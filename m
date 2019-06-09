@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4A031F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA0911F609
 	for <e@80x24.org>; Sun,  9 Jun 2019 04:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725808AbfFIEt2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 00:49:28 -0400
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:35013 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbfFIEt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jun 2019 00:49:27 -0400
-Received: by mail-wm1-f53.google.com with SMTP id c6so5252942wml.0
-        for <git@vger.kernel.org>; Sat, 08 Jun 2019 21:49:26 -0700 (PDT)
+        id S1726178AbfFIEtc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 00:49:32 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55341 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbfFIEtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jun 2019 00:49:32 -0400
+Received: by mail-wm1-f67.google.com with SMTP id a15so5514048wmj.5
+        for <git@vger.kernel.org>; Sat, 08 Jun 2019 21:49:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fZxUjrJ9hQ4U3pJ1EP4nnsq9j/SrKI5ea/tPPCnVAoY=;
-        b=sIP3YdHL/y/PINSvHddxtE3sfVj2ZsKTapW5XFES5ycdM8tW8DrZaIFKD8+igyRdCj
-         chiOLP67Ehj75gCHUSu1NVG+n1rbwbVVo6aIWARibsrTSA4g8lLopFr2dd1VQzaJa2bY
-         tnrpWhQTGQc32P0meEC+9tdhOScy2FKHefdu3vbvEGSjQ5MEsTN0gkcjv+5Yv8B1HMIq
-         Rp/yPrM1RY4YBAqt8CNN0XUm6+cNO7I7QMXYuD55VxOtNB540MCeFEVKCxzf2LD7uX9l
-         rT+nc/5GyzRRa4DwVGIlmWPI/I+ymaoJVwsdGBR4UKSajycic0q4UFTCLUWf+WlxcR0K
-         RbEQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oq7MYXaWMxG0fDN/89eHW6L1CBiq5MTFLH5MXXeWvM0=;
+        b=iRilU9LuhLzJzrsOkw6T/gATaGUyZuZdZrkEi9Pfk7fWwe+jXse4SmqFwMxPhHRFMZ
+         xoOJ4nfVqVZaue2vJcwPgWl+WHHp9muXbr+/WBaKMEV75ZgdM8iogMpxrRcVNTnxlr3A
+         6PsLg2TUlMM7bfe7oaTv8PoP4U9p4HbcBzUW96eG/qq2kMrxumZMx+QUX/8kFIHyPK0m
+         acly47xtGqWIA083t7Rm41Nw4CM8EvqXsvrHbCjSKYstzmttW0wadV10XzqZHMkJEwgD
+         PvaqMWz64fdcUjdtM84dlswkRe1ciJOyXzH+9o9BwNjTGaiVnWwrJ5Xt4AqHC8p24SWU
+         ojLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fZxUjrJ9hQ4U3pJ1EP4nnsq9j/SrKI5ea/tPPCnVAoY=;
-        b=BkinyDBZHC03l0wwlIEoCCv1nCnKzhK/qaM0MmObY/c727FF5A5WaPgHbhw0c4jBZm
-         xOBZOoaIS2X1o796eeXSqxkEZ2hQE7sSlbdQ5reQ8p2Fbjdiu7JzE0rKSUWwR0zx+cU0
-         REuOY5zrGEjJB2VmgQHfOCYEBQrokWB43XMVwgsMo7W5RZlNQdQ7G96tZ5pzlIz0sAT4
-         u+tOLi3YP9cLqySisfUc7xnEaaI+fEIxg4mcJ5paVzPN1U+zFEINcyeco4gaFOZWcrFK
-         0nlnYeE1/KK+luTks22k1+qncdxXHLGImavJ6aD/WFf+3hW6H7BsOMdfDcDwmqUeFhzW
-         oAYA==
-X-Gm-Message-State: APjAAAUxaFO6JHcYNeBm8NesrWgiXO8An29vFbVxUw2o2kLxZe0QB0kL
-        qQC7We5pY3uI2onqemWQVFFOS9Dv5p4=
-X-Google-Smtp-Source: APXvYqzIvXyDBnxvY0oK7yWMzh9HpQPD5yZXauX//NjnJ7Rld3+8K0Slmiv+iK9yXpg06SmkDxvD0w==
-X-Received: by 2002:a1c:7c11:: with SMTP id x17mr1399414wmc.22.1560055765121;
-        Sat, 08 Jun 2019 21:49:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oq7MYXaWMxG0fDN/89eHW6L1CBiq5MTFLH5MXXeWvM0=;
+        b=bSSj/tAgjFvk41OSXB1GWkoKvYtjL/9GvtJvjfWAf0CvCqrBzcKzSIDQkaxK47rvlA
+         fP5B+WlYelGU3oRMFGMgVpKr/oufcWo731bXc+XILo/mfquRVf+DqSpJE6ZSxiveL4nH
+         is1oLqGPxSW+sE5ODrTWzrJaf5LeLBVjCGXqi9l2SSiH29nVpbcvBp/1935Lf+SmBTrJ
+         Ln/aElesZsz3MHE96ZuoWtEOdMkH5YbbpvjlHgOt9W5diMPUG/zodA0LNqw3RgZzDnd4
+         gO1bXCFWSQSVTDxljhHo7NCooyojjBZQ9NZm16P/lIW9SenjPVKHJ5SgzuXUz37tHkoD
+         A7xA==
+X-Gm-Message-State: APjAAAX6CURiET8k8BGCknC8N1GETMlftBk1njtH9dtDpulK36E2kcBd
+        SdiwAuL9uAfOUaIin2+zsUYFhWp4WtU=
+X-Google-Smtp-Source: APXvYqxInkPsQhcwkx9RcG5wR+ykMs2StdEWEr1hSh8lBqEJSD8Aii0MomZHDyiYlhkZetLerViI1Q==
+X-Received: by 2002:a05:600c:389:: with SMTP id w9mr8454349wmd.139.1560055769454;
+        Sat, 08 Jun 2019 21:49:29 -0700 (PDT)
 Received: from localhost.localdomain (160.10.112.78.rev.sfr.net. [78.112.10.160])
-        by smtp.gmail.com with ESMTPSA id y2sm6461116wra.58.2019.06.08.21.49.23
+        by smtp.gmail.com with ESMTPSA id y2sm6461116wra.58.2019.06.08.21.49.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Jun 2019 21:49:24 -0700 (PDT)
+        Sat, 08 Jun 2019 21:49:29 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,12 +57,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
         Brandon Williams <bmwill@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 0/3] Test oidmap
-Date:   Sun,  9 Jun 2019 06:49:04 +0200
-Message-Id: <20190609044907.32477-1-chriscool@tuxfamily.org>
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/3] t/helper: add test-oidmap.c
+Date:   Sun,  9 Jun 2019 06:49:05 +0200
+Message-Id: <20190609044907.32477-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.14.g9023ccb50a
+In-Reply-To: <20190609044907.32477-1-chriscool@tuxfamily.org>
+References: <20190609044907.32477-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -70,27 +71,194 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+This new helper is very similar to "test-hashmap.c" and will help
+test how `struct oidmap` from oidmap.{c,h} can be used.
 
-Unlike hashmap that has t/helper/test-hashmap.c and t/t0011-hashmap.sh
-oidmap has no specific test. The goal of this small patch series is to
-change that and also improve oidmap a bit while at it.
-
-Christian Couder (3):
-  t/helper: add test-oidmap.c
-  t: add t0016-oidmap.sh
-  oidmap: use sha1hash() instead of static hash() function
-
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
  Makefile               |   1 +
- oidmap.c               |  13 +---
  t/helper/test-oidmap.c | 134 +++++++++++++++++++++++++++++++++++++++++
  t/helper/test-tool.c   |   1 +
  t/helper/test-tool.h   |   1 +
- t/t0016-oidmap.sh      | 100 ++++++++++++++++++++++++++++++
- 6 files changed, 240 insertions(+), 10 deletions(-)
+ 4 files changed, 137 insertions(+)
  create mode 100644 t/helper/test-oidmap.c
- create mode 100755 t/t0016-oidmap.sh
 
+diff --git a/Makefile b/Makefile
+index 8a7e235352..5efc7700ed 100644
+--- a/Makefile
++++ b/Makefile
+@@ -727,6 +727,7 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-match-trees.o
+ TEST_BUILTINS_OBJS += test-mergesort.o
+ TEST_BUILTINS_OBJS += test-mktemp.o
++TEST_BUILTINS_OBJS += test-oidmap.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+ TEST_BUILTINS_OBJS += test-path-utils.o
+diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
+new file mode 100644
+index 0000000000..0ba122a264
+--- /dev/null
++++ b/t/helper/test-oidmap.c
+@@ -0,0 +1,134 @@
++#include "test-tool.h"
++#include "cache.h"
++#include "oidmap.h"
++#include "strbuf.h"
++
++/* key is an oid and value is a name (could be a refname for example) */
++struct test_entry {
++	struct oidmap_entry entry;
++	char name[FLEX_ARRAY];
++};
++
++#define DELIM " \t\r\n"
++
++/*
++ * Read stdin line by line and print result of commands to stdout:
++ *
++ * hash oidkey -> sha1hash(oidkey)
++ * put oidkey namevalue -> NULL / old namevalue
++ * get oidkey -> NULL / namevalue
++ * remove oidkey -> NULL / old namevalue
++ * iterate -> oidkey1 namevalue1\noidkey2 namevalue2\n...
++ *
++ */
++int cmd__oidmap(int argc, const char **argv)
++{
++	struct strbuf line = STRBUF_INIT;
++	struct oidmap map = OIDMAP_INIT;
++
++	setup_git_directory();
++
++	/* init oidmap */
++	oidmap_init(&map, 0);
++
++	/* process commands from stdin */
++	while (strbuf_getline(&line, stdin) != EOF) {
++		char *cmd, *p1 = NULL, *p2 = NULL;
++		struct test_entry *entry;
++		struct object_id oid;
++
++		/* break line into command and up to two parameters */
++		cmd = strtok(line.buf, DELIM);
++		/* ignore empty lines */
++		if (!cmd || *cmd == '#')
++			continue;
++
++		p1 = strtok(NULL, DELIM);
++		if (p1)
++			p2 = strtok(NULL, DELIM);
++
++		if (!strcmp("hash", cmd) && p1) {
++
++			/* print hash of oid */
++			if (!get_oid(p1, &oid))
++				printf("%u\n", sha1hash(oid.hash));
++			else
++				printf("Unknown oid: %s\n", p1);
++
++		} else if (!strcmp("add", cmd) && p1 && p2) {
++
++			if (get_oid(p1, &oid)) {
++				printf("Unknown oid: %s\n", p1);
++				continue;
++			}
++
++			/* create entry with oidkey from p1, value = p2 */
++			FLEX_ALLOC_STR(entry, name, p2);
++			oidcpy(&entry->entry.oid, &oid);
++
++			/* add to oidmap */
++			oidmap_put(&map, entry);
++
++		} else if (!strcmp("put", cmd) && p1 && p2) {
++
++			if (get_oid(p1, &oid)) {
++				printf("Unknown oid: %s\n", p1);
++				continue;
++			}
++
++			/* create entry with oid_key = p1, name_value = p2 */
++			FLEX_ALLOC_STR(entry, name, p2);
++			oidcpy(&entry->entry.oid, &oid);
++
++			/* add / replace entry */
++			entry = oidmap_put(&map, entry);
++
++			/* print and free replaced entry, if any */
++			puts(entry ? entry->name : "NULL");
++			free(entry);
++
++		} else if (!strcmp("get", cmd) && p1) {
++
++			if (get_oid(p1, &oid)) {
++				printf("Unknown oid: %s\n", p1);
++				continue;
++			}
++
++			/* lookup entry in oidmap */
++			entry = oidmap_get(&map, &oid);
++
++			/* print result */
++			puts(entry ? entry->name : "NULL");
++
++		} else if (!strcmp("remove", cmd) && p1) {
++
++			if (get_oid(p1, &oid)) {
++				printf("Unknown oid: %s\n", p1);
++				continue;
++			}
++
++			/* remove entry from oidmap */
++			entry = oidmap_remove(&map, &oid);
++
++			/* print result and free entry*/
++			puts(entry ? entry->name : "NULL");
++			free(entry);
++
++		} else if (!strcmp("iterate", cmd)) {
++
++			struct oidmap_iter iter;
++			oidmap_iter_init(&map, &iter);
++			while ((entry = oidmap_iter_next(&iter)))
++				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
++
++		} else {
++
++			printf("Unknown command %s\n", cmd);
++
++		}
++	}
++
++	strbuf_release(&line);
++	oidmap_free(&map, 1);
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 087a8c0cc9..1eac25233f 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -35,6 +35,7 @@ static struct test_cmd cmds[] = {
+ 	{ "match-trees", cmd__match_trees },
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
++	{ "oidmap", cmd__oidmap },
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "parse-options", cmd__parse_options },
+ 	{ "path-utils", cmd__path_utils },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 7e703f3038..c7a46dc320 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -25,6 +25,7 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
+ int cmd__match_trees(int argc, const char **argv);
+ int cmd__mergesort(int argc, const char **argv);
+ int cmd__mktemp(int argc, const char **argv);
++int cmd__oidmap(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+ int cmd__path_utils(int argc, const char **argv);
 -- 
 2.22.0.14.g9023ccb50a
 
