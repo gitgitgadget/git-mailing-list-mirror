@@ -2,312 +2,322 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2948E1F462
-	for <e@80x24.org>; Sun,  9 Jun 2019 08:17:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A43A71F462
+	for <e@80x24.org>; Sun,  9 Jun 2019 08:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727720AbfFIIR2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 04:17:28 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59159 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727432AbfFIIR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jun 2019 04:17:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560068230;
-        bh=xYdhjydemfNkcSuh6OOoxtDAuI7lXvqptMO4/d5mj4E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=U2+dGW2eU+tFy/o6bqXQWMSUQvwUMkntxSAibMMfNplAfSdaT4RKSbxZpGhTQv2Mv
-         OLndQc7DzG4RHFdKOnfsbNCrT2DpzMIZxLb0ysA2uUlFEgADht0xak6N/PhFgog5GY
-         C72Lw8DCnLQ2S5P8FoUrDSl3lDovFLP7L4L7Ok6w=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from DESKTOP-QUA364F ([46.183.103.8]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOjMY-1hUxbE1Cf0-0068DI; Sun, 09
- Jun 2019 10:17:10 +0200
-Date:   Sun, 9 Jun 2019 10:17:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
-To:     Matthew DeVore <matvore@google.com>
-cc:     git@vger.kernel.org, avarab@gmail.com, git@matthieu-moy.fr,
-        olyatelezhnaya@gmail.com, samuel.maftoul@gmail.com,
-        gitster@pobox.com, karthik.188@gmail.com, pclouds@gmail.com,
-        sunshine@sunshineco.com, emilyshaffer@google.com, jrn@google.com
-Subject: Re: [RFC PATCH] ref-filter: sort detached HEAD lines firstlyxy
-In-Reply-To: <faaa9a3d6ba66d77cc2a8eab438d1bfc8f762fa1.1559857032.git.matvore@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1906090954510.789@QRFXGBC-DHN364S.ybpnyqbznva>
-References: <faaa9a3d6ba66d77cc2a8eab438d1bfc8f762fa1.1559857032.git.matvore@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727766AbfFIIhO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 04:37:14 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46753 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727705AbfFIIhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jun 2019 04:37:14 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so6070935wrw.13
+        for <git@vger.kernel.org>; Sun, 09 Jun 2019 01:37:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vDU4FcvmC9ZN7przgsWdMXqyGExKmNRVlf28PFVI7Pw=;
+        b=ArSUhFAWdpbrfZeBq9P6IsdPaBzWyAR9OtMxhj6tujTVSPm84j35fZ/Osq5T4RHyhd
+         rTWJEsReMMTPgYH2bxHN08P85SzHHwNZKrN85jnXbvfpZa0D4/6G3k4a2abGCzOPRHD8
+         kKIA7J8xygukVP7gNKz37jxqpDhkD5lWUgOecuRUUAHG+pqMS+20NNCVlI7f0U2LjR+1
+         tHui5PL50qqK4WqmGEcSNCDxMTeD9vD/Jc79duniKoXxUxK5Z/dXkRVdP/O6qijGGqzC
+         JzuKKsLzTaYNDxkhiATvZh+TKgjNT6IWHBTJt2RcomWkPRDxUemQIsTQA513R1+iw9qn
+         b4pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vDU4FcvmC9ZN7przgsWdMXqyGExKmNRVlf28PFVI7Pw=;
+        b=g20TfzUdQ66AL2xnqBqhRUHllaQoekj3wlPgny7dNJDf4fMznr2RaIPhbn9JzbJEpp
+         RPeQN+TWXTnNWavowS8hoBYsVaSFlZM0Rv2dVhnB/d9PLNqyqSvMHKgjQOspZ/9U0+iB
+         MurUD/GFhPLauFAOPKbnchsqtISf0wRJnNGSJRdfrKdc6Krxc/u7Ezwu1wuYVbc24/OA
+         podl/wim8AiHx+KcFHmEQmmHaik5kfpQIJTk+S0vJnPHPnCG40vRlMiHLFAFDP6n4WdI
+         gprevUjTu0Hu9mPimuduQSxq4tm99jzKWpwzXhglB9ho79/8NwBqi6ocAVtUWw5tFjO/
+         MjEA==
+X-Gm-Message-State: APjAAAXD90KHLOURTcFpZAbNdmkrw7y6Dgx1x+Iittlh/wqNkYm5lDgS
+        rCL3ZA4pCuklIpJKUgNVhZztVKu4pMEDmQ==
+X-Google-Smtp-Source: APXvYqxKSlXWS7ljl1RkaswZgphx7N9Ez1tLHkZHlp9K8HrFM5JJ6Cjzr5Q8VetKZnCLdWtXfJCd2g==
+X-Received: by 2002:a05:6000:cf:: with SMTP id q15mr9072257wrx.52.1560069431494;
+        Sun, 09 Jun 2019 01:37:11 -0700 (PDT)
+Received: from localhost (adsl-22.176.58.193.tellas.gr. [176.58.193.22])
+        by smtp.gmail.com with ESMTPSA id u5sm8874437wmc.32.2019.06.09.01.37.10
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 09 Jun 2019 01:37:10 -0700 (PDT)
+Date:   Sun, 9 Jun 2019 09:37:09 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [GSoC][PATCH 2/3] cherry-pick/revert: add --skip option
+Message-ID: <20190609083708.GA28007@hank.intra.tgummerer.com>
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+ <20190608191958.4593-3-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Wm1czJ3jtGkuqT7vfjPUrStU5nGYpjtK/ETvMnT7V+9KszdWavd
- Bv8nPBEmO22V+Kkn9greqjKHpqHhZVuQ3NLAKTz2alqJBYsKm5/0VdVdaqnClpLHyJjajKp
- xPjp+Ylkngmd6nd69Z+cZH+7d0PyxxIzA2uA6vkDVUep0wT3Qx59xe6WFZmFmFYifepZvE1
- Zv7jCuXee8Z+JRgS425wA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ujvlgv6RPHk=:XevRmgagHiQImK9P2spgpt
- bzHk6asHURGLZEf7yEizHzI4GVc77ES91oHMCywAZBogynUjcU/qo9DNDVeLem1khSlBsxB/a
- rtgAmorcUrbkmK83is0PBeZ8/zVg+mftLX/aJ5LHHxEYI4bibayhmCaqcaQAfxXmdq/MXhorH
- uBZ9+k+UYzgMdrCkxjMmQTRVPQ1/vltXJdSnR6/XP0CpolEIfMnijuLHPT1XtIU1s84qXONco
- 8U23eCJyx8gLdpDjGec4qHv4kbKL2XNRXZ4TlWv3mc75HQewLSZDyWrQdKCtjCVveYjSbG3w6
- juBq4KQbt8ZwU6NyKNikk+tB92PLU9oVdgcV/FU8uQbxSwCEy7Z/yT5Ve/k4ddDkBNerQTwuY
- Uq5PANud2gbfAPECahIWdSYtNG8SPPmeDBvUcn1awE/FUtG/3CoUUs/1iBeoasFysu1lnptQ/
- ah0BG47+jJA2XRwHTwxbrcUUWozY9kwLtIsWQMkIZpHvqcEQTtV6lGxzg5cm/RoJXcGKJWaEG
- HITAKXWua/0sSqmh0+Baafe7f9CGPbl2PhMYIe8RsYkrGLc26BMCVnnk5jk3nilnBpi18Kg0N
- Yn641tW1BV9a+4rSf0rY4JKqVp+RESgt6kGISXzVdRtZ3E0FRDZhbo0DBBswdCL9EyDGSbi+V
- lBZnwKV9OoDJ9dvTaxqFEe6qU8SUio+5DUosTn8zSS31Ak+dsNG1LUkAegaq0zRvbngTABd7k
- uKXfDRC/h1qiE4AhhtJkMCO9/rx/vs7UDwjYo6Wou5VH/1hb3iE7h9OIvjKaohVeMbc0gx5xz
- mgj3+mCS1w9rktQgRV8v84dwt5eL/HeJ4Ds19/bjuIRo7rGwSbb5yfJbJc8v++h2Fqf7N0UY8
- tVdNs8MvqjnfDiJhxFhjxJ3bFAy8yhb+Bt7wlrdVgqoDg+YpMlqrgc9+6vVY74IF/yexUPOnt
- jpyyo14NtOhoxvUr1flQ98425bEAVqwISMxdcrMgY9BKgd3Ey4C6zMfnIH170kExhfekzfHkF
- uQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190608191958.4593-3-rohit.ashiwal265@gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matthew,
+On 06/09, Rohit Ashiwal wrote:
+> git am or rebase advise the user to use `git (am | rebase) --skip` to
+> skip the commit. cherry-pick and revert also have this concept of
+> skipping commits but they advise the user to use `git reset` (or in
+> case of a patch which had conflicts, `git reset --merge`) which on the
+> user's part is annoying and sometimes confusing. Add a `--skip` option
+> to make these commands more consistent.
 
-On Thu, 6 Jun 2019, Matthew DeVore wrote:
+Something I missed in the off-list review for this PR:  I think this
+commit message is a bit heavy on the advice part, rather than on the
+real advantage the --skip flag brings, which is that it's less
+cumbersome for the user to skip a commit, and brings consistency to
+the commands.  Maybe something like:
 
-> Before this patch, "git branch" would put "(HEAD detached...)" and "(no
-> branch, rebasing...)" lines before all the other branches *in most
-> cases* and only because of the fact that "(" is a low codepoint. This
-> would not hold in the Chinese locale, which uses a full-width "(" symbol
-> (codepoint FF08). This meant that the detached HEAD line would appear
-> after all local refs and even after the remote refs if there were any.
->
-> Deliberately sort the detached HEAD refs before other refs when sorting
-> by refname rather than rely on codepoint subtleties.
+        git am or rebase have a --skip flag to skip the current commit if
+        the user wishes to do so.  During a cherry-pick or revert a user
+        could likewise skip a commit, but needs to use 'git reset' (or in
+        the case of conflicts 'git reset --merge'), followed by 'git
+        (cherry-pick | revert) --continue' to skip the commit.  This is
+        more annoying and sometimes confusing on the users part.  Add a
+        `--skip` option to make skipping commits easier for the user and
+        to make the commands more consistent.
 
-This description is pretty convincing!
-
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8500671bc6..cbfae790f9 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2157,25 +2157,29 @@ static int cmp_ref_sorting(struct ref_sorting *s=
-, struct ref_array_item *a, stru
->  	cmp_type cmp_type =3D used_atom[s->atom].type;
->  	int (*cmp_fn)(const char *, const char *);
->  	struct strbuf err =3D STRBUF_INIT;
->
->  	if (get_ref_atom_value(a, s->atom, &va, &err))
->  		die("%s", err.buf);
->  	if (get_ref_atom_value(b, s->atom, &vb, &err))
->  		die("%s", err.buf);
->  	strbuf_release(&err);
->  	cmp_fn =3D s->ignore_case ? strcasecmp : strcmp;
-> -	if (s->version)
-> +	if (s->version) {
->  		cmp =3D versioncmp(va->s, vb->s);
-> -	else if (cmp_type =3D=3D FIELD_STR)
-> +	} else if (cmp_type =3D=3D FIELD_STR) {
-
-I find that it makes sense in general to suppress one's urges regarding
-introducing `{ ... }` around one-liners when the patch does not actually
-require it.
-
-For example, I found this patch harder than necessary to read because of
-it.
-
-> +		if ((a->kind & FILTER_REFS_DETACHED_HEAD) !=3D
-> +				(b->kind & FILTER_REFS_DETACHED_HEAD)) {
-
-So in case that both are detached...
-
-> +			return (a->kind & FILTER_REFS_DETACHED_HEAD) ? -1 : 1;
-> +		}
->  		cmp =3D cmp_fn(va->s, vb->s);
-
-... we compare their commit hashes, is that right? Might be worth a code
-comment.
-
-> -	else {
-> +	} else {
-
-FWIW it would have been a much more obvious patch if it had done
-
- 	if (s->version)
-		[...]
-+	else if (cmp_type =3D=3D FIELD_STR &&
-+		 (a->kind & FILTER_REFS_DETACHED_HEAD ||
-+		  b->kind & FILTER_REFS_DETACHED_HEAD))
-+		return (a->kind & FILTER_REFS_DETACHED_HEAD) ? -1 : 1;
- 	else if (cmp_type =3D=3D FIELD_STR)
-		[...]
-
-Maybe still worth doing.
-
-FWIW I was *so* tempted to write
-
-	((a->kind ^ b->kind) & FILTER_REFS_DETACHED_HEAD)
-
-to make this code DRYer, but then, readers not intimately familiar with
-Boolean arithmetic might not even know about the `^` operator, making the
-code harder to read than necessary, too.
-
-> diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-> index 2139b427ca..de08d109dc 100644
-> --- a/t/lib-gettext.sh
-> +++ b/t/lib-gettext.sh
-> @@ -25,23 +25,29 @@ then
->  		p
->  		q
->  	}')
->  	# is_IS.ISO8859-1 on Solaris and FreeBSD, is_IS.iso88591 on Debian
->  	is_IS_iso_locale=3D$(locale -a 2>/dev/null |
->  		sed -n '/^is_IS\.[iI][sS][oO]8859-*1$/{
->  		p
->  		q
->  	}')
->
-> -	# Export them as an environment variable so the t0202/test.pl Perl
-> -	# test can use it too
-> -	export is_IS_locale is_IS_iso_locale
-> +	zh_CN_locale=3D$(locale -a 2>/dev/null |
-> +		sed -n '/^zh_CN\.[uU][tT][fF]-*8$/{
-> +		p
-> +		q
-> +	}')
+> In the next commit, we will change the advice messages hence finishing
+> the process of teaching revert and cherry-pick "how to skip commits".
+> 
+> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> ---
+>  Documentation/git-cherry-pick.txt |  4 +-
+>  Documentation/git-revert.txt      |  4 +-
+>  Documentation/sequencer.txt       |  4 ++
+>  builtin/revert.c                  |  5 +++
+>  sequencer.c                       | 23 +++++++++++
+>  sequencer.h                       |  1 +
+>  t/t3510-cherry-pick-sequence.sh   | 63 +++++++++++++++++++++++++++++++
+>  7 files changed, 98 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> index 754b16ce0c..955880ab88 100644
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -10,9 +10,7 @@ SYNOPSIS
+>  [verse]
+>  'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
+>  		  [-S[<keyid>]] <commit>...
+> -'git cherry-pick' --continue
+> -'git cherry-pick' --quit
+> -'git cherry-pick' --abort
+> +'git cherry-pick' --continue | --skip | --abort | --quit
+>  
+>  DESCRIPTION
+>  -----------
+> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> index 0c82ca5bc0..ffce98099c 100644
+> --- a/Documentation/git-revert.txt
+> +++ b/Documentation/git-revert.txt
+> @@ -9,9 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git revert' [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<keyid>]] <commit>...
+> -'git revert' --continue
+> -'git revert' --quit
+> -'git revert' --abort
+> +'git revert' --continue | --skip | --abort | --quit
+>  
+>  DESCRIPTION
+>  -----------
+> diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
+> index 5a57c4a407..3bceb56474 100644
+> --- a/Documentation/sequencer.txt
+> +++ b/Documentation/sequencer.txt
+> @@ -3,6 +3,10 @@
+>  	`.git/sequencer`.  Can be used to continue after resolving
+>  	conflicts in a failed cherry-pick or revert.
+>  
+> +--skip::
+> +	Skip the current commit and continue with the rest of the
+> +	sequence.
 > +
-> +	# Export them as environment variables so other tests can use them
-> +	# too
-> +	export is_IS_locale is_IS_iso_locale zh_CN_locale
->
->  	if test -n "$is_IS_locale" &&
->  		test $GIT_INTERNAL_GETTEXT_SH_SCHEME !=3D "fallthrough"
->  	then
->  		# Some of the tests need the reference Icelandic locale
->  		test_set_prereq GETTEXT_LOCALE
->
->  		# Exporting for t0202/test.pl
->  		GETTEXT_LOCALE=3D1
->  		export GETTEXT_LOCALE
-> @@ -53,11 +59,15 @@ then
->  	if test -n "$is_IS_iso_locale" &&
->  		test $GIT_INTERNAL_GETTEXT_SH_SCHEME !=3D "fallthrough"
->  	then
->  		# Some of the tests need the reference Icelandic locale
->  		test_set_prereq GETTEXT_ISO_LOCALE
->
->  		say "# lib-gettext: Found '$is_IS_iso_locale' as an is_IS ISO-8859-1 =
-locale"
->  	else
->  		say "# lib-gettext: No is_IS ISO-8859-1 locale available"
->  	fi
-> +
-> +	if test -z "$zh_CN_locale"; then
-> +		say "# lib-gettext: No zh_CN UTF-8 locale available"
-> +	fi
+>  --quit::
+>  	Forget about the current operation in progress.  Can be used
+>  	to clear the sequencer state after a failed cherry-pick or
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index d4dcedbdc6..5dc5891ea2 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -102,6 +102,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>  		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
+>  		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
+>  		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
+> +		OPT_CMDMODE(0, "skip", &cmd, N_("skip current commit and continue"), 's'),
+>  		OPT_CLEANUP(&cleanup_arg),
+>  		OPT_BOOL('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
+>  		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
+> @@ -151,6 +152,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>  			this_operation = "--quit";
+>  		else if (cmd == 'c')
+>  			this_operation = "--continue";
+> +		else if (cmd == 's')
+> +			this_operation = "--skip";
+>  		else {
+>  			assert(cmd == 'a');
+>  			this_operation = "--abort";
+> @@ -210,6 +213,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>  		return sequencer_continue(the_repository, opts);
+>  	if (cmd == 'a')
+>  		return sequencer_rollback(the_repository, opts);
+> +	if (cmd == 's')
+> +		return sequencer_skip(the_repository, opts);
+>  	return sequencer_pick_revisions(the_repository, opts);
+>  }
+>  
+> diff --git a/sequencer.c b/sequencer.c
+> index 9c561a041b..f586e677d3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2784,6 +2784,29 @@ int sequencer_rollback(struct repository *r, struct replay_opts *opts)
+>  	return -1;
+>  }
+>  
+> +int sequencer_skip(struct repository *r, struct replay_opts *opts)
+> +{
+> +	switch (opts->action) {
+> +	case REPLAY_REVERT:
+> +		if (!file_exists(git_path_revert_head(r)))
+> +			return error(_("no revert in progress"));
+> +		break;
+> +	case REPLAY_PICK:
+> +		if (!file_exists(git_path_cherry_pick_head(r)))
+> +			return error(_("no cherry-pick in progress"));
+> +		break;
 
-I wonder why this hunk, unlike the previous one, does not imitate the
-is_IS handling closely.
+I see that in some cases (e.g 'rollback_single_pick'), we just check
+if either REVERT_HEAD or CHERRY_PICK_HEAD exist, but would allow the
+"wrong" command to be used, e.g. 'git revert --abort' when a
+cherry-pick is in progress.  This helps avoiding that, good!
 
-> diff --git a/t/t3207-branch-intl.sh b/t/t3207-branch-intl.sh
-> new file mode 100755
-> index 0000000000..9f6fcc7481
-> --- /dev/null
-> +++ b/t/t3207-branch-intl.sh
-> @@ -0,0 +1,38 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'git branch internationalization tests'
-> +
-> +. ./lib-gettext.sh
-> +
-> +test_expect_success 'init repo' '
-> +	git init r1 &&
+> +	default:
+> +		BUG("the control must not reach here.");
 
-Why?
+We don't support rebase in 'sequencer_skip' yet, makes sense as this
+patch is focused on cherry-pick and revert.  There's nothing
+preventing supporting that in the future though.
 
-> +	touch r1/foo &&
-> +	git -C r1 add foo &&
-> +	git -C r1 commit -m foo
-> +'
-
-Why not simply `test_commit foo`?
-
-> +test_expect_success 'detached head sorts before other branches' '
-> +	# Ref sorting logic should put detached heads before the other
-> +	# branches, but this is not automatic when a branch name sorts
-> +	# lexically before "(" or the full-width "(" (Unicode codepoint FF08).
-> +	# The latter case is nearly guaranteed for the Chinese locale.
-> +
-> +	git -C r1 checkout HEAD^{} -- &&
-> +	git -C r1 branch !should_be_after_detached HEAD &&
-
-I am not sure that `!` is a wise choice, as it might not be a legal file
-name character everywhere. A `.` or `-` might make more sense.
-
-> +	LC_ALL=3D$zh_CN_locale LC_MESSAGES=3D$zh_CN_locale \
-> +		git -C r1 branch >actual &&
-> +	git -C r1 checkout - &&
-
-Why call `checkout` after `branch`? That's unnecessary, we do not verify
-anything after that call.
-
-> +	awk "
-> +	# We need full-width or half-width parens on the first line.
-> +	NR =3D=3D 1 && (/[(].*[)]/ || /\xef\xbc\x88.*\xef\xbc\x89/) {
-> +		found_head =3D 1;
 > +	}
-> +	/!should_be_after_detached/ {
-> +		found_control_branch =3D 1;
-> +	}
-> +	END { exit !found_head || !found_control_branch }
-> +	" actual
+> +
+> +	if (rollback_single_pick(r))
+> +		return error(_("failed to skip the commit"));
+> +	if (!is_directory(git_path_seq_dir()))
+> +		return 0;
 
-This might look beautiful for a fan of `awk`. For the vast majority of us,
-this is not a good idea.
+If there's no sequencer directory, we don't need to continue the
+cherry-pick/revert, as there's nothing left to do.  Otherwise we
+continue.  Good.
 
-Remember, you do *not* write those tests for your own pleasure, you do
-*not* write those tests in order to help you catch problems while you
-develop your patches, you do *not* develop these tests in order to just
-catch future breakages.
+So this looks good to me.
 
-You *do* write those tests for *other* developers who you try to help in
-preventing introducing regressions.
-
-As such, you *want* the tests to be
-
-- easy to understand for as wide a range of developers as you can make,
-
-- quick,
-
-- covering regressions, and *only* regressions,
-
-- helping diagnose *and* fix regressions.
-
-In the ideal case you won't even hear when developers found your test
-helpful, and you will never, ever learn about regressions that have been
-prevented.
-
-You most frequently will hear about your tests when they did not do their
-job well.
-
-In this instance, I would have expected something like
-
-	test_expect_lines =3D 3 actual &&
-
-	head -n 1 <actual >first &&
-	test_i18ngrep "detached HEAD" first &&
-
-	tail -n 1 <actual >last &&
-	grep should_be_after last
-
-instead of the "awk-ward" code above.
-
-Ciao,
-Johannes
-
+> +
+> +	return sequencer_continue(r, opts);
+> +}
+> +
+>  static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+>  {
+>  	struct lock_file todo_lock = LOCK_INIT;
+> diff --git a/sequencer.h b/sequencer.h
+> index 0c494b83d4..731b9853eb 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -129,6 +129,7 @@ int sequencer_pick_revisions(struct repository *repo,
+>  			     struct replay_opts *opts);
+>  int sequencer_continue(struct repository *repo, struct replay_opts *opts);
+>  int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
+> +int sequencer_skip(struct repository *repo, struct replay_opts *opts);
+>  int sequencer_remove_state(struct replay_opts *opts);
+>  
+>  #define TODO_LIST_KEEP_EMPTY (1U << 0)
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index 941d5026da..48cc9f13ee 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -93,6 +93,69 @@ test_expect_success 'cherry-pick cleans up sequencer state upon success' '
+>  	test_path_is_missing .git/sequencer
+>  '
+>  
+> +test_expect_success 'cherry-pick --skip requires cherry-pick in progress' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick --skip
 > +'
 > +
-> +test_done
-> --
+> +test_expect_success 'revert --skip requires revert in progress' '
+> +	pristine_detach initial &&
+> +	test_must_fail git revert --skip
+> +'
+> +
+> +test_expect_success 'cherry-pick --skip to skip commit' '
+> +	pristine_detach initial &&
+> +	test_must_fail git cherry-pick anotherpick &&
+> +	test_must_fail git revert --skip &&
+> +	git cherry-pick --skip &&
+> +	test_cmp_rev initial HEAD &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD
+> +'
+> +
+> +test_expect_success 'revert --skip to skip commit' '
+> +	pristine_detach anotherpick &&
+> +	test_must_fail git revert anotherpick~1 &&
+> +	test_must_fail git cherry-pick --skip &&
+> +	git revert --skip &&
+> +	test_cmp_rev anotherpick HEAD
+> +'
+> +
+> +test_expect_success 'skip "empty" commit' '
+> +	pristine_detach picked &&
+> +	test_commit dummy foo d &&
+> +	test_must_fail git cherry-pick anotherpick &&
+> +	git cherry-pick --skip &&
+> +	test_cmp_rev dummy HEAD
+> +'
+> +
+> +test_expect_success 'skip a commit and check if rest of sequence is correct' '
+> +	pristine_detach initial &&
+> +	echo e >expect &&
+> +	cat >expect.log <<-EOF &&
+> +	OBJID
+> +	:100644 100644 OBJID OBJID M	foo
+> +	OBJID
+> +	:100644 100644 OBJID OBJID M	foo
+> +	OBJID
+> +	:100644 100644 OBJID OBJID M	unrelated
+> +	OBJID
+> +	:000000 100644 OBJID OBJID A	foo
+> +	:000000 100644 OBJID OBJID A	unrelated
+> +	EOF
+> +	test_must_fail git cherry-pick base..yetanotherpick &&
+> +	test_must_fail git cherry-pick --skip &&
+> +	echo d >foo &&
+> +	git add foo &&
+> +	git cherry-pick --continue &&
+> +	{
+> +		git rev-list HEAD |
+> +		git diff-tree --root --stdin |
+> +		sed "s/$OID_REGEX/OBJID/g"
+> +	} >actual.log &&
+> +	test_cmp expect foo &&
+> +	test_cmp expect.log actual.log
+> +'
+> +
+>  test_expect_success '--quit does not complain when no cherry-pick is in progress' '
+>  	pristine_detach initial &&
+>  	git cherry-pick --quit
+> -- 
 > 2.21.0
->
->
+> 
