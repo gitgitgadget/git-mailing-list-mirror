@@ -2,91 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF22C1F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 21:27:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51BF21F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 21:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390096AbfFJV1E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 17:27:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58730 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389193AbfFJV1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 17:27:03 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BD3A46B17F;
-        Mon, 10 Jun 2019 17:27:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/WVITKhK0GFvYtR+I9j+GszNwNo=; b=U+ZPsA
-        69oJ2BfBg3Snh0QZR31czPb+6lvlPJreySYwGZzK6p8/gv0YT7jh2QI6haPvpGu/
-        Kp6ELY02l0imxJlssRmKasLF4PJdRESlPszlremaoLYm15ANrX8iMgFWmFBHzd+X
-        UTBUNN7FUbuKGpnHbjoGpjyEWB9VhYZ+8xfsc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bTiBMqwpRDhxuKd8GZF/wvaY9b0e5imk
-        ygWH2aWlWLHctwp4HuDPwVRVa8RKCPWUkSeHn5Nyx2mNiRwSfJNQvuLNUtAFz79O
-        oYbRt/FQGzcpJBFoPF5EVQH06oRz/Mvxi0Io36obS1/9w0cN/R9HyV93AW7gNYcC
-        QcFhwV5m0dE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B65BE6B17E;
-        Mon, 10 Jun 2019 17:27:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7E606B17C;
-        Mon, 10 Jun 2019 17:26:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] documentation: add tutorial for revision walking
-References: <20190607010708.46654-1-emilyshaffer@google.com>
-        <CAPig+cTZFL=GzM_-S2JMWWxRU7poJ87f3a9ZcFjjUe1T131eEQ@mail.gmail.com>
-Date:   Mon, 10 Jun 2019 14:26:56 -0700
-In-Reply-To: <CAPig+cTZFL=GzM_-S2JMWWxRU7poJ87f3a9ZcFjjUe1T131eEQ@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 7 Jun 2019 02:21:07 -0400")
-Message-ID: <xmqq36khm8rj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2390136AbfFJVeu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 17:34:50 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:37455 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389362AbfFJVeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 17:34:50 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45N5y01yk2z5tlC;
+        Mon, 10 Jun 2019 23:34:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B160D450;
+        Mon, 10 Jun 2019 23:34:47 +0200 (CEST)
+Subject: Re: [PATCH 2/3] mergetool: dissect strings with shell variable magic
+ instead of `expr`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <cover.1560152205.git.j6t@kdbg.org>
+ <2a33ca20af41d68a5bb4e2cf1e5ae32fddf2796c.1560152205.git.j6t@kdbg.org>
+ <xmqqblz5nyve.fsf@gitster-ct.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <0a350943-9264-1a40-6452-91a990ec790d@kdbg.org>
+Date:   Mon, 10 Jun 2019 23:34:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7AB030D0-8BC6-11E9-8D0B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <xmqqblz5nyve.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Am 10.06.19 um 19:17 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>> git-mergetool spawns an enormous amount of processes. For this reason,
+>> the test script, t7610, is exceptionally slow, in particular, on
+>> Windows. Most of the processes are invocations of git, but there are
+>> also some that can be replaced with shell builtins. Do so with `expr`.
+> 
+> I see these as improvements independent of whatever test may or may
+> not be slow ;-)  s/^.*/but there are/There are/.  Thanks for working
+> on it.
 
->> +/*
->> + * "git walken"
->> + *
->> + * Part of the "My First Revision Walk" tutorial.
->> + */
->> +
->> +#include <stdio.h>
->> +#include "builtin.h"
->
-> Git source files must always include cache.h or git-compat-util.h (or,
-> for builtins, builtin.h) as the very first header since those headers
-> take care of differences which might crop up as problems with system
-> headers on various platforms. System headers are included after Git
-> headers. So, stdio.h should be included after builtin.h. In this case,
+Noted.
 
-Actually the idea is that platform agnostic part of the codebase
-should not have to include _any_ system header themselves; instead,
-including git-compat-util.h should take care of the system header
-files *including* the funky ordering requirements some platforms may
-have.  So, we'd want to go stronger than "should be included after";
-it shouldn't have to be included or our git-compat-util.h is wrong.
+>> @@ -255,13 +254,16 @@ merge_file () {
+>>  		return 1
+>>  	fi
+>>  
+>> -	if BASE=$(expr "$MERGED" : '\(.*\)\.[^/]*$')
+>> -	then
+>> -		ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
+>> -	else
+>> +	# extract file extension from the last path component
+>> +	case "${MERGED##*/}" in
+>> +	*.*)
+>> +		ext=.${MERGED##*.}
+>> +		BASE=${MERGED%"$ext"}
+> 
+> This rewrite can potentially change the behaviour, when $ext has
+> glob metacharacters.  Wouldn't BASE=${MERGED%.*} be more faithful
+> conversion?
 
-I've started reading the patch myself, but it seems that you've
-already done a lot more thorough read-thru than I would have done,
-so thank you very much for that.
+Since "$ext" is quoted inside the braces of the parameter expansion, the
+pattern counts as quoted, so all glob characters in $ext lose their
+special meaning. At least that's how I read the spec.
 
+I do see the symmetry in your proposed version. Nevertheless, I have a
+slight preference for my version because it specifies exactly what is to
+be removed from the end of value.
+
+-- Hannes
