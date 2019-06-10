@@ -2,121 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B67491F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 17:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5125D1F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 17:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbfFJRJt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 13:09:49 -0400
-Received: from mout.gmx.net ([212.227.15.19]:34465 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727679AbfFJRJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:09:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560186580;
-        bh=Tk/NMtQRNWmy4AldLb4YpD6zngkjv7bWkEYbBgUKq+8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eXz1wyW4bfxOIywOEVzNP4AXwgKkl8Qt03wIEaoQDjTB23g5on8FPDdMg7m1Q/sZY
-         pD/0jaZOaJbbKq9Wn3lgK0obNR/+1AkNYb4LHFX9fUvK6PJkP06Bb7Ap/8ItzYogDe
-         l1ge6DddQwfyDE9WwieaiS5BFg9N1ZEPS0J/Jm6I=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.215.76.8] ([46.142.197.184]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXIov-1h4sQD1PL3-00WCfR; Mon, 10
- Jun 2019 19:09:40 +0200
-Date:   Mon, 10 Jun 2019 19:09:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
-To:     =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>, timcharper@gmail.com,
-        "avila.jn" <avila.jn@gmail.com>
-Subject: Re: Inclusion of translated git manpages into the packaging
- systems
-In-Reply-To: <1979608.xhrAu3A07H@cayenne>
-Message-ID: <nycvar.QRO.7.76.6.1906101906140.789@QRFXGBC-DHN364S.ybpnyqbznva>
-References: <1979608.xhrAu3A07H@cayenne>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728289AbfFJRRs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 13:17:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58660 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbfFJRRs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 13:17:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1AAE26993E;
+        Mon, 10 Jun 2019 13:17:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=160f+YzBlkO4PB3WfvILwOIScIY=; b=a7XxAK
+        A5qQOnBmiMj7mFI/VuSlTj6cZ095/ijPxuBuxTKgViiJFfa+KjZMClm87CbU4KGA
+        H8zo+BFPbQWeQzbef+wADjytnlwloM+tG96velz3EpzARet2a+bGBcgMvAA41IWx
+        u5sOF/r6uvHLZbLjhzHpUrJs6GXwpFWsCFOhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OY02ZZz/pGvKkHt5N+8vsAtxzrslYdFU
+        UQRxac78AxOI44riTHpqqqE9xDOHhiUVNmSryHCShgT1lA0wN84xbaGqsPgpI95/
+        1HN5xMg/J4Kgd8VxIGqKabDTIZFY6SUhs+fvveNUIRsa6Exx7ycf6VzWFVg50TOp
+        jrbS92zZjqQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 135E16993D;
+        Mon, 10 Jun 2019 13:17:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 390006993C;
+        Mon, 10 Jun 2019 13:17:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] mergetool: dissect strings with shell variable magic instead of `expr`
+References: <cover.1560152205.git.j6t@kdbg.org>
+        <2a33ca20af41d68a5bb4e2cf1e5ae32fddf2796c.1560152205.git.j6t@kdbg.org>
+Date:   Mon, 10 Jun 2019 10:17:41 -0700
+In-Reply-To: <2a33ca20af41d68a5bb4e2cf1e5ae32fddf2796c.1560152205.git.j6t@kdbg.org>
+        (Johannes Sixt's message of "Mon, 10 Jun 2019 10:58:59 +0200")
+Message-ID: <xmqqblz5nyve.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1115639801-1560186595=:789"
-X-Provags-ID: V03:K1:km6nlJV1krMcGvBlAbwQGe6PGkfcKrCBk9lrvRWuUSkZjt1uooB
- laIY8jj8VDP2vJ3XxlHf3rsw1dLn/2RRNOnq/pzlYbKqz+BvVOPiNpq4M/KGghSiF4Qq7sF
- O4Scz6/cUgow3l21CYgHcqVxZPwclerx7CslREdq7mPYjXHLpwQrUM+QQbqnl+w89nIJvpn
- HO/KBdSyHr0f9duECNBCQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OUJBDeVp054=:wZg3tAm5a0V1nc1/DAK42k
- bSsqim5lPdCEXYu8PlXtwcNnii6HWYmA/kK3un36PweJWsxb4Q9SNYJXr6Tjqw+BKwJz+NpPr
- olNnYt4ZxKS7FW028NTYt0MiuOoDJtv9AwC0RyFj3bznfVjmV8g+nyz0i2+jCtR3jpZKXxsqB
- ycTepiWk1fulymSzkIWMSmca6ur88rUbthXHCLhGTehFTWNeC1lCD1ttY+DArFnGAvGq3wCQQ
- 6waL1ONr/TymkrPmimJC5c9wziPPKEARCLC4owbi/KB4x4n6a8Pwjc9QK7hhCcSQ2rsBbd2aC
- 3nLDejXh6mZwBuHNQ9ibIYIede6IH/aFWNafgRh5oYuJnbec5fMNaBd/xWOoHNUFlXmd4qcSE
- YLzeMYooW7oqFRw5JwYNDnlrpVZb8jn8VzWumf5dfx9HHv8n6cJNu+LY3FL6AFWb42sfsXdBL
- gV/eUp8ZLMWDHQkzikhPXz5TzrQzgaa+2AYzUCBxDwdD2ZHRyaVr1cA/bxfWUy5DUcRCztxW2
- lzOwPmOQqz41Nbrg6+mCf9IPfxAsAECLXJwPL7TsRtMIKYZTimpjrjtvkGqIexcnpvm6vV6lq
- 0stWHIt2mH9VZtNj8MaYCstPWhs8+BwZa6/c4smn1Paf92OJWQW3amR2AS90hlgkQKhAdUlZa
- 3bJEE74BdeKArm07tvO3wsq+JUBFtalIJDm+Tkmt3q9LizRzrusnWeB5xlyKqkfE6xDUajVV8
- 6ZtWmAlRRMhkiKR0hWof4QTxgR7+oENUK2kwUmDZpsBLXppZ45vfCGfaAyKhTCGgWbd6Jsv9h
- Zrgl0xYj+oz3HUtFZfPvyCZ6UFYqOObICmaHIZAW0YvO9wzQmVPk+1rfK7oIIxCngcQrA8x8W
- iEbaC/ds7ilijDRAUaaTH7ImRVFsabbn5lW1Ncs51qFMgB0IsBIAdrCm7DcunS4DGj9I27PC5
- HcCRg3oNiuAUZqBhfjAm2Vj5arKiV9s/SGof1yRY5ayT+jyMtvi6u
+Content-Type: text/plain
+X-Pobox-Relay-ID: A862D5B4-8BA3-11E9-9F33-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Sixt <j6t@kdbg.org> writes:
 
---8323329-1115639801-1560186595=:789
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> git-mergetool spawns an enormous amount of processes. For this reason,
+> the test script, t7610, is exceptionally slow, in particular, on
+> Windows. Most of the processes are invocations of git, but there are
+> also some that can be replaced with shell builtins. Do so with `expr`.
 
-Hi Jean-No=C3=ABl,
+I see these as improvements independent of whatever test may or may
+not be slow ;-)  s/^.*/but there are/There are/.  Thanks for working
+on it.
 
-On Sun, 9 Jun 2019, Jean-No=C3=ABl AVILA wrote:
+>  checkout_staged_file () {
+> -	tmpfile=$(expr \
+> -		"$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" \
+> -		: '\([^	]*\)	')
 
-> I took on the task of creating a project for the translation of man-page=
-s at
-> https://github.com/jnavila/git-manpages-l10n
->
-> Up to now, the translations have started for 3 languages:
->
-> * German (2 pages)
-> * Brazilian Portuguese (6 pages)
-> * French (11pages)
+So this wants to grab leading non-HT substring that comes before an
+HT; we are trying to grab the name of the temorary picked by the
+checkout-index command, the output is ".merge_file_XXXXXX" followed
+by HT followed by the original filename "$2".
 
-Nice!!!
+> +	tmpfile="$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" &&
+> +	tmpfile=${tmpfile%%'	'*}
 
-> In order to provide feedback to translators, it's time to have these
-> pages included with the distributions of git. Right now the process of
-> compilation of the man-pages is still a bit off-tree, because it relies
-> on a recent version of po4a (v0.56) which has not yet reached most
-> distros.
+And this obviously is an equivalent, at least in the successful
+case.  The ".merge_file_XXXXXX" temporary filename never has HT in
+it, and we are stripping everything after the first HT.
 
-Maybe there is a way to skip the Makefile task when a too-old po4a is
-detected, with a warning?
+And this rewrite makes the error behaviour much better.  In the
+original, the exit code checked in the next "if test $? -eq 0" is
+that of "expr" (i.e. does the pattern match?); with this version, we
+are looking at the exit status of the checkout-index command.
 
-> I miss expertise in the process of packaging. Depending on the type of
-> distribution, the route to packaging might differ (for Mac OS and
-> Windows, maybe a direct inclusion, for Linux dists sister packages).
-> That's why I need your help to correctly perform this integration.
+Good.
 
-Historically, Git for Windows punts on translations, excluding any
-non-en-US documentation (to save on bandwidth for the installer, which did
-grow from <30MB to 44MB in the last four years alone).
+> @@ -255,13 +254,16 @@ merge_file () {
+>  		return 1
+>  	fi
+>  
+> -	if BASE=$(expr "$MERGED" : '\(.*\)\.[^/]*$')
+> -	then
+> -		ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
+> -	else
+> +	# extract file extension from the last path component
+> +	case "${MERGED##*/}" in
+> +	*.*)
+> +		ext=.${MERGED##*.}
+> +		BASE=${MERGED%"$ext"}
 
-There were a couple of motions to change that (maybe in the form of add-on
-packages/installers, maybe in the form of a "full" installer), but nothing
-came of it so far.
+This rewrite can potentially change the behaviour, when $ext has
+glob metacharacters.  Wouldn't BASE=${MERGED%.*} be more faithful
+conversion?
 
-Therefore, as far as Windows is concerned, I hate to admit that my answer
-is "don't worry for now, we only include US-English documentation
-anyway"... :-(
+> +		;;
+> +	*)
+>  		BASE=$MERGED
+>  		ext=
+> -	fi
+> +	esac
+> @@ -406,7 +408,7 @@ main () {
+>  		-t|--tool*)
+>  			case "$#,$1" in
+>  			*,*=*)
+> -				merge_tool=$(expr "z$1" : 'z-[^=]*=\(.*\)')
+> +				merge_tool=${1#*=}
 
-Ciao,
-Dscho
+OK, we strip leading substring before the first '=' out of "$1" and
+the case/esac ensures that there is such an equal '=' sign in "$1",
+so the rewrite is correct.
 
---8323329-1115639801-1560186595=:789--
+Looks good.  Thanks.
+
+
