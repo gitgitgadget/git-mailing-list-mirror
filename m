@@ -2,82 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEB351F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 20:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C07801F609
+	for <e@80x24.org>; Mon, 10 Jun 2019 20:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389307AbfFJUL1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 16:11:27 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:44708 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389099AbfFJUL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 16:11:27 -0400
-Received: by mail-wr1-f41.google.com with SMTP id b17so10460482wrq.11
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 13:11:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=user-agent:date:subject:from:to:message-id:thread-topic
-         :mime-version:content-transfer-encoding;
-        bh=9iiGAVkeZHS6UL+qThR9QzjZi1kHDhlnKmDbHEJ3808=;
-        b=thUkwpp9lxe7Cz5DHNxV962OHWbrwZ7cTbvYTEv4sayQunajdAFpUzuKnPTmKOMrE7
-         ndQG/R09aR8fRdyrxdngPBpClFG05U+SMv8eLwkXy3J2kNk5XvJJ5uIOoD9aBwkETX0r
-         S5SHAxx+3/wKBldPJq9XWEVizbHwGO9rjaMglCvNAT7pG2YOsw96B1s3GLbSkEZjhwcc
-         pLnZtRLkcRJRou/XJ/smlc+msgyUa2mTWQF6Jg3onrJS1IF5MeURKHJ0DJzJEo5MspK/
-         PD9gh1Rk91F0YgDS3ss+HP1/sADnl7zT/gUH0EH4sejptdl7w0DmYktKPJTUcWmaW4v9
-         fj/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:user-agent:date:subject:from:to:message-id
-         :thread-topic:mime-version:content-transfer-encoding;
-        bh=9iiGAVkeZHS6UL+qThR9QzjZi1kHDhlnKmDbHEJ3808=;
-        b=Z3RvFWPhRVESe8wfFX0VVSJxR0RFQvLyZ8nztVa7DR1wqcCNm2tSm0zWB/a/xdMqW3
-         gvumskb+jeNsJIX25AhVt2TAbS6xdRoRO0fKNcNDvBkIhcDDJRk6W5zHArQGntxOQuji
-         WKirlrtA3wc+nGcvXhW5I/amLPn7PZzl15l7vx/+TOTvxq1prkULLEzFusVphOYCw2uJ
-         8qKcmPR02TWAboNFHPWpxkdCXddDDbKO7+YC1dWHukRFHTKT+Zwh1bU7CXC8cdbMLKaF
-         HmHP4XT3g8RCzwwTQD/OpqpbSG+lUCPjBH2sEjqnD1qACa5HRT7WLrdp4fOLaEhQIIiG
-         8lSw==
-X-Gm-Message-State: APjAAAUm5gyxLrd9RBGhkbSNGwvwEhQGl/SiouQ4kQdnVNQ+kK1/b2Wd
-        srKeJIj1XMnxzelGoatuF53UmimmHas=
-X-Google-Smtp-Source: APXvYqz47WRM4LbSKjm/nxUBI2/iHurOuhSHPHgIG+XoR7/hm3GqVVnONwpK7OsbdpNKlWw2p6d/ww==
-X-Received: by 2002:adf:e40f:: with SMTP id g15mr2477455wrm.174.1560197485624;
-        Mon, 10 Jun 2019 13:11:25 -0700 (PDT)
-Received: from [192.168.1.100] (93-40-190-237.ip40.fastwebnet.it. [93.40.190.237])
-        by smtp.gmail.com with ESMTPSA id l8sm5239650wrg.40.2019.06.10.13.11.24
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 13:11:25 -0700 (PDT)
-User-Agent: Microsoft-MacOutlook/10.19.0.190512
-Date:   Mon, 10 Jun 2019 22:11:24 +0200
-Subject: Re-enabled a folder set as untracked
-From:   Samuel Rabini <samuel.rabini@gmail.com>
-To:     <git@vger.kernel.org>
-Message-ID: <4AB7124D-0704-4C6E-B3B1-C0C1BF5C89B0@gmail.com>
-Thread-Topic: Re-enabled a folder set as untracked
-Mime-version: 1.0
-Content-type: text/plain;
-        charset="UTF-8"
-Content-transfer-encoding: 7bit
+        id S2389519AbfFJUN6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 16:13:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57265 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389099AbfFJUN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 16:13:58 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B855163138;
+        Mon, 10 Jun 2019 16:13:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z0NgJPQb3WeeUdYLz85F71Ye9oI=; b=xSCW+C
+        CezYIlp6XtNl7cLaHBUrWTg1Gm0DuhLcXK9jyWTEBGJawJzmgFZOk46wEFylLFGf
+        sogEFWDnMGibBonrRU4E+FDF4Vi9Cvv5PPhh1vV8eiQJlccCW4gpQqOYGEqHhx+t
+        CncpyrvPqkaJWBTTb2ATrJtho6nkNjMeKf0oE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=voiWgAx1ryunB6CvTb0N1bd1DY3cSPLm
+        0b2B9BD3fmI72ySd9kmuQmBSLVC6tSfup9gOL7wYgCFQCsjox0ifWgwQhjOF/c9n
+        hgxwUrcZV2n1fULZTDJK8xCkt63PSpRW9UUbQCIKwP7nH+oRAriuOQZbeZcAJfyv
+        duMxLLnnzuQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 530EC163137;
+        Mon, 10 Jun 2019 16:13:56 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1D4B163134;
+        Mon, 10 Jun 2019 16:13:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
+        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
+        pclouds@gmail.com, emilyshaffer@google.com, matvore@comcast.net
+Subject: Re: [PATCH v2 6/9] list-objects-filter-options: make filter_spec a strbuf
+References: <20190601003603.90794-1-matvore@google.com>
+        <20190601003603.90794-7-matvore@google.com>
+Date:   Mon, 10 Jun 2019 13:13:54 -0700
+In-Reply-To: <20190601003603.90794-7-matvore@google.com> (Matthew DeVore's
+        message of "Fri, 31 May 2019 17:36:00 -0700")
+Message-ID: <xmqqimtdmc59.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 461641A2-8BBC-11E9-ADD1-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Matthew DeVore <matvore@google.com> writes:
 
-Using SourceTree I issue the Stop Tracking command (I think it executed the add untracked https://git-scm.com/docs/git-add#Documentation/git-add.txt-adduntracked). Is there anyway to revert this command and re-enable the folder? I was able to re-add to the index all files into the folder by the git add -f pathtofolder command, but new files are not asked to be committed and pushed.
+> -	filter_options->filter_spec = strdup(core_partial_clone_filter_default);
+> +	if (!filter_options->filter_spec.buf)
+> +		strbuf_init(&filter_options->filter_spec, 0);
 
-Thanks in advance,
+This part made me go "Huh?" a bit.
 
-Samuel Rabini
-Software Architect
-M: +39 339 81 24 118
-samuel.rabini@gmail.com | www.samuelrabini.com <http://www.samuelrabini.com/>
- 
- 
+Do we document that .buf==NULL means an uninitialized strbuf that is
+safe to run strbuf_init() on?  I do not mind that as a general
+convention, and it may even be a useful one (i.e. it allows you to
+calloc() a structure with an embedded strbuf in it and the "if
+.buf==NULL, call strbuf_init() lazily" can become an established
+pattern), but at the same time it feels a bit brittle.  
 
-
+Such a convention forces everybody who might want to use such an
+embedded strbuf to first check .buf==NULL and lazily initialize
+it---and at some point when the embedded strbuf to be used by enough
+codepaths, it would make the code more robust by giving up on the
+lazy initialization (iow, when *filter_options is initialized, run
+strbuf_init() on its .filter_spec field).
