@@ -7,77 +7,77 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C07801F609
-	for <e@80x24.org>; Mon, 10 Jun 2019 20:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA9A1F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 20:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389519AbfFJUN6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 16:13:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57265 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389099AbfFJUN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 16:13:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B855163138;
-        Mon, 10 Jun 2019 16:13:56 -0400 (EDT)
+        id S1728431AbfFJUZW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 16:25:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59607 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728276AbfFJUZV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 16:25:21 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C232E6ABF4;
+        Mon, 10 Jun 2019 16:25:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z0NgJPQb3WeeUdYLz85F71Ye9oI=; b=xSCW+C
-        CezYIlp6XtNl7cLaHBUrWTg1Gm0DuhLcXK9jyWTEBGJawJzmgFZOk46wEFylLFGf
-        sogEFWDnMGibBonrRU4E+FDF4Vi9Cvv5PPhh1vV8eiQJlccCW4gpQqOYGEqHhx+t
-        CncpyrvPqkaJWBTTb2ATrJtho6nkNjMeKf0oE=
+        :content-type; s=sasl; bh=1Zp260ZnOupn95Qc7t3XSyzeSM0=; b=R304vm
+        GrGJHiwyxkUGA6JecmjNbT7vSVXMipH39Yqlp/yfjr4w3/b4EhiXGF58kOXYQFnW
+        oEcJurKKw3Yz1hWfiyt40sqOKDkeUOIPK8JJeTE6G1UL2+LpLGoYIz1GkvzuV58l
+        9f2KOXcvzak+vJLxpL9oDEq1WDGa6wYpDEkzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=voiWgAx1ryunB6CvTb0N1bd1DY3cSPLm
-        0b2B9BD3fmI72ySd9kmuQmBSLVC6tSfup9gOL7wYgCFQCsjox0ifWgwQhjOF/c9n
-        hgxwUrcZV2n1fULZTDJK8xCkt63PSpRW9UUbQCIKwP7nH+oRAriuOQZbeZcAJfyv
-        duMxLLnnzuQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 530EC163137;
-        Mon, 10 Jun 2019 16:13:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=itqXetXwCt1g6w3TKSauRbMzPJQknlwW
+        B3tmcpWdm60hh82wh+TrUxJWhrZKyew9LD0hC0je/GG/aJShsJoohMBe+u/XnT/k
+        VpdpT4dY8ATPv3zan4+wf7qbl+rwbsnGhUC65uMpMItnzlSnBFUB0G4HLMTzbc7A
+        sAYwqR5rsvk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BAD266ABF3;
+        Mon, 10 Jun 2019 16:25:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1D4B163134;
-        Mon, 10 Jun 2019 16:13:55 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EF8946ABEF;
+        Mon, 10 Jun 2019 16:25:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
-        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
-        pclouds@gmail.com, emilyshaffer@google.com, matvore@comcast.net
-Subject: Re: [PATCH v2 6/9] list-objects-filter-options: make filter_spec a strbuf
-References: <20190601003603.90794-1-matvore@google.com>
-        <20190601003603.90794-7-matvore@google.com>
-Date:   Mon, 10 Jun 2019 13:13:54 -0700
-In-Reply-To: <20190601003603.90794-7-matvore@google.com> (Matthew DeVore's
-        message of "Fri, 31 May 2019 17:36:00 -0700")
-Message-ID: <xmqqimtdmc59.fsf@gitster-ct.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] documentation: add tutorial for revision walking
+References: <20190607010708.46654-1-emilyshaffer@google.com>
+Date:   Mon, 10 Jun 2019 13:25:14 -0700
+In-Reply-To: <20190607010708.46654-1-emilyshaffer@google.com> (Emily Shaffer's
+        message of "Thu, 6 Jun 2019 18:07:08 -0700")
+Message-ID: <xmqqef41mbmd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 461641A2-8BBC-11E9-ADD1-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: DC245BEC-8BBD-11E9-9C87-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> -	filter_options->filter_spec = strdup(core_partial_clone_filter_default);
-> +	if (!filter_options->filter_spec.buf)
-> +		strbuf_init(&filter_options->filter_spec, 0);
+> I'll also be mailing an RFC patchset In-Reply-To this message; the RFC
+> patchset should not be merged to Git, as I intend to host it in my own
+> mirror as an example. I hosted a similar example for the
+> MyFirstContribution tutorial; it's visible at
+> https://github.com/nasamuffin/git/tree/psuh. There might be a better
+> place to host these so I don't "own" them but I'm not sure what it is;
+> keeping them as a live branch somewhere struck me as an okay way to keep
+> them from getting stale.
 
-This part made me go "Huh?" a bit.
+Yes, writing the initial version is one thing, but keeping it alive
+is more work and more important.  As the underlying API changes over
+time, it will become necessary to update the sample implementation,
+but for a newbie who wants to learn by building "walken" on top of
+the then-current codebase and API, it would not be so helpful to
+show "these 7 patches were for older codebase, and the tip 2 are
+incremental updates to adjust to the newer API", so the maintenance
+of these sample patches may need different paradigm than the norm
+for our main codebase that values incremental polishing.
 
-Do we document that .buf==NULL means an uninitialized strbuf that is
-safe to run strbuf_init() on?  I do not mind that as a general
-convention, and it may even be a useful one (i.e. it allows you to
-calloc() a structure with an embedded strbuf in it and the "if
-.buf==NULL, call strbuf_init() lazily" can become an established
-pattern), but at the same time it feels a bit brittle.  
-
-Such a convention forces everybody who might want to use such an
-embedded strbuf to first check .buf==NULL and lazily initialize
-it---and at some point when the embedded strbuf to be used by enough
-codepaths, it would make the code more robust by giving up on the
-lazy initialization (iow, when *filter_options is initialized, run
-strbuf_init() on its .filter_spec field).
