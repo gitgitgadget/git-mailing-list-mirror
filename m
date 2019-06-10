@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4747C1F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 10:40:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A99F71F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 10:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389519AbfFJKkN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 06:40:13 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54491 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389476AbfFJKkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 06:40:13 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g135so7975867wme.4
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 03:40:11 -0700 (PDT)
+        id S2389549AbfFJKkU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 06:40:20 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46231 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389476AbfFJKkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 06:40:20 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so8585384wrw.13
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 03:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oIbBLAzp9MJczqoqhwyleTKeptlMWmmkHS2aWMeElTs=;
-        b=IbpEECxsoVyG1KB44gREgDZp5WoIwg4Y6xoOBzyJuJjLVCNEsY1A2Y6tWkRsxgahjn
-         kYSYz5LoyBNlp3AQCXnO93pkkRr0Knyz0kgdm1RNz06c9tgj98WaNr7Nchda4VaLP5BM
-         KNhkRRGCgViOguZ1ujaFdZMMCNy2bpWDsYxdBuoFgTF+P2TthsyB9O9x1SHG839pO1gI
-         PYRY7ugurSXkAsUqiy/EHoZXbWeR7M+EasJ9N38aNyZrEBZe0Z13BWjHyGPCapuYcNkr
-         r8Z7lWOIaaP4tgah3WehZABHN9vAYJZFp/NLoDB0BL1UiFw4B8zNCrfOdaQNm+CQ/P3b
-         z5Rg==
+        bh=mUtzsLC9xlEY6SY4UHvzVhelZZDxKZTPxxbaALtdfaM=;
+        b=rW+c3mh2upXNgcJP3dqffFqK+s3ztyPQCzAm57g1MX+KKW0zi5ez6+UPZOil34fDzq
+         Cvdt9LM6X4vylQV9LI0L3roin5fV3GWiOA2xayLwg71qa2UhZZ2wrjmbW4+QzALX76g4
+         EHeZdLrkScVzmnozBzcE+u9aSJ4SStxTvx50tJ6ZKFx31DF0iuz0DHmkXKuAKEsWnqFX
+         8TiJkjgnBaBqiTHI+GwXRLdWSHYp0CYrasL7P0f4ARzS/cIuFL2qnLhTaPbFExu0qYtj
+         MvjyS+sepJFuIGBPWD9XLlmRsQwSqO7QX8q/PU5+9WoIQOcTRnRv3oJJq7k4iLtdPPqR
+         AJGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=oIbBLAzp9MJczqoqhwyleTKeptlMWmmkHS2aWMeElTs=;
-        b=OcSxCuP4/pcZiTfp6lFiNH2F+eXwH7oo0E8qMq6koCq+5QYktWS7AwhbC5/i+f8jB4
-         OKY47dbKrZVlUqHHmAO8FqV2H9DYD98wjovYtnvj6PLuH0XzL+OJ5V03EQw1yp0dtzPJ
-         EpqVkhg/Aum4TBpH22+u+jGagXo6xzlhTgThVy9x1jUTcjV7Jj+cHl4NhgIbVg2vsLXY
-         kkzBN7dF1WbHPni61x4NFIdyl0ojHs0vDd1eGY3f/ZyUvz+iwnVdmcIEkpbTASIbG/am
-         tJYcHnp94rQXOjiDVBJQKnaOe/5lUhVsqm/Kgt3KgMtkq6ItfNGeAw8B3wfpYUDM8PDD
-         sAUA==
-X-Gm-Message-State: APjAAAVoN+zn1gnw2NLORjrHRnZ3gWLH4NksuIOuYEIf+Cj/nzI+VXKr
-        CVvyq+TSF+G1f1zgkpjQItc=
-X-Google-Smtp-Source: APXvYqzuAVnAVBDVEvcgwSBEXToxCdSiEsnqjYGBlrw9DTWRHuZjrMDXL8mPDEFyHdTTnpsmI1FpCw==
-X-Received: by 2002:a1c:c145:: with SMTP id r66mr3308426wmf.139.1560163210523;
-        Mon, 10 Jun 2019 03:40:10 -0700 (PDT)
+        bh=mUtzsLC9xlEY6SY4UHvzVhelZZDxKZTPxxbaALtdfaM=;
+        b=e97bexpOmVnu7Zs8LulzyrTHYXAjp/vZ2n1yHoJhEZKi5MKCfr5gDlu7rv8HVQRPvJ
+         rW05OwzRK2CKiZoRrZYbF6iT5RI0QeOfr2PYUz/6KmvfCin9bB0PatvucfqQwdpUHXmC
+         eI/+TV+Qp7MmOHOHMKj2ooaFrMpJkr/bltE/fgwzhkrBlmBdEOoIPD1/nQSHhPTL5aD3
+         ZNd6luw5JuEjhpdDDOuY8WnXAdXi0gFNOg+1OrxHEQy75YTO7j74ehlKVk8oQ/XMcFs9
+         Cz9CVXrJ21LzJM3D1k7Ar+E2Ss3e0tivTn5MAw7JY0sbe/lgKRZYlIziIpbE+Ni5Ciwq
+         nSjA==
+X-Gm-Message-State: APjAAAXV+br3FGqF4hryg/xmdy/OaFF9rZxJnfXLhplMFXqeGBSq54+b
+        wotVQ1ylnX0nR3v6PhDAz1UKzwPN
+X-Google-Smtp-Source: APXvYqzv1x7D+xDILxbmkNLakwDno/XCOJdAP3USC9IRBFBBeZnYZdPgApZ5T4GQUuAQYS27hRyYLQ==
+X-Received: by 2002:adf:f18d:: with SMTP id h13mr13382328wro.120.1560163219061;
+        Mon, 10 Jun 2019 03:40:19 -0700 (PDT)
 Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id l1sm10170837wmg.13.2019.06.10.03.40.09
+        by smtp.googlemail.com with ESMTPSA id d10sm15402857wrh.91.2019.06.10.03.40.18
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 03:40:10 -0700 (PDT)
-Subject: Re: [GSoC][PATCH 2/3] cherry-pick/revert: add --skip option
+        Mon, 10 Jun 2019 03:40:18 -0700 (PDT)
+Subject: Re: [GSoC][PATCH 3/3] cherry-pick/revert: update hints
 To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com
-References: <0659a53e-0712-eb50-f15f-1c6a56fd3213@gmail.com>
- <20190610055719.19572-1-rohit.ashiwal265@gmail.com>
+References: <61a8bfde-018c-5a69-5abd-89d4a332e39e@gmail.com>
+ <20190610052823.17013-1-rohit.ashiwal265@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <2488ef91-b9e5-1836-aeea-2aaf11c3c383@gmail.com>
-Date:   Mon, 10 Jun 2019 11:40:21 +0100
+Message-ID: <72b44513-1182-8172-94aa-ca69730d9a22@gmail.com>
+Date:   Mon, 10 Jun 2019 11:40:30 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20190610055719.19572-1-rohit.ashiwal265@gmail.com>
+In-Reply-To: <20190610052823.17013-1-rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -73,131 +73,65 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Rohit
 
-On 10/06/2019 06:57, Rohit Ashiwal wrote:
+On 10/06/2019 06:28, Rohit Ashiwal wrote:
 > Hey Phillip
 > 
-> On Sun, 9 Jun 2019 19:01:35 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
+> On Sun, 9 Jun 2019 19:03:02 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>
 >> Hi Rohit
 >>
->> --skip is definitely a useful addition to cherry-pick/revert
->>
 >> On 08/06/2019 20:19, Rohit Ashiwal wrote:
->>>
 >>> [...]
->>> @@ -2784,6 +2784,29 @@ int sequencer_rollback(struct repository *r, struct replay_opts *opts)
->>>  	return -1;
->>>  }
->>>  
->>> +int sequencer_skip(struct repository *r, struct replay_opts *opts)
->>> +{
->>> +	switch (opts->action) {
->>> +	case REPLAY_REVERT:
->>> +		if (!file_exists(git_path_revert_head(r)))
->>> +			return error(_("no revert in progress"));
+>>> @@ -2654,8 +2654,8 @@ static int create_seq_dir(void)
+>>>  {
+>>>  	if (file_exists(git_path_seq_dir())) {
+>>>  		error(_("a cherry-pick or revert is already in progress"));
+>>> -		advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
+>>> -		advise(_("or  \"git revert (--continue | --quit | --abort)\""));
+>>> +		advise(_("try \"git cherry-pick (--continue | --skip | --quit | --abort)\""));
+>>> +		advise(_("or  \"git revert (--continue | --skip | --quit | --abort)\""));
 >>
->> This error message is slightly misleading. If the user has already
->> committed a conflict resolution then REVERT_HEAD/CHERRY_PICK_HEAD will
->> not exist but it is possible that a cherry-pick/revert is in progress if
->> the user was picking a sequence of commits. It would be nice to give a
->> different error message or maybe just a warning in that case.
->> sequencer_get_last_command() should help with that.
+>> If the user has already committed the conflict resolution then we don't
+>> want to recommend --skip as there is nothing to skip.
+> I think it is more about suggesting what are all the possibilities
+> you can try and not about intelligently suggesting what you should
+> do.
 
-It's actually a bit more complicated as if the cherry-pick failed
-because it would have overwriten untracked files then CHERRY_PICK_HEAD
-will not exist but we want to be able to skip that pick. So it should
-not error out in that case either. (I think you may be able to use the
-abort safety file (see rollback_is_safe()) to distinguish the 'failed to
-pick case' from the 'user committed a conflict resolution' case.)
+Previously all the suggested options were viable, --skip is not
+applicable if the user has committed a conflict resolution. The idea of
+the advice is to help the user, suggesting options that wont work is not
+going to help them.
 
-> Yes, .git/{REVERT|CHERRY_PICK}_HEAD will not exist in this case, but
-> in case of cherry-picking/reverting:
-> 
-> 1. multiple commits:
->     sequencer dir will exist which will throw out the error listed
->     under `create_seq_dir`
+> ofc, we can not use `revert --<option>` while cherry-picking.(
 
-I don't understand. Wont it will error out here? Why would we call
-create_seq_dir() for --skip?
+As I suggested in patch 1 we should tailor the error message to the command.
 
-> 2. single commit:
->     Then ACTION is already over and there is nothing to do and the
->     error is correct.
-> 
->>> +		break;
->>> +	case REPLAY_PICK:
->>> +		if (!file_exists(git_path_cherry_pick_head(r)))
->>> +			return error(_("no cherry-pick in progress"));
->>> +		break;
->>> +	default:
->>> +		BUG("the control must not reach here.");
->>> +	}
->>> +
->>> +	if (rollback_single_pick(r))
->>> +		return error(_("failed to skip the commit"));
->>
->> If rollback_single_pick() sees that HEAD is the null oid then it gives
->> the error "cannot abort from a branch yet to be born". We're not
->> aborting and if we're picking a sequence of commits the skip ought
->> succeed, but it won't at the moment. If we're picking a single commit
->> then the skip should probably fail like abort but with an appropriate
->> message. Admittedly that's all a bit of a corner case.
-> 
-> Yes, you are right here. We could actually modify the advice there
-> to be more like _("cannot perform the specified action, the branch
-> is yet to be born") and I think it should suffice this. What do you
-> think?
+> we should not be able to do so in ideal conditions, but the world
+> does not work as we think it should). Still we are suggesting so
+> here.
 
-I think it should allow the user to skip if there are more commits to
-pick . Just changing the error message does not fix that.
+Yes because you have the power to easily make that change. It is normal
+to try and improve the code base when we make related changes.
 
-> 
->>> [...]
->>> +test_expect_success 'skip a commit and check if rest of sequence is correct' '
->>> +	pristine_detach initial &&
->>> +	echo e >expect &&
->>> +	cat >expect.log <<-EOF &&
->>> +	OBJID
->>> +	:100644 100644 OBJID OBJID M	foo
->>> +	OBJID
->>> +	:100644 100644 OBJID OBJID M	foo
->>> +	OBJID
->>> +	:100644 100644 OBJID OBJID M	unrelated
->>> +	OBJID
->>> +	:000000 100644 OBJID OBJID A	foo
->>> +	:000000 100644 OBJID OBJID A	unrelated
->>> +	EOF
->>> +	test_must_fail git cherry-pick base..yetanotherpick &&
->>> +	test_must_fail git cherry-pick --skip &&
->>
->> It would be good to check that the cherry-pick has progressed since
->> --skip and didn't just fail without trying to pick another commit.
-> 
-> The overall test tests that only, if cherry-pick --skip "failed" then
-> we won't get 'e' inside of `foo` and `test_cmp expect foo` will also
-> fail and if it skipped wrongly then expect.log will not match the
-> actual.log and `test_cmp` will fail. Am I missing something here?
-> Please tell if so.
+> Also, I think it is more reasonable to make "this" a part of patch
+> which will cover "tailored" advice messages which is also a topic
+> of discussion as I described here[1].
 
-You're right that the tests at the end would probably pick up a failure,
-but I'm concerned that there could be some obscure corner case we've not
-thought of so checking HEAD and the file contents here would be an
-additional safety measure. It also makes it easier for someone tracking
-down a test failure to see what happened. If they rely only on the test
-at the end they need to spend time to understand where the mismatched
-contents came from.
+That might make sense, but it is a pretty self contained change as part
+of this patch.
 
 Best Wishes
 
 Phillip
 
-
->  
+> 
 >> Best Wishes
 >>
 >> Phillip
 > 
 > Thanks
 > Rohit
+> 
+> [1]: https://public-inbox.org/git/20190609200038.GD28007@hank.intra.tgummerer.com/T/#mbb071f6e29c69f291ecd9c61c71b889774ff33b2
 > 
 
