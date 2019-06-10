@@ -2,144 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5528D1F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 18:57:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BCA91F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 19:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388542AbfFJS5M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 14:57:12 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40618 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387674AbfFJS5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 14:57:12 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p11so10273971wre.7
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 11:57:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=X03Gu0dr6Izol/xZO0OgnsMo/Ky5z2AJ4YaZTkHCLhY=;
-        b=LumDGbSOpaN9uErgsJ+pa/tFVEAPJlvcJzJGXj6a1W/mYRj5NdTz33lYZ25IuTbI2M
-         2Bdp9FHsy6vwYsUt0ANJLFw0F5KjqFNbAYYO2EJ1xvrk4kazXsuZY+0sOjniLSDw7daj
-         w9LCc+db/9dwJIHxpxFzXCJNEz0HoXMfZLhVftsVY6XOpOF4se1WRV1nuVOdrr16DNcQ
-         lV/Ky6Zyl9WtOM2R7gNaj2VrCJChpersBoe4oi98EaqzqXwzAfwHptFv4gUkmWmOQ+Oe
-         R2/0Mg1yKfCO2TOv70FhZYyf8i+Q6trz/NaAwDDZbsSK5NUZw4LDCf8dnNgSGlBOG8iu
-         T8bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=X03Gu0dr6Izol/xZO0OgnsMo/Ky5z2AJ4YaZTkHCLhY=;
-        b=aVMGf/8uyNb9vXoUcfWbwJffiMqteq59I5nc+57UdKDiAQEtVte3aIH6PGIOsSeaJJ
-         4xZ+wzsSzcQyS07fQd1qUbliUV06MW5lvZkVYWIlyuw9sX2lzh+6fpxJQrotbEchGWRa
-         ly2GpIui8xbFUHO4zldWyyueKVZsDnPf6R+OZZQOf5LnYLgydWmVGx0CXOKOgCQJ8A58
-         PgSSM25OozfS/fN/cSSSC6f3t9FwY38klr7VJOO8Ka7zr2GFXE2HXlrAuTPqsVTGDroN
-         gPEo3HHayS02+oSWbOVzuKSWXlIxKDmvHQo8EeNp8u9lZqmOIMYscdMb3a4ObTG6/XFW
-         Wtkg==
-X-Gm-Message-State: APjAAAVqfe+rS6XgaN9hqJvP3o3TW5DXT43TZ+/JSoCQdRU9hZ4tFf1F
-        mxNkWb958fZnImPAgNCdPMQ=
-X-Google-Smtp-Source: APXvYqzCC8iRF+0AmDDMlBx0nx/NtUYic1UsqvQ4d1izGM/QJWPzy9nlSeuOaBPzYrHOuOkMnZG9DA==
-X-Received: by 2002:a5d:6ccc:: with SMTP id c12mr22278933wrc.57.1560193031065;
-        Mon, 10 Jun 2019 11:57:11 -0700 (PDT)
-Received: from szeder.dev (x4d0c1d42.dyn.telefonica.de. [77.12.29.66])
-        by smtp.gmail.com with ESMTPSA id l190sm268913wml.16.2019.06.10.11.57.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 11:57:10 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 20:57:08 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S2388696AbfFJTCY convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 10 Jun 2019 15:02:24 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:45504 "EHLO smtp2-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387674AbfFJTCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 15:02:24 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id B11F02003F6;
+        Mon, 10 Jun 2019 21:02:17 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by
- `yes` in subshells
-Message-ID: <20190610185708.GC4012@szeder.dev>
-References: <cover.1560152205.git.j6t@kdbg.org>
- <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
- <20190610095942.GA19035@szeder.dev>
- <nycvar.QRO.7.76.6.1906102026030.789@QRFXGBC-DHN364S.ybpnyqbznva>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, timcharper@gmail.com
+Subject: Re: Inclusion of translated git manpages into the packaging systems
+Date:   Mon, 10 Jun 2019 21:02:17 +0200
+Message-ID: <1835964.yutTd2aTbA@cayenne>
+In-Reply-To: <nycvar.QRO.7.76.6.1906101906140.789@QRFXGBC-DHN364S.ybpnyqbznva>
+References: <1979608.xhrAu3A07H@cayenne> <nycvar.QRO.7.76.6.1906101906140.789@QRFXGBC-DHN364S.ybpnyqbznva>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1906102026030.789@QRFXGBC-DHN364S.ybpnyqbznva>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 08:29:56PM +0200, Johannes Schindelin wrote:
-> Hi,
+On Monday, 10 June 2019 19:09:54 CEST Johannes Schindelin wrote:
+> Hi Jean-Noël,
 > 
-> On Mon, 10 Jun 2019, SZEDER GÃ¡bor wrote:
+> On Sun, 9 Jun 2019, Jean-Noël AVILA wrote:
 > 
-> > > diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-> > > index 5b61c10a9c..b67440882b 100755
-> > > --- a/t/t7610-mergetool.sh
-> > > +++ b/t/t7610-mergetool.sh
-> > > @@ -131,13 +131,13 @@ test_expect_success 'custom mergetool' '
-> > >  	git checkout -b test$test_count branch1 &&
-> > >  	git submodule update -N &&
-> > >  	test_must_fail git merge master &&
-> > > -	( yes "" | git mergetool both ) &&
-> > > -	( yes "" | git mergetool file1 file1 ) &&
-> > > -	( yes "" | git mergetool file2 "spaced name" ) &&
-> > > -	( yes "" | git mergetool subdir/file3 ) &&
-> > > -	( yes "d" | git mergetool file11 ) &&
-> > > -	( yes "d" | git mergetool file12 ) &&
-> > > -	( yes "l" | git mergetool submod ) &&
-> > > +	yes "" | git mergetool both &&
-> > > +	yes "" | git mergetool file1 file1 &&
-> > > +	yes "" | git mergetool file2 "spaced name" &&
-> > > +	yes "" | git mergetool subdir/file3 &&
-> > > +	yes "d" | git mergetool file11 &&
-> > > +	yes "d" | git mergetool file12 &&
-> > > +	yes "l" | git mergetool submod &&
-> > >  	test "$(cat file1)" = "master updated" &&
-> > >  	test "$(cat file2)" = "master new" &&
-> > >  	test "$(cat subdir/file3)" = "master new sub" &&
+> > I took on the task of creating a project for the translation of man-pages 
+at
+> > https://github.com/jnavila/git-manpages-l10n
 > >
-> > Another possibility for eliminating a few more subshells might be to
-> > turn these
+> > Up to now, the translations have started for 3 languages:
 > >
-> >   test "$(cat file1)" = "that"'
-> >
-> > checks into
-> >
-> >   echo that >expect &&
-> >   test_cmp expect file1
-> >
-> > because 'test_cmp' on Windows first compares the two files in shell
-> > and runs 'diff' only when there is a difference to report.
+> > * German (2 pages)
+> > * Brazilian Portuguese (6 pages)
+> > * French (11pages)
 > 
-> When you remember that spawning processes is much more expensive on
-> Windows, still, than I/O, you will realize that this adds even more
-> expense. Instead of a spawn & read, you are suggesting essentially a
-> write, spawn, read & read, and that is only the best case.
-
-No, instead of a spawn (the subshell of the command substitution), spawn
-('cat'), read, I suggest a write, read, read (no subshell or external
-process in 'mingw_test_cmp's main code path).
-
-> In the worst case, it would be a write, spawn, read & read, spawn, read &
-> read.
-
-It would be a write, read, read, only one spawn (diff), read read, but
-I assume that the tests succeed, so I ignore this worst case.
-
-
-> (Even if the first spawn is an MSYS2 spawn on Windows, which is more
-> expensive than the MINGW spawn for the `git diff`, if that is a `git diff`
-> rather than `diff`, didn't check...)
+> Nice!!!
 > 
-> So I am rather negative about this suggestion ;-)
+> > In order to provide feedback to translators, it's time to have these
+> > pages included with the distributions of git. Right now the process of
+> > compilation of the man-pages is still a bit off-tree, because it relies
+> > on a recent version of po4a (v0.56) which has not yet reached most
+> > distros.
+> 
+> Maybe there is a way to skip the Makefile task when a too-old po4a is
+> detected, with a warning?
+
+The project is provided with a script that downloads the correct version of 
+po4a from the root repo (this is needed for ci).
+
+I can provide an archive comprising the precompiled manpages so that packagers 
+don't need to mess up with po4a.
+
+> 
+> > I miss expertise in the process of packaging. Depending on the type of
+> > distribution, the route to packaging might differ (for Mac OS and
+> > Windows, maybe a direct inclusion, for Linux dists sister packages).
+> > That's why I need your help to correctly perform this integration.
+> 
+> Historically, Git for Windows punts on translations, excluding any
+> non-en-US documentation (to save on bandwidth for the installer, which did
+> grow from <30MB to 44MB in the last four years alone).
+
+It might not be the correct argument for now, but a tgz of the manpages 
+presently weights 230kB.
+
+> 
+> There were a couple of motions to change that (maybe in the form of add-on
+> packages/installers, maybe in the form of a "full" installer), but nothing
+> came of it so far.
+
+If there's any chance to get this move alive, who should I refer to? 
+Otherwise, where can an additional package be built?
+
+> 
+> Therefore, as far as Windows is concerned, I hate to admit that my answer
+> is "don't worry for now, we only include US-English documentation
+> anyway"... :-(
 > 
 > Ciao,
 > Dscho
+
+
+
 
