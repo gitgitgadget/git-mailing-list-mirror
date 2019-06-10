@@ -2,127 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57A381F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 09:59:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 040291F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 10:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388749AbfFJJ7u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 05:59:50 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43729 "EHLO
+        id S2389475AbfFJKjt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 06:39:49 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43154 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388056AbfFJJ7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 05:59:49 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r18so8490833wrm.10
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 02:59:48 -0700 (PDT)
+        with ESMTP id S2388708AbfFJKjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 06:39:48 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r18so8621345wrm.10
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 03:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TBjgWgQSSVeKyVufpyt0YhUvJZYDeBJJ65UAuBUGXQ0=;
-        b=SRTBzofArS+Lrp+4W9Vec7l3moBp8BPONao6SkCkgyP66KvzzBBgJ16d3FaG/rEdkU
-         e6GurFHT9hStWt8acg/d9dI4ro6fvgsoZlOYTDEzinipfOeWRGMWvLa2HxSyW8ugAKQU
-         CaLTwHWt4w4TljaNLT8I82f/HG+VkzHiYiB5+LfIkYqHEVSc5hR2ta+BUxlW5eI1QA5v
-         vpepjxGqTlNkZ4B7sr2AbAFjfhsN8zVMczX1j1tqgGBaz8Qw5rKrJFj9z+9RUi8G4THS
-         qrO0szbkInrKdc5TK5U02pGF4kem6YwDUf/qwrINZZ5P1PG+GqEgb3wGxMCbQqzkLrU0
-         tvqA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OPyYd3sC7ahbZxn/iei/mC2dxwSPiSEzDZlu0dLW61g=;
+        b=gVXqv4OKXNrM3fSbnJQmriZh4YpJr9J4kNsk5FJPoMZ1DDsxwloO8HuRvXO1KiKHzl
+         G2yQSus1R7A2OXlztwTSXo9zcFbqZFOReBIQB2/oJ8SIXOEzcE4yNYfjs+ImL0rs/B2C
+         2f2HNFQeqBrq4pdV+mKr3/t3pD7tFKAKx+CYe+Z5b9vero7sV478OcHmWhnKi+qVyG31
+         TcX5G/wGPgmMocpbc4VtRducjSqi9yw8KCzYZ+nOQGjNL00cJ4RyuVsbSw96GzgtFlNG
+         4krCHTVoCc3uJpPzEh5qWBv1O8RCAP0qkJaWjcdAV93qXTcbMJjR60V8RuLil+U0WNJp
+         6wiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TBjgWgQSSVeKyVufpyt0YhUvJZYDeBJJ65UAuBUGXQ0=;
-        b=YV0zj8gNBzPSgvYf7vOI2rbV7FgyDFcJHbwesMPuHVwCrgOTMh14M/oLyewlpn8pJA
-         qO0lxHm8vgj04dLIr8fj5V3Y9VRd2s/qnV3VWbnIt6a4Bag7xVIyF0TTaF36hrLESB4U
-         3e55RbQZNDlengLOL0lurDzKaYIDAqL7ywNhnmf+W4vJDS/id+YXv+9lToSxq29mEKAI
-         vyMdDbqsWSL+iUs0tz/mpJ2O9Du0B2k7KVNyvR3ZxwBPnseZ6+n6p4OPtFN2Td1HOoMW
-         PFuyI1Krb5wOguhOqGUk2Y2SOSBPyaM+E6Pc8SSekS26/ysEK67jE5U0H3p6o/GPOypd
-         bBEQ==
-X-Gm-Message-State: APjAAAWTa/qOQzFd3JYsXv4ZLze9zHmHgyT459KAQxh3T846GTRemdU6
-        RtfNA4hM2C8JB1WrhfU3bGgkt1Eb
-X-Google-Smtp-Source: APXvYqyarPTEvlq0JQZyVR7jo6IiVtN1AjU0C3KT+HdFnBMKXuEWy3eavGmISqsknVP/oclossGxxA==
-X-Received: by 2002:a5d:4941:: with SMTP id r1mr35570168wrs.225.1560160788271;
-        Mon, 10 Jun 2019 02:59:48 -0700 (PDT)
-Received: from szeder.dev (x4d0c1d42.dyn.telefonica.de. [77.12.29.66])
-        by smtp.gmail.com with ESMTPSA id j7sm13786020wru.54.2019.06.10.02.59.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 02:59:47 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 11:59:42 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by
- `yes` in subshells
-Message-ID: <20190610095942.GA19035@szeder.dev>
-References: <cover.1560152205.git.j6t@kdbg.org>
- <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OPyYd3sC7ahbZxn/iei/mC2dxwSPiSEzDZlu0dLW61g=;
+        b=aEe3QU9/QySXN33XQV724dK2VI+xglcdLZghx+VKKUeoh0RliDibWB0JgxHLmtkHMp
+         kBywLOquY2lJ7ty1/TPjlcFq0wSZBR1fk5TuVe/+gCqya8GiZ6BG2WjjcRWGvMqiaMmD
+         maYlimoZ2J7AHLfo9fTcVQybLsBEaFTUJX/v9zRcHMXLKV+U1wmSWjVVfNCfmVNnwSYX
+         CphCEPSOIY02iKqqMI3Q26O19ki0lQz+iba3fFIAonR+QEb7ydDpYF2/aBwhwR1z2Dw8
+         kKaPD9JevTb/pGf/3eYTg1X7onalFKutY/CzYJOHDXNuUq7jk+xzhqUWGgY9FQSo8lWV
+         jz3Q==
+X-Gm-Message-State: APjAAAWyFrKKMd0jlfkVOyPDMxGQLEKLmXYpP174Bdx2tRDbYBBH/vnV
+        l8Xn7ACpe/uRL1dvEYAoVjQ=
+X-Google-Smtp-Source: APXvYqypDtSvZE7aScEwDExkwEnxywzq2hwIJF+b+WVYPEXKfXVNT9v5heSxpXceL7hz0LXVXZN2fw==
+X-Received: by 2002:adf:f709:: with SMTP id r9mr12431976wrp.281.1560163186942;
+        Mon, 10 Jun 2019 03:39:46 -0700 (PDT)
+Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.googlemail.com with ESMTPSA id u11sm7619282wrn.1.2019.06.10.03.39.46
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jun 2019 03:39:46 -0700 (PDT)
+Subject: Re: [GSoC][PATCH 1/3] sequencer: add advice for revert
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com
+References: <2007ef79-1791-4f77-f9e4-34c59b4f0c36@gmail.com>
+ <20190610051313.16222-1-rohit.ashiwal265@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <d59c078c-61da-1c3a-d215-80c9e3d08896@gmail.com>
+Date:   Mon, 10 Jun 2019 11:39:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
+In-Reply-To: <20190610051313.16222-1-rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 10:58:58AM +0200, Johannes Sixt wrote:
-> Subshells for pipelines are not required. This can save a number of
-> processes (if the shell does not optimize it away anyway).
+Hi Rohit
+
+On 10/06/2019 06:13, Rohit Ashiwal wrote:
+> Hi Philip
 > 
-> The patch was generated with the command
+> On 2019-06-09 17:52 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi Rohit
+>>
+>> Congratulations on your first GSoC patch series!
 > 
->    sed -i 's/( *\(yes.*[^ ]\) *) *\&\&/\1 \&\&/' t7610-mergetool.sh
+> Thank you very much :)
 > 
-> with a manual fixup of the case having no && at the end.
-
-I think it would be great to include the corresponding numbers from
-the cover letter in each of the commit messages.
-
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t7610-mergetool.sh | 170 +++++++++++++++++++++----------------------
->  1 file changed, 85 insertions(+), 85 deletions(-)
+>> On 08/06/2019 20:19, Rohit Ashiwal wrote:
+>>> [...]
+>>> @@ -2655,6 +2655,7 @@ static int create_seq_dir(void)
+>>>  	if (file_exists(git_path_seq_dir())) {
+>>>  		error(_("a cherry-pick or revert is already in progress"));
+>>>  		advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
+>>> +		advise(_("or  \"git revert (--continue | --quit | --abort)\""));
+>>
+>> I agree that it's a good idea to add advice for revert as well, but it
+>> would be better to call sequencer_get_last_command() to find out if
+>> we're running cherry-pick or revert and tailor the advice appropriately.
 > 
-> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-> index 5b61c10a9c..b67440882b 100755
-> --- a/t/t7610-mergetool.sh
-> +++ b/t/t7610-mergetool.sh
-> @@ -131,13 +131,13 @@ test_expect_success 'custom mergetool' '
->  	git checkout -b test$test_count branch1 &&
->  	git submodule update -N &&
->  	test_must_fail git merge master &&
-> -	( yes "" | git mergetool both ) &&
-> -	( yes "" | git mergetool file1 file1 ) &&
-> -	( yes "" | git mergetool file2 "spaced name" ) &&
-> -	( yes "" | git mergetool subdir/file3 ) &&
-> -	( yes "d" | git mergetool file11 ) &&
-> -	( yes "d" | git mergetool file12 ) &&
-> -	( yes "l" | git mergetool submod ) &&
-> +	yes "" | git mergetool both &&
-> +	yes "" | git mergetool file1 file1 &&
-> +	yes "" | git mergetool file2 "spaced name" &&
-> +	yes "" | git mergetool subdir/file3 &&
-> +	yes "d" | git mergetool file11 &&
-> +	yes "d" | git mergetool file12 &&
-> +	yes "l" | git mergetool submod &&
->  	test "$(cat file1)" = "master updated" &&
->  	test "$(cat file2)" = "master new" &&
->  	test "$(cat subdir/file3)" = "master new sub" &&
+> Firstly, signature of `create_seq_dir` doesn't allow us to call
+> `sequencer_get_last_command()`. Changing that for the sake of a
+> better error message is too much task for this patch as it is a
+> subject of discussion on its own.
 
-Another possibility for eliminating a few more subshells might be to
-turn these
+There is only one caller and it already has a struct repository pointer
+so it is a two line change, one of which is the insertion of a single
+character to change create_seq_dir() so it can call
+sequencer_get_last_command(). It is normal to change function signatures
+(especially for static functions like this) when making changes, it is
+part of improving the code base. The quality of error messages is
+important to the overall user experience. It's when things go wrong that
+users need accurate advice about what to do.
 
-  test "$(cat file1)" = "that"'
+> (Also changing signature only
+> makes sense if this patch series gets merged). FWIW, I think we
+> should left this to further discussions for now and decide what
+> to do later on.
 
-checks into
+It is only a small change so why not do it now rather than putting it
+off for another series which will be more work in the long run.
 
-  echo that >expect &&
-  test_cmp expect file1
+Best Wishes
 
-because 'test_cmp' on Windows first compares the two files in shell
-and runs 'diff' only when there is a difference to report.
+Phillip
+
+> 
+>> Best Wishes
+>>
+>> Phillip
+> 
+> Thanks
+> Rohit
+> 
 
