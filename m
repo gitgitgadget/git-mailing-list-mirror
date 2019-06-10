@@ -7,87 +7,75 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6A9A1F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 17:21:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7D81F609
+	for <e@80x24.org>; Mon, 10 Jun 2019 17:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728358AbfFJRVg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 13:21:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51750 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726781AbfFJRVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:21:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C28F01401B7;
-        Mon, 10 Jun 2019 13:21:32 -0400 (EDT)
+        id S2388007AbfFJRYE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 13:24:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60143 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387448AbfFJRYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 13:24:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 28EF3699C3;
+        Mon, 10 Jun 2019 13:24:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eCRrqIQdFmvp7S1dO3dWlCLlbSM=; b=koOZ0h
-        5Z8IxL+yEZPDw1OSr+J+Z4r+mGDovL/DT4VYOnT1pdHQIjujZ7zSO9TvFzA42Ikn
-        3Ei0fmAvhZfqx4+vyMobFnzYrNXGWhoC05j7w0KtqtE635sHU0l/rE9a3Ro7/A84
-        +c4O4nvqICb9REA1zg6ku1tT+V2QARWJVYA3Y=
+        :content-type:content-transfer-encoding; s=sasl; bh=8RPJDWZBNQE5
+        LGNHJIa+tQ5tYgY=; b=MDUKKabAfbUzu7wekjPCVVOXp/vyWD8HVIVGlRwuh4Ny
+        msiLWv2P6oUd7QTDf8/VAutqHK9zsMgXlPY/9SsBMgbkWIOr4VYTcsG5WkL332d2
+        mHEsEIBO5EhSBWjuICDBS5Aa7lxW7UCmq9Cx1dh1ie478fnt9evMlk6KrEtjMZ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BM1Bgz/iWX0siZVuTndlX8UMz0v/qHxK
-        AyGCmtv/1qTgW548NE06xcRnO0hbSk3vHmu1nmukmRVrDEfW55JoAsgCpqkftarw
-        ImiBeTe1WerdPFRzbphPCF7rskUbkk3OH4fSZLmerrfWh/vtSHZg625dGZoPpyfc
-        1ob3A8FUW5g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB79A1401B6;
-        Mon, 10 Jun 2019 13:21:32 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xQmnKH
+        03rr6slgOrqPLwLsg2PyfnGBVthTNIbknKMfBIu8OBz0u51/nP6GzsvLGW/SNxA6
+        3Wuawi9LYoQRKgxhvM9ZZpQy7K96Cwlg7APXQL2zBG/MuUMtncwvP7A8QAMNH2+y
+        7e90e1233dFy5olZCuGoQ+iDxNdpVK1/mU5TA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21E3D699C2;
+        Mon, 10 Jun 2019 13:24:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 152591401B5;
-        Mon, 10 Jun 2019 13:21:32 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 46DAF699BF;
+        Mon, 10 Jun 2019 13:23:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] mergetool: use shell variable magic instead of `awk`
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by `yes` in subshells
 References: <cover.1560152205.git.j6t@kdbg.org>
-        <d6675b02918364736ec74db937481127ab7d8990.1560152205.git.j6t@kdbg.org>
-Date:   Mon, 10 Jun 2019 10:21:31 -0700
-In-Reply-To: <d6675b02918364736ec74db937481127ab7d8990.1560152205.git.j6t@kdbg.org>
-        (Johannes Sixt's message of "Mon, 10 Jun 2019 10:59:00 +0200")
-Message-ID: <xmqq7e9tnyp0.fsf@gitster-ct.c.googlers.com>
+        <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
+        <20190610095942.GA19035@szeder.dev>
+Date:   Mon, 10 Jun 2019 10:23:57 -0700
+In-Reply-To: <20190610095942.GA19035@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Mon, 10 Jun 2019 11:59:42 +0200")
+Message-ID: <xmqq36khnyky.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30CB6420-8BA4-11E9-B406-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 88888FBC-8BA4-11E9-86A9-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> +	# here, $IFS is just a LF
-> +	for line in $f
-> +	do
-> +		mode=${line%% *}		# 1st word
-> +		sha1=${line#"$mode "}
-> +		sha1=${sha1%% *}		# 2nd word
-> +		case "${line#$mode $sha1 }" in	# remainder
-> +		'1	'*)
-> +			base_mode=$mode
-> +			;;
-> +		'2	'*)
-> +			local_mode=$mode local_sha1=$sha1
-> +			;;
-> +		'3	'*)
-> +			remote_mode=$mode remote_sha1=$sha1
-> +			;;
-> +		esac
-> +	done
+> turn these
+>
+>   test "$(cat file1)" =3D "that"'
+>
+> checks into
+>
+>   echo that >expect &&
+>   test_cmp expect file1
+>
+> because 'test_cmp' on Windows first compares the two files in shell
+> and runs 'diff' only when there is a difference to report.
 
-OK.  $mode won't have any glob metacharacter, and there is only one
-invocation of "ls-files -u", which is now two fewer processes ;-)
-
->  
->  	if is_submodule "$local_mode" || is_submodule "$remote_mode"
->  	then
->  		echo "Submodule merge conflict for '$MERGED':"
-> -		local_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
-> -		remote_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $2;}')
->  		describe_file "$local_mode" "local" "$local_sha1"
->  		describe_file "$remote_mode" "remote" "$remote_sha1"
->  		resolve_submodule_merge
+Needs measuring.  Is two extra file I/Os that inexpensive?
