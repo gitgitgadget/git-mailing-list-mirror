@@ -2,134 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCB051F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 13:45:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13D8C1F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 13:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390156AbfFJNp3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 09:45:29 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:32935 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390063AbfFJNp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 09:45:29 -0400
-Received: by mail-pg1-f196.google.com with SMTP id k187so4584858pga.0
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 06:45:29 -0700 (PDT)
+        id S2390561AbfFJNzm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 09:55:42 -0400
+Received: from mail-oi1-f172.google.com ([209.85.167.172]:36600 "EHLO
+        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389373AbfFJNzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 09:55:41 -0400
+Received: by mail-oi1-f172.google.com with SMTP id w7so6286753oic.3
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 06:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BgUvbOIXDtHEGHGsx3KAlZ2A/NY19l8iihPpa+bw84o=;
-        b=my3PwXh9bTfQcmqw52DMGF+dgSnoyvZ95JPCNHEHzBBWt4x5/Xw0p92gDWu24vcqZG
-         xDxWe1/+rwEdFFbr9qtdHYDpRY8eX9x+y4nwlcAcHW0K980vkr/ICSsR4y4jxW1g+qhS
-         fBo0uCZjxANswQ1i7j/J54JT5O+Bky1uyNza/b33BJiS3jbuuQxoHwse3n3dgg/UttOt
-         fjy2yJSwivwrKebfWMowNyv5WXDUIa0fbC9F8t3qJfUzF+ra4IJQvJO1/gi+TeJ68fkx
-         spRCueu/C27Osq0qeOI84+a5+Fu54ViUK+M97YOMscfbRh2kTrJ8EM5K0Ezwvf2z4DVa
-         GzpQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=40fY7dFDSS7MMka0K3OjuoHLLvNZpIpeS42K3j/eXag=;
+        b=IbaGWmA0SQ84DSkvqiXm6cZ1ADBVf7LpGOT38E8A9mWVVr2p6EEscmG/8suewTIz9t
+         cTokt6dgT6cnIJPuft74gHBuyPfbFYlO1zVzWUB2yM2NVM3PgGIkeIzBwzHk0grGWNty
+         w/UgF+Cq0iJwJ3GMu9oPzxT5KNFAGqWq8VA4mzU7pIYU6FVXijEMKzG9nqab8ER5Qb4p
+         at8t2MZK9gPzFRLZt/kxO2suV5QunmlHaI2/UcB8GVqhXJK7dUYCe4NI0Fiuo8TziZih
+         16YHJ1gwVsJ9WyIFw4wsIrWDpIQb4rL7jMncDm6/mNaHsNpIn6i9GkE59yusZ5LgwJmx
+         RQnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BgUvbOIXDtHEGHGsx3KAlZ2A/NY19l8iihPpa+bw84o=;
-        b=RcjzSHbMLzR38q8qJd8aY4RZ9XTT7qTUE+lWr2y/rpClobttQTbsgjEXptBTDewqtQ
-         Evu6uCeYPl6h4L2yP40G65ls2/86WDNnclcrHEYKwa102mGWxXxlCnr4nrO54mSvyBg6
-         vDBZosUruXc2442PJgyAQBr2OHhwjzGCr0m5fsyZ3vuodn2VmSJ5x+S1Ekr6LOR1ns2U
-         zdt7ud/7SWMnxot7Ufx0a0gehdlsbkDSjZXE3Mscw3brHDVD8cDv8FG5Coke2JURlKOH
-         JBvCNqFHzuFDrE15sNDREur/1sjzihQcV21IONrG0AxuI/eMdVUMfx/ONtG5ci0qlShc
-         ILcg==
-X-Gm-Message-State: APjAAAXb5VfiAaCfn/Exa9l5W4hX5XlZkmBw+x9vX2Zwc04G/81Ro8SM
-        eHtLU8gJiiSeFY27jDm2NSw=
-X-Google-Smtp-Source: APXvYqwKlGvuY3H4bXJeAzuRkCbWnQn+sXT2PbaIw/chrf9x8Ju95oKJEj09FvPluxFWzBKfAihfoA==
-X-Received: by 2002:a63:1657:: with SMTP id 23mr14867025pgw.98.1560174328326;
-        Mon, 10 Jun 2019 06:45:28 -0700 (PDT)
-Received: from ar135.iitr.local ([223.188.3.146])
-        by smtp.gmail.com with ESMTPSA id b66sm12973301pfa.77.2019.06.10.06.45.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 06:45:27 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     phillip.wood123@gmail.com
-Cc:     git@vger.kernel.org, newren@gmail.com, rohit.ashiwal265@gmail.com,
-        t.gummerer@gmail.com
-Subject: Re: [GSoC][PATCH 2/3] cherry-pick/revert: add --skip option
-Date:   Mon, 10 Jun 2019 19:13:21 +0530
-Message-Id: <20190610134321.8203-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <2488ef91-b9e5-1836-aeea-2aaf11c3c383@gmail.com>
-References: <2488ef91-b9e5-1836-aeea-2aaf11c3c383@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=40fY7dFDSS7MMka0K3OjuoHLLvNZpIpeS42K3j/eXag=;
+        b=lfd0AdgAbE+E8cBzCB2onAUTZU1yTt6+vUcfJVeZOXk7JMJTYO3B/aSRY8fbI2Ot3K
+         BJ/cFB6yFZvo5TO2L+pvQj2iHUkogFe8l885k6rSpB8A0GQJSFSyYHhKda1uRlSLZAwS
+         MNBsPfSVDxVp6Io9HSy3HcrcwjQ8zuvJLE/CCnnYzLvdcnlG8Lcj0h/xyADJ9uW/oo9N
+         Oj3oUeKuaJVgYVbeX5dJ2fEjnyjK7clWQGslNLwbvOU0UJ5RsqyESGH7q89zP6v+pmdi
+         5IczoTnn5KHdmSIOJkqt8wpiYS1Gqz+nmwpMi19FIt6Cgw8/9Po9m1whxcsFOQFiJ51U
+         /ndQ==
+X-Gm-Message-State: APjAAAWMUoTzM//qoj7Ga1y+inY32o7CTDtJWZ9PzTV/HoqXcCFSCy6O
+        bjjCTEwdjfhFeFcXKvGD3xBWJxNVdqQ9zh6x+pdMTr7w
+X-Google-Smtp-Source: APXvYqwvP40QeBKwENdWOK3ODWjPXjCObwsynM/KZhLeVwi/JY8ZcxsDvN1OfO7nwvLaLTNQ9fUTyvwtsJQNSvRYMOw=
+X-Received: by 2002:aca:a896:: with SMTP id r144mr11805826oie.105.1560174940921;
+ Mon, 10 Jun 2019 06:55:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-iAjxRCpqNK5bnhRg@mail.gmail.com>
+In-Reply-To: <CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-iAjxRCpqNK5bnhRg@mail.gmail.com>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Mon, 10 Jun 2019 16:55:29 +0300
+Message-ID: <CAGHpTBLvVLY4YTp6c1x66WvO-OsqqTQ_-DAvBi20LFz-BG0+uA@mail.gmail.com>
+Subject: Re: Performance regression on git fetch in 2.21
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip
-
-On 2019-06-10 10:40 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Fri, May 24, 2019 at 12:14 PM Orgad Shaneh <orgads@gmail.com> wrote:
 >
-> [...]
-> It's actually a bit more complicated as if the cherry-pick failed
-> because it would have overwriten untracked files then CHERRY_PICK_HEAD
-> will not exist but we want to be able to skip that pick. So it should
-> not error out in that case either. (I think you may be able to use the
-> abort safety file (see rollback_is_safe()) to distinguish the 'failed to
-> pick case' from the 'user committed a conflict resolution' case.)
-
-Oh! I was thinking about some other case. (spawing another cherry-pick,
-which is wrong since the topic is --skip). I'm sorry. 
-
->> Yes, .git/{REVERT|CHERRY_PICK}_HEAD will not exist in this case, but
->> in case of cherry-picking/reverting:
->> 
->> 1. multiple commits:
->>     sequencer dir will exist which will throw out the error listed
->>     under `create_seq_dir`
+> Hi,
 >
-> I don't understand. Wont it will error out here? Why would we call
-> create_seq_dir() for --skip?
-
-No, you are correct. This won't skip commit in this case. I'll change
-it to do the required.
-
->>> If rollback_single_pick() sees that HEAD is the null oid then it gives
->>> the error "cannot abort from a branch yet to be born". We're not
->>> aborting and if we're picking a sequence of commits the skip ought
->>> succeed, but it won't at the moment. If we're picking a single commit
->>> then the skip should probably fail like abort but with an appropriate
->>> message. Admittedly that's all a bit of a corner case.
->> 
->> Yes, you are right here. We could actually modify the advice there
->> to be more like _("cannot perform the specified action, the branch
->> is yet to be born") and I think it should suffice this. What do you
->> think?
+> git fetch in my repository *when nothing new is received* takes 2.5x
+> the time when comparing 2.20 against 2.21 (on Windows it's 4x).
 >
-> I think it should allow the user to skip if there are more commits to
-> pick . Just changing the error message does not fix that.
-
-Right! I'll check what can be done here.
-
->> The overall test tests that only, if cherry-pick --skip "failed" then
->> we won't get 'e' inside of `foo` and `test_cmp expect foo` will also
->> fail and if it skipped wrongly then expect.log will not match the
->> actual.log and `test_cmp` will fail. Am I missing something here?
->> Please tell if so.
+> I have 5 initialized submodules in this working directory.
 >
-> You're right that the tests at the end would probably pick up a failure,
-> but I'm concerned that there could be some obscure corner case we've not
-> thought of so checking HEAD and the file contents here would be an
-> additional safety measure. It also makes it easier for someone tracking
-> down a test failure to see what happened. If they rely only on the test
-> at the end they need to spend time to understand where the mismatched
-> contents came from.
+> I reported this issue on git-for-windows github:
+> https://github.com/git-for-windows/git/issues/2199 but there is also
+> an upstream change related.
+>
+> I bisected and found this commit to blame:
+>
+> Building... Fetching... Failed [10.7949124]
+> Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> [a62387b3fc9f5aeeb04a2db278121d33a9caafa7] submodule.c: fetch in
+> submodules git directory instead of in worktree
+> running git-bisect.rb
+> Building... Fetching... Success [4.303592]
+> be76c2128234d94b47f7087152ee55d08bb65d88 is the first bad commit
+> commit be76c2128234d94b47f7087152ee55d08bb65d88
+> Author: Stefan Beller <sbeller@google.com>
+> Date:   Thu Dec 6 13:26:55 2018 -0800
+>
+>     fetch: ensure submodule objects fetched
+>
+>     Currently when git-fetch is asked to recurse into submodules, it dispatches
+>     a plain "git-fetch -C <submodule-dir>" (with some submodule related options
+>     such as prefix and recusing strategy, but) without any information of the
+>     remote or the tip that should be fetched.
+>
+>     But this default fetch is not sufficient, as a newly fetched commit in
+>     the superproject could point to a commit in the submodule that is not
+>     in the default refspec. This is common in workflows like Gerrit's.
+>     When fetching a Gerrit change under review (from refs/changes/??), the
+>     commits in that change likely point to submodule commits that have not
+>     been merged to a branch yet.
+>
+>     Fetch a submodule object by id if the object that the superproject
+>     points to, cannot be found. For now this object is fetched from the
+>     'origin' remote as we defer getting the default remote to a later patch.
+>
+>     A list of new submodule commits are already generated in certain
+>     conditions (by check_for_new_submodule_commits()); this new feature
+>     invokes that function in more situations.
+>
+>     The submodule checks were done only when a ref in the superproject
+>     changed, these checks were extended to also be performed when fetching
+>     into FETCH_HEAD for completeness, and add a test for that too.
+>
+>     Signed-off-by: Stefan Beller <sbeller@google.com>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> :040000 040000 2bad86c248b79ef1e36ea5edaa423cd73445c9a2
+> ad989a8f3e6f80d4f5a84ec3db0ff1ab00a7e210 M      builtin
+> :100644 100644 d1b6646f42d5d12740a94f50a7d25aad4aa356bf
+> b88343d977d78364b417e2015eaa352dec1501b9 M      submodule.c
+> :040000 040000 a3c58919de0796b6467709a0f21fa21e28d4d13b
+> cdf9514c9085efcbfcdba8efc765174f6455ce5d M      t
+>
+> Can you please suggest a fix? Is this the expected behavior?
+>
+> Thanks,
+> - Orgad
 
-Yes, it is worth checking here if HEAD after cherry-picking is in the
-correct position, same for the file foo. I'll change this test too.
-Thanks for pointing out.
+ping
 
-Thanks for the review
-Rohit
-
+- Orgad
