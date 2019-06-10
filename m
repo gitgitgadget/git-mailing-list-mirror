@@ -2,161 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35C991F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 17:56:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D81611F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 17:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388342AbfFJR4s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 13:56:48 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56034 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388174AbfFJR4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:56:48 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a15so223719wmj.5
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 10:56:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=0Iz3FIXKko0MbFr7f26iDIEVEi2hR63t6ZOaV9tZ21I=;
-        b=TS8jmoJYBtmGmLZ639EtZtufJr1H74lnTZMlSMSnsy5TrW68AonFqTIlsulKKHeP5I
-         zp6ssgXp4r3U8sAyJW5ysWBZHqI8GvFMypkZ6vWOTjSYZzVUXL++TIdUMRyFlgAswB5O
-         o45v6K0bVUGn+V506iYUInyTH1TjpoIw4gpeVQoEAb/82g9PEVpiYa/tObDZvdYR/4t+
-         s6g7GZVPmo9D4edQmztSVOSO/tULTByBXWZ951mqwKPtnk4AYZtZH7MsO9Nx3cPLAd8h
-         RwqV2en5MSoQFCElpPqhAaljUa1HLYuA7H3wERbhWQ+4KUKuph+YR5tFM+QxmjQ/lXVr
-         4ggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0Iz3FIXKko0MbFr7f26iDIEVEi2hR63t6ZOaV9tZ21I=;
-        b=H3Z6ZaEsbVJ02NnrskVAnU8EidZXpLnnDbfjhOmEKhDqo9Z8KwP2N3WjDz9c49D5QB
-         z7hwfKeSNWYpLN1NgJoD3iHi+zqvmp1N2hS6dKhzuGsVcPq7QTZ++vgM73FnZNfpgh24
-         MjWQl2ux+NYdEthIVIDt3ospuLh8YVikY4TkFDNhPCqTwPi8svcr4pPMhnKfwLiKoBI7
-         9aDgwJfXw37zv73XheZbIEqYn+V026Zd5mfJPQC+EGdo0T8JtHpGmLGKqxj3q8oGhnG7
-         QA1b5lOndN1BVbzFpt5hFxD6gGOZtCZ19B474vHxHbCWc4Dx6eCDDpKjAA3FCHD7BSPL
-         dHQg==
-X-Gm-Message-State: APjAAAXA5SEtUmz/mTUdc3lgtommO7zwnYQPpqAN1+TGD5mAkMU+Ptqv
-        11c7RKqS+ggLgp2JAQ86AGNNohM6
-X-Google-Smtp-Source: APXvYqwtm2Q4sB9jgh0J+CyPEUlwB/PrEMWaY1eo/g+DNkN7KaJLN5B7YYbt83ok6aaNknF4uHsaig==
-X-Received: by 2002:a7b:c5ca:: with SMTP id n10mr13316334wmk.136.1560189406071;
-        Mon, 10 Jun 2019 10:56:46 -0700 (PDT)
-Received: from szeder.dev (x4d0c1d42.dyn.telefonica.de. [77.12.29.66])
-        by smtp.gmail.com with ESMTPSA id y16sm9857299wru.28.2019.06.10.10.56.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 10:56:45 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 19:56:42 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by
- `yes` in subshells
-Message-ID: <20190610175642.GB4012@szeder.dev>
-References: <cover.1560152205.git.j6t@kdbg.org>
- <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
- <20190610095942.GA19035@szeder.dev>
- <xmqq36khnyky.fsf@gitster-ct.c.googlers.com>
+        id S2388617AbfFJR55 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 13:57:57 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53600 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388592AbfFJR54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 13:57:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4D6286C69;
+        Mon, 10 Jun 2019 13:57:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=i0Z7nXEsiAP+
+        2IHzKPyT5LvWw+c=; b=yiaX4XTaaj73w1wW6EF4Pv4DvWnGRbZSIXXdgAvtHaqc
+        Sofpif/8/P19p3uwNSnkxzeLjSEXEX/9kZQTi3iSTRA6CPuGFOzAP9VuZJW1TovO
+        18a3GcAe1Q4g4AUAIkdh/lUIvr1Et2Os/nO9QlE+mK+HooxJiAyTa3Y1xUW4TjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KAHqp5
+        iuXfpoRLeB1E/ICYDMurMKALVZC7BrCi5NffWjZDXIL503p7x8RVS6rqQQn/DKz6
+        91eBEn2vvpQUu7Gp6MZoE4WYy3VK82vRX0n1W+Y98VR84sRCycrq1qM0RWc44v5N
+        y29Pot5Qv3AMAFqt9Kvea3LMfCIE1YtU7G6L8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CD27586C68;
+        Mon, 10 Jun 2019 13:57:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C3E0086C67;
+        Mon, 10 Jun 2019 13:57:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     GitList <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC/PATCH v2] doc branch: provide examples for listing remote tracking branches
+References: <2ea35ad4-4b33-0ece-4de4-b2e92a100d9a@iee.org>
+        <20190528231605.10108-1-philipoakley@iee.org>
+Date:   Mon, 10 Jun 2019 10:57:48 -0700
+In-Reply-To: <20190528231605.10108-1-philipoakley@iee.org> (Philip Oakley's
+        message of "Wed, 29 May 2019 00:16:05 +0100")
+Message-ID: <xmqqtvcxmig3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq36khnyky.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Pobox-Relay-ID: 4368DDEC-8BA9-11E9-ABEC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 10:23:57AM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > turn these
-> >
-> >   test "$(cat file1)" = "that"'
-> >
-> > checks into
-> >
-> >   echo that >expect &&
-> >   test_cmp expect file1
-> >
-> > because 'test_cmp' on Windows first compares the two files in shell
-> > and runs 'diff' only when there is a difference to report.
-> 
-> Needs measuring.  Is two extra file I/Os that inexpensive?
+Philip Oakley <philipoakley@iee.org> writes:
 
-Compared to subshells and external processes, yes.
+> The availability of these pattern selections is not obvious from
+> the man pages, as per mail thread <87lfz3vcbt.fsf@evledraar.gmail.com>.
+>
+> Provide examples.
+>
+> Re-order the `git branch` synopsis to emphasise the `--list <pattern>`
+> pairing. Also expand and reposition the `all/remotes` options.
+>
+> Split the over-long description into three parts so that the <pattern>
+> description can be seen.
+>
+> Clarify that the `all/remotes` options require the --list if patterns
+> are to be used.
+>
+> Add examples of listing remote tracking branches that match a pattern,
+> including `git for-each-ref` which has more options.
+>
+> Improve the -a/-r warning message. The message confused this author
+> as the combined -a and -r options had not been given, though a pattern
+> had. Specifically guide the user that maybe they needed the --list
+> option to enable a remote branch pattern selection.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>
+> in response to=20
+> <2ea35ad4-4b33-0ece-4de4-b2e92a100d9a@iee.org>
+> thread: https://public-inbox.org/git/?q=3D%3CCACsJy8CwY8gzeWa9kNRX3ecez=
+1JGiQiaOknbAoU7S%2BhiXBoUGQ%40mail.gmail.com%3E
+>
+> to: Git Mailing List <git@vger.kernel.org>
+> cc: Duy Nguyen <pclouds@gmail.com>
+> cc: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> cc: Junio C Hamano <gitster@pobox.com>
 
-I run this on Linux:
-
-  --- >8 ---
-
-#!/bin/sh
-
-test_description='test'
-
-. ./lib-bash.sh
-
-test_expect_success 'test' '
-	echo "master updated" >file1 &&
-
-	echo "original:" &&
-	time for i in $(seq 1000)
-	do
-		test "$(cat file1)" = "master updated"
-	done &&
-
-	echo "using test_cmp:" &&
-	time for i in $(seq 1000)
-	do
-		echo "master updated" >expect &&
-		test_cmp expect file1
-	done &&
-
-	echo "using mingw_test_cmp:" &&
-	time for i in $(seq 1000)
-	do
-		echo "master updated" >expect &&
-		mingw_test_cmp expect file1
-	done
-'
-
-test_done
-
-  --- >8 ---
-
-And it produced:
-
-  original:
-  
-  real    0m1.888s
-  user    0m1.491s
-  sys     0m0.532s
-  using test_cmp:
-  
-  real    0m1.233s
-  user    0m0.877s
-  sys     0m0.432s
-  using mingw_test_cmp:
-  
-  real    0m0.344s
-  user    0m0.298s
-  sys     0m0.026s
-  ok 1 - test
-
-It's faster even on Linux, so it should be much faster on Windows,
-where both external commands and subshells have much higher overhead.
-
-However, there are only about 50 "$(cat ...)" in t7610 that can be
-eliminated this way, which is not all that much compared to the
-several thousand processes shown in the cover letter...
-
-Anyway, there is still the better developer experience in case of one
-of these checks were to fail without '-x' tracing... :)
-
+This looks reasonable to me---is it ready to go even with its RFC prefix?
