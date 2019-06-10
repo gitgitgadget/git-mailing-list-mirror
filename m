@@ -7,27 +7,27 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55E941F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 08:59:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA0D11F609
+	for <e@80x24.org>; Mon, 10 Jun 2019 08:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388570AbfFJI7l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 04:59:41 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:15377 "EHLO bsmtp7.bon.at"
+        id S2388602AbfFJI7q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 04:59:46 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:18053 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388190AbfFJI7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 04:59:41 -0400
+        id S2388190AbfFJI7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 04:59:45 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45MnBg27G2z5tl9;
-        Mon, 10 Jun 2019 10:59:39 +0200 (CEST)
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45MnBm0bDFz5tlB;
+        Mon, 10 Jun 2019 10:59:44 +0200 (CEST)
 Received: from dx.site (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 114C7450;
-        Mon, 10 Jun 2019 10:59:39 +0200 (CEST)
+        by dx.site (Postfix) with ESMTP id CCB64450;
+        Mon, 10 Jun 2019 10:59:43 +0200 (CEST)
 From:   Johannes Sixt <j6t@kdbg.org>
 To:     git@vger.kernel.org
 Cc:     Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 2/3] mergetool: dissect strings with shell variable magic instead of `expr`
-Date:   Mon, 10 Jun 2019 10:58:59 +0200
-Message-Id: <2a33ca20af41d68a5bb4e2cf1e5ae32fddf2796c.1560152205.git.j6t@kdbg.org>
+Subject: [PATCH 3/3] mergetool: use shell variable magic instead of `awk`
+Date:   Mon, 10 Jun 2019 10:59:00 +0200
+Message-Id: <d6675b02918364736ec74db937481127ab7d8990.1560152205.git.j6t@kdbg.org>
 X-Mailer: git-send-email 2.21.0.285.gc38d92e052
 In-Reply-To: <cover.1560152205.git.j6t@kdbg.org>
 References: <cover.1560152205.git.j6t@kdbg.org>
@@ -41,60 +41,54 @@ X-Mailing-List: git@vger.kernel.org
 git-mergetool spawns an enormous amount of processes. For this reason,
 the test script, t7610, is exceptionally slow, in particular, on
 Windows. Most of the processes are invocations of git, but there are
-also some that can be replaced with shell builtins. Do so with `expr`.
+also some that can be replaced with shell builtins. Avoid repeated
+calls of `git ls-files` and `awk`.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- git-mergetool.sh | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ git-mergetool.sh | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
 diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 88fa6a914a..8a937f680f 100755
+index 8a937f680f..e3f6d543fb 100755
 --- a/git-mergetool.sh
 +++ b/git-mergetool.sh
-@@ -228,9 +228,8 @@ stage_submodule () {
- }
+@@ -279,15 +279,30 @@ merge_file () {
+ 	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+ 	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
  
- checkout_staged_file () {
--	tmpfile=$(expr \
--		"$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" \
--		: '\([^	]*\)	')
-+	tmpfile="$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" &&
-+	tmpfile=${tmpfile%%'	'*}
+-	base_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==1) print $1;}')
+-	local_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}')
+-	remote_mode=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}')
++	base_mode= local_mode= remote_mode=
++
++	# here, $IFS is just a LF
++	for line in $f
++	do
++		mode=${line%% *}		# 1st word
++		sha1=${line#"$mode "}
++		sha1=${sha1%% *}		# 2nd word
++		case "${line#$mode $sha1 }" in	# remainder
++		'1	'*)
++			base_mode=$mode
++			;;
++		'2	'*)
++			local_mode=$mode local_sha1=$sha1
++			;;
++		'3	'*)
++			remote_mode=$mode remote_sha1=$sha1
++			;;
++		esac
++	done
  
- 	if test $? -eq 0 && test -n "$tmpfile"
+ 	if is_submodule "$local_mode" || is_submodule "$remote_mode"
  	then
-@@ -255,13 +254,16 @@ merge_file () {
- 		return 1
- 	fi
- 
--	if BASE=$(expr "$MERGED" : '\(.*\)\.[^/]*$')
--	then
--		ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
--	else
-+	# extract file extension from the last path component
-+	case "${MERGED##*/}" in
-+	*.*)
-+		ext=.${MERGED##*.}
-+		BASE=${MERGED%"$ext"}
-+		;;
-+	*)
- 		BASE=$MERGED
- 		ext=
--	fi
-+	esac
- 
- 	mergetool_tmpdir_init
- 
-@@ -406,7 +408,7 @@ main () {
- 		-t|--tool*)
- 			case "$#,$1" in
- 			*,*=*)
--				merge_tool=$(expr "z$1" : 'z-[^=]*=\(.*\)')
-+				merge_tool=${1#*=}
- 				;;
- 			1,*)
- 				usage ;;
+ 		echo "Submodule merge conflict for '$MERGED':"
+-		local_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $2;}')
+-		remote_sha1=$(git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $2;}')
+ 		describe_file "$local_mode" "local" "$local_sha1"
+ 		describe_file "$remote_mode" "remote" "$remote_sha1"
+ 		resolve_submodule_merge
 -- 
 2.21.0.285.gc38d92e052
 
