@@ -8,107 +8,79 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB871F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 18:42:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9521F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 18:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388615AbfFJSmL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 14:42:11 -0400
-Received: from mout.gmx.net ([212.227.17.20]:45147 "EHLO mout.gmx.net"
+        id S2388311AbfFJSqo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 14:46:44 -0400
+Received: from mout.gmx.net ([212.227.15.15]:48573 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387398AbfFJSmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 14:42:11 -0400
+        id S2387643AbfFJSqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 14:46:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560192115;
-        bh=LzLdNJrbzUCDS7PCDwpFLmd0iw050qkVQJEPday38fg=;
+        s=badeba3b8450; t=1560192401;
+        bh=OxgNe0uUHUtI13gcEuNXLKyB0kmziJYRdBY3xPMnNLg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=T+2B8rw+wFDI62cOXNgr1keh8ye6qAewVzl3gb3hXwpSaaXTDknCK3GxYXQ62XW9y
-         9u+j82xYUgojpQsDf/uTxeP2hb4kwwqXqUOxYpVeU9eF+uUs+bUL5ifFfbJMz5TwFw
-         yvH7x8bXF9nVXWRGLj/KPRsPjvZ5yksn36jbG4Pk=
+        b=VGo8jnz4zDfM4tG3fjqRJw4gGSkQzSb0GkiZTYIN8d2L29NWmV3ZK+vNoFqashI5d
+         xYnPiyVf/xK80udtlSbqD1Y9H1EluRmGJO3wBU/dF1RToEGD3rEKXaRot7Y5dRmFcd
+         BDZs1LxP6f20l+yW67CKIp9EuvD0sMmbbd9+g8Bw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.215.76.8] ([46.142.197.184]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wpt-1gYn9u2281-012GvT; Mon, 10
- Jun 2019 20:41:55 +0200
-Date:   Mon, 10 Jun 2019 20:42:08 +0200 (CEST)
+Received: from [10.215.76.8] ([46.142.197.184]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqzEB-1gwPnG0kSJ-00egsc; Mon, 10
+ Jun 2019 20:46:41 +0200
+Date:   Mon, 10 Jun 2019 20:46:55 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        'Linux Kernel' <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: RE: [ANNOUNCE] Git v2.22.0
-In-Reply-To: <018b01d51f90$4d394c10$e7abe430$@nexbridge.com>
-Message-ID: <nycvar.QRO.7.76.6.1906102032450.789@QRFXGBC-DHN364S.ybpnyqbznva>
-References: <xmqq36klozfu.fsf@gitster-ct.c.googlers.com> <018b01d51f90$4d394c10$e7abe430$@nexbridge.com>
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+cc:     git <git@vger.kernel.org>
+Subject: Re: rebase / am separation problem
+In-Reply-To: <20190610170718.2f9fe177@naga.suse.cz>
+Message-ID: <nycvar.QRO.7.76.6.1906102046110.789@QRFXGBC-DHN364S.ybpnyqbznva>
+References: <20190610170718.2f9fe177@naga.suse.cz>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:vJx6lKycpiLSsjCyZ30KQQ7UNmBkywfaza/lkxvDGoINNNcgmAL
- GeZ01Xaq9mnHKs8aBbDyUIxyyca2BNtLlUkpT23NNnA9dZXgKaCCip3ONKqH6TGTAhgeP3D
- xPFQ3b6LGsuPMdfj2idXPYlbmRgym3NKmOm+OGM5bE4Zfj7uz2b8SMvv/rgfqUppyEDM/Hq
- kzOrAcS8GOiF4uf6iZEdA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:97PPFUdxvRs=:hxIQKvvh3fkvLd28jWQ9JF
- fnIPnVE0hBkgzzk88p9KzFdy/1t3tkR/FXAMJp7MQ5PxEfuWH2dszPRdtK7u2TMFKOMc46TEW
- W1QH1dwQcOT+XcpqIQz4aOBgTZyRR9XUGISQ/x2Je9mV9nMpP9Ld5l79iHLuQppjPt7ilVwgT
- UoA0PrVYFKgrAuYl+ISjSdCGd3phy3VohzxEJ4XJnxgFKUPcEijr+R84SmcSSTM7jJ+nQdnjK
- YSbOs3LO0lbeoasnw+LgsOimtksfrX/NuVUFs0o6lGISNIZMQSJaVCgUP1dsy1nV01HghEgJV
- BwcCMVBGG41E7DbDiEziGDTHAJraIrdLmO5Av1gQ8R5AuRlAP2n2FEnWZ4FEkC8Kkh56revbR
- mCO2ooJNPNZhH86A2u5CPxVqhLEWHFGygiE4zZtSVFe88McH7JBAHrizBOMl4arOpLm16AHzz
- 8kN2iVQ/nMytqC/fKfbcWYN1T6+TwW5+8g/hj7cf/mYDx5QdtBujpgde6ebJd7B6GYuMYQhRW
- rdaUitqufVMeFyt0cwoMry0PBhJtMEcLuiTtzXZZgO0eNDBMELcKb6lPBRI9Xp2SWhA6GnpVt
- +gsVjzOWvXmNpYQFwJZxw4yJdpxG8bqh00UGNdnG8LBPSZkIt/oG5eEdbBpeAvylmmZbB2WGe
- wNUGT5A0ST2rA9wes1uCHmkgz0l2CKBam7znlF5GcVLbOyVexMlwxQZK4Mz5VgeqyAtRfPnsQ
- t8OumBQkQ4POXaTyc4Gz2OlICMZVhy41o58gqqjye72/NDSUpHx2sGMU686BvY9sk/7ZRXRfA
- U9fC+K5NjD31Wwzpn8w/jaN8ToV6+4WxbfBGuBlcu3xkKThskIneg7As8jsGcsjKQYIFvPxMq
- vyUwKbcYND7XtcEFhWEc88pSr1xmJcJJBDlLo5wcwiwz7KBcaV/2evC63/WfP8UQfYetY1V5V
- fYa3vGm428YkEmKba0YIwGaxb15Own6vJdcHGxoQWaLejdj9r2i3Q
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323329-585299116-1560192416=:789"
+X-Provags-ID: V03:K1:3re9hULJjHzm4Xb4AwprgchNm2/zvjVrKrezycfhUiwcz1uDm41
+ 44h5qsUEo6lh/W39IZ2mzz0Bc1XrBF7dS6RcGsCl14SfNoCQ1AAo/5yklx0i6opi/QGHgDq
+ UXf8pP3cjiTRZMNw+pXIM0DIvNHJnFH/AqJWZIPRU2o5kJGlaGysCQB+MD/GQXaJhtguAfD
+ GdKRVT0wxS/AV6yHo/OiA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oWYuv5f/130=:yOS7NV3aNwFTWgd/iv+a03
+ OTjZVNC2AnH39qRbJmqllEiCTHjMky8gciYmd9Xqy9bxOiw2BdcUcqkzVPq/lV2DR+gbXWfs7
+ tzVNjMEbrJ5NEdmVgE06vIQamwoIyU9/fHFSSq/saFbT3dsXvXMXlI4C+CK+rgFUwp07Ylfj9
+ BT6fySzgOLCm/e8WpekQqxbdjuR0x88TcXe39NPshMZDwvlpT3CqWwMWRomo2eM9lX1Kn/fAw
+ 8azmvZcJmEWfsIXNDZkYHrzdZXQz4yhpO71/LoJn/Mns5dL2nqq+QJYKr6gvDQayAsJ3P9L+0
+ 4rIr2j7oWngHWxxTClEowcx+vfJ59YQZNcJXPi5/MCM91If+al9Z4WCajjisRKpI+rsf/LzLd
+ 8rIku+SwMQua8w1M8fN95ZNDNxbEwyN1HgsqBTtWN3S88kska2/IMF+z/6F+8UAefMEbBDD6A
+ 8LtrAgbbZEI6g8l1hPGgAi8daXjjMtoDO2ikDToEInGmg5WQHK3cxYOguHUgSnFNKL6FzRENa
+ M09jO44Qm6+sPn7zHyFa8Eug21pS7dgphLXTYA73ZUcIvQYuSoqMxSuudpYn6QB+eIxc1KpC5
+ kdEbzjUcEADGm0jyOmVBWeCDjYXyAySH+ThADZIfjd0V7tKJVGgOq7bqxNr552boYl5iwPEeY
+ LRKz1Qty1RodmZVgFoneH35B2SRLhn/zOwF6X66YvJBpHCUVAf2UleooinvHZ6sgXNlIMobkf
+ RemOoMN+6gtZl47kA5r3QF4S69io2sZmZ+biE/IOggGCJEpqZ09b00xFFNX6icSjPWl8qdUr/
+ jvEpG9fnFIxARCS+sTEhmXKQiC9No2/svdtICRvOG6CYFdD+yOulyRWahdxoe9wpzoEbkP27p
+ M6IRgdvFiFE+fJBRCPnZByfPg0gaVY5SU32pEG+XUDeRNJXLyCosFW628xF34j506iHYaSzus
+ Hmcf2tDHonLUi7dvfbYunIqTLQZxZjM9cgeXu/sy/kFg2qAnc/O9y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Randall,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 10 Jun 2019, Randall S. Becker wrote:
+--8323329-585299116-1560192416=:789
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Friday, June 7, 2019 5:31 PM, Junio C Hamano wrote:
-> > The latest feature release Git v2.22.0 is now available at the
-> > usual places.  It is comprised of 745 non-merge commits since
-> > v2.21.0, contributed by 74 people, 18 of which are new faces.
->
-> Report from NonStop tests:
-> t7519 subtest 25 still fails on first execution but not on second.
+Hi Michal
 
-As mentioned previously: known issue. The patch to fix that is in `next`
-(1aa850bc59 (Merge branch 'js/fsmonitor-unflake' into next, 2019-05-30).
+On Mon, 10 Jun 2019, Michal Such=C3=A1nek wrote:
 
-> t9001 subtests 33, 82, 118, 119, 146 fail. We have no normal sendmail on=
- platform.
+> I am using git 2.20.1 and just observed this behavior:
 
-Maybe you should craft a patch series that adds a new prereq that verifies
-that sendmail works, and contribute a patch that marks those test cases
-with that prereq.
-
-> t9020, t9600, t9601, t9602 all fail - we have no SVN. I may be able to
-> handle exclusions for the next release.
-
-The question is why they fail even if the correspondig prereq should have
-triggered.
-
-Another opportunity for you to contribute a patch series!
-
-(By my analysis, you rank #277 in the `git shortlog -nse --no-merges`
-statistics, and just 17 patches would improve your rank to #150 or
-better...)
-
-> So essentially, no change from previous releases other than t7519 being
-> wonky. This is a pass. Thanks for all hard work from the team.
-
-Yes, t7519 became "more wonky" as a consequence of a bug fix of mine that
-made that particular bug a lot more prominent.
-
-So prominent, in fact, that I contributed two patches that will improve my
-rank ;-)
+Have you tested this with v2.21.0 (which is over three months old by now),
+or even v2.22.0?
 
 Ciao,
 Johannes
+
+--8323329-585299116-1560192416=:789--
