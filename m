@@ -2,86 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE341F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 16:47:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B67491F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 17:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727588AbfFJQru (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 12:47:50 -0400
-Received: from mail-it1-f172.google.com ([209.85.166.172]:54976 "EHLO
-        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726217AbfFJQru (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 12:47:50 -0400
-Received: by mail-it1-f172.google.com with SMTP id m138so84585ita.4
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 09:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=ZuURcv6Zxz/MZb98sZRY2Y5Bdr2SBeSHH0uJ8iNGNuA=;
-        b=sfwI7h4LWRSbC1bd26kRZG5cLaxuRefdq/+o//dBJcN6E7dZgZXwbxo8vMKkFy5WW9
-         55qWKMfJCk8wKYTC8N/XZNkW+ovz3FWoTLhHGLyl8+wDUPAvUu+C9vzlw5zsIZKYZsXv
-         78ykqlSkv80Zs+T7WrcSQz/LjlpJ6TaxkgFkEHaZFrvpIPF1dA2KaAlerOsfXrtyzCWI
-         E/UOxnkfCrxFXij0fTuhUG2RwgIGWL+KiJlzwuTtLFMK3gejvue4rkU4cWRTdnwYWAYj
-         RmO+3EeKy1MiSTVvWhpItkpUR9pl8lNq7SopoJV2b0hcRq/mRcFLGMA0TlzShqYpDy4i
-         Y3Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=ZuURcv6Zxz/MZb98sZRY2Y5Bdr2SBeSHH0uJ8iNGNuA=;
-        b=IbNSpbcN0E+VVd+V0WRlIsST9cGOasGCHN0+V+3HcSaVwTzYz8M9qUEIjeae4M71D1
-         XE//LrzZjT++PTClmI3RQhoGmCTKgcmE1Zd2OBAEjbVDk8awXSgjMfmCk4Pq7Cuf2Xrp
-         Tcn3z+B7FvjOVoXslQbamWc0HJmr6YJ2xoZnhRG6Fj+Rt4VoCkeLK2vBSwuNY3sbDqd7
-         avujjOuI0lziq+hzveMlHZHYTTdM+SWDAsU67fwiTtEDo24AzRNJQ0cBDCG9H8b6Og0m
-         003Y5TtqJie5mKqS5sLxUZuEuJBrMcixzLlgZmYRJQg8NGhk6Qt+6hDr+dvwfRmYcctv
-         Mr1Q==
-X-Gm-Message-State: APjAAAVZ12YoYrp0ruvJgW50bbtlgBiRSYu6wV091oOHnU0FxsHq1klI
-        OS/SWssozbIg1W6RV2wdxfHsCXFV8J/U0DgGKEsERx3PKcEP6w==
-X-Google-Smtp-Source: APXvYqxT/jb1NUoQuy5sUqS2Zv2rdhfJBxTZF0rshK+5kaSWzPA2Z7hg1FANgBhtFpM+1a1Ybrv9Z+o+L+uhgMj9EU0=
-X-Received: by 2002:a24:7401:: with SMTP id o1mr14173164itc.124.1560185269118;
- Mon, 10 Jun 2019 09:47:49 -0700 (PDT)
+        id S1728165AbfFJRJt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 13:09:49 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34465 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727679AbfFJRJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 13:09:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560186580;
+        bh=Tk/NMtQRNWmy4AldLb4YpD6zngkjv7bWkEYbBgUKq+8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eXz1wyW4bfxOIywOEVzNP4AXwgKkl8Qt03wIEaoQDjTB23g5on8FPDdMg7m1Q/sZY
+         pD/0jaZOaJbbKq9Wn3lgK0obNR/+1AkNYb4LHFX9fUvK6PJkP06Bb7Ap/8ItzYogDe
+         l1ge6DddQwfyDE9WwieaiS5BFg9N1ZEPS0J/Jm6I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.215.76.8] ([46.142.197.184]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXIov-1h4sQD1PL3-00WCfR; Mon, 10
+ Jun 2019 19:09:40 +0200
+Date:   Mon, 10 Jun 2019 19:09:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
+To:     =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, timcharper@gmail.com,
+        "avila.jn" <avila.jn@gmail.com>
+Subject: Re: Inclusion of translated git manpages into the packaging
+ systems
+In-Reply-To: <1979608.xhrAu3A07H@cayenne>
+Message-ID: <nycvar.QRO.7.76.6.1906101906140.789@QRFXGBC-DHN364S.ybpnyqbznva>
+References: <1979608.xhrAu3A07H@cayenne>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 10 Jun 2019 13:47:38 -0300
-Message-ID: <CAHd-oW5ifDZ_MmtmkuQt0FMpG74F=MZeUZ0yw7nq0xjOcwN-nA@mail.gmail.com>
-Subject: [GSoC][RFC] New approach: improve threading at git-grep
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323329-1115639801-1560186595=:789"
+X-Provags-ID: V03:K1:km6nlJV1krMcGvBlAbwQGe6PGkfcKrCBk9lrvRWuUSkZjt1uooB
+ laIY8jj8VDP2vJ3XxlHf3rsw1dLn/2RRNOnq/pzlYbKqz+BvVOPiNpq4M/KGghSiF4Qq7sF
+ O4Scz6/cUgow3l21CYgHcqVxZPwclerx7CslREdq7mPYjXHLpwQrUM+QQbqnl+w89nIJvpn
+ HO/KBdSyHr0f9duECNBCQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OUJBDeVp054=:wZg3tAm5a0V1nc1/DAK42k
+ bSsqim5lPdCEXYu8PlXtwcNnii6HWYmA/kK3un36PweJWsxb4Q9SNYJXr6Tjqw+BKwJz+NpPr
+ olNnYt4ZxKS7FW028NTYt0MiuOoDJtv9AwC0RyFj3bznfVjmV8g+nyz0i2+jCtR3jpZKXxsqB
+ ycTepiWk1fulymSzkIWMSmca6ur88rUbthXHCLhGTehFTWNeC1lCD1ttY+DArFnGAvGq3wCQQ
+ 6waL1ONr/TymkrPmimJC5c9wziPPKEARCLC4owbi/KB4x4n6a8Pwjc9QK7hhCcSQ2rsBbd2aC
+ 3nLDejXh6mZwBuHNQ9ibIYIede6IH/aFWNafgRh5oYuJnbec5fMNaBd/xWOoHNUFlXmd4qcSE
+ YLzeMYooW7oqFRw5JwYNDnlrpVZb8jn8VzWumf5dfx9HHv8n6cJNu+LY3FL6AFWb42sfsXdBL
+ gV/eUp8ZLMWDHQkzikhPXz5TzrQzgaa+2AYzUCBxDwdD2ZHRyaVr1cA/bxfWUy5DUcRCztxW2
+ lzOwPmOQqz41Nbrg6+mCf9IPfxAsAECLXJwPL7TsRtMIKYZTimpjrjtvkGqIexcnpvm6vV6lq
+ 0stWHIt2mH9VZtNj8MaYCstPWhs8+BwZa6/c4smn1Paf92OJWQW3amR2AS90hlgkQKhAdUlZa
+ 3bJEE74BdeKArm07tvO3wsq+JUBFtalIJDm+Tkmt3q9LizRzrusnWeB5xlyKqkfE6xDUajVV8
+ 6ZtWmAlRRMhkiKR0hWof4QTxgR7+oENUK2kwUmDZpsBLXppZ45vfCGfaAyKhTCGgWbd6Jsv9h
+ Zrgl0xYj+oz3HUtFZfPvyCZ6UFYqOObICmaHIZAW0YvO9wzQmVPk+1rfK7oIIxCngcQrA8x8W
+ iEbaC/ds7ilijDRAUaaTH7ImRVFsabbn5lW1Ncs51qFMgB0IsBIAdrCm7DcunS4DGj9I27PC5
+ HcCRg3oNiuAUZqBhfjAm2Vj5arKiV9s/SGof1yRY5ayT+jyMtvi6u
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I've been working on making the pack access code thread safe, as my
-GSoC project[1]. I was working directly at sha1-file.c global states
-targeting, in the far distance, to parallelize git-blame. But my
-mentors and I decided to take a different path, as a better way to
-continuous validate the work being done and be able to see small
-continuous improvements: the idea is to focus on the object store call
-chains originated at git-grep. Making them thread-safe, we should be
-able to re-enable threading when greping blobs[2] and go refining
-git-grep's locks along the way, for a better performance.
+--8323329-1115639801-1560186595=:789
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I just posted about the overall idea together with some analysis I've
-made on git-grep, here:
-https://matheustavares.gitlab.io/posts/week-4-a-different-approach
-Please, let me know if you have any comments or suggestions.
+Hi Jean-No=C3=ABl,
 
-Thanks,
-Matheus
+On Sun, 9 Jun 2019, Jean-No=C3=ABl AVILA wrote:
 
-[1]: https://matheustavares.gitlab.io/assets/Matheus_Tavares_GSoC_Proposal.=
-pdf
-[2]: Disabled by 53b8d93 (=E2=80=9Cgrep: disable threading in non-worktree
-case=E2=80=9D, 2011-12-12), because it was causing slowdowns
+> I took on the task of creating a project for the translation of man-page=
+s at
+> https://github.com/jnavila/git-manpages-l10n
+>
+> Up to now, the translations have started for 3 languages:
+>
+> * German (2 pages)
+> * Brazilian Portuguese (6 pages)
+> * French (11pages)
+
+Nice!!!
+
+> In order to provide feedback to translators, it's time to have these
+> pages included with the distributions of git. Right now the process of
+> compilation of the man-pages is still a bit off-tree, because it relies
+> on a recent version of po4a (v0.56) which has not yet reached most
+> distros.
+
+Maybe there is a way to skip the Makefile task when a too-old po4a is
+detected, with a warning?
+
+> I miss expertise in the process of packaging. Depending on the type of
+> distribution, the route to packaging might differ (for Mac OS and
+> Windows, maybe a direct inclusion, for Linux dists sister packages).
+> That's why I need your help to correctly perform this integration.
+
+Historically, Git for Windows punts on translations, excluding any
+non-en-US documentation (to save on bandwidth for the installer, which did
+grow from <30MB to 44MB in the last four years alone).
+
+There were a couple of motions to change that (maybe in the form of add-on
+packages/installers, maybe in the form of a "full" installer), but nothing
+came of it so far.
+
+Therefore, as far as Windows is concerned, I hate to admit that my answer
+is "don't worry for now, we only include US-English documentation
+anyway"... :-(
+
+Ciao,
+Dscho
+
+--8323329-1115639801-1560186595=:789--
