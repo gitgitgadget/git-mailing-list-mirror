@@ -8,53 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED3251F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 23:35:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 486F11F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 23:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390574AbfFJXfY (ORCPT <rfc822;e@80x24.org>);
+        id S2390612AbfFJXf0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 19:35:26 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:32881 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390524AbfFJXfY (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 10 Jun 2019 19:35:24 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:36457 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390500AbfFJXfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 19:35:24 -0400
-Received: by mail-ed1-f49.google.com with SMTP id k21so13635454edq.3
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 16:35:22 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id h9so17007298edr.0
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 16:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:mime-version:content-transfer-encoding
-         :fcc:content-transfer-encoding:to:cc;
-        bh=+6RhozrWuAU+g9XzrrAB/FqocJQ7yncsJIu13nDQ81A=;
-        b=mZD7SS1p0mDieK9aGgKONHaXbZTq3PWM57L5aHAJMKTLcBgBPYudJJB3S8uNBa017w
-         Za6bxDHG1oxTcPS2J91GW3zbA059O7DhKcrbud3Sr4fZdCy4dNUCXAFsfhuTWHoersMl
-         k8Gxme7816RcdfFboVgn4ZbgkEGhPVYcfymMUvMZC4fzAdDFzv7rfsmjQNB/fbF5c6h0
-         ve5WD3TkqWTp23svNysCpiwqZNVwDbjYehQ2xI3zcDj59WPuhui7msfatBuBnNs+LY4T
-         w3OSZNBqYC1dTY/iwlYW1SBTLcRvwcNTyeW7rRFCJDyBdLd1I7WIx52qJoFYeAKExNjm
-         shpw==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=KFvWs3MtFPh9f4rs4LNngKoc4vcN++p1+neR0WjImg8=;
+        b=Lbuhg5/0PFmm9mNAtCmTIxiS5DkTCQiiLa43xRoD2h1kGiXPhy6fgxdZjDxD5xFkQ8
+         D8DjU5n3aAGcRs781GN/aqzOtpvoewsFio1vOll9sVmXITkIAQ8Z8iQICj57gA9GKpsk
+         yLvuSbFN5ULlL+s4t5dppqj6AlX0xIs2VwlZNRIZyftBxWHV2xPXiVDqVkOqDeSJ0Lbv
+         KdhExin5FA1KhmLVL1qH/cdXE0TvcNu9VCfzEYLiUr50EcDbsOrfm8QKE9flMlTZq/hz
+         t5LxNNcdeVgKRN5KfQ8IM3eXyi8ar+JUPf4r5NWvkgPkTmB1B0JKdEJv8Hrdlu3Da5o3
+         /51g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=+6RhozrWuAU+g9XzrrAB/FqocJQ7yncsJIu13nDQ81A=;
-        b=KlaYTmMy/lj42IsYDSPmlJZKzB75Y/gGc7wptJx/gJaWEuiOg36GYRd4EH6Ur4Educ
-         FAC3J2q3I99txRQ1e+oUuV3QjYBe/veLYckjznbdMvOUNam23C4iooH7jQ1CcZyQMM/9
-         2mQ7F9CuRXfMJVsm1DbU8aNgWVYQHJICz2JmK3nZdEY2ASf9kcuOCvlktJ2ksxVQhPju
-         MkdUdRGDpFxL1p4yxtOYv2E69eNTRsgutNPNi3wcc1MTCN8tP3fWwknDgBYwozla89Yq
-         y5yxjqaFef05hWCpk4Afys+6b2ll3BBzI7WPL1+5bFqXafwKmBprPXf6vl6LXN/BA59t
-         AZZw==
-X-Gm-Message-State: APjAAAXMQQJl1TPEjn3L1wdy9JdQFOoZQ1Hm6mVsiEWVDYgqBv5mj6eM
-        l5HhV6OjKf2W6hRh5xYJNHH4GP+A
-X-Google-Smtp-Source: APXvYqzhNJzOsRjoFPORAo/eIwwdidUJKVXhL+VMpv6LkpOOSJL6Ekn2JwoL7vvcVeH36R40xSlSIA==
-X-Received: by 2002:a50:f599:: with SMTP id u25mr43973487edm.195.1560209721774;
-        Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=KFvWs3MtFPh9f4rs4LNngKoc4vcN++p1+neR0WjImg8=;
+        b=FHF+Mu73VW+ci4rALmOvavygQsZsMUYL3aSByp9h5tdi9GnZudU3FAFleI7wAGcii3
+         TpY5VIeC6ZJVT3KThO6VujC4PkUIZNHussLU+6NHukM6fP5q9wu5YJmDxAyd3zgmTb+F
+         21BdbxIO8AR5QY6cdK7LMMX2A+D75SyDxKhcJwruYVA3TNIfm+dha5+0hZbFTqQ08hZC
+         rN8lSX/FsMhYSgbbTMEMEvRHy2Sh/evI2Z66dQ3DRL8aPGXPa+XxxuE56W63Nt1n822+
+         P8xQXFg9sg94OtKBYWsvpThvrSivSbmsrlXlSu5VNDK28lk558pGiC9js2d01H/rFhoc
+         OA6g==
+X-Gm-Message-State: APjAAAX7qPezW+zeK2ewuapvoab8NbxHkLNPNrxOANoPc7ZcMuzyw3Bd
+        zNJB67F8g/81XF/JoYsQWIvRXMcL
+X-Google-Smtp-Source: APXvYqzHCsrRt0wDyZWUgyfPrd4t8xgTt77HqG5yvCq7e/m7VBGM/SLdg7dCRh4OSihZG9CVU9YVhg==
+X-Received: by 2002:a50:95ae:: with SMTP id w43mr48301492eda.115.1560209723163;
+        Mon, 10 Jun 2019 16:35:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s27sm2800321eda.36.2019.06.10.16.35.20
+        by smtp.gmail.com with ESMTPSA id a17sm3224948edt.63.2019.06.10.16.35.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
-Date:   Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
-X-Google-Original-Date: Mon, 10 Jun 2019 23:35:09 GMT
-Message-Id: <pull.261.git.gitgitgadget@gmail.com>
+        Mon, 10 Jun 2019 16:35:22 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 16:35:22 -0700 (PDT)
+X-Google-Original-Date: Mon, 10 Jun 2019 23:35:11 GMT
+Message-Id: <fe047db57064a2d8dafe5eb1268768cf5c441945.1560209720.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.261.git.gitgitgadget@gmail.com>
+References: <pull.261.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 00/11] Create 'expire' and 'repack' verbs for git-multi-pack-index
+Subject: [PATCH 02/11] Docs: rearrange subcommands for multi-pack-index
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,106 +67,58 @@ Content-Transfer-Encoding: 8bit
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, jrnieder@gmail.com,
         avarab@gmail.com, jonathantanmy@google.com,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The multi-pack-index provides a fast way to find an object among a large
-list of pack-files. It stores a single pack-reference for each object id, so
-duplicate objects are ignored. Among a list of pack-files storing the same
-object, the most-recently modified one is used.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Create new subcommands for the multi-pack-index builtin.
+We will add new subcommands to the multi-pack-index, and that will
+make the documentation a bit messier. Clean up the 'verb'
+descriptions by renaming the concept to 'subcommand' and removing
+the reference to the object directory.
 
- * 'git multi-pack-index expire': If we have a pack-file indexed by the
-   multi-pack-index, but all objects in that pack are duplicated in
-   more-recently modified packs, then delete that pack (and any others like
-   it). Delete the reference to that pack in the multi-pack-index.
-   
-   
- * 'git multi-pack-index repack --batch-size=': Starting from the oldest
-   pack-files covered by the multi-pack-index, find those whose "expected
-   size" is below the batch size until we have a collection of packs whose
-   expected sizes add up to the batch size. We compute the expected size by
-   multiplying the number of referenced objects by the pack-size and
-   dividing by the total number of objects in the pack. If the batch-size is
-   zero, then select all packs. Create a new pack containing all objects
-   that the multi-pack-index references to those packs.
-   
-   
+Helped-by: Stefan Beller <sbeller@google.com>
+Helped-by: Szeder Gábor <szeder.dev@gmail.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/git-multi-pack-index.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-This allows us to create a new pattern for repacking objects: run 'repack'.
-After enough time has passed that all Git commands that started before the
-last 'repack' are finished, run 'expire' again. This approach has some
-advantages over the existing "repack everything" model:
-
- 1. Incremental. We can repack a small batch of objects at a time, instead
-    of repacking all reachable objects. We can also limit ourselves to the
-    objects that do not appear in newer pack-files.
-    
-    
- 2. Highly Available. By adding a new pack-file (and not deleting the old
-    pack-files) we do not interrupt concurrent Git commands, and do not
-    suffer performance degradation. By expiring only pack-files that have no
-    referenced objects, we know that Git commands that are doing normal
-    object lookups* will not be interrupted.
-    
-    
-
- * Note: if someone concurrently runs a Git command that uses
-   get_all_packs(), then that command could try to read the pack-files and
-   pack-indexes that we are deleting during an expire command. Such commands
-   are usually related to object maintenance (i.e. fsck, gc, pack-objects)
-   or are related to less-often-used features (i.e. fast-import,
-   http-backend, server-info).
-
-We are using this approach in VFS for Git to do background maintenance of
-the "shared object cache" which is a Git alternate directory filled with
-packfiles containing commits and trees. We currently download pack-files on
-an hourly basis to keep up-to-date with the central server. The cache
-servers supply packs on an hourly and daily basis, so most of the hourly
-packs become useless after a new daily pack is downloaded. The 'expire'
-command would clear out most of those packs, but many will still remain with
-fewer than 100 objects remaining. The 'repack' command (with a batch size of
-1-3gb, probably) can condense the remaining packs in commands that run for
-1-3 min at a time. Since the daily packs range from 100-250mb, we will also
-combine and condense those packs.
-
-This series is the same as v6 of an earlier series [1].
-
-Thanks, -Stolee
-
-[1] https://public-inbox.org/git/pull.92.git.gitgitgadget@gmail.com/T/#u
-
-Derrick Stolee (11):
-  repack: refactor pack deletion for future use
-  Docs: rearrange subcommands for multi-pack-index
-  multi-pack-index: prepare for 'expire' subcommand
-  midx: simplify computation of pack name lengths
-  midx: refactor permutation logic and pack sorting
-  multi-pack-index: implement 'expire' subcommand
-  multi-pack-index: prepare 'repack' subcommand
-  midx: implement midx_repack()
-  multi-pack-index: test expire while adding packs
-  midx: add test that 'expire' respects .keep files
-  t5319-multi-pack-index.sh: test batch size zero
-
- Documentation/git-multi-pack-index.txt |  32 +-
- builtin/multi-pack-index.c             |  14 +-
- builtin/repack.c                       |  14 +-
- midx.c                                 | 440 +++++++++++++++++++------
- midx.h                                 |   2 +
- packfile.c                             |  28 ++
- packfile.h                             |   7 +
- t/t5319-multi-pack-index.sh            | 184 +++++++++++
- 8 files changed, 602 insertions(+), 119 deletions(-)
-
-
-base-commit: af96fe3392fb078cb5447bcb94f2ed8d79d0a4a8
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-261%2Fderrickstolee%2Fmidx-expire%2Fupstream-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-261/derrickstolee/midx-expire/upstream-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/261
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index f7778a2c85..1af406aca2 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -9,7 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
+ SYNOPSIS
+ --------
+ [verse]
+-'git multi-pack-index' [--object-dir=<dir>] <verb>
++'git multi-pack-index' [--object-dir=<dir>] <subcommand>
+ 
+ DESCRIPTION
+ -----------
+@@ -23,13 +23,13 @@ OPTIONS
+ 	`<dir>/packs/multi-pack-index` for the current MIDX file, and
+ 	`<dir>/packs` for the pack-files to index.
+ 
++The following subcommands are available:
++
+ write::
+-	When given as the verb, write a new MIDX file to
+-	`<dir>/packs/multi-pack-index`.
++	Write a new MIDX file.
+ 
+ verify::
+-	When given as the verb, verify the contents of the MIDX file
+-	at `<dir>/packs/multi-pack-index`.
++	Verify the contents of the MIDX file.
+ 
+ 
+ EXAMPLES
 -- 
 gitgitgadget
+
