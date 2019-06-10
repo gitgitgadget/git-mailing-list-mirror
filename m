@@ -2,106 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1FD41F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 17:58:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8EB21F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 18:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388642AbfFJR6D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 13:58:03 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:33176 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388592AbfFJR6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:58:02 -0400
-Received: by mail-vs1-f67.google.com with SMTP id m8so6024399vsj.0
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 10:58:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hH3rJH29foLuGGOSQgluWNVEvPHI4wGdVRCbR0qhKIs=;
-        b=HzUIAEfDLZhah26CNCDTEA/uTO5nxFczAAUDs9+uq/q6tYlt65d39XDeILpPsICEfq
-         kP0fUuJzRoNXYolnUQ7eXzgC9hhyQkO/u83zPXGVSINfbVyGmGrugMPMQ9tq546XJ8zS
-         OFAS/O+h3rCA/SIJcxfjl3L4bkOJM8ns9Y06dGivpwl6ofkCb7JApU3xYRrq8kuTndDD
-         fqPYb45XJmzNCz0UToeXRkH423+621lg3F0FUR1PKeyv2/DmuGf0ncIbVNCCip1/ayZP
-         nXvk15sJZ786aOupVyZE/TJ68JdoDfomt/0m55j0RMSihas3lNvzrTZdpx6DHnWBl56X
-         QKIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hH3rJH29foLuGGOSQgluWNVEvPHI4wGdVRCbR0qhKIs=;
-        b=oDm30LMdQ000Rs4dai+9PKywW9Dl+4WZROhw+NBQ48uvyiP9RuBZFiQa5FyF8VZsGS
-         X4RT0ARv9g/75xuyRpC2XIvwTESNDKAGQObSJOX+Vuv9uV5uOjn/L3VxJVgMcQqxLJ9W
-         NP1L4wCsS/qBdf+5gSCmnp8C6a9mHoRCF9CrJASUC5Uanz/xpYKZhSktS3Rz02j/esI4
-         EVaS97GCo9MM/etFZgSRy25TuglMouJXKKTBBSIe+3bla6wroewy0h5EQsYUEbD8Pqte
-         YabutZAnkfS4y9HDTsF53xdn32KGXaoYHpa1Ay0KzElUdBLONXOaWq3iX2r5Jg+zWLlg
-         1K8A==
-X-Gm-Message-State: APjAAAUowiWoFXTSmrkZEOScpZIqnQkwx4gYvngCJzYUQt56IpRLP7LO
-        axwG6Q1U/01jjVYdYuAJoV10Ql/P
-X-Google-Smtp-Source: APXvYqxAA98lpumFgn/clCL/QuTCaOGYt7oIkYxMFohrnLTzgKuSLKTRhtTqJGLjGnC9CK0/7HRY+g==
-X-Received: by 2002:a67:dc01:: with SMTP id x1mr25248816vsj.153.1560189481831;
-        Mon, 10 Jun 2019 10:58:01 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:a8d5:9520:fdfe:9e75? ([2001:4898:a800:1012:5a09:9520:fdfe:9e75])
-        by smtp.gmail.com with ESMTPSA id h191sm1736493vkd.23.2019.06.10.10.58.00
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 10:58:01 -0700 (PDT)
-Subject: Re: [PATCH v6 00/11] Create 'expire' and 'repack' verbs for
- git-multi-pack-index
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        avarab@gmail.com, dstolee@microsoft.com
-References: <20190424151428.170316-1-dstolee@microsoft.com>
- <20190514184754.3196-1-dstolee@microsoft.com>
- <5fadd5ee-0993-ad94-2cda-f8dfe3795336@gmail.com>
- <xmqqy329mjns.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <39b0c277-0ab4-971e-bf10-3f232f0df8e4@gmail.com>
-Date:   Mon, 10 Jun 2019 13:57:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        id S2387836AbfFJS3p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 14:29:45 -0400
+Received: from mout.gmx.net ([212.227.15.19]:38327 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726214AbfFJS3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 14:29:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560191382;
+        bh=RVPr9Uu3q7Z8G/IGzz70fBzH7ArbBh6xiqUYjGWlxUk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=G8fkvIetRs6F3usESzStyNHw+V47W9HD2KqtFIM6yKF/achmTBTYp7hzwtzqWj06I
+         NYaxOkiX52CbjLKpM5VOeJGZ/4/uvwgXECeEcddDFCicdj92TOqcNTrzLWKZmZxR3K
+         fRC9wpZxIyn6wekV5Dyps7C1cv6s1MBad6vgTqaw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.215.76.8] ([46.142.197.184]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ln8Tl-1gtfhr2hKf-00hKnO; Mon, 10
+ Jun 2019 20:29:42 +0200
+Date:   Mon, 10 Jun 2019 20:29:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by
+ `yes` in subshells
+In-Reply-To: <20190610095942.GA19035@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1906102026030.789@QRFXGBC-DHN364S.ybpnyqbznva>
+References: <cover.1560152205.git.j6t@kdbg.org> <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org> <20190610095942.GA19035@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy329mjns.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323329-1034172982-1560191397=:789"
+X-Provags-ID: V03:K1:jJ+JT60/F5/pMZKpMWQKeYr2oLy0YuzjOHBOhQmviC66zKmpcju
+ gxmXFDi7Z4ZjWvIEC+VxFxvFPaJ8wWMW4O/HK+IeKs3UIBt1Rmo1MjS7LPj0rccq5czxJsy
+ BFBZwmhi32aMLQapXuqNQ8B/XylnFdFbGrMJun5guy+rMb7eOUcyQ9VjaasHpiL5vX3tzly
+ 4Ss7bwrQBTckPJk7unt8A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZmM+HL1PwSQ=:o9cNjTzzBN+nrq0a2QeWca
+ b0TEyak16677UZzVxFuuS9Akc35E7mm1STQ6KgRaI2QeE66kZL1ZPmk9bbjJ2tkW0w6VO8qbI
+ 0zO4wqqh4zrhoIJ0eu/JOOJ6PpTZ1n2Tx8pUdQOg6+YyN9iZHKn/HXOwpceTyRjz9bxXhSFvQ
+ AaUQ5XA01QMQmjjy+TODw4rn7X7Ri1Uz19nfFCRU3JvWzsDoTv1KXegCpKU5KcqDnVmTLzk5/
+ 0X0kQmZFDXPwztSnx6I6TlIUs6yCTeuOFa8CP2OzgN3HXoTx7mM60W/bLbiNX9+E4zo5QtN5H
+ T6btIK7j6g8NmJ6P+2KVBH4DdsEHATH43dnv5s4mol+kwhNIiVdkcA/DjrMCxX0j/VJgV+it1
+ JDE5ZeUuSSqShZ+xSOMw3Y623LwbSmJHbevht0s3ZQ+nOuyINaE9Efe7Eg2sd5sRQT6CgBZ4r
+ 7CWEPvCyZQdEaeJ3mTLYc4Y0ZE7bn52y8EPqCHICyWk9YVV9otxh7Zy1AndMgoIyeY0Nq64sJ
+ 33anCgn9aOOuBTFf7kLSCy2ma5nkjcHYq36J+xvaZpo+abEpdWOCkR66uhgXT3/23rovHNdDT
+ zOsCLyVw84rmx75m/HuKR58KfIxZrqhts3DyiyjGcH4EI7ygW+zE/BO5GpGK/h8lfXLcg9xL9
+ Kw5wfQ3mqe0TSx3cB0W6LH2apYiyVESHgkpCNoEL9puaG+HkHOCGiCzlsO/omxAfC5TvNxN1Z
+ 0K+OmHNDyLGiyy9AUrFbhSLLxOwg8+hTqK2ggbaKKy1EGHG4s611Vvm/J626kks4mf9oV9fYZ
+ bHvng7zfCSMvwkjtsjT1i/omkykoMIisSUNK7I64PSIkpj9f+53/ZCVCpEhG4+o9mi3IgZPAO
+ nFqy0gtdGJ/s4a6fPrslyyAzlafzBrQAUKi8nUFh61yxxdUVHpy4U7MckLuqLhV+kk87Y8g8a
+ b5RdYggKLuDBa2hdM3baaq6EckOS9UPMuOqQdVNx45wWQwIthkFti
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/10/2019 1:31 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> On 5/14/2019 2:47 PM, Derrick Stolee wrote:
->>> Updates in V6:
->>>
->>> I rebased onto ds/midx-too-many-packs. Thanks, Junio for taking that
->>> change first. There were several subtle things that needed to change to
->>> put this change on top:
->>> ...
->> However, this series was dropped from the cooking emails, and never
->> included this v6. Now that the release is complete, could this be
->> reconsidered?
-> 
-> "reconsider" is a bit strong word, as (at least as far as I recall)
-> it was never "rejected" as an unwanted topic, but was merely
-> postponed to give way to other topics in flight.  Thanks for keeping
-> an eye on it and finding the right moment to raising it again.
-> 
-> I could go back to the list archive and dig it up, but because it
-> has been a while since it was posted, it may not be a bad idea to
-> send it for a review, after making sure it cleanly applies to
-> 'master', to make it one of the early topics to go 'next' during
-> this cycle, I would think.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Sure, I'll create a brand new thread and point to this thread for
-history.
+--8323329-1034172982-1560191397=:789
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
--Stolee
+Hi,
+
+On Mon, 10 Jun 2019, SZEDER G=C3=A1bor wrote:
+
+> > diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> > index 5b61c10a9c..b67440882b 100755
+> > --- a/t/t7610-mergetool.sh
+> > +++ b/t/t7610-mergetool.sh
+> > @@ -131,13 +131,13 @@ test_expect_success 'custom mergetool' '
+> >  	git checkout -b test$test_count branch1 &&
+> >  	git submodule update -N &&
+> >  	test_must_fail git merge master &&
+> > -	( yes "" | git mergetool both ) &&
+> > -	( yes "" | git mergetool file1 file1 ) &&
+> > -	( yes "" | git mergetool file2 "spaced name" ) &&
+> > -	( yes "" | git mergetool subdir/file3 ) &&
+> > -	( yes "d" | git mergetool file11 ) &&
+> > -	( yes "d" | git mergetool file12 ) &&
+> > -	( yes "l" | git mergetool submod ) &&
+> > +	yes "" | git mergetool both &&
+> > +	yes "" | git mergetool file1 file1 &&
+> > +	yes "" | git mergetool file2 "spaced name" &&
+> > +	yes "" | git mergetool subdir/file3 &&
+> > +	yes "d" | git mergetool file11 &&
+> > +	yes "d" | git mergetool file12 &&
+> > +	yes "l" | git mergetool submod &&
+> >  	test "$(cat file1)" =3D "master updated" &&
+> >  	test "$(cat file2)" =3D "master new" &&
+> >  	test "$(cat subdir/file3)" =3D "master new sub" &&
+>
+> Another possibility for eliminating a few more subshells might be to
+> turn these
+>
+>   test "$(cat file1)" =3D "that"'
+>
+> checks into
+>
+>   echo that >expect &&
+>   test_cmp expect file1
+>
+> because 'test_cmp' on Windows first compares the two files in shell
+> and runs 'diff' only when there is a difference to report.
+
+When you remember that spawning processes is much more expensive on
+Windows, still, than I/O, you will realize that this adds even more
+expense. Instead of a spawn & read, you are suggesting essentially a
+write, spawn, read & read, and that is only the best case.
+
+In the worst case, it would be a write, spawn, read & read, spawn, read &
+read.
+
+(Even if the first spawn is an MSYS2 spawn on Windows, which is more
+expensive than the MINGW spawn for the `git diff`, if that is a `git diff`
+rather than `diff`, didn't check...)
+
+So I am rather negative about this suggestion ;-)
+
+Ciao,
+Dscho
+
+--8323329-1034172982-1560191397=:789--
