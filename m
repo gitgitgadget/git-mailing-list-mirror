@@ -2,85 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51BF21F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 21:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7972C1F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 21:38:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390136AbfFJVeu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 17:34:50 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:37455 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389362AbfFJVeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 17:34:50 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45N5y01yk2z5tlC;
-        Mon, 10 Jun 2019 23:34:48 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id B160D450;
-        Mon, 10 Jun 2019 23:34:47 +0200 (CEST)
-Subject: Re: [PATCH 2/3] mergetool: dissect strings with shell variable magic
- instead of `expr`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <cover.1560152205.git.j6t@kdbg.org>
- <2a33ca20af41d68a5bb4e2cf1e5ae32fddf2796c.1560152205.git.j6t@kdbg.org>
- <xmqqblz5nyve.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <0a350943-9264-1a40-6452-91a990ec790d@kdbg.org>
-Date:   Mon, 10 Jun 2019 23:34:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S2390060AbfFJViV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 17:38:21 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35561 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389362AbfFJViV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 17:38:21 -0400
+Received: by mail-wm1-f67.google.com with SMTP id c6so761902wml.0
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 14:38:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WguhKx+IwNehgEPDf03AdauZCTqJcY0yNcg+pyQt3LM=;
+        b=rHIWrhpM8isH3lGqf86jq5KBiWUrkhRsKx6FBtTRLjqFZCERpS5qWvLHHB8UFNUrYb
+         KszIWkfFlpi/oCpSz7oGahSpQdWASXhk0Q0vbVeSkYZozh0yPk1qWMr7B7GCBhU2+h+f
+         huM2vtDPAfWlLv+UcbDz3zT+L7yo9JbVGkwPgcboCUueSkXwcIE7tmoLTWjQIVrQg76c
+         Ei/pxCYO2zVhDWQoSTboxVqn4xlgpng9r1Fb4FzedrMgyEAcTWw0RYx4YBVn/x6LJoMW
+         RlmxYml0Q0Tbj8cF4i0RfCMLUkamky5moJ9qwlUQMSRedgAWzBl2kVcAoXikSar9Rwz0
+         WSqg==
+X-Gm-Message-State: APjAAAUO5mDqSJSJgkKYJHXY9w78ZVPmYdTiptV7dfQAHKZqzL2A4n4z
+        Nhxz5X2O81d/xqnaiLFwAgW9yFj8AFKdmhIW+Xs=
+X-Google-Smtp-Source: APXvYqxogF7dHtVGGXmnKKki6c4FevZlED58Ibk6llZfqKreHefE7CNWn8BfgD0fY2j+L0GmsUuN0TA5jwJOSv5XIMk=
+X-Received: by 2002:a05:600c:218d:: with SMTP id e13mr15168371wme.101.1560202699375;
+ Mon, 10 Jun 2019 14:38:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqblz5nyve.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190607010708.46654-1-emilyshaffer@google.com>
+ <CAPig+cTZFL=GzM_-S2JMWWxRU7poJ87f3a9ZcFjjUe1T131eEQ@mail.gmail.com> <xmqq36khm8rj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36khm8rj.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 10 Jun 2019 17:38:08 -0400
+Message-ID: <CAPig+cQiDjMd5gG+JPE-7gxWxVYpUGAHGm39Z1kXh4WsEiMZkQ@mail.gmail.com>
+Subject: Re: [PATCH] documentation: add tutorial for revision walking
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.06.19 um 19:17 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
->> git-mergetool spawns an enormous amount of processes. For this reason,
->> the test script, t7610, is exceptionally slow, in particular, on
->> Windows. Most of the processes are invocations of git, but there are
->> also some that can be replaced with shell builtins. Do so with `expr`.
-> 
-> I see these as improvements independent of whatever test may or may
-> not be slow ;-)  s/^.*/but there are/There are/.  Thanks for working
-> on it.
+On Mon, Jun 10, 2019 at 5:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> +#include <stdio.h>
+> >> +#include "builtin.h"
+> >
+> > Git source files must always include cache.h or git-compat-util.h (or,
+> > for builtins, builtin.h) as the very first header since those headers
+> > take care of differences which might crop up as problems with system
+> > headers on various platforms. System headers are included after Git
+> > headers. So, stdio.h should be included after builtin.h. In this case,
+>
+> Actually the idea is that platform agnostic part of the codebase
+> should not have to include _any_ system header themselves; instead,
+> including git-compat-util.h should take care of the system header
+> files *including* the funky ordering requirements some platforms may
+> have.  So, we'd want to go stronger than "should be included after";
+> it shouldn't have to be included or our git-compat-util.h is wrong.
 
-Noted.
-
->> @@ -255,13 +254,16 @@ merge_file () {
->>  		return 1
->>  	fi
->>  
->> -	if BASE=$(expr "$MERGED" : '\(.*\)\.[^/]*$')
->> -	then
->> -		ext=$(expr "$MERGED" : '.*\(\.[^/]*\)$')
->> -	else
->> +	# extract file extension from the last path component
->> +	case "${MERGED##*/}" in
->> +	*.*)
->> +		ext=.${MERGED##*.}
->> +		BASE=${MERGED%"$ext"}
-> 
-> This rewrite can potentially change the behaviour, when $ext has
-> glob metacharacters.  Wouldn't BASE=${MERGED%.*} be more faithful
-> conversion?
-
-Since "$ext" is quoted inside the braces of the parameter expansion, the
-pattern counts as quoted, so all glob characters in $ext lose their
-special meaning. At least that's how I read the spec.
-
-I do see the symmetry in your proposed version. Nevertheless, I have a
-slight preference for my version because it specifies exactly what is to
-be removed from the end of value.
-
--- Hannes
+Thanks for clarifying that.
