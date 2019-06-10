@@ -2,129 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B66E01F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 22:09:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED3251F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 23:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388757AbfFJWJb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 18:09:31 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60012 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728651AbfFJWJb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 10 Jun 2019 18:09:31 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6959360435;
-        Mon, 10 Jun 2019 22:09:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1560204569;
-        bh=AH9BJttAyr6gIAEoajQUVw9CY0ge6UVk4rA99aMnnz8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=hTlC0DJjW0TvwFGVWVjw7DzYGNXeHc3vJ/besj+JbJ6CTADF0BlczDZeLjAbPPtsp
-         LPEgUqLggtlUmL9Yp3sqqa625DUWWX0Wm2ejRxyD/ie4r3hZxCxaQH+P/1YLEgqUvU
-         e5xwKskWmwNd9ad2zFsd5YOQl3mS/h4BemqCdqcCJYjUDQyv4Nto/+4+vBkz/94idc
-         A9VdE7sfEVWldghVq/B6E7g6kjvVJcUy4kRpVsTWDkWrjrXc9P7XLSfyF3Cw/L9Iz7
-         t7kdI17rC9IjA66ZGHdiFK7NGXXHHlEfT048g9bHNKDcg297biGxIfk9pqwNXEfSsf
-         CPVVpaH3WTaHAL34wfVhoiyhKkRc3PLRV/qFPZWPcqVKPJAfl61aYPWzCOvsj/B4h4
-         DQLVTGUZ30BMd2sf7VJQCUj4wciL8fm8mwyH6Kpa7sD1kK+jESKhlW57CBHa119xIF
-         KMRAU3qq4GUcvCdZ8VuuvtaD8T22Foq+5M1qU0RQF6Hldn+dmWy
-Date:   Mon, 10 Jun 2019 22:09:25 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/10] t1450: make hash size independent
-Message-ID: <20190610220924.GY8616@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190609224400.41557-1-sandals@crustytoothpaste.net>
- <20190609224400.41557-4-sandals@crustytoothpaste.net>
- <CAPig+cT_457aAXEXYm1ZrFVuLmFeKVaJ7ahf9AmbrWwuoSRKfQ@mail.gmail.com>
+        id S2390574AbfFJXfY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 19:35:24 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:36457 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390500AbfFJXfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 19:35:24 -0400
+Received: by mail-ed1-f49.google.com with SMTP id k21so13635454edq.3
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 16:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:mime-version:content-transfer-encoding
+         :fcc:content-transfer-encoding:to:cc;
+        bh=+6RhozrWuAU+g9XzrrAB/FqocJQ7yncsJIu13nDQ81A=;
+        b=mZD7SS1p0mDieK9aGgKONHaXbZTq3PWM57L5aHAJMKTLcBgBPYudJJB3S8uNBa017w
+         Za6bxDHG1oxTcPS2J91GW3zbA059O7DhKcrbud3Sr4fZdCy4dNUCXAFsfhuTWHoersMl
+         k8Gxme7816RcdfFboVgn4ZbgkEGhPVYcfymMUvMZC4fzAdDFzv7rfsmjQNB/fbF5c6h0
+         ve5WD3TkqWTp23svNysCpiwqZNVwDbjYehQ2xI3zcDj59WPuhui7msfatBuBnNs+LY4T
+         w3OSZNBqYC1dTY/iwlYW1SBTLcRvwcNTyeW7rRFCJDyBdLd1I7WIx52qJoFYeAKExNjm
+         shpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=+6RhozrWuAU+g9XzrrAB/FqocJQ7yncsJIu13nDQ81A=;
+        b=KlaYTmMy/lj42IsYDSPmlJZKzB75Y/gGc7wptJx/gJaWEuiOg36GYRd4EH6Ur4Educ
+         FAC3J2q3I99txRQ1e+oUuV3QjYBe/veLYckjznbdMvOUNam23C4iooH7jQ1CcZyQMM/9
+         2mQ7F9CuRXfMJVsm1DbU8aNgWVYQHJICz2JmK3nZdEY2ASf9kcuOCvlktJ2ksxVQhPju
+         MkdUdRGDpFxL1p4yxtOYv2E69eNTRsgutNPNi3wcc1MTCN8tP3fWwknDgBYwozla89Yq
+         y5yxjqaFef05hWCpk4Afys+6b2ll3BBzI7WPL1+5bFqXafwKmBprPXf6vl6LXN/BA59t
+         AZZw==
+X-Gm-Message-State: APjAAAXMQQJl1TPEjn3L1wdy9JdQFOoZQ1Hm6mVsiEWVDYgqBv5mj6eM
+        l5HhV6OjKf2W6hRh5xYJNHH4GP+A
+X-Google-Smtp-Source: APXvYqzhNJzOsRjoFPORAo/eIwwdidUJKVXhL+VMpv6LkpOOSJL6Ekn2JwoL7vvcVeH36R40xSlSIA==
+X-Received: by 2002:a50:f599:: with SMTP id u25mr43973487edm.195.1560209721774;
+        Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s27sm2800321eda.36.2019.06.10.16.35.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 16:35:21 -0700 (PDT)
+X-Google-Original-Date: Mon, 10 Jun 2019 23:35:09 GMT
+Message-Id: <pull.261.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 00/11] Create 'expire' and 'repack' verbs for git-multi-pack-index
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="j+Rb494BzBd9643b"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cT_457aAXEXYm1ZrFVuLmFeKVaJ7ahf9AmbrWwuoSRKfQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, peff@peff.net, jrnieder@gmail.com,
+        avarab@gmail.com, jonathantanmy@google.com,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The multi-pack-index provides a fast way to find an object among a large
+list of pack-files. It stores a single pack-reference for each object id, so
+duplicate objects are ignored. Among a list of pack-files storing the same
+object, the most-recently modified one is used.
 
---j+Rb494BzBd9643b
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Create new subcommands for the multi-pack-index builtin.
 
-On 2019-06-10 at 07:57:18, Eric Sunshine wrote:
-> On Sun, Jun 9, 2019 at 6:44 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > Replace several hard-coded full and partial object IDs with variables or
-> > computed values.  Create junk data to stuff inside an invalid tree that
-> > can be either 20 or 32 bytes long.  Compute a binary all-zeros object ID
-> > instead of hard-coding a 20-byte length.
-> > [...]
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> > diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-> > @@ -9,6 +9,7 @@ test_description=3D'git fsck random collection of tests
-> >  test_expect_success setup '
-> > +       test_oid_init &&
-> >         git config gc.auto 0 &&
-> >         git config i18n.commitencoding ISO-8859-1 &&
-> >         test_commit A fileA one &&
-> > @@ -16,7 +17,8 @@ test_expect_success setup '
-> >         git checkout HEAD^0 &&
-> >         test_commit B fileB two &&
-> >         git tag -d A B &&
-> > -       git reflog expire --expire=3Dnow --all
-> > +       git reflog expire --expire=3Dnow --all &&
-> > +       test_oid_init
-> >  '
->=20
-> Why does this function call test_oid_init() twice?
+ * 'git multi-pack-index expire': If we have a pack-file indexed by the
+   multi-pack-index, but all objects in that pack are duplicated in
+   more-recently modified packs, then delete that pack (and any others like
+   it). Delete the reference to that pack in the multi-pack-index.
+   
+   
+ * 'git multi-pack-index repack --batch-size=': Starting from the oldest
+   pack-files covered by the multi-pack-index, find those whose "expected
+   size" is below the batch size until we have a collection of packs whose
+   expected sizes add up to the batch size. We compute the expected size by
+   multiplying the number of referenced objects by the pack-size and
+   dividing by the total number of objects in the pack. If the batch-size is
+   zero, then select all packs. Create a new pack containing all objects
+   that the multi-pack-index references to those packs.
+   
+   
 
-Probably because this was a squash of a couple different patches. I'll
-reroll with that fixed.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+This allows us to create a new pattern for repacking objects: run 'repack'.
+After enough time has passed that all Git commands that started before the
+last 'repack' are finished, run 'expire' again. This approach has some
+advantages over the existing "repack everything" model:
 
---j+Rb494BzBd9643b
-Content-Type: application/pgp-signature; name="signature.asc"
+ 1. Incremental. We can repack a small batch of objects at a time, instead
+    of repacking all reachable objects. We can also limit ourselves to the
+    objects that do not appear in newer pack-files.
+    
+    
+ 2. Highly Available. By adding a new pack-file (and not deleting the old
+    pack-files) we do not interrupt concurrent Git commands, and do not
+    suffer performance degradation. By expiring only pack-files that have no
+    referenced objects, we know that Git commands that are doing normal
+    object lookups* will not be interrupted.
+    
+    
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+ * Note: if someone concurrently runs a Git command that uses
+   get_all_packs(), then that command could try to read the pack-files and
+   pack-indexes that we are deleting during an expire command. Such commands
+   are usually related to object maintenance (i.e. fsck, gc, pack-objects)
+   or are related to less-often-used features (i.e. fast-import,
+   http-backend, server-info).
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlz+1RQACgkQv1NdgR9S
-9osOEBAAxcH/GYTt9v/zF60fD18utWz2AIrtqiXuhmoKAMM0JMogzdU6Y27pFrGE
-M/9eCZ1xLJ+jTJfX8gbKA04zdB8VzME875Ws5ZLiAcBEb7qZI/Vl0liFbX78lVf1
-764X3fgfLAryoGVNky5hPUwDaDKKUNRmgMD7xY9bZveQ+gOnRAV74TnqFx/XFu3s
-RFZ6CLkVeRoCE42wHJpJ70yamMuhkiwIw06b/PObG9Zd1zr+D45Pgy0BVNB22j2f
-kriPJNDPPl2NiqC58cyStn239NXkhHMiWRhs0xxodYANEcIv5Yz1BKkV36cbb77G
-0kQIed5sUEnm6FG+jMQUl2pSDUumqynEK5MQt5IXVNYR7P1I+k2gkE2+/uWKQfIh
-R9vwihrtcl4uz2FOX6gDQvJfs/Ram5zmLeVp0Hdv3wK6UAKhfgeCt6+xHIPFW+8q
-s8MkwXTI9EQHQL3uGwF7EMNY3a9vKECaT3VqoekzFjyJPYBZq7eCJ6MDTpKD8j4i
-9w56KSuGFM69qlcH/Grm77jPUWVWHbt4+trha6zcESJfWbiY95smjqf3hFBgofI4
-rtD88fegqKFOP1AbgjXgqM7KleeEWH17iJ8JPcFeATlLBBSxc0IZ/ZG2bo1iAgnB
-CUtbMSIOjuk8OnAkYFjyeMzaZOETpU+eRH+2gxA71kZ0wivQSNo=
-=HNxO
------END PGP SIGNATURE-----
+We are using this approach in VFS for Git to do background maintenance of
+the "shared object cache" which is a Git alternate directory filled with
+packfiles containing commits and trees. We currently download pack-files on
+an hourly basis to keep up-to-date with the central server. The cache
+servers supply packs on an hourly and daily basis, so most of the hourly
+packs become useless after a new daily pack is downloaded. The 'expire'
+command would clear out most of those packs, but many will still remain with
+fewer than 100 objects remaining. The 'repack' command (with a batch size of
+1-3gb, probably) can condense the remaining packs in commands that run for
+1-3 min at a time. Since the daily packs range from 100-250mb, we will also
+combine and condense those packs.
 
---j+Rb494BzBd9643b--
+This series is the same as v6 of an earlier series [1].
+
+Thanks, -Stolee
+
+[1] https://public-inbox.org/git/pull.92.git.gitgitgadget@gmail.com/T/#u
+
+Derrick Stolee (11):
+  repack: refactor pack deletion for future use
+  Docs: rearrange subcommands for multi-pack-index
+  multi-pack-index: prepare for 'expire' subcommand
+  midx: simplify computation of pack name lengths
+  midx: refactor permutation logic and pack sorting
+  multi-pack-index: implement 'expire' subcommand
+  multi-pack-index: prepare 'repack' subcommand
+  midx: implement midx_repack()
+  multi-pack-index: test expire while adding packs
+  midx: add test that 'expire' respects .keep files
+  t5319-multi-pack-index.sh: test batch size zero
+
+ Documentation/git-multi-pack-index.txt |  32 +-
+ builtin/multi-pack-index.c             |  14 +-
+ builtin/repack.c                       |  14 +-
+ midx.c                                 | 440 +++++++++++++++++++------
+ midx.h                                 |   2 +
+ packfile.c                             |  28 ++
+ packfile.h                             |   7 +
+ t/t5319-multi-pack-index.sh            | 184 +++++++++++
+ 8 files changed, 602 insertions(+), 119 deletions(-)
+
+
+base-commit: af96fe3392fb078cb5447bcb94f2ed8d79d0a4a8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-261%2Fderrickstolee%2Fmidx-expire%2Fupstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-261/derrickstolee/midx-expire/upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/261
+-- 
+gitgitgadget
