@@ -7,87 +7,74 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5477F1F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 16:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01EC91F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 16:34:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727929AbfFJQcp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 12:32:45 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52412 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727884AbfFJQcp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 12:32:45 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0A00D69468;
-        Mon, 10 Jun 2019 12:32:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1728136AbfFJQeX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 12:34:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52787 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727986AbfFJQeX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 12:34:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EBD1161AEC;
+        Mon, 10 Jun 2019 12:34:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r+1gjSxGv4Eno9N4nGNejZJFuIo=; b=C+EiPb
-        vH/EN03hpoidaNfSDJBE4P9sVicQujW4tqyW81kXVrzuy280z4eZkH5Ve8zujY2O
-        FRH/DBv40j7HshRoQDqJfVqIRCv02Q4a4jV/nHES7W8FHu+JPbyoO2LU+HE4F4Jz
-        Afhm0fRHw5jlWq4Sbe94U71E4ZWtI9bhwz/dM=
+        :content-type; s=sasl; bh=e8zwqApllCw/GJmvNhsCXLcdB2s=; b=mpbDyh
+        pGjxXW7HOPKq8RjEoV7SyeSoW8wG/VV0QRV75QyeY4j8xLJDl11tOi1nvwgwUE1x
+        +Sk70c0ougNuusUZMl61zKLdgKefkLKIHOAHK7ESPNC7tLzRw8I7EWz+4h9/PeST
+        2/h7TTuL3M/wvep+zK5170xag3G/xU0xF4/Go=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RaiKIvQMy46fuPizuWJbfcjDOVpiYR3N
-        2mDla8WegIqDOnJrLt3lVgK94LXdQk77BhuUpneoAY7Jc9Mwnc1IOdtklZUmtuSC
-        PyUE/YESRE1o3VTHGOjDkLv4TvNOvBJ83m6XhISaeJPMTmMd36fY2kwN7K5M0RbS
-        mNAHffKfkQ8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 02E5069467;
-        Mon, 10 Jun 2019 12:32:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=Q2Cwz8lO32dYeKFvap0mABPFdhXsk3RJ
+        srBJzNicLvSj9i7FLt0DWfM+WJk1fe5IPpqvCH8qEL4skLxCsB5KtI2e/RNE4HUX
+        j7JUpNp87Bl7UUdKxgKv+XJc9mtyO637l85DsmCEPFNT7sr6XvUkaN6VMOgpZdgI
+        X84AuNqa/wk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 460E2161AEB;
+        Mon, 10 Jun 2019 12:34:21 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 14EC269464;
-        Mon, 10 Jun 2019 12:32:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A4822161AEA;
+        Mon, 10 Jun 2019 12:34:20 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] t0001: fix on case-insensitive filesystems
-References: <pull.151.git.gitgitgadget@gmail.com>
-        <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
-        <20190609201302.GX8616@genre.crustytoothpaste.net>
-Date:   Mon, 10 Jun 2019 09:32:37 -0700
-In-Reply-To: <20190609201302.GX8616@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 9 Jun 2019 20:13:02 +0000")
-Message-ID: <xmqqo935o0yi.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>, git@vger.kernel.org,
+        newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH 1/3] sequencer: add advice for revert
+References: <2007ef79-1791-4f77-f9e4-34c59b4f0c36@gmail.com>
+        <20190610051313.16222-1-rohit.ashiwal265@gmail.com>
+        <d59c078c-61da-1c3a-d215-80c9e3d08896@gmail.com>
+Date:   Mon, 10 Jun 2019 09:34:19 -0700
+In-Reply-To: <d59c078c-61da-1c3a-d215-80c9e3d08896@gmail.com> (Phillip Wood's
+        message of "Mon, 10 Jun 2019 11:39:58 +0100")
+Message-ID: <xmqqk1dto0vo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5D2F514A-8B9D-11E9-BA09-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 99241CB2-8B9D-11E9-8F4A-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->>  test_expect_success 'init with separate gitdir' '
->>  	rm -rf newdir &&
->>  	git init --separate-git-dir realgitdir newdir &&
->>  	echo "gitdir: $(pwd)/realgitdir" >expected &&
->> +	downcase_on_case_insensitive_fs expected newdir/.git &&
+>> Firstly, signature of `create_seq_dir` doesn't allow us to call
+>> `sequencer_get_last_command()`. Changing that for the sake of a
+>> better error message is too much task for this patch as it is a
+>> subject of discussion on its own.
 >
-> I wonder if there's maybe a simpler way. If we canonicalize paths when
-> writing them to the gitdir file, then writing "$(pwd -P)" on the line
-> above should produce the right result.
->
-> Now, technically, POSIX doesn't require case canonicalization of the
-> path with "pwd -P", but then again, POSIX doesn't permit
-> case-insensitive file systems, and we know the behavior on macOS uses
-> bash, which does the right thing in this case because it calls
-> realpath(3). I've tested that it also does the right thing on Linux when
-> the worktree containing the Git checkout is in a path with symlinks.
->
-> I don't know how that works on Windows, but if it does, it might be
-> simpler.
+> There is only one caller and it already has a struct repository pointer
+> so it is a two line change, one of which is the insertion of a single
+> character to change create_seq_dir() so it can call
+> sequencer_get_last_command(). It is normal to change function signatures
+> (especially for static functions like this) when making changes, it is
+> part of improving the code base. The quality of error messages is
+> important to the overall user experience. It's when things go wrong that
+> users need accurate advice about what to do.
 
-Yup, it would be a worthwhile avenue to pursue; on the negative
-side, a single-liner "no, unfortunately that would not work on
-Windows" would also be useful.
-
-Thanks.
+Thanks for guiding a new contributor in the right direction gently.
+Very much appreciated.
