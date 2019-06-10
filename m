@@ -2,133 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BA091F462
-	for <e@80x24.org>; Mon, 10 Jun 2019 17:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35C991F462
+	for <e@80x24.org>; Mon, 10 Jun 2019 17:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388434AbfFJRrC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jun 2019 13:47:02 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42685 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387643AbfFJRrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jun 2019 13:47:01 -0400
-Received: by mail-wr1-f66.google.com with SMTP id x17so10053077wrl.9
-        for <git@vger.kernel.org>; Mon, 10 Jun 2019 10:47:01 -0700 (PDT)
+        id S2388342AbfFJR4s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jun 2019 13:56:48 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56034 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388174AbfFJR4s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jun 2019 13:56:48 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a15so223719wmj.5
+        for <git@vger.kernel.org>; Mon, 10 Jun 2019 10:56:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BemgM+alGqRO3VoH3eKhAiltI7TUoBiGa2+6ld0vJSc=;
-        b=FTe0K2f4ErzQHYmC/lmSDVlf9rryzBUBiH8PSvl3KJz3MPlmjjPYNCKUogd1J+B8J9
-         RdRRDhxYEeHKUdhgq4Ki1mvEqbd4WO0kF+mb44AogJ2tdN8SbjWaVKoBJpVsMCK/792R
-         s7Oaq9WaKMs68OvpEZ1SMckoOt2ELYJv0IVzzjP6Ka3M0G89Hu4WOQA+COaTzKx9nj8e
-         lyhpRpJRkZ0+o+SqyD013ajsXE6v+v71jlo83xm2S2QbJ2mgUyZo/Ma+SANesrNWHVIs
-         1nRwo4WVTmhQ4wCkUzHEfZ7DXEs6EIlX5qMI40TSzKOrkdKgJp4zIIphRvWGmAhajj4e
-         oFZQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=0Iz3FIXKko0MbFr7f26iDIEVEi2hR63t6ZOaV9tZ21I=;
+        b=TS8jmoJYBtmGmLZ639EtZtufJr1H74lnTZMlSMSnsy5TrW68AonFqTIlsulKKHeP5I
+         zp6ssgXp4r3U8sAyJW5ysWBZHqI8GvFMypkZ6vWOTjSYZzVUXL++TIdUMRyFlgAswB5O
+         o45v6K0bVUGn+V506iYUInyTH1TjpoIw4gpeVQoEAb/82g9PEVpiYa/tObDZvdYR/4t+
+         s6g7GZVPmo9D4edQmztSVOSO/tULTByBXWZ951mqwKPtnk4AYZtZH7MsO9Nx3cPLAd8h
+         RwqV2en5MSoQFCElpPqhAaljUa1HLYuA7H3wERbhWQ+4KUKuph+YR5tFM+QxmjQ/lXVr
+         4ggQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BemgM+alGqRO3VoH3eKhAiltI7TUoBiGa2+6ld0vJSc=;
-        b=lFgTXqGzAqyjpbCDU8j3GsUqnQcgoolPpcqOcOq207FQBQxOtpp9iSz2ias1XSbOlh
-         Wyz1Bx7r2M5KQe0dzuxa+zKfcfg7eYtM+f4kfKdz1D00S9sceVFC+nUiJcqnQIe2IxLx
-         ULwBD0prqGQB4H1TKFD4yQXcvPAZoIcATpXwkwylXWwzZ1lsQOd+jGfShxBThr6jD7XZ
-         rWig9guhf/eNtwmbAoypBVTEaXiIF5qTVk5dlzv6SOp4f/MHTRiaE2p+YP8W+/ngH+dG
-         qV4LdQQ0Vko+Ao07BZcywN2oxbIMXwrnA9DncvEdMp9kovn/8qQeH/EAoY65fKu4zjCL
-         79eQ==
-X-Gm-Message-State: APjAAAVwU/Osp0CIHUjCyRcs33Cwkan7KBrZjN5UQZb/80e23IN/LbfG
-        jcqYX9q/RCDDni2K9DBoxLs=
-X-Google-Smtp-Source: APXvYqymMKfBI14aDNuG0RyK4kioSPsf0lH+PPnQ8XMdwiGImBexT1h7KZioykeUlX3lhT2XdSUQZQ==
-X-Received: by 2002:adf:ef09:: with SMTP id e9mr32074605wro.79.1560188820738;
-        Mon, 10 Jun 2019 10:47:00 -0700 (PDT)
-Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id o15sm14570345wrw.42.2019.06.10.10.46.59
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jun 2019 10:47:00 -0700 (PDT)
-Subject: Re: [GSoC][PATCH 3/3] cherry-pick/revert: update hints
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com
-References: <72b44513-1182-8172-94aa-ca69730d9a22@gmail.com>
- <20190610133321.7901-1-rohit.ashiwal265@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <81dbc317-c11f-c3b4-f20f-cff20254d626@gmail.com>
-Date:   Mon, 10 Jun 2019 18:47:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0Iz3FIXKko0MbFr7f26iDIEVEi2hR63t6ZOaV9tZ21I=;
+        b=H3Z6ZaEsbVJ02NnrskVAnU8EidZXpLnnDbfjhOmEKhDqo9Z8KwP2N3WjDz9c49D5QB
+         z7hwfKeSNWYpLN1NgJoD3iHi+zqvmp1N2hS6dKhzuGsVcPq7QTZ++vgM73FnZNfpgh24
+         MjWQl2ux+NYdEthIVIDt3ospuLh8YVikY4TkFDNhPCqTwPi8svcr4pPMhnKfwLiKoBI7
+         9aDgwJfXw37zv73XheZbIEqYn+V026Zd5mfJPQC+EGdo0T8JtHpGmLGKqxj3q8oGhnG7
+         QA1b5lOndN1BVbzFpt5hFxD6gGOZtCZ19B474vHxHbCWc4Dx6eCDDpKjAA3FCHD7BSPL
+         dHQg==
+X-Gm-Message-State: APjAAAXA5SEtUmz/mTUdc3lgtommO7zwnYQPpqAN1+TGD5mAkMU+Ptqv
+        11c7RKqS+ggLgp2JAQ86AGNNohM6
+X-Google-Smtp-Source: APXvYqwtm2Q4sB9jgh0J+CyPEUlwB/PrEMWaY1eo/g+DNkN7KaJLN5B7YYbt83ok6aaNknF4uHsaig==
+X-Received: by 2002:a7b:c5ca:: with SMTP id n10mr13316334wmk.136.1560189406071;
+        Mon, 10 Jun 2019 10:56:46 -0700 (PDT)
+Received: from szeder.dev (x4d0c1d42.dyn.telefonica.de. [77.12.29.66])
+        by smtp.gmail.com with ESMTPSA id y16sm9857299wru.28.2019.06.10.10.56.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jun 2019 10:56:45 -0700 (PDT)
+Date:   Mon, 10 Jun 2019 19:56:42 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t7610-mergetool: do not place pipelines headed by
+ `yes` in subshells
+Message-ID: <20190610175642.GB4012@szeder.dev>
+References: <cover.1560152205.git.j6t@kdbg.org>
+ <75c812bd4838f6f35b6f42b97ae396ebb28d8b95.1560152205.git.j6t@kdbg.org>
+ <20190610095942.GA19035@szeder.dev>
+ <xmqq36khnyky.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20190610133321.7901-1-rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq36khnyky.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit
+On Mon, Jun 10, 2019 at 10:23:57AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > turn these
+> >
+> >   test "$(cat file1)" = "that"'
+> >
+> > checks into
+> >
+> >   echo that >expect &&
+> >   test_cmp expect file1
+> >
+> > because 'test_cmp' on Windows first compares the two files in shell
+> > and runs 'diff' only when there is a difference to report.
+> 
+> Needs measuring.  Is two extra file I/Os that inexpensive?
 
-On 10/06/2019 14:33, Rohit Ashiwal wrote:
-> Hi Phillip
-> 
-> On 2019-06-10 10:40 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi Rohit
->>
->> On 10/06/2019 06:28, Rohit Ashiwal wrote:
->>> Hey Phillip
->>>
->>> On Sun, 9 Jun 2019 19:03:02 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
->>>>
->>>> Hi Rohit
->>> [...]
->>> I think it is more about suggesting what are all the possibilities
->>> you can try and not about intelligently suggesting what you should
->>> do.
->>
->> Previously all the suggested options were viable, --skip is not
->> applicable if the user has committed a conflict resolution. The idea of
->> the advice is to help the user, suggesting options that wont work is not
->> going to help them.
-> 
-> Now that I know what I should do, I'll make the change and submit a
-> better patch.
+Compared to subshells and external processes, yes.
 
+I run this on Linux:
 
-That's great, thanks
+  --- >8 ---
 
-Phillip
+#!/bin/sh
 
->>> ofc, we can not use `revert --<option>` while cherry-picking.(
->>
->> As I suggested in patch 1 we should tailor the error message to the command.
-> 
-> Yes, I'll tailor the messages based on which command was ran.
-> 
->>> we should not be able to do so in ideal conditions, but the world
->>> does not work as we think it should). Still we are suggesting so
->>> here.
->>
->> Yes because you have the power to easily make that change. It is normal
->> to try and improve the code base when we make related changes.
-> 
-> :)
-> 
->>> Also, I think it is more reasonable to make "this" a part of patch
->>> which will cover "tailored" advice messages which is also a topic
->>> of discussion as I described here[1].
->>
->> That might make sense, but it is a pretty self contained change as part
->> of this patch.
-> 
-> Yes, this patch is the place where all changes should be made.
-> 
-> Thanks
-> Rohit
-> 
+test_description='test'
+
+. ./lib-bash.sh
+
+test_expect_success 'test' '
+	echo "master updated" >file1 &&
+
+	echo "original:" &&
+	time for i in $(seq 1000)
+	do
+		test "$(cat file1)" = "master updated"
+	done &&
+
+	echo "using test_cmp:" &&
+	time for i in $(seq 1000)
+	do
+		echo "master updated" >expect &&
+		test_cmp expect file1
+	done &&
+
+	echo "using mingw_test_cmp:" &&
+	time for i in $(seq 1000)
+	do
+		echo "master updated" >expect &&
+		mingw_test_cmp expect file1
+	done
+'
+
+test_done
+
+  --- >8 ---
+
+And it produced:
+
+  original:
+  
+  real    0m1.888s
+  user    0m1.491s
+  sys     0m0.532s
+  using test_cmp:
+  
+  real    0m1.233s
+  user    0m0.877s
+  sys     0m0.432s
+  using mingw_test_cmp:
+  
+  real    0m0.344s
+  user    0m0.298s
+  sys     0m0.026s
+  ok 1 - test
+
+It's faster even on Linux, so it should be much faster on Windows,
+where both external commands and subshells have much higher overhead.
+
+However, there are only about 50 "$(cat ...)" in t7610 that can be
+eliminated this way, which is not all that much compared to the
+several thousand processes shown in the cover letter...
+
+Anyway, there is still the better developer experience in case of one
+of these checks were to fail without '-x' tracing... :)
 
