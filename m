@@ -7,50 +7,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC6B1F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 23:35:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0F71F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 23:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408181AbfFKXfj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 19:35:39 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60028 "EHLO
+        id S2407356AbfFKXks (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 19:40:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60034 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2405380AbfFKXfj (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 11 Jun 2019 19:35:39 -0400
+        by vger.kernel.org with ESMTP id S2406131AbfFKXks (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 Jun 2019 19:40:48 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:4429:e8a6:430:6b59])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2A5CD60427;
-        Tue, 11 Jun 2019 23:35:36 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2233E60427;
+        Tue, 11 Jun 2019 23:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1560296136;
-        bh=bLZ3Dcdfmejk1/WlT7yLQK2o7eU8PycwOJ6L1dvo5Aw=;
+        s=default; t=1560296446;
+        bh=GxLpehDy+cT/9H5EJuhpU1SZki1hY8OFPtw6SI5Wqio=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=AHtioKnOurWkUskcOHSE2RDPkelnBwC6DbX07ylSfdItl3OALkU8ejwTP/DJnLX3X
-         agE5PNhyRpLwbDZVLbcEDWGHiP2BxWDdr6zY/CxZtmjWk+bgDJ4od6iHtU5LenoAfr
-         1qvWd9wS8E4s3ol+LFbFmEBnoZVwVhHu47W1Lg/DYtpJBdow8D4IUhHOhxlODCvakt
-         FOfUjz+wMa1KJ2xWrbvH13bDtqzi84mcn2+LgyrhS97TCX50cKmEG5gKZ1JVT+5+I/
-         UDIf7beU0kzp6l+BTuQdNYj0MGGpJir2mzyg5XP4uwSWREcaXa7FiHqLuwLsuQrrGj
-         tKJrbX7fs7stsfiOXWUKfZ++D6h/BLejmV4CxcZPdSUeuxxn2uWHoEtMMXI/f2QT5I
-         X0NFO61zSnhbM1H1G26spq1Kb6qWXhRVK4x1/kxrQt6fJcp0+PnG23cRT/WgRpr8sJ
-         lueGj18hIy49T9aCpSyoujIYBjdi+bGc4yVBGyvrHXosMQGjQym
-Date:   Tue, 11 Jun 2019 23:35:31 +0000
+        b=G+i2pum0XJj9pUR+N7nGdl2o7TXXFmEf0+8tJmD6Hr2ZYCwTv2+Ij8IVzjYG4AWrz
+         Y55pMSYh7pzTm8ZWEwKJf2Nmpuoj/E1JUN9LCmZf4W3uhR0qDkEq1aR3yeI9/n+9ub
+         9//VgpnCQxP1cIEI/6JEFj2F5tCcrLqQZq18uBuQ3tIdDCC1xF6Z3iu5HTFpZ6M45I
+         Gp/ZSz5M5JadY5ztR24mEk/BfO7RyNv+WbgZPyf/l2GZ+eR8hETCms4un6ixwBQ0V+
+         qGpQnwATXuT2RLic8TSdt/SO/PhSY7h0XdLnp8vdjZZL4m/zvU2O9sVSbwdwNLV5zG
+         Mk3Ge2mnPSBCtkktJK/v81s+U8np0wfTvARblGReJpPBXg/iSBLB46zZMagyUytUOr
+         1JcRpMPLoOER33NJLgHA5uPW8Ay/89+A8rSVleFVLwdTXDX1APoVlO3RsrZuYexQOK
+         SDcrwA68xQMSrnfqSVa/DoN7P41xyfzPIuFE/otTA/CPd52ULuH
+Date:   Tue, 11 Jun 2019 23:40:42 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git List <git@vger.kernel.org>
 Subject: Re: [PATCH 03/10] t1450: make hash size independent
-Message-ID: <20190611233530.GZ8616@genre.crustytoothpaste.net>
+Message-ID: <20190611234041.GA8616@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git List <git@vger.kernel.org>
 References: <20190609224400.41557-4-sandals@crustytoothpaste.net>
  <20190611230255.146381-1-jonathantanmy@google.com>
+ <CAPig+cT-N6=-9CJR1ugQnrksy-Zfx7bqnppsEdpiX8qaG-7_Hg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="obAtV4On+KRLREo5"
+        protocol="application/pgp-signature"; boundary="Ytgo/kJyDF3J5kSH"
 Content-Disposition: inline
-In-Reply-To: <20190611230255.146381-1-jonathantanmy@google.com>
+In-Reply-To: <CAPig+cT-N6=-9CJR1ugQnrksy-Zfx7bqnppsEdpiX8qaG-7_Hg@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-5-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -61,75 +65,59 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---obAtV4On+KRLREo5
+--Ytgo/kJyDF3J5kSH
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-06-11 at 23:02:55, Jonathan Tan wrote:
-> > @@ -84,7 +86,7 @@ test_expect_success 'branch pointing to non-commit' '
-> >  test_expect_success 'HEAD link pointing at a funny object' '
-> >  	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
-> >  	mv .git/HEAD .git/SAVED_HEAD &&
-> > -	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
-> > +	echo $ZERO_OID >.git/HEAD &&
-> >  	# avoid corrupt/broken HEAD from interfering with repo discovery
-> >  	test_must_fail env GIT_DIR=3D.git git fsck 2>out &&
-> >  	cat out &&
+On 2019-06-11 at 23:20:31, Eric Sunshine wrote:
+> On Tue, Jun 11, 2019 at 7:03 PM Jonathan Tan <jonathantanmy@google.com> w=
+rote:
+> > >  test_expect_success 'alternate objects are correctly blamed' '
+> > >       test_when_finished "rm -rf alt.git .git/objects/info/alternates=
+" &&
+> > > +     path=3D$(test_oid numeric) &&
+> > > +     path=3D$(test_oid_to_path "$path") &&
+> >
+> > Double assignment to path?
 >=20
-> ZERO_OID doesn't seem redefined to the SHA256 variant when being tested
-> under SHA256. Maybe you need a test_oid invocation here.
-
-That's actually coming in a later series. Eventually, test_oid_init will
-be called automatically and ZERO_OID will be set by calling test_oid
-with an appropriate value.
-
-> I couldn't verify this, though - do you know if there is a way for me to
-> run the tests with SHA256 instead of SHA1?
-
-There isn't any way in Junio's tree, mostly because there are still a
-lot of places that need fixing. However, all of those commits are in my
-transition-stage-4 branch at https://github.com/bk2204/git.git, and you
-can set the environment variable GIT_TEST_DEFAULT_HASH to "sha256" and
-it will run the test suite with SHA-256.
-
-That branch has a fully functional SHA-256 Git if you'd like to test it
-out, and the same binary can handle SHA-1 and SHA-256. Interoperability
-between SHA-1 and SHA-256 repos hasn't been implemented yet, though.
-
-> > @@ -631,10 +639,12 @@ test_expect_success 'fsck --name-objects' '
-> > =20
-> >  test_expect_success 'alternate objects are correctly blamed' '
-> >  	test_when_finished "rm -rf alt.git .git/objects/info/alternates" &&
-> > +	path=3D$(test_oid numeric) &&
-> > +	path=3D$(test_oid_to_path "$path") &&
+> I tripped over this, as well, when reading the patch, but if you look
+> closely, the second assignment is "refining" a value computed in first
+> assignment. It would have been clearer if written as:
 >=20
-> Double assignment to path?
+>     name=3D$(test_oid numeric) &&
+>     path=3D$(test_oid_to_path "$name") &&
+>=20
+> or:
+>=20
+>     path=3D$(test_oid_to_path $(test_oid numeric))
 
-Good point. Will fix.
+I think in general people have discouraged the latter form because it
+doesn't fail predictably if the inner command substitution fails. I'll
+rename the first variable so that it's less surprising.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---obAtV4On+KRLREo5
+--Ytgo/kJyDF3J5kSH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.15 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0AOsIACgkQv1NdgR9S
-9otg4xAApoerWDn874lXxoFe9a5EqB3tWTT4zAhdegH6wuOag+8QNPzO5Bh5GqRU
-+D2rUIUS5HB2OjY7VziXdQYtdTMFSleFUp+YtRME7kX4iUXVN/C1PyAmDGT7IxWH
-e9x68aY6pcsQDilECay/nV7D+ChFkF2c99VbMTPy05Yn2b7//rOfYHeaUj0k+hua
-r8deH6VPhE/8TeU/Wohg31gRgj8/5gIlhYqimOsU8rZrI4w6VYBy4STqEuy2L3UR
-l02uUqEX27arpwwv0XO3NUD3e6hOGnUNlA4FHMISY5+T6aktZXi0Fde24rjkA/HD
-fT4WVQA+PCVSC4gVdleUQo19rN62JzGBdRL7WgHxLvw7R6c1jcx/XkG/wZ11fL/V
-zxKm9GTmasZxLlFlpbL3+Ye9QDABubLZUzrFxup/UH6sAhElgUjrEwYSan1zINpM
-hA4cmRmQ/7Eavv9y8kodgrDpaoC1qPHNmj9MEAVJaBiGcAK//lKZKlfps9ypVrtU
-iHO3zA3ABY+8ZThDp3hZaIHu9w8CA/cEKWOTOkgdKpOTDFoPo+dh5A+u5lTNqEtd
-u6biiRn3Huzr+bQT43rOIPMe1tGLK4BszLB9yiGn9QhNjfCMbVp6msIuhHzDLmOl
-HkAI1JrGqW5JMfJGqlOC8MICBgaGTX0PcGTVSjxlWZVw3t5sZI0=
-=tqw1
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0AO/kACgkQv1NdgR9S
+9ou4NxAAtpFokEn7VjhZCqKBG4rUK7b7T5gxz5kGCB59Xmx4klMA8dxwXmB+SdTF
+OaBA/WOvIIahgUnrcUX0Vc0f/JCBTWLVsvtp+Buq3+kI5q82kzU7+oOahgmVWied
+PRc9l+GYX5jWDfUg/0tR13RUNgGangZsLV2ZQ/sFL9gkb8gFveu0hQ6EUqVI/k0u
+4RNP9BYA83lCsRXggrAHElaEgESUbvPn2zP24ChD0mmtl9LAW5UIuXe5au6Fno0m
+6klO9f0n4aTOOy9B9xehRrIpl4zft4IpsClEz4nQMQvUKmRjiwWNKfpI1duL1ebB
+d2fHmb8SH4O+2jEG6ZOjxthdmS6JgFXrLBSgG3HOg6Ji+HgJPlR3qmJUQx9n09QS
+7FUM3kkB2KefLXOfnYlL6epwsGVNWIgYx0y9oAKCg+u3V4OGSNaN981GuqbbQ+De
+BnHmDhL3KJO4rfjI+Cn9UuBOfPbIUWlRULm4VMdnSsQ/xeQqAWloKFdmMec8xQZg
+dDoJlEiT7BtPOts3FWdRxffF5iRc2Nqr6v3A0Aa9icZxw3kPNeDH3Qv5kmW3AbhQ
+gV2laZ2C16/mRyx5qctvJaJiPhxE3ht0x7uloWkt1VCPvJ6YFshKVrmFYGMjd+cb
+1arO5oANkE7ZWtGVXluobhxiXK2h628t9rem7u24q8k/b0altbA=
+=wUf8
 -----END PGP SIGNATURE-----
 
---obAtV4On+KRLREo5--
+--Ytgo/kJyDF3J5kSH--
