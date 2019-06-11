@@ -2,69 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_DNOT,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 025F11F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 10:29:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 004241F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 12:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727319AbfFKK3S (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 06:29:18 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:37226 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbfFKK3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 06:29:17 -0400
-Received: by mail-qt1-f175.google.com with SMTP id y57so13858594qtk.4
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 03:29:17 -0700 (PDT)
+        id S2387593AbfFKMiS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 08:38:18 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45856 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726713AbfFKMiR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 08:38:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f9so12822478wre.12
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 05:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=FO+pIYweJG86iqp2UomyYAnaXhDbnyMDHmwos/OG/9U=;
-        b=YMw5BkfkBPFEHVDjyAsDRtTXpqpI8fpJMciKJ9oLeQZDQ4qH1EyywZsiSS3KtGnP03
-         iewqoe2bmonQoPkkW3txPIlsX0XLXpar3Qw0k+MhMmMGLfAP+zWhnsCbi0n5W27459HH
-         d73GVylJF8KvO+QG3sKlJ481lf69BGce/WZNqkHlKG2hjgcIIkG9ho8+GAHZM1ffuoCt
-         PYSzOn54svDezdGSwl35fv2l/hEHzXGrnqn/oMGUS75OyC3g+Y4NOQCqMVZoXdH/v11f
-         MZm6H5jTJPgxbfIWaXK8EAtelPbZNlCHTVgyG8P7h2Ft7Rf8O++gUz/d2OEzWpmUjXaY
-         gOOg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=LnzpW6kPkg4zMhuJkAlFbgqsvHuNjMBdfwKulsGt1dI=;
+        b=F4NoppEnGzWKfhq+CWywdpYaC/ivh6mDdXeQijEzVOvzuV+HIrLZLEPQknHpsmPTvv
+         fxWBaDkKFVXIsB/M4I2xcjXZYdcfEo4VJlte0FnGvt1tiQuCSeO8nPrcZEaCZ+oJAlwb
+         IBRvIEiWSXMmhiWNaVL2AtMx9Tf+gkpCJTQJI8PA2MiqdlLNQR/EwQxSK4okTPNMKLQs
+         7DvNMb5PTcHV9mOGTL88EAZ9EsiLhr7L4SGUO3nrIYf0a1lGcJMFEg3d1cJbmkLpzVq2
+         xs5g9QRP5HWDy1wkNp+NtYx/MnUUIuwrmeSUEpWuUktPVVruqjj9IeudxeTDK5QT6Bog
+         Ddjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=FO+pIYweJG86iqp2UomyYAnaXhDbnyMDHmwos/OG/9U=;
-        b=Nk3P3/VdTRKZ2Nfpknd0g4ODOWbUYfcFXvbcsleKNg5KzjMnQcf3SzkF/ETzDIxaTw
-         T21H2UgSD8YggRtmq+1Z9eDnJvhhIe2VC4SPHG8atj+qOS2Pvoq+J3pbrecWJrxXM3OL
-         137F65a+lJiWLAo+AhSf5T2HocIidURc83RwyoWpZazu8g8t3XtxAQ7KPbwCcGm5m1Rs
-         FejQmVCugzmMJkz9Gn99PkN2/uur0KkaIdWY/ROJSck7nKc9FU8vSQI2HaH/Pme8IVfz
-         lMcKxsNNEx0b0xnyfLgPci0r8gKvMEvE/UWxbw4DFkTQ6Ck4l8k91wmQj5Pd5FLCMTsF
-         4oCA==
-X-Gm-Message-State: APjAAAVXJtJBT5cphSARkEJpW+odycBp4WYb1g2Rc+49okwbhJz/+3G9
-        qs/SLdSX3EoUlS8qTrqVoqpzqPM5OIfx/N3omxuFgIWQ8m0=
-X-Google-Smtp-Source: APXvYqw7kSZqq00vUWb1HB7UJ/aIFlKZdnQQU3QsILEDaSlD4PHcEJSgEI1HWEUZqQYgyifecfBzJt0wKpVcMCsypG8=
-X-Received: by 2002:ad4:5388:: with SMTP id i8mr49255518qvv.166.1560248956585;
- Tue, 11 Jun 2019 03:29:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=LnzpW6kPkg4zMhuJkAlFbgqsvHuNjMBdfwKulsGt1dI=;
+        b=hudiAzu0VoG7+yg3hKt++ioQXxVPqaqhjCzPQ3J7+G74MNcF1atSSrp79IJiTOKmYP
+         E5GBLykpgjkUhgfBRW5i3vE54wiiJ1lDo4lIcI/8HpB19TIUMsyJNdjoInSGmcrCPlbW
+         qyYvkddRLIfTjuJ/cDABjoELWFbvskFT2X1moEgxL1kH47LqT8DCEigZqch/2AyvKpud
+         1ixhCGbRETiwfCXeIgGTbLVcicZDzfaRAkq4BqpqBPcQReLrwS05FpZk2PVBHgDYGOfA
+         srzlxkBOjv7M6DDwifEuHi4lZayATiw2+w1s/E+r+e5Dl0ulL5SjG2JOT8CB5NEdjB8/
+         986Q==
+X-Gm-Message-State: APjAAAWo4atuDI4YN7WqkkRvkEJf31EBs8Zg1wTGVkEtiq+WKRiozro6
+        X6QcD8KGtbyliQb9/jA8bJw=
+X-Google-Smtp-Source: APXvYqxE47IKQbgyO0tQjbdzkLDb5ZHV6FR4sK2fUjD0az8sc6qOb08kHzz59sYQoxKQr2bO1Sb66A==
+X-Received: by 2002:a5d:5702:: with SMTP id a2mr5104645wrv.89.1560256696124;
+        Tue, 11 Jun 2019 05:38:16 -0700 (PDT)
+Received: from szeder.dev (x4d0cbedf.dyn.telefonica.de. [77.12.190.223])
+        by smtp.gmail.com with ESMTPSA id o6sm2733973wmc.15.2019.06.11.05.38.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Jun 2019 05:38:14 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 14:38:11 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] rebase: fix garbled progress display with '-x'
+Message-ID: <20190611123811.GF4012@szeder.dev>
+References: <20190430142556.20921-1-szeder.dev@gmail.com>
+ <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
+ <20190501231640.GD14763@szeder.dev>
 MIME-Version: 1.0
-References: <CAFF4x5LfJ7qY73JE-=mah5vx9PdeNhc0i0X6kQohPpvDTCd3Sw@mail.gmail.com>
- CAFF4x5LfJ7qY73JE-=mah5vx9PdeNhc0i0X6kQohPpvDTCd3Sw@mail.gmail.com <5cff8197.1c69fb81.4940.6de6.GMR@mx.google.com>
-In-Reply-To: <5cff8197.1c69fb81.4940.6de6.GMR@mx.google.com>
-From:   Xeno Amess <xenoamess@gmail.com>
-Date:   Tue, 11 Jun 2019 18:29:05 +0800
-Message-ID: <CAFF4x5LFYQqHnUSzqd1R9NJ=ZVKs3yFqZA=RdrihVx74BtKWMg@mail.gmail.com>
-Subject: Re: Delivery Status Notification (Failure)
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190501231640.GD14763@szeder.dev>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not all people can afford stable network connection...
-I'm now suffered from connection lost and have to restart the clone/push fully.
-It's OK when dealing with a project of several MB size, but when I try
-to clone a 2GB sized repo I never succeed.
-So I wonder, if there should be some way to resume from break-point for git?
-For example what if we support something like Content-Range in http,
-and make the download be split into smaller files, then make some way
-to auto-resume if some file block failed hash-check?
+On Thu, May 02, 2019 at 01:16:40AM +0200, SZEDER Gábor wrote:
+> On Tue, Apr 30, 2019 at 06:25:35PM -0400, Johannes Schindelin wrote:
+> > > Make sure that the previously displayed "Rebasing (N/M)" line is
+> > > completely covered up by printing a terminal width worth of space
+> > > characters.
+
+> > > +			if (!opts->verbose)
+> > > +				/*
+> > > +				 * Fully cover the previous "Rebasing (n/m)"
+> > > +				 * progress line.
+> > > +				 */
+> > > +				fprintf(stderr, "%*s\r", term_columns(), "");
+> > 
+> > IIRC there are terminals (`cmd.exe`?) that would advance to the next row
+> > automatically when printing the exact number of columns in a row. So this
+> > would not work.
+> 
+> Hrm, I though about using 'term_columns()-1', or moving the '\r' from
+> the format string to the string to be printed, but in the end didn't
+> do either, because it seemed to work well as it is in the two
+> terminals that I tried (on Linux).
+
+And I would have been wrong doing so, because that fprintf'ed string
+ends with '\r', not '\n', and therefore it is actually necessary to
+write as many space characters as the width of the terminal, or the
+last character in the previously displayed line won't get overwritten.
+
