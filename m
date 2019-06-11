@@ -2,91 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_DNOT,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76801F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 10:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 025F11F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 10:29:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405274AbfFKKMz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 06:12:55 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44882 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727641AbfFKKMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 06:12:54 -0400
-Received: by mail-wr1-f67.google.com with SMTP id b17so12321303wrq.11
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 03:12:53 -0700 (PDT)
+        id S1727319AbfFKK3S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 06:29:18 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:37226 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbfFKK3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 06:29:17 -0400
+Received: by mail-qt1-f175.google.com with SMTP id y57so13858594qtk.4
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 03:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+kQbOJwD+xdG6lJdYvz12rdw+pD8DJJhtdm4g/8OxOQ=;
-        b=Sx0mp8lcco7zpW6JukjcCBYUMqbG+/eoUnAl8cl37Cx8voYOeXgP2PxF1ztw3zNfsx
-         KyeEqE1R5GppxWs0LY1p3+8h5yI2oqvvx+O2zfDL3sPEH69XKfubeEjJ7JWAtuvhNvfe
-         e7soNVA9a7kxzO7dTcAGPyoNihzvplV1LEyxSnwfawLtBPSH9Z6f2mbG3BrL+8+LoMf4
-         eBvc6v92OVceQnVOYUrH2FBLkUDFNxQPfBn+j/DhCiu69Aop6WaAmO/Swn/365/SoYvP
-         oiKRRJfpTBYOzeQbNeVFD95lX2zAAgVui7dbibjlPzwsyb5cGPy2dEfykVZhrb05gQAx
-         PtEA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=FO+pIYweJG86iqp2UomyYAnaXhDbnyMDHmwos/OG/9U=;
+        b=YMw5BkfkBPFEHVDjyAsDRtTXpqpI8fpJMciKJ9oLeQZDQ4qH1EyywZsiSS3KtGnP03
+         iewqoe2bmonQoPkkW3txPIlsX0XLXpar3Qw0k+MhMmMGLfAP+zWhnsCbi0n5W27459HH
+         d73GVylJF8KvO+QG3sKlJ481lf69BGce/WZNqkHlKG2hjgcIIkG9ho8+GAHZM1ffuoCt
+         PYSzOn54svDezdGSwl35fv2l/hEHzXGrnqn/oMGUS75OyC3g+Y4NOQCqMVZoXdH/v11f
+         MZm6H5jTJPgxbfIWaXK8EAtelPbZNlCHTVgyG8P7h2Ft7Rf8O++gUz/d2OEzWpmUjXaY
+         gOOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+kQbOJwD+xdG6lJdYvz12rdw+pD8DJJhtdm4g/8OxOQ=;
-        b=BPIIeEGYNpXr0+f+LuUg950ygKsvZaxmwgwMCzYP8VL+lSMhs4btkzbZp0RuOtlQeU
-         ky8nvwXx+reiBt+UYblJs5sjQJKcG/e09MMgBNnwzHCpVaBomwTyhekFxIBk4xA/8UL7
-         1ICdhe18I6gG/1F1erd67blxLA8qzqJbNrfV0DeBzWa/bF++RYa6+cv8pxEEIaouRzqo
-         CmWLmKKsIoBU4QDaERw0yq8ZWRs9J4c4HeyYLimnv5lbksp7/SwD31LLthjeI6ZeqKPb
-         0XNiSTIiKpPk7UiyMtQVveZhbj0rc4Vg9MIH8VFya8AKvAhRqUgDnhmcTZlpwcHyUoAf
-         W01w==
-X-Gm-Message-State: APjAAAWHGGHQbRm/HPncfRhubnWXGLowD9vlG7V4R4egy2O7056gc7SU
-        /MsRo2O3foczQFUPlviGxHg=
-X-Google-Smtp-Source: APXvYqxeic1BAFv7VQI9+Yy49MrJ4xXQWtLIp809t/0nWG31qcecnIRGc4PPkg1AAMOg30UPME2viw==
-X-Received: by 2002:adf:f50c:: with SMTP id q12mr21655106wro.300.1560247973212;
-        Tue, 11 Jun 2019 03:12:53 -0700 (PDT)
-Received: from szeder.dev (x4d0cbedf.dyn.telefonica.de. [77.12.190.223])
-        by smtp.gmail.com with ESMTPSA id j16sm30281307wre.94.2019.06.11.03.12.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jun 2019 03:12:52 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 12:12:50 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 2/3] t: add t0016-oidmap.sh
-Message-ID: <20190611101250.GE4012@szeder.dev>
-References: <20190611082325.28878-1-chriscool@tuxfamily.org>
- <20190611082325.28878-3-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=FO+pIYweJG86iqp2UomyYAnaXhDbnyMDHmwos/OG/9U=;
+        b=Nk3P3/VdTRKZ2Nfpknd0g4ODOWbUYfcFXvbcsleKNg5KzjMnQcf3SzkF/ETzDIxaTw
+         T21H2UgSD8YggRtmq+1Z9eDnJvhhIe2VC4SPHG8atj+qOS2Pvoq+J3pbrecWJrxXM3OL
+         137F65a+lJiWLAo+AhSf5T2HocIidURc83RwyoWpZazu8g8t3XtxAQ7KPbwCcGm5m1Rs
+         FejQmVCugzmMJkz9Gn99PkN2/uur0KkaIdWY/ROJSck7nKc9FU8vSQI2HaH/Pme8IVfz
+         lMcKxsNNEx0b0xnyfLgPci0r8gKvMEvE/UWxbw4DFkTQ6Ck4l8k91wmQj5Pd5FLCMTsF
+         4oCA==
+X-Gm-Message-State: APjAAAVXJtJBT5cphSARkEJpW+odycBp4WYb1g2Rc+49okwbhJz/+3G9
+        qs/SLdSX3EoUlS8qTrqVoqpzqPM5OIfx/N3omxuFgIWQ8m0=
+X-Google-Smtp-Source: APXvYqw7kSZqq00vUWb1HB7UJ/aIFlKZdnQQU3QsILEDaSlD4PHcEJSgEI1HWEUZqQYgyifecfBzJt0wKpVcMCsypG8=
+X-Received: by 2002:ad4:5388:: with SMTP id i8mr49255518qvv.166.1560248956585;
+ Tue, 11 Jun 2019 03:29:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190611082325.28878-3-chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAFF4x5LfJ7qY73JE-=mah5vx9PdeNhc0i0X6kQohPpvDTCd3Sw@mail.gmail.com>
+ CAFF4x5LfJ7qY73JE-=mah5vx9PdeNhc0i0X6kQohPpvDTCd3Sw@mail.gmail.com <5cff8197.1c69fb81.4940.6de6.GMR@mx.google.com>
+In-Reply-To: <5cff8197.1c69fb81.4940.6de6.GMR@mx.google.com>
+From:   Xeno Amess <xenoamess@gmail.com>
+Date:   Tue, 11 Jun 2019 18:29:05 +0800
+Message-ID: <CAFF4x5LFYQqHnUSzqd1R9NJ=ZVKs3yFqZA=RdrihVx74BtKWMg@mail.gmail.com>
+Subject: Re: Delivery Status Notification (Failure)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 11, 2019 at 10:23:24AM +0200, Christian Couder wrote:
-> diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-> new file mode 100755
-> index 0000000000..cbd2cb71d6
-> --- /dev/null
-> +++ b/t/t0016-oidmap.sh
-> @@ -0,0 +1,100 @@
-> +#!/bin/sh
-> +
-> +test_description='test oidmap'
-> +. ./test-lib.sh
-> +
-> +# This purposefully is very similar to t0011-hashmap.sh
-> +
-> +test_oidmap() {
-> +	echo "$1" | test-tool oidmap $3 > actual &&
-
-Style nit: space between redirection op and filename ;)
-
+Not all people can afford stable network connection...
+I'm now suffered from connection lost and have to restart the clone/push fully.
+It's OK when dealing with a project of several MB size, but when I try
+to clone a 2GB sized repo I never succeed.
+So I wonder, if there should be some way to resume from break-point for git?
+For example what if we support something like Content-Range in http,
+and make the download be split into smaller files, then make some way
+to auto-resume if some file block failed hash-check?
