@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D43E11F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 08:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59C2F1F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 08:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391301AbfFKIX4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 04:23:56 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39569 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388847AbfFKIXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 04:23:55 -0400
-Received: by mail-wm1-f67.google.com with SMTP id z23so1826464wma.4
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 01:23:53 -0700 (PDT)
+        id S2404550AbfFKIX7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 04:23:59 -0400
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:52905 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388847AbfFKIX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 04:23:59 -0400
+Received: by mail-wm1-f42.google.com with SMTP id s3so1897544wms.2
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 01:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lCC//pn3KNrzGN31dr8tmRVR9Rr02A8N6rblEqNJqHU=;
-        b=SHDKFfZ50vC1ddQFcVOFhkulvDrB89sQDajrMePZbSjwdh1RclyQwI06YzvFkp/6K2
-         wFc0MocqlAUaAVPq+Et0nn0N6NK/ema3C5wb/fgkBy/KvIpNFlSI+wcZjLvB0f+iPT7y
-         z0jFs3W6YaO5u77dj3JKFWr8HAQziBpLzgqt9VZZIwBW0gKv0vqx/cFobFkhtCsdIzlq
-         pqvxUK7YwTPaTdjdwz+un+rqvQDReSEbkOPcy3YquzDQyQEDFX/Kf3X2nqI8NojaltiB
-         qH92aTzAZy816Aa/dZHS1A0E5sZxvw4mePY8nEjhYw+h2GjtdrBd2DC9ClLDqUFW5qSH
-         aq+w==
+        bh=Wj/H/JLtAmuFNEObov9qOAGln5NhYEuqgtx1TN7UKM4=;
+        b=O04mbglo/ZO+d6jALWoTeijH+E2IUeFrGGG+89oUPe+LVC+79awzdU7V+EaGY8GCJc
+         vyvHzO3dE/ezzzI21FpsykxHfjkIHZNDGl2DHqjKo35/efls32k9a0zaAFyuO3eEUvs7
+         traDwdCQHqRNdw1OeAufRgqVvIE2ZkdNnZpwjexhf8lAmwRWzmOORlpC0eeS45SLNh7J
+         8Nv2S9cfymCXvlO4w9stQ55ObvipgxeP+tKkxB+gqRmFsxr5EquIbD50bv+tVnnnTzMZ
+         k3uKpfYadwxryhBbjZXZMJCaag1zZARy5OlsR32vuRCdI1M59q7n6HT9ElODY4aL79Vu
+         Kw8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lCC//pn3KNrzGN31dr8tmRVR9Rr02A8N6rblEqNJqHU=;
-        b=Q07B3KtZb/Ww2wcXyqJF7gCG5jjP0kwiL7KvojPyJ5yugJWLDukX/uQxl50ng23Iia
-         9BAcIF2u8LVNU5sY4ytrlOs6XP/sFQhczLoPERLGpw+u+Lv8sacO9zECRf+uywMXdE8W
-         UMjtSUc0iAlaBJ9mpYIp87ujktTO00xpYFFSoagxFBkRdnbwwtg50XKIRMzW/H8l2O9O
-         WZaJKCVjD3+2FtrdtC0woCfR4r/Pe9GCRjIsA9gnDZZeLRxOpmGe6fNtD+er92v3cEAu
-         lYv1VG68WuquHunGQrEGAIMxjbtPYbwg6T0gEqSVlq1LkvAGWU9lO5W7Hieg7a3H2lvV
-         YMYQ==
-X-Gm-Message-State: APjAAAXWScqqB3SzAML3GG0Q4adJf6iDBFD4YPrxkDtq0ZaY6HbmH9jS
-        kxcvBLPm4IqfYwGFtFyR10xX+gbA
-X-Google-Smtp-Source: APXvYqwIIIEi9Q+1KOY5CJZf9UVcD2Du5kgxPp5TZjYwZXjWsHsC1TiHh7X8zp5N9ebfV5mjTKXCNg==
-X-Received: by 2002:a1c:7e85:: with SMTP id z127mr11090844wmc.95.1560241432422;
-        Tue, 11 Jun 2019 01:23:52 -0700 (PDT)
+        bh=Wj/H/JLtAmuFNEObov9qOAGln5NhYEuqgtx1TN7UKM4=;
+        b=cjcM/zUClZ3bKEmZTQSjwIDLHlZ42ID/SyRA/C3kZOto039PadjlwhGgNx5ym9G9Yt
+         ItyMCVeEMKGocCyX83NQlmrMffHIl2xLQ2YX8MtT3tp+2v0w2zoYGjRe3OOwEeHb14i0
+         m8VkAxgUpeo5ujOGcGo/sVc+b2pumsIncWddqHmCTjSDGvy6wTvnyi/lR/BvRPxr4wbM
+         KMgSf0Xz1+atr+xzjf0gQy50r9Y01vCuHEEl+8MNU01pzJTgY6a7ejQHSX321NfTpkVp
+         CxFTJJx2ihOR5Bugt6emopuKdXTWLu3XQPAC5E52Nan5aiYgBTXdTjuomZNVB3BCEZX5
+         sNcg==
+X-Gm-Message-State: APjAAAXBZKlJRWIV8GCTHHPWbm3BzzMCF/WthbiufoUXyNpOhpoY7Wax
+        0uLt9srhaNBGWcfeJsJLXnVsclY3
+X-Google-Smtp-Source: APXvYqyUExNDY4hBy6d5sE6CENmiRJ7Eh5Gurbg+PaZ9mZydwP/p+jNMWnSiIF7HI0Q/drMN1RUjDQ==
+X-Received: by 2002:a1c:a783:: with SMTP id q125mr17496782wme.94.1560241436844;
+        Tue, 11 Jun 2019 01:23:56 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:10dc:b342:2143:78cf:c452:5744])
-        by smtp.gmail.com with ESMTPSA id o126sm2837350wmo.31.2019.06.11.01.23.51
+        by smtp.gmail.com with ESMTPSA id o126sm2837350wmo.31.2019.06.11.01.23.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jun 2019 01:23:51 -0700 (PDT)
+        Tue, 11 Jun 2019 01:23:56 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,10 +57,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/3] t/helper: add test-oidmap.c
-Date:   Tue, 11 Jun 2019 10:23:23 +0200
-Message-Id: <20190611082325.28878-2-chriscool@tuxfamily.org>
+        Christian Couder <chriscool@tuxfamily.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v2 2/3] t: add t0016-oidmap.sh
+Date:   Tue, 11 Jun 2019 10:23:24 +0200
+Message-Id: <20190611082325.28878-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.6.gde8b105b43
 In-Reply-To: <20190611082325.28878-1-chriscool@tuxfamily.org>
 References: <20190611082325.28878-1-chriscool@tuxfamily.org>
@@ -72,195 +73,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new helper is very similar to "test-hashmap.c" and will help
-test how `struct oidmap` from oidmap.{c,h} can be used.
+From: Christian Couder <christian.couder@gmail.com>
+
+Add actual tests for operations using `struct oidmap` from oidmap.{c,h}.
 
 Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile               |   1 +
- t/helper/test-oidmap.c | 134 +++++++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c   |   1 +
- t/helper/test-tool.h   |   1 +
- 4 files changed, 137 insertions(+)
- create mode 100644 t/helper/test-oidmap.c
+ t/t0016-oidmap.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
+ create mode 100755 t/t0016-oidmap.sh
 
-diff --git a/Makefile b/Makefile
-index 8a7e235352..5efc7700ed 100644
---- a/Makefile
-+++ b/Makefile
-@@ -727,6 +727,7 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
- TEST_BUILTINS_OBJS += test-match-trees.o
- TEST_BUILTINS_OBJS += test-mergesort.o
- TEST_BUILTINS_OBJS += test-mktemp.o
-+TEST_BUILTINS_OBJS += test-oidmap.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-parse-options.o
- TEST_BUILTINS_OBJS += test-path-utils.o
-diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
-new file mode 100644
-index 0000000000..60e92096a1
+diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+new file mode 100755
+index 0000000000..cbd2cb71d6
 --- /dev/null
-+++ b/t/helper/test-oidmap.c
-@@ -0,0 +1,134 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "oidmap.h"
-+#include "strbuf.h"
++++ b/t/t0016-oidmap.sh
+@@ -0,0 +1,100 @@
++#!/bin/sh
 +
-+/* key is an oid and value is a name (could be a refname for example) */
-+struct test_entry {
-+	struct oidmap_entry entry;
-+	char name[FLEX_ARRAY];
-+};
++test_description='test oidmap'
++. ./test-lib.sh
 +
-+#define DELIM " \t\r\n"
++# This purposefully is very similar to t0011-hashmap.sh
 +
-+/*
-+ * Read stdin line by line and print result of commands to stdout:
-+ *
-+ * hash oidkey -> sha1hash(oidkey)
-+ * put oidkey namevalue -> NULL / old namevalue
-+ * get oidkey -> NULL / namevalue
-+ * remove oidkey -> NULL / old namevalue
-+ * iterate -> oidkey1 namevalue1\noidkey2 namevalue2\n...
-+ *
-+ */
-+int cmd__oidmap(int argc, const char **argv)
-+{
-+	struct strbuf line = STRBUF_INIT;
-+	struct oidmap map = OIDMAP_INIT;
-+
-+	setup_git_directory();
-+
-+	/* init oidmap */
-+	oidmap_init(&map, 0);
-+
-+	/* process commands from stdin */
-+	while (strbuf_getline(&line, stdin) != EOF) {
-+		char *cmd, *p1 = NULL, *p2 = NULL;
-+		struct test_entry *entry;
-+		struct object_id oid;
-+
-+		/* break line into command and up to two parameters */
-+		cmd = strtok(line.buf, DELIM);
-+		/* ignore empty lines */
-+		if (!cmd || *cmd == '#')
-+			continue;
-+
-+		p1 = strtok(NULL, DELIM);
-+		if (p1)
-+			p2 = strtok(NULL, DELIM);
-+
-+		if (!strcmp("hash", cmd) && p1) {
-+
-+			/* print hash of oid */
-+			if (!get_oid(p1, &oid))
-+				printf("%x\n", ntohl(sha1hash(oid.hash)));
-+			else
-+				printf("Unknown oid: %s\n", p1);
-+
-+		} else if (!strcmp("add", cmd) && p1 && p2) {
-+
-+			if (get_oid(p1, &oid)) {
-+				printf("Unknown oid: %s\n", p1);
-+				continue;
-+			}
-+
-+			/* create entry with oidkey from p1, value = p2 */
-+			FLEX_ALLOC_STR(entry, name, p2);
-+			oidcpy(&entry->entry.oid, &oid);
-+
-+			/* add to oidmap */
-+			oidmap_put(&map, entry);
-+
-+		} else if (!strcmp("put", cmd) && p1 && p2) {
-+
-+			if (get_oid(p1, &oid)) {
-+				printf("Unknown oid: %s\n", p1);
-+				continue;
-+			}
-+
-+			/* create entry with oid_key = p1, name_value = p2 */
-+			FLEX_ALLOC_STR(entry, name, p2);
-+			oidcpy(&entry->entry.oid, &oid);
-+
-+			/* add / replace entry */
-+			entry = oidmap_put(&map, entry);
-+
-+			/* print and free replaced entry, if any */
-+			puts(entry ? entry->name : "NULL");
-+			free(entry);
-+
-+		} else if (!strcmp("get", cmd) && p1) {
-+
-+			if (get_oid(p1, &oid)) {
-+				printf("Unknown oid: %s\n", p1);
-+				continue;
-+			}
-+
-+			/* lookup entry in oidmap */
-+			entry = oidmap_get(&map, &oid);
-+
-+			/* print result */
-+			puts(entry ? entry->name : "NULL");
-+
-+		} else if (!strcmp("remove", cmd) && p1) {
-+
-+			if (get_oid(p1, &oid)) {
-+				printf("Unknown oid: %s\n", p1);
-+				continue;
-+			}
-+
-+			/* remove entry from oidmap */
-+			entry = oidmap_remove(&map, &oid);
-+
-+			/* print result and free entry*/
-+			puts(entry ? entry->name : "NULL");
-+			free(entry);
-+
-+		} else if (!strcmp("iterate", cmd)) {
-+
-+			struct oidmap_iter iter;
-+			oidmap_iter_init(&map, &iter);
-+			while ((entry = oidmap_iter_next(&iter)))
-+				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
-+
-+		} else {
-+
-+			printf("Unknown command %s\n", cmd);
-+
-+		}
-+	}
-+
-+	strbuf_release(&line);
-+	oidmap_free(&map, 1);
-+	return 0;
++test_oidmap() {
++	echo "$1" | test-tool oidmap $3 > actual &&
++	echo "$2" >expect &&
++	test_cmp expect actual
 +}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 087a8c0cc9..1eac25233f 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -35,6 +35,7 @@ static struct test_cmd cmds[] = {
- 	{ "match-trees", cmd__match_trees },
- 	{ "mergesort", cmd__mergesort },
- 	{ "mktemp", cmd__mktemp },
-+	{ "oidmap", cmd__oidmap },
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "parse-options", cmd__parse_options },
- 	{ "path-utils", cmd__path_utils },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 7e703f3038..c7a46dc320 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -25,6 +25,7 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
- int cmd__match_trees(int argc, const char **argv);
- int cmd__mergesort(int argc, const char **argv);
- int cmd__mktemp(int argc, const char **argv);
-+int cmd__oidmap(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
- int cmd__path_utils(int argc, const char **argv);
++
++
++test_expect_success 'setup' '
++
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	test_commit four
++
++'
++
++test_oidhash() {
++	git rev-parse "$1" | cut -c1-8
++}
++
++test_expect_success 'hash' '
++
++test_oidmap "hash one
++hash two
++hash invalidOid
++hash three" "$(test_oidhash one)
++$(test_oidhash two)
++Unknown oid: invalidOid
++$(test_oidhash three)"
++
++'
++
++test_expect_success 'put' '
++
++test_oidmap "put one 1
++put two 2
++put invalidOid 4
++put three 3" "NULL
++NULL
++Unknown oid: invalidOid
++NULL"
++
++'
++
++test_expect_success 'replace' '
++
++test_oidmap "put one 1
++put two 2
++put three 3
++put invalidOid 4
++put two deux
++put one un" "NULL
++NULL
++NULL
++Unknown oid: invalidOid
++2
++1"
++
++'
++
++test_expect_success 'get' '
++
++test_oidmap "put one 1
++put two 2
++put three 3
++get two
++get four
++get invalidOid
++get one" "NULL
++NULL
++NULL
++2
++NULL
++Unknown oid: invalidOid
++1"
++
++'
++
++test_expect_success 'iterate' '
++
++test_oidmap "put one 1
++put two 2
++put three 3
++iterate" "NULL
++NULL
++NULL
++$(git rev-parse two) 2
++$(git rev-parse one) 1
++$(git rev-parse three) 3"
++
++'
++
++test_done
 -- 
 2.22.0.6.gde8b105b43
 
