@@ -2,123 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4982C1F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 15:09:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 382301F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 16:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404352AbfFKPJq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 11:09:46 -0400
-Received: from mx.mylinuxtime.de ([195.201.174.144]:53800 "EHLO
-        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404326AbfFKPJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 11:09:46 -0400
-X-Greylist: delayed 335 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Jun 2019 11:09:44 EDT
-Received: from leda (unknown [IPv6:2001:470:99c1:714:e078:5e8f:bc9c:af22])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S2390926AbfFKQje (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 12:39:34 -0400
+Received: from mx0b-002e3701.pphosted.com ([148.163.143.35]:50220 "EHLO
+        mx0b-002e3701.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388531AbfFKQje (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 Jun 2019 12:39:34 -0400
+Received: from pps.filterd (m0150245.ppops.net [127.0.0.1])
+        by mx0b-002e3701.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x5BGQE6o028601;
+        Tue, 11 Jun 2019 16:39:26 GMT
+Received: from g9t5008.houston.hpe.com (g9t5008.houston.hpe.com [15.241.48.72])
+        by mx0b-002e3701.pphosted.com with ESMTP id 2t2fg9rksu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Jun 2019 16:39:26 +0000
+Received: from G9W9210.americas.hpqcorp.net (g9w9210.houston.hpecorp.net [16.220.66.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id B276C149B69;
-        Tue, 11 Jun 2019 17:04:08 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de B276C149B69
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-        t=1560265448; bh=Dy7aS7t1lu9yl7tu8WTIHql+efBKvjdoD5OV52bH1aA=;
-        h=Date:From:To:Cc:Subject;
-        b=Y1B2jEBuVG3kKyR50PG8RW8GGAhsLMWMBa3K/rngdtYlNTCpZRq+q2Lk6Y/3RRZax
-         MelHN9dx0De7OKddKxDnNWrtxJozxG5WKHZeb0S8scmm2HAT0dLatmPywAPjp0UXB2
-         yJkeMHdluj/cDYgdNAT7PMH0oOkfsrQRCZ5TS+qs=
-Date:   Tue, 11 Jun 2019 17:04:01 +0200
-From:   Christian Hesse <mail@eworm.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: cgit and global configuration
-Message-ID: <20190611170401.15d43623@leda>
-X-Mailer: Claws Mail 3.17.3git183 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
-Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
+        by g9t5008.houston.hpe.com (Postfix) with ESMTPS id BED5D53;
+        Tue, 11 Jun 2019 16:39:25 +0000 (UTC)
+Received: from G9W9210.americas.hpqcorp.net (2002:10dc:429b::10dc:429b) by
+ G9W9210.americas.hpqcorp.net (2002:10dc:429b::10dc:429b) with Microsoft SMTP
+ Server (TLS) id 15.0.1367.3; Tue, 11 Jun 2019 16:39:25 +0000
+Received: from NAM05-CO1-obe.outbound.protection.outlook.com (15.241.52.12) by
+ G9W9210.americas.hpqcorp.net (16.220.66.155) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3 via Frontend Transport; Tue, 11 Jun 2019 16:39:25 +0000
+Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM (10.169.47.13) by
+ TU4PR8401MB0542.NAMPRD84.PROD.OUTLOOK.COM (10.169.42.150) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1965.14; Tue, 11 Jun 2019 16:39:24 +0000
+Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::6c61:bb5d:e04b:dc38]) by TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::6c61:bb5d:e04b:dc38%4]) with mapi id 15.20.1965.017; Tue, 11 Jun 2019
+ 16:39:24 +0000
+From:   "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: GIT issue while cloning (fatal: pack is corrupted (SHA1
+ mismatch)) !!!
+Thread-Topic: GIT issue while cloning (fatal: pack is corrupted (SHA1
+ mismatch)) !!!
+Thread-Index: AdUVNK2vOdBL1LuLQeCX2A7XwcsEXwAAGetAAAD4WwAAEw7MAAAF1FgAAA1+/nAABZVi4AAFOOfwADhKkgACZUPI8A==
+Date:   Tue, 11 Jun 2019 16:39:24 +0000
+Message-ID: <TU4PR8401MB12163C00148C39F0083C732DE1ED0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+References: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+ <20190528093728.GA15106@sigill.intra.peff.net>
+ <TU4PR8401MB1216A7B920D40B5063123A94E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+ <20190528213004.GF24650@sigill.intra.peff.net>
+ <TU4PR8401MB12166DBE2156683ADF28E9A4E11F0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+ <TU4PR8401MB1216339F1E7A378C45DF9B36E11F0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+ <20190530115742.GC31607@sigill.intra.peff.net>
+In-Reply-To: <20190530115742.GC31607@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [122.172.121.214]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 7595f3df-0dc5-4046-ac13-08d6ee8b5cb6
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:TU4PR8401MB0542;
+x-ms-traffictypediagnostic: TU4PR8401MB0542:
+x-microsoft-antispam-prvs: <TU4PR8401MB0542F826ABD13C38D8FCCC90E1ED0@TU4PR8401MB0542.NAMPRD84.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 006546F32A
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(346002)(396003)(39860400002)(136003)(189003)(199004)(13464003)(66946007)(76176011)(14454004)(6506007)(4326008)(53936002)(6246003)(478600001)(102836004)(53546011)(74316002)(33656002)(66066001)(316002)(66556008)(64756008)(66446008)(5660300002)(76116006)(73956011)(6916009)(66476007)(52536014)(2906002)(7736002)(3846002)(11346002)(68736007)(186003)(55016002)(26005)(305945005)(9686003)(6116002)(446003)(71200400001)(256004)(81166006)(229853002)(99286004)(7696005)(8676002)(486006)(6436002)(25786009)(81156014)(8936002)(476003)(86362001)(71190400001);DIR:OUT;SFP:1102;SCL:1;SRVR:TU4PR8401MB0542;H:TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: hpe.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: fOXSOCtQ4LaCqvtccYnVRy//+Mp19yZmS1loqXacY/5ovbkc1RV9Zyi/0bQemZ+Md+B1BIjaF4IIyrOcDD7Gu89TS59m7Rj/W/Ogdt0h+QzTafZLetf66wQgnJp6O7svKua91tFTqB8fn6PQzArvEvrJEnabIGQB4S2/0MzN1Z9vqSjfZ/9JJrEav+L5mC/WSXq7It6X+24+PP9GCE6P4ShFA3Sgb//yD80PCI/OAXzkC26nk7/gTRzQaJjToBHSrk5wS6I6z3udd/L8v7Dn1oVHGDdfKemtvz0VgyC/Y4Q5gFb7y48A2MqrLmEFQrKLkpX4V7oGFHVhDHb4/5IKEWKDxwKW2MQtoGU286zvC/0l99CHC4UmilqOidN83n7CXMT3TdnVJXOB0z2sn/DOSyMHl5GJ72bk1lAVmxFbMIo=
+Content-Type: text/plain; charset="utf-8"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7595f3df-0dc5-4046-ac13-08d6ee8b5cb6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2019 16:39:24.0862
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ibrahim.vanak@hpe.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TU4PR8401MB0542
+X-OriginatorOrg: hpe.com
+Content-Transfer-Encoding: base64
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/Vw7hqCFLj/daaVn21ZMVdgV";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-Authentication-Results: mx.mylinuxtime.de;
-        auth=pass smtp.auth=mail@eworm.de smtp.mailfrom=mail@eworm.de
-X-Rspamd-Server: mx
-X-Stat-Signature: my6pfe3uojjdtdb3gifra6dtedt4a3qe
-X-Rspamd-Queue-Id: B276C149B69
-X-Spamd-Result: default: False [-4.55 / 15.00];
-         ARC_NA(0.00)[];
-         FROM_HAS_DN(0.00)[];
-         RCPT_COUNT_THREE(0.00)[4];
-         TO_MATCH_ENVRCPT_ALL(0.00)[];
-         MIME_GOOD(-0.20)[multipart/signed,text/plain];
-         TO_DN_ALL(0.00)[];
-         NEURAL_HAM(-2.85)[-0.949,0];
-         SIGNED_PGP(-2.00)[];
-         RCVD_COUNT_ZERO(0.00)[0];
-         FROM_EQ_ENVFROM(0.00)[];
-         MID_RHS_NOT_FQDN(0.50)[];
-         ASN(0.00)[asn:6939, ipnet:2001:470::/32, country:US];
-         RCVD_TLS_ALL(0.00)[]
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-06-11_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906110106
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/Vw7hqCFLj/daaVn21ZMVdgV
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-Dear Jeff, dear Junio,
-
-for cgit we use the static git library built into the executable. This used
-to work well, but breaks with latest release v2.22.0: Our code unsets HOME
-and XDG_CONFIG_HOME to mitigate loading arbitrary configuration.
-We have tests that use strace to check for access to directories given by
-environment variables.
-
-With the new trace2 code in place at least tracing configuration is loaded
-before cmd_main() kicks in. This happens in trace2_initialize_fl() ->
-tr2_sysenv_load() -> read_very_early_config(). The offending commit is
-bce9db6d ("trace2: use system/global config for default trace2 settings") [=
-0].
-
-I had thought about adding a new option to struct config_options and making
-xdg_config_home() and expand_user_path() conditional in
-do_git_config_sequence() when called from read_very_early_config(). However
-this breaks the test suite as ptrace2 tests with global configuration depend
-on HOME being set to a trash directory. Any hint about how to properly solve
-this?
-Or can we be sure configuration read at this point can not do any harm and
-updating out tests is sufficient? I guess no as file paths can be specified.
-
-[0] https://github.com/git/git/commit/bce9db6de97c95882a7c46836bb6cc90acf0f=
-ef0
---=20
-Best regards,
-Christian Hesse
-
---Sig_/Vw7hqCFLj/daaVn21ZMVdgV
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEvYTecfST32gUsBZyVO3JFgm8kYMFAlz/wuIACgkQVO3JFgm8
-kYP1/A//Z3ycl3IcqZnygQGGeSo/yjSBY7ziXf2sTu3phdhhfXzDXnGEaLlS70tZ
-F5yrQYNLPXNC1lzhsHOX3NCZdIzerbHLVllU/ltstN1vT8O/itWUyCKsSVzjEStY
-Uchpf8IBjYMsmaqHtlTBmuicQ5JQjCTxXYaU5F7tWQGsJ8EfJ7G8N6bvJcwDB0xs
-HjMYjOwehxKN/RiS2+RUnelP+4OucL59cADOZUYShcAzdTVlIsnOipHKYSozL7uh
-y6BWsgt+wovSvM4xuTf/ZR4yMhBYBlPZLXhKPywul2EHl1t/yoHDmcsSDNoJxXVR
-3/zcW2CDSpV/d+acizeOH6xxWNqrXK/TZBBooMGSU4O7tl01aufntH2WG07bYEqj
-7eAI2jIqTVB4mr1dSVJ40WFaS3bBGK+whNBT1EOy+T0lRnq4oW+OVQu5Fn68zDdH
-Ksgdzle+r+NVXFMjvnFvNMq5Z3AL6ZHnAmY+UcJzi7Ipk3F/GfhItdUrg/91Dlcp
-O6PDgBINNRsGO3ygfGX/KXzR2DGPSDB7BHbKsoFjNI+ZrNss2vqaEBUvCevyfePF
-WmdyVHAtG8OB8jX5nFMU26eBa3wmUZvQ0YjpibixqCg5AX7N0ikyTK3FiWBnK+/Q
-zbc6FR2ItYp2JwbQb+9A3xMw24XYmRJ2sSJDKmT38bcNhHpP2i8=
-=umii
------END PGP SIGNATURE-----
-
---Sig_/Vw7hqCFLj/daaVn21ZMVdgV--
+VGhhbmsgUGVmZi4gVW5mb3J0dW5hdGVseSBJIGFtIGxpdmluZyB3aXRoIHRoaXMgaXNzdWUsIG5v
+IG9uZSBhYmxlIHRvIGZpbmQgb3V0IHdoYXQgaXMgY2F1c2luZyB0aGlzIHNpZ25pZmljYW50IGRl
+bGF5LiBSZS1pbml0aWF0aW5nIHRoaXMgdGhyZWFkIGlmIHNvbWVvbmUgY2FuIGhlbHAgb24gdGhp
+cy4NCg0KVGhhbmtzICYgUmVnYXJkcywNCklicmFoaW0gVmFuYWsNCg0KLS0tLS1PcmlnaW5hbCBN
+ZXNzYWdlLS0tLS0NCkZyb206IEplZmYgS2luZyBbbWFpbHRvOnBlZmZAcGVmZi5uZXRdIA0KU2Vu
+dDogVGh1cnNkYXksIE1heSAzMCwgMjAxOSA1OjI4IFBNDQpUbzogVmFuYWssIElicmFoaW0gPGli
+cmFoaW0udmFuYWtAaHBlLmNvbT4NCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0OiBS
+ZTogR0lUIGlzc3VlIHdoaWxlIGNsb25pbmcgKGZhdGFsOiBwYWNrIGlzIGNvcnJ1cHRlZCAoU0hB
+MSBtaXNtYXRjaCkpICEhIQ0KDQpPbiBXZWQsIE1heSAyOSwgMjAxOSBhdCAwOTowNjoxOEFNICsw
+MDAwLCBWYW5haywgSWJyYWhpbSB3cm90ZToNCg0KPiBBZnRlciBjbG9uaW5nIHdoZW4gSSB0cmll
+ZCB0byBjaGVja291dCBhIGJyYW5jaCBvbiBIUFVYIGFuZCBMaW51eCwgSSANCj4gc3RpbGwgc2ln
+bmlmaWNhbnQgdGltZSBkaWZmZXJlbmNlIHRoZXJlIGFzIHdlbGwgZXZlbiB0aG91Z2ggbmV0d29y
+ayBpcyANCj4gbm90IGludm9sdmUgaGVyZS4gRG8geW91IHN1c3BlY3QgYW55dGhpbmcgd2l0aCBI
+UFVYIE9TPyBEbyB5b3UgaGF2ZSANCj4gYW55IG1lY2hhbmlzbSB0byBmaW5kIG91dCB3aG8gaXMg
+dGhlIGNhdXNpbmcgZ2lnYW50aWMgZGVsYXkgPw0KDQpJZiBpdCdzIGhhcHBlbmluZyBmb3IganVz
+dCBhIGxvY2FsIGNoZWNrb3V0IG9wZXJhdGlvbiwgSSdkIHN1c3BlY3QgdmVyeSBwb29yIGZpbGVz
+eXN0ZW0gcGVyZm9ybWFuY2UuIE9uIExpbnV4LCBJJ2QgcnVuIGl0IHVuZGVyICJwZXJmIiB0byBz
+ZWUgd2hlcmUgdGhlIHRpbWUgaXMgZ29pbmcuIE9yIHBvc3NpYmx5ICJzdHJhY2UgLVQiIHRvIHRp
+bWUgc3lzdGVtIGNhbGxzLiBJIGRvbid0IGtub3cgd2hhdCB0b29scyBhcmUgYXZhaWxhYmxlIHVu
+ZGVyIEhQLVVYIGZvciB0aGF0IGtpbmQgb2YgcHJvZmlsaW5nLg0KDQotUGVmZg0K
