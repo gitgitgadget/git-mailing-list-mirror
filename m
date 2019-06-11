@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244881F609
-	for <e@80x24.org>; Tue, 11 Jun 2019 13:03:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A4671F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 13:03:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389974AbfFKNDn (ORCPT <rfc822;e@80x24.org>);
+        id S2389902AbfFKNDp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 09:03:45 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55048 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389958AbfFKNDn (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 11 Jun 2019 09:03:43 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:35803 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389902AbfFKNDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 09:03:41 -0400
-Received: by mail-wr1-f53.google.com with SMTP id m3so12973167wrv.2
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 06:03:40 -0700 (PDT)
+Received: by mail-wm1-f66.google.com with SMTP id g135so2870819wme.4
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 06:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HmPOBb5BAz7NfvXvPTz+M/4cpmZMEgfRqdhhoJcpZG8=;
-        b=CStoFavqxdiONR3PvGskLRyPXbUQKHfS0Qc0Rse5z2m5bzZfQDlRx0fqB37PIO61oL
-         6fWgnDLu+B3ynnpA84qVAp3i5+cwsHnjGzxkEi2ZEN/hJg4qau6ftOQWm4u/fA4FHfQB
-         r2tmIE+bvORCwhFf0H/QPjoaKuGOpT5/fBfHyWnL0XAWOCoqqJpEtadcajVcZ1xmDHQ9
-         W3hOXdlqXgWFWtzBweSTHhTDiaJy/CvVzcnU6Ql54k5CXZ67gj9Y6m5hIna88bZ7eCF5
-         UGE8ItQ+R60WPCKzGnQuMXIvmWSjWXYLXdmU5R1duIW06BHppfe9EFachnjSrRe6x+mo
-         Cp5g==
+        bh=D1VgAFs/fc+Y/9eiRj7tYKketPPl27dz5wMWbvtZ+5Q=;
+        b=B5ZRRHFF+FvMgSsWM9bWyitBf7QdsRWDFdIp+GpUfsq1/3YueGqBPlQ0NsQ9FYKdF4
+         zyOoT9AUqCnrBEcuZUVz6MXwkotYgd8ewEttTAquFJ9HOiuzZIgVBr7C+6vOZ1umIAFS
+         q6o8d8FRkGTuy5bGF4jobje5VoiI1OUo5C0LgUxlDzAMdW50iqhj9ccT6ZRMl5xrSrn4
+         64/usX3HmbPrZQlwRxdRsWd/LG+XL2jR2+Zcs6gBrtE2ERtyJ7BAJEVV25txzolVRCM2
+         rsrpRab8ux+Wg2/o1rGu20t4Al48UwKRzB1KQUEC7yxpssuA8x85FEGJqthPghfKOu19
+         FF6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HmPOBb5BAz7NfvXvPTz+M/4cpmZMEgfRqdhhoJcpZG8=;
-        b=pEY4tOj0xK+D75hJ46rcRAXKVqLUnPYSmut/tnF0RpPo//GhVmDEcbDAC2nr3DGeL0
-         w+nU3dO1VTL1UY3OuMx+JmhY3W6hxBaK99PehMb/a+klaCQPslwpZ/clsTJDOK6gyuQ/
-         ra76Q6BFBufPeMD50SIRWNNboCsIuB6H1j4AJFmX4RCC5KSLOJJRlqPWu5qG1NGTqeWi
-         X4cqJKGNwJALIQFNoHXnmZmlZg00dXOzCXS8pOh2KdYRJ1NDvpoMFV8AZNYsOnUs5lLZ
-         8wB6BIC2RavHHDsmgqXJzb1e8YDwUeIJDTwuvZdstIxPaJQFqgLyNaB/i5TBeANlW58M
-         FTEg==
-X-Gm-Message-State: APjAAAUXd55NvjIaO50g3nVOtsGR99RzOSeZCffaO9tB0Te8ggAzkbUb
-        D4FVmiBeYZkusqGzwgW+ad8=
-X-Google-Smtp-Source: APXvYqx4f15xdnasX6up+oA8eo/NfdT5ovvuNn13KESey7I4HTay0R5esfyUSi7uVfXDOHQYdBy0SA==
-X-Received: by 2002:adf:b6a9:: with SMTP id j41mr3765273wre.8.1560258220056;
-        Tue, 11 Jun 2019 06:03:40 -0700 (PDT)
+        bh=D1VgAFs/fc+Y/9eiRj7tYKketPPl27dz5wMWbvtZ+5Q=;
+        b=m/8mppR+aH4dVsFPOVOQllcrZ7zv6o41cYVaK1LsFwRzwHDjSl9OyF0Iqc6FuUcQ0d
+         97dpB4WzTp8/f1/Zxbe0sSRkQBq3mZH2VVcu6Q+s2lsPvL5Z7NR9U6it+Iy5Iu6bT+Qg
+         b9nBg8ZRPPkaDCdcgEQfV2B6uMqbv1QBGgXqPd0tHKvupq7tHOcdb4Km5pEP+h2BADHd
+         mHWNrOA5Qg5TznSAUy6WCGm9IvSvK6j/cXneRWBkHNQXDHZ2mxawKu7+ioWVweJqWdae
+         qqMvnnnopOOR21KSSd489TFV6uuEqt0L/vRvlo4jjzazmg0NHZtK8qeY2JPFRqCSO11u
+         6sXA==
+X-Gm-Message-State: APjAAAW3wyeN8+X2X3AsBqdZjUjP0TiX3xVq+j7+pjGCZ6PgcAMXQR+Y
+        CKd3O3bVu429lr7a6iECb/k=
+X-Google-Smtp-Source: APXvYqwFMqRRWD1EBYuI5hVo9BLNqMLYd5WDuS0iv6fUBsacV7jNy8u27pPeZ/xvOHK4Y5QoX0b5oQ==
+X-Received: by 2002:a1c:e341:: with SMTP id a62mr17419821wmh.165.1560258221301;
+        Tue, 11 Jun 2019 06:03:41 -0700 (PDT)
 Received: from localhost.localdomain (x4d0cbedf.dyn.telefonica.de. [77.12.190.223])
-        by smtp.gmail.com with ESMTPSA id l190sm2561524wml.16.2019.06.11.06.03.39
+        by smtp.gmail.com with ESMTPSA id l190sm2561524wml.16.2019.06.11.06.03.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Jun 2019 06:03:39 -0700 (PDT)
+        Tue, 11 Jun 2019 06:03:40 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
-Date:   Tue, 11 Jun 2019 15:03:19 +0200
-Message-Id: <20190611130320.18499-4-szeder.dev@gmail.com>
+Subject: [PATCH v2 4/4] progress: use term_clear_line()
+Date:   Tue, 11 Jun 2019 15:03:20 +0200
+Message-Id: <20190611130320.18499-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.22.0.566.g58873a45ff
 In-Reply-To: <20190611130320.18499-1-szeder.dev@gmail.com>
 References: <20190430142556.20921-1-szeder.dev@gmail.com>
@@ -70,160 +70,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running a command with the 'exec' instruction during an
-interactive rebase session, or for a range of commits using 'git
-rebase -x', the output can be a bit garbled when the name of the
-command is short enough:
+To make sure that the previously displayed progress line is completely
+covered up when the new line is shorter, commit 545dc345eb (progress:
+break too long progress bar lines, 2019-04-12) added a bunch of
+calculations to figure out how many characters it needs to overwrite
+with spaces.
 
-  $ git rebase -x true HEAD~5
-  Executing: true
-  Executing: true
-  Executing: true
-  Executing: true
-  Executing: true)
-  Successfully rebased and updated refs/heads/master.
+Use the just introduced term_clear_line() helper function to, well,
+clear the last line, making all these calculations unnecessary, and
+thus simplifying the code considerably.
 
-Note the ')' at the end of the last line.  It gets more garbled as the
-range of commits increases:
+Three tests in 't5541-http-push-smart.sh' 'grep' for specific text
+shown in the progress lines at the beginning of the line, but now
+those lines begin either with the ANSI escape sequence or with the
+terminal width worth of space characters clearing the line.  Relax the
+'grep' patterns to match anywhere on the line.  Note that only two of
+these three tests fail without relaxing their 'grep' pattern, but the
+third looks for the absence of the pattern, so it still succeeds, but
+without the adjustment would potentially hide future regressions.
 
-  $ git rebase -x true HEAD~50
-  Executing: true)
-  [ repeated 3 more times ]
-  Executing: true0)
-  [ repeated 44 more times ]
-  Executing: true00)
-  Successfully rebased and updated refs/heads/master.
-
-Those extra numbers and ')' are remnants of the previously displayed
-"Rebasing (N/M)" progress lines that are usually completely
-overwritten by the "Executing: <cmd>" lines, unless 'cmd' is short and
-the "N/M" part is long.
-
-Make sure that the previously displayed "Rebasing (N/M)" line is
-cleared by using the term_clear_line() helper function added in the
-previous patch.
-
-A couple of other rebase commands print similar messages, e.g.
-"Stopped at <abbrev-oid>... <subject>" for the 'edit' or 'break'
-commands, or the "Successfully rebased and updated <full-ref>." at the
-very end.  These are so long that they practically always overwrite
-that "Rebasing (n/m)" progress line, but let's be prudent, and clear
-the last line before printing these, too.
-
-Three tests, one in 't3404-rebase-interactive.sh' and two in
-'t3420-rebase-autostash.sh' check the full output of 'git rebase' and
-thus are affected by this change, so adjust their expectations to
-account for the new line clearing.
-
-Note that this patch doesn't completely eliminate the possibility of
-similar garbled outputs, e.g. some error messages from rebase or the
-"Auto-merging <file>" message from withing the depths of the merge
-machinery might not be long enough to completely cover the last
-"Rebasing (N/M)" line.  This patch doesn't do anything about them,
-because dealing with them individually would result in way too much
-churn, while having a catch-all term_clear_line() call in the common
-code path of pick_commits() would hide the "Rebasing (N/M)" line way
-too soon, and it would either flicker or be invisible.
+Note also that with this change we no longer need the length of the
+previously displayed progress line, so the strbuf added to 'struct
+progress' in d53ba841d4 (progress: assemble percentage and counters in
+a strbuf before printing, 2019-04-05) is not strictly necessary
+anymore.  We still keep it, though, as it avoids allocating and
+releasing a strbuf each time the progress is updated.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- sequencer.c                   | 17 ++++++++++++++---
- t/t3404-rebase-interactive.sh |  2 +-
- t/t3420-rebase-autostash.sh   |  4 ++--
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ progress.c                 | 28 +++++++++++-----------------
+ t/t5541-http-push-smart.sh |  6 +++---
+ 2 files changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index f88a97fb10..63b09cfceb 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3731,8 +3731,11 @@ static int pick_commits(struct repository *r,
- 			unlink(git_path_merge_head(the_repository));
- 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+diff --git a/progress.c b/progress.c
+index a2e8cf64a8..095dcd0ddf 100644
+--- a/progress.c
++++ b/progress.c
+@@ -88,7 +88,6 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 	const char *tp;
+ 	struct strbuf *counters_sb = &progress->counters_sb;
+ 	int show_update = 0;
+-	int last_count_len = counters_sb->len;
  
--			if (item->command == TODO_BREAK)
-+			if (item->command == TODO_BREAK) {
-+				if (!opts->verbose)
-+					term_clear_line();
- 				return stopped_at_head(r);
-+			}
- 		}
- 		if (item->command <= TODO_SQUASH) {
- 			if (is_rebase_i(opts))
-@@ -3754,11 +3757,14 @@ static int pick_commits(struct repository *r,
+ 	if (progress->delay && (!progress_update || --progress->delay))
+ 		return;
+@@ -116,26 +115,21 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 	if (show_update) {
+ 		if (is_foreground_fd(fileno(stderr)) || done) {
+ 			const char *eol = done ? done : "\r";
+-			size_t clear_len = counters_sb->len < last_count_len ?
+-					last_count_len - counters_sb->len + 1 :
+-					0;
+-			size_t progress_line_len = progress->title_len +
+-						counters_sb->len + 2;
+-			int cols = term_columns();
+ 
++			term_clear_line();
+ 			if (progress->split) {
+-				fprintf(stderr, "  %s%*s", counters_sb->buf,
+-					(int) clear_len, eol);
+-			} else if (!done && cols < progress_line_len) {
+-				clear_len = progress->title_len + 1 < cols ?
+-					    cols - progress->title_len - 1 : 0;
+-				fprintf(stderr, "%s:%*s\n  %s%s",
+-					progress->title, (int) clear_len, "",
+-					counters_sb->buf, eol);
++				fprintf(stderr, "  %s%s", counters_sb->buf,
++					eol);
++			} else if (!done &&
++				   /* The "+ 2" accounts for the ": ". */
++				   term_columns() < progress->title_len +
++						    counters_sb->len + 2) {
++				fprintf(stderr, "%s:\n  %s%s",
++					progress->title, counters_sb->buf, eol);
+ 				progress->split = 1;
+ 			} else {
+-				fprintf(stderr, "%s: %s%*s", progress->title,
+-					counters_sb->buf, (int) clear_len, eol);
++				fprintf(stderr, "%s: %s%s", progress->title,
++					counters_sb->buf, eol);
  			}
- 			if (item->command == TODO_EDIT) {
- 				struct commit *commit = item->commit;
--				if (!res)
-+				if (!res) {
-+					if (!opts->verbose)
-+						term_clear_line();
- 					fprintf(stderr,
- 						_("Stopped at %s...  %.*s\n"),
- 						short_commit_name(commit),
- 						item->arg_len, arg);
-+				}
- 				return error_with_patch(r, commit,
- 					arg, item->arg_len, opts, res, !res);
- 			}
-@@ -3796,6 +3802,8 @@ static int pick_commits(struct repository *r,
- 			int saved = *end_of_arg;
- 			struct stat st;
- 
-+			if (!opts->verbose)
-+				term_clear_line();
- 			*end_of_arg = '\0';
- 			res = do_exec(r, arg);
- 			*end_of_arg = saved;
-@@ -3954,10 +3962,13 @@ static int pick_commits(struct repository *r,
+ 			fflush(stderr);
  		}
- 		apply_autostash(opts);
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 8ef8763e06..2e4802e206 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -213,7 +213,7 @@ test_expect_success TTY 'push shows progress when stderr is a tty' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	test_commit noisy &&
+ 	test_terminal git push >output 2>&1 &&
+-	test_i18ngrep "^Writing objects" output
++	test_i18ngrep "Writing objects" output
+ '
  
--		if (!opts->quiet)
-+		if (!opts->quiet) {
-+			if (!opts->verbose)
-+				term_clear_line();
- 			fprintf(stderr,
- 				"Successfully rebased and updated %s.\n",
- 				head_ref.buf);
-+		}
+ test_expect_success TTY 'push --quiet silences status and progress' '
+@@ -228,7 +228,7 @@ test_expect_success TTY 'push --no-progress silences progress but not status' '
+ 	test_commit no-progress &&
+ 	test_terminal git push --no-progress >output 2>&1 &&
+ 	test_i18ngrep "^To http" output &&
+-	test_i18ngrep ! "^Writing objects" output
++	test_i18ngrep ! "Writing objects" output
+ '
  
- 		strbuf_release(&buf);
- 		strbuf_release(&head_ref);
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index e66e95d453..72ce9d393c 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1313,7 +1313,7 @@ To avoid this message, use "drop" to explicitly remove a commit.
- Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
- The possible behaviours are: ignore, warn, error.
+ test_expect_success 'push --progress shows progress to non-tty' '
+@@ -236,7 +236,7 @@ test_expect_success 'push --progress shows progress to non-tty' '
+ 	test_commit progress &&
+ 	git push --progress >output 2>&1 &&
+ 	test_i18ngrep "^To http" output &&
+-	test_i18ngrep "^Writing objects" output
++	test_i18ngrep "Writing objects" output
+ '
  
--Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QSuccessfully rebased and updated refs/heads/missing-commit.
-+Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QQ                                                                                QSuccessfully rebased and updated refs/heads/missing-commit.
- EOF
- 
- test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 2d1094e483..9186e90127 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -49,7 +49,7 @@ create_expected_success_interactive () {
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
- 	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	Rebasing (1/2)QRebasing (2/2)QApplied autostash.
--	Successfully rebased and updated refs/heads/rebased-feature-branch.
-+	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
-@@ -73,7 +73,7 @@ create_expected_failure_interactive () {
- 	Rebasing (1/2)QRebasing (2/2)QApplying autostash resulted in conflicts.
- 	Your changes are safe in the stash.
- 	You can run "git stash pop" or "git stash drop" at any time.
--	Successfully rebased and updated refs/heads/rebased-feature-branch.
-+	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
+ test_expect_success 'http push gives sane defaults to reflog' '
 -- 
 2.22.0.566.g58873a45ff
 
