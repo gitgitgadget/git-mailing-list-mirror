@@ -8,51 +8,51 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2BC21F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 23:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E56A11F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 23:31:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408144AbfFKXbt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 19:31:49 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:37413 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408126AbfFKXbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 19:31:48 -0400
-Received: by mail-pf1-f201.google.com with SMTP id x18so10667985pfj.4
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:31:47 -0700 (PDT)
+        id S2408133AbfFKXbr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 19:31:47 -0400
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:49752 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404692AbfFKXbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 19:31:46 -0400
+Received: by mail-vs1-f74.google.com with SMTP id 184so4818192vsw.16
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=SXY/CgbexSQiBdos0S0dmLpXZIbKQ2KMSCjVtNiurmA=;
-        b=AB4bfS2rPdw/4Qb88y8eYpc9z6ScpXlSOW2KtMw0Kjn9VAKIdSs+4WhduIBjkSp/0U
-         tZP1wD28ZtW8osKoDEyiSnS4nQvFmny/a5/nnKJJAKX3LYeljv3KHbVDhw79pTCQQp9Z
-         asIKAiu0GJMZdddWRXLVor5HYnxxWzNctsMgi8dz6tsarP2cUBGe0kT/UTMWUpItYCQQ
-         6IcemzrPgI8vQIfSWWt46k3NjsleGLoS3XNhVXV7y5et/DWNJpIkGQDlfjnRE3IWqKTG
-         tdmRpfWXdI1XGYorbshmDfXdIxxpE9k+7BNOT+JMu4liBc48FHM3B8qrZITenfUXJ4cl
-         SYmg==
+        bh=MjryO5Ekus0jjjA7KOGE9LdJrehRl2VsZmp7t0u4+u4=;
+        b=Vff2WnD2V1BvPdWlVP6IHMz9MYyq0fCpemOq4oVZZhwKZXexo3UUp5M1+ZySmWrsEE
+         2SXqBLSEzdPtfZnwYFM5X4umgjch+WqdUfbXWikgnydMFy5/DzeN/d+AEO4GytH0lpfa
+         gXTsHHgUWCdjNVjvnLTqX3JJhz2mM3udvwL/ONeS6379l/dpssCsUYxGTtV86jT/xkgS
+         sU3FVVek/J9iKUAUyA2A6mKEConT2Inkv4JfbmCuoKwVon/rLngrkPzHe8fh6WDU2Kp9
+         2FUPd/m6ld6zEanqz5oFVK/qIAvXnBKibvnBBYvDGKt3swSJjphVjs6mzTbx46LGs5/A
+         Tecg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to;
-        bh=SXY/CgbexSQiBdos0S0dmLpXZIbKQ2KMSCjVtNiurmA=;
-        b=RvU/6Ddp4T4mVHH2zW6GyJKnbd6fRaylgZKbnvYMEzzHoxRmEEY4NXdZH2IUftP5v0
-         OvyWPZj+ukpBwmHy/5aNEZSDmcrD8m3Y1y/2eO/q53joFxIuIWrI/ylBR475Ldrj8YcU
-         zWSY3oHFatN/4grqu4QqgNXzM6WhEn6ZuUEIySPyHeMm9K+iemoF2g0DriCZRAbBm+jm
-         WBQ53OmRaF5FKXmTBNJiH8jMVshpf6fLAAkH5d+jhwtU+TTivsfvTExoJEw77YEvJJ59
-         G0rbU49rSjxsK1rnwHlXwHkjjcpNHy+zh0xUqrRqxDh/iZvkEvJUBeSiV1CRaAqP6Osg
-         QowA==
-X-Gm-Message-State: APjAAAVEAQKpySXGyk3waT/XCq0aRT2lG+Iko7xFsA3ftprELPGHyd+l
-        xJIvNg8yXIQP6E93OsPGyfcGmUHDQlGukDvF0WPo1RqmSOcshsahoWClyJf0Q6ei1DEtv2tgzjZ
-        /cR4mBI0UrXnkckmWGpYE4kzDDviEPDY+96s+g3WMk1PR0KGzmHjrgqLwBGEaLiY=
-X-Google-Smtp-Source: APXvYqzLNsuvAbJ/q4xkv9L3R5hFIU5VUFE/XzPxGm8CrVjxdjQABY42zHtWXh1hOTy4uE9bQYbsXukPvYtz2Q==
-X-Received: by 2002:a65:4907:: with SMTP id p7mr22086792pgs.288.1560295907197;
- Tue, 11 Jun 2019 16:31:47 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 16:31:37 -0700
+        bh=MjryO5Ekus0jjjA7KOGE9LdJrehRl2VsZmp7t0u4+u4=;
+        b=GmjQhT1kZthpwwHAlwSKEwaJlZ7JAhk+Emjjb8ia9lmyyNWs0Ev52VdgVJPOG7Dnnz
+         QOCZXRZTba1KWZPlE64ThbFhQwQsgdCM4CNtPAshJL4gsMsiLMXNVL//1XnNYV2w3s/+
+         W1VObzqBSZ+aSy1vQ1n4DzxSqmTUZpNXb47i2BC922rjZW9QPPTdqHR0Frm9N+sSgJnF
+         1gtBYqwMdTMeQC6oZREZfE7BdPWHSXmsKoqSpbP9iLubdTSDYjHmdiyJkgLTeuDIWYDl
+         C+AsRJySBfPapAXzKjw6B0RIej4MSWeOBUjhUz/NOuFjmILTISLG/XET1gdG4hut3GLy
+         C3PQ==
+X-Gm-Message-State: APjAAAX1BKogJPWvn0v9QKC3aze3JAhJ2l9PKVeMZwW0jebhGKkV1SQs
+        cVYdnDAHNeN5CL3XfV6nSAt6/YdERrRh9uY7NouCx+Q2p2AETC8rZ8El2XRzNguSRnBYB8v+TEz
+        PRY0/7CBVIO8k6p/4ejFCxTYzAFsWWCWpNxQeu4FhieQcs4Djc+V77kZaWdF/FYg=
+X-Google-Smtp-Source: APXvYqwe1M+HmdSRN/bogjU4aD4WuIYibtOpZ3dQl1KzkY3nh5XNCg+UYbQdNcAQGLjLUYIX04DGFSG7LK5OXg==
+X-Received: by 2002:ab0:1004:: with SMTP id f4mr14998095uab.79.1560295904930;
+ Tue, 11 Jun 2019 16:31:44 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 16:31:36 -0700
 In-Reply-To: <cover.1560295286.git.steadmon@google.com>
-Message-Id: <7475c6220895d96cdc7d25d6edea70e2f978526b.1560295286.git.steadmon@google.com>
+Message-Id: <8dd0277222efa265f1e911c8476305feb3c2c3fb.1560295286.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1560295286.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH 3/3] trace2: add a schema validator for trace2 events
+Subject: [RFC PATCH 2/3] trace2: Add a JSON schema for trace2 events
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org, git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
@@ -61,124 +61,953 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-trace_schema_validator can be used to verify that trace2 event output
-conforms to the expectations set by the API documentation and codified
-in event_schema.json (or strict_schema.json). This allows us to build a
-regression test to verify that trace2 output does not change
-unexpectedly.
+Define a JSON schema[1] that can be used to validate trace2 event
+objects. This can be used to add regression tests to verify that the
+event output format does not change unexpectedly.
+
+Two versions of the schema are provided:
+* event_schema.json is more permissive. It verifies that all expected
+  fields are present in each trace event, but it allows traces to have
+  unexpected additional fields. This allows the schema to be specified
+  more concisely by factoring out the common fields into a reusable
+  sub-schema.
+* strict_schema.json is more restrictive. It verifies that all expected
+  fields are present and no unexpected fields are present in each trace
+  event. Due to this additional restriction, the common fields cannot be
+  factored out into a re-usable subschema (at least as-of draft-07) [2],
+  and must be repeated for each event definition.
+
+[1]: https://json-schema.org/
+[2]: https://json-schema.org/understanding-json-schema/reference/combining.html#allof
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/trace_schema_validator/.gitignore           |  1 +
- t/trace_schema_validator/Makefile             | 10 +++
- .../trace_schema_validator.go                 | 74 +++++++++++++++++++
- 3 files changed, 85 insertions(+)
- create mode 100644 t/trace_schema_validator/.gitignore
- create mode 100644 t/trace_schema_validator/Makefile
- create mode 100644 t/trace_schema_validator/trace_schema_validator.go
+ t/trace_schema_validator/event_schema.json  | 398 +++++++++++++++
+ t/trace_schema_validator/strict_schema.json | 511 ++++++++++++++++++++
+ 2 files changed, 909 insertions(+)
+ create mode 100644 t/trace_schema_validator/event_schema.json
+ create mode 100644 t/trace_schema_validator/strict_schema.json
 
-diff --git a/t/trace_schema_validator/.gitignore b/t/trace_schema_validator/.gitignore
+diff --git a/t/trace_schema_validator/event_schema.json b/t/trace_schema_validator/event_schema.json
 new file mode 100644
-index 0000000000..c3f1e04e9e
+index 0000000000..5f6cfb11e7
 --- /dev/null
-+++ b/t/trace_schema_validator/.gitignore
-@@ -0,0 +1 @@
-+trace_schema_validator
-diff --git a/t/trace_schema_validator/Makefile b/t/trace_schema_validator/Makefile
-new file mode 100644
-index 0000000000..ed22675e5d
---- /dev/null
-+++ b/t/trace_schema_validator/Makefile
-@@ -0,0 +1,10 @@
-+.PHONY: fetch_deps clean
++++ b/t/trace_schema_validator/event_schema.json
+@@ -0,0 +1,398 @@
++{
++	"$schema": "http://json-schema.org/draft-07/schema#",
++	"$id": "http://git-scm.com/schemas/event_schema.json",
++	"title": "trace2 permissive schema",
++	"description": "Permissive schema for trace2 event output that does not fail in the presence of unexpected fields.",
 +
-+trace_schema_validator: fetch_deps trace_schema_validator.go
-+	go build
++	"definitions": {
++		"event_common_fields": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" }
++			},
++			"required": [ "sid", "thread" ]
++		},
 +
-+fetch_deps:
-+	go get github.com/xeipuuv/gojsonschema
++		"version_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "version" },
++						"evt": { "const": "1" },
++						"exe": { "type": "string" }
++					},
++					"required": [ "event", "evt", "exe" ]
++				}
++			]
++		},
 +
-+clean:
-+	rm -f trace_schema_validator
-diff --git a/t/trace_schema_validator/trace_schema_validator.go b/t/trace_schema_validator/trace_schema_validator.go
-new file mode 100644
-index 0000000000..51dc9ec608
---- /dev/null
-+++ b/t/trace_schema_validator/trace_schema_validator.go
-@@ -0,0 +1,74 @@
-+// trace_schema_validator validates individual lines of an input file against a
-+// provided JSON-Schema for git trace2 event output.
-+//
-+// Traces can be collected by setting the GIT_TRACE2_EVENT environment variable
-+// to an absolute path and running any Git command; traces will be appended to
-+// the file.
-+//
-+// Traces can then be verified like so:
-+//   trace_schema_validator \
-+//     --trace2_event_file /path/to/trace/output \
-+//     --schema_file /path/to/schema
-+package main
++		"start_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "start" },
++						"t_abs": { "type": "number" },
++						"argv": {
++							"type": "array",
++							"items": { "type": "string" }
++						}
++					},
++					"required": [ "event", "t_abs", "argv" ]
++				}
++			]
++		},
 +
-+import (
-+	"bufio"
-+	"flag"
-+	"log"
-+	"os"
-+	"path/filepath"
++		"exit_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "exit" },
++						"t_abs": { "type": "number" },
++						"code": { "type": "integer" }
++					},
++					"required": [ "event", "t_abs", "code" ]
++				}
++			]
++		},
 +
-+	"github.com/xeipuuv/gojsonschema"
-+)
++		"atexit_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "atexit" },
++						"t_abs": { "type": "number" },
++						"code": { "type": "integer" }
++					},
++					"required": [ "event", "t_abs", "code" ]
++				}
++			]
++		},
 +
-+// Required flags
-+var schemaFile = flag.String("schema_file", "", "JSON-Schema filename")
-+var trace2EventFile = flag.String("trace2_event_file", "", "trace2 event filename")
++		"signal_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "signal" },
++						"t_abs": { "type": "number" },
++						"signo": { "type": "integer" }
++					},
++					"required": [ "event", "t_abs", "signo" ]
++				}
++			]
++		},
 +
-+func main() {
-+	flag.Parse()
-+	if *schemaFile == "" || *trace2EventFile == "" {
-+		log.Fatal("Both --schema_file and --trace2_event_file are required.")
-+	}
-+	schemaURI, err := filepath.Abs(*schemaFile)
-+	if err != nil {
-+		log.Fatal("Can't get absolute path for schema file: ", err)
-+	}
-+	schemaURI = "file://" + schemaURI
++		"error_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "error" },
++						"msg": { "type": "string" },
++						"fmt": { "type": "string" }
++					},
++					"required": [ "event", "msg", "fmt" ]
++				}
++			]
++		},
 +
-+	schemaLoader := gojsonschema.NewReferenceLoader(schemaURI)
-+	schema, err := gojsonschema.NewSchema(schemaLoader)
-+	if err != nil {
-+		log.Fatal("Problem loading schema: ", err)
-+	}
++		"cmd_path_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "cmd_path" },
++						"path": { "type": "string" }
++					},
++					"required": [ "event", "path" ]
++				}
++			]
++		},
 +
-+	tracesFile, err := os.Open(*trace2EventFile)
-+	if err != nil {
-+		log.Fatal("Problem opening trace file: ", err)
-+	}
-+	defer tracesFile.Close()
++		"cmd_name_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "cmd_name" },
++						"name": { "type": "string" },
++						"hierarchy": { "type": "string" }
++					},
++					"required": [ "event", "name", "hierarchy" ]
++				}
++			]
++		},
 +
-+	scanner := bufio.NewScanner(tracesFile)
++		"cmd_mode_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "cmd_mode" },
++						"name": { "type": "string" }
++					},
++					"required": [ "event", "name" ]
++				}
++			]
++		},
 +
-+	count := 0
-+	for ; scanner.Scan(); count++ {
-+		event := gojsonschema.NewStringLoader(scanner.Text())
-+		result, err := schema.Validate(event)
-+		if err != nil {
-+			log.Fatal(err)
++		"alias_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "alias" },
++						"alias": { "type": "string" },
++						"argv": {
++							"type": "array",
++							"items": { "type": "string" }
++						}
++					},
++					"required": [ "event", "alias", "argv" ]
++				}
++			]
++		},
++
++		"child_start_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "child_start" },
++						"child_id": { "type": "integer" },
++						"child_class": { "type": "string" },
++						"use_shell": { "type": "boolean" },
++						"argv": {
++							"type": "array",
++							"items": { "type": "string" }
++						},
++						"hook_name": { "type": "string" },
++						"cd": { "type": "string" }
++					},
++					"required": [
++						"event", "child_id", "child_class", "use_shell", "argv"
++					]
++				}
++			]
++		},
++
++		"child_exit_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "child_exit" },
++						"child_id": { "type": "integer" },
++						"pid": { "type": "integer" },
++						"code": { "type": "integer" },
++						"t_rel": { "type": "number" }
++					},
++					"required": [ "event", "child_id", "pid", "code", "t_rel" ]
++				}
++			]
++		},
++
++		"exec_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "exec" },
++						"exec_id": { "type": "integer" },
++						"exe": { "type": "string" },
++						"argv": {
++							"type": "array",
++							"items": { "type": "string" }
++						}
++					},
++					"required": [ "event", "exec_id", "exe", "argv" ]
++				}
++			]
++		},
++
++		"exec_result_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "exec_result" },
++						"exec_id": { "type": "integer" },
++						"code": { "type": "integer" }
++					},
++					"required": [ "event", "exec_id", "code" ]
++				}
++			]
++		},
++
++		"thread_start_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "thread_start" },
++						"thread": { "type": "string" }
++					},
++					"required": [ "event", "thread" ]
++				}
++			]
++		},
++
++		"thread_exit_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "thread_exit" },
++						"thread": { "type": "string" },
++						"t_rel": { "type": "number" }
++					},
++					"required": [ "event", "thread", "t_rel" ]
++				}
++			]
++		},
++
++		"def_param_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "def_param" },
++						"param": { "type": "string" },
++						"value": { "type": "string" }
++					},
++					"required": [ "event", "param", "value" ]
++				}
++			]
++		},
++
++		"def_repo_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "def_repo" },
++						"repo": { "type": "integer" },
++						"worktree": { "type": "string" }
++					},
++					"required": [ "event", "repo", "worktree" ]
++				}
++			]
++		},
++
++		"region_enter_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "region_enter" },
++						"repo": { "type": "integer" },
++						"nesting": { "type": "integer" },
++						"category": { "type": "string" },
++						"label": { "type": "string" },
++						"msg": { "type": "string" }
++					},
++					"required": [ "event", "nesting" ]
++				}
++			]
++		},
++
++		"region_leave_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "region_leave" },
++						"repo": { "type": "integer" },
++						"t_rel": { "type": "number" },
++						"nesting": { "type": "integer" },
++						"category": { "type": "string" },
++						"label": { "type": "string" },
++						"msg": { "type": "string" }
++					},
++					"required": [ "event", "t_rel", "nesting" ]
++				}
++			]
++		},
++
++		"data_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "data" },
++						"repo": { "type": "integer" },
++						"t_abs": { "type": "number" },
++						"t_rel": { "type": "number" },
++						"nesting": { "type": "integer" },
++						"category": { "type": "string" },
++						"key": { "type": "string" },
++						"value": { "type": "string" }
++					},
++					"required": [
++						"event", "t_abs", "t_rel", "nesting", "category", "key",
++						"value"
++					]
++				}
++			]
++		},
++
++		"data-json_event": {
++			"allOf": [
++				{ "$ref": "#/definitions/event_common_fields" },
++				{
++					"properties": {
++						"event": { "const": "data-json" },
++						"repo": { "type": "integer" },
++						"t_abs": { "type": "number" },
++						"t_rel": { "type": "number" },
++						"nesting": { "type": "integer" },
++						"category": { "type": "string" },
++						"key": { "type": "string" },
++						"value": true
++					},
++					"required": [
++						"event", "t_abs", "t_rel", "nesting", "category", "key",
++						"value"
++					]
++				}
++			]
 +		}
-+		if !result.Valid() {
-+			log.Print("Trace event is invalid: ", scanner.Text())
-+			for _, desc := range result.Errors() {
-+				log.Print("- ", desc)
-+			}
-+			os.Exit(1)
++	},
++
++	"oneOf": [
++		{ "$ref": "#/definitions/version_event" },
++		{ "$ref": "#/definitions/start_event" },
++		{ "$ref": "#/definitions/exit_event" },
++		{ "$ref": "#/definitions/atexit_event" },
++		{ "$ref": "#/definitions/signal_event" },
++		{ "$ref": "#/definitions/error_event" },
++		{ "$ref": "#/definitions/cmd_path_event" },
++		{ "$ref": "#/definitions/cmd_name_event" },
++		{ "$ref": "#/definitions/cmd_mode_event" },
++		{ "$ref": "#/definitions/alias_event" },
++		{ "$ref": "#/definitions/child_start_event" },
++		{ "$ref": "#/definitions/child_exit_event" },
++		{ "$ref": "#/definitions/exec_event" },
++		{ "$ref": "#/definitions/exec_result_event" },
++		{ "$ref": "#/definitions/thread_start_event" },
++		{ "$ref": "#/definitions/thread_exit_event" },
++		{ "$ref": "#/definitions/def_param_event" },
++		{ "$ref": "#/definitions/def_repo_event" },
++		{ "$ref": "#/definitions/region_enter_event" },
++		{ "$ref": "#/definitions/region_leave_event" },
++		{ "$ref": "#/definitions/data_event" },
++		{ "$ref": "#/definitions/data-json_event" }
++	]
++}
+diff --git a/t/trace_schema_validator/strict_schema.json b/t/trace_schema_validator/strict_schema.json
+new file mode 100644
+index 0000000000..239d852ee9
+--- /dev/null
++++ b/t/trace_schema_validator/strict_schema.json
+@@ -0,0 +1,511 @@
++{
++	"$schema": "http://json-schema.org/draft-07/schema#",
++	"$id": "http://git-scm.com/schemas/event_schema.json",
++	"title": "trace2 strict schema",
++	"description": "Strict schema for trace2 event output that verifies there are no unexpected fields.",
++
++	"definitions": {
++		"version_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "version" },
++				"evt": { "const": "1" },
++				"exe": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "evt", "exe" ],
++			"additionalProperties": false
++		},
++
++		"start_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "start" },
++				"t_abs": { "type": "number" },
++				"argv": {
++					"type": "array",
++					"items": { "type": "string" }
++				}
++			},
++			"required": [ "sid", "thread", "time", "event", "t_abs", "argv" ],
++			"additionalProperties": false
++		},
++
++		"exit_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "exit" },
++				"t_abs": { "type": "number" },
++				"code": { "type": "integer" }
++			},
++			"required": [ "sid", "thread", "event", "t_abs", "code" ],
++			"additionalProperties": false
++		},
++
++		"atexit_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "atexit" },
++				"t_abs": { "type": "number" },
++				"code": { "type": "integer" }
++			},
++			"required": [ "sid", "thread", "time", "event", "t_abs", "code" ],
++			"additionalProperties": false
++		},
++
++		"signal_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "signal" },
++				"t_abs": { "type": "number" },
++				"signo": { "type": "integer" }
++			},
++			"required": [ "sid", "thread", "event", "t_abs", "signo" ],
++			"additionalProperties": false
++		},
++
++		"error_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "error" },
++				"msg": { "type": "string" },
++				"fmt": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "msg", "fmt" ],
++			"additionalProperties": false
++		},
++
++		"cmd_path_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "cmd_path" },
++				"path": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "path" ],
++			"additionalProperties": false
++		},
++
++		"cmd_name_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "cmd_name" },
++				"name": { "type": "string" },
++				"hierarchy": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "name", "hierarchy"
++			],
++			"additionalProperties": false
++		},
++
++		"cmd_mode_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "cmd_mode" },
++				"name": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "name" ],
++			"additionalProperties": false
++		},
++
++		"alias_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "alias" },
++				"alias": { "type": "string" },
++				"argv": {
++					"type": "array",
++					"items": { "type": "string" }
++				}
++			},
++			"required": [ "sid", "thread", "event", "alias", "argv" ],
++			"additionalProperties": false
++		},
++
++		"child_start_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "child_start" },
++				"child_id": { "type": "integer" },
++				"child_class": { "type": "string" },
++				"use_shell": { "type": "boolean" },
++				"argv": {
++					"type": "array",
++					"items": { "type": "string" }
++				},
++				"hook_name": { "type": "string" },
++				"cd": { "type": "string" }
++			},
++			"required": [
++				"sid", "thread", "event", "child_id", "child_class",
++				"use_shell", "argv"
++			],
++			"additionalProperties": false
++		},
++
++		"child_exit_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "child_exit" },
++				"child_id": { "type": "integer" },
++				"pid": { "type": "integer" },
++				"code": { "type": "integer" },
++				"t_rel": { "type": "number" }
++			},
++			"required": [
++				"sid", "thread", "event", "child_id", "pid", "code", "t_rel"
++			],
++			"additionalProperties": false
++		},
++
++		"exec_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "exec" },
++				"exec_id": { "type": "integer" },
++				"exe": { "type": "string" },
++				"argv": {
++					"type": "array",
++					"items": { "type": "string" }
++				}
++			},
++			"required": [ "sid", "thread", "event", "exec_id", "exe", "argv" ],
++			"additionalProperties": false
++		},
++
++		"exec_result_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "exec_result" },
++				"exec_id": { "type": "integer" },
++				"code": { "type": "integer" }
++			},
++			"required": [ "sid", "thread", "event", "exec_id", "code" ],
++			"additionalProperties": false
++		},
++
++		"thread_start_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "thread_start" }
++			},
++			"required": [ "sid", "thread", "event" ],
++			"additionalProperties": false
++		},
++
++		"thread_exit_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "thread_exit" },
++				"t_rel": { "type": "number" }
++			},
++			"required": [ "sid", "thread", "event", "t_rel" ],
++			"additionalProperties": false
++		},
++
++		"def_param_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "def_param" },
++				"param": { "type": "string" },
++				"value": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "param", "value" ],
++			"additionalProperties": false
++		},
++
++		"def_repo_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "def_repo" },
++				"worktree": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "repo", "worktree" ],
++			"additionalProperties": false
++		},
++
++		"region_enter_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "region_enter" },
++				"nesting": { "type": "integer" },
++				"category": { "type": "string" },
++				"label": { "type": "string" },
++				"msg": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "nesting" ],
++			"additionalProperties": false
++		},
++
++		"region_leave_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "region_leave" },
++				"t_rel": { "type": "number" },
++				"nesting": { "type": "integer" },
++				"category": { "type": "string" },
++				"label": { "type": "string" },
++				"msg": { "type": "string" }
++			},
++			"required": [ "sid", "thread", "event", "t_rel", "nesting" ],
++			"additionalProperties": false
++		},
++
++		"data_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "data" },
++				"t_abs": { "type": "number" },
++				"t_rel": { "type": "number" },
++				"nesting": { "type": "integer" },
++				"category": { "type": "string" },
++				"key": { "type": "string" },
++				"value": { "type": "string" }
++			},
++			"required": [
++				"sid", "thread", "event", "t_abs", "t_rel", "nesting",
++				"category","key", "value"
++			],
++			"additionalProperties": false
++		},
++
++		"data-json_event": {
++			"type": "object",
++			"properties": {
++				"sid": { "type": "string" },
++				"thread": { "type": "string" },
++				"time": {
++					"type": "string",
++					"format": "date-time"
++				},
++				"file": { "type": "string" },
++				"line": { "type": "integer" },
++				"repo": { "type": "integer" },
++				"event": { "const": "data-json" },
++				"t_abs": { "type": "number" },
++				"t_rel": { "type": "number" },
++				"nesting": { "type": "integer" },
++				"category": { "type": "string" },
++				"key": { "type": "string" },
++				"value": true
++			},
++			"required": [
++				"sid", "thread", "event", "t_abs", "t_rel", "nesting",
++				"category", "key", "value"
++			],
++			"additionalProperties": false
 +		}
-+	}
++	},
 +
-+	if err := scanner.Err(); err != nil {
-+		log.Fatal("Scanning error: ", err)
-+	}
-+
-+	log.Print("Validated events: ", count)
++	"oneOf": [
++		{ "$ref": "#/definitions/version_event" },
++		{ "$ref": "#/definitions/start_event" },
++		{ "$ref": "#/definitions/exit_event" },
++		{ "$ref": "#/definitions/atexit_event" },
++		{ "$ref": "#/definitions/signal_event" },
++		{ "$ref": "#/definitions/error_event" },
++		{ "$ref": "#/definitions/cmd_path_event" },
++		{ "$ref": "#/definitions/cmd_name_event" },
++		{ "$ref": "#/definitions/cmd_mode_event" },
++		{ "$ref": "#/definitions/alias_event" },
++		{ "$ref": "#/definitions/child_start_event" },
++		{ "$ref": "#/definitions/child_exit_event" },
++		{ "$ref": "#/definitions/exec_event" },
++		{ "$ref": "#/definitions/exec_result_event" },
++		{ "$ref": "#/definitions/thread_start_event" },
++		{ "$ref": "#/definitions/thread_exit_event" },
++		{ "$ref": "#/definitions/def_param_event" },
++		{ "$ref": "#/definitions/def_repo_event" },
++		{ "$ref": "#/definitions/region_enter_event" },
++		{ "$ref": "#/definitions/region_leave_event" },
++		{ "$ref": "#/definitions/data_event" },
++		{ "$ref": "#/definitions/data-json_event" }
++	]
 +}
 -- 
 2.22.0.410.gd8fdbe21b5-goog
