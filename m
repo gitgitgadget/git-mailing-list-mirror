@@ -2,102 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A28A91F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 20:10:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A2171F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 20:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406051AbfFKUKr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 16:10:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63117 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405799AbfFKUKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 16:10:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1BDD168B4B;
-        Tue, 11 Jun 2019 16:10:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OhVt7fQOFo+JDPpFsgotcBCHT0g=; b=pKlBPg
-        0LLdbx6kv2fS3UX19iF6rz5F6jWSDjt8eL/beAgEsmv17uXWWlNDsPwPTni+WP9g
-        70wrTLTMyvAy5lRq6xB5JVI9IoiuaUDuRH1WZOJncy07pLj9LAP4YL6NrDLb4YgF
-        TkrdGA5zEnhQP/LXwOyO9SvIK4PZ/MnSTQIgQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A5d33yUE1tB/EynPOCRVykS8HBIoF15R
-        1d35/F9zM6Bmjl82mJvzvSqEJpQAvVvkFkpOf/2jPanuLiBvzED23++XIqseTsc+
-        Hy6599qJxOjwcIVeAC8r9oHrvvWtXjgkqomTpjiMnNVVDkarBTWDnNcFsRyf+39O
-        ZWi0E+4arXA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1257668B4A;
-        Tue, 11 Jun 2019 16:10:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2406498AbfFKUWf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 16:22:35 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14584 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406240AbfFKUWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 16:22:35 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 065E23F4852;
+        Tue, 11 Jun 2019 16:22:34 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:fdf7:bf2d:a8f:7a8e] (unknown [IPv6:2001:4898:a800:1012:af2b:bf2d:a8f:7a8e])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CCDFB68B49;
-        Tue, 11 Jun 2019 16:10:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, git@matthieu-moy.fr,
-        olyatelezhnaya@gmail.com, samuel.maftoul@gmail.com,
-        Johannes.Schindelin@gmx.de, karthik.188@gmail.com,
-        pclouds@gmail.com, sunshine@sunshineco.com,
-        emilyshaffer@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v2 1/1] ref-filter: sort detached HEAD lines firstly
-References: <faaa9a3d6ba66d77cc2a8eab438d1bfc8f762fa1.1559857032.git.matvore@google.com>
-        <cover.1560277373.git.matvore@google.com>
-        <cf0246a5cce6cbd9b4a1fd1eefa0f5cbc2cfcaf0.1560277373.git.matvore@google.com>
-Date:   Tue, 11 Jun 2019 13:10:41 -0700
-In-Reply-To: <cf0246a5cce6cbd9b4a1fd1eefa0f5cbc2cfcaf0.1560277373.git.matvore@google.com>
-        (Matthew DeVore's message of "Tue, 11 Jun 2019 11:28:18 -0700")
-Message-ID: <xmqq7e9rlw72.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 742663F4855;
+        Tue, 11 Jun 2019 16:22:33 -0400 (EDT)
+Subject: Re: cgit and global configuration
+To:     Christian Hesse <mail@eworm.de>, Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <20190611170401.15d43623@leda>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <1cdb3444-fb39-66a4-fb27-01e1617e538a@jeffhostetler.com>
+Date:   Tue, 11 Jun 2019 16:22:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FE1FB7F6-8C84-11E9-8F8E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20190611170401.15d43623@leda>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
 
-> -	if (s->version)
-> +	if (s->version) {
->  		cmp = versioncmp(va->s, vb->s);
-> -	else if (cmp_type == FIELD_STR)
-> -		cmp = cmp_fn(va->s, vb->s);
-> -	else {
 
-Ah, this must be the patch noise Jonathan was (half) complaining
-about.  It does make it a bit distracting to read the patch but the
-resulting code is of course easier to follow ;-).
+On 6/11/2019 11:04 AM, Christian Hesse wrote:
+> Dear Jeff, dear Junio,
+> 
+> for cgit we use the static git library built into the executable. This used
+> to work well, but breaks with latest release v2.22.0: Our code unsets HOME
+> and XDG_CONFIG_HOME to mitigate loading arbitrary configuration.
+> We have tests that use strace to check for access to directories given by
+> environment variables.
+> 
+> With the new trace2 code in place at least tracing configuration is loaded
+> before cmd_main() kicks in. This happens in trace2_initialize_fl() ->
+> tr2_sysenv_load() -> read_very_early_config(). The offending commit is
+> bce9db6d ("trace2: use system/global config for default trace2 settings") [0].
+> 
+> I had thought about adding a new option to struct config_options and making
+> xdg_config_home() and expand_user_path() conditional in
+> do_git_config_sequence() when called from read_very_early_config(). However
+> this breaks the test suite as ptrace2 tests with global configuration depend
+> on HOME being set to a trash directory. Any hint about how to properly solve
+> this?
+> Or can we be sure configuration read at this point can not do any harm and
+> updating out tests is sufficient? I guess no as file paths can be specified.
+> 
+> [0] https://github.com/git/git/commit/bce9db6de97c95882a7c46836bb6cc90acf0fef0
+> 
 
-> +	} else if (cmp_type == FIELD_STR) {
-> +		const int a_detached = a->kind & FILTER_REFS_DETACHED_HEAD;
-> +
-> +		/*
-> +		 * When sorting by name, we should put "detached" head lines,
-> +		 * which are all the lines in parenthesis, before all others.
-> +		 * This usually is automatic, since "(" is before "refs/" and
-> +		 * "remotes/", but this does not hold for zh_CN, which uses
-> +		 * full-width parenthesis, so make the ordering explicit.
-> +		 */
-> +		if (a_detached != (b->kind & FILTER_REFS_DETACHED_HEAD))
-> +			cmp = a_detached ? -1 : 1;
+I'm not sure I fully understand the problem here, so let me
+ask a few questions.
 
-So, comparing a detached and an undetached ones, the detached side
-always sorts lower.  Good.  And ...
+If you're using the static git library (by that I assume you
+mean libgit.a) and the call to trace2_initialize_fl() is in
+main() in common-main.c, how it is getting called?  Don't you
+have your own main()?
 
-> +		else
-> +			cmp = cmp_fn(va->s, vb->s);
+     Looking at your source in `https://git.zx2c4.com/cgit/tree/cgit.c`
+     it looks like you're defining a cmd_main() and using the rest of
+     Git's Makefile, so I'm guessing you're getting common-main.c too.
 
-... otherwise we compare the string using the given function.
+I'm curious why a call to read_very_early_config() before cmd_main()
+causes problems.
 
-Sounds sensible.  Will queue.
+     Again, in `https://git.zx2c4.com/cgit/tree/cgit.c` I found
+     the code in prepare_repo_env() where you unset the various
+     HOME variables.  And that is called during your cmd_main()
+     sequence.  That would explain why my read_very_early_config()
+     causes you problems that a call to read_early_config() inside
+     your cmd_main() does not.
+
+     I'm not sure I understand the reasons for the unsets and the
+     need for the strace guards, but that is not my business, so
+     I'll just trust that you have your reasons.  And I have to
+     assume that you have security concerns that supersede the
+     need to do any tracing or advanced logging.
+
+Adding a new bit to `struct config_options` doesn't really help
+because you don't know when (or even have an opportunity) to set
+it.  You've abdicated main() to common code and so your application
+doesn't start until cmd_main() is called.
+
+     And you can't really have an environment or config variable
+     to say to ignore mine, because they'd be just as vulnerable.
+
+     I'm not sure what you meant by a `ptrace2` test -- unless
+     that is just a typo and that you meant the t/t021*.sh tests.
+     And yes, these tests do test the global config setting.
+
+As for going forward, I see 3 options:
+
+[1] update your tests to allow this.  (I didn't dig thru your
+     tests to see how extensive this might be.)
+
+[2] define your own version of common-main.c and link with it
+     instead of git/common-main.c and delete the calls to trace2_*()
+     in it.
+
+[3] define your own version of common-main.c and then call your
+     prepare_repo_env() prior to trace2_initialize().
+
+Granted, I've only spent 15 minutes looking at your code, so
+I may be mistaken about several things, but I think those are
+your options.
+
+Hope this helps,
+Jeff
