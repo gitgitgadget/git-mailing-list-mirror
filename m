@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59C2F1F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 08:24:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EC8D1F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 08:24:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404550AbfFKIX7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 04:23:59 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:52905 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388847AbfFKIX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 04:23:59 -0400
-Received: by mail-wm1-f42.google.com with SMTP id s3so1897544wms.2
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 01:23:57 -0700 (PDT)
+        id S2404585AbfFKIYB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 04:24:01 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41050 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404565AbfFKIYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 04:24:01 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c2so11920242wrm.8
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 01:24:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Wj/H/JLtAmuFNEObov9qOAGln5NhYEuqgtx1TN7UKM4=;
-        b=O04mbglo/ZO+d6jALWoTeijH+E2IUeFrGGG+89oUPe+LVC+79awzdU7V+EaGY8GCJc
-         vyvHzO3dE/ezzzI21FpsykxHfjkIHZNDGl2DHqjKo35/efls32k9a0zaAFyuO3eEUvs7
-         traDwdCQHqRNdw1OeAufRgqVvIE2ZkdNnZpwjexhf8lAmwRWzmOORlpC0eeS45SLNh7J
-         8Nv2S9cfymCXvlO4w9stQ55ObvipgxeP+tKkxB+gqRmFsxr5EquIbD50bv+tVnnnTzMZ
-         k3uKpfYadwxryhBbjZXZMJCaag1zZARy5OlsR32vuRCdI1M59q7n6HT9ElODY4aL79Vu
-         Kw8g==
+        bh=JQxy7QTZ3SJg459ql3zBsovlVdVKcSjTR6ROqdx/idk=;
+        b=D463JW2Hc36ZfwiQxhuBkW7+DFmOZylYpU4wuAMoSfUKSl9Et0P3TBMvRi0CxIh3Z8
+         1bphDfTZS4cw69s6s8l9HPWU4QHLZYcRYlQGtRIsuOs3PVeWoWX/0VyTwYS1kesmXPa6
+         8qYb4u+wxrhF4S2WLF6EH4GKXV44YcHTgrI23Wf4v5SEc7D/ZtG3HLceJseUgigEK9cO
+         E/oyhLBm8XubB1IsljuxgXiFqFQ6kz8DojnEWZRjXONaOIHPKUMO4jtIyRFntN0AHhPn
+         kToHQ6jnzwKjZbyBwNPgOktdsnbXNQE99YKte8rrPMJ7qq4FtIXAIDNQLt+pJAzrgp4G
+         I35Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Wj/H/JLtAmuFNEObov9qOAGln5NhYEuqgtx1TN7UKM4=;
-        b=cjcM/zUClZ3bKEmZTQSjwIDLHlZ42ID/SyRA/C3kZOto039PadjlwhGgNx5ym9G9Yt
-         ItyMCVeEMKGocCyX83NQlmrMffHIl2xLQ2YX8MtT3tp+2v0w2zoYGjRe3OOwEeHb14i0
-         m8VkAxgUpeo5ujOGcGo/sVc+b2pumsIncWddqHmCTjSDGvy6wTvnyi/lR/BvRPxr4wbM
-         KMgSf0Xz1+atr+xzjf0gQy50r9Y01vCuHEEl+8MNU01pzJTgY6a7ejQHSX321NfTpkVp
-         CxFTJJx2ihOR5Bugt6emopuKdXTWLu3XQPAC5E52Nan5aiYgBTXdTjuomZNVB3BCEZX5
-         sNcg==
-X-Gm-Message-State: APjAAAXBZKlJRWIV8GCTHHPWbm3BzzMCF/WthbiufoUXyNpOhpoY7Wax
-        0uLt9srhaNBGWcfeJsJLXnVsclY3
-X-Google-Smtp-Source: APXvYqyUExNDY4hBy6d5sE6CENmiRJ7Eh5Gurbg+PaZ9mZydwP/p+jNMWnSiIF7HI0Q/drMN1RUjDQ==
-X-Received: by 2002:a1c:a783:: with SMTP id q125mr17496782wme.94.1560241436844;
-        Tue, 11 Jun 2019 01:23:56 -0700 (PDT)
+        bh=JQxy7QTZ3SJg459ql3zBsovlVdVKcSjTR6ROqdx/idk=;
+        b=sgxD513sVatkazVHQ6nPYYC200ea5rjxgzMX9Op9FC+hJsEXjOcXsoI8AFbR0TJ/mq
+         B51HhR8m2B9XmJzrKgLu/Df3vTnkVk20t+ox3lrIs+PHPO+a/e4Kq2TsE02FjVOAVfns
+         xQZtlB+wyuHMRpJ9Ma5A4t0TjDFxgM+gl4Y9kvJ/W0A0XvVDdy5lvMBWltu/LAaOR3LY
+         aYf6mb0viRViURTczq/9Cq8VuNePmSgEw0KKzWPwSYaDHUMfUTh7aoaAtpOg5oDmwpZR
+         M7Cm3n9vCiVyaRLEGORo68X7X2vSqD4gk2nYuD8jVIWZAeUVsixKjzBJCRNw/KGsybz/
+         UgLg==
+X-Gm-Message-State: APjAAAWbr06KYR/MRgDjLZojaWjmtWQsc8YK1Ssd0Q/wQdcGyqrHuwDS
+        DrbUMOD1aY5uilRz4ua2PTtEHw/H
+X-Google-Smtp-Source: APXvYqxYEYUbDNQtq6omwRfI7eEBgxTZAz7cSi0WyGp+e8moipgeqRwbvjFkYxhX+GuAAOf6ANQYmQ==
+X-Received: by 2002:a5d:4087:: with SMTP id o7mr35340479wrp.277.1560241439428;
+        Tue, 11 Jun 2019 01:23:59 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:10dc:b342:2143:78cf:c452:5744])
-        by smtp.gmail.com with ESMTPSA id o126sm2837350wmo.31.2019.06.11.01.23.55
+        by smtp.gmail.com with ESMTPSA id o126sm2837350wmo.31.2019.06.11.01.23.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jun 2019 01:23:56 -0700 (PDT)
+        Tue, 11 Jun 2019 01:23:58 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,14 +59,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 2/3] t: add t0016-oidmap.sh
-Date:   Tue, 11 Jun 2019 10:23:24 +0200
-Message-Id: <20190611082325.28878-3-chriscool@tuxfamily.org>
+Subject: [PATCH v2 3/3] oidmap: use sha1hash() instead of static hash() function
+Date:   Tue, 11 Jun 2019 10:23:25 +0200
+Message-Id: <20190611082325.28878-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.6.gde8b105b43
 In-Reply-To: <20190611082325.28878-1-chriscool@tuxfamily.org>
 References: <20190611082325.28878-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -75,121 +74,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-Add actual tests for operations using `struct oidmap` from oidmap.{c,h}.
+Get rid of the static hash() function in oidmap.c which is redundant
+with sha1hash(). Use sha1hash() directly instead.
 
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Let's be more consistent and not use several hash functions doing
+nearly exactly the same thing.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0016-oidmap.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
- create mode 100755 t/t0016-oidmap.sh
+ oidmap.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-new file mode 100755
-index 0000000000..cbd2cb71d6
---- /dev/null
-+++ b/t/t0016-oidmap.sh
-@@ -0,0 +1,100 @@
-+#!/bin/sh
-+
-+test_description='test oidmap'
-+. ./test-lib.sh
-+
-+# This purposefully is very similar to t0011-hashmap.sh
-+
-+test_oidmap() {
-+	echo "$1" | test-tool oidmap $3 > actual &&
-+	echo "$2" >expect &&
-+	test_cmp expect actual
-+}
-+
-+
-+test_expect_success 'setup' '
-+
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	test_commit four
-+
-+'
-+
-+test_oidhash() {
-+	git rev-parse "$1" | cut -c1-8
-+}
-+
-+test_expect_success 'hash' '
-+
-+test_oidmap "hash one
-+hash two
-+hash invalidOid
-+hash three" "$(test_oidhash one)
-+$(test_oidhash two)
-+Unknown oid: invalidOid
-+$(test_oidhash three)"
-+
-+'
-+
-+test_expect_success 'put' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put invalidOid 4
-+put three 3" "NULL
-+NULL
-+Unknown oid: invalidOid
-+NULL"
-+
-+'
-+
-+test_expect_success 'replace' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+put invalidOid 4
-+put two deux
-+put one un" "NULL
-+NULL
-+NULL
-+Unknown oid: invalidOid
-+2
-+1"
-+
-+'
-+
-+test_expect_success 'get' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+get two
-+get four
-+get invalidOid
-+get one" "NULL
-+NULL
-+NULL
-+2
-+NULL
-+Unknown oid: invalidOid
-+1"
-+
-+'
-+
-+test_expect_success 'iterate' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+iterate" "NULL
-+NULL
-+NULL
-+$(git rev-parse two) 2
-+$(git rev-parse one) 1
-+$(git rev-parse three) 3"
-+
-+'
-+
-+test_done
+diff --git a/oidmap.c b/oidmap.c
+index b0841a0f58..01c206aaef 100644
+--- a/oidmap.c
++++ b/oidmap.c
+@@ -12,13 +12,6 @@ static int oidmap_neq(const void *hashmap_cmp_fn_data,
+ 		      &((const struct oidmap_entry *) entry_or_key)->oid);
+ }
+ 
+-static int hash(const struct object_id *oid)
+-{
+-	int hash;
+-	memcpy(&hash, oid->hash, sizeof(hash));
+-	return hash;
+-}
+-
+ void oidmap_init(struct oidmap *map, size_t initial_size)
+ {
+ 	hashmap_init(&map->map, oidmap_neq, NULL, initial_size);
+@@ -36,7 +29,7 @@ void *oidmap_get(const struct oidmap *map, const struct object_id *key)
+ 	if (!map->map.cmpfn)
+ 		return NULL;
+ 
+-	return hashmap_get_from_hash(&map->map, hash(key), key);
++	return hashmap_get_from_hash(&map->map, sha1hash(key->hash), key);
+ }
+ 
+ void *oidmap_remove(struct oidmap *map, const struct object_id *key)
+@@ -46,7 +39,7 @@ void *oidmap_remove(struct oidmap *map, const struct object_id *key)
+ 	if (!map->map.cmpfn)
+ 		oidmap_init(map, 0);
+ 
+-	hashmap_entry_init(&entry, hash(key));
++	hashmap_entry_init(&entry, sha1hash(key->hash));
+ 	return hashmap_remove(&map->map, &entry, key);
+ }
+ 
+@@ -57,6 +50,6 @@ void *oidmap_put(struct oidmap *map, void *entry)
+ 	if (!map->map.cmpfn)
+ 		oidmap_init(map, 0);
+ 
+-	hashmap_entry_init(&to_put->internal_entry, hash(&to_put->oid));
++	hashmap_entry_init(&to_put->internal_entry, sha1hash(to_put->oid.hash));
+ 	return hashmap_put(&map->map, to_put);
+ }
 -- 
 2.22.0.6.gde8b105b43
 
