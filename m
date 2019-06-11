@@ -2,103 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9371F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 21:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEFC21F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 21:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406954AbfFKVL4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 17:11:56 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42474 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391155AbfFKVL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 17:11:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x17so14533432wrl.9
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 14:11:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=5eC/2RZ9KNfGLJrYMzdChmfE2GJvAVYHsdRW/8cBkEY=;
-        b=jeh3MBcmmIa4GHDsFSa/wxJpxEWU3Cna7KkgDyw0xuz+YzC8SbSmoY6yBJEIo+se+m
-         9tTw32agCVXGulW4HKO+w+VlA6isPTnOCC7El+5Fmri/dTwhtHLb53J9fyCGqiqI8dfl
-         zNsO1QnWBTzhDx9yaek6334YSmrYrm1wEHYVtpo3WIJlBX34FKf6w9QMtmkVvxVm1N6w
-         1r4/jVVrEgaICa894K/zTnpuSjx4B4NPEg50MspyiT65XsyEDbQ3ttdeijxF9bqMz4n1
-         i4IzKhVJW/luO5p3Nq8ZdkXmLLCS9o9FiTrjTkP5qW6QuJMw+r5qqkv33TVxqqni821f
-         Q+aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=5eC/2RZ9KNfGLJrYMzdChmfE2GJvAVYHsdRW/8cBkEY=;
-        b=Yqfn/nqhJLrS/52T8dCQTa9ekXbq9adIbDItt5sT1yIJnKlOTRFW4BTt3+67zkxlyf
-         0mFTK/PMYEWhfI7oeDWoGcniEC5FVKGVW0xM8QJNaxpIO5gakMI7IPJgQ3CltSAa6K1z
-         AMFb5ol3M3Qz8PGmMw1Dv5m5BOETy5dpSGvgXGTUUaI3QOrLQi7n/mKulE3dcUYay/FL
-         PFe80XiC82A1VbkfPX6VQN/fwcf7djo+yxaHH1GhsfjlU55RqwMRtMWH4KhTFjHpbI8v
-         ++mCKlqYU0p93HCTLKqv88oti8r33pc7k+fw6be4cPuZlWotg4WWWf07xAoROCe+cc52
-         GLdQ==
-X-Gm-Message-State: APjAAAVCeA8DFROvIW+s2/gcm75suQ4HnvVf30/3omwnMujLNsmOLmZv
-        o5TblS8dmF6/3Nvjan++Zr8=
-X-Google-Smtp-Source: APXvYqyRdbXEmzmYq9XYExlfqBOhENQgjASYeqsREFL1HhVLAUEQFqk20+XJ+9FuZKkeR/KqokofLA==
-X-Received: by 2002:adf:fc85:: with SMTP id g5mr51444559wrr.324.1560287514387;
-        Tue, 11 Jun 2019 14:11:54 -0700 (PDT)
-Received: from szeder.dev (x4db6e6c5.dyn.telefonica.de. [77.182.230.197])
-        by smtp.gmail.com with ESMTPSA id o13sm25188440wra.92.2019.06.11.14.11.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jun 2019 14:11:53 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 23:11:51 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
-Message-ID: <20190611211151.GG4012@szeder.dev>
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
- <20190611130320.18499-1-szeder.dev@gmail.com>
- <20190611130320.18499-4-szeder.dev@gmail.com>
- <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com>
+        id S2407627AbfFKVZp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 17:25:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51676 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391155AbfFKVZp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 17:25:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5755B14AC16;
+        Tue, 11 Jun 2019 17:25:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XOcuzjKkrIqx072Z7sujjuKvMYg=; b=u3hbhG
+        BSAn8lAmlRyZFdSg/+nrg2SB4j83p3Wu+b7hJxJ6vYREdfWM/ovx8sUnSxkJ8GPn
+        XksO8K+NitqS8LeSjLUqQoz4/hIwJacUrkjwZ92CYh6OHNm+V3UmmF8485uHxSuW
+        xIj1GOqAqB3KCuafZeXseF7Gf/jgf4J5cVVt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OYFOe8btnhkbfgSPudlzyoUH4IahSH2i
+        d8w64KFXEVrd7JPRRVNDJ697MrCKDMO2ztLMN/FyBTsuGGXFtYokx41QCQvYePmJ
+        XcsY4b4DL3KIP4ekDf0eMjGcqhSY8zMSoaTKIzpcABe5VN5t+Jx/v4bdtHsvwZZz
+        1ZjB74KOIAg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E91314AC15;
+        Tue, 11 Jun 2019 17:25:43 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACA6014AC14;
+        Tue, 11 Jun 2019 17:25:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
+        phillip.wood123@gmail.com
+Subject: Re: [GSoC][PATCH v2 1/3] sequencer: add advice for revert
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+        <20190611073152.12214-1-rohit.ashiwal265@gmail.com>
+        <20190611073152.12214-2-rohit.ashiwal265@gmail.com>
+Date:   Tue, 11 Jun 2019 14:25:41 -0700
+In-Reply-To: <20190611073152.12214-2-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Tue, 11 Jun 2019 13:01:50 +0530")
+Message-ID: <xmqqr27zke5m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 77A7FD22-8C8F-11E9-8EF9-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 11, 2019 at 01:36:16PM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > -Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QSuccessfully rebased and updated refs/heads/missing-commit.
-> > +Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QQ                                                                                QSuccessfully rebased and updated refs/heads/missing-commit.
-> >  EOF
-> 
-> Yuck, 
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-Oh yeah...
+> -static int create_seq_dir(void)
+> +static int create_seq_dir(struct repository *r)
+>  {
+> -	if (file_exists(git_path_seq_dir())) {
+> -		error(_("a cherry-pick or revert is already in progress"));
+> -		advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
+> -		return -1;
+> -	} else if (mkdir(git_path_seq_dir(), 0777) < 0)
+> +	enum replay_action action;
+> +
+> +	if (!sequencer_get_last_command(r, &action)) {
+> +		switch (action) {
+> +		case REPLAY_REVERT:
+> +		case REPLAY_PICK:
+> +			error(_("a %s is already in progress"),
+> +				 action == REPLAY_REVERT ?
+> +				 "revert" : "cherry-pick");
 
->... but I do not see how else/better this test can be written
-> myself, which makes it a double-yuck X-<
+I wonder if this poses a challenge to translators (imagine an
+alternate world, in which the name of one of these subcommands began
+with a vowel---your "a %s is already ..." would not be correct even
+without localization).
 
-Perhaps hiding those spaces behind a helper variable e.g.
-'dump_term_clear_line=Q<80-spaces>Q' and embedding that in the here
-docs specifying the expected output in these three tests could make it
-ever so slightly less yuck...
+The same comment applies to the other one, too.
 
-> Are we forcing out test to operate under dumb terminal mode and with
-> a known number of columns?
+> +			advise(_("try \"git %s (--continue | "
+> +				 "--quit | --abort)\""),
+> +				 action == REPLAY_REVERT ?
+> +				 "revert" : "cherry-pick");
 
-'test-lib.sh' sets TERM=dumb relatively early on, and in these tests
-we don't use 'test_terminal' to run 'git rebase', so...  yeah.  And
-term_columns() defaults to 80.
+This is horrible but it is not a fault of yours---you merely
+inherited it.  A call to advise() that is not behind any "advise.*"
+configuration variable like this one should be cleaned up before
+we do anything else.
 
-However, if the terminal were smart, then we would have to deal with
-ANSI escape suddenly popping up...
+The obvious and straight-forward way to deal with it is to do
+
+	const char *in_progress_error;
+        const char *in_progress_advice;
+
+	if (action == REPLAY_REVERT) {
+		in_progress_error = _("a revert is already in progress");
+		in_progress_advise = _("try ...");
+	} else if (action == REPLAY_PICK) {
+		... likewise ...
+	} else {
+		BUG("should not come here");
+	}
+
+and then do
+
+	error(in_progress_error);
+	if (advise_verbosely_how_to_continue_sequencing)
+		advise(in_progress_advise);
+
+
+
+> +			return -1;
+> +	if (mkdir(git_path_seq_dir(), 0777) < 0)
+>  		return error_errno(_("could not create sequencer directory '%s'"),
+>  				   git_path_seq_dir());
+> +
+>  	return 0;
+>  }
+>  
+> @@ -4237,7 +4252,7 @@ int sequencer_pick_revisions(struct repository *r,
+>  	 */
+>  
+>  	if (walk_revs_populate_todo(&todo_list, opts) ||
+> -			create_seq_dir() < 0)
+> +			create_seq_dir(r) < 0)
+>  		return -1;
+>  	if (get_oid("HEAD", &oid) && (opts->action == REPLAY_REVERT))
+>  		return error(_("can't revert as initial commit"));
