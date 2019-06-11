@@ -8,48 +8,51 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC4341F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 23:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 627261F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 23:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408119AbfFKXbl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 19:31:41 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:36730 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404692AbfFKXbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 19:31:40 -0400
-Received: by mail-yw1-f74.google.com with SMTP id 75so9397793ywb.3
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:31:40 -0700 (PDT)
+        id S2408123AbfFKXbn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 19:31:43 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:48396 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404692AbfFKXbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 19:31:43 -0400
+Received: by mail-pf1-f202.google.com with SMTP id u21so7545903pfn.15
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=3Sd57SgamfNEeWT1nql3nZ3ZLlJvVEmQ9GL2IPRq6cU=;
-        b=anLzVBQWZxubXyH1/vkkL5+HnFvys1ybZbIh63kg7QiM/L/OBYUagkcSz5HYcqZEkW
-         V1hziO1v6NxPNarWixjQhlBQUin1RWaOSvtYQQxO0dpmUwTqaDpXtf7pwh4Le9Ukh8eE
-         5ir2ybqeH5hhfc33CWoYxLlg9FJKsaya3iiVUlAn7qS1ewuYXcudHCUGFFDGiHx16OKr
-         i/VH9t+92cmrXkQch+Yh+fXy11hRblTxph0379nBSycgj7KQ4yORL4deGoq7Y9ECLPnc
-         YLGGHka/0ayyJWSGooI+J7keD2tiJJWxn8E4JmPu9RA59scj9Go8yh52rGEZYGxu1RrK
-         E5Mg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=o+J3IOknk86VKO2klkj8QJqhfOdxbMbsIKsJCyqwFUE=;
+        b=vtejCj2Vqhr9ANEoxxL7GY9hGxeNM1bVufZhMaXVqRgvaqlaF8sZN1tZnpv+rIgOn7
+         /S+BL0FPxGFn4Xtvd+/RdzMtt4I4p0WJixQ0nXl4wWQwsAN5Yg1lzG0DOx6ULrbjbQCb
+         0aEJ6kDBjWwDy4+UWe3i/H+dEU9Xlr7lein2SVAr6Qn1NiB1N5KwhVzpiYSuZiOFcYVm
+         F9jDxyI14r0RJEj71++GEIt5/PG6k/NFTjtJDANnA5EX71pLWZcjeILQofYmgPMaRLs5
+         FfugNnsdrKQpjykxxJtzrQCiciXH5SVYO3vlXtrLm9yu+H8d84vE87a6Ektenn75XasX
+         5NPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=3Sd57SgamfNEeWT1nql3nZ3ZLlJvVEmQ9GL2IPRq6cU=;
-        b=RKmUf0uqpzqlk+moAmWtv+ePAGhBgvND8hZsDesvizaHxTjeSk1NwZl8nHv22ZR9UQ
-         /SEcBISF20dwuNMC6p/0kMKrMuluhqtB3g8Gte0iuXJzk2zHQb6JrbGlZ5Q61HJ1Ltui
-         Wwm4g9Z6x0HNpd+xiagFGYO4y9UqsSlMSRsCy3H0POZu4Lg0pFFdMJ5xyoCr1mJ2sZeR
-         b5qDtMo4FiaqwUHvbjHRDCWMlV4l5hullHWbpGq+VTzqQoeq1EtxNgzvtebOVCQzo+wJ
-         KXmW9h67siEjt5BA1wP5+8ZaihDY2v3BcZ7NTcYxOrKmIa0421vs0KMZHhuKPM7t0n8m
-         QiGg==
-X-Gm-Message-State: APjAAAWlt0gEzuucDJUoLEE2313ymlKAN09pSt4kA6aOgo4SKP0IUAkz
-        fcGN/D2ALg4kJLcW2cV75R4J+grL7qKCQhspAlunpMuYYlVSMXDN32D2sqcoB+c5QAt3vEyJpfy
-        aLnyadvXiuQTH7l3/guzAbpA8cliVj2zYmB/1hq6AFWiXepLuSIYkS8mUAQpcRc8=
-X-Google-Smtp-Source: APXvYqzB++e1sKOq4lTuKubBR5YlCYepEJq3zIfBWQVW7R9JFZG8w8HCDITS/7AfIcgPnnBoNkg7eY8tHcLmAg==
-X-Received: by 2002:a25:ef10:: with SMTP id g16mr37494621ybd.510.1560295899707;
- Tue, 11 Jun 2019 16:31:39 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 16:31:34 -0700
-Message-Id: <cover.1560295286.git.steadmon@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=o+J3IOknk86VKO2klkj8QJqhfOdxbMbsIKsJCyqwFUE=;
+        b=SWSFEJV8zMkOqItru9Kv7CMnxJN4drw6rR6YX2bLiVmYzmq0EDmcOBjP476uWkX1xW
+         vH8dzDvBDEa7SEo4R31b6UhYBLM8rgU55kf09BlCR8moBdxc4btDHAAmNuA2b38cmM9Y
+         TkJcjdcz70aEhZzTMLX8PGZ1D0dw9/NMdfIQTmDOtVAwXkScJILDaNz5kDaRBH7HQmIq
+         ktQLytEyFxUaEPtw9p7BrhI12jmAWcQcuy6q7J+MicjCP/stWtLdA5VmAvACqs3UWtJK
+         P3b8iPqqc7i43g/A8z7EQdYl74TwbovdbLzyP337aBBpoYi0Wrke7OJEkY8XAvFFuTbD
+         JPyA==
+X-Gm-Message-State: APjAAAWZNdhqDZr7k3Fg1+GW1flquj6zzzOd4NEeoF+w6RnHEXHaGh1k
+        C8i7jb4ukbuN2H5exF+yWfm8H77ywU+kjMnbTbLDDuFxmA899TSXEK+zKOZr+ZLu6gTgikehv5C
+        Dki5YjFN0D69j+B7wkTwqE3Mqb5lqrP8fGA7Aj0K36vdqB3dD42++yHFYksYHl/I=
+X-Google-Smtp-Source: APXvYqwo2gZDjJ1OudIbJkXpNX1BJ+TbSfqUBZxtHpuwYmY6OLZzhczLv+pvDTotdc8uSLAKg9DIA02rXsQq+w==
+X-Received: by 2002:a63:2ad2:: with SMTP id q201mr21438463pgq.94.1560295902011;
+ Tue, 11 Jun 2019 16:31:42 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 16:31:35 -0700
+In-Reply-To: <cover.1560295286.git.steadmon@google.com>
+Message-Id: <8bcd72a762f0fd349f8bf7d0b134cc7033ae6f00.1560295286.git.steadmon@google.com>
 Mime-Version: 1.0
+References: <cover.1560295286.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH 0/3] Add a JSON Schema for trace2 events
+Subject: [RFC PATCH 1/3] trace2: correct trace2 field name documentation
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org, git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
@@ -58,43 +61,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a proof of concept series that formalizes the structure of trace2 event
-output using JSON-Schema [1].
+Correct the api-trace2 documentation, which lists "signal" as an
+expected field for the signal event type, but which actually outputs
+"signo" as the field name.
 
-It provides a validator (written in Go) that verifies the events in a given
-trace2 event output file match the schema. I am happy to rewrite this validator
-in some other language, provided that the language has a JSON-Schema library
-supporting at least draft-04.
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ Documentation/technical/api-trace2.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In the long term, I think it would be useful to add a regression test that
-collects the trace2 output of the entire test suite and runs the validator
-against that. On my machine, this takes about 15 minutes of run time to validate
-the 1.7M events created by a full test run.
-
-If such a regression test is in place, users of the trace2 event output can be
-relatively confident that the output format has not changed so long as the
-schema file remains the same and the regression test is passing.
-
-[1]: https://json-schema.org/
-
-Josh Steadmon (3):
-  trace2: correct trace2 field name documentation
-  trace2: Add a JSON schema for trace2 events
-  trace2: add a schema validator for trace2 events
-
- Documentation/technical/api-trace2.txt        |   2 +-
- t/trace_schema_validator/.gitignore           |   1 +
- t/trace_schema_validator/Makefile             |  10 +
- t/trace_schema_validator/event_schema.json    | 398 ++++++++++++++
- t/trace_schema_validator/strict_schema.json   | 511 ++++++++++++++++++
- .../trace_schema_validator.go                 |  74 +++
- 6 files changed, 995 insertions(+), 1 deletion(-)
- create mode 100644 t/trace_schema_validator/.gitignore
- create mode 100644 t/trace_schema_validator/Makefile
- create mode 100644 t/trace_schema_validator/event_schema.json
- create mode 100644 t/trace_schema_validator/strict_schema.json
- create mode 100644 t/trace_schema_validator/trace_schema_validator.go
-
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 23c3cc7a37..fd1e628944 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -668,7 +668,7 @@ completed.)
+ 	"event":"signal",
+ 	...
+ 	"t_abs":0.001227,  # elapsed time in seconds
+-	"signal":13        # SIGTERM, SIGINT, etc.
++	"signo":13         # SIGTERM, SIGINT, etc.
+ }
+ ------------
+ 
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
