@@ -2,93 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE9D51F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 21:48:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 818831F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 23:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407695AbfFKVs7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 17:48:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51261 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405081AbfFKVs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 17:48:58 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A653069574;
-        Tue, 11 Jun 2019 17:48:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xr1m5s/QGuyYy8T4irnapsAou/8=; b=aJnji1
-        wKDFfyEuDQ6V2bTUHkGWf++c80HS8DWLMWTNzf1URunAxT5Wz1lYuj+ad2pptQvR
-        16Qw+jEBLyij9u7ZmyIr73Yl8JjQ/Qyrbsz2ltkql3QBcjatDG/FyeufiYVV+KIv
-        J/laKSFgASPl5Yq94Ato2NP2f74Gf5H9NeUOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bAaQUdBu4h8dzYzeyf5XlzN6OvvTy5IB
-        3MdYtkqI+RIKiQBHnqZcGZoh5yYuXb7ylK+oteDEA+SmNjAFf/miYa5DeXvoRE5H
-        6NN0d13GVNPDdhrDilZHrcuCXrovWvzes9uKitQGUcF6XmOBvjjJC+TllGhUvGSf
-        m3gQLVmcqMo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F03269573;
-        Tue, 11 Jun 2019 17:48:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D413069572;
-        Tue, 11 Jun 2019 17:48:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@comcast.net>
-Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, jrn@google.com, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com,
-        emilyshaffer@google.com
-Subject: Re: [PATCH v2 6/9] list-objects-filter-options: make filter_spec a strbuf
-References: <20190601003603.90794-1-matvore@google.com>
-        <20190601003603.90794-7-matvore@google.com>
-        <xmqqimtdmc59.fsf@gitster-ct.c.googlers.com>
-        <20190611003456.GB10396@comcast.net>
-        <xmqqtvcwkowx.fsf@gitster-ct.c.googlers.com>
-        <20190611184426.GB58112@comcast.net>
-Date:   Tue, 11 Jun 2019 14:48:51 -0700
-In-Reply-To: <20190611184426.GB58112@comcast.net> (Matthew DeVore's message of
-        "Tue, 11 Jun 2019 11:44:27 -0700")
-Message-ID: <xmqqmuinkd30.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B4DABE34-8C92-11E9-9CF8-B0405B776F7B-77302942!pb-smtp20.pobox.com
+        id S2437000AbfFKXDC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 19:03:02 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:44383 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436837AbfFKXDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 19:03:02 -0400
+Received: by mail-pf1-f201.google.com with SMTP id 5so10609068pff.11
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:03:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/2EsORUQ9j4j8979v9BXj94LxZTF9xgguzrPa/Xk7Hw=;
+        b=qzx5iPwV4Hr9ez83Oh04OV8lwezfMMEpe2bETNTga6kRWfVbhnwS/xsItuTbCC0gqj
+         APbqLP6kGEDo6yHUJYxdaGx+gJ1uDHMTnOaeCrMWCox+Vk6vJg1kdtAHNnYgylOaoUyp
+         pb3kGrB6Br7riSIu/2nJLzq36FZJV1piksTGoGZPT/t9pROySlVqG5eIklkTFFN0kMzz
+         lrs9zzoL5DkKDeviRw4ki/SINPwjOZ/ptkBlKHvckniSTjSohQByiuEg89oWRq4Sicgg
+         fmr5lOGaYG4bJcGcOmCeerrCCmA5xa452gmnvVzRWxQhiD+ph7CEIKHPAEZCHZUfaVTl
+         0Gdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/2EsORUQ9j4j8979v9BXj94LxZTF9xgguzrPa/Xk7Hw=;
+        b=rwVPWawpAaY3+Z2Iop3pvPjjbdVKuZBGL6LL0HTxAg+SSFIR6nPjueuWLb5X9I666f
+         OML5zcLYKiQ+rSJl95+FAUMklxXtV1cZ85TgbNW7gcAjGlpBHU31CLiPpuQ7NDvdpxhb
+         BhW0byNw5RAN0u35epLk6Pj5sVUprVy1NT6Co+PYd3OIUMVUa+zBQ9pvQiOSgRJ+obxp
+         lKfVKWoL2xlMrWLvovx7T3cVbiIrTu08GiDMuit99GfioxZD7H/OIa/05fASZnfciQi1
+         R6E4W4+oanizjaIfiL/+COwKMdw5k9nQSFFvpmUSiWgSVjH/1SmSTnQ3JwstYRINhnmb
+         b42w==
+X-Gm-Message-State: APjAAAVukwLhy5+kFOKoz+5Megz4gy8ev1LDpeV2CI0mKqomOiBc7FSD
+        BCiZ5h007RYyftG53pJe6XODH/CELoPbj6wIPGqL
+X-Google-Smtp-Source: APXvYqx58xG6nCeu9Q7zhTk/UuH35l1SgoDy6ZpedKUGAFt4ao6hq7z2S/YikhvCau+n7ti59dJ5gzu2+Wfc7oEtIgt0
+X-Received: by 2002:a65:4806:: with SMTP id h6mr21524518pgs.299.1560294181192;
+ Tue, 11 Jun 2019 16:03:01 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 16:02:55 -0700
+In-Reply-To: <20190609224400.41557-4-sandals@crustytoothpaste.net>
+Message-Id: <20190611230255.146381-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190609224400.41557-4-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
+Subject: Re: [PATCH 03/10] t1450: make hash size independent
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sandals@crustytoothpaste.net
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@comcast.net> writes:
+> @@ -84,7 +86,7 @@ test_expect_success 'branch pointing to non-commit' '
+>  test_expect_success 'HEAD link pointing at a funny object' '
+>  	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+>  	mv .git/HEAD .git/SAVED_HEAD &&
+> -	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
+> +	echo $ZERO_OID >.git/HEAD &&
+>  	# avoid corrupt/broken HEAD from interfering with repo discovery
+>  	test_must_fail env GIT_DIR=.git git fsck 2>out &&
+>  	cat out &&
 
->> It is brittle because callers are bound to forget doing "if
->> (!x->buf.buf) lazy_init(&x->buf)" at some point, and blindly use an
->> uninitialized x->buf.  Making sure x->buf is always initialized
->
-> A corallary proposition would be to make this particular strbuf a "struct
-> strbuf *" rather than an inline strbuf. It should then be rather clear to users
-> that it may be null.
+ZERO_OID doesn't seem redefined to the SHA256 variant when being tested
+under SHA256. Maybe you need a test_oid invocation here.
 
-Would make it less likely for uses of an uninitialized strbuf to be
-left undetected as errors?  I guess so, and if that is the case it
-would definitely be an improvement.
+I couldn't verify this, though - do you know if there is a way for me to
+run the tests with SHA256 instead of SHA1?
 
-But initializing the strbuf at the point where the enclosing
-structure is initialized (or calloc()'ed) is also a vaiable option,
-and between the two, I think that would be even more robust.
+> @@ -417,13 +426,12 @@ test_expect_success 'force fsck to ignore double author' '
+>  '
+>  
+>  _bz='\0'
+> -_bz5="$_bz$_bz$_bz$_bz$_bz"
+> -_bz20="$_bz5$_bz5$_bz5$_bz5"
+> +_bzoid=$(printf $ZERO_OID | sed -e 's/00/\\0/g')
 
-There may be reasons why it is cumbersome to arrange it that way,
-though (e.g. if the code does not introduce a "new_stuff()"
-allocator that also initializes, and instead uses xcalloc() from
-many places, initializing the enclosing structure properly might
-take a preliminary clean-up step before the main part of the patch
-series can begin).
+Same comment here.
+
+> @@ -631,10 +639,12 @@ test_expect_success 'fsck --name-objects' '
+>  
+>  test_expect_success 'alternate objects are correctly blamed' '
+>  	test_when_finished "rm -rf alt.git .git/objects/info/alternates" &&
+> +	path=$(test_oid numeric) &&
+> +	path=$(test_oid_to_path "$path") &&
+
+Double assignment to path?
