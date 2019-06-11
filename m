@@ -2,88 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6CB11F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 20:48:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8A71F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 21:06:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406036AbfFKUsV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 16:48:21 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52112 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405881AbfFKUsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 16:48:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB33872D40;
-        Tue, 11 Jun 2019 16:48:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FKOQTuB9nKKs
-        okYlq9Xrz7vSdmE=; b=L0UIDn9AOU5eTSOLYKONCPbMHQmY/6pyBUaKVMU3DYsq
-        AJJeJbu8T0soeWyAInZJCamj2MFcX8WDPriI3DBZN3ld3ylderdVYblKU6O6nH1p
-        iFuesIyPrpXDFxh1AgLNFz3CBgjqob2A700Uqf01zTVapoLFVtdbdpJHL2/z1eQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LgJUao
-        ZDfmMDST4Fico8GcoLSdgC8hPq3qWNL8zzZfrqQkAvrDtnvUvYDculL5zjgysRAB
-        QrdGAS2sI0ulMWdW5gkC5y6r6Jr00OQsh4PPiSAlHb1GR5ojaDbPP/YNCZ0bqVow
-        wYj2pNvKSfl3/s8KAYwxLRTgAYNSP2+3T+0tk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A32BC72D3F;
-        Tue, 11 Jun 2019 16:48:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D329572D3E;
-        Tue, 11 Jun 2019 16:48:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
-        <20190611130320.18499-1-szeder.dev@gmail.com>
-        <20190611130320.18499-4-szeder.dev@gmail.com>
-Date:   Tue, 11 Jun 2019 13:48:14 -0700
-In-Reply-To: <20190611130320.18499-4-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Tue, 11 Jun 2019 15:03:19 +0200")
-Message-ID: <xmqqy327kfw1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3D07C5BC-8C8A-11E9-800F-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S2406893AbfFKVGv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 17:06:51 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:37557 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406793AbfFKVGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 17:06:51 -0400
+Received: by mail-pf1-f202.google.com with SMTP id x18so10442918pfj.4
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 14:06:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=TY/pc/O4K+09a8iX32rX2S2j6uX1+FsQZvoILLyOFWc=;
+        b=lEaCP18icfG71a7R5p2uhPWll7u/TrsReLDmk0IrrNy7lcYy1dlyXgJy/0HhtdQQOt
+         wF65wl+NTp6z58Y+q6rRAIJ0ZIMcTx2Sn7aR9RUlK3JdPd8gZBj4orvNMs3YselEiwm1
+         mW5aUmXNpE8ieBsn9WMwTEtsON8ngp9kcK9kFG31eFNpCgqMiyd/ECcJM7qyjCvwDu8s
+         hPEkyz44yZ5ml5lAr0xn8yQfwQmga4M9jSttYLn4WXTZ+ag+jrS5Hs7NRyJTRHkOtbQ8
+         M8/897X4KhDPATSuf1oJrWK3XSDK4w6ztrxWKPKwXSwgKtZlOnKUMjdUHQ9u8QqoGD/S
+         N3LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=TY/pc/O4K+09a8iX32rX2S2j6uX1+FsQZvoILLyOFWc=;
+        b=su23T6BS4cJdyYiW0qxz8m5XpCszlRYlG4FHDcRVRiCzpLLOUkDVOYVfN5JDJSAcqQ
+         iejUhfMnEato7Wgr203tXRVqMC6djhgOTLqzlL2td8by7JuKDy0xBIyUQ/OIPeDuz2gC
+         MnNjqbdHIfj+/o8rzT4eqDyLSI0EkpRiiMrtprLRJFjXhiKJJyA75ZXZezAhnDQHyfXc
+         mzMkq0cZeHS9lDZz+ImvSI3O7O7GxDNM2fhc5AGVgi2rMLosQZJkNuzBUEYiSbPdzu4l
+         w1rxHSXrK9ouSY9csKjVKpK3MGXXTmrg35rEqNiNVBa5vtv19vxo1+SFOGawAGHoamQn
+         7lAA==
+X-Gm-Message-State: APjAAAUMbvmwF4c+YQTU4l75Rvpw8ismu1taVTTiieId10TZJ/6ecg/p
+        R0kuNaUW/QoSAKI7mf6LfyVU70FTTGT6fuQoJnPwq0zPKi5sYddu4Yhuwm4nLM5PPDjpAse1AQD
+        E1f0OvdMGYc9bVOlkG3eI8/zZw+0gDtY0AW9UNi54Z6ErHIetvnSQzxXrJQb2NTMLWHEcUj2iPJ
+        bN
+X-Google-Smtp-Source: APXvYqwfDq9R7B9mGVpevEIIDTHUGjIrVjHwukwQrtT1i9zFfYYuNcp1GJDWp6wh2U7ACY4TB8LaJ+3LL20bBOyDxKt4
+X-Received: by 2002:a63:8841:: with SMTP id l62mr20255991pgd.246.1560287210080;
+ Tue, 11 Jun 2019 14:06:50 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 14:06:45 -0700
+Message-Id: <cover.1560286956.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
+Subject: [PATCH 0/2] Improve test code coverage on jt/partial-clone-missing-ref-delta-base
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+This series is on jt/partial-clone-missing-ref-delta-base.
 
-> Make sure that the previously displayed "Rebasing (N/M)" line is
-> cleared by using the term_clear_line() helper function added in the
-> previous patch.
->
-> A couple of other rebase commands print similar messages, e.g.
-> "Stopped at <abbrev-oid>... <subject>" for the 'edit' or 'break'
-> commands, or the "Successfully rebased and updated <full-ref>." at the
-> very end.  These are so long that they practically always overwrite
-> that "Rebasing (n/m)" progress line, but let's be prudent, and clear
-> the last line before printing these, too.
-> ...
-> Note that this patch doesn't completely eliminate the possibility of
-> similar garbled outputs, ...
-> too soon, and it would either flicker or be invisible.
+Patch 1 is a cleanup, and patch 2 improves test code coverage. Thanks to
+Stolee for the code coverage report.
 
-The user of term_clear_line() in this patch always guard themselves
-behind "we do not do this if we are producing verbose output," but
-the proposed log message does not explain why they need to do so.
+I have checked this by running `make coverage` then `make cover_db_html`
+on both "next" and this series, and comparing the output - the
+relevant line indeed shows up as uncovered on "next", and covered on
+this.
 
-Is it because it is so obvious to potential readers?
+Jonathan Tan (2):
+  t5616: use correct flag to check object is missing
+  t5616: cover case of client having delta base
+
+ t/t5616-partial-clone.sh | 41 ++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
+
+-- 
+2.22.0.rc2.383.gf4fbbf30c2-goog
+
