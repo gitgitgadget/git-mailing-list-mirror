@@ -8,49 +8,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8A71F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 21:06:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 916BF1F462
+	for <e@80x24.org>; Tue, 11 Jun 2019 21:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406893AbfFKVGv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 17:06:51 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:37557 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406793AbfFKVGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 17:06:51 -0400
-Received: by mail-pf1-f202.google.com with SMTP id x18so10442918pfj.4
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 14:06:50 -0700 (PDT)
+        id S2407336AbfFKVGx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 17:06:53 -0400
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:46253 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406793AbfFKVGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jun 2019 17:06:53 -0400
+Received: by mail-oi1-f202.google.com with SMTP id x72so1232066oif.13
+        for <git@vger.kernel.org>; Tue, 11 Jun 2019 14:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=TY/pc/O4K+09a8iX32rX2S2j6uX1+FsQZvoILLyOFWc=;
-        b=lEaCP18icfG71a7R5p2uhPWll7u/TrsReLDmk0IrrNy7lcYy1dlyXgJy/0HhtdQQOt
-         wF65wl+NTp6z58Y+q6rRAIJ0ZIMcTx2Sn7aR9RUlK3JdPd8gZBj4orvNMs3YselEiwm1
-         mW5aUmXNpE8ieBsn9WMwTEtsON8ngp9kcK9kFG31eFNpCgqMiyd/ECcJM7qyjCvwDu8s
-         hPEkyz44yZ5ml5lAr0xn8yQfwQmga4M9jSttYLn4WXTZ+ag+jrS5Hs7NRyJTRHkOtbQ8
-         M8/897X4KhDPATSuf1oJrWK3XSDK4w6ztrxWKPKwXSwgKtZlOnKUMjdUHQ9u8QqoGD/S
-         N3LQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=QMZjR6Lu5zwTeDAblnuqe/ZxeGzF7hP5N2im5o41CCg=;
+        b=fWXEqb2QULYgZ9mpn2BrbqKic+4bkyZ0P0XhGFKQzCTxMrlKUgq0DQVfAvFGIseiJY
+         +BNku5YB4xs5y/KSQcN5YsE/Q7WJcprj/aT9yrScn3AelLzwk0MF2MpLmPXTqXKPmFrR
+         zaEE8b43HHxgx1/eEYVsZf7S/ilJ+eK95VT7Aw58FG6xbsD068/1YZ/m3sO0hX7LrttN
+         4XAJDKGlkA4LkRkn5yi57r5BrHZzCf2RIy6pX34bAnV/blwk/+7Z5OMF73TbHH+HHCym
+         BixOZiIxN8dqAMppVGnBQVb7i43cmdmq4iDsaZiWWZilfJPyv+nodyI21pkwT7+jQ10F
+         G1Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=TY/pc/O4K+09a8iX32rX2S2j6uX1+FsQZvoILLyOFWc=;
-        b=su23T6BS4cJdyYiW0qxz8m5XpCszlRYlG4FHDcRVRiCzpLLOUkDVOYVfN5JDJSAcqQ
-         iejUhfMnEato7Wgr203tXRVqMC6djhgOTLqzlL2td8by7JuKDy0xBIyUQ/OIPeDuz2gC
-         MnNjqbdHIfj+/o8rzT4eqDyLSI0EkpRiiMrtprLRJFjXhiKJJyA75ZXZezAhnDQHyfXc
-         mzMkq0cZeHS9lDZz+ImvSI3O7O7GxDNM2fhc5AGVgi2rMLosQZJkNuzBUEYiSbPdzu4l
-         w1rxHSXrK9ouSY9csKjVKpK3MGXXTmrg35rEqNiNVBa5vtv19vxo1+SFOGawAGHoamQn
-         7lAA==
-X-Gm-Message-State: APjAAAUMbvmwF4c+YQTU4l75Rvpw8ismu1taVTTiieId10TZJ/6ecg/p
-        R0kuNaUW/QoSAKI7mf6LfyVU70FTTGT6fuQoJnPwq0zPKi5sYddu4Yhuwm4nLM5PPDjpAse1AQD
-        E1f0OvdMGYc9bVOlkG3eI8/zZw+0gDtY0AW9UNi54Z6ErHIetvnSQzxXrJQb2NTMLWHEcUj2iPJ
-        bN
-X-Google-Smtp-Source: APXvYqwfDq9R7B9mGVpevEIIDTHUGjIrVjHwukwQrtT1i9zFfYYuNcp1GJDWp6wh2U7ACY4TB8LaJ+3LL20bBOyDxKt4
-X-Received: by 2002:a63:8841:: with SMTP id l62mr20255991pgd.246.1560287210080;
- Tue, 11 Jun 2019 14:06:50 -0700 (PDT)
-Date:   Tue, 11 Jun 2019 14:06:45 -0700
-Message-Id: <cover.1560286956.git.jonathantanmy@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=QMZjR6Lu5zwTeDAblnuqe/ZxeGzF7hP5N2im5o41CCg=;
+        b=F/UYUeX3eXwhk2INbwx6Sgofq1rZko/IEa/AfZ/NlMFdrIQ2sLeK90BB5Ha4GNoSpd
+         O/Tl2QO9Jus8MAq0jjRcVXDuneg4vEL6m+3YhGXjA6X/1jzznuUsldYzlf8eTwJCUh1p
+         Tbct5nALpTcjNIUYQCFnk9nY1aLL+fL4u25P75BoLLqa26+7yuX1bfPM94FRAZDMNte6
+         JfeyUAvSPCK4iduEAL8fKBB3Pdtraf6+T6k4FKMdFP0RT5nBppEjr260CSQu/+jHXWJ9
+         oQJWd50WgChlrFW1DbFtLNH3PpmM3gyL8tgsWwxcIH3fVkPch7Eh4r6b48x9IPc0mWj+
+         fiIA==
+X-Gm-Message-State: APjAAAUCbVcwA/G+hrb+Sw/eFVoK3vfCjsimEf904F7bRIz89WTIynPy
+        KtLjIksYCbiOZrDKoochInW+AS54Z4XWUVJo+BsCjWwyA8uhn6mfsWsy81WyENQ0/t7ySeqIviv
+        9JnGLY3f0esgSmnvmSPnRkZ6kWNvZe53BHOUffrou/3uZ0OtiLKiHpDZrq/T1EweBWs+Vb1qphK
+        to
+X-Google-Smtp-Source: APXvYqwczMbJGv+gYFdgUU6gcDdO/ukJS+Rcu0fx9T2VlXgEasmXIq6iXPUQpwHgzfcajCdzafHq1awbZlRgOs3enoBn
+X-Received: by 2002:aca:3b8a:: with SMTP id i132mr15687989oia.90.1560287212509;
+ Tue, 11 Jun 2019 14:06:52 -0700 (PDT)
+Date:   Tue, 11 Jun 2019 14:06:46 -0700
+In-Reply-To: <cover.1560286956.git.jonathantanmy@google.com>
+Message-Id: <c09d6119e51d70390d130cd9c47ef8d363244f80.1560286956.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1560286956.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
-Subject: [PATCH 0/2] Improve test code coverage on jt/partial-clone-missing-ref-delta-base
+Subject: [PATCH 1/2] t5616: use correct flag to check object is missing
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com
@@ -60,23 +64,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is on jt/partial-clone-missing-ref-delta-base.
+If we want to check whether an object is missing, the correct flag to
+pass to rev-list is --ignore-missing; --exclude-promisor-objects will
+exclude any object that came from the promisor remote, whether it is
+present or missing. Use the correct flag.
 
-Patch 1 is a cleanup, and patch 2 improves test code coverage. Thanks to
-Stolee for the code coverage report.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ t/t5616-partial-clone.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I have checked this by running `make coverage` then `make cover_db_html`
-on both "next" and this series, and comparing the output - the
-relevant line indeed shows up as uncovered on "next", and covered on
-this.
-
-Jonathan Tan (2):
-  t5616: use correct flag to check object is missing
-  t5616: cover case of client having delta base
-
- t/t5616-partial-clone.sh | 41 ++++++++++++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 12 deletions(-)
-
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index f1baf83502..8b9b471a62 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -359,7 +359,7 @@ test_expect_success 'tolerate server sending REF_DELTA against missing promisor
+ 		--filter=blob:none $HTTPD_URL/one_time_sed/server repo &&
+ 
+ 	# Sanity check to ensure that the client does not have that blob.
+-	git -C repo rev-list --objects --exclude-promisor-objects \
++	git -C repo rev-list --objects --ignore-missing \
+ 		-- $(cat deltabase) >objlist &&
+ 	test_line_count = 0 objlist &&
+ 
 -- 
 2.22.0.rc2.383.gf4fbbf30c2-goog
 
