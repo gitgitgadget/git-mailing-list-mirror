@@ -2,117 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C39341F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 08:56:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFDAE1F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 09:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727409AbfFLI4Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 04:56:16 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39405 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbfFLI4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 04:56:16 -0400
-Received: by mail-pf1-f195.google.com with SMTP id j2so9257208pfe.6
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 01:56:15 -0700 (PDT)
+        id S2406059AbfFLJIN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 05:08:13 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:44694 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390115AbfFLJIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 05:08:12 -0400
+Received: by mail-io1-f67.google.com with SMTP id s7so12323116iob.11
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=C1UboooEWeaa+MA1fkCsY5z0jOmSdzqriIGCE16d31k=;
-        b=Wm36G0NvWmsPoNbKRmHX/zg15rUxTCfGGZI6u12n7Tw9BUbsn+hzojTkXCGEt9APM5
-         bY2Q6v9a3lYeUzXVunrdQTDB2a6QfThkwTaet61dd8vNMxKzXtZEtEr3CSy/ZtJMemEC
-         vS2uFaruXfuCFGy+qp7FqkgZhIfvNUa1KGUaWUHyNbyrTiSFFJdhAkWx1dIsD70vkNps
-         R5jqbu2qG/mzE+dhT7NscK07zRkcr3UtiWA+jEn2rx+SMDAbS0ZXtOPixyy1a9VsjaMH
-         /3ZjriLS2m/2dU3BT6otvVUOBNLIcf6NjZLothK3GG/Wqw+LQop1PTx12f30viWHyTKW
-         7OmQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hm3NF3lGzhvVT4bEMpvaTy9P8n8Nas8zdjvbYc35Yj8=;
+        b=iY+fsXSDkNoihuIGxKfD4gtosrZH6UzL5yHHgsR0S90uqQo0rP1hZ7A4y49WjyYUCv
+         h9FHGnzfAa106voH49TQ03OWITdPQkIsvx/0vQ9wTIbf+GlJupcjTOfFpUOdC59yh/zs
+         CgPlJcbShiBJE0vmTqAVatruBRHBGE7EZo22V9AZjp3pnZHTrLUeMyz1akv8Wa1xHCTD
+         JOJbJPognQYjJhlIuRMBxcC4QiEwDNnTIImqoVSh1hUaMUsxnjQnpOa1O8G2FJBU6bb3
+         JH7pw2VLFHSuRAKwwO4A6Ql/g458uhukn1GTypl8VRTgevuHuqMFjyBnA0MRTrI5DzU+
+         hURA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=C1UboooEWeaa+MA1fkCsY5z0jOmSdzqriIGCE16d31k=;
-        b=mYcsvaH/4KmlpUpfiJZPvbX+OVlJtBKDJdlkOMNbldUXiqZlVfm+bZJvKRSCe9OULf
-         WbyPhP5Es2af4v+piVE3iCg8NteMZuRrz4Yo8uNUIk3GQZT2v+V4hvfmREwhSufhtSRf
-         xNLK6XoMKFEOx82Bmmma5BFOfPKbxKKhSCso6LT/t8CsBvHePdHprWaY7Y/oQvEDXPHD
-         1vlTjpe0XQG/nDA/7mf432gV5CHXTw+ARzd6vqp11KzHqn6C0mJyg1mmJ4o5xRte7wpm
-         kSPl4h4RsAwhvSvpsboXhKjSxsZ4tKv2vD0Hb218DYn33ffLis1nYjei4KBFclSJdIm9
-         gwAA==
-X-Gm-Message-State: APjAAAUKcsLnARNCDa1+m79Ag9q3h5OxQvOh+y7Vs8rRQnOu4iiOSdub
-        RYkyKR9N+C53h1/9K0UCpak=
-X-Google-Smtp-Source: APXvYqyVKzLp+Q1PWgvBRJB21UB+nHXmZNLQogVWXnqreCpho034TQK6XYfIakXaOAaZbWj8xRCaJw==
-X-Received: by 2002:a17:90a:a505:: with SMTP id a5mr32156047pjq.27.1560329775504;
-        Wed, 12 Jun 2019 01:56:15 -0700 (PDT)
-Received: from ash ([115.76.191.0])
-        by smtp.gmail.com with ESMTPSA id g2sm37181615pfb.95.2019.06.12.01.56.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 01:56:14 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 12 Jun 2019 15:56:09 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     felipe.contreras@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        szeder.dev@gmail.com
-Subject: [PATCH v2] completion: do not cache if --git-completion-helper fails
-Date:   Wed, 12 Jun 2019 15:56:06 +0700
-Message-Id: <20190612085606.12144-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
-In-Reply-To: <20190607093034.816-1-pclouds@gmail.com>
-References: <20190607093034.816-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hm3NF3lGzhvVT4bEMpvaTy9P8n8Nas8zdjvbYc35Yj8=;
+        b=gPSOwgrGc/CljwbPaTc/xAOGU1m/yHA2QcQ+vwLEDBa3Fe9LmPzQpjdRzDGxAdHu10
+         wtnxySl8FY/b4UbPPQwaDBpI7rcEAFF7xWpcc53MFdym746ePY6piZBCFfdcPbwxRA64
+         sMWt2QdqU20UIjRtzcMxmcl49PzmABiVYGaMtdPm/TRr2qugKAXPS+mrFpAZPpSms13Q
+         gxwJ5diUVHR9gmw7pEd8NaV9wqadf4yOh3nggpR3UMdF2sJ7ztrKhauBl7cTS/K4vUHK
+         f2JYbzF6tO41bk+QifRO1UQ9zvVzkzFoOZPEoqnXLkDRK585vYiu8Qwct8QpZK5Jmg2N
+         /gKg==
+X-Gm-Message-State: APjAAAXeAkVhYY7gdDqNJTqGy/e2ZXB+I0gjjD6ybxVnBc5GCMQmwE+G
+        mC81+9FFO5wDP8oYGWP/sNSVZ/Np7hL5F1RV832A8Q==
+X-Google-Smtp-Source: APXvYqzzSio9ZehdfNu1Vyz1hHtbxLBcq3VxuLVrKzVCUSpBleu64CPRAYNa+hdjUgBV2ATKQzh0VKDWjMhkLu66Ti4=
+X-Received: by 2002:a6b:7f0b:: with SMTP id l11mr46095791ioq.282.1560330491570;
+ Wed, 12 Jun 2019 02:08:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqqimtiqyey.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqimtiqyey.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 12 Jun 2019 16:07:45 +0700
+Message-ID: <CACsJy8CRwvRhxT7OBWn8f716=xX93gD-jho_gE09c5aGe=Vskg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2019, #02; Thu, 6)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git <cmd> --git-completion-helper" could fail if the command checks for
-a repo before parse_options(). If the result is cached, later on when
-the user moves to a worktree with repo, tab completion will still fail.
+On Fri, Jun 7, 2019 at 3:19 AM Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/switch-and-restore (2019-05-07) 43 commits
+>  - Declare both git-switch and git-restore experimental
+>  - help: move git-diff and git-reset to different groups
+>  - doc: promote "git restore"
+>  - user-manual.txt: prefer 'merge --abort' over 'reset --hard'
+>  - completion: support restore
+>  - t: add tests for restore
+>  - restore: support --patch
+>  - restore: replace --force with --ignore-unmerged
+>  - restore: default to --source=HEAD when only --staged is specified
+>  - restore: reject invalid combinations with --staged
+>  - restore: add --worktree and --staged
+>  - checkout: factor out worktree checkout code
+>  - restore: disable overlay mode by default
+>  - restore: make pathspec mandatory
+>  - restore: take tree-ish from --source option instead
+>  - checkout: split part of it to new command 'restore'
+>  - doc: promote "git switch"
+>  - completion: support switch
+>  - t: add tests for switch
+>  - switch: make --orphan switch to an empty tree
+>  - switch: reject if some operation is in progress
+>  - switch: no worktree status unless real branch switch happens
+>  - switch: implicit dwim, use --no-guess to disable it
+>  - switch: add short option for --detach
+>  - switch: only allow explicit detached HEAD
+>  - switch: reject "do nothing" case
+>  - switch: stop accepting pathspec
+>  - switch: remove -l
+>  - switch: add --discard-changes
+>  - switch: better names for -b and -B
+>  - checkout: split part of it to new command 'switch'
+>  - checkout: split options[] array in three pieces
+>  - checkout: move 'confict_style' and 'dwim_..' to checkout_opts
+>  - checkout: make "opts" in cmd_checkout() a pointer
+>  - checkout: factor out some code in parse_branchname_arg()
+>  - checkout: keep most #include sorted
+>  - checkout: inform the user when removing branch state
+>  - checkout: advice how to get out of detached HEAD mode
+>  - t: rename t2014-switch.sh to t2014-checkout-switch.sh
+>  - git-checkout.txt: fix monospace typeset
+>  - doc: document --overwrite-ignore
+>  - git-checkout.txt: fix one syntax line
+>  - git-checkout.txt: spell out --no-option
+>  (this branch is used by jl/status-reduce-vertical-blank.)
+>
+>  Two new commands "git switch" and "git restore" are introduced to
+>  split "checking out a branch to work on advancing its history" and
+>  "checking out paths out of the index and/or a tree-ish to work on
+>  advancing the current history" out of the single "git checkout"
+>  command.
 
-Avoid this by detecting errors and not cache the completion output. We
-can try again and hopefully succeed next time (e.g. when a repo is
-found).
+It's probably ok to move both switch and restore to 'next' more more
+testing. I've been using both for months. I had to switch back to
+git-checkout one time (because of submodule stuff) and it felt weird.
+So they're probably good enough, overall.
 
-Of course if --git-completion-helper fails permanently because of other
-reasons (*), this will slow down completion. But I don't see any better
-option to handle that case.
+I do have two or three small refinement patches (for both switch and
+restore), but I'm still hung up on handling "git restore *.c" (with
+shell's expanding *.c). I think I know what should be a good
+compromise now, just need some more time to code it up.
 
-(*) one of those cases is if __gitcomp_builtin is called on a command
-  that does not support --git-completion-helper. And we do have a
-  generic call
-
-    __git_complete_common "$command"
-
-  but this case is protected with __git_support_parseopt_helper so we're
-  good.
-
-Reported-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- v2 simplifies the code. $nocache in v1 was overkill.
-
- contrib/completion/git-completion.bash | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9f71bcde96..8c6b610a24 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -400,7 +400,8 @@ __gitcomp_builtin ()
- 	if [ -z "$options" ]; then
- 		# leading and trailing spaces are significant to make
- 		# option removal work correctly.
--		options=" $incl $(__git ${cmd/_/ } --git-completion-helper) "
-+		options=" $incl $(__git ${cmd/_/ } --git-completion-helper) " || return
-+
- 		for i in $excl; do
- 			options="${options/ $i / }"
- 		done
--- 
-2.22.0.rc0.322.g2b0371e29a
-
+>  cf. <20190329103919.15642-1-pclouds@gmail.com> (switch v6)
+>  cf. <20190425094600.15673-1-pclouds@gmail.com> (restore v3)
+--
+Duy
