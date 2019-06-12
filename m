@@ -8,118 +8,112 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF0891F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 09:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD3A01F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 09:30:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408720AbfFLJZa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 05:25:30 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39705 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408715AbfFLJZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 05:25:30 -0400
-Received: by mail-ed1-f65.google.com with SMTP id m10so24659529edv.6
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:25:29 -0700 (PDT)
+        id S2408714AbfFLJaA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 05:30:00 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:36470 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731492AbfFLJ37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 05:29:59 -0400
+Received: by mail-it1-f194.google.com with SMTP id r135so9509707ith.1
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:29:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dvSXKoO/VIkjFTQKOmw4jJLxfHr9O6oL0Vlpx69WoGQ=;
-        b=isPRglNOqk6C5uumL+ivo+9CuS6ZIT6NQZ/HCCOdde0k5lVjFmW4kGUmC0hYHertCc
-         EsEnVTuRKS2Ty1+59BEeYAn7j6GwUEreDVE4tja/LAcPDq6xLTMio7de0kljsnIv+7TH
-         PWNxjyJRhNF/V1V99FKLjmt9ebQONxv6WXDbQG/cirqSyu+5qNDVdnmzWjBsaUbogk5D
-         /narB4mB2S9sUQH6R1x7ADh+f6+rGkJIii+i/4DTWOXMEXxLznSpju9iuPAI044NruAM
-         LAVRjC6JItPYuI1dHLMUUy7gDHmGU795d3CVrNhF/KXT6tY/6ER1CcrIcXg1FsZIVQZY
-         8dKQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=30S35xSc0Ys3EBxtpxDaee2KkfrxVKeJVYFELUX86bs=;
+        b=ZTqUAAzkp7KmA5xHIFD95/Q+ASY6XuLRl2N5aNuiMpQr1hAYitCPsJr7dhTx5cR4bw
+         kGcVVeLBHqYkh1XTos7PYzbgrpiDVNFVU2uIeESXi9dhMZy1Mn3qpbv8D+Cg0OIu9fiS
+         d0ARW/qbyYFhRooCa0UdaT7JgrzyqwZK+7rjrQ/y96nPZg5cdOCgyzm2VR1xekaIgyxe
+         xV3uaM7VUj59Id6akasPA4PzzB1f0VvUCaBNSUodt9HmNI422HuBH8ngqGSBNSxq5bZN
+         kttSVzp8ipiSbZ6rmpms2/DIZaRI54e8a/d0bwfqZCKa/AoHGdDaHbHjoZqL6dRN0fvD
+         Grfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dvSXKoO/VIkjFTQKOmw4jJLxfHr9O6oL0Vlpx69WoGQ=;
-        b=C//1zYzUgim4VCgdVZG0UqM+qQGieQXvJe4x2wYjhsSjI5KmEX8bKRw7whaueyGb6P
-         5LQzPxkBBs+8ge1VkuO+mElBFYPzwRTwpTxlBu7bY9WmIf3f+Q3QJ7Df51+2bC/nfYJ9
-         eLjEf/6TXsOAY3qcimmr5mhdbW1NBf6irefmWheyKrk41JtuEk44Lx/nrSnZ0x3q59ay
-         wqZR4u6I58osp6Mqe5oQ2tkDDnybEpgk3U0qcnqBPnlVcxzZNKouLY7esSFmwE9o0drT
-         2GC7IZP3u5zB/QyBJUjr1oY6D49qy4FXSFfjOcf7SMFEjoF+Yv/Hma68Hj0WsCu/RgxP
-         2Q/Q==
-X-Gm-Message-State: APjAAAVWYaH1J4CxeFI5HgTRLaUBNXC+vAVkWnutPAReh4vfw/isnSAO
-        I0FapMHDP7CetElrisg98DcnNNX9
-X-Google-Smtp-Source: APXvYqzyWvgFzp/FduMBYHH7TP+7UxQjBdZTPIL8ioUYv7mIbGn6CDi9bvtgXBJtUzdso8rp9zsNlg==
-X-Received: by 2002:a17:906:d549:: with SMTP id gk9mr53443593ejb.268.1560331528299;
-        Wed, 12 Jun 2019 02:25:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g18sm4393014edh.13.2019.06.12.02.25.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 02:25:27 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 02:25:27 -0700 (PDT)
-X-Google-Original-Date: Wed, 12 Jun 2019 09:25:26 GMT
-Message-Id: <98d9302618aecd941eff5ea0a1e797f94769c73d.1560331526.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.262.git.gitgitgadget@gmail.com>
-References: <pull.262.git.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] add -p: fix checkout -p with pathological context
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=30S35xSc0Ys3EBxtpxDaee2KkfrxVKeJVYFELUX86bs=;
+        b=WAo5r40/r6/KI75F8TFt/SoKVnRIehBielgVjJbnwpyu1UBv/Mqqj/9l5uIELSlOt2
+         mn6wSzhIlpXMJHP7upiy+hTv/OOMdG09gACvDBUozLLUVkRwt1yhoTX3blr6wHdZZMuc
+         5IFP9ZLaMsuMu0ByqcCyXKdFX4dypUDk7pXMyswXW1BMUfacVg9jtyL5JtE0K9lb/Va2
+         XC0bBBUuBIVhWbVO2vut0YigEgAWQRJnBz2b6n022nSexuibm6ilftKNATRy9botKCBZ
+         TYTauW+87okcHyyPVkFv22Pk3RVzVwM1797AUdZYWJLIlNYYe+Xq8nGrkiYRuv4AAOmi
+         OQGw==
+X-Gm-Message-State: APjAAAXt98dA9BG0aa+ZjusBxYQibAWtu4vJ5sM9BX36rk7nbfqEDk5n
+        eyAIurwaBwMKALaJlbsZAz5p1jgYD6GY5P60a80=
+X-Google-Smtp-Source: APXvYqxy+ifvEATNRqXCnZEGY7A1hozmOzMo3e2WQmhBoRKENIIgVachVFPQ/I+r0X5aO1DAje3o3enF4+8MH1Yy964=
+X-Received: by 2002:a02:13c3:: with SMTP id 186mr5829312jaz.30.1560331798842;
+ Wed, 12 Jun 2019 02:29:58 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu> <20190611234815.GB8616@genre.crustytoothpaste.net>
+In-Reply-To: <20190611234815.GB8616@genre.crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 12 Jun 2019 16:29:32 +0700
+Message-ID: <CACsJy8BxdvOrc28_JhAARzJdOqyqWZaFX8DoPjEr4BCe-sRqsg@mail.gmail.com>
+Subject: Re: Reducing git size by building libgit.so
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Elmar Pruesse <p@ucdenver.edu>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Wed, Jun 12, 2019 at 2:11 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2019-06-11 at 19:52:18, Elmar Pruesse wrote:
+> > Hi!
+> >
+> > The total compiled size of libexec/git-core is currently somewhere
+> > around 30 MB. This is largely due to a number of binaries linking
+> > statically against libgit.a. For some folks, every byte counts. I
+> > meddled with the Makefile briefly to make it build and use a libgit.so
+> > instead, which dropped package size down to 5MB.
+> >
+> > Are there, beyond the ~20 ms in extra startup time and the slightly
+> > bigger hassle with DSO locations, reasons for the choice to link statically?
+>
+> I think the reason is that libgit is not API stable and we definitely
+> don't want people linking against it.
 
-Commit fecc6f3a68 ("add -p: adjust offsets of subsequent hunks when one is
-skipped", 2018-03-01) fixed adding hunks in the correct place when a
-previous hunk has been skipped. However it did not address patches that
-are applied in reverse. In that case we need to adjust the pre-image
-offset so that when apply reverses the patch the post-image offset is
-adjusted correctly. We subtract rather than add the delta as the patch
-is reversed (the easiest way to think about it is to consider a hunk of
-deletions that is skipped - in that case we want to reduce offset so we
-need to subtract).
+Having .so files does not mean it's stable API though. If we don't
+ever install header files, there's no way for outside people to use it
+(people who dlopen() it anyway deserve whatever they get). I do agree
+with some hassles from .so files though.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- git-add--interactive.perl  | 6 +++++-
- t/t3701-add-interactive.sh | 8 ++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+If installation size is a problem I think we can still shrink it a bit
+down. Some non-builtin commands (fast-import, sh-i18n--subst...) could
+be merged back in "git" binary. Some other for remote side (or
+background daemons) could also be bundled together unless there's
+security concerns.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 20eb81cc92..da5b4ec4bc 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -972,7 +972,11 @@ sub coalesce_overlapping_hunks {
- 			next;
- 		}
- 		if ($ofs_delta) {
--			$n_ofs += $ofs_delta;
-+			if ($patch_mode_flavour{IS_REVERSE}) {
-+				$o_ofs -= $ofs_delta;
-+			} else {
-+				$n_ofs += $ofs_delta;
-+			}
- 			$_->{TEXT}->[0] = format_hunk_header($o_ofs, $o_cnt,
- 							     $n_ofs, $n_cnt);
- 		}
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 65dfbc033a..69991a3168 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -639,4 +639,12 @@ test_expect_success 'add -p patch editing works with pathological context lines'
- 	test_cmp expected-2 actual
- '
- 
-+test_expect_success 'checkout -p works with pathological context lines' '
-+	test_write_lines a a a a a a >a &&
-+	git add a &&
-+	test_write_lines a b a b a b a b a b a > a&&
-+	test_write_lines s n n y q | git checkout -p &&
-+	test_write_lines a b a b a a b a b a >expect &&
-+	test_cmp expect a
-+'
- test_done
+We could also have a look at function distribution in libgit.a. I'm
+surprised git-credential-store is 5.6 MB on my machine. We probably
+pull more stuff than needed somewhere due to dependency between .o
+files.
+
+> Before libgit2 existed, projects
+> like cgit built their own libgit and it required pinning to a specific
+> version of Git.
+>
+> Also, some people install Git into their home directories, and a shared
+> library means that they'll have to use LD_LIBRARY_PATH (or equivalent)
+> to run Git.
+>
+> Finally, we have support for a runtime relocatable Git which can be run
+> out of any path and still automatically find its dependent binaries.
+> That won't work with a shared library.
+>
+> So if we did allow for building a shared library, it would have to be an
+> option that defaulted to off, I think.
+> --
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
+
+
+
 -- 
-gitgitgadget
+Duy
