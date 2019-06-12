@@ -8,123 +8,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFDAE1F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 09:08:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCDA51F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 09:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406059AbfFLJIN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 05:08:13 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:44694 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390115AbfFLJIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 05:08:12 -0400
-Received: by mail-io1-f67.google.com with SMTP id s7so12323116iob.11
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:08:12 -0700 (PDT)
+        id S2408718AbfFLJZ3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 05:25:29 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35237 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406207AbfFLJZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 05:25:29 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p26so20630358edr.2
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hm3NF3lGzhvVT4bEMpvaTy9P8n8Nas8zdjvbYc35Yj8=;
-        b=iY+fsXSDkNoihuIGxKfD4gtosrZH6UzL5yHHgsR0S90uqQo0rP1hZ7A4y49WjyYUCv
-         h9FHGnzfAa106voH49TQ03OWITdPQkIsvx/0vQ9wTIbf+GlJupcjTOfFpUOdC59yh/zs
-         CgPlJcbShiBJE0vmTqAVatruBRHBGE7EZo22V9AZjp3pnZHTrLUeMyz1akv8Wa1xHCTD
-         JOJbJPognQYjJhlIuRMBxcC4QiEwDNnTIImqoVSh1hUaMUsxnjQnpOa1O8G2FJBU6bb3
-         JH7pw2VLFHSuRAKwwO4A6Ql/g458uhukn1GTypl8VRTgevuHuqMFjyBnA0MRTrI5DzU+
-         hURA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=w0d4LMQavNCVeOl2+Q0JW/eqjgcgxnX84QnjHVNekrU=;
+        b=rzjyCGoCKAaBg6y54V9x49Zcvj/BR1UgnQxcOMn1ZxUT0CGvzAcy0pYiuRDHuOxZap
+         birPTID/wP6jH+a/A+ubB6/V8dxe3U87NpNn6k2oyeGoXU0gtEJrXH8L/xB2S5iTbgs4
+         ZQ0urTZoIpaL+ZxB6uBAUS5lPe7PXsi2mTI0/0LfP8kRWYrpY2RPgc43qdsTt5rADAnH
+         +vIT1mYeuMKdAAlCNekjJo5O0fJ+RoEaZ07rIeTC1ARLz5nzKvV0K9oSxit6zCMeNGR6
+         yf82dOwsSs0wufM99SCewFh3FuCL25PqCoRaksS9aks/WX12FsT2jY9vTRaQz34tqbJe
+         +FMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hm3NF3lGzhvVT4bEMpvaTy9P8n8Nas8zdjvbYc35Yj8=;
-        b=gPSOwgrGc/CljwbPaTc/xAOGU1m/yHA2QcQ+vwLEDBa3Fe9LmPzQpjdRzDGxAdHu10
-         wtnxySl8FY/b4UbPPQwaDBpI7rcEAFF7xWpcc53MFdym746ePY6piZBCFfdcPbwxRA64
-         sMWt2QdqU20UIjRtzcMxmcl49PzmABiVYGaMtdPm/TRr2qugKAXPS+mrFpAZPpSms13Q
-         gxwJ5diUVHR9gmw7pEd8NaV9wqadf4yOh3nggpR3UMdF2sJ7ztrKhauBl7cTS/K4vUHK
-         f2JYbzF6tO41bk+QifRO1UQ9zvVzkzFoOZPEoqnXLkDRK585vYiu8Qwct8QpZK5Jmg2N
-         /gKg==
-X-Gm-Message-State: APjAAAXeAkVhYY7gdDqNJTqGy/e2ZXB+I0gjjD6ybxVnBc5GCMQmwE+G
-        mC81+9FFO5wDP8oYGWP/sNSVZ/Np7hL5F1RV832A8Q==
-X-Google-Smtp-Source: APXvYqzzSio9ZehdfNu1Vyz1hHtbxLBcq3VxuLVrKzVCUSpBleu64CPRAYNa+hdjUgBV2ATKQzh0VKDWjMhkLu66Ti4=
-X-Received: by 2002:a6b:7f0b:: with SMTP id l11mr46095791ioq.282.1560330491570;
- Wed, 12 Jun 2019 02:08:11 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=w0d4LMQavNCVeOl2+Q0JW/eqjgcgxnX84QnjHVNekrU=;
+        b=HvlsCXsuuLnS5KqlElrdzL2c/y0iyeWIRxqYiTcy8/tHx+gdYiw/LlF1VAZXX677UQ
+         i08x4ui11JDhuYnn5AZck/FLLNmDX0EIibigTTJ//lk8gUek8HgSS0TnS+PG4BzWZfNm
+         dZ9Jkfj4hFCor61nR+kOWzXSKLihRtwAZh39EycmmoMmTXwmgHh0895PIsGnEQZ6ja+2
+         F5xdcgcOgCHE0wfUIUJG6ChgKuz8YUNr8OLjwlAxjZWtzLm1b6Hqi2ie/vNocNwpQe0m
+         2f6y6mJ8EC9mIdndXulMBILT/GkpGUhguWD53Dim8h/b/6E3IDfkVK6qFx8NTtInSgqD
+         QpCQ==
+X-Gm-Message-State: APjAAAXN3Xow0QWIU7Ml75vhd6zbZBNXH1RRg1ve5bKY/wVd4Nwo08tv
+        wopwqPznYCRpZHE/E4bMowxioYRn
+X-Google-Smtp-Source: APXvYqzkaRMmru3CA0yKYQOD4+8LJDmTo5Ga1gLTZzznzku6sj9bxIyYcdxf210fz9j2y8eft2GcJw==
+X-Received: by 2002:a17:906:3e97:: with SMTP id a23mr56596485ejj.233.1560331527599;
+        Wed, 12 Jun 2019 02:25:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g18sm4393009edh.13.2019.06.12.02.25.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Jun 2019 02:25:27 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 02:25:27 -0700 (PDT)
+X-Google-Original-Date: Wed, 12 Jun 2019 09:25:25 GMT
+Message-Id: <pull.262.git.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] add -p: fix checkout -p with pathological context
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <xmqqimtiqyey.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimtiqyey.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 12 Jun 2019 16:07:45 +0700
-Message-ID: <CACsJy8CRwvRhxT7OBWn8f716=xX93gD-jho_gE09c5aGe=Vskg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2019, #02; Thu, 6)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 7, 2019 at 3:19 AM Junio C Hamano <gitster@pobox.com> wrote:
-> * nd/switch-and-restore (2019-05-07) 43 commits
->  - Declare both git-switch and git-restore experimental
->  - help: move git-diff and git-reset to different groups
->  - doc: promote "git restore"
->  - user-manual.txt: prefer 'merge --abort' over 'reset --hard'
->  - completion: support restore
->  - t: add tests for restore
->  - restore: support --patch
->  - restore: replace --force with --ignore-unmerged
->  - restore: default to --source=HEAD when only --staged is specified
->  - restore: reject invalid combinations with --staged
->  - restore: add --worktree and --staged
->  - checkout: factor out worktree checkout code
->  - restore: disable overlay mode by default
->  - restore: make pathspec mandatory
->  - restore: take tree-ish from --source option instead
->  - checkout: split part of it to new command 'restore'
->  - doc: promote "git switch"
->  - completion: support switch
->  - t: add tests for switch
->  - switch: make --orphan switch to an empty tree
->  - switch: reject if some operation is in progress
->  - switch: no worktree status unless real branch switch happens
->  - switch: implicit dwim, use --no-guess to disable it
->  - switch: add short option for --detach
->  - switch: only allow explicit detached HEAD
->  - switch: reject "do nothing" case
->  - switch: stop accepting pathspec
->  - switch: remove -l
->  - switch: add --discard-changes
->  - switch: better names for -b and -B
->  - checkout: split part of it to new command 'switch'
->  - checkout: split options[] array in three pieces
->  - checkout: move 'confict_style' and 'dwim_..' to checkout_opts
->  - checkout: make "opts" in cmd_checkout() a pointer
->  - checkout: factor out some code in parse_branchname_arg()
->  - checkout: keep most #include sorted
->  - checkout: inform the user when removing branch state
->  - checkout: advice how to get out of detached HEAD mode
->  - t: rename t2014-switch.sh to t2014-checkout-switch.sh
->  - git-checkout.txt: fix monospace typeset
->  - doc: document --overwrite-ignore
->  - git-checkout.txt: fix one syntax line
->  - git-checkout.txt: spell out --no-option
->  (this branch is used by jl/status-reduce-vertical-blank.)
->
->  Two new commands "git switch" and "git restore" are introduced to
->  split "checking out a branch to work on advancing its history" and
->  "checking out paths out of the index and/or a tree-ish to work on
->  advancing the current history" out of the single "git checkout"
->  command.
+When I fixed the hunk offsets in add -p when hunks are skipped I forgot that
+the reverse patch case needs to be handled differently.
 
-It's probably ok to move both switch and restore to 'next' more more
-testing. I've been using both for months. I had to switch back to
-git-checkout one time (because of submodule stuff) and it felt weird.
-So they're probably good enough, overall.
+Phillip Wood (1):
+  add -p: fix checkout -p with pathological context
 
-I do have two or three small refinement patches (for both switch and
-restore), but I'm still hung up on handling "git restore *.c" (with
-shell's expanding *.c). I think I know what should be a good
-compromise now, just need some more time to code it up.
+ git-add--interactive.perl  | 6 +++++-
+ t/t3701-add-interactive.sh | 8 ++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
->  cf. <20190329103919.15642-1-pclouds@gmail.com> (switch v6)
->  cf. <20190425094600.15673-1-pclouds@gmail.com> (restore v3)
---
-Duy
+
+base-commit: aeb582a98374c094361cba1bd756dc6307432c42
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-262%2Fphillipwood%2Fwip%2Ffix-checkout-p-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-262/phillipwood/wip/fix-checkout-p-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/262
+-- 
+gitgitgadget
