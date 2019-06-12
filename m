@@ -2,78 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED9991F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 19:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 030A41F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 19:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728271AbfFLTgD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 15:36:03 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36734 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727826AbfFLTgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 15:36:03 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n4so18205358wrs.3
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 12:36:02 -0700 (PDT)
+        id S1728350AbfFLThw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 15:37:52 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:36616 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727496AbfFLThw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 15:37:52 -0400
+Received: by mail-pf1-f180.google.com with SMTP id r7so4382730pfl.3
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 12:37:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nh5h+fux1g0izuLRWZ9qdqVm5rzLOOlZVjpGWoN/4zY=;
+        b=p+NK+UratQLn5V4+FwpaSiyz6g9WGC2fVUM2V++VcNCbclIVmBhLFEtemIJsEP26/s
+         xS0TBE3teikQAXwiHE8uTknW8q90p10djM0+imQ/fucTMIJrsJ5JL/m6CFeOsP7Ut7iG
+         f9GXQBFektFhHQOeJ9ytG62F59SHa78qVgbcWhG7dZzOGYU7ByvQLhDbbmp15srJg99g
+         EaJih4mJPf1q//2wz84GUtEC7NXh4ulSQ8UnF/CCuTOAtV3OvSZ6g6EfcIFQzRzQo0P/
+         kkMvIPh87aB0YBk0teEbr+Q6sarNgBLRyqDagWWNNoxeTLdWEWJ5FPVA4Eg9UmfAY6do
+         E4CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hUlN58Wvrr4+9ukp/9+iLmvWn1ONrud2Lp+ees9XB3A=;
-        b=U0SkmSFNnEFxtiL0GTE+y2SxReGomConbO3ASP939Z7XSP+c60x31RIzqhIfVZt8X3
-         VTE0+l0AUbPUWN9E2YZNWrxdnMC51HU0MEL7Px5i85jMyyB9BfQz4iq6U3P8jrRtkhNg
-         V6d0AoQ+jCgR6u9uuaCo9waNM7yVlCuvImTuKRyMhY0oJYGqqhXRbcbzHHa19P5y+l1o
-         UPSl5xN9iwvAoUboJGzDrNYQpwxsEP6b1kkjEdPJVjh1JxqxHd7WA8QwJyspyD7bUWMH
-         jez71fF/nvZsDg7UaDPE5u/GaPHPtwN5+WvhjrMrWwY0WkJInc0iR+bXf0WaJRUMRxsT
-         eGbA==
-X-Gm-Message-State: APjAAAWLgTmyR0yM6RovLBB//7HGlhg8T5KhIAkm33JRlHhpGrwnR2lS
-        iFwEI31tHnxAByt6Jo7av+I7X5hJXxk2cHZegpSysw==
-X-Google-Smtp-Source: APXvYqyYIKptzKAozwv5XaWNp8/xo+3HDem770YgnHx9cYmjhywZpZkMGdLpB4f++aMVXqov6uM+b9r+34lZzB15A5s=
-X-Received: by 2002:adf:8b83:: with SMTP id o3mr52669745wra.278.1560368161706;
- Wed, 12 Jun 2019 12:36:01 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nh5h+fux1g0izuLRWZ9qdqVm5rzLOOlZVjpGWoN/4zY=;
+        b=tgqaEfRx+c/qYE/FPns5yK5ve8hBPPicm+X38J3UPsHK6IV1TmSO/5cw6TUYKeVCPB
+         E5e3aeF4anXxNqVgl3j/JUoejdRsm2gpOmmY2yJHHB6dLnVKPNuj0EDbLbYSPr1yDWlv
+         GG3Mby4r5THav2F/qFvtTYDdHUFfJxhWdIXz5IWRc58kwJ5pvHCOk9a9ECsHIWlcMnbe
+         TL7goLppg4BtktHuQuNwrxqp++RRavOy/ufmQmjF5Zu00CEmDs/GHA2LcyonHUwmUtDE
+         NMTfTgtmpYgWjlWbbZFhRmWGN/wlVN/sBfmc3mWoSOOrnhMFMNpWp8X7WMENHkBYLCam
+         smPw==
+X-Gm-Message-State: APjAAAVWEBr8A4audZtet1k0bSd9raHCY6YepvNgawpqkOThMf0uctvm
+        jPAKKaampHb+LpxOiMmLW/w2w//UoRc=
+X-Google-Smtp-Source: APXvYqy3JKGP3CE3o0w83D89msF05w33CDdz2/rXGdyjfgab9gAtE7lPSyZKxE9lHJIz7qRnzxXYvw==
+X-Received: by 2002:a63:5726:: with SMTP id l38mr27714958pgb.344.1560368270989;
+        Wed, 12 Jun 2019 12:37:50 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id d123sm386007pfc.144.2019.06.12.12.37.50
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 12 Jun 2019 12:37:50 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 12:37:45 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH] revision: remove stray whitespace when name empty
+Message-ID: <20190612193745.GB233791@google.com>
+References: <20190607225900.89299-1-emilyshaffer@google.com>
+ <20190609130004.GB23555@sigill.intra.peff.net>
+ <xmqqsgsho145.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.263.git.gitgitgadget@gmail.com> <e766e5177722dc20837adbd902d596186b1e4997.1560363008.git.gitgitgadget@gmail.com>
-In-Reply-To: <e766e5177722dc20837adbd902d596186b1e4997.1560363008.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 12 Jun 2019 15:35:50 -0400
-Message-ID: <CAPig+cR5hV3+8RjB=8Vz2cF6Ycnh_kj+LwraZAehAqYxrEt0xg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] submodule foreach: fix recursion of options
-To:     Morian Sonnet via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Morian Sonnet <MorianSonnet@googlemail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsgsho145.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 2:10 PM Morian Sonnet via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> [...]
-> . Add -- before the command to execute, such that now correctly
->
->     git --super-prefix <submodulepath> submodule--helper \
->       foreach --recursive -- git reset --hard
->
->   is called.
->
-> Signed-off-by: Morian Sonnet <moriansonnet@googlemail.com>
-> ---
-> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-> @@ -421,4 +421,9 @@ test_expect_success 'option-like arguments passed to foreach commands are not lo
-> +test_expect_success 'option-like arguments passed to foreach recurse correctly' '
-> +  cd super &&
-> +  git submodule foreach --recursive git reset --hard
-> +'
+On Mon, Jun 10, 2019 at 09:29:14AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Your patch only helps with this at all because you're using the "tree:1"
+> > ...
+> > because there you'll have actual names which cat-file will choke on. So
+> > it seems like this is helping only a very limited use case.
+> > ...
+> > Alternatively, it would be reasonable to me to have an option for
+> > "rev-list --objects" to have an option to suppress the filename (and
+> > space) entirely.
+> 
+> Yup, I think that is a more reasonable short-term change compared to
+> the patch being discussed, and ...
 
-Follow the example of the existing tests in this script and do the
-'cd' in a subshell so that it doesn't bleed into tests added later
-following this one, thus confusing them.
+I like this too. Starting work on it today.
 
-    (
-        cd super &&
-        git submodule foreach ...
-    )
+> 
+> > I think in the longer run along those lines that "--objects" should
+> > allow cat-file style pretty-print formats, which would eliminate the
+> > need to pipe to cat-file in the first place. That makes this parsing
+> > problem go away entirely, and it's way more efficient to boot (rev-list
+> > already knows the types!).
+> 
+> ... of course this makes tons of sense.
+
+Probably not going to start work on this now, but I will make a note to
+myself to have a look if I have some spare time soon, and keep an eye
+out for reviews in that area.
+
+> 
+> Thanks.
+
+Thanks all for the feedback, I'll have a reroll soon.
+
+ - Emily
