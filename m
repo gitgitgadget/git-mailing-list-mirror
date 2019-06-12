@@ -2,101 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9DF71F462
-	for <e@80x24.org>; Tue, 11 Jun 2019 23:50:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E0341F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 00:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405753AbfFKXu6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jun 2019 19:50:58 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55592 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405024AbfFKXu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jun 2019 19:50:57 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a15so4643281wmj.5
-        for <git@vger.kernel.org>; Tue, 11 Jun 2019 16:50:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=oQsY0FaHUq/zqh1u9yIpiBxKaQUpYWmbwD0+GiFV2O4=;
-        b=GfaFF0u6pUd83LZpoLtl+wmIw/dRMTEp5KC4ygrxxHADUmfvHY5mRe3kl4WCJYR3Yg
-         C9KYJdLGwdhO5fAf5fB7HRJCXp92bseYf3NPdg7UXFhLoDqhcm6/ORCjNr5gk2tJzyyP
-         HhF6N6p5BLw76JN6+RCNOmuSwmuK4UqAaatM8ROEmFbxlbDnyLQUeRdbYyq/hccvvHc0
-         jMHaVWzFxNKLJgzpT5V+U1lsgb2e/djbIJkXEjSLdXgC6/dPYIhC9qcb0K+rOEmiZnkW
-         h4a/pdMw5wZ9zg7z9a+wI62rtxIMcE7NLQ8iD3MwxIYCfS+ugq2FSDjOR0KxMyNHXDtj
-         ajAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=oQsY0FaHUq/zqh1u9yIpiBxKaQUpYWmbwD0+GiFV2O4=;
-        b=ATJwqNsYpMRpdPK2hQzgOhpsA2Zl7+Ujw5FqGcyDxtRB6nN7Un9m86NK68hHR062Rt
-         TY68UDbBcegyud6Y1nJa0Phy5NdwTNXQEI1GQYc3yErpYpBbHnUENvyCmzqOJ+IzGUTc
-         PsC6RX9uWevPwgZdsoQmj30vT35UTNTtNbJH2hGgo4iyuKfLKbkntqf/g8FSYS5zFW61
-         QkjP3VJfZXS+eOL11zmpyvO6sZzehYOEgK2EolfBsdTVlmq9O10wcYu0/ldUA3MWnFT2
-         c1qNr1g6bkwRMi3yckkAHRkCNx/25TNWXBmR/dSF78hH0DRA8SkFWwvAtkcKlalKZrIX
-         /8dA==
-X-Gm-Message-State: APjAAAWb1trlzWyep/f6K89vRhpdVNKzQlD7Q2fJepRUV5+nkrmqgOiH
-        758Pa5RT8Ht1Lo3kApCQQJw=
-X-Google-Smtp-Source: APXvYqyHYEnOVKY3ey3OoGQjqxODsYKuBRfrgnSz3PMPn6fFolhodtZbGwhduv/kiDYvSGyA8oxnRw==
-X-Received: by 2002:a1c:4987:: with SMTP id w129mr19113343wma.41.1560297055308;
-        Tue, 11 Jun 2019 16:50:55 -0700 (PDT)
-Received: from szeder.dev (x4db6e6c5.dyn.telefonica.de. [77.182.230.197])
-        by smtp.gmail.com with ESMTPSA id f26sm3983141wmh.8.2019.06.11.16.50.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jun 2019 16:50:54 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 01:50:52 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S2404185AbfFLAhq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jun 2019 20:37:46 -0400
+Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:54750 "EHLO
+        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391217AbfFLAhq (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 Jun 2019 20:37:46 -0400
+Received: from resomta-po-10v.sys.comcast.net ([96.114.154.234])
+        by resqmta-po-03v.sys.comcast.net with ESMTP
+        id ar3yhWM4OJWz7arGrhrZxw; Wed, 12 Jun 2019 00:37:45 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1560299865;
+        bh=xREF0E7AwrZWGz4jOoUOmMmC5fcXm5rXfTgnsYPzL3I=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=GDlYP1Tcq4TcOU95Noh33AB0LBuG+7VAnGFR4y+bYM6GJLyaov+3uo+I0mqzfCv4T
+         33glHFFaNHjMKifh0SgFWZndch99yX1yrZ1MAE+NN8VOQeAEw8tTmElW3Q5ouXoGL2
+         SgQxv2lHuBn/EU5qMZFI03DQrdJxF0IzBuyH7BmwQ0qUAxaOWFYfA0bN6Mlh96c0jX
+         kZX5wliv7K01oP96K4B+4MIrfDoi8pQLAHHh7PqQcnAUMn5+PcUj1A6P7I3fe+Oe9z
+         fdPIiDVuz1x02T48FE14dYu9bLpMjWrSLfY3sv783xCAVSuohTgPkAR/6/yBvUClVs
+         wOsd9LOXrQJCw==
+Received: from comcast.net ([IPv6:2620:15c:2ce:200:8dc5:35e2:73b6:2c5e])
+        by resomta-po-10v.sys.comcast.net with ESMTPSA
+        id arGOhVFFXOGz5arGSh1sEi; Wed, 12 Jun 2019 00:37:43 +0000
+X-Xfinity-VMeta: sc=0;st=legit
+Date:   Tue, 11 Jun 2019 17:37:16 -0700
+From:   Matthew DeVore <matvore@comcast.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
-Message-ID: <20190611235052.GH4012@szeder.dev>
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
- <20190611130320.18499-1-szeder.dev@gmail.com>
- <20190611130320.18499-4-szeder.dev@gmail.com>
- <xmqqy327kfw1.fsf@gitster-ct.c.googlers.com>
+Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        jonathantanmy@google.com, jrn@google.com, dstolee@microsoft.com,
+        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com,
+        emilyshaffer@google.com
+Subject: Re: [PATCH v2 6/9] list-objects-filter-options: make filter_spec a
+ strbuf
+Message-ID: <20190612003716.GD58112@comcast.net>
+References: <20190601003603.90794-1-matvore@google.com>
+ <20190601003603.90794-7-matvore@google.com>
+ <xmqqimtdmc59.fsf@gitster-ct.c.googlers.com>
+ <20190611003456.GB10396@comcast.net>
+ <xmqqtvcwkowx.fsf@gitster-ct.c.googlers.com>
+ <20190611184426.GB58112@comcast.net>
+ <xmqqmuinkd30.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy327kfw1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqmuinkd30.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 11, 2019 at 01:48:14PM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Tue, Jun 11, 2019 at 02:48:51PM -0700, Junio C Hamano wrote:
+> Matthew DeVore <matvore@comcast.net> writes:
 > 
-> > Make sure that the previously displayed "Rebasing (N/M)" line is
-> > cleared by using the term_clear_line() helper function added in the
-> > previous patch.
+> >> It is brittle because callers are bound to forget doing "if
+> >> (!x->buf.buf) lazy_init(&x->buf)" at some point, and blindly use an
+> >> uninitialized x->buf.  Making sure x->buf is always initialized
 > >
-> > A couple of other rebase commands print similar messages, e.g.
-> > "Stopped at <abbrev-oid>... <subject>" for the 'edit' or 'break'
-> > commands, or the "Successfully rebased and updated <full-ref>." at the
-> > very end.  These are so long that they practically always overwrite
-> > that "Rebasing (n/m)" progress line, but let's be prudent, and clear
-> > the last line before printing these, too.
-> > ...
-> > Note that this patch doesn't completely eliminate the possibility of
-> > similar garbled outputs, ...
-> > too soon, and it would either flicker or be invisible.
+> > A corallary proposition would be to make this particular strbuf a "struct
+> > strbuf *" rather than an inline strbuf. It should then be rather clear to users
+> > that it may be null.
 > 
-> The user of term_clear_line() in this patch always guard themselves
-> behind "we do not do this if we are producing verbose output," but
-> the proposed log message does not explain why they need to do so.
+> Would make it less likely for uses of an uninitialized strbuf to be
+> left undetected as errors?  I guess so, and if that is the case it
+> would definitely be an improvement.
+> 
+> But initializing the strbuf at the point where the enclosing
+> structure is initialized (or calloc()'ed) is also a vaiable option,
+> and between the two, I think that would be even more robust.
+> 
+> There may be reasons why it is cumbersome to arrange it that way,
+> though (e.g. if the code does not introduce a "new_stuff()"
+> allocator that also initializes, and instead uses xcalloc() from
+> many places, initializing the enclosing structure properly might
+> take a preliminary clean-up step before the main part of the patch
+> series can begin).
 
-In verbose mode there is no progress output that is overwritten and
-might need to be covered up.
+These are all the locations where a struct which ultimately contains a
+list_objects_filter_options is instantiated:
 
+GLOBAL VARIABLES:
 
+builtin/clone.c:68:static struct list_objects_filter_options filter_options;
+builtin/fetch.c:66:static struct list_objects_filter_options filter_options;
+builtin/pack-objects.c:112:static struct list_objects_filter_options filter_options;
+builtin/rev-list.c:65:static struct list_objects_filter_options filter_options;
+
+LOCAL VARIABLES:
+
+builtin/fetch-pack.c:54:        struct fetch_pack_args args;
+transport.c:327:        struct fetch_pack_args args;
+
+HEAP ALLOCATIONS:
+
+transport-helper.c:1123:	struct helper_data *data = xcalloc(1, sizeof(*data));
+transport.c:964:                struct git_transport_data *data = xcalloc(1, sizeof(*data));
+
+git_transport_options is also not directly instantiated as a local or static
+variable, but it would need to have a git_transport_options_init function
+defined.
+
+I didn't count exactly the number of _INIT macros and _init functions that
+would need to be defined. It seems like a lot of work. It is hard to believe
+that our ability to exhaustively pinpoint all these instantiations, and to
+catch ALL future instantiations, is all that reliable. I think our ability to
+find the places we need to lazily instantiate the strbuf-containing-struct
+(struct filter_spec in the interdiff) is more reliable.
