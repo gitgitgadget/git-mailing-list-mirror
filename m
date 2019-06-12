@@ -2,183 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE1B1F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 15:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4E271F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 16:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729521AbfFLPQy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 11:16:54 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:32850 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728939AbfFLPQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 11:16:54 -0400
-Received: by mail-wm1-f67.google.com with SMTP id h19so4517983wme.0
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 08:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O+vXzaNuH63dW8gU2Ot/POBKdXFNo5/gewSnVAtTIYY=;
-        b=nYm9IHy9kNBdTuYSA9KnHdZ15W0sTaAAgKgP4onHBxxGEWJWostNbJoqVBUOvcDcF4
-         jOTArIih8Mg4J/Dw+VLqU/DRc2B4qN0a4sXlWg0SnHwMQ1VLoO5wTryVrF+y2rOT6ncj
-         9Zk93cUIrK545mG2LkGUyjzvgMDJPp2mJPivNU6yChoGv4O8+DzuK2doyxLcHN1Hnfrh
-         E8VPF5qOrsFF4xaa1p6tRD6zQYztJJnD2TTBDyDgB0q4WVLpT4x58kOpXxDotqH5yROh
-         wHgX4VGOU2UZw+7TyhSKylRTuz8djzTvdsDZmJKlhYbJl3AHNgrEpI+VSkhOGyX8+5kI
-         rkPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=O+vXzaNuH63dW8gU2Ot/POBKdXFNo5/gewSnVAtTIYY=;
-        b=bdXXqYex0NUtopTAO2d5rFQhkUr1ba9E6SgEBmuvb5jBOfxM45um15pQ4zP8t8XRjL
-         xMgzI4QdC4PeIeGwOHftGhe0LTRMn8UNeaATR7XOwTqCKy2GMgJIxz7v+H9kYSn4FEAn
-         Ne/WcUNqL4D0Cy8SuSBruPQyVeswRja+nL4cWyK8XGllAEJh5o4Lyj+14iyJOAs+daW+
-         +xen85ou7lsRw/b1sxyCW/NGnl86kYuzPyy/S/g1XkpvE3K7CVX+9ubMsMtjRtJbj4T0
-         QT61Vu66TZ50p3IaOS0pqvWd+ykeFi+Sot3BYXSkB6i2rxG7iRqw+xaPidwsgIi/8CUA
-         4GWQ==
-X-Gm-Message-State: APjAAAU+52wrQyd3h+Pav04LID4oSQ+lFzGNuvx5NE98TGFFPlUf0ciu
-        MmtJFrHzpwvd86IYgBVdTpU=
-X-Google-Smtp-Source: APXvYqywe4d/tr6Q/Wq8ZZNp8UpV3wpTaMIpdwz84/f4MsYAXeT2WSn/ShW+1oeqcMEgM/HGAVJN2Q==
-X-Received: by 2002:a1c:51:: with SMTP id 78mr23963603wma.9.1560352611218;
-        Wed, 12 Jun 2019 08:16:51 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id p2sm22867005wrx.90.2019.06.12.08.16.50
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 08:16:50 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v2 3/3] cherry-pick/revert: advise using --skip
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
-        gitster@pobox.com
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
- <20190611073152.12214-1-rohit.ashiwal265@gmail.com>
- <20190611073152.12214-4-rohit.ashiwal265@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <3591ee0f-b302-23c8-dda5-00ff650887b8@gmail.com>
-Date:   Wed, 12 Jun 2019 16:16:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S2408048AbfFLQVj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 12:21:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61293 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407889AbfFLQVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 12:21:39 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7FBC151778;
+        Wed, 12 Jun 2019 12:21:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=sD3VjOH3vHhx
+        PrYUguQ2o415cHA=; b=Br7pJYKdm283GnYLBnGTT0idWWxcI/ix3CY58e2B/0cX
+        C2SxmmbG8bERV1eEsCbuthrxD+KrdsV5CMlEasuw2E8+7PZX9eLFIah62x+MbCCw
+        iasHdwG7iigskTfXAJ1QH0GeWiYCnuHDyD0KCX23w19zw5s/5qdVrpI9PQvok9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Y+igTS
+        BOOww/ffU0DIQMI4M7ssHEd1i7HxK/ygiZIzzmQmLveptQVlNw+y4F5iUhbQOXfn
+        ebe8deJ+d82lvOTO9o1VgMDxTBv7iTAK2w1BjcTOHK0eqNas45tR4/NV+iTn5FD7
+        w7QAzxsR9HKrgiwqci7SDx5VQkvUjuzWG90Xo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE6FB151777;
+        Wed, 12 Jun 2019 12:21:35 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1AC9D151776;
+        Wed, 12 Jun 2019 12:21:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
+References: <20190430142556.20921-1-szeder.dev@gmail.com>
+        <20190611130320.18499-1-szeder.dev@gmail.com>
+        <20190611130320.18499-4-szeder.dev@gmail.com>
+        <xmqqy327kfw1.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 12 Jun 2019 09:21:34 -0700
+In-Reply-To: <xmqqy327kfw1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 11 Jun 2019 13:48:14 -0700")
+Message-ID: <xmqqimtakc4x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190611073152.12214-4-rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 25A723F0-8D2E-11E9-8CD7-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 11/06/2019 08:31, Rohit Ashiwal wrote:
-> The previous commit introduced a --skip flag for cherry-pick and
-> revert. Update the advice messages, to tell users about this less
-> cumbersome way of skipping commits. Also add tests to ensure
-> everything is working fine.
-> 
-> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-> ---
-> changes since last revision:
->      - selectively advice --skip
->      - add new test
-> 
->   builtin/commit.c                | 13 ++++++++-----
->   sequencer.c                     |  7 +++++--
->   t/t3510-cherry-pick-sequence.sh | 20 ++++++++++++++++++++
->   3 files changed, 33 insertions(+), 7 deletions(-)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 1c9e8e2228..1f47c51bdc 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -60,15 +60,18 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
->   "\n");
->   
->   static const char empty_cherry_pick_advice_single[] =
-> -N_("Otherwise, please use 'git reset'\n");
-> +N_("Otherwise, please use 'git cherry-pick --skip'\n");
->   
->   static const char empty_cherry_pick_advice_multi[] =
-> -N_("If you wish to skip this commit, use:\n"
-> +N_("and then use:\n"
->   "\n"
-> -"    git reset\n"
-> +"    git cherry-pick --continue\n"
->   "\n"
-> -"Then \"git cherry-pick --continue\" will resume cherry-picking\n"
-> -"the remaining commits.\n");
-> +"to resume cherry-picking the remaining commits.\n"
-> +"If you wish to skip this commit, use:\n"
-> +"\n"
-> +"    git cherry-pick --skip\n"
-> +"\n");
->   
->   static const char *color_status_slots[] = {
->   	[WT_STATUS_HEADER]	  = "header",
-> diff --git a/sequencer.c b/sequencer.c
-> index 93284cd7dd..ecf4be7e15 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2661,10 +2661,13 @@ static int create_seq_dir(struct repository *r)
->   			error(_("a %s is already in progress"),
->   				 action == REPLAY_REVERT ?
->   				 "revert" : "cherry-pick");
-> -			advise(_("try \"git %s (--continue | "
-> +			advise(_("try \"git %s (--continue | %s"
->   				 "--quit | --abort)\""),
->   				 action == REPLAY_REVERT ?
-> -				 "revert" : "cherry-pick");
-> +				 "revert" : "cherry-pick",
-> +				 !file_exists(git_path_revert_head(r)) ?
-> +				 !file_exists(git_path_cherry_pick_head(r)) ? ""
-> +				 : "--skip | " : "--skip | ");
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+>> Make sure that the previously displayed "Rebasing (N/M)" line is
+>> cleared by using the term_clear_line() helper function added in the
+>> previous patch.
+>>
+>> A couple of other rebase commands print similar messages, e.g.
+>> "Stopped at <abbrev-oid>... <subject>" for the 'edit' or 'break'
+>> commands, or the "Successfully rebased and updated <full-ref>." at the
+>> very end.  These are so long that they practically always overwrite
+>> that "Rebasing (n/m)" progress line, but let's be prudent, and clear
+>> the last line before printing these, too.
+>> ...
+>> Note that this patch doesn't completely eliminate the possibility of
+>> similar garbled outputs, ...
+>> too soon, and it would either flicker or be invisible.
+>
+> The user of term_clear_line() in this patch always guard themselves
+> behind "we do not do this if we are producing verbose output," but
+> the proposed log message does not explain why they need to do so.
+>
+> Is it because it is so obvious to potential readers?
 
-This could be simplified as
-	(file_exists(git_path_revert_head(r) ||
-	file_exists(git_path_cherry_pick_head(r)) ?
-	"--skip | " ""
+Answering myself, it is due to this part in sequencer.c:
 
-Best Wishes
+   3721                                 if (!opts->quiet)
+   3722                                         fprintf(stderr, "Rebasing=
+ (%d/%d)%s",
+   3723                                                 todo_list->done_n=
+r,
+   3724                                                 todo_list->total_=
+nr,
+   3725                                                 opts->verbose ? "=
+\n" : "\r");
 
-Phillip
+That is, under 'verbose' mode, we do not try to reuse a single line
+to show different steps of rebase in the progress output, but
+consume one line per one step, so it would not be necessary to erase
+what is previously written on the line.
 
->   			return -1;
->   		default:
->   			BUG(_("the control must not reach here"));
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index 6c1903a735..f298f02cd0 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -172,6 +172,26 @@ test_expect_success 'check advice when we move HEAD by committing' '
->   	test_cmp expect advice
->   '
->   
-> +test_expect_success 'selectively advise --skip while launching another sequence' '
-> +	pristine_detach initial &&
-> +	cat >expect <<-EOF &&
-> +	error: a cherry-pick is already in progress
-> +	hint: try "git cherry-pick (--continue | --skip | --quit | --abort)"
-> +	fatal: cherry-pick failed
-> +	EOF
-> +	test_must_fail git cherry-pick picked..yetanotherpick &&
-> +	test_must_fail git cherry-pick picked..yetanotherpick 2>advice && > +	test_cmp expect advice &&
-> +	cat >expect <<-EOF &&
-> +	error: a cherry-pick is already in progress
-> +	hint: try "git cherry-pick (--continue | --quit | --abort)"
-> +	fatal: cherry-pick failed
-> +	EOF
-> +	git reset --merge &&
-> +	test_must_fail git cherry-pick picked..yetanotherpick 2>advice &&
-> +	test_cmp expect advice
-> +'
-> +
->   test_expect_success 'allow skipping commit but not abort for a new history' '
->   	pristine_detach initial &&
->   	cat >expect <<-EOF &&
-> 
+I do not think it is so obvious, though.
