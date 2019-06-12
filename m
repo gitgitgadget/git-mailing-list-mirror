@@ -2,69 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E11D61F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 16:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66CC01F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 17:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727321AbfFLQzZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 12:55:25 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:17917 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726200AbfFLQzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 12:55:24 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45PCfg1zLMz5tlG;
-        Wed, 12 Jun 2019 18:55:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id C3A7E20A5;
-        Wed, 12 Jun 2019 18:55:22 +0200 (CEST)
-Subject: Re: rebase drops patches that have since been reverted
-To:     Shawn Landden <slandden@gmail.com>
-References: <CA+49okrxjv63UQfQ1fMt6xC95Pjz2wuZu70WMS94vukTHevEaw@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <2033f2fe-cc01-d7a6-bac3-4ba982a68425@kdbg.org>
-Date:   Wed, 12 Jun 2019 18:55:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1730282AbfFLRJX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 13:09:23 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43952 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727004AbfFLRJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 13:09:23 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w33so26805342edb.10
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 10:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SDAv4pcIh+YZauA6VWVuO4sGcVAYNzs/aCCgL/rWmuI=;
+        b=cP/IWyFdn6FA4aqyRdpysbiAyoDlFeWH1mGUG66nAxM1ryZBTPcGltYHRmd98fy8HZ
+         +WV+WfTPGosWeg78NJuwZJWjZdrtUiBVAnohqfjYqv33PirPn16RvwYeuEWJzcWH08Sr
+         oLAjby0EBr4ieKAz8jt6rO/90qpsO7S4TM/wFxlj4lCPmY6FD+3xB+WvwUfAggrocWr1
+         x8EqGJ+aZMGpEjaY6hrpus5cdZT9+I2C5aLdCbYx/uzBFg+UwEGC954088vqt6KNH+Ev
+         9BbwIW2dZIaU/+nwGywL119Icm8Xysm0cVqG9nRMcwj1Xw8nmb/HmQeT6NIgMSstxeq9
+         tkbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SDAv4pcIh+YZauA6VWVuO4sGcVAYNzs/aCCgL/rWmuI=;
+        b=EedWF/FD/gckzNSwafLcCug/14QIse0BIJQdXC0TZNv5vmovzlKB5A0+f1rVrSG6F0
+         xSEhhzF7gjYPxVpBuD+sJYAXu2tbrJ5jhA6Ojrgn7g7Nj14rOQl29bG4quVO3qMLtmOw
+         uI7aChZytZ285+2fFt8+GurX1LomXxIaBepVZmXgAXk59461roRiTo163kiUaaoqPvxY
+         TIAMoIsTzWu86WpJarH5jpvVXR0vPP90JjAeD7McuFvf4zJ5+np/akJ8m9tGZbrt7tVr
+         TqxQUpDKlwwB6FRlCvGxd12uzLAdhXxC18KwX9fbNr1t47FxBClaqPoXBASvcyyE+U7P
+         23Bg==
+X-Gm-Message-State: APjAAAUG0tvksEzh2GHHqq16QWDLkQ6D5D0EEAPqTul9zx5skwBC7I7k
+        GM58b4rkKVHUGigmjTz2ZS6o7bBukkysu1w6bSw=
+X-Google-Smtp-Source: APXvYqzqGWB8ynU/J4XnqMtSABEs89O9dPk+tQy9bXhc7ZgQD0yL/sa7CYdQm2KhhxpSc0gDi/VECcEEoPdacPRzVWw=
+X-Received: by 2002:aa7:c5d2:: with SMTP id h18mr87706772eds.110.1560359361423;
+ Wed, 12 Jun 2019 10:09:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CA+49okrxjv63UQfQ1fMt6xC95Pjz2wuZu70WMS94vukTHevEaw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190611082325.28878-1-chriscool@tuxfamily.org>
+ <20190611082325.28878-3-chriscool@tuxfamily.org> <20190611101250.GE4012@szeder.dev>
+In-Reply-To: <20190611101250.GE4012@szeder.dev>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 12 Jun 2019 19:09:06 +0200
+Message-ID: <CAP8UFD1Cn15P4KeuPbK1ZOcZuWHNRq690PtdcvQSWnSc_T+Beg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] t: add t0016-oidmap.sh
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.06.19 um 17:03 schrieb Shawn Landden:
-> If a patch has been applied upstream AND THEN reverted, rebase still
-> drops the patch, requiring the use of relative rebase git rebase -i
-> HEAD~5 et cetera.
-> 
-> git rebase should detect reverts as well.
+On Tue, Jun 11, 2019 at 12:12 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+>
+> On Tue, Jun 11, 2019 at 10:23:24AM +0200, Christian Couder wrote:
+> > diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+> > new file mode 100755
+> > index 0000000000..cbd2cb71d6
+> > --- /dev/null
+> > +++ b/t/t0016-oidmap.sh
+> > @@ -0,0 +1,100 @@
+> > +#!/bin/sh
+> > +
+> > +test_description=3D'test oidmap'
+> > +. ./test-lib.sh
+> > +
+> > +# This purposefully is very similar to t0011-hashmap.sh
+> > +
+> > +test_oidmap() {
+> > +     echo "$1" | test-tool oidmap $3 > actual &&
+>
+> Style nit: space between redirection op and filename ;)
 
-You have the same patch that upstream has. Perhaps you cherry-picked it
-from them, or they cherry-picked it from you. In any case, they thought
-the patch was a good one.
+Aargh! I will resend soon with a fix.
 
-Later upstream found a problem with the patch and decided to revert it.
-Certainly, they didn't do this just for fun; they had a good reason.
+It will actually have everything that Junio put in 7f2a91c1a6
+(SQUASH??? sh style, 2019-06-11) which is in pu.
 
-Now you are rebasing against upstream. IOW, you are accepting the
-authority of the upstream code. Then, why on earth would you not want to
-accept their authorative word that the cherry-picked patch was bad and
-needed to be reverted?
-
-If you later find out that your patch is definitely needed, then it is
-on you to prove that, for example, by including it again in your patch
-series. That must be an explicit decision on your part, not an accident
-that happens.
-
-TLDR: Git worked as designed.
-
--- Hannes
+Thanks,
+Christian.
