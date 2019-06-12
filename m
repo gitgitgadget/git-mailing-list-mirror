@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA9401F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 18:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10E121F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 18:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729008AbfFLSAn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 14:00:43 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54455 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728965AbfFLSAn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 14:00:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F0C146FDA5;
-        Wed, 12 Jun 2019 14:00:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EPnUts4klNtoTf59AwqVKW2OJn0=; b=x3UJx+
-        hlcFl41Cz6Ldd1VF5055vymruELoMCaPQxTXRS5fPm2+6qvDNhaaPkc5cNvGIILd
-        wepbELgo+tPtPLfCeQeVBXQ+6SFFik2+I4y37qQo3/DDT7e69QLMu47DqNuCIVXg
-        4438ZgLHRK302Z0NeGrIGz4vFHV5q6jpJsZeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=R79WWmcTAq0ieTOqDSJEUALcTzHBOtTn
-        tR4QCnV+arJq2XENROrud/NVOjMYSZqhGTng22EX8/sDGpJTsmShZPlSSYfbFz4B
-        DkgM6M0cNWQdDEB4i9mfIv994QPUhN7VSo0FNNBN/ScbTshBZHydOxJ5ZaXxomEo
-        /miPz8w4FUs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E8D746FDA4;
-        Wed, 12 Jun 2019 14:00:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0B69C6FDA3;
-        Wed, 12 Jun 2019 14:00:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com
-Subject: Re: [RFC PATCH 1/3] trace2: correct trace2 field name documentation
-References: <cover.1560295286.git.steadmon@google.com>
-        <8bcd72a762f0fd349f8bf7d0b134cc7033ae6f00.1560295286.git.steadmon@google.com>
-Date:   Wed, 12 Jun 2019 11:00:34 -0700
-In-Reply-To: <8bcd72a762f0fd349f8bf7d0b134cc7033ae6f00.1560295286.git.steadmon@google.com>
-        (Josh Steadmon's message of "Tue, 11 Jun 2019 16:31:35 -0700")
-Message-ID: <xmqqwohqiszh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727105AbfFLSKL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 14:10:11 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:32843 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726167AbfFLSKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 14:10:11 -0400
+Received: by mail-ed1-f66.google.com with SMTP id h9so27084510edr.0
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 11:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=5Jy7++giPFvWS8od9LJD6lxbphI9SA23GHipkbex79Y=;
+        b=X7bh1ScDVoL+ocHeaIGioafYmGCnn3YYaVXxZMfnD+qxlpAHOn4FjrJQhP9Rfim3fz
+         yjA7UXzOEzNbMhGbMXZ6tDvoD6h2XwKElU+IsFYUUIx6vJX+169RVS0GunJuxqOAvakg
+         eU1vW1HuCSpjan9S86WsvWt9rKysteuHQNfsvptVApvxrPkHHWhQm639okl2rZE0ZSG7
+         mVTf6/uPuZXQtSTXyRAkRocrxgN3NWzsaHTbOmFeqNtGOsSW3yiPGQjm3670wNnHmJ18
+         20b/hjZ5UkTvKtwU1JpFyaqt5ReccrVfOaId1BWBVtWLYk67G5gM0l4SqfXaSE7HmZnG
+         oHMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5Jy7++giPFvWS8od9LJD6lxbphI9SA23GHipkbex79Y=;
+        b=tkra3z1VsB7HDIx6SoK11EJCJ3+xlazTqvho/hVew4ccG/sIHyU/J6p3EXnVbXLMG0
+         Kj/gFZyx4g2M9PV4Frh4NrIcG8FtAj5AsnsXeBE16YJc28bM8Mx55ObWsHBl9kG8FvK+
+         9Gn/mRV5MyTC3lauTcDy+9AKHuHWiIsL8S11RzrhD1Ikyujzb9cLzwSb/pF9sRWckLrq
+         rSQrSzvdm2G+zXJY307yTPk9Xc7kdJoVpaFI12hkc+1CyEaHnFuxd/ACmtFcgmNb51rT
+         6bid0a+wPphMYzzl6GGBSecUJ5HdGWlgp5FKDJbytiP9e51CtTywozzcuywR1ffuW7D3
+         t9SA==
+X-Gm-Message-State: APjAAAWrL0kg/cQCGVo0wAQyrR8ZIAewo/CsOp+vlfMyEcxWph0l/USq
+        bY2ShCIQr8CBQczy1CwWkaqKMgXA
+X-Google-Smtp-Source: APXvYqypTLuBvbIGLNxW+KxiLUtoQSAuERmQ1RiTtEptTidJKoXFiaq+AXUL+622Sfc/zzPaK2lQ+A==
+X-Received: by 2002:a17:906:4f8f:: with SMTP id o15mr71950058eju.129.1560363009292;
+        Wed, 12 Jun 2019 11:10:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y15sm92305ejo.78.2019.06.12.11.10.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Jun 2019 11:10:08 -0700 (PDT)
+Date:   Wed, 12 Jun 2019 11:10:08 -0700 (PDT)
+X-Google-Original-Date: Wed, 12 Jun 2019 18:10:07 GMT
+Message-Id: <pull.263.git.gitgitgadget@gmail.com>
+From:   "Morian Sonnet via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] submodule foreach: fix recursion of options
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB53050C-8D3B-11E9-AEF1-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+During the usage of git in Buildkite we noted that git fails upon calling 
+git submodule foreach --recursive git reset --hardafter updating git version
+to 2.22.0.
 
-> Correct the api-trace2 documentation, which lists "signal" as an
-> expected field for the signal event type, but which actually outputs
-> "signo" as the field name.
+This is due to a problem with the recursive calling of git submodule--helper 
+itself, which is fixed in the patch below.
+
+Morian Sonnet (1):
+  submodule foreach: fix recursion of options
+
+ builtin/submodule--helper.c  | 1 +
+ t/t7407-submodule-foreach.sh | 5 +++++
+ 2 files changed, 6 insertions(+)
 
 
-Nice.  Is this one of the findings made by your validation, by the way?
-
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  Documentation/technical/api-trace2.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-> index 23c3cc7a37..fd1e628944 100644
-> --- a/Documentation/technical/api-trace2.txt
-> +++ b/Documentation/technical/api-trace2.txt
-> @@ -668,7 +668,7 @@ completed.)
->  	"event":"signal",
->  	...
->  	"t_abs":0.001227,  # elapsed time in seconds
-> -	"signal":13        # SIGTERM, SIGINT, etc.
-> +	"signo":13         # SIGTERM, SIGINT, etc.
->  }
->  ------------
+base-commit: b697d92f56511e804b8ba20ccbe7bdc85dc66810
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-263%2Fmomoson%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-263/momoson/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/263
+-- 
+gitgitgadget
