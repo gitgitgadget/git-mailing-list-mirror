@@ -2,94 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 975EC1F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 10:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFC531F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 10:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404692AbfFLKZm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 06:25:42 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46345 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391669AbfFLKZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 06:25:42 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n4so16235866wrw.13
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 03:25:41 -0700 (PDT)
+        id S2438077AbfFLKsN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 06:48:13 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:39922 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438073AbfFLKsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 06:48:12 -0400
+Received: by mail-ot1-f45.google.com with SMTP id r21so14954939otq.6
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 03:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=cHDGM3UL1xdgDL+HQFTyZECNRtZVznhFuhHpdAo8ZV8=;
-        b=TGDqCnH1ParCXUmjV0mwidYxsmsvFwYyfG4vHTjG+xMwI/Aj9u0ftwFF2aKwyKW4sh
-         EH4++GR5K7nXIKS2JQSNdObEQzxgPSQKXjOPuCyswP1922tg/CvB/pDt4r1TzdKnhHwv
-         JaUutBid9HrcbWVDbHpmI+NlQNfJTJGNDZhMkvzteaW39cYOqMEwV3FqE977JV6aYCGf
-         5qa2qj1v4yCy7qDdT782S28kV20bdV63MX5VKMaCN3b5uNNHK57kXF50GmhLwlZ5DkNK
-         EGMmryhxdnmGL4XnysoD/QvAqZUnIYZuQORzWL41QaBxhqLlsCkDytCzKlcKJ7umfZw4
-         avVQ==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=8RVR2u2MNYFYaH4j5kjmeMR0mR1+H5Qqkz4s2s++pz8=;
+        b=M6IhKTVsjXXC6Ss87Sp4DIHHcSb7Gi7VqyTU3cAAo3uot/6VNp3lq0dJetaBNeUUDG
+         XDwIIv5jNLQAMotpF4/0y8jOtakCgGmD0+4I90uQBE/b99cF4X1gF4lHyU46oxV7P7uT
+         egh0lRxn/bcxX/VYLAfq8zEKiwrYNBavQmwGHGZwn5Eoimk5dvoYSFLBltPwsjMq6uwB
+         wNjzqL8cuU1uMfamRN+hWQUVO4urdv9CH1V+QwaChCv8olIWqXsrkRETW1VyusJfc3tH
+         ObXbyle2SXaZiWcgChuqBKmoB+82P822YE6/sUM6/sCcv+z36Ke/Qns/xrznxnt2QGfG
+         V/TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=cHDGM3UL1xdgDL+HQFTyZECNRtZVznhFuhHpdAo8ZV8=;
-        b=X+gK8qE1/qbneLBi4cS5s5pPBbb2dZzOC4K4vZTjDfgHhLtzzSjeOMsQD5V5HvyUip
-         0iqrnsKOF1F+4G5/ZvLKj9uCyJ/hACLXDTeE4AJM8i6rO2DIW+8qqhkRguFz+YuRfBgG
-         dyFRXY/HUlzQrfWt0lTh/1ZB8t+gs8VWisW+MWgBqAeGcdEVY3ajYz7KMrDQOgjaZgKM
-         2qT8M60UWRkG5ltmFyR3USx1gwN69rmsiy2yB7jGUp4sU2pi/elZEXkOr1PCCfwapv7l
-         2vkySkKUZt6zj3iqyXFNYmJKb6xB1bLKcqK06YHcZavRe72sROFN/KcRwMoMq6hvGj3D
-         g5dQ==
-X-Gm-Message-State: APjAAAX2vE6wgMItKPMCbAmBHSPAXJEeSsXD7aUsgeJC6B4RSevU1tAE
-        hok8sGtG48wyATDTrLbUe34=
-X-Google-Smtp-Source: APXvYqxGnAFrMdHrtApmNLrHvS6SccvaukcAfwKT9lhud/HJGzZOe2RKHqmCBl0XyBYFjEkIxjqndQ==
-X-Received: by 2002:adf:e705:: with SMTP id c5mr24218613wrm.270.1560335140492;
-        Wed, 12 Jun 2019 03:25:40 -0700 (PDT)
-Received: from szeder.dev (x4db4038e.dyn.telefonica.de. [77.180.3.142])
-        by smtp.gmail.com with ESMTPSA id r131sm5531248wmf.4.2019.06.12.03.25.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 03:25:39 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 12:25:37 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Elmar Pruesse <p@ucdenver.edu>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Reducing git size by building libgit.so
-Message-ID: <20190612102537.GI4012@szeder.dev>
-References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu>
- <87y32787k9.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=8RVR2u2MNYFYaH4j5kjmeMR0mR1+H5Qqkz4s2s++pz8=;
+        b=P9zTnXm7Ym19mxcHvKBLbwn42Ib3FXSH8lGgYUo3VTI2bYrk7pM3X9ES1ONyi+iQSc
+         hyuLyF0dWQzW07E2yroxXRMPXLMAL04g9KaUu5H5/rQfoazmkeZ/6SNnYbnw4LHfHE2f
+         NqQL99SYBMnbqujZJoHXGehp4GwVIGq+qF95usI6xSfjztvOk81u4mT2S2Z98VPZetn+
+         pvsQQLCY4FoSDnk1bvHfalH0fbv9Obxij0HM3cq3gPzXe680LYjoVWgQKFyfw/mcOL3v
+         KN3Sj339UL9zruLqnjwIZ7xKaT3GySZoro0oncNw5l1rKnU+f92X4fI+74kDXOO+00s5
+         8R1Q==
+X-Gm-Message-State: APjAAAU1gZnUZfYvGPpCR4YdZ8gz700FhrT2nWMnjXyEvXl3fzXBqee9
+        iGHmux/LnHGaeCfh8dLmp5agiswymXKb7rmaFYZBFq/W
+X-Google-Smtp-Source: APXvYqwLcNeDEcEtS/DJqUeeCcvSwoGNLwoXSSklyXS9B4lfhtps9Y6s8t2xGP08kcIZKX9pzc/QrtIinPXm5uOR5xk=
+X-Received: by 2002:a9d:62d4:: with SMTP id z20mr38625163otk.340.1560336491844;
+ Wed, 12 Jun 2019 03:48:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y32787k9.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From:   Alexander <alexander.samoylov@gmail.com>
+Date:   Wed, 12 Jun 2019 12:48:00 +0200
+Message-ID: <CABcYkASFxTe7Sq278EqCT1hBQq4Sh47-emNPJcnhA6YWZf+uQg@mail.gmail.com>
+Subject: BUG: Git checkout on Linux sets always CRLF regardless of core.eol
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 11:41:10AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Jun 11 2019, Elmar Pruesse wrote:
-> > The total compiled size of libexec/git-core is currently somewhere
-> > around 30 MB. This is largely due to a number of binaries linking
-> > statically against libgit.a. For some folks, every byte counts.
+Hello,
 
-I wonder whether those folks actually need such non-builtin git
-binaries like 'git-shell' or 'git-daemon' in the first place.
+I am trying to checkout out various 3rd party Git projects on Linux
+and build them.
+Some of them have text files created under Windows with CRLF endings
+and it is not under my responsibility to change it.
 
+Thus I have to force LF line ending for Git checkout (regardless of
+which line endings the files have in the repo). I use the following
+settings for that:
 
-> We still have some stand-alone binaries, but IIRC there's under 5 of
-> those with INSTALL_SYMLINKS. We could probably also just make those
-> built-ins to get the rest of the size benefits.
-> 
-> I.e. we'd just have one git binary, everything else symlinking to that,
-> and we'd route to the right program by inspecting argv, which we mostly
-> do already.
+$ git config --system -l | grep core
+core.eol=3Dlf
+$ git config --global -l | grep core
+core.eol=3Dlf
 
-Let's not forget that commands like 'git-daemon' and 'git-shell' are
-better left as stand-alone programs.
+However it does not work. The issue is reproduced pretty fine on
+https://github.com/winlibs/libjpeg project. This project does not have
+.gitattributes file, therefore I expect that global settings must be
+enough to force LF, but I observe different behavior:
 
+$ git clone https://github.com/winlibs/libjpeg; file libjpeg/libjpeg.map
+Cloning into 'libjpeg'...
+...
+libjpeg/libjpeg.map: ASCII text, with CRLF line terminators
+(not only libjpeg.map, but a lot of *.c files also have CRLF if you check i=
+t)
+
+libjpeg is an opensource project, so anyone can reproduce this issue
+on a Linux host.
+
+This makes me think that this it is either a bug or not documented behavior=
+.
+I tried various combinations with core.eol, core.autocrlf and even
+global /etc/gitattributes file - nothing can force checkout with LF!
+
+Could you please confirm whether it is a bug and provide the clear way
+to bypass it.
+
+My Git client version: 2.17.1. Please, see also
+stackoverflow.com/questions/56546220/git-checks-out-crlf-instead-of-lf-on-l=
+inux.
+
+--
+Best Regards,
+Aleksandr Samoilov
+Build & Integration Ingenieur
+Compart AG, 71034 B=C3=B6blingen
