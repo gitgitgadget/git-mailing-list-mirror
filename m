@@ -2,118 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD3A01F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 09:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83A831F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 09:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408714AbfFLJaA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 05:30:00 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:36470 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731492AbfFLJ37 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 05:29:59 -0400
-Received: by mail-it1-f194.google.com with SMTP id r135so9509707ith.1
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:29:59 -0700 (PDT)
+        id S2437655AbfFLJlO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 05:41:14 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:47038 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437465AbfFLJlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 05:41:13 -0400
+Received: by mail-ed1-f48.google.com with SMTP id d4so1380016edr.13
+        for <git@vger.kernel.org>; Wed, 12 Jun 2019 02:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=30S35xSc0Ys3EBxtpxDaee2KkfrxVKeJVYFELUX86bs=;
-        b=ZTqUAAzkp7KmA5xHIFD95/Q+ASY6XuLRl2N5aNuiMpQr1hAYitCPsJr7dhTx5cR4bw
-         kGcVVeLBHqYkh1XTos7PYzbgrpiDVNFVU2uIeESXi9dhMZy1Mn3qpbv8D+Cg0OIu9fiS
-         d0ARW/qbyYFhRooCa0UdaT7JgrzyqwZK+7rjrQ/y96nPZg5cdOCgyzm2VR1xekaIgyxe
-         xV3uaM7VUj59Id6akasPA4PzzB1f0VvUCaBNSUodt9HmNI422HuBH8ngqGSBNSxq5bZN
-         kttSVzp8ipiSbZ6rmpms2/DIZaRI54e8a/d0bwfqZCKa/AoHGdDaHbHjoZqL6dRN0fvD
-         Grfw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=4D4OCnrJ3vRQkW1zuGTw5WKLelsnsM0fTOkIGnkXXyM=;
+        b=nquXAjZMjNvg9ZZKP+f7SKUJzXE9HpHMixA8HuxNE2komcaOpxqj+wTu4jIF0w2Wv1
+         3UbambzuLVJEVXsjQOTeKPCAI0VCzHoq3tp+305F1GM5GiowlrSIXC9AigZPVloyP4MB
+         Pk8ZggdKiQHV/oCeKYZJ2/CA6eRtGeSUV3mzAsEntuibikj/4qHapPvrIUOe3Yyy1M84
+         t3pg3W62/IdTmkwe3g80g75yCEYliG8qEQLu9bon+nYv+wDWCIz1n/OB+CZjWjRRboQf
+         pe1fSsw3MQyNXr7o581WSt2MjQtETxN6xIM1rkZzkj6HzIHYMGC/sQR2dMxPwkZAyT5K
+         cmyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=30S35xSc0Ys3EBxtpxDaee2KkfrxVKeJVYFELUX86bs=;
-        b=WAo5r40/r6/KI75F8TFt/SoKVnRIehBielgVjJbnwpyu1UBv/Mqqj/9l5uIELSlOt2
-         mn6wSzhIlpXMJHP7upiy+hTv/OOMdG09gACvDBUozLLUVkRwt1yhoTX3blr6wHdZZMuc
-         5IFP9ZLaMsuMu0ByqcCyXKdFX4dypUDk7pXMyswXW1BMUfacVg9jtyL5JtE0K9lb/Va2
-         XC0bBBUuBIVhWbVO2vut0YigEgAWQRJnBz2b6n022nSexuibm6ilftKNATRy9botKCBZ
-         TYTauW+87okcHyyPVkFv22Pk3RVzVwM1797AUdZYWJLIlNYYe+Xq8nGrkiYRuv4AAOmi
-         OQGw==
-X-Gm-Message-State: APjAAAXt98dA9BG0aa+ZjusBxYQibAWtu4vJ5sM9BX36rk7nbfqEDk5n
-        eyAIurwaBwMKALaJlbsZAz5p1jgYD6GY5P60a80=
-X-Google-Smtp-Source: APXvYqxy+ifvEATNRqXCnZEGY7A1hozmOzMo3e2WQmhBoRKENIIgVachVFPQ/I+r0X5aO1DAje3o3enF4+8MH1Yy964=
-X-Received: by 2002:a02:13c3:: with SMTP id 186mr5829312jaz.30.1560331798842;
- Wed, 12 Jun 2019 02:29:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu> <20190611234815.GB8616@genre.crustytoothpaste.net>
-In-Reply-To: <20190611234815.GB8616@genre.crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 12 Jun 2019 16:29:32 +0700
-Message-ID: <CACsJy8BxdvOrc28_JhAARzJdOqyqWZaFX8DoPjEr4BCe-sRqsg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=4D4OCnrJ3vRQkW1zuGTw5WKLelsnsM0fTOkIGnkXXyM=;
+        b=aY3aFsVPUCCz3dZwm5Fp/FG3zNAn1XBT9YAroV1nqVnRwWHckgThv21Wt8KX+LMv6L
+         894pMpjImMiIZbsfCf3558qL5duAtsOLblHXJNvdK6APoZ6JJmJ6cbnWNqGFeUaGMjTp
+         tVC2riuajsfNS49MFQ8eLwmeLVoxSnXRdLRFcIaCF1YDNZ5wnaCTo/WNKNCIgWS+bL6m
+         uJX0c39u8Q3KBgOzL+ZBrIxWinmNTF2z9NHOIGqwBZLX/fVpfcBBH36qvizlKfDpSC9O
+         Q8IyHssgWKPPBZekpjWDyvghR5JZI/bppNhWl7oH8Fxoe+lDp/MrVLqDHSmEiTiYTa/Z
+         3Otw==
+X-Gm-Message-State: APjAAAWcoiLMCg3yysPAg8RLVg2YiNYWOgW2SY/TIupOMBL9CCCPfBm1
+        LqHwsclqGIxdYZBIl+G1MZ0=
+X-Google-Smtp-Source: APXvYqx4tIzdULGnQoQWva73aiTwe/aMY+HV9sszC6hXgWRKSiA0+x3x7JdaLAckfkh0TfbiTW/i5g==
+X-Received: by 2002:a17:906:3708:: with SMTP id d8mr19377097ejc.65.1560332471631;
+        Wed, 12 Jun 2019 02:41:11 -0700 (PDT)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id o22sm3158242edc.37.2019.06.12.02.41.10
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 12 Jun 2019 02:41:10 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elmar Pruesse <p@ucdenver.edu>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: Reducing git size by building libgit.so
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Elmar Pruesse <p@ucdenver.edu>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu>
+Date:   Wed, 12 Jun 2019 11:41:10 +0200
+Message-ID: <87y32787k9.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 2:11 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+
+On Tue, Jun 11 2019, Elmar Pruesse wrote:
+
+> Hi!
 >
-> On 2019-06-11 at 19:52:18, Elmar Pruesse wrote:
-> > Hi!
-> >
-> > The total compiled size of libexec/git-core is currently somewhere
-> > around 30 MB. This is largely due to a number of binaries linking
-> > statically against libgit.a. For some folks, every byte counts. I
-> > meddled with the Makefile briefly to make it build and use a libgit.so
-> > instead, which dropped package size down to 5MB.
-> >
-> > Are there, beyond the ~20 ms in extra startup time and the slightly
-> > bigger hassle with DSO locations, reasons for the choice to link statically?
+> The total compiled size of libexec/git-core is currently somewhere
+> around 30 MB. This is largely due to a number of binaries linking
+> statically against libgit.a. For some folks, every byte counts. I
+> meddled with the Makefile briefly to make it build and use a libgit.so
+> instead, which dropped package size down to 5MB.
 >
-> I think the reason is that libgit is not API stable and we definitely
-> don't want people linking against it.
+> Are there, beyond the ~20 ms in extra startup time and the slightly
+> bigger hassle with DSO locations, reasons for the choice to link statically?
 
-Having .so files does not mean it's stable API though. If we don't
-ever install header files, there's no way for outside people to use it
-(people who dlopen() it anyway deserve whatever they get). I do agree
-with some hassles from .so files though.
+brian mentioned API stability. I'd be fine with having a *.so shipped
+with git. We'd document the API non-stability, and of course it's GPL so
+you can only link other GPL programs to it, but if people would be fine
+with still using it and very closely following git development as we
+break their API/ABI why not.
 
-If installation size is a problem I think we can still shrink it a bit
-down. Some non-builtin commands (fast-import, sh-i18n--subst...) could
-be merged back in "git" binary. Some other for remote side (or
-background daemons) could also be bundled together unless there's
-security concerns.
+Have you looked at INSTALL_SYMLINKS & friends? I.e. maybe you're
+measuring size without accounting for most of the binaries being
+hardlinks to the same thing.
 
-We could also have a look at function distribution in libgit.a. I'm
-surprised git-credential-store is 5.6 MB on my machine. We probably
-pull more stuff than needed somewhere due to dependency between .o
-files.
+We still have some stand-alone binaries, but IIRC there's under 5 of
+those with INSTALL_SYMLINKS. We could probably also just make those
+built-ins to get the rest of the size benefits.
 
-> Before libgit2 existed, projects
-> like cgit built their own libgit and it required pinning to a specific
-> version of Git.
->
-> Also, some people install Git into their home directories, and a shared
-> library means that they'll have to use LD_LIBRARY_PATH (or equivalent)
-> to run Git.
->
-> Finally, we have support for a runtime relocatable Git which can be run
-> out of any path and still automatically find its dependent binaries.
-> That won't work with a shared library.
->
-> So if we did allow for building a shared library, it would have to be an
-> option that defaulted to off, I think.
-> --
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
-
-
-
--- 
-Duy
+I.e. we'd just have one git binary, everything else symlinking to that,
+and we'd route to the right program by inspecting argv, which we mostly
+do already.
