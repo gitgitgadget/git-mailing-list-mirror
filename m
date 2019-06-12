@@ -2,128 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18FDF1F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 20:00:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2B8F1F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 20:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388159AbfFLUAs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 16:00:48 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56989 "EHLO mout.gmx.net"
+        id S1728207AbfFLUC0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 16:02:26 -0400
+Received: from mout.web.de ([212.227.17.11]:36487 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387605AbfFLUAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 16:00:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560369641;
-        bh=U84VquVYmG8Gm9ty6DY5RDK4glsyspMVk2uVvXbaYgo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cp8IfjicdwMgn9+jSD+cCwjxSmZRRrRM+3M013gpiPiZmXuM3LyRt/s68+i0rSgtV
-         ES761OrIenKprl8vhgHpd1kMYyyf3JrdJa7gvhtS5RYytRt2AXqfE1GDXVd7qG4RTJ
-         EvNk32+TjTJmUeO2nEFTSa2ueAQFyOJdizYDI8Z8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lx8OH-1ih9Av3zGz-016g3R; Wed, 12
- Jun 2019 22:00:41 +0200
-Date:   Wed, 12 Jun 2019 22:00:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@DESKTOP-QUA364F.localdomain
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] progress: use term_clear_line()
-In-Reply-To: <20190611130320.18499-5-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906122158500.789@QRFXGBC-DHN364S.ybpnyqbznva>
-References: <20190430142556.20921-1-szeder.dev@gmail.com> <20190611130320.18499-1-szeder.dev@gmail.com> <20190611130320.18499-5-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728064AbfFLUC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 16:02:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1560369743;
+        bh=0jZVRrGzAhwyl2hcvV7qXGcYWBtNyv8iZdwKxi2HKBU=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=ekjG8hV2DIJniMzHpIHK4d/VsaTWR5VZ8z6W79ZlJivm1Q7zMIyjvxc+vKJDgaxNh
+         wbFNgD8hqfQ6F/mR5iJ0wIY+p+9cbXkVflQh+ck9XiJJKxQDeZpntqRS60diQ33SaA
+         LdCOCp+ewkEsD00gLomgxduzoR3nZa1LHiJLM3zU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhFJ-1htVmM2MfF-00Iz3m; Wed, 12
+ Jun 2019 22:02:23 +0200
+Date:   Wed, 12 Jun 2019 22:02:23 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Alexander <alexander.samoylov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: BUG: Git checkout on Linux sets always CRLF regardless of
+ core.eol
+Message-ID: <20190612200222.odtht5uq2fzqpsmz@tb-raspi4>
+References: <CABcYkASFxTe7Sq278EqCT1hBQq4Sh47-emNPJcnhA6YWZf+uQg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1899841153-1560369641=:789"
-X-Provags-ID: V03:K1:+3U+KP/iFlwbIQALUH9wSIKkUCWzVAKlhTPDDQdNYqON4xZoTmt
- 2zcsJHcWKbkBAkyfgm96+yBgQ7U9TcCy/FBoAWKTtkZCr9JPAFgBD8VFembJGoDzaky75OV
- rQo6hab9RWxNo5cBcAGbpKk41sXAVE9Z4YogypMS/rLm8Oxf8NOs41BMWaf1I9aJZP3XOKf
- vg2x/niBn5hOiuZI7G7Zg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0q73BzlDlOo=:BioP9X0VWd8kZ1Z+9wYqhO
- ihN8bCUhwaY6muDY55ueG1Sz0bgzuYc+4CItvcUuveOF2ipz0i6UwY49xl4y7Gx4c/HcnDe+C
- 5AHyaq6o3AiLJW50jqmz6Z1H8CX/IXiVUPuxSO2rvHtEmKZlYcOf78bm0MfTBAeB7M09p0omd
- fK+aRivefZLw+o58UDglLFruJlnlP1pgjfMxIk659gUiVJ1230UBmeuPSk8LB4C8IfbFLddpQ
- r/OHKumyVY3b2HCY34QqrBi9uSiLCWqOfC7FB7VU0lVTLH9SVSK9WH1Y6qZ4xW1PlQMAsBjsr
- aRGOOHae9pHgNG8bqWje5MhUKurPRayhWB3zXucC/jeq84ANuSJ5R3WStmCFK4hudnza4MsIM
- hDgxF6OnWjPmMEB7Zw6nPJoTJ/I/r4zR8BnzpuJb0kpVBQ9ad6D2G71r/9zESgh2L3ymXyfTy
- jC+aTOz73pm4UdA5QdwvCn9jDcx1kHbvBgi0xyJW1Vag8aRJ5MBYsUDdwRPQJojVYSTeOCE3P
- ObIe3Z7/maPC0RcO5mCZ3HkZp3Z1pOXWLvXhhxLOoCNvn186V0/94SCG61bx8O3KOF3EYPRXy
- OqhPrXdaNGvMfWozlfF33ux9nDDRd4QAvjtlNn7BxiqwCVMSU8y9+dCwLCpQ9pYzNSrmv8qGp
- /MTCjXgUzPIQIsGkkh8qjUypzF3lCR5q21prre9005QUUE8z6XGFaJANMNi6uxWtbxkQhkIS4
- fGWy12vSsRBYywcAGGOFpdq4Zb+d6HDy8QjaVmf8XqcrpziQjDqneemKhC033rKuVQydoBvdW
- LdEmjWq1o1rUejfKO337VuB1ZNbEXmuMYWSIzQV6pnSgXeGK2pu3ol9i+/q1XFJs1O4z46ap5
- m8N01Df3KJN9RlMcKHoTSfDI8xyfoUNCjkYvpBn3RuTXdjd24nutjUbZDsYR00wU2ksCn0AC3
- c1dLGnWOLn/6mPCH7/kYuzf4nSx9ZBu6mcfaj8q2gYGp6yp62tC66
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABcYkASFxTe7Sq278EqCT1hBQq4Sh47-emNPJcnhA6YWZf+uQg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:h05MBJu1oU9zWDtuhlYpO1VuwlxiQrzJSye/EJGaIKg+Vm7FQ87
+ a+/DfFKoApgM5hOdjCdo5lLMyC3CQQW1nUWZWHCnTjnEqyb3GjoxPcu4SlnjzxwbD0mX5wW
+ ESaKlAMaU9alkPpV6hvRdFdWWj3apnK4EC8j73iQ3JCMXfbvaf7SpSusHaALVeQh5i76tta
+ 73VvV6lFD82eSIzyiM8Ww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UQr15KCTA+k=:DkE2IjCoVt2YLYlPwyZ3Nm
+ Dz8S7BxLbbz7WmvfGLA8jv7WvpICvQq5uhxwVDK2OxkRexHctcwGcZ7adxT94GZkiKZ4VqgZX
+ Cv3CqezjlKwF8JTDFkUhRUPOcQlywq5hiBHoOd0F8Jdt+IvTefc6oXU5af+qKsTJ8IHXfOZPa
+ KlAXALLPwbnzdE9ftNp1wjoDtd0ydHV+QC9oqxZDEM/P9jzDy+0Aj/g0S+nQHDtc29AU/9Hfb
+ Iz0SmoXSqHqqlyu/iPj+0AxoTOOsk1QGHXWazSKOlMI4Tbf8/wHH5r6lJsN7mJzC1jzvoTMRs
+ UlS6Os88++3N+51tHLT7RPGGbqHJqUP+4HoaPKubaVZ7meWFZe0ud7HZ/H64xufTNv0evFOCg
+ 51f7FNlnBSqeGsmfPWSvumCoKIeWf/FSV7CFI3fZ/VvpswXFmwppmRmV0hdpH30AN4LAY+YnB
+ 7v4/FGOz8XMYkrdCgOENnwsDCOupNS+1SFViQ08kQjhAbujzf9urpi/qTYxU1EjOlN0A248kK
+ BgehDtGCorbqZgr5KvT8zfL/q5CdUTGXfHPW+JDh9i4Yy6XB3/hw/SUBBnDiTZ0zX8DbNuoDs
+ dnOQi3Sg5IuwjOH1EtaE63y26BzTKRpuj6Dh+Ja0t9UN4O9zXoiz6w0UvnZlMr6L0WdfXVJnt
+ bpyxLP50PrmKcS8Eryh7YmUu/C6YgiLQll9w4VOtkwM4gt308xh1fHKk2MyvmaFZqf6FuTwPN
+ 7E5n9IYIIYa4Tr+t7oYdndkyQSVmaHRts/bGvZ/y3hKUzhp3d2dMfh/8gC38ikK5/L5v42dQ0
+ kuDz8OEaU18x7yFPPDfZ4+3aTqxtvpkcrbvt8jytdS36WhetU1x53dNzATR8IDBn1I0O4gaM3
+ 4H6uqyou88yfQ50cE0SkUKfOyxuA3i+FyqAshyVz38Zkjje/rIq61oCgImeLzu22COWwFYsg/
+ /VKgk+CMfiozrimxQlk/tyLKbcCFMJ5k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1899841153-1560369641=:789
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Tue, 11 Jun 2019, SZEDER G=C3=A1bor wrote:
-
-> diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-> index 8ef8763e06..2e4802e206 100755
-> --- a/t/t5541-http-push-smart.sh
-> +++ b/t/t5541-http-push-smart.sh
-> @@ -213,7 +213,7 @@ test_expect_success TTY 'push shows progress when st=
-derr is a tty' '
->  	cd "$ROOT_PATH"/test_repo_clone &&
->  	test_commit noisy &&
->  	test_terminal git push >output 2>&1 &&
-> -	test_i18ngrep "^Writing objects" output
-> +	test_i18ngrep "Writing objects" output
-
-I guess the problem is that now the "Writing objects" is preceded by a CR
-instead of a NL? If so, maybe the `cr_to_nl` function could be introduced
-into `test-lib-functions.sh` and be used here and in the subsequent test
-cases?
-
-(Just an idea, as you seemed unhappy about these adjustments according to
-the cover letter.)
-
-Ciao,
-Dscho
-
->  '
+On Wed, Jun 12, 2019 at 12:48:00PM +0200, Alexander wrote:
+> Hello,
 >
->  test_expect_success TTY 'push --quiet silences status and progress' '
-> @@ -228,7 +228,7 @@ test_expect_success TTY 'push --no-progress silences=
- progress but not status' '
->  	test_commit no-progress &&
->  	test_terminal git push --no-progress >output 2>&1 &&
->  	test_i18ngrep "^To http" output &&
-> -	test_i18ngrep ! "^Writing objects" output
-> +	test_i18ngrep ! "Writing objects" output
->  '
+> I am trying to checkout out various 3rd party Git projects on Linux
+> and build them.
+> Some of them have text files created under Windows with CRLF endings
+> and it is not under my responsibility to change it.
 >
->  test_expect_success 'push --progress shows progress to non-tty' '
-> @@ -236,7 +236,7 @@ test_expect_success 'push --progress shows progress =
-to non-tty' '
->  	test_commit progress &&
->  	git push --progress >output 2>&1 &&
->  	test_i18ngrep "^To http" output &&
-> -	test_i18ngrep "^Writing objects" output
-> +	test_i18ngrep "Writing objects" output
->  '
+> Thus I have to force LF line ending for Git checkout (regardless of
+> which line endings the files have in the repo). I use the following
+> settings for that:
 >
->  test_expect_success 'http push gives sane defaults to reflog' '
+> $ git config --system -l | grep core
+> core.eol=3Dlf
+> $ git config --global -l | grep core
+> core.eol=3Dlf
+>
+> However it does not work. The issue is reproduced pretty fine on
+> https://github.com/winlibs/libjpeg project. This project does not have
+> .gitattributes file, therefore I expect that global settings must be
+> enough to force LF, but I observe different behavior:
+>
+> $ git clone https://github.com/winlibs/libjpeg; file libjpeg/libjpeg.map
+> Cloning into 'libjpeg'...
+> ...
+> libjpeg/libjpeg.map: ASCII text, with CRLF line terminators
+> (not only libjpeg.map, but a lot of *.c files also have CRLF if you chec=
+k it)
+>
+> libjpeg is an opensource project, so anyone can reproduce this issue
+> on a Linux host.
+>
+> This makes me think that this it is either a bug or not documented behav=
+ior.
+> I tried various combinations with core.eol, core.autocrlf and even
+> global /etc/gitattributes file - nothing can force checkout with LF!
+>
+> Could you please confirm whether it is a bug and provide the clear way
+> to bypass it.
+
+I can do neither-nor, so to say.
+
+Whenever there are CRLF in the repo,
+there is no way for Git to change those into LF in the working tree.
+
+The correct way is to normalize the repo:
+user@linux:/tmp/libjpeg> git checkout -b normalize_EOL
+user@linux:/tmp/libjpeg> echo "* text=3Dauto" >.gitattributes
+user@linux:/tmp/libjpeg> git add --renormalize .
+user@linux:/tmp/libjpeg> git add .
+user@linux:/tmp/libjpeg> git commit -m "Normalize the repo; add .gitattrib=
+utes"
+
+After that, send a pull request to the original author.
+
+HTH
+>
+> My Git client version: 2.17.1. Please, see also
+> stackoverflow.com/questions/56546220/git-checks-out-crlf-instead-of-lf-o=
+n-linux.
+>
 > --
-> 2.22.0.566.g58873a45ff
->
->
-
---8323329-1899841153-1560369641=:789--
+> Best Regards,
+> Aleksandr Samoilov
+> Build & Integration Ingenieur
+> Compart AG, 71034 B=F6blingen
