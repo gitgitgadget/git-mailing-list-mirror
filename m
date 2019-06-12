@@ -2,147 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15E051F462
-	for <e@80x24.org>; Wed, 12 Jun 2019 18:10:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFDD11F462
+	for <e@80x24.org>; Wed, 12 Jun 2019 18:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727249AbfFLSKN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jun 2019 14:10:13 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35835 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726245AbfFLSKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 14:10:11 -0400
-Received: by mail-ed1-f66.google.com with SMTP id p26so23035162edr.2
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 11:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=vb2NcnlPfKa58SoklfefNdMlesTIR2Xi2ohW2s8/bV8=;
-        b=EO9yAMQvRS0q+lbr0CgTPfKh25LCI1W2WRBVIKZJFiNavJwpOLtu5MZQ2tjiZT/wZx
-         t1cTCKk1z5JkUyu8KOslG8oHaZnT4jse+UTiUZmU/Ob9WekGSut8Hl5Mpv0dmZbFP2Uz
-         ZTodKgqudBoFemtNaJ/61Htsis/pJzBBxc500q3e9YkTgwBLAoqNuSsyg8wRkMTxYxV8
-         4MYX4J+E8hiMI0wjDD0qH7aVTd04aKX8O4ILW+BG5gLNZA9U5efz1Q1x6F8R1VRCtjel
-         ApeGsyZPGCXS5WMsyjwr3msZbdJdzYLVSfRlcvVsvSHIMZuXDLNSISxVGDZVdGpMU/Ff
-         muyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vb2NcnlPfKa58SoklfefNdMlesTIR2Xi2ohW2s8/bV8=;
-        b=KMNK9VVqWQhO+C6JVOoi2mNtvxv+Y6OT2bC90lVUxhAA/7WdSACnTBb/SeVfmXYSAZ
-         /NNyebTfbXKPMYyO+Ylffy6wzYsPRE/CVHTNXWxVp9HgSmJDrI7rpOEu9R3jsLC3tSvk
-         VQJJfM9Kdj7z+/d/LMGVJklRkxqJfphPO8z3MvQP+0VHog3mP9+LluHn4/SNO4DJdC/h
-         fM7onvMRB1DJE2J0kMEa76lN8FoMqJ97DY+0nN1u7X2R3M7F/HoRsUaKBsyl8A6IC11r
-         2/tyBwLMt0btL+MjBmwRRKy9ZkaAdPVgw/Z2ai79UglxJgPi32jObshhrsk8UjfYC26h
-         tEQQ==
-X-Gm-Message-State: APjAAAXdpwTkoDg6j58hxHOErMTD/CQsEmhKuCH32hytKJAwym+R98vK
-        HjfPxOhc6M+UbXy6GgBfdDMA/uVA
-X-Google-Smtp-Source: APXvYqy5PMa63/Fha2mnf9rvtxkFdS9AztPXYh+ZiyOsh1t2YZdHs2SKBCBXluCu9eT7dENOyRXBOw==
-X-Received: by 2002:a50:ac46:: with SMTP id w6mr56367507edc.238.1560363010044;
-        Wed, 12 Jun 2019 11:10:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v6sm157866eds.23.2019.06.12.11.10.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jun 2019 11:10:09 -0700 (PDT)
-Date:   Wed, 12 Jun 2019 11:10:09 -0700 (PDT)
-X-Google-Original-Date: Wed, 12 Jun 2019 18:10:08 GMT
-Message-Id: <e766e5177722dc20837adbd902d596186b1e4997.1560363008.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.263.git.gitgitgadget@gmail.com>
-References: <pull.263.git.gitgitgadget@gmail.com>
-From:   "Morian Sonnet via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] submodule foreach: fix recursion of options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726324AbfFLSLu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jun 2019 14:11:50 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62813 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726245AbfFLSLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jun 2019 14:11:50 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A4E679649;
+        Wed, 12 Jun 2019 14:11:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BqQ/DaZSMnBCu3Tsy+cYxG/vhqI=; b=KVuI09
+        LY58LTVYVGEfCTnRz/PJLw0YsNIovStxdm7+KCP9KOnK7ofvID2QNiiuVT6+yVSs
+        fYw+hauvon/ty1KFlBO+mRMFtJX7wh2gu/uZ/XoxXLtopEqsNTSbuYAmGh/28Sdr
+        +KydhNxMo58EVns9rnqQ3AJOZk/QT8tGIOs3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MA6jwBzb+Sdo5KMp/CxKFG1crhv+eatq
+        dFeZU3bJ1PCQYY1zntVyCc7mgcFC98yV4oPA0oHMib7E2QLZ1DLv8E2FUxe+g3Yg
+        B9LVq2jAwiq5NCYEeSD9WGzMyOHdLck50zjEeWLGwb+MQHhOGZFoe73J6HqFewoR
+        KuL2mhrO83Q=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 232CC79648;
+        Wed, 12 Jun 2019 14:11:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4A26F79646;
+        Wed, 12 Jun 2019 14:11:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>, git@vger.kernel.org,
+        newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 2/3] cherry-pick/revert: add --skip option
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+        <20190611073152.12214-1-rohit.ashiwal265@gmail.com>
+        <20190611073152.12214-3-rohit.ashiwal265@gmail.com>
+        <6d3c1c1e-6140-dd8c-c37f-8c625b04ddc9@gmail.com>
+Date:   Wed, 12 Jun 2019 11:11:45 -0700
+In-Reply-To: <6d3c1c1e-6140-dd8c-c37f-8c625b04ddc9@gmail.com> (Phillip Wood's
+        message of "Wed, 12 Jun 2019 14:31:53 +0100")
+Message-ID: <xmqqsgseisgu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Morian Sonnet <MorianSonnet@googlemail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8AD44C9E-8D3D-11E9-88E6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Morian Sonnet <MorianSonnet@googlemail.com>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Calling
+> Thanks for the new version, this is looking pretty good now, just a
+> few comments below
 
-    git submodule foreach --recursive git reset --hard
+I agree that this step is looking pretty good now.
 
-leads to an error stating that the option --hard is unknown to
-submodule--helper.
+I didn't check closely, but when 1/3 undergoes necessary polishing,
+it may have repercussions on this step, though (I did see that the
+change in 3/3 would have overlaps with what was touched by 1/3 that
+needs to be done differently).
 
-Reasons:
+Thanks for guiding Rohit's series forward.  
 
-. Above call is internally translated into
+> This is only slightly different from reset_for_rollback() if you
+> decide to keep a separate code path for skip vs abort then I'd be
+> tempted to combine the two like this.
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index ecf4be7e15..b187b4222e 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2740,11 +2740,13 @@ static int reset_merge(void) {
+>  static int reset_for_rollback(const struct object_id *oid)
+>  {
+>         const char *argv[4];    /* reset --merge <arg> + NULL */
+> +       size_t i = 0;
 
-    git submodule--helper foreach --recursive -- git reset --hard
+That size_t is, eh, "unusual".  For an index into a small local
+array of known size, just sticking to bog-standard-and-boring 'int'
+would make it less distracting for future readers of the code.
 
-. After calling
+Or even better, perhaps use argv-array, so that you do not have to
+worry about sizing the local array sufficiently large in the first
+place.
 
-    git reset --hard
+> +       argv[i++] = "reset";
+> +       argv[i++] = "--merge";
+> +       if (oid)
+> +               argv[i++] = oid_to_hex(oid);
+> +       argv[i] = NULL;
+>         return run_command_v_opt(argv, RUN_GIT_CMD);
+>  }
 
-  inside the first first level submodule,
-
-    git --super-prefix <submodulepath> submodule--helper \
-      foreach --recursive git reset --hard
-
-  is called. Note the missing --.
-
-. Due to the removal of PARSE_OPT_KEEP_UNKNOWN in commit a282f5a906 the
-  option --hard is not passed to
-
-    git reset
-
-  anymore, but leads to git submodule--helper complaining about an
-  unknown option.
-
-Fix:
-
-. Add -- before the command to execute, such that now correctly
-
-    git --super-prefix <submodulepath> submodule--helper \
-      foreach --recursive -- git reset --hard
-
-  is called.
-
-Signed-off-by: Morian Sonnet <moriansonnet@googlemail.com>
----
- builtin/submodule--helper.c  | 1 +
- t/t7407-submodule-foreach.sh | 5 +++++
- 2 files changed, 6 insertions(+)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 0bf4aa088e..afaf0819c9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -540,6 +540,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 		if (info->quiet)
- 			argv_array_push(&cpr.args, "--quiet");
- 
-+		argv_array_push(&cpr.args, "--");
- 		argv_array_pushv(&cpr.args, info->argv);
- 
- 		if (run_command(&cpr))
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index 706ae762e0..6110742a7c 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -421,4 +421,9 @@ test_expect_success 'option-like arguments passed to foreach commands are not lo
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'option-like arguments passed to foreach recurse correctly' '
-+  cd super &&
-+  git submodule foreach --recursive git reset --hard
-+'
-+
- test_done
--- 
-gitgitgadget
