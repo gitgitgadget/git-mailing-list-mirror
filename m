@@ -2,112 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1391F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 22:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3F51F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 22:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726665AbfFMWPt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 18:15:49 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:37902 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725793AbfFMWPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:15:49 -0400
-Received: by mail-qk1-f201.google.com with SMTP id n190so360597qkd.5
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:15:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=7hXyskFKznsPKBFriFHPNRxUfRJGgVP4ly6SCWzFU+I=;
-        b=FknqYqOpFw4gt+VbE/lnSbg2i0604I5j9QDc5niMPge5r5Wn9rjGrCjgFaQz9R1Hu+
-         dCeUgvJFfEOyXQH7TaaH3+WESlw7ctrtnuSyy1tS+YkLAXuXeOTErWVdHpbnzbSYIz6q
-         0s5NvBQj4CDuOUOHUn/5rrqc8mMrOIYK+fzbIkL/rs96CBDTxNqRP1Y4LNynulOHQrKd
-         +3WqsgXdOnOFS5mu/38X75FIC6Rx75CxX8IVeCHMre7kma6krWwqeys6HFJANfL20GuH
-         UIeLoof0pm80R7XAa2hWtZErN3vDjPZGvQpQJWqmTXh07ppMrqZF2zxprAMqLGqRaoob
-         xJXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=7hXyskFKznsPKBFriFHPNRxUfRJGgVP4ly6SCWzFU+I=;
-        b=Yy7Z0lJYE5EUYEJ2vaFhcnJoABd3fKMGUQxDNnyrmlXWnZqcCvm4cDy6icAVZT0vYR
-         d7w8p1MDWTOq6PLBKwPSidg2eUJlnsXL3gL4c5heWWR6pfD4e1DAvOgUjx4ZKrkvEHOm
-         Deg7w7JeS1mQTZIKTmqGYACOQTJAG9ZWe6J99rH9b/ISjS9lSz9m5xFj9mG1gdOpCNH0
-         WeRyFjV359l3vgky/WX2WGq0qwx0vC+KO4zr2N6Kq1j3fGPIBfIK2eSImvWR4x7zYG8V
-         oxjY+quHnCSYfvnzhDSE/pLUZapiS9h538dxfyz7JZ9X5KDGmgCm5SWS7Xyxrh05Qgl8
-         oWDw==
-X-Gm-Message-State: APjAAAVqECcYLdtU7N52qPhmi5bD2DvLS7v0tB1Mki3Z+1ekxYhMP9Z/
-        3WZ3dv4Apnh6aXd7G3yh4kLody4fawgdHmZNu7TXszAQPdv2AkXWbjji3XF8oqfw6WdQ9qlhrIW
-        kkENAidWOQc0lopKtX1ZMyKW/AEO1ijBbB7ro4CB9zMabjEoEIAdfgMfQ+bsttHV6/0VJmWzz9w
-        ==
-X-Google-Smtp-Source: APXvYqwH23gsXSQkcKHTUhcnHxpvjqnYvXNFeqN4Z/tnolmJyhOUG3vW2wRK3FUGCun/pK7edHqQNRVUEqCFJtfh6/E=
-X-Received: by 2002:a05:6214:248:: with SMTP id k8mr5482766qvt.200.1560464148030;
- Thu, 13 Jun 2019 15:15:48 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 15:15:41 -0700
-Message-Id: <20190613221541.10007-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
-Subject: [RFC PATCH] rev-list: clarify --abbrev and --abbrev-commit usage
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726091AbfFMWWW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 18:22:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51867 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725793AbfFMWWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 18:22:22 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DF4E62625;
+        Thu, 13 Jun 2019 18:22:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aQAQyvl4tfPmtQwA3bmcMf67Bxc=; b=EkiHBe
+        wn6ItVYk81PWcm0TSZA3ROwLxbTbreG4OCNkq1Sjn3dzMJO/OGEDBZvnrdoJPLHy
+        Dum1qy/pjfh81Cj+QCPhLh7DCJgwBxfuW6zM3PpcrCuPYkiU8NSOIjyqflkhaPd7
+        Q2T26/JDz041WgnjdFrXL9hkjdh6VBx2fP0q8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RA5cJljVz/KxQDlGEz/+ok22vDoSBALJ
+        tFrnSi2k/GiW75ru4YkGWYbYNPexWqROnk9OcbAdKi5Sd6mtxVMcfjhGyLVKAuDO
+        RSRxJ/FQdDAs2Vf6ty/A9DdRhWm05xhL2fS8HEs+lGXeLCZY5n4+1ne2BjK6hAw+
+        wA7WL27j3O8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45C5762624;
+        Thu, 13 Jun 2019 18:22:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B69F662622;
+        Thu, 13 Jun 2019 18:22:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/3] t: add t0016-oidmap.sh
+References: <20190609044907.32477-1-chriscool@tuxfamily.org>
+        <20190609044907.32477-3-chriscool@tuxfamily.org>
+        <20190609092259.GB24208@szeder.dev>
+        <20190613171913.GA14055@sigill.intra.peff.net>
+        <20190613175236.GF31952@szeder.dev>
+        <20190613190229.GB27217@sigill.intra.peff.net>
+Date:   Thu, 13 Jun 2019 15:22:14 -0700
+In-Reply-To: <20190613190229.GB27217@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 13 Jun 2019 15:02:30 -0400")
+Message-ID: <xmqqh88tunvt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B37D342A-8E29-11E9-BA2A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Indicate that --abbrev only works with --abbrev-commit also specified.
-It seems that simply running `git rev-list --abbrev=5` doesn't
-abbreviate commit OIDs. But the combination of `git rev-list
---abbrev-commit --abbrev=5` works as expected. Clarify in the
-documentation by indicating that --abbrev is an optional addition to the
---abbrev-commit option. --no-abbrev remains on a separate line as it can
-still be used to disable OID abbreviation even if --abbrev-commit has
-been specified.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Change-Id: If9b1198938e1a3515ae6740241f7b791fb7a88bd
----
-I thought this was odd when I was working on the other rev-list changes
-- --abbrev doesn't do anything on its own. It looks like it does work by
-itself in other commands, but apparently not in rev-list.
+>> > I know there are testing philosophies that go to this level of
+>> > white-box testing, but I don't think we usually do in Git. A unit
+>> > test of oidmap's externally visible behavior seems like the right
+>> > level to me.
+>> 
+>> That's a good point...  but then why does 't0011-hashmap.sh' do it in
+>> the first place?  As far as I understood this t0016 mainly follows
+>> suit of t0011.
+>
+> I'd make the same argument against t0011. :)
 
-Listed this patch as RFC because maybe instead it's better to fix
-something so --abbrev can be used alone, or teach --abbrev-commit=<n>.
-It looks like `git log --abbrev=5` also doesn't work the way one might
-expect, which makes sense to me, as they use the same internals for
-option parsing (parse_revisions()).
+Yeah, I tend to agree.  It is not a good excuse that somebody else
+alerady has made a mistake.
 
-The manpages for log and rev-list both correctly indicate that
---abbrev=<n> is an optional addition to --abbrev-commit. `git log -h` is
-generated by parse-options tooling and doesn't cover --abbrev-commit at
-all, but `git rev-list` doesn't use an option parser on its own and the
-usage is hardcoded.
+> I think there it at least made a little more sense because we truly are
+> hashing ourselves, rather than just copying out some sha1 bytes. But I
+> think I'd still argue that if I updated strhash() to use a different
+> hash, I should not have to be updating t0011 to change out the hashes.
 
- - Emily
-
- builtin/rev-list.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 9f31837d30..6ae0087b01 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -49,8 +49,8 @@ static const char rev_list_usage[] =
- "    --objects | --objects-edge\n"
- "    --unpacked\n"
- "    --header | --pretty\n"
--"    --abbrev=<n> | --no-abbrev\n"
--"    --abbrev-commit\n"
-+"    --abbrev-commit [--abbrev=<n>]\n"
-+"    --no-abbrev\n"
- "    --left-right\n"
- "    --count\n"
- "  special purpose:\n"
--- 
-2.22.0.rc2.383.gf4fbbf30c2-goog
-
+True, too.
