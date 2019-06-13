@@ -8,82 +8,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 597961F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 15:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DDC1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 15:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732103AbfFMPUb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 11:20:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:32851 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732105AbfFMMxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 08:53:54 -0400
-Received: by mail-ed1-f66.google.com with SMTP id i11so3099404edq.0
+        id S1732701AbfFMPUc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 11:20:32 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40750 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732104AbfFMMxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 08:53:52 -0400
+Received: by mail-ed1-f68.google.com with SMTP id k8so16435888eds.7
         for <git@vger.kernel.org>; Thu, 13 Jun 2019 05:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WKBAyx9ooKtEby5Ubwc5Bo0LpmufvxpxDF3P5rxfzbM=;
-        b=N4dt35VqoSTeryW9jKn4meentpjOJBpMT8jMww9dcV0jiMsqxpTAPAFsFKBBm77IwX
-         QVKExl7PZIJzlhInwZVqzPRHESe7Gs6qHHJyRGt8bVzwd1/IPpo3EQrwgOiuk7GXDfLY
-         hP/UX7Fd7o7dI3rMaBgRvOhpaPxDkp1sXjiAG4/UHheTlA9Z+X3Y9OFWBzYMCjbETlSV
-         lv9ibm7RiuI7so90XPuMW2PtoXIbSWPsn1Zh+yW0nwY1xZlowcZBdf222JRYgdNLU7Ex
-         EOkOg7UciUJOxQmkci0fmSomPI/6MtxCjx4WnNyG14x7T8wdsvWXFX/mzw6/gRLo9Peq
-         HyIw==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=tjlKAvMFwl5NCRqvt3KN47fF8YCgX0ude7uVobuePsQ=;
+        b=EFkA2/pYh9zA+18vNIVq/gz8VS4a/Ee5LsNzAtCjkTjpg3X+uV1oSiq+IqScF7xPv1
+         WIaVyvA2DBaRoT0DS4Rsif8xwGoSOEsvNX3V3WO7iNawDP4TeJAiHwSwvRglhz38nXOk
+         yEkboTCDn8gUFGyn92IxF/LlyiIgiDcAlRUg2GnQXmgNdrGDbBseM1P76Jo0HePzj28X
+         bPeDXXSNHnpwRLSDfP4rWGivoncW2f4jgCBHAfsw4LK0JUr/6Ptm6+icqiLNYwy7wt5U
+         6N7pXJUfY5jQTrC+61HJxXxaETXG5zQqSoBX39zgF0FL1mVf8sDvdAI7Eeyaq5+ZsH5Y
+         lVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WKBAyx9ooKtEby5Ubwc5Bo0LpmufvxpxDF3P5rxfzbM=;
-        b=XCwgkUUmSC03fFhS1b1ukgwOYf1NKDvchQ6vM6MWopi02aUWuq3PanjRBLqBxnYXdT
-         thnrwAjDy6niJ8d9VXMrSFYL3A3iVULx7RdJM2cz4/3HM012Xz8elqGsV2tOelnsBd3h
-         h9rvd5HThs9ZoBzxzN++Jq4Vk410L13KIgYwOjEFQ0LnBiKcvWDmfnkon7sXc04z03Lt
-         tk8IqE9g4d9TQmJqcqILMNYJ7ZIklfVI5batcAa5l7E0uDbHnimJLrLa3qlV/Ecr0iAX
-         0EosUREO+aX/j6GhxYyFe95lTSrcNC2auf4UM2gIl10dVEAQevozQ16sBr7vsRyTg67S
-         UWDw==
-X-Gm-Message-State: APjAAAWtYdVX3vy5+71C35dH9pa1YDdsqMWes4y9TGfxAJSBPb9C+BbA
-        UC3w78xGRaBKlZHoTwCAb+s1clkf
-X-Google-Smtp-Source: APXvYqzrln6oFcj40mEbESHV6zLGhdWakIPMEa+Xl/gKTpCFm4Z4JukvpEF3ocyROJ64GuepfPuXCQ==
-X-Received: by 2002:a50:a5ec:: with SMTP id b41mr66220308edc.52.1560430432137;
-        Thu, 13 Jun 2019 05:53:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l45sm881146edc.93.2019.06.13.05.53.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tjlKAvMFwl5NCRqvt3KN47fF8YCgX0ude7uVobuePsQ=;
+        b=qae+C2yThyX3ISfhkeodGG7ahZJOh6h5OWHrw40u7VvAp57KOxdgLL/dYBR7/AmFoQ
+         woJmvIjxH42VxkwqolfA1qQzbkJmkBP4PJ4SN2c6LA959hM7L7YTfgnMf+nzwZNpBtNX
+         1WIJcHWHnonysbFEhMY5W/5tB2hJ750U65dmH/SdNeVsQ9bO6tiY2jpIvCk01EHQgLhO
+         A6pFQQWZQoMknbD2uRqDt+z9QeCsspTLQ8jesJN3kmlHrvoPtrc1r/RLGkmdT1+YJwGp
+         BcKUOSmHMLs514KbmuBotlDC6p71tr4IMD8zki+dNJmjoaCQlXgRVgME4CgQyfIoHTNA
+         UjvQ==
+X-Gm-Message-State: APjAAAWT4bTbL6/nlx5tU3JOqqTL6F4SJx73HKxNGSOXfRdFEjixQoYE
+        N3rPivN6hOlakqy18+34G/7yYB5d
+X-Google-Smtp-Source: APXvYqwrzwo6yDJHHbhT/zPn/m/3T3C2QhdPWB6eQaPSEnzyAbIJ19nPA3xoExbjlqF7ea4I44m8Yg==
+X-Received: by 2002:a50:b34a:: with SMTP id r10mr2462873edd.84.1560430431315;
         Thu, 13 Jun 2019 05:53:51 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 05:53:51 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Jun 2019 12:53:50 GMT
-Message-Id: <ac102169ec6f47b8be1fe69b4798de385f102af8.1560430430.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.266.git.gitgitgadget@gmail.com>
-References: <pull.266.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y3sm862631edr.27.2019.06.13.05.53.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Jun 2019 05:53:50 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 05:53:50 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Jun 2019 12:53:49 GMT
+Message-Id: <pull.266.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] ci: split the `linux-gcc` job into two jobs
+Subject: [PATCH 0/1] ci: split linux-gcc into linux-gcc and linux-gcc-extra
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+For people like me, who often look at our CI builds, it is hard to tell
+whether test suite failures in the linux-gcc job stem from the first make
+test run, or from the second one, after setting all kinds of GIT_TEST_* 
+variables to non-default values.
 
-This job was abused to not only run the test suite in a regular way but
-also with all kinds of `GIT_TEST_*` options set to non-default values.
+Let's make it easier on people like me.
 
-Let's split this into two, with the `linux-gcc` job running the default
-test suite, and the newly-introduced `linux-gcc-extra` job running the
-test suite in the "special" ways.
+This also helps the problem where the CI builds often finish the other jobs
+waaaay before linux-gcc finally finishes, too: linux-gcc and linux-gcc-extra 
+can be run in parallel, on different agents.
 
-Technically, we would have to build Git only once, but it would not be
-obvious how to teach Travis to transport build artifacts, so we keep it
-simple and just build Git in both jobs.
+Johannes Schindelin (1):
+  ci: split the `linux-gcc` job into two jobs
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
  .travis.yml                |  4 ++++
  azure-pipelines.yml        | 39 ++++++++++++++++++++++++++++++++++++++
  ci/install-dependencies.sh |  4 ++--
@@ -91,128 +87,10 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
  ci/run-build-and-tests.sh  |  5 ++---
  5 files changed, 49 insertions(+), 7 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index ffb1bc46f2..a6444ee3ab 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -16,6 +16,10 @@ compiler:
- 
- matrix:
-   include:
-+    - env: jobname=linux-gcc-extra
-+      os: linux
-+      compiler: gcc
-+      addons:
-     - env: jobname=GIT_TEST_GETTEXT_POISON
-       os: linux
-       compiler:
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index c329b7218b..4080aa3c45 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -206,6 +206,45 @@ jobs:
-       PathtoPublish: t/failed-test-artifacts
-       ArtifactName: failed-test-artifacts
- 
-+- job: linux_gcc_extra
-+  displayName: linux-gcc-extra
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo add-apt-repository ppa:ubuntu-toolchain-r/test &&
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2 language-pack-is git-svn gcc-8 || exit 1
-+
-+       export jobname=linux-gcc-extra &&
-+
-+       ci/install-dependencies.sh || exit 1
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux-gcc-extra'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
- - job: osx_clang
-   displayName: osx-clang
-   condition: succeeded()
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 7f6acdd803..c25bdcdf66 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -9,12 +9,12 @@ P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
- LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
- 
- case "$jobname" in
--linux-clang|linux-gcc)
-+linux-clang|linux-gcc|linux-gcc-extra)
- 	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2
- 	case "$jobname" in
--	linux-gcc)
-+	linux-gcc|linux-gcc-extra)
- 		sudo apt-get -q -y install gcc-8
- 		;;
- 	esac
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 288a5b3884..b16a1454f1 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -154,8 +154,8 @@ export DEFAULT_TEST_TARGET=prove
- export GIT_TEST_CLONE_2GB=YesPlease
- 
- case "$jobname" in
--linux-clang|linux-gcc)
--	if [ "$jobname" = linux-gcc ]
-+linux-clang|linux-gcc|linux-gcc-extra)
-+	if [ "$jobname" = linux-gcc -o "$jobname" = linux-gcc-extra ]
- 	then
- 		export CC=gcc-8
- 	fi
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cdd2913440..b252ff859d 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -11,8 +11,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
- esac
- 
- make
--make test
--if test "$jobname" = "linux-gcc"
-+if test "$jobname" = "linux-gcc-extra"
- then
- 	export GIT_TEST_SPLIT_INDEX=yes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
-@@ -20,8 +19,8 @@ then
- 	export GIT_TEST_OE_DELTA_SIZE=5
- 	export GIT_TEST_COMMIT_GRAPH=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
--	make test
- fi
-+make test
- 
- check_unignored_build_artifacts
- 
+
+base-commit: b697d92f56511e804b8ba20ccbe7bdc85dc66810
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-266%2Fdscho%2Fsplit-gcc-ci-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-266/dscho/split-gcc-ci-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/266
 -- 
 gitgitgadget
