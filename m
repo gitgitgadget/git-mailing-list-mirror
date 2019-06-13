@@ -2,79 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7426B1F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 15:20:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9D11F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 15:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727020AbfFMPUg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 11:20:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53810 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732104AbfFMPUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 11:20:33 -0400
-Received: (qmail 2813 invoked by uid 109); 13 Jun 2019 15:20:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jun 2019 15:20:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19115 invoked by uid 111); 13 Jun 2019 15:21:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 13 Jun 2019 11:21:17 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jun 2019 11:20:28 -0400
-Date:   Thu, 13 Jun 2019 11:20:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH] revision: remove stray whitespace when name empty
-Message-ID: <20190613152028.GA7459@sigill.intra.peff.net>
-References: <20190607225900.89299-1-emilyshaffer@google.com>
- <20190609130004.GB23555@sigill.intra.peff.net>
- <xmqqsgsho145.fsf@gitster-ct.c.googlers.com>
- <20190612193745.GB233791@google.com>
+        id S1730038AbfFMP0E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 11:26:04 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34396 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729423AbfFMLtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 07:49:49 -0400
+Received: by mail-ed1-f65.google.com with SMTP id s49so1005378edb.1
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 04:49:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RjK5HPR90OQikUiyb0/LDBsGyBsszNskYXuUhuUaqTw=;
+        b=fP1gjaheIJnQRfx8FRMUh4MwuBj66LPuAERMCCKMOslii0WFIEn8BGX9EU/Ec0GC0T
+         9wpR2TYkYiJBDT75y+1Wld+NEirZ/NXVZ1+/+p5yfD9JlYfgKS/6kJdFmYomXR0s9aUR
+         YWrxD4GuhfJZcjfvOVdW9O5X/WMPhc+EAn94fhyNG8YLhvHRtbNwUNApR2yWxJ9BwIY+
+         mWr/f2NFs3MjNgvX/E+cL85vsYRw71E2ijDzzD23+B3/S/l8HX/2I8k2+BvY8pv8LIlV
+         65vavlSoc4bWUenGUPdJv4RVRVtgb7IlldMhz7Bft0on2VZG7XxdowgHSiaFfpZpn8Ao
+         NXIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=RjK5HPR90OQikUiyb0/LDBsGyBsszNskYXuUhuUaqTw=;
+        b=UKYSNbpyJ9Q0pJf4qYclXRAm24WCBDs2onKmm4MYZQEtFsm8BIuroVKtGS+0ys14Y/
+         xy3GjLkTbj41Uehd90w2lLj45rJy/2N2z0ZQPb4JXmkUDk9uJgw4EMSzniDvk26yL1Lf
+         YbOE9XOkEInYbDx+nOItGkjOPkmKVQEa+nYPLLdfCt7+z533HBCnQYVYMDJtVTthbL38
+         vWKJb73HlmchDA21Iz2ExIb7qu0gFUqK4lGL12Wk/stwdInpXkOgmyxzcJugrrFiaa9V
+         K/+/nhPIFSMoV8LymUFTHq+s9yNBxzr1+Ywmzgq0A+bhggBTA9Oz99gGgX6SuuT/M67e
+         fPgw==
+X-Gm-Message-State: APjAAAVxs79DCSwfvRl0k21/THMtHfv+Ncp1Vynk3Z/BOBRj+YAWUhg4
+        avAuWqU81qhQTWnVBp9MZvEPkNnN
+X-Google-Smtp-Source: APXvYqzIeNGmrZkTGXj5YiXE6CmbStIi+nEUhtuwpqnu9qpA5W+hk7ipcVp0VzKGLB0i30YJL4n+rA==
+X-Received: by 2002:a17:906:1e8a:: with SMTP id e10mr36957150ejj.261.1560426587685;
+        Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c49sm260560eda.74.2019.06.13.04.49.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Jun 2019 11:49:41 GMT
+Message-Id: <9613c88849e53e00e1f7ade49c6c9056309ef0b9.1560426581.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.265.git.gitgitgadget@gmail.com>
+References: <pull.265.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 4/4] config: avoid calling `labs()` on too-large data type
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190612193745.GB233791@google.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 12:37:45PM -0700, Emily Shaffer wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> > > Alternatively, it would be reasonable to me to have an option for
-> > > "rev-list --objects" to have an option to suppress the filename (and
-> > > space) entirely.
-> > 
-> > Yup, I think that is a more reasonable short-term change compared to
-> > the patch being discussed, and ...
-> 
-> I like this too. Starting work on it today.
+The `labs()` function operates, as the initial `l` suggests, on `long`
+parameters. However, in `config.c` we tried to use it on values of type
+`intmax_t`.
 
-Great!
+This problem was found by GCC v9.x.
 
-> > > I think in the longer run along those lines that "--objects" should
-> > > allow cat-file style pretty-print formats, which would eliminate the
-> > > need to pipe to cat-file in the first place. That makes this parsing
-> > > problem go away entirely, and it's way more efficient to boot (rev-list
-> > > already knows the types!).
-> > 
-> > ... of course this makes tons of sense.
-> 
-> Probably not going to start work on this now, but I will make a note to
-> myself to have a look if I have some spare time soon, and keep an eye
-> out for reviews in that area.
+To fix it, let's just "unroll" the function (i.e. negate the value if it
+is negative).
 
-That's fine. I suspect it will be quite involved, because the format
-placeholders you'd want for "objects" are going to be more like
-"cat-file" ones than like the existing pretty.c ones. So I think this
-really implies unifying those format systems, which is a long-term
-project that Olga has been working on.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ config.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
--Peff
+diff --git a/config.c b/config.c
+index 296a6d9cc4..01c6e9df23 100644
+--- a/config.c
++++ b/config.c
+@@ -869,9 +869,9 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
+ 			errno = EINVAL;
+ 			return 0;
+ 		}
+-		uval = labs(val);
++		uval = val < 0 ? -val : val;
+ 		uval *= factor;
+-		if (uval > max || labs(val) > uval) {
++		if (uval > max || (val < 0 ? -val : val) > uval) {
+ 			errno = ERANGE;
+ 			return 0;
+ 		}
+-- 
+gitgitgadget
