@@ -2,94 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3F51F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 22:22:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5680F1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 22:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbfFMWWW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 18:22:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51867 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725793AbfFMWWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:22:22 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DF4E62625;
-        Thu, 13 Jun 2019 18:22:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aQAQyvl4tfPmtQwA3bmcMf67Bxc=; b=EkiHBe
-        wn6ItVYk81PWcm0TSZA3ROwLxbTbreG4OCNkq1Sjn3dzMJO/OGEDBZvnrdoJPLHy
-        Dum1qy/pjfh81Cj+QCPhLh7DCJgwBxfuW6zM3PpcrCuPYkiU8NSOIjyqflkhaPd7
-        Q2T26/JDz041WgnjdFrXL9hkjdh6VBx2fP0q8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RA5cJljVz/KxQDlGEz/+ok22vDoSBALJ
-        tFrnSi2k/GiW75ru4YkGWYbYNPexWqROnk9OcbAdKi5Sd6mtxVMcfjhGyLVKAuDO
-        RSRxJ/FQdDAs2Vf6ty/A9DdRhWm05xhL2fS8HEs+lGXeLCZY5n4+1ne2BjK6hAw+
-        wA7WL27j3O8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45C5762624;
-        Thu, 13 Jun 2019 18:22:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B69F662622;
-        Thu, 13 Jun 2019 18:22:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] t: add t0016-oidmap.sh
-References: <20190609044907.32477-1-chriscool@tuxfamily.org>
-        <20190609044907.32477-3-chriscool@tuxfamily.org>
-        <20190609092259.GB24208@szeder.dev>
-        <20190613171913.GA14055@sigill.intra.peff.net>
-        <20190613175236.GF31952@szeder.dev>
-        <20190613190229.GB27217@sigill.intra.peff.net>
-Date:   Thu, 13 Jun 2019 15:22:14 -0700
-In-Reply-To: <20190613190229.GB27217@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 13 Jun 2019 15:02:30 -0400")
-Message-ID: <xmqqh88tunvt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726237AbfFMWkW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 18:40:22 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:44783 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbfFMWkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 18:40:21 -0400
+Received: by mail-io1-f45.google.com with SMTP id s7so1461410iob.11
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=IElDEUXT7xwibCnRgx8is5oyJjrgAfVD8aSAaUqEVBs=;
+        b=WOjNr/hYGRWgRA8FR/NRySzEk5dw6xcU8cPU28DFy85v+rUhF8KFYf5FjkFGa8VPrv
+         CoCXzhGlfwxnJrxd9YF5UQTh2lUp1gdZj011g3LSv7EDtuUZnIj57IWpgI/LGl84pBi5
+         70XgvxHr8abzZXxK5u7h6Z9GCgdSQH4T9GjJwS8Rrb9kzdBHlok6qPZzZZQwPG6Lfh/C
+         XRs7LDYNMZNnRH3f0lFD0hseK10ngGdmA2ZUoig0JM9D9cHONnSs1jDlRYfriIwY/OM5
+         9nPKo97oIlLmQsmTqBZTRI9Ntd+4M2awVww0hU4X6Z129iarXMILe2svgIxYAH+1KSad
+         8LXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=IElDEUXT7xwibCnRgx8is5oyJjrgAfVD8aSAaUqEVBs=;
+        b=ieD4QoVmvmJgDeACS7CtQXTRFqkGr16/YgCMOgbT1Ywfb0bdU9NNHAKZltjOVuLp9w
+         HnIk00SpZ1OeyglmZPF1wzro2ucPUYOBaLYH6qSJqmLJhqlgUfKS85tk2ATosNhan3+p
+         8P+J+tNnJAgDiMcnXtmxUaWmFNCClBhtLQI0itbEs0H5SbwB2RsJTHmSZx1VVbzAfG3X
+         +2seB7xx5XNYmr2SScDKOmRp1dq1pWgi1bYcEfB8DEI/UrJKX2zYffJe/rwsWXo5Mo0y
+         Kft1rfqbCgjiaKJLWA9dqCEub81Uvp+6SuKjsAic+r4aCiEQKVPCfGKXLATk8VkrIWrB
+         JJSg==
+X-Gm-Message-State: APjAAAWYABnXU2NIU5m/SBu84AH16dFKQQAojSAtVIubCD0LTwheZANp
+        1UfEGw3YtIfvcKnK1E0zkigYN2f9biFJAtVbLN2aYr20
+X-Google-Smtp-Source: APXvYqwgSEmDKZJxYfOdT7ZpXyDXrHtLBqUPlvxgyEjbp77eS2qWr39Xhs02JDX0uvC2fNPXmKeMJIXv09ijOebtSw4=
+X-Received: by 2002:a6b:7008:: with SMTP id l8mr57426312ioc.292.1560465620943;
+ Thu, 13 Jun 2019 15:40:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B37D342A-8E29-11E9-BA2A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+From:   Vincent Legoll <vincent.legoll@gmail.com>
+Date:   Fri, 14 Jun 2019 00:40:10 +0200
+Message-ID: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
+Subject: cherry-pick strangeness
+To:     git@vger.kernel.org,
+        Vincent Legoll - Gmail <vincent.legoll@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000056dc4058b3c377c"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+--000000000000056dc4058b3c377c
+Content-Type: text/plain; charset="UTF-8"
 
->> > I know there are testing philosophies that go to this level of
->> > white-box testing, but I don't think we usually do in Git. A unit
->> > test of oidmap's externally visible behavior seems like the right
->> > level to me.
->> 
->> That's a good point...  but then why does 't0011-hashmap.sh' do it in
->> the first place?  As far as I understood this t0016 mainly follows
->> suit of t0011.
->
-> I'd make the same argument against t0011. :)
+Hello,
 
-Yeah, I tend to agree.  It is not a good excuse that somebody else
-alerady has made a mistake.
+I stumbled upon a strange behavior of cherry-pick,
+running the attached script yields different results
+from running the same command lines manually in
+an interactive shell, one after the other.
 
-> I think there it at least made a little more sense because we truly are
-> hashing ourselves, rather than just copying out some sha1 bytes. But I
-> think I'd still argue that if I updated strhash() to use a different
-> hash, I should not have to be updating t0011 to change out the hashes.
+I searched the man page and found no indications
+that that should act in this way. It looks like the CLI
+args "--ff" & "--no-ff" or the absence of it are not
+doing the same in a script as in an interactive shell.
 
-True, too.
+I  asked in the IRC channel, and was asked to report
+it here.
+
+I tried to reproduce it in various environments, I
+ran it in Centos 7, debian 9, ubuntu bionic & cosmic,
+alpine & fedora, in docker containers, all giving the
+same results. The git versions tested range from
+1.8.3.1 to 2.21.0.
+
+Trying to reproduce, I created the attached script,
+which reports 3 times "SAME", whereas the case
+using "--no-ff" should print "DIFF", if I'm not wrong
+in reading its manpage description.
+
+What am I missing ?
+
+-- 
+Vincent Legoll
+
+--000000000000056dc4058b3c377c
+Content-Type: application/x-shellscript; name="repro.sh"
+Content-Disposition: attachment; filename="repro.sh"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jwv8wuok0>
+X-Attachment-Id: f_jwv8wuok0
+
+IyEgL2Jpbi9iYXNoCgpXUktESVI9IiQobWt0ZW1wIC1kIC1wIC4pIgpjZCAiJHtXUktESVJ9IgoK
+Z2l0IC0tdmVyc2lvbgoKZ2l0IGluaXQgLiA+IC9kZXYvbnVsbCAyPiYxCmdpdCBjb25maWcgLS1n
+bG9iYWwgdXNlci5lbWFpbCAieW91QGV4YW1wbGUuY29tIiA+IC9kZXYvbnVsbCAyPiYxCmdpdCBj
+b25maWcgLS1nbG9iYWwgdXNlci5uYW1lICJZb3VyIE5hbWUiID4gL2Rldi9udWxsIDI+JjEKCnRv
+dWNoIC5naXRpZ25vcmUKZ2l0IGFkZCAuZ2l0aWdub3JlID4gL2Rldi9udWxsIDI+JjEKZ2l0IGNv
+bW1pdCAtbSdJbml0JyA+IC9kZXYvbnVsbCAyPiYxCgplY2hvICdhJyA+IGRhdGEudHh0CmdpdCBh
+ZGQgZGF0YS50eHQgPiAvZGV2L251bGwgMj4mMQpnaXQgY29tbWl0IC1tJ0ZpcnN0IGNvbW1pdCcg
+PiAvZGV2L251bGwgMj4mMQoKZWNobyAnYicgPiBkYXRhLnR4dApnaXQgYWRkIGRhdGEudHh0ID4g
+L2Rldi9udWxsIDI+JjEKZ2l0IGNvbW1pdCAtbSdTZWNvbmQgY29tbWl0JyA+IC9kZXYvbnVsbCAy
+PiYxCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMKCkJBU0U9J21hc3RlcicKCkJFRk9SRV9CQVNFPSdtYXN0ZXJe
+JwojQkVGT1JFX0JBU0U9J21hc3Rlcn4xJwojQkVGT1JFX0JBU0U9J21hc3RlckB7MX0nCgplY2hv
+ICJCQVNFOiAke0JBU0V9IgplY2hvICJCRUZPUkVfQkFTRTogJHtCRUZPUkVfQkFTRX0iCgojIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMKCkJSQU5DSD1icmFuY2hfMQpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIg
+IiR7QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVsbCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzLCBz
+YW1lIGNvbW1pdHMgKGFzIGlmIC0tZmYgd2FzIGdpdmVuKQpnaXQgY2hlcnJ5LXBpY2sgIiR7QkFT
+RX0iID4gL2Rldi9udWxsIDI+JjEKCkNJRF9CUkFOQ0g9JChnaXQgc2hvdyAiJHtCUkFOQ0h9IiB8
+IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKQ0lEX01BU1RFUj0kKGdpdCBzaG93IG1hc3RlciB8
+IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKCiMgU2hvdWxkIGJlIGRpZmZlcmVudCBidXQgYXJl
+bid0CmVjaG8gIiR7Q0lEX01BU1RFUn0gPD4gJHtDSURfQlJBTkNIfSIKWyAiJHtDSURfTUFTVEVS
+fSIgPSAiJHtDSURfQlJBTkNIfSIgXSAmJiBlY2hvIFNBTUUgfHwgZWNobyBESUZGCgojIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMKCkJSQU5DSD1icmFuY2hfMgpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIgIiR7
+QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVsbCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzIGJ1dCBu
+ZXcgY29tbWl0IElEcwpnaXQgY2hlcnJ5LXBpY2sgLS1uby1mZiAiJHtCQVNFfSIgPiAvZGV2L251
+bGwgMj4mMQoKQ0lEX0JSQU5DSD0kKGdpdCBzaG93ICIke0JSQU5DSH0iIHwgYXdrICdOUiA9PSAx
+IHtwcmludCAkMn0nKQpDSURfTUFTVEVSPSQoZ2l0IHNob3cgbWFzdGVyIHwgYXdrICdOUiA9PSAx
+IHtwcmludCAkMn0nKQoKIyBUaG9zZSBhcmUgZGlmZmVyZW50CmVjaG8gIiR7Q0lEX01BU1RFUn0g
+PD4gJHtDSURfQlJBTkNIfSIKWyAiJHtDSURfTUFTVEVSfSIgPSAiJHtDSURfQlJBTkNIfSIgXSAm
+JiBlY2hvIFNBTUUgfHwgZWNobyBESUZGCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKCkJSQU5DSD1icmFuY2hf
+MwpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIgIiR7QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVs
+bCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzLCBzYW1lIGNvbW1pdHMKZ2l0IGNoZXJyeS1waWNr
+IC0tZmYgIiR7QkFTRX0iID4gL2Rldi9udWxsIDI+JjEKCkNJRF9CUkFOQ0g9JChnaXQgc2hvdyAi
+JHtCUkFOQ0h9IiB8IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKQ0lEX01BU1RFUj0kKGdpdCBz
+aG93IG1hc3RlciB8IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKCiMgVGhvc2UgYXJlIGRpZmZl
+cmVudAplY2hvICIke0NJRF9NQVNURVJ9IDw+ICR7Q0lEX0JSQU5DSH0iClsgIiR7Q0lEX01BU1RF
+Un0iID0gIiR7Q0lEX0JSQU5DSH0iIF0gJiYgZWNobyBTQU1FIHx8IGVjaG8gRElGRgoKIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjCg==
+--000000000000056dc4058b3c377c--
