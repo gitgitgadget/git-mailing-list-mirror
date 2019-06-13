@@ -2,170 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 548651F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 21:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1391F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 22:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbfFMVwG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 17:52:06 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:42202 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbfFMVwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 17:52:06 -0400
-Received: by mail-pg1-f202.google.com with SMTP id d3so278796pgc.9
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 14:52:05 -0700 (PDT)
+        id S1726665AbfFMWPt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 18:15:49 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:37902 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725793AbfFMWPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 18:15:49 -0400
+Received: by mail-qk1-f201.google.com with SMTP id n190so360597qkd.5
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=gOBCM0b/gdKvpOjQEZuZJZscDkYOWi69GKHebbse/3o=;
-        b=gzPx3dlIvtvJaR03OkX1uNssnM+jPRCInDLV7SCXwiiXA7XYwvdL5/NaYUiZtmV1Kx
-         53CteqdpwePmR0rShbk4D02XrLBSC6UacgvRKZaZJPJzs04vzTIWzl4TM6IRSnwYnrCq
-         ORPDcbUGuNDgD3h5JYi8CRYohsSbP1bKy2t6W2twTx2rCBhPGuLwtl/ndiPudYuqe28s
-         5ZlAhOix5FlTjOqthZ2pMgFGUfcLkdPLcsrzLt+bFqCa1ZOOsIfEojii7ry+FaPMrnk/
-         4TJE+awqpQFWV2BLXWQsVa3FuHJXxz00Hu2ss3USipFQ4Rh7JjWvDtktRdbHFlRDtIr0
-         kOkw==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=7hXyskFKznsPKBFriFHPNRxUfRJGgVP4ly6SCWzFU+I=;
+        b=FknqYqOpFw4gt+VbE/lnSbg2i0604I5j9QDc5niMPge5r5Wn9rjGrCjgFaQz9R1Hu+
+         dCeUgvJFfEOyXQH7TaaH3+WESlw7ctrtnuSyy1tS+YkLAXuXeOTErWVdHpbnzbSYIz6q
+         0s5NvBQj4CDuOUOHUn/5rrqc8mMrOIYK+fzbIkL/rs96CBDTxNqRP1Y4LNynulOHQrKd
+         +3WqsgXdOnOFS5mu/38X75FIC6Rx75CxX8IVeCHMre7kma6krWwqeys6HFJANfL20GuH
+         UIeLoof0pm80R7XAa2hWtZErN3vDjPZGvQpQJWqmTXh07ppMrqZF2zxprAMqLGqRaoob
+         xJXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=gOBCM0b/gdKvpOjQEZuZJZscDkYOWi69GKHebbse/3o=;
-        b=C36GXAlTYY9SYMfSoe5eHAMUt1J5cXfPQ2R/F84x+Pfnvmooa2GPxiJnSmMg4MWgH2
-         3QxglgrEQYTIWG65IMB4ICLHVBiI4U4WRg4dZIByfAZ0wRHYleXf78R4Frv+KldqgJgA
-         NOCPkXisC0o7XS2wq7n73Sm9v0N/3INYC01jkCxaiQcMfCvoi+29JZvFUzNfTAGkwcVx
-         MvWed7YIn5bSoQq47RMHVuV9CVPnxPpq7XuEZFajYARX709yfb7PZw9oz09+nJBZ9fcY
-         tmU4v7B+cQAHgVQO7XSDZDiVIyfJ3btZOmPcoF7PwRPMZN8psH8xjFcZi3OzsPmD4pg8
-         mmFQ==
-X-Gm-Message-State: APjAAAX1q9GDI3WjwyywWBnAIXvy4q+KiM4xLDadrqHc6QAQM1IPSd7R
-        cwzh/8IazO1FGG99dET0YO7vz5ptSnd0K4ZaUP9zd2x2VaVzSt8gDQlKtXxfXD3CuAJ9XEzOUc4
-        WMxzpxkYg3r3uyBvLHbq8/Lv/DG8Y+FW56hRtGI1f3hgjK8vwhiQsLq+WqyM=
-X-Google-Smtp-Source: APXvYqxs0qBnFuCBFteFwo79GDNSBmZn6OdaJPg+XDYfkJFDLEqmktjljIgBhkFSGVDZHvF9HARWxQ5tBRQv
-X-Received: by 2002:a65:4307:: with SMTP id j7mr32594702pgq.91.1560462724923;
- Thu, 13 Jun 2019 14:52:04 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 14:51:33 -0700
-In-Reply-To: <cover.1560462201.git.matvore@google.com>
-Message-Id: <e2d87f8cb6a0079811386e701c7b9f90da163618.1560462201.git.matvore@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=7hXyskFKznsPKBFriFHPNRxUfRJGgVP4ly6SCWzFU+I=;
+        b=Yy7Z0lJYE5EUYEJ2vaFhcnJoABd3fKMGUQxDNnyrmlXWnZqcCvm4cDy6icAVZT0vYR
+         d7w8p1MDWTOq6PLBKwPSidg2eUJlnsXL3gL4c5heWWR6pfD4e1DAvOgUjx4ZKrkvEHOm
+         Deg7w7JeS1mQTZIKTmqGYACOQTJAG9ZWe6J99rH9b/ISjS9lSz9m5xFj9mG1gdOpCNH0
+         WeRyFjV359l3vgky/WX2WGq0qwx0vC+KO4zr2N6Kq1j3fGPIBfIK2eSImvWR4x7zYG8V
+         oxjY+quHnCSYfvnzhDSE/pLUZapiS9h538dxfyz7JZ9X5KDGmgCm5SWS7Xyxrh05Qgl8
+         oWDw==
+X-Gm-Message-State: APjAAAVqECcYLdtU7N52qPhmi5bD2DvLS7v0tB1Mki3Z+1ekxYhMP9Z/
+        3WZ3dv4Apnh6aXd7G3yh4kLody4fawgdHmZNu7TXszAQPdv2AkXWbjji3XF8oqfw6WdQ9qlhrIW
+        kkENAidWOQc0lopKtX1ZMyKW/AEO1ijBbB7ro4CB9zMabjEoEIAdfgMfQ+bsttHV6/0VJmWzz9w
+        ==
+X-Google-Smtp-Source: APXvYqwH23gsXSQkcKHTUhcnHxpvjqnYvXNFeqN4Z/tnolmJyhOUG3vW2wRK3FUGCun/pK7edHqQNRVUEqCFJtfh6/E=
+X-Received: by 2002:a05:6214:248:: with SMTP id k8mr5482766qvt.200.1560464148030;
+ Thu, 13 Jun 2019 15:15:48 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 15:15:41 -0700
+Message-Id: <20190613221541.10007-1-emilyshaffer@google.com>
 Mime-Version: 1.0
-References: <20190601003603.90794-1-matvore@google.com> <cover.1560462201.git.matvore@google.com>
 X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
-Subject: [PATCH v3 10/10] list-objects-filter-options: make parser void
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
-        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, emilyshaffer@google.com
-Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
+Subject: [RFC PATCH] rev-list: clarify --abbrev and --abbrev-commit usage
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function always returns 0, so make it return void instead.
+Indicate that --abbrev only works with --abbrev-commit also specified.
+It seems that simply running `git rev-list --abbrev=5` doesn't
+abbreviate commit OIDs. But the combination of `git rev-list
+--abbrev-commit --abbrev=5` works as expected. Clarify in the
+documentation by indicating that --abbrev is an optional addition to the
+--abbrev-commit option. --no-abbrev remains on a separate line as it can
+still be used to disable OID abbreviation even if --abbrev-commit has
+been specified.
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Change-Id: If9b1198938e1a3515ae6740241f7b791fb7a88bd
 ---
- list-objects-filter-options.c | 12 +++++-------
- list-objects-filter-options.h |  2 +-
- 2 files changed, 6 insertions(+), 8 deletions(-)
+I thought this was odd when I was working on the other rev-list changes
+- --abbrev doesn't do anything on its own. It looks like it does work by
+itself in other commands, but apparently not in rev-list.
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 9f08390628..a4ebf21a5b 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -222,21 +222,21 @@ static void transform_to_combine_type(
- 	string_list_clear(&filter_options->sub[0].filter_spec, /*free_util=*/0);
- }
- 
- void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options)
- {
- 	if (filter_options->choice)
- 		die(_("multiple filter-specs cannot be combined"));
- }
- 
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg)
- {
- 	struct strbuf errbuf = STRBUF_INIT;
- 	int parse_error;
- 
- 	if (!filter_options->choice) {
- 		string_list_append(&filter_options->filter_spec, xstrdup(arg));
- 
- 		parse_error = gently_parse_list_objects_filter(
-@@ -252,34 +252,32 @@ int parse_list_objects_filter(
- 		filter_spec_append_urlencode(filter_options, arg);
- 		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
- 			      filter_options->sub_alloc);
- 
- 		parse_error = gently_parse_list_objects_filter(
- 			&filter_options->sub[filter_options->sub_nr - 1], arg,
- 			&errbuf);
- 	}
- 	if (parse_error)
- 		die("%s", errbuf.buf);
--	return 0;
- }
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset)
- {
- 	struct list_objects_filter_options *filter_options = opt->value;
- 
--	if (unset || !arg) {
-+	if (unset || !arg)
- 		list_objects_filter_set_no_filter(filter_options);
--		return 0;
--	}
--
--	return parse_list_objects_filter(filter_options, arg);
-+	else
-+		parse_list_objects_filter(filter_options, arg);
-+	return 0;
- }
- 
- const char *list_objects_filter_spec(struct list_objects_filter_options *filter)
- {
- 	if (!filter->filter_spec.nr)
- 		BUG("no filter_spec available for this filter");
- 	if (filter->filter_spec.nr != 1) {
- 		struct strbuf concatted = STRBUF_INIT;
- 		strbuf_add_separated_string_list(
- 			&concatted, "", &filter->filter_spec);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index fe2e4d5649..0a48f541d2 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -69,21 +69,21 @@ void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options);
- 
- /*
-  * Parses the filter spec string given by arg and either (1) simply places the
-  * result in filter_options if it is not yet populated or (2) combines it with
-  * the filter already in filter_options if it is already populated. In the case
-  * of (2), the filter specs are combined as if specified with 'combine:'.
-  *
-  * Dies and prints a user-facing message if an error occurs.
-  */
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg);
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset);
- 
- #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
- 	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
- 	  N_("object filtering"), 0, \
- 	  opt_parse_list_objects_filter }
+Listed this patch as RFC because maybe instead it's better to fix
+something so --abbrev can be used alone, or teach --abbrev-commit=<n>.
+It looks like `git log --abbrev=5` also doesn't work the way one might
+expect, which makes sense to me, as they use the same internals for
+option parsing (parse_revisions()).
+
+The manpages for log and rev-list both correctly indicate that
+--abbrev=<n> is an optional addition to --abbrev-commit. `git log -h` is
+generated by parse-options tooling and doesn't cover --abbrev-commit at
+all, but `git rev-list` doesn't use an option parser on its own and the
+usage is hardcoded.
+
+ - Emily
+
+ builtin/rev-list.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 9f31837d30..6ae0087b01 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -49,8 +49,8 @@ static const char rev_list_usage[] =
+ "    --objects | --objects-edge\n"
+ "    --unpacked\n"
+ "    --header | --pretty\n"
+-"    --abbrev=<n> | --no-abbrev\n"
+-"    --abbrev-commit\n"
++"    --abbrev-commit [--abbrev=<n>]\n"
++"    --no-abbrev\n"
+ "    --left-right\n"
+ "    --count\n"
+ "  special purpose:\n"
 -- 
-2.21.0
+2.22.0.rc2.383.gf4fbbf30c2-goog
 
