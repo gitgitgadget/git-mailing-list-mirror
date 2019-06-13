@@ -2,77 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C3F71F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 18:54:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35D91F87F
+	for <e@80x24.org>; Thu, 13 Jun 2019 19:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728531AbfFMSx3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 14:53:29 -0400
-Received: from sonic301-35.consmr.mail.ne1.yahoo.com ([66.163.184.204]:38322
-        "EHLO sonic301-35.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727224AbfFMSx3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Jun 2019 14:53:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1560452008; bh=NuUrHl7AtUCqqq1w2+ev6fOsuItU2bE1OFPEtuqa7kw=; h=From:To:Cc:Subject:Date:From:Subject; b=nvyE9svxbzaAG1s75Iaobv8haydqw3xVsXqWsYR7yYxLlUdFpT5AUreZxUwfbOzoMXn7/RqPK4Sh6cZxU3dWSTMA1JQ49P6iHJseVGWahOzc+2ut/5O078UFtXwgxWHGUo4glKRlyGw8SbED8SCd8DNhh09hD2DdN1FCU2XY0HQ1/mqU4etrfyd/T1c5MjPPFm5DgUvByTh+VGpllUO3rYfIyIaok3ZGNsUMTSJDyXozwgRkTNvGRoKxyDuhzEJEmH9J0tCUnKnlC5yvBry2Dmr90VkABxyd/pAx3jNwtLKAZlUqFx1AHfmrRYnf3BQ5qUAIogWz+IAzYALgIVVA+w==
-X-YMail-OSG: k6iXi4EVM1noibW70ot0sPozuR6QMZbbSyCPyj9962j.2s_FaDTCE05pCyESlyn
- AHM4OJDoUYUHcCd.OoAVmJ2gpqdG2t2higIj.BknJuBVi3InfLDNLakVTEDZbHLsYv.OCu9LI3SH
- JocUpIBEyBCI.ZqxMPmDqYJnu9ZBRUeXqTvWIivvYpu7Xc._Oh8GVJQ9Nm5sCzlx5Wt9W_jfnjqs
- yX6lou9vK_C5qzv1YEn3ywSsDxo_XTZolcXnKUJLv2oEsE0xNshCyxSRsW6o8c8DBPadvBzMjYmf
- vtthMVOkkREKtECXILsIN2kfIqItOIGhTnp3SHTuXKx_F2gVUpUArHjnLdMU1_s3G8JJSlRLioSj
- rC0GSOaQ80gr4aZRFBCAHfmd0riYMYkQXXJV2bJY7HZsjOLD8xG7w_yzm9NbM6FiXte_KAYAdU2k
- FT9t8d.R_fFPvq5pFFtK9uHQHJug8Ph92BsT1pKM0PFVYByNSkK1L6zDs2OZ1y_o_WfdUbpjoS0f
- _BUexRRbmV81pxwAJrhRyCjNcqjNblDq6Z4OBLCKPgmZmJ5Mz1wU77alcjL19VcgzLVvd7YVzNPb
- rNzEdOyQtuOfp0PRwbTBJbhkBD2oB2sf_zKw1gCaqOtqAXAmBypDBG_zVuCbZzmhtsUtFGSKEhsn
- 4W_DJF15nwrMBuvcC1T4KnNNbrUoqXZCa4JPhA46_ZSeP4HJElVgDeRmRAsZ9j3gh77VMlOwxjJk
- IPKur5UBPZgiUDTPytDEb7bS.FbU83uGdRZ8irIEO0IIY0dEGbw2SxJ4Adv9uFVqoQwYcySv5_tC
- KecImFJPElGWjD1lib4IAP79._PBPpjD8MZ2wdH742pobQWYlg_pO9267_HHhM73L6DSvMnZH5qM
- DoU1SKhVG0YgKcNvdEbWAouJbwueFAVFjkHoiaVqmgq6OTA9UBano3NlTBF868_bvA6Ft8uPO3pp
- ZgXG1GO1aFgG._t5w6EXuQG6oaoJ_bT8dhuQ9sgHFajaQJcHqCDWNvR_5og51AV8gXq99JuFTcEI
- AIAfT4F6th358uTCkXV1knamQ6tS6C.JX1ZAHamwfFyhInrjlVNtKDvTUYYXB93bJ8Eq3b_LNOX1
- TEzwInPWKxFoBGelAxtvVft6WIJGcA_4CLXglWy5JQAGoPcFPJ2Whvjxn4yA.WuO_jJ86v90NKRG
- 8mhddzeGvsWf9L.9k8Bl4CyPUN96u7aWChUldoggcY.llWHitddROt8wpaqmcLYP2cy95XkybPLe
- d2RUXozFODjXdU2KHwo55DNrzC1zy2nIgWBU-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic301.consmr.mail.ne1.yahoo.com with HTTP; Thu, 13 Jun 2019 18:53:28 +0000
-Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
-          by smtp432.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 0df5561e6e714d6e0f0f0c310b112dc6;
-          Thu, 13 Jun 2019 18:53:25 +0000 (UTC)
-From:   randall.s.becker@rogers.com
-To:     git@vger.kernel.org
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [Patch 0/5] Add exclusions for tests requiring cvs where cvs is not installed
-Date:   Thu, 13 Jun 2019 14:53:08 -0400
-Message-Id: <20190613185313.16120-1-randall.s.becker@rogers.com>
-X-Mailer: git-send-email 2.12.3
+        id S1727294AbfFMTAl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 15:00:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54238 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726603AbfFMTAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 15:00:41 -0400
+Received: (qmail 3952 invoked by uid 109); 13 Jun 2019 19:00:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jun 2019 19:00:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21064 invoked by uid 111); 13 Jun 2019 19:01:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 13 Jun 2019 15:01:26 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jun 2019 15:00:37 -0400
+Date:   Thu, 13 Jun 2019 15:00:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, aleksandrs@ledovskis.lv,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Espen Antonsen <espen@inspired.no>, git@vger.kernel.org
+Subject: Re: Git status parse error after v.2.22.0 upgrade
+Message-ID: <20190613190037.GA27217@sigill.intra.peff.net>
+References: <3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com>
+ <nycvar.QRO.7.76.6.1906112127420.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <38b0f33a-1da1-4231-802e-ae14d9843ad2@www.fastmail.com>
+ <nycvar.QRO.7.76.6.1906122046400.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <20190613093023.GA3919@ariake.ledovskis.lv>
+ <xmqqr27xwjwj.fsf@gitster-ct.c.googlers.com>
+ <20190613162432.GA12128@sigill.intra.peff.net>
+ <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
+On Thu, Jun 13, 2019 at 06:43:41PM +0100, Phillip Wood wrote:
 
-t9600 to t9604 currently depend on cvs to function correctly, otherwise
-all of those tests fail. This patch follows an existing pattern of
-from the t9400 series by attempting to run cvs without arguments,
-which succeeds if installed, and skipping the test if the command
-fails.
+> >>  (2) make the sequencer machinery more careful to clean up after it
+> >>      is done or it is aborted  (for example, "git reset --hard"
+> >>      could remove these state files preemptively even when a rebase
+> >>      is not in progress, I would think).
+> >>
+> >> I think we already had some patches toward the latter recently.
+> > 
+> > Maybe I am not understanding it correctly, but do you mean in (2) that
+> > "git reset --hard" would always clear sequencer state?
+> 
+> I think the commit Junio is referring to is
+> b07d9bfd17 ("commit/reset: try to clean up sequencer state", 2019-04-16)
+> which will only remove the sequencer directory if it stops after the
+> pick was the last one in the series. The idea is that if cherry-pick
+> stops for a conflict resolution on the last pick user commits the result
+> directly or run reset without running `cherry-pick --continue`
+> afterwards the sequencer state gets cleaned up properly.
 
-Randall S. Becker (5):
-  t9600-cvsimport: exclude test if cvs is not installed
-  t9601-cvsimport-vendor-branch: exclude test if cvs is not installed
-  t9602-cvsimport-branches-tags: exclude test if cvs is not installed
-  t9603-cvsimport-patchsets: exclude test if cvs is not installed
-  t9604-cvsimport-timestamps: exclude test if cvs is not installed
+OK, that makes a lot more sense to me. It did make me wonder if doing an
+"e"dit on the final commit of a rebase followed by "reset HEAD^" would
+clear the sequencer state. But looking at that commit, this kicks in
+only for the cherry-pick and revert cases.
 
- t/t9600-cvsimport.sh               | 7 +++++++
- t/t9601-cvsimport-vendor-branch.sh | 8 ++++++++
- t/t9602-cvsimport-branches-tags.sh | 7 +++++++
- t/t9603-cvsimport-patchsets.sh     | 7 +++++++
- t/t9604-cvsimport-timestamps.sh    | 7 +++++++
- 5 files changed, 36 insertions(+)
+Thanks for explaining.
 
--- 
-2.22.0
+> If we do want to do something then maybe teaching gc not to collect
+> commits listed in .git/sequencer/todo and
+> .git/rebase-merge/git-rebase-todo would be useful.
 
+IMHO that opens up a can of worms, because the reachability rules get
+more complicated (so for example people trying to prune away unwanted
+history get confused about what is still mentioning the objects). That's
+a reasonable rare case. OTOH, so is mentioning commits in an ongoing
+rebase that are not still reachable from the branch you are rebasing,
+nor the HEAD reflog.
+
+-Peff
