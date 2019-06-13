@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05B2B1F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 15:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C21361F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 15:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729435AbfFMP0L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 11:26:11 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34390 "EHLO
+        id S1729433AbfFMP0K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 11:26:10 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34393 "EHLO
         mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729406AbfFMLtr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729418AbfFMLtr (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 13 Jun 2019 07:49:47 -0400
-Received: by mail-ed1-f65.google.com with SMTP id s49so1005244edb.1
+Received: by mail-ed1-f65.google.com with SMTP id s49so1005299edb.1
         for <git@vger.kernel.org>; Thu, 13 Jun 2019 04:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wu3jazoDAlbauAyAM1ClYlJXGYiSgY5Y02gxCmNI9SI=;
-        b=Zb6lMa3PJ+hUuWHJgdBwrMuVMZEoiXP0asmE4lFKq/uKBmZCp4f+on7fxz3pFObwjv
-         gm6RMykq8jjbWzpwvNsU1bub8fztcyKqHkTuLmki3F7lF9rRfoYtMhz9FIFBDA4nYLxg
-         21I7B91fp0CPLh+VHSCb5w/73Mv/CyDzaLQqveLrNu5YMaAvJwNUA4hZ/ipB92iHi26V
-         EqHo2j043BBvuTX40iw9gTDR79yma5bIKhirDIw/UKbm/6AN74CCEAHxFEmi0fmDIfBr
-         m2IGalpFqzplFHGKX6s33pFlDKLmH9A10I5A6EcNvsme8xUALbg8RQUZo2Ij5n4r+9BV
-         cVhg==
+        bh=RMbR/sr9uFSB2sNfUSbwNcmXQ4wJeTPdpKIku5E/Tsk=;
+        b=vTWGW71jlBSQFgV/McoYpFdMuHnVtrfRr/6PvTSgXas2ibc1GtnmqQBrKYislKLidJ
+         WxUBiMPbCfry2L5piL3edhh5yg2nXSKb7yL94OIn4AGJkGPf+/kSFisIhowsEBbNl3Pa
+         ThIFexXPcL9A6KA+U9Q2UNjPDJ/KAXLUe3Esq8W4qpheXjLLaJKhFnLzWj71m6K32HaA
+         zaoKo1kwGiaHA7W0olBhwffTnbFuobK1X48p93104Z5c0cmPLtmTo6TWjAYQ6qi2KQtk
+         KNTdqzYvIsvLEkgOabQ2aW0DIeXkP84GJLvbU24NweiYJYNQnfzI/IAvnKP5pMA2llli
+         +qbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wu3jazoDAlbauAyAM1ClYlJXGYiSgY5Y02gxCmNI9SI=;
-        b=C7JrilGaGHG9jA4GohiTg0YrqL6WMgLbyoevTB9KwYJNbR2ssYDJwjQ7rHzM0lFut4
-         N2+u0f38soFMNIaPcoHvjGvBHXQ0Jz9PlvCLINhTJOD8Y4BSy9I1HtvzYwysPuZeIhby
-         1oBrdZi6wvQBCUiNlDHR4jasZEZfnv6jqODkHEV3nPqK/XdWNQqsLT2x4b3HDraBIczn
-         K1/J4hmU3Qyw495yYefAL/rzMw4BSIGzyCXzR9BqqXoX8HFihMZwGp0VMkzHuKVIc5W7
-         LjL5ipiHDVIBCG0XzrIkDhpJMnPOQLwdkiK6CYMiR62sPVTAfZqR0c4pQHxgYxJQn7/C
-         wWfg==
-X-Gm-Message-State: APjAAAVnmXWVfBefCLwvplT4SuX5DH9Q84hMxNdKXhk1gShyBvpzCCpw
-        XtdcrWSl7IWbT6a32Im/EKaAC6lw
-X-Google-Smtp-Source: APXvYqzs5rKNaUtzJCRFfTACgyrjXW5hD54inRd3L2H4YCMVJpcPVvQp9oSJXtk1QAgjfNh4oR8QdQ==
-X-Received: by 2002:a50:8b9c:: with SMTP id m28mr49662101edm.53.1560426585250;
-        Thu, 13 Jun 2019 04:49:45 -0700 (PDT)
+        bh=RMbR/sr9uFSB2sNfUSbwNcmXQ4wJeTPdpKIku5E/Tsk=;
+        b=d6Ko8hTL7Si/xlJUcn6NOKFgeoVxVFc/GiQAOHtd5RzjlIhEK+Dnmsh0xCX0sjASqu
+         bxBsaRUY0eDwER8TjI4DXtnzZvA+Si9fvyIkbZjme1Mgbxw2I0vKYqBGoPDfvrYCuGlE
+         8VCMtraI+EPxGB0/0wU4ezn0RUilaBXAQLhAYPDU4GI5TDsGvBcZhfFuzq38+4U8Kn+M
+         SfYTeZht8F4Rdryz+14HK5JRdhPB80mtKIeC6nWlJzeqLnrl1IPENED/ms3qR75w1B6t
+         kcb+uTbOPZDYY/oygMGBLncDMvAXuadKzDAZgH4MAzE+bELppwJRCsa8aoTbgjF29d+h
+         L+SQ==
+X-Gm-Message-State: APjAAAXbFC/wQv70NssXRVWVvyCq1qRGjobLEqMYGHMYNJzNS6MENq97
+        UXBk4QTsbCyXcH8jp+U/t2GE+5Pi
+X-Google-Smtp-Source: APXvYqx1Ks8hQbDE6LSOVvkU+yiC+09xgOtmJ/XU0jNLaCpJkDm7mizEjIB72ZwGahq8P48yXJ7b6g==
+X-Received: by 2002:a50:ad45:: with SMTP id z5mr71444639edc.21.1560426586010;
+        Thu, 13 Jun 2019 04:49:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c21sm509070ejk.79.2019.06.13.04.49.44
+        by smtp.gmail.com with ESMTPSA id f36sm574333ede.47.2019.06.13.04.49.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 04:49:44 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 04:49:44 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Jun 2019 11:49:38 GMT
-Message-Id: <fde98c32199a6570c721dbef7795e278b36224db.1560426581.git.gitgitgadget@gmail.com>
+        Thu, 13 Jun 2019 04:49:45 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 04:49:45 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Jun 2019 11:49:39 GMT
+Message-Id: <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.265.git.gitgitgadget@gmail.com>
 References: <pull.265.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/4] poll (mingw): allow compiling with GCC 8 and DEVELOPER=1
+Subject: [PATCH 2/4] kwset: allow building with GCC 8
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,31 +71,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The return type of the `GetProcAddress()` function is `FARPROC` which
-evaluates to `long long int (*)()`, i.e. it cannot be cast to the
-correct function signature by GCC 8.
+The kwset functionality makes use of the obstack code, which expects to
+be handed a function that can allocate large chunks of data. It expects
+that function to accept a `size` parameter of type `long`.
 
-To work around that, we first cast to `void *` and go on with our merry
-lives.
+This upsets GCC 8 on Windows, because `long` does not have the same
+bit size as `size_t` there.
+
+Now, the proper thing to do would be to switch to `size_t`. But this
+would make us deviate from the "upstream" code even further, making it
+hard to synchronize with newer versions, and also it would be quite
+involved because that `long` type is so invasive in that code.
+
+Let's punt, and instead provide a super small wrapper around
+`xmalloc()`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/poll/poll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kwset.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-index 4459408c7d..8b07edb0fe 100644
---- a/compat/poll/poll.c
-+++ b/compat/poll/poll.c
-@@ -149,7 +149,7 @@ win32_compute_revents (HANDLE h, int *p_sought)
-     case FILE_TYPE_PIPE:
-       if (!once_only)
- 	{
--	  NtQueryInformationFile = (PNtQueryInformationFile)
-+	  NtQueryInformationFile = (PNtQueryInformationFile)(void (*)(void))
- 	    GetProcAddress (GetModuleHandle ("ntdll.dll"),
- 			    "NtQueryInformationFile");
- 	  once_only = TRUE;
+diff --git a/kwset.c b/kwset.c
+index 4fb6455aca..efc2ff41bc 100644
+--- a/kwset.c
++++ b/kwset.c
+@@ -38,7 +38,13 @@
+ #include "compat/obstack.h"
+ 
+ #define NCHAR (UCHAR_MAX + 1)
+-#define obstack_chunk_alloc xmalloc
++/* adapter for `xmalloc()`, which takes `size_t`, not `long` */
++static void *obstack_chunk_alloc(long size)
++{
++	if (size < 0)
++		BUG("Cannot allocate a negative amount: %ld", size);
++	return xmalloc(size);
++}
+ #define obstack_chunk_free free
+ 
+ #define U(c) ((unsigned char) (c))
 -- 
 gitgitgadget
 
