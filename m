@@ -2,120 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D84F1F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 17:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E365C1F609
+	for <e@80x24.org>; Thu, 13 Jun 2019 17:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729058AbfFMR2P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 13:28:15 -0400
-Received: from gproxy2-pub.mail.unifiedlayer.com ([69.89.18.3]:49158 "EHLO
-        gproxy2-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727230AbfFMR2P (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Jun 2019 13:28:15 -0400
-Received: from cmgw10.unifiedlayer.com (unknown [10.9.0.10])
-        by gproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id 7B80F1E0E3C
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 11:28:14 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmsmtp with ESMTP
-        id bTWIhVZ28sFwgbTWIhOMkY; Thu, 13 Jun 2019 11:28:14 -0600
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.3 cv=J/aEEjvS c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=dq6fvYVFJ5YA:10:nop_rcvd_month_year
- a=eAOjpCpGei4A:10:endurance_base64_authed_username_1 a=iz-zNJ8GzIr3HHWB9zYA:9
- a=QEXdDO2ut3YA:10:nop_charset_2
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
-        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=WcYeaxjNVhDDddttFIiN6UicPx+/Y9blImj0WV8ruSA=; b=dkKyZiLq0SVx5I71WR+gsRl/pK
-        Pl1VWezHyUep9Y6AabdXfrJghaK/6AySf5Z9epNHcjW2gGx013XMS6geM8fZtSRIlgy2NNRHg/p94
-        TPKVo9c4yxOYaLCjxKf5TCZC9;
-Received: from [65.112.16.22] (port=36932 helo=pdslaptop)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.92)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1hbTWH-001LGJ-Tw
-        for git@vger.kernel.org; Thu, 13 Jun 2019 11:28:14 -0600
-Message-ID: <13c40b4b819f702a52f7039177579f87fa90aa50.camel@mad-scientist.net>
-Subject: Re: Reducing git size by building libgit.so
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Date:   Thu, 13 Jun 2019 13:28:10 -0400
-In-Reply-To: <nycvar.QRO.7.76.6.1906130914250.42@tvgsbejvaqbjf.bet>
-References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu>
-                 <20190611234815.GB8616@genre.crustytoothpaste.net>
-         <9c488ce8c1e1e6d6d4c343b0b40c8a64c8147a7f.camel@mad-scientist.net>
-         <nycvar.QRO.7.76.6.1906130914250.42@tvgsbejvaqbjf.bet>
-Organization: Please remain calm--I may be mad but I am a professional!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 65.112.16.22
-X-Source-L: No
-X-Exim-ID: 1hbTWH-001LGJ-Tw
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdslaptop) [65.112.16.22]:36932
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+        id S1727430AbfFMRdn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 13:33:43 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47584 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725793AbfFMRdn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 13:33:43 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1BCAD61836; Thu, 13 Jun 2019 17:33:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560447222;
+        bh=hUArA1rPbND0zEO7qA0z1Tilw3w682aI2G9Hk3d3DE0=;
+        h=From:Subject:Date:To:From;
+        b=g7Z8C6HLs94VPIBOrYI4xELRup9u1oDJwSfhuCepX0tPoRt/PsFoa2iTFcPnvkPej
+         lL9zoSC5Jjr+kllNu5pRBSZk4Smko+FxvEwTQ4JBa+I7GMpHMTeV0ohVxiNBJ4QQSA
+         tJjasO2L1SFe34Ucis87z1k5HwfwFxe3yM1CoG5g=
+Received: from nasserg1-mac.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: nasser@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4EE7261788
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 17:33:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1560447221;
+        bh=hUArA1rPbND0zEO7qA0z1Tilw3w682aI2G9Hk3d3DE0=;
+        h=From:Subject:Date:To:From;
+        b=ZYAg5pOPQV7XEJ9Vz2gBLRxRzkKuJMFs98uFSRfxb6N0Jihvn4VY3N22+kgN3fRhq
+         YshSzNemO78+imBJIlTduOtdbP3baGm4steHXGs6vfiRaTK5TW0qWYtlYts3CjWYqI
+         LYk16Tt/ApJCpPkwL9X09DtVDwDhpPooKWdnf/aU=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4EE7261788
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=nasser@codeaurora.org
+From:   Nasser Grainawi <nasser@codeaurora.org>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: git receive-pack deletes refs one at a time?
+Message-Id: <E203B539-3481-435F-8D08-9C405DF42923@codeaurora.org>
+Date:   Thu, 13 Jun 2019 11:33:40 -0600
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2019-06-13 at 09:51 +0200, Johannes Schindelin wrote:
-> Hassles aside, you mentioned Linux and macOS. What about literally
-> *all* the other platforms we support? Like AIX, NonStop, HP/UX, etc?
+I have a situation where I need to delete 100k+ refs on 15+ separate =
+hosts/disks. This setup is using Gerrit replication, so I can trigger it =
+all on one host and it will push the deletes to the rest (all running =
+git-daemon v2.18.0 with receive-pack enabled). All the refs being =
+deleted on the receiving ends are packed.
 
-I assumed that we were discussing providing an _option_ of building
-with shared libraries, rather than removing support for static
-libraries and only supporting shared libraries.  The former is the
-typical model in portable projects.
+What I see is the packed-refs file getting locked/updated over and over =
+for each ref. I had assumed it would do something more like 'update-ref =
+--stdin' and do a bulk removal of refs. Am I seeing the correct =
+behavior? If yes, is there a specific reason it works this way or is =
+"bulk delete through push" just a feature that hasn't been implemented =
+yet?
 
-So, the answer to most of the (important) issues you and Brian raise
-is, "if it doesn't work, can't be made to work, is too slow, or is
-annoying for ANY other reason, then don't do it".
+Thanks,
+Nasser
 
-Regarding things like publish-ability of the API, I don't know what
-else to say.  It's FOSS, after all: anyone can do whatever they want
-(with respect to building and using the code) regardless of the desires
-of the development team.  All you can do is make clear that the intent
-is that the API is not stable, and if they don't listen and their stuff
-breaks, well, as the saying goes, they get to keep both halves.  Not
-adding any header files to the installation rules and packages is also
-helpful :).
-
-There's a certain amount of cold, hard reality that every FOSS project,
-regardless of how friendly and welcoming they aspire to be, simply
-can't avoid while still making progress (and staying sane).
-
-
-I certainly don't want to minimize the amount of work involved here,
-nor do I want to in any way volunteer myself to undertake any of it: as
-I said, I don't have strong feelings about it.
-
-I'm just saying, there's no technical reason it can't be done while
-maintaining the same features (such as relocatability) as the static
-library installs, at least on the major platforms.
-
-Cheers!
+--=20
+Qualcomm Innovation Center, Inc.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora =
+Forum,=20
+a Linux Foundation Collaborative Project
 
