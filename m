@@ -2,154 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2461F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95D841F462
 	for <e@80x24.org>; Thu, 13 Jun 2019 17:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbfFMRne (ORCPT <rfc822;e@80x24.org>);
+        id S1727665AbfFMRnf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 13:43:35 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39527 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727141AbfFMRne (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 13 Jun 2019 13:43:34 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:46882 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726519AbfFMRnd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 13:43:33 -0400
-Received: by mail-wr1-f47.google.com with SMTP id n4so21656212wrw.13
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 10:43:32 -0700 (PDT)
+Received: by mail-wm1-f67.google.com with SMTP id z23so11001413wma.4
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 10:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=a8KMQgYk2wGSgKSEOEt+ueHIk0Uy6dipb74jfl7jHgw=;
-        b=eYiu9dbHirD2Bv29KiYpORabF4zYtcLo6TuD4MpMREFLw/7LBVAa8Arq78jI6zWegz
-         GwC3qNP1F8BwSMUV0CHFeO58eLOgF3NjVQZwTCeYbc4lVJJwIofVl35pkpaTKYP3YvqB
-         8T2wZeunUhjJmatPhfP/826b2Mos0uWVc4VBO7e7HXe99y1NPmG7dQtb+izik+2hxiFZ
-         5E4lt97HkQDaoYyXw9qt66f/CN94mrjumkzPqhU9JlT+5Pp/bKJVn75kYvDkwGKTgcxd
-         Bn6hN2hDmWSm5Aa2u1Pa6YurDzbY0Rz75MhWLiAS0EsmuVg53enWx5VzFiZdY4/GHoO9
-         ua+g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Nnof1SUVoV0WHT9za8T8p2Hpw+ZiBomKR8AlJ5sYlIY=;
+        b=ig5a5WaaI3n5FEfaEodHf9/fJpHK2FI1iFDVAyYknIXtSwFvyD3iV+F4sf6LxLU8xQ
+         IlRk29dbCsIhw7OcpxXusOozTZ94GqyEyDvhlT2IAP1nsuuftnyJcsZtEfaANCIBPbTE
+         6em3Nw1+bb/Hy9rFcJGxvrSmpzbp2MqIUtWpaxU5NUX1lii0HFivjsnXeoDkfT6d5q3C
+         1r6k1tgu3rOvJSUncE13747C+dYtNmYsPSyBMp19DXh+La8qBNJV2qsIWrG1kwhm2/5A
+         GmBNz+4QZXsUKtrZmaAB+jZjlb+oiAumToHdLeuWTGT1Qn8qVO+26VD7PSEH8NdYTpV7
+         Bdfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=a8KMQgYk2wGSgKSEOEt+ueHIk0Uy6dipb74jfl7jHgw=;
-        b=Cx5EAGT6g7NlpccynysreTnPB1pwmFVwoF4SW4t0R6QS6gza0nNKMSYqm4hXVsmNNs
-         F/8hPov0Zs686QgVwjYRriD0QEc7F03cgc2pXibrSbdIajfZug2Mex0oGoHEZEsK4yGy
-         QWFjW9craEYjCWFvYqy9J8cOgqFiCqmD7QI89HF0pdHL4PAkZTCuodLens3wu1+t44CP
-         MvDv6PNPDNLYlenbYnCN0BW4qA+QKdI2cq3ppt2eAa7IY/6mLt55AC0RRBD/bGM9pI2m
-         GJ6zBprxNcQSElU8VmmgAR8q6BWH/uUQ+h9SU4mLPWwjTOXaHvXphMwF64MzBt/awmWP
-         FYwQ==
-X-Gm-Message-State: APjAAAWH1KpcF7MIsY0L9pObVaBadUXK4O/j1Qe/FPBZL5MEcMLzb7bI
-        KyxgrZD7+7clguiHbQDfPnC8cuSAMPs=
-X-Google-Smtp-Source: APXvYqzfPjLwj+ESHUyHZnkT/zC/BZbLHdq76/uglJ1grd3pd2pSDG/wqf+zd98OOMsneoagntsjMg==
-X-Received: by 2002:adf:a443:: with SMTP id e3mr8051551wra.221.1560447811847;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Nnof1SUVoV0WHT9za8T8p2Hpw+ZiBomKR8AlJ5sYlIY=;
+        b=pw8eGm7/3gEWlAAcwpQFTTqTCts0j+p5y46CoObXLI7fPgHqZ56VMvjASui7gHypb9
+         VEQNxm+EvoJTCDRQRj4NZV8cLb0I1tH2tbNwThdC9/mzlGki4ejNWZ4+f9yQBfd2GDip
+         bDSffAZtOtLnvpL94EBYYj8IQ5V7XLjuF+ra1kXhWGqvmyCpY7RXwnO/qiXVH+UgME0F
+         746yH6uDE7GFxxbxgWhcEXMwLE/Ado1JEBay9xAjMlKF+4pbRNgwNKbq9/NK/Ye1BdZS
+         m4WkMg9U50OMIkAFYQvmcZOCjC5nhBz8X5ie1bPEKgy/OEsxBuDOgUifIBgkxlCu3/l2
+         wTHA==
+X-Gm-Message-State: APjAAAW9w4YsI1eL3UWUeMD/LKKpQwMr/aRcaDZXOV7r4uhel9gnx0HR
+        VFPtJ3o7QqAT3FirC2ANAt4YYOgl
+X-Google-Smtp-Source: APXvYqxp26gtQtTHQ8621JPa3eC3CmXsHsCPKaiVs70C1NczqTaBlOP5zy14rbwyiKrS4CJhE9jHDg==
+X-Received: by 2002:a1c:a541:: with SMTP id o62mr4741271wme.84.1560447812359;
+        Thu, 13 Jun 2019 10:43:32 -0700 (PDT)
+Received: from szeder.dev (x4dbd2f68.dyn.telefonica.de. [77.189.47.104])
+        by smtp.gmail.com with ESMTPSA id w14sm171028wrt.59.2019.06.13.10.43.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Thu, 13 Jun 2019 10:43:31 -0700 (PDT)
-Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id o8sm484562wrj.71.2019.06.13.10.43.30
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 10:43:31 -0700 (PDT)
-Subject: Re: Git status parse error after v.2.22.0 upgrade
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     aleksandrs@ledovskis.lv,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Espen Antonsen <espen@inspired.no>, git@vger.kernel.org
-References: <3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com>
- <nycvar.QRO.7.76.6.1906112127420.789@QRFXGBC-DHN364S.ybpnyqbznva>
- <38b0f33a-1da1-4231-802e-ae14d9843ad2@www.fastmail.com>
- <nycvar.QRO.7.76.6.1906122046400.789@QRFXGBC-DHN364S.ybpnyqbznva>
- <20190613093023.GA3919@ariake.ledovskis.lv>
- <xmqqr27xwjwj.fsf@gitster-ct.c.googlers.com>
- <20190613162432.GA12128@sigill.intra.peff.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
-Date:   Thu, 13 Jun 2019 18:43:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+Date:   Thu, 13 Jun 2019 19:43:29 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] ci: split the `linux-gcc` job into two jobs
+Message-ID: <20190613174329.GE31952@szeder.dev>
+References: <pull.266.git.gitgitgadget@gmail.com>
+ <ac102169ec6f47b8be1fe69b4798de385f102af8.1560430430.git.gitgitgadget@gmail.com>
+ <20190613153354.GC31952@szeder.dev>
+ <xmqqv9x9wkba.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906131844440.44@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <20190613162432.GA12128@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1906131844440.44@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/06/2019 17:24, Jeff King wrote:
-> On Thu, Jun 13, 2019 at 09:05:16AM -0700, Junio C Hamano wrote:
+On Thu, Jun 13, 2019 at 06:51:04PM +0200, Johannes Schindelin wrote:
+> Hi,
 > 
->> aleksandrs@ledovskis.lv writes:
->>
->>> My repo indeed contains a ".git/sequencer/todo" file which
->>> contains references to commits long-gone (i.e., rebased).
->>> Renaming or deleting this file stops whines about "error: could
->>> not parse".
-
-I think this bug report is a result of
-4a72486de9 ("fix cherry-pick/revert status after commit", 2019-04-16)
-which tries to read the sequencer todo file if it is present and there
-is no CHERRY_PICK_HEAD/REVERT_HEAD. Before that if the user committed a
-conflict resolution in the middle of a sequence of picks then status
-would forget that there was a cherry-pick in progress. It just reuses
-the code that cherry-pick uses to parse the first todo list item which
-expects the commits to exist.
-
->> Interesting.  So in short, when the repository has leftover
->> sequencer state file that is not in use, "git status parse" thing
->> (whatever it is---are you getting it when you run "git status"
->> command???)---is not careful enough to notice that it does not
->> matter even if that leftover file is unusable.
->>
->> Two issues "the sequencer" folks may want to address are
->>
->>  (1) make the one that reads an irrelevant/stale 'todo' file more
->>      careful to ignore errors in such a file;
->>
->>  (2) make the sequencer machinery more careful to clean up after it
->>      is done or it is aborted  (for example, "git reset --hard"
->>      could remove these state files preemptively even when a rebase
->>      is not in progress, I would think).
->>
->> I think we already had some patches toward the latter recently.
+> On Thu, 13 Jun 2019, Junio C Hamano wrote:
 > 
-> Maybe I am not understanding it correctly, but do you mean in (2) that
-> "git reset --hard" would always clear sequencer state?
-
-I think the commit Junio is referring to is
-b07d9bfd17 ("commit/reset: try to clean up sequencer state", 2019-04-16)
-which will only remove the sequencer directory if it stops after the
-pick was the last one in the series. The idea is that if cherry-pick
-stops for a conflict resolution on the last pick user commits the result
-directly or run reset without running `cherry-pick --continue`
-afterwards the sequencer state gets cleaned up properly.
-
-> That seems
-> undesirable to me, as I often use "git reset" to move the head around
-> during a rebase. (e.g., when using "rebase -i" to split apart I commit,
-> I stop on that commit, "git reset" back to the parent, and then
-> selectively "add -p" the various parts).
+> > SZEDER Gábor <szeder.dev@gmail.com> writes:
+> >
+> > > On Thu, Jun 13, 2019 at 05:53:51AM -0700, Johannes Schindelin via GitGitGadget wrote:
+> > >> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > >>
+> > >> This job was abused to not only run the test suite in a regular way but
+> > >> also with all kinds of `GIT_TEST_*` options set to non-default values.
+> > >>
+> > >> Let's split this into two
+> > >
+> > > Why...?
+> > >
+> > >> with the `linux-gcc` job running the default
+> > >> test suite, and the newly-introduced `linux-gcc-extra` job running the
+> > >> test suite in the "special" ways.
+> > >>
+> > >> Technically, we would have to build Git only once, but it would not be
+> > >> obvious how to teach Travis to transport build artifacts, so we keep it
+> > >> simple and just build Git in both jobs.
+> >
+> > I had the same reaction.
 > 
-> Direction (1) seems quite sensible to me, though.
-
-Now that we try harder to clean up the sequencer state I wonder if that
-would just cover up bugs where the state has not been removed when it
-should have been. That can lead to unpleasant problems if the user
-aborts a single revert/cherry-pick when there is stale sequencer state
-around as it rewinds HEAD to the commit when the stale
-cherry-pick/revert was started as explained in the message to b07d9bfd17
-("commit/reset: try to clean up sequencer state", 2019-04-16)
-
-If we do want to do something then maybe teaching gc not to collect
-commits listed in .git/sequencer/todo and
-.git/rebase-merge/git-rebase-todo would be useful.
-
-Best Wishes
-
-Phillip
-
-> -Peff
+> So basically you are saying that the cover letter was the wrong location
+> for this:
 > 
+> 	For people like me, who often look at our CI builds, it is hard to
+> 	tell whether test suite failures in the linux-gcc job stem from
+> 	the first make test run, or from the second one, after setting all
+> 	kinds of GIT_TEST_* variables to non-default values.
 
+Is this really an issue in practice?  In my experience there are only
+two (and a half) cases:
+
+  - if both the 'linux-gcc' and 'linux-clang' build jobs fail, then
+    it's some sort of a general breakage.
+
+  - if only the 'linux-gcc' build job fails, the 'linux-clang'
+    succeeds, then it's a breakage in the test run with the various
+    'GIT_TEST_*' test knobs enabled (unless the failing 'linux-gcc'
+    build job's runtime is below, say, 5 minutes, in which case it's a
+    build error only triggered by GCC(-8), and, as I recall, is rather
+    rare).
+
+
+> 	Let's make it easier on people like me.
+> 
+> 	This also helps the problem where the CI builds often finish the other
+> 	jobs waaaay before linux-gcc finally finishes
+
+This is not the case on Travis CI, where the runtime of the macOS
+build jobs are far the longest, so this change won't help anything
+there... on the contrary, it would make things slower by spending time
+on installing dependencies and building Git in one more build job.
+
+>       too: linux-gcc and
+> 	linux-gcc-extra can be run in parallel, on different agents.
