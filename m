@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9D11F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 15:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22FE1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 15:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730038AbfFMP0E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 11:26:04 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34396 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729423AbfFMLtt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 07:49:49 -0400
-Received: by mail-ed1-f65.google.com with SMTP id s49so1005378edb.1
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 04:49:48 -0700 (PDT)
+        id S1726789AbfFMP0K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 11:26:10 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44679 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729422AbfFMLts (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 07:49:48 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k8so30744668edr.11
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RjK5HPR90OQikUiyb0/LDBsGyBsszNskYXuUhuUaqTw=;
-        b=fP1gjaheIJnQRfx8FRMUh4MwuBj66LPuAERMCCKMOslii0WFIEn8BGX9EU/Ec0GC0T
-         9wpR2TYkYiJBDT75y+1Wld+NEirZ/NXVZ1+/+p5yfD9JlYfgKS/6kJdFmYomXR0s9aUR
-         YWrxD4GuhfJZcjfvOVdW9O5X/WMPhc+EAn94fhyNG8YLhvHRtbNwUNApR2yWxJ9BwIY+
-         mWr/f2NFs3MjNgvX/E+cL85vsYRw71E2ijDzzD23+B3/S/l8HX/2I8k2+BvY8pv8LIlV
-         65vavlSoc4bWUenGUPdJv4RVRVtgb7IlldMhz7Bft0on2VZG7XxdowgHSiaFfpZpn8Ao
-         NXIQ==
+        bh=VNRv0hgUnC+qtQN/vThezjmRB9rOmTqItv2ejLWr2Dg=;
+        b=ZQxIf0bf7U5PWJrLj0knLuRgl5plQlFkP/MD5OnaHzJZOyCin8wEC5T6ogG67Omcj1
+         MsM4wV1IBeQl8hyQz5nPGjsfWkrFqcz+DqGc9yjeWaCMIlntxqv/UBX6yFOVuvgkqMLn
+         ThtHaBp4RhqGpN7nlA5b4dcye1yTH9YJ9VgXNnZ17f1QFQ3SL4Qurm4tHQvWojdU1Q7b
+         /nVok1Ghv2E9TIOkRwdIf4LD8Fm5x4oZI1eFKQMB2wMVXE3LF1CtLrVtPSmENKdnDAsJ
+         ouJLmzeKKSkk/svsNIeN0nlsz7Wzb4em+JWB8+Lgy4vOpA6sAyKOI+ut646MuCG9hYBR
+         gNHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RjK5HPR90OQikUiyb0/LDBsGyBsszNskYXuUhuUaqTw=;
-        b=UKYSNbpyJ9Q0pJf4qYclXRAm24WCBDs2onKmm4MYZQEtFsm8BIuroVKtGS+0ys14Y/
-         xy3GjLkTbj41Uehd90w2lLj45rJy/2N2z0ZQPb4JXmkUDk9uJgw4EMSzniDvk26yL1Lf
-         YbOE9XOkEInYbDx+nOItGkjOPkmKVQEa+nYPLLdfCt7+z533HBCnQYVYMDJtVTthbL38
-         vWKJb73HlmchDA21Iz2ExIb7qu0gFUqK4lGL12Wk/stwdInpXkOgmyxzcJugrrFiaa9V
-         K/+/nhPIFSMoV8LymUFTHq+s9yNBxzr1+Ywmzgq0A+bhggBTA9Oz99gGgX6SuuT/M67e
-         fPgw==
-X-Gm-Message-State: APjAAAVxs79DCSwfvRl0k21/THMtHfv+Ncp1Vynk3Z/BOBRj+YAWUhg4
-        avAuWqU81qhQTWnVBp9MZvEPkNnN
-X-Google-Smtp-Source: APXvYqzIeNGmrZkTGXj5YiXE6CmbStIi+nEUhtuwpqnu9qpA5W+hk7ipcVp0VzKGLB0i30YJL4n+rA==
-X-Received: by 2002:a17:906:1e8a:: with SMTP id e10mr36957150ejj.261.1560426587685;
-        Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
+        bh=VNRv0hgUnC+qtQN/vThezjmRB9rOmTqItv2ejLWr2Dg=;
+        b=e70vQAXWrKuyX/7eIP8Gl14PDZOwOUP5Y35X4r/hWNj3kwY1mlXKd7bQstEFUyiyWV
+         vdR8hGukBtivbe0Yng+hDRDI17v0Gq3MyliUjoQvtjWPLTstkwi/kkHsg12zGre2JAho
+         iRIiJynswajb8lywcI5xQoNVV1CxJZjMqqKiHTO7/sqDvWS2qj2rq09oW6zBnbrho42U
+         2VyUEbSvbuN7deWyP6KgSpuTA+gG8VOlVW6d9kouj6pQhNW8DDmfwXF3K9J+w/E0D9EG
+         7GZBa7SGcaWLOAmtbzdxA2kFnRL3iR+jyhE4lMz9//HnY6n6K4wJgUCaJdwn95jUHhEb
+         6mKw==
+X-Gm-Message-State: APjAAAWj/OhubdJ2wZ4mMLHUxdipc7L1zyNf+TPpk5Rw75YocSBzPsD3
+        LJO2B2gYMvy7JAvh31Z+AJdz3DEj
+X-Google-Smtp-Source: APXvYqwkJ5CRM+nIOavk7egF/vLNV+L7dqsO9gU6nnQllEFNxcPiCn3gZnaXuRopn1auxkzaYV4JAA==
+X-Received: by 2002:a17:906:30c4:: with SMTP id b4mr12817142ejb.276.1560426586975;
+        Thu, 13 Jun 2019 04:49:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c49sm260560eda.74.2019.06.13.04.49.47
+        by smtp.gmail.com with ESMTPSA id m6sm814987ede.2.2019.06.13.04.49.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 04:49:47 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Jun 2019 11:49:41 GMT
-Message-Id: <9613c88849e53e00e1f7ade49c6c9056309ef0b9.1560426581.git.gitgitgadget@gmail.com>
+        Thu, 13 Jun 2019 04:49:46 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 04:49:46 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Jun 2019 11:49:40 GMT
+Message-Id: <d0ae652801c3ae343cc0c6b29c4444282d6c2d4a.1560426581.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.265.git.gitgitgadget@gmail.com>
 References: <pull.265.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 4/4] config: avoid calling `labs()` on too-large data type
+Subject: [PATCH 3/4] winansi: simplify loading the GetCurrentConsoleFontEx()
+ function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,35 +72,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `labs()` function operates, as the initial `l` suggests, on `long`
-parameters. However, in `config.c` we tried to use it on values of type
-`intmax_t`.
+We introduced helper macros to simplify loading functions dynamically.
+Might just as well use them.
 
-This problem was found by GCC v9.x.
-
-To fix it, let's just "unroll" the function (i.e. negate the value if it
-is negative).
+This also side-steps a compiler warning when building with GCC v8.x: it
+would complain about casting between incompatible function pointers.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ compat/winansi.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/config.c b/config.c
-index 296a6d9cc4..01c6e9df23 100644
---- a/config.c
-+++ b/config.c
-@@ -869,9 +869,9 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
- 			errno = EINVAL;
- 			return 0;
- 		}
--		uval = labs(val);
-+		uval = val < 0 ? -val : val;
- 		uval *= factor;
--		if (uval > max || labs(val) > uval) {
-+		if (uval > max || (val < 0 ? -val : val) > uval) {
- 			errno = ERANGE;
- 			return 0;
- 		}
+diff --git a/compat/winansi.c b/compat/winansi.c
+index f4f08237f9..a29d34ef44 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -7,6 +7,7 @@
+ #include <wingdi.h>
+ #include <winreg.h>
+ #include "win32.h"
++#include "win32/lazyload.h"
+ 
+ static int fd_is_interactive[3] = { 0, 0, 0 };
+ #define FD_CONSOLE 0x1
+@@ -41,26 +42,21 @@ typedef struct _CONSOLE_FONT_INFOEX {
+ #endif
+ #endif
+ 
+-typedef BOOL (WINAPI *PGETCURRENTCONSOLEFONTEX)(HANDLE, BOOL,
+-		PCONSOLE_FONT_INFOEX);
+-
+ static void warn_if_raster_font(void)
+ {
+ 	DWORD fontFamily = 0;
+-	PGETCURRENTCONSOLEFONTEX pGetCurrentConsoleFontEx;
++	DECLARE_PROC_ADDR(kernel32.dll, BOOL, GetCurrentConsoleFontEx,
++			HANDLE, BOOL, PCONSOLE_FONT_INFOEX);
+ 
+ 	/* don't bother if output was ascii only */
+ 	if (!non_ascii_used)
+ 		return;
+ 
+ 	/* GetCurrentConsoleFontEx is available since Vista */
+-	pGetCurrentConsoleFontEx = (PGETCURRENTCONSOLEFONTEX) GetProcAddress(
+-			GetModuleHandle("kernel32.dll"),
+-			"GetCurrentConsoleFontEx");
+-	if (pGetCurrentConsoleFontEx) {
++	if (INIT_PROC_ADDR(GetCurrentConsoleFontEx)) {
+ 		CONSOLE_FONT_INFOEX cfi;
+ 		cfi.cbSize = sizeof(cfi);
+-		if (pGetCurrentConsoleFontEx(console, 0, &cfi))
++		if (GetCurrentConsoleFontEx(console, 0, &cfi))
+ 			fontFamily = cfi.FontFamily;
+ 	} else {
+ 		/* pre-Vista: check default console font in registry */
 -- 
 gitgitgadget
+
