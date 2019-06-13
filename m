@@ -2,127 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 822321F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 19:21:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4193F1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 19:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727376AbfFMTVk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 15:21:40 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38080 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfFMTVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 15:21:40 -0400
-Received: by mail-pg1-f193.google.com with SMTP id v11so70172pgl.5
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 12:21:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3Q9NGE/7jb0qVJTq2q0ALalVYl0fKrV6+bvu+BG1/h0=;
-        b=G0vGaeQPG2YWvLLvxpRuynOvY1aY6fKFcbkMSCOYL0lXtaARfZ7VkSxQkV5nI2LUUj
-         aGzZfz79BbiHOkiPUnn2PHdu5cL4DqS4+5DaxQqNbsK2JG/j4yz21ET79L2rDdZJTQL3
-         0vd376Mbu/LwUQUqDyfqS/jOicFf0SHqyuJRLaaRmMGfgX4j2JfhoxkWXYJMyi3YSE2H
-         CJCjJ332L28Ov/4il8GQpfz0vSMx5ATBNABrLfBqboX2mkDdG7NTfXZCjCox6Nm498QA
-         eKWQ6vuIPkXDdo/J0BYKGILYOGiynbNG6wfwYYFDJUX3C64USFpMhbzB2yMwhg1UDDH4
-         sQuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3Q9NGE/7jb0qVJTq2q0ALalVYl0fKrV6+bvu+BG1/h0=;
-        b=HjvMIbSoXRbxuravm3SXYLCtMFzXqMKdRrSAwA6pmJUuRNe73WOmPgjTGygq57smiW
-         zN3n4iC5RybLOqiVAhjbuQAeA6rJ5YnFpysI5hYKgumO506xBaMlHQ1thE4ka7y0LzeX
-         /NBZJmNJwcApbS33P4XU2u0iE8sWvMlSyTZMTXhF/srOdCCiPkYsn8/mG6w5Mv56OOuO
-         efvJaLcci6ubXnMB6oVCLbzlS+yeHgEpEtwG7BkWSLRxbXKz0uyohH53CbF6ZX32Bvdt
-         u2qEaR0XMwxrizlHUrF/2RTrajFmVi+rd755aLlJ5B4AJ8eKa3t1MhN/COOdCEXVnvfo
-         ZjcA==
-X-Gm-Message-State: APjAAAXyaomGqpoZ9iuvOBHW4ImQFPVYF1DXIdPSHBXXNtLa6NgRnvXX
-        pyJE1Wf1mLmBmrooxa3ZHTcWhrKL9y0k+wYTA14k2g==
-X-Google-Smtp-Source: APXvYqx7upWZ4eLIHJh2it7v1jiKChhI/XKTD4T08d4UMOr7ebiZmw+k8+u2+kmSMMO09ixLzwia7FPbCGCueOkYbkE=
-X-Received: by 2002:a65:6495:: with SMTP id e21mr17793553pgv.383.1560453699600;
- Thu, 13 Jun 2019 12:21:39 -0700 (PDT)
+        id S1727333AbfFMTbL convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 13 Jun 2019 15:31:11 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:41807 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFMTbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 15:31:11 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x5DJV3xd061880
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 13 Jun 2019 15:31:03 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>, <randall.s.becker@rogers.com>
+Cc:     <git@vger.kernel.org>
+References: <20190613185313.16120-1-randall.s.becker@rogers.com> <20190613190644.GC27217@sigill.intra.peff.net>
+In-Reply-To: <20190613190644.GC27217@sigill.intra.peff.net>
+Subject: RE: [Patch 0/5] Add exclusions for tests requiring cvs where cvs is not installed
+Date:   Thu, 13 Jun 2019 15:30:55 -0400
+Message-ID: <000101d5221e$88aa67d0$99ff3770$@nexbridge.com>
 MIME-Version: 1.0
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
- <20190613040504.32317-1-rohit.ashiwal265@gmail.com> <20190613040504.32317-2-rohit.ashiwal265@gmail.com>
- <0333fe2f-d68a-4536-c736-ca2a356df34b@gmail.com>
-In-Reply-To: <0333fe2f-d68a-4536-c736-ca2a356df34b@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 13 Jun 2019 21:21:27 +0200
-Message-ID: <CAN0heSp_XDZTviwGDpOuXhuh+8k-BA7Ld6z9gSHA9My+16BnbQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v3 1/3] sequencer: add advice for revert
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQMHvzyDluE9P4st0JpJQ4fnzjC8uAE6c9KmpCrmoVA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit,
+On June 13, 2019 3:07 PM, Peff wrote:
+> On Thu, Jun 13, 2019 at 02:53:08PM -0400, randall.s.becker@rogers.com
+> wrote:
+> 
+> > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> >
+> > t9600 to t9604 currently depend on cvs to function correctly,
+> > otherwise all of those tests fail. This patch follows an existing
+> > pattern of from the t9400 series by attempting to run cvs without
+> > arguments, which succeeds if installed, and skipping the test if the
+> > command fails.
+> 
+> Hrm. I don't have cvs installed, and those tests are properly skipped for me.
+> That's because they include lib-cvs.sh, which has:
+> 
+>   if ! type cvs >/dev/null 2>&1
+>   then
+>           skip_all='skipping cvsimport tests, cvs not found'
+>           test_done
+>   fi
+> 
+> Why doesn't that work for you? Does the "type" check not work (e.g., you
+> have something called "cvs" but it does not behave as we expect)? If so, then
+> it sounds like we just need to harmonize that with the other checks.
+> 
+> It also sounds like the t9400 tests could be using lib-cvs to avoid duplicating
+> logic, though it might need some refactoring (they don't need cvsps, for
+> example).
 
-On Thu, 13 Jun 2019 at 19:46, Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> On 13/06/2019 05:05, Rohit Ashiwal wrote:
-> > -static int create_seq_dir(void)
-> > +static int create_seq_dir(struct repository *r)
-> >  {
-> > -     if (file_exists(git_path_seq_dir())) {
-> > -             error(_("a cherry-pick or revert is already in progress"));
-> > -             advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
-> > +     enum replay_action action;
-> > +     const char *in_progress_advice;
-> > +     const char *in_progress_error = NULL;
+The t9400 tests use the same technique as I used - and I mistakenly trusted it. The type check does not fail.
 
-The assigning vs not assigning is a bit inconsistent, but that's a very
-minor nit, and not why I started replying. Only noticed it just now. :-)
+if ! type cvs >/dev/null 2>&1
+then
+	echo "oops"
+fi
 
-> > +     if (!sequencer_get_last_command(r, &action)) {
-> > +             switch (action) {
-> > +             case REPLAY_REVERT:
-> > +                     in_progress_error = _("revert is already in progress");
-> > +                     in_progress_advice =
-> > +                     _("try \"git revert (--continue | --abort | --quit)\"");
-> > +                     break;
-> > +             case REPLAY_PICK:
-> > +                     in_progress_error = _("cherry-pick is already in progress");
-> > +                     in_progress_advice =
-> > +                     _("try \"git cherry-pick (--continue | --abort | --quit)\"");
-> > +                     break;
-> > +             default:
-> > +                     BUG(_("the control must not reach here"));
->
-> This does not need to be translated as BUG() messages are not really for
-> users. Everything else looks fine to be now
+does not print "oops". type is reporting $?=0 and a legitimate file in /usr/local/bin/cvs. Confusingly, t9400 skips, but type reports a valid path. I think the test done in the t9400 series is not correct.
 
-I agree 100% with Phillip, but I'll also note that "the control must not
-reach here" doesn't tell me anything that BUG() doesn't already. That
-is, the point of BUG() is to document that, indeed, we shouldn't get
-here and to alert if we do anyway.
+cvs >/dev/null 2>&1 on the platform causes $?=255, while a blah >/dev/null 2>&1 reports $?=127.
 
-An obvious alternative would be
+There is something else going on causing the cvs-related tests to fail that this patch might be hiding. We do have cvsps so I'm now much more confused by the whole thing.
 
-        BUG("action is neither revert nor pick");
+Let's drop this patch for now. I was premature on this patch and need to dig deeper as to what is going on.
 
-but that doesn't say much more than the code already says quite clearly,
-plus it risks getting outdated. I'd probably settle on something like
+Randall
 
-        BUG("unexpected action in create_seq_dir");
-
-which should give us a good clue even if all we have is this message (so
-no file, no line number), but I am sure there are other good choices
-here. :-)
-
-Thanks Rohit for your work on this. I'm impressed by how you've polished
-this series.
-
-
-Martin
