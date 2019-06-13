@@ -8,145 +8,152 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 290761F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 21:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 341E41F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 21:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727693AbfFMVvm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 17:51:42 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:56936 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbfFMVvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 17:51:42 -0400
-Received: by mail-pf1-f202.google.com with SMTP id 140so197243pfa.23
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 14:51:41 -0700 (PDT)
+        id S1727717AbfFMVvp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 17:51:45 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:51381 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbfFMVvo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 17:51:44 -0400
+Received: by mail-pf1-f201.google.com with SMTP id 145so203571pfv.18
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 14:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=19LjbPkiDgGlfpc0xRSBeZZp2FPXFc/fiAQiup7CHuA=;
-        b=ZxS0IrpDU6QsLM7TwcJvNGK0I6BYcK+jF+14IEJqsDeW+jV2MaTPCbyQrbQgNrrZ53
-         +2awKlMrndSQ5dt6iq3DSFTBppVHeIgcAzbYCwEPOngxFwpae4lFEjmL3bODC5K6TLRM
-         Kcs4rlG9NKpumatOy1/AgcmjXNqY7mUlHlc1PHXHLQJBEouWhQXLskonkq2e//xu+2Mx
-         VaQT82ymJLWeVpLbnJTAkqy8HMnHkdGvN7IOErO7U2X4hSC3JIC/ecFizUxm8ft4nQYw
-         PZNxJhjqlK0fE2XYRIwvlexgyOQn0dVhYGpRT/PFRboI9ISVtL3OUHgmykPawsD2P71v
-         hDAQ==
+        bh=ueMV2MwRmiuxJ9X9ye/GtjOny0cFapGL3zixTzeLBOM=;
+        b=sIgHy305ehgabOyVs2y5mvCI4JECOxQMZxKSR+fUTWtq2Sn8XfXYhJemAwgjSBLuVe
+         pnc3ULEUZ9MAY+odGA3ZcCUhM/1HIm6kyLNgT0tUc0qZsIeQpnv9OX0UYj8sQA7j3Dpl
+         wu61eLuDySjFOqXW5H0nHhkZwTDxOSCnsTdo3AqHa/8hmwIFSWbBXUYSJbY8l2Wcl/CN
+         zJbAuymlsu3bwz6wbYAjkqyrhWnZ4gnQIKsGtTlYbKLnY4ETjo4P2MJcAZcB0JO4Xp+o
+         aHkEevpKt4buSaLZm2svpShdZ/IDjc/Ogv+jmMQyGmgRMYKsjN87pMMXaqHOGLlYx4uo
+         +l3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=19LjbPkiDgGlfpc0xRSBeZZp2FPXFc/fiAQiup7CHuA=;
-        b=dOyBpLH/ZlzkuolUzY7tEnCxFQ+5gt4hLtURlzfAkAlm7r7jf8MFup05adaIFnZfGQ
-         tSNgPRHuhsxD8JzYfvvqLIzqXqriOvMskPHYmaUKk0ycYVuGA4M8HhPDfBN9LbcKeNIc
-         293h50qhDULXRpy8ovnF/+jWDvO9xhspGlk4Pu10bYp9gyFOvp79lU+q+CixkA+r+qTT
-         2fFNlCl6FlHOWVBc4FftQs6x9kWgc3ntNxUiVRNfR6u4ELjVf1en2qwY6NmnUyjzlKJU
-         30K5inYr/VIdleQP8tZwqD58Eo4EQ47oGW+8Hj0Ot/47jjC4zH5Eg7TkMqYLNFwu03R7
-         l3Kw==
-X-Gm-Message-State: APjAAAVk6fEDjllq+Qjk7NvsaBekR4CpASk6n3qnO2E6jQyuEZVujLPA
-        HN8bLNiZmGM8aUEhaVzX0y+Pag9NjE5OV1UonuS5ZgXMOoBWHngvL0b0YzehJA11WFcVSxpUiOl
-        JcP8yFSAZ8EUhCoG+J+zDsNMuFLRd4hqVzIDVciVNz2UHsnb7uOgShpKhA8E=
-X-Google-Smtp-Source: APXvYqzJ4NbO6IHEcmX8twPTNYjcOdkrab7m62jgTnrifEllDV34XxfEB3eYL68psL8m4C30sXoMPcA9pB8i
-X-Received: by 2002:a65:5a0d:: with SMTP id y13mr12869174pgs.314.1560462700781;
- Thu, 13 Jun 2019 14:51:40 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 14:51:24 -0700
+        bh=ueMV2MwRmiuxJ9X9ye/GtjOny0cFapGL3zixTzeLBOM=;
+        b=WoEy3z2Z+tBagNaefKfwy3LuurhCyq6MUqR4r/BelbCbyScqpMmJZ+X1VP5/cB5Geg
+         3I63Dd5QPe/rHGL5mypUleRbQpmDpPPa2kPAGGknVbRDf/h1fQmzDAmyNKmOPl9ORyxs
+         IdcSe9JkyfakKltwa1fDuxc8xUxtwGc0ACHrZy0Ga7QXTtiYwo7lWrkLbNFgMULcqvTl
+         JVWuQBBdFHumGimTKCPzmgPZN5n2yjjgocHo6bxrw/vPMB7OGUYKZT1XtTpHzbqrY2Sv
+         /yD0Dft82cyjX0c6FAg81mMOEWNMJ0DSqONOWhzmBVvh9Isz6W4UY1C0r/Zsi2kQDJK4
+         uMgg==
+X-Gm-Message-State: APjAAAUQ9hs4HMw29CuZQZNkzcXf5Vg5DmVAoAnscJVPWMYilOf4Ye3S
+        v3R9qo+YFV5nw0FoCMFt9gfZJwO9NGsgd0P5lEOwcR2d4OU+13GzQceUKuCdYpEa5I8TjrySg10
+        TvF9DT+e+GWOsMFT/YY4xCwxUTOCDx2ngdXDFwehlXLqta3tT8ZDKNzUa7T4=
+X-Google-Smtp-Source: APXvYqyLjA84bPfx0sMdhxJ/J0jE/PUteNP/B9BXizfm74H+/+Ou+8VSVHWuBYuIivRxvAd8GbOqyRuHZuRZ
+X-Received: by 2002:a63:8dc4:: with SMTP id z187mr32906175pgd.337.1560462703566;
+ Thu, 13 Jun 2019 14:51:43 -0700 (PDT)
+Date:   Thu, 13 Jun 2019 14:51:25 -0700
 In-Reply-To: <cover.1560462201.git.matvore@google.com>
-Message-Id: <0ab5685d4fa6532afa7d9bfc0a2a6f5441ffc045.1560462201.git.matvore@google.com>
+Message-Id: <5e1792a67ab00b3373ea689e35db4704e387fbe2.1560462201.git.matvore@google.com>
 Mime-Version: 1.0
 References: <20190601003603.90794-1-matvore@google.com> <cover.1560462201.git.matvore@google.com>
 X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2-goog
-Subject: [PATCH v3 01/10] list-objects-filter: make API easier to use
+Subject: [PATCH v3 02/10] list-objects-filter: put omits set in filter struct
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
         dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
         pclouds@gmail.com, peff@peff.net, emilyshaffer@google.com
-Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the list-objects-filter.h API more opaque and easier to use. This
-prepares for combined filter support, where filters will be created and
-used in a new context.
+The oidset *omits pointer must be accessed by the combine filter in a
+type-agnostic way once the graph traversal is over. Store that pointer
+in the general `filter` struct. This will be used in a follow-up patch
+to implement the combine filter.
 
-Helped-by: Jeff Hostetler <git@jeffhostetler.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- list-objects-filter.c | 122 +++++++++++++++++++++++++++---------------
- list-objects-filter.h |  35 ++++++------
- list-objects.c        |  55 ++++++++-----------
- 3 files changed, 117 insertions(+), 95 deletions(-)
+ list-objects-filter.c | 70 ++++++++++++++++---------------------------
+ 1 file changed, 26 insertions(+), 44 deletions(-)
 
 diff --git a/list-objects-filter.c b/list-objects-filter.c
-index ee449de3f7..35e0bbe123 100644
+index 35e0bbe123..57bbf6ec1c 100644
 --- a/list-objects-filter.c
 +++ b/list-objects-filter.c
-@@ -19,20 +19,34 @@
-  * FILTER_SHOWN_BUT_REVISIT -- we set this bit on tree objects
-  * that have been shown, but should be revisited if they appear
-  * in the traversal (until we mark it SEEN).  This is a way to
-  * let us silently de-dup calls to show() in the caller.  This
-  * is subtly different from the "revision.h:SHOWN" and the
-  * "sha1-name.c:ONELINE_SEEN" bits.  And also different from
-  * the non-de-dup usage in pack-bitmap.c
+@@ -26,88 +26,76 @@
   */
  #define FILTER_SHOWN_BUT_REVISIT (1<<21)
  
-+struct filter {
-+	enum list_objects_filter_result (*filter_object_fn)(
-+		struct repository *r,
-+		enum list_objects_filter_situation filter_situation,
-+		struct object *obj,
-+		const char *pathname,
-+		const char *filename,
-+		void *filter_data);
-+
-+	void (*free_fn)(void *filter_data);
-+
-+	void *filter_data;
-+};
-+
- /*
-  * A filter for list-objects to omit ALL blobs from the traversal.
-  * And to OPTIONALLY collect a list of the omitted OIDs.
-  */
- struct filter_blobs_none_data {
+ struct filter {
+ 	enum list_objects_filter_result (*filter_object_fn)(
+ 		struct repository *r,
+ 		enum list_objects_filter_situation filter_situation,
+ 		struct object *obj,
+ 		const char *pathname,
+ 		const char *filename,
++		struct oidset *omits,
+ 		void *filter_data);
+ 
+ 	void (*free_fn)(void *filter_data);
+ 
+ 	void *filter_data;
+-};
+ 
+-/*
+- * A filter for list-objects to omit ALL blobs from the traversal.
+- * And to OPTIONALLY collect a list of the omitted OIDs.
+- */
+-struct filter_blobs_none_data {
++	/* If non-NULL, the filter collects a list of the omitted OIDs here. */
  	struct oidset *omits;
  };
  
  static enum list_objects_filter_result filter_blobs_none(
  	struct repository *r,
-@@ -60,32 +74,31 @@ static enum list_objects_filter_result filter_blobs_none(
+ 	enum list_objects_filter_situation filter_situation,
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct oidset *omits,
+ 	void *filter_data_)
+ {
+-	struct filter_blobs_none_data *filter_data = filter_data_;
+-
+ 	switch (filter_situation) {
+ 	default:
+ 		BUG("unknown filter_situation: %d", filter_situation);
+ 
+ 	case LOFS_BEGIN_TREE:
+ 		assert(obj->type == OBJ_TREE);
+ 		/* always include all tree objects */
+ 		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
+ 
+ 	case LOFS_END_TREE:
+ 		assert(obj->type == OBJ_TREE);
+ 		return LOFR_ZERO;
+ 
  	case LOFS_BLOB:
  		assert(obj->type == OBJ_BLOB);
  		assert((obj->flags & SEEN) == 0);
  
- 		if (filter_data->omits)
- 			oidset_insert(filter_data->omits, &obj->oid);
+-		if (filter_data->omits)
+-			oidset_insert(filter_data->omits, &obj->oid);
++		if (omits)
++			oidset_insert(omits, &obj->oid);
  		return LOFR_MARK_SEEN; /* but not LOFR_DO_SHOW (hard omit) */
  	}
  }
  
--static void *filter_blobs_none__init(
-+static void filter_blobs_none__init(
- 	struct oidset *omitted,
+ static void filter_blobs_none__init(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct filter *filter)
+ 	struct filter *filter)
  {
- 	struct filter_blobs_none_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
- 
--	*filter_fn = filter_blobs_none;
--	*filter_free_fn = free;
--	return d;
-+	filter->filter_data = d;
-+	filter->filter_object_fn = filter_blobs_none;
-+	filter->free_fn = free;
+-	struct filter_blobs_none_data *d = xcalloc(1, sizeof(*d));
+-	d->omits = omitted;
+-
+-	filter->filter_data = d;
+ 	filter->filter_object_fn = filter_blobs_none;
+ 	filter->free_fn = free;
  }
  
  /*
@@ -154,11 +161,114 @@ index ee449de3f7..35e0bbe123 100644
   * Can OPTIONALLY collect a list of the omitted OIDs.
   */
  struct filter_trees_depth_data {
- 	struct oidset *omits;
+-	struct oidset *omits;
+-
+ 	/*
+ 	 * Maps trees to the minimum depth at which they were seen. It is not
+ 	 * necessary to re-traverse a tree at deeper or equal depths than it has
+ 	 * already been traversed.
+ 	 *
+ 	 * We can't use LOFR_MARK_SEEN for tree objects since this will prevent
+ 	 * it from being traversed at shallower depths.
+ 	 */
+ 	struct oidmap seen_at_depth;
+ 
+@@ -116,38 +104,39 @@ struct filter_trees_depth_data {
+ };
+ 
+ struct seen_map_entry {
+ 	struct oidmap_entry base;
+ 	size_t depth;
+ };
+ 
+ /* Returns 1 if the oid was in the omits set before it was invoked. */
+ static int filter_trees_update_omits(
+ 	struct object *obj,
+-	struct filter_trees_depth_data *filter_data,
++	struct oidset *omits,
+ 	int include_it)
+ {
+-	if (!filter_data->omits)
++	if (!omits)
+ 		return 0;
+ 
+ 	if (include_it)
+-		return oidset_remove(filter_data->omits, &obj->oid);
++		return oidset_remove(omits, &obj->oid);
+ 	else
+-		return oidset_insert(filter_data->omits, &obj->oid);
++		return oidset_insert(omits, &obj->oid);
+ }
+ 
+ static enum list_objects_filter_result filter_trees_depth(
+ 	struct repository *r,
+ 	enum list_objects_filter_situation filter_situation,
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct oidset *omits,
+ 	void *filter_data_)
+ {
+ 	struct filter_trees_depth_data *filter_data = filter_data_;
+ 	struct seen_map_entry *seen_info;
+ 	int include_it = filter_data->current_depth <
+ 		filter_data->exclude_depth;
+ 	int filter_res;
+ 	int already_seen;
  
  	/*
-@@ -194,35 +207,34 @@ static enum list_objects_filter_result filter_trees_depth(
- }
+@@ -158,47 +147,47 @@ static enum list_objects_filter_result filter_trees_depth(
+ 	switch (filter_situation) {
+ 	default:
+ 		BUG("unknown filter_situation: %d", filter_situation);
+ 
+ 	case LOFS_END_TREE:
+ 		assert(obj->type == OBJ_TREE);
+ 		filter_data->current_depth--;
+ 		return LOFR_ZERO;
+ 
+ 	case LOFS_BLOB:
+-		filter_trees_update_omits(obj, filter_data, include_it);
++		filter_trees_update_omits(obj, omits, include_it);
+ 		return include_it ? LOFR_MARK_SEEN | LOFR_DO_SHOW : LOFR_ZERO;
+ 
+ 	case LOFS_BEGIN_TREE:
+ 		seen_info = oidmap_get(
+ 			&filter_data->seen_at_depth, &obj->oid);
+ 		if (!seen_info) {
+ 			seen_info = xcalloc(1, sizeof(*seen_info));
+ 			oidcpy(&seen_info->base.oid, &obj->oid);
+ 			seen_info->depth = filter_data->current_depth;
+ 			oidmap_put(&filter_data->seen_at_depth, seen_info);
+ 			already_seen = 0;
+ 		} else {
+ 			already_seen =
+ 				filter_data->current_depth >= seen_info->depth;
+ 		}
+ 
+ 		if (already_seen) {
+ 			filter_res = LOFR_SKIP_TREE;
+ 		} else {
+ 			int been_omitted = filter_trees_update_omits(
+-				obj, filter_data, include_it);
++				obj, omits, include_it);
+ 			seen_info->depth = filter_data->current_depth;
+ 
+ 			if (include_it)
+ 				filter_res = LOFR_DO_SHOW;
+-			else if (filter_data->omits && !been_omitted)
++			else if (omits && !been_omitted)
+ 				/*
+ 				 * Must update omit information of children
+ 				 * recursively; they have not been omitted yet.
+ 				 */
+ 				filter_res = LOFR_ZERO;
+ 			else
+ 				filter_res = LOFR_SKIP_TREE;
+ 		}
+ 
+ 		filter_data->current_depth++;
+@@ -208,50 +197,48 @@ static enum list_objects_filter_result filter_trees_depth(
  
  static void filter_trees_free(void *filter_data) {
  	struct filter_trees_depth_data *d = filter_data;
@@ -168,26 +278,20 @@ index ee449de3f7..35e0bbe123 100644
  	free(d);
  }
  
--static void *filter_trees_depth__init(
-+static void filter_trees_depth__init(
- 	struct oidset *omitted,
+ static void filter_trees_depth__init(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct filter *filter)
+ 	struct filter *filter)
  {
  	struct filter_trees_depth_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
+-	d->omits = omitted;
  	oidmap_init(&d->seen_at_depth, 0);
  	d->exclude_depth = filter_options->tree_exclude_depth;
  	d->current_depth = 0;
  
--	*filter_fn = filter_trees_depth;
--	*filter_free_fn = filter_trees_free;
--	return d;
-+	filter->filter_data = d;
-+	filter->filter_object_fn = filter_trees_depth;
-+	filter->free_fn = filter_trees_free;
+ 	filter->filter_data = d;
+ 	filter->filter_object_fn = filter_trees_depth;
+ 	filter->free_fn = filter_trees_free;
  }
  
  /*
@@ -195,49 +299,146 @@ index ee449de3f7..35e0bbe123 100644
   * And to OPTIONALLY collect a list of the omitted OIDs.
   */
  struct filter_blobs_limit_data {
- 	struct oidset *omits;
+-	struct oidset *omits;
  	unsigned long max_bytes;
  };
-@@ -274,33 +286,32 @@ static enum list_objects_filter_result filter_blobs_limit(
- 			oidset_insert(filter_data->omits, &obj->oid);
+ 
+ static enum list_objects_filter_result filter_blobs_limit(
+ 	struct repository *r,
+ 	enum list_objects_filter_situation filter_situation,
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct oidset *omits,
+ 	void *filter_data_)
+ {
+ 	struct filter_blobs_limit_data *filter_data = filter_data_;
+ 	unsigned long object_length;
+ 	enum object_type t;
+ 
+ 	switch (filter_situation) {
+ 	default:
+ 		BUG("unknown filter_situation: %d", filter_situation);
+ 
+@@ -275,38 +262,36 @@ static enum list_objects_filter_result filter_blobs_limit(
+ 			 * apply the size filter criteria.  Be conservative
+ 			 * and force show it (and let the caller deal with
+ 			 * the ambiguity).
+ 			 */
+ 			goto include_it;
+ 		}
+ 
+ 		if (object_length < filter_data->max_bytes)
+ 			goto include_it;
+ 
+-		if (filter_data->omits)
+-			oidset_insert(filter_data->omits, &obj->oid);
++		if (omits)
++			oidset_insert(omits, &obj->oid);
  		return LOFR_MARK_SEEN; /* but not LOFR_DO_SHOW (hard omit) */
  	}
  
  include_it:
- 	if (filter_data->omits)
- 		oidset_remove(filter_data->omits, &obj->oid);
+-	if (filter_data->omits)
+-		oidset_remove(filter_data->omits, &obj->oid);
++	if (omits)
++		oidset_remove(omits, &obj->oid);
  	return LOFR_MARK_SEEN | LOFR_DO_SHOW;
  }
  
--static void *filter_blobs_limit__init(
-+static void filter_blobs_limit__init(
- 	struct oidset *omitted,
+ static void filter_blobs_limit__init(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct filter *filter)
+ 	struct filter *filter)
  {
  	struct filter_blobs_limit_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
+-	d->omits = omitted;
  	d->max_bytes = filter_options->blob_limit_value;
  
--	*filter_fn = filter_blobs_limit;
--	*filter_free_fn = free;
--	return d;
-+	filter->filter_data = d;
-+	filter->filter_object_fn = filter_blobs_limit;
-+	filter->free_fn = free;
+ 	filter->filter_data = d;
+ 	filter->filter_object_fn = filter_blobs_limit;
+ 	filter->free_fn = free;
  }
  
  /*
   * A filter driven by a sparse-checkout specification to only
   * include blobs that a sparse checkout would populate.
-  *
-  * The sparse-checkout spec can be loaded from a blob with the
-  * given OID or from a local pathname.  We allow an OID because
-  * the repo may be bare or we may be doing the filtering on the
-  * server.
-@@ -450,92 +461,117 @@ static enum list_objects_filter_result filter_sparse(
+@@ -330,33 +315,33 @@ struct frame {
+ 	 * omitted objects.
+ 	 *
+ 	 * 0 if everything (recursively) contained in this directory
+ 	 * has been explicitly included (SHOWN) in the result and
+ 	 * the directory may be short-cut later in the traversal.
+ 	 */
+ 	unsigned child_prov_omit : 1;
+ };
+ 
+ struct filter_sparse_data {
+-	struct oidset *omits;
+ 	struct exclude_list el;
+ 
+ 	size_t nr, alloc;
+ 	struct frame *array_frame;
+ };
+ 
+ static enum list_objects_filter_result filter_sparse(
+ 	struct repository *r,
+ 	enum list_objects_filter_situation filter_situation,
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct oidset *omits,
+ 	void *filter_data_)
+ {
+ 	struct filter_sparse_data *filter_data = filter_data_;
+ 	int val, dtype;
+ 	struct frame *frame;
+ 
+ 	switch (filter_situation) {
+ 	default:
+ 		BUG("unknown filter_situation: %d", filter_situation);
+ 
+@@ -425,98 +410,93 @@ static enum list_objects_filter_result filter_sparse(
+ 
+ 		frame = &filter_data->array_frame[filter_data->nr];
+ 
+ 		dtype = DT_REG;
+ 		val = is_excluded_from_list(pathname, strlen(pathname),
+ 					    filename, &dtype, &filter_data->el,
+ 					    r->index);
+ 		if (val < 0)
+ 			val = frame->defval;
+ 		if (val > 0) {
+-			if (filter_data->omits)
+-				oidset_remove(filter_data->omits, &obj->oid);
++			if (omits)
++				oidset_remove(omits, &obj->oid);
+ 			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
+ 		}
+ 
+ 		/*
+ 		 * Provisionally omit it.  We've already established that
+ 		 * this pathname is not in the sparse-checkout specification
+ 		 * with the CURRENT pathname, so we *WANT* to omit this blob.
+ 		 *
+ 		 * However, a pathname elsewhere in the tree may also
+ 		 * reference this same blob, so we cannot reject it yet.
+ 		 * Leave the LOFR_ bits unset so that if the blob appears
+ 		 * again in the traversal, we will be asked again.
+ 		 */
+-		if (filter_data->omits)
+-			oidset_insert(filter_data->omits, &obj->oid);
++		if (omits)
++			oidset_insert(omits, &obj->oid);
+ 
+ 		/*
+ 		 * Remember that at least 1 blob in this tree was
+ 		 * provisionally omitted.  This prevents us from short
+ 		 * cutting the tree in future iterations.
+ 		 */
+ 		frame->child_prov_omit = 1;
+ 		return LOFR_ZERO;
+ 	}
  }
  
  
@@ -248,16 +449,13 @@ index ee449de3f7..35e0bbe123 100644
  	free(d);
  }
  
--static void *filter_sparse_oid__init(
-+static void filter_sparse_oid__init(
- 	struct oidset *omitted,
+ static void filter_sparse_oid__init(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct filter *filter)
+ 	struct filter *filter)
  {
  	struct filter_sparse_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
+-	d->omits = omitted;
  	if (add_excludes_from_blob_to_list(filter_options->sparse_oid_value,
  					   NULL, 0, &d->el) < 0)
  		die("could not load filter specification");
@@ -266,24 +464,18 @@ index ee449de3f7..35e0bbe123 100644
  	d->array_frame[d->nr].defval = 0; /* default to include */
  	d->array_frame[d->nr].child_prov_omit = 0;
  
--	*filter_fn = filter_sparse;
--	*filter_free_fn = filter_sparse_free;
--	return d;
-+	filter->filter_data = d;
-+	filter->filter_object_fn = filter_sparse;
-+	filter->free_fn = filter_sparse_free;
+ 	filter->filter_data = d;
+ 	filter->filter_object_fn = filter_sparse;
+ 	filter->free_fn = filter_sparse_free;
  }
  
--static void *filter_sparse_path__init(
-+static void filter_sparse_path__init(
- 	struct oidset *omitted,
+ static void filter_sparse_path__init(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct filter *filter)
+ 	struct filter *filter)
  {
  	struct filter_sparse_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
+-	d->omits = omitted;
  	if (add_excludes_from_file_to_list(filter_options->sparse_path_value,
  					   NULL, 0, &d->el, NULL) < 0)
  		die("could not load filter specification");
@@ -292,21 +484,15 @@ index ee449de3f7..35e0bbe123 100644
  	d->array_frame[d->nr].defval = 0; /* default to include */
  	d->array_frame[d->nr].child_prov_omit = 0;
  
--	*filter_fn = filter_sparse;
--	*filter_free_fn = filter_sparse_free;
--	return d;
-+	filter->filter_data = d;
-+	filter->filter_object_fn = filter_sparse;
-+	filter->free_fn = filter_sparse_free;
+ 	filter->filter_data = d;
+ 	filter->filter_object_fn = filter_sparse;
+ 	filter->free_fn = filter_sparse_free;
  }
  
--typedef void *(*filter_init_fn)(
-+typedef void (*filter_init_fn)(
- 	struct oidset *omitted,
+ typedef void (*filter_init_fn)(
+-	struct oidset *omitted,
  	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn);
-+	struct filter *filter);
+ 	struct filter *filter);
  
  /*
   * Must match "enum list_objects_filter_choice".
@@ -315,323 +501,45 @@ index ee449de3f7..35e0bbe123 100644
  	NULL,
  	filter_blobs_none__init,
  	filter_blobs_limit__init,
- 	filter_trees_depth__init,
- 	filter_sparse_oid__init,
- 	filter_sparse_path__init,
- };
- 
--void *list_objects_filter__init(
-+struct filter *list_objects_filter__init(
- 	struct oidset *omitted,
--	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
-+	struct list_objects_filter_options *filter_options)
- {
-+	struct filter *filter;
- 	filter_init_fn init_fn;
- 
- 	assert((sizeof(s_filters) / sizeof(s_filters[0])) == LOFC__COUNT);
+@@ -536,35 +516,37 @@ struct filter *list_objects_filter__init(
  
  	if (filter_options->choice >= LOFC__COUNT)
  		BUG("invalid list-objects filter choice: %d",
  		    filter_options->choice);
  
  	init_fn = s_filters[filter_options->choice];
--	if (init_fn)
--		return init_fn(omitted, filter_options,
--			       filter_fn, filter_free_fn);
--	*filter_fn = NULL;
--	*filter_free_fn = NULL;
--	return NULL;
-+	if (!init_fn)
-+		return NULL;
-+
-+	filter = xcalloc(1, sizeof(*filter));
-+	init_fn(omitted, filter_options, filter);
-+	return filter;
-+}
-+
-+enum list_objects_filter_result list_objects_filter__filter_object(
-+	struct repository *r,
-+	enum list_objects_filter_situation filter_situation,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	struct filter *filter)
-+{
-+	if (filter && (obj->flags & NOT_USER_GIVEN))
-+		return filter->filter_object_fn(r, filter_situation, obj,
-+						pathname, filename,
-+						filter->filter_data);
-+	/*
-+	 * No filter is active or user gave object explicitly. Choose default
-+	 * behavior based on filter situation.
-+	 */
-+	if (filter_situation == LOFS_END_TREE)
-+		return 0;
-+	return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+}
-+
-+void list_objects_filter__free(struct filter *filter)
-+{
-+	if (!filter)
-+		return;
-+	filter->free_fn(filter->filter_data);
-+	free(filter);
+ 	if (!init_fn)
+ 		return NULL;
+ 
+ 	filter = xcalloc(1, sizeof(*filter));
+-	init_fn(omitted, filter_options, filter);
++	filter->omits = omitted;
++	init_fn(filter_options, filter);
+ 	return filter;
  }
-diff --git a/list-objects-filter.h b/list-objects-filter.h
-index 1d45a4ad57..6908954266 100644
---- a/list-objects-filter.h
-+++ b/list-objects-filter.h
-@@ -53,37 +53,34 @@ enum list_objects_filter_result {
- 	LOFR_DO_SHOW   = 1<<1,
- 	LOFR_SKIP_TREE = 1<<2,
- };
  
- enum list_objects_filter_situation {
- 	LOFS_BEGIN_TREE,
- 	LOFS_END_TREE,
- 	LOFS_BLOB
- };
- 
--typedef enum list_objects_filter_result (*filter_object_fn)(
-+struct filter;
-+
-+/* Constructor for the set of defined list-objects filters. */
-+struct filter *list_objects_filter__init(
-+	struct oidset *omitted,
-+	struct list_objects_filter_options *filter_options);
-+
-+/*
-+ * Lets `filter` decide how to handle the `obj`. If `filter` is NULL, this
-+ * function behaves as expected if no filter is configured: all objects are
-+ * included.
-+ */
-+enum list_objects_filter_result list_objects_filter__filter_object(
+ enum list_objects_filter_result list_objects_filter__filter_object(
  	struct repository *r,
  	enum list_objects_filter_situation filter_situation,
  	struct object *obj,
  	const char *pathname,
  	const char *filename,
--	void *filter_data);
--
--typedef void (*filter_free_fn)(void *filter_data);
-+	struct filter *filter);
- 
--/*
-- * Constructor for the set of defined list-objects filters.
-- * Returns a generic "void *filter_data".
-- *
-- * The returned "filter_fn" will be used by traverse_commit_list()
-- * to filter the results.
-- *
-- * The returned "filter_free_fn" is a destructor for the
-- * filter_data.
-- */
--void *list_objects_filter__init(
--	struct oidset *omitted,
--	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn);
-+/* Destroys `filter`. Does nothing if `filter` is null. */
-+void list_objects_filter__free(struct filter *filter);
- 
- #endif /* LIST_OBJECTS_FILTER_H */
-diff --git a/list-objects.c b/list-objects.c
-index b5651ddd5b..9307d91fb3 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -11,32 +11,31 @@
- #include "list-objects-filter-options.h"
- #include "packfile.h"
- #include "object-store.h"
- #include "trace.h"
- 
- struct traversal_context {
- 	struct rev_info *revs;
- 	show_object_fn show_object;
- 	show_commit_fn show_commit;
- 	void *show_data;
--	filter_object_fn filter_fn;
--	void *filter_data;
-+	struct filter *filter;
- };
- 
- static void process_blob(struct traversal_context *ctx,
- 			 struct blob *blob,
- 			 struct strbuf *path,
- 			 const char *name)
+ 	struct filter *filter)
  {
- 	struct object *obj = &blob->object;
- 	size_t pathlen;
--	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+	enum list_objects_filter_result r;
- 
- 	if (!ctx->revs->blob_objects)
- 		return;
- 	if (!obj)
- 		die("bad blob object");
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
- 
+ 	if (filter && (obj->flags & NOT_USER_GIVEN))
+ 		return filter->filter_object_fn(r, filter_situation, obj,
+ 						pathname, filename,
++						filter->omits,
+ 						filter->filter_data);
  	/*
- 	 * Pre-filter known-missing objects when explicitly requested.
-@@ -47,25 +46,24 @@ static void process_blob(struct traversal_context *ctx,
- 	 * may cause the actual filter to report an incomplete list
- 	 * of missing objects.
+ 	 * No filter is active or user gave object explicitly. Choose default
+ 	 * behavior based on filter situation.
  	 */
- 	if (ctx->revs->exclude_promisor_objects &&
- 	    !has_object_file(&obj->oid) &&
- 	    is_promisor_object(&obj->oid))
- 		return;
- 
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
--	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn)
--		r = ctx->filter_fn(ctx->revs->repo,
--				   LOFS_BLOB, obj,
--				   path->buf, &path->buf[pathlen],
--				   ctx->filter_data);
-+	r = list_objects_filter__filter_object(ctx->revs->repo,
-+					       LOFS_BLOB, obj,
-+					       path->buf, &path->buf[pathlen],
-+					       ctx->filter);
- 	if (r & LOFR_MARK_SEEN)
- 		obj->flags |= SEEN;
- 	if (r & LOFR_DO_SHOW)
- 		ctx->show_object(obj, path->buf, ctx->show_data);
- 	strbuf_setlen(path, pathlen);
+ 	if (filter_situation == LOFS_END_TREE)
+ 		return 0;
+ 	return LOFR_MARK_SEEN | LOFR_DO_SHOW;
  }
  
- /*
-  * Processing a gitlink entry currently does nothing, since
-  * we do not recurse into the subproject.
-@@ -150,21 +148,21 @@ static void process_tree_contents(struct traversal_context *ctx,
- }
- 
- static void process_tree(struct traversal_context *ctx,
- 			 struct tree *tree,
- 			 struct strbuf *base,
- 			 const char *name)
- {
- 	struct object *obj = &tree->object;
- 	struct rev_info *revs = ctx->revs;
- 	int baselen = base->len;
--	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+	enum list_objects_filter_result r;
- 	int failed_parse;
- 
- 	if (!revs->tree_objects)
- 		return;
- 	if (!obj)
- 		die("bad tree object");
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
- 
- 	failed_parse = parse_tree_gently(tree, 1);
-@@ -179,47 +177,44 @@ static void process_tree(struct traversal_context *ctx,
- 		 */
- 		if (revs->exclude_promisor_objects &&
- 		    is_promisor_object(&obj->oid))
- 			return;
- 
- 		if (!revs->do_not_die_on_missing_tree)
- 			die("bad tree object %s", oid_to_hex(&obj->oid));
- 	}
- 
- 	strbuf_addstr(base, name);
--	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn)
--		r = ctx->filter_fn(ctx->revs->repo,
--				   LOFS_BEGIN_TREE, obj,
--				   base->buf, &base->buf[baselen],
--				   ctx->filter_data);
-+	r = list_objects_filter__filter_object(ctx->revs->repo,
-+					       LOFS_BEGIN_TREE, obj,
-+					       base->buf, &base->buf[baselen],
-+					       ctx->filter);
- 	if (r & LOFR_MARK_SEEN)
- 		obj->flags |= SEEN;
- 	if (r & LOFR_DO_SHOW)
- 		ctx->show_object(obj, base->buf, ctx->show_data);
- 	if (base->len)
- 		strbuf_addch(base, '/');
- 
- 	if (r & LOFR_SKIP_TREE)
- 		trace_printf("Skipping contents of tree %s...\n", base->buf);
- 	else if (!failed_parse)
- 		process_tree_contents(ctx, tree, base);
- 
--	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn) {
--		r = ctx->filter_fn(ctx->revs->repo,
--				   LOFS_END_TREE, obj,
--				   base->buf, &base->buf[baselen],
--				   ctx->filter_data);
--		if (r & LOFR_MARK_SEEN)
--			obj->flags |= SEEN;
--		if (r & LOFR_DO_SHOW)
--			ctx->show_object(obj, base->buf, ctx->show_data);
--	}
-+	r = list_objects_filter__filter_object(ctx->revs->repo,
-+					       LOFS_END_TREE, obj,
-+					       base->buf, &base->buf[baselen],
-+					       ctx->filter);
-+	if (r & LOFR_MARK_SEEN)
-+		obj->flags |= SEEN;
-+	if (r & LOFR_DO_SHOW)
-+		ctx->show_object(obj, base->buf, ctx->show_data);
- 
- 	strbuf_setlen(base, baselen);
- 	free_tree_buffer(tree);
- }
- 
- static void mark_edge_parents_uninteresting(struct commit *commit,
- 					    struct rev_info *revs,
- 					    show_edge_fn show_edge)
- {
- 	struct commit_list *parents;
-@@ -395,38 +390,32 @@ static void do_traverse(struct traversal_context *ctx)
- void traverse_commit_list(struct rev_info *revs,
- 			  show_commit_fn show_commit,
- 			  show_object_fn show_object,
- 			  void *show_data)
- {
- 	struct traversal_context ctx;
- 	ctx.revs = revs;
- 	ctx.show_commit = show_commit;
- 	ctx.show_object = show_object;
- 	ctx.show_data = show_data;
--	ctx.filter_fn = NULL;
--	ctx.filter_data = NULL;
-+	ctx.filter = NULL;
- 	do_traverse(&ctx);
- }
- 
- void traverse_commit_list_filtered(
- 	struct list_objects_filter_options *filter_options,
- 	struct rev_info *revs,
- 	show_commit_fn show_commit,
- 	show_object_fn show_object,
- 	void *show_data,
- 	struct oidset *omitted)
- {
- 	struct traversal_context ctx;
--	filter_free_fn filter_free_fn = NULL;
- 
- 	ctx.revs = revs;
- 	ctx.show_object = show_object;
- 	ctx.show_commit = show_commit;
- 	ctx.show_data = show_data;
--	ctx.filter_fn = NULL;
--
--	ctx.filter_data = list_objects_filter__init(omitted, filter_options,
--						    &ctx.filter_fn, &filter_free_fn);
-+	ctx.filter = list_objects_filter__init(omitted, filter_options);
- 	do_traverse(&ctx);
--	if (ctx.filter_data && filter_free_fn)
--		filter_free_fn(ctx.filter_data);
-+	list_objects_filter__free(ctx.filter);
- }
 -- 
 2.21.0
 
