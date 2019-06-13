@@ -2,141 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5680F1F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 22:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6281F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 22:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbfFMWkW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 18:40:22 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:44783 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfFMWkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:40:21 -0400
-Received: by mail-io1-f45.google.com with SMTP id s7so1461410iob.11
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=IElDEUXT7xwibCnRgx8is5oyJjrgAfVD8aSAaUqEVBs=;
-        b=WOjNr/hYGRWgRA8FR/NRySzEk5dw6xcU8cPU28DFy85v+rUhF8KFYf5FjkFGa8VPrv
-         CoCXzhGlfwxnJrxd9YF5UQTh2lUp1gdZj011g3LSv7EDtuUZnIj57IWpgI/LGl84pBi5
-         70XgvxHr8abzZXxK5u7h6Z9GCgdSQH4T9GjJwS8Rrb9kzdBHlok6qPZzZZQwPG6Lfh/C
-         XRs7LDYNMZNnRH3f0lFD0hseK10ngGdmA2ZUoig0JM9D9cHONnSs1jDlRYfriIwY/OM5
-         9nPKo97oIlLmQsmTqBZTRI9Ntd+4M2awVww0hU4X6Z129iarXMILe2svgIxYAH+1KSad
-         8LXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IElDEUXT7xwibCnRgx8is5oyJjrgAfVD8aSAaUqEVBs=;
-        b=ieD4QoVmvmJgDeACS7CtQXTRFqkGr16/YgCMOgbT1Ywfb0bdU9NNHAKZltjOVuLp9w
-         HnIk00SpZ1OeyglmZPF1wzro2ucPUYOBaLYH6qSJqmLJhqlgUfKS85tk2ATosNhan3+p
-         8P+J+tNnJAgDiMcnXtmxUaWmFNCClBhtLQI0itbEs0H5SbwB2RsJTHmSZx1VVbzAfG3X
-         +2seB7xx5XNYmr2SScDKOmRp1dq1pWgi1bYcEfB8DEI/UrJKX2zYffJe/rwsWXo5Mo0y
-         Kft1rfqbCgjiaKJLWA9dqCEub81Uvp+6SuKjsAic+r4aCiEQKVPCfGKXLATk8VkrIWrB
-         JJSg==
-X-Gm-Message-State: APjAAAWYABnXU2NIU5m/SBu84AH16dFKQQAojSAtVIubCD0LTwheZANp
-        1UfEGw3YtIfvcKnK1E0zkigYN2f9biFJAtVbLN2aYr20
-X-Google-Smtp-Source: APXvYqwgSEmDKZJxYfOdT7ZpXyDXrHtLBqUPlvxgyEjbp77eS2qWr39Xhs02JDX0uvC2fNPXmKeMJIXv09ijOebtSw4=
-X-Received: by 2002:a6b:7008:: with SMTP id l8mr57426312ioc.292.1560465620943;
- Thu, 13 Jun 2019 15:40:20 -0700 (PDT)
+        id S1726972AbfFMWq1 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 13 Jun 2019 18:46:27 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:62294 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFMWq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 18:46:27 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x5DMkHal081039
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 13 Jun 2019 18:46:18 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>, <randall.s.becker@rogers.com>
+Cc:     <git@vger.kernel.org>
+References: <20190613185313.16120-1-randall.s.becker@rogers.com> <20190613190644.GC27217@sigill.intra.peff.net> <000101d5221e$88aa67d0$99ff3770$@nexbridge.com>
+In-Reply-To: <000101d5221e$88aa67d0$99ff3770$@nexbridge.com>
+Subject: RE: [Patch 0/5] Add exclusions for tests requiring cvs where cvs is not installed
+Date:   Thu, 13 Jun 2019 18:46:10 -0400
+Message-ID: <001b01d52239$cefaa270$6cefe750$@nexbridge.com>
 MIME-Version: 1.0
-From:   Vincent Legoll <vincent.legoll@gmail.com>
-Date:   Fri, 14 Jun 2019 00:40:10 +0200
-Message-ID: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
-Subject: cherry-pick strangeness
-To:     git@vger.kernel.org,
-        Vincent Legoll - Gmail <vincent.legoll@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000056dc4058b3c377c"
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQMHvzyDluE9P4st0JpJQ4fnzjC8uAE6c9KmAsZ1DLCkFO1HIA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000056dc4058b3c377c
-Content-Type: text/plain; charset="UTF-8"
+On June 13, 2019 3:31 PM, I wrote:
+> On June 13, 2019 3:07 PM, Peff wrote:
+> > On Thu, Jun 13, 2019 at 02:53:08PM -0400, randall.s.becker@rogers.com
+> > wrote:
+> >
+> > > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> > >
+> > > t9600 to t9604 currently depend on cvs to function correctly,
+> > > otherwise all of those tests fail. This patch follows an existing
+> > > pattern of from the t9400 series by attempting to run cvs without
+> > > arguments, which succeeds if installed, and skipping the test if the
+> > > command fails.
+> >
+> > Hrm. I don't have cvs installed, and those tests are properly skipped for me.
+> > That's because they include lib-cvs.sh, which has:
+> >
+> >   if ! type cvs >/dev/null 2>&1
+> >   then
+> >           skip_all='skipping cvsimport tests, cvs not found'
+> >           test_done
+> >   fi
+> >
+> > Why doesn't that work for you? Does the "type" check not work (e.g.,
+> > you have something called "cvs" but it does not behave as we expect)?
+> > If so, then it sounds like we just need to harmonize that with the other
+> checks.
+> >
+> > It also sounds like the t9400 tests could be using lib-cvs to avoid
+> > duplicating logic, though it might need some refactoring (they don't
+> > need cvsps, for example).
+> 
+> The t9400 tests use the same technique as I used - and I mistakenly trusted it.
+> The type check does not fail.
+> 
+> if ! type cvs >/dev/null 2>&1
+> then
+> 	echo "oops"
+> fi
+> 
+> does not print "oops". type is reporting $?=0 and a legitimate file in
+> /usr/local/bin/cvs. Confusingly, t9400 skips, but type reports a valid path. I
+> think the test done in the t9400 series is not correct.
+> 
+> cvs >/dev/null 2>&1 on the platform causes $?=255, while a blah >/dev/null
+> 2>&1 reports $?=127.
+> 
+> There is something else going on causing the cvs-related tests to fail that this
+> patch might be hiding. We do have cvsps so I'm now much more confused by
+> the whole thing.
+> 
+> Let's drop this patch for now. I was premature on this patch and need to dig
+> deeper as to what is going on.
 
-Hello,
+We do not need the patch. The situation was caused by an old version of CVS (pre 1.11)  that was causing t9600... to fail. The message was buried under --verbose. I ported CVS 1.11.23 and CVS tests are now working. My bad.
 
-I stumbled upon a strange behavior of cherry-pick,
-running the attached script yields different results
-from running the same command lines manually in
-an interactive shell, one after the other.
+Cheers,
+Randall
 
-I searched the man page and found no indications
-that that should act in this way. It looks like the CLI
-args "--ff" & "--no-ff" or the absence of it are not
-doing the same in a script as in an interactive shell.
 
-I  asked in the IRC channel, and was asked to report
-it here.
-
-I tried to reproduce it in various environments, I
-ran it in Centos 7, debian 9, ubuntu bionic & cosmic,
-alpine & fedora, in docker containers, all giving the
-same results. The git versions tested range from
-1.8.3.1 to 2.21.0.
-
-Trying to reproduce, I created the attached script,
-which reports 3 times "SAME", whereas the case
-using "--no-ff" should print "DIFF", if I'm not wrong
-in reading its manpage description.
-
-What am I missing ?
-
--- 
-Vincent Legoll
-
---000000000000056dc4058b3c377c
-Content-Type: application/x-shellscript; name="repro.sh"
-Content-Disposition: attachment; filename="repro.sh"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jwv8wuok0>
-X-Attachment-Id: f_jwv8wuok0
-
-IyEgL2Jpbi9iYXNoCgpXUktESVI9IiQobWt0ZW1wIC1kIC1wIC4pIgpjZCAiJHtXUktESVJ9IgoK
-Z2l0IC0tdmVyc2lvbgoKZ2l0IGluaXQgLiA+IC9kZXYvbnVsbCAyPiYxCmdpdCBjb25maWcgLS1n
-bG9iYWwgdXNlci5lbWFpbCAieW91QGV4YW1wbGUuY29tIiA+IC9kZXYvbnVsbCAyPiYxCmdpdCBj
-b25maWcgLS1nbG9iYWwgdXNlci5uYW1lICJZb3VyIE5hbWUiID4gL2Rldi9udWxsIDI+JjEKCnRv
-dWNoIC5naXRpZ25vcmUKZ2l0IGFkZCAuZ2l0aWdub3JlID4gL2Rldi9udWxsIDI+JjEKZ2l0IGNv
-bW1pdCAtbSdJbml0JyA+IC9kZXYvbnVsbCAyPiYxCgplY2hvICdhJyA+IGRhdGEudHh0CmdpdCBh
-ZGQgZGF0YS50eHQgPiAvZGV2L251bGwgMj4mMQpnaXQgY29tbWl0IC1tJ0ZpcnN0IGNvbW1pdCcg
-PiAvZGV2L251bGwgMj4mMQoKZWNobyAnYicgPiBkYXRhLnR4dApnaXQgYWRkIGRhdGEudHh0ID4g
-L2Rldi9udWxsIDI+JjEKZ2l0IGNvbW1pdCAtbSdTZWNvbmQgY29tbWl0JyA+IC9kZXYvbnVsbCAy
-PiYxCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMKCkJBU0U9J21hc3RlcicKCkJFRk9SRV9CQVNFPSdtYXN0ZXJe
-JwojQkVGT1JFX0JBU0U9J21hc3Rlcn4xJwojQkVGT1JFX0JBU0U9J21hc3RlckB7MX0nCgplY2hv
-ICJCQVNFOiAke0JBU0V9IgplY2hvICJCRUZPUkVfQkFTRTogJHtCRUZPUkVfQkFTRX0iCgojIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMKCkJSQU5DSD1icmFuY2hfMQpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIg
-IiR7QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVsbCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzLCBz
-YW1lIGNvbW1pdHMgKGFzIGlmIC0tZmYgd2FzIGdpdmVuKQpnaXQgY2hlcnJ5LXBpY2sgIiR7QkFT
-RX0iID4gL2Rldi9udWxsIDI+JjEKCkNJRF9CUkFOQ0g9JChnaXQgc2hvdyAiJHtCUkFOQ0h9IiB8
-IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKQ0lEX01BU1RFUj0kKGdpdCBzaG93IG1hc3RlciB8
-IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKCiMgU2hvdWxkIGJlIGRpZmZlcmVudCBidXQgYXJl
-bid0CmVjaG8gIiR7Q0lEX01BU1RFUn0gPD4gJHtDSURfQlJBTkNIfSIKWyAiJHtDSURfTUFTVEVS
-fSIgPSAiJHtDSURfQlJBTkNIfSIgXSAmJiBlY2hvIFNBTUUgfHwgZWNobyBESUZGCgojIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMKCkJSQU5DSD1icmFuY2hfMgpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIgIiR7
-QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVsbCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzIGJ1dCBu
-ZXcgY29tbWl0IElEcwpnaXQgY2hlcnJ5LXBpY2sgLS1uby1mZiAiJHtCQVNFfSIgPiAvZGV2L251
-bGwgMj4mMQoKQ0lEX0JSQU5DSD0kKGdpdCBzaG93ICIke0JSQU5DSH0iIHwgYXdrICdOUiA9PSAx
-IHtwcmludCAkMn0nKQpDSURfTUFTVEVSPSQoZ2l0IHNob3cgbWFzdGVyIHwgYXdrICdOUiA9PSAx
-IHtwcmludCAkMn0nKQoKIyBUaG9zZSBhcmUgZGlmZmVyZW50CmVjaG8gIiR7Q0lEX01BU1RFUn0g
-PD4gJHtDSURfQlJBTkNIfSIKWyAiJHtDSURfTUFTVEVSfSIgPSAiJHtDSURfQlJBTkNIfSIgXSAm
-JiBlY2hvIFNBTUUgfHwgZWNobyBESUZGCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKCkJSQU5DSD1icmFuY2hf
-MwpnaXQgY2hlY2tvdXQgLWIgIiR7QlJBTkNIfSIgIiR7QkVGT1JFX0JBU0V9IiA+IC9kZXYvbnVs
-bCAyPiYxCgojIElkZW50aWNhbCBwYXRjaGVzLCBzYW1lIGNvbW1pdHMKZ2l0IGNoZXJyeS1waWNr
-IC0tZmYgIiR7QkFTRX0iID4gL2Rldi9udWxsIDI+JjEKCkNJRF9CUkFOQ0g9JChnaXQgc2hvdyAi
-JHtCUkFOQ0h9IiB8IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKQ0lEX01BU1RFUj0kKGdpdCBz
-aG93IG1hc3RlciB8IGF3ayAnTlIgPT0gMSB7cHJpbnQgJDJ9JykKCiMgVGhvc2UgYXJlIGRpZmZl
-cmVudAplY2hvICIke0NJRF9NQVNURVJ9IDw+ICR7Q0lEX0JSQU5DSH0iClsgIiR7Q0lEX01BU1RF
-Un0iID0gIiR7Q0lEX0JSQU5DSH0iIF0gJiYgZWNobyBTQU1FIHx8IGVjaG8gRElGRgoKIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjCg==
---000000000000056dc4058b3c377c--
