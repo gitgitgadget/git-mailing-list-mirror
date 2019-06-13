@@ -7,77 +7,94 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 429F61F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 18:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CB371F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 18:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726872AbfFMSWw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 14:22:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51489 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfFMSWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 14:22:51 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 871DC15A235;
-        Thu, 13 Jun 2019 14:22:50 -0400 (EDT)
+        id S1726922AbfFMSXi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 14:23:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55615 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbfFMSXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 14:23:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37A8C60C95;
+        Thu, 13 Jun 2019 14:23:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Pd2iSQfBN76Rj1twaBYOfin1VWo=; b=Y36HLJ
-        6B3YIUPthNzQxoS+blt6at6t6juJGrE6xtzTOz7ft0Ona830gved1B6i2yiVPn86
-        svTV3lAbOE8ybVPqtC31glLSSLQrJ9WIs+qXiK/DX9UwGvUUJWmrpg1FeCBGMrpV
-        R0xalGCm0npy4VDiz6ndegYKeI/51BzpPoj0g=
+        :content-type; s=sasl; bh=JnayyZs8h5O6cO1ia07b/4YVjDg=; b=lC7da0
+        oOJ2lV5zWLxtvfI5hk/Ha8cnnd7ICMfbIPXDPGiZ5OrCEFaOkzXsRYhpQD8pwuBo
+        TsAZx+fuE9FsueuQ7Cg/SvjzkncOFR+aHjL3Q3d8Xrv+rfc3XznwQ6nFN25kkw4i
+        3d5SZUbQE8pu7P9xRtq+wMa9y3lWVMDjgVgUw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UyiiPRJwHUJycyy2SpzvrzvHwtKuPlMP
-        9ew/Je+/Z1/0pT9CCAjeDzP6QOLRY/4DqYxDk9JBYCw1IIoAo6Y5876J6P0HbsI0
-        ANUyyAsePPAkuBO724i2tpeIAJuAp7GGQIL0ihYvDxmzsq6RXpLbDTZ/QqNAtq4D
-        8e7++2+KvTw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FE3615A234;
-        Thu, 13 Jun 2019 14:22:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=C/IlmR4lIFyeBuhMAVSJH2qOgItjcAh2
+        1I/5dLeXc1R7gDKi40b1iRcaSnV2AMTqFTgFZxWnQUaVgeKG0KJCWjiOn28ZQHhd
+        bcHgAQwcOfyIScD3AZQ3HCISvZwiKgGFvhlz0Uy5WGve/viq5JddEo5BYZphKXZ7
+        xOVNNWFwHqk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3037D60C94;
+        Thu, 13 Jun 2019 14:23:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E771615A233;
-        Thu, 13 Jun 2019 14:22:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7A95960C90;
+        Thu, 13 Jun 2019 14:23:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pedro Larroy <pedro.larroy.lists@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git bisect should return 1 when the first bad commit is found
-References: <CAC_CU1iWBCTt5jLQ0Zp2HoyA0oFgG3shDB2rLfOsmC+x67NdAw@mail.gmail.com>
-Date:   Thu, 13 Jun 2019 11:22:48 -0700
-In-Reply-To: <CAC_CU1iWBCTt5jLQ0Zp2HoyA0oFgG3shDB2rLfOsmC+x67NdAw@mail.gmail.com>
-        (Pedro Larroy's message of "Wed, 12 Jun 2019 15:33:43 -0700")
-Message-ID: <xmqq5zp9wdjb.fsf@gitster-ct.c.googlers.com>
+To:     Paul Smith <paul@mad-scientist.net>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Reducing git size by building libgit.so
+References: <21f1f334-755e-3283-d0da-ec0ab9231cfc@ucdenver.edu>
+        <20190611234815.GB8616@genre.crustytoothpaste.net>
+        <9c488ce8c1e1e6d6d4c343b0b40c8a64c8147a7f.camel@mad-scientist.net>
+        <nycvar.QRO.7.76.6.1906130914250.42@tvgsbejvaqbjf.bet>
+        <13c40b4b819f702a52f7039177579f87fa90aa50.camel@mad-scientist.net>
+Date:   Thu, 13 Jun 2019 11:23:29 -0700
+In-Reply-To: <13c40b4b819f702a52f7039177579f87fa90aa50.camel@mad-scientist.net>
+        (Paul Smith's message of "Thu, 13 Jun 2019 13:28:10 -0400")
+Message-ID: <xmqq1rzxwdi6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 40354C8A-8E08-11E9-8473-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 59924412-8E08-11E9-8205-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pedro Larroy <pedro.larroy.lists@gmail.com> writes:
+Paul Smith <paul@mad-scientist.net> writes:
 
-> I'm using git bisect, and for complex reasons I can't use git bisect
-> run to drive the bisection. I don't think git bisect bad/good is
-> returning a different status code when the first bad commit is found
-> and this would be very useful to stop the driver of the bisection.
+> I assumed that we were discussing providing an _option_ of building
+> with shared libraries, rather than removing support for static
+> libraries and only supporting shared libraries.  The former is the
+> typical model in portable projects.
+> ...
+> So, the answer to most of the (important) issues you and Brian raise
+> is, "if it doesn't work, can't be made to work, is too slow, or is
+> annoying for ANY other reason, then don't do it".
 >
-> What do you think?  Would such a change be acceptable?
-
-Probably not.
-
-A non-zero exit code would indicate that "git bisect" had trouble
-finding the next commit to check after being told 'good' (or 'bad'),
-which you wouldn't be able to tell from your "first bad one is
-found".
-
-The 'first bad one' is not necessarily the HEAD when the bisect
-procedure finds it, so you'd have to read and parse "x is the first
-such commit" message anyway, no?  And once you start parsing the
-message from 'git bisect', you should be able to tell between
-"please try this one, you have approximately 7 steps left" and "we
-found the first bad one, which is X", without relying on the exit
-status, no?
-
+> Regarding things like publish-ability of the API, I don't know what
+> else to say.  It's FOSS, after all: anyone can do whatever they want
+> (with respect to building and using the code) regardless of the desires
+> of the development team.  All you can do is make clear that the intent
+> is that the API is not stable, and if they don't listen and their stuff
+> breaks, well, as the saying goes, they get to keep both halves.  Not
+> adding any header files to the installation rules and packages is also
+> helpful :).
+>
+> There's a certain amount of cold, hard reality that every FOSS project,
+> regardless of how friendly and welcoming they aspire to be, simply
+> can't avoid while still making progress (and staying sane).
+>
+>
+> I certainly don't want to minimize the amount of work involved here,
+> nor do I want to in any way volunteer myself to undertake any of it: as
+> I said, I don't have strong feelings about it.
+>
+> I'm just saying, there's no technical reason it can't be done while
+> maintaining the same features (such as relocatability) as the static
+> library installs, at least on the major platforms.
+>
+> Cheers!
