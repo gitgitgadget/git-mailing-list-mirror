@@ -2,118 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 838D01F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 17:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB5EF1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 17:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726813AbfFMRwl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 13:52:41 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35099 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbfFMRwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 13:52:41 -0400
-Received: by mail-wm1-f65.google.com with SMTP id c6so11060607wml.0
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 10:52:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=WeTcgrFm1RQETNGuZdBGdKgq0oHRumvmVfYfnjUunzY=;
-        b=ZwUKIX1QHvf0pZUyDwxG3H5WG4+nzBc5Wcm7MDzdGRzy44RhZvfYT8uj7x8CKOmZjt
-         JYL49Tc532m9ADwL6sQ9cjeWyNo9Yz3q6AZrONHXRXnv1MDv5caZ9qcRhfq9aqB2XUj4
-         bzBNlCpIyCjebpgGaeB1+JiqBWHEP+NN1ACmVIsJygYWz3bvciSSsaHF+gsTCcF7Taz6
-         gugYGRt2jGJXx8dcnlYApdv4ySu/DUnsKVrZFiDzoWGODHyiaXclyk9NHBkc+UlfXufz
-         C2S9gAkKvpcBgwXyAQ5Dqrs63P5z5LdZZTnA7kU99crZy08yQZA+jhzKl5ee+kQ2uHOv
-         JvRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=WeTcgrFm1RQETNGuZdBGdKgq0oHRumvmVfYfnjUunzY=;
-        b=AxsCb2Rd63gxhWrR5aif8wuASoy8SlGShVNmHGh/NunBtCf5F87BSgGUSsGLmURuk4
-         cjU8hRSl5nu6M9LNdLH5dkFtqBWx/zr19/beKwDZxoFtrmg0c49yynJVS8HWAQyJK1/V
-         FQ5ZAJZKyC5sbAYEp9WEkDTOwNYOXypKMeDT297ilawxwar7zXsZWrtWggSvyUKKx9Yc
-         6z7o7Y0AOmi8tiC/RNzHt0Wm0Q9vXDqsdvJ31bOnFc/lRxH4lXRCSiiQQjbEUXtXs3mk
-         vtbejanrW2METlnCqbgvUwUjs/Zs4/BmLm+Pz6klvzVFW3M58ZkbPhM4ucIkHohfhZL1
-         15yQ==
-X-Gm-Message-State: APjAAAV8TqyHLHe2cSDqIVXqG16mXFHy/o9cYnlmubVwEJ1sSq6/f4q7
-        jxZyFKjbjxxUaaQydP0ISA4=
-X-Google-Smtp-Source: APXvYqykKOSMKWNAk5Z+MFIsJErKYTy+YbYwA+pCeFAkT4kJwbNGGVeex8HjkWcB85gxvz7+05rshg==
-X-Received: by 2002:a1c:df46:: with SMTP id w67mr4499579wmg.69.1560448359784;
-        Thu, 13 Jun 2019 10:52:39 -0700 (PDT)
-Received: from szeder.dev (x4dbd2f68.dyn.telefonica.de. [77.189.47.104])
-        by smtp.gmail.com with ESMTPSA id x4sm476922wrd.46.2019.06.13.10.52.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jun 2019 10:52:38 -0700 (PDT)
-Date:   Thu, 13 Jun 2019 19:52:36 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] t: add t0016-oidmap.sh
-Message-ID: <20190613175236.GF31952@szeder.dev>
-References: <20190609044907.32477-1-chriscool@tuxfamily.org>
- <20190609044907.32477-3-chriscool@tuxfamily.org>
- <20190609092259.GB24208@szeder.dev>
- <20190613171913.GA14055@sigill.intra.peff.net>
+        id S1726736AbfFMR4h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 13:56:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56605 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725825AbfFMR4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 13:56:37 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D7B3E15A385;
+        Thu, 13 Jun 2019 13:56:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2+Np/Xgi7o93ahGb6wvE3HmnuPQ=; b=LWfKae
+        0ZwN86zkALA2eBdB6KsUD9f9XmGUfYqAH5Mtsfugc5tRIKXRcZf2ogqJkx/q0eoV
+        UgqiMwx4BjkZP4QNfDUaMkrWEFViAaEEmTiTmvvn/0VzPvABe6upR4gr6ULTJE0h
+        oySIWIbIFdCmNqQDQ9jejN2iIdwfipbwxv9kw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=j9QvaGqtcNlCfncDbpdKTLm74Z6yVQAa
+        +ty4p2/u3QEKWYOHJD9QfPnbv6z2F/zrnDEefrqWwuOBSIxQDrzg9zQh+hZecDNP
+        nJx3uM+qnhUOi/5W4IgYLDjNkQTV4LHT6ZXJzJDqRwZJEBAdLqB9xk4/7kIbag/5
+        L6Gw1RzGOVE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CEDDA15A384;
+        Thu, 13 Jun 2019 13:56:27 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3EDBA15A382;
+        Thu, 13 Jun 2019 13:56:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
+        phillip.wood123@gmail.com
+Subject: Re: [GSoC][PATCH v3 2/3] cherry-pick/revert: add --skip option
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+        <20190613040504.32317-1-rohit.ashiwal265@gmail.com>
+        <20190613040504.32317-3-rohit.ashiwal265@gmail.com>
+Date:   Thu, 13 Jun 2019 10:56:26 -0700
+In-Reply-To: <20190613040504.32317-3-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Thu, 13 Jun 2019 09:35:03 +0530")
+Message-ID: <xmqqa7elwer9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190613171913.GA14055@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 90DA29B6-8E04-11E9-B119-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 13, 2019 at 01:19:13PM -0400, Jeff King wrote:
-> On Sun, Jun 09, 2019 at 11:22:59AM +0200, SZEDER Gábor wrote:
-> 
-> > So, 'test oidmap' from the previous patch prints the value we want to
-> > check with:
-> > 
-> >     printf("%u\n", sha1hash(oid.hash));
-> > 
-> > First, since object ids inherently make more sense as hex values, it
-> > would be more appropriate to print that hash with the '%x' format
-> > specifier, and then we wouldn't need Perl's hex() anymore, and thus
-> > could swap the order of the first four bytes in oidmap's hash without
-> > relying on Perl, e.g. with:
-> > 
-> >   sed -e 's/^\(..\)\(..\)\(..\)\(..\).*/\4\3\2\1/'
-> > 
-> > Second, and more importantly, the need for swapping the byte order
-> > indicates that this test would fail on big-endian systems, I'm afraid.
-> > So I think we need an additional bswap32() on the printing side, and
-> > then could further simplify 'test_oidhash':
-> 
-> I agree with all your points about using hex and pushing the logic into
-> test-oidmap.c. BUT.
-> 
-> At the point where we are normalizing byte order of the hashes, I have
-> to wonder: why do we care about testing the hash value in the first
-> place? We care that oidmap can store and retrieve values, and that it
-> performs well. But as long as it does those things, I don't think
-> anybody cares if it uses the first 4 bytes of the sha1 or the last 4.
-> 
-> I know there are testing philosophies that go to this level of
-> white-box testing, but I don't think we usually do in Git. A unit
-> test of oidmap's externally visible behavior seems like the right
-> level to me.
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-That's a good point...  but then why does 't0011-hashmap.sh' do it in
-the first place?  As far as I understood this t0016 mainly follows
-suit of t0011.
+> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> index 754b16ce0c..955880ab88 100644
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -10,9 +10,7 @@ SYNOPSIS
+>  [verse]
+>  'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
+>  		  [-S[<keyid>]] <commit>...
+> -'git cherry-pick' --continue
+> -'git cherry-pick' --quit
+> -'git cherry-pick' --abort
+> +'git cherry-pick' --continue | --skip | --abort | --quit
 
+Is this correct, or do we need to enclose these choices inside (),
+i.e.
+
+	'git cherry-pick' ( --continue | --skip | --abort | --quit )
+
+?  
+
+> -static int rollback_single_pick(struct repository *r)
+> +static int rollback_single_pick(struct repository *r, unsigned int is_skip)
+>  {
+>  	struct object_id head_oid;
+>  
+>  	if (!file_exists(git_path_cherry_pick_head(r)) &&
+> -	    !file_exists(git_path_revert_head(r)))
+> +	    !file_exists(git_path_revert_head(r)) && !is_skip)
+>  		return error(_("no cherry-pick or revert in progress"));
+>  	if (read_ref_full("HEAD", 0, &head_oid, NULL))
+>  		return error(_("cannot resolve HEAD"));
+> -	if (is_null_oid(&head_oid))
+> +	if (is_null_oid(&head_oid) && !is_skip)
+>  		return error(_("cannot abort from a branch yet to be born"));
+>  	return reset_for_rollback(&head_oid);
+>  }
+
+It is unclear *why* the function (and more importantly, its callers)
+would want to omit two sanity checks when is_skip is in effect.
+
+Before this patch introduced such conditional behaviour, the name
+was descriptive enough for this single-purpose function that is a
+file-local helper, but it is no longer a case.  The function needs a
+bit of commentary before it.
+
+When &&-chaining error checks that are optional, check the condition
+that makes the error checks optional first, i.e.
+
+	if (!is_skip &&
+		!file_exists(...) && !file_exists(...))
+		return error(...);
+
+The same comment applies to the "do not barf by checking is-null-oid
+under is-skip mode, as that is a sign that we are on an unborn
+branch and reset-for-rollback knows how to handle it now".
+
+It may even be a good idea to group the checks that are guarded by
+the condition for readability, i.e.
+
+	if (!is_skip &&
+		(!file_exists(...) && !file_exists(...)))
+		return error(...);
+
+> +int sequencer_skip(struct repository *r, struct replay_opts *opts)
+> +{
+> +	enum replay_action action = -1;
+> +	sequencer_get_last_command(r, &action);
+> +
+> +	switch (opts->action) {
+> +	case REPLAY_REVERT:
+> +		if (!file_exists(git_path_revert_head(r))) {
+> +			if (action == REPLAY_REVERT) {
+> +				if (!rollback_is_safe())
+> +					goto give_advice;
+> +				else
+> +					break;
+> +			}
+> +			return error(_("no revert in progress"));
+> +		}
+
+This part probably deserves a bit of in-code comment.  
+
+    The Git subcommand (i.e. opts->action) tells us that we are
+    asked to "git revert --skip".  When REVERT_HEAD is not there, we
+    look at the last command of the sequencer state and make sure it
+    is 'revert'; all other cases we barf.
+
+That much we can read from the code.  But what are "all other cases"?
+Do we cover a single-revert case (i.e. "git revert <commit>" got
+conflict and the user is saying "git revert --skip")?  Was the user
+in the middle of "git rebase -i" and the last command before we gave
+the control back was 'pick'?
+
+> +		break;
+> +	case REPLAY_PICK:
+> +		if (!file_exists(git_path_cherry_pick_head(r))) {
+> +			if (action == REPLAY_PICK) {
+> +				if (!rollback_is_safe())
+> +					goto give_advice;
+> +				else
+> +					break;
+> +			}
+> +			return error(_("no cherry-pick in progress"));
+> +		}
+> +		break;
+> +	default:
+> +		BUG("the control must not reach here");
+> +	}
+> +
+> +	if (rollback_single_pick(r, 1))
+> +		return error(_("failed to skip the commit"));
+
+And this takes us back to the previous comment.  By passing '1'
+here, this caller is asking the callee to omit certain sanity check
+the original version of the callee used to do.  What makes it an
+appropriate thing to do so here?  "Because we reach at this point
+under such and such condition, we would never have CHERRY_PICK_HEAD
+or REVERT_HEAD---we do not want it to barf" is a good answer (and
+no, do not merely give answer to me in your response---write the
+answer as in-code comment to help future readers of the code).
+
+"Because when we come here, sometimes the XXX_HEAD must exist but
+some other times XXX_HEAD may not exist, so insisting that either
+exists would make the function fail" is *NOT* a good answer, on the
+other hand.  Somebody must still check that the necessary file
+exists when it must exist.
+
+Thanks.
