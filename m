@@ -2,194 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B4361F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 17:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 295541F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 17:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729585AbfFMRBx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 13:01:53 -0400
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:54101 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729551AbfFLXYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jun 2019 19:24:54 -0400
-Received: by mail-wm1-f44.google.com with SMTP id x15so8200827wmj.3
-        for <git@vger.kernel.org>; Wed, 12 Jun 2019 16:24:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DjVPIMf+xSlw8VRxJOPb8SnirDuQ2XY9HUor0KgqFv0=;
-        b=MowxwC7xZ86LJ4paWGVWzVTQPsVotq9j3DerxQ8q9kxF7PbANqeHFRHcXHCmEYvMBk
-         /9sF5QbPE4GEdYuWgFJUUMSsDbQFdg0LAVmDcWetjtBaFznavk/xaLeU+sI3anM1uCBT
-         WL3IStftovjWv4UkKA1BwcxtUSw3sNipzl+M4QY8Gb9rMWoL+iu6LLwSf/RPttoRGMzD
-         ttkFjAmKxVQrlPdOkEGa7BUa/5ItkQHXzHOfKm1rsr6GfEDUg8REJ0+N4UNul3PY7038
-         RhnavVLwR6TrtUtgxVtOt+5ScaJfF87shnfUsqbvTCyD0DTqW84NdFBoeZ34XMWLle/6
-         bn9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DjVPIMf+xSlw8VRxJOPb8SnirDuQ2XY9HUor0KgqFv0=;
-        b=cmLpq6OjDqvFVtMHs4ZU8dPm2SjAhtdiZgb3khwZn2c1PemaNfDnTETXgAuWQ9y6/u
-         LNYrtCfEW2tSUJwJHWnf5Vih76uwj343h9u0iVlQht/c4GFl1/nQPCclwowzACmuXXRT
-         QUf2oUMiJ1rranKHsbDNhAMs0GmkqqrkXhXPBoCwLQzds1Is6bVbsWMy/CllUezCuYky
-         Uq6c/tBhqAU2ji2eeUB2w/TLKYSJzvl0ctsFSyQPon2M4ZpQFrNdscdnbEmV7Xx5aJR/
-         e43exQN3UzZ4GyaAGs/FN6djYhC30goMn1Ri5S42wk8499hyh+e32qV467D826fqaTxc
-         NrFQ==
-X-Gm-Message-State: APjAAAUdsbAGvXw7pdUJzgic9rN9kanINsIdNXQBTEmJbcu/UECUepRf
-        o8N50DTV+MsUG0JLZ5BpMDItu2hG
-X-Google-Smtp-Source: APXvYqyrn/LpbRB9najqRYS5CtsTXGtmM+DVBoDewLnJs6LKYgERlZ+Pem4o0/9t52X6P7gZBOe58w==
-X-Received: by 2002:a1c:6c08:: with SMTP id h8mr1138835wmc.62.1560381892104;
-        Wed, 12 Jun 2019 16:24:52 -0700 (PDT)
-Received: from localhost.localdomain ([2a04:cec0:1018:b2dd:2143:78cf:c452:5744])
-        by smtp.gmail.com with ESMTPSA id o126sm1414803wmo.31.2019.06.12.16.24.51
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 12 Jun 2019 16:24:51 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 2/3] t: add t0016-oidmap.sh
-Date:   Thu, 13 Jun 2019 01:24:24 +0200
-Message-Id: <20190612232425.12149-3-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.22.0.6.gde8b105b43
-In-Reply-To: <20190612232425.12149-1-chriscool@tuxfamily.org>
-References: <20190612232425.12149-1-chriscool@tuxfamily.org>
+        id S2393285AbfFMRJp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 13:09:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54066 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2393574AbfFMRJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 13:09:44 -0400
+Received: (qmail 3265 invoked by uid 109); 13 Jun 2019 17:09:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jun 2019 17:09:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20125 invoked by uid 111); 13 Jun 2019 17:10:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 13 Jun 2019 13:10:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jun 2019 13:09:41 -0400
+Date:   Thu, 13 Jun 2019 13:09:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Farhan Khan <farhan@farhan.codes>
+Cc:     git@vger.kernel.org
+Subject: Re: Understanding last ~28 bytes of index file
+Message-ID: <20190613170941.GA13670@sigill.intra.peff.net>
+References: <c7c9012143e0818d332d0a9967c1a3e6@farhan.codes>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c7c9012143e0818d332d0a9967c1a3e6@farhan.codes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+On Thu, Jun 13, 2019 at 06:32:03AM +0000, Farhan Khan wrote:
 
-Add actual tests for operations using `struct oidmap` from oidmap.{c,h}.
+> I am trying to understand how the index (.git/index) file works. When
+> looking through extensions, it loops until it reaches the last 28
+> bytes (SHA size + 8). This is referenced here.
+> https://github.com/git/git/blob/master/read-cache.c#L1933
+> What do the last 28 bytes consist of? Where in the source are bytes written?
 
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t0016-oidmap.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
- create mode 100755 t/t0016-oidmap.sh
+It is not that the last 28 bytes are magical. It is that you must have
+at least 28 bytes remaining in the file for there to be any extension.
+20 of those are the trailing sha1 hash (which are written as part of the
+hashfile code in csum-file.c).
 
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-new file mode 100755
-index 0000000000..f5315f42b8
---- /dev/null
-+++ b/t/t0016-oidmap.sh
-@@ -0,0 +1,100 @@
-+#!/bin/sh
-+
-+test_description='test oidmap'
-+. ./test-lib.sh
-+
-+# This purposefully is very similar to t0011-hashmap.sh
-+
-+test_oidmap () {
-+	echo "$1" | test-tool oidmap $3 >actual &&
-+	echo "$2" >expect &&
-+	test_cmp expect actual
-+}
-+
-+
-+test_expect_success 'setup' '
-+
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	test_commit four
-+
-+'
-+
-+test_oidhash () {
-+	git rev-parse "$1" | cut -c1-8
-+}
-+
-+test_expect_success 'hash' '
-+
-+test_oidmap "hash one
-+hash two
-+hash invalidOid
-+hash three" "$(test_oidhash one)
-+$(test_oidhash two)
-+Unknown oid: invalidOid
-+$(test_oidhash three)"
-+
-+'
-+
-+test_expect_success 'put' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put invalidOid 4
-+put three 3" "NULL
-+NULL
-+Unknown oid: invalidOid
-+NULL"
-+
-+'
-+
-+test_expect_success 'replace' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+put invalidOid 4
-+put two deux
-+put one un" "NULL
-+NULL
-+NULL
-+Unknown oid: invalidOid
-+2
-+1"
-+
-+'
-+
-+test_expect_success 'get' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+get two
-+get four
-+get invalidOid
-+get one" "NULL
-+NULL
-+NULL
-+2
-+NULL
-+Unknown oid: invalidOid
-+1"
-+
-+'
-+
-+test_expect_success 'iterate' '
-+
-+test_oidmap "put one 1
-+put two 2
-+put three 3
-+iterate" "NULL
-+NULL
-+NULL
-+$(git rev-parse two) 2
-+$(git rev-parse one) 1
-+$(git rev-parse three) 3"
-+
-+'
-+
-+test_done
--- 
-2.22.0.6.gde8b105b43
+And then for there to be an extension, it must have 8 bytes of name and
+length, which will then be followed by however many bytes the length
+indicated. After parsing that, we check to see if there are enough bytes
+for another extension, and so on.
 
+To find where the index extension blocks themselves are written, perhaps
+grep for write_index_ext_header(), which should be called before writing
+out the data for each.
+
+-Peff
