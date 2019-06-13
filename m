@@ -2,103 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6281F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 22:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0BD1F462
+	for <e@80x24.org>; Thu, 13 Jun 2019 22:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726972AbfFMWq1 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 13 Jun 2019 18:46:27 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:62294 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFMWq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:46:27 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x5DMkHal081039
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 13 Jun 2019 18:46:18 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>, <randall.s.becker@rogers.com>
-Cc:     <git@vger.kernel.org>
-References: <20190613185313.16120-1-randall.s.becker@rogers.com> <20190613190644.GC27217@sigill.intra.peff.net> <000101d5221e$88aa67d0$99ff3770$@nexbridge.com>
-In-Reply-To: <000101d5221e$88aa67d0$99ff3770$@nexbridge.com>
-Subject: RE: [Patch 0/5] Add exclusions for tests requiring cvs where cvs is not installed
-Date:   Thu, 13 Jun 2019 18:46:10 -0400
-Message-ID: <001b01d52239$cefaa270$6cefe750$@nexbridge.com>
+        id S1727377AbfFMW45 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 18:56:57 -0400
+Received: from mail-vs1-f43.google.com ([209.85.217.43]:39922 "EHLO
+        mail-vs1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727060AbfFMW45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 18:56:57 -0400
+Received: by mail-vs1-f43.google.com with SMTP id n2so559842vso.6
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=j0xyLEeLB0oHvgIOVAWm4+Lg0plKozJ525wXroXMEnM=;
+        b=AL0F1O0iGu+tBRgmY4T1SqrqUFfrDmoYd6F/3pftXJQCiZx0N4SzSQAREfzaEs2q4c
+         mHtRV0wk5gbFFfipad7OVjkijTO0IdmWii4ZWrZjOJ0tBne/KbhsmtOnDBK+NlV+J62c
+         knlUJtp+o9zDf1TPL/QcjN4PRxTFsT4Cf/Q/mxJS99bdO4TexwNBgnkVDWiZkpgVguSy
+         tNBlbD60eTvt6aJqpTUusk+Q1u85AlS513vjmHKr+kEIM44SoQZ9RyDNWgoAa3eU/7fT
+         2yD8XwUpNAAqoS77YcvnNT5eqU1Bwlh0aSNthIUJPodXpSslkd34GKnV8yen+3hHxbEg
+         CKTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j0xyLEeLB0oHvgIOVAWm4+Lg0plKozJ525wXroXMEnM=;
+        b=FPWGHu58jzJySaiopVZaJ7Eyi/JvbmnfMRV6TBt/a2TrWxXkztqnFLcT0BxyqQcU8S
+         2pJm6wcErim0+ydEh1ZLoBBR2/tNMowvpxcdgsOAd71dFN0Sl6kijIezUKlv8I9+/7c4
+         aDVunWB5pIrFSlu7JduZ+rdWFYvB83/mPCEIO9ATSNc6q1QTccyNX9AVb5n1dW6TJu/2
+         mbk2/Nqs8TrfvXNFMU52+ZrEYI4vmdGgeVkJUdnkbEYnMazORt4lUvNXnEkaxSKWsQrT
+         pMkuCtNSc4oGXoj4hVsnVjgt1UdK/kIwpa/opkmbDiRa4I/HjzBSTsOVRoTCxiV9yIac
+         +dRQ==
+X-Gm-Message-State: APjAAAU89KBTkREp0mM3EPBbnnMGW2ItW0ZYIG67PRpnOGEul7pFHKgA
+        0bO2xqPq3QkKGBvEn1yoy40XIz/xtV2ltmjAtDY=
+X-Google-Smtp-Source: APXvYqwT5yYKUFizr6R+aKQK5enLm/7hfAx1cHMmOCl9P640dUfjDaLCh2VtlT28Cp3g0qbednls0moN97l/1QkAiro=
+X-Received: by 2002:a67:f5d0:: with SMTP id t16mr3128972vso.175.1560466615693;
+ Thu, 13 Jun 2019 15:56:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMHvzyDluE9P4st0JpJQ4fnzjC8uAE6c9KmAsZ1DLCkFO1HIA==
-Content-Language: en-ca
+References: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
+In-Reply-To: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 13 Jun 2019 15:56:43 -0700
+Message-ID: <CABPp-BGQ0frtOk7ZF4vnLdfeYCXibUaC4zUV1coTz=AzOvy8Lw@mail.gmail.com>
+Subject: Re: cherry-pick strangeness
+To:     Vincent Legoll <vincent.legoll@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 13, 2019 3:31 PM, I wrote:
-> On June 13, 2019 3:07 PM, Peff wrote:
-> > On Thu, Jun 13, 2019 at 02:53:08PM -0400, randall.s.becker@rogers.com
-> > wrote:
-> >
-> > > From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> > >
-> > > t9600 to t9604 currently depend on cvs to function correctly,
-> > > otherwise all of those tests fail. This patch follows an existing
-> > > pattern of from the t9400 series by attempting to run cvs without
-> > > arguments, which succeeds if installed, and skipping the test if the
-> > > command fails.
-> >
-> > Hrm. I don't have cvs installed, and those tests are properly skipped for me.
-> > That's because they include lib-cvs.sh, which has:
-> >
-> >   if ! type cvs >/dev/null 2>&1
-> >   then
-> >           skip_all='skipping cvsimport tests, cvs not found'
-> >           test_done
-> >   fi
-> >
-> > Why doesn't that work for you? Does the "type" check not work (e.g.,
-> > you have something called "cvs" but it does not behave as we expect)?
-> > If so, then it sounds like we just need to harmonize that with the other
-> checks.
-> >
-> > It also sounds like the t9400 tests could be using lib-cvs to avoid
-> > duplicating logic, though it might need some refactoring (they don't
-> > need cvsps, for example).
-> 
-> The t9400 tests use the same technique as I used - and I mistakenly trusted it.
-> The type check does not fail.
-> 
-> if ! type cvs >/dev/null 2>&1
-> then
-> 	echo "oops"
-> fi
-> 
-> does not print "oops". type is reporting $?=0 and a legitimate file in
-> /usr/local/bin/cvs. Confusingly, t9400 skips, but type reports a valid path. I
-> think the test done in the t9400 series is not correct.
-> 
-> cvs >/dev/null 2>&1 on the platform causes $?=255, while a blah >/dev/null
-> 2>&1 reports $?=127.
-> 
-> There is something else going on causing the cvs-related tests to fail that this
-> patch might be hiding. We do have cvsps so I'm now much more confused by
-> the whole thing.
-> 
-> Let's drop this patch for now. I was premature on this patch and need to dig
-> deeper as to what is going on.
+On Thu, Jun 13, 2019 at 3:42 PM Vincent Legoll <vincent.legoll@gmail.com> wrote:
+>
+> Hello,
+>
+> I stumbled upon a strange behavior of cherry-pick,
+> running the attached script yields different results
+> from running the same command lines manually in
+> an interactive shell, one after the other.
+>
+> I searched the man page and found no indications
+> that that should act in this way. It looks like the CLI
+> args "--ff" & "--no-ff" or the absence of it are not
+> doing the same in a script as in an interactive shell.
+>
+> I  asked in the IRC channel, and was asked to report
+> it here.
+>
+> I tried to reproduce it in various environments, I
+> ran it in Centos 7, debian 9, ubuntu bionic & cosmic,
+> alpine & fedora, in docker containers, all giving the
+> same results. The git versions tested range from
+> 1.8.3.1 to 2.21.0.
+>
+> Trying to reproduce, I created the attached script,
+> which reports 3 times "SAME", whereas the case
+> using "--no-ff" should print "DIFF", if I'm not wrong
+> in reading its manpage description.
+>
+> What am I missing ?
 
-We do not need the patch. The situation was caused by an old version of CVS (pre 1.11)  that was causing t9600... to fail. The message was buried under --verbose. I ported CVS 1.11.23 and CVS tests are now working. My bad.
-
-Cheers,
-Randall
-
-
+When you cherry-pick a commit, it reapplies its diff on top of a
+(usually different) commit, preserving the author name/email/date, but
+throwing away the committer name/email/date -- instead using your
+name/email and the time of the cherry-pick for the committer.  Since
+you are transplanting on the same commit, and you created both the
+original commit and the cherry-pick, the only thing that can be
+different is the committer timestamp.  Git records timestamps down to
+1-second resolution.  If you run in a script, odds are that the
+original commit and the cherry-pick both run within the same second
+(though not always), and thus you end up with precisely the same
+commit.  When you run interactively, you take longer than a second
+between commands, and thus have a different committer date which
+naturally will have a different sha1sum.
