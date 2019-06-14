@@ -2,105 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0BD1F462
-	for <e@80x24.org>; Thu, 13 Jun 2019 22:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A671F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 00:30:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727377AbfFMW45 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 18:56:57 -0400
-Received: from mail-vs1-f43.google.com ([209.85.217.43]:39922 "EHLO
-        mail-vs1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727060AbfFMW45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 18:56:57 -0400
-Received: by mail-vs1-f43.google.com with SMTP id n2so559842vso.6
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 15:56:56 -0700 (PDT)
+        id S1725788AbfFNAap (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 20:30:45 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:47089 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbfFNAap (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 20:30:45 -0400
+Received: by mail-vs1-f66.google.com with SMTP id l125so642142vsl.13
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 17:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=j0xyLEeLB0oHvgIOVAWm4+Lg0plKozJ525wXroXMEnM=;
-        b=AL0F1O0iGu+tBRgmY4T1SqrqUFfrDmoYd6F/3pftXJQCiZx0N4SzSQAREfzaEs2q4c
-         mHtRV0wk5gbFFfipad7OVjkijTO0IdmWii4ZWrZjOJ0tBne/KbhsmtOnDBK+NlV+J62c
-         knlUJtp+o9zDf1TPL/QcjN4PRxTFsT4Cf/Q/mxJS99bdO4TexwNBgnkVDWiZkpgVguSy
-         tNBlbD60eTvt6aJqpTUusk+Q1u85AlS513vjmHKr+kEIM44SoQZ9RyDNWgoAa3eU/7fT
-         2yD8XwUpNAAqoS77YcvnNT5eqU1Bwlh0aSNthIUJPodXpSslkd34GKnV8yen+3hHxbEg
-         CKTQ==
+        bh=lfZdVSu7EsE1gl3lmx1Dy/vnJbrFAOejf54Sr1adv0Q=;
+        b=J0yVbkaSTkvUTtBnIHxTGn81NaaNCR6nzyjwxaPpDm7XDuBh5W+ls1EbkZ4kFx43Dk
+         QfL8h4WYLzCzfM0vwE5bk9pyC+DlliFPlTWX+tnxHil0tRbIzvfQWtAAkaYvac6Gw2sX
+         BWY4LPpdKCUi6NrB7Ju5igrc56WBQfTlZR4Uo0kXHBjQtSoIUNz1WZI0CdNMN5Rn5w6b
+         na8s+WsYgPFbm5oAhXQFAJJr5ibMfj1FHSCwx1rBJIgz4WfhxBcpLOFccN5S6MgFgmJB
+         OhibQm8oClFP3b9UP1RZ3A7BWYSB/vscA9eqXADDFUEj4ZfnvGOhBxHarIoRN8x42UXb
+         B4xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=j0xyLEeLB0oHvgIOVAWm4+Lg0plKozJ525wXroXMEnM=;
-        b=FPWGHu58jzJySaiopVZaJ7Eyi/JvbmnfMRV6TBt/a2TrWxXkztqnFLcT0BxyqQcU8S
-         2pJm6wcErim0+ydEh1ZLoBBR2/tNMowvpxcdgsOAd71dFN0Sl6kijIezUKlv8I9+/7c4
-         aDVunWB5pIrFSlu7JduZ+rdWFYvB83/mPCEIO9ATSNc6q1QTccyNX9AVb5n1dW6TJu/2
-         mbk2/Nqs8TrfvXNFMU52+ZrEYI4vmdGgeVkJUdnkbEYnMazORt4lUvNXnEkaxSKWsQrT
-         pMkuCtNSc4oGXoj4hVsnVjgt1UdK/kIwpa/opkmbDiRa4I/HjzBSTsOVRoTCxiV9yIac
-         +dRQ==
-X-Gm-Message-State: APjAAAU89KBTkREp0mM3EPBbnnMGW2ItW0ZYIG67PRpnOGEul7pFHKgA
-        0bO2xqPq3QkKGBvEn1yoy40XIz/xtV2ltmjAtDY=
-X-Google-Smtp-Source: APXvYqwT5yYKUFizr6R+aKQK5enLm/7hfAx1cHMmOCl9P640dUfjDaLCh2VtlT28Cp3g0qbednls0moN97l/1QkAiro=
-X-Received: by 2002:a67:f5d0:: with SMTP id t16mr3128972vso.175.1560466615693;
- Thu, 13 Jun 2019 15:56:55 -0700 (PDT)
+        bh=lfZdVSu7EsE1gl3lmx1Dy/vnJbrFAOejf54Sr1adv0Q=;
+        b=jS2LU6K8fQUoq+8gxygDN+6FudfiDEIVBuh/3csVUQ21t0Txuz0P6+j6TYsZrJ+sa8
+         pifAgetM6OFIsNaab+9zr8wQ/zXj3qta/ygsOIHCCd3Ac5sxemKL7lGbpWsog07II5Fu
+         QacefIlnxxcQO8NAKjOtZIPx85w5KArjtmqCTc5bkdlImW1G4UJjOMaIxWM7IDoOVOS+
+         /S1dMcIQQ1uW3Cz6onXcZ4LT22fhc3Ecs7FKjBddQn38DNnYIHpYZ9uKWw256KxtzHis
+         SXv/JI/BU/+aah/ktBfrgfcQV/KZDzDKRwrH0XFSukUWwCnI/qv3RYD92IjdCS7j/3QU
+         8WLQ==
+X-Gm-Message-State: APjAAAVcTIj/DlVH3jCUI+Vnju5Mhmoxskq1S98nBTEYlPO0szHdCHMs
+        iV5E6h+roG6/v1XlOqzKt2ioa3IvE5t9ugj3p3V8p22P434=
+X-Google-Smtp-Source: APXvYqxjDh9AhRA4J8+jrYUtjaE8/hURbA93L5GSg+dVdUHFnHUSx2ZHDq/ZetdMzg5PSYFd7klI01IMReZElNGXRuo=
+X-Received: by 2002:a67:fc50:: with SMTP id p16mr31964369vsq.79.1560472244252;
+ Thu, 13 Jun 2019 17:30:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
-In-Reply-To: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 13 Jun 2019 15:56:43 -0700
-Message-ID: <CABPp-BGQ0frtOk7ZF4vnLdfeYCXibUaC4zUV1coTz=AzOvy8Lw@mail.gmail.com>
-Subject: Re: cherry-pick strangeness
-To:     Vincent Legoll <vincent.legoll@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190607022443.5706-1-felipe.contreras@gmail.com>
+ <20190607093034.816-1-pclouds@gmail.com> <20190607100252.GA24208@szeder.dev>
+ <CAMP44s3EsNzBtt_pG8HVp_RTMTTArk7Twhty4_tzf2iiZ7TKUQ@mail.gmail.com> <CACsJy8CGtZMn0aa7QRj7Dz-jZS2K2fviUJ_Lii48FRY4E84i5Q@mail.gmail.com>
+In-Reply-To: <CACsJy8CGtZMn0aa7QRj7Dz-jZS2K2fviUJ_Lii48FRY4E84i5Q@mail.gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 13 Jun 2019 19:30:33 -0500
+Message-ID: <CAMP44s2ewOJNYSqQ+8EiBJ8ik7rWMj9yaxWwzYk9nUO+A1gwcg@mail.gmail.com>
+Subject: Re: [PATCH] completion: do not cache if --git-completion-helper fails
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 13, 2019 at 3:42 PM Vincent Legoll <vincent.legoll@gmail.com> wrote:
+On Wed, Jun 12, 2019 at 3:52 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Hello,
->
-> I stumbled upon a strange behavior of cherry-pick,
-> running the attached script yields different results
-> from running the same command lines manually in
-> an interactive shell, one after the other.
->
-> I searched the man page and found no indications
-> that that should act in this way. It looks like the CLI
-> args "--ff" & "--no-ff" or the absence of it are not
-> doing the same in a script as in an interactive shell.
->
-> I  asked in the IRC channel, and was asked to report
-> it here.
->
-> I tried to reproduce it in various environments, I
-> ran it in Centos 7, debian 9, ubuntu bionic & cosmic,
-> alpine & fedora, in docker containers, all giving the
-> same results. The git versions tested range from
-> 1.8.3.1 to 2.21.0.
->
-> Trying to reproduce, I created the attached script,
-> which reports 3 times "SAME", whereas the case
-> using "--no-ff" should print "DIFF", if I'm not wrong
-> in reading its manpage description.
->
-> What am I missing ?
+> On Sat, Jun 8, 2019 at 12:33 AM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
-When you cherry-pick a commit, it reapplies its diff on top of a
-(usually different) commit, preserving the author name/email/date, but
-throwing away the committer name/email/date -- instead using your
-name/email and the time of the cherry-pick for the committer.  Since
-you are transplanting on the same commit, and you created both the
-original commit and the cherry-pick, the only thing that can be
-different is the committer timestamp.  Git records timestamps down to
-1-second resolution.  If you run in a script, odds are that the
-original commit and the cherry-pick both run within the same second
-(though not always), and thus you end up with precisely the same
-commit.  When you run interactively, you take longer than a second
-between commands, and thus have a different committer date which
-naturally will have a different sha1sum.
+> > Something like this should work:
+> >
+> > struct command checkout_command = {
+> > .name = "checkout",
+> > .function = cmd_checkout,
+> > .run_options = RUN_SETUP | NEED_WORK_TREE,
+> > .help = N_("Switch branches or restore working tree files"),
+> > .options = {
+> > OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+> > ...
+> > },
+> > }
+> >
+> > This way we could run parse_options_show_gitcomp() from git.c and not
+> > worry about whatever cmd_checkout() needs.
+>
+> This only works for a few commands. Those with subcommands already
+> have struct option[] array scattered in different places. And some new
+> ones also have struct option array dynamically created.
+>
+> It's not impossible to do. But I feel there's a lot of reorganizing
+> for little gain. Maybe when we pass 'struct repository *' to all
+> commands, which means we hit all commmands at once anyway, we can
+> reconsider this (and having config parser in a more declarative form
+> like cmd option parser).
+
+Well yes, there is little *functional* gain at the moment, but this
+(or some version of this) must be done eventually.
+
+For the moment we still have an issue, but I see there's already a
+hack present for '-h', maybe we can re-utilize it. Something like
+this:
+
+--- a/git.c
++++ b/git.c
+@@ -408,6 +408,8 @@ static int run_builtin(struct cmd_struct *p, int
+argc, const char **argv)
+
+        prefix = NULL;
+        help = argc == 2 && !strcmp(argv[1], "-h");
++       if (!help)
++               help = argc == 2 && !strcmp(argv[1], "--git-completion-helper");
+        if (!help) {
+                if (p->option & RUN_SETUP)
+                        prefix = setup_git_directory();
+
+One way or the other, shouldn't my tests be merged? The issue is still
+there, and it's nice to have tests for that.
+
+-- 
+Felipe Contreras
