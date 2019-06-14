@@ -2,93 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5371F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 12:15:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D851F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 12:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727577AbfFNMO6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 08:14:58 -0400
-Received: from mail-vk1-f170.google.com ([209.85.221.170]:44156 "EHLO
-        mail-vk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727544AbfFNMO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 08:14:58 -0400
-Received: by mail-vk1-f170.google.com with SMTP id w186so466190vkd.11
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 05:14:57 -0700 (PDT)
+        id S1727806AbfFNMQK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 08:16:10 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:34085 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727573AbfFNMQK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 08:16:10 -0400
+Received: by mail-ed1-f47.google.com with SMTP id s49so3247329edb.1
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 05:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GdpCewxJYdnlR2bcpz92/7oxMG9DFQdiO6QKRarmd7s=;
-        b=hHn4M6LfP6zdCJqiMNYxeOVOpcf/hCJ/Pt8oL6vpVSeSR6MdBBa3bGXVIrci7wlwmn
-         zR7EZCSyO+4FlFeJ3GHp1p1V5kjaRwwc215Rp/wHVZ0Xak4DEgWfiPNmLpxn7N5OCRdQ
-         44kxRPYFJY4MOJQ+8n23TV5O6or69ECzDjoiItL5/FixOlthmc5Hz+kBj5/3C6pxeS8/
-         AZEGjSIAV/bDtcH90vtMjd8BHUxEPpMQzSnn7E3jcLvHlG3b8QAxXjSzztUOZ2CLcJDv
-         YYDd2kkaxDVq4oXUXIb56nccu/qIyCMZN+jGuC0tb0/ri0dwiLDSCh3eoo3fVehVJDdZ
-         ndDQ==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=hl4/99xyJ/T/om7HnF1RIlCyStTa9Cf0kATH5qJyCnk=;
+        b=DmzsXpxO3FUJyM9MTjR23Tz4zFNuh62FbGPPR7FhNApafUqOymIo6oE6V48rs2hgQC
+         8ad53bIheOPHL849n9l3n1m5BkMVWrPJG9cQUpTmsh7DiNJf+lweZzGWFjtQtLBo2SG9
+         uEDTxes+T9NOualVNxaFt/Gpzr5VC2F0CkhOkC6k5BRj5skPM5TKnPkHfjMYR//s27RU
+         4lLYwfz043OGQtpDGPwjHaeBiaQJ81mRGcEYjmUHxbLJtCLFtaPqQhKs3vzAO9E47x7d
+         hrtBrtErWz25zvctRMKULbByNNJBgvpsiozgc/H5NsHGGMtx9YBWlpgaJKkaySZZAl8E
+         Ix3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GdpCewxJYdnlR2bcpz92/7oxMG9DFQdiO6QKRarmd7s=;
-        b=qSZ2iLGxtYy8vI46ToTlSXilA6YkQJvCzYZ3PjmUJFuOcM8kxILvzuCeuTuq2scN4b
-         VdZjYtikEgOfXqxqtL4PXswYEqhM128B87ZI/A4nAIBgzeOGETSS1P0hLQXuU0XHIZ8r
-         pvdkFWDKbo18BZRHO06Fs7iYJiWqDEzRc67fVoUG19WXGZizbKwU1ol5xZI8T9/qXlqi
-         H7yaOk7Aev1G2EjqcoSH0VX7wZF8ABdC/Kia6WXQKuJTJYJUbZHqqOyolp3ury+yaBEq
-         1bnBHUafvHaKIL51cTSf/xlfiNFxjTFLvT82tuByoErnMNw3kiNNs16tzaS0yt1xAN8M
-         7R0g==
-X-Gm-Message-State: APjAAAXGX9+vdUB7CyWTAFuQtLsU8ruPhAdnogtlIqWXeKcvxHttdiLn
-        QLnH75uHd1Yp1yWaxPPahD4SLJT7wL7NkMrfGDWbJXDO
-X-Google-Smtp-Source: APXvYqymONhfFukzn/WFF3msXFzCEMcKsWQ3U2tIDD/fNHw3uTuQxYPErFj7ChsKX8Xc2LWv/lByknS0wu5+re3As7A=
-X-Received: by 2002:a1f:16c9:: with SMTP id 192mr22376026vkw.54.1560514497057;
- Fri, 14 Jun 2019 05:14:57 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hl4/99xyJ/T/om7HnF1RIlCyStTa9Cf0kATH5qJyCnk=;
+        b=ubRRUMujQykd7QB/Gp+5qTvKSN/GMjvHZ39sHxnhti62W5BXR/BQh7M5ts5X2/1TXy
+         3oKS/5/03GiqEVO61fvak1XI+shnHdYZIR12PyT5Ky47WtEmpNtxmeXYoJm2+i25j1/2
+         I3AuQfp3SalkFCaAcZdlWjRs3//IFUCgm0Aa8OF4ovLGW52B40ADer5yD5CavjL01lRK
+         6AZl8kN8e8k42znY9Wqp/SvDqD7l5hi54L4JFZP6kLIk/tD9WaQYLwIXOhlM8AvJyYJ6
+         YrimhO9mdQzk1uHsYDeEho246oE2HkAnEQk7ziMRNZUwiu5wLrONrtaIQLlh892h3n5R
+         ofYg==
+X-Gm-Message-State: APjAAAWopQUD1GYpRDPHxvEOvt1UF+XO6X0aWS2ixFxcwed1ht6j3FE6
+        snxt4kqljPcNPHPb1GCnRRxCgL2TyuM=
+X-Google-Smtp-Source: APXvYqzRIsj8yqzdGis3dEjE5TW2EHKSYdUmPVcJM89sLJ9kiXu/76tZ1+Mrp0u/X7zHMH/B1d26dg==
+X-Received: by 2002:a50:e619:: with SMTP id y25mr17519870edm.247.1560514567909;
+        Fri, 14 Jun 2019 05:16:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o31sm846912edb.66.2019.06.14.05.16.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Jun 2019 05:16:07 -0700 (PDT)
+Date:   Fri, 14 Jun 2019 05:16:07 -0700 (PDT)
+X-Google-Original-Date: Fri, 14 Jun 2019 12:16:05 GMT
+Message-Id: <pull.267.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] t3404: fix a typo
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Mateusz Krawczuk <krawczukmat@gmail.com>
-Date:   Fri, 14 Jun 2019 14:14:46 +0200
-Message-ID: <CAK1UviVMx1Q+8BYaLJSh-+UjkugaMr8fgS0EqZec4jmuEKJ8xw@mail.gmail.com>
-Subject: [RFC] submodule: display progress by default
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, git submodule does not display operation progress unless
-explicitly demanded by adding the --progress option to the command.
-This makes a bad user experience in cases of initializing a huge
-submodule, as one might get an impression that something went
-wrong and the execution froze (which was exactly my case recently).
+Just a typo I found while debugging something else.
 
-The help page states that this is enabled by default if stderr is directed
-to the terminal. This is not true. It is still required to explicitly pass this
-option to the command.
+Johannes Schindelin (1):
+  t3404: fix a typo
 
-My proposition is, instead of updating the documentation, is to set the
---progress flag to true by default, and leave the rest as-is for backward
-compatibility. If one does not wish to see the progress, it is possible
-to silence it with -q or --quiet option.
+ t/t3404-rebase-interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Notice that such behavior will be identical for commands like clone,
-which display progress unless silenced with -q or --quiet.
 
-Also submodule--helper seems to have trouble handling the --progress
-option. For example,
-`$ git submodule update --init modulename --progress`
-prints
-`error: unknown option `progress'`,
-but running
-`$ git submodule update --init --progress modulename`
-works fine.
-
-Also progress is not reported for add subcommand even with
---progress option set.
-
-Note: --progress was added to submodule with commit 6d33e1c2821.
-
-Please let me know what you think about it.
-
-Taking advantage of the opportunity, I would like to greet everyone -
-it is my first post to git's mailing list.
+base-commit: 0aae918dd929862d3ce0ea2960897787bb269a3b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-267%2Fdscho%2Ffix-typo-confilct-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-267/dscho/fix-typo-confilct-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/267
+-- 
+gitgitgadget
