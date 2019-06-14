@@ -2,143 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61C9B1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 11:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5371F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 12:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727501AbfFNLk3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 07:40:29 -0400
-Received: from condef-02.nifty.com ([202.248.20.67]:41759 "EHLO
-        condef-02.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727054AbfFNLk3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 07:40:29 -0400
-Received: from conssluserg-05.nifty.com ([10.126.8.84])by condef-02.nifty.com with ESMTP id x5EBZotd016678
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 20:35:50 +0900
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48]) (authenticated)
-        by conssluserg-05.nifty.com with ESMTP id x5EBZeru026922
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 20:35:41 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-05.nifty.com x5EBZeru026922
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1560512141;
-        bh=GNLbdNnt8YjSqnMXjzf3OfBcJHpzP6doL0YnOaW1YLA=;
-        h=From:Date:Subject:To:Cc:From;
-        b=rJJ0PK12Gr50fpcsXZh4NKSGWJZvfYobfA9GmPAWNbSKnE3Do/fgFL0v+70KgapLJ
-         s0MtRg57PsUDH8uiwGJNCLbGYV0oqAxx+MhTLnvg/R4F6kwyQxIWTNQjcJ/7zypITq
-         hseb2IVJIvIIESQPKfgGqByT5ylRUR9G5sAJC2gkuAJsuU2kOtaKAI14xnJT/Gt2li
-         pOS8147Qjotueb3G8DimO+S0pLu7hBMkghGSHBwMPaRa3NmImdMrTnLYxupXGJTfWJ
-         ugjozeTeegE9DXU4gIwmoRtyuGolLE77soaPJoHtJD7bwWP8kxlONPBdx3pZrkauGK
-         f5JgIlOzZmv3g==
-X-Nifty-SrcIP: [209.85.217.48]
-Received: by mail-vs1-f48.google.com with SMTP id j26so1527330vsn.10
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 04:35:41 -0700 (PDT)
-X-Gm-Message-State: APjAAAXNG+mUQynxfVi2XwPQPU6zI+RQunzUZgHVHRVrM+5OgZ69j8aj
-        WluORoz/C0vOutvgtTP5M1YeeEdX0SHpg8KIx+4=
-X-Google-Smtp-Source: APXvYqyrODJ4CKiuOz6ZyLl/4Qa9CDhkR7Wmo8RdOxQfvjOPabCW7aZf1P4f+djarXV2lUL3E4kPNs/nvx2uynOgXw4=
-X-Received: by 2002:a67:7fcc:: with SMTP id a195mr33027753vsd.181.1560512140171;
- Fri, 14 Jun 2019 04:35:40 -0700 (PDT)
+        id S1727577AbfFNMO6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 08:14:58 -0400
+Received: from mail-vk1-f170.google.com ([209.85.221.170]:44156 "EHLO
+        mail-vk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727544AbfFNMO6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 08:14:58 -0400
+Received: by mail-vk1-f170.google.com with SMTP id w186so466190vkd.11
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 05:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GdpCewxJYdnlR2bcpz92/7oxMG9DFQdiO6QKRarmd7s=;
+        b=hHn4M6LfP6zdCJqiMNYxeOVOpcf/hCJ/Pt8oL6vpVSeSR6MdBBa3bGXVIrci7wlwmn
+         zR7EZCSyO+4FlFeJ3GHp1p1V5kjaRwwc215Rp/wHVZ0Xak4DEgWfiPNmLpxn7N5OCRdQ
+         44kxRPYFJY4MOJQ+8n23TV5O6or69ECzDjoiItL5/FixOlthmc5Hz+kBj5/3C6pxeS8/
+         AZEGjSIAV/bDtcH90vtMjd8BHUxEPpMQzSnn7E3jcLvHlG3b8QAxXjSzztUOZ2CLcJDv
+         YYDd2kkaxDVq4oXUXIb56nccu/qIyCMZN+jGuC0tb0/ri0dwiLDSCh3eoo3fVehVJDdZ
+         ndDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GdpCewxJYdnlR2bcpz92/7oxMG9DFQdiO6QKRarmd7s=;
+        b=qSZ2iLGxtYy8vI46ToTlSXilA6YkQJvCzYZ3PjmUJFuOcM8kxILvzuCeuTuq2scN4b
+         VdZjYtikEgOfXqxqtL4PXswYEqhM128B87ZI/A4nAIBgzeOGETSS1P0hLQXuU0XHIZ8r
+         pvdkFWDKbo18BZRHO06Fs7iYJiWqDEzRc67fVoUG19WXGZizbKwU1ol5xZI8T9/qXlqi
+         H7yaOk7Aev1G2EjqcoSH0VX7wZF8ABdC/Kia6WXQKuJTJYJUbZHqqOyolp3ury+yaBEq
+         1bnBHUafvHaKIL51cTSf/xlfiNFxjTFLvT82tuByoErnMNw3kiNNs16tzaS0yt1xAN8M
+         7R0g==
+X-Gm-Message-State: APjAAAXGX9+vdUB7CyWTAFuQtLsU8ruPhAdnogtlIqWXeKcvxHttdiLn
+        QLnH75uHd1Yp1yWaxPPahD4SLJT7wL7NkMrfGDWbJXDO
+X-Google-Smtp-Source: APXvYqymONhfFukzn/WFF3msXFzCEMcKsWQ3U2tIDD/fNHw3uTuQxYPErFj7ChsKX8Xc2LWv/lByknS0wu5+re3As7A=
+X-Received: by 2002:a1f:16c9:: with SMTP id 192mr22376026vkw.54.1560514497057;
+ Fri, 14 Jun 2019 05:14:57 -0700 (PDT)
 MIME-Version: 1.0
-From:   Masahiro Yamada <yamada.masahiro@socionext.com>
-Date:   Fri, 14 Jun 2019 20:35:04 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
-Message-ID: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
-Subject: 'git interpret-trailers' is tripped by comment characters other than '#'
+From:   Mateusz Krawczuk <krawczukmat@gmail.com>
+Date:   Fri, 14 Jun 2019 14:14:46 +0200
+Message-ID: <CAK1UviVMx1Q+8BYaLJSh-+UjkugaMr8fgS0EqZec4jmuEKJ8xw@mail.gmail.com>
+Subject: [RFC] submodule: display progress by default
 To:     git@vger.kernel.org
-Cc:     masahiroy@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+Currently, git submodule does not display operation progress unless
+explicitly demanded by adding the --progress option to the command.
+This makes a bad user experience in cases of initializing a huge
+submodule, as one might get an impression that something went
+wrong and the execution froze (which was exactly my case recently).
 
-When I tried to add ChangeId tag for Gerrit Code Review,
-I noticed 'git interpret-trailers' went wrong
-if a comment character other than '#' is used.
+The help page states that this is enabled by default if stderr is directed
+to the terminal. This is not true. It is still required to explicitly pass this
+option to the command.
 
+My proposition is, instead of updating the documentation, is to set the
+--progress flag to true by default, and leave the rest as-is for backward
+compatibility. If one does not wish to see the progress, it is possible
+to silence it with -q or --quiet option.
 
-Quick Test Code
----------------
+Notice that such behavior will be identical for commands like clone,
+which display progress unless silenced with -q or --quiet.
 
-cat <<EOF | git -c trailer.ifexists=doNothing interpret-trailers \
-      --trailer "Change-Id: new tag"
-subject: this is commit subject
+Also submodule--helper seems to have trouble handling the --progress
+option. For example,
+`$ git submodule update --init modulename --progress`
+prints
+`error: unknown option `progress'`,
+but running
+`$ git submodule update --init --progress modulename`
+works fine.
 
-Blah Blah
+Also progress is not reported for add subcommand even with
+--progress option set.
 
-Change-Id: old tag
-Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Note: --progress was added to submodule with commit 6d33e1c2821.
 
-; This is a comment line with non-default char
+Please let me know what you think about it.
 
-EOF
-
-[result]
-
-subject: this is commit subject
-
-Blah Blah
-
-Change-Id: old tag
-Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
-
-; This is a comment line with non-default char
-
-Change-Id: new tag
-
-
-
-The same trailer 'Change-Id' was appended,
-ignoring trailer.ifexists=doNothing
-
-
-
-Details
--------
-
-For Gerrit Code Review, we add "Change-Id" tag,
-which will identify the patch though the review process.
-
-For details, you can refer:
-https://www.gerritcodereview.com/cmd-hook-commit-msg.html
-
-
-Gerrit provides a shell script "commit-msg",
-which is hooked from 'git commit'.
-
-You can see its implementation here:
-https://github.com/GerritCodeReview/gerrit/blob/v3.0.0/resources/com/google/gerrit/server/tools/root/hooks/commit-msg
-
-
-It is implemented by using
-'git interpret-trailers'.
-
-
-I prefer ';' to '#" for commit comment lines.
-
-So, I add the following:
-
-[core]
-        commentChar = ";"
-
-
-
-With core.commentChar is set,
-'git interpret-trailers' is so confused
-that accumulate the same tag for every 'git commit --amend'.
-
-
-I guess this should be fixed on the Git side.
-
-Perhaps, 'git interpret-trailers' should be changed
-to recognize core.commentChar ?
-
-
-
--- 
-Best Regards
-Masahiro Yamada
+Taking advantage of the opportunity, I would like to greet everyone -
+it is my first post to git's mailing list.
