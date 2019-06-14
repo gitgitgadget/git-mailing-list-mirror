@@ -2,83 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAA101F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 16:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C7FF1F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 16:18:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725864AbfFNQM5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 12:12:57 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63789 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbfFNQM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 12:12:57 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BEE9688FB;
-        Fri, 14 Jun 2019 12:12:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/XCXs8LOhN8K
-        sGJfdcuWXDAxTuA=; b=OKJTX9DAcbTHSFC/uAuntQlvRyke+KJH23mwLp6S3t/e
-        dcCKHls5sElqUL+1pziuCBOC0Zhu7Mik36YVolruGhhGl5Yei03pktswsAi8WqLR
-        YcyShuUGQ9CccZPTGh608GyaHtyvWQJeIdr9Pq0GDSMUUGZZqPXyg6deO2YMDbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=fGx7R+
-        AmStK5/p3WWzNC++KlVAbfk+TUzbFDTffRfnwcrO6YA2YppH2NyJd+evWZzZvipI
-        BXSwpa/VSwepih9uPuDjmAHG3evHcnTSHTc8X3W1Oahr7EUWeuWnId2NYmfqc48/
-        ILd+rrFs6Hxb9QuZ6zK7JjoX/Iii+Lg2VlG/c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 956F2688FA;
-        Fri, 14 Jun 2019 12:12:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BECDA688F9;
-        Fri, 14 Jun 2019 12:12:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] kwset: allow building with GCC 8
-References: <pull.265.git.gitgitgadget@gmail.com>
-        <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
-        <20190614095308.GG31952@szeder.dev>
-Date:   Fri, 14 Jun 2019 09:12:50 -0700
-In-Reply-To: <20190614095308.GG31952@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Fri, 14 Jun 2019 11:53:08 +0200")
-Message-ID: <xmqq4l4suovx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726276AbfFNQSo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 12:18:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55332 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725801AbfFNQSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 12:18:43 -0400
+Received: (qmail 17451 invoked by uid 109); 14 Jun 2019 16:18:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jun 2019 16:18:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28393 invoked by uid 111); 14 Jun 2019 16:19:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Jun 2019 12:19:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Jun 2019 12:18:41 -0400
+Date:   Fri, 14 Jun 2019 12:18:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] rev-list: clarify --abbrev and --abbrev-commit usage
+Message-ID: <20190614161841.GB30083@sigill.intra.peff.net>
+References: <20190613221541.10007-1-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4325D98E-8EBF-11E9-89AA-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20190613221541.10007-1-emilyshaffer@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Thu, Jun 13, 2019 at 03:15:41PM -0700, Emily Shaffer wrote:
 
->> Now, the proper thing to do would be to switch to `size_t`. But this
->> would make us deviate from the "upstream" code even further,
->
-> This is not entirely true: upstream already uses 'size_t', so the
-> switch would actually bring our copy closer to upstream.
+> I thought this was odd when I was working on the other rev-list changes
+> - --abbrev doesn't do anything on its own. It looks like it does work by
+> itself in other commands, but apparently not in rev-list.
+> 
+> Listed this patch as RFC because maybe instead it's better to fix
+> something so --abbrev can be used alone, or teach --abbrev-commit=<n>.
+> It looks like `git log --abbrev=5` also doesn't work the way one might
+> expect, which makes sense to me, as they use the same internals for
+> option parsing (parse_revisions()).
+> 
+> The manpages for log and rev-list both correctly indicate that
+> --abbrev=<n> is an optional addition to --abbrev-commit. `git log -h` is
+> generated by parse-options tooling and doesn't cover --abbrev-commit at
+> all, but `git rev-list` doesn't use an option parser on its own and the
+> usage is hardcoded.
 
-Ah, earlier I said that within the context how kwset uses obstack,
-it is perfectly proper to fix it like the patch in question did, but
-the upstream already using size_t changes the picture quite a bit.
+Yeah, "--abbrev" is a bit tricky here. It is really "when you abbrev, do
+it to this level". In "log", that means that "git log --abbrev=5 --raw"
+_does_ do something useful (it abbreviates the blob hashes). And then
+you may add "--abbrev-commit" on top to ask to abbreviate the commit
+ids.
 
-I do not mind updating our copy of obstack, but make sure you pick
-the version with license compatible with ours.
+And rev-list follows that same pattern, except that rev-list _never_
+shows diff output. You'd traditionally do (and this is how log was
+implemented once upon a time):
 
-Thanks.
+  git rev-list HEAD | git diff-tree --stdin --abbrev=5 --raw
+
+But even there, we are not seeing the commit id output by rev-list. It
+goes to diff-tree, which then formats it separately. So if you wanted
+abbreviated commits there, you'd add "--abbrev-commit" to the diff-tree
+invocation, not rev-list!
+
+So no, I cannot see a way in which "rev-list --abbrev" is useful without
+"--abbrev-commit". Which means that perhaps the former should imply the
+latter.
+
+And as you noticed in your other patch, there is no way to abbreviate
+"--objects" output at all. I am not sure I have ever seen a good use for
+that. Though to be honest, I am not sure that "--abbrev" is really all
+that useful in the first place. Machine-readable output should never
+abbreviate, and human-readable ones generally already do.
+
+But at any rate, before making any behavior changes it may make sense to
+think about how they'd interact with "rev-list --objects" abbreviation,
+if it were to be added.
+
+As for the patch itself:
+
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index 9f31837d30..6ae0087b01 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -49,8 +49,8 @@ static const char rev_list_usage[] =
+>  "    --objects | --objects-edge\n"
+>  "    --unpacked\n"
+>  "    --header | --pretty\n"
+> -"    --abbrev=<n> | --no-abbrev\n"
+> -"    --abbrev-commit\n"
+> +"    --abbrev-commit [--abbrev=<n>]\n"
+> +"    --no-abbrev\n"
+
+So --no-abbrev clears both --abbrev and --abbrev-commit. That sort of
+makes sense, though I did not expect it. But it also means that:
+
+  --abbrev-commit [--abbrev=<n> | --no-abbrev]
+
+is not right. Possibly:
+
+  --abbrev-commit [--abbrev=<n>] | --no-abbrev
+
+would show the interaction more clearly, but I don't have a strong
+opinion.
+
+-Peff
