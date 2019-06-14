@@ -2,175 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B46A1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 18:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8E281F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 18:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726164AbfFNSku (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 14:40:50 -0400
-Received: from mail-eopbgr720118.outbound.protection.outlook.com ([40.107.72.118]:11040
-        "EHLO NAM05-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725809AbfFNSkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 14:40:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
- b=j+z+p5v2FVMVcL5+FJR8BiF5Khe/kS1hvK87v5lhzVnXdDdIqZ/h9nmZt0Xm1DHj+S6lJr1y72H8xvjrXOBxFX58j0Q1lYzud+ExsCC0tgIFOCOQNAHBg1lKPTpHXh9DlJxA8kMOzWVSQ8VDw8idXDHNlgDlJ09O5i0JNzNRt4c=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=testarcselector01;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ixl4+3R143yuzRtXM/vjOiLQ34tpL9cNQbUbMeiWAuw=;
- b=n/c9ga915opjIhdwJVvlKVgqMVLRtW3+/hRphl29SLvvbOrlFOKxPMMwBiHmXieOh2EufrYeXAZGEyCsFXVjsxsiSa9aetqMH11pUjqtXliwZMNbCQJTaRmvZkq+3yNqtstjCp9fT0fUcEcOP5mkQhASrKe6M8O8YHmV8TsC0gE=
-ARC-Authentication-Results: i=1; test.office365.com
- 1;spf=none;dmarc=none;dkim=none;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ixl4+3R143yuzRtXM/vjOiLQ34tpL9cNQbUbMeiWAuw=;
- b=MTl8yNIN7LwKH/Gps7z+bKY1OasvTeRN+1GJBuCERcAX2GlazA/R8xLOLetr5qmhKt8iFKzLavBxP6OQrwyik5aEVrnqXNlOZOlVK7qPG/C7jEwPXK+JwiGukTn4gYOeo0QBFTBE/latjsbHw/bahrPQO2HhjdErGDLIXNBzJyM=
-Received: from MN2PR21MB1231.namprd21.prod.outlook.com (2603:10b6:208:3b::12)
- by MN2PR21MB1168.namprd21.prod.outlook.com (2603:10b6:208:ff::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2008.0; Fri, 14 Jun
- 2019 18:40:45 +0000
-Received: from MN2PR21MB1231.namprd21.prod.outlook.com
- ([fe80::f95d:893d:7d13:2d1f]) by MN2PR21MB1231.namprd21.prod.outlook.com
- ([fe80::f95d:893d:7d13:2d1f%6]) with mapi id 15.20.2008.006; Fri, 14 Jun 2019
- 18:40:45 +0000
-From:   "Aram Maliachi (WIPRO LIMITED)" <v-armal@microsoft.com>
-To:     "Aram Maliachi (WIPRO LIMITED)" <v-armal@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Kranz, Peter" <kranz.peter.ext@siemens-healthineers.com>,
-        "Brettschneider, Marco" 
-        <marco.brettschneider.ext@siemens-healthineers.com>
-Subject: RE: commit sized around 100 gb in changes failed to push to a TFS
- remote - Git
-Thread-Topic: commit sized around 100 gb in changes failed to push to a TFS
- remote - Git
-Thread-Index: AdUiEtMNbTQxx+KVQ/WGqOvteNH83wABokmQABhdzuAAFJi2YAAAyg1wAAQZ3VA=
-Date:   Fri, 14 Jun 2019 18:40:45 +0000
-Message-ID: <MN2PR21MB1231AACB729D9D7E2B09E150E9EE0@MN2PR21MB1231.namprd21.prod.outlook.com>
-References: <MN2PR21MB1231B057E9E662BB151B2819E9EF0@MN2PR21MB1231.namprd21.prod.outlook.com>
- <DE8A44FD55B8BE44AC9861D8ECF567F801FEEC1D@DEFTHW99EM2MSX.ww902.siemens.net>
-  <MN2PR21MB1231DB1D2FCE7622F0AED616E9EE0@MN2PR21MB1231.namprd21.prod.outlook.com>
-In-Reply-To: <MN2PR21MB1231DB1D2FCE7622F0AED616E9EE0@MN2PR21MB1231.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=v-armal@microsoft.com; 
-x-originating-ip: [12.41.100.134]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 19f10545-0b47-4ea3-fc2d-08d6f0f7d02e
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:MN2PR21MB1168;
-x-ms-traffictypediagnostic: MN2PR21MB1168:
-x-ms-exchange-purlcount: 2
-x-microsoft-antispam-prvs: <MN2PR21MB1168EF8ACCF42174EFDCDC80E9EE0@MN2PR21MB1168.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2733;
-x-forefront-prvs: 0068C7E410
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(366004)(346002)(39860400002)(376002)(136003)(13464003)(199004)(189003)(71190400001)(229853002)(52536014)(10090500001)(2501003)(9686003)(14444005)(256004)(5660300002)(6436002)(99286004)(68736007)(76176011)(71200400001)(86362001)(53936002)(52396003)(7696005)(6246003)(6306002)(54906003)(110136005)(73956011)(11346002)(446003)(25786009)(478600001)(4326008)(10290500003)(33656002)(22452003)(316002)(8990500004)(2906002)(476003)(76116006)(66066001)(3846002)(74316002)(26005)(102836004)(8936002)(6116002)(186003)(6506007)(53546011)(486006)(2940100002)(1511001)(55016002)(305945005)(8676002)(966005)(66446008)(81166006)(14454004)(7736002)(66556008)(64756008)(66946007)(81156014)(66476007);DIR:OUT;SFP:1102;SCL:1;SRVR:MN2PR21MB1168;H:MN2PR21MB1231.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: iYXQvYHA1isdFLiRgUxOqHw+n6m5rFVcx5L5+nlmJFzye40FbrOI0xMILv5dTkcJS8F8pgGUFgA59Gkan9nkrVgCiY4s5w1jGevhfN/jJ5WHyVJUEUuEYS5/VxuXVAwHGehcKaZFkIdN3fMbiWmP5gtsGnDXL9CTKJTlXyNCjTlxJekNjbUiWH6BjRySqT/qAgg+h96amk3eg8ou2GN/Ls5mqemEW/R1zID4NksyEQjF+ZapoKbTuMS8rurESi4KAtxoHz2wY1lPxt5LEFAJsetMXXMFTEBo3hblQDlmbJemrfqpVanHmTVtxD5rQ9UgEmmE+4FyUYRKE5B/J9AUEW0D0iKFRVpeQ0+ylhMgJwY1FHks9LqXGlseYQUfVfF2Y9Hngrm2WiCDD12zxKB/7G7qE1dTFVLYO08/Nb4ImTE=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1726424AbfFNSm3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 14:42:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:42419 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726405AbfFNSm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 14:42:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560537741;
+        bh=rEOyYWDLC4C+Jutm8hFGRjW/g8ZwxeCdUQM1euImdG8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BWdqte0Crj3/p29kEd6YoWmOxVJ8AN38UwDFgjuoFaw5zgSj/bR0clBgT5h+WEq0X
+         BXDPSZ99+02Zk5j3yLnWAz8scJ2rtiVqADv6eaRi8MzTUYEJg9uBpjpobiUg7FYcTI
+         CISRjvGhGArT1ES/dZgBnUOlGv5baeisw3FU1Ym4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFu0Y-1hpag63Dba-00Eqzo; Fri, 14
+ Jun 2019 20:42:20 +0200
+Date:   Fri, 14 Jun 2019 20:42:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
+In-Reply-To: <20190612194106.GJ4012@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1906141356140.44@tvgsbejvaqbjf.bet>
+References: <20190430142556.20921-1-szeder.dev@gmail.com> <20190611130320.18499-1-szeder.dev@gmail.com> <20190611130320.18499-4-szeder.dev@gmail.com> <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com> <20190611211151.GG4012@szeder.dev>
+ <nycvar.QRO.7.76.6.1906122056570.789@QRFXGBC-DHN364S.ybpnyqbznva> <20190612194106.GJ4012@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19f10545-0b47-4ea3-fc2d-08d6f0f7d02e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jun 2019 18:40:45.8503
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: v-armal@microsoft.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR21MB1168
+Content-Type: multipart/mixed; BOUNDARY="8323328-1674472957-1560514992=:44"
+Content-ID: <nycvar.QRO.7.76.6.1906141958510.44@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:elpE3fp7FU+7eTT4UZsGq/BwmEcpC5LBc7XBuP5Up0L0CyHGMd7
+ jMDSkJQLwqCokk43RNJWharKXmzM65AW3ffPaP5VBTcFXkXfxIyY2SR+gBkh2+6iAqQ/mJL
+ Jp0VjlAYmbzqd04Amv7OTIJu+Vg+SmIiqot49AIWUxyMH8zFAYn9ntB72ICSzXixCldzcKy
+ JP0f6vpKhAnjM/RZ2/CsA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KoDwzEosv6c=:EU0RH3Yh6zOdDPS26QxU2i
+ E9BaVlx9YiOSQPG/MaUO0cYCGCaJfLi7whT1AH/7vQ5xG5jVBkzZUBsMSVanbJZJxQH5iZncH
+ U0hoydwCYx1V0yPZsXJevrFh06LZ37uT3e3mYGAsP6mJEozDXViAhPV5sYayOu1XQhjv0Aqkw
+ RcQMFIgWtNNwLFPXJm3yYMjR12rpFZ7OOq3bHfM6znCKTeKuTNZsm6nhhzUQwBoKUryZuOV7a
+ pDPY5JDm8dAMpTxn0q5gfDWjVOVsAaybu19l9sOQYdtuL9aXPPI8YRH/oBrpOD6b/+f7FwcVS
+ +fIInPTTMf7ZB6PqEKep72OUfPSBeOsT/6unA17egGMlRea/+RRORXICUap7YGw3JZyvol/nq
+ cK9A1qTjHv55t38UuEmyiFUPsqoISqkh+xnnrcJ1Buo88m4MLi6yRQQ0giam0xsmtrJmUldm7
+ d3hOdhNkxZHGLexkRM0Wjy7+ZsOsSjXYd2tOlQpvThXdFsxS6cuwxNuzywF55CDkkm9aMDxQJ
+ qwe0CeymO5wTQCTSNcHxQCqCYhm0ZAMMlN0tTgnp8kCLCTaVSKqCPVK5oXHkWWTmkRoc/Ql43
+ XBSItw91OSWGnJpEz2vpa/X2qVGmIpHu4XcXcKuPKLcNykPlSh2vHaBUzs9SnWzSSjlj2+xzg
+ WKhFpmNmVSUljOw8Y+z0M03iKvfAAl2zJKylxltPEPeNPU2sJJwO5j5vYehLJLM0AjdK2mxQ9
+ ulI+e/ALyEsDE3R+0p3GjEQ0BdqGqkLZg2nfwNLLzb7mJFzvmzX/x4AxMYfqAGSOOJaCi3yNu
+ rhH/hsb87o4cn7dLvv0q93yet9gA9FRfPCBFGZOZJksUXwpL6XmH136rmd89VuUJMHjLvjSNr
+ DynPGwp6awN98NNPzoxtdvklBFH2UALXZzFvoY8+UyVO4FgzU1D2eHbVAAxtXjzUxdrld5V4x
+ Et9oGKkXLyIpYmaGldO/IRozwkcDm8bU4Y4QRweijjHrfnmb/xJwC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a hard limit in the service of 5GB for a single push.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The advice we've given other customers is to do partial pushes by checking =
-out an older commit, pushing that, and then checking out a newer commit, pu=
-shing, etc.  You have to push multiple times, but you can build up the enti=
-re history that way.
+--8323328-1674472957-1560514992=:44
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.1906141958511.44@tvgsbejvaqbjf.bet>
 
-This is due to a limit set by the TFS product.
+Hi,
 
------Original Message-----
-From: git-owner@vger.kernel.org <git-owner@vger.kernel.org> On Behalf Of Ar=
-am Maliachi (WIPRO LIMITED)
-Sent: Friday, June 14, 2019 11:48 AM
-To: git@vger.kernel.org
-Cc: Kranz, Peter <kranz.peter.ext@siemens-healthineers.com>; Brettschneider=
-, Marco <marco.brettschneider.ext@siemens-healthineers.com>
-Subject: commit sized around 100 gb in changes failed to push to a TFS remo=
-te - Git
+On Wed, 12 Jun 2019, SZEDER G=C3=A1bor wrote:
 
-To @Git Community
-From the perspective of an Azure DevOps support engineer. I have a customer=
- who is unable to make a push with following error:
+> On Wed, Jun 12, 2019 at 09:14:40PM +0200, Johannes Schindelin wrote:
+>
+> > On Tue, 11 Jun 2019, SZEDER G=C3=A1bor wrote:
+> >
+> > > On Tue, Jun 11, 2019 at 01:36:16PM -0700, Junio C Hamano wrote:
+> > > > SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+> > > >
+> > > > > -Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QSuc=
+cessfully rebased and updated refs/heads/missing-commit.
+> > > > > +Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QQ  =
+                                                                          =
+    QSuccessfully rebased and updated refs/heads/missing-commit.
+> > > > >  EOF
+> > > >
+> > > > Yuck,
+> > >
+> > > Oh yeah...
+> > >
+> > > >... but I do not see how else/better this test can be written
+> > > > myself, which makes it a double-yuck X-<
+> > >
+> > > Perhaps hiding those spaces behind a helper variable e.g.
+> > > 'dump_term_clear_line=3DQ<80-spaces>Q' and embedding that in the her=
+e
+> > > docs specifying the expected output in these three tests could make =
+it
+> > > ever so slightly less yuck...
+> > >
+> > > > Are we forcing out test to operate under dumb terminal mode and wi=
+th
+> > > > a known number of columns?
+> > >
+> > > 'test-lib.sh' sets TERM=3Ddumb relatively early on, and in these tes=
+ts
+> > > we don't use 'test_terminal' to run 'git rebase', so...  yeah.  And
+> > > term_columns() defaults to 80.
+> > >
+> > > However, if the terminal were smart, then we would have to deal with
+> > > ANSI escape suddenly popping up...
+> >
+> > And I fear that is *exactly* what makes
+> > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D10539&=
+view=3Dms.vss-test-web.build-test-results-tab
+> > fail...
+>
+> Isn't it a sign of a problem in that Windows test environment that
+> it mistakenly believes that the terminal is smart, even though it has
+> been explicitly set to dumb?
 
-fatal: The remote end hung up unexpectedly failed to push some refs into ht=
-tps://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fzelos.hea=
-lthcare.siemens.com%2Ftfs%2FHoover%2FVA20A.DevInt.Gvfs%2F_git%2FSaturn&amp;=
-data=3D02%7C01%7Cv-armal%40microsoft.com%7C00a886aa8e6e4eb7b38308d6f0e81171=
-%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C636961276860256000&amp;sdata=
-=3DHF36q%2FZff3882jBBNdyXQdQMUcFrsJ1jHtWJyfbTu0s%3D&amp;reserved=3D0
+I investigated this today.
 
-The local repository has only one change when comparing it to the remote an=
-d it is a commit labelled with SHA value: 504aedfdbb to a branch called git=
-Test This being said the scheme is as following:
+Mind you, I still think that it is totally inappropriate for a test case
+with the title 'rebase -i respects rebase.missingCommitsCheck =3D warn' to
+validate the expected progress output, in particular since it verifies the
+progress on non-sophisticated terminals, i.e. the totally least
+interesting and least common scenario.
 
-[Remote] - master
-b946c27c
+In short: I stand by my suggestion to fix these tests (i.e. ignore the
+progress altogether) in a preparatory patch in your patch series.
 
-[Local] - gitTest branch
-504aedfdbb
-b946c27c
+The investigation why the test fails on Windows (due to the progress being
+displayed for TERM=3Dcygwin instead of TERM=3Ddumb) took quite a bit longe=
+r
+than I had originally anticipated, essentially because I did not expect to
+uncover a bug that I introduced into Git for Windows v2.x apparently from
+day one of the v2.x era.
 
+In case you are interested in the details, please read on, otherwise just
+mark this mail as read and move on.
 
-Important data:
-- The commit 504aedfdbb contains +100 GB in file changes
-- The remote git repository is a TFS server
-- Customer isn't building code - it is using the remote kind of as a storag=
-e service <- We understand these are not best practices but is the way cust=
-omer is using Git and TFS. If @Git Community could confirm/elaborate on thi=
-s customer may change up the current approach he is using.
+Still with me? Well, here you go, enjoy the ride.
 
-Things tried:
-- reset the history for the local repository back to the latest shared comm=
-it b946c27c =A0and committed something small which succeeded to push into r=
-emote into a brand new branch by running $ git push origin <name of local b=
-ranch>
-- cherry-picked the commit into local master and attempted to push =3D fail=
-ed. <- this makes me think this is entirely caused by the oversized commit
-- boosted up the http post buffer configuration =3D failed. Rolled configur=
-ation back to default according to the MSFT docs https://nam06.safelinks.pr=
-otection.outlook.com/?url=3Dhttps%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fazur=
-e%2Fdevops%2Frepos%2Fgit%2Frpc-failures-http-postbuffer%3Fview%3Dazure-devo=
-ps&amp;data=3D02%7C01%7Cv-armal%40microsoft.com%7C00a886aa8e6e4eb7b38308d6f=
-0e81171%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C636961276860256000&amp=
-;sdata=3DjnxDSnfGiRpHbs%2F1n0yRt3V%2FE3UogElyRhhyoxFc%2FTM%3D&amp;reserved=
-=3D0
-- since this is a TFS server I initially though this could be caused by ins=
-ufficient disk storage capacity in the server containing the TFS product. B=
-ut @Vimal Thiagaraj has confirmed that the repositories size limit depend u=
-pon the remote TFS databases and not the server itself. Is there a limit on=
- these databases or on how much changes can a git commit contain?
+There are quite a few interesting bits about this bug, and I have to start
+by stating that in DOS, there was no difference between empty values of
+environment variables and unset environment variables. In other words,
+there was no way to distinguish between the equivalent of `export x=3D` an=
+d
+`unset x`. Back in the days, this was obviously perceived as reasonable,
+and I kind of agree given my own difficulty to describe the problem
+clearly.
 
-Things I've suggested to customer:
-- commit more frequently in smaller batches
-- understand that the nature of git is to collaborate and track versions of=
- files over time - not a cloud storage provider
+Now, in the Win32 API there is a relatively easy way to distinguish
+between those values: if the return value of `GetEnvironmentVariableW()`
+(which indicates the length of the value) is 0 *and* `GetLastError()`
+returns `ERROR_ENVVAR_NOT_FOUND`, then the environment variable is unset,
+if it instead returns `ERROR_SUCCESS`, then it is set, and the value is
+the empty string.
 
-Would appreciate any insight on this @Git Community. Thanks to @Phillip Oak=
-ley who took the time to answer last time I posted a question to this maili=
-ng list.
+Side note: if you want to rely on this behavior, you will most likely want
+to call `SetLastError(ERROR_SUCCESS)` before querying the environment, as
+there seem to be conditions where the last error is not re-set to that
+value even if the call succeeded.
+
+Since Cygwin started really, really early in the history of Windows (even
+supporting Windows 95 at some stage), it emulates the DOS behavior, not
+the Win32 API behavior, and simply skips environment variables with empty
+values when spawning non-Cygwin programs. In other words, it pretends that
+they are unset instead.
+
+Git for Windows' Bash (which runs the test suite) is an MSYS2 program, and
+since MSYS2 is based on Cygwin, inherits this behavior, and since
+`git.exe` is a non-MSYS2 program, there would be no way for the test suite
+to set environment variables to the empty value and have Git respect that.
+
+This broke t/t3301-notes.sh (because it sets GIT_NOTES_REF=3D and
+GIT_NOTES_DISPLAY_REF=3D to override the configured settings), and therefo=
+re
+I came up with this fix in February 2015:
+
+https://github.com/git-for-windows/msys2-runtime/commit/c19199cc14ee
+
+It tells the MSYS2 runtime to *keep* environment variables with empty
+values.
+
+Note: this fix was really made in order to let Git for Windows' test suite
+pass, for no other reason. And it was not accepted by the MSYS2 project,
+so this really only affects Git for Windows.
+
+That fix seemed to work at the time (and maybe it really, really did), and
+it seemed to work, still, until my investigation that took the better part
+of today revealed that my fix was buggy. Under certain circumstances
+(which I believe have to do with the environment variable referring to a
+Unix-y path at some point, which is the case for `SHELL`), the subsequent
+`getwinenv()` call mishandles empty values. It tries to convert them from
+a Unix-y path (that looks like an absolute Unix path, but it really is
+rooted in MSYS2's top-level directory, identified as the second-level
+parent directory of `msys-2.0.dll`) to a Windows path, and failing that,
+it replaces the `SHELL=3D` by a NUL character.
+
+The `SHELL` thing here is important, as t/t3404-rebase-interactive.sh sets
+this to the empty value explicitly:
+
+https://github.com/git/git/blob/v2.22.0/t/t3404-rebase-interactive.sh#L63-=
+L68
+
+So instead of a `SHELL=3D\0` in the middle of the environment block, Git f=
+or
+Windows' MSYS2 runtime inserts a `\0\0`. That, however, is the marker for
+the end of the environment block, and as the environment has been sorted
+before being converted in order to launch a non-MSYS2 program (in this
+case, `git.exe`), the `TERM=3Ddumb` setting is lost.
+
+Even worse, for unrelated reasons, `git.exe` defaults to setting
+`TERM=3Dcygwin` if `TERM` is unset.
+
+I hope you, dear reader, can appreciate the number of circumstances that
+had to come together to trigger this bug.
+
+The fix with which I came up can be adored here:
+
+https://github.com/git-for-windows/msys2-runtime/commit/c10b4185a35f
+
+I tested this locally and will re-test as soon as a new MSYS2 runtime has
+been deployed into Git for Windows' SDK.
+
+Ciao,
+Dscho
+
+--8323328-1674472957-1560514992=:44--
