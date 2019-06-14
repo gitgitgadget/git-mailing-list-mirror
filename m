@@ -8,195 +8,102 @@ X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C851F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 22:57:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAEA21F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 23:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbfFNW5C (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 18:57:02 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35087 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725868AbfFNW5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 18:57:02 -0400
-Received: by mail-pf1-f195.google.com with SMTP id d126so2256051pfd.2
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 15:57:01 -0700 (PDT)
+        id S1725973AbfFNXSz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 19:18:55 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36818 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFNXSy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 19:18:54 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r7so2279558pfl.3
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 16:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=9e1S555FkwOkuXrHRwNc0/KSzrwwAgM4HbryRihW25g=;
-        b=s5PbbHTAadY/d/I9uFnf3Ga+rCMS9ssKmkp9j93Njo0pI1LpgXK6vIP0QFo2qpdJp3
-         OUFgI1X2XHpSYTPHInms7eryO4YhsKvkkxA36cDWG5Sg2SmSoW9S5qAwVii74s8Re7PC
-         UeD1KfMFGyQW8fVueopTOHZQy84JL9MfgzN97SKATTszL/KVNhlsnU7mogHRkM34oKAY
-         VeJbv9o/cGEFhBJxaQEuDwDiBFb6W8UFUcx+fx/ErvIqEaQe5tbS59/fmOtZh+qq5Rdd
-         soF4nrfn+K6JuWCtLfe+XWliAStYZOpB279ef1vAUVLAbxfIRiU6D1aGddodsRmtAK/T
-         UPPg==
+        bh=nXinPc7xHX3SZaeu9a1NYNV/SqI5jWdjL6jZBhzIOP8=;
+        b=C3tvftsEMBBiqnyWtb4VRZMFtALEBAnWYQSUovULGgaR32w+ceQ3TmrzI5ZnYwRZZf
+         Lwfa9+7z5DSG+t79yXCTbdCP1E2wZUNkvs2kkahagFE1S5fYXXif5xP2PMQGLz5eB+Ec
+         231+pAeGAbmm+IKjfjLvZZ06LfgS3a82TkzS5pQUOg96kr8l5XzUImANiuojjk7zV+xh
+         +72q9APV0/lfTGFfEITa+Rk0HMu/frFprvM/zrxmhURnyxsT1NoBo19cJcJ+qH3+WyqR
+         oKjNVGWp4a/ZtmXR/9jGpGM7leVZ7fBGnYBUU8dyg8Z0ZxQujqPz4jWDPDBXDTkspynp
+         1fTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9e1S555FkwOkuXrHRwNc0/KSzrwwAgM4HbryRihW25g=;
-        b=On1cTzVBGqoEj4cBc07Ca06nP6Um2Pe7QQNgj2BZveizkqx9JD3vyYdwEyYab3RE1n
-         WPjevwZW4H5b9JYJHEmf3OkR5i1IcAFMW16xSvXs7lCucWuTOOwX9uTLBSR8mhkJjuja
-         kHeD71LXiIemW4D0YRPZ4P/6S4U3eL5YrKv1tGQKGdkU2WVoFUnYezUqSXvmBohm224v
-         m1H7Em16bmT4WpVITqi8pRPoT/uredBbomsazr/VbfmBuXO3ELp0cT8PqbOUGQr+ptsV
-         gRubyzZTZ8RW8k+G26KN1GB3GWvxwjE8A9Vzd5yt/bu7RJwAGv8GJYnPczww4QVRSrLY
-         FUMg==
-X-Gm-Message-State: APjAAAUUUQ2mL6EoMKa59WtC4HOKkB3OT4IqWj8u1EsiOzTIrjP5yQiX
-        pVr+l56IaivqzYfp40VaWntfS5E248s=
-X-Google-Smtp-Source: APXvYqyJ3D+VuUXs9WPS2AC6gT8XA0CWE+B2j6pDYEO7yfqAZ/ZlbJRdhpzRcCZWqGZIYjfL3WH7FA==
-X-Received: by 2002:a62:58c4:: with SMTP id m187mr43454382pfb.147.1560553020929;
-        Fri, 14 Jun 2019 15:57:00 -0700 (PDT)
+        bh=nXinPc7xHX3SZaeu9a1NYNV/SqI5jWdjL6jZBhzIOP8=;
+        b=dcd2SLFUMfK6/CN/qDP9hsTJZVjWxeZ7OQpoWFmwyqpcwRomSxPOoHl0XcBYG6kaRj
+         oleDYt0q/X3SMWqd2NWH2rzexPo9H5GkGWGGfpU5x2tY1Bp+mzEnYqyuL8MVJlt+gUM/
+         fAh3Hoo27exim+2PE8ww979EXBnuQSLJ5qyc3BWOAEVaszjIoOGxX/tvKhY4roB1jOj3
+         ANOfIclppuPvmD6OKwqq7+hfclEhJhiAgab7yglJZ9NiRsCyMHkGYv6+N1LJrxcQ2trI
+         RmGAWUsme8qMj0bnuW3MmmMFdwOMvIqO57TNIp5I1l/uAC1QzYfTv+TpCgV8MS1H0e4P
+         ibDQ==
+X-Gm-Message-State: APjAAAVn9kcT/B/5Q9vZBI2PwOGB9e9x1sedDAWFO9FcVd71CW7DgV30
+        W8jZMNJWezR9XPJ/4ZKiCF0UMA==
+X-Google-Smtp-Source: APXvYqz3drbnjX09YwstEbCEN6fl2fuKHiKRkD1wSN9PC7kbiFCKs5dR75ZIx97RwxlQEKKFYm93/g==
+X-Received: by 2002:a63:1617:: with SMTP id w23mr29828735pgl.183.1560554333631;
+        Fri, 14 Jun 2019 16:18:53 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id a22sm4734950pfn.173.2019.06.14.15.56.58
+        by smtp.gmail.com with ESMTPSA id a16sm3823445pfc.167.2019.06.14.16.18.52
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 14 Jun 2019 15:56:59 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 15:56:54 -0700
+        Fri, 14 Jun 2019 16:18:53 -0700 (PDT)
+Date:   Fri, 14 Jun 2019 16:18:48 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] rev-list: clarify --abbrev and --abbrev-commit usage
-Message-ID: <20190614225654.GD233791@google.com>
-References: <20190613221541.10007-1-emilyshaffer@google.com>
- <20190614161841.GB30083@sigill.intra.peff.net>
- <20190614205950.GC233791@google.com>
- <20190614212714.GA15798@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] rev-list: teach --oid-only to enable piping
+Message-ID: <20190614231848.GE233791@google.com>
+References: <20190607225900.89299-1-emilyshaffer@google.com>
+ <20190613215102.44627-1-emilyshaffer@google.com>
+ <20190614160728.GA30083@sigill.intra.peff.net>
+ <xmqqlfy3ud60.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190614212714.GA15798@sigill.intra.peff.net>
+In-Reply-To: <xmqqlfy3ud60.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 05:27:14PM -0400, Jeff King wrote:
-> On Fri, Jun 14, 2019 at 01:59:50PM -0700, Emily Shaffer wrote:
+On Fri, Jun 14, 2019 at 01:25:59PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> > > So no, I cannot see a way in which "rev-list --abbrev" is useful without
-> > > "--abbrev-commit". Which means that perhaps the former should imply the
-> > > latter.
-> > 
-> > Maybe it should; maybe this patch is a good excuse to do so, and enforce
-> > mutual exclusion of --abbrev-commit/--abbrev and --no-abbrev. Maybe it's
-> > also a good time to add --abbrev-commit=<length>?
+> > But I wonder if things would be simpler if we did not touch the commit
+> > code path at all. I.e., if this were simply "--no-object-names", and it
+> > touched only show_object().
 > 
-> Hmm, yeah, I think that would reduce confusion quite a bit. If it were
-> "--abbrev-commit=<length>", then "--abbrev" would not be useful for
-> anything in rev-list. It would still work as a historical item, but we
-> would not need or want to advertise it in the usage at all. Good
-> suggestion.
-
-Given your comments below, I think rather than enforcing mutual
-exclusion it makes more sense to enforce last-one-wins. But the thinking
-is essentially the same.
-
+> Yeah, that sounds more tempting.  And the refined code structure you
+> suggested ...
 > 
-> > > is not right. Possibly:
-> > > 
-> > >   --abbrev-commit [--abbrev=<n>] | --no-abbrev
-> > > 
-> > > would show the interaction more clearly, but I don't have a strong
-> > > opinion.
-> > 
-> > I did consider demonstrating it this way, but when both --abbrev-commit
-> > and --no-abbrev are used together, we don't complain or reject the
-> > invocation - which I would expect if the usage states the two options
-> > are mutually exclusive.
-> 
-> Ah, I see. I don't consider "|" to indicate an exclusion to the point
-> that the options are rejected. Only that you wouldn't want to use both,
-> because one counteracts the other. So every "--no-foo" is mutually
-> exclusive with "--foo" in the sense that one override the other. But the
-> outcome is "last one wins", and not "whoops, we cannot figure out what
-> you meant". And that's what the original:
-> 
->       --abbrev=<n> | --no-abbrev
-> 
-> before your patch was trying to say (and I suspect there are many other
-> cases of "|" with this kind of last-one-wins behavior).
-
-For what it's worth, in this case it's not last-one-wins - --no-abbrev
-always wins:
-
-  emilyshaffer@podkayne:~/git [master]$ g rev-list --abbrev-commit
-  --no-abbrev --max-count=5 --pretty=oneline HEAD
-  b697d92f56511e804b8ba20ccbe7bdc85dc66810 Git 2.22
-  6ee1eaca3e996e69691f515742129645f453e0e8 Merge tag 'l10n-2.22.0-rnd3' of
-    git://github.com/git-l10n/git-po
-  0cdb8d2db2f39d1a29636975168c457d2dc0d466 Merge branch 'fr_review' of
-    git://github.com/jnavila/git
-  d0149200792f579151166a4a5bfae7e66c5d998b Merge branch 'master' of
-    git://github.com/alshopov/git-po
-  82eb147dbbbd0221980883e87ca7efd16a939a6f l10n: fr.po: Review French
-    translation
-  emilyshaffer@podkayne:~/git [master]$ g rev-list --no-abbrev
-  --abbrev-commit --max-count=5 --pretty=oneline HEAD
-  b697d92f56511e804b8ba20ccbe7bdc85dc66810 Git 2.22
-  6ee1eaca3e996e69691f515742129645f453e0e8 Merge tag 'l10n-2.22.0-rnd3' of
-    git://github.com/git-l10n/git-po
-  0cdb8d2db2f39d1a29636975168c457d2dc0d466 Merge branch 'fr_review' of
-    git://github.com/jnavila/git
-  d0149200792f579151166a4a5bfae7e66c5d998b Merge branch 'master' of
-    git://github.com/alshopov/git-po
-  82eb147dbbbd0221980883e87ca7efd16a939a6f l10n: fr.po: Review French
-    translation
-  emilyshaffer@podkayne:~/git [master]$ g rev-list --abbrev-commit
-  --max-count=5 --pretty=oneline HEAD
-  b697d92f56 Git 2.22
-  6ee1eaca3e Merge tag 'l10n-2.22.0-rnd3' of
-    git://github.com/git-l10n/git-po
-  0cdb8d2db2 Merge branch 'fr_review' of git://github.com/jnavila/git
-  d014920079 Merge branch 'master' of git://github.com/alshopov/git-po
-  82eb147dbb l10n: fr.po: Review French translation
-
-> 
-> > I've been trying to think of good reasons not to enforce their mutual
-> > exclusion, and the one I keep coming back to is that --no-abbrev might
-> > be desired to override a git config'd abbreviation length - although I
-> > didn't check to see whether we have one, maybe we would want one later.
-> > And even in that case, I suppose that --abbrev-commit would not be
-> > explicitly added to the call (because we'd infer from the config), or
-> > that if it did need to be explicitly added (like if we need the user to
-> > say they want abbreviation, but we want to use their configured
-> > preferred length) then we could still reject the addition of
-> > --no-abbrev.
+> >> @@ -255,6 +262,10 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
+> >>  	display_progress(progress, ++progress_counter);
+> >>  	if (info->flags & REV_LIST_QUIET)
+> >>  		return;
+> >> +	if (arg_oid_only) {
+> >> +		printf("%s\n", oid_to_hex(&obj->oid));
+> >> +		return;
+> >> +	}
+> >>  	show_object_with_name(stdout, obj, name);
+> >>  }
+> >>  
 > >
-> > So maybe it makes even more sense to take this patch as an opportunity
-> > to make these options mutually exclusive... although that checking I
-> > think would wind up in revision.c, and therefore widen the impact of
-> > the change significantly.
+> > A minor style point, but I think this might be easier to follow without
+> > the early return, since we are really choosing to do A or B. Writing:
+> >
+> >   if (arg_oid_only)
+> > 	printf(...);
+> >   else
+> > 	show_object_with_name(...);
+> >
+> > shows that more clearly, I think.
 > 
-> You can configure core.abbrev, though I'm not sure if it ever requests
-> abbreviation itself, or if it simply sets the length when we do happen
-> to abbreviate based on command-line options.
-> 
-> But forgetting config for a moment, last-one-wins is useful even among
-> command line options. E.g., imagine an alias like this:
-> 
->   [alias]
->   mylog = git rev-list --abbrev-commit --pretty=oneline
-> 
-> It's nice if you can run "git mylog --no-abbrev" and have it do what you
-> expect, instead of complaining "you cannot use --abbrev-commit and
-> --no-abbrev together".
-> 
-> That's a toy example, but you can imagine more elaborate scripts that
-> set some default options, and allow arbitrary per-invocation options to
-> be appended.
+> ... is a good way to clearly show that intention, I would think.
 
-This makes a lot more sense than the scenarios I was imagining. Thanks.
-
-I think a good solution here is to go and add --abbrev-commit=<n>
-without breaking support for --abbrev=<n>; I'm a little more worried
-about changing --no-abbrev to last-one-wins but I'll take a crack at it
-and see what the test suite says. While I'm at it, I'll check for
-last-one-wins with multiple instances of --abbrev[-commit]=<n>.
-
-Having done so, I'll also change the documentation here in rev-list to:
- --abbrev-commit[=<n>] [--abbrev=<n>] | --no-abbrev
-
-Sounds like a fun bit of low hanging fruit to me. Hoping to have a short
-turnaround. :)
-
- - Emily
+Sounds good. Thanks, both; I'll reroll that quickly today.
