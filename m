@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89A3C1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 06:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 816931F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 06:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726017AbfFNGu7 (ORCPT <rfc822;e@80x24.org>);
+        id S1726059AbfFNGvA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 02:51:00 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:33829 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725999AbfFNGu7 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 14 Jun 2019 02:50:59 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:37146 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725846AbfFNGu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 02:50:58 -0400
-Received: by mail-ot1-f65.google.com with SMTP id s20so1673480otp.4
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 23:50:58 -0700 (PDT)
+Received: by mail-oi1-f196.google.com with SMTP id j184so1218636oih.1
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 23:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hSovXS+rZ84ozHD1zjbHHZjsjicH9cdpEGDfU+yKOXo=;
-        b=rhuZjWbG8sK49aDsvBBRmncWibkBReD3sTvh4kqh/XovDkuLKVHaKf1l7u/LfxH5P/
-         ZijFWABwNqby4A3WPK2IGjZLdxnUc6OedrwRmBpzIIAG6wq2HXw4Tx6lsKKeQiFsWkqQ
-         6GVUJSaI4fosBfLpG9FCEDje6qOdba27R3b6bJe7aXw4HuiihU5mi27ROqdAw+uPyKTA
-         +m3xhLpUSWPncJpR/a+cdR6jD7Nfo7iRYHWy05YKk7q2pMTI5tAqjkvddap7LyRBU7hq
-         vFU0VBzdgi7akExGbwAcFh/SJ9ebGvxg5QXhJ8Qvi/t8lhezHRFtK64T4j5jVlPNlsLZ
-         cCyQ==
+        bh=sGMKNfJjY2nXbFbu/gCmlnC8WzykFhIPlYpEtSj9Zk8=;
+        b=QxqwfHnZSruH+nJxgeMjrjNzEEyhUGPzbz/R98pRyKOpqGXKF8Szhj4DN0hehy4F4q
+         ZkLvsNj5Uloyf8VlFjJX43uwJ9YRYOJieFc7Dgkk6w/A3lMx/3CAyCjbB4Q7ZIwPjWQr
+         RIE7dVdK/rksBCHWv+bNERDpGlVbi6bCPyxj2OgmZ1N2GYjM0tUXv+VoT9k0L1txpzal
+         AH9MsRNP6qKHucjsdKGQw8BreBl70msJReS4EWR3L/eV6ACalGunPj0a7kplFLGFvL34
+         tz1E0oLWrzdcMXMzwZgIB/yDTres5msCHX/fUfUiK32XnEC8x8Mmmxm3iduhH9a3TOn9
+         1j5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hSovXS+rZ84ozHD1zjbHHZjsjicH9cdpEGDfU+yKOXo=;
-        b=Kil+P1td7/JyHM45jjPnrsjJpHuDbBGt3QatUMem7fHpS20Wbeo59M+s543EDlNut5
-         Y6CCwTwHJ74LpoeGGo9ZcwbOic+nayTPj6mYJ9aOKpR0IDf+Jm++wPZ+nlX883MGZx+z
-         TAkYaEHfvypWPgVBLR8Qu2iQFrvpz0psXufvgz1OtGADVrIbtIbFOoabmXcpl5iqJ6Y7
-         eu3Ysu/hPEt4Zdc5IG/sjN/XDvdBkweiM6EUtLtq9gD8YLM3cTGC2OhfPiuPmiksaUBw
-         3CBkmwNDWqLJNNuhPBse2QsLt/jC/WXjTE70SlP8gK96ojhrjiUO7HuowhobnbOzk6vA
-         C05w==
-X-Gm-Message-State: APjAAAXxRqzgt5usFAbiG/+1XukxwagEjj9Ool8pisXTnTdBhs3yuKEJ
-        jPZkjhXf4GqNBo4EBMpfI4/GukLAjK8=
-X-Google-Smtp-Source: APXvYqxk9z2HKC7i72NEqEFlRonvNaeewR3om2nQR26tCEiPVknPjW4kerzjEuCYER+R058I9Q37og==
-X-Received: by 2002:a9d:66d5:: with SMTP id t21mr23559780otm.130.1560495057553;
-        Thu, 13 Jun 2019 23:50:57 -0700 (PDT)
+        bh=sGMKNfJjY2nXbFbu/gCmlnC8WzykFhIPlYpEtSj9Zk8=;
+        b=jHHu8C9h3xSCp/QjGQ0zvZlwq7mjuXXqizwz+L8PW0VPGm3G6ZolgwR5Oy8a/ft6B5
+         2vHn28nlmn2KRe52EkHwySIzfxYyIKOwfSPc24PH76+vkN9nTP2u8iCJfKJtyy+FoC0B
+         /sW5rds7CAZ4U6IHgRrBDiaGixCZhIS9qtr+ekYYyEgiX6tCUcOhLLsqLazVVITRupcE
+         cDRHQMv41PThZg7Y+db21vrtP//AvzIA352UHXkWJE/IckAqxQV6L2v0mbn0Na8oAN5g
+         dsZ9OWvIhGC6ghRdmdNbsEX0S5ftuzneWWeRfHAPxBMl+9VYILu2XAI6jTBB7LNYkj4G
+         Nyvw==
+X-Gm-Message-State: APjAAAVSva04dQzTVyuIApCb/1alvbqe1OakHxKFxraIwNxEFOxlY73T
+        VmpFIdazXKSgUgI2P23BTQNki5fijvc=
+X-Google-Smtp-Source: APXvYqzaqHN4YBuDtJnUTFiTXHo8yPklxTr15h3JXsYThRmw8Y36P1NWYUz9NRarvSkx3HtUj07zJA==
+X-Received: by 2002:aca:7507:: with SMTP id q7mr885431oic.87.1560495058796;
+        Thu, 13 Jun 2019 23:50:58 -0700 (PDT)
 Received: from localhost (200-52-42-156.reservada.static.axtel.net. [200.52.42.156])
-        by smtp.gmail.com with ESMTPSA id q12sm833845oth.25.2019.06.13.23.50.56
+        by smtp.gmail.com with ESMTPSA id t206sm826414oig.30.2019.06.13.23.50.58
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 13 Jun 2019 23:50:57 -0700 (PDT)
+        Thu, 13 Jun 2019 23:50:58 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Richard Hansen <rhansen@rhansen.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Mark Lodato <lodato@google.com>
-Subject: [PATCH 3/5] completion: remove zsh hack
-Date:   Fri, 14 Jun 2019 01:50:49 -0500
-Message-Id: <20190614065051.17774-4-felipe.contreras@gmail.com>
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 4/5] completion: zsh: improve main function selection
+Date:   Fri, 14 Jun 2019 01:50:50 -0500
+Message-Id: <20190614065051.17774-5-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc2.dirty
 In-Reply-To: <20190614065051.17774-1-felipe.contreras@gmail.com>
 References: <20190614065051.17774-1-felipe.contreras@gmail.com>
@@ -69,45 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't want to override the 'complete()' function in zsh, which can be
-used by bashcomp.
+Sometimes we want to use the function directly (e.g. _git_checkout), for
+example when zsh has the option 'complete_aliases', this way, we can do
+something like:
 
-Reported-by: Mark Lodato <lodato@google.com>
+  compdef _git gco=git_checkout
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 1 +
- contrib/completion/git-completion.zsh  | 6 ------
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ contrib/completion/git-completion.zsh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9f71bcde96..57cced3f51 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3066,6 +3066,7 @@ __git_func_wrap ()
- # This is NOT a public function; use at your own risk.
- __git_complete ()
- {
-+	test -n "$ZSH_VERSION" && return
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
- 	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 067738d93f..58b3b5c27d 100644
+index 58b3b5c27d..92b956d5de 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -18,12 +18,6 @@
- #  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
- #
+@@ -227,8 +227,10 @@ _git ()
  
--complete ()
--{
--	# do nothing
--	return 0
--}
--
- zstyle -T ':completion:*:*:git:*' tag-order && \
- 	zstyle ':completion:*:*:git:*' tag-order 'common-commands'
+ 	if (( $+functions[__${service}_zsh_main] )); then
+ 		__${service}_zsh_main
+-	else
++	elif (( $+functions[__${service}_main] )); then
+ 		emulate ksh -c __${service}_main
++	elif (( $+functions[_${service}] )); then
++		emulate ksh -c _${service}
+ 	fi
  
+ 	let _ret && _default && _ret=0
 -- 
 2.22.0.rc2.dirty
 
