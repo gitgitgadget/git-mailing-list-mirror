@@ -2,128 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EB7A1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 09:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB901F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 10:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727136AbfFNJxO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 05:53:14 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53257 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbfFNJxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 05:53:14 -0400
-Received: by mail-wm1-f66.google.com with SMTP id x15so1670711wmj.3
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 02:53:12 -0700 (PDT)
+        id S1727151AbfFNKBH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 06:01:07 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36311 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726767AbfFNKBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 06:01:07 -0400
+Received: by mail-wm1-f65.google.com with SMTP id u8so1690708wmm.1
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 03:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=z99ki0oSgtyITW/ExU72YlOqNquiuRj8hchA9YpXtlU=;
-        b=qThEhNlZuEOYKSu+iY/uXS2Ls40LutEBW+IucxRgfKc6+RuFNLphLV7cr9GrO7UmiQ
-         FHZ+7AOa2KCC8wz/ZZ5a49fdlQAVglhWh1Mo8QOfK9M39naeUoLdB3Ca9J0GNURkxSCx
-         tHNsA775CPzHXXX+DKKcJqrcX2kO2BMEC11eNzg162Xk82JLdJQ6y+PO+ueYdhiHi3wB
-         v2XI5K0xN8i+oDjlOxrA61/CqEuorBgbo/HmTy7hs4TGvGfjOu7e745utE1H4o7o0ql+
-         DtHroWsJiVinUYoeq6eVmf4Zk9F/8E3u7HjKt6dQJJTRbz1rqRx1pGCE8XVGPJw6A6WI
-         VB8g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6mYPEFtq74yMoYOQUwMhY50Nt2rzYW0REDAc2OI3+pA=;
+        b=aQoUlGk+cwA+BMPHmbssBr8eZMtKeanUIdVKfhSWTrhpS8OfblxTnBLkhRj45MdkSD
+         ezGfGPTptK2wYDhpqMgJiEHUH/hx5Alil7AtjkwuHsPVhkvAbNjo65v/5srfNex0xPuW
+         5QX3EoasasTismJcViX8MzhstiD97eJsyr0KxpK1MAFaamrgbCZa7luiFTFoWPDqCQcC
+         EUxEa8r0BdlMPo7dg//ioNpmVIiKtJZSEcWsRcMJpp3v9ExV7eFivbxy/trmOs3kkj/v
+         PuX1lBqA/kgi9rC6m+Gle4R4slzFesqtKXL/UQN6ogRmG1jZE2UfGG0zWjUnImauRmUP
+         yKIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=z99ki0oSgtyITW/ExU72YlOqNquiuRj8hchA9YpXtlU=;
-        b=DWnpIfkgsyTLt06l5rGtJvgjRbMWD0KM8vkH/xbLs/506cGVCbtsYRRRM7LMPM6L5w
-         rhgrf0reDsFFW+wDc/KEgQrd+HiZqBkwuDfsQe3yd8qtJaXi30L4exJGCOXWPfHFfs7W
-         pS9PQCUS8V8EvITSZGpgAVi0iR+R0J3ZB//pHD+Mw8iGmuHF/fM4n/0VdTt/txRVkJfI
-         OgmMiwNOmUZ0vrF6PBOEa8PNzDG+Yk/rWKy1+ukXLT18zijpHv0kqiuRaotUZLuqeY0R
-         uSt1c+lgBu0kuF4HnQwo74mG5/17DaYOO0wJoGKfbo9MfrWj2YK/UOYjZ38hEh7fwvXm
-         8a3g==
-X-Gm-Message-State: APjAAAWWZ6blhDJuA10lFjqzS4bbEqLOO8/ViMOCzOEMNr4S3IIwl9bF
-        vqWRsmfs88DjFdTKWgcK9zo=
-X-Google-Smtp-Source: APXvYqzz2ishDoRZTaScSAfAxM2p06SiA3QvaWxeMB0oA9EEzZ9lIUWLeh6W/QwUse69lzErv6UFQg==
-X-Received: by 2002:a1c:99c6:: with SMTP id b189mr7425939wme.57.1560505991671;
-        Fri, 14 Jun 2019 02:53:11 -0700 (PDT)
-Received: from szeder.dev (x4db35d93.dyn.telefonica.de. [77.179.93.147])
-        by smtp.gmail.com with ESMTPSA id a10sm1934696wrx.17.2019.06.14.02.53.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Jun 2019 02:53:10 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 11:53:08 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] kwset: allow building with GCC 8
-Message-ID: <20190614095308.GG31952@szeder.dev>
-References: <pull.265.git.gitgitgadget@gmail.com>
- <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6mYPEFtq74yMoYOQUwMhY50Nt2rzYW0REDAc2OI3+pA=;
+        b=aIu1oy/x3bEb4cjU7s1eGumXIriry4oxQd7EwBeEbEhdlH15pvFzuT1oxrV5GtAtkg
+         aGcdbx6KinpzHPGAZY6+xwvCaeaKNHS2J/8RYkLr/QQcgM6JWl/YGY+fzcZLEXSf+i32
+         yIp/FMN713NPQ2+jxx/9ywlqA2ubj/GFFsScptaARfpleq8j2WBNuENrXcSwF5y3tnvh
+         xNGzpyEv2n6w8Zpucmd9huXuGPtnGKXal1uT+Hs4BSjeV/7K6FlOUK1u/uC4CtT9htls
+         6ySGIN5gWAjb9BCKjko+Oavfo3Vqn9lAIxmbpdk6wuwET9cXSBFHH/MCzw2voAW8PwZo
+         5/xw==
+X-Gm-Message-State: APjAAAX6ThsLiTSDPld0J1VP7EMACMePRvOJXixfZijDLLZ3E5b2KZ6c
+        GRAHSPIyyCGXj49c+CjyBl8pt1DE
+X-Google-Smtp-Source: APXvYqyxQUtc/N/mGR5ZxXrVY/z9+EsJWS6aK4W+6Sf96XbwbP86mfBpwIaB/dPNrUdMmy6wNxkA3g==
+X-Received: by 2002:a1c:7c11:: with SMTP id x17mr6844249wmc.22.1560506463602;
+        Fri, 14 Jun 2019 03:01:03 -0700 (PDT)
+Received: from localhost.localdomain (x4db35d93.dyn.telefonica.de. [77.179.93.147])
+        by smtp.gmail.com with ESMTPSA id d3sm1986988wrs.8.2019.06.14.03.01.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Jun 2019 03:01:02 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [RFC/PATCH v1 0/4] compat/obstack: update from upstream
+Date:   Fri, 14 Jun 2019 12:00:55 +0200
+Message-Id: <20190614100059.13540-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.22.0.589.g5bd7971b91
+In-Reply-To: <20190614095308.GG31952@szeder.dev>
+References: <20190614095308.GG31952@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Subject: Re: [PATCH 2/4] kwset: allow building with GCC 8
+Update 'compat/obstack.{c,h}' from upstream, because they already use
+'size_t' instead of 'long' in places that might eventually end up as
+an argument to malloc(), which might solve build errors with GCC 8 on
+Windows.
 
-The subject could benefit from a "on Windows" at the end; 'kwset' and
-compat/obstack can be build with GCC 8 and 9 just fine on some other
-platforms.
+The first patch just imports from upstream and doesn't modify anything
+at all, and, consequently, it can't be compiled because of a screenful
+or two of errors.  This is bad for future bisects, of course.
 
-On Thu, Jun 13, 2019 at 04:49:45AM -0700, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> The kwset functionality makes use of the obstack code, which expects to
-> be handed a function that can allocate large chunks of data. It expects
-> that function to accept a `size` parameter of type `long`.
-> 
-> This upsets GCC 8 on Windows, because `long` does not have the same
-> bit size as `size_t` there.
-> 
-> Now, the proper thing to do would be to switch to `size_t`. But this
-> would make us deviate from the "upstream" code even further,
+OTOH, adding all the necessary build fixes right away makes review
+harder...
 
-This is not entirely true: upstream already uses 'size_t', so the
-switch would actually bring our copy closer to upstream.
+I'm not sure how to deal with this situation, so here is a series with
+the fixes in separate patches for review, for now.  If there's an
+agreement that this is the direction to take, then I'll squash in the
+fixes in the first patch and touch up the resulting commit message.
 
-But look out for the patches that I'll send out in a minute...
 
-> making it
-> hard to synchronize with newer versions, and also it would be quite
-> involved because that `long` type is so invasive in that code.
-> 
-> Let's punt, and instead provide a super small wrapper around
-> `xmalloc()`.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  kwset.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/kwset.c b/kwset.c
-> index 4fb6455aca..efc2ff41bc 100644
-> --- a/kwset.c
-> +++ b/kwset.c
-> @@ -38,7 +38,13 @@
->  #include "compat/obstack.h"
->  
->  #define NCHAR (UCHAR_MAX + 1)
-> -#define obstack_chunk_alloc xmalloc
-> +/* adapter for `xmalloc()`, which takes `size_t`, not `long` */
-> +static void *obstack_chunk_alloc(long size)
-> +{
-> +	if (size < 0)
-> +		BUG("Cannot allocate a negative amount: %ld", size);
-> +	return xmalloc(size);
-> +}
->  #define obstack_chunk_free free
->  
->  #define U(c) ((unsigned char) (c))
-> -- 
-> gitgitgadget
-> 
+Ramsay, could you please run sparse on top of these patch series to
+make sure that I caught and converted all "0 instead of NULL" usages
+in the last patch?  Thanks.
+
+
+And here is an all-green build of these patches on Travis CI:
+
+  https://travis-ci.org/szeder/git/builds/545645247
+
+(and one bonus patch on top to deal with some Homebrew nonsense)
+
+SZEDER Gábor (4):
+  compat/obstack: update from upstream
+  SQUASH??? compat/obstack: fix portability issues
+  SQUASH??? compat/obstack: fix build errors with Clang
+  compat/obstack: fix some sparse warnings
+
+ compat/obstack.c | 356 ++++++++------------
+ compat/obstack.h | 832 ++++++++++++++++++++++++-----------------------
+ 2 files changed, 572 insertions(+), 616 deletions(-)
+
+-- 
+2.22.0.589.g5bd7971b91
+
