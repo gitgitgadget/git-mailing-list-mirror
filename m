@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BB3F1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 03:48:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60FE51F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 03:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbfFNDsF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jun 2019 23:48:05 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43479 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbfFNDsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jun 2019 23:48:05 -0400
-Received: by mail-pg1-f195.google.com with SMTP id f25so704688pgv.10
-        for <git@vger.kernel.org>; Thu, 13 Jun 2019 20:48:04 -0700 (PDT)
+        id S1725793AbfFNDuT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jun 2019 23:50:19 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:38697 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbfFNDuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jun 2019 23:50:19 -0400
+Received: by mail-pl1-f195.google.com with SMTP id f97so411431plb.5
+        for <git@vger.kernel.org>; Thu, 13 Jun 2019 20:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9uaHBVG6gmLAOo4P4d2qrg4ODU7ebtLgeGFCAgy/KC4=;
-        b=U3DqD5vebpOL7XFHM7tERO/j9kaS88GNY8mDI8EcC8zCG15wuJ+n0CJOj1Uf+/l1gj
-         /Z7eLETqCw4saAu41XRqb8spHMVE9kIPNN5sPiDI3br3OyQt4+0rquLf5BszC1zbSYQd
-         TyGjM10VB2LOFq/OFwR++8A1y/OjjTk4MgoQ+vjV4mki1JYP6+oQj7SX9HJVBIlB4yXg
-         WsYm7kBfwG5ivz8JnLt79X4tKZ27BWrYXlsO+8iY7WPtRB6z+K61mXMDqt4Kt9Y/EIof
-         2vQBEPm0Xv6gJ06iP7ncYiPPR4LcF6x+ZqXsm/3IfVwLLOXtKXljfxcjWD3lvXp1I/gk
-         tgMw==
+        bh=G73MgnFYCnFsWuDD61PTpURh4LUG6T52oXpb/X9KclQ=;
+        b=t7yORGb4K+NnGyUtPwzXCczQGzOgK1fGoh8xgme11sGpsg8F91/zUDRXejgQxhvgaj
+         1TnO0JAlSwl6mqClSKnPgXMPCnFkvjCqDvsJk0X3KgEfWLS9W3ynBydiWyh+HoDTfVi9
+         CyP0x/mIV2EFXTg7eCl0WZPBqouOPSY8suKscA48BtF7hQfEimtr7qA/bLovi4RNgam9
+         5tRkaMmF2VlWPmlhNKDQ7Lb438vORr3a5oMdfzDzaRofO7+DrBI2cVt2zW5hGHVGqrdu
+         8wm1Q2r/FU2A7Klk1LWuDT1xHNaEmiD2KoXE2cqlUNKuGDDPfWO9qHV5z4D9zpZLlix/
+         3CfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9uaHBVG6gmLAOo4P4d2qrg4ODU7ebtLgeGFCAgy/KC4=;
-        b=nMUyp/FeOoLMBpVK+ZaKPLxObAKsHuhoMWajA84o9G/NLvtwQo7S7deGSaMB42A7wr
-         XLcdanBGhsEe4BPwoQ2Sw2gFjfSGNsrBGQWqJS+NBWTyNn9SYSXuhd7Xi8tr0T1KSHdU
-         7+etZfB03bBj+XMgvDUIsc8TGguzCK3Ie2bd+6a//Snh9W3qcbdIC3ZB+loUf0qMzLqP
-         wav1BFSN9VOyo+Caju+vH+E8jgr0vKid3sd80MN1NrKtkqxqyR6OAWeWzweMihcGfCOI
-         T3BTzS3NqXMNG9UIs4+Dh4LFC0wQgT3FDhloe+CwRCYtqhNj46CnwLDsWKzGWpgmx4dt
-         k7/Q==
-X-Gm-Message-State: APjAAAVnM7F7Y+ku56GIunFUTktVS31W99rWkBbtPXpWJ4BqT9b6aOZK
-        ZyUEKaCbqsn3HS296UBjDGQ=
-X-Google-Smtp-Source: APXvYqxH5cUjDcJoQt59M3CexKI3YX6tBwp5dKq+C5yRJnPN7l0ZpKOUdDAklDH6WRImZYBwLfGZlg==
-X-Received: by 2002:aa7:8e54:: with SMTP id d20mr7640245pfr.16.1560484084276;
-        Thu, 13 Jun 2019 20:48:04 -0700 (PDT)
+        bh=G73MgnFYCnFsWuDD61PTpURh4LUG6T52oXpb/X9KclQ=;
+        b=VyIky9WtduE3S14lShYNK9faoJGsPbgXCYVp+bZz7kd/SbXGHGCr6BXUxTmfVMFiWQ
+         SnvISa2p4kcGS+i+Fismh7mkaLrIdfEinCPF+j8hj4NrqfKYAJDDSbHfv8d85SIK2QOn
+         thbsnFZRaXeOqqyvK09tifZpB18vNlehJ6Ts6WQ6z+ehmfJtfBfTxNxAiyrlP86pvy8W
+         UjS+MlQbZt1EIwJggmgTPuYMNrqlCBnwqXDG/9gSXt5fXIDUbk1cBGnoYNmwKx+mKXpY
+         VWNykuvnhDHgupKQ/VZFYeTaLEWYn8ntVDjA8u6vvx4dCl/cd0URj4K0FpO63duDx1xO
+         7O9w==
+X-Gm-Message-State: APjAAAWmwCA85KtQmpadf+T1wEM2UkGWDDSrSAIl3fvASeGUBuJlzZO4
+        Cr9i85qEIGks+1EsCDkNk/I=
+X-Google-Smtp-Source: APXvYqynNeYwaJsMDxy4D+bTdeXs/S0z1WGgLP/W1ErEiNXhU3ME4GUK6//Es+02UdMC4YMvAFLeng==
+X-Received: by 2002:a17:902:9689:: with SMTP id n9mr91318959plp.133.1560484218409;
+        Thu, 13 Jun 2019 20:50:18 -0700 (PDT)
 Received: from ar135.iitr.local ([117.234.2.144])
-        by smtp.gmail.com with ESMTPSA id c69sm1373585pje.6.2019.06.13.20.48.00
+        by smtp.gmail.com with ESMTPSA id c133sm1127031pfb.111.2019.06.13.20.50.14
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 13 Jun 2019 20:48:03 -0700 (PDT)
+        Thu, 13 Jun 2019 20:50:17 -0700 (PDT)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, newren@gmail.com, phillip.wood123@gmail.com,
         rohit.ashiwal265@gmail.com, t.gummerer@gmail.com
 Subject: Re: [GSoC][PATCH v3 2/3] cherry-pick/revert: add --skip option
-Date:   Fri, 14 Jun 2019 09:15:54 +0530
-Message-Id: <20190614034554.19364-1-rohit.ashiwal265@gmail.com>
+Date:   Fri, 14 Jun 2019 09:18:08 +0530
+Message-Id: <20190614034808.19667-1-rohit.ashiwal265@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <xmqqa7elwer9.fsf@gitster-ct.c.googlers.com>
-References: <xmqqa7elwer9.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvctuul6.fsf@gitster-ct.c.googlers.com>
+References: <xmqqtvctuul6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -69,48 +69,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio
 
-On 2019-06-13 17:56 UTC Junio C Hamano <gitster@pobox.com> wrote:
+On 2019-06-13 19:57 UTC Junio C Hamano <gitster@pobox.com> wrote:
 > 
-> > +'git cherry-pick' --continue | --skip | --abort | --quit
+> I think my earlier comments would lead to a wrong direction, i.e. to
+> justify the change made to rollback_single_pick(), so let's step
+> back a bit.  Perhaps the change is unjustifiable and that is why I
+> had trouble reading it and trying to make sense out of it.
 > 
-> Is this correct, or do we need to enclose these choices inside (),
-> i.e.
-> 
-> 	'git cherry-pick' ( --continue | --skip | --abort | --quit )
-> 
-> ?
+> Is it possible that the new callsite that passes is_skip==1 should
+> not be calling it (while castrating many parts of the callee) in the
+> first place?  Perhaps it is doing something _different_ from being
+> called "rollback single pick" (or perhaps the name of the function
+> is not specific enough to describe what its existing caller, i.e. the
+> one that passes is_skip==0 after your patch, calls it for)?  IOW,
+> would it lead to a better code structure if you left the original
+> rollback_single_pick() helper and its caller alone (perhaps rename
+> it to make it clearer what it does), and *add* a new helper around
+> the underlying reset_for_rollback() function and call it from here?
 
-Documentation of `git rebase` also lists these options without the
-'('s so, I thought to make it similar to that.
- 
-> It is unclear *why* the function (and more importantly, its callers)
-> would want to omit two sanity checks when is_skip is in effect.
-> 
-> Before this patch introduced such conditional behaviour, the name
-> was descriptive enough for this single-purpose function that is a
-> file-local helper, but it is no longer a case.  The function needs a
-> bit of commentary before it.
-> 
-> When &&-chaining error checks that are optional, check the condition
-> that makes the error checks optional first, i.e.
-> 
-> 	if (!is_skip &&
-> 		!file_exists(...) && !file_exists(...))
-> 		return error(...);
-> 
-> [...]
-> 
-> no, do not merely give answer to me in your response---write the
-> answer as in-code comment to help future readers of the code).
-> 
-> "Because when we come here, sometimes the XXX_HEAD must exist but
-> some other times XXX_HEAD may not exist, so insisting that either
-> exists would make the function fail" is *NOT* a good answer, on the
-> other hand.  Somebody must still check that the necessary file
-> exists when it must exist.
+That is why I added a new function, but I was not super sure if it
+was a good idea to begin with, since it only introduced small changes
+to `reset_for_rollback` (also Phillip[1] discouraged it so, I stopped
+thinking in that direction).
 
-Yes, I should have added some comments. I'll add them in next revision.
+> Perhaps it is not rolling back but is skipping, so the new function
+> needs to be called skip_single_pick() or something, and the existing
+> one is named correctly and there is no need for even renaming?
+
+We could have a wrapper function to `reset_for_rollback` and better
+rename it to `reset_merge` since we *are* resetting a merge which
+translates to rolling-back in reality?
 
 Thanks
 Rohit
+
+[1]: https://public-inbox.org/git/6d3c1c1e-6140-dd8c-c37f-8c625b04ddc9@gmail.com/
 
