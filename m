@@ -2,115 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BE7F1F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 17:57:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91AD81F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 18:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727053AbfFNR5C (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 13:57:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55418 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726389AbfFNR5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 13:57:02 -0400
-Received: (qmail 18216 invoked by uid 109); 14 Jun 2019 17:57:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jun 2019 17:57:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29023 invoked by uid 111); 14 Jun 2019 17:57:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Jun 2019 13:57:49 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Jun 2019 13:57:00 -0400
-Date:   Fri, 14 Jun 2019 13:57:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        id S1726238AbfFNSTw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 14:19:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56211 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726028AbfFNSTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 14:19:49 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C76B16159F;
+        Fri, 14 Jun 2019 14:19:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=arNh6dnmExQ6
+        W7LYW967edbsAeY=; b=hGQAU+NuQ29LOSmjY+vzEicCw6loUny3C9OtudUmqw8W
+        70tWXe+rP14HEOOQ2IZFwew9NXU6KmpfiP1iFxatUl12akftHraHr1A90FPSfuoY
+        pw+GCioOnI/Y9vrxj+9pzW86bnD0RljJOgHG/KREJhIyKWhcnkcMFn2jhwhgmbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=v50jbD
+        bcS4iUY754L3URBgLVkYcXLONuC9GuuiQZGXJ8JwPM5Nnc9k3SQBy+GLJD6Ufw7W
+        rrAIVWcvL7w5Ay+lf6gaDjEyaJ//JAu4SHnut5DkL6Zp0VzjWIvhHT6gm6MEbpXo
+        636/+xt4NqiWO+XiK+jDapXHsCK99k5FoWl0Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 94F8616159E;
+        Fri, 14 Jun 2019 14:19:45 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E448916159C;
+        Fri, 14 Jun 2019 14:19:44 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
 Subject: Re: [RFC/PATCH v1 0/4] compat/obstack: update from upstream
-Message-ID: <20190614175700.GA313@sigill.intra.peff.net>
 References: <20190614095308.GG31952@szeder.dev>
- <20190614100059.13540-1-szeder.dev@gmail.com>
+        <20190614100059.13540-1-szeder.dev@gmail.com>
+Date:   Fri, 14 Jun 2019 11:19:43 -0700
+In-Reply-To: <20190614100059.13540-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Fri, 14 Jun 2019 12:00:55 +0200")
+Message-ID: <xmqqy324t4g0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190614100059.13540-1-szeder.dev@gmail.com>
+X-Pobox-Relay-ID: FC58CFD6-8ED0-11E9-B44D-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 12:00:55PM +0200, SZEDER Gábor wrote:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> Update 'compat/obstack.{c,h}' from upstream, because they already use
-> 'size_t' instead of 'long' in places that might eventually end up as
-> an argument to malloc(), which might solve build errors with GCC 8 on
-> Windows.
-> 
-> The first patch just imports from upstream and doesn't modify anything
-> at all, and, consequently, it can't be compiled because of a screenful
-> or two of errors.  This is bad for future bisects, of course.
-> 
-> OTOH, adding all the necessary build fixes right away makes review
-> harder...
+> And here is an all-green build of these patches on Travis CI:
+>
+>   https://travis-ci.org/szeder/git/builds/545645247
+>
+> (and one bonus patch on top to deal with some Homebrew nonsense)
 
-One thing about your approach that makes it hard to review is that the
-first commit obliterates all of our local changes, and then you have to
-re-apply them individually. Looking at "git log" there aren't very many
-in this case, so it's pretty easy to be sure you got them all (in some
-cases this can be particularly nasty if the changes were themselves part
-of conflict resolution, and so you have to pick them out of a merge).
+Is this the one that making all of the jobs pass in the above
+output, including the mac gcc one.  It would be wonderful to have it
+separately and fast-tracked ;-)
 
-I think a flow that better matches "what really happened" is to do more
-of a vendor-branch approach: have a line of history that represents the
-upstream changes (each one obliterating the last), and then periodically
-merge that into our fork.
+-- >8 --
+From: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+Date: Wed, 3 Apr 2019 02:49:47 +0200
+Subject: [PATCH] ci: make Homebrew's operations faster
 
-That can even retain bisectability as long as the commits along the
-vendor branch don't actually try to build the code. Unfortunately our
-initial import does try to build, so I think it already wrecks
-bisectability, but we can undo that now. So e.g.,:
+---
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  # start at e831171d67 (Add obstack.[ch] from EGLIBC 2.10, 2011-08-21)
-  git checkout -b upstream-obstack e831171d67
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 7f6acdd803..f804b40ddd 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -34,7 +34,7 @@ linux-clang|linux-gcc)
+ 	popd
+ 	;;
+ osx-clang|osx-gcc)
+-	brew update >/dev/null
++	export HOMEBREW_NO_INSTALL_CLEANUP=3D1 HOMEBREW_NO_AUTO_UPDATE=3D1
+ 	# Uncomment this if you want to run perf tests:
+ 	# brew install gnu-time
+ 	test -z "$BREW_INSTALL_PACKAGES" ||
+--=20
+2.22.0-68-g0aae918dd9
 
-  # undo build changes to restore bisection; ideally this would have
-  # been done back then, but it's too late now
-  sed -i /obstack/d Makefile
-  git commit -am 'strip out obstack building'
-
-  # but of course in our merged version we want that back, so let's
-  # do a noop merge to represent that.
-  git checkout master ;# or whatever feature branch you're working on
-  git merge -s ours upstream-obstack
-
-  # and now with a sane vendor branch established, we can proceed to do
-  # a real update there
-  git checkout upstream-obstack
-  cp /path/to/obstack.[ch] compat/
-  git commit -am 'update obstack'
-
-  # and now we are free to merge that in, getting a real 3-way merge
-  # between our changes and what happened upstream.
-  git checkout master
-  git merge upstream-obstack
-
-Now, if you try this you may find that the conflicts are pretty horrid.
-And the result may end up way less readable than your cherry-picks (and
-harder to resolve in the first place). I claim only that:
-
-  1. This represents in the history graph more clearly the actual
-     sequence of events.
-
-  2. Its saves you from digging up the set of changes that have been
-     applied since our last upstream import.
-
-So in this case the way you did it may well be the best way. But I offer
-it as an alternative. :)
-
--Peff
