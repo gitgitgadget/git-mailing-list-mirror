@@ -2,177 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F9E01F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 20:59:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC7B1F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 21:01:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726052AbfFNU75 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 16:59:57 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38573 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFNU75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 16:59:57 -0400
-Received: by mail-pl1-f194.google.com with SMTP id f97so1481069plb.5
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 13:59:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OJYJhKf6rSb5+FY8ww33ZMIP3QAbgBmY7gCPcC+sfe4=;
-        b=M33gTVpcHevvFgM/s6TqR1j+x/FJ5jUtc58QvBBciX7+ZHIbVDhribkVTHz13uZ1ox
-         uy4hBsO1UXIIwRJOQAX0X0GUqsIQNkFYyeMrYYL5VOt3wskYaVfxSLc3WIS8qxOAqtsN
-         WBQIV7ADm9KLkV1n7/lqxDm9Re4qcMLy4Yc7OF2Zx+tRv6ILXIBF2bd9fUc5J6xItb37
-         rSPk8RVWfD0ZqHn5IYu2dP3wQ8yD6U/6H3k9EzD+tzzxWXC9BIVte2fPRf7Gf59bw2Fd
-         skLQ0CshH6Nq5/vufUCsS5vDTlEvPthTJnFlMVENksojz/WpOJN7uCi7phRDEuWxrcWQ
-         Xiiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OJYJhKf6rSb5+FY8ww33ZMIP3QAbgBmY7gCPcC+sfe4=;
-        b=eZOUvolJ8qUrcr6tv9iP+5VbLEdrM+AkehG1VIXPxvmYqBv+5y8+ZbiowmxJwQYy3X
-         tyWko8gYnLjWAsrXlZ5K7dFqSPQMck63DajOB7R0Hd8G3Q/aGPGJbsrGSt0nN36NXuaZ
-         GkOZ7IZM4KjkTqkQY95mqLowUdtDcrBgrjwvA2aBMzGVFp+qX7dsIL81NptAmjrZIung
-         VtUDN45GWRhqY2t/EVqJCvrk/5J1adFsIV4hKV5rvkFtB+hmpAupqRoPE8rhb5RoiUhD
-         vy8dWii8lk7lom74pLXKOj1tQTbIpDi5fwwHY+4ndzrww581At9VuE9SXeE6eDloAgpw
-         VZBQ==
-X-Gm-Message-State: APjAAAX170ItlqT8wrvyAXv/EElp5o11tKyctxjz2lMCFHIKmajFbmkD
-        oNkysi4NoDpdX2xfwRRFdlvygd6QmlY=
-X-Google-Smtp-Source: APXvYqyhvscIA6jSKwaptIY2EA7KNSNVj8W3XCDWRp7vvy6m/3OcD6KVOTPAIOnauoIFUEH6paKIFg==
-X-Received: by 2002:a17:902:9006:: with SMTP id a6mr90051195plp.305.1560545995698;
-        Fri, 14 Jun 2019 13:59:55 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id s12sm3207821pjp.10.2019.06.14.13.59.54
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 14 Jun 2019 13:59:55 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 13:59:50 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] rev-list: clarify --abbrev and --abbrev-commit usage
-Message-ID: <20190614205950.GC233791@google.com>
-References: <20190613221541.10007-1-emilyshaffer@google.com>
- <20190614161841.GB30083@sigill.intra.peff.net>
+        id S1726092AbfFNVA7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 17:00:59 -0400
+Received: from e2i236.smtp2go.com ([103.2.140.236]:52665 "EHLO
+        e2i236.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFNVA7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 17:00:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1560546958; h=Feedback-ID:
+        X-Smtpcorp-Track:Date:Message-ID:From:To:Subject:Reply-To:Sender:
+        List-Unsubscribe; bh=wnJ594kWNyMySW755fnLtorz6Wemz+NwEAbjnzj6ttI=; b=DKOZmwM7
+        U7RlN2Sn1prQJaZPRFpgwt91F+op4Q60Pn1CMCG3AK+gG1O+irf5IkwiCcdwe3CGJf7rxV7+XVR1j
+        /SMPz7V8OAUVo7v/jS/06QVpgq7+I7OJH30TJbKW6Ja+AkAYESo9WyzoCj5RZIskDCODveYv0EDuY
+        WRr5DKxu6vqArhPCILw+Kmw3fXIVi8E6eH7IXwi6H9kxatgOuNYiI6mxVxYbfnI2uVZOekx+G6Nwt
+        VpdYUJl8J9aWgMIeOBeiAxqydprJM0PMIFwvpzv5BD3JWlvHfFp1Jsgbpprtk8BAxe7Ep7nVGjYXZ
+        kmJjmvKfW9lCAKTyP86NhR8j+A==;
+Received: from [10.176.58.103] (helo=SmtpCorp)
+        by smtpcorp.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92-S2G)
+        (envelope-from <philipoakley@iee.org>)
+        id 1hbtJf-cp4UQt-CN; Fri, 14 Jun 2019 21:00:55 +0000
+Received: from [10.90.199.94] (helo=[10.192.168.0])
+        by smtpcorp.com with esmtp (Exim 4.92-S2G)
+        (envelope-from <philipoakley@iee.org>)
+        id 1hbtJf-9EFQBQ-08; Fri, 14 Jun 2019 21:00:55 +0000
+Subject: Re: [RFC/PATCH v2] doc branch: provide examples for listing remote
+ tracking branches
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>
+Cc:     GitList <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <2ea35ad4-4b33-0ece-4de4-b2e92a100d9a@iee.org>
+ <20190528231605.10108-1-philipoakley@iee.org>
+ <xmqqtvcxmig3.fsf@gitster-ct.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <024373d9-e032-1af8-ba26-439ad5620bf5@iee.org>
+Date:   Fri, 14 Jun 2019 22:00:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614161841.GB30083@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqtvcxmig3.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-Smtpcorp-Track: 1hPtJf9EFQUQ08.ULsEBfVFQ
+Feedback-ID: 66524m:66524aMf6O2Y:66524sDMpfAVPy_
+X-Report-Abuse: Please forward a copy of this message, including all headers, to <abuse-report@smtp2go.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 12:18:41PM -0400, Jeff King wrote:
-> On Thu, Jun 13, 2019 at 03:15:41PM -0700, Emily Shaffer wrote:
-> 
-> > I thought this was odd when I was working on the other rev-list changes
-> > - --abbrev doesn't do anything on its own. It looks like it does work by
-> > itself in other commands, but apparently not in rev-list.
-> > 
-> > Listed this patch as RFC because maybe instead it's better to fix
-> > something so --abbrev can be used alone, or teach --abbrev-commit=<n>.
-> > It looks like `git log --abbrev=5` also doesn't work the way one might
-> > expect, which makes sense to me, as they use the same internals for
-> > option parsing (parse_revisions()).
-> > 
-> > The manpages for log and rev-list both correctly indicate that
-> > --abbrev=<n> is an optional addition to --abbrev-commit. `git log -h` is
-> > generated by parse-options tooling and doesn't cover --abbrev-commit at
-> > all, but `git rev-list` doesn't use an option parser on its own and the
-> > usage is hardcoded.
-> 
-> Yeah, "--abbrev" is a bit tricky here. It is really "when you abbrev, do
-> it to this level". In "log", that means that "git log --abbrev=5 --raw"
-> _does_ do something useful (it abbreviates the blob hashes). And then
-> you may add "--abbrev-commit" on top to ask to abbreviate the commit
-> ids.
-> 
-> And rev-list follows that same pattern, except that rev-list _never_
-> shows diff output. You'd traditionally do (and this is how log was
-> implemented once upon a time):
-> 
->   git rev-list HEAD | git diff-tree --stdin --abbrev=5 --raw
-> 
-> But even there, we are not seeing the commit id output by rev-list. It
-> goes to diff-tree, which then formats it separately. So if you wanted
-> abbreviated commits there, you'd add "--abbrev-commit" to the diff-tree
-> invocation, not rev-list!
-> 
-> So no, I cannot see a way in which "rev-list --abbrev" is useful without
-> "--abbrev-commit". Which means that perhaps the former should imply the
-> latter.
+Hi Junio,
 
-Maybe it should; maybe this patch is a good excuse to do so, and enforce
-mutual exclusion of --abbrev-commit/--abbrev and --no-abbrev. Maybe it's
-also a good time to add --abbrev-commit=<length>?
+On 10/06/2019 18:57, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.org> writes:
+>
+>> The availability of these pattern selections is not obvious from
+>> the man pages, as per mail thread <87lfz3vcbt.fsf@evledraar.gmail.com>.
+>>
+>> Provide examples.
+>>
+>> Re-order the `git branch` synopsis to emphasise the `--list <pattern>`
+>> pairing. Also expand and reposition the `all/remotes` options.
+>>
+>> Split the over-long description into three parts so that the <pattern>
+>> description can be seen.
+>>
+>> Clarify that the `all/remotes` options require the --list if patterns
+>> are to be used.
+>>
+>> Add examples of listing remote tracking branches that match a pattern,
+>> including `git for-each-ref` which has more options.
+>>
+>> Improve the -a/-r warning message. The message confused this author
+>> as the combined -a and -r options had not been given, though a pattern
+>> had. Specifically guide the user that maybe they needed the --list
+>> option to enable a remote branch pattern selection.
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> ---
+>>
+>> in response to
+>> <2ea35ad4-4b33-0ece-4de4-b2e92a100d9a@iee.org>
+>> thread: https://public-inbox.org/git/?q=%3CCACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S%2BhiXBoUGQ%40mail.gmail.com%3E
+>>
+>> to: Git Mailing List <git@vger.kernel.org>
+>> cc: Duy Nguyen <pclouds@gmail.com>
+>> cc: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> cc: Junio C Hamano <gitster@pobox.com>
+> This looks reasonable to me---is it ready to go even with its RFC prefix?
 
-> 
-> And as you noticed in your other patch, there is no way to abbreviate
-> "--objects" output at all. I am not sure I have ever seen a good use for
-> that. Though to be honest, I am not sure that "--abbrev" is really all
-> that useful in the first place. Machine-readable output should never
-> abbreviate, and human-readable ones generally already do.
-> 
-> But at any rate, before making any behavior changes it may make sense to
-> think about how they'd interact with "rev-list --objects" abbreviation,
-> if it were to be added.
-> 
-> As for the patch itself:
-> 
-> > diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> > index 9f31837d30..6ae0087b01 100644
-> > --- a/builtin/rev-list.c
-> > +++ b/builtin/rev-list.c
-> > @@ -49,8 +49,8 @@ static const char rev_list_usage[] =
-> >  "    --objects | --objects-edge\n"
-> >  "    --unpacked\n"
-> >  "    --header | --pretty\n"
-> > -"    --abbrev=<n> | --no-abbrev\n"
-> > -"    --abbrev-commit\n"
-> > +"    --abbrev-commit [--abbrev=<n>]\n"
-> > +"    --no-abbrev\n"
-> 
-> So --no-abbrev clears both --abbrev and --abbrev-commit. That sort of
-> makes sense, though I did not expect it. But it also means that:
-> 
->   --abbrev-commit [--abbrev=<n> | --no-abbrev]
-> 
-> is not right. Possibly:
-> 
->   --abbrev-commit [--abbrev=<n>] | --no-abbrev
-> 
-> would show the interaction more clearly, but I don't have a strong
-> opinion.
+Yes; the RFC was only in regard of the die() message change as it 
+touches real code;-)
 
-I did consider demonstrating it this way, but when both --abbrev-commit
-and --no-abbrev are used together, we don't complain or reject the
-invocation - which I would expect if the usage states the two options
-are mutually exclusive.
 
-I've been trying to think of good reasons not to enforce their mutual
-exclusion, and the one I keep coming back to is that --no-abbrev might
-be desired to override a git config'd abbreviation length - although I
-didn't check to see whether we have one, maybe we would want one later.
-And even in that case, I suppose that --abbrev-commit would not be
-explicitly added to the call (because we'd infer from the config), or
-that if it did need to be explicitly added (like if we need the user to
-say they want abbreviation, but we want to use their configured
-preferred length) then we could still reject the addition of
---no-abbrev.
+Following the post, Stolee's coverage report, it was noted that the 
+die() wasn't actually tested, so I sent a quick follow-up of a potential 
+test 
+https://public-inbox.org/git/f28dd5b1-fda8-cf51-5582-067a7d2c2472@iee.org/ 
+which is a proper RFC...
 
-So maybe it makes even more sense to take this patch as an opportunity
-to make these options mutually exclusive... although that checking I
-think would wind up in revision.c, and therefore widen the impact of
-the change significantly.
 
-From a practical standpoint, I guess you could consider --abbrev-commit
-and --no-abbrev mutually exclusive, but since it's not enforced, I have
-a little preference not to document it as though it is...
+I did not attempt to see if any other dies()'s were untested, just 
+copied one that was..
 
- - Emily
+Philip
+
+(currently travelling)
+
