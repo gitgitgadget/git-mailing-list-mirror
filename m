@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DE191F462
-	for <e@80x24.org>; Fri, 14 Jun 2019 10:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66A481F462
+	for <e@80x24.org>; Fri, 14 Jun 2019 10:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727232AbfFNKBL (ORCPT <rfc822;e@80x24.org>);
+        id S1727203AbfFNKBL (ORCPT <rfc822;e@80x24.org>);
         Fri, 14 Jun 2019 06:01:11 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38692 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbfFNKBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 06:01:10 -0400
-Received: by mail-wm1-f68.google.com with SMTP id s15so1679298wmj.3
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 03:01:09 -0700 (PDT)
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:34201 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726831AbfFNKBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 06:01:09 -0400
+Received: by mail-wm1-f67.google.com with SMTP id w9so8535851wmd.1
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 03:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6y4/B3GCSlzLW+19ZLqqCtsXWf3XzHTGJZ2CxN8hHSo=;
-        b=Dxv6MTu6jMP+07kB2Ie6xQbx544OAjNga/hK7mrXbjTr1zRci/0zufRoMDjj3BcU/t
-         hqAWAZq2ceg6O+3lkCfLa1oWHDm5Oy8OSikAgy2r0wrgSRJsNanfS4q+MC4cpSE1V1nv
-         FnkrIduZrl+m+Qy+6GBkwBUgAg55/3fcedmC++2+31Z0uuZbstiNmOaboant3iRTksuU
-         tKOCt0CATJsM/ugZI9/HSgiUfRJTd5mgPZq/S8zE9pparN+uspNzwjG0uG9EEcewDtDE
-         OAgk3TXO+reQ6wmiXdzOMZFjBKe/6e6iOeZvqYEfLsnwp2flBbHRuIln43JMIYRULyfQ
-         CKVw==
+        bh=fwwxi6eXEQqCEfBfTtjiZARst/PDzFhUXS5p1e1jLaA=;
+        b=AHPBYszDApBPmKE3maDpL0+3l57f+X/6TbfMirmq/i4xALmcIsuivUUYhzD8YR+aGI
+         PPiHLBy3gTRFN28+ZJ5RbrdnAD2dv9MggUlVfKkCwxRjA7vuVCk+/m0utOP+OaQXkABm
+         LspAw9QTwMi8dtlKeAs/TkXH1JMd8bJVqjiuumnlH5EfbjDSy8UjvSKS0ZzwVTROwDSR
+         DIqrk51tEUa5RL9tciXZUoncPOHklDSzgtjrlR0D0MN09MDpx0ZtI0O9Fz1oY/bjYFRm
+         fJtXQf799WwJTYWhP/yBGK+tdOtGTfJNODs23ebWfpBjIbGdqKtWYfakKzyAw6JR9tlC
+         0HXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6y4/B3GCSlzLW+19ZLqqCtsXWf3XzHTGJZ2CxN8hHSo=;
-        b=AfI/vI/w3g1/V1fdZDZe1NSvS9x0FhkbInDRLUC46LUiR/wTtaEWOeS9dEFXPRxlww
-         ZZcgffPcThsniYpunC5nPCT6cUdrEew03dCRbkqC0B17YRhVhH0vPJU5wBDdOw1iXSZK
-         3B0YZmbbWsEE6ix4SHoTPzy9klADtgP0gu10dD0Y1XZaOlV9PeCDt+Kb+/d0A2q0HnCg
-         x++Lq9Sf/7gU5ah6W/fzQpsYCJ3in+EVPrVMJYmPej3MM5idc63y3095OYli+DfbUdkD
-         wOcEK717z/mjlD8Hp7zi3KrRxCJ5zN0yFph0rtovK3t78Rra9WH0zFXtNvhklGSNMg+H
-         v2Pg==
-X-Gm-Message-State: APjAAAU8f2GqxOQJNXjsa+G49gJha8NCHIl4lm1H+tRTLunVWr0f5zTV
-        ooFmUVQCywY/lX/G0FxpkM5OVpee
-X-Google-Smtp-Source: APXvYqzFYTwMOxbRoZzn1Ineoy1eWhn4cBbmXMO4hc+1RqqY5K+Kuncs+WQFAlBKcgace3YTFoJVIw==
-X-Received: by 2002:a1c:2d8b:: with SMTP id t133mr7236337wmt.57.1560506468294;
-        Fri, 14 Jun 2019 03:01:08 -0700 (PDT)
-Received: from localhost.localdomain (x4db35d93.dyn.telefonica.de. [77.179.93.147])
-        by smtp.gmail.com with ESMTPSA id d3sm1986988wrs.8.2019.06.14.03.01.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=fwwxi6eXEQqCEfBfTtjiZARst/PDzFhUXS5p1e1jLaA=;
+        b=Uwq2zqdvwCggWX5lHrvmwlscthiPmWLqmUp082hYb/2aG8FYpEOa+CthMi/eSl7XlD
+         Fp2yfu7guWWSKO9AWJMQXTdb9cfA1zg3GuKAN5TFR3YR1RkhQbdpF8Xds4dzk4EnoDoW
+         k/PZJb1oLMsA4ZRi6O7+8rR1Md1wSzMGMucBoU8aBnhruAzUObe6fzI40v2nlf9Obf12
+         fV3yC1LQCMHMPkd3+rNVPhol2wufY6z+8Jcz6vesffzqAgWqe9AccsL22gQczH51m5eQ
+         Pi1TxF5F7+2lco+Km8Es/vSShRSplAvIiebcawrhW+9H/0Ghfzr4YL24nHzraJkqZyq4
+         anww==
+X-Gm-Message-State: APjAAAU9lTgsR2+xB9lz0yuJz0GpIyauSk24zL0woUwIoI6OBSSSeYtr
+        /uvOxWaSnHjwWGweeiOEGmeaJutI
+X-Google-Smtp-Source: APXvYqw3Zn93KPedsR1Dy+QQ7qXadPViwqouGl/mEgK0cDmVpjt+Gogdib6eSvbwKWbuwHQs1Cgw+A==
+X-Received: by 2002:a1c:1a06:: with SMTP id a6mr7340379wma.128.1560506467226;
         Fri, 14 Jun 2019 03:01:07 -0700 (PDT)
+Received: from localhost.localdomain (x4db35d93.dyn.telefonica.de. [77.179.93.147])
+        by smtp.gmail.com with ESMTPSA id d3sm1986988wrs.8.2019.06.14.03.01.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Jun 2019 03:01:06 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v1 4/4] compat/obstack: fix some sparse warnings
-Date:   Fri, 14 Jun 2019 12:00:59 +0200
-Message-Id: <20190614100059.13540-5-szeder.dev@gmail.com>
+Subject: [PATCH v1 3/4] SQUASH??? compat/obstack: fix build errors with Clang
+Date:   Fri, 14 Jun 2019 12:00:58 +0200
+Message-Id: <20190614100059.13540-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.22.0.589.g5bd7971b91
 In-Reply-To: <20190614100059.13540-1-szeder.dev@gmail.com>
 References: <20190614095308.GG31952@szeder.dev>
@@ -71,82 +71,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'compat/obstack.c' occasionally assigns/compares a plain 0 to a
-pointer, which triggers sparse warnings.  Use NULL instead.
+Compiling 'compat/obstack.c' with Clang on Linux and macOS fails with
+different errors:
 
-This is basically a cherry-pick of 3254310863 (obstack.c: Fix some
-sparse warnings, 2011-09-11) on top of the just updated code from
-upstream.
+On Linux:
+
+      CC compat/obstack.o
+  compat/obstack.c:330:31: error: incompatible pointer types initializing
+        'void (*)(void) __attribute__((noreturn))' with an expression of type
+        'void (void)' [-Werror,-Wincompatible-pointer-types]
+  __attribute_noreturn__ void (*obstack_alloc_failed_handler) (void)
+                                ^
+
+Remove '__attribute_noreturn__' from the function's declaration and
+definition to resolve this build error.
+
+On macOS:
+
+  compat/obstack.h:223:3: error: expected function body after function declarator
+    __attribute_pure__;
+    ^
+  compat/obstack.h:151:29: note: expanded from macro '__attribute_pure__'
+  # define __attribute_pure__ _GL_ATTRIBUTE_PURE
+
+Remove '__attribute_pure__' to resolve this build error.
+
+With this patch it's now possible to compile 'compat/obstack.c' both
+with GCC and Clang on both on Linux and macOS.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- compat/obstack.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ compat/obstack.c | 4 ++--
+ compat/obstack.h | 5 ++---
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/compat/obstack.c b/compat/obstack.c
-index 6ef8cecb8a..5fff087cd3 100644
+index 17fa95d46c..6ef8cecb8a 100644
 --- a/compat/obstack.c
 +++ b/compat/obstack.c
-@@ -135,7 +135,7 @@ _obstack_begin_worker (struct obstack *h,
-   h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
-                                                alignment - 1);
-   h->chunk_limit = chunk->limit = (char *) chunk + h->chunk_size;
--  chunk->prev = 0;
-+  chunk->prev = NULL;
-   /* The initial chunk now contains no empty object.  */
-   h->maybe_empty_object = 0;
-   h->alloc_failed = 0;
-@@ -178,7 +178,7 @@ void
- _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
- {
-   struct _obstack_chunk *old_chunk = h->chunk;
--  struct _obstack_chunk *new_chunk = 0;
-+  struct _obstack_chunk *new_chunk = NULL;
-   size_t obj_size = h->next_free - h->object_base;
-   char *object_base;
+@@ -231,7 +231,7 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
  
-@@ -243,12 +243,12 @@ _obstack_allocated_p (struct obstack *h, void *obj)
-   /* We use >= rather than > since the object cannot be exactly at
-      the beginning of the chunk but might be an empty object exactly
-      at the end of an adjacent chunk.  */
--  while (lp != 0 && ((void *) lp >= obj || (void *) (lp)->limit < obj))
-+  while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
-     {
-       plp = lp->prev;
-       lp = plp;
-     }
--  return lp != 0;
-+  return lp != NULL;
- }
+ /* Suppress -Wmissing-prototypes warning.  We don't want to declare this in
+    obstack.h because it is just for debugging.  */
+-int _obstack_allocated_p (struct obstack *h, void *obj) __attribute_pure__;
++int _obstack_allocated_p (struct obstack *h, void *obj);
  
- /* Free objects in obstack H, including OBJ and everything allocate
-@@ -264,7 +264,7 @@ _obstack_free (struct obstack *h, void *obj)
-   /* We use >= because there cannot be an object at the beginning of a chunk.
-      But there can be an empty object at that address
-      at the end of another chunk.  */
--  while (lp != 0 && ((void *) lp >= obj || (void *) (lp)->limit < obj))
-+  while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
-     {
-       plp = lp->prev;
-       call_freefun (h, lp);
-@@ -279,7 +279,7 @@ _obstack_free (struct obstack *h, void *obj)
-       h->chunk_limit = lp->limit;
-       h->chunk = lp;
-     }
--  else if (obj != 0)
-+  else if (obj != NULL)
-     /* obj is not in any of the chunks! */
-     abort ();
- }
-@@ -290,7 +290,7 @@ _obstack_memory_used (struct obstack *h)
-   struct _obstack_chunk *lp;
-   _OBSTACK_SIZE_T nbytes = 0;
+ int
+ _obstack_allocated_p (struct obstack *h, void *obj)
+@@ -327,7 +327,7 @@ print_and_abort (void)
+    abort gracefully or use longjump - but shouldn't return.  This
+    variable by default points to the internal function
+    'print_and_abort'.  */
+-__attribute_noreturn__ void (*obstack_alloc_failed_handler) (void)
++void (*obstack_alloc_failed_handler) (void)
+   = print_and_abort;
+ # endif /* !_OBSTACK_NO_ERROR_HANDLER */
+ #endif /* !_OBSTACK_ELIDE_CODE */
+diff --git a/compat/obstack.h b/compat/obstack.h
+index 811de588a4..f8f9625121 100644
+--- a/compat/obstack.h
++++ b/compat/obstack.h
+@@ -219,15 +219,14 @@ extern int _obstack_begin_1 (struct obstack *,
+                              _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
+                              void *(*) (void *, size_t),
+                              void (*) (void *, void *), void *);
+-extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *)
+-  __attribute_pure__;
++extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *);
  
--  for (lp = h->chunk; lp != 0; lp = lp->prev)
-+  for (lp = h->chunk; lp != NULL; lp = lp->prev)
-     {
-       nbytes += lp->limit - (char *) lp;
-     }
+ 
+ /* Error handler called when 'obstack_chunk_alloc' failed to allocate
+    more memory.  This can be set to a user defined function which
+    should either abort gracefully or use longjump - but shouldn't
+    return.  The default action is to print a message and abort.  */
+-extern __attribute_noreturn__ void (*obstack_alloc_failed_handler) (void);
++extern void (*obstack_alloc_failed_handler) (void);
+ 
+ /* Exit value used when 'print_and_abort' is used.  */
+ extern int obstack_exit_failure;
 -- 
 2.22.0.589.g5bd7971b91
 
