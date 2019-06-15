@@ -2,94 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67B0F1F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 00:24:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E924D1F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 00:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725837AbfFOAYQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 20:24:16 -0400
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:40302 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFOAYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 20:24:16 -0400
-Received: by mail-lf1-f53.google.com with SMTP id a9so2842814lff.7
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 17:24:14 -0700 (PDT)
+        id S1725993AbfFOAmC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 20:42:02 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:54214 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbfFOAmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 20:42:02 -0400
+Received: by mail-qk1-f201.google.com with SMTP id i196so3580217qke.20
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 17:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=23A9yeslBn/c3QGtF4bbzd04unIbZ/zPq0xCB3L/Oko=;
-        b=faIBphBDuenYY8hKibXevIJQTrNGu6gFTlwGQdctTvQ5C0YUxI4gBkMj7RfCoathOl
-         IzsBU93Ligrp+qKqZWuo5mm7GoS2XbIcOG58hlxocejhl2yfyIdx4cWY0UW5BxHjQb7k
-         TeBAovRu1Sd3CM8ocF6eao/AH4Pt2C4Vm7+sKPn+UPGmPb/s93Cw/Quz8WEwn0UfxdlP
-         aVUb2QI8Jny0FP4/jt2HeWLEHFnmcERnxsVjNZHwqpmM+a/5x9TpRpSI4HdTEBfsEUxb
-         5bzT3JVY7wASy/zrUipaczc7Y/5nkXe65B5BwZNY0BpZqtR78rVgHqUF+A8C3TVfHIkS
-         XRzg==
+        bh=NjH8y2ZxmTWVRUs7J8iUv34tklAK1RSl07QqdTAkQ58=;
+        b=Uxn5lq3DWDnNwjYcIzTLTLUA9NXBwDK/rt5WOYbEPzFwWI5nL12LmO8s88eVQUWDfe
+         IjG6BWxqJ/jVond4+JQAPPazfCqfqu7aUtZ8AlFkDJYDP2SCjxKFtPF7ZVquw5ebxH85
+         8Q/IM9AJ136HP0aHuG7idSQQ2syHF+gJ9qxXgSZtbJ86X43b8FALIHIOkysVrquoTCh+
+         70XSpCBZJfM19pHt97btJWh3vak60bWTeWQOj23vWjv/JYA5Fm776Rszwhmu4xKbgpKH
+         twOVKVUX/2x9Ly2YdLJr1ZmSVld5aqeSvoHZpeukz1V/Y7MLI0fNFdPGQcCoM+bTDym/
+         +/1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=23A9yeslBn/c3QGtF4bbzd04unIbZ/zPq0xCB3L/Oko=;
-        b=Zoo2okVw8orjC/YTKKGYC+FiD1w77ZwqrGHshKZCEwZzHWfGTrxYe5WaD+TUNMrt94
-         xxNvnT1o0iedOV1hBQ1CTRc5tFUr3YGnHDLGIsjftp+kJQG0ubbECeRnzzi+bfUUTgny
-         W8uoitSCj8zZRHrtx+YQutDcCTWn/8xUeob96L3TRc6ycZyCGDvEwOdAA87+8Lqi6ZmP
-         356pkj8DLLQxIRPgA9xhLFZSm9phsbeKyCbDJn+dcuw0bJ9w8NyN9kRdw3T9v98lZHpK
-         qFX1o7ADYUn16FogsokXKQugjHEKuPoFlzTviZ3hTXIDwuGpTOCrXeGXR04+pWBciI7V
-         9eSA==
-X-Gm-Message-State: APjAAAVXJXbldpUwFTJTI62G914derBfoYELCmnuaY0f3AFx2ocu9BnV
-        0oivj1WwXz4xNe1NrQzlcuVTE5w9w/6IHaa5WpI=
-X-Google-Smtp-Source: APXvYqy5nzRoKSqHMoFpyvMFgENeHyJLl4be6NW51MlHuEUj1raibT9p/4FsdMrSZJTn7JXG1zHdlK81WgFx9srbUsQ=
-X-Received: by 2002:a19:bec9:: with SMTP id o192mr27722937lff.78.1560558253770;
- Fri, 14 Jun 2019 17:24:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAEwRq=ohKw8o0R3mtcr5E0fAeEX_OMo5qCiVx3EWwp5B3BKU9Q@mail.gmail.com>
- <CABPp-BGQ0frtOk7ZF4vnLdfeYCXibUaC4zUV1coTz=AzOvy8Lw@mail.gmail.com> <CAEwRq=qufzNg_fBNPgSkV++VRHE2jE8q_iNBB1Fn=BQjTFRLEw@mail.gmail.com>
-In-Reply-To: <CAEwRq=qufzNg_fBNPgSkV++VRHE2jE8q_iNBB1Fn=BQjTFRLEw@mail.gmail.com>
-From:   Phil Hord <phil.hord@gmail.com>
-Date:   Fri, 14 Jun 2019 17:24:00 -0700
-Message-ID: <CABURp0p3iwizpZNR+aeAK3_sj7v2mu487AD57PiZG4fgne+tww@mail.gmail.com>
-Subject: Re: cherry-pick strangeness
-To:     Vincent Legoll <vincent.legoll@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=NjH8y2ZxmTWVRUs7J8iUv34tklAK1RSl07QqdTAkQ58=;
+        b=uGfU2YRVggqgUp14IgL//8mE/QnkJsVqVGWiZl1CURZZZRQiDEriJk/njzWP2ffRMY
+         S3ABF+2edXfZH1Ji3ZzgmsDAxQU/me0h+Jq67NcK4OKk2ZnT26bISbubilkNwS7WS8cy
+         RFhNffvh3gJP2uNWDHwQGyh5gIrePdTKYThL/sb40not38sJD1KBWxJ4uG6oXCM+WuV5
+         9QpXqE6mgtkp+vOExLJFTsbwZFoHuJzZFRl4eE00zsxmRR7vKMfmJgAuUv8TeylBnxkR
+         KG/yATwRqUsV+y7P2wtEmuJxIvmZC/d4VIkZJIEDiyBjlYg/a4kZzoMENBMbT1p0BP97
+         S9TA==
+X-Gm-Message-State: APjAAAXGgK7SrK20wP/WnWYdmHWZajkEZgcapUD6JUYdZLWGNL4enzag
+        umVhbFWihNEpE8stxh+9gzgVAqqWLP1oAP8TM5I70Hk1/4eHxAgIIBX5+QqLs7vUZMYAhIH+3lC
+        V+fYb5tjlXkM+OTWi2prl4NVlmNvPF8lVK5qPlmE6s5B2S62UFPkbcS8HwwM=
+X-Google-Smtp-Source: APXvYqzK2Wn9+HIZ4N4sEcHRWXv98l10hzN/jTV+adVnvNZApUrYB6BPoW12nhIhRI0LUEmYaWqUyYHkLMQI
+X-Received: by 2002:a0c:95f8:: with SMTP id t53mr10988915qvt.115.1560559321256;
+ Fri, 14 Jun 2019 17:42:01 -0700 (PDT)
+Date:   Fri, 14 Jun 2019 17:40:06 -0700
+In-Reply-To: <20190601003603.90794-1-matvore@google.com>
+Message-Id: <cover.1560558910.git.matvore@google.com>
+Mime-Version: 1.0
+References: <20190601003603.90794-1-matvore@google.com>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: [PATCH v4 00/10] Filter combination
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
+        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, emilyshaffer@google.com
+Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 12:29 AM Vincent Legoll
-<vincent.legoll@gmail.com> wrote:
-> On Fri, Jun 14, 2019 at 12:56 AM Elijah Newren <newren@gmail.com> wrote:
-> > When you cherry-pick a commit, it reapplies its diff on top of a
-> > (usually different) commit, preserving the author name/email/date, but
-> > throwing away the committer name/email/date -- instead using your
-> > name/email and the time of the cherry-pick for the committer.  Since
-> > you are transplanting on the same commit, and you created both the
-> > original commit and the cherry-pick, the only thing that can be
-> > different is the committer timestamp.  Git records timestamps down to
-> > 1-second resolution.  If you run in a script, odds are that the
-> > original commit and the cherry-pick both run within the same second
-> > (though not always), and thus you end up with precisely the same
-> > commit.  When you run interactively, you take longer than a second
-> > between commands, and thus have a different committer date which
-> > naturally will have a different sha1sum.
->
-> Thanks for the thorough explanation.
->
-> Looks like this has nothing to do with "--[no-]ff" at all.
->
-> Shouldn't something about that be added to the man page to avoid
-> people scratch their heads ? (I can try to cook something if this is
-> deemed acceptable)
+I had to rebase this onto the latest master rev. master now has the patch which
+disables the sparse:path filter, and v3 of this patch set has conflicts with it.
+This version does not so it can be patched in and tried out by others.
 
-Patches to documentation are welcome, but I'm not sure what you'd say.
-Is it just a note to point out that the HEAD resulting from
-cherry-pick is not guaranteed to be unique?  That seems too noisy for
-something which is inconsequential to most users, to me.  But others
-may disagree.
+I have re-run the test suite on each commit. Sorry for the spamminess.
+
+Thanks,
+
+Matthew DeVore (10):
+  list-objects-filter: make API easier to use
+  list-objects-filter: put omits set in filter struct
+  list-objects-filter-options: always supply *errbuf
+  list-objects-filter: implement composite filters
+  list-objects-filter-options: move error check up
+  list-objects-filter-options: make filter_spec a string_list
+  strbuf: give URL-encoding API a char predicate fn
+  list-objects-filter-options: allow mult. --filter
+  list-objects-filter-options: clean up use of ALLOC_GROW
+  list-objects-filter-options: make parser void
+
+ Documentation/rev-list-options.txt  |  16 ++
+ builtin/clone.c                     |   8 +-
+ builtin/fetch.c                     |   9 +-
+ builtin/rev-list.c                  |   6 +-
+ cache.h                             |  22 ++
+ credential-store.c                  |   9 +-
+ fetch-pack.c                        |  20 +-
+ http.c                              |   6 +-
+ list-objects-filter-options.c       | 267 ++++++++++++++++++----
+ list-objects-filter-options.h       |  57 ++++-
+ list-objects-filter.c               | 332 +++++++++++++++++++++-------
+ list-objects-filter.h               |  35 ++-
+ list-objects.c                      |  55 ++---
+ strbuf.c                            |  15 +-
+ strbuf.h                            |   7 +-
+ t/t5616-partial-clone.sh            |  19 ++
+ t/t6112-rev-list-filters-objects.sh | 194 +++++++++++++++-
+ transport-helper.c                  |  10 +-
+ transport.c                         |   1 +
+ upload-pack.c                       |  13 +-
+ url.c                               |   6 +
+ url.h                               |   8 +
+ 22 files changed, 874 insertions(+), 241 deletions(-)
+
+-- 
+2.21.0
+
