@@ -2,89 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C39C01F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 02:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80C4F1F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 07:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbfFOCLF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 22:11:05 -0400
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:34051 "EHLO
-        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725812AbfFOCLF (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Jun 2019 22:11:05 -0400
-X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Jun 2019 22:11:05 EDT
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailnew.nyi.internal (Postfix) with ESMTP id E5AB11DA1
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 22:01:08 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 14 Jun 2019 22:01:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-        to:from:subject:message-id:date:mime-version:content-type
-        :content-transfer-encoding; s=fm3; bh=sTqmtga3EI2t7FXz8aqKfLd0tO
-        WN4xHuLM4A6JJKeCM=; b=fiXSf7+3hfFksaczBsAHXuqYN6HaX+pNebRMTppfhE
-        a07J4/NHTcNCPMWd4c3wazLXXRH68NjQQmXlCBubgiLUOUpD/hW+B/O5PW/mlLDY
-        EMvaSUm3IlxP19LgJH4/ml5YP5Y2CiQWtQrAbICYm5csk/18iJjdg5XKqn7UxMHo
-        NgkUwtaAHqMDeqkR0FD2CDfFUhij5jb960i2ozYKHFSn7PpgIqITjiDozG+U/TAY
-        nPH+AXjBtIR2Bk2KBa12TlfD/sQQdwbz3UNhYoD01ciCmICdn/fckTYu+qP+Qkoy
-        SYVxK1EOIf5ngfFIWj6F0hlr3MdbJkVRaUehoos3ybfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=sTqmtg
-        a3EI2t7FXz8aqKfLd0tOWN4xHuLM4A6JJKeCM=; b=JPJe1CCEfgaTcll0U3x2WW
-        Doji7gj9sbGqj7DM1g0wX85/yKt7lNema1kTg+vPe7iTzPdJlLp8WMpDVLzcC/tB
-        Rekg6CxUf3eVaY3Ry9qB7qN2G37i7RkAYzMc63EAJwuRbrW1CL4vGFAeWDEeyhSa
-        sx+QXQD+HxzcnGpWEK+HGelRy4Mp2ULo3vwTuWjqhMHbGTgKqtBHdeE57o9/sTIw
-        Mm5Q5Lo+B+bjHDaaMy0MYXXEkh3AgvIdak9zz99KaMN0xoYDCrVPzjJVssHfz4B0
-        WhLTGElcDb/DXgcmOaIg4Tx7mZ/EL/NFx8+CXiACirLy+p7domHokID2VDIJXxUQ
-        ==
-X-ME-Sender: <xms:ZFEEXRGQ98hgS8-G5MSi02xv99bJo0FY4yw7YJ0DWo2SxwCjDMZpEA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudeivddgheegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefvhffukffffgggtgfgsehtjeertd
-    dtfeejnecuhfhrohhmpefurghmuceurgiilhgvhicuoehsrghmsggriihlvgihsehfrghs
-    thhmrghilhdrtghomheqnecukfhppeekiedriedrleehrddvfeegnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehsrghmsggriihlvgihsehfrghsthhmrghilhdrtghomhenucevlhhu
-    shhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:ZFEEXWK6uy6DdZ1NPifq6omE1v5V0jmvaWgBEHHtOa8K7pUVBGPnrQ>
-    <xmx:ZFEEXVvv7OquXFNEPeMAGAMO6zfPyUacDwRdTrrZASStvM6VxUTjAQ>
-    <xmx:ZFEEXToE2t6s3ircnfEAyEeT4sxM5cylxBo96VTv9aTN5PFJuqxQSA>
-    <xmx:ZFEEXTdfnu9hC6v6HMf4m4XPA4-LFgJk9ewgxLQPDVHNUKDGouMWQvrZYwE>
-Received: from [192.168.0.32] (cpc88606-newt36-2-0-cust1001.19-3.cable.virginm.net [86.6.95.234])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 27ED5380084
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 22:01:08 -0400 (EDT)
-To:     git@vger.kernel.org
-From:   Sam Bazley <sambazley@fastmail.com>
-Subject: rev-parse --is-bare-repository incorrect when work tree is set
-Message-ID: <8ac7a1d8-9185-b527-67f4-d5e25cb3eaf5@fastmail.com>
-Date:   Sat, 15 Jun 2019 02:59:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726047AbfFOH1n (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jun 2019 03:27:43 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:58853 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbfFOH1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jun 2019 03:27:43 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 45QpwD6JH2z1rXv5;
+        Sat, 15 Jun 2019 09:27:40 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 45QpwD63Xgz1qqkq;
+        Sat, 15 Jun 2019 09:27:40 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id wQwxHZJpBxVw; Sat, 15 Jun 2019 09:27:40 +0200 (CEST)
+X-Auth-Info: wnV1ERS9Tj7CUuB30YlfHMTxHtrp99nf7wcdHUkL9h4P72xycpSNBdj1BzTYaxch
+Received: from linux.local (ppp-46-244-181-62.dynamic.mnet-online.de [46.244.181.62])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Sat, 15 Jun 2019 09:27:40 +0200 (CEST)
+Received: by linux.local (Postfix, from userid 501)
+        id 3E20B1E5466; Sat, 15 Jun 2019 09:27:36 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Deadname rewriting
+References: <CABURp0poUjSBTTFUXP8dAmJ=37qvpe64=o+t_+mHOiK9Cv+=kg@mail.gmail.com>
+X-Yow:  My CODE of ETHICS is vacationing at famed SCHROON LAKE
+ in upstate New York!!
+Date:   Sat, 15 Jun 2019 09:27:36 +0200
+In-Reply-To: <CABURp0poUjSBTTFUXP8dAmJ=37qvpe64=o+t_+mHOiK9Cv+=kg@mail.gmail.com>
+        (Phil Hord's message of "Fri, 14 Jun 2019 18:54:26 -0700")
+Message-ID: <m27e9nux3r.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rev-parse --is-bare-repository incorrectly outputs "false" when testing
-a bare repository with the work tree set.
+On Jun 14 2019, Phil Hord <phil.hord@gmail.com> wrote:
 
-To reproduce:
+> It feels like `.git/info/grafts` would work the best if it could be
+> distributed with the project, but I'm pretty sure that's a non-starter
+> for many reasons.
 
-$ git init --bare testbare
-$ git --git-dir=testbare rev-parse --is-bare-repository
-true
-$ git --git-dir=testbare --work-tree=something rev-parse \
---is-bare-repository
-false
-$ GIT_WORK_TREE=something git --git-dir=testbare rev-parse \
---is-bare-repository
-false
+The graft file is obsoleted by git replace.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
