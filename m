@@ -8,164 +8,144 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE241F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 18:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D017F1F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 18:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbfFOSdU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jun 2019 14:33:20 -0400
-Received: from mout.web.de ([212.227.15.4]:48795 "EHLO mout.web.de"
+        id S1726781AbfFOSgn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jun 2019 14:36:43 -0400
+Received: from mout.web.de ([212.227.15.3]:55135 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725535AbfFOSdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jun 2019 14:33:20 -0400
+        id S1725535AbfFOSgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jun 2019 14:36:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1560623591;
-        bh=D096lH+cCFNa/FeP26MeWmXZPrnXBxDfCwu5KFHXBO8=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=lXJOESnVtSUk91mi/cVIZGC6kUsUHcbgKNEogm1eAQf1KqIP7vPDu2JV06EdTFl+P
-         TVPsA/uBtMbb1ut+KrTI0EInNLXla1VHkk1FeW37UOXuGyBYnA69YF5aJ9Axn68Rv0
-         L7fUiNiQOXPz3G8l+DJ50LnYU30SnxtuDIrEf/Ic=
+        s=dbaedf251592; t=1560623796;
+        bh=Wmfgh3fPFhvEssLU81wgEHXAg+65tIQud1oFnvhWvX4=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=ZD647P41qtJkZ7Rj3916HueAimoeuFneCSAph+QPeZams94h0OzrbRRCuMk7pLysS
+         FKlKFo5m48xba0xj+cL+XiaUQ0lSryF9bgdqlyoYy+liiWvjz8nftYF8IbulZlvkXk
+         k0tFrTEzI+/ybV7Gd2NcGZC8ZEUL0RT7t2e1DcDs=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPYMT-1hgK5m3Cb3-004mrN; Sat, 15
- Jun 2019 20:33:11 +0200
+Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MYefK-1i7a3K0SjS-00VMyR; Sat, 15
+ Jun 2019 20:36:36 +0200
+Subject: [PATCH 2/2] use COPY_ARRAY for copying arrays
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] coccinelle: use COPY_ARRAY for copying arrays
-Message-ID: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
-Date:   Sat, 15 Jun 2019 20:32:58 +0200
+References: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
+Message-ID: <e09e49a6-8f6d-1f26-005a-bec5f99414dd@web.de>
+Date:   Sat, 15 Jun 2019 20:36:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
+In-Reply-To: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:X01dsKu5jhaP/6QvKwO1soT2UvwtP0YGIpt7tEpcHsFfo6nBfIS
- 5E+xFKMP10LS9E3Eih+cn0Wlznkm7rwxlTPW9nELuOJ7yrmALjWyiZbzCMBAv/kVilG6cht
- UOmfWpfVw3jYFZqCqPMRMNmeieaFZ4CD1H95WLz/h33ruo3YQ3i8aMCG4ctYgUcWmpkTUhA
- WYTISq+oczFtUnXKERjbg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tIgQYMz7aS4=:0Anad11uKGJSJ4ePoaWjVM
- aR8mq6A/RgvSBGQWhwXPkOU2l6hi2bz0BS33mf0gRBdlgSJevMkKHLTlSw6nDscdaWeglvocn
- 0EjysMq2cAfa1pHcafzv6HrxcEr9cDEtErOxNHrNswnYO7lWpyIK0HC4lC01gHQjP4YrO5WMn
- 9AX1qt+TQ2RQHlGdV29pPtueS6vFkBRGQbZePGuNV8imINuCf7RRcRLQHAphU5z+prjkwDPFQ
- G0S77d5HlBLhgMUpIAIwQAqMH5ozTCHcBH0Tr+yJ0Kjolf3ioGHeHJGOwxTXhnqz1081gGYnS
- UYt8OwTBDvyGOMvoazp3TX+d8p66eFXr+mwh/XUvlDgAY3RvU9jpB1DrLuNWgGJUZlTTgWSEV
- 3uDv2w1g158TBbSISMw5SraZ1+Ps3HXXYiTQuMdJQE4YxeZMagLRnEfXWp4IvayjJX+Sa8oT5
- 2V8O5B9vg5tR80dlvRV+TSBJjpB0flG6sPGluJ/Pj5oDW3dTIr18e5n/RKdNMk5UZiJzGk9Iv
- MJcKi1dhXRGB9J8lCsBc81+NBhAOdu0iMndi9TTILFHq8rBmCtb5MblHz3L2NViduth+fzg3C
- B+lBMLhRP6GzQu6NrwkE3ruLSvZpN3C9c6pVcrBvOUzsgy6KvptzPMo41OzXu5iqHlxHPkH9I
- mtpNkPMftc8t4PpMOQa8tDqyJcZNVR0fNJhPPhiuhJpCYApYqzHKEHqVefjahqJBJSDrLujSt
- /DYGmYkcCf4ePSV1O8YJMW2ef/z+Ku1I+zKAzIL6/txXrII5ccovwrYv1mzu9HjalTsIs3+F3
- V3aZBBTiA+cyzFHVHp99BBmCVlUQf1qNpyQw0wiyjwBEDedLMlfCfqRRq78c/XpcVRKwRGte3
- hRzqYnMnvbN/+9hMVhysxknSlDx9NL2AGHqcrWVYBXwwA0dpsOILDzK1pycnL6V5Ndozdfcm4
- Msc9VDQJ5ytJNAUlW93iwc73+4WJcdgQ=
+X-Provags-ID: V03:K1:lr3DFxOYjUI/L1lKNEuf1jr0ZWzyDhNcFqMD/0jwcayue2YsCrj
+ 2Pjt0Wwp/822Gk9/GMy2MR/MW8i21GVto1sntyA6Ka8J7FnZZpS55K9nIB2DQb+HhAZSJBr
+ c7sQp2lUsrRzqWyrnZ+TMh4VnOmHe9320f9tXJOqNtBZs5xQygqLxnS2n9dPinaMS+2T0nb
+ qTx1al+vTLqy15WrK3TCg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:A/5XySQxjCQ=:HWe4SjuipQZxt54Ku/g7Ty
+ dYSk1ZfjPpQnkA4AGLZWHaLmWGK+8xiPceSCBMOi2VQi7lVKzlOep/rXHomLxTL8Rw5aom7TG
+ N5ecUcL4hl3WP/6PWYwYwOpgptnhpbIVyKcqi2VWMaliigjEhWsr8Ro2jtzCXXoCgOghaj4ON
+ gfR84sC7qN8VMtqaTMJ2s8C1tTs2rk/wBVfXX62ocl9S7X5EzRME9+gX2WSVkC+EN89IuUbs/
+ WmkRdbzfKggObNqzcBQyfzkXZ5QG0XMpEfBMLPojaVuxdU3LUtbOPikheSq9sYYp9FZ6g8Cb/
+ HLnSpmA9j1B0/pl9O/83Ivi6JDl8nv8H5RhdvI/l3hVL0JOr+fkbb7GdzBnikt6Y7qs2MUDuO
+ vrNknIVPY+b9Fo4aIxV3sIeahUsjuz3kroppFPCTIEDKd1mKrGVnFhCJv4J41CNCZMAuzeAH9
+ kCc3umtgR7TCL7xKYwinG1znOXnRXOWreVnzBw5VkJJFz8GaYboV1lzCZXKKLUz7NFqj0pDM+
+ eYF1kqYTwczJz7/13N+3CLp+FCOCYlDPxwdKga2ifAluM41seQE1W+MGw1wuP/h9TMAjZB4lw
+ STddDu5P20/5wqbOLACIbHRq/XnCbil1cadBpxVjS/ht27dkhd1Rrrn9fPCMsLWcZl8ugaXmM
+ 30Oi6M8VUodJlM8itAd/YSxNiwMH04KPfDj8Ai8fteeCKYebdxbaoTrCZQowu/x1ljJD4MCX7
+ n5RiBWCXWR2cm8f88ODDvxePUgy8yZgqSf+9p0tJgGP+TzQ701RTZttxd1XFgegIVszfGCPAp
+ UiRjAT2O3Ac+Ra87QYMQwgIugSYYNLj7AqLK/CuDZkk+l1ChpoUKBbXUEmS13EsuuB2wOAqtk
+ SI673lzEwyo5mlZH1S3hEKoCmmKCDwcIDAQu6pYPgyQw9KbmQWLLdRQTmbK4siMpFR9zjcPYB
+ +4IIGanZl2UP7ro18INcymL+mcW8sEYU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current semantic patch for COPY_ARRAY transforms memcpy(3) calls on
-pointers, but Coccinelle distinguishes them from arrays.  It already
-contains three rules to handle the options for sizeof (i.e. source,
-destination and type), and handling arrays as source and destination
-would require four times as many rules if we enumerated all cases.
+Convert calls of memcpy(3) to use COPY_ARRAY, which shortens and
+simplifies the code a bit.
 
-We also don't handle array subscripts, and supporting that would
-increase the number of rules by another factor of four.  (An isomorphism
-telling Coccinelle that "sizeof x[...]" is equivalent to "sizeof *x"
-would be nice..)
-
-Support arrays and array subscripts, but keep the number of rules down
-by adding normalization steps: First turn array subscripts into
-derefences, then determine the types of expressions used with sizeof and
-replace them with these types, and then convert the different possible
-combinations of arrays and pointers with memcpy(3) to COPY_ARRAY.
+Patch generated by Coccinelle and contrib/coccinelle/array.cocci.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 =2D--
- contrib/coccinelle/array.cocci | 61 +++++++++++++++++++++++++---------
- 1 file changed, 46 insertions(+), 15 deletions(-)
+ fast-import.c | 2 +-
+ kwset.c       | 2 +-
+ packfile.c    | 6 +++---
+ pretty.c      | 4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
-ci
-index 01586821dc..46b8d2ee11 100644
-=2D-- a/contrib/coccinelle/array.cocci
-+++ b/contrib/coccinelle/array.cocci
-@@ -1,29 +1,60 @@
- @@
--type T;
--T *dst;
--T *src;
--expression n;
-+expression dst, src, n, E;
- @@
-=2D- memcpy(dst, src, (n) * sizeof(*dst));
--+ COPY_ARRAY(dst, src, n);
-+  memcpy(dst, src, n * sizeof(
-+- E[...]
-++ *(E)
-+  ))
+diff --git a/fast-import.c b/fast-import.c
+index 76a7bd3699..6dfdd6801c 100644
+=2D-- a/fast-import.c
++++ b/fast-import.c
+@@ -644,7 +644,7 @@ static struct tree_content *grow_tree_content(
+ 	struct tree_content *r =3D new_tree_content(t->entry_count + amt);
+ 	r->entry_count =3D t->entry_count;
+ 	r->delta_depth =3D t->delta_depth;
+-	memcpy(r->entries,t->entries,t->entry_count*sizeof(t->entries[0]));
++	COPY_ARRAY(r->entries, t->entries, t->entry_count);
+ 	release_tree_content(t);
+ 	return r;
+ }
+diff --git a/kwset.c b/kwset.c
+index 4fb6455aca..090ffcafa2 100644
+=2D-- a/kwset.c
++++ b/kwset.c
+@@ -475,7 +475,7 @@ kwsprep (kwset_t kws)
+ 	for (i =3D 0; i < NCHAR; ++i)
+ 	  kwset->next[i] =3D next[U(trans[i])];
+       else
+-	memcpy(kwset->next, next, NCHAR * sizeof(struct trie *));
++	COPY_ARRAY(kwset->next, next, NCHAR);
+     }
 
- @@
- type T;
--T *dst;
--T *src;
--expression n;
-+T *ptr;
-+T[] arr;
-+expression E, n;
- @@
-=2D- memcpy(dst, src, (n) * sizeof(*src));
--+ COPY_ARRAY(dst, src, n);
-+(
-+  memcpy(ptr, E,
-+- n * sizeof(*(ptr))
-++ n * sizeof(T)
-+  )
-+|
-+  memcpy(arr, E,
-+- n * sizeof(*(arr))
-++ n * sizeof(T)
-+  )
-+|
-+  memcpy(E, ptr,
-+- n * sizeof(*(ptr))
-++ n * sizeof(T)
-+  )
-+|
-+  memcpy(E, arr,
-+- n * sizeof(*(arr))
-++ n * sizeof(T)
-+  )
-+)
+   /* Fix things up for any translation table. */
+diff --git a/packfile.c b/packfile.c
+index d786ec7312..d55cb7f013 100644
+=2D-- a/packfile.c
++++ b/packfile.c
+@@ -1269,7 +1269,7 @@ static enum object_type packed_to_object_type(struct=
+ repository *r,
+ 		if (poi_stack_nr >=3D poi_stack_alloc && poi_stack =3D=3D small_poi_sta=
+ck) {
+ 			poi_stack_alloc =3D alloc_nr(poi_stack_nr);
+ 			ALLOC_ARRAY(poi_stack, poi_stack_alloc);
+-			memcpy(poi_stack, small_poi_stack, sizeof(off_t)*poi_stack_nr);
++			COPY_ARRAY(poi_stack, small_poi_stack, poi_stack_nr);
+ 		} else {
+ 			ALLOC_GROW(poi_stack, poi_stack_nr+1, poi_stack_alloc);
+ 		}
+@@ -1679,8 +1679,8 @@ void *unpack_entry(struct repository *r, struct pack=
+ed_git *p, off_t obj_offset,
+ 		    && delta_stack =3D=3D small_delta_stack) {
+ 			delta_stack_alloc =3D alloc_nr(delta_stack_nr);
+ 			ALLOC_ARRAY(delta_stack, delta_stack_alloc);
+-			memcpy(delta_stack, small_delta_stack,
+-			       sizeof(*delta_stack)*delta_stack_nr);
++			COPY_ARRAY(delta_stack, small_delta_stack,
++				   delta_stack_nr);
+ 		} else {
+ 			ALLOC_GROW(delta_stack, delta_stack_nr+1, delta_stack_alloc);
+ 		}
+diff --git a/pretty.c b/pretty.c
+index ced0485257..e4ed14effe 100644
+=2D-- a/pretty.c
++++ b/pretty.c
+@@ -106,8 +106,8 @@ static void setup_commit_formats(void)
+ 	commit_formats_len =3D ARRAY_SIZE(builtin_formats);
+ 	builtin_formats_len =3D commit_formats_len;
+ 	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
+-	memcpy(commit_formats, builtin_formats,
+-	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
++	COPY_ARRAY(commit_formats, builtin_formats,
++		   ARRAY_SIZE(builtin_formats));
 
- @@
- type T;
--T *dst;
--T *src;
-+T *dst_ptr;
-+T *src_ptr;
-+T[] dst_arr;
-+T[] src_arr;
- expression n;
- @@
-=2D- memcpy(dst, src, (n) * sizeof(T));
--+ COPY_ARRAY(dst, src, n);
-+(
-+- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
-++ COPY_ARRAY(dst_ptr, src_ptr, n)
-+|
-+- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
-++ COPY_ARRAY(dst_ptr, src_arr, n)
-+|
-+- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
-++ COPY_ARRAY(dst_arr, src_ptr, n)
-+|
-+- memcpy(dst_arr, src_arr, (n) * sizeof(T))
-++ COPY_ARRAY(dst_arr, src_arr, n)
-+)
-
- @@
- type T;
+ 	git_config(git_pretty_formats_config, NULL);
+ }
 =2D-
 2.22.0
