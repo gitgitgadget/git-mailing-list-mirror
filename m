@@ -2,150 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D017F1F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 18:36:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F35AB1F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 18:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbfFOSgn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jun 2019 14:36:43 -0400
-Received: from mout.web.de ([212.227.15.3]:55135 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725535AbfFOSgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jun 2019 14:36:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1560623796;
-        bh=Wmfgh3fPFhvEssLU81wgEHXAg+65tIQud1oFnvhWvX4=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=ZD647P41qtJkZ7Rj3916HueAimoeuFneCSAph+QPeZams94h0OzrbRRCuMk7pLysS
-         FKlKFo5m48xba0xj+cL+XiaUQ0lSryF9bgdqlyoYy+liiWvjz8nftYF8IbulZlvkXk
-         k0tFrTEzI+/ybV7Gd2NcGZC8ZEUL0RT7t2e1DcDs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MYefK-1i7a3K0SjS-00VMyR; Sat, 15
- Jun 2019 20:36:36 +0200
-Subject: [PATCH 2/2] use COPY_ARRAY for copying arrays
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
-Message-ID: <e09e49a6-8f6d-1f26-005a-bec5f99414dd@web.de>
-Date:   Sat, 15 Jun 2019 20:36:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726834AbfFOSmm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jun 2019 14:42:42 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36828 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbfFOSml (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jun 2019 14:42:41 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so5795009wrs.3
+        for <git@vger.kernel.org>; Sat, 15 Jun 2019 11:42:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5CR6y2b1qfNdnLTZ5r1QbIo5DiwjbIfaII8gZMySWzc=;
+        b=sWiTCTgIrKph6lbz6Mi/tMSFxJm3HBXqF0qpBzwQiYuzOElCrzN1AFYtclt3yivLRC
+         sD2U1Sfe8jbo4HArBWO2+ryyZHeixwdF9hqJFFUAJ/Hn4HseAZ11qSIHwvMyAvdfVy99
+         CqNU6FA6pemVVaBdbe9ESSifVNbIrIt4BdninUuWQuQly255Inax0uqxHIpVlQABg7Xv
+         fR5wFkR9TrWq3ePy3yFw0TndauN/KLQ3V9gnAWuYLhKOR/iU6/xegA0kaQQdNXMofeSo
+         JBHcLQfVDzPo6IB5y4AtFLqdNM044BNSteQamEaAYl2IdQQM/2zJm53f7DvIJRhsu6WT
+         9M6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=5CR6y2b1qfNdnLTZ5r1QbIo5DiwjbIfaII8gZMySWzc=;
+        b=UeG7vAe/h7KuxzNXFCFPMIEMWJfHfgazukM7XWFJwjYqeF0ow/QlGtLlwVrOJK7bBh
+         IJyQuhb5YRcDo9SEpHyH9C2f/PW/bsiqwcCvih4URRsA8TT/x8oznPmfgqMzQ45QW2sI
+         fDH+FGZ5Rnp/0Qhh2sj776x4roHCHOZ8Vu+wgHCaU58pxvD6qyrcpHqj3BN5d/8LCkRv
+         IeeQoqtdRQPiY5uNd+N5IGHUXftEUFB4HtkL9u5Y4xIRaFsdTcj2bhQZd+QtAMKIrKYI
+         FVC6BtlyeKrVBzZQ7uw8WmpzvcZ/JI7pktwpAkpOLEhaOIaUmxRDinvSpfdoEQ/wB7CM
+         qCmg==
+X-Gm-Message-State: APjAAAUUTMSNPQCL9CTjfgqJu+8xhvkk32bxyebEM2/Ly1j9iS5wtD04
+        GbBUjbiCrvTug7SmNDzsfmG4bq1jIYM=
+X-Google-Smtp-Source: APXvYqwd4fUUPeMOhZszhg5gSlslMQgKbmNFI9WNwDXG1Mc8AY+ij36ZsN04sA5oN1bgXiJozXkVpQ==
+X-Received: by 2002:a5d:4949:: with SMTP id r9mr10137753wrs.289.1560624159372;
+        Sat, 15 Jun 2019 11:42:39 -0700 (PDT)
+Received: from localhost.localdomain (cpc91214-cmbg18-2-0-cust207.5-4.cable.virginm.net. [81.102.75.208])
+        by smtp.gmail.com with ESMTPSA id f197sm9402016wme.39.2019.06.15.11.42.37
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 15 Jun 2019 11:42:38 -0700 (PDT)
+From:   michael@platin.gs
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Barret Rhoden <brho@google.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Subject: [PATCH] Use an intermediate file between between git blame and sed to avoid git blame's exit code being hidden.
+Date:   Sat, 15 Jun 2019 19:40:39 +0100
+Message-Id: <20190615184039.3711-1-michael@platin.gs>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <Re: [PATCH v8 7/9] blame: add a fingerprint heuristic to match ignored lines>
+References: <Re: [PATCH v8 7/9] blame: add a fingerprint heuristic to match ignored lines>
 MIME-Version: 1.0
-In-Reply-To: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lr3DFxOYjUI/L1lKNEuf1jr0ZWzyDhNcFqMD/0jwcayue2YsCrj
- 2Pjt0Wwp/822Gk9/GMy2MR/MW8i21GVto1sntyA6Ka8J7FnZZpS55K9nIB2DQb+HhAZSJBr
- c7sQp2lUsrRzqWyrnZ+TMh4VnOmHe9320f9tXJOqNtBZs5xQygqLxnS2n9dPinaMS+2T0nb
- qTx1al+vTLqy15WrK3TCg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:A/5XySQxjCQ=:HWe4SjuipQZxt54Ku/g7Ty
- dYSk1ZfjPpQnkA4AGLZWHaLmWGK+8xiPceSCBMOi2VQi7lVKzlOep/rXHomLxTL8Rw5aom7TG
- N5ecUcL4hl3WP/6PWYwYwOpgptnhpbIVyKcqi2VWMaliigjEhWsr8Ro2jtzCXXoCgOghaj4ON
- gfR84sC7qN8VMtqaTMJ2s8C1tTs2rk/wBVfXX62ocl9S7X5EzRME9+gX2WSVkC+EN89IuUbs/
- WmkRdbzfKggObNqzcBQyfzkXZ5QG0XMpEfBMLPojaVuxdU3LUtbOPikheSq9sYYp9FZ6g8Cb/
- HLnSpmA9j1B0/pl9O/83Ivi6JDl8nv8H5RhdvI/l3hVL0JOr+fkbb7GdzBnikt6Y7qs2MUDuO
- vrNknIVPY+b9Fo4aIxV3sIeahUsjuz3kroppFPCTIEDKd1mKrGVnFhCJv4J41CNCZMAuzeAH9
- kCc3umtgR7TCL7xKYwinG1znOXnRXOWreVnzBw5VkJJFz8GaYboV1lzCZXKKLUz7NFqj0pDM+
- eYF1kqYTwczJz7/13N+3CLp+FCOCYlDPxwdKga2ifAluM41seQE1W+MGw1wuP/h9TMAjZB4lw
- STddDu5P20/5wqbOLACIbHRq/XnCbil1cadBpxVjS/ht27dkhd1Rrrn9fPCMsLWcZl8ugaXmM
- 30Oi6M8VUodJlM8itAd/YSxNiwMH04KPfDj8Ai8fteeCKYebdxbaoTrCZQowu/x1ljJD4MCX7
- n5RiBWCXWR2cm8f88ODDvxePUgy8yZgqSf+9p0tJgGP+TzQ701RTZttxd1XFgegIVszfGCPAp
- UiRjAT2O3Ac+Ra87QYMQwgIugSYYNLj7AqLK/CuDZkk+l1ChpoUKBbXUEmS13EsuuB2wOAqtk
- SI673lzEwyo5mlZH1S3hEKoCmmKCDwcIDAQu6pYPgyQw9KbmQWLLdRQTmbK4siMpFR9zjcPYB
- +4IIGanZl2UP7ro18INcymL+mcW8sEYU=
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert calls of memcpy(3) to use COPY_ARRAY, which shortens and
-simplifies the code a bit.
+From: Michael Platings <michael@platin.gs>
 
-Patch generated by Coccinelle and contrib/coccinelle/array.cocci.
+---
+ t/t8014-blame-ignore-fuzzy.sh | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
-=2D--
- fast-import.c | 2 +-
- kwset.c       | 2 +-
- packfile.c    | 6 +++---
- pretty.c      | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+diff --git a/t/t8014-blame-ignore-fuzzy.sh b/t/t8014-blame-ignore-fuzzy.sh
+index 1ff59624e9..13f3313710 100755
+--- a/t/t8014-blame-ignore-fuzzy.sh
++++ b/t/t8014-blame-ignore-fuzzy.sh
+@@ -332,7 +332,9 @@ test_expect_success setup '
+ for i in $(test_seq 2 $last_test); do
+ 	eval title="\$title$i"
+ 	test_expect_success "$title" \
+-	"git blame -M9 --ignore-rev $IGNOREME $i | sed -e \"$pick_author\" >actual && test_cmp expected$i actual"
++	"git blame -M9 --ignore-rev $IGNOREME $i >output &&
++	sed -e \"$pick_author\" <output >actual &&
++	test_cmp expected$i actual"
+ done
+ 
+ # This invoked a null pointer dereference when the chunk callback was called
+@@ -357,7 +359,8 @@ test_expect_success 'Diff chunks with no suspects' '
+ 
+ 	test_write_lines 1 1 >expected &&
+ 
+-	git blame --ignore-rev $REV_2 --ignore-rev $REV_3 file | sed -e "$pick_author" >actual &&
++	git blame --ignore-rev $REV_2 --ignore-rev $REV_3 file >output &&
++	sed -e "$pick_author" <output >actual &&
+ 
+ 	test_cmp expected actual
+ 	'
+@@ -387,7 +390,8 @@ test_expect_success 'position matching' '
+ 
+ 	test_write_lines 1 1 2 2 >expected &&
+ 
+-	git blame --ignore-rev $REV_3 --ignore-rev $REV_4 file2 | sed -e "$pick_author" >actual &&
++	git blame --ignore-rev $REV_3 --ignore-rev $REV_4 file2 >output &&
++	sed -e "$pick_author" <output >actual &&
+ 
+ 	test_cmp expected actual
+ 	'
+@@ -424,7 +428,8 @@ test_expect_success 'preserve order' '
+ 
+ 	test_write_lines 1 2 3 >expected &&
+ 
+-	git blame --ignore-rev $REV_4 --ignore-rev $REV_5 file3 | sed -e "$pick_author" >actual &&
++	git blame --ignore-rev $REV_4 --ignore-rev $REV_5 file3 >output &&
++	sed -e "$pick_author" <output >actual &&
+ 
+ 	test_cmp expected actual
+ 	'
+-- 
+2.21.0
 
-diff --git a/fast-import.c b/fast-import.c
-index 76a7bd3699..6dfdd6801c 100644
-=2D-- a/fast-import.c
-+++ b/fast-import.c
-@@ -644,7 +644,7 @@ static struct tree_content *grow_tree_content(
- 	struct tree_content *r =3D new_tree_content(t->entry_count + amt);
- 	r->entry_count =3D t->entry_count;
- 	r->delta_depth =3D t->delta_depth;
--	memcpy(r->entries,t->entries,t->entry_count*sizeof(t->entries[0]));
-+	COPY_ARRAY(r->entries, t->entries, t->entry_count);
- 	release_tree_content(t);
- 	return r;
- }
-diff --git a/kwset.c b/kwset.c
-index 4fb6455aca..090ffcafa2 100644
-=2D-- a/kwset.c
-+++ b/kwset.c
-@@ -475,7 +475,7 @@ kwsprep (kwset_t kws)
- 	for (i =3D 0; i < NCHAR; ++i)
- 	  kwset->next[i] =3D next[U(trans[i])];
-       else
--	memcpy(kwset->next, next, NCHAR * sizeof(struct trie *));
-+	COPY_ARRAY(kwset->next, next, NCHAR);
-     }
-
-   /* Fix things up for any translation table. */
-diff --git a/packfile.c b/packfile.c
-index d786ec7312..d55cb7f013 100644
-=2D-- a/packfile.c
-+++ b/packfile.c
-@@ -1269,7 +1269,7 @@ static enum object_type packed_to_object_type(struct=
- repository *r,
- 		if (poi_stack_nr >=3D poi_stack_alloc && poi_stack =3D=3D small_poi_sta=
-ck) {
- 			poi_stack_alloc =3D alloc_nr(poi_stack_nr);
- 			ALLOC_ARRAY(poi_stack, poi_stack_alloc);
--			memcpy(poi_stack, small_poi_stack, sizeof(off_t)*poi_stack_nr);
-+			COPY_ARRAY(poi_stack, small_poi_stack, poi_stack_nr);
- 		} else {
- 			ALLOC_GROW(poi_stack, poi_stack_nr+1, poi_stack_alloc);
- 		}
-@@ -1679,8 +1679,8 @@ void *unpack_entry(struct repository *r, struct pack=
-ed_git *p, off_t obj_offset,
- 		    && delta_stack =3D=3D small_delta_stack) {
- 			delta_stack_alloc =3D alloc_nr(delta_stack_nr);
- 			ALLOC_ARRAY(delta_stack, delta_stack_alloc);
--			memcpy(delta_stack, small_delta_stack,
--			       sizeof(*delta_stack)*delta_stack_nr);
-+			COPY_ARRAY(delta_stack, small_delta_stack,
-+				   delta_stack_nr);
- 		} else {
- 			ALLOC_GROW(delta_stack, delta_stack_nr+1, delta_stack_alloc);
- 		}
-diff --git a/pretty.c b/pretty.c
-index ced0485257..e4ed14effe 100644
-=2D-- a/pretty.c
-+++ b/pretty.c
-@@ -106,8 +106,8 @@ static void setup_commit_formats(void)
- 	commit_formats_len =3D ARRAY_SIZE(builtin_formats);
- 	builtin_formats_len =3D commit_formats_len;
- 	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
--	memcpy(commit_formats, builtin_formats,
--	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
-+	COPY_ARRAY(commit_formats, builtin_formats,
-+		   ARRAY_SIZE(builtin_formats));
-
- 	git_config(git_pretty_formats_config, NULL);
- }
-=2D-
-2.22.0
