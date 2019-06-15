@@ -2,120 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4661F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 16:12:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE241F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 18:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726969AbfFOQMI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jun 2019 12:12:08 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43125 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726770AbfFOQMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jun 2019 12:12:07 -0400
-Received: by mail-pl1-f196.google.com with SMTP id cl9so2284727plb.10
-        for <git@vger.kernel.org>; Sat, 15 Jun 2019 09:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KRIPiDOeEZHitOQ0XopQ57ITGkYGyueWSSB9U5N8ivA=;
-        b=W2m2tn4cZ0alpCIAl7gqB6G/xKlEzgQmCtj4+QQmgjJOqUJFu1MFK0Wzx5oBpDaDD4
-         3TjR0cZdxB/Y+6ZzhQYR3mSbEu+bxCoUZGA3VrrSGBzLtpx+vg/Y7PXW7c+Pu3d8X5lH
-         +f5Pp+0pO1LWmc5BefPq1FNd3jTtFnTRhYYdojzKHeVSVZftRk1oJSrttXba/9VlE54l
-         gEDBVKlPNu+q60aAqNGTUFd0k0ZrBFZmRVhrIsbQtf8bmsosbkoSYq8Ehzl1S96X1g9+
-         plekx9rzVqrTGYy6zcLxpGLZFMihVaxu0xi0XszCYHgBbIn8Uecr+UCmozBwNupRzdKo
-         Wzkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KRIPiDOeEZHitOQ0XopQ57ITGkYGyueWSSB9U5N8ivA=;
-        b=uTy8j32NwH1He+9M1BcFiwrOKcvtx1ASUaMRQE6K0WA8BA4alrECY1D1IdB6Ic7GRg
-         TMhy5UoIF3ukBB0VWWnjYHy/sUXJJY5lG7Yg7VQ+aneQItdw/9GFw4ZTw2yxQ/sdjr1Y
-         4/mF/+MIR/i1ROojbPNyF4c4cQmyE6D0YrlfNuY1km/oE9V/HTiX6mH1Iv0E4Z/oxH2E
-         j/ul6VDJc3BLYE0H+UuVbTcFgxCoHtCm6iWJUpT2IWSDfmxRaaZ5e6sc3fASXMhbE0C/
-         VbzCbFPSBuDF1OrQ9XmDOzMzqSpP6EKkbgeFV4EkAEofWcmr7fyRCyTUhrzV1fK30uWe
-         Zrcg==
-X-Gm-Message-State: APjAAAUO+FL5TAhfXENK3lmBa0w240jhbUsl7TEWt7k8+Owl7VqqTZNm
-        78derxeJW+uWSqgFwkgkdFrq6bEk
-X-Google-Smtp-Source: APXvYqyOqmVBgOl5z0BPHRvtY0SfG0LiLJnSpnAZfddtjQGAigHDdSgmLOIo4O0TSy6PlDcfto+OPQ==
-X-Received: by 2002:a17:902:9041:: with SMTP id w1mr85929862plz.132.1560615126698;
-        Sat, 15 Jun 2019 09:12:06 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id m19sm3833267pjl.0.2019.06.15.09.12.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Jun 2019 09:12:05 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     benpeart@microsoft.com
-Subject: [PATCH] fsmonitor: avoid signed integer overflow / infinite loop
-Date:   Sat, 15 Jun 2019 09:11:35 -0700
-Message-Id: <20190615161135.57269-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        id S1726405AbfFOSdU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jun 2019 14:33:20 -0400
+Received: from mout.web.de ([212.227.15.4]:48795 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725535AbfFOSdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jun 2019 14:33:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1560623591;
+        bh=D096lH+cCFNa/FeP26MeWmXZPrnXBxDfCwu5KFHXBO8=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=lXJOESnVtSUk91mi/cVIZGC6kUsUHcbgKNEogm1eAQf1KqIP7vPDu2JV06EdTFl+P
+         TVPsA/uBtMbb1ut+KrTI0EInNLXla1VHkk1FeW37UOXuGyBYnA69YF5aJ9Axn68Rv0
+         L7fUiNiQOXPz3G8l+DJ50LnYU30SnxtuDIrEf/Ic=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPYMT-1hgK5m3Cb3-004mrN; Sat, 15
+ Jun 2019 20:33:11 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] coccinelle: use COPY_ARRAY for copying arrays
+Message-ID: <a2633676-5350-e85d-2bea-c2c0f7a33bbb@web.de>
+Date:   Sat, 15 Jun 2019 20:32:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:X01dsKu5jhaP/6QvKwO1soT2UvwtP0YGIpt7tEpcHsFfo6nBfIS
+ 5E+xFKMP10LS9E3Eih+cn0Wlznkm7rwxlTPW9nELuOJ7yrmALjWyiZbzCMBAv/kVilG6cht
+ UOmfWpfVw3jYFZqCqPMRMNmeieaFZ4CD1H95WLz/h33ruo3YQ3i8aMCG4ctYgUcWmpkTUhA
+ WYTISq+oczFtUnXKERjbg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tIgQYMz7aS4=:0Anad11uKGJSJ4ePoaWjVM
+ aR8mq6A/RgvSBGQWhwXPkOU2l6hi2bz0BS33mf0gRBdlgSJevMkKHLTlSw6nDscdaWeglvocn
+ 0EjysMq2cAfa1pHcafzv6HrxcEr9cDEtErOxNHrNswnYO7lWpyIK0HC4lC01gHQjP4YrO5WMn
+ 9AX1qt+TQ2RQHlGdV29pPtueS6vFkBRGQbZePGuNV8imINuCf7RRcRLQHAphU5z+prjkwDPFQ
+ G0S77d5HlBLhgMUpIAIwQAqMH5ozTCHcBH0Tr+yJ0Kjolf3ioGHeHJGOwxTXhnqz1081gGYnS
+ UYt8OwTBDvyGOMvoazp3TX+d8p66eFXr+mwh/XUvlDgAY3RvU9jpB1DrLuNWgGJUZlTTgWSEV
+ 3uDv2w1g158TBbSISMw5SraZ1+Ps3HXXYiTQuMdJQE4YxeZMagLRnEfXWp4IvayjJX+Sa8oT5
+ 2V8O5B9vg5tR80dlvRV+TSBJjpB0flG6sPGluJ/Pj5oDW3dTIr18e5n/RKdNMk5UZiJzGk9Iv
+ MJcKi1dhXRGB9J8lCsBc81+NBhAOdu0iMndi9TTILFHq8rBmCtb5MblHz3L2NViduth+fzg3C
+ B+lBMLhRP6GzQu6NrwkE3ruLSvZpN3C9c6pVcrBvOUzsgy6KvptzPMo41OzXu5iqHlxHPkH9I
+ mtpNkPMftc8t4PpMOQa8tDqyJcZNVR0fNJhPPhiuhJpCYApYqzHKEHqVefjahqJBJSDrLujSt
+ /DYGmYkcCf4ePSV1O8YJMW2ef/z+Ku1I+zKAzIL6/txXrII5ccovwrYv1mzu9HjalTsIs3+F3
+ V3aZBBTiA+cyzFHVHp99BBmCVlUQf1qNpyQw0wiyjwBEDedLMlfCfqRRq78c/XpcVRKwRGte3
+ hRzqYnMnvbN/+9hMVhysxknSlDx9NL2AGHqcrWVYBXwwA0dpsOILDzK1pycnL6V5Ndozdfcm4
+ Msc9VDQJ5ytJNAUlW93iwc73+4WJcdgQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-883e248b8a ("fsmonitor: teach git to optionally utilize a file system
-monitor to speed up detecting new or changed files.", 2017-09-22) uses
-an int in a loop that would wrap if index_state->cache_nr (unsigned)
-is bigger than INT_MAX
+The current semantic patch for COPY_ARRAY transforms memcpy(3) calls on
+pointers, but Coccinelle distinguishes them from arrays.  It already
+contains three rules to handle the options for sizeof (i.e. source,
+destination and type), and handling arrays as source and destination
+would require four times as many rules if we enumerated all cases.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- fsmonitor.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+We also don't handle array subscripts, and supporting that would
+increase the number of rules by another factor of four.  (An isomorphism
+telling Coccinelle that "sizeof x[...]" is equivalent to "sizeof *x"
+would be nice..)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 1dee0aded1..231e83a94d 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -56,7 +56,7 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
- 
- void fill_fsmonitor_bitmap(struct index_state *istate)
- {
--	int i;
-+	unsigned int i;
- 	istate->fsmonitor_dirty = ewah_new();
- 	for (i = 0; i < istate->cache_nr; i++)
- 		if (!(istate->cache[i]->ce_flags & CE_FSMONITOR_VALID))
-@@ -134,7 +134,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 	size_t bol; /* beginning of line */
- 	uint64_t last_update;
- 	char *buf;
--	int i;
-+	unsigned int i;
- 
- 	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
- 		return;
-@@ -192,7 +192,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 
- void add_fsmonitor(struct index_state *istate)
- {
--	int i;
-+	unsigned int i;
- 
- 	if (!istate->fsmonitor_last_update) {
- 		trace_printf_key(&trace_fsmonitor, "add fsmonitor");
-@@ -225,7 +225,7 @@ void remove_fsmonitor(struct index_state *istate)
- 
- void tweak_fsmonitor(struct index_state *istate)
- {
--	int i;
-+	unsigned int i;
- 	int fsmonitor_enabled = git_config_get_fsmonitor();
- 
- 	if (istate->fsmonitor_dirty) {
--- 
+Support arrays and array subscripts, but keep the number of rules down
+by adding normalization steps: First turn array subscripts into
+derefences, then determine the types of expressions used with sizeof and
+replace them with these types, and then convert the different possible
+combinations of arrays and pointers with memcpy(3) to COPY_ARRAY.
+
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+=2D--
+ contrib/coccinelle/array.cocci | 61 +++++++++++++++++++++++++---------
+ 1 file changed, 46 insertions(+), 15 deletions(-)
+
+diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
+ci
+index 01586821dc..46b8d2ee11 100644
+=2D-- a/contrib/coccinelle/array.cocci
++++ b/contrib/coccinelle/array.cocci
+@@ -1,29 +1,60 @@
+ @@
+-type T;
+-T *dst;
+-T *src;
+-expression n;
++expression dst, src, n, E;
+ @@
+=2D- memcpy(dst, src, (n) * sizeof(*dst));
+-+ COPY_ARRAY(dst, src, n);
++  memcpy(dst, src, n * sizeof(
++- E[...]
+++ *(E)
++  ))
+
+ @@
+ type T;
+-T *dst;
+-T *src;
+-expression n;
++T *ptr;
++T[] arr;
++expression E, n;
+ @@
+=2D- memcpy(dst, src, (n) * sizeof(*src));
+-+ COPY_ARRAY(dst, src, n);
++(
++  memcpy(ptr, E,
++- n * sizeof(*(ptr))
+++ n * sizeof(T)
++  )
++|
++  memcpy(arr, E,
++- n * sizeof(*(arr))
+++ n * sizeof(T)
++  )
++|
++  memcpy(E, ptr,
++- n * sizeof(*(ptr))
+++ n * sizeof(T)
++  )
++|
++  memcpy(E, arr,
++- n * sizeof(*(arr))
+++ n * sizeof(T)
++  )
++)
+
+ @@
+ type T;
+-T *dst;
+-T *src;
++T *dst_ptr;
++T *src_ptr;
++T[] dst_arr;
++T[] src_arr;
+ expression n;
+ @@
+=2D- memcpy(dst, src, (n) * sizeof(T));
+-+ COPY_ARRAY(dst, src, n);
++(
++- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
+++ COPY_ARRAY(dst_ptr, src_ptr, n)
++|
++- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
+++ COPY_ARRAY(dst_ptr, src_arr, n)
++|
++- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
+++ COPY_ARRAY(dst_arr, src_ptr, n)
++|
++- memcpy(dst_arr, src_arr, (n) * sizeof(T))
+++ COPY_ARRAY(dst_arr, src_arr, n)
++)
+
+ @@
+ type T;
+=2D-
 2.22.0
-
