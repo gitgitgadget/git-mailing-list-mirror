@@ -2,170 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3E621F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 00:42:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57B171F462
+	for <e@80x24.org>; Sat, 15 Jun 2019 01:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfFOAm3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jun 2019 20:42:29 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:36546 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbfFOAm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jun 2019 20:42:28 -0400
-Received: by mail-pl1-f202.google.com with SMTP id a5so2550437pla.3
-        for <git@vger.kernel.org>; Fri, 14 Jun 2019 17:42:28 -0700 (PDT)
+        id S1726296AbfFOByl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jun 2019 21:54:41 -0400
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:39960 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725825AbfFOByl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jun 2019 21:54:41 -0400
+Received: by mail-lj1-f182.google.com with SMTP id a21so4135539ljh.7
+        for <git@vger.kernel.org>; Fri, 14 Jun 2019 18:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=LJqTahfQp1GHPA0hdXpwIHROxCyOAyQjFVii8mbK+Uo=;
-        b=DMJ74HxmUmRYyn88yRsXhfoXqQXe7CfFm7sQs9WgBpAoAuZbVExqQG8nTwX2Jpb53n
-         b2z08slnBMAKZFK3dxw6MFig1HRIVMhzfdV9rrcsH6rlnvBg//eQhPcz+N4w5hlUNXse
-         dmS11EFNDtHPRYNuQHCqQxUhSkeNOOHsotHWD9gUqvXzXgEr14y5sMtuLpIRCxFv1Gqb
-         ZHMPYctCNIe4HDhhI5MWRyzKMG67As+PO8a8NPKKxuOQeRFPj6k38Tih+8ADjfO7dQRn
-         sK/AC39wGgoFflkj9QrH8d91HU025JTVUalWJi/eegqxQ96tASAnMNrfDoTY4P4h8Jok
-         DnOA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MH18kHYf63ViVJAm5KNStEzFpSggtkKM7s7hosIftms=;
+        b=C4yeIFr2xgf2TiLkxq+OGo6bid2U/nvVjtM+LdXA6DIWN8o6f0chRiFoGHGo/RcnoV
+         3iUtLD//csSwjy51xrV1rAYCMRrYSFrDMsHylwiUQ4XaKB1aT+y/HuUxibTjBAaHo4EI
+         oIfmgmqmg2GilND2nki1+TI1fh0qEnI7jOCPdOZulkdiVury8es9xWXuXoaDudgMHUIm
+         X57sjp/84qnXmP+rW2NS7zXPJ4TejfZKN0ZTz60Wsen+8P+fa+r+q2T0RFsmxyzARIvG
+         7EnlYNPPS7zfBzd4w1MBp5I/12YT5PvewhjM7kCnmoWorP4nWPqP0i77nn1JfGb8OAvr
+         RriQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=LJqTahfQp1GHPA0hdXpwIHROxCyOAyQjFVii8mbK+Uo=;
-        b=RupEaINAPpsET4zmtzJcVDx9HHC+JfAsX66JL8eDeSTS1AZWFqm2QaUrfLSDwfzylR
-         4Yz40+iHfFLKGbK2xUZ4ruemLO0Rle8zmEMANw6+Po6xke1kI/RuyCYJQTAdo6wYRISS
-         fHnMBhD60ZKr/8/XtIwrqJKR3JeoD93g0wgp9dZ2oVYMNEYSBlf/kPfOB2GHRkGEodEQ
-         TRurZXgXjggZ20Quuvnl0OxMZMASIeD4J7Me+7xy4VIIyKdMy0dra3cDv45Sqp75/94p
-         E/6dhu/7/7WlkLiUWYX+6PoS+2IprsZTjfx+Qmw4o9oDzf9itC6Li++Eq+X+vbPNBGsR
-         Omkw==
-X-Gm-Message-State: APjAAAUnHhcFx3092VpLYqzw0Wlivi+BWQLNvOADgxjB36+UmdbZBsZd
-        q9lvbFYH+uF9ERADLFT7k75FdHmhzkiQo3mzjkMQ9n0TNanNtRTTxNwwGHySabPzwauTV8BkWF6
-        kPH+yw1b2DuluADmvo4FR0QIA0+GIJLjIeH1K93TBoujm/4mN6inV9+Yp06U=
-X-Google-Smtp-Source: APXvYqwmC7s6Zn0FYxLRZtfnVKrsT0D2TAfvUCbFVGjPXPBGC4TD2clE8DVQb9oxlX3ao24un8ZUHZlWMgdz
-X-Received: by 2002:a65:638a:: with SMTP id h10mr7713751pgv.64.1560559347604;
- Fri, 14 Jun 2019 17:42:27 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 17:40:16 -0700
-In-Reply-To: <cover.1560558910.git.matvore@google.com>
-Message-Id: <2f7566f697be759614a04c1277194f974bdcd662.1560558910.git.matvore@google.com>
-Mime-Version: 1.0
-References: <20190601003603.90794-1-matvore@google.com> <cover.1560558910.git.matvore@google.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v4 10/10] list-objects-filter-options: make parser void
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
-        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
-        pclouds@gmail.com, peff@peff.net, emilyshaffer@google.com
-Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MH18kHYf63ViVJAm5KNStEzFpSggtkKM7s7hosIftms=;
+        b=poKG5p+SrCri6F9qTxv5han+mhs0h7sHEkGSYBQXuH7sgjzreVVNbVmdsZLSMO88wR
+         Y2X7D8bi1M/etgiH/HxcMpQ8v23z9Kcs98O4mY+u8BAYF8KuosypUS/CJKPZA+PkdVh1
+         Y2Q045BeRyn7DxOOKgSG6ExRYFWTa7JvB7gpV71+EEsWJU7nrqJ/NvVPWQq5aCv8+XnY
+         7IztBjzyTyUIbKKQ8P9nvIlrTi7wNEOYatQ6T0ke90s4rTge+veNq554d9QhkUolV84a
+         UyZ4+EiXSOdEl1cqcC4vxCx3KEA+R6QwGljXpY4HlNYI+m3sJpD0aL4pWa+IeLHV4z4Q
+         E5yg==
+X-Gm-Message-State: APjAAAVO5HlOP5d9xfChGYIofrQqJHmXDC8iu4WsFJY01GboHt4l8jEI
+        tJHlPKjo/3+LBHU37DBTISRsFXs7/RHPmBxbw4QD1yUne4U=
+X-Google-Smtp-Source: APXvYqwtx94uSkgXY/SuHkcvIfgDjUJzR9dcBahriAmNV07/db1SDUSzF7AjKG6EQjfWOsjwh6FJfs6Lcve1sfKK8T4=
+X-Received: by 2002:a2e:6e01:: with SMTP id j1mr51882976ljc.135.1560563678431;
+ Fri, 14 Jun 2019 18:54:38 -0700 (PDT)
+MIME-Version: 1.0
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Fri, 14 Jun 2019 18:54:26 -0700
+Message-ID: <CABURp0poUjSBTTFUXP8dAmJ=37qvpe64=o+t_+mHOiK9Cv+=kg@mail.gmail.com>
+Subject: Deadname rewriting
+To:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function always returns 0, so make it return void instead.
+I know name-scrubbing is already covered in filter-branch and other
+places. But we have a scenario becoming more common that makes it a
+more sensitive topic.
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- list-objects-filter-options.c | 12 +++++-------
- list-objects-filter-options.h |  2 +-
- 2 files changed, 6 insertions(+), 8 deletions(-)
+At $work we have a long time employee who has changed their name from
+Alice to Bob.  Bob doesn't want anyone to call him "Alice" anymore and
+is prone to be offended if they do.  This is called "deadnaming".
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index f07928ea21..e19ecdcafa 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -225,21 +225,21 @@ static void transform_to_combine_type(
- 	string_list_clear(&filter_options->sub[0].filter_spec, /*free_util=*/0);
- }
- 
- void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options)
- {
- 	if (filter_options->choice)
- 		die(_("multiple filter-specs cannot be combined"));
- }
- 
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg)
- {
- 	struct strbuf errbuf = STRBUF_INIT;
- 	int parse_error;
- 
- 	if (!filter_options->choice) {
- 		string_list_append(&filter_options->filter_spec, xstrdup(arg));
- 
- 		parse_error = gently_parse_list_objects_filter(
-@@ -255,34 +255,32 @@ int parse_list_objects_filter(
- 		filter_spec_append_urlencode(filter_options, arg);
- 		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
- 			      filter_options->sub_alloc);
- 
- 		parse_error = gently_parse_list_objects_filter(
- 			&filter_options->sub[filter_options->sub_nr - 1], arg,
- 			&errbuf);
- 	}
- 	if (parse_error)
- 		die("%s", errbuf.buf);
--	return 0;
- }
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset)
- {
- 	struct list_objects_filter_options *filter_options = opt->value;
- 
--	if (unset || !arg) {
-+	if (unset || !arg)
- 		list_objects_filter_set_no_filter(filter_options);
--		return 0;
--	}
--
--	return parse_list_objects_filter(filter_options, arg);
-+	else
-+		parse_list_objects_filter(filter_options, arg);
-+	return 0;
- }
- 
- const char *list_objects_filter_spec(struct list_objects_filter_options *filter)
- {
- 	if (!filter->filter_spec.nr)
- 		BUG("no filter_spec available for this filter");
- 	if (filter->filter_spec.nr != 1) {
- 		struct strbuf concatted = STRBUF_INIT;
- 		strbuf_add_separated_string_list(
- 			&concatted, "", &filter->filter_spec);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index d8bc7e946e..db37dfb34a 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -67,21 +67,21 @@ void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options);
- 
- /*
-  * Parses the filter spec string given by arg and either (1) simply places the
-  * result in filter_options if it is not yet populated or (2) combines it with
-  * the filter already in filter_options if it is already populated. In the case
-  * of (2), the filter specs are combined as if specified with 'combine:'.
-  *
-  * Dies and prints a user-facing message if an error occurs.
-  */
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg);
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset);
- 
- #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
- 	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
- 	  N_("object filtering"), 0, \
- 	  opt_parse_list_objects_filter }
--- 
-2.21.0
+We are able to convince most of our work tools to expunge the deadname
+from usage anywhere, but git stubbornly calls Bob "Alice" whenever
+someone asks for "git blame" or checks in "git log".
 
+We could rewrite history with filter-branch, but that's quite
+disruptive.  I found some alternatives.
+
+.mailmap seems perfect for this task, but it doesn't work everywhere
+(blame, log, etc.).  Also, it requires the deadname to be forever
+proclaimed in the .mailmap file itself.
+
+`git replace` works rather nicely, except all of Bob's old commits
+show "replaced" in the decorator list. Also, it doesn't propagate well
+from the central server since `refs/replaces` namespace isn't fetched
+normally.  But in case anyone wants it, here's what I did:
+
+git log --author=alice.smith --format="%h" --all |
+   while read hash ; do
+      GIT_EDITOR='sed -i -e s/Alice Smith/Bob Smith/g' -e
+'s/alice.smith/bob.smith/' \
+      git replace --edit $hash
+   done
+git push origin 'refs/replace/*:refs/replace/*'
+
+I'd quite like the .mailmap solution to work, and I might flesh that
+out that some day.
+
+It feels like `.git/info/grafts` would work the best if it could be
+distributed with the project, but I'm pretty sure that's a non-starter
+for many reasons.
+
+Any other ideas?  Has anyone here encountered this already?
