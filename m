@@ -2,133 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CFCF1F462
-	for <e@80x24.org>; Sat, 15 Jun 2019 22:14:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89A01F462
+	for <e@80x24.org>; Sun, 16 Jun 2019 01:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726591AbfFOWOx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jun 2019 18:14:53 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37735 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725535AbfFOWOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jun 2019 18:14:53 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w13so9321773eds.4
-        for <git@vger.kernel.org>; Sat, 15 Jun 2019 15:14:51 -0700 (PDT)
+        id S1726754AbfFPBct (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jun 2019 21:32:49 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36637 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726434AbfFPBct (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jun 2019 21:32:49 -0400
+Received: by mail-io1-f66.google.com with SMTP id h6so14002527ioh.3
+        for <git@vger.kernel.org>; Sat, 15 Jun 2019 18:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=M3xoD18CgWqLSnUFa7EOEH0haulZ/6AsAui1+cPWg/c=;
-        b=sXGQ5wj9CqaqnmwXt3/K3sMxn1TFkcpLF63FnzOEtcuMCOfjp6TqrT76nPOgxgbZqJ
-         MWFOyftrkD3DnCsabErocvpkw7zaJqmH/zOv/xlOlj45oqOVECDLSlJXFJqYjR2MR/zR
-         JEk45RwU+pE0PUr1dlsSO/IWr4Melbm0buR5FnSl0lLTvzqyD5ohYFwdkPMiFE5lauI/
-         9rsEMOBhLkqlhGcIBeqT4SlLMiQiETlpGZFe/37gzNUQTBSj3wx/4SVQGcljAUQOkwBV
-         xvspAN8KwMhT37qg/OrH5l2M8Zju3ysd/h+vT+AhJDs7TBivmSz3iPI2P3/DbKeYpomu
-         iW8A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i920+rjxGyKgY3CtmHRbbtIhidbtHySY31dPfCTRHQk=;
+        b=tXP44rKjalGjDqOrxH7HOdHOmh/V4tuLu5On01P3eYex/y8lYlQTJVVM1lwbgTrvCR
+         ADuaxIJMNowA25JCw1eK6QsRwucGXO1CnTsFbNxODxpbmswTsQ5ChXb8nvha0L5oT7q4
+         6W3lMhW0CAsjkD54JGG9X6H+Q3zZTGJ6jFdOCp9mBcLuB30ycpR4ZvSxiRwrvwJM/V6L
+         6y137Qy+sXET1nq6Ur7nyh3hQMcm53I2VkIjcdDjpT5zIcsE7147RJSF97Q642MaMxpg
+         qJiI065jv9t0ZMZCTA3GMpQjFWnrQgioFBMqVjPulLrU+RAxpV0494r8dOhLE6oCEy15
+         SZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=M3xoD18CgWqLSnUFa7EOEH0haulZ/6AsAui1+cPWg/c=;
-        b=Fsa3t5fI8YPgmt/9XkABDCSHk6J1mVwCvsKO70DHsGvhRVr4BkML+fzfxOcMyBM21L
-         wcgtHeKuy1D0+c3FruKaB9hN8LmCF5ZKYzhqBujMVqU+DNsJM3alx5fcT9g7OM7h9iYb
-         QsN3PsHrA4JXEleQx6nxFnG8Dbfiu8GnAJDOax33M8GY2OF3dFIo035U6A77rpV4TTLU
-         /ahuhkmZUl7T0B+wLetLPtT81ZjIf0SKiLqHLV9VlfITsVbexjg4dSZZv0CuiWJ6LWaw
-         Gj8DR0QlxYSXmMDABAmLlHdZy0Erv+yIWxXIIvQV8Q13MJb2XbSWdH7LMHA97mmVZM2r
-         0fdQ==
-X-Gm-Message-State: APjAAAX7tk2Zcm60CwTOgumWnqanWFduD22QGf/8Lq3jDlCCrM6uRe8q
-        3r6+0S8Hy/48wjvnSLn8MFA=
-X-Google-Smtp-Source: APXvYqzCdD9VzQ1JaCNMe9o4/iguTI1IpQqPPdrQiTEinPlEEsbb+4HjU53ivyZwC10oe5E0/LDXAA==
-X-Received: by 2002:a05:6402:14cf:: with SMTP id f15mr50334283edx.255.1560636891140;
-        Sat, 15 Jun 2019 15:14:51 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id l2sm2112160edn.59.2019.06.15.15.14.49
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 15 Jun 2019 15:14:50 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, git-packagers@googlegroups.com
-Subject: Re: Can we just get rid of kwset & obstack in favor of optimistically using PCRE v2 JIT?
-References: <pull.265.git.gitgitgadget@gmail.com>
-        <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
-        <87v9x793qi.fsf@evledraar.gmail.com>
-        <20190615191514.GD8616@genre.crustytoothpaste.net>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190615191514.GD8616@genre.crustytoothpaste.net>
-Date:   Sun, 16 Jun 2019 00:14:49 +0200
-Message-ID: <87r27u8pie.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i920+rjxGyKgY3CtmHRbbtIhidbtHySY31dPfCTRHQk=;
+        b=GjvKazJZNDe0da1W00lSJrGQP5MeH3fP/ulayJjvmeISIFPVf0Ej/GXSmAOkFQB1ch
+         WESikHBtlGz7FCNArBDpUwqYBfnaNymiPmX+XV0j4vGqJMsQPgne96ik34DT6/JxXEtu
+         lExl3/Qw471F5b+O1ZcNv9+ZooLKXKHypRWa6prCdZK0/856nb9O52PSkIVCKcE2phtZ
+         eZOsqxQs/VboKvp2S9yzltcm0TTf++0XDp+lGXO2ZoucfxhJ0+jLoYxirvOLcs8AdyXE
+         Hxxwa8tTlBqHjKx+3vaQgVlLv4sPMrnkHu7twKEOFtE8DRWmUcgnyzbyPOFO7IH2guJx
+         uILw==
+X-Gm-Message-State: APjAAAU3AgZafgC95GOZ1WZN3bIx5vCIvl0aG5Wa3zHZ7frl9k8ZaJXr
+        7uoDWhpUfqxL+TX42afxLwzFo7cgwb4m4gmyoMM=
+X-Google-Smtp-Source: APXvYqyuxPDduTtfvUpiKhAkSrLnz+417blAyFKqymi4DlzLdDFB6UPVMuiK1DgmdjNxbq4RNUZRzSImGfGtKPoFVqo=
+X-Received: by 2002:a5d:8347:: with SMTP id q7mr9584941ior.277.1560648768272;
+ Sat, 15 Jun 2019 18:32:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20190607022443.5706-1-felipe.contreras@gmail.com>
+ <20190607093034.816-1-pclouds@gmail.com> <20190607100252.GA24208@szeder.dev>
+ <CAMP44s3EsNzBtt_pG8HVp_RTMTTArk7Twhty4_tzf2iiZ7TKUQ@mail.gmail.com>
+ <CACsJy8CGtZMn0aa7QRj7Dz-jZS2K2fviUJ_Lii48FRY4E84i5Q@mail.gmail.com>
+ <CAMP44s2ewOJNYSqQ+8EiBJ8ik7rWMj9yaxWwzYk9nUO+A1gwcg@mail.gmail.com>
+ <CACsJy8DThHXksARSM32fQ_8fdYqpQYnR5SQmC0i1oVZVc58fPw@mail.gmail.com> <CAMP44s1RP8ERVX7EPt3oJyd8FP+4OjrGnWnaavnHuORoc+BGxw@mail.gmail.com>
+In-Reply-To: <CAMP44s1RP8ERVX7EPt3oJyd8FP+4OjrGnWnaavnHuORoc+BGxw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 16 Jun 2019 08:32:22 +0700
+Message-ID: <CACsJy8AkKEf=EvFTcw2QvsQOfaHawWLas-K0FRq-BBLeHuLFbQ@mail.gmail.com>
+Subject: Re: [PATCH] completion: do not cache if --git-completion-helper fails
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Jun 15 2019, brian m. carlson wrote:
-
-> On 2019-06-14 at 22:55:17, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> It seems most packagers build with PCRE v2 now (CC:
->> git-packagers@). I.e. we'd keep something like compile_fixed_regexp()
->> (and as an aside just use PCRE's \Q...\E instead of our own escaping).
->>
->> We'd have performance regression for platforms that use kwset() now but
->> don't build pcre2, or where pcre2 jit doesn't work. Does anyone care?
+On Fri, Jun 14, 2019 at 1:07 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 >
-> I know that there are people shipping newer versions of Git using CentOS
-> 6, which IIRC doesn't ship PCRE 2[0]. Since having to ship your own PCRE
-> is a security maintenance nightmare, it's probably best to leave this at
-> least compatible with non-PCRE 2 systems until November 2020. At that
-> point, I'm happy to drop support for it.
+> On Thu, Jun 13, 2019 at 9:53 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Fri, Jun 14, 2019 at 7:30 AM Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
 >
-> If it would work but just be slower with PCRE 1, I'm not too terribly
-> concerned. Let that be an incentive to users to upgrade.
-
-Not just PCRE, but if you don't have PCRE at all things would still work
-perfectly fine.
-
-I.e. all we're talking about is how to treat this internal
-optimization. If we'd never imported kwset we'd still be perfectly
-capable of searching for fixed strings with grep/pickaxe, it would have
-just been slower.
-
-So platforms that don't have PCRE at all would be slowed down by
-something like what the benchmark in my
-https://public-inbox.org/git/87v9x793qi.fsf@evledraar.gmail.com/
-upthread shows.
-
-Or not, maybe their C library POSIX regcomp()/regexec() is faster.
-
-Platforms that do have PCRE would be faster than they are now, and we
-could stop shipping this kwset code.
-
-The *only* case where what I've outlined above isn't true is cases where
-the pattern being matched has a \0. See my 966be95549 ("grep: add tests
-to fix blind spots with \0 patterns", 2017-05-20) for how that behaves.
-
-There our current behavior is IMNSHO insane, and is certainly
-undocumented and unreliable (i.e. it behaves differently if you
-e.g. have non-ASCII along with \0 in the pattern, none of this is
-documented).
-
-Having poked a bit at that I think the only sane thing there is to just
-outright die unless you have PCRE v2, which is the only backend we have
-that has any hope of handling that sanely.
-
-> Also, as Carlos pointed out, not all platforms will have the JIT support
-> functional, such as OpenBSD, NetBSD, and PaX Linux systems. That may be
-> more of a blocker than the CentOS issue, especially since people run PaX
-> kernels with standard distros.
+> > > One way or the other, shouldn't my tests be merged? The issue is still
+> > > there, and it's nice to have tests for that.
+> >
+> > Is there any good reason to complete options when they are not going
+> > to work anyway (e.g. like checkout which needs $GIT_DIR)? Besides "it
+> > used to work before --git-completion-helper" which I don't consider a
+> > good reason given the maintenance tradeoff of --git-completion-helper.
 >
-> [0] I'm not certain because CentOS 6 Docker images segfault on newer
-> kernels and I'm too lazy to download a live CD image for testing.
+> No, there is no good reason that I can think of, except checking the
+> arguments, which is precisely how I found out the issue; not something
+> I usually do. But a newcomer might not know what commands don't work
+> outside a git directory.
+>
+> But more importantly; is there a good enough reason not to?
+
+For me, yes. No extra work for me.
+
+> I seem to
+> recall to be annoyed by the fact that 'git command -h' failed on some
+> command with a fatal error. Similarly, I don't see any good reason why
+> 'git help clone' should ever fail.
+
+You could give the '-h' hack a try. It probably works for some, but I
+don't think it also works for things like 'git worktree add
+--git-completion-helper'.
+-- 
+Duy
