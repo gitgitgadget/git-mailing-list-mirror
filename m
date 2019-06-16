@@ -8,127 +8,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA2C1F462
-	for <e@80x24.org>; Sun, 16 Jun 2019 08:24:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19FAF1F462
+	for <e@80x24.org>; Sun, 16 Jun 2019 13:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726323AbfFPIYY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jun 2019 04:24:24 -0400
-Received: from mout.web.de ([212.227.15.14]:45111 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726085AbfFPIYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jun 2019 04:24:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1560673458;
-        bh=4YQ0JMQDxXADrSHVift5s/W74BFJy7vDwXsFTiPSY3g=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=dBo1BDWbJClx8c0pNRSneZQHkjBX3KVoQ7Npqv49R1+iXpAwbi30dZ3/GQsKij0o1
-         jDvjl+sOZwEImf0MJbWuedNhm6Ud/A8PS3+6CTTL6SzzbgHkC9udQY1x6cjjsAVrtr
-         KpPajXVRZccrXz34uoW9Z+9auBsqFasOhc20doZY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MBp3P-1hkMfm4B4Z-00Aivg; Sun, 16
- Jun 2019 10:24:18 +0200
-Subject: Re: [PATCH 4/4] config: avoid calling `labs()` on too-large data type
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.265.git.gitgitgadget@gmail.com>
- <9613c88849e53e00e1f7ade49c6c9056309ef0b9.1560426581.git.gitgitgadget@gmail.com>
- <03a68560-8058-7436-6edb-38e276a37190@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f22599d4-148f-212c-282c-790f5bde1706@web.de>
-Date:   Sun, 16 Jun 2019 10:24:17 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1727159AbfFPNZS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jun 2019 09:25:18 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43677 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbfFPNZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jun 2019 09:25:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p13so7024631wru.10
+        for <git@vger.kernel.org>; Sun, 16 Jun 2019 06:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:reply-to:mime-version
+         :content-transfer-encoding;
+        bh=NMFwcZ8FPFlmd4B21QLY9f5In3muKf62bE31Smazj3Q=;
+        b=f1JxaBDpjeUftrjQjxSgHKZUsmfo5+ImrI9Y/VmoL0DWcvRzq6RTB3+kYdoS19qASz
+         QTMbEMH5mMFYSb2JnzqACGSePAGliweSPxi5O7NHuuPZoWBJBSTYB2h+ZN0Gwgwjoqxb
+         ye1dZYH63qlEV2lc2R+sMbQM71Oro9RB54CzJ8vdnbi15eN0Q9EfIdaDObKocP7osbIk
+         nx7fLANXj5qtNfkkggJGZa7IcP+vI4jsoNvyfupx5jYsWWKvsGyVKXrh+yvNfDvy9q7L
+         kMZE5tOLJ901Zvmbo6G0F/4vku2oTd3HBeyYktCYMWq7MpE+OD57wW0bwPqH7oI9R/Yk
+         xO1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=NMFwcZ8FPFlmd4B21QLY9f5In3muKf62bE31Smazj3Q=;
+        b=oU7X8oT1JIN7orhOeleCLpcO9ivbe8VIPOyEacgDCPLaM/VNmo9YZhEyRovVbp6I4L
+         zvRq4kHaBPxdZbIa9g7cib7OhFRqZHf1kjRJfINHwcKGcKkO/5kfPXQvsmd2tmz/tomM
+         0u6CqIWRy8/Dx4OIthV2u4HkYbZsqSBCjBG+dckRoCBUtj+fNyFUFh/qKvEdmhqT9UiV
+         +gu/etlWLvltZHuABJn6E7ptQP1wBgo3r3kPWYux+VD/XTx7Uf9fZpPYAgj1KpzEWJMP
+         6dzov6a1UDp7/ZWlf9AE3lWAJkobdeEqkBsMMI1430d7T7YrASYsLZR6VpanaTb84sJT
+         OjeA==
+X-Gm-Message-State: APjAAAUBXPRtV/ppBErHTAZK+yu6v1/ffwKiydbU2YJaMwy8/MHv0msv
+        2U+OBircQyOKpJgBBd1XkkHm2Smj
+X-Google-Smtp-Source: APXvYqyFwkRkEoKx2Hg3srcSLdIEcxmNjaoQNSjTnX/4yUHN6L+jiAp4T5R0IZLBydNzLk79iKc1mQ==
+X-Received: by 2002:adf:df91:: with SMTP id z17mr66805139wrl.336.1560691516020;
+        Sun, 16 Jun 2019 06:25:16 -0700 (PDT)
+Received: from localhost.localdomain (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id d5sm5998741wrc.17.2019.06.16.06.25.14
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 16 Jun 2019 06:25:15 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] show --continue/skip etc. consistently in synopsis
+Date:   Sun, 16 Jun 2019 14:24:57 +0100
+Message-Id: <20190616132457.19413-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.22.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <03a68560-8058-7436-6edb-38e276a37190@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:VOIl6kKGV5TauU5CiH5kS++jnaY5LTTauAj3Xjjq2kcnZ9BF7f0
- 5M7l4Y4qXodkkpB1Lq9ZUFIIVKGdwpmR1qiRd2OnJkaA4Qu+lwwwVffYWkCni3ODYLkQvb1
- SyFoSqrRjuoqvjfSw0Yx6QChFWdAStphFtKpYuwK39QFzSm5MfLX6TlbUNCE4ssjpd9coCG
- GRwU6zhGFNxCEEA8l11pQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+7csZqOdyWc=:yvl2RrcJW80FsQ2m100M8g
- uyUzQ/2u0NH3uenqUDnYyBsa6yte4FYcDAaCH8yRrRqrcloFoiM+45rXooOggqhY9gWUS/HQm
- Eiy22S5Q/aPSMgAv6z8kaq4XELWW49nT3aonv248UXE7nXD+DE/nuWrMv+ghgm7qAtk2SBW2L
- 6XoBXm+7uMLKNsi+D/xjQ7W4fcPGEGxIYC4I1XcXueHD7o82KIXMXfGGbgujmgouOoA+frdZY
- pY+y3/E81onSFw7mP8avIpelPeE1QjevNmM29b/Ncn8Sp9PMy91rBk/CbJRdFdS3Wmf3Wf2Ie
- WgJRxEP3/qJgYijPqiY1hV9O8gq2G3tg5bUvOXuMkUe1ozSmgKGtXiru2LSzR7KqujVu9qeRA
- tQCFU6ogErnuYrNN/QVeJ0+F3EsIfAhs5L78sERpJnd328hmy/fkO3W/61jRdpYO5YeZ71TfZ
- 3/Bdza2GMxZamYrqQsjN14jGhDa95jxurhuRYMhyCEoyQ+DCo3zzGglwFNWxr3+Mk2HVr2Hi5
- U0GCFHELo52o6zypEhHWLTjnqlLvIxmjBuZYp3aXmIZ1UfzUYjYtnGzir40D0q+CfUGlWgEpm
- G8TpnXPSt7POhS50DsSnm/Fg18ccl8nVpwGqRFvr1DcxNXIG7BOTlemb5HvtOk9np+A5jQxTM
- knP6w/GVSvJuOrlbbwkNMtEJh6iQYqVSmuG8Nn5f1gunmhawgdeUzbVySPox7xx2NUXVvQGp/
- mzPSd4UwPzpBlbnGD0DLdNN/q6suxNeGXEK91otto5J53iEOawMlK9ZXu3Az+Izvjo9Cwg4UE
- VNq3Pz0Sk4wqLvDFceFW/DxRuRqiaUE2p4XwkQnQsUaeU6l4MmcaT+p0jOyssswrtVHhFcVaB
- ShysRk+blg1EFrUvC26KMRLN01Ab/iY2yWghp9UWA2FZSEaeW+VYsWYL8NIXwQK5qjjJ2Zsn8
- iYUi7OlB/UNWwgGtI7wvutS4MDEYAax0=
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.06.19 um 08:48 schrieb Ren=C3=A9 Scharfe:
-> Am 13.06.19 um 13:49 schrieb Johannes Schindelin via GitGitGadget:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> The `labs()` function operates, as the initial `l` suggests, on `long`
->> parameters. However, in `config.c` we tried to use it on values of type
->> `intmax_t`.
->>
->> This problem was found by GCC v9.x.
->>
->> To fix it, let's just "unroll" the function (i.e. negate the value if i=
-t
->> is negative).
->
-> There's also imaxabs(3).
->
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->>  config.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/config.c b/config.c
->> index 296a6d9cc4..01c6e9df23 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -869,9 +869,9 @@ static int git_parse_signed(const char *value, intm=
-ax_t *ret, intmax_t max)
->>  			errno =3D EINVAL;
->>  			return 0;
->>  		}
->> -		uval =3D labs(val);
->> +		uval =3D val < 0 ? -val : val;
->>  		uval *=3D factor;
->> -		if (uval > max || labs(val) > uval) {
->> +		if (uval > max || (val < 0 ? -val : val) > uval) {
->>  			errno =3D ERANGE;
->>  			return 0;
->>  		}
->
-> So this check uses unsigned arithmetic to find out if the multiplication
-> overflows, right?  Let's say value is "4G", then val will be 4 and
-> factor will be 2^30.  Multiplying the two yields 2^32.  On a 32-bit
-> system this will wrap around to 0, so that's what we get for uval there.
-> The range check will then pass unless max is negative, which is wrong.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-No, this example is wrong.  (I need to remember to take baby steps while
-carrying numbers. o_O)
+The synopsis for am shows the command mode options as
+    (--continue | --skip | --abort | --quit)
+They are on a single line and in parenthesis as they are not
+optional. Fix the merge and rebase docs to match this style.
+---
+This patch is based on top of nd/merge-quit.
+The docs for cherry-pick/revert are updated to this style by
+https://public-inbox.org/git/20190616082040.9440-1-rohit.ashiwal265@gmail.com/T/#u
 
-So value =3D "5G", then val =3D 5 and factor =3D 2^30.  After multiplicati=
-on
-uval =3D 2^32 + 2^30, on 32-bit machines this is 2^30 due to wrap-around.
-Correct so far?
+Documentation/git-merge.txt  | 3 +--
+ Documentation/git-rebase.txt | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-If uval is 2^30, then it's smaller than 2^31, so will pass a check
-against INT_MAX.  val is 5, which is smaller than 2^30, so will pass the
-second check as well.  Makes sense?
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index b7d581fc76..07ca9fb78c 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -13,8 +13,7 @@ SYNOPSIS
+ 	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+-'git merge' --abort
+-'git merge' --continue
++'git merge' (--continue | --skip | --abort | --quit)
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 5629ba4c5d..a67d40596a 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[<upstream> [<branch>]]
+ 'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+ 	--root [<branch>]
+-'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
++'git rebase' (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+ 
+ DESCRIPTION
+ -----------
+-- 
+2.22.0
 
-That would mean "5G" will overflow on a 32-bit machine, but we won't
-detect it.
-
-Ren=C3=A9
