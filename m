@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF621F462
-	for <e@80x24.org>; Sun, 16 Jun 2019 18:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A15631F462
+	for <e@80x24.org>; Sun, 16 Jun 2019 18:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727420AbfFPSyB (ORCPT <rfc822;e@80x24.org>);
+        id S1727424AbfFPSyB (ORCPT <rfc822;e@80x24.org>);
         Sun, 16 Jun 2019 14:54:01 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60200 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60208 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726926AbfFPSx7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 16 Jun 2019 14:53:59 -0400
+        by vger.kernel.org with ESMTP id S1727413AbfFPSyA (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 16 Jun 2019 14:54:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:159e:486:c87b:cfd7])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 20EAA6075B;
-        Sun, 16 Jun 2019 18:53:57 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A509860100;
+        Sun, 16 Jun 2019 18:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1560711237;
-        bh=Phj/AHj6kyTS/Qy5e/n5OvwxT34sihB9KInmpPuA8ZQ=;
+        s=default; t=1560711239;
+        bh=M0MQpkFrfaSOrgT/0PAL3clo9+uKbC69veH6kSfTa3w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=L5KP6QdPKnr114cHH62uMlvEh/I3hUm755w4tQm2y2DA2l9WNjgNoiFodZNBQYP7r
-         VQAdB7b1ypAnU/DiZSf16PVP56UtNLN9k3wRtUHOJ7zRONJv0dXBQeg2vT0Kme2gEs
-         jxovrgEUinF4KWQk16C/EZk1D2N07AHg6+V8V5botnvOr6frpRbjLdwWdH1gOxlHs7
-         vtvZMVDi1zI2k/+zR+1qIIfA9/g4GDShMS/tI4nwZ13GI4ViAOYc3iemcGDc6tZ+BS
-         LRFWEbxZfqaaR46c8YLUKzhc+pCebJLkYPc3aF6Q426gkmaguGkjxTl//ZK1hYvIDr
-         WLYzsS1O7BS9FumYw08leUXjbEgOVvPdoUTsGp+o3cdb2hONoGENp+FP0oSx+Pi+l7
-         sCTYPfFsNbptExWi/BJvabZPZW+c7i0Sc2OjKvvySFdaMXz8+MDoXzoIH6HlmOj86j
-         A0tPleN+dCndwRwDFZ9fDfdRbusofK4o2Hs+kTOF6rJgW1cnHB3
+        b=XJVps//hef+rIzABf2cEmMutmonCXwWXMrrYDAl3WlsCyQCAgz0/QkGNHkWY09AGI
+         zpDzajJ1q5hOHqlaK7ZmqhOcc34XuV2i5swBSaYIF2mkGR1FEpyb3B1QlJaTcsxafJ
+         3piwv5Bk0t5RTAz8sLiZ5lFnnMgqXfZiwikakIlaISVMkmb51iUoCOyUzrmdqFTXTM
+         Z4/dzxXZ+WXFiiU1WBZrkV17k0r2ZHdea3Ep1d8GxKcRiviiqxAsGr2pjnBG19AZ4E
+         MWjyiGjxmBOZvMtaU0ZobSXQgyoTxppRmYJipHglqZvEq74k/cAhYZKETc+4g0LXPV
+         CGAdknXFrWCL1Meh6tsKCF6/lOZnAikW8RiHn9TKPNcpmKYDuDBT2HbC9nlTpALh/W
+         DCdYBEVi9l8XZVTyEWhp8Q5dEFwmNOee3eiEaUmVTZ93ddjbMOcDo8slIO2+jjADHR
+         bfo3fk38VVA7QYORd1wq0rr+9S6/6KYnYSsTROyiwCjJVLiKWya
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
@@ -42,9 +42,9 @@ Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/10] t0090: make test pass with SHA-256
-Date:   Sun, 16 Jun 2019 18:53:27 +0000
-Message-Id: <20190616185330.549436-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 08/10] t1007: remove SHA1 prerequisites
+Date:   Sun, 16 Jun 2019 18:53:28 +0000
+Message-Id: <20190616185330.549436-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5
 In-Reply-To: <20190616185330.549436-1-sandals@crustytoothpaste.net>
 References: <20190616185330.549436-1-sandals@crustytoothpaste.net>
@@ -56,37 +56,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One assertion of this test checks for a shrinking cache tree.  The
-initial index contains a cache tree with two directory names but no
-object ID, and the second index contains a cache tree with an object ID
-but no directory name.
-
-With SHA-1, the second index is smaller than the first, because the
-directory information stored takes more than the 20 bytes of an SHA-1
-hash, but with SHA-256, the hash is longer, and the test fails the
-assertion that the second index is smaller than the first.
-
-To address this issue, increase the length of the subdirectory name to
-ensure that the cache tree does indeed shrink in size regardless of the
-algorithm in use.
+Update this test to use test_oid_cache to specify the object IDs for
+both SHA-1 and SHA-256.  Since this test now works with both algorithms,
+remove the SHA1 prerequisite.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t0090-cache-tree.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1007-hash-object.sh | 58 +++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 504334e552..ce9a4a5f32 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -162,8 +162,8 @@ test_expect_success PERL 'commit --interactive gives cache-tree on partial commi
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index 7099d33508..64b340f227 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -9,22 +9,19 @@ echo_without_newline() {
+ }
+ 
+ test_blob_does_not_exist() {
+-	test_expect_success SHA1 'blob does not exist in database' "
++	test_expect_success 'blob does not exist in database' "
+ 		test_must_fail git cat-file blob $1
+ 	"
+ }
+ 
+ test_blob_exists() {
+-	test_expect_success SHA1 'blob exists in database' "
++	test_expect_success 'blob exists in database' "
+ 		git cat-file blob $1
+ 	"
+ }
+ 
+ hello_content="Hello World"
+-hello_sha1=5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
+-
+ example_content="This is an example"
+-example_sha1=ddd3f836d3e3fbb7ae289aa9ae83536f76956399
+ 
+ setup_repo() {
+ 	echo_without_newline "$hello_content" > hello
+@@ -44,7 +41,16 @@ pop_repo() {
+ 	rm -rf $test_repo
+ }
+ 
+-setup_repo
++test_expect_success 'setup' '
++	setup_repo &&
++	test_oid_cache <<-EOF
++	hello sha1:5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
++	hello sha256:1e3b6c04d2eeb2b3e45c8a330445404c0b7cc7b257e2b097167d26f5230090c4
++
++	example sha1:ddd3f836d3e3fbb7ae289aa9ae83536f76956399
++	example sha256:b44fe1fe65589848253737db859bd490453510719d7424daab03daf0767b85ae
++	EOF
++'
+ 
+ # Argument checking
+ 
+@@ -73,23 +79,23 @@ test_expect_success "Can't use --path with --no-filters" '
+ 
+ push_repo
+ 
+-test_expect_success SHA1 'hash a file' '
+-	test $hello_sha1 = $(git hash-object hello)
++test_expect_success 'hash a file' '
++	test "$(test_oid hello)" = $(git hash-object hello)
  '
  
- test_expect_success PERL 'commit -p with shrinking cache-tree' '
--	mkdir -p deep/subdir &&
--	echo content >deep/subdir/file &&
-+	mkdir -p deep/very-long-subdir &&
-+	echo content >deep/very-long-subdir/file &&
- 	git add deep &&
- 	git commit -m add &&
- 	git rm -r deep &&
+-test_blob_does_not_exist $hello_sha1
++test_blob_does_not_exist "$(test_oid hello)"
+ 
+-test_expect_success SHA1 'hash from stdin' '
+-	test $example_sha1 = $(git hash-object --stdin < example)
++test_expect_success 'hash from stdin' '
++	test "$(test_oid example)" = $(git hash-object --stdin < example)
+ '
+ 
+-test_blob_does_not_exist $example_sha1
++test_blob_does_not_exist "$(test_oid example)"
+ 
+-test_expect_success SHA1 'hash a file and write to database' '
+-	test $hello_sha1 = $(git hash-object -w hello)
++test_expect_success 'hash a file and write to database' '
++	test "$(test_oid hello)" = $(git hash-object -w hello)
+ '
+ 
+-test_blob_exists $hello_sha1
++test_blob_exists "$(test_oid hello)"
+ 
+ test_expect_success 'git hash-object --stdin file1 <file0 first operates on file0, then file1' '
+ 	echo foo > file1 &&
+@@ -161,11 +167,11 @@ pop_repo
+ for args in "-w --stdin" "--stdin -w"; do
+ 	push_repo
+ 
+-	test_expect_success SHA1 "hash from stdin and write to database ($args)" '
+-		test $example_sha1 = $(git hash-object $args < example)
++	test_expect_success "hash from stdin and write to database ($args)" '
++		test "$(test_oid example)" = $(git hash-object $args < example)
+ 	'
+ 
+-	test_blob_exists $example_sha1
++	test_blob_exists "$(test_oid example)"
+ 
+ 	pop_repo
+ done
+@@ -173,22 +179,22 @@ done
+ filenames="hello
+ example"
+ 
+-sha1s="$hello_sha1
+-$example_sha1"
++oids="$(test_oid hello)
++$(test_oid example)"
+ 
+-test_expect_success SHA1 "hash two files with names on stdin" '
+-	test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object --stdin-paths)"
++test_expect_success "hash two files with names on stdin" '
++	test "$oids" = "$(echo_without_newline "$filenames" | git hash-object --stdin-paths)"
+ '
+ 
+ for args in "-w --stdin-paths" "--stdin-paths -w"; do
+ 	push_repo
+ 
+-	test_expect_success SHA1 "hash two files with names on stdin and write to database ($args)" '
+-		test "$sha1s" = "$(echo_without_newline "$filenames" | git hash-object $args)"
++	test_expect_success "hash two files with names on stdin and write to database ($args)" '
++		test "$oids" = "$(echo_without_newline "$filenames" | git hash-object $args)"
+ 	'
+ 
+-	test_blob_exists $hello_sha1
+-	test_blob_exists $example_sha1
++	test_blob_exists "$(test_oid hello)"
++	test_blob_exists "$(test_oid example)"
+ 
+ 	pop_repo
+ done
