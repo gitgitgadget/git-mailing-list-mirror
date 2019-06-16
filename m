@@ -2,101 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD1211F462
-	for <e@80x24.org>; Sun, 16 Jun 2019 18:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78C541F462
+	for <e@80x24.org>; Sun, 16 Jun 2019 18:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727374AbfFPSk1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jun 2019 14:40:27 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:41154 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfFPSk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jun 2019 14:40:27 -0400
-Received: by mail-pf1-f195.google.com with SMTP id m30so4390093pff.8
-        for <git@vger.kernel.org>; Sun, 16 Jun 2019 11:40:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NfNWlvJd9v1NQAHt/xI8/9rAPgz/6FgByGTt8qt+VC8=;
-        b=LEQeI9/+C02j1GnRqWB3co8IW0lHYuOpKMGR1/3Y8I9aISW3KDiVHthWI27c96ocV/
-         9XI4BdBjYQi3fAVKaTZuDLZW77TK03Q38hWHRhDp4buz9gQXD1VSKKTKQUe4j1zz4Bh7
-         v77G2jsqhBzLKq0XKUqQ2BXXF8mmaYCU3x7jVgQi6Q3cJV6qOW0pLDrxGiRLtEsH9Hjh
-         x/g8RIz3XDqLKKaQI7Lhw5ozk7O2ttBTs+Iorec1PNB7GtzdwSAd348nZmL+xpua7uyE
-         4HWzt0eyVv/M1w4dZxlZkgM+x7PknNrjDtYimMLhryfdzBrMMI61reY/FV78BlHxfAUY
-         5khA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NfNWlvJd9v1NQAHt/xI8/9rAPgz/6FgByGTt8qt+VC8=;
-        b=CLockWDNPlkXiKEmfPuwqyXTCHte3vYlmZ0eFQk/rnqG10pYxVKN+E/vLQu0VSNwdL
-         AlS0ClKZIrxL5A3XQXXcxdKqVtbqub8iQASwJ/7b/TUmi2/0ZKx3O7buyQtQuNdx21CG
-         r7we5Y8KsPUQJmFdeEgafMsFIdBOpQjIjKl4XRTwANTJJFdIIYR+FSG9xS4ErNOcqJrI
-         wM1sylGBMa+x9laD8+q9+7szoqI/NVXa5DrZUK8QlFc+d37FyAI5TkxFc4MWes5+M1Ob
-         52DhhvPWFixbr0eWOb8MJZFS+nJTxjIjsg6QJJz60RFTEYJ5wiRJYi/OO8ndyJya5c7e
-         L6Fg==
-X-Gm-Message-State: APjAAAV5vK3CmUhoe4E9O8/9jFRB3nxeaKmesa6GR2/7C76O7yE5P86z
-        o84d03NlJquewR7qni7jn2eRG4v8
-X-Google-Smtp-Source: APXvYqwMYjSOZerthJpUuvGYdMt6IzfkN3gLsg5bPHEC5VlB2m9r5HXEt6+xvg2sm7KDxKIsOfwktw==
-X-Received: by 2002:a63:4e10:: with SMTP id c16mr45079091pgb.214.1560710426354;
-        Sun, 16 Jun 2019 11:40:26 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id 2sm9426093pff.174.2019.06.16.11.40.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 16 Jun 2019 11:40:25 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     davvid@gmail.com, gitster@pobox.com
-Subject: [PATCH] wrapper: avoid UB in macOS
-Date:   Sun, 16 Jun 2019 11:40:03 -0700
-Message-Id: <20190616184003.17236-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        id S1727329AbfFPSxu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jun 2019 14:53:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60106 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725920AbfFPSxu (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 16 Jun 2019 14:53:50 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:159e:486:c87b:cfd7])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1C20B60100;
+        Sun, 16 Jun 2019 18:53:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1560711225;
+        bh=S/4Nv+eCdusui8US+6K0+pND9RUopGnObidBYY3VkKU=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=XCMuB0s/Yc9LtdWaLx0oK8DAV6fryQWSWwFonqIssggbQfjunVEO1lQ8OEuFbNfwY
+         a600TkIncBu3h5Vs68CYI3r9Tb1j5bzCVv/e6GfSh3/hbVgvylQ7AXdryvEpH4QllV
+         hq9GLhicn4E+c0ErHCiPmt7dzxM3uKuG9R+l3HbevSPlqn23x4kVyXlf7lKMisJGIe
+         nq5nIdagTc1CIS70gNNEv2GR0zoGB3H36d9AUOtEFr/zOYeexhYO73adZMrYBJ7vlg
+         wHt5BlvITrDAobyxO1o7aKiB58jsQCtcVUuod9EIUevbhgub/YQNopmb/juCkyVTVE
+         Hq9f4KHx+zep+aHAFObFBuQoEBVWo1UFArIQKipxxpd67mCPgPYBpQkPeQtHNj8h8j
+         hiUcTI+tKAXPP7IP60zsJIiuEMVwtzEhFTggoDsmdcKOsjPCanNLNxii1oWqxP/Vsk
+         RVbW7mqQ0QEPgl06gF993LgpTaKXe/kaMx82mPPROuBSSFyr+0Z
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 00/10] Hash-independent tests, part 4
+Date:   Sun, 16 Jun 2019 18:53:20 +0000
+Message-Id: <20190616185330.549436-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-0620b39b3b ("compat: add a mkstemps() compatibility function", 2009-05-31)
-included a function based on code from libiberty which would result in
-undefined behaviour in platforms where timeval's tv_usec is a 32-bit signed
-type as shown by:
+This is an additional series of fixes for tests to make them work with
+SHA-256.
 
-wrapper.c:505:31: runtime error: left shift of 594546 by 16 places cannot be represented in type '__darwin_suseconds_t' (aka 'int')
+This series makes use of several constants, such as $ZERO_OID, which
+will be replaced with appropriate values based on "test_oid" with later
+work.
 
-interestingly the version of this code from gcc never had this bug and the
-code had a cast that would had prevented the issue (at least in 64-bit
-platforms) but was misapplied.
+There is one test (t1410) which adds an SHA1 prerequisite. I wasn't able
+to get the math to work out when trying to compute the proper values for
+SHA-256, and the test doesn't test what it's supposed to test without
+changes, so I opted to mark it with a prerequisite. Suggestions on how
+to make it functionally useful under SHA-256 would be appreciated.
 
-change the cast to uint64_t so it also works in 32-bit platforms.
+brian m. carlson (10):
+  t: add helper to convert object IDs to paths
+  t1410: make hash size independent
+  t1450: make hash size independent
+  t5000: make hash independent
+  t6030: make test work with SHA-256
+  t0027: make hash size independent
+  t0090: make test pass with SHA-256
+  t1007: remove SHA1 prerequisites
+  t1710: make hash independent
+  t2203: avoid hard-coded object ID values
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- wrapper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index ea3cf64d4c..1e45ab7b92 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -502,7 +502,7 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- 	 * Try TMP_MAX different filenames.
- 	 */
- 	gettimeofday(&tv, NULL);
--	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	value = ((uint64_t)tv.tv_usec << 16) ^ tv.tv_sec ^ getpid();
- 	filename_template = &pattern[len - 6 - suffix_len];
- 	for (count = 0; count < TMP_MAX; ++count) {
- 		uint64_t v = value;
--- 
-2.22.0
+ t/t0027-auto-crlf.sh                          |   6 +-
+ t/t0090-cache-tree.sh                         |   4 +-
+ t/t1007-hash-object.sh                        |  58 ++++++++++--------
+ t/t1410-reflog.sh                             |  16 ++---
+ t/t1450-fsck.sh                               |  41 ++++++++-----
+ t/t1700-split-index.sh                        |  51 ++++++++++-----
+ t/t2203-add-intent.sh                         |   6 +-
+ t/t5000-tar-tree.sh                           |  16 +++--
+ ...8938e6999cb59b3ff66739902a => huge-object} | Bin
+ t/t6030-bisect-porcelain.sh                   |  31 +++++-----
+ t/test-lib-functions.sh                       |   6 ++
+ 11 files changed, 142 insertions(+), 93 deletions(-)
+ rename t/t5000/{19f9c8273ec45a8938e6999cb59b3ff66739902a => huge-object} (100%)
 
