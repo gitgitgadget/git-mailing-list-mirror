@@ -2,102 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 329EA1F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 17:31:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4479D1F462
+	for <e@80x24.org>; Mon, 17 Jun 2019 17:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726173AbfFQRbu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 13:31:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65445 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725995AbfFQRbu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 13:31:50 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D51541580D3;
-        Mon, 17 Jun 2019 13:31:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IiyIiSCR42ZlbfKgj0S+9yZ0G/Q=; b=BBY5ez
-        SDl2EcnjtkfkEZHeWKo0BecUFmsxueMI9a1p6LJr8L6KbLhEA/Q7r4neA/rys0HC
-        sQpMg/z1g6TF07eACw4IEzRXX4ancjUmIRv/kuLHLzy04++F8sDoTLqnnPEqKjbr
-        6DzAwSnWpL0rseZiF1yxIe/gj/YXs0xhK2FwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xDwjIVTmb3cLk66DqagmU8qHEVdu/Rhk
-        fRV1EpaKs5uWWNEuzvQhIRYbvr47KFrBXlDi6D7RAchYsONoLiluYMpbl6xaOETq
-        p+DFzyO4229+NZ0+dJaMpoGzNao/8rF/ee59pwjQoUqM/CbUaoXp+6Z+4iXVQa9g
-        40IzHn8ip50=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC9001580D1;
-        Mon, 17 Jun 2019 13:31:47 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33F1B1580D0;
-        Mon, 17 Jun 2019 13:31:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Subject: Re: 'git interpret-trailers' is tripped by comment characters other than '#'
-References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
-        <20190614150758.GA22984@sigill.intra.peff.net>
-        <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
-        <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
-        <CAP8UFD3_kKvBs=rMvBp-K-UPD5mCqVsHRZ1VqGYY7uR8G+H8SQ@mail.gmail.com>
-Date:   Mon, 17 Jun 2019 10:31:45 -0700
-In-Reply-To: <CAP8UFD3_kKvBs=rMvBp-K-UPD5mCqVsHRZ1VqGYY7uR8G+H8SQ@mail.gmail.com>
-        (Christian Couder's message of "Mon, 17 Jun 2019 07:03:29 +0200")
-Message-ID: <xmqqtvcoruda.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728665AbfFQRlT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 13:41:19 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55671 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725995AbfFQRlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 13:41:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560793270;
+        bh=eV0K50FwFYjEkhnyn4i4HZauF4dryjVLylHfOpj+bzU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MGzD27pG5BexTZf/bqGxCb2lXbf6wDVGV4Ow/C2ugBc0pHgZBKcvKb7WfkPBo/YwH
+         ZW4/4PQbzssp6o22Kp6xqSSf+3D5RqWwHtkn29p/4esREk+nFzNfyyM4MOf9tiWCv0
+         A1oH62ihOnnhb2jaoMEAKuXwXKKyQJzMujNCBD2U=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIdYi-1hf8YP3wkK-002GQV; Mon, 17
+ Jun 2019 19:41:10 +0200
+Date:   Mon, 17 Jun 2019 19:41:21 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/gcc-8-and-9, was Re: What's cooking in git.git (Jun 2019, #04;
+ Fri, 14)
+In-Reply-To: <xmqqh88ruc1b.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906171940201.44@tvgsbejvaqbjf.bet>
+References: <xmqqh88ruc1b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8543D18-9125-11E9-BB6E-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:T43w5j0zVJ2U9Amv8DBFLfhwHX/fUI6dpqXn7UHCKpe6P7wuYF4
+ 07ppIdmX6Vp0aMBR7wqPeKoWM1kxeY+nJKtpCdzZE3UPApD8TFkL5to3ROPqcELBwJydIik
+ 3gAxba8lSHwF9G8b3zWnx/Itp3FNivNakNTCWjtzxPbf/z5baLHsfFt7O/nIlcaOnh2JaWD
+ U+jq9v3G+Fd/FILLF94PA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:b69KusZIGZs=:BGmljN+y4HP+la3ECGEO2+
+ 8Po3GwzfF5baZfayND+uora+XHdELC7H595MUcgksAO64fAXTpxU+e849ebis5CMpHiB7NlrU
+ 61sUpn9Ht7aERSVao3IBJzUpmTVFsVnJycEJTC58PyQEBOF5podAl/NpRNJQ2tKtku7UYesQD
+ jkji2QRrWOpOppeaI5tY+t9dqxTYsBcXAuO3jXd5OLNKzoxFiDvopEejZWQemdYwqRfsINUYi
+ HbXFvdbpHT17rsZtwZPSXDWDhl2f/PlTkROv6OffNCrVOdegHOCL9QW8AUpVSObJk1IYddq59
+ 7aUiUwyqB9lnXqhvmB3oVKbZ1k8F7sjiW3F27fni3V4ZMv8d6Xcvryly78s5q/XIeHfc/2ECl
+ 3+nraDaR46gwbTuF6gmJEZ3yIuvA63WYKhcKBjIije98sIvRbFpuJeE/JD2A66mBrmubFdnkn
+ U30vs0Qn/hGbwpzYquvAYx2Nlkvf5/MCQI7AbUHkEmh2gy1ae2b7oFdt+2vVPwxaz32bxDzSh
+ 4lPFyrQy+XiU6yh8cVTtnLInFn9sVEGyaXUSgUEEqrkjN05rOerO3W0hPBlcYPonGEjYdyzGX
+ ejDycoHGxX/fZ8qm0TVHN7tUAMLVJRhPRsdXXLbaZiCKDdQRBoLo2mdq3hHaoTs8My4xlmh8q
+ 2ibf6HgtJ/LuttgyF+vXh8vNt6JzPo4ZghsBX1haVmNg50bIGs43W4dfJIT1eCxI6pVo+9fyk
+ vCMjieZROC3wpR1q8EQ+c5LafoRbf3zohB7aOv39Yc2A+FcdfZmyzRg0T68NcUHoSB0unv5El
+ 5JfZt4tO3ygkgh+brQFxRbMQar/D78fO89GB9ecAaY5roAyyJDBR1v0q2eH9mMF2yr2rQMZGG
+ 2Wk6bjFgAgAysRGoyh93G/ztEwIB2M5B5NeijGHEEqOwsAxXCygF/z/z8bT8gh7qwsQW9sUtK
+ CSbjubrnZJv/VepQwaK4UvTdhTAwYzVh3NcFflb0BvClxNNxqtpHl
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi Junio,
 
-> On Mon, Jun 17, 2019 at 6:33 AM Masahiro Yamada
-> <yamada.masahiro@socionext.com> wrote:
->>
->> On Sat, Jun 15, 2019 at 5:41 PM Christian Couder
->> <christian.couder@gmail.com> wrote:
->> >
->> > > I do wonder if the trailer code is correct to always respect it, though.
->> > > For example, in "git log" output we'd expect to see commit messages from
->> > > people with all sorts of config. I suppose the point is that their
->> > > comment characters wouldn't make it into the commit object at all, so
->> > > the right answer there is probably not to look for comment characters at
->> > > all.
->> >
->> > Would you suggest an option, maybe called `--ignore-comments` to ignore them?
->>
->> Since 'git interpret-trailers' already ignores lines starting with '#',
->> is this option true by default?
+On Fri, 14 Jun 2019, Junio C Hamano wrote:
+
+> * js/gcc-8-and-9 (2019-06-13) 4 commits
+>  - config: avoid calling `labs()` on too-large data type
+>  - winansi: simplify loading the GetCurrentConsoleFontEx() function
+>  - kwset: allow building with GCC 8
+>  - poll (mingw): allow compiling with GCC 8 and DEVELOPER=3D1
 >
-> Sorry, I should have suggested something called --unstrip-comments or
-> --ignore-comment-char that would make 'git interpret-trailers' stop
-> stripping lines that start with the comment character.
+>  Code clean-up for new compilers.
+>
+>  The 'kwset' one may want to be discussed a bit longer.  Perhaps
+>  merge the other three earlier to 'next' and then to 'master'
+>  separately?
 
-So, to summarize:
+Or just take the kwset one with an adjusted commit message because it may
+turn out that the kwset update will be blocked for a while because of
+licensing issues?
 
- - As the traditional behaviour is to strip comment, using the
-   hardcoded definition of the comment char, i.e. '#', we do not
-   switch the default.  Instead, a new command line option makes
-   it pretend there is no comment char and nothing get stripped.
-
- - But the core.commentchar that does not override hardcoded
-   definition is a bug, so we'd fix that along the lines of what
-   Peff's patch outlined.
-
-Anybody volunteering to do the honors?
-
-Thanks.
-
+Ciao,
+Dscho
