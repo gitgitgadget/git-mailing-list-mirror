@@ -2,115 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F16A1F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 18:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A64E61F462
+	for <e@80x24.org>; Mon, 17 Jun 2019 19:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbfFQSkw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 14:40:52 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53338 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbfFQSkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 14:40:51 -0400
-Received: by mail-wm1-f67.google.com with SMTP id x15so480073wmj.3
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 11:40:50 -0700 (PDT)
+        id S1727241AbfFQTEF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 15:04:05 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:36671 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726048AbfFQTEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 15:04:05 -0400
+Received: by mail-wr1-f51.google.com with SMTP id n4so3109123wrs.3
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 12:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=d2dmP9QeIka1AII1z5c4lM1rqInqlzOuwo5kOT1sJq4=;
-        b=Pt4bjJ1OS0oATNrUIHZOWaiV4nzbg71kCRhccgZb0XSoRPD7VOgHSidrnQNV72SwNq
-         xRphcOO3GMchgKm809N4e1f3+vSJTeKGTi3z9/bKPaWiwAokbUj8LpctFhFLnylAsPND
-         6ITLwHz67CimNhA2ZLyUeutrFV/2zWi/BOvLLDa5oV6QnHeGkzP+Neb1boAiNUwfEwxJ
-         7Wqvz+QMBD0FiWgT0Vt5jTotPWNdFeZDlcJ6k+T12VY+kQOKKqCjOOuBEbttd+Cml8SI
-         VnYjjmxiL9hohYEGNUq2uKdWruXlj/m754EP3T9AMV8hlWvjOHpjR+VoYK4a7ElVywps
-         3Gjg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xgcrIAnPMTHHIabCWLoA7HscspXJwsCoA4UBviNgLYw=;
+        b=ENxoJ+bp0ImzTsiexZdNY9d9C4M//1AoKYiH1hJQoNqTKdEYwTnQ80i5uyG4jpFoEp
+         4yOv0Fu+MFlYA6oWv7OAtjbEhyl0ImnCGGohS0A75DitVUxnXnQ8vkYUTGGNUMWwj4Cs
+         2FspFzgXHBQO/qytAMLBJaBMNbl2E//5oZN2HEDWcBw0+mIb3vK8czu2wy7PvvsXc03T
+         3NNQ2f3UX+YR3OgifayZ8Qw5uFks+g6PzW4rmXVjj3A6CqQXKcMxNFHMD0+Quo5SNhuc
+         jcJ5ewaXGUCUf54OuipfiMFa3MpNLLMz+orMXecv9jm4q2+dFW9VQ9cFnhm1pBVJtImE
+         XXHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=d2dmP9QeIka1AII1z5c4lM1rqInqlzOuwo5kOT1sJq4=;
-        b=piPxPKJAQfMFeDmJYGFp7tsfLydOuqFPJGnt6AsIH0ZK/1rZJ/womF43x0KiJ4BwjT
-         poieJ+w8oIXJS5HOhDlFExj3MQnWp9fI2afUiyXDQmxROcWBEFpAQafk1REh5Q/ENjeM
-         mcs6JihHNnlizn7fxbqe9Mf79omn+F5oyegJYv2BKSI25PfQtT4yiZ2c5IF8dPqKwrqk
-         M/m7SHfdj3TlXpBMEkje2tPHZtgxYyOHYTuyRCBD1xN0twEFd422r4lHPQaeJX3Fgac1
-         KYbkKIqj6TWNwXx5Ow0eGeSH13PIVwu/p0Ub8BMOWD7wA+f5fvCNg8wCVkCepLIvN+xk
-         UWrA==
-X-Gm-Message-State: APjAAAXlLZyz8MAEnI8GCieH0Bd0g0y81oyUL0TbuCDYFA3t/MjHmsd0
-        mUQou24MCwiq+24dTP/ToTs=
-X-Google-Smtp-Source: APXvYqxEHE1uVLgexmrxOZLJVsi/SdbSvv0vG7osM+Ciym9gG5Eh23oCAfPwvn3wUvSfbY+4og4yrQ==
-X-Received: by 2002:a1c:2c6:: with SMTP id 189mr45781wmc.108.1560796850274;
-        Mon, 17 Jun 2019 11:40:50 -0700 (PDT)
-Received: from szeder.dev (x4db66496.dyn.telefonica.de. [77.182.100.150])
-        by smtp.gmail.com with ESMTPSA id a12sm8331318wrr.70.2019.06.17.11.40.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2019 11:40:49 -0700 (PDT)
-Date:   Mon, 17 Jun 2019 20:40:47 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
-Message-ID: <20190617184047.GK31952@szeder.dev>
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
- <20190611130320.18499-1-szeder.dev@gmail.com>
- <20190611130320.18499-4-szeder.dev@gmail.com>
- <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com>
- <20190611211151.GG4012@szeder.dev>
- <nycvar.QRO.7.76.6.1906122056570.789@QRFXGBC-DHN364S.ybpnyqbznva>
- <20190612194106.GJ4012@szeder.dev>
- <nycvar.QRO.7.76.6.1906141356140.44@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=xgcrIAnPMTHHIabCWLoA7HscspXJwsCoA4UBviNgLYw=;
+        b=MltOtEt4q3nGJih+5lEogveNE4cN2ZQRgIMkEC1ItO/JOZ4acJG5i+JUxjzUuVMJvN
+         PQjUuz3Z+nlwLCy1RvGw7hZkuiMwMbFHcPq8jPlCbu81fQgDhHy6eyJXKI9kt197mUgJ
+         kyTz8FlKcZGJZwtvZyOU0gk+L3RF/Uo6uhudcFdQ/rpwWp8x/9wHXqA9CNz8WHIxVnry
+         Y0xuugt91Xe4yRK2QU58zDkdHe9YT5Mr29Y0yjonp8gcKn4PnrlokqeDjasBSKvoKtKu
+         U/F006tnL2LB+ajqdNU5WeCaaBBGGyXD8wj6d4sjl37nGjFO9bZzKhTq9gGFni+ewyuW
+         kcDg==
+X-Gm-Message-State: APjAAAXfbs60febWoUOo1w71YsRQXKAIjaIWuTh3NajagQMPlEtj+ywh
+        VI8YcchgHYW4ehSbFqtyJneQaS8e
+X-Google-Smtp-Source: APXvYqwKBbbs0ITCJUHIk3Fqs9cQRV33mh4uWG+b8RqQdi0PEwtpl1xErxTYGknloHelrDhtjbsqGQ==
+X-Received: by 2002:adf:f442:: with SMTP id f2mr11117913wrp.275.1560798242908;
+        Mon, 17 Jun 2019 12:04:02 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id l12sm33966120wrb.81.2019.06.17.12.04.01
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Jun 2019 12:04:02 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: pw/rebase-abort-clean-rewritten, was Re: What's cooking in
+ git.git (Jun 2019, #04; Fri, 14)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git@vger.kernel.org
+References: <xmqqh88ruc1b.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906172001490.44@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <2a37d4c2-6eec-548d-0bd0-12bbd49c8071@gmail.com>
+Date:   Mon, 17 Jun 2019 20:04:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1906141356140.44@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <nycvar.QRO.7.76.6.1906172001490.44@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 08:42:29PM +0200, Johannes Schindelin wrote:
+Hi Dscho & Junio
 
-> > > > However, if the terminal were smart, then we would have to deal with
-> > > > ANSI escape suddenly popping up...
-> > >
-> > > And I fear that is *exactly* what makes
-> > > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=10539&view=ms.vss-test-web.build-test-results-tab
-> > > fail...
-> >
-> > Isn't it a sign of a problem in that Windows test environment that
-> > it mistakenly believes that the terminal is smart, even though it has
-> > been explicitly set to dumb?
+On 17/06/2019 19:06, Johannes Schindelin wrote:
+> Hi Junio & Phillip,
 > 
-> I investigated this today.
+> On Fri, 14 Jun 2019, Junio C Hamano wrote:
 > 
-> Mind you, I still think that it is totally inappropriate for a test case
-> with the title 'rebase -i respects rebase.missingCommitsCheck = warn' to
-> validate the expected progress output, in particular since it verifies the
-> progress on non-sophisticated terminals, i.e. the totally least
-> interesting and least common scenario.
+>> * pw/rebase-abort-clean-rewritten (2019-05-15) 4 commits
+>>   - rebase --abort/--quit: cleanup refs/rewritten
+>>   - sequencer: return errors from sequencer_remove_state()
+>>   - rebase: warn if state directory cannot be removed
+>>   - rebase: fix a memory leak
+>>
+>>   "git rebase --abort" used to leave refs/rewritten/ when concluding
+>>   "git rebase -r", which has been corrected.
+>>
+>>   On hold.
+>>   cf. <20190514180349.17245-1-phillip.wood123@gmail.com>
 > 
-> In short: I stand by my suggestion to fix these tests (i.e. ignore the
-> progress altogether) in a preparatory patch in your patch series.
+> This is just the cover letter of the latest iteration, claiming that
+> Phillip would be offline for a couple days (but I am certain that that
+> period passed).
 
-I agree and will try to get around to it in the coming days.
+Yes I sent it just before I went offline, but that's a while ago now
 
-> In case you are interested in the details, please read on, otherwise just
-> mark this mail as read and move on.
+> Phillip, I was under the impression that all reviewer comments had been
+> resolved. Does that match your impression?
+
+Yes, I think it's ready. Thanks for prompting me dscho, I'd seen this 
+was on hold and then forgotten to write to Junio
+
+Best Wishes
+
+Phillip
+
+> Ciao,
+> Dscho
 > 
-> Still with me? Well, here you go, enjoy the ride.
-
-Sure!
-
-[...]
-
-> I hope you, dear reader, can appreciate the number of circumstances that
-> had to come together to trigger this bug.
-
-Thank you, it was both educational and entertaining :)
-
