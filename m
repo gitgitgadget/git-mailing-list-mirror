@@ -8,144 +8,113 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1C561F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 09:15:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83BA81F462
+	for <e@80x24.org>; Mon, 17 Jun 2019 09:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbfFQJPT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 05:15:19 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44161 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbfFQJPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 05:15:18 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r16so9051903wrl.11
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 02:15:17 -0700 (PDT)
+        id S1727847AbfFQJRM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 05:17:12 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33345 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbfFQJRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 05:17:11 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h19so4043222wme.0
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 02:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=u4696rjjTeFZHBWO9W/qXyyzylUaoZZSaoK7z+BFD0c=;
-        b=o7dOaLLVvZUb60/v9Y7VSMvikc17DUTHdqjftzsNaFnm6ILDILXyy1cwd85GgiBe1f
-         5sV76P3M/n7QBjIdGKXf2DKeHOOSdjIjth0LqAlVWQ3rtQ8kg9pHMKkmClVpE2kvwscP
-         Nn/Knr44kgrhoInDMEQYq4FGDOHH1X7+wCE/z7ewX+UzL0xqClleE3EzPFEZZNoq3riN
-         mdBMwuZbH8hmiFeTyweiNUjZ+h9xTCbkZwZKINCPYzhnvmfev7JQv4jkfxOSogw4WMPv
-         f4qtVo6zGr8wfKR2A/R99jbbLrb1YvAiXCTrHlGAAsov7zZN8/T86E/ojql2f54GvJmN
-         D1Ew==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=5Ts/9HSyIBX7Eca7aMdbZ/S2AbTkKvOMLJYz8D1JQ4o=;
+        b=R73MBiMkRFudbkfEQvz2JThzVi3KCSyHQMt6dCfcaVpSqAUZSfaGQoMJ19MKPE1E7z
+         Bm7lFuectQGZcANPRxQ3XrWb6+8N7pKwLGCCKaKkWkDE782kDltWsLO9I/p2JddsDqMc
+         XHT/xb0VKByCUJPAvURyAYjcs2OFBlBAkdFtyWbCAugGtDf1EAazNLTGCBkXGvs+u8UH
+         cyi2S0cfj/oVnKZBkJcvp1emKDd8QM3lbtyJw6KqT4Qz3ybBKnrVqkuSYtoNUSJE4F4W
+         cmuB64hvX8qXeK537vFY0GoxhBcKdtA/VdSDwY9CyJ1d4s8vzckB0yv3A3uDqGDAR5b9
+         wjGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=u4696rjjTeFZHBWO9W/qXyyzylUaoZZSaoK7z+BFD0c=;
-        b=Ey+xb7t9xuWcbCm2tFHOzG4z7TJbArHXMl/oK8yze8SRnBOC9jmw/kPaPg5Spb6gMG
-         gqRABoJOAj/f9QgqkcShZrFad/6HDvc8fnaApDAcfGjwqaYp7cpTKHrt6zrwGw+oZhYF
-         4Cvcu5iF9VzIpM2gKzfilRmcTXFogJOT81eD4RhcpsbdJF0SDyD/8s2nKv/a+MehAQur
-         igzocVFLJcSkPP0P0vJIISsv9NvLGZIctIrcEnArf0YNLLU4l/etGMgCwl2pQT2oIxIv
-         KJ1EDbJ+dYFgoM8htbdKwZOeWAER9wnF2x9vlGCzzFTcVK8IYnSXhoROQK9VuJXyNMSh
-         ytRA==
-X-Gm-Message-State: APjAAAWfzyFE8gTOWf4eKiM7to1Vs1FNMIbZVo68kUGUqJ2F6P7n2h2U
-        FIyXjZuKcEL0l+eo7lnkTQlolLEz
-X-Google-Smtp-Source: APXvYqzX3X76kIM/Unq2RGeSlb2Jhe3LKXOFphjZ0V7gNDyJ97TDqEHqIhWP3EPXxfZc3ZU2C2rPKg==
-X-Received: by 2002:adf:ea87:: with SMTP id s7mr1621839wrm.24.1560762917148;
-        Mon, 17 Jun 2019 02:15:17 -0700 (PDT)
-Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id p3sm12453553wrd.47.2019.06.17.02.15.16
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2019 02:15:16 -0700 (PDT)
-Subject: Re: [PATCH] show --continue/skip etc. consistently in synopsis
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20190616132457.19413-1-phillip.wood123@gmail.com>
- <xmqq36k9tb30.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:reply-to:mime-version:content-transfer-encoding;
+        bh=5Ts/9HSyIBX7Eca7aMdbZ/S2AbTkKvOMLJYz8D1JQ4o=;
+        b=uAC0MLcCl4pMm1/Db6jgRclJhLNTVl0fKXgSmx+O8GAvkq5XuR20vjzKGJpmg0vEql
+         gUpoPekJJuN1tBLD4a2dG+ITjAZtgywm5bvqpTkoBv2t43YCD7P6k8urLuW1udNKAWsA
+         FsOmGRc3i+zncA5wvq2+uY7eiSp0/Wpc7Q4fgnwu/D/8zI2iKnwEdFLguFU3nPWSgMuc
+         ucXbShuqM5TKzu+A7jOGOq2UT7ApWpomiJzRtTB/Ck8jp4TOW7U/i+nkOGmg19Gy80RP
+         qeS8YvtJ09LvbyuJvPr131BM3KJF9HUUqNhV9S/H62Pr5v4CylfR2O/PX9oySB28/4fP
+         N75Q==
+X-Gm-Message-State: APjAAAVdUx8FGX6HLU+p3ayHTvtSbceXO4RJBH50XYqzNF1V8X3Mj9ra
+        QjYn47TSZLrgb7ezGL72jbg=
+X-Google-Smtp-Source: APXvYqxq4vhgAITcfoptC/KHMQY7AGoAEKWxa1rGA73A/IYtATC4gjGsWUY4uvFZq3DcJSFBkUl/vw==
+X-Received: by 2002:a1c:7d8e:: with SMTP id y136mr16632990wmc.16.1560763030392;
+        Mon, 17 Jun 2019 02:17:10 -0700 (PDT)
+Received: from lindisfarne.localdomain (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id l124sm16322890wmf.36.2019.06.17.02.17.09
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 17 Jun 2019 02:17:09 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <991b0908-4ec5-2d19-4df3-df3eb28632c2@gmail.com>
-Date:   Mon, 17 Jun 2019 10:15:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2] show --continue/skip etc. consistently in synopsis
+Date:   Mon, 17 Jun 2019 10:17:09 +0100
+Message-Id: <20190617091709.5785-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190616132457.19413-1-phillip.wood123@gmail.com>
+References: <20190616132457.19413-1-phillip.wood123@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-In-Reply-To: <xmqq36k9tb30.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/06/2019 23:33, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> The synopsis for am shows the command mode options as
->>     (--continue | --skip | --abort | --quit)
->> They are on a single line and in parenthesis as they are not
->> optional. Fix the merge and rebase docs to match this style.
-> 
-> Is it so clear-cut that it is more "correct" to have everything on a
-> single line, as opposed to describing each one per line?  I am not
-> sure.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I'm not sure I'd argue too hard one way or the other, but I do think the
-documentation for the various commands should try to be consistent and
-the am, cherry-pick, rebase and revert man pages all use a single line
-for these options (although rebase is missing the parentheses).
+The synopsis for am shows the command mode options as
+    (--continue | --skip | --abort | --quit)
+They are on a single line and in parenthesis as they are not
+optional. Fix the merge and rebase docs to match this style.
 
-I'll re-roll with Elijah's correction and a sign off
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
 
-Best Wishes
+Notes:
+    This patch is based on top of nd/merge-quit.
+    The docs for cherry-pick/revert are updated to this style by
+    https://public-inbox.org/git/20190616082040.9440-1-rohit.ashiwal265@gmail.com/T/#u
 
-Phillip
+ Documentation/git-merge.txt  | 3 +--
+ Documentation/git-rebase.txt | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-> 
-> I would say both the above style and the style used by "git merge"
-> documentation are correct.  The "rebase" one is a different story
-> and the change in this patch deserves to be called a "fix".
-> 
-> As long as the more concise "am" style is already prevalent (are
-> there pages other than "am" you can cite?), I would agree with you
-> that the change to "git merge" in this patch is a good idea for
-> consistency's sake.
-> 
->> ---
->> This patch is based on top of nd/merge-quit.
-> 
-> Thanks for indicating where it should go.  We need your sign-off,
-> too.>
-> 
-> 
->> The docs for cherry-pick/revert are updated to this style by
->> https://public-inbox.org/git/20190616082040.9440-1-rohit.ashiwal265@gmail.com/T/#u
->>
->> Documentation/git-merge.txt  | 3 +--
->>  Documentation/git-rebase.txt | 2 +-
->>  2 files changed, 2 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
->> index b7d581fc76..07ca9fb78c 100644
->> --- a/Documentation/git-merge.txt
->> +++ b/Documentation/git-merge.txt
->> @@ -13,8 +13,7 @@ SYNOPSIS
->>  	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
->>  	[--[no-]allow-unrelated-histories]
->>  	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
->> -'git merge' --abort
->> -'git merge' --continue
->> +'git merge' (--continue | --skip | --abort | --quit)
->>  
->>  DESCRIPTION
->>  -----------
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 5629ba4c5d..a67d40596a 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -12,7 +12,7 @@ SYNOPSIS
->>  	[<upstream> [<branch>]]
->>  'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
->>  	--root [<branch>]
->> -'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
->> +'git rebase' (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
->>  
->>  DESCRIPTION
->>  -----------
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index b7d581fc76..926ea4f460 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -13,8 +13,7 @@ SYNOPSIS
+ 	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+-'git merge' --abort
+-'git merge' --continue
++'git merge' (--continue | --abort | --quit)
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 5629ba4c5d..a67d40596a 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 	[<upstream> [<branch>]]
+ 'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+ 	--root [<branch>]
+-'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
++'git rebase' (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+ 
+ DESCRIPTION
+ -----------
+-- 
+2.21.0
 
