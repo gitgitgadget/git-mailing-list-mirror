@@ -7,87 +7,120 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9501D1F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 04:33:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F32E01F609
+	for <e@80x24.org>; Mon, 17 Jun 2019 04:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbfFQEdt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 00:33:49 -0400
-Received: from conssluserg-03.nifty.com ([210.131.2.82]:45392 "EHLO
-        conssluserg-03.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbfFQEdt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 00:33:49 -0400
+        id S1725869AbfFQEjt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 00:39:49 -0400
+Received: from condef-09.nifty.com ([202.248.20.74]:30480 "EHLO
+        condef-09.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbfFQEjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 00:39:48 -0400
+Received: from conssluserg-04.nifty.com ([10.126.8.83])by condef-09.nifty.com with ESMTP id x5H4XXUA021375
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 13:33:33 +0900
 Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52]) (authenticated)
-        by conssluserg-03.nifty.com with ESMTP id x5H4XZPr021081
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 13:33:36 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com x5H4XZPr021081
+        by conssluserg-04.nifty.com with ESMTP id x5H4XRaT027424
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 13:33:28 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-04.nifty.com x5H4XRaT027424
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1560746016;
-        bh=gOtm3DBYRH8DGWcZ7rotmzOoCS68M5UpgMxk5Yoa1Ds=;
+        s=dec2015msa; t=1560746008;
+        bh=MThotcFMyj5w8W8syae7U2zgDdKi+rFS8GobvWP+TFs=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=bgEvSnRJMDOZK7xhDQyCQkJK0vh4GvlcEqlDW/9Wq0+PBdKHRlyyUv55febaDYe5k
-         rijy6+7nk68O4H/SD3yMJsIwynxwd/xIqvOp2798LGxlo/3jWQsHbslPX+F8hqoyOy
-         xtx55awoK/7/buYtaEZHFFDUsbIA//aWzaS7yPWtJjlwdFX+9W9Av1FK8h9kPoYYL7
-         KfSTQFlw8A/U6GnYhlbwhoQBpGsmPLVo+ZHQLZTjbgF8s962tjcVh4RDli0lkHn5hn
-         mDszakh1d4xYN7mPmLIWm2VqdwBBec57k/8PX8ymg1l5yMH1hSzOxepPvjARyiSPQc
-         NKaE3wyb9IWJQ==
+        b=vCNK/VQ4d/Uj75Z4N3kGu32o+hbqXbGAXuNmCJuQYnUWgBGnXrEitjLrA3yQRtWu9
+         UZHOIMU9dDjIXj5Dcqy66ZGBxiKYfWWJfPskBWKThS8V2rv6mCXCZ/FwEauyIqkYar
+         2h5XzRg/ObUDN4WQ7OfQy0B9b2MraB7Ly8ulPW5zCGp5WhO1qzMBaDDCnPsiOo0sc5
+         wvlVgYDBxmWYITa0gR3wCUsBqu63XzQ8wPrnpab/0nQORopf3Rdd2KJ9zGkBRSWL7R
+         FaU4Q07Hip4vz7Ke03I+Q5ppoxNkkDzNtPtXbX0OH6Qg4yBaz0kPPhdnANWhWlzRRS
+         RpjNZWxJ9RAGw==
 X-Nifty-SrcIP: [209.85.217.52]
-Received: by mail-vs1-f52.google.com with SMTP id n21so5256592vsp.12
-        for <git@vger.kernel.org>; Sun, 16 Jun 2019 21:33:36 -0700 (PDT)
-X-Gm-Message-State: APjAAAULZlRb1hdo5k2wLzSV1UL9bvNFaaFA1J5d+8sYwR38e+HhPA2T
-        oBMWqwflAPqLWBZsgiSSQ0uT2aGW94e4aYHWaHA=
-X-Google-Smtp-Source: APXvYqzEszwmHMFtWfjqfaJHIpeK3M+49YrzKrzUpLKhTET7qLCME//0M6x0s4Bw1Qsq26k/OfX5LFsCmgGDgY6Pv4o=
-X-Received: by 2002:a67:cd1a:: with SMTP id u26mr19902423vsl.155.1560746015370;
- Sun, 16 Jun 2019 21:33:35 -0700 (PDT)
+Received: by mail-vs1-f52.google.com with SMTP id u124so5298095vsu.2
+        for <git@vger.kernel.org>; Sun, 16 Jun 2019 21:33:28 -0700 (PDT)
+X-Gm-Message-State: APjAAAX8sEn4L1z6yzO7V7ZDp6hgA0pvxi1+aiyNjT4QQnvQoB9aGgAe
+        zN6kX6yDAy5HkkDS+QToYr0NKuGbPSzxpzsAfJ8=
+X-Google-Smtp-Source: APXvYqzm7lvUfc6aWqaF4QzqSk6dPa+D56TqHNmf3u2CQkbLqFXAoR/jOhJ3JdI6xSxqh3At0wOG/gF+pGBcAE3MavM=
+X-Received: by 2002:a67:ed04:: with SMTP id l4mr41135759vsp.179.1560746007349;
+ Sun, 16 Jun 2019 21:33:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
- <20190614150758.GA22984@sigill.intra.peff.net> <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
-In-Reply-To: <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
+ <20190614150758.GA22984@sigill.intra.peff.net>
+In-Reply-To: <20190614150758.GA22984@sigill.intra.peff.net>
 From:   Masahiro Yamada <yamada.masahiro@socionext.com>
-Date:   Mon, 17 Jun 2019 13:32:59 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
-Message-ID: <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
+Date:   Mon, 17 Jun 2019 13:32:51 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASueRR6narhHqe_D93ewXhTPXokWSCvQRh+Q6=-_AB+3g@mail.gmail.com>
+Message-ID: <CAK7LNASueRR6narhHqe_D93ewXhTPXokWSCvQRh+Q6=-_AB+3g@mail.gmail.com>
 Subject: Re: 'git interpret-trailers' is tripped by comment characters other
  than '#'
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 15, 2019 at 5:41 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Sat, Jun 15, 2019 at 12:08 AM Jeff King <peff@peff.net> wrote:
 >
-> On Fri, Jun 14, 2019 at 5:10 PM Jeff King <peff@peff.net> wrote:
-> >
-> > On Fri, Jun 14, 2019 at 08:35:04PM +0900, Masahiro Yamada wrote:
-> >
-> > > Perhaps, 'git interpret-trailers' should be changed
-> > > to recognize core.commentChar ?
-> >
-> > It looks like the trailer code does respect it, but the
-> > interpret-trailers program never loads the config. Does the patch below
-> > make your problem go away?
+> On Fri, Jun 14, 2019 at 08:35:04PM +0900, Masahiro Yamada wrote:
 >
-> It seems to me to be the right analysis and the right fix too.
+> > Perhaps, 'git interpret-trailers' should be changed
+> > to recognize core.commentChar ?
 >
-> > I do wonder if the trailer code is correct to always respect it, though.
-> > For example, in "git log" output we'd expect to see commit messages from
-> > people with all sorts of config. I suppose the point is that their
-> > comment characters wouldn't make it into the commit object at all, so
-> > the right answer there is probably not to look for comment characters at
-> > all.
+> It looks like the trailer code does respect it, but the
+> interpret-trailers program never loads the config. Does the patch below
+> make your problem go away?
 >
-> Would you suggest an option, maybe called `--ignore-comments` to ignore them?
+> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+> index 8ae40dec47..f101d092b8 100644
+> --- a/builtin/interpret-trailers.c
+> +++ b/builtin/interpret-trailers.c
+> @@ -10,6 +10,7 @@
+>  #include "parse-options.h"
+>  #include "string-list.h"
+>  #include "trailer.h"
+> +#include "config.h"
+>
+>  static const char * const git_interpret_trailers_usage[] = {
+>         N_("git interpret-trailers [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
+> @@ -112,6 +113,8 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+>                 OPT_END()
+>         };
+>
+> +       git_config(git_default_config, NULL);
+> +
+>         argc = parse_options(argc, argv, prefix, options,
+>                              git_interpret_trailers_usage, 0);
+>
 
-Since 'git interpret-trailers' already ignores lines starting with '#',
-is this option true by default?
+Yup, works for me.
 
 
-> Thanks,
-> Christian.
 
+> I do wonder if the trailer code is correct to always respect it, though.
+> For example, in "git log" output we'd expect to see commit messages from
+> people with all sorts of config. I suppose the point is that their
+> comment characters wouldn't make it into the commit object at all, so
+> the right answer there is probably not to look for comment characters at
+> all.
+
+I see some sort of over-wrap between 'git stripspace --strip-comments'
+and 'git interpret-trailers'
+
+The 'commit-msg' hook could pass the message to 'git interpret-trailers'
+after trimming all comment lines by using 'git stripspace --strip-comments'.
+
+Anyway, users' hooks already rely on the behavior that
+'git interpret-trailers' ignores lines starting with '#'.
+
+So, respecting core.commentChar is the right fix, I believe.
+
+
+BTW, why is commit-msg hook is passed with a message
+without comments unstripped?
+I think the straightforward behavior would be
+to strip comments first, then invoke the commit hook.
+
+
+Thanks.
 
 
 -- 
