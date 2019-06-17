@@ -2,66 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83BA81F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 09:17:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7BC1F462
+	for <e@80x24.org>; Mon, 17 Jun 2019 15:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727847AbfFQJRM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 05:17:12 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33345 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbfFQJRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 05:17:11 -0400
-Received: by mail-wm1-f65.google.com with SMTP id h19so4043222wme.0
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 02:17:11 -0700 (PDT)
+        id S1728301AbfFQPCP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 11:02:15 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:36185 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726215AbfFQPCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 11:02:14 -0400
+Received: by mail-qk1-f194.google.com with SMTP id g18so6365239qkl.3
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 08:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5Ts/9HSyIBX7Eca7aMdbZ/S2AbTkKvOMLJYz8D1JQ4o=;
-        b=R73MBiMkRFudbkfEQvz2JThzVi3KCSyHQMt6dCfcaVpSqAUZSfaGQoMJ19MKPE1E7z
-         Bm7lFuectQGZcANPRxQ3XrWb6+8N7pKwLGCCKaKkWkDE782kDltWsLO9I/p2JddsDqMc
-         XHT/xb0VKByCUJPAvURyAYjcs2OFBlBAkdFtyWbCAugGtDf1EAazNLTGCBkXGvs+u8UH
-         cyi2S0cfj/oVnKZBkJcvp1emKDd8QM3lbtyJw6KqT4Qz3ybBKnrVqkuSYtoNUSJE4F4W
-         cmuB64hvX8qXeK537vFY0GoxhBcKdtA/VdSDwY9CyJ1d4s8vzckB0yv3A3uDqGDAR5b9
-         wjGQ==
+        bh=JPOTFtv0CcsqCIi8yZyvoo7+1NTHlGnFxubPk7Jukqk=;
+        b=lv8QSAosQqgsts1G9uzpGSYkBexCElccWsdHnaBHbH1QhxIRQegdlJpUTXHxBkL/+6
+         4GW6Dj/sCMurRSYXbM3nyTY2gwkiUHUKZW+xD8oV5R4Al13DOwRh+aM+iPze90B65zk8
+         P5c3RFJBKReDdoxSBwbe7rCqljVrq+/nXPzLj1aeU+71HIXJNqNkcAfN7T/0w4+IHSOE
+         NCy5DRxQuXlspmHUHexnoRpmwddRTm0kY9/JdEVMlxEKDvtnfg/laM44GSdVJP5EjL/V
+         AygCJvh9z8EybEMO0CeL38+EAztsCvvLW9JwXQp6gvO8fd6K5A/SPSNUcfelMq43R16j
+         JrlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=5Ts/9HSyIBX7Eca7aMdbZ/S2AbTkKvOMLJYz8D1JQ4o=;
-        b=uAC0MLcCl4pMm1/Db6jgRclJhLNTVl0fKXgSmx+O8GAvkq5XuR20vjzKGJpmg0vEql
-         gUpoPekJJuN1tBLD4a2dG+ITjAZtgywm5bvqpTkoBv2t43YCD7P6k8urLuW1udNKAWsA
-         FsOmGRc3i+zncA5wvq2+uY7eiSp0/Wpc7Q4fgnwu/D/8zI2iKnwEdFLguFU3nPWSgMuc
-         ucXbShuqM5TKzu+A7jOGOq2UT7ApWpomiJzRtTB/Ck8jp4TOW7U/i+nkOGmg19Gy80RP
-         qeS8YvtJ09LvbyuJvPr131BM3KJF9HUUqNhV9S/H62Pr5v4CylfR2O/PX9oySB28/4fP
-         N75Q==
-X-Gm-Message-State: APjAAAVdUx8FGX6HLU+p3ayHTvtSbceXO4RJBH50XYqzNF1V8X3Mj9ra
-        QjYn47TSZLrgb7ezGL72jbg=
-X-Google-Smtp-Source: APXvYqxq4vhgAITcfoptC/KHMQY7AGoAEKWxa1rGA73A/IYtATC4gjGsWUY4uvFZq3DcJSFBkUl/vw==
-X-Received: by 2002:a1c:7d8e:: with SMTP id y136mr16632990wmc.16.1560763030392;
-        Mon, 17 Jun 2019 02:17:10 -0700 (PDT)
-Received: from lindisfarne.localdomain (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id l124sm16322890wmf.36.2019.06.17.02.17.09
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 02:17:09 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2] show --continue/skip etc. consistently in synopsis
-Date:   Mon, 17 Jun 2019 10:17:09 +0100
-Message-Id: <20190617091709.5785-1-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190616132457.19413-1-phillip.wood123@gmail.com>
-References: <20190616132457.19413-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+         :references:mime-version:content-transfer-encoding;
+        bh=JPOTFtv0CcsqCIi8yZyvoo7+1NTHlGnFxubPk7Jukqk=;
+        b=nT4ObhJZk06ABGdaqyRy0D37IMmE6z0TfNkiOPtCqJAwnSdoOInUT0GyykN2iIJyFG
+         WsTZ52rgZc1HDoGXVu7KZWEKI5LE4ktZKUsUL24qoQxXOi/l/kxEISQSAQGu6gUr+M0Z
+         q1bXP3mH0QfLNaZYIh3CK++XbkyWK22P3JlMVVh6oNG66iwleVCZK/ZrzRvyQnntttee
+         OysgUCNzgxff0EmbIeskgfFDeHtnd7GOZULh/LQr7dEm4G+N9oV+FTd0+42ncqjixv0J
+         2fssHR6MbrJNNZr3oqqv1qKtetplZHZ+JaKgxeI5vW/OD8//pVbpH8U1Dyjx32ehdyiQ
+         w0Vw==
+X-Gm-Message-State: APjAAAWeMqiA7hwqxQ4zby/S0UXHECg8rY8+6e+921Hw94mJKdTQ18Mf
+        o2EiUUCPOTVMoPsQ/QF0LYFQ+sMj
+X-Google-Smtp-Source: APXvYqyl8RFSKBDpi1FaVNacVCzksVC0Og6rO1qPqR9T6mGT99IzduDjpFIah3L06tlsu0S3A7QQ7g==
+X-Received: by 2002:a05:620a:13ec:: with SMTP id h12mr37789963qkl.266.1560783733142;
+        Mon, 17 Jun 2019 08:02:13 -0700 (PDT)
+Received: from stolee-gitdev.corp.microsoft.com ([2001:4898:a800:1012:6e6a:2b95:41d:be6b])
+        by smtp.gmail.com with ESMTPSA id t8sm8503458qtc.80.2019.06.17.08.02.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Jun 2019 08:02:12 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] commit-graph: normalize commit-graph filenames
+Date:   Mon, 17 Jun 2019 11:02:07 -0400
+Message-Id: <20190617150207.16849-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.22.0.430.g4f3aec613b
+In-Reply-To: <pull.184.v5.git.gitgitgadget@gmail.com>
+References: <pull.184.v5.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -69,52 +68,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+When writing commit-graph files, we append path data to an
+object directory, which may be specified by the user via the
+'--object-dir' option. If the user supplies a trailing slash,
+or some other alternative path format, the resulting path may
+be usable for writing to the correct location. However, when
+expiring graph files from the <obj-dir>/info/commit-graphs
+directory during a write, we need to compare paths with exact
+string matches.
 
-The synopsis for am shows the command mode options as
-    (--continue | --skip | --abort | --quit)
-They are on a single line and in parenthesis as they are not
-optional. Fix the merge and rebase docs to match this style.
+Normalize the commit-graph filenames to avoid ambiguity. This
+creates extra allocations, but this is a constant multiple of
+the number of commit-graph files, which should be a number in
+the single digits.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+To complete the effectiveness, we need to use the filename
+methods when iterating over the info/commit-graphs directory
+instead of constructing the paths manually.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
 
-Notes:
-    This patch is based on top of nd/merge-quit.
-    The docs for cherry-pick/revert are updated to this style by
-    https://public-inbox.org/git/20190616082040.9440-1-rohit.ashiwal265@gmail.com/T/#u
+Junio,
 
- Documentation/git-merge.txt  | 3 +--
- Documentation/git-rebase.txt | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+I noticed the need for this patch while integrating the
+split commit-graph series into VFS for Git, since our
+C# code was storing the alternates directory with a trailing
+slash, causing some confusion in the expire logic.
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index b7d581fc76..926ea4f460 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -13,8 +13,7 @@ SYNOPSIS
- 	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
- 	[--[no-]allow-unrelated-histories]
- 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
--'git merge' --abort
--'git merge' --continue
-+'git merge' (--continue | --abort | --quit)
+This could be added to ds/commit-graph-incremental (and I
+could add it to a future revision, if necessary) or could
+be a new branch on top of that series.
+
+Thanks,
+-Stolee
+
+ commit-graph.c | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 8842f93910..e0f3e8a954 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -43,15 +43,23 @@
  
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 5629ba4c5d..a67d40596a 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 	[<upstream> [<branch>]]
- 'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
- 	--root [<branch>]
--'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
-+'git rebase' (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+ char *get_commit_graph_filename(const char *obj_dir)
+ {
+-	return xstrfmt("%s/info/commit-graph", obj_dir);
++	char *filename = xstrfmt("%s/info/commit-graph", obj_dir);
++	char *normalized = xmalloc(strlen(filename) + 1);
++	normalize_path_copy(normalized, filename);
++	free(filename);
++	return normalized;
+ }
  
- DESCRIPTION
- -----------
+ static char *get_split_graph_filename(const char *obj_dir,
+ 				      const char *oid_hex)
+ {
+-	return xstrfmt("%s/info/commit-graphs/graph-%s.graph",
+-		       obj_dir,
+-		       oid_hex);
++	char *filename = xstrfmt("%s/info/commit-graphs/graph-%s.graph",
++				 obj_dir,
++				 oid_hex);
++	char *normalized = xmalloc(strlen(filename) + 1);
++	normalize_path_copy(normalized, filename);
++	free(filename);
++	return normalized;
+ }
+ 
+ static char *get_chain_filename(const char *obj_dir)
+@@ -1680,7 +1688,6 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 	struct strbuf path = STRBUF_INIT;
+ 	DIR *dir;
+ 	struct dirent *de;
+-	size_t dirnamelen;
+ 	timestamp_t expire_time = time(NULL);
+ 
+ 	if (ctx->split_opts && ctx->split_opts->expire_time)
+@@ -1701,16 +1708,13 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 		return;
+ 	}
+ 
+-	strbuf_addch(&path, '/');
+-	dirnamelen = path.len;
+ 	while ((de = readdir(dir)) != NULL) {
+ 		struct stat st;
+ 		uint32_t i, found = 0;
+ 
+-		strbuf_setlen(&path, dirnamelen);
+-		strbuf_addstr(&path, de->d_name);
++		char *filename = get_split_graph_filename(path.buf, de->d_name);
+ 
+-		stat(path.buf, &st);
++		stat(filename, &st);
+ 
+ 		if (st.st_mtime > expire_time)
+ 			continue;
+@@ -1719,15 +1723,16 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 
+ 		for (i = 0; i < ctx->num_commit_graphs_after; i++) {
+ 			if (!strcmp(ctx->commit_graph_filenames_after[i],
+-				    path.buf)) {
++				    filename)) {
+ 				found = 1;
+ 				break;
+ 			}
+ 		}
+ 
+ 		if (!found)
+-			unlink(path.buf);
++			unlink(filename);
+ 
++		free(filename);
+ 	}
+ }
+ 
 -- 
-2.21.0
+2.22.0.430.g4f3aec613b
 
