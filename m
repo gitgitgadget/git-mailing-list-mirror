@@ -2,127 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32E01F609
-	for <e@80x24.org>; Mon, 17 Jun 2019 04:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47EC61F462
+	for <e@80x24.org>; Mon, 17 Jun 2019 05:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725869AbfFQEjt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 00:39:49 -0400
-Received: from condef-09.nifty.com ([202.248.20.74]:30480 "EHLO
-        condef-09.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbfFQEjs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 00:39:48 -0400
-Received: from conssluserg-04.nifty.com ([10.126.8.83])by condef-09.nifty.com with ESMTP id x5H4XXUA021375
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 13:33:33 +0900
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52]) (authenticated)
-        by conssluserg-04.nifty.com with ESMTP id x5H4XRaT027424
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 13:33:28 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-04.nifty.com x5H4XRaT027424
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1560746008;
-        bh=MThotcFMyj5w8W8syae7U2zgDdKi+rFS8GobvWP+TFs=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=vCNK/VQ4d/Uj75Z4N3kGu32o+hbqXbGAXuNmCJuQYnUWgBGnXrEitjLrA3yQRtWu9
-         UZHOIMU9dDjIXj5Dcqy66ZGBxiKYfWWJfPskBWKThS8V2rv6mCXCZ/FwEauyIqkYar
-         2h5XzRg/ObUDN4WQ7OfQy0B9b2MraB7Ly8ulPW5zCGp5WhO1qzMBaDDCnPsiOo0sc5
-         wvlVgYDBxmWYITa0gR3wCUsBqu63XzQ8wPrnpab/0nQORopf3Rdd2KJ9zGkBRSWL7R
-         FaU4Q07Hip4vz7Ke03I+Q5ppoxNkkDzNtPtXbX0OH6Qg4yBaz0kPPhdnANWhWlzRRS
-         RpjNZWxJ9RAGw==
-X-Nifty-SrcIP: [209.85.217.52]
-Received: by mail-vs1-f52.google.com with SMTP id u124so5298095vsu.2
-        for <git@vger.kernel.org>; Sun, 16 Jun 2019 21:33:28 -0700 (PDT)
-X-Gm-Message-State: APjAAAX8sEn4L1z6yzO7V7ZDp6hgA0pvxi1+aiyNjT4QQnvQoB9aGgAe
-        zN6kX6yDAy5HkkDS+QToYr0NKuGbPSzxpzsAfJ8=
-X-Google-Smtp-Source: APXvYqzm7lvUfc6aWqaF4QzqSk6dPa+D56TqHNmf3u2CQkbLqFXAoR/jOhJ3JdI6xSxqh3At0wOG/gF+pGBcAE3MavM=
-X-Received: by 2002:a67:ed04:: with SMTP id l4mr41135759vsp.179.1560746007349;
- Sun, 16 Jun 2019 21:33:27 -0700 (PDT)
+        id S1725995AbfFQFDn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 01:03:43 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:41806 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725372AbfFQFDn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 01:03:43 -0400
+Received: by mail-ed1-f51.google.com with SMTP id p15so14158548eds.8
+        for <git@vger.kernel.org>; Sun, 16 Jun 2019 22:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ctn3prHzu5y3FInKmsnxwJ3+wVQnzNCzaYvHauQGVa0=;
+        b=IOnyX5DSHkxQazidUYoo429TEJAjuBbtel3A9lamIufhLTqQJSY72EMqEl1lbwfDhI
+         2ab4WOfbbhCVEW8x07opXxV/j143iy4XUwkQgqkm3PgrHYYu08Vh9lsBvS6lHfW69p/f
+         S4VpYeL0oxwa5WMoqEV9XHkqRVaPk6+2x4sNnQDBi1hbQvG6Np3349+JXO708GDehaVs
+         pWXVYFh8ovZC0FgN6RFw6/hxtBrQavdIfxjY2NRAj9PiAPx8s3IrzdUrmSz41dyUQPEE
+         iWbtz/y4PPXdWB0hl8DpDo+EZAdyhR/98wMPFKRyDYEx2HiBghW76MZEKcwNhrIEQfjE
+         Ezrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ctn3prHzu5y3FInKmsnxwJ3+wVQnzNCzaYvHauQGVa0=;
+        b=JgTNGr0238Knq34PYNER6NH/fFFr8GUCsyEYH9jhSG6yyGOzN0SqXSAm7DJLqXdi04
+         EEPot/0freHtT29r4RozHeVylyQU2CeNPgaM0dI1Pt2dYmtX9mulFvg5Tw3b77WtElYN
+         1jQmuBcIVIFBlXo21F0kM/ntcURsGJRiIqpyZEl5xVKraMnVa3SBdTcCJh7CChImmesc
+         7Th7jkHwE1L0cQbSZM2euJwsFWQyZG7vmkcpIJK4p0niVj5K1AVZtrCB+nXwWGEBf+Kv
+         az9bzhfRARzbMbIhXljzCO0LJqQ0osKXy2KgDfZM7hQ0pOydHirReLQtKNfPvw0nLLVu
+         cLJQ==
+X-Gm-Message-State: APjAAAU9TPzy4qOGbv31CnN96wV3HmVje/GPxLeyTCbMIkGhAMSNs3uv
+        H39NEhfXkOOTzaYYvcyZvlD7TnTtCWXFchtLo47eukiHdFw=
+X-Google-Smtp-Source: APXvYqzTFkJyHRa8WbHmD3/ONKMJ1RbsSp6ihf0sDl34xhM4OoBFURifFawjbwBSsZYqwQ1o31WkFX1kP5M944rHQqI=
+X-Received: by 2002:a50:886a:: with SMTP id c39mr71163953edc.214.1560747821221;
+ Sun, 16 Jun 2019 22:03:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
- <20190614150758.GA22984@sigill.intra.peff.net>
-In-Reply-To: <20190614150758.GA22984@sigill.intra.peff.net>
-From:   Masahiro Yamada <yamada.masahiro@socionext.com>
-Date:   Mon, 17 Jun 2019 13:32:51 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASueRR6narhHqe_D93ewXhTPXokWSCvQRh+Q6=-_AB+3g@mail.gmail.com>
-Message-ID: <CAK7LNASueRR6narhHqe_D93ewXhTPXokWSCvQRh+Q6=-_AB+3g@mail.gmail.com>
+ <20190614150758.GA22984@sigill.intra.peff.net> <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
+ <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
+In-Reply-To: <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 17 Jun 2019 07:03:29 +0200
+Message-ID: <CAP8UFD3_kKvBs=rMvBp-K-UPD5mCqVsHRZ1VqGYY7uR8G+H8SQ@mail.gmail.com>
 Subject: Re: 'git interpret-trailers' is tripped by comment characters other
  than '#'
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+To:     Masahiro Yamada <yamada.masahiro@socionext.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 15, 2019 at 12:08 AM Jeff King <peff@peff.net> wrote:
+On Mon, Jun 17, 2019 at 6:33 AM Masahiro Yamada
+<yamada.masahiro@socionext.com> wrote:
 >
-> On Fri, Jun 14, 2019 at 08:35:04PM +0900, Masahiro Yamada wrote:
+> On Sat, Jun 15, 2019 at 5:41 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > > I do wonder if the trailer code is correct to always respect it, though.
+> > > For example, in "git log" output we'd expect to see commit messages from
+> > > people with all sorts of config. I suppose the point is that their
+> > > comment characters wouldn't make it into the commit object at all, so
+> > > the right answer there is probably not to look for comment characters at
+> > > all.
+> >
+> > Would you suggest an option, maybe called `--ignore-comments` to ignore them?
 >
-> > Perhaps, 'git interpret-trailers' should be changed
-> > to recognize core.commentChar ?
->
-> It looks like the trailer code does respect it, but the
-> interpret-trailers program never loads the config. Does the patch below
-> make your problem go away?
->
-> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-> index 8ae40dec47..f101d092b8 100644
-> --- a/builtin/interpret-trailers.c
-> +++ b/builtin/interpret-trailers.c
-> @@ -10,6 +10,7 @@
->  #include "parse-options.h"
->  #include "string-list.h"
->  #include "trailer.h"
-> +#include "config.h"
->
->  static const char * const git_interpret_trailers_usage[] = {
->         N_("git interpret-trailers [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
-> @@ -112,6 +113,8 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
->                 OPT_END()
->         };
->
-> +       git_config(git_default_config, NULL);
-> +
->         argc = parse_options(argc, argv, prefix, options,
->                              git_interpret_trailers_usage, 0);
->
+> Since 'git interpret-trailers' already ignores lines starting with '#',
+> is this option true by default?
 
-Yup, works for me.
-
-
-
-> I do wonder if the trailer code is correct to always respect it, though.
-> For example, in "git log" output we'd expect to see commit messages from
-> people with all sorts of config. I suppose the point is that their
-> comment characters wouldn't make it into the commit object at all, so
-> the right answer there is probably not to look for comment characters at
-> all.
-
-I see some sort of over-wrap between 'git stripspace --strip-comments'
-and 'git interpret-trailers'
-
-The 'commit-msg' hook could pass the message to 'git interpret-trailers'
-after trimming all comment lines by using 'git stripspace --strip-comments'.
-
-Anyway, users' hooks already rely on the behavior that
-'git interpret-trailers' ignores lines starting with '#'.
-
-So, respecting core.commentChar is the right fix, I believe.
-
-
-BTW, why is commit-msg hook is passed with a message
-without comments unstripped?
-I think the straightforward behavior would be
-to strip comments first, then invoke the commit hook.
-
-
-Thanks.
-
-
--- 
-Best Regards
-Masahiro Yamada
+Sorry, I should have suggested something called --unstrip-comments or
+--ignore-comment-char that would make 'git interpret-trailers' stop
+stripping lines that start with the comment character.
