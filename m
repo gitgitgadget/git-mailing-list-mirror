@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 275C61F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 20:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FBFD1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 20:25:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730699AbfFRUZb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 16:25:31 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37582 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725909AbfFRUZa (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730695AbfFRUZa (ORCPT <rfc822;e@80x24.org>);
         Tue, 18 Jun 2019 16:25:30 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w13so23606233eds.4
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 13:25:29 -0700 (PDT)
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46177 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730607AbfFRUZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 16:25:29 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d4so23550282edr.13
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 13:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zwS2nMSbEsRZS5n1FJuk8U8t4YllwgX+MGjEmy+UsA8=;
-        b=TnWguPE2qpae42ERaSmj4nNtyJHVekG4e8ZDxFpBFiYxsmoXVNC/xPKQYbj7ycJMzc
-         ub50wAGdY91/qEhDSmdZJNYFhYFsgS/KkWA52CYuRkKZRHIFO0atNe+f4iDYT0QIHiGb
-         zWzwfpC2j7NRMOiGgCvzHHTeU+cIuTsAB3gzK5Q1lkvCd+A3JH1CannYuDBsPoXIBQXH
-         JKP1nO9WuXzzLMPdbQe4rc9Ep60u5s+O43Kmop2z1CFgqUUVYIFrgtXE3RKuvQVTSkYf
-         nRPml8TzSFPfLMurD361mtSAc6lXz8Je1aO8mr7MrAjhAlPlLhVp7PPP+qAsd+GEy9Yu
-         PWeQ==
+        bh=UtMwdNJ9qk+40LxlT1yFJjlPipk+EuW7wYWAQAFkbmo=;
+        b=jf1A6+nOzzxEmMAr7PnNet7rjXjm8Lu+Gtq86LOklXiUgoKX3Y+VazrFwU+4sStIzO
+         mKcx5HEwSWQDD155H4PGqRLj0wJ1/TsbqAuMR6ezUQecjzpyjhSsEJJRLAeaf97PY2Tj
+         HLpVWGjvF5perTJRap6bNXcHDRjY5hei5vPwkjOHPw6HqLpYSrAk8v2akRcVamv0G3f9
+         1UN0clDIhkCQUHLVwvcZxDsn5LtRkavMW7jytLVZQW3FJl140uFiooXandWINpqjesmD
+         KAzlRl+gvKu9kL+cE8oYSlQ1QAxXVhKstt6Dp55LpZiIWXQ8dBq10PbRDlWmXDWMvgBj
+         AOUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zwS2nMSbEsRZS5n1FJuk8U8t4YllwgX+MGjEmy+UsA8=;
-        b=KZlsM/QFmeg6Vrn8m2LmddzZH4zWX18GL0vkv1gBJRnxjrZ5YgdBeVI9Q4ZmA3YEMM
-         rHSGXSed6oKZrkkVGAZ0P3ezyMFYQAGORb+fawjryHVFsTD9rgc3rTEGjpnTi4bFa6E6
-         J4Bns6eejC096GCdvUfxL26NPrGfzWvaX9TmfMw+yeOpdj5zS5fjKg0oiabFHEShSaBp
-         uf426RoyAdDhamtehUgQZFj8ZmHEdPFj9HaVqEjyPD2DiY9Z99t2lbUWCWtPYPZ2Lft/
-         NDS12Lud7/biOY64CFx1hcIMmHRBqwSVLy1icrYmV2dbvKvT7Jqk5BYr2l+HGP+SsfLP
-         exfg==
-X-Gm-Message-State: APjAAAXVB8GPhaViMZTYkggIyo75P22t/5N2xLEuI4o4Ss/suJi1gENG
-        1cwXYuqSVk3KogvYtEQS+tOD6dUG
-X-Google-Smtp-Source: APXvYqzn4Re0WSeAISrLhqL5GUXbIFMRWFAI4pNqiTgL7dthDPPaPIubRtafPBb978RhHxYIaBrSOA==
-X-Received: by 2002:a50:9822:: with SMTP id g31mr98670599edb.175.1560889528411;
-        Tue, 18 Jun 2019 13:25:28 -0700 (PDT)
+        bh=UtMwdNJ9qk+40LxlT1yFJjlPipk+EuW7wYWAQAFkbmo=;
+        b=j4igGgP95mYXNxSw7L5SbjQuHhhwasX9ePEcOohYwTbdTNj0cXGrabGo3lgd2qtgbs
+         u2pGw7IUvf3nqcUhNJ2x7JN/SL6W/Utr5HTE9+6NG5M4ssKCqVfLuVka9pPcKdehys+z
+         5XCcXr3BG6jb7NvtTckaLEek8AUaI88BoK2s7fmY8nmcqFoSKNiv8i0ELtDs1Uwzk3Hs
+         zkNtvWTAf4jH4WvmMU/BGaXp0wCUGJ5kz8tQr1ohw+ajtYGJX1kL/9gBbmSCrQw8fYmq
+         zF9EzoUwTPg996k9Kbj8TkH4RadhQONxXZLPQ4iq5B9yQGMLnvFDFAJR8l+QeNMG9nwX
+         JtCQ==
+X-Gm-Message-State: APjAAAV2RIszIStf62WrBz+hvDoaG2AgSGlBX6QGUVNYSKbmss79/GHs
+        6cYHLhRlPINUMQEXflm52JTdz2hW
+X-Google-Smtp-Source: APXvYqx2ByT3uiHog/D8x0s/fpJ/WIMEbCkRXkXr/ZBOtH0QpPKnhgnzFaWURdS/dFQeW0U5q79EKg==
+X-Received: by 2002:a17:906:2890:: with SMTP id o16mr77780046ejd.80.1560889527571;
+        Tue, 18 Jun 2019 13:25:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y18sm2919973ejh.84.2019.06.18.13.25.27
+        by smtp.gmail.com with ESMTPSA id p18sm2947858ejr.61.2019.06.18.13.25.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 13:25:28 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 13:25:28 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 20:25:24 GMT
-Message-Id: <c9479caf4c6aa099bd49ddb4153051f449feab4c.1560889525.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 13:25:27 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 13:25:27 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 20:25:23 GMT
+Message-Id: <25d467ea1db0db07ea976c7d1331f4223fa9ee9a.1560889525.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.273.git.gitgitgadget@gmail.com>
 References: <pull.273.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/3] pull: add --[no-]show-forced-updates passthrough
+Subject: [PATCH 2/3] fetch: warn about forced updates in branch listing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,47 +71,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git fetch' command can avoid calculating forced updates, so
-allow users of 'git pull' to provide that option. This is particularly
-necessary when the advice to use '--no-show-forced-updates' is given
-at the end of the command.
+The --[no-]show-forced-updates option in 'git fetch' can be confusing
+for some users, especially if it is enabled via config setting and not
+by argument. Add advice to warn the user that the (forced update)
+messages were not listed.
+
+Additionally, warn users when the forced update check takes longer
+than ten seconds, and recommend that they disable the check. These
+messages can be disabled by the advice.fetchShowForcedUpdates config
+setting.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/pull.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/config/advice.txt |  4 ++++
+ advice.c                        |  2 ++
+ advice.h                        |  1 +
+ builtin/fetch.c                 | 25 ++++++++++++++++++++++++-
+ 4 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 9dd32a115b..f1eaf6e6ed 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -128,6 +128,7 @@ static char *opt_update_shallow;
- static char *opt_refmap;
- static char *opt_ipv4;
- static char *opt_ipv6;
-+static int opt_show_forced_updates = -1;
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index ec4f6ae658..1f1e847fb4 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -4,6 +4,10 @@ advice.*::
+ 	can tell Git that you do not need help by setting these to 'false':
+ +
+ --
++	fetchShowForcedUpdates::
++		Advice shown when linkgit:git-fetch[1] takes a long time
++		to calculate forced updates after ref updates, or to warn
++		that the check is disabled.
+ 	pushUpdateRejected::
+ 		Set this variable to 'false' if you want to disable
+ 		'pushNonFFCurrent',
+diff --git a/advice.c b/advice.c
+index ce5f374ecd..4b283be51a 100644
+--- a/advice.c
++++ b/advice.c
+@@ -3,6 +3,7 @@
+ #include "color.h"
+ #include "help.h"
  
- static struct option pull_options[] = {
- 	/* Shared options */
-@@ -240,6 +241,8 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU('6',  "ipv6", &opt_ipv6, NULL,
- 		N_("use IPv6 addresses only"),
- 		PARSE_OPT_NOARG),
-+	OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
-+		 N_("check for forced-updates on all updated branches")),
++int advice_fetch_show_forced_updates = 1;
+ int advice_push_update_rejected = 1;
+ int advice_push_non_ff_current = 1;
+ int advice_push_non_ff_matching = 1;
+@@ -59,6 +60,7 @@ static struct {
+ 	const char *name;
+ 	int *preference;
+ } advice_config[] = {
++	{ "fetchShowForcedUpdates", &advice_fetch_show_forced_updates },
+ 	{ "pushUpdateRejected", &advice_push_update_rejected },
+ 	{ "pushNonFFCurrent", &advice_push_non_ff_current },
+ 	{ "pushNonFFMatching", &advice_push_non_ff_matching },
+diff --git a/advice.h b/advice.h
+index e50f02cdfe..495e53255c 100644
+--- a/advice.h
++++ b/advice.h
+@@ -3,6 +3,7 @@
  
- 	OPT_END()
- };
-@@ -549,6 +552,10 @@ static int run_fetch(const char *repo, const char **refspecs)
- 		argv_array_push(&args, opt_ipv4);
- 	if (opt_ipv6)
- 		argv_array_push(&args, opt_ipv6);
-+	if (opt_show_forced_updates > 0)
-+		argv_array_push(&args, "--show-forced-updates");
-+	else if (opt_show_forced_updates == 0)
-+		argv_array_push(&args, "--no-show-forced-updates");
+ #include "git-compat-util.h"
  
- 	if (repo) {
- 		argv_array_push(&args, repo);
++extern int advice_fetch_show_forced_updates;
+ extern int advice_push_update_rejected;
+ extern int advice_push_non_ff_current;
+ extern int advice_push_non_ff_matching;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 571c255218..cf7eb0dd8d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -24,6 +24,8 @@
+ #include "list-objects-filter-options.h"
+ #include "commit-reach.h"
+ 
++#define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
++
+ static const char * const builtin_fetch_usage[] = {
+ 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
+ 	N_("git fetch [<options>] <group>"),
+@@ -40,6 +42,7 @@ enum {
+ 
+ static int fetch_prune_config = -1; /* unspecified */
+ static int fetch_show_forced_updates = 1;
++static uint64_t forced_updates_ms = 0;
+ static int prune = -1; /* unspecified */
+ #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ 
+@@ -707,6 +710,7 @@ static int update_local_ref(struct ref *ref,
+ 	enum object_type type;
+ 	struct branch *current_branch = branch_get(NULL);
+ 	const char *pretty_ref = prettify_refname(ref->name);
++	int fast_forward = 0;
+ 
+ 	type = oid_object_info(the_repository, &ref->new_oid, NULL);
+ 	if (type < 0)
+@@ -781,7 +785,15 @@ static int update_local_ref(struct ref *ref,
+ 		return r;
+ 	}
+ 
+-	if (!fetch_show_forced_updates || in_merge_bases(current, updated)) {
++	if (fetch_show_forced_updates) {
++		uint64_t t_before = getnanotime();
++		fast_forward = in_merge_bases(current, updated);
++		forced_updates_ms += (getnanotime() - t_before) / 1000000;
++	} else {
++		fast_forward = 1;
++	}
++
++	if (fast_forward) {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		int r;
+ 
+@@ -980,6 +992,17 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		      " 'git remote prune %s' to remove any old, conflicting "
+ 		      "branches"), remote_name);
+ 
++	if (advice_fetch_show_forced_updates) {
++		if (!fetch_show_forced_updates) {
++			warning(_("Fetch normally indicates which branches had a forced update, but that check has been disabled."));
++			warning(_("To re-enable, use '--show-forced-updates' flag or run 'git config fetch.showForcedUpdates true'."));
++		} else if (forced_updates_ms > FORCED_UPDATES_DELAY_WARNING_IN_MS) {
++			warning(_("It took %.2f seconds to check forced updates. You can use '--no-show-forced-updates'\n"),
++				forced_updates_ms / 1000.0);
++			warning(_("or run 'git config fetch.showForcedUpdates false' to avoid this check.\n"));
++		}
++	}
++
+  abort:
+ 	strbuf_release(&note);
+ 	free(url);
 -- 
 gitgitgadget
+
