@@ -2,133 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 838DA1F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 14:43:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB971F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 15:15:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729174AbfFROnh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 10:43:37 -0400
-Received: from mout.gmx.net ([212.227.15.18]:44295 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727105AbfFROnh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 10:43:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560869008;
-        bh=Zo/pJHsk81DmxZI93L47ht/46eqetJ7RWKG8z+cILQ8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IsE0sRx33/mVOilj2+7/DSfB03LViuoYbIFSrbJ+MlfocfJ09Ru5CkWSsJolY9Gtu
-         to6F1fF2wZy4hklntFdd6JbBT+G8B+JmNMxYpLbGIrs3/ko/33Pc8rH02Ht8HXLG31
-         X+FDwUwr7zwiaxVGVlCp/ubLqaa69mRRiU27SpBA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZCUG-1htfkZ49YC-00Kwdo; Tue, 18
- Jun 2019 16:43:28 +0200
-Date:   Tue, 18 Jun 2019 16:43:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH] xdiff: avoid accidental redefinition of LFS feature in
- OpenIndiana
-In-Reply-To: <20190618064537.62369-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906181642000.44@tvgsbejvaqbjf.bet>
-References: <20190618064537.62369-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729307AbfFRPPN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 11:15:13 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45711 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729038AbfFRPPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 11:15:13 -0400
+Received: by mail-wr1-f65.google.com with SMTP id f9so14370731wre.12
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 08:15:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:message-id:date:to:subject:cc:references:in-reply-to
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1ab0InR24stCWrLVrQQxGqYiLg8XVU23ZNjHL3O2exU=;
+        b=F8DKkNru31YVgK3fLJMAEg+ZgumIW4XUbsRNOzts5F8oQD9bKNwlJ7c5udd1SHJl8y
+         IzvXmw90AxCA16jhFtudpGUIZlMaV4BZRiDvbSbr+PNk71TUw/Y/vQ3ZcueQE7Rq6Emo
+         u5aTrXwqUHD/xtkNIRjJ5KAaExYu3YT4eUk4T2CPDGH4txpCUOM1xGZmJL5orc1MgUlU
+         y5IUbXn7yyclcbxFVHx0XqLdaUPD8v58x05JPVhSGPn8BRo8aats+DjnX2pgP1fItwUZ
+         PNQMfgTYq8IGwWK9qEaXnoKSWkzkXmImY3yKQOvaR3WthzrYLi8QbogaIDRjlLmGUhfx
+         s2iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:message-id:date:to:subject:cc:references
+         :in-reply-to:user-agent:mime-version:content-transfer-encoding;
+        bh=1ab0InR24stCWrLVrQQxGqYiLg8XVU23ZNjHL3O2exU=;
+        b=Sl/0yORrY3FQo9xb5uPRzRzLkG0kD0/b9KXFFUtTYazQE1Fqc6umqRA19hgGCYK2iR
+         L/aR7tm7rhx5z9/G+scszutGEhKqlOgfMOpZrbp1bZ1OTJWK9LfZNzpmYB/RfdMWJXaW
+         EHSLNU/McKrfeOdg2tnT1MtG86peO22OB4sGffk6zDI4emLTLNdcyfvXmMJiVTg/0otU
+         f/b2ORQ/lKaquLNQZ74xvR8LOX75Pow9nxk/BxR9U9POdfuuEJXres27PQxlQfirLrp4
+         Or061Jb2P/iff7kispyofVHJeuhPXsirM4r+W5QaQ2CNZZdnGwWWY0BtGXW7V7NVMMlx
+         8Udg==
+X-Gm-Message-State: APjAAAUIv17BAc0t/z5gL8x4/eTB+LckHpvdz//iunaMkOCQ+Yo1j/sI
+        JW48Ey4GrBl2uHmbnu+rvYs3E4mbrYo=
+X-Google-Smtp-Source: APXvYqw2cSw7/isOp4GOOiSERArjBzUFyhjGtRef8CSsg3wkGqKTDKmq4APfv6ENJod/uYfkeLp2fQ==
+X-Received: by 2002:a5d:43c9:: with SMTP id v9mr80752376wrr.70.1560870911042;
+        Tue, 18 Jun 2019 08:15:11 -0700 (PDT)
+Received: from pool-147-74-zam859.wlan.kfa-juelich.de ([134.94.60.226])
+        by smtp.gmail.com with ESMTPSA id y6sm3176159wmd.16.2019.06.18.08.15.10
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 18 Jun 2019 08:15:10 -0700 (PDT)
+From:   Morian Sonnet <moriansonnet@gmail.com>
+X-Google-Original-From: Morian Sonnet <momo@pool-147-74-zam859.wlan.kfa-juelich.de>
+Received: from pool-147-74-zam859.wlan.kfa-juelich.de (localhost [127.0.0.1])
+        by pool-147-74-zam859.wlan.kfa-juelich.de (8.15.2/8.15.2) with ESMTPS id x5IFF9aV005588
+        (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+        Tue, 18 Jun 2019 17:15:09 +0200
+Received: (from momo@localhost)
+        by pool-147-74-zam859.wlan.kfa-juelich.de (8.15.2/8.15.2/Submit) id x5IFF8bg005587;
+        Tue, 18 Jun 2019 17:15:08 +0200
+Message-Id: <201906181515.x5IFF8bg005587@pool-147-74-zam859.wlan.kfa-juelich.de>
+Date:   Tue, 18 Jun 2019 17:15:08 +0200
+To:     sunshine@sunshineco.us, gitgitgadget@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] submodule foreach: fix recursion of options
+Cc:     MorianSonnet@googlemail.com, gitster@pobox.com
+References: <pull.263.git.gitgitgadget@gmail.com>
+ <pull.263.v2.git.gitgitgadget@gmail.com>
+ <c46e5bd1403b45d25192220ce689fcd55d897981.1560371293.git.gitgitgadget@gmail.com>
+In-Reply-To: <c46e5bd1403b45d25192220ce689fcd55d897981.1560371293.git.gitgitgadget@gmail.com>
+User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1893583725-1560869022=:44"
-X-Provags-ID: V03:K1:wPmXSyGGLCa04Znx11IThFVhpS2DE0RWq28cKLkM9tCgDpVrTcJ
- b8PXXt3HuXgLaB4h+mwreyLc9iZfJ2IHSgd5Scmw0liOva7RAVxSJzJwocvch9MPqmjFjqA
- x5JYyPjrReFLf5wISnNPcyoEHyY9Q9d6E4t8SK3C0cw0I6Pe7qFoqpmE8KLDZPgi/hpQmQa
- QTxcLXztZYngm98qtDB1g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:J8yoklCyqlg=:hLpGVWgERSNy5MGSdn+qjm
- D8e3w2VWz9INh3tN6cGgEW1EoiIGKv9yNUPH+Jfn2X+p+Znp6c5L6qNBkdur3ygTTp3QSo7jX
- ui+KtX1Q9UZeo5XOyCYX74TYkT1nAl3aeR2L/hlbd7p8UkAa6aVWukIdvX1HTUbCHcKMajl0g
- LPTMvbEVtluT6C++3AXl3bJHwen8Es2KXSP3pFU19qnKaa6Uf7HCW9YEWWKURDfmLHMQktLR1
- myGttJCoLuTzhR6rnYgMRSFh9NS0+hlXjZkMga8CV2mnQLobYHbxFyawRdX2LUp+Cbw9JZeHT
- MB8FnoV0hm+4wvLf2hg2KhvRit4jJO0S6W2CeDe5AzEldkU+1gBEQ9cgWuTQa9OrolHmH0n+I
- t9ODUBl5WwtLdiNN8DgbfZrdC0IyB0uSIPwOpHPHp0SQEsgKJ/JoldgQuSbcfAusVUKJYPacf
- /ERlBLXYkWRW3NFXRFwNSau4xc9DW5LOJ1OGP/Q121vJfOrfGZnJ3p+nU8yrVD+Si7jpio8yM
- 9gfs5m7EFx7rcnRRb9lGGfq7ZWaI2MSQxCL5CHBOTDiChqZ3mQJBtETe4mUFm6ydWof0en+RN
- 3mwd5Wb/YrE5W0odu1apkCmvHb5tc1OLISU+5/6vf8W9ZosJIT3OAuVCyzK5q5Rsrr106srw1
- AEDSdVbjPkcDild0vt3aj3ttzh1gbBCN1RCjy0ByujyMNeXsGUCN+NZUgmhia4vX1gOSSDOKN
- mLheyS7mmeInssJoqDEawnxBpnTUcuiKCCwom7z0ZJTINSrAO2e0Msm9BRLTrAaqB0lwDYafe
- XMrnAf2XjrkSRErfGSgS4w7tCPPG49BYsvDbtngKau6LW6p6mKxrybusOmUffsjdnhm9mIRIf
- DQMfGjGR/+lB1xGiYylqssUTyfBg22b246JmlqsAs7W7V2Bbh1M6dI4lzACfR9fkF9atoRKxA
- zIsHpzshCVsbJ8n/cjxcTpIAUWCQmcRulUDT/CiYBn8cRuvS+k79z
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+"Morian Sonnet via GitGitGadget" <gitgitgadget@gmail.com> wrote:
 
---8323328-1893583725-1560869022=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I fixed the problem with the test case. Please take another look.
 
-Hi Carlo,
-
-in the Git ecosystem, the abbreviation "LFS" does not mean what you think
-it means... Let's not use the abbreviation for anything else.
-
-On Mon, 17 Jun 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-
-> after b46054b374 ("xdiff: use git-compat-util", 2019-04-11), two system
-> headers added in 2012 to xutils where no longer needed and could conflic=
-t
-
-s/where/are/
-
-Otherwise the patch looks fine to me, thanks,
-Johannes
-
-> as shown below:
+> From: Morian Sonnet <MorianSonnet@googlemail.com>
 >
-> In file included from xdiff/xinclude.h:26:0,
->                  from xdiff/xutils.c:25:
-> ./git-compat-util.h:4:0: warning: "_FILE_OFFSET_BITS" redefined
->  #define _FILE_OFFSET_BITS 64
+> Calling
 >
-> In file included from /usr/include/limits.h:37:0,
->                  from xdiff/xutils.c:23:
-> /usr/include/sys/feature_tests.h:231:0: note: this is the location of th=
-e previous definition
->  #define _FILE_OFFSET_BITS 32
+>     git submodule foreach --recursive git reset --hard
 >
-> make sure git-compat-util.h is the first header (through xinclude.h)
+> leads to an error stating that the option --hard is unknown to
+> submodule--helper.
 >
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> Reasons:
+>
+> . Above call is internally translated into
+>
+>     git submodule--helper foreach --recursive -- git reset --hard
+>
+> . After calling
+>
+>     git reset --hard
+>
+>   inside the first first level submodule,
+>
+>     git --super-prefix <submodulepath> submodule--helper \
+>       foreach --recursive git reset --hard
+>
+>   is called. Note the missing --.
+>
+> . Due to the removal of PARSE_OPT_KEEP_UNKNOWN in commit a282f5a906 the
+>   option --hard is not passed to
+>
+>     git reset
+>
+>   anymore, but leads to git submodule--helper complaining about an
+>   unknown option.
+>
+> Fix:
+>
+> . Add -- before the command to execute, such that now correctly
+>
+>     git --super-prefix <submodulepath> submodule--helper \
+>       foreach --recursive -- git reset --hard
+>
+>   is called.
+>
+> Signed-off-by: Morian Sonnet <moriansonnet@googlemail.com>
 > ---
->  xdiff/xutils.c | 4 ----
->  1 file changed, 4 deletions(-)
+>  builtin/submodule--helper.c  | 1 +
+>  t/t7407-submodule-foreach.sh | 7 +++++++
+>  2 files changed, 8 insertions(+)
 >
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 963e1c58b9..cfa6e2220f 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -20,13 +20,9 @@
->   *
->   */
->
-> -#include <limits.h>
-> -#include <assert.h>
->  #include "xinclude.h"
->
->
-> -
-> -
->  long xdl_bogosqrt(long n) {
->  	long i;
->
-> --
-> 2.22.0
->
->
-
---8323328-1893583725-1560869022=:44--
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 0bf4aa088e..afaf0819c9 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -540,6 +540,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+>  		if (info->quiet)
+>  			argv_array_push(&cpr.args, "--quiet");
+>  
+> +		argv_array_push(&cpr.args, "--");
+>  		argv_array_pushv(&cpr.args, info->argv);
+>  
+>  		if (run_command(&cpr))
+> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+> index 706ae762e0..c554589e6f 100755
+> --- a/t/t7407-submodule-foreach.sh
+> +++ b/t/t7407-submodule-foreach.sh
+> @@ -421,4 +421,11 @@ test_expect_success 'option-like arguments passed to foreach commands are not lo
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'option-like arguments passed to foreach recurse correctly' '
+> +  (
+> +    cd super &&
+> +    git submodule foreach --recursive git reset --hard
+> +  )
+> +'
+> +
+>  test_done
+> -- 
+> gitgitgadget
