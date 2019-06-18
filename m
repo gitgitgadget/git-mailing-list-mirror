@@ -2,94 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 976571F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 17:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D05061F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 17:30:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729491AbfFRRUD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 13:20:03 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46791 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728572AbfFRRUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 13:20:03 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n4so317490wrw.13
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 10:20:02 -0700 (PDT)
+        id S1729754AbfFRRaN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 13:30:13 -0400
+Received: from mail-vk1-f201.google.com ([209.85.221.201]:51626 "EHLO
+        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729337AbfFRRaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 13:30:12 -0400
+Received: by mail-vk1-f201.google.com with SMTP id s145so6321571vke.18
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 10:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4kb/2Xl9Q85x7DnPBiv2/RXFW2CGInuFJr9sIGOoJzw=;
-        b=DIm/kRN4wKOJAjZf9bAOdKYpd/uYbmIxiYc5rfdpVzPMUw1ut3T/G5mZm5swTa+64Q
-         p2+v7q8TQjdG4aQlBA5IlnuLhoZFa6+anTJYBWmZOyNT5AE89MrFr9yj2sIw0JbJL479
-         IjVYJ6HcrAY3K1wSffZR/qst7n3OTsT9j3b4U34nlLrXI8k8lcux/uykMjdfMZ2E9VL2
-         PA7kVyhsIdLPD6L0D5Y2HIVpaFcP3Mp6ZHGPq6bf5UsoO2g63/3D+VrmbillhKmzCYqE
-         sFeKvP02bjYc5OpxP8MGiHk4Jaq2/1M1WoIdc6KY8YcBAYspnLykcCd1mvEuRFUeb0Zk
-         Yxsw==
+        bh=b0umn8G+CPm1rYozuFlsPvOyCC4fmGDH+q+zrbRkd8U=;
+        b=G85KNfATM8xNNI1xWMnEI6nXI66GkMsYOETNbPZBbP5V+gue3XRBrfpVwtkTcZeUjx
+         R6/lLcPnidYB3YaQAb4WesX9e72X4xm3/V7LdqFkcUrL1hQVQHQNwJBYIc8NKTEAmv4K
+         qh/18DzsDg01j75kLGYSRbX7zXtaUYMz1lqywyPXdBAajeOnDQyiZi78fwBeDFZjgGlL
+         /4851xbwWvV7hlqVuxcUtHuM/2Dc40V8RWyPhCb/ahbFHbcst0GkfKKGj7wkh27DcRNT
+         CFGqI0pmyLYsl/8lYzfhAWt5u7oWuC0M500cj7VgFZPAedQ5xOxuyOWxoQX6ZnWxEe11
+         f9qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4kb/2Xl9Q85x7DnPBiv2/RXFW2CGInuFJr9sIGOoJzw=;
-        b=gowZWzH1T/8Aey9J+O1wNijHVhY3uMoeoiJTMql+XdL5vJ9xf4P9EKDfE0TNOWytKP
-         D1ViBNeH3Pr6q6c8roBgCrtTf39aLLgHicF35QsmK1TikP1KGuakMS+vGu9tmiW4pqPz
-         V6UsuZ7kNLscAGHYEkjkXlzvlEb1ftFoxrHx8GCIDeFxo2uJUAU+g9WqR4bt3/6i+rgD
-         +Bp9sOb+gZosRmLA66ytBJKRVFRJmXgvU6NFGTmzK3PBIKcKnUsEf+5OZcDsDbRkUnnA
-         /Vtj2to05TbtUVDjHYlohrTg3DU+nWb0Hu9wyLeQAjb75mxedLSRYP9fJ1bhliQxuYSz
-         0XMQ==
-X-Gm-Message-State: APjAAAUe5hYtyI9ODY1Lak2RQsZP9Zes45qSRbGnTHdfwFqUdHlNnGoz
-        gKmnCWH8GqhFiJowKFRg5vbtFaTtlwlKBb0z7iUpsw==
-X-Google-Smtp-Source: APXvYqyRnqAUz8ve4IWOlk1yoGLzue2hRW3vPVBw+RSUInbyRv9y1Ev0PN8wjjCbb+2Mh0MvOXz6vOC0e0PcLhvJ7Hc=
-X-Received: by 2002:a5d:508a:: with SMTP id a10mr13130831wrt.59.1560878402073;
- Tue, 18 Jun 2019 10:20:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+dzEB=iOsfuZQ5Z8uXO+k6E3WczkLX64yWUpTm1NZBjdd47kg@mail.gmail.com>
- <CAPig+cTFfhBz+xiq6VAMNOW4OTvByHJ1g5oF=RTTh_buA+nUQA@mail.gmail.com>
-In-Reply-To: <CAPig+cTFfhBz+xiq6VAMNOW4OTvByHJ1g5oF=RTTh_buA+nUQA@mail.gmail.com>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 18 Jun 2019 10:19:50 -0700
-Message-ID: <CA+dzEBk5GbkuDde6nDw+nx1wL50zoswNE74EFvYJvrxPs7OZmA@mail.gmail.com>
-Subject: Re: windows: error cannot lock ref ... unable to create lock
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=b0umn8G+CPm1rYozuFlsPvOyCC4fmGDH+q+zrbRkd8U=;
+        b=nDa3+fZT2OcK/wyc6D6WSU499m8S+2QRk67zEZXHWa8y6ulRdX6VqXvxPNuJQlaNyX
+         xu9KaF1qep/82RXb42AK/9hqV6gNlvOXuIkp9sFcWZt6N3kzdTAwyIfvBTmLmOZs4Nbw
+         O1+J1lfiJpD2QsBfN/T8CoZ+S4EzoYP2tY9AtoftNCv8rhgVBVhZ4Z9W610fv/guGnC6
+         RAGyfrUBFXnhue4rqaOLl1BRjocLE2YlTOMANd4jqsO5LM55rjQyAoTl555sHiiXjez3
+         8wZdj/nTUP8E/p6alNXQUEH9kpvDo5dpm363mVCTX9AdUBQC2up7hqwEC5AqjW/h0mhU
+         gFCw==
+X-Gm-Message-State: APjAAAX8l76K1f1hSOCt6W93i+6dWXTydQJNbGkCxe1/F++BJKOSlyl7
+        pPMenobAJtSq4dFUGmlGD6yvzdDikITiRCHE24VT
+X-Google-Smtp-Source: APXvYqyRJfa+idkR3WrhqUUVU7YMweyE+mhcTbOb91WEBIt8sqbo1f2hw/LJ0LtoLG/047eet39444U/dpejMptyLXB+
+X-Received: by 2002:a1f:7dc2:: with SMTP id y185mr1052545vkc.51.1560879011018;
+ Tue, 18 Jun 2019 10:30:11 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 10:30:06 -0700
+In-Reply-To: <87o92v817k.fsf@evledraar.gmail.com>
+Message-Id: <20190618173006.182337-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <87o92v817k.fsf@evledraar.gmail.com>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: Re: [PATCH v4] fetch-pack: support negotiation tip whitelist
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     avarab@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 10:01 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Tue, Jun 18, 2019 at 12:39 PM Anthony Sottile <asottile@umich.edu> wrote:
-> > + git fetch origin --tags
-> > Unpacking objects: 100% (10/10), done.
-> > From https://github.com/asottile-archive/git-windows-branch-test
-> >  * [new branch]      master     -> origin/master
-> > error: cannot lock ref 'refs/remotes/origin/pr/aux': Unable to create
-> > 'C:/Users/IEUser/x/x/.git/refs/remotes/origin/pr/aux.lock': No such
-> > file or directory
-> >  ! [new branch]      pr/aux     -> origin/pr/aux  (unable to update local ref)
->
-> AUX is a reserved[1] filename on Windows. Quoting from that source:
->
->     Do not use the following reserved names for the name of a file:
->     CON, PRN, AUX, NUL, COM1, COM2, COM3, COM4, COM5, COM6, COM7,
->     COM8, COM9, LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, and
->     LPT9. Also avoid these names followed immediately by an
->     extension...
->
-> The default Git "ref store" is filesystem-based, so a branch named
-> "aux" is problematic. Other ref store implementations would not be
-> subject to this limitation (though I'm not sure what the state of the
-> others is -- someone with more knowledge can probably answer that).
->
-> [1]: https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file#naming-conventions
+> > @@ -230,7 +246,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+> >  	if (args->stateless_rpc && multi_ack == 1)
+> >  		die(_("--stateless-rpc requires multi_ack_detailed"));
+> >
+> > -	for_each_ref(rev_list_insert_ref_oid, negotiator);
+> > +	mark_tips(negotiator, args->negotiation_tips);
+> >  	for_each_cached_alternate(negotiator, insert_one_alternate_object);
+> >
+> >  	fetching = 0;
+> 
+> Here we blindly add objects found in an alternate repo. I found and
+> debugged this with this:
+> 
+>     diff --git a/fetch-negotiator.h b/fetch-negotiator.h
+>     index 9e3967ce66..cbe71c9c8d 100644
+>     --- a/fetch-negotiator.h
+>     +++ b/fetch-negotiator.h
+>     @@ -33,2 +33,3 @@ struct fetch_negotiator {
+>             void (*add_tip)(struct fetch_negotiator *, struct commit *);
+>     +       int done_adding;
+> 
+>     diff --git a/fetch-pack.c b/fetch-pack.c
+>     index 3f24d0c8a6..6b43b4f8f1 100644
+>     --- a/fetch-pack.c
+>     +++ b/fetch-pack.c
+>     @@ -238,2 +238,3 @@ static void mark_tips(struct fetch_negotiator *negotiator,
+>                                         &negotiation_tips->oid[i]);
+>     +       negotiator->done_adding = 1;
+>             return;
+>     diff --git a/negotiator/default.c b/negotiator/default.c
+>     index 4b78f6bf36..4e45f05f25 100644
+>     --- a/negotiator/default.c
+>     +++ b/negotiator/default.c
+>     @@ -137,2 +137,4 @@ static void add_tip(struct fetch_negotiator *n, struct commit *c)
+>      {
+>     +       if (n->done_adding)
+>     +               return;
+>             n->known_common = NULL;
+>     @@ -166,2 +168,3 @@ void default_negotiator_init(struct fetch_negotiator *negotiator)
+>             negotiator->add_tip = add_tip;
+>     +       negotiator->done_adding = 0;
+>             negotiator->next = next;
+> 
+> Perhaps something like that with an assert() is a good idea for the
+> negotiation backend code in general? It seems rather fragile to depend
+> on there being no other codepath that calls add_tip() again after some
+> other code (--negotiation-tip=*) that expects it not to be called again.
 
-Oh of course, totally forgot about the special files on windows.
+Thanks for spotting this bug.
 
-Thanks for the quick response and helpful link!
+There is already some defense from add_tip() not being called
+unexpectedly - see negotiator/default.c and negotiator.skipping.c, which
+sets add_tip to NULL when next() is called.
 
-Anthony
+I can see that this doesn't help in this case, when we want to declare
+done_adding but we haven't called next() yet, but I don't think that
+this API layer is the right place to prevent that.
