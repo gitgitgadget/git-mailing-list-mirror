@@ -8,101 +8,93 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEBEF1F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60E4A1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729202AbfFRMYK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 08:24:10 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40697 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbfFRMYC (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729123AbfFRMYC (ORCPT <rfc822;e@80x24.org>);
         Tue, 18 Jun 2019 08:24:02 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k8so21427233eds.7
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:24:02 -0700 (PDT)
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45622 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbfFRMYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 08:24:00 -0400
+Received: by mail-ed1-f67.google.com with SMTP id a14so21400955edv.12
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
-        b=iCYeK2NIOk2RA9Gw2WXbdf0WxZ6Hsy1fQ2uUCwakKxfHwLLIEzBPYVdlP9u328onC/
-         4N8TbQUjafcv/GBmOo86L4+8FysydQOs1/FEXtPHO9orTFkG1DWpa1TLAhUquLyEyfg0
-         W5e7YA6sM8NMuPqI048f5HVPSCVhBKgBEhLMXM7hTvWrG/zgKkrYeoaFzJNWvlVS0AVb
-         UPxGyuOJ1aXOj01AtQ2o79n2VAeOfaLc/zLK6OcJ8lnymC+cENLs0xpFLgMNRYdTgTYa
-         ouHRKqFB9TgsmHa3PKWubAbBQypKk9uoE9cFO6FLScPv3Z4EW2LQ4HR+Sl8qMkN1pRDx
-         9ZdA==
+        bh=LoCuUzbLrTlxvzT3SSXNCTd+NcF5pCsvxAgW+KCAJpY=;
+        b=kQSZg2MgE2DVKAnQR2+Aa4D3KIIbeavEAzBZ4Jy/RigRFV9Qpnn2W/bowYIZHd4Rg8
+         GdbStMU/cEc8xxNudJfZDYU1l3QQdf81KqAITqw72G05cQOVLjlHiMkUxWlVFBG/zCrj
+         QrAFf/vF8O94/DzaqnGPw5uG4UFvS43oW/2WHleRkQpbRz19TlM7SXdzE/PPe+5mqxuO
+         TUnoVx8EI+zTucMaYpRFSjGvvRy2Nqrrq+lZffu/k1duTJ1jJV5SE0Wr4Tzb8A/LxYOT
+         AmSH1Wo6HG/2LcXIbr6heJ/NE0NdZDKCmPOxJlgOESvXlRq/jHebVFlb83AWbAkgnoVB
+         pJaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
-        b=QSMSlmT3bc43ISNCucCsLCqGx4FgsCLe4rIR2nn8UIOtStS3hzBJKOwdC5tRF7VwrR
-         drO6Lj2yT/NavJ1djM6bs4M6NeZrF+H4m1L7ETjiCyoEk16gLNuZV5Rq0LTYx3fE8jaH
-         biZCATCEXUQb3GdIJ4sOK8VbvhfGFvzlJlCbUsN8a++pPU2cgQRYlh8HNranNwhPUUB/
-         aPqiaxzernAG7fBXNQQX0Gy9pdUGRSe7LU99RDvftW+fl97p3zGBmqVuHsturMY0hw39
-         wNFUQnlPnX31ypZpCc9/+TDGjXORhBWoKIKOjQJ5DKCW3+qJj5aL8zlyTi7UOOpQYCHL
-         obZw==
-X-Gm-Message-State: APjAAAWnfrNRx5+7OEXOwxXpgsaJkUeBI4lXYYDoW70XZ/tL59AfmNHu
-        krVXbBqjUjloWwOxV8xws1rO0eU/
-X-Google-Smtp-Source: APXvYqzgssSrvUTrt3l2vGmLt1zj6gDxv1ET4Jp7MoO4orvHVSXP0ok5mXmht6OYzPxOPLI09Namtg==
-X-Received: by 2002:a17:906:a98b:: with SMTP id jr11mr35427013ejb.224.1560860641691;
-        Tue, 18 Jun 2019 05:24:01 -0700 (PDT)
+        bh=LoCuUzbLrTlxvzT3SSXNCTd+NcF5pCsvxAgW+KCAJpY=;
+        b=aOJ3xLrSXTXlNtgK04GTUQRl0ZHxkzNLIw1vOlUsEiZOI367b+CfpN7u72oUBgyjNq
+         YC3jl0wMSqZEX2ICWNcc3DSlP7kTcmuOz1INaaE+1710Qr7m+/HTNERfDetuwE7LNw2a
+         sroYA9rx0lt7usvndyckzXQZNP5wzEvQnCHVHXD4Cmwf6HYc8uPCPoYETyUPw422vdDh
+         5N+/LVUbTkJJMTVXTIOlUOAXSuz95GluZmnNZr6GPdjbEOJzg+Hwy5Atbpzh9qVEbHpz
+         8uOgxFdg5dIPXyLds4DjBQPw9jsqtEH1mdL2m7jRAKX/Foh/zPBuLau85vyem7jFPWi6
+         KFUw==
+X-Gm-Message-State: APjAAAVfONdSIfE7XAOQXUrpUXOSob4pkTEaHbNRn8wB7K3Gto8KwacR
+        YK+CPLPECJixcvzP/IxIFSIVLy4H
+X-Google-Smtp-Source: APXvYqxP/0xcb2xjMA/RiYnEGCf7RjkDqvSixpjPOIh6BVN5ltDtBPY1IE/czlYrNfr8Wxrhocto6g==
+X-Received: by 2002:a17:906:b6c2:: with SMTP id ec2mr31340922ejb.200.1560860638929;
+        Tue, 18 Jun 2019 05:23:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 10sm2736974ejn.8.2019.06.18.05.24.01
+        by smtp.gmail.com with ESMTPSA id b53sm4732262edd.45.2019.06.18.05.23.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 05:24:01 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 05:24:01 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 12:23:45 GMT
-Message-Id: <b23651a357db822aabb0b2e65dc962829a117645.1560860634.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 05:23:58 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 05:23:58 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 12:23:41 GMT
+Message-Id: <bda1c270c1248fe947183bbb04cb7c55f3a74941.1560860634.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 08/17] msvc: define O_ACCMODE
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 04/17] obstack: fix compiler warning
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This constant is not defined in MSVC's headers.
+MS Visual C suggests that the construct
 
-In UCRT's fcntl.h, _O_RDONLY, _O_WRONLY and _O_RDWR are defined as 0, 1
-and 2, respectively. Yes, that means that UCRT breaks with the tradition
-that O_RDWR == O_RDONLY | O_WRONLY.
+	condition ? (int) i : (ptrdiff_t) d
 
-It is a perfectly legal way to define those constants, though, therefore
-we need to take care of defining O_ACCMODE accordingly.
+is incorrect. Let's fix this by casting to ptrdiff_t also for the
+positive arm of the conditional.
 
-This is particularly important in order to keep our "open() can set
-errno to EISDIR" emulation working: it tests that (flags & O_ACCMODE) is
-not identical to O_RDONLY before going on to test specifically whether
-the file for which open() reported EACCES is, in fact, a directory.
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/msvc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ compat/obstack.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/msvc.h b/compat/msvc.h
-index 04b4750b87..d336d80670 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -19,6 +19,8 @@
- #undef ERROR
- 
- typedef int sigset_t;
-+/* open for reading, writing, or both (not in fcntl.h) */
-+#define O_ACCMODE     (_O_RDONLY | _O_WRONLY | _O_RDWR)
- 
- #include "compat/mingw.h"
+diff --git a/compat/obstack.h b/compat/obstack.h
+index ced94d0118..ae36ed6a66 100644
+--- a/compat/obstack.h
++++ b/compat/obstack.h
+@@ -496,7 +496,7 @@ __extension__								\
+ ( (h)->temp.tempint = (char *) (obj) - (char *) (h)->chunk,		\
+   ((((h)->temp.tempint > 0						\
+     && (h)->temp.tempint < (h)->chunk_limit - (char *) (h)->chunk))	\
+-   ? (int) ((h)->next_free = (h)->object_base				\
++   ? (ptrdiff_t) ((h)->next_free = (h)->object_base				\
+ 	    = (h)->temp.tempint + (char *) (h)->chunk)			\
+    : (((obstack_free) ((h), (h)->temp.tempint + (char *) (h)->chunk), 0), 0)))
  
 -- 
 gitgitgadget
