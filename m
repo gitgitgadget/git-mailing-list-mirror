@@ -2,123 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB581F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 01:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65BAC1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 02:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726047AbfFRB3w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 21:29:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60284 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725829AbfFRB3w (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 Jun 2019 21:29:52 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:8174:fea0:25b6:f16a])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6A325605B2;
-        Tue, 18 Jun 2019 01:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1560821389;
-        bh=njE42RNlZlJ4NWsjC9T6THavUyJCLYiW/bJFsKyvNLc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=PtL058eJKgd+mHXYI1hPVZIylz4Y5RU637gAZO0xASxeQl5euGjN5EJn7ukZQCONY
-         BXC+BmuzM70WDZ45CEKo478D3eSivyp2iShpozjpcxW7YDjrNtIVIQMD1Ev0K3LMdj
-         w0/mFHu+VRIRd797xOyv/rwxLfOq+Aem+/Zna1stxkJV9Ut6+QwwmGGY4ccQ/gDpIZ
-         bpnu70uGw4HMvto37dTHyGAZJ3XAQgHRYWX8TxsDsLuiTH5tpP9YEv87wh1WjodXvQ
-         56jZwj1FNWHHZl9GMgDZ9FRh67htMud8CZ3hEUAYwwH7uZYv530VnpWH+iic+w+9Cd
-         Knz8NS3pglqWOJULdM1Rp+sTmrFWxBB1QXpkvWIzeQu0T5RJ/JW8O/XhKigNez2e+5
-         i0crmXxzP7fOPIp9KwZ1uelfIBEb4AwpaCOiMNf1j23scvFI+Rso8ZvpmCWj0MYDzi
-         Y0riQNbSIVKqHKMAhQA5slNwuM5KI6+xO2xHlDF1gpIKitleZI2
-Date:   Tue, 18 Jun 2019 01:29:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/10] t: add helper to convert object IDs to paths
-Message-ID: <20190618012943.GB8877@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190616185330.549436-1-sandals@crustytoothpaste.net>
- <20190616185330.549436-2-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1906172102180.44@tvgsbejvaqbjf.bet>
+        id S1728166AbfFRCmI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 22:42:08 -0400
+Received: from conssluserg-03.nifty.com ([210.131.2.82]:61518 "EHLO
+        conssluserg-03.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726151AbfFRCmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 22:42:07 -0400
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45]) (authenticated)
+        by conssluserg-03.nifty.com with ESMTP id x5I2fuVf015260
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 11:41:57 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com x5I2fuVf015260
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1560825717;
+        bh=Y55/H7jPP63m1m5AfK5AG4A9bgpt7HAK35yoXyZRrcQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=YHeiHx/ZN1oMftYOnpWKVCR88kzeTH3telpXs23vdTHcGiKm/ZLQCdtka8mMph0QW
+         5C7uYEHjl2T0mXmjIVB2NTeOsFuEURut2NzlUfI7v2zg0XV776YZv2wGUakmBYeUWj
+         qaKeKHE//K571IUhnGpsQunl6pw2xgbz0RH/WScEy4DI1fToABo4wcnN7eG26aVePS
+         qcjdJ/3CKN7N0i9yjkQ3wmVPLyuiuP/UoazyOxUsAKMI5jhHcEU0pYO8uYymJgQo8o
+         WDokCcwhuzowRlFa1tyZFeBpv192rrEX2L4K62aLlAv9PvcOwzLW7OMCFQV/sZrOmZ
+         fZ9bCByzPLHkg==
+X-Nifty-SrcIP: [209.85.217.45]
+Received: by mail-vs1-f45.google.com with SMTP id k9so7616950vso.5
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 19:41:57 -0700 (PDT)
+X-Gm-Message-State: APjAAAVeeYk98MPVKYq6SYZ/21eYpfm3qIoCpYGS+dhDy5rMQtez06lC
+        dxVLpcpTJpR5NkJ65V/BDwoWcfCzg+6k+88le18=
+X-Google-Smtp-Source: APXvYqzVT3XQYGxm6kmwjq5QMZ5CsWaW7N3bUFmpbeRDceh09piXXI+eXwrgUeh/wNl62k1piTyitUzzoiQX4eFnC5U=
+X-Received: by 2002:a67:de99:: with SMTP id r25mr62315591vsk.215.1560825715984;
+ Mon, 17 Jun 2019 19:41:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="f2QGlHpHGjS2mn6Y"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1906172102180.44@tvgsbejvaqbjf.bet>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
+ <20190614150758.GA22984@sigill.intra.peff.net> <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
+ <CAK7LNATRQWz9CvosEDzNHCZHaxpzozAjGyo5VSKpQhui9zhSFQ@mail.gmail.com>
+ <CAP8UFD3_kKvBs=rMvBp-K-UPD5mCqVsHRZ1VqGYY7uR8G+H8SQ@mail.gmail.com>
+ <xmqqtvcoruda.fsf@gitster-ct.c.googlers.com> <CAP8UFD3EaR=PRsN9sEEAOOdqQxPeZ1wiiWrVeBKQv8AW1zY1ig@mail.gmail.com>
+In-Reply-To: <CAP8UFD3EaR=PRsN9sEEAOOdqQxPeZ1wiiWrVeBKQv8AW1zY1ig@mail.gmail.com>
+From:   Masahiro Yamada <yamada.masahiro@socionext.com>
+Date:   Tue, 18 Jun 2019 11:41:19 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARd7AeaBqFh3AgfbcjcgjGsGpK=0xK_bgpbe9FevA6qHA@mail.gmail.com>
+Message-ID: <CAK7LNARd7AeaBqFh3AgfbcjcgjGsGpK=0xK_bgpbe9FevA6qHA@mail.gmail.com>
+Subject: Re: 'git interpret-trailers' is tripped by comment characters other
+ than '#'
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jun 18, 2019 at 5:08 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Mon, Jun 17, 2019 at 7:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> > > On Mon, Jun 17, 2019 at 6:33 AM Masahiro Yamada
+> > > <yamada.masahiro@socionext.com> wrote:
+> > >>
+> > >> On Sat, Jun 15, 2019 at 5:41 PM Christian Couder
+> > >> <christian.couder@gmail.com> wrote:
+> > >> >
+> > >> > > I do wonder if the trailer code is correct to always respect it, though.
+> > >> > > For example, in "git log" output we'd expect to see commit messages from
+> > >> > > people with all sorts of config. I suppose the point is that their
+> > >> > > comment characters wouldn't make it into the commit object at all, so
+> > >> > > the right answer there is probably not to look for comment characters at
+> > >> > > all.
+> > >> >
+> > >> > Would you suggest an option, maybe called `--ignore-comments` to ignore them?
+> > >>
+> > >> Since 'git interpret-trailers' already ignores lines starting with '#',
+> > >> is this option true by default?
+> > >
+> > > Sorry, I should have suggested something called --unstrip-comments or
+> > > --ignore-comment-char that would make 'git interpret-trailers' stop
+> > > stripping lines that start with the comment character.
+> >
+> > So, to summarize:
+> >
+> >  - As the traditional behaviour is to strip comment, using the
+> >    hardcoded definition of the comment char, i.e. '#', we do not
+> >    switch the default.  Instead, a new command line option makes
+> >    it pretend there is no comment char and nothing get stripped.
+>
+> Yeah, that's the idea of --unstrip-comments (or
+> --ignore-comment-char). I am ok with preparing and sending a patch to
+> add that, though it is not urgent and it would be nice if we could
+> agree with the name first.
+>
+> >  - But the core.commentchar that does not override hardcoded
+> >    definition is a bug, so we'd fix that along the lines of what
+> >    Peff's patch outlined.
+>
+> Yeah, not sure if Peff wants to resend his patch with a proper commit
+> message. I would be ok with doing it if he prefers.
 
---f2QGlHpHGjS2mn6Y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2019-06-17 at 19:05:03, Johannes Schindelin wrote:
-> I guess it does not *really* matter all that much, but this does spawn a
-> new process (and I think it actually spawns 4 on Windows, for reasons, and
-> spawning processes is super expensive on Windows).
->=20
-> We might actually want to think about using something like this instead
-> (which admittedly looks a bit like gobbledygook to the uninitiated, but it
-> definitely avoids any spawned process):
->=20
-> test_oid_to_path () {
-> 	echo "${1%${1#??}}/${1#??}"
-> }
+Sounds good to me.
 
-I'm fine making that change. The original design was because we had
-other code that used that technique and I didn't see an obviously better
-solution. Now you've provided one and a good justification.
+These are separate works.
 
-I think the complexity isn't too terrible since it's a one-line function
-and the comment adequately explains the behavior so people don't have to
-parse it to understand it.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Since the second one is a bug-fix, it can go in first.
+(Peff's patch works for me)
 
---f2QGlHpHGjS2mn6Y
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+The first one is a new feature, so we can take our time
+to decide a preferred option name.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0IPocACgkQv1NdgR9S
-9osJKRAAtvsJE25aop3VP0Yd5OZnyiskKxtLNfEQwIhAvpTuc4nmX5rX5/1QKu4G
-eBCnvOGQPUDTvFdtCnUOrzCavBlrz0shTM9Roobxz908wvWSQn41lGTwZvOXdmb7
-36La/ynyvy/lyEtkJANPjhp8l2F43zJzvuEqwBd8oGcpZl0YRDTTboaBqwBkFOPS
-m26O2jZs7qX0jqlHY8UNOQLeWYKkD+KIcu852A8ZqgFTXBSwEnzwphbZ49/rVxJk
-Np2tbxK+ykPe5CWQLbeIRvhRHuI0/4UU8x0y6yca4Avmbh6QKWjuB+m60EJ9MxVA
-Iu8zSfejZvB9+xo9bQjgSe3Iafry+my5HVjJUrdv2TH3IXlcZOyP59q0xajL+e8q
-dI3g3GKYKvhn4bBL3GWM17nmSoIdpgEPw/VVlTX2byzA1t3yizkRRPtV3w64iNQ5
-3v/fX6sEJIAVwV8JOQJmdShO+Ix0KPPd43McD300dnsJYtCZCarAxWmU0GllOpBm
-i6mZp2H0njBhhvQVbBDLNsVo4XKk6uWgOnWFD3yRpKSPAKyOHe0cX6llzYWUOeWs
-w6vf61qSsokAdf2Bbro+7pEhYDduh8rVT/19tLVtZ0MARpUGXtCvEkltaTVylukb
-bEwFkEeRkHk5KnyKycQ+ReAR9hj7WiTmOXKz8yHDDgipdFmsBeU=
-=beqa
------END PGP SIGNATURE-----
 
---f2QGlHpHGjS2mn6Y--
+
+
+IMHO, --unstrip-* is a little bit confusing.
+
+interpret-trailers does not strip anything from the output.
+
+It is just like interpret-trailers does not take comment lines
+into account when it determines the boundary between the commit
+message body and trailers.
+
+
+Just a idea:
+
+--[no-]ignore-comments
+
+   By default, comments (i.e. lines starting with '#' or a character
+specified core.commentChar)
+   are not taken into consideration when interpret-trailers determines which
+   parts are trailers.
+   Pass --no-ignore-comments if you want to treat all lines as the message body.
+   --ignore-comments is the default.
+
+
+
+Please feel free to put your ideas on the table!
+
+
+-- 
+Best Regards
+Masahiro Yamada
