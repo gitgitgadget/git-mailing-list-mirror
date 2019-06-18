@@ -2,121 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2BB01F462
-	for <e@80x24.org>; Mon, 17 Jun 2019 23:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 274941F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 01:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbfFQXvA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jun 2019 19:51:00 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:36697 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727731AbfFQXvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jun 2019 19:51:00 -0400
-Received: by mail-pf1-f193.google.com with SMTP id r7so6514577pfl.3
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 16:50:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AxRSdoUTMMDfB637VEVYY9Ona3+7Ufe1ksHli7s8I/U=;
-        b=Z/iNQPvm+q2SVovkOyUezVzZQj1HExs8y6wUjS5Ayw0UWvnla2fZ390/qXfilCwKJv
-         UYj4NNWeaSEp9wLSmzNevOcGSbiZD9Xe+f0Q+53gHlnrVatDxiqQBP9msbbfbwyVgcMo
-         5wIDC3fp2+6YB4hkjTZ5Qo8gEqMws58xCZoAIfZEC6P1ONsc+VA4qlxijZQSlSuKfM0p
-         5B/z0hSSYafypPMYGTjerreAvgZ3ZX+8DrB8Y83dTjtYFIcqPXyFhBpCXtLlgtlE9MFg
-         nONkOW7OyyTJ6h91RyjobYbD0+ZNYDNiAljg26Q3dTY8v3ED4Gzfj/sTaU8i1oGOwCPL
-         YFnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AxRSdoUTMMDfB637VEVYY9Ona3+7Ufe1ksHli7s8I/U=;
-        b=ZlesqJnBsg/ePqpgmezCdfyl2BDGP1WfOZwshAWJCBdFphjGdiN8VuttF2UwF9kXR1
-         zXwc94UO+eX7BPXjELmUHmJMU86JsFfdOzqmVN4EYyt3e/nWkt9Ba3dl2kK0N0IAeiql
-         t0s7jM0hI6w2+oDfhi2cPjTrAFxvUCsAyVHRxnbe+JTaanBqMgZ+87oheBFW6qW6pf8s
-         r/e862ZSXviEea6qmzGBj/GsyyS76F35REU+J2wxSo0sZnVXqrpHgvXFoM0Ox2atX7Uo
-         LjmaUylGG6Gav42BAO5+gseW0jLRsa58Idra4TdMzI35ZDIYtDUXrd7A7qB4UxOJGWXG
-         S8FA==
-X-Gm-Message-State: APjAAAXjagAQ/7J/k80ardlzrIp2Y5CeXt4G7/krE/1fqMNM8HZ3Q5Vd
-        PRzITA6C2eqLPJsdzdk/Tna/bgqAMfU=
-X-Google-Smtp-Source: APXvYqzXMcBVMyZisXWLBGpHJlkX2KURhu0sJD7/pvCUJVA/gd8aBotkOgKTfrrb5P2PyTqImpPd6A==
-X-Received: by 2002:a17:90a:71cb:: with SMTP id m11mr1821257pjs.40.1560815459000;
-        Mon, 17 Jun 2019 16:50:59 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id z4sm12935043pfa.142.2019.06.17.16.50.57
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 16:50:58 -0700 (PDT)
-Date:   Mon, 17 Jun 2019 16:50:53 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] documentation: add tutorial for revision walking
-Message-ID: <20190617235053.GD100487@google.com>
-References: <20190607010708.46654-1-emilyshaffer@google.com>
- <xmqqef41mbmd.fsf@gitster-ct.c.googlers.com>
+        id S1726489AbfFRBZa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jun 2019 21:25:30 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56924 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbfFRBZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jun 2019 21:25:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B804276062;
+        Mon, 17 Jun 2019 21:25:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0EggMDeoyS8ZBRqv/8aYDlp/xdI=; b=rxLexq
+        Ioce52TegyY+ms4Tk5Zx08jBGtUiXc25GU9+kZityQq3HXvKmH7sWiZHo1FTMweb
+        1obQV5SVBuJP07ZUDr5KUkJaMdhlsymhvpdpex6NLmD5x7TvR9cQahbLFE5E1MZN
+        euzqNGzHXjHf3XdgvAT1xh5GNqQXQ3Oi3wnOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eE+JsptG8FsIidgOi5wpeAVeKvdaTkNs
+        myXR1Hx6qRkjSG/OYPNxOZ+34habAp9HTo+PJ4WbTl4pjO1/4BQXXXHjd01jbiRw
+        mvhXsXyP86jTyctckOhfsyr5JIGTAAsoIlv7jMLGhr3y14Hp5zGnOHrK37Gtj+0Q
+        m+wBzAx/9/M=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AFF9676061;
+        Mon, 17 Jun 2019 21:25:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DF2077605C;
+        Mon, 17 Jun 2019 21:25:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
+        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
+        pclouds@gmail.com, peff@peff.net, emilyshaffer@google.com,
+        matvore@comcast.net
+Subject: Re: [PATCH v4 00/10] Filter combination
+References: <20190601003603.90794-1-matvore@google.com>
+        <cover.1560558910.git.matvore@google.com>
+Date:   Mon, 17 Jun 2019 18:25:22 -0700
+In-Reply-To: <cover.1560558910.git.matvore@google.com> (Matthew DeVore's
+        message of "Fri, 14 Jun 2019 17:40:06 -0700")
+Message-ID: <xmqqblyvsn0d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqef41mbmd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2998014-9167-11E9-8ACB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 10, 2019 at 01:25:14PM -0700, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > I'll also be mailing an RFC patchset In-Reply-To this message; the RFC
-> > patchset should not be merged to Git, as I intend to host it in my own
-> > mirror as an example. I hosted a similar example for the
-> > MyFirstContribution tutorial; it's visible at
-> > https://github.com/nasamuffin/git/tree/psuh. There might be a better
-> > place to host these so I don't "own" them but I'm not sure what it is;
-> > keeping them as a live branch somewhere struck me as an okay way to keep
-> > them from getting stale.
-> 
-> Yes, writing the initial version is one thing, but keeping it alive
-> is more work and more important.  As the underlying API changes over
-> time, it will become necessary to update the sample implementation,
-> but for a newbie who wants to learn by building "walken" on top of
-> the then-current codebase and API, it would not be so helpful to
-> show "these 7 patches were for older codebase, and the tip 2 are
-> incremental updates to adjust to the newer API", so the maintenance
-> of these sample patches may need different paradigm than the norm
-> for our main codebase that values incremental polishing.
+Matthew DeVore <matvore@google.com> writes:
+
+> I had to rebase this onto the latest master rev. master now has the patch which
+> disables the sparse:path filter, and v3 of this patch set has conflicts with it.
+> This version does not so it can be patched in and tried out by others.
 >
-I'm trying to think of how it would end up working if I tried to use a
-Github workflow. I think it wouldn't - someone would open a PR, and then
-I'd have to rewrite that change into the appropriate commit in the live
-branch and push the entire branch anew. Considering that workflow leaves
-me doubly convinced that leaving it in my personal fork indefinitely
-might not be wise (what if I become unable to continue maintaining it)?
+> I have re-run the test suite on each commit. Sorry for the spamminess.
 
-I wonder if this is something that might fit well in
-one of the more closely-associated mirrors, like gitster/git or
-gitgitgadget/git - although I wonder if those count as "owned" by Junio
-and Johannes, respectively. Hmmmm.
-
-Maybe there's a case for storing them as a set of patch files that are
-revision-controlled somewhere within Documentation/? There was some
-discussion on the IRC a few weeks ago about trying to organize these
-tutorials into their own directory to form a sort of "Git Contribution
-101" course, maybe it makes sense to store there?
-
-  Documentation/contributing/myfirstcontrib/MyFirstContrib.txt
-  Documentation/contributing/myfirstcontrib/sample/*.patch
-  Documentation/contributing/myfirstrevwalk/MyFirstRevWalk.txt
-  Documentation/contributing/myfirstrevwalk/sample/*.patch
-
-I don't love the idea of maintaining text patches with the expectation
-that they should cleanly apply always, but it might make the idea that
-they shouldn't contain 2 patches on the tip for API adjustment more
-clear. And it would be probably pretty easy to inflate and build them
-with a build target or something. Hmmmmmmmmm.
-
- - Emily
+Thanks.  Will queue.
