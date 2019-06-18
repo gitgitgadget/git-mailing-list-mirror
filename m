@@ -2,87 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA331F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 04:25:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E342D1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 06:45:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbfFREZN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 00:25:13 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:39925 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbfFREZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 00:25:13 -0400
-Received: by mail-wr1-f47.google.com with SMTP id x4so12290525wrt.6
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 21:25:12 -0700 (PDT)
+        id S1728942AbfFRGpl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 02:45:41 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45440 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbfFRGpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 02:45:40 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r1so7053666pfq.12
+        for <git@vger.kernel.org>; Mon, 17 Jun 2019 23:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=lrXQgNInbq1GCKkQ3Wj53zzBq8S9FqNXgIQAzO/ctRw=;
-        b=G9Qbz8iDlRDnkIi67497dB/hef5ERF6idNtOP67fPkXu36yqOsiP4YfyqtLzCVr/Ww
-         BAL3BzlLW2VHNLkIoSUUyB/c2NNsH8WmAZQo7KzgCC+itpsIN9AM93Aoz9jn9F8fy1Mr
-         /WPOvPSqxVd/k8IbrDbvfEqzs74/LkblXFruKfSW6rVCG6h6FW793G0s66yYQ1kcPvDM
-         HwTLwakDiB8b9WqvuB9s4rLLUD6xFsYzxaN4axnVl+E5E+dZDVzGg8e/2M1bt1sCXAsl
-         wLs18RSyhXs5QrQDD+EWfGlqCMlCicWXzbLRoLB28tnBvGidP1NR/9Ey8IB9rMY0fUTF
-         x3hg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BslaF+mayGjuWnY2C4l5U2WgQoDWw8/dmAUHzLppeXE=;
+        b=AJjMmtUzl9pEklNDcJbpyl7Kbmn1Xp/+a0uW3lj+dL2lKYh4Gwmu3Ci7ivv+xY6Apu
+         pvN40BgC+KfvSuZ4GLqlm/SNJtWGxNOBVPT5OMb44qJxbNfdTWRQPQbkp8kyUESqdOn5
+         aSPsaQaapuCpDTxwW7DEv5yeBVmpdfu+78Zbg+sRbzS2hFZI92LXjIINkUlQ3+oo1OCH
+         Swl98kF0amHHhdRRTD3YEf/4BC1sXZ5UvvTHz07/wBB+iZckMZMfg5W66My2Zlyx4YTe
+         6ZL0eKhZuPjVWf1n+lUgVxpNOMczwuwEoKIQF5R5TaeKw3oUEfYCMffnAi2kuSX4sNQF
+         xGOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=lrXQgNInbq1GCKkQ3Wj53zzBq8S9FqNXgIQAzO/ctRw=;
-        b=QQdNU69uQYqcg3+Pn7c2qNkT8+B+TG6UzNUmE0yGL6W6hc+fr+PFcPvT/+telw1Svg
-         qx70mEQzx9IY8IJy9kApQc9mqCVeT9GlLrQ3YQOyJj+EhqbRaqs/lWx8RoZKUfR/EVK2
-         7jdFCh1flt540EWr7pRRv2nWfzaYbzYrjRm0mj3ES+PF//MiOrckZvpUv1aMskSnrDlC
-         ABwgl+sss0VYkyLr6cbIQN2/20G3EF70BZQH77sjZKpEaCIN3XdV15RQwapRRrts1j5A
-         +iHqnjTGidL5X0VBEHf7ZhaQaHGblR8YnfmFA0W5Pad5kYqY+4MiMPO7z4n4/2SbRxmO
-         jM9g==
-X-Gm-Message-State: APjAAAWmh+eSUYhD2EDvY5+HwD5Okddx0NamOkXflASoG1RC5lwkPhdz
-        4i1bpW18aNOfQOYK6ztuYvZUBzX4D2rqV6nD1UTPnt5Gi6o=
-X-Google-Smtp-Source: APXvYqxbgk7T8oCA8UqzHcGde19bgr3HmjtHdde7O5+gh4P1HCpb3ETdIrCKeP4rMRytC+izkhRIU5c4y92ck6WZK0c=
-X-Received: by 2002:a5d:4008:: with SMTP id n8mr19776255wrp.353.1560831911669;
- Mon, 17 Jun 2019 21:25:11 -0700 (PDT)
-MIME-Version: 1.0
-From:   Matthias Goerner <enischte@gmail.com>
-Date:   Mon, 17 Jun 2019 21:25:00 -0700
-Message-ID: <CALB88e9n7raRET8Av-uSih8Xj=iAaUYrVx_+cOR2Bf8zYGQaKw@mail.gmail.com>
-Subject: Should sparse checkout be extended to clone, fetch, commit, and merge?
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BslaF+mayGjuWnY2C4l5U2WgQoDWw8/dmAUHzLppeXE=;
+        b=ejZjyV/qJhe5W+KYZyB91P8/FQxr5m5hRBosCasfD4xUTG3FlKZDHNKLKGbU3D5Nl3
+         0wzhVJsmNN9ReO3Z7j0Xcfsx8m+f4ydJf/IXPHg7aZbHJgNENDUCPUrPMDEQkF7zNvXx
+         6awJ7zOKiZYi/kBFmOfqiMWrsSdFk6uNID3uJcEzRyfEkbyEEuhLAZveU44/gOx+l1/M
+         PMg/k5PY9+azEzwLi+IEwXZ00A9Jc0yLEOrUbdN1i7qNS8hDNs1Z+IgohgIScX52ogz8
+         GRTJn/Kkn5H2dnhfPgK8PwRRUxG5zw17hmtlu+xFWzCLwpHDR2hgKyP4HXQOh16bdKEl
+         cBXg==
+X-Gm-Message-State: APjAAAVevTcI8pvoG/uH72GA2e4oOPPEL4HkUFOrVbmq8cfVksY1LpuI
+        VAaeiR1KVyNcrE/frmVhad07dAiq
+X-Google-Smtp-Source: APXvYqzFatKzBATbCIPYOBQo9zzUh4KvtY5c0wWm13gkuD+LA220wyxngePnJRCBRyIStUEao8dquA==
+X-Received: by 2002:a63:4d05:: with SMTP id a5mr1142071pgb.19.1560840339845;
+        Mon, 17 Jun 2019 23:45:39 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id d6sm12807784pgv.4.2019.06.17.23.45.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 17 Jun 2019 23:45:38 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     peff@peff.net
+Subject: [PATCH] xdiff: avoid accidental redefinition of LFS feature in OpenIndiana
+Date:   Mon, 17 Jun 2019 23:45:37 -0700
+Message-Id: <20190618064537.62369-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+after b46054b374 ("xdiff: use git-compat-util", 2019-04-11), two system
+headers added in 2012 to xutils where no longer needed and could conflict
+as shown below:
 
-Sparse checkout is a great start but I wish that clone, fetch, commit,
-and merge also had sparse functionality to skip operating on objects
-associated with directories not listed in the sparse-checkout (or
-similar) configuration file. To clarify, this is different from
-shallow clone or fetch which skips old commits but still fetches the
-objects associated to every file in the tree.
+In file included from xdiff/xinclude.h:26:0,
+                 from xdiff/xutils.c:25:
+./git-compat-util.h:4:0: warning: "_FILE_OFFSET_BITS" redefined
+ #define _FILE_OFFSET_BITS 64
 
-This functionality would be very useful when dealing with large
-repositories. Sparse checkout helps, but it doesn't reduce at all the
-amount of traffic and the amount of disk spaces needed for the .git
-repository. git submodule is an alternative, but ideally, one wouldn't
-need to break up a repository as it grows and use git submodule.
+In file included from /usr/include/limits.h:37:0,
+                 from xdiff/xutils.c:23:
+/usr/include/sys/feature_tests.h:231:0: note: this is the location of the previous definition
+ #define _FILE_OFFSET_BITS 32
 
-Are there any plans to implement this? And if not, why not? How much
-effort would be to implement this?
+make sure git-compat-util.h is the first header (through xinclude.h)
 
-I don't see a conceptual reason why this can't be done. In particular,
-it is not hard to see that making a commit after a sparse clone/fetch
-is still possible even though one does not know the content of each
-file in the repository. For example, assume a repository has two
-directories /A and /B at the root and a user fetched only the objects
-in /B to make a change to a file in /B. git could compute the new hash
-of the root to make a commit by computing the new hash for /B and
-simply using the old hash for /A without the need to know the content
-of /A.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ xdiff/xutils.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Cheers,
-    Matthias
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 963e1c58b9..cfa6e2220f 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -20,13 +20,9 @@
+  *
+  */
+ 
+-#include <limits.h>
+-#include <assert.h>
+ #include "xinclude.h"
+ 
+ 
+-
+-
+ long xdl_bogosqrt(long n) {
+ 	long i;
+ 
+-- 
+2.22.0
+
