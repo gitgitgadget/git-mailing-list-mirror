@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50F631F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 18:14:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 634351F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 18:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730356AbfFRSOm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 14:14:42 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:38868 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730334AbfFRSOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 14:14:36 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r12so20851295edo.5
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 11:14:35 -0700 (PDT)
+        id S1730353AbfFRSOl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 14:14:41 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43229 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730340AbfFRSOi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 14:14:38 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e3so22989181edr.10
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 11:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fw5Y2dHBDiFWW6OD8UhRfhbOL0mhunXuojtHWy7e9I8=;
-        b=eUOQGH0lSH8pJpFrRlaAA+p5ddouZf4PrwHzB1uY1q+7gL2qMvaLJVaYGnDDj2nXXT
-         gg2xdMNjR5t2gOw7jmMY7Z0Zms20rpmo+XUbllMqNitEQE6g2ialfJaZMqMDU4VcVXBY
-         jvyw7uh7o0dZi0/axDV+/LW9fK2XAEwIc+JVM84i2ApLrMDA2zK4/i13azoCUJ8ZxBlQ
-         yHB3lqv32Xm/N+HX4R6jcAhla6dp0jOpwqjZKw0peHZLu7v7BpGeoJg5Jexm5ZNGOOT/
-         m6vY9dS8OivrPnKWuXErNu7eQzB9+eJiekk+jSlonmQpOBCLPzSvYp7NGOr6iM6noPni
-         BvKw==
+        bh=0VgUGqTcNhF6P1ymO8x14/dnJ8Ut7yWnbobrZLGu6u4=;
+        b=kXcrQmKbZkKPZCvIcIRU2q/SUqJtssNkryHnjKOYG7LR83dVu/Nu5SdkLSrTt4RtGR
+         sp1OhTsujq2q7OBU6cWH8XekclnUNoOjhXmN3ZEOmx77BnQgByES8qqlXtbX/HVnLQUK
+         BLNjWdFQ4qEUWoWf01tChZHF3Jh2wX3uKuYMD3w6k9/iDbGCknjVJ7vSdW/ebV0zdxcv
+         +v2FuoYG7MGve6d4fgabpVoi3qyvH25XLHEmL5E34OfrdF7liNlV4eox4QUwHrvEbZJi
+         IMpPdoKyC7hO71+mz9RnARUjF4ZnscaEvCnuCkWgFPwOXuMv0w8bpQhnXRA2l+q19jSC
+         lNDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fw5Y2dHBDiFWW6OD8UhRfhbOL0mhunXuojtHWy7e9I8=;
-        b=AA5sOWs1QKVKOR/uOLvJokgaNSrTCft7HhlbCl0mFVnyr/dwZIWq3Hab6OohOhrP+4
-         pQlEtsfvnWaZXYvtZ1nXqF/Uo1lrY3n7t4S8QmNcTCP9PuU5X6DqtUDR+gmYmCR+eid3
-         PtcXcznuYPZl4D3JRqBS/DoSzVr3olqNhx/HNSKiKFgb56Re1i7BgAALpxEtdgo20uWv
-         kO8f0H55UX5IlIMC4wStd3BIBHn0d8K+yJOS84cU9ysP5JPc5rG0KVhyqy6srsjKWe5s
-         oZD3z9oLF5B30/QRmbrQY6i+JMJ/OAvtdFROAjGgt3kOIlc8gSfFlMvY8CSR1NlN25Eq
-         S7eQ==
-X-Gm-Message-State: APjAAAUu9J7N9tqR6+RhvQFPbmXOZRMhuKHJqMq5EAC3VRhABKPBWimi
-        /SUuJneehpX1pOjpiCkNUUUSvOnL
-X-Google-Smtp-Source: APXvYqxum5JkJU2RmqzqHNCu+qBMlY/CYb0EPEVYEtezZv+teOzujDL+8PdP3UwWR2aeucAv8PlFLw==
-X-Received: by 2002:a50:a7a5:: with SMTP id i34mr126881044edc.294.1560881675047;
-        Tue, 18 Jun 2019 11:14:35 -0700 (PDT)
+        bh=0VgUGqTcNhF6P1ymO8x14/dnJ8Ut7yWnbobrZLGu6u4=;
+        b=RmSR94VEsm7J4Xy1opwfOBYMrYd71GY5/WxlL5B/8ui/3VJSciYzXczV9GH37GsTfl
+         t9l27wZ8ORjqnGvwYWVmsYPImz1KI2nhzh8IyU6hz3YNvetIcMGIuTocDT2YKnd/59f5
+         rLIDGCZzXoqTFdeDi0oD484k3yg1J5KZslCSW9zKxdF7AI+S7TZd64d720vX9CePKM+2
+         ycgXOk2tFcdJN2/aXRZ67wJbCn4oOPm/7tVOddDZhMDWhSuutJwmK7ige8wQVh5bOSY4
+         1i2uvqJtcYSMZ3RbgKFYxx4rJtG5GFEAUF3BJyzPNMd7W1f4texz0jowSxihIcri4rAw
+         Fr2w==
+X-Gm-Message-State: APjAAAXFdIyl0GrIlQ5ewyhwYntCggnQvjacAXUcmxgKYFZnvst5JkYO
+        ygj7hixnqYXSOD+UHbYgKar9SXxk
+X-Google-Smtp-Source: APXvYqysNj72DA/OaqwUx0NnW7kV0PWmJauFvRQjZDwROQqLkJCDyrIA4Cj+RUzjEJ8rk/m7LkSOwA==
+X-Received: by 2002:a17:906:f0cd:: with SMTP id dk13mr54099492ejb.84.1560881677222;
+        Tue, 18 Jun 2019 11:14:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k62sm4898718edc.70.2019.06.18.11.14.34
+        by smtp.gmail.com with ESMTPSA id z12sm2219941edq.57.2019.06.18.11.14.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 11:14:34 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 11:14:34 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 18:14:17 GMT
-Message-Id: <4877166d2ff74ff75f72a2c4d92b25bd3a6b343d.1560881661.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 11:14:36 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 11:14:36 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 18:14:20 GMT
+Message-Id: <bad9f13cc27663051dd3d9eebdd61a6287129861.1560881661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v6.git.gitgitgadget@gmail.com>
 References: <pull.184.v5.git.gitgitgadget@gmail.com>
         <pull.184.v6.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 15/18] commit-graph: test octopus merges with --split
+Subject: [PATCH v6 18/18] commit-graph: test verify across alternates
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,37 +75,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Octopus merges require an extra chunk of data in the commit-graph
-file format. Create a test that ensures the new --split option
-continues to work with an octopus merge. Specifically, ensure
-that the octopus merge has parents across layers to truly check
-that our graph position logic holds up correctly.
+The 'git commit-graph verify' subcommand loads a commit-graph from
+a given object directory instead of using the standard method
+prepare_commit_graph(). During development of load_commit_graph_chain(),
+a version did not include prepare_alt_odb() as it was previously
+run by prepare_commit_graph() in most cases.
+
+Add a test that prevents that mistake from happening again.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t5324-split-commit-graph.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t5324-split-commit-graph.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index e8df35c30b..704def70bb 100755
+index fc0d00751c..03f45a1ed9 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -290,4 +290,15 @@ test_expect_success 'verify after commit-graph-chain corruption' '
+@@ -237,6 +237,7 @@ corrupt_file() {
+ 	file=$1
+ 	pos=$2
+ 	data="${3:-\0}"
++	chmod a+w "$file" &&
+ 	printf "$data" | dd of="$file" bs=1 seek="$pos" conv=notrunc
+ }
+ 
+@@ -295,6 +296,24 @@ test_expect_success 'verify after commit-graph-chain corruption' '
  	)
  '
  
-+test_expect_success 'add octopus merge' '
-+	git reset --hard commits/10 &&
-+	git merge commits/3 commits/4 &&
-+	git branch merge/octopus &&
-+	git commit-graph write --reachable --split &&
-+	git commit-graph verify &&
-+	test_line_count = 3 $graphdir/commit-graph-chain
++test_expect_success 'verify across alternates' '
++	git clone --no-hardlinks . verify-alt &&
++	(
++		cd verify-alt &&
++		rm -rf $graphdir &&
++		altdir="$(pwd)/../.git/objects" &&
++		echo "$altdir" >.git/objects/info/alternates &&
++		git commit-graph verify --object-dir="$altdir/" &&
++		test_commit extra &&
++		git commit-graph write --reachable --split &&
++		tip_file=$graphdir/graph-$(tail -n 1 $graphdir/commit-graph-chain).graph &&
++		corrupt_file "$tip_file" 100 "\01" &&
++		test_must_fail git commit-graph verify --shallow 2>test_err &&
++		grep -v "^+" test_err >err &&
++		test_i18ngrep "commit-graph has incorrect fanout value" err
++	)
 +'
 +
-+graph_git_behavior 'graph exists' merge/octopus commits/12
-+
- test_done
+ test_expect_success 'add octopus merge' '
+ 	git reset --hard commits/10 &&
+ 	git merge commits/3 commits/4 &&
 -- 
 gitgitgadget
-
