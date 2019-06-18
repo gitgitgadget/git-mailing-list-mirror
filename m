@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B42861F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 18:14:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B1901F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 18:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730069AbfFRSO2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 14:14:28 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45177 "EHLO
+        id S1730346AbfFRSOk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 14:14:40 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35239 "EHLO
         mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729642AbfFRSO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 14:14:26 -0400
-Received: by mail-ed1-f65.google.com with SMTP id a14so22997997edv.12
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 11:14:25 -0700 (PDT)
+        with ESMTP id S1730171AbfFRSOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 14:14:36 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p26so23078503edr.2
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 11:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SaFXBRvwt5xGUpk98XzTYwt/45A9HM0Np8Vyy5/Yze0=;
-        b=QpKPiOvFycsho+7+ET/okmcpDLDxb06eR0CBUiL7sdhn4NzuzNSs7w3t7k/31pPKl/
-         KMFERojfAhDZlD+cXCM2yVTnOt/tM0tTggQUmlSllQKBe34K0M30D55cnT3l02+kXyWK
-         JktK9pvKYeOA+SIw/ZZe5m6rcLdPVh56ZYcBvjr56p39M5lRZdQQHfIWpLkpkWqFDDgS
-         MdyiyXb45Rad1fR7WHD3kRHu0jm2FSOmn06bW4YdkjOn72J7QxWm0cqW1zLtuaw9vAy2
-         Q88qHkZeKkSBkknynqUv2C5h19ER1+P/DGJ4I9lNm4CaGQOBqoaS95A9za/4+r+8MhJ3
-         4lJg==
+        bh=HXSXdQ5Rz3aMBKbJoVmMTYz9pf/hTvjtFWy3MApxN+0=;
+        b=Kl7A+uprHWd06/W7U0Sg+33VxdSxGDyxOG3SWap7j1OGKIPqlM310/kwFTtdPcNylX
+         /IhzKYvwemCWzHjfOGPlDYfgdtiCxz6j9760GDsPAan7IBV6bMvZdyQNP7d8tX2XdJvF
+         VtZsMfsICQqMvgvCx9xuTIYaHKuzRAgph207mSCq4igEyCNc3nnxGSH1oiYe6t2NP/V6
+         SoqW7eJrdFmpajW+ftdZyLaZqhvlvXBKlGb0DPGE3eIoRZlY1iG211tKMgVYLN1+l+00
+         1nkMNhUjEFBJHUqFzOFVQmlyPEqiQW+403Gy3u4qmj3HCf5Q+CUEgHKfJeVX8rVpDY7D
+         +KjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SaFXBRvwt5xGUpk98XzTYwt/45A9HM0Np8Vyy5/Yze0=;
-        b=bRV7EzOuNuduAjlnIWCp6hEkJvxDsl69u7KXybDc6o0VWxh1Uddm7Bm0xmg0c7zygk
-         RQvCvGPFtGa8BBYD0ick2D7t8NUicds3RRI4DE5U2WbaVxROrZ/FR+LZUkwtobItmvGn
-         RU1nCEtC4z7SiDrejur3UQ4slgFB+QzsWL7+cMIoxjomtN9rBv3q4ltlAdENPugClWWm
-         OfhSkLvrqhOROYX4CznlmCISODMoZS5mBH87pAn9EdusllZqLcFuB39TfvpXsDVTSZWf
-         d+hyseogk2r+x6vxQ98/9ZEYtF8evSWdii235r+x87Jtnv4TUZJhGNw0TQnLRaT13bX9
-         w2Lg==
-X-Gm-Message-State: APjAAAVQvOA5MI12q957Jjqq6nC6Mhk3s13qO7oEf+IWQ+R4MzPJmheo
-        XMe8mlGfchUoNs/G7zNBd80nt+eI
-X-Google-Smtp-Source: APXvYqwlX1ffGPLyx1s3hLF3Pmxg6HZ98IeVDOQee9dMKxRLTq2s0GLqG/Bmck6+fUjTFxs2rcgTng==
-X-Received: by 2002:a50:b34a:: with SMTP id r10mr35385697edd.84.1560881664557;
-        Tue, 18 Jun 2019 11:14:24 -0700 (PDT)
+        bh=HXSXdQ5Rz3aMBKbJoVmMTYz9pf/hTvjtFWy3MApxN+0=;
+        b=Pf0AtV2eszKx7uaBwRX1f/v66GrMfJ6hOOObR+WpAfJ2sX3KXCyHvKY32vGkDZj1Ji
+         oX2ptEQWPXHDNFHEFR6lhQvUSaQGPDRnQWrLKScMcQLsehP6sh6s1JsTakvUfU7kS1M3
+         8ieeiM8izEMlrgyQQcFTdc0TkBbnqButNyyD6z9oFD9xOIu9U6Huzm3pdrJd1Jwr/upz
+         cyEnhReaHcFa5AgJyYK3S8mYxwS8WT9YkUGIwIYFfsKWu+P1BvkQU9WNyuZQzgptO4cV
+         Gk+rVAsASSeePLCP+ux99BAfFl3IAURt+mIZzYuM7/tUbNZ8IlE/vhPsWw+GGhtQKTZZ
+         5TUw==
+X-Gm-Message-State: APjAAAUe/OBHeIQ9MSFn/7znFXL2cJ9DTnNY1i4DY5CzhEV7Lp7aPKPy
+        XjEdcgyDSudUC8JD0QQh8SjzPxAf
+X-Google-Smtp-Source: APXvYqww7XCm+Kg9CyR7zDRvJQX51S60Mkynz22WYzOqFVVKVx5eY7q++54l+h0g6TbxhcF3UVWL1w==
+X-Received: by 2002:aa7:c486:: with SMTP id m6mr62483674edq.298.1560881674370;
+        Tue, 18 Jun 2019 11:14:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x10sm4904578edd.73.2019.06.18.11.14.23
+        by smtp.gmail.com with ESMTPSA id c3sm320564ejo.43.2019.06.18.11.14.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 11:14:24 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 11:14:24 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 18:14:04 GMT
-Message-Id: <a06428d749198c180fe0cade50251e0c6b048658.1560881661.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 11:14:33 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 11:14:33 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 18:14:16 GMT
+Message-Id: <a4aa473c55e5df8a61f63742a2e27a2483ab6291.1560881661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v6.git.gitgitgadget@gmail.com>
 References: <pull.184.v5.git.gitgitgadget@gmail.com>
         <pull.184.v6.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 02/18] commit-graph: prepare for commit-graph chains
+Subject: [PATCH v6 14/18] commit-graph: clean up chains after flattened write
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,197 +75,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-To prepare for a chain of commit-graph files, augment the
-commit_graph struct to point to a base commit_graph. As we load
-commits from the graph, we may actually want to read from a base
-file according to the graph position.
+If we write a commit-graph file without the split option, then
+we write to $OBJDIR/info/commit-graph and start to ignore
+the chains in $OBJDIR/info/commit-graphs/.
 
-The "graph position" of a commit is given by concatenating the
-lexicographic commit orders from each of the commit-graph files in
-the chain. This means that we must distinguish two values:
-
- * lexicographic index : the position within the lexicographic
-   order in a single commit-graph file.
-
- * graph position: the position within the concatenated order
-   of multiple commit-graph files
-
-Given the lexicographic index of a commit in a graph, we can
-compute the graph position by adding the number of commits in
-the lower-level graphs. To find the lexicographic index of
-a commit, we subtract the number of commits in lower-level graphs.
-
-While here, change insert_parent_or_die() to take a uint32_t
-position, as that is the type used by its only caller and that
-makes more sense with the limits in the commit-graph format.
+Unlink the commit-graph-chain file and expire the graph-{hash}.graph
+files in $OBJDIR/info/commit-graphs/ during every write.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 89 +++++++++++++++++++++++++++++++++++++++++++-------
- commit-graph.h |  3 ++
- 2 files changed, 81 insertions(+), 11 deletions(-)
+ commit-graph.c                | 12 +++++++++---
+ t/t5324-split-commit-graph.sh | 12 ++++++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 76d189de45..8f5c09363c 100644
+index f33f4fe009..3599ae664d 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -359,9 +359,18 @@ int generation_numbers_enabled(struct repository *r)
- 	return !!first_generation;
- }
+@@ -1687,6 +1687,12 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
  
-+static void close_commit_graph_one(struct commit_graph *g)
-+{
-+	if (!g)
-+		return;
-+
-+	close_commit_graph_one(g->base_graph);
-+	free_commit_graph(g);
-+}
-+
- void close_commit_graph(struct raw_object_store *o)
- {
--	free_commit_graph(o->commit_graph);
-+	close_commit_graph_one(o->commit_graph);
- 	o->commit_graph = NULL;
- }
+ 	if (ctx->split_opts && ctx->split_opts->expire_time)
+ 		expire_time -= ctx->split_opts->expire_time;
++	if (!ctx->split) {
++		char *chain_file_name = get_chain_filename(ctx->obj_dir);
++		unlink(chain_file_name);
++		free(chain_file_name);
++		ctx->num_commit_graphs_after = 0;
++	}
  
-@@ -371,18 +380,38 @@ static int bsearch_graph(struct commit_graph *g, struct object_id *oid, uint32_t
- 			    g->chunk_oid_lookup, g->hash_len, pos);
- }
+ 	strbuf_addstr(&path, ctx->obj_dir);
+ 	strbuf_addstr(&path, "/info/commit-graphs");
+@@ -1841,10 +1847,10 @@ int write_commit_graph(const char *obj_dir,
  
-+static void load_oid_from_graph(struct commit_graph *g,
-+				uint32_t pos,
-+				struct object_id *oid)
-+{
-+	uint32_t lex_index;
-+
-+	while (g && pos < g->num_commits_in_base)
-+		g = g->base_graph;
-+
-+	if (!g)
-+		BUG("NULL commit-graph");
-+
-+	if (pos >= g->num_commits + g->num_commits_in_base)
-+		die(_("invalid commit position. commit-graph is likely corrupt"));
-+
-+	lex_index = pos - g->num_commits_in_base;
-+
-+	hashcpy(oid->hash, g->chunk_oid_lookup + g->hash_len * lex_index);
-+}
-+
- static struct commit_list **insert_parent_or_die(struct repository *r,
- 						 struct commit_graph *g,
--						 uint64_t pos,
-+						 uint32_t pos,
- 						 struct commit_list **pptr)
- {
- 	struct commit *c;
- 	struct object_id oid;
+ 	res = write_commit_graph_file(ctx);
  
--	if (pos >= g->num_commits)
--		die("invalid parent position %"PRIu64, pos);
-+	if (pos >= g->num_commits + g->num_commits_in_base)
-+		die("invalid parent position %"PRIu32, pos);
+-	if (ctx->split) {
++	if (ctx->split)
+ 		mark_commit_graphs(ctx);
+-		expire_commit_graphs(ctx);
+-	}
++
++	expire_commit_graphs(ctx);
  
--	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
-+	load_oid_from_graph(g, pos, &oid);
- 	c = lookup_commit(r, &oid);
- 	if (!c)
- 		die(_("could not find commit %s"), oid_to_hex(&oid));
-@@ -392,7 +421,14 @@ static struct commit_list **insert_parent_or_die(struct repository *r,
+ cleanup:
+ 	free(ctx->graph_name);
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 3df90ae58f..e8df35c30b 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -216,6 +216,18 @@ test_expect_success 'test merge stragety constants' '
+ 	)
+ '
  
- static void fill_commit_graph_info(struct commit *item, struct commit_graph *g, uint32_t pos)
- {
--	const unsigned char *commit_data = g->chunk_commit_data + GRAPH_DATA_WIDTH * pos;
-+	const unsigned char *commit_data;
-+	uint32_t lex_index;
++test_expect_success 'remove commit-graph-chain file after flattening' '
++	git clone . flatten &&
++	(
++		cd flatten &&
++		test_line_count = 2 $graphdir/commit-graph-chain &&
++		git commit-graph write --reachable &&
++		test_path_is_missing $graphdir/commit-graph-chain &&
++		ls $graphdir >graph-files &&
++		test_line_count = 0 graph-files
++	)
++'
 +
-+	while (pos < g->num_commits_in_base)
-+		g = g->base_graph;
-+
-+	lex_index = pos - g->num_commits_in_base;
-+	commit_data = g->chunk_commit_data + GRAPH_DATA_WIDTH * lex_index;
- 	item->graph_pos = pos;
- 	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
- }
-@@ -405,10 +441,25 @@ static int fill_commit_in_graph(struct repository *r,
- 	uint32_t *parent_data_ptr;
- 	uint64_t date_low, date_high;
- 	struct commit_list **pptr;
--	const unsigned char *commit_data = g->chunk_commit_data + (g->hash_len + 16) * pos;
-+	const unsigned char *commit_data;
-+	uint32_t lex_index;
- 
--	item->object.parsed = 1;
-+	while (pos < g->num_commits_in_base)
-+		g = g->base_graph;
-+
-+	if (pos >= g->num_commits + g->num_commits_in_base)
-+		die(_("invalid commit position. commit-graph is likely corrupt"));
-+
-+	/*
-+	 * Store the "full" position, but then use the
-+	 * "local" position for the rest of the calculation.
-+	 */
- 	item->graph_pos = pos;
-+	lex_index = pos - g->num_commits_in_base;
-+
-+	commit_data = g->chunk_commit_data + (g->hash_len + 16) * lex_index;
-+
-+	item->object.parsed = 1;
- 
- 	item->maybe_tree = NULL;
- 
-@@ -452,7 +503,18 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
- 		*pos = item->graph_pos;
- 		return 1;
- 	} else {
--		return bsearch_graph(g, &(item->object.oid), pos);
-+		struct commit_graph *cur_g = g;
-+		uint32_t lex_index;
-+
-+		while (cur_g && !bsearch_graph(cur_g, &(item->object.oid), &lex_index))
-+			cur_g = cur_g->base_graph;
-+
-+		if (cur_g) {
-+			*pos = lex_index + cur_g->num_commits_in_base;
-+			return 1;
-+		}
-+
-+		return 0;
- 	}
- }
- 
-@@ -492,8 +554,13 @@ static struct tree *load_tree_for_commit(struct repository *r,
- 					 struct commit *c)
- {
- 	struct object_id oid;
--	const unsigned char *commit_data = g->chunk_commit_data +
--					   GRAPH_DATA_WIDTH * (c->graph_pos);
-+	const unsigned char *commit_data;
-+
-+	while (c->graph_pos < g->num_commits_in_base)
-+		g = g->base_graph;
-+
-+	commit_data = g->chunk_commit_data +
-+			GRAPH_DATA_WIDTH * (c->graph_pos - g->num_commits_in_base);
- 
- 	hashcpy(oid.hash, commit_data);
- 	c->maybe_tree = lookup_tree(r, &oid);
-diff --git a/commit-graph.h b/commit-graph.h
-index 390c7f6961..5819910a5b 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -48,6 +48,9 @@ struct commit_graph {
- 	uint32_t num_commits;
- 	struct object_id oid;
- 
-+	uint32_t num_commits_in_base;
-+	struct commit_graph *base_graph;
-+
- 	const uint32_t *chunk_oid_fanout;
- 	const unsigned char *chunk_oid_lookup;
- 	const unsigned char *chunk_commit_data;
+ corrupt_file() {
+ 	file=$1
+ 	pos=$2
 -- 
 gitgitgadget
 
