@@ -2,227 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDB8E1F609
-	for <e@80x24.org>; Tue, 18 Jun 2019 22:29:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 267BE1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 23:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730517AbfFRW3Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 18:29:25 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:33275 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729982AbfFRW3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 18:29:24 -0400
-Received: by mail-qt1-f201.google.com with SMTP id r40so13899611qtk.0
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 15:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=n5wjmKc+wFEkmCIEbWaDQwwRKinMZoLvKQPML8GexMM=;
-        b=Xi8OsxN7HiPAMm2crtyTvepbOccNVJjTxv0ybnRqZC2zdpTL092wA/TA8Z5TvNSfAp
-         I+8dKTJcCreSn0dYRcMotH6bwNrLiAfY8ft8dD8dZBouMIT41ufJSKPtuMWPq/uPWNJy
-         8CVNAlJV00E+4PzPP41cMIQiXj47H+/rjbIAOruCyR0GTcyT0q3MnwRXnUOlrFheKgLe
-         0JCn30TtwzRXkmNlh+QeBoxr9Y4yCx5691qKFczHk8Ja8keWE+a5WkrmkPChWnXC2ppV
-         skdgoPO29Zs7xGr1sS8ZYcKoEka3hPXK4Fj0q3MNz0FdMgpEX/sSzBjxYQfnjhfhDmdl
-         XtIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=n5wjmKc+wFEkmCIEbWaDQwwRKinMZoLvKQPML8GexMM=;
-        b=U1V4nQIJVKiwfmE1/x6S0MK0WVLMNb5/iQ1Ez+mfPdN3uEOVXOuPdVA0GYyXFbSUy6
-         YjJvQz8+n3ctURefBQh72AmZCk1+tvM1eiEAXF/CezRthQTe3tsTYmw7qScDz0iT2Bwk
-         JEM1O8SGH4jEzXMnXsNFHcFlWuj/C+zgAtgpTKKBqwexFOrIbHaWtSj1NBjhdT/6uDns
-         HiDVgG+Vsp2imnhE1LPRh1SIn5F0BvZ30JRcYwuA1d+SXRHKrOV7rcqLB7CjT2xgQGPO
-         k25ny4NY8s6MxU8SPz6zlpSj5Yyaik/oyhIXdqu0wAQ+xAp+bT+ZDQyb5lJZKW0Qx4yZ
-         ycSw==
-X-Gm-Message-State: APjAAAWp0QBQf8qYYeTt5E1U4H7l3VOdjYaZS9K8U5gJurBaC7nmOe//
-        ur1GRujpJm8jI7d644kRAPxu4J64Toypihk5O4hKuO/0S/BsjV2NQQh2vGXqqP/UfWHx85+f/JR
-        izQnzLRmnsaWhVXyNElepb8SUEZw4JYsCGHSEOFtQN20YvY4LJ7UpfAlwFTU=
-X-Google-Smtp-Source: APXvYqwEv+xxYzQeEHtelHz+LbkfI8qWsEwlu75TNjRgEeuEbSQCCYzQkG/u8LPQhDpx/FhXQh1KtfGyyhvS
-X-Received: by 2002:ac8:264f:: with SMTP id v15mr26345597qtv.51.1560896963772;
- Tue, 18 Jun 2019 15:29:23 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 15:29:15 -0700
-In-Reply-To: <cover.1560895672.git.matvore@google.com>
-Message-Id: <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
-Mime-Version: 1.0
-References: <faaa9a3d6ba66d77cc2a8eab438d1bfc8f762fa1.1559857032.git.matvore@google.com>
- <cover.1560895672.git.matvore@google.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v3 1/1] ref-filter: sort detached HEAD lines firstly
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org
-Cc:     Matthew DeVore <matvore@google.com>, avarab@gmail.com,
-        git@matthieu-moy.fr, olyatelezhnaya@gmail.com,
-        samuel.maftoul@gmail.com, gitster@pobox.com,
-        Johannes.Schindelin@gmx.de, karthik.188@gmail.com,
-        pclouds@gmail.com, sunshine@sunshineco.com,
-        emilyshaffer@google.com, jrnieder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1730519AbfFRXDn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 19:03:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60304 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730377AbfFRXDm (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 18 Jun 2019 19:03:42 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:8174:fea0:25b6:f16a])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5C56860427;
+        Tue, 18 Jun 2019 23:03:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1560899021;
+        bh=bcr55k3rjFJup2Jg/JprGG+uq84pI7aMbS7UdcuhCTc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yO7GjaUrs6PDh3M9bnyAZ5Fh2ZsSy5w00K/zHgyy8fXlHSldzb6phNSY8gUTzc2XF
+         +lDS3I84yMnDnFwgdPOWIeC2u6taelrWg94g4lODQKJ1WhHoLeu4Y87oesjYsSyzaq
+         yjEK/al8NRYxuamcXNrvjrDzP1QyuLIjHyKixWlTWgbmzlhigC0xiN7I8NoJ7kxG7u
+         vJMNsaJi2GhP41LP/9u/3vx9jJ3NHS6c/xMrkUFDixBvhRBafexLpXQlGZHTnrRiCU
+         hZQKizJEUcuJQR/gIYrCxeorTjd/2VhtuNLPMlrW7HNnaJgRRgwc/JmngWDWrGIK5R
+         QwPuU9hwnlJeM2F3GJdWUKBpYAXJfJsfHtJ/ivy4G/bHFCAyifL7mSp/XkWhmF/LRA
+         6yz/X/nLWL/yP/dOl5e2qftok6Hgm4dSDNMBAL7LP0C4QixMSrxmEh5/vX4ngCiHBV
+         dCH00AtJ7kSVCpJVqDS5AvDSvKE5zjpCtzWOCp47lrX4hg9CFnS
+Date:   Tue, 18 Jun 2019 23:03:34 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/10] t: add helper to convert object IDs to paths
+Message-ID: <20190618230334.GC8877@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190616185330.549436-1-sandals@crustytoothpaste.net>
+ <20190616185330.549436-2-sandals@crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1906172102180.44@tvgsbejvaqbjf.bet>
+ <20190618012943.GB8877@genre.crustytoothpaste.net>
+ <c9be7464-21f3-6651-500d-14137f0f1c0f@kdbg.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="32u276st3Jlj2kUU"
+Content-Disposition: inline
+In-Reply-To: <c9be7464-21f3-6651-500d-14137f0f1c0f@kdbg.org>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before this patch, "git branch" would put "(HEAD detached...)" and "(no
-branch, rebasing...)" lines before all the other branches *in most
-cases* except for when using Chinese-language messages. zh_CN generally
-uses a full-width "(" symbol (codepoint FF08) to match the full-width
-proportions of Chinese characters, and the translated strings we had did
-use them. This meant that the detached HEAD line would appear after all
-local refs and even after the remote refs if there were any.
 
-AFAIK, it is sometimes not jarring to see the half-width parenthesis in
-"full-width" text as in the CJK languages, for instance when there are
-no characters preceding or following the parenthesized text fragment. By
-removing the parenthesis from the localizable text, we can share strings
-with wt-status.c and remove a cautionary comment to translators.
+--32u276st3Jlj2kUU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Remove the ( from the localizable portion of messages so the sorting
-happens properly regardless of locale.
+On 2019-06-18 at 06:14:03, Johannes Sixt wrote:
+> Am 18.06.19 um 03:29 schrieb brian m. carlson:
+> > On 2019-06-17 at 19:05:03, Johannes Schindelin wrote:
+> > I'm fine making that change. The original design was because we had
+> > other code that used that technique and I didn't see an obviously better
+> > solution. Now you've provided one and a good justification.
+>=20
+> Regardless of how it is implemented, I have another gripe with this
+> helper: the way it must be used requires a process: $(test_out_to_path $f=
+oo)
+>=20
+> And looking through this patch series, I see a gazillion of *new*
+> process substitutions $(test_something...) and $(basename $whatever).
+> Can't we do something about it?
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- ref-filter.c | 32 ++++++++++++++++----------------
- wt-status.c  |  4 ++--
- wt-status.h  |  3 +++
- 3 files changed, 21 insertions(+), 18 deletions(-)
+A command substitution need not invoke another process. In fact, all of
+the test_oid calls operate only within the shell. The test_oid_cache and
+test_oid_init calls require spawning only expr, and they are typically
+limited to one or two per test.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 8500671bc6..87aa6b4774 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1440,49 +1440,49 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 	} else
- 		BUG("unhandled RR_* enum");
- }
- 
- char *get_head_description(void)
- {
- 	struct strbuf desc = STRBUF_INIT;
- 	struct wt_status_state state;
- 	memset(&state, 0, sizeof(state));
- 	wt_status_get_state(the_repository, &state, 1);
-+
-+	/*
-+	 * The ( character must be hard-coded and not part of a localizable
-+	 * string, since the description is used as a sort key and compared
-+	 * with ref names.
-+	 */
-+	strbuf_addch(&desc, '(');
- 	if (state.rebase_in_progress ||
- 	    state.rebase_interactive_in_progress) {
- 		if (state.branch)
--			strbuf_addf(&desc, _("(no branch, rebasing %s)"),
-+			strbuf_addf(&desc, _("no branch, rebasing %s"),
- 				    state.branch);
- 		else
--			strbuf_addf(&desc, _("(no branch, rebasing detached HEAD %s)"),
-+			strbuf_addf(&desc, _("no branch, rebasing detached HEAD %s"),
- 				    state.detached_from);
- 	} else if (state.bisect_in_progress)
--		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
-+		strbuf_addf(&desc, _("no branch, bisect started on %s"),
- 			    state.branch);
- 	else if (state.detached_from) {
- 		if (state.detached_at)
--			/*
--			 * TRANSLATORS: make sure this matches "HEAD
--			 * detached at " in wt-status.c
--			 */
--			strbuf_addf(&desc, _("(HEAD detached at %s)"),
--				state.detached_from);
-+			strbuf_addstr(&desc, HEAD_DETACHED_AT);
- 		else
--			/*
--			 * TRANSLATORS: make sure this matches "HEAD
--			 * detached from " in wt-status.c
--			 */
--			strbuf_addf(&desc, _("(HEAD detached from %s)"),
--				state.detached_from);
-+			strbuf_addstr(&desc, HEAD_DETACHED_FROM);
-+		strbuf_addstr(&desc, state.detached_from);
- 	}
- 	else
--		strbuf_addstr(&desc, _("(no branch)"));
-+		strbuf_addstr(&desc, _("no branch"));
-+	strbuf_addch(&desc, ')');
-+
- 	free(state.branch);
- 	free(state.onto);
- 	free(state.detached_from);
- 	return strbuf_detach(&desc, NULL);
- }
- 
- static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
- {
- 	if (!ref->symref)
- 		return xstrdup("");
-diff --git a/wt-status.c b/wt-status.c
-index 0bccef542f..c29e4bf091 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1669,23 +1669,23 @@ static void wt_longstatus_print(struct wt_status *s)
- 			if (s->state.rebase_in_progress ||
- 			    s->state.rebase_interactive_in_progress) {
- 				if (s->state.rebase_interactive_in_progress)
- 					on_what = _("interactive rebase in progress; onto ");
- 				else
- 					on_what = _("rebase in progress; onto ");
- 				branch_name = s->state.onto;
- 			} else if (s->state.detached_from) {
- 				branch_name = s->state.detached_from;
- 				if (s->state.detached_at)
--					on_what = _("HEAD detached at ");
-+					on_what = HEAD_DETACHED_AT;
- 				else
--					on_what = _("HEAD detached from ");
-+					on_what = HEAD_DETACHED_FROM;
- 			} else {
- 				branch_name = "";
- 				on_what = _("Not currently on any branch.");
- 			}
- 		} else
- 			skip_prefix(branch_name, "refs/heads/", &branch_name);
- 		status_printf(s, color(WT_STATUS_HEADER, s), "%s", "");
- 		status_printf_more(s, branch_status_color, "%s", on_what);
- 		status_printf_more(s, branch_color, "%s\n", branch_name);
- 		if (!s->is_initial)
-diff --git a/wt-status.h b/wt-status.h
-index 64f1ddc9fd..b0cfdc8011 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -58,20 +58,23 @@ struct wt_status_change_data {
- enum wt_status_format {
- 	STATUS_FORMAT_NONE = 0,
- 	STATUS_FORMAT_LONG,
- 	STATUS_FORMAT_SHORT,
- 	STATUS_FORMAT_PORCELAIN,
- 	STATUS_FORMAT_PORCELAIN_V2,
- 
- 	STATUS_FORMAT_UNSPECIFIED
- };
- 
-+#define HEAD_DETACHED_AT _("HEAD detached at ")
-+#define HEAD_DETACHED_FROM _("HEAD detached from ")
-+
- struct wt_status_state {
- 	int merge_in_progress;
- 	int am_in_progress;
- 	int am_empty_patch;
- 	int rebase_in_progress;
- 	int rebase_interactive_in_progress;
- 	int cherry_pick_in_progress;
- 	int bisect_in_progress;
- 	int revert_in_progress;
- 	int detached_at;
--- 
-2.21.0
+Within reason, I'm happy to try to make things easier for Windows folks
+if I can, but it's still the case that process creation is more
+expensive on Windows and shell scripting is designed around process
+creation. My hope is that Microsoft's work on WSL will help them improve
+their Win32 process creation time so it's faster and this becomes less
+of an issue.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
+--32u276st3Jlj2kUU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.15 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0JbcYACgkQv1NdgR9S
+9osDMA/8Dma6Q6WXZHPPjzmokdJfU8DXqh1641voAtMVbVEgPqJ3kTMUw9+mXWYc
+XFEn5lILWxJn9T5n1HfAAvxYHVz2v8NVPZHFCgnMUegoZuAH7Z1vkR2Yre/wDFfp
+d90QkrAoXVuX4gcZ3UCoplYGaHXNrM135mDk4A7DaDaStkmKyQVHZG1jbVyscvNi
+t2A9L6flIHQdpt/l4/9weqFJp73OLz4Kf0mW+ro3THdLAFEE87gyrhjJqNqQNzDe
+7ewTIecwt2HXA9Nhc/JoZeagjgjCjFCtRl/DPkLs4ymYTdh8yDv0AJd188a/cXl6
+IB9JgusUATcf/RaWAvCV/O0B4DgnM1Ji2jHt2yZhENPx3CUYLp9xIGLWC6IsmBBu
+Vcxfg8YEz/FFekgopb+9Kypq7RKfsyA4AXEGQFEqVh3hF52Hh/wdEIEa77b1ZYRG
+wnhVCekpQpVuOtvl8CW7nEeeYMNVRFWZ5HFZbHoQ2NH2pGCKQV8tmmL7JNEuJdwX
+hhckM/losDar4R2Rw5FkF2d2KbNsQ03tV+iuLOayJXwmt8fsq9bhFz87eh/eEuiJ
+rDlEuEU09y8tP3DjZX3UFck3+KppMD2Rpww5c7y34cM5yz98iYLjEfbwlIONQR8W
+9YV9pAxeISxLD/NmO9F0JKA87W57b0UUATFKHiWo4v8P4u0NlTo=
+=o0PE
+-----END PGP SIGNATURE-----
+
+--32u276st3Jlj2kUU--
