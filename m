@@ -2,103 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F3D1F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 16:41:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61CD21F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 16:55:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729472AbfFRQlW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 12:41:22 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41468 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729319AbfFRQlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 12:41:22 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c2so228192wrm.8
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 09:41:20 -0700 (PDT)
+        id S1729859AbfFRQza (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 12:55:30 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34712 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729319AbfFRQza (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 12:55:30 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k11so323931wrl.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 09:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Y5iwxAuexHFc18cTQNvwC2JSeavswqyJWdbkHxKFyi8=;
-        b=R3dUH6xCZXEVxABIO/V3H3qL2dEbS151Yn1/i8rX67ZK3KxIC/Us53U+FtLct8rL8l
-         O4MNNDGZcLlsvXAdnhx/itxeLO/vcGax1s+0VkU7YQtHHNCmYYg1Mzs+zlSL7vq01dmJ
-         2FL0F8tV1ZNu1eWlY0ke4BNarR1UsWbWsx1cL+ntanbdwyolc55w9L8FWpA4tFgot1zn
-         I0FuVToZZM8YLcZrYrC693g7RXPnjNpe0yCW4l5XW4wEm2NW1tmciE5hOG8JLfydMuXU
-         0wbmH+IUD4qxwbmXBIbLAMm+tPYxvQ4aMvTekqAuXv0YcA6+j478meGJHE8UMYCspInk
-         7fGg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PKHGEixIUuEpkt8+rFGX+y53tom/qJRX5dDJRDKuFB8=;
+        b=tlZC1aDvDFemcoJRhtvjVU5ru8nGA/Z+ndfsPCU6rKTdlFRjxGxdsnhJ9IJBsxzYmI
+         PiwWV7nWyhL3ix2X7wvp//sk0BvqJdAgJXnPuqHdPGi8y52xwELw9cDrd20dssvQVe1N
+         SMs590EjTi7VbQXEke6VIMK5QewWztoS3Mb3XprtR2gxz1Fbbg7mQJ7gjP7sk9Un+VcQ
+         fIuf4sQ7/wczRoNgXsHsT5gnxhrcIsLC3/HuURJKo1ff/4KTdqlLfgF6KS1p/qTXld/R
+         TjW4d/SLQC3ZIUEDlEjM7JM6+BxuiHm88EdZz9Bi9B7i3Ey67QvRLXI9Gpa7WhRJYe+5
+         WnZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Y5iwxAuexHFc18cTQNvwC2JSeavswqyJWdbkHxKFyi8=;
-        b=eMOSPv54iZXzezFhCpGbvmkoirXigBhMtYr0foRiX4cVaM3T0gr3YnJHdho8lSmnfC
-         xN6KMMybwX4qqA/sWkyOCDgK0TPseWH5an0Yg/PqLyZATcJBKEiy29aYy9MepKxcd+wf
-         fnVX3078y3nzPHp1fxweIzoeFcOc9bwDaunZyp+kguamJHr9dPjmVR+bR+0lPRbxH9lb
-         9bj7AsLN3zlqxjTBg2KhOyKGYjcTQcSaB6/+QWcbkTHJ7gulcZ411IKg2YfQIYU3XkXl
-         mSTBOIlnR5DTFHzoDXSFnqcw+B/b1TLwjnuBh8aW4ZWSrLHUJiDv0Zq4SU5KmqFHuVaI
-         aXNQ==
-X-Gm-Message-State: APjAAAVgFYyud39WP0vYH7hgCj1s0rHwUHB3oezuPmJwHc78Xdixkzcg
-        gy/S2HpMxY5DHppxiN3HO6V9CNK08vVnqB1UnlWv9boIgYE=
-X-Google-Smtp-Source: APXvYqzAbpp9cWvO/5Q20Uh1Xeg67O94S+7/VhqoVQYdO4okz70YCgfpqwBtJ2WjHCff2pcoLKrMdhagXdt1Na3x4s0=
-X-Received: by 2002:a5d:5542:: with SMTP id g2mr6965356wrw.232.1560876079916;
- Tue, 18 Jun 2019 09:41:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PKHGEixIUuEpkt8+rFGX+y53tom/qJRX5dDJRDKuFB8=;
+        b=qkJqjQRkd4z3CGtr+lIMLWKrPDqxtdpn8QdEc0I3J8nC5y/EVJzSatINhVfTWayXCB
+         4zPnJuITf4uUHdyMujBLWfeIs0QQXpzgcJYNtErfTs8PuW3NKbJuk7GKTrFQWpUARizD
+         Iai/wBxBYG/sk1eIJy46SGvrkUKCw727dC8BJ9+/jhTn6GOV8aW37vyO6CQhpjNqGYWf
+         ATp1QgPfP5t/FMd3lmajVfTw0D7D5ZkmbI7udgIRxqaCP4k4E1yNAe2pNNA6S/giELmN
+         LbJVVcIwRsjTH0pO1LjOVK2+wPYgGBha2T8sqVBWolkn0jo8OUMrph8xFSVX+c1sG/nq
+         AWZw==
+X-Gm-Message-State: APjAAAWB1t1gtKQG/XQ9P+MqSiM2XG+4ExXtaFJvet/BpjtlgrfEOXbI
+        tPDTKbKp2LMXtGnB6LtHdgM=
+X-Google-Smtp-Source: APXvYqwDErEtNEiecM2d+bmIRXbbdfTeytkpSilKYm3cTSecR+x3CHuyJ/CYfQPg40b5YJmCYSBPcA==
+X-Received: by 2002:adf:dd51:: with SMTP id u17mr66258866wrm.218.1560876928278;
+        Tue, 18 Jun 2019 09:55:28 -0700 (PDT)
+Received: from szeder.dev (x4dbda1c5.dyn.telefonica.de. [77.189.161.197])
+        by smtp.gmail.com with ESMTPSA id o185sm1742402wmo.45.2019.06.18.09.55.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Jun 2019 09:55:27 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 18:55:25 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/10] t: add helper to convert object IDs to paths
+Message-ID: <20190618165525.GN31952@szeder.dev>
+References: <20190616185330.549436-1-sandals@crustytoothpaste.net>
+ <20190616185330.549436-2-sandals@crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1906172102180.44@tvgsbejvaqbjf.bet>
+ <20190618012943.GB8877@genre.crustytoothpaste.net>
+ <c9be7464-21f3-6651-500d-14137f0f1c0f@kdbg.org>
+ <nycvar.QRO.7.76.6.1906181647480.44@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <CA+dzEB=iOsfuZQ5Z8uXO+k6E3WczkLX64yWUpTm1NZBjdd47kg@mail.gmail.com>
-In-Reply-To: <CA+dzEB=iOsfuZQ5Z8uXO+k6E3WczkLX64yWUpTm1NZBjdd47kg@mail.gmail.com>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 18 Jun 2019 09:41:08 -0700
-Message-ID: <CA+dzEBniPBM9qyR9gq=8sKtc8ieUkq6HGfUuZSc5=UdovR5wkw@mail.gmail.com>
-Subject: Re: windows: error cannot lock ref ... unable to create lock
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1906181647480.44@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hit send too quickly, here's my version information:
+On Tue, Jun 18, 2019 at 06:15:46PM +0200, Johannes Schindelin wrote:
+> > Regardless of how it is implemented, I have another gripe with this
+> > helper: the way it must be used requires a process: $(test_out_to_path
+> > $foo)
+> 
+> Indeed.
+> 
+> > And looking through this patch series, I see a gazillion of *new*
+> > process substitutions $(test_something...) and $(basename $whatever).
+> > Can't we do something about it?
+> 
+> I wish there was. Unix shell scripting has not evolved much in the past,
+> what, 3 decades? So I don't really see a way to "pass variables by
+> reference" to shell functions, short of calling `eval` (which buys
+> preciously little as it _also_ has to spawn a new process [*1*]).
 
-$ git --version
-git version 2.22.0.windows.1
+> Footnote *1*: Theoretically, it could be a *ton* faster by using threads
+> on Windows. But threads are pretty much an afterthought on Unix/Linux, so
+> no mainstream POSIX shell supports this. They all `fork()` to interpret an
+> `eval` as far as I can tell.
 
-On Tue, Jun 18, 2019 at 9:38 AM Anthony Sottile <asottile@umich.edu> wrote:
->
-> I've set up a demo problematic repository on github:
-> https://github.com/asottile-archive/git-windows-branch-test
->
-> The minimal reproduction is:
->
-> rm -rf x
-> git init x
-> cd x
-> git remote add origin https://github.com/asottile-archive/git-windows-branch-te>
-> git fetch origin --tags
->
-> Here's the output:
->
-> + git init x
-> Initialized empty Git repository in C:/Users/IEUser/x/x/.git/
-> + cd x
-> + git remote add origin
-> https://github.com/asottile-archive/git-windows-branch-test
-> + git fetch origin --tags
-> remote: Enumerating objects: 10, done.
-> remote: Counting objects: 100% (10/10), done.
-> remote: Compressing objects: 100% (4/4), done.
-> remote: Total 10 (delta 0), reused 0 (delta 0), pack-reused 0
-> Unpacking objects: 100% (10/10), done.
-> From https://github.com/asottile-archive/git-windows-branch-test
->  * [new branch]      master     -> origin/master
-> error: cannot lock ref 'refs/remotes/origin/pr/aux': Unable to create
-> 'C:/Users/IEUser/x/x/.git/refs/remotes/origin/pr/aux.lock': No such
-> file or directory
->  ! [new branch]      pr/aux     -> origin/pr/aux  (unable to update local ref)
->
->
-> real-world issue: https://github.com/pre-commit/pre-commit/issues/1058
->
-> Thanks
->
-> Anthony
+'eval' doesn't fork().  It can't possibly fork(), because if it did,
+then any variables set in the eval-ed code snippet couldn't be visible
+outside the 'eval'.
+
