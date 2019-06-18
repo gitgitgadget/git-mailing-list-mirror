@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA581F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 17:09:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B91A1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 17:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729994AbfFRRJS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 13:09:18 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40338 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729319AbfFRRJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 13:09:18 -0400
-Received: by mail-pf1-f196.google.com with SMTP id p184so8017818pfp.7
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 10:09:18 -0700 (PDT)
+        id S1730070AbfFRRJV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 13:09:21 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:35319 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729319AbfFRRJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 13:09:21 -0400
+Received: by mail-pg1-f194.google.com with SMTP id s27so8044386pgl.2
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 10:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=E0tDpwlg+OKRkVbD+oy1LwC7tE5sbq/gpCxskU0uUP0=;
-        b=j2aizDIFvDSKQS0X4EyteZ72VbEZcsE7kHvcFV+LNcRt1hU9HAF9uTntU0MukBLu8u
-         XUjDZnBi7dWbQyeayohpAHOSLOgSaTpyESipAZR9FbppYuypnOWT8T/Q/xQpL9aLQJMa
-         XOgx2RVCjlPplGYN6ImeXBncbVIXeIi4jH1rYvcN2lGTV4teKnBkEGX0XRdQbGadIQNo
-         YqhwGt3O4HhA0tRicOckIkn7wx94ksa//8Zes114cFoK7rlCa4+zDAgWc5w8JsSQfB+s
-         m/OAttgd4R81oORKsC28sL/EJScw/l9eMvOm/3I4lXkzpKTRWRw24hMez+delUa8oa0s
-         XvMw==
+        bh=fbylS04N0kpHs/7vKPXmotnmDYuGwmyACsWWpHPf3xQ=;
+        b=lhI0ZJ4OkzIk/SiPuJWqJUjjN9iEtdigwpqa9yA1+UwCKL13SghJxBXDm4UsehIjNt
+         dRHBJerRT1XRFiLiqHza9w58i6ITBJblRhzBXuj1660kmlLT+eXX1+4V3kZpwSOnw2O1
+         FZzGeAoAbpv+IZA9gK+dgOcy27Q0Nz51lw+B2Ajlacl77LBcTgN4d5gtHT9LzeM1uYgT
+         xXL1uzbsGU4VpHs3Zm3Fp6je2JkE+Z96YP2M6+fpo5dvfnmdPrchM3R/min1yqpo32Ll
+         fn8702glGtzvoxMPcUzxzX9H14NN4HYLczaziXAt5wRT+EABD0cEaDTVjO0DqYhVZqHp
+         Nyig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=E0tDpwlg+OKRkVbD+oy1LwC7tE5sbq/gpCxskU0uUP0=;
-        b=aTbXcUp8/M6IrnjRCd3RpIxg9gdDDXi6pQG1nrx3PN4igDvl4AFBiHOOq94DzTR2Bo
-         1pjA+QMJhBG2A4mfUrZUYWj6xHZOdPwVMvnIPecQoH5ciLGZTW9+Tq8407ZcBm7p3ZD/
-         JgxFxfyfYDCxXeEzs19CVX1Tpz1Y2gaKTkLq2TWgr4WxL5gYn0MiAhnmLqrRCd64UuFb
-         6TD2w2PzIva8F26WJ1D5BIlSjJ2hfLvcHIAVVs55+wnvqIqF6VNSItD/4pG8ctnauJpU
-         w1kHlHBVGwIIwmVLFRaQVYXBK2f+BTcnISQDcx0dVhcV9IrxZw8RYQuer4OrwZV3Vr+v
-         ELjw==
-X-Gm-Message-State: APjAAAW44UpVBseKAAPo5qruQ274HkpvrPVhsX4KdHIW5jTTrkYA9VrD
-        NWODWUp4JS5+XVAK1IGE+OY=
-X-Google-Smtp-Source: APXvYqw185gYxQOEdKAwzkmBP3zq0L4QtEqYw7PX6G+sAXypb7mbCUWTzsD8abHLFgmIHHVdvglDeQ==
-X-Received: by 2002:a17:90a:480a:: with SMTP id a10mr6282563pjh.57.1560877757509;
-        Tue, 18 Jun 2019 10:09:17 -0700 (PDT)
+        bh=fbylS04N0kpHs/7vKPXmotnmDYuGwmyACsWWpHPf3xQ=;
+        b=O4DqAF/stETjXegvL0xckOcCetC6YMrmwZ+SJeZnYZxPwR1aMNzDlgTek10c3jpP2V
+         GwJkE8C3mBRhLkAZ2nroZ2ZnseU3bk3LKazTPok2TDigSezo7OqCj3IG+TkW/72rfj9Y
+         R2JpRcX5d+WN/wybSeW8yu9q5p4xVVhV3YzQkeh5OWf0Ry9albss50RSntc941GMv4sn
+         noCdkrc51xQWPF/qp6P5otLqr3dP0Ilu6zIe10jSJfwSsvxW8QjqFLngDMLqYpFzv/iN
+         ycJgN5nMHK9COFxz13HIQLVWbKtNxQeGExeSoLJeibJmyGfvj9zXg/IfM3ZZESE8FEMX
+         RSPg==
+X-Gm-Message-State: APjAAAXwOwi0w/0NgPULEiTR5VGxBN0Uhu3p8cuOBnmrngzh7lrciVf0
+        Rwq905luju0E9GZjQV86jWI=
+X-Google-Smtp-Source: APXvYqwuMLKRwElH8aN5MizrAZ/PJUQszvvTBLNdZjFo+DPnXZViwBxnZkTL46etYFF0Sk8r1310lA==
+X-Received: by 2002:a63:6c4a:: with SMTP id h71mr3577920pgc.331.1560877760926;
+        Tue, 18 Jun 2019 10:09:20 -0700 (PDT)
 Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id d6sm14251093pgf.55.2019.06.18.10.09.14
+        by smtp.gmail.com with ESMTPSA id d6sm14251093pgf.55.2019.06.18.10.09.17
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 18 Jun 2019 10:09:16 -0700 (PDT)
+        Tue, 18 Jun 2019 10:09:20 -0700 (PDT)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 To:     rohit.ashiwal265@gmail.com
 Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
         phillip.wood123@gmail.com, martin.agren@gmail.com,
         jrnieder@gmail.com, gitster@pobox.com
-Subject: [GSoC][PATCH v5 2/5] sequencer: rename reset_for_rollback to reset_merge
-Date:   Tue, 18 Jun 2019 22:36:47 +0530
-Message-Id: <20190618170650.22721-3-rohit.ashiwal265@gmail.com>
+Subject: [GSoC][PATCH v5 3/5] sequencer: use argv_array in reset_merge
+Date:   Tue, 18 Jun 2019 22:36:48 +0530
+Message-Id: <20190618170650.22721-4-rohit.ashiwal265@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190618170650.22721-1-rohit.ashiwal265@gmail.com>
 References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
@@ -69,50 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are on a path to teach cherry-pick/revert how to skip commits. To
-achieve this, we could really make use of existing functions.
-reset_for_rollback is one such function, but the name does not
-intuitively suggest to use it to reset a merge, which it was born to
-perform see 539047c ("revert: introduce --abort to cancel a failed
-cherry-pick", 2011-11-23). Change the name to reset_merge to make
-it more intuitive.
+Avoid using magic numbers for array size and index under `reset_merge`
+function. Use `argv_array` instead. This will make code shorter and
+easier to extend.
 
 Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 ---
- sequencer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sequencer.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index c644368b54..12f2605ded 100644
+index 12f2605ded..6762a5f485 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2731,7 +2731,7 @@ static int rollback_is_safe(void)
- 	return oideq(&actual_head, &expected_head);
- }
+@@ -2733,13 +2733,18 @@ static int rollback_is_safe(void)
  
--static int reset_for_rollback(const struct object_id *oid)
-+static int reset_merge(const struct object_id *oid)
+ static int reset_merge(const struct object_id *oid)
  {
- 	const char *argv[4];	/* reset --merge <arg> + NULL */
+-	const char *argv[4];	/* reset --merge <arg> + NULL */
++	int ret;
++	struct argv_array argv = ARGV_ARRAY_INIT;
  
-@@ -2753,7 +2753,7 @@ static int rollback_single_pick(struct repository *r)
- 		return error(_("cannot resolve HEAD"));
- 	if (is_null_oid(&head_oid))
- 		return error(_("cannot abort from a branch yet to be born"));
--	return reset_for_rollback(&head_oid);
-+	return reset_merge(&head_oid);
+-	argv[0] = "reset";
+-	argv[1] = "--merge";
+-	argv[2] = oid_to_hex(oid);
+-	argv[3] = NULL;
+-	return run_command_v_opt(argv, RUN_GIT_CMD);
++	argv_array_pushl(&argv, "reset", "--merge", NULL);
++
++	if (!is_null_oid(oid))
++		argv_array_push(&argv, oid_to_hex(oid));
++
++	ret = run_command_v_opt(argv.argv, RUN_GIT_CMD);
++	argv_array_clear(&argv);
++
++	return ret;
  }
  
- int sequencer_rollback(struct repository *r, struct replay_opts *opts)
-@@ -2796,7 +2796,7 @@ int sequencer_rollback(struct repository *r, struct replay_opts *opts)
- 		warning(_("You seem to have moved HEAD. "
- 			  "Not rewinding, check your HEAD!"));
- 	} else
--	if (reset_for_rollback(&oid))
-+	if (reset_merge(&oid))
- 		goto fail;
- 	strbuf_release(&buf);
- 	return sequencer_remove_state(opts);
+ static int rollback_single_pick(struct repository *r)
 -- 
 2.21.0
 
