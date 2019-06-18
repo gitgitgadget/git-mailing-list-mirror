@@ -8,249 +8,141 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA011F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 527031F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729135AbfFRMYC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 08:24:02 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39924 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729115AbfFRMYB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 08:24:01 -0400
-Received: by mail-ed1-f66.google.com with SMTP id m10so21453123edv.6
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:24:00 -0700 (PDT)
+        id S1729163AbfFRMYE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 08:24:04 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37219 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbfFRMX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 08:23:59 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w13so21474954eds.4
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=myJh4IksGT5LpjsbiGigjofo29xoMjLU+JcS5Ji/PC8=;
-        b=PuyF/NPZd1BjCFxhfGWHJrMoRGl+aAtUKbEneNsfXuoryq1w9EsE50n+3QInWxcpt/
-         TvxuxETPRyvVvOqZmeXfR+fOipNQLa5fenPH21kuYwg3YYHwBdDLrmI4Eq/gMG1LzL8N
-         uDOVa0fnGSXFkpzQ8DAKbuPBBPiSPvatmCu3YS48ftmUNSJ7d/Wit8ObkSNxu4hrwqNw
-         jCYAulC5h5I5OCLTGaFORaZEYekOo5Sca0sEhdBze4P7FMDFForSO7jxXELBJpVVAbDV
-         Aw3bIkF4ZQy0KR+R2bnrj2284wAEJRsiudeNNeefCawkxSDipgFM5BxsnBHDKQmlhoFJ
-         P3hg==
+        bh=KUoJ+UAAZHH8tlelUr0P8mSiA+QhsYQzdWUhkSBAxRE=;
+        b=ZKOS7i2Kstd+zIXzey02JNCGKPwSXHzIfCgoJrniE9+V8BU0+vN0YY0TRtAF0zidLG
+         1wo+nD2BRvcYsLc7eU/iCBwj7gOk37odt4kw5hKhiCAd28MnMgrAd6TC8YTNRw/H9QIb
+         Gq/7uXNIgrhY/McWqusM62RUJtMTJ9LqRhAW+2Il3jrPqmYyqkt2I1tSioTKQr0yaqqK
+         eJYAWDsPfEB5LKcC8KkZz0WZ/4OOdu7Pv2XxVStU7/HqpdnFq3YPedQNZOLNc48vWGHh
+         6TnyS/S1A1KX4duwPF5xH4v5WBaDCBwSKua2KIHm0ZLbBJt5hB1zi8jNXYtshSVvYF6S
+         AVyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=myJh4IksGT5LpjsbiGigjofo29xoMjLU+JcS5Ji/PC8=;
-        b=qujUwt0+izFKEmiRhwNXblCLdsqIWyc/SHhu4u3q9xiXuaYj3oZygvZBFEasusrZJv
-         8Fv1k6bEGVd3795TzaSEXQcaPOfubCJOLGpXO10OdFefh3j1txEX8cQ8u+ZmVuaFLLG7
-         kRE7q3yyOJJJa2KVSCJl6AirSXW6VlIgTW91v+oZSHC4R86GoJ78HvuXh6RpRRrZnulW
-         2mN9EM9DDeMJGVWoOCBtsk3gUgHAuJs6UFyczftxqzMUkX5CiHHFy1dLxFdLyIYQ/R9u
-         Qh1XJNoKsDSSuCnpO0EOfNs37+47gpPe2a3mCvtCQEhgd9XJH1ysOI+j4zJGKC6T29+J
-         hcuw==
-X-Gm-Message-State: APjAAAXy5i6MUviZ5IqqkPUI/CZCGKVV3WlDnYR078XbMsqAnRT/p0tR
-        5ErWwwzjTZglwvNgEXxvG5GkoACZ
-X-Google-Smtp-Source: APXvYqywaG3T76se8NeR3y5nrELJV83Nn/3iRZDuEwh6L0oBAGLBDsELeAKU4VfGd9KG+6SU4V96Fg==
-X-Received: by 2002:a17:906:3e88:: with SMTP id a8mr12180443ejj.206.1560860639598;
-        Tue, 18 Jun 2019 05:23:59 -0700 (PDT)
+        bh=KUoJ+UAAZHH8tlelUr0P8mSiA+QhsYQzdWUhkSBAxRE=;
+        b=ONjtUrziDyMgpUxnvHqKdPx1ORZ3AcBq29wBt3qg8sXUJdOhBla9OxrWiioUfmvNZx
+         0l813wzCPCT4jXK5IFdFkC4t3FxY8RRU3kOtbXbnyt8rC9n6ETeEKyCUZKKrx7CJSSG4
+         ViFDv/rDlcQHYmeziMaq3X1ENDfcv05xEQx6Ygoe4XYQKBxlmUdCYmdrTGesSyjuE9Dl
+         3SuMJDYEuYynewgTtjUZPo4HnrVb7QyG0I4eA+TQUQPpe2OPh/I6JX5bL7EHuQVjcLn9
+         Rj4X0NFgO5CfNktEeqbNKs18uOzKJeMGPGPEyNNLG6O+f++LgNP+XPH8zcpPGb1PYuK4
+         T8Zw==
+X-Gm-Message-State: APjAAAWUTLRajb3+L1I+Idx97nRwA//UsJOJx1AyEzBJP/IRpMFeQZWL
+        BQR7it/Ee1XPd+zvjupbJZrUGDG0
+X-Google-Smtp-Source: APXvYqzYgQeEznx7mP3R5Qyx9LTTMY0kU1NrJhc7DJg0PrBZ6fcEPQvpF5Si3YdY/Mbo/5/m3A32cw==
+X-Received: by 2002:a50:87d0:: with SMTP id 16mr72143196edz.133.1560860638283;
+        Tue, 18 Jun 2019 05:23:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l50sm4768262edb.77.2019.06.18.05.23.59
+        by smtp.gmail.com with ESMTPSA id j25sm4521526edq.68.2019.06.18.05.23.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 05:23:59 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 05:23:59 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 12:23:42 GMT
-Message-Id: <47105b63503b84be2769186db95be2d45d81577d.1560860634.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 05:23:57 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 05:23:57 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 12:23:40 GMT
+Message-Id: <486297ec8c146e0ed47cd1dd8fe8f6496c2b54c2.1560860634.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 05/17] mingw: replace mingw_startup() hack
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 03/17] cache-tree.c: avoid reusing the DEBUG constant
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Git for Windows has special code to retrieve the command-line parameters
-(and even the environment) in UTF-16 encoding, so that they can be
-converted to UTF-8. This is necessary because Git for Windows wants to
-use UTF-8 encoded strings throughout its code, and the main() function
-does not get the parameters in that encoding.
+In MSVC, the DEBUG constant is set automatically whenever compiling with
+debug information.
 
-To do that, we used the __wgetmainargs() function, which is not even a
-Win32 API function, but provided by the MINGW "runtime" instead.
+This is clearly not what was intended in cache-tree.c, so let's use a less
+ambiguous constant there.
 
-Obviously, this method would not work with any compiler other than GCC,
-and in preparation for compiling with Visual C++, we would like to avoid
-precisely that.
-
-Lucky us, there is a much more elegant way: we can simply implement the
-UTF-16 variant of `main()`: `wmain()`.
-
-To make that work, we need to link with -municode. The command-line
-parameters are passed to `wmain()` encoded in UTF-16, as desired, and
-this method also works with GCC, and also with Visual C++ after
-adjusting the MSVC linker flags to force it to use `wmain()`.
-
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c   | 53 +++++++++++++++++++++++++++++++-----------------
- compat/mingw.h   | 22 ++++++++++----------
- config.mak.uname |  3 ++-
- 3 files changed, 47 insertions(+), 31 deletions(-)
+ cache-tree.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 9b6d2400e1..0d8713e515 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2301,18 +2301,13 @@ static void setup_windows_environment(void)
- 		setenv("TERM", "cygwin", 1);
- }
+diff --git a/cache-tree.c b/cache-tree.c
+index b13bfaf71e..706ffcf188 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -6,8 +6,8 @@
+ #include "object-store.h"
+ #include "replace-object.h"
  
-+#if !defined(_MSC_VER)
- /*
-  * Disable MSVCRT command line wildcard expansion (__getmainargs called from
-  * mingw startup code, see init.c in mingw runtime).
-  */
- int _CRT_glob = 0;
--
--typedef struct {
--	int newmode;
--} _startupinfo;
--
--extern int __wgetmainargs(int *argc, wchar_t ***argv, wchar_t ***env, int glob,
--		_startupinfo *si);
-+#endif
+-#ifndef DEBUG
+-#define DEBUG 0
++#ifndef DEBUG_CACHE_TREE
++#define DEBUG_CACHE_TREE 0
+ #endif
  
- static NORETURN void die_startup(void)
- {
-@@ -2390,22 +2385,25 @@ static void maybe_redirect_std_handles(void)
- 				  GENERIC_WRITE, FILE_FLAG_NO_BUFFERING);
- }
+ struct cache_tree *cache_tree(void)
+@@ -111,7 +111,7 @@ static int do_invalidate_path(struct cache_tree *it, const char *path)
+ 	int namelen;
+ 	struct cache_tree_sub *down;
  
--void mingw_startup(void)
-+/*
-+ * We implement wmain() and compile with -municode, which would
-+ * normally ignore main(), but we call the latter from the former
-+ * so that we can handle non-ASCII command-line parameters
-+ * appropriately.
-+ *
-+ * To be more compatible with the core git code, we convert
-+ * argv into UTF8 and pass them directly to main().
-+ */
-+int wmain(int argc, const wchar_t **wargv)
- {
--	int i, maxlen, argc;
--	char *buffer;
--	wchar_t **wenv, **wargv;
--	_startupinfo si;
-+	int i, maxlen, exit_status;
-+	char *buffer, **save;
-+	const char **argv;
+-#if DEBUG
++#if DEBUG_CACHE_TREE
+ 	fprintf(stderr, "cache-tree invalidate <%s>\n", path);
+ #endif
  
- 	trace2_initialize_clock();
+@@ -398,7 +398,7 @@ static int update_one(struct cache_tree *it,
+ 		strbuf_addf(&buffer, "%o %.*s%c", mode, entlen, path + baselen, '\0');
+ 		strbuf_add(&buffer, oid->hash, the_hash_algo->rawsz);
  
- 	maybe_redirect_std_handles();
+-#if DEBUG
++#if DEBUG_CACHE_TREE
+ 		fprintf(stderr, "cache-tree update-one %o %.*s\n",
+ 			mode, entlen, path + baselen);
+ #endif
+@@ -421,7 +421,7 @@ static int update_one(struct cache_tree *it,
  
--	/* get wide char arguments and environment */
--	si.newmode = 0;
--	if (__wgetmainargs(&argc, &wargv, &wenv, _CRT_glob, &si) < 0)
--		die_startup();
--
- 	/* determine size of argv and environ conversion buffer */
- 	maxlen = wcslen(wargv[0]);
- 	for (i = 1; i < argc; i++)
-@@ -2415,9 +2413,16 @@ void mingw_startup(void)
- 	maxlen = 3 * maxlen + 1;
- 	buffer = malloc_startup(maxlen);
+ 	strbuf_release(&buffer);
+ 	it->entry_count = to_invalidate ? -1 : i - *skip_count;
+-#if DEBUG
++#if DEBUG_CACHE_TREE
+ 	fprintf(stderr, "cache-tree update-one (%d ent, %d subtree) %s\n",
+ 		it->entry_count, it->subtree_nr,
+ 		oid_to_hex(&it->oid));
+@@ -462,7 +462,7 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+ 	strbuf_add(buffer, path, pathlen);
+ 	strbuf_addf(buffer, "%c%d %d\n", 0, it->entry_count, it->subtree_nr);
  
--	/* convert command line arguments and environment to UTF-8 */
-+	/*
-+	 * Create a UTF-8 version of w_argv. Also create a "save" copy
-+	 * to remember all the string pointers because parse_options()
-+	 * will remove claimed items from the argv that we pass down.
-+	 */
-+	ALLOC_ARRAY(argv, argc + 1);
-+	ALLOC_ARRAY(save, argc + 1);
- 	for (i = 0; i < argc; i++)
--		__argv[i] = wcstoutfdup_startup(buffer, wargv[i], maxlen);
-+		argv[i] = save[i] = wcstoutfdup_startup(buffer, wargv[i], maxlen);
-+	argv[i] = save[i] = NULL;
- 	free(buffer);
+-#if DEBUG
++#if DEBUG_CACHE_TREE
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%.*s> (%d ent, %d subtree) %s\n",
+ 			pathlen, path, it->entry_count, it->subtree_nr,
+@@ -536,7 +536,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 		size -= rawsz;
+ 	}
  
- 	/* fix Windows specific environment settings */
-@@ -2436,6 +2441,16 @@ void mingw_startup(void)
- 
- 	/* initialize Unicode console */
- 	winansi_init();
-+
-+	/* invoke the real main() using our utf8 version of argv. */
-+	exit_status = main(argc, argv);
-+
-+	for (i = 0; i < argc; i++)
-+		free(save[i]);
-+	free(save);
-+	free(argv);
-+
-+	return exit_status;
- }
- 
- int uname(struct utsname *buf)
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 593bdbffe6..210f1b01a8 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -562,18 +562,18 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen);
- extern CRITICAL_SECTION pinfo_cs;
- 
- /*
-- * A replacement of main() that adds win32 specific initialization.
-+ * Git, like most portable C applications, implements a main() function. On
-+ * Windows, this main() function would receive parameters encoded in the
-+ * current locale, but Git for Windows would prefer UTF-8 encoded  parameters.
-+ *
-+ * To make that happen, we still declare main() here, and then declare and
-+ * implement wmain() (which is the Unicode variant of main()) and compile with
-+ * -municode. This wmain() function reencodes the parameters from UTF-16 to
-+ * UTF-8 format, sets up a couple of other things as required on Windows, and
-+ * then hands off to the main() function.
-  */
--
--void mingw_startup(void);
--#define main(c,v) dummy_decl_mingw_main(void); \
--static int mingw_main(c,v); \
--int main(int argc, const char **argv) \
--{ \
--	mingw_startup(); \
--	return mingw_main(__argc, (void *)__argv); \
--} \
--static int mingw_main(c,v)
-+int wmain(int argc, const wchar_t **w_argv);
-+int main(int argc, const char **argv);
- 
- /*
-  * Used by Pthread API implementation for Windows
-diff --git a/config.mak.uname b/config.mak.uname
-index b71688eeb7..bf5d160ef4 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -401,7 +401,7 @@ ifeq ($(uname_S),Windows)
- 		compat/win32/trace2_win32_process_info.o \
- 		compat/win32/dirent.o
- 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
--	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
-+	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -ENTRY:wmainCRTStartup -SUBSYSTEM:CONSOLE
- 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib invalidcontinue.obj
- 	PTHREAD_LIBS =
- 	lib =
-@@ -548,6 +548,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	ETAGS_TARGET = ETAGS
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	DEFAULT_HELP_FORMAT = html
-+	BASIC_LDFLAGS += -municode
- 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+-#if DEBUG
++#if DEBUG_CACHE_TREE
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%s> (%d ent, %d subtree) %s\n",
+ 			*buffer, it->entry_count, subtree_nr,
 -- 
 gitgitgadget
 
