@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CB861F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 23:28:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C21A1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 23:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbfFRX24 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 19:28:56 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:35105 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbfFRX24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 19:28:56 -0400
-Received: by mail-qt1-f195.google.com with SMTP id d23so17702684qto.2
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 16:28:55 -0700 (PDT)
+        id S1728881AbfFRX3D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 19:29:03 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:34090 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbfFRX3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 19:29:03 -0400
+Received: by mail-qk1-f194.google.com with SMTP id t8so9771725qkt.1
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 16:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HZeQvGDF6ph32VZaJg9CsEtLW+IEjcr2kE9QW8pbBAQ=;
-        b=dEFtLtPkD7PAMvsz4GQOVDyWmz99+nZ26txnEItLxBv1ov92TP0j+ZAodvXJ4xUuDA
-         ee/HSKenl9OFLsjMbhE+TXxTzOKEX4wI+/QYPWTqQiGs0nB0WG2xLdIJ4be2YIINFoVg
-         494FhHR56MWn4xmiUspgQzX7cOZZg1MlPZV2Xd5R7XGq8zlXcYKIoIw2kLy0t5EujSmz
-         x0wi9uzXFJWfA+idxLpk1dcxQgQAS8RBsHYx0cBOF+En+ZlZqYS9+OFRZwZgCX5ucxK6
-         jESt5tc3m7+x87PR27MgB9t4bN7Y2yikBEWrep3Kjhz3nx4uEgWTDXZ9aZKq2zA1aTPd
-         0qSg==
+        bh=hwF3tfzYDWjFlaGtHtkNWoMVZECCkGQuNX+SZav6ClE=;
+        b=dGAvxey4CPng/IgxifZ3bAChAAMLeNAQi0NOZ3qaJ6C//ZFeF5gjMN2xtqGP4BrCkZ
+         j1PAcoLeRsOTepoA6Zqbj4JPKEgdQGAnpQVBI2sLNAPQU/7t1WF7L5nf1XmrRuq/v8qR
+         L8yQEhMSMn0+get14dhiVaDCtQ+uTVnHXK5WLOUSJzcoFAaj1YUx3oewF5bKMKkdvzu/
+         07MZuaHG6t0wLe9dL06XaAvyVBXBgkyeKrTB4T1fjUDqLmj6b0Fn/bSGokP2XJbcnY8O
+         rmdYAM/rV1skBtDvk2+14f/dVOL0qKPGgL+NqD3GhT2FYL3MKThIDIXSoZcsrsICevrA
+         iC8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HZeQvGDF6ph32VZaJg9CsEtLW+IEjcr2kE9QW8pbBAQ=;
-        b=ek6Diof9bxv7vQNOStr2P0+oiibYlTSZvEMvBnpNz5HLFhEQt9QG2iGqyVX1kmtWeu
-         yZUxDGrff+I71FO+LJTr/dQrpMt+1Ric+ddn+anJeCJ0Tzt3tdvESQhoPQ4OfZqAh7SL
-         v72DxeV324aLpYhVAVw90abd17H59AydAV5XFXysfloft0DVixJhu2NC4aVWVdyQkh1W
-         AUSptlqmfwW56VFrc3z+5BsTxNsss4zBoJJmBFpdTQJuNMx2kIzMxhPofpiJvIshUmsj
-         ARGsddZ9FMPy5E3mThk04gEVDi8FOEHTki7RSa7Ji2mIsW/FrTREfy4qRyVsIDj2KxZ1
-         c3Eg==
-X-Gm-Message-State: APjAAAVjjlZjZB4tQTCkAAdiHxHL3yFMQo7w5mhpnN54uTg1QRM03z4R
-        L8yq26JHBm//Roy4nEps6Ej37azx6t4=
-X-Google-Smtp-Source: APXvYqw+SAwMxE3e3IIZtPr42Y6AxpxUuLhUUzc/XxuIUKKW8ABsJg0HnLhD8RLeE7IrzPjwDijoGQ==
-X-Received: by 2002:ac8:c0e:: with SMTP id k14mr59679514qti.72.1560900534757;
-        Tue, 18 Jun 2019 16:28:54 -0700 (PDT)
+        bh=hwF3tfzYDWjFlaGtHtkNWoMVZECCkGQuNX+SZav6ClE=;
+        b=q0sb9xZXjhr/iW9px/SSXVj0kxUJWRY288a9rUrvpvnDtec7qnGuZUi4wdMawyC2ef
+         wo835/ux2VE0uQSVlK3xCKJ9qjbnFkOVSVnc1QL+eCMICIsd2ZdHcK4sU/ZeyOv10VuR
+         VwCrF/76l9Nw3uD3nHJQjRFPLvjEUjg8gU3l5N4WsU7I7hnssfx1nufqTrqycOkz+G40
+         Kad79PgX0uZDF9tj46zH71s5dOrbAgOgLZ+Zic04RlcjBvySGaf2VQlMVNVvalMTssx1
+         L2aLF7bhBPfk66ZOPEzWHgm5RqTb+WgJVW0jN09xoNOQn0VtWjZZSD0T9yYDXfL2V79A
+         zg7w==
+X-Gm-Message-State: APjAAAW5tW7LFYxaNB7CcvV4PC2xw/DmmdSawrnRhhlQHPcZMA19ySzL
+        MMCGZvs21oeaq0Wql9aKMOFQlFODG1w=
+X-Google-Smtp-Source: APXvYqzzEgDfDThZlgrBSHnE6dlyA27yZPDdjMp+dpA4B1+CbNfEsBCId02HF5iR2VeYOGkCbK28Ag==
+X-Received: by 2002:ae9:eb53:: with SMTP id b80mr68407120qkg.172.1560900541965;
+        Tue, 18 Jun 2019 16:29:01 -0700 (PDT)
 Received: from mango.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id e18sm4828997qkm.49.2019.06.18.16.28.51
+        by smtp.gmail.com with ESMTPSA id e18sm4828997qkm.49.2019.06.18.16.28.58
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 18 Jun 2019 16:28:54 -0700 (PDT)
+        Tue, 18 Jun 2019 16:29:01 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
@@ -58,154 +58,179 @@ Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: [GSoC][PATCH v7 02/10] clone: better handle symlinked files at .git/objects/
-Date:   Tue, 18 Jun 2019 20:27:39 -0300
-Message-Id: <722350fe00de73d28df1a9c8667c84171aa8c1f5.1560898723.git.matheus.bernardino@usp.br>
+        kernel-usp@googlegroups.com, Daniel Ferreira <bnmvco@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC][PATCH v7 03/10] dir-iterator: add tests for dir-iterator API
+Date:   Tue, 18 Jun 2019 20:27:40 -0300
+Message-Id: <60c5fc6ad28a01c767befeb06601eaf6db4ca42a.1560898723.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <cover.1560898723.git.matheus.bernardino@usp.br>
 References: <cover.1560898723.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is currently an odd behaviour when locally cloning a repository
-with symlinks at .git/objects: using --no-hardlinks all symlinks are
-dereferenced but without it, Git will try to hardlink the files with the
-link() function, which has an OS-specific behaviour on symlinks. On OSX
-and NetBSD, it creates a hardlink to the file pointed by the symlink
-whilst on GNU/Linux, it creates a hardlink to the symlink itself.
+From: Daniel Ferreira <bnmvco@gmail.com>
 
-On Manjaro GNU/Linux:
-    $ touch a
-    $ ln -s a b
-    $ link b c
-    $ ls -li a b c
-    155 [...] a
-    156 [...] b -> a
-    156 [...] c -> a
+Create t/helper/test-dir-iterator.c, which prints relevant information
+about a directory tree iterated over with dir-iterator.
 
-But on NetBSD:
-    $ ls -li a b c
-    2609160 [...] a
-    2609164 [...] b -> a
-    2609160 [...] c
+Create t/t0066-dir-iterator.sh, which tests that dir-iterator does
+iterate through a whole directory tree as expected.
 
-It's not good to have the result of a local clone to be OS-dependent and
-besides that, the current behaviour on GNU/Linux may result in broken
-symlinks. So let's standardize this by making the hardlinks always point
-to dereferenced paths, instead of the symlinks themselves. Also, add
-tests for symlinked files at .git/objects/.
-
-Note: Git won't create symlinks at .git/objects itself, but it's better
-to handle this case and be friendly with users who manually create them.
-
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+[matheus.bernardino: update to use test-tool and some minor aesthetics]
+Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Co-authored-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/clone.c            |  2 +-
- t/t5604-clone-reference.sh | 27 ++++++++++++++++++++-------
- 2 files changed, 21 insertions(+), 8 deletions(-)
+ Makefile                     |  1 +
+ t/helper/test-dir-iterator.c | 33 ++++++++++++++++++++++
+ t/helper/test-tool.c         |  1 +
+ t/helper/test-tool.h         |  1 +
+ t/t0066-dir-iterator.sh      | 55 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 91 insertions(+)
+ create mode 100644 t/helper/test-dir-iterator.c
+ create mode 100755 t/t0066-dir-iterator.sh
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5b9ebe9947..4a0a2455a7 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -445,7 +445,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 		if (unlink(dest->buf) && errno != ENOENT)
- 			die_errno(_("failed to unlink '%s'"), dest->buf);
- 		if (!option_no_hardlinks) {
--			if (!link(src->buf, dest->buf))
-+			if (!link(real_path(src->buf), dest->buf))
- 				continue;
- 			if (option_local > 0)
- 				die_errno(_("failed to create link '%s'"), dest->buf);
-diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
-index 207650cb95..0800c3853f 100755
---- a/t/t5604-clone-reference.sh
-+++ b/t/t5604-clone-reference.sh
-@@ -266,7 +266,7 @@ test_expect_success 'clone a repo with garbage in objects/*' '
- 	test_cmp expected actual
- '
- 
--test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknown files at objects/' '
-+test_expect_success SYMLINKS 'setup repo with manually symlinked or unknown files at objects/' '
- 	git init T &&
- 	(
- 		cd T &&
-@@ -280,10 +280,19 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
- 		ln -s packs pack &&
- 		find ?? -type d >loose-dirs &&
- 		last_loose=$(tail -n 1 loose-dirs) &&
--		rm -f loose-dirs &&
- 		mv $last_loose a-loose-dir &&
- 		ln -s a-loose-dir $last_loose &&
-+		first_loose=$(head -n 1 loose-dirs) &&
-+		rm -f loose-dirs &&
+diff --git a/Makefile b/Makefile
+index f58bf14c7b..7e2a44cccc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -704,6 +704,7 @@ TEST_BUILTINS_OBJS += test-config.o
+ TEST_BUILTINS_OBJS += test-ctype.o
+ TEST_BUILTINS_OBJS += test-date.o
+ TEST_BUILTINS_OBJS += test-delta.o
++TEST_BUILTINS_OBJS += test-dir-iterator.o
+ TEST_BUILTINS_OBJS += test-drop-caches.o
+ TEST_BUILTINS_OBJS += test-dump-cache-tree.o
+ TEST_BUILTINS_OBJS += test-dump-fsmonitor.o
+diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
+new file mode 100644
+index 0000000000..84f50bed8c
+--- /dev/null
++++ b/t/helper/test-dir-iterator.c
+@@ -0,0 +1,33 @@
++#include "test-tool.h"
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "iterator.h"
++#include "dir-iterator.h"
 +
-+		cd $first_loose &&
-+		obj=$(ls *) &&
-+		mv $obj ../an-object &&
-+		ln -s ../an-object $obj &&
++/* Argument is a directory path to iterate over */
++int cmd__dir_iterator(int argc, const char **argv)
++{
++	struct strbuf path = STRBUF_INIT;
++	struct dir_iterator *diter;
 +
-+		cd ../ &&
- 		find . -type f | sort >../../../T.objects-files.raw &&
-+		find . -type l | sort >../../../T.objects-symlinks.raw &&
- 		echo unknown_content> unknown_file
- 	) &&
- 	git -C T fsck &&
-@@ -291,7 +300,7 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
- '
- 
- 
--test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files at objects/' '
-+test_expect_success SYMLINKS 'clone repo with symlinked or unknown files at objects/' '
- 	for option in --local --no-hardlinks --shared --dissociate
- 	do
- 		git clone $option T T$option || return 1 &&
-@@ -300,7 +309,8 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 		test_cmp T.objects T$option.objects &&
- 		(
- 			cd T$option/.git/objects &&
--			find . -type f | sort >../../../T$option.objects-files.raw
-+			find . -type f | sort >../../../T$option.objects-files.raw &&
-+			find . -type l | sort >../../../T$option.objects-symlinks.raw
- 		)
- 	done &&
- 
-@@ -314,6 +324,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 	./Y/Z
- 	./Y/Z
- 	./a-loose-dir/Z
-+	./an-object
- 	./Y/Z
- 	./info/packs
- 	./pack/pack-Z.idx
-@@ -323,13 +334,15 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 	./unknown_file
- 	EOF
- 
--	for option in --local --dissociate --no-hardlinks
-+	for option in --local --no-hardlinks --dissociate
- 	do
--		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1
-+		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1 &&
-+		test_must_be_empty T$option.objects-symlinks.raw.de-sha || return 1
- 	done &&
- 
- 	echo ./info/alternates >expected-files &&
--	test_cmp expected-files T--shared.objects-files.raw
-+	test_cmp expected-files T--shared.objects-files.raw &&
-+	test_must_be_empty T--shared.objects-symlinks.raw
- '
- 
- test_done
++	if (argc < 2)
++		die("BUG: test-dir-iterator needs one argument");
++
++	strbuf_add(&path, argv[1], strlen(argv[1]));
++
++	diter = dir_iterator_begin(path.buf);
++
++	while (dir_iterator_advance(diter) == ITER_OK) {
++		if (S_ISDIR(diter->st.st_mode))
++			printf("[d] ");
++		else if (S_ISREG(diter->st.st_mode))
++			printf("[f] ");
++		else
++			printf("[?] ");
++
++		printf("(%s) [%s] %s\n", diter->relative_path, diter->basename,
++		       diter->path.buf);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 087a8c0cc9..7bc9bb231e 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -19,6 +19,7 @@ static struct test_cmd cmds[] = {
+ 	{ "ctype", cmd__ctype },
+ 	{ "date", cmd__date },
+ 	{ "delta", cmd__delta },
++	{ "dir-iterator", cmd__dir_iterator },
+ 	{ "drop-caches", cmd__drop_caches },
+ 	{ "dump-cache-tree", cmd__dump_cache_tree },
+ 	{ "dump-fsmonitor", cmd__dump_fsmonitor },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 7e703f3038..ec0ffbd0cb 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -9,6 +9,7 @@ int cmd__config(int argc, const char **argv);
+ int cmd__ctype(int argc, const char **argv);
+ int cmd__date(int argc, const char **argv);
+ int cmd__delta(int argc, const char **argv);
++int cmd__dir_iterator(int argc, const char **argv);
+ int cmd__drop_caches(int argc, const char **argv);
+ int cmd__dump_cache_tree(int argc, const char **argv);
+ int cmd__dump_fsmonitor(int argc, const char **argv);
+diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
+new file mode 100755
+index 0000000000..6e06dc038d
+--- /dev/null
++++ b/t/t0066-dir-iterator.sh
+@@ -0,0 +1,55 @@
++#!/bin/sh
++
++test_description='Test the dir-iterator functionality'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	mkdir -p dir &&
++	mkdir -p dir/a/b/c/ &&
++	>dir/b &&
++	>dir/c &&
++	mkdir -p dir/d/e/d/ &&
++	>dir/a/b/c/d &&
++	>dir/a/e &&
++	>dir/d/e/d/a &&
++
++	mkdir -p dir2/a/b/c/ &&
++	>dir2/a/b/c/d
++'
++
++test_expect_success 'dir-iterator should iterate through all files' '
++	cat >expected-iteration-sorted-output <<-EOF &&
++	[d] (a) [a] ./dir/a
++	[d] (a/b) [b] ./dir/a/b
++	[d] (a/b/c) [c] ./dir/a/b/c
++	[d] (d) [d] ./dir/d
++	[d] (d/e) [e] ./dir/d/e
++	[d] (d/e/d) [d] ./dir/d/e/d
++	[f] (a/b/c/d) [d] ./dir/a/b/c/d
++	[f] (a/e) [e] ./dir/a/e
++	[f] (b) [b] ./dir/b
++	[f] (c) [c] ./dir/c
++	[f] (d/e/d/a) [a] ./dir/d/e/d/a
++	EOF
++
++	test-tool dir-iterator ./dir >out &&
++	sort <out >./actual-iteration-sorted-output &&
++
++	test_cmp expected-iteration-sorted-output actual-iteration-sorted-output
++'
++
++test_expect_success 'dir-iterator should list files in the correct order' '
++	cat >expected-pre-order-output <<-EOF &&
++	[d] (a) [a] ./dir2/a
++	[d] (a/b) [b] ./dir2/a/b
++	[d] (a/b/c) [c] ./dir2/a/b/c
++	[f] (a/b/c/d) [d] ./dir2/a/b/c/d
++	EOF
++
++	test-tool dir-iterator ./dir2 >actual-pre-order-output &&
++
++	test_cmp expected-pre-order-output actual-pre-order-output
++'
++
++test_done
 -- 
 2.22.0
 
