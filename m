@@ -8,92 +8,102 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAFA31F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 036B01F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 12:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729239AbfFRMYP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 08:24:15 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:34597 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729179AbfFRMYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 08:24:07 -0400
-Received: by mail-ed1-f52.google.com with SMTP id s49so21513172edb.1
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:24:06 -0700 (PDT)
+        id S1729240AbfFRMYQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 08:24:16 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43649 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729167AbfFRMYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 08:24:06 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e3so21384463edr.10
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 05:24:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7kDTvmNJzxuKVCuUEw2sUjOAOs9WzIM36vSbnY3v/YM=;
-        b=IysWD+Niy9qw0d0s6OFZvu5vP6HQ7EsFoUe0YImEIrv4G7sVVF6JT2XlKLRoyjz9H6
-         UAfYCP45rMvSCSvY/fOgriP1etuso0Ndk1QMfyQDHWCQEjZVmxrtQi8yb6WLIwducDKy
-         Yt4DVfb3vAna/Sj+n81zL6MXGr3BPBgX0+H449t5bj8Nwqjp62VAKhqzvA9fJNQ/FLnt
-         3qBL8cvKSblNTOCYH2ZnAQEhJr7Hdaexj96ogYpir7ipsBgS8PzhiiTvq4LwwO3Qc1de
-         3aSiuqV48GNz7bMkx6tgY/zsPp6h5YgvrybAMgiqskvbmEvd2a0sX9kk/QtQAhU4dorF
-         bCaA==
+        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
+        b=AH283W/BZzP598GAcarrU46mU6cVppGpRezkueFCy/T9femC/ptAzeWgO4IS2K/N5w
+         sFslIbyRCLjA8g2U8lfRoCHtfmUY9tXjQoeYKffRGeOGkmOfEY1DzqsHoF6mIesFlWEs
+         wK9RlgtA/NTWNfdICKvx3F1HZG3Jge8y+QOCH5FNofhMzsylrRAIihfZ8mBW3zUSmRvF
+         dKr0C9dBOccmum7rOXYwKCGMxoLhGH5Wl6785CFYAjQMhJ92GYCbQWPqvMbo+FHaky8B
+         PP1Tf2EUuarD71sQxvnCnxiB53vEwWcMda2VpW/L1DC5/0prteoLEZGYUB431XtaDpnY
+         NugQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7kDTvmNJzxuKVCuUEw2sUjOAOs9WzIM36vSbnY3v/YM=;
-        b=s49Q4BrgSVXPttNo7QlzZmKRMyv0NHOlXO7bvVasDS6mkrZSwySY1su8now2G36rwc
-         /K9IUQHJAPgLEW0x2OISXwUL4PNVS1lcIFNrv/aiCPELrpNfrKUWRPwnN+UDLp4Vbkeh
-         kAiLJOJxwiVQzEmOKW1V/C2XGmFz1yb05tl8aZ1heCP3Ue+fgIJjXg4CknZsZHiaycxd
-         Lu01qU577jw60y5y8/S+DVEwLTuijY3Xhhtuj7GP//HMKrkbpcbguHBHEeHsvSoI2H1k
-         Y5TK0a8Qnj4ns61RSDmK5gAMn6PrzXynMp9FwA3V+4GEBJvSQndycqSgwBJvSgU46k8Q
-         rt3g==
-X-Gm-Message-State: APjAAAV+F2oIIMElL/LARcANmlXtdUFI8H87gj6HIEq4y+cu0iIoW1Uy
-        fl7KpnSixp8RKWIC0HaiCRl/7eZq
-X-Google-Smtp-Source: APXvYqwJTY13IFZshpAiDTWVXENjLaWg0ma/1staPx7PxJHPA0UDWD2S1f55w1HGPZrhYnix6OGONA==
-X-Received: by 2002:a05:6402:14cf:: with SMTP id f15mr65547802edx.255.1560860645644;
-        Tue, 18 Jun 2019 05:24:05 -0700 (PDT)
+        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
+        b=BHfVEKYIkpiEto3BvhMzFm23Unif88xYM/hlo7VID5rl6Dwgd8vMuQwecz+M7Os4UR
+         XQzfixj09IxRmd/mpDDr3EU3owJbahzBKx8aRheCeGEjwwq9w0Ut3+ypnWtL+mAmYoi2
+         nq6cRdedA83F2LUbrIt5FcSbaNCQT5XtKHtyy9xZvXyaOouie7uWMf0a/NIXM3A5A1oO
+         c3UEtXWShDlGNebrZP5nb3z2if6BjKXR/8ruGXghRfrW2cusxg+6fKw5adjrTKI1T+VK
+         tdXz+L4COuNNI3zdPJjqy56LTjwIQPqrXNGD3Ac6uUGGy5xZr0uZDmCWFRmvxuN5wmRp
+         lI5Q==
+X-Gm-Message-State: APjAAAU1NuQIyqEz1n8PzaB2IkJbvPjtfsE3FvMMYXgRza+/+Fegz82b
+        +Va9qT+VG89mqcpVEqQRhLBQYJuI
+X-Google-Smtp-Source: APXvYqw8Nj0BpKjeCmtUZd5TFfFEJkNYBlqXCh0O56yuMrXJI2OHNRVgWCivSmD96guwKET6NvGIMA==
+X-Received: by 2002:a50:ad01:: with SMTP id y1mr101990074edc.180.1560860644320;
+        Tue, 18 Jun 2019 05:24:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i3sm4789712edk.9.2019.06.18.05.24.05
+        by smtp.gmail.com with ESMTPSA id o22sm4711259edc.37.2019.06.18.05.24.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jun 2019 05:24:05 -0700 (PDT)
-Date:   Tue, 18 Jun 2019 05:24:05 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Jun 2019 12:23:51 GMT
-Message-Id: <0cca8c3c68e848836606757745f20287a4fb96c9.1560860634.git.gitgitgadget@gmail.com>
+        Tue, 18 Jun 2019 05:24:03 -0700 (PDT)
+Date:   Tue, 18 Jun 2019 05:24:03 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Jun 2019 12:23:49 GMT
+Message-Id: <073dc01b1431b62255a2c258c479c8408123fc90.1560860634.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 14/17] msvc: add pragmas for common warnings
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 12/17] msvc: fix detect_msys_tty()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-MSVC can be overzealous about some warnings. Disable them.
+The ntstatus.h header is only available in MINGW.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/msvc.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ compat/winansi.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/compat/msvc.h b/compat/msvc.h
-index d7525cf61d..1d7a8c6145 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -6,6 +6,10 @@
- #include <malloc.h>
- #include <io.h>
+diff --git a/compat/winansi.c b/compat/winansi.c
+index f4f08237f9..11cd9b82cc 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -544,7 +544,20 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
+ #ifdef DETECT_MSYS_TTY
  
-+#pragma warning(disable: 4018) /* signed/unsigned comparison */
-+#pragma warning(disable: 4244) /* type conversion, possible loss of data */
-+#pragma warning(disable: 4090) /* 'function' : different 'const' qualifiers (ALLOC_GROW etc.)*/
+ #include <winternl.h>
 +
- /* porting function */
- #define inline __inline
- #define __inline__ __inline
++#if defined(_MSC_VER)
++
++typedef struct _OBJECT_NAME_INFORMATION
++{
++	UNICODE_STRING Name;
++	WCHAR NameBuffer[0];
++} OBJECT_NAME_INFORMATION, *POBJECT_NAME_INFORMATION;
++
++#define ObjectNameInformation 1
++
++#else
+ #include <ntstatus.h>
++#endif
+ 
+ static void detect_msys_tty(int fd)
+ {
 -- 
 gitgitgadget
 
