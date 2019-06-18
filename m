@@ -2,109 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E342D1F462
-	for <e@80x24.org>; Tue, 18 Jun 2019 06:45:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B1BC1F462
+	for <e@80x24.org>; Tue, 18 Jun 2019 06:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728942AbfFRGpl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 02:45:41 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:45440 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726403AbfFRGpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 02:45:40 -0400
-Received: by mail-pf1-f193.google.com with SMTP id r1so7053666pfq.12
-        for <git@vger.kernel.org>; Mon, 17 Jun 2019 23:45:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BslaF+mayGjuWnY2C4l5U2WgQoDWw8/dmAUHzLppeXE=;
-        b=AJjMmtUzl9pEklNDcJbpyl7Kbmn1Xp/+a0uW3lj+dL2lKYh4Gwmu3Ci7ivv+xY6Apu
-         pvN40BgC+KfvSuZ4GLqlm/SNJtWGxNOBVPT5OMb44qJxbNfdTWRQPQbkp8kyUESqdOn5
-         aSPsaQaapuCpDTxwW7DEv5yeBVmpdfu+78Zbg+sRbzS2hFZI92LXjIINkUlQ3+oo1OCH
-         Swl98kF0amHHhdRRTD3YEf/4BC1sXZ5UvvTHz07/wBB+iZckMZMfg5W66My2Zlyx4YTe
-         6ZL0eKhZuPjVWf1n+lUgVxpNOMczwuwEoKIQF5R5TaeKw3oUEfYCMffnAi2kuSX4sNQF
-         xGOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BslaF+mayGjuWnY2C4l5U2WgQoDWw8/dmAUHzLppeXE=;
-        b=ejZjyV/qJhe5W+KYZyB91P8/FQxr5m5hRBosCasfD4xUTG3FlKZDHNKLKGbU3D5Nl3
-         0wzhVJsmNN9ReO3Z7j0Xcfsx8m+f4ydJf/IXPHg7aZbHJgNENDUCPUrPMDEQkF7zNvXx
-         6awJ7zOKiZYi/kBFmOfqiMWrsSdFk6uNID3uJcEzRyfEkbyEEuhLAZveU44/gOx+l1/M
-         PMg/k5PY9+azEzwLi+IEwXZ00A9Jc0yLEOrUbdN1i7qNS8hDNs1Z+IgohgIScX52ogz8
-         GRTJn/Kkn5H2dnhfPgK8PwRRUxG5zw17hmtlu+xFWzCLwpHDR2hgKyP4HXQOh16bdKEl
-         cBXg==
-X-Gm-Message-State: APjAAAVevTcI8pvoG/uH72GA2e4oOPPEL4HkUFOrVbmq8cfVksY1LpuI
-        VAaeiR1KVyNcrE/frmVhad07dAiq
-X-Google-Smtp-Source: APXvYqzFatKzBATbCIPYOBQo9zzUh4KvtY5c0wWm13gkuD+LA220wyxngePnJRCBRyIStUEao8dquA==
-X-Received: by 2002:a63:4d05:: with SMTP id a5mr1142071pgb.19.1560840339845;
-        Mon, 17 Jun 2019 23:45:39 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id d6sm12807784pgv.4.2019.06.17.23.45.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Jun 2019 23:45:38 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net
-Subject: [PATCH] xdiff: avoid accidental redefinition of LFS feature in OpenIndiana
-Date:   Mon, 17 Jun 2019 23:45:37 -0700
-Message-Id: <20190618064537.62369-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        id S1726739AbfFRG6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 02:58:22 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:7909 "EHLO bsmtp8.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725955AbfFRG6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 02:58:22 -0400
+Received: from bsmtp7.bon.at (unknown [192.168.181.103])
+        by bsmtp8.bon.at (Postfix) with ESMTPS id 45Sd7x6dDDz5v93
+        for <git@vger.kernel.org>; Tue, 18 Jun 2019 08:14:05 +0200 (CEST)
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45Sd7w6vdsz5tlT;
+        Tue, 18 Jun 2019 08:14:04 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C9BE12148;
+        Tue, 18 Jun 2019 08:14:03 +0200 (CEST)
+Subject: Re: [PATCH v2 01/10] t: add helper to convert object IDs to paths
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20190616185330.549436-1-sandals@crustytoothpaste.net>
+ <20190616185330.549436-2-sandals@crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1906172102180.44@tvgsbejvaqbjf.bet>
+ <20190618012943.GB8877@genre.crustytoothpaste.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <c9be7464-21f3-6651-500d-14137f0f1c0f@kdbg.org>
+Date:   Tue, 18 Jun 2019 08:14:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190618012943.GB8877@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-after b46054b374 ("xdiff: use git-compat-util", 2019-04-11), two system
-headers added in 2012 to xutils where no longer needed and could conflict
-as shown below:
+Am 18.06.19 um 03:29 schrieb brian m. carlson:
+> On 2019-06-17 at 19:05:03, Johannes Schindelin wrote:
+>> I guess it does not *really* matter all that much, but this does spawn a
+>> new process (and I think it actually spawns 4 on Windows, for reasons, and
+>> spawning processes is super expensive on Windows).
+>>
+>> We might actually want to think about using something like this instead
+>> (which admittedly looks a bit like gobbledygook to the uninitiated, but it
+>> definitely avoids any spawned process):
+>>
+>> test_oid_to_path () {
+>> 	echo "${1%${1#??}}/${1#??}"
+>> }
+> 
+> I'm fine making that change. The original design was because we had
+> other code that used that technique and I didn't see an obviously better
+> solution. Now you've provided one and a good justification.
 
-In file included from xdiff/xinclude.h:26:0,
-                 from xdiff/xutils.c:25:
-./git-compat-util.h:4:0: warning: "_FILE_OFFSET_BITS" redefined
- #define _FILE_OFFSET_BITS 64
+Regardless of how it is implemented, I have another gripe with this
+helper: the way it must be used requires a process: $(test_out_to_path $foo)
 
-In file included from /usr/include/limits.h:37:0,
-                 from xdiff/xutils.c:23:
-/usr/include/sys/feature_tests.h:231:0: note: this is the location of the previous definition
- #define _FILE_OFFSET_BITS 32
+And looking through this patch series, I see a gazillion of *new*
+process substitutions $(test_something...) and $(basename $whatever).
+Can't we do something about it?
 
-make sure git-compat-util.h is the first header (through xinclude.h)
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- xdiff/xutils.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 963e1c58b9..cfa6e2220f 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -20,13 +20,9 @@
-  *
-  */
- 
--#include <limits.h>
--#include <assert.h>
- #include "xinclude.h"
- 
- 
--
--
- long xdl_bogosqrt(long n) {
- 	long i;
- 
--- 
-2.22.0
-
+-- Hannes
