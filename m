@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7BB61F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24C1E1F462
 	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730566AbfFSVGG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 17:06:06 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37360 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727244AbfFSVGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 17:06:04 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w13so1296287eds.4
+        id S1730574AbfFSVGI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 17:06:08 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41659 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730461AbfFSVGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 17:06:05 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p15so1263422eds.8
         for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
-        b=ekWR9I4h35ycHS0a3ktjPauwcfhihJztP+Cens6oY787M30FveCkkKGmLbG0cSta4l
-         FixCTdj1FGIk67jNOh9Z8781PTidnHd5GVtQZ0lFGcCI8TTV8XqzlQYObPbG/EdAwL/2
-         7O+EXKmHyRPUevdnvY8Qy4WhOWk07i9L8chzgIAIL2phKjFuGQf36lcGMFeotlmHtzEy
-         ZbAj1MZmTzdJK6cwu0y3qfK162RuNQjovJmKsJ/1hnzfPeGEWEl+dbiHoAkFZuoi/p00
-         sVeuUVnrluXcGY1Nj5gE8EammfyMQG8qMOEfUkOdPzDgBjYnxFmoSeDZ/alE1rBbBdMX
-         pn0g==
+        bh=wuS2WA7Jif5QUvj7Fml1sgZWSEjo5/eKfDep4R9AnUE=;
+        b=uZb1xiPLJ6pOcDFKyOiE97NR1HVevPs+adAM+by0GWp8d0RLEz+EmR+7BXJ1wEa4gF
+         UxAQvu/igDG3D0U1RRhIqGHlhMq91pgWr0Od+NIyEyLb49/gLfRuw+whnqXu985cbFJN
+         VI+9y1bg8x7I0+BehxVi+nxOBIoz8a8LDrw82kgLMf/mWCFC38FcZ4T9qnF+8HBCPX9J
+         Jy13FIgL4DZRzRIFhRJZ01VtgI7LcAFpCIasoS8piBADKOZMnQIrHjcvHge3TMXPjGdN
+         QVl9KxSs8JY/i9oSIN2qPWfXXEtTUQt1EEy4F4x0uCvl7rW8T1YgZLCh/dMxXi9p/GQi
+         b7kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
-        b=Mwpf2UBRf/w7gPUuHnA658nE69lUc/csL0cbWxbAu9PtsjD8TPcTqlnoIokinn0f6f
-         WE17OJg9GpSFZMeHE2Imb4VsrgShPa6NT/QL6h3+WxJQqbngde7zq3HxbHhFmSFDvM+D
-         4A8VaBvL3EBKiLWvAe87HpfkMQrDQZhz0ZhiioXZ3xsLLvxlyML1Tpw4H2ik/eZ3CyoU
-         +0qYTZfaeAP8apYyWAJY+qvwqqXtfaQgoUCou/UPMEvW/tnOBXShN1/Ehz88RawsTDpJ
-         xvqk54CLQ8caghAhBulqrTPcoTvfl30tvfXMYPpwq8kSHrnpECj0t58Lwe8qJb/oevyI
-         w0lg==
-X-Gm-Message-State: APjAAAUPp229GQEm7AVeLiljXPVwLLN0Ym3VH/n+rgqI+OMCgb7vUPqR
-        2/WGshcftIzTaIXn60wIMKadEnfj
-X-Google-Smtp-Source: APXvYqz1EA+kvpVkA/QWGha/+4t8jNy/Bnfy82btR0RB2JC+04Rf7C3n0Fgn6jhbKd1mGq6Xbc1jTg==
-X-Received: by 2002:a50:eac6:: with SMTP id u6mr27657873edp.83.1560978362547;
-        Wed, 19 Jun 2019 14:06:02 -0700 (PDT)
+        bh=wuS2WA7Jif5QUvj7Fml1sgZWSEjo5/eKfDep4R9AnUE=;
+        b=K3OarYWiN5NuOcHSNmAmA1Gdii+ybomsB89OKjUtcTMZE3p4UpMlPBCd4FvmrK9i8O
+         eIZrpTSlITm9jdcA2h2QuJBLIYhSqAKl5mc7LNoviQFl39Ngx7qhd/TGuHBdocN9VBEZ
+         i+2mpgf1/sSuK0/uZxhOB8UV0sHs2lE2qgpRnW7TJWlAvM99D9rRKfaL3HakRwAgNBjo
+         ihUGkKePuGddVHlAHq6U9uxi+mOTpXptdezrxaGdqTQNus+4xw/ZEBG15iuyHAZgIjKS
+         Ej4bwEuR/EcW2/da5DTH9vcwtQPJ8auRjtn6MH/H9ze/09xtnvZxIcnxD7MQPrXNKomn
+         mlvQ==
+X-Gm-Message-State: APjAAAXmlL/wTjs7KXIulAtZJ1CTFLirIpBTMrn3qPN25xlcoICE6Ui9
+        F29PM7rsVClc4DFvLJoFTHbv/JyS
+X-Google-Smtp-Source: APXvYqxAYEYIEZUog+uxVAFln/ZHetiakTqp8RUfexc4dtUhuaruw/CYChPTxt7bmkGvdKgGQ6rTtg==
+X-Received: by 2002:a17:906:a2d2:: with SMTP id by18mr46703318ejb.245.1560978363163;
+        Wed, 19 Jun 2019 14:06:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8sm2393756edt.56.2019.06.19.14.06.02
+        by smtp.gmail.com with ESMTPSA id x4sm6197876eda.22.2019.06.19.14.06.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 19 Jun 2019 14:06:02 -0700 (PDT)
 Date:   Wed, 19 Jun 2019 14:06:02 -0700 (PDT)
-X-Google-Original-Date: Wed, 19 Jun 2019 21:05:43 GMT
-Message-Id: <99a2939cc2d4501d37e806de9273c8f9832b7849.1560978354.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Wed, 19 Jun 2019 21:05:44 GMT
+Message-Id: <1542e8abe5c40b6ebae5924e5912523a0f4aa4a1.1560978354.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v2.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
         <pull.149.v2.git.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 09/20] msvc: define O_ACCMODE
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 10/20] msvc: mark a variable as non-const
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,47 +67,38 @@ Cc:     Carlo Arenas <carenas@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This constant is not defined in MSVC's headers.
+VS2015 complains when using a const pointer in memcpy()/free().
 
-In UCRT's fcntl.h, _O_RDONLY, _O_WRONLY and _O_RDWR are defined as 0, 1
-and 2, respectively. Yes, that means that UCRT breaks with the tradition
-that O_RDWR == O_RDONLY | O_WRONLY.
-
-It is a perfectly legal way to define those constants, though, therefore
-we need to take care of defining O_ACCMODE accordingly.
-
-This is particularly important in order to keep our "open() can set
-errno to EISDIR" emulation working: it tests that (flags & O_ACCMODE) is
-not identical to O_RDONLY before going on to test specifically whether
-the file for which open() reported EACCES is, in fact, a directory.
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/msvc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ compat/mingw.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/compat/msvc.h b/compat/msvc.h
-index 04b4750b87..d336d80670 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -19,6 +19,8 @@
- #undef ERROR
- 
- typedef int sigset_t;
-+/* open for reading, writing, or both (not in fcntl.h) */
-+#define O_ACCMODE     (_O_RDONLY | _O_WRONLY | _O_RDWR)
- 
- #include "compat/mingw.h"
- 
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 0d8713e515..d14d33308d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1553,7 +1553,10 @@ static int try_shell_exec(const char *cmd, char *const *argv)
+ 	if (prog) {
+ 		int exec_id;
+ 		int argc = 0;
+-		const char **argv2;
++#ifndef _MSC_VER
++		const
++#endif
++		char **argv2;
+ 		while (argv[argc]) argc++;
+ 		ALLOC_ARRAY(argv2, argc + 1);
+ 		argv2[0] = (char *)cmd;	/* full path to the script file */
 -- 
 gitgitgadget
 
