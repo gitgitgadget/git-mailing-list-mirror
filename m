@@ -2,85 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06321F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 00:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC8B41F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 03:37:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfFSAvv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jun 2019 20:51:51 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:42510 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbfFSAvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jun 2019 20:51:51 -0400
-Received: by mail-io1-f68.google.com with SMTP id u19so34144118ior.9
-        for <git@vger.kernel.org>; Tue, 18 Jun 2019 17:51:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lIjaSTMphxDH8t5+mWSNNSSVY0LvlFrcELS2PjBBwgw=;
-        b=p1wpseFJIQoi+IGJLkYq5owWoCP9Ctn5lWRFBGe7KlGc/CrNzNWdjcj5n8wigPA/oY
-         bCBebOdPcM/TDvs8ugwmfMbzRFqOGX+YSTD1wSE9b9AM6f0rWKKh5YYOOl3KB7RIaISM
-         sIu2m4OgnCothD9KVslZ7SioZ1qbs9kH6rl6JnywUOMo62/qlZwvVEWjI2g8tn83vAy4
-         58PwRIyMBPcd9jZ3MurCHxGQCoAk+4nJYkbMcif/zHQYLTmh0/ZcR2ELShq/b6cy9Gjg
-         my7hzNqG2qP1UIcM9WjjvIi6T62EJbmGaJWLKe1h5FFLJhYn2HExBUEZXhBhQ63cFjsj
-         yU5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lIjaSTMphxDH8t5+mWSNNSSVY0LvlFrcELS2PjBBwgw=;
-        b=FKdiBwvFVUXQObbIbkC/cLl9kln0khU0rUOsiI5sDSuQbC6zwDazZCmULYDur1kw2U
-         kCt4TFc3bGV/ObYcsXvxDEdtis0qqgEGoKxxHtlOaKUWuISYSexMeI1Wr6TSjU0UAdhI
-         B9jE/zFTL5xBY18dZghQrRGKu6CYWlYAWUJ/9UxfvWfEsiCo9reYmtyHmyZyA6HPeDxZ
-         XA6U98YHqR/qvkXbfTgi9QxZnD+AU1Lbt3Iymcb2hnkHZlUzOwuNmw2GVvlvoEHKZhaM
-         UAHGxeB8fYhwFC0ZKy9qALUsHgp61a+fDkoBvrfgwY/buEM/QaNisYBDKto73QgO8CIn
-         6gnQ==
-X-Gm-Message-State: APjAAAVvr1KpnV8TedPONs6ZlG/ROubWGa11vGtznD11UYVmaUWGs2Ve
-        ek/1kHYLWvv4VAVZGKUXmlSLJl7fyDWXsn/JbmL9MQ==
-X-Google-Smtp-Source: APXvYqxquagulULLURxhTsnK3XsUOmzaXHLyUuECdyEHG4FKVvF+v6n1OzHdrPqHfa2+QMe+W7iLoV2sUrHhLGdf7nw=
-X-Received: by 2002:a5d:968b:: with SMTP id m11mr5739433ion.16.1560905510684;
- Tue, 18 Jun 2019 17:51:50 -0700 (PDT)
+        id S1730250AbfFSDhb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jun 2019 23:37:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726037AbfFSDhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jun 2019 23:37:31 -0400
+Received: (qmail 23513 invoked by uid 109); 19 Jun 2019 03:37:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Jun 2019 03:37:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20518 invoked by uid 111); 19 Jun 2019 03:38:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Jun 2019 23:38:18 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jun 2019 23:37:28 -0400
+Date:   Tue, 18 Jun 2019 23:37:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Masahiro Yamada <yamada.masahiro@socionext.com>,
+        git <git@vger.kernel.org>, masahiroy@kernel.org
+Subject: [PATCH] interpret-trailers: load default config
+Message-ID: <20190619033728.GA29027@sigill.intra.peff.net>
+References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
+ <20190614150758.GA22984@sigill.intra.peff.net>
+ <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.149.git.gitgitgadget@gmail.com> <587cbcf61903693139ad4a02b32727bddd6d116d.1560860634.git.gitgitgadget@gmail.com>
-In-Reply-To: <587cbcf61903693139ad4a02b32727bddd6d116d.1560860634.git.gitgitgadget@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 18 Jun 2019 17:51:39 -0700
-Message-ID: <CAPUEsphHXxa6xbckKym7Nbx_E6aOzJYL+5j=xXa0oe3BLMrtbQ@mail.gmail.com>
-Subject: Re: [PATCH 13/17] msvc: support building Git using MS Visual C++
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 5:26 AM Jeff Hostetler via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index d14d33308d..667285887a 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2388,6 +2388,12 @@ static void maybe_redirect_std_handles(void)
->                                   GENERIC_WRITE, FILE_FLAG_NO_BUFFERING);
->  }
->
-> +#ifdef _MSC_VER
-> +#ifdef _DEBUG
+On Sat, Jun 15, 2019 at 10:41:44AM +0200, Christian Couder wrote:
 
-why not use DEBUG instead (without the leading underscore), then you
-could also drop the -D_DEBUG below
+> On Fri, Jun 14, 2019 at 5:10 PM Jeff King <peff@peff.net> wrote:
+> >
+> > On Fri, Jun 14, 2019 at 08:35:04PM +0900, Masahiro Yamada wrote:
+> >
+> > > Perhaps, 'git interpret-trailers' should be changed
+> > > to recognize core.commentChar ?
+> >
+> > It looks like the trailer code does respect it, but the
+> > interpret-trailers program never loads the config. Does the patch below
+> > make your problem go away?
+> 
+> It seems to me to be the right analysis and the right fix too.
 
-...
-> +       # BASIC_CLFAGS += -DUSE_MSVC_CRTDBG
+Thanks. Here it is (below) with a commit message and a test. I tried to
+build on the existing comment test, but the resulting diff is hard to
+read due to the indent change; try it with "-w".
 
-typo
+> > I do wonder if the trailer code is correct to always respect it, though.
+> > For example, in "git log" output we'd expect to see commit messages from
+> > people with all sorts of config. I suppose the point is that their
+> > comment characters wouldn't make it into the commit object at all, so
+> > the right answer there is probably not to look for comment characters at
+> > all.
+> 
+> Would you suggest an option, maybe called `--ignore-comments` to ignore them?
 
-Carlo
+Yeah, though I think most callers of interpret-trailers would probably
+want the existing behavior. I'd be more concerned about the internal
+callers to the trailer code, like "git log --format=%(trailers)". I
+doubt it's that big a deal in practice, though. As I said above, the
+idea is that comments would be removed before making it into commit
+objects anyway. So we shouldn't be seeing comments, and so the code to
+recognize them is not likely to trigger (and I think it would be
+reasonably hard to trigger a false positive accidentally).
+
+If you or somebody else wants to dig into it, be my guest, but I don't
+think I'd prioritize it.
+
+-- >8 --
+Subject: [PATCH] interpret-trailers: load default config
+
+The interpret-trailers program does not do the usual loading of config
+via git_default_config(), and thus does not respect many of the usual
+options. In particular, we will not load core.commentChar, even though
+the underlying trailer code tries to do so.
+
+This can be seen in the accompanying test, where setting
+core.commentChar to anything besides "#" results in a failure to treat
+the comments correctly.
+
+Reported-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/interpret-trailers.c  |  3 ++
+ t/t7513-interpret-trailers.sh | 70 +++++++++++++++++++++--------------
+ 2 files changed, 46 insertions(+), 27 deletions(-)
+
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 8ae40dec47..f101d092b8 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -10,6 +10,7 @@
+ #include "parse-options.h"
+ #include "string-list.h"
+ #include "trailer.h"
++#include "config.h"
+ 
+ static const char * const git_interpret_trailers_usage[] = {
+ 	N_("git interpret-trailers [--in-place] [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]"),
+@@ -112,6 +113,8 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	git_config(git_default_config, NULL);
++
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     git_interpret_trailers_usage, 0);
+ 
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index c441861331..1da194e527 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -538,33 +538,49 @@ test_expect_success 'with 2 files arguments' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'with message that has comments' '
+-	cat basic_message >message_with_comments &&
+-	sed -e "s/ Z\$/ /" >>message_with_comments <<-\EOF &&
+-		# comment
+-
+-		# other comment
+-		Cc: Z
+-		# yet another comment
+-		Reviewed-by: Johan
+-		Reviewed-by: Z
+-		# last comment
+-
+-	EOF
+-	cat basic_patch >>message_with_comments &&
+-	cat basic_message >expected &&
+-	cat >>expected <<-\EOF &&
+-		# comment
+-
+-		Reviewed-by: Johan
+-		Cc: Peff
+-		# last comment
+-
+-	EOF
+-	cat basic_patch >>expected &&
+-	git interpret-trailers --trim-empty --trailer "Cc: Peff" message_with_comments >actual &&
+-	test_cmp expected actual
+-'
++# Cover multiple comment characters with the same test input.
++for char in "#" ";"; do
++	case "$char" in
++	"#")
++		# This is the default, so let's explicitly _not_
++		# set any config to make sure it behaves as we expect.
++		;;
++	*)
++		config="-c core.commentChar=$char"
++		;;
++	esac
++
++	test_expect_success "with message that has comments ($char)" '
++		cat basic_message >message_with_comments &&
++		sed -e "s/ Z\$/ /" \
++		    -e "s/#/$char/g" >>message_with_comments <<-EOF &&
++			# comment
++
++			# other comment
++			Cc: Z
++			# yet another comment
++			Reviewed-by: Johan
++			Reviewed-by: Z
++			# last comment
++
++		EOF
++		cat basic_patch >>message_with_comments &&
++		cat basic_message >expected &&
++		sed -e "s/#/$char/g" >>expected <<-\EOF &&
++			# comment
++
++			Reviewed-by: Johan
++			Cc: Peff
++			# last comment
++
++		EOF
++		cat basic_patch >>expected &&
++		git $config interpret-trailers \
++			--trim-empty --trailer "Cc: Peff" \
++			message_with_comments >actual &&
++		test_cmp expected actual
++	'
++done
+ 
+ test_expect_success 'with message that has an old style conflict block' '
+ 	cat basic_message >message_with_comments &&
+-- 
+2.22.0.rc3.685.g5185838c9a
+
