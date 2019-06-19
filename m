@@ -8,154 +8,123 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8CC51F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 20:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD0071F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 20:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730020AbfFSURt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 16:17:49 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54655 "EHLO mout.gmx.net"
+        id S1726689AbfFSUYY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 16:24:24 -0400
+Received: from mout.gmx.net ([212.227.17.21]:36141 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726175AbfFSURs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 16:17:48 -0400
+        id S1726143AbfFSUYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 16:24:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560975453;
-        bh=/gwcSNFjEd6Ga/C5Qg23gfwBp+tcDOlzKxX8U2C0FLU=;
+        s=badeba3b8450; t=1560975857;
+        bh=AfC+SlNTTkhN7BDGcZakIJHz9Q7flm7ox0PpRcLtZO0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IeiRIeVXLlDF2MzqrgU7FNIvojlcW1C2noJHODWPExcT5pbxYp9ZSmw4T59HiYL8+
-         xasLjKFp2l8NQhIa8wjU/Pvhl+FLh/1AL33/ZvIrAHXzxP1pbouNi8NnSo/6Qy/jNJ
-         7jYD5DipXezEOsQrbG/JDHG8zKoQ1BxP2Da6a8LE=
+        b=NGmObdsW9xGO+SV+xu+CUz74Wg82fRP9/yHFV1voRrTwgrTBGcUfmFq2IoI/k61Sf
+         ZiSfqIIC0iLNIbljtDWlvbvcNvrnN6Bztj5Gv4q/MZHytsQdR4blEv/mxdnqpGifZa
+         IxZMczSGSfjyDma9PGj3mJaPk2fV5JJa2jPSB23A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhRI2-1hzC99019W-00Mdq2; Wed, 19
- Jun 2019 22:17:33 +0200
-Date:   Wed, 19 Jun 2019 22:17:47 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MzhnN-1iZ4ts1Bi5-00vhdD; Wed, 19
+ Jun 2019 22:24:17 +0200
+Date:   Wed, 19 Jun 2019 22:24:31 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] t0001: fix on case-insensitive filesystems
-In-Reply-To: <xmqqo935o0yi.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1906192201200.44@tvgsbejvaqbjf.bet>
-References: <pull.151.git.gitgitgadget@gmail.com> <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com> <20190609201302.GX8616@genre.crustytoothpaste.net> <xmqqo935o0yi.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAN0heSrQ-AVui0OzpL7WGBzmdU4ignUsFxYqeXDtgR+CsDXbJw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906192223560.44@tvgsbejvaqbjf.bet>
+References: <pull.151.git.gitgitgadget@gmail.com> <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com> <CAN0heSrQ-AVui0OzpL7WGBzmdU4ignUsFxYqeXDtgR+CsDXbJw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Vbx9T1j7AaqjpMticyWJ0koOW9KUl4okRkStkNGXhP76UeCwVjp
- LiBaRMfKnHtEu9hGQ5HCmDC0Ewg7sTovFtbkPajpdu+nBHKGSHWwdK5f9SrC4aAOZ1BFF1k
- AfS4rQn66Bz3dDqUWvc51USlFxol8xoBcYTH+HyLJqKyrTuJG7AmjfY8Dy1Cn8LVN+3w2Io
- zl43eak57TXegmcLdUNVA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bJvZf0/O38U=:sOGg4tj6xaCY8XsJA0ziSV
- 6f11CFAAXT9h3AwxpoO8NpYbgwChue7J6I4M2sgO/+rWwV8oNqwLY0/CTavNFTa/4wpqj5cvj
- 7aj8TStClGWyhjIaOnND3bKNTPxqTRM91Ivn1kTFEy/GRX/nopjqMx99prO7XdD77jB/8MonK
- UDHKAxCGd+ifiV6M0OFy2cMJR23owu9FZcJ6i9IizoSIID2NNKnQiuo8OBMF+bYeaDWL2UxDp
- PhuEaqE1ZquI/xRpa93pMEKd8r5wpfBs7ZZ+knJTsROp1sx+3OiK4FRq7y9NmoKTLVffZsh+s
- UOefcAy+c3h3E6wfpA+/jrcRSDy56XlV92GP+poaE9iU28rEtu/UKI5UXm/3C1fuwiQ8Gr45F
- O+qvptK4yOgkgzp0cO9CdojPFd7qIlsi6Dq+uE/IgzU2RAaSFK7vZnYAB2dDz3JdTG8/KzkLX
- 42ah8FGXlV1fKdZCybos0KQku0ijXshnseWE5AYa4oKab8TLVUcQNCHsKrY5Jri0rQlExDfMu
- n4zOs05zkZI4ayQQS9kRHwTNhyX03Ah/3GOm29ZygiKfMn2lkhwFrXp4rP3t0uD8q585ey/vf
- sLAxbf1ul8SqBCIj4o/Vyp0ge3kVDmL9HNCbJ+X7F1IB0GMxPViykVc4g0BV4Q7x4LZQMDSeq
- 0xiCQA5Q0kZfo/aJkd3d2VJr9/803jd2YEl7kzRKV0PbK56LkmHMWLdMnIn1II+m5WMNBOusu
- wNhDqo/AwXtYMpN7buStX7CwZZQKH8y3M1KkH+DJPI+PVFjZlMrzEVRYLODliF4CpJjaUiF57
- tNCq6arF4WN2FYcMEUmp3qtPpscIO7W5h636Gjr57YDoR/U0yjN4L8YG1HyvvPtaFO0Mg8uWE
- Bb0vgto9Plz5cR7zggWc03MR7uM40poFrGgshBXwjg1q7VBHt9PahlomWioXBCK0qixk2OIVv
- R/deqNe4U1IkuZUzRtCymE4OQaIa6tv++VrsXa+IAPJJaf7sURZx4
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-784249478-1560975872=:44"
+X-Provags-ID: V03:K1:Ti4iEPRDuU0E5IK4Rs/bJ42g0jcVN0QigQFMTHHa8Fbsgu1m3Tz
+ tStzMrieMuSA+FcdsYkjKaeZhJbGvNq5o9muV0bAHrlMOp5uEaqRqL8+E1+Hdt6KeHey2RK
+ rdJ/dkIo5dzdsw0lnm3Y6jGGAkuGnkIOhk+IVBXFt5+IQg4335tNiM63/9TCPq+huXdBRI5
+ jmAk+4BujE88g/mYnpEOQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3wGelOFH9iw=:iKlWYa87Ap4hiHlcIMjlPI
+ ynPzBfHNBDHCj2IDN6prkofykeIqOTSh/rFEj8omcDg9ASSnLiYvddVrZK5LQC+E7eMr+MzWK
+ SqfZ6ib8TBAlT+XodYkdzuh7uGXPPW8YZclFY/YC8vTXXXc0/TKc2YQgT1oF/6gbwSgkynTO5
+ fhsx6+1CZtraJGAcP3VoC+yVJoWGlxWZnfvxnky3HswO0m1XBSXMTBhneYmGKjTe+kPc3Nrwv
+ rT1nLmkf5T/Ba+N7uDQEihbDcjrYKKsDiVr/4EZDuE5pZm1BQ+mtTrpwnJI2ivadA57HoTStm
+ Y7YfoM1CClx0cC0QlLYznVUJ87pwERSru4zJKBQ7jg/kw/U/XGF5nUqjvc1GSrv9T4G/fehkY
+ uhIDCiGj1GOXreUcYeEJBPw3pwoD/EF8VYWTBoIyNDkm/TF59OD9ZDmURG0PDdSzwL0WFJ+0S
+ 7LqglgjNKwfESETYziQ/hCephsXG3MLlMlZdOIbcfucLXExdIoVNUAQ8CW5C+zpJiyIK4BYD9
+ PBVVxdOKjrTOLojhTaFQ7bsUSaXo0AaEm3TgZrTTqQrbH7RWZP4Hck92UBy5niCWW8GnEQb91
+ gXE1X5ZLLJGtxfDVja1T0ZQ8uJYdIBd4XO97Pvx4vm0w3WWo/VyOjC+IljXKnKz9RiBrC/ke4
+ yrqMsz0DYSaLcMmLKsgCcMlZkXZlUGLUw1WJEMi1xoz38jHgFt9jFKWMN43gBU4GNnw3hsN40
+ szUCBTkAI52NXn2E7e8N2fPCuvAAxq7WguW9uGmeb5QEAPVTtdHS7syqMGlWWf4t/0fE9JRI9
+ cAjWjrYaKKg8/QRhTvJP4i1MnnOvivI3PX9jw/nFcpcA0g8EYPyh4OO7Hb5D0Ms+/1a36LIUp
+ C8Gnog66qZuFI+nIhgAhEfz4rNcEGK3pgYXNj59NYqMYfK6tUOqlhSfM4CNyEScsxYi+HYVR7
+ doSQgvpKaNQw9XPZLz0L08LzZk/QDYlydPgc200XYGoCcCHfq4F/j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 10 Jun 2019, Junio C Hamano wrote:
+--8323328-784249478-1560975872=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
-> >>  test_expect_success 'init with separate gitdir' '
-> >>  	rm -rf newdir &&
-> >>  	git init --separate-git-dir realgitdir newdir &&
-> >>  	echo "gitdir: $(pwd)/realgitdir" >expected &&
-> >> +	downcase_on_case_insensitive_fs expected newdir/.git &&
+Hi Martin,
+
+On Sun, 9 Jun 2019, Martin =C3=85gren wrote:
+
+> On Sat, 8 Jun 2019 at 16:45, Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 > >
-> > I wonder if there's maybe a simpler way. If we canonicalize paths when
-> > writing them to the gitdir file, then writing "$(pwd -P)" on the line
-> > above should produce the right result.
-
-When you execute `pwd -P` in Git for Windows' SDK's Bash (which is an
-MSYS2 Bash), you get the emulated Unix path. For example, in my main Git
-worktree, this results in
-
-	$ pwd -P
-	/usr/src/git
-
-However, the actual (i.e. Windows) path seen by `git.exe` is
-`C:/git-sdk-64/usr/src/git`.
-
-> > Now, technically, POSIX doesn't require case canonicalization of the
-> > path with "pwd -P", but then again, POSIX doesn't permit
-> > case-insensitive file systems,
-
-I was not sure about this statement (that POSIX does not permit
-case-insensitive file systems), so I whipped up this gem in a quick web
-search (https://unix.stackexchange.com/a/358407):
-
-	According to the POSIX specification:
-
-	    The system may provide non-standard extensions. These are
-	    features not required by POSIX.1-2008 and may include, but are
-	    not limited to:
-
-	--snip--
-
-		Non-conforming file systems (for example, legacy file
-		systems for which _POSIX_NO_TRUNC is false,
-		case-insensitive file systems, or network file systems)
-
-Which means that I now know once and for all that POSIX does not dictate
-whether a file system should, or should not, be case-insensitive.
-
-> > and we know the behavior on macOS uses bash, which does the right
-> > thing in this case because it calls realpath(3). I've tested that it
-> > also does the right thing on Linux when the worktree containing the
-> > Git checkout is in a path with symlinks.
-
-I am honestly not a big fan of relying on testing things on the major
-three platforms and then assuming that everything will work also on the
-long tail of operating systems/setups.
-
-That is exactly the kind of thinking that led me to believe that relying
-on REG_STARTEND was a sane thing, and it simply wasn't. It caused quite a
-bit of pain, and my original approach would have prevented that, and after
-testing on the major three platforms I let myself be talked into dropping
-the original approach.
-
-> > I don't know how that works on Windows, but if it does, it might be
-> > simpler.
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > On a case-insensitive filesystem, such as HFS+ or NTFS, it is possible
+> > that the idea Bash has of the current directory differs in case from
+> > what Git thinks it is. That's totally okay, though, and we should not
+> > expect otherwise.
 >
-> Yup, it would be a worthwhile avenue to pursue; on the negative
-> side, a single-liner "no, unfortunately that would not work on
-> Windows" would also be useful.
+> > +downcase_on_case_insensitive_fs () {
+> > +       test false =3D "$(git config --get core.filemode)" || return 0
+>
+> I think it would be worthwhile to add `--type=3Dbool` to this git-config
+> call. See, e.g., the FILEMODE prereq in t/test-lib.sh. From my
+> understanding, this check would regress if someone did s/false/no/ in
+> builtin/init-db.c, so this check is perhaps not as robust as it could
+> be. (Now, as for *why* someone would do such a change...)
+>
+> I do wonder if this is the right way to check for a case-insensitive
+> filesystem. According to git-config(1), this variable tells whether "the
+> executable bit of files in the working tree is to be honored". I can see
+> how this property could correlate with the filesystem being
+> case-insensitive, but from git-config(1), I would have expected
+> core.ignoreCase to be queried instead.
 
-1) no, unfortunately that would not work on Windows. In a PowerShell, when
-   I call `c:` followed by `cd \GIT-SDK-64`, it reports the current
-   directory as `C:\GIT-SDK-64` (i.e. with the wrong case, the real name,
-   on disk, is `C:\git-sdk-64`). When I then call Git's Bash to execute
-   `git -PW` (the `W` stands for: gimme a Windows path), it reports
-   `C:/GIT-SDK-64`. Incorrect case.
+Oh my, you're right. I do not know how the filemode slipped in...
 
-2) It might look more elegant from the design perspective, but oh my
-   goodness do I not want to be a developer who has no knowledge of this
-   design decision, being tasked to debug any related issue.
-
-   It would be very "magic" that Git relies on its having written a
-   normalized path, not dealing well with Git worktrees initialized by
-   alternative Git implementations that did not normalize that path, or
-   previous Git versions that also did not, for example.
-
-   And normalizing the path for the sake of having this test case pass?
-   Nah. I like it explicit. And that's what my patch does. No magic.
-
-Ciao,
+Thanks!
 Dscho
+
+> You're no doubt a lot more familiar with filesystem case-insensitivity a=
+nd
+> how it interacts with Git than I am. Any light you could shed on this
+> would be much appreciated.
+>
+> > +       for f
+> > +       do
+> > +               tr A-Z a-z <"$f" >"$f".downcased &&
+> > +               mv -f "$f".downcased "$f" || return 1
+>
+> Makes sense. Good error-handling.
+>
+> > +       done
+> > +}
+>
+> Cheers
+> Martin
+>
+
+--8323328-784249478-1560975872=:44--
