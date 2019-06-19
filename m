@@ -2,97 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3151F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 11:19:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 819261F87F
+	for <e@80x24.org>; Wed, 19 Jun 2019 11:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727134AbfFSLTf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 07:19:35 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60643 "EHLO mout.gmx.net"
+        id S1731267AbfFSL0B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 07:26:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53601 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727076AbfFSLTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 07:19:35 -0400
+        id S1727144AbfFSL0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 07:26:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560943165;
-        bh=PLFExe045zY5IS9NghucBiq5VZ5I1DjMRAJ6ITUYAIM=;
+        s=badeba3b8450; t=1560943555;
+        bh=K93zw/wK5kFFDJRvKdm707+xdBh0QGz+JEYP80nCzoE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Jr6fRJof7JYDtDY9uj0y+fsF8kq0SAT1SBHvn7fY4+xSKsH9S72vfFlWE3bmnOBm0
-         P70PekxEPzzx4ok3W3vypCYSJGmrKrzChBHV4osnrOYJx7iwPna3ZifLb4rVnH8ChT
-         A+Mz44qfCJuI6P1Lc9EfzL15lE0aUxgjkFtfS6NY=
+        b=FrbTOyCei+MnnQgfwX5yzI9daX1kEjqfwXdA4xflftwGos2tKM+cqdtGW9vLSkDOm
+         P6GRSPH5SdqHeoGO3DV/TQf6Y9yTGAiaWCk7arHiYsNaC7+2ltuXkLwdoPjrcX5x9d
+         qW72vzhZCkWx2uBashbdFsEWzh/hiWpiDNHMZY9M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOA3P-1hxfvw32ID-00ObNh; Wed, 19
- Jun 2019 13:19:25 +0200
-Date:   Wed, 19 Jun 2019 13:19:39 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LuxG5-1idfXP3x8T-0100ol; Wed, 19
+ Jun 2019 13:25:55 +0200
+Date:   Wed, 19 Jun 2019 13:26:08 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 03/17] cache-tree.c: avoid reusing the DEBUG constant
-In-Reply-To: <CAPig+cTXdz6s_cftPydKjtESz986s1xLQvwV8xPzYSR_xLK6Cg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906191318570.44@tvgsbejvaqbjf.bet>
-References: <pull.149.git.gitgitgadget@gmail.com> <486297ec8c146e0ed47cd1dd8fe8f6496c2b54c2.1560860634.git.gitgitgadget@gmail.com> <CAPig+cTXdz6s_cftPydKjtESz986s1xLQvwV8xPzYSR_xLK6Cg@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/17] t0001 (mingw): do not expect a specific order of
+ stdout/stderr
+In-Reply-To: <CAPig+cTTAgYia6DUOrg7AuLmGSbqn5u=iy3wx-=--NJuyULwaQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906191325130.44@tvgsbejvaqbjf.bet>
+References: <pull.149.git.gitgitgadget@gmail.com> <d551cdeafbf2953ba340aa16554fbd5ac6194a6e.1560860634.git.gitgitgadget@gmail.com> <CAPig+cQaoRBnH0JrUwXTo1hSwjrZ1vJHewjCAkKPeCrRwo=P2w@mail.gmail.com> <40cfbb30-c632-54da-62d9-9b31bc878806@kdbg.org>
+ <CAPig+cTTAgYia6DUOrg7AuLmGSbqn5u=iy3wx-=--NJuyULwaQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NHYOYs761amXInku32uq1d2AIdPxjex1BbbP0r4ZKBSl1Ev6cQg
- k8e8i/3GITxzG0bZ6EjCCLoHL+zSSJ0hppLXpECXU3USxwNCBNvd9FydxFotZNZgf6bPOIm
- tLN2E7SGyTsTBjb7WLaE9PIR5yNlUdVVxzin110GW4Vgs52BvTY3k1ciHCPAPXNsFUUi4aD
- 1WQON1vJXKhlw+4fJeC6Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d5iysVdPV4E=:17MfreGouJ3PDw0E52qQ3v
- 8pfd51+8nhLwUqbyxvKgrWUzQe61yrut7WjDlBk7GyEuluJKmBo0oCtCe/i/378fJO3fRGeRH
- mRGDup4SZ5s2Xq/3VbiqgvvJb5hE0htnppGLr4a52cqMugAGCjCL37hQDNFqeBX464yrWON64
- +hEGJrXz36CxJBy93qNI1N+bIcV0lRPJmU8h1g24t6E5tFk82dBy1iCaaGQFr34/K4n4I9f9k
- r9JvfD5WhEVlgEMFCnTuMyKngNle+xffs8OEgWk2S00NFcppiENNB9wkg+Lhj4r2pNdsE6pyy
- BhcKRqfCVGPCfrATFxuo8LftyxUlBWFNyKEhl0PYSg3f+cEPcPFSES2BF9TBkG2Z+t62WvDmq
- 9Z5NxJIuiaX54mkRJPsjFOMSxpzqduQjJOKe3DZ1dc3uS7exD4Vcwo969K/9ebugtIq9Jr2Yq
- MC88g1/5ARdI0TXftaZWVUiF4MoIyW7tzaY5HvdeQ1rje2w6jJgUQl+OTRfSlje/0QSwnJGM2
- f01VUKsu9rIQy70Bj7WAVgHAY0bGIau8oO6kQj66GZVLpgbmZEgBn2K0RrKp1NavOkoM0jjRN
- XC5/eULFZvbo5/QGIiKHInM0wRoKx7ECu6LNbYoSe0mLCSskdrCfKxC+8drhYFCv4x8iJrtKt
- 6YNw1zJ9ndX0MY3leDTCSFkBvZm3UIU0McUUcouH6oPPxlos1v+m9vpadFfEpaDTM2YUNHU3M
- Xp2XnaJG7tuKr59Ub7A8NCoWTCqGLsziVr6whMVZQB529TSeugD8xPVvNc411BLyaU9+7VVJH
- CyhU0WB68qqoZyyYCSCxUZATrmc6pPPiHNrcTNs45GmyFTmQ5dCNT0WPAIn8RICXmJBjO2gJO
- HpH73QrtgXN8E6URGlLlQQQjruVrffYqbpdcN9ahIkbaQheQdIDH4WEzWfSizypO57CrMibh1
- 5CEi6SgEJWYHfg+di9xlwUTOMEzBQ30HY2oB3Ibw8UNktKJUc/lTM
+X-Provags-ID: V03:K1:iV2U2Asg82tlDynk3CKR7rU7YvYL3rM2AjkmyKJsvLxMI4JA0W/
+ 29xpLNXRjtJJQPJ8xsOfIvdUQcYIYzD4kSzFVUPoVdiM5T4f8QgeXzI+ekeSzfcf3tg5goB
+ o5ivBDek7fc3SAo46wLgxk4jTzJF/pDBU0Soob0WVxrn9nyEc+O6Nkjr4OUx8fuzjo9wgJX
+ dAeiJLHiKO9SbZHlfjwWQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6fvOirMc8aE=:8MnaQeKEqormeBNqQeNrwz
+ C80jfCeRlog2WzFRWcU3HK9X4lpzhm/zHvDt7d/hL+/Niybhb+k2yOviiCzkTBuW2zE2ppgIx
+ Onw6aq8jjAGNEO2PHu3vN2tuaneD+jVhqK0rbpua3I+LBb9t6d2l+wMTtS4uwYdAwcHc8awRB
+ ag4/a7M2xeEJse07moY7dENHs6S7nt5UGHi2rojCmeHASlZUJVs8hW5GGmQ7vC70JofzEOz7F
+ XTrhpZ9mECyXEUbOjmauCQc0BOvyIq5sYDZQ1lYKElqKHq3mEIUNvlMJE1DsKWLOk2gamtDFA
+ 7kQZH01Kt6R5y+kTQ0L7og4ZGalMUEg6v8dewWemwJI4kRj3M/jHcpAO9bxNB6K2gyliGg4Bf
+ VUSPef818zFQG1+NHBhXhWzYiB0/CYcQAZIkZXgRuImu+XOAYUxFh98918bI3jyI6ncOw5WGV
+ dtiB3MOAN47+h3AUxRTGe02zwMCDEZE1kzmsUsnKNRzrtecf83WKPvV09JZNKa5AbowReOhQs
+ R2t43CuNaR4t2rreFkJYaT6AlulhWH0OYN5CGLSzSNTrpezY96k0Ml0Xrc1y7ZaGl++itw04r
+ QX27urwRPH71JPI2ahOrHXPecFPPR1jC00gNDrG1ATqcTPASIjUqfMNVLEhJ5UCRjBgxckdYG
+ aqdvIrP9qw6NxXJz8PmThzqQ+dzrWgFJ4mM/TlF+3pEkrg5tvad1QBxRVFKysRHUtEE8hpy7+
+ nAPiBgx/3sqknKioAZ0LdAm40/yGHFTPskbovuW7QbUrcdeweLlh5bndMBivrwclmgOKdwOIG
+ lDqRs/br4kFjjnoSLK8+44heu5G2WdlvRkyjbhKGAtMwyM2QmXCMk4BKfL7ZtR5KG2uz6EjnI
+ FMyIT5QM2lzA3M9jUpOrzULzErakiuIBj/dTnH5uIi7D4BJZSbHxepm7rNihjWUOodImyJIug
+ YMFc1YPXNRSbQkxHlOknFhQiA7kfw4LKWsKeUd/nNkzhkp4KC9moo
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Eric & Hannes,
 
-On Tue, 18 Jun 2019, Eric Sunshine wrote:
+On Wed, 19 Jun 2019, Eric Sunshine wrote:
 
-> On Tue, Jun 18, 2019 at 8:24 AM Jeff Hostetler via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > In MSVC, the DEBUG constant is set automatically whenever compiling wi=
-th
-> > debug information.
+> On Wed, Jun 19, 2019 at 2:19 AM Johannes Sixt <j6t@kdbg.org> wrote:
+> > Am 19.06.19 um 01:12 schrieb Eric Sunshine:
+> > > On Tue, Jun 18, 2019 at 8:24 AM Johannes Schindelin via GitGitGadget
+> > > <gitgitgadget@gmail.com> wrote:
+> > >>         printf ".git\nfatal: Needed a single revision\n" >expect &&
+> > >> -       test_cmp expect output.txt
+> > >> +       sort <output.txt >output.sorted &&
+> > >> +       test_cmp expect output.sorted
+> > >
+> > > It was quite surprising to see this sorting only 'output' but not
+> > > 'expect'. I see now that 'output' is already "sorted" (in that sense=
+),
+> > > but it feels fragile. More robust would be to sort 'expect' as well:
+> > >
+> > >     printf ".git\nfatal: Needed a single revision\n" | sort >expect =
+&&
 > >
-> > This is clearly not what was intended in cache-tree.c, so let's use a =
-less
-> > ambiguous constant there.
+> > Following Dscho's recent objection elsewhere that tests tend to check
+> > for much more than regressions, wouldn't it be logical to write these =
+as
+> >
+> >         grep -F .git" output.txt &&
+> >         test_i18n_grep "Needed a single rev" output.txt
+> >
+> > without an 'expect' file at all?
 >
-> s/constant/macro name/ would be clearer.
+> I considered suggesting that, as well, as being more obvious and less
+> fragile (with the exception that "Needed a single rev" isn't currently
+> localizable in builtin/rev-parse.c, so plain 'grep' instead of
+> 'test_i18n_grep').
 
-To me, "macro" always sounds as if it referred to executable code, or at
-least to something that expands to code.
+Valid points all around, thank you so much!
 
-I went with s/constant/name/ instead.
-
-Thanks,
+The next iteration will have the two `grep`s instead,
 Dscho
-
->
-> > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
