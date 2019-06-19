@@ -2,125 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7DFD1F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 08:36:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8231F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 09:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731306AbfFSIgH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 04:36:07 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36927 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730783AbfFSIgH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 04:36:07 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v14so2392557wrr.4
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 01:36:06 -0700 (PDT)
+        id S1731400AbfFSJMm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 05:12:42 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:40458 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730996AbfFSJMm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 05:12:42 -0400
+Received: by mail-io1-f65.google.com with SMTP id n5so36477827ioc.7
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 02:12:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8WoPeu67DCiUNwzSRofjX1TavKYdTqFGzg5rz2fPyVM=;
+        b=njv3K3MXmqxsJkNu/BBdMM3vVBgxrQIZLf3pSCfsd+DkzyQtGVQUk0CqYCFtqyAdSK
+         j56wGvDTJuWSnt4uoAybNUmdqRbArHlWQepiZnlGU8DuzxF8D9Llobps/z+vwIn3gIpy
+         etHkkhjnkInHwOSxzuvoaKWrkcc/svGpMK9NIsDbGt9UUupEYmXm8H0BT6BANCNkddPN
+         qzwSwyiLxsUNc6No57oNm9t41sgNEQspOAfwqYxJHtWrAAx29uNsoy0rbCFyGTBmtkX+
+         nOAy9dSX3mu0Ruppbq0WVOa3cdPhynDEfjAkFFLzkZI1U9LpPeGl1x0U4Sz98HyBuKw1
+         pYzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jjlD5/SWgIxe7Mt+E6UJOIXnGhzs7pSLbEB0JZClHnQ=;
-        b=sEJo215fM9sSelN/Trp918E6dCf+aLlIQkSaJQpP6MsFnIpFN7u36bE08j9mV4AjP5
-         qwdMdtdYlTtnT+P1HBMDI47QG/DuA0k/XN4r5OHKcZkstoQeTwweY0gz38FH6Qv2NkqO
-         KkCAF2fvNnwpvJvGLXl3950pxXZadIqSSPrC76tXWu/915grXyixOGmh5fZQGFHZrbTd
-         d+JFmEjhXy9JVahMydN929y2+dGE+p7PIfSHzl06KefKivqcN0GVcxKNa6kXHMrzvfQS
-         CHl0Y0mROWjMIqff4DyB8Gu331hYtFJADzVv9lf0U/PsTQJ4shOW/6glbwaqQp+RtluM
-         a6Qw==
-X-Gm-Message-State: APjAAAV25hyN5h3zZDs9VIxrdYKjjoKh0R68Ss+p5GHYm8O0TmuUW7Uw
-        SYjaRTVJuh89Hyri7T9HoviJruGEH6L4UuEv+qE=
-X-Google-Smtp-Source: APXvYqxJkqdb/ETykI3bUzShxonWr1PBLdHZ1GYsMboP60hnwyiJVe6ev6Eq4aBlOlVUpJbw3TYvaNEK9RDyXKHrawc=
-X-Received: by 2002:adf:8b83:: with SMTP id o3mr80240557wra.278.1560933365505;
- Wed, 19 Jun 2019 01:36:05 -0700 (PDT)
+        bh=8WoPeu67DCiUNwzSRofjX1TavKYdTqFGzg5rz2fPyVM=;
+        b=JauGmV9wGCur+pb/b2hh1TZEkk4uQDM59megalwFLpJoprCUBss+p0+6pqqAqzYvkn
+         owpGNa/1hcCJgQQRCqZJz0qRogrEoEBNBEWnlw4o0bA3l6uMtQs0iBHvAE7l30eEJ/JQ
+         dycovY//f1xwmjO5UlKpqsy8BFz30J4QOeCexthzDa8sjate8uLqcFk0sKSKWbVvhntS
+         x21p0fKW4lSvsl/zrG844HeFgBwf+qAf2yFi23g0CmL3kMxDSVxhDUcJuMW850rRzlat
+         Tlq3G9weX+f9XyUBcDtb1rLGOmSlZXTqRzLk8s5FvbqoJ44RB6rTenRBcWkC49gm2s30
+         WkNg==
+X-Gm-Message-State: APjAAAVl/r0xWC84uYFpOGmj36vOC5GuEuxLJvcfYxJUo0WbJXNF8dJn
+        GzOuCj2v5nTwpFhEMLeCLNcZzRaLQA9slwk2fT7eAg==
+X-Google-Smtp-Source: APXvYqyMJL8hg7UaT2wk1kB4PBRE/4GXpgYpLZxHY9jRLJUmjIUvS8nasad+ZsWw0qHsbVqi+DqakvnYKcEpV6kgYKw=
+X-Received: by 2002:a5d:968b:: with SMTP id m11mr1543000ion.16.1560935561212;
+ Wed, 19 Jun 2019 02:12:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.149.git.gitgitgadget@gmail.com> <587cbcf61903693139ad4a02b32727bddd6d116d.1560860634.git.gitgitgadget@gmail.com>
-In-Reply-To: <587cbcf61903693139ad4a02b32727bddd6d116d.1560860634.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 19 Jun 2019 04:35:54 -0400
-Message-ID: <CAPig+cTgmvwg_LV5zonQAR3c0et2p1Nm4YuAfAkYDF=2jY9YeQ@mail.gmail.com>
-Subject: Re: [PATCH 13/17] msvc: support building Git using MS Visual C++
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20190618064537.62369-1-carenas@gmail.com> <20190618155326.GA4014@sigill.intra.peff.net>
+In-Reply-To: <20190618155326.GA4014@sigill.intra.peff.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 19 Jun 2019 02:12:30 -0700
+Message-ID: <CAPUEspgRnGd4nT3yd2YTGMt8t4qQ=V3GGNeTih3cmjnZHNextw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] a few more redundant system include cleanups
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 18, 2019 at 8:24 AM Jeff Hostetler via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> With this patch, Git can be built using the Microsoft toolchain, via:
+On Tue, Jun 18, 2019 at 8:53 AM Jeff King <peff@peff.net> wrote:
 >
->         make MSVC=1 [DEBUG=1]
->
-> Third party libraries are built from source using the open source
-> "vcpkg" tool set. See https://github.com/Microsoft/vcpkg
-> [...]
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/Makefile b/Makefile
-> @@ -1240,7 +1240,7 @@ endif
-> -BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix $(SANE_TOOL_PATH_SQ)|'
-> +BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
+> Thanks, this looks good to me. I fixed the system headers in xinclude.h,
+> but didn't think to check for individual C files including them.
 
-This seems like a distinct bug fix which should live in its own patch.
+also noticed that after the refactoring some files will include a couple
+of headers twice (not an issue, though thanks to the header guards)
+but didn't send that patch to reduce the churn and avoid confusion.
 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> @@ -2388,6 +2388,12 @@ static void maybe_redirect_std_handles(void)
-> +#ifdef _MSC_VER
-> +#ifdef _DEBUG
-> +#include <crtdbg.h>
-> +#endif
-> +#endif
-> @@ -2405,6 +2411,12 @@ int wmain(int argc, const wchar_t **wargv)
-> +#ifdef _MSC_VER
-> +#ifdef USE_MSVC_CRTDBG
-> +       _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-> +#endif
-> +#endif
+> I did a quick grep for similar cases, and didn't find any that I think
+> would be problematic. There were a few cleanups, below.
 
-Shouldn't these changes be squashed into 16/17 (with the commit
-message of 16/17 adjusted accordingly), rather than being included in
-this patch?
+would you mind if I add your 2 patches to a series and include that
+missing one?, that way I'll also have a chance to write a better commit
+message from my original change, including the other feedback I got
+as well
 
-> diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-> @@ -1,3 +1,54 @@
-> +Alternatively, run `make MSVC=1 vcxproj` and then load the generated
-> +git.sln in Visual Studio. The initial build will install the vcpkg
-> +system and build the dependencies automatically. This will take a while.
+Carlo
 
-Is this bit implemented yet, or will it be introduced by a subsequent
-patch series mentioned in the cover letter? If the latter, perhaps
-this README snippet belongs to that future patch series.
-
-> +Note that this will automatically add and commit the generated
-> +.sln and .vcxproj files to the repo.  You may want to drop this
-> +commit before submitting a Pull Request....
-
-Yuck. An automatic commit as part of the build process has high
-surprise-factor, and it seems like it's creating extra work (and
-possibility for error) if the user needs to remember to drop it before
-submitting.
-
-> +Or maybe we should put the .sln/.vcxproj files in the .gitignore file
-> +and not do this.  I'm not sure.
-
-Seems like a better choice.
-
-> diff --git a/compat/vcbuild/find_vs_env.bat b/compat/vcbuild/find_vs_env.bat
-> @@ -0,0 +1,169 @@
-> +:not_2015
-> +   REM TODO....
-> +   echo TODO support older versions of VS. >&2
-> +   EXIT /B 1
-
-As this is a user-facing error message, perhaps it could be worded
-differently. Maybe:
-
-    ERROR: unsupported VS version (older than VS2015)
-
-or something.
+PS. is there a recommendation on how to version a patch that move
+into a series that would be preferred?
