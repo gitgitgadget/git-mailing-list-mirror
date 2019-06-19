@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 074281F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C86711F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730482AbfFSVF7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 17:05:59 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33636 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726839AbfFSVF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 17:05:59 -0400
-Received: by mail-ed1-f68.google.com with SMTP id i11so1335644edq.0
+        id S1730519AbfFSVGB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 17:06:01 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37942 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726244AbfFSVGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 17:06:00 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r12so1289874edo.5
         for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EqWet8OWHv5Fm6Wm9fDw7t4RsdT/tqbq3V03EERpNek=;
-        b=nzxUqQjDj3aV3aQLrPh6jNgJ2pAiSmfs0dHUcVqIINKoZUQ3Mpw/DQa8kmnZH9H9O+
-         lcZMlJZMdOvsj6gUe99Fq+IM01Mr0G0AOSJ9liOUzPi+4H36HB5le20laJ8Tl4Ognym/
-         MSWE9bPXZB12e+JDTiOKf1Zkdz4f5253YxMaYRK7ri3C3cSsqNKZu0THqN4urYeYYWxQ
-         FLF70FnRkH3/eG7gC0lLUGRZzyJdcqLBQPmj2hTKwWYk8A+N4hPG7f6CbXvP2RqdFuct
-         1GrTQdDWsWJYmeXo+0H2AN+7CsC13xfYWugyKanuEXkto9sOPcDMovPlbb9ZSjoxNRNR
-         0R+A==
+        bh=528239hnOHI6K+T7ibhsYcnma7vmlnOrafBrcPk1qOY=;
+        b=N+wCU3gO9VlAOfQjatYmpNjXU3SCjEStfcAxOJnzkblVa2/jFSTpUQLicHwha+RovF
+         G6MeR5AK2dc6QhsrwWYLSJ1i7Hjvp6F+SWhndmBR3RvMEOWPYkNxCKcHHJfpTgy9fhQU
+         h/NCp478pdx+NuOCY6kSxeYJDFHfdHsAGWC2V5vXPUUW4o92wC75ECjBfffT9ANw8VZq
+         l/TW5WJtlZ02rxaYdK1lzhrlYuhxrRrXzSGlrVJSTok3TmTki0P8T1tB5ImDT9YBrLsr
+         ufgAuZnH741AfBo+3aTKVG/+jR/rDXwhOIDD5UIoRJWh0hBzDliAwJeoW9IrbkA/DVtf
+         VxNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EqWet8OWHv5Fm6Wm9fDw7t4RsdT/tqbq3V03EERpNek=;
-        b=Ew01DluFuQW3YcwgPX3Xb136dZhpdhOAbfAo6xrISIwriGeHsMDc4fk6Bj0T43paXE
-         0i7hZ5rQRwQfR0FPJtQDlRYtsKqz1xvR+H4WLs7g/HOAxdPI7fHMOwjuUJSJJjXmRzMZ
-         q4D+r72Ds88n1lN3IebNAv7xHmjcLpg7LpSxTl6eVQQH10Mr/nRLVnR4UndHRoZUOBW9
-         25ZgTI3vtJ4eFxDW4ANTb4KoYa60GUg/F+V4jHkkVkd8ck0fS0XVyLxDXDa1+Kf7q6WJ
-         Y3uSMfC+F4CoOQOLM8jxq3j4FWhnycXH1xSQtGdsIfbDa3IaKBCASwA+CEOMuTbd8ZzU
-         WQyg==
-X-Gm-Message-State: APjAAAW48eZnUWefo9eTf52wEEKyTyrwfCWDHhyTap3LMkgnFq+U483W
-        GX7PN68pJ5wHZr/2B+Mw73+Ttqxl
-X-Google-Smtp-Source: APXvYqzH6jS8iJ5v5PQa3yZOsaWft9PolZlwD4kFdZfJJxT9EK2cZ+Yeas1Q92mMXjerNYz3xJFaqQ==
-X-Received: by 2002:a50:f486:: with SMTP id s6mr101046779edm.186.1560978357472;
-        Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
+        bh=528239hnOHI6K+T7ibhsYcnma7vmlnOrafBrcPk1qOY=;
+        b=ubeVNzkB39Hyu1e4UdqivOeLt85tbOUe3oBjRsyBcafweh64ec8Zdg0H9SRWff1SKn
+         BGNBL15m7QGoqJxrR3NcDOWVK3KhzSYDQoPaMUyocbgt9ve97qRJM5NBM+DbuvHK5/Wv
+         TDsau0ZeSk/vR0kXEbgWLg8y1Th4/7jlUoQZPUD/MUGvgLzy/L4rZh4I0qiB3S02LEcu
+         K9Vz1YBiCMm4H+EkoU3nC+U6SczySr4KgzDcvcuV5cbuK4NYoeFGYQ10byWGVfVi3HZ2
+         rqfqVA73MQgLqqNqYRZ1HFi8sgioDNIVNf/7mWB9/RWtNL0Yx6b+wpZ+MslERimPdWGE
+         cuhA==
+X-Gm-Message-State: APjAAAUnh6i9twb38l0KyIliOxBVN2Rpx+DLIobkgS5ojm0R0ji8TzZw
+        CMBxEj0gvo5g+XBOmL+E47jojPEe
+X-Google-Smtp-Source: APXvYqzNokPG/COgidHafPGlFMGqNU/dYVdh7x7c3krzHZZHm9r6A76KGl0MrkavHPYS8sXyl71lLA==
+X-Received: by 2002:a50:9422:: with SMTP id p31mr94281462eda.127.1560978358183;
+        Wed, 19 Jun 2019 14:05:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t2sm6325712eda.95.2019.06.19.14.05.56
+        by smtp.gmail.com with ESMTPSA id l10sm914381ejh.53.2019.06.19.14.05.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
 Date:   Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
-X-Google-Original-Date: Wed, 19 Jun 2019 21:05:36 GMT
-Message-Id: <aa27e7f9cbfda50a02ac6bb555f2ee6487c47625.1560978354.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Wed, 19 Jun 2019 21:05:37 GMT
+Message-Id: <3e108cfb0250919c10833bcff3985e79c6452ae0.1560978354.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v2.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
         <pull.149.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 02/20] Mark .bat files as requiring CR/LF endings
+Subject: [PATCH v2 03/20] t0001 (mingw): do not expect a specific order of
+ stdout/stderr
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,31 +76,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like the natural line ending for Unix shell scripts consist of a
-single Line Feed, the natural line ending for (DOS) Batch scripts
-consists of a Carriage Return followed by a Line Feed.
+When redirecting stdout/stderr to the same file, we cannot guarantee
+that stdout will come first.
 
-It seems that both Unix shell script interpreters and the interpreter
-for Batch scripts (`cmd.exe`) are keen on seeing the "right" line
-endings.
+In fact, in this test case, it seems that an MSVC build always prints
+stderr first.
+
+In any case, this test case does not want to verify the *order* but
+the *presence* of both outputs, so let's test exactly that.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
+ t/t0001-init.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/.gitattributes b/.gitattributes
-index 9fa72ad450..b08a1416d8 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -5,6 +5,7 @@
- *.pl eof=lf diff=perl
- *.pm eol=lf diff=perl
- *.py eol=lf diff=python
-+*.bat eol=crlf
- /Documentation/**/*.txt eol=lf
- /command-list.txt eol=lf
- /GIT-VERSION-GEN eol=lf
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 77a224aafb..387e4e6b81 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -473,8 +473,8 @@ test_expect_success MINGW 'redirect std handles' '
+ 		GIT_REDIRECT_STDOUT=output.txt \
+ 		GIT_REDIRECT_STDERR="2>&1" \
+ 		git rev-parse --git-dir --verify refs/invalid &&
+-	printf ".git\nfatal: Needed a single revision\n" >expect &&
+-	test_cmp expect output.txt
++	grep "^\\.git\$" output.txt &&
++	grep "Needed a single revision" output.txt
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
