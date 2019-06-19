@@ -7,77 +7,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 896C31F609
-	for <e@80x24.org>; Wed, 19 Jun 2019 19:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F731F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 19:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730385AbfFSTKl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 15:10:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44444 "HELO cloud.peff.net"
+        id S1730283AbfFSTRL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 15:17:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44456 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726265AbfFSTKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 15:10:39 -0400
-Received: (qmail 11844 invoked by uid 109); 19 Jun 2019 19:07:25 -0000
+        id S1729988AbfFSTRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 15:17:11 -0400
+Received: (qmail 11887 invoked by uid 109); 19 Jun 2019 19:13:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Jun 2019 19:07:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Jun 2019 19:13:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8411 invoked by uid 111); 19 Jun 2019 19:11:28 -0000
+Received: (qmail 8488 invoked by uid 111); 19 Jun 2019 19:18:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 19 Jun 2019 15:11:28 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 19 Jun 2019 15:18:00 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Jun 2019 15:10:37 -0400
-Date:   Wed, 19 Jun 2019 15:10:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Jun 2019 15:17:09 -0400
+Date:   Wed, 19 Jun 2019 15:17:09 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH] gc: run more pre-detach operations under lock
-Message-ID: <20190619191037.GE28145@sigill.intra.peff.net>
-References: <20190619094630.32557-1-pclouds@gmail.com>
- <20190619102601.24913-1-avarab@gmail.com>
- <CACsJy8AqA3TmNP62ko4c5Et39jsADYf9nKQByz28y-YQjNyKag@mail.gmail.com>
- <87k1dh8ne4.fsf@evledraar.gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
+Message-ID: <20190619191709.GF28145@sigill.intra.peff.net>
+References: <20190619095858.30124-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1dh8ne4.fsf@evledraar.gmail.com>
+In-Reply-To: <20190619095858.30124-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 19, 2019 at 08:01:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Jun 19, 2019 at 04:58:50PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-> > You could sort of avoid the problem here too with
-> >
-> > parallel 'git fetch --no-auto-gc {}' ::: $(git remote)
-> > git gc --auto
-> >
-> > It's definitely simpler, but of course we have to manually add
-> > --no-auto-gc in everywhere we need, so not quite as elegant.
-> >
-> > Actually you could already do that with 'git -c gc.auto=false fetch', I guess.
+> This is probably just my itch. Every time I have to do something with
+> the index, I need to add a little bit code here, a little bit there to
+> get a better "view" of the index.
 > 
-> The point of the 'parallel' example is to show disconnected git
-> commands, think trying to run 'git' in a terminal while your editor
-> asynchronously runs a polling 'fetch', or a server with multiple
-> concurrent clients running 'gc --auto'.
+> This solves it for me. It allows me to see pretty much everything in the
+> index (except really low detail stuff like pathname compression). It's
+> readable by human, but also easy to parse if you need to do statistics
+> and stuff. You could even do a "diff" between two indexes.
 > 
-> That's the question my RFC patch raises. As far as I can tell the
-> approach in your patch is only needed because our locking for gc is
-> buggy, rather than introduce the caveat that an fetch(N) operation won't
-> do "gc" until it's finished (we may have hundreds, thousands of remotes,
-> I use that for some more obscure use-cases) shouldn't we just fix the
-> locking?
+> I'm not really sure if anybody else finds this useful. Because if not,
+> I guess there's not much point trying to merge it to git.git just for a
+> single user. Maintaining off tree is still a pain for me, but I think
+> I can manage it.
 
-I think there may be room for both approaches. Yours fixes the repeated
-message in the more general case, but Duy's suggestion is the most
-efficient thing.
+I don't have any particular use for this, but I am all in favor of tools
+that make it easier to access and analyze information kept in our
+on-disk formats (some of this is available via --debug, I think, but
+AFAIK most of the extension bits are not).
 
-I agree that the "thousands of remotes" case means we might want to gc
-in the interim. But we probably ought to do that deterministically
-rather than hoping that the pattern of lock contention makes sense.
+And I'd rather see something like JSON than inventing yet another ad-hoc
+output format.
+
+I think your warning in the manpage that this is for debugging is fine,
+as it does not put us on the hook for maintaining the feature nor its
+format forever. We might want to call it "--debug=json" or something,
+though, in case we do want real stable json support later (though of
+course we would be free to steal the option then, since we're making no
+promises).
 
 -Peff
