@@ -2,76 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95F741F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 10:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C51551F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 11:17:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727085AbfFSKam (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 06:30:42 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42813 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbfFSKam (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 06:30:42 -0400
-Received: by mail-ed1-f68.google.com with SMTP id z25so26412395edq.9
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 03:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Iswq88c/854UBE6BIlf8BANSwC99YQcJK5jeK8NC2Y0=;
-        b=PeVJBG25xvfFYFqjEnuZOeHJym5RV5FYNKT/WZ2+9TmuIVawlNpKBUClJs8B/35owA
-         EN50i6oHbaTsr4FcTyViAapfliMLGK3YTuQlz0c7xMEpmob52+oSEnlxB1/bDZmjA37s
-         wJEQe+385o2bSWzHRuIgmSFRB7VJZqsG1Xs/Srfwu/TB98ae0aj/LBaJ9c3/lBxl6PD4
-         ejKMqIE2+T9zNDnuLo32lvabUz1xRol+8cGRlNe0gobQJYUnM8bgpqou5n7hwNdL5ylW
-         2U96M3mA7/Virl1eQLHFrI+yVMh0hyPDu5O7ywCOnI1XbuoNh2RNFuCiIG6para4DJX1
-         dZ+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Iswq88c/854UBE6BIlf8BANSwC99YQcJK5jeK8NC2Y0=;
-        b=EB9s0NEouAkYfPjcTuP222uQYHFlHAtrzJMniUjhz3vhefrIOG3GDz5GCKHlBgnFvl
-         rGSa2Aeu9hi1mVMfr13e3z7+ihm9SV2lmhEQJu9vlN1PAnmZp5VlUcYrg5Sbp1c10VDL
-         QLbq8lyZwzaYKA5kxK2LMnmN0RgASgbGQTHlTb8AVZvnrvyOuinV/acl/OQEIvkutZKG
-         g2YoEVWsCFFPo/Df9j7PZHonPZrMbhwARIJOljuaCDKeVflmtN1V7EiMjUXtslGLNgEC
-         MmcqAS17oF3c14XUxcUEfuNIgD9quxFg/3WAzRgECbGi3nDBHdyEfnaMk/ENJzs+XUAX
-         xQzg==
-X-Gm-Message-State: APjAAAUzb4fwftVnmo+z0N/wH6yYELIuspqOnuVtc5iLnB1z7MnX5jZk
-        wHm6eFN3fX6ppYceEv9EDLFDAVUnJ0w=
-X-Google-Smtp-Source: APXvYqy7QVpjMmqC2AZv27hPWsqb8v1eRD6Iz56w9I+Cu3UG4mLy9StxLtPRc70TipYZ9J0gkLfPbA==
-X-Received: by 2002:a50:b329:: with SMTP id q38mr130441038edd.246.1560940240157;
-        Wed, 19 Jun 2019 03:30:40 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id bq8sm1496582ejb.42.2019.06.19.03.30.39
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 19 Jun 2019 03:30:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/8] ls-files: add --json to dump the index
-References: <20190619095858.30124-1-pclouds@gmail.com> <20190619095858.30124-2-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190619095858.30124-2-pclouds@gmail.com>
-Date:   Wed, 19 Jun 2019 12:30:38 +0200
-Message-ID: <87lfxx98a9.fsf@evledraar.gmail.com>
+        id S1731178AbfFSLR6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 07:17:58 -0400
+Received: from mout.gmx.net ([212.227.17.22]:45777 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727076AbfFSLR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 07:17:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560943060;
+        bh=+V8WIiFvTFjQhwH+58HfDBg1D9L76XP3xPQm/JDfGbQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NhlX4rVz1GNM6KnuiIcZ9aD+qGkmy2RXkWL/ZwY/1nR/KymiAiV57wQv7eA/uzjYq
+         Syu6BxoDsEykPgfpxHlKxuxXKSvPn/DQviYy75WooGussco3CZ9SIMb4VL1HBdDKhS
+         wahMY+t1wGU+nCFClA+ulN3w7mlZFVg6t8fRd0DQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHnm-1iRnpu1IR0-00tiOk; Wed, 19
+ Jun 2019 13:17:40 +0200
+Date:   Wed, 19 Jun 2019 13:17:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Carlo Arenas <carenas@gmail.com>
+cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 03/17] cache-tree.c: avoid reusing the DEBUG constant
+In-Reply-To: <CAPUEspi-G7abt-zuLbw0iuyXN0gtrM_6Vy6d+9f-=6FpRsoV4A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906191316210.44@tvgsbejvaqbjf.bet>
+References: <pull.149.git.gitgitgadget@gmail.com> <486297ec8c146e0ed47cd1dd8fe8f6496c2b54c2.1560860634.git.gitgitgadget@gmail.com> <CAPUEspi-G7abt-zuLbw0iuyXN0gtrM_6Vy6d+9f-=6FpRsoV4A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PdZ49Wg5L8gQ59yJftSzwyZB3/JdTh1c5nCNxo0ngt7ueMbYwz1
+ t9l/R6WbpH8u4uzz7A/ggXImP0XSpAqn+zuG1QVdMFKWRemVtqqARVN7arQeqK93nWgIYi1
+ ebNCnmZfpYYmSezlE26HefYy75xhbBoIxMyzu6hOhOglI+bqmygV2Tc5GOK59v6yno93cSx
+ lqqes2tUYGw2TQz3K75PA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4GYvxnX57D4=:q66GdAr0YxnQzK2dFJrRyd
+ qyK0USPPbuREWR4KOf/t2Mz+PPCua85uDBmI8dji/6jDwtvBFeqsmmnEG7jh6W9Atlsy7AMco
+ MZDMO/RLJMt/EPaAGI5plywEg86b123WEUtS2GUOFwwmCUkD54yetGIsw0BXchi+oexg3kw5N
+ PufXw5i/k5bfAfrlo2wprGf86MKTUR5dcN4F9RKBPfjI3PU3/UlaJk4BgRAlkMZw0myzm1aTh
+ YhUStLpfT7M9iotLYAfxMYkX7DMFrcLHwqhOwwObFHXrE2JNedVdyhKxSe8dJZa+ddv+Ix7dy
+ 5/+V9c8EPF4uN2JUW/GXjdOTULOd3oplJH0h3pcSsachn9Yc1maRQNDMgYrrd2kePIrKWpsk8
+ i+3WOYtJiStZTdkehMGxdEmKT6+O+0izepqPw3oiEBmGS0asVqvdhZRohCH63839uw23rbt4A
+ FheotgHkc75quV7bnDvHx71bOCHv79KcRpvjO95UGC9nTADNPi8lZFwDykTqAj8y0DzKID+yH
+ KDloSqOgs+53CKKh9ttt/mhK9WQXN4XnDCppf2JQi9Z+oMlmGpu5PzNM95aG9lvt9x+LqqsMO
+ LTJkTqvhJ5/tvmjpbBKF8wnb/2lDzMQWRAsuy/nA6S0/XvmDFG0m++U4KK5Ie+HLoiS7P2q5Z
+ gh2VbvjFZamzY9pPbsBI7lpnm2sZcuejqfZU7k+cRz1jkud3wfJZZUZjt5uBOMjb77tge/YLy
+ B25S73DE4TmcxmA9FFlLTou6e//vSfxBos+IElmj7CduoSprmVxMPiwpIBL3QEnouo9TiA9vk
+ DxUDWCTa5sDcW6ZD9akyprdyP6DioE11OG1xI0K8eLCsnp/0h0bKqeiivdu78RjhCYaxzKZFJ
+ lj/qZcEHuBShtKNnxTkM3Ydwa2kAD3Zrw/08tvE4phPCZyYljBzNRuwTTG+2E2dgi+YKyJx/w
+ r13IrqtpZQhuhdXRo4QVKrbUJ4NiZ2tdMIGWOpvr06R05SS2FiPdK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Carlo,
 
-On Wed, Jun 19 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Tue, 18 Jun 2019, Carlo Arenas wrote:
 
-> +		die(_("--show-json cannot be used with other --show- options, or --wit=
-h-tree"));
+> shouldn't this also be a problem with builtin/blame.c?
 
-Should be --json, not --show-json, right? I assume --show-json is left
-over from an earlier version.
+Sharp eyes!
+
+It does not *really* matter as much here, as that file defines that
+`DEBUG` constant if it has not yet been defined, but yes, it assumes that
+*if* it is defined, then it is set to `1`. Which is the case, but it is
+fragile.
+
+I changed it locally already, and it will be part of the next iteration.
+
+Thanks,
+Johannes
