@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 944221F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 074281F462
 	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730248AbfFSVF6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 17:05:58 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35330 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726379AbfFSVF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 17:05:58 -0400
-Received: by mail-ed1-f65.google.com with SMTP id p26so1322755edr.2
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
+        id S1730482AbfFSVF7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 17:05:59 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33636 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726839AbfFSVF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 17:05:59 -0400
+Received: by mail-ed1-f68.google.com with SMTP id i11so1335644edq.0
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cX9jL+CBENQtJWnsnsmDqn7UC5K6XEyfSeVCLeRfihA=;
-        b=HE2IXD+9Nk0xtLaoZA02JTnBnPqyiG1689aLl0lLhMAAmoCSXIfNAGbovut+9mwgr3
-         mJW2wXSShJicP4a9HBe9Rg92KaQlMFu7K6kqPJE2rlDEnMddmrM6dANdrvPctefy339S
-         fCko8IUtE0ibGxtjz21VYBogoWr+prYgR2SGxlq/zvZgH8XJT1XVNI8drf14cKJm47GX
-         EcPEp3MiGHZW9BPiBngDbNRRmZ8p/fULFD4ZEXXf5WswRZlsWtCBV0b8JNiWD4u2fsnz
-         HojUAUlf2j9IIW5WqUWajrHKW1PJtVFhcLv+Fi5mfFPC3WkwBAVwSq0YowGboNjTy7BS
-         5uNw==
+        bh=EqWet8OWHv5Fm6Wm9fDw7t4RsdT/tqbq3V03EERpNek=;
+        b=nzxUqQjDj3aV3aQLrPh6jNgJ2pAiSmfs0dHUcVqIINKoZUQ3Mpw/DQa8kmnZH9H9O+
+         lcZMlJZMdOvsj6gUe99Fq+IM01Mr0G0AOSJ9liOUzPi+4H36HB5le20laJ8Tl4Ognym/
+         MSWE9bPXZB12e+JDTiOKf1Zkdz4f5253YxMaYRK7ri3C3cSsqNKZu0THqN4urYeYYWxQ
+         FLF70FnRkH3/eG7gC0lLUGRZzyJdcqLBQPmj2hTKwWYk8A+N4hPG7f6CbXvP2RqdFuct
+         1GrTQdDWsWJYmeXo+0H2AN+7CsC13xfYWugyKanuEXkto9sOPcDMovPlbb9ZSjoxNRNR
+         0R+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cX9jL+CBENQtJWnsnsmDqn7UC5K6XEyfSeVCLeRfihA=;
-        b=Q9UxcRoGEAPyaCLpYmuB1cdoNSO9/LE0wmdn6lJfkVCnecXQob318VQDIp49F2vYdy
-         2fW/o7bHlHryNhUKoqKO2e/cW7wiCQtDat9SexQp6KnxiVae5doBd/TgrWuTxkfnJScZ
-         r9eAJM56KSpA7QQRoq/e9CihwA158WZVQq+oWApkQ67MeljPTLAMC0jtMGhmBp/vHj/3
-         5aoyUeF4Baed18ol4rn7IsV3OwLJwN7WuIArQQhdpOckcEjKNRTtCYWpXViQTGCo9mm2
-         XXq0uHG3ESs6NzonNutRWFENp8M8MuNRo42v4/VVWkxTphKwCLGWeZ46RU62GoKihD8k
-         OWWA==
-X-Gm-Message-State: APjAAAVW2hMxiawVS55F83zBafCFKyD9UhsvHSYd0L4stpg3qqliceKr
-        9k7kZzsDVl7F3K/w2XVWQaFgJICa
-X-Google-Smtp-Source: APXvYqxn9n/Q4GkwPmI/rQJg8vC4WxprcuogArLNl8EZ5h+f0J9BplJFZAKr4LM5ub6pzFO9C9zfVw==
-X-Received: by 2002:a50:a5b7:: with SMTP id a52mr90884303edc.237.1560978356720;
-        Wed, 19 Jun 2019 14:05:56 -0700 (PDT)
+        bh=EqWet8OWHv5Fm6Wm9fDw7t4RsdT/tqbq3V03EERpNek=;
+        b=Ew01DluFuQW3YcwgPX3Xb136dZhpdhOAbfAo6xrISIwriGeHsMDc4fk6Bj0T43paXE
+         0i7hZ5rQRwQfR0FPJtQDlRYtsKqz1xvR+H4WLs7g/HOAxdPI7fHMOwjuUJSJJjXmRzMZ
+         q4D+r72Ds88n1lN3IebNAv7xHmjcLpg7LpSxTl6eVQQH10Mr/nRLVnR4UndHRoZUOBW9
+         25ZgTI3vtJ4eFxDW4ANTb4KoYa60GUg/F+V4jHkkVkd8ck0fS0XVyLxDXDa1+Kf7q6WJ
+         Y3uSMfC+F4CoOQOLM8jxq3j4FWhnycXH1xSQtGdsIfbDa3IaKBCASwA+CEOMuTbd8ZzU
+         WQyg==
+X-Gm-Message-State: APjAAAW48eZnUWefo9eTf52wEEKyTyrwfCWDHhyTap3LMkgnFq+U483W
+        GX7PN68pJ5wHZr/2B+Mw73+Ttqxl
+X-Google-Smtp-Source: APXvYqzH6jS8iJ5v5PQa3yZOsaWft9PolZlwD4kFdZfJJxT9EK2cZ+Yeas1Q92mMXjerNYz3xJFaqQ==
+X-Received: by 2002:a50:f486:: with SMTP id s6mr101046779edm.186.1560978357472;
+        Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm3409353eja.37.2019.06.19.14.05.56
+        by smtp.gmail.com with ESMTPSA id t2sm6325712eda.95.2019.06.19.14.05.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Jun 2019 14:05:56 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 14:05:56 -0700 (PDT)
-X-Google-Original-Date: Wed, 19 Jun 2019 21:05:35 GMT
-Message-Id: <9d4d6ae7db55309ff99c34237b64d7edae2dbbd6.1560978354.git.gitgitgadget@gmail.com>
+        Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 14:05:57 -0700 (PDT)
+X-Google-Original-Date: Wed, 19 Jun 2019 21:05:36 GMT
+Message-Id: <aa27e7f9cbfda50a02ac6bb555f2ee6487c47625.1560978354.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v2.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
         <pull.149.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 01/20] mingw: fix a typo in the msysGit-specific section
+Subject: [PATCH v2 02/20] Mark .bat files as requiring CR/LF endings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,32 +75,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The msysGit project (i.e. Git for Windows 1.x' SDK) is safely dead for
-*years* already. This is probably the reason why nobody caught this typo
-until Carlo Arenas spotted a copy-edited version of it nearby.
+Just like the natural line ending for Unix shell scripts consist of a
+single Line Feed, the natural line ending for (DOS) Batch scripts
+consists of a Carriage Return followed by a Line Feed.
 
-It is probably about time to rip out the remainders of msysGit/MSys1
-support, but that can safely wait a bit longer, and we can at least fix
-the typo for now.
+It seems that both Unix shell script interpreters and the interpreter
+for Batch scripts (`cmd.exe`) are keen on seeing the "right" line
+endings.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitattributes | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b71688eeb7..9fc053cac0 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -571,7 +571,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
- 	INTERNAL_QSORT = YesPlease
- 	HAVE_LIBCHARSET_H = YesPlease
- 	NO_GETTEXT = YesPlease
--	COMPAT_CLFAGS += -D__USE_MINGW_ACCESS
-+	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS
- else
- 	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
- 		# MSys2
+diff --git a/.gitattributes b/.gitattributes
+index 9fa72ad450..b08a1416d8 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -5,6 +5,7 @@
+ *.pl eof=lf diff=perl
+ *.pm eol=lf diff=perl
+ *.py eol=lf diff=python
++*.bat eol=crlf
+ /Documentation/**/*.txt eol=lf
+ /command-list.txt eol=lf
+ /GIT-VERSION-GEN eol=lf
 -- 
 gitgitgadget
 
