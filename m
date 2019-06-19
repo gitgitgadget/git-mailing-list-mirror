@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0386B1F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 09:59:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3C0E1F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 09:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731481AbfFSJ7e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 05:59:34 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44294 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731385AbfFSJ7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 05:59:33 -0400
-Received: by mail-pf1-f196.google.com with SMTP id t16so9417511pfe.11
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 02:59:33 -0700 (PDT)
+        id S1731495AbfFSJ7j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 05:59:39 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:40843 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731385AbfFSJ7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 05:59:38 -0400
+Received: by mail-pg1-f193.google.com with SMTP id w10so4722719pgj.7
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 02:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UGYeAPN7w6w1sm6Sh8QryALnaq1DTY1XELy/WQasz2s=;
-        b=oASr2Drwgq9BVInFct8/fRtT5kKcNNUt1s2EpfrDv8qUCi61NUfrhRwQlRDR1MbS9X
-         vBomhFQwy7u8dJ1m076NUhvivu0OkHqpd/kpgbdAbyAQKymD+zLCFFOJUFByThR+97X4
-         NCnslc8h5RlSSoDAloaryucyMSHu9ayVNX+xaobvzwuWsKZqFAt25WPkJJXvlk80j8A9
-         kw/PdilII6sCaoWDcJGxyn1ieUrs6QctPGgy++tK1N70cziGxbRDj+mKShFBQVJ4ppIN
-         RKzalmhS16ZXZBrE6ZpAKDwStvdqu9L8F5LEKZSOjuINzoTYh/mlwi1pt4sMc6PE2Seh
-         u2rg==
+        bh=mOwsuLV5YQw/z24XqQpVieu79p1qEgu/udmI1Zu1dec=;
+        b=oKVjw+/92ZkrHMW4MBEPDqWza26CCizNuGylGechtV9M4KrGjlJxHu+axvQiWlXXw0
+         fHb0/ceOL/9sFtbhj16NzYzWnHj0FMkdMEcRcZUMQJ/63Qe/5Rxui0qoG8f4WbMXjFk+
+         +SNL+UfTL8ZGhWCa8th5e1BvIgMauXddX1N7ZWu+YuUjnyXirB8TNXqOpdBNYnYpZlsN
+         y7indrRLy30wOTragGJwBV8JcA1XUgPlyWMfMIVxoQJBzV+kNGPmq0tlawauiOqbHMqD
+         rA3NgSOCuXGN4AiuTYrme37ppr29vjJZxi+zPp6PmX6INpxm++Z4NMOqzDXjF1Hgx2Mo
+         Q2AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UGYeAPN7w6w1sm6Sh8QryALnaq1DTY1XELy/WQasz2s=;
-        b=i7hjHt0tQxstKAwi6vxuxy1ORbyLgqtKxYoUehWYQGyGJRk8Wr7sqe2FGMP2hgqby/
-         I/NKy5DPBQa/V07hx2rYvtD06E/962cHKC8G1DD+dMIb0bs1e4EUOqFLbeOO3UwfMZVQ
-         T6A3948PMO47uEADZ2464F+TMAfZwB/AljKEh0hG2+9Z/WldLDSVks5IoTWkTuvEGkUT
-         vcGbom/SrEJ4xAJqYeQlnSe+NbOYnDXE6yUoKU4HMTKr+UFq/hnuXaB1mO1IaCY3dzGh
-         16U9AvfFmLuQxF0Zd6icoF0hJppXuHj6PXkN4Y+UtQoBAGrz5JcpgZ4sv0odW7zlpkaF
-         ZO6g==
-X-Gm-Message-State: APjAAAUX3X4y4W5Occ/SORU6CEeUr9b9MYwQ10NgfBD03koyXqsXcFHl
-        Ry/oiTfImZ76oUSnFniKco1katww
-X-Google-Smtp-Source: APXvYqzPlGqReBJAQSKK9WWBpVG6LS1l1jDqb766gBQoYc6+efmS6lkZtLb/eF+S/MKr2ANxULc81g==
-X-Received: by 2002:a62:ce07:: with SMTP id y7mr9106048pfg.12.1560938373086;
-        Wed, 19 Jun 2019 02:59:33 -0700 (PDT)
+        bh=mOwsuLV5YQw/z24XqQpVieu79p1qEgu/udmI1Zu1dec=;
+        b=YrA9th7zs2Q2t21Vjp0JYspWDdals79QKn+K+S/hpbh0Ja6+1uCa7Ln+o7M94LCIku
+         bSfgDVEDkU+4Cjp9WfL+C5pOz9pDuAGaYuMepiL4s5OlucXFPPaGjotM6fVYqWeXvp2B
+         euBJaRA2YawxRaThbU61h3iMysQUPal0139nyGg4W/DoF46z6x6/m8XorRKHQVtuj9sy
+         ZGuPaFceOqFLeVlKV0VEYtBZUkeH01VhuRAdDQCEWo/80HJm3VyZLrLY8Z4Tge2Va0x4
+         8aWoZ6IoM1TEkLX5SB1tDHT9/DKV+x0jlE3ALXCSj4fS1LJjBnAMBWdXKphs2xN7jiEe
+         YCmw==
+X-Gm-Message-State: APjAAAVUsQrVzNEP3qOhNct0scg8rtqkerDk7j9zY8YCsj30Va3XM2By
+        7FbRWU6dffmO+KjlA5K5qyMfxW0t
+X-Google-Smtp-Source: APXvYqyeCaoNPDON528FAYN1L003HJCOt1asf4BB1n8QIZ2FEY81zFhf6xwJZhrfT7fow89GdCoZXg==
+X-Received: by 2002:a63:1d10:: with SMTP id d16mr6897666pgd.446.1560938377512;
+        Wed, 19 Jun 2019 02:59:37 -0700 (PDT)
 Received: from ash ([115.76.181.38])
-        by smtp.gmail.com with ESMTPSA id a22sm21413139pfn.173.2019.06.19.02.59.29
+        by smtp.gmail.com with ESMTPSA id u20sm15836079pgm.56.2019.06.19.02.59.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Jun 2019 02:59:31 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 19 Jun 2019 16:59:28 +0700
+        Wed, 19 Jun 2019 02:59:36 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 19 Jun 2019 16:59:33 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 6/8] read-cache.c: dump "IEOT" extension as json
-Date:   Wed, 19 Jun 2019 16:58:56 +0700
-Message-Id: <20190619095858.30124-7-pclouds@gmail.com>
+Subject: [PATCH 7/8] cache-tree.c: dump "TREE" extension as json
+Date:   Wed, 19 Jun 2019 16:58:57 +0700
+Message-Id: <20190619095858.30124-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190619095858.30124-1-pclouds@gmail.com>
 References: <20190619095858.30124-1-pclouds@gmail.com>
@@ -72,96 +72,134 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c | 34 +++++++++++++++++++++++++++++-----
- 1 file changed, 29 insertions(+), 5 deletions(-)
+ cache-tree.c | 41 ++++++++++++++++++++++++++++++++++++-----
+ cache-tree.h |  5 ++++-
+ read-cache.c |  2 +-
+ 3 files changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 04863c3853..200834e77e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1911,7 +1911,7 @@ struct index_entry_offset_table
- 	struct index_entry_offset entries[FLEX_ARRAY];
- };
+diff --git a/cache-tree.c b/cache-tree.c
+index b13bfaf71e..fc44016fe8 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -3,6 +3,7 @@
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "cache-tree.h"
++#include "json-writer.h"
+ #include "object-store.h"
+ #include "replace-object.h"
  
--static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset);
-+static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset, struct json_writer *jw);
- static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_table *ieot);
+@@ -492,7 +493,8 @@ void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
+ 	write_one(sb, root, "", 0);
+ }
  
- static size_t read_eoie_extension(const char *mmap, size_t mmap_size, struct json_writer *jw);
-@@ -2232,6 +2232,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		nr_threads = 1;
- 
- 	if (istate->jw) {
-+		size_t off;
-+
- 		jw_object_begin(istate->jw, jw_pretty);
- 		jw_object_intmax(istate->jw, "version", istate->version);
- 		jw_object_string(istate->jw, "oid", oid_to_hex(&istate->oid));
-@@ -2243,8 +2245,11 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		 * debugging only, so performance is not a concern.
- 		 */
- 		nr_threads = 1;
--		/* and dump EOIE extension even with threading off */
--		read_eoie_extension(mmap, mmap_size, istate->jw);
-+		/* and dump EOIE/IOET extensions even with threading off */
-+		off = read_eoie_extension(mmap, mmap_size, istate->jw);
-+		if (off)
-+			free(read_ieot_extension(mmap, mmap_size,
-+						 off, istate->jw));
- 	}
- 
- 	if (nr_threads > 1) {
-@@ -2266,7 +2271,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	 * to multi-thread the reading of the cache entries.
- 	 */
- 	if (extension_offset && nr_threads > 1)
--		ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
-+		ieot = read_ieot_extension(mmap, mmap_size, extension_offset, NULL);
- 
- 	if (ieot) {
- 		src_offset += load_cache_entries_threaded(istate, mmap, mmap_size, nr_threads, ieot);
-@@ -3630,7 +3635,9 @@ static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context,
- 
- #define IEOT_VERSION	(1)
- 
--static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset)
-+static struct index_entry_offset_table *read_ieot_extension(
-+	const char *mmap, size_t mmap_size,
-+	size_t offset, struct json_writer *jw)
+-static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
++static struct cache_tree *read_one(const char **buffer, unsigned long *size_p,
++				   struct json_writer *jw)
  {
- 	const char *index = NULL;
- 	uint32_t extsize, ext_version;
-@@ -3666,6 +3673,12 @@ static struct index_entry_offset_table *read_ieot_extension(const char *mmap, si
- 		error("invalid number of IEOT entries %d", nr);
- 		return NULL;
- 	}
+ 	const char *buf = *buffer;
+ 	unsigned long size = *size_p;
+@@ -546,6 +548,15 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 			*buffer, subtree_nr);
+ #endif
+ 
 +	if (jw) {
-+		jw_object_inline_begin_object(jw, "index-entry-offsets");
-+		jw_object_intmax(jw, "version", ext_version);
-+		jw_object_intmax(jw, "ext-size", extsize);
-+		jw_object_inline_begin_array(jw, "entries");
++		if (it->entry_count >= 0) {
++			jw_object_string(jw, "oid", oid_to_hex(&it->oid));
++			jw_object_intmax(jw, "entry_count", it->entry_count);
++		} else {
++			jw_object_null(jw, "oid");
++		}
++		jw_object_inline_begin_array(jw, "subdirs");
 +	}
- 	ieot = xmalloc(sizeof(struct index_entry_offset_table)
- 		       + (nr * sizeof(struct index_entry_offset)));
- 	ieot->nr = nr;
-@@ -3674,6 +3687,17 @@ static struct index_entry_offset_table *read_ieot_extension(const char *mmap, si
- 		index += sizeof(uint32_t);
- 		ieot->entries[i].nr = get_be32(index);
- 		index += sizeof(uint32_t);
-+
+ 	/*
+ 	 * Just a heuristic -- we do not add directories that often but
+ 	 * we do not want to have to extend it immediately when we do,
+@@ -559,12 +570,18 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 		struct cache_tree_sub *subtree;
+ 		const char *name = buf;
+ 
+-		sub = read_one(&buf, &size);
 +		if (jw) {
 +			jw_array_inline_begin_object(jw);
-+			jw_object_intmax(jw, "offset", ieot->entries[i].offset);
-+			jw_object_intmax(jw, "count", ieot->entries[i].nr);
-+			jw_end(jw);
++			jw_object_string(jw, "name", name);
 +		}
-+	}
-+	if (jw) {
-+		jw_end(jw);	/* entries */
-+		jw_end(jw);	/* index-entry-offsets */
++		sub = read_one(&buf, &size, jw);
++		jw_end_gently(jw);
+ 		if (!sub)
+ 			goto free_return;
+ 		subtree = cache_tree_sub(it, name);
+ 		subtree->cache_tree = sub;
  	}
++	jw_end_gently(jw);
+ 	if (subtree_nr != it->subtree_nr)
+ 		die("cache-tree: internal error");
+ 	*buffer = buf;
+@@ -576,11 +593,25 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	return NULL;
+ }
  
- 	return ieot;
+-struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
++struct cache_tree *cache_tree_read(const char *buffer, unsigned long size,
++				   struct json_writer *jw)
+ {
++	struct cache_tree *ret;
++
++	if (jw) {
++		jw_object_inline_begin_object(jw, "cache-tree");
++		jw_object_intmax(jw, "ext-size", size);
++		jw_object_inline_begin_object(jw, "root");
++	}
+ 	if (buffer[0])
+-		return NULL; /* not the whole tree */
+-	return read_one(&buffer, &size);
++		ret = NULL; /* not the whole tree */
++	else
++		ret = read_one(&buffer, &size, jw);
++	if (jw) {
++		jw_end(jw);	/* root */
++		jw_end(jw);	/* cache-tree */
++	}
++	return ret;
+ }
+ 
+ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *path)
+diff --git a/cache-tree.h b/cache-tree.h
+index 757bbc48bc..fc3c73284b 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -6,6 +6,8 @@
+ #include "tree-walk.h"
+ 
+ struct cache_tree;
++struct json_writer;
++
+ struct cache_tree_sub {
+ 	struct cache_tree *cache_tree;
+ 	int count;		/* internally used by update_one() */
+@@ -28,7 +30,8 @@ void cache_tree_invalidate_path(struct index_state *, const char *);
+ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+ 
+ void cache_tree_write(struct strbuf *, struct cache_tree *root);
+-struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
++struct cache_tree *cache_tree_read(const char *buffer, unsigned long size,
++				   struct json_writer *jw);
+ 
+ int cache_tree_fully_valid(struct cache_tree *);
+ int cache_tree_update(struct index_state *, int);
+diff --git a/read-cache.c b/read-cache.c
+index 200834e77e..289705b816 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1698,7 +1698,7 @@ static int read_index_extension(struct index_state *istate,
+ {
+ 	switch (CACHE_EXT(ext)) {
+ 	case CACHE_EXT_TREE:
+-		istate->cache_tree = cache_tree_read(data, sz);
++		istate->cache_tree = cache_tree_read(data, sz, istate->jw);
+ 		break;
+ 	case CACHE_EXT_RESOLVE_UNDO:
+ 		istate->resolve_undo = resolve_undo_read(data, sz, istate->jw);
 -- 
 2.22.0.rc0.322.g2b0371e29a
 
