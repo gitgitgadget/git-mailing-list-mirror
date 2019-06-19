@@ -2,117 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76F081F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 15:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCBAD1F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 15:33:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727818AbfFSP3g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 11:29:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51543 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727250AbfFSP3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 11:29:36 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0A9D76162F;
-        Wed, 19 Jun 2019 11:29:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=veZcs9hpziphLOCjPn+tXR45/GU=; b=vuFRov
-        6Z2yAg81z9pXNRAZbuDXwPxeJVPyX56SsoVEqJaWcD3pX96tIr8xFjJarLFssv0I
-        cEejOqEdtbcxS+zgUTbPPl/5GBZjyq8Z0lRLkvNJMI5hZujoSMWY3ALUeZDVVzSg
-        rs1rvBIAfwDoHNeBJQrsx3o2FV49D93xJ3S+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vhA/dTskv9op/BNKY1kv5KtS7guCGAC1
-        qFRloA5HvRSkkC5AzeAAoLZSglaxrdM2ni+T2PftPU94ccpVzq7iEgDWR+fEIzpw
-        ZsWvLjPNCiOHMC8HknwveeH3o3+8ZSXDa4wjssE8pGZyZ9WtPfzoZYnwqiGv54md
-        UZW0ex7rMSQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0291C6162D;
-        Wed, 19 Jun 2019 11:29:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 260DF61629;
-        Wed, 19 Jun 2019 11:29:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, git@matthieu-moy.fr,
-        olyatelezhnaya@gmail.com, samuel.maftoul@gmail.com,
-        Johannes.Schindelin@gmx.de, karthik.188@gmail.com,
-        pclouds@gmail.com, sunshine@sunshineco.com,
-        emilyshaffer@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v3 1/1] ref-filter: sort detached HEAD lines firstly
-References: <faaa9a3d6ba66d77cc2a8eab438d1bfc8f762fa1.1559857032.git.matvore@google.com>
-        <cover.1560895672.git.matvore@google.com>
-        <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
-Date:   Wed, 19 Jun 2019 08:29:29 -0700
-In-Reply-To: <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
-        (Matthew DeVore's message of "Tue, 18 Jun 2019 15:29:15 -0700")
-Message-ID: <xmqqv9x1pp9i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726332AbfFSPdB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 11:33:01 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:46431 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbfFSPdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 11:33:01 -0400
+Received: by mail-yw1-f67.google.com with SMTP id z197so8089579ywd.13
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 08:33:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=connect-hku-hk.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o8Iq/5VZrH/M1mLnwf1z8pc0xkJ0r/wk5h6C6vyXIbM=;
+        b=TLxcnO4g8/IjT94Cm12M0mkAZ3Bv1aPlFGZcpo3O7RA2TIp+9HopdnOFJ2f0LAojwQ
+         RUY0629vlYv8nCHSR1J9PJw18pbc4+M8mHj/W9+O2JjzYaxL2dDVsI8BebOh8vuUMEQU
+         HTABTfioCH1OaZuGxMTnsWIqim8oSPGcbqnbCh1QSzhDaqGD83NkJRWhgFwqS6M3pKKd
+         GH5TUjl8ahz6GsmTUEOSneRDgc/MZT8LvCgOjOuPrMVaQx8QXai6AOMA9Kwt7uBCKtHV
+         KOAHqxJI9tWbZWkAMq2aZWaCI+27BVDGp+xTxzmgSjTiEcBE+FXy9Xj8J3V+s0j63x9D
+         HDZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o8Iq/5VZrH/M1mLnwf1z8pc0xkJ0r/wk5h6C6vyXIbM=;
+        b=YFyaEHbX2O4YMr7OjeSQCj87YpHqAMsxpdf8XalrULs97xsMqNeKYYB7gKTMLnne3U
+         44pQbyHLbBHUa4Ctl7GPcOc+jM+PvlaPvX0/NhOchw5d03fqvwjjyhL+XW2IhsDuv08p
+         NuMoTANUn4Z2HLldHP9OQd5QT2gDuk1KsYJLd1c+YlhvkQRekdPdtedJ1lfqDGqyHV44
+         3KKCGsJUpVZaSQR21XQblhq9btj96fLM+qQrMmCs1swpd6YTWPZhL4rA5MXNRmFwJRBa
+         ixBUUlVt89OwUVZdRWNbDHIUT+2kJtHprWJhCM361t9nNmcCjtDOiLhebFJYzboHlvpW
+         moYA==
+X-Gm-Message-State: APjAAAVltMADOas/qBJHJkWKIFh8/6BN0dKOJLWt4UQMo/2GgNjsi6+O
+        lRXi6WgvtpdwKx9275wSUx2svpLR+j8b9mPQonTdAg==
+X-Google-Smtp-Source: APXvYqxZBuMdT+g0qIh8+E6Apty/R1sZT3mEM0G841khdhkcCM7IWbeAkxotwujbHX1ik2JMRjOcIkYN+4T+0L7vOLI=
+X-Received: by 2002:a81:22c1:: with SMTP id i184mr67150255ywi.292.1560958380587;
+ Wed, 19 Jun 2019 08:33:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09B7D01C-92A7-11E9-B432-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20190617165450.81916-1-liboxuan@connect.hku.hk> <20190619035857.GB515@sigill.intra.peff.net>
+In-Reply-To: <20190619035857.GB515@sigill.intra.peff.net>
+From:   "LI, BO XUAN" <liboxuan@connect.hku.hk>
+Date:   Wed, 19 Jun 2019 23:32:19 +0800
+Message-ID: <CALM0=-=4b4j1brRN=Jnq4N+f+_vJXrL-JBAOxaLw0FgugNqX5w@mail.gmail.com>
+Subject: Re: [RFC PATCH] userdiff: ship built-in driver config file
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+On Wed, Jun 19, 2019 at 11:58 AM Jeff King <peff@peff.net> wrote:
+>
+> While having separate lines that get joined here does make the result
+> easier to read, I think it creates some confusion. diff.*.xfuncname in a
+> regular config file _doesn't_ behave this way (it's the usual
+> last-one-wins, so we expect a single string). You've handled this
+> specially in your code to read this file, but it's confusing because
+> this test otherwise looks exactly like a config file. And thus somebody
+> might be tempted to copy it to their config file and modify it, but it
+> would not do what they expected.
+>
+> I don't recall how well our config parser copes with embedded newlines
+> in values.  I.e., if it would be possible to write:
+>
+>   [diff "foo"]
+>   xfuncname = "the pattern starts here...
+>   and continues through newlines!"
+>
 
-> ... By
-> removing the parenthesis from the localizable text, we can share strings
-> with wt-status.c and remove a cautionary comment to translators.
-...
-> -			/*
-> -			 * TRANSLATORS: make sure this matches "HEAD
-> -			 * detached at " in wt-status.c
-> -			 */
-> -			strbuf_addf(&desc, _("(HEAD detached at %s)"),
-> -				state.detached_from);
-> +			strbuf_addstr(&desc, HEAD_DETACHED_AT);
->  		else
-> -			/*
-> -			 * TRANSLATORS: make sure this matches "HEAD
-> -			 * detached from " in wt-status.c
-> -			 */
-> -			strbuf_addf(&desc, _("(HEAD detached from %s)"),
-> -				state.detached_from);
-> +			strbuf_addstr(&desc, HEAD_DETACHED_FROM);
+If I recall correctly, the above version wouldn't work, but the
+following version would:
 
-Very nice ;-)
+[diff "foo"]
+    xfuncname = "The pattern starts here..."
+"and continues here! But the indentation looks ugly,"
+"and we lose the ability to add comments inline (within pattern)"
 
-> +		strbuf_addstr(&desc, state.detached_from);
->  	}
->  	else
-> -		strbuf_addstr(&desc, _("(no branch)"));
-> +		strbuf_addstr(&desc, _("no branch"));
-> +	strbuf_addch(&desc, ')');
-> +
->  	free(state.branch);
->  	free(state.onto);
->  	free(state.detached_from);
->  	return strbuf_detach(&desc, NULL);
->  }
+Actually, at the very beginning, I was imaging some syntax like this:
 
-> diff --git a/wt-status.h b/wt-status.h
-> index 64f1ddc9fd..b0cfdc8011 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -58,20 +58,23 @@ struct wt_status_change_data {
-> ...
->  
-> +#define HEAD_DETACHED_AT _("HEAD detached at ")
-> +#define HEAD_DETACHED_FROM _("HEAD detached from ")
-> +
->  struct wt_status_state {
+[diff "foo"]
+    xfuncname = "The pattern starts here..."
+    ; using '+=' will continue the pattern above
+    xfuncname += "and continues here!"
+    ; a '=' symbol will start a new pattern
+    xfuncname = "This is another pattern.."
+    xfuncname += "and remember, last one always wins"
 
-These too.
+The existing config parser does not support "+=" though, which is a
+nice feature to have in my opinion. Maybe there is a reason?
+
+By the way, thanks for all the reviews! Especially when I found more
+lines of reviews than lines of my code.
+
+Best regards,
+Boxuan
