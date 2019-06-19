@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 088591F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C3011F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730620AbfFSVGO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 17:06:14 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37378 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730583AbfFSVGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 17:06:11 -0400
-Received: by mail-ed1-f65.google.com with SMTP id w13so1296746eds.4
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:06:10 -0700 (PDT)
+        id S1730582AbfFSVGJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 17:06:09 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:40884 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730568AbfFSVGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 17:06:08 -0400
+Received: by mail-ed1-f41.google.com with SMTP id k8so1275878eds.7
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VdLnT0ez1EMIfdC3FCjWfNOpGA2/FA1Og7dzu2n+60A=;
-        b=cUf4Pxzfv7eC14nnvEouhwBA9pLT2NhTZLJZmHVTpSahbimbwksU2vWav9bXJQofRQ
-         yPIPtc1GmljSz1xwr4Z7ilWqlbi9O1ePTpPBjBOXpVJgKboCzstXvDCl23ae8EqeNW2z
-         JT6Sb4oSibAzHyX3f3i6byOWcqnhsEAdXBFQVRkm3ZKnqqgVvuf2eckdEwchRSED14fQ
-         seDMQ4uUbcB/M8ZoWvKDcHGb+jJIjHjgFlShuuzk0nHw+ebI0I7dpc5lO6AGnlvb04lK
-         n+UVBEtiUJq1CYrVZU9DOzmoaZeHcz/OPHRKPgTAN8fogy8FdFJmkQ7OvsTuGdaT8DFM
-         tZkg==
+        bh=hZNUWoDxtPYSagWWQfRxxLc7WIBwG+NKxJpRjBW0xjo=;
+        b=YF4OgjLsSSxN8o/67aUrdOVsd8f+V1LE58XxlsUhMuG4bz6XNL7GSs59twrUrww68D
+         DGy4fM6ZyTVLvyjCyzGe67o6KcwQzh8D3NZJsHYlgL5TOut04MiI9qzyizRLFkv26WGV
+         jBc/Kn+Kmx1qEGzLlv5Zu49LM4sMpEy1jhpfk9UMSWVd7a604lt/wrr1DDJAtulLiRFm
+         zoBHPPl7iQbuhzt9xgCQmhFN3oM3nabxlvmybvyuFeESOkfLrAcgBKq80ZoKJxP4aFVe
+         R/Se57a+MHrWdb9n8kBCKChAIblzjUI/89hdNuJ5O9Pm3bvhNYLqvCk5BVN6+Vg2y3Dg
+         N2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VdLnT0ez1EMIfdC3FCjWfNOpGA2/FA1Og7dzu2n+60A=;
-        b=C4GOurD3kr/phMf0RkPqc7+TbFOHvHhHS/ivSHNLua983zQ61tE2x6CiNWqHnXPSU4
-         fjjEmK7g7RLtzHvJTVlObaTokN1BY2e99dleSsCAc963L93ya0EUYqzNGXDtqHFqLM+d
-         SFxUumIaB7YpCy7SmbjIHKHbk1Y7wt/dqBd6avlLFgkSmi/5+xrGsRjsiMHy2IQ99sbY
-         7cg5/ufzSgPZGrM2GUP9TFZOEDCYb5ZHFkZoCUNaeT8c144g1uV82NxtlfPhXWzHAQ3s
-         f43VpRJgooedFBINbKtQXPh3F5a4m4lpwE/AR2q65/0m0zZ7y8aBEEB9hUPQiWYVa1w9
-         rqtA==
-X-Gm-Message-State: APjAAAVhe1To72DF0rmKi6IoncSEUhiTIlF847KciiD4Mn7YyQMQ7F1A
-        JmxkyD1v4huGDMGqDRxNLJtBVGhH
-X-Google-Smtp-Source: APXvYqx1qzyXVWAAEZHKgqV1VFwVjitH2H20CIsD4QShxwhh8EztD3Xt5PhoiZUF3iPoMkwVbLW/qg==
-X-Received: by 2002:a50:b803:: with SMTP id j3mr68363498ede.208.1560978369347;
-        Wed, 19 Jun 2019 14:06:09 -0700 (PDT)
+        bh=hZNUWoDxtPYSagWWQfRxxLc7WIBwG+NKxJpRjBW0xjo=;
+        b=Hfp2j2sXBN0UE7bU4+SvXuZSOjfO1QGD/K0NIvCf+nHB5qYx4A4u5d2F2kvvKG4uPH
+         WZ3C6n7FZv9JMs/iXC3+drA2hCdr4+5vK0i5q0WBBud/A39c50qmGiIH7SrWkMhzqt5e
+         pUFbTt7W67Jede5hc+8W7r3VeiIAz3WA/oT4hXUHbxTRimif5CMHKDbMLJsSGzTXQnlc
+         VPt0Aes2AY7IPXumsj3P7PU6nYuPupqLbS+yL7aDWdMQa4E/R1ygiByKi8yDh6wblnBA
+         JtmCAIgIRxzmteUJHrGG2PRevRqnuP8mFW8ngURevqtc6681auOQsNUMG4QFMDGzjhpk
+         0fDA==
+X-Gm-Message-State: APjAAAX/XSQYaUwoh0H2nwjx2NVsvA5RP2wO7LOQBqpdJL8Q390NbAz8
+        dBfXbDmYErzieXeNEWo3TzIqy22V
+X-Google-Smtp-Source: APXvYqx2TvhzGnieL50YduRqUmvjbG/YNIqz+Id+YS9k0vR5W93e7/ulxn1JKKtxfLNxG4DsQRhcMQ==
+X-Received: by 2002:a17:906:68d8:: with SMTP id y24mr61900794ejr.16.1560978366472;
+        Wed, 19 Jun 2019 14:06:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u26sm5752059edf.91.2019.06.19.14.06.08
+        by smtp.gmail.com with ESMTPSA id p37sm6033606edc.14.2019.06.19.14.06.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Jun 2019 14:06:08 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 14:06:08 -0700 (PDT)
-X-Google-Original-Date: Wed, 19 Jun 2019 21:05:52 GMT
-Message-Id: <c883f037e0c6fb408dbe0350f264c0b41e5623db.1560978354.git.gitgitgadget@gmail.com>
+        Wed, 19 Jun 2019 14:06:06 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 14:06:06 -0700 (PDT)
+X-Google-Original-Date: Wed, 19 Jun 2019 21:05:48 GMT
+Message-Id: <63bf9f1f9239280359c0086375117f984ae72dc1.1560978354.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v2.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
         <pull.149.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 18/20] msvc: do not pretend to support all signals
+Subject: [PATCH v2 14/20] msvc: update Makefile to allow for spaces in the
+ compiler path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,54 +76,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This special-cases various signals that are not supported on Windows,
-such as SIGPIPE. These cause the UCRT to throw asserts (at least in
-debug mode).
+It is quite common that MS Visual C++ is installed into a location whose
+path contains spaces, therefore we need to quote it.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 667285887a..d01e88c2f8 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2119,8 +2119,33 @@ int mingw_raise(int sig)
- 			sigint_fn(SIGINT);
- 		return 0;
+diff --git a/Makefile b/Makefile
+index 8a7e235352..3cf8cc8ffd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1240,7 +1240,7 @@ endif
  
-+#if defined(_MSC_VER)
-+	case SIGILL:
-+	case SIGFPE:
-+	case SIGSEGV:
-+	case SIGTERM:
-+	case SIGBREAK:
-+	case SIGABRT:
-+	case SIGABRT_COMPAT:
-+		/*
-+		 * The <signal.h> header in the MS C Runtime defines 8 signals
-+		 * as being supported on the platform. Anything else causes an
-+		 * "Invalid signal or error" (which in DEBUG builds causes the
-+		 * Abort/Retry/Ignore dialog). We by-pass the CRT for things we
-+		 * already know will fail.
-+		 */
-+		return raise(sig);
-+	default:
-+		errno = EINVAL;
-+		return -1;
-+
-+#else
-+
- 	default:
- 		return raise(sig);
-+
-+#endif
-+
- 	}
- }
- 
+ ifdef SANE_TOOL_PATH
+ SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
+-BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix $(SANE_TOOL_PATH_SQ)|'
++BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
+ PATH := $(SANE_TOOL_PATH):${PATH}
+ else
+ BROKEN_PATH_FIX = '/^\# @@BROKEN_PATH_FIX@@$$/d'
 -- 
 gitgitgadget
 
