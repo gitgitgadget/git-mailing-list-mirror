@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CFD31F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 14:24:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 640671F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 14:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729964AbfFSOYO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 10:24:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50498 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729423AbfFSOYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 10:24:13 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE69015E23D;
-        Wed, 19 Jun 2019 10:24:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ivPSjgOnBHCl4bqA0ZAp6rDji3Y=; b=w9P6x4
-        +eCENlAYy3XYnEfvgdP7B+VZ/ntE3ZWz6XcilgDwHcgss2Sa2xgLoyTqmjoI4M80
-        yhYD65S+rVqtnc6KEff9N6ncALvNoyi9NMCZCygfyeBw15VrqMAsy/t3boE1U5+h
-        ktN+kXWaLEd3a7FiOX4fDGFRt1txLo4oBm0f4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NBHTE/pYLpcTkOwTcLsks55W16o0hW97
-        7VdzS0mrS34zg405f6U5a10rQtELSsrrz2ba2vRbsDFQFrUjx+FIlaSIJFPihNLX
-        xcXuUwxjJLyQKnoIU3ARpPz8JhM/4bLPwM5+7Eg9y1mntsf8jWJKkKgWbuQk4FQw
-        gCZ8RayBFeA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D52E815E23C;
-        Wed, 19 Jun 2019 10:24:11 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4369A15E23B;
-        Wed, 19 Jun 2019 10:24:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        git <git@vger.kernel.org>, masahiroy@kernel.org
-Subject: Re: [PATCH] interpret-trailers: load default config
-References: <CAK7LNAR=KhTZRFFXTbcZwe-+65fGnVB7NbmVbQ7ymbmChDuhAg@mail.gmail.com>
-        <20190614150758.GA22984@sigill.intra.peff.net>
-        <CAP8UFD2dhGqOxXJMTZhNSM5G4sp6PvKF+0R5KVk6YjAQi3Sccw@mail.gmail.com>
-        <20190619033728.GA29027@sigill.intra.peff.net>
-Date:   Wed, 19 Jun 2019 07:24:10 -0700
-In-Reply-To: <20190619033728.GA29027@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 18 Jun 2019 23:37:28 -0400")
-Message-ID: <xmqqwohhr6ut.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729603AbfFSO0Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 10:26:24 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:33798 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbfFSO0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 10:26:23 -0400
+Received: by mail-qk1-f193.google.com with SMTP id t8so11027632qkt.1
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 07:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=t23b1ujLY3vjBr8hXZxoZhv1jQFPctRaed/IUhGQG7U=;
+        b=T/cDeoFRS+95EyMkpN60ZX5MYQWbVwdOAtPvJq9LJ8ifLPQtWsbJ0tCpFYTgchgyTA
+         tvf+Tir02LkmjQY1Z7msuuu2TqbZbSOysSr7Y/sD/P5MFE66srzPEWJBHjdyncHMX2Un
+         upnVVHgOfWrlbdq/mnEASkMZ3BOgKuKgJT8b6qz1MFG+PRX8V9DlCGb4AK4MWoQ68+Zu
+         k19shFEGvLlThatZDvWUmZSzPq2qdQTJJUmdm1qRW2QDPmYp0TsXid1Tv/mEga7cXGD3
+         HgUhRsff2fTBuUn4D4s0xihDwf80L+psWCoaD45s2y5279nn08AACqE8JfQ8BcMgDeX+
+         0etA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=t23b1ujLY3vjBr8hXZxoZhv1jQFPctRaed/IUhGQG7U=;
+        b=lT4A0aOuXVFvTF38QgLKTl4twP5244wQ68SnwEgKLxYRHPp1Y2ANWPIkzkiIaSgIgk
+         tD1sT3ClpR7hnTbWokSYtXrWcRJWa2PTXkrofoTPVkYRyux/ZkQX3UB1rOgQRIdlINKL
+         /jzR09IducnQfoLH/UiujqEmOD9+JeLuoxD+tGEb8p3qsvH4yJ3snkvqD1iFB2T4lMW4
+         OTESdJbKmwwaPqsNzxebUraSo2SE8JHTS3qe4UGy9i2ZX4nOeTQZiuHSbcrRHTYQqRRg
+         IgBcwj4YB5aap2kBvd9fdGSQrqIBWbLr9Q3NBhM5kZBDE8GvEa0OQ+EKuEmWw/l1H6b9
+         tdvQ==
+X-Gm-Message-State: APjAAAX0uURzo7PN7PVsH9+oxa7yQTPpzVNqLZ1Ot/FA8vC9cGsXu0fH
+        LTx6bjELtjBSAtP/tq6kw2rP/EpQ
+X-Google-Smtp-Source: APXvYqydRFgVwiXgl07SxUYtu9UouiyfzRVMOA8k7Hj9zpCVb2H3meglkrWomJdJFPzHseLq46mo/w==
+X-Received: by 2002:a37:c408:: with SMTP id d8mr6608353qki.18.1560954381655;
+        Wed, 19 Jun 2019 07:26:21 -0700 (PDT)
+Received: from [10.0.1.15] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id p23sm9015113qkm.55.2019.06.19.07.26.20
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Jun 2019 07:26:21 -0700 (PDT)
+Subject: Re: [PATCH 6/8] read-cache.c: dump "IEOT" extension as json
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190619095858.30124-1-pclouds@gmail.com>
+ <20190619095858.30124-7-pclouds@gmail.com>
+ <8a56ac88-f3b9-c80d-441e-8e74eb64921d@gmail.com>
+ <CACsJy8A1Zkkf-QxZSioD61UUj05Xap=f5NJLhOzabVc=dLz25A@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <fd33bf49-3708-63fc-71e3-fe0d599245c2@gmail.com>
+Date:   Wed, 19 Jun 2019 10:26:18 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E818030E-929D-11E9-BA65-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <CACsJy8A1Zkkf-QxZSioD61UUj05Xap=f5NJLhOzabVc=dLz25A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 6/19/2019 9:24 AM, Duy Nguyen wrote:
+> On Wed, Jun 19, 2019 at 8:18 PM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 6/19/2019 5:58 AM, Nguyễn Thái Ngọc Duy wrote:> @@ -2266,7 +2271,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>>>        * to multi-thread the reading of the cache entries.
+>>>        */
+>>>       if (extension_offset && nr_threads > 1)
+>>> -             ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
+>>> +             ieot = read_ieot_extension(mmap, mmap_size, extension_offset, NULL);
+>>
+>> I tried applying this series on top of v2.22.0 and ran into an issue
+>> on this patch, and the message seemed to imply the problem was at this
+>> block. I couldn't figure out what was wrong, but maybe the series is
+>> based on a different commit?
+> 
+> it's on 'master', a6a95cd1b4 (The second batch, 2019-06-17). There are
+> a couple patches since v2.22.0 that touch read-cache.c, but they don't
+> touch these lines explictly...
 
-> Subject: [PATCH] interpret-trailers: load default config
->
-> The interpret-trailers program does not do the usual loading of config
-> via git_default_config(), and thus does not respect many of the usual
-> options. In particular, we will not load core.commentChar, even though
-> the underlying trailer code tries to do so.
-
-"tries to use it"?  Eh, it does use it, so, "the underlying trailer code
-uses its value", would be the correct version of the last sentence.
-
-The underlying trailer.c has two calls to git_config() to lazy-load
-its own set of config variables (which is justified, as its caller
-is not necessarily the "interpret-trailers" subcommand), but their
-callbacks are not good places to call git_default_config() from for
-obvious reasons.  It has to be done in "interpret-trailers" (and
-other callers of the machinery should already have learned what
-core.commentChar is with their own configuration calls) like the
-patch I am reviewing does.
-
-Looks perfect.  Thanks.
-
-> This can be seen in the accompanying test, where setting
-> core.commentChar to anything besides "#" results in a failure to treat
-> the comments correctly.
->
-> Reported-by: Masahiro Yamada <yamada.masahiro@socionext.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-
->  builtin/interpret-trailers.c  |  3 ++
->  t/t7513-interpret-trailers.sh | 70 +++++++++++++++++++++--------------
->  2 files changed, 46 insertions(+), 27 deletions(-)
-
+Thanks, I should have tried from master myself. Starting there worked.
