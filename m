@@ -2,64 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 070B71F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 17:24:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB0AE1F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 17:40:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbfFSRY0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 13:24:26 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:54302 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726197AbfFSRY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 13:24:26 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45TWyw3TxPz5tlD;
-        Wed, 19 Jun 2019 19:24:24 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id DB515208D;
-        Wed, 19 Jun 2019 19:24:23 +0200 (CEST)
-Subject: Re: [PATCH 02/17] t0001 (mingw): do not expect a specific order of
- stdout/stderr
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.149.git.gitgitgadget@gmail.com>
- <d551cdeafbf2953ba340aa16554fbd5ac6194a6e.1560860634.git.gitgitgadget@gmail.com>
- <CAPig+cQaoRBnH0JrUwXTo1hSwjrZ1vJHewjCAkKPeCrRwo=P2w@mail.gmail.com>
- <40cfbb30-c632-54da-62d9-9b31bc878806@kdbg.org>
- <CAPig+cTTAgYia6DUOrg7AuLmGSbqn5u=iy3wx-=--NJuyULwaQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1906191325130.44@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1906191329040.44@tvgsbejvaqbjf.bet>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <0841b134-0719-8bda-41ec-abd124157df6@kdbg.org>
-Date:   Wed, 19 Jun 2019 19:24:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1906191329040.44@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
+        id S1730254AbfFSRk5 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 19 Jun 2019 13:40:57 -0400
+Received: from mail.inforeach.biz ([38.106.198.11]:35457 "EHLO
+        mailf.inforeachinc.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1730029AbfFSRk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 13:40:57 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mailf.inforeachinc.com (Postfix) with ESMTP id 116A519C196
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 12:40:59 -0500 (CDT)
+Received: from mail2.inforeachinc.com (unknown [192.168.27.11])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mailf.inforeachinc.com (Postfix) with ESMTPS id D05ED19C198
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 12:40:56 -0500 (CDT)
+Authentication-Results: mailf.inforeachinc.com; none
+Received: from EXCH2010A.inforeachinc.com ([::1]) by
+ Exch2010a.inforeachinc.com ([::1]) with mapi id 14.03.0439.000; Wed, 19 Jun
+ 2019 12:40:53 -0500
+From:   Konstantin Matokhin <konstantin.matokhin@inforeachinc.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Ruslan Petrenko <Ruslan.Petrenko@inforeachinc.com>
+Subject: git@vger.kernel.org
+Thread-Topic: git@vger.kernel.org
+Thread-Index: AdUmxiOQVikrlWMQTyWp5ptlmPMiQQ==
+Date:   Wed, 19 Jun 2019 17:40:53 +0000
+Message-ID: <869169A1206D344E9ADF64BB83A734F3011434C3B1@Exch2010a.inforeachinc.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.21.171]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.06.19 um 13:30 schrieb Johannes Schindelin:
-> Interesting side note: I just realized that t6050-replace.sh does indeed
-> contain
-> 
-> 	test_i18ngrep "Needed a single revision" err
-> 
-> so I wonder why that works.
+Hello,
 
-Why should it not work? If GIT_TEST_GETTEXT_POISON is on, it pretends
-success; otherwise, it does a regular grep.
+I have a question about sparse checkout. Git version 2.17.1
+For some reason it checks out files from not specified folders. 
+My .git/info/sparse-checkout has two lines:
 
--- Hannes
+frontend/
+common/
+
+However backend/ is also created with some files in it (not all)
+
+Is it a known bug? 
+Any workaround to have only desired frontend/ and common/ checked out?
+
+Thanks,
+Konstantin.
