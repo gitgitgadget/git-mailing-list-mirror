@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD351F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 23:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89CE21F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 23:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730812AbfFSXbF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 19:31:05 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:55965 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730747AbfFSXbE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 19:31:04 -0400
-Received: by mail-wm1-f42.google.com with SMTP id a15so1120292wmj.5
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 16:31:03 -0700 (PDT)
+        id S1730815AbfFSXbI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 19:31:08 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37927 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730773AbfFSXbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 19:31:06 -0400
+Received: by mail-wr1-f65.google.com with SMTP id d18so1006525wrs.5
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 16:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BOKarEEAdG3LkHbv06JofqJHfsqof2DwY3Sj/B/olYY=;
-        b=h18lc9BjHYfwhz+cboE4wGVux34f6eEV4uj9Xac+1r2UPePJTpeh+7q+2iJVY0IEsr
-         m97WOQ8mHnLxTeA1Q92bkVA6YbkdCveiEft6k9wXFNM+bLi8yd6HvHylU7pB+GkS8oRu
-         qfg2DJNsLDT0WxTceQV9du7A9T28GMhtSUdUe+NHVew1XHhzy574XkVZigTLxEJMYamB
-         OOt78EQSuCz6fiq/jblp5O0sqmtsdd8QD+3/o2Mcku3QZo9rtxMdW1g7wVkDa7aqNv4q
-         e0Jdse0WpWe3RJEZBj/UMVIMExE0/03rE6PJK9QsaHsnJ0s+mvqEO2GHjyXUP76hCAc4
-         Lv8Q==
+        bh=TFwT88Ou4kmA5D2NT2srC2pZRxzicfsioj5+5T6mZTI=;
+        b=aQXEhZUGV0YVFtfDLiUk2GKK62zXpuCO+JdskK5Znjb/CbX9Kg6cmm5OeUr50l1gxs
+         0HWeb0LjbdZt6N+eKAKW1jFtD2JnqxqxUr0jDzaFLPGTk8dlQDjF5QNW99RpEakAhXOl
+         eaxFR1ENWtXaasad135mL0FghK1Ld6PSnmIeHdgVIiM58mWUty/0PfqQIlELz4qBm/R0
+         pQZn5UBjtt96i1geyn0B7EtjaPZJ1UhfBhvYgPw5ISVecDYkjEVXN0ZVgWzXyEEBoFS/
+         OCwqPjxPcjC5SiCUJxIK6T3cosdvtrHq5HBTbe/vNpwAHXYTJ2kWNegeyiIjSKxPxqla
+         L6+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BOKarEEAdG3LkHbv06JofqJHfsqof2DwY3Sj/B/olYY=;
-        b=ML399ye1Rd+PLfCVU/JZFo51cdQztSqAwB7ll9Beniuk/FUIVWpdWQxIS+gkfKXu2Z
-         WubtD4fG6fSXWhBjX7pKHGXqfYqGZkWee7RM4zi+WlZV8TPwY12839OFowYXVvuEPmTT
-         UG/WR0g5Ut9Lt2ddYQuQKuWt2XjQUv6T2X6tIMZJW+p0m2VPBXEfOk/A76Cy83qp/hoa
-         B3pd3PqJ6YV/PHTOyY5Ln5PvGs93VVKZ8kaR+eyhizEgng8oMZHOGPmY1HlTwkhDRdnt
-         XZ4KeO7UvoHIJbAS2vVLIAl5Yly5EJzD/yfBe2ObdUTnyB3uKxwH/Cfi88+fZExrx24M
-         o+7Q==
-X-Gm-Message-State: APjAAAVksq/JJz4Amtt289ZxQt8PkbRyY8K9yaVvqT0m5FeQIUcrtrLt
-        EOzQWXDib5HyaK0/nPSJXoPA75P4AyM=
-X-Google-Smtp-Source: APXvYqzQWSGio/o947YXTc4UiqrS5J/6rF7QZqSXR65kFVDbQDx6Da8rJBSOOIJUCTQlMiSahCPfNg==
-X-Received: by 2002:a05:600c:2201:: with SMTP id z1mr9519241wml.59.1560987061896;
-        Wed, 19 Jun 2019 16:31:01 -0700 (PDT)
+        bh=TFwT88Ou4kmA5D2NT2srC2pZRxzicfsioj5+5T6mZTI=;
+        b=hbPJCH9115lsY0L/QP8npO5ML6HGPC9uKNPYR9KN7V5WSUab8v2O0qO++ceq+PySMw
+         Q4uBdZycUMWfaa4zcPP02kAIbbiDDnb612s9p3PLyaQy9z8V9ef1K797jQfK0elqFzE+
+         6azmeqqWt8qOQZxoVgFwpMvDgWUNZqNxlX7J/hevDfHjonVnepFH4vDKjf9NDCxFA9xL
+         pgoYth+MIeYhai+1UUReQdfGW7+VQ7cykNYn5EjShF9npzAvNOKNBRaT0F4UUVF5y5FG
+         cKmPElDLM882QhA446Q7w8Ms3BsWyq/HODUhUiGeKWkS+q3Rbr1rIsBEVz6cfMdRFM0u
+         vQpw==
+X-Gm-Message-State: APjAAAWFahCrVy781h1hXHFVqX277QaXXHjuPhxZrXe/xZfZ4r8EcMqo
+        ldDY5it7Ac+D35GzKoeLgaMlQOE+bPw=
+X-Google-Smtp-Source: APXvYqxmQTDqkvispXap3VdrtbMdgHSHSl9gWJn3/qroqgeDOf1xLkMJsNw9rUtzy49fFW78yXIHWA==
+X-Received: by 2002:adf:f84a:: with SMTP id d10mr8091256wrq.319.1560987064332;
+        Wed, 19 Jun 2019 16:31:04 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b6sm17964958wrx.85.2019.06.19.16.31.00
+        by smtp.gmail.com with ESMTPSA id b6sm17964958wrx.85.2019.06.19.16.31.01
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 19 Jun 2019 16:31:01 -0700 (PDT)
+        Wed, 19 Jun 2019 16:31:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/6] tests: replace test_tristate with "git env--helper"
-Date:   Thu, 20 Jun 2019 01:30:45 +0200
-Message-Id: <20190619233046.27503-6-avarab@gmail.com>
+Subject: [PATCH 6/6] tests: make GIT_TEST_FAIL_PREREQS a boolean
+Date:   Thu, 20 Jun 2019 01:30:46 +0200
+Message-Id: <20190619233046.27503-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc1.257.g3120a18244
 In-Reply-To: <87imt18a2r.fsf@evledraar.gmail.com>
 References: <87imt18a2r.fsf@evledraar.gmail.com>
@@ -72,252 +72,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_tristate helper introduced in 83d842dc8c ("tests: turn on
-network daemon tests by default", 2014-02-10) can now be better
-implemented with "git env--helper" to give the variables in question
-the standard boolean behavior.
+Change the GIT_TEST_FAIL_PREREQS variable from being "non-empty?" to
+being a more standard boolean variable. I recently added the variable
+in dfe1a17df9 ("tests: add a special setup where prerequisites fail",
+2019-05-13), having to add another "non-empty?" special-case is what
+prompted me to write the "git env--helper" utility being used here.
 
-The reason for the "tristate" was to have all of false/true/auto,
-where "auto" meant either "false" or "true" depending on what the
-fallback was. With the --default option to "git env--helper" we can
-simply have e.g. GIT_TEST_HTTPD where we know if it's true because the
-user asked explicitly ("true"), or true implicitly ("auto").
-
-This breaks backwards compatibility for explicitly setting "auto" for
-these variables, but I don't think anyone cares. That was always
-intended to be internal.
-
-This means the test_normalize_bool() code in test-lib-functions.sh
-goes away in addition to test_tristate(). We still need the
-test_skip_or_die() helper, but now it takes the variable name instead
-of the value, and uses "git env--bool" to distinguish a default "true"
-from an explicit "true" (in those "explicit true" cases we want to
-fail the test in question).
+Converting this one is a bit tricky since we use it so early and
+frequently in the guts of the test code itself, so let's set a
+GIT_TEST_FAIL_PREREQS_INTERNAL which can be tested with the old "test
+-n" for the purposes of the shell code, and change the user-exposed
+and documented GIT_TEST_FAIL_PREREQS variable to a boolean.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/lib-git-daemon.sh     |  7 +++---
- t/lib-git-svn.sh        | 11 +++-----
- t/lib-httpd.sh          | 15 ++++++-----
- t/t5512-ls-remote.sh    |  3 +--
- t/test-lib-functions.sh | 56 ++++++-----------------------------------
- 5 files changed, 22 insertions(+), 70 deletions(-)
+ t/README                |  2 +-
+ t/t0000-basic.sh        | 10 +++++-----
+ t/test-lib-functions.sh |  2 +-
+ t/test-lib.sh           | 25 +++++++++++++++++++++----
+ 4 files changed, 28 insertions(+), 11 deletions(-)
 
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index 7b3407134e..770c5218ea 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -15,8 +15,7 @@
- #
- #	test_done
+diff --git a/t/README b/t/README
+index 072c9854d1..60d5b77bcc 100644
+--- a/t/README
++++ b/t/README
+@@ -334,7 +334,7 @@ that cannot be easily covered by a few specific test cases. These
+ could be enabled by running the test suite with correct GIT_TEST_
+ environment set.
  
--test_tristate GIT_TEST_GIT_DAEMON
--if test "$GIT_TEST_GIT_DAEMON" = false
-+if ! git env--helper --mode-bool --variable=GIT_TEST_GIT_DAEMON --default=1 --exit-code --quiet
+-GIT_TEST_FAIL_PREREQS<non-empty?> fails all prerequisites. This is
++GIT_TEST_FAIL_PREREQS=<boolean> fails all prerequisites. This is
+ useful for discovering issues with the tests where say a later test
+ implicitly depends on an optional earlier test.
+ 
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 31de7e90f3..e89438e619 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -726,7 +726,7 @@ donthaveit=yes
+ test_expect_success DONTHAVEIT 'unmet prerequisite causes test to be skipped' '
+ 	donthaveit=no
+ '
+-if test -z "$GIT_TEST_FAIL_PREREQS" -a $haveit$donthaveit != yesyes
++if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit != yesyes
  then
- 	skip_all="git-daemon testing disabled (unset GIT_TEST_GIT_DAEMON to enable)"
- 	test_done
-@@ -24,7 +23,7 @@ fi
- 
- if test_have_prereq !PIPE
+ 	say "bug in test framework: prerequisite tags do not work reliably"
+ 	exit 1
+@@ -747,7 +747,7 @@ donthaveiteither=yes
+ test_expect_success DONTHAVEIT,HAVEIT 'unmet prerequisites causes test to be skipped' '
+ 	donthaveiteither=no
+ '
+-if test -z "$GIT_TEST_FAIL_PREREQS" -a $haveit$donthaveit$donthaveiteither != yesyesyes
++if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit$donthaveiteither != yesyesyes
  then
--	test_skip_or_die $GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
-+	test_skip_or_die GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
- fi
- 
- test_set_port LIB_GIT_DAEMON_PORT
-@@ -73,7 +72,7 @@ start_git_daemon() {
- 		kill "$GIT_DAEMON_PID"
- 		wait "$GIT_DAEMON_PID"
- 		unset GIT_DAEMON_PID
--		test_skip_or_die $GIT_TEST_GIT_DAEMON \
-+		test_skip_or_die GIT_TEST_GIT_DAEMON \
- 			"git daemon failed to start"
- 	fi
- }
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index c1271d6863..853d33a57a 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -69,14 +69,12 @@ svn_cmd () {
- maybe_start_httpd () {
- 	loc=${1-svn}
- 
--	test_tristate GIT_SVN_TEST_HTTPD
--	case $GIT_SVN_TEST_HTTPD in
--	true)
-+	if git env--helper --mode-bool --variable=GIT_TEST_HTTPD --default=0 --exit-code --quiet	
-+	then
- 		. "$TEST_DIRECTORY"/lib-httpd.sh
- 		LIB_HTTPD_SVN="$loc"
- 		start_httpd
--		;;
--	esac
-+	fi
- }
- 
- convert_to_rev_db () {
-@@ -106,8 +104,7 @@ EOF
- }
- 
- require_svnserve () {
--	test_tristate GIT_TEST_SVNSERVE
--	if ! test "$GIT_TEST_SVNSERVE" = true
-+	if ! git env--helper --mode-bool --variable=GIT_TEST_SVNSERVE --default=0 --exit-code --quiet
- 	then
- 		skip_all='skipping svnserve test. (set $GIT_TEST_SVNSERVE to enable)'
- 		test_done
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index b3cc62bd36..eef3250552 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -41,15 +41,14 @@ then
- 	test_done
- fi
- 
--test_tristate GIT_TEST_HTTPD
--if test "$GIT_TEST_HTTPD" = false
-+if ! git env--helper --mode-bool --variable=GIT_TEST_HTTPD --default=1 --exit-code --quiet
- then
- 	skip_all="Network testing disabled (unset GIT_TEST_HTTPD to enable)"
- 	test_done
- fi
- 
- if ! test_have_prereq NOT_ROOT; then
--	test_skip_or_die $GIT_TEST_HTTPD \
-+	test_skip_or_die GIT_TEST_HTTPD \
- 		"Cannot run httpd tests as root"
- fi
- 
-@@ -95,7 +94,7 @@ GIT_TRACE=$GIT_TRACE; export GIT_TRACE
- 
- if ! test -x "$LIB_HTTPD_PATH"
- then
--	test_skip_or_die $GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
-+	test_skip_or_die GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
- fi
- 
- HTTPD_VERSION=$($LIB_HTTPD_PATH -v | \
-@@ -107,19 +106,19 @@ then
- 	then
- 		if ! test $HTTPD_VERSION -ge 2
- 		then
--			test_skip_or_die $GIT_TEST_HTTPD \
-+			test_skip_or_die GIT_TEST_HTTPD \
- 				"at least Apache version 2 is required"
- 		fi
- 		if ! test -d "$DEFAULT_HTTPD_MODULE_PATH"
- 		then
--			test_skip_or_die $GIT_TEST_HTTPD \
-+			test_skip_or_die GIT_TEST_HTTPD \
- 				"Apache module directory not found"
- 		fi
- 
- 		LIB_HTTPD_MODULE_PATH="$DEFAULT_HTTPD_MODULE_PATH"
- 	fi
- else
--	test_skip_or_die $GIT_TEST_HTTPD \
-+	test_skip_or_die GIT_TEST_HTTPD \
- 		"Could not identify web server at '$LIB_HTTPD_PATH'"
- fi
- 
-@@ -184,7 +183,7 @@ start_httpd() {
- 	if test $? -ne 0
- 	then
- 		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
--		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
-+		test_skip_or_die GIT_TEST_HTTPD "web server setup failed"
- 	fi
- }
- 
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index e3c4a48c85..7161148280 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -267,8 +267,7 @@ test_expect_success 'ls-remote --symref omits filtered-out matches' '
+ 	say "bug in test framework: multiple prerequisite tags do not work reliably"
+ 	exit 1
+@@ -763,7 +763,7 @@ test_expect_success !LAZY_TRUE 'missing lazy prereqs skip tests' '
+ 	donthavetrue=no
  '
  
- test_lazy_prereq GIT_DAEMON '
--	test_tristate GIT_TEST_GIT_DAEMON &&
--	test "$GIT_TEST_GIT_DAEMON" != false
-+	git env--helper --mode-bool --variable=GIT_TEST_GIT_DAEMON --default=1 --exit-code --quiet
+-if test -z "$GIT_TEST_FAIL_PREREQS" -a "$havetrue$donthavetrue" != yesyes
++if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a "$havetrue$donthavetrue" != yesyes
+ then
+ 	say 'bug in test framework: lazy prerequisites do not work'
+ 	exit 1
+@@ -779,7 +779,7 @@ test_expect_success LAZY_FALSE 'missing negative lazy prereqs will skip' '
+ 	havefalse=no
  '
  
- # This test spawns a daemon, so run it only if the user would be OK with
+-if test -z "$GIT_TEST_FAIL_PREREQS" -a "$nothavefalse$havefalse" != yesyes
++if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a "$nothavefalse$havefalse" != yesyes
+ then
+ 	say 'bug in test framework: negative lazy prerequisites do not work'
+ 	exit 1
+@@ -790,7 +790,7 @@ test_expect_success 'tests clean up after themselves' '
+ 	test_when_finished clean=yes
+ '
+ 
+-if test -z "$GIT_TEST_FAIL_PREREQS" -a $clean != yes
++if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $clean != yes
+ then
+ 	say "bug in test framework: basic cleanup command does not work reliably"
+ 	exit 1
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 0367cec5fd..527508c350 100644
+index 527508c350..3fba71c358 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -1035,62 +1035,20 @@ perl () {
- 	command "$PERL_PATH" "$@" 2>&7
- } 7>&2 2>&4
- 
--# Is the value one of the various ways to spell a boolean true/false?
--test_normalize_bool () {
--	git -c magic.variable="$1" config --bool magic.variable 2>/dev/null
--}
--
--# Given a variable $1, normalize the value of it to one of "true",
--# "false", or "auto" and store the result to it.
--#
--#     test_tristate GIT_TEST_HTTPD
--#
--# A variable set to an empty string is set to 'false'.
--# A variable set to 'false' or 'auto' keeps its value.
--# Anything else is set to 'true'.
--# An unset variable defaults to 'auto'.
--#
--# The last rule is to allow people to set the variable to an empty
--# string and export it to decline testing the particular feature
--# for versions both before and after this change.  We used to treat
--# both unset and empty variable as a signal for "do not test" and
--# took any non-empty string as "please test".
--
--test_tristate () {
--	if eval "test x\"\${$1+isset}\" = xisset"
--	then
--		# explicitly set
--		eval "
--			case \"\$$1\" in
--			'')	$1=false ;;
--			auto)	;;
--			*)	$1=\$(test_normalize_bool \$$1 || echo true) ;;
--			esac
--		"
--	else
--		eval "$1=auto"
--	fi
--}
--
- # Exit the test suite, either by skipping all remaining tests or by
--# exiting with an error. If "$1" is "auto", we then we assume we were
--# opportunistically trying to set up some tests and we skip. If it is
--# "true", then we report a failure.
-+# exiting with an error. If our prerequisite variable $1 falls back
-+# on a default assume we were opportunistically trying to set up some
-+# tests and we skip. If it is explicitly "true", then we report a failure.
- #
- # The error/skip message should be given by $2.
- #
- test_skip_or_die () {
--	case "$1" in
--	auto)
-+	if ! git env--helper --mode-bool --variable=$1 --default=0 --exit-code --quiet
-+	then
- 		skip_all=$2
- 		test_done
--		;;
--	true)
--		error "$2"
--		;;
--	*)
--		error "BUG: test tristate is '$1' (real error: $2)"
--	esac
-+	fi
-+	error "$2"
+@@ -309,7 +309,7 @@ test_unset_prereq () {
  }
  
- # The following mingw_* functions obey POSIX shell syntax, but are actually
+ test_set_prereq () {
+-	if test -n "$GIT_TEST_FAIL_PREREQS"
++	if test -n "$GIT_TEST_FAIL_PREREQS_INTERNAL"
+ 	then
+ 		case "$1" in
+ 		# The "!" case is handled below with
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index bdd5017d24..552461435e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1389,6 +1389,27 @@ yes () {
+ 	done
+ }
+ 
++# The GIT_TEST_FAIL_PREREQS code hooks into test_set_prereq(), and
++# thus needs to be set up really early, and set an internal variable
++# for convenience so the hot test_set_prereq() codepath doesn't need
++# to call "git env--helper". Only do that work if needed by seeing if
++# GIT_TEST_FAIL_PREREQS is set at all.
++GIT_TEST_FAIL_PREREQS_INTERNAL=
++if test -n "$GIT_TEST_FAIL_PREREQS"
++then
++	if git env--helper --mode-bool --variable=GIT_TEST_FAIL_PREREQS \
++		--default=0 --exit-code --quiet
++	then
++		GIT_TEST_FAIL_PREREQS_INTERNAL=true
++		test_set_prereq FAIL_PREREQS
++	fi
++else
++	test_lazy_prereq FAIL_PREREQS '
++		git env--helper --mode-bool --variable=GIT_TEST_FAIL_PREREQS \
++			--default=0 --exit-code --quiet
++	'
++fi
++
+ # Fix some commands on Windows
+ uname_s=$(uname -s)
+ case $uname_s in
+@@ -1611,7 +1632,3 @@ test_lazy_prereq SHA1 '
+ test_lazy_prereq REBASE_P '
+ 	test -z "$GIT_TEST_SKIP_REBASE_P"
+ '
+-
+-test_lazy_prereq FAIL_PREREQS '
+-	test -n "$GIT_TEST_FAIL_PREREQS"
+-'
 -- 
 2.22.0.rc1.257.g3120a18244
 
