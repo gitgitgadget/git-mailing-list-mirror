@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 764CD1F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 088591F462
 	for <e@80x24.org>; Wed, 19 Jun 2019 21:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730587AbfFSVGK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 17:06:10 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41664 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726839AbfFSVGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 17:06:07 -0400
-Received: by mail-ed1-f67.google.com with SMTP id p15so1263581eds.8
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:06:06 -0700 (PDT)
+        id S1730620AbfFSVGO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 17:06:14 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37378 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730583AbfFSVGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 17:06:11 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w13so1296746eds.4
+        for <git@vger.kernel.org>; Wed, 19 Jun 2019 14:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
-        b=DyD1Rmh3PJhy2DWcxCjgehDzwXwZYT+yI6WePFb2in7cAztEH6yLbyqTZd1KyYtFlG
-         i2TlutDljof3+szF3ZBUoTcaeR1mFZXgjYPC3pW0IVMr18ZgGLO26PRbsDHLp2xjHefU
-         CS5Mor+HWnnOVOHoPIYErc6gXkH4HaGdAtQQTdTqPrVXWRAMqP3STqU9WmhAMHzOZ6rr
-         Ada/M+v43DHnybHlwbM6yYkvqmmHD+Z0kOaY9KGlN7I8JONmoD93WIJYWXwi4Yjxdzlb
-         nFh5UnoK/gZfnEP2tduCIKjR5/WM6d1On4PiPNORuJQbKF/N4BOzN/yhPeKaFLspjDaI
-         TFjA==
+        bh=VdLnT0ez1EMIfdC3FCjWfNOpGA2/FA1Og7dzu2n+60A=;
+        b=cUf4Pxzfv7eC14nnvEouhwBA9pLT2NhTZLJZmHVTpSahbimbwksU2vWav9bXJQofRQ
+         yPIPtc1GmljSz1xwr4Z7ilWqlbi9O1ePTpPBjBOXpVJgKboCzstXvDCl23ae8EqeNW2z
+         JT6Sb4oSibAzHyX3f3i6byOWcqnhsEAdXBFQVRkm3ZKnqqgVvuf2eckdEwchRSED14fQ
+         seDMQ4uUbcB/M8ZoWvKDcHGb+jJIjHjgFlShuuzk0nHw+ebI0I7dpc5lO6AGnlvb04lK
+         n+UVBEtiUJq1CYrVZU9DOzmoaZeHcz/OPHRKPgTAN8fogy8FdFJmkQ7OvsTuGdaT8DFM
+         tZkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
-        b=qVQEBSGyJsVrxABJKFHkbIMJgFPvTlKt/LeC6mivMqE7EIZ4ZEPRL8VY8/fICG92IZ
-         ecKfnOYZs/s1dHoG/rWpAuW/pArnt/3LtgfzC2CWLpBlxYb7C8cY9bccs7kkUDyTig2c
-         7AixENfnzPSg+ApILAbiYckBvetfTwjWZhjggSLpCQcC6EnAEdm5jkAVcLMkfSiaf4ck
-         +c1eOWgo0dI1er7db+ili+vKuMP4eTbDqRWhl6HbRrcQXNrVXMVWiKeiwGOONYl3GClq
-         jRloRuzSMhC2iva3xFJtyNExTQbX8D0gEacVMeel8LgLdCfU3EaAoX7iP9dM/zS0tH4K
-         l5Ow==
-X-Gm-Message-State: APjAAAU6su7YVxIYjppVSSGRwZ8K8gZNmPH/SUy14I/WqTrj/PXDYkZQ
-        4RDPGoCu47Hr8U3ycLUimmbOZdbM
-X-Google-Smtp-Source: APXvYqxg6+i1aZA9DAzRoUu9AeEEYJqM9TyEXsAF2bWPzqt4OgjnTA9RX0U/rafCaeSynb0HXWF1dw==
-X-Received: by 2002:a50:a56d:: with SMTP id z42mr115395271edb.241.1560978365835;
-        Wed, 19 Jun 2019 14:06:05 -0700 (PDT)
+        bh=VdLnT0ez1EMIfdC3FCjWfNOpGA2/FA1Og7dzu2n+60A=;
+        b=C4GOurD3kr/phMf0RkPqc7+TbFOHvHhHS/ivSHNLua983zQ61tE2x6CiNWqHnXPSU4
+         fjjEmK7g7RLtzHvJTVlObaTokN1BY2e99dleSsCAc963L93ya0EUYqzNGXDtqHFqLM+d
+         SFxUumIaB7YpCy7SmbjIHKHbk1Y7wt/dqBd6avlLFgkSmi/5+xrGsRjsiMHy2IQ99sbY
+         7cg5/ufzSgPZGrM2GUP9TFZOEDCYb5ZHFkZoCUNaeT8c144g1uV82NxtlfPhXWzHAQ3s
+         f43VpRJgooedFBINbKtQXPh3F5a4m4lpwE/AR2q65/0m0zZ7y8aBEEB9hUPQiWYVa1w9
+         rqtA==
+X-Gm-Message-State: APjAAAVhe1To72DF0rmKi6IoncSEUhiTIlF847KciiD4Mn7YyQMQ7F1A
+        JmxkyD1v4huGDMGqDRxNLJtBVGhH
+X-Google-Smtp-Source: APXvYqx1qzyXVWAAEZHKgqV1VFwVjitH2H20CIsD4QShxwhh8EztD3Xt5PhoiZUF3iPoMkwVbLW/qg==
+X-Received: by 2002:a50:b803:: with SMTP id j3mr68363498ede.208.1560978369347;
+        Wed, 19 Jun 2019 14:06:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h10sm6168662eda.85.2019.06.19.14.06.05
+        by smtp.gmail.com with ESMTPSA id u26sm5752059edf.91.2019.06.19.14.06.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Jun 2019 14:06:05 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 14:06:05 -0700 (PDT)
-X-Google-Original-Date: Wed, 19 Jun 2019 21:05:47 GMT
-Message-Id: <f528883d97011128d77061c4976655b80a7e7b14.1560978354.git.gitgitgadget@gmail.com>
+        Wed, 19 Jun 2019 14:06:08 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 14:06:08 -0700 (PDT)
+X-Google-Original-Date: Wed, 19 Jun 2019 21:05:52 GMT
+Message-Id: <c883f037e0c6fb408dbe0350f264c0b41e5623db.1560978354.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v2.git.gitgitgadget@gmail.com>
 References: <pull.149.git.gitgitgadget@gmail.com>
         <pull.149.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 13/20] msvc: fix detect_msys_tty()
+Subject: [PATCH v2 18/20] msvc: do not pretend to support all signals
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,39 +75,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-The ntstatus.h header is only available in MINGW.
+This special-cases various signals that are not supported on Windows,
+such as SIGPIPE. These cause the UCRT to throw asserts (at least in
+debug mode).
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ compat/mingw.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index f4f08237f9..11cd9b82cc 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -544,7 +544,20 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
- #ifdef DETECT_MSYS_TTY
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 667285887a..d01e88c2f8 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2119,8 +2119,33 @@ int mingw_raise(int sig)
+ 			sigint_fn(SIGINT);
+ 		return 0;
  
- #include <winternl.h>
-+
 +#if defined(_MSC_VER)
-+
-+typedef struct _OBJECT_NAME_INFORMATION
-+{
-+	UNICODE_STRING Name;
-+	WCHAR NameBuffer[0];
-+} OBJECT_NAME_INFORMATION, *POBJECT_NAME_INFORMATION;
-+
-+#define ObjectNameInformation 1
++	case SIGILL:
++	case SIGFPE:
++	case SIGSEGV:
++	case SIGTERM:
++	case SIGBREAK:
++	case SIGABRT:
++	case SIGABRT_COMPAT:
++		/*
++		 * The <signal.h> header in the MS C Runtime defines 8 signals
++		 * as being supported on the platform. Anything else causes an
++		 * "Invalid signal or error" (which in DEBUG builds causes the
++		 * Abort/Retry/Ignore dialog). We by-pass the CRT for things we
++		 * already know will fail.
++		 */
++		return raise(sig);
++	default:
++		errno = EINVAL;
++		return -1;
 +
 +#else
- #include <ntstatus.h>
++
+ 	default:
+ 		return raise(sig);
++
 +#endif
++
+ 	}
+ }
  
- static void detect_msys_tty(int fd)
- {
 -- 
 gitgitgadget
 
