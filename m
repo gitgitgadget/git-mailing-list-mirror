@@ -2,217 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 565941F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 20:57:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55AF41F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 20:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730447AbfFSU5L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 16:57:11 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:35683 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726321AbfFSU5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 16:57:10 -0400
-Received: by mail-qt1-f201.google.com with SMTP id v58so714431qta.2
-        for <git@vger.kernel.org>; Wed, 19 Jun 2019 13:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=hmZ/fmRSiuprdfGPo+jCgfrsDmMUbxT20r+SiFM8G6o=;
-        b=O+EupEFYMK/yvGNoqz79nCBlytymTIIp+RmTgeP4Vf3MflK73BYgiH/dh2NmAnZo8D
-         3yAc1OUz7+M+8tqfStqhIVzvtiG99NkSi5WOxVwSz1iJhP/KTUED5cyGEYlBQkTYucGc
-         dhc550l+a3ArARWfpsPgnM9x0b5zbtgIatl8E+GtU6MWVuazrWC6A7DZsnILbZ+U/3Ul
-         dbJmMIpFOF+PyJXQDMlZ24y/d2rm1mNBcjdDacH1D23ShIskf8bqP7xlXVMBCi4Ikccr
-         wXyqGflFHwBpYXZsEa/W1Ml1t+Bs+6fZN1haeGGojMxXFi7xUOVtEiPQ5+MnKrnbuBHF
-         V8hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=hmZ/fmRSiuprdfGPo+jCgfrsDmMUbxT20r+SiFM8G6o=;
-        b=QYk1EsGYm0Tz8H6KktFNoJd5aMVJ5J9KlvDTcqZwiWXrTsK/zEIbbCH8gW+/cORXEM
-         AN25ototLT6qSryQXPdE0Rb8RkE1xA2J1ChsZ+iMPbVKThUCnILJyflYDi20R7FduK/4
-         Q2wy4p3Ezj6+0jwkTPpzR/iuXUoObnLgE+mSlknvxl06EvNDyPhLoZsuS1zZV0JJil9D
-         Rmj2CT8uD06Ug67VKDv5szqi8vX7Hyhuxat68GLkEA5MSbrhqvN55zD7U5l7VUMBplZq
-         jtDOguLdaky7OZfSMoZTYJXLLMPcfV5VujiOyPEQKwDJ5KEWOhbuJliOhEyEOxmha4Vr
-         mZTw==
-X-Gm-Message-State: APjAAAUmhZR723d/+F5XUK0viGqJRnama7PLooqCfHkVLUFgzxLb0irr
-        oRxOCRXi8l54OAEXQMnNg/dG4A+hVnijC5m4/hlL5fS33uh1Sk7BekFXU9qWfhZZpSIofTNyzt7
-        rSx2BUglnIxPZxJN8b1QaT/DVav+rj+eoLNaRVs27jSnX28MVnrsCqjR0li3L4aRnnoR/kA+fDw
-        ==
-X-Google-Smtp-Source: APXvYqzIDoiQXaRh/qbA93tikd4bGGSrrhO4sHUK6LzZyd11UshUKy5T314A2Rl9SVC6FXHT5s+ZAcFbbAr0GwsLiDM=
-X-Received: by 2002:ac8:6b42:: with SMTP id x2mr102442876qts.92.1560977828755;
- Wed, 19 Jun 2019 13:57:08 -0700 (PDT)
-Date:   Wed, 19 Jun 2019 13:56:56 -0700
-In-Reply-To: <20190618222917.261701-1-emilyshaffer@google.com>
-Message-Id: <20190619205656.117272-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v5] rev-list: teach --no-object-names to enable piping
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730248AbfFSU6t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 16:58:49 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60693 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726175AbfFSU6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 16:58:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1560977922;
+        bh=lHKxgnKGMOVFBjvJaYz4l+T97ikz9uVelISczlIX5Os=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=VOHMbhUBxascByyyFlkm6Oz0JEHyuQrpPIJicJSJsY4v768CJ8SGW2yE3CHwhYb/X
+         7scZgntp2SRRcVuZVGl2oTGAuWEc96l2qREqoNhZWLJ9CtdN7kgyY7tN7EbmaOvBo0
+         cQTc146e6RCW787IqME0m3+v1dg5YDuRaWRzWwao=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm27-1hoPzF2bRj-00GHIP; Wed, 19
+ Jun 2019 22:58:42 +0200
+Date:   Wed, 19 Jun 2019 22:58:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/17] t0001 (mingw): do not expect a specific order of
+ stdout/stderr
+In-Reply-To: <0841b134-0719-8bda-41ec-abd124157df6@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1906192257000.44@tvgsbejvaqbjf.bet>
+References: <pull.149.git.gitgitgadget@gmail.com> <d551cdeafbf2953ba340aa16554fbd5ac6194a6e.1560860634.git.gitgitgadget@gmail.com> <CAPig+cQaoRBnH0JrUwXTo1hSwjrZ1vJHewjCAkKPeCrRwo=P2w@mail.gmail.com> <40cfbb30-c632-54da-62d9-9b31bc878806@kdbg.org>
+ <CAPig+cTTAgYia6DUOrg7AuLmGSbqn5u=iy3wx-=--NJuyULwaQ@mail.gmail.com> <nycvar.QRO.7.76.6.1906191325130.44@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1906191329040.44@tvgsbejvaqbjf.bet> <0841b134-0719-8bda-41ec-abd124157df6@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ry+PLMVdS+iwYulkBrZGVc0WP/GF6iCMJ4zGEi8QBRymEAAEC1+
+ WdARPBHqNAzZohxLebEEh0vhBMaBWUMHbaqdHPjQ0ePFraGxzPRVYC1UUKIXfOTDd5O+AAJ
+ qnsLDbKFQa9/r44j8JLQZWIc1e9gxziI4AmC4RMEv2wvMsBa2HOMbEHRkta59n3yNHBSBae
+ 2osr3rB6JjDdUIChhdtmw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:37mltchjI+o=:G4L9YJQslToM1fQOxkoJTf
+ fFl8wXFeXwIC73hXXAuc4i1qlp2FUS2ZQAbG7r8e+lYH72J1mRg+RC9mWAyC5+SL7xubmx+yz
+ sO4iCNikYvFG9DNqtnqopSjlu7eGVYD+2Ist+S5zilk+f9xzpgUP2Gyo1IXMxT+tGIDVFsJVm
+ /DDIEJRywKQIK1LwuhyvCphkXfeU8atTDM+qywPBpV7Wcp9ydqUYmYPnGqQPEkOviwQFZstag
+ rIFSgNg44xEi6cSF5Dw6yS6aQ+HnYM0sm9r0xGwyWnbP8DFK6jFJMwKk3l60vCVHMe7iEDg95
+ VeWBzIPB8Bl5u+eimQnBcQ7k4BlOF0ARwfpL308jGryxQ4iVbVK9f0MfpKd9ZKQh3C9aBHYGR
+ LZC7EbwYPLEayE7mZ8g2RLWW5I+wqQjNIIDT0cvTHc46pHBAnaGqKcoBBVkI/F6cQ/7HhvUok
+ mgr2DEIi4NGglBy1i/JxFropeUcrECs2eLa2vrOKSp/uiQJF1wmBrgk+Fle/xTP/2jDiw66+l
+ IaaPQrW7rnj7pyVeZSj4qwUCmoySF15FkXRDhgAF5Asx0c977yeOIUlJQ1ImD3XR5OgdICGC1
+ PATFS7BDWuTrzJHhR9BzqmRiJFDZpFMOqn3tZoJd+trqDOnc9nFtuGGOtr3aDBgA8mZ8epn66
+ MzfOJ7n1h5zSJGS2Ikp8dHTWF4gx7bgsJlD1ApnHHPVzGrIFjEo0dZ2DLzZ88nxXBu0Uo2V4D
+ xPGp9mftCBr8NGYLPX3MrdcJJ4uv00sm8su6TSKcNs3bk1K712DB1lnjGx5H3v1BSm/0o7OFQ
+ cVc2OrnfbOww4AQb4yPMR5LGSiS9GSKsHY9y7PIgWJbPZp9PCeiAGZ3fiV/xZLGUHBFt4cvoV
+ kGnomi1Kgv3mKe7ktBgOX/72VJ8NRcE1qA6W3hhnJ3vZMoRbul64nLYM4ZjmNyW1RTG5DoPR1
+ WkRJnx6Dw624U2fBvjoC07GNPOQA8lKoXpuJ6u+mg10JbrYbr5neg
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow easier parsing by cat-file by giving rev-list an option to print
-only the OID of a non-commit object without any additional information.
-This is a short-term shim; later on, rev-list should be taught how to
-print the types of objects it finds in a format similar to cat-file's.
+Hi Hannes,
 
-Before this commit, the output from rev-list needed to be massaged
-before being piped to cat-file, like so:
+On Wed, 19 Jun 2019, Johannes Sixt wrote:
 
-  git rev-list --objects HEAD | cut -f 1 -d ' ' |
-    git cat-file --batch-check
+> Am 19.06.19 um 13:30 schrieb Johannes Schindelin:
+> > Interesting side note: I just realized that t6050-replace.sh does inde=
+ed
+> > contain
+> >
+> > 	test_i18ngrep "Needed a single revision" err
+> >
+> > so I wonder why that works.
+>
+> Why should it not work? If GIT_TEST_GETTEXT_POISON is on, it pretends
+> success; otherwise, it does a regular grep.
 
-This was especially unexpected when dealing with root trees, as an
-invisible whitespace exists at the end of the OID:
+Ah, right, I vaguely remembered that Duy offered patches to do something
+funny with a pseudo locale (I never understood why not go for the much
+simpler ROT-13), and I guess that effort never went anywhere.
 
-  git rev-list --objects --filter=tree:1 --max-count=1 HEAD |
-    xargs -I% echo "AA%AA"
+So essentially the test case in t6050 will succeed under GETTEXT_POISON
+for the wrong reasons.
 
-Now, it can be piped directly, as in the added test case:
+Thanks for explaining this to me!
 
-  git rev-list --objects --no-object-names HEAD | git cat-file --batch-check
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Change-Id: I489bdf0a8215532e540175188883ff7541d70e1b
----
-Since v4, added the new options to `git help rev-list`.
-
- Documentation/git-rev-list.txt     |  1 +
- Documentation/rev-list-options.txt | 10 ++++++++++
- builtin/rev-list.c                 | 19 ++++++++++++++++++-
- t/t6000-rev-list-misc.sh           | 20 ++++++++++++++++++++
- 4 files changed, 49 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 88609ff435..9392760b25 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -48,6 +48,7 @@ SYNOPSIS
- 	     [ --date=<format>]
- 	     [ [ --objects | --objects-edge | --objects-edge-aggressive ]
- 	       [ --unpacked ]
-+	       [ --object-names | --no-object-names ]
- 	       [ --filter=<filter-spec> [ --filter-print-omitted ] ] ]
- 	     [ --missing=<missing-action> ]
- 	     [ --pretty | --header ]
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 71a1fcc093..286fc163f1 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -708,6 +708,16 @@ ifdef::git-rev-list[]
- 	Only useful with `--objects`; print the object IDs that are not
- 	in packs.
- 
-+--object-names::
-+	Only useful with `--objects`; print the names of the object IDs
-+	that are found. This is the default behavior.
-+
-+--no-object-names::
-+	Only useful with `--objects`; does not print the names of the object
-+	IDs that are found. This inverts `--object-names`. This flag allows
-+	the output to be more easily parsed by commands such as
-+	linkgit:git-cat-file[1].
-+
- --filter=<filter-spec>::
- 	Only useful with one of the `--objects*`; omits objects (usually
- 	blobs) from the list of printed objects.  The '<filter-spec>'
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 660172b014..301ccb970b 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -49,6 +49,7 @@ static const char rev_list_usage[] =
- "    --objects | --objects-edge\n"
- "    --unpacked\n"
- "    --header | --pretty\n"
-+"    --[no-]object-names\n"
- "    --abbrev=<n> | --no-abbrev\n"
- "    --abbrev-commit\n"
- "    --left-right\n"
-@@ -75,6 +76,9 @@ enum missing_action {
- };
- static enum missing_action arg_missing_action;
- 
-+/* display only the oid of each object encountered */
-+static int arg_show_object_names = 1;
-+
- #define DEFAULT_OIDSET_SIZE     (16*1024)
- 
- static void finish_commit(struct commit *commit);
-@@ -255,7 +259,10 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
- 	display_progress(progress, ++progress_counter);
- 	if (info->flags & REV_LIST_QUIET)
- 		return;
--	show_object_with_name(stdout, obj, name);
-+	if (arg_show_object_names)
-+		show_object_with_name(stdout, obj, name);
-+	else
-+		printf("%s\n", oid_to_hex(&obj->oid));
- }
- 
- static void show_edge(struct commit *commit)
-@@ -484,6 +491,16 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		if (skip_prefix(arg, "--missing=", &arg))
- 			continue; /* already handled above */
- 
-+		if (!strcmp(arg, ("--no-object-names"))) {
-+			arg_show_object_names = 0;
-+			continue;
-+		}
-+
-+		if (!strcmp(arg, ("--object-names"))) {
-+			arg_show_object_names = 1;
-+			continue;
-+		}
-+
- 		usage(rev_list_usage);
- 
- 	}
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index 0507999729..52a9e38d66 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -48,6 +48,26 @@ test_expect_success 'rev-list --objects with pathspecs and copied files' '
- 	! grep one output
- '
- 
-+test_expect_success 'rev-list --objects --no-object-names has no space/names' '
-+	git rev-list --objects --no-object-names HEAD >output &&
-+	! grep wanted_file output &&
-+	! grep unwanted_file output &&
-+	! grep " " output
-+'
-+
-+test_expect_success 'rev-list --objects --no-object-names works with cat-file' '
-+	git rev-list --objects --no-object-names --all >list-output &&
-+	git cat-file --batch-check <list-output >cat-output &&
-+	! grep missing cat-output
-+'
-+
-+test_expect_success '--no-object-names and --object-names are last-one-wins' '
-+	git rev-list --objects --no-object-names --object-names --all >output &&
-+	grep wanted_file output &&
-+	git rev-list --objects --object-names --no-object-names --all >output &&
-+	! grep wanted_file output
-+'
-+
- test_expect_success 'rev-list A..B and rev-list ^A B are the same' '
- 	git commit --allow-empty -m another &&
- 	git tag -a -m "annotated" v1.0 &&
--- 
-2.22.0.410.gd8fdbe21b5-goog
-
+Ciao,
+Dscho
