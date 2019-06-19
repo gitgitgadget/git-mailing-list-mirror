@@ -8,78 +8,91 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C51551F462
-	for <e@80x24.org>; Wed, 19 Jun 2019 11:17:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3151F462
+	for <e@80x24.org>; Wed, 19 Jun 2019 11:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731178AbfFSLR6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Jun 2019 07:17:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45777 "EHLO mout.gmx.net"
+        id S1727134AbfFSLTf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Jun 2019 07:19:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60643 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727076AbfFSLR6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jun 2019 07:17:58 -0400
+        id S1727076AbfFSLTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jun 2019 07:19:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1560943060;
-        bh=+V8WIiFvTFjQhwH+58HfDBg1D9L76XP3xPQm/JDfGbQ=;
+        s=badeba3b8450; t=1560943165;
+        bh=PLFExe045zY5IS9NghucBiq5VZ5I1DjMRAJ6ITUYAIM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NhlX4rVz1GNM6KnuiIcZ9aD+qGkmy2RXkWL/ZwY/1nR/KymiAiV57wQv7eA/uzjYq
-         Syu6BxoDsEykPgfpxHlKxuxXKSvPn/DQviYy75WooGussco3CZ9SIMb4VL1HBdDKhS
-         wahMY+t1wGU+nCFClA+ulN3w7mlZFVg6t8fRd0DQ=
+        b=Jr6fRJof7JYDtDY9uj0y+fsF8kq0SAT1SBHvn7fY4+xSKsH9S72vfFlWE3bmnOBm0
+         P70PekxEPzzx4ok3W3vypCYSJGmrKrzChBHV4osnrOYJx7iwPna3ZifLb4rVnH8ChT
+         A+Mz44qfCJuI6P1Lc9EfzL15lE0aUxgjkFtfS6NY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHnm-1iRnpu1IR0-00tiOk; Wed, 19
- Jun 2019 13:17:40 +0200
-Date:   Wed, 19 Jun 2019 13:17:54 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOA3P-1hxfvw32ID-00ObNh; Wed, 19
+ Jun 2019 13:19:25 +0200
+Date:   Wed, 19 Jun 2019 13:19:39 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Carlo Arenas <carenas@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
 Subject: Re: [PATCH 03/17] cache-tree.c: avoid reusing the DEBUG constant
-In-Reply-To: <CAPUEspi-G7abt-zuLbw0iuyXN0gtrM_6Vy6d+9f-=6FpRsoV4A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906191316210.44@tvgsbejvaqbjf.bet>
-References: <pull.149.git.gitgitgadget@gmail.com> <486297ec8c146e0ed47cd1dd8fe8f6496c2b54c2.1560860634.git.gitgitgadget@gmail.com> <CAPUEspi-G7abt-zuLbw0iuyXN0gtrM_6Vy6d+9f-=6FpRsoV4A@mail.gmail.com>
+In-Reply-To: <CAPig+cTXdz6s_cftPydKjtESz986s1xLQvwV8xPzYSR_xLK6Cg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906191318570.44@tvgsbejvaqbjf.bet>
+References: <pull.149.git.gitgitgadget@gmail.com> <486297ec8c146e0ed47cd1dd8fe8f6496c2b54c2.1560860634.git.gitgitgadget@gmail.com> <CAPig+cTXdz6s_cftPydKjtESz986s1xLQvwV8xPzYSR_xLK6Cg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PdZ49Wg5L8gQ59yJftSzwyZB3/JdTh1c5nCNxo0ngt7ueMbYwz1
- t9l/R6WbpH8u4uzz7A/ggXImP0XSpAqn+zuG1QVdMFKWRemVtqqARVN7arQeqK93nWgIYi1
- ebNCnmZfpYYmSezlE26HefYy75xhbBoIxMyzu6hOhOglI+bqmygV2Tc5GOK59v6yno93cSx
- lqqes2tUYGw2TQz3K75PA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4GYvxnX57D4=:q66GdAr0YxnQzK2dFJrRyd
- qyK0USPPbuREWR4KOf/t2Mz+PPCua85uDBmI8dji/6jDwtvBFeqsmmnEG7jh6W9Atlsy7AMco
- MZDMO/RLJMt/EPaAGI5plywEg86b123WEUtS2GUOFwwmCUkD54yetGIsw0BXchi+oexg3kw5N
- PufXw5i/k5bfAfrlo2wprGf86MKTUR5dcN4F9RKBPfjI3PU3/UlaJk4BgRAlkMZw0myzm1aTh
- YhUStLpfT7M9iotLYAfxMYkX7DMFrcLHwqhOwwObFHXrE2JNedVdyhKxSe8dJZa+ddv+Ix7dy
- 5/+V9c8EPF4uN2JUW/GXjdOTULOd3oplJH0h3pcSsachn9Yc1maRQNDMgYrrd2kePIrKWpsk8
- i+3WOYtJiStZTdkehMGxdEmKT6+O+0izepqPw3oiEBmGS0asVqvdhZRohCH63839uw23rbt4A
- FheotgHkc75quV7bnDvHx71bOCHv79KcRpvjO95UGC9nTADNPi8lZFwDykTqAj8y0DzKID+yH
- KDloSqOgs+53CKKh9ttt/mhK9WQXN4XnDCppf2JQi9Z+oMlmGpu5PzNM95aG9lvt9x+LqqsMO
- LTJkTqvhJ5/tvmjpbBKF8wnb/2lDzMQWRAsuy/nA6S0/XvmDFG0m++U4KK5Ie+HLoiS7P2q5Z
- gh2VbvjFZamzY9pPbsBI7lpnm2sZcuejqfZU7k+cRz1jkud3wfJZZUZjt5uBOMjb77tge/YLy
- B25S73DE4TmcxmA9FFlLTou6e//vSfxBos+IElmj7CduoSprmVxMPiwpIBL3QEnouo9TiA9vk
- DxUDWCTa5sDcW6ZD9akyprdyP6DioE11OG1xI0K8eLCsnp/0h0bKqeiivdu78RjhCYaxzKZFJ
- lj/qZcEHuBShtKNnxTkM3Ydwa2kAD3Zrw/08tvE4phPCZyYljBzNRuwTTG+2E2dgi+YKyJx/w
- r13IrqtpZQhuhdXRo4QVKrbUJ4NiZ2tdMIGWOpvr06R05SS2FiPdK
+X-Provags-ID: V03:K1:NHYOYs761amXInku32uq1d2AIdPxjex1BbbP0r4ZKBSl1Ev6cQg
+ k8e8i/3GITxzG0bZ6EjCCLoHL+zSSJ0hppLXpECXU3USxwNCBNvd9FydxFotZNZgf6bPOIm
+ tLN2E7SGyTsTBjb7WLaE9PIR5yNlUdVVxzin110GW4Vgs52BvTY3k1ciHCPAPXNsFUUi4aD
+ 1WQON1vJXKhlw+4fJeC6Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:d5iysVdPV4E=:17MfreGouJ3PDw0E52qQ3v
+ 8pfd51+8nhLwUqbyxvKgrWUzQe61yrut7WjDlBk7GyEuluJKmBo0oCtCe/i/378fJO3fRGeRH
+ mRGDup4SZ5s2Xq/3VbiqgvvJb5hE0htnppGLr4a52cqMugAGCjCL37hQDNFqeBX464yrWON64
+ +hEGJrXz36CxJBy93qNI1N+bIcV0lRPJmU8h1g24t6E5tFk82dBy1iCaaGQFr34/K4n4I9f9k
+ r9JvfD5WhEVlgEMFCnTuMyKngNle+xffs8OEgWk2S00NFcppiENNB9wkg+Lhj4r2pNdsE6pyy
+ BhcKRqfCVGPCfrATFxuo8LftyxUlBWFNyKEhl0PYSg3f+cEPcPFSES2BF9TBkG2Z+t62WvDmq
+ 9Z5NxJIuiaX54mkRJPsjFOMSxpzqduQjJOKe3DZ1dc3uS7exD4Vcwo969K/9ebugtIq9Jr2Yq
+ MC88g1/5ARdI0TXftaZWVUiF4MoIyW7tzaY5HvdeQ1rje2w6jJgUQl+OTRfSlje/0QSwnJGM2
+ f01VUKsu9rIQy70Bj7WAVgHAY0bGIau8oO6kQj66GZVLpgbmZEgBn2K0RrKp1NavOkoM0jjRN
+ XC5/eULFZvbo5/QGIiKHInM0wRoKx7ECu6LNbYoSe0mLCSskdrCfKxC+8drhYFCv4x8iJrtKt
+ 6YNw1zJ9ndX0MY3leDTCSFkBvZm3UIU0McUUcouH6oPPxlos1v+m9vpadFfEpaDTM2YUNHU3M
+ Xp2XnaJG7tuKr59Ub7A8NCoWTCqGLsziVr6whMVZQB529TSeugD8xPVvNc411BLyaU9+7VVJH
+ CyhU0WB68qqoZyyYCSCxUZATrmc6pPPiHNrcTNs45GmyFTmQ5dCNT0WPAIn8RICXmJBjO2gJO
+ HpH73QrtgXN8E6URGlLlQQQjruVrffYqbpdcN9ahIkbaQheQdIDH4WEzWfSizypO57CrMibh1
+ 5CEi6SgEJWYHfg+di9xlwUTOMEzBQ30HY2oB3Ibw8UNktKJUc/lTM
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo,
+Hi Eric,
 
-On Tue, 18 Jun 2019, Carlo Arenas wrote:
+On Tue, 18 Jun 2019, Eric Sunshine wrote:
 
-> shouldn't this also be a problem with builtin/blame.c?
+> On Tue, Jun 18, 2019 at 8:24 AM Jeff Hostetler via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > In MSVC, the DEBUG constant is set automatically whenever compiling wi=
+th
+> > debug information.
+> >
+> > This is clearly not what was intended in cache-tree.c, so let's use a =
+less
+> > ambiguous constant there.
+>
+> s/constant/macro name/ would be clearer.
 
-Sharp eyes!
+To me, "macro" always sounds as if it referred to executable code, or at
+least to something that expands to code.
 
-It does not *really* matter as much here, as that file defines that
-`DEBUG` constant if it has not yet been defined, but yes, it assumes that
-*if* it is defined, then it is set to `1`. Which is the case, but it is
-fragile.
-
-I changed it locally already, and it will be part of the next iteration.
+I went with s/constant/name/ instead.
 
 Thanks,
-Johannes
+Dscho
+
+>
+> > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
