@@ -7,114 +7,93 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CDB01F4B6
-	for <e@80x24.org>; Thu, 20 Jun 2019 18:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4331F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 18:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728469AbfFTSNQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 14:13:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59942 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729205AbfFTSNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 14:13:15 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 149E516701A;
-        Thu, 20 Jun 2019 14:13:13 -0400 (EDT)
+        id S1726521AbfFTSXM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 14:23:12 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57064 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728672AbfFTSJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 14:09:46 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3FCD6B37C;
+        Thu, 20 Jun 2019 14:09:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=xEogMMPvUiqO
-        U2s29mDtRG48llM=; b=B1XOuLL2E8Ui4zhMjOlvPXTZf3mrmiRLreAuTGlmiCHa
-        YEpb0svvNBqymQnoul7DWo+Iq9P9Q8Tfo/oGjHirBEuvevPPK0jsnxc3PtqF+L5Y
-        jFjNCJWKsDJAd13zLXfR3pl/apYecxl0ofUaZmAqpEHJrxSkWVFj5sb6V4d/V18=
+        :content-type; s=sasl; bh=INzyQdnlmcH7a2/jE+Q9dT75pLA=; b=EQXPI2
+        Dk63+YLeep48et8YckYPJwihCKj+eBw9ptT9Xx86o6Nt64ZRaVWBvRM68ti9iEGA
+        Ri0EebyQJqD8tnaOMS4o7vfkIt2KzMQS/5D+7nvSVJd91ix6uvxGZZvnZ3uC9u+M
+        gKyyFOFwBkBfDd9ldmNjvrXdX4WCe8VXFUFT0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QMrme3
-        lYZ57TrQHVCiehVJXA8xjTw1btwYwdyiWaByyEuNGry37nPMe40/YnubmtACHvn6
-        UCBhaut3e+XcJ7/AGVYyhCUm3k9cFeMaDIMx3NlneWDWa/IHLtoVS3sAeu2yfxK8
-        Umx1V9cISdc0PhRvRVj5qqN3v3G7huf33dJqE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D7B0167019;
-        Thu, 20 Jun 2019 14:13:13 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=X7IGpWt2udKWUL5Dy8QSWf789Wy1OH3C
+        ynZv05DQQIpQUeiKiXR0cNNuph8ChhntHHP8JbybeXwX1tiS3P3lD7gdZqerV5+c
+        qhWHnc8V/DqLKA4IXZyJZn9R2izOz1hvBTgSdRYm+A7mGTJbJBI6DT9YEctrjz8v
+        uzyV86570Xk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AAFDD6B37A;
+        Thu, 20 Jun 2019 14:09:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 707A3167018;
-        Thu, 20 Jun 2019 14:13:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D6B8F6B378;
+        Thu, 20 Jun 2019 14:09:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6] Change <non-empty?> GIT_TEST_* variables to <boolean>
-References: <87imt18a2r.fsf@evledraar.gmail.com>
-        <20190619233046.27503-1-avarab@gmail.com>
-Date:   Thu, 20 Jun 2019 11:13:11 -0700
-In-Reply-To: <20190619233046.27503-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 20 Jun 2019 01:30:40 +0200")
-Message-ID: <xmqqo92snn0o.fsf@gitster-ct.c.googlers.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: mention that 'git submodule update' fetches missing commits
+References: <0102016a2274c90f-3dbf792f-5b0a-4da4-ada0-9a163a14e68d-000000@eu-west-1.amazonses.com>
+        <0102016b72a55a7d-fb4ecdb7-9f2b-4204-b888-0000f209c3ff-000000@eu-west-1.amazonses.com>
+Date:   Thu, 20 Jun 2019 11:09:39 -0700
+In-Reply-To: <0102016b72a55a7d-fb4ecdb7-9f2b-4204-b888-0000f209c3ff-000000@eu-west-1.amazonses.com>
+        (Philippe Blain's message of "Thu, 20 Jun 2019 02:09:27 +0000")
+Message-ID: <xmqqsgs4nn6k.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 10E44A56-9387-11E9-9062-72EEE64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93600F8E-9386-11E9-BF3E-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-> This changes the remaining <non-empty?> special snowflake test modes
-> to <boolean> and gets rid of test_tristate() in favor of the now
-> standard "boolea" test.
+> 'git submodule update' will fetch new commits from the submodule remote
+> if the SHA-1 recorded in the superproject is not found. This was not
+> mentioned in the documentation.
 >
-> I'm replying to my "gc: run more pre-detach operations under lock"
-> thread because one of the things my WIP patches to make gc locking
-> less sucky depends on is new GIT_TEST_GC_* test modes to test its
-> racyness, which in turn depends on these cleanups.
-
-That sounds like the "gc: run more ..." depends on these (iow, that
-should be the reply to these, not the other way around)?
-
-I am asking because I see obvious value in these "uniformly require
-<boolean>" consistency change (which could be backward incompatible,
-but as long as these are GIT_TEST_*, we do not mind too much forcing
-developers to adjust), but not yet in the "gc: run more ..." one,
-and do not want these to be taken hostage.
-
-Thanks.
-
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>  Documentation/git-submodule.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (6):
->   env--helper: new undocumented builtin wrapping git_env_*()
->   t6040 test: stop using global "script" variable
->   tests: make GIT_TEST_GETTEXT_POISON a boolean
->   tests README: re-flow a previously changed paragraph
->   tests: replace test_tristate with "git env--helper"
->   tests: make GIT_TEST_FAIL_PREREQS a boolean
->
->  .gitignore                |  1 +
->  Makefile                  |  1 +
->  builtin.h                 |  1 +
->  builtin/env--helper.c     | 74 +++++++++++++++++++++++++++++++++++++++
->  ci/lib.sh                 |  2 +-
->  gettext.c                 |  6 ++--
->  git-sh-i18n.sh            |  4 ++-
->  git.c                     |  1 +
->  po/README                 |  2 +-
->  t/README                  | 12 +++----
->  t/lib-git-daemon.sh       |  7 ++--
->  t/lib-git-svn.sh          | 11 +++---
->  t/lib-httpd.sh            | 15 ++++----
->  t/t0000-basic.sh          | 10 +++---
->  t/t0016-env-helper.sh     | 70 ++++++++++++++++++++++++++++++++++++
->  t/t0205-gettext-poison.sh |  2 +-
->  t/t5512-ls-remote.sh      |  3 +-
->  t/t6040-tracking-info.sh  |  6 ++--
->  t/t7201-co.sh             |  2 +-
->  t/t9902-completion.sh     |  2 +-
->  t/test-lib-functions.sh   | 58 +++++-------------------------
->  t/test-lib.sh             | 29 ++++++++++++---
->  22 files changed, 220 insertions(+), 99 deletions(-)
->  create mode 100644 builtin/env--helper.c
->  create mode 100755 t/t0016-env-helper.sh
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index 2794e2978021c..930bfcee50e4c 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -132,7 +132,8 @@ update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--forc
+>  +
+>  --
+>  Update the registered submodules to match what the superproject
+> -expects by cloning missing submodules and updating the working tree of
+> +expects by cloning missing submodules, fetching missing submodule commits
+> +and updating the working tree of
+>  the submodules. The "updating" can be done in several ways depending
+>  on command line options and the value of `submodule.<name>.update`
+>  configuration variable. The command line option takes precedence over
+
+The additional text may not be wrong per-se, but isn't it fairly
+obvious that there is no other way than to fetch, in order to
+"update the registered submodules to match what the superproject
+expects", aka "if the commit object name recorded in the
+superproject is not found".  How else would the subcommand come up
+with the missing commit out of thin air?
+
+IOW, I have to wonder if this is worth saying, or if these new words
+are just adding more things the readers need to scan on the page
+without adding that much information.
