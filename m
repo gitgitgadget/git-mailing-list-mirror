@@ -7,70 +7,77 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C59F91F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 20:03:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 142881F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 20:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726992AbfFTUDG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 16:03:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56748 "EHLO
+        id S1726960AbfFTUJu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 16:09:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56968 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbfFTUDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 16:03:06 -0400
+        with ESMTP id S1726114AbfFTUJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 16:09:50 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B71AB167946;
-        Thu, 20 Jun 2019 16:03:04 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E79951679F0;
+        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=0hXkkrUH1Jxm3hCStaelbK1Q9
-        lY=; b=ImQbOSamB9Qm0LF0uNQIOtZ/F+II1PqoVi0FAopHypCxGHRKOMY2hX3nf
-        jm32UHwnNavCjklkPSDq1DpWbBK7Fkxdfsc0TVx/KfJCBUwZxF4j80wCmQTQYzaH
-        7WphEeeTdcDwea3oi82VFqXdXe6v1Z+Jq2lp24Fq85e9m/kJq4=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=S/SNJErbbWPGkEgx5S9U8zgx8DA=; b=ZEZxM6
+        OCz23NP83ddvBR0w5P+nk+c85UiPOWqSSmidbjWYqIAGJMWOjOjVNWrGhIP98l9E
+        6irtqXiYP36uqZFFYlJ7lTOumMP7oSbxJ2Aj2ofsdX48YCtSJs1HpGJCmRvdUPCt
+        avKn0HN3TM6tRrOsOv0FQlG4uzESVV0JWptQk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=kiAf0zilLVXeULg8lCE
-        IEbohpIIb8QnWNhmGv72s0rbBANiwr42evABN2VYeJg8DSpIAPNoruMFyLI98MJ0
-        Xj3yDJzUejy1rWrkxqXa+kQwvkOtEFt9MRD4khu82F+2cKpZErJqHeJ+uM4Ken33
-        d/t34zhX/L2b8a7j0HeSecQQ=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oiWEO5yRJOgkaqDCI9nEYXmFZtKV1ADf
+        nYB+g9mnYlNtxjfbvVIp+A9LuBYFuO75A/gHE7mHPIq8dEARfaW+jWM0zfGXZ0Xm
+        KA9dtJ01y2Il8snpKZHPJDvh4AaJd+OT2Vhzneqz1FdY7D0XYxOiNsRlL/YJEHUJ
+        ppajvZA16W4=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0436167945;
-        Thu, 20 Jun 2019 16:03:04 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE00B1679EF;
+        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 11CF9167944;
-        Thu, 20 Jun 2019 16:03:03 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33F321679EE;
+        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6] Change <non-empty?> GIT_TEST_* variables to <boolean>
-References: <87imt18a2r.fsf@evledraar.gmail.com>
-        <20190619233046.27503-1-avarab@gmail.com>
-Date:   Thu, 20 Jun 2019 13:03:03 -0700
-Message-ID: <xmqqmuicm3d4.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>, git@vger.kernel.org,
+        newren@gmail.com, t.gummerer@gmail.com, martin.agren@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [GSoC][PATCH v5 4/5] cherry-pick/revert: add --skip option
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+        <20190618170650.22721-1-rohit.ashiwal265@gmail.com>
+        <20190618170650.22721-5-rohit.ashiwal265@gmail.com>
+        <xmqqr27oq5z1.fsf@gitster-ct.c.googlers.com>
+        <76359a86-0eb1-dd87-c36f-7bd2df8b0ae5@gmail.com>
+Date:   Thu, 20 Jun 2019 13:09:46 -0700
+In-Reply-To: <76359a86-0eb1-dd87-c36f-7bd2df8b0ae5@gmail.com> (Phillip Wood's
+        message of "Thu, 20 Jun 2019 10:57:44 +0100")
+Message-ID: <xmqqimt0m31x.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 69CC634C-9396-11E9-8362-72EEE64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5A175DC0-9397-11E9-95E5-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> This changes the remaining <non-empty?> special snowflake test modes
-> to <boolean> and gets rid of test_tristate() in favor of the now
-> standard "boolea" test.
+>> This one, and the in_progress_advice emitted from the patch 1/5, are
+>> both bad in that they make calls to advise() without guarding it
+>> with an advice.* configuration variable.
+>
+> I'm not sure we have one for cherry-pick/revert/rebase. At the moment
+> they print advice advice for a failed pick unconditionally...
 
-Is that "boolean" test?
+Yes, 1/5 does not introduce a new problem; it just makes it worse by
+allowing the misdesign survive another update.  The one introduced
+by 4/5 is genuinely new.
 
-I had a lot of trouble with the external interface to "env--helper",
-but I kind of liked the changes to the tests that makes the use of
-these environment variables uniform and consistent.  One fewer
-things to remember.
+> ... Maybe that
+> should be checking advice.resolveConflict though.
 
-In addition to the other review on 1/6, t0016 is taken at the tip of
-'pu'; we would want to renumber to avoid test-lint complaints.
+I think that is a sensible one, rather than inventing a new knob.
+
