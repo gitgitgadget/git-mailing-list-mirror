@@ -8,65 +8,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6792D1F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 12:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C10811F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 12:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731398AbfFTMju (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 08:39:50 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:35442 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbfFTMju (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 08:39:50 -0400
-Received: by mail-qt1-f195.google.com with SMTP id d23so3046833qto.2
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 05:39:49 -0700 (PDT)
+        id S1730886AbfFTMmP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 08:42:15 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:35003 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbfFTMmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 08:42:15 -0400
+Received: by mail-qk1-f196.google.com with SMTP id l128so1784792qke.2
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 05:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=crOp2QPIf44RdNylu0Zx5nfwgz7yfPrjWcBNUJqBxz4=;
-        b=Otceo7BetFotLBGPZ48X3WLc1TsJ5bDA7TUMWVLu2dk0D3158AZtPyrn2j3+HLsfPj
-         kguyrLOyeOS0urVMXJVF+IM4CNmtvoG9TiT75gLdokECfjQ88sPkpcUCKHoBDPvSw9a0
-         yTR3uNmBoPlULQueR+416LSg4zjAiTJEDx4rl/6ynBcR6nrMAV3sBiKZYQO4kzANJjGL
-         5GLXjUMNmAEV52P1oUMTTVnUfXDui04lYSfhi/C3SLeQG3JZuYR2s35G39OryWvCq1HZ
-         TAehpTrOnIF71fGkiqKXO3h3jUXCpqDVfmDe8yFDJQiWdt9Zmxx6jYimswXjW57LvpEt
-         jjCA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=pbcrH8ESIbLdoWVIfm3pwtVv1JLd7AyetIHY6AjIq3U=;
+        b=cliP9HhldVKB/qooGGkjLJ3OQrSygCPgV2U9yEJX9sl8lvG2yp65oDg4VRLTq38vdi
+         SwcTWhh7SHmJxwMrKgnOX/WvttIfi3jUX/bXwiz5Os8ihwlIKCsSId8jb3P0pcM7Trw5
+         +P3cQmWy8fgF0YT3eveXZ1tKu1B3pEWSNEVpvJWT1h5WNIMVAIV0TPtvVmYQx1s+SXZ3
+         dFlpCRzTwFs1bapD8C2LHGOtsdh0R7h5/RQuS1JfXDeQx/RB+4jG7T4x+e2ypMjr2Szz
+         G615jd3tXd61n++CvsRe3yeefFztX04yA5BjlSn6Uu/54NAShqRoDnARuow9Ugjy6lEf
+         MeyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=crOp2QPIf44RdNylu0Zx5nfwgz7yfPrjWcBNUJqBxz4=;
-        b=NJGq2rWgFcLMEImlMPEDVuUDTbVQCqsnZt4LCGIqt5EEtjY2t8F/vlp5QrcBwg7xuj
-         FBoG2KBsbzjg0tsw5K5S3unL0qubLWhwJdmiHBrtX++ezoSWRXLBorMJ0rs2gFIku1qc
-         K1dJWFsHYCOx2ks4HtvuCpdb5Orvg2gNdOW4c4+j+sCnAiBT8Tp6RbsOLdeXG177Rkt1
-         shUbMrtiSTJQFfDbn6Z/OfX0dGtY4Qgtu+W3mnH19FqUBuM5v3bwFSxU/25PFy/Vi7iS
-         6hRDVVGLl3YuKdvBqzivGD8OU899eTfVOuEv5+jlziMdXKJYkk4YUBmLbBOklwjyhjtn
-         9dIg==
-X-Gm-Message-State: APjAAAU48BCjLpwfbb0N/XSNB9on74iQ0uwJ2JvIMi/ZRqOJ6gFqeFu5
-        URUj7Lm1pKGGonOk0UAlK4dlq09O
-X-Google-Smtp-Source: APXvYqy79Bkj7PL8seqwjYyl8LMQJ65ugfRbFQlWMlZ7heJMuc6B3ps1sMfY+eDhcgAuCgguknh49A==
-X-Received: by 2002:a0c:87ec:: with SMTP id 41mr28129758qvk.196.1561034389252;
-        Thu, 20 Jun 2019 05:39:49 -0700 (PDT)
+        bh=pbcrH8ESIbLdoWVIfm3pwtVv1JLd7AyetIHY6AjIq3U=;
+        b=BSe1DI2TH1/nGvsWz4r09LnucXU4DH0TVZtTLqdYLKgMhRE4J5w9FDYhurBZQgxEt8
+         xlU12FTCoOVt4FVv0yxn9IhBWQ/ATi8i1Ak22svBfzJeyirmfZvgFRmplyceVG4Z3cuK
+         NLTMV9/30pRz6IfNAwFsMc2PLZTdoN49gVassUEAzyK7HRxxckcXMXAapxW6fB8Bj70k
+         fwJz6AOfP+YMmSu04NcR0BJ3n4zLl61OnOqpli3JjT207NAa1P9+JVyF64T6M1Azo0gv
+         olF2GdbdcccvUqtmUuAytpovEsliEaKY4BJQicqJLr3w+V4z7HvsIwuWOvri4GHF2h5f
+         YExw==
+X-Gm-Message-State: APjAAAWmKwbgo9IIH8XE+PeNNU2GWRUO3Wz/QStPY51zpFW6X6Owk6E6
+        cRXbZ6AKLq/K8ilZcAtWceDbZVlN
+X-Google-Smtp-Source: APXvYqyZwaotQhPVXqrSYKDrb8QE2JILq5Z1TVCtvsgNqjxfW6sXmV4f8QiXu4fOvnZAzvboLVy+gA==
+X-Received: by 2002:a37:6a87:: with SMTP id f129mr21648507qkc.183.1561034534324;
+        Thu, 20 Jun 2019 05:42:14 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:a934:2ce3:312e:b671? ([2001:4898:a800:1010:5a6a:2ce3:312e:b671])
-        by smtp.gmail.com with ESMTPSA id y16sm10103225qkf.93.2019.06.20.05.39.47
+        by smtp.gmail.com with ESMTPSA id k33sm12369663qte.69.2019.06.20.05.42.13
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jun 2019 05:39:48 -0700 (PDT)
-Subject: Re: [PATCH 2/2] sha1-file: use OBJECT_INFO_NO_FETCH_IF_MISSING
-To:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20190620083026.14524-1-chriscool@tuxfamily.org>
- <20190620083026.14524-3-chriscool@tuxfamily.org>
- <20190620085009.GC3952@sigill.intra.peff.net>
+        Thu, 20 Jun 2019 05:42:13 -0700 (PDT)
+Subject: Re: [PATCH] delta-islands: respect progress flag
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20190620085832.GA5039@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d88ac28b-638b-89c0-2bfb-634a0bb6ca4c@gmail.com>
-Date:   Thu, 20 Jun 2019 08:39:47 -0400
+Message-ID: <77c41405-2270-1a48-2277-533f26ac1530@gmail.com>
+Date:   Thu, 20 Jun 2019 08:42:13 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
  Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <20190620085009.GC3952@sigill.intra.peff.net>
+In-Reply-To: <20190620085832.GA5039@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,24 +69,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/20/2019 4:50 AM, Jeff King wrote:
-> On Thu, Jun 20, 2019 at 10:30:26AM +0200, Christian Couder wrote:
+On 6/20/2019 4:58 AM, Jeff King wrote:
+> The delta island code always prints "Marked %d islands", even if
+> progress has been suppressed with --no-progress or by sending stderr to
+> a non-tty.
 > 
->> Currently the OBJECT_INFO_FOR_PREFETCH flag is used to check
->> if we should fetch objects from promisor remotes when we
->> haven't found them elsewhere.
->>
->> Now that OBJECT_INFO_NO_FETCH_IF_MISSING exists, let's use
->> it instead to be more correct in case this new flag is ever
->> used without OBJECT_INFO_QUICK.
+> Let's pass a progress boolean to load_delta_islands(). We already do
+> the same thing for the progress meter in resolve_tree_islands().
 > 
-> I said earlier that this one would need to be tweaked for the new
-> upstream name. But actually, I think it is not necessary after Stolee's
-> patch.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Arguably this should be a real progress meter that counts up, but I'm
+> not sure what it should be counting. Refs we analyzed? Islands found?
+> Unless you have a ton of refs, it doesn't really matter, so I just
+> punted on that part for now and only fixed the egregious bug. :)
 
-Yes, I believe that 31f5256c82  does an equivalent thing to the
-combination of these patches.
+I agree that the first goal should be to stop writing 'progress' output
+to stderr when progress is disabled. Changing this to a full progress
+indicator can be done on top of this patch later (without changing the
+method prototypes again) if desired.
 
-Thanks,
+LGTM.
 -Stolee
 
