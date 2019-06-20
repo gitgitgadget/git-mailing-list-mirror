@@ -8,87 +8,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C10811F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 12:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D53A1F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 14:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730886AbfFTMmP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 08:42:15 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:35003 "EHLO
+        id S1726838AbfFTOC3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 10:02:29 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:35000 "EHLO
         mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbfFTMmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 08:42:15 -0400
-Received: by mail-qk1-f196.google.com with SMTP id l128so1784792qke.2
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 05:42:15 -0700 (PDT)
+        with ESMTP id S1726551AbfFTOC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 10:02:29 -0400
+Received: by mail-qk1-f196.google.com with SMTP id l128so1975704qke.2
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 07:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=pbcrH8ESIbLdoWVIfm3pwtVv1JLd7AyetIHY6AjIq3U=;
-        b=cliP9HhldVKB/qooGGkjLJ3OQrSygCPgV2U9yEJX9sl8lvG2yp65oDg4VRLTq38vdi
-         SwcTWhh7SHmJxwMrKgnOX/WvttIfi3jUX/bXwiz5Os8ihwlIKCsSId8jb3P0pcM7Trw5
-         +P3cQmWy8fgF0YT3eveXZ1tKu1B3pEWSNEVpvJWT1h5WNIMVAIV0TPtvVmYQx1s+SXZ3
-         dFlpCRzTwFs1bapD8C2LHGOtsdh0R7h5/RQuS1JfXDeQx/RB+4jG7T4x+e2ypMjr2Szz
-         G615jd3tXd61n++CvsRe3yeefFztX04yA5BjlSn6Uu/54NAShqRoDnARuow9Ugjy6lEf
-         MeyA==
+        bh=UCgR+XE/850W0w6INdm4wv/yI93vykv1S/kvAsXM8UI=;
+        b=LLA3YNnxGblDk2kMyVUha0CTBK48zD3Rhye/Rk4F30g+0Lxs+VTbpfyOkcfVosrwPF
+         7LacVv7RDkyvOoCzUb8BlAp6GBAFO2BJez1mnLPQBCGWcZ5lg+k01VJxlSnzCiXuJV76
+         3/Ek8iGBZbx9rH6JBVZ7hxZ4uMSpaCBhWNroh5/ao+P5NphN+9yGEuU5XR0RHg1ctAvp
+         5vAbFbuRamdNzuIAbdzla9JF0kQOrgeezKrmKdsiHYQ8SmXpOFsyLHDM99j5Y7PzBG/s
+         nNm5NrA7IpUg69vAyJqp+VJS2LdXlUn6Pbxz+hc4+AiU0VUlW2YrBzspPANU/nWMVDpo
+         Sb2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=pbcrH8ESIbLdoWVIfm3pwtVv1JLd7AyetIHY6AjIq3U=;
-        b=BSe1DI2TH1/nGvsWz4r09LnucXU4DH0TVZtTLqdYLKgMhRE4J5w9FDYhurBZQgxEt8
-         xlU12FTCoOVt4FVv0yxn9IhBWQ/ATi8i1Ak22svBfzJeyirmfZvgFRmplyceVG4Z3cuK
-         NLTMV9/30pRz6IfNAwFsMc2PLZTdoN49gVassUEAzyK7HRxxckcXMXAapxW6fB8Bj70k
-         fwJz6AOfP+YMmSu04NcR0BJ3n4zLl61OnOqpli3JjT207NAa1P9+JVyF64T6M1Azo0gv
-         olF2GdbdcccvUqtmUuAytpovEsliEaKY4BJQicqJLr3w+V4z7HvsIwuWOvri4GHF2h5f
-         YExw==
-X-Gm-Message-State: APjAAAWmKwbgo9IIH8XE+PeNNU2GWRUO3Wz/QStPY51zpFW6X6Owk6E6
-        cRXbZ6AKLq/K8ilZcAtWceDbZVlN
-X-Google-Smtp-Source: APXvYqyZwaotQhPVXqrSYKDrb8QE2JILq5Z1TVCtvsgNqjxfW6sXmV4f8QiXu4fOvnZAzvboLVy+gA==
-X-Received: by 2002:a37:6a87:: with SMTP id f129mr21648507qkc.183.1561034534324;
-        Thu, 20 Jun 2019 05:42:14 -0700 (PDT)
+        bh=UCgR+XE/850W0w6INdm4wv/yI93vykv1S/kvAsXM8UI=;
+        b=m9cBfPuumIlqvVTYUITWR54RwoWo54clCBej8yxa1qvwjRCzqbnnLUMYAzznAjvtJx
+         jls2Lub/LPE6ZtpYVJL53scLMAhi4upKZWMMhFCz0vo3hB0WyOtcJOQYXjT3lj2+EMpD
+         aR6idPwRY+lYdV9cPB6+PwSL+Yrnd0RORcRTFp2KkRgys56BiFCX0+x1yxQYZPkQcQ5e
+         ZWL2F7/PTJl7b90QEXlFpsn/1smLrqjV12f/hITAYygLVMyPXAtRkTtPFlNtKVnsUy29
+         YYhX4OrP1XgT9Vlr6QjMldO2C/LUmeho0pt2Gb40auAXkSPVkkpSb+YnjgONGsS2TevZ
+         uaDQ==
+X-Gm-Message-State: APjAAAWDlIczO+yVczoYngjih4Zx/+/jTJo6skvf9Z4hpd3ZAftTH8Ah
+        eMgqG55YMJI8bgdIw2eHjCUUV4fi
+X-Google-Smtp-Source: APXvYqxraCzaHkM/Oi4V8jQktzdgkOO2a3zAT4I9Vhjuad0UgSoY3Wpg7ExvV0+r35UyLXDQafefcg==
+X-Received: by 2002:a37:e506:: with SMTP id e6mr37709832qkg.229.1561039348080;
+        Thu, 20 Jun 2019 07:02:28 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:a934:2ce3:312e:b671? ([2001:4898:a800:1010:5a6a:2ce3:312e:b671])
-        by smtp.gmail.com with ESMTPSA id k33sm12369663qte.69.2019.06.20.05.42.13
+        by smtp.gmail.com with ESMTPSA id s8sm643820qkg.64.2019.06.20.07.02.26
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jun 2019 05:42:13 -0700 (PDT)
-Subject: Re: [PATCH] delta-islands: respect progress flag
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20190620085832.GA5039@sigill.intra.peff.net>
+        Thu, 20 Jun 2019 07:02:26 -0700 (PDT)
+Subject: Re: [PATCH 2/4] switch: allow to switch in the middle of bisect
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20190620095523.10003-1-pclouds@gmail.com>
+ <20190620095523.10003-3-pclouds@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <77c41405-2270-1a48-2277-533f26ac1530@gmail.com>
-Date:   Thu, 20 Jun 2019 08:42:13 -0400
+Message-ID: <446ace86-714f-9109-99d8-95554ceaf26b@gmail.com>
+Date:   Thu, 20 Jun 2019 10:02:26 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
  Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <20190620085832.GA5039@sigill.intra.peff.net>
+In-Reply-To: <20190620095523.10003-3-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/20/2019 4:58 AM, Jeff King wrote:
-> The delta island code always prints "Marked %d islands", even if
-> progress has been suppressed with --no-progress or by sending stderr to
-> a non-tty.
+On 6/20/2019 5:55 AM, Nguyễn Thái Ngọc Duy wrote:
+> In c45f0f525d (switch: reject if some operation is in progress,
+> 2019-03-29), a check is added to prevent switching when some operation
+> is in progress. The reason is it's often not safe to do so.
 > 
-> Let's pass a progress boolean to load_delta_islands(). We already do
-> the same thing for the progress meter in resolve_tree_islands().
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Arguably this should be a real progress meter that counts up, but I'm
-> not sure what it should be counting. Refs we analyzed? Islands found?
-> Unless you have a ton of refs, it doesn't really matter, so I just
-> punted on that part for now and only fixed the egregious bug. :)
+> This is true for merge, am, rebase, cherry-pick and revert, but not so
+> much for bisect because bisecting is basically jumping/switching between
+> a bunch of commits to pin point the first bad one. git-bisect suggests
+> the next commit to test, but it's not wrong for the user to test a
+> different commit because git-bisect cannot have the knowledge to know
+> better.
 
-I agree that the first goal should be to stop writing 'progress' output
-to stderr when progress is disabled. Changing this to a full progress
-indicator can be done on top of this patch later (without changing the
-method prototypes again) if desired.
+When a user switches commits during a bisect, it can just create new
+known-good or known-bad commits, right? It won't mess up the next
+selection of a test commit? I'm imagining someone jumping to a commit
+between two known-bad commits or something, when it is more likely that
+they are jumping to a parallel history.
 
-LGTM.
+> For this reason, allow to switch when bisecting (*). I considered if we
+> should still prevent switching by default and allow it with
+> --ignore-in-progress. But I don't think the prevention really adds
+> anything much.
+>
+> If the user switches away by mistake, since we print the previous HEAD
+> value, even if they don't know about the "-" shortcut, switching back is
+> still possible.
+
+I tell everyone I know about the "-" shortcut, and I'm always surprised
+they didn't already know about "cd -".
+
+> The warning will be printed on every switch while bisect is still
+> ongoing, not the first time you switch away from bisect's suggested
+> commit, so it could become a bit annoying.
+
+I think a one-line warning is fine, as a power user doing this a lot
+will develop blinders that ignore the message as they switch during
+a bisect.
+
 -Stolee
-
