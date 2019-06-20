@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14A081F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 08:30:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 850551F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 08:30:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfFTIax (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 04:30:53 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37734 "EHLO
+        id S1726445AbfFTIay (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 04:30:54 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40893 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfFTIax (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726175AbfFTIax (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 Jun 2019 04:30:53 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f17so2201303wme.2
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 01:30:51 -0700 (PDT)
+Received: by mail-wm1-f65.google.com with SMTP id v19so2183460wmj.5
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 01:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8wu9UaVCsfg4L73n6wmdVpb/edyPW2DqYki4l8ldtxI=;
-        b=BY4w7ytKhxJucvrvzfLmlrkWtefABrYIkBYw/wSjEcBKCQEgt1h7ROUAvoYuiAL8dv
-         STaVQPtm5mDuk20H4+NYcnAK3AoywaFnqExhj7nGhhEaE0SzBuWtJM3+r0bFvtawO/iE
-         sjI0G/zzN8587AcjppietjqNAS9wJY14ZsvrM5QJfdWfCXi9wbO0UnM5WXrMoLTuGL9m
-         rFwJ7PCUsvmr2n+nfLoTkTia/ndLcHLZqHE+BQsK3pxE3l3HfyV0cSOOZS5NOcTYaWEv
-         A+7TDnLPVlDesvnSIaoQEyfJS6cA+ISTizo76dLzgk2hk2474aFYnLsgJW6u7yBmfpNh
-         XqEg==
+        bh=bAy/tuS4kuRcRk9ClUC32w5qgALHhZumXtI3PYos/M8=;
+        b=QbSxj4OySuHRmGPxNzlXILF9chCnRTw/5nfUMrd3G4euJp54LLnB3ZAIdQoOIiwHeI
+         Z5TXSbGSIkVPRoWJAYhpBxoY1lC8gKELwS+YSLcOPQ/qT/5fHepAwwmEJb57BXET5TyZ
+         Rv8uR3bnp0t3ykNVjzt+NCBA6vyOePmIKht5gM7iNscgszUFYqmqobGncMOSb/8Qp6WY
+         gn4Zlu7TL2oIjt+2v/UYY9l/gXfB1tdnRU/upz77ccgFghMfQtNjKMBfGZGJbnK/Qoby
+         GWJeiEjlHSYGrjF8GyYNppBhFjMEpCMq/7pyTrv9vR01gnLVItDMkoHZt6Rw47SCZszc
+         D0oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8wu9UaVCsfg4L73n6wmdVpb/edyPW2DqYki4l8ldtxI=;
-        b=CCFyzBOJFV9xIjenHI8C7a0AkB3htdwDzhFMG0uQhAm+wdLtYTmbXXMJho2Ojh5BBK
-         gnsRfG85bijSB5jSAFIDrL/IgREOcMQz7FbsU0J8Q53kyTKPDqR6S9XxAt/P8teY2CtV
-         PKn8Q8fUkdWI4QGvuv1hkxNDrOH/udlH9g4161O9Del/+Wx65GlKrcH6GPNtOoSOg11B
-         XFX66cmT99oKIQt88q0QrzcPg0va4AlURzmI+XrSvmAaTJ8VMXEj60VYbr/USnwZ5jTm
-         +U3c4sEvk75UtpN6GNsCwfAcdgc2icA4GNatAGnDjTUCiuhjDeGbu7ofBqV1zNyLKiKS
-         GJ2w==
-X-Gm-Message-State: APjAAAXCSR38VOdfvjLMzhkJ3B7XAHjxPzIXhyl5jICY1kpsSZcyWoZ6
-        VaYTp+Sv34Xhmu7hR8309XCy+rVGCEY=
-X-Google-Smtp-Source: APXvYqwMEEPiN+AxPgIa1K1szR3P8HJYYS04g2lTRkKe/VjI8f5E6zx+UQuJEPQ+/JPopaEUP+H34A==
-X-Received: by 2002:a1c:4d6:: with SMTP id 205mr1643033wme.148.1561019450899;
-        Thu, 20 Jun 2019 01:30:50 -0700 (PDT)
+        bh=bAy/tuS4kuRcRk9ClUC32w5qgALHhZumXtI3PYos/M8=;
+        b=EQFCoVdNYpTgdYx7GzFIrvfIP31UI32KZXIc9VVJVPLQh686wbSKSI9Wh5QWcM8vYr
+         fLTNKhPhqaB2kGdolEuzUNnYTwvMY8lWXZD8i3p5lzljfj151N8NbHIC0DaEW0E+lpa5
+         O9iTy/C2uWlcSASu9jTV5Dp6yHWKjQt2VXZd3DjC/fR+XxMh1UuMKNN5iIcfotNCmMhn
+         h9Z7EwOClS5LOYUKE3rXlZJfjlZwX+W2O8AuUE0jjuawp/igqtRgzWg8S9Zz14TCGDz9
+         UJkf2wmUc0O0IWn8ilm5+K6tonBKMmWclNBRVD/Au6RBxu56G6SqRUU/ZtWB3uYE9xLP
+         t0+Q==
+X-Gm-Message-State: APjAAAV/EvbafdYNVlS19INhTxXhoSKC84PTAEeZcl2N3eZ0sLzgGJkl
+        d7r92YImJTLa7CJsD5MhmFfqKmm2DUw=
+X-Google-Smtp-Source: APXvYqxBIZL6hWFGrByB+pgUTY/RUyDLYRdCVZU8PG/HkcQPHLrRt0IAhR1TIJEBOS9qWsSuwi0Zhw==
+X-Received: by 2002:a1c:6641:: with SMTP id a62mr1693189wmc.175.1561019452139;
+        Thu, 20 Jun 2019 01:30:52 -0700 (PDT)
 Received: from localhost.localdomain (73.38.126.78.rev.sfr.net. [78.126.38.73])
-        by smtp.gmail.com with ESMTPSA id f204sm5578039wme.18.2019.06.20.01.30.49
+        by smtp.gmail.com with ESMTPSA id f204sm5578039wme.18.2019.06.20.01.30.51
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 20 Jun 2019 01:30:50 -0700 (PDT)
+        Thu, 20 Jun 2019 01:30:51 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/2] object-store: introduce OBJECT_INFO_NO_FETCH_IF_MISSING
-Date:   Thu, 20 Jun 2019 10:30:25 +0200
-Message-Id: <20190620083026.14524-2-chriscool@tuxfamily.org>
+Subject: [PATCH 2/2] sha1-file: use OBJECT_INFO_NO_FETCH_IF_MISSING
+Date:   Thu, 20 Jun 2019 10:30:26 +0200
+Message-Id: <20190620083026.14524-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190620083026.14524-1-chriscool@tuxfamily.org>
 References: <20190620083026.14524-1-chriscool@tuxfamily.org>
@@ -70,43 +70,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fetch_if_missing global variable should be replaced as much
-as possible by passing a flag to oid_object_info_extended().
+Currently the OBJECT_INFO_FOR_PREFETCH flag is used to check
+if we should fetch objects from promisor remotes when we
+haven't found them elsewhere.
 
-The existing OBJECT_INFO_FOR_PREFETCH unfortunately conflates
-both a "no fetch if missing" meaning with OBJECT_INFO_QUICK
-which is about retrying packed storage.
-
-Let's disambiguate that by adding a new explicit
-OBJECT_INFO_NO_FETCH_IF_MISSING flag.
+Now that OBJECT_INFO_NO_FETCH_IF_MISSING exists, let's use
+it instead to be more correct in case this new flag is ever
+used without OBJECT_INFO_QUICK.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- object-store.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sha1-file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/object-store.h b/object-store.h
-index 272e01e452..02c1795d50 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -277,10 +277,15 @@ struct object_info {
- #define OBJECT_INFO_IGNORE_LOOSE 16
- /*
-  * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-- * nonzero). This is meant for bulk prefetching of missing blobs in a partial
-+ * nonzero).
-+ */
-+#define OBJECT_INFO_NO_FETCH_IF_MISSING 32
-+/*
-+ * This is meant for bulk prefetching of missing blobs in a partial
-  * clone. Implies OBJECT_INFO_QUICK.
-  */
--#define OBJECT_INFO_FOR_PREFETCH (32 + OBJECT_INFO_QUICK)
-+#define OBJECT_INFO_FOR_PREFETCH \
-+  (OBJECT_INFO_NO_FETCH_IF_MISSING + OBJECT_INFO_QUICK)
- 
- int oid_object_info_extended(struct repository *r,
- 			     const struct object_id *,
+diff --git a/sha1-file.c b/sha1-file.c
+index ed5c50dac4..2116ff1e70 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1379,7 +1379,7 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 		/* Check if it is a missing object */
+ 		if (fetch_if_missing && repository_format_partial_clone &&
+ 		    !already_retried && r == the_repository &&
+-		    !(flags & OBJECT_INFO_FOR_PREFETCH)) {
++		    !(flags & OBJECT_INFO_NO_FETCH_IF_MISSING)) {
+ 			/*
+ 			 * TODO Investigate having fetch_object() return
+ 			 * TODO error/success and stopping the music here.
 -- 
 2.22.0
 
