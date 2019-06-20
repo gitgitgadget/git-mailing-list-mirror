@@ -7,25 +7,25 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60EF31F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 07:41:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B65D1F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 07:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730611AbfFTHle (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 03:41:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45404 "HELO cloud.peff.net"
+        id S1730660AbfFTHli (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 03:41:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45432 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726732AbfFTHle (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 03:41:34 -0400
-Received: (qmail 16665 invoked by uid 109); 20 Jun 2019 07:41:33 -0000
+        id S1726732AbfFTHli (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 03:41:38 -0400
+Received: (qmail 16693 invoked by uid 109); 20 Jun 2019 07:41:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 07:41:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 07:41:37 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12907 invoked by uid 111); 20 Jun 2019 07:42:22 -0000
+Received: (qmail 12944 invoked by uid 111); 20 Jun 2019 07:42:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 03:42:22 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 03:42:26 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 03:41:32 -0400
-Date:   Thu, 20 Jun 2019 03:41:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 03:41:35 -0400
+Date:   Thu, 20 Jun 2019 03:41:35 -0400
 From:   Jeff King <peff@peff.net>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -33,8 +33,8 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 12/17] delta-islands: convert island_marks khash to use oids
-Message-ID: <20190620074131.GL3713@sigill.intra.peff.net>
+Subject: [PATCH 13/17] pack-bitmap: convert khash_sha1 maps into kh_oid_map
+Message-ID: <20190620074135.GM3713@sigill.intra.peff.net>
 References: <20190620073952.GA1539@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,114 +45,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of the users of this map have an actual "struct object_id" rather
-than a bare sha1. Let's use the more descriptive type (and get one step
-closer to dropping khash_sha1 entirely).
+All of the users of our khash_sha1 maps actually have a "struct
+object_id". Let's use the more descriptive type.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- delta-islands.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ pack-bitmap-write.c | 14 +++++++-------
+ pack-bitmap.c       |  8 ++++----
+ pack-bitmap.h       |  2 +-
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/delta-islands.c b/delta-islands.c
-index 5f3ab914f5..88d102298c 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -22,7 +22,7 @@
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 0637378533..fa78a460c9 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -28,8 +28,8 @@ struct bitmap_writer {
+ 	struct ewah_bitmap *blobs;
+ 	struct ewah_bitmap *tags;
  
- KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)
+-	khash_sha1 *bitmaps;
+-	khash_sha1 *reused;
++	kh_oid_map_t *bitmaps;
++	kh_oid_map_t *reused;
+ 	struct packing_data *to_pack;
  
--static khash_sha1 *island_marks;
-+static kh_oid_map_t *island_marks;
- static unsigned island_counter;
- static unsigned island_counter_core;
- 
-@@ -105,7 +105,7 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
- 	 * If we don't have a bitmap for the target, we can delta it
- 	 * against anything -- it's not an important object
- 	 */
--	trg_pos = kh_get_sha1(island_marks, trg_oid->hash);
-+	trg_pos = kh_get_oid_map(island_marks, *trg_oid);
- 	if (trg_pos >= kh_end(island_marks))
- 		return 1;
- 
-@@ -113,7 +113,7 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
- 	 * if the source (our delta base) doesn't have a bitmap,
- 	 * we don't want to base any deltas on it!
- 	 */
--	src_pos = kh_get_sha1(island_marks, src_oid->hash);
-+	src_pos = kh_get_oid_map(island_marks, *src_oid);
- 	if (src_pos >= kh_end(island_marks))
+ 	struct bitmapped_commit *selected;
+@@ -175,7 +175,7 @@ add_to_include_set(struct bitmap *base, struct commit *commit)
+ 	if (bitmap_get(base, bitmap_pos))
  		return 0;
  
-@@ -129,11 +129,11 @@ int island_delta_cmp(const struct object_id *a, const struct object_id *b)
- 	if (!island_marks)
- 		return 0;
+-	hash_pos = kh_get_sha1(writer.bitmaps, commit->object.oid.hash);
++	hash_pos = kh_get_oid_map(writer.bitmaps, commit->object.oid);
+ 	if (hash_pos < kh_end(writer.bitmaps)) {
+ 		struct bitmapped_commit *bc = kh_value(writer.bitmaps, hash_pos);
+ 		bitmap_or_ewah(base, bc->bitmap);
+@@ -256,7 +256,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 	struct bitmap *base = bitmap_new();
+ 	struct rev_info revs;
  
--	a_pos = kh_get_sha1(island_marks, a->hash);
-+	a_pos = kh_get_oid_map(island_marks, *a);
- 	if (a_pos < kh_end(island_marks))
- 		a_bitmap = kh_value(island_marks, a_pos);
+-	writer.bitmaps = kh_init_sha1();
++	writer.bitmaps = kh_init_oid_map();
+ 	writer.to_pack = to_pack;
  
--	b_pos = kh_get_sha1(island_marks, b->hash);
-+	b_pos = kh_get_oid_map(island_marks, *b);
- 	if (b_pos < kh_end(island_marks))
- 		b_bitmap = kh_value(island_marks, b_pos);
+ 	if (writer.show_progress)
+@@ -311,7 +311,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 		if (i >= reuse_after)
+ 			stored->flags |= BITMAP_FLAG_REUSE;
  
-@@ -154,7 +154,7 @@ static struct island_bitmap *create_or_get_island_marks(struct object *obj)
- 	khiter_t pos;
- 	int hash_ret;
+-		hash_pos = kh_put_sha1(writer.bitmaps, object->oid.hash, &hash_ret);
++		hash_pos = kh_put_oid_map(writer.bitmaps, object->oid, &hash_ret);
+ 		if (hash_ret == 0)
+ 			die("Duplicate entry when writing index: %s",
+ 			    oid_to_hex(&object->oid));
+@@ -366,7 +366,7 @@ void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack)
+ 	if (!(bitmap_git = prepare_bitmap_git(to_pack->repo)))
+ 		return;
  
--	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
-+	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
- 	if (hash_ret)
- 		kh_value(island_marks, pos) = island_bitmap_new(NULL);
+-	writer.reused = kh_init_sha1();
++	writer.reused = kh_init_oid_map();
+ 	rebuild_existing_bitmaps(bitmap_git, to_pack, writer.reused,
+ 				 writer.show_progress);
+ 	/*
+@@ -382,7 +382,7 @@ static struct ewah_bitmap *find_reused_bitmap(const struct object_id *oid)
+ 	if (!writer.reused)
+ 		return NULL;
  
-@@ -167,7 +167,7 @@ static void set_island_marks(struct object *obj, struct island_bitmap *marks)
- 	khiter_t pos;
- 	int hash_ret;
+-	hash_pos = kh_get_sha1(writer.reused, oid->hash);
++	hash_pos = kh_get_oid_map(writer.reused, *oid);
+ 	if (hash_pos >= kh_end(writer.reused))
+ 		return NULL;
  
--	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
-+	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
- 	if (hash_ret) {
- 		/*
- 		 * We don't have one yet; make a copy-on-write of the
-@@ -279,7 +279,7 @@ void resolve_tree_islands(struct repository *r,
- 		struct name_entry entry;
- 		khiter_t pos;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 998133588f..ed2befaac6 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1041,7 +1041,7 @@ static int rebuild_bitmap(uint32_t *reposition,
  
--		pos = kh_get_sha1(island_marks, ent->idx.oid.hash);
-+		pos = kh_get_oid_map(island_marks, ent->idx.oid);
- 		if (pos >= kh_end(island_marks))
- 			continue;
- 
-@@ -456,7 +456,7 @@ static void deduplicate_islands(struct repository *r)
- 
- void load_delta_islands(struct repository *r)
+ int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
+ 			     struct packing_data *mapping,
+-			     khash_sha1 *reused_bitmaps,
++			     kh_oid_map_t *reused_bitmaps,
+ 			     int show_progress)
  {
--	island_marks = kh_init_sha1();
-+	island_marks = kh_init_oid_map();
- 	remote_islands = kh_init_str();
+ 	uint32_t i, num_objects;
+@@ -1080,9 +1080,9 @@ int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
+ 			if (!rebuild_bitmap(reposition,
+ 					    lookup_stored_bitmap(stored),
+ 					    rebuild)) {
+-				hash_pos = kh_put_sha1(reused_bitmaps,
+-						       stored->oid.hash,
+-						       &hash_ret);
++				hash_pos = kh_put_oid_map(reused_bitmaps,
++							  stored->oid,
++							  &hash_ret);
+ 				kh_value(reused_bitmaps, hash_pos) =
+ 					bitmap_to_ewah(rebuild);
+ 			}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index ee9792264c..00de3ec8e4 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -51,7 +51,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+ 				       struct packed_git **packfile,
+ 				       uint32_t *entries, off_t *up_to);
+ int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
+-			     khash_sha1 *reused_bitmaps, int show_progress);
++			     kh_oid_map_t *reused_bitmaps, int show_progress);
+ void free_bitmap_index(struct bitmap_index *);
  
- 	git_config(island_config_callback, NULL);
-@@ -468,7 +468,7 @@ void load_delta_islands(struct repository *r)
- 
- void propagate_island_marks(struct commit *commit)
- {
--	khiter_t pos = kh_get_sha1(island_marks, commit->object.oid.hash);
-+	khiter_t pos = kh_get_oid_map(island_marks, commit->object.oid);
- 
- 	if (pos < kh_end(island_marks)) {
- 		struct commit_list *p;
-@@ -490,7 +490,7 @@ int compute_pack_layers(struct packing_data *to_pack)
- 
- 	for (i = 0; i < to_pack->nr_objects; ++i) {
- 		struct object_entry *entry = &to_pack->objects[i];
--		khiter_t pos = kh_get_sha1(island_marks, entry->idx.oid.hash);
-+		khiter_t pos = kh_get_oid_map(island_marks, entry->idx.oid);
- 
- 		oe_set_layer(to_pack, entry, 1);
- 
+ /*
 -- 
 2.22.0.732.g5402924b4b
 
