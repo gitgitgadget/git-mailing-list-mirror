@@ -2,84 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1DF1F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 17:38:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCADA1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 17:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbfFTRi1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 13:38:27 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:38645 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726526AbfFTRi1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 13:38:27 -0400
-Received: by mail-pl1-f202.google.com with SMTP id s22so2017659plp.5
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 10:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=fAz5+lF1C0tfqgoAnkQxSHnqmRoflpkqUEh04aT6vww=;
-        b=Hplws0MDHzLRuoz2cnLT/kSGTnJ3UgDFpmkkFW29GXNWl6TvP0bG6p7f/pPKAtp6sQ
-         /H2Wg7uYYOWuFppeRPSQBpxn6r0P6EVSXr4OembqYn7OGZ/CTHrMKlZdk5M275B7FKHH
-         KyDlf6BxqxuuLiaeSB4dYucjpHCUBbCrWnfLb2uoWPkggY9vL/6e/Ztv0NE2Zc5UC4qR
-         RUbyN9Py5YNRsTwSfhVU+MtLW+HLZTe/o3urgn9uZU74hCWvyNk333GrecdlZEDuW4Kv
-         Ibsn78BiZKVceg+JA6UTA8iUQveoVo9VSD5476Rf7+9sr3Whae0nvwpeyzUktcNVvBrg
-         /MeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=fAz5+lF1C0tfqgoAnkQxSHnqmRoflpkqUEh04aT6vww=;
-        b=RIRiwMGGGuqFR4D94R1b0zzydWXBj+LJcoEkUcNameOhRk+DD5tLCO+FRcHemB0MaX
-         19G8IBgBadTgeEq37lZlphSfzrLkIOnHf9RZPF1aBskI83SvG1Xjc2BcblIslBG0+tQZ
-         lB+Xpi1+MzaXJPzWZd2BD52+m+eCc0Dr273KWS03+AQGheCWSkgVYa3cBwCWKpWuGrHu
-         BIOV4dzL8XP2h/xzpaGjLklHEyka9gyym9bxMjov39HtXGkAhMYgxc1CVBBXzQdDraux
-         Rg+6zeOoVi7mnGxUoJuajSfFr5LrxTTBP0EIScHkpZdx6q0nfRuT0yfZEiaMTTP9V6Ib
-         oZIQ==
-X-Gm-Message-State: APjAAAVx/uRp6jJQPa5JrmJagaSvB4wxba7rPPvRY6cXvOxo67ldtMer
-        deA71Lywqs/KlUHxtWgizwAGGHCIapk3y+i/EgPA
-X-Google-Smtp-Source: APXvYqx2ydvcHc7P4HexFFZZnqXNrFhASRspzl2KQGJ0wIYGPvsPs3lKEJGVZwiPPpp+NO6oPajCDjWJmTaZDKUeK5Dn
-X-Received: by 2002:a63:231c:: with SMTP id j28mr13692497pgj.430.1561052306692;
- Thu, 20 Jun 2019 10:38:26 -0700 (PDT)
-Date:   Thu, 20 Jun 2019 10:38:23 -0700
-In-Reply-To: <20190620074131.GL3713@sigill.intra.peff.net>
-Message-Id: <20190620173823.23374-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190620074131.GL3713@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: Re: [PATCH 12/17] delta-islands: convert island_marks khash to use oids
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726675AbfFTRlz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 13:41:55 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52392 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726530AbfFTRly (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 13:41:54 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B7D0D616B8;
+        Thu, 20 Jun 2019 13:41:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zh0RYDemkxJR0B0m3cydo3e56XM=; b=VeQDNk
+        QzyGFVpJk6CzHTuf1F6N//OpN9VGx06o1Kz+y35nC1M/2GWrWvBSVdy0jkIeDykd
+        yUVFfAO7wv7XInxvl/R7RywhErItrh9YFNAV+4XKER155bzmvAhej85HBns94Bjq
+        /R4mrA56lQRM+PUOy23OmN1Pyle1ObyOztLrM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SHLpe4+afHJFdcfeeBA2TRhixl0bDj5k
+        tDqDBK2u9R8ZYlc9r7ebzWXLRJjtrxVFs6+o6XnLCoPNmarU6JRFwXRrfMwX3okC
+        iiXvc7TBxsJGnEM/uEM2EqVr2ww1WxOp8pu/UuRXOBn+J3izo7V5kBRpDRpcziAl
+        sVTS/h/2jx0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEBE1616B5;
+        Thu, 20 Jun 2019 13:41:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D09E1616B4;
+        Thu, 20 Jun 2019 13:41:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 16/17] hash.h: move object_id definition from cache.h
+References: <20190620073952.GA1539@sigill.intra.peff.net>
+        <20190620074145.GP3713@sigill.intra.peff.net>
+Date:   Thu, 20 Jun 2019 10:41:47 -0700
+In-Reply-To: <20190620074145.GP3713@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 20 Jun 2019 03:41:45 -0400")
+Message-ID: <xmqq1rzop31g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AEC4EECE-9382-11E9-AB96-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -105,7 +105,7 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
->  	 * If we don't have a bitmap for the target, we can delta it
->  	 * against anything -- it's not an important object
->  	 */
-> -	trg_pos = kh_get_sha1(island_marks, trg_oid->hash);
-> +	trg_pos = kh_get_oid_map(island_marks, *trg_oid);
+Jeff King <peff@peff.net> writes:
 
-[snip]
+> Our hashmap.h helpfully defines a sha1hash() function. But it cannot
+> define a similar oidhash() without including all of cache.h, which
+> itself wants to include hashmap.h! Let's break this circular dependency
+> by moving the definition to hash.h, along with the remaining RAWSZ
+> macros, etc. That will put them with the existing git_hash_algo
+> definition.
+>
+> One alternative would be to move oidhash() into cache.h, but it's
+> already quite bloated. We're better off moving things out than in.
 
-> @@ -154,7 +154,7 @@ static struct island_bitmap *create_or_get_island_marks(struct object *obj)
->  	khiter_t pos;
->  	int hash_ret;
+Makes sense.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  cache.h | 24 ------------------------
+>  hash.h  | 24 ++++++++++++++++++++++++
+>  2 files changed, 24 insertions(+), 24 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index bf20337ef4..37e0b82064 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -43,30 +43,6 @@ int git_deflate_end_gently(git_zstream *);
+>  int git_deflate(git_zstream *, int flush);
+>  unsigned long git_deflate_bound(git_zstream *, unsigned long);
 >  
-> -	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
-> +	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
-
-Thanks for doing this cleanup. The entire series (17 patches) look good
-to me. The only remotely surprising thing to me was that OIDs are passed
-by value on the stack, both for kh_get_oid_map() and kh_put_oid_map(),
-but I see that this is how things currently work (and anyway, changing
-this is beyond the scope of this patch set).
+> -/* The length in bytes and in hex digits of an object name (SHA-1 value). */
+> -#define GIT_SHA1_RAWSZ 20
+> -#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+> -/* The block size of SHA-1. */
+> -#define GIT_SHA1_BLKSZ 64
+> -
+> -/* The length in bytes and in hex digits of an object name (SHA-256 value). */
+> -#define GIT_SHA256_RAWSZ 32
+> -#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
+> -/* The block size of SHA-256. */
+> -#define GIT_SHA256_BLKSZ 64
+> -
+> -/* The length in byte and in hex digits of the largest possible hash value. */
+> -#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
+> -#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
+> -/* The largest possible block size for any supported hash. */
+> -#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
+> -
+> -struct object_id {
+> -	unsigned char hash[GIT_MAX_RAWSZ];
+> -};
+> -
+> -#define the_hash_algo the_repository->hash_algo
+> -
+>  #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+>  #define DTYPE(de)	((de)->d_type)
+>  #else
+> diff --git a/hash.h b/hash.h
+> index 661c9f2281..52a4f1a3f4 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -139,4 +139,28 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+>  	return p - hash_algos;
+>  }
+>  
+> +/* The length in bytes and in hex digits of an object name (SHA-1 value). */
+> +#define GIT_SHA1_RAWSZ 20
+> +#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+> +/* The block size of SHA-1. */
+> +#define GIT_SHA1_BLKSZ 64
+> +
+> +/* The length in bytes and in hex digits of an object name (SHA-256 value). */
+> +#define GIT_SHA256_RAWSZ 32
+> +#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
+> +/* The block size of SHA-256. */
+> +#define GIT_SHA256_BLKSZ 64
+> +
+> +/* The length in byte and in hex digits of the largest possible hash value. */
+> +#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
+> +#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
+> +/* The largest possible block size for any supported hash. */
+> +#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
+> +
+> +struct object_id {
+> +	unsigned char hash[GIT_MAX_RAWSZ];
+> +};
+> +
+> +#define the_hash_algo the_repository->hash_algo
+> +
+>  #endif
