@@ -2,71 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6CFE1F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 14:21:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAB921F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 14:32:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729563AbfFTOVq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 10:21:46 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:59356 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726391AbfFTOVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 10:21:46 -0400
-Received: from [10.0.2.15] ([87.115.253.20])
-        by smtp with ESMTPA
-        id dxwchLMfiaslVdxwdhkSrd; Thu, 20 Jun 2019 15:21:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1561040505; bh=UWrR7paVjeyXcICyHEahgoQZrvTFNo0Bye2P6jJfmF0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=EkAIBDb6+8Hp+FwZPn1CuJ3rgkRnxLitn4sVC0LEpHb59odV2shZwEv0R9kHiLcIA
-         HkIk8N/lVAYKh7gOJvuKfsGYwrc4ztLwLMZvcfqEHcFEgM6IcX28spEiVQhRD2S6Er
-         vnnDNqYh+aL+FWMiYPTfLYP4tno5VU1WKV/oLxkH58sRSHHzzoVA/jK3185DWr9mPa
-         /2LYho15vP07V6Hd6qhnwwPovflqWmO4DGQeA1TH3Z2Yi2ZrnGu339G3jYBCglC+cP
-         8pvSfHUTDwF7E8cfTrl/Ec3VyNVz/nLba0dgQ+NvcZOV6cn/SZdsJrJYUIej4WCn3E
-         zp/b2MGmXtuUA==
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=bfsVr9HB c=1 sm=1 tr=0
- a=ceBz2RPxfYaxgFK6o8vNfQ==:117 a=ceBz2RPxfYaxgFK6o8vNfQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=WRhvg1l36unL36H3UhoA:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 09/17] object: convert create_object() to use object_id
-To:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20190620073952.GA1539@sigill.intra.peff.net>
- <20190620074121.GI3713@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <b69ddbda-b24f-bb67-30b3-206fd21c2e53@ramsayjones.plus.com>
-Date:   Thu, 20 Jun 2019 15:21:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+        id S1726697AbfFTOcg convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 20 Jun 2019 10:32:36 -0400
+Received: from mx0.karlstorz.com ([62.134.46.134]:26587 "EHLO
+        mx0.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726428AbfFTOcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 10:32:35 -0400
+IronPort-SDR: S71TyuImQyfMOu+zixCcOBFFQgp9oIpkDBkjVzfltjPvlO+odE7pGnZ7sliQ/kFSUbKm13Yur4
+ xmncEVYj5I1+qhsSClTpYn+8jWGjvONgEpbCV5tffZJM0I2YRDOgsmuSjQVkdaj8/sW+8Rrmf+
+ cF2mD2hxWRzJsCqZmZliKuhcxkPdDKLXBiIAed/18Qx1kecJWzwkQheEkfg2eqruNWaRUFQ1CF
+ h0OHNRV/uynm9xeNCpWgBeBNNCOivIapZuwvHBtGd9gNcUyKzm6jqyy88zTV/e6XcRgiS15xJh
+ +iE=
+X-IronPort-AV: E=Sophos;i="5.63,397,1557180000"; 
+   d="scan'208";a="837385"
+Received: from tut-ex04-pv.kstg.corp ([10.0.10.234])
+  by mx0.karlstorz.com with ESMTP/TLS/ECDHE-RSA-AES256-SHA; 20 Jun 2019 16:32:30 +0200
+Received: from TUT-EX01-PV.KSTG.corp ([169.254.1.209]) by
+ TUT-EX04-PV.KSTG.corp ([10.0.10.234]) with mapi id 14.03.0439.000; Thu, 20
+ Jun 2019 16:32:30 +0200
+From:   "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: specifying revision - how to enforce matching a tag/branch-name or
+ revision only
+Thread-Topic: specifying revision - how to enforce matching a
+ tag/branch-name or revision only
+Thread-Index: AdUndPq6jw27fdRITDCM6LgaQQxNWA==
+Date:   Thu, 20 Jun 2019 14:32:29 +0000
+Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
+Accept-Language: de-CH, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.0.10.41]
+x-kse-serverinfo: TUT-EX04-PV.KSTG.corp, 9
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean, bases: 6/20/2019 12:58:00 PM
+x-kse-attachment-filter-scan-result: Clean
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-In-Reply-To: <20190620074121.GI3713@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNvr7k8feShS5RyoLoIYrfkB44VEuTA+Af8kKa+MLbsYZNRKmMxIqtixz19S0+NYplOYz4ccLehw827zNW1VGYd3VTI/Z8wV9iwDePCUho+VLwJDitY6
- mxMtM+ZICwPvvUwHMrkQer6gly3jLwRq062p+VL9pre83yLDKxAN463COS9059T8dfOvKqIcU6gmdw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+I discovered an interesting problem when using `git checkout` to which I couldn't find a good solution. We have an automatic system trying to checkout a branch only when it exists. To do so we check whether `git rev-parse` finds a commit for given branch name:
 
-On 20/06/2019 08:41, Jeff King wrote:
-> There are no callers left of lookup_object() that aren't just passing us
+git rev-parse "${BRANCH_NAME}"  || git rev-parse "refs/remotes/${UPSTREAM}/${BRANCH_NAME}"
 
-s/lookup_object/create_object/
+Unfortunately somebody used the branch name "add-gcc10" and `git rev-parse` which didn't exist on one repository. However `git rev-parse`
+also supports to parse the `git-describe` format which resulted in checkout a commit starting with "cc10".
 
-ATB,
-Ramsay Jones
+We saw a similar problem with disambiguation of tag and branch-name. If there any possibility to enforce that `git checkout` and other commands such `git rev-parse` handle a revision as a specific type (branch, tag, commit-id). Is there something like
+`git checkout name@{branch}`  or `git checkout name@{tag}` similar to other rev-parse format such as  `branch@{upstream}`.
+
+Best Regards
+
+Heiko Böttger
+
