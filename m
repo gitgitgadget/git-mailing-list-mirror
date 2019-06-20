@@ -2,129 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C52B1F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 17:26:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1DF1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 17:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbfFTR0y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 13:26:54 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38960 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbfFTR0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 13:26:54 -0400
-Received: by mail-pf1-f196.google.com with SMTP id j2so2045451pfe.6
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 10:26:53 -0700 (PDT)
+        id S1726661AbfFTRi1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 13:38:27 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:38645 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726526AbfFTRi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 13:38:27 -0400
+Received: by mail-pl1-f202.google.com with SMTP id s22so2017659plp.5
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 10:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NW7bLc85DuRybPeHQwZdX5+x3Oq4NPRBGooLDj8MmCw=;
-        b=EJ+6bSQ/h+FgHmmsTSGhplCCgzVhq481x7+Aysq7HeRz6B7simAnxfebLYsY2qFny4
-         cWRe8panoB1x17R+sncEx0PG0ODOCSxqBe8gBXT1iYaGv/hQU3dAJwOb4UQlF9YZhPeb
-         yPXlLGr7iMAFyAsX+BN4AH+nCm2KPXXIG0NKMJatkSrIz2fnANfOU3SFL7rEI6nr8mTE
-         LKI4knZAuVVRAZyrmP5oMWbNyCEIEqBKPdUTMYNIzCS1TGkKIF2FS2R0OR/1fYZMeW6f
-         dqzw9RPNyPpyv49+tTd6ZpWlvvpIZBaUVOVL7C8g3CKmNhanZhlRA3W8x21Z4M7a+0A7
-         8F7w==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=fAz5+lF1C0tfqgoAnkQxSHnqmRoflpkqUEh04aT6vww=;
+        b=Hplws0MDHzLRuoz2cnLT/kSGTnJ3UgDFpmkkFW29GXNWl6TvP0bG6p7f/pPKAtp6sQ
+         /H2Wg7uYYOWuFppeRPSQBpxn6r0P6EVSXr4OembqYn7OGZ/CTHrMKlZdk5M275B7FKHH
+         KyDlf6BxqxuuLiaeSB4dYucjpHCUBbCrWnfLb2uoWPkggY9vL/6e/Ztv0NE2Zc5UC4qR
+         RUbyN9Py5YNRsTwSfhVU+MtLW+HLZTe/o3urgn9uZU74hCWvyNk333GrecdlZEDuW4Kv
+         Ibsn78BiZKVceg+JA6UTA8iUQveoVo9VSD5476Rf7+9sr3Whae0nvwpeyzUktcNVvBrg
+         /MeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=NW7bLc85DuRybPeHQwZdX5+x3Oq4NPRBGooLDj8MmCw=;
-        b=Z6CoyaL3n39jYuGCsEDplYJ0neOq1aQfQZusFgYLcmaRMSdGYR1uCOlncbExO+Og1j
-         N1c8i6p3rQx70qlQi1Az6dJq9bzbbdlqdrYZAeN/YxtdvbzTNELCzz2mAq+uphWRViDK
-         rFeFwuCqR8/Cg3GkMRbdKoXqtnwwvRNm726E9LWE7b/UqbzE67Ok02g6XUmeT/u8POXJ
-         BslZf+vOTPFWHLcSwX+wqseDWlyhyMXf0Bn9LJozIlCv22MYw/nhvW60+2QL0hGB2ygi
-         EclnznJjoyPkfSOQqMtRgl6Xe+eYJHtA9aLU6qADwnMPDQHIZUcGnd9HXuQWTrC5LXD8
-         lsvA==
-X-Gm-Message-State: APjAAAVfGMTrYVpwEFKEpwe5bDI6AxF5IAx1uRzxMu+4EDFH5Z7PdJpK
-        MB4KUVNNoXbQOumBzDmQ5pDfIEEqloaMLw==
-X-Google-Smtp-Source: APXvYqwBrKrti2EG9acmglGh9U06jbGasR4VyklST77DquOyOhNM9ZIwN4xuDVrQIfTn73xwLJRAZw==
-X-Received: by 2002:a17:90a:2567:: with SMTP id j94mr743463pje.121.1561051612855;
-        Thu, 20 Jun 2019 10:26:52 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
-        by smtp.gmail.com with ESMTPSA id t8sm89942pfq.31.2019.06.20.10.26.51
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 20 Jun 2019 10:26:51 -0700 (PDT)
-Date:   Thu, 20 Jun 2019 10:26:46 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/3] trace2: Add a JSON schema for trace2 events
-Message-ID: <20190620172646.GD42943@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-References: <cover.1560295286.git.steadmon@google.com>
- <8dd0277222efa265f1e911c8476305feb3c2c3fb.1560295286.git.steadmon@google.com>
- <c624600c-42d6-d68f-28c1-916efc6b38b6@jeffhostetler.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c624600c-42d6-d68f-28c1-916efc6b38b6@jeffhostetler.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=fAz5+lF1C0tfqgoAnkQxSHnqmRoflpkqUEh04aT6vww=;
+        b=RIRiwMGGGuqFR4D94R1b0zzydWXBj+LJcoEkUcNameOhRk+DD5tLCO+FRcHemB0MaX
+         19G8IBgBadTgeEq37lZlphSfzrLkIOnHf9RZPF1aBskI83SvG1Xjc2BcblIslBG0+tQZ
+         lB+Xpi1+MzaXJPzWZd2BD52+m+eCc0Dr273KWS03+AQGheCWSkgVYa3cBwCWKpWuGrHu
+         BIOV4dzL8XP2h/xzpaGjLklHEyka9gyym9bxMjov39HtXGkAhMYgxc1CVBBXzQdDraux
+         Rg+6zeOoVi7mnGxUoJuajSfFr5LrxTTBP0EIScHkpZdx6q0nfRuT0yfZEiaMTTP9V6Ib
+         oZIQ==
+X-Gm-Message-State: APjAAAVx/uRp6jJQPa5JrmJagaSvB4wxba7rPPvRY6cXvOxo67ldtMer
+        deA71Lywqs/KlUHxtWgizwAGGHCIapk3y+i/EgPA
+X-Google-Smtp-Source: APXvYqx2ydvcHc7P4HexFFZZnqXNrFhASRspzl2KQGJ0wIYGPvsPs3lKEJGVZwiPPpp+NO6oPajCDjWJmTaZDKUeK5Dn
+X-Received: by 2002:a63:231c:: with SMTP id j28mr13692497pgj.430.1561052306692;
+ Thu, 20 Jun 2019 10:38:26 -0700 (PDT)
+Date:   Thu, 20 Jun 2019 10:38:23 -0700
+In-Reply-To: <20190620074131.GL3713@sigill.intra.peff.net>
+Message-Id: <20190620173823.23374-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190620074131.GL3713@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: Re: [PATCH 12/17] delta-islands: convert island_marks khash to use oids
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.06.14 11:59, Jeff Hostetler wrote:
-> 
-> 
-> On 6/11/2019 7:31 PM, Josh Steadmon wrote:
-> > Define a JSON schema[1] that can be used to validate trace2 event
-> > objects. This can be used to add regression tests to verify that the
-> > event output format does not change unexpectedly.
-> > 
-> > Two versions of the schema are provided:
-> > * event_schema.json is more permissive. It verifies that all expected
-> >    fields are present in each trace event, but it allows traces to have
-> >    unexpected additional fields. This allows the schema to be specified
-> >    more concisely by factoring out the common fields into a reusable
-> >    sub-schema.
-> > * strict_schema.json is more restrictive. It verifies that all expected
-> >    fields are present and no unexpected fields are present in each trace
-> >    event. Due to this additional restriction, the common fields cannot be
-> >    factored out into a re-usable subschema (at least as-of draft-07) [2],
-> >    and must be repeated for each event definition.
-> > 
-> [...]
-> > +
-> > +		"data-json_event": {
-> > +			"allOf": [
-> > +				{ "$ref": "#/definitions/event_common_fields" },
-> > +				{
-> > +					"properties": {
-> > +						"event": { "const": "data-json" },
-> > +						"repo": { "type": "integer" },
-> > +						"t_abs": { "type": "number" },
-> > +						"t_rel": { "type": "number" },
-> > +						"nesting": { "type": "integer" },
-> > +						"category": { "type": "string" },
-> > +						"key": { "type": "string" },
-> > +						"value": true
-> > +					},
-> > +					"required": [
-> > +						"event", "t_abs", "t_rel", "nesting", "category", "key",
-> > +						"value"
-> > +					]
-> > +				}
-> > +			]
-> > +		}
-> > +	},
-> [...]
-> 
-> Here you have "value" as just a boolean rather than a sub-object.
-> Is that a limitation of the schema tools?  I guess this is reasonable
-> since the contents of the sub-object are variable and you wouldn't be
-> able to verify it anyway.
+> @@ -105,7 +105,7 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
+>  	 * If we don't have a bitmap for the target, we can delta it
+>  	 * against anything -- it's not an important object
+>  	 */
+> -	trg_pos = kh_get_sha1(island_marks, trg_oid->hash);
+> +	trg_pos = kh_get_oid_map(island_marks, *trg_oid);
 
-Yeah, I just listed it as "true" (which in JSON-Schema means that a value is
-expected but we're not making any restrictions on what it looks like) because of
-not being able to verify the contents of the sub-object. But we should actually
-at least verify that it's an object versus some other type, so I'll fix that if
-there's enough interest for a v2 of this series.
+[snip]
+
+> @@ -154,7 +154,7 @@ static struct island_bitmap *create_or_get_island_marks(struct object *obj)
+>  	khiter_t pos;
+>  	int hash_ret;
+>  
+> -	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
+> +	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
+
+Thanks for doing this cleanup. The entire series (17 patches) look good
+to me. The only remotely surprising thing to me was that OIDs are passed
+by value on the stack, both for kh_get_oid_map() and kh_put_oid_map(),
+but I see that this is how things currently work (and anyway, changing
+this is beyond the scope of this patch set).
