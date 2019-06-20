@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D94F1F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 12:00:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 710711F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 12:00:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731663AbfFTMAC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 08:00:02 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34023 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726435AbfFTMAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 08:00:02 -0400
-Received: by mail-pl1-f195.google.com with SMTP id i2so1327273plt.1
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 05:00:01 -0700 (PDT)
+        id S1731695AbfFTMAG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 08:00:06 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36600 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726435AbfFTMAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 08:00:06 -0400
+Received: by mail-pf1-f194.google.com with SMTP id r7so1565306pfl.3
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 05:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mTDCc1+Nv6uTYAXedQfRcEBJ/kjYrKgB96Kim/18/1Q=;
-        b=Np4+JQk5+4zwBU1dte7ZsjgpzCh1/9R1alGI8NYG9PNZfSTFJwcUB3iWp/IESK5DS3
-         vz47Yy3/XOOB3SXkAHVWSZuR1J3BOW7e71sRbP8uV4F6Z4znOIFydxv8lVc3q0/nlUFI
-         +zk1XJj8v5of15CE9ZMDKHGWkkeOMTqbsyx00ScAY/svdLBcKUIXiSHn92ZkIkRB6zV0
-         Tm+utKcF5+EqfuyRqiyCX7TZMeuDGZbLSuJK/LUivpsmlSIsskUYk5EE3/rnGI2nEOl6
-         vr18sk5ZEpV6FOtgDIJY5v1qAXsQvXfGovLMQmRP91DS52h2K9KVvfRooGMujPDzh0RB
-         jPDA==
+        bh=+FCuVys0qgLTOkIUFxZcdYS1A2pZyTOGbD/f1SFsKnI=;
+        b=Ki+lF6vZ3oxQu2nYuaBcIR3Ut2Sdb5GwKvy1qzemau6pUJSbuEjlZblke9w7gCdoN7
+         J5Yau0ruFT5uanhlkLnTB4xv9tb2LA6sEzC4CV+mk97GlgqC5ZpIR/GGbMVO4QVdNlND
+         9ynmL2xkBGj83GdY6+McdK5jXEVoViym+bpE1OLA1TPdMU5gZSAYIOHlyBLT7iPm2lkB
+         EpSY6ZfUAkekoV6vKUtYv8xNx6GJmw6Ct1z/ECkCG6HqGSJ3UeUpPP3hD+U1xTiIKluA
+         zTnGAB0ALT2IkT7bK6UJCslQwrOq1E2IC3pmZq8BY83WNLVpengIVWz9YBqa0ehoVfjE
+         8rxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mTDCc1+Nv6uTYAXedQfRcEBJ/kjYrKgB96Kim/18/1Q=;
-        b=AxW9gQYlIYKNI49AOwh3t4EqSKq1QaRQg2J3CPm3NkZdm7CfYONIn7n38ZOgFoBosd
-         qY9PhVUBj/H2ZmmAXL58/rPlIbnxEoZpmMU/XmwESFmO1uA4ha7kt/5gZWQmt7uk3Wpw
-         a8m8NGLd0a9jacxXUjgaungKu4AEr5YplAnN50efoz+NGg3c2o7YOm9S4guZvsGJHj2X
-         c7+k7deCdYRVmqsBzi1Jdn+BHWzOlA1OGzep+joHUZtkqDOJW7liT0d2WVaCO3SxRyND
-         l61qTchziwJPehHNeleE/aSaieJZs57fuUiBEyp3QAxFSq2+dlYshlAmZZ/D/R/DJljD
-         vELg==
-X-Gm-Message-State: APjAAAWe3Xo4StpGHTBagFuN9b/cNTTlpeO4NTyRGyxAXBRGExIw6Rfd
-        ISZphIO7rEudUq8IjrBg7F0O9hms
-X-Google-Smtp-Source: APXvYqwcNFraXTgt316ABGymyans9xCIBcCoi7yhywCQalUVf67+bYqn6i1ccQ1MG+V2PpQ8qAF6PA==
-X-Received: by 2002:a17:902:b098:: with SMTP id p24mr34324643plr.146.1561032001362;
-        Thu, 20 Jun 2019 05:00:01 -0700 (PDT)
+        bh=+FCuVys0qgLTOkIUFxZcdYS1A2pZyTOGbD/f1SFsKnI=;
+        b=ChPbChKwCWVpCYeZ4+PXuyNMjNMC0Klxrs6n7zuEwSvyq/xyeYpB9UmlWBPz+iqBxL
+         fdEbzXI21kwWazlqJKjyTZFap3c2rNZiBmi6DDRaglOUiLanh05czj6alBWEP4MkiReH
+         zGcjnYMWj8LV5hwSWLbgfxzXQxEfPpLG31mJSp59GaEf89vg7qWg+Irha5UttCMMPNgR
+         33CQ3m85i5h+hQIMDYYbP8irtXxfJQukFoZ/4+Gzw2uCCI07FvfWQLRjkyhe1vfw2hVL
+         Kg3VwTq+kRr4hCbQ8k2a68jrnMd9X8tw9edxu6/cgSNLRMHXUXqOm9VB6wqah+v+h5UD
+         r80A==
+X-Gm-Message-State: APjAAAX3JiWm2sZCEyYNN7BZKVJ9EzcT9AueL0JMKNNa1NU8jppb0+Ld
+        +kqYsfdaA5+wiiqL1U4AAbxeW7QU
+X-Google-Smtp-Source: APXvYqwigdvrnm/VeydSjhLDP4DpfYGrPs29vg21tJUhZzr2Gk/bwCXc14etkz9geZL51gULw+r1zg==
+X-Received: by 2002:a63:b1d:: with SMTP id 29mr12512403pgl.103.1561032005660;
+        Thu, 20 Jun 2019 05:00:05 -0700 (PDT)
 Received: from ash ([115.76.181.38])
-        by smtp.gmail.com with ESMTPSA id e16sm28317566pga.11.2019.06.20.04.59.59
+        by smtp.gmail.com with ESMTPSA id j1sm24132737pfe.101.2019.06.20.05.00.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jun 2019 05:00:00 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 20 Jun 2019 18:59:57 +0700
+        Thu, 20 Jun 2019 05:00:05 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 20 Jun 2019 19:00:01 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 2/3] fetch-pack: print all relevant supported capabilities with -v -v
-Date:   Thu, 20 Jun 2019 18:59:50 +0700
-Message-Id: <20190620115951.13629-2-pclouds@gmail.com>
+Subject: [PATCH 3/3] fetch-pack: print server version at the top in -v -v
+Date:   Thu, 20 Jun 2019 18:59:51 +0700
+Message-Id: <20190620115951.13629-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190620115951.13629-1-pclouds@gmail.com>
 References: <20190620115951.13629-1-pclouds@gmail.com>
@@ -70,81 +70,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we check if some capability is supported, we do print something in
-verbose mode. Some capabilities are not printed though (and it made me
-think it's not supported; I was more used to GIT_TRACE_PACKET) so let's
-print them all.
+Before the previous patch, the server version is printed after all the
+"Server supports" lines. The previous one puts the version in the middle
+of "Server supports" group.
 
-It's a bit more code. And one could argue for printing all supported
-capabilities the server sends us. But I think it's still valuable this
-way because we see the capabilities that the client cares about.
+Instead of moving it to the bottom, I move it to the top. Version may
+stand out more at the top as we will have even more debug out after
+capabilities.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- fetch-pack.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fetch-pack.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 0532029f2c..de935f8776 100644
+index de935f8776..445a261f14 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -902,7 +902,9 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+@@ -902,6 +902,13 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
  	sort_ref_list(&ref, ref_compare_name);
  	QSORT(sought, nr_sought, cmp_ref_by_name);
  
--	if ((args->depth > 0 || is_repository_shallow(the_repository)) && !server_supports("shallow"))
-+	if (server_supports("shallow"))
-+		print_verbose(args, _("Server supports %s"), "shallow");
-+	else if (args->depth > 0 || is_repository_shallow(the_repository))
- 		die(_("Server does not support shallow clients"));
- 	if (args->depth > 0 || args->deepen_since || args->deepen_not)
- 		args->deepen = 1;
-@@ -935,11 +937,17 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 		print_verbose(args, _("Server supports %s"), "allow-reachable-sha1-in-want");
- 		allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
++	if ((agent_feature = server_feature_value("agent", &agent_len))) {
++		agent_supported = 1;
++		if (agent_len)
++			print_verbose(args, _("Server version is %.*s"),
++				      agent_len, agent_feature);
++	}
++
+ 	if (server_supports("shallow"))
+ 		print_verbose(args, _("Server supports %s"), "shallow");
+ 	else if (args->depth > 0 || is_repository_shallow(the_repository))
+@@ -961,12 +968,6 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		warning("filtering not recognized by server, ignoring");
  	}
--	if (!server_supports("thin-pack"))
-+	if (server_supports("thin-pack"))
-+		print_verbose(args, _("Server supports %s"), "thin-pack");
-+	else
- 		args->use_thin_pack = 0;
--	if (!server_supports("no-progress"))
-+	if (server_supports("no-progress"))
-+		print_verbose(args, _("Server supports %s"), "no-progress");
-+	else
- 		args->no_progress = 0;
--	if (!server_supports("include-tag"))
-+	if (server_supports("include-tag"))
-+		print_verbose(args, _("Server supports %s"), "include-tag");
-+	else
- 		args->include_tag = 0;
- 	if (server_supports("ofs-delta"))
- 		print_verbose(args, _("Server supports %s"), "ofs-delta");
-@@ -959,15 +967,19 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 			print_verbose(args, _("Server version is %.*s"),
- 				      agent_len, agent_feature);
- 	}
--	if (server_supports("deepen-since"))
-+	if (server_supports("deepen-since")) {
-+		print_verbose(args, _("Server supports %s"), "deepen-since");
- 		deepen_since_ok = 1;
--	else if (args->deepen_since)
-+	} else if (args->deepen_since)
- 		die(_("Server does not support --shallow-since"));
--	if (server_supports("deepen-not"))
-+	if (server_supports("deepen-not")) {
-+		print_verbose(args, _("Server supports %s"), "deepen-not");
- 		deepen_not_ok = 1;
--	else if (args->deepen_not)
-+	} else if (args->deepen_not)
- 		die(_("Server does not support --shallow-exclude"));
--	if (!server_supports("deepen-relative") && args->deepen_relative)
-+	if (server_supports("deepen-relative"))
-+		print_verbose(args, _("Server supports %s"), "deepen-relative");
-+	else if (args->deepen_relative)
- 		die(_("Server does not support --deepen"));
  
- 	if (!args->no_dependents) {
+-	if ((agent_feature = server_feature_value("agent", &agent_len))) {
+-		agent_supported = 1;
+-		if (agent_len)
+-			print_verbose(args, _("Server version is %.*s"),
+-				      agent_len, agent_feature);
+-	}
+ 	if (server_supports("deepen-since")) {
+ 		print_verbose(args, _("Server supports %s"), "deepen-since");
+ 		deepen_since_ok = 1;
 -- 
 2.22.0.rc0.322.g2b0371e29a
 
