@@ -2,118 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-7.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0096F1F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 17:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74EBC1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 18:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbfFTRoY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 13:44:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60376 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbfFTRoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 13:44:23 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A4BA14A853;
-        Thu, 20 Jun 2019 13:44:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eEmWg7xwLwgrhj1Ya+fMPWaYvV0=; b=SG5g56
-        jPy2qWJ0c9h4JFnJ+MNp687JE1EcB2g0V1DRw41D52vhR+/ZBw7/r2/pwCoO1f11
-        UYaCW2sPymG0BD7/dQLY4yC6qep16A5IZ2wtSd/Gfl5cRbSnMdtvQlfNMmwGMLrE
-        wXn4mjcFVmej8HbRpSc/a4WJnSlrVw1ULjG20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YNaGUTgwzxJfgTKnBL/J+ZAR0f+/oSvT
-        JDgLnyf4okqtC3G3DOD0bquY3ZfVgSE4NNj+pmq0oRS5eUkMcBmbE7BQyjK2bbdS
-        CMz2fKXX3itExmQ1tNFNcRlQz8aq907E5bkBx1F1Sq9VKYNTjo8xnAN+RxEBku+M
-        w/r/9dYDdG0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2170214A852;
-        Thu, 20 Jun 2019 13:44:19 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 815FD14A851;
-        Thu, 20 Jun 2019 13:44:18 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1728934AbfFTSTF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 14:19:05 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:39232 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728226AbfFTSPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 14:15:44 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b7so1715398pls.6
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 11:15:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=XqI6HO8XFXyXmAIYCazOnVt253B8ZImecNAcZ8Gqa0s=;
+        b=XwjWEWaaCYaXEWqvTqWlvz9n8kgq1sQ+ievliY0pbdsl1QSSpUPDUSLbRozxbelKca
+         7Ne2mbgfWM/p1aEPUAC4NISt3WXHMgHc/4jznql6ctmHpcaibisrJ1r5c0ulMLHzKzW7
+         SYXlOjZOIzolU/0MUFBm9M8oY6b5hEHqLFhr+3vd9oX+alB2gUb9z4bshjKYsCZMcnP8
+         8P/uFNMO/RE/y0ZiBfKa2UaQxUmQkkiHUbYmmjER/XM5PrxXdutt0keeI8BRG8nTHN9u
+         ukJxBY9XWRXVbowlBqKVKAL2XgDqLg5ZicZXbpY0jUh0o+fOVypXBGJbhKud3WeWvY4E
+         PiXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=XqI6HO8XFXyXmAIYCazOnVt253B8ZImecNAcZ8Gqa0s=;
+        b=qLO7kbM/vngd4piYUh/3c61BQWxaAJskEeKHKt2H75gxMMXy/Yy7/crnwVP/7HuPX1
+         6Oi2MMqypYssUn2iq+n2Y7NV/IsEWRhVRnB48IVxwtvm/yjqp3cAU8OG1HJaRV4OK9le
+         rtaOL5bYCneK1yd7HpQxtJDjY6IS65H9OJdIDhwLPJy2FW9gVg4hmVbclyaW29BAvFgS
+         vj7e4modogPRfqwgHiUZiC/lQOqA5R28vwsMZQUV9t1W+C0abch/C9xG40u1/v/pzQY6
+         8Fd0ccd0FMzrucUKxp6CEzH7jadQRw5eE2IBXynWFfl8RR5g3pRm5wa9J4Y4AtyZy1VK
+         toyw==
+X-Gm-Message-State: APjAAAVMPvSZG9e2J07nQxpjUv6LkhK8MbCQwUkKTTWOX7euwP+yx5Xg
+        zSbmVnmVojyO7H5OMeK7I+mXfQ==
+X-Google-Smtp-Source: APXvYqxZDsTDDekRVNNRkNaDBu3H6WZdsZv/IqQLOVY/tqI3atvyEwzpA+ulfK6zOYMwVWiklaNmiQ==
+X-Received: by 2002:a17:902:54f:: with SMTP id 73mr123999915plf.246.1561054542963;
+        Thu, 20 Jun 2019 11:15:42 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
+        by smtp.gmail.com with ESMTPSA id b29sm157075pfr.159.2019.06.20.11.15.41
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 20 Jun 2019 11:15:42 -0700 (PDT)
+Date:   Thu, 20 Jun 2019 11:15:36 -0700
+From:   Josh Steadmon <steadmon@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 15/17] khash: rename oid helper functions
-References: <20190620073952.GA1539@sigill.intra.peff.net>
-        <20190620074141.GO3713@sigill.intra.peff.net>
-Date:   Thu, 20 Jun 2019 10:44:17 -0700
-In-Reply-To: <20190620074141.GO3713@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 20 Jun 2019 03:41:42 -0400")
-Message-ID: <xmqqwohgnocu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, git@jeffhostetler.com
+Subject: Re: [RFC PATCH 3/3] trace2: add a schema validator for trace2 events
+Message-ID: <20190620181536.GE42943@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, git@jeffhostetler.com
+References: <cover.1560295286.git.steadmon@google.com>
+ <7475c6220895d96cdc7d25d6edea70e2f978526b.1560295286.git.steadmon@google.com>
+ <87v9xb7x0q.fsf@evledraar.gmail.com>
+ <20190612162341.GA42943@google.com>
+ <20190612191818.GB14949@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 07633F18-9383-11E9-AD44-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190612191818.GB14949@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 2019.06.12 15:18, Jeff King wrote:
+> On Wed, Jun 12, 2019 at 09:23:41AM -0700, Josh Steadmon wrote:
+> 
+> > The problem with the existing validators is that they expect each file to be a
+> > complete JSON entity, whereas the trace output is one object per line. You can
+> > of course loop over the lines in a shell script, but in my testing this approach
+> > took multiple hours on the full test suite trace output, vs. 15 minutes for the
+> > implementation in this patch.
+> 
+> It seems like it should be easy to turn a sequence of entities into a
+> single entity, with something like:
+> 
+>   echo '['
+>   sed 's/$/,/' <one-per-line
+>   echo ']'
+> 
+> You could even turn a sequence of files into a single entity (which
+> might be even faster to validate, since it would be one invocation for
+> the entire test suite) with something like:
+> 
+>   echo '{'
+>   for fn in $FILES; do
+> 	echo "\"$fn\": "
+> 	cat $fn
+> 	echo ","
+>   done
+>   echo '}'
+> 
+> though I suspect the resulting error messages might not be as good.
+> 
+> Obviously neither of those is particularly robust if the individual JSON
+> is not well-formed. But then, if we are mostly interested in testing
+> whether it's well-formed and expect it to be in the normal case, that
+> might be a good optimization.
 
-> For use in object_id hash tables, we have oid_hash() and oid_equal().
-> But these are confusingly similar to the existing oideq() and the
-> oidhash() we plan to add to replace sha1hash().
->
-> The big difference from those functions is that rather than accepting a
-> const pointer to the "struct object_id", we take the arguments by value
-> (which is a khash internal convention). So let's make that obvious by
-> calling them oidhash_by_value() and oideq_by_value().
->
-> Those names are fairly horrendous to type, but we rarely need to do so;
-> they are passed to the khash implementation macro and then only used
-> internally. Callers get to use the nice kh_put_oid_map(), etc.
+Yeah, as I noted in my reply to Ævar, ~20 of the trace lines generated by the
+test suite are not properly encoded. So if we do something like:
 
-The pass-by-value interface feels a bit unforunate but hopefully
-"static inline" would help us avoid actually copying the struct left
-and right as we make calls to them X-<.
+  $ GIT_TRACE2_EVENT=$(pwd)/one-per-line make test
+  $ (echo '[' ; sed 's/$/,/' < one-per-line ; echo ']') > list
+  $ validate list
 
+then most validators will only tell us that the file as a whole is malformed.
+If we validate line-by-line, then we can just count how many malformed lines we
+have and make sure it's within expectations.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  khash.h | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/khash.h b/khash.h
-> index cb2cd3d7e4..f911d2b005 100644
-> --- a/khash.h
-> +++ b/khash.h
-> @@ -324,20 +324,20 @@ static const double __ac_HASH_UPPER = 0.77;
->  		code;												\
->  	} }
->  
-> -static inline unsigned int oid_hash(struct object_id oid)
-> +static inline unsigned int oidhash_by_value(struct object_id oid)
->  {
->  	return sha1hash(oid.hash);
->  }
->  
-> -static inline int oid_equal(struct object_id a, struct object_id b)
-> +static inline int oideq_by_value(struct object_id a, struct object_id b)
->  {
->  	return oideq(&a, &b);
->  }
->  
-> -KHASH_INIT(oid_set, struct object_id, int, 0, oid_hash, oid_equal)
-> +KHASH_INIT(oid_set, struct object_id, int, 0, oidhash_by_value, oideq_by_value)
->  
-> -KHASH_INIT(oid_map, struct object_id, void *, 1, oid_hash, oid_equal)
-> +KHASH_INIT(oid_map, struct object_id, void *, 1, oidhash_by_value, oideq_by_value)
->  
-> -KHASH_INIT(oid_pos, struct object_id, int, 1, oid_hash, oid_equal)
-> +KHASH_INIT(oid_pos, struct object_id, int, 1, oidhash_by_value, oideq_by_value)
->  
->  #endif /* __AC_KHASH_H */
+Alternatively, we could just explicitly disable tracing on the tests that
+generate the malformed traces.
+
+> 
+> I also wouldn't be surprised if "jq" could do this in a more robust way.
+
+I'll go take a look at jq.
+
+> -Peff
