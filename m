@@ -7,56 +7,104 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4AF41F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 08:50:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8901F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 08:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731223AbfFTIuL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 04:50:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45618 "HELO cloud.peff.net"
+        id S1726170AbfFTI6e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 04:58:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45630 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725925AbfFTIuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 04:50:11 -0400
-Received: (qmail 17947 invoked by uid 109); 20 Jun 2019 08:50:11 -0000
+        id S1725875AbfFTI6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 04:58:34 -0400
+Received: (qmail 17960 invoked by uid 109); 20 Jun 2019 08:58:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 08:50:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 08:58:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13752 invoked by uid 111); 20 Jun 2019 08:51:00 -0000
+Received: (qmail 13789 invoked by uid 111); 20 Jun 2019 08:59:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 04:51:00 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 04:59:23 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 04:50:09 -0400
-Date:   Thu, 20 Jun 2019 04:50:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 04:58:32 -0400
+Date:   Thu, 20 Jun 2019 04:58:32 -0400
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/2] sha1-file: use OBJECT_INFO_NO_FETCH_IF_MISSING
-Message-ID: <20190620085009.GC3952@sigill.intra.peff.net>
-References: <20190620083026.14524-1-chriscool@tuxfamily.org>
- <20190620083026.14524-3-chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Subject: [PATCH] delta-islands: respect progress flag
+Message-ID: <20190620085832.GA5039@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190620083026.14524-3-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 20, 2019 at 10:30:26AM +0200, Christian Couder wrote:
+The delta island code always prints "Marked %d islands", even if
+progress has been suppressed with --no-progress or by sending stderr to
+a non-tty.
 
-> Currently the OBJECT_INFO_FOR_PREFETCH flag is used to check
-> if we should fetch objects from promisor remotes when we
-> haven't found them elsewhere.
-> 
-> Now that OBJECT_INFO_NO_FETCH_IF_MISSING exists, let's use
-> it instead to be more correct in case this new flag is ever
-> used without OBJECT_INFO_QUICK.
+Let's pass a progress boolean to load_delta_islands(). We already do
+the same thing for the progress meter in resolve_tree_islands().
 
-I said earlier that this one would need to be tweaked for the new
-upstream name. But actually, I think it is not necessary after Stolee's
-patch.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Arguably this should be a real progress meter that counts up, but I'm
+not sure what it should be counting. Refs we analyzed? Islands found?
+Unless you have a ton of refs, it doesn't really matter, so I just
+punted on that part for now and only fixed the egregious bug. :)
 
--Peff
+ builtin/pack-objects.c | 2 +-
+ delta-islands.c        | 5 +++--
+ delta-islands.h        | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index b2be8869c2..698c901523 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3134,7 +3134,7 @@ static void get_object_list(int ac, const char **av)
+ 		return;
+ 
+ 	if (use_delta_islands)
+-		load_delta_islands(the_repository);
++		load_delta_islands(the_repository, progress);
+ 
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
+diff --git a/delta-islands.c b/delta-islands.c
+index 2186bd0738..b959f6c380 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -454,7 +454,7 @@ static void deduplicate_islands(struct repository *r)
+ 	free(list);
+ }
+ 
+-void load_delta_islands(struct repository *r)
++void load_delta_islands(struct repository *r, int progress)
+ {
+ 	island_marks = kh_init_sha1();
+ 	remote_islands = kh_init_str();
+@@ -463,7 +463,8 @@ void load_delta_islands(struct repository *r)
+ 	for_each_ref(find_island_for_ref, NULL);
+ 	deduplicate_islands(r);
+ 
+-	fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
++	if (progress)
++		fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
+ }
+ 
+ void propagate_island_marks(struct commit *commit)
+diff --git a/delta-islands.h b/delta-islands.h
+index 3ac8045d8c..eb0f952629 100644
+--- a/delta-islands.h
++++ b/delta-islands.h
+@@ -11,7 +11,7 @@ int in_same_island(const struct object_id *, const struct object_id *);
+ void resolve_tree_islands(struct repository *r,
+ 			  int progress,
+ 			  struct packing_data *to_pack);
+-void load_delta_islands(struct repository *r);
++void load_delta_islands(struct repository *r, int progress);
+ void propagate_island_marks(struct commit *commit);
+ int compute_pack_layers(struct packing_data *to_pack);
+ 
+-- 
+2.22.0.732.g5402924b4b
