@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17B8D1F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 10:35:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BF771F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 10:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731253AbfFTKfd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 06:35:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45718 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726081AbfFTKfd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 06:35:33 -0400
-Received: (qmail 18517 invoked by uid 109); 20 Jun 2019 10:35:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 10:35:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14773 invoked by uid 111); 20 Jun 2019 10:36:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 06:36:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 06:35:31 -0400
-Date:   Thu, 20 Jun 2019 06:35:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git-packagers@googlegroups.com
-Subject: Re: Can we just get rid of kwset & obstack in favor of
- optimistically using PCRE v2 JIT?
-Message-ID: <20190620103530.GA15700@sigill.intra.peff.net>
-References: <pull.265.git.gitgitgadget@gmail.com>
- <c1527a71672056859a4613f2318bcbfce31e8b50.1560426581.git.gitgitgadget@gmail.com>
- <87v9x793qi.fsf@evledraar.gmail.com>
- <87tvcr92m2.fsf@evledraar.gmail.com>
+        id S1731681AbfFTKgT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 06:36:19 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:37711 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbfFTKgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 06:36:19 -0400
+Received: by mail-pl1-f193.google.com with SMTP id bh12so1230410plb.4
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 03:36:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=FEjS81C0NVWuvDAynhalKT6bHs1xbQ0hXDvWGtnWZpA=;
+        b=LLwcX7gfPTgfZrMRa4mQ7IO9lLN2p5do6lpWnR+3g3DJeUgL27bemJEqph3ps7VeMJ
+         +2EIW3ZkWNcHWym7+a9LsRdU4ebDZhgfAgWm3wLm7N65HV92iPbAskITsb9fhGVeCAAR
+         HmK+axAnNs9RDyIO2npAJdxbj2hHVc0OTKF+eUDXo731dJ1iJNo/ReiEYh/lB4qwhqYz
+         v3SgWtz90+CxAA0XI2EndEPCpl3f6u0yFq2qs5msESueCT0YxWxjHHDnSJz8htTChEcL
+         ilYVTfypsEJsA0PRt5sIk4uYvMYv5KAFLA9wpr/pCYZS7zwSREIRHJbVCc8uzmV20+X1
+         XhZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=FEjS81C0NVWuvDAynhalKT6bHs1xbQ0hXDvWGtnWZpA=;
+        b=PFlNbpbzMcIQQAFPzHlwOCUTyaelHfLwfy5QnS62AT3tlGWz/IuU72DYzQ86a3jefH
+         m76ZtNT1sbQy8huF5r3knvWFF6lo8ir7Y5cD1MmdIOlKjxtagCeh/ckfpe8f3IFlXR/R
+         +nzZg7p8e0hjGaTjcQaRaARwbywbT3HLQ5jMFusZ4e+PYA4ylz4cjSF3kpxHq7nDMB9i
+         2xfyyrmdlD4IdbYviI47GeCykr6sayaxdn7gt79dyOhkyNyCiXLATZXaGeR0VF3jIHou
+         PZv1azCRhsCgfZqchOR2zW1FPyT3G/vqZvmiPuZQGZpc7G/NMZi1H0DNX0c7mfitUWEk
+         /Dvw==
+X-Gm-Message-State: APjAAAVSk6Fk+ba4HA8jGvLSft3tznOy4fNqBhYVrtjmEN6/GprsQn6D
+        cmTbgifUY+xD1fiPkbpTLPA=
+X-Google-Smtp-Source: APXvYqzAc8mjQTbgJr9COCbNcMKZghAb5oi7/gDX95tt4bJVvQslLoS6RAykD3BjBdwgkziGZtIYtg==
+X-Received: by 2002:a17:902:7297:: with SMTP id d23mr111260057pll.254.1561026978140;
+        Thu, 20 Jun 2019 03:36:18 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.214])
+        by smtp.gmail.com with ESMTPSA id u128sm5383061pfu.26.2019.06.20.03.36.13
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 20 Jun 2019 03:36:17 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     phillip.wood123@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+        martin.agren@gmail.com, newren@gmail.com,
+        phillip.wood@dunelm.org.uk, rohit.ashiwal265@gmail.com,
+        t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v5 4/5] cherry-pick/revert: add --skip option
+Date:   Thu, 20 Jun 2019 16:04:01 +0530
+Message-Id: <20190620103401.29654-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <0047b8c6-8a58-7546-2ae8-19c4ab668fa3@gmail.com>
+References: <0047b8c6-8a58-7546-2ae8-19c4ab668fa3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvcr92m2.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 15, 2019 at 01:19:33AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi Phillip
 
-> ...small correction, we currently hard-rely on kwset() for any pattern
-> containing a \0 for "git-grep" (these can only by supplied via the -f
-> <pattern-from-file> option), this means that any pattern containing a \0
-> is implicitly fixed, unless kwset() doesn't like it (-i and non-ASCII),
-> what a mess.
-> 
-> Since we hard depend on REG_STARTEND since 2f8952250a ("regex: add
-> regexec_buf() that can work on a non NUL-terminated string", 2016-09-21)
-> we should just fix that while we're at it. It's a backwards-incompatible
-> change, but I doubt anyone is relying on our undocumented behavior of
-> implicitly considering grep patterns with \0 in them always fixed.
+On 2019-06-20 10:02 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> > +test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
+> > +	pristine_detach initial &&
+> > +	git rm --cached unrelated &&
+> > +	git commit -m "untrack unrelated" &&
+> > +	test_must_fail git cherry-pick initial base &&
+> > +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
+> > +	git cherry-pick --skip
+>
+> If you change this to --continue rather than --skip the test also
+> passes! I think we could fix this by checking if HEAD has changed if
+> CHERRY_PICK_HEAD/REVERT_HEAD is missing and not dropping the last
+> command in the todo list in that case when we continue.
 
-That's only for NULs in the haystack, though. I don't think there's a
-way to have a NUL in the pattern with regcomp(), since it takes a
-NUL-terminated string.
+I don't think I fully understood this. At this point --skip is essentially
+--continue. How is checking unmoved HEAD and unchanged todo uniquely related
+to --skip flag (or for that matter any _flag_)?
 
-I do agree with you that treating it like a fixed string is somewhat
-insane. We're probably better off to die.
+Thanks
+Rohit
 
-In general, your plan to get rid of kwset sounds like a good path. It
-would be a slight regression for somebody who is truly feeding a
-fixed-string pattern with a NUL in it, on a system without pcre. Right
-now that works (via kwset), and if we would start feeding fixed strings
-to regcomp() then obviously that won't work. I guess we could go back to
-using memmem as a fallback, which is what it looks like we used before
-9eceddeec6 (Use kwset in grep, 2011-08-21).
-
-Seems like a code path that would get exercised approximately never,
-though.
-
--Peff
