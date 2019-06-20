@@ -2,113 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B941A1F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 15:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 529AC1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 16:32:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbfFTPHS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 11:07:18 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:43137 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726649AbfFTPHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 11:07:18 -0400
-Received: by mail-io1-f67.google.com with SMTP id k20so65245ios.10
-        for <git@vger.kernel.org>; Thu, 20 Jun 2019 08:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3t3MiP8pqPKb5PWCcM2Y69kzjp16ynrwodWzT5VIgMw=;
-        b=Czp3AZB5Cd+6scRu2u42k+msI+f3IpTZ+iuc1MY3liEy4Ld4mkww8t9lhR7xN9JLB1
-         BdKEMxCPBsGTi4ipLn12g3QPrWMyn3Wbu56fIat5E7HHS7JAk1TD8cNdzYNkfSI02q59
-         Gs4JqqzqNy0nG+bINiLu5Gx+CRFXQKjHw660K4wB8+ObFsVZCzxQGOv6G5BUN80BRHyR
-         +VRM76NFqqQSZQO6jOtrzfazneqtBmPZbx1RYZyrInj2T9u6ALCOv0aR7gSrkKOSXZ6X
-         9H80i4ZbyzaQTUlEkBIREzbLM7HBrfNluXUk1MPvPJIv9gjwccE7BhvbjdL9VJpJ57ff
-         +z/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3t3MiP8pqPKb5PWCcM2Y69kzjp16ynrwodWzT5VIgMw=;
-        b=jCpremFJRrAltbxy0UCLEOAEmxwrceoEVPTI0RPxOEW7hEeW3uO8tomaQFCuvpHZIX
-         MlTjGHeG2lbgC90DNK5YAADXOPVefJJykLE8t6O7MA49099SbhSeM1DZUwtIci9w8Vdc
-         oiGr8pbdhuUj2Q+mVK5SgfVVMt6Gb0Fs/SlhdyRjPP/ua9io1/BYGJEaegClEQuFjx+4
-         M8zrZTWKd84J7Ey++4QL5PfWoThBV+s0TpDdPu0NYnGtKCfIjXWQbUeYD4EaB417pOTW
-         MTh0Kv0rD387XqyE6UWgJOjkDE3ZKBNINkDpG5AfK7UN8KtcsLYD0180EYmtbz8bWOmz
-         wpgQ==
-X-Gm-Message-State: APjAAAXKWITwULN7vrl7lb88L5+LkHh9w/aQyP7Pu1qUepqdEtUn1cox
-        4IsSBtPullupVR0OyJsGYkwo+gAzqSv+HKK4GSZiUw==
-X-Google-Smtp-Source: APXvYqxUDMw3QxTkjkRb7ROFV2OQRq2uwna8Ct0bwXKOknh+U/kg+9eVIcMiM2lUlEdo1eqwXFFlRgDai1+zliipFSY=
-X-Received: by 2002:a5d:8347:: with SMTP id q7mr34813246ior.277.1561043237968;
- Thu, 20 Jun 2019 08:07:17 -0700 (PDT)
+        id S1731682AbfFTQcy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 12:32:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59002 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726530AbfFTQcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 12:32:54 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94A6416667A;
+        Thu, 20 Jun 2019 12:32:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+DZPb8asRNDEIRSQNWFUPWx4xaU=; b=JAa37w
+        OQwR5HZqdPhbxhx6HH6aifV43LljXPsWC91R0WPNLEdCpDAK3Y7fEHLG/jLzzo61
+        XPIzGcHm+CdJ/Q4ZjYEHfULOYhT3tVXrIE9iAUI55ubvMDBMlQbl8JMrFZxv+Y3M
+        oo+NHiHn1WloL8P1DLTg6kWM4m3gNc3rtpDVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mtTPu2Q//d0Blnvq2YhuCZEsc99JtSYD
+        9tLvJObz0VHJfzc/HK33udM8IfAf4VR4pyfuHRNZrP1NdRRJ3tFrUF2B9Xo+Rhhf
+        qvOzndoqgbi5mQBpr46tQe13+ryozz9eViqKLYzlaCgvU5y1i9H/QbsxrX+Qng6Y
+        0xsr9SndWfs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C1D4166679;
+        Thu, 20 Jun 2019 12:32:51 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 00FC5166678;
+        Thu, 20 Jun 2019 12:32:50 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 01/17] describe: fix accidental oid/hash type-punning
+References: <20190620073952.GA1539@sigill.intra.peff.net>
+        <20190620074050.GA3713@sigill.intra.peff.net>
+Date:   Thu, 20 Jun 2019 09:32:49 -0700
+In-Reply-To: <20190620074050.GA3713@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 20 Jun 2019 03:40:50 -0400")
+Message-ID: <xmqq7e9gp68e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190620095523.10003-1-pclouds@gmail.com> <20190620095523.10003-3-pclouds@gmail.com>
- <446ace86-714f-9109-99d8-95554ceaf26b@gmail.com>
-In-Reply-To: <446ace86-714f-9109-99d8-95554ceaf26b@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 20 Jun 2019 22:06:51 +0700
-Message-ID: <CACsJy8DoEwoR67BopXLPiBmuidixREn-Ac16V5di6sFZx_Gbng@mail.gmail.com>
-Subject: Re: [PATCH 2/4] switch: allow to switch in the middle of bisect
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0BD2AC46-9379-11E9-ACF4-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 20, 2019 at 9:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> The find_commit_name() function passes an object_id.hash as the key of a
+> hashmap. That ends up in commit_name_neq(), which then feeds it to
+> oideq(). Which means we should actually be the whole "struct object_id".
 >
-> On 6/20/2019 5:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> > In c45f0f525d (switch: reject if some operation is in progress,
-> > 2019-03-29), a check is added to prevent switching when some operation
-> > is in progress. The reason is it's often not safe to do so.
-> >
-> > This is true for merge, am, rebase, cherry-pick and revert, but not so
-> > much for bisect because bisecting is basically jumping/switching betwee=
-n
-> > a bunch of commits to pin point the first bad one. git-bisect suggests
-> > the next commit to test, but it's not wrong for the user to test a
-> > different commit because git-bisect cannot have the knowledge to know
-> > better.
+> It works anyway because pointers to the two are interchangeable. And
+> because we're going through a layer of void pointers, the compiler
+> doesn't notice the type mismatch.
+
+Wow.  Good eyes.  I wouldn't have noticed this (and for the reasons
+you stated, it is very tricky for any clever compiler to notice it).
+
+Impressed.
+
+> But it's worth cleaning up (especially since once we switch away from
+> sha1hash() on the same line, accessing the hash member will look doubly
+> out of place).
+
+Yup.  Thanks.
+
 >
-> When a user switches commits during a bisect, it can just create new
-> known-good or known-bad commits, right? It won't mess up the next
-> selection of a test commit? I'm imagining someone jumping to a commit
-> between two known-bad commits or something, when it is more likely that
-> they are jumping to a parallel history.
-
-Until you run "git bisect bad" or "git bisect good" I don't think
-switching could mess up bisect. And I'm pretty sure I marked wrong
-ones once or twice and git-bisect did complain.
-
-It would be a good idea to warn about jumping in known-good-or-bad
-commit ranges. I'll keep this as an improvement point (there's still
-another one I haven't done, also about warning improvement, sigh).
-
-> > For this reason, allow to switch when bisecting (*). I considered if we
-> > should still prevent switching by default and allow it with
-> > --ignore-in-progress. But I don't think the prevention really adds
-> > anything much.
-> >
-> > If the user switches away by mistake, since we print the previous HEAD
-> > value, even if they don't know about the "-" shortcut, switching back i=
-s
-> > still possible.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/describe.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I tell everyone I know about the "-" shortcut, and I'm always surprised
-> they didn't already know about "cd -".
-
-I actually wanted to go a bit more aggressive/verbose about "teaching"
-users via the advice framework, but allows the user to turn off the
-"lessons" they already learned. Something like gcc adding
-[-Wno-foobar] in a warning to hint how to turn it off. I'll come back
-to this at some point, hopefully.
---=20
-Duy
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index 1409cedce2..0a5cde00a2 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -76,7 +76,7 @@ static int commit_name_neq(const void *unused_cmp_data,
+>  
+>  static inline struct commit_name *find_commit_name(const struct object_id *peeled)
+>  {
+> -	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
+> +	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled);
+>  }
+>  
+>  static int replace_name(struct commit_name *e,
