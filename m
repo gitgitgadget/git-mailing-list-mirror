@@ -7,58 +7,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8151F4B7
-	for <e@80x24.org>; Thu, 20 Jun 2019 20:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C59F91F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 20:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbfFTUAn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 16:00:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58667 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbfFTUAn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 16:00:43 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97B956BE35;
-        Thu, 20 Jun 2019 16:00:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726992AbfFTUDG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 16:03:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56748 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbfFTUDG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 16:03:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B71AB167946;
+        Thu, 20 Jun 2019 16:03:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=LAmXzmrLNUjO
-        mdLtT0bMjRRPMMM=; b=QvTL07h8szaWRaFoG7uMdrgf2t5S9JmvgmucI7YxfBNj
-        7N9gBjY6mFnR11f+sMblp1mXbCY/aTzZPC4IDcnF53l/lXmRzlLBAo2xnWjbVbWn
-        izCBs5asNAex6b8Qbqbov74tcUEiShZTV1OjbqMQxITh2pwelXWEgGLETxo13Hc=
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=0hXkkrUH1Jxm3hCStaelbK1Q9
+        lY=; b=ImQbOSamB9Qm0LF0uNQIOtZ/F+II1PqoVi0FAopHypCxGHRKOMY2hX3nf
+        jm32UHwnNavCjklkPSDq1DpWbBK7Fkxdfsc0TVx/KfJCBUwZxF4j80wCmQTQYzaH
+        7WphEeeTdcDwea3oi82VFqXdXe6v1Z+Jq2lp24Fq85e9m/kJq4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BEGp6r
-        /SHnLRmGu/JO1KaKiyBSWGHvh6WEZU5XYQCDJ3Kx1ebnoPz0ia+H9fr7ryHrmBIk
-        I5du2d4MAuNBu1/ELfz3w47yDPfnHMdJAifOIqL9kM/4HOZRJkNI4BqOObsKlpf1
-        jVN6N3+HCCuyf6u0QhMi9OCLZW7kBFdYZJzzA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 90AC46BE34;
-        Thu, 20 Jun 2019 16:00:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=kiAf0zilLVXeULg8lCE
+        IEbohpIIb8QnWNhmGv72s0rbBANiwr42evABN2VYeJg8DSpIAPNoruMFyLI98MJ0
+        Xj3yDJzUejy1rWrkxqXa+kQwvkOtEFt9MRD4khu82F+2cKpZErJqHeJ+uM4Ken33
+        d/t34zhX/L2b8a7j0HeSecQQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0436167945;
+        Thu, 20 Jun 2019 16:03:04 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 636156BE27;
-        Thu, 20 Jun 2019 16:00:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 11CF9167944;
+        Thu, 20 Jun 2019 16:03:03 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] tests: make GIT_TEST_GETTEXT_POISON a boolean
+Subject: Re: [PATCH 0/6] Change <non-empty?> GIT_TEST_* variables to <boolean>
 References: <87imt18a2r.fsf@evledraar.gmail.com>
-        <20190619233046.27503-4-avarab@gmail.com>
-Date:   Thu, 20 Jun 2019 13:00:35 -0700
-In-Reply-To: <20190619233046.27503-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 20 Jun 2019 01:30:43 +0200")
-Message-ID: <xmqqtvckm3h8.fsf@gitster-ct.c.googlers.com>
+        <20190619233046.27503-1-avarab@gmail.com>
+Date:   Thu, 20 Jun 2019 13:03:03 -0700
+Message-ID: <xmqqmuicm3d4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1260A910-9396-11E9-8CDC-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 69CC634C-9396-11E9-8362-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -67,32 +61,16 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Change the GIT_TEST_GETTEXT_POISON variable from being "non-empty?" to
-> being a more standard boolean variable.
->
-> Since it needed to be checked in both C code and shellscript (via test
-> -n) it was one of the remaining shellscript-like variables. Now that
-> we have "git env--helper" we can change that.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
+> This changes the remaining <non-empty?> special snowflake test modes
+> to <boolean> and gets rid of test_tristate() in favor of the now
+> standard "boolea" test.
 
-Hmph.  Even though I earlier said "we do not terribly mind breaking
-developers and that is why we allow these patches", I have second
-thoughts.  Turning "If it is empty, it is false" to "if you want to
-say false, say it in one of those approved ways" is one thing.
-Forcing SWITCH=3DYesPlease to be rewritten to SWITCH=3Dyes is quite
-different---we are breaking everybody who would have to read and
-follow po/README and t/README.
+Is that "boolean" test?
 
-We _might_ have to grandfarther YesPlease as a special value that is
-understood by "git env" (but not "git config") to ease the
-transition, as that token has been used as a sample true value in
-many places.
+I had a lot of trouble with the external interface to "env--helper",
+but I kind of liked the changes to the tests that makes the use of
+these environment variables uniform and consistent.  One fewer
+things to remember.
 
-But let's read on.  Assuming that breaking those who hardcoded
-YesPlease in their scripts is OK, this patch looked sensible.
-
-Thanks.
-
+In addition to the other review on 1/6, t0016 is taken at the tip of
+'pu'; we would want to renumber to avoid test-lint complaints.
