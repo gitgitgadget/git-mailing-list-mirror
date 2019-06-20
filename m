@@ -2,103 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 529AC1F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 16:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DB291F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 16:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731682AbfFTQcy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 12:32:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59002 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726530AbfFTQcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 12:32:54 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94A6416667A;
-        Thu, 20 Jun 2019 12:32:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+DZPb8asRNDEIRSQNWFUPWx4xaU=; b=JAa37w
-        OQwR5HZqdPhbxhx6HH6aifV43LljXPsWC91R0WPNLEdCpDAK3Y7fEHLG/jLzzo61
-        XPIzGcHm+CdJ/Q4ZjYEHfULOYhT3tVXrIE9iAUI55ubvMDBMlQbl8JMrFZxv+Y3M
-        oo+NHiHn1WloL8P1DLTg6kWM4m3gNc3rtpDVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mtTPu2Q//d0Blnvq2YhuCZEsc99JtSYD
-        9tLvJObz0VHJfzc/HK33udM8IfAf4VR4pyfuHRNZrP1NdRRJ3tFrUF2B9Xo+Rhhf
-        qvOzndoqgbi5mQBpr46tQe13+ryozz9eViqKLYzlaCgvU5y1i9H/QbsxrX+Qng6Y
-        0xsr9SndWfs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C1D4166679;
-        Thu, 20 Jun 2019 12:32:51 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 00FC5166678;
-        Thu, 20 Jun 2019 12:32:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 01/17] describe: fix accidental oid/hash type-punning
-References: <20190620073952.GA1539@sigill.intra.peff.net>
-        <20190620074050.GA3713@sigill.intra.peff.net>
-Date:   Thu, 20 Jun 2019 09:32:49 -0700
-In-Reply-To: <20190620074050.GA3713@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 20 Jun 2019 03:40:50 -0400")
-Message-ID: <xmqq7e9gp68e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0BD2AC46-9379-11E9-ACF4-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+        id S1732072AbfFTQia (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 12:38:30 -0400
+Received: from mail-ua1-f74.google.com ([209.85.222.74]:43514 "EHLO
+        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732055AbfFTQi3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 12:38:29 -0400
+Received: by mail-ua1-f74.google.com with SMTP id z42so562051uac.10
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 09:38:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=cnv4N6j0PTU+4ggz5g33TxSVcWQwxLF5Y8N08ItoPpc=;
+        b=qRI/zcyGc26i0hdGe3VCre+svptXsiOUwzxC9IfRbwT/ymbD2r4maLuoHyMuAH9YfF
+         agARXjRB3+niW4WhEsy8MXmRMImg39b6k7lzceNkzuGlZu8K0W0S2bI+ACezXVzRcT1s
+         StxH4BrxdZTdojLzXs6+ypD++ODwf6CXmWw0ul0W7EJVdLuUc3P7NkAvRRkCLV077bst
+         46HvAYiM+7k12Av2xsJmExMhcAfV9TQiDD6bhXXiQcGFLayZMpx1IvAaykQyqJ5FShue
+         ba9OHL46i0qLEBIFXK6nWT2gt8TLmv3dwhog6dT32O2H7aPiF1seAkq6Akq823+CBXAI
+         pPcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=cnv4N6j0PTU+4ggz5g33TxSVcWQwxLF5Y8N08ItoPpc=;
+        b=HLk9HWUQCSfyv0e0FyEPXNl/C4foPyShXnzVTpUH3bLSkqx/Xg8ETnyAq3tN2gLqcP
+         ZntMIoVV584sAT0RfaK9JBCJwE4LQxQY+NFa6c8IWI8wtcSqkaWF4tZy0moAxpmpdUMo
+         4yDx5Txtewvi+y1pGD1vE8eTDXDOhbAh2NOr6z5tupt+1o9i5bKZJMJmHnxi1Cj8uBnz
+         0cQoTJZzf/sCSaIrgz/gv3ENRHQ610KzQjWQjgXFdw7u4Lzj9jYzxwUJ7T+JWW/dgads
+         lLDl9ka1kiUTa4HzCmUI14PfxStJs10VSjGiFOYjTBCCT1b8xmZQxpxlMoVy4TrpxE+4
+         SULg==
+X-Gm-Message-State: APjAAAUoUDezrCnKKTElUZoV4pTsb00F6GcCPOB5KypeEkN5PJ/XQzFc
+        oz6mz1asHKisJNPCaBug7vTuu+p3mNNn7i0Bpdy0D+58zPnPcR8m/K2ZYt/mOYniwXnaO4/ZnPw
+        +WbgditHymHR2/W91mBJEZJrHaQqnLO6527JqDB09v+VFimy33bIE
+X-Google-Smtp-Source: APXvYqzcDgt3pVPXPPI1jQtE5OGOMVRbhGM5hR7JKcp0AkY5ugRRobrWzEQ82NdYd2kGtw+Jkv3lFR6F
+X-Received: by 2002:a1f:4107:: with SMTP id o7mr4560335vka.34.1561048707898;
+ Thu, 20 Jun 2019 09:38:27 -0700 (PDT)
+Date:   Thu, 20 Jun 2019 12:38:11 -0400
+Message-Id: <20190620163820.231316-1-brho@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: [PATCH v9 0/9] blame: add the ability to ignore commits
+From:   Barret Rhoden <brho@google.com>
+To:     git@vger.kernel.org
+Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+This patch set adds the ability to ignore a set of commits and their
+changes when blaming.  This can be used to ignore a commit deemed 'not
+interesting,' such as reformatting.
 
-> The find_commit_name() function passes an object_id.hash as the key of a
-> hashmap. That ends up in commit_name_neq(), which then feeds it to
-> oideq(). Which means we should actually be the whole "struct object_id".
->
-> It works anyway because pointers to the two are interchangeable. And
-> because we're going through a layer of void pointers, the compiler
-> doesn't notice the type mismatch.
+v8 -> v9
+v8: https://public-inbox.org/git/20190610153014.42055-1-brho@google.com
+- Fixed tests that had git-blame's output piped to another command
+- Rebased onto master
 
-Wow.  Good eyes.  I wouldn't have noticed this (and for the reasons
-you stated, it is very tricky for any clever compiler to notice it).
+v7 -> v8
+v7: https://public-inbox.org/git/20190515214503.77162-1-brho@google.com
+- Added Junio's fixes for test portability.
+- Removed unreachable code exposed by Derrick's test coverage report.
+- Added a test to ensure blame_coalesce() is covered.
+- Rebased onto master.
 
-Impressed.
+v6 -> v7
+v6: https://public-inbox.org/git/20190410162409.117264-1-brho@google.com
+- Split the init_skiplist commit into two commits: "change variable
+  names" then "move the function".
+- Fixed the test's usage of grep, from grep "\+" to grep -E "+".
+- Fixed comments related to fsck.skipList, added them to
+  config/blame.txt
+- A line in the blame output is either "ignored" or "unblamable", not
+  both.
+- Changed the way we mark lines.  In particular, we don't zero-out the
+  hash anymore for unblamables, since all zeros already had a meaning.
+  We also distinguish between ignored and unblamable.  Here's the new
+  style:
+	? for ignored
+	* for unblamable
+  Both of those markings are controlled by config vars; the discussion
+  on the list shows that no default style works for everyone:
+        if blame.markIgnoredLines
+	    Line was attributed to a commit that was not the most recent
+	    to change it (i.e. the ignored commit) and will be marked
+	    with '?'.  Lines touched by an ignored commit that we could
+	    not blame on another are unmarked.
+        if blame.markUnblamableLines
+	    Lines touched by an ignored commit that we could not blame
+	    on another are marked with *.  I wanted to differentiate
+	    between Ignored and Unblamable, so a single ? isn't enough.
+- Added Michael's fuzzy fingerprinting code.
+- We guess_line_blames() for an entire chunk, instead of per-blame
+  entry.  A diff chunk can be made up of more than one blame_entry,
+  which made the job of the heuristic unnecessarily difficult.
+- Rebased onto master.
 
-> But it's worth cleaning up (especially since once we switch away from
-> sha1hash() on the same line, accessing the hash member will look doubly
-> out of place).
+v5 -> v6
+v5: https://public-inbox.org/git/20190403160207.149174-1-brho@google.com/
+- The "guess" heuristic can now look anywhere in the parent file for a
+  matching line, instead of just looking in the parent chunk.  The
+  chunks passed to blame_chunk() are smaller than you'd expect: they are
+  just adjacent '-' and '+' sections.  Any diff 'context' is a chunk
+  boundary.
+- Fixed the parent_len calculation.  I had been basing it off of
+  e->num_lines, and treating the blame entry as if it was the target
+  chunk, but the individual blame entries are subsets of the chunk.  I
+  just pass the parent chunk info all the way through now.
+- Use Michael's newest fingerprinting code, which is a large speedup.
+- Made a config option to zero the hash for an ignored line when the
+  heuristic could not find a line in the parent to blame.  Previously,
+  this was always 'on'.
+- Moved the for loop variable declarations out of the for ().
+- Rebased on master.
 
-Yup.  Thanks.
+v4 -> v5
+v4: https://public-inbox.org/git/20190226170648.211847-1-brho@google.com/
+- Changed the handling of blame_entries from ignored commits so that you
+  can use any algorithm you want to map lines from the diff chunk to
+  different parts of the parent commit.
+- fill_origin_blob() optionally can track the offsets of the start of
+  every line, similar to what we do in the scoreboard for the final
+  file.  This can be used by the matching algorithm.  It has no effect
+  if you are not ignoring commits.
+- RFC of a fuzzy/fingerprinting heuristic, based on Michael Platings RFC
+  at https://public-inbox.org/git/20190324235020.49706-2-michael@platin.gs/
+- Made the tests that detect unblamable entries more resilient to
+  different heuristics.
+- Fixed a few bugs:
+	- tests were not grepping the line number from --line-porcelain
+	  correctly.
+	- In the old version, when I passed the "upper" part of the
+	  blame entry to the target and marked unblamable, the suspect
+	  was incorrectly marked as the parent.  The s_lno was also in
+	  the parent's address space.
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/describe.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index 1409cedce2..0a5cde00a2 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -76,7 +76,7 @@ static int commit_name_neq(const void *unused_cmp_data,
->  
->  static inline struct commit_name *find_commit_name(const struct object_id *peeled)
->  {
-> -	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled->hash);
-> +	return hashmap_get_from_hash(&names, sha1hash(peeled->hash), peeled);
->  }
->  
->  static int replace_name(struct commit_name *e,
+v3 -> v4
+v3: https://public-inbox.org/git/20190212222722.240676-1-brho@google.com/
+- Cleaned up the tests, especially removing usage of sed -i.
+- Squashed the 'tests' commit into the other blame commits.  Let me know
+  if you'd like further squashing.
+
+v2 -> v3
+v2: https://public-inbox.org/git/20190117202919.157326-1-brho@google.com/
+- SHA-1 -> "object name", and fixed other comments
+- Changed error string for oidset_parse_file()
+- Adjusted existing fsck tests to handle those string changes
+- Return hash of all zeros for lines we know we cannot identify
+- Allow repeated options for blame.ignoreRevsFile and
+  --ignore-revs-file.  An empty file name resets the list.  Config
+  options are parsed before the command line options.
+- Rebased to master
+- Added regression tests
+
+v1 -> v2
+v1: https://public-inbox.org/git/20190107213013.231514-1-brho@google.com/
+- extracted the skiplist from fsck to avoid duplicating code
+- overhauled the interface and options
+- split out markIgnoredFiles
+- handled merges
+
+Barret Rhoden (8):
+  fsck: rename and touch up init_skiplist()
+  Move oidset_parse_file() to oidset.c
+  blame: use a helper function in blame_chunk()
+  blame: add the ability to ignore commits and their changes
+  blame: add config options for the output of ignored or unblamable
+    lines
+  blame: optionally track line fingerprints during fill_blame_origin()
+  blame: use the fingerprint heuristic to match ignored lines
+  blame: add a test to cover blame_coalesce()
+
+Michael Platings (1):
+  blame: add a fingerprint heuristic to match ignored lines
+
+ Documentation/blame-options.txt |   19 +
+ Documentation/config/blame.txt  |   16 +
+ Documentation/git-blame.txt     |    1 +
+ blame.c                         | 1016 +++++++++++++++++++++++++++++--
+ blame.h                         |    6 +
+ builtin/blame.c                 |   56 ++
+ fsck.c                          |   37 +-
+ oidset.c                        |   35 ++
+ oidset.h                        |    8 +
+ t/t5504-fetch-receive-strict.sh |   14 +-
+ t/t8003-blame-corner-cases.sh   |   36 ++
+ t/t8013-blame-ignore-revs.sh    |  274 +++++++++
+ t/t8014-blame-ignore-fuzzy.sh   |  437 +++++++++++++
+ 13 files changed, 1856 insertions(+), 99 deletions(-)
+ create mode 100755 t/t8013-blame-ignore-revs.sh
+ create mode 100755 t/t8014-blame-ignore-fuzzy.sh
+
+-- 
+2.22.0.410.gd8fdbe21b5-goog
+
