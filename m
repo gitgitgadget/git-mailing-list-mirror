@@ -2,109 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8901F462
-	for <e@80x24.org>; Thu, 20 Jun 2019 08:58:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94DBB1F462
+	for <e@80x24.org>; Thu, 20 Jun 2019 09:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726170AbfFTI6e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 04:58:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45630 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725875AbfFTI6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 04:58:34 -0400
-Received: (qmail 17960 invoked by uid 109); 20 Jun 2019 08:58:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Jun 2019 08:58:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13789 invoked by uid 111); 20 Jun 2019 08:59:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Jun 2019 04:59:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jun 2019 04:58:32 -0400
-Date:   Thu, 20 Jun 2019 04:58:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] delta-islands: respect progress flag
-Message-ID: <20190620085832.GA5039@sigill.intra.peff.net>
+        id S1726081AbfFTJe6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 05:34:58 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:36226 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725925AbfFTJe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 05:34:58 -0400
+Received: by mail-wm1-f51.google.com with SMTP id u8so2426097wmm.1
+        for <git@vger.kernel.org>; Thu, 20 Jun 2019 02:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YfA1yYC0RxwiUc1ObIt9a249uNc6/Kt35iTG8AH0mNU=;
+        b=tmZkZmi0NSQqGEGLDIXdH+R6xnNkKOcUnoaNiTmEgfzM0hfWaIi6DO6P6a88sgtX4s
+         LEVzGzt1hqFvcB1w+Wf7sZhBbWlCcXebFEaozgEUq7tNwM1E73PMsLxhTTLqXW5y0VV8
+         yYOsVnTqBeUYmBg/otjTqm5YO5duJzObr2W8Eezbkb/RO1EGqAccrO30bs2DjhnjXhL7
+         50JfKrSkkQL1IGwc4lg6nrmAnZQGFpdxCzQ06/NgBrnGBKoOLdgqNIs/Gy7SjHbl0TKu
+         Zje/ob78eyxQmM61fxa/hKPw5QHhrRwgyX6uHihsQiBZiMtU3DI6J2/RwHBDlxydPoLr
+         TLsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=YfA1yYC0RxwiUc1ObIt9a249uNc6/Kt35iTG8AH0mNU=;
+        b=WzYI8PI0OP2hRAp+CUxot9n5XoSyZ6ezOawTVJ0tXs0HZ5HAVTHABYtilqyjCaL2Ey
+         taSfjkP+5VUzClIigqS43bcF95ex/PekWyYVAcLhnwcxCHRPD4GWMTSt3/9MIepsxUmk
+         IUaLO9hPjHyoV1xPhVurMTGbS7c9E4uF3Bn8cnLBKYKdnuf0xYnKRw0JB/WkRrU4nmRb
+         rdzBDbuERfmz7oFe8DGsApP9sHEUGsiA3V17oyH/x9owRhqiZA4DzFpUxuW1QepAPhhX
+         Xwi0w+K+/VKa8kDRc0jhtJzGTE/Um2vj7FfQpPmzRHhwwek/KXO5eYt5YiJfYni1asxu
+         CVbQ==
+X-Gm-Message-State: APjAAAVmreuJ9g0FFIKIqLPWXWWt+KeDkIvluXZLQQuHLBlCOJxHSDn8
+        7dWn14NZO47uFhVRwUgBjvRN4Axi
+X-Google-Smtp-Source: APXvYqxAdf3hqp08uNoczqbkOb2LkINRBfahffCw/7OrRYDOnZRnDEsLkumBaMa2eGZXvRT7YIYAwQ==
+X-Received: by 2002:a1c:3c8a:: with SMTP id j132mr2019593wma.172.1561023295636;
+        Thu, 20 Jun 2019 02:34:55 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id n1sm16399260wrx.39.2019.06.20.02.34.54
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jun 2019 02:34:55 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: pw/rebase-abort-clean-rewritten, was Re: What's cooking in
+ git.git (Jun 2019, #04; Fri, 14)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <xmqqh88ruc1b.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906172001490.44@tvgsbejvaqbjf.bet>
+ <2a37d4c2-6eec-548d-0bd0-12bbd49c8071@gmail.com>
+ <xmqq7e9jsh8j.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <b2afef27-96f8-b262-2cda-4c22dc604d2d@gmail.com>
+Date:   Thu, 20 Jun 2019 10:34:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <xmqq7e9jsh8j.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The delta island code always prints "Marked %d islands", even if
-progress has been suppressed with --no-progress or by sending stderr to
-a non-tty.
+Hi Junio & dscho
 
-Let's pass a progress boolean to load_delta_islands(). We already do
-the same thing for the progress meter in resolve_tree_islands().
+On 18/06/2019 04:30, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> Yes I sent it just before I went offline, but that's a while ago now
+> 
+> Yup.  IIRC, you told us not to look at the patch "for now" as you
+> would be offline, and I was fully expecting that a regular review
+> exchange would happen after you come back.
+> 
+> I do not recall seeing much discussion, though, but ...
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Arguably this should be a real progress meter that counts up, but I'm
-not sure what it should be counting. Refs we analyzed? Islands found?
-Unless you have a ton of refs, it doesn't really matter, so I just
-punted on that part for now and only fixed the egregious bug. :)
+You're right there hasn't been much discussion I assume dscho is happy 
+with the new version if he's asking for it to be picked up.
 
- builtin/pack-objects.c | 2 +-
- delta-islands.c        | 5 +++--
- delta-islands.h        | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+>>> Phillip, I was under the impression that all reviewer comments had been
+>>> resolved. Does that match your impression?
+>>
+>> Yes, I think it's ready. Thanks for prompting me dscho, I'd seen this
+>> was on hold and then forgotten to write to Junio
+> 
+> ... if you resolved "all reviewer comments", it must have seen
+> sufficient review, in which case let's merge it to 'next'.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b2be8869c2..698c901523 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3134,7 +3134,7 @@ static void get_object_list(int ac, const char **av)
- 		return;
- 
- 	if (use_delta_islands)
--		load_delta_islands(the_repository);
-+		load_delta_islands(the_repository, progress);
- 
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
-diff --git a/delta-islands.c b/delta-islands.c
-index 2186bd0738..b959f6c380 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -454,7 +454,7 @@ static void deduplicate_islands(struct repository *r)
- 	free(list);
- }
- 
--void load_delta_islands(struct repository *r)
-+void load_delta_islands(struct repository *r, int progress)
- {
- 	island_marks = kh_init_sha1();
- 	remote_islands = kh_init_str();
-@@ -463,7 +463,8 @@ void load_delta_islands(struct repository *r)
- 	for_each_ref(find_island_for_ref, NULL);
- 	deduplicate_islands(r);
- 
--	fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
-+	if (progress)
-+		fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
- }
- 
- void propagate_island_marks(struct commit *commit)
-diff --git a/delta-islands.h b/delta-islands.h
-index 3ac8045d8c..eb0f952629 100644
---- a/delta-islands.h
-+++ b/delta-islands.h
-@@ -11,7 +11,7 @@ int in_same_island(const struct object_id *, const struct object_id *);
- void resolve_tree_islands(struct repository *r,
- 			  int progress,
- 			  struct packing_data *to_pack);
--void load_delta_islands(struct repository *r);
-+void load_delta_islands(struct repository *r, int progress);
- void propagate_island_marks(struct commit *commit);
- int compute_pack_layers(struct packing_data *to_pack);
- 
--- 
-2.22.0.732.g5402924b4b
+Thanks
+
+Phillip
+> Thanks.
+> 
