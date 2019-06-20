@@ -7,77 +7,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 142881F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 20:09:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7A5C1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 20:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726960AbfFTUJu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 16:09:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56968 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726114AbfFTUJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 16:09:50 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E79951679F0;
-        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
+        id S1726533AbfFTUSX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 16:18:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56561 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbfFTUSX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 16:18:23 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2C93862801;
+        Thu, 20 Jun 2019 16:18:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S/SNJErbbWPGkEgx5S9U8zgx8DA=; b=ZEZxM6
-        OCz23NP83ddvBR0w5P+nk+c85UiPOWqSSmidbjWYqIAGJMWOjOjVNWrGhIP98l9E
-        6irtqXiYP36uqZFFYlJ7lTOumMP7oSbxJ2Aj2ofsdX48YCtSJs1HpGJCmRvdUPCt
-        avKn0HN3TM6tRrOsOv0FQlG4uzESVV0JWptQk=
+        :content-type:content-transfer-encoding; s=sasl; bh=rPHqNShK3te4
+        ShIUJAGPQT1Z2XI=; b=sY1ReeX8ry927j3EHHSR0j1s8LoAutA0xogUe2lSlBKK
+        sDGYmlr2ONttWmIBhEubCSNy1jj/GGr7VL81CJSpYB9z7YO2Azv4G0BPyv2kR72V
+        IqAdZeD/rLP2hggJpOEjfSQ5WAaoVrZJCkjnpXJTpuVpn6VOXxYPQfIJX0O9ykA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oiWEO5yRJOgkaqDCI9nEYXmFZtKV1ADf
-        nYB+g9mnYlNtxjfbvVIp+A9LuBYFuO75A/gHE7mHPIq8dEARfaW+jWM0zfGXZ0Xm
-        KA9dtJ01y2Il8snpKZHPJDvh4AaJd+OT2Vhzneqz1FdY7D0XYxOiNsRlL/YJEHUJ
-        ppajvZA16W4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE00B1679EF;
-        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aXP4hg
+        eiHmrzfIeHwqieNhVuB+LjtZq6jtr9DtxTPBaprOa+4vHqn/jXk1VKuhn58irmdv
+        jByqaTfBlra4OORSAp+RoYZFhnMl+KD8/PlL5XjXcPqQ6KRSrJc3yQ+iO7v13bCu
+        jh/bjRwwwz1p7FYsZLnwIf/nrwy15QXFrjmwI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2466662800;
+        Thu, 20 Jun 2019 16:18:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33F321679EE;
-        Thu, 20 Jun 2019 16:09:47 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5761E627FF;
+        Thu, 20 Jun 2019 16:18:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>, git@vger.kernel.org,
-        newren@gmail.com, t.gummerer@gmail.com, martin.agren@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [GSoC][PATCH v5 4/5] cherry-pick/revert: add --skip option
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
-        <20190618170650.22721-1-rohit.ashiwal265@gmail.com>
-        <20190618170650.22721-5-rohit.ashiwal265@gmail.com>
-        <xmqqr27oq5z1.fsf@gitster-ct.c.googlers.com>
-        <76359a86-0eb1-dd87-c36f-7bd2df8b0ae5@gmail.com>
-Date:   Thu, 20 Jun 2019 13:09:46 -0700
-In-Reply-To: <76359a86-0eb1-dd87-c36f-7bd2df8b0ae5@gmail.com> (Phillip Wood's
-        message of "Thu, 20 Jun 2019 10:57:44 +0100")
-Message-ID: <xmqqimt0m31x.fsf@gitster-ct.c.googlers.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>, Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        kernel-usp@googlegroups.com
+Subject: Re: [GSoC][PATCH v7 00/10] clone: dir-iterator refactoring with tests
+References: <20190502144829.4394-1-matheus.bernardino@usp.br>
+        <cover.1560898723.git.matheus.bernardino@usp.br>
+Date:   Thu, 20 Jun 2019 13:18:16 -0700
+In-Reply-To: <cover.1560898723.git.matheus.bernardino@usp.br> (Matheus
+        Tavares's message of "Tue, 18 Jun 2019 20:27:37 -0300")
+Message-ID: <xmqqef3om2nr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A175DC0-9397-11E9-95E5-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8AC13ED6-9398-11E9-9EAB-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
->> This one, and the in_progress_advice emitted from the patch 1/5, are
->> both bad in that they make calls to advise() without guarding it
->> with an advice.* configuration variable.
+> Daniel Ferreira (1):
+>   dir-iterator: add tests for dir-iterator API
 >
-> I'm not sure we have one for cherry-pick/revert/rebase. At the moment
-> they print advice advice for a failed pick unconditionally...
+> Matheus Tavares (8):
+>   clone: better handle symlinked files at .git/objects/
+>   dir-iterator: use warning_errno when possible
+>   dir-iterator: refactor state machine model
+>   dir-iterator: add flags parameter to dir_iterator_begin
+>   clone: copy hidden paths at local clone
+>   clone: extract function from copy_or_link_directory
+>   clone: use dir-iterator to avoid explicit dir traversal
+>   clone: replace strcmp by fspathcmp
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
+>   clone: test for our behavior on odd objects/* content
+>
+>  Makefile                     |   1 +
+>  builtin/clone.c              |  75 +++++----
+>  dir-iterator.c               | 289 +++++++++++++++++++++--------------
+>  dir-iterator.h               |  60 ++++++--
+>  refs/files-backend.c         |  17 ++-
+>  t/helper/test-dir-iterator.c |  58 +++++++
+>  t/helper/test-tool.c         |   1 +
+>  t/helper/test-tool.h         |   1 +
+>  t/t0066-dir-iterator.sh      | 163 ++++++++++++++++++++
+>  t/t5604-clone-reference.sh   | 133 ++++++++++++++++
+>  10 files changed, 635 insertions(+), 163 deletions(-)
+>  create mode 100644 t/helper/test-dir-iterator.c
+>  create mode 100755 t/t0066-dir-iterator.sh
 
-Yes, 1/5 does not introduce a new problem; it just makes it worse by
-allowing the misdesign survive another update.  The one introduced
-by 4/5 is genuinely new.
+A higher level question is what's the benefit of using dir-iterator
+API in the first place.  After subtracting 356 added lines to t/,
+it still adds 279 lines while removing only 163 lines, so it is not
+like "we have a perfect dir-iterator API that can be applied as-is
+but an older code that predates dir-iterator API was still using an
+old way, so let's make the latter use the former."
 
-> ... Maybe that
-> should be checking advice.resolveConflict though.
-
-I think that is a sensible one, rather than inventing a new knob.
 
