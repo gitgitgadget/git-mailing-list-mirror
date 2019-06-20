@@ -2,94 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97A531F461
-	for <e@80x24.org>; Thu, 20 Jun 2019 18:55:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB0E1F461
+	for <e@80x24.org>; Thu, 20 Jun 2019 19:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726052AbfFTSza (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Jun 2019 14:55:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52791 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfFTSza (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jun 2019 14:55:30 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F29DA1673FC;
-        Thu, 20 Jun 2019 14:55:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QgyGuQeBJVz6VpwRSROwQ/kRC88=; b=e8wqxs
-        W6PidTFJ+wqdIN6PJs66HlZHTprzX5+f4CzzqVst8ojjwAhgRfuWhynV845TbRtZ
-        pYPnf2jdZecmSbWjh1S2mNT66+GBxnTOBBee0ReUu1HHd2Kgs9uOjd3XY1bjFYh2
-        1TanK8nBmIC+pt8DYVS2CAw8NKkzn7x3YBGko=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P+zNF3UcZm+9/w8EpqmjXn3swYBJlXM4
-        inceT5DV9FFV2/uJLV3MqXPgeDq/V53Lta2hg2Z9YQSkhCLsBt66JL0Tha8KutcH
-        pNok7JRTJbexTpp9YKRiboN51IHf0h5Dj1BGP4jsOaYCVN6053YXcFIChxdho8nB
-        EVTISEEDJGs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E37B81673FA;
-        Thu, 20 Jun 2019 14:55:27 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726437AbfFTTM0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Jun 2019 15:12:26 -0400
+Received: from siwi.pair.com ([209.68.5.199]:43054 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725897AbfFTTM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jun 2019 15:12:26 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 2EFCD3F409F;
+        Thu, 20 Jun 2019 15:12:24 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:4dc2:af85:669c:b0a] (unknown [IPv6:2001:4898:a800:1012:fef5:af85:669c:b0a])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F4EE1673F9;
-        Thu, 20 Jun 2019 14:55:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH] gc: run more pre-detach operations under lock
-References: <20190619094630.32557-1-pclouds@gmail.com>
-        <20190619102601.24913-1-avarab@gmail.com>
-        <CACsJy8AqA3TmNP62ko4c5Et39jsADYf9nKQByz28y-YQjNyKag@mail.gmail.com>
-        <87k1dh8ne4.fsf@evledraar.gmail.com>
-        <20190619191037.GE28145@sigill.intra.peff.net>
-Date:   Thu, 20 Jun 2019 11:55:26 -0700
-In-Reply-To: <20190619191037.GE28145@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 19 Jun 2019 15:10:37 -0400")
-Message-ID: <xmqqef3onl29.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id ED7843F4083;
+        Thu, 20 Jun 2019 15:12:23 -0400 (EDT)
+Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20190619095858.30124-1-pclouds@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <1d24e390-5269-2a9a-4301-d4c462052e25@jeffhostetler.com>
+Date:   Thu, 20 Jun 2019 15:12:23 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F7CA0096-938C-11E9-8540-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20190619095858.30124-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> I think there may be room for both approaches. Yours fixes the repeated
-> message in the more general case, but Duy's suggestion is the most
-> efficient thing.
 
-Yeah, not just the most efficient, but it is a low-hanging-fruit
-that is very obvious.
+On 6/19/2019 5:58 AM, Nguyễn Thái Ngọc Duy wrote:
+> This is probably just my itch. Every time I have to do something with
+> the index, I need to add a little bit code here, a little bit there to
+> get a better "view" of the index.
+> 
+> This solves it for me. It allows me to see pretty much everything in the
+> index (except really low detail stuff like pathname compression). It's
+> readable by human, but also easy to parse if you need to do statistics
+> and stuff. You could even do a "diff" between two indexes.
+> 
+> I'm not really sure if anybody else finds this useful. Because if not,
+> I guess there's not much point trying to merge it to git.git just for a
+> single user. Maintaining off tree is still a pain for me, but I think
+> I can manage it.
+> 
+> Nguyễn Thái Ngọc Duy (8):
+>    ls-files: add --json to dump the index
+>    split-index.c: dump "link" extension as json
+>    fsmonitor.c: dump "FSMN" extension as json
+>    resolve-undo.c: dump "REUC" extension as json
+>    read-cache.c: dump "EOIE" extension as json
+>    read-cache.c: dump "IEOT" extension as json
+>    cache-tree.c: dump "TREE" extension as json
+>    dir.c: dump "UNTR" extension as json
+> 
+>   Documentation/git-ls-files.txt |   5 ++
+>   builtin/ls-files.c             |  30 +++++--
+>   cache-tree.c                   |  41 ++++++++--
+>   cache-tree.h                   |   5 +-
+>   cache.h                        |   2 +
+>   dir.c                          |  56 ++++++++++++-
+>   dir.h                          |   4 +-
+>   fsmonitor.c                    |   9 +++
+>   json-writer.c                  |  30 +++++++
+>   json-writer.h                  |  29 +++++++
+>   read-cache.c                   | 139 ++++++++++++++++++++++++++++++---
+>   resolve-undo.c                 |  36 ++++++++-
+>   resolve-undo.h                 |   4 +-
+>   split-index.c                  |  13 ++-
+>   14 files changed, 376 insertions(+), 27 deletions(-)
+> 
 
-> I agree that the "thousands of remotes" case means we might want to gc
-> in the interim. But we probably ought to do that deterministically
-> rather than hoping that the pattern of lock contention makes sense.
+Thanks for working on this!  I've been wanting to do something
+like this for a while.  I too am tired of digging thru hex dumps
+or "od" output whenever I have an odd problem to investigate.
+This will certainly help.
 
-In the process chain starting from the topmost "git fetch
-<multiple>", that calls multiple "git fetch <one>" for individual
-remotes, that does network transfer and calls "git index-pack" (or
-"git unpack-objects"), the bottommost layer knows how much cruft one
-step among "thousands of remotes" created for a later "gc", but
-there is no mechanism for them to report the information back to
-their callers.  Unlike "git svn" that periodically calls the auto gc
-every N commits and can claim to be aware of its cruft creation rate
-;-), the information available to the topmost "git fetch" is only
-the number of underlying fetches, counting a no-op fetch and a fetch
-that is close to a full clone equally, which is not a good way to
-gauge the cruft creation rate X-<.
-
-A useful deteministic triggering would be a good thing to aim in the
-longer run, but would be somewhat involved to design and implement,
-I am afraid.
+Jeff
