@@ -8,58 +8,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEFDA1F4B6
-	for <e@80x24.org>; Fri, 21 Jun 2019 22:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4A4B1F4B6
+	for <e@80x24.org>; Fri, 21 Jun 2019 22:31:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726099AbfFUWbK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 18:31:10 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:37174 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726018AbfFUWbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 18:31:10 -0400
-Received: by mail-oi1-f196.google.com with SMTP id t76so5778886oih.4
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 15:31:10 -0700 (PDT)
+        id S1726106AbfFUWbM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 18:31:12 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:35900 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726018AbfFUWbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 18:31:12 -0400
+Received: by mail-oi1-f194.google.com with SMTP id w7so5766852oic.3
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 15:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TiNwCZJflNYZRi+NOnd+vhCjmfMO8p8eO9bw5FUSS+I=;
-        b=vQztBb3+vfemT/uRBiJ2ujRU4nQVZ+/H21OlwQSVS0LSDXTVATc8e20Tvn5fmLhM6D
-         IKdd6PWdV5nLZHFhDm/7FK0e+jND9Xa4ZiexK8tK8d6uWL8AllppIyxrNxDf2FgDXr75
-         jRf/UrMCIVRxOeRQlRhYY9YdiEnQyVid0AwLfu/kiIelCkp4T2Ni/XAjQ/elEFwpScSN
-         Tr9hjWpCDO+E930xCdTD+ttGcrglP3I3I1tEG/FHQuJh3E0CX34xGkbmbYof6cF9O0J9
-         X2NgcSrqF4ub8bkeYe+DYT1Ov7uv34K6nr38lXnR/8Vfseo7MxC0xrPkMaJWo1KD/Gxk
-         JV/Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VtHV5zTS3soqq+ZGlAysNvSswCep2UXClY2cSqCUe90=;
+        b=myjjPgkjSlHVS8sMf9RVIbYmUXI0z7asVQgOdOTX1xbOWPpTknWJhL920v40RAG5tR
+         xMJU/DN3L3Km7/yxjgchuJ1IXHTv5jmM87CAX1qJeVC3g/cPZ7eoWJ0uJJgJc/mOp0kf
+         rNk9Ia1I2JoZl84W2jonoFqfxXNI+LWX80ddhUn6Rg4OJZZwzAYHXvarRPWRkB1N0Tob
+         M3hrCcQkVujvrDkdARp/N7cVZhcEKKQEcUapfFOG8SfkLrJ5HbpiRFsIFON4D2OK4vBk
+         T7IktqbU4ThIa0t4IDZt2wWrUbYyLH4KqKok1Kz3D0JeQP257rfA72tLkIDRe1r1hIyu
+         n08Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TiNwCZJflNYZRi+NOnd+vhCjmfMO8p8eO9bw5FUSS+I=;
-        b=mlb1VTC/SI6vj4wR3Ai+x5rXuKz0SegfngPJmOuvBYYgpZRiErZ3YOMZeRGI9sBKKG
-         xwqwz4N1gCrXhDtlOrgmCkOcnvTSWaH1mW+bxXHT6+GokkCgDx3Fjs/Bxegp9UEGn/u/
-         vBaNOpdmtdDsRb5LlpwZxOpuJ1w81rhYq0ZEXVWqpqJ/Ta6Hi+ll2O7sZiHb1zLWVY7S
-         tBkCMPpZJ+9ZciaH+PBRv7S9X7h8FIhow09wOKiENBedf4duqtjuLv6I8H91X7xHspyy
-         YZ0+Zs/xszkLrNTQLuo9axq1tmnePZf4ho0jywAmDAD25MkuEUt4m8uXQamPt67tl8rH
-         qxNQ==
-X-Gm-Message-State: APjAAAUiFTzNRyZB/WgBtl+IDQ8siliU5VPSsaYBYGtTtnZYGAMCGen2
-        0HvU5UpL9Xb1RJLFufT5v2yVMB4r1vc=
-X-Google-Smtp-Source: APXvYqwU/tOfvpDPmgASOlvRwMlIeBCSvP///4NKH1yYzJhxOtRDQW7+9cK96zDAvLeLCBrFXa65sA==
-X-Received: by 2002:a05:6808:49a:: with SMTP id z26mr4382530oid.177.1561156269542;
-        Fri, 21 Jun 2019 15:31:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VtHV5zTS3soqq+ZGlAysNvSswCep2UXClY2cSqCUe90=;
+        b=Q1CZg0TamK7ALH7YAOa2PADutrbvJaWlg+d5HjukYn+WRM+GnjqXNSWh6iTZO4DEMY
+         tkdKRvLKQxYlC+ro6Q+vVXyYiG0OashjwViNSlCwh3pJhLrNNzH27xWWAIdZ6P1kNkWn
+         7dsNUy75kEVvy+ck+RR6rBi5MdV3OS/kwLuiZqnIi4rxpZzDx4xx1haDnoWy6lN1QZnd
+         nBp1x/JirAgH1iIK3YzLwDdD7Z8ZCxhEbBdgoKwYA4HRDidMdNrTZLq6v5jvw7lEsaqN
+         sd9APGP0z5FPbITw4lpe4YnOh41iI7AarHvBQbF24vkPTF9nzEHgMCI4Rf6Mu0XuoWqN
+         gNGA==
+X-Gm-Message-State: APjAAAWB4PXlwmYI4qGnWhm4sW2QrDK37rJoM2P15t55gMHauLiWh6q2
+        BAhuKOJ0RXDnx2d0cbbPdTzAXKZl+g4=
+X-Google-Smtp-Source: APXvYqy2EP2bMnz6N/ZFXJHyUDn64UYA8T+fWzW4Ti3U9bw28dVFGZTf12tw/zjn7JJ4vp1+35Tv4Q==
+X-Received: by 2002:aca:b808:: with SMTP id i8mr4162180oif.160.1561156270996;
+        Fri, 21 Jun 2019 15:31:10 -0700 (PDT)
 Received: from localhost (200-52-42-156.reservada.static.axtel.net. [200.52.42.156])
-        by smtp.gmail.com with ESMTPSA id b25sm1415262oti.31.2019.06.21.15.31.08
+        by smtp.gmail.com with ESMTPSA id a125sm2124153oib.11.2019.06.21.15.31.10
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 15:31:08 -0700 (PDT)
+        Fri, 21 Jun 2019 15:31:10 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 00/14] completion: a bunch of updates
-Date:   Fri, 21 Jun 2019 17:30:53 -0500
-Message-Id: <20190621223107.8022-1-felipe.contreras@gmail.com>
+Subject: [PATCH 01/14] completion: zsh: fix __gitcomp_direct()
+Date:   Fri, 21 Jun 2019 17:30:54 -0500
+Message-Id: <20190621223107.8022-2-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190621223107.8022-1-felipe.contreras@gmail.com>
+References: <20190621223107.8022-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -67,33 +69,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Many callers append a space suffix, but zsh automatically appends a
+space, making the completion add two spaces, for example:
 
-Here's another try at completion fixes, cleanups, and more tests. Some
-of these have already been sent.
+  git log ma<tab>
 
-Felipe Contreras (14):
-  completion: zsh: fix __gitcomp_direct()
-  completion: zsh: fix for directories with spaces
-  completion: remove zsh hack
-  completion: zsh: improve main function selection
-  completion: prompt: fix color for Zsh
-  completion: bash: cleanup cygwin check
-  completion: zsh: update installation instructions
-  completion: bash: remove old compat wrappers
-  completion: bash: remove zsh wrapper
-  completion: zsh: trivial cleanups
-  test: completion: tests for __gitcomp regression
-  test: completion: use global config
-  completion: add default options
-  completion: add default merge strategies
+Will complete 'master  '.
 
- contrib/completion/git-completion.bash | 202 +++++++++++++------------
- contrib/completion/git-completion.zsh  |  53 +++----
- contrib/completion/git-prompt.sh       |  10 +-
- t/t9902-completion.sh                  |  37 +++--
- 4 files changed, 161 insertions(+), 141 deletions(-)
+Let's remove that extra space.
 
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ contrib/completion/git-completion.zsh  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9f71bcde96..a65d5956c1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3009,7 +3009,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
+ 
+ 		local IFS=$'\n'
+ 		compset -P '*[=:]'
+-		compadd -Q -- ${=1} && _ret=0
++		compadd -Q -- ${${=1}% } && _ret=0
+ 	}
+ 
+ 	__gitcomp_nl ()
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 886bf95d1f..0d66c27366 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -73,7 +73,7 @@ __gitcomp_direct ()
+ 
+ 	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -- ${=1} && _ret=0
++	compadd -Q -- ${${=1}% } && _ret=0
+ }
+ 
+ __gitcomp_nl ()
 -- 
 2.22.0
 
