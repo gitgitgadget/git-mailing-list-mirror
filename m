@@ -7,88 +7,111 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93A0B1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 19:09:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C064B1F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 19:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbfFUTJo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 15:09:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51311 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbfFUTJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 15:09:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 619236A187;
-        Fri, 21 Jun 2019 15:09:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726311AbfFUTSS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 15:18:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61663 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726108AbfFUTSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 15:18:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0235C14AF49;
+        Fri, 21 Jun 2019 15:18:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zHBi25hqwhVwHs+d0+ruKC3o+M4=; b=azW4zv
-        b562PVcsup7dko9Kgdn4kPnhfT0A3yEqNWWDoLArgJqZ5zYxtV1BDTElhH5IsjtP
-        hSCLmeJeXvRCdiGue6cSF5yaJXUqhZgAKOq4ND1vr7qlRgqNF9zM6xa2/8EHbrbi
-        Jl+fgZJDCz2DaNa0GMfccjuUd9fBS1nxN/Kjw=
+        :content-type; s=sasl; bh=lStsA2giJNhwPiFbDry63M1G8No=; b=uJrXfR
+        bsLJRMbA9wiOhCLAWBbXiVSeSB4zA1kZ2phj94th21QEiBibPv506dfwNM+DVkP+
+        2ITkr22V/9N+Razv/KlRdo1RUE5IDYUIchuKmeUhkSd26ZbSjbya+OEWTl+DeDG1
+        3+/u6wiM1USA3Mi6LRCMncvKYxaSbEDLhDQQs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IMtx++edNywfev4LSCBc7xi3GY7wOfSZ
-        +8uMb/FS3Cr1gqY75p817aQrvla8hclYuAa+FNMANWsqNvLvd2o3L2ghhxwbujxN
-        J9t0se+8GQd+Y/0qvHrCb1e7r1dX6maiPejKEwamf56QXWRsJR/55rJ2J89DeZhF
-        Y9E+DJaxv7I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 590716A185;
-        Fri, 21 Jun 2019 15:09:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=FfK8GfU7SehwDKdsXh2ClnRkHQ7cPLHF
+        aKLV9XOZaukdqCSos2E0SeGTDlwhfw2buTYrUNBbMNTJeQGmoJ2IAOqJMd0vsX8t
+        cG0vQ6oQaFDea2++vHu9uYJYO9fR4jrtSHEnIej4SD+A8Rhf04Qud97J27+0FwkZ
+        V2J3zQ7xlc8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED8ED14AF48;
+        Fri, 21 Jun 2019 15:18:12 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3F3466A184;
-        Fri, 21 Jun 2019 15:09:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63F1414AF46;
+        Fri, 21 Jun 2019 15:18:12 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
-        phillip.wood123@gmail.com, jrnieder@gmail.com,
-        martin.agren@gmail.com
-Subject: Re: [GSoC][PATCH v6 0/5] Teach cherry-pick/revert to skip commits
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
-        <20190621091800.17686-1-rohit.ashiwal265@gmail.com>
-Date:   Fri, 21 Jun 2019 12:09:37 -0700
-In-Reply-To: <20190621091800.17686-1-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Fri, 21 Jun 2019 14:47:55 +0530")
-Message-ID: <xmqqd0j6kb66.fsf@gitster-ct.c.googlers.com>
+To:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] l10n: localizable upload progress messages
+References: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com>
+Date:   Fri, 21 Jun 2019 12:18:11 -0700
+In-Reply-To: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com> (Dimitriy
+        Ryazantcev's message of "Fri, 21 Jun 2019 21:50:51 +0300")
+Message-ID: <xmqq8stukarw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1DFDED4C-9458-11E9-97C0-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4FDB6866-9459-11E9-912F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com> writes:
 
-> I've covered the advice message behind `advice_resolve_conflict` variable and
-> changed the order of error and advice to match that of 1/5.
+> Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+> ---
+>  progress.c | 3 ++-
+>  strbuf.c   | 8 ++++----
+>  2 files changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/progress.c b/progress.c
+> index a2e8cf64a8..3d47c06495 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -151,7 +151,8 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
+>  	strbuf_humanise_bytes(buf, total);
+>  	strbuf_addstr(buf, " | ");
+>  	strbuf_humanise_bytes(buf, rate * 1024);
+> -	strbuf_addstr(buf, "/s");
+> +	/* TRANSLATORS: per second */
+> +	strbuf_addstr(buf, _("/s"));
+>  }
 
-I think the updated text reads much better, i.e. taking from your
-range-diff:
+Hpmh, if it is OK to assume that in all human languages it is OK to
+express the reate as <number> followed by translated "per second",
+without allowing the order from getting changed, then ...
 
->      +	cat >expect <<-EOF &&
->     ++	error: there is nothing to skip
->      +	hint: have you committed already?
->      +	hint: try "git cherry-pick --continue"
->     -+	error: there is nothing to skip
->      +	fatal: cherry-pick failed
->      +	EOF
+>  	if (bytes > 1 << 30) {
+> -		strbuf_addf(buf, "%u.%2.2u GiB",
+> +		strbuf_addf(buf, _("%u.%2.2u GiB"),
+>  			    (unsigned)(bytes >> 30),
+>  			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
 
-we say "why we failed" upfront with "error", and then for those who
-would need more clues, we give "how you might want to proceed" as an
-additionao "hint".  That looks more logical, besides being more
-consistent with how advice messages are given in other codepaths.
+wouldn't it make more sense to split GiB, MiB, KiB and "bytes" units
+out of these messages, and ask only these unit names, without the
+%u.%2.2u number formats, to get translated by the localization team?
 
-> I believe that we
-> don't have any advice variable appropriate for advice in 1/5.
+>  	} else if (bytes > 1 << 20) {
+>  		unsigned x = bytes + 5243;  /* for rounding */
+> -		strbuf_addf(buf, "%u.%2.2u MiB",
+> +		strbuf_addf(buf, _("%u.%2.2u MiB"),
+>  			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
+>  	} else if (bytes > 1 << 10) {
+>  		unsigned x = bytes + 5;  /* for rounding */
+> -		strbuf_addf(buf, "%u.%2.2u KiB",
+> +		strbuf_addf(buf, _("%u.%2.2u KiB"),
+>  			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
+>  	} else {
+> -		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
+> +		strbuf_addf(buf, _("%u bytes"), (unsigned)bytes);
 
-If there is nothing, perhaps you would need to invent one.  Perhaps
-"advice_sequencer_in_use" or something?
+This needs the Q_() to deal with plural (i.e. in en, between "byte"
+and "bytes").
 
-Other than that, looks quite good.  Will (re-)queue.
-
+>  	}
+>  }
