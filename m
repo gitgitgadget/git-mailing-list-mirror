@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464521F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 10:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A45E01F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 10:18:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbfFUKSf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 06:18:35 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44140 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbfFUKSe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 06:18:34 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r16so5983195wrl.11
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 03:18:32 -0700 (PDT)
+        id S1726587AbfFUKSi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 06:18:38 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:33281 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726439AbfFUKSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 06:18:36 -0400
+Received: by mail-wr1-f44.google.com with SMTP id n9so6066396wru.0
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 03:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NEx9zZSP0K4r7Yu9Gkx+jdK13o3tdQx951Ls51YsjJ4=;
-        b=q/7qNPhaq4eKlgrF6moSys6Loxo/jY4OfBvB+RsL33LC0s8p+QQohVxjYp41+DiZy3
-         mxbB1baWEoxIqRbF7b1cqyS+hYFieJSLYMY3sz2T/a3sH0j7TFWU09+jF8NJEOrJLgyh
-         qWejdJX3d718ZyEd/NyCvr5Oh/egvt+EZ238l0SuVs7kCopfUADw0SzlJ7c3PwhuSH8P
-         9SLtnUOjk02dgYwKVuaFtvbmQDobEVzUsv66YhvUSSXap2G/wqAaHh8YJ45GDw4zUxU/
-         lrpOv2ifDpVkIJtcYsw8Cwyywfbir2s+rVkhyj2l9UyQodKT4xiQEvE+NPcEPUSxBT9C
-         zzoA==
+        bh=0p1RCFjT87l9dgkXZ1aNcukicWmd8g+qnh5wDdPky9I=;
+        b=PEjRP63xCsLYYUIkaQn8qvWJBVo4xIOQIcXS9/T9KWMlM6KtyN7WpflhMqWOBiauaa
+         5lJXOvrqIpcNhRudwKePBW/xWpiX861jsciv8jE+GkxgDJulnxYHmkFdn9u4WlrrMi91
+         IBWCt38LsttYHjxJ6iq2kTKYmmqsto6UlT+J47Yy5pwzCWsAtror6uEJeyIAksswFQ0T
+         Yn1okylaxm/Ep/rkx2g/7YsLIR0haAf/73NMYB19qkETjECqQuSOWKvhUAr/VuYAtX5n
+         i01wAjMrag2NQ6ebEAI45HBw8AidzrI8agq+PXOCfVvTr4VLIgQ0s8MMBVHhWvEWy2nO
+         wiuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NEx9zZSP0K4r7Yu9Gkx+jdK13o3tdQx951Ls51YsjJ4=;
-        b=WTE0EUsKPECi2U5ankc/ci6cR8COJkmHdrCkt9lAXngVk5n+DuKvGy1t7DSTDLrcWt
-         9FE1xvifdWYPqmVLwIsU4vB5R9d/Ixx/LyyHyZSq2UpdFaJNPGclNnuCiBE3gS7Gxn4P
-         PbmvBc2Mb0sakEXzU4SVHM9PNs06LgSNHFQIat9HlrP3NNDqZw9BQHiWYZush7p4SWAs
-         j/BlNscwUACqreItwI73OH7xnEVMKgn7LO5EwYbhiBK0gEBOAfS/XmVp5swvryEYOR7E
-         cg7lKmhbcHuhf4Zh5INV2lS7DEQoSVMZWfVcQjE0l4afMEmJipwU2jQKOqE+Im/0yjuf
-         fqfw==
-X-Gm-Message-State: APjAAAX8S6YWaCoU+NfIsVOL89vpaTGqF4A15MzHVBI+eTmejCOGi1lG
-        kBOOtawpJOLFSynfsTM2PQ05cqEiiRo=
-X-Google-Smtp-Source: APXvYqxg+cDhGYIDr5GdeTWgn7elwjR6s2NcIFjTbl5ZSqpD4J6GM59UnJYGaxBqJ24Ir728aQ1WRw==
-X-Received: by 2002:adf:e88e:: with SMTP id d14mr16855698wrm.189.1561112311455;
-        Fri, 21 Jun 2019 03:18:31 -0700 (PDT)
+        bh=0p1RCFjT87l9dgkXZ1aNcukicWmd8g+qnh5wDdPky9I=;
+        b=eZAmzxD/zJeC7gFXVksy0UKRoJn7QeomA1sEmmCN8xG8U7K9F0rLSDDzKQegt1EhbX
+         O9Iw9o5nFkhzDEyYEbTWgSdEC65XdVwnkh8KqcPghZHNqvQtxzEtR0s3/dP2/guiliDm
+         4ImBNvkrhyMbZYXVq+gbJ59LiBsb2VXSLXYd+nMkgS5oCVpNT81XJ61m+0jJLqOOACWE
+         OZkH6HOL5Caf/xzhmYAoc71dpDlaQKLOgiNHOlvmgNmkvCD7Goo3qNhsaaiYvXFiDM2q
+         Dmaldzyu4ll/0QBZMRBZuhB4NwCSbe3DsmnwLhiOy1n3uLL9+MZzgTi6eNtRGUcN1SJr
+         tBHQ==
+X-Gm-Message-State: APjAAAXRoyW1O/o2QIV4m6Ycq5EbdbK60ypUHxhRTWevnGUKLyYamlUS
+        XjRpEcyE8FrAouVxRT4g6tS4byqYSwY=
+X-Google-Smtp-Source: APXvYqzs3vViI6TIMoQIWdZdgrVNTdweX7lx//IIpvRN3sxfDTz7ImV3NT9eMuEnQcBdiOpNO7hdMA==
+X-Received: by 2002:a5d:4703:: with SMTP id y3mr37767537wrq.35.1561112313781;
+        Fri, 21 Jun 2019 03:18:33 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y184sm1878193wmg.14.2019.06.21.03.18.30
+        by smtp.gmail.com with ESMTPSA id y184sm1878193wmg.14.2019.06.21.03.18.32
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 03:18:30 -0700 (PDT)
+        Fri, 21 Jun 2019 03:18:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 5/8] tests: make GIT_TEST_GETTEXT_POISON a boolean
-Date:   Fri, 21 Jun 2019 12:18:09 +0200
-Message-Id: <20190621101812.27300-6-avarab@gmail.com>
+Subject: [PATCH v3 7/8] tests: replace test_tristate with "git env--helper"
+Date:   Fri, 21 Jun 2019 12:18:11 +0200
+Message-Id: <20190621101812.27300-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190620210915.11297-1-avarab@gmail.com>
 References: <20190620210915.11297-1-avarab@gmail.com>
@@ -72,266 +72,252 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the GIT_TEST_GETTEXT_POISON variable from being "non-empty?" to
-being a more standard boolean variable.
+The test_tristate helper introduced in 83d842dc8c ("tests: turn on
+network daemon tests by default", 2014-02-10) can now be better
+implemented with "git env--helper" to give the variables in question
+the standard boolean behavior.
 
-Since it needed to be checked in both C code and shellscript (via test
--n) it was one of the remaining shellscript-like variables. Now that
-we have "env--helper" we can change that.
+The reason for the "tristate" was to have all of false/true/auto,
+where "auto" meant either "false" or "true" depending on what the
+fallback was. With the --default option to "git env--helper" we can
+simply have e.g. GIT_TEST_HTTPD where we know if it's true because the
+user asked explicitly ("true"), or true implicitly ("auto").
 
-There's a couple of tricky edge cases that arise because we're using
-git_env_bool() early, and the config-reading "env--helper".
+This breaks backwards compatibility for explicitly setting "auto" for
+these variables, but I don't think anyone cares. That was always
+intended to be internal.
 
-If GIT_TEST_GETTEXT_POISON is set to an invalid value die_bad_number()
-will die, but to do so it would usually call gettext(). Let's detect
-the special case of GIT_TEST_GETTEXT_POISON and always emit that
-message in the C locale, lest we infinitely loop.
-
-As seen in the updated tests in t0017-env-helper.sh there's also a
-caveat related to "env--helper" needing to read the config for trace2
-purposes.
-
-Since the C_LOCALE_OUTPUT prerequisite is lazy and relies on
-"env--helper" we could get invalid results if we failed to read the
-config (e.g. because we'd loop on includes) when combined with
-e.g. "test_i18ngrep" wanting to check with "env--helper" if
-GIT_TEST_GETTEXT_POISON was true or not.
-
-I'm crossing my fingers and hoping that a test similar to the one I
-removed in the earlier "config tests: simplify include cycle test"
-change in this series won't happen again, and testing for this
-explicitly in "env--helper"'s own tests.
-
-This change breaks existing uses of
-e.g. GIT_TEST_GETTEXT_POISON=YesPlease, which we've documented in
-po/README and other places. As noted in [1] we might want to consider
-also accepting "YesPlease" in "env--helper" as a special-case.
-
-But as the lack of uproar over 6cdccfce1e ("i18n: make GETTEXT_POISON
-a runtime option", 2018-11-08) demonstrates the audience for this
-option is a really narrow set of git developers, who shouldn't have
-much trouble modifying their test scripts, so I think it's better to
-deal with that minor headache now and make all the relevant GIT_TEST_*
-variables boolean in the same way than carry the "YesPlease"
-special-case forward.
-
-1. https://public-inbox.org/git/xmqqtvckm3h8.fsf@gitster-ct.c.googlers.com/
+This means the test_normalize_bool() code in test-lib-functions.sh
+goes away in addition to test_tristate(). We still need the
+test_skip_or_die() helper, but now it takes the variable name instead
+of the value, and uses "git env--bool" to distinguish a default "true"
+from an explicit "true" (in those "explicit true" cases we want to
+fail the test in question).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh                 |  2 +-
- config.c                  |  9 +++++++++
- gettext.c                 |  6 ++----
- git-sh-i18n.sh            |  4 +++-
- po/README                 |  2 +-
- t/README                  |  4 ++--
- t/t0017-env-helper.sh     | 16 ++++++++++++++++
- t/t0205-gettext-poison.sh |  7 ++++++-
- t/t1305-config-include.sh |  2 +-
- t/t7201-co.sh             |  2 +-
- t/t9902-completion.sh     |  2 +-
- t/test-lib.sh             |  8 +++-----
- 12 files changed, 46 insertions(+), 18 deletions(-)
+ t/lib-git-daemon.sh     |  7 +++---
+ t/lib-git-svn.sh        | 11 +++-----
+ t/lib-httpd.sh          | 15 ++++++-----
+ t/t5512-ls-remote.sh    |  3 +--
+ t/test-lib-functions.sh | 56 ++++++-----------------------------------
+ 5 files changed, 22 insertions(+), 70 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 288a5b3884..fd799ae663 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -184,7 +184,7 @@ osx-clang|osx-gcc)
- 	export GIT_SKIP_TESTS="t9810 t9816"
- 	;;
- GIT_TEST_GETTEXT_POISON)
--	export GIT_TEST_GETTEXT_POISON=YesPlease
-+	export GIT_TEST_GETTEXT_POISON=true
- 	;;
- esac
+diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+index 7b3407134e..fb8f887080 100644
+--- a/t/lib-git-daemon.sh
++++ b/t/lib-git-daemon.sh
+@@ -15,8 +15,7 @@
+ #
+ #	test_done
  
-diff --git a/config.c b/config.c
-index 374cb33005..b985d60fa4 100644
---- a/config.c
-+++ b/config.c
-@@ -956,6 +956,15 @@ static void die_bad_number(const char *name, const char *value)
- 	if (!value)
- 		value = "";
- 
-+	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
-+		/*
-+		 * We explicitly *don't* use _() here since it would
-+		 * cause an infinite loop with _() needing to call
-+		 * use_gettext_poison(). This is why marked up
-+		 * translations with N_() above.
-+		 */
-+		die(bad_numeric, value, name, error_type);
-+
- 	if (!(cf && cf->name))
- 		die(_(bad_numeric), value, name, _(error_type));
- 
-diff --git a/gettext.c b/gettext.c
-index d4021d690c..5c71f4c8b9 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -50,10 +50,8 @@ const char *get_preferred_languages(void)
- int use_gettext_poison(void)
- {
- 	static int poison_requested = -1;
--	if (poison_requested == -1) {
--		const char *v = getenv("GIT_TEST_GETTEXT_POISON");
--		poison_requested = v && strlen(v) ? 1 : 0;
--	}
-+	if (poison_requested == -1)
-+		poison_requested = git_env_bool("GIT_TEST_GETTEXT_POISON", 0);
- 	return poison_requested;
- }
- 
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index e1d917fd27..8eef60b43f 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -17,7 +17,9 @@ export TEXTDOMAINDIR
- 
- # First decide what scheme to use...
- GIT_INTERNAL_GETTEXT_SH_SCHEME=fallthrough
--if test -n "$GIT_TEST_GETTEXT_POISON"
-+if test -n "$GIT_TEST_GETTEXT_POISON" &&
-+	    git env--helper --type=bool --default=0 --exit-code \
-+		GIT_TEST_GETTEXT_POISON
+-test_tristate GIT_TEST_GIT_DAEMON
+-if test "$GIT_TEST_GIT_DAEMON" = false
++if ! git env--helper --type=bool --default=true --exit-code GIT_TEST_GIT_DAEMON
  then
- 	GIT_INTERNAL_GETTEXT_SH_SCHEME=poison
- elif test -n "@@USE_GETTEXT_SCHEME@@"
-diff --git a/po/README b/po/README
-index aa704ffcb7..07595d369b 100644
---- a/po/README
-+++ b/po/README
-@@ -293,7 +293,7 @@ To smoke out issues like these, Git tested with a translation mode that
- emits gibberish on every call to gettext. To use it run the test suite
- with it, e.g.:
+ 	skip_all="git-daemon testing disabled (unset GIT_TEST_GIT_DAEMON to enable)"
+ 	test_done
+@@ -24,7 +23,7 @@ fi
  
--    cd t && GIT_TEST_GETTEXT_POISON=YesPlease prove -j 9 ./t[0-9]*.sh
-+    cd t && GIT_TEST_GETTEXT_POISON=true prove -j 9 ./t[0-9]*.sh
- 
- If tests break with it you should inspect them manually and see if
- what you're translating is sane, i.e. that you're not translating
-diff --git a/t/README b/t/README
-index 9747971d58..9a131f472e 100644
---- a/t/README
-+++ b/t/README
-@@ -343,8 +343,8 @@ whether this mode is active, and e.g. skip some tests that are hard to
- refactor to deal with it. The "SYMLINKS" prerequisite is currently
- excluded as so much relies on it, but this might change in the future.
- 
--GIT_TEST_GETTEXT_POISON=<non-empty?> turns all strings marked for
--translation into gibberish if non-empty (think "test -n"). Used for
-+GIT_TEST_GETTEXT_POISON=<boolean> turns all strings marked for
-+translation into gibberish if true. Used for
- spotting those tests that need to be marked with a C_LOCALE_OUTPUT
- prerequisite when adding more strings for translation. See "Testing
- marked strings" in po/README for details.
-diff --git a/t/t0017-env-helper.sh b/t/t0017-env-helper.sh
-index 709bbbd275..c1ecf6aeac 100755
---- a/t/t0017-env-helper.sh
-+++ b/t/t0017-env-helper.sh
-@@ -80,4 +80,20 @@ test_expect_success 'env--helper --type=ulong' '
- 	test_must_be_empty actual.err
- '
- 
-+test_expect_success 'env--helper reads config thanks to trace2' '
-+	mkdir home &&
-+	git config -f home/.gitconfig include.path cycle &&
-+	git config -f home/cycle include.path .gitconfig &&
-+
-+	test_must_fail \
-+		env HOME="$(pwd)/home" GIT_TEST_GETTEXT_POISON=false \
-+		git config -l 2>err &&
-+	grep "exceeded maximum include depth" err &&
-+
-+	test_must_fail \
-+		env HOME="$(pwd)/home" GIT_TEST_GETTEXT_POISON=true \
-+		git -C cycle env--helper --type=bool --default=0 --exit-code GIT_TEST_GETTEXT_POISON 2>err &&
-+	grep "# GETTEXT POISON #" err
-+'
-+
- test_done
-diff --git a/t/t0205-gettext-poison.sh b/t/t0205-gettext-poison.sh
-index a06269f38a..f9fa16ad83 100755
---- a/t/t0205-gettext-poison.sh
-+++ b/t/t0205-gettext-poison.sh
-@@ -5,7 +5,7 @@
- 
- test_description='Gettext Shell poison'
- 
--GIT_TEST_GETTEXT_POISON=YesPlease
-+GIT_TEST_GETTEXT_POISON=true
- export GIT_TEST_GETTEXT_POISON
- . ./lib-gettext.sh
- 
-@@ -31,4 +31,9 @@ test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
-     test_cmp expect actual
- '
- 
-+test_expect_success "gettext: invalid GIT_TEST_GETTEXT_POISON value doesn't infinitely loop" "
-+	test_must_fail env GIT_TEST_GETTEXT_POISON=xyz git version 2>error &&
-+	grep \"fatal: bad numeric config value 'xyz' for 'GIT_TEST_GETTEXT_POISON': invalid unit\" error
-+"
-+
- test_done
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 6b388ba2d0..de294c990e 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -314,7 +314,7 @@ test_expect_success 'include cycles are detected' '
- 	git -C cycle config include.path cycle &&
- 	git config -f cycle/cycle include.path config &&
- 	test_must_fail \
--		env GIT_TEST_GETTEXT_POISON= \
-+		env GIT_TEST_GETTEXT_POISON=false \
- 		git -C cycle config --get-all test.value 2>stderr &&
- 	grep "exceeded maximum include depth" stderr
- '
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 5990299fc9..b696bae5f5 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -249,7 +249,7 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
- test_expect_success 'checkout to detach HEAD' '
- 	git config advice.detachedHead true &&
- 	git checkout -f renamer && git clean -f &&
--	GIT_TEST_GETTEXT_POISON= git checkout renamer^ 2>messages &&
-+	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
- 	grep "HEAD is now at 7329388" messages &&
- 	test_line_count -gt 1 messages &&
- 	H=$(git rev-parse --verify HEAD) &&
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 43cf313a1c..75512c3403 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1706,7 +1706,7 @@ test_expect_success 'sourcing the completion script clears cached commands' '
- '
- 
- test_expect_success 'sourcing the completion script clears cached merge strategies' '
--	GIT_TEST_GETTEXT_POISON= &&
-+	GIT_TEST_GETTEXT_POISON=false &&
- 	__git_compute_merge_strategies &&
- 	verbose test -n "$__git_merge_strategies" &&
- 	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4b346467df..ed5d69dfe5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1443,11 +1443,9 @@ then
- 	unset GIT_TEST_GETTEXT_POISON_ORIG
+ if test_have_prereq !PIPE
+ then
+-	test_skip_or_die $GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
++	test_skip_or_die GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
  fi
  
--# Can we rely on git's output in the C locale?
--if test -z "$GIT_TEST_GETTEXT_POISON"
--then
--	test_set_prereq C_LOCALE_OUTPUT
--fi
-+test_lazy_prereq C_LOCALE_OUTPUT '
-+	! git env--helper --type=bool --default=0 --exit-code GIT_TEST_GETTEXT_POISON
-+'
+ test_set_port LIB_GIT_DAEMON_PORT
+@@ -73,7 +72,7 @@ start_git_daemon() {
+ 		kill "$GIT_DAEMON_PID"
+ 		wait "$GIT_DAEMON_PID"
+ 		unset GIT_DAEMON_PID
+-		test_skip_or_die $GIT_TEST_GIT_DAEMON \
++		test_skip_or_die GIT_TEST_GIT_DAEMON \
+ 			"git daemon failed to start"
+ 	fi
+ }
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index c1271d6863..5d4ae629e1 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -69,14 +69,12 @@ svn_cmd () {
+ maybe_start_httpd () {
+ 	loc=${1-svn}
  
- if test -z "$GIT_TEST_CHECK_CACHE_TREE"
+-	test_tristate GIT_SVN_TEST_HTTPD
+-	case $GIT_SVN_TEST_HTTPD in
+-	true)
++	if git env--helper --type=bool --default=false --exit-code GIT_TEST_HTTPD
++	then
+ 		. "$TEST_DIRECTORY"/lib-httpd.sh
+ 		LIB_HTTPD_SVN="$loc"
+ 		start_httpd
+-		;;
+-	esac
++	fi
+ }
+ 
+ convert_to_rev_db () {
+@@ -106,8 +104,7 @@ EOF
+ }
+ 
+ require_svnserve () {
+-	test_tristate GIT_TEST_SVNSERVE
+-	if ! test "$GIT_TEST_SVNSERVE" = true
++	if ! git env--helper --type=bool --default=false --exit-code GIT_TEST_SVNSERVE
+ 	then
+ 		skip_all='skipping svnserve test. (set $GIT_TEST_SVNSERVE to enable)'
+ 		test_done
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index b3cc62bd36..0d985758c6 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -41,15 +41,14 @@ then
+ 	test_done
+ fi
+ 
+-test_tristate GIT_TEST_HTTPD
+-if test "$GIT_TEST_HTTPD" = false
++if ! git env--helper --type=bool --default=true --exit-code GIT_TEST_HTTPD
  then
+ 	skip_all="Network testing disabled (unset GIT_TEST_HTTPD to enable)"
+ 	test_done
+ fi
+ 
+ if ! test_have_prereq NOT_ROOT; then
+-	test_skip_or_die $GIT_TEST_HTTPD \
++	test_skip_or_die GIT_TEST_HTTPD \
+ 		"Cannot run httpd tests as root"
+ fi
+ 
+@@ -95,7 +94,7 @@ GIT_TRACE=$GIT_TRACE; export GIT_TRACE
+ 
+ if ! test -x "$LIB_HTTPD_PATH"
+ then
+-	test_skip_or_die $GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
++	test_skip_or_die GIT_TEST_HTTPD "no web server found at '$LIB_HTTPD_PATH'"
+ fi
+ 
+ HTTPD_VERSION=$($LIB_HTTPD_PATH -v | \
+@@ -107,19 +106,19 @@ then
+ 	then
+ 		if ! test $HTTPD_VERSION -ge 2
+ 		then
+-			test_skip_or_die $GIT_TEST_HTTPD \
++			test_skip_or_die GIT_TEST_HTTPD \
+ 				"at least Apache version 2 is required"
+ 		fi
+ 		if ! test -d "$DEFAULT_HTTPD_MODULE_PATH"
+ 		then
+-			test_skip_or_die $GIT_TEST_HTTPD \
++			test_skip_or_die GIT_TEST_HTTPD \
+ 				"Apache module directory not found"
+ 		fi
+ 
+ 		LIB_HTTPD_MODULE_PATH="$DEFAULT_HTTPD_MODULE_PATH"
+ 	fi
+ else
+-	test_skip_or_die $GIT_TEST_HTTPD \
++	test_skip_or_die GIT_TEST_HTTPD \
+ 		"Could not identify web server at '$LIB_HTTPD_PATH'"
+ fi
+ 
+@@ -184,7 +183,7 @@ start_httpd() {
+ 	if test $? -ne 0
+ 	then
+ 		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
+-		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
++		test_skip_or_die GIT_TEST_HTTPD "web server setup failed"
+ 	fi
+ }
+ 
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index e3c4a48c85..43e1d8d4d2 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -267,8 +267,7 @@ test_expect_success 'ls-remote --symref omits filtered-out matches' '
+ '
+ 
+ test_lazy_prereq GIT_DAEMON '
+-	test_tristate GIT_TEST_GIT_DAEMON &&
+-	test "$GIT_TEST_GIT_DAEMON" != false
++	git env--helper --type=bool --default=true --exit-code GIT_TEST_GIT_DAEMON
+ '
+ 
+ # This test spawns a daemon, so run it only if the user would be OK with
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0367cec5fd..527508c350 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1035,62 +1035,20 @@ perl () {
+ 	command "$PERL_PATH" "$@" 2>&7
+ } 7>&2 2>&4
+ 
+-# Is the value one of the various ways to spell a boolean true/false?
+-test_normalize_bool () {
+-	git -c magic.variable="$1" config --bool magic.variable 2>/dev/null
+-}
+-
+-# Given a variable $1, normalize the value of it to one of "true",
+-# "false", or "auto" and store the result to it.
+-#
+-#     test_tristate GIT_TEST_HTTPD
+-#
+-# A variable set to an empty string is set to 'false'.
+-# A variable set to 'false' or 'auto' keeps its value.
+-# Anything else is set to 'true'.
+-# An unset variable defaults to 'auto'.
+-#
+-# The last rule is to allow people to set the variable to an empty
+-# string and export it to decline testing the particular feature
+-# for versions both before and after this change.  We used to treat
+-# both unset and empty variable as a signal for "do not test" and
+-# took any non-empty string as "please test".
+-
+-test_tristate () {
+-	if eval "test x\"\${$1+isset}\" = xisset"
+-	then
+-		# explicitly set
+-		eval "
+-			case \"\$$1\" in
+-			'')	$1=false ;;
+-			auto)	;;
+-			*)	$1=\$(test_normalize_bool \$$1 || echo true) ;;
+-			esac
+-		"
+-	else
+-		eval "$1=auto"
+-	fi
+-}
+-
+ # Exit the test suite, either by skipping all remaining tests or by
+-# exiting with an error. If "$1" is "auto", we then we assume we were
+-# opportunistically trying to set up some tests and we skip. If it is
+-# "true", then we report a failure.
++# exiting with an error. If our prerequisite variable $1 falls back
++# on a default assume we were opportunistically trying to set up some
++# tests and we skip. If it is explicitly "true", then we report a failure.
+ #
+ # The error/skip message should be given by $2.
+ #
+ test_skip_or_die () {
+-	case "$1" in
+-	auto)
++	if ! git env--helper --mode-bool --variable=$1 --default=0 --exit-code --quiet
++	then
+ 		skip_all=$2
+ 		test_done
+-		;;
+-	true)
+-		error "$2"
+-		;;
+-	*)
+-		error "BUG: test tristate is '$1' (real error: $2)"
+-	esac
++	fi
++	error "$2"
+ }
+ 
+ # The following mingw_* functions obey POSIX shell syntax, but are actually
 -- 
 2.22.0.455.g172b71a6c5
 
