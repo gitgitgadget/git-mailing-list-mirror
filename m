@@ -2,116 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C064B1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 19:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633F61F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 19:29:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbfFUTSS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 15:18:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61663 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726108AbfFUTSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 15:18:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0235C14AF49;
-        Fri, 21 Jun 2019 15:18:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lStsA2giJNhwPiFbDry63M1G8No=; b=uJrXfR
-        bsLJRMbA9wiOhCLAWBbXiVSeSB4zA1kZ2phj94th21QEiBibPv506dfwNM+DVkP+
-        2ITkr22V/9N+Razv/KlRdo1RUE5IDYUIchuKmeUhkSd26ZbSjbya+OEWTl+DeDG1
-        3+/u6wiM1USA3Mi6LRCMncvKYxaSbEDLhDQQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FfK8GfU7SehwDKdsXh2ClnRkHQ7cPLHF
-        aKLV9XOZaukdqCSos2E0SeGTDlwhfw2buTYrUNBbMNTJeQGmoJ2IAOqJMd0vsX8t
-        cG0vQ6oQaFDea2++vHu9uYJYO9fR4jrtSHEnIej4SD+A8Rhf04Qud97J27+0FwkZ
-        V2J3zQ7xlc8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED8ED14AF48;
-        Fri, 21 Jun 2019 15:18:12 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63F1414AF46;
-        Fri, 21 Jun 2019 15:18:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH] l10n: localizable upload progress messages
-References: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com>
-Date:   Fri, 21 Jun 2019 12:18:11 -0700
-In-Reply-To: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com> (Dimitriy
-        Ryazantcev's message of "Fri, 21 Jun 2019 21:50:51 +0300")
-Message-ID: <xmqq8stukarw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726168AbfFUT3M (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 15:29:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:44361 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726111AbfFUT3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 15:29:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561145347;
+        bh=hasH++VVMosxViVMjrhSG9NsXSWJI+TXE60PfzrcTYQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hqXuMIzDVixtSur5dc8OpdZ0xS6kGtq29hCw6F6Mw9pKvytNJ4zXF2qs669BJrb1J
+         QOPEB+tB6EnQc/TF35SknHq5aMEvmRWRRYSZcWMwmguI2hDo53qlEUd+K9YaQLEfUs
+         DWycZsI4+u4bWkqWVrEmPXpBp5w1Ha4l78UK+e5g=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkHQX-1iK2dn3hTF-00ke23; Fri, 21
+ Jun 2019 21:29:06 +0200
+Date:   Fri, 21 Jun 2019 21:29:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: sg/rebase-progress, was Re: What's cooking in git.git (Jun 2019,
+ #05; Wed, 19)
+In-Reply-To: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906212127500.44@tvgsbejvaqbjf.bet>
+References: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4FDB6866-9459-11E9-912F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wM/ahtDDKUVldtzK28pVvmcIv41P8ZaXmljcb3DxNV0hBLP5S3y
+ W1OlTkGzt3Rlqhz7mgdVW52d6A4sdCEoklqhg9CI7ON5f43drPqNAVQJhgpk6tf4XFXyerR
+ wTrxMyOmSX4SOgVaSjOcEBJ0Qz/sLAYcj8kqBLY+EC8EA6TaQQ5Az8Pxq5/YMttsiKWsdKl
+ lnE2lk+XWeebZAKwouOag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8+8OhvvcLlk=:zBiHKjx5egXcnol53iEQn6
+ 9qrml//mY+g8gdjz1dD1KhFs5baJiN86DQ3geuN0R5DS+BspCFMfuXgsltX4A7MRZhJ/w47Gp
+ Z1oHAw/mkplrqqUYO5eV4I8yVAAwZaGHKKpuquPq20ommzJFXDkP84xbIfg9aYHgTCaT9Bib8
+ G0bBuKzSstXfyguMAz9LYtYEnK4q7ORjyHWKKoaU9KKNJisdItUfCCyf0D+y5EEYr/Ds/MKKT
+ zDixZ54plbxYGAUa6vxrhNgMXim+wdACyVJzd7KBexUAMJOiwGrnKn5UrnlzVsh9Xj+3fNGqx
+ WOAGPFTTJXsNEP4t6zOsVWTOaxueeJRkvVrkoZRBLmbT8hO0Wtgw+kSxvwuU9P/becYaAqQq8
+ 31zM6yGOHOUhgRdvVMwUrhZhw8Sk2+7Ns4dvhvivGUJFTKVx895XFq5ne8cOqfrl2sN1dsN5G
+ ShQZJU9HOYuxb/sAZedW2vThBzru6Me5EzO316Gm8xvl+hcGiFwAQOeA7DegoWhmRkxeaDh6v
+ 3ozW6kscqROtGn0MMEOVyqZ2/MHSDerXpMzmdmjIcSwEuTzoQ2N4lDi5UhyE366rrShC1x81n
+ w7eJvfsxIt8ts6oqRvGj31lyUUKjga7D2E1DM5G878euHP4t9l0O6M0gQCYsoOSMkv4Cv6Ekr
+ 9LaN1AHu2Sp2dvc7ynkV6aGw4PzWKsCaoPoQCwDvxhSnU0nGFeCX86u8fBK8z0JwuU4LhqVHK
+ f161PbiN2GEg8lnrW7Ut5SY9yh7+Qpi6QZdJE4zacECtCYyqi4MTSIC1N6HH8kDLiXUKZo5Ej
+ NwfiRl5Fhj2RFp3JjGw5wn9MUniS+zNkEv3XMDsa87tkkE2MpxHeZH9nL61Q/3JEJ55sN2Wb6
+ 1aPMR81pnmRnRwheHiRwRsxcwUjAZZXDgnOEiFxEEPwomCvPkZCSdKfy7okTENp25VQx3bsk0
+ 9yXDN19fVCKdXJVC8avebxQhzBkwBIuZz3LHHqa5RuY3w2Nj5FyCD
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com> writes:
+Hi Junio,
 
-> Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-> ---
->  progress.c | 3 ++-
->  strbuf.c   | 8 ++++----
->  2 files changed, 6 insertions(+), 5 deletions(-)
+On Wed, 19 Jun 2019, Junio C Hamano wrote:
+
+> * sg/rebase-progress (2019-06-11) 4 commits
+>  - progress: use term_clear_line()
+>  - rebase: fix garbled progress display with '-x'
+>  - pager: add a helper function to clear the last line in the terminal
+>  - t3404-rebase-interactive: use the 'q_to_cr' helper
 >
-> diff --git a/progress.c b/progress.c
-> index a2e8cf64a8..3d47c06495 100644
-> --- a/progress.c
-> +++ b/progress.c
-> @@ -151,7 +151,8 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
->  	strbuf_humanise_bytes(buf, total);
->  	strbuf_addstr(buf, " | ");
->  	strbuf_humanise_bytes(buf, rate * 1024);
-> -	strbuf_addstr(buf, "/s");
-> +	/* TRANSLATORS: per second */
-> +	strbuf_addstr(buf, _("/s"));
->  }
+>  Use "Erase in Line" CSI sequence that is already used in the editor
+>  support to clear cruft in the progress output.
+>
+>  Its test may have to be updated to work around glitch in test setup
+>  on Windows.
 
-Hpmh, if it is OK to assume that in all human languages it is OK to
-express the reate as <number> followed by translated "per second",
-without allowing the order from getting changed, then ...
+No, it seems that the Windows-specific problem with this patch series'
+tests have disappeared (I want to believe that my bugfix is the reason,
+but I lack the time to verify that suspicion).
 
->  	if (bytes > 1 << 30) {
-> -		strbuf_addf(buf, "%u.%2.2u GiB",
-> +		strbuf_addf(buf, _("%u.%2.2u GiB"),
->  			    (unsigned)(bytes >> 30),
->  			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+=46rom my side, this patch series is therefore good to go.
 
-wouldn't it make more sense to split GiB, MiB, KiB and "bytes" units
-out of these messages, and ask only these unit names, without the
-%u.%2.2u number formats, to get translated by the localization team?
-
->  	} else if (bytes > 1 << 20) {
->  		unsigned x = bytes + 5243;  /* for rounding */
-> -		strbuf_addf(buf, "%u.%2.2u MiB",
-> +		strbuf_addf(buf, _("%u.%2.2u MiB"),
->  			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
->  	} else if (bytes > 1 << 10) {
->  		unsigned x = bytes + 5;  /* for rounding */
-> -		strbuf_addf(buf, "%u.%2.2u KiB",
-> +		strbuf_addf(buf, _("%u.%2.2u KiB"),
->  			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
->  	} else {
-> -		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
-> +		strbuf_addf(buf, _("%u bytes"), (unsigned)bytes);
-
-This needs the Q_() to deal with plural (i.e. in en, between "byte"
-and "bytes").
-
->  	}
->  }
+Ciao,
+Dscho
