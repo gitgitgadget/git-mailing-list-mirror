@@ -2,109 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6721F1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 07:49:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C06BD1F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 08:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726098AbfFUHt0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 03:49:26 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42393 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726025AbfFUHt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 03:49:26 -0400
-Received: by mail-pg1-f196.google.com with SMTP id l19so2951403pgh.9
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 00:49:26 -0700 (PDT)
+        id S1726360AbfFUILI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 04:11:08 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44324 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726401AbfFUILH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 04:11:07 -0400
+Received: by mail-ed1-f65.google.com with SMTP id k8so8760135edr.11
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 01:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PWqjyJCr8/tzWkKVfcuvcCEKQ7Sj1w06RMQZcugzNUQ=;
-        b=lMT6CypSdNoMQL5kMa3ilJ0wnYn/i/QVtF7O9VKOjRJICCkUvBk3DQQoup2h+OZz7Z
-         NJDGbO4Bu1J0ssGGI8Iw0O26wy6s4LYhiSYokxHDrZ5OUqY3XmbepdWrU5FyuR/QOQjs
-         +4jN4jM7a5lklKDD31In9AQdbMiW7kBIOM0N4m1HH9ngiH7JvLhzLQOvVCESlLJj6uSw
-         MtAdM8Y/3B2D8f5qlxPQoCvByZ+aXcrsf09pJsl8sZkvKO5lJNwPH7Kd2Sn3fhtNxkiZ
-         pBPP5gjpwBRUGwc/DFf7nCC4axOLQyC270uWfhnppfxRcnrx7fc/rCQQddJXZ2+lMAbU
-         wHog==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=V7NoIusz/DOq8Z0DapTHLUXJYtlDMlKJMenTmU3kGTs=;
+        b=B0y7iwL8LaaPERtNkBJXJbXdzlZWe5Ta7q31wj0xvnVXJBLlv2nPn+DJ3IpkAZnKMd
+         8HT02wXMZg1c0suwpG4gJVYfAgHuC+BfZWMMAXBn9ecEWPuuXe6+ZTEEDzgt1qeF5UCk
+         9jnM4X/nyqr1ZiWqg92IXjecAxMk7rbzTHrSGT4KAIEn3OWciTWgwFmlRA0VjjRNck+g
+         qRDP2UZl93niZa2RgtLSwYpSaM2ivjGF0ohd/E2yAlW+sg/83OmGozkj8hBkCcS+2E1f
+         gRuS8vqmrYfgIOINhrEo9o1RKTPp3+StISR4OGJ1obq/AqbgkvWPFcj5BfyiDUpNbnFx
+         SY5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PWqjyJCr8/tzWkKVfcuvcCEKQ7Sj1w06RMQZcugzNUQ=;
-        b=Y3Hi+iyJ9UbV6aahhRMwXGc+u+tjX5jSVdQ0GuSR2/DFoPdQj4iLrK0Ypc5eEWYN3v
-         Bxo/6c+RYw367YrEirFtigYQrDiGvEUU3sG4aaQolHaydj6NvCqMdYhMyBV2H5fXKk37
-         Utx1tufh/17mxJm2dfZJW6yUcEZcXk+MATKx86Y9LTlHDJ8NLC3EC52HT4vL4nrL7NvG
-         nzz6o29DZpQTLcz/y8fCny0qTDGsuUyzQMFwpr2Eu3ZMR3utI0m2vAmxC2Iq54UuPheF
-         TEvAzZQZmNJbwC2ErlSgaPdh8Lwd6eFe4HTPdqWJn6MXQaF59LClI3eFGwnomgT/+JPW
-         hV4g==
-X-Gm-Message-State: APjAAAWK1JaaZ0gOCoUZCe7CYG/5tlPoqm7NVWtXq506RUVlNLR6pg8k
-        xWPqga6xRo1NtbZQFBE6vYQ=
-X-Google-Smtp-Source: APXvYqw7ZDehhaoOvdcS8GdPENJ3PJMPAeXIdd1+P1yiAOljxealvmoqZyBIe04Rdku5ZyIKAnHqQA==
-X-Received: by 2002:a63:4553:: with SMTP id u19mr16877091pgk.420.1561103365454;
-        Fri, 21 Jun 2019 00:49:25 -0700 (PDT)
-Received: from ar135.iitr.local ([103.37.200.216])
-        by smtp.gmail.com with ESMTPSA id k184sm1619079pgk.7.2019.06.21.00.49.20
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=V7NoIusz/DOq8Z0DapTHLUXJYtlDMlKJMenTmU3kGTs=;
+        b=ckWUklPRXVh4DTlNeyAtWCSrtcewf161ouTl5OwpkI47+OzmyKCGaRlgMn/22nzL3N
+         uukKtHAoek2PyI1axYx6juodOtBuOTGfX/B65sbttFrBSDOLOTYhn92rBCenoGeAvz6U
+         Qc4+BBASRpszh2/pxHe7icDfk5KFwFecoDzl30IkVfw1Q4wizD6GVlBZsK52YEQiS4y7
+         EJegm4P3vyD6MqOIb94J9rLZ36z3jhO0NR8TP7UZAHoQqy7BBBMa69urhRURhsS18xDr
+         jZmStTSqJTximkrZq2G+ZROl7BpnxRKhkXpyinatkS/wxHG1vj8skydpTnc4JZos+zvp
+         JLjw==
+X-Gm-Message-State: APjAAAU6oMFCCrdKHqsqBngvEifTsSa0Xz++xYtKZFM2kfOmuFBPv9VT
+        CmoKDjm2zLVjrwadvWw1Mn8=
+X-Google-Smtp-Source: APXvYqyTwYnXK75cadbVkm0+iCBdlOBpIP2fQt648Dax8IGp/xWN8JtQcQHSwLD6fXC6dhtS/++dmw==
+X-Received: by 2002:a50:9273:: with SMTP id j48mr118116576eda.285.1561104665854;
+        Fri, 21 Jun 2019 01:11:05 -0700 (PDT)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id 93sm603336edk.84.2019.06.21.01.11.05
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 00:49:24 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     phillip.wood123@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood@dunelm.org.uk, rohit.ashiwal265@gmail.com,
-        t.gummerer@gmail.com
-Subject: Re: [GSoC][PATCH v5 4/5] cherry-pick/revert: add --skip option
-Date:   Fri, 21 Jun 2019 13:17:04 +0530
-Message-Id: <20190621074704.6870-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <b6cf26b0-51b7-0c63-fb1c-4da1eb3666cb@gmail.com>
-References: <b6cf26b0-51b7-0c63-fb1c-4da1eb3666cb@gmail.com>
+        Fri, 21 Jun 2019 01:11:05 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/8] env--helper: new undocumented builtin wrapping git_env_*()
+References: <20190619233046.27503-1-avarab@gmail.com> <20190620210915.11297-3-avarab@gmail.com> <xmqqpnn7lxet.fsf@gitster-ct.c.googlers.com> <xmqqlfxvlwyg.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <xmqqlfxvlwyg.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 21 Jun 2019 10:11:04 +0200
+Message-ID: <87blyr8ijr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip
 
-On 2019-06-20 11:42 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Fri, Jun 21 2019, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Hi Rohit
->
-> On 20/06/2019 11:34, Rohit Ashiwal wrote:
->> Hi Phillip
+>> ...
+>> as I am getting
 >>
->> On 2019-06-20 10:02 UTC Phillip Wood <phillip.wood123@gmail.com> wrote:
->>>
->>>> +test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
->>>> +	pristine_detach initial &&
->>>> +	git rm --cached unrelated &&
->>>> +	git commit -m "untrack unrelated" &&
->>>> +	test_must_fail git cherry-pick initial base &&
->>>> +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
->>>> +	git cherry-pick --skip
->>>
->>> If you change this to --continue rather than --skip the test also
->>> passes! I think we could fix this by checking if HEAD has changed if
->>> CHERRY_PICK_HEAD/REVERT_HEAD is missing and not dropping the last
->>> command in the todo list in that case when we continue.
+>>     error: 'ret' may be used uninitialized in this function [-Werror=maybe-uninitialized]
 >>
->> I don't think I fully understood this. At this point --skip is essentially
->> --continue. How is checking unmoved HEAD and unchanged todo uniquely related
->> to --skip flag (or for that matter any _flag_)?
+>> from here.
+>>
+>> Giving an otherwise useless initial value to ret would be a
+>> workaround.
 >
-> My point is that --continue should reschedule the failed pick and try to
-> pick it again - it should not silently skip a failed pick and  --skip
-> should skip it.
+> I've added this on top of the topic before merging to keep the
+> integration going at least for now.
+>
+> commit 8f86948797a1152594a8dee50d0878604fec3e80
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Thu Jun 20 15:13:14 2019 -0700
+>
+>     SQUASH??? avoid maybe-uninitialized
+>
+> diff --git a/builtin/env--helper.c b/builtin/env--helper.c
+> index 2bb65ecf3f..29df0567fb 100644
+> --- a/builtin/env--helper.c
+> +++ b/builtin/env--helper.c
+> @@ -43,6 +43,9 @@ int cmd_env__helper(int argc, const char **argv, const char *prefix)
+>  		usage_with_options(env__helper_usage, opts);
+>
+>  	switch (cmdmode) {
+> +	default:
+> +		BUG("wrong cmdmode");
+> +		break;
+>  	case ENV_HELPER_BOOL:
+>  		tmp_int = strtol(env_default, (char **)&env_default, 10);
+>  		if (*env_default) {
 
-So, this is a flaw in the --continue, I guess? Fixing that is beyond the
-scope of this patch. May be we can launch another series in which we fix
-this and decouple skip and continue?
+In this case the compiler is wrong, and gcc/clang in e.g. Debian
+unstable doesn't warn about this since the analyzer sees that it's
+impossible for "ret" to be uninitialized.
 
-Thanks
-Rohit
+I can change it anyway, and if I rewrite the UI of this command it might
+go away anyway.
 
+Just thought I'd ask if appeasing older analyzers is what we want for
+these sorts of optional warnings in general.
