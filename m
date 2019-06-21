@@ -2,111 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F43D1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 20:06:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91AAB1F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 20:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726259AbfFUUGr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 16:06:47 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41643 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725992AbfFUUGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 16:06:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561147601;
-        bh=Xi7bwyhs8hPMhYJuPPdQpDjq7f6lGsVLhTEVTakHReQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XgaqpqsMt4fMYuj/DjYf6+wWmtzKD0UysqwP7e5ntcUGhvkl0eubvboLxuUoNJe59
-         uj7DmADZp2kDXB0ufQ5Ltx8enZDEKhB3RVEzGUNYVlj7b7vOZwBfzXoxzs1HdO2HRI
-         rPdr/zrCHGuYK9GqsCRuxwWsAtx4be+8GVQl8XCI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mey7N-1hxyzQ01Ht-00OYkk; Fri, 21
- Jun 2019 22:06:41 +0200
-Date:   Fri, 21 Jun 2019 22:06:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: md/list-objects-filter-combo, was Re: What's cooking in git.git (Jun
- 2019, #05; Wed, 19)
-In-Reply-To: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1906212205360.44@tvgsbejvaqbjf.bet>
-References: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726066AbfFUUIY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 16:08:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56463 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbfFUUIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 16:08:24 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E51BE1534DF;
+        Fri, 21 Jun 2019 16:08:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=6rrJ34jldYoA
+        SiFeCPMVqmzXwR0=; b=B/vZDIkjL9v71M/3FLZzno6pyc/IM/Ow8Ei1hn6pZBBj
+        OEgmN9nHSm4HB2IPwvOlTN687wPhORNunJsdrbXQYHyVtEQO+HDgQWh1HlDrAji4
+        iFgBJslo2rKfEM9n/unHQ+zIujYdMkD3oLRlDmp5uT/eM83kyzbLoztilYkRDG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OBjSGf
+        gplxtjiv9b9C0hPR/Ln3duntWv6A/clXzX2BlwBoRh7XUfiLYy4Jvp/HR9q6KNyy
+        5zUqpJ+9tAxWThWLrXzYrLWHPdeG2WGjo7LDQu5Gpdi7eaIBrtSnSckUNbUD9cCd
+        X8Sl3jikyx/CnZ08EayTPbcjRwuSG+W5diCGg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD0271534DE;
+        Fri, 21 Jun 2019 16:08:22 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 336B91534DD;
+        Fri, 21 Jun 2019 16:08:22 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] tests: mark two failing tests under FAIL_PREREQS
+References: <20190513183242.10600-1-avarab@gmail.com>
+        <20190620204227.8947-1-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.1906212000580.44@tvgsbejvaqbjf.bet>
+        <87a7ea94m9.fsf@evledraar.gmail.com>
+Date:   Fri, 21 Jun 2019 13:08:21 -0700
+In-Reply-To: <87a7ea94m9.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 21 Jun 2019 20:26:38 +0200")
+Message-ID: <xmqq4l4ik8ga.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jOQ4piNanOIbuttqTwLCIWhFB+WkI0mLNwdqTpXQWC1k+7GKzY3
- tcpyVywe6BUt5fSrXKQBIxRBrbLqGAZIJm1SkuX+C8/cIlcyWj6D7/y4B1MDiYMg2oleFKf
- NoklvD+yvEPoJXHTl4KcP45a6TdHrj9iavsKTnS4kvUSjwMbnPPRExjAcx1P2UuITN3SyDp
- p8Oic1CK1oQ+APqK3OqlA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZRylD/6t5l4=:RpvgW4ilo0QL2vmGsH6rdV
- cZcObrLFuFgGGPmTKbijG9Y8Av+HCDHacEi94ov6SsutvUTUU41M60aP8bPn9nnLzRer5Cels
- 5ykw62uLmB3tapMapFsaT63Yo6/Wj+1JcJVG/dVgG7hDZkiQ3BSW15uwPA4fDiN5mF6Wv7+LS
- OvnkxYcuGECUPVsDsevHK9WGamd+JDUBusURWyVsoupBumBdjkpDgCN+scCry+1ckfcuSOqpH
- oU9wUBxdCQUeRu/0ULRuaOvN7YSQpHE8C7w6kq1KYh9avpkKGm9bqWb5PKqMIczuKtd8Kw7QK
- SMHEbsizr9qN54jJj97TmwsZwC3XwFIfSUi1sXse31t/uHD7k+c/M8LKWp0WTHEHYYBQ/Vr8X
- +yiztm9VvAa95/xBMFjYFM9HVPgPQIku5ynot5p+OetGIAAjBPub3tz2okWZqjONJ3FSagxg3
- r5FZk5myitgegKvnPhZo33N2/5hXHJvZWTlsN500vmgfR4d+9jqPG2+LjKgTBF9d15Mzyc465
- TWtbCOBqTvwsn3voBiy7Whuqm8aEToNJm3xxAmPDa6Z+jh9zg9jD9tOzXg0O+rtQs466io+b3
- m9qOrCkcToVP6kwzxX9z2uYe80eDC/8CXgeQTAtIJHGlt6dJhWaEvteQt1PMDU7T6mzaYF4sd
- bwWnkHIFyZ98HMbkYtznDCPOHXg4Iuuiy10EtFD/xV8C4rpqfHiEFIVgZ074AE23td5KSQSKm
- lgY4OmiYYLMP2fjqhc8ySR163etrvqntlF4ta3rfTmF46svVN66aZybwR5gfg8E/J1eOFuRup
- L6gKVPkVwTslEB0sZxuIpMYYcFhWvUwqZn1RqHs88VC4AexGdN0meTifqTVglVQ7VenQNBpX4
- S3IFVaQ3dNP5KLwaEIW7cHCb1P7qFj7b29D0YID/Hj5Y/wLEAYMoMbV2YTlJLIER3rPyeHZWL
- Lki1qQlYZvFVuzc1cqXZuxgNrMD04+Bn2NqOkwO5ud2ElYZ/i4+xE
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 51D64FBC-9460-11E9-A2CC-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Wed, 19 Jun 2019, Junio C Hamano wrote:
-
-> * md/list-objects-filter-combo (2019-06-17) 10 commits
->  - list-objects-filter-options: make parser void
->  - list-objects-filter-options: clean up use of ALLOC_GROW
->  - list-objects-filter-options: allow mult. --filter
->  - strbuf: give URL-encoding API a char predicate fn
->  - list-objects-filter-options: make filter_spec a string_list
->  - list-objects-filter-options: move error check up
->  - list-objects-filter: implement composite filters
->  - list-objects-filter-options: always supply *errbuf
->  - list-objects-filter: put omits set in filter struct
->  - list-objects-filter: make API easier to use
+> ... The effect of the FAIL_PREREQS mode is to set all
+> prereqs to false, and therefore "test_have_prereq AUTOIDENT" is false,
+> but "test_have_prereq !AUTOIDENT" is true.
 >
->  The list-objects-filter API (used to create a sparse/lazy clone)
->  learned to take a combined filter specification.
+> So this test that would otherwise get skipped gets run.
+>
+> I honestly didn't think much about these cases when I wrote dfe1a17df9
+> ("tests: add a special setup where prerequisites fail", 2019-05-13), an=
+d
+> now I'm not quite sure whether it should be considered a bug or a
+> feature, but in the meantime this un-breaks the test suite under this
+> mode.
 
-This still needs
+Yeah, reading the above alone, anybody's knee-jerk reaction would be
+that fail-prereqs is buggy, but then I am not sure how we can "fix"
+that, short of forbidding a prereq like this !AUTOIDENT one from the
+test suite.  The test "predicts" how 'git' used in the test body
+would behave, and skips it if we know that the predicted behaviour
+breaks the test.  Forcing the prereq using FAIL_PREREQS without
+actually making a matching change to the behaviour of 'git' has no
+chance of producing sane results.
 
-=2D- snip --
-diff -u -p a/list-objects-filter-options.c b/list-objects-filter-options.c
-=2D-- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -146,7 +146,7 @@ static int parse_combine_filter(
- 	int result =3D 0;
+>>> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+>>> index 5868a87352..1f600e2cae 100755
+>>> --- a/t/t0007-git-var.sh
+>>> +++ b/t/t0007-git-var.sh
+>>> @@ -17,7 +17,7 @@ test_expect_success 'get GIT_COMMITTER_IDENT' '
+>>>  	test_cmp expect actual
+>>>  '
+>>>
+>>> -test_expect_success !AUTOIDENT 'requested identites are strict' '
+>>> +test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identites ar=
+e strict' '
+>>>  	(
+>>>  		sane_unset GIT_COMMITTER_NAME &&
+>>>  		sane_unset GIT_COMMITTER_EMAIL &&
 
- 	if (!subspecs[0]) {
--		strbuf_addf(errbuf,
-+		strbuf_addstr(errbuf,
- 			    _("expected something after combine:"));
- 		result =3D 1;
- 		goto cleanup;
-=2D-
+For this particular one, given the test used to set/unset AUTOIDENT
+lazily, I am not sure if it even makes sense to keep this test.  If
+we break the underlying ident machinery that would be caught by this
+particular test, it seems to me that it is very likely that the test
+used to lazily set up AUTOIDENT prereq would fail the same way, so
+I am not sure protecting it with !AUTOIDENT would still keep this
+one useful.
 
-(see
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D10925&view=
-=3Dlogs&jobId=3De7b80b24-15e8-561b-2b9b-3069817c0357&taskId=3D37898c85-322=
-8-5621-0595-22d470949738&lineStart=3D253&lineEnd=3D264&colStart=3D1&colEnd=
-=3D17)
-
-Ciao,
-Dscho
+>>> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.s=
+h
+>>> index 5733d9cd34..14c92e4c25 100755
+>>> --- a/t/t7502-commit-porcelain.sh
+>>> +++ b/t/t7502-commit-porcelain.sh
+>>> @@ -402,7 +402,7 @@ echo editor started >"$(pwd)/.git/result"
+>>>  exit 0
+>>>  EOF
+>>>
+>>> -test_expect_success !AUTOIDENT 'do not fire editor when committer is=
+ bogus' '
+>>> +test_expect_success !FAIL_PREREQS,!AUTOIDENT 'do not fire editor whe=
+n committer is bogus' '
+>>>  	>.git/result &&
+>>>
+>>>  	echo >>negative &&
+>>> --
+>>> 2.22.0.455.g172b71a6c5
+>>>
+>>>
