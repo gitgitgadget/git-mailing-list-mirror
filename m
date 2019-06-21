@@ -8,119 +8,83 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 022ED1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 13:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 813AE1F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 13:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbfFUNQq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 09:16:46 -0400
-Received: from mout.gmx.net ([212.227.17.22]:37231 "EHLO mout.gmx.net"
+        id S1726062AbfFUN0z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 09:26:55 -0400
+Received: from mout.gmx.net ([212.227.15.18]:36047 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726029AbfFUNQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 09:16:45 -0400
+        id S1725975AbfFUN0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 09:26:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561122997;
-        bh=qo7v2mT0HovWjaxpdMmhTmi2x0jsySb3GqEsaZLoAvA=;
+        s=badeba3b8450; t=1561123607;
+        bh=yzmWShUotmx/6gszgvtmwSmQly8ItkynX2yBEGGb+mI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TRDJz9hcLhuB2eOGAWkpLtavhg4N6iv+UGaJBZtocQ45Vvn+HE9BIh1gZzUp5+RIs
-         fn7iDCN63yUy+VyrPX3thSz6BAkFuFLqGvXG2AMmN0bWqCtQpEA3a9ho06dR3OWKxC
-         pIbG1hXMtNHArKcGcChsTAgRwHKjoSUklhyz7Umo=
+        b=kvsZkLeMRB/NQ0Fy6ZrYgGCkxVfuIgG0lYjX95LuEiQDE9BeY740x3Ekes+xwvI3T
+         bTQwPA0LdmbZtJPivqukl5Sy9uI0lRLjlQx5c8i1gS8hW4Nkb+1O0hz8EWLuibO2fI
+         Qjci0P7CQW2SFF2de8vDqycmiwnVxXS8WT8tlKHU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWkZL-1i7g7D3JkZ-00XxMv; Fri, 21
- Jun 2019 15:16:36 +0200
-Date:   Fri, 21 Jun 2019 15:16:52 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6v3-1iPCm406m3-00pbz0; Fri, 21
+ Jun 2019 15:26:47 +0200
+Date:   Fri, 21 Jun 2019 15:27:03 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
-In-Reply-To: <20190619191709.GF28145@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1906211515160.44@tvgsbejvaqbjf.bet>
-References: <20190619095858.30124-1-pclouds@gmail.com> <20190619191709.GF28145@sigill.intra.peff.net>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: pw/rebase-abort-clean-rewritten, was Re: What's cooking in
+ git.git (Jun 2019, #04; Fri, 14)
+In-Reply-To: <b2afef27-96f8-b262-2cda-4c22dc604d2d@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906211526400.44@tvgsbejvaqbjf.bet>
+References: <xmqqh88ruc1b.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1906172001490.44@tvgsbejvaqbjf.bet> <2a37d4c2-6eec-548d-0bd0-12bbd49c8071@gmail.com> <xmqq7e9jsh8j.fsf@gitster-ct.c.googlers.com> <b2afef27-96f8-b262-2cda-4c22dc604d2d@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2087275535-1561123013=:44"
-X-Provags-ID: V03:K1:jW9STlTN5GzpcQeatprFnZfaNkgP9pWSKv8GuvIltlMvGayK4U4
- SBkzkx6aNWkXQ+bdkNyhMBeHfSmt9fJEM08e+YMM+MuT6mbxjKEKQkb/FjO+Gm9Cpx4PZ/m
- DSqi4tyvmlSRp7EUNmbw4aMkZ33SwxNue8Et93yvNE07nZGEpODjAUZlMGpV8YzgzN5QrTh
- 6xGX/p/rDBkffJn+l/7bQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nZgmEu4+eJ4=:yq13y+DJWdqj/5j6n2oRIJ
- ho8hV5UVTs5+gbODIsESXkvUDhsPfkGq3pJpZhxHhdAtSUIf1TJdKBbKCVCkermAojLHoo5RD
- mkFiY6i0vfsbQrMWWKDB/L/bCZlvQkBkbkj/5yLWqZ/tb7w530ThTSefp07fSXUyHOLA+pYFU
- qc2RSYr0lPYqiqLGvmanIXpGTpEHLROOU+b1Wj/O3vzErGGpZt6ln5dDO4SW/8NgqvsdtvJJ9
- Kv3ERgIfFSoypldaES6Yj0LmJMGxi3hhKUIGqd52jGgVhjoCfHKKRkgnYY11M0d9ifG0kEFOd
- cO7a1XqqaXVlgqyv4r5h80quh8CkbiFzGkkI3xw5DFtJEy7bI2AGLrCkchwUfni+kHrGjBR0y
- r4ME7qQ3gFo6rg6Mnk63D2j/BhC1sa/7ESv2Yv5GKtw2LVSKD70VXqGVURbNwEaoBKj9Rrwzy
- U/adJW7GllZdKVi4St+mGRyNBV9eVCteea2r2QMLI8nbvuEYABjPrcbRkqn7i1oT5OnSBMkCf
- PscvLU5bHpfXrPw3/EFqNGUPkmhfgDb92SQ75M2B5xu5bu2njWrOPCCf23YZiv7gG4GS6ROOC
- Tay+xOQ/eO1nkEDNiAycHujhBsm1VhMVqF6ctDPZecqYs+SqgRUwd7f3bDqltjlev2xSrWLVF
- kjnkbqpZ0T26XrwhMqbDIj3hK6WyZWwrl7BxkA62aW2v7RSfGHLkxi7Au9EFecXD6lhmEauac
- 9HHvnIZ7+ZSoyeYmDGuxLJHPVztIJvy5dVJJlyL+ssBkhY3JMTV5R9vK+G+IlhwsLBNv8nJgn
- P1Hm/iDAd7ReDu05ZrpJfPVNBYoxFaUdI4mAkEsfQgT/r8aneoWAQ/bfRDI4SxXi8yZH7GD/T
- VqTAWchtXUhNz5zi5XwGhh4mY0qnkq2fAagMXZF9NUYl+8VdG+IuorcOI+dmboLkkpI1NU+TB
- Rhej2c6/Kw/Jq48f+dZ+dIZoAL/wSrY3guJqQqrIK6cM6k6Brv04j
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LQIBKkMHCTeFDiy0QpRFPJEJQ5PB5kbkahFF4EP9AUq1BY2OZ97
+ SClKnQu1xlTcudR3XFOg6Q7sakTCZs8oIti6Ift8a99my9A0pf/sVVekORduljF1fBrVNwM
+ cOSySEMRkkhPODNPaO9aGG0RBEUfBmAj51zEmi6DnqqXZ25T57/6rQ7E35db/NnS6cismpt
+ QNcQVXc2lh8xHM1Ud6I9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kNWvNFONCsI=:QfWMbhbUIC06HJtgE4e2I2
+ PnhqzZZos2TcYwvA+IQBd8nzFB3BPrz7MTM5RY6WpbennhN0Bs9XoWkx16HtTKxX0u4uH/6PT
+ 6Iaq+1LqSYWy/rLseeknUNUa9MOpSsPBSBMxbfVRUAlmJJUbeVQQl/BoIRmh3uEHhlF+WwkgX
+ nwcjDmiXdwVJ67LUhEKl5ACInOB1hsMHK5/I4xVEC0FK4jcW4rOsP+xQsOfL+pUt9c4GHFSNY
+ usDLXTQ99hOp4XlZkqtBBx9krSLS6heKzUZN9UpZVAcOd1SOdO5N86T5Lq0Aod8VcAyQ294Bh
+ hWdTAnwtwib5I6JBF2q59PP6kdQ2FxaGN5YSiXefXuweG7OAxv/GnoOijTt6WQMq1qqhFrTNL
+ nM4TPIBWfqbQ71BcKOFO715r883YMICaQp2G/VhznQ1t+TbSfiuFXRbsA449peBXx4exBy7IJ
+ kcEaRzsAYkOc2v3JSyP+DbVMFKlRa/ipXXobtKyMk8uIdAjSRNPPds5INp/fE/pqZPvvRxiji
+ dyeynxzgfT1BK7twsIoIB5Fga3XOyBETdnakMbx3ltKe7pYaFVX3NY/yMCLk1fnGmNZr8D1Vt
+ Wv6Kby/tHwm3ZKd2Q+kOpnssd8Pg+SvBn4DyCnQhEC2wVCqNd2hlyQlRkOZsJwqW5iNQdaV20
+ GyTm4pIW9CojFAYN9ABr1u4/jwR257JAb/vnRuDJixS/r5XgwZ4m21xHh+w6jN1MGINkpsaBD
+ NecHu6KQiMVsLaNnqalaMdUwMM7R6U3eMbSsLs+QFhundweBeoG17RZAbcbSEzjD/3ju90dQ3
+ A7kIyLzBuoTrErWa1+NeREs9iPTSSH9dAOukK2zUhA3XWrZK4AkBOwi+PuZmP4EJ0mTuI/3XB
+ 5KVQFT1n1SKMxI7qRkU7TggCVUM8//Kw4KMq7gBfDBLQPRCDkx7mSefYSThJt2g3qmAje2VOS
+ JqBjCBfH9Vr9FgBLUzOZQ3YHOlLCsYM5nYRFhWAFV+KRtiIjz++/H
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-2087275535-1561123013=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 20 Jun 2019, Phillip Wood wrote:
 
-Hi Peff,
-
-On Wed, 19 Jun 2019, Jeff King wrote:
-
-> On Wed, Jun 19, 2019 at 04:58:50PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
-> > This is probably just my itch. Every time I have to do something with
-> > the index, I need to add a little bit code here, a little bit there to
-> > get a better "view" of the index.
+> On 18/06/2019 04:30, Junio C Hamano wrote:
+> > Phillip Wood <phillip.wood123@gmail.com> writes:
 > >
-> > This solves it for me. It allows me to see pretty much everything in t=
-he
-> > index (except really low detail stuff like pathname compression). It's
-> > readable by human, but also easy to parse if you need to do statistics
-> > and stuff. You could even do a "diff" between two indexes.
+> > > Yes I sent it just before I went offline, but that's a while ago now
 > >
-> > I'm not really sure if anybody else finds this useful. Because if not,
-> > I guess there's not much point trying to merge it to git.git just for =
-a
-> > single user. Maintaining off tree is still a pain for me, but I think
-> > I can manage it.
+> > Yup.  IIRC, you told us not to look at the patch "for now" as you
+> > would be offline, and I was fully expecting that a regular review
+> > exchange would happen after you come back.
+> >
+> > I do not recall seeing much discussion, though, but ...
 >
-> I don't have any particular use for this, but I am all in favor of tools
-> that make it easier to access and analyze information kept in our
-> on-disk formats (some of this is available via --debug, I think, but
-> AFAIK most of the extension bits are not).
->
-> And I'd rather see something like JSON than inventing yet another ad-hoc
-> output format.
->
-> I think your warning in the manpage that this is for debugging is fine,
-> as it does not put us on the hook for maintaining the feature nor its
-> format forever. We might want to call it "--debug=3Djson" or something,
-> though, in case we do want real stable json support later (though of
-> course we would be free to steal the option then, since we're making no
-> promises).
+> You're right there hasn't been much discussion I assume dscho is happy
+> with the new version if he's asking for it to be picked up.
 
-Traditionally, we have not catered well to 3rd-party applications in Git,
-and this JSON format would provide a way out of that problem.
-
-So I would like *not* to lock the door on letting this feature stabilize
-organically.
-
-I'd be much more in favor of `--json[=3D<version>]`, with an initial versi=
-on
-of 0 to indicate that it really is unstable for now.
+Indeed, that's what I tried to ask... ;-)
 
 Ciao,
 Dscho
-
---8323328-2087275535-1561123013=:44--
