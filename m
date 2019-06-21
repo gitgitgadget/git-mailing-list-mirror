@@ -7,112 +7,118 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59BEB1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 16:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 380F81F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 16:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726092AbfFUQFh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 12:05:37 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57962 "EHLO
+        id S1726045AbfFUQdy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 12:33:54 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64007 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbfFUQFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 12:05:37 -0400
+        with ESMTP id S1726002AbfFUQdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 12:33:54 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C1AE668F5F;
-        Fri, 21 Jun 2019 12:05:32 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0EECE69216;
+        Fri, 21 Jun 2019 12:33:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kXZMJjy8G0Oh
-        j2TWekaQYV5QspM=; b=kbuntiSjMqAQv2SA03mNSl5CkJ+b+JKJbAN5wf6H1Zo7
-        lwePC9R9XrS1U5Kq0kwQt0oviy7LWvY2SIVeFg5sg5DktFmgj+2PHJvJEA91lPAZ
-        iyYE40UZSibBthdGoSmhekIBs9c+16IK7ThLyqceXXAjbOchBBCouW1eA5HLYsc=
+        :content-type; s=sasl; bh=+Rb7AYfEqCgKH6SHR7oxBjxcT/k=; b=c2FU4D
+        bSHDutDC1dC/eQmZ+KGS4wgq94k5+uYon+FmJoqs9ZoC9BTN2PnlPl1v8qm6ElqE
+        wdzytNMbr4e1frsGqPsg3oKSTjVq4xuVUpzrrX5AAbByBDcETy8C+DSOlIrIh7s7
+        zHTmCorp89B8AwMLPRZFOdmFAHCJgs3wtPZ+I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mSzYn6
-        y+RpQJcxmaO2rRYEzXVlWDo00eUCX6vckAbnNJoCZYIENQrg+ry5F1ewv1Q9pzaP
-        lqXETjUxW4NIMdvBnHWWI9b3Un8LJJZrtyKufZeLonfAxSargJuZdWTLal9BJjXc
-        swdYH00eLjE0YaLmK/gJRMA+QwAzo2J+An/MI=
+        :content-type; q=dns; s=sasl; b=EQOycupdMNiO6gmwC7S+A5CBnQEGu7xF
+        Y/ulL6TMj6y90XnCigm4s3c09qElPAUK9PM/vswfuN+eKrNA2Ns9EfYRAMB55+WJ
+        vzNnY9CfpZDA1BlEVhSdUJGco3iSJH9gTxviuBoKU6iUn1Sg87M5VbhkforZv5ku
+        LA3WyFuDVUo=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B747168F5E;
-        Fri, 21 Jun 2019 12:05:32 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0603269215;
+        Fri, 21 Jun 2019 12:33:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A406468F5C;
-        Fri, 21 Jun 2019 12:05:28 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31D9269214;
+        Fri, 21 Jun 2019 12:33:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Paolo Bonzini <pbonzini@redhat.com>,
-        Linux List Kernel Mailing <linux-kernel@vger.kernel.org>,
-        Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@redhat.com>,
-        KVM list <kvm@vger.kernel.org>
-Subject: Re: [PATCH] push: make "HEAD:tags/my-tag" consistently push to a branch
-References: <20190526225445.21618-1-avarab@gmail.com>
-        <20190621144447.21769-1-avarab@gmail.com>
-Date:   Fri, 21 Jun 2019 09:05:26 -0700
-In-Reply-To: <20190621144447.21769-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 21 Jun 2019 16:44:47 +0200")
-Message-ID: <xmqq4l4ily9l.fsf@gitster-ct.c.googlers.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/3] status: add status.aheadbehind setting
+References: <pull.272.git.gitgitgadget@gmail.com>
+        <2f0f2a2df9410947b985d83a924d2549d62bb65f.1560889284.git.gitgitgadget@gmail.com>
+Date:   Fri, 21 Jun 2019 09:33:47 -0700
+In-Reply-To: <2f0f2a2df9410947b985d83a924d2549d62bb65f.1560889284.git.gitgitgadget@gmail.com>
+        (Jeff Hostetler via GitGitGadget's message of "Tue, 18 Jun 2019
+        13:21:25 -0700 (PDT)")
+Message-ID: <xmqqzhmakidw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6354856E-943E-11E9-BC01-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58ECDC4E-9442-11E9-AF4C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This resulted in a case[1] where someone on LKML did:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
->     git push kvm +HEAD:tags/for-linus
+> The --[no-]ahead-behind option was introduced in fd9b544a
+> (status: add --[no-]ahead-behind to status and commit for V2
+> format, 2018-01-09). This is a necessary change of behavior
+> in repos where the remote tracking branches can move very
+> quickly ahead of the local branches. However, users need to
+> remember to provide the command-line argument every time.
 >
-> Which would have created a new "refs/heads/tags/for-linus" branch in
-> their "kvm" repository. But since they happened to have an existing
-> "refs/tags/for-linus" reference we pushed there instead, and replaced
-> an annotated tag with a lightweight tag.
-
-I do not think that is a problematic behaviour in the context of
-asking Linus to pull when every time a merge window opens.  One
-would keep refs/tags/for-linus at the publishing site, and update it
-(forcing as necessary) before request-pull.  If it went to a branch
-with confusing name tags/for-linus, that would be a disaster.
-
-> Now we'll print out the following advice when this happens, and act
-> differently as described therein:
+> Add a new "status.aheadBehind" config setting to change the
+> default behavior of all git status formats.
 >
->     hint: The <dst> part of the refspec matched both of:
->     hint:
->     hint:   1. tags/my-tag -> refs/tags/my-tag
->     hint:   2. tags/my-tag -> refs/heads/tags/my-tag
->     hint:
->     hint: Earlier versions of git would have picked (1) as the RHS star=
-ts
->     hint: with a second-level ref prefix which could be fully-qualified=
- by
->     hint: adding 'refs/' in front of it. We now pick (2) which uses the=
- prefix
->     hint: inferred from the <src> part of the refspec.
->     hint:
->     hint: See the "<refspec>..." rules  discussed in 'git help push'.
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/config/status.txt |  5 +++++
+>  builtin/commit.c                | 17 ++++++++++++++++-
+>  t/t6040-tracking-info.sh        | 31 +++++++++++++++++++++++++++++++
+>  t/t7064-wtstatus-pv2.sh         |  4 ++++
+>  4 files changed, 56 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config/status.txt b/Documentation/config/status.txt
+> index ed72fa7dae..0fc704ab80 100644
+> --- a/Documentation/config/status.txt
+> +++ b/Documentation/config/status.txt
+> @@ -12,6 +12,11 @@ status.branch::
+>  	Set to true to enable --branch by default in linkgit:git-status[1].
+>  	The option --no-branch takes precedence over this variable.
+>  
+> +status.aheadBehind::
+> +	Set to true to enable `--ahead-behind` and false to enable
+> +	`--no-ahead-behind` by default in linkgit:git-status[1] for
+> +	non-porcelain status formats.  Defaults to true.
 
-"matched" in past tense means that your example scenario actually
-has such a confusing branch?  Then I think the above is OK (or just
-silently updating the branch is also fine, I think).  If there were
-no such branch currently, the above woudl be a serious regression,
-but as long as both exist, I think it is probably OK.  From my quick
-scan of your new tests, I couldn't quite tell if that case (i.e. the
-a tag "my-tag" exists but a bbranch "tags/my-tag"does not exist at
-the receiving end when push happens, and the tag is updated without
-touching the branch nor giving extra warnings and hints) is covered,
-though.
+Sensible.
 
-Thanks.
+> @@ -1078,9 +1078,11 @@ static const char *read_commit_message(const char *name)
+>  static struct status_deferred_config {
+>  	enum wt_status_format status_format;
+>  	int show_branch;
+> +	enum ahead_behind_flags ahead_behind;
+>  } status_deferred_config = {
+>  	STATUS_FORMAT_UNSPECIFIED,
+> -	-1 /* unspecified */
+> +	-1, /* unspecified */
+> +	AHEAD_BEHIND_UNSPECIFIED,
+
+This obviously is not a problem introduced by this patch, but is
+there a plan to extend this beyond a boolean?
+
+Otherwise, a separate enum is way overkill.  Naming the field so
+that it is clear it is either true or false (e.g.  perhaps call it
+"ahead_behind_detailed" as the current "QUICK" is merely "are they
+equal?" which corresponds to "false", and "FULL" is to show the
+detailed info), and then use the usual "-1 is unspecified, 0 and 1
+are usual bools" convention would be more appropriate.
 
