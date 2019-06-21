@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBAA81F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 10:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 100691F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 10:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfFUKSc (ORCPT <rfc822;e@80x24.org>);
+        id S1726452AbfFUKSd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 06:18:33 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44137 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726260AbfFUKSc (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Jun 2019 06:18:32 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33459 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbfFUKSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 06:18:31 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n9so6066144wru.0
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 03:18:30 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id r16so5983130wrl.11
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 03:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NpzDRG0kZJ9YtaYBUv3fvBA5IBhs5BLuVYzXtQLF3yY=;
-        b=TEAjjrkN48bgHtaSmSs4AkLqmReXY0MFc3iWxyfRWAOP/MSDWvSa0K5faCIGyKGfB1
-         edmOGkuOmBBIZ/Yoo7Cgq2OrfZ4CxgLvsKEPtNCPv/fFpVrNbvnc7dPNm1zCT3ynvS6H
-         OyKc70wjqa9r2HmaI1T0klp2W3RH4InxvvkEifPYdNTiQupD3hLXzkzcFdKLzAvTQ7j0
-         Pg3y3wwyEJYhQFjpqnUx7vas3dZEgsomLlvR0H/TDFCkzd3yrZmLrpMSGcBL3Lf0EteE
-         J0zlDXeFCJ72mbcrguIuHpZEXQbfvuvrDtrvIlQR9K6dhwCHe3TiYx17Yyp8wUYeBr1l
-         Q3ug==
+        bh=ugShOYf8Li5vms2a7LuBZrSltUjtVP/P1t4CWD/xlWY=;
+        b=ivYQF+9Cl8uK/87RPhCmRUwDvgua00cCZEMS8FSaT0EOt+GQxhJ289GeL/Q2lVVkbT
+         MxJ72PEwrPV5m5X14bInDfC+p5kFiFMqtUoqwuTNGRGlFIKLMh/5PQAWMIClwvOXVDPk
+         QxwP60/k8kHSSqzJMywBR+rRiiH0apc/48nKn68L3dWEq22N4quR0B8WnhXtP9wZ80RX
+         RN0fwTKCMK0Y1F5VG0jVTApPGJKgeOTAGet7VO1NItHBgIfOuH27JMM4RpRgZdCFIGkU
+         Yx89pZK5uJcVtQy4u2WkC/otxWZKtxACOep4w5Gh2dpW2KWX1wsp+qFvd8Ff+DwfywQ1
+         vqvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NpzDRG0kZJ9YtaYBUv3fvBA5IBhs5BLuVYzXtQLF3yY=;
-        b=lgiQblq/LbLltS7CodDEpAgNTDUVjO34XF6TQzhCXrD20kTMjDj/QmNUawv8ES92p/
-         s4PAPlIxeC7m3gaXOl3YUSlatgMv8RFoh+WfaZCSKSzfuFw20AU1rl3dpH1BBgLa2GxN
-         asItYo7K/Ise3Gx330uMgUZOSwTb0egsaD1L8GmKElUk3yBSYgIOSxVSJEohl76olGII
-         cYBMRaH0mHWe0sATYlR5kEu1N9sIktCNCsgOeTgYqveEGCRxXjPpMQfr4A0oAZ7TisMh
-         H37UtQhk50d/Z2XVFK3+9X4SzLhwqmA1JLV+4FShB0c2YElUz8Zf2VUe9c29s42rxaqP
-         Vr4Q==
-X-Gm-Message-State: APjAAAWvmoE6blX70IIMonytjguMXft8K8cwxIA+qvUqqoy136nz3Yaj
-        ga/g8r+SgcNkXas2BJ+lqIVv3NKs3WE=
-X-Google-Smtp-Source: APXvYqxVuT7fTrkZgenX/CPa+14xolBD6f9kwsCFSSV/aE3F/oRsPFxcdsMvaeME7PclxVS7rCH7GA==
-X-Received: by 2002:adf:f050:: with SMTP id t16mr76814725wro.99.1561112309140;
-        Fri, 21 Jun 2019 03:18:29 -0700 (PDT)
+        bh=ugShOYf8Li5vms2a7LuBZrSltUjtVP/P1t4CWD/xlWY=;
+        b=tV6hNsuTRcHaYAmRqvTS+ztHR1QIgQi93+TQd89eSVoiqS4RPwS99N42BVUsgWXINA
+         4cupYQZxT/PX6q4jTNeybRG7iADjqy+m4Ig0ZqqHtY1t2cHW1P+gp9PK3+4UacgGNwjb
+         Tp/LkS7CwjAZKuNsY5kc7FXrF9YwtERyicSQ1I8eBBYiiceTYE+OzREk8CDrLQGN0e7Z
+         LJv4k8EBF9yr9Jfgv5JHV4OrEZgNoWjLkP8QzoUK1A9hPwzsBpqxxCvznM2+gtmzVowT
+         b7HzWQU1OOvHV8sht22x9F9ONHck1Mi19+tq9ghV5B8DvQuEZxP4EfahECOu1pSnikgV
+         EdwA==
+X-Gm-Message-State: APjAAAWP3W5EtBRN0IkhKFztMog5WYnmjWg3oW5YL6qJxyIj5eb6LP4h
+        VNi8E/sQRa2Kpb39HiQapAOs8Qovp4s=
+X-Google-Smtp-Source: APXvYqyKZO8j1HEOWk0X1AuwvW60Uc1dpIJC+2ttmuwlyCdjTTP3Nb5ZOrK7JrORbHm4eDpr3DzVMg==
+X-Received: by 2002:a5d:618d:: with SMTP id j13mr18335437wru.195.1561112310313;
+        Fri, 21 Jun 2019 03:18:30 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y184sm1878193wmg.14.2019.06.21.03.18.27
+        by smtp.gmail.com with ESMTPSA id y184sm1878193wmg.14.2019.06.21.03.18.29
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 03:18:27 -0700 (PDT)
+        Fri, 21 Jun 2019 03:18:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/8] config.c: refactor die_bad_number() to not call gettext() early
-Date:   Fri, 21 Jun 2019 12:18:07 +0200
-Message-Id: <20190621101812.27300-4-avarab@gmail.com>
+Subject: [PATCH v3 4/8] t6040 test: stop using global "script" variable
+Date:   Fri, 21 Jun 2019 12:18:08 +0200
+Message-Id: <20190621101812.27300-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190620210915.11297-1-avarab@gmail.com>
 References: <20190620210915.11297-1-avarab@gmail.com>
@@ -72,67 +72,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prepare die_bad_number() for a change to specially handle
-GIT_TEST_GETTEXT_POISON calling git_env_bool() by making
-die_bad_number() not call gettext() early, which would in turn call
-git_env_bool().
+Change test code added in c0234b2ef6 ("stat_tracking_info(): clear
+object flags used during counting", 2008-07-03) to stop using the
+"script" variable also used for lazy prerequisites in
+test-lib-functions.sh.
 
-There's no meaningful change here yet, just a re-arrangement of the
-current code to make that subsequent change easier to read.
+Since this test uses test_i18ncmp and expects to use its own "script"
+variable twice it implicitly depends on the C_LOCALE_OUTPUT
+prerequisite not being a lazy prerequisite. A follow-up change will
+make it a lazy prerequisite, so we must remove this landmine before
+inadvertently stepping on it as we make that change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- config.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ t/t6040-tracking-info.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/config.c b/config.c
-index 296a6d9cc4..374cb33005 100644
---- a/config.c
-+++ b/config.c
-@@ -949,34 +949,35 @@ int git_parse_ssize_t(const char *value, ssize_t *ret)
- NORETURN
- static void die_bad_number(const char *name, const char *value)
- {
--	const char * error_type = (errno == ERANGE)? _("out of range"):_("invalid unit");
-+	const char *error_type = (errno == ERANGE) ?
-+		N_("out of range") : N_("invalid unit");
-+	const char *bad_numeric = N_("bad numeric config value '%s' for '%s': %s");
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 716283b274..970b25a289 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -38,7 +38,7 @@ test_expect_success setup '
+ 	advance h
+ '
  
- 	if (!value)
- 		value = "";
+-script='s/^..\(b.\) *[0-9a-f]* \(.*\)$/\1 \2/p'
++t6040_script='s/^..\(b.\) *[0-9a-f]* \(.*\)$/\1 \2/p'
+ cat >expect <<\EOF
+ b1 [ahead 1, behind 1] d
+ b2 [ahead 1, behind 1] d
+@@ -53,7 +53,7 @@ test_expect_success 'branch -v' '
+ 		cd test &&
+ 		git branch -v
+ 	) |
+-	sed -n -e "$script" >actual &&
++	sed -n -e "$t6040_script" >actual &&
+ 	test_i18ncmp expect actual
+ '
  
- 	if (!(cf && cf->name))
--		die(_("bad numeric config value '%s' for '%s': %s"),
--		    value, name, error_type);
-+		die(_(bad_numeric), value, name, _(error_type));
- 
- 	switch (cf->origin_type) {
- 	case CONFIG_ORIGIN_BLOB:
- 		die(_("bad numeric config value '%s' for '%s' in blob %s: %s"),
--		    value, name, cf->name, error_type);
-+		    value, name, cf->name, _(error_type));
- 	case CONFIG_ORIGIN_FILE:
- 		die(_("bad numeric config value '%s' for '%s' in file %s: %s"),
--		    value, name, cf->name, error_type);
-+		    value, name, cf->name, _(error_type));
- 	case CONFIG_ORIGIN_STDIN:
- 		die(_("bad numeric config value '%s' for '%s' in standard input: %s"),
--		    value, name, error_type);
-+		    value, name, _(error_type));
- 	case CONFIG_ORIGIN_SUBMODULE_BLOB:
- 		die(_("bad numeric config value '%s' for '%s' in submodule-blob %s: %s"),
--		    value, name, cf->name, error_type);
-+		    value, name, cf->name, _(error_type));
- 	case CONFIG_ORIGIN_CMDLINE:
- 		die(_("bad numeric config value '%s' for '%s' in command line %s: %s"),
--		    value, name, cf->name, error_type);
-+		    value, name, cf->name, _(error_type));
- 	default:
- 		die(_("bad numeric config value '%s' for '%s' in %s: %s"),
--		    value, name, cf->name, error_type);
-+		    value, name, cf->name, _(error_type));
- 	}
- }
+@@ -71,7 +71,7 @@ test_expect_success 'branch -vv' '
+ 		cd test &&
+ 		git branch -vv
+ 	) |
+-	sed -n -e "$script" >actual &&
++	sed -n -e "$t6040_script" >actual &&
+ 	test_i18ncmp expect actual
+ '
  
 -- 
 2.22.0.455.g172b71a6c5
