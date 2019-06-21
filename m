@@ -2,128 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2ACB1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 22:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55F111F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 23:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbfFUW6p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 18:58:45 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:38204 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726043AbfFUW6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 18:58:45 -0400
-Received: by mail-pg1-f202.google.com with SMTP id 21so4914134pgl.5
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 15:58:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=yzy/o8wyT5rORBnyg/XCTe8NtqgM9zwVIy04hmaE4Wc=;
-        b=LPeqixq0zo1qdN+mZNP+PUGyaH80h8LN3Xxx6TUk3cwBU4KCDVdjS2RoQMORR2QRjR
-         37h/X3LZzYS+crQdNHhqx1tK9azG/jU+UaODAhTK/mO5g2yTsAuPSASeK8KoVKnWbGfE
-         a17D/6WAPrGdZLtowQ9kZbQDM76H8yasTO99HMjJG/8lRB7u85b4bctUSv/PiXKTJ+x8
-         YYkkJCFYRPN7J+LgWlgBRTimAUy5Zj+MtvIcclqS/smhSDHd6QWp2+pL/PB0SUM/YlLo
-         QhcVnpIJrVJLgKtaFRI0qDba/uOYCD+lWQzy/rbEC8/Al8VUCXEIMsJAm5TrS2tG7Sp4
-         DCyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=yzy/o8wyT5rORBnyg/XCTe8NtqgM9zwVIy04hmaE4Wc=;
-        b=U/a8VlIjkzxLobth/w/mTsZPb39ToPj+an/UYc7aljQFn1odgW0esa9DQikX2z9hAj
-         pwwNcfa5uDVWmG6hrOQab7fSTFs6Wp2QWn0UaILdNwzhTQIXTLR/HRsMLSh0LEG7l4iL
-         lksnwjdOTUgERoKIlM5qQv7SSBoHfPk7Unh+eflunPDFC2vyp9Nsp54if2lcMvdWQeyK
-         i/UYoYvjjDFaKDaYMjEZANLahyrPRwvfl4SISMYW4kv5/JGM1PgTWm7OHB2mvUpNH0Yd
-         QgL3H7/wYGPxSKYb0OhS7fdN9giIgtS/qxnvvtyjUPxf7APAuICmquIfI+sEUWbM4zKF
-         zHgA==
-X-Gm-Message-State: APjAAAXcsJNmfjCGnt9L1MA29s+6KFhe7GfllvEyOom47YVgVw2O9nkT
-        7UDEC0YbHtlPkAYoxbY9sNnlk7bnMhlT/ISx+ndk
-X-Google-Smtp-Source: APXvYqx62NOZpSgxxQguSYsys4Xx9HSJEwsEbzR6tcAs7RbBA7jutMsS9u4zBRQzBxWsaBB/WrN5spwStlaCGiW5Wpmm
-X-Received: by 2002:a63:1d2:: with SMTP id 201mr15294156pgb.232.1561157924285;
- Fri, 21 Jun 2019 15:58:44 -0700 (PDT)
-Date:   Fri, 21 Jun 2019 15:58:38 -0700
-In-Reply-To: <70568c42ae6d59dacbb36ffb8e4a8828b6595158.1560558910.git.matvore@google.com>
-Message-Id: <20190621225838.226321-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <70568c42ae6d59dacbb36ffb8e4a8828b6595158.1560558910.git.matvore@google.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: Re: [PATCH v4 01/10] list-objects-filter: make API easier to use
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726083AbfFUXbD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 19:31:03 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56160 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726045AbfFUXbD (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Jun 2019 19:31:03 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:8174:fea0:25b6:f16a])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D645A60443;
+        Fri, 21 Jun 2019 23:31:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1561159861;
+        bh=3dpVu0W5vFjHamBRgcuwAm4/P3tCxJOF7xMK0u9ijf4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=q1Wm+dvfS5IwUxVgIxjHQ3vL6GlpwNOGReLznCgpbNJJt67hyd0ysy5V4ewCs7Zzg
+         fGksL7nGg5fBf9WuCyWnN0VCXZoafQTKb6dovwF3T7oZSQ5CyBsjU+lbvB32nUHcPb
+         6zcJz7Qg4Re6EY7FtH1l1A47b1z2485grr+nzA48pLI8TA37VnH6rONYRrbWzq39nK
+         03UOimAcNIPP/VZp58sNh+C++64rPBUzLpu8KTcz0LY6IH42Etr224oWIi1wafSPVP
+         U8rYsS5IXKeUfgmmi8+ICpN9EFfuBwzEiL+niSqE7Z60lk9tXpfulzGTuhvtZhS3Lk
+         JOeIp2RlTGo+avgpHHsTdz3voteY+PZoQ3cLI0WIe68wo23W/LbXFagRwy35Z1XCki
+         iwc8RXpKNNt03RmQi+cnhPNXUBJdyH1L4Y58uX4jkR5on0VyC/3iFDJnBtypJRJNU+
+         bUuYy5rRvLq/tJBiltm3F6n3ixI5WFm0KlhS6UmRvjqW54Hd1Uu
+Date:   Fri, 21 Jun 2019 23:30:55 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
+Message-ID: <20190621233055.GB965782@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+References: <20190619095858.30124-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/WwmFnJnmDyWGHa4"
+Content-Disposition: inline
+In-Reply-To: <20190619095858.30124-1-pclouds@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Make the list-objects-filter.h API more opaque and easier to use. This
-> prepares for combined filter support, where filters will be created and
-> used in a new context.
-> 
-> Helped-by: Jeff Hostetler <git@jeffhostetler.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Matthew DeVore <matvore@google.com>
 
-So what happens is that filter_fn, filter_free_fn, and filter_data are
-encapsulated into one opaque object, and users will now use filter_fn
-and filter_free_fn through other functions that we expose, allowing us
-to add some conveniences that currently have to be repeated at each call
-site.
+--/WwmFnJnmDyWGHa4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I would prefer the following commit message:
+On 2019-06-19 at 09:58:50, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> This is probably just my itch. Every time I have to do something with
+> the index, I need to add a little bit code here, a little bit there to
+> get a better "view" of the index.
+>=20
+> This solves it for me. It allows me to see pretty much everything in the
+> index (except really low detail stuff like pathname compression). It's
+> readable by human, but also easy to parse if you need to do statistics
+> and stuff. You could even do a "diff" between two indexes.
+>=20
+> I'm not really sure if anybody else finds this useful. Because if not,
+> I guess there's not much point trying to merge it to git.git just for a
+> single user. Maintaining off tree is still a pain for me, but I think
+> I can manage it.
 
-  list-objects-filter: encapsulate filter components
+I'm generally in favor of this, but we need to document what this does
+when it encounters paths that are not valid UTF-8. (Ideally, the answer
+is, "die()", but I suspect the answer will be "silently produce invalid
+output".) Those can of course occur on Unix systems, but also on
+Windows, where unpaired surrogates can occur.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-  Encapsulate filter_fn, filter_free_fn, and filter_data into its own
-  opaque struct.
+--/WwmFnJnmDyWGHa4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  Due to opaqueness, filter_fn and filter_free_fn can no longer be
-  accessed directly by users. Currently, all usages of filter_fn are
-  guarded by a necessary check:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.16 (GNU/Linux)
 
-    (obj->flags & NOT_USER_GIVEN) && filter_fn
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0NaK8ACgkQv1NdgR9S
+9oun0xAAx033fn97zHVn2bb6/XJnvAGRP7+ujn3yM6BWKpXMqIQRWt4+8CYOauC9
+Epv2WPC5DLp8iQs6CEnyMjqQnqVKZol1wzS1641bv4rIW5Z5BSzzoMhbHdz2dYui
+3t2rjmOc8lXTlSUguKrYgnjK+ECFIygSiF59NlFSDQf/rVX801VKR9xnV/Ifu5PZ
+5AWkZtfPeEzqZOrhvjFXZnvdefvDnGRaJGAjbSNc/d22rtm72pPwQca8L+JLVBq2
+kgta2EMtBqaESBHW1rtvaEGcqYnzR1gXJA8Jz3Yzzvr/EvGlbWIKSKZHR1qUbyvi
+Pm5bgljkM+EA9sXtdD8AGEdP2VdBh1AIZ37Tid/YYC10moVcdq3YYrA1IyWuNHW0
+sEVEw3WyCKvpHPhLQrzwKFarenA7P8wF844OvK31I2nxHfMxrsA+YB8S/9z1NMkk
+j3VuOZQehZBpXqyqtRINQxBbH6SXOGGEYBBUK/6BEkN/ia3e+HrjY9dR0eK/9Y0T
+wngde9kC60Bqxe3MNcK2p1E/SFGsN9pliAzBmDksvQhD8EmHyQYCfUdwXN6m04aO
+0L6xFvDmHHBX2FTowtIOG3Z7BFru9rkRz/gyQPV5cAjecLGhSZafOD9N/uw+EPNd
+LsKOQL1ocVWZKRFle031/k3TUf04BpHUfzxMP19S6YrH8AEAy+w=
+=D7v6
+-----END PGP SIGNATURE-----
 
-  Take the opportunity to include this check into the new function
-  list_objects_filter__filter_object(), so that we no longer need to
-  write this check at every caller of the filter function.
-
-  Also, the init functions in list-objects-filter.c no longer need to
-  confusingly return the filter constituents in various places
-  (filter_fn and filter_free_fn as out parameters, and filter_data as
-  the function's return value); they can just initialize the "struct
-  filter" passed in.
-
-> +enum list_objects_filter_result list_objects_filter__filter_object(
-> +	struct repository *r,
-> +	enum list_objects_filter_situation filter_situation,
-> +	struct object *obj,
-> +	const char *pathname,
-> +	const char *filename,
-> +	struct filter *filter)
-> +{
-> +	if (filter && (obj->flags & NOT_USER_GIVEN))
-> +		return filter->filter_object_fn(r, filter_situation, obj,
-> +						pathname, filename,
-> +						filter->filter_data);
-> +	/*
-> +	 * No filter is active or user gave object explicitly. Choose default
-> +	 * behavior based on filter situation.
-> +	 */
-
-This part is when we do not need to apply the filter (or none exists). I
-think the comment will be better if stated more explicitly:
-
-  No filter is active or user gave object explicitly. In this case,
-  always show the object (except when LOFS_END_TREE, since this tree had
-  already been shown when LOFS_BEGIN_TREE).
-
-> +	if (filter_situation == LOFS_END_TREE)
-> +		return 0;
-> +	return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-> +}
+--/WwmFnJnmDyWGHa4--
