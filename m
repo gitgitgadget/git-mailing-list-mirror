@@ -2,117 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C06BD1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 08:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14D341F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 08:38:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbfFUILI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 04:11:08 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44324 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbfFUILH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 04:11:07 -0400
-Received: by mail-ed1-f65.google.com with SMTP id k8so8760135edr.11
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 01:11:06 -0700 (PDT)
+        id S1726218AbfFUIiN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 04:38:13 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:36385 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbfFUIiN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 04:38:13 -0400
+Received: by mail-io1-f67.google.com with SMTP id h6so889586ioh.3
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 01:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=V7NoIusz/DOq8Z0DapTHLUXJYtlDMlKJMenTmU3kGTs=;
-        b=B0y7iwL8LaaPERtNkBJXJbXdzlZWe5Ta7q31wj0xvnVXJBLlv2nPn+DJ3IpkAZnKMd
-         8HT02wXMZg1c0suwpG4gJVYfAgHuC+BfZWMMAXBn9ecEWPuuXe6+ZTEEDzgt1qeF5UCk
-         9jnM4X/nyqr1ZiWqg92IXjecAxMk7rbzTHrSGT4KAIEn3OWciTWgwFmlRA0VjjRNck+g
-         qRDP2UZl93niZa2RgtLSwYpSaM2ivjGF0ohd/E2yAlW+sg/83OmGozkj8hBkCcS+2E1f
-         gRuS8vqmrYfgIOINhrEo9o1RKTPp3+StISR4OGJ1obq/AqbgkvWPFcj5BfyiDUpNbnFx
-         SY5w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i8lmLdICNtGqybTGSBQpuI4FTZbPGRAReT2FkACitbI=;
+        b=mUO6io2cZTPDi8u8CCD+X8DBwe87gwo+6Byr3YbX6shoXP8rBChum9WIjQKbIlZYqS
+         Fw1jyJNnPTKjx0pdZeOM7KXqbmMzyDAfI8URkPrVuMnRqy+ScFbzOis6oTXwTj2bcqMO
+         r2QPfh2AqzU232evPA+uWUWI9vMMwuLwMvVMTjIUCG741UifRgaRJXwanR9gjby5gymu
+         CQXH0WPwV5f7dAGxYZvdo2urzzcB+FUcwUz3L8NZXbd5aFfQB+MGjaVdpG5PuzY4QCjI
+         mrg4Qp83+7/fIfkGMiy1eB4WhrXzGu4My5SxgFskw3ZcvcbhMhrWwPNGemAV3+2gnSFI
+         qrwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=V7NoIusz/DOq8Z0DapTHLUXJYtlDMlKJMenTmU3kGTs=;
-        b=ckWUklPRXVh4DTlNeyAtWCSrtcewf161ouTl5OwpkI47+OzmyKCGaRlgMn/22nzL3N
-         uukKtHAoek2PyI1axYx6juodOtBuOTGfX/B65sbttFrBSDOLOTYhn92rBCenoGeAvz6U
-         Qc4+BBASRpszh2/pxHe7icDfk5KFwFecoDzl30IkVfw1Q4wizD6GVlBZsK52YEQiS4y7
-         EJegm4P3vyD6MqOIb94J9rLZ36z3jhO0NR8TP7UZAHoQqy7BBBMa69urhRURhsS18xDr
-         jZmStTSqJTximkrZq2G+ZROl7BpnxRKhkXpyinatkS/wxHG1vj8skydpTnc4JZos+zvp
-         JLjw==
-X-Gm-Message-State: APjAAAU6oMFCCrdKHqsqBngvEifTsSa0Xz++xYtKZFM2kfOmuFBPv9VT
-        CmoKDjm2zLVjrwadvWw1Mn8=
-X-Google-Smtp-Source: APXvYqyTwYnXK75cadbVkm0+iCBdlOBpIP2fQt648Dax8IGp/xWN8JtQcQHSwLD6fXC6dhtS/++dmw==
-X-Received: by 2002:a50:9273:: with SMTP id j48mr118116576eda.285.1561104665854;
-        Fri, 21 Jun 2019 01:11:05 -0700 (PDT)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id 93sm603336edk.84.2019.06.21.01.11.05
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 01:11:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/8] env--helper: new undocumented builtin wrapping git_env_*()
-References: <20190619233046.27503-1-avarab@gmail.com> <20190620210915.11297-3-avarab@gmail.com> <xmqqpnn7lxet.fsf@gitster-ct.c.googlers.com> <xmqqlfxvlwyg.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <xmqqlfxvlwyg.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 21 Jun 2019 10:11:04 +0200
-Message-ID: <87blyr8ijr.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i8lmLdICNtGqybTGSBQpuI4FTZbPGRAReT2FkACitbI=;
+        b=hOlV8u3bRXJMT3HxwQRtQbZAc2GJrI70cVzSS/ORLLrszuM2NAxD5Tg98x075H2znA
+         TDxrusQBypOroHFnPUrCdhRok68Ah2jiJm/fWR2ISdTHoSk3XgP/XmcpfxgcDoO4RLh2
+         n+1hW9KVsjJOesDe4lztaP8EA6ZgnMNThvcaRlITzDstpAi5+M2f/6A87GUqyiYOTxlW
+         QYOqjDxcAA65D4tqLHWUs7/Si1aaiLFyphx40Skc4XNAaQ+0ZumoXIWuCMqR3UmBffAr
+         blYrSRo6rXi94hShPa+SO10aE6KIxyVAjM4yIihOEf6wx2jU2MlfmulJUe97Fh8WbOFb
+         OrhA==
+X-Gm-Message-State: APjAAAW5Arh5rSN9lM0z9A20nVvpEz8EIRoQBvSorJnP7eGyzrWZy3Lo
+        jrsWpdbCilOvMYqFUaTwwbcJEaoPNLgABCXLqzjUkIi3
+X-Google-Smtp-Source: APXvYqwN8k+M9KjgSajqntB0C1bSjlVt6sYn3TVK8vYsyVqMf4b2RD7V9hcvOIOb5/iwYfKJIwefxkvs+joKPxwmJCI=
+X-Received: by 2002:a02:cc8e:: with SMTP id s14mr23329675jap.142.1561106292100;
+ Fri, 21 Jun 2019 01:38:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190619095858.30124-1-pclouds@gmail.com> <20190619191709.GF28145@sigill.intra.peff.net>
+In-Reply-To: <20190619191709.GF28145@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 21 Jun 2019 15:37:45 +0700
+Message-ID: <CACsJy8AYw1QLjWALUNr7hSZemWyTSG0U8Fc_TH=9HNR-LcygTg@mail.gmail.com>
+Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jun 20, 2019 at 2:17 AM Jeff King <peff@peff.net> wrote:
+> I think your warning in the manpage that this is for debugging is fine,
+> as it does not put us on the hook for maintaining the feature nor its
+> format forever. We might want to call it "--debug=json" or something,
 
-On Fri, Jun 21 2019, Junio C Hamano wrote:
+Hmm.. does it mean we make --debug PARSE_OPT_OPTARG? In other words,
+"--debug" still means "text", --debug=json is obvious, but "--debug
+json" means "text" debug with  pathspec "json". Which is really
+horrible in my opinion.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> ...
->> as I am getting
->>
->>     error: 'ret' may be used uninitialized in this function [-Werror=maybe-uninitialized]
->>
->> from here.
->>
->> Giving an otherwise useless initial value to ret would be a
->> workaround.
->
-> I've added this on top of the topic before merging to keep the
-> integration going at least for now.
->
-> commit 8f86948797a1152594a8dee50d0878604fec3e80
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Thu Jun 20 15:13:14 2019 -0700
->
->     SQUASH??? avoid maybe-uninitialized
->
-> diff --git a/builtin/env--helper.c b/builtin/env--helper.c
-> index 2bb65ecf3f..29df0567fb 100644
-> --- a/builtin/env--helper.c
-> +++ b/builtin/env--helper.c
-> @@ -43,6 +43,9 @@ int cmd_env__helper(int argc, const char **argv, const char *prefix)
->  		usage_with_options(env__helper_usage, opts);
->
->  	switch (cmdmode) {
-> +	default:
-> +		BUG("wrong cmdmode");
-> +		break;
->  	case ENV_HELPER_BOOL:
->  		tmp_int = strtol(env_default, (char **)&env_default, 10);
->  		if (*env_default) {
+Or is it ok to just make the argument mandatory? That would be a
+behavior change, but I suppose --debug is a thing only we use and
+could still be a safe thing to do...
 
-In this case the compiler is wrong, and gcc/clang in e.g. Debian
-unstable doesn't warn about this since the analyzer sees that it's
-impossible for "ret" to be uninitialized.
+> though, in case we do want real stable json support later (though of
+> course we would be free to steal the option then, since we're making no
+> promises).
+>
+> -Peff
 
-I can change it anyway, and if I rewrite the UI of this command it might
-go away anyway.
 
-Just thought I'd ask if appeasing older analyzers is what we want for
-these sorts of optional warnings in general.
+
+-- 
+Duy
