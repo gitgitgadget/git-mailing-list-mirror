@@ -2,90 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4991F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 10:48:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AEE01F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 11:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726297AbfFUKsB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 06:48:01 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:38219 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbfFUKsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 06:48:01 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r12so9464083edo.5
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 03:48:00 -0700 (PDT)
+        id S1726299AbfFULxS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 07:53:18 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44646 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726229AbfFULxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 07:53:17 -0400
+Received: by mail-lj1-f196.google.com with SMTP id k18so5673862ljc.11
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 04:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H/9nXA/Hh2EPiU3AwjdbRydOHqESC+RhwGGkWpTPkYI=;
-        b=qhoPr5afj5Iw7BweHWOwkn05oGmAGd8b5zfYoF5GnYFtk9UJlfBTEjyrJjJL8DJa9g
-         XbQIQ64eWq4jSAvR6AGJx1BAoe7o4grmw1QPbK6f3hVVrhu6TK6jsowL+h6JvC05/NNL
-         6MYRtBuj7U6vYyp2UpBkthq4B6Vko9cWiREz3/ZJD2eNKI7QC2ARDzafLXqgjWk71o2S
-         o9DQnXeSGllUSk9aAAfEiXCfoM+KSUR2a44d3sWD8pI9bpjXS6iFWAuAzv7hEfh3/qSp
-         yQ0mQ3S0Q43CyWsA1zEw055RrBJX5We1jwOm5Ak6QuLslSOXq8lEDGGI68X/d2kjFUYc
-         ZmKw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=oNMfdCvAq64SRI4VdA0/6v1oZg22VaQLa3OpE11G39Q=;
+        b=o1dZWNF538n9bFBRWgTKmsWdzuoanPuvSwIWn9E8NkmoZ0jyuNL91ST0VNwoidYmOC
+         zxsWDbHCkTyzNbG6j0O5ErtMNBcUhPDJeJQz+Fa/xkf1+kG4G8rpDzDjF3TTExMV6AWt
+         2udZblkQOufmHmi3AAsW5wOOEi7lf6u0BuA+0Y2B32YWfdOVzuSLlC6iX0T5nHKPFHxx
+         ECVRy4eNOq1EQDdezloOcmjbkysH+W63nT10VzjqkAtYuU4/5gsDRqhhZrfm0biS6Ukv
+         DMvpw3mYrkwOg80HDJoliVoxOo6mNXmWrybddmWlBZMz2eXGVhm4nebACIJI5t45lGtw
+         pI5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H/9nXA/Hh2EPiU3AwjdbRydOHqESC+RhwGGkWpTPkYI=;
-        b=ZFXy2G6k/6/8WfS+xci9EPrLrz3WLyy8ozgTkhsywFHy/UUzvKK8yW+cHNMvcPJ6m+
-         qRl0E8v9fBCexyaghSFsV6/zkv3e3NzHFbyy3GwjSPqei1VmUIT5OMdcZI/sHyLzbwgB
-         zXP9JEnppLZLKKqTYPaLkhX0ahR+UzsF+K4VTgRO92HGnsd6yM1lq4/vgN8L9Lltyb8b
-         xVBnUB0yxd9MOs79cyn5WnhU9pMU4o1hmuCsOQ+KXBiwsyxWuMG6xj6IKxpkDxiCMhN4
-         GhPSR+Ch9nCICMBccmpCUAtR1b3XDlmFETAisjj6Exvi6ZR/8fo54ryN0ohL1Dfz/dVq
-         vwww==
-X-Gm-Message-State: APjAAAVRo4gHHVeQv8m1GDCZkhlXEPUtQbCKQrOtE3lFlUbEdbCqyS9E
-        XoQZ8IepwqnwJ6JoYDxNjRlasitE9pqDdADSW2c=
-X-Google-Smtp-Source: APXvYqxOZai3nZgvdb/OjWn3tKmVDFfD9YXCNJDhByB4wS+hTav2Bziie6O+/aqsfrd+Ddh/Nk/x0ijttW+m2BkR4oQ=
-X-Received: by 2002:a17:906:6147:: with SMTP id p7mr12335943ejl.187.1561114079589;
- Fri, 21 Jun 2019 03:47:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=oNMfdCvAq64SRI4VdA0/6v1oZg22VaQLa3OpE11G39Q=;
+        b=rPnogPQNC9Vdt7Sy32zkbpKjH6jvHGLov12g7kji0fywQZc4ejDsbXq1C2lsxVu84v
+         P4YbXtieSaifR08m3WRTrvSfh+qult8l98GZcmqPbKOkUvPMIwOIlHRwjGXd6cp4Kmzf
+         md4EUjEoUSRWgRChsS/vHKdhq6v1nh1gASz+dh6kPFbBZmSFP+mq48ANV5uoUR6yk7L7
+         62qOUUxeX8EKHoni9HAWSs//DLmqERR8wafG/5SsBxVBE92t2MgfSmGeuGR93xwoiYfu
+         dD3CiwcKhUMg01cSVWM18FQm1H2NvtfBeXAl7LVVvqColQ+eBMuPOPfPBk0lo2ir0IU9
+         mbeg==
+X-Gm-Message-State: APjAAAXA/LSgYG5Gy7fUJfUL2SVj+9qjxdhYymrxTptu1oNN+9dcVOeA
+        8gRPkdnTtOJYdE9Z7bBKkqQ=
+X-Google-Smtp-Source: APXvYqxJY1/JTwXCBVlvZOhBaGkGf3lTvVUDTMxkwk/SkY+eUWJUVCiUACEw/yHOB7L1pvXkzhk3dQ==
+X-Received: by 2002:a2e:858b:: with SMTP id b11mr627815lji.159.1561117995787;
+        Fri, 21 Jun 2019 04:53:15 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 ([158.75.2.128])
+        by smtp.gmail.com with ESMTPSA id i1sm349712lfc.86.2019.06.21.04.53.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 21 Jun 2019 04:53:14 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, git@jeffhostetler.com
+Subject: Re: [RFC PATCH 3/3] trace2: add a schema validator for trace2 events
+References: <cover.1560295286.git.steadmon@google.com>
+        <7475c6220895d96cdc7d25d6edea70e2f978526b.1560295286.git.steadmon@google.com>
+        <87v9xb7x0q.fsf@evledraar.gmail.com>
+        <20190612162341.GA42943@google.com>
+Date:   Fri, 21 Jun 2019 13:53:12 +0200
+In-Reply-To: <20190612162341.GA42943@google.com> (Josh Steadmon's message of
+        "Wed, 12 Jun 2019 09:23:41 -0700")
+Message-ID: <86y31vxihj.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-References: <20190620083026.14524-1-chriscool@tuxfamily.org> <xmqq36k4m12g.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36k4m12g.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 21 Jun 2019 12:47:48 +0200
-Message-ID: <CAP8UFD0HsD+q2Srd7iUkPhXMHzUN=g0he3EHGd0m3n_TDxuZ1w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add OBJECT_INFO_NO_FETCH_IF_MISSING flag
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 20, 2019 at 10:52 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > In a review[1] of my "many promisor remotes" patch series[2] and in
-> > the following thread, it was suggested that a flag should be passed to
-> > tell oid_object_info_extended() that it should not fetch objects from
-> > promisor remotes if they are missing, instead of using the ugly
-> > fetch_if_missing global.
-> >
-> > It looks like the OBJECT_INFO_FOR_PREFETCH flag already exists but
-> > unfortunately conflates 2 separate things.
-> >
-> > This patch series introduces OBJECT_INFO_NO_FETCH_IF_MISSING to
-> > disambiguate the different meanings and then uses it instead of
-> > OBJECT_INFO_FOR_PREFETCH where it makes sense.
-> >
-> > 1: https://public-inbox.org/git/b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com/
-> > 2: https://public-inbox.org/git/20190409161116.30256-1-chriscool@tuxfamily.org/
->
-> What commit did you base these two patches on?
+Josh Steadmon <steadmon@google.com> writes:
+> On 2019.06.12 15:28, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:=20
+>> On Wed, Jun 12 2019, Josh Steadmon wrote:
+>>=20
+>>> trace_schema_validator can be used to verify that trace2 event output
+>>> conforms to the expectations set by the API documentation and codified
+>>> in event_schema.json (or strict_schema.json). This allows us to build a
+>>> regression test to verify that trace2 output does not change
+>>> unexpectedly.
+>>=20
+>> Does this actually work for you? As seen in my code at
+>> https://public-inbox.org/git/87zhnuwdkp.fsf@evledraar.gmail.com/ our
+>> test suite emits various lines of JSON that aren't even validly encoded,
+>> so I can't imagine we're passing any sort of proper parser validatior,
+>> let alone a schema validator.
+[...]
+> The problem with the existing validators is that they expect each file to=
+ be a
+> complete JSON entity, whereas the trace output is one object per line. Yo=
+u can
+> of course loop over the lines in a shell script, but in my testing this a=
+pproach
+> took multiple hours on the full test suite trace output, vs. 15 minutes f=
+or the
+> implementation in this patch.
 
-They were based on master at v2.22.0 when I worked on them, but I
-didn't send them right away. And I didn't rebase them before I later
-sent them.
+Isn't this JSON-Lines (http://jsonlines.org/), also known as
+Line-delimited JSON (LDJSON), newline-delimited JSON (NDJSON) format?
+
+Best,
+--
+Jakub Nar=C4=99bski
