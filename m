@@ -2,97 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 257BB1F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 22:24:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEFDA1F4B6
+	for <e@80x24.org>; Fri, 21 Jun 2019 22:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbfFUWY1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 18:24:27 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:55134 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726017AbfFUWY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 18:24:27 -0400
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jun 2019 18:24:26 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-        by smtp with ESMTP
-        id eRpyhHOjwljKgeRpzhw2Hp; Fri, 21 Jun 2019 23:16:54 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=ermhMbhX c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=8nJEP1OIZ-IA:10 a=dq6fvYVFJ5YA:10
- a=5rxgeBVgAAAA:8 a=Ew9TdX-QAAAA:8 a=x1ibdp7xoucimdHk3yUA:9 a=wPNLvfGTeEIA:10
- a=PwKx63F5tFurRwaNxrlG:22 a=obabQ9O6v7JZJTLIbnk7:22
-Received: from seabee by hashpling.plus.com with local (Exim 4.89)
-        (envelope-from <seabee@hashpling.org>)
-        id 1heRpy-0005t7-4r; Fri, 21 Jun 2019 23:16:50 +0100
-Date:   Fri, 21 Jun 2019 23:16:50 +0100
-From:   CB Bailey <cb@hashpling.org>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Deadname rewriting
-Message-ID: <20190621221650.hoet5juwjhjcw5mh@hashpling.org>
-References: <CABURp0poUjSBTTFUXP8dAmJ=37qvpe64=o+t_+mHOiK9Cv+=kg@mail.gmail.com>
- <87sgsb8dmx.fsf@evledraar.gmail.com>
- <CABURp0p2Z=qD2gF59AHBLaRn9iiTOeJyNXYsQDNk-_KEC4uSGg@mail.gmail.com>
- <877e9e8vxt.fsf@evledraar.gmail.com>
+        id S1726099AbfFUWbK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 18:31:10 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:37174 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726018AbfFUWbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 18:31:10 -0400
+Received: by mail-oi1-f196.google.com with SMTP id t76so5778886oih.4
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 15:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TiNwCZJflNYZRi+NOnd+vhCjmfMO8p8eO9bw5FUSS+I=;
+        b=vQztBb3+vfemT/uRBiJ2ujRU4nQVZ+/H21OlwQSVS0LSDXTVATc8e20Tvn5fmLhM6D
+         IKdd6PWdV5nLZHFhDm/7FK0e+jND9Xa4ZiexK8tK8d6uWL8AllppIyxrNxDf2FgDXr75
+         jRf/UrMCIVRxOeRQlRhYY9YdiEnQyVid0AwLfu/kiIelCkp4T2Ni/XAjQ/elEFwpScSN
+         Tr9hjWpCDO+E930xCdTD+ttGcrglP3I3I1tEG/FHQuJh3E0CX34xGkbmbYof6cF9O0J9
+         X2NgcSrqF4ub8bkeYe+DYT1Ov7uv34K6nr38lXnR/8Vfseo7MxC0xrPkMaJWo1KD/Gxk
+         JV/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TiNwCZJflNYZRi+NOnd+vhCjmfMO8p8eO9bw5FUSS+I=;
+        b=mlb1VTC/SI6vj4wR3Ai+x5rXuKz0SegfngPJmOuvBYYgpZRiErZ3YOMZeRGI9sBKKG
+         xwqwz4N1gCrXhDtlOrgmCkOcnvTSWaH1mW+bxXHT6+GokkCgDx3Fjs/Bxegp9UEGn/u/
+         vBaNOpdmtdDsRb5LlpwZxOpuJ1w81rhYq0ZEXVWqpqJ/Ta6Hi+ll2O7sZiHb1zLWVY7S
+         tBkCMPpZJ+9ZciaH+PBRv7S9X7h8FIhow09wOKiENBedf4duqtjuLv6I8H91X7xHspyy
+         YZ0+Zs/xszkLrNTQLuo9axq1tmnePZf4ho0jywAmDAD25MkuEUt4m8uXQamPt67tl8rH
+         qxNQ==
+X-Gm-Message-State: APjAAAUiFTzNRyZB/WgBtl+IDQ8siliU5VPSsaYBYGtTtnZYGAMCGen2
+        0HvU5UpL9Xb1RJLFufT5v2yVMB4r1vc=
+X-Google-Smtp-Source: APXvYqwU/tOfvpDPmgASOlvRwMlIeBCSvP///4NKH1yYzJhxOtRDQW7+9cK96zDAvLeLCBrFXa65sA==
+X-Received: by 2002:a05:6808:49a:: with SMTP id z26mr4382530oid.177.1561156269542;
+        Fri, 21 Jun 2019 15:31:09 -0700 (PDT)
+Received: from localhost (200-52-42-156.reservada.static.axtel.net. [200.52.42.156])
+        by smtp.gmail.com with ESMTPSA id b25sm1415262oti.31.2019.06.21.15.31.08
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 21 Jun 2019 15:31:08 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/14] completion: a bunch of updates
+Date:   Fri, 21 Jun 2019 17:30:53 -0500
+Message-Id: <20190621223107.8022-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <877e9e8vxt.fsf@evledraar.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-CMAE-Envelope: MS4wfOHBZDV+iyO+kqWjynyu9IuwU/IC9jsuXMqJC7iOYCT4cB0akYA3mb4OHOUfEuVo7nTWxIZXAIEUOyshaBPpD9qqX/zd/fh0xm0CcfxDbHDDbpHgBJ9f
- h7iEAFB3VjdbAP77BNLfaPj+qJqISjGZJlE2gv8GcSz2khwF2dJIajtShFQ0jn35bxEPNjShkY7x+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 21, 2019 at 11:34:06PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >> This topic was discussed at the last git contributor summit (brought up
-> >> by CB Bailey) resulting in this patch, which I see didn't make it in &
-> >> needs to be resurrected again:
-> >> https://public-inbox.org/git/20181212171052.13415-1-cb@hashpling.org/
-> >
-> > Thanks for the link.
-> >
-> > I didn't know about config options for mailmap.file and log.mailmap
-> > before. These do make this option much more useful, especially when we
-> > can insert default settings for them into /etc/gitconfig across the
-> > company.
-> 
-> Right, and to the extent that we don't --use-mailmap by default I think
-> that's mainly because nobody's cared enough to advocate for it. I think
-> it would be a sensible default.
+Hi,
 
-That was this patch:
+Here's another try at completion fixes, cleanups, and more tests. Some
+of these have already been sent.
 
-https://public-inbox.org/git/20181213120940.26477-1-cb@hashpling.org/
+Felipe Contreras (14):
+  completion: zsh: fix __gitcomp_direct()
+  completion: zsh: fix for directories with spaces
+  completion: remove zsh hack
+  completion: zsh: improve main function selection
+  completion: prompt: fix color for Zsh
+  completion: bash: cleanup cygwin check
+  completion: zsh: update installation instructions
+  completion: bash: remove old compat wrappers
+  completion: bash: remove zsh wrapper
+  completion: zsh: trivial cleanups
+  test: completion: tests for __gitcomp regression
+  test: completion: use global config
+  completion: add default options
+  completion: add default merge strategies
 
-There were no objections so I was going to re-propose it but I haven't
-got around to this for a number of reasons, many of which are not Git
-related. Ideally, I wanted to fix all of the known issues with mailmap
-such as some behaviors of shortlog fixed with the shortlog patch above.
+ contrib/completion/git-completion.bash | 202 +++++++++++++------------
+ contrib/completion/git-completion.zsh  |  53 +++----
+ contrib/completion/git-prompt.sh       |  10 +-
+ t/t9902-completion.sh                  |  37 +++--
+ 4 files changed, 161 insertions(+), 141 deletions(-)
 
-I also noticed some more artifacts that I would like to be fixed. In
-particular the RFC 822 style "trailers" should be rewritten by default.
+-- 
+2.22.0
 
-Having something like this pop up is not likely to be acceptable in a
-project which uses trailers:
-
-commit abcd...
-Author: Bob <bob@...>
-
-    important commit message
-
-    Signed-off-by: Alice <alice@...?
-
-Obviously it's virtually impossible to account for everything such as
-someone referencing Bob by their deadname in the free text body of a
-historical commit.
-
-CB
