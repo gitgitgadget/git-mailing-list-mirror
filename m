@@ -2,74 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0F691F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 19:00:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93A0B1F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 19:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726215AbfFUTAS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 15:00:18 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36132 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbfFUTAS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 15:00:18 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n4so6354332wrs.3
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 12:00:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=F8kgP25lEB9LRZXMFEeDFQ/+HGujz8LlGifwhkqpMd8=;
-        b=tQ5zLHRYg/QwBuzLA7X5Ua3SUbYxXwVt3X3ag9K9wmbXiJpSFcUnoVwE1s+bj2heN1
-         5puVxGEH55YmS+7cpfFFu/7sFF28ozt4EB0RMjwdO9ALYgREmqt1APQM3hjWrDU1Gf27
-         YjzVE90DckO2pfKFjIc2xhdFrYsQValXBaSyViBsIlfGGDw1IK/Txt1hCVUkcYd7o6cp
-         rhuPXgnmg3m0IhmxoWIB8dR2nfEm4bsSZWbsQdr3vcMfLd90d/Pj6cWesCm9q7GRLaJ0
-         WgPoY3z7dHwg4SFBWWLksF51tmnuJZdaCBBSD1fMCLqPzvRXemSvVVfdlDgnNpX7iYy8
-         Q1rw==
-X-Gm-Message-State: APjAAAXAxm6RGGsdGKb3mKIQekUNUvsTedKGviDkZhZi1AwnL8S4/MNC
-        WxW0wWRIobVX6qF8eO+lPniZeJXG0i22pVGQaWo=
-X-Google-Smtp-Source: APXvYqx5K19Ke5NDmvMdwOK7uKcq3x+f6vmgOjYa80P8Yiwg0dJQEjoGFICYJFf8q1oFdJrL1Fnucb2bOZxkj6MyBvU=
-X-Received: by 2002:adf:f101:: with SMTP id r1mr6511232wro.170.1561143616062;
- Fri, 21 Jun 2019 12:00:16 -0700 (PDT)
+        id S1726253AbfFUTJo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 15:09:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51311 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbfFUTJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 15:09:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 619236A187;
+        Fri, 21 Jun 2019 15:09:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zHBi25hqwhVwHs+d0+ruKC3o+M4=; b=azW4zv
+        b562PVcsup7dko9Kgdn4kPnhfT0A3yEqNWWDoLArgJqZ5zYxtV1BDTElhH5IsjtP
+        hSCLmeJeXvRCdiGue6cSF5yaJXUqhZgAKOq4ND1vr7qlRgqNF9zM6xa2/8EHbrbi
+        Jl+fgZJDCz2DaNa0GMfccjuUd9fBS1nxN/Kjw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IMtx++edNywfev4LSCBc7xi3GY7wOfSZ
+        +8uMb/FS3Cr1gqY75p817aQrvla8hclYuAa+FNMANWsqNvLvd2o3L2ghhxwbujxN
+        J9t0se+8GQd+Y/0qvHrCb1e7r1dX6maiPejKEwamf56QXWRsJR/55rJ2J89DeZhF
+        Y9E+DJaxv7I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 590716A185;
+        Fri, 21 Jun 2019 15:09:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3F3466A184;
+        Fri, 21 Jun 2019 15:09:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
+        phillip.wood123@gmail.com, jrnieder@gmail.com,
+        martin.agren@gmail.com
+Subject: Re: [GSoC][PATCH v6 0/5] Teach cherry-pick/revert to skip commits
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+        <20190621091800.17686-1-rohit.ashiwal265@gmail.com>
+Date:   Fri, 21 Jun 2019 12:09:37 -0700
+In-Reply-To: <20190621091800.17686-1-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Fri, 21 Jun 2019 14:47:55 +0530")
+Message-ID: <xmqqd0j6kb66.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190619221315.7343-1-chriscool@tuxfamily.org>
- <20190620212922.GB87385@google.com> <CAP8UFD1KRq9gUJQbDP9d3xewS9F_9wHnt463Qt7UXoi7VdmOJg@mail.gmail.com>
- <CAPig+cQh0MC9JQPMkxhDKFzzCwRTC-_rVBR7RnzcP3SM_kn_vA@mail.gmail.com> <xmqqmuiakgaq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmuiakgaq.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Jun 2019 15:00:05 -0400
-Message-ID: <CAPig+cQJRwfEnsPwY=Cwwy2zPU+=rd+5XJckh7=iEjsb2h1A7g@mail.gmail.com>
-Subject: Re: [PATCH] doc: improve usage string in MyFirstContribution
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1DFDED4C-9458-11E9-97C0-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 21, 2019 at 1:19 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Fri, Jun 21, 2019 at 6:43 AM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> >> On Thu, Jun 20, 2019 at 11:29 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> >> > It doesn't require 1 or more args - you can run it with no args. So it
-> >> > might be better suited to state the args as optional:
-> >> >
-> >> >   'git psuh [arg]...'
-> >>
-> >> Yeah sure, I will will resend soon with such changes.
-> >
-> > More correct would be "git psuh [<arg>]".
->
-> I think this takes 0 or more, not 0 or 1, so "git psuh [<arg>...]",
-> no?
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-I hadn't read the tutorial, but looking at it now, I see that it
-indeed takes zero or more, so "git psuh [<arg>...]" would be best.
+> I've covered the advice message behind `advice_resolve_conflict` variable and
+> changed the order of error and advice to match that of 1/5.
+
+I think the updated text reads much better, i.e. taking from your
+range-diff:
+
+>      +	cat >expect <<-EOF &&
+>     ++	error: there is nothing to skip
+>      +	hint: have you committed already?
+>      +	hint: try "git cherry-pick --continue"
+>     -+	error: there is nothing to skip
+>      +	fatal: cherry-pick failed
+>      +	EOF
+
+we say "why we failed" upfront with "error", and then for those who
+would need more clues, we give "how you might want to proceed" as an
+additionao "hint".  That looks more logical, besides being more
+consistent with how advice messages are given in other codepaths.
+
+> I believe that we
+> don't have any advice variable appropriate for advice in 1/5.
+
+If there is nothing, perhaps you would need to invent one.  Perhaps
+"advice_sequencer_in_use" or something?
+
+Other than that, looks quite good.  Will (re-)queue.
+
