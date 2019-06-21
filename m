@@ -2,147 +2,290 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B001F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 14:34:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 584071F461
+	for <e@80x24.org>; Fri, 21 Jun 2019 14:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726437AbfFUOeF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 10:34:05 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58471 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726415AbfFUOeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 10:34:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561127628;
-        bh=BQTpriFiXmQSI84J3sZj9oaPLe4o7HK9ULkRWMKKShA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ux//6juDA7+STxy06Um0n6bZQ/rszVJ2POV4xLMCukfgw6H6LWlPSbDfFRnDdm2FI
-         Cxxyx2gJGIdtqyg/oPNc/DnX2sgf4lpPpY4UaDbBnNF/QgRkKmmooF4OrnD7HkucfE
-         ouFJ+ywgVx48CNPPwDLpvnazPqnGAf/NVCoBh+Pk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmOLO-1iDwHG2tiE-00ZtEM; Fri, 21
- Jun 2019 16:33:48 +0200
-Date:   Fri, 21 Jun 2019 16:34:04 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/1] t0001: fix on case-insensitive filesystems
-In-Reply-To: <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906211632570.44@tvgsbejvaqbjf.bet>
-References: <pull.151.git.gitgitgadget@gmail.com> <pull.151.v2.git.gitgitgadget@gmail.com> <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726188AbfFUOpD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 10:45:03 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46640 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfFUOpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 10:45:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n4so6805979wrw.13;
+        Fri, 21 Jun 2019 07:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Hs5jMxH1qfI9XrhkDS3mG+g/lMuciQerbzkd/y0dumE=;
+        b=DDMiecOmc51/FZOpP5bE4oQthzjyVdWtY5f7Wc1yTI4FfwL3b7ramODW0HYE/8h1Ju
+         Jr9lq3VZWrbhZMYkW2VJFzPDjn8YHyDShJnQvGgAz4DtBZTEeEeXOJKeTbynycQQKtdW
+         qaLBBIwrp8r688mstge5x6C/M0xRxcQaxbw7ceiKcO3Z9o6eL8lvabD+wYvFawkU0y7U
+         Qg6bDimLYou35qewIC3v29Ga2PjgFrKBz4fgvAZP0q2aVpmhULgixUqvV5gs7bLGM/he
+         oGedlhq/x5sRHn3lFSwKdOYfQwZPwYYKjx+CPekwtLlWDnTEJcdQrNIbTQi+Rfzaudhl
+         xjMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Hs5jMxH1qfI9XrhkDS3mG+g/lMuciQerbzkd/y0dumE=;
+        b=eAfxJo7ApnXcx/m0V4DqcEdimL4NbnfsjNqV6RTb+jUGDs9oDZRM9OYhhTZJcDy92m
+         esD+v/QA5lCqH/r9W2P6ZaJInRuJ/se/PO+g60sPrgJ+1zk0t1ThWWJqg6CFyN2Rj+9X
+         1AoUHM0hVuO2iNzM1I/wKXGeiPYEdmdEuTY5iQOHebU1HbR+kv9ZqW625lbUhZqFV0/z
+         QnZgyM0V+tiwavZU4IupWug0kb+yaHid7vfSXxHaF7KNIVisw7Qc61117cXylUYMWH+f
+         gvPxhtevqKQ/9v6iVARZf1fMZGv07a4bE76VjyRF9xPq87m5m9RDcusvuv8XhVugsTad
+         tVRA==
+X-Gm-Message-State: APjAAAXEYJvvIAeHbrXxBV+m1eWg/78UlSc6AGLttlRgOtlp/lz3RCdB
+        2IJX2F9F9MRcNDb9JOsHs3BC/wjGofA=
+X-Google-Smtp-Source: APXvYqzjlZZ+/l+e7/a2gWk7FvhGbL5shM2ZbNQ6ZfMt2nhogNgaplgtbCJ9n9g9EEzZscE3RNmbgA==
+X-Received: by 2002:adf:dd89:: with SMTP id x9mr19668029wrl.7.1561128299240;
+        Fri, 21 Jun 2019 07:44:59 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v18sm3516159wrd.51.2019.06.21.07.44.57
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 21 Jun 2019 07:44:58 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Paolo Bonzini <pbonzini@redhat.com>,
+        Linux List Kernel Mailing <linux-kernel@vger.kernel.org>,
+        =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>,
+        KVM list <kvm@vger.kernel.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] push: make "HEAD:tags/my-tag" consistently push to a branch
+Date:   Fri, 21 Jun 2019 16:44:47 +0200
+Message-Id: <20190621144447.21769-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
+In-Reply-To: <20190526225445.21618-1-avarab@gmail.com>
+References: <20190526225445.21618-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WxZckyy45hPyIh3x5JrDmn6PZt1+3uvmYdlMye34LWc7P9Hy+Tn
- +MLv0B7ar5p5/sxfcvX69fxOrW6r6NGsLp1YUdn2GifNS8xGOUrHYDzr3kEuie768hJF1kD
- bDshV4NutL1ju+8fH30Wi9IrrLb6g1uBY1edoaYkyfjqRPAKvhMkuUrc/+oMiNgN9GiOHAc
- MRdNmvNHM6N4Hq7eiHuDw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IIFgNkMJ/oA=:xss1ed9a1pkuf1t52aniSZ
- th8FRuh+4vKA7hTTadesKt/m2FJAiWTXqM215G1Uo2jJfGvASvlKVkW4YLCSFO6Uxmto35POQ
- eNxSJepHvVCPNceb2MN5Y+9PiRGTHlmw6+xhpodOCaMXg75/sVfSlmJqcRZsD4IiZo6GKb2v6
- 772/h7e1ixiTnle5dj03wQ0Ea6B+4Xfy+NqZ1IHE56kgPZt/Pta8kKeMMbKj4ZeA1UqRlDncV
- fw3aBz1eUmkPwQ9NoncFu5aGcieqESu4Faz2g7kv+HPYzTkQkehp8OMkrMIaHAPj0d3t/08jj
- aJXS8fmlT6TDaDsznCtldbCFsG1SVgRRSNtsdvzk+AJ+8H+wSJDGoTGX7Fiy191/8rlYAi3P/
- jf3Dr47sdI/Z1uNAfwGy8/lLlXopgjWKpthXj7XxigNeKnBh7b5yTYF2CBvIrCRcJ8VkhAF2t
- FJLf/vQoBI4I10t/pJ0hxSUmLwukrqfMBWGBntIiqA+FYEFF6EJrQyTtBF0YOEHp1SWnRDttb
- DIOwAWtHS5rnlMyhnSjDt+/TV2GyUgz9mDftJccCzpk8TcjqGsFiX9e4u3mRTwTHG/r1XJLRx
- qlmKhGLTkOEsAySTlDP+I2xgUT4doccyLJxpzEj+THKtT/lembLsZz4AdiAEVaAyLTDWrAng/
- 6ifvRDKd7OfEurYnZPIlHkBIN15IEgPNcvsK5ythG+M/msBFiMYhfVKNU1NaZ7F/bJkEWF3KS
- +JIRrNN47bpptz/gddclb18JywswSJokfQ7Q6tD8ofINIoMQiECJEta/xd8njiMn99hqPSePF
- cbfjXYmIhEgwy/tlB/OV8OY0BB2eJh4fOQ973bCPgN5wqIfxMAmL7vQ9aUOJ7avtc7VV+YgJy
- I8Y8R68PDTRt3Q9SPxuSzwVTJl6ZARGgQWq/O6yTHQ4+Onya2X++W762caKgBdC4icpg69bfJ
- akd6xdNRt5swbUrc+qiVcQZEq+uF78cWJfAJdM/SYQMXFZ0d7wjtL
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Re-sending, as the Git mailing list seems to have decided to silently
-drop this patch, I cannot see it on public-inbox.org, at least]
+When a refspec like "HEAD:tags/my-tag" is pushed where "HEAD" is a
+branch, we'll push a *branch* that'll be located at
+"refs/heads/tags/my-tag". This is part of the rather straightforward
+rules I documented in 2219c09e23 ("push doc: document the DWYM
+behavior pushing to unqualified <dst>", 2018-11-13).
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+However, if there exists a "refs/tags/my-tag" on the remote the
+count_refspec_match() logic will, as a result of calling
+refname_match(), match partially-qualified RHS of the refspec
+"refs/tags/my-tag", because it's in a loop where it tries to match
+"tags/my-tag" to "refs/tags/my-tag', then "refs/tags/tags/my-tag" etc.
 
-On a case-insensitive filesystem, such as HFS+ or NTFS, it is possible
-that the idea Bash has of the current directory differs in case from
-what Git thinks it is. That's totally okay, though, and we should not
-expect otherwise.
+This resulted in a case[1] where someone on LKML did:
 
-On Windows, for example, when you call
+    git push kvm +HEAD:tags/for-linus
 
-	cd C:\GIT-SDK-64
+Which would have created a new "refs/heads/tags/for-linus" branch in
+their "kvm" repository. But since they happened to have an existing
+"refs/tags/for-linus" reference we pushed there instead, and replaced
+an annotated tag with a lightweight tag.
 
-in a PowerShell and there exists a directory called `C:\git-sdk-64`, the
-current directory will be reported in all upper-case. Even in a Bash
-that you might call from that PowerShell. Git, however, will have
-normalized this via `GetFinalPathByHandle()`, and the expectation in
-t0001 that the recorded gitdir will match what `pwd` says will be
-violated.
+We do want a RHS ref like "master" to match "refs/heads/master", but
+it's confusing and dangerous that the DWYM behavior for matching
+partial RHS refspecs acts differently when the start of the RHS
+happens to be a second-level namespace under "refs/" namespace like
+"tags".
 
-Let's address this by forcing the comparison to be case-insensitive when
-`core.ignoreCase` is `true`.
+Now we'll print out the following advice when this happens, and act
+differently as described therein:
 
-Reported by Jameson Miller.
+    hint: The <dst> part of the refspec matched both of:
+    hint:
+    hint:   1. tags/my-tag -> refs/tags/my-tag
+    hint:   2. tags/my-tag -> refs/heads/tags/my-tag
+    hint:
+    hint: Earlier versions of git would have picked (1) as the RHS starts
+    hint: with a second-level ref prefix which could be fully-qualified by
+    hint: adding 'refs/' in front of it. We now pick (2) which uses the prefix
+    hint: inferred from the <src> part of the refspec.
+    hint:
+    hint: See the "<refspec>..." rules  discussed in 'git help push'.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- t/t0001-init.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+An earlier version of this patch[2] used the much more heavy-handed
+approach of changing this logic in refname_match(). As shown from the
+tests that patch needed to modify that results in changes that are
+overzealous for fixing this push-specific issue.
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 42a263cada..68f713884f 100755
-=2D-- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -307,10 +307,22 @@ test_expect_success 'init prefers command line to GI=
-T_DIR' '
- 	test_path_is_missing otherdir/refs
- '
+The right place to fix this is in match_explicit(). There we can see
+if we have both a DWYM match and a match based on the prefix of the
+LHS of the refspec, in those cases the match based on the LHS's ref
+prefix should win.
 
-+downcase_on_case_insensitive_fs () {
-+	test true =3D "$(git config --get --type=3Dbool core.ignorecase)" ||
-+	return 0
+1. https://lore.kernel.org/lkml/2d55fd2a-afbf-1b7c-ca82-8bffaa18e0d0@redhat.com/
+2. https://public-inbox.org/git/20190526225445.21618-1-avarab@gmail.com/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Now that the 2.22.0 release is out I cleaned this up into a more
+sensible patch.
+
+ Documentation/config/advice.txt |  7 +++++++
+ Documentation/git-push.txt      | 13 +++++++++++++
+ advice.c                        |  2 ++
+ advice.h                        |  1 +
+ remote.c                        | 23 ++++++++++++++++++++++-
+ t/t5505-remote.sh               | 18 ++++++++++++++++++
+ 6 files changed, 63 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index ec4f6ae658..36cb3db63a 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -37,6 +37,13 @@ advice.*::
+ 		we can still suggest that the user push to either
+ 		refs/heads/* or refs/tags/* based on the type of the
+ 		source object.
++	pushPartialAmbigiousName::
++		Shown when linkgit:git-push[1] is given a refspec
++		where the <src> in earlier versions of Git would have
++		matched a <dst> on the remote based on its existence
++		over appending a prefix based on the type of the
++		<src>. See the "<refspec>..." documentation in
++		linkgit:git-push[1] for details.
+ 	statusHints::
+ 		Show directions on how to proceed from the current
+ 		state in the output of linkgit:git-status[1], in
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 6a8a0d958b..5c46ef5e59 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -84,6 +84,19 @@ is ambiguous.
+ 
+ * If <src> resolves to a ref starting with refs/heads/ or refs/tags/,
+   then prepend that to <dst>.
+++
++Versions of Git before 2.23.0 would override this rule and match
++e.g. `HEAD:tags/mark` to either `refs/tags/mark` or `refs/tags/mark`
++depending on, respectively, if `refs/tags/mark` existed or not on the
++remote.
+++
++We'll now consistently pick `refs/heads/tags/mark` based on this rule
++and so that we're not so eager in guessing the <dst> on the remote
++that we'll pick a different <dst> based on what refs exist there
++already than we otherwise would have. This exception guards for cases
++where the match would be different due to a subsequent
++"refs/{tags,heads,remotes}/" matching rule". than a plain "refs/"
++prefix match.
+ 
+ * Other ambiguity resolutions might be added in the future, but for
+   now any other cases will error out with an error indicating what we
+diff --git a/advice.c b/advice.c
+index ce5f374ecd..c9217834e2 100644
+--- a/advice.c
++++ b/advice.c
+@@ -10,6 +10,7 @@ int advice_push_already_exists = 1;
+ int advice_push_fetch_first = 1;
+ int advice_push_needs_force = 1;
+ int advice_push_unqualified_ref_name = 1;
++int advice_partial_ambiguous_ref_name = 1;
+ int advice_status_hints = 1;
+ int advice_status_u_option = 1;
+ int advice_commit_before_merge = 1;
+@@ -66,6 +67,7 @@ static struct {
+ 	{ "pushFetchFirst", &advice_push_fetch_first },
+ 	{ "pushNeedsForce", &advice_push_needs_force },
+ 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
++	{ "pushPartialAmbigiousName", &advice_partial_ambiguous_ref_name },
+ 	{ "statusHints", &advice_status_hints },
+ 	{ "statusUoption", &advice_status_u_option },
+ 	{ "commitBeforeMerge", &advice_commit_before_merge },
+diff --git a/advice.h b/advice.h
+index e50f02cdfe..027ec396cf 100644
+--- a/advice.h
++++ b/advice.h
+@@ -10,6 +10,7 @@ extern int advice_push_already_exists;
+ extern int advice_push_fetch_first;
+ extern int advice_push_needs_force;
+ extern int advice_push_unqualified_ref_name;
++extern int advice_partial_ambiguous_ref_name;
+ extern int advice_status_hints;
+ extern int advice_status_u_option;
+ extern int advice_commit_before_merge;
+diff --git a/remote.c b/remote.c
+index e50f7602ed..be226fac11 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1066,7 +1066,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 			  struct ref ***dst_tail,
+ 			  struct refspec_item *rs)
+ {
+-	struct ref *matched_src, *matched_dst;
++	struct ref *matched_src, *matched_dst, *tmp;
+ 	int allocated_src;
+ 
+ 	const char *dst_value = rs->dst;
+@@ -1094,6 +1094,27 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 
+ 	switch (count_refspec_match(dst_value, dst, &matched_dst)) {
+ 	case 1:
++		if ((starts_with(dst_value, "tags/") ||
++		     starts_with(dst_value, "heads/") ||
++		     starts_with(dst_value, "remotes/")) &&
++		    (dst_guess = guess_ref(dst_value, matched_src))) {
++			tmp = make_linked_ref(dst_guess, dst_tail);
++			if (advice_partial_ambiguous_ref_name)
++				advise(_("The <dst> part of the refspec matched both of:\n"
++					 "\n"
++					 "	1. %1$s -> %2$s\n"
++					 "	2. %1$s -> %3$s\n"
++					 "\n"
++					 "Earlier versions of git would have picked (1) as the RHS starts\n"
++					 "with a second-level ref prefix which could be fully-qualified by\n"
++					 "adding 'refs/' in front of it. We now pick (2) which uses the prefix\n"
++					 "inferred from the <src> part of the refspec.\n"
++					 "\n"
++					 "See the \"<refspec>...\" rules  discussed in 'git help push'.\n"),
++					dst_value, matched_dst->name, tmp->name);
++			matched_dst = tmp;
++		}
 +
-+	for f
-+	do
-+		tr A-Z a-z <"$f" >"$f".downcased &&
-+		mv -f "$f".downcased "$f" || return 1
-+	done
-+}
+ 		break;
+ 	case 0:
+ 		if (starts_with(dst_value, "refs/")) {
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 883b32efa0..4d54f90ae3 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1277,4 +1277,22 @@ test_expect_success 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and
+ 	)
+ '
+ 
++test_expect_success 'HEAD:tags/A and HEAD:tags/B should not be different depending on if refs/tags/[AB] exists or not' '
++	git clone "file://$PWD/two" tags-match &&
++	(
++		cd tags-match &&
++		test_commit A &&
++		git rev-parse HEAD >expected &&
 +
- test_expect_success 'init with separate gitdir' '
- 	rm -rf newdir &&
- 	git init --separate-git-dir realgitdir newdir &&
- 	echo "gitdir: $(pwd)/realgitdir" >expected &&
-+	downcase_on_case_insensitive_fs expected newdir/.git &&
- 	test_cmp expected newdir/.git &&
- 	test_path_is_dir realgitdir/refs
- '
-@@ -365,6 +377,7 @@ test_expect_success 're-init to update git link' '
- 	git init --separate-git-dir ../surrealgitdir
- 	) &&
- 	echo "gitdir: $(pwd)/surrealgitdir" >expected &&
-+	downcase_on_case_insensitive_fs expected newdir/.git &&
- 	test_cmp expected newdir/.git &&
- 	test_path_is_dir surrealgitdir/refs &&
- 	test_path_is_missing realgitdir/refs
-@@ -378,6 +391,7 @@ test_expect_success 're-init to move gitdir' '
- 	git init --separate-git-dir ../realgitdir
- 	) &&
- 	echo "gitdir: $(pwd)/realgitdir" >expected &&
-+	downcase_on_case_insensitive_fs expected newdir/.git &&
- 	test_cmp expected newdir/.git &&
- 	test_path_is_dir realgitdir/refs
- '
-=2D-
-gitgitgadget
++		git push origin HEAD:tags/my-not-a-tag &&
++		git -C ../two rev-parse refs/heads/tags/my-not-a-tag >actual &&
++		test_cmp expected actual &&
++
++		git push origin HEAD:tags/my-tag 2>advice &&
++		test_i18ngrep "hint: The <dst> part of the refspec matched both of" advice &&
++		git -C ../two rev-parse refs/heads/tags/my-tag >actual &&
++		test_cmp expected actual
++	)
++'
++
+ test_done
+-- 
+2.22.0.455.g172b71a6c5
 
