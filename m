@@ -2,65 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4FEA1F461
-	for <e@80x24.org>; Sat, 22 Jun 2019 06:11:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CE441F461
+	for <e@80x24.org>; Sat, 22 Jun 2019 09:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbfFVGLG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Jun 2019 02:11:06 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45841 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726052AbfFVGLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jun 2019 02:11:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f9so8454702wre.12
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 23:11:04 -0700 (PDT)
+        id S1726296AbfFVJ2S (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Jun 2019 05:28:18 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:33250 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726187AbfFVJ2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jun 2019 05:28:18 -0400
+Received: by mail-lj1-f195.google.com with SMTP id h10so8134461ljg.0
+        for <git@vger.kernel.org>; Sat, 22 Jun 2019 02:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=pAu4zpP6Kw96JZgBbgh48lFQhwUTcVjfVvh4YTEc/64=;
-        b=jnM7HOXJ8V7xjF0VD7mnvKybcPkfjjqMgLVre2SihRFshh6DSPmmlTDNCfU7lOSYoM
-         tSBY1bgarmn4GJA935Uaz4hccqJ2ne68AZJw7V8CT2+EUWL9F0/foH371ZV28aIung0g
-         UUFxJscmW4VgL4ZuID8+gqpIP/KmDj0ND6X0Uek256Xhb6gXOlBuCqNL1ItpiqirAlEd
-         MgbMc1uQswTykP6SUwGqAJPLiSXMubLpjEHb69AqAWWmqenMTxyEungRDNGaT9B9d8EQ
-         HUnbSvgzZNFe/EcOGUAbT5pyvRqMmMG7HoXSnvtcDDGaG5eGC12I7j/aLz9+nB3JE31W
-         yLNA==
+        bh=YRAUyFc2+0JamQXcLQbRw1aBP7YZTT5rU3frot/PGwM=;
+        b=J+XpEbAb5+OQ9IvQf/p6kWg2yDT7Ys1B2Rr3r/22y9zp81wEyZqZ07vWKwMT8PDYRO
+         6Sir9x5caqB1Q+SkV44KAyJ/ZaiVsJ0bdSqnQOf1pJiGQLRNLChqsvS4pFAPC/vuvGYK
+         ePV3kzRjHDKmI8u8IRQ34/L5RfccWNtfewvmDs476fBGaxtkJBoqjJE8IP7VJZ/V1kz9
+         /V222eAaYjd18aOnF8ij+WL+b212cRlb9MamIO+i8gHEp4nMZCpXtM2Ylag8xMtsWhsH
+         d6xBWXnKZWn/6jOogOsS9g2bYJsMgYCgMX67p/5WCXp3tAn4ovof0nJHUVsRcj95tVaw
+         OgMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=pAu4zpP6Kw96JZgBbgh48lFQhwUTcVjfVvh4YTEc/64=;
-        b=uly9KC7yFddb0Igfsv90at396hvBEsvZWDgnQEMZRr183N++/ebPZSXOfp8VlZ7nTj
-         UNCgrmcTaGuswogn4v+EyLxBBFOWfqc/8Tn3krZTFgEa19n3EkprX7mfNOK3aGageadY
-         +oMWRmTIuxstVpEkJiQh2O7UWLHJ0ORm71MJGIlQpxAAZPg5OmB+LzBzr/GvQzxQHBIb
-         DviNzimt9b4W871bGzHgaFT4ZhVHgZcIx+vmuVevmjemUjGQoKBrgr8Wl+vB2+DpnjPA
-         B7HUdJkDVEQOgWv3aj2hyPirylJeyVSY4oP18PgmNyza0TegdlyBMpQ6h3zZJzEMqT3V
-         OKvg==
-X-Gm-Message-State: APjAAAX2WZFDjrWS0/byt5o8AMUkk7RCAN0l1MjPQ8ctvYywKjjSOzbc
-        7mIaSB7x5bH0fr478gJDPVWzEDuCADM=
-X-Google-Smtp-Source: APXvYqyFhmYQoAye6yOmGrB+Om9CKlzIPUST0sbVyqF2HisNftpECYOXl4iVR5rIc3DY/GJgo6RwAw==
-X-Received: by 2002:adf:e2c7:: with SMTP id d7mr43155806wrj.272.1561183863904;
-        Fri, 21 Jun 2019 23:11:03 -0700 (PDT)
-Received: from localhost.localdomain ([2a04:cec0:1162:99b7:a064:6e6d:d379:4b95])
-        by smtp.gmail.com with ESMTPSA id d201sm3678213wmd.19.2019.06.21.23.11.02
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 21 Jun 2019 23:11:03 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+        bh=YRAUyFc2+0JamQXcLQbRw1aBP7YZTT5rU3frot/PGwM=;
+        b=G8SDPOHzn1rQb8ligPrwTlKTlK/MCS70xoaCpNAr5Gcg/PvkgfT2Q69nyfOLMrUGJh
+         Cyh6C/obrjoQE41TWStkJnrXGf5+AhGdEZZuMK5uDbjihrr0MJVN6/Uukm3O78IhMA43
+         s4OabBtwMRAPZkOwx4BDtt+9JZx8vy++cPk4IA1itUfGzlF/vUV5NtyD8eh8kFmhtuXm
+         5Q7ZwP7VFvvTmt1imEstYlVJnnzSsM0dZJSIQeRfV0ZD4df4NarAPlRwu3ExSujP2js1
+         4eaHXvmunnP05XoCVsdX3lEcj4CCXaZMkkS1TAwGWt2e1DCVuRANbzh5TlsWY4cEGRHm
+         Anag==
+X-Gm-Message-State: APjAAAUEJTKdWmKQ7Xz/m0CcTSJaxG4mjuXofEcjYQEu8L+WmUi5MOP+
+        s0N5L41+vxy7GgvnBkJd8mw+z2ihb3kxTQ==
+X-Google-Smtp-Source: APXvYqyuBIhiE/piDiFWI7vBTLjsPThdbMrsOtvj8RDYkt+QBetZI3PQ9sB1hpzsI5VelTZmVU9UNg==
+X-Received: by 2002:a2e:5b5b:: with SMTP id p88mr64961675ljb.192.1561195695663;
+        Sat, 22 Jun 2019 02:28:15 -0700 (PDT)
+Received: from localhost.localdomain (host-176-36-198-58.la.net.ua. [176.36.198.58])
+        by smtp.gmail.com with ESMTPSA id d2sm710726lfh.1.2019.06.22.02.28.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 22 Jun 2019 02:28:15 -0700 (PDT)
+From:   Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] doc: improve usage string in MyFirstContribution
-Date:   Sat, 22 Jun 2019 08:10:35 +0200
-Message-Id: <20190622061035.1612-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.22.0.206.geb73f2e638
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Subject: [PATCH v2] l10n: localizable upload progress messages
+Date:   Sat, 22 Jun 2019 12:26:10 +0300
+Message-Id: <20190622092610.79911-2-dimitriy.ryazantcev@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -68,58 +69,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We implement a command called git-psuh which accept arguments, so let's
-show that it accepts arguments in the doc and the usage string.
-
-While at it, we need to prepare "a NULL-terminated array of usage strings",
-not just "a NULL-terminated usage string".
-
-Helped-by: Emily Shaffer <emilyshaffer@google.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
 ---
+ progress.c |  4 +++-
+ strbuf.c   | 16 ++++++++++++----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-The only change compared to he previous version is that "[<arg>...]" is
-used instead of "<arg>..." in the synopsis and help message as discussed
-with Emily, Eric and Junio.
-
- Documentation/MyFirstContribution.txt | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 895b7cfd4f..f8670379c0 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -428,7 +428,7 @@ git-psuh - Delight users' typo with a shy horse
- SYNOPSIS
- --------
- [verse]
--'git-psuh'
-+'git-psuh [<arg>...]'
+diff --git a/progress.c b/progress.c
+index a2e8cf64a8..61d8cf5d04 100644
+--- a/progress.c
++++ b/progress.c
+@@ -151,7 +151,9 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
+ 	strbuf_humanise_bytes(buf, total);
+ 	strbuf_addstr(buf, " | ");
+ 	strbuf_humanise_bytes(buf, rate * 1024);
+-	strbuf_addstr(buf, "/s");
++	strbuf_addstr(buf, "/");
++	/* TRANSLATORS: IEC 80000-13:2008, subclause 13-12.b: second */
++	strbuf_addstr(buf, _("s"));
+ }
  
- DESCRIPTION
- -----------
-@@ -491,14 +491,16 @@ Take a look at `Documentation/technical/api-parse-options.txt`. This is a handy
- tool for pulling out options you need to be able to handle, and it takes a
- usage string.
+ void display_throughput(struct progress *progress, uint64_t total)
+diff --git a/strbuf.c b/strbuf.c
+index 0e18b259ce..62144e755c 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -814,20 +814,28 @@ void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ {
+ 	if (bytes > 1 << 30) {
+-		strbuf_addf(buf, "%u.%2.2u GiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    (unsigned)(bytes >> 30),
+ 			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
++		/* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: gibi */
++		strbuf_addf(buf, _("Gi"));
+ 	} else if (bytes > 1 << 20) {
+ 		unsigned x = bytes + 5243;  /* for rounding */
+-		strbuf_addf(buf, "%u.%2.2u MiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
++		/* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: mebi */
++		strbuf_addf(buf, _("Mi"));
+ 	} else if (bytes > 1 << 10) {
+ 		unsigned x = bytes + 5;  /* for rounding */
+-		strbuf_addf(buf, "%u.%2.2u KiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
++		/* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: kibi */
++		strbuf_addf(buf, _("Ki"));
+ 	} else {
+-		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
++		strbuf_addf(buf, "%u ", (unsigned)bytes);
+ 	}
++	/* TRANSLATORS: ISO/IEC 80000-13:2008, subclause 13-9.c: byte */
++	strbuf_addf(buf, _("B"));
+ }
  
--In order to use it, we'll need to prepare a NULL-terminated usage string and a
--`builtin_psuh_options` array. Add a line to `#include "parse-options.h"`.
-+In order to use it, we'll need to prepare a NULL-terminated array of usage
-+strings and a `builtin_psuh_options` array.
- 
--At global scope, add your usage:
-+Add a line to `#include "parse-options.h"`.
-+
-+At global scope, add your array of usage strings:
- 
- ----
- static const char * const psuh_usage[] = {
--	N_("git psuh"),
-+	N_("git psuh [<arg>...]"),
- 	NULL,
- };
- ----
+ void strbuf_add_absolute_path(struct strbuf *sb, const char *path)
 -- 
-2.22.0.206.geb73f2e638
+2.22.0
 
