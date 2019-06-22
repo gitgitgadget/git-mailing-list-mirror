@@ -2,86 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 212FE1F461
-	for <e@80x24.org>; Sat, 22 Jun 2019 11:28:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 786CF1F461
+	for <e@80x24.org>; Sat, 22 Jun 2019 11:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726274AbfFVLYH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Jun 2019 07:24:07 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:24305 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbfFVLYG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jun 2019 07:24:06 -0400
-Received: from [192.168.1.22] ([89.243.184.39])
-        by smtp.talktalk.net with SMTP
-        id ee7nhKNKnWIpcee7ohNx4g; Sat, 22 Jun 2019 12:24:05 +0100
-X-Originating-IP: [89.243.184.39]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=3GZFt4OQGy0NQQxJwP7nlQ==:117
- a=3GZFt4OQGy0NQQxJwP7nlQ==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=fAO4vL-9AAAA:20 a=yMhMjlubAAAA:8 a=i26yTtmzlxz-QGRswo0A:9
- a=QEXdDO2ut3YA:10
-Subject: Re: windows: error cannot lock ref ... unable to create lock
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Anthony Sottile <asottile@umich.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <CA+dzEB=iOsfuZQ5Z8uXO+k6E3WczkLX64yWUpTm1NZBjdd47kg@mail.gmail.com>
- <CAPig+cTFfhBz+xiq6VAMNOW4OTvByHJ1g5oF=RTTh_buA+nUQA@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <98e1e1e5-c410-caf1-0e2f-9cb0cc6d7e94@iee.org>
-Date:   Sat, 22 Jun 2019 12:24:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+        id S1726307AbfFVLmm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Jun 2019 07:42:42 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:41614 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726138AbfFVLmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jun 2019 07:42:42 -0400
+Received: by mail-io1-f65.google.com with SMTP id w25so311531ioc.8
+        for <git@vger.kernel.org>; Sat, 22 Jun 2019 04:42:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=53sZIQwbOkYIw//ub5w5t6CG4vPj2EzFU6OTx1gwSuY=;
+        b=a8fQZctm5m9oOD7RWm61Apl8Zw+owk4P9m7Cn8rfVMfeW0m7YGaIZ9i6y7NRAmcjK/
+         Jq558RaobzG0BzDu1Z4IfIYlCX96hpf02h+VFbEFI/A42ItPYWe96oYXtZfcOd0DUbYc
+         7MoeM5NaetzeEFB19muCiAJP0sIxg2jQl2lJSGJAaenN9Vmsqu8UWgmYJerzkkXdriEt
+         L0TXhUte93JOcNbaqpJloFfHWD3LFxQk/99NlwxKBqTozlH/C77xnmT//cDIwI18Mlwi
+         A7Q0a48su9Do/F4TGPu9OV0kEm3ZhEXElPTdnepiV8KFzF5fTJeGxc/FVT7vwx84x7P6
+         o3tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=53sZIQwbOkYIw//ub5w5t6CG4vPj2EzFU6OTx1gwSuY=;
+        b=bLI8lcu0n4qnUkdZSRic9DjVbB0nE2ZledBsEr+zck7Ng8ZQICJvxmHoNd+emgnr5l
+         CVX7eQyM5mb4Hu5n16E0utyjLB3AIgmbUH7y57HBWoLwjWPugWdXJHQ92uB32e8FGvyc
+         atyywZVowVGJS3QsnIePd1UeA+tX/TBjzldfi/eg8nehE2misHL1IDKt44ujPYbALvFH
+         yqhiRc5UDYXNe+8+f6Y0GE9ZCASOcHMJFe0kjVeaPTuSX5+QZwe+J+9duuXPVqJs8qCF
+         O4/BUo619lEac8WUI1vIRr0sd3e+gX5Q2fV2hZQhgYvyVPISNoo6q5cduBa9Jy4dN0Y8
+         F8qQ==
+X-Gm-Message-State: APjAAAVLhRtMJCSmbkcTMsDE9vNFbfFO7frfth6IAOhZ5bakzLxR6SiY
+        q8w+8Kpw1GAzhfSurw8aOMTDVwRqfCi2fwS4KT4=
+X-Google-Smtp-Source: APXvYqx7ZBl1gO0nyutBXgEoYtvgs0ymfk+YtlL4nYJSwLahdB7iR3YqYCn0JdXUo2Vf179hY1XmFNW9t7T+Vn4f7X8=
+X-Received: by 2002:a6b:b497:: with SMTP id d145mr51222766iof.17.1561203761173;
+ Sat, 22 Jun 2019 04:42:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cTFfhBz+xiq6VAMNOW4OTvByHJ1g5oF=RTTh_buA+nUQA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfMbo60zGYGk7zDVYNtjKeH0a0JIPM2sMsmo0Qf0uggR1OELYmXUbK7/YBCNC46YSFc4qfT1pwAvGsAgDUrsm1RBGt72dowUk4bsOkzp701M6rwBmWzCG
- 0AdInGTd2S7aLmVknthwyvDzK42Ff7ztkaEjMEJ29GVYn3tT+5f0XNc+myaSWymIh4ib5wO9SxPE7VRfO7F2p/TTCZFybIXbRLg3qG9KgeR4+8/JsX9hcbTu
- v+6cahYAb05j9djm2oJj+9HkhFgM7uny2CK+YfzqVdE=
+References: <20190622093655.80092-2-dimitriy.ryazantcev@gmail.com>
+In-Reply-To: <20190622093655.80092-2-dimitriy.ryazantcev@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 22 Jun 2019 18:42:14 +0700
+Message-ID: <CACsJy8CPChOGSZVfXd6ioaXHWg_aFxNMzr2J=Zdm2RZXkO++Ew@mail.gmail.com>
+Subject: Re: [PATCH v3] l10n: localizable upload progress messages
+To:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/06/2019 18:01, Eric Sunshine wrote:
-> On Tue, Jun 18, 2019 at 12:39 PM Anthony Sottile <asottile@umich.edu> wrote:
->> + git fetch origin --tags
->> Unpacking objects: 100% (10/10), done.
->>  From https://github.com/asottile-archive/git-windows-branch-test
->>   * [new branch]      master     -> origin/master
->> error: cannot lock ref 'refs/remotes/origin/pr/aux': Unable to create
->> 'C:/Users/IEUser/x/x/.git/refs/remotes/origin/pr/aux.lock': No such
->> file or directory
->>   ! [new branch]      pr/aux     -> origin/pr/aux  (unable to update local ref)
-> AUX is a reserved[1] filename on Windows. Quoting from that source:
->
->      Do not use the following reserved names for the name of a file:
->      CON, PRN, AUX, NUL, COM1, COM2, COM3, COM4, COM5, COM6, COM7,
->      COM8, COM9, LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, and
->      LPT9. Also avoid these names followed immediately by an
->      extension...
->
-> The default Git "ref store" is filesystem-based, so a branch named
-> "aux" is problematic. Other ref store implementations would not be
-> subject to this limitation (though I'm not sure what the state of the
-> others is -- someone with more knowledge can probably answer that).
->
-> [1]: https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file#naming-conventions
-This sounds interesting. I thought (but I'm not certain) that Git for 
-Windows avoided creating files in the working tree with such problematic 
-names, so that a clone of a repo that contained a file "AUX" (any case, 
-any extension IIRC), would be bypassed with possibly a warning message.
+On Sat, Jun 22, 2019 at 4:37 PM Dimitriy Ryazantcev
+<dimitriy.ryazantcev@gmail.com> wrote:
+> diff --git a/strbuf.c b/strbuf.c
+> index 0e18b259ce..0a3ebc3749 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -814,20 +814,28 @@ void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+>  void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+>  {
+>         if (bytes > 1 << 30) {
+> -               strbuf_addf(buf, "%u.%2.2u GiB",
+> +               strbuf_addf(buf, "%u.%2.2u ",
+>                             (unsigned)(bytes >> 30),
+>                             (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+> +               /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: gibi */
+> +               strbuf_addstr(buf, _("Gi"));
 
-However this looks to be a slightly different case where a _branch_ 
-called "AUX" (lower cased) has been created within the clone, and it's a 
-problem not trapped. Maybe worth creating a proper issue on the 
-Git-for-Windows repo. Also cc'ing Dscho who may remember better than I.
---
-Philip
+It may be ISO standard, but GiB to me looks much easier to understand.
+What's the reason for changing GiB to Gi btw?
+
+>         } else if (bytes > 1 << 20) {
+>                 unsigned x = bytes + 5243;  /* for rounding */
+> -               strbuf_addf(buf, "%u.%2.2u MiB",
+> +               strbuf_addf(buf, "%u.%2.2u ",
+>                             x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
+> +               /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: mebi */
+> +               strbuf_addstr(buf, _("Mi"));
+>         } else if (bytes > 1 << 10) {
+>                 unsigned x = bytes + 5;  /* for rounding */
+> -               strbuf_addf(buf, "%u.%2.2u KiB",
+> +               strbuf_addf(buf, "%u.%2.2u ",
+>                             x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
+> +               /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: kibi */
+> +               strbuf_addstr(buf, _("Ki"));
+>         } else {
+> -               strbuf_addf(buf, "%u bytes", (unsigned)bytes);
+> +               strbuf_addf(buf, "%u ", (unsigned)bytes);
+>         }
+> +       /* TRANSLATORS: ISO/IEC 80000-13:2008, subclause 13-9.c: byte */
+> +       strbuf_addstr(buf, _("B"));
+>  }
+>
+>  void strbuf_add_absolute_path(struct strbuf *sb, const char *path)
+> --
+> 2.22.0
+>
+
+
+-- 
+Duy
