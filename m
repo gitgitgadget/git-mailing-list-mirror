@@ -8,97 +8,106 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1679C1F461
-	for <e@80x24.org>; Sat, 22 Jun 2019 03:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5514F1F4B6
+	for <e@80x24.org>; Sat, 22 Jun 2019 03:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726067AbfFVDCE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 23:02:04 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:32824 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726049AbfFVDCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jun 2019 23:02:03 -0400
-Received: by mail-io1-f66.google.com with SMTP id u13so493997iop.0
-        for <git@vger.kernel.org>; Fri, 21 Jun 2019 20:02:03 -0700 (PDT)
+        id S1726070AbfFVDKt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 23:10:49 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:45562 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726049AbfFVDKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 23:10:48 -0400
+Received: by mail-io1-f68.google.com with SMTP id e3so5692142ioc.12
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 20:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=dbwsnexVvS9GWvhMH8MvQ3ytg74H34A22XI7qVJwrnA=;
-        b=cgGEQwjZ6xRiwIt1sJnyXu9iSyjB4bu8CVAVqYUdDjuoSDmAzIJGCSv1t0P+QWXXHG
-         nZt5HfXkTrEE+IZp3gToTKXI92VupL5s66zNa3GeCDCzozNO8q/oTsTjWi+MOMKeBlem
-         zzdg6/oCSh5V/5JHHJHqpwkcC4CcxRz40JbnW+cy2iCrQnIgluy+bz7XPtrlkfl/Gjer
-         zTFV0gTZXF1AbW2wBrYSsRv+63L7kOpJHvvL/OqmmLrXiZrSCibIoBb3Z27wRlc6dShd
-         rfZ/sLPs65yMa8hpMqEmSRXjdy5Ef7mXgGswlpWFkiPOtTe/OjNBtcRunUzPvv0Tphol
-         s59g==
+        bh=sGkj0Rm4T1mAyHtc1pBHXwBGViO7OI2DxBV6aR+bLI8=;
+        b=CFz1V1ShDQM+6SwMOELH+1z5dMojdkBebP3NpMENcNWl33ptgBoOMVO46xE4UfV3MN
+         5Pu8SiK91uIvdUQJNtzm16IMKUke6ZwRp3SonjimAi/JRvL0yDLqlLO2mp+tMbsoixDK
+         6iunI2ojw4zXD3vKlRjU07MWfhhsBWn77LZ+rlYn+TXNy5mGqqg3Qi8vTrthWJDy4KxR
+         yn7Iv2BSGPvOtUApcUY15qlx0+tjw6ewmCSQZRnP3UBZSnWwC4d4TXKLnqW6y150uLtV
+         9RYIz1cWwynex8+nmkpS8h392puVvsxuqOqi6gIonQIznJX5qMYhi/nEKdUJ+PwuNItd
+         rnlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=dbwsnexVvS9GWvhMH8MvQ3ytg74H34A22XI7qVJwrnA=;
-        b=f34AKrQijl2U3XTcD6JpwTWtPm942cyURlmklZxJDirV0wvPALxL9zD5zH0cjWtyDO
-         Te/eK7LYpAyzRAxoJCyBCCQANKRqh6ACbRwDynk+JQzBuaMXCXOTy2lpgDENegC1M2MV
-         o0WXAHSw1zBLb7eO0OfpUjSS3wwdUHi2AFkHHAbZMyr+77SwZK/G/bkdc1Dx6VNhjy1u
-         kS0NZdnRNGxyTKpymddXiZeSJqreVgHTMqwmZDz4/lxAyjpnvVjTXucYsP6h1jft4i50
-         EXXGRoNyKFjeqHsprXOjKmsXF+zpUyMNZmIGRoPZfohIpuCrxq4VTW8sqBgV6/lThQJ8
-         3o2A==
-X-Gm-Message-State: APjAAAXkKqBJ7RNw4r3QdorW6MD5iX26JSNms/Z4R9lXoYj/Mty5K8Vi
-        iLb2aF3RPcDVb2IMvIUk2xR0SBvF7QtjdlRg1d8=
-X-Google-Smtp-Source: APXvYqwtQNRds9LomULOiy5G+enfMzY0qpkGtJ/BYuDyG0bb45+iCnsOdldzCSSnFatytt0Jc+WnCHMuf7GgCR1pS9o=
-X-Received: by 2002:a6b:7312:: with SMTP id e18mr2503087ioh.156.1561172522774;
- Fri, 21 Jun 2019 20:02:02 -0700 (PDT)
+        bh=sGkj0Rm4T1mAyHtc1pBHXwBGViO7OI2DxBV6aR+bLI8=;
+        b=qSqqCW2h6jIvKUH71m1Uf1zI4vsIfUiNCYYeXAM8bXKBkdOUEr8p2cD0YaW0BtrRpm
+         FYlLSHDoj5EKOCtGRF7EZ/rgH8PKx1pOhl+8ZLJ6BrS1xKooO+nwiUKW1PD16P/3zF64
+         lf+fxmQxExJ/e729TGctv3veXyonF/jOULUIwy2slDpg0L8l+Twew9BYWT0/+WViq7ec
+         kgNW8GvE66ce3gMyLTMV6VG+RuSDaQo/GV7r4tGETgjSPJOyoHQn1RnubKMbFiaRA9OV
+         W7Iakn0v+baA4Div21ansSq4OyMKI/0C1bgfXVUaE5Ay18bgUOZqr6mV7azr0V9Ef5iM
+         9B3g==
+X-Gm-Message-State: APjAAAVM1byhsL+G/mn/9u2fIxmi0kns36KMJLcXlK/Ob2wr8lBBfGpQ
+        6oMkB/F1rI+oqgCDImRoaJPn/umKpDP69LRMNstDcQ==
+X-Google-Smtp-Source: APXvYqzAlBWFkuVabUEOt81KWvW4nKokZbpVDw8VGK+lRNnfNOE0OQQmr/NvND+CoSiPslYzheehAaKYNluHp8a/nLU=
+X-Received: by 2002:a5d:8890:: with SMTP id d16mr9358238ioo.274.1561173047882;
+ Fri, 21 Jun 2019 20:10:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190621223107.8022-1-felipe.contreras@gmail.com> <20190621223107.8022-14-felipe.contreras@gmail.com>
-In-Reply-To: <20190621223107.8022-14-felipe.contreras@gmail.com>
+References: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com> <xmqq8stukarw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8stukarw.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 22 Jun 2019 10:01:36 +0700
-Message-ID: <CACsJy8AATA-7Z+HsA80NQ2j4Z9JeuSYXiBZLi=7FopzfLY1R+w@mail.gmail.com>
-Subject: Re: [PATCH 13/14] completion: add default options
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Sat, 22 Jun 2019 10:10:21 +0700
+Message-ID: <CACsJy8BF0RHgrw9A_6zj8hQk7s15LvCZDz_P7rxgRvGfRhLJZg@mail.gmail.com>
+Subject: Re: [PATCH] l10n: localizable upload progress messages
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 22, 2019 at 5:31 AM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+On Sat, Jun 22, 2019 at 2:18 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Versions of Git older than v2.17 don't know about
-> --git-completion-helper, so provide some defaults for them.
+> Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com> writes:
 >
-> Also, some commands fail if there's no Git repository available.
+> > Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+> > ---
+> >  progress.c | 3 ++-
+> >  strbuf.c   | 8 ++++----
+> >  2 files changed, 6 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/progress.c b/progress.c
+> > index a2e8cf64a8..3d47c06495 100644
+> > --- a/progress.c
+> > +++ b/progress.c
+> > @@ -151,7 +151,8 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
+> >       strbuf_humanise_bytes(buf, total);
+> >       strbuf_addstr(buf, " | ");
+> >       strbuf_humanise_bytes(buf, rate * 1024);
+> > -     strbuf_addstr(buf, "/s");
+> > +     /* TRANSLATORS: per second */
+> > +     strbuf_addstr(buf, _("/s"));
+> >  }
 >
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 97 +++++++++++++++++++++++++-
->  t/t9902-completion.sh                  |  4 +-
->  2 files changed, 98 insertions(+), 3 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index d3ee6c7dc2..922ba5f925 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -377,6 +377,100 @@ else
->         unset $(compgen -v __gitcomp_builtin_)
->  fi
->
-> +__gitcomp_builtin_add_default=" --dry-run --verbose --interactive --patch --edit --force --update --renormalize --intent-to-add --all --ignore-
-removal --refresh --ignore-errors --ignore-missing --chmod=
---no-dry-run -- --no-verbose --no-interactive --no-patch --no-edit
---no-force --no-update --no-renormalize --no-intent-to-add --no-all
---no-ignore-removal --no-refresh --no-ignore-errors
---no-ignore-missing --no-chmod"
+> Hpmh, if it is OK to assume that in all human languages it is OK to
+> express the reate as <number> followed by translated "per second",
+> without allowing the order from getting changed, then ...
 
-And who's going to keep these uptodate? If you do this, might as well
-delete --git-completion-helper
+Probably not (but I don't know any language that is not ok with this).
+I would just add strbuf_humanise_rate() that prints "GiB/s",
+"MiB/s"... Then we probably should print "bytes/second". This will
+print "bytes/s" which looks just weird.
 
-A more acceptable option might be regenerate git-completion.bash and
-run --git-completion-helper to generate these, or make
-git-completion.bash source a generated file. But that might need some
-more build infrastructure, and people who just one to copy the file
-might not like it.
+> >       if (bytes > 1 << 30) {
+> > -             strbuf_addf(buf, "%u.%2.2u GiB",
+> > +             strbuf_addf(buf, _("%u.%2.2u GiB"),
+> >                           (unsigned)(bytes >> 30),
+> >                           (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+>
+> wouldn't it make more sense to split GiB, MiB, KiB and "bytes" units
+> out of these messages, and ask only these unit names, without the
+> %u.%2.2u number formats, to get translated by the localization team?
+
+That assumes all languages will print the unit after the number. I
+guess that is ok and it helps share code if we add
+strbuf_humanise_rate() above because only the unit part changes.
 -- 
 Duy
