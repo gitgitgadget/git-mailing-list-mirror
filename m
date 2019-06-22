@@ -2,113 +2,286 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F111F461
-	for <e@80x24.org>; Fri, 21 Jun 2019 23:31:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6C071F461
+	for <e@80x24.org>; Sat, 22 Jun 2019 00:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726083AbfFUXbD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Jun 2019 19:31:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56160 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726045AbfFUXbD (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 Jun 2019 19:31:03 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:8174:fea0:25b6:f16a])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D645A60443;
-        Fri, 21 Jun 2019 23:31:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1561159861;
-        bh=3dpVu0W5vFjHamBRgcuwAm4/P3tCxJOF7xMK0u9ijf4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=q1Wm+dvfS5IwUxVgIxjHQ3vL6GlpwNOGReLznCgpbNJJt67hyd0ysy5V4ewCs7Zzg
-         fGksL7nGg5fBf9WuCyWnN0VCXZoafQTKb6dovwF3T7oZSQ5CyBsjU+lbvB32nUHcPb
-         6zcJz7Qg4Re6EY7FtH1l1A47b1z2485grr+nzA48pLI8TA37VnH6rONYRrbWzq39nK
-         03UOimAcNIPP/VZp58sNh+C++64rPBUzLpu8KTcz0LY6IH42Etr224oWIi1wafSPVP
-         U8rYsS5IXKeUfgmmi8+ICpN9EFfuBwzEiL+niSqE7Z60lk9tXpfulzGTuhvtZhS3Lk
-         JOeIp2RlTGo+avgpHHsTdz3voteY+PZoQ3cLI0WIe68wo23W/LbXFagRwy35Z1XCki
-         iwc8RXpKNNt03RmQi+cnhPNXUBJdyH1L4Y58uX4jkR5on0VyC/3iFDJnBtypJRJNU+
-         bUuYy5rRvLq/tJBiltm3F6n3ixI5WFm0KlhS6UmRvjqW54Hd1Uu
-Date:   Fri, 21 Jun 2019 23:30:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
-Message-ID: <20190621233055.GB965782@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-References: <20190619095858.30124-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/WwmFnJnmDyWGHa4"
-Content-Disposition: inline
-In-Reply-To: <20190619095858.30124-1-pclouds@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1726180AbfFVA0c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Jun 2019 20:26:32 -0400
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:49428 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbfFVA0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jun 2019 20:26:31 -0400
+Received: by mail-vk1-f202.google.com with SMTP id o202so3056007vko.16
+        for <git@vger.kernel.org>; Fri, 21 Jun 2019 17:26:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=syWJA7ivaybXCyir31+qK6yShExm4Rq6nF2cjz1r/Fs=;
+        b=vZ36E9J5Hw+sYqoJSQJe8IFrhwGnqhniJCDvQz7aUyVg+KgnKrbmouoZEpMKgLBiRe
+         g8Jdk5r2ZOsjkv65KiHkDuMEGwKpDMCdDPGFyjuACI0Wky5S6Az6tbDre0zUJrHCQupm
+         Xzpa3LWoPFAyKKP0BdoJRMHwWL3Q2RzxErEhltt3zWLRefKdlb75tRskEngAlIDrnLvX
+         dT4PLfP6Cze8T3+GtflNcOOkWkkXnGybHiKayBBsj4BFTtmqpWzF97rUbY6mAwSvS5bH
+         QlBbOY1dslgpA5YVchS5iFkZCTYlIA/gdhMxlb2hq0dhKOx4oUGSwCCCDtJz/2JUqO4I
+         ufHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=syWJA7ivaybXCyir31+qK6yShExm4Rq6nF2cjz1r/Fs=;
+        b=dz2CgiMCiKG9ZTzIuL53CZpnc2B7NSac9cHfoFIXXq8qv6Lp55nja6p2jI94Kpgm4V
+         prfMt8iZx3tIxGDQnN8RCOBpCAto8r4etiYBuuRbCqv9DvnzlOSdHtJtQ127t+np2EmB
+         DhPbSTQyVYKhEEgj+/gpArA0yZRqCGtokHhI1epTlhyytDHYAUY9t6ma+vGDXCQ3JKoy
+         JQeZ2n75NY8Z/CShfUBFhMtM6BWguINv26XO0lO/AchE6oXuqCOlGDhUGifwqiIkM2en
+         55J4RxrAqWW3BcMMhtt0dubm7OqKM9pW0iGE8eBdFQqbPI/xSCAY41PoezXyce1x9Uo5
+         qhFw==
+X-Gm-Message-State: APjAAAWdTC92DwHGu5+3dTHU7bgmkZEhpnIFEEivmpHSISgrX/F40WhV
+        mx5gkpA4vfyWsQlJG/tHV8cKjvkffSKdpQso4EI5
+X-Google-Smtp-Source: APXvYqwfd+O5BMMS0ErWUTTNcO5rVAyVhpU2IIgiPcH7+wli7zwGi0qsLhJBhM1EADr/JaQPPcFvFWfL8miIpAvxgUeh
+X-Received: by 2002:a1f:20f:: with SMTP id 15mr10674249vkc.15.1561163190082;
+ Fri, 21 Jun 2019 17:26:30 -0700 (PDT)
+Date:   Fri, 21 Jun 2019 17:26:26 -0700
+In-Reply-To: <47a2680875e6f68fbf1f2e5a5a2630d263cdf426.1560558910.git.matvore@google.com>
+Message-Id: <20190622002626.245441-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <47a2680875e6f68fbf1f2e5a5a2630d263cdf426.1560558910.git.matvore@google.com>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: Re: [PATCH v4 04/10] list-objects-filter: implement composite filters
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     matvore@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Allow combining filters such that only objects accepted by all filters
+> are shown. The motivation for this is to allow getting directory
+> listings without also fetching blobs. This can be done by combining
+> blob:none with tree:<depth>. There are massive repositories that have
+> larger-than-expected trees - even if you include only a single commit.
 
---/WwmFnJnmDyWGHa4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+First of all, patches 2 and 3 are straightforward and LGTM. On to patch
+4...
 
-On 2019-06-19 at 09:58:50, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> This is probably just my itch. Every time I have to do something with
-> the index, I need to add a little bit code here, a little bit there to
-> get a better "view" of the index.
->=20
-> This solves it for me. It allows me to see pretty much everything in the
-> index (except really low detail stuff like pathname compression). It's
-> readable by human, but also easy to parse if you need to do statistics
-> and stuff. You could even do a "diff" between two indexes.
->=20
-> I'm not really sure if anybody else finds this useful. Because if not,
-> I guess there's not much point trying to merge it to git.git just for a
-> single user. Maintaining off tree is still a pain for me, but I think
-> I can manage it.
+[snip]
 
-I'm generally in favor of this, but we need to document what this does
-when it encounters paths that are not valid UTF-8. (Ideally, the answer
-is, "die()", but I suspect the answer will be "silently produce invalid
-output".) Those can of course occur on Unix systems, but also on
-Windows, where unpaired surrogates can occur.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> The current usage requires passing the filter to rev-list in the
+> following form:
+> 
+> 	--filter=<FILTER1> --filter=<FILTER2> ...
+> 
+> Such usage is currently an error, so giving it a meaning is backwards-
+> compatible.
+> 
+> The URL-encoding scheme is being introduced before the repeated flag
+> logic, and the user-facing documentation for URL-encoding is being
+> withheld until the repeated flag feature is implemented. The
+> URL-encoding is in general not meant to be used directly by the user,
+> and it is better to describe the URL-encoding feature in terms of the
+> repeated flag.
 
---/WwmFnJnmDyWGHa4
-Content-Type: application/pgp-signature; name="signature.asc"
+As of this commit, we don't support such arguments passed to rev-list in
+this way, so I would write these paragraphs as:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.16 (GNU/Linux)
+  A combined filter supports any number of subfilters, and is written in
+  the following form:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0NaK8ACgkQv1NdgR9S
-9oun0xAAx033fn97zHVn2bb6/XJnvAGRP7+ujn3yM6BWKpXMqIQRWt4+8CYOauC9
-Epv2WPC5DLp8iQs6CEnyMjqQnqVKZol1wzS1641bv4rIW5Z5BSzzoMhbHdz2dYui
-3t2rjmOc8lXTlSUguKrYgnjK+ECFIygSiF59NlFSDQf/rVX801VKR9xnV/Ifu5PZ
-5AWkZtfPeEzqZOrhvjFXZnvdefvDnGRaJGAjbSNc/d22rtm72pPwQca8L+JLVBq2
-kgta2EMtBqaESBHW1rtvaEGcqYnzR1gXJA8Jz3Yzzvr/EvGlbWIKSKZHR1qUbyvi
-Pm5bgljkM+EA9sXtdD8AGEdP2VdBh1AIZ37Tid/YYC10moVcdq3YYrA1IyWuNHW0
-sEVEw3WyCKvpHPhLQrzwKFarenA7P8wF844OvK31I2nxHfMxrsA+YB8S/9z1NMkk
-j3VuOZQehZBpXqyqtRINQxBbH6SXOGGEYBBUK/6BEkN/ia3e+HrjY9dR0eK/9Y0T
-wngde9kC60Bqxe3MNcK2p1E/SFGsN9pliAzBmDksvQhD8EmHyQYCfUdwXN6m04aO
-0L6xFvDmHHBX2FTowtIOG3Z7BFru9rkRz/gyQPV5cAjecLGhSZafOD9N/uw+EPNd
-LsKOQL1ocVWZKRFle031/k3TUf04BpHUfzxMP19S6YrH8AEAy+w=
-=D7v6
------END PGP SIGNATURE-----
+    combine:<filter 1>+<filter 2>+<filter 3>
 
---/WwmFnJnmDyWGHa4--
+  Certain non-alphanumeric characters in each filter must be
+  URL-encoded.
+
+  For now, combined filters must be specified in this form. In a
+  subsequent commit, rev-list will support multiple --filter arguments
+  which will have the same effect as specifying one filter argument
+  starting with "combine:".
+
+> Helped-by: Emily Shaffer <emilyshaffer@google.com>
+> Helped-by: Jeff Hostetler <git@jeffhostetler.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Matthew DeVore <matvore@google.com>
+> ---
+>  list-objects-filter-options.c       | 106 ++++++++++++++++++-
+>  list-objects-filter-options.h       |  17 ++-
+>  list-objects-filter.c               | 159 ++++++++++++++++++++++++++++
+>  t/t6112-rev-list-filters-objects.sh | 151 +++++++++++++++++++++++++-
+>  url.c                               |   6 ++
+>  url.h                               |   8 ++
+>  6 files changed, 441 insertions(+), 6 deletions(-)
+> 
+> @@ -28,22 +34,20 @@ static int gently_parse_list_objects_filter(
+>  	struct strbuf *errbuf)
+>  {
+>  	const char *v0;
+>  
+>  	if (filter_options->choice) {
+>  		strbuf_addstr(
+>  			errbuf, _("multiple filter-specs cannot be combined"));
+>  		return 1;
+>  	}
+>  
+> -	filter_options->filter_spec = strdup(arg);
+> -
+
+This line has been removed from gently_parse_list_objects_filter()
+because this function gains another caller that does not need it.
+To compensate, this line has been added to both its existing callers.
+
+> @@ -31,27 +32,37 @@ struct list_objects_filter_options {
+>  	 * the filtering algorithm to use.
+>  	 */
+>  	enum list_objects_filter_choice choice;
+>  
+>  	/*
+>  	 * Choice is LOFC_DISABLED because "--no-filter" was requested.
+>  	 */
+>  	unsigned int no_filter : 1;
+>  
+>  	/*
+> -	 * Parsed values (fields) from within the filter-spec.  These are
+> -	 * choice-specific; not all values will be defined for any given
+> -	 * choice.
+> +	 * BEGIN choice-specific parsed values from within the filter-spec. Only
+> +	 * some values will be defined for any given choice.
+>  	 */
+> +
+>  	struct object_id *sparse_oid_value;
+>  	unsigned long blob_limit_value;
+>  	unsigned long tree_exclude_depth;
+> +
+> +	/* LOFC_COMBINE values */
+> +
+> +	/* This array contains all the subfilters which this filter combines. */
+> +	size_t sub_nr, sub_alloc;
+> +	struct list_objects_filter_options *sub;
+> +
+> +	/*
+> +	 * END choice-specific parsed values.
+> +	 */
+>  };
+
+I still think it's cleaner to just have a "left subfilter" and "right
+subfilter", but I don't feel strongly about it. In any case, this is an
+internal detail and can always be changed in the future.
+
+> +	/*
+> +	 * Optional. If this function is supplied and the filter needs to
+> +	 * collect omits, then this function is called once before free_fn is
+> +	 * called.
+> +	 */
+> +	void (*finalize_omits_fn)(struct oidset *omits, void *filter_data);
+
+This is needed because a combined filter's omits actually lie in the
+subfilters. Resolving it this way means that callers must call
+list_objects_filter__free() before using the omits set. Can you add
+documentation to __init() (which is the first function to take in the
+omits set) and __free() describing this?
+
+(As stated in the test below, we cannot just share one omits set amongst
+all the subfilters - see filter_trees_update_omits and the call site
+that relies on its return value.)
+
+Here comes the tricky part...
+
+> +static int should_delegate(enum list_objects_filter_situation filter_situation,
+> +			   struct object *obj,
+> +			   struct subfilter *sub)
+> +{
+> +	if (!sub->is_skipping_tree)
+> +		return 1;
+> +	if (filter_situation == LOFS_END_TREE &&
+> +		oideq(&obj->oid, &sub->skip_tree)) {
+> +		sub->is_skipping_tree = 0;
+> +		return 1;
+> +	}
+> +	return 0;
+> +}
+
+Optional: I think this should be called "test_and_set_skip_tree" or
+something like that, made to return the inverse of its current return
+value, and documented:
+
+  Returns the value of sub->is_skipping_tree at the moment of
+  invocation. If iteration is at the LOFS_END_TREE of the tree currently
+  being skipped, first clears sub->is_skipping_tree before returning.
+
+> +static enum list_objects_filter_result process_subfilter(
+> +	struct repository *r,
+> +	enum list_objects_filter_situation filter_situation,
+> +	struct object *obj,
+> +	const char *pathname,
+> +	const char *filename,
+> +	struct subfilter *sub)
+> +{
+> +	enum list_objects_filter_result result;
+> +
+> +	/*
+> +	 * Check should_delegate before oidset_contains so that
+> +	 * is_skipping_tree gets unset even when the object is marked as seen.
+> +	 * As of this writing, no filter uses LOFR_MARK_SEEN on trees that also
+> +	 * uses LOFR_SKIP_TREE, so the ordering is only theoretically
+> +	 * important. Be cautious if you change the order of the below checks
+> +	 * and more filters have been added!
+> +	 */
+> +	if (!should_delegate(filter_situation, obj, sub))
+> +		return LOFR_ZERO;
+> +	if (oidset_contains(&sub->seen, &obj->oid))
+> +		return LOFR_ZERO;
+> +
+> +	result = list_objects_filter__filter_object(
+> +		r, filter_situation, obj, pathname, filename, sub->filter);
+> +
+> +	if (result & LOFR_MARK_SEEN)
+> +		oidset_insert(&sub->seen, &obj->oid);
+> +
+> +	if (result & LOFR_SKIP_TREE) {
+> +		sub->is_skipping_tree = 1;
+> +		sub->skip_tree = obj->oid;
+> +	}
+> +
+> +	return result;
+> +}
+
+Looks good.
+
+> +static enum list_objects_filter_result filter_combine(
+> +	struct repository *r,
+> +	enum list_objects_filter_situation filter_situation,
+> +	struct object *obj,
+> +	const char *pathname,
+> +	const char *filename,
+> +	struct oidset *omits,
+> +	void *filter_data)
+> +{
+> +	struct combine_filter_data *d = filter_data;
+> +	enum list_objects_filter_result combined_result =
+> +		LOFR_DO_SHOW | LOFR_MARK_SEEN | LOFR_SKIP_TREE;
+> +	size_t sub;
+> +
+> +	for (sub = 0; sub < d->nr; sub++) {
+> +		enum list_objects_filter_result sub_result = process_subfilter(
+> +			r, filter_situation, obj, pathname, filename,
+> +			&d->sub[sub]);
+> +		if (!(sub_result & LOFR_DO_SHOW))
+> +			combined_result &= ~LOFR_DO_SHOW;
+> +		if (!(sub_result & LOFR_MARK_SEEN))
+> +			combined_result &= ~LOFR_MARK_SEEN;
+> +		if (!d->sub[sub].is_skipping_tree)
+> +			combined_result &= ~LOFR_SKIP_TREE;
+> +	}
+> +
+> +	return combined_result;
+> +}
+
+And also looks good. Might be confusing for tree skipping to be
+communicated through is_skipping_tree instead of the return value, but
+is_skipping_tree needs to be set anyway for other reasons, so that's
+convenient.
