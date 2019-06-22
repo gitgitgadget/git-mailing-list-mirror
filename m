@@ -2,70 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63F951F461
-	for <e@80x24.org>; Sat, 22 Jun 2019 17:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61C811F461
+	for <e@80x24.org>; Sat, 22 Jun 2019 20:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726342AbfFVR2b (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Jun 2019 13:28:31 -0400
-Received: from 13.mo4.mail-out.ovh.net ([178.33.251.8]:46964 "EHLO
-        13.mo4.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfFVR2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jun 2019 13:28:30 -0400
-X-Greylist: delayed 1799 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Jun 2019 13:28:30 EDT
-Received: from player794.ha.ovh.net (unknown [10.109.159.152])
-        by mo4.mail-out.ovh.net (Postfix) with ESMTP id 13EF71F5853
-        for <git@vger.kernel.org>; Sat, 22 Jun 2019 18:49:02 +0200 (CEST)
-Received: from jwilk.net (ip-5-172-255-74.free.aero2.net.pl [5.172.255.74])
-        (Authenticated sender: jwilk@jwilk.net)
-        by player794.ha.ovh.net (Postfix) with ESMTPSA id 39CA471D5225;
-        Sat, 22 Jun 2019 16:48:59 +0000 (UTC)
-From:   Jakub Wilk <jwilk@jwilk.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] doc: don't use git.kernel.org as example gitweb URL
-Date:   Sat, 22 Jun 2019 18:48:57 +0200
-Message-Id: <20190622164857.896-1-jwilk@jwilk.net>
-X-Mailer: git-send-email 2.20.1
+        id S1726299AbfFVUzO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Jun 2019 16:55:14 -0400
+Received: from mail-pg1-f178.google.com ([209.85.215.178]:34451 "EHLO
+        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbfFVUzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jun 2019 16:55:14 -0400
+Received: by mail-pg1-f178.google.com with SMTP id p10so5028190pgn.1
+        for <git@vger.kernel.org>; Sat, 22 Jun 2019 13:55:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/+Bak3dFTSpOV6HKhz0L0TsxWrQwSBvBnoEFyWQxF+w=;
+        b=FcHvuwnYDL+4pGy0/DBiKqwXVokP+HPN9Dltu1APcEnQ+n/H2/xCIeC1IOXYGu7vEH
+         gUomwWnZSLYmB53CDo0/pyeyRRFrHIIoVEU+Zp1HY05cGJfooSlcC0tO0lOZGPbn2EA3
+         5FsPW8Rj7WZJrYOnGAOO69dk8edEX+k4ORHvxEIz/bohk81U/HbVZJzY898B3pBqY1k/
+         58g8mHHM8n+nHTiSgl+jHazAcfEvg7QFDVd3+U0KyEi1sFtM8zYFfrvoqopAevAOQxkX
+         vYbcOSYnyIV9HU8NJIPbaJibSt6g+3SwlA29SN6ei7B/K1xXnsORVkjOmT3OhpS1GFa5
+         0+iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/+Bak3dFTSpOV6HKhz0L0TsxWrQwSBvBnoEFyWQxF+w=;
+        b=FsGszbX2NvtnoSdF53/BtvK07qXYO6ptNBf+t3w5qyjI/jI7eWDavefQXxJWu9kBpc
+         V6YdPG0oPwwHg/z+u2/uiLRX3xWrRQshqPo2G/cSJYVPiDu7ahFeOWu2byv7ItIbDE7L
+         9hbvtwjXG5gnJksy/5225ek04vrTV6pN+jCugTwcc8WQ4PA8MhxtXvAbR1dbc32BQx9f
+         NuvLl7YO1CCzOkAYlYIg/V1RplZZdkTyaQAR3rxzFdhcDhtch+VZQSUlKcBYUEWbva8G
+         vtkGks1bh0qSQ62bHl5NffC9wL9Shz4kP6RfWY3wYJOOv9q6SExAUkoGmeM5i1x6Ckia
+         cm/g==
+X-Gm-Message-State: APjAAAVFc9DL8wQB33/6AhS0myjy8FVE74KqA7h+c/js529CGKl9lM+L
+        vmr5B2KlCbVlpAJKPFyai+BzcXJ3UE0=
+X-Google-Smtp-Source: APXvYqwhWtTbN32wyEK4JNda1/JWSOKTdHg/AAOpmORfrEYjoMRHdQkQSgF3l1MHg7qtsde7wWVYEQ==
+X-Received: by 2002:a17:90a:cb18:: with SMTP id z24mr14435210pjt.108.1561236913108;
+        Sat, 22 Jun 2019 13:55:13 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.221])
+        by smtp.gmail.com with ESMTPSA id g8sm7350907pfi.8.2019.06.22.13.55.09
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sat, 22 Jun 2019 13:55:12 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     rohit.ashiwal265@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        matheus.bernardino@usp.br, newren@gmail.com,
+        olyatelezhnaya@gmail.com, t.gummerer@gmail.com
+Subject: [GSoC] Blogging with Rohit
+Date:   Sun, 23 Jun 2019 02:22:53 +0530
+Message-Id: <20190622205253.13360-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
+References: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 6628454229580371933
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduvddrtdekgddutdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenuc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git.kernel.org uses cgit, not gitweb, these days:
+Hi Everyone!
 
-    $ w3m -dump 'http://git.kernel.org/?p=git/git.git;a=tree;f=gitweb' | grep -w generated
-    generated by cgit 1.2-0.3.lf.el7 (git 2.18.0) at 2019-06-22 16:14:38 +0000
+Last week was not so productive so, this post is a bit shorter.
 
-Signed-off-by: Jakub Wilk <jwilk@jwilk.net>
----
- Documentation/gitweb.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Thanks
+Rohit
 
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index c7436098c9..3cc9b034c4 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -28,8 +28,7 @@ Gitweb provides a web interface to Git repositories.  Its features include:
-   revisions one at a time, viewing the history of the repository.
- * Finding commits which commit messages matches given search term.
- 
--See http://git.kernel.org/?p=git/git.git;a=tree;f=gitweb[] or
--http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
-+See http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
- browsed using gitweb itself.
- 
- 
--- 
-2.20.1
+[1]: https://rashiwal.me/2019/unproductive-week/
 
