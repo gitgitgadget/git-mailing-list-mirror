@@ -2,178 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC9B1F4B6
-	for <e@80x24.org>; Sun, 23 Jun 2019 15:39:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC47E1F461
+	for <e@80x24.org>; Sun, 23 Jun 2019 16:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbfFWPi7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jun 2019 11:38:59 -0400
-Received: from mail-oi1-f170.google.com ([209.85.167.170]:40472 "EHLO
-        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726399AbfFWPi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jun 2019 11:38:59 -0400
-Received: by mail-oi1-f170.google.com with SMTP id w196so7958690oie.7
-        for <git@vger.kernel.org>; Sun, 23 Jun 2019 08:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xa5wP8TwJkZ1Q1yEFUnynsLtjX/+qzFIwfT+VKo1D+c=;
-        b=O2bVZ1D1CF7fN6Ayt9unjye9Ncmc4lwUca0Hwn4pKfssPE7l+kq8jqMJTUtgtkl3+R
-         oz5Y5osCn32LVa+EI+xIOOiwmFuEvmb9h38MuKRbswa+wi/yNH82FTLNmPr0drMn0O6Z
-         DA8FR8ze1wRNP8pSTS7mw/AH4QkfxJwGqmWAWXvF6aClXY7wymb7R3NUmKUeMJlgv256
-         zDjyZftCNCbNxlORPImeffnqRUPXTSv0DyJaKFspyeJaPsVH3C0NNj4psKWiaWdDDFK1
-         8+MV74sG+yIwFZmS0wq3Am4X0+Df2GjvBmM43Xo9B7HhH3ImXlqezjgO6HVmdf9spKdt
-         m4Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xa5wP8TwJkZ1Q1yEFUnynsLtjX/+qzFIwfT+VKo1D+c=;
-        b=JPK0lvZhOZ0auAwiordndKW1/KnsGh+YfX5y9UYXppbndOOtQoVfvYHz8ICiK5dFuv
-         2NTCgaBBYbrlO44W7C2MvED9EFbOli/s4sNBIYGtsg8hAqvA/bLoa5+w9AjQzy/j5CMc
-         HaBmdFzdkvOmFevMkaqmsUZFxs1YbUjem3Lmh46T9x9HE3MH3aj3JJ18TUKtYbY0SU//
-         Ug0fkJL9p5onsP+vFBKzhNzoYICZcMP/lY1EuaR1N7LgLTpjPIHXBCNShp2T/387/5eb
-         0ygeR8vGAiT67roQUeN//B7SOqQaMKno4xRF7VXe4WVrdC+wmCFw9GfTxcDe/crFEOmR
-         1HPA==
-X-Gm-Message-State: APjAAAWL8pB/gB86ZUlJryIIFdRIJ+g9iCcRLems8L7otHH9xuqKoxkN
-        6wZpMXgqV27qyPugb4ihnQI1/y7biZudzUQUTXVfU4hgH1A=
-X-Google-Smtp-Source: APXvYqz8XAJHUxhN02nJJnpcqyIk2rJAq/P/oqBUvC07XunfPcoY6DEFXXQBVQLiLwWj65SyGQ5ZnRBN2tRWxyGuEXw=
-X-Received: by 2002:aca:b808:: with SMTP id i8mr8150530oif.160.1561304338210;
- Sun, 23 Jun 2019 08:38:58 -0700 (PDT)
+        id S1726776AbfFWQBY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jun 2019 12:01:24 -0400
+Received: from mout.web.de ([212.227.15.4]:39269 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726399AbfFWQBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jun 2019 12:01:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1561305661;
+        bh=e7mdgaCGAwBFWx6dtIPZmT8QLRkrM1g8Vn14Lr/TWeI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=WQ9AOmXZI5i81hFiC+CvHQXlWJjtpLQeooxxqWyH8p/D2kpjrGlwbf+ehTqZNLcKA
+         53ZPo3OgkNbxGeP4d+Vb1HiB1yFMfoNca63mwcCVdc/BqQLkSslou7ooL3iapgz5Id
+         F3Co8LGxnVY+S6imB63cA9/4Jq0y2TxQxOEPIcvA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.26.169]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LqDHE-1iIYXN2qO0-00dl6G; Sun, 23
+ Jun 2019 18:01:01 +0200
+Subject: Re: [PATCH 15/17] khash: rename oid helper functions
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+References: <20190620073952.GA1539@sigill.intra.peff.net>
+ <20190620074141.GO3713@sigill.intra.peff.net>
+ <xmqqwohgnocu.fsf@gitster-ct.c.googlers.com>
+ <20190620182743.GC18704@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <0e4ca2e6-5c75-20c3-def5-b2d3e31f9f08@web.de>
+Date:   Sun, 23 Jun 2019 18:00:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-References: <CAEXt3sqno7RAtuwQ_OpD3aLkEORLaf6aNeNKGQL0BKezD+wWTw@mail.gmail.com>
- <875zow8i85.fsf@evledraar.gmail.com>
-In-Reply-To: <875zow8i85.fsf@evledraar.gmail.com>
-From:   Janos Farkas <chexum@gmail.com>
-Date:   Sun, 23 Jun 2019 16:38:46 +0100
-Message-ID: <CAEXt3srf-9O8GbDEFwa5ELHRfwZ7LWYqqm6DxEjnegRUMcECnA@mail.gmail.com>
-Subject: Re: 2.22.0 repack -a duplicating pack contents
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190620182743.GC18704@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WMUjxoqPqro8mGaak69THj+sNMFbtUazAB9u05wda5O+SZI04Dq
+ RFnH7ympqTi5xAO5evOSbtRYVVJxbOI/pPlrJElWZTkYsFjWcxLsGDZE8Dcq7iLPSFiqwh4
+ 2Zm4u+P+N1NjCu+n6WMXYCNomMkAkH+5Qz4zvcJNSkYKslOUd7RyBqc60TkOlNmz7zVhXoS
+ fVJyTNLYT1bf7m1qq/nuw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R2qIhcEwAfU=:uPf7E+zf5yKoYtdcipJXxL
+ 8A2SvJP9fJ4VqI2ioLIrC0K7Fqs/9nlczMg7uj2kGVMuuu049kkUiLIJ07xgsONvhRA4GgzHp
+ LiucRCtwWkvQeCUVd3zr5pLbADOqFUCOPJdmmvCh1q5RGOSyK+GTc07i2BZmU0BCXhGyeNZqZ
+ G0U5xradX7WAAr0XP5Rea4LVIVScwTWP/DSJAqU51QJ9CH3onXb7wGl64uqPCyzZ4kz2vVHGC
+ htT9AGUN1dS0Os77Y4hQ9e16dkL+2EB1IMjWzBmAilIGjpaSu6sprXgd/kTSMQTHhL9kSsq+s
+ 5KtE5RbXc8OBkDDcWOZ2S+XNahtAIqRqCp18zOymbWr0eAaCzE8l1tpWtsax2gva9rKRrY4zV
+ 109YSsmWSltQFU7+EBjryg/1HZgjbCjw8uZMEznXqsVfmvyhPRHaQ2XbwemJvj9eqWTIENTVY
+ VYXwQ/F2azlBqyh1kqq/63Zd6xDzLqE+MDshkyPN1+eiAb45ikeAybiNVsofMwOrIQln4Csd/
+ tEl1i/wpcljotOfUSc4EhLGjLa7UdTpHEnZeLEmLoVytoQJnR8rvR7v0JJOk7GJ05svT3XZ/X
+ bffN/jz/SNoarudD2kdRVucrGh6GbFknGykdzoI4I/SnF52oo67GPNIbgajPr4408xq6/8dpK
+ O9l89up2Ry2f//6F/NJbmaR7YOA+CUuBn8W3mTD6PnkWIGDyQd+4LvPkLhosuUj+JeujWMOlW
+ Ge1csxsbV7/K5jUwvcsSej1pgG0OUOCrco8DaCKHNt0zEfMvne0Fgn158DgXz6rtZj6c/Zoxh
+ ySzTTTzaZcC7LJ4NcJiJv2q+o53V3gsnDJhMzEVSINOF4iSYk6nQYdY/FroPaq0z9XuN6tNY7
+ QFqX+wFybFnggb00u1Fn3+Qv5M+Lr8mvtrrlWME8yXsPYBjy0D1ndzHPjE74zAny9j/x1GFjb
+ hu2VfEfq9iVoULWL3fCs2GcXXpW60FYM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for looking at this, yes, it seems it's purely the .bitmap
-writing.  With disabled repack.writeBitmaps, it all behaves as before
-(and yes, these are bare repros for keeping an intermediate backup).
+Am 20.06.19 um 20:27 schrieb Jeff King:
+> On Thu, Jun 20, 2019 at 10:44:17AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> For use in object_id hash tables, we have oid_hash() and oid_equal().
+>>> But these are confusingly similar to the existing oideq() and the
+>>> oidhash() we plan to add to replace sha1hash().
+>>>
+>>> The big difference from those functions is that rather than accepting =
+a
+>>> const pointer to the "struct object_id", we take the arguments by valu=
+e
+>>> (which is a khash internal convention). So let's make that obvious by
+>>> calling them oidhash_by_value() and oideq_by_value().
+>>>
+>>> Those names are fairly horrendous to type, but we rarely need to do so=
+;
+>>> they are passed to the khash implementation macro and then only used
+>>> internally. Callers get to use the nice kh_put_oid_map(), etc.
+>>
+>> The pass-by-value interface feels a bit unforunate but hopefully
+>> "static inline" would help us avoid actually copying the struct left
+>> and right as we make calls to them X-<.
+>
+> Yeah, exactly. I think it should end up quite fast, though if anybody
+> (Ren=C3=A9?) wants to try tweaking khash and timing it, be my guest.
+>
+> I do think if it took the more usual pass-by-const-pointer we'd probably
+> still end up with the exact same code from an optimizing compiler, since
+> all of the references and dereferences would cancel out once it was
+> inlined.
 
-With the easy workaround in place, I'm back at 2.22 for now, thanks!
+I suspect it depends on the compiler and the exact details.  Here's a
+simple experiment: https://godbolt.org/z/kuv4NE.  It has a comparison
+function for call by value and one for call by reference as well as a
+wrapper for each with the opposite interface.
 
-On Sun, Jun 23, 2019 at 3:54 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sun, Jun 23 2019, Janos Farkas wrote:
->
-> > I'm using .keep files to... well.. keep packs to avoid some CPU time
-> > spent on repacking huge packs and make the process somewhat more
-> > incremental.
-> >
-> > Something changed with 22.2.0.  Now .bitmap files are also created,
-> > and no simple repacks re-create the pack data in a completely new
-> > file, wasting quite some storage:
-> >
-> > 02d03::master> find objects/pack/pack* -type f|xargs ls -sht
-> > 108K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.bitmap
-> > 524K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.idx
-> > 4.7M objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.pack
-> > 108K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.bitmap
-> > 524K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.idx
-> > 4.6M objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
-> > 116K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.bitmap
-> > 524K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.idx
-> > 4.6M objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
-> >    0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
-> > 108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
-> > 524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
-> > 4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
-> > 02d03::master > git repack -af
-> > Enumerating objects: 19001, done.
-> > Counting objects: 100% (19001/19001), done.
-> > Delta compression using up to 2 threads
-> > Compressing objects: 100% (18952/18952), done.
-> > Writing objects: 100% (19001/19001), done.
-> > warning: ignoring extra bitmap file:
-> > ./objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
-> > warning: ignoring extra bitmap file:
-> > ./objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
-> > warning: ignoring extra bitmap file:
-> > ./objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
-> > Reusing bitmaps: 104, done.
-> > Selecting bitmap commits: 2550, done.
-> > Building bitmaps: 100% (130/130), done.
-> > Total 19001 (delta 14837), reused 4162 (delta 0)
-> > 02d03::master > find objects/pack/pack* -type f|xargs ls -sht
-> > 108K objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.bitmap
-> > 524K objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.idx
-> > 4.6M objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.pack   =
-<=3D ????
-> > 108K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.bitmap
-> > 524K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.idx
-> > 4.7M objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.pack
-> > 108K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.bitmap
-> > 524K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.idx
-> > 4.6M objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
-> > 116K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.bitmap
-> > 524K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.idx
-> > 4.6M objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
-> >    0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
-> > 108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
-> > 524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
-> > 4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
-> >
-> > The ccbd455 pack and its metadata seem quite pointless to be
-> > containing apparently all the data based on the size.
-> >
-> > If I use -ad, a new pack is still created,which, judging by the size,
-> > is essentially everything again, (but at least the extra packs are
-> > removed)
-> >
-> > 02d03::master> git repack -ad
-> > Enumerating objects: 19001, done.
-> > Counting objects: 100% (19001/19001), done.
-> > Delta compression using up to 2 threads
-> > Compressing objects: 100% (4114/4114), done.
-> > Writing objects: 100% (19001/19001), done.
-> > warning: ignoring extra bitmap file:
-> > ./objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
-> > Reusing bitmaps: 104, done.
-> > Selecting bitmap commits: 2550, done.
-> > Building bitmaps: 100% (130/130), done.
-> > Total 19001 (delta 14838), reused 19001 (delta 14838)
-> > 02d03::master 9060> find objects/pack/pack* -type f|xargs ls -sht
-> > 116K objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.bitmap
-> > 524K objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.idx
-> > 4.6M objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.pack   =
-<=3D ????
-> >    0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
-> > 108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
-> > 524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
-> > 4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
-> >
-> > Previously, the kept pack would be kept, and no additional packs would
-> > be created if no new objects were born in the repro.
-> >
-> > With the .keep placeholder removed, the duplication does not happen,
-> > but all the repro is rewritten into a new pack, which does not look
-> > correct.  Am I doing something unexpected?
->
-> I haven't looked at this for more than a couple of minutes (and don't
-> have more time now), but this is almost certainly due to 36eba0323d
-> ("repack: enable bitmaps by default on bare repos", 2019-03-14). Can you
-> confirm when you re-run with repack.writeBitmaps=3Dfalse in the config?
->
-> I.e. something in the "yes I want bitmaps" code implies "*.keep"
-> semantics changing from "keep" to "replace", which is obvious in
-> retrospect, since we can only have one *.bitmap per-repo.
+An enlightened compiler would emit the same code for functions with the
+same interface, but none of the current ones do in all cases.  Clang
+and MSVC do emit the same code for the two call by value functions, so
+there's hope.  And moving to call by reference might make matters worse.
+GCC adds some 128-bit moves to both wrappers for some reason.
+
+Perhaps it doesn't matter much anyway e.g. due to caching, especially
+for the branch-free variants.  A definite answer would require
+measurements.  Your cleanup would make the necessary surgery on khash.h
+a bit easier by reducing the number of functions and definitions.
+
+Ren=C3=A9
