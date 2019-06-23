@@ -2,129 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A3761F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 02:40:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E8321F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 02:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727117AbfFXCkC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jun 2019 22:40:02 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:57162 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726781AbfFXCkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jun 2019 22:40:02 -0400
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id 060CC34689C
-        for <git@vger.kernel.org>; Sun, 23 Jun 2019 21:50:55 +0000 (UTC)
-Received: (qmail 24426 invoked by uid 129); 23 Jun 2019 21:50:50 -0000
-X-HELO: bohr-int.orbis-terrarum.net
-Authentication-Results: orbis-terrarum.net; auth=pass (plain) smtp.auth=robbat2-bohr@orbis-terrarum.net; iprev=fail; iprev=fail
-Received: from node-1w7jr9qtv0a5amn9pw5p8gn5k.ipv6.telus.net (HELO bohr-int.orbis-terrarum.net) (2001:569:7caf:ee00:4988:d144:fb03:3538)
- by orbis-terrarum.net (qpsmtpd/0.95) with ESMTPSA (ECDHE-RSA-AES256-GCM-SHA384 encrypted); Sun, 23 Jun 2019 21:50:50 +0000
-Received: (nullmailer pid 24440 invoked by uid 10000);
-        Sun, 23 Jun 2019 21:50:52 -0000
-From:   robbat2@gentoo.org
-To:     git@vger.kernel.org
-Cc:     "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: [PATCH] Makefile: include contrib docs in dist-doc tarballs
-Date:   Sun, 23 Jun 2019 14:50:46 -0700
-Message-Id: <20190623215046.24030-1-robbat2@gentoo.org>
-X-Mailer: git-send-email 2.22.0
+        id S1727253AbfFXCms (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jun 2019 22:42:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726510AbfFXCms (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jun 2019 22:42:48 -0400
+Received: (qmail 5063 invoked by uid 109); 23 Jun 2019 22:42:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 23 Jun 2019 22:42:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6202 invoked by uid 111); 23 Jun 2019 22:43:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 23 Jun 2019 18:43:36 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Jun 2019 18:42:45 -0400
+Date:   Sun, 23 Jun 2019 18:42:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Janos Farkas <chexum@gmail.com>, git@vger.kernel.org
+Subject: Re: 2.22.0 repack -a duplicating pack contents
+Message-ID: <20190623224244.GB1100@sigill.intra.peff.net>
+References: <CAEXt3sqno7RAtuwQ_OpD3aLkEORLaf6aNeNKGQL0BKezD+wWTw@mail.gmail.com>
+ <875zow8i85.fsf@evledraar.gmail.com>
+ <20190623180226.GA1100@sigill.intra.peff.net>
+ <20190623180825.3ospajjgat3clwiu@dcvr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Checked: Checked by ClamAV on orbis-terrarum.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190623180825.3ospajjgat3clwiu@dcvr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Robin H. Johnson" <robbat2@gentoo.org>
+On Sun, Jun 23, 2019 at 06:08:25PM +0000, Eric Wong wrote:
 
-The pre-built htmldoc/manpage tarballs do not include any documentation
-from the contrib code. As a result, if you want that documentation, you
-need the full documentation stack to build them.
+> > I'm not sure of the right solution. For maximal backwards-compatibility,
+> > the default for bitmaps could become "if not bare and if there are no
+> > .keep files". But that would mean bitmaps sometimes not getting
+> > generated because of the problems that ee34a2bead was trying to solve.
+> > 
+> > That's probably OK, though; you can always flip the bitmap config to
+> > "true" yourself if you _must_ have bitmaps.
+> 
+> What about something like this?  Needs tests but I need to leave, now.
 
-By including the contrib docs in the tarballs, this is prevented.
+Yeah, I think that's the right direction.
 
-The documentation process in the contrib directories could use some
-general cleanups, but this gets it going for now.
-- Add doc install target that includes the .txt files
-- svn-fe has no doc install targets at all.
+Though...
 
-See-Also: https://bugs.gentoo.org/687886
-See-Also: https://bugs.gentoo.org/687848
-See-Also: https://bugs.gentoo.org/517794
-Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
----
- Makefile | 43 +++++++++++++++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+> +static int has_pack_keep_file(void)
+> +{
+> +	DIR *dir;
+> +	struct dirent *e;
+> +	int found = 0;
+> +
+> +	if (!(dir = opendir(packdir)))
+> +		return found;
+> +
+> +	while ((e = readdir(dir)) != NULL) {
+> +		if (ends_with(e->d_name, ".keep")) {
+> +			found = 1;
+> +			break;
+> +		}
+> +	}
+> +	closedir(dir);
+> +	return found;
+> +}
 
-diff --git a/Makefile b/Makefile
-index f58bf14c7b..fc36a9211e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3008,21 +3008,48 @@ artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
- 
- htmldocs = git-htmldocs-$(GIT_VERSION)
- manpages = git-manpages-$(GIT_VERSION)
--.PHONY: dist-doc distclean
--dist-doc:
-+.PHONY: dist-doc distclean contrib-doc
-+
-+# subdirs with install-html & install-man targets
-+contrib_doc_dirs := contrib/contacts contrib/subtree
-+doc_dirs := Documentation $(contrib_doc_dirs)
-+
-+contrib-doc:
-+	$(MAKE) -C contrib/svn-fe svn-fe.html svn-fe.1 # no doc target
-+	for d in $(contrib_doc_dirs) ; do \
-+		$(MAKE) -C $$d doc ; \
-+	done
-+
-+dist-doc: doc contrib-doc
- 	$(RM) -r .doc-tmp-dir
- 	mkdir .doc-tmp-dir
--	$(MAKE) -C Documentation WEBDOC_DEST=../.doc-tmp-dir install-webdoc
-+	for d in $(doc_dirs) ; do \
-+		$(MAKE) -C $$d \
-+			DESTDIR=$(PWD)/ \
-+			htmldir=/.doc-tmp-dir/ \
-+			install-html ; \
-+	done
-+	: # These files have no install targets
-+	cp --target .doc-tmp-dir \
-+		contrib/subtree/git-subtree.txt \
-+		contrib/contacts/git-contacts.txt \
-+		contrib/svn-fe/svn-fe.html \
-+		contrib/svn-fe/svn-fe.txt
- 	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar .
- 	gzip -n -9 -f $(htmldocs).tar
- 	:
- 	$(RM) -r .doc-tmp-dir
- 	mkdir -p .doc-tmp-dir/man1 .doc-tmp-dir/man5 .doc-tmp-dir/man7
--	$(MAKE) -C Documentation DESTDIR=./ \
--		man1dir=../.doc-tmp-dir/man1 \
--		man5dir=../.doc-tmp-dir/man5 \
--		man7dir=../.doc-tmp-dir/man7 \
--		install
-+	for d in $(doc_dirs) ; do \
-+		$(MAKE) -C $$d DESTDIR=$(PWD)/ \
-+		man1dir=/.doc-tmp-dir/man1 \
-+		man5dir=/.doc-tmp-dir/man5 \
-+		man7dir=/.doc-tmp-dir/man7 \
-+		install-man ; \
-+	done
-+	: # These files have no install targets
-+	cp --target .doc-tmp-dir/man1/ \
-+		contrib/svn-fe/svn-fe.1
- 	cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar .
- 	gzip -n -9 -f $(manpages).tar
- 	$(RM) -r .doc-tmp-dir
--- 
-2.22.0
+I think this can be replaced with just checking p->pack_keep for each
+item in the packed_git list.
 
+That's racy, but then so is your code here, since it's really the child
+pack-objects which is going to deal with the .keep. I don't think we
+need to care much about the race, though. Either:
+
+  1. Somebody has made an old intentional .keep, which would not be
+     racy. We'd see it in both places.
+
+  2. Somebody _just_ made an intentional .keep; we'll race with that and
+     maybe duplicate objects from the kept pack. But this is a rare
+     occurrence, and there's no real ordering promise here anyway with
+     somebody creating .keep files alongside a running repack.
+
+  3. An incoming fetch/push may create a .keep file as a temporary lock,
+     which we see here but which goes away by the time pack-objects
+     runs. That's OK; we err on the side of not generating bitmaps, but
+     they're an optimization anyway (and if you really insist on having
+     them, you should tell Git to definitely make them instead of
+     relying on this default behavior).
+
+  4. Like (3), but we _don't _see the temporary .keep here but _do_ see
+     it during pack-objects. That's OK, because we'll have told
+     pack-objects to pack those objects anyway, which is the right
+     thing.
+
+-Peff
