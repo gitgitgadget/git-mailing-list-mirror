@@ -2,168 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77C51F461
-	for <e@80x24.org>; Sun, 23 Jun 2019 08:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF1F1F461
+	for <e@80x24.org>; Sun, 23 Jun 2019 09:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726378AbfFWI2y (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jun 2019 04:28:54 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42395 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbfFWI2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jun 2019 04:28:54 -0400
-Received: by mail-io1-f67.google.com with SMTP id u19so1003419ior.9
-        for <git@vger.kernel.org>; Sun, 23 Jun 2019 01:28:53 -0700 (PDT)
+        id S1726467AbfFWJ1m (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jun 2019 05:27:42 -0400
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:40349 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726415AbfFWJ1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jun 2019 05:27:42 -0400
+Received: by mail-lj1-f174.google.com with SMTP id a21so9750695ljh.7
+        for <git@vger.kernel.org>; Sun, 23 Jun 2019 02:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SuCfvMCZnX0Wog09co181aLE2OS+12UFlC+Ueo1+q+Y=;
-        b=F7sSZe7Rj1sZ4R7tVCJ+LOKHHhQB8wP/Hw3yW4mz5KyNYjJhrb2DPhOiEnh6WiHygw
-         L9ykqFOIol6gZ0AABG6uibMbvDsie+PE3zHIyVhWWSesVF6jaMxxitvqnPZPfl01TAOG
-         Yg9pwz/6GdqIKdTvihgFQIzx8wDGvQhTCd4bkroOrhw7quQm3n/BUlEJWlxSBO7k0hue
-         D4ZoaAHzvwqgA0UZPxpaq3Vo1ijiWkZ8lWcUGoia8O9NQnITQp1AIqmfn+S2WVkxUQ/6
-         p5z7QAFpeKZ/1q66MetsLreLe4eyQ/MfOxKZ+x9dZT+4Vwlim9NuorwHy3rSAa6J1QCz
-         2JsA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kDJXoP43oai/5WkUrT5YZk4hI2I8oIlp4TjTdJyxqjc=;
+        b=EyiojpXJ2KU0xfLEA8ytGVJN9dbs1zdARYSa2QHnQ/9wCih21ztdUkbQeyP7+o4v/R
+         YgCuxkV0l5/ovKHJ6rtDNi+UWG37D1Ly1YrI7tNKgK7TiS15j+Qzoko6RHaWkHnFs6+a
+         DE44uB98NmZLvW9NUofZkiZ4T4fN0KpG4YRY/OabotIEvT4cfkW+k+pum3RdXglgL3ha
+         wbdY8cSGPV69LhQz+5T4AYgKvZzdbKal/BatvOnMUA5sUsIgGsBWT3B9aGVd+eaVHOQR
+         K6dFI5YuWxesqn2e4HNSmhnQjrK4qjvczhJRoPncdriaxzr8KgImeMUC28HIWmxrQnwH
+         +qDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SuCfvMCZnX0Wog09co181aLE2OS+12UFlC+Ueo1+q+Y=;
-        b=ni97wSUIueS/Z1PeGE6iM/YtIX13KeU0pkRY1kAd/nBLrDXl1n7JgIA7cgqiv4lmIK
-         T7PbJLY++BIyCs/121OI+/NumZksXpJb9O/e75XEGnz+9b2hzIkNtYJ8agG7Tqh85ybr
-         uers5pT7uBhmazVPrj3JwfYM3GodnOMtsp84CEBT7oq8kVOm2jb8d7AaaSTd2GyDSWVh
-         7EPtWJFslU5ocJHTk5AmT9BnkSAzBBwXykgz0DvMIia/uNhoIGOKGgGt4z8Gxg7aNY4l
-         0yuCjTUhsN6ZcmJEy+8qLuR56A11y0kP7Yj3LlML0CXNdeLC5t7f03ve+fet/Ho7A3lF
-         UAmA==
-X-Gm-Message-State: APjAAAUzUGYl8aUGuLdOdumq4f70IkUx31QUQKAqN806dLGQrvh0gFG7
-        VFB+EyKDSgLEbz2DeU7lZv/zz2lYzJlr88r4VTo=
-X-Google-Smtp-Source: APXvYqy1aMAXkfvDmgM3qamONovqZTBSsMbqCvtUlNWcOWv2HnzKLP0sMFZKzLC7h1m+r4qjP+LfTi6U+L28INOWdAk=
-X-Received: by 2002:a5d:9a04:: with SMTP id s4mr55601722iol.19.1561278532806;
- Sun, 23 Jun 2019 01:28:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190622093655.80092-2-dimitriy.ryazantcev@gmail.com>
- <65cf1cfd-bb5f-dba0-17d6-7fee0ed1f51f@kdbg.org> <20190623010311.GC965782@genre.crustytoothpaste.net>
-In-Reply-To: <20190623010311.GC965782@genre.crustytoothpaste.net>
-From:   Dimitriy <dimitriy.ryazantcev@gmail.com>
-Date:   Sun, 23 Jun 2019 11:28:41 +0300
-Message-ID: <CAPUT4mSHK8bD-TGf9QOM2O2ChxTvwScCvmmQH37pedGDVR2w-g@mail.gmail.com>
-Subject: Re: [PATCH v3] l10n: localizable upload progress messages
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kDJXoP43oai/5WkUrT5YZk4hI2I8oIlp4TjTdJyxqjc=;
+        b=BrMlkGp/0VXGSVbFrMyXWqvroynR9Qugle1EJ7jLE6gn4auHx+6JNt6eqt/qIUBm7G
+         GqJHXTH5R5Lf9CetWLc0vt56u9muVvI79ns4goieaqqanzluBcUswGzQoNEotd/Y7u8K
+         yFRXBVHkJY+oDmR7JcRC8ByV4/iWx/c8s7Ci5yi3swXKvjrUA0lysHuuXhQLEXGY/m48
+         8GMkH/COUGyCur106snSUGdGHk6XA7lK/lZub6ehL2YeIAatCx3VtXQqFiCgDiHHfH8c
+         iyH14yA8NBcDc/2/zDI2hsI08sQP6t6FWNcee0W5Buo9NdDeejvL/MEJo9exFNr0+C4V
+         uYDQ==
+X-Gm-Message-State: APjAAAWKDw63jO5+D0odK6K3o+8JBmuB0XrUYtBQfVmdft+tk8rLN7m9
+        5I7uJu4KPTCW2gELGJV/jcGfNqI9lFRWhQ==
+X-Google-Smtp-Source: APXvYqwHe4i/Dk7W+500PVKvKXeLDhE2DTGUvWhhnWmrqtbS9KE3dmhLGaTVovAlPRD6rZt9yVtusA==
+X-Received: by 2002:a2e:a0d5:: with SMTP id f21mr45511769ljm.69.1561282059493;
+        Sun, 23 Jun 2019 02:27:39 -0700 (PDT)
+Received: from localhost.localdomain (host-176-36-198-58.la.net.ua. [176.36.198.58])
+        by smtp.gmail.com with ESMTPSA id l25sm1194257lja.76.2019.06.23.02.27.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 23 Jun 2019 02:27:38 -0700 (PDT)
+From:   Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Subject: [PATCH v4] l10n: localizable upload progress messages
+Date:   Sun, 23 Jun 2019 12:27:17 +0300
+Message-Id: <20190623092717.82424-2-dimitriy.ryazantcev@gmail.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson <sandals@crustytoothpaste.net> wrote:
->
-> On 2019-06-22 at 21:42:33, Johannes Sixt wrote:
-> > Am 22.06.19 um 11:36 schrieb Dimitriy Ryazantcev:
-> > > diff --git a/strbuf.c b/strbuf.c
-> > > index 0e18b259ce..0a3ebc3749 100644
-> > > --- a/strbuf.c
-> > > +++ b/strbuf.c
-> > > @@ -814,20 +814,28 @@ void strbuf_addstr_urlencode(struct strbuf *sb,=
- const char *s,
-> > >  void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
-> > >  {
-> > >     if (bytes > 1 << 30) {
-> > > -           strbuf_addf(buf, "%u.%2.2u GiB",
-> > > +           strbuf_addf(buf, "%u.%2.2u ",
-> > >                         (unsigned)(bytes >> 30),
-> > >                         (unsigned)(bytes & ((1 << 30) - 1)) / 1073741=
-9);
-> > > +           /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: gibi */
-> > > +           strbuf_addstr(buf, _("Gi"));
-> > >     } else if (bytes > 1 << 20) {
-> > >             unsigned x =3D bytes + 5243;  /* for rounding */
-> > > -           strbuf_addf(buf, "%u.%2.2u MiB",
-> > > +           strbuf_addf(buf, "%u.%2.2u ",
-> > >                         x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20)=
-;
-> > > +           /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: mebi */
-> > > +           strbuf_addstr(buf, _("Mi"));
-> > >     } else if (bytes > 1 << 10) {
-> > >             unsigned x =3D bytes + 5;  /* for rounding */
-> > > -           strbuf_addf(buf, "%u.%2.2u KiB",
-> > > +           strbuf_addf(buf, "%u.%2.2u ",
-> > >                         x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10)=
-;
-> > > +           /* TRANSLATORS: ISO/IEC 80000-13:2008, clause 4: kibi */
-> > > +           strbuf_addstr(buf, _("Ki"));
-> > >     } else {
-> > > -           strbuf_addf(buf, "%u bytes", (unsigned)bytes);
-> > > +           strbuf_addf(buf, "%u ", (unsigned)bytes);
-> > >     }
-> > > +   /* TRANSLATORS: ISO/IEC 80000-13:2008, subclause 13-9.c: byte */
-> > > +   strbuf_addstr(buf, _("B"));
-> > >  }
-> > >
-> > >  void strbuf_add_absolute_path(struct strbuf *sb, const char *path)
-> > >
-> >
-> > All of the prefixes are in ISO/IEC, i.e., standardized. Why do they hav=
-e
-> > to be translated?
-> >
-> > Isn't the way of presentation of magnitudes with a unit also
-> > standardized, and should not need to be translated?
->
-> In my view, the translation is less important for the prefixes and more
-> important for the unit: at least French prefers the term "octet" over
-> "byte"[0], so instead of writing "MB", you'd write "Mo".
+Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+---
+ progress.c |  4 +++-
+ strbuf.c   | 16 ++++++++++++----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-Localization according to local rules is important for every unit part.
-There is a Russian adoption of IEC 80000-13:2008 called
-GOST R IEC 80000-13-2016[0].
-And in this document there is national translations for these units\prefixe=
-s.
-So 'KiB' should become '=D0=9A=D0=B8=D0=91' according to this national stan=
-dard.
-Same story with Ukrainian adoption called DSTU IEC 80000-13:2016[1]:
-'KiB' -> '=D0=9A=D1=96=D0=91'.
-Also according to ISO website seems that there is French version of
-IEC 80000-13:2008 exist. Not sure about French translation through.
+diff --git a/progress.c b/progress.c
+index a2e8cf64a8..fc62941fa4 100644
+--- a/progress.c
++++ b/progress.c
+@@ -151,7 +151,9 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
+ 	strbuf_humanise_bytes(buf, total);
+ 	strbuf_addstr(buf, " | ");
+ 	strbuf_humanise_bytes(buf, rate * 1024);
+-	strbuf_addstr(buf, "/s");
++	strbuf_addstr(buf, "/");
++	/* TRANSLATORS: unit symbol for IEC 80000-13:2008 second */
++	strbuf_addstr(buf, _("s"));
+ }
+ 
+ void display_throughput(struct progress *progress, uint64_t total)
+diff --git a/strbuf.c b/strbuf.c
+index 0e18b259ce..706b3b8e42 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -814,19 +814,27 @@ void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ {
+ 	if (bytes > 1 << 30) {
+-		strbuf_addf(buf, "%u.%2.2u GiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    (unsigned)(bytes >> 30),
+ 			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
++		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 gibibyte */
++		strbuf_addstr(buf, _("GiB"));
+ 	} else if (bytes > 1 << 20) {
+ 		unsigned x = bytes + 5243;  /* for rounding */
+-		strbuf_addf(buf, "%u.%2.2u MiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
++		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 mebibyte */
++		strbuf_addstr(buf, _("MiB"));
+ 	} else if (bytes > 1 << 10) {
+ 		unsigned x = bytes + 5;  /* for rounding */
+-		strbuf_addf(buf, "%u.%2.2u KiB",
++		strbuf_addf(buf, "%u.%2.2u ",
+ 			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
++		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 kibibyte */
++		strbuf_addstr(buf, _("KiB"));
+ 	} else {
+-		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
++		strbuf_addf(buf, "%u ", (unsigned)bytes);
++		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 byte */
++		strbuf_addstr(buf, _("B"));
+ 	}
+ }
+ 
+-- 
+2.22.0
 
-> In general, I think it's better to keep the prefixes and units together,
-> since trying to translate a single letter runs the risk of collisions
-> with other places in the code. It's likely to be easier for translators
-> as well.
-
-I agree with you in this part.
-I searched for similar code in other codebases and found such in KDE
-codebase[2]. I'll update patch if there is no objections.
-
-> [0] Technically, as in English, they have different meanings, but I've
-> always seen French units written with "o" for "octet", not "B" for
-> "byte".
-
-To solve this ambiguity IEC standard in subclause 13-9.=D1=81 says
-that 'byte' implies 'octet' (8-bit byte).
-
-> --
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
-
-[0] http://docs.cntd.ru/document/1200143231
-[1] http://online.budstandart.com/ua/catalog/doc-page.html?id_doc=3D69033
-[1] https://cgit.kde.org/kcoreaddons.git/tree/src/lib/util/kformatprivate.c=
-pp#n254
-
---=20
-Sincerely,
-Dimitriy Ryazantcev
