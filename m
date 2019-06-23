@@ -2,130 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF1F1F461
-	for <e@80x24.org>; Sun, 23 Jun 2019 09:27:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61B421F461
+	for <e@80x24.org>; Sun, 23 Jun 2019 12:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726467AbfFWJ1m (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jun 2019 05:27:42 -0400
-Received: from mail-lj1-f174.google.com ([209.85.208.174]:40349 "EHLO
-        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726415AbfFWJ1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jun 2019 05:27:42 -0400
-Received: by mail-lj1-f174.google.com with SMTP id a21so9750695ljh.7
-        for <git@vger.kernel.org>; Sun, 23 Jun 2019 02:27:40 -0700 (PDT)
+        id S1726386AbfFWMPu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jun 2019 08:15:50 -0400
+Received: from mail-ot1-f46.google.com ([209.85.210.46]:41958 "EHLO
+        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbfFWMPu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jun 2019 08:15:50 -0400
+Received: by mail-ot1-f46.google.com with SMTP id 43so5977381otf.8
+        for <git@vger.kernel.org>; Sun, 23 Jun 2019 05:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kDJXoP43oai/5WkUrT5YZk4hI2I8oIlp4TjTdJyxqjc=;
-        b=EyiojpXJ2KU0xfLEA8ytGVJN9dbs1zdARYSa2QHnQ/9wCih21ztdUkbQeyP7+o4v/R
-         YgCuxkV0l5/ovKHJ6rtDNi+UWG37D1Ly1YrI7tNKgK7TiS15j+Qzoko6RHaWkHnFs6+a
-         DE44uB98NmZLvW9NUofZkiZ4T4fN0KpG4YRY/OabotIEvT4cfkW+k+pum3RdXglgL3ha
-         wbdY8cSGPV69LhQz+5T4AYgKvZzdbKal/BatvOnMUA5sUsIgGsBWT3B9aGVd+eaVHOQR
-         K6dFI5YuWxesqn2e4HNSmhnQjrK4qjvczhJRoPncdriaxzr8KgImeMUC28HIWmxrQnwH
-         +qDw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zAQDhYuJARBRZlhBPSziylDMzzPrVcnBOWVJ+F7RQm4=;
+        b=kNJIh7jPf87X4+8gAYMo0Ale+xNY6PZREVQOm8N8472LsvQX1FXVd45Wmdyo/WRFEU
+         CXuPfHHKJ7Y3cEzzCUO4uqUO1rFU40fgU50AUvyV6z68kOC9D66PJGAylns156PGAIBV
+         hr2EgyKq1+IYa6QWMSieYHDM/PtY9xCnCrRSmhG+i9IFrO85A8KlaNZi7/Sz2EGrfoNR
+         lWWnbywIQMYuViG52Upt13qwwdTA2cytQmAqwva5ckeGs85mY1duws1FU/nHl4DQqpOV
+         G1Mq5MAzbIKb9TDP30vRraoFiZ0Zk5+iIHhXzLgWkNnMOL8VE6Gy/ifVzmlw7T98S6RG
+         I/Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kDJXoP43oai/5WkUrT5YZk4hI2I8oIlp4TjTdJyxqjc=;
-        b=BrMlkGp/0VXGSVbFrMyXWqvroynR9Qugle1EJ7jLE6gn4auHx+6JNt6eqt/qIUBm7G
-         GqJHXTH5R5Lf9CetWLc0vt56u9muVvI79ns4goieaqqanzluBcUswGzQoNEotd/Y7u8K
-         yFRXBVHkJY+oDmR7JcRC8ByV4/iWx/c8s7Ci5yi3swXKvjrUA0lysHuuXhQLEXGY/m48
-         8GMkH/COUGyCur106snSUGdGHk6XA7lK/lZub6ehL2YeIAatCx3VtXQqFiCgDiHHfH8c
-         iyH14yA8NBcDc/2/zDI2hsI08sQP6t6FWNcee0W5Buo9NdDeejvL/MEJo9exFNr0+C4V
-         uYDQ==
-X-Gm-Message-State: APjAAAWKDw63jO5+D0odK6K3o+8JBmuB0XrUYtBQfVmdft+tk8rLN7m9
-        5I7uJu4KPTCW2gELGJV/jcGfNqI9lFRWhQ==
-X-Google-Smtp-Source: APXvYqwHe4i/Dk7W+500PVKvKXeLDhE2DTGUvWhhnWmrqtbS9KE3dmhLGaTVovAlPRD6rZt9yVtusA==
-X-Received: by 2002:a2e:a0d5:: with SMTP id f21mr45511769ljm.69.1561282059493;
-        Sun, 23 Jun 2019 02:27:39 -0700 (PDT)
-Received: from localhost.localdomain (host-176-36-198-58.la.net.ua. [176.36.198.58])
-        by smtp.gmail.com with ESMTPSA id l25sm1194257lja.76.2019.06.23.02.27.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 23 Jun 2019 02:27:38 -0700 (PDT)
-From:   Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-Subject: [PATCH v4] l10n: localizable upload progress messages
-Date:   Sun, 23 Jun 2019 12:27:17 +0300
-Message-Id: <20190623092717.82424-2-dimitriy.ryazantcev@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zAQDhYuJARBRZlhBPSziylDMzzPrVcnBOWVJ+F7RQm4=;
+        b=qhvledt/bJF+2SzOMvya5nXbixTihK63NDzGbvSiUmupxrM3iBudCzXEtM4eMJYYk3
+         tSbwCCG39QfZU8snPHhIBDnqTPRMmeNV5Ko6f5S1nxwy3mtRPfjWiUsogWtLbhaEuZ5s
+         q4xsKF+kRErtnJ539WPMmsiFIyfDOdDBySYXGXV0b6tOzJABocu3nnwNjgxHX8MCrNS/
+         Z5zSh55LBRBCJ/r9kkITwltnNXt7wug4Z0WKGra6EdkOZdKhzEe7WYZUm5JOz/Vtzwmy
+         u8xi/HYCLR6BdpWMJI8nJIfIM57/c1BVzoZRI+qF5azfBhWtZOJr1O8/W3g5S3iiQSWm
+         nZdw==
+X-Gm-Message-State: APjAAAWCctEGnzdu0o0/vPIM4/fqzFsRR26rx03iYcB4NcXM1PPgBy8s
+        DAtB5HSs1ea7mrTpAkZcE93eiKlwIG+MT2W+NvG7HtzeP/0=
+X-Google-Smtp-Source: APXvYqx1jiUphRRdJ1kRU4ABfzzinynTveNrh5MYtYyhbCz+VXAHkdRvQFeRH3txub4Uz8dWh6a8MFZLnofKSG7PWLg=
+X-Received: by 2002:a9d:bb8:: with SMTP id 53mr23927562oth.372.1561292149126;
+ Sun, 23 Jun 2019 05:15:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Janos Farkas <chexum@gmail.com>
+Date:   Sun, 23 Jun 2019 13:15:38 +0100
+Message-ID: <CAEXt3sqno7RAtuwQ_OpD3aLkEORLaf6aNeNKGQL0BKezD+wWTw@mail.gmail.com>
+Subject: 2.22.0 repack -a duplicating pack contents
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
----
- progress.c |  4 +++-
- strbuf.c   | 16 ++++++++++++----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+I'm using .keep files to... well.. keep packs to avoid some CPU time
+spent on repacking huge packs and make the process somewhat more
+incremental.
 
-diff --git a/progress.c b/progress.c
-index a2e8cf64a8..fc62941fa4 100644
---- a/progress.c
-+++ b/progress.c
-@@ -151,7 +151,9 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
- 	strbuf_humanise_bytes(buf, total);
- 	strbuf_addstr(buf, " | ");
- 	strbuf_humanise_bytes(buf, rate * 1024);
--	strbuf_addstr(buf, "/s");
-+	strbuf_addstr(buf, "/");
-+	/* TRANSLATORS: unit symbol for IEC 80000-13:2008 second */
-+	strbuf_addstr(buf, _("s"));
- }
- 
- void display_throughput(struct progress *progress, uint64_t total)
-diff --git a/strbuf.c b/strbuf.c
-index 0e18b259ce..706b3b8e42 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -814,19 +814,27 @@ void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
- void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
- {
- 	if (bytes > 1 << 30) {
--		strbuf_addf(buf, "%u.%2.2u GiB",
-+		strbuf_addf(buf, "%u.%2.2u ",
- 			    (unsigned)(bytes >> 30),
- 			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
-+		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 gibibyte */
-+		strbuf_addstr(buf, _("GiB"));
- 	} else if (bytes > 1 << 20) {
- 		unsigned x = bytes + 5243;  /* for rounding */
--		strbuf_addf(buf, "%u.%2.2u MiB",
-+		strbuf_addf(buf, "%u.%2.2u ",
- 			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
-+		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 mebibyte */
-+		strbuf_addstr(buf, _("MiB"));
- 	} else if (bytes > 1 << 10) {
- 		unsigned x = bytes + 5;  /* for rounding */
--		strbuf_addf(buf, "%u.%2.2u KiB",
-+		strbuf_addf(buf, "%u.%2.2u ",
- 			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
-+		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 kibibyte */
-+		strbuf_addstr(buf, _("KiB"));
- 	} else {
--		strbuf_addf(buf, "%u bytes", (unsigned)bytes);
-+		strbuf_addf(buf, "%u ", (unsigned)bytes);
-+		/* TRANSLATORS: unit symbol for IEC 80000-13:2008 byte */
-+		strbuf_addstr(buf, _("B"));
- 	}
- }
- 
--- 
-2.22.0
+Something changed with 22.2.0.  Now .bitmap files are also created,
+and no simple repacks re-create the pack data in a completely new
+file, wasting quite some storage:
 
+02d03::master> find objects/pack/pack* -type f|xargs ls -sht
+108K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.bitmap
+524K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.idx
+4.7M objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.pack
+108K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.bitmap
+524K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.idx
+4.6M objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
+116K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.bitmap
+524K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.idx
+4.6M objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
+   0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
+108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
+524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
+4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
+02d03::master > git repack -af
+Enumerating objects: 19001, done.
+Counting objects: 100% (19001/19001), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (18952/18952), done.
+Writing objects: 100% (19001/19001), done.
+warning: ignoring extra bitmap file:
+./objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
+warning: ignoring extra bitmap file:
+./objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
+warning: ignoring extra bitmap file:
+./objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
+Reusing bitmaps: 104, done.
+Selecting bitmap commits: 2550, done.
+Building bitmaps: 100% (130/130), done.
+Total 19001 (delta 14837), reused 4162 (delta 0)
+02d03::master > find objects/pack/pack* -type f|xargs ls -sht
+108K objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.bitmap
+524K objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.idx
+4.6M objects/pack/pack-8702a2550b7e29940af8bc62bc6fca011ccbd455.pack   <= ????
+108K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.bitmap
+524K objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.idx
+4.7M objects/pack/pack-879f2c28d15e57d353eb8e0ddbcb540655c844c9.pack
+108K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.bitmap
+524K objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.idx
+4.6M objects/pack/pack-e7a7aebfc6dc6b1431f6f56bb8b2f7e730cc4a0c.pack
+116K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.bitmap
+524K objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.idx
+4.6M objects/pack/pack-994c76cb1999e3b29552677d05e6364e6be2ae5e.pack
+   0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
+108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
+524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
+4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
+
+The ccbd455 pack and its metadata seem quite pointless to be
+containing apparently all the data based on the size.
+
+If I use -ad, a new pack is still created,which, judging by the size,
+is essentially everything again, (but at least the extra packs are
+removed)
+
+02d03::master> git repack -ad
+Enumerating objects: 19001, done.
+Counting objects: 100% (19001/19001), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (4114/4114), done.
+Writing objects: 100% (19001/19001), done.
+warning: ignoring extra bitmap file:
+./objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
+Reusing bitmaps: 104, done.
+Selecting bitmap commits: 2550, done.
+Building bitmaps: 100% (130/130), done.
+Total 19001 (delta 14838), reused 19001 (delta 14838)
+02d03::master 9060> find objects/pack/pack* -type f|xargs ls -sht
+116K objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.bitmap
+524K objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.idx
+4.6M objects/pack/pack-46ab64716d4220aac8d53b380d90a264d5293d3d.pack   <= ????
+   0 objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.keep
+108K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.bitmap
+524K objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.idx
+4.6M objects/pack/pack-e5b8848e7c1096274dba2430323ccaf5320c6846.pack
+
+Previously, the kept pack would be kept, and no additional packs would
+be created if no new objects were born in the repro.
+
+With the .keep placeholder removed, the duplication does not happen,
+but all the repro is rewritten into a new pack, which does not look
+correct.  Am I doing something unexpected?
