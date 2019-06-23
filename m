@@ -2,141 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01A7F1F461
-	for <e@80x24.org>; Sun, 23 Jun 2019 18:55:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA3661F461
+	for <e@80x24.org>; Sun, 23 Jun 2019 20:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbfFWSzO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Jun 2019 14:55:14 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52140 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726179AbfFWSzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jun 2019 14:55:13 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 207so10725503wma.1
-        for <git@vger.kernel.org>; Sun, 23 Jun 2019 11:55:11 -0700 (PDT)
+        id S1726311AbfFWUGA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Jun 2019 16:06:00 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:45472 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbfFWUGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jun 2019 16:06:00 -0400
+Received: by mail-pl1-f193.google.com with SMTP id bi6so5633051plb.12
+        for <git@vger.kernel.org>; Sun, 23 Jun 2019 13:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ir7JxHJ/FYsOYPO2NPtj5wOahJ0DH/LmYX8zPFtTTFs=;
+        b=KMoh3iRSuJOtwIELIAyeaRQrMNtweszu94XNAkj2EOyg9WECqRL0sMpkSnLVgRDjAd
+         oJfciQys0nZEIc8H1BS2uq9hT3EHjcYBNf1sdUouKtOJPChdF7w/PAjf45gDiFqJhEch
+         Z/CZ7rRZsWWc6+uuM4HH00fEv6pwU0YumxjX6PdTAMa8cEVOnIPiLkOBX8HFEY8JGmxv
+         V4bW9fqOK8MXnsfXEB0jvvP8kSodihMc6RYtH2CRDTLen1QQyQeXNQqhuMMHZmRwu25F
+         +1ZKzPIBJMhX/XArnQ3I2qwqvdfFAtKXY+G2fgkhWgT6+aAE5TfQ1BRexmnXKE/3XbVR
+         m5aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=euwSgiF0RU1ZIBCaBxttmDu1bZ8l+GT6dpfR9ojnkb8=;
-        b=uRWCWGZl+KW1VPtTbmtRqk2c9TJKc9YN9B6Lq1ByG1ac4ZW7NJDf2JTToW7y3zhxpO
-         4xe4BMp6Wbr1HFXNT3cp9F4i5/fQImsxVyUUVqoRBmcooPGlLDA5i6vBkCQ5jz90ttcG
-         CL4PjYkM+/nkEIs0Z0O1/MRBKB9/vxQwAEcXZqrI/fe19UfumQC22RbfTR+2gao6csXz
-         Dn1hcCtByhJbt/31XvwVcBaDn31MUCV3ReYn6Y+rV3GXP2FtztTpNeSumEK+Ht+PpYmF
-         61pFIDwh3cpumB6ihsSMq4Q3RMZ9sGmhzAlqW4s2SGRztFBbzDOV7XvQ22M0+85zi32C
-         kflw==
-X-Gm-Message-State: APjAAAUrzBwzR2+qo9/Xnq1cDEaOK2N1Gx2S0dNQQcc3klF3Ue7UcXld
-        Nymmd0mft5MokfKOvsWpiqm6jcyHUTpQABcC6/E=
-X-Google-Smtp-Source: APXvYqz9suQCvfeLQTtdSkpRPJCfELevXE5x+prLjghSIJbY+Od+7Xh+d1Q9QJ29gt0Lp8DZKVivpxUH6bxjJKsZp6A=
-X-Received: by 2002:a1c:7e85:: with SMTP id z127mr12651618wmc.95.1561316110673;
- Sun, 23 Jun 2019 11:55:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ir7JxHJ/FYsOYPO2NPtj5wOahJ0DH/LmYX8zPFtTTFs=;
+        b=W3xpuU9q4fytl43TBUICJoEoePI5xdQwl8rFajfUW0E31FtrHL1Nghm7VEIlRFUU/Q
+         yDb1o5VPCyKK9J3wc6jxR6socVvOXMAOdpR+YEpeduPZnuuGbjM77pIM90s90p0naLpP
+         jbWBbXX/hjLBn9J7SdYUgvvPVhMUeqvjHSCs288I8fFN7ygRDDqzML0mzRI8HRU7Y/M+
+         2gBWDKU+TZ1EPa8O79M0Mh6M5EyQKGRecK6b+Qp1qx78+IKAqNmZCultD19QVHWeLoeC
+         lm8HbIbR/sxhj1gna8lx2vKAhJf1TFaB1iVD8GNPCJoJh760wfF5bC1uhBPEaLfqKrRM
+         dwjA==
+X-Gm-Message-State: APjAAAXbgC4ebckeT4YJZswwFT12jQhoL9ap5nOFcQck4FzQXY9rhq62
+        ejKmZlENzjK7ZuZqp9a51vw=
+X-Google-Smtp-Source: APXvYqzYpZC1B3l9mLLTql9FYOeDCUsDyHVXwabLn1kX+vFao7YDgSBhlti7oGYPPNbII63vcscv5Q==
+X-Received: by 2002:a17:902:20e9:: with SMTP id v38mr103526987plg.62.1561320359630;
+        Sun, 23 Jun 2019 13:05:59 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.213])
+        by smtp.gmail.com with ESMTPSA id 27sm8621882pgt.6.2019.06.23.13.05.56
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 23 Jun 2019 13:05:58 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     rohit.ashiwal265@gmail.com
+Cc:     git@vger.kernel.org, newren@gmail.com, t.gummerer@gmail.com,
+        phillip.wood123@gmail.com, gitster@pobox.com,
+        martin.agren@gmail.com
+Subject: [GSoC][PATCH v7 0/6] Teach cherry-pick/revert to skip commits
+Date:   Mon, 24 Jun 2019 01:33:32 +0530
+Message-Id: <20190623200338.17144-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
+References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
-References: <20190607010708.46654-1-emilyshaffer@google.com>
- <CAPig+cTZFL=GzM_-S2JMWWxRU7poJ87f3a9ZcFjjUe1T131eEQ@mail.gmail.com>
- <20190617231959.GB100487@google.com> <CAPig+cSyEHUvx39stA0kx1c6kKYO7jk7Sk_Q=etEro_h=3ucOw@mail.gmail.com>
- <20190619233556.GH100487@google.com>
-In-Reply-To: <20190619233556.GH100487@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 23 Jun 2019 14:54:59 -0400
-Message-ID: <CAPig+cTCfm3wi2G6q1ZW9wVwQB9zp0TQ96BXKKt8E+qxfR-UWA@mail.gmail.com>
-Subject: Re: [PATCH] documentation: add tutorial for revision walking
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 19, 2019 at 7:36 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> On Wed, Jun 19, 2019 at 04:13:35AM -0400, Eric Sunshine wrote:
-> > Maybe I got confused because the tiny cmd_walken() snippets followed
-> > one another so closely (or because I got interrupted several times
-> > during the review), but one way to avoid that would be to present a
-> > single _complete_ snippet from the start, followed by a bit of
-> > explanation. [...]
->
-> Hmm. I can say that I personally would find that much more difficult to
-> follow interactively, and I'd be tempted to copy-and-paste and skim
-> through the wall of text if I was presented with such a snippet.
-> However, I could also imagine the reverse - someone becoming tired of
-> having their hand held through a fairly straightforward implementation,
-> when they're perfectly capable of reading a long description and would
-> just like to get on with it.
->
-> (Maybe we can split the difference and present a complete patch or new
-> function, followed by a breakdown? That would end up even more verbose
-> than the current approach, though.)
+Tied all loose ends. Add an advice config variable to guard advise() call
+in 2/6.
 
-It might not be that important and may not need fixing considering
-that I read it correctly the second time, and don't know how I managed
-to get confused on the first read.
+Rohit Ashiwal (6):
+  advice: add sequencerInUse config variable
+  sequencer: add advice for revert
+  sequencer: rename reset_for_rollback to reset_merge
+  sequencer: use argv_array in reset_merge
+  cherry-pick/revert: add --skip option
+  cherry-pick/revert: advise using --skip
 
-> > As this is just a toy example, I don't care too strongly about the
-> > unnecessary second sentence. On the other hand, the tutorial is trying
-> > to teach people how to contribute to this project, and on this
-> > project, that sort of pointless comment is likely to be called out in
-> > review. In fact, given that view, the entire comment block is
-> > unnecessary (it doesn't add any value for anyone reviewing or reading
-> > the code), so it might make more sense to drop the comment from the
-> > code entirely, and just do a better job explaining in prose above the
-> > snippet why you are calling that function. For instance:
-> >
-> >     ... Let's start the helper with the call to `prepare_revision_walk()`,
-> >     which does the final setup of the `rev_info` structure before it can
-> >     be used.
-> >
-> > The above observation may be more widely applicable than to just this
-> > one instance. Don't use in-code comments for what should be explained
-> > in prose if the in-code comment adds no value to the code itself (to
-> > wit, if a reviewer would say "don't repeat in a comment what the code
-> > already says clearly" or "don't use a comment to state the obvious").
->
-> I'm of two minds about this. On the one hand, I'm somewhat in favor of
-> leaving contextual, informational comments in the sample code, so the
-> sample code can teach on its own without the tutorial (specifically, I
-> mean the patchset that was sent alongside this one as RFC). On the other
-> hand, you're right that adding these informational comments doesn't
-> model best practices for real commits.
->
-> I don't have a strong opposition to removing those comments from the
-> in-place samples in the tutorial itself. But I do think it's useful to
-> include them in the sample patchset, which is intended as an additional
-> learning tool, rather than as a pristine code example - especially if we
-> make it clear in the commit messages there.
+ Documentation/config/advice.txt   |   2 +
+ Documentation/git-cherry-pick.txt |   4 +-
+ Documentation/git-revert.txt      |   4 +-
+ Documentation/sequencer.txt       |   4 +
+ advice.c                          |   2 +
+ advice.h                          |   1 +
+ builtin/commit.c                  |  13 +--
+ builtin/revert.c                  |   5 ++
+ sequencer.c                       | 134 ++++++++++++++++++++++++++----
+ sequencer.h                       |   1 +
+ t/t3510-cherry-pick-sequence.sh   | 122 +++++++++++++++++++++++++++
+ 11 files changed, 266 insertions(+), 26 deletions(-)
 
-Indeed, having the comments in the sample patch-set makes sense for
-people who learn better that way (by seeing a complete piece of code).
+Range-diff:
+-:  ---------- > 1:  207042a895 advice: add sequencerInUse config variable
+1:  67c212090d ! 2:  d7c603d47f sequencer: add advice for revert
+    @@ -46,7 +46,8 @@
+     +	}
+     +	if (in_progress_error) {
+     +		error("%s", in_progress_error);
+    -+		advise("%s", in_progress_advice);
+    ++		if (advice_sequencer_in_use)
+    ++			advise("%s", in_progress_advice);
+      		return -1;
+     -	} else if (mkdir(git_path_seq_dir(), 0777) < 0)
+     +	}
+2:  300d6f64f0 = 3:  b70299c572 sequencer: rename reset_for_rollback to reset_merge
+3:  edc35f6a4c = 4:  569122c861 sequencer: use argv_array in reset_merge
+4:  2b16d7ea4d = 5:  4580f0e5af cherry-pick/revert: add --skip option
+5:  8f278b5139 ! 6:  f6f21b055b cherry-pick/revert: advise using --skip
+    @@ -64,14 +64,12 @@
+      		default:
+      			BUG("unexpected action in create_seq_dir");
+     @@
+    - 	}
+      	if (in_progress_error) {
+      		error("%s", in_progress_error);
+    --		advise("%s", in_progress_advice);
+    -+		if (advise_skip)
+    -+			advise(in_progress_advice, "--skip | ");
+    -+		else
+    -+			advise(in_progress_advice, "");
+    + 		if (advice_sequencer_in_use)
+    +-			advise("%s", in_progress_advice);
+    ++			advise(in_progress_advice,
+    ++				advise_skip ? "--skip | " : "");
+      		return -1;
+      	}
+      	if (mkdir(git_path_seq_dir(), 0777) < 0)
+-- 
+2.21.0
 
-> > > > Or make the output more useful by having it be machine-parseable (and
-> > > > not localized):
-> > > >
-> > > >     printf("commits %d\nblobs %d\ntags %d\ntrees %d\n",
-> > > >         commit_count, blob_count, tag_cont, tree_count);
-> > >
-> > > I'm not sure whether I agree, since it's a useless toy command only for human
-> > > parsing.
-> >
-> > True, it's not a big deal, and I don't insist upon it. But, if you
-> > mention in prose that this output is easily machine-parseable, then
-> > perhaps that nudges the reader a bit in the direction of thinking
-> > about porcelain vs. plumbing, which is something a contributor to this
-> > project eventually has to be concerned with (the sooner, the better).
->
-> Oh, that's a very good point. I'll frame it that way - that's a handy
-> place to slip in some bonus context about Git. Thanks.
->
->   NOTE: We aren't localizing the printf here because we have purposefully
->   formatted it in a machine-parseable way. Commands in Git are divided into
->   "plumbing" and "porcelain"; the "plumbing" commands are machine-parseable and
->   intended for use in scripts, while the "porcelain" commands are intended for
->   human interaction. Output intended for script usage doesn't need to be
->   localized; output intended for humans does.
-
-I'd go with stronger language than "doesn't need to be localized" and
-say instead that plumbing output "must not be localized" since scripts
-depend upon stable output (and stable API).
