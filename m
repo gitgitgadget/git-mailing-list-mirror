@@ -2,111 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E82401F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 18:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C50291F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 18:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732694AbfFXSAM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 14:00:12 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43633 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726331AbfFXSAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 14:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561399202;
-        bh=85s0+7kyvh7wGtpGnajDDfISMH4iUTaPhR5nDpYns9w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BK4BGhxFtrMsXYpBYmP7dYInzdKEo5aIm73LF3/Km9eseD+80entGvmfoinDhENm5
-         cODCffXFz7rF+CkTiJDfhJXVGBI1A7cKvaZyqmm54J3du9qOIEUYtdoScjMXHO5e6v
-         /vVBrwxhobbBjde4e5vtlRNK4hMoiyzWCaEWHsmI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1ic1K93JNk-015MmD; Mon, 24
- Jun 2019 20:00:01 +0200
-Date:   Mon, 24 Jun 2019 20:00:20 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 00/10] Add 'ls-files --debug-json' to dump the index
- in json
-In-Reply-To: <20190624130226.17293-1-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906241954290.44@tvgsbejvaqbjf.bet>
-References: <20190624130226.17293-1-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732683AbfFXSBy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 14:01:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50097 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729019AbfFXSBy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 14:01:54 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80C9415DBAB;
+        Mon, 24 Jun 2019 14:01:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RWh5gjnymixhduAkcQImCIpZG0w=; b=hFXnVx
+        xa6wrILSIvV5QHu/5pVWzVoWmd8lAQO9BctHylB3o/ZpQaINvl+FbQTD8VZY90IL
+        0+y2u68xVjUvzkMJBO875l1pOq/pxv2iFee5gCXDN7YswbLH2CV0FSvFiH2RVB3i
+        3H7mJuvqm9z5majMhSukVG0e6MVRDf9g5hjEQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IuCbQsqy7133fGWhN4KRjECy3e9vG+y9
+        ENy3Fc3arekv4dsRtHZnScIZ/y4fGI1jb/zlrhHxmC7VQLcHtSFawkYmmvt26+2Z
+        d68NF5vFSz8sJCg7o08YHF3c2VxYSL4DmHeMbgJDHgsyY36bJsCEjCpTI84qUn8W
+        5EhGtmapZL0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7670E15DBAA;
+        Mon, 24 Jun 2019 14:01:52 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BECB115DBA9;
+        Mon, 24 Jun 2019 14:01:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dimitriy <dimitriy.ryazantcev@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3] l10n: localizable upload progress messages
+References: <20190622093655.80092-2-dimitriy.ryazantcev@gmail.com>
+        <CACsJy8CPChOGSZVfXd6ioaXHWg_aFxNMzr2J=Zdm2RZXkO++Ew@mail.gmail.com>
+        <CAPUT4mQnsThA=ZxZD8K+J+u6tbN5PggPomuymEUO=u2GT88aUA@mail.gmail.com>
+Date:   Mon, 24 Jun 2019 11:01:50 -0700
+In-Reply-To: <CAPUT4mQnsThA=ZxZD8K+J+u6tbN5PggPomuymEUO=u2GT88aUA@mail.gmail.com>
+        (Dimitriy's message of "Sat, 22 Jun 2019 19:39:57 +0300")
+Message-ID: <xmqq1rzij20h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-379455855-1561399222=:44"
-X-Provags-ID: V03:K1:7bXQrmEkW7kpZk6TYdKqCxREQ1kBUZeN7RS+kysvVcSl8os9dXV
- Cd7RvymmlJwbb+ZS5/mGhloDunhQXp0HyNJIBcSNbxhlJIYnQuPajSVOYOPQMbvFo76TZXU
- IcnHIlrUwu6pTn11Mg+xt2glNpXaSAzNs8PYcNVOP7Str00RHqfmXiERGc7h/48M7lNyQbc
- DYdmoLbGkT3jF+Jvb5uyA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lTTNdwNS34I=:fGYQOHCsq0Wf6e//Xy2uyo
- zHe8SaJ1LwsP3RUeIlcQwGPAfDAmNW7W0RFUM/aCxzBM6ygMAvWYJ8xpGPENi9Fd+JlisuW2A
- lVUnFUZaDspC9eF/Y/NGs5yEBFTto1o/iUcyaV9cMIqCHHDVYBUUl3p9XPn3wsJjNHz5LSpsF
- PHOeJulNb/eknMQk8rCThDH5M6fb9R6YHYFm6ObcqrK47ci8OABIosD33SLgnAXHpwewtgSvB
- kuieZClpad+CxxHdiGkv90QGmWAoHDJHi6dQjZAL55Du1URY/UWRwECpWX2K5L+Q7xbBC/Ode
- /NB/T7qtgwNQwzRzzKCRT9d6KefrtkwoDF/CcK9vD9vh4EY6ZzY15ibPjpBHU4rmSZjJx6tJx
- q9v9D11yQywz7jXTYYpmSIJEwpYsiSrYnoLAWYZ+edg4h/lQjIy9P21Pw5xusUim5skq+G/9I
- T42rsNFe7RS4TjNLxwts1iWMneFND5uL6OIOQ1i2DtmxaGrQ3/ubY520SxCxaMHygXhbuiyAL
- XgZKenZlWLZsrYX5A4eekGzLknkCSqV6xrYR3NGQVPWIb3PT76V4InQtJnLIyI61hn8I+142D
- p0o8e5LN8LFmxWes2cmJlw5KXoR9AMvokx4AByGnZ6Wy6KMl4mTca2ypfglY7HnBcfVIv4U5g
- 3Hkshdt084PeMCLjg23niX27VQaSY8u39q+it4mm8V9d53fsZMyOlY04igUgJc3yFLCEp6a2d
- JOys7cmyFyOksMej9DizOzKiRum+1dPS0ZHprxm/VZIaDVd6Usv7qsXTBwshp9oRHAIthIbk2
- hukFbAXLDRF+Y0nZeBCUMLCXnbtgWt0SrQs5jfDh+xaW7+jAJAqx6maK/G0LDtGqEoVxYkNnE
- iYcux0UuR3ekOFGQJ976u4wl3niKhgG03Jd7W0C0qs6Y830iEqZo2jVnVlUL++lUqgh4l6RQl
- vduB56vYxcMQJdMMGAYFOHXS+lVo2jzEXiXbhhCq9IcfQbBywG/zObmVKYRe1efYOG65sxVeu
- gfiBrAbRoUp/zO3ofRDwCGVrfpNPWY6aqTs2CUj+UCNHdUHOEayzUtXsWRbrLU2aPs4xdAXJM
- ufLONLwxrj2c8o8dJCxE8kkC5cuTiD19tLS
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24D498D8-96AA-11E9-836F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Dimitriy <dimitriy.ryazantcev@gmail.com> writes:
 
---8323328-379455855-1561399222=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> I just moved 'B' out of else block so it will be prepended with
+> 'Gi'/'Mi'/'Ki' when needed.
+> Note: I changed 'bytes' to just 'B' unit.
 
-Hi Duy,
+That makes this change more than "localizable messages", doesn't it?
 
-On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-> - json field names now use '_' instead of '.' to be friendlier to some
->   languages. I stick to underscore_name instead of camelCase because
->   the former is closer to what we use
-
-This is not a good reason. People who are used to read JSON will stumble
-over this all the time because it is so uncommon.
-
-> - extension location is printed, in case you need to decode the
->   extension by yourself (previously only the size is printed)
-> - all extensions are printed in the same order they appear in the file
->   (previously eoie and ieot are printed first because that's how we
->   parse)
-> - resolve undo extension is reorganized a bit to be easier to read
-> - tests added. Example json files are in t/t3011
-
-It might actually make sense to optionally disable showing extensions.
-
-You also forgot to mention that you explicitly disable handling
-`<pathspec>`, which I find a bit odd, personally, as that would probably
-come in real handy at times, especially when we offer this as a better way
-for 3rd-party applications to interact with Git (which I think will be the
-use case for this feature that will be _far_ more common than using it for
-debugging).
-
-Ciao,
-Dscho
-
---8323328-379455855-1561399222=:44--
+As an old timer, I do not mind MiB (I'd prefer the old-fashioned MB
+myself), but I think "20 bytes" (or "1 byte") spelled out is much
+easier to grok and less prone to get misunderstood than "20B".  Like
+it or not, with scale prefixes, e.g. "20 kiB", "20 MiB", etc., it is
+hard to misunderstand what 'B' means in there, but without any scale
+prefix, i.e. "20 B", it is rather easy to get confused what 'B'
+means.
