@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2E8B1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 13:03:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4511C1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 13:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730476AbfFXNDE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 09:03:04 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39396 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729130AbfFXNDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 09:03:03 -0400
-Received: by mail-pl1-f193.google.com with SMTP id b7so6875195pls.6
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 06:03:03 -0700 (PDT)
+        id S1730506AbfFXNDJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 09:03:09 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45278 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729130AbfFXNDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 09:03:09 -0400
+Received: by mail-pl1-f196.google.com with SMTP id bi6so6856061plb.12
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 06:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hS84pD7SLtkTGLA9zIhMVzeq4ScnuuDvladmMWsLCRw=;
-        b=uw9t6Ggi+ddbwgHQFIy4sh+jT/RYg6m/XlrhXhpXz3ywTCbDGwCxXlHLp2naIvW5tn
-         ZaGFkBrM1eAGHsboe/0nYlfo0CZ9YvlHGpSs29tvUGr7AOIodZ80a3SX2XGetbcsqPbK
-         gQqqITpvJpPXwhk3J43dHmGYqkiXJ/3fdXWbmyZuJq/4EPDDDBxCdWp92fBWQZeYgQhr
-         Cr9f/TJrjP8cG2XiYtXxUYIVAgKRS3Ue/mVXUIjwpBLISC8uwTUuWGCnu6VHiQck3+g9
-         YDHr78gNRLIXgT3qFQb7a/McFPXqDo7a9j5umRj4BewMiiaq5Xyzi+QLyqovwHt9kjDE
-         2qGA==
+        bh=mQmITDvZW2CXGzoSuENvM0CTFqjQaG5lFvaTu8HDWV4=;
+        b=YFif0D9rGIipysT4x72Qzo4H5kdOtugqUwPMEREorx1/sNGIbIq16LXP1JBi1ELO2m
+         e2ih6kwUAqHvuvqnt6QDU73Enw+6xgaa+8zSr1n6Kc4u+eYWjQXtUYK8fleo2778FZ8J
+         XtrHuqhM6Twr54lxqKoOr4fIxrL2sCa0lWRdck0bSVRUWpDD7tOEUKsAGSltFXIeZb/6
+         AMlFSKxBv0/KoDW2+Q/XSSXuqsOHsc+ke9+oHmwv1zWMeecpn7q4y33+UEM9wgSHW257
+         U9AIkYogNKzbgBRtViDOQdvptI01dCiCJVRb9mkuFmmmgeHMnm2v1u5OCw45xfA7cM1Q
+         J0Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hS84pD7SLtkTGLA9zIhMVzeq4ScnuuDvladmMWsLCRw=;
-        b=b5SzWvX0xRQEEaLH4jq30uQiwgZBJAvwko/wUy+ly9/f5BQ/UOH8mQhRWB09BrcKIs
-         JS4zU9Q09MBEfEmv6ArS5SrOQEq+lFselfKF9u/FfhbzfDDFNF4gu8mOeif76h95cUDb
-         EbXsg0BRiXo+g8tP4TyIuNXKR2rThgyYTLbecp2m+GRgg6UlAsNlNqDUOH5bO0pD1TfJ
-         Dc40iXe61xkD2nybi0XVvccuKdDYIsRJqWSBx2Sm+rzUTkV59+KPU7gdNB7JWTAifh4a
-         kmKULjfRD7utc4B2WzIpunKkHVkBFJEPlMqzOoPmsfl/lxuRMFDX1DyL6rdH0/Fo7cS8
-         Q+ew==
-X-Gm-Message-State: APjAAAUfqpze+QdTbnae3S4uzPpnbROJXWHQ4Zt74B4zHtviHQG8CH0G
-        iEclCxci70djgiCc8mo3ZQbgHzpa
-X-Google-Smtp-Source: APXvYqxkFugBs8DAISh9mLGKwongXU2yPKUSLjip8tf2PLomV5cVaMIo+2J0GhSTCqdr7GuiNeFM2w==
-X-Received: by 2002:a17:902:20b:: with SMTP id 11mr15259622plc.78.1561381382809;
-        Mon, 24 Jun 2019 06:03:02 -0700 (PDT)
+        bh=mQmITDvZW2CXGzoSuENvM0CTFqjQaG5lFvaTu8HDWV4=;
+        b=HSdqLC4U3GRgZThHJjcEcOpCRQKeorpW+vO7qtmCFPHKeadhziEeUw3BYNWyqyElud
+         swErijWttYC3j+v5VicKcsWFLj9DW9uP+0fiaCIPv6vPbajaBfbgjPQB6ogrujb3rt1X
+         kJfpVRbswS2IM/8ygAHBOwavFL7XrC9wOzKFso6njDDDm19T/JZh1gSPJeSkOo7Zy9X6
+         4vk0xr89ZDig9ohcS/EtDrYQhXphNdNOr5LXpV00cB3J7FXnh+8CTPHED7w31782VZKS
+         vFa7lOU3RS8CmG+td5dSekpzfYz/i5NdY15Z5OorQekLMqo/wFgRFzFvzalBOMQkTaxg
+         /33A==
+X-Gm-Message-State: APjAAAVSZ/ZsydztbiUa/0CB9RVrzLkKdqr0QN2XRpJZvTf4/SqsqgEF
+        w3u4ifW7K7Yf4do25fxODlq39LMX
+X-Google-Smtp-Source: APXvYqxnbd/nLSKMBtMJHSuEtpykls2+AxfPnSKXaeU6GINAX2p4SNJ9gVlHkzM/e3B745yKyX1Bwg==
+X-Received: by 2002:a17:902:e65:: with SMTP id 92mr141065909plw.13.1561381388222;
+        Mon, 24 Jun 2019 06:03:08 -0700 (PDT)
 Received: from ash ([115.76.181.38])
-        by smtp.gmail.com with ESMTPSA id f7sm12067386pfd.43.2019.06.24.06.02.58
+        by smtp.gmail.com with ESMTPSA id x3sm12312646pja.7.2019.06.24.06.03.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 06:03:02 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 20:02:56 +0700
+        Mon, 24 Jun 2019 06:03:07 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 20:03:03 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 03/10] cache-tree.c: dump "TREE" extension as json
-Date:   Mon, 24 Jun 2019 20:02:19 +0700
-Message-Id: <20190624130226.17293-4-pclouds@gmail.com>
+Subject: [PATCH v2 04/10] dir.c: dump "UNTR" extension as json
+Date:   Mon, 24 Jun 2019 20:02:20 +0700
+Message-Id: <20190624130226.17293-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190624130226.17293-1-pclouds@gmail.com>
 References: <20190624130226.17293-1-pclouds@gmail.com>
@@ -75,183 +75,231 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The big part of UNTR extension is dumped at the end instead of dumping
+as soon as we read it, because we actually "patch" some fields in
+untracked_cache_dir with EWAH bitmaps at the end.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache-tree.c             | 36 +++++++++++++++++++++++++++++++-----
- cache-tree.h             |  5 ++++-
+ dir.c                    | 57 +++++++++++++++++++++++++++++++++++++++-
+ dir.h                    |  4 ++-
+ json-writer.h            |  6 +++++
  read-cache.c             |  2 +-
- t/t3011-ls-files-json.sh |  4 +++-
- t/t3011/basic            | 20 +++++++++++++++++++-
- 5 files changed, 58 insertions(+), 9 deletions(-)
+ t/t3011-ls-files-json.sh |  3 ++-
+ t/t3011/basic            | 39 +++++++++++++++++++++++++++
+ 6 files changed, 107 insertions(+), 4 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index b13bfaf71e..b6a233307e 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -3,6 +3,7 @@
- #include "tree.h"
- #include "tree-walk.h"
- #include "cache-tree.h"
+diff --git a/dir.c b/dir.c
+index ba4a51c296..8808577ea3 100644
+--- a/dir.c
++++ b/dir.c
+@@ -19,6 +19,7 @@
+ #include "varint.h"
+ #include "ewah/ewok.h"
+ #include "fsmonitor.h"
 +#include "json-writer.h"
- #include "object-store.h"
- #include "replace-object.h"
+ #include "submodule-config.h"
  
-@@ -492,7 +493,8 @@ void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
- 	write_one(sb, root, "", 0);
+ /*
+@@ -2826,7 +2827,42 @@ static void load_oid_stat(struct oid_stat *oid_stat, const unsigned char *data,
+ 	oid_stat->valid = 1;
  }
  
--static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
-+static struct cache_tree *read_one(const char **buffer, unsigned long *size_p,
-+				   struct json_writer *jw)
- {
- 	const char *buf = *buffer;
- 	unsigned long size = *size_p;
-@@ -546,6 +548,15 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 			*buffer, subtree_nr);
- #endif
- 
-+	if (jw) {
-+		if (it->entry_count >= 0) {
-+			jw_object_string(jw, "oid", oid_to_hex(&it->oid));
-+			jw_object_intmax(jw, "entry_count", it->entry_count);
-+		} else {
-+			jw_object_null(jw, "oid");
-+		}
-+		jw_object_inline_begin_array(jw, "subdirs");
-+	}
- 	/*
- 	 * Just a heuristic -- we do not add directories that often but
- 	 * we do not want to have to extend it immediately when we do,
-@@ -559,12 +570,18 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 		struct cache_tree_sub *subtree;
- 		const char *name = buf;
- 
--		sub = read_one(&buf, &size);
-+		if (jw) {
-+			jw_array_inline_begin_object(jw);
-+			jw_object_string(jw, "name", name);
-+		}
-+		sub = read_one(&buf, &size, jw);
-+		jw_end_gently(jw);
- 		if (!sub)
- 			goto free_return;
- 		subtree = cache_tree_sub(it, name);
- 		subtree->cache_tree = sub;
- 	}
-+	jw_end_gently(jw);
- 	if (subtree_nr != it->subtree_nr)
- 		die("cache-tree: internal error");
- 	*buffer = buf;
-@@ -576,11 +593,20 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 	return NULL;
- }
- 
--struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
-+struct cache_tree *cache_tree_read(const char *buffer, unsigned long size,
-+				   struct json_writer *jw)
- {
-+	struct cache_tree *ret;
+-struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
++static void jw_object_oid_stat(struct json_writer *jw, const char *key,
++			       const struct oid_stat *oid_stat)
++{
++	jw_object_inline_begin_object(jw, key);
++	jw_object_bool(jw, "valid", oid_stat->valid);
++	jw_object_string(jw, "oid", oid_to_hex(&oid_stat->oid));
++	jw_object_stat_data(jw, "stat", &oid_stat->stat);
++	jw_end(jw);
++}
 +
++static void jw_object_untracked_cache_dir(struct json_writer *jw,
++					  const struct untracked_cache_dir *ucd)
++{
++	int i;
++
++	jw_object_bool(jw, "valid", ucd->valid);
++	jw_object_bool(jw, "check-only", ucd->check_only);
++	jw_object_stat_data(jw, "stat", &ucd->stat_data);
++	jw_object_string(jw, "exclude-oid", oid_to_hex(&ucd->exclude_oid));
++	jw_object_inline_begin_array(jw, "untracked");
++	for (i = 0; i < ucd->untracked_nr; i++)
++		jw_array_string(jw, ucd->untracked[i]);
++	jw_end(jw);
++
++	jw_object_inline_begin_object(jw, "dirs");
++	for (i = 0; i < ucd->dirs_nr; i++) {
++		jw_object_inline_begin_object(jw, ucd->dirs[i]->name);
++		jw_object_untracked_cache_dir(jw, ucd->dirs[i]);
++		jw_end(jw);
++	}
++	jw_end(jw);
++}
++
++struct untracked_cache *read_untracked_extension(const void *data,
++						 unsigned long sz,
++						 struct json_writer *jw)
+ {
+ 	struct untracked_cache *uc;
+ 	struct read_data rd;
+@@ -2864,6 +2900,19 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
+ 	exclude_per_dir = (const char *)next + exclude_per_dir_offset;
+ 	uc->exclude_per_dir = xstrdup(exclude_per_dir);
++
++	if (jw) {
++		jw_object_string(jw, "ident", ident);
++		jw_object_oid_stat(jw, "info_exclude", &uc->ss_info_exclude);
++		jw_object_oid_stat(jw, "excludes_file", &uc->ss_excludes_file);
++		jw_object_intmax(jw, "flags", uc->dir_flags);
++		if (uc->dir_flags & DIR_SHOW_OTHER_DIRECTORIES)
++			jw_object_bool(jw, "show_other_directories", 1);
++		if (uc->dir_flags & DIR_HIDE_EMPTY_DIRECTORIES)
++			jw_object_bool(jw, "hide_empty_directories", 1);
++		jw_object_string(jw, "excludes_per_dir", uc->exclude_per_dir);
++	}
++
+ 	/* NUL after exclude_per_dir is covered by sizeof(*ouc) */
+ 	next += exclude_per_dir_offset + strlen(exclude_per_dir) + 1;
+ 	if (next >= end)
+@@ -2905,6 +2954,12 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	ewah_each_bit(rd.sha1_valid, read_oid, &rd);
+ 	next = rd.data;
+ 
 +	if (jw) {
 +		jw_object_inline_begin_object(jw, "root");
++		jw_object_untracked_cache_dir(jw, uc->root);
++		jw_end(jw);
 +	}
- 	if (buffer[0])
--		return NULL; /* not the whole tree */
--	return read_one(&buffer, &size);
-+		ret = NULL; /* not the whole tree */
-+	else
-+		ret = read_one(&buffer, &size, jw);
-+	jw_end_gently(jw);
-+	return ret;
- }
- 
- static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *path)
-diff --git a/cache-tree.h b/cache-tree.h
-index 757bbc48bc..fc3c73284b 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
++
+ done:
+ 	free(rd.ucd);
+ 	ewah_free(rd.valid);
+diff --git a/dir.h b/dir.h
+index 680079bbe3..80efdd05c4 100644
+--- a/dir.h
++++ b/dir.h
 @@ -6,6 +6,8 @@
- #include "tree-walk.h"
+ #include "cache.h"
+ #include "strbuf.h"
  
- struct cache_tree;
 +struct json_writer;
 +
- struct cache_tree_sub {
- 	struct cache_tree *cache_tree;
- 	int count;		/* internally used by update_one() */
-@@ -28,7 +30,8 @@ void cache_tree_invalidate_path(struct index_state *, const char *);
- struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+ struct dir_entry {
+ 	unsigned int len;
+ 	char name[FLEX_ARRAY]; /* more */
+@@ -362,7 +364,7 @@ void untracked_cache_remove_from_index(struct index_state *, const char *);
+ void untracked_cache_add_to_index(struct index_state *, const char *);
  
- void cache_tree_write(struct strbuf *, struct cache_tree *root);
--struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
-+struct cache_tree *cache_tree_read(const char *buffer, unsigned long size,
-+				   struct json_writer *jw);
+ void free_untracked_cache(struct untracked_cache *);
+-struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
++struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz, struct json_writer *jw);
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+ void add_untracked_cache(struct index_state *istate);
+ void remove_untracked_cache(struct index_state *istate);
+diff --git a/json-writer.h b/json-writer.h
+index c48c4cbf33..c3d0fbd1ef 100644
+--- a/json-writer.h
++++ b/json-writer.h
+@@ -121,6 +121,12 @@ static inline void jw_object_inline_begin_array_gently(struct json_writer *jw,
+ 		jw_object_inline_begin_array(jw, name);
+ }
  
- int cache_tree_fully_valid(struct cache_tree *);
- int cache_tree_update(struct index_state *, int);
++static inline void jw_array_inline_begin_object_gently(struct json_writer *jw)
++{
++	if (jw)
++		jw_array_inline_begin_object(jw);
++}
++
+ static inline void jw_end_gently(struct json_writer *jw)
+ {
+ 	if (jw)
 diff --git a/read-cache.c b/read-cache.c
-index 4accd8bb08..d09ce42b9a 100644
+index d09ce42b9a..a70df4b0a5 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1716,7 +1716,7 @@ static int read_index_extension(struct index_state *istate,
- 
- 	switch (CACHE_EXT(ext)) {
- 	case CACHE_EXT_TREE:
--		istate->cache_tree = cache_tree_read(data, sz);
-+		istate->cache_tree = cache_tree_read(data, sz, istate->jw);
+@@ -1725,7 +1725,7 @@ static int read_index_extension(struct index_state *istate,
+ 		ret = read_link_extension(istate, data, sz);
  		break;
- 	case CACHE_EXT_RESOLVE_UNDO:
- 		istate->resolve_undo = resolve_undo_read(data, sz);
+ 	case CACHE_EXT_UNTRACKED:
+-		istate->untracked = read_untracked_extension(data, sz);
++		istate->untracked = read_untracked_extension(data, sz, istate->jw);
+ 		break;
+ 	case CACHE_EXT_FSMONITOR:
+ 		read_fsmonitor_extension(istate, data, sz);
 diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
-index 97bcd814be..fc313f2c9a 100755
+index fc313f2c9a..082fe8e966 100755
 --- a/t/t3011-ls-files-json.sh
 +++ b/t/t3011-ls-files-json.sh
-@@ -29,6 +29,8 @@ test_expect_success 'setup' '
- 	echo 2 >sub/two &&
+@@ -30,6 +30,7 @@ test_expect_success 'setup' '
  	git add sub/two &&
  
-+	git commit -m first &&
-+
+ 	git commit -m first &&
++	git update-index --untracked-cache &&
+ 
  	echo intent-to-add >ita &&
  	git add -N ita &&
- 
-@@ -37,7 +39,7 @@ test_expect_success 'setup' '
+@@ -39,7 +40,7 @@ test_expect_success 'setup' '
  	strip_string oid ident
  '
  
--test_expect_success 'ls-files --json, main entries' '
-+test_expect_success 'ls-files --json, main entries and TREE' '
+-test_expect_success 'ls-files --json, main entries and TREE' '
++test_expect_success 'ls-files --json, main entries, UNTR and TREE' '
  	compare_json basic
  '
  
 diff --git a/t/t3011/basic b/t/t3011/basic
-index 9436445d90..e27f5be5ff 100644
+index e27f5be5ff..8e049f5350 100644
 --- a/t/t3011/basic
 +++ b/t/t3011/basic
-@@ -63,5 +63,23 @@
-       },
-       "file_offset": <number>
-     }
--  ]
-+  ],
-+  "extensions": {
-+    "TREE": {
+@@ -80,6 +80,45 @@
+           }
+         ]
+       }
++    },
++    "UNTR": {
 +      "file_offset": <number>,
 +      "ext_size": <number>,
-+      "root": {
-+        "oid": null,
-+        "subdirs": [
-+          {
-+            "name": "sub",
-+            "oid": <string>,
-+            "entry_count": 1,
-+            "subdirs": [
-+            ]
-+          }
-+        ]
-+      }
-+    }
-+  }
++      "ident": <string>,
++      "info_exclude": {
++        "valid": true,
++        "oid": <string>,
++        "stat": {
++          "ctime_sec": <number>,
++          "ctime_nsec": <number>,
++          "mtime_sec": <number>,
++          "mtime_nsec": <number>,
++          "device": <number>,
++          "inode": <number>,
++          "uid": <number>,
++          "gid": <number>,
++          "size": 0
++        }
++      },
++      "excludes_file": {
++        "valid": true,
++        "oid": <string>,
++        "stat": {
++          "ctime_sec": <number>,
++          "ctime_nsec": <number>,
++          "mtime_sec": <number>,
++          "mtime_nsec": <number>,
++          "device": <number>,
++          "inode": <number>,
++          "uid": <number>,
++          "gid": <number>,
++          "size": 0
++        }
++      },
++      "flags": 6,
++      "show_other_directories": true,
++      "hide_empty_directories": true,
++      "excludes_per_dir": ".gitignore"
+     }
+   }
  }
 -- 
 2.22.0.rc0.322.g2b0371e29a
