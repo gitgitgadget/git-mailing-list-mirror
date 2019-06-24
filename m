@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 452F01F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 09:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0060E1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 09:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728270AbfFXJ4B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 05:56:01 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:33493 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727991AbfFXJ4B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 05:56:01 -0400
-Received: by mail-pg1-f194.google.com with SMTP id m4so6227835pgk.0
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:56:00 -0700 (PDT)
+        id S1728311AbfFXJ4G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 05:56:06 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44261 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726788AbfFXJ4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 05:56:05 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t7so6575308plr.11
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UMaBu+OyQySzr/SGJEEBkGIwN5Peo2j+BEvW2ufgvHY=;
-        b=B0aDPPUYAgxWC/oOpCPZFL8akc0z/A2Zw/RRWWthzVkdlZkI709qz+BzXESs5ZRjvm
-         n8UvVpZhjyW8Rv+NIOo13fxUf2YDpct5/pTlZIljs//xWZFqSfpWuyOc9DpERlsyTw8J
-         NMJM+oCutRCRiUNBlxbdiQn5m2pfUiVSj2JQHcjREyTBuGHqRJJkT7d9NLqSlDnRSDUv
-         luBr79+e5v1hcgkF+cLhcT+8vOyw5VRnAtgkXe/Kb+bl3PixmZk36cd2P6pZxuq5msHz
-         AU2a74pDGG26pnuudxPbIavYlYLxpCMXFwBhuYI2sLs4YWkESkWwQ24P9uzdoynmZUuJ
-         LTMg==
+        bh=luyi7uKA1TWVYgolKLhyMKxtRUKQjajZ2kWt761rU6k=;
+        b=j7DZ3xNnTxHpWqSenJbevLdQxgm/p95DTCOe6l4rCUM/DsyijUpXQbKWJOj2XLn7Ps
+         agkAwdNfupk5IMGBCnEqqzcgvrGG325itiDYvVO4c1b5BlJM90MoroWrfBRAuVbBKD69
+         CqJUKf6+QrC6FLShlE1O0vknV8XT/fUaZLI9joGeFwGzJqK47GzYReBKogC/RAIyuoEo
+         TGR3z36PEZ80nrZ+6Ibi2816eChOshVeNPpNmgBmIeTRISNbYalKEk8Ev1jUJGRxbyk8
+         9+8wbBszyiN6faU87MeXeman/e4vV/WYPmp7/4AihxFxRrM4Uxa7d0TqCs5Oce9AzkzT
+         SQ7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UMaBu+OyQySzr/SGJEEBkGIwN5Peo2j+BEvW2ufgvHY=;
-        b=Zml2Yi83rDRk4uOhktY5et2YR/KinvVSVEpGghWSburspWtiqdew0h5baMaBmymw9x
-         QofBWynl3QL6482pxa6FAFVllSamFsSL8inqJxYO7LJTOgzIG6ysD954zPEi4GGM5GpW
-         R6DIQyPipWWwW66Q9VIV8iixLBTgkW4m0UPIwz8ZHYMcLQoihnglqX1NS2REdsmRJX47
-         cEpUleqCUu0QGBz677VPuzCip3DDK2GdBrWAa7ISmIEwWnOWHPvEC78pP9BKHGzxQ2px
-         2TRQLveGsjtVehJpMIRpwi+J2JL1PUjz+0iWb/t1wGH0Wig2/O10117w7fYo1Y3RWwHO
-         ts+g==
-X-Gm-Message-State: APjAAAUcD7U4125xbPLvO9WaAppy1sLLRC/SUX1yIm600mbm5eW/zYmj
-        ahEc3PKiZuInNe6LPByt8m5i9yc1
-X-Google-Smtp-Source: APXvYqxU8iqQ8jPOCmBTezrRuKEaPcMLs8kYaCMOtZEv2D7WigCR+RyQGbl5hl0N6B5qZKIlQ2UFvg==
-X-Received: by 2002:a63:e4a:: with SMTP id 10mr1008609pgo.348.1561370160278;
-        Mon, 24 Jun 2019 02:56:00 -0700 (PDT)
+        bh=luyi7uKA1TWVYgolKLhyMKxtRUKQjajZ2kWt761rU6k=;
+        b=jP/MioVLyHxGLmdvZno4JuxH6ez5xSWjXzPt/yf03RLc7L9lVd5GVnGoZnTCjm9MYu
+         OCLxvCb4N4CThHWLF02tkkJtQi+m4yv1YBQ1wMDGL03L5JJPexUi9MPw1BxhmeeX3G9i
+         Ur/a70qlxraGyfwy8oVV3at/ximaopCCziFgbP5LvAkJSQxPLJzO9rF/sTTeXhgmEcXL
+         qAnwSvfJuSIXfhUv/o+TQB8cJgnMK/3gWm+MjiWV/peXTeGPdTDMyR61qFUfQOfIliF3
+         nw5FkshhkX/sXMdQfiIegymn8iwe/RoMRsDSTPYO1hWSlOqCQ3dPm3DmYf0D/0lqX6ev
+         nofA==
+X-Gm-Message-State: APjAAAXYd8jlROc9E4VB8YwofG1GeC93uCv14q7aQ5VxleGQH6OnvyPQ
+        R8/cRuw5x2hAuNO/x6jlVZWHZkdT
+X-Google-Smtp-Source: APXvYqzIDJHCBOPPqqWuzbl22qCXh3S9n5GK/XG6TLUhuAa7LydrAJVxRy7dhju3kZ3o64OkjhHdLQ==
+X-Received: by 2002:a17:902:f01:: with SMTP id 1mr12927479ply.170.1561370164666;
+        Mon, 24 Jun 2019 02:56:04 -0700 (PDT)
 Received: from ash ([115.76.181.38])
-        by smtp.gmail.com with ESMTPSA id 14sm15855570pfj.36.2019.06.24.02.55.57
+        by smtp.gmail.com with ESMTPSA id q198sm15724474pfq.155.2019.06.24.02.56.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 02:55:59 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 16:55:56 +0700
+        Mon, 24 Jun 2019 02:56:04 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 16:56:00 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 4/6] tree-walk.c: remove the_repo from get_tree_entry_follow_symlinks()
-Date:   Mon, 24 Jun 2019 16:55:31 +0700
-Message-Id: <20190624095533.22162-5-pclouds@gmail.com>
+Subject: [PATCH 5/6] match-trees.c: remove the_repo from shift_tree*()
+Date:   Mon, 24 Jun 2019 16:55:32 +0700
+Message-Id: <20190624095533.22162-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190624095533.22162-1-pclouds@gmail.com>
 References: <20190624095533.22162-1-pclouds@gmail.com>
@@ -73,90 +73,104 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-name.c | 10 +---------
- tree-walk.c | 12 ++++++++----
- tree-walk.h |  2 +-
- 3 files changed, 10 insertions(+), 14 deletions(-)
+ cache.h                     |  4 ++--
+ match-trees.c               | 12 +++++++-----
+ merge-recursive.c           |  4 ++--
+ t/helper/test-match-trees.c |  2 +-
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/sha1-name.c b/sha1-name.c
-index e8fb215e5c..3c9fa10af8 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1890,16 +1890,8 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			new_filename = resolve_relative_path(repo, filename);
- 			if (new_filename)
- 				filename = new_filename;
--			/*
--			 * NEEDSWORK: Eventually get_tree_entry*() should
--			 * learn to take struct repository directly and we
--			 * would not need to inject submodule odb to the
--			 * in-core odb.
--			 */
--			if (repo != the_repository)
--				add_to_alternates_memory(repo->objects->odb->path);
- 			if (flags & GET_OID_FOLLOW_SYMLINKS) {
--				ret = get_tree_entry_follow_symlinks(&tree_oid,
-+				ret = get_tree_entry_follow_symlinks(repo, &tree_oid,
- 					filename, oid, &oc->symlink_path,
- 					&oc->mode);
- 			} else {
-diff --git a/tree-walk.c b/tree-walk.c
-index 506e12a031..c20b62f49e 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -593,7 +593,10 @@ int get_tree_entry(struct repository *r,
-  * See the code for enum get_oid_result for a description of
-  * the return values.
+diff --git a/cache.h b/cache.h
+index cd84cc9bbe..ddefda2bb6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1786,8 +1786,8 @@ int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int
+ extern int diff_auto_refresh_index;
+ 
+ /* match-trees.c */
+-void shift_tree(const struct object_id *, const struct object_id *, struct object_id *, int);
+-void shift_tree_by(const struct object_id *, const struct object_id *, struct object_id *, const char *);
++void shift_tree(struct repository *, const struct object_id *, const struct object_id *, struct object_id *, int);
++void shift_tree_by(struct repository *, const struct object_id *, const struct object_id *, struct object_id *, const char *);
+ 
+ /*
+  * whitespace rules.
+diff --git a/match-trees.c b/match-trees.c
+index de7e8a6783..f6c194c1cc 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -248,7 +248,8 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+  * other hand, it could cover tree one and we might need to pick a
+  * subtree of it.
   */
--enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned short *mode)
-+enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
-+		struct object_id *tree_oid, const char *name,
-+		struct object_id *result, struct strbuf *result_path,
-+		unsigned short *mode)
- {
- 	int retval = MISSING_OBJECT;
- 	struct dir_state *parents = NULL;
-@@ -617,7 +620,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, c
- 			void *tree;
- 			struct object_id root;
- 			unsigned long size;
--			tree = read_object_with_reference(the_repository,
-+			tree = read_object_with_reference(r,
- 							  &current_tree_oid,
- 							  tree_type, &size,
- 							  &root);
-@@ -687,7 +690,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, c
- 		}
+-void shift_tree(const struct object_id *hash1,
++void shift_tree(struct repository *r,
++		const struct object_id *hash1,
+ 		const struct object_id *hash2,
+ 		struct object_id *shifted,
+ 		int depth_limit)
+@@ -290,7 +291,7 @@ void shift_tree(const struct object_id *hash1,
+ 		if (!*del_prefix)
+ 			return;
  
- 		/* Look up the first (or only) path component in the tree. */
--		find_result = find_tree_entry(the_repository, &t, namebuf.buf,
-+		find_result = find_tree_entry(r, &t, namebuf.buf,
- 					      &current_tree_oid, mode);
- 		if (find_result) {
- 			goto done;
-@@ -731,7 +734,8 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, c
- 			 */
- 			retval = DANGLING_SYMLINK;
+-		if (get_tree_entry(the_repository, hash2, del_prefix, shifted, &mode))
++		if (get_tree_entry(r, hash2, del_prefix, shifted, &mode))
+ 			die("cannot find path %s in tree %s",
+ 			    del_prefix, oid_to_hex(hash2));
+ 		return;
+@@ -307,7 +308,8 @@ void shift_tree(const struct object_id *hash1,
+  * Unfortunately we cannot fundamentally tell which one to
+  * be prefixed, as recursive merge can work in either direction.
+  */
+-void shift_tree_by(const struct object_id *hash1,
++void shift_tree_by(struct repository *r,
++		   const struct object_id *hash1,
+ 		   const struct object_id *hash2,
+ 		   struct object_id *shifted,
+ 		   const char *shift_prefix)
+@@ -317,12 +319,12 @@ void shift_tree_by(const struct object_id *hash1,
+ 	unsigned candidate = 0;
  
--			contents = read_object_file(&current_tree_oid, &type,
-+			contents = repo_read_object_file(r,
-+						    &current_tree_oid, &type,
- 						    &link_len);
+ 	/* Can hash2 be a tree at shift_prefix in tree hash1? */
+-	if (!get_tree_entry(the_repository, hash1, shift_prefix, &sub1, &mode1) &&
++	if (!get_tree_entry(r, hash1, shift_prefix, &sub1, &mode1) &&
+ 	    S_ISDIR(mode1))
+ 		candidate |= 1;
  
- 			if (!contents)
-diff --git a/tree-walk.h b/tree-walk.h
-index 639f79187f..2a5db29e8f 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -53,7 +53,7 @@ struct traverse_info;
- typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
- int traverse_trees(struct index_state *istate, int n, struct tree_desc *t, struct traverse_info *info);
+ 	/* Can hash1 be a tree at shift_prefix in tree hash2? */
+-	if (!get_tree_entry(the_repository, hash2, shift_prefix, &sub2, &mode2) &&
++	if (!get_tree_entry(r, hash2, shift_prefix, &sub2, &mode2) &&
+ 	    S_ISDIR(mode2))
+ 		candidate |= 2;
  
--enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned short *mode);
-+enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r, struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned short *mode);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b051066795..6d772eb0eb 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -153,9 +153,9 @@ static struct tree *shift_tree_object(struct repository *repo,
+ 	struct object_id shifted;
  
- struct traverse_info {
- 	const char *traverse_path;
+ 	if (!*subtree_shift) {
+-		shift_tree(&one->object.oid, &two->object.oid, &shifted, 0);
++		shift_tree(repo, &one->object.oid, &two->object.oid, &shifted, 0);
+ 	} else {
+-		shift_tree_by(&one->object.oid, &two->object.oid, &shifted,
++		shift_tree_by(repo, &one->object.oid, &two->object.oid, &shifted,
+ 			      subtree_shift);
+ 	}
+ 	if (oideq(&two->object.oid, &shifted))
+diff --git a/t/helper/test-match-trees.c b/t/helper/test-match-trees.c
+index 96857f26ac..b9fd427571 100644
+--- a/t/helper/test-match-trees.c
++++ b/t/helper/test-match-trees.c
+@@ -20,7 +20,7 @@ int cmd__match_trees(int ac, const char **av)
+ 	if (!two)
+ 		die("not a tree-ish %s", av[2]);
+ 
+-	shift_tree(&one->object.oid, &two->object.oid, &shifted, -1);
++	shift_tree(the_repository, &one->object.oid, &two->object.oid, &shifted, -1);
+ 	printf("shifted: %s\n", oid_to_hex(&shifted));
+ 
+ 	exit(0);
 -- 
 2.22.0.rc0.322.g2b0371e29a
 
