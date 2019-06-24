@@ -2,116 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBCE1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 11:03:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 415A21F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 12:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729057AbfFXLDe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 07:03:34 -0400
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:38070 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727732AbfFXLDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 07:03:34 -0400
-Received: by mail-wm1-f45.google.com with SMTP id s15so12897220wmj.3
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 04:03:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=HmLwnDYMP6pCvZ7bccPMPvb0Q7Sjj2cVFi0OpURzNSM=;
-        b=hauvMXBFntdfQlecM1T6xrhJXBPER5mk6tCqiGz+P/XKVC39gPUGeSCWgVmYGVCBL/
-         TJNIgKJOBL+bEJMixvtCMF5K/fcd0vSPYobwHmE8HuxNjZGI+3OnvG/qd9kOqAXRemYC
-         nzMDcYTY0jzxAyiim3PBNwrxAQgH0wToraEOmiIbUnLX3IyXh3znGVuo4xTfoLA2P5Uf
-         85Xqm5HfccS6V2ZWgeonCY8uma7yZmhEbnNVqwnv7jrdENZaU8DUH/T3j/zPMfmRYLqW
-         oWT++dbAACW7XWuG0rZhcEZPS4MuzWXpnFsn7ZhHert6hiqMsn+c/TFjoqoqLdsHcSTX
-         113g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=HmLwnDYMP6pCvZ7bccPMPvb0Q7Sjj2cVFi0OpURzNSM=;
-        b=SZFPqjKJLftRQzDDEhkM6gSClRmwgm5f/AIAXHFq4+F2ci1vaYyVr8YtNMBXHDG/DA
-         Uzz7M8sbUcL6aew65NPgDutys+vv1S/KU4YeqGgzgUcfWt6vNwExEUP1vpF2ehItjpMf
-         F+WMD+GqELQbePInn+AZeF3ZrHCgFOg+LYNVqqnK4UmwxZ2+tVV15iCrl2/ygzTw2Gze
-         Gz6RNCpPoSRjJqrK9r87b1Ll54wxBFSMKtyEDLi+eFo5olBPxY5/tQUJSiLznaO1sMwh
-         cI1E2mS1KHHH4KrwIxUjqQYSjOezEzrEfZUJ6hXCj6LCDIA/Ng1b5tdpmG/eWm2a0WK5
-         w9Rw==
-X-Gm-Message-State: APjAAAUW7s1UwNPOMB5WCne3GUHfoVKYjodEcokt1k1P0ufuFq7SNh0p
-        5tzDBIR3+zUmHr51i5dE3McdtKKm
-X-Google-Smtp-Source: APXvYqxODtakEGfs1A8EQXXmlcqpMrijqb77NoZ6E4ost+FY/XTQrQWBsOzLMSV3XQYw5yJMmdiD1w==
-X-Received: by 2002:a1c:305:: with SMTP id 5mr16131853wmd.101.1561374211549;
-        Mon, 24 Jun 2019 04:03:31 -0700 (PDT)
-Received: from 200116b840fa6b00255037fd7cde3798.dip.versatel-1u1.de (200116b840fa6b00255037fd7cde3798.dip.versatel-1u1.de. [2001:16b8:40fa:6b00:2550:37fd:7cde:3798])
-        by smtp.gmail.com with ESMTPSA id y6sm10644850wmd.16.2019.06.24.04.03.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 04:03:30 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: [BUG] Symbolic links break "git fast-export"?
-Message-Id: <95EF0665-9882-4707-BB6A-94182C01BE91@gmail.com>
-Date:   Mon, 24 Jun 2019 13:03:29 +0200
-Cc:     Jeff King <peff@peff.net>
-To:     Git Mailing List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3445.104.11)
+        id S1727302AbfFXMRN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 08:17:13 -0400
+Received: from mta2.cl.cam.ac.uk ([128.232.25.22]:55784 "EHLO
+        mta2.cl.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbfFXMRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 08:17:13 -0400
+X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Jun 2019 08:17:13 EDT
+Received: from methi.cl.cam.ac.uk ([2001:630:212:238:fa32:e4ff:fe88:56f3])
+        by mta2.cl.cam.ac.uk with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.86_2)
+        (envelope-from <nwf20@cl.cam.ac.uk>)
+        id 1hfNlB-000VdE-Rx; Mon, 24 Jun 2019 13:07:45 +0100
+Received: from nwf20 by methi.cl.cam.ac.uk with local (Exim 4.90_1)
+        (envelope-from <nwf20@cl.cam.ac.uk>)
+        id 1hfNlB-0007EZ-Pn; Mon, 24 Jun 2019 13:07:45 +0100
+From:   Nathaniel Filardo <nwf20@cl.cam.ac.uk>
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, Nathaniel Filardo <nwf20@cl.cam.ac.uk>
+Subject: [PATCH v3 4/5] repack: optionally assume transitive kept packs
+Date:   Mon, 24 Jun 2019 13:07:10 +0100
+Message-Id: <20190624120711.27744-5-nwf20@cl.cam.ac.uk>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190624120711.27744-1-nwf20@cl.cam.ac.uk>
+References: <20190624120711.27744-1-nwf20@cl.cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+If the user is careful to mark .pack files as kept only when they refer
+to (other) kept packs, then we can rely on this when walking the object
+graph in subsequent repack operations and reduce the time and memory
+spent building the object graph.
 
-Is my understanding correct, that `git fast-export | git fast-import` 
-should not modify the repository? If yes, then we might have a bug in 
-`git fast-export` if symbolic directory links are removed and converted 
-to a real directory.
+Towards that end, then, teach git repack to enumerate the COMMITs and
+TREEs in kept packs and mark them as UNINTERESTING for pack-object's
+operation.  Because this creates UNINTERESTING marks, we make repack's
+--assume-pack-keep-transitive imply --sparse for pack-object to avoid
+hauling the entire object graph into memory.
 
-Consider this test case:
+In testing with a 203GB repository with 80M objects, this amounts to
+several gigabytes of memory and over ten minutes saved.  This machine
+has 32G of RAM and the repository is on a fast SSD to speed testing.
 
-    # Create test repo
-    git init .
-    mkdir foo
-    echo "foo" >foo/baz
-    git add .
-    git commit -m "add foo dir"
-    ln -s foo bar
-    git add .
-    git commit -m "add bar dir as link"
-    rm bar
-    mkdir bar
-    echo "bar" >bar/baz
-    git add .
-    git commit -m "remove link and make bar dir real"
+All told, this test repository takes about 33 minutes elapsed (28
+minutes in user code) and 3 GB of RAM to repack 12M objects occupying
+33GB scattered across 477 pack files not marked as kept (the remainder
+of the objects are spread across three kept pack files).  The time and
+RAM usage with --assume-pack-keep-transitive should be dominated by
+factors proportional to the size and number of un-kept objects.
 
-    printf "BEFORE: "
-    git rev-parse HEAD
+Without these optimizations, it takes about 45 minutes (34 minutes in
+user code) and 7 GB of RAM to compute the same pack file.  The extra
+time and total memory use are expected to be proportional to the kept
+packs' size, not the working set of the repack.  The time discrepancy
+can be expected to be more dramatic when the repository is on spinning
+rust rather than SSD.
 
-    # Fast export, import ... that should not change anything!
-    git fast-export --no-data --all --signed-tags=warn-strip \
-        --tag-of-filtered-object=rewrite | git fast-import --force --quiet
+Signed-off-by: Nathaniel Filardo <nwf20@cl.cam.ac.uk>
+---
+ Documentation/git-repack.txt | 21 +++++++++++++
+ builtin/repack.c             | 57 ++++++++++++++++++++++++++++++++++--
+ 2 files changed, 76 insertions(+), 2 deletions(-)
 
-    printf "AFTER: "
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 836d81457a..014812c4bb 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -169,6 +169,27 @@ depth is 4095.
+ 	Pass the `--sparse` option to `git-pack-objects`; see
+ 	linkgit:git-pack-objects[1].
+ 
++--assume-pack-keep-transitive::
++	This flag accelerates the search for objects to pack by assuming
++	that commit objects found in kept packfiles make reference only
++	to that or other kept packfiles.  This is very useful if, for
++	example, this repository periodically repacks all reachable objects
++	and marks the resulting pack file as kept.
++
++	Because this option may prevent git from descending into kept packs,
++	no objects inside kept packs will be available for delta processing.
++	One should therefore restrict the use of this option to situations
++	where delta processing is disabled or when relatively large amounts
++	of data are considered and the relative gain of a wider set of
++	possible delta base objects is reduced.
++
++	The simplest way to ensure transitivity of kept packs is to run `git
++	repack` with `-a` (or `-A`) and `-d` and mark all resulting packs as
++	kept, never removing the kept marker.  In practice, one may wish to
++	wait to mark packs as kept until they are sufficiently large
++	(reducing the number of pack files necessary for a given set of
++	objects) but not so large as to be unwieldy.
++
+ Configuration
+ -------------
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 4cfdd62bb8..a2cd479686 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -11,6 +11,8 @@
+ #include "midx.h"
+ #include "packfile.h"
+ #include "object-store.h"
++#include "revision.h"
++#include "list-objects.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -256,6 +258,30 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 		die(_("could not finish pack-objects to repack promisor objects"));
+ }
+ 
++static void apkt_show_commit(struct commit *commit, void *data)
++{
++	struct tree *tree;
++	struct pack_entry e;
++
++	if (!find_pack_entry(the_repository, &commit->object.oid, &e))
++		return;
++
++	if (!(e.p->pack_keep || e.p->pack_keep_in_core))
++		return;
++
++	tree = get_commit_tree(commit);
++	if (tree)
++		tree->object.flags |= UNINTERESTING;
++
++	write_oid(&commit->object.oid, e.p, 0, data);
++	write_oid(&tree->object.oid, NULL, 0, data);
++}
++
++static void apkt_show_object(struct object *obj, const char *name, void *data)
++{
++	return;
++}
++
+ #define ALL_INTO_ONE 1
+ #define LOOSEN_UNREACHABLE 2
+ 
+@@ -287,6 +313,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
+ 	int no_update_server_info = 0;
+ 	int midx_cleared = 0;
++	int assume_pack_keep_transitive = 0;
+ 	struct pack_objects_args po_args = {NULL};
+ 	int sparse = 0;
+ 
+@@ -329,6 +356,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("repack objects in packs marked with .keep")),
+ 		OPT_BOOL(0, "sparse", &sparse,
+ 			 N_("use the sparse reachability algorithm")),
++		OPT_BOOL(0, "assume-pack-keep-transitive", &assume_pack_keep_transitive,
++				N_("assume kept packs reference only kept packs")),
+ 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
+ 				N_("do not repack this pack")),
+ 		OPT_END()
+@@ -346,6 +375,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+ 		die(_("--keep-unreachable and -A are incompatible"));
+ 
++	if (assume_pack_keep_transitive) {
++		/* imply --honor-pack-keep */
++		pack_kept_objects = 0;
++	}
++
+ 	if (write_bitmaps < 0)
+ 		write_bitmaps = (pack_everything & ALL_INTO_ONE) &&
+ 				 is_bare_repository();
+@@ -372,7 +406,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--all");
+ 	argv_array_push(&cmd.args, "--reflog");
+ 	argv_array_push(&cmd.args, "--indexed-objects");
+-	if (sparse)
++	if (sparse || assume_pack_keep_transitive)
+ 		argv_array_push(&cmd.args, "--sparse");
+ 	if (repository_format_partial_clone)
+ 		argv_array_push(&cmd.args, "--exclude-promisor-objects");
+@@ -407,12 +441,31 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_push(&cmd.args, "--incremental");
+ 	}
+ 
+-	cmd.no_stdin = 1;
++	cmd.in = -1;
++	cmd.no_stdin = !assume_pack_keep_transitive;
+ 
+ 	ret = start_command(&cmd);
+ 	if (ret)
+ 		return ret;
+ 
++	if (assume_pack_keep_transitive) {
++		struct rev_info revs;
++		const char *revargv[] = { "skip", "--all", "--reflog", "--indexed-objects", NULL };
++
++		repo_init_revisions(the_repository, &revs, NULL);
++		revs.sparse_tree_walk = !!(sparse || assume_pack_keep_transitive);
++		setup_revisions(sizeof(revargv)/sizeof(revargv[0]) - 1 , revargv, &revs, NULL);
++		if (prepare_revision_walk(&revs))
++			die("revision walk setup failed");
++
++		xwrite(cmd.in, "--not\n", 6);
++		traverse_commit_list(&revs, apkt_show_commit, apkt_show_object,
++				     &cmd);
++		xwrite(cmd.in, "--not\n", 6);
++
++		close(cmd.in);
++	}
++
+ 	out = xfdopen(cmd.out, "r");
+ 	while (strbuf_getline_lf(&line, out) != EOF) {
+ 		if (line.len != the_hash_algo->hexsz)
+-- 
+2.17.1
 
-I would assume that the BEFORE/AFTER hashes match. Unfortunately, with 
-Git 2.22.0 they do no. The problem is this export output I think:
-
-    remove link and make bar dir real
-    from :2
-    M 100644 5716ca5987cbf97d6bb54920bea6adde242d87e6 bar/baz
-    D bar
-
-The new file in the `bar` directory is added to the repo first and
-afterwards the path `bar` is deleted. I think that deletes the entire 
-directory `bar`?
-
-If you confirm that this is a bug, then I will try to provide a fix.
-
-Thanks,
-Lars
