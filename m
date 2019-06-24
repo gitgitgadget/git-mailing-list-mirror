@@ -4,117 +4,163 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D41C21F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 07:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 108E21F4B6
+	for <e@80x24.org>; Mon, 24 Jun 2019 09:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbfFXHQ2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 03:16:28 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41313 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726480AbfFXHQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 03:16:27 -0400
-Received: by mail-ed1-f66.google.com with SMTP id p15so20200973eds.8
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 00:16:26 -0700 (PDT)
+        id S1727942AbfFXJbD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 05:31:03 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:37775 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbfFXJbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 05:31:03 -0400
+Received: by mail-wm1-f49.google.com with SMTP id f17so12607753wme.2
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=A2Nm4ueIK6poK1Iu1yBTcrAKI0JLT8vIJDXw/L2iJoA=;
-        b=PyRzbpOzUagq+0FFKo/qxq+FlvHRoe+JqzK1tyhONy5Nl/bTF921g4u7NEk2WX9sHb
-         p58P7cwcxwQttKU295td33QwSi6RZ7KSzIqSEUhG6Qu06BzyrISd9lp1gC7gf+AfshbY
-         JcDu4f3iEBsyzbuiFkLHcc2QFK0kRXMl6yoTA/U0KvqLgu3bPW7OaWOxRhEL03BlcLty
-         OjPyqrXblc+qAqgxmcR6cwyRNsGLGD+0aY524lJFdcIkwg3y3BkKB+30U6uSvtmP3BMg
-         84/ykLRDLPqPLIRIy4ibzEIpTZ43uceNFbIjWfVtzrJp0kyKpuZSN5A9NRb1qdSU58w8
-         FNbg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=TVb2CUOYq4YNFBsYgeNW0Pa8KO/DqfZN9DvkBhh5hP8=;
+        b=a0C9AhTfMtea6AuCE75phk71gZ1WDzSVvuidpb1e99mKRwU+WnNdyzD/uweiSY1iLF
+         cvl9U3iHUMOOGN8YYOPCIXmScOXVlWGqsyJsHerDAsYkvNCRpbX5LGAa23aG46SEmeyN
+         C7knymSjJL83E1eNGRHYry7YPcJp573ROCWGkWihUBhg7KjxdeVLPDK4tbv+xoOoFInv
+         R4hpk+LLcs3MOZk+ZH6Xylgts0p6s8ftLHRXZDtLY5+pHnceVHuGmFeOF84E0THQwRUa
+         M+LZFiI2K5BPOZDS6X13M25fxRp9rmtOGSwioDweLPrFceFDFOoOQN7MWeZ9Vmto/T9R
+         5KnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=A2Nm4ueIK6poK1Iu1yBTcrAKI0JLT8vIJDXw/L2iJoA=;
-        b=Ot2APjmpFoX6drg8+eVn5b8VkHKQo6kCDv3X+iuBLJo1PljgqdtHsaAmsUqyREWwNT
-         X9cotYOgYmMGd8uwCUgShMrCNM9V5Z5i4qoNctogfhZgbg3LZ0rr2SnBU4gxLpodobAn
-         wtE29XT69FDZwIx9TQ2wTzuDxPvIr2k9+fdrny/XxC1/mAlPU5s6rJh6jREIxb0A1tgi
-         qBRBx6zIN9WTa1SqRHMmDjooB6B06R6MLcm5eeugeJfEYScBwhSOpQYKOiJmDnd2i667
-         2obNJnqxxTCryQFIWfMEjBF7Pb+6Jyw3gE8FxGwOizaa2wrVZ32ZdKZqFreR5EL+awce
-         S/dg==
-X-Gm-Message-State: APjAAAXoam/WXv295aPacttoqABKpz/pz6J7bWq7BXB+9YG9L5S+jRPW
-        m8jnyGb50l76bj1UiXcnaf8vDZafLIcrI5eBv1g=
-X-Google-Smtp-Source: APXvYqwKSzVSABN1ls/UuntEyzf39GGpfBZW68bt58VrWQmRhMJNYd0CwAz2BaK57+kBy9G5pmaX2aDYE+Lzcztfwdg=
-X-Received: by 2002:a50:886a:: with SMTP id c39mr117303405edc.214.1561360585251;
- Mon, 24 Jun 2019 00:16:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAC_CU1iWBCTt5jLQ0Zp2HoyA0oFgG3shDB2rLfOsmC+x67NdAw@mail.gmail.com>
- <xmqq5zp9wdjb.fsf@gitster-ct.c.googlers.com> <CAC_CU1hHK5n4GcETbWFLBeqT_Y9LV6N32Rv0F0+OCXH2G0qg8Q@mail.gmail.com>
- <20190623224935.GD1100@sigill.intra.peff.net>
-In-Reply-To: <20190623224935.GD1100@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 24 Jun 2019 09:16:13 +0200
-Message-ID: <CAP8UFD1gWnkJZSzjOxOHdS4R3GCUSDgC9X85y_Yvc0LmyK19Cw@mail.gmail.com>
-Subject: Re: git bisect should return 1 when the first bad commit is found
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=TVb2CUOYq4YNFBsYgeNW0Pa8KO/DqfZN9DvkBhh5hP8=;
+        b=W2HvXYS+kN62LHxurzZbEaBNyM5kEtuVoZ0aqGjNU5R4ePM80vQDHs5YW9MDo7G/KA
+         hX4XDKK+kHxgq6SK5TZO6BwgLxsSJWR6pDfC3GNOJgzElaU+HuwaEsX8SIgx63OJzO0l
+         Ay7yJRBAhLBOK7eYJQfNIbWwcinKCqfIOtsvr83OEWCScX3oCaaZrfbRcGKv3PfYGSVL
+         O/XPdlhI+b1I9k4k6bGno4hFhyx0vCaUzTUqDn9Mg6Oag2ZnAJosxTpDQuiJOHqmT5fB
+         sVKJ5xyaz9KbXOzSAiNjdybw6cbfip+Pd788twORwwQZYSJLAgzXzj/248XwC8uJJDNa
+         TJ5g==
+X-Gm-Message-State: APjAAAWgleNR+WtFpvOsWYfEU7I8OJtM1rTm6ZCWDCp58prESNmwKBaL
+        NhPxuT9nyyaEiaPC2AYfGIg=
+X-Google-Smtp-Source: APXvYqzs8EPkcpF2Bfb6Oa3XNolIsGnj1HEVpvffjBzviDX5rBcTP5UKtovDQbUUDIVfnI9eMr/JvA==
+X-Received: by 2002:a7b:cc97:: with SMTP id p23mr15649759wma.120.1561368660759;
+        Mon, 24 Jun 2019 02:31:00 -0700 (PDT)
+Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
+        by smtp.gmail.com with ESMTPSA id 5sm23324478wrc.76.2019.06.24.02.30.59
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 24 Jun 2019 02:31:00 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Pedro Larroy <pedro.larroy.lists@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Eric Wong <e@80x24.org>, Janos Farkas <chexum@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: 2.22.0 repack -a duplicating pack contents
+References: <CAEXt3sqno7RAtuwQ_OpD3aLkEORLaf6aNeNKGQL0BKezD+wWTw@mail.gmail.com> <875zow8i85.fsf@evledraar.gmail.com> <20190623180226.GA1100@sigill.intra.peff.net> <20190623180825.3ospajjgat3clwiu@dcvr> <20190623224244.GB1100@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190623224244.GB1100@sigill.intra.peff.net>
+Date:   Mon, 24 Jun 2019 11:30:59 +0200
+Message-ID: <874l4f8h4c.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 24, 2019 at 4:51 AM Jeff King <peff@peff.net> wrote:
+
+On Mon, Jun 24 2019, Jeff King wrote:
+
+> On Sun, Jun 23, 2019 at 06:08:25PM +0000, Eric Wong wrote:
 >
-> On Sun, Jun 23, 2019 at 01:32:16PM -0700, Pedro Larroy wrote:
+>> > I'm not sure of the right solution. For maximal backwards-compatibility,
+>> > the default for bitmaps could become "if not bare and if there are no
+>> > .keep files". But that would mean bitmaps sometimes not getting
+>> > generated because of the problems that ee34a2bead was trying to solve.
+>> >
+>> > That's probably OK, though; you can always flip the bitmap config to
+>> > "true" yourself if you _must_ have bitmaps.
+>>
+>> What about something like this?  Needs tests but I need to leave, now.
 >
-> > Thanks for your answer.
-> >
-> > I was expecting the HEAD to point to the first bad commit.
-> >
-> > In mercurial, the exit status tells you information about the
-> > bisection process:  https://www.mercurial-scm.org/repo/hg/help/bisect
+> Yeah, I think that's the right direction.
+>
+> Though...
+>
+>> +static int has_pack_keep_file(void)
+>> +{
+>> +	DIR *dir;
+>> +	struct dirent *e;
+>> +	int found = 0;
+>> +
+>> +	if (!(dir = opendir(packdir)))
+>> +		return found;
+>> +
+>> +	while ((e = readdir(dir)) != NULL) {
+>> +		if (ends_with(e->d_name, ".keep")) {
+>> +			found = 1;
+>> +			break;
+>> +		}
+>> +	}
+>> +	closedir(dir);
+>> +	return found;
+>> +}
+>
+> I think this can be replaced with just checking p->pack_keep for each
+> item in the packed_git list.
+>
+> That's racy, but then so is your code here, since it's really the child
+> pack-objects which is going to deal with the .keep. I don't think we
+> need to care much about the race, though. Either:
+>
+>   1. Somebody has made an old intentional .keep, which would not be
+>      racy. We'd see it in both places.
+>
+>   2. Somebody _just_ made an intentional .keep; we'll race with that and
+>      maybe duplicate objects from the kept pack. But this is a rare
+>      occurrence, and there's no real ordering promise here anyway with
+>      somebody creating .keep files alongside a running repack.
+>
+>   3. An incoming fetch/push may create a .keep file as a temporary lock,
+>      which we see here but which goes away by the time pack-objects
+>      runs. That's OK; we err on the side of not generating bitmaps, but
+>      they're an optimization anyway (and if you really insist on having
+>      them, you should tell Git to definitely make them instead of
+>      relying on this default behavior).
 
-It's not clear from he above URL how that differs from what git bisect
-does. I only found "Returns 0 on success" there which is not very
-explicit, and we could argue that it's also what git bisect does.
+This sort of thing (#3) strikes me as a fairly pathological case we
+should try to avoid. Now what we've turned on bitmaps by default people
+will take the sort of performance increase noted in [1] for granted.
 
-> > Sure one can parse stdout, it's just more tedious than just checking
-> > the return code and having the HEAD left to the original bad commit.
+So they'll be happily running with that & then get a CPU/IO spike as the
+*.bitmap files they'd been implicitly relying on for years in their
+default config goes away, only to have it re-appear when "repack" runs
+next.
 
-The git bisect documentation says:
+I can't think of some great solution for this case, some thoughts:
 
-       Eventually there will be no more revisions left to inspect, and
-the command will print out a description of the first bad commit. The
-reference
-       refs/bisect/bad will be left pointing at that commit.
+ a. Perhaps we should split the *.keep flag into two things or
+    more.
 
-So you just need to parse stdout to detect that it found the first bad
-commit, and then you can use refs/bisect/bad.
+    We're using it for all of "I want this *.pack forever"
+    (e.g. debugging) and "I want only this *.pack to contain the data
+    found in it" (I/O & CPU optimization, what Janos wants) and "I'm
+    git.git code avoiding a race with myself" (what you describe in #3).
 
-If the return code was used, how would you distinguish between a
-failure in the command (for example if you give bad information to
-`git bisect good` or `git bisect bad`) and the fact that it has not
-yet found the first bad commit? Anyway you would need to add some
-logic for that.
+    So maybe for the last of those we could also use and understand
+    *.tmp-keep, at which point we wouldn't have this race described in
+    #3. The 1st of those is a *.noprune and the 2nd is *.highlander (but
+    whether it's worth splitting all that out v.s. just having
+    *.tmp-keep is another matter).
 
-> I think it might be nice for Git to write a well-known refname (like
-> BISECT_RESULT or similar) so that you can refer to that instead of
-> having to read stdout (whether by machine or by a user
-> cutting-and-pasting). And I cannot offhand think of a particular reason
-> why that could not just be HEAD (instead of something bisect-specific)
-> after the bisect finishes.
+ b) Shouldn't we at least print some warning to STDERR in this case so
+    e.g. gc.log will note the performance degradation of the repo in its
+    current configuration?
 
-If it would be HEAD, it would mean that git bisect would potentially
-have to do one more checkout so that HEAD points to the first bad
-commit. This checkout would sometimes be useless, so it's more
-efficient to use something like refs/bisect/bad rather than HEAD.
+>   4. Like (3), but we _don't _see the temporary .keep here but _do_ see
+>      it during pack-objects. That's OK, because we'll have told
+>      pack-objects to pack those objects anyway, which is the right
+>      thing.
+>
+> -Peff
 
-> We do not promise any particular value in HEAD now. The only downside
-> would be the minor cost to checkout the working tree of the known-bad
-> commit if we are not already there.
-
-Though we might not explicitly promise in the doc that HEAD will stay
-at the last commit that was tested, I think that's something people
-can expect from the way we describe how bisect work. So I don't think
-it would be a good idea to change our behavior.
+1. https://github.blog/2015-09-22-counting-objects/
