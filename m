@@ -8,55 +8,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DCEE1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 14:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41F551F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 15:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728454AbfFXOzp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 10:55:45 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:46451 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727406AbfFXOzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 10:55:45 -0400
-Received: by mail-io1-f66.google.com with SMTP id i10so696011iol.13
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 07:55:45 -0700 (PDT)
+        id S1730294AbfFXPCu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 11:02:50 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:44411 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730218AbfFXPCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 11:02:48 -0400
+Received: by mail-io1-f68.google.com with SMTP id s7so37223iob.11
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 08:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=k0c2vCemgqvN5geezqSNJedg82lj+0oRtJ48INqHNec=;
-        b=R7W7hBNm80vv6jCSMDe6XwHUeB736MLNzPz58SmTOQN9y3Ts93vS28H7+I+Yhaocp+
-         Z4aGHA37xNZxBnEJ8YjbRM6EaIkjF0cxXu2qV4xuvYSNcGGWDs4nF+hVmNBuZinlIbCC
-         tLRR0XrauuXxuPBqS/gKnkOU0zBvFw3VVeOmAUfT1kAJ51FW5MogFEeydtomudzlvOFE
-         gVAXgFhUaFaESKr/10yns+ouIuneWOHnJwk1mz1ajKFjktjsL83i5Li3/j2mCtHsepU2
-         7HmWKEhIqh9vOPMmE5gruC/wssTnV7E4sy7FgFYfqG5N49uKXt7JGEk+aGT//Byrt9j0
-         T0MQ==
+        bh=wcFcAN2NVYyFNl9vCTq3yy1RWWN8bghdt4G3UBBsBaU=;
+        b=sBv3UEpIzJPotW21tdwGLCqKy3ypuzvsSmqMrxYMs47r+TdEk8YZUrgBS+eEDZ3l7O
+         cSmTC0ETm5fsIosjTc68Wf0qbojM391LZyu89HKCA9s5PuoIv8xZFc1BiFHp9hM5xo22
+         Oc8lmdaI6afnxyPqnsvtkthOM5S8MsPwQxS1+Ys8mKCq4gbHwKzfxDsyEIoJD/+cYSlP
+         NW4qaRh0VyNp6F6NceZO8tmQzgUz1FBRrhsLSLFKk/MShPH0A0BWKAbIAvfFzRJ5gxEP
+         I36qW7qIbgKrbyttGIIvRzS/pQ39ut8IHyoxeH8fYpGHKYs8VLBXvTqoTJiLUmoKGuMV
+         +doA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k0c2vCemgqvN5geezqSNJedg82lj+0oRtJ48INqHNec=;
-        b=Oxdv4Hnq0oTV/tZL640jmih+f5e6uJAQ0pQgPVS7TXWQoVzAl2vnDkA6EO88GaDxqr
-         qb3+EKZSpGlBJyVXz8Z4YqIvoZzGtdNnEkPoiZt3i+s3eWk6n6RxpvnKaBxCPu4Yhfgm
-         hPqvdEDiP7kH/oyae3ayj71U13sT6nIvFymX73NKf1IHJM6fpFwAtNnb6e0rnCJMW8dM
-         S9pDbQBku4XHEwNDXQpYGe75CbPshEkvaNwTPTeK5uwA2MFyh9AWFgmU08+KOlW28aRF
-         NdriQ4JuBqvWiSb1k2urVmPBiwd5KGEfnbqpI19nzB69NGAmM5T27de1hCjSMuNO1NEA
-         2AhA==
-X-Gm-Message-State: APjAAAVdb85WO1jVvbTScAtI5vuVdX/FpcIPayNrdyut38rwcni+SLCU
-        yLeBAgbsW9yPLI51mpM0U4/QTcUpoiEkuUc1K0s=
-X-Google-Smtp-Source: APXvYqyUbZ/9hHVcar+/6AL9Svani7yfZR94bKHUvnuVTbx6PU+oPzcYuFjwmH1IEJWFfXZG1l9CMcQ1f+8STFKtSGc=
-X-Received: by 2002:a6b:f711:: with SMTP id k17mr2934395iog.273.1561388144829;
- Mon, 24 Jun 2019 07:55:44 -0700 (PDT)
+        bh=wcFcAN2NVYyFNl9vCTq3yy1RWWN8bghdt4G3UBBsBaU=;
+        b=GVxHcDlzjAsofcLjann4httF91NmxpaWnDnpcEsy5DVENIMwzQ7EaA+bW4Qve+3Mfr
+         6sUX/WXojs4qTvmWVtiNsCuXqqtiMpUrfXZqqy44ale/AtEd4j4O9JBpO1HhLWd15lzP
+         NT4MyKRzzptVFwnYjJNQDkGSEf4/jnCw5re7bpUbnW72qnmM2rM7TZ1sm7JMQeSgPzTD
+         JnqNCsmGi1vsS2AABGXLwO60SIgPdGd1aXYPMmE5KauS8XaKrzMRd+Pwhe6dSOXZj6B4
+         256Tf3V4LmUFQhoJP72+T1KMpLq55eZ4YH2NFlyIHCGR5Ej1y1qsR//3fj+9Xo1D6yND
+         WYEA==
+X-Gm-Message-State: APjAAAU4jjdHj99BYAWxhFg1lVwJI2tV0aM4qLXpiQljp76ZiIn+UR4m
+        j23rcJsBHCt1lVTxZXgfcVYnGgq4yzpyyTtkpdk=
+X-Google-Smtp-Source: APXvYqxyHnSszxHWSPEbduE3vp4ECfc+EsG3adc+lW1fw0kHBQMF0PrNlBf392KAwvpnNN/8U+z0olkyFo6JHNeBlkQ=
+X-Received: by 2002:a6b:b497:: with SMTP id d145mr61365764iof.17.1561388567915;
+ Mon, 24 Jun 2019 08:02:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190624095533.22162-1-pclouds@gmail.com> <20190624095533.22162-4-pclouds@gmail.com>
- <0f13008e-bdf1-70cb-c4ff-e4c572cd5703@gmail.com>
-In-Reply-To: <0f13008e-bdf1-70cb-c4ff-e4c572cd5703@gmail.com>
+References: <20190622122417.28178-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906241251040.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1906241251040.44@tvgsbejvaqbjf.bet>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 24 Jun 2019 21:55:18 +0700
-Message-ID: <CACsJy8CaUHTfUS9tMDTNC+S10Bpqz_-rujR6Jr0689AJHpf=UQ@mail.gmail.com>
-Subject: Re: [PATCH 3/6] tree-walk.c: remove the_repo from get_tree_entry()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 24 Jun 2019 22:02:21 +0700
+Message-ID: <CACsJy8DOAWw7TSi1jPqSNV-41h8R6nUAjVC+osTjaDpmxnPa-g@mail.gmail.com>
+Subject: Re: [PATCH] rm: add --intent-to-add, to be used with --cached
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,57 +62,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 24, 2019 at 9:20 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Mon, Jun 24, 2019 at 5:52 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> On 6/24/2019 5:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> > ---
-> >  archive.c              |  4 +++-
-> >  blame.c                |  4 ++--
-> >  builtin/rm.c           |  2 +-
-> >  builtin/update-index.c |  2 +-
-> >  line-log.c             |  7 ++++---
-> >  match-trees.c          |  6 +++---
-> >  merge-recursive.c      |  8 +++++---
-> >  notes.c                |  2 +-
-> >  sha1-name.c            |  9 +++++----
-> >  tree-walk.c            | 18 ++++++++++++------
-> >  tree-walk.h            |  2 +-
-> >  11 files changed, 38 insertions(+), 26 deletions(-)
-> >
-> > diff --git a/archive.c b/archive.c
-> > index 53141c1f0e..a8da0fcc4f 100644
-> > --- a/archive.c
-> > +++ b/archive.c
-> > @@ -418,7 +418,9 @@ static void parse_treeish_arg(const char **argv,
-> >               unsigned short mode;
-> >               int err;
-> >
-> > -             err =3D get_tree_entry(&tree->object.oid, prefix, &tree_o=
-id,
-> > +             err =3D get_tree_entry(ar_args->repo,
+> Hi Duy,
 >
-> If I'm reading this correctly, this is a place where we previously conver=
-ted
-> to using a custom repository pointer but this function boundary reverted =
-us
-> to the_repository anyway. I know we have some tests around the commit-gra=
-ph
-> that ensures it works with an arbitrary repository (and I frequently stum=
-ble
-> over them when I add new dependencies). How can we add more testing aroun=
+> On Sat, 22 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+> > An index entry serves two purposes: to keep the content to be committed=
+,
+> > and to mark that the same path on worktree is tracked. When
+> >
+> >     git rm --cached foo
+> >
+> > is called and there is "foo" in worktree, its status is changed from
+> > tracked to untracked. Which I think is not intended, at least from the
+> > user perspective because we almost always tell people "Git is about the
+> > content" (*).
+>
+> I can buy that rationale. However, I do not think that "remove intent to
+> add" (which is how I read `git rm --intent-to-add`) is a particularly goo=
 d
-> these new conversions?
+> way to express this. I could see `--keep-intent-to-add` as a better
+> alternative, though.
 
-Right now it's really patchy. There's no guarantee that the_repo is
-not used somwhere in the callchain (or will not be in the future). My
-main aim is _not_ break it when used with the_repo. These new
-conversions hopefully will get more used outside the default the_repo
-setting (e.g. new developments in git-submodule, or git-worktree).
-Eventually the_repo should be gone (or referenced in very few places),
-then the conversion will get more coverage. Really mixing repos though
-will not be as well tested until actually used (by submodule and
-friends).
+Oh good. I also dislike --intent-to-add for a different reasosn but I
+didn't bring it up: This "rm --intent-to-cache" removes the content
+and keeps ita, but there's also the potential use case to keep the
+content and remove ita (e.g. you just want to undo intent-to-add
+effect, but if you have already staged some content, leave it).
+
+This case is about the worktree. But "git rm" is not designed for
+that. It either handles both index and worktree, or just index. "Just
+worktree" is delegated to system's "rm". But system "rm" can't do
+anything about ita bit. And if we make "git rm --worktree" do that,
+then "rm --worktree --intent-to-add" would be a much better name and
+should not be taken by this patch. But "git rm --worktree" is not real
+to even start a discussion about that...
+
+End of rambling. I guess what I'm saying is, --keep-intent-to-add is a
+good name (that I also didn't think of).
 --=20
 Duy
