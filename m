@@ -2,210 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEB9F1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 19:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E828B1F4B7
+	for <e@80x24.org>; Mon, 24 Jun 2019 20:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729945AbfFXTc6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 15:32:58 -0400
-Received: from siwi.pair.com ([209.68.5.199]:56075 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727329AbfFXTc5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 15:32:57 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id BCB873F412B;
-        Mon, 24 Jun 2019 15:32:56 -0400 (EDT)
-Received: from [192.168.1.6] (152.sub-174-229-150.myvzw.com [174.229.150.152])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1731385AbfFXUE0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 16:04:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55634 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727419AbfFXUE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 16:04:26 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7C593666DA;
+        Mon, 24 Jun 2019 16:04:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=c97BYt6y559j
+        HLDIBaqaM+uAF3s=; b=eG6KdtUlpeVFHglhI3k6iafC1dF7bohxzwhGuz46vZ/k
+        l0b4Sfr74PDQVHPy6ktrZxCw/FE0m0Jf3MM2ZUYWMCHIQcJxFM0uPghCJ1kyxkGy
+        fM7+O8ulIoxANN6py6yTje1KDmZS/cJGGUMzY6l6ogvWNbGSnjri4hrPzjJHAaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QbPCuj
+        WvSgHrJAENXdcvS/rtUBiQKQZm14I2l29Ntj6/OJpGka2uk+Rp1zCBPDlBsVipUu
+        0rYxbTJ67sLSDEh/dI2qMi8DQXHV7l8xPB6UsIt52MLCxP1lsih0PHcNxff5l0W5
+        fAhhuMSH8mZXV/ynxpjfUWdDhwxvTcmPobzLs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7403C666D9;
+        Mon, 24 Jun 2019 16:04:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C733C3F40EB;
-        Mon, 24 Jun 2019 15:32:55 -0400 (EDT)
-Subject: Re: [PATCH v2 04/10] dir.c: dump "UNTR" extension as json
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A0020666D7;
+        Mon, 24 Jun 2019 16:04:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 01/10] ls-files: add --json to dump the index
+In-Reply-To: <755a4cfe-fd6b-044b-dca2-05eebfa518b1@jeffhostetler.com> (Jeff
+        Hostetler's message of "Mon, 24 Jun 2019 15:15:54 -0400")
 References: <20190624130226.17293-1-pclouds@gmail.com>
- <20190624130226.17293-5-pclouds@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <ec6bdf73-0c05-80cd-ecab-9a6ebf6aad6e@jeffhostetler.com>
-Date:   Mon, 24 Jun 2019 15:32:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        <20190624130226.17293-2-pclouds@gmail.com>
+        <755a4cfe-fd6b-044b-dca2-05eebfa518b1@jeffhostetler.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+Date:   Mon, 24 Jun 2019 13:04:19 -0700
+Message-ID: <xmqq5zouhhrw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20190624130226.17293-5-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 41B1E01C-96BB-11E9-8CC4-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
+> On 6/24/2019 9:02 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> ...
+>> +void jw_object_stat_data(struct json_writer *jw, const char *name,
+>> +			 const struct stat_data *sd)
+>
+> Should this be in json_writer.c or in read-cache.c ?
+> Currently, json_writer.c is concerned with formatting
+> JSON on basic/scalar types.
 
-On 6/24/2019 9:02 AM, Nguyễn Thái Ngọc Duy wrote:
-> The big part of UNTR extension is dumped at the end instead of dumping
-> as soon as we read it, because we actually "patch" some fields in
-> untracked_cache_dir with EWAH bitmaps at the end.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->   dir.c                    | 57 +++++++++++++++++++++++++++++++++++++++-
->   dir.h                    |  4 ++-
->   json-writer.h            |  6 +++++
->   read-cache.c             |  2 +-
->   t/t3011-ls-files-json.sh |  3 ++-
->   t/t3011/basic            | 39 +++++++++++++++++++++++++++
->   6 files changed, 107 insertions(+), 4 deletions(-)
-> 
-> diff --git a/dir.c b/dir.c
-> index ba4a51c296..8808577ea3 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -19,6 +19,7 @@
->   #include "varint.h"
->   #include "ewah/ewok.h"
->   #include "fsmonitor.h"
-> +#include "json-writer.h"
->   #include "submodule-config.h"
->   
->   /*
-> @@ -2826,7 +2827,42 @@ static void load_oid_stat(struct oid_stat *oid_stat, const unsigned char *data,
->   	oid_stat->valid = 1;
->   }
->   
-> -struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
-> +static void jw_object_oid_stat(struct json_writer *jw, const char *key,
-> +			       const struct oid_stat *oid_stat)
+That's an interesting question.
 
-I was hoping to reserve the jw_, jw_object_, and jw_array_ prefixes
-to refer to public functions in the json-writer.[ch] files, rather
-than private functions elsewhere in the code.  I think it is less
-confusing that way.  IMHO.
+In the longer run, is it reasonable to assume that the current
+callers of these functions will stay to be the only places that
+would want to say "For this path, various attributes like timestamps
+and other stuff are these values"?  The answer is probably no.
 
-It's fine to have such helper functions for local structure types,
-but I think it'd be better for them to not be named like other
-public functions.
+Would it be reasonable to assume that the future callers are all
+likely to be closely related to what functions that are currently in
+read-cache.c do and would appear only in that file?  I think the
+answer would also be no.  Functions in entry.c may want to report
+"I've created/updated these filesystem entities and their stat info
+now look like so", for example.  So (assuming that we would want to
+represent "struct stat" the same way no matter who wants to write it
+out), I think it is reasonable to have this function on the json
+side, not on Git side.
 
-> +{
-> +	jw_object_inline_begin_object(jw, key);
-> +	jw_object_bool(jw, "valid", oid_stat->valid);
-> +	jw_object_string(jw, "oid", oid_to_hex(&oid_stat->oid));
-> +	jw_object_stat_data(jw, "stat", &oid_stat->stat);
-> +	jw_end(jw);
-> +}
-> +
-> +static void jw_object_untracked_cache_dir(struct json_writer *jw,
-> +					  const struct untracked_cache_dir *ucd)
-> +{
-> +	int i;
-> +
-> +	jw_object_bool(jw, "valid", ucd->valid);
-> +	jw_object_bool(jw, "check-only", ucd->check_only);
-> +	jw_object_stat_data(jw, "stat", &ucd->stat_data);
-> +	jw_object_string(jw, "exclude-oid", oid_to_hex(&ucd->exclude_oid));
-> +	jw_object_inline_begin_array(jw, "untracked");
-> +	for (i = 0; i < ucd->untracked_nr; i++)
-> +		jw_array_string(jw, ucd->untracked[i]);
-> +	jw_end(jw);
-> +
-> +	jw_object_inline_begin_object(jw, "dirs");
-> +	for (i = 0; i < ucd->dirs_nr; i++) {
-> +		jw_object_inline_begin_object(jw, ucd->dirs[i]->name);
-> +		jw_object_untracked_cache_dir(jw, ucd->dirs[i]);
-> +		jw_end(jw);
-> +	}
-> +	jw_end(jw);
-> +}
-> +
-> +struct untracked_cache *read_untracked_extension(const void *data,
-> +						 unsigned long sz,
-> +						 struct json_writer *jw)
->   {
->   	struct untracked_cache *uc;
->   	struct read_data rd;
-> @@ -2864,6 +2900,19 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
->   	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
->   	exclude_per_dir = (const char *)next + exclude_per_dir_offset;
->   	uc->exclude_per_dir = xstrdup(exclude_per_dir);
-> +
-> +	if (jw) {
-> +		jw_object_string(jw, "ident", ident);
-> +		jw_object_oid_stat(jw, "info_exclude", &uc->ss_info_exclude);
-> +		jw_object_oid_stat(jw, "excludes_file", &uc->ss_excludes_file);
-> +		jw_object_intmax(jw, "flags", uc->dir_flags);
-> +		if (uc->dir_flags & DIR_SHOW_OTHER_DIRECTORIES)
-> +			jw_object_bool(jw, "show_other_directories", 1);
-> +		if (uc->dir_flags & DIR_HIDE_EMPTY_DIRECTORIES)
-> +			jw_object_bool(jw, "hide_empty_directories", 1);
-> +		jw_object_string(jw, "excludes_per_dir", uc->exclude_per_dir);
-> +	}
-> +
->   	/* NUL after exclude_per_dir is covered by sizeof(*ouc) */
->   	next += exclude_per_dir_offset + strlen(exclude_per_dir) + 1;
->   	if (next >= end)
-> @@ -2905,6 +2954,12 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
->   	ewah_each_bit(rd.sha1_valid, read_oid, &rd);
->   	next = rd.data;
->   
-> +	if (jw) {
-> +		jw_object_inline_begin_object(jw, "root");
-> +		jw_object_untracked_cache_dir(jw, uc->root);
-> +		jw_end(jw);
-> +	}
-> +
->   done:
->   	free(rd.ucd);
->   	ewah_free(rd.valid);
-> diff --git a/dir.h b/dir.h
-> index 680079bbe3..80efdd05c4 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -6,6 +6,8 @@
->   #include "cache.h"
->   #include "strbuf.h"
->   
-> +struct json_writer;
-> +
->   struct dir_entry {
->   	unsigned int len;
->   	char name[FLEX_ARRAY]; /* more */
-> @@ -362,7 +364,7 @@ void untracked_cache_remove_from_index(struct index_state *, const char *);
->   void untracked_cache_add_to_index(struct index_state *, const char *);
->   
->   void free_untracked_cache(struct untracked_cache *);
-> -struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
-> +struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz, struct json_writer *jw);
->   void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
->   void add_untracked_cache(struct index_state *istate);
->   void remove_untracked_cache(struct index_state *istate);
-> diff --git a/json-writer.h b/json-writer.h
-> index c48c4cbf33..c3d0fbd1ef 100644
-> --- a/json-writer.h
-> +++ b/json-writer.h
-> @@ -121,6 +121,12 @@ static inline void jw_object_inline_begin_array_gently(struct json_writer *jw,
->   		jw_object_inline_begin_array(jw, name);
->   }
->   
-> +static inline void jw_array_inline_begin_object_gently(struct json_writer *jw)
-> +{
-> +	if (jw)
-> +		jw_array_inline_begin_object(jw);
-> +}
-> +
->   static inline void jw_end_gently(struct json_writer *jw)
->   {
->   	if (jw)
+I do not think it is a bad idea to have a layer that sits above
+json-writer.c and below read-cache.c that give us standardized
+mapping from in-core objects (like "struct stat") to objects in json
+(they are set of key-value pairs after all).  Call it json-schema.c
+or something?
 
-I'm not sure about the need for these _gently versions, but
-maybe make them macros in json-writer.h
+What other "higher than scaler" types do we foresee that we'd need
+to serialize in a standardised way?  If we do not have that many
+yet, perhaps a split like that might be a bit premature and we can
+start by having the function in json-writer.c side, not in the API
+consumer side.
 
-Jeff
+Thanks.
