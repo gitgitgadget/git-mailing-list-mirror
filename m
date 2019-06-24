@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCBC11F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 09:55:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 423411F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 09:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727768AbfFXJzx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 05:55:53 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34701 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726788AbfFXJzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 05:55:52 -0400
-Received: by mail-pg1-f196.google.com with SMTP id p10so6849992pgn.1
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:55:52 -0700 (PDT)
+        id S1727953AbfFXJz5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 05:55:57 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37271 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726788AbfFXJz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 05:55:57 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 19so7212480pfa.4
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kyg3OqoRX1j8S1Qk9zlC3Dx2EOKDflHSYUCdorkv+UA=;
-        b=uGs3NVmMIaqx0I7fID/y6f+LC4B1zTrZosZ32qAE/b6URtWlhGy3jxnVpGJg3NYzfu
-         DFxWnU/eNntRbFfhNgbe9PMtVbXnqTeflIUnSbwxLYJER5soFo04nmo95IUu/aCVzFVS
-         LyTDK9euAspScS/AkiiB7FpTRsPKsYMCyaFTRcwGa5MAJoQxRLUurfahgzaSfcU+6Ih0
-         nrHViE6fjcDAadAQ/C1i8T2GV4mfXj3V/s8Cdzyi62SbYbr6VMXnmUY2dTMEoFmfKtcq
-         jZk1sLyo3WBqk5HHX8zws67CPUp7IbAUVcxTMqQlwQ+qoNXOBnFaMf58Yr+3jokdDTvh
-         BTSg==
+        bh=6uuS8+nvnnfw+NpZR3l5bQYvXCNHID+xxwPZ3nL+gIA=;
+        b=uRibMM7NhOJ7O/YGt5YgTIGNUvE8BVfUWBxpvtnRyAlfBULFDNi3ap354PkTvFUeTM
+         wmk9O6URhAsYwtgJizsYQvZJWbcC6WMUdqqCc3QXWqGGTyKhsbEkrc2eJnkYE8qHoFFI
+         Fvp7m6nlHCJUOyU/vtYW66MY+DBJcYJ41TKAdtN4TbZdI3MW2Szds6Z+XDOKjYOUKVon
+         2QDQJS+WC2UlQ/IvXdpomnEmtAmTu80niU+ezEnmA2hTttXSip9uVZryFt8WTONknqVv
+         7Np/kibNiRo1pv/Jmtnb2FDz+FBDrsxnt9HnuVqpSR2tPRNNhPHh6ssgulHMwjV2Djfi
+         I5sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kyg3OqoRX1j8S1Qk9zlC3Dx2EOKDflHSYUCdorkv+UA=;
-        b=KpTF+Yw08in444bPD4F87avZ8vuelIt0bLcE8YKrh+jMLFtKSHBpTKpH4E2AFkQj/I
-         3ec5m0hbfmrPCShHrN16EtSRNfX/grZNT9/rjqfgN5DcjX3INwsncSE1zJGiJ9IIKnvg
-         iVKmAHoeh4HE7SAOgtw1DygiAwNL6+1cRE+kVEVMv6dVGahIhZga1TICoMQIN5Lt0hj9
-         d1/4dfsMlvV9GByZM+QLuEz7cBwKftDygSEesF/wQTX09XEuWdwFP1hqUg+QYXbW0W7/
-         LNf9JIilCKIzKMfMUo4TNjmZTwMpwbkPdKe2gRDlO5B7op0KLIG72n25XtrrQF9J7Rxy
-         g/NQ==
-X-Gm-Message-State: APjAAAVQkEw7WtfehRn7Bbsnty6LEZ7wsf6FY9iifnWGFDYVMoFWj9FG
-        dvDeJFRN0u3M1RJZi54KpxPBMfyw
-X-Google-Smtp-Source: APXvYqxqoTh43lojn8eBt1pqt6l8osN1PzFEuhXPXN4ubdfsnUiFmbMBROgNGGMqEgRDBJEKq0B8HQ==
-X-Received: by 2002:a17:90a:1aa4:: with SMTP id p33mr24055886pjp.27.1561370151641;
-        Mon, 24 Jun 2019 02:55:51 -0700 (PDT)
+        bh=6uuS8+nvnnfw+NpZR3l5bQYvXCNHID+xxwPZ3nL+gIA=;
+        b=Dw37TIqMdMaaPOnUzryW6OJpEXl/Qo0X2knoBF6Y+h0uJS87i9FyjI5gb0t4qSo9hZ
+         CAPRmxE+HuOGLlhsGUPCJ4n5qCSpwN2edsv59x1FFd5wwHD3eGrvaA7/8XOady8ghx9D
+         Le0f6K3f6GdXHIvQ+8HX+zgwa+C3QhVWTPbQnUDG0tvGBo+EiGmwr76Sn8xv1vTC4c/s
+         Yt6B+xlZNAjjNI8an/ZnjBAJLDS32aprXoqM1LcrSuDI9o6uwj+sn0LpWexmfZKYnvd1
+         NZ41DHz+WZZF3F6ztxJ5QPDzOEEj9Nhx9Z+Nmb+8/+HeiDfC+eGxrcB3MQNAh+t+4YAi
+         4+0Q==
+X-Gm-Message-State: APjAAAXaZMbA9Tfx+wuzuGDyzYpq8LUQ2ADcA3wXaHZb72PB6eS35VFC
+        Rh+FuIeM58LpByctjVOpUnv7KO4p
+X-Google-Smtp-Source: APXvYqy8MoBLqZOTokLUfW+Gf+tbnr3X6drgtu34hOshMnXPApeqlfecv+s8LlT6aciV2LPR3i+yFQ==
+X-Received: by 2002:a63:1723:: with SMTP id x35mr27235458pgl.233.1561370155954;
+        Mon, 24 Jun 2019 02:55:55 -0700 (PDT)
 Received: from ash ([115.76.181.38])
-        by smtp.gmail.com with ESMTPSA id d12sm10483787pfd.96.2019.06.24.02.55.49
+        by smtp.gmail.com with ESMTPSA id y11sm11343674pfb.119.2019.06.24.02.55.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 02:55:51 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 16:55:47 +0700
+        Mon, 24 Jun 2019 02:55:55 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 24 Jun 2019 16:55:51 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 2/6] tree-walk.c: remove the_repo from fill_tree_descriptor()
-Date:   Mon, 24 Jun 2019 16:55:29 +0700
-Message-Id: <20190624095533.22162-3-pclouds@gmail.com>
+Subject: [PATCH 3/6] tree-walk.c: remove the_repo from get_tree_entry()
+Date:   Mon, 24 Jun 2019 16:55:30 +0700
+Message-Id: <20190624095533.22162-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190624095533.22162-1-pclouds@gmail.com>
 References: <20190624095533.22162-1-pclouds@gmail.com>
@@ -71,217 +71,295 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at there, clean up the_repo usage in builtin/merge-tree.c a tiny
-bit.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/merge-tree.c | 22 +++++++++++++---------
- builtin/rebase.c     |  4 ++--
- builtin/reset.c      |  4 ++--
- notes.c              |  2 +-
- sequencer.c          |  2 +-
- tree-diff.c          |  4 ++--
- tree-walk.c          |  6 ++++--
- tree-walk.h          |  4 +++-
- unpack-trees.c       |  2 +-
- 9 files changed, 29 insertions(+), 21 deletions(-)
+ archive.c              |  4 +++-
+ blame.c                |  4 ++--
+ builtin/rm.c           |  2 +-
+ builtin/update-index.c |  2 +-
+ line-log.c             |  7 ++++---
+ match-trees.c          |  6 +++---
+ merge-recursive.c      |  8 +++++---
+ notes.c                |  2 +-
+ sha1-name.c            |  9 +++++----
+ tree-walk.c            | 18 ++++++++++++------
+ tree-walk.h            |  2 +-
+ 11 files changed, 38 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 34ca0258b1..97b54caeb9 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -205,6 +205,7 @@ static void resolve(const struct traverse_info *info, struct name_entry *ours, s
- static void unresolved_directory(const struct traverse_info *info,
- 				 struct name_entry n[3])
+diff --git a/archive.c b/archive.c
+index 53141c1f0e..a8da0fcc4f 100644
+--- a/archive.c
++++ b/archive.c
+@@ -418,7 +418,9 @@ static void parse_treeish_arg(const char **argv,
+ 		unsigned short mode;
+ 		int err;
+ 
+-		err = get_tree_entry(&tree->object.oid, prefix, &tree_oid,
++		err = get_tree_entry(ar_args->repo,
++				     &tree->object.oid,
++				     prefix, &tree_oid,
+ 				     &mode);
+ 		if (err || !S_ISDIR(mode))
+ 			die(_("current working directory is untracked"));
+diff --git a/blame.c b/blame.c
+index 145eaf2faf..ef022809e9 100644
+--- a/blame.c
++++ b/blame.c
+@@ -101,7 +101,7 @@ static void verify_working_tree_path(struct repository *r,
+ 		struct object_id blob_oid;
+ 		unsigned short mode;
+ 
+-		if (!get_tree_entry(commit_oid, path, &blob_oid, &mode) &&
++		if (!get_tree_entry(r, commit_oid, path, &blob_oid, &mode) &&
+ 		    oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
+ 			return;
+ 	}
+@@ -532,7 +532,7 @@ static int fill_blob_sha1_and_mode(struct repository *r,
  {
-+	struct repository *r = the_repository;
- 	char *newbase;
- 	struct name_entry *p;
- 	struct tree_desc t[3];
-@@ -220,9 +221,9 @@ static void unresolved_directory(const struct traverse_info *info,
- 	newbase = traverse_path(info, p);
+ 	if (!is_null_oid(&origin->blob_oid))
+ 		return 0;
+-	if (get_tree_entry(&origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
++	if (get_tree_entry(r, &origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
+ 		goto error_out;
+ 	if (oid_object_info(r, &origin->blob_oid, NULL) != OBJ_BLOB)
+ 		goto error_out;
+diff --git a/builtin/rm.c b/builtin/rm.c
+index be8edc6d1e..2eacda42b4 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -179,7 +179,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 		 * way as changed from the HEAD.
+ 		 */
+ 		if (no_head
+-		     || get_tree_entry(head, name, &oid, &mode)
++		     || get_tree_entry(the_repository, head, name, &oid, &mode)
+ 		     || ce->ce_mode != create_ce_mode(mode)
+ 		     || !oideq(&ce->oid, &oid))
+ 			staged_changes = 1;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 3f8cc6ccb4..dff2f4b837 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -601,7 +601,7 @@ static struct cache_entry *read_one_ent(const char *which,
+ 	struct object_id oid;
+ 	struct cache_entry *ce;
  
- #define ENTRY_OID(e) (((e)->mode && S_ISDIR((e)->mode)) ? &(e)->oid : NULL)
--	buf0 = fill_tree_descriptor(t + 0, ENTRY_OID(n + 0));
--	buf1 = fill_tree_descriptor(t + 1, ENTRY_OID(n + 1));
--	buf2 = fill_tree_descriptor(t + 2, ENTRY_OID(n + 2));
-+	buf0 = fill_tree_descriptor(r, t + 0, ENTRY_OID(n + 0));
-+	buf1 = fill_tree_descriptor(r, t + 1, ENTRY_OID(n + 1));
-+	buf2 = fill_tree_descriptor(r, t + 2, ENTRY_OID(n + 2));
- #undef ENTRY_OID
- 
- 	merge_trees(t, newbase);
-@@ -351,14 +352,16 @@ static void merge_trees(struct tree_desc t[3], const char *base)
- 	traverse_trees(&the_index, 3, t, &info);
+-	if (get_tree_entry(ent, path, &oid, &mode)) {
++	if (get_tree_entry(the_repository, ent, path, &oid, &mode)) {
+ 		if (which)
+ 			error("%s: not in %s branch.", path, which);
+ 		return NULL;
+diff --git a/line-log.c b/line-log.c
+index 0a17b21187..3aff1849e7 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -496,12 +496,13 @@ static struct commit *check_single_commit(struct rev_info *revs)
+ 	return (struct commit *) commit;
  }
  
--static void *get_tree_descriptor(struct tree_desc *desc, const char *rev)
-+static void *get_tree_descriptor(struct repository *r,
-+				 struct tree_desc *desc,
-+				 const char *rev)
+-static void fill_blob_sha1(struct commit *commit, struct diff_filespec *spec)
++static void fill_blob_sha1(struct repository *r, struct commit *commit,
++			   struct diff_filespec *spec)
  {
+ 	unsigned short mode;
  	struct object_id oid;
- 	void *buf;
  
--	if (get_oid(rev, &oid))
-+	if (repo_get_oid(r, rev, &oid))
- 		die("unknown rev %s", rev);
--	buf = fill_tree_descriptor(desc, &oid);
-+	buf = fill_tree_descriptor(r, desc, &oid);
- 	if (!buf)
- 		die("%s is not a tree", rev);
- 	return buf;
-@@ -366,15 +369,16 @@ static void *get_tree_descriptor(struct tree_desc *desc, const char *rev)
+-	if (get_tree_entry(&commit->object.oid, spec->path, &oid, &mode))
++	if (get_tree_entry(r, &commit->object.oid, spec->path, &oid, &mode))
+ 		die("There is no path %s in the commit", spec->path);
+ 	fill_filespec(spec, &oid, 1, mode);
  
- int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+@@ -585,7 +586,7 @@ parse_lines(struct repository *r, struct commit *commit,
+ 					name_part);
+ 
+ 		spec = alloc_filespec(full_name);
+-		fill_blob_sha1(commit, spec);
++		fill_blob_sha1(r, commit, spec);
+ 		fill_line_ends(r, spec, &lines, &ends);
+ 		cb_data.spec = spec;
+ 		cb_data.lines = lines;
+diff --git a/match-trees.c b/match-trees.c
+index 9d1ec8d6b0..de7e8a6783 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -290,7 +290,7 @@ void shift_tree(const struct object_id *hash1,
+ 		if (!*del_prefix)
+ 			return;
+ 
+-		if (get_tree_entry(hash2, del_prefix, shifted, &mode))
++		if (get_tree_entry(the_repository, hash2, del_prefix, shifted, &mode))
+ 			die("cannot find path %s in tree %s",
+ 			    del_prefix, oid_to_hex(hash2));
+ 		return;
+@@ -317,12 +317,12 @@ void shift_tree_by(const struct object_id *hash1,
+ 	unsigned candidate = 0;
+ 
+ 	/* Can hash2 be a tree at shift_prefix in tree hash1? */
+-	if (!get_tree_entry(hash1, shift_prefix, &sub1, &mode1) &&
++	if (!get_tree_entry(the_repository, hash1, shift_prefix, &sub1, &mode1) &&
+ 	    S_ISDIR(mode1))
+ 		candidate |= 1;
+ 
+ 	/* Can hash1 be a tree at shift_prefix in tree hash2? */
+-	if (!get_tree_entry(hash2, shift_prefix, &sub2, &mode2) &&
++	if (!get_tree_entry(the_repository, hash2, shift_prefix, &sub2, &mode2) &&
+ 	    S_ISDIR(mode2))
+ 		candidate |= 2;
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d2e380b7ed..b051066795 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -475,7 +475,7 @@ static int get_tree_entry_if_blob(const struct object_id *tree,
  {
-+	struct repository *r = the_repository;
- 	struct tree_desc t[3];
- 	void *buf1, *buf2, *buf3;
+ 	int ret;
  
- 	if (argc != 4)
- 		usage(merge_tree_usage);
+-	ret = get_tree_entry(tree, path, &dfs->oid, &dfs->mode);
++	ret = get_tree_entry(the_repository, tree, path, &dfs->oid, &dfs->mode);
+ 	if (S_ISDIR(dfs->mode)) {
+ 		oidcpy(&dfs->oid, &null_oid);
+ 		dfs->mode = 0;
+@@ -1905,7 +1905,8 @@ static int tree_has_path(struct tree *tree, const char *path)
+ 	struct object_id hashy;
+ 	unsigned short mode_o;
  
--	buf1 = get_tree_descriptor(t+0, argv[1]);
--	buf2 = get_tree_descriptor(t+1, argv[2]);
--	buf3 = get_tree_descriptor(t+2, argv[3]);
-+	buf1 = get_tree_descriptor(r, t+0, argv[1]);
-+	buf2 = get_tree_descriptor(r, t+1, argv[2]);
-+	buf3 = get_tree_descriptor(r, t+2, argv[3]);
- 	merge_trees(t, "");
- 	free(buf1);
- 	free(buf2);
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b8116db487..28490f5f88 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -840,13 +840,13 @@ static int reset_head(struct object_id *oid, const char *action,
- 		goto leave_reset_head;
- 	}
+-	return !get_tree_entry(&tree->object.oid, path,
++	return !get_tree_entry(the_repository,
++			       &tree->object.oid, path,
+ 			       &hashy, &mode_o);
+ }
  
--	if (!reset_hard && !fill_tree_descriptor(&desc[nr++], &head_oid)) {
-+	if (!reset_hard && !fill_tree_descriptor(the_repository, &desc[nr++], &head_oid)) {
- 		ret = error(_("failed to find tree of %s"),
- 			    oid_to_hex(&head_oid));
- 		goto leave_reset_head;
- 	}
- 
--	if (!fill_tree_descriptor(&desc[nr++], oid)) {
-+	if (!fill_tree_descriptor(the_repository, &desc[nr++], oid)) {
- 		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
- 		goto leave_reset_head;
- 	}
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 26ef9a7bd0..77c38f28c2 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -79,13 +79,13 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
- 		struct object_id head_oid;
- 		if (get_oid("HEAD", &head_oid))
- 			return error(_("You do not have a valid HEAD."));
--		if (!fill_tree_descriptor(desc + nr, &head_oid))
-+		if (!fill_tree_descriptor(the_repository, desc + nr, &head_oid))
- 			return error(_("Failed to find tree of HEAD."));
- 		nr++;
- 		opts.fn = twoway_merge;
- 	}
- 
--	if (!fill_tree_descriptor(desc + nr, oid)) {
-+	if (!fill_tree_descriptor(the_repository, desc + nr, oid)) {
- 		error(_("Failed to find tree of %s."), oid_to_hex(oid));
- 		goto out;
- 	}
+@@ -2500,7 +2501,8 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
+ 	 * the various handle_rename_*() functions update the index
+ 	 * explicitly rather than relying on unpack_trees() to have done it.
+ 	 */
+-	get_tree_entry(&tree->object.oid,
++	get_tree_entry(opt->repo,
++		       &tree->object.oid,
+ 		       pair->two->path,
+ 		       &re->dst_entry->stages[stage].oid,
+ 		       &re->dst_entry->stages[stage].mode);
 diff --git a/notes.c b/notes.c
-index 532ec37865..2522b87d77 100644
+index 2522b87d77..75c028b300 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -397,7 +397,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 	struct name_entry entry;
- 	const unsigned hashsz = the_hash_algo->rawsz;
+@@ -1015,7 +1015,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 		return;
+ 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
+ 		die("Cannot use notes ref %s", notes_ref);
+-	if (get_tree_entry(&object_oid, "", &oid, &mode))
++	if (get_tree_entry(the_repository, &object_oid, "", &oid, &mode))
+ 		die("Failed to read notes tree referenced by %s (%s)",
+ 		    notes_ref, oid_to_hex(&object_oid));
  
--	buf = fill_tree_descriptor(&desc, &subtree->val_oid);
-+	buf = fill_tree_descriptor(the_repository, &desc, &subtree->val_oid);
- 	if (!buf)
- 		die("Could not read %s for notes-index",
- 		     oid_to_hex(&subtree->val_oid));
-diff --git a/sequencer.c b/sequencer.c
-index ab74b6baf1..d565fcf2b1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3194,7 +3194,7 @@ static int do_reset(struct repository *r,
- 		return error_resolve_conflict(_(action_name(opts)));
- 	}
- 
--	if (!fill_tree_descriptor(&desc, &oid)) {
-+	if (!fill_tree_descriptor(r, &desc, &oid)) {
- 		error(_("failed to find tree of %s"), oid_to_hex(&oid));
- 		rollback_lock_file(&lock);
- 		free((void *)desc.buffer);
-diff --git a/tree-diff.c b/tree-diff.c
-index f1f641eb6a..33ded7f8b3 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -422,8 +422,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 	 *   diff_tree_oid(parent, commit) )
- 	 */
- 	for (i = 0; i < nparent; ++i)
--		tptree[i] = fill_tree_descriptor(&tp[i], parents_oid[i]);
--	ttree = fill_tree_descriptor(&t, oid);
-+		tptree[i] = fill_tree_descriptor(opt->repo, &tp[i], parents_oid[i]);
-+	ttree = fill_tree_descriptor(opt->repo, &t, oid);
- 
- 	/* Enable recursion indefinitely */
- 	opt->pathspec.recursive = opt->flags.recursive;
-diff --git a/tree-walk.c b/tree-walk.c
-index 0c7722b220..c5569b3e9f 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -81,13 +81,15 @@ int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned l
- 	return result;
+diff --git a/sha1-name.c b/sha1-name.c
+index 728e6f1f61..e8fb215e5c 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1677,7 +1677,8 @@ int repo_get_oid_blob(struct repository *r,
  }
  
--void *fill_tree_descriptor(struct tree_desc *desc, const struct object_id *oid)
-+void *fill_tree_descriptor(struct repository *r,
-+			   struct tree_desc *desc,
-+			   const struct object_id *oid)
- {
- 	unsigned long size = 0;
- 	void *buf = NULL;
+ /* Must be called only when object_name:filename doesn't exist. */
+-static void diagnose_invalid_oid_path(const char *prefix,
++static void diagnose_invalid_oid_path(struct repository *r,
++				      const char *prefix,
+ 				      const char *filename,
+ 				      const struct object_id *tree_oid,
+ 				      const char *object_name,
+@@ -1695,7 +1696,7 @@ static void diagnose_invalid_oid_path(const char *prefix,
+ 	if (is_missing_file_error(errno)) {
+ 		char *fullname = xstrfmt("%s%s", prefix, filename);
  
- 	if (oid) {
--		buf = read_object_with_reference(the_repository, oid, tree_type, &size, NULL);
-+		buf = read_object_with_reference(r, oid, tree_type, &size, NULL);
- 		if (!buf)
- 			die("unable to read tree %s", oid_to_hex(oid));
+-		if (!get_tree_entry(tree_oid, fullname, &oid, &mode)) {
++		if (!get_tree_entry(r, tree_oid, fullname, &oid, &mode)) {
+ 			die("Path '%s' exists, but not '%s'.\n"
+ 			    "Did you mean '%.*s:%s' aka '%.*s:./%s'?",
+ 			    fullname,
+@@ -1902,10 +1903,10 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 					filename, oid, &oc->symlink_path,
+ 					&oc->mode);
+ 			} else {
+-				ret = get_tree_entry(&tree_oid, filename, oid,
++				ret = get_tree_entry(repo, &tree_oid, filename, oid,
+ 						     &oc->mode);
+ 				if (ret && only_to_die) {
+-					diagnose_invalid_oid_path(prefix,
++					diagnose_invalid_oid_path(repo, prefix,
+ 								   filename,
+ 								   &tree_oid,
+ 								   name, len);
+diff --git a/tree-walk.c b/tree-walk.c
+index c5569b3e9f..506e12a031 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -502,7 +502,9 @@ struct dir_state {
+ 	struct object_id oid;
+ };
+ 
+-static int find_tree_entry(struct tree_desc *t, const char *name, struct object_id *result, unsigned short *mode)
++static int find_tree_entry(struct repository *r, struct tree_desc *t,
++			   const char *name, struct object_id *result,
++			   unsigned short *mode)
+ {
+ 	int namelen = strlen(name);
+ 	while (t->size) {
+@@ -532,19 +534,23 @@ static int find_tree_entry(struct tree_desc *t, const char *name, struct object_
+ 			oidcpy(result, &oid);
+ 			return 0;
+ 		}
+-		return get_tree_entry(&oid, name + entrylen, result, mode);
++		return get_tree_entry(r, &oid, name + entrylen, result, mode);
  	}
+ 	return -1;
+ }
+ 
+-int get_tree_entry(const struct object_id *tree_oid, const char *name, struct object_id *oid, unsigned short *mode)
++int get_tree_entry(struct repository *r,
++		   const struct object_id *tree_oid,
++		   const char *name,
++		   struct object_id *oid,
++		   unsigned short *mode)
+ {
+ 	int retval;
+ 	void *tree;
+ 	unsigned long size;
+ 	struct object_id root;
+ 
+-	tree = read_object_with_reference(the_repository, tree_oid, tree_type, &size, &root);
++	tree = read_object_with_reference(r, tree_oid, tree_type, &size, &root);
+ 	if (!tree)
+ 		return -1;
+ 
+@@ -559,7 +565,7 @@ int get_tree_entry(const struct object_id *tree_oid, const char *name, struct ob
+ 	} else {
+ 		struct tree_desc t;
+ 		init_tree_desc(&t, tree, size);
+-		retval = find_tree_entry(&t, name, oid, mode);
++		retval = find_tree_entry(r, &t, name, oid, mode);
+ 	}
+ 	free(tree);
+ 	return retval;
+@@ -681,7 +687,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct object_id *tree_oid, c
+ 		}
+ 
+ 		/* Look up the first (or only) path component in the tree. */
+-		find_result = find_tree_entry(&t, namebuf.buf,
++		find_result = find_tree_entry(the_repository, &t, namebuf.buf,
+ 					      &current_tree_oid, mode);
+ 		if (find_result) {
+ 			goto done;
 diff --git a/tree-walk.h b/tree-walk.h
-index 161e2400f4..9aa1042642 100644
+index 9aa1042642..639f79187f 100644
 --- a/tree-walk.h
 +++ b/tree-walk.h
-@@ -45,7 +45,9 @@ int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long
- int tree_entry(struct tree_desc *, struct name_entry *);
- int tree_entry_gently(struct tree_desc *, struct name_entry *);
+@@ -68,7 +68,7 @@ struct traverse_info {
+ 	int show_all_errors;
+ };
  
--void *fill_tree_descriptor(struct tree_desc *desc, const struct object_id *oid);
-+void *fill_tree_descriptor(struct repository *r,
-+			   struct tree_desc *desc,
-+			   const struct object_id *oid);
- 
- struct traverse_info;
- typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 50189909b8..cfe1c5ec6f 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -840,7 +840,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 			const struct object_id *oid = NULL;
- 			if (dirmask & 1)
- 				oid = &names[i].oid;
--			buf[nr_buf++] = fill_tree_descriptor(t + i, oid);
-+			buf[nr_buf++] = fill_tree_descriptor(the_repository, t + i, oid);
- 		}
- 	}
+-int get_tree_entry(const struct object_id *, const char *, struct object_id *, unsigned short *);
++int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
+ char *make_traverse_path(char *path, const struct traverse_info *info, const struct name_entry *n);
+ void setup_traverse_info(struct traverse_info *info, const char *base);
  
 -- 
 2.22.0.rc0.322.g2b0371e29a
