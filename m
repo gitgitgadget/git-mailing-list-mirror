@@ -2,79 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D375B1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 19:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEB9F1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 19:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729083AbfFXTXF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 15:23:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63002 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727521AbfFXTXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 15:23:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B04367C91C;
-        Mon, 24 Jun 2019 15:23:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Vs6lgIegiF1ZwXiS49CDFp2UETo=; b=pshtDt
-        M34SF05wlbhAdkk67Idv8amYuuD5nyq6BJ0BbzdRwUUYaTcYtQanyqpZh05KWEVd
-        cwDEKX766uh5gPIFM6pdvXe0w4x3gWxbfTiwS5WMl5ijW7Vj18pneG+xeJepdoD4
-        JEo1nYVxLyfSEg38zcRPM1CVjY3tRKoXUZEYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=negB5Qiz6k65wPrGW26c8eTR6W9SZ0WS
-        mPxbeVYhlS0RHiSydqho9n4Yrw+9IIAJIHUMl7PJJWvZAxaDh0QB9EptIR9JPHQi
-        i0vriMmzz/MC1YzW63BUnb3bAq3CzWFUIhPxNO8MdLQiz+g6nLOdKi8SGQFM0JK2
-        DDJL/odrXfM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A8C5F7C91B;
-        Mon, 24 Jun 2019 15:23:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729945AbfFXTc6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 15:32:58 -0400
+Received: from siwi.pair.com ([209.68.5.199]:56075 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727329AbfFXTc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 15:32:57 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id BCB873F412B;
+        Mon, 24 Jun 2019 15:32:56 -0400 (EDT)
+Received: from [192.168.1.6] (152.sub-174-229-150.myvzw.com [174.229.150.152])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D87AE7C918;
-        Mon, 24 Jun 2019 15:22:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 1/1] t0001: fix on case-insensitive filesystems
-References: <pull.151.git.gitgitgadget@gmail.com>
-        <pull.151.v2.git.gitgitgadget@gmail.com>
-        <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1906211632570.44@tvgsbejvaqbjf.bet>
-        <xmqqh88ikfpb.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet>
-        <xmqqimsuj4ft.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1906241937010.44@tvgsbejvaqbjf.bet>
-Date:   Mon, 24 Jun 2019 12:22:57 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1906241937010.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 24 Jun 2019 19:38:18 +0200 (CEST)")
-Message-ID: <xmqqblymhjou.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id C733C3F40EB;
+        Mon, 24 Jun 2019 15:32:55 -0400 (EDT)
+Subject: Re: [PATCH v2 04/10] dir.c: dump "UNTR" extension as json
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190624130226.17293-1-pclouds@gmail.com>
+ <20190624130226.17293-5-pclouds@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <ec6bdf73-0c05-80cd-ecab-9a6ebf6aad6e@jeffhostetler.com>
+Date:   Mon, 24 Jun 2019 15:32:54 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A719C68-96B5-11E9-A308-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20190624130226.17293-5-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The other path category is the paths in the index, which _are_
-> case-sensitive, no matter what core.ignoreCase says.
->
-> So I'd rather keep the `fs`.
 
-Sensible.  Thanks.
+On 6/24/2019 9:02 AM, Nguyễn Thái Ngọc Duy wrote:
+> The big part of UNTR extension is dumped at the end instead of dumping
+> as soon as we read it, because we actually "patch" some fields in
+> untracked_cache_dir with EWAH bitmaps at the end.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>   dir.c                    | 57 +++++++++++++++++++++++++++++++++++++++-
+>   dir.h                    |  4 ++-
+>   json-writer.h            |  6 +++++
+>   read-cache.c             |  2 +-
+>   t/t3011-ls-files-json.sh |  3 ++-
+>   t/t3011/basic            | 39 +++++++++++++++++++++++++++
+>   6 files changed, 107 insertions(+), 4 deletions(-)
+> 
+> diff --git a/dir.c b/dir.c
+> index ba4a51c296..8808577ea3 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -19,6 +19,7 @@
+>   #include "varint.h"
+>   #include "ewah/ewok.h"
+>   #include "fsmonitor.h"
+> +#include "json-writer.h"
+>   #include "submodule-config.h"
+>   
+>   /*
+> @@ -2826,7 +2827,42 @@ static void load_oid_stat(struct oid_stat *oid_stat, const unsigned char *data,
+>   	oid_stat->valid = 1;
+>   }
+>   
+> -struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
+> +static void jw_object_oid_stat(struct json_writer *jw, const char *key,
+> +			       const struct oid_stat *oid_stat)
+
+I was hoping to reserve the jw_, jw_object_, and jw_array_ prefixes
+to refer to public functions in the json-writer.[ch] files, rather
+than private functions elsewhere in the code.  I think it is less
+confusing that way.  IMHO.
+
+It's fine to have such helper functions for local structure types,
+but I think it'd be better for them to not be named like other
+public functions.
+
+> +{
+> +	jw_object_inline_begin_object(jw, key);
+> +	jw_object_bool(jw, "valid", oid_stat->valid);
+> +	jw_object_string(jw, "oid", oid_to_hex(&oid_stat->oid));
+> +	jw_object_stat_data(jw, "stat", &oid_stat->stat);
+> +	jw_end(jw);
+> +}
+> +
+> +static void jw_object_untracked_cache_dir(struct json_writer *jw,
+> +					  const struct untracked_cache_dir *ucd)
+> +{
+> +	int i;
+> +
+> +	jw_object_bool(jw, "valid", ucd->valid);
+> +	jw_object_bool(jw, "check-only", ucd->check_only);
+> +	jw_object_stat_data(jw, "stat", &ucd->stat_data);
+> +	jw_object_string(jw, "exclude-oid", oid_to_hex(&ucd->exclude_oid));
+> +	jw_object_inline_begin_array(jw, "untracked");
+> +	for (i = 0; i < ucd->untracked_nr; i++)
+> +		jw_array_string(jw, ucd->untracked[i]);
+> +	jw_end(jw);
+> +
+> +	jw_object_inline_begin_object(jw, "dirs");
+> +	for (i = 0; i < ucd->dirs_nr; i++) {
+> +		jw_object_inline_begin_object(jw, ucd->dirs[i]->name);
+> +		jw_object_untracked_cache_dir(jw, ucd->dirs[i]);
+> +		jw_end(jw);
+> +	}
+> +	jw_end(jw);
+> +}
+> +
+> +struct untracked_cache *read_untracked_extension(const void *data,
+> +						 unsigned long sz,
+> +						 struct json_writer *jw)
+>   {
+>   	struct untracked_cache *uc;
+>   	struct read_data rd;
+> @@ -2864,6 +2900,19 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+>   	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
+>   	exclude_per_dir = (const char *)next + exclude_per_dir_offset;
+>   	uc->exclude_per_dir = xstrdup(exclude_per_dir);
+> +
+> +	if (jw) {
+> +		jw_object_string(jw, "ident", ident);
+> +		jw_object_oid_stat(jw, "info_exclude", &uc->ss_info_exclude);
+> +		jw_object_oid_stat(jw, "excludes_file", &uc->ss_excludes_file);
+> +		jw_object_intmax(jw, "flags", uc->dir_flags);
+> +		if (uc->dir_flags & DIR_SHOW_OTHER_DIRECTORIES)
+> +			jw_object_bool(jw, "show_other_directories", 1);
+> +		if (uc->dir_flags & DIR_HIDE_EMPTY_DIRECTORIES)
+> +			jw_object_bool(jw, "hide_empty_directories", 1);
+> +		jw_object_string(jw, "excludes_per_dir", uc->exclude_per_dir);
+> +	}
+> +
+>   	/* NUL after exclude_per_dir is covered by sizeof(*ouc) */
+>   	next += exclude_per_dir_offset + strlen(exclude_per_dir) + 1;
+>   	if (next >= end)
+> @@ -2905,6 +2954,12 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+>   	ewah_each_bit(rd.sha1_valid, read_oid, &rd);
+>   	next = rd.data;
+>   
+> +	if (jw) {
+> +		jw_object_inline_begin_object(jw, "root");
+> +		jw_object_untracked_cache_dir(jw, uc->root);
+> +		jw_end(jw);
+> +	}
+> +
+>   done:
+>   	free(rd.ucd);
+>   	ewah_free(rd.valid);
+> diff --git a/dir.h b/dir.h
+> index 680079bbe3..80efdd05c4 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -6,6 +6,8 @@
+>   #include "cache.h"
+>   #include "strbuf.h"
+>   
+> +struct json_writer;
+> +
+>   struct dir_entry {
+>   	unsigned int len;
+>   	char name[FLEX_ARRAY]; /* more */
+> @@ -362,7 +364,7 @@ void untracked_cache_remove_from_index(struct index_state *, const char *);
+>   void untracked_cache_add_to_index(struct index_state *, const char *);
+>   
+>   void free_untracked_cache(struct untracked_cache *);
+> -struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
+> +struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz, struct json_writer *jw);
+>   void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
+>   void add_untracked_cache(struct index_state *istate);
+>   void remove_untracked_cache(struct index_state *istate);
+> diff --git a/json-writer.h b/json-writer.h
+> index c48c4cbf33..c3d0fbd1ef 100644
+> --- a/json-writer.h
+> +++ b/json-writer.h
+> @@ -121,6 +121,12 @@ static inline void jw_object_inline_begin_array_gently(struct json_writer *jw,
+>   		jw_object_inline_begin_array(jw, name);
+>   }
+>   
+> +static inline void jw_array_inline_begin_object_gently(struct json_writer *jw)
+> +{
+> +	if (jw)
+> +		jw_array_inline_begin_object(jw);
+> +}
+> +
+>   static inline void jw_end_gently(struct json_writer *jw)
+>   {
+>   	if (jw)
+
+I'm not sure about the need for these _gently versions, but
+maybe make them macros in json-writer.h
+
+Jeff
