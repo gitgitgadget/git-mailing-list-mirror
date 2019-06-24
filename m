@@ -2,96 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4BD1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 10:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBCE1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 11:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729177AbfFXKw3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 06:52:29 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59401 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728369AbfFXKw3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 06:52:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561373548;
-        bh=FVNUSCd3agdd8aaPVLtd6MYBOwmh/oHWx+N0kPKqOuA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SRQ5fUHEqaLIhoe4UYKek329dYTc7hktM99AZg8H/TtomDmFhLDSZHXs6greqZet6
-         gjo9qv9CXGEyTxxUA+rMoGvm9V/WEGlhj45LRfz3RZaLar/tmFdPoU6g55mNt1xZ/T
-         aZU7N6tCpxUB2jJUtBFeE/W4ZsC5aycXPBmTvRDU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiacR-1iBy3A3dw7-00fh03; Mon, 24
- Jun 2019 12:52:27 +0200
-Date:   Mon, 24 Jun 2019 12:52:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rm: add --intent-to-add, to be used with --cached
-In-Reply-To: <20190622122417.28178-1-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906241251040.44@tvgsbejvaqbjf.bet>
-References: <20190622122417.28178-1-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-868592721-1561373568=:44"
-X-Provags-ID: V03:K1:fktkGnByHAxFLGVEqobeV1Zh6+C7yqpZwQPKG6X0PF7EDoK6lDK
- /HmohLcGtRQ1HE12jA5DUTS2nKC3MT+RCCuDoHifhu6v6qHxplm16E/TuQBMHutsnsfDrER
- Y2KrwQa9cZeBH064T7wP/9bBOWpPjf77n51f636DR0LO5+xvsVA+aFJrfrMN5BhlqOy2I6y
- TtZdRlUvdTGeiewPqjnoQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:APr7BQTfVbA=:HfYHm/wdtdWB2FCRoEcDF6
- LQ9Ou+Vzo3I4Nq1UFBR/9kyXY17H0iGJY6GAoRJnhSLPewdgt4SZqGi7tzRp8upDqW41xytrZ
- TfzsRXaaK5MrcbtHMLCR2wp6+kkX4K25FR94Wdv5k45ynEpXwJlPi9p4xoiECxUYHfSV92KDq
- D00y6WVChbfmy+QE8rXI2wrFvflucJEqzDE5NZr6Yxd6hXB9NjmSY0rn09qjcqUblrJYvu9aP
- O9FKlLpRy8kw2+wvpbADoc0foiaam1/ZPl72M+ksUKkF5omo9lrTWte5D8ZFEOQ+jkL5z26/e
- 7PAUGHmR4nCEWozrkcoxQGntdV0XHOJwdxz4mPVDT0oBK6fJheWudPrds+0QXCc00tDEiGQrg
- N5fvdBnAeFxPL+UbG6LrhseUgopbU6Ufvhr4TnvUWWsmj6n7p88BxH4wpkmhZStjKhz7aq0lu
- TgSWeT+CBiwUTodyqgid7qw0++yhbaHZmRM4Q4kuzdwLGaDF5TSf5dS7FUZwM44GCv7KW79uL
- HmL8AcoJKzp5yw0H81M+ihmhgTLKnZ3b2RlBxuAT6kUDONHueVQMBHtp0SSL84gF/EXtIHE27
- kiMIVXLL/6ti0ToTK2m1LIKnOupd47gBfBmADjzQ7BEH/StNLXCpn29/6kT3kfZFxA/Wucde9
- getlURTYhsieXXLU2lpc1Odm7/qEo8AVQIto/W1omERDt57hiHOWU7D6v7p2LJ4+vGCPthKSo
- RLIAeRQ2i76oUnwPabi332UhhCRrzF9GyCxrWBxu2453ePjfafoZES3q87+wVSMz1WC24mzqO
- FihqfrXQl8eUmmxewTsVWFLgAqsbLe78QCbc0Zi/4n6Sx2/Bf4/r+1M8g6uAmphpL1p6Rl3vm
- bJRO5jGXrIgqk/SOIdztBSq3Uo+2E805vi2iAhmYL2icf9bBpQdtPnlp4IlNpmmiVSn7jeoG6
- D9zW/68TtQYDmik/yu/qh4kmXKzxRG1BLaySN1YAWfE0W4OafneLC
+        id S1729057AbfFXLDe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 07:03:34 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:38070 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727732AbfFXLDe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 07:03:34 -0400
+Received: by mail-wm1-f45.google.com with SMTP id s15so12897220wmj.3
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 04:03:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=HmLwnDYMP6pCvZ7bccPMPvb0Q7Sjj2cVFi0OpURzNSM=;
+        b=hauvMXBFntdfQlecM1T6xrhJXBPER5mk6tCqiGz+P/XKVC39gPUGeSCWgVmYGVCBL/
+         TJNIgKJOBL+bEJMixvtCMF5K/fcd0vSPYobwHmE8HuxNjZGI+3OnvG/qd9kOqAXRemYC
+         nzMDcYTY0jzxAyiim3PBNwrxAQgH0wToraEOmiIbUnLX3IyXh3znGVuo4xTfoLA2P5Uf
+         85Xqm5HfccS6V2ZWgeonCY8uma7yZmhEbnNVqwnv7jrdENZaU8DUH/T3j/zPMfmRYLqW
+         oWT++dbAACW7XWuG0rZhcEZPS4MuzWXpnFsn7ZhHert6hiqMsn+c/TFjoqoqLdsHcSTX
+         113g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=HmLwnDYMP6pCvZ7bccPMPvb0Q7Sjj2cVFi0OpURzNSM=;
+        b=SZFPqjKJLftRQzDDEhkM6gSClRmwgm5f/AIAXHFq4+F2ci1vaYyVr8YtNMBXHDG/DA
+         Uzz7M8sbUcL6aew65NPgDutys+vv1S/KU4YeqGgzgUcfWt6vNwExEUP1vpF2ehItjpMf
+         F+WMD+GqELQbePInn+AZeF3ZrHCgFOg+LYNVqqnK4UmwxZ2+tVV15iCrl2/ygzTw2Gze
+         Gz6RNCpPoSRjJqrK9r87b1Ll54wxBFSMKtyEDLi+eFo5olBPxY5/tQUJSiLznaO1sMwh
+         cI1E2mS1KHHH4KrwIxUjqQYSjOezEzrEfZUJ6hXCj6LCDIA/Ng1b5tdpmG/eWm2a0WK5
+         w9Rw==
+X-Gm-Message-State: APjAAAUW7s1UwNPOMB5WCne3GUHfoVKYjodEcokt1k1P0ufuFq7SNh0p
+        5tzDBIR3+zUmHr51i5dE3McdtKKm
+X-Google-Smtp-Source: APXvYqxODtakEGfs1A8EQXXmlcqpMrijqb77NoZ6E4ost+FY/XTQrQWBsOzLMSV3XQYw5yJMmdiD1w==
+X-Received: by 2002:a1c:305:: with SMTP id 5mr16131853wmd.101.1561374211549;
+        Mon, 24 Jun 2019 04:03:31 -0700 (PDT)
+Received: from 200116b840fa6b00255037fd7cde3798.dip.versatel-1u1.de (200116b840fa6b00255037fd7cde3798.dip.versatel-1u1.de. [2001:16b8:40fa:6b00:2550:37fd:7cde:3798])
+        by smtp.gmail.com with ESMTPSA id y6sm10644850wmd.16.2019.06.24.04.03.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Jun 2019 04:03:30 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: [BUG] Symbolic links break "git fast-export"?
+Message-Id: <95EF0665-9882-4707-BB6A-94182C01BE91@gmail.com>
+Date:   Mon, 24 Jun 2019 13:03:29 +0200
+Cc:     Jeff King <peff@peff.net>
+To:     Git Mailing List <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi folks,
 
---8323328-868592721-1561373568=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Is my understanding correct, that `git fast-export | git fast-import` 
+should not modify the repository? If yes, then we might have a bug in 
+`git fast-export` if symbolic directory links are removed and converted 
+to a real directory.
 
-Hi Duy,
+Consider this test case:
 
-On Sat, 22 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+    # Create test repo
+    git init .
+    mkdir foo
+    echo "foo" >foo/baz
+    git add .
+    git commit -m "add foo dir"
+    ln -s foo bar
+    git add .
+    git commit -m "add bar dir as link"
+    rm bar
+    mkdir bar
+    echo "bar" >bar/baz
+    git add .
+    git commit -m "remove link and make bar dir real"
 
-> An index entry serves two purposes: to keep the content to be committed,
-> and to mark that the same path on worktree is tracked. When
->
->     git rm --cached foo
->
-> is called and there is "foo" in worktree, its status is changed from
-> tracked to untracked. Which I think is not intended, at least from the
-> user perspective because we almost always tell people "Git is about the
-> content" (*).
+    printf "BEFORE: "
+    git rev-parse HEAD
 
-I can buy that rationale. However, I do not think that "remove intent to
-add" (which is how I read `git rm --intent-to-add`) is a particularly good
-way to express this. I could see `--keep-intent-to-add` as a better
-alternative, though.
+    # Fast export, import ... that should not change anything!
+    git fast-export --no-data --all --signed-tags=warn-strip \
+        --tag-of-filtered-object=rewrite | git fast-import --force --quiet
 
-Ciao,
-Johannes
+    printf "AFTER: "
 
---8323328-868592721-1561373568=:44--
+I would assume that the BEFORE/AFTER hashes match. Unfortunately, with 
+Git 2.22.0 they do no. The problem is this export output I think:
+
+    remove link and make bar dir real
+    from :2
+    M 100644 5716ca5987cbf97d6bb54920bea6adde242d87e6 bar/baz
+    D bar
+
+The new file in the `bar` directory is added to the repo first and
+afterwards the path `bar` is deleted. I think that deletes the entire 
+directory `bar`?
+
+If you confirm that this is a bug, then I will try to provide a fix.
+
+Thanks,
+Lars
