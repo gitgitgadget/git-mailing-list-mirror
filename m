@@ -2,159 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 695AD1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 16:02:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 103471F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 16:47:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731389AbfFXQCA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 12:02:00 -0400
-Received: from mail-lf1-f49.google.com ([209.85.167.49]:35835 "EHLO
-        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbfFXQCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 12:02:00 -0400
-Received: by mail-lf1-f49.google.com with SMTP id a25so10474187lfg.2
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 09:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jetbrains.com; s=googleapps;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=/s+LltwjP5vBgYui3uAd2POyuhCWwKm0LcXWvR08nOA=;
-        b=GXjQ3XpBItrzCM6GkJW+XRJPj6t2Li8mopbj8U4A46vkldh7zYNz1RQ36rvDGvWFr5
-         3QtQhE0HiI9rPo/y7ODeK/Kb3lRq7mSLU01s1AcY0xTa8w2cNruzXcylWrY+Lr7O6w6D
-         zme+5+ezZQa+ek9higEVE+8AnDoIMcw6u2FLc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=/s+LltwjP5vBgYui3uAd2POyuhCWwKm0LcXWvR08nOA=;
-        b=qxjIFtLr9HIjIRhC3/FNbCDMSwhbSPZzAfn8KH2ekybA3isEprBPi7qP75rMOwYMqL
-         4mrthUnYZ47Z6T55lgyFSgGvEWmgFi9LqaBwk2IxL45yZx0LwHOwE8YqD1vbwTJj9zqf
-         /KFxHGwQkQMCY3VRwsMZrcwrcs240urVfzHSvK+00//yADq3d42BH5mOpyj+U0tr68GC
-         8yRORSUGC9U9Q48DQ5KZD/cIxRAXEYkiHJfMUEB4HQiGi6BRWNyNml6SVZbCftrUBILv
-         GFJhZ19PcO/BEaHSLfEwoXYD4HTo3J5+61wZJ8h0RAyDNSWHpkrKlrY2GSae7CGCV/HR
-         N+ng==
-X-Gm-Message-State: APjAAAXryQbsNrwKlVGkWTBIiDIfCVFysmHBHxgJiHWbhU06liLUqfpt
-        T2Y8U+jC8nabm+o51HQGQgLBL/JBdZkgoA==
-X-Google-Smtp-Source: APXvYqyzAbH0P8pkhxMXaDDceNM3NAPXih/P1WkGNvl3z9CFTh3CcfuL8zxCqYIRX5VCZTYKawy7ig==
-X-Received: by 2002:a05:6512:15a:: with SMTP id m26mr32560980lfo.71.1561392116877;
-        Mon, 24 Jun 2019 09:01:56 -0700 (PDT)
-Received: from unit-1441.labs.intellij.net (notify.jetbrains.com. [81.3.129.5])
-        by smtp.gmail.com with ESMTPSA id z30sm1811248lfj.63.2019.06.24.09.01.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 09:01:56 -0700 (PDT)
-From:   Dmitriy Smirnov <dmitriy.smirnov@jetbrains.com>
-Content-Type: text/plain;
-        charset=utf-8
+        id S1728273AbfFXQrY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 12:47:24 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59214 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727715AbfFXQrY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 12:47:24 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 250057BA79;
+        Mon, 24 Jun 2019 12:47:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=g4QjdfFzoO7F
+        0e7EH/vxHqSuL2I=; b=Iu+1O7/EJB2ptgPKZ1W+HYIM/6uVLDbzeZE/KIke3K4r
+        ErrD/LDGImQOA1IwML4c6fe0OvZ5qy+DLUVbognLeqOILWvG3FKM4BivWHNjKeFb
+        FY3eOfWTayD9oSqhB6YnRQi/hQ3ZJPr215KeQ/6xh1XEeQj6ebqfXGGiTz7cOWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ruhoTR
+        qXS4UjwI9QoR72hrydrDQvYbr4oaUvHzUHuqEKIn9QbzCJoqYoU9Gw6NWwBEK7tS
+        BaSHNinbQol/iHu2tz7Sp793jSyw2vVFrz4Ou4AWse71mnU8tm12oXYbIvajFxLX
+        FgDwwZI/nf4lE/ujSmo7dy/CX4OdO/9c9jmEQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D8CD7BA78;
+        Mon, 24 Jun 2019 12:47:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 48D447BA76;
+        Mon, 24 Jun 2019 12:47:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 5/8] tests: make GIT_TEST_GETTEXT_POISON a boolean
+References: <20190620210915.11297-1-avarab@gmail.com>
+        <20190621101812.27300-6-avarab@gmail.com>
+Date:   Mon, 24 Jun 2019 09:47:15 -0700
+In-Reply-To: <20190621101812.27300-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 21 Jun 2019 12:18:09 +0200")
+Message-ID: <xmqqr27jhqwc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B9D3A7F4-969F-11E9-9A65-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
-Subject: Git 2.22 , --preserve-merges fails with custom commentChar 
-Message-Id: <68F548D4-DF5A-411E-AAB7-33C9DBF9B658@jetbrains.com>
-Date:   Mon, 24 Jun 2019 19:01:55 +0300
-Cc:     Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-        Aleksey Pivovarov <aleksey.pivovarov@jetbrains.com>
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.104.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I know =E2=80=94preserve-merges is deprecated now and =E2=80=94rebase-merg=
-es should be used instead, however it is still possible to pass =
-=E2=80=94preserve-merges flag, so the issue seems worth reporting.
+> diff --git a/config.c b/config.c
+> index 374cb33005..b985d60fa4 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -956,6 +956,15 @@ static void die_bad_number(const char *name, const=
+ char *value)
+>  	if (!value)
+>  		value =3D "";
+> =20
+> +	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+> +		/*
+> +		 * We explicitly *don't* use _() here since it would
+> +		 * cause an infinite loop with _() needing to call
+> +		 * use_gettext_poison(). This is why marked up
+> +		 * translations with N_() above.
+> +		 */
+> +		die(bad_numeric, value, name, error_type);
 
-In git 2.22, =E2=80=94preserve-merges does not work when custom =
-commentchar is used. It shows the editor to select options bu then =
-fails:
+;-)  Nicely explained.
 
-=E2=9E=9C  ProjectRoot git:(master) git -c core.quotepath=3Dfalse -c =
-log.showSignature=3Dfalse -c core.commentChar=3D@ rebase --interactive =
---preserve-merges --no-autosquash =
-554597b2e2c73e636b9c0cdf24dacba38568d02b
-warning: git rebase --preserve-merges is deprecated. Use --rebase-merges =
-instead.
-error: invalid line 6: @ Rebase 554597b..a8702dd onto 554597b (4 =
-commands)
-error: invalid line 6: @ Rebase 554597b..0607564 onto 554597b (4 =
-commands)
-error: invalid line 7: @
-error: invalid line 8: @ Commands:
-error: invalid line 9: @ p, pick <commit> =3D use commit
-error: invalid line 10: @ r, reword <commit> =3D use commit, but edit =
-the commit message
-error: invalid line 11: @ e, edit <commit> =3D use commit, but stop for =
-amending
-error: invalid line 12: @ s, squash <commit> =3D use commit, but meld =
-into previous commit
-error: invalid line 13: @ f, fixup <commit> =3D like "squash", but =
-discard this commit's log message
-error: invalid line 14: @ x, exec <commit> =3D run command (the rest of =
-the line) using shell
-error: invalid line 15: @ d, drop <commit> =3D remove commit
-error: invalid line 16: @ l, label <label> =3D label current HEAD with a =
-name
-error: invalid line 17: @ t, reset <label> =3D reset HEAD to a label
-error: invalid line 18: @ m, merge [-C <commit> | -c <commit>] <label> =
-[# <oneline>]
-error: invalid line 19: @ .       create a merge commit using the =
-original merge commit's
-error: invalid line 20: @ .       message (or the oneline, if no =
-original merge commit was
-error: invalid line 21: @ .       specified). Use -c <commit> to reword =
-the commit message.
-error: invalid line 22: @
-error: invalid line 23: @ These lines can be re-ordered; they are =
-executed from top to bottom.
-error: invalid line 24: @
-error: invalid line 25: @ If you remove a line here THAT COMMIT WILL BE =
-LOST.
-error: invalid line 26: @
-error: invalid line 27: @ However, if you remove everything, the rebase =
-will be aborted.
-error: invalid line 28: @
-error: invalid line 29: @ Note that empty commits are commented out
-error: unusable todo list: '.git/rebase-merge/git-rebase-todo'
-error: invalid line 6: @ Rebase 554597b..0607564 onto 554597b (4 =
-commands)
-error: invalid line 7: @
-error: invalid line 8: @ Commands:
-error: invalid line 9: @ p, pick <commit> =3D use commit
-error: invalid line 10: @ r, reword <commit> =3D use commit, but edit =
-the commit message
-error: invalid line 11: @ e, edit <commit> =3D use commit, but stop for =
-amending
-error: invalid line 12: @ s, squash <commit> =3D use commit, but meld =
-into previous commit
-error: invalid line 13: @ f, fixup <commit> =3D like "squash", but =
-discard this commit's log message
-error: invalid line 14: @ x, exec <commit> =3D run command (the rest of =
-the line) using shell
-error: invalid line 15: @ d, drop <commit> =3D remove commit
-error: invalid line 16: @ l, label <label> =3D label current HEAD with a =
-name
-error: invalid line 17: @ t, reset <label> =3D reset HEAD to a label
-error: invalid line 18: @ m, merge [-C <commit> | -c <commit>] <label> =
-[# <oneline>]
-error: invalid line 19: @ .       create a merge commit using the =
-original merge commit's
-error: invalid line 20: @ .       message (or the oneline, if no =
-original merge commit was
-error: invalid line 21: @ .       specified). Use -c <commit> to reword =
-the commit message.
-error: invalid line 22: @
-error: invalid line 23: @ These lines can be re-ordered; they are =
-executed from top to bottom.
-error: invalid line 24: @
-error: invalid line 25: @ If you remove a line here THAT COMMIT WILL BE =
-LOST.
-error: invalid line 26: @
-error: invalid line 27: @ However, if you remove everything, the rebase =
-will be aborted.
-error: invalid line 28: @
-error: invalid line 29: @ Note that empty commits are commented out=
+> diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
+> index e1d917fd27..8eef60b43f 100644
+> --- a/git-sh-i18n.sh
+> +++ b/git-sh-i18n.sh
+> @@ -17,7 +17,9 @@ export TEXTDOMAINDIR
+> =20
+>  # First decide what scheme to use...
+>  GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrough
+> -if test -n "$GIT_TEST_GETTEXT_POISON"
+> +if test -n "$GIT_TEST_GETTEXT_POISON" &&
+> +	    git env--helper --type=3Dbool --default=3D0 --exit-code \
+> +		GIT_TEST_GETTEXT_POISON
+
+The helper is called only when GIT_TEST_GETTEXT_POISON has a
+non-empty string as its value, so it's default is meaningless, no?
