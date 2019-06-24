@@ -2,113 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EC3A1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 17:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A14DC1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 17:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731556AbfFXRYI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 13:24:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60077 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726941AbfFXRYI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 13:24:08 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C80D7BE56;
-        Mon, 24 Jun 2019 13:24:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R7JUjijtNYlQjURCoczIjX1f4gc=; b=SuOewA
-        mXkbd5SLtY9CDMGRgbMoBaAdxP/yGJuNiAans/t7pxD5woX/bkhdHQMyJLGaN5tf
-        x2pUYNlURS5pL7ISURpGj2sXLM0mp1dLqi0UvDNsWW+g4eduAp/oZ8tUej9s7UkE
-        HTw1hoASdKDpZSFibm6kiUjyMxBFamXSGPZSM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K1BlD4oe2766ZRbuncoPjWdFkee27jvx
-        5VbwTwqhJWynHOne3ak8fgTi18Ixg40B1H3BrqibrCLPkumRk0wk8qNTRdRFriPo
-        qUwmPKhPbOU0+a54Qurftw99E6FiINSvbwLlvK9qbLf3eBO1SWwnGQhkMohVkrAw
-        4pm31sZurbg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4521D7BE55;
-        Mon, 24 Jun 2019 13:24:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 702787BE50;
-        Mon, 24 Jun 2019 13:24:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 14/14] completion: add default merge strategies
-References: <20190621223107.8022-1-felipe.contreras@gmail.com>
-        <20190621223107.8022-15-felipe.contreras@gmail.com>
-Date:   Mon, 24 Jun 2019 10:23:58 -0700
-In-Reply-To: <20190621223107.8022-15-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Fri, 21 Jun 2019 17:31:07 -0500")
-Message-ID: <xmqq5zouj3rl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731632AbfFXRiM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 13:38:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59267 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728762AbfFXRiM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 13:38:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561397879;
+        bh=4twL5CryWYHRH3NdLIgc25+AkCoMi2U4olCrhd0zDOA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZbgtFjm0/7x3O7HYd/W0NIC84HBkDXdycEulZ0dOfZV48Ady0FAPSYj0JnnMS5ESx
+         LG4sY7JJXId9alApVcrsWl+9z6/sIbCGqNwtDQy3N/VuEIpSktmGw+FdbB+Bppond5
+         sqiTzeNc8S3ZpV1KVaNNo71nCy7xUILOJIkmQqy0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiHf-1hwJs81H0Z-00QDPQ; Mon, 24
+ Jun 2019 19:37:59 +0200
+Date:   Mon, 24 Jun 2019 19:38:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/1] t0001: fix on case-insensitive filesystems
+In-Reply-To: <xmqqimsuj4ft.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906241937010.44@tvgsbejvaqbjf.bet>
+References: <pull.151.git.gitgitgadget@gmail.com> <pull.151.v2.git.gitgitgadget@gmail.com> <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1906211632570.44@tvgsbejvaqbjf.bet> <xmqqh88ikfpb.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet> <xmqqimsuj4ft.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DB032F44-96A4-11E9-89C2-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:tHRGiRO9k286UqkxDD8KV5Nvrojs02D1ZTER/9kjIYCrOLrJnHm
+ LSwPzcUszgE8Nn/BJKxuOfTsUCQjEvJeFPdVWzkO5fYTXb1PaZqJVPJ/+y9NuOZCqiaDVZJ
+ d+r0wxraNCHG04R3cNqWJfxtFd+ZE0wXw2B7KTU5afIbn9rm1i2lQwmYPIWqD3fj8U7U/8P
+ qDpXSgvJ0TpZJkHwU1thw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hGaHi6/LIpI=:DYmkIqgiruud63QqXnNH9f
+ 9l6hwAoVsnyTDEADmxomMq5HQxcmtpJLgdf+ynepDVKpocb8EmdsSSL3B5ZgZO68egbVUFrsU
+ O+5oXe8g2LlFG09Ov7gewlqoefrUDI9GsBIrVEZRzNS+6ZSmd9Siq+6qWLVXVmuMCL1scE6Kj
+ Qe02CggZ/RLd+PdwfG7p392xBlu3TU4ET/oj7MeAfHnKXJPJAlt/YqPk9XFZbLAdzqrjazllh
+ j5G9vxqVnQvq/ivM+vxLPdsHKNgEJeAnihKn8wGtGg1dzYM/8KftK/r0WZLvIOeLAwm5nNuaD
+ bfubY1Xu1zhZNmwPru3w4KZphytq/flg8iOyETAz1bz8WdRs1F1BwJMwJhOdZAToGyitmtPwQ
+ RMZ3H6LFV4UCJXRXcHdBV9XP9BfnYK9lUo14jILKKUnd2RAukvHlf8+IRWwviPpGe37KOdhqB
+ cPaf7W4reqUzAXmEY2roNpCL4p++8BxA5MyK3nmOa8bQoDSBfOGfWMgRQ++ZCxa3l2FEtZ2nU
+ /M7kqP4lL7Ykp3PRF2x6uxE9DJfeWohkO18aMndrv6g3jCfqgxJCmFn/hufXodWvOS1oG39Fj
+ bldcUBGgIeNVOMR7VTP0ZXKOC9wXFifxC6SskeUrFNRL1XRKLPAb2yAxV6VX1XEocmBsvb0SN
+ LevDwSotSH7YgjNHjLmxwbNWUOYjTauKq+b1o8b/ILLNw4BaT3CQFtRWL/3KJrYfvu3nIpBqz
+ ZQwepQcHV2KqId1PaTv2A4Aw67cQZUUJ0bFq8dX9Dy/EzjaQZlzu5d3J00AtZ0L27ziFnVBhC
+ HBu6G7PvjtFMDgsG2+EFzFEA4ne5rf0knl3CjoXdqUtzcr3n/H9xPLH7PezRSldfk/8DH3y4k
+ LPnzb71Xjx0dR3bxzWkwszQReT5DETJ9dSfRzCEpOirMfyKjb/7OzRicQRDxEf1MCDTje6iUs
+ zrgWxRGskvMvK44qn8LwO0L8L4RhrJDK+nMFEDF51RqGniipWC19gcMOBF2S01eimSS7lyKFX
+ 6ni/oWBC9bWHKr1jfadq54OtDL/L16H1PzIgqkDHbjdVJB3u0mznm48+HUOFfptetdiYeE7dR
+ uEJDNXsPhF9/F2pLyFV7mpc24YKdjFdKJIh
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi Junio,
 
-> In case the command fails.
+On Mon, 24 Jun 2019, Junio C Hamano wrote:
 
-It is unclear what you wanted to say with this.  What command?
-After "git merge" fails?
-
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 4 +++-
->  t/t9902-completion.sh                  | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
+> >> I wonder if we want (possibly local) test_cmp_fspath that can be
+> >> used more like
+> >>
+> >> 	test_cmp_fspath "$(pwd)/realgitdir" "$(sed -e "s/^gitdir: //" newdir=
+/.git)"
+> >>
+> >> to compare two paths, honoring the case sensitivity of the
+> >> filesystem.
+> >
+> > I agree that that's a much better approach to fix the issue.
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 922ba5f925..91b87eb558 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -936,6 +936,7 @@ __git_list_merge_strategies ()
->  	}'
->  }
->  
-> +__git_merge_strategies_default='octopus ours recursive resolve subtree'
->  __git_merge_strategies=
->  # 'git merge -s help' (and thus detection of the merge strategy
->  # list) fails, unfortunately, if run outside of any git working
-> @@ -945,7 +946,8 @@ __git_merge_strategies=
->  __git_compute_merge_strategies ()
->  {
->  	test -n "$__git_merge_strategies" ||
-> -	__git_merge_strategies=$(__git_list_merge_strategies)
-> +	{ __git_merge_strategies=$(__git_list_merge_strategies);
-> +		__git_merge_strategies="${__git_merge_strategies:-__git_merge_strategies_default}"; }
->  }
->  
->  __git_merge_strategy_options="ours theirs subtree subtree= patience
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 14598bfbec..f4453ce70d 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -1722,7 +1722,7 @@ test_expect_success 'sourcing the completion script clears cached commands' '
->  	verbose test -z "$__git_all_commands"
->  '
->  
-> -test_expect_failure 'sourcing the completion script clears cached merge strategies' '
-> +test_expect_success 'sourcing the completion script clears cached merge strategies' '
->  	offgit &&
->  	GIT_TEST_GETTEXT_POISON= &&
->  	__git_compute_merge_strategies &&
+> I find that response somewhat surprising :-|.  In any case, I am not
+> sure what kind of 'path' other than the filesystem one we would deal
+> with in the context of Git and its test suite, so perhaps we should
+> drop 'fs' from the name of the helper function if we were to go that
+> route.
+
+The other path category is the paths in the index, which _are_
+case-sensitive, no matter what core.ignoreCase says.
+
+So I'd rather keep the `fs`.
+
+Ciao,
+Dscho
