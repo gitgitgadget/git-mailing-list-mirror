@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDE5B1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 14:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F8C1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 14:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726586AbfFXOUE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 10:20:04 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:46041 "EHLO
+        id S1728094AbfFXOYQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 10:24:16 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:32776 "EHLO
         mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726376AbfFXOUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 10:20:03 -0400
-Received: by mail-qt1-f195.google.com with SMTP id j19so14591515qtr.12
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 07:20:03 -0700 (PDT)
+        with ESMTP id S1726263AbfFXOYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 10:24:16 -0400
+Received: by mail-qt1-f195.google.com with SMTP id w40so4086262qtk.0
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 07:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hchgvqS7AThPm2SNib8NL92wloya77eLQWDYqhX8Nz0=;
-        b=KT+kxlAIABcopg1SZV2Dkco2UstHphtrop+Ar4D62T9V/LuLRl7SrrqtYXC2HMfnoz
-         CjwYG547ytLWVP8Md5Sh/2t2w43GrmDNrouiyOwOybzz+UyAYWyD2IhuP/BDK3IMCvb9
-         VkESNQ3jbXZU0McUZNcKBZessbCzmDnv1NY2BGQf3PDeC/oU3XbX47e9ZKf1llCbc6iy
-         N9W0LITGlKgEtWdPc9yvj1rQqFXaOw6kt1VDDUrltS8GReP8PiBsZe0+Q0n/iwFyywON
-         NZ3xJCx4YXVKLhetEv5wrqFo5TswKW80hgpndV0+meuasPCIU7QuRa6te/33xjaUueAA
-         5a9Q==
+        bh=qZN6kI2KFPe8ec54XTVDjnMespgn20eIpv4z4GJ/1oQ=;
+        b=lc/q1Mz/FDqnMkVn0xLEI7WJYgMudwTZ+W4eNh/rq2tpQenVOP6bsrgk7+4NJIK3+3
+         mtQNtQ5kbSSeYGdaGjuOvqiTsrr4nRber+7hya0+XyJNO9VAi7V8Y89zu8PlOu7/lu7Q
+         LG668iRT41ydnbj3x7xu2UbW7xIvLk2+85FhsjjNFqeOndojY0X2dwIMJpYG4Lcw/Sy5
+         1lprBzRRAX1+0P/EQiOEq3X22lLaWKhaHMBVZKo9kToiNWQjvQVOKmn7UXrCG23iQdo+
+         G5EIWuJZjsSm3Bp5JTVtA9XPKlqr17d2QrcYw2rOB4wNnWdUScpOsRzIz7gRiB5ZC8DD
+         P5UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=hchgvqS7AThPm2SNib8NL92wloya77eLQWDYqhX8Nz0=;
-        b=tWzx0CTUA3hqjwbC/aJpSbudS1iCSSopCr8TAZp4fKuOPjZWHq+9x+iWo1+iGtNurf
-         RJ1qcqVnX17WkuGI3zLQfMerOdpSQ3Eu2MkM7gpo8xdsIyLagZft8fdFuTiRf025YLP3
-         pUg5vVnuNXehMZYG0e12dCKj8UrTp2yMhMq97EEW9Fv0cfgv3m/fgE5sSWCLVVPrruyT
-         l2rtChPanPepY9DmjXEOBHcL3bCIj7IxQpZs7975GHf8gJ/smYj3+OnW+0YvqlvTqX/n
-         2SWrj79RqFlQWdjo0OjJrmT39d4Fa5yFOGlXEaOk0S5Aa3U3TciMgUAKHFy//cZJcd3W
-         7peQ==
-X-Gm-Message-State: APjAAAXqWH9RG+maa4KEWVSwXax3ehD+MXU0VYpKSXkqcE9nv4680mMo
-        rRyB9HtX+3XIh9TyJfCFz3RH8RUh
-X-Google-Smtp-Source: APXvYqxwiQe/ajNHqN+X4erwVgZK60rusJOnhel7FJb9QRBU21KL83083046S/DcQlHup/Nd1EgIow==
-X-Received: by 2002:a0c:87ec:: with SMTP id 41mr47747045qvk.196.1561386002619;
-        Mon, 24 Jun 2019 07:20:02 -0700 (PDT)
+        bh=qZN6kI2KFPe8ec54XTVDjnMespgn20eIpv4z4GJ/1oQ=;
+        b=hwGX2a2zwdBQc+dX9WD2OtFZicXFd39xI7cHZ3N1zKojGk8OVIjp/ImpLi9whVWmuT
+         XyPfO1CTMXkx3Z+P7/bPLfgtrwdnnX7yPmhx8hbJ6h+QxFv+Oo+/cOa7jTo5yEqC3wLE
+         /Xwea9KCtdjfavnvLeDKIn9R6BVZrK7MESYUdUNpvfhqLGom4l5CdgtyXOI4ZQ0eEeR/
+         R9RpofuVTUMvtK0vYUt3bEE8PDCbPPFmOO0arylhKC7+IYbVaj6SsuXKn9QcfFkhzN2O
+         uvibcoFl1oJwAV91GCY31icjQp7631FWpe/pm5X0oFlieFC1DMqNsulq+hoCznWcYh2f
+         0KWg==
+X-Gm-Message-State: APjAAAVrF+tSQ5Q82RUQN0hWI+m3YOYcC5SPHS7/AthLHRSous3w7FLv
+        aUwjBlug6QKI+G7GSqiVjs3dNNgH
+X-Google-Smtp-Source: APXvYqxh/mhPSLkWMBL5Pc7Q8NelEjm1UDFy1VhLGtqG1oxVWp4AmK+EEu0eoWr4/zpb1l/cNLt0bg==
+X-Received: by 2002:a0c:ac98:: with SMTP id m24mr42301891qvc.9.1561386255694;
+        Mon, 24 Jun 2019 07:24:15 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:bd0b:1518:483a:73eb? ([2001:4898:a800:1010:6e41:1518:483a:73eb])
-        by smtp.gmail.com with ESMTPSA id t8sm7646199qtc.80.2019.06.24.07.20.01
+        by smtp.gmail.com with ESMTPSA id w56sm6463102qta.72.2019.06.24.07.24.14
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 07:20:01 -0700 (PDT)
-Subject: Re: [PATCH 3/6] tree-walk.c: remove the_repo from get_tree_entry()
+        Mon, 24 Jun 2019 07:24:15 -0700 (PDT)
+Subject: Re: [PATCH 6/6] Use the right 'struct repository' instead of
+ the_repository
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <20190624095533.22162-1-pclouds@gmail.com>
- <20190624095533.22162-4-pclouds@gmail.com>
+ <20190624095533.22162-7-pclouds@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0f13008e-bdf1-70cb-c4ff-e4c572cd5703@gmail.com>
-Date:   Mon, 24 Jun 2019 10:20:01 -0400
+Message-ID: <166543de-bc25-ca2c-326a-4497688aa235@gmail.com>
+Date:   Mon, 24 Jun 2019 10:24:14 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <20190624095533.22162-4-pclouds@gmail.com>
+In-Reply-To: <20190624095533.22162-7-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -73,41 +74,17 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 6/24/2019 5:55 AM, Nguyễn Thái Ngọc Duy wrote:
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  archive.c              |  4 +++-
->  blame.c                |  4 ++--
->  builtin/rm.c           |  2 +-
->  builtin/update-index.c |  2 +-
->  line-log.c             |  7 ++++---
->  match-trees.c          |  6 +++---
->  merge-recursive.c      |  8 +++++---
->  notes.c                |  2 +-
->  sha1-name.c            |  9 +++++----
->  tree-walk.c            | 18 ++++++++++++------
->  tree-walk.h            |  2 +-
->  11 files changed, 38 insertions(+), 26 deletions(-)
+> There are a couple of places where 'struct repository' is already passed
+> around, but the_repository is still used. Use the right repo.
 > 
-> diff --git a/archive.c b/archive.c
-> index 53141c1f0e..a8da0fcc4f 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -418,7 +418,9 @@ static void parse_treeish_arg(const char **argv,
->  		unsigned short mode;
->  		int err;
->  
-> -		err = get_tree_entry(&tree->object.oid, prefix, &tree_oid,
-> +		err = get_tree_entry(ar_args->repo,
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-If I'm reading this correctly, this is a place where we previously converted
-to using a custom repository pointer but this function boundary reverted us
-to the_repository anyway. I know we have some tests around the commit-graph
-that ensures it works with an arbitrary repository (and I frequently stumble
-over them when I add new dependencies). How can we add more testing around
-these new conversions?
+nit: the subject line doesn't use the standard "area: topic" format (including
+the capitalization of the first word). Perhaps:
 
-The rest looks straight-forward.
+treewide: use the right 'struct repository' instead of the_repository
+
+The changes here are straight-forward, but how do we check if we are done?
 
 Thanks,
 -Stolee
-
