@@ -7,87 +7,83 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43AED1F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 17:05:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 989451F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 17:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730849AbfFXRF1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 13:05:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52811 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbfFXRF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 13:05:27 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3D9B15D5BE;
-        Mon, 24 Jun 2019 13:05:24 -0400 (EDT)
+        id S1732311AbfFXRJd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 13:09:33 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52288 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729008AbfFXRJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 13:09:33 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E675653CB;
+        Mon, 24 Jun 2019 13:09:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Xzrd2qhbkseD
-        nOU7tpVDZGJVWEA=; b=rz25oLzG0H7uNO3J0HK2cu8ouFDG+hoS9oqlKxDHaNYC
-        qaRgo1VPFc1PMrw4fl3TxHIA+jZswjMB8CtR9NHwIsTsRTBgivjUyRX59gCLmWSQ
-        HWhL/sOBWyfA1Nz5P+PcXvKfw9kE+XQVcpAoF3YQw2E2xUY/o4xaiFTEAIdCZEM=
+        :content-type; s=sasl; bh=SWTol1vNExxHUFscpe63zVRKPWk=; b=tCxrLP
+        7jtvP6J806rhxGTW1nBTKwIv4BJRStobYRY7+d6scJSA16Zys1Cf/AIfQJtkC3Cd
+        7MH6yRlmuZpvzVsl/XW0pSNZbhW2XnNTdrpnpFLVX7ZnneU6LYzX4LX96d90YNQb
+        QeFwwsFNgiGbCWYVUiNuQFUlGpex+Jm2AyLjE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lZL+CJ
-        WVVganfEEVYROPQc9I/+fYJMW93LW+ZWPu8ajebsdrFAA8gA2P+6XXxV7FW9TrGi
-        NN08iQgJT/LiGtan4wypekNaHx0dnY0HR2WNmDBx0s3g+hcUx7LmVsht57QjovNn
-        JY8RDpXNlhbj33ij+WCGBZvtsmbSUfYWoJk9U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA5B815D5BD;
-        Mon, 24 Jun 2019 13:05:24 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SnAjmet8fFOdAl0JQGhGrdVwMNzfg4Tn
+        acDGUOdCXdVmRymK/pGE+phnI2JWXlhNsZS8I9B+AA447Lx2dLnPDKM13+UMrutH
+        pmH+TZM/VDsGejlz8m+y4l+Or182tz01MLSohkXLj4x4aorK8zwwdJHF5yvqMRf3
+        DgLwhvXuINA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 877BF653CA;
+        Mon, 24 Jun 2019 13:09:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4390515D5BC;
-        Mon, 24 Jun 2019 13:05:24 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AFF7B653C8;
+        Mon, 24 Jun 2019 13:09:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrey <ahippo@yandex.ru>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>, luke@diamand.org
-Subject: Re: What's cooking in git.git (Jun 2019, #05; Wed, 19)
-References: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
-        <1748011561196810@sas2-7b909973f402.qloud-c.yandex.net>
-Date:   Mon, 24 Jun 2019 10:05:23 -0700
-In-Reply-To: <1748011561196810@sas2-7b909973f402.qloud-c.yandex.net> (Andrey's
-        message of "Sat, 22 Jun 2019 05:46:50 -0400")
-Message-ID: <xmqqmui6j4mk.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/1] t0001: fix on case-insensitive filesystems
+References: <pull.151.git.gitgitgadget@gmail.com>
+        <pull.151.v2.git.gitgitgadget@gmail.com>
+        <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.1906211632570.44@tvgsbejvaqbjf.bet>
+        <xmqqh88ikfpb.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet>
+Date:   Mon, 24 Jun 2019 10:09:26 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 24 Jun 2019 12:13:44 +0200 (CEST)")
+Message-ID: <xmqqimsuj4ft.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 41B75786-96A2-11E9-B404-72EEE64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D36B606E-96A2-11E9-AD10-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrey <ahippo@yandex.ru> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> 20.06.2019, 00:35, "Junio C Hamano" <gitster@pobox.com>:
->> * am/p4-branches-excludes (2019-04-02) 8 commits
->> =C2=A0- git-p4: respect excluded paths when detecting branches
->> =C2=A0- git-p4: add failing test for "git-p4: respect excluded paths w=
-hen detecting branches"
->> =C2=A0- git-p4: don't exclude other files with same prefix
->> =C2=A0- git-p4: add failing test for "don't exclude other files with s=
-ame prefix"
->> =C2=A0- git-p4: don't groom exclude path list on every commit
->> =C2=A0- git-p4: match branches case insensitively if configured
->> =C2=A0- git-p4: add failing test for "git-p4: match branches case inse=
-nsitively if configured"
->> =C2=A0- git-p4: detect/prevent infinite loop in gitCommitByP4Change()
+>> I wonder if we want (possibly local) test_cmp_fspath that can be
+>> used more like
 >>
->> =C2=A0"git p4" update.
+>> 	test_cmp_fspath "$(pwd)/realgitdir" "$(sed -e "s/^gitdir: //" newdir/.git)"
 >>
->> =C2=A0Is this ready for 'next'?
+>> to compare two paths, honoring the case sensitivity of the
+>> filesystem.
 >
-> Junio,
->
-> I haven't got any new feedback on the patch series in the past 2.5 mont=
-hs.
-> From my point of view, these are ready for next.
+> I agree that that's a much better approach to fix the issue.
 
-Thanks.  When I ask "Is this ready", I am asking for opinion(s) from
-third-party, not self nomination ;-)
-
-Let's merge it down to 'next' and to 'master' anyway.
+I find that response somewhat surprising :-|.  In any case, I am not
+sure what kind of 'path' other than the filesystem one we would deal
+with in the context of Git and its test suite, so perhaps we should
+drop 'fs' from the name of the helper function if we were to go that
+route.
 
 
