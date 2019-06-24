@@ -7,83 +7,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 989451F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 17:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DBC1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 17:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732311AbfFXRJd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 13:09:33 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52288 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729008AbfFXRJd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 13:09:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E675653CB;
-        Mon, 24 Jun 2019 13:09:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1732325AbfFXRL7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 13:11:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60043 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731061AbfFXRL7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 13:11:59 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 015C115D650;
+        Mon, 24 Jun 2019 13:11:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SWTol1vNExxHUFscpe63zVRKPWk=; b=tCxrLP
-        7jtvP6J806rhxGTW1nBTKwIv4BJRStobYRY7+d6scJSA16Zys1Cf/AIfQJtkC3Cd
-        7MH6yRlmuZpvzVsl/XW0pSNZbhW2XnNTdrpnpFLVX7ZnneU6LYzX4LX96d90YNQb
-        QeFwwsFNgiGbCWYVUiNuQFUlGpex+Jm2AyLjE=
+        :content-type; s=sasl; bh=RucdywyiajJOugXnsp7amnLpKgo=; b=Pdk5jt
+        Vrx/kuU+31htXNcsi5NoNN/ndn2aatMnRpjqaOkp6pw3fM7hxrdp7hoA/fNatfty
+        L66WKqEpRrWstR2CKDtDMjW07jH5p+VNG/OJqqD7fYI7r4JUUaH61DlyKc0/u2cT
+        1WAZKCb1Rm5Kc9JIDqFFPNYStWJjZxq8iB9yQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=SnAjmet8fFOdAl0JQGhGrdVwMNzfg4Tn
-        acDGUOdCXdVmRymK/pGE+phnI2JWXlhNsZS8I9B+AA447Lx2dLnPDKM13+UMrutH
-        pmH+TZM/VDsGejlz8m+y4l+Or182tz01MLSohkXLj4x4aorK8zwwdJHF5yvqMRf3
-        DgLwhvXuINA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 877BF653CA;
-        Mon, 24 Jun 2019 13:09:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=k0Jbd4c5oQ9uSOh2g9dqxrXC3gdiSGBS
+        4caj1+KP7sy9RF6hpM9pSrQjqutjznzL/mn2+dFY6BkbOflWIqITsg/9xVvz5IvH
+        ijf7dbaIuVGkPZuV0/IBuLW0mvF91uZMIAZwWkiiDqHs8Rss+kC0BkC52pHCWQa7
+        jIhs3m9d3XE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE20915D64F;
+        Mon, 24 Jun 2019 13:11:56 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AFF7B653C8;
-        Mon, 24 Jun 2019 13:09:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6369415D64E;
+        Mon, 24 Jun 2019 13:11:56 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 1/1] t0001: fix on case-insensitive filesystems
-References: <pull.151.git.gitgitgadget@gmail.com>
-        <pull.151.v2.git.gitgitgadget@gmail.com>
-        <c2fdcf28e725c91a1a48c34226223866ad14bc0a.1560978437.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1906211632570.44@tvgsbejvaqbjf.bet>
-        <xmqqh88ikfpb.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet>
-Date:   Mon, 24 Jun 2019 10:09:26 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1906241212220.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 24 Jun 2019 12:13:44 +0200 (CEST)")
-Message-ID: <xmqqimsuj4ft.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] l10n: localizable upload progress messages
+References: <20190621185051.77354-1-dimitriy.ryazantcev@gmail.com>
+        <xmqq8stukarw.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8BF0RHgrw9A_6zj8hQk7s15LvCZDz_P7rxgRvGfRhLJZg@mail.gmail.com>
+Date:   Mon, 24 Jun 2019 10:11:55 -0700
+In-Reply-To: <CACsJy8BF0RHgrw9A_6zj8hQk7s15LvCZDz_P7rxgRvGfRhLJZg@mail.gmail.com>
+        (Duy Nguyen's message of "Sat, 22 Jun 2019 10:10:21 +0700")
+Message-ID: <xmqqef3ij4bo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D36B606E-96A2-11E9-AD10-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2B71A610-96A3-11E9-9628-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> I wonder if we want (possibly local) test_cmp_fspath that can be
->> used more like
->>
->> 	test_cmp_fspath "$(pwd)/realgitdir" "$(sed -e "s/^gitdir: //" newdir/.git)"
->>
->> to compare two paths, honoring the case sensitivity of the
->> filesystem.
+>> Hpmh, if it is OK to assume that in all human languages it is OK to
+>> express the reate as <number> followed by translated "per second",
+>> without allowing the order from getting changed, then ...
 >
-> I agree that that's a much better approach to fix the issue.
+> Probably not (but I don't know any language that is not ok with this).
+> I would just add strbuf_humanise_rate() that prints "GiB/s",
+> "MiB/s"... Then we probably should print "bytes/second". This will
+> print "bytes/s" which looks just weird.
+>
+>> >       if (bytes > 1 << 30) {
+>> > -             strbuf_addf(buf, "%u.%2.2u GiB",
+>> > +             strbuf_addf(buf, _("%u.%2.2u GiB"),
+>> >                           (unsigned)(bytes >> 30),
+>> >                           (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+>>
+>> wouldn't it make more sense to split GiB, MiB, KiB and "bytes" units
+>> out of these messages, and ask only these unit names, without the
+>> %u.%2.2u number formats, to get translated by the localization team?
+>
+> That assumes all languages will print the unit after the number. I
+> guess that is ok and it helps share code if we add
+> strbuf_humanise_rate() above because only the unit part changes.
 
-I find that response somewhat surprising :-|.  In any case, I am not
-sure what kind of 'path' other than the filesystem one we would deal
-with in the context of Git and its test suite, so perhaps we should
-drop 'fs' from the name of the helper function if we were to go that
-route.
-
-
+I think this is the direction I expected the discussion to go in.
+It seems that the other subthread went the other way, though.
