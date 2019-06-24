@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941611F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 15:41:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA261F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 15:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730828AbfFXPl1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 11:41:27 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39098 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726551AbfFXPl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 11:41:27 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x4so14418626wrt.6
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 08:41:25 -0700 (PDT)
+        id S1731159AbfFXPlh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 11:41:37 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36066 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726551AbfFXPlh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 11:41:37 -0400
+Received: by mail-wm1-f66.google.com with SMTP id u8so13871747wmm.1
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 08:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=viQIS5x2rKWgDvlbNFKXRLH6HL0tijqS8OaY9tU+ZRE=;
-        b=j+p2bdzWwnkgCLWL38mmKsNjAK1DfvN863hoFmoSzPTC7bIAYZKL+tOkc7VRRXn9pk
-         zj3XF5LLEF5KeK3b7/3w51JS6lKc04qmUBvE0jPQPECDyj41laHx5wWqHvnSk7JGyBkd
-         wVz6fQAD+nzJTXykbXGymFCfC8r6Emx0zywTVN7h+cSm2aepeM0UTQ2X18BBKtDu6jJ7
-         X0w866ehvoJcJPP/l6/1PgpQ0ZQuY9nWjrh++Zcwcapu6KTErESN65zAn+0SWifXzzAK
-         K2jaU/+MOEE4m1Pidql68yCIk2BqoE/pXJeR2+ddYbkogO5GuekDr6zpjWh1/Tnd68v2
-         k6Dg==
+        bh=JmNyTYV4FZeJlng2NBS0O59vquDDdAmj1TXUhWoIz+o=;
+        b=nEAuSpGEeEq9hoELhFAI+NoWfLbiMNKnp1T4rwZ212rirryMrQCRO16vRX2aaqeAek
+         P7762BurpCyHijI0n/OFDZk5kPFKnpglcUaWYO+i6RSAav0GPz+g1UZjVTb0NJaGXqAg
+         22iCm1esDAPXOK6k1/I9vmyEJ88mlV7GxoBCRrQ3pfzsS1hpJvDL/3E0qpqEbrSG3E6S
+         1W7HzGLFaMX+zWGyezNicLX08MiJ+w9EmW4KErnzBpAz1YOHtd/ZjhSsYoKTg2UNI+7z
+         iODdU0NiJKf8KDZUO1dWZvDnGt++SmcH0ropnzgisJNz9TIsDJr9qrbu2GOpabTt0ci2
+         blJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=viQIS5x2rKWgDvlbNFKXRLH6HL0tijqS8OaY9tU+ZRE=;
-        b=L7ZESZ4b5QV+c6hRQuipoHtRhj8M0Y/MureqbaII7NZwSoMdzzAOPm3fKSHiGNlxFL
-         +73AnP0fMeTfL1iawb2U87+99dr+vPkBMJErpqGB10ZGUfQhv+dZuwR/gHhpZ+TwnM8U
-         utmvLUHgRD2Qtvy897CAEos6pKhVkvE5yC6KjCtAyKoGA+q1ZybNvZNNOvBpNP4T0Wm6
-         av4vQ9aqVcGCxmxfljsYovIb9t8K6w2HswrVROj61QH59fkuKgFEHP94NdMwffY/hzRs
-         BWktOT6aJR7RR7xR4gUx57rzAX0l1ewF5Ru5dGKCe+74VwaCP+qqV/dFK2sG68xuQGVv
-         n3eQ==
-X-Gm-Message-State: APjAAAU6wIDzN78vlf6DQA95fH9eQT+BrVH/lwalZaJWZRH90O2Vd6yc
-        2v7RzgWJmPTMCqBp+VGPunk=
-X-Google-Smtp-Source: APXvYqwdrszc+1ytKpX8tF8ueihxA2LDJoD6D4bIYOUxVc7W4mb1G2ZRQf3TPXnH4wxHhza/waAVSw==
-X-Received: by 2002:adf:efc8:: with SMTP id i8mr1548402wrp.220.1561390884311;
-        Mon, 24 Jun 2019 08:41:24 -0700 (PDT)
+        bh=JmNyTYV4FZeJlng2NBS0O59vquDDdAmj1TXUhWoIz+o=;
+        b=kSTixi1GqzT5JuNVg6XxQlERnrUvCUKKmGMlFaUbyB1rrdagMUhDMf5+mtQn13Wb+h
+         aqABuUKU8GgmJ4Csgt0g24v8ZFc/FZnAEaOtr0TjkS9mGyEWOd7SKOcIMxdpa2NbXS/S
+         K/sfdB/KuQRMh3OYaxxs0qzJ1RyAFbWOD6XvI3a5oP/vz50NpEcYiBvCL70zqQfBtl0D
+         Pl3PnG/yNg+ntchyzOhf+j17AeaJVWhZfwCuq5eozk8gLuFBUR+ZcO2+zImTE14asavE
+         Zyu/qHYxVTgRm/yXZIJmApvYPOZ764DTSsO2b4q4xW+8d9fMN2IbVRE0eISaL35eax9N
+         6GLA==
+X-Gm-Message-State: APjAAAUQkPtaqTP3VkXDC9/WBdYzlnU3mUTIh7S+qE48OVHKburrCfJy
+        ePW9EFH6LTMy9tZToVZ1hWo=
+X-Google-Smtp-Source: APXvYqx885RbmqWlrQkNQVhRKH31JS52Wan7RkVDlBZqfdRjksLfCvw/zF3whwdWIaafMi0WCoUn5A==
+X-Received: by 2002:a7b:c774:: with SMTP id x20mr16311822wmk.30.1561390894738;
+        Mon, 24 Jun 2019 08:41:34 -0700 (PDT)
 Received: from linux-16.fritz.box (2a0a-a542-2a07-0-a793-8424-e1d1-435c.ipv6dyn.netcologne.de. [2a0a:a542:2a07:0:a793:8424:e1d1:435c])
-        by smtp.gmail.com with ESMTPSA id i25sm14848676wrc.91.2019.06.24.08.41.23
+        by smtp.gmail.com with ESMTPSA id z5sm9647460wma.36.2019.06.24.08.41.33
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 24 Jun 2019 08:41:23 -0700 (PDT)
+        Mon, 24 Jun 2019 08:41:34 -0700 (PDT)
 From:   Morian Sonnet <moriansonnet@gmail.com>
 X-Google-Original-From: Morian Sonnet <MorianSonnet@googlemail.com>
 Received: from linux-16.fritz.box (localhost [127.0.0.1])
-        by linux-16.fritz.box (8.15.2/8.15.2) with ESMTPS id x5OFfMFU010223
+        by linux-16.fritz.box (8.15.2/8.15.2) with ESMTPS id x5OFfXdQ010232
         (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-        Mon, 24 Jun 2019 17:41:22 +0200
+        Mon, 24 Jun 2019 17:41:33 +0200
 Received: (from momo@localhost)
-        by linux-16.fritz.box (8.15.2/8.15.2/Submit) id x5OFfLgk010222;
-        Mon, 24 Jun 2019 17:41:21 +0200
+        by linux-16.fritz.box (8.15.2/8.15.2/Submit) id x5OFfXhF010231;
+        Mon, 24 Jun 2019 17:41:33 +0200
 To:     johannes.schindelin@gmx.de
 Cc:     MorianSonnet@googlemail.com, git@vger.kernel.org,
         gitgitgadget@gmail.com, gitster@pobox.com, moriansonnet@gmail.com,
-        sunshine@sunshineco.us
-Subject: submodule foreach: fix recursion of options
-Date:   Mon, 24 Jun 2019 17:40:50 +0200
-Message-Id: <20190624154050.9943-1-MorianSonnet@googlemail.com>
+        sunshine@sunshineco.us, Morian Sonnet <moriansonnet@googlemail.com>
+Subject: [PATCH] submodule foreach: fix recursion of options
+Date:   Mon, 24 Jun 2019 17:40:51 +0200
+Message-Id: <20190624154050.9943-2-MorianSonnet@googlemail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <nycvar.QRO.7.76.6.1906241241080.44@tvgsbejvaqbjf.bet>
 References: <nycvar.QRO.7.76.6.1906241241080.44@tvgsbejvaqbjf.bet>
@@ -76,120 +76,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-here comes the next version.
+Calling
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> Hi Morian,
-> 
-> On Sat, 22 Jun 2019, Morian Sonnet wrote:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > > On Tue, 18 Jun 2019, Morian Sonnet wrote:
-> > >
-> > > > "Morian Sonnet via GitGitGadget" <gitgitgadget@gmail.com> wrote:
-> > > >
-> > > > > Calling
-> > > > >
-> > > > >     git submodule foreach --recursive git reset --hard
-> > > > >
-> > > > > leads to an error stating that the option --hard is unknown to
-> > > > > submodule--helper.
-> > > > >
-> > > > > Reasons:
-> > > > >
-> > > > > . Above call is internally translated into
-> > > > >
-> > > > >     git submodule--helper foreach --recursive -- git reset --hard
-> > > > >
-> > > > > . After calling
-> > > > >
-> > > > >     git reset --hard
-> > > > >
-> > > > >   inside the first first level submodule,
-> > > > >
-> > > > >     git --super-prefix <submodulepath> submodule--helper \
-> > > > >       foreach --recursive git reset --hard
-> > > > >
-> > > > >   is called. Note the missing --.
-> > > > >
-> > > > > . Due to the removal of PARSE_OPT_KEEP_UNKNOWN in commit a282f5a906 the
-> > > > >   option --hard is not passed to
-> > > > >
-> > > > >     git reset
-> > > > >
-> > > > >   anymore, but leads to git submodule--helper complaining about an
-> > > > >   unknown option.
-> > > > >
-> > > > > Fix:
-> > > > >
-> > > > > . Add -- before the command to execute, such that now correctly
-> > > > >
-> > > > >     git --super-prefix <submodulepath> submodule--helper \
-> > > > >       foreach --recursive -- git reset --hard
-> > > > >
-> > > > >   is called.
-> > >
-> > > This is a good explanation, even if the format is not exactly close to the
-> > > existing commit messages ;-) If you look e.g. at
-> > > https://github.com/git/git/commit/e5a329a279c7, you will see what I mean:
-> > > there is much more "prose" (and less bullet points) going on.
-> >
-> > Ok, I see the differences. Shall I adapt the commit description?
-> 
-> Well, I would if I were you ;-)
+    git submodule foreach --recursive <subcommand> --<option>
 
-Ok, done.
+leads to an error stating that the option --<option> is unknown to
+submodule--helper. That is of course only, when <option> is not a valid
+option for git submodule foreach.
 
-> 
-> > My test so far was designed to not actually check whether git reset
-> > --hard has shown any effect.
-> 
-> Right, but the test case's title suggested that...
+The reason for this is, that above call is internally translated into a
+call to submodule--helper:
 
-The commit message is very specific regarding git reset --hard, right.
-Changed that.
+    git submodule--helper foreach --recursive \
+        -- <subcommand> --<option>
 
-> 
-> > Taking the test "test "foreach --quiet --recursive"" and the test
-> > "option-like arguments passed to foreach commands are not lost" for
-> > example, I suggest the following:
-> >
-> >   git -C clone2 submodule foreach --recursive "echo be --hard" > expected &&
-> >   git -C clone2 submodule foreach --recursive echo be --hard > actual &&
-> >   grep -sq -e "--hard" expected &&
-> 
-> Please without the `-sq`.
+This call starts by executing the subcommand with its option inside the
+first first level submodule and continues by calling the next iteration
+of the submodule foreach call
 
-Oh, ok, i took it from another test in that suite.
+    git --super-prefix <submodulepath> submodule--helper \
+      foreach --recursive <subcommand> --<option>
 
-> 
-> >   test_cmp expected actual
-> 
-> Sounds good to me, especially with this suggestion:
-> 
-> > As final comment: One could change the flag --hard to something which
-> > will definetely never be an option flag for both, echo and git submodule
-> > foreach, e.g.  --this-will-never-be-an-option.
-> 
-> Personally, I'd go for `echo --an-option`, and yes, you are absolutely
-> right, the intention of your bug fix is not so much to fix the recursive
-> `git reset --hard` as it is to fix _any_ recursive command with
-> command-line options.
-> 
-> To be honest, I had missed that `git submodule foreach --recursive`
-> executes commands even in uninitialized submodules... I could even see how
-> some users might consider that behavior a bug... are you sure this is the
-> case? Is this `echo` really executed even in `nested2`?
+inside the first level submodule. Note that the double dash in front of
+the subcommand is missing.
 
-I think this is a misunderstanding. I did not mean that the subcommand
-is executed in `nested2` (which it actually is not) but rather that
-`git submodule--helper foreach ...`
-is again executed in `nested1` and this even if `nested1` does not
-include any submodules.
+This problem starts to arise only recently, as the
+PARSE_OPT_KEEP_UNKNOWN flag for the argument parsing of git submodule
+foreach was removed in commit a282f5a906. Hence, the unknown option is
+complained about now, as the argument parsing is not properly ended by
+the double dash.
 
-Best regards,
-  Morian
+This commit fixes the problem by adding the double dash in front of the
+subcommand during the recursion.
 
+Signed-off-by: Morian Sonnet <moriansonnet@googlemail.com>
+---
+ builtin/submodule--helper.c  | 1 +
+ t/t7407-submodule-foreach.sh | 7 +++++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 0bf4aa088e..afaf0819c9 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -540,6 +540,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+ 		if (info->quiet)
+ 			argv_array_push(&cpr.args, "--quiet");
+ 
++		argv_array_push(&cpr.args, "--");
+ 		argv_array_pushv(&cpr.args, info->argv);
+ 
+ 		if (run_command(&cpr))
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 706ae762e0..ade6672820 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -421,4 +421,11 @@ test_expect_success 'option-like arguments passed to foreach commands are not lo
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'option-like arguments passed to foreach recurse correctly' '
++  git -C super submodule foreach --recursive "echo be --an-option" > expected &&
++  git -C super submodule foreach --recursive echo be --an-option > actual &&
++  grep -e "--an-option" expected &&
++  test_cmp expected actual
++'
++
+ test_done
+-- 
+2.20.1
 
