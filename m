@@ -2,165 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 108E21F4B6
-	for <e@80x24.org>; Mon, 24 Jun 2019 09:31:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EADF81F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 09:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbfFXJbD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 05:31:03 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:37775 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbfFXJbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 05:31:03 -0400
-Received: by mail-wm1-f49.google.com with SMTP id f17so12607753wme.2
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 02:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=TVb2CUOYq4YNFBsYgeNW0Pa8KO/DqfZN9DvkBhh5hP8=;
-        b=a0C9AhTfMtea6AuCE75phk71gZ1WDzSVvuidpb1e99mKRwU+WnNdyzD/uweiSY1iLF
-         cvl9U3iHUMOOGN8YYOPCIXmScOXVlWGqsyJsHerDAsYkvNCRpbX5LGAa23aG46SEmeyN
-         C7knymSjJL83E1eNGRHYry7YPcJp573ROCWGkWihUBhg7KjxdeVLPDK4tbv+xoOoFInv
-         R4hpk+LLcs3MOZk+ZH6Xylgts0p6s8ftLHRXZDtLY5+pHnceVHuGmFeOF84E0THQwRUa
-         M+LZFiI2K5BPOZDS6X13M25fxRp9rmtOGSwioDweLPrFceFDFOoOQN7MWeZ9Vmto/T9R
-         5KnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=TVb2CUOYq4YNFBsYgeNW0Pa8KO/DqfZN9DvkBhh5hP8=;
-        b=W2HvXYS+kN62LHxurzZbEaBNyM5kEtuVoZ0aqGjNU5R4ePM80vQDHs5YW9MDo7G/KA
-         hX4XDKK+kHxgq6SK5TZO6BwgLxsSJWR6pDfC3GNOJgzElaU+HuwaEsX8SIgx63OJzO0l
-         Ay7yJRBAhLBOK7eYJQfNIbWwcinKCqfIOtsvr83OEWCScX3oCaaZrfbRcGKv3PfYGSVL
-         O/XPdlhI+b1I9k4k6bGno4hFhyx0vCaUzTUqDn9Mg6Oag2ZnAJosxTpDQuiJOHqmT5fB
-         sVKJ5xyaz9KbXOzSAiNjdybw6cbfip+Pd788twORwwQZYSJLAgzXzj/248XwC8uJJDNa
-         TJ5g==
-X-Gm-Message-State: APjAAAWgleNR+WtFpvOsWYfEU7I8OJtM1rTm6ZCWDCp58prESNmwKBaL
-        NhPxuT9nyyaEiaPC2AYfGIg=
-X-Google-Smtp-Source: APXvYqzs8EPkcpF2Bfb6Oa3XNolIsGnj1HEVpvffjBzviDX5rBcTP5UKtovDQbUUDIVfnI9eMr/JvA==
-X-Received: by 2002:a7b:cc97:: with SMTP id p23mr15649759wma.120.1561368660759;
-        Mon, 24 Jun 2019 02:31:00 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id 5sm23324478wrc.76.2019.06.24.02.30.59
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 24 Jun 2019 02:31:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Wong <e@80x24.org>, Janos Farkas <chexum@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: 2.22.0 repack -a duplicating pack contents
-References: <CAEXt3sqno7RAtuwQ_OpD3aLkEORLaf6aNeNKGQL0BKezD+wWTw@mail.gmail.com> <875zow8i85.fsf@evledraar.gmail.com> <20190623180226.GA1100@sigill.intra.peff.net> <20190623180825.3ospajjgat3clwiu@dcvr> <20190623224244.GB1100@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190623224244.GB1100@sigill.intra.peff.net>
-Date:   Mon, 24 Jun 2019 11:30:59 +0200
-Message-ID: <874l4f8h4c.fsf@evledraar.gmail.com>
+        id S1728526AbfFXJcr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 05:32:47 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49387 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726331AbfFXJcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 05:32:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561368762;
+        bh=b8yPFy+5IXTS3Fuo7zHXLGWyXYehwTsB7bUqmaYZfeQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=H31mYFDZdxVl6LxGRkwjunh3h8GG5WmcyXz826HFfCxoDeyIfsg910Hoq3JKNpgcQ
+         vxJNgYJI5SSlPhfcrwZrP+VKxDyanu0id44YuarUIXRe7AM6cjVrn+VIks3UCtHJ1y
+         rhTNOlcx/om+4hp+sWSo2IkFQPKgbmJ4cf4U5jsM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MlNtF-1iQoAJ0bjp-00lknV; Mon, 24
+ Jun 2019 11:32:42 +0200
+Date:   Mon, 24 Jun 2019 11:33:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/8] Add 'ls-files --json' to dump the index in json
+In-Reply-To: <CACsJy8A=Vhwgv8cvs8s2f_aJ5W335s8CdqRQCDSFrdJu2j9fjw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906241129490.44@tvgsbejvaqbjf.bet>
+References: <20190619095858.30124-1-pclouds@gmail.com> <20190619191709.GF28145@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1906211515160.44@tvgsbejvaqbjf.bet> <CACsJy8A=Vhwgv8cvs8s2f_aJ5W335s8CdqRQCDSFrdJu2j9fjw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yZRv7oap89hX4IRZpp73l9+HVuOOPFAvyoQ1/6hubxRtveBhMGr
+ aexLRsHwGrz6keW+V6y9b56Mvll4IGlIHorRBGeqK3ffDmfKIiqpu7egmhpWQkEY3nfqzRl
+ th5FYbCK5B138h0GV7Pa8dZZEtMvPflDoHfmu5Qq+DabXtDrSFwzUDzkfSnNAB5Y6UDAQZd
+ keWigV/wnlSEpW1WUL/Mg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fQbVyM62gc4=:dDi7I/AI2lnZlRg85axwCd
+ 9kOdlxGPc7yodSfL98X/AXtbUrtvyATsezUdvLzsqfcKjRyE6wI0QOVDF2Hu9YX+IrHnXfYB0
+ b6kZm2dGsyRHaYI5t2MiLVkW/rM4gabIToNuW/Qqp7g152JRWdcCo6YkJydzi8z0RBGz3fo7p
+ 8VaeNCrfxlwpt0AbXvpAD8QaOtEq7iETB4m5TT5f/vNIWcXlLPtDzE57RkUQcz7U8XNkGvAo+
+ GQLm8j2xJOJ0DmFFsz4avkFcbOI5Yu5E7UpxrEkCOHTjj/1ZG9Soq1jaCs/dOj4GIpkMF767n
+ BmWnBRSCn1Ei1Ay7Lki7my3+RpdKWyTDhHsRBUP0fKdW3+BWbEchZQWcs1Fdty/F8XjB9Kl20
+ FZnvJEyfT2RbqSnl+7niz8T573xXNZ7A4nachQ0acPgRKsEcDA/r/XNpP17H9e9PMw6w18vGv
+ o1h0+KsJN372OkgHvXszp8Fk0HQYGEXqG/gJNFMTi8kVjg81H0maqop2NC1o/czmCQSZlGBqj
+ cUnQ+iBHHnyMImfxRKoaIR29oHp8BLr0SYWbcBZ1T81tB9ewFB2ZcFLJ8EZh0gHPN8ZqNk33p
+ wfRLNIttDyhSAdvKPOkFIdWsm0xPGq9shf2BHzl3A6DLvQGR9lp8CcwtA/TuxUpAI9aZmPCxj
+ qx91DhIeXy1YYypyu48exIVpyu9pienRz3H2FGzmhABOryZqEwN7RldU+k+v2MAx2xwx4uXN2
+ OG+qwkNmLPPQFrA0k5O7D5NNmTV3S/8V3UgoxuB9HM8Ym3scmadDxDdo30ys/GMMNup62DugE
+ zDpk+XSnAeZZgyszt7jtVDNjXj/totMMLkFxKVGBodCmQwm4K6Wu1m76xj2+4NZiFUBARTo31
+ tfEqQqq678TRGuy+Io+j4sFv/c2EoHsHvK16sW9WbkczK7LTIHHWnAPrP4Colk4pP9hMcEe8y
+ lALLUX8sy5HI+SW4hy6NAJ7vn8RZC7hoUYomnRejjmt82R1is35W7
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Duy,
 
-On Mon, Jun 24 2019, Jeff King wrote:
+On Fri, 21 Jun 2019, Duy Nguyen wrote:
 
-> On Sun, Jun 23, 2019 at 06:08:25PM +0000, Eric Wong wrote:
+> On Fri, Jun 21, 2019 at 8:16 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 >
->> > I'm not sure of the right solution. For maximal backwards-compatibility,
->> > the default for bitmaps could become "if not bare and if there are no
->> > .keep files". But that would mean bitmaps sometimes not getting
->> > generated because of the problems that ee34a2bead was trying to solve.
->> >
->> > That's probably OK, though; you can always flip the bitmap config to
->> > "true" yourself if you _must_ have bitmaps.
->>
->> What about something like this?  Needs tests but I need to leave, now.
+> > > I think your warning in the manpage that this is for debugging is fi=
+ne,
+> > > as it does not put us on the hook for maintaining the feature nor it=
+s
+> > > format forever. We might want to call it "--debug=3Djson" or somethi=
+ng,
+> > > though, in case we do want real stable json support later (though of
+> > > course we would be free to steal the option then, since we're making=
+ no
+> > > promises).
+> >
+> > Traditionally, we have not catered well to 3rd-party applications in G=
+it,
+> > and this JSON format would provide a way out of that problem.
+> >
+> > So I would like *not* to lock the door on letting this feature stabili=
+ze
+> > organically.
+> >
+> > I'd be much more in favor of `--json[=3D<version>]`, with an initial v=
+ersion
+> > of 0 to indicate that it really is unstable for now.
 >
-> Yeah, I think that's the right direction.
->
-> Though...
->
->> +static int has_pack_keep_file(void)
->> +{
->> +	DIR *dir;
->> +	struct dirent *e;
->> +	int found = 0;
->> +
->> +	if (!(dir = opendir(packdir)))
->> +		return found;
->> +
->> +	while ((e = readdir(dir)) != NULL) {
->> +		if (ends_with(e->d_name, ".keep")) {
->> +			found = 1;
->> +			break;
->> +		}
->> +	}
->> +	closedir(dir);
->> +	return found;
->> +}
->
-> I think this can be replaced with just checking p->pack_keep for each
-> item in the packed_git list.
->
-> That's racy, but then so is your code here, since it's really the child
-> pack-objects which is going to deal with the .keep. I don't think we
-> need to care much about the race, though. Either:
->
->   1. Somebody has made an old intentional .keep, which would not be
->      racy. We'd see it in both places.
->
->   2. Somebody _just_ made an intentional .keep; we'll race with that and
->      maybe duplicate objects from the kept pack. But this is a rare
->      occurrence, and there's no real ordering promise here anyway with
->      somebody creating .keep files alongside a running repack.
->
->   3. An incoming fetch/push may create a .keep file as a temporary lock,
->      which we see here but which goes away by the time pack-objects
->      runs. That's OK; we err on the side of not generating bitmaps, but
->      they're an optimization anyway (and if you really insist on having
->      them, you should tell Git to definitely make them instead of
->      relying on this default behavior).
+> Considering the amount of code to output these, supporting multiple
+> formats would be a nightmare. I may be ok with versioning the output
+> so the tool know what format they need to deal with, but I'd rather
+> support just one version.
 
-This sort of thing (#3) strikes me as a fairly pathological case we
-should try to avoid. Now what we've turned on bitmaps by default people
-will take the sort of performance increase noted in [1] for granted.
+Once the format stabilized, I don't think it would be a huge burden to
+support multiple formats, if we ever had to update.
 
-So they'll be happily running with that & then get a CPU/IO spike as the
-*.bitmap files they'd been implicitly relying on for years in their
-default config goes away, only to have it re-appear when "repack" runs
-next.
+It would, however, be a huge burden on third-party applications. In
+effect, we could be lazy, but we would put a lot more burden on others
+than we saved ourselves, so that would be a bit... selfish.
 
-I can't think of some great solution for this case, some thoughts:
+> For third parties wanting to dig deep, I think libgit2 would be a much
+> better fit.
 
- a. Perhaps we should split the *.keep flag into two things or
-    more.
+If we (i.e. the core Git contributors) were contributing new features/bug
+fixes to libgit2, that would be a good recommendation.
 
-    We're using it for all of "I want this *.pack forever"
-    (e.g. debugging) and "I want only this *.pack to contain the data
-    found in it" (I/O & CPU optimization, what Janos wants) and "I'm
-    git.git code avoiding a race with myself" (what you describe in #3).
+But we don't. We essentially ignore libgit2 (and all of their learnings)
+all the time.
 
-    So maybe for the last of those we could also use and understand
-    *.tmp-keep, at which point we wouldn't have this race described in
-    #3. The 1st of those is a *.noprune and the 2nd is *.highlander (but
-    whether it's worth splitting all that out v.s. just having
-    *.tmp-keep is another matter).
+Even worse, for years, even decades, we recommended the command-line as
+"the API". If you want to reverse that recommendation, I think it merits a
+bigger discussion than a flimsical comment buried in a thread about an
+experimental feature.
 
- b) Shouldn't we at least print some warning to STDERR in this case so
-    e.g. gc.log will note the performance degradation of the repo in its
-    current configuration?
-
->   4. Like (3), but we _don't _see the temporary .keep here but _do_ see
->      it during pack-objects. That's OK, because we'll have told
->      pack-objects to pack those objects anyway, which is the right
->      thing.
->
-> -Peff
-
-1. https://github.blog/2015-09-22-counting-objects/
+Ciao,
+Dscho
