@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722B51F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 18:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4D7B1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 18:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731931AbfFXSNa (ORCPT <rfc822;e@80x24.org>);
+        id S1732742AbfFXSNc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 14:13:32 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33756 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731900AbfFXSNa (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 24 Jun 2019 14:13:30 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33505 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731820AbfFXSN3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 14:13:29 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n9so14973021wru.0
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 11:13:26 -0700 (PDT)
+Received: by mail-wm1-f66.google.com with SMTP id h19so528650wme.0
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 11:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lAj1UyL6S9MtquN4j4m9IdZ4FBisgTrZBixRsl0N33c=;
-        b=BhWd84+TfVQslyqtnnrl9rFl1rpJ0KxmBIHz/gVPn0XsMdcawA+N3X5IcNTZuBOiYB
-         rbd6Hcp824EIJcJq9PDSanHB/4yITxzTc+RRtZjdcBTJw5e6hJFu/IA6MPeFA2Eeb3tk
-         lWkDeAO+ZCDNyNEILfK2fWqm+ArXhaSBU3hyENXNN4clITKKysODro3Q4Z45YNwo/wJy
-         PRwjKfxEcwt2eLYeCLbUJ1VfW3orgwDB3Cg76k0b5wNV+IimL3OerNqIyDd94QDfNF11
-         4di/Ngx6XK7H54GSIOqH028CCpNUmSadSjKYjDvQX3+O7mdwEQuDBsYdMIO1O1fWZhEB
-         Bckw==
+        bh=2jjjOIKj+RGusBRxxlzthlITZIX/tPrLiawA3qHT6WM=;
+        b=AUP1+lv4XHahxvZUprSEmH3Hp78626wYErVxySjaUwRy5gaGlCkfZuPc72/EoyAK0J
+         qi6XO/8FAIsomtW2qQPXRNgVNEUX492crDXjqLRlw9B+pNU0gA8ednstqxDMqi2zJvXu
+         aSiq7OCjHoziwPF2hpHrmkEKRFm39krw1oVovp6w1/XDaj0Aiu9sD6g+rbJ65uU5/yl4
+         91DaJvNA/3Lc4zjGMLWevingTrAiZQQdq26dwcM9HO43sA7D+J2IchjaVNp/MYs7IKiF
+         D8pJjoDxB6UbKRaVFjB48I+CKbB+Aav+Vl1xpI3WbmmmH8XPghtwo0fQg6jas2DdZxlL
+         2qiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lAj1UyL6S9MtquN4j4m9IdZ4FBisgTrZBixRsl0N33c=;
-        b=hQCyIvfaMfJnxFhoTe5lkETc4LQQESoT9Lahgfc8pVjZqLfCWXSI2QAU1QK4YVYyhT
-         /qx22dPgjSKjmV97MSrI9Of0H1N629HEDUEf4icwL1WVKIIQ73hOmoRb6H1AF/l7NA0E
-         kulYXXNukxa8a6pp1LbKDfvBQF38dR/MsEUKQiWcbWGI2vUfwn+np5iRCJ7lguyLlZQC
-         4/hyYDibNFhlz18oMq47WLLIDDMzbPN6bfK1/hwIuhSS7Lc2r+qCaVgnjk04xBnDsVvG
-         yhuUmLv/+SzBG8jl5SmyMr3adsCfbVQeSYtq/nzysSand1u/Dp7OinJG7atfTkyuBuuh
-         lpRw==
-X-Gm-Message-State: APjAAAX3tHY/NbmA/qXGw1B8UChe8hyvvghiVIUzTxL8r77/+EezwFP9
-        hpP3xyfzn5WhCvGi+kUzD/w=
-X-Google-Smtp-Source: APXvYqyO9oYtUqMtzmjwwdG7Jgj0KhLxYPXos6kyx8FlEp1CVQVWQBOlnJFyUXfmcsceTi8EZGEAog==
-X-Received: by 2002:adf:f050:: with SMTP id t16mr91114266wro.99.1561400006101;
-        Mon, 24 Jun 2019 11:13:26 -0700 (PDT)
+        bh=2jjjOIKj+RGusBRxxlzthlITZIX/tPrLiawA3qHT6WM=;
+        b=tZP/evva57fsOotC4CsKHwny9uD+KQYJIY4OmnOURsbUhs6tM+2UpQ3L+a+BrBUeUk
+         ryY8RRGi9xbZ5gmKkCsBl+yRW2Y6gr42DrBMryTpKrHKOhNSpvTNwjZjIJ8SX5WLek/E
+         q49PNcO0JOXNTxI5/SNSw6DDrmlwAS5ZdzPrX4C2ms45TFlu2yjOygt0sJaddnK53zlI
+         L5+ihjEmNPAGeD43tv32RV3lDacLJeuVJwMs5CncPNF9h1Artbk4RSGhj0c57woyARHN
+         CSEJY8a5qHYMavRw14RiglVAhh8wwL39+ZmgD2Pw4auZe97a7ImuTmsQ+wLYX9XP6Nck
+         LeCQ==
+X-Gm-Message-State: APjAAAV83VQ61ny7qtm532H512LYPgzpmps3TpMFN0J5+OJNCE+T4i0t
+        UTkRBqtRcrJGQhuYmb0v3IQ=
+X-Google-Smtp-Source: APXvYqzh4LVJZG7cO1opvx2aZcoWvNZIXoCnB4/RawJhyn2EAZxaInvMTdtIOWsUx/YwehIcHH0bdg==
+X-Received: by 2002:a1c:618a:: with SMTP id v132mr16640776wmb.17.1561400008375;
+        Mon, 24 Jun 2019 11:13:28 -0700 (PDT)
 Received: from localhost.localdomain (x4db9a89d.dyn.telefonica.de. [77.185.168.157])
-        by smtp.gmail.com with ESMTPSA id v65sm401349wme.31.2019.06.24.11.13.25
+        by smtp.gmail.com with ESMTPSA id v65sm401349wme.31.2019.06.24.11.13.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Jun 2019 11:13:25 -0700 (PDT)
+        Mon, 24 Jun 2019 11:13:27 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 1/5] t3404: modernize here doc style
-Date:   Mon, 24 Jun 2019 20:13:14 +0200
-Message-Id: <20190624181318.17388-2-szeder.dev@gmail.com>
+Subject: [PATCH v3 3/5] pager: add a helper function to clear the last line in the terminal
+Date:   Mon, 24 Jun 2019 20:13:16 +0200
+Message-Id: <20190624181318.17388-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.22.0.589.g5bd7971b91
 In-Reply-To: <20190624181318.17388-1-szeder.dev@gmail.com>
 References: <20190611130320.18499-1-szeder.dev@gmail.com>
@@ -70,201 +70,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 't3404-rebase-interactive.sh' the expected output of several tests
-is prepared from here documents, which are outside of
-'test_expect_success' blocks and have spaces around redirection
-operators.
+There are a couple of places where we want to clear the last line on
+the terminal, e.g. when a progress bar line is overwritten by a
+shorter line, then the end of that progress line would remain visible,
+unless we cover it up.
 
-Move these here documents into the corresponding 'test_expect_success'
-block and avoid spaces between filename and redition operators.
-Furthermore, quote the here docs' delimiter word to prevent parameter
-expansions and what not, where applicable.
+In 'progress.c' we did this by always appending a fixed number of
+space characters to the next line (even if it was not shorter than the
+previous), but as it turned out that fixed number was not quite large
+enough, see the fix in 9f1fd84e15 (progress: clear previous progress
+update dynamically, 2019-04-12).  From then on we've been keeping
+track of the length of the last displayed progress line and appending
+the appropriate number of space characters to the next line, if
+necessary, but, alas, this approach turned out to be error prone, see
+the fix in 1aed1a5f25 (progress: avoid empty line when breaking the
+progress line, 2019-05-19).  The next patch in this series is about to
+fix a case where we don't clear the last line, and on occasion do end
+up with such garbage at the end of the line.  It would be great if we
+could do that without the need to deal with that without meticulously
+computing the necessary number of space characters.
+
+So add a helper function to clear the last line on the terminal using
+an ANSI escape sequence, which has the advantage to clear the whole
+line no matter how wide it is, even after the terminal width changed.
+Such an escape sequence is not available on dumb terminals, though, so
+in that case fall back to simply print a whole terminal width (as
+reported by term_columns()) worth of space characters.
+
+In 'editor.c' launch_specified_editor() already used this ANSI escape
+sequence, so replace it with a call to this function.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t3404-rebase-interactive.sh | 123 ++++++++++++++++------------------
- 1 file changed, 58 insertions(+), 65 deletions(-)
+ cache.h  |  1 +
+ editor.c |  6 +++---
+ pager.c  | 20 ++++++++++++++++++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 1723e1a858..9146f9d47b 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -75,11 +75,10 @@ test_expect_success 'rebase --keep-empty' '
- 	test_line_count = 6 actual
- '
+diff --git a/cache.h b/cache.h
+index b4bb2e2c11..5b2cd32bad 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1759,6 +1759,7 @@ void setup_pager(void);
+ int pager_in_use(void);
+ extern int pager_use_color;
+ int term_columns(void);
++void term_clear_line(void);
+ int decimal_width(uintmax_t);
+ int check_pager_config(const char *cmd);
+ void prepare_pager_args(struct child_process *, const char *pager);
+diff --git a/editor.c b/editor.c
+index 71547674ab..f079abbf11 100644
+--- a/editor.c
++++ b/editor.c
+@@ -96,10 +96,10 @@ static int launch_specified_editor(const char *editor, const char *path,
  
--cat > expect <<EOF
--error: nothing to do
--EOF
--
- test_expect_success 'rebase -i with empty HEAD' '
-+	cat >expect <<-\EOF &&
-+	error: nothing to do
-+	EOF
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 exec_true" git rebase -i HEAD^ >actual 2>&1 &&
- 	test_i18ncmp expect actual
-@@ -237,25 +236,23 @@ test_expect_success 'exchange two commits' '
- 	test G = $(git cat-file commit HEAD | sed -ne \$p)
- '
+ 		if (print_waiting_for_editor && !is_terminal_dumb())
+ 			/*
+-			 * Go back to the beginning and erase the entire line to
+-			 * avoid wasting the vertical space.
++			 * Erase the entire line to avoid wasting the
++			 * vertical space.
+ 			 */
+-			fputs("\r\033[K", stderr);
++			term_clear_line();
+ 	}
  
--cat > expect << EOF
--diff --git a/file1 b/file1
--index f70f10e..fd79235 100644
----- a/file1
--+++ b/file1
--@@ -1 +1 @@
---A
--+G
--EOF
--
--cat > expect2 << EOF
--<<<<<<< HEAD
--D
--=======
--G
-->>>>>>> 5d18e54... G
--EOF
--
- test_expect_success 'stop on conflicting pick' '
-+	cat >expect <<-\EOF &&
-+	diff --git a/file1 b/file1
-+	index f70f10e..fd79235 100644
-+	--- a/file1
-+	+++ b/file1
-+	@@ -1 +1 @@
-+	-A
-+	+G
-+	EOF
-+	cat >expect2 <<-\EOF &&
-+	<<<<<<< HEAD
-+	D
-+	=======
-+	G
-+	>>>>>>> 5d18e54... G
-+	EOF
- 	git tag new-branch1 &&
- 	set_fake_editor &&
- 	test_must_fail git rebase -i master &&
-@@ -495,15 +492,14 @@ test_expect_success 'commit message retained after conflict' '
- 	git branch -D conflict-squash
- '
- 
--cat > expect-squash-fixup << EOF
--B
--
--D
-+test_expect_success C_LOCALE_OUTPUT 'squash and fixup generate correct log messages' '
-+	cat >expect-squash-fixup <<-\EOF &&
-+	B
- 
--ONCE
--EOF
-+	D
- 
--test_expect_success C_LOCALE_OUTPUT 'squash and fixup generate correct log messages' '
-+	ONCE
-+	EOF
- 	git checkout -b squash-fixup E &&
- 	base=$(git rev-parse HEAD~4) &&
- 	set_fake_editor &&
-@@ -799,13 +795,12 @@ test_expect_success 'rebase -i can copy notes' '
- 	test "a note" = "$(git notes show HEAD)"
- '
- 
--cat >expect <<EOF
--an earlier note
--
--a note
--EOF
--
- test_expect_success 'rebase -i can copy notes over a fixup' '
-+	cat >expect <<-\EOF &&
-+	an earlier note
-+
-+	a note
-+	EOF
- 	git reset --hard n3 &&
- 	git notes add -m"an earlier note" n2 &&
- 	set_fake_editor &&
-@@ -1304,27 +1299,26 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = ignore' '
- 		actual
- '
- 
--cat >expect <<EOF
--Warning: some commits may have been dropped accidentally.
--Dropped commits (newer to older):
-- - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
--To avoid this message, use "drop" to explicitly remove a commit.
--
--Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
--The possible behaviours are: ignore, warn, error.
--
--Rebasing (1/4)
--Rebasing (2/4)
--Rebasing (3/4)
--Rebasing (4/4)
--Successfully rebased and updated refs/heads/missing-commit.
--EOF
--
- cr_to_nl () {
- 	tr '\015' '\012'
+ 	if (!buffer)
+diff --git a/pager.c b/pager.c
+index 4168460ae9..41446d4f05 100644
+--- a/pager.c
++++ b/pager.c
+@@ -177,6 +177,26 @@ int term_columns(void)
+ 	return term_columns_at_startup;
  }
  
- test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
-+	cat >expect <<-EOF &&
-+	Warning: some commits may have been dropped accidentally.
-+	Dropped commits (newer to older):
-+	 - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
-+	To avoid this message, use "drop" to explicitly remove a commit.
++/*
++ * Clear the entire line, leave cursor in first column.
++ */
++void term_clear_line(void)
++{
++	if (is_terminal_dumb())
++		/*
++		 * Fall back to print a terminal width worth of space
++		 * characters (hoping that the terminal is still as wide
++		 * as it was upon the first call to term_columns()).
++		 */
++		fprintf(stderr, "\r%*s\r", term_columns(), "");
++	else
++		/*
++		 * On non-dumb terminals use an escape sequence to clear
++		 * the whole line, no matter how wide the terminal.
++		 */
++		fputs("\r\033[K", stderr);
++}
 +
-+	Use '\''git config rebase.missingCommitsCheck'\'' to change the level of warnings.
-+	The possible behaviours are: ignore, warn, error.
-+
-+	Rebasing (1/4)
-+	Rebasing (2/4)
-+	Rebasing (3/4)
-+	Rebasing (4/4)
-+	Successfully rebased and updated refs/heads/missing-commit.
-+	EOF
- 	test_config rebase.missingCommitsCheck warn &&
- 	rebase_setup_and_clean missing-commit &&
- 	set_fake_editor &&
-@@ -1335,21 +1329,20 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = warn' '
- 	test D = $(git cat-file commit HEAD | sed -ne \$p)
- '
- 
--cat >expect <<EOF
--Warning: some commits may have been dropped accidentally.
--Dropped commits (newer to older):
-- - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
-- - $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
--To avoid this message, use "drop" to explicitly remove a commit.
--
--Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
--The possible behaviours are: ignore, warn, error.
--
--You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
--Or you can abort the rebase with 'git rebase --abort'.
--EOF
--
- test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
-+	cat >expect <<-EOF &&
-+	Warning: some commits may have been dropped accidentally.
-+	Dropped commits (newer to older):
-+	 - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
-+	 - $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
-+	To avoid this message, use "drop" to explicitly remove a commit.
-+
-+	Use '\''git config rebase.missingCommitsCheck'\'' to change the level of warnings.
-+	The possible behaviours are: ignore, warn, error.
-+
-+	You can fix this with '\''git rebase --edit-todo'\'' and then run '\''git rebase --continue'\''.
-+	Or you can abort the rebase with '\''git rebase --abort'\''.
-+	EOF
- 	test_config rebase.missingCommitsCheck error &&
- 	rebase_setup_and_clean missing-commit &&
- 	set_fake_editor &&
+ /*
+  * How many columns do we need to show this number in decimal?
+  */
 -- 
 2.22.0.589.g5bd7971b91
 
