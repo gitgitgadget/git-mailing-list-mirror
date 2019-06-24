@@ -8,146 +8,105 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82F511F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 17:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E82401F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 18:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728043AbfFXRrg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 13:47:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52871 "EHLO mout.gmx.net"
+        id S1732694AbfFXSAM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 14:00:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:43633 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726351AbfFXRrg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 13:47:36 -0400
+        id S1726331AbfFXSAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 14:00:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561398451;
-        bh=Y6q9NZanMe3ORb5icwV9gZJzE3AF64JKOyJZjkXG1Bk=;
+        s=badeba3b8450; t=1561399202;
+        bh=85s0+7kyvh7wGtpGnajDDfISMH4iUTaPhR5nDpYns9w=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NuH35OkeXe7+iQG4mceN7i6s8lGqV58dVZrwCmwNo4q+S+2wy2Iha4ORtwPA9X1Vt
-         I73OrDrFBJN59sC9VxsOVuCK52c2dVDOSvW3jqBB5+ozhPnSz1897uOcSTgQp8Iayd
-         KRSCTxtPcsYBOlZJvKWaOyklKt0kckcvtITEHt3U=
+        b=BK4BGhxFtrMsXYpBYmP7dYInzdKEo5aIm73LF3/Km9eseD+80entGvmfoinDhENm5
+         cODCffXFz7rF+CkTiJDfhJXVGBI1A7cKvaZyqmm54J3du9qOIEUYtdoScjMXHO5e6v
+         /vVBrwxhobbBjde4e5vtlRNK4hMoiyzWCaEWHsmI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MaJ7v-1i2PO33syj-00WJCM; Mon, 24
- Jun 2019 19:47:31 +0200
-Date:   Mon, 24 Jun 2019 19:47:50 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1ic1K93JNk-015MmD; Mon, 24
+ Jun 2019 20:00:01 +0200
+Date:   Mon, 24 Jun 2019 20:00:20 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Morian Sonnet <moriansonnet@gmail.com>
-cc:     Morian Sonnet <MorianSonnet@googlemail.com>, git@vger.kernel.org,
-        gitgitgadget@gmail.com, gitster@pobox.com, sunshine@sunshineco.us,
-        Morian Sonnet <moriansonnet@googlemail.com>
-Subject: Re: [PATCH] submodule foreach: fix recursion of options
-In-Reply-To: <20190624154750.19842-2-MorianSonnet@googlemail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906241947210.44@tvgsbejvaqbjf.bet>
-References: <20190624154050.9943-2-MorianSonnet@googlemail.com> <20190624154750.19842-2-MorianSonnet@googlemail.com>
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v2 00/10] Add 'ls-files --debug-json' to dump the index
+ in json
+In-Reply-To: <20190624130226.17293-1-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906241954290.44@tvgsbejvaqbjf.bet>
+References: <20190624130226.17293-1-pclouds@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:t1oITel17RL0EKvIjZIBTZ1KaOiHjUDy+PXz+REC8rDw8qoCAcQ
- vHNZCCOekledh3e7BkQJcP7+dM4rFPB6sVTGNpY4DO0Xtnc0TT6GmE04dEu8HN5WkPXIBJi
- mnR700Wk/Te3wXKBC3elzi8modh6waVLODgPpTQVrPerv2w2bWrGXW4jQfgtHGikHzhvQQ2
- S19+QSey+jt6440WUCWsA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/qrJslIcEzU=:BPTYprqtoCoVqaEP5d25GR
- S6GZvFq10c69sWzKVazJsKYLRZOTEf4X+S2x/z1wTxVmAxJeZpPUrs5gGWKz6rAziZXX4tkz5
- npSyF4Jmy2CpJSQZiY/gClfhJgL+624Fqt3W9hHJS1fbG7otYbbKfPTkoUUQ/F0hSvAm67k0X
- rbHNmiuJDQ/2BrQ3z4lyVWW9y36wzgITyZwr8vefWwjh6ivUKlE5copXLKm/iRzA4mzq/B+81
- a7Y74/B6Npr7MnltjkG1GSAkpY7aY/M7kbLoPkaZdc8aW/PY1KXR0U+HSRLd24z0U7a3iC4xa
- 6n+ACcBy1moiuhH9A72V5FINC2w1Gs7/0sssmjyt7OzaqhM2fscTn2UIa/5sXGlrzMW6x2SF6
- hgsmeo6NADdUxU4QVvh73HHlyKuEjRvEgPAG+m33djvffz2oGAWnvvBUPcfFJZWu+aJGtRSC5
- ajPfqvo7gCAwWtkAAITvuz2NyrpfMejeffKsQZS19jaEMFmkquRw6z+Ihjtl4XlL489+NPw+g
- jX8bMGuO6ynl6+g6nmQVJAXgaccbeAiqS67aEu2lOmpbW3dA4zXY77vZCWzO+cO6d8JjdDuxP
- VegfZkiFElxJnKhB3ok1p+4Wdmbst4wLjC9oE+mCLz14hwMSmiche+1NC54jt0ak2nKJ1+THj
- M9Qh4PmQChyleCVBtc0VUHTz8eW6ayQ7f4KP0pz9VNhKVFdQqQ2mmSZHkqK5wg7Q7DRl0GRs6
- XHiGnfGSew+gFwq3464d80UqixobRqRv2jskZ4Hfoxo6FMEXOb4eq1OUXYpCNFI1WTokZB9Qz
- fTRJJy142OIfVjLuxQoArCQM5XutFuKO36Rp2fO2i2xrRnUDi0C62F3GaFr8vtCTmICIQ+P0Q
- IzmW9QZFPOqDpsxBgSLYIbPDpVaDjABB0SZabkXHXQtI/OdJkKv93cqd1c0vstGv998drJLF8
- SGJcG4+4T+5hQxoJxi/CiM94GosSvzu3cwlCS8CUejKriYr/OV2oL
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-379455855-1561399222=:44"
+X-Provags-ID: V03:K1:7bXQrmEkW7kpZk6TYdKqCxREQ1kBUZeN7RS+kysvVcSl8os9dXV
+ Cd7RvymmlJwbb+ZS5/mGhloDunhQXp0HyNJIBcSNbxhlJIYnQuPajSVOYOPQMbvFo76TZXU
+ IcnHIlrUwu6pTn11Mg+xt2glNpXaSAzNs8PYcNVOP7Str00RHqfmXiERGc7h/48M7lNyQbc
+ DYdmoLbGkT3jF+Jvb5uyA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lTTNdwNS34I=:fGYQOHCsq0Wf6e//Xy2uyo
+ zHe8SaJ1LwsP3RUeIlcQwGPAfDAmNW7W0RFUM/aCxzBM6ygMAvWYJ8xpGPENi9Fd+JlisuW2A
+ lVUnFUZaDspC9eF/Y/NGs5yEBFTto1o/iUcyaV9cMIqCHHDVYBUUl3p9XPn3wsJjNHz5LSpsF
+ PHOeJulNb/eknMQk8rCThDH5M6fb9R6YHYFm6ObcqrK47ci8OABIosD33SLgnAXHpwewtgSvB
+ kuieZClpad+CxxHdiGkv90QGmWAoHDJHi6dQjZAL55Du1URY/UWRwECpWX2K5L+Q7xbBC/Ode
+ /NB/T7qtgwNQwzRzzKCRT9d6KefrtkwoDF/CcK9vD9vh4EY6ZzY15ibPjpBHU4rmSZjJx6tJx
+ q9v9D11yQywz7jXTYYpmSIJEwpYsiSrYnoLAWYZ+edg4h/lQjIy9P21Pw5xusUim5skq+G/9I
+ T42rsNFe7RS4TjNLxwts1iWMneFND5uL6OIOQ1i2DtmxaGrQ3/ubY520SxCxaMHygXhbuiyAL
+ XgZKenZlWLZsrYX5A4eekGzLknkCSqV6xrYR3NGQVPWIb3PT76V4InQtJnLIyI61hn8I+142D
+ p0o8e5LN8LFmxWes2cmJlw5KXoR9AMvokx4AByGnZ6Wy6KMl4mTca2ypfglY7HnBcfVIv4U5g
+ 3Hkshdt084PeMCLjg23niX27VQaSY8u39q+it4mm8V9d53fsZMyOlY04igUgJc3yFLCEp6a2d
+ JOys7cmyFyOksMej9DizOzKiRum+1dPS0ZHprxm/VZIaDVd6Usv7qsXTBwshp9oRHAIthIbk2
+ hukFbAXLDRF+Y0nZeBCUMLCXnbtgWt0SrQs5jfDh+xaW7+jAJAqx6maK/G0LDtGqEoVxYkNnE
+ iYcux0UuR3ekOFGQJ976u4wl3niKhgG03Jd7W0C0qs6Y830iEqZo2jVnVlUL++lUqgh4l6RQl
+ vduB56vYxcMQJdMMGAYFOHXS+lVo2jzEXiXbhhCq9IcfQbBywG/zObmVKYRe1efYOG65sxVeu
+ gfiBrAbRoUp/zO3ofRDwCGVrfpNPWY6aqTs2CUj+UCNHdUHOEayzUtXsWRbrLU2aPs4xdAXJM
+ ufLONLwxrj2c8o8dJCxE8kkC5cuTiD19tLS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Morian,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 24 Jun 2019, Morian Sonnet wrote:
+--8323328-379455855-1561399222=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Calling
->
->     git submodule foreach --recursive <subcommand> --<option>
->
-> leads to an error stating that the option --<option> is unknown to
-> submodule--helper. That is of course only, when <option> is not a valid
-> option for git submodule foreach.
->
-> The reason for this is, that above call is internally translated into a
-> call to submodule--helper:
->
->     git submodule--helper foreach --recursive \
->         -- <subcommand> --<option>
->
-> This call starts by executing the subcommand with its option inside the
-> first first level submodule and continues by calling the next iteration
-> of the submodule foreach call
->
->     git --super-prefix <submodulepath> submodule--helper \
->       foreach --recursive <subcommand> --<option>
->
-> inside the first level submodule. Note that the double dash in front of
-> the subcommand is missing.
->
-> This problem starts to arise only recently, as the
-> PARSE_OPT_KEEP_UNKNOWN flag for the argument parsing of git submodule
-> foreach was removed in commit a282f5a906. Hence, the unknown option is
-> complained about now, as the argument parsing is not properly ended by
-> the double dash.
->
-> This commit fixes the problem by adding the double dash in front of the
-> subcommand during the recursion.
->
-> Signed-off-by: Morian Sonnet <moriansonnet@googlemail.com>
+Hi Duy,
 
-This version indeed addresses all my outstanding comments. Thank you!
-Johannes
+On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> ---
->  builtin/submodule--helper.c  | 1 +
->  t/t7407-submodule-foreach.sh | 7 +++++++
->  2 files changed, 8 insertions(+)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 0bf4aa088e..afaf0819c9 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -540,6 +540,7 @@ static void runcommand_in_submodule_cb(const struct =
-cache_entry *list_item,
->  		if (info->quiet)
->  			argv_array_push(&cpr.args, "--quiet");
->
-> +		argv_array_push(&cpr.args, "--");
->  		argv_array_pushv(&cpr.args, info->argv);
->
->  		if (run_command(&cpr))
-> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-> index 706ae762e0..43da184d40 100755
-> --- a/t/t7407-submodule-foreach.sh
-> +++ b/t/t7407-submodule-foreach.sh
-> @@ -421,4 +421,11 @@ test_expect_success 'option-like arguments passed t=
-o foreach commands are not lo
->  	test_cmp expected actual
->  '
->
-> +test_expect_success 'option-like arguments passed to foreach recurse co=
-rrectly' '
-> +  git -C clone2 submodule foreach --recursive "echo be --an-option" > e=
-xpected &&
-> +  git -C clone2 submodule foreach --recursive echo be --an-option > act=
-ual &&
-> +  grep -e "--an-option" expected &&
-> +  test_cmp expected actual
-> +'
-> +
->  test_done
-> --
-> 2.20.1
->
->
+> - json field names now use '_' instead of '.' to be friendlier to some
+>   languages. I stick to underscore_name instead of camelCase because
+>   the former is closer to what we use
+
+This is not a good reason. People who are used to read JSON will stumble
+over this all the time because it is so uncommon.
+
+> - extension location is printed, in case you need to decode the
+>   extension by yourself (previously only the size is printed)
+> - all extensions are printed in the same order they appear in the file
+>   (previously eoie and ieot are printed first because that's how we
+>   parse)
+> - resolve undo extension is reorganized a bit to be easier to read
+> - tests added. Example json files are in t/t3011
+
+It might actually make sense to optionally disable showing extensions.
+
+You also forgot to mention that you explicitly disable handling
+`<pathspec>`, which I find a bit odd, personally, as that would probably
+come in real handy at times, especially when we offer this as a better way
+for 3rd-party applications to interact with Git (which I think will be the
+use case for this feature that will be _far_ more common than using it for
+debugging).
+
+Ciao,
+Dscho
+
+--8323328-379455855-1561399222=:44--
