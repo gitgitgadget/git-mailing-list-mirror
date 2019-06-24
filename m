@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B54311F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 12:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11B351F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 12:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728210AbfFXMwU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 08:52:20 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:36997 "EHLO
+        id S1728475AbfFXMya (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 08:54:30 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:44340 "EHLO
         mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727283AbfFXMwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 08:52:20 -0400
-Received: by mail-qt1-f194.google.com with SMTP id y57so14312034qtk.4
-        for <git@vger.kernel.org>; Mon, 24 Jun 2019 05:52:20 -0700 (PDT)
+        with ESMTP id S1728465AbfFXMya (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 08:54:30 -0400
+Received: by mail-qt1-f194.google.com with SMTP id x47so14256015qtk.11
+        for <git@vger.kernel.org>; Mon, 24 Jun 2019 05:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=ITEBsvNzJcedp2T1ezaLqdwlq6MWpinYUS87l5EeoVM=;
-        b=QRAYtQ5WnuHbQQGLaW+ryF1ch4ReV0fDydVbd9OtLC9dQKoqdCykcdHPyAnzuT44pJ
-         B/fXXyAcv1dg0WBuBCEdXmq7WA3MHr41Ck5c/22Zaahjo19BIYBImytvedDALQpq8yyY
-         qcL88jX1szWcTmn3bGgdRrZAk/DHG7q/qS7k+q56XEBSDBud+ixXR5DTqXQx8qsWguNl
-         P0pQhmJX3ryMeA8lv/Z6PoEZdbT7KkclAzH98+9Qrp92dHlT8iBRDvmsdaEexyzgtbZP
-         cNuNUTzd1lzDE8XgcADPPP5tpCbbjTgva1QkpHRiQT/siSTEZ+1pmC0RE/xb6HYVlJA9
-         paWw==
+        bh=kjikLVOKuEaGo0JmpAxB+RgTBKOYc3C3/cRUErQw8kY=;
+        b=q2QAHvjgp8T5gQNWWaFai1m1jjfcwkyv2HFwtOuluiEByeHjem59ZnA90eAW+jXHnO
+         jFrybBkyIvpbgUE+2UGyFPEVG8xpldPYc9y5WQIG0WfP1+MQpPqy6c54hO0lBwdOI5lG
+         Z3zoKabpwlpRB2TPan+ci42q34FJVc7BAtjnzuX5EmxyTKk/YAr4iQrzemPpnWreUQ0C
+         SJZjTZ2QNogCziLTgiMO7TZ0BbxYBaXs4muCH9+K8H+gxDlapsOfMpwoMWvSz2tji4it
+         IQp6BYDm0JFZBrI9+BqPUISR+m+72v6Ilh0HE0QgY3Sfix63gw/k/FE/Dwb+00ANfU3z
+         cdsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ITEBsvNzJcedp2T1ezaLqdwlq6MWpinYUS87l5EeoVM=;
-        b=pmn77AbB7uakpzRAZ7HqjxTHVGUfeR+zH2M1uw86nRhUkEilA3dE24Eig3Mmn9eQRJ
-         Bqnnv+9c4r/tRB4hTujT7d73yCUzSKG25858+LDmOHf7fumDwm7vNlWL/TsWld0CL2lS
-         xNLUFMBjbel0hJhLLAUTZkiW93lwAK7MPhvBRZYUCqGwWctVKeV0Om8IeUtHUJSnOIkX
-         MAVfZMXISwcNXQHg4+0D1Mj8WYhIFWwcPwRvuTnvejYZc7K7EwOHQpgzqNg3Jzi772Cb
-         sre+vGqKthFkxpELBm6yHOEva3/FwEgF3yJiT+vGLEF8ITy7RldwC5mBxXWEtFhZBsb7
-         KSFg==
-X-Gm-Message-State: APjAAAUri6fUfGo53MRHHHit4aVUcKiJh3AqjcdzoMicsyIrnkQ0CNZd
-        +9BNfGyM3yKlQvQbl0bfNuY1zmiF
-X-Google-Smtp-Source: APXvYqyVg3TV8SbgRRFgF08ouH5zu0dynjmuZTU3fzHmB7fCUswzXcjjbC3tWgeYN9H9exXDJXo7bw==
-X-Received: by 2002:a0c:b084:: with SMTP id o4mr57900395qvc.227.1561380739347;
-        Mon, 24 Jun 2019 05:52:19 -0700 (PDT)
+        bh=kjikLVOKuEaGo0JmpAxB+RgTBKOYc3C3/cRUErQw8kY=;
+        b=emQgc2d+7SXKubMqGQiiCc19Kq/+ecfOZHWvy9bAR5WzKRmK789Jh0JmoioP5lcTXt
+         eJyno2doZGgk3is8AY2KeZYIRfpCqZbXfn2rWNVg+mKGDwczAd9fJaxyBMPl6g05Y/iG
+         6oxAfqGeChxVmfty/w7a+jncZYyRtfw0GBtwq8peMFjB2NBVjif4LgyL/p9jS4kdyObb
+         hiowZ8gTvLk9G9McvnTGIYlYPrEBp5y3vhTTAiidoANS3PEUcJ2bZeK86ErIY+Jc3CZA
+         3oOAJKQ0zO8UjpFUrE6H0a1mxVOveHpXAyvIAUSj6soy5M1jh7zoIlJ7eQzwJqIwocPL
+         c1Bg==
+X-Gm-Message-State: APjAAAWmca4FgRwouZ3VEdr++oPR/Jm5QtLMBV+EDWLRC5zfSyphmJFx
+        AG/Id0ZdEJAMZzHdTTwXn3IepyBW
+X-Google-Smtp-Source: APXvYqyV8HVQQCmzEuemmezQtNJNuIFxBL79NRonCaWVKMX54KOwY/bHqM6VxAEZRkHDw229GoFuaw==
+X-Received: by 2002:ac8:2646:: with SMTP id v6mr108489399qtv.205.1561380869444;
+        Mon, 24 Jun 2019 05:54:29 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:bd0b:1518:483a:73eb? ([2001:4898:a800:1012:6e3f:1518:483a:73eb])
-        by smtp.gmail.com with ESMTPSA id z18sm6061294qka.12.2019.06.24.05.52.18
+        by smtp.gmail.com with ESMTPSA id 42sm1803727qtm.27.2019.06.24.05.54.28
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Jun 2019 05:52:18 -0700 (PDT)
-Subject: Re: [PATCH v3 1/5] count-objects: report statistics about kept packs
+        Mon, 24 Jun 2019 05:54:28 -0700 (PDT)
+Subject: Re: [PATCH v3 2/5] revision walk: optionally use sparse reachability
 To:     Nathaniel Filardo <nwf20@cl.cam.ac.uk>, git@vger.kernel.org
 References: <20190624120711.27744-1-nwf20@cl.cam.ac.uk>
- <20190624120711.27744-2-nwf20@cl.cam.ac.uk>
+ <20190624120711.27744-3-nwf20@cl.cam.ac.uk>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <504c99bb-d264-4fc1-5dfb-00a691dfe39a@gmail.com>
-Date:   Mon, 24 Jun 2019 08:52:18 -0400
+Message-ID: <6e726082-8275-b94e-c3d7-8899f00ea958@gmail.com>
+Date:   Mon, 24 Jun 2019 08:54:25 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <20190624120711.27744-2-nwf20@cl.cam.ac.uk>
+In-Reply-To: <20190624120711.27744-3-nwf20@cl.cam.ac.uk>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -71,11 +71,20 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 6/24/2019 8:07 AM, Nathaniel Filardo wrote:
-> Signed-off-by: Nathaniel Filardo <nwf20@cl.cam.ac.uk>
+> Add another bit flag to the struct rev_info.
 > 
-> update count-objects
-> ---
+> The only caller that uses this after this patch is builtin/pack-objects.
+> Without this, sparsity seems to do little good therein, as
+> prepare_revision_walk will densely propagate UNINTERESTING flags from
+> trees to tree contents, before mark_edges_uninteresting has a chance to
+> be faster by being sparse.
+> 
+> While here, drop the "sparse" parameter to mark_edges_uninteresting,
+> introduced in 4f6d26b167 ("list-objects: consume sparse tree walk",
+> 2019-01-16) which can now use the flag in struct rev_info.  No
+> functional change intended.
 
-This post-signoff text looks like cruft from a rebase.
+Looks like a straight-forward refactor to me. I'll keep reading
+for the use of this new bitflag.
 
 -Stolee
