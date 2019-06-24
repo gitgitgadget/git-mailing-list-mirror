@@ -8,161 +8,90 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 730821F461
-	for <e@80x24.org>; Mon, 24 Jun 2019 10:49:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4BD1F461
+	for <e@80x24.org>; Mon, 24 Jun 2019 10:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728664AbfFXKtB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Jun 2019 06:49:01 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45943 "EHLO mout.gmx.net"
+        id S1729177AbfFXKw3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Jun 2019 06:52:29 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59401 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726960AbfFXKtB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jun 2019 06:49:01 -0400
+        id S1728369AbfFXKw3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jun 2019 06:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561373335;
-        bh=/YLgmKyh+TmHHd/5fcgEvac1CeMJnk3lgEGBjpGn3rc=;
+        s=badeba3b8450; t=1561373548;
+        bh=FVNUSCd3agdd8aaPVLtd6MYBOwmh/oHWx+N0kPKqOuA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=J17SLaC22NQDvp/pkv3kcW/mOWT0QbpZvIjcJp3DdhgFKyb0EG8IYXER8cqSKSWFD
-         h38MOUlxfkH9l11tzJ2LofZT7RQWu2B0k0CG2YZehv4tHagoOuQCYJ+L2grt8964N3
-         QFvAw1/YzLmvUlLU+b63HZPU8gvxVjmZc147Cry8=
+        b=SRQ5fUHEqaLIhoe4UYKek329dYTc7hktM99AZg8H/TtomDmFhLDSZHXs6greqZet6
+         gjo9qv9CXGEyTxxUA+rMoGvm9V/WEGlhj45LRfz3RZaLar/tmFdPoU6g55mNt1xZ/T
+         aZU7N6tCpxUB2jJUtBFeE/W4ZsC5aycXPBmTvRDU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzQkE-1iRhv5062y-00vQVF; Mon, 24
- Jun 2019 12:48:55 +0200
-Date:   Mon, 24 Jun 2019 12:49:14 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiacR-1iBy3A3dw7-00fh03; Mon, 24
+ Jun 2019 12:52:27 +0200
+Date:   Mon, 24 Jun 2019 12:52:47 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Morian Sonnet <moriansonnet@gmail.com>
-cc:     sunshine@sunshineco.us, MorianSonnet@googlemail.com,
-        gitster@pobox.com, gitgitgadget@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] submodule foreach: fix recursion of options
-In-Reply-To: <201906221054.x5MAspEQ003711@linux-5.fritz.box>
-Message-ID: <nycvar.QRO.7.76.6.1906241241080.44@tvgsbejvaqbjf.bet>
-References: <pull.263.git.gitgitgadget@gmail.com> <pull.263.v2.git.gitgitgadget@gmail.com> <c46e5bd1403b45d25192220ce689fcd55d897981.1560371293.git.gitgitgadget@gmail.com> <201906181515.x5IFF8bg005587@pool-147-74-zam859.wlan.kfa-juelich.de>
- <nycvar.QRO.7.76.6.1906191928420.44@tvgsbejvaqbjf.bet> <201906221054.x5MAspEQ003711@linux-5.fritz.box>
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] rm: add --intent-to-add, to be used with --cached
+In-Reply-To: <20190622122417.28178-1-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906241251040.44@tvgsbejvaqbjf.bet>
+References: <20190622122417.28178-1-pclouds@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:v+VrdyjKpOFprBdDjigYHFoQtKP/bucPds7pZvGcen5h4IsESn/
- XW6LPVzAiuiigGgCbQcQOGt9viZ7moN23wVByjCtC5y9370Ed4dOClem7M4jx1Iny+VyEea
- VpSz/mUexLZxoK5cDt08kKbzJVhkve4r95cRMhk0RHjVXeG9uzbr2iL2iWAr3wDtwAfQAnu
- 2HK0eFCmuMpgTdmaSw9uA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kmA0Ww+I0js=:+8cWZDL9UZwy7R6515d4Kt
- CraxLSVHGeTMOV5nItI31XkqvgrgvpXLXedYAr+0OCGIqLrowTSs/Cg4+tNTgn6KlsTBa1cN0
- XzLrtCqIoYoRUtsQpM0B7bzz3Bf9YDgbbnK+lXsTsbc6vdyg0OfwO9F504RJ/BP0hjwJptRdo
- 3vQqKjxtbjb6vVa98nVU48QuQI508SQJ7f4tDTD+cM7oHnb3iB0a5+ypzpG6WumSDdkBV/KCT
- 2IV+J48TI3KD+5ilZyadkbYfxMZ5BdVkucoV0QzUdn6C/Fjzh/fB2FoeIwzuGWU7R6h1p/Yes
- SOk4y8jOZ37T7Mpcj1nSMRxeHFyDGAyxcmrVxAP6320DyGpn3e3MAF3Q48cO3Ew17TC3/4GwT
- bgT0O1b9vAmfvxfDpfpvqTGG41C/D30tLDCW/y6l32rUhGcgdSKd6oS88fvQncjeKY3yPaAkv
- 1BCWb3t0aWpL5ysKPifaQ28TZFqGGm3oBlszO9m+Kb+AEN/N/WxreJBepghwCllm/zCbeURNm
- 1kZLSwBtGP5Ui7lCc92hlUnAC0wmTvgm1rPYBUZsbPt544WtJdlKAvDb62KupMuBOhNGri06F
- XnSej8eFPxtE2JyiAhtQkk2AZt1soeVrRLgHtW6S8RhvIvLOnWISJ7K1212dWFnWQKNckpXgk
- cy8hCn9DK/Ua5rOxMOXwcMipJxUqVYm60MwRDGvJPNdiomc81zYl63JwuPfAsC+lqardyn94u
- nSxE8ur+PPZP+8EsaOKcG6pAqrSmY50wEBZVY5VhC88cgZMl9CHPq6ero24Fx/mIST7BRsO6x
- eCQhpXake0WoYMnviyZN0KuvJEFYjMz7PuPvUq1sW1QOtI4z2Qfhq+TE50QGf5ZjH9B51avM2
- P14SFKuaLCaCaX+aoeYTTgQamlw8/j2j9Jjjcb8tWCL4JRGITfgJWMa/5tHHusJoRROfTzEq+
- 6ecGjkugeVVtDMn2f7fF0xLKIQlHxW0V0kKWF9dLLkDYx/2oh7Fiq
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-868592721-1561373568=:44"
+X-Provags-ID: V03:K1:fktkGnByHAxFLGVEqobeV1Zh6+C7yqpZwQPKG6X0PF7EDoK6lDK
+ /HmohLcGtRQ1HE12jA5DUTS2nKC3MT+RCCuDoHifhu6v6qHxplm16E/TuQBMHutsnsfDrER
+ Y2KrwQa9cZeBH064T7wP/9bBOWpPjf77n51f636DR0LO5+xvsVA+aFJrfrMN5BhlqOy2I6y
+ TtZdRlUvdTGeiewPqjnoQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:APr7BQTfVbA=:HfYHm/wdtdWB2FCRoEcDF6
+ LQ9Ou+Vzo3I4Nq1UFBR/9kyXY17H0iGJY6GAoRJnhSLPewdgt4SZqGi7tzRp8upDqW41xytrZ
+ TfzsRXaaK5MrcbtHMLCR2wp6+kkX4K25FR94Wdv5k45ynEpXwJlPi9p4xoiECxUYHfSV92KDq
+ D00y6WVChbfmy+QE8rXI2wrFvflucJEqzDE5NZr6Yxd6hXB9NjmSY0rn09qjcqUblrJYvu9aP
+ O9FKlLpRy8kw2+wvpbADoc0foiaam1/ZPl72M+ksUKkF5omo9lrTWte5D8ZFEOQ+jkL5z26/e
+ 7PAUGHmR4nCEWozrkcoxQGntdV0XHOJwdxz4mPVDT0oBK6fJheWudPrds+0QXCc00tDEiGQrg
+ N5fvdBnAeFxPL+UbG6LrhseUgopbU6Ufvhr4TnvUWWsmj6n7p88BxH4wpkmhZStjKhz7aq0lu
+ TgSWeT+CBiwUTodyqgid7qw0++yhbaHZmRM4Q4kuzdwLGaDF5TSf5dS7FUZwM44GCv7KW79uL
+ HmL8AcoJKzp5yw0H81M+ihmhgTLKnZ3b2RlBxuAT6kUDONHueVQMBHtp0SSL84gF/EXtIHE27
+ kiMIVXLL/6ti0ToTK2m1LIKnOupd47gBfBmADjzQ7BEH/StNLXCpn29/6kT3kfZFxA/Wucde9
+ getlURTYhsieXXLU2lpc1Odm7/qEo8AVQIto/W1omERDt57hiHOWU7D6v7p2LJ4+vGCPthKSo
+ RLIAeRQ2i76oUnwPabi332UhhCRrzF9GyCxrWBxu2453ePjfafoZES3q87+wVSMz1WC24mzqO
+ FihqfrXQl8eUmmxewTsVWFLgAqsbLe78QCbc0Zi/4n6Sx2/Bf4/r+1M8g6uAmphpL1p6Rl3vm
+ bJRO5jGXrIgqk/SOIdztBSq3Uo+2E805vi2iAhmYL2icf9bBpQdtPnlp4IlNpmmiVSn7jeoG6
+ D9zW/68TtQYDmik/yu/qh4kmXKzxRG1BLaySN1YAWfE0W4OafneLC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Morian,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sat, 22 Jun 2019, Morian Sonnet wrote:
+--8323328-868592721-1561373568=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Hi Duy,
+
+On Sat, 22 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> An index entry serves two purposes: to keep the content to be committed,
+> and to mark that the same path on worktree is tracked. When
 >
-> > On Tue, 18 Jun 2019, Morian Sonnet wrote:
-> >
-> > > "Morian Sonnet via GitGitGadget" <gitgitgadget@gmail.com> wrote:
-> > >
-> > > > Calling
-> > > >
-> > > >     git submodule foreach --recursive git reset --hard
-> > > >
-> > > > leads to an error stating that the option --hard is unknown to
-> > > > submodule--helper.
-> > > >
-> > > > Reasons:
-> > > >
-> > > > . Above call is internally translated into
-> > > >
-> > > >     git submodule--helper foreach --recursive -- git reset --hard
-> > > >
-> > > > . After calling
-> > > >
-> > > >     git reset --hard
-> > > >
-> > > >   inside the first first level submodule,
-> > > >
-> > > >     git --super-prefix <submodulepath> submodule--helper \
-> > > >       foreach --recursive git reset --hard
-> > > >
-> > > >   is called. Note the missing --.
-> > > >
-> > > > . Due to the removal of PARSE_OPT_KEEP_UNKNOWN in commit a282f5a90=
-6 the
-> > > >   option --hard is not passed to
-> > > >
-> > > >     git reset
-> > > >
-> > > >   anymore, but leads to git submodule--helper complaining about an
-> > > >   unknown option.
-> > > >
-> > > > Fix:
-> > > >
-> > > > . Add -- before the command to execute, such that now correctly
-> > > >
-> > > >     git --super-prefix <submodulepath> submodule--helper \
-> > > >       foreach --recursive -- git reset --hard
-> > > >
-> > > >   is called.
-> >
-> > This is a good explanation, even if the format is not exactly close to=
- the
-> > existing commit messages ;-) If you look e.g. at
-> > https://github.com/git/git/commit/e5a329a279c7, you will see what I me=
-an:
-> > there is much more "prose" (and less bullet points) going on.
+>     git rm --cached foo
 >
-> Ok, I see the differences. Shall I adapt the commit description?
+> is called and there is "foo" in worktree, its status is changed from
+> tracked to untracked. Which I think is not intended, at least from the
+> user perspective because we almost always tell people "Git is about the
+> content" (*).
 
-Well, I would if I were you ;-)
-
-> My test so far was designed to not actually check whether git reset
-> --hard has shown any effect.
-
-Right, but the test case's title suggested that...
-
-> Taking the test "test "foreach --quiet --recursive"" and the test
-> "option-like arguments passed to foreach commands are not lost" for
-> example, I suggest the following:
->
-> 	git -C clone2 submodule foreach --recursive "echo be --hard" > expected=
- &&
-> 	git -C clone2 submodule foreach --recursive echo be --hard > actual &&
-> 	grep -sq -e "--hard" expected &&
-
-Please without the `-sq`.
-
-> 	test_cmp expected actual
-
-Sounds good to me, especially with this suggestion:
-
-> As final comment: One could change the flag --hard to something which
-> will definetely never be an option flag for both, echo and git submodule
-> foreach, e.g.  --this-will-never-be-an-option.
-
-Personally, I'd go for `echo --an-option`, and yes, you are absolutely
-right, the intention of your bug fix is not so much to fix the recursive
-`git reset --hard` as it is to fix _any_ recursive command with
-command-line options.
-
-To be honest, I had missed that `git submodule foreach --recursive`
-executes commands even in uninitialized submodules... I could even see how
-some users might consider that behavior a bug... are you sure this is the
-case? Is this `echo` really executed even in `nested2`?
+I can buy that rationale. However, I do not think that "remove intent to
+add" (which is how I read `git rm --intent-to-add`) is a particularly good
+way to express this. I could see `--keep-intent-to-add` as a better
+alternative, though.
 
 Ciao,
 Johannes
+
+--8323328-868592721-1561373568=:44--
