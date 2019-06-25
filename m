@@ -2,241 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28CE61F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 14:10:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01B51F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 14:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729128AbfFYOKe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 10:10:34 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726532AbfFYOKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:10:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561471819;
-        bh=nfmkqvqREI1FV4JZuu5OwDH4qzF018ygQtL/0zzAwto=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FlXdCppVpZNhjW+4xTJ6GtfT/9nRR/vEJaLbclEi3LdioAr6VlA1177Q+EHactdDv
-         HdkMh4nekNX8rdD1lDWJrXoYrVzFORPDGT5P3X4bg07LQX4lpFXnrwUro/RRcHLrN7
-         mIDzi0ey31FBqkIsBTbw3XS3lwbfdbSyI+ww0bvI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0gcI-1iZWQn1Kla-00urJW; Tue, 25
- Jun 2019 16:10:19 +0200
-Date:   Tue, 25 Jun 2019 16:10:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 00/10] Add 'ls-files --debug-json' to dump the index
- in json
-In-Reply-To: <CACsJy8B9vd9YaP_FHN-EDEPc_OHgD=MtFu8WymM66PURWX=25Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906251601240.44@tvgsbejvaqbjf.bet>
-References: <20190624130226.17293-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906241954290.44@tvgsbejvaqbjf.bet> <CACsJy8BsT-GaVvEmqfk5n1jGmkcLG_bRjqcU0M3yefBmNSxmnA@mail.gmail.com> <nycvar.QRO.7.76.6.1906251311280.44@tvgsbejvaqbjf.bet>
- <CACsJy8B9vd9YaP_FHN-EDEPc_OHgD=MtFu8WymM66PURWX=25Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730727AbfFYOfS convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 25 Jun 2019 10:35:18 -0400
+Received: from mx0.karlstorz.com ([62.134.46.134]:23757 "EHLO
+        mx0.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728710AbfFYOfS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 10:35:18 -0400
+IronPort-SDR: ytcvDWovm7jEw6umWtbxhzlOWAQpklG8sAUwV95IUBWrX9LgYkRgSzh78bmVZULSo8JhpLznHO
+ SellxxDnYulEbS8NjUFb6/4cJNoV9kWkxJ6jZzIKBUuQvxQgNkJPTSHRlj/Kce3uEvcrZfdnqi
+ t3iU95ghbwdqdBTTLmATO3cde3wsW35LDXiWNOEFypjZTDS2a/N788taO2rqkvatunPsnu1UlI
+ 4ZnTEtYRpJoj9yxHlyN1d/4xprCQnCcJiifuP974dPok0Mv+YAYPozzelN2m+FNN4CfQTBMZqX
+ j5U=
+X-IronPort-AV: E=Sophos;i="5.63,416,1557180000"; 
+   d="scan'208";a="923356"
+Received: from tut-ex04-pv.kstg.corp ([10.0.10.234])
+  by mx0.karlstorz.com with ESMTP/TLS/ECDHE-RSA-AES256-SHA; 25 Jun 2019 16:35:15 +0200
+Received: from TUT-EX01-PV.KSTG.corp ([169.254.1.241]) by
+ TUT-EX04-PV.KSTG.corp ([10.0.10.234]) with mapi id 14.03.0439.000; Tue, 25
+ Jun 2019 16:35:15 +0200
+From:   "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
+To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+CC:     Kyle Meyer <kyle@kyleam.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: AW: specifying revision - how to enforce matching a tag/branch-name
+ or revision only
+Thread-Topic: specifying revision - how to enforce matching a
+ tag/branch-name or revision only
+Thread-Index: AQHVKEQ/jw27fdRITDCM6LgaQQxNWKasJEsAgABPrHM=
+Date:   Tue, 25 Jun 2019 14:35:15 +0000
+Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF82024806510C@TUT-EX01-PV.KSTG.corp>
+References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
+ <87sgs3rhpo.fsf@kyleam.com>
+ <xmqq8stvklzd.fsf@gitster-ct.c.googlers.com>,<CACsJy8CBQhF2=nZ4tZj_h6Gr8PjK3amANjT38uhnurS0dehyiQ@mail.gmail.com>
+In-Reply-To: <CACsJy8CBQhF2=nZ4tZj_h6Gr8PjK3amANjT38uhnurS0dehyiQ@mail.gmail.com>
+Accept-Language: de-CH, en-US
+Content-Language: de-CH
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.0.10.246]
+x-kse-serverinfo: TUT-EX04-PV.KSTG.corp, 9
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean, bases: 6/25/2019 1:17:00 PM
+x-kse-attachment-filter-scan-result: Clean
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tFvDdjN4lW4xAoD/tqv2ctkh+y9IfWGFq2MC7FfU9XXHzjDkpwp
- 1lPchN9bN4VTxFRcacHtnyyluVmS5Ke4br1O9XeAz+z0bJ88C4+0KRxdyRtEcT7yq5jycA6
- Cajmz0NEFTf+0SNLiPDexBFViPu2uIGo8swXjuvYaroTamQAkvtqKg7JBxR3174+dEMu9tc
- R7EySwq2TUQcqvd2gDeBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6mVtJ3LPHfE=:Lrtp5fgY7QUrxpvN5BuTDP
- ebC1eX/ri/izQrvbVoA0cSSKf7wqsFmfnukn0y99qGOFOhlAQfLqwNgHGIJGpEZ+7dQ2fJr61
- aGI2kB4nlTiBIsAOx8BHNnOafwRRAtrAbWE+8WifTSrv47fu4hcCCJwicWAKA26bcfpRCxqcR
- fLiCNYTW+ZTWeBHrwHcmVh8Xd7OkWWP8MdGcw2M94AcQuLrjQm5nMFfzsYw4xYnysb4YzMajO
- itV3GLD+O1Z/wSrXI32j5bNVcCSTQlrR+aHHBMCMMhG8K7jItDXNFRhijw7Rq6ut9a5Pf9DmN
- 7+KsjkU2REVakplC48S93nf+0qRs1b4iWvhUORTFRkyswYQZVtR8SX36D/NHI3UTmDWuRZOgw
- 1w72cIhJcBXtEEES5QqDNLsgVsyLNtX1w3fnndd70i285SemxsK8IkUvN0Ok3ciXsd0zTERut
- Jhawyq8bUnq+eGpaOokeLABMSzhFrC7VKrf3Ouf7eo+ea83T7o5SGmYO0G9QbHDNBcbhskVa3
- kon1OKir0j9c96yAStlWOyGSFdh4nHAVXbNFAFljL8Y/5c7odgfPi6EPkqXaU0irb6HYrysEW
- HJgXkakQhtmuw0byxIV49Zdz3EmYBx4hgW6TiMLPsNwW5k4kRZ99YuAflZWxNl3d3r+5UexPK
- rfJOCmU7K9VtU2zZHejQvuFKDKz2XaqmHuEh5Rw7cBHU2B6cvfWt0WRjN1YKt7apBO6jwcVcZ
- UgKZwRVZ2fcHeP40LmLzYC8Usw0j9niGI+aI1UUTx2Op7E5uVVyX7YkX5ObzKqagLbdfUzsbB
- dEwZ2BldHEX+H1V41WXyh9J9bKTKH/UoqwaY+1RI1upY6OgdO3P4B0HRXm+yszlOGnO4d4W+Q
- SXE0aIRSTVqpFxF9H2bDb5y0yKG1U4QbH0MudFl0Iob/jNoW4oEFJdzHlme4tSM1TA5Hhf71I
- HDepI5yyWCsuMho/p+yx+qz8h6lIDzBRDRrLJXvkv9H5lzG7C9DOl
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+First of all many thanks for the responses.
 
-On Tue, 25 Jun 2019, Duy Nguyen wrote:
+And yes refs/heads/foo-g<hash> will be interpreted by "git checkout" as "git-describe" output, if there is no such branch. My current solution for the moment is to extract the commit-sha1 from the output of "git for-each-ref" and fail if there is no exact match otherwise git checkout will anyway do what I want, because it finds the branch.
 
-> On Tue, Jun 25, 2019 at 6:27 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Tue, 25 Jun 2019, Duy Nguyen wrote:
-> >
-> > > On Tue, Jun 25, 2019 at 1:00 AM Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > > - extension location is printed, in case you need to decode the
-> > > > >   extension by yourself (previously only the size is printed)
-> > > > > - all extensions are printed in the same order they appear in th=
-e file
-> > > > >   (previously eoie and ieot are printed first because that's how=
- we
-> > > > >   parse)
-> > > > > - resolve undo extension is reorganized a bit to be easier to re=
-ad
-> > > > > - tests added. Example json files are in t/t3011
-> > > >
-> > > > It might actually make sense to optionally disable showing extensi=
-ons.
-> > > >
-> > > > You also forgot to mention that you explicitly disable handling
-> > > > `<pathspec>`, which I find a bit odd, personally, as that would pr=
-obably
-> > > > come in real handy at times,
-> > >
-> > > No. I mentioned the land of high level languages before. Filtering i=
-n
-> > > any Python, Ruby, Scheme, JavaScript, Java is a piece of cake and mu=
-ch
-> > > more flexible than pathspec.
-> >
-> > I heard that type of argument before. I was working on the initial Win=
-dows
-> > port of Git, uh, of course I was working on a big refactoring of a big=
- C++
-> > application backed by a database. A colleague suggested that filtering
-> > could be done much better in C++, on the desktop, than in SQL. And so =
-they
-> > changed the paradigm to "simplify" the SQL query, and instead dropped =
-the
-> > unwanted data after it had hit the RAM of the client machine.
-> >
-> > Turns out it was a bad idea. A _really_ bad idea. Because it required
-> > downloading 30MB of data for about several dozens computers in paralle=
-l,
-> > at the start of every shift.
-> >
-> > This change was reverted in one big hurry, and the colleague was taske=
-d to
-> > learn them some SQL.
-> >
-> > Why am I telling you this story? Because you fall into the exact same =
-trap
-> > as my colleague.
-> >
-> > In this instance, it may not be so much network bandwidth, but it is s=
-till
-> > quite a suboptimal idea to render JSON for possibly tens of thousands =
-of
-> > files, then parse the same JSON on the receiving side, the spend even =
-more
-> > time to drop all but a dozen files.
+Regards
+Heiko
+
+________________________________________
+Von: Duy Nguyen [pclouds@gmail.com]
+Gesendet: Dienstag, 25. Juni 2019 13:43
+An: Junio C Hamano
+Cc: Kyle Meyer; Boettger, Heiko; git@vger.kernel.org
+Betreff: Re: specifying revision - how to enforce matching a tag/branch-name or revision only
+
+On Fri, Jun 21, 2019 at 10:16 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This was mentioned before [1]. Of course I don't work on giant index
-> files, but I would assume the cost of parsing JSON (at least with a
-> stream-based one, not loading the whole thing in core) is still
-> cheaper.
-
-You may have heard that a few thousand of my colleagues are working on
-what they call the largest repository on this planet.
-
-No, the cost of parsing JSON only to throw away the majority of the parsed
-information is not cheap. It is a clear sign of a design in want of being
-improved.
-
-> And you could still do it in iteration, saving every step until you have
-> the reasonable small dataset to work on. The other side of the story is,
-> are we sure parsing and executing pathspec is cheap? I'm not so sure,
-> especially when pathspec code is not exactly optimized.
-
-Let's not try to slap on workaround over workaround. Let's fix the root
-cause. (Being: don't filter at the wrong end.)
-
-> Consider the amount of code to support something like that.
-
-Given that I am pretty familiar with the pathspec machinery due to working
-with it in the `git stash` and `git add -p` built-ins, I have a very easy
-time considering the amount of code. It makes me smile how little code
-will be needed.
-
-> I'd rather wait until a real example come up and no good solution found
-> without modify git.git, before actually supporting it.
-
-Oh hey, there you go: Team Explorer. Visual Studio Code. Literally every
-single 3rd-party application that needs to deal with real-world loads.
-Every single one.
-
-> > And this is _even more_ relevant when you want to debug things.
-> >
-> > In short: I am quite puzzled why this is even debated here. There is a
-> > reason, a good reason, why `git ls-files` accepts pathspecs. I would n=
-ot
-> > want to ignore the lessons of history as willfully here.
+> Kyle Meyer <kyle@kyleam.com> writes:
 >
-> I guess you and I have different ways of debugging things.
+> >> git rev-parse "${BRANCH_NAME}"  || git rev-parse "refs/remotes/${UPSTREAM}/${BRANCH_NAME}"
+> >>
+> >> Unfortunately somebody used the branch name "add-gcc10" and `git rev-parse` which didn't exist on one repository. However `git rev-parse`
+> >> also supports to parse the `git-describe` format which resulted in checkout a commit starting with "cc10".
 
-Yep, I'm with Lincoln here: Give me six hours to debug a problem and I
-will spend the first four optimizing the edit-build-test cycle.
+I wonder if something like refs/heads/foo-g<hash> could trip the
+parser and mistake it as a `git-describe` output. Staring at
+get_describe_name() alone the answer might be an unfortunate "yes".
+But maybe something will kick in earlier and reject it.
 
-> > > Even with shell scripts, jq could do a much better job than pathspec=
-. If
-> > > you filter by pathspec, good luck trying that on extensions.
 > >
-> > You keep harping on extensions, but the reality of the matter is that =
-they
-> > are rarely interesting. I would even wager a bet that we will end up
-> > excluding them from the JSON output by default.
-> >
-> > Most of the times when I had to decode the index file manually in the
-> > past, it was about the regular file entries.
-> >
-> > There was *one* week in which I had to decode the untracked cache a bi=
-t,
-> > to the point where I patched the test helper locally to help me with t=
-hat.
-> >
-> > If my experience in debugging these things is any indicator, extension=
-s do
-> > not matter even 10% of the non-extension data.
+> > Can't you prepend "refs/heads/" to BRANCH_NAME to disambiguate?
 >
-> Again our experiences differ. Mine is mostly about extensions,
-> probably because I had to work on them more often. For normal entries
-> "ls-files --debug" gives you 99% what's in the index file already.
+> Yes, that is the kosher way for most commands.
 
-Like the device. And the ctime. And the file size. And the uid/gid. Is
-that what you mean?
+Some commands always prepend refs/heads/ to the <branch> argument you
+give it if I remember correctly. Or I think I accidentally made
+refs/heads/refs/heads/something once with some command (then hell
+ensued). If true, prepending refs/heads/ is not really foolproof.
 
-I don't know whether I missed a joke or not.
+> It gets a bit tricky for "checkout <branch-or-committish>" that
+> changes its behaviour (a local branch is checked out and the next
+> commit extends it, other committishes like tags and remote-tracking
+> branch tips are checked out on a detached HEAD), and has special
+> rules for a "${BRANCH_NAME}" that is both the name of a local branch
+> and something else.
 
-> > You don't need JSON if you want to debug things. That would be a lot o=
-f
-> > love lost, if debugging was your goal.
->
-> No, I did think of some other line-based format before I ended up with
-> JSON. I did not want to use it in the beginning.
+I think "git checkout --no-guess --no-detach <branch>" should only
+accept a branch (i.e. ref: refs/heads/<branch>). Dropping --no-detach
+should allow any ref, which interprets refs/heads/foo as an absolute
+ref, not as refs/heads/refs/heads/foo.
 
-Then why bother.
+> Hopefully (Duy Cc'ed) "git switch" would improve the situation.
 
-> The thing is, a giant table to cover all fields and entries in the
-> main index is not as easy to navigate, or search even in 'less'. And
-> the hierarchical structure of some extensions is hard to represent in
-> good way (at least without writing lots of code). On top of that I
-> still need some easy way to parse and post-process, like how much
-> saving I could gain if I compressed stat data. And the final nail is
-> json-writer.c is already there, much less work.
->
-> So JSON was the best option I found to meet all those points.
-
-Well, as I said: you're obviously dead-set to optimize this for debugging
-your own problems. The beauty of open source is that it can be turned into
-something of wider use.
-
-Ciao,
-Johannes
+"git switch" has slightly saner defaults, but with --guess being
+default to be friendlier to interactive usage, it's still not that
+much friendlier to scripts, unfortunately.
+--
+Duy
