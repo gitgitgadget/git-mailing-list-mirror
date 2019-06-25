@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DF021F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFD7D1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730279AbfFYNlc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 09:41:32 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39830 "EHLO
+        id S1730434AbfFYNla (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:41:30 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35007 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730847AbfFYNlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:41:22 -0400
-Received: by mail-ed1-f67.google.com with SMTP id m10so27236045edv.6
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:21 -0700 (PDT)
+        with ESMTP id S1726871AbfFYNlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:41:24 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w20so19619057edd.2
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=flz8AQf2YyWfeUF6PkCk1aqxzsb+TL0CnOz7yPbe5Ws=;
-        b=Lw7lXDSme24srlg/9hwV+bp2HI0dlQF19XE1h6WMLN81e2nx8XoHPniIURXv8QP1ih
-         o0oEx7UArWVPR6coyqBUs/LTv/uV5yKxFGLqyEV73dp/JFpHjBzCOZUkeEmnDNozxu0C
-         kR4fTPvQY8/xNnPwpuI1390dgGOqgHWiTTrKnQmUVkdajXrwSHCqKJlcddd0oKaR583I
-         SyeKdxRSW58lZh6q+s16/DoLDDm2pw+ZUdGzbJZfctu5UF3cfUCKzvibCi2TcFgXs7q0
-         sQJM6nIOdVC4VmSngVgCUXxArvcxcnjTF7K1RvFcopcJq7P88UKwXdI2jVpofvXGvRgf
-         EsIQ==
+        bh=P+Uh3OM2UyPjAqXRs0MwDF+mqy/zbc7X8AYuR/mZiNU=;
+        b=MGbqvh5pI9gn2olY8opW1WM1MDH9FoX/KbW/1De/L+SlRGcAAotYBlftbHV6MUw6Rs
+         6UMLAHZWr3TE6tKf3B9oOS6QP7qc/ag87v+Omq1/mm42oMvk8GWa04E525tyUN569DMY
+         xcn/TT56KUWn+UJ+Z501TKNLIBhJjVLqddQPLludkpLfLou6XsK2jM3r7VWKnMMnnedD
+         JmTBP+QpDl793xDZWepcUO7D+0dV7Ye7ydHA44XIEXYz/M0amjBKpzpLYgA2Qshz579F
+         pT8x0Ar5YF7Hmg5t8xhHeUKxGdvrbQ9M8skTlJX3uBroj7mKzRjpDtXxa/YM0Av7V2bT
+         h2nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=flz8AQf2YyWfeUF6PkCk1aqxzsb+TL0CnOz7yPbe5Ws=;
-        b=hZPyOqev9xF2Kzff5icftETlP+66G8S+0B5EYP0OJ3mvNyyBIIV7AwbMeFw1EUvmeW
-         cn4OhsrOlhU2Bapwrm9o4zPZLjzwaE/hL9DLm9Ovwb923wWv6hJVhVmlRC5+7acgKGRo
-         qdOJXlXJL/jj4nGYbVl6e2MA3nrM3lR5HY8LlzDuVAX65QK9LEMezeWvnfR7C4W3dr3O
-         aujTO1vkEnrb02cP2EWKhoXD68qhnWVxG7vlM8VwmZKAfTIiubQ7afhXrd9/bF27XiuT
-         urtqY+tbPX8dwEP97ztHsCdXI8sQs+0YPGPCAB5QKwU3UwDJh7hmJgCSi7l2YFVvRbQO
-         Uysw==
-X-Gm-Message-State: APjAAAUMED90VEE+uRHE5v88lgfJpI97KSUMWRX48ddEZaUrbkxN4+jb
-        mi0aY35hYQzGawsM7W01jdfY8dT5glM=
-X-Google-Smtp-Source: APXvYqynPCGhU+Ab31KsSG9WgwfHit2nb2FtzThfzIMnrM9rQjmCf+YRBVOZaMW0nulw8+Mm15dvVg==
-X-Received: by 2002:a17:906:944f:: with SMTP id z15mr25055248ejx.137.1561470080531;
-        Tue, 25 Jun 2019 06:41:20 -0700 (PDT)
+        bh=P+Uh3OM2UyPjAqXRs0MwDF+mqy/zbc7X8AYuR/mZiNU=;
+        b=idR03oAPFqhiHW0aFtu2zdJehvqi6e/Yh1dFSoAwv8bVKP8r1AHRh2wCcXqIvUU2Wh
+         kU4vhAZNO2VZXVCuFdhTV+HjR3UXluSkXHcExa7vfOTxiYs7b55MpwiAXmGjb53pZTFO
+         9C0tTJoCKuyeUyRjp/ojvFjBpXIG4cF9VetNtm9AB3kpBPGliGsL+z65039Z6B7rVY7i
+         6j51AuHnVdas3Hk3N0tYOdWqcwhlOIFzw/jkWqAsKdaLqSB1JhOy8EJnEBaiw+i8KhKK
+         qFpb5FK48pTpmzVaXprTxhJZYGyJjuafbFJB6ARknXtJymkRGFWK9akUHOlGvOKHfrQK
+         btVw==
+X-Gm-Message-State: APjAAAX1q2nnOuvSUkn2dEmILxIgmnKkadhBzgdixyg54NUATdtAJO0T
+        FSrpohT0oQ163RHr/noG3IQltgz7MyY=
+X-Google-Smtp-Source: APXvYqzrM4bNSqSqu/oN3jG7vx9wldWk206mZGN4GH2VO+wsnvnBcq5X3XuK89afpwtKFankBN+f3g==
+X-Received: by 2002:a50:86b7:: with SMTP id r52mr145425023eda.100.1561470082679;
+        Tue, 25 Jun 2019 06:41:22 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.19
+        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.21
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 25 Jun 2019 06:41:19 -0700 (PDT)
+        Tue, 25 Jun 2019 06:41:22 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v6 13/15] Remove fetch-object.{c,h} in favor of promisor-remote.{c,h}
-Date:   Tue, 25 Jun 2019 15:40:37 +0200
-Message-Id: <20190625134039.21707-14-chriscool@tuxfamily.org>
+Subject: [PATCH v6 15/15] Move core_partial_clone_filter_default to promisor-remote.c
+Date:   Tue, 25 Jun 2019 15:40:39 +0200
+Message-Id: <20190625134039.21707-16-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.229.ga13d9ffdf7.dirty
 In-Reply-To: <20190625134039.21707-1-chriscool@tuxfamily.org>
 References: <20190625134039.21707-1-chriscool@tuxfamily.org>
@@ -81,148 +81,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As fetch_objects() is now used only in promisor-remote.c
-and should't be used outside it, let's move it into
-promisor-remote.c, make it static there, and remove
-fetch-object.{c,h}.
+Now that we can have a different default partial clone filter for
+each promisor remote, let's hide core_partial_clone_filter_default
+as a static in promisor-remote.c to avoid it being use for
+anything other than managing backward compatibility.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile          |  1 -
- fetch-object.c    | 43 -------------------------------------------
- fetch-object.h    |  9 ---------
- promisor-remote.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 39 insertions(+), 54 deletions(-)
- delete mode 100644 fetch-object.c
- delete mode 100644 fetch-object.h
+ cache.h           | 1 -
+ config.c          | 5 -----
+ environment.c     | 1 -
+ promisor-remote.c | 5 +++++
+ 4 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 049bc8cfd4..9b0baa7239 100644
---- a/Makefile
-+++ b/Makefile
-@@ -880,7 +880,6 @@ LIB_OBJS += ewah/ewah_io.o
- LIB_OBJS += ewah/ewah_rlw.o
- LIB_OBJS += exec-cmd.o
- LIB_OBJS += fetch-negotiator.o
--LIB_OBJS += fetch-object.o
- LIB_OBJS += fetch-pack.o
- LIB_OBJS += fsck.o
- LIB_OBJS += fsmonitor.o
-diff --git a/fetch-object.c b/fetch-object.c
-deleted file mode 100644
-index eac4d448ef..0000000000
---- a/fetch-object.c
-+++ /dev/null
-@@ -1,43 +0,0 @@
--#include "cache.h"
--#include "packfile.h"
--#include "pkt-line.h"
--#include "strbuf.h"
--#include "transport.h"
--#include "fetch-object.h"
--
--static int fetch_refs(const char *remote_name, struct ref *ref)
--{
--	struct remote *remote;
--	struct transport *transport;
--	int original_fetch_if_missing = fetch_if_missing;
--	int res;
--
--	fetch_if_missing = 0;
--	remote = remote_get(remote_name);
--	if (!remote->url[0])
--		die(_("Remote with no URL"));
--	transport = transport_get(remote, remote->url[0]);
--
--	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
--	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
--	res = transport_fetch_refs(transport, ref);
--	fetch_if_missing = original_fetch_if_missing;
--
--	return res;
--}
--
--int fetch_objects(const char *remote_name, const struct object_id *oids,
--		  int oid_nr)
--{
--	struct ref *ref = NULL;
--	int i;
--
--	for (i = 0; i < oid_nr; i++) {
--		struct ref *new_ref = alloc_ref(oid_to_hex(&oids[i]));
--		oidcpy(&new_ref->old_oid, &oids[i]);
--		new_ref->exact_oid = 1;
--		new_ref->next = ref;
--		ref = new_ref;
+diff --git a/cache.h b/cache.h
+index e34b9e66d2..a4d7f84eeb 100644
+--- a/cache.h
++++ b/cache.h
+@@ -961,7 +961,6 @@ extern int grafts_replace_parents;
+ #define GIT_REPO_VERSION 0
+ #define GIT_REPO_VERSION_READ 1
+ extern int repository_format_precious_objects;
+-extern const char *core_partial_clone_filter_default;
+ extern int repository_format_worktree_config;
+ 
+ /*
+diff --git a/config.c b/config.c
+index 296a6d9cc4..317b226bc8 100644
+--- a/config.c
++++ b/config.c
+@@ -1344,11 +1344,6 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(var, "core.partialclonefilter")) {
+-		return git_config_string(&core_partial_clone_filter_default,
+-					 var, value);
 -	}
--	return fetch_refs(remote_name, ref);
--}
-diff --git a/fetch-object.h b/fetch-object.h
-deleted file mode 100644
-index 7bcc7cadb0..0000000000
---- a/fetch-object.h
-+++ /dev/null
-@@ -1,9 +0,0 @@
--#ifndef FETCH_OBJECT_H
--#define FETCH_OBJECT_H
 -
--struct object_id;
--
--int fetch_objects(const char *remote_name, const struct object_id *oids,
--		  int oid_nr);
--
--#endif
+ 	if (!strcmp(var, "core.usereplacerefs")) {
+ 		read_replace_refs = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 8855d2fc11..efa072680a 100644
+--- a/environment.c
++++ b/environment.c
+@@ -31,7 +31,6 @@ int warn_ambiguous_refs = 1;
+ int warn_on_object_refname_ambiguity = 1;
+ int ref_paranoia = -1;
+ int repository_format_precious_objects;
+-const char *core_partial_clone_filter_default;
+ int repository_format_worktree_config;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
 diff --git a/promisor-remote.c b/promisor-remote.c
-index 826890f7b8..92c4c12c1c 100644
+index 31d51bb50e..9bc296cdde 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -2,7 +2,45 @@
- #include "object-store.h"
- #include "promisor-remote.h"
- #include "config.h"
--#include "fetch-object.h"
-+#include "transport.h"
-+
-+static int fetch_refs(const char *remote_name, struct ref *ref)
-+{
-+	struct remote *remote;
-+	struct transport *transport;
-+	int original_fetch_if_missing = fetch_if_missing;
-+	int res;
-+
-+	fetch_if_missing = 0;
-+	remote = remote_get(remote_name);
-+	if (!remote->url[0])
-+		die(_("Remote with no URL"));
-+	transport = transport_get(remote, remote->url[0]);
-+
-+	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
-+	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
-+	res = transport_fetch_refs(transport, ref);
-+	fetch_if_missing = original_fetch_if_missing;
-+
-+	return res;
-+}
-+
-+static int fetch_objects(const char *remote_name,
-+			 const struct object_id *oids,
-+			 int oid_nr)
-+{
-+	struct ref *ref = NULL;
-+	int i;
-+
-+	for (i = 0; i < oid_nr; i++) {
-+		struct ref *new_ref = alloc_ref(oid_to_hex(&oids[i]));
-+		oidcpy(&new_ref->old_oid, &oids[i]);
-+		new_ref->exact_oid = 1;
-+		new_ref->next = ref;
-+		ref = new_ref;
-+	}
-+	return fetch_refs(remote_name, ref);
-+}
+@@ -5,6 +5,7 @@
+ #include "transport.h"
  
- static struct promisor_remote *promisors;
- static struct promisor_remote **promisors_tail = &promisors;
+ static char *repository_format_partial_clone;
++static const char *core_partial_clone_filter_default;
+ 
+ void set_repository_format_partial_clone(char *partial_clone)
+ {
+@@ -103,6 +104,10 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+ 	int namelen;
+ 	const char *subkey;
+ 
++	if (!strcmp(var, "core.partialclonefilter"))
++		return git_config_string(&core_partial_clone_filter_default,
++					 var, value);
++
+ 	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
+ 		return 0;
+ 
 -- 
 2.22.0.229.ga13d9ffdf7.dirty
 
