@@ -2,134 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A49A41F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 20:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8374F1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 21:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726447AbfFYUpG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 16:45:06 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62641 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726053AbfFYUpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 16:45:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 19CEA6E3CF;
-        Tue, 25 Jun 2019 16:45:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MgTB8/qSYRx3P1Lo1jBsosal9Ok=; b=a9Sad5
-        l/OqeQePmU2eCE+SfQ96rsqW8Gf9Xti8cFLOjTdUKnPnsNxR1yufN7dJzwgkm2nv
-        BBq5+kp8iq2yKeY1PUm7QfUrtrhus9xZXxNCxusSNG5z7azrir7gXkdqqQoRE+JR
-        jYIys62yiTZcOW9s90TwCPp80qNR/roARc64w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S4Uz/AqHORRuUUTt2Nd1fuMZzYi0vfvl
-        4wxg42DO+98+UQHcISukOIbduhVb0WBfVugs8Pp2nX/YdmWJ5FenIqn6JPk4rdad
-        0VSkTwZrNn64ZYLWmrl444C+qhL9KMyATv/1VjHMfbp+Qd1J8ePu+gccNuQTYucm
-        /GaxK6HQXeQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE3726E3CD;
-        Tue, 25 Jun 2019 16:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC6FB6E3CC;
-        Tue, 25 Jun 2019 16:44:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 3/3] status: do not report errors in sequencer/todo
-References: <pull.275.git.gitgitgadget@gmail.com>
-        <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
-Date:   Tue, 25 Jun 2019 13:44:55 -0700
-In-Reply-To: <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Tue, 25 Jun 2019 03:11:26
-        -0700 (PDT)")
-Message-ID: <xmqqo92le6ns.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726379AbfFYVfs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 17:35:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50624 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726037AbfFYVfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 17:35:47 -0400
+Received: (qmail 406 invoked by uid 109); 25 Jun 2019 21:35:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Jun 2019 21:35:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25758 invoked by uid 111); 25 Jun 2019 21:36:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 25 Jun 2019 17:36:38 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Jun 2019 17:35:45 -0400
+Date:   Tue, 25 Jun 2019 17:35:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Pugh, Logan" <Logan.Pugh@austintexas.gov>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "liu.denton@gmail.com" <liu.denton@gmail.com>
+Subject: Re: [2.22.0] difftool no longer passes through to git diff if
+ diff.tool is unset
+Message-ID: <20190625213545.GA23411@sigill.intra.peff.net>
+References: <20190620052125.GA12434@sigill.intra.peff.net>
+ <SN6PR09MB3248412C9E5AE197B65A8D878AE40@SN6PR09MB3248.namprd09.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1842B150-978A-11E9-883A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SN6PR09MB3248412C9E5AE197B65A8D878AE40@SN6PR09MB3248.namprd09.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jun 20, 2019 at 07:29:36PM +0000, Pugh, Logan wrote:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> commit 4a72486de9 ("fix cherry-pick/revert status after commit",
-> 2019-04-16) used parse_insn_line() to parse the first line of the todo
-> list to check if it was a pick or revert. However if the todo list is
-> left over from an old cherry-pick or revert and references a commit that
-> no longer exists then parse_insn_line() prints an error message which is
-> confusing for users [1]. Instead parse just the command name so that the
-> user is alerted to the presence of stale sequencer state by status
-> reporting that a cherry-pick or revert is in progress.
+> Thanks for the explanation. It sounds like I was under the incorrect 
+> assumption that I could use the difftool command the same way as the 
+> diff command. Part of my confusion could be blamed on the git-difftool 
+> documentation (https://git-scm.com/docs/git-difftool) which near the top 
+> states:
 
-I have to wonder what would happen when "git cherry-pick --continue"
-is given from such a stale state.  It would have to fail as it would
-not know the shape of the change to be replayed, no?  
+Well, it _is_ true that you can use it the same way. It's just that you
+need to configure it to use whatever 3rd-party tool you want (and if you
+do not want to configure a tool, then you are better off just using
+git-diff directly). It was only due to a bug/historical accident that it
+behaved just like git-diff in the no-index case (but not in the regular
+case -- AFAICT, that would have been broken for your script always).
 
-Is it easy to detect and say "there is an abandoned state file from
-stale cherry-pick" and optionally offer to remove it (as we have no
-chance of continuing anyway)?
+> My use case is a CLI program I've written that processes and then 
+> compares two arbitrary files using the git difftool apparatus as 
+> configured by the end user, leaving the choice to them whether to use 
+> the internal diff tool or an external tool.
+> 
+> Now, if I'm understanding correctly, I should not rely on the behavior 
+> of git difftool --no-index passing through to git diff. I could add 
+> another CLI switch and code path to my program that calls git diff 
+> directly instead of git difftool but the passthrough behavior seemed 
+> more elegant at the time.
+> 
+> Ideally, in my mind, git difftool should work as it says on the tin, as 
+> a straight up passthrough to git diff *unless* explicitly configured to 
+> use external tools (e.g. diff.tool and diff.guitool).
 
-Or is it likely that such an effort would end up being wasted, as...
+That does make some sense to me for your use case. But I'm worried it
+would be a worse experience for people new to difftool (they run it and
+scratch their heads why it does not do anything different, whereas now
+they get walked through an interactive configuration).
 
-> Note that we should not be leaving stale sequencer state lying around
-> (or at least not as often) after commit b07d9bfd17 ("commit/reset: try
-> to clean up sequencer state", 2019-04-16).
+I dunno. I do not use difftool myself, so I don't have strong opinions.
 
-...this already happened?
+In the meantime, I think you can probably switch behavior in your script
+by checking if the diff.tool config is set. It might be nice if difftool
+had a better way to query that without you having to know if it's
+configured. Or in your case I suppose even better would just be an
+option like "--if-not-configured-just-use-regular-diff". Then it would
+do what you want, without impacting users who do want the interactive
+setup.
 
-> Also avoid printing an error message if for some reason the user has a
-> file called `sequencer` in $GIT_DIR.
-
-I agree that it is not a good place for giving diagnostics, but
-getting ENOTDIR would be an indication that next time when the user
-wants to do a rebase, range pick or range revert, it would not work
-unless somebody removes that `sequencer` file, right?  Are our users
-sufficiently covered on that front (e.g. giving "we cannot do this
-operation as $GIT_DIR/sequencer is in the way. please remove that
-file" would be OK, but silently removing and possibly losing info we
-didn't even look at may be bad)?
-
-In any case, the "unable to open 'sequencer/todo'" you are removing
-with this patch was *not* about helping the issue above which is an
-unrelated tangent, so let me not be distracted by that ;-)
-
-> +test_expect_success 'status shows cherry-pick with invalid oid' '
-> +	mkdir .git/sequencer &&
-> +	test_write_lines "pick invalid-oid" >.git/sequencer/todo &&
-> +	git status --untracked-files=no >actual 2>err &&
-> +	git cherry-pick --quit &&
-> +	test_must_be_empty err &&
-> +	test_i18ncmp expected actual
-> +'
-> +
-> +test_expect_success 'status does not show error if .git/sequencer is a file' '
-> +	test_when_finished "rm .git/sequencer" &&
-
-In short, I was wondering what happens if we lose this line, and
-then we later had a command that needs to use .git/sequencer/todo or
-something.
-
-> +	test_write_lines hello >.git/sequencer &&
-> +	git status --untracked-files=no 2>err &&
-> +	test_must_be_empty err
-> +'
-> +
->  test_expect_success 'status showing detached at and from a tag' '
->  	test_commit atag tagging &&
->  	git checkout atag &&
+-Peff
