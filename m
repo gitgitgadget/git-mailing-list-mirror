@@ -2,100 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D7391F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 10:30:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D833F1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 10:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727702AbfFYKaT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 06:30:19 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:44279 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbfFYKaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 06:30:16 -0400
-Received: by mail-io1-f67.google.com with SMTP id s7so1976287iob.11
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 03:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=upC59MnyeFsHXzxMaAKnjwkTNNMh3eStMkIrBNDCN1o=;
-        b=ex+ZXHbpn6dvzKx0HMxSXvOnUlkEKy4QfnORHTAUnWolU6DwCqXV0mU8+gev7f30tZ
-         doq9UhztQFztwRk1rPAsTuEuZ9IZORoPwgKD9JXK5NzVXP+5lHVlzK1sXutNYPSNpRwB
-         DtCuPDVqNtDE024ZprZ8305GN6w7NveR5q2LE+BtGpZz7cDDUFmmx+f6ypnP5Ov4PCri
-         xEFurfUYxfWtBwiJ7vEzHmutZ/QcuGFA+tk4ZebqhiGASAExkLe6S14WKIxm/a0HFRTO
-         nEgL4Fos6V2J08UV41z32cDN44nJlQyD4MnMv5tXHX0IbWF7VmIUDm7SZ/RHz+2HJynY
-         37JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=upC59MnyeFsHXzxMaAKnjwkTNNMh3eStMkIrBNDCN1o=;
-        b=qrDWZohAII+KvbscgniBUZ0C2cQVXwqVtg5tc4bFeB0dhSd1GEACThBmwHmjcF2/mB
-         9w77T+nVJZGf6da4pM2TgD7FuS5176f83/rtC4G5m5QJPL9xl7t1W10GsP8mrLu0gm/E
-         59o6q3o5diJtdQye7xb5ajTirjydV7owmN+L0gUXsy7FJdCbqQLrFLJmej+BQofuFBfk
-         6WCz7vNKsN1lXSwuBaj7F8eQmEcvv7xcvUlgFePksF3orSR4d15SPY2HG1w3VehFu8Wo
-         0++jZBLlWcFaV90zJXKM1ljGRe9tIFB9IU2oxZ1K42NrzlJXJrxvRHidmOz/ih7vHFmC
-         uYVg==
-X-Gm-Message-State: APjAAAXsth9pgX4V8VRaxG2PrQ79Ph5j1Wx5R0aemBzDbbQM+s5b9aRz
-        nFgjldT8nmlIiiGCh9q7H4ZSY1SSP+gT7pqGoi2voA==
-X-Google-Smtp-Source: APXvYqx6OoVAnhw5zWj+EcgzBRutYysnrUOJZls6a3JE/yDRg2d40LySadEFpFvvXJIjJfGV4IWwnlpwRbAMFYixArI=
-X-Received: by 2002:a02:13c3:: with SMTP id 186mr45804138jaz.30.1561458615513;
- Tue, 25 Jun 2019 03:30:15 -0700 (PDT)
+        id S1729101AbfFYKt6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 06:49:58 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54725 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726521AbfFYKt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 06:49:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561459781;
+        bh=btcWs/TK+VsG1/714TwT+v4GBAx5bi7qXoyYfuWLQWg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=M+6Y8uFyGatcy6hmFZv1/LV3+C/c64dc0/9prEIBn57PBVa/GAM3JUDBGkwY/8Zg+
+         rGsG5Wp0frCxaTHSa2r6Hgo51ccRMDtqjgsQM3zqGzLeWS7UYbhWMWr68Y9MiozDiW
+         763WzKdjvchjakHoN95F3hT61vRBP+tBGPNI36/M=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoJDJ-1iCHoz3mvZ-00gEty; Tue, 25
+ Jun 2019 12:49:41 +0200
+Date:   Tue, 25 Jun 2019 12:50:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: vger vs GitGitGadget, was Re: [PATCH v3 1/1] t0001: fix on
+ case-insensitive filesystems
+In-Reply-To: <xmqqftnyhkyu.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906251147581.44@tvgsbejvaqbjf.bet>
+References: <pull.151.v2.git.gitgitgadget@gmail.com> <pull.151.v3.git.gitgitgadget@gmail.com> <1f0ceee8687e9032a7777f764b34b1c9ccc68f38.1561379363.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1906241938450.44@tvgsbejvaqbjf.bet>
+ <xmqqftnyhkyu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190624130226.17293-1-pclouds@gmail.com> <20190624130226.17293-6-pclouds@gmail.com>
- <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com>
-In-Reply-To: <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Jun 2019 17:29:49 +0700
-Message-ID: <CACsJy8BjhQD-g69dr-yDCycgfrHZ8xJLgjD=LanRUBxAN6=Zrg@mail.gmail.com>
-Subject: Re: [PATCH v2 05/10] split-index.c: dump "link" extension as json
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:xAeqGPY/9d4aRINHDvee8CMGI8kWJ/+kzxxkDiIQ/MeVqUMNdJx
+ zhLUweTaTq4yB8rLy9yDxPvGhGKmaF0AwflHyzKDoL3fF140OCzPPCTzjr5/QcK9kIWXlV1
+ ooPxI8POL2JVoSfXQwkCF1Z5E6HqdvFCpqbuczkRdhtIjrSLJDS6uIX3oIiOIMSp/KyhqzK
+ bI/K/zK0U4wELYZdqdPzg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Kg+mLs1FlSM=:UwTiKL1eF48UPxRazjldsr
+ c4643tDKzliYPymzSPQCQ1u3mELu2JfHcyyueKSqDpbuHP9FjNBWW1tq32TV/ViDY68lrr0xd
+ HA2j9PWCkOmSGBjW+hNa9XsnxeP17V4ujrNNn1LVCdKCLnxuES5lxJJykEr8mEBZaSFS+Qa+U
+ BKFFrLUWazudz5GvpqLVMQ7e1wO44gs7qrny6IPmtlP9QntWeL799lZ7SvMiQeNRx4Zqd1xRI
+ fN1HHwUcv1hWQczZfH/iudj1VrVEbT8jBL6XoAqqYM1MMfAIUXem5TYaU/9WeW6nHseYXj81s
+ igyka2QdiRvLv4W/Avrjp7/XF/dHxkaLUrPCXPJEyZGQGWNiC98pyz+wXcJVr9jQarrKcZBn0
+ pD6/JSdtcqWqrWcUHiWmiG9yQnfNIDEYkB07NhY0Y+p5fT1BP3eKy9UNX1QwCjlzohCpjKR3w
+ aHKXcQcVm8F7duxGBHZiiyFvR88TV3N9JmWw+zfA52+vH+n0zCOgB9JCgVpEvDoB8hBpcFSbH
+ c8L5W79CBn93fWrAcpgl7Ke8KdlwGDhKkGrNFfV2ELwjggyY6/JQ+mnPeShgJj1hVycjfvQmS
+ uXE/3+wouS8oqEYrshwFGZcAptRlgWifrjpK9DRCN+l2wK5YilezDCpnlhiJ78P/i657QgAPs
+ syxeDMNn8sr8VCPusAnbcd999Pd7/VreleH0aMomCL0ii89RLr93xS2ACGwj2myF7jTkLvxRF
+ YjJhb6yXzi2MgWiqt2AYbl9sJYnOULrYAfSM7/wRQr12kEd5NxIa6UWwnQPmuazRTHl1hCG1k
+ gu4pXlez42RNqo6FGEmtsg753YDEeWtKISLcyCOG/26A5XPzl/HBLhu1h8nVzQwdyOy7FBiAh
+ AEKggCqcGQXSM1cAox120apJHcXvswb4AnHEftESFhXI98Z19H2ynNZaS0aJkAbPKRKLDFAb5
+ DasJzvcZvTgM28ncChunV8LxiIwoynO3AeiImj+Pw/AHK5KtDI9cW
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 3:06 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> I'm curious how big these EWAHs will be in practice and
-> how useful an array of integers will be (especially as the
-> pretty format will be one integer per line).  Perhaps it
-> would helpful to have an extended example in one of the
-> tests.
+Hi Junio,
 
-It's one integer per updated entry. So if you have a giant index and
-updated every single one of them, the EWAH bitmap contains that many
-integers.
+On Mon, 24 Jun 2019, Junio C Hamano wrote:
 
-If it was easy to just merge these bitmaps back to the entry (e.g. in
-this example, add "replaced": true to entry zero) I would have done
-it. But we dump as we stream and it's already too late to do it.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > ---
+> >
+> > 	Again, re-sending, as something in the mail (my guess is the
+> > 	non-ASCII character in Martin's surname) seems to upset vger so
+> > 	much that it drops the mail unceremoniously.
+>
+> Hmph, but in the copy I am responding to, I can see non-ASCII
+> Martin's surname in the CC: header just fine, so vger may not
+> be at fault, perhaps?
 
-> Would it be better to have the caller of ewah_each_bit()
-> build a hex or bit string in a strbuf and then write it
-> as a single string?
+You can see the non-ASCII surname fine because you are responding to my
+reply, which I sent via Alpine.
 
-I don't think the current EWAH representation is easy to read in the
-first place. You'll probably have to run through some script to update
-the main entries part and will have a much better view, but that's
-pretty quick. If it's for scripts, then it's probably best to keep as
-an array of integers, not a string. Less post processing.
+The original mail was sent by GitGitGadget via nodemailer, using GMail's
+SMTP end point, and the fact that _I_ received it means that it was
+partially successful in delivering that mail.
 
-Another reason for not merging to one string (might not be a very good
-argument though) is to help diff between two indexes.
-One-number-per-line works well with "git diff --no-index" while one
-long string is a bit harder. I did this kind of comparison when I made
-changes in read-cache.c and wanted to check if the new index file is
-completely broken, or just slighly broken.
--- 
-Duy
+I can only assume that GMX or Alpine did something to the mail that made
+it look better to vger.
+
+*goes-to-unleash-the-power-of-investigation*
+
+So I have a theory now why vger regurgitated on that mail: it had the
+unquoted name brian m. carlson in the Cc: line.
+
+Expecting that this is the culprit, I opened
+https://github.com/gitgitgadget/gitgitgadget/pull/98 to fix that.
+
+Thanks,
+Dscho
