@@ -8,85 +8,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD641F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 10:11:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35361F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 10:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727990AbfFYKL0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 06:11:26 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46059 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727202AbfFYKL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 06:11:26 -0400
-Received: by mail-ed1-f65.google.com with SMTP id a14so26275873edv.12
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 03:11:25 -0700 (PDT)
+        id S1728098AbfFYKL2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 06:11:28 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40986 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727676AbfFYKL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 06:11:27 -0400
+Received: by mail-ed1-f67.google.com with SMTP id p15so26286611eds.8
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 03:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Ze68xgU7U4w8NN9Dt5exlQs24wHmEll8BzRsL7ONUAY=;
-        b=lY3Ne5vHB8sOZEMb0KmjfTV+sSoIslepuDpuveLF1AYok73k4Bsd04eRmkgf11Tf6A
-         Xsyzy9wj4D1fPYyOZB3KCz6FLOShtsUvi65dgHxoDgJTTOkt5w5LiWowFoEp4UhL2gsD
-         rwbS4A6ugTuecH5fsRdr17arGouNHnJoGWnVv5fvLCg3yrHWb8TL2MgBsrpXEX0cN928
-         PcGg7GwKK7GC0sQQpFu5sUfQz337Q3XgTDbsa/Y8qatXX8oM8rBvqb4H5/RT8ue16rVf
-         eumjFRlGvokq7GWxWXAQTLmKJW+ZArEoVTmt2BXaRsW8NzXfqK6x+m7HWD1j+W86VBxE
-         vI/Q==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/Pp0pOh24JeXCDwML+8Tat+zy/xp3jjpopYGA5b9S1s=;
+        b=PYUUPvmB8mKwRshZWlMQfu5Mj7egMWVTj/xtaN9YpBxgiVQVX4EZsAj4SKs9N/JNiC
+         qdq532Xbm8KA/KcjghW1KZK0sxwzb3bFblmkJJz8f/RDRLsuzi+ehdm2LAmPt+0e5eMH
+         yhyIL5kQUH+cMx1yJkI/tGlrQ8oDdZli7VRQRuEibUil4z+ETHQx69Nhg/iVC6G+tL7N
+         VYf0Rip4vO+GrjCJKHb8NFXKbrjnqgkGyr+wIC4NrJRjtbwtatboYHN/zHNJmiVFyArL
+         gGQnMhBXHwTVaYn8GHsQ9VHPkC0CArBJRxRQ6dvuaTOnlghkAIkW9OsC/dOTLISNiebQ
+         PVXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Ze68xgU7U4w8NN9Dt5exlQs24wHmEll8BzRsL7ONUAY=;
-        b=fme9t7wNmkNitRJCH10syHYHTGZg3OCWrcNiuqii0h4+ZePOVK2wK1gTWYUF6o20Wc
-         3N+XeSID108yWwCQllrkpDmz8jFmYQbtwupzdWanDHuMSZSG/bdrOzjQ98AmQ1Tc2sEo
-         5ZDSJzp+dV+9LJcAgtnbMETLCupzIcM86vMKqLJMw0klNyD4BnuAmFjotPVUgUDuUBI3
-         uj6q0GT8yj018EiX61hQ9ofqoQE/A2UGexqSCgxzRvpyrchoncUZ47hBHndJFUoxXCik
-         fBs6nv8TvoviskwWqGZdtJo8Oa7S9fDmBnwTWqO7nRL1hWczqup7xbmFbLC7QsENOwdX
-         3r/g==
-X-Gm-Message-State: APjAAAWH9gx1laUntdAP92aVpkvIe6DgCPoQpM7yJK0mVRV7trypVEl2
-        HS+UjqJ0yJl2RELDs2LJfxApo4dy
-X-Google-Smtp-Source: APXvYqzlLDC/u7Ytl5pOng9avqGZ8/YoVV/2RXpJ0EZvyMLHCichTWBfWiXC/L3sGn1x2Qq6jHUKfA==
-X-Received: by 2002:a17:906:6582:: with SMTP id x2mr13599751ejn.2.1561457484902;
-        Tue, 25 Jun 2019 03:11:24 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/Pp0pOh24JeXCDwML+8Tat+zy/xp3jjpopYGA5b9S1s=;
+        b=DpuGSlKHN5q0qjAtLK7OPSVmNLm/vsPg/NiotS9wzsnNFpVPyiHXuDpyrkl+TAWCUw
+         75SrYhG1kdvKPTnMxYEOyWFMjS2jCigHsZca3QvDwW82Vr/vhT9jwbfta2vt/YJVjyW5
+         GyJWsBTW/UG4JZONyobMmS/lHdMFluu03ag4Ho/KnBFkB8FitsDH23qm6aT2Js4pFewM
+         AEX+6XN/ilMBGKvmDHyPe6uzCTxqNJJuSF0afX6S6oxwX51r63ScHg55T88oeEHmnCCE
+         7ixcmAvjpGrIm9BLgwR5LzRVgkayU9SL3S6e6bcvVfJEcew2+CYINVJ8nrCXdTW6C/ym
+         yRbw==
+X-Gm-Message-State: APjAAAVDVHBAoJqamGvJOt5oFc9CUzSoBDeXz82nC9GBlfoNPm+6UsMg
+        ns2iIYmHyP+2hxzgOul4Fvd02kgm
+X-Google-Smtp-Source: APXvYqxD1szYvU1rKWVJzLMrVD1V8dkcW4bqg62zfdaFARCSTXf5wj/CnsATg9EUF6oKUe7IZ8PeVQ==
+X-Received: by 2002:a50:b7a7:: with SMTP id h36mr54532641ede.234.1561457485557;
+        Tue, 25 Jun 2019 03:11:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l38sm4615287eda.1.2019.06.25.03.11.23
+        by smtp.gmail.com with ESMTPSA id p15sm2367684ejb.6.2019.06.25.03.11.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 03:11:24 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 03:11:24 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 10:11:20 GMT
-Message-Id: <pull.275.git.gitgitgadget@gmail.com>
+        Tue, 25 Jun 2019 03:11:25 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 03:11:25 -0700 (PDT)
+X-Google-Original-Date: Tue, 25 Jun 2019 10:11:21 GMT
+Message-Id: <a5bede1cf9cba89c354779e559e19d7a2fffa1eb.1561457483.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.275.git.gitgitgadget@gmail.com>
+References: <pull.275.git.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/3] Wip/quieter sequencer status parsing
+Subject: [PATCH 1/3] sequencer: always allow tab after command name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we cannot parse the oid in the sequencer todo file do not show an error
-when running git status but instead report that a cherry-pick or revert is
-in progress. This addresses a confusing error message reported in 
-https://public-inbox.org/git/3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com/
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-These patches are based on maint
+The code that parses the todo list allows an unabbreviated command name
+to be followed by a space or a tab, but if the command name is
+abbreviated it only allows a space after it. Fix this inconsistency.
 
-Phillip Wood (3):
-  sequencer: always allow tab after command name
-  sequencer: factor out todo command name parsing
-  status: do not report errors in sequencer/todo
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- sequencer.c            | 43 +++++++++++++++++++++---------------------
- t/t7512-status-help.sh | 16 ++++++++++++++++
- 2 files changed, 37 insertions(+), 22 deletions(-)
-
-
-base-commit: b697d92f56511e804b8ba20ccbe7bdc85dc66810
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-275%2Fphillipwood%2Fwip%2Fquieter%C2%A0sequencer%C2%A0status%C2%A0parsing-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-275/phillipwood/wip/quieter sequencer status parsing-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/275
+diff --git a/sequencer.c b/sequencer.c
+index f88a97fb10..919e3153f5 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2100,7 +2100,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+ 			item->command = i;
+ 			break;
+-		} else if ((bol + 1 == eol || bol[1] == ' ') &&
++		} else if ((bol + 1 == eol || bol[1] == ' ' || bol[1] == '\t') &&
+ 			   *bol == todo_command_info[i].c) {
+ 			bol++;
+ 			item->command = i;
 -- 
 gitgitgadget
+
