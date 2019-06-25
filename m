@@ -2,87 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4861F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 22:28:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01B8B1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 23:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbfFYW22 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 18:28:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51196 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbfFYW22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 18:28:28 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5330016607B;
-        Tue, 25 Jun 2019 18:28:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=c04Y2/93bMDoRi/ITxrH7a8hD/Q=; b=oSzlw1
-        ffrxMQsuG6rALvCDI7OwNzenK4VWNeFqa6XFuKLfUApBsOWefXWm4OS6c1JncSfd
-        bSB6VzgrRCA7xw1CJXG43vkGo++AMmMHuycj1sIgjUpU9jo0trpBzksBwusLxLwI
-        00IaNmHS00Q7t2kOa6hyLuxgritdVlPbvOkJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dTBChnPgBXOh3xrYgORvItIJnQeAOrgM
-        aKIZTxPkMALBmiO6RDQgsNKEEMTe31nEtZi54fCuc6OngWI6y3wfEd9ScTXG3bzA
-        0/KnJtu9LEE+rs5bjA5uerGV/PmmSKh9vAlOmeisUL6TiFTf6hYHUtFUCa5/RgNa
-        0EmFQXEB5ms=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B64916607A;
-        Tue, 25 Jun 2019 18:28:26 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B25FC166079;
-        Tue, 25 Jun 2019 18:28:25 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 01/10] ls-files: add --json to dump the index
-References: <20190624130226.17293-1-pclouds@gmail.com>
-        <20190624130226.17293-2-pclouds@gmail.com>
-        <nycvar.QRO.7.76.6.1906251142580.44@tvgsbejvaqbjf.bet>
-Date:   Tue, 25 Jun 2019 15:28:24 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1906251142580.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 25 Jun 2019 11:44:53 +0200 (CEST)")
-Message-ID: <xmqqk1d9e1vb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726307AbfFYXJL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 19:09:11 -0400
+Received: from mail-eopbgr840089.outbound.protection.outlook.com ([40.107.84.89]:16293
+        "EHLO GCC01-DM2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726287AbfFYXJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 19:09:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cityofaustin.onmicrosoft.com; s=selector2-cityofaustin-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eHZ8rKajSS24g4TwwSITWBEcCH124yTSRUzOihrGhZU=;
+ b=My631Qvu9KVwjU5BgjNHrZLbR1eE4Bq28o27BS4xREwgfFY34qnG4mOweqh527AW73ZJmVmpEVytLzyZmTjwvTZ2KGAmxz/3ulQ9QCtxBNoapDBR1sKkiqQCsyG8ZXdviiYi0+AAKlLsrXOkArBf+LmdMsuaT7aNuXNzarUOX+o=
+Received: from BL0PR0901MB4466.namprd09.prod.outlook.com (10.255.69.16) by
+ BL0PR0901MB4465.namprd09.prod.outlook.com (52.135.45.82) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2008.13; Tue, 25 Jun 2019 23:09:08 +0000
+Received: from BL0PR0901MB4466.namprd09.prod.outlook.com
+ ([fe80::f4a9:9781:26fa:622b]) by BL0PR0901MB4466.namprd09.prod.outlook.com
+ ([fe80::f4a9:9781:26fa:622b%2]) with mapi id 15.20.2008.017; Tue, 25 Jun 2019
+ 23:09:08 +0000
+From:   "Pugh, Logan" <Logan.Pugh@austintexas.gov>
+To:     "peff@peff.net" <peff@peff.net>
+CC:     "Pugh, Logan" <Logan.Pugh@austintexas.gov>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "liu.denton@gmail.com" <liu.denton@gmail.com>
+Subject: Re: [2.22.0] difftool no longer passes through to git diff if
+ diff.tool is unset
+Thread-Topic: [2.22.0] difftool no longer passes through to git diff if
+ diff.tool is unset
+Thread-Index: AdUm+T+1c7ctjjbIR+WEKBBEplAQZw==
+Date:   Tue, 25 Jun 2019 23:09:08 +0000
+Message-ID: <BL0PR0901MB4466FF7338C085ADBBF594898AE30@BL0PR0901MB4466.namprd09.prod.outlook.com>
+References: <20190625213545.GA23411@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Logan.Pugh@austintexas.gov; 
+x-originating-ip: [162.89.0.59]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2719c141-f41e-4437-fb7a-08d6f9c2208a
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BL0PR0901MB4465;
+x-ms-traffictypediagnostic: BL0PR0901MB4465:
+x-microsoft-antispam-prvs: <BL0PR0901MB44658E71AFFC385FAE4889938AE30@BL0PR0901MB4465.namprd09.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0079056367
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(39860400002)(136003)(366004)(376002)(346002)(396003)(55674003)(51444003)(189003)(199004)(14454004)(186003)(71190400001)(71200400001)(52536014)(76116006)(66446008)(66556008)(64756008)(25786009)(66476007)(66946007)(476003)(6916009)(73956011)(74316002)(486006)(5660300002)(7736002)(478600001)(33656002)(446003)(72206003)(66066001)(256004)(305945005)(316002)(54906003)(68736007)(8676002)(81166006)(81156014)(3846002)(6116002)(4326008)(8936002)(2351001)(1730700003)(55016002)(86362001)(5640700003)(53936002)(229853002)(6436002)(2501003)(9686003)(2906002)(6246003)(26005)(7696005)(76176011)(102836004)(99286004)(6506007);DIR:OUT;SFP:1101;SCL:1;SRVR:BL0PR0901MB4465;H:BL0PR0901MB4466.namprd09.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: austintexas.gov does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: o40+NLzMdp5knj3eibR5sdCP91+45zvN/F2fE3NYCiyUcGbqpiYC4H57hERRL95RUWTWa1TlXwjJ58g6zf+3kdkaWF2GRO4ISuu5wmpqABijar3mfJm4Nj5Z2UD4ucBq3KZ8P4lRxgBIewmj2w3T4YEqOluyPkAwMaGW+7C9y27cOZKqqDpW2bDPBwv9dEYN5nWXz7ktSnMXo2ExIh4kwkRi7O+U40ZnwIFce9QfoMihK7Iqn8VJf6eAeYAIvH0cf5ZYwwR2vyNzDXYZ2rGqoNWTfhPX66iB2GbFDkzmYlgAyw+fNWer42WlIDd+MFzq5sp0w9CCU3eDhXwV1Yrb/hnREvLTcYwuZEoaxL66u8oIbzs8LEzCB+F7WTL1KyBgkXYTtvo6Ud8NvV/PIWeyAz4ICeRILGT/4aWHXPna9nU=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8C60D860-9798-11E9-A438-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-OriginatorOrg: austintexas.gov
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2719c141-f41e-4437-fb7a-08d6f9c2208a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jun 2019 23:09:08.3634
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5c5e19f6-a6ab-4b45-b1d0-be4608a9a67f
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Logan.Pugh@austintexas.gov
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR0901MB4465
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Well, it _is_ true that you can use it the same way. It's just that you
+> need to configure it to use whatever 3rd-party tool you want (and if you
+> do not want to configure a tool, then you are better off just using
+> git-diff directly). It was only due to a bug/historical accident that it
+> behaved just like git-diff in the no-index case (but not in the regular
+> case -- AFAICT, that would have been broken for your script always).
 
->> +		echo 's/\("'$name'":\) [0-9]\+/\1 <number>/' >>filter.sed
->
-> This does not do what you think it does, in Ubuntu Xenial and on macOS:
->
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=11408&view=ms.vss-test-web.build-test-results-tab&runId=27736&paneView=debug&resultId=105613
->
-> The `\1` is expanded to the ASCII character 001. Therefore your test cases
-> fail on almost all platforms.
->
-> Funnily enough, they pass on Windows...
+Yes, it would seem that I had only stumbled upon the broken behavior=20
+because of my --no-index use case, but at least the inconsistency is fixed.
 
-bash, dash and /bin/echo behave differently given 
+> That does make some sense to me for your use case. But I'm worried it
+> would be a worse experience for people new to difftool (they run it and
+> scratch their heads why it does not do anything different, whereas now
+> they get walked through an interactive configuration).
 
-    $ echo 'foo \1 bar'
+That is a fair point. UX matters even for CLI programs. Prior to it=20
+being fixed, I myself was confused as to why I was getting a git-diff=20
+output when trying to use an external tool with git-difftool but hadn't=20
+configured it correctly. At least now there is some feedback when the=20
+configuration is invalid.
 
-some 'echo' suffer from the "\<n>" interpolation.  Some don't.
+> In the meantime, I think you can probably switch behavior in your script
+> by checking if the diff.tool config is set. It might be nice if difftool
+> had a better way to query that without you having to know if it's
+> configured.
 
-I think your spelled-out version downthread (except for stepping out
-of BRE which would break your sed script, as you realized) would be
-a much readable alternative.
+What I ended up doing in my app was just requiring the user to be=20
+explicit (via separate arguments) about whether they wanted to use=20
+git-diff or git-difftool. My app also accepts additional arguments that=20
+get passed through to git-diff/difftool and I didn't want to have to=20
+check those in addition to git-config. I think that would have been=20
+significantly more complex to implement.
 
-Thanks.
+> Or in your case I suppose even better would just be an
+> option like "--if-not-configured-just-use-regular-diff". Then it would
+> do what you want, without impacting users who do want the interactive
+> setup.
+
+If such an option was considered I would be in favor of it. Maybe call=20
+it "--no-tutorial" or perhaps "--diff-fallback".
+
+But having fixed my app, I'm content with the status quo too, now.
+
+Thanks,
+
+Logan
