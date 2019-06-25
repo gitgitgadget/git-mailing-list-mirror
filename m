@@ -8,144 +8,97 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D0E51F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC8ED1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:26:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729889AbfFYNZa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 09:25:30 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53646 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727070AbfFYNZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:25:30 -0400
-Received: by mail-wm1-f65.google.com with SMTP id x15so2824856wmj.3
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:25:28 -0700 (PDT)
+        id S1729744AbfFYN04 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:26:56 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:47091 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726916AbfFYN04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:26:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n4so17833202wrw.13
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UMA+zDl5WVxKxfQwW+K0o4wfl2enAzs+H1Gt296h2mU=;
-        b=BOHFkq72GcawtmdyJ1joySJbziV/nAD+Pp5zMWh0dn32ZvaNHA8GRrNwQqOOWF9mnZ
-         C8rW4TGVfM+21+8RgHKnVFjjxD84Ms+VGrM7onv0TV9+2qj5+Ev44Kbq94QLc1jjS1ie
-         QLBE1gmIOVEPzihBNvMG6MOIuo4J3pSiviZx+ff3XqyqSGb9dijJdWolxRQvmC2UC8tt
-         DIDHwIpajMpjiqgi81EluwGGn0y5G/JIQ7+Su5mw3N/XxMQyegE8LqG/nJB+E/mNimxf
-         g8KH7IO0nK26Cp5q9PSA+UM7xdKghi6cNUGL7g90qAF24t0UJofjMj6ngAGCPmbIMM4R
-         mwHg==
+        bh=PP5CjdXBmcHEEtCX+W/4tCQfmimozy5XJoAVUyn4c0I=;
+        b=OHV0KbLq0psDlqEz1qkuKGX2aJfXovACfwQeU4FlDOtFn050ld6NzsDS9vCIVTQ7j3
+         6r1gz0W6BNVlbt8Z5/HOAAlTwcLV/kt7G82QYG3XCo0Y2omAm3pa1x/37Fsp1NsjomPz
+         GorpxhOkoKPt6iQwElkSbHkJoDTNYMN13EhTrXinGS4r8jSyDyG0HjGSijbKzhbpgckn
+         tH10EVJa1jbUs6kaChcKjJfGAomlPwjVsJFEcspcgbCtzos7pgHT4weLyqEACyJUx9vG
+         T18XtSnrSWQLJ7ipKMGSlmZIpv/DsdCuqOT+vu7Kct7dIC5jkwXikxsnNlZqDl1AmQji
+         GhLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UMA+zDl5WVxKxfQwW+K0o4wfl2enAzs+H1Gt296h2mU=;
-        b=qPVyvR+4+5im3jfrYaSyNbL6rbm5RGpad4eRrv18P64tGeMo2M8M+gD3Pu6IIbg4Xn
-         mF7CW2gyUUMKgvX5p7RO4XEeBZrfxZVeKQPt2NvUVW8PNGEZYTcH5mxlwEaCX0mq8R1l
-         owRL4AEpls846uVP0PbLa0VdgzVMSYftAzUAIfVVNv/EVRsxXGmYLSOU6+mW0XpxZeEc
-         EswbBtX2uOT9l92cRcvsCMsyh4NMvood+t2LnvLFNSZ5cxDZoTsy7F+3iyii9wO23GPh
-         QBbprG8GD2qNSRbmZVYyVVELdSdv+zQX+WZJlmRSS1tbA5OuyYmvzs2aRBEhDDJq9e1d
-         FiFQ==
-X-Gm-Message-State: APjAAAXywjnmGegWKjUlY0cZ/NYGef//u9pP7Xn+0aLoAxKIEx9KnOMo
-        SHYs8pgYqUKY9PCddC79L4n7L/oFAKM=
-X-Google-Smtp-Source: APXvYqy+CD6xCep/jVX1C0zhIh/Ra6S0wKDYeZY/qbUp+0YGW75jsp5MXyMnEaftiHrVdNMcYyibfQ==
-X-Received: by 2002:a1c:c6:: with SMTP id 189mr11381851wma.112.1561469127999;
-        Tue, 25 Jun 2019 06:25:27 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=PP5CjdXBmcHEEtCX+W/4tCQfmimozy5XJoAVUyn4c0I=;
+        b=H64HFBiqxcEZuBiXXJiYCPfRpzRNVb1Bo2iwYbVBVvMcXDYsaVvcjcma3WA4U4oe/K
+         taYtTnDTYCzq7+g5wIJKWTJMK3VL/pUKuHv4INXiIl3khmmK1S/j+RK77V6AvpkdcKHC
+         JtpUto2GmuQWUmyhgtwYY3VkoOt3std+NBXCB6zxB4oUowWFhXInS+tdBjXpuvN+xVBp
+         w5Nhp0+bE7mZ1r/h1cCAVuyufnz5JOGlE6y2HUwmou/bRJin658mOXzLsWVoTAAhz+Gf
+         NJ9cqooCxkm8AKUs9d8gdfmCVEEhhnXrYOaA3Gpx7w2ZpvhLKnzw6rkKdweJyvpX2OQH
+         c7rg==
+X-Gm-Message-State: APjAAAWCiATDA6qb3Tej0TDAGACchTofknFkoMCptoGixJZ/sIBVX2nr
+        BeFYDouT6HZ0lD5htHGZw4w=
+X-Google-Smtp-Source: APXvYqwaJl/hN7X3mP+XxKjEfCcoXk1tN3fGGO38gMjMbSgGvWcHutwXoYj8/PkUGRJzGp9/cv/SSg==
+X-Received: by 2002:adf:9003:: with SMTP id h3mr34925355wrh.172.1561469214913;
+        Tue, 25 Jun 2019 06:26:54 -0700 (PDT)
 Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id j189sm3134116wmb.48.2019.06.25.06.25.26
+        by smtp.gmail.com with ESMTPSA id t15sm12065596wrx.84.2019.06.25.06.26.54
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 06:25:27 -0700 (PDT)
-Subject: Re: Git status parse error after v.2.22.0 upgrade
+        Tue, 25 Jun 2019 06:26:54 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/3] Wip/quieter sequencer status parsing
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.275.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     aleksandrs@ledovskis.lv,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Espen Antonsen <espen@inspired.no>, git@vger.kernel.org
-References: <3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com>
- <nycvar.QRO.7.76.6.1906112127420.789@QRFXGBC-DHN364S.ybpnyqbznva>
- <38b0f33a-1da1-4231-802e-ae14d9843ad2@www.fastmail.com>
- <nycvar.QRO.7.76.6.1906122046400.789@QRFXGBC-DHN364S.ybpnyqbznva>
- <20190613093023.GA3919@ariake.ledovskis.lv>
- <xmqqr27xwjwj.fsf@gitster-ct.c.googlers.com>
- <20190613162432.GA12128@sigill.intra.peff.net>
- <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
-Message-ID: <82f4aa37-51fa-4d1a-8221-d6dd37113c70@gmail.com>
-Date:   Tue, 25 Jun 2019 14:25:25 +0100
+Message-ID: <21a27493-220d-3c4c-63c0-7ffe60e19c49@gmail.com>
+Date:   Tue, 25 Jun 2019 14:26:53 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
+In-Reply-To: <pull.275.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/06/2019 18:43, Phillip Wood wrote:
-> On 13/06/2019 17:24, Jeff King wrote:
->> On Thu, Jun 13, 2019 at 09:05:16AM -0700, Junio C Hamano wrote:
->>>
->>> Two issues "the sequencer" folks may want to address are
->>>
->>>   (1) make the one that reads an irrelevant/stale 'todo' file more
->>>       careful to ignore errors in such a file;
->>>
->>>   (2) make the sequencer machinery more careful to clean up after it
->>>       is done or it is aborted  (for example, "git reset --hard"
->>>       could remove these state files preemptively even when a rebase
->>>       is not in progress, I would think).
->>>
->>> I think we already had some patches toward the latter recently.
->>
->> Maybe I am not understanding it correctly, but do you mean in (2) that
->> "git reset --hard" would always clear sequencer state?
-> 
-> I think the commit Junio is referring to is
-> b07d9bfd17 ("commit/reset: try to clean up sequencer state", 2019-04-16)
-> which will only remove the sequencer directory if it stops after the
-> pick was the last one in the series. The idea is that if cherry-pick
-> stops for a conflict resolution on the last pick user commits the result
-> directly or run reset without running `cherry-pick --continue`
-> afterwards the sequencer state gets cleaned up properly.
-> 
->> That seems
->> undesirable to me, as I often use "git reset" to move the head around
->> during a rebase. (e.g., when using "rebase -i" to split apart I commit,
->> I stop on that commit, "git reset" back to the parent, and then
->> selectively "add -p" the various parts).
->>
->> Direction (1) seems quite sensible to me, though.
-> 
-> Now that we try harder to clean up the sequencer state I wonder if that
-> would just cover up bugs where the state has not been removed when it
-> should have been.
-
-When I wrote that it hadn't dawned on me that if there is an error the 
-status will not tell the user that a cherry-pick is in progress which is 
-what we really want so they are alerted to the stale sequencer state. 
-I've posted a series [1] to address this (sadly gitgitgadget wont let me 
-post it on this thread).
+Please ignore the 'Wip' in the title, I forget to edit it on gitgitgadget
 
 Best Wishes
 
 Phillip
 
-[1] 
-https://public-inbox.org/git/pull.275.git.gitgitgadget@gmail.com/T/#mf57a4ab95ba907fbf2d06ec64e9b676db158eace
-
-
-> That can lead to unpleasant problems if the user
-> aborts a single revert/cherry-pick when there is stale sequencer state
-> around as it rewinds HEAD to the commit when the stale
-> cherry-pick/revert was started as explained in the message to b07d9bfd17
-> ("commit/reset: try to clean up sequencer state", 2019-04-16)
+On 25/06/2019 11:11, Phillip Wood via GitGitGadget wrote:
+> If we cannot parse the oid in the sequencer todo file do not show an error
+> when running git status but instead report that a cherry-pick or revert is
+> in progress. This addresses a confusing error message reported in
+> https://public-inbox.org/git/3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com/
 > 
-> If we do want to do something then maybe teaching gc not to collect
-> commits listed in .git/sequencer/todo and
-> .git/rebase-merge/git-rebase-todo would be useful.
+> These patches are based on maint
 > 
-> Best Wishes
+> Phillip Wood (3):
+>    sequencer: always allow tab after command name
+>    sequencer: factor out todo command name parsing
+>    status: do not report errors in sequencer/todo
 > 
-> Phillip
+>   sequencer.c            | 43 +++++++++++++++++++++---------------------
+>   t/t7512-status-help.sh | 16 ++++++++++++++++
+>   2 files changed, 37 insertions(+), 22 deletions(-)
 > 
->> -Peff
->>
+> 
+> base-commit: b697d92f56511e804b8ba20ccbe7bdc85dc66810
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-275%2Fphillipwood%2Fwip%2Fquieter%C2%A0sequencer%C2%A0status%C2%A0parsing-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-275/phillipwood/wip/quieter sequencer status parsing-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/275
 > 
