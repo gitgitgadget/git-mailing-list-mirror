@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6106F1F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39D221F4BC
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730018AbfFYNlP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 09:41:15 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38422 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727770AbfFYNlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:41:12 -0400
-Received: by mail-ed1-f66.google.com with SMTP id r12so27259620edo.5
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:11 -0700 (PDT)
+        id S1727338AbfFYNlT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:41:19 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45416 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730220AbfFYNlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:41:18 -0400
+Received: by mail-ed1-f68.google.com with SMTP id a14so27178719edv.12
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v7xYUgFCv1yB8odZItBcl+uRJGhBZUO/PWSuRmjzAqI=;
-        b=uMlu8z7AR8bhTad0frCdbijRenOyV+Eyq9lEjt5lt6ov64VBCTVfzcHdFgh0TSCYVt
-         l4MBcJfQycICgFv8kIJe/sdQU4QT5aOnw1Y3XbecCuBzPOivf+OKHR1Q5YeTFyVrIy7y
-         C1pCgP4OHe5pfogrFzqOxLbCFUpG0RauETzmoPFXoL4YkNM1OMiYY4pHSEEl/ovTiHhn
-         IOhccxsIeIpI6S8IosEcJUIsYMBFwbM/DJ+5dErV5AGiSuknrXSSE7+47ZCfQjFddyh+
-         6v0EsxAfoFsf0+eeXJrA+mJMPj43M86bqY26PPnkuQ4QQ2BW+87j1Lm2BXAiqG07boAz
-         H0cQ==
+        bh=hQ6bGiqz4a2cNG6935V15lPG6hJOhxhpuDE2K4gYTHc=;
+        b=N3/uKG0/H6psUt7bC0JR5irI5meP1JovrG+8wu+lmdw5l/hfnTFWD97gj0nHntWXZR
+         X54i+9Bxf+s7+F0rUQqUqn0WFLwQw5D1m3TagrjAUkQ+xhrxDtKoc+xO6Dar8sq1E2/4
+         bqnBMmgLGvuxCv+Ld52glFSXO6nfk53e6Cb0LDKhkoijWrhKiwVv2mx89+gb9I63bMlx
+         0vXftLfkmGtgk5IcmZgC4sWCYxv+j1XHJtstu66JJ9tFnUsWloW4xv/EkRVZYZd9QskX
+         PhLt3I9rOPjRlkP66FfZlVGvVRI3Z3e03hxWsMoiX0ojm1DIbXzfB9FZCaywWVlSWGee
+         pmcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v7xYUgFCv1yB8odZItBcl+uRJGhBZUO/PWSuRmjzAqI=;
-        b=TBoe3374W5R8m7GDpNJC22azBmQhPnnAadFc1nsS5lhKr2rgy3PcQhjGrHVeMSPKoc
-         aSN2hvnXao52dDjV9MgLbq+jjXlR3AoQnEa2lP0i7ZhuwHfYpEfH1FIUi+DnxNf8SUhs
-         lMyYX8hdID3D5A3ccbB92n07nnVfVkujb2P2rvCQufO8cmPhz94Jz3n5cY+UW+D/VK+R
-         sthNK/f9733M+3YcMOTJwTvUP3WebmGFJSM6oV0sOv6yXjXCtCtIWbSWWzReQ7wauTMd
-         6X9BqBv9c84Z+PWLLzSUjjYFRPl1ZT8CN78eBMjSDAcoSypSXHLXKFUWqYnuSvP8RiQ2
-         gfnQ==
-X-Gm-Message-State: APjAAAV4DhJEZiLt1raAWoRVMiuYN1Ez5iOK/fRlI6wtxD0nsXf53xyK
-        J9Os2Dc4vemM3D5T7nz3Y/Z31Ac9k7k=
-X-Google-Smtp-Source: APXvYqzWKrg4/dhe8G0L3R7sWX4+ttwyAed8KASazyLg7IaCJv7RA38PADNaHve9Ac5VYaxzCnnENQ==
-X-Received: by 2002:a50:fd0c:: with SMTP id i12mr82974221eds.55.1561470070138;
-        Tue, 25 Jun 2019 06:41:10 -0700 (PDT)
+        bh=hQ6bGiqz4a2cNG6935V15lPG6hJOhxhpuDE2K4gYTHc=;
+        b=rJCIQcWi8wm7v9u8tNosBZYpn/GX85kqsc0YXkwRUulLj2fBM/9/3D//FbzGQuq67S
+         pcNDhqbVaxtosznNcSkG3E5s8R0unFNr9BHkkP6NNWqzZAJB6PlJYH9v09kcqY960hF5
+         IvIHadD8cp6pERLz/KafTZoZFIQAy1CP7P9kHJxtwqFGazEZXMmEe5uBdZGgLvqWhfpk
+         S2PJNHtpV0zXDnHWeaXfoA6RhuENkt9tlcidKN51aFqI+VR1AC0pGvjq8Gc+OTgyKgby
+         g/VugWvBnUgdlE9UVDtWkdQwyP05/v6QBjqdsjsQ7GadmmnrDmXN/+qYG3YEhS0M+2aL
+         vPaQ==
+X-Gm-Message-State: APjAAAXYBPE2jzFqwmn3+QtRjhK/v9IhihXMXmEn3nS5gxxA0V+ikxfp
+        ovUghQGL4WZfTZCtv8JuwEEeV2yjE18=
+X-Google-Smtp-Source: APXvYqyEN0zFPXFgRoW7vvV+m12kV4cArMJ62Wn2g0w1D+jQvxDpbFauGmKTQEXZjFUz/Eelbp/XGw==
+X-Received: by 2002:a17:906:158c:: with SMTP id k12mr25643172ejd.83.1561470076012;
+        Tue, 25 Jun 2019 06:41:16 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.08
+        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.15
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 25 Jun 2019 06:41:09 -0700 (PDT)
+        Tue, 25 Jun 2019 06:41:15 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,11 +67,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Beat Bolli <dev+git@drbeat.li>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 04/15] promisor-remote: implement promisor_remote_get_direct()
-Date:   Tue, 25 Jun 2019 15:40:28 +0200
-Message-Id: <20190625134039.21707-5-chriscool@tuxfamily.org>
+        Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH v6 09/15] builtin/fetch: remove unique promisor remote limitation
+Date:   Tue, 25 Jun 2019 15:40:33 +0200
+Message-Id: <20190625134039.21707-10-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.229.ga13d9ffdf7.dirty
 In-Reply-To: <20190625134039.21707-1-chriscool@tuxfamily.org>
 References: <20190625134039.21707-1-chriscool@tuxfamily.org>
@@ -82,123 +81,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+As the infrastructure for more than one promisor remote
+has been introduced in previous patches, we can remove
+code that forbids the registration of more than one
+promisor remote.
 
-This is implemented for now by calling fetch_objects(). It fetches
-from all the promisor remotes.
-
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Helped-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 67 +++++++++++++++++++++++++++++++++++++++++++++++
- promisor-remote.h |  5 ++++
- 2 files changed, 72 insertions(+)
+ builtin/fetch.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index c249b80e02..b79a84ce3a 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -1,6 +1,8 @@
- #include "cache.h"
-+#include "object-store.h"
- #include "promisor-remote.h"
- #include "config.h"
-+#include "fetch-object.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 13d8133130..5657d054ec 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1465,26 +1465,16 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 		return;
  
- static struct promisor_remote *promisors;
- static struct promisor_remote **promisors_tail = &promisors;
-@@ -90,3 +92,68 @@ int has_promisor_remote(void)
- {
- 	return !!promisor_remote_find(NULL);
- }
-+
-+static int remove_fetched_oids(struct repository *repo,
-+			       struct object_id **oids,
-+			       int oid_nr, int to_free)
-+{
-+	int i, remaining_nr = 0;
-+	int *remaining = xcalloc(oid_nr, sizeof(*remaining));
-+	struct object_id *old_oids = *oids;
-+	struct object_id *new_oids;
-+
-+	for (i = 0; i < oid_nr; i++)
-+		if (oid_object_info_extended(repo, &old_oids[i], NULL,
-+					     OBJECT_INFO_SKIP_FETCH_OBJECT)) {
-+			remaining[i] = 1;
-+			remaining_nr++;
-+		}
-+
-+	if (remaining_nr) {
-+		int j = 0;
-+		new_oids = xcalloc(remaining_nr, sizeof(*new_oids));
-+		for (i = 0; i < oid_nr; i++)
-+			if (remaining[i])
-+				oidcpy(&new_oids[j++], &old_oids[i]);
-+		*oids = new_oids;
-+		if (to_free)
-+			free(old_oids);
-+	}
-+
-+	free(remaining);
-+
-+	return remaining_nr;
-+}
-+
-+int promisor_remote_get_direct(struct repository *repo,
-+			       const struct object_id *oids,
-+			       int oid_nr)
-+{
-+	struct promisor_remote *r;
-+	struct object_id *remaining_oids = (struct object_id *)oids;
-+	int remaining_nr = oid_nr;
-+	int to_free = 0;
-+	int res = -1;
-+
-+	promisor_remote_init();
-+
-+	for (r = promisors; r; r = r->next) {
-+		if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
-+			if (remaining_nr == 1)
-+				continue;
-+			remaining_nr = remove_fetched_oids(repo, &remaining_oids,
-+							 remaining_nr, to_free);
-+			if (remaining_nr) {
-+				to_free = 1;
-+				continue;
-+			}
-+		}
-+		res = 0;
-+		break;
-+	}
-+
-+	if (to_free)
-+		free(remaining_oids);
-+
-+	return res;
-+}
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 01dcdf4dc7..ed4ecead36 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -1,6 +1,8 @@
- #ifndef PROMISOR_REMOTE_H
- #define PROMISOR_REMOTE_H
+ 	/*
+-	 * If this is the FIRST partial-fetch request, we enable partial
+-	 * on this repo and remember the given filter-spec as the default
+-	 * for subsequent fetches to this remote.
++	 * If this is a partial-fetch request, we enable partial on
++	 * this repo if not already enabled and remember the given
++	 * filter-spec as the default for subsequent fetches to this
++	 * remote.
+ 	 */
+-	if (!has_promisor_remote() && filter_options.choice) {
++	if (filter_options.choice) {
+ 		partial_clone_register(remote->name, &filter_options);
+ 		return;
+ 	}
  
-+struct object_id;
-+
- /*
-  * Promisor remote linked list
-  * Its information come from remote.XXX config entries.
-@@ -12,5 +14,8 @@ struct promisor_remote {
- 
- extern struct promisor_remote *promisor_remote_find(const char *remote_name);
- extern int has_promisor_remote(void);
-+extern int promisor_remote_get_direct(struct repository *repo,
-+				      const struct object_id *oids,
-+				      int oid_nr);
- 
- #endif /* PROMISOR_REMOTE_H */
+-	/*
+-	 * We are currently limited to only ONE promisor remote and only
+-	 * allow partial-fetches from the promisor remote.
+-	 */
+-	if (!promisor_remote_find(remote->name)) {
+-		if (filter_options.choice)
+-			die(_("--filter can only be used with the remote "
+-			      "configured in extensions.partialClone"));
+-		return;
+-	}
+-
+ 	/*
+ 	 * Do a partial-fetch from the promisor remote using either the
+ 	 * explicitly given filter-spec or inherit the filter-spec from
 -- 
 2.22.0.229.ga13d9ffdf7.dirty
 
