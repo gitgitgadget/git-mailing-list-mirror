@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDFAF1F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A48E1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731945AbfFYOtm (ORCPT <rfc822;e@80x24.org>);
+        id S1731957AbfFYOtn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 10:49:43 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46586 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731906AbfFYOtm (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 25 Jun 2019 10:49:42 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45795 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731772AbfFYOtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:49:40 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a14so27511663edv.12
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:38 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id d4so27489887edr.13
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
-        b=Z7hJpbFHm3uColTQIXp7rlNQ5qzlK3+HncHO/Z22uaBB+tDrWRd/oGaYPSCsyAfBE/
-         R77LHYXdrVdgF3sUY8Mz/xJf7CGAKhTIuqn7Rh2sGSdPIUUX3XEjYBq8UurKQwZXQmbr
-         sQFsg00pgarvV2IbVpZWwv+pUhat1geh+oSRmFVpMvZN6QxCVtnWZb7SvIW+SsYFLlI6
-         rZgLFl4vkrsXXBenjo6D2LYYaKmzEynzlLp1x+p0n7fV0JsG2mktasCJeYu4pKk+zuGQ
-         WgqQZKJYHN9gVJGfByoP49ria8jteET2bLIaGSXHuFHkg/FLPyuNqh8w0SEyMsVW2SR+
-         b4xQ==
+        bh=prTONMgonWGTswXILkRhCe6wGvUsumXO4PE5ug20+a0=;
+        b=Dkg+Ye5Hzh/gVEP4OSu/KJNJLbxbR/bBQ00XL7HZzHyNttQAgKXlO8am0Mip757Rqx
+         k+34mFaKSZ99xkqm2sZnuwHaViPnftw+PkyBtunEC8/JSLm56q+IpGc2epNBgCQ7P62G
+         b3rV4vigOv2OI4Z5v76hAlMcwn3Rs7QP3n4jXIFfmcx1uGw58STvaXsePEaAIcPUDXrW
+         J6tQ78Hsg1HvBSaZzj8eEKvpuINl93KO8DyP6PiIXPPyKysLVEJlwS21pOb0JQ9Nrm7e
+         g0+HsAiPpoowclYEWhB5l9iKEIfZg4NO7lUHrJexQmHMcoRPlqk/lpP5jsIg7vL0yb7e
+         QSZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DSglU3HprV3qOQP85ARxY9TDB5rasZXGc/9TjR3K0J8=;
-        b=B2Cgsz2CtEdg8k8nTfvIVQ/CnoFfJXzoA7cMjlkBsAByRcsLS+nY5rsoINznKb96hN
-         hIndWdRMukC3nDjs2C1NjFECeZddX6bkHGoMM3iPhLc/PPoglR8uVOHhAXqEV9WLbkAw
-         7rzQvkt4IBIwU/ZJoVWvVYG0Ha94N7bEACHz880r5HomzDv7Ab8a4tmYwW30BzKieB5Q
-         3KdHjc2eV6dcxi82x9CO0ijISLQdlpFor8AZbNxAZuF72avwM1ogHCbcOU0Nl0DpAfN6
-         lRR4H4z4QS4A8q4D8V/sGgvR5AbDGC1fFe2eJZcYo8cgQL38kHEye/80s/QMRFcZYlY4
-         ww+w==
-X-Gm-Message-State: APjAAAVJIcXlzQ28lJzw2exdtarFJcfGgEKcyofQW/xyZP5RUZYCkNHC
-        IyWcrh+Ri4CMJ8u+2ecwOCK/8icN
-X-Google-Smtp-Source: APXvYqxR/1Mmo3nT4QLdosOQu/ZLVmhJ8mTro2RChtfrgiSLSbIF2gFOXO+ug9v7G1/33zMY28owyw==
-X-Received: by 2002:a17:906:c73c:: with SMTP id fj28mr36132634ejb.136.1561474178300;
-        Tue, 25 Jun 2019 07:49:38 -0700 (PDT)
+        bh=prTONMgonWGTswXILkRhCe6wGvUsumXO4PE5ug20+a0=;
+        b=WS997y4lJVSjtlUvwnWsAYyg9/O5IAEmRLEZS73xncSNXYe/RvKZ7TcntIjqkx1nKc
+         FvCTHHjFrX6tGY+e5EOj1F2Jvseae+zUDts5cfqF0foYRmTcAmZlKcW4E3R7KlxhvBGU
+         ChDaSP46ySdl9aF12sINOFFSzlimYqbJzhS9viqJvETv8cHd2UYUXTSWcBn5iFotyXcz
+         E8kjvBQX+PEHFBHeQ//aty6XYjFlLXqQh1Vf7X1HTYvYhoQpJ+xiAo424QLSKzy/jLXi
+         Qr4C5qFyeSx8/vCtAo6pAs6YMJ7n7TA8tBpEbi3nUP3N4jRUz7iwndCYL/mY7hRd1Tmj
+         hdzQ==
+X-Gm-Message-State: APjAAAW3nqsMI1zhGt1JylVn5EKBxXUB+aS9nJ2s5yK3iOOO1cQy7AKY
+        58ZZDz3VHSfGdbBCIlvKix+RJLVM
+X-Google-Smtp-Source: APXvYqwenBDU+AFd3L3G4eHheFxuXfYBPDvbPyyKQI9KEpk2lmuJimIor8wOc1UyxqnaHPP2CRg0qg==
+X-Received: by 2002:a50:b803:: with SMTP id j3mr104390600ede.208.1561474180551;
+        Tue, 25 Jun 2019 07:49:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l38sm4821987eda.1.2019.06.25.07.49.37
+        by smtp.gmail.com with ESMTPSA id a6sm4581205eds.19.2019.06.25.07.49.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 14:49:19 GMT
-Message-Id: <f528883d97011128d77061c4976655b80a7e7b14.1561474167.git.gitgitgadget@gmail.com>
+        Tue, 25 Jun 2019 07:49:40 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 07:49:40 -0700 (PDT)
+X-Google-Original-Date: Tue, 25 Jun 2019 14:49:22 GMT
+Message-Id: <993b6bcd0a8cf47acd0cfa695ad6e34865b060d3.1561474167.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v3.git.gitgitgadget@gmail.com>
 References: <pull.149.v2.git.gitgitgadget@gmail.com>
         <pull.149.v3.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 13/20] msvc: fix detect_msys_tty()
+Subject: [PATCH v3 16/20] msvc: add a compile-time flag to allow detailed heap
+ debugging
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,39 +76,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-The ntstatus.h header is only available in MINGW.
+MS Visual C comes with a few neat features we can use to analyze the
+heap consumption (i.e. leaks, max memory, etc).
+
+With this patch, we introduce support via the build-time flag
+`USE_MSVC_CRTDBG`.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ compat/mingw.c    | 6 ++++++
+ config.mak.uname  | 4 ++++
+ git-compat-util.h | 9 +++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index f4f08237f9..11cd9b82cc 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -544,7 +544,20 @@ static HANDLE swap_osfhnd(int fd, HANDLE new_handle)
- #ifdef DETECT_MSYS_TTY
+diff --git a/compat/mingw.c b/compat/mingw.c
+index c063ae62be..667285887a 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2411,6 +2411,12 @@ int wmain(int argc, const wchar_t **wargv)
  
- #include <winternl.h>
-+
-+#if defined(_MSC_VER)
-+
-+typedef struct _OBJECT_NAME_INFORMATION
-+{
-+	UNICODE_STRING Name;
-+	WCHAR NameBuffer[0];
-+} OBJECT_NAME_INFORMATION, *POBJECT_NAME_INFORMATION;
-+
-+#define ObjectNameInformation 1
-+
-+#else
- #include <ntstatus.h>
+ 	trace2_initialize_clock();
+ 
++#ifdef _MSC_VER
++#ifdef USE_MSVC_CRTDBG
++	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 +#endif
++#endif
++
+ 	maybe_redirect_std_handles();
  
- static void detect_msys_tty(int fd)
- {
+ 	/* determine size of argv and environ conversion buffer */
+diff --git a/config.mak.uname b/config.mak.uname
+index b8c52e49d2..3fde48c64d 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -448,6 +448,10 @@ else
+ endif
+ 	BASIC_CFLAGS += $(sdk_libs) $(msvc_libs)
+ 
++ifneq ($(USE_MSVC_CRTDBG),)
++	# Optionally enable memory leak reporting.
++	BASIC_CFLAGS += -DUSE_MSVC_CRTDBG
++endif
+ 	BASIC_CFLAGS += -DPROTECT_NTFS_DEFAULT=1
+ 	# Always give "-Zi" to the compiler and "-debug" to linker (even in
+ 	# release mode) to force a PDB to be generated (like RelWithDebInfo).
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cc0e7e9733..83be89de0a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1,6 +1,15 @@
+ #ifndef GIT_COMPAT_UTIL_H
+ #define GIT_COMPAT_UTIL_H
+ 
++#ifdef USE_MSVC_CRTDBG
++/*
++ * For these to work they must appear very early in each
++ * file -- before most of the standard header files.
++ */
++#include <stdlib.h>
++#include <crtdbg.h>
++#endif
++
+ #define _FILE_OFFSET_BITS 64
+ 
+ 
 -- 
 gitgitgadget
 
