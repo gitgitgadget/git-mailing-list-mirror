@@ -2,115 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3661F1F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 11:40:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39A481F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 11:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730049AbfFYLk0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 07:40:26 -0400
-Received: from mout.gmx.net ([212.227.15.18]:42073 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728703AbfFYLk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 07:40:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561462821;
-        bh=QlS7o1ex8kb8ojMh/SL4jTFwbKLg0pR0Q1hEaLv9Bio=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jn1acQDECTqjZwBTsfbM/mPoRkmrKaAo9b2tEdrwiY88awcS1ekTA/4/YODxQZMjg
-         kkxcOu8bzvL1V2sKbje/ypOfbiIvsCAT7qF0GtxLMuHUTarvRCSgQOyFWHB8UBtIX4
-         ET8uKW1zKPZZYM+EZ7oMSEdid1ExExw823YsJd2g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwrwO-1idNs50e1Q-016SAI; Tue, 25
- Jun 2019 13:40:21 +0200
-Date:   Tue, 25 Jun 2019 13:40:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     Catalin Criste <cris_linu_w@yahoo.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH] doc: fix form -> from typo
-In-Reply-To: <CAN0heSraZh+j04qjeaVtS5bsNoE=Hf_FBU-kfcB+69BkZz+zHg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906251339050.44@tvgsbejvaqbjf.bet>
-References: <0102016b8d597569-c1f6cfdc-cb45-4428-8737-cb1bc30655d8-000000@eu-west-1.amazonses.com> <CAN0heSraZh+j04qjeaVtS5bsNoE=Hf_FBU-kfcB+69BkZz+zHg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730524AbfFYLno (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 07:43:44 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:43874 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729164AbfFYLnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 07:43:43 -0400
+Received: by mail-io1-f66.google.com with SMTP id k20so654623ios.10
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 04:43:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BZjO8SnJ4JlroacxgF+4hv7iiVhiCfpWoXv6CrPiBv0=;
+        b=YOFQDZ1hrDVSf6oTSLFibRYUkyrRLnlmUzFJldPE/EQLXDT54p3X+nVjTNOIj9cWa5
+         vaum6GF237qJenYc5P2xukRcjk04YEbO5mzYYBdbrtaCOe5t7H5aOe9CEKY3VPzI73GF
+         q4lk0Rx3PCUcD2N0IFF8GW1x7ZYDH1mQhoW6GwGVLo0RTHv9jjixvJb/70kr6CBrAK+2
+         Wh+zscQzbkg7ko0Lch7fhjM6HbmF4HJz8ebH0cZX6Cpi1YRPdJauodE6Zi8KJOBp6Ugn
+         hf23+a3ZfxzfKHIUezu28+ptj+SYMIhrJR+vq+O2cQpR5lzHJBBE1zzXr6Tm1YI9AGS7
+         iauQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BZjO8SnJ4JlroacxgF+4hv7iiVhiCfpWoXv6CrPiBv0=;
+        b=LmJrA/wN4ipgxP3sK88TjWr8/ROJAI6AqGvTM3r3Llu8UkvPCcEXoyOGQvE1XNiefX
+         +RI1uY5xodSxiVghI/RpHTGYGrNGk27EoGbOsqDLvnjG75mNlUPbZ7Kpt6Sme3asA8Cn
+         n6XW+Bj9jq8/I9lCnVP36yOsRh7nn2Fjkgi/QJQFX1EyRD9HH+EQGkjiUiasct/WoNKC
+         0u1W8X78FlZK9N4XZD6rvaz4v1hO6YLJMd0mVESbVremLeiSCen7rW6YtJmGHEmifUKw
+         CZzmoFzl/rdGZnn4/K9WjJ3qJFpFSsiELNJwBcyl8/OK3EdGCfLGBdHn/llw2uE2oLeA
+         dDqA==
+X-Gm-Message-State: APjAAAVPmUWPMHP719/gB4Lt8CNt64PmNNboadx6sQdUjJrAKUdMVnug
+        G9AvTXOwRH3dFggQZhxn8WxscNvtHgZ5RC+qApU=
+X-Google-Smtp-Source: APXvYqwZg/WZ0FcTrny+ikSKufUWJw0NevzGXyXdsnvqBOTtMvkeBFzl+CFEpif5jRBrGLCKsz8hsP9r9X5W7U6Zwlc=
+X-Received: by 2002:a02:a07:: with SMTP id 7mr39034316jaw.65.1561463022938;
+ Tue, 25 Jun 2019 04:43:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1595391619-1561462842=:44"
-X-Provags-ID: V03:K1:/fW324SrLDVHyAW5H86WsqJMoLnktwAxzRjKHE0/WFh+MfVkgKx
- ZfYvq/6DOSM/bI79+Nr7YkWLyTkTZIv/bpEQlz4PRgPK8sx1lBRUpRXCw3WorrdBB8rHkI4
- r8ROtrqj7N5tZf6OIe4kSHwqN275ONEpfT9onDVkWNHnYr2E1dFM22TaEp9KX6geX99a/Vz
- koF9bgJKEoxf1AtvqzYXw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8zIhAjLOTVA=:Mqk1sBCbvAQniIoWtytmZI
- 065jSyplfqGqD+5ZLyKiXmK3drdjia/w2FypgrTeZ9O1KB+ZR4HW9rBbBEZTDN5PEGhL3b+YU
- kXRe1CYORobrznEgD0pMcv2t3IYofQwDRV6zvd/4R/V0nMO1U7h+snyJJHakdpH1PBHDR9+D8
- Tzclt37wcqmIYKqbiW6S6dRHM6vk5MRJ2HS/DMSlYD50v5gsH8p3BO6rVeem55uipLx3Uco8u
- 7rEq+3MvCExy0+7hwtcthFHvLCzFvLiWa30lum25IvKUcf98oHAXLF9ety1kdSD8WUxaFve19
- AnFuEJaBGwvo7ghcdBye8WE10FC9x7ZUOTeQ3S7eVkX5sv+ZpFE9TA9wy3ugSJ0KWUkNDEthi
- pRB47TUu1O6flfQmotRGGtILWW2QGdsvA7EYnGkDAfyC+hziPh3qgLeilEyMeSAeQg6EYKvqe
- 9dx0gHrX9YBMSI1XT9IRpvgBcnPtH/8qrQuDORydUnfJEVz9EecocM5p4rc4pspECNNX4zD9R
- gMJXdYNxkn2QQKH+MdVITV8/1V6l7N2Oyhc18xwrrs8++yHq3DWNHThrSCCh2DughwIpP7Oke
- GYebXOQsdm3ta3ESxh6bED/82O34pf1VMjPhcw6GNR4xPoEd1VBEsudQfdaPG6pp+Mmk1dGz5
- /i1TrFvceaLQxQorVOcJ6YmoUNUQomrhtb6Vrh2D9RkzP56CU4bd005Q43cKpLEJw9fD7V9/o
- rdmgOSKExvGNzMsK9Ivmc9FLWAghCG0DC9K+rJ/Kr2PUuEoculoQhEqaJuUMsYdqKfYijHpqF
- 2HqCqLofqTJrwfncc0GSSHCJ1umUGgjFWo2s8gnUYoLE6rftcj2P5LRGA3lZUl4B8T5mHmcVD
- NhMTj7yH5/jtXaeejoTHpnWFJPfjrglQTQmKSCYXnaUqc4MkXR2hssQNN/PfT2rbR0wzo6Frt
- 8ilGUN7UPByNBQcPpDPkMfyML661lRyUvKoB3OY4t9bRDbFOCEB1/e0DmSPsGmfWD3HICF1m9
- ydd3u18Fy1rnM6QNlTqnA4YsyO1Vcwla+M/DaTL/C5ha1iY1WNLYl9vWGHhCR+13EQHhV74aI
- yMNFV62jOTBfecXX+cDGUiNhh7qiywRBAZx
+References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
+ <87sgs3rhpo.fsf@kyleam.com> <xmqq8stvklzd.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8stvklzd.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 25 Jun 2019 18:43:16 +0700
+Message-ID: <CACsJy8CBQhF2=nZ4tZj_h6Gr8PjK3amANjT38uhnurS0dehyiQ@mail.gmail.com>
+Subject: Re: specifying revision - how to enforce matching a tag/branch-name
+ or revision only
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kyle Meyer <kyle@kyleam.com>,
+        "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1595391619-1561462842=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Martin,
-
-On Tue, 25 Jun 2019, Martin =C3=85gren wrote:
-
-> On Tue, 25 Jun 2019 at 09:43, Catalin Criste <cris_linu_w@yahoo.com> wro=
-te:
+On Fri, Jun 21, 2019 at 10:16 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > @@ -88,7 +88,7 @@ save [-p|--patch] [-k|--[no-]keep-index] [-u|--inclu=
-de-untracked] [-a|--all] [-q
+> Kyle Meyer <kyle@kyleam.com> writes:
+>
+> >> git rev-parse "${BRANCH_NAME}"  || git rev-parse "refs/remotes/${UPSTREAM}/${BRANCH_NAME}"
+> >>
+> >> Unfortunately somebody used the branch name "add-gcc10" and `git rev-parse` which didn't exist on one repository. However `git rev-parse`
+> >> also supports to parse the `git-describe` format which resulted in checkout a commit starting with "cc10".
+
+I wonder if something like refs/heads/foo-g<hash> could trip the
+parser and mistake it as a `git-describe` output. Staring at
+get_describe_name() alone the answer might be an unfortunate "yes".
+But maybe something will kick in earlier and reject it.
+
 > >
-> >         This option is deprecated in favour of 'git stash push'.  It
-> >         differs from "stash push" in that it cannot take pathspecs,
-> > -       and any non-option arguments form the message.
-> > +       and any non-option arguments from the message.
+> > Can't you prepend "refs/heads/" to BRANCH_NAME to disambiguate?
 >
-> I think this is actually intended as "form". It took me a couple of
-> readings, but what this paragraph wants to say is that any non-option
-> arguments will be used to form (construct) the message.
+> Yes, that is the kosher way for most commands.
 
-You're right! I totally misread this, too.
+Some commands always prepend refs/heads/ to the <branch> argument you
+give it if I remember correctly. Or I think I accidentally made
+refs/heads/refs/heads/something once with some command (then hell
+ensued). If true, prepending refs/heads/ is not really foolproof.
 
-> Do you have any suggestions as to how this could be made clearer?
-> There are at least two of us that have stumbled on this. :-)
+> It gets a bit tricky for "checkout <branch-or-committish>" that
+> changes its behaviour (a local branch is checked out and the next
+> commit extends it, other committishes like tags and remote-tracking
+> branch tips are checked out on a detached HEAD), and has special
+> rules for a "${BRANCH_NAME}" that is both the name of a local branch
+> and something else.
 
-Make that three.
+I think "git checkout --no-guess --no-detach <branch>" should only
+accept a branch (i.e. ref: refs/heads/<branch>). Dropping --no-detach
+should allow any ref, which interprets refs/heads/foo as an absolute
+ref, not as refs/heads/refs/heads/foo.
 
-Maybe something like
+> Hopefully (Duy Cc'ed) "git switch" would improve the situation.
 
-	This option is deprecated in favour of 'git stash push'.  It
-	differs from "stash push" in that it cannot take pathspecs;
-	Instead, all non-option arguments are concatenated to form the stash
-	message.
-
-?
-
-Ciao,
-Dscho
-
---8323328-1595391619-1561462842=:44--
+"git switch" has slightly saner defaults, but with --guess being
+default to be friendlier to interactive usage, it's still not that
+much friendlier to scripts, unfortunately.
+-- 
+Duy
