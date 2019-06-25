@@ -2,109 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3715C1F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 18:00:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B3C01F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 18:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732749AbfFYSAb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 14:00:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54673 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732741AbfFYSA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 14:00:29 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DCEB716BAA1;
-        Tue, 25 Jun 2019 14:00:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1k55LUGhTt0aFjEV8KxC7MtKo6I=; b=TudnVb
-        rT1mkVhUK0hekmjP9ouoIIJ6xL5fEfqf7iuWdXBd3SVNWfilwalLDfxiMXXJw5Rp
-        /IqwrRqP1JYzHfiHtKrf8G/HFl4VIWKXZDRIo1EradBSW9DWP6EyUNZKxzGGouHV
-        IenlneIp2N5ZFOibOAcLG4nIXAu3XVlmzPsLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Hov+dy4Sri/2fmQ6WMt0gBtv44EAvqSW
-        G1Ghcr2TH81uCmVquKFgadfzycuyFBDhi+N5eo+f+VmaarPxFW+TalJxRV9azXdC
-        R37hIJipER4+tHpeFuxQ83lqceZjZjdUtKJKEYGKGW8jwXIKS5ProBoo1JdFIskg
-        x+EioxRSWXw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D10C016BAA0;
-        Tue, 25 Jun 2019 14:00:23 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DAE7616BA9F;
-        Tue, 25 Jun 2019 14:00:22 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
-        <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
-Date:   Tue, 25 Jun 2019 11:00:21 -0700
-In-Reply-To: <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Tue, 18 Jun 2019 20:27:43 -0300")
-Message-ID: <xmqqimstfsui.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729530AbfFYSAs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 14:00:48 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35982 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728637AbfFYSAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 14:00:48 -0400
+Received: by mail-wr1-f65.google.com with SMTP id n4so17720067wrs.3
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 11:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wfA+CX6w2ZK+NZAZkHOuM4D7xwNaQwRcYi0lQK5WGdM=;
+        b=W/MdIHd699FyFfDEp/rvyFSYgg5nDiKURBWnHWiSfzEC1neaaCUTjEnfi8lB6/0Avn
+         QwzX+vz61t0WBMBQHioAxiKMYDz1182p1p+8aMJyPnog931VEEZgH+ahkBLaPDsoCa4L
+         LpTyVjvRaeSWVBe2aE2W5jmf5IxD6E19NBvePrvjSLlc17zznNDxa/2MsC7O/nDTXO+r
+         koqq9izIWrpL12AX8sWrUKm0oARLxoJwBosMFH/LyoDQmUTzXrlxTnqR511L0k7pROrT
+         4F96rvMVo1PhO8Tz7bBXOwRkqJyXwSCl9S22AFqwUojhMbAzBw829FeIBX+fwreOikH0
+         Qvrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wfA+CX6w2ZK+NZAZkHOuM4D7xwNaQwRcYi0lQK5WGdM=;
+        b=YrdYIDOWgilC6yg9PbLFf/JhVdgAwk0RJ/arIG1ZF/NMAVE30PINblRaCSywP/Vj4g
+         kD/E5xaZDU4bD1LxMdp0g6IHLgLIEkM7d6aB8nwMtv8tWdG612CQWezMc2geLPtFQcKu
+         R5iNB8zl1phvAzWpXaCSryPNo9lEGAYJDCsdGKCMKMULrUQWH5DXVXFF9J/BOCT1ucXN
+         a1kLnOY3vXne7QG2la4ISqLJ1Zu2Vu9Plt85j82kaBhnDgnx/OKgB2vgAjux/4B0+mkA
+         VDrGtQwCUuLW7chJoKGOeYvA9BkU6ss+uw/t3kMNKmwaTYYJR0SlQCT+7rA1ONTRTYh6
+         QJcw==
+X-Gm-Message-State: APjAAAUZ1VDcHxqv3UY1B/5B3M6FuKvYMBHDlCliQjtDkM0TqiarCTDv
+        0DUQnRZSzmLz2tYmVDTjeYGp98DfHgw=
+X-Google-Smtp-Source: APXvYqw8bwV3MKHPBfl4P0YLDTK4ICfYBmmTOGkZXvWujZlLbfKZQMJX9fLMx7qZrif+7fg7eNuiog==
+X-Received: by 2002:a5d:4008:: with SMTP id n8mr54157471wrp.353.1561485645072;
+        Tue, 25 Jun 2019 11:00:45 -0700 (PDT)
+Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.googlemail.com with ESMTPSA id z5sm3137723wma.36.2019.06.25.11.00.44
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Jun 2019 11:00:44 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20190430142556.20921-1-szeder.dev@gmail.com>
+ <20190611130320.18499-1-szeder.dev@gmail.com>
+ <20190611130320.18499-4-szeder.dev@gmail.com>
+ <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com>
+ <20190611211151.GG4012@szeder.dev>
+ <nycvar.QRO.7.76.6.1906122056570.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <20190624183927.GA10853@szeder.dev>
+ <efc4a141-071a-6549-f25d-21cc6256832a@gmail.com>
+ <20190625113103.GB10853@szeder.dev>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <573b9280-939b-879e-6e5e-b63779836740@gmail.com>
+Date:   Tue, 25 Jun 2019 19:00:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A42DD20-9773-11E9-8CAA-46F8B7964D18-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20190625113103.GB10853@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+Hi Gábor and Dscho
+On 25/06/2019 12:31, SZEDER Gábor wrote:
+> On Tue, Jun 25, 2019 at 11:08:04AM +0100, Phillip Wood wrote:
+>>>> Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QQ                                                                                QSuccessfully rebased and updated refs/heads/missing-commit.
+> 
+> 
+>>>> May I please *strongly* suggest to fix this first? It should
+>>>>
+>>>> - completely lose that last line,
+>>>> - be inserted into the test case itself so that e.g. disk full problems are
+>>>>   caught and logged properly, and
+>>>> - the `test_i18ncmp expect actual` call in the test case should be replaced
+>>>>   by something like:
+>>>>
+>>>> 	sed "\$d" <actual >actual-skip-progress &&
+>>>> 	test_i18ncmp expect actual-skip-progress
+>>>>
+>>>> This should obviously be made as a separate, introductory patch (probably with
+>>>> a less scathing commit message than my comments above would suggest).
+>>>>
+>>>> And that would also remove the double-yuck.
+>>>
+>>> Unfortunately, this addresses only one of the "Yuck"s; see v3 of this
+>>> patch series [1].
+>>>
+>>> The other yucks affect the following four tests in
+>>> 't3420-rebase-autostash.sh':
+>>>
+>>>   16 - rebase --merge --autostash: check output
+>>>   23 - rebase --merge: check output with conflicting stash
+>>>   26 - rebase --interactive --autostash: check output
+>>>   33 - rebase --interactive: check output with conflicting stash
+>>>
+>>> These tests come from commits b76aeae553 (rebase: add regression tests
+>>> for console output, 2017-06-19) and 7d70e6b902 (rebase: add more
+>>> regression tests for console output, 2017-06-19), and are specifically
+>>> about checking the (whole) console output of 'git rebase', so I left
+>>> the updates to them as they were.
+>>>
+>>> In any case, Cc-ing Phillip to discuss whether something could be done
+>>> about them (now perhaps preferably (for me :) as a follow-up, and not
+>>> another preparatory patches).
+>>
+>> Those tests were added to check that `git stash` was being silenced (see
+>> 79a6226981 ("rebase -i: silence stash apply", 2017-05-18)).
+> 
+> Hmm, so would it then be possible/sensible to do something like this
+> instead:
+> 
+>   git rebase --options... >out &&
+>   test_i18ngrep ! "<something specific that only 'git stash' would print if it wasn't silenced>" out
+> 
+>> I can have a
+>> think about a better way to do that, but is it still a problem? I just
+>> tried to take a look at your CI output and
+>> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=11406
+>> seems to be all green - have I missed something or has Gábor fixed the
+>> issue?
+> 
+> No, it was Dscho who fixed the Azure CI issue, see
+> 
+>   https://public-inbox.org/git/nycvar.QRO.7.76.6.1906141356140.44@tvgsbejvaqbjf.bet/
+> 
+> elsewhere in this thread (it's a long one, but well worth the read
+> IMO).
+> 
+> However, the point here is not that Azure CI failure, but rather the
+> fact that tests had to be updated to include the new line clearing
+> sequence in the expected output, and that "Q<...80 spaces...>Q" looks
+> yuck indeed.
 
-This hunk, which claims to have 25 lines in the postimage ...
+I've come up with a sed based solution to remove the progress
+notifications from the output - see
+https://github.com/gitgitgadget/git/pull/276 If you're both happy with
+the basic idea I'll clean it up and submit it (I've just noticed I left
+some debugging bits in one of the tests). I was worried using "\r" in a
+sed expression wouldn't be portable but the tests pass on gitgitgadget.
+If it proves to be a problem on other platforms we could use always tr
+to convert "\r" to some unique string and use that string in the sed
+expression.
 
-> @@ -44,6 +45,25 @@
->   * dir_iterator_advance() again.
->   */
->  
-> +/*
-> + * Flags for dir_iterator_begin:
-> + *
-> + * - DIR_ITERATOR_PEDANTIC: override dir-iterator's default behavior
-> + *   in case of an error at dir_iterator_advance(), which is to keep
-> + *   looking for a next valid entry. With this flag, resources are freed
-> + *   and ITER_ERROR is returned immediately. In both cases, a meaningful
-> + *   warning is emitted. Note: ENOENT errors are always ignored so that
-> + *   the API users may remove files during iteration.
-> + *
-> + * - DIR_ITERATOR_FOLLOW_SYMLINKS: make dir-iterator follow symlinks.
-> + *   i.e., linked directories' contents will be iterated over and
-> + *   iter->base.st will contain information on the referred files,
-> + *   not the symlinks themselves, which is the default behavior.
-> + *   Recursive symlinks are skipped with a warning and broken symlinks
-> + *   are ignored.
-> + */
-> +#define DIR_ITERATOR_PEDANTIC (1 << 0)
-> +#define DIR_ITERATOR_FOLLOW_SYMLINKS (1 << 1)
-> +
->  struct dir_iterator {
->  	/* The current path: */
->  	struct strbuf path;
-> @@ -58,29 +78,38 @@ struct dir_iterator {
+Best Wishes
 
-... adds 20 lines, making the postimage 26 lines long.
+Phillip
 
-Did you hand edit your patch?  It is OK to do so, as long as you
-know what you are doing ;-).  Adjust the length of the postimage on
-the @@ ... @@ line to make it consistent with the patch text, and
-also make sure a tweak you do here won't make later patches not
-apply.
