@@ -3,119 +3,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204A21F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 18:11:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6624A1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 18:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729748AbfFYSLt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 14:11:49 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:33403 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725921AbfFYSLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 14:11:49 -0400
-Received: by mail-io1-f68.google.com with SMTP id u13so1876767iop.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 11:11:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GwWVu2+5Fr9I917aKcPT/HS0aZzUuwXyiK6hQYxff0Y=;
-        b=tCVwdef6Su/odGlMCO8tDHu2Ol07xRY02c+e3i2hynojq0h7LhPWFjvURUfTvQVeo6
-         72dh9+bFvlM7S442TWZVQVtUWnsbDvAj+IMPg0gMEwcm3oOAd2kK8yDfGHDBbvTNxDWn
-         6Xq2lbTU4QZm3nSSi5L2ipYSx9m0oSKbQgfY1giFU0i3qZGmqq0olfhToZPfNPT82zQn
-         rDtcSMg2oBO5X3OPc4715GZ9PfZLOSZuo84OqIZWjqEWME8RGaRbnEiDPZtxaME//HPT
-         XzXbLuFQWVc3TwiSCDIR3mPXrD2w/W8lnMU+IIJkBvJvAZ+vAB2ClkpRX/VApOaO/pve
-         UUug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GwWVu2+5Fr9I917aKcPT/HS0aZzUuwXyiK6hQYxff0Y=;
-        b=WYqOVfXLEmv5TKnN3o7bGxvj4LYz1hBeEes4YviNxTKJ7MRcIe8HnqAKLyzgIE2ECu
-         NlFSbFSHSN2+4lDaqMMVpMjJOjrgdveTGhrgvtNF1UjZwTDcf49IhWLr3Q4LEQPCFOiL
-         IBoVtQdUwi0JOqDeTeLzhZi7p3JKtiYHmCrYkUZtD0Yl3SyZ5UAwyDqqwlMS+lTJ08iX
-         6Xb1PfrPau6HT0u5sYx9HzHcgEDBArDILjuLW5S8DK/ntzAoQd00zv/yXh9LGnbY65aq
-         jM54oo/q2gQUaLtLqQbHhwcOC+cCnnoXRBSUncUkI86niT8APGTCEzFFoo3Rmbry8iZT
-         U4BQ==
-X-Gm-Message-State: APjAAAVU2ETDgv1EFp7qzddH8XRb3ffV/GVV9/vgksaTHetDuAvDGyzv
-        exuGRBvgVL3g3MB+LQZwfPqphi0FdgZgGnTEA5UbYQ==
-X-Google-Smtp-Source: APXvYqyeXn5oMaTGLhKcxf0Phu69ND6nGk4txUZfLo/aYJdsiNxunZFvwptxPiQ8knbXgDiQoRo8eLMoRaF8ZWPm5TI=
-X-Received: by 2002:a02:4e05:: with SMTP id r5mr54122035jaa.27.1561486308075;
- Tue, 25 Jun 2019 11:11:48 -0700 (PDT)
+        id S1732862AbfFYSSf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 14:18:35 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65090 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727479AbfFYSSf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 14:18:35 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E4ECF6D5F1;
+        Tue, 25 Jun 2019 14:18:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+B0J1a4nlLJb0SuSenkhVumMHKU=; b=KVtrPH
+        XKBAMeSSvmdgG8H7w7uoIHmL60pKZSzuFAzYlzSu9A0lPAocVkf6smOg8nQr6ReG
+        ehPNGtEuUROf7bGcAvivD2xg9F+DEbki6+5tqUD26N7VvvOCMJZCulo+CT24gth9
+        TxA+6jTrtAKjqDj910zyTZ5CCOVE83VPDO6B4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JVlLZFD3JcE9yuCcCcpRMyNxD5n/+9f+
+        G06PigZ+GyJyjcqudYKaXNH/ppZe+yCmyEBl3SFos86wJ/AVA2davgrjOPQbVWOX
+        9bw15tu6YG6G71audfqBqdF8XFTNMiucXrRKzGX+gd7jNOnneqqVP7oQwioVuMIN
+        kzcn/mbKzp8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DDFC46D5EF;
+        Tue, 25 Jun 2019 14:18:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 23D176D5E6;
+        Tue, 25 Jun 2019 14:18:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Morian Sonnet <moriansonnet@gmail.com>,
+        MorianSonnet@googlemail.com,
+        Git Mailing List <git@vger.kernel.org>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.us>
+Subject: Re: [PATCH] submodule foreach: fix recursion of options
+References: <xmqqsgryhmqt.fsf@gitster-ct.c.googlers.com>
+        <20190624202653.13810-2-MorianSonnet@googlemail.com>
+        <CACsJy8BnpkfYwKJiz2u5=yhoyLQzu5yAcsvmL75bxWop=ZRh0A@mail.gmail.com>
+Date:   Tue, 25 Jun 2019 11:18:27 -0700
+In-Reply-To: <CACsJy8BnpkfYwKJiz2u5=yhoyLQzu5yAcsvmL75bxWop=ZRh0A@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 25 Jun 2019 18:18:05 +0700")
+Message-ID: <xmqqef3hfs0c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
- <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
- <xmqqimstfsui.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimstfsui.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 25 Jun 2019 15:11:37 -0300
-Message-ID: <CAHd-oW5UCqnXDoLcx5=BRBwobHF52h-wJUBJh2B3-sy-p1nS5Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A24FEC88-9775-11E9-8B0D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 3:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> This hunk, which claims to have 25 lines in the postimage ...
->
-> > @@ -44,6 +45,25 @@
-> >   * dir_iterator_advance() again.
-> >   */
-> >
-> > +/*
-> > + * Flags for dir_iterator_begin:
-> > + *
-> > + * - DIR_ITERATOR_PEDANTIC: override dir-iterator's default behavior
-> > + *   in case of an error at dir_iterator_advance(), which is to keep
-> > + *   looking for a next valid entry. With this flag, resources are freed
-> > + *   and ITER_ERROR is returned immediately. In both cases, a meaningful
-> > + *   warning is emitted. Note: ENOENT errors are always ignored so that
-> > + *   the API users may remove files during iteration.
-> > + *
-> > + * - DIR_ITERATOR_FOLLOW_SYMLINKS: make dir-iterator follow symlinks.
-> > + *   i.e., linked directories' contents will be iterated over and
-> > + *   iter->base.st will contain information on the referred files,
-> > + *   not the symlinks themselves, which is the default behavior.
-> > + *   Recursive symlinks are skipped with a warning and broken symlinks
-> > + *   are ignored.
-> > + */
-> > +#define DIR_ITERATOR_PEDANTIC (1 << 0)
-> > +#define DIR_ITERATOR_FOLLOW_SYMLINKS (1 << 1)
-> > +
-> >  struct dir_iterator {
-> >       /* The current path: */
-> >       struct strbuf path;
-> > @@ -58,29 +78,38 @@ struct dir_iterator {
->
-> ... adds 20 lines, making the postimage 26 lines long.
->
-> Did you hand edit your patch?  It is OK to do so, as long as you
-> know what you are doing ;-).  Adjust the length of the postimage on
-> the @@ ... @@ line to make it consistent with the patch text, and
-> also make sure a tweak you do here won't make later patches not
-> apply.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Oh, I'm sorry for that, I'll be more careful with hand editing next
-time. Thanks for the advice. I think for this time it won't affect the
-later patches as it was a minor addition at one comment, but should I
-perhaps re-send it?
+> On Tue, Jun 25, 2019 at 5:02 AM Morian Sonnet <moriansonnet@gmail.com> wrote:
+>>
+>> Calling
+>>
+>>     git submodule foreach --recursive <subcommand> --<option>
+>>
+>> leads to an error stating that the option --<option> is unknown to
+>> submodule--helper. That is of course only, when <option> is not a valid
+>> option for git submodule foreach.
+>>
+>> The reason for this is, that above call is internally translated into a
+>> call to submodule--helper:
+>>
+>>     git submodule--helper foreach --recursive \
+>>         -- <subcommand> --<option>
+>>
+>> This call starts by executing the subcommand with its option inside the
+>> first level submodule and continues by calling the next iteration of
+>> the submodule foreach call
+>>
+>>     git --super-prefix <submodulepath> submodule--helper \
+>>       foreach --recursive <subcommand> --<option>
+>>
+>> inside the first level submodule. Note that the double dash in front of
+>> the subcommand is missing.
+>>
+>> This problem starts to arise only recently, as the
+>> PARSE_OPT_KEEP_UNKNOWN flag for the argument parsing of git submodule
+>> foreach was removed in commit a282f5a906. Hence, the unknown option is
+>> complained about now, as the argument parsing is not properly ended by
+>> the double dash.
+>
+> My bad. Last time I checked *.sh but forgot about *.c. I looked around
+> this time in *.c. This should be the only submodule--helper invocation
+> that needs "--".
+
+Thanks, both.  Will queue.
