@@ -2,181 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D97D31F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 11:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF7D1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 11:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729957AbfFYLaz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 07:30:55 -0400
-Received: from mout.gmx.net ([212.227.17.20]:37713 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729170AbfFYLaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 07:30:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561462247;
-        bh=58wkaKedlMQ6318y4l631UkmcZuCkyxfoEHpfEs/ZrA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=beoEYFpB2rb90cjKua/4vLfs7H5EyuAFEvYV520mO7fXjYd8v97gFrW9bvwBhSNnc
-         bDnkqmjKmcJaBGTCpx+j9Q51tdueztGT4SXbs8ADp+S24IyUbhDUg/n/k7ypG1l3n+
-         D6PqYS6AzTITaBjwHSudhNSLa1sDoIol+TrARz3o=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ll0tl-1iGRJy0eWb-00ai3Q; Tue, 25
- Jun 2019 13:30:47 +0200
-Date:   Tue, 25 Jun 2019 13:31:07 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 01/10] ls-files: add --json to dump the index
-In-Reply-To: <nycvar.QRO.7.76.6.1906251142580.44@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1906251328320.44@tvgsbejvaqbjf.bet>
-References: <20190624130226.17293-1-pclouds@gmail.com> <20190624130226.17293-2-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906251142580.44@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729987AbfFYLbI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 07:31:08 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51854 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728940AbfFYLbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 07:31:08 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 207so2437928wma.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 04:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=niw9KDnpy+R4vf83lGYcPyPQSGdan+2tdnfVis4hbH8=;
+        b=lRNa70LuQ+UM6JpKxWlajOyiIrSzAHSBLlqiHtbFxP3Oah933xEXUNE2CdiNgvzc7w
+         lkZorZUId5fWP05EHkZZB3EgFWMu+OAC/3iIj0SXwxULmArwo0qAlAY5P6XTx0MnJEsn
+         bUmI7GicE/Q2WGHW1LV/klkIlzjkkrOtafR9UOUFlrPEhuBmpVgtMxoXdfQaR8+g9sqd
+         oEKyLWCJKUhwHBtaQi+1Sr16oBMrZwlWhNXHsd7ypZkTrVtAteOkDZMKTGWC9jsgAKYg
+         mjdIL0CQDvnJIvjmbupP935AG1xQBCGGAzBs4tb0mw4KdNwqjBIp5ekZO5A1Ncvw3bdI
+         9zLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=niw9KDnpy+R4vf83lGYcPyPQSGdan+2tdnfVis4hbH8=;
+        b=IGIkOZR+FkeU2GbNLStPMPX+EHDuwp/d7rCp/fAya/3HSncKmF+XVmPjey40vEn1et
+         vyjliZCiMpRZvdRyGyVNNTp0jpROTXYuxlvIclZWJVQ+qG4ulQucoBWIKJZP7jtjbx3k
+         dHhwAPfVmVwVLWQgCGyaueYHrFTngHhLfB7szfP6zSVjtxC0t/pGEMWiIK0pRpoHndZO
+         6z+CmpuL7QvpiEFLTyrsqMMPIUBRDmDBQRIzni3Hwwb7Pvw2IwnTYuz6TvuoGc1n38+/
+         wlq9dLCOQf9UucTThlKB/lO+w4GVkNAa1v7P0epbAvPL4oHWDlOMonhKsON1uwmSNFA2
+         p1TQ==
+X-Gm-Message-State: APjAAAVJI0GL7+Zk/hEC3M6NcMat2wBtPkeLjwTFCpSEfEjiGMyoz5uc
+        kXGvkAjqqWdNIHoZYuwkyrQ=
+X-Google-Smtp-Source: APXvYqyIPwl0S6jRE34E12YGAmWHDZNVSCwAA5qh0H2PebjDsD/P1uiN2zohv5YD7qMyjYfgJIgh6w==
+X-Received: by 2002:a1c:b457:: with SMTP id d84mr21012700wmf.153.1561462266412;
+        Tue, 25 Jun 2019 04:31:06 -0700 (PDT)
+Received: from szeder.dev (x4d0c7556.dyn.telefonica.de. [77.12.117.86])
+        by smtp.gmail.com with ESMTPSA id x8sm30563820wre.73.2019.06.25.04.31.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Jun 2019 04:31:05 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 13:31:03 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] rebase: fix garbled progress display with '-x'
+Message-ID: <20190625113103.GB10853@szeder.dev>
+References: <20190430142556.20921-1-szeder.dev@gmail.com>
+ <20190611130320.18499-1-szeder.dev@gmail.com>
+ <20190611130320.18499-4-szeder.dev@gmail.com>
+ <xmqq36kflv0f.fsf@gitster-ct.c.googlers.com>
+ <20190611211151.GG4012@szeder.dev>
+ <nycvar.QRO.7.76.6.1906122056570.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <20190624183927.GA10853@szeder.dev>
+ <efc4a141-071a-6549-f25d-21cc6256832a@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-837661696-1561462268=:44"
-X-Provags-ID: V03:K1:IebrNsvcDCFac5LaNODpNtofHdOzEzYXbKWIM20sLO995WhCo/c
- ZVIgsEGZyXmhTQZDNq22fIKLLtnEQrQDkLRHCFb56osJOKkhPQd5wG3iXiYkwoOZ89oF/o0
- HBmX4LukZuYi8Rb8r5D9g6PH83Ok6VEEogsp9CvXn3RyeTqg5nVHYQJRj9hs8SyampY+/gy
- VWzcYIy1UMdTzDNbpMwWw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ERK6mfFquls=:IyQc4kHQJ0bdrlv99PMCvq
- tpjFZanRvDysmYxjwJ9ODTC7cSk76q1Hwh7H/Mze81lXvd6bAZQ2EIoKln0d0xaaN9HvKJ+Sq
- 1BdL2qRe9DN3XZ7D9ufA03zvwxDGfJ3bop0KbhpEffMihCmgGXjp5YfWBd0P2fs7vCIoNbZze
- +1EQ6vTyF5UyY6I4th1kRKGd2k+AJoQLa+OaOgdw/ycc8jTct4DIuPjEvMCIOn0MudFhHkMhs
- dbRxM5be5PFFgrFY5WVCDlrRpLo4PkQ26gtMYIN7Kf2oUo1I/iN9iB3mNHQYhh314XH1XMu8P
- KFksvKx1pKyfuBSp+2mkf14GA6ju3Kzt1u8RCWLDkzmaKV5Gg16llubnwlG792Z5jGdoxvlTS
- j93pJbMY77Vh0XRhTLP/WtkH/tjNAtJ3g6EoVuWUo/4MUlNjlqj2XgmKguL8z6MzEn8H5t2RP
- 2jleF1If1I9qtodwOFE5nNUCU3tx0kRoxvm6nqaSrsCpndqoS0loaC7HPr3V60G5s43USJtZz
- UexSzd4svmUoPWV6DjYTPYb2qCs2BMCeZR3wtC6QgLInRmUqXemw86amKrEoNtFHYw+KUdEBo
- ILF1CtdSGtD9/rlN2iKWpF4yeraBHKxQwEPiRQi7XgzsOuS9Fa8Q4ImXulWpoHvCxGPzVoo3b
- mkhOXN8EVwUredK52q/PWod8AClEy9zpxddLsD6BI8CAFfm4V2KYpWxqaYXJMNwa2eQAHfHsR
- 9iXWI8y5eMssmQenl1ZtDV7CqAH+Svfxu0SBuKXD4MNAGtTJyQqMmo5ZTL+Bs7XPoaYAloHC3
- Zn0Kju51o5gqjKMHkONd1+LOeiiftwb/kASyrKB0soEruSplhv7rKomInaa+9UKe0fK5mFkK3
- DjgdRgPuhsK45zzVk4kKPPNEeAXQmszZ7ENUUErGTPdrV9Nmi1YXNIj0YhkZ4a8bMbBMDeRAP
- dVTvc9VvLF2Wh8wTUGcXNhbab21dTTc1R6MbxRspDSJhw5Q++dnp7obhz6Wh/sckTzpyviRI+
- /bOz1pyZMgghmL+D5PSh9wyf4xE5pyCna7G93dnZZT4uf7sq0YfTIV1NZh/Mqx9XC4NGbDqfq
- xz/HmgFgk7cQ71ZEm3//YN3jfWcnep38phg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <efc4a141-071a-6549-f25d-21cc6256832a@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Jun 25, 2019 at 11:08:04AM +0100, Phillip Wood wrote:
+> >> Rebasing (1/4)QRebasing (2/4)QRebasing (3/4)QRebasing (4/4)QQ                                                                                QSuccessfully rebased and updated refs/heads/missing-commit.
 
---8323328-837661696-1561462268=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-Hi Duy,
+> >> May I please *strongly* suggest to fix this first? It should
+> >>
+> >> - completely lose that last line,
+> >> - be inserted into the test case itself so that e.g. disk full problems are
+> >>   caught and logged properly, and
+> >> - the `test_i18ncmp expect actual` call in the test case should be replaced
+> >>   by something like:
+> >>
+> >> 	sed "\$d" <actual >actual-skip-progress &&
+> >> 	test_i18ncmp expect actual-skip-progress
+> >>
+> >> This should obviously be made as a separate, introductory patch (probably with
+> >> a less scathing commit message than my comments above would suggest).
+> >>
+> >> And that would also remove the double-yuck.
+> > 
+> > Unfortunately, this addresses only one of the "Yuck"s; see v3 of this
+> > patch series [1].
+> > 
+> > The other yucks affect the following four tests in
+> > 't3420-rebase-autostash.sh':
+> > 
+> >   16 - rebase --merge --autostash: check output
+> >   23 - rebase --merge: check output with conflicting stash
+> >   26 - rebase --interactive --autostash: check output
+> >   33 - rebase --interactive: check output with conflicting stash
+> > 
+> > These tests come from commits b76aeae553 (rebase: add regression tests
+> > for console output, 2017-06-19) and 7d70e6b902 (rebase: add more
+> > regression tests for console output, 2017-06-19), and are specifically
+> > about checking the (whole) console output of 'git rebase', so I left
+> > the updates to them as they were.
+> > 
+> > In any case, Cc-ing Phillip to discuss whether something could be done
+> > about them (now perhaps preferably (for me :) as a follow-up, and not
+> > another preparatory patches).
+> 
+> Those tests were added to check that `git stash` was being silenced (see
+> 79a6226981 ("rebase -i: silence stash apply", 2017-05-18)).
 
-On Tue, 25 Jun 2019, Johannes Schindelin wrote:
+Hmm, so would it then be possible/sensible to do something like this
+instead:
 
-> On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> > diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
-> > new file mode 100755
-> > index 0000000000..97bcd814be
-> > --- /dev/null
-> > +++ b/t/t3011-ls-files-json.sh
-> > @@ -0,0 +1,44 @@
-> > +#!/bin/sh
-> > +
-> > +test_description=3D'ls-files dumping json'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +strip_number() {
-> > +	for name; do
-> > +		echo 's/\("'$name'":\) [0-9]\+/\1 <number>/' >>filter.sed
->
-> This does not do what you think it does, in Ubuntu Xenial and on macOS:
->
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11408&vi=
-ew=3Dms.vss-test-web.build-test-results-tab&runId=3D27736&paneView=3Ddebug=
-&resultId=3D105613
->
-> The `\1` is expanded to the ASCII character 001. Therefore your test cas=
-es
-> fail on almost all platforms.
+  git rebase --options... >out &&
+  test_i18ngrep ! "<something specific that only 'git stash' would print if it wasn't silenced>" out
 
-The `strip_number()`/`strip_string()` approach might look elegant from a
-design perspective, but from a readability perspective (and obviously,
-when one wants to make those tests more robust and cross-platform), it
-would be a lot better to do it more explicitly.
+> I can have a
+> think about a better way to do that, but is it still a problem? I just
+> tried to take a look at your CI output and
+> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=11406
+> seems to be all green - have I missed something or has Gábor fixed the
+> issue?
 
-This patch on top of your patch series makes the test run correctly in my
-Linux and Windows setup, and much easier to understand:
+No, it was Dscho who fixed the Azure CI issue, see
 
-=2D- snipsnap --
-diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
-index 9f4ad4c9cf..8b782c48e0 100755
-=2D-- a/t/t3011-ls-files-json.sh
-+++ b/t/t3011-ls-files-json.sh
-@@ -4,18 +4,6 @@ test_description=3D'ls-files dumping json'
+  https://public-inbox.org/git/nycvar.QRO.7.76.6.1906141356140.44@tvgsbejvaqbjf.bet/
 
- . ./test-lib.sh
+elsewhere in this thread (it's a long one, but well worth the read
+IMO).
 
--strip_number() {
--	for name; do
--		echo 's/\("'$name'":\) [0-9]\+/\1 <number>/' >>filter.sed
--	done
--}
--
--strip_string() {
--	for name; do
--		echo 's/\("'$name'":\) ".*"/\1 <string>/' >>filter.sed
--	done
--}
--
- compare_json() {
- 	git ls-files --debug-json >json &&
- 	sed -f filter.sed json >filtered &&
-@@ -35,9 +23,21 @@ test_expect_success 'setup' '
- 	echo intent-to-add >ita &&
- 	git add -N ita &&
+However, the point here is not that Azure CI failure, but rather the
+fact that tests had to be updated to include the new line clearing
+sequence in the expected output, and that "Q<...80 spaces...>Q" looks
+yuck indeed.
 
--	strip_number ctime_sec ctime_nsec mtime_sec mtime_nsec &&
--	strip_number device inode uid gid file_offset ext_size last_update &&
--	strip_string oid ident
-+	cat >filter.sed <<-\EOF
-+	s/\("ctime_sec":\) [0-9]\+/\1 <number>/
-+	s/\("ctime_nsec":\) [0-9]\+/\1 <number>/
-+	s/\("mtime_sec":\) [0-9]\+/\1 <number>/
-+	s/\("mtime_nsec":\) [0-9]\+/\1 <number>/
-+	s/\("device":\) [0-9]\+/\1 <number>/
-+	s/\("inode":\) [0-9]\+/\1 <number>/
-+	s/\("uid":\) [0-9]\+/\1 <number>/
-+	s/\("gid":\) [0-9]\+/\1 <number>/
-+	s/\("file_offset":\) [0-9]\+/\1 <number>/
-+	s/\("ext_size":\) [0-9]\+/\1 <number>/
-+	s/\("last_update":\) [0-9]\+/\1 <number>/
-+	s/\("oid":\) ".*"/\1 <string>/
-+	s/\("ident":\) ".*"/\1 <string>/
-+	EOF
- '
-
- test_expect_success 'ls-files --json, main entries, UNTR and TREE' '
-@@ -98,7 +98,9 @@ test_expect_success !SINGLE_CPU 'ls-files --json and mul=
-ticore extensions' '
- 		touch one two three four &&
- 		git add . &&
- 		cp ../filter.sed . &&
--		strip_number offset &&
-+		cat >>filter.sed <<-\EOF &&
-+		s/\("offset":\) [0-9]\+/\1 <number>/
-+		EOF
- 		compare_json eoie
- 	)
- '
-
---8323328-837661696-1561462268=:44--
