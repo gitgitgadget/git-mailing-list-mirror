@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFD851F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09CE31F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731053AbfFYOtv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 10:49:51 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35274 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731769AbfFYOtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:49:39 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w20so19944613edd.2
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:38 -0700 (PDT)
+        id S1731978AbfFYOtq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 10:49:46 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33243 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731429AbfFYOto (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 10:49:44 -0400
+Received: by mail-ed1-f65.google.com with SMTP id i11so27598066edq.0
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qUawvVx9e8pcL3sa1O6MgFXtN7nuq0z+7VUdxlYXMko=;
-        b=JIVq68mihUMrx/q/VOuzSJuN605TKKwoK7cEYp1ZDWqGf9VNSvR69KXAKeKKO42GXM
-         zCQ9wF/q3K/9NUjui6kmmkGLw/r6dWhd+4cRCdfuhp73Y7yv33oqlSbVz21F8e/53MXS
-         d45qM4uGqw92gRMWcyTaa36vTZknbS5A62nRYX6Hx/nKIUHZGLfq3LN5iYHPauro93wS
-         jxH6nZsc508CkRkI3npKe6jnCohGOk+CjmNzTnve3NmNVngWsvuG9+1CQaglNTbXXC5E
-         Sd+NEPux+FS6fQWbSr4c1CS13Tvn1XtyL8C+qYDR2ieIu1fkjdGl/luApbllpVhpNOlc
-         ppng==
+        bh=qcyS8YGsoGXGwJUmX0IUCggwXAEadBUw1CFX8LLJFY4=;
+        b=l8fz4/dArNDmnmzzG5VhqbWbRgI3gAQY1y1FCKNr5RTQ4hygPLBBkMecvdUD5+okhq
+         cDOGBvemrLKpPKLR2depV5X71B9/NkS4lrY/2arkKKAVG2U+DvthTwNwRcdjpNSXPRQ0
+         nTB3IV/wu+ky7WSmZsy9GQLhT57rqwhylm0INs++zy4h9OD/SEGHd3UKehLZBRPDPOh3
+         kjwaVPOdBUMw8tBHdScQ6RQkoLFp9wTYkybuS3Gktz/QjHI/xW4Lp4llzEpZLH/BSXVg
+         8wlil4iTHg2JPxEXtlo/zeFtJpfgBVmU/SK66fmpj2Zv4gWiiaMeqf1AhsmdzfUbXyq2
+         gywA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qUawvVx9e8pcL3sa1O6MgFXtN7nuq0z+7VUdxlYXMko=;
-        b=NyPvu8MCdxxyehzd7Tdy03vSiJ7lS0e4L3wcT567P2yZKzjHzqVZntwjyAjR+hD3C2
-         2NHhMMuJGDM0U7rpVQytOSV8q8iq1bLkm4xu6OCO/+gq3qonSzO6+Tx6OpvgtiI57ehe
-         vf6S5EMXLDOl8vMJ/7QsEZ+5wT5VcBwmZ8ROEiauPbvpY637rRphyWVjSGXZvaDLeo6T
-         D+GpJroNiM2UvgEOEqIy9kyj3t4jvg89I4JYDS3KXZos2PxWG9ePr/vGFZPJRdI5lClg
-         tabQXNoZoJ+LAmi1slozbeDNP55erIlpi+dCnTcqLRoRYPTRlGs7MKKZT02ZvlCc9OHj
-         5X4A==
-X-Gm-Message-State: APjAAAX242xWB3VC56w6iRxtyFjn23P2yA7yy2EtxpObbkQoSP/NxVk2
-        IcgtDiacbaSfQ2lfE0T/ZLvbzR+M
-X-Google-Smtp-Source: APXvYqx2qY/f58V7V1Fi8fxYmux+ERym4HHfPFoOyKtsI/VeRQDf2gea+V9ml4Gx7mhNetmsPQAZjw==
-X-Received: by 2002:a50:87d0:: with SMTP id 16mr118899127edz.133.1561474177703;
-        Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
+        bh=qcyS8YGsoGXGwJUmX0IUCggwXAEadBUw1CFX8LLJFY4=;
+        b=ZrlF2Q4iO9T38Ikqev4SfV73clD37cGAaNLItMryzlfkHBfX3xozQXcXqiYAkIadDs
+         MxmJJivpYCQz6wXyiE49twG3qXqMGn3mQe0Qpgq6T83JBXuk6RWQEiFRe+lsUm29tT6f
+         EJzXi4P889j4DbcNZ8wGCaT0JSvtYVfgGMt+cCdSyncGdewL39beAwDVp5+W5JRq5JSL
+         z32HOlWHZVLx+spmgUlCWU+WhmkIKGK5nGnpPhiVWdfDXdnHSjhF7C6gkkCHByZbwavN
+         Z3CQpPrTJXEfF3MKkGUNsISyOu9qpo1D0FhZQubOd+CPDeHChrjXZjz1oo68WfODCxBb
+         VI6g==
+X-Gm-Message-State: APjAAAVUDeVTALE9B3WNB17kkWIfyZsy5gBimZ4/0xSwihojkaEQSJ7h
+        WvyIsmVEBHzOxqZ2VO7zZ0ot/5nA
+X-Google-Smtp-Source: APXvYqwivR76FWkaNovuEl0nBZGM8g6aCwDilJ6E/hbRGRuwB1mC1yND4zP/FtPCbjJNQprabS4SmA==
+X-Received: by 2002:a50:a5ec:: with SMTP id b41mr141633774edc.52.1561474182485;
+        Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m3sm4604493edi.33.2019.06.25.07.49.37
+        by smtp.gmail.com with ESMTPSA id k20sm2844193ede.66.2019.06.25.07.49.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 14:49:18 GMT
-Message-Id: <7cfd0fc9b42eee9bac026f7541b6cceec215000b.1561474167.git.gitgitgadget@gmail.com>
+        Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
+X-Google-Original-Date: Tue, 25 Jun 2019 14:49:25 GMT
+Message-Id: <7cb0434fac0cd73bd624571f90eed77e93181858.1561474167.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v3.git.gitgitgadget@gmail.com>
 References: <pull.149.v2.git.gitgitgadget@gmail.com>
         <pull.149.v3.git.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 12/20] msvc: define ftello()
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 19/20] msvc: avoid debug assertion windows in Debug Mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,35 +67,45 @@ Cc:     Carlo Arenas <carenas@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It is just called differently in MSVC's headers.
+For regular debugging, it is pretty helpful when a debug assertion in a
+running application triggers a window that offers to start the debugger.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+However, when running the test suite, it is not so helpful, in
+particular when the debug assertions are then suppressed anyway because
+we disable the invalid parameter checking (via invalidcontinue.obj, see
+the comment in config.mak.uname about that object for more information).
+
+So let's simply disable that window in Debug Mode (it is already
+disabled in Release Mode).
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/msvc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ compat/mingw.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/compat/msvc.h b/compat/msvc.h
-index d336d80670..d7525cf61d 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -18,6 +18,8 @@
+diff --git a/compat/mingw.c b/compat/mingw.c
+index d01e88c2f8..433838391f 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2437,6 +2437,10 @@ int wmain(int argc, const wchar_t **wargv)
+ 	trace2_initialize_clock();
  
- #undef ERROR
- 
-+#define ftello _ftelli64
+ #ifdef _MSC_VER
++#ifdef _DEBUG
++	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
++#endif
 +
- typedef int sigset_t;
- /* open for reading, writing, or both (not in fcntl.h) */
- #define O_ACCMODE     (_O_RDONLY | _O_WRONLY | _O_RDWR)
+ #ifdef USE_MSVC_CRTDBG
+ 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+ #endif
 -- 
 gitgitgadget
 
