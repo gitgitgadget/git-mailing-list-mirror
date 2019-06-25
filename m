@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09CE31F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9A7F1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731978AbfFYOtq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 10:49:46 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33243 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731429AbfFYOto (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:49:44 -0400
-Received: by mail-ed1-f65.google.com with SMTP id i11so27598066edq.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:43 -0700 (PDT)
+        id S1731984AbfFYOtw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 10:49:52 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33956 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731198AbfFYOth (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 10:49:37 -0400
+Received: by mail-ed1-f67.google.com with SMTP id s49so27593522edb.1
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qcyS8YGsoGXGwJUmX0IUCggwXAEadBUw1CFX8LLJFY4=;
-        b=l8fz4/dArNDmnmzzG5VhqbWbRgI3gAQY1y1FCKNr5RTQ4hygPLBBkMecvdUD5+okhq
-         cDOGBvemrLKpPKLR2depV5X71B9/NkS4lrY/2arkKKAVG2U+DvthTwNwRcdjpNSXPRQ0
-         nTB3IV/wu+ky7WSmZsy9GQLhT57rqwhylm0INs++zy4h9OD/SEGHd3UKehLZBRPDPOh3
-         kjwaVPOdBUMw8tBHdScQ6RQkoLFp9wTYkybuS3Gktz/QjHI/xW4Lp4llzEpZLH/BSXVg
-         8wlil4iTHg2JPxEXtlo/zeFtJpfgBVmU/SK66fmpj2Zv4gWiiaMeqf1AhsmdzfUbXyq2
-         gywA==
+        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
+        b=CePhjfu8TDCniWl23kgGFSym4T+r5Xh4s1Q8MnsZOEfBwdDVIn5RlD9wdFIc7MLCNU
+         QoVTKXULT+jLCXssIoG2eiSHr6Zdc4J0lDB1rxsU9Ua0l0AWSn6lZTrZ5hIJ8MW2KgJz
+         MacWyibsmCAXtyXhNBK7AsYAJU/kdvcEOPE0y66f2jWIZAo0aTNgmu/W1YG9m+5q7GsC
+         XFI4iEb3aoX7EA8VK8FjgkEOQx6R6Jel2hUi5ksKlM6RSHgpGtaAOk77amCxnwwFsB+Y
+         mChg04MMkhmetjcOyEZkazGuyI80p9D0VsmrbtMyaSCI/Vd5uUBtjDr9Yzw6G4peHNBf
+         PouQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qcyS8YGsoGXGwJUmX0IUCggwXAEadBUw1CFX8LLJFY4=;
-        b=ZrlF2Q4iO9T38Ikqev4SfV73clD37cGAaNLItMryzlfkHBfX3xozQXcXqiYAkIadDs
-         MxmJJivpYCQz6wXyiE49twG3qXqMGn3mQe0Qpgq6T83JBXuk6RWQEiFRe+lsUm29tT6f
-         EJzXi4P889j4DbcNZ8wGCaT0JSvtYVfgGMt+cCdSyncGdewL39beAwDVp5+W5JRq5JSL
-         z32HOlWHZVLx+spmgUlCWU+WhmkIKGK5nGnpPhiVWdfDXdnHSjhF7C6gkkCHByZbwavN
-         Z3CQpPrTJXEfF3MKkGUNsISyOu9qpo1D0FhZQubOd+CPDeHChrjXZjz1oo68WfODCxBb
-         VI6g==
-X-Gm-Message-State: APjAAAVUDeVTALE9B3WNB17kkWIfyZsy5gBimZ4/0xSwihojkaEQSJ7h
-        WvyIsmVEBHzOxqZ2VO7zZ0ot/5nA
-X-Google-Smtp-Source: APXvYqwivR76FWkaNovuEl0nBZGM8g6aCwDilJ6E/hbRGRuwB1mC1yND4zP/FtPCbjJNQprabS4SmA==
-X-Received: by 2002:a50:a5ec:: with SMTP id b41mr141633774edc.52.1561474182485;
-        Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
+        bh=dqJHfuKTPsOY8evakM7j8XeIh7DKWK6mb9bcnQXq+SE=;
+        b=LjpydHVdeTh9WeRVbeuKy1yH9NWU+R/VmGXDO9jyrTlfMR77E6XK8Spi8TPmTQLfDD
+         QtBz4tKNiI9E94XP+O2vHIlP4MrEzLrv/K3yKpyoChHh5NHfQlprmQIYOiAjceEC6BUL
+         5jpDSRoIwKz9BnzNBqluol29jykfmVJ5WAn+d3IsnSsLAkLFSmAwSSB+rxD4IeW8Jt2l
+         srejKmSo6LFH/74pIVpC9LdCAMB6FoVvKNk7V6F+8OzY5sNXButqCkMv75Z5xZU9zOkq
+         GO9sKdKwcDYUXye+Rnh8E4TsedrK0dqDNxZrDOskXHEmHCX+X7AxANFsYdYbwZZ5u055
+         qtnA==
+X-Gm-Message-State: APjAAAWN8RieQB5nUAGTDV1dTwtNgXyUyLelT7CmNYQCoO88c2O0esFL
+        uMB4xm4XnCAWm7Y8N5fmAAzzPoBy
+X-Google-Smtp-Source: APXvYqwR9t7cXZlKbs5BZq4r4+lcExumR50ekb332D3tcw/UpaMIZcfVJluaakaiDeb6awOi0SLGNg==
+X-Received: by 2002:a50:89a2:: with SMTP id g31mr138419090edg.93.1561474175682;
+        Tue, 25 Jun 2019 07:49:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k20sm2844193ede.66.2019.06.25.07.49.41
+        by smtp.gmail.com with ESMTPSA id z9sm4961777edd.53.2019.06.25.07.49.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 07:49:42 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 14:49:25 GMT
-Message-Id: <7cb0434fac0cd73bd624571f90eed77e93181858.1561474167.git.gitgitgadget@gmail.com>
+        Tue, 25 Jun 2019 07:49:35 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 07:49:35 -0700 (PDT)
+X-Google-Original-Date: Tue, 25 Jun 2019 14:49:15 GMT
+Message-Id: <99a2939cc2d4501d37e806de9273c8f9832b7849.1561474167.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v3.git.gitgitgadget@gmail.com>
 References: <pull.149.v2.git.gitgitgadget@gmail.com>
         <pull.149.v3.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 19/20] msvc: avoid debug assertion windows in Debug Mode
+From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 09/20] msvc: define O_ACCMODE
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,45 +67,47 @@ Cc:     Carlo Arenas <carenas@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Philip Oakley <philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Philip Oakley <philipoakley@iee.org>
 
-For regular debugging, it is pretty helpful when a debug assertion in a
-running application triggers a window that offers to start the debugger.
+This constant is not defined in MSVC's headers.
 
-However, when running the test suite, it is not so helpful, in
-particular when the debug assertions are then suppressed anyway because
-we disable the invalid parameter checking (via invalidcontinue.obj, see
-the comment in config.mak.uname about that object for more information).
+In UCRT's fcntl.h, _O_RDONLY, _O_WRONLY and _O_RDWR are defined as 0, 1
+and 2, respectively. Yes, that means that UCRT breaks with the tradition
+that O_RDWR == O_RDONLY | O_WRONLY.
 
-So let's simply disable that window in Debug Mode (it is already
-disabled in Release Mode).
+It is a perfectly legal way to define those constants, though, therefore
+we need to take care of defining O_ACCMODE accordingly.
 
+This is particularly important in order to keep our "open() can set
+errno to EISDIR" emulation working: it tests that (flags & O_ACCMODE) is
+not identical to O_RDONLY before going on to test specifically whether
+the file for which open() reported EACCES is, in fact, a directory.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ compat/msvc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index d01e88c2f8..433838391f 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2437,6 +2437,10 @@ int wmain(int argc, const wchar_t **wargv)
- 	trace2_initialize_clock();
+diff --git a/compat/msvc.h b/compat/msvc.h
+index 04b4750b87..d336d80670 100644
+--- a/compat/msvc.h
++++ b/compat/msvc.h
+@@ -19,6 +19,8 @@
+ #undef ERROR
  
- #ifdef _MSC_VER
-+#ifdef _DEBUG
-+	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
-+#endif
-+
- #ifdef USE_MSVC_CRTDBG
- 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
- #endif
+ typedef int sigset_t;
++/* open for reading, writing, or both (not in fcntl.h) */
++#define O_ACCMODE     (_O_RDONLY | _O_WRONLY | _O_RDWR)
+ 
+ #include "compat/mingw.h"
+ 
 -- 
 gitgitgadget
 
