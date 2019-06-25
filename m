@@ -8,169 +8,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A98001F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 10:11:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D7391F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 10:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbfFYKLb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 06:11:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36782 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728018AbfFYKL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 06:11:28 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k21so26354499edq.3
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 03:11:27 -0700 (PDT)
+        id S1727702AbfFYKaT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 06:30:19 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:44279 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727022AbfFYKaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 06:30:16 -0400
+Received: by mail-io1-f67.google.com with SMTP id s7so1976287iob.11
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 03:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sIee3jvzarAXThJpOI5auz7CsbmfSGLzPDeYhLRewjI=;
-        b=L2bWO5EwI1ddzDwmkSZH66fb6ILF1mrnnsOsM8OBSlJTd5w1RgzD3cX79Ai5/ykEbx
-         zRT0ce0IYN2K3PhYVdE6GmFq+E+JFtJoUgs3n2hQwKjouMI85luqDqPfuQersG6qkG6E
-         HaUd3BSAHkJ9k2trExA05q0Xs83Xb8wNTCZcb7+r+U2nWKdDEECKRi5x/SHG91hxMP03
-         nAA2+PIG/uGYeXnNVUp1JYyEECLORKo7C7p6nf+4XetJbWR2tqo2UAVrhPmxQAhb2Qs4
-         ZdnxKtIZb2lFT0xr16mNzj36fo+5zUtUsZwDvX0bMJzGtOUgaAynofPnlDJkNfggpHiW
-         yX7A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=upC59MnyeFsHXzxMaAKnjwkTNNMh3eStMkIrBNDCN1o=;
+        b=ex+ZXHbpn6dvzKx0HMxSXvOnUlkEKy4QfnORHTAUnWolU6DwCqXV0mU8+gev7f30tZ
+         doq9UhztQFztwRk1rPAsTuEuZ9IZORoPwgKD9JXK5NzVXP+5lHVlzK1sXutNYPSNpRwB
+         DtCuPDVqNtDE024ZprZ8305GN6w7NveR5q2LE+BtGpZz7cDDUFmmx+f6ypnP5Ov4PCri
+         xEFurfUYxfWtBwiJ7vEzHmutZ/QcuGFA+tk4ZebqhiGASAExkLe6S14WKIxm/a0HFRTO
+         nEgL4Fos6V2J08UV41z32cDN44nJlQyD4MnMv5tXHX0IbWF7VmIUDm7SZ/RHz+2HJynY
+         37JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sIee3jvzarAXThJpOI5auz7CsbmfSGLzPDeYhLRewjI=;
-        b=okQqNsIrgWNpM/tdtPjTnrsBXjAmQC97dR0kUPSMoNdi06N1O+VRC4Qw2N3spSpdGe
-         baxmbc+pznBfBBu/3WlNgdJWs42+byCJD6g+cCGOb1QYK44dpuUx/bB7ZAwChH3DZ5wl
-         IUmsEV7C6a5ttwzF7Tko1wqrK3u4e9edIcLNw59qJ6O2Sp1w2dJxNwoEgYTWv6PzG9fR
-         bvVHjcubRyFODYXl+bNQdwJxuFy8MmXLWo7QLCFe8OtsX7tKMcBe/pFFyvnsEnzdUENe
-         7oxeDnta8+o6ouV996n3vwlk0td0LgS4E7/3Kf5goNMXcJImnwYO94rH+gI/oZbK8Jx3
-         edkw==
-X-Gm-Message-State: APjAAAV4wx+yw4WDBr4vTr9TjcAgjE3m5Qy1FAw1met6nc5Z9X1vkXW5
-        NqmkgB4E/uuUtDhgJeN/gkjs39cM
-X-Google-Smtp-Source: APXvYqxnxFzq/OxB2CPAyanxHl71BdDGEObKcY2pLD6J/b2RTJHyc3j1Al3xfviwAkdVv9yBd0C0cQ==
-X-Received: by 2002:a50:fd0c:: with SMTP id i12mr81716360eds.55.1561457486934;
-        Tue, 25 Jun 2019 03:11:26 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v11sm2356992ejx.24.2019.06.25.03.11.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 03:11:26 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 03:11:26 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 10:11:23 GMT
-Message-Id: <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.275.git.gitgitgadget@gmail.com>
-References: <pull.275.git.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/3] status: do not report errors in sequencer/todo
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=upC59MnyeFsHXzxMaAKnjwkTNNMh3eStMkIrBNDCN1o=;
+        b=qrDWZohAII+KvbscgniBUZ0C2cQVXwqVtg5tc4bFeB0dhSd1GEACThBmwHmjcF2/mB
+         9w77T+nVJZGf6da4pM2TgD7FuS5176f83/rtC4G5m5QJPL9xl7t1W10GsP8mrLu0gm/E
+         59o6q3o5diJtdQye7xb5ajTirjydV7owmN+L0gUXsy7FJdCbqQLrFLJmej+BQofuFBfk
+         6WCz7vNKsN1lXSwuBaj7F8eQmEcvv7xcvUlgFePksF3orSR4d15SPY2HG1w3VehFu8Wo
+         0++jZBLlWcFaV90zJXKM1ljGRe9tIFB9IU2oxZ1K42NrzlJXJrxvRHidmOz/ih7vHFmC
+         uYVg==
+X-Gm-Message-State: APjAAAXsth9pgX4V8VRaxG2PrQ79Ph5j1Wx5R0aemBzDbbQM+s5b9aRz
+        nFgjldT8nmlIiiGCh9q7H4ZSY1SSP+gT7pqGoi2voA==
+X-Google-Smtp-Source: APXvYqx6OoVAnhw5zWj+EcgzBRutYysnrUOJZls6a3JE/yDRg2d40LySadEFpFvvXJIjJfGV4IWwnlpwRbAMFYixArI=
+X-Received: by 2002:a02:13c3:: with SMTP id 186mr45804138jaz.30.1561458615513;
+ Tue, 25 Jun 2019 03:30:15 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+References: <20190624130226.17293-1-pclouds@gmail.com> <20190624130226.17293-6-pclouds@gmail.com>
+ <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com>
+In-Reply-To: <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 25 Jun 2019 17:29:49 +0700
+Message-ID: <CACsJy8BjhQD-g69dr-yDCycgfrHZ8xJLgjD=LanRUBxAN6=Zrg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/10] split-index.c: dump "link" extension as json
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Jun 25, 2019 at 3:06 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
+> I'm curious how big these EWAHs will be in practice and
+> how useful an array of integers will be (especially as the
+> pretty format will be one integer per line).  Perhaps it
+> would helpful to have an extended example in one of the
+> tests.
 
-commit 4a72486de9 ("fix cherry-pick/revert status after commit",
-2019-04-16) used parse_insn_line() to parse the first line of the todo
-list to check if it was a pick or revert. However if the todo list is
-left over from an old cherry-pick or revert and references a commit that
-no longer exists then parse_insn_line() prints an error message which is
-confusing for users [1]. Instead parse just the command name so that the
-user is alerted to the presence of stale sequencer state by status
-reporting that a cherry-pick or revert is in progress.
+It's one integer per updated entry. So if you have a giant index and
+updated every single one of them, the EWAH bitmap contains that many
+integers.
 
-Note that we should not be leaving stale sequencer state lying around
-(or at least not as often) after commit b07d9bfd17 ("commit/reset: try
-to clean up sequencer state", 2019-04-16). However the user may still
-have stale state that predates that commit.
+If it was easy to just merge these bitmaps back to the entry (e.g. in
+this example, add "replaced": true to entry zero) I would have done
+it. But we dump as we stream and it's already too late to do it.
 
-Also avoid printing an error message if for some reason the user has a
-file called `sequencer` in $GIT_DIR.
+> Would it be better to have the caller of ewah_each_bit()
+> build a hex or bit string in a strbuf and then write it
+> as a single string?
 
-[1] https://public-inbox.org/git/3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com/
+I don't think the current EWAH representation is easy to read in the
+first place. You'll probably have to run through some script to update
+the main entries part and will have a much better view, but that's
+pretty quick. If it's for scripts, then it's probably best to keep as
+an array of integers, not a string. Less post processing.
 
-Reported-by: Espen Antonsen <espen@inspired.no>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c            | 24 ++++++++----------------
- t/t7512-status-help.sh | 16 ++++++++++++++++
- 2 files changed, 24 insertions(+), 16 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 793f86bf9a..f8eab1697e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2177,34 +2177,26 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
- 
- int sequencer_get_last_command(struct repository *r, enum replay_action *action)
- {
--	struct todo_item item;
--	char *eol;
--	const char *todo_file;
-+	const char *todo_file, *bol;
- 	struct strbuf buf = STRBUF_INIT;
--	int ret = -1;
-+	int ret = 0;
- 
- 	todo_file = git_path_todo_file();
- 	if (strbuf_read_file(&buf, todo_file, 0) < 0) {
--		if (errno == ENOENT)
-+		if (errno == ENOENT || errno == ENOTDIR)
- 			return -1;
- 		else
- 			return error_errno("unable to open '%s'", todo_file);
- 	}
--	eol = strchrnul(buf.buf, '\n');
--	if (buf.buf != eol && eol[-1] == '\r')
--		eol--; /* strip Carriage Return */
--	if (parse_insn_line(r, &item, buf.buf, buf.buf, eol))
--		goto fail;
--	if (item.command == TODO_PICK)
-+	bol = buf.buf + strspn(buf.buf, " \t\r\n");
-+	if (is_command(TODO_PICK, &bol) && (*bol == ' ' || *bol == '\t'))
- 		*action = REPLAY_PICK;
--	else if (item.command == TODO_REVERT)
-+	else if (is_command(TODO_REVERT, &bol) &&
-+		 (*bol == ' ' || *bol == '\t'))
- 		*action = REPLAY_REVERT;
- 	else
--		goto fail;
--
--	ret = 0;
-+		ret = -1;
- 
-- fail:
- 	strbuf_release(&buf);
- 
- 	return ret;
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index c1eb72555d..3c9308709a 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -798,6 +798,22 @@ EOF
- 	test_i18ncmp expected actual
- '
- 
-+test_expect_success 'status shows cherry-pick with invalid oid' '
-+	mkdir .git/sequencer &&
-+	test_write_lines "pick invalid-oid" >.git/sequencer/todo &&
-+	git status --untracked-files=no >actual 2>err &&
-+	git cherry-pick --quit &&
-+	test_must_be_empty err &&
-+	test_i18ncmp expected actual
-+'
-+
-+test_expect_success 'status does not show error if .git/sequencer is a file' '
-+	test_when_finished "rm .git/sequencer" &&
-+	test_write_lines hello >.git/sequencer &&
-+	git status --untracked-files=no 2>err &&
-+	test_must_be_empty err
-+'
-+
- test_expect_success 'status showing detached at and from a tag' '
- 	test_commit atag tagging &&
- 	git checkout atag &&
+Another reason for not merging to one string (might not be a very good
+argument though) is to help diff between two indexes.
+One-number-per-line works well with "git diff --no-index" while one
+long string is a bit harder. I did this kind of comparison when I made
+changes in read-cache.c and wanted to check if the new index file is
+completely broken, or just slighly broken.
 -- 
-gitgitgadget
+Duy
