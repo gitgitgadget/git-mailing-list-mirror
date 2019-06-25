@@ -2,170 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E7C61F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:50:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E1161F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbfFYNuf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 09:50:35 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33471 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726524AbfFYNuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:50:35 -0400
-Received: by mail-ed1-f68.google.com with SMTP id i11so27321636edq.0
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:50:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9Rafg6rcCwyS+wOqm2pcWLwU3AOqJcYj+t04xEzjUQg=;
-        b=ErI+J4bpyNLGhTaZMx/hq4vR9c53M9dmrcJI8AzU+Z+txw+WFfyhnA8lUl+hCDeo2z
-         D0MGP9FHaKo18gG0vvwed9eE3znKhpTZ8NlOb4GosPCURZZ+9H+gw3pe3s4ZysHjuNtK
-         yjNO3KtZRaclhO/2YeVJi6dWI3X0qvnYtnC0CWKIlJIUBZm+Twkx+Vpp2HAot1y8tl0Y
-         5amlTiyexBGtiNbT+Y3A79FnAtxmK0uzqajpYfCFWlM7QeR1Q2QVjMGxph2iSnV6Hfac
-         +MXNmBNkqr2JCZBHDotAo8KtHTCkJWpRA55M649quz0KVpAev/QxAA9oVkkKUc7CQKCp
-         /dtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9Rafg6rcCwyS+wOqm2pcWLwU3AOqJcYj+t04xEzjUQg=;
-        b=PBSuU5SZL2fivpyHzT+WxcyV4Ihepr6/nDeHFPSE84FAdKb1lTsB58a/rRmIvMm27H
-         7+R1BLY/Z5/mMZaigSAi3OxpK1kQzDK7fs8mULK8JOVd/P3ZmF6tX3uXKf9B+C+jJU8J
-         qqSIUI8hDL8f4+1in3Le7VsEoxqsCQA3CKIsnjmaH8fo0hmqk2/m1iHcOpfMvE0DK2D1
-         zB4a/hWamkLtH8laMWah1PV4IYlI9m5MvflbwxZoRAuE5pHWkfhiOklymt+rzufoJkrH
-         DTwicYSu47d/k8E7gzsZsFCeRPeG4Zw0wvLiG1i+3iRcsLK7sqqm5ds5GF/rtyuBwewv
-         4mOA==
-X-Gm-Message-State: APjAAAVoSEIK+Q5aj/Tj7JW8pOAGwkWj4pF+hxjidXHY9nphsP6QwT3K
-        RcBoqO10jRXajqpWbV+/TEtJHHehiappJKrkCVI=
-X-Google-Smtp-Source: APXvYqwfdpniH1Uhb5O7TMu+14Vypo3ZFDSXa03k91a+YhsZgo3gw8hI5MoShd1T9+ddzs0tr6Xio9lsde6HqVlisQw=
-X-Received: by 2002:a17:906:4808:: with SMTP id w8mr10595398ejq.53.1561470632541;
- Tue, 25 Jun 2019 06:50:32 -0700 (PDT)
+        id S1728103AbfFYN5q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:57:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55125 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727251AbfFYN5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561471051;
+        bh=M2aw+p9RYmER9aIRq1Qt61d+qdsBFj1a3A9SaOImG1s=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=EsoLip2vKIZMlXp3Bv1X3MHYD5uW+oTN3VgZpBFUKLdQHnyZZlIqucGUVl8heFMak
+         dcH4OSXuFF7iVW06uLCxC5u46cxC44haWVi+Hi5tF4PgieztPXlktWBZI43vYLm3h3
+         4BY+jYDK6HvIA2icg+nhrx8SQR6Lkh3fhxspXLsQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mbir8-1iHr7d2jGA-00dC1g; Tue, 25
+ Jun 2019 15:57:31 +0200
+Date:   Tue, 25 Jun 2019 15:57:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v2 01/10] ls-files: add --json to dump the index
+In-Reply-To: <nycvar.QRO.7.76.6.1906251328320.44@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1906251557001.44@tvgsbejvaqbjf.bet>
+References: <20190624130226.17293-1-pclouds@gmail.com> <20190624130226.17293-2-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906251142580.44@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1906251328320.44@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190409161116.30256-1-chriscool@tuxfamily.org>
- <20190409161116.30256-5-chriscool@tuxfamily.org> <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
- <CAP8UFD0zvqC2s3_RsWfKwoWQL=2iV6PbaL8+hwUXrWBVe+6sgA@mail.gmail.com>
-In-Reply-To: <CAP8UFD0zvqC2s3_RsWfKwoWQL=2iV6PbaL8+hwUXrWBVe+6sgA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 25 Jun 2019 15:50:21 +0200
-Message-ID: <CAP8UFD2-BUVsaVcO-pRNY+qc8WBZC=NUOQHnNYbBVKc=q_aOSg@mail.gmail.com>
-Subject: Re: [PATCH v5 04/16] promisor-remote: implement promisor_remote_get_direct()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7cfD8+3HBUNNtiBtJEd1p8XR3hjPsVH3eiBFTNZT1rbEzLbpNUW
+ FU5GOoYqOCZHh/TLsggTYf5vsQQBDXV5+RBU/xhXO95jECsmNjD//oFk7GT15jB5JbeAyZy
+ PoyoTFGtDkEkWO0a51wJ7keY38aesiABPb1zRZY8toDS4C1rriE2I9AksP69VA4fa1yQDHE
+ ijMtrrYI43FMZoLLCKBYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j9yKbeQHdBc=:nu3Dd01vb3z3qAR1NzzzdX
+ gZGTXjBDkMuIQ5Z8scwVtcIr/x3jceUMoumrb5ST0QvXsIsYbW5gITC/iwCID95c/DOoRvVX7
+ 7tadcfizuXFgV4FMwux+tSvifbv3ml2Yum4R8QBnwpRDx+v9RvVRXKQOpcxIUeGE7DVOqE1OL
+ GZj6OC/fGr+oum1q6/0WfsnLX/gVDDTfJFXtS0/A7/PPcp0QZ5/X8X3r2cALJAmUqcLMXLZuA
+ S6+GXsn0bSxU5tC9VIpYZ/R644KGCANEkddD2jrxZUI+JSYgt2a0ZziH43+SNLqMmEoHu9g1T
+ YZ/9hPy56KkVRibILpKRh0D2bhVUhSDddshrsxHJPTVJGSOmAVH58i7P5gfFQQRLVud2fyPXF
+ ziDMa3uy0WKRM1INEvftIbo2gpDip0QZora/CIu9rsUjEFDAea4sF6Yizq/M1YYZlVDBamWFM
+ azrBgaq5fxwGYYxeXmamu5MOOnkoocAKpZc9r6X245vSFKkF8ynkahdIhNnH/34aTgbBKMOpa
+ oTVLMY9k23RcYcHBUG6TypIizy1ft8c34qZDfomVho0Kf861IoOqhQlvP98bz9KAN+4WtcYwo
+ mRLv0LYpdiZlaq6ff5UxYmhZzIC+CjeGmZoBmnV2znhg0MFb4X+iPSqeJItvrwnO4PivHTzby
+ UbF6gJVAktrLLk/7dzakyB0M3hjNfvyzIaTzL4nl+FN+ExlUVl3OJIjTdtfAs0FPA7SPrOKsf
+ cffPFYn5It8EsG0tluSCPn0LN6sMJ/eKQzuyU2RPHh6DYPH+5LiO07cMs5NzKhTxSA65lhWHU
+ 64TIwEaMUPWNXHkQaeOFhNHU+NZeSIp9HOM5MKQG0C+5r9rk+4ZDa3HaNLp+CCpS4YzMBlsi3
+ DcAOwu0FGpuvdBCvpWwGnEGy3H0ZQx/5kEHf208pN75yGSws07l9EvZCkQ6WJK4t2Lli37qCh
+ y9TJBWcvjBmru5E5fOVE96RTxMtWmWoctDjz6L60NGmYXG1NhWr3m
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 31, 2019 at 7:10 AM Christian Couder
-<christian.couder@gmail.com> wrote:
+Hi Duy,
 
-> On Thu, May 30, 2019 at 7:21 PM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 4/9/2019 12:11 PM, Christian Couder wrote:
+On Tue, 25 Jun 2019, Johannes Schindelin wrote:
 
-> > > +{
-> > > +     int i, missing_nr = 0;
-> > > +     int *missing = xcalloc(oid_nr, sizeof(*missing));
-> > > +     struct object_id *old_oids = *oids;
-> > > +     struct object_id *new_oids;
-> > > +     int old_fetch_if_missing = fetch_if_missing;
-> > > +
-> > > +     fetch_if_missing = 0;
-> >
-> > This global 'fetch_if_missing' swap seems very fragile. I'm guessing you are using
-> > it to prevent a loop when calling oid_object_info_extended() below. Can you instead
-> > pass a flag to the method that disables the fetch_if_missing behavior?
+> diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
+> index 9f4ad4c9cf..8b782c48e0 100755
+> --- a/t/t3011-ls-files-json.sh
+> +++ b/t/t3011-ls-files-json.sh
+> @@ -4,18 +4,6 @@ test_description=3D'ls-files dumping json'
 >
-> If such a flag existed when I wrote the function I would certainly
-> have used it, as I also dislike this kind of messing with a global
-> (and globals in general).
+>  . ./test-lib.sh
 >
-> I will see if I can do something about it according to what you
-> suggest later in this thread.
-
-In the V6 patch series I just sent, the new
-OBJECT_INFO_SKIP_FETCH_OBJECT flag that you introduced is used.
-
-> > > +     for (i = 0; i < oid_nr; i++)
-> > > +             if (oid_object_info_extended(the_repository, &old_oids[i], NULL, 0)) {
-> >
-> > A use of "the_repository" this deep in new code is asking for a refactor later to remove it.
-> > Please try to pass a "struct repository *r" through your methods so we minimize references
-> > to the_repository (and the amount of work required to remove them later).
+> -strip_number() {
+> -	for name; do
+> -		echo 's/\("'$name'":\) [0-9]\+/\1 <number>/' >>filter.sed
+> -	done
+> -}
+> -
+> -strip_string() {
+> -	for name; do
+> -		echo 's/\("'$name'":\) ".*"/\1 <string>/' >>filter.sed
+> -	done
+> -}
+> -
+>  compare_json() {
+>  	git ls-files --debug-json >json &&
+>  	sed -f filter.sed json >filtered &&
+> @@ -35,9 +23,21 @@ test_expect_success 'setup' '
+>  	echo intent-to-add >ita &&
+>  	git add -N ita &&
 >
-> Ok, I will take a look at that.
+> -	strip_number ctime_sec ctime_nsec mtime_sec mtime_nsec &&
+> -	strip_number device inode uid gid file_offset ext_size last_update &&
+> -	strip_string oid ident
+> +	cat >filter.sed <<-\EOF
+> +	s/\("ctime_sec":\) [0-9]\+/\1 <number>/
 
-A "struct repository *r" is passed in V6. I forgot to mention that in
-the cover letter.
+And of course, \+ still isn't POSIX, so you have to write [0-9][1-9]*
+instead.
 
-> > > +                     missing_nr = remove_fetched_oids(&missing_oids, missing_nr, to_free);
-> >
-> > Here is the one call, and after this assignment "missing_nr" does mean the number of missing objects.
-> > However, I do think this could be clarified by using remaining_nr and remaining_oids.
+Ciao,
+Johannes
+
+> +	s/\("ctime_nsec":\) [0-9]\+/\1 <number>/
+> +	s/\("mtime_sec":\) [0-9]\+/\1 <number>/
+> +	s/\("mtime_nsec":\) [0-9]\+/\1 <number>/
+> +	s/\("device":\) [0-9]\+/\1 <number>/
+> +	s/\("inode":\) [0-9]\+/\1 <number>/
+> +	s/\("uid":\) [0-9]\+/\1 <number>/
+> +	s/\("gid":\) [0-9]\+/\1 <number>/
+> +	s/\("file_offset":\) [0-9]\+/\1 <number>/
+> +	s/\("ext_size":\) [0-9]\+/\1 <number>/
+> +	s/\("last_update":\) [0-9]\+/\1 <number>/
+> +	s/\("oid":\) ".*"/\1 <string>/
+> +	s/\("ident":\) ".*"/\1 <string>/
+> +	EOF
+>  '
 >
-> Ok, I will take a look at using "remaining_nr" and "remaining_oids".
-
-Done in V6 too.
-
-> > > +                     if (missing_nr) {
-> > > +                             to_free = 1;
-> > > +                             continue;
-> > > +                     }
-> >
-> > Now this block took a bit to grok. You use to_free in the if(to_free) free(missing_oids); below.
-> > But it also changes the behavior of remove_fetched_oids(). This means that the first time
-> > remove_fetched_oids() will preserve the list (because it is the input list) but all later
-> > calls will free the newly-created intermediate list. This checks out.
-> >
-> > What is confusing to me: is there any reason that missing_nr would be zero in this situation?
->
-> I don't think so but I will check again, and maybe add a comment.
-
-Actually missing_nr, or now remaining_nr, would be 0 if all the
-promised objects have been fetched.
-
-> > > +             }
-> > > +             res = 0;
-> > > +             break;
-> > > +     }
-> > > +
-> > > +     if (to_free)
-> > > +             free(missing_oids);
-> > > +
-> > > +     return res;
-> > > +}
-> >
-> > While the test coverage report brought this patch to my attention, it does seem correct.
-> > I still think a test exposing this method would be good, especially one that requires
-> > a fetch_objects() call to multiple remotes to really exercise the details of remove_fetched_oids().
->
-> Yeah, I would like to actually test it. I will take another look at
-> what can be done to test this. Perhaps I will look at what can be done
-> to still get some objects when fetching from a promisor/partial clone
-> remote even when it doesn't have all of the objects we request.
-
-I haven't improved test coverage or looked at how we could better
-handle a partial fetch. I plan to look at that soon.
-
-Thanks,
-Christian.
+>  test_expect_success 'ls-files --json, main entries, UNTR and TREE' '
+> @@ -98,7 +98,9 @@ test_expect_success !SINGLE_CPU 'ls-files --json and m=
+ulticore extensions' '
+>  		touch one two three four &&
+>  		git add . &&
+>  		cp ../filter.sed . &&
+> -		strip_number offset &&
+> +		cat >>filter.sed <<-\EOF &&
+> +		s/\("offset":\) [0-9]\+/\1 <number>/
+> +		EOF
+>  		compare_json eoie
+>  	)
+>  '
