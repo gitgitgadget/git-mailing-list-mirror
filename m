@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C991F4BE
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6131D1F4B7
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730838AbfFYNlU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 09:41:20 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44675 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727975AbfFYNlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:41:17 -0400
-Received: by mail-ed1-f68.google.com with SMTP id k8so27166570edr.11
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:16 -0700 (PDT)
+        id S1726931AbfFYNlV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:41:21 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46290 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730591AbfFYNlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:41:19 -0400
+Received: by mail-ed1-f67.google.com with SMTP id d4so27162663edr.13
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OJddKki4i5LM7JqqBW9SQzb4BiJmxM38qI9ZRfQYRbY=;
-        b=FD8dmn8uEFpVJobXchp+8zElWr2H7TveyRleliHLviZsoha2JUQ5p0i8+deYY3r7cI
-         s7i8FcC6XB9dWlMR3jp18rH/nDubhA4a5tiBnv3Qyv2QMRv6uKC+YAQOsLW5S6KY4XDo
-         NTbUEaLTXwEd7KvT3Lbb8pPhWMwdMhfZpzUBy0QcbHPgbW+7q4dTK+KMItYq8hUv/QDO
-         jZMcvS83y0y3bkIozXAiJDm+RIOUnmwn3g8VH3Whdt9ZHFKJ6zIsGwp0EBzYJT1eGAug
-         PYaeZVblngimHtXeZsfKLmrpqUl4NQ0rtLxkCHwMUjmazpSqTfjhmBW51S/jEOzwCa79
-         I07w==
+        bh=w32hNmpnCQv0SjxcKVptiQUzm2FTMKi1ZOMuwrEJ9WE=;
+        b=ayTeTGVr7L4UekjGXs1bkBfxfg3QPeeGCr8IdEKLZ7JYBnfI+fz3NSeC8Oq9GaZQbX
+         aq1F3p95SYMK1dVNJt6YHq2c1MppPra7ytcP/NyNqc8lxMQYEvnEPQR1CKpDL9rIHqQZ
+         Rfp0Qg/t9lGU0oXjQZX2usz0DWOv/DtD2qNmSQPNxuSIJ/HANUKr4q8NRhHNo9WJYjlv
+         M+TIkI3bMcT7pxHleoKW9CXdcG9S77ryL0mCZ8Fk7RETZ8YWYeEu3R8pMcYwaWBAJlYl
+         vZu4E7vp36pDySjB2pwnjKREWuKu92GyPVYxecWkEVdVKraIJku5Tq/fKkh8xbum6t7S
+         Lztw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OJddKki4i5LM7JqqBW9SQzb4BiJmxM38qI9ZRfQYRbY=;
-        b=s4xWR97wuEfsi4WTP1ESaCDhuio5XgaHJwPfGySUmtVGlNqrZEZHkUqekOR6+setd9
-         FfLYoL6vslnrLRfzBvAyaQ39oMHNfWh0CEpei10TeWbFK7XZJB89qiLpGW3oCI7fEe27
-         PL3OMAQ2YFjdCfHALL0qlTJYg9J6SOSkRn7wFp3AtHbsG3h1RbNtZ3UIn3LQ/UR2KlGg
-         H74vIDJh4eMMmUr8PAmS6+1Bch8SQo3Bmt7FsdBxwJobRFJH3cTZKuiwrKWVpx3gtFKq
-         FB62yqQe60b/96MQ7L6mWUPDJ1TfR1+mGTmU+HiMAP1NWK3nmtSugKBmHYALNTPDkwIv
-         c3IA==
-X-Gm-Message-State: APjAAAW7dHQCm7iqxiazirql75U8M8yiFfwbLnvQaayOngfnFLTPExD5
-        XwwLP7mFyx7w3EdACPsOYwnoOVrNZCU=
-X-Google-Smtp-Source: APXvYqwV2FcoXNRHoYga8vWgUfykka9/PaGMMlZHtk7sJIiophkb1yr9r0kw0ilQuP8N39bpOmfPzw==
-X-Received: by 2002:a17:906:914:: with SMTP id i20mr40607945ejd.213.1561470074961;
-        Tue, 25 Jun 2019 06:41:14 -0700 (PDT)
+        bh=w32hNmpnCQv0SjxcKVptiQUzm2FTMKi1ZOMuwrEJ9WE=;
+        b=SZr83WRdDrxiGl+34EQb3H/NUn7oIPMyIlO9Tq7FsfZK0pkNDL+lgKnrztCoHWqTex
+         RLdfxzCSj6IpwStwhvG75JXP671etMguQZ2qwxluY8eHiyG7rjtsRYWHlQhO/DeO933i
+         gSJ5WjpnOpD9NXVP/ayJEmbcrLJ9ZwhmSSds0qv042952L8jkCRDdXDV3SJw432yrHCy
+         2bJ9QBNcfnRL4WP1xRIKLGdbIopxN7/zaMHoSHRuu+CDsROP0NFuycRQXdhfQKXK3TGQ
+         PQjE1QbwyQLO9bhqFNlT/k3+8l0woSLIeJSdo9rdqI0JB5VWbRJZx3jeLyq1GT6B+eUP
+         C17g==
+X-Gm-Message-State: APjAAAVkPrZ7XhBaHP7XMELVI+g5vvlpTnqCasQBqgdWTwLp0ogG7Xlu
+        cQwHo36lFTNMrmMq581vqlG6O8EvXTg=
+X-Google-Smtp-Source: APXvYqyaa1Yks33swrhCbSfRnG5lFf0UYhEeU0kR0GzQWy4ve2KJucLIWB+Bl3q+xGNVPDSLlFWoYg==
+X-Received: by 2002:a17:906:2191:: with SMTP id 17mr29047317eju.280.1561470077195;
+        Tue, 25 Jun 2019 06:41:17 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.13
+        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.16
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 25 Jun 2019 06:41:13 -0700 (PDT)
+        Tue, 25 Jun 2019 06:41:16 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,205 +67,95 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Beat Bolli <dev+git@drbeat.li>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v6 08/15] promisor-remote: parse remote.*.partialclonefilter
-Date:   Tue, 25 Jun 2019 15:40:32 +0200
-Message-Id: <20190625134039.21707-9-chriscool@tuxfamily.org>
+        Derrick Stolee <stolee@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v6 10/15] t0410: test fetching from many promisor remotes
+Date:   Tue, 25 Jun 2019 15:40:34 +0200
+Message-Id: <20190625134039.21707-11-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.229.ga13d9ffdf7.dirty
 In-Reply-To: <20190625134039.21707-1-chriscool@tuxfamily.org>
 References: <20190625134039.21707-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes it possible to specify a different partial clone
-filter for each promisor remote.
+From: Christian Couder <christian.couder@gmail.com>
 
+This shows that it is now possible to fetch objects from more
+than one promisor remote, and that fetching from a new
+promisor remote can configure it as one.
+
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/fetch.c               |  2 +-
- list-objects-filter-options.c | 27 +++++++++++++++------------
- list-objects-filter-options.h |  3 ++-
- promisor-remote.c             | 15 +++++++++++++++
- promisor-remote.h             |  5 ++++-
- t/t0410-partial-clone.sh      |  2 +-
- t/t5601-clone.sh              |  1 +
- t/t5616-partial-clone.sh      |  2 +-
- 8 files changed, 40 insertions(+), 17 deletions(-)
+ t/t0410-partial-clone.sh | 49 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f74bd78144..13d8133130 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1491,7 +1491,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * the config.
- 	 */
- 	if (!filter_options.choice)
--		partial_clone_get_default_filter_spec(&filter_options);
-+		partial_clone_get_default_filter_spec(&filter_options, remote->name);
- 	return;
- }
- 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index b0de7d3c17..28c571f922 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -30,6 +30,9 @@ static int gently_parse_list_objects_filter(
- {
- 	const char *v0;
- 
-+	if (!arg)
-+		return 0;
-+
- 	if (filter_options->choice) {
- 		if (errbuf) {
- 			strbuf_addstr(
-@@ -148,6 +151,7 @@ void partial_clone_register(
- 	const struct list_objects_filter_options *filter_options)
- {
- 	char *cfg_name;
-+	char *filter_name;
- 
- 	/* Check if it is already registered */
- 	if (!promisor_remote_find(remote)) {
-@@ -162,27 +166,26 @@ void partial_clone_register(
- 	/*
- 	 * Record the initial filter-spec in the config as
- 	 * the default for subsequent fetches from this remote.
--	 *
--	 * TODO: record it into remote.<name>.partialclonefilter
- 	 */
--	core_partial_clone_filter_default =
--		xstrdup(filter_options->filter_spec);
--	git_config_set("core.partialclonefilter",
--		       core_partial_clone_filter_default);
-+	filter_name = xstrfmt("remote.%s.partialclonefilter", remote);
-+	git_config_set(filter_name, filter_options->filter_spec);
-+	free(filter_name);
- 
- 	/* Make sure the config info are reset */
- 	promisor_remote_reinit();
- }
- 
- void partial_clone_get_default_filter_spec(
--	struct list_objects_filter_options *filter_options)
-+	struct list_objects_filter_options *filter_options,
-+	const char *remote)
- {
-+	struct promisor_remote *promisor = promisor_remote_find(remote);
-+
- 	/*
- 	 * Parse default value, but silently ignore it if it is invalid.
- 	 */
--	if (!core_partial_clone_filter_default)
--		return;
--	gently_parse_list_objects_filter(filter_options,
--					 core_partial_clone_filter_default,
--					 NULL);
-+	if (promisor)
-+		gently_parse_list_objects_filter(filter_options,
-+						 promisor->partial_clone_filter,
-+						 NULL);
- }
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index c54f0000fb..8deaa287b5 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -87,6 +87,7 @@ void partial_clone_register(
- 	const char *remote,
- 	const struct list_objects_filter_options *filter_options);
- void partial_clone_get_default_filter_spec(
--	struct list_objects_filter_options *filter_options);
-+	struct list_objects_filter_options *filter_options,
-+	const char *remote);
- 
- #endif /* LIST_OBJECTS_FILTER_OPTIONS_H */
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 6a8856f475..826890f7b8 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -75,6 +75,21 @@ static int promisor_remote_config(const char *var, const char *value, void *data
- 		free(remote_name);
- 		return 0;
- 	}
-+	if (!strcmp(subkey, "partialclonefilter")) {
-+		struct promisor_remote *r;
-+		char *remote_name = xmemdupz(name, namelen);
-+
-+		r = promisor_remote_lookup(remote_name, NULL);
-+		if (!r)
-+			r = promisor_remote_new(remote_name);
-+
-+		free(remote_name);
-+
-+		if (!r)
-+			return 0;
-+
-+		return git_config_string(&r->partial_clone_filter, var, value);
-+	}
- 
- 	return 0;
- }
-diff --git a/promisor-remote.h b/promisor-remote.h
-index dddd4048e0..838cb092f3 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -5,10 +5,13 @@ struct object_id;
- 
- /*
-  * Promisor remote linked list
-- * Its information come from remote.XXX config entries.
-+ *
-+ * Information in its fields come from remote.XXX config entries or
-+ * from extensions.partialclone or core.partialclonefilter.
-  */
- struct promisor_remote {
- 	struct promisor_remote *next;
-+	const char *partial_clone_filter;
- 	const char name[FLEX_ARRAY];
- };
- 
 diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 3559313bd0..3082eff2bf 100755
+index 3082eff2bf..2498e72a34 100755
 --- a/t/t0410-partial-clone.sh
 +++ b/t/t0410-partial-clone.sh
-@@ -26,7 +26,7 @@ promise_and_delete () {
- test_expect_success 'extensions.partialclone without filter' '
+@@ -183,8 +183,55 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
+ 	grep "git< fetch=.*ref-in-want" trace
+ '
+ 
++test_expect_success 'fetching of missing objects from another promisor remote' '
++	git clone "file://$(pwd)/server" server2 &&
++	test_commit -C server2 bar &&
++	git -C server2 repack -a -d --write-bitmap-index &&
++	HASH2=$(git -C server2 rev-parse bar) &&
++
++	git -C repo remote add server2 "file://$(pwd)/server2" &&
++	git -C repo config remote.server2.promisor true &&
++	git -C repo cat-file -p "$HASH2" &&
++
++	git -C repo fetch server2 &&
++	rm -rf repo/.git/objects/* &&
++	git -C repo cat-file -p "$HASH2" &&
++
++	# Ensure that the .promisor file is written, and check that its
++	# associated packfile contains the object
++	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
++	test_line_count = 1 promisorlist &&
++	IDX=$(sed "s/promisor$/idx/" promisorlist) &&
++	git verify-pack --verbose "$IDX" >out &&
++	grep "$HASH2" out
++'
++
++test_expect_success 'fetching of missing objects configures a promisor remote' '
++	git clone "file://$(pwd)/server" server3 &&
++	test_commit -C server3 baz &&
++	git -C server3 repack -a -d --write-bitmap-index &&
++	HASH3=$(git -C server3 rev-parse baz) &&
++	git -C server3 config uploadpack.allowfilter 1 &&
++
++	rm repo/.git/objects/pack/pack-*.promisor &&
++
++	git -C repo remote add server3 "file://$(pwd)/server3" &&
++	git -C repo fetch --filter="blob:none" server3 $HASH3 &&
++
++	test_cmp_config -C repo true remote.server3.promisor &&
++
++	# Ensure that the .promisor file is written, and check that its
++	# associated packfile contains the object
++	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
++	test_line_count = 1 promisorlist &&
++	IDX=$(sed "s/promisor$/idx/" promisorlist) &&
++	git verify-pack --verbose "$IDX" >out &&
++	grep "$HASH3" out
++'
++
+ test_expect_success 'fetching of missing blobs works' '
+-	rm -rf server repo &&
++	rm -rf server server2 repo &&
++	rm -rf server server3 repo &&
  	test_create_repo server &&
- 	git clone --filter="blob:none" "file://$(pwd)/server" client &&
--	git -C client config --unset core.partialclonefilter &&
-+	git -C client config --unset remote.origin.partialclonefilter &&
- 	git -C client fetch origin
- '
- 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 534d03a4d7..078cf48dd6 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -655,6 +655,7 @@ partial_clone () {
- 
- 	# Ensure that unneeded blobs are not inadvertently fetched.
- 	test_config -C client remote.origin.promisor "false" &&
-+	git -C client config --unset remote.origin.partialclonefilter &&
- 	test_must_fail git -C client cat-file -e "$HASH1" &&
- 
- 	# But this blob was fetched, because clone performs an initial checkout
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 8f9a62aac0..8ae7ba9c95 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -43,7 +43,7 @@ test_expect_success 'do partial clone 1' '
- 	test_cmp expect_1.oids observed.oids &&
- 	test "$(git -C pc1 config --local core.repositoryformatversion)" = "1" &&
- 	test "$(git -C pc1 config --local remote.origin.promisor)" = "true" &&
--	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
-+	test "$(git -C pc1 config --local remote.origin.partialclonefilter)" = "blob:none"
- '
- 
- # checkout master to force dynamic object fetch of blobs at HEAD.
+ 	test_commit -C server foo &&
+ 	git -C server repack -a -d --write-bitmap-index &&
 -- 
 2.22.0.229.ga13d9ffdf7.dirty
 
