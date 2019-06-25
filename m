@@ -2,154 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,T_HK_NAME_DR shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 313AD1F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 11:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0A51F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 11:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730112AbfFYLFP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 07:05:15 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:59522 "EHLO
-        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726419AbfFYLFP (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 25 Jun 2019 07:05:15 -0400
-Received: from [2001:16b8:5c70:2000:5cc1:ca70:89c5:11f6]; authenticated
-        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hfjGD-0003iF-Mp; Tue, 25 Jun 2019 13:05:13 +0200
-Subject: Re: [PATCH] make slash-rules more readable
-To:     git@vger.kernel.org
-References: <20190604173446.2664-1-admin@in-ici.net>
-From:   "Dr. Adam Nielsen" <admin@in-ici.net>
-Message-ID: <bd722415-1547-8db5-f88a-c35c8b48d8be@in-ici.net>
-Date:   Tue, 25 Jun 2019 13:05:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1729907AbfFYLSc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 07:18:32 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:36703 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727964AbfFYLSc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 07:18:32 -0400
+Received: by mail-io1-f65.google.com with SMTP id h6so572003ioh.3
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 04:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V8cbRUZ1byK+zWWJCQ0sgp/ky/lKaD1aLDvoos+AVR4=;
+        b=SswClHx8lSkmPJyrr6eXZqBCzztBhLo/gLzgJK/nSvdmHug5wbb6JW0/btw/khzRB4
+         yPln1rqCCA0AqBdxRc/lVQziR1vzs3seAKu8r537g2jSt8rjtDxUJfdaeBCjwRw4TfGw
+         6WBgnCftSR4oR3FMSxw/wlrPTTt6ekK3msQ1o7eHNpGQ48Qq8f/84jPeWjvYqU/mDfoD
+         +fuSUZvDtTYdDU2tc2LI1+dKuRCPXmmgT+pg7jrFn2V6717Ihp5uJRZDVy6LmcKzPqa8
+         OxqXJsZslhqEOi/uqNKSFdI6AxoCiF8gH2mRfTHJR/YSHtXeqqMyD3Vkx0YX8dLyQnOQ
+         zpaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V8cbRUZ1byK+zWWJCQ0sgp/ky/lKaD1aLDvoos+AVR4=;
+        b=LGXicL56nQUfZmSHQipOIe/Js79fruBJvQYI55HuS46SZYPGlQcKF19Y79fMSJd2H6
+         cgWCQUMJU0rZK54vySdFdJfg7XjWNKA31yjog9QGlktI3p6V3HOdiIHQ78eHZOlcZ4gV
+         zJTL6py/9Lvgsuzwe+GVchpFM7FTwtmWrFjxwtILcdqud/9ez8ELaCDh75PuSQCCWxTt
+         kaB4tfFvBENd9U/e+kIvUTBheKi/AOqkYmNH3oaYMPmEKuKlvjOb7t+HgPw0wFoLJKKB
+         iPjbr3XUZdR5dzbZqPG6H1nYbDDVCQVbPeIUGPhoNcrYFg4e+5D6hEY6R7jmtVRhNBVZ
+         WNyg==
+X-Gm-Message-State: APjAAAVYc+zfJpmNQ8j1P38HWzUIcfh9J/Pd6MPA072W8orz1baHzOI4
+        YVWhlVqMk5rXf4/2pCRSn8h2b1NNt20ud9vrRg4=
+X-Google-Smtp-Source: APXvYqytrZ7qLNzev0WbAuiEiziE81lMwhQzvQWGZqAhFX5se6v3BOh2UH9OWXEstb8lxR0l4/2uZUiHTMzTEXTkNjE=
+X-Received: by 2002:a5d:8890:: with SMTP id d16mr6771166ioo.274.1561461511469;
+ Tue, 25 Jun 2019 04:18:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190604173446.2664-1-admin@in-ici.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1561460715;2e4dea16;
-X-HE-SMSGID: 1hfjGD-0003iF-Mp
+References: <xmqqsgryhmqt.fsf@gitster-ct.c.googlers.com> <20190624202653.13810-2-MorianSonnet@googlemail.com>
+In-Reply-To: <20190624202653.13810-2-MorianSonnet@googlemail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 25 Jun 2019 18:18:05 +0700
+Message-ID: <CACsJy8BnpkfYwKJiz2u5=yhoyLQzu5yAcsvmL75bxWop=ZRh0A@mail.gmail.com>
+Subject: Re: [PATCH] submodule foreach: fix recursion of options
+To:     Morian Sonnet <moriansonnet@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, MorianSonnet@googlemail.com,
+        Git Mailing List <git@vger.kernel.org>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.us>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Tue, Jun 25, 2019 at 5:02 AM Morian Sonnet <moriansonnet@gmail.com> wrote:
+>
+> Calling
+>
+>     git submodule foreach --recursive <subcommand> --<option>
+>
+> leads to an error stating that the option --<option> is unknown to
+> submodule--helper. That is of course only, when <option> is not a valid
+> option for git submodule foreach.
+>
+> The reason for this is, that above call is internally translated into a
+> call to submodule--helper:
+>
+>     git submodule--helper foreach --recursive \
+>         -- <subcommand> --<option>
+>
+> This call starts by executing the subcommand with its option inside the
+> first level submodule and continues by calling the next iteration of
+> the submodule foreach call
+>
+>     git --super-prefix <submodulepath> submodule--helper \
+>       foreach --recursive <subcommand> --<option>
+>
+> inside the first level submodule. Note that the double dash in front of
+> the subcommand is missing.
+>
+> This problem starts to arise only recently, as the
+> PARSE_OPT_KEEP_UNKNOWN flag for the argument parsing of git submodule
+> foreach was removed in commit a282f5a906. Hence, the unknown option is
+> complained about now, as the argument parsing is not properly ended by
+> the double dash.
 
-any comments about the patch note from 04.06 ?
-
-All the best,
-Adam
-
-On 04.06.19 19:34, Dr. Adam Nielsen wrote:
-> gitignore.txt: make slash-rules more readable
-> 
-> Renew paragraphs relevant for pattern with slash.
-> Aim to make it more clear and to avoid possible
-> pitfalls for the reader. Add some examples.
-> 
-> Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
-> 
-> ---
->   Documentation/gitignore.txt | 66 ++++++++++++++++++++++++-------------
->   1 file changed, 44 insertions(+), 22 deletions(-)
-> 
-> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-> index b5bc9dbff0..d47b1ae296 100644
-> --- a/Documentation/gitignore.txt
-> +++ b/Documentation/gitignore.txt
-> @@ -89,28 +89,28 @@ PATTERN FORMAT
->      Put a backslash ("`\`") in front of the first "`!`" for patterns
->      that begin with a literal "`!`", for example, "`\!important!.txt`".
->   
-> - - If the pattern ends with a slash, it is removed for the
-> -   purpose of the following description, but it would only find
-> -   a match with a directory.  In other words, `foo/` will match a
-> -   directory `foo` and paths underneath it, but will not match a
-> -   regular file or a symbolic link `foo` (this is consistent
-> -   with the way how pathspec works in general in Git).
-> -
-> - - If the pattern does not contain a slash '/', Git treats it as
-> -   a shell glob pattern and checks for a match against the
-> -   pathname relative to the location of the `.gitignore` file
-> -   (relative to the toplevel of the work tree if not from a
-> -   `.gitignore` file).
-> -
-> - - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
-> -   anything except "`/`", "`?`" matches any one character except "`/`"
-> -   and "`[]`" matches one character in a selected range. See
-> -   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
-> -   description.
-> -
-> - - A leading slash matches the beginning of the pathname.
-> -   For example, "/{asterisk}.c" matches "cat-file.c" but not
-> -   "mozilla-sha1/sha1.c".
-> + - The slash '/' is used as the directory separator. Separators may
-> +   occur at the beginning, middle or end of the `.gitignore` search pattern.
-> +
-> + - If there is a separator at the beginning or middle (or both) of the
-> +   pattern, then the pattern is relative to the directory level of the
-> +   particular `.gitignore` file itself. Otherwise the pattern may also
-> +   match at any level below the `.gitignore` level.
-> +
-> + - If there is a separator at the end of the pattern then the pattern
-> +   will only match directories, otherwise the pattern can match both
-> +   files and directories.
-> +
-> + - For example, a pattern `doc/frotz/` matches `doc/frotz` directory,
-> +   but not `a/doc/frotz` directory; however `frotz/` matches `frotz`
-> +   and `a/frotz` that is a directory (all paths are relative from
-> +   the `.gitignore` file).
-> +
-> + - An asterisk "`*`" matches anything except a slash.
-> +   The character "`?`" matches any one character except "`/`".
-> +   The range notation, e.g. `[a-zA-Z]`, can be used to match
-> +   one of the characters in a range. See fnmatch(3) and the
-> +   FNM_PATHNAME flag for a more detailed description.
->   
->   Two consecutive asterisks ("`**`") in patterns matched against
->   full pathname may have special meaning:
-> @@ -152,6 +152,28 @@ To stop tracking a file that is currently tracked, use
->   EXAMPLES
->   --------
->   
-> + - The pattern `hello.*` matches any file or folder
-> +   whose name begins with `hello`. If one wants to restrict
-> +   this only to the directory and not in its subdirectories,
-> +   one can prepend the pattern with a slash, i.e. `/hello.*`;
-> +   the pattern now matches `hello.txt`, `hello.c` but not
-> +   `a/hello.java`.
-> +
-> + - The pattern `foo/` will match a directory `foo` and
-> +   paths underneath it, but will not match a regular file
-> +   or a symbolic link `foo` (this is consistent with the
-> +   way how pathspec works in general in Git)
-> +
-> + - The pattern `doc/frotz` and `/doc/frotz` have the same effect
-> +   in any `.gitignore` file. In other words, a leading slash
-> +   is not relevant  if there is already a middle slash in
-> +   the pattern.
-> +
-> + - The pattern "foo/*", matches "foo/test.json"
-> +   (a regular file), "foo/bar" (a directory), but it does not match
-> +   "foo/bar/hello.c" (a regular file), as the asterisk in the
-> +   pattern does not match "bar/hello.c" which has a slash in it.
-> +
->   --------------------------------------------------------------
->       $ git status
->       [...]
-> 
-
+My bad. Last time I checked *.sh but forgot about *.c. I looked around
+this time in *.c. This should be the only submodule--helper invocation
+that needs "--".
 -- 
-photograph 	
-*Dr. Adam Nielsen
-* Administrator | IN/ICI/WHO
-*IN:* 	nlp-institutes.net <https://nlp-institutes.net>
-*ICI:* 	coaching-institutes.net <https://coaching-institutes.net>
-*WHO:* 	world-hypnosis.org <https://world-hypnosis.org>
-
+Duy
