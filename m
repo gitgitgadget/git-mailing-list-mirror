@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 940CB1F4BD
-	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6106F1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730180AbfFYNlP (ORCPT <rfc822;e@80x24.org>);
+        id S1730018AbfFYNlP (ORCPT <rfc822;e@80x24.org>);
         Tue, 25 Jun 2019 09:41:15 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38427 "EHLO
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38422 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727975AbfFYNlO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:41:14 -0400
-Received: by mail-ed1-f66.google.com with SMTP id r12so27259768edo.5
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:13 -0700 (PDT)
+        with ESMTP id S1727770AbfFYNlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:41:12 -0400
+Received: by mail-ed1-f66.google.com with SMTP id r12so27259620edo.5
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VPLkInReMhBYY7H2msBeY0ml8DrmkLjlaT9/hjyg7ZY=;
-        b=F/aesQk4tfwKEu5J3T55shp30WHx2B9Cjjcod5ic/vzUvPAXdBwy+5O9Przbop3QiS
-         qBN+fjaf42f6r+6UbIWMmD8Y1UwGuBzcrU2fent9Zd1hQSET5u/FRe/cgjmtqw3SuvkH
-         vcnRsQOeAfihm1q2t0GZSnD+2G7UwrJjvAVvtAPn7MXNegrJWTjsScxRhe5/aHvJq/ko
-         zqp9R3v3v/uq4K9/g8Bvo1xvsRpKoNhmRgToD3V8cs24HQPXZEqImAs4N2neqsxj1c8n
-         tNZ8R+LxGnq53VG1IeyjBlYH75TLSEjFq1wTpqo2RtyIANbLXZLtF11iA/oMShfJmlbu
-         jDDw==
+        bh=v7xYUgFCv1yB8odZItBcl+uRJGhBZUO/PWSuRmjzAqI=;
+        b=uMlu8z7AR8bhTad0frCdbijRenOyV+Eyq9lEjt5lt6ov64VBCTVfzcHdFgh0TSCYVt
+         l4MBcJfQycICgFv8kIJe/sdQU4QT5aOnw1Y3XbecCuBzPOivf+OKHR1Q5YeTFyVrIy7y
+         C1pCgP4OHe5pfogrFzqOxLbCFUpG0RauETzmoPFXoL4YkNM1OMiYY4pHSEEl/ovTiHhn
+         IOhccxsIeIpI6S8IosEcJUIsYMBFwbM/DJ+5dErV5AGiSuknrXSSE7+47ZCfQjFddyh+
+         6v0EsxAfoFsf0+eeXJrA+mJMPj43M86bqY26PPnkuQ4QQ2BW+87j1Lm2BXAiqG07boAz
+         H0cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VPLkInReMhBYY7H2msBeY0ml8DrmkLjlaT9/hjyg7ZY=;
-        b=a3REhlpskmvBCPIqRXaglADAlqtAqqYtBhMHpq53LnSL7XcN/ms6RiGFk+ZcjKwPfx
-         +C0EwnFStFlUsasQ3cHmACm9pqcJABgECYZXZx4mhLKXVYGwIoH8DG4C7uq8s/gWTewm
-         3F/sLKeu4V1ZCcNQsMwizSOcVgeQTfn4L2FajocY2qUt1ojGBIzcgMw8huNlS661wG0T
-         Svvt9R0MZGepTp+zcK1EBfAjItpDrFz9TMPM5uuDnBBDMMWw5rLqMR3oXEIgqEX33r1I
-         UCY0tDDq51SdUox9xMrdoLWm6mtnF1KwlDDrCylgdHsyyx4ZnujYtL2hopsW/J1J9okT
-         VhTw==
-X-Gm-Message-State: APjAAAWLjtiQ1lZIQLXifU9Q1VVsFF9KxAZkqXVctZtjZgeE3bWz5r/Y
-        YAnsFX+2dcmqpAcmFZKO3L8WZg3sC/U=
-X-Google-Smtp-Source: APXvYqw/jsr9bx78/LHTEeDPb3Wa1nqJhg2eB7vUn33xtlrcNeEYZTFUc3zTSd/pfjBpsShY2dysBw==
-X-Received: by 2002:a17:906:5008:: with SMTP id s8mr99228176ejj.308.1561470072228;
-        Tue, 25 Jun 2019 06:41:12 -0700 (PDT)
+        bh=v7xYUgFCv1yB8odZItBcl+uRJGhBZUO/PWSuRmjzAqI=;
+        b=TBoe3374W5R8m7GDpNJC22azBmQhPnnAadFc1nsS5lhKr2rgy3PcQhjGrHVeMSPKoc
+         aSN2hvnXao52dDjV9MgLbq+jjXlR3AoQnEa2lP0i7ZhuwHfYpEfH1FIUi+DnxNf8SUhs
+         lMyYX8hdID3D5A3ccbB92n07nnVfVkujb2P2rvCQufO8cmPhz94Jz3n5cY+UW+D/VK+R
+         sthNK/f9733M+3YcMOTJwTvUP3WebmGFJSM6oV0sOv6yXjXCtCtIWbSWWzReQ7wauTMd
+         6X9BqBv9c84Z+PWLLzSUjjYFRPl1ZT8CN78eBMjSDAcoSypSXHLXKFUWqYnuSvP8RiQ2
+         gfnQ==
+X-Gm-Message-State: APjAAAV4DhJEZiLt1raAWoRVMiuYN1Ez5iOK/fRlI6wtxD0nsXf53xyK
+        J9Os2Dc4vemM3D5T7nz3Y/Z31Ac9k7k=
+X-Google-Smtp-Source: APXvYqzWKrg4/dhe8G0L3R7sWX4+ttwyAed8KASazyLg7IaCJv7RA38PADNaHve9Ac5VYaxzCnnENQ==
+X-Received: by 2002:a50:fd0c:: with SMTP id i12mr82974221eds.55.1561470070138;
+        Tue, 25 Jun 2019 06:41:10 -0700 (PDT)
 Received: from ubuntu-N150ZU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.11
+        by smtp.gmail.com with ESMTPSA id v11sm2448445ejx.24.2019.06.25.06.41.08
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 25 Jun 2019 06:41:11 -0700 (PDT)
+        Tue, 25 Jun 2019 06:41:09 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,10 +67,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Beat Bolli <dev+git@drbeat.li>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v6 06/15] promisor-remote: use repository_format_partial_clone
-Date:   Tue, 25 Jun 2019 15:40:30 +0200
-Message-Id: <20190625134039.21707-7-chriscool@tuxfamily.org>
+        Derrick Stolee <stolee@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v6 04/15] promisor-remote: implement promisor_remote_get_direct()
+Date:   Tue, 25 Jun 2019 15:40:28 +0200
+Message-Id: <20190625134039.21707-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.229.ga13d9ffdf7.dirty
 In-Reply-To: <20190625134039.21707-1-chriscool@tuxfamily.org>
 References: <20190625134039.21707-1-chriscool@tuxfamily.org>
@@ -81,71 +82,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A remote specified using the extensions.partialClone config
-option should be considered a promisor remote too.
+From: Christian Couder <christian.couder@gmail.com>
 
-For simplicity and to make things predictable, this promisor
-remote should be either always the last one we try to get
-objects from, or the first one. So it should always be either
-at the end of the promisor remote list, or at its start.
+This is implemented for now by calling fetch_objects(). It fetches
+from all the promisor remotes.
 
-We decided to make it the last one we try, because it is
-likely that someone using many promisor remotes is doing so
-because the other promisor remotes are better for some reason
-(maybe they are closer or faster for some kind of objects)
-than the origin, and the origin is likely to be the remote
-specified by extensions.partialClone.
-
-This justification is not very strong, but one choice had to
-be made, and anyway the long term plan should be to make the
-order somehow fully configurable.
-
+Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Helped-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ promisor-remote.c | 67 +++++++++++++++++++++++++++++++++++++++++++++++
+ promisor-remote.h |  5 ++++
+ 2 files changed, 72 insertions(+)
 
 diff --git a/promisor-remote.c b/promisor-remote.c
-index 763d98aedd..6a8856f475 100644
+index c249b80e02..b79a84ce3a 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -40,6 +40,18 @@ static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
- 	return NULL;
- }
+@@ -1,6 +1,8 @@
+ #include "cache.h"
++#include "object-store.h"
+ #include "promisor-remote.h"
+ #include "config.h"
++#include "fetch-object.h"
  
-+static void promisor_remote_move_to_tail(struct promisor_remote *r,
-+					 struct promisor_remote *previous)
+ static struct promisor_remote *promisors;
+ static struct promisor_remote **promisors_tail = &promisors;
+@@ -90,3 +92,68 @@ int has_promisor_remote(void)
+ {
+ 	return !!promisor_remote_find(NULL);
+ }
++
++static int remove_fetched_oids(struct repository *repo,
++			       struct object_id **oids,
++			       int oid_nr, int to_free)
 +{
-+	if (previous)
-+		previous->next = r->next;
-+	else
-+		promisors = r->next ? r->next : r;
-+	r->next = NULL;
-+	*promisors_tail = r;
-+	promisors_tail = &r->next;
++	int i, remaining_nr = 0;
++	int *remaining = xcalloc(oid_nr, sizeof(*remaining));
++	struct object_id *old_oids = *oids;
++	struct object_id *new_oids;
++
++	for (i = 0; i < oid_nr; i++)
++		if (oid_object_info_extended(repo, &old_oids[i], NULL,
++					     OBJECT_INFO_SKIP_FETCH_OBJECT)) {
++			remaining[i] = 1;
++			remaining_nr++;
++		}
++
++	if (remaining_nr) {
++		int j = 0;
++		new_oids = xcalloc(remaining_nr, sizeof(*new_oids));
++		for (i = 0; i < oid_nr; i++)
++			if (remaining[i])
++				oidcpy(&new_oids[j++], &old_oids[i]);
++		*oids = new_oids;
++		if (to_free)
++			free(old_oids);
++	}
++
++	free(remaining);
++
++	return remaining_nr;
 +}
 +
- static int promisor_remote_config(const char *var, const char *value, void *data)
- {
- 	const char *name;
-@@ -76,6 +88,17 @@ static void promisor_remote_init(void)
- 	initialized = 1;
- 
- 	git_config(promisor_remote_config, NULL);
++int promisor_remote_get_direct(struct repository *repo,
++			       const struct object_id *oids,
++			       int oid_nr)
++{
++	struct promisor_remote *r;
++	struct object_id *remaining_oids = (struct object_id *)oids;
++	int remaining_nr = oid_nr;
++	int to_free = 0;
++	int res = -1;
 +
-+	if (repository_format_partial_clone) {
-+		struct promisor_remote *o, *previous;
++	promisor_remote_init();
 +
-+		o = promisor_remote_lookup(repository_format_partial_clone,
-+					   &previous);
-+		if (o)
-+			promisor_remote_move_to_tail(o, previous);
-+		else
-+			promisor_remote_new(repository_format_partial_clone);
++	for (r = promisors; r; r = r->next) {
++		if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
++			if (remaining_nr == 1)
++				continue;
++			remaining_nr = remove_fetched_oids(repo, &remaining_oids,
++							 remaining_nr, to_free);
++			if (remaining_nr) {
++				to_free = 1;
++				continue;
++			}
++		}
++		res = 0;
++		break;
 +	}
- }
++
++	if (to_free)
++		free(remaining_oids);
++
++	return res;
++}
+diff --git a/promisor-remote.h b/promisor-remote.h
+index 01dcdf4dc7..ed4ecead36 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -1,6 +1,8 @@
+ #ifndef PROMISOR_REMOTE_H
+ #define PROMISOR_REMOTE_H
  
- static void promisor_remote_clear(void)
++struct object_id;
++
+ /*
+  * Promisor remote linked list
+  * Its information come from remote.XXX config entries.
+@@ -12,5 +14,8 @@ struct promisor_remote {
+ 
+ extern struct promisor_remote *promisor_remote_find(const char *remote_name);
+ extern int has_promisor_remote(void);
++extern int promisor_remote_get_direct(struct repository *repo,
++				      const struct object_id *oids,
++				      int oid_nr);
+ 
+ #endif /* PROMISOR_REMOTE_H */
 -- 
 2.22.0.229.ga13d9ffdf7.dirty
 
