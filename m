@@ -8,131 +8,144 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 182641F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 12:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D0E51F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 13:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729573AbfFYMkw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 08:40:52 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45176 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726414AbfFYMkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 08:40:51 -0400
-Received: by mail-qt1-f194.google.com with SMTP id j19so18127981qtr.12
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 05:40:51 -0700 (PDT)
+        id S1729889AbfFYNZa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 09:25:30 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53646 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727070AbfFYNZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 09:25:30 -0400
+Received: by mail-wm1-f65.google.com with SMTP id x15so2824856wmj.3
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 06:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3mMLTCRNXb0eR1PuurybV8B8OQ9gLK32H1cMI3/XyRY=;
-        b=dffAiUdEHEb+MvTZy3Hrbm/snDlEmesEt6UD/o1oXIu3r9MCcZLV9UpE4oNT6coEup
-         RRr2m6Lr+j89NSpXMJwIo0dcXE2SVqyPoA2BT307KIsj7fBvI2ln1iVp+vt8G3unZCLG
-         euRw5ca/+SX1OaJuJMTjnyWZREk5hBGe5zkKj6sirCdhzhmjBh05pIY1XobHEScKshYm
-         TSppvmObWkHQLX5nNKx36ji0BUI6Bvyp5MCMV+X0VQULbtmZj/StM2/V204E1FRhE8Ly
-         E+/RhIlfIY3zJwx5DNYQ/wVRjU5pTUYFgM+/2bZjZb1VX6Ygf9bJdrKobJLI6V1wPJhn
-         4ccw==
+        bh=UMA+zDl5WVxKxfQwW+K0o4wfl2enAzs+H1Gt296h2mU=;
+        b=BOHFkq72GcawtmdyJ1joySJbziV/nAD+Pp5zMWh0dn32ZvaNHA8GRrNwQqOOWF9mnZ
+         C8rW4TGVfM+21+8RgHKnVFjjxD84Ms+VGrM7onv0TV9+2qj5+Ev44Kbq94QLc1jjS1ie
+         QLBE1gmIOVEPzihBNvMG6MOIuo4J3pSiviZx+ff3XqyqSGb9dijJdWolxRQvmC2UC8tt
+         DIDHwIpajMpjiqgi81EluwGGn0y5G/JIQ7+Su5mw3N/XxMQyegE8LqG/nJB+E/mNimxf
+         g8KH7IO0nK26Cp5q9PSA+UM7xdKghi6cNUGL7g90qAF24t0UJofjMj6ngAGCPmbIMM4R
+         mwHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3mMLTCRNXb0eR1PuurybV8B8OQ9gLK32H1cMI3/XyRY=;
-        b=fS2tdQImbTLeohk7zxRSF3JGXyWkfxmVQvRs+22u5B/PHYWCH/BWv0T6Il0DVm+5fG
-         pc6mb1CdCxUmJPWb2x+M9E2hJLPX1Eo8Zoi0wOcjunkRnn7FmrfuI1CjXhkoxnRJWFUm
-         aM2UKV3c5AdMsR1WzszeNP4l9DqZr+7rcOfXFBL+CIthD1bfzQWm0GaBrUzw+TTczMxZ
-         IwB0VBl64fbG4g8HbHikEKIvCL5KOfxMaCIyswsTFad5QcgrbGlNgcDaYrTOsyeHPC6o
-         M7cxT5Hw+8sucVZ34bHka73ICqOVQmITg0R7OhNR2ajX41rMh571jDCaikHgiUCZ8Ljg
-         3XTA==
-X-Gm-Message-State: APjAAAVhd8jemLukQhvwkVai2HGFAdzVP4vF30kX/B0sch65WYAXTc60
-        aGf60t5h4LSQEB+GMqtVu3U=
-X-Google-Smtp-Source: APXvYqzVa2ysyq0X7gZnwbniuGasksOJJbY2UAPNdLSHheW3r5yGeJ4mlOK6MXQtO4fMoqcbBCiIxA==
-X-Received: by 2002:a0c:d1f0:: with SMTP id k45mr64170225qvh.69.1561466450871;
-        Tue, 25 Jun 2019 05:40:50 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:64c6:ee1a:485:1947? ([2001:4898:a800:1010:15fc:ee1a:485:1947])
-        by smtp.gmail.com with ESMTPSA id l63sm7365326qkb.124.2019.06.25.05.40.49
+        bh=UMA+zDl5WVxKxfQwW+K0o4wfl2enAzs+H1Gt296h2mU=;
+        b=qPVyvR+4+5im3jfrYaSyNbL6rbm5RGpad4eRrv18P64tGeMo2M8M+gD3Pu6IIbg4Xn
+         mF7CW2gyUUMKgvX5p7RO4XEeBZrfxZVeKQPt2NvUVW8PNGEZYTcH5mxlwEaCX0mq8R1l
+         owRL4AEpls846uVP0PbLa0VdgzVMSYftAzUAIfVVNv/EVRsxXGmYLSOU6+mW0XpxZeEc
+         EswbBtX2uOT9l92cRcvsCMsyh4NMvood+t2LnvLFNSZ5cxDZoTsy7F+3iyii9wO23GPh
+         QBbprG8GD2qNSRbmZVYyVVELdSdv+zQX+WZJlmRSS1tbA5OuyYmvzs2aRBEhDDJq9e1d
+         FiFQ==
+X-Gm-Message-State: APjAAAXywjnmGegWKjUlY0cZ/NYGef//u9pP7Xn+0aLoAxKIEx9KnOMo
+        SHYs8pgYqUKY9PCddC79L4n7L/oFAKM=
+X-Google-Smtp-Source: APXvYqy+CD6xCep/jVX1C0zhIh/Ra6S0wKDYeZY/qbUp+0YGW75jsp5MXyMnEaftiHrVdNMcYyibfQ==
+X-Received: by 2002:a1c:c6:: with SMTP id 189mr11381851wma.112.1561469127999;
+        Tue, 25 Jun 2019 06:25:27 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id j189sm3134116wmb.48.2019.06.25.06.25.26
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 05:40:50 -0700 (PDT)
-Subject: Re: [PATCH v2 05/10] split-index.c: dump "link" extension as json
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190624130226.17293-1-pclouds@gmail.com>
- <20190624130226.17293-6-pclouds@gmail.com>
- <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com>
- <CACsJy8BjhQD-g69dr-yDCycgfrHZ8xJLgjD=LanRUBxAN6=Zrg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <98afb501-ef57-9b64-7ffb-f13cea6fd58a@gmail.com>
-Date:   Tue, 25 Jun 2019 08:40:50 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        Tue, 25 Jun 2019 06:25:27 -0700 (PDT)
+Subject: Re: Git status parse error after v.2.22.0 upgrade
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     aleksandrs@ledovskis.lv,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Espen Antonsen <espen@inspired.no>, git@vger.kernel.org
+References: <3bc58c33-4268-4e7c-bf1a-fe349b3cb037@www.fastmail.com>
+ <nycvar.QRO.7.76.6.1906112127420.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <38b0f33a-1da1-4231-802e-ae14d9843ad2@www.fastmail.com>
+ <nycvar.QRO.7.76.6.1906122046400.789@QRFXGBC-DHN364S.ybpnyqbznva>
+ <20190613093023.GA3919@ariake.ledovskis.lv>
+ <xmqqr27xwjwj.fsf@gitster-ct.c.googlers.com>
+ <20190613162432.GA12128@sigill.intra.peff.net>
+ <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
+Message-ID: <82f4aa37-51fa-4d1a-8221-d6dd37113c70@gmail.com>
+Date:   Tue, 25 Jun 2019 14:25:25 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8BjhQD-g69dr-yDCycgfrHZ8xJLgjD=LanRUBxAN6=Zrg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <8981e6c8-eb20-fde7-2b4c-1fbf2057caef@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/25/2019 6:29 AM, Duy Nguyen wrote:
-> On Tue, Jun 25, 2019 at 3:06 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
->> I'm curious how big these EWAHs will be in practice and
->> how useful an array of integers will be (especially as the
->> pretty format will be one integer per line).  Perhaps it
->> would helpful to have an extended example in one of the
->> tests.
+On 13/06/2019 18:43, Phillip Wood wrote:
+> On 13/06/2019 17:24, Jeff King wrote:
+>> On Thu, Jun 13, 2019 at 09:05:16AM -0700, Junio C Hamano wrote:
+>>>
+>>> Two issues "the sequencer" folks may want to address are
+>>>
+>>>   (1) make the one that reads an irrelevant/stale 'todo' file more
+>>>       careful to ignore errors in such a file;
+>>>
+>>>   (2) make the sequencer machinery more careful to clean up after it
+>>>       is done or it is aborted  (for example, "git reset --hard"
+>>>       could remove these state files preemptively even when a rebase
+>>>       is not in progress, I would think).
+>>>
+>>> I think we already had some patches toward the latter recently.
+>>
+>> Maybe I am not understanding it correctly, but do you mean in (2) that
+>> "git reset --hard" would always clear sequencer state?
 > 
-> It's one integer per updated entry. So if you have a giant index and
-> updated every single one of them, the EWAH bitmap contains that many
-> integers.
+> I think the commit Junio is referring to is
+> b07d9bfd17 ("commit/reset: try to clean up sequencer state", 2019-04-16)
+> which will only remove the sequencer directory if it stops after the
+> pick was the last one in the series. The idea is that if cherry-pick
+> stops for a conflict resolution on the last pick user commits the result
+> directly or run reset without running `cherry-pick --continue`
+> afterwards the sequencer state gets cleaned up properly.
 > 
-> If it was easy to just merge these bitmaps back to the entry (e.g. in
-> this example, add "replaced": true to entry zero) I would have done
-> it. But we dump as we stream and it's already too late to do it.
+>> That seems
+>> undesirable to me, as I often use "git reset" to move the head around
+>> during a rebase. (e.g., when using "rebase -i" to split apart I commit,
+>> I stop on that commit, "git reset" back to the parent, and then
+>> selectively "add -p" the various parts).
+>>
+>> Direction (1) seems quite sensible to me, though.
 > 
->> Would it be better to have the caller of ewah_each_bit()
->> build a hex or bit string in a strbuf and then write it
->> as a single string?
+> Now that we try harder to clean up the sequencer state I wonder if that
+> would just cover up bugs where the state has not been removed when it
+> should have been.
+
+When I wrote that it hadn't dawned on me that if there is an error the 
+status will not tell the user that a cherry-pick is in progress which is 
+what we really want so they are alerted to the stale sequencer state. 
+I've posted a series [1] to address this (sadly gitgitgadget wont let me 
+post it on this thread).
+
+Best Wishes
+
+Phillip
+
+[1] 
+https://public-inbox.org/git/pull.275.git.gitgitgadget@gmail.com/T/#mf57a4ab95ba907fbf2d06ec64e9b676db158eace
+
+
+> That can lead to unpleasant problems if the user
+> aborts a single revert/cherry-pick when there is stale sequencer state
+> around as it rewinds HEAD to the commit when the stale
+> cherry-pick/revert was started as explained in the message to b07d9bfd17
+> ("commit/reset: try to clean up sequencer state", 2019-04-16)
 > 
-> I don't think the current EWAH representation is easy to read in the
-> first place. You'll probably have to run through some script to update
-> the main entries part and will have a much better view, but that's
-> pretty quick. If it's for scripts, then it's probably best to keep as
-> an array of integers, not a string. Less post processing.
-
-I don't think the intent is to dump the EWAH directly, but instead to
-dump a string of the uncompressed bitmap. Something like:
-
-	"delete_bitmap" : "01101101101"
-
-instead of
-
-	"delete_bitmap" : [ 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1 ]
-
-> Another reason for not merging to one string (might not be a very good
-> argument though) is to help diff between two indexes.
-> One-number-per-line works well with "git diff --no-index" while one
-> long string is a bit harder. I did this kind of comparison when I made
-> changes in read-cache.c and wanted to check if the new index file is
-> completely broken, or just slighly broken.
-
-You're right that the diff of the json output is an interesting
-use, and the "single string" output is not helpful. What about
-batches of 64-bit strings? For example:
-
-	"delete_bitmap" : [
-		"0101010101010101010101010101010101010101010101010101010101010101",
-		"0101010101010101010101010101010101010101010101010101010101010101",
-		"0101010101010101010101010101010101010101010101010101010101010101",
-		"01010101010101"
-	]
-
-This could be a happy medium between the two options, but does require
-some extra work in the formatter.
-
-Thanks,
--Stolee
+> If we do want to do something then maybe teaching gc not to collect
+> commits listed in .git/sequencer/todo and
+> .git/rebase-merge/git-rebase-todo would be useful.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>> -Peff
+>>
+> 
