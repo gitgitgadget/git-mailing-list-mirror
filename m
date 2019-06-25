@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07A291F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75F1F1F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 14:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731674AbfFYOth (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 10:49:37 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42285 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731171AbfFYOtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 10:49:36 -0400
-Received: by mail-ed1-f67.google.com with SMTP id z25so27539161edq.9
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:34 -0700 (PDT)
+        id S1731837AbfFYOtk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 10:49:40 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43965 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731740AbfFYOti (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 10:49:38 -0400
+Received: by mail-ed1-f65.google.com with SMTP id e3so27492626edr.10
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4f07BskVjja2sCXYPOMaiA7HIs4U1rV1+oT5jx14NzA=;
-        b=G/LSA8wUvk5vw0UGQ8y7a2JVUesBk4xfM+h8MzThiqHCWTU5/gzTuJy55m1QVCh3Dt
-         z6xYg7hBxg5rrQala1gBsb0YTeKMdIZLctbtN9pZ3lRJJGcUXRrkGvguErwAs8Gora0Q
-         R6Ni0/fmnmOrYqZcey47yg9Ril3vhZ0CzBF9B4Fe6y2icsJ5qfrqmv8+wxisv9Zxov3a
-         NRoH8WLm/Ydcnxg6duSs9bXIb6o+uy+1zPT9x9IM3JHDrAxiVnuaIERpH5eSzViZSj4N
-         6Vf3rLbCoV8eij7tDASkAz17opw54WFXrqtirpsy89Ni5oqzI+dgOFEb7Ay0NO6IvE7Z
-         kCRw==
+        bh=OQcXUHxBS6yq224kqYH1CH+e5fbZrkv0VTnNS0DDVFk=;
+        b=Zg7XiaJhMb/Iz0ic1RPf0RzIk0fnqsd/iUq13ah9lpwc9ud1ePfULrpQ60tDYjm58H
+         991MwXH5qj281aEgZfj2T9zjhyHukye2feIPYGhiQGdtN6gbRFxKk41LgiHo6+S4+niP
+         ANClIzMDBDd+LwJq0Am4SxthpxcepPY1zLSU442KV+7eEe2VWCxZVjwpGi73GSeNi6M4
+         ZIZVvAJzH8gEXdUFMaAoDYlHO9jxTzUpqVybuewVhtigI0fw504xMjAPKUDnpYT188hc
+         Pa4KZqPXTgEpq5oELbM4IB+8Ue72zK6THc4DoX4MPMs+YJ56qYARCtDLzSJFBW1Q6F+g
+         GmKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4f07BskVjja2sCXYPOMaiA7HIs4U1rV1+oT5jx14NzA=;
-        b=Dc6ewT3IsSIhjZ8ffIqWx0C7E5n9wlstusHs38MSMG2G5g5c0j0IF8PCmsFv1eaA+d
-         N+k/iaT72iABEAp8CdnNzB2hXZC8SQar92kBQOFmmQKM4ZIhZbbM+zV8wBgCNd4Q18h/
-         q40lfg3PSeMS6r4ZlYsPvfYdxsm+1l/ci+zmMqbA4qifqbKwlbi4LwKJf1ylczn+Pdeb
-         pcsNe592p86P/mC3xuHhf21MQ5LhJuLnYvgBly9OKKSad3hBzm7G6qPdC27LU1KFdk7V
-         E7W8uIsWFJFDBkkisFK0I6QYsP8kL6+F3NRibXmdTDXZ/Kexissf6d0TmT/wD0lj1rfG
-         qS+w==
-X-Gm-Message-State: APjAAAVakzy+tQKF+BkVILQtZVlA9TKzbbozrF7lrO2dzW8toKCpFeTG
-        qm8ZlzEUBwZGWE7fb0HT/1qIyLrb
-X-Google-Smtp-Source: APXvYqw9CwmzyV4n81fy30e21f4uctp+mZq3+q06GHCgtso7wXh765L6EPzx+Oe6+pg11xzc4KseBw==
-X-Received: by 2002:aa7:ce91:: with SMTP id y17mr114071601edv.56.1561474174205;
-        Tue, 25 Jun 2019 07:49:34 -0700 (PDT)
+        bh=OQcXUHxBS6yq224kqYH1CH+e5fbZrkv0VTnNS0DDVFk=;
+        b=mxsSQvV1a710x3eOkFRYN+/mqaOCElq1QhKEJE+2d+wX8kPH8355AWNLqq6DiIe3NB
+         sjU3d7ZhXpls5BDPCCYVjIfqUKeL6LbwoV5xazabZn+U8hfJmC+hYH8HuaOeVgwFzGat
+         xf/4I64cxnv1rfT/haNDKWHAEIT/bAwcXdyuw/sqe4JMURup6vmsj4U0Bw+fqyGlj61M
+         LlKfeXMD7bnITQmiyBRGVHlMyvcJmg44hnx+ImJfBFHnN1MWmZOyn8dsGN5aVTZJoznm
+         QD44BO2wXbSTxqmKjvX+mHxo3A2FhHsClyd6twGGkPHErkeT1kbKBtS2vnsccKJ8Xfeb
+         G1vQ==
+X-Gm-Message-State: APjAAAVWtSE2LxKgpNwT9PpYHQbdlNuwSQICk3P0qbkAsB7hDLGd1CVl
+        xgzJQryUkgjx0qQaahAlgOT2WoYA
+X-Google-Smtp-Source: APXvYqyM2fgbi6tjtg3zwWCj4HDVmfWaW3ekJn3KRi8amgNQDx3TbgO3hh4Z34vrCvJLORdxO288Wg==
+X-Received: by 2002:a17:906:1304:: with SMTP id w4mr18323486ejb.159.1561474177053;
+        Tue, 25 Jun 2019 07:49:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m19sm2463893eje.30.2019.06.25.07.49.33
+        by smtp.gmail.com with ESMTPSA id m32sm4918332edc.89.2019.06.25.07.49.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Jun 2019 07:49:33 -0700 (PDT)
-Date:   Tue, 25 Jun 2019 07:49:33 -0700 (PDT)
-X-Google-Original-Date: Tue, 25 Jun 2019 14:49:13 GMT
-Message-Id: <5c383985a19f8d7edff4a496021c99849840c8be.1561474167.git.gitgitgadget@gmail.com>
+        Tue, 25 Jun 2019 07:49:36 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 07:49:36 -0700 (PDT)
+X-Google-Original-Date: Tue, 25 Jun 2019 14:49:17 GMT
+Message-Id: <51d73c61d3fea7c02cf2c9622f6c492adf56502b.1561474167.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.149.v3.git.gitgitgadget@gmail.com>
 References: <pull.149.v2.git.gitgitgadget@gmail.com>
         <pull.149.v3.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 07/20] msvc: fix dependencies of compat/msvc.c
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 11/20] msvc: do not re-declare the timespec struct
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,35 +67,40 @@ Cc:     Carlo Arenas <carenas@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-The file compat/msvc.c includes compat/mingw.c, which means that we have
-to recompile compat/msvc.o if compat/mingw.c changes.
+VS2015's headers already declare that struct.
 
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 2 ++
+ compat/mingw.h | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 6ddece0350..473613a20d 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -414,6 +414,8 @@ else
- 	BASIC_CFLAGS += -Zi -MDd
- endif
- 	X = .exe
-+
-+compat/msvc.o: compat/msvc.c compat/mingw.c GIT-CFLAGS
- endif
- ifeq ($(uname_S),Interix)
- 	NO_INITGROUPS = YesPlease
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 210f1b01a8..a03e40e6e2 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -352,11 +352,13 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
+ #ifndef __MINGW64_VERSION_MAJOR
+ #define off_t off64_t
+ #define lseek _lseeki64
++#ifndef _MSC_VER
+ struct timespec {
+ 	time_t tv_sec;
+ 	long tv_nsec;
+ };
+ #endif
++#endif
+ 
+ struct mingw_stat {
+     _dev_t st_dev;
 -- 
 gitgitgadget
 
