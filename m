@@ -2,300 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCA01F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 09:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FC521F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 09:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729116AbfFYJFt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 05:05:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:36461 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728365AbfFYJFt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 05:05:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561453542;
-        bh=UJvt2SOGu/6bYYAAzQn79Z7aGMVt5OdwjS7SfpqKXPs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=STIZNQqgYySOOIWbRAG2i3ASX6F22s/dig8azbK2A6fVBzzLHpKIZON9m2l+JkeSb
-         A7fPvzYhMbxwjvhxHw1lBI+MNxrZA4An6eULCyzZSslQpFSUGcLG3ajxEAbw6gUmt0
-         88DkdoD7H8Ft3WVKfc9NFCyFTEhEtpagEZvK4vGE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdebB-1iETyu2FHt-00Zcd0; Tue, 25
- Jun 2019 11:05:41 +0200
-Date:   Tue, 25 Jun 2019 11:06:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] t3404: modernize here doc style
-In-Reply-To: <20190624181318.17388-2-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906251104300.44@tvgsbejvaqbjf.bet>
-References: <20190611130320.18499-1-szeder.dev@gmail.com> <20190624181318.17388-1-szeder.dev@gmail.com> <20190624181318.17388-2-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729235AbfFYJF7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 05:05:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32869 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728365AbfFYJF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 05:05:59 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n9so16982916wru.0
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 02:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Or5ajJewnjr5tDmBqH4/I+l2hML1IC3O+umX9erXpbM=;
+        b=DVe3o+OvDcEIwHRJvxMWwn8BkxMYH7z0nNepP3B9Wc3O2P7q/BgxGG+/WFZoIXmeYL
+         vu+YJweVF2khVHCOJO/BHUnMgYIC26IKcdAM3dreA5HN51f1TTF0kKTHYWexEOlUfWBI
+         nQNep5J238NN9PhWsxOUL7IM8kP5GNNX2f13Yn1b7/Xt+8vZoXQ/5j7Ppv4PKKBzsHF/
+         rK34NT5HZivwPVoYrECoY1Valjcbbvw9ic/Jbdu8BsVKEu+JQCtKsShiL1yqQLB6Usw4
+         aYohu1fbrcs5yAwLUhOSDukDJ4MFD0W6qEv6puPtY0kTRi0H0eMLJt288z8rLwSEz+rZ
+         bZiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Or5ajJewnjr5tDmBqH4/I+l2hML1IC3O+umX9erXpbM=;
+        b=MJKhE9K5lFUS5un7Ermi5fW/zZP/eTk1q0gDGh0pIe740XCoTRsQknlfY6n+BiOSYK
+         GxaOE6k8klZaXgPsEXkVmeQWGElrWvP7EpW+xepoKflp9XyVmbB106/WUaDH+DxBuQj3
+         zmmEbAfx1o/nKaSc7AP+JIBBPMgXK51DrnoLfEp1UkwkgcVKdkj6w7WgzI9n0wWvxtM0
+         7ELvH7FJz9hXEjpwMs1YY/8OWCl0SR8JQhc4VabbIAENWBE6HLUeOJ/fSw7EkvUWlgdr
+         mXNMRTlAv1fInK1jBNQSsee/O9C5N0ddPmeX/hVH3jx0hZJJLIiDtbQbgW7fa67HvVS2
+         4rSA==
+X-Gm-Message-State: APjAAAWBJtl2Kv15PPu2XxWJqofLCgkmMKhq7FTtIpTte/rVtnagBS6f
+        wJDFP7QnT/ZadSDo4MFZSIg=
+X-Google-Smtp-Source: APXvYqwAof92Se4e+gVHkWUXCXSotI6VaxHsjdxkSlPsNm3JATFZspHIlAX0ldDSzOeb7Or4GbbBwg==
+X-Received: by 2002:adf:a345:: with SMTP id d5mr34925424wrb.234.1561453557391;
+        Tue, 25 Jun 2019 02:05:57 -0700 (PDT)
+Received: from localhost (adsl-24.176.58.195.tellas.gr. [176.58.195.24])
+        by smtp.gmail.com with ESMTPSA id d7sm1043868wrx.37.2019.06.25.02.05.55
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 25 Jun 2019 02:05:56 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 10:05:54 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 01/10] ls-files: add --json to dump the index
+Message-ID: <20190625090554.GA2423@hank.intra.tgummerer.com>
+References: <20190624130226.17293-1-pclouds@gmail.com>
+ <20190624130226.17293-2-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1252390739-1561453562=:44"
-X-Provags-ID: V03:K1:AK3tOGZCQPgngDboWymP/nsG7F9bn6SO7ttOx5EH3Lj/DKzVh5/
- TKqZdkO3wStoxWR5tvL4qPF0Bb2DVN8q3kozwwabWW4ZB86lUtidCYOa2+1PLiWqRVs8V8Y
- OcQ+8atm/1y9d4GQVJHO71pyv8V+G7ta5x53WD++wUWovEm+Mor7U0NI/ZB7lWOpYW2VKxm
- v0cJftUeagUyOGsHLWgvw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8gp+6QXk14o=:Um9A//lD9l+i+9JxYvAWOO
- ox2Q4J4KNh7hpxqFR/yg8nmTViAC6R9Fmib1jnGAFc5pzFkTwCbc3oNEru2qT0120SZZHm8IA
- O2PKOCn56uMwOFCsFbLtwZxgv/HK0tnK7WL5ZZy8IqSXEr5E9QuYzqOq5a9Ph8fRJ9wSVBddj
- 8IYZ+8E8mMXROPdeqK3Cz9AEE+oLtGs7hbkLb3nTyLUKhECZg9HBDhnpeevIXbR0Ut+wGtTWg
- VU/TkSbonsY5XQ5Vo35WM8EgOZ1sAKLQtN1Da28xS+1qTTbCZCL8PVabRv3VvJN9SHTs30zVi
- 2ROIDZeKSXCWeGuljRMB6+H5wZKJPRqezS1Tj9+smIisCl9/mPXjCYrpsxNEaBsNfp/QTahOS
- sR7MIcgCwrVrcUNSrXhx+DJId3ikTwCbkl4HOf52/zzs0A+yOMDU5NKqj4wPBuui7kjUeSuSQ
- 4yLyKoSMk6hMkYpwg6l6WgsZjDBJvl6kXuhjhGt2WNIO7wBFQIrnmPC/6Py2rmOC8W20tfN0u
- GOtQAjx61R4Ew03wQu8wvF6vlEpGSYy2VCuU6pQC2Hd1btjLD7A63/YTPMyldTR6UNEb4rI++
- 19tOxosHEkxiqUd3+1+W2Ma7FoKx0uRq7DbHXpg+fP8LFiFIcXHlFTtytB7CG5/EUBT2BxuOs
- dc7W8Q9wZZfrWgSitSkiYQC/blGcEWt398ZLDO04UT8wPGP1CHt/FFetMD9jn5kaKWT3LyXGX
- xabjbcDAtzTkgKRG15vHs2oMbpsWY6XdOxd6tcctz58EyK+4GLuWfRHAg27a+S1X6Q5wLmTEf
- sVFkcoEvXLN0H+hUsH3MhVI+300aY7xDCTpI3hAF3oat5L5TXj/BHWcBwSr4H5n5kYlULAI7c
- FJbv81GPnALDOq/+X6wAwAZabeMvkgkfOKO4V3q7EU7tvQL5cfy/xFMW/6jYrA+RHKZzF/Vqg
- XdKgt8ofHIepvo/SXdVCUp2RvfSB60DuuH5KUEPJMuF0/3q4O9r3E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190624130226.17293-2-pclouds@gmail.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1252390739-1561453562=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi G=C3=A1bor,
-
-On Mon, 24 Jun 2019, SZEDER G=C3=A1bor wrote:
-
-> In 't3404-rebase-interactive.sh' the expected output of several tests
-> is prepared from here documents, which are outside of
-> 'test_expect_success' blocks and have spaces around redirection
-> operators.
->
-> Move these here documents into the corresponding 'test_expect_success'
-> block and avoid spaces between filename and redition operators.
-> Furthermore, quote the here docs' delimiter word to prevent parameter
-> expansions and what not, where applicable.
-
-Makes sense. I did not really look at it in detail (it's a bit tough to
-read, and `--patience` would have made it only _slightly_ easier),
-trusting that you used `git diff -w --color-moved` to verify the moves.
-
-Thanks,
-Dscho
-
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+On 06/24, Nguyễn Thái Ngọc Duy wrote:
+> So far we don't have a command to basically dump the index file out,
+> with all its glory details. Checking some info, for example, stat
+> time, usually involves either writing new code or firing up "xxd" and
+> decoding values by yourself.
+> 
+> This --json is supposed to help that. It dumps the index in a human
+> readable format but also easy to be processed with tools. And it will
+> print almost enough info to reconstruct the index later.
+> 
+> In this patch we only dump the main part, not extensions. But at the
+> end of the series, the entire index is dumped. The end result could be
+> very verbose even on a small repository such as git.git.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  t/t3404-rebase-interactive.sh | 123 ++++++++++++++++------------------
->  1 file changed, 58 insertions(+), 65 deletions(-)
+>  Documentation/git-ls-files.txt    |  5 +++
+>  builtin/ls-files.c                | 38 +++++++++++++---
+>  cache.h                           |  2 +
+>  json-writer.c                     | 22 ++++++++++
+>  json-writer.h                     | 23 ++++++++++
+>  read-cache.c                      | 72 ++++++++++++++++++++++++++++++-
+>  t/t3011-ls-files-json.sh (new +x) | 44 +++++++++++++++++++
+>  t/t3011/basic (new)               | 67 ++++++++++++++++++++++++++++
+>  8 files changed, 265 insertions(+), 8 deletions(-)
 >
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.=
-sh
-> index 1723e1a858..9146f9d47b 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -75,11 +75,10 @@ test_expect_success 'rebase --keep-empty' '
->  	test_line_count =3D 6 actual
->  '
+> [...]
 >
-> -cat > expect <<EOF
-> -error: nothing to do
-> -EOF
-> -
->  test_expect_success 'rebase -i with empty HEAD' '
-> +	cat >expect <<-\EOF &&
-> +	error: nothing to do
-> +	EOF
->  	set_fake_editor &&
->  	test_must_fail env FAKE_LINES=3D"1 exec_true" git rebase -i HEAD^ >act=
-ual 2>&1 &&
->  	test_i18ncmp expect actual
-> @@ -237,25 +236,23 @@ test_expect_success 'exchange two commits' '
->  	test G =3D $(git cat-file commit HEAD | sed -ne \$p)
->  '
->
-> -cat > expect << EOF
-> -diff --git a/file1 b/file1
-> -index f70f10e..fd79235 100644
-> ---- a/file1
-> -+++ b/file1
-> -@@ -1 +1 @@
-> --A
-> -+G
-> -EOF
-> -
-> -cat > expect2 << EOF
-> -<<<<<<< HEAD
-> -D
-> -=3D=3D=3D=3D=3D=3D=3D
-> -G
-> ->>>>>>> 5d18e54... G
-> -EOF
-> -
->  test_expect_success 'stop on conflicting pick' '
-> +	cat >expect <<-\EOF &&
-> +	diff --git a/file1 b/file1
-> +	index f70f10e..fd79235 100644
-> +	--- a/file1
-> +	+++ b/file1
-> +	@@ -1 +1 @@
-> +	-A
-> +	+G
-> +	EOF
-> +	cat >expect2 <<-\EOF &&
-> +	<<<<<<< HEAD
-> +	D
-> +	=3D=3D=3D=3D=3D=3D=3D
-> +	G
-> +	>>>>>>> 5d18e54... G
-> +	EOF
->  	git tag new-branch1 &&
->  	set_fake_editor &&
->  	test_must_fail git rebase -i master &&
-> @@ -495,15 +492,14 @@ test_expect_success 'commit message retained after=
- conflict' '
->  	git branch -D conflict-squash
->  '
->
-> -cat > expect-squash-fixup << EOF
-> -B
-> -
-> -D
-> +test_expect_success C_LOCALE_OUTPUT 'squash and fixup generate correct =
-log messages' '
-> +	cat >expect-squash-fixup <<-\EOF &&
-> +	B
->
-> -ONCE
-> -EOF
-> +	D
->
-> -test_expect_success C_LOCALE_OUTPUT 'squash and fixup generate correct =
-log messages' '
-> +	ONCE
-> +	EOF
->  	git checkout -b squash-fixup E &&
->  	base=3D$(git rev-parse HEAD~4) &&
->  	set_fake_editor &&
-> @@ -799,13 +795,12 @@ test_expect_success 'rebase -i can copy notes' '
->  	test "a note" =3D "$(git notes show HEAD)"
->  '
->
-> -cat >expect <<EOF
-> -an earlier note
-> -
-> -a note
-> -EOF
-> -
->  test_expect_success 'rebase -i can copy notes over a fixup' '
-> +	cat >expect <<-\EOF &&
-> +	an earlier note
+> diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
+> new file mode 100755
+> index 0000000000..97bcd814be
+> --- /dev/null
+> +++ b/t/t3011-ls-files-json.sh
+> @@ -0,0 +1,44 @@
+> +#!/bin/sh
 > +
-> +	a note
-> +	EOF
->  	git reset --hard n3 &&
->  	git notes add -m"an earlier note" n2 &&
->  	set_fake_editor &&
-> @@ -1304,27 +1299,26 @@ test_expect_success 'rebase -i respects rebase.m=
-issingCommitsCheck =3D ignore' '
->  		actual
->  '
->
-> -cat >expect <<EOF
-> -Warning: some commits may have been dropped accidentally.
-> -Dropped commits (newer to older):
-> - - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> -To avoid this message, use "drop" to explicitly remove a commit.
-> -
-> -Use 'git config rebase.missingCommitsCheck' to change the level of warn=
-ings.
-> -The possible behaviours are: ignore, warn, error.
-> -
-> -Rebasing (1/4)
-> -Rebasing (2/4)
-> -Rebasing (3/4)
-> -Rebasing (4/4)
-> -Successfully rebased and updated refs/heads/missing-commit.
-> -EOF
-> -
->  cr_to_nl () {
->  	tr '\015' '\012'
->  }
->
->  test_expect_success 'rebase -i respects rebase.missingCommitsCheck =3D =
-warn' '
-> +	cat >expect <<-EOF &&
-> +	Warning: some commits may have been dropped accidentally.
-> +	Dropped commits (newer to older):
-> +	 - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> +	To avoid this message, use "drop" to explicitly remove a commit.
+> +test_description='ls-files dumping json'
 > +
-> +	Use '\''git config rebase.missingCommitsCheck'\'' to change the level =
-of warnings.
-> +	The possible behaviours are: ignore, warn, error.
+> +. ./test-lib.sh
 > +
-> +	Rebasing (1/4)
-> +	Rebasing (2/4)
-> +	Rebasing (3/4)
-> +	Rebasing (4/4)
-> +	Successfully rebased and updated refs/heads/missing-commit.
-> +	EOF
->  	test_config rebase.missingCommitsCheck warn &&
->  	rebase_setup_and_clean missing-commit &&
->  	set_fake_editor &&
-> @@ -1335,21 +1329,20 @@ test_expect_success 'rebase -i respects rebase.m=
-issingCommitsCheck =3D warn' '
->  	test D =3D $(git cat-file commit HEAD | sed -ne \$p)
->  '
->
-> -cat >expect <<EOF
-> -Warning: some commits may have been dropped accidentally.
-> -Dropped commits (newer to older):
-> - - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> - - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master~2)
-> -To avoid this message, use "drop" to explicitly remove a commit.
-> -
-> -Use 'git config rebase.missingCommitsCheck' to change the level of warn=
-ings.
-> -The possible behaviours are: ignore, warn, error.
-> -
-> -You can fix this with 'git rebase --edit-todo' and then run 'git rebase=
- --continue'.
-> -Or you can abort the rebase with 'git rebase --abort'.
-> -EOF
-> -
->  test_expect_success 'rebase -i respects rebase.missingCommitsCheck =3D =
-error' '
-> +	cat >expect <<-EOF &&
-> +	Warning: some commits may have been dropped accidentally.
-> +	Dropped commits (newer to older):
-> +	 - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
-> +	 - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master~2)
-> +	To avoid this message, use "drop" to explicitly remove a commit.
+> +strip_number() {
+> +	for name; do
+> +		echo 's/\("'$name'":\) [0-9]\+/\1 <number>/' >>filter.sed
+> +	done
+> +}
 > +
-> +	Use '\''git config rebase.missingCommitsCheck'\'' to change the level =
-of warnings.
-> +	The possible behaviours are: ignore, warn, error.
+> +strip_string() {
+> +	for name; do
+> +		echo 's/\("'$name'":\) ".*"/\1 <string>/' >>filter.sed
+> +	done
+> +}
 > +
-> +	You can fix this with '\''git rebase --edit-todo'\'' and then run '\''=
-git rebase --continue'\''.
-> +	Or you can abort the rebase with '\''git rebase --abort'\''.
-> +	EOF
->  	test_config rebase.missingCommitsCheck error &&
->  	rebase_setup_and_clean missing-commit &&
->  	set_fake_editor &&
-> --
-> 2.22.0.589.g5bd7971b91
->
->
+> +compare_json() {
+> +	git ls-files --debug-json >json &&
+> +	sed -f filter.sed json >filtered &&
+> +	test_cmp "$TEST_DIRECTORY"/t3011/"$1" filtered
+> +}
+> +
+> +test_expect_success 'setup' '
+> +	mkdir sub &&
+> +	echo one >one &&
+> +	git add one &&
+> +	echo 2 >sub/two &&
+> +	git add sub/two &&
+> +
+> +	echo intent-to-add >ita &&
+> +	git add -N ita &&
+> +
+> +	strip_number ctime_sec ctime_nsec mtime_sec mtime_nsec &&
+> +	strip_number device inode uid gid file_offset ext_size &&
+> +	strip_string oid ident
+> +'
+> +
+> +test_expect_success 'ls-files --json, main entries' '
+> +	compare_json basic
+> +'
+> +
+> +test_done
+> diff --git a/t/t3011/basic b/t/t3011/basic
+> new file mode 100644
+> index 0000000000..9436445d90
+> --- /dev/null
+> +++ b/t/t3011/basic
+> @@ -0,0 +1,67 @@
+> +{
+> +  "version": 3,
 
---8323328-1252390739-1561453562=:44--
+This will break the test suite when 'GIT_TEST_INDEX_VERSION' is set to
+4 for example.  I think this applies to a few other tests in later
+patches as well.
+
+> +  "oid": <string>,
+> +  "mtime_sec": <number>,
+> +  "mtime_nsec": <number>,
+> +  "entries": [
+> +    {
+> +      "id": 0,
+> +      "name": "ita",
+> +      "mode": "100644",
+> +      "flags": 536887296,
+> +      "extended_flags": true,
+> +      "intent_to_add": true,
+> +      "oid": <string>,
+> +      "stat": {
+> +        "ctime_sec": <number>,
+> +        "ctime_nsec": <number>,
+> +        "mtime_sec": <number>,
+> +        "mtime_nsec": <number>,
+> +        "device": <number>,
+> +        "inode": <number>,
+> +        "uid": <number>,
+> +        "gid": <number>,
+> +        "size": 0
+> +      },
+> +      "file_offset": <number>
+> +    },
+> +    {
+> +      "id": 1,
+> +      "name": "one",
+> +      "mode": "100644",
+> +      "flags": 0,
+> +      "oid": <string>,
+> +      "stat": {
+> +        "ctime_sec": <number>,
+> +        "ctime_nsec": <number>,
+> +        "mtime_sec": <number>,
+> +        "mtime_nsec": <number>,
+> +        "device": <number>,
+> +        "inode": <number>,
+> +        "uid": <number>,
+> +        "gid": <number>,
+> +        "size": 4
+> +      },
+> +      "file_offset": <number>
+> +    },
+> +    {
+> +      "id": 2,
+> +      "name": "sub/two",
+> +      "mode": "100644",
+> +      "flags": 0,
+> +      "oid": <string>,
+> +      "stat": {
+> +        "ctime_sec": <number>,
+> +        "ctime_nsec": <number>,
+> +        "mtime_sec": <number>,
+> +        "mtime_nsec": <number>,
+> +        "device": <number>,
+> +        "inode": <number>,
+> +        "uid": <number>,
+> +        "gid": <number>,
+> +        "size": 2
+> +      },
+> +      "file_offset": <number>
+> +    }
+> +  ]
+> +}
+> -- 
+> 2.22.0.rc0.322.g2b0371e29a
+> 
