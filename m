@@ -2,192 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3D911F461
-	for <e@80x24.org>; Tue, 25 Jun 2019 11:56:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73FC11F461
+	for <e@80x24.org>; Tue, 25 Jun 2019 12:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731234AbfFYL4e (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 07:56:34 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36271 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726313AbfFYL4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 07:56:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561463787;
-        bh=jvFgrUblKKQ56SzU46Qu4VyOi8bZ2buQu7c98zJHpeE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CyDPEqRUvY8LxqUEFEKXQT1r0Cv30EW7HaFhmLheT4H/SDFdpdyxsX2+Ez5jMqmjm
-         UhyA5I1uRZ6GHhyRAxrfYwmFZaTFKMuH0Qhkgm88NBZ/nhemXSqqYEknqwZTXD3Lm3
-         oOKO/U1TVa7nfFnGfUSzuoVRBv7Co86SEpOU/uQw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPV69-1hbdKV3KFt-004hM7; Tue, 25
- Jun 2019 13:56:26 +0200
-Date:   Tue, 25 Jun 2019 13:56:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 3/3] status: do not report errors in sequencer/todo
-In-Reply-To: <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906251356110.44@tvgsbejvaqbjf.bet>
-References: <pull.275.git.gitgitgadget@gmail.com> <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732524AbfFYMG6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 08:06:58 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45905 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732520AbfFYMG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 08:06:56 -0400
+Received: by mail-io1-f65.google.com with SMTP id e3so2525392ioc.12
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 05:06:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f+KikxFCFA+N47+XDC9cOGcHFAsDg1vgwB2das0xpUk=;
+        b=NQPrQ87B2YWknapk5ab6q0Rw79MvaMyTjhzbay9YCvedihV81SvhUm8h9bQizlc0fK
+         Xyw4V9m1RdZDI1nYP+bMn5PUQTkHs1NHbKVODxCrH2+QsfOSoI81H2Mb5EmWvGYg+yhn
+         NhofHFO2E+E5hA+QOkLRCSI/QjVwiD+pJ6Cxiv8R6PavUo2wPEnA1R6xlPE2MO78eZw2
+         fnrkWzvDCUm50lhpG55vdcIAKUB+u/kFOcj56yZGRjnN3tx4bJl6hOfCuwxQSmX7xN8X
+         HvDwOrVgIsCtzqieckT4zda01faLi3oSXmPOzqRTKREaWh0tM+WwLzwZNgzeeVas7kWi
+         WmdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f+KikxFCFA+N47+XDC9cOGcHFAsDg1vgwB2das0xpUk=;
+        b=WykUsMmLzELkmgMEc9wXUNaPIGZQKpgvbrdQZfhhbQpFg+X6ob4SkrdsKEd+p0rOVj
+         LsP6p6u/CRyXADh19CV3tAfbYvAzeyG21JBQC66FTdk4p9Hh38+5qaAFVHwRsWxnD/c2
+         arkVTtduLzdApB/LWYvoSBx0qJSabRgfbT8WN2he1UNRBxpk6ubAg70i91/SZGj0bwEQ
+         VFWfV0/g36etLf3Fobw+pfQAXhBfgTdie0xSmOcu+wXjUNJ5GNuI+f7Tor/SrSWn86Gf
+         Vg6KfU6h31Bt8ARjQn5VmKFuMo+dM0Gk3kJdBmd11R2YcPATpy1QasAibBr0JiA1Pewn
+         KC1w==
+X-Gm-Message-State: APjAAAU4tRGoJOCEAAttvOf8Im3iDY6v7R0iVRmtGeR1uWiV4/gLFxva
+        gbdTKixcibbIJGE5AZcN4CWQQzE5CPku25olNGw=
+X-Google-Smtp-Source: APXvYqwFXimWdfMrXifCc1JpQH3kzRs+bodHMhLtAjnq0O0kWeDvwYkXTdFBJMpqqSaRvun/TXpvBdL7ZoWM3anwb8U=
+X-Received: by 2002:a6b:f711:: with SMTP id k17mr8066693iog.273.1561464415910;
+ Tue, 25 Jun 2019 05:06:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:44YzrqhUCq3gej3Y6hG9IUzsQZKiqv0rlG1dumFJ5hs5+aqS6tI
- iubulGHce2iw9G8W1PHy9D3mGr7xYcWZ3tL7zllBGnjtdqb6JA0g8a/fObVoJODqbbgRUYB
- Y8+krZQuy8HD5lTIQcgOEL4UfgW8RkJGba0GAEuvhChbitoFqqJlZfTk8eEAk9sFuTivDs3
- QzkgGBA3SHGkL3LpaYfkA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zrZmvGVtCl8=:SByBuu2RzeK/yRLeciz3G0
- z4hr8aVPEbH2H6os7TQQ4WPiujENgo+BgmagD4zX+q48UGb5nd3dx0vMkTMnCDPH05f7Xriu9
- aoFco6U8dw2RPFsS01tTsZa5Fv1Z4sXqYKLpmqJ8d2nuWWlYWzXp7PFTkqF8UgyZP2H50H4RJ
- 9yWXALHamXUnZ0GoQNQALDyJHx7LuHFUU23oXmAiN1KuZwfnlvGIPEDxjIn2gX95xH7jekIjQ
- YKsF5JkJmgTmYco8nyvHVK7C/7Z15ITNMySaXW6zL1QLlUMHqkBGbgiNL/B1m0AeD7mPaKvNM
- eN6DOKhylLyKxZ/oo5UWmJ9n1nWO2ohmRPXif3grt2ID7SHeh47Lm0mw27AL0eiZ0niKV6qxo
- WxEaOTWbOz0AoEqZ8HANTUjN2wHQywB4Gw0pY8zfdNKF61hhkEncB26kl8lcPDfNgFgC0ypKe
- jQg7MmxHrHVHyMGItCDJEV0DLxp/CzCRgXfp38xvBPmeNc8w8zE/3EXG3Y5k1ZKp4FKrSNfUh
- +xXWSBDnME/kZZqxg/mP+Sv8sqy2fMTaVA+djMYM9RLIhWGuWptek9vaj/H3IBiNkaMWInrpK
- bbzR9Q7jiYLf7RLRJZqlz7VAT6lGzgm5DyXR3YHCRYoBBX6JGerj3GRZbKvYVnwmEIzdehhbM
- 2JHGSADHDlR71qvJsaOvIJD04PiJUPDwlYrZgIks4EgSspczw2/jhqzqH7eAg2RdSxd/Q/cfk
- ooNV1IC/KLZZKjA5omd0nCOPrIjeoChu2lFNZR4UkeuVp+KzTlsE/Sn0eR3Y9Mx5pZEioxdJ7
- hAS51sOLXzVsKT1g6Q5MB0YI9bL8uobxJrZpcy45JDh/K0M4P9qADRnHjfwvN/sOj5zDAN6/9
- RsT5htHGiGKY3bV6Jnslq4NrlPGd99vVrNKxOyDxtrhVIxYqD/GWADmAXmf32lzxq24+vqvV0
- 0obSYS9Yd5HW2pXz4mbikM14reUojMlqxtjO3gfQ6bSt8sjV8ohoCyoThDORqyr7u+usPT8DC
- y3NOSO/3P5ctc93ktw+b+jzS2SI/fSyFbBP1YNzmMnhEHzYinZzuQqfaVu3USvPs++DbEUBjz
- H+x/Xio8yI/igpO7zDWywvcFQ1J1s/Mh+VT
-Content-Transfer-Encoding: quoted-printable
+References: <20190624130226.17293-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906241954290.44@tvgsbejvaqbjf.bet>
+ <CACsJy8BsT-GaVvEmqfk5n1jGmkcLG_bRjqcU0M3yefBmNSxmnA@mail.gmail.com> <nycvar.QRO.7.76.6.1906251311280.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1906251311280.44@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 25 Jun 2019 19:06:29 +0700
+Message-ID: <CACsJy8B9vd9YaP_FHN-EDEPc_OHgD=MtFu8WymM66PURWX=25Q@mail.gmail.com>
+Subject: Re: [PATCH v2 00/10] Add 'ls-files --debug-json' to dump the index in json
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Tue, Jun 25, 2019 at 6:27 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Duy,
+>
+> On Tue, 25 Jun 2019, Duy Nguyen wrote:
+>
+> > On Tue, Jun 25, 2019 at 1:00 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > > > - extension location is printed, in case you need to decode the
+> > > >   extension by yourself (previously only the size is printed)
+> > > > - all extensions are printed in the same order they appear in the file
+> > > >   (previously eoie and ieot are printed first because that's how we
+> > > >   parse)
+> > > > - resolve undo extension is reorganized a bit to be easier to read
+> > > > - tests added. Example json files are in t/t3011
+> > >
+> > > It might actually make sense to optionally disable showing extensions.
+> > >
+> > > You also forgot to mention that you explicitly disable handling
+> > > `<pathspec>`, which I find a bit odd, personally, as that would probably
+> > > come in real handy at times,
+> >
+> > No. I mentioned the land of high level languages before. Filtering in
+> > any Python, Ruby, Scheme, JavaScript, Java is a piece of cake and much
+> > more flexible than pathspec.
+>
+> I heard that type of argument before. I was working on the initial Windows
+> port of Git, uh, of course I was working on a big refactoring of a big C++
+> application backed by a database. A colleague suggested that filtering
+> could be done much better in C++, on the desktop, than in SQL. And so they
+> changed the paradigm to "simplify" the SQL query, and instead dropped the
+> unwanted data after it had hit the RAM of the client machine.
+>
+> Turns out it was a bad idea. A _really_ bad idea. Because it required
+> downloading 30MB of data for about several dozens computers in parallel,
+> at the start of every shift.
+>
+> This change was reverted in one big hurry, and the colleague was tasked to
+> learn them some SQL.
+>
+> Why am I telling you this story? Because you fall into the exact same trap
+> as my colleague.
+>
+> In this instance, it may not be so much network bandwidth, but it is still
+> quite a suboptimal idea to render JSON for possibly tens of thousands of
+> files, then parse the same JSON on the receiving side, the spend even more
+> time to drop all but a dozen files.
 
-On Tue, 25 Jun 2019, Phillip Wood via GitGitGadget wrote:
+This was mentioned before [1]. Of course I don't work on giant index
+files, but I would assume the cost of parsing JSON (at least with a
+stream-based one, not loading the whole thing in core) is still
+cheaper. And you could still do it in iteration, saving every step
+until you have the reasonable small dataset to work on. The other side
+of the story is, are we sure parsing and executing pathspec is cheap?
+I'm not so sure, especially when pathspec code is not exactly
+optimized.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> commit 4a72486de9 ("fix cherry-pick/revert status after commit",
-> 2019-04-16) used parse_insn_line() to parse the first line of the todo
-> list to check if it was a pick or revert. However if the todo list is
-> left over from an old cherry-pick or revert and references a commit that
-> no longer exists then parse_insn_line() prints an error message which is
-> confusing for users [1]. Instead parse just the command name so that the
-> user is alerted to the presence of stale sequencer state by status
-> reporting that a cherry-pick or revert is in progress.
->
-> Note that we should not be leaving stale sequencer state lying around
-> (or at least not as often) after commit b07d9bfd17 ("commit/reset: try
-> to clean up sequencer state", 2019-04-16). However the user may still
-> have stale state that predates that commit.
->
-> Also avoid printing an error message if for some reason the user has a
-> file called `sequencer` in $GIT_DIR.
->
-> [1] https://public-inbox.org/git/3bc58c33-4268-4e7c-bf1a-fe349b3cb037@ww=
-w.fastmail.com/
+Consider the amount of code to support something like that. I'd rather
+wait until a real example come up and no good solution found without
+modify git.git, before actually supporting it.
 
-Very nice, I particularly like the simplicity of the code in `sequencer.c`
-after this patch.
+[1] https://public-inbox.org/git/45e49624-be8e-deff-bf9d-aee052991189@gmail.com/
 
-The entire patch series looks good to me.
+> And this is _even more_ relevant when you want to debug things.
+>
+> In short: I am quite puzzled why this is even debated here. There is a
+> reason, a good reason, why `git ls-files` accepts pathspecs. I would not
+> want to ignore the lessons of history as willfully here.
 
-Thanks,
-Dscho
+I guess you and I have different ways of debugging things.
 
+> > Even with shell scripts, jq could do a much better job than pathspec. If
+> > you filter by pathspec, good luck trying that on extensions.
 >
-> Reported-by: Espen Antonsen <espen@inspired.no>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  sequencer.c            | 24 ++++++++----------------
->  t/t7512-status-help.sh | 16 ++++++++++++++++
->  2 files changed, 24 insertions(+), 16 deletions(-)
+> You keep harping on extensions, but the reality of the matter is that they
+> are rarely interesting. I would even wager a bet that we will end up
+> excluding them from the JSON output by default.
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index 793f86bf9a..f8eab1697e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2177,34 +2177,26 @@ static int parse_insn_line(struct repository *r,=
- struct todo_item *item,
+> Most of the times when I had to decode the index file manually in the
+> past, it was about the regular file entries.
 >
->  int sequencer_get_last_command(struct repository *r, enum replay_action=
- *action)
->  {
-> -	struct todo_item item;
-> -	char *eol;
-> -	const char *todo_file;
-> +	const char *todo_file, *bol;
->  	struct strbuf buf =3D STRBUF_INIT;
-> -	int ret =3D -1;
-> +	int ret =3D 0;
+> There was *one* week in which I had to decode the untracked cache a bit,
+> to the point where I patched the test helper locally to help me with that.
 >
->  	todo_file =3D git_path_todo_file();
->  	if (strbuf_read_file(&buf, todo_file, 0) < 0) {
-> -		if (errno =3D=3D ENOENT)
-> +		if (errno =3D=3D ENOENT || errno =3D=3D ENOTDIR)
->  			return -1;
->  		else
->  			return error_errno("unable to open '%s'", todo_file);
->  	}
-> -	eol =3D strchrnul(buf.buf, '\n');
-> -	if (buf.buf !=3D eol && eol[-1] =3D=3D '\r')
-> -		eol--; /* strip Carriage Return */
-> -	if (parse_insn_line(r, &item, buf.buf, buf.buf, eol))
-> -		goto fail;
-> -	if (item.command =3D=3D TODO_PICK)
-> +	bol =3D buf.buf + strspn(buf.buf, " \t\r\n");
-> +	if (is_command(TODO_PICK, &bol) && (*bol =3D=3D ' ' || *bol =3D=3D '\t=
-'))
->  		*action =3D REPLAY_PICK;
-> -	else if (item.command =3D=3D TODO_REVERT)
-> +	else if (is_command(TODO_REVERT, &bol) &&
-> +		 (*bol =3D=3D ' ' || *bol =3D=3D '\t'))
->  		*action =3D REPLAY_REVERT;
->  	else
-> -		goto fail;
-> -
-> -	ret =3D 0;
-> +		ret =3D -1;
+> If my experience in debugging these things is any indicator, extensions do
+> not matter even 10% of the non-extension data.
+
+Again our experiences differ. Mine is mostly about extensions,
+probably because I had to work on them more often. For normal entries
+"ls-files --debug" gives you 99% what's in the index file already.
+
+> > > especially when we offer this as a better way for 3rd-party
+> > > applications to interact with Git (which I think will be the use case
+> > > for this feature that will be _far_ more common than using it for
+> > > debugging).
+> >
+> > We may have conflicting goals. For me, first priority is the debug
+> > tool for Git developers. 3rd-party support is a stretch. I could move
+> > all this back to test-tool, then you can provide a 3rd-party API if
+> > you want. Or I'll withdraw this series and go back to my original
+> > plan.
 >
-> - fail:
->  	strbuf_release(&buf);
->
->  	return ret;
-> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-> index c1eb72555d..3c9308709a 100755
-> --- a/t/t7512-status-help.sh
-> +++ b/t/t7512-status-help.sh
-> @@ -798,6 +798,22 @@ EOF
->  	test_i18ncmp expected actual
->  '
->
-> +test_expect_success 'status shows cherry-pick with invalid oid' '
-> +	mkdir .git/sequencer &&
-> +	test_write_lines "pick invalid-oid" >.git/sequencer/todo &&
-> +	git status --untracked-files=3Dno >actual 2>err &&
-> +	git cherry-pick --quit &&
-> +	test_must_be_empty err &&
-> +	test_i18ncmp expected actual
-> +'
-> +
-> +test_expect_success 'status does not show error if .git/sequencer is a =
-file' '
-> +	test_when_finished "rm .git/sequencer" &&
-> +	test_write_lines hello >.git/sequencer &&
-> +	git status --untracked-files=3Dno 2>err &&
-> +	test_must_be_empty err
-> +'
-> +
->  test_expect_success 'status showing detached at and from a tag' '
->  	test_commit atag tagging &&
->  	git checkout atag &&
-> --
-> gitgitgadget
->
+> You don't need JSON if you want to debug things. That would be a lot of
+> love lost, if debugging was your goal.
+
+No, I did think of some other line-based format before I ended up with
+JSON. I did not want to use it in the beginning.
+
+The thing is, a giant table to cover all fields and entries in the
+main index is not as easy to navigate, or search even in 'less'. And
+the hierarchical structure of some extensions is hard to represent in
+good way (at least without writing lots of code). On top of that I
+still need some easy way to parse and post-process, like how much
+saving I could gain if I compressed stat data. And the final nail is
+json-writer.c is already there, much less work.
+
+So JSON was the best option I found to meet all those points.
+-- 
+Duy
