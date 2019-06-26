@@ -2,70 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3D251F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 22:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1A41F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 23:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbfFZWlv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 18:41:51 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:42350 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbfFZWlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 18:41:51 -0400
-Received: by mail-pg1-f202.google.com with SMTP id d3so113222pgc.9
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 15:41:51 -0700 (PDT)
+        id S1726420AbfFZXKx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 19:10:53 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:34697 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726396AbfFZXKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 19:10:53 -0400
+Received: by mail-ed1-f68.google.com with SMTP id s49so5265045edb.1
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 16:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kpfSgIC/th8hAPRn6krdGOoThkyNH9LHOPXvFOeAEU0=;
-        b=lPLNGjuYVcyb3TXiXCfMFdtuYKEHBRPhFtEsAxMAnBolncZ1wHXEZxfbebtGn+XjCe
-         xu0LmR1Nu2n4yXr91RhG0yAFLix6HcH76pQJmKusX18qTrIfTlMicNZpOFcKMe1NPkrC
-         d06q09MNhkKnT1RbyhTioTcfU/NRsCBsXcLwWajo8hBTC+8qXSDpvfpxW4ufQZ9LNUhX
-         R2KgIVqEKjvMjRzK2iCTgRuAUeD9QAVH+Uu8tweVgVdg0y05weHUFhfJPJs+Pt42h5c4
-         03dyYlg1oabFSS8gBm3Sz4i2PGjdWNRUPQIs0cRFfBmMkDhGpMdUm7DgytBXu0GFzZ8i
-         R1SQ==
+        bh=FQZ/exasp8VhQAvasCdrsUx3b1qBkXy3hovRKvQIVQc=;
+        b=niaNhiKgvxMFqqWjEh5V+4WBG18vqgvSMPLEDM65F0iM+uHqAyo4w1824rckRCsX2Q
+         i04JRfYYyUA4RNav+yjhA/q2pF8peRJ/hHanOiJgjp5M/gY7+d98wKR1vBQzMy7aQ8Bv
+         jfXY8O8zhMVeTABEzt1xRFHKTGuvpu6HrzmINzPTXiSkCd+bLN2jJiJFN/rLmtsbSCZ5
+         3OQsC2bf/w7CvMkYWpqFk3rRP4lpmR4PCfg7mxqZYFp8S/UnklNC62B0d3QWB2GJWvFs
+         Q6Mnw1et8xk8MNIgulAyHmlreuVE14mMFkP25Nq4ebdd/1Jd4TKIAfF15Cmvt2VBvWwl
+         Q8ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=kpfSgIC/th8hAPRn6krdGOoThkyNH9LHOPXvFOeAEU0=;
-        b=kJV/8dbtdnnHJBmQ1OLnv3c0v1CSkBDnsFczRwGTtmVPCwgFgMyn4kcMzit3W+mZ3I
-         aebqHszCsaJlED0MV7loZQ5VZlNYPB9qlyPdO8SAfk9Ogo9925V4DszsBvCzdZIt+KZ/
-         o7bwePZrlhk1LmcrxvPQ2dthGLAGP8k8YXF9vXnYZVC/mxcr6P/hQmB8FUwK+3uj8pe4
-         x5iwltu4TopTrgJ/mMwPlJ3NOEXjm/4BeCjirDKfMmGqi/b/pi+5TQ+w+NIOeVhiFLih
-         h7f+7szJ+1x5VBu0or8EiFG/dxDaaFHgwF1MD0WTfYdMbj+k7sFobStMtU2DohweEiCP
-         6ing==
-X-Gm-Message-State: APjAAAUgVRhEKAp9pe0tU36YuJRgjGGkWaWqpwoggg0jQZ8fQo4kW6xu
-        bQUjuL0cTYnLbQbAYLyoFlpCXsiko6StsiHFr3ii
-X-Google-Smtp-Source: APXvYqxlF6Z2nooHFzf3JpLfDpaVKs+mGfI4ScPhHv+QGnjw9izxmfwipZ930syGZASymjUX+wm+uU4iA8Zpv4wex2IL
-X-Received: by 2002:a63:4518:: with SMTP id s24mr342415pga.123.1561588910349;
- Wed, 26 Jun 2019 15:41:50 -0700 (PDT)
-Date:   Wed, 26 Jun 2019 15:41:47 -0700
-In-Reply-To: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190626224147.75686-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FQZ/exasp8VhQAvasCdrsUx3b1qBkXy3hovRKvQIVQc=;
+        b=BJ2SPjgLLXC7FKMfPJaevK4z/biGyOCRpTmXmZe3XYGKUk6JWzV4DMe0Lqmn3ThGKP
+         U0AkCqqdKqVviDB+LO0Pzmj+LETsuzdDfulhve3nyb0erC1amkPMddicqwmtJDvAZ6eo
+         9RGZ09xokNNM+4ZSjZ2KhZ6Wg8XVt1Y5wTbYtF90xMjoIg+LBRe0Y5hobwzi89ML1rPs
+         eLewMr69NlAfp3pYFJj/xQQiRxl9pI566SyMeOvvE0vLlzYnN5i1hVbsUCM/knYH3DuB
+         rM7999so8JLYMVcNPpFFl6Amjc/lWjhUO2TLi3ZxVqJNnssoKqIZePUcXDPb2LDoyEmd
+         7Y1Q==
+X-Gm-Message-State: APjAAAUeafbG4m0v6AJ4f80d9rlBvakA4WQhDR/PQ6wd6sgpiFpZsbIt
+        wtF4WbVlMiu5vALVyNncd9WLDnys3P+6ZnTDqlwLMMxp
+X-Google-Smtp-Source: APXvYqyKNbjdADhcpvWB16/v/V3MeZEgcVoppTEkQRA4VYXDz1jTgIITDMjUnidS1dX/05IK/IDsQAEreMtxa7Sh508=
+X-Received: by 2002:a17:907:20ed:: with SMTP id rh13mr294163ejb.34.1561590651403;
+ Wed, 26 Jun 2019 16:10:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <204ceee5-9a79-150c-df62-e2f522cf15e0@ramsayjones.plus.com>
+In-Reply-To: <204ceee5-9a79-150c-df62-e2f522cf15e0@ramsayjones.plus.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 27 Jun 2019 01:10:40 +0200
+Message-ID: <CAP8UFD1+cs3LB9w4331oqkwABHe2ufV+gXixVrT2pJ8sts44hA@mail.gmail.com>
+Subject: Re: [PATCH] promisor-remote.h: fix an 'hdr-check' warning
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio, what do you think of this small patch that just updates a test:
+Hi Ramsay,
 
-https://public-inbox.org/git/20190605192624.129677-1-jonathantanmy@google.com/
+On Thu, Jun 27, 2019 at 12:14 AM Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+> If you need to re-roll your 'cc/multi-promisor' branch, could you please
+> squash this into the relevant patch (commit 9e27beaa23, "promisor-remote:
+> implement promisor_remote_get_direct()", 2019-06-25).
 
-For what it's worth, Stolee and Peff have replied and both of them seem
-to be OK with it.
+Sure, I have integrated it into my current development branch.
+
+> [No, this is not the same as the April patch! :-D ]
+
+Glad to hear that :-D
+
+Thanks,
+Christian.
