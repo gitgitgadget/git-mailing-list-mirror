@@ -2,99 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8861F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 18:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 905A01F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 18:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbfFZSFC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 14:05:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54111 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbfFZSFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 14:05:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F39416B293;
-        Wed, 26 Jun 2019 14:04:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/RYBqBp8YaKOqcZTqoVj/6VuFUM=; b=cBSU2d
-        /nsloqPYLVKa+/GXYJzdjVjwRds1QnX4Xhbgxg0N2GVRl/j3K8463xjS0Vd+T6WF
-        hCZ4utpccUph3b6YbOtCiLAfIi1vnT4unf2p/a9uMtJbVR9/S68838zQTcvspU6a
-        WWZ+OVyRHM3bUecmyuBoAk+N9sqT+E0+o6G8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JtAa8YWK5FIdHkUchmGA6YVknmQ9LyhJ
-        yEjJlV85w3MAmjVCkyPUm0yJ1nfBktqEYTYZh1GqzpRbzhAZmSw9ZY4hGwVVWM5W
-        6MJ82zYjSzuPJCNBwhvv8BmEdOcP9WcEl7c1yF6uUh+jJinSMfLOpzr1UAeK+S5O
-        1Q7lotS6u08=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85B6F16B292;
-        Wed, 26 Jun 2019 14:04:57 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E546916B291;
-        Wed, 26 Jun 2019 14:04:56 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
-        <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
-        <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet>
-Date:   Wed, 26 Jun 2019 11:04:55 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 26 Jun 2019 15:34:52 +0200 (CEST)")
-Message-ID: <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726347AbfFZSIX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 14:08:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51390 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726271AbfFZSIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 14:08:23 -0400
+Received: (qmail 4481 invoked by uid 109); 26 Jun 2019 18:08:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Jun 2019 18:08:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32504 invoked by uid 111); 26 Jun 2019 18:09:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 26 Jun 2019 14:09:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jun 2019 14:08:21 -0400
+Date:   Wed, 26 Jun 2019 14:08:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Pugh, Logan" <Logan.Pugh@austintexas.gov>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "liu.denton@gmail.com" <liu.denton@gmail.com>
+Subject: Re: [2.22.0] difftool no longer passes through to git diff if
+ diff.tool is unset
+Message-ID: <20190626180821.GA23857@sigill.intra.peff.net>
+References: <20190625213545.GA23411@sigill.intra.peff.net>
+ <BL0PR0901MB4466FF7338C085ADBBF594898AE30@BL0PR0901MB4466.namprd09.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E805070A-983C-11E9-B496-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <BL0PR0901MB4466FF7338C085ADBBF594898AE30@BL0PR0901MB4466.namprd09.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jun 25, 2019 at 11:09:08PM +0000, Pugh, Logan wrote:
 
-> Hi Matheus,
->
-> On Tue, 18 Jun 2019, Matheus Tavares wrote:
->
->>[...]
->> +/*
->> + * Look for a recursive symlink at iter->base.path pointing to any directory on
->> + * the previous stack levels. If it is found, return 1. If not, return 0.
->> + */
->> +static int find_recursive_symlinks(struct dir_iterator_int *iter)
->> +{
->> +	int i;
->> +
->> +	if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
->> +	    !S_ISDIR(iter->base.st.st_mode))
->> +		return 0;
->>
->> +	for (i = 0; i < iter->levels_nr; ++i)
->> +		if (iter->base.st.st_ino == iter->levels[i].ino)
->
-> This does not work on Windows. [[ Windows port does not have
-> usable st_ino field ]]]
+> > Or in your case I suppose even better would just be an
+> > option like "--if-not-configured-just-use-regular-diff". Then it would
+> > do what you want, without impacting users who do want the interactive
+> > setup.
+> 
+> If such an option was considered I would be in favor of it. Maybe call 
+> it "--no-tutorial" or perhaps "--diff-fallback".
+> 
+> But having fixed my app, I'm content with the status quo too, now.
 
-And if you cross mountpoint, st_ino alone does not guarantee
-uniqueness; you'd need to combine it with st_dev, I would think,
-even on POSIX systems.
+Yeah, those are definitely better names. :)
 
+I think we're on the same page about a good path forward, then. I don't
+plan to work on this myself, but maybe it would be a good #leftoverbits
+candidate for somebody wanting to get started on modifying Git.
+
+-Peff
