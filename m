@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B90D1F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 23:51:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADF231F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 23:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbfFZXvQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 19:51:16 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:35713 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbfFZXvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 19:51:16 -0400
-Received: by mail-pf1-f202.google.com with SMTP id r142so281489pfc.2
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 16:51:15 -0700 (PDT)
+        id S1726671AbfFZXvS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 19:51:18 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:39483 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbfFZXvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 19:51:18 -0400
+Received: by mail-pl1-f201.google.com with SMTP id r7so295265plo.6
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 16:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=dbeAs++P6lgwcZBiAdad7ATS/JYm4HxYSeUjqc8FQlg=;
-        b=m+xNeUzkAsv16anNVWEY2/no6OBtVic407fK+s/tpm6HbDIEJcGTsID0RcuBhS2Gk2
-         7jgYykfDK1nAjbw0TpPhBdrVfffsImG7UxD87fc5sO3XuMghijAkSkl2w8jdcO1nucve
-         PSof4EHHNrShLUOCslR7ptu+JlnoubkuICLNjHs2K2E/zb644ke3D8xdshNCuk1Z0gWT
-         9WDDtKX+SANmhXVcAIs/KPvC4Yae3ja6z3S8a8AXir8bm0jgr/j+xpS2UNZNSczaVBmV
-         L6rOmz5yg2o/nODcs2mFh04UjZIT85/jW1nHIykKi6a6K/8J1pdL6cBfNJyIZWQqTsBx
-         F0EA==
+        bh=WGAwoi10ZwQ3gkHiE4e9AGONWrkjxHpg22xP0Yx7mSM=;
+        b=eABcZxN0FBLL1V1mds1ZBI1xjPagCZVYvQtelt/EQlXFWGV2UXOepwYCFT/ahEeTpt
+         0o2bRd04y+lPovKzusgQ0l8L7XbOqWgitsFXdxHgtNB9P7qU6Vff+ZokWkqg+i4uwx5X
+         xbsRp/6JRJtQ46J7j+5jfNOMsEgYMWJOzAgav3M18zyXQUUap0oG51d+D0LqXjezH4Dy
+         aQcZoc1QL2kfIgw4jDCGLpV7bIGnII7NgssT5LmXpKvXUpLt8u37ml2GbZfocO7HHQks
+         YWNNHBUa1pqw3PfGvLtiV+h/n/22MtLqITwcRN4ujTVYgi5xdimi+ErNvYv9fHTYVM2H
+         F9ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=dbeAs++P6lgwcZBiAdad7ATS/JYm4HxYSeUjqc8FQlg=;
-        b=aoFr9p1Hsx/OVNlEqC528GAXEKsWu9/IxMcMqCDYV/UkrjJA+HKmpLrGbpcfLL5NJ+
-         PnjaOH88miR5rJGaw9UEm2xIXcWDzB/9/gcYMfrwA98UB96aS72vRw7zw7mNTOsz7/HD
-         P4ATbOKp1eJq5VeUi6Xq7cVIwsWJjF0TQgVxu+sSKfGSX6gcFZW3hg7Es5TbsgeliIr0
-         qDU4pJ6RzEg6jNiLtEU6+Fm2B3PROJJfdy0XUnT5J1tjhhEVmLH/bY6V5blLuu2cAWXL
-         PBNzAHegNoyfY7PuNYAyrzRt0RmK/0bL7aY8t+vAyuCqfLteNjtTI/LbsLJ8BbOhUCXs
-         Ictg==
-X-Gm-Message-State: APjAAAXd2TyLZwhijm7bEHYv+i4M3pUY6QUkujuEQkO4275HYI1hK5ss
-        Fiqu9qPx6Mre/k3ThRYey7bTtUY6Zdr4VXFgjyr3H2thzHiEsCre3SxTWFGf+xkIMOM7XUNonCT
-        dL3/eWmce3/MgVqdKXhwRH4ekvwor0hfgfxUOLRvP2MVyJtbp0Wx9GrrDIMPE45qQbdm8xqp//A
+        bh=WGAwoi10ZwQ3gkHiE4e9AGONWrkjxHpg22xP0Yx7mSM=;
+        b=Qe1GnAezq5UknFMwrh3rnhVLlmlqcMXFR+dK7c6Wp6KtVFfMvCd2pTz1V+yaGrCq6+
+         zE16YEofW737BQ/95dnY8UORDW0/creT8YUPNdmGjEyVx2OjyvgzMh8zRT+Rcs4Y4ZiX
+         zjbFxS92xqtJNlIiVUkZx3+6dy7youHlvoAySHmFyGYLJ0AtIRVpqqKTtbp6RtOPtAio
+         iDcblWor9mH2SB/w4rbrFwdoznnDcNyiIyIoNlapTQfjnMfONQGv/vqcFaDY95K/5JyV
+         zkAJc5pdjSae+wxL2JEbOHCgVhfvb80NmqXj53dFmV+Sd5A+UHhvul4y03XngX4fxly2
+         Ok8Q==
+X-Gm-Message-State: APjAAAUc39eNLE0lprrIqLoIMCXQgtpcSwHqrSBySRIcHvcVJAV94qqf
+        I3FvlIqmkk/JDxEhoLOwb55f/9KGoq1Gw7MW15iv5NJDW3WmxQ3oso2+hdyyc/Ty4QjXzXRuMcH
+        41xQ1p9PQgVNgsGGC5sCZIilf6E+Zsv+DRGyfa8QkvZQwrrXWX74P3YqUYVUjhElPSD3owdRifw
         ==
-X-Google-Smtp-Source: APXvYqwZTX/T7VzHdFVr89lTSRYkefk8o0NKYz3jYRTSXwjXVkv6p5NEbzOgMpN6+vIQjmXmNP6wjlWB0s1no8Y8BKA=
-X-Received: by 2002:a63:9a51:: with SMTP id e17mr651376pgo.212.1561593074843;
- Wed, 26 Jun 2019 16:51:14 -0700 (PDT)
-Date:   Wed, 26 Jun 2019 16:50:27 -0700
+X-Google-Smtp-Source: APXvYqy3ifXsiw9O9/fLYJIbsHxp6CNJCRlg1WGf07tyXcN2WKCt4loV1x6r3ENMi+6mjFDa+Xdgr2h9drqF+TwUBI0=
+X-Received: by 2002:a63:5d61:: with SMTP id o33mr649945pgm.114.1561593077486;
+ Wed, 26 Jun 2019 16:51:17 -0700 (PDT)
+Date:   Wed, 26 Jun 2019 16:50:28 -0700
 In-Reply-To: <20190626235032.177551-1-emilyshaffer@google.com>
-Message-Id: <20190626235032.177551-9-emilyshaffer@google.com>
+Message-Id: <20190626235032.177551-10-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20190626235032.177551-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v2 08/13] walken: demonstrate various topographical sorts
+Subject: [RFC PATCH v2 09/13] walken: demonstrate reversing a revision walk list
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,36 +64,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Order the revision walk by author or commit dates, to demonstrate how to
-apply topo_sort to a revision walk.
+The final installment in the tutorial about sorting revision walk
+outputs. This commit reverses the commit list, so that we see newer
+commits last (handy since we aren't using a pager).
 
-While following the tutorial, new contributors are guided to run a walk
-with each sort and compare the results.
+It's important to note that rev->reverse needs to be set after
+add_head_to_pending() or before setup_revisions(). (This is mentioned in
+the accompanying tutorial.)
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Change-Id: I7ce2f3e8a77c42001293637ae209087afec4ce2c
 ---
- builtin/walken.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ builtin/walken.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/builtin/walken.c b/builtin/walken.c
-index da2d197914..6cc451324a 100644
+index 6cc451324a..958923c172 100644
 --- a/builtin/walken.c
 +++ b/builtin/walken.c
-@@ -69,6 +69,13 @@ static void final_rev_info_setup(int argc, const char **argv, const char *prefix
+@@ -69,6 +69,9 @@ static void final_rev_info_setup(int argc, const char **argv, const char *prefix
  
  	/* add the HEAD to pending so we can start */
  	add_head_to_pending(rev);
-+	
-+	/* Let's play with the sort order. */
-+	rev->topo_order = 1;
 +
-+	/* Toggle between these and observe the difference. */
-+	rev->sort_order = REV_SORT_BY_COMMIT_DATE;
-+	/* rev->sort_order = REV_SORT_BY_AUTHOR_DATE; */
- }
- 
- /*
++	/* Reverse the order */
++	rev->reverse = 1;
+ 	
+ 	/* Let's play with the sort order. */
+ 	rev->topo_order = 1;
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
