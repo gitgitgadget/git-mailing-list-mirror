@@ -2,86 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0791E1F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 09:02:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86ADD1F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 12:25:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbfFZJCj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 05:02:39 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:52827 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbfFZJCi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 05:02:38 -0400
-Received: by mail-wm1-f42.google.com with SMTP id s3so1236431wms.2
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 02:02:37 -0700 (PDT)
+        id S1727146AbfFZMZC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 08:25:02 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:44394 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726104AbfFZMZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 08:25:02 -0400
+Received: by mail-qt1-f196.google.com with SMTP id x47so2052024qtk.11
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 05:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PdSnOMr8ElbaiOCmeWo9D3OVZSfhTPOOeTdZ8I/rbeI=;
-        b=s9ZFr7jL1hLxNHwmnWrESW6OkR3ndHSNdH1tl+TcKfFaGgTLPwns9fqLHBBCHMmCHQ
-         p/j5qSuPoe2ztPHBicsgsAKiMnv8F5Pz+j5QNttxmfZiFVF1RVH8recFCCbfQ+jBvc4Z
-         qv6Bp5H4TDKKMoRLi+vwJ/rXBRtoddW9wN0ClLUWsNx5wqXSSCn0clxwetRCZcDNE6Qn
-         ntuoeMV11JjZKHKsJAoO1P561jn3LrZLLeTzktYfpH4XKEJJVbDSDWmNkO9Lpr9PpivG
-         Sld3TyxWjladwifmyl27mn8CNiDW80G8YakbrgWipSVWcdrbOFPkDkLwF/WxAhhE7wpn
-         y9jA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=3FZHNDzl0fGP25HAZ28G//xNgLv6NYPK6L8gvwGUF+s=;
+        b=OQvcF8P9X6x975jg85HJdZdPiM//6/sqFUNcXIxq2vAl6I94lGwRXHOCxu3p3yM53r
+         n00WRJAPj6RTs56xDQ8QWok2MSdMT2HaPWpnsEGxmwfNHZjScp3wvDTO9SVnJPgLXbsS
+         n5EE3pHB5WlMo7RnrPx9qXhq4pYdYXPAugpk7T1sC59RNM3iY6yKjAY++awk+DxuFj7u
+         COY9OFL5iansGaL7cS1eyFWVQVWaoWn0Nc70VJ+irGiejXzkhhjFdbycBSD+8i/mcxOo
+         G/iT/wqKsFidfLdK8AeFPI4mOJMEWDUQ8FY2jZ2yjyHNpYgq7XKEOKNhdapAfAwGr0j0
+         1scA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=PdSnOMr8ElbaiOCmeWo9D3OVZSfhTPOOeTdZ8I/rbeI=;
-        b=JQFYCRU3mCi/Goic3ZN/augdYjeG+8/hRIF+/UIdNXIEQ4r4vnH+f7wSdJbClyqygR
-         WrAwQIrqgXFM9J0OWz1ToKg9//oMe4aqvkKP2jKiUKFdkWA0qmZHmrXtuW1giLNIdDeQ
-         xePueO0mhvh07Y7BNIfbPpDqHRhVQEWVc1xyAf48oWd1kLyiAFnjbVUw9Fsr9CUd1GKP
-         t6X4c9U3FO78BPMRpsDAEvq4I1e4Ig8j2nfgOF7GmdOOr6vMKI/YODBLxuE/Fx5FDcZk
-         Q57FApmk0CHajSAo8JkTIDfORpcCxn/eWkStM0EJDWjDydprkaMcMb8kxQl2+EcU8u8X
-         xZOw==
-X-Gm-Message-State: APjAAAV6Xtnhco/Nxm/iWEdy/vH44rq6uafHN+gZo/OgY243rxpyIj7O
-        EnOSh922n4vT/rrAPiKStkDdDZIb
-X-Google-Smtp-Source: APXvYqwRnyuqFrCj9vnsF788uMM5erDZoEzYK1skbiHjLkoSjWJSrSN7CxKFLZBwCLwEq4oKPTjwNg==
-X-Received: by 2002:a05:600c:2243:: with SMTP id a3mr578719wmm.83.1561539756698;
-        Wed, 26 Jun 2019 02:02:36 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id x8sm1131344wmc.5.2019.06.26.02.02.35
+        bh=3FZHNDzl0fGP25HAZ28G//xNgLv6NYPK6L8gvwGUF+s=;
+        b=X3DD+5KSQDf9EvyZ42YBAYaJ1I9v6d7+w/VnnaCc+n/FrszNXOGTfdaR4MS/uxFR1C
+         4dGX/Uny5KKLExmpoY0mZjb6LnuXAUNN+1R7gzlLECcFaabrem8lCXHBFdvIOtatikjU
+         SGUUPloO4OW5lsVNKnN0Jnwl8ck2q92msQvD+yKlYc99I6bkircCCc2nS8SOwWXtb4I9
+         uRU9/98guqjQQQEyQd0lPV5Yi6WSWo2Dzwr6k7kyhQosQg1Zz/shCI/SGgNCZGwTN+u/
+         7ZSbkNlS+YQfMHdEFrSI6YQ/Za2e5luJpkelBlyXVS2fdvkgkkluHz2XbfA3OeD3+j0+
+         mJZQ==
+X-Gm-Message-State: APjAAAWuXuhyvqo/GPN/MLjul1ODWOwMKJgMJnSF6UcoUc2AQZj1L5nc
+        jlpB0Igw4MAYSBIN/J3y7mH9AETY
+X-Google-Smtp-Source: APXvYqymZHpJwnXiftMDlqGrAgnpFwUIUwv8rmWbuigC4AWQ1Tlz+4Jw7UVxHl5gtdI7JBhdlb2z8Q==
+X-Received: by 2002:ac8:156:: with SMTP id f22mr3446864qtg.58.1561551900776;
+        Wed, 26 Jun 2019 05:25:00 -0700 (PDT)
+Received: from [10.0.1.15] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id y29sm9203329qkj.8.2019.06.26.05.24.59
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Jun 2019 02:02:36 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Jun 2019, #05; Wed, 19)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <0fa8f3ce-b1e4-7501-6a65-8628d8a46989@gmail.com>
-Date:   Wed, 26 Jun 2019 10:02:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+        Wed, 26 Jun 2019 05:24:59 -0700 (PDT)
+Subject: Re: [BUG] Bad coloring
+To:     Eugen Konkov <kes-kes@yandex.ru>,
+        Git Mailing List <git@vger.kernel.org>
+References: <1817947890.20190626113231@yandex.ru>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5e77e3ee-3daf-da00-fd81-323e34122004@gmail.com>
+Date:   Wed, 26 Jun 2019 08:24:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqef3oq3go.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+In-Reply-To: <1817947890.20190626113231@yandex.ru>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
-
-On 20/06/2019 05:35, Junio C Hamano wrote:
-> * pw/doc-synopsis-markup-opmode-options (2019-06-17) 1 commit
->   - show --continue/skip etc. consistently in synopsis
+On 6/26/2019 4:32 AM, Eugen Konkov wrote:
+> Hello,
 > 
->   Docfix.
+> For next diff the `}` line should not be detected as removed/added.
 > 
->   Will merge to 'next' and then to 'master'.
+> As  you can see there are differences only at new lines. (see attached
+> pics)
+> 
+> git version 2.21.0
+> 
+> 
+> git diff -b -w --ignore-blank-lines
+> 
+> 
+> git config:
+> 
+> [color "diff"]
+>     old = red bold
+>     new = green bold
+> 
+> [diff]
+>     tool = sublimerge
+>     colorMoved = default
+>     colorMovedWS = ignore-all-space
+> 
 
-Thanks for fixing up the commit message an this one
+Below, I pasted your diff in the message body for
+easier discussion on-list.
 
-Best Wishes
+Your diff shows that the content was moved. However, it was
+also changed during the move by adding that extra line of
+whitespace. The "ignore-all-space" setting can only ignore
+whitespace when matching lines. It cannot ignore entire
+lines of whitespace.
 
-Phillip
+For that reason, the last three lines are not matched as moved
+because they are not part of the larger hunk that moved. You
+are using the 'default' mode for diff.colorMoved which defaults
+to the 'zebra' mode and that matches blocks of at least 20
+characters. These lines at the end are only four characters
+("}\n\n\n").
+
+If we used a smaller block size, then we would have too many
+false-positives when using the color-moved option.
+
+Thanks,
+-Stolee
+
+---
+
+--- a/Service.pm
++++ b/Service.pm
+@@ -34,46 +34,4 @@ $X->set_primary_key("id");
+ $X->has_many( service_types => $X, 'parent_id' );
+ 
+ 
+-sub sqlt_deploy_hook {
+-    my( $self, $sqlt_table ) =  @_;
+-
+-    my $sqlt =  $sqlt_table->schema;
+-    $sqlt->add_procedure(
+-        name =>  'service_level_tree',
+-        parameters =>  [
+-            { argmode => 'in',  type => 'integer' },
+-        ],
+-        extra =>  {
+-            returns =>  { type => 'table( id int, parent_id int, name text, display text,
+-            definitions =>  [
+-                { language  =>  'sql' },
+-                { attribute =>  'STABLE' },
+-                { quote => "\$\$\n",  body => <<'   FUNC' =~ s!^\t!!grm  =~ s!;\n!;/**/\n
+-        WITH RECURSIVE service_level_tree (id, parent_id, name, display, depth ) AS (
+-            SELECT
+-              id,
+-              parent_id,
+-              name,
+-              display,
+-              1
+-            FROM service_level
+-            WHERE id = $1
+-            UNION
+-            SELECT
+-              sl.id,
+-              sl.parent_id,
+-              sl.name,
+-              sl.display,
+-              depth +1
+-            FROM service_level_tree t
+-            INNER JOIN service_level sl ON sl.id = t.parent_id
+-            WHERE depth < 10   -- Prohibit deep hierarchy
+-        )
+-        SELECT * FROM service_level_tree;
+-    FUNC
+-    ]});
+-
+-}
+-
+-
+ 1;
+diff --git a/ServiceLevel.pm b/S
+index 73fa9dea..f7da48c8 100644
+--- a/ServiceLevel.pm
++++ b/ServiceLevel.pm
+@@ -34,4 +34,46 @@ $X->add_unique_constraint([ 'parent_id', 'name' ]);
+ 
+ $X->has_many( service_levels => $X, 'parent_id' );
+ 
++
++sub sqlt_deploy_hook {
++    my( $self, $sqlt_table ) =  @_;
++
++    my $sqlt =  $sqlt_table->schema;
++    $sqlt->add_procedure(
++        name =>  'service_level_tree',
++        parameters =>  [
++            { argmode => 'in',  type => 'integer' },
++        ],
++        extra =>  {
++            returns =>  { type => 'table( id int, parent_id int, name text, display text,
++            definitions =>  [
++                { language  =>  'sql' },
++                { attribute =>  'STABLE' },
++                { quote => "\$\$\n",  body => <<'   FUNC' =~ s!^\t!!grm  =~ s!;\n!;/**/\n
++        WITH RECURSIVE service_level_tree (id, parent_id, name, display, depth ) AS (
++            SELECT
++              id,
++              parent_id,
++              name,
++              display,
++              1
++            FROM service_level
++            WHERE id = $1
++            UNION
++            SELECT
++              sl.id,
++              sl.parent_id,
++              sl.name,
++              sl.display,
++              depth +1
++            FROM service_level_tree t
++            INNER JOIN service_level sl ON sl.id = t.parent_id
++            WHERE depth < 10   -- Prohibit deep hierarchy
++        )
++        SELECT * FROM service_level_tree;
++    FUNC
++    ]});
++}
++
++
+ 1;
+
