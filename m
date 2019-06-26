@@ -2,117 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A55011F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 15:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A409F1F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 16:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728041AbfFZPFC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 11:05:02 -0400
-Received: from mout.gmx.net ([212.227.17.20]:48213 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbfFZPFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 11:05:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561561486;
-        bh=nkQX4PWFtxlsqE2E5ShaJW6qcOikd9FLgKAbU9ZIrrg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eD15foIrag9hhOc5bWfvG3BpnkxIEHBYQFan5XhlVrWsXpv2WnFk5i1RTe5zClx40
-         swXAfgEU3wmbpmXRIV+yFJZtzExy3E5IZW+1kkbJH1LsFTCG3J7hxTAn4YijwKpLG9
-         WxoP8SMYcDRVPsoLRvbgudCMrmNm8A6QHtrljg8E=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnUna-1iDZom2SHW-00hbl5; Wed, 26
- Jun 2019 17:04:46 +0200
-Date:   Wed, 26 Jun 2019 17:05:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 00/10] Add 'ls-files --debug-json' to dump the index
- in json
-In-Reply-To: <27211d51-c77f-84f8-49c0-4bc104baa266@ramsayjones.plus.com>
-Message-ID: <nycvar.QRO.7.76.6.1906261704330.44@tvgsbejvaqbjf.bet>
-References: <20190624130226.17293-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1906241954290.44@tvgsbejvaqbjf.bet> <CACsJy8BsT-GaVvEmqfk5n1jGmkcLG_bRjqcU0M3yefBmNSxmnA@mail.gmail.com> <nycvar.QRO.7.76.6.1906251311280.44@tvgsbejvaqbjf.bet>
- <CACsJy8B9vd9YaP_FHN-EDEPc_OHgD=MtFu8WymM66PURWX=25Q@mail.gmail.com> <nycvar.QRO.7.76.6.1906251601240.44@tvgsbejvaqbjf.bet> <27211d51-c77f-84f8-49c0-4bc104baa266@ramsayjones.plus.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726645AbfFZQOt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 12:14:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59045 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbfFZQOt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 12:14:49 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0263516A884;
+        Wed, 26 Jun 2019 12:14:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=TtS84m3H1Vgp
+        xBevrtReiSok34Y=; b=e+hg6dzeCkqd4KqSeyxEVkCbRvMopYG9qIZxP8MWVyvn
+        WPAngzMHDJmN3Q+aW88SvymLnnSr8Kg++LV4F7LgrKudmcryCmS0eWkKbvq5jeoN
+        8DkODH4kZ59Jtcn2WlY46WnSIXGwzAmP385fhvIeAlfHhiQpfaKR40/P4vFV/jI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A6obYE
+        obe0C45D7AHcr5cfTHCKM8GWobZ6lMsXNGjJQ7QVmOiu3X+v9ejS3jBTdvGtWb5O
+        IQevUxNIpJ1rFEzwdaUZ2pARsM05/KJZ2L/oTEQoTizDSOLp7TOX1WJ5nJEpwi8T
+        mYRILbZ5AeYC/dfQ7uH4d33f1Uemzk/M54SxY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EDB8D16A883;
+        Wed, 26 Jun 2019 12:14:46 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 522E116A882;
+        Wed, 26 Jun 2019 12:14:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
+        gitgitgadget@gmail.com, johannes.schindelin@gmx.de, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com
+Subject: Re: [RFC/PATCH 5/7] grep: drop support for \0 in --fixed-strings <pattern>
+References: <87r27u8pie.fsf@evledraar.gmail.com>
+        <20190626000329.32475-6-avarab@gmail.com>
+Date:   Wed, 26 Jun 2019 09:14:45 -0700
+In-Reply-To: <20190626000329.32475-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 26 Jun 2019 02:03:27 +0200")
+Message-ID: <xmqqftnwe32i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JyqieXlqttOZ+WgGNOl2iaU+JccPAPik+cipLhyOj8b+sxXZpCs
- z3QeyyS+3yOmMUyzzzegEuNfxgLPEEitnsRZ9UdfSTcQJWFZCchfVPzUkdzVrM67xg+ZVpc
- QYAypd0FfTGNQPJ2H1MPbqgIVWLNjrqOLn8c6UmtBEmj17CTKmHLABhcbiEYSvxWRZBizAH
- 2xuae7rSn1/u5FX3YHZhQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wNyN7t1QGfE=:0J4wjzY9205S/iGxtsvIFD
- NC+XEzHrRSFX4TqHv8tyR+0Xo/GFJlz35TLxS7UTTNN1PsC2eLa/GooqCVpgQcR/0u9P85okG
- RxXvaLQXQfUfbbG9aTHSl5e/Kcqco+cIkAgEV8WaYtwU7kBUV9S4OBN4avVVz1KPQo5tKqzEX
- R73GNcgQ5ILOopZtV850D6U5pCWp8agYSCjLGfnEYpGbJtVYLCdlwo4Mz180D2zLhQuv+Nzk1
- 6HTeGN8tRK+TYoY7w8QZcJrsFy/UNLE63DXGNl7FxZ2q6B78vhkFQs3a7EpTWrfE1priE5EB8
- PMJtJuCIr6AymgtCcGaZ5DjiuE/ap4ck8pE0x2VAp7wNDHGoe8SI5cfIHz8o/hGRjmpvobEp0
- oUK70nIXb61/1zUuMgQBj9gD9kSA+H+Tz2FGcYCNLrZPpp1ngNmOQocGXNN0xxFRZzvydf3IC
- NHsW4dR8fKjHHR7HSv9pZYbrAFZEnQ+GzxMlxJvsJw4LiK7cZx3Nf0E3RHbYWDtgdmM5CTlUq
- Ba4uIWVQJLWoZKGXMriAyyfGnEmQzrwsAIuPAVx5mu5SyCwExi/IeWAVFGWcnp0THPTsW3EZZ
- DUVZvkvP7x1643XiBmMoKaNwLUBLjrAmGiUfjfYCblbSogNZjcu9hU3gOZ8cXcuPRW+o1/ytN
- ec0cnPlsetbNkQHMJNP+52q0O5Bm1VUAMIRKR4UOR4ZNLN5PAF4kCUdEr3hTtLeDykZYSICsQ
- oSIEQvPdqOxHWPmIr7x/aWCFl/McGCJlImWA+Szlgh83RKGZYcjPkWwpN1Ux5wUa/gED3q/6T
- 1YDMTaxDHa3Wx5pRKuRjLOgKRvCgwBhPZFcECbx7lquaqGuEH+oJ0IPHnFPsdRnE+0Ommftbh
- sjLBDL7IjqPYsk5L8tbz5AOiGIZwZHceC8z5WGb4+a52UXcADHAgpUO7n1dnlCpjtmgmJuMbj
- PurhwAZLfM0B8t/hRGUrg2XfkPkWnwniU3dFIyVN86b6/CgX7V3KHb3rux5qoBOlKomtDMkSS
- IrfKFnp3vFTLsMpCO75h+6IMuK8ej/ydBr+lgEIzoqyT0wcTvLoWQy49kcPhcoQibvbEuQ//u
- LnlRXLDMH3SHVtVw4t2Elz4LpHaXblmYYKS
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 83CAB672-982D-11E9-99CA-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ramsay,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Tue, 25 Jun 2019, Ramsay Jones wrote:
+> Change "-f <file>" to not support patterns with "\0" in them under
+> --fixed-strings, we'll now only support these under --perl-regexp with
+> PCRE v2.
+>
+> A previous change to Documentation/git-grep.txt changed the
+> description of "-f <file>" to be vague enough as to not promise that
+> this would work, and by dropping support for this we make it a whole
+> lot easier to move away from the kwset backend, which a subsequent
+> change will try to do.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
 
-> On 25/06/2019 15:10, Johannes Schindelin wrote:
-> > Hi Duy,
-> [snip]
->
-> >> Again our experiences differ. Mine is mostly about extensions,
-> >> probably because I had to work on them more often. For normal entries
-> >> "ls-files --debug" gives you 99% what's in the index file already.
-> >
-> > Like the device. And the ctime. And the file size. And the uid/gid. Is
-> > that what you mean?
->
-> Hmm, well I think so:
->
->   $ git ls-files --debug git.c git-compat-util.h
->   git-compat-util.h
->     ctime: 1561457278:502638001
->     mtime: 1561457278:502638001
->     dev: 2049	ino: 262663
->     uid: 1000	gid: 1000
->     size: 35440	flags: 0
->   git.c
->     ctime: 1561457278:518646000
->     mtime: 1561457278:518646000
->     dev: 2049	ino: 263083
->     uid: 1000	gid: 1000
->     size: 26837	flags: 0
->   $
->
-> I have occasionally added stuff to the '--debug' output
-> while debugging something, but the above is usually
-> sufficient for my uses. (Having said that, I have not
-> had the need to debug extensions [yet!]).
+This step, together with all others, looks sensibly justified to me
+only when I wear tinted glasses that make me pretend that the final
+goal is to promote pcre backend, which is much more important than
+serving the current users.  When I remove the glasses, it smells
+more like making excuses.
 
-Well, live and learn. So for debugging purposes, we already have a good
-facility and would not need JSON at all.
+But as we saw discussed in the previous thread, I too think it is OK
+to make 'Nobody would notice the updated behaviour of NUL in the
+patterns' our working assumption and see if anybody screams---after
+all we have to start somewhere to make progress.
 
-Good to know,
-Dscho
+A very good thing about this series is that it does *not* add a new
+feature that people would miss, even if it went straight to 'master'
+and to the next release.  All it does is to optimize differently and
+changing the behaviour we assume nobody depends on. =20
+
+It is easy enough to revert the whole thing if it turns out to be
+problematic even in the worst case, and nobody would notice ;-)
