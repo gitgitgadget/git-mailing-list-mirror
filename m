@@ -8,27 +8,27 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 265D01F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 14:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3FCA1F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 14:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbfFZOCd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 10:02:33 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49979 "EHLO mout.gmx.net"
+        id S1727276AbfFZOFi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 10:05:38 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50413 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725958AbfFZOCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 10:02:33 -0400
+        id S1725958AbfFZOFh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 10:05:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561557734;
-        bh=RPMA/5n2tl6cjjBuS9mAvEXmFvywyuKJOEkMLsis4YU=;
+        s=badeba3b8450; t=1561557921;
+        bh=mYtSLJ5yFaigFXcC4wVdGe1J7xbbO6aRDQ8xbeBF4Mw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OsyqmhgbbiMLGRw6iD8p0sORSCMeCwF02Bw8f3XBu0N/kompZDkOgBhU2egjJNgTQ
-         4fu5LGjDe/O889NWEIEdqCYw1qw78Rdy5W9jmKZ5y909UwBjam70VoYp1NMz3FRoAh
-         FFcnhaEiR8Oz9/kpUaJkRQZ/Fs8NBL0WPMfdAnHg=
+        b=bDfoVrDJ2Ba2poaxq6hvcC2m/uiyqGsGdwTF8qDUUFZJgPUHNUppYlshIYlFMuJqm
+         OMrs63xxEQJffsAnc7gEKXrccMK0+Z3i0cO2Vt8FetsEgwHHGVq1hNXxI0Lx93b+Px
+         FyZKKpaeZ8LiaNn02XUYJpnGEghj7643unjL8cm8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LymHf-1ibcvq47rb-0165xy; Wed, 26
- Jun 2019 16:02:14 +0200
-Date:   Wed, 26 Jun 2019 16:02:33 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxUnp-1iUV5M11ab-00xtVk; Wed, 26
+ Jun 2019 16:05:21 +0200
+Date:   Wed, 26 Jun 2019 16:05:41 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -36,34 +36,35 @@ To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?=
 cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
         gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
         sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [RFC/PATCH 0/7] grep: move from kwset to optional PCRE v2
-In-Reply-To: <20190626000329.32475-1-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906261601270.44@tvgsbejvaqbjf.bet>
-References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-1-avarab@gmail.com>
+Subject: Re: [RFC/PATCH 2/7] grep tests: move "grep binary" alongside the
+ rest
+In-Reply-To: <20190626000329.32475-3-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906261603380.44@tvgsbejvaqbjf.bet>
+References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-3-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-15737342-1561557755=:44"
-X-Provags-ID: V03:K1:f+J0Xp3mtMxmw/2IWlANPHv8gafOtf92g1T0I7LwVHzscFsrhBf
- ACe49aRUmUy4ecbvLvxRmZRH31ZyU3XQM46Mo54qq49Ff7O7by3p4SLMxfgNKKIRLn1ZIX+
- 7qopoQpi/wSc4MoCdsdMUkiWD6pS9L8q03o9M3E84zttQbrELSpGtXL/uV5VbVgo3qgw9zM
- 3ntfJ90PeJvdsm32g991Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:D6llAln5BRI=:NybER6M9sK7DS5efWEYH0T
- yExGW/5FzM7ENOc5iFlOzDPHNZg0ryXeq/GXPzLnPi8ajrotiR0uunmuWUH0NaScWMH1PMrfE
- FaBvnxKUKZ+/BAfkppX/JZ9UIPdlvkJfTN8W76r7/vaCkujmCjW4W+f8OqnR/TWulJIXef9Ax
- lU5AUTwf+sKiTi4+iZ2g+zQnG/0GsdzTlguorirENIepl+iJLhGWnev6Sfej6VPnSquWbGovC
- mLB4zm7RNH73JVRf9bczfJ83Q58GSujbr3m6QOa0i/4lFkIc65O8R3HFDxaw8QiSD2jLnnBsy
- RirENARin1YVRBgUTCEk2pvYD9+xrIhnYnejlDK/zW+yJxspBf4qf5j4uqugFVQDt24HlrFjM
- AFEjOcxftqCz9FIMO4pSaHKQ4Qj/LOjMI75gmRRFiGx51sU25OaHdUdgnrIjIbx/SAfXbUT0b
- 7Va02mtr3ntA9l05bnNGdM8gZspzPnDoyunv+X9295eKzMqLdu/ohhGuf0n5t89JMU/Uc+XHm
- +yGc6dvRORPULWRJ0ATv87JzXvtNGJ+4vtV9uQ+Uk/0IDfEbeeKT/HzTmntaSO/BBWSwEJEld
- V5QjShMVVpU63WRO08Kl6c7ICKi7hU4cLag9lKZx6lEHbm2gNai2snVgtD3xCAauYKtgKuuDo
- 9GoFW2928XOSUnG8FSzTPo0ITGPwMS3rwAUYo4IGjMTMY28ahPW78ffsMEOMd1C4DMxJ0jkTH
- zf2nScGewJLart8lHe7Oaq06po1JH3lgyD5hypaIfQDlR72tVEU58fNnjzkRzilt7ZGkolL86
- VwsxsnfpIOcYGcKbJ1K8OqaoHdF9lg4gvxQalqG410Vhpq4Cw5til/CNmZU38PpK9S6HV5ful
- s08X1HjTHC6mglFfCrDBmdqIeWXvboYH9H6KN+FR6f8R+b0kNpEbKYUlJmHSbluCF/vdpX8Va
- gEY6uZdSZqlV7kQA+3gjS0cGmDV8cy30f3XvnAY7ZKSzWOy6Oln3kgyPNCHnFFZIdjeZalbrd
- spJzOKg+vVV1joVAEwQCdufJ2yHNgB+ryjQuxwQx7ky5r9DeCy1RdBc8b662z1FJDlnEXh9eU
- d8LIQq7z/fhazwqUqNjgKHGJ32GMFuMktoq
+Content-Type: multipart/mixed; boundary="8323328-1144635054-1561557942=:44"
+X-Provags-ID: V03:K1:W0yefpB9bCCA1lxmx3EvoQGt3QxVnVZuTh5CfZ++8m8ra5x2M8d
+ 5mQYNIFWmw6MEAM6okzSCcTSSnMW/ztaWEVO6MCZ7+e29afDmgC8FSsFteps/3hQchIUTue
+ zg7NmGBK67jkJaTV44MuUfypxQ5F4LECN0/YpxJtExfBZVsZRGrEmMdHk5nAYM04AEz515n
+ 50dlcJ7blKrcco1hIg85Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Zzol7DIJOGo=:QjJVBmddE7HswW5aAMOcUJ
+ fWp3RmB57hw5hVLXuc2AnEG/gFCFZgALkfrcXR67f6+yLIomNkXE89Ejosn7rIbxJeDSegV6X
+ dkMXWG8xhiMHh854AHu5KnsnuS0rDl+MhpVSfIBkLiB0OLo1Md2BSLKzW9RinpvXo9eFxZ6CM
+ wlwCCtYpAZzF3zUOxVXM1Yx32wWFILTm3+T5+442e/cVXrjvym+ByYtgvs3RQrOClHHIDEtmB
+ eWe0E6HOsM9B8vqanI8o2D3vouPA7AAcu2mDL8Dwd+9v4x15Q1fnbkUSlqSiFpkRSccfGMor4
+ Qp5X2iiR8wj8LZM8nl4duqBJlwYlbhYveGCSB6tGVZbVbS25XUj2XfxkZR+dx65kvAm8MjV4j
+ mBNPwkoofananIohDyigb4Ddbs1CHvoGMUpEi/9uxhAiAYXIjeePK2/tLcDpM+S0grJlF03F1
+ k+E3SYzsRkxqcbjI7CR7TkQgbMGdn64GLLRODve44X8IN64yb2a6wMHEBlM0THpZOlY6tcqxv
+ quSHMOP2Yp87+q/oo5zHVyDKFNbAQSY912UTTiLS7slrTcytfKEt13YFXh/F7SnKQC32+cpbu
+ 6CizeU0pZpzJ8DA6zPCfcbXRSun4VSUJtM1qMtKVdvpo1XZcXTaowWtG/i7//AB2lD0SQNqbi
+ ceT9pC+t9RFwddVWPPj1/0RcqwpthcqCW/oZvz/NQgGxFoLKe2/ljNO9WLFyRyTPrNFLKATcq
+ TdGSHejlWuaNzOInyGOOGRNsHUvlkL5mmf10WQAjaV6lFNSFXryfACmuW+gG0t8sKgTmZovM2
+ r14CJ7AeODEN/qhiIL7UBpEjZGsZbDMDhxQn+mutVFw3KjzeIqMpTKz1L/dyFbVmPJ41I7QBu
+ +CdcQ2dcqkhL6Phk30Spw+2YFKoItd1iqMKtjiVqgVSJ7oZvqLMgVJq/s0axmF7bPDwiGhZ7A
+ tdIuZeM8G04cRn0XP8FBk/b3vcaNU7tlz44lPO1IwKs9erVaJNFDfhuHagZCPBsTdxzbJIhJp
+ frk2rqMjnVFCJfbuWTRu6pKrCt/eJ3ZeejGcE7fW6HyBzZorpXUj2BnlClYADu43ekFct/PVV
+ Fs8FKf6t6NTEUGo31QpGgE7nTDwc9cH1gX0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,7 +73,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-15737342-1561557755=:44
+--8323328-1144635054-1561557942=:44
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -80,15 +81,15 @@ Hi =C3=86var,
 
 On Wed, 26 Jun 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> This speeds things up a lot, but as shown in the patches & tests
-> changed modifies the behavior where we have \0 in *patterns* (only
-> possible with 'grep -f <file>').
+> Move the "grep binary" test case added in aca20dd558 ("grep: add test
+> script for binary file handling", 2010-05-22) so that it lives
+> alongside the rest of the "grep" tests in t781*. This would have left
+> a gap in the t/700* namespace, so move a "filter-branch" test down,
+> leaving the "t7010-setup.sh" test as the next one after that.
 
-I agree that it is not worth a lot to care about NULs in search patterns.
-
-So I am in favor of the goal of this patch series.
+I would be totally fine with having gaps.
 
 Ciao,
 Dscho
 
---8323328-15737342-1561557755=:44--
+--8323328-1144635054-1561557942=:44--
