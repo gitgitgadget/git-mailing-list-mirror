@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5C51F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F9F61F461
 	for <e@80x24.org>; Wed, 26 Jun 2019 00:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfFZAEB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Jun 2019 20:04:01 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36072 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfFZAEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jun 2019 20:04:00 -0400
-Received: by mail-wm1-f66.google.com with SMTP id u8so251045wmm.1
-        for <git@vger.kernel.org>; Tue, 25 Jun 2019 17:03:58 -0700 (PDT)
+        id S1726520AbfFZAEC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Jun 2019 20:04:02 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:46443 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726455AbfFZAD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jun 2019 20:03:59 -0400
+Received: by mail-wr1-f53.google.com with SMTP id n4so509899wrw.13
+        for <git@vger.kernel.org>; Tue, 25 Jun 2019 17:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nJI4wgzfyiviQ7jyhgMizxbG82Rm8L6ORNpDljl4n6g=;
-        b=aV63uwgwPwgfyrOUhY177HrW5nMZD6ooQDFFscDMZeMuweSK9Q25yUjQjS5U0aRnzY
-         tnpUa47e9IfcGwLrUveZBfMGL4/XMFPOlpiquvv11JbkDgd+2sj+jrtupFMRDhXfNGk+
-         g6QbqCGlDXzl7oNAsi6fRjKOJ9gEtj4QkupoCGzjoV0TUzUlXgLSf2TbkKcoTrv7MXrC
-         KseHHJf8lEAbRIob/6UlcgZ/sN4BSx9gzbvx8M6eYTPjsGVwADIgVHeOCMAbCj0xhsOi
-         ssiHn1CKR2ay3pX5a63WSMd35Uhu9B4RP6TFo4RJqeeuDCOXifPd1QoraB2shJuuHmwX
-         p9RA==
+        bh=1JnXLcdAR13yXXt7qB2uuyduB5zNMTp6nr1lzBZdIWE=;
+        b=NPFu9yeXuVlfLxxLgrrc8gKykmyDJ9L+rlcoH0qDZvCV44g6pwKUx7ZAteaQOcbM3G
+         h/kmUHWAQtdrHlOBbZrfQ4QWui6nUrI/cEF+nIkFGxjvy6sQbPyeAJLKG0VYV5NA3CDT
+         TiJGLBKuE0lK3g4cp/+0CymVH4SIGD8G4iKTBaQ3wuj40It0usrMOHVxadregxGPtI1P
+         boQBWpu9kXiVtlghwZIrWtYs1hwkzceDLZTJ9BCKJxwYzkGN2M5kIDlrOJ+yNTf91vsy
+         JwRzVGAv14ukY5va1TRPAd4gLyXVAzoBwWpwFm9TJ1F8eugSOmzNFBffiuxnndc1oyvN
+         naXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nJI4wgzfyiviQ7jyhgMizxbG82Rm8L6ORNpDljl4n6g=;
-        b=cWvlDB7DSXujmoXqeps7wH8LTPGrn/edzCyBW+mxyfEiayCYzFPiN9hlesUU8aUBkj
-         iHvpTEGRXyzT+7NKBDcp60rkS73V3vLLFthgVAE5JkjanqOZ8QHnIy8HC7vEXgpwPlLn
-         JOyOlR54u9UhCgGKQrlh1XAXziePB47EzDGOQiVQ/phqxrZbumg7PBPRT/JJt8u1seyS
-         n1t+fJE3EAwlQH6uNcAAK+FOGMp3TsIkpwYXD4ZVX92cnIGopqo+ev5+643VKh2VRfk+
-         dQSLyoPv/laxLIQ7GIfyIpRmDMDutU6L2hbjTpxKVyk5L85Gar2TwLyXwncXitEL82+X
-         goNg==
-X-Gm-Message-State: APjAAAW/74NayFGwCVzBS/hbqoKc2HkttI2R3tNkBsDEZxARQ8EDyoLu
-        YYe7bvny5DzJ8Hlz+jC3p5tg69rn7p4=
-X-Google-Smtp-Source: APXvYqzn9VCzn7qdtlrXo4mWypoNjuvG/ULVPpmd4HsnwteTM95YQeeQwLCRyAhkgvxjT1Tnw8LADQ==
-X-Received: by 2002:a1c:c74a:: with SMTP id x71mr252289wmf.121.1561507437154;
-        Tue, 25 Jun 2019 17:03:57 -0700 (PDT)
+        bh=1JnXLcdAR13yXXt7qB2uuyduB5zNMTp6nr1lzBZdIWE=;
+        b=LQ2u15kla51KmC7/5pJIoF4uJqtn1AUsuZorJyPYrAnzWq87yvBQRL5WlpupLur2Bx
+         s0LRTrcgBB1k0uk/awa9Wv8f0BHy/cUZaNLvz5Yy2Prd2MsFZpzpcMplOFBAIjrqkXod
+         3wPIuetSQ8VZAQOncsGoz17SZrGztlxNjXLDW0o/4SV9NScfOgl258mIHcwlIXmxPqkA
+         D549tyeSbMtuk4mY6aT+//BnEUC8AD1MMmUFFFrY86WfJT7CVaZOc0AXunTXvdfWQJN2
+         CeiMBXZNtNHzcY0GGev+fSGCc8crMy/qvv8gACglRCByf/O8HxBsi+H/q9zwhPs563Jx
+         nGkA==
+X-Gm-Message-State: APjAAAUCoTeNPhsDIAZmEHSG+H9ubhEXamKAYZf0K3AK6iZvpB76H1DS
+        dCBkJalodCINK0mBR4+b/4+WS9AN+NI=
+X-Google-Smtp-Source: APXvYqy9MgMacfHbdbJB3cvuu+BA2CC/Oa2Hqc8Fe+lISKUNsGsIeCxR+Lvbs2ULJhtKGHYkHpbU8A==
+X-Received: by 2002:adf:de02:: with SMTP id b2mr538301wrm.349.1561507435942;
+        Tue, 25 Jun 2019 17:03:55 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l8sm33645982wrg.40.2019.06.25.17.03.55
+        by smtp.gmail.com with ESMTPSA id l8sm33645982wrg.40.2019.06.25.17.03.54
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 25 Jun 2019 17:03:56 -0700 (PDT)
+        Tue, 25 Jun 2019 17:03:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     git-packagers@googlegroups.com, gitgitgadget@gmail.com,
         sandals@crustytoothpaste.net, szeder.dev@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC/PATCH 4/7] grep: make the behavior for \0 in patterns sane
-Date:   Wed, 26 Jun 2019 02:03:26 +0200
-Message-Id: <20190626000329.32475-5-avarab@gmail.com>
+Subject: [RFC/PATCH 3/7] grep tests: move binary pattern tests into their own file
+Date:   Wed, 26 Jun 2019 02:03:25 +0200
+Message-Id: <20190626000329.32475-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <87r27u8pie.fsf@evledraar.gmail.com>
 References: <87r27u8pie.fsf@evledraar.gmail.com>
@@ -72,163 +72,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The behavior of "grep" when patterns contained "\0" has always been
-haphazard, and has served the vagaries of the implementation more than
-anything else. A "\0" in a pattern can only be provided via "-f
-<file>", and since pickaxe (log search) has no such flag "\0" in
-patterns has only ever been supported by "grep".
+Move the tests for "-f <file>" where "<file>" contains a "\0" pattern
+into their own file. I added most of these tests in 966be95549 ("grep:
+add tests to fix blind spots with \0 patterns", 2017-05-20).
 
-Since 9eceddeec6 ("Use kwset in grep", 2011-08-21) patterns containing
-"\0" were considered fixed. In 966be95549 ("grep: add tests to fix
-blind spots with \0 patterns", 2017-05-20) I added tests for this
-behavior.
+Whether a regex engine supports matching binary content is very
+different from whether it matches binary patterns. Since
+2f8952250a ("regex: add regexec_buf() that can work on a non
+NUL-terminated string", 2016-09-21) we've required REG_STARTEND of our
+regex engines so we can match binary content, but only the PCRE v2
+engine can sensibly match binary patterns.
 
-Change the behavior to do the obvious thing, i.e. don't silently
-discard a regex pattern and make it implicitly fixed just because it
-contains a \0. Instead die if e.g. --basic-regexp is combined with
-such a pattern.
-
-This is desired because from a user's point of view it's the obvious
-thing to do. Whether we support BRE/ERE/Perl syntax is different from
-whether our implementation is limited by C-strings. These patterns are
-obscure enough that I think this behavior change is OK, especially
-since we never documented the old behavior.
-
-Doing this also makes it easier to replace the kwset backend with
-something else, since we'll no longer strictly need it for anything we
-can't easily use another fixed-string backend for.
+Since 9eceddeec6 ("Use kwset in grep", 2011-08-21) we've been punting
+patterns containing "\0" and considering them fixed, except in cases
+where "--ignore-case" is provided and they're non-ASCII, see
+5c1ebcca4d ("grep/icase: avoid kwsset on literal non-ascii strings",
+2016-06-25). Subsequent commits will change this behavior.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-grep.txt     |  17 ++++
- grep.c                         |  23 ++---
- t/t7816-grep-binary-pattern.sh | 159 ++++++++++++++++++---------------
- 3 files changed, 110 insertions(+), 89 deletions(-)
+ t/t7815-grep-binary.sh         | 101 -----------------------------
+ t/t7816-grep-binary-pattern.sh | 114 +++++++++++++++++++++++++++++++++
+ 2 files changed, 114 insertions(+), 101 deletions(-)
+ create mode 100755 t/t7816-grep-binary-pattern.sh
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 2d27969057..c89fb569e3 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -271,6 +271,23 @@ providing this option will cause it to die.
+diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
+index 2d87c49b75..90ebb64f46 100755
+--- a/t/t7815-grep-binary.sh
++++ b/t/t7815-grep-binary.sh
+@@ -4,41 +4,6 @@ test_description='git grep in binary files'
  
- -f <file>::
- 	Read patterns from <file>, one per line.
-++
-+Passing the pattern via <file> allows for providing a search pattern
-+containing a \0.
-++
-+Not all pattern types support patterns containing \0. Git will error
-+out if a given pattern type can't support such a pattern. The
-+`--perl-regexp` pattern type when compiled against the PCRE v2 backend
-+has the widest support for these types of patterns.
-++
-+In versions of Git before 2.23.0 patterns containing \0 would be
-+silently considered fixed. This was never documented, there were also
-+odd and undocumented interactions between e.g. non-ASCII patterns
-+containing \0 and `--ignore-case`.
-++
-+In future versions we may learn to support patterns containing \0 for
-+more search backends, until then we'll die when the pattern type in
-+question doesn't support them.
- 
- -e::
- 	The next parameter is the pattern. This option has to be
-diff --git a/grep.c b/grep.c
-index d3e6111c46..261bd3a342 100644
---- a/grep.c
-+++ b/grep.c
-@@ -368,18 +368,6 @@ static int is_fixed(const char *s, size_t len)
- 	return 1;
- }
- 
--static int has_null(const char *s, size_t len)
--{
--	/*
--	 * regcomp cannot accept patterns with NULs so when using it
--	 * we consider any pattern containing a NUL fixed.
--	 */
--	if (memchr(s, 0, len))
--		return 1;
--
--	return 0;
--}
--
- #ifdef USE_LIBPCRE1
- static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- {
-@@ -668,9 +656,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 	 * simple string match using kws.  p->fixed tells us if we
- 	 * want to use kws.
- 	 */
--	if (opt->fixed ||
--	    has_null(p->pattern, p->patternlen) ||
--	    is_fixed(p->pattern, p->patternlen))
-+	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
- 		p->fixed = !p->ignore_case || !has_non_ascii(p->pattern);
- 
- 	if (p->fixed) {
-@@ -678,7 +664,12 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 		kwsincr(p->kws, p->pattern, p->patternlen);
- 		kwsprep(p->kws);
- 		return;
--	} else if (opt->fixed) {
-+	}
-+
-+	if (memchr(p->pattern, 0, p->patternlen) && !opt->pcre2)
-+		die(_("given pattern contains NULL byte (via -f <file>). This is only supported with -P under PCRE v2"));
-+
-+	if (opt->fixed) {
- 		/*
- 		 * We come here when the pattern has the non-ascii
- 		 * characters we cannot case-fold, and asked to
-diff --git a/t/t7816-grep-binary-pattern.sh b/t/t7816-grep-binary-pattern.sh
-index 4060dbd679..9e09bd5d6a 100755
---- a/t/t7816-grep-binary-pattern.sh
-+++ b/t/t7816-grep-binary-pattern.sh
-@@ -2,113 +2,126 @@
- 
- test_description='git grep with a binary pattern files'
- 
--. ./test-lib.sh
-+. ./lib-gettext.sh
+ . ./test-lib.sh
  
 -nul_match () {
-+nul_match_internal () {
- 	matches=$1
+-	matches=$1
 -	flags=$2
 -	pattern=$3
-+	prereqs=$2
-+	lc_all=$3
-+	extra_flags=$4
-+	flags=$5
-+	pattern=$6
- 	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
- 
- 	if test "$matches" = 1
- 	then
+-	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
+-
+-	if test "$matches" = 1
+-	then
 -		test_expect_success "git grep -f f $flags '$pattern_human' a" "
-+		test_expect_success $prereqs "LC_ALL='$lc_all' git grep $extra_flags -f f $flags '$pattern_human' a" "
- 			printf '$pattern' | q_to_nul >f &&
+-			printf '$pattern' | q_to_nul >f &&
 -			git grep -f f $flags a
-+			LC_ALL='$lc_all' git grep $extra_flags -f f $flags a
- 		"
- 	elif test "$matches" = 0
- 	then
+-		"
+-	elif test "$matches" = 0
+-	then
 -		test_expect_success "git grep -f f $flags '$pattern_human' a" "
-+		test_expect_success $prereqs "LC_ALL='$lc_all' git grep $extra_flags -f f $flags '$pattern_human' a" "
-+			>stderr &&
- 			printf '$pattern' | q_to_nul >f &&
+-			printf '$pattern' | q_to_nul >f &&
 -			test_must_fail git grep -f f $flags a
-+			test_must_fail env LC_ALL=\"$lc_all\" git grep $extra_flags -f f $flags a 2>stderr &&
-+			test_i18ngrep ! 'This is only supported with -P under PCRE v2' stderr
- 		"
+-		"
 -	elif test "$matches" = T1
-+	elif test "$matches" = P
- 	then
+-	then
 -		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
-+		test_expect_success $prereqs "error, PCRE v2 only: LC_ALL='$lc_all' git grep -f f $flags '$pattern_human' a" "
-+			>stderr &&
- 			printf '$pattern' | q_to_nul >f &&
+-			printf '$pattern' | q_to_nul >f &&
 -			git grep -f f $flags a
 -		"
 -	elif test "$matches" = T0
@@ -236,32 +133,18 @@ index 4060dbd679..9e09bd5d6a 100755
 -		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
 -			printf '$pattern' | q_to_nul >f &&
 -			test_must_fail git grep -f f $flags a
-+			test_must_fail env LC_ALL=\"$lc_all\" git grep -f f $flags a 2>stderr &&
-+			test_i18ngrep 'This is only supported with -P under PCRE v2' stderr
- 		"
- 	else
- 		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
- 	fi
- }
- 
-+nul_match () {
-+	matches=$1
-+	matches_pcre2=$2
-+	matches_pcre2_locale=$3
-+	flags=$4
-+	pattern=$5
-+	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
-+
-+	nul_match_internal "$matches" "" "C" "" "$flags" "$pattern"
-+	nul_match_internal "$matches_pcre2" "LIBPCRE2" "C" "-P" "$flags" "$pattern"
-+	nul_match_internal "$matches_pcre2_locale" "LIBPCRE2,GETTEXT_LOCALE" "$is_IS_locale" "-P" "$flags" "$pattern"
-+}
-+
+-		"
+-	else
+-		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
+-	fi
+-}
+-
  test_expect_success 'setup' "
  	echo 'binaryQfileQm[*]cQ*æQð' | q_to_nul >a &&
  	git add a &&
- 	git commit -m.
- "
+@@ -102,72 +67,6 @@ test_expect_failure 'git grep .fi a' '
+ 	git grep .fi a
+ '
  
 -nul_match 1 '-F' 'yQf'
 -nul_match 0 '-F' 'yQx'
@@ -272,18 +155,8 @@ index 4060dbd679..9e09bd5d6a 100755
 -nul_match 1 '' 'æQð'
 -nul_match 1 '-F' 'eQm[*]c'
 -nul_match 1 '-Fi' 'EQM[*]C'
-+# Simple fixed-string matching that can use kwset (no -i && non-ASCII)
-+nul_match 1 1 1 '-F' 'yQf'
-+nul_match 0 0 0 '-F' 'yQx'
-+nul_match 1 1 1 '-Fi' 'YQf'
-+nul_match 0 0 0 '-Fi' 'YQx'
-+nul_match 1 1 1 '' 'yQf'
-+nul_match 0 0 0 '' 'yQx'
-+nul_match 1 1 1 '' 'æQð'
-+nul_match 1 1 1 '-F' 'eQm[*]c'
-+nul_match 1 1 1 '-Fi' 'EQM[*]C'
- 
- # Regex patterns that would match but shouldn't with -F
+-
+-# Regex patterns that would match but shouldn't with -F
 -nul_match 0 '-F' 'yQ[f]'
 -nul_match 0 '-F' '[y]Qf'
 -nul_match 0 '-Fi' 'YQ[F]'
@@ -292,19 +165,11 @@ index 4060dbd679..9e09bd5d6a 100755
 -nul_match 0 '-F' '[æ]Qð'
 -nul_match 0 '-Fi' 'ÆQ[Ð]'
 -nul_match 0 '-Fi' '[Æ]QÐ'
-+nul_match 0 0 0 '-F' 'yQ[f]'
-+nul_match 0 0 0 '-F' '[y]Qf'
-+nul_match 0 0 0 '-Fi' 'YQ[F]'
-+nul_match 0 0 0 '-Fi' '[Y]QF'
-+nul_match 0 0 0 '-F' 'æQ[ð]'
-+nul_match 0 0 0 '-F' '[æ]Qð'
- 
+-
 -# kwset is disabled on -i & non-ASCII. No way to match non-ASCII \0
 -# patterns case-insensitively.
 -nul_match T1 '-i' 'ÆQÐ'
-+# The -F kwset codepath can't handle -i && non-ASCII...
-+nul_match P 1 1 '-i' '[æ]Qð'
- 
+-
 -# \0 implicitly disables regexes. This is an undocumented internal
 -# limitation.
 -nul_match T1 '' 'yQ[f]'
@@ -314,33 +179,14 @@ index 4060dbd679..9e09bd5d6a 100755
 -nul_match T1 '' 'æQ[ð]'
 -nul_match T1 '' '[æ]Qð'
 -nul_match T1 '-i' 'ÆQ[Ð]'
-+# ...PCRE v2 only matches non-ASCII with -i casefolding under UTF-8
-+# semantics
-+nul_match P P P '-Fi' 'ÆQ[Ð]'
-+nul_match P 0 1 '-i'  'ÆQ[Ð]'
-+nul_match P 0 1 '-i'  '[Æ]QÐ'
-+nul_match P 0 1 '-i' '[Æ]Qð'
-+nul_match P 0 1 '-i' 'ÆQÐ'
- 
+-
 -# ... because of \0 implicitly disabling regexes regexes that
 -# should/shouldn't match don't do the right thing.
 -nul_match T1 '' 'eQm.*cQ'
 -nul_match T1 '-i' 'EQM.*cQ'
 -nul_match T0 '' 'eQm[*]c'
 -nul_match T0 '-i' 'EQM[*]C'
-+# \0 in regexes can only work with -P & PCRE v2
-+nul_match P 1 1 '' 'yQ[f]'
-+nul_match P 1 1 '' '[y]Qf'
-+nul_match P 1 1 '-i' 'YQ[F]'
-+nul_match P 1 1 '-i' '[Y]Qf'
-+nul_match P 1 1 '' 'æQ[ð]'
-+nul_match P 1 1 '' '[æ]Qð'
-+nul_match P 0 1 '-i' 'ÆQ[Ð]'
-+nul_match P 1 1 '' 'eQm.*cQ'
-+nul_match P 1 1 '-i' 'EQM.*cQ'
-+nul_match P 0 0 '' 'eQm[*]c'
-+nul_match P 0 0 '-i' 'EQM[*]C'
- 
+-
 -# Due to the REG_STARTEND extension when kwset() is disabled on -i &
 -# non-ASCII the string will be matched in its entirety, but the
 -# pattern will be cut off at the first \0.
@@ -350,14 +196,9 @@ index 4060dbd679..9e09bd5d6a 100755
 -# Matches, but for the wrong reasons, just stops at [æ]
 -nul_match 1 '-i' '[Æ]Qð'
 -nul_match 1 '-i' '[æ]Qð'
-+# Assert that we're using REG_STARTEND and the pattern doesn't match
-+# just because it's cut off at the first \0.
-+nul_match 0 0 0 '-i' 'NOMATCHQð'
-+nul_match P 0 0 '-i' '[Æ]QNOMATCH'
-+nul_match P 0 0 '-i' '[æ]QNOMATCH'
- 
- # Ensure that the matcher doesn't regress to something that stops at
- # \0
+-
+-# Ensure that the matcher doesn't regress to something that stops at
+-# \0
 -nul_match 0 '-F' 'yQ[f]'
 -nul_match 0 '-Fi' 'YQ[F]'
 -nul_match 0 '' 'yQNOMATCH'
@@ -370,21 +211,130 @@ index 4060dbd679..9e09bd5d6a 100755
 -nul_match 0 '' 'QNÓMATCH'
 -nul_match 0 '-i' 'YQNÓMATCH'
 -nul_match 0 '-i' 'QNÓMATCH'
-+nul_match 0 0 0 '-F' 'yQ[f]'
-+nul_match 0 0 0 '-Fi' 'YQ[F]'
-+nul_match 0 0 0 '' 'yQNOMATCH'
-+nul_match 0 0 0 '' 'QNOMATCH'
-+nul_match 0 0 0 '-i' 'YQNOMATCH'
-+nul_match 0 0 0 '-i' 'QNOMATCH'
-+nul_match 0 0 0 '-F' 'æQ[ð]'
-+nul_match P P P '-Fi' 'ÆQ[Ð]'
-+nul_match P 0 1 '-i' 'ÆQ[Ð]'
-+nul_match 0 0 0 '' 'yQNÓMATCH'
-+nul_match 0 0 0 '' 'QNÓMATCH'
-+nul_match 0 0 0 '-i' 'YQNÓMATCH'
-+nul_match 0 0 0 '-i' 'QNÓMATCH'
- 
- test_done
+-
+ test_expect_success 'grep respects binary diff attribute' '
+ 	echo text >t &&
+ 	git add t &&
+diff --git a/t/t7816-grep-binary-pattern.sh b/t/t7816-grep-binary-pattern.sh
+new file mode 100755
+index 0000000000..4060dbd679
+--- /dev/null
++++ b/t/t7816-grep-binary-pattern.sh
+@@ -0,0 +1,114 @@
++#!/bin/sh
++
++test_description='git grep with a binary pattern files'
++
++. ./test-lib.sh
++
++nul_match () {
++	matches=$1
++	flags=$2
++	pattern=$3
++	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
++
++	if test "$matches" = 1
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			git grep -f f $flags a
++		"
++	elif test "$matches" = 0
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			test_must_fail git grep -f f $flags a
++		"
++	elif test "$matches" = T1
++	then
++		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			git grep -f f $flags a
++		"
++	elif test "$matches" = T0
++	then
++		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			test_must_fail git grep -f f $flags a
++		"
++	else
++		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
++	fi
++}
++
++test_expect_success 'setup' "
++	echo 'binaryQfileQm[*]cQ*æQð' | q_to_nul >a &&
++	git add a &&
++	git commit -m.
++"
++
++nul_match 1 '-F' 'yQf'
++nul_match 0 '-F' 'yQx'
++nul_match 1 '-Fi' 'YQf'
++nul_match 0 '-Fi' 'YQx'
++nul_match 1 '' 'yQf'
++nul_match 0 '' 'yQx'
++nul_match 1 '' 'æQð'
++nul_match 1 '-F' 'eQm[*]c'
++nul_match 1 '-Fi' 'EQM[*]C'
++
++# Regex patterns that would match but shouldn't with -F
++nul_match 0 '-F' 'yQ[f]'
++nul_match 0 '-F' '[y]Qf'
++nul_match 0 '-Fi' 'YQ[F]'
++nul_match 0 '-Fi' '[Y]QF'
++nul_match 0 '-F' 'æQ[ð]'
++nul_match 0 '-F' '[æ]Qð'
++nul_match 0 '-Fi' 'ÆQ[Ð]'
++nul_match 0 '-Fi' '[Æ]QÐ'
++
++# kwset is disabled on -i & non-ASCII. No way to match non-ASCII \0
++# patterns case-insensitively.
++nul_match T1 '-i' 'ÆQÐ'
++
++# \0 implicitly disables regexes. This is an undocumented internal
++# limitation.
++nul_match T1 '' 'yQ[f]'
++nul_match T1 '' '[y]Qf'
++nul_match T1 '-i' 'YQ[F]'
++nul_match T1 '-i' '[Y]Qf'
++nul_match T1 '' 'æQ[ð]'
++nul_match T1 '' '[æ]Qð'
++nul_match T1 '-i' 'ÆQ[Ð]'
++
++# ... because of \0 implicitly disabling regexes regexes that
++# should/shouldn't match don't do the right thing.
++nul_match T1 '' 'eQm.*cQ'
++nul_match T1 '-i' 'EQM.*cQ'
++nul_match T0 '' 'eQm[*]c'
++nul_match T0 '-i' 'EQM[*]C'
++
++# Due to the REG_STARTEND extension when kwset() is disabled on -i &
++# non-ASCII the string will be matched in its entirety, but the
++# pattern will be cut off at the first \0.
++nul_match 0 '-i' 'NOMATCHQð'
++nul_match T0 '-i' '[Æ]QNOMATCH'
++nul_match T0 '-i' '[æ]QNOMATCH'
++# Matches, but for the wrong reasons, just stops at [æ]
++nul_match 1 '-i' '[Æ]Qð'
++nul_match 1 '-i' '[æ]Qð'
++
++# Ensure that the matcher doesn't regress to something that stops at
++# \0
++nul_match 0 '-F' 'yQ[f]'
++nul_match 0 '-Fi' 'YQ[F]'
++nul_match 0 '' 'yQNOMATCH'
++nul_match 0 '' 'QNOMATCH'
++nul_match 0 '-i' 'YQNOMATCH'
++nul_match 0 '-i' 'QNOMATCH'
++nul_match 0 '-F' 'æQ[ð]'
++nul_match 0 '-Fi' 'ÆQ[Ð]'
++nul_match 0 '' 'yQNÓMATCH'
++nul_match 0 '' 'QNÓMATCH'
++nul_match 0 '-i' 'YQNÓMATCH'
++nul_match 0 '-i' 'QNÓMATCH'
++
++test_done
 -- 
 2.22.0.455.g172b71a6c5
 
