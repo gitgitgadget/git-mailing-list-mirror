@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F081D1F461
-	for <e@80x24.org>; Wed, 26 Jun 2019 23:51:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 944FE1F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 23:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726655AbfFZXvL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 19:51:11 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:43040 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbfFZXvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 19:51:10 -0400
-Received: by mail-pl1-f201.google.com with SMTP id t2so288747plo.10
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 16:51:10 -0700 (PDT)
+        id S1726659AbfFZXvN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 19:51:13 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:37016 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbfFZXvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 19:51:13 -0400
+Received: by mail-pg1-f201.google.com with SMTP id e16so206503pga.4
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 16:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4TaIo5JITih+BTUObpSO0GNEJ6wW9gJ5AjFC0810znE=;
-        b=cmqbjkfAc4T3BLMpZ7ESvDhyEvjxuJ1gIcZcS6V0lZLUfKLq/LscIytjWLI7TY1Bcu
-         0Wz9VrHYYP3irzqkM/5ib/9vUXqTeerJF2Xx+Zrfn1biMMB+SrjKtYIIwu9mc+iOYwIn
-         I5r/FAM390wxqaLShRM+F+mjTPh1Zgf3/UtFPkmgcV7SkYbgaehLVm4b9pSfO34MZTXJ
-         TG/af34RFndzQrIwQvSgKZKP12b0ZzttcjgoAHuzEHwqf1rqclpDd5fqGVi/el314Paz
-         y4GUKfooJ1gTjLrxUp6ctDI5eGq73tuiegtSWk9+/Pj2fT5TAHX4Wt3FdBDHT3tnapQD
-         X36w==
+        bh=nyiPkoZ6sPMQUqADlP4e3n5AVmwefyeDNcV2SY+k2Eg=;
+        b=pck/+SGgndoArsLEzclKeBuA33xERNCtazq6F/qZM8zmWwFxQwxN0HTwnkjw27Gror
+         me5NmXPZpVcC2drtrB6fpYjeVC3DjQJW8w+WzmTGTHGKGfs7Nbr5+FsLyKkwvK+uiHrF
+         olLMhMobr9UywtP8/u6P3uQzBteZmYiWwPslA7nK4YVGHMHKMDpOXnXQyveKexYXsEQC
+         eB5dVxHePK9DGTZBNJiR8EQ3rrgSJwRSIBWAzvm1idX72p2kbx2/F3/zB3rZyblVLjO4
+         nZbLjI/Vw0NPuwgB7F4NcpPC2Euf2P+H4T+zso1O5OGWx5RJR5sDB/xlCEVu3mpm2PnC
+         UT2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=4TaIo5JITih+BTUObpSO0GNEJ6wW9gJ5AjFC0810znE=;
-        b=SYubNDKrmqIJwPBFSUMAw2TGehBVEY8UObEDqyXGFClk0HZq0ka8jWNvY3D4q4lMRH
-         OyBUgqvgZtq+HEKUjcSEjtltpenl3OAZ7lWZ1YXwgSQDac/dcDxm3zOhmA2iHNhdI8lm
-         FTlN5wAPFgmbHVM/LnZvFtlYpGGBse0kwEpxT6C/poGslClk82nXpgttRboySpPeQFcu
-         ETkbZpvnBsKOcNVs80e1IoqFMe7xbkFv6soagirvXNoaKKAhzSo7LDetcG+ueE+F4Uzp
-         p3Bzyqp+8j3Jv9FIr1nfwhe+3oeN8DXEGxrWT6gXdxis9RNzCZZgbajSlH0rh5ZAZAOi
-         D3FA==
-X-Gm-Message-State: APjAAAUMqiNtbFIlk+XKE0lJnD7NO1Fhj/gMPk8pjTMb1GLvzZaZuQLI
-        gcNJ3YWiDEtChlZyXT6hxz+ETHC4gvY2Hft/XwkOS9H97Tzd07nfYJiP0Mh19wf0+em1/tFOOXf
-        e/U6kV6HtcEBVUX4I07YETYJ1yOJkR4isaKvuJa5LOa/8JX9qHjh/5nwE3nAaR7ReIv2XYmO3vA
+        bh=nyiPkoZ6sPMQUqADlP4e3n5AVmwefyeDNcV2SY+k2Eg=;
+        b=tR+aeAzBpz79XRkcWeTrFl976KuAltgvmS3kHWlQ/6tAVhIXh89H3jniBMV3ohcWBU
+         z26u7Ghcrp6RXnEc6irnQUKvmON3AONG0cnQ3HuOXWoc8IiTcfhqa3ycxGdsDRye4EgF
+         NqHeWklfSpJBImhd9T9PLMsJGfAWCsz7fnbxtZeoRlp87j5JC8cNt51+xvMurOHB4Bui
+         U7o06ITqug6+nISu2wopAnLcStg5MgFYDHFeLRXD44ToZmu3mP3DEOBvp/pezxot/pzq
+         /k1huI5Dr68Y3rAd/dQboAh/zfMqUmQfSWZPF2/L8o72Y6c2Goe+gc9Id7CIzGy7oTCO
+         3xZA==
+X-Gm-Message-State: APjAAAVN3DGka27qOidb3yrNq+igKGkTgchMGmjCZ30c9l82LmMOy57S
+        Uvz6QH6HXokdRSDRacY23XY6twqNNbIdx7kbb3al/2hiCJa1KtvMMNRYJTlsHpyC5iMfoOMrpMZ
+        FUIMaeVUNeJmNcNrfvv4t2A3CpDPF31RLOJwcdXxH9VYY0m2nzEd63WynQrBBJyvLYYqtR0Zb3A
         ==
-X-Google-Smtp-Source: APXvYqwkZ0Gq2HDC1h6ZJU29BZOqJJNeSN+OsX8ucI15ZJs540TGQQuidDSLNNxFmQu9gfCQ3xx6My17NTIKqaquSAA=
-X-Received: by 2002:a65:530c:: with SMTP id m12mr598151pgq.363.1561593069772;
- Wed, 26 Jun 2019 16:51:09 -0700 (PDT)
-Date:   Wed, 26 Jun 2019 16:50:25 -0700
+X-Google-Smtp-Source: APXvYqzO8ku6mz0527nK0ssKEn5ZD+E3wSnpm0wOXYWKSQipsH7/nRL8smureSAPXZ2dW9X8jyTRQOicWEseMFEs8V4=
+X-Received: by 2002:a65:448b:: with SMTP id l11mr640926pgq.74.1561593072454;
+ Wed, 26 Jun 2019 16:51:12 -0700 (PDT)
+Date:   Wed, 26 Jun 2019 16:50:26 -0700
 In-Reply-To: <20190626235032.177551-1-emilyshaffer@google.com>
-Message-Id: <20190626235032.177551-7-emilyshaffer@google.com>
+Message-Id: <20190626235032.177551-8-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20190626235032.177551-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v2 06/13] walken: perform our basic revision walk
+Subject: [RFC PATCH v2 07/13] walken: filter for authors from gmail address
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,95 +64,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the final steps needed and implement the walk loop itself. We add a
-method walken_commit_walk() which performs the final setup to revision.c
-and then iterates over commits from get_revision().
+In order to demonstrate how to create grep filters for revision walks,
+filter the walk performed by cmd_walken() to print only commits which
+are authored by someone with a gmail address.
 
-This basic walk only prints the subject line of each commit in the
-history. It is nearly equivalent to `git log --oneline`.
+This commit demonstrates how to append a grep pattern to a
+rev_info.grep_filter, to teach new contributors how to create their own
+more generalized grep filters during revision walks.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Change-Id: If6dc5f3c9d14df077b99e42806cf790c96191582
 ---
- builtin/walken.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ builtin/walken.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/walken.c b/builtin/walken.c
-index c463eca843..335dcb6b21 100644
+index 335dcb6b21..da2d197914 100644
 --- a/builtin/walken.c
 +++ b/builtin/walken.c
-@@ -6,8 +6,11 @@
- 
- #include "builtin.h"
- #include "revision.h"
-+#include "commit.h"
- #include "config.h"
+@@ -11,6 +11,7 @@
  #include "parse-options.h"
-+#include "pretty.h"
-+#include "line-log.h"
+ #include "pretty.h"
+ #include "line-log.h"
++#include "grep.h"
  
  /*
   * All builtins are expected to provide a usage to provide a consistent user
-@@ -90,6 +93,41 @@ static int git_walken_config(const char *var, const char *value, void *cb)
+@@ -28,10 +29,8 @@ const char * const walken_usage[] = {
+  */
+ static void init_walken_defaults(void)
+ {
+-	/*
+-	 * We don't use any other components or have settings to initialize, so
+-	 * leave this empty.
+-	 */
++	/* Needed by our grep filter. */
++	init_grep_defaults(the_repository);
+ }
+ 
+ /*
+@@ -60,6 +59,10 @@ static void final_rev_info_setup(int argc, const char **argv, const char *prefix
+ 	 * setup_revisions(argc, argv, rev, &opt);
+ 	 */
+ 
++	/* Add a grep pattern to the author line in the header. */
++	append_header_grep_pattern(&rev->grep_filter, GREP_HEADER_AUTHOR, "gmail");
++	compile_grep_patterns(&rev->grep_filter);
++
+ 	/* Let's force oneline format. */
+ 	get_commit_format("oneline", rev);
+ 	rev->verbose_header = 1;
+@@ -86,10 +89,7 @@ static void final_rev_info_setup(int argc, const char **argv, const char *prefix
+  */
+ static int git_walken_config(const char *var, const char *value, void *cb)
+ {
+-	/*
+-	 * For now, we don't have any custom configuration, so fall back on the
+-	 * default config.
+-	 */
++	grep_config(var, value, cb);
  	return git_default_config(var, value, cb);
  }
  
-+/*
-+ * walken_commit_walk() is invoked by cmd_walken() after initialization. It
-+ * does the commit walk only.
-+ */
-+static void walken_commit_walk(struct rev_info *rev)
-+{
-+	struct commit *commit;
-+	struct strbuf prettybuf = STRBUF_INIT;
-+
-+	/*
-+         * prepare_revision_walk() gets the final steps ready for a revision
-+	 * walk. We check the return value for errors.
-+         */
-+	if (prepare_revision_walk(rev)) {
-+		die(_("revision walk setup failed"));
-+	}
-+
-+	/*
-+         * Now we can start the real commit walk. get_revision grabs the next
-+	 * revision based on the contents of rev.
-+	 */
-+	rev->diffopt.close_file = 0;
-+	while ((commit = get_revision(rev))) {
-+		if (!commit)
-+			continue;
-+		strbuf_reset(&prettybuf);
-+		pp_commit_easy(CMIT_FMT_ONELINE, commit, &prettybuf);
-+		/*
-+		 * We expect this part of the output to be machine-parseable -
-+		 * one commit message per line - so we must not localize it.
-+		 */
-+		puts(prettybuf.buf);
-+	}
-+}
-+
- int cmd_walken(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = {
-@@ -115,12 +153,17 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- 	 */
- 	repo_init_revisions(the_repository, &rev, prefix);
- 
-+	/* We can set our traversal flags here. */
-+	rev.always_show_header = 1;
-+
- 	/*
- 	 * Before we do the walk, we need to set a starting point by giving it
- 	 * something to go in `pending` - that happens in here
- 	 */
- 	final_rev_info_setup(argc, argv, prefix, &rev);
- 
-+	walken_commit_walk(&rev);
-+
- 	/*
- 	 * This line is "human-readable" and we are writing a plumbing command,
- 	 * so we localize it and use the trace library to print only when
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
