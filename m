@@ -2,407 +2,328 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F8021F4B6
-	for <e@80x24.org>; Wed, 26 Jun 2019 08:38:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E82341F461
+	for <e@80x24.org>; Wed, 26 Jun 2019 08:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726833AbfFZIiK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 04:38:10 -0400
-Received: from forward103o.mail.yandex.net ([37.140.190.177]:34141 "EHLO
-        forward103o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725379AbfFZIiJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Jun 2019 04:38:09 -0400
-X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jun 2019 04:38:03 EDT
-Received: from mxback21g.mail.yandex.net (mxback21g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:321])
-        by forward103o.mail.yandex.net (Yandex) with ESMTP id E73EB5F80CB5
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 11:32:33 +0300 (MSK)
-Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [2a02:6b8:0:1a2d::27])
-        by mxback21g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id x3ZfaADu4c-WXOiCYb6;
-        Wed, 26 Jun 2019 11:32:33 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1561537953;
-        bh=7QiTV9+pbx402kJFjSoSpMF4zmDKsVJ7lkJUyN35Rvo=;
-        h=Subject:To:From:Date:Message-ID;
-        b=HB4ivnne20HK/37RAFU/JLOJFIFjokOhM4MLOGLJ49DqTUm5PBiluA7OwpQTZh85+
-         xdLutuOiAqVuTlyDCmdl1HJQMBtxrmV6dCbL9l4rduAq5XV3WNEgHCNIFXim260lv8
-         edtUQegyUxdjXU9wGbKeyAIgOli76O9O81/V1QUs=
-Authentication-Results: mxback21g.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id KyxjgJctVw-WWMG0sBj;
-        Wed, 26 Jun 2019 11:32:32 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (Client certificate not present)
-Date:   Wed, 26 Jun 2019 11:32:31 +0300
-From:   Eugen Konkov <kes-kes@yandex.ru>
-Message-ID: <1817947890.20190626113231@yandex.ru>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [BUG] Bad coloring
+        id S1726329AbfFZIlt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Jun 2019 04:41:49 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34845 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbfFZIls (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jun 2019 04:41:48 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w24so1057719plp.2
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 01:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=H9vA/z2ZMb5wxpGqqs6beyfS3TDuNe6vW7IKNgmKhUc=;
+        b=UT+pHZw/SnQrETp1fsrzncBTJmMHH30xZgUTL9x3BkHKqOUVibytxjwQLvrQPI6Pgi
+         a/wtYKDIL9hr6E3vfp8Kg2Ht7wBc1ZcW7YJ0CxQVkl1RsjBfQh1yKBwLy9ENCwdewiZN
+         1MWNM0P0s4XUDOYSRkUoBy60sYp1Izizh+SUlJPgQnJ9Z88OVXE4Yj1Z64KdOhZkgSlq
+         iqCZ2tzv1DhEs4Bv/S9hhptLN/LN7GbDiNm97a8bvgZC7RaazRAfx833CQDxQQntWtUI
+         IIk/e2k2AAdF9nz3Iz0m6IU0XhMHpwbK/tgq/0EPtiXOuOh9x63za3e7VfmUfNHV3089
+         nGgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=H9vA/z2ZMb5wxpGqqs6beyfS3TDuNe6vW7IKNgmKhUc=;
+        b=eqtw+LTjRPnkorDhVCDFsu0aDN3cBNrKvpQNOW6kk610nKGN+DjHOFB30eQfkE8EVO
+         jEikMxKG0FUY5POzicadMQAtjHjWUtR0oAmX9k0s+m+4qen41wjzDIJ0rl7yMXwoTRGR
+         7aOtxHmHudXuK61avto3DntuehHOB3H1ObbD489GbWy6dc0TrVDFmmgQGajx+710ahzF
+         fKkz+Zg1J2neZdBHxXXHdaWjTWGNBQAv/DaEe6OlRRi7bk+YeTT1VLiYP/n/JpaiGvqP
+         rb/LElahJyg002NwQaatbe2rmxgHy3J913HftHbUjZoDzOcijTeneZDZrO5f56t+7MY5
+         AbSw==
+X-Gm-Message-State: APjAAAUp555qmoM48W3KJxhki+OxBj1rR8xx+C6v6jj03oyIwqL/lamG
+        ODvDLMXnhwMVUgTR0PhuNAGBwV/u
+X-Google-Smtp-Source: APXvYqxjdsR0szPj4yp4OFRjtKNXsziGAFZkdf2GhYhCqmMvGocCc6J4NZPnzoLY/CMaAxO1YdlmgQ==
+X-Received: by 2002:a17:902:b603:: with SMTP id b3mr4105600pls.9.1561538507490;
+        Wed, 26 Jun 2019 01:41:47 -0700 (PDT)
+Received: from ash ([115.76.181.38])
+        by smtp.gmail.com with ESMTPSA id b19sm10995475pgh.57.2019.06.26.01.41.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Jun 2019 01:41:46 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 26 Jun 2019 15:41:42 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, kyle@kyleam.com,
+        Heiko.Boettger@karlstorz.com,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH/RFC] get_oid: new extended SHA-1 syntax to control resolution process
+Date:   Wed, 26 Jun 2019 15:41:39 +0700
+Message-Id: <20190626084139.30246-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
+In-Reply-To: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
+References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="----------01E0340FC0A346FAF"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-------------01E0340FC0A346FAF
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+[I feel like this is something we should do, but I'm not sure. Hence
+RFC. The patch is mostly to play with if you're curious. The die() thing
+there is definitely wrong. And yeah all the syntax names are
+placeholders.]
 
-Hello,
+get_oid() is flexible and accepts multiple SHA-1 sources. Sometimes this
+flexibility is actually unwanted, especially for scripts. Let's talk
+problems:
 
-For next diff the `}` line should not be detected as removed/added.
+- Ambiguity aside, a script may want to check if branch A exists. Of
+  course "git rev-parse A" won't cut it. But even "git rev-parse
+  refs/heads/A" may fail: if you have refs/heads/refs/heads/A for
+  whatever reason and the real branch "A" does not exist, the rev-parse
+  rules allow to expand "refs/heads/A" to the long ref.
 
-As  you can see there are differences only at new lines. (see attached
-pics)
+- And then there's problem with using the wrong rule. 9309ba may look
+  like a short hash. But if such short hash does not match any object,
+  and there is refs/heads/9309ba, you'll have a little surprise.
 
-git version 2.21.0
+- The same for blahblah-g9309ba which could either be expanded to
+  refs/heads/blahblah-g9309ba, or interpreted as git-describe output.
 
+- Ambiguation will also cause problems, but I don't think we need to
+  get into that. Ambiguation may be addressed separately actually.
 
-git diff -b -w --ignore-blank-lines
+There could be existing mitigation (e.g. maybe you can resolve
+blahblah-g9309ba and see if it's a ref or not). But it feels like we
+work around the problem than addressing it.
 
+The problem is we try every possible way to resolve a rev. Let's have
+some annotation to express that we only want to resolve a rev in a
+certain way:
 
-git config:
+- <hash>@{hash} only accepts a full hash or a short hash. If it's a
+  short hash, it cannot be ambiguous.
 
-[color "diff"]
-    old = red bold
-    new = green bold
+- <ref>@{literal} only accepts full ref. No turning "master" into
+  "refs/heads/master".
 
-[diff]
-    tool = sublimerge
-    colorMoved = default
-    colorMovedWS = ignore-all-space
+- <output>@{describe} interprets <output> as git-describe output
+  only, not an object name or a reference.
 
+This gives scripts much better control over get_oid(), which
+translates to rev-parse and a bunch other commands.
 
+PS. The new syntax can stack with existing ones. E.g. you could write
+refs/heads/master@{literal}@{yesterday} or <hash>@{hash}^{tree}.
+Perhaps I should allow these tags at the end too, so you can enforce a
+variable like "$REV"@{literal} where $REV could be even HEAD~123
 
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/revisions.txt | 10 ++++++++
+ refs.c                      | 41 +++++++++++++++++++++++++++++--
+ refs.h                      |  2 ++
+ sha1-name.c                 | 48 +++++++++++++++++++++++++++++++++++--
+ 4 files changed, 97 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 82c1e5754e..93eb278743 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -86,6 +86,16 @@ some output processing may assume ref names in UTF-8.
+   immediately following a ref name and the ref must have an existing
+   log ('$GIT_DIR/logs/<refname>').
+ 
++'<refname>@{literal}'::
++  The ref is not expanded by Git. In other words, if '$GIT_DIR/<refname>'
++  does not exist, the ref is not valid.
++
++'<sha1>@{hash}'::
++  '<sha1>' must be an unambiguous (short or full) object name.
++
++'<describeOutput>@{describe}'::
++  ...
++
+ '@{<n>}', e.g. '@\{1\}'::
+   You can use the '@' construct with an empty ref part to get at a
+   reflog entry of the current branch. For example, if you are on
+diff --git a/refs.c b/refs.c
+index b8a8430c96..2ee33257fd 100644
+--- a/refs.c
++++ b/refs.c
+@@ -634,6 +634,27 @@ int repo_dwim_ref(struct repository *r, const char *str, int len,
+ 	return refs_found;
+ }
+ 
++int repo_dwim_ref_strict(struct repository *r,
++			 const char *str, int len,
++			 struct object_id *oid,
++			 char **ref)
++{
++	char *last_branch = substitute_branch_name(r, &str, &len);
++	struct strbuf sb = STRBUF_INIT;
++	int flag;
++
++	FREE_AND_NULL(last_branch);
++	strbuf_add(&sb, str, len);
++	*ref = xstrdup_or_null(
++		refs_resolve_ref_unsafe(get_main_ref_store(r),
++					sb.buf,
++					RESOLVE_REF_READING,
++					oid,
++					&flag));
++	strbuf_release(&sb);
++	return *ref != NULL;
++}
++
+ int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
+ {
+ 	return repo_dwim_ref(the_repository, str, len, oid, ref);
+@@ -673,8 +694,9 @@ int expand_ref(struct repository *repo, const char *str, int len,
+ 	return refs_found;
+ }
+ 
+-int repo_dwim_log(struct repository *r, const char *str, int len,
+-		  struct object_id *oid, char **log)
++static int do_dwim_log(struct repository *r, const char *str, int len,
++		       struct object_id *oid, char **log,
++		       int ignore_rev_parse_rules)
+ {
+ 	struct ref_store *refs = get_main_ref_store(r);
+ 	char *last_branch = substitute_branch_name(r, &str, &len);
+@@ -687,6 +709,9 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
+ 		struct object_id hash;
+ 		const char *ref, *it;
+ 
++		if (ignore_rev_parse_rules && p != ref_rev_parse_rules)
++			break;
++
+ 		strbuf_reset(&path);
+ 		strbuf_addf(&path, *p, len, str);
+ 		ref = refs_resolve_ref_unsafe(refs, path.buf,
+@@ -713,6 +738,18 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
+ 	return logs_found;
+ }
+ 
++int repo_dwim_log(struct repository *r, const char *str, int len,
++		  struct object_id *oid, char **log)
++{
++	return do_dwim_log(r, str, len, oid, log, 0);
++}
++
++int repo_dwim_log_strict(struct repository *r, const char *str, int len,
++			 struct object_id *oid, char **log)
++{
++	return do_dwim_log(r, str, len, oid, log, 1);
++}
++
+ int dwim_log(const char *str, int len, struct object_id *oid, char **log)
+ {
+ 	return repo_dwim_log(the_repository, str, len, oid, log);
+diff --git a/refs.h b/refs.h
+index 730d05ad91..9395a2e708 100644
+--- a/refs.h
++++ b/refs.h
+@@ -151,6 +151,8 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
+ int expand_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
+ int repo_dwim_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
+ int repo_dwim_log(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
++int repo_dwim_ref_strict(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
++int repo_dwim_log_strict(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+ 
+diff --git a/sha1-name.c b/sha1-name.c
+index 728e6f1f61..2d05414140 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -789,6 +789,25 @@ static inline int push_mark(const char *string, int len)
+ 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+ }
+ 
++static inline int literal_mark(const char *string, int len)
++{
++	const char *suffix[] = { "@{literal}" };
++	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
++}
++
++static inline int find_mark(const char *mark, const char *string, int len, int *len_p)
++{
++	int mark_len = strlen(mark);
++
++	if (mark_len <= len &&
++	    !strncasecmp(string + len - mark_len, mark, mark_len)) {
++		if (len_p)
++			*len_p -= mark_len;
++		return 1;
++	}
++	return 0;
++}
++
+ static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
+ static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
+ 
+@@ -811,6 +830,18 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 	int refs_found = 0;
+ 	int at, reflog_len, nth_prior = 0;
+ 
++	if (find_mark("@{hash}", str, len, &len)) {
++		struct strbuf sb = STRBUF_INIT;
++
++		strbuf_add(&sb, str, len);
++		if (!get_oid_hex(sb.buf, oid) ||
++		    !get_short_oid(r, sb.buf, sb.len, oid, flags)) {
++			strbuf_release(&sb);
++			return 0;
++		}
++		die("Not a hash. Yes I know this should be fatal");
++	}
++
+ 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+ 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref);
+@@ -837,7 +868,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 					continue;
+ 				}
+ 				if (!upstream_mark(str + at, len - at) &&
+-				    !push_mark(str + at, len - at)) {
++				    !push_mark(str + at, len - at) &&
++				    !literal_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+ 				}
+@@ -862,7 +894,14 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 		}
+ 	}
+ 
+-	if (!len && reflog_len)
++	if (find_mark("@{literal}", str, len, &len)) {
++		if (reflog_len)
++			refs_found = repo_dwim_log_strict(r, str, len, oid, &real_ref);
++		else
++			refs_found = repo_dwim_ref_strict(r, str, len, oid, &real_ref);
++		if (!refs_found)
++			die("bad ref");
++	} else if (!len && reflog_len)
+ 		/* allow "@{...}" to mean the current branch reflog */
+ 		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref);
+ 	else if (reflog_len)
+@@ -1180,6 +1219,11 @@ static enum get_oid_result get_oid_1(struct repository *r,
+ 	if (!ret)
+ 		return FOUND;
+ 
++	if (find_mark("@{describe}", name, len, &len)) {
++		ret = get_describe_name(r, name, len, oid);
++		return !ret ? FOUND : MISSING_OBJECT;
++	}
++
+ 	ret = get_oid_basic(r, name, len, oid, lookup_flags);
+ 	if (!ret)
+ 		return FOUND;
 -- 
-Best regards,
-Eugen Konkov
-------------01E0340FC0A346FAF
-Content-Type: application/octet-stream;
- name=diff
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename=diff
-
-LS0tIGEvU2VydmljZS5wbQorKysgYi9TZXJ2aWNlLnBtCkBAIC0zNCw0NiArMzQsNCBAQCAk
-WC0+c2V0X3ByaW1hcnlfa2V5KCJpZCIpOwogJFgtPmhhc19tYW55KCBzZXJ2aWNlX3R5cGVz
-ID0+ICRYLCAncGFyZW50X2lkJyApOwogCiAKLXN1YiBzcWx0X2RlcGxveV9ob29rIHsKLSAg
-ICBteSggJHNlbGYsICRzcWx0X3RhYmxlICkgPSAgQF87Ci0KLSAgICBteSAkc3FsdCA9ICAk
-c3FsdF90YWJsZS0+c2NoZW1hOwotICAgICRzcWx0LT5hZGRfcHJvY2VkdXJlKAotICAgICAg
-ICBuYW1lID0+ICAnc2VydmljZV9sZXZlbF90cmVlJywKLSAgICAgICAgcGFyYW1ldGVycyA9
-PiAgWwotICAgICAgICAgICAgeyBhcmdtb2RlID0+ICdpbicsICB0eXBlID0+ICdpbnRlZ2Vy
-JyB9LAotICAgICAgICBdLAotICAgICAgICBleHRyYSA9PiAgewotICAgICAgICAgICAgcmV0
-dXJucyA9PiAgeyB0eXBlID0+ICd0YWJsZSggaWQgaW50LCBwYXJlbnRfaWQgaW50LCBuYW1l
-IHRleHQsIGRpc3BsYXkgdGV4dCwKLSAgICAgICAgICAgIGRlZmluaXRpb25zID0+ICBbCi0g
-ICAgICAgICAgICAgICAgeyBsYW5ndWFnZSAgPT4gICdzcWwnIH0sCi0gICAgICAgICAgICAg
-ICAgeyBhdHRyaWJ1dGUgPT4gICdTVEFCTEUnIH0sCi0gICAgICAgICAgICAgICAgeyBxdW90
-ZSA9PiAiXCRcJFxuIiwgIGJvZHkgPT4gPDwnICAgRlVOQycgPX4gcyFeXHQhIWdybSAgPX4g
-cyE7XG4hOy8qKi9cbgotICAgICAgICBXSVRIIFJFQ1VSU0lWRSBzZXJ2aWNlX2xldmVsX3Ry
-ZWUgKGlkLCBwYXJlbnRfaWQsIG5hbWUsIGRpc3BsYXksIGRlcHRoICkgQVMgKAotICAgICAg
-ICAgICAgU0VMRUNUCi0gICAgICAgICAgICAgIGlkLAotICAgICAgICAgICAgICBwYXJlbnRf
-aWQsCi0gICAgICAgICAgICAgIG5hbWUsCi0gICAgICAgICAgICAgIGRpc3BsYXksCi0gICAg
-ICAgICAgICAgIDEKLSAgICAgICAgICAgIEZST00gc2VydmljZV9sZXZlbAotICAgICAgICAg
-ICAgV0hFUkUgaWQgPSAkMQotICAgICAgICAgICAgVU5JT04KLSAgICAgICAgICAgIFNFTEVD
-VAotICAgICAgICAgICAgICBzbC5pZCwKLSAgICAgICAgICAgICAgc2wucGFyZW50X2lkLAot
-ICAgICAgICAgICAgICBzbC5uYW1lLAotICAgICAgICAgICAgICBzbC5kaXNwbGF5LAotICAg
-ICAgICAgICAgICBkZXB0aCArMQotICAgICAgICAgICAgRlJPTSBzZXJ2aWNlX2xldmVsX3Ry
-ZWUgdAotICAgICAgICAgICAgSU5ORVIgSk9JTiBzZXJ2aWNlX2xldmVsIHNsIE9OIHNsLmlk
-ID0gdC5wYXJlbnRfaWQKLSAgICAgICAgICAgIFdIRVJFIGRlcHRoIDwgMTAgICAtLSBQcm9o
-aWJpdCBkZWVwIGhpZXJhcmNoeQotICAgICAgICApCi0gICAgICAgIFNFTEVDVCAqIEZST00g
-c2VydmljZV9sZXZlbF90cmVlOwotICAgIEZVTkMKLSAgICBdfSk7Ci0KLX0KLQotCiAxOwpk
-aWZmIC0tZ2l0IGEvU2VydmljZUxldmVsLnBtIGIvUwppbmRleCA3M2ZhOWRlYS4uZjdkYTQ4
-YzggMTAwNjQ0Ci0tLSBhL1NlcnZpY2VMZXZlbC5wbQorKysgYi9TZXJ2aWNlTGV2ZWwucG0K
-QEAgLTM0LDQgKzM0LDQ2IEBAICRYLT5hZGRfdW5pcXVlX2NvbnN0cmFpbnQoWyAncGFyZW50
-X2lkJywgJ25hbWUnIF0pOwogCiAkWC0+aGFzX21hbnkoIHNlcnZpY2VfbGV2ZWxzID0+ICRY
-LCAncGFyZW50X2lkJyApOwogCisKK3N1YiBzcWx0X2RlcGxveV9ob29rIHsKKyAgICBteSgg
-JHNlbGYsICRzcWx0X3RhYmxlICkgPSAgQF87CisKKyAgICBteSAkc3FsdCA9ICAkc3FsdF90
-YWJsZS0+c2NoZW1hOworICAgICRzcWx0LT5hZGRfcHJvY2VkdXJlKAorICAgICAgICBuYW1l
-ID0+ICAnc2VydmljZV9sZXZlbF90cmVlJywKKyAgICAgICAgcGFyYW1ldGVycyA9PiAgWwor
-ICAgICAgICAgICAgeyBhcmdtb2RlID0+ICdpbicsICB0eXBlID0+ICdpbnRlZ2VyJyB9LAor
-ICAgICAgICBdLAorICAgICAgICBleHRyYSA9PiAgeworICAgICAgICAgICAgcmV0dXJucyA9
-PiAgeyB0eXBlID0+ICd0YWJsZSggaWQgaW50LCBwYXJlbnRfaWQgaW50LCBuYW1lIHRleHQs
-IGRpc3BsYXkgdGV4dCwKKyAgICAgICAgICAgIGRlZmluaXRpb25zID0+ICBbCisgICAgICAg
-ICAgICAgICAgeyBsYW5ndWFnZSAgPT4gICdzcWwnIH0sCisgICAgICAgICAgICAgICAgeyBh
-dHRyaWJ1dGUgPT4gICdTVEFCTEUnIH0sCisgICAgICAgICAgICAgICAgeyBxdW90ZSA9PiAi
-XCRcJFxuIiwgIGJvZHkgPT4gPDwnICAgRlVOQycgPX4gcyFeXHQhIWdybSAgPX4gcyE7XG4h
-Oy8qKi9cbgorICAgICAgICBXSVRIIFJFQ1VSU0lWRSBzZXJ2aWNlX2xldmVsX3RyZWUgKGlk
-LCBwYXJlbnRfaWQsIG5hbWUsIGRpc3BsYXksIGRlcHRoICkgQVMgKAorICAgICAgICAgICAg
-U0VMRUNUCisgICAgICAgICAgICAgIGlkLAorICAgICAgICAgICAgICBwYXJlbnRfaWQsCisg
-ICAgICAgICAgICAgIG5hbWUsCisgICAgICAgICAgICAgIGRpc3BsYXksCisgICAgICAgICAg
-ICAgIDEKKyAgICAgICAgICAgIEZST00gc2VydmljZV9sZXZlbAorICAgICAgICAgICAgV0hF
-UkUgaWQgPSAkMQorICAgICAgICAgICAgVU5JT04KKyAgICAgICAgICAgIFNFTEVDVAorICAg
-ICAgICAgICAgICBzbC5pZCwKKyAgICAgICAgICAgICAgc2wucGFyZW50X2lkLAorICAgICAg
-ICAgICAgICBzbC5uYW1lLAorICAgICAgICAgICAgICBzbC5kaXNwbGF5LAorICAgICAgICAg
-ICAgICBkZXB0aCArMQorICAgICAgICAgICAgRlJPTSBzZXJ2aWNlX2xldmVsX3RyZWUgdAor
-ICAgICAgICAgICAgSU5ORVIgSk9JTiBzZXJ2aWNlX2xldmVsIHNsIE9OIHNsLmlkID0gdC5w
-YXJlbnRfaWQKKyAgICAgICAgICAgIFdIRVJFIGRlcHRoIDwgMTAgICAtLSBQcm9oaWJpdCBk
-ZWVwIGhpZXJhcmNoeQorICAgICAgICApCisgICAgICAgIFNFTEVDVCAqIEZST00gc2Vydmlj
-ZV9sZXZlbF90cmVlOworICAgIEZVTkMKKyAgICBdfSk7Cit9CisKKwogMTsK
-------------01E0340FC0A346FAF
-Content-Type: image/jpeg;
- name="_.jpg"
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename="_.jpg"
-
-/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRof
-Hh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwh
-MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAAR
-CACvAjsDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAA
-AgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK
-FhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWG
-h4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl
-5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREA
-AgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYk
-NOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE
-hYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk
-5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3qf7hrgvFX+qeu9n+4a4LxV/qnoA8Xlv3
-0/W7944oZC0zjEq5A+Y+9ULu6a8uWndERmx8sYwBxUmqf8he9/67v/6EaqU79B3drBRRRSEF
-FFFABRRRQAUUUUAFFFFAE1rHHLcokswhQnmQjO2t+edIdFuILvUYbxmx5IRtxU+pNc1RTvpY
-qMuU6lJGm0ixS21aC1dEO9Wm2k1U0do4NXvFnu4TuiZfOLjaxJHfvWDRVOV3crn28jTl09LJ
-4Zft1rMPMUERSZI9/pWvqvmXM07wa3bLAy/6rz+vHIxXK0UubSwlNLZG3YyW17oradNcJbyp
-J5kbScKfx/Osy7gjtrnyo50nAAy6dM1XoobvqJyurGt4imin1JXikSRfKUZRgRmsmiiperuK
-Tu7ksFzLbSJJE5BRtwHbP0pjOz43MTjpk9KbRQK4Vu3OovBounJa3eyQBvMWN+RzxmsKimnZ
-WHGVjc0a/MEGpTtcKtw0eULkZZufXrT7y+iuUsNU8xPtETBZotwycHqBWBRT52Vzu1jqzPY2
-15daql7FJ5sZCQg/NuOOo/Cs+TUntdL0/wCyzoJQkiuAQSAT3HasSihy6IbqM1NbljlktDHI
-r7bZFO05wfSsuiik3d3IbuzqLaWGS2RdRutPnt1jwCT++XjoKr6PeW402ezLWyyGTen2pcow
-9/fiufoqufW5ftHobWqXJe4so3ms3WI/8uwwqjI71B4gmjn1mZ4pFkQhcMrZHQVmUVLdxOd7
-nS6Nd2p0+I3MyLJZuzxqzAFgQeB+NZNjEb2/M8lzbwlXEjGZ9u7nPFUKKfNqmJyukmbmuJH/
-AGi1/HdW0yM64RJAzcDuPTin6tDa6jM9/FqECqyAmNz84IHQCsCilfSxTndt23Ok0+8gm0aG
-2DWKzRMcreL8pB7g+tZmtXDXF6C0sEhVAu6AEL9OazqsWt0LXdm2gm3Y/wBcpOPpgim5c24u
-e65SvW5biG+8PpZ/aoIJo5i+Jn2gj/JqjLqSyxMn2CyTcMbkjII+nNUaV7aCTUWdBpF1AmnT
-2LvaCXzNym5GY2/ziodUvZFnsyJbRzB8yi1B2ryOP0rFop870Hz+7ynR63dWq2LrazRu13KJ
-ZArAlQAOD+NTw30NzY2hik05ZIUCsLteVI7qa5Winzj9o73NcXqjxKt1NJGyiQbnjBCnjGRU
-Wr2yR3UlxHdW8ySyEgRPlhnnkdqzakglEMyyGOOTH8Egyp+tTfSwua97kda+hTQr9sglmSIz
-QlFZzgZ9zUP9qr/0DbD/AL9n/wCKrPdt7s20Lk5wOgoTsJPld0aVlGljrtuslxA6K4JkR8p+
-dV9RkV9VuZFYOplYgg5BGaqUUXC+ljsH1CK4lju7ebTEwoybhf3qn2qnp+oQyW13bu9oJXmM
-im4X922f5VzdFVz6le1Zra3cNL9niMto4jU4FqDtX2qLU7GOyitNsrtJLEHdW/hz/k1nU+SW
-SZt0js7Yxljk4qWyXK97jKKKKRIUUUUAFFFFABRRRQAUUUUAFFFFAH13P9w1wXir/VPXez/c
-NcF4q/1T0AeJXdncXms3yW8TSMszkhew3GqU8EttKYpkKSDqp7Vbvria31m+aCaSImdwSjFc
-/MfSqcksk0hklkZ3PVmOSfxp6D0sMooopCCiiigArqtIa5Xw6Da3EMEnnn5pjgYx06VytaBv
-4joS2O1/NE3mZwNuMVUXa5cHZ3NixkuJNZvPtM0U0gtSN8X3SOKo2v8AyKl5/wBd1/pVPSr8
-adeea6F42Uo6g8kGrN3qVkNONlYQSpG773aUjP0qk1b+u5akmrvz/FHQXUSzaxZzIPngcJJ9
-CuQf51lWQS1i1XUfLV5opCse4ZCknr+tJF4ggj1p7ry5TbvGqlcDdkdD1qpZ6rFDLdxzwtJa
-3LEsoOGHPBptrp5lOUb3Kl9qE2oOjzhN6jGVXGfrVSrV89k7oLGKVEA+YyHJJqrWRhK99Qoo
-ooEFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFA
-BRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUU
-UUAfXc/3DXBeKv8AVPXez/cNcF4q/wBU9AHhmqf8he9/67v/AOhGqla0tml5rd+kl1DbhZnO
-6U4B+Y8VQu4FtrlokmSZVx88ZyDxTt1HZ2uQUUUUhBRRRQAVd0/TZNRdkimhRx0WRiC30wDV
-Ktbw3/yGov8Adb+Rqoq7HHWSTM+3t/PnERliiz/FIcLTryzlsbloJtu8YOVOQRUDffP1rb8R
-RxmWKdpdtw0a7oCMkcdc9KVvduUkrMy3s5FsY7vKtE7FODypHY1XrY0/5/D2pq/3VKMvsc1R
-06RYr6N2tvtIGf3WM7uPoabWthNaJlWipJ2DXErCPywWJ2f3eelR1JLCiiigAooooAKKKKAC
-iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooo
-oAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD67n+4a4LxV/
-qnrvZ/uGuC8Vf6p6APDNU/5C97/13f8A9CNVKt6p/wAhe9/67v8A+hGqlABRRRQAUUUUAFaW
-jXlpYXP2i4ExdQQojAI5GOcms2imnYadncmgWGS4xPKYozklgm4/lVnWLyK+1BpYQ3lhQo3D
-BOBVCii+lg5tGi8b1E0gWUSsHeTfKx6HHQCjSbyOwv1uZFZginaF9SMCqNFHM73C708h8sjT
-SvI33nYsfqaZRRSFuFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABR
-RRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUU
-AFFFFABRRRQAUUUUAFFFFAH13P8AcNcF4q/1T13s/wBw1wXir/VPQB4hfGEa1e+cGK+dJ931
-3GqkxiMn7kMEx/F1qfVP+Qve/wDXd/8A0I1UqeXW5q6v7v2dl621+8KKKKoyCiiigAooooAK
-KKKACiiigAoopcE9jSbS3KjGUnaKuJRTtjn+E/lS+U5/hqHVpreSOmGAxU/hpSfyf+QyipPI
-f2pfIPdgKh4ml/MdMclzBq/smvXT8yKipfKUdZBRsiHVzR9Yh0u/kx/2NiV8bjH1nH/MioqR
-vK2nBJNR1pCfOr2a9TjxOG9hJR5oy/wu4UUUVZzBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAB
-RRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUU
-UAFFFFABRRRQAUUUUAfXc/3DXBeKv9U9d7P9w1wXir/VPQB4Zqn/ACF73/ru/wD6EaqqdrA4
-Bwc4PSr19MYNavWCqxM0gwwz/EaqTSmaTeVVTjoowKnW9raGtoKCmpe9fa36k12qmGCVUVS4
-OdowKgWJm7YHvVqZ2hsbdF4Dgk5qsJnHcH61z3q8n7u3zPYccB9Zvi3JaRuopWvZdb/oSLAo
-+8c00wMWOMAUC49V/Ko3bc5IzisaUMTzvndvxPTx9fJFhoqhDms9k3F7dW02x/k46uBR5aDr
-IKiorp9nUe8/wR4n13BL4cMvnKT/ACsS7Yh/GaP3I7E1FRR7B9ZP7w/tSK+ChTX/AG63+bZL
-viHRDR5qjpGKioo+rw63fzYf2ziV8CjH0hH/ACJfPPZQKTz39qjooWGpL7IpZ1mDVvatemn5
-D/Nf+9Sb3P8AEfzptFWqUFtFHNPH4qfx1ZP5v/MXJPUmkooq0ktjmlJyd27hRRRTJCiiigAo
-oooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKK
-ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD67n+4a4LxV/qnrvZ/
-uGuC8Vf6p6APDNU/5C97/wBd3/8AQjVVWKsGBwQcg1c1CJ5dZvVRSx8+Q4H+8aqSRvE211Kn
-0NK6bsWoTUVUSdu//BFklklbMjFiPWmUUUJJaIUpSk+aTuwooopkhRRRQAUUUUAFFFFABRRR
-QAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAF
-FFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRR
-QAUUUUAfXc/3DXBeKv8AVPXez/cNcF4q/wBU9AHh2pO8esXpRmU+fJyDj+I1TZ2dtzsWPqTm
-rWqf8he9/wCu7/8AoRqpSsr3K55cvLfQKKKKZIUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUU
-UUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFA
-BRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB9d
-z/cNcF4q/wBU9d7P9w1wXir/AFT0AeIX0Ql1q9UyLGPOkOWP+0aqTRiKTaHVxjqvSp9U/wCQ
-ve/9d3/9CNVKmzve5q5w9ny8uve/6bBRRRVGQUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUU
-UAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAB
-RRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB9dz
-/cNcF4q/1T13s/3DXBeKv9U9AHhmqf8AIXvf+u7/APoRqCCNJbiOOSVYkZgGkYEhATySBzxU
-+qf8he9/67v/AOhGqqqWYKoJYnAA70AbviDw/a6RYabe2Wqfb4L4SFX+zmLGxtp4JyefYVix
-280sckkcMjpGMuyqSFHue1dZ4gsrpPA3hjdbTL5S3PmZjI2Zl4z6VlaMNbbSNZGmECy8hTfg
-7OUzx97nr6Ud/mHYxKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACi
-iigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoooo
-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
-XOCR0Jz1FKKcldDk1Hc//9k=
-------------01E0340FC0A346FAF
-Content-Type: image/jpeg;
- name="_2.jpg"
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename="_2.jpg"
-
-/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRof
-Hh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwh
-MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAAR
-CACHAd4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAA
-AgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK
-FhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWG
-h4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl
-5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREA
-AgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYk
-NOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE
-hYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk
-5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD0fRf+Ry0b/sWh/wCjI67iuH0X/kctG/7F
-of8AoyOu4oAp3v8Aqz9K8r8af8e11/1xk/8AQTXql7/qz9K8r8af8e11/wBcZP8A0E0AeP0V
-12l6dpP9jajjVlcPHH5jm2b9zz+vpxXMXkUEF08dtcfaIRjbLsKbuPQ9KucHG1zmo4qNWcoJ
-PTumu3dee3zIKKKKg6QooooAKKKKACiiigAooooAs2Wn3eoz+TaQNK+MkDsPcngVJd6Rf2Nx
-Fb3Nu0ckpwgJGG7dc4q5oOqwaet3Bdxytb3SBHeI4ZevT86tXmmra3GlXVteSXNjNKPK8zIK
-HcMjH+elbKEWk18zhniKkK/JLSPTR66X3vZelitJ4T1uKJ5HssIgLMfNTgD8azhYXJ0834i/
-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
-qmNwNebnVotNu7cZfo0xSjDqpptPErjvmnedn7yA0+ast4p+j/zM/YZdU+CrKP8Aijf8Yv8A
-QioqXdEeqkfSjZGej4+tHt0vii18v8g/smU/4NWEv+3rP7pWIqKl8huxBppicfwmqjXpS2kZ
-VcqxtJXlSdu6V196uhlFBBHUUVqcDTTswooooEFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFF
-FFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH0Rov
-/I5aN/2LQ/8ARkddxXD6L/yOWjf9i0P/AEZHXcUAU73/AFZ+leV+NP8Aj2uv+uMn/oJr1S9/
-1Z+leV+NP+Pa6/64yf8AoJoA4/SNN0k6PqJ/tZX3wp5rG1b9xz9efTiuXvYbeC7eO1uvtMIx
-tl2FN3HoaSC9uLaCeGKTbHOoWQYB3AHP4fhUFc1GjOE5SlJtP07LyRnCDi22wooorpNAoooo
-AKKKKACiiigAooooAOlOEjj+I02iplCMviVzaliKtF3pycfRtEonbuAaPMjP3o/yqKisvq1P
-oremh3rOcZa05c6/vJS/NEuIT3Io8kH7rg1FRR7Ka+Gb+eof2hh5/wAbDxf+FuP6tfgSGFx2
-zTCrDqCKAzDoxp4mcd8/Wj9+uz/D/MP+Eup/PB/KS/8AbWR0VL5oP3kBqNiCxIGBVwnJu0o2
-OfE4ehTipUaqn5Waf46fiJRRRWhxBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAF
-FFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB9EaL/yOWjf9i0P/RkddxXD6L/yOWjf
-9i0P/RkddxQBTvf9WfpXlfjT/j2uv+uMn/oJr1S9/wBWfpXlfjT/AI9rr/rjJ/6CaAPJYrWe
-eGaWKMtHCA0jD+EGoa7LRr7SToupldHKiOBPPH2lj53P/jvPPFcrey28928lpbfZoTjbFvL7
-eOeTXNRrynOUXFq3p2XmzOE3JtNFeiiiuk0CiiigAooooAKKKKACiiigAooooAKKKKACiiig
-AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKK
-KKACiiigAooooAKKKKACiiigAooooA+iNF/5HLRv+xaH/oyOu4oooAp3v+rP0ryvxp/x7XX/
-AFxk/wDQTRRQB4/RRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUU
-AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABR
-RRQAUUUUAFFFFABRRRQB/9k=
-------------01E0340FC0A346FAF--
+2.22.0.rc0.322.g2b0371e29a
 
