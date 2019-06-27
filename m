@@ -2,81 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D3E51F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 02:54:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCEE11F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 04:47:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbfF0CyA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Jun 2019 22:54:00 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:41799 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726760AbfF0CyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jun 2019 22:54:00 -0400
-Received: by mail-io1-f65.google.com with SMTP id w25so1386106ioc.8
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 19:53:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rDBAWtYaLJMpaM4G4J4V0jlmB8XIr9NqEx6tFsvKkgI=;
-        b=rkC2t/EkDdKVH/3znjEu4fhNXZ8Y28Go6O8ILQHkdaNrGgvrp8T9qKfeMC/eYPaHhy
-         BMz9IYFbIrjLmrgO9uNMu+S3FLD9s1f6RSPqELN6VBUbMGv+jUW7cdc3WWVLcTH8mT1P
-         qt3IBXnl5t1Q51+54wYdYas4k+Ow9M+NrlTycujYjF9veHUgaB+F8pPo0E8BN/drG00q
-         UuyTp9+Amk9byBUId7kubu5xckwvvOw+/30Te5L4IxhKxpEmCH7JvrsryHkJEi6XNw4h
-         KpKHdGKeJPfh+IkDg1FpJOf9W3eDqD88FQCwrCIKWbwZV3Iw26pPKhZsLHEDED9lHlhy
-         BdwA==
+        id S1727182AbfF0Eri (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 00:47:38 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:32964 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727180AbfF0Eri (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 00:47:38 -0400
+Received: by mail-wm1-f67.google.com with SMTP id h19so6107178wme.0
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 21:47:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rDBAWtYaLJMpaM4G4J4V0jlmB8XIr9NqEx6tFsvKkgI=;
-        b=PWhLwH3s1oBHYznEi90MObEENTvmx3k12SW2sC3FOOhq7Vuydk/qrJvyayxRCv4MQm
-         Zlo7ucmQmVrP8cYapdBCY8faNOtOe0S+XSZSh2Wg8bOsz1GlGQEtlLAaiSYv6p0KgPnp
-         FMH/hoYsDtv2FtTq5FSmUNQpSf+mzL1ojTdqRQyRIyFE7oYIZau0nYglTK9cdsxvb8eR
-         ctxnTn5FYnqR9SUcUkmYvP/Mij7ab+NwMkrCypFRKe1/SJkUN1Gay30AiY5RKlyVjRI9
-         +RcQllWiMlCw9Em4/zIjbvLzH6nl3e4Qum+WhAG3bY7x0bzeAMkUG69j8DPTaWxipqMG
-         EC0A==
-X-Gm-Message-State: APjAAAVj3niJfMzRgrydaNizAESlKig8T3FyLe+DaKmavCctc3Dmx4ID
-        e9GH6HAwsPMGxovpQsCy7Gm41MxTdBIpOPSan14=
-X-Google-Smtp-Source: APXvYqyIiYOME9+sFYDe2UT8TKwXE7UlQyGkYThuFyuQecL0C4uOX2A3FTbdZpq+B/UYLE7Z5u3kwDlXOWICOC8ZokU=
-X-Received: by 2002:a6b:7f0b:: with SMTP id l11mr1798335ioq.282.1561604039289;
- Wed, 26 Jun 2019 19:53:59 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=oR0llFqdv4FbuZTTRmUeXOhcKtH5emLiVZPhJjj5Hlo=;
+        b=kya4Ai1iIdN1aEH+yIH5I5qUa3JT9d9sP4bTlOXSbhuQX6l/oRl0gJWdGDQ+acfySf
+         4EupM0GcKEXIH7k+vbiemUgzuwhxx3YY1KQMMuVAVRti+ezo3XZHtMItVFG68bKkbRi5
+         tr1gRsNZkELJEQEUroyj/erLei4qDow9WzJOOrqtCHyeRDGMk60LwiYnHl1efI735j36
+         4+xXk0SW0xCBRCtnjvL3DEO0VsQWj0TF7DlVmWbqVZymb6HgnPWksBk5f38NlRPBduSU
+         2RUbi7/M0iBzHmK43OQX96lxI3aIgjgV3vY20SpFljz8RraUn8gxziwCLOGql/i7tkAz
+         zKIg==
+X-Gm-Message-State: APjAAAWpirnoAsgSwNQhk67Ga08WN9n8MW3m9Ld3d3mROt9v8d3bDwwO
+        +1OvF7EbJ46oz3xkcf5YUa1fLOp0q25XXfkXjZc=
+X-Google-Smtp-Source: APXvYqyjJuCYkqYmAtnDtVJCv49Gj2T694gJyd2uKrW47j47z7RKTQDHfN2Lqw1W/U4oIdGf6XdEZO3vofQM2iZFOWE=
+X-Received: by 2002:a1c:7e85:: with SMTP id z127mr1552899wmc.95.1561610856536;
+ Wed, 26 Jun 2019 21:47:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190620095523.10003-1-pclouds@gmail.com> <xmqq8stoce5w.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8stoce5w.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Jun 2019 09:53:33 +0700
-Message-ID: <CACsJy8Di1720RhDxgieVNTfpNONJhi5ZniKje=wj4pZDy-0EwQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Some more on top of nd/switch-and-restore
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-3-emilyshaffer@google.com>
+In-Reply-To: <20190626235032.177551-3-emilyshaffer@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 27 Jun 2019 00:47:25 -0400
+Message-ID: <CAPig+cQxt7rZRkQLpUZabwfLfWpzvVrWNd11RkQvt83K8zPZ7w@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 02/13] walken: add usage to enable -h
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 2:58 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > This is small refinements (except 4/4).
->
-> What's the status of these?
+On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> It's expected that Git commands support '-h' in order to provide a
+> consistent user experience (and this expectation is enforced by the
+> test suite). '-h' is captured by parse_options() by default; in order to
+> support this flag, we add a short usage text to walken.c and invoke
+> parse_options().
+> [...]
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+> diff --git a/builtin/walken.c b/builtin/walken.c
+> @@ -5,9 +5,34 @@
+> +const char * const walken_usage[] = {
+> +       N_("git walken"),
+> +       NULL,
+> +};
 
-Small test fixup needed. I should be able to do it later today.
+Unless you expect to reference this from multiple functions, there is
+no need for it to reside here; instead, it can live inside
+cmd_walken(). (And, if you do leave it in the global scope for some
+reason, it should be 'static'.)
 
-> As another low-prio topic interferes
-> with the code touched by nd/switch-and-restore and hence needs to
-> wait for these to stabilize, I'd rather see us focus on finishing
-> these before switching our attention to other things.
->
-> Thanks.
---=20
-Duy
+>  int cmd_walken(int argc, const char **argv, const char *prefix)
+>  {
+> +       struct option options[] = {
+> +               OPT_END()
+> +       };
