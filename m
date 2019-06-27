@@ -8,87 +8,100 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3571B1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 08:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 922AD1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 08:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbfF0IoY (ORCPT <rfc822;e@80x24.org>);
+        id S1726549AbfF0IoZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 04:44:25 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45004 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726382AbfF0IoY (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 27 Jun 2019 04:44:24 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:42658 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbfF0IoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 04:44:23 -0400
-Received: by mail-ed1-f50.google.com with SMTP id z25so6264897edq.9
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 01:44:22 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id k8so6234824edr.11
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 01:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=ItjxU6egcL7o7zpzgb5qhp8DYr07bUNHBU8kA1lqmas=;
-        b=vHXt+PT/59rVv9LGZBRMG03pcgQeMpY645XPexBpOykMXXFboM8k5bkUtY6SPkhVVA
-         FtDzJLaKG8hmbKqyzEnKv9B6YDa5r96GlqiQfkugVUu4zptEKgjrTmMCMOrcQzWKdBBY
-         3LrHZsIeau0Im/OaKt24j54pncAQQuCQ1wrCUC6PpiE9wwnBc44eL8tdc2hyND9VXDWz
-         R+h+MzqAVReu0NQNtPeJETtrt2u0+mMh5GT/9gdlfFVZs0rcD0cRYEQWEMj385ivB3Ch
-         jJe24jdSJm0RJBeNOca83qliOk1GXzrPisM97aEYXMRMpg/OgWc2w1zagb1U8GG+1OSr
-         VImA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6wMrDrAwg3L8uOeclgj+vIFprliVJ11sKLIoxQdvAqI=;
+        b=CNz9bWz86OBY0RPsq+zQD5NuWDdbQ2sfsbj4t5g7wejtcb4K8uGf9tYHDexwAFi8cF
+         ttkhijHhhF5/9SJqXACTfWaCYugs2eAL1O2h9zLtrbEAFVlBzMFWAU1toEyi27/c+4nx
+         Zpov98PM19qxbu+sVGcmF4e6QPCHJoRJYX5ZHn1qpApZc6EzMg4SxgjzJoXcj5+pFjzV
+         PzBJowGVh1rp8bBYlfcy8G1h+SBaq+Xo64k/l4wo0I5GzdCPBn3+gTdxxH5lh4V9a9DH
+         h0/KEn7ATimyPJnDodjLyZxHTc10SGTPaxhyRw1IpRQvmXLkNrQLiatZUXPXbY6BduD1
+         Q8gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ItjxU6egcL7o7zpzgb5qhp8DYr07bUNHBU8kA1lqmas=;
-        b=VVFCbjR/ZzmLr/ymLiAubzIvx4UMz+3YGnoWp6FbufQQNv53obBxbrmOuYmXVI6yRi
-         q/KOf2i+b8vsy1WvwanOF5oDg2ezeMWh0oNY5njeoLOAPtLN0WqqESY/ntCmJMjoDHkV
-         2N3eN6LIpLG2l/7iTyyCLoCHl67GR2MhfXagR5kARSKJB5C2JqggKZIDaKdANdF35Yq3
-         Ui0SHu9zFNEQKdIqNJtMAOj8r2/GX81FSN374AwukD1uYntlGV6XbAD2kJ8MrFbgCBRe
-         31nQR3krWo5+AMvW5VOznVpI2TY0j2nZI2kh8SPBK40ThpCnQmjC2SlTzWdvwnwVmWWV
-         NnTQ==
-X-Gm-Message-State: APjAAAXJzHEzMmmUwYVUy3VXJf7S5YNcYUgFRp/8dcUKKVwITlqsQpkm
-        ZC+X1yc29e58tjVxMhvbKHwIzsRP
-X-Google-Smtp-Source: APXvYqyGPzUpDWzSM7exVkBtzuptPl1aV+LOfQ5m9XXdZDmIiIYjbp+v7BoadfxVFCBzkaaXyKqJ+w==
-X-Received: by 2002:aa7:c3d8:: with SMTP id l24mr2742605edr.58.1561625061846;
-        Thu, 27 Jun 2019 01:44:21 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=6wMrDrAwg3L8uOeclgj+vIFprliVJ11sKLIoxQdvAqI=;
+        b=POS42mUUi1VQ8KzssO49wfyoB7k3kk4c17gvp8g3iXxpo7hbyr2imL26emMywEKSUM
+         GqQ4Me1l4+6PryAxedHdIkcgc18kGq2vPM0dobyShttaTaO+yTytd+dRT712Dglewxlq
+         IqQ6YcEF3rl2kNohpmPbTI2IWrhnXCmTHBiM2DKtkDt/QIIlMpswIUJZqeeX5o79BLYp
+         GZrXEu5Wrq9PJaeHwNAx9rZ05IivHqPIfYgzmIvJmnNIshDnp6ggFxRJ71VnHTsPTaVh
+         wEE/j7jFW8sJ1QjkK9Jg2+cDI0f6tfOoPyFTSCgZSmSHWpTwo+Cazmu8JAU/MbjztR61
+         hW/g==
+X-Gm-Message-State: APjAAAVvVzPriflfE0GAGOJza4M+fPLingN2gZ0zRHpA4l5gdyXGZI6S
+        U8yKww5TGq0sPvrmEQc6araUFua/
+X-Google-Smtp-Source: APXvYqzLDrTG8wzdUOG8oA6SyRs7aA+JJZIBB9l5NBruNr8RghuQpoRwd6z4DYOEXdjM/9GP7cVwEA==
+X-Received: by 2002:a50:9422:: with SMTP id p31mr2610622eda.127.1561625062704;
+        Thu, 27 Jun 2019 01:44:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o7sm297082ejj.88.2019.06.27.01.44.20
+        by smtp.gmail.com with ESMTPSA id f36sm519083ede.47.2019.06.27.01.44.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Jun 2019 01:44:21 -0700 (PDT)
-Date:   Thu, 27 Jun 2019 01:44:21 -0700 (PDT)
-X-Google-Original-Date: Thu, 27 Jun 2019 08:44:19 GMT
-Message-Id: <pull.217.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] gettext(windows): always use UTF-8
+        Thu, 27 Jun 2019 01:44:22 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 01:44:22 -0700 (PDT)
+X-Google-Original-Date: Thu, 27 Jun 2019 08:44:20 GMT
+Message-Id: <ff37a2646a848e3eca8d02a001844986a3fa366b.1561625060.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.217.git.gitgitgadget@gmail.com>
+References: <pull.217.git.gitgitgadget@gmail.com>
+From:   "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] gettext: always use UTF-8 on native Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Karsten Blees <blees@dcon.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The main issue we work around here is that Windows does not have a UTF-8
-"code page".
+From: Karsten Blees <blees@dcon.de>
 
-Side note: there is actually a code page for UTF-8: 65001 (see 
-https://docs.microsoft.com/en-us/windows/desktop/Intl/code-page-identifiers
-). However, when experimenting with it, we ran into a multitude of issues in
-the Git for Windows project, ranging from various problems with Windows'
-default console to miscounted file writes. While these issues may have been
-mitigated in recent Windows 10 versions, older ones (in particular, Windows
-7) still seem to have most of them, and Git for Windows specifically still
-supports even Windows Vista. So from a practical point of view, there is no
-UTF-8 code page.
+Git on native Windows exclusively uses UTF-8 for console output (both with
+MinTTY and native Console windows). Gettext uses setlocale() to determine
+the output encoding for translated text, however, MSVCRT's setlocale()
+doesn't support UTF-8. As a result, translated text is encoded in system
+encoding (GetAPC()), and non-ASCII chars are mangled in console output.
 
-Karsten Blees (1):
-  gettext: always use UTF-8 on native Windows
+Use gettext's bind_textdomain_codeset() to force the encoding to UTF-8 on
+native Windows.
 
+In this developers' setup, HAVE_LIBCHARSET_H is apparently defined, but
+we *really* want to override the locale_charset() here.
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  gettext.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-
-base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-217%2Fdscho%2Fgettext-force-utf-8-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-217/dscho/gettext-force-utf-8-on-windows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/217
+diff --git a/gettext.c b/gettext.c
+index d4021d690c..d8423e5c41 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -12,7 +12,9 @@
+ #ifndef NO_GETTEXT
+ #	include <locale.h>
+ #	include <libintl.h>
+-#	ifdef HAVE_LIBCHARSET_H
++#	ifdef GIT_WINDOWS_NATIVE
++#		define locale_charset() "UTF-8"
++#	elif defined HAVE_LIBCHARSET_H
+ #		include <libcharset.h>
+ #	else
+ #		include <langinfo.h>
 -- 
 gitgitgadget
