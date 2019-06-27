@@ -2,113 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8D4F1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 16:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1989C1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 16:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726543AbfF0Q2C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 12:28:02 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43251 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726465AbfF0Q2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 12:28:02 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e3so7641832edr.10
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 09:28:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bx3WS1CddI24peaSgDgCfOroGDTNry8WRuxuOcvq18k=;
-        b=ilQZ31cHmSBmvrJH6Bt0b2yUQ1fsMU/Ks6q1MZXkQcrseKcXlRU9QvazO0Y6zRQHWx
-         48Tuf2pQg86TrsP42FqkZIxcEi6zU0X870YEIK2esaq3i/OFpzEWyCpRme14XtTJrh9c
-         /LiIktSSYbsO04ABBjGR63rqy4fTsOFVbT9VYYnDgr7x+nu4hV1nIKSAtGKVqlDgMVse
-         vQoZABbrvi23T2l4ehldxlHCm4Cd5lKPkPSFPej9KvIqwatVa0HuEmVdoZqzLST4Tvc0
-         A71JgKkAqRWrvkGAagjoM/CDoUqkdDIRsYO5j/hJvERU2giwHY3nl5x/ikdvxYCt5mru
-         y8og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=bx3WS1CddI24peaSgDgCfOroGDTNry8WRuxuOcvq18k=;
-        b=SWSNZzvraJ7LFV+wh5CxbVLpObtMt8iFN8YkPG8M1GIklHkMdtvdSCTwd4k3fkhnEr
-         SdIV7xYr0+xZXLmZhoUfioFAj3SnqxZgfq9Xoi4TkRWK11wA2pufVdMi28Gz/vlkZ+6J
-         cfpVxGHupBUw+xHVY2PIbXt0ExXfcAEg4XhW3MTflPk4D0aZEsHLnxjY5ipdOvyWdZ4w
-         9o4GIKdbr2HfYXUM/DwF1aBWt/B2kjcFVmyuFkOgOCr/dsgeGqTT1NvJs9MTrLzXNApm
-         XPXIddjJtL1K7y7GUzPriRW0zjdvhG4zKIrOSeDG7FUsUEeEA3YalbsNuKnwAAe9guKM
-         o/rQ==
-X-Gm-Message-State: APjAAAXT1Fo00qfBS4xGJ8FaJZNqEIte8VSDei8Ltt0cHDoR13TckCDk
-        lHzt7pFf69KE4o9GBYh4dDE=
-X-Google-Smtp-Source: APXvYqxvYtnirC0vYde5CNR4mKTiNNviT3XcqW2LURNu5azUmq8LIoNDrQiYDEtfDzUMTnLq6zoK4g==
-X-Received: by 2002:a50:9282:: with SMTP id k2mr5243455eda.269.1561652880801;
-        Thu, 27 Jun 2019 09:28:00 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id s47sm917218edd.40.2019.06.27.09.27.59
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 27 Jun 2019 09:28:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [RFC/PATCH 0/7] grep: move from kwset to optional PCRE v2
-References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1906261601270.44@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet>
-Date:   Thu, 27 Jun 2019 18:27:59 +0200
-Message-ID: <871rzf8034.fsf@evledraar.gmail.com>
+        id S1726583AbfF0Qqz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 12:46:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50337 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725770AbfF0Qqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 12:46:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C24AD156D7C;
+        Thu, 27 Jun 2019 12:46:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=C1cZgXGXTMvq
+        3/ILUBAXoVzVC10=; b=Zhq8VG754lx1S/NcLBijNcuxXXqhXvSfhKh6Edx07dF+
+        xOD1slqsLSQJEsvZBXWJxXJQfpAC+3XoO1VbKJ9dc+IUxJutgc+hWDvt6lOH6J6E
+        f9dcl1bBkAS4jARMLwBma0/zNB56T4bBptyYb0WMJQ/SOsog19xWP+YGqIlJVXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hy+Fnj
+        1DLlIVJSURWnzb9EJZfgJC8hwcVinAjwcddd+YIh69DkpWSpEAZklUXJiG5V5kQd
+        ZS0bBIOT1DFM9vvWd3uRe6c2riIIU0e+T/qMEf5IOSTqBrN/2MSaf1u6zOOeS3EP
+        O5Terl+4sHwWriFRjeS73DTTYOlH6WkK1IZmI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8951156D7B;
+        Thu, 27 Jun 2019 12:46:52 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E0E5156D7A;
+        Thu, 27 Jun 2019 12:46:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Travis not looking so good
+References: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+        <20190601004143.GN8616@genre.crustytoothpaste.net>
+        <20190602112239.GO951@szeder.dev>
+        <20190626203559.GA71590@TaylorsMBP3745.attlocal.net>
+        <20190627132319.GB21574@szeder.dev>
+Date:   Thu, 27 Jun 2019 09:46:51 -0700
+In-Reply-To: <20190627132319.GB21574@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Thu, 27 Jun 2019 15:23:19 +0200")
+Message-ID: <xmqqy31nasck.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2A0F87EC-98FB-11E9-948A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-On Thu, Jun 27 2019, Johannes Schindelin wrote:
+> However, we've always used the macOS build jobs as "build and test
+> with the latest and greatest", i.e. they install the latest available
+> Perforce and Git-LFS.  To keep up with this tradition we'd need to run
+> 'brew update' and in turn would need to 'brew install gcc'.
+>
+> [1] See e.g. a1ccaedd62 (travis-ci: make the OSX build jobs' 'brew
+>     update' more quiet, 2019-02-02) or
+>
+>     https://public-inbox.org/git/20180907032002.23366-1-szeder.dev@gmai=
+l.com/T/#u
 
-> Hi =C3=86var,
->
-> On Wed, 26 Jun 2019, Johannes Schindelin wrote:
->
->> On Wed, 26 Jun 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->> > This speeds things up a lot, but as shown in the patches & tests
->> > changed modifies the behavior where we have \0 in *patterns* (only
->> > possible with 'grep -f <file>').
->>
->> I agree that it is not worth a lot to care about NULs in search patterns.
->>
->> So I am in favor of the goal of this patch series.
->
-> There seems to be a Windows-specific test failure:
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11535&vie=
-w=3Dms.vss-test-web.build-test-results-tab&runId=3D28232&resultId=3D101315&=
-paneView=3Ddebug
->
-> The output is this:
->
-> -- snip --
-> not ok 5 - log --grep does not find non-reencoded values (latin1)
->
-> expecting success:
-> 	git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$utf8_e >actual
-> &&
-> 	test_must_be_empty actual
->
-> ++ git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D=C3=A9
-> fatal: pcre2_match failed with error code -8: UTF-8 error: byte 2 top bits
-> not 0x80
-> -- snap --
->
-> Any quick ideas? (I _could_ imagine that it is yet another case of passing
-> non-UTF-8-encoded stuff via command-line vs via file, which does not work
-> on Windows.)
+Is the reason why you did not submit your bonus patch [*1*] in the series=
+ at
 
-This is an existing issue that my patches just happen to uncover. I'm
-working on a v2 which'll fix it.
+  https://public-inbox.org/git/20190614100059.13540-1-szeder.dev@gmail.co=
+m/
+
+because it goes the opposite way, i.e. "build and test with whatever
+happens to be in the image"?
+
+Unless what happens to come in the image at travis-ci.org is
+hopelessly outdated and does not match what normal users run, isn't
+it is better to test with "whatever happens to be there" than not to
+test at all due to missing compiler?
+
+
+[Reference]
+
+*1* ... what I picked up from your branch reproduced here
+
+  https://public-inbox.org/git/xmqqy324t4g0.fsf@gitster-ct.c.googlers.com=
+/
+
+It is missing explanation and sign-off, but if it lets the build
+jobs run, even in a tad stale environment, it may be worth
+resurrecting until those who want macOS port working can come up
+with a real "with the latest and greatest" alternative.
