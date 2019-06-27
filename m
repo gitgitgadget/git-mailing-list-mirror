@@ -2,95 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 893341F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 12:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD501F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 12:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726465AbfF0MdU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 08:33:20 -0400
-Received: from mail-io1-f49.google.com ([209.85.166.49]:41842 "EHLO
-        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726059AbfF0MdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 08:33:20 -0400
-Received: by mail-io1-f49.google.com with SMTP id w25so4296071ioc.8
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 05:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TinLX/y52XR9Mf0z+8Ke2qP9gmqWD9qHGvMi4TFL9p8=;
-        b=LsR/AxIknpp/zTBMTPwpxpDf5ftg95MOxKhAAkUK5EgF0DcfE29DP9dIJg488ntKrL
-         Vhtv/iTEo52dU1R65Kz9GNpozCNT/k8NrwXE70GyOoQyyJK9wsH9dScPRuuJmSyMDXQK
-         iapIECaLeR5NEofCGdWE7j5inC36MH0YhXutkc5+Ek7ncH4mqcBSOAl6GWx2K963T/Um
-         Oa8GPD31xP56Y3fqsGZonymTvX1M2ASLNUsTgMCwH0mYKFboVW3V6SzMBx+KbLvIAU7p
-         3rWGROuqV1RcQHSpSK3f7No3KtCgYp2hNR+knet2VexdWhJfV+SsTl3e9/1xWyhQTNZi
-         B2Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TinLX/y52XR9Mf0z+8Ke2qP9gmqWD9qHGvMi4TFL9p8=;
-        b=kiJ58ccOxA3cHECYDhl86F7ZQYGyKKDk8PeGFb8mwToyTHjW12/0E9usXHcxXKCcqO
-         algtHcYHfy/4a74766htPVlEwgXb1i3Uvc+ado3JOIN1YYjhu1TPhYu+04VV+DFJaWos
-         5p+kQ4snNxDVJs0tiGfI0NGqPFgnamIfrURbkE+TyBhCEZqDLbaXr75bnQD+xGzNW7bD
-         q/AYNJcuc7Ayt+yXqo5WuDeGgaZbi8kvK+0FIm/jfj/icNTAOFxAeLWImTSa3/6mNxM7
-         BxKQczxsrfsywVJguDn6bCZ2HCbPxUb36n0Rb9WquOpf6/iW/RwY62SgSaWuQMPx3hkN
-         6Jrw==
-X-Gm-Message-State: APjAAAXPrZ2sirjhGST2OlG8eAuxQGkmloI8hdrHO3OusCVMMhV15h/i
-        XzMJS0ekrDIyXkHO2zgUOTJWChcj9hS64uxrEKA=
-X-Google-Smtp-Source: APXvYqwi9eT82Nn3UYPxd0njnhBBYmfG43yRY/PXzn+cN+mPBG2KiI07+z73ZHe3wGz/pflOXhBmXUh4JXrmYzHALg0=
-X-Received: by 2002:a02:3c07:: with SMTP id m7mr4622687jaa.64.1561638799337;
- Thu, 27 Jun 2019 05:33:19 -0700 (PDT)
+        id S1726497AbfF0Myh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 08:54:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33199 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726059AbfF0Myh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 08:54:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561640071;
+        bh=u7ucvH8Mst2Ah+MxyMx9p3+xw9l/fuGAK6NtV30oyws=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hsuOckQM4Pry8fr2fAO0FQyAFxTPQGQveS/KsVnCAeMYaH60aJrXEvgqDTi4bWNb3
+         kDxFp6EKpVo1SvBetpXRPwNqq5c1qiLsXzKP8ED7w8mym24RmzCjfGrZArarczfLUi
+         knkrudsER6dUT/1s3HqZurzVbNeSbNROlKfOWTwA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbPza-1iR39g3sWg-00kv8n; Thu, 27
+ Jun 2019 14:54:31 +0200
+Date:   Thu, 27 Jun 2019 14:54:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/6] sha1-file.c: remove the_repo from
+ read_object_with_reference()
+In-Reply-To: <20190624095533.22162-2-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
+References: <20190624095533.22162-1-pclouds@gmail.com> <20190624095533.22162-2-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190627052515.GA21207@sigill.intra.peff.net> <20190627055739.GA9322@sigill.intra.peff.net>
- <CACsJy8Cjn2z7TrH9HLQ94Ph7qPZ0fC01J=Lq7GcrhvaCQZaSmg@mail.gmail.com> <8736jv8bnc.fsf@evledraar.gmail.com>
-In-Reply-To: <8736jv8bnc.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Jun 2019 19:32:53 +0700
-Message-ID: <CACsJy8AgmM0xYMMdYvpRSs4JRbNahcQyGcMMfPmaTS4Uv=Ok6A@mail.gmail.com>
-Subject: Re: fprintf_ln() is slow
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; BOUNDARY="8323328-1738728013-1561639827=:44"
+Content-ID: <nycvar.QRO.7.76.6.1906271450360.44@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:ccKgoftuue6YeFOQXdXG3PkgdhcrnZaGN6Q6iP+YRNX5iU0spED
+ DaAhh0s2c/IdZLJ5Cfz0dO0RPqVFu3uh42jh60W7Iz1yVZa13LkdP5WjYj7HfUYGFy/Y7UF
+ /A4C2ra0UJv0TlPLTHJcO4F9Y91tsprF3R374CDMcoBUhTeQeDzZgV9EjJsX1Sed7pYeOZ0
+ yiMpa1X63q0O9Huo4r7Pw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:a0RStg4TJ/Q=:k5HkfYeon4eUOen+z2W4pp
+ Ri07aMVO/38dGrnLbTmG+LkcuuDCzLgMAM5IyE6//6PtIagQz4Glm99Tc8RLIAgxOk6Yabtm6
+ NCXD2R+QKBBRx0uB0i7fNuJNg2OaxAq7gGuqbzHs4q9I07AjB1JZcXgADZ35nwSmRk5HtI3nt
+ J5Gx+m5ppaVEyYtYEVQ7xZtOCafyd0alWhoHBTBE1nZ+1j1BZOcwb2AsmjORMAB+kNNtDbpuh
+ ixNKYPqdsXNyGMhlo3FDdPbYCew9asL86Gk227ZLckVS7di4+P1UZiezlVLS4eudHDIlM+BOe
+ ArkC9fkqKM1sJMkEXezAjMk6DwDHVrP0K4oo7EI+DXXu0kPIFzDOHBoJ3m+h13gCmYjSNdJuT
+ VoOtKQt8oX8g9AXUzpLJpsxpWKuthLFKXyKxcQAsxgwKzBWsY5wEYpB0BR8uE2j1pGInsIHB9
+ GoUaPVkAeiIrkEPHAkpIvIupjv4YRt2DcH5AbJmOttNx+s7E2vmcCOOR+W/gpiqp8YQT4bHiZ
+ dbKTesrulzJiiplA5SzDwLn70HiB1cCKo0fwI5WcI49dT2HfXW1TKTF4jYTsE2BCFpUocmAVy
+ 7RdFkOW7MnZ5/jFbtDHgMzA2N8PfGozXfECEnZNwvrs2XTD0z1IRBll5MYB3q0R1n5L4aWoM+
+ lpHksjCnY45gbsFfLNvMG5vebYA2IxZUPr4cnvRl00blsP5/pmeGtg/eq5rk88+xIPE/RIhyZ
+ mjIKDDPslWocwyyQmhqBOLrAIUkDaT/1gHCiGI/E3EWeuF5gjtlHBYCMdFNm0NmME2udQtXfA
+ 28H4ucHLReUnAE4HEsvhR5Up9k5vYmS2hSl5S3doKmUZBVFOVLers5uXsV99C6LOCwmWr74j4
+ nhXKEo9LuswmxNq+r2EOX/JqxIspxVPWQf06Ni3VOjfjF5JUJYLsDuCNw0gFVNG5PtgFBGoPs
+ HP+FtcgkiXD3SuZK80icqcpeEHS2hMvjy21D9Q22MqS7puA4OuC2I+6Wmjsqob3YxGaDhzVhS
+ QJ56WIYOZ7v2aCrLK1w4mEd4FPYWl/xwW8rMQYCc2M9Jv1oEvu5ltcTzA3D0eQucNNWG/y5Sd
+ Is7fp5tBdUXaCLR2fEuZ8dv70+A6c0/87ts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 7:18 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Why shouldn't we just move back to plain fprintf() with "\n"? Your
-> 9a0a30aa4b ("strbuf: convenience format functions with \n automatically
-> appended", 2012-04-23) doesn't explain why this is a convenience for
-> translators.
->
-> When I'm translating things tend to like knowing that something ends in
-> a newline explicitly, why do we need to hide that from translators? They
-> also need to deal with trailing \n in other messages, so these *_ln()
-> functions make things inconsistent.
->
-> It's also not possible for translators to do this by mistake
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This (accidentally dropping \n which sometimes is significant) is the
-part that I made me prefer *printf_ln(). I had been translating for
-years, as far back as 2003-ish, but I've stopped since the last few
-years so I'm no longer uptodate with gettext development. And my very
-old/outdated experience with gettext might make me think it's still
-the problem.
+--8323328-1738728013-1561639827=:44
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.1906271450361.44@tvgsbejvaqbjf.bet>
 
-> without
-> being caught, because msgfmt will catch this (and other common issues):
+Hi Duy,
+
+On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 580fd38f41..85da7ee542 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
+>  		object =3D parse_object_or_die(oid, oid_to_hex(oid));
 >
->     po/de.po:23: 'msgid' and 'msgstr' entries do not both end with '\n'
+>  		grep_read_lock();
+> -		data =3D read_object_with_reference(&object->oid, tree_type,
+> +		data =3D read_object_with_reference(opt->repo,
+> +						  &object->oid, tree_type,
 
-Ok good. And with the downside of degraded performance, sure remove
-all the *printf_ln()
---=20
-Duy
+Junio's hunch was absolutely spot on. This conversion is incorrect. If you
+replace this `opt->repo` and...
+
+>  						  &size, NULL);
+>  		grep_read_unlock();
+>
+> @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const s=
+truct pathspec *pathspec,
+>  		int hit, len;
+>
+>  		grep_read_lock();
+> -		data =3D read_object_with_reference(&obj->oid, tree_type,
+> +		data =3D read_object_with_reference(opt->repo,
+
+... this one with `the_repository`, t7814 starts passing again.
+
+It makes me very wary of this patch series that this bug has only been
+caught by a CI build. You probably did not run the test suite before
+sending this patch series.
+
+I also wonder what the rationale was to deviate from the strategy used in
+the remainder of the call sites, where no attempt was made to use an
+already-available repository pointer that might, or might not, be the
+correct one.
+
+It strikes me as a pretty important goal of this patch series to _not_
+change any behavior, and this bug makes me dubious that all diligence has
+been done to assure that.
+
+Ciao,
+Johannes
+
+--8323328-1738728013-1561639827=:44--
