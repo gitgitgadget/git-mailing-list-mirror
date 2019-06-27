@@ -2,129 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08DAD1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 05:25:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A6A91F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 05:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbfF0FZS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 01:25:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51980 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726370AbfF0FZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 01:25:17 -0400
-Received: (qmail 7559 invoked by uid 109); 27 Jun 2019 05:25:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 27 Jun 2019 05:25:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4438 invoked by uid 111); 27 Jun 2019 05:26:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 27 Jun 2019 01:26:08 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Jun 2019 01:25:15 -0400
-Date:   Thu, 27 Jun 2019 01:25:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: fprintf_ln() is slow
-Message-ID: <20190627052515.GA21207@sigill.intra.peff.net>
+        id S1726359AbfF0F0c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 01:26:32 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39437 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbfF0F0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 01:26:32 -0400
+Received: by mail-wm1-f67.google.com with SMTP id z23so4263963wma.4
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 22:26:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Iw3kO5QkHjoHfKAG/iLx05+yECHh5yi51GVmsYX/E6o=;
+        b=ZP6TJtN0l3H/1wTVDaX1j5srUuPAJPo7Fbt6FgIW++3QLlgTovyOKG2MY0QijoSCv2
+         ZXprNLp7OOY/h0EagzYK8Szei3VT0+kKY+sWhYBwJ7Im4gvCGZqNq5UK3fsAsBZ9wz3B
+         xvPxV0+7hyX8WmEIs0OYWwCpI6Flv3TSKok8MdYwsFaqpoPTicg7rmDkB2PH8zOuzLys
+         eEWgHMs2/EPCm+ejsIG4xiRGtVd0wqsxByRQFkDbS662pYMiuce/VissngqxEV6HiLKS
+         cDZi9vOrn39KNa9wyAutO+DCXZdY5/wdYiVBFhznp6r7Mt6IiGXvxUp/hSBk/9gRrBbk
+         aqYA==
+X-Gm-Message-State: APjAAAVKJC3rOOdf0NgmSAX85aHPZSRte/Emmdh8aYHWd7Cgl8XYlbn4
+        4SCN2msOM1LXAoBCboZ/5PJxp1Tf0YoCIlNf8k4=
+X-Google-Smtp-Source: APXvYqwmdH2VnZ7RDpog4Fvs9jRy0lTGwtXlmS8GWpIQs2ra6VUU/Y2D0GSfp5t/SX3PJ8Kg8EisT7kcieHvsd+tHfk=
+X-Received: by 2002:a1c:720e:: with SMTP id n14mr1643723wmc.53.1561613189989;
+ Wed, 26 Jun 2019 22:26:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-10-emilyshaffer@google.com>
+In-Reply-To: <20190626235032.177551-10-emilyshaffer@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 27 Jun 2019 01:26:19 -0400
+Message-ID: <CAPig+cQh2rEW271KziUyYGZyPXrFV8z_OV6UzY=-e4pOrF_zsw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 09/13] walken: demonstrate reversing a revision
+ walk list
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor and I noticed a slowdown in p1451 between v2.20.1 and v2.21.0. I
-was surprised to find that it bisects to bbb15c5193 (fsck: reduce word
-legos to help i18n, 2018-11-10).
+On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> The final installment in the tutorial about sorting revision walk
+> outputs. This commit reverses the commit list, so that we see newer
+> commits last (handy since we aren't using a pager).
+>
+> It's important to note that rev->reverse needs to be set after
+> add_head_to_pending() or before setup_revisions(). (This is mentioned in
+> the accompanying tutorial.)
 
-The important part, as it turns out, is the switch to using fprintf_ln()
-instead of a regular fprintf() with a "\n" in it. Doing this:
+This leaves the reader wondering "why that requirement?". Is it
+because those functions may change the value or otherwise depend upon
+the value?
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index d26fb0a044..234b766843 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -128,12 +128,12 @@ static int fsck_error_func(struct fsck_options *o,
- 	switch (type) {
- 	case FSCK_WARN:
- 		/* TRANSLATORS: e.g. warning in tree 01bfda: <more explanation> */
--		fprintf_ln(stderr, _("warning in %s %s: %s"),
-+		fprintf(stderr, _("warning in %s %s: %s\n"),
- 			   printable_type(obj), describe_object(obj), message);
- 		return 0;
- 	case FSCK_ERROR:
- 		/* TRANSLATORS: e.g. error in tree 01bfda: <more explanation> */
--		fprintf_ln(stderr, _("error in %s %s: %s"),
-+		fprintf(stderr, _("error in %s %s: %s\n"),
- 			   printable_type(obj), describe_object(obj), message);
- 		return 1;
- 	default:
+Also, something this important probably deserves an in-code comment
+(and need not be mentioned in the commit message if the in-code
+comment explains it well.)
 
-on top of the current tip of master yields this result:
-
-  Test                                             HEAD^             HEAD                  
-  -----------------------------------------------------------------------------------------
-  1451.3: fsck with 0 skipped bad commits          9.78(7.46+2.32)   8.74(7.38+1.36) -10.6%
-  1451.5: fsck with 1 skipped bad commits          9.78(7.66+2.11)   8.49(7.04+1.44) -13.2%
-  1451.7: fsck with 10 skipped bad commits         9.83(7.45+2.37)   8.53(7.26+1.24) -13.2%
-  1451.9: fsck with 100 skipped bad commits        9.87(7.47+2.40)   8.54(7.24+1.30) -13.5%
-  1451.11: fsck with 1000 skipped bad commits      9.79(7.67+2.12)   8.48(7.25+1.23) -13.4%
-  1451.13: fsck with 10000 skipped bad commits     9.86(7.58+2.26)   8.38(7.09+1.28) -15.0%
-  1451.15: fsck with 100000 skipped bad commits    9.58(7.39+2.19)   8.41(7.21+1.19) -12.2%
-  1451.17: fsck with 1000000 skipped bad commits   6.38(6.31+0.07)   6.35(6.26+0.07) -0.5% 
-
-That test makes a repo with a million bad commits. Most of those (except
-the last one, which doesn't see a huge change!) tests are outputting
-900k+ error messages. So small changes in the speed of printing are
-amplified.
-
-This is a totally synthetic repo. So as a real-world case, these numbers
-are probably not all that interesting. If you have a million-line fsck
-output, the extra 1s of output time is probably not biggest thing on
-your mind. But we do use fprintf_ln() elsewhere, and I wonder if there
-are cases where it could add up.
-
-I thought it might be due to stdio's locking overhead (we ran into that
-with single-character getc's in other code). But there's no unlocked
-variant of the formatting functions, so the best we can do is this:
-
-diff --git a/strbuf.c b/strbuf.c
-index 0e18b259ce..fac3b33f68 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -882,12 +882,18 @@ int fprintf_ln(FILE *fp, const char *fmt, ...)
- {
- 	int ret;
- 	va_list ap;
-+
-+	flockfile(fp);
-+
- 	va_start(ap, fmt);
- 	ret = vfprintf(fp, fmt, ap);
- 	va_end(ap);
--	if (ret < 0 || putc('\n', fp) == EOF)
--		return -1;
--	return ret + 1;
-+
-+	if (ret >= 0 && putc_unlocked('\n', fp) != EOF)
-+		ret++;
-+
-+	funlockfile(fp);
-+	return ret;
- }
- 
- char *xstrdup_tolower(const char *string)
-
-which doesn't seem to help. I don't know if this is even worth digging
-into, or if we should declare that "yeah, fprintf_ln is not the fastest
-way to print something; don't use it in a tight loop".
-
-But maybe somebody else has a brilliant idea.
-
--Peff
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+> diff --git a/builtin/walken.c b/builtin/walken.c
+> @@ -69,6 +69,9 @@ static void final_rev_info_setup(int argc, const char **argv, const char *prefix
+>         /* add the HEAD to pending so we can start */
+>         add_head_to_pending(rev);
+> +
+> +       /* Reverse the order */
+> +       rev->reverse = 1;
