@@ -2,144 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0D891F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 10:49:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34A821F4B6
+	for <e@80x24.org>; Thu, 27 Jun 2019 12:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbfF0Kt2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 06:49:28 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:38284 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726801AbfF0Kt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 06:49:27 -0400
-Received: by mail-io1-f67.google.com with SMTP id j6so3703827ioa.5
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 03:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VjjsRW75Zfdaz62jZYom37Fh6xv8+bYyvoWjAjGhC5I=;
-        b=IvTUGTGr75738vnUT8p7gPKlqUzE12T1iXsif0+IzS08JG+vF5YiK6Dguxt25LSQCO
-         gX2n2wugvDDEcQAxO25Qi/OKyP7tDDRb9jeXK0tlfWsmoAXJOPs7B2PjmZtGquktv+pN
-         zTwkRl/3OxmbY6tZadoAPj1ti8+JUhxoHhWsxKY73P7FCFeyo1Lt7QNK56U1mqHvd6WB
-         c+p6Ry2gjtHqhDcDibE05hLI2l1RpkdIrJu66RiwCJ5Sx/N8JWjFHvaNALcLaYXtAQvj
-         s97d6qo7ymtEO/SIW2W2YeGVuW9ycljaVIsrbuMGBbzlm+67auaC1ltX2Tvl3QcQKO3v
-         Y7Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VjjsRW75Zfdaz62jZYom37Fh6xv8+bYyvoWjAjGhC5I=;
-        b=RbWeVBeoImEGJ5wUDcXz8kjHm2Ei3iLaA6FRr3twroAKW/JwAobsRTrRM01XvmZRMm
-         5lvxFli1s/tNMBB2zelGooXbRaVS1eAYlixKTadJPQmPvXcfGgo0uTA4q81s3Y9lgdnI
-         xn0s16FeJSaD0hsU3YK/ls3quJasQCN7o1YNpVFljKAgGF1cjmAQlLsYu4ogMp93A1EP
-         4dM53vtF7OHyZkFABwixFmnbbdUexIZtGbc0gRUDWuI9/ZJpDmcO2mRjSBCQidGwdRDg
-         0xeUGJ5eG86aghooRVOC2HH99e44dp4lpPCqAmYbOrPG2secCPknaqt1xP0FXOOPM7vq
-         eT6g==
-X-Gm-Message-State: APjAAAWpCydLd7LRis7N+1WI3l4lbyxcBGy2lshv+7sjU2woFjE2HIJc
-        tCWJs9WyKkzlzXeVkf0WhnFKTdHMP3I2AfY7+pw=
-X-Google-Smtp-Source: APXvYqyVNRWvzvdlNgyU3aBI18/Mvx1TZWXDTbxmUg5Bmg5cgwe9nNlXdZTJYlbWT51PbUqvoeakRVhZy5WEleQR2/o=
-X-Received: by 2002:a6b:7312:: with SMTP id e18mr3551481ioh.156.1561632565817;
- Thu, 27 Jun 2019 03:49:25 -0700 (PDT)
+        id S1726441AbfF0MAn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 08:00:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:33187 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726370AbfF0MAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 08:00:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561636833;
+        bh=RuvIzqWdRVg0wOp1TXEgolyXgEZv0KWWYM0oyirjP/A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=HnK4lvkMGfk56MVy+wnzW7d//MCmkahi/F/KCx13YkXNNMG4MTWrDI1ugnGO2+d3U
+         k5rmPAYIWJMmUlS7l0xV3/X8YQxtme0rmFmUKQZAB4mCXScFAlLUjZhGIH9yH+JJrR
+         noKhv8Mewv6wPgHj16tOGl1nYlgQolDL73vDWWBw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgqEs-1iJLzr2gbe-00oEkd; Thu, 27
+ Jun 2019 14:00:33 +0200
+Date:   Thu, 27 Jun 2019 14:00:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: fprintf_ln() is slow
+In-Reply-To: <20190627055739.GA9322@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1906271358260.44@tvgsbejvaqbjf.bet>
+References: <20190627052515.GA21207@sigill.intra.peff.net> <20190627055739.GA9322@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190624130226.17293-1-pclouds@gmail.com> <20190624130226.17293-6-pclouds@gmail.com>
- <55f81571-ba45-edcf-49bd-05418cc309c5@jeffhostetler.com> <CACsJy8BjhQD-g69dr-yDCycgfrHZ8xJLgjD=LanRUBxAN6=Zrg@mail.gmail.com>
- <98afb501-ef57-9b64-7ffb-f13cea6fd58a@gmail.com>
-In-Reply-To: <98afb501-ef57-9b64-7ffb-f13cea6fd58a@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Jun 2019 17:48:59 +0700
-Message-ID: <CACsJy8CwWvKNbYvDqWc-zCwEPc_rz-P4y-SvXV-9jL8_XCFjZQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/10] split-index.c: dump "link" extension as json
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CLZ1x6WNKSqr16izm6g7ylymdMkWOCheMeWzZVO1MqYrKAMVhWK
+ cL4Nk6dLXvp0ekYCLtiwLP3Wu4kt1M/mycEfAP/UmPrsXOoU3CTP9JFv2+VaZagwInI7i/A
+ 8QCrdaQJFRiF+75JVbBEEgQQBp6Jutn84Ic99yEuWcZYas5xL6CMoOP/f0tJ1eF6JLGEtMs
+ afkCqETk8nykdbGTacRvw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bCQSr1Hf26E=:ZIDZUWTgauiIzvLdczR0ew
+ JBc4xUjk4/zg9k/hN3IOQR/JCf0wB8lR93toiBsZKMGOvu/fe5tAHhbrru8TDQsNiFvmZ14Y9
+ IBEM88S26Pml8LBi1RPX7XjGj8Z6ZMEkz2DHazeNDjV+0ujPm9HLz6s22Bwc6W/hVrRouvCnY
+ GzlaUBD8R7iGkPIIr1UNw+IHCFxHxsYN0BRtvBUY8XP4gtzkHwnTCubGbSUnUWsseYXegF0+V
+ lldPFKE0hOhzPGcFB8mmChrX/+yBkpm0VFjZ+ztlDwLlwIwZutlA93PzK4LauFM3AJ9JXWTEO
+ aL1UVIDQgcvCSumCIjR8oKFYc3XY6yGUuinDuw8ud33zjfp3iN/NfkPSn95RnokSHAdf6TqKN
+ N9JmV7LYl3Erw0633K3dKH6vRbK62smXG9Hchpd62mhlw4wkzEP0A5+JSAs/0SwXD+nelLlDS
+ Hawz4w7++UtTvTZaSi2MHErxGyZprIod2qKLML4DeD6lws12MVWgriqdWDuzQCFfHUYO0Eh1F
+ 5IJqntfSKNVDAm3SQodZdDfxrItvdxVkGnmb0exwRHozdwsWqFcibXeogl1IjyPez4tRTbe2l
+ 7/R9gxtVc9bko6Ey94JPz7YploXq4BvnlhuGJEoEpq0p0iKU1QbITfnPQ/K+QoPJruckftGLg
+ 2hlAfFo0FLS+bp9HgQpng+XO9gvsI9ZDUfs2C8FZ3ybZS/PRI7MpPcjXo/aYopQXz4rBLutQa
+ M3Y3eGgXtjXXRPaPgcdRYl6qrD10Bbz4ZgMkjpFhFg0PYQvFde+Yu0caDHrejmUXgg6SDdpDJ
+ 5+/GNWJqJLg1px6qyXUghRc3IGdbojfiLfdXnGNCKuymGpMuR3x/MvpdiRgjSy3tacp2/Qh2j
+ EpmVDk/d9NHTXNrXWwnsU46K301XbJPyvw2L2QxGElsRgx7Q1o8CRR7pEJPd6bU/i/kPaNOcs
+ 8EWiC6i99g6P3fNsWcVTw8oFM2hmNiTsui/eXqU+tc4/LNwa8xgVcLIBqkQft7WCY+TKbsMNP
+ S77QCM9L/xXEqQDDZkclv9zwbb2a3i61WixfHX/Zfi+wb7r9m0BZ9A+WSo5EXM3cyO51GiLul
+ U10sQKZ7FKXMrQk2puPcfMr16wNA72ZAXa+
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 25, 2019 at 7:40 PM Derrick Stolee <stolee@gmail.com> wrote:
+Hi Peff,
+
+On Thu, 27 Jun 2019, Jeff King wrote:
+
+> On Thu, Jun 27, 2019 at 01:25:15AM -0400, Jeff King wrote:
 >
-> On 6/25/2019 6:29 AM, Duy Nguyen wrote:
-> > On Tue, Jun 25, 2019 at 3:06 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> >> I'm curious how big these EWAHs will be in practice and
-> >> how useful an array of integers will be (especially as the
-> >> pretty format will be one integer per line).  Perhaps it
-> >> would helpful to have an extended example in one of the
-> >> tests.
+> > Taylor and I noticed a slowdown in p1451 between v2.20.1 and v2.21.0. =
+I
+> > was surprised to find that it bisects to bbb15c5193 (fsck: reduce word
+> > legos to help i18n, 2018-11-10).
 > >
-> > It's one integer per updated entry. So if you have a giant index and
-> > updated every single one of them, the EWAH bitmap contains that many
-> > integers.
+> > The important part, as it turns out, is the switch to using fprintf_ln=
+()
+> > instead of a regular fprintf() with a "\n" in it. Doing this:
+> > [...]
+> > on top of the current tip of master yields this result:
 > >
-> > If it was easy to just merge these bitmaps back to the entry (e.g. in
-> > this example, add "replaced": true to entry zero) I would have done
-> > it. But we dump as we stream and it's already too late to do it.
-> >
-> >> Would it be better to have the caller of ewah_each_bit()
-> >> build a hex or bit string in a strbuf and then write it
-> >> as a single string?
-> >
-> > I don't think the current EWAH representation is easy to read in the
-> > first place. You'll probably have to run through some script to update
-> > the main entries part and will have a much better view, but that's
-> > pretty quick. If it's for scripts, then it's probably best to keep as
-> > an array of integers, not a string. Less post processing.
+> >   Test                                             HEAD^             H=
+EAD
+> >   --------------------------------------------------------------------=
+---------------------
+> >   1451.3: fsck with 0 skipped bad commits          9.78(7.46+2.32)   8=
+.74(7.38+1.36) -10.6%
+> >   1451.5: fsck with 1 skipped bad commits          9.78(7.66+2.11)   8=
+.49(7.04+1.44) -13.2%
+> >   1451.7: fsck with 10 skipped bad commits         9.83(7.45+2.37)   8=
+.53(7.26+1.24) -13.2%
+> >   1451.9: fsck with 100 skipped bad commits        9.87(7.47+2.40)   8=
+.54(7.24+1.30) -13.5%
+> >   1451.11: fsck with 1000 skipped bad commits      9.79(7.67+2.12)   8=
+.48(7.25+1.23) -13.4%
+> >   1451.13: fsck with 10000 skipped bad commits     9.86(7.58+2.26)   8=
+.38(7.09+1.28) -15.0%
+> >   1451.15: fsck with 100000 skipped bad commits    9.58(7.39+2.19)   8=
+.41(7.21+1.19) -12.2%
+> >   1451.17: fsck with 1000000 skipped bad commits   6.38(6.31+0.07)   6=
+.35(6.26+0.07) -0.5%
 >
-> I don't think the intent is to dump the EWAH directly, but instead to
-> dump a string of the uncompressed bitmap. Something like:
+> Ah, I think I see it.
 >
->         "delete_bitmap" : "01101101101"
+> See how the system times for HEAD^ (with fprintf_ln) are higher? We're
+> flushing stderr more frequently (twice as much, since it's unbuffered,
+> and we now have an fprintf followed by a putc).
 >
-> instead of
+> I can get similar speedups by formatting into a buffer:
 >
->         "delete_bitmap" : [ 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1 ]
+> diff --git a/strbuf.c b/strbuf.c
+> index 0e18b259ce..07ce9b9178 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -880,8 +880,22 @@ int printf_ln(const char *fmt, ...)
+>
+>  int fprintf_ln(FILE *fp, const char *fmt, ...)
+>  {
+> +	char buf[1024];
+>  	int ret;
+>  	va_list ap;
+> +
+> +	/* Fast path: format it ourselves and dump it via fwrite. */
+> +	va_start(ap, fmt);
+> +	ret =3D vsnprintf(buf, sizeof(buf), fmt, ap);
+> +	va_end(ap);
+> +	if (ret < sizeof(buf)) {
+> +		buf[ret++] =3D '\n';
+> +		if (fwrite(buf, 1, ret, fp) !=3D ret)
+> +			return -1;
+> +		return ret;
+> +	}
+> +
+> +	/* Slow path: a normal fprintf/putc combo */
+>  	va_start(ap, fmt);
+>  	ret =3D vfprintf(fp, fmt, ap);
+>  	va_end(ap);
+>
+> But we shouldn't have to resort to that.
 
-I get this part. But the numbers in the array were the position of the
-set bits. It's not showing just the actual bit map.
+Why not?
 
-The same bitmap would be currently displayed as
+It would make for a perfectly fine excuse to finally get work going in
+direction of a initially heap-backed strbuf. Which we have wanted for ages
+now.
 
- "delete_bitmap": [ 1, 2, 4, 5, 7, 8, 9, 11 ]
+> We can use setvbuf() to toggle buffering back and forth, but I'm not
+> sure if there's a way to query the current buffering scheme for a stdio
+> stream.
 
-And that maps back to the entry[1], entry[2], entry[4]... in the index
-being deleted from the base index. So displaying as a real bit map
-actually adds more work for both the reader and the tool because you
-have to calculate the position either way. And it gets harder if the
-bit you're intereted in is on the far right.
+It also is not very safe, especially when we want to have this work in a
+multi-threaded fashion.
 
-> > Another reason for not merging to one string (might not be a very good
-> > argument though) is to help diff between two indexes.
-> > One-number-per-line works well with "git diff --no-index" while one
-> > long string is a bit harder. I did this kind of comparison when I made
-> > changes in read-cache.c and wanted to check if the new index file is
-> > completely broken, or just slighly broken.
->
-> You're right that the diff of the json output is an interesting
-> use, and the "single string" output is not helpful. What about
-> batches of 64-bit strings? For example:
->
->         "delete_bitmap" : [
->                 "0101010101010101010101010101010101010101010101010101010101010101",
->                 "0101010101010101010101010101010101010101010101010101010101010101",
->                 "0101010101010101010101010101010101010101010101010101010101010101",
->                 "01010101010101"
->         ]
->
-> This could be a happy medium between the two options, but does require
-> some extra work in the formatter.
+I'd be much more comfortable with rendering the string into a buffer and
+then sending that buffer wholesale to stderr.
 
-And the reader/parser too since you have to join that array back in
-one string first.
---
-Duy
+Ciao,
+Dscho
