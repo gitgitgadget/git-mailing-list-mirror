@@ -2,161 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94DF81F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 18:32:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE0E1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 18:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726508AbfF0Scv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 14:32:51 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56032 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726443AbfF0Scv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 14:32:51 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C8D57B959;
-        Thu, 27 Jun 2019 14:32:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wUClJoj3wVpHotF9X8/JrV78hmw=; b=MO5uks
-        L7wF9UqfSu4xoA4bUE0ji0tUDXSqtai6FPZKt7AN/kmOqDxihktY38VBH+VvaUQH
-        MrpsD4evKv2QVV8WLcp/NbFFGoVG5yxW2qF65AlFsyQC484/RuqATEFjlFfXQE5u
-        RHLR547SjSKwR1gKabA9gu8aERG53vOGjj2fE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UpZDvLGJRK2W/EwH7CwBA0MK7QQFzL6c
-        7fWb9xDdCZzL0hjPvIT9PT0Ne7M6+sZ25sq87pWL8KteJZ8qy2LoUMt57g9UXfqx
-        1qajkUO6ijQge5pO+gjMPMtiF7rad/Vd3QjWwqwtMNAjhyB5WFQg6RrVrdjlq8Wf
-        7DmInSiA20w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9503F7B958;
-        Thu, 27 Jun 2019 14:32:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A13B27B957;
-        Thu, 27 Jun 2019 14:32:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect interactive rebases
-References: <pull.253.git.gitgitgadget@gmail.com>
-        <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
-Date:   Thu, 27 Jun 2019 11:32:42 -0700
-In-Reply-To: <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 27 Jun 2019
-        01:12:49 -0700 (PDT)")
-Message-ID: <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726472AbfF0Sk6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 14:40:58 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39897 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726384AbfF0Sk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 14:40:58 -0400
+Received: by mail-pf1-f196.google.com with SMTP id j2so1662010pfe.6
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 11:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=R00GMVghcJMvyD6IP+WFxOTJjsHGh42vT4K4qDBA50I=;
+        b=XcaWzRN70Gp6j3SQsiaKuVZvbpmYiR24rAX1sIKsVYB1s2y676liMtPGtYGlumtNVF
+         7K1Co/sbSf9nfkFxHIxLQ5cuUPRMOIOGCGDgacwJdEba2CnfQf0QTbZHedT84vwLrR6i
+         Lrswajzr7q5qZW/DX2Xi9gF4ac+KcDVILtYonVYm6rjN1AUnj1EZ8u+use8Ztgwqpfps
+         Zw8x5ItabG0FJrwx89QPNsWeAiKfqjUZOG5WQH4UewoUw64UTaHLJwnsuxL5E652jpRL
+         Kdby8jBb8y+jzv9tbua+hNhwlRAm+mfIHpU3LDTHLmZ+4P2TLnZmuwkZ+DGFOe6nfdwF
+         XXlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=R00GMVghcJMvyD6IP+WFxOTJjsHGh42vT4K4qDBA50I=;
+        b=YB/0ZewgNyVRjz+Fy7zQ5m+XQCP2ubSkzVh78sM7kirmsZUIjayq0bPBaFqcpqx1Ax
+         XxKWCy4Ji0BHEEa6pHNKuuorKBcXbq0gNLRC5U3OQyLOZeIL84m4Q6Te4EkMdAVqJw4E
+         Tya0LTynnoVUZKLkMBsuYZC+p/DJlNBlwpLwWNnQ1nuu4eZ2nK6tvbYnfsY0rQvA3esv
+         HQcI1Ntgkezn3PQrl2MNPnGHc4NhWMV0ci3wysKDQynlFTHyh7qNNOicHNwJ3UBbr/6K
+         BHb5lyAMkpI+T+Eevk28IcjVqOCKO7IYxDRrRAOqeK6BM3w9xM01+ftOwmUmMIRYPoJb
+         Q1cw==
+X-Gm-Message-State: APjAAAVLEaNok7Yze8TfxxPses5H6mbUnY4YymmTAka2sPsyDTTg62oJ
+        NRLnt8V7j1ANLhGDVqwJngPgI3SfmKQ=
+X-Google-Smtp-Source: APXvYqyXY3V6UDMH4SOUnoFGtVVuSYwLR2biXXkSatEshTLoz3OgOgj3J1u7/XWnMRFU0gXjsaPlJA==
+X-Received: by 2002:a65:63d1:: with SMTP id n17mr5230531pgv.382.1561660856682;
+        Thu, 27 Jun 2019 11:40:56 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id l23sm2339842pgh.68.2019.06.27.11.40.55
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 27 Jun 2019 11:40:55 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 11:40:51 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 02/13] walken: add usage to enable -h
+Message-ID: <20190627184051.GA245941@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com>
+ <20190626235032.177551-3-emilyshaffer@google.com>
+ <CAPig+cQxt7rZRkQLpUZabwfLfWpzvVrWNd11RkQvt83K8zPZ7w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F477C824-9909-11E9-B56C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQxt7rZRkQLpUZabwfLfWpzvVrWNd11RkQvt83K8zPZ7w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Jun 27, 2019 at 12:47:25AM -0400, Eric Sunshine wrote:
+> On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> > It's expected that Git commands support '-h' in order to provide a
+> > consistent user experience (and this expectation is enforced by the
+> > test suite). '-h' is captured by parse_options() by default; in order to
+> > support this flag, we add a short usage text to walken.c and invoke
+> > parse_options().
+> > [...]
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> > diff --git a/builtin/walken.c b/builtin/walken.c
+> > @@ -5,9 +5,34 @@
+> > +const char * const walken_usage[] = {
+> > +       N_("git walken"),
+> > +       NULL,
+> > +};
+> 
+> Unless you expect to reference this from multiple functions, there is
+> no need for it to reside here; instead, it can live inside
+> cmd_walken(). (And, if you do leave it in the global scope for some
+> reason, it should be 'static'.)
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> It does not make sense to stop non-interactive rebases when that config
-> setting is set to `true`.
+Thanks, done.
 
-The reader is assumed to know that that config setting is only about
-interactive rebases, including "rebase -x", which probably is an OK
-explanation.
+> 
+> >  int cmd_walken(int argc, const char **argv, const char *prefix)
+> >  {
+> > +       struct option options[] = {
+> > +               OPT_END()
+> > +       };
 
-The subject needs a bit more work, though.  
+Fixed the comment from your other mail too.
 
-"rebase: ignore rebase.reschedulefailedexec unless interative"
-
-or something like that, perhaps.
-
-> @@ -929,7 +930,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL(0, "root", &options.root,
->  			 N_("rebase all reachable commits up to the root(s)")),
->  		OPT_BOOL(0, "reschedule-failed-exec",
-> -			 &options.reschedule_failed_exec,
-> +			 &reschedule_failed_exec,
->  			 N_("automatically re-schedule any `exec` that fails")),
->  		OPT_END(),
->  	};
-> @@ -1227,8 +1228,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		break;
->  	}
->  
-> -	if (options.reschedule_failed_exec && !is_interactive(&options))
-> +	if (reschedule_failed_exec > 0 && !is_interactive(&options))
-
-OK, it used to be that we got affected by what came from "options",
-which was read from the configuration.  Now we only pay attention to
-the command line, which makes sense.
-
-At this point, we have already examined '-x' and called
-imply_interative(), so this should trigger for '-x' (without '-i'),
-right?
-
->  		die(_("--reschedule-failed-exec requires an interactive rebase"));
-
-I wonder if users understand that '-x' is "an interctive rebase".
-The documentation can read both ways, and one of these may want to
-be clarified.
-
-	-x <cmd>, --exec <cmd>
-	...
-	This uses the --interactive machinery internally, but it can
-	be run without an explicit --interactive.
-
-Is it saying that use of interactive machinery is an impelementation
-detail the users should not concern themselves (in which case, the
-message given to "die()" above is misleading---not a new problem
-with this patch, though)?  Is it saying "-x" makes it plenty clear
-that the user wants interactive behaviour, so the users do not need
-to spell out --interactive in order to ask for it (in which case,
-"die()" message is fine, but "... internally, but ..." is
-misleading)?
-
-> +	if (reschedule_failed_exec >= 0)
-> +		options.reschedule_failed_exec = reschedule_failed_exec;
-
-OK, here we recover the bit that is only stored in a local variable
-and pass it into cmd_rebase__interactive() machinery via the options
-structure, which lets the codepath after this point oblivious to
-this change, which is good ;-).
-
->  	if (options.git_am_opts.argc) {
->  		/* all am options except -q are compatible only with --am */
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index bdaa511bb0..4eff14dae5 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -265,4 +265,12 @@ test_expect_success '--reschedule-failed-exec' '
->  	test_i18ngrep "has been rescheduled" err
->  '
->  
-> +test_expect_success 'rebase.reschedulefailedexec only affects `rebase -i`' '
-> +	test_config rebase.reschedulefailedexec true &&
-> +	test_must_fail git rebase -x false HEAD^ &&
-
-These three lines gives us a concise summary of this patch ;-)
-
- - The test title can serve as a starting point for a much better
-   patch title.
-
- - We trigger for '-x' without requiring '-i'.
-
-> +	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
-> +	git rebase --abort &&
-> +	git rebase HEAD^
-> +'
-> +
->  test_done
+Thanks!
