@@ -2,208 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66F951F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 18:21:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94DF81F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 18:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726616AbfF0SVD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 14:21:03 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57993 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726523AbfF0SVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 14:21:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561659645;
-        bh=TsXyfC35RIrY26VtmvAOwVYtCXl/V/WZKRH1aNte3cY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=VG83pmrYTG7UQtwUTxchyAvy8U40SppGQQzAMYozn/H5ZUE5FgsTfcAYyQARnqMSI
-         nkvrWhfekmfVK0jcgUYuMCJDsF7005xPgBiZf2rIIoB7bjHtdTnRr8oVnkzPlE0P5d
-         LVwMJVITN7L1Zqllo4tmMXPxW/UH13Ser9Am5cyw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7K3i-1hdHDV0VVU-007kKw; Thu, 27
- Jun 2019 20:20:45 +0200
-Date:   Thu, 27 Jun 2019 20:21:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [RFC/PATCH 0/7] grep: move from kwset to optional PCRE v2
-In-Reply-To: <871rzf8034.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906272012470.44@tvgsbejvaqbjf.bet>
-References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1906261601270.44@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet> <871rzf8034.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726508AbfF0Scv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 14:32:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56032 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbfF0Scv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 14:32:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C8D57B959;
+        Thu, 27 Jun 2019 14:32:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wUClJoj3wVpHotF9X8/JrV78hmw=; b=MO5uks
+        L7wF9UqfSu4xoA4bUE0ji0tUDXSqtai6FPZKt7AN/kmOqDxihktY38VBH+VvaUQH
+        MrpsD4evKv2QVV8WLcp/NbFFGoVG5yxW2qF65AlFsyQC484/RuqATEFjlFfXQE5u
+        RHLR547SjSKwR1gKabA9gu8aERG53vOGjj2fE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UpZDvLGJRK2W/EwH7CwBA0MK7QQFzL6c
+        7fWb9xDdCZzL0hjPvIT9PT0Ne7M6+sZ25sq87pWL8KteJZ8qy2LoUMt57g9UXfqx
+        1qajkUO6ijQge5pO+gjMPMtiF7rad/Vd3QjWwqwtMNAjhyB5WFQg6RrVrdjlq8Wf
+        7DmInSiA20w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9503F7B958;
+        Thu, 27 Jun 2019 14:32:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A13B27B957;
+        Thu, 27 Jun 2019 14:32:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect interactive rebases
+References: <pull.253.git.gitgitgadget@gmail.com>
+        <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
+Date:   Thu, 27 Jun 2019 11:32:42 -0700
+In-Reply-To: <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Thu, 27 Jun 2019
+        01:12:49 -0700 (PDT)")
+Message-ID: <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-334934356-1561659667=:44"
-X-Provags-ID: V03:K1:HF8dO/fPNdw4aPlvHKpHV/BaoqcswO35CCOqNd+lRy/W7zILezP
- H/CSWAUx/LTZsbKySoPSIogSNHik947p9g291+ITbB24B9Z3MEAaoGfAy84cLeYYASDSRGn
- V3iAdE+XfXnIYrrMU5RRlvHUaPvykrnOEjU6kCoSFHdN2xQcpdAi9Ys1tFsZyDmy9ImB+AL
- Dfk/gWBR33XFIhePK2EXg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tXYo76dFJHs=:lX3MN5Otl9NhjZ1N3+pTGY
- qM+Z4/HeTG88yBF4MMiXSsMFU96BhI43OfQ9vLcSfcbXHyc4r8AHa+kF1xiqD44tpdcYLWVdt
- MeF7Y8C7coXCkoDDxBIAsVM7emO/4UMjjMBj2rfRhYyXx8ERpbz1IHDqMe/Jpde4L8a0ctKq4
- yk/lolrTGM93EZefzL2jnFcRj2B7KhC/vdPakjooYxj/fGnrvj+mVbF7LQVWSlgaHhujkbsuS
- 7FEeX1OwRuhph2IYQ0QJbm2SHwwBf1xT6OKOSLWNwzoaZDFz8CLYjXrsO7KxfeFYUIbfm0TFr
- i/4zAv5ppqEgQv2TK1zKsRjxm73wsLm5I9zP7w5UqVLH3fC5YCF+N4R2+2ZTfCNTKay6u9xZc
- r2QhmpBFUPlzaD3YkjkNTLnyZDiE7n6z5yYCo3F51BuwbF6BxRImVADDJLLKD7m867cK5mcVc
- /50NKqVxo0mZ6L3nTFfbg/zMBD8q35mbbGTJOeO72OpuARz4Lac9VR2UAyLVFiWDMggYzuMcz
- sfJzBQATQXE4o5/JlGNdrrvfK/y4G02Le39sHunmohVzS9JntUuyA09t9KJ45VYlMb8ukjYI9
- 6LJ7AvS0zNKt3K2ds5oOEsCDripfE4hjZIb+tJLBV8AtT2OPWz3tGLtohgqwJE/v6yxCwkny2
- OW54SkdTVX9almaMu7nTHyZ3xGFjLfEB8ZcxS7WeW/GPDbupxoF9y0jv1H7yPS+ushyW5dqsj
- +kJb7xVGdq2w4cEKkkH8FiizPbexVYfUQpf00Jso72MDJ4Fhuddntd4OkPr280MauxoB8DQIn
- baKlqYCfcNvsEPA2BflXV99+S6Q5nZsO/QuZaDf4szbyN2IegjPc/fUXtCJ631/YdzMxSDtQR
- YjQjkj1WPYpycVjFkhgpann2ulgH3VXQv9ow+epSwlUSRIO+5J9Uu2wYr8TcwWENU20ng9Sln
- fBQ03qnGiic+65GXkALsMYyTODBCF5gY4QsuGPPyugCi+z9TE8EtBhceQuXzlqLeGPtS6VFwT
- 1i3onEwxsxcaaGd+dQEwqwWplo3I58fmJqT6YWr00XVgklwDrWtikd5AJYYG50JOat6+g13u1
- E460JgugC8fJvGispU7+guhKeEthwiEzMf9
+Content-Type: text/plain
+X-Pobox-Relay-ID: F477C824-9909-11E9-B56C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
---8323328-334934356-1561659667=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi =C3=86var,
-
-On Thu, 27 Jun 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> On Thu, Jun 27 2019, Johannes Schindelin wrote:
->
-> > On Wed, 26 Jun 2019, Johannes Schindelin wrote:
-> >
-> >> On Wed, 26 Jun 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >>
-> >> > This speeds things up a lot, but as shown in the patches & tests
-> >> > changed modifies the behavior where we have \0 in *patterns* (only
-> >> > possible with 'grep -f <file>').
-> >>
-> >> I agree that it is not worth a lot to care about NULs in search patte=
-rns.
-> >>
-> >> So I am in favor of the goal of this patch series.
-> >
-> > There seems to be a Windows-specific test failure:
-> > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11535&=
-view=3Dms.vss-test-web.build-test-results-tab&runId=3D28232&resultId=3D101=
-315&paneView=3Ddebug
-> >
-> > The output is this:
-> >
-> > -- snip --
-> > not ok 5 - log --grep does not find non-reencoded values (latin1)
-> >
-> > expecting success:
-> > 	git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$utf8_e >actua=
-l
-> > &&
-> > 	test_must_be_empty actual
-> >
-> > ++ git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D=C3=A9
-> > fatal: pcre2_match failed with error code -8: UTF-8 error: byte 2 top =
-bits
-> > not 0x80
-> > -- snap --
-> >
-> > Any quick ideas? (I _could_ imagine that it is yet another case of pas=
-sing
-> > non-UTF-8-encoded stuff via command-line vs via file, which does not w=
-ork
-> > on Windows.)
->
-> This is an existing issue that my patches just happen to uncover. I'm
-> working on a v2 which'll fix it.
+> It does not make sense to stop non-interactive rebases when that config
+> setting is set to `true`.
 
-I just found yet another problem. When using a libpcre2 _without_ JIT
-support, I get this:
+The reader is assumed to know that that config setting is only about
+interactive rebases, including "rebase -x", which probably is an OK
+explanation.
 
-=2D- snip --
-$ sh t4210-log-i18n.sh -i -V -x || tail -20
-test-results/t4210-log-i18n.out
-ok 1 - create commits in different encodings
-ok 2 - log --grep searches in log output encoding (utf8)
-ok 3 # skip log --grep searches in log output encoding (latin1) (missing !=
-MINGW)
-ok 4 # skip log --grep does not find non-reencoded values (utf8) (missing =
-!MINGW)
-not ok 5 - log --grep does not find non-reencoded values (latin1)
-#
-#               git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$ut=
-f8_e
-#               >actual &&
-#               test_must_be_empty actual
-#
-ok 3 # skip log --grep searches in log output encoding (latin1) (missing !=
-MINGW)
+The subject needs a bit more work, though.  
 
-skipping test: log --grep does not find non-reencoded values (utf8)
-        git log --encoding=3Dutf8 --format=3D%s --grep=3D$latin1_e >actual=
- &&
-        test_must_be_empty actual
+"rebase: ignore rebase.reschedulefailedexec unless interative"
 
-ok 4 # skip log --grep does not find non-reencoded values (utf8) (missing =
-!MINGW)
+or something like that, perhaps.
 
-expecting success:
-        git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$utf8_e >ac=
-tual &&
-        test_must_be_empty actual
+> @@ -929,7 +930,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "root", &options.root,
+>  			 N_("rebase all reachable commits up to the root(s)")),
+>  		OPT_BOOL(0, "reschedule-failed-exec",
+> -			 &options.reschedule_failed_exec,
+> +			 &reschedule_failed_exec,
+>  			 N_("automatically re-schedule any `exec` that fails")),
+>  		OPT_END(),
+>  	};
+> @@ -1227,8 +1228,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		break;
+>  	}
+>  
+> -	if (options.reschedule_failed_exec && !is_interactive(&options))
+> +	if (reschedule_failed_exec > 0 && !is_interactive(&options))
 
-++ git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D=C3=A9
-fatal: pcre2_match failed with error code -8: UTF-8 error: byte 2 top bits=
- not 0x80
-error: last command exited with $?=3D128
-not ok 5 - log --grep does not find non-reencoded values (latin1)
-#
-#               git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$ut=
-f8_e
-#               >actual &&
-#               test_must_be_empty actual
-#
-=2D- snap --
+OK, it used to be that we got affected by what came from "options",
+which was read from the configuration.  Now we only pay attention to
+the command line, which makes sense.
 
-This is actually a correct error, as we specifically feed non-UTF-8 text
-to PCRE2, but we do turn on the PCRE2_UTF flag.
+At this point, we have already examined '-x' and called
+imply_interative(), so this should trigger for '-x' (without '-i'),
+right?
 
-Funnily enough, this error only occurs when `pcre2_jit_on =3D=3D 0`, i.e. =
-when
-we hit the code path that calls `pcre2_match()`. When the alternative code
-path is used, `pcre2_jit_match()` is called, and it does _not_ print that
-error.
+>  		die(_("--reschedule-failed-exec requires an interactive rebase"));
 
-Whatever the bug in libpcre2 that causes the JIT code path to fail on the
-Unicode validation, it points to the problem in this code in
-`compile_pcre2_pattern()`:
+I wonder if users understand that '-x' is "an interctive rebase".
+The documentation can read both ways, and one of these may want to
+be clarified.
 
-=2D- snip --
-        if (is_utf8_locale() && has_non_ascii(p->pattern))
-                options |=3D PCRE2_UTF;
-=2D- snap --
+	-x <cmd>, --exec <cmd>
+	...
+	This uses the --interactive machinery internally, but it can
+	be run without an explicit --interactive.
 
-It only asks whether there is a non-ASCII character in pattern, but we
-never bother to see whether the haystack is also encoded in UTF-8. In this
-case, it is not...
+Is it saying that use of interactive machinery is an impelementation
+detail the users should not concern themselves (in which case, the
+message given to "die()" above is misleading---not a new problem
+with this patch, though)?  Is it saying "-x" makes it plenty clear
+that the user wants interactive behaviour, so the users do not need
+to spell out --interactive in order to ask for it (in which case,
+"die()" message is fine, but "... internally, but ..." is
+misleading)?
 
-Ciao,
-Dscho
+> +	if (reschedule_failed_exec >= 0)
+> +		options.reschedule_failed_exec = reschedule_failed_exec;
 
-P.S.: Yes, yes, I know, we should run PCRE2 with JIT, and I am trying to
-figure out why it is not enabled on Windows when I specifically asked
-`./configure` to enable it... Investigating now.
+OK, here we recover the bit that is only stored in a local variable
+and pass it into cmd_rebase__interactive() machinery via the options
+structure, which lets the codepath after this point oblivious to
+this change, which is good ;-).
 
--
+>  	if (options.git_am_opts.argc) {
+>  		/* all am options except -q are compatible only with --am */
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index bdaa511bb0..4eff14dae5 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -265,4 +265,12 @@ test_expect_success '--reschedule-failed-exec' '
+>  	test_i18ngrep "has been rescheduled" err
+>  '
+>  
+> +test_expect_success 'rebase.reschedulefailedexec only affects `rebase -i`' '
+> +	test_config rebase.reschedulefailedexec true &&
+> +	test_must_fail git rebase -x false HEAD^ &&
 
---8323328-334934356-1561659667=:44--
+These three lines gives us a concise summary of this patch ;-)
+
+ - The test title can serve as a starting point for a much better
+   patch title.
+
+ - We trigger for '-x' without requiring '-i'.
+
+> +	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
+> +	git rebase --abort &&
+> +	git rebase HEAD^
+> +'
+> +
+>  test_done
