@@ -7,67 +7,83 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F01411F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 17:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16F4A1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 17:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726659AbfF0RnZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 13:43:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50715 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbfF0RnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 13:43:24 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E10D157434;
-        Thu, 27 Jun 2019 13:43:22 -0400 (EDT)
+        id S1726542AbfF0RxT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 13:53:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56487 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726405AbfF0RxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 13:53:18 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD5DB7B560;
+        Thu, 27 Jun 2019 13:53:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pFL8HCIjGd9j8pXJPnFESapJnsw=; b=nTvQA2
-        H+QdH0fk7WtDLEBAhxhiiZut33yPv8RsmBmLHT9PWUQw/cStMVJI+RZaDztPCGOu
-        G7swA90FTzwutdcTil6PNd7t8fXbWNV+vn+K1llLmO3uZypTNIGlSF6S6zOqdaep
-        Szi/FkDmfcWneAFdYuol0pL62fGXB6djXevNE=
+        :content-type:content-transfer-encoding; s=sasl; bh=LfQ2EFw5EKY7
+        LVPzqqW/r5qO9lg=; b=a9yc1iZ0vhmZgTofzXQftRcIkDPuMulcxmNvJTxGoyLG
+        tbA9OkEfRfSKSFTVQrydBHbLaAokua9dCGGrSpp59rFy8wEwuuzssRpCkFVqRCAu
+        b1P+sDYXmApdPaBGblx3vTBjv0h0RFvwEF8YFGYSqePzRxGvFCKYaSng9atmu1Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fuvcYNMFwcZ88BsL6T/XyqWT0xN4pa5a
-        yGrD6Qkn/vDHpsSVY+S2y9NLrvKg86AJC+M+xBYPjvCuZHYhimV0/6bi55xZptEC
-        aex39v1Yfho2EzxCaeBNGqJOBZsJ2oANP7XkGoBmL5T9NZG5dmkOrCaDjqEg3p+5
-        V2tj3w8Y8tI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7542E157433;
-        Thu, 27 Jun 2019 13:43:22 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UdghaD
+        HWY8Yz33LeKEY473KOJWuPbQl9iBA7WwugXxCNboCt0L5MooxuYt/h6NPHKKuciK
+        D+NznJDTmYAuUW3DIyAZKftAusLBcb2pFzgrsZcTNvPzcfmSx2nN0c4g9S8SHi1a
+        YO8DJu5fAZDtTENauJYWt8DJMDDM7p73t6ZIA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4EF97B55E;
+        Thu, 27 Jun 2019 13:53:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7B50157432;
-        Thu, 27 Jun 2019 13:43:21 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C2DE47B55C;
+        Thu, 27 Jun 2019 13:53:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Dr. Adam Nielsen" <admin@in-ici.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] make slash-rules more readable
-References: <20190604173446.2664-1-admin@in-ici.net>
-        <bd722415-1547-8db5-f88a-c35c8b48d8be@in-ici.net>
-Date:   Thu, 27 Jun 2019 10:43:20 -0700
-In-Reply-To: <bd722415-1547-8db5-f88a-c35c8b48d8be@in-ici.net> (Adam Nielsen's
-        message of "Tue, 25 Jun 2019 13:05:13 +0200")
-Message-ID: <xmqqd0iyc4av.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/4] Some more on top of nd/switch-and-restore
+References: <20190620095523.10003-1-pclouds@gmail.com>
+        <xmqq8stoce5w.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8Di1720RhDxgieVNTfpNONJhi5ZniKje=wj4pZDy-0EwQ@mail.gmail.com>
+        <CACsJy8CeChO6wJkr_Pp8aH1a6rJwUCDYtK89SLwLw_9KOgQHeA@mail.gmail.com>
+Date:   Thu, 27 Jun 2019 10:53:12 -0700
+In-Reply-To: <CACsJy8CeChO6wJkr_Pp8aH1a6rJwUCDYtK89SLwLw_9KOgQHeA@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 27 Jun 2019 15:53:43 +0700")
+Message-ID: <xmqq8stmc3uf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0E83DC46-9903-11E9-9D22-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6FEB874E-9904-11E9-8949-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Dr. Adam Nielsen" <admin@in-ici.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Hi everyone,
+> On Thu, Jun 27, 2019 at 9:53 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> On Thu, Jun 27, 2019 at 2:58 AM Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> >
+>> > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>> >
+>> > > This is small refinements (except 4/4).
+>> >
+>> > What's the status of these?
+>>
+>> Small test fixup needed. I should be able to do it later today.
 >
-> any comments about the patch note from 04.06 ?
+> Actually since the patch that needs updates is 4/4, which is not part
+> of nd/switch-and-store-more, I think the status is "ready". You
+> probably could safely make them part nd/switch-and-restore.
 
-https://git.kernel.org/pub/scm/git/git.git/log/ shows that the topic
-holding the patch has already been merged to the 'master' branch
-about 6 days ago, at
+Yup, that matches my understanding after re-reading them.
 
-https://git.kernel.org/pub/scm/git/git.git/commit/?id=e694ea5e04ea2cabc64ade337063b5562810b268
-
-Thanks.
+Thanks.\
