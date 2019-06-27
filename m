@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095101F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 04:50:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36BF1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 04:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbfF0Eul (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 00:50:41 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38248 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbfF0Euk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 00:50:40 -0400
-Received: by mail-wm1-f66.google.com with SMTP id s15so4197556wmj.3
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 21:50:39 -0700 (PDT)
+        id S1726663AbfF0Ey2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 00:54:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36102 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbfF0Ey2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 00:54:28 -0400
+Received: by mail-wr1-f65.google.com with SMTP id n4so848270wrs.3
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 21:54:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=K3OeQ5s8pOLIUXFBu4OI1v0CnJnTURdrss8rMBsWS0w=;
-        b=hcoC+4GhDlMtqJknDl/I2FROiLktl2aKf/ivOv9KQHvOAI5psvPQxZlx1G6uEV56LY
-         TOyrCOiVMXcNbBcIJSm4EP6ft/tXKCUsIn0Bs2d1dxTvTXb3E120kLJrIyuS/igCovtn
-         9SNWh1S2kl55AkA53/FYECehH25PiAJZBn7M3uyzGUWQ1dvDOOxoPuk38XpN4L6VflcD
-         bZbxDzw4L2jPmMZDCNz+8Ode1UzqLmDnKMxqEtBobZZXEo9NtYr6Lilch22nskteVTkB
-         7AuYxFH+aIZMMU4dpIFTCgkHVojsXb+VKzQ7lGZiWs1ecegT3GOEXWNf6GFjSo2rUlwe
-         A73Q==
-X-Gm-Message-State: APjAAAXSDLnzCHL+FgY9Y851QMbut5hswAJXkH0whGvgwDFHcldtw2G5
-        +1ZlEt+vTNv1jKdXcvyp570+BJT4ppbQKBgLeXQ=
-X-Google-Smtp-Source: APXvYqxDuZgzd9j/bNtrXl9cUkKifzybwFuPT7+q0+VojiocF4U0TgEqJEdljr/Lw6eTWM76SpJG1RbAxZ4rFU9o6Dc=
-X-Received: by 2002:a1c:f319:: with SMTP id q25mr1447778wmq.129.1561611038721;
- Wed, 26 Jun 2019 21:50:38 -0700 (PDT)
+        bh=dL60yh+4N4iKnxgJDXiatTO9usSj7ulTugdzGkQCFDg=;
+        b=pe01IYRkVgQRSHldyfbD7tG1hH6HBEByH3q/P8bRkoS86TApR8KYy38KE6tsgaRprz
+         KuHCg/OjGMN1I2E3Jjs1FGK4sKVxa62Jqi0jt1zsgJLrzaEVrhsFSpLg2nAN0LVAU2gl
+         wbdp7jhEuM55YUjFX/EVoYLIzrDHMk+xdKMI+zTRbZKr9UkRBHJk4kW5a4Fw+UNEEEvi
+         tirsbsTFHkSZuCEtvmBzhvBVznwiM63pIBqHoi//s6tgIUi6q1PH0pBvKRE3w3eN/XFE
+         RnUFtRnYgWPEgXZkrByybsyuA7llxJTQeAIRRrC4thqeRSDTPhKyd3CgIho7Mk+FZi/Y
+         Bfrg==
+X-Gm-Message-State: APjAAAVikasPrUqDjrigWCLQNB1wQuRBX5IsDHRqggq9/ClIyaZ9q31Z
+        AiemRHIAV56/eXcCxZUlhNdLWN2SK22yE7W2e6I=
+X-Google-Smtp-Source: APXvYqzO016ub6gmcPobOF2MoggC9ICTra9DvLGbznUnibCyQnLZDw4G93eECgBvxLSgjbT4oJTs6+vQNXdRcvaH3aw=
+X-Received: by 2002:a5d:4fce:: with SMTP id h14mr1197066wrw.231.1561611266205;
+ Wed, 26 Jun 2019 21:54:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-3-emilyshaffer@google.com>
-In-Reply-To: <20190626235032.177551-3-emilyshaffer@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-5-emilyshaffer@google.com>
+In-Reply-To: <20190626235032.177551-5-emilyshaffer@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 27 Jun 2019 00:50:28 -0400
-Message-ID: <CAPig+cTk9=sd7iqwDT=ynRuAvyh3gj3NKQwkv9_tBo1v28Xysw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 02/13] walken: add usage to enable -h
+Date:   Thu, 27 Jun 2019 00:54:15 -0400
+Message-ID: <CAPig+cT4=qMers5QTGCCPJx9=ej6rPUHjA94SqChxXBdJDTdmg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 04/13] walken: add handler to git_config
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -50,25 +50,26 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> It's expected that Git commands support '-h' in order to provide a
-> consistent user experience (and this expectation is enforced by the
-> test suite). '-h' is captured by parse_options() by default; in order to
-> support this flag, we add a short usage text to walken.c and invoke
-> parse_options().
-> [...]
+> For now, we have no configuration options we want to set up for
+> ourselves, but in the future we may need to. At the very least, we
+> should invoke git_default_config() for each config option; we will do so
+> inside of a skeleton config callback so that we know where to add
+> configuration handling later on when we need it.
+>
 > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
 > diff --git a/builtin/walken.c b/builtin/walken.c
-> @@ -5,9 +5,34 @@
->  int cmd_walken(int argc, const char **argv, const char *prefix)
+> @@ -24,11 +25,36 @@ const char * const walken_usage[] = {
+>  static void init_walken_defaults(void)
 >  {
-> +       [...]
-> +       /*
-> +        * This line is "human-readable" and we are writing a plumbing command,
-> +        * so we localize it and use the trace library to print only when
-> +        * the GIT_TRACE environment variable is set.
-> +        */
->         trace_printf(_("cmd_walken incoming...\n"));
+>         /*
+> -        * We don't actually need the same components `git log` does; leave this
+> -        * empty for now.
+> +        * We don't use any other components or have settings to initialize, so
+> +        * leave this empty.
+>          */
+>  }
 
-Also, this in-code comment should have been introduced in patch 1/13,
-not here in 2/13.
+Meh, I don't think this change has anything to do with this patch. If
+the rewritten text is the one you prefer, then just introduce it like
+that in patch 3/13 where the function itself was introduced.
