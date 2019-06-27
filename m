@@ -3,93 +3,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE1DA1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 17:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD4A51F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 17:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726540AbfF0RTS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 13:19:18 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57056 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726315AbfF0RTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 13:19:18 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8FB9F69C2A;
-        Thu, 27 Jun 2019 13:19:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RlaCry+Xb54YXa1Naw8gwlFMfPI=; b=fhjZqG
-        9uPsMhEiz70PhlCOZcflvN+bppD1veN0TGkowVRJ7YBnzrDhPk2IAto15k1XRKa1
-        kSfhPzJchaDhXt1N0QYB5+jo4bAUaD0a603mgT+aT22d9VYXNzY6iT99VtH2Dm9e
-        WjVsYONyAo6dAJOakCyKEaY3FyT9g3lN4MYIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cuQvmqbv/+WHo0ZtFbGm7FK3jyp+XO2p
-        mj2AdeQuiKMS0hn2Pg4k+5UVXA4wG5MLuvSfX0ceTALNWAJyH4nK77xtz6xz0NR5
-        E3bnypoaAnw8T08C5nyYZKLOZYEZux6dhRxbbIqkHC9JCUufPSKu0rfb8RjTAuDf
-        TxIHFXVPs+o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8834669C29;
-        Thu, 27 Jun 2019 13:19:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B43169C24;
-        Thu, 27 Jun 2019 13:19:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/3] sequencer: always allow tab after command name
-References: <pull.275.git.gitgitgadget@gmail.com>
-        <pull.275.v2.git.gitgitgadget@gmail.com>
-        <a5bede1cf9cba89c354779e559e19d7a2fffa1eb.1561644762.git.gitgitgadget@gmail.com>
-Date:   Thu, 27 Jun 2019 10:19:11 -0700
-In-Reply-To: <a5bede1cf9cba89c354779e559e19d7a2fffa1eb.1561644762.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Thu, 27 Jun 2019 07:12:44
-        -0700 (PDT)")
-Message-ID: <xmqqlfxnaquo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726524AbfF0RXc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 13:23:32 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:39167 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfF0RXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 13:23:32 -0400
+Received: by mail-io1-f65.google.com with SMTP id r185so6485877iod.6
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 10:23:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v6GC57ydUyrK1i6sF5yA7IvL8Q5N9TN1nUNV7r1w5GA=;
+        b=bjCtUb7SPF5YgCK+JKhUi8omR/LTdonW1DhvwJ2SHL40fwkclmGakgPY9pD9tZU06Y
+         /AU2QCXsn/E5T+t+0RQ6fZY7uPBb2Uw7/QlEa0tJrdiz5/ZsS5AUlY5WyYh1us3xsZ1C
+         SEfvUC/+3FVZblER0xbQLDiPJqPFVKicXUyzYoSv+yL6rpFwiwaoS8D//H/2iJgAK6b3
+         /fvGu027pCLC/HGLi+SEBxCBjHwyOL/44HkGIduWUIIm0zxcTyo5VCsDcIHKlwstKsSv
+         wNntjwRglNCLneMzoomeTQSs/QUB1bSoZ3ojXY4srBKbHSM0qWjm6ZrkPuUouss+mySN
+         YEhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v6GC57ydUyrK1i6sF5yA7IvL8Q5N9TN1nUNV7r1w5GA=;
+        b=eoMxYfD6CeA1QdD8X+S+wRx5jrGhvCS3m50aVUbenJH6z3Es438B26rgkqPN0jdWTY
+         kyAwDkn9Y3oosv7m5MnAWcOVCGODY6Plv5skHGgTQ7j4PuInuf/OChRNwt5gmUKCuIFE
+         voawWzs/S4IAXVjr19MGXOg2Fowp6r0guf7ES5iyiKbBOM3oVN/JFN6dtsY47dJJByFD
+         uQKMw/dLPLa/MR6NDl+zWAUTxFDUKZ//hawvdEgPVrMeoC6m02GGAV5Ae8TLT+NF40Fe
+         KK282h2TjU9Mw9suJrXmLOFb0ztCG2HXITG/LNe0eLUjsxb6LgmAChWlUw72ZbUwFMSL
+         G+FA==
+X-Gm-Message-State: APjAAAWKCKKvmrs1QHFodnVb4BTqbH+kTOqm2W7DM+B8twlL6TQPRTit
+        B5StpwUpPrjN/Hv8FwPNmcreYG8fbieAnGeci8uzxw==
+X-Google-Smtp-Source: APXvYqwdOGvTMnAOx9GCdc81DEInbkzUgvR09UB5K3DxgEH9JVjDlla1K/tv6a0wVVG2A8ZR3qNt3U0W+J+Oz4DJcMA=
+X-Received: by 2002:a6b:e20a:: with SMTP id z10mr5887062ioc.76.1561656211543;
+ Thu, 27 Jun 2019 10:23:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AF4ABDC4-98FF-11E9-993A-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <cover.1560898723.git.matheus.bernardino@usp.br>
+ <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
+ <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 27 Jun 2019 14:23:19 -0300
+Message-ID: <CAHd-oW5zea9wzobAQG4FzN-KSS5BsRoM5vf_x_F83=yqGRfUQw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Wed, Jun 26, 2019 at 3:04 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The code that parses the todo list allows an unabbreviated command name
-> to be followed by a space or a tab, but if the command name is
-> abbreviated it only allows a space after it. Fix this inconsistency.
-
-Makes sense.
-
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  sequencer.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > Hi Matheus,
+> >
+> > On Tue, 18 Jun 2019, Matheus Tavares wrote:
+> >
+> >>[...]
+> >> +/*
+> >> + * Look for a recursive symlink at iter->base.path pointing to any directory on
+> >> + * the previous stack levels. If it is found, return 1. If not, return 0.
+> >> + */
+> >> +static int find_recursive_symlinks(struct dir_iterator_int *iter)
+> >> +{
+> >> +    int i;
+> >> +
+> >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
+> >> +        !S_ISDIR(iter->base.st.st_mode))
+> >> +            return 0;
+> >>
+> >> +    for (i = 0; i < iter->levels_nr; ++i)
+> >> +            if (iter->base.st.st_ino == iter->levels[i].ino)
+> >
+> > This does not work on Windows. [[ Windows port does not have
+> > usable st_ino field ]]]
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index f88a97fb10..919e3153f5 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2100,7 +2100,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
->  			item->command = i;
->  			break;
-> -		} else if ((bol + 1 == eol || bol[1] == ' ') &&
-> +		} else if ((bol + 1 == eol || bol[1] == ' ' || bol[1] == '\t') &&
->  			   *bol == todo_command_info[i].c) {
->  			bol++;
->  			item->command = i;
+> And if you cross mountpoint, st_ino alone does not guarantee
+> uniqueness; you'd need to combine it with st_dev, I would think,
+> even on POSIX systems.
+
+Ok, thanks for letting me know. I'm trying to think of another
+approach to test for recursive symlinks that does not rely on inode:
+Given any symlink, we could get its real_path() and compare it with
+the path of the directory current being iterated. If the first is a
+prefix of the second, than we mark it as a recursive symlink.
+
+What do you think of this idea?
