@@ -8,62 +8,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD501F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 12:54:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A98181F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 13:04:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726497AbfF0Myh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 08:54:37 -0400
-Received: from mout.gmx.net ([212.227.17.21]:33199 "EHLO mout.gmx.net"
+        id S1726542AbfF0NEO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 09:04:14 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50459 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726059AbfF0Myh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 08:54:37 -0400
+        id S1726059AbfF0NEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 09:04:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561640071;
-        bh=u7ucvH8Mst2Ah+MxyMx9p3+xw9l/fuGAK6NtV30oyws=;
+        s=badeba3b8450; t=1561640648;
+        bh=7SbNShYIcVj6zy6fdBJvPtVv8JfAGhFI+0534XYymiY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hsuOckQM4Pry8fr2fAO0FQyAFxTPQGQveS/KsVnCAeMYaH60aJrXEvgqDTi4bWNb3
-         kDxFp6EKpVo1SvBetpXRPwNqq5c1qiLsXzKP8ED7w8mym24RmzCjfGrZArarczfLUi
-         knkrudsER6dUT/1s3HqZurzVbNeSbNROlKfOWTwA=
+        b=VM3getbUwcfrvz94RoMCcGUsXW93NgfEfYV/H+GxqK409+wI1egXnYOGzj30GKqtl
+         ypETmO1+gcEu+h5Ww6IVJJDs5RypmiVPEyEABS6a5fMkWIEAZ61M8t2R2lZOUY3s1z
+         wvFgpJBmJPyoO7MgcesdLk0OnNUcGQMY5KNIDcxE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbPza-1iR39g3sWg-00kv8n; Thu, 27
- Jun 2019 14:54:31 +0200
-Date:   Thu, 27 Jun 2019 14:54:52 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltr89-1if9FF0xWv-011DvW; Thu, 27
+ Jun 2019 15:04:08 +0200
+Date:   Thu, 27 Jun 2019 15:04:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] sha1-file.c: remove the_repo from
- read_object_with_reference()
-In-Reply-To: <20190624095533.22162-2-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
-References: <20190624095533.22162-1-pclouds@gmail.com> <20190624095533.22162-2-pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Kill the_repository in tree-walk.c
+In-Reply-To: <xmqq5zose00p.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906271458240.44@tvgsbejvaqbjf.bet>
+References: <20190624095533.22162-1-pclouds@gmail.com> <xmqq5zose00p.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1738728013-1561639827=:44"
-Content-ID: <nycvar.QRO.7.76.6.1906271450360.44@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:ccKgoftuue6YeFOQXdXG3PkgdhcrnZaGN6Q6iP+YRNX5iU0spED
- DaAhh0s2c/IdZLJ5Cfz0dO0RPqVFu3uh42jh60W7Iz1yVZa13LkdP5WjYj7HfUYGFy/Y7UF
- /A4C2ra0UJv0TlPLTHJcO4F9Y91tsprF3R374CDMcoBUhTeQeDzZgV9EjJsX1Sed7pYeOZ0
- yiMpa1X63q0O9Huo4r7Pw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a0RStg4TJ/Q=:k5HkfYeon4eUOen+z2W4pp
- Ri07aMVO/38dGrnLbTmG+LkcuuDCzLgMAM5IyE6//6PtIagQz4Glm99Tc8RLIAgxOk6Yabtm6
- NCXD2R+QKBBRx0uB0i7fNuJNg2OaxAq7gGuqbzHs4q9I07AjB1JZcXgADZ35nwSmRk5HtI3nt
- J5Gx+m5ppaVEyYtYEVQ7xZtOCafyd0alWhoHBTBE1nZ+1j1BZOcwb2AsmjORMAB+kNNtDbpuh
- ixNKYPqdsXNyGMhlo3FDdPbYCew9asL86Gk227ZLckVS7di4+P1UZiezlVLS4eudHDIlM+BOe
- ArkC9fkqKM1sJMkEXezAjMk6DwDHVrP0K4oo7EI+DXXu0kPIFzDOHBoJ3m+h13gCmYjSNdJuT
- VoOtKQt8oX8g9AXUzpLJpsxpWKuthLFKXyKxcQAsxgwKzBWsY5wEYpB0BR8uE2j1pGInsIHB9
- GoUaPVkAeiIrkEPHAkpIvIupjv4YRt2DcH5AbJmOttNx+s7E2vmcCOOR+W/gpiqp8YQT4bHiZ
- dbKTesrulzJiiplA5SzDwLn70HiB1cCKo0fwI5WcI49dT2HfXW1TKTF4jYTsE2BCFpUocmAVy
- 7RdFkOW7MnZ5/jFbtDHgMzA2N8PfGozXfECEnZNwvrs2XTD0z1IRBll5MYB3q0R1n5L4aWoM+
- lpHksjCnY45gbsFfLNvMG5vebYA2IxZUPr4cnvRl00blsP5/pmeGtg/eq5rk88+xIPE/RIhyZ
- mjIKDDPslWocwyyQmhqBOLrAIUkDaT/1gHCiGI/E3EWeuF5gjtlHBYCMdFNm0NmME2udQtXfA
- 28H4ucHLReUnAE4HEsvhR5Up9k5vYmS2hSl5S3doKmUZBVFOVLers5uXsV99C6LOCwmWr74j4
- nhXKEo9LuswmxNq+r2EOX/JqxIspxVPWQf06Ni3VOjfjF5JUJYLsDuCNw0gFVNG5PtgFBGoPs
- HP+FtcgkiXD3SuZK80icqcpeEHS2hMvjy21D9Q22MqS7puA4OuC2I+6Wmjsqob3YxGaDhzVhS
- QJ56WIYOZ7v2aCrLK1w4mEd4FPYWl/xwW8rMQYCc2M9Jv1oEvu5ltcTzA3D0eQucNNWG/y5Sd
- Is7fp5tBdUXaCLR2fEuZ8dv70+A6c0/87ts
+Content-Type: multipart/mixed; boundary="8323328-105596653-1561640670=:44"
+X-Provags-ID: V03:K1:Ez1RjA0WIB7aHNdyuojRjoan+DESdkvCH2Rt1zErJ275CDunelX
+ oXscbOL3UP7IUwW3tzbJvFbEmifBMJ9dFhmMXVCkcciaYYNoLummT0L5m2lyBEofjTdsGwE
+ f+767Aa+BNI4sVv0+97XrcA31wO0R/LKtKYeXg2/e2OjIuWQwRgF0NffARzK7Mpy0lwgXhP
+ QesH0eYeaGQ7LWU3KObPA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xBlQQaTjyyM=:Xa0nyBfNzGyk5oCWxD0cOC
+ P8whqZDXqcNv5G18mX0iD3pLqze7vqkJlGjXHGLQPC6VNFTZge9FGk260xbLxgJDZEhI16sSE
+ yJzXBmVmtZ4Oj4dNgyxjphHh5+onGJmMN5ElNBEw84zmIP7++mk+cChhc+ZAfwBvAWq0NC1n2
+ DX21JNnJ5WOscIr1UQpCEd/su963lP1m9EXXhus/ZaAhaWZG2nZAAdtLmF+9hkn9sPaE3KDQ4
+ 5No+cN+gC1FjUMkvqM5Qee1iSD3w6qFgUE7/G8O/fawMOh7mxxOUXDFBP3JLZZ1FZsdPJognB
+ RFZ0e2gZpHehrLcaCHsCCDdr1+QW3g9OpatFCMKmh+J6O4ZPLyCGXuzmP0tteyoPbY8Mtx/sV
+ bvkNNCZ++g5mBhYIXEZOO9XJ0dDmfpBGUNxtdxJj+/kxep5RWXT0pi1VThkwEJdGIGZ0P+5wl
+ 8QuQgmhGTw2MQ520OVy9i/MskuTbGegc66C4GE2qurAZm++Aph9uGZCE7eK283P8S+7fgLvMN
+ znLexJjtQLvtCoNgk6F80mfcTL4AZYmb5TRQ6EzCl0Z4Nrft2ZWxIkHN+p/NOStfANj+/Bw3n
+ emKxgIVmNzuOiOlDp7WId3hMd4d3s+JY1zV5QaNKj+BfFGHTzNh3rSR7JTM7EVHoFYIO4jOnT
+ ufCALo1zKwD2ANzNWMxgMz3m8ZTphZL5SFptkUqePNmQIJ7hwr6SqNSI1f7Lhj3g0j/PVWWku
+ cZwX6BZt8IIwUpy2w474ykUGCyucXLTVQCN2NXUokGFj/bNvs8AMPNy6iKTUQ17x5HDPIsvEp
+ yv1cI+I/e9EpCiFFQGv/vG/lZ5Sp1lVMeM7F+34+/FRPb/1auNh7uycapbNtv8cH4neKSC8+T
+ NakYsAeK/NyH+oF/xH2v32Y3nNKioYlJOqTBeRKIzjBjU1709GKZ65fQkBu5fxvkfxVqI4lmr
+ lDxtMDhJPg24bQbV1RngFc1HcyKjShlJB+45o2yK/LTxUf4s+MCB9hhd8TWwkd7LcdF7Rg+DC
+ cUP1aGTBuXdx7CwoP/zPq4uWG4DqTR79HHhWFPpgNZrLdKtC/JePEfItcyrjDupnFXsFIW1zm
+ AZGw5pZa0XhuF2btdAsnxKp6w2VOtptXm7w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,57 +70,37 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1738728013-1561639827=:44
-Content-Type: text/plain; CHARSET=UTF-8
+--8323328-105596653-1561640670=:44
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.1906271450361.44@tvgsbejvaqbjf.bet>
 
-Hi Duy,
+Hi Junio,
 
-On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Wed, 26 Jun 2019, Junio C Hamano wrote:
 
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 580fd38f41..85da7ee542 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
->  		object =3D parse_object_or_die(oid, oid_to_hex(oid));
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
->  		grep_read_lock();
-> -		data =3D read_object_with_reference(&object->oid, tree_type,
-> +		data =3D read_object_with_reference(opt->repo,
-> +						  &object->oid, tree_type,
-
-Junio's hunch was absolutely spot on. This conversion is incorrect. If you
-replace this `opt->repo` and...
-
->  						  &size, NULL);
->  		grep_read_unlock();
+> > This is the continuation of nd/sha1-name-c-wo-the-repository. In that
+> > series I sealed off one place in sha1-name.c that cannot walk trees
+> > from arbitrary repositories. With tree-walk.c taking 'struct
+> > repository *' directly, that check in there can now be removed.
 >
-> @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const s=
-truct pathspec *pathspec,
->  		int hit, len;
+> Thanks.
 >
->  		grep_read_lock();
-> -		data =3D read_object_with_reference(&obj->oid, tree_type,
-> +		data =3D read_object_with_reference(opt->repo,
+> With these queued on 'master', t7814 seems to become flaky (tried
+> running it with --stress, with and without these patches).  Are we
+> touching a wrong index file in some codepaths or something?
 
-... this one with `the_repository`, t7814 starts passing again.
+It's not flaky, as it fails consistently, and yes, we're touching the
+wrong repository in at least this one code path. I think I would have
+wished for a more careful conversion in this patch series, as it does
+touch critical code paths.
 
-It makes me very wary of this patch series that this bug has only been
-caught by a CI build. You probably did not run the test suite before
-sending this patch series.
-
-I also wonder what the rationale was to deviate from the strategy used in
-the remainder of the call sites, where no attempt was made to use an
-already-available repository pointer that might, or might not, be the
-correct one.
-
-It strikes me as a pretty important goal of this patch series to _not_
-change any behavior, and this bug makes me dubious that all diligence has
-been done to assure that.
+Given that this bug was only caught by a failing CI build, it does make me
+wonder what other bugs are hidden and would slip into our code base just
+because of gaps in the code coverage.
 
 Ciao,
-Johannes
+Dscho
 
---8323328-1738728013-1561639827=:44--
+--8323328-105596653-1561640670=:44--
