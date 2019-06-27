@@ -2,105 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A98181F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 13:04:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43FB91F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 13:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726542AbfF0NEO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 09:04:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50459 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726059AbfF0NEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 09:04:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561640648;
-        bh=7SbNShYIcVj6zy6fdBJvPtVv8JfAGhFI+0534XYymiY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=VM3getbUwcfrvz94RoMCcGUsXW93NgfEfYV/H+GxqK409+wI1egXnYOGzj30GKqtl
-         ypETmO1+gcEu+h5Ww6IVJJDs5RypmiVPEyEABS6a5fMkWIEAZ61M8t2R2lZOUY3s1z
-         wvFgpJBmJPyoO7MgcesdLk0OnNUcGQMY5KNIDcxE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltr89-1if9FF0xWv-011DvW; Thu, 27
- Jun 2019 15:04:08 +0200
-Date:   Thu, 27 Jun 2019 15:04:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Kill the_repository in tree-walk.c
-In-Reply-To: <xmqq5zose00p.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1906271458240.44@tvgsbejvaqbjf.bet>
-References: <20190624095533.22162-1-pclouds@gmail.com> <xmqq5zose00p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726511AbfF0NMt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 09:12:49 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45772 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726441AbfF0NMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 09:12:49 -0400
+Received: by mail-io1-f65.google.com with SMTP id e3so4529617ioc.12
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 06:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=woHe8hLOgc3AZIQfUFjPb4En7JyPGWGgbA5az012YaY=;
+        b=gAp9OG37Jr1TNMzMhwaHELCvxxrraGfkWFif3pIeXdgnNUNcJ9Qv+aCZ+BF/I9DKd5
+         PtYlNWME6QZkv3sE98Fv1knhyw684LfS8JCJcHRyf/k1qB60O3b9yZBJzgpzsjNjsq8c
+         C6XbOTeUsM0ifwN2YIdXyFoFkZLcmNht9rYzhCZksEAQ6JMxa+PmHexVLgFki7eD9BZC
+         3DBUC4S+Q1E05V6NJ8zMppjn5+AuvT0M3W+0XhFlCAuPvAiekLgUxgs3Y2INGrJd7Zqq
+         E3wog95ue3+zuqChVtyrASNYvCMThH1/Zmf9icaJpq5g3CvsqEjJK1WXzqbEDzmujhJ6
+         eIsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=woHe8hLOgc3AZIQfUFjPb4En7JyPGWGgbA5az012YaY=;
+        b=MM7AWSNBcKjB/ZtS3nCKwfvXLyPeRxzoHU3maz0I7/9vVks9pte0W8PgANVEDN0566
+         x7SzhMC+8/mpCXDtp4b3I+zYRBUYZ1TSFt8ZMFUqEdcFgYLKU21c0Lezwz29oZWBCH9O
+         4ecLSTf39IqlXxLspfiXmr5/pG7FydYZvynLZGjsnx1O7vdr4uB+vVmjQVEfDipXfP00
+         XyhTXiLxfkAk0BTbdEAe1C0rio+0pLc78XcjDLjxIbd24XDPxjql/TGinBkBVXbpxmq8
+         J/HoXpoVvDvBSzhFLVJGtaDtWNQKnoHRfcqBlaLpDRxNrt6GysjcuXjC4umvY9GjIBIH
+         rDpg==
+X-Gm-Message-State: APjAAAVCD8XDcv8IPvYzJzbIuk90stsNzFDtMGkWf0pLJmHkc5OzwVe3
+        tkG7nf0Be7SUGWDWOKMJLn069oVNw32SuVtAhQ0=
+X-Google-Smtp-Source: APXvYqx6abkEp1pN06md6QAeE7KdQ6naqWEPtpE2lVQAZToGylcm3zjmQS5BAkPHORs9ld0SqbZw3SMoWR0dgza3feg=
+X-Received: by 2002:a6b:f80b:: with SMTP id o11mr4425751ioh.40.1561641168672;
+ Thu, 27 Jun 2019 06:12:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-105596653-1561640670=:44"
-X-Provags-ID: V03:K1:Ez1RjA0WIB7aHNdyuojRjoan+DESdkvCH2Rt1zErJ275CDunelX
- oXscbOL3UP7IUwW3tzbJvFbEmifBMJ9dFhmMXVCkcciaYYNoLummT0L5m2lyBEofjTdsGwE
- f+767Aa+BNI4sVv0+97XrcA31wO0R/LKtKYeXg2/e2OjIuWQwRgF0NffARzK7Mpy0lwgXhP
- QesH0eYeaGQ7LWU3KObPA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xBlQQaTjyyM=:Xa0nyBfNzGyk5oCWxD0cOC
- P8whqZDXqcNv5G18mX0iD3pLqze7vqkJlGjXHGLQPC6VNFTZge9FGk260xbLxgJDZEhI16sSE
- yJzXBmVmtZ4Oj4dNgyxjphHh5+onGJmMN5ElNBEw84zmIP7++mk+cChhc+ZAfwBvAWq0NC1n2
- DX21JNnJ5WOscIr1UQpCEd/su963lP1m9EXXhus/ZaAhaWZG2nZAAdtLmF+9hkn9sPaE3KDQ4
- 5No+cN+gC1FjUMkvqM5Qee1iSD3w6qFgUE7/G8O/fawMOh7mxxOUXDFBP3JLZZ1FZsdPJognB
- RFZ0e2gZpHehrLcaCHsCCDdr1+QW3g9OpatFCMKmh+J6O4ZPLyCGXuzmP0tteyoPbY8Mtx/sV
- bvkNNCZ++g5mBhYIXEZOO9XJ0dDmfpBGUNxtdxJj+/kxep5RWXT0pi1VThkwEJdGIGZ0P+5wl
- 8QuQgmhGTw2MQ520OVy9i/MskuTbGegc66C4GE2qurAZm++Aph9uGZCE7eK283P8S+7fgLvMN
- znLexJjtQLvtCoNgk6F80mfcTL4AZYmb5TRQ6EzCl0Z4Nrft2ZWxIkHN+p/NOStfANj+/Bw3n
- emKxgIVmNzuOiOlDp7WId3hMd4d3s+JY1zV5QaNKj+BfFGHTzNh3rSR7JTM7EVHoFYIO4jOnT
- ufCALo1zKwD2ANzNWMxgMz3m8ZTphZL5SFptkUqePNmQIJ7hwr6SqNSI1f7Lhj3g0j/PVWWku
- cZwX6BZt8IIwUpy2w474ykUGCyucXLTVQCN2NXUokGFj/bNvs8AMPNy6iKTUQ17x5HDPIsvEp
- yv1cI+I/e9EpCiFFQGv/vG/lZ5Sp1lVMeM7F+34+/FRPb/1auNh7uycapbNtv8cH4neKSC8+T
- NakYsAeK/NyH+oF/xH2v32Y3nNKioYlJOqTBeRKIzjBjU1709GKZ65fQkBu5fxvkfxVqI4lmr
- lDxtMDhJPg24bQbV1RngFc1HcyKjShlJB+45o2yK/LTxUf4s+MCB9hhd8TWwkd7LcdF7Rg+DC
- cUP1aGTBuXdx7CwoP/zPq4uWG4DqTR79HHhWFPpgNZrLdKtC/JePEfItcyrjDupnFXsFIW1zm
- AZGw5pZa0XhuF2btdAsnxKp6w2VOtptXm7w
+References: <20190624095533.22162-1-pclouds@gmail.com> <20190624095533.22162-2-pclouds@gmail.com>
+ <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 27 Jun 2019 20:12:22 +0700
+Message-ID: <CACsJy8Avw0hh61Rr-xAWpOT_J8GKwFq=e4BYtFOfXHvpfpR0rw@mail.gmail.com>
+Subject: Re: [PATCH 1/6] sha1-file.c: remove the_repo from read_object_with_reference()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-105596653-1561640670=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Junio,
-
-On Wed, 26 Jun 2019, Junio C Hamano wrote:
-
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Thu, Jun 27, 2019 at 7:54 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> > This is the continuation of nd/sha1-name-c-wo-the-repository. In that
-> > series I sealed off one place in sha1-name.c that cannot walk trees
-> > from arbitrary repositories. With tree-walk.c taking 'struct
-> > repository *' directly, that check in there can now be removed.
+> Hi Duy,
 >
-> Thanks.
+> On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
-> With these queued on 'master', t7814 seems to become flaky (tried
-> running it with --stress, with and without these patches).  Are we
-> touching a wrong index file in some codepaths or something?
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index 580fd38f41..85da7ee542 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
+> >               object =3D parse_object_or_die(oid, oid_to_hex(oid));
+> >
+> >               grep_read_lock();
+> > -             data =3D read_object_with_reference(&object->oid, tree_ty=
+pe,
+> > +             data =3D read_object_with_reference(opt->repo,
+> > +                                               &object->oid, tree_type=
+,
+>
+> Junio's hunch was absolutely spot on. This conversion is incorrect. If yo=
+u
+> replace this `opt->repo` and...
+>
+> >                                                 &size, NULL);
+> >               grep_read_unlock();
+> >
+> > @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const =
+struct pathspec *pathspec,
+> >               int hit, len;
+> >
+> >               grep_read_lock();
+> > -             data =3D read_object_with_reference(&obj->oid, tree_type,
+> > +             data =3D read_object_with_reference(opt->repo,
+>
+> ... this one with `the_repository`, t7814 starts passing again.
+>
+> It makes me very wary of this patch series that this bug has only been
+> caught by a CI build. You probably did not run the test suite before
+> sending this patch series.
 
-It's not flaky, as it fails consistently, and yes, we're touching the
-wrong repository in at least this one code path. I think I would have
-wished for a more careful conversion in this patch series, as it does
-touch critical code paths.
+I did. After Junio reported, I've ran a lot more and had the same
+pass/fail-sometimes behavior.
 
-Given that this bug was only caught by a failing CI build, it does make me
-wonder what other bugs are hidden and would slip into our code base just
-because of gaps in the code coverage.
+> I also wonder what the rationale was to deviate from the strategy used in
+> the remainder of the call sites, where no attempt was made to use an
+> already-available repository pointer that might, or might not, be the
+> correct one.
 
-Ciao,
-Dscho
+My strategy has always been "use the right repo if available, fall
+back to the_repo otherwise". This code path has struct repo, my
+mistake was not realize soon enough that there are two repos, not once
+(Ironically I made the conversion to add subrepo here).
 
---8323328-105596653-1561640670=:44--
+> It strikes me as a pretty important goal of this patch series to _not_
+> change any behavior, and this bug makes me dubious that all diligence has
+> been done to assure that.
+
+Sooner or later all the_repo must be converted, what makes _this_
+series different from other conversion series? Yes I slipped, I should
+have been more careful to the parts related to submodule.
+--=20
+Duy
