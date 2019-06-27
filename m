@@ -7,72 +7,89 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8975A1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 17:11:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE1DA1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 17:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726590AbfF0RLk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 13:11:40 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59528 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726315AbfF0RLk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 13:11:40 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7B627B14E;
-        Thu, 27 Jun 2019 13:11:39 -0400 (EDT)
+        id S1726540AbfF0RTS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 13:19:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57056 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfF0RTS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 13:19:18 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8FB9F69C2A;
+        Thu, 27 Jun 2019 13:19:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z+Bt9vYhWSLcYipDl4x9H+HsFU4=; b=Rxy6jp
-        DgG7ZZgZRX2dFCgIaMKKIIHyS6py1q3j5om6iatkHfoq0jV1MPDfgEPfYpef0NBq
-        +p3XAtGeZn1IIrCUrCgp+Mq9G0g4SaGkzqIR8JTndbcWRXzIaNS6BUBRvUzlvjcE
-        lm4qW8RmuSbLLueT7pRMUTkvULFN2nfp27qOc=
+        :content-type; s=sasl; bh=RlaCry+Xb54YXa1Naw8gwlFMfPI=; b=fhjZqG
+        9uPsMhEiz70PhlCOZcflvN+bppD1veN0TGkowVRJ7YBnzrDhPk2IAto15k1XRKa1
+        kSfhPzJchaDhXt1N0QYB5+jo4bAUaD0a603mgT+aT22d9VYXNzY6iT99VtH2Dm9e
+        WjVsYONyAo6dAJOakCyKEaY3FyT9g3lN4MYIA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ACjvwiVDIpDAERhvzF1apZOebRXvVe4E
-        bUB+vPTug/qABI4QCi/Z+m7r2ildVYvvppGGMy1VwIdB+Vf1rzrpv/nEPb/k4dMN
-        dme3h6lpEF3hve0eu/FMkdGJGfDl5pdYKIJyNTBlnh6l5dAqlpq1Kz0l9gtw5pk0
-        JUIpeE+WkGQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DF6E57B14C;
-        Thu, 27 Jun 2019 13:11:39 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=cuQvmqbv/+WHo0ZtFbGm7FK3jyp+XO2p
+        mj2AdeQuiKMS0hn2Pg4k+5UVXA4wG5MLuvSfX0ceTALNWAJyH4nK77xtz6xz0NR5
+        E3bnypoaAnw8T08C5nyYZKLOZYEZux6dhRxbbIqkHC9JCUufPSKu0rfb8RjTAuDf
+        TxIHFXVPs+o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8834669C29;
+        Thu, 27 Jun 2019 13:19:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CCEED7B14B;
-        Thu, 27 Jun 2019 13:11:36 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B43169C24;
+        Thu, 27 Jun 2019 13:19:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com
-Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
-References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
-        <20190626224147.75686-1-jonathantanmy@google.com>
-Date:   Thu, 27 Jun 2019 10:11:34 -0700
-In-Reply-To: <20190626224147.75686-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Wed, 26 Jun 2019 15:41:47 -0700")
-Message-ID: <xmqqpnmzar7d.fsf@gitster-ct.c.googlers.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 1/3] sequencer: always allow tab after command name
+References: <pull.275.git.gitgitgadget@gmail.com>
+        <pull.275.v2.git.gitgitgadget@gmail.com>
+        <a5bede1cf9cba89c354779e559e19d7a2fffa1eb.1561644762.git.gitgitgadget@gmail.com>
+Date:   Thu, 27 Jun 2019 10:19:11 -0700
+In-Reply-To: <a5bede1cf9cba89c354779e559e19d7a2fffa1eb.1561644762.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Thu, 27 Jun 2019 07:12:44
+        -0700 (PDT)")
+Message-ID: <xmqqlfxnaquo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9F055894-98FE-11E9-AC93-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: AF4ABDC4-98FF-11E9-993A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Junio, what do you think of this small patch that just updates a test:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> https://public-inbox.org/git/20190605192624.129677-1-jonathantanmy@google.com/
+> The code that parses the todo list allows an unabbreviated command name
+> to be followed by a space or a tab, but if the command name is
+> abbreviated it only allows a space after it. Fix this inconsistency.
+
+Makes sense.
+
 >
-> For what it's worth, Stolee and Peff have replied and both of them seem
-> to be OK with it.
-
-Thanks for pointing out a thread fell in the cracks.  The default
-for a patch that have been reviewed and received favourably is to
-queue, but sometimes I miss a thread or two among dozens.
-
-Very much appreciated.
-
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index f88a97fb10..919e3153f5 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2100,7 +2100,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>  		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+>  			item->command = i;
+>  			break;
+> -		} else if ((bol + 1 == eol || bol[1] == ' ') &&
+> +		} else if ((bol + 1 == eol || bol[1] == ' ' || bol[1] == '\t') &&
+>  			   *bol == todo_command_info[i].c) {
+>  			bol++;
+>  			item->command = i;
