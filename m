@@ -2,83 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A6B61F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 17:27:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE4251F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 17:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbfF0R1A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 13:27:00 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34293 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726315AbfF0R07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 13:26:59 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k11so3503116wrl.1
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 10:26:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XhTs9yHaKQLHwFXIBhgSb9XXD2MhpG39d0xUZwcGbbw=;
-        b=Q8qcTM7Ii2yRxokld3Rvs0aRG4akXvPp/0gNO+/9Qu5sOPjlLnW5U7ZvVvqjitPuhF
-         6oU/inxxgse2/zyzWaiMwP39hdTdOOKF4W9ajMjtoGYFF8jO3ZEqGRQK0gp25R8IdLxA
-         WZ2UItrx2LNLhullcU2974rQbx135Tf5BluohKCn04Neojry6jB1uDNcjXlOEsUaq0XO
-         qJAXfPkcWvuPviZeRqfn+sT2l+jBDtm7GzJ3tHZIOgwnO/trrP4u8Z5dCIW6895H7h4w
-         ZdgBis2tY1WZCfzfl0fcP1rDqPYAjZqY6/lWVx1XK/ZgS+42BbwlE41HS65L3XRi2V1O
-         QEmg==
-X-Gm-Message-State: APjAAAW1113zeehjaFXqf98hernN+tS1y+3CVM/jgMuQvhBnJ5Jwptg4
-        VJlSGFvP20fNtgidfJrVPJTMVVoVI44SoCI9hzI=
-X-Google-Smtp-Source: APXvYqycOnD6sEHY5Ink6a/7vgupSDfkFt8PbHatxz6vcTd986uR2ueQN+gZGf1V/8+1717Hb3nFNTxhSsPXGC79w/Q=
-X-Received: by 2002:adf:f101:: with SMTP id r1mr4311042wro.170.1561656417067;
- Thu, 27 Jun 2019 10:26:57 -0700 (PDT)
+        id S1726589AbfF0RaC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 13:30:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57708 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726487AbfF0RaC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 13:30:02 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1930B7B33A;
+        Thu, 27 Jun 2019 13:30:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8xW8q0ZIQIuPnkz7GlXXsnq/IjA=; b=setb3J
+        1f4u6+L6Tcgipsju0eYymAsPgcdPp29jt7GP7eneSUI4fv1J5CiOc9w60jBryTdl
+        O6zV/sjwTF+6yIuC5KXlHAaw0PA+4u6y9SJa59RGCv9+v0/beVI4KOwWhBzbr/lJ
+        JvBPFIOsEovbNrRzBsJBG/gf79+VOacvTrxOY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NBkCPns6nUM6eFbOz6VkbpGuSbemZDlT
+        mR8QfOpRRUutxOoDI6fZQbrsPQl/VpogkE8e/8996orJph2RDWyUGylYFq1kqqSi
+        lmWT4uWDzZqg+j5RCwQkRZrqfWgn3GLqmAawKVGpTHXocKSn87BfeQTFdBbo5hg1
+        3p+46Aq1b0E=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 11F697B339;
+        Thu, 27 Jun 2019 13:30:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C037D7B338;
+        Thu, 27 Jun 2019 13:29:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 2/3] sequencer: factor out todo command name parsing
+References: <pull.275.git.gitgitgadget@gmail.com>
+        <pull.275.v2.git.gitgitgadget@gmail.com>
+        <c3885c0b8f55957695650c2d1e25f9036d7e80dd.1561644762.git.gitgitgadget@gmail.com>
+Date:   Thu, 27 Jun 2019 10:29:53 -0700
+In-Reply-To: <c3885c0b8f55957695650c2d1e25f9036d7e80dd.1561644762.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Thu, 27 Jun 2019 07:12:45
+        -0700 (PDT)")
+Message-ID: <xmqqh88baqcu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.147.git.gitgitgadget@gmail.com> <0c9d2aead5f729942968314679c5a1ca2e0370d0.1561628237.git.gitgitgadget@gmail.com>
-In-Reply-To: <0c9d2aead5f729942968314679c5a1ca2e0370d0.1561628237.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 27 Jun 2019 13:26:45 -0400
-Message-ID: <CAPig+cTkzeyGjvftxmaA5Du2Dm4myzchJhrnHi=noJ7nLiLp-A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] mingw: use Unicode functions explicitly
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2E0B8930-9901-11E9-8029-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Many Win32 API functions actually exist in two variants: one with
-> the `A` suffix that takes ANSI parameters (`char *` or `const char *`)
-> and one with the `W` suffix that takes Unicode parameters (`wchar_t *`
-> or `const wchar_t *`).
->
-> The ANSI variant assumes that the strings are encoded according to
-> whatever is the current locale. This is not what Git wants to use on
-> Windows: we assume that `char *` variables point to strings encoded in
-> UTF-8.
->
-> There is a pseudo UTF-8 locale on Windows, but it does not work
-> as one might expect.
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-What does "does not work as one might expect" mean? The reader is left
-hanging, not knowing why or how the UTF-8 locale on Windows is
-undesirable.
+> As I don't want to burden other callers with having to pass in a pointer
+> to the end of the line the test for an abbreviated command is
+> changed.
 
-> In addition, if we overrode the user's locale, that
-> would modify the behavior of programs spawned by Git (such as editors,
-> difftools, etc), therefore we cannot use that pseudo locale.
+A comma missing somewhere between "As <<REASON>>, <<CONSEQUENCE>>",
+perhaps after "end of the line"?
+
+> This change should not affect the behavior. Instead of testing
+> `eol == bol + 1` the new code checks for the end of the line by testing
+> for '\n', '\r' or '\0' following the abbreviated name. To avoid reading
+> past the end of an empty string it also checks that there is actually a
+> single character abbreviation before testing if it matches. This
+> prevents it from matching '\0' as the abbreviated name and then trying
+> to read another character.
 >
-> Further, it is actually highly encouraged to use the Unicode versions
-> instead of the ANSI versions, so let's do precisely that.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  sequencer.c | 19 +++++++++++++------
+>  1 file changed, 13 insertions(+), 6 deletions(-)
 >
-> Note: when calling the Win32 API functions _without_ any suffix, it
-> depends whether the `UNICODE` constant is defined before the relevant
-> headers are #include'd. Without that constant, the ANSI variants are
-> used. Let's be explicit and avoid that ambiguity.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> diff --git a/sequencer.c b/sequencer.c
+> index 919e3153f5..793f86bf9a 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2076,6 +2076,18 @@ const char *todo_item_get_arg(struct todo_list *todo_list,
+>  	return todo_list->buf.buf + item->arg_offset;
+>  }
+>  
+> +static int is_command(enum todo_command command, const char **bol)
+> +{
+
+This is a tangent, but the reason why the caller of this function is
+named parse_insn_line() (and not parse_command_line()) is because a
+"command" often refers "rebase", "cherry-pick" etc., and we need a
+word to differenciate these from what is to be done as an individual
+step.  Once the codebase stabilizes (read: I am excluding this kind
+of change outside the scope of a series like this one), we'd need to
+clean up the names in this file, I think.
+
+> +	const char *str = todo_command_info[command].str;
+> +	const char nick = todo_command_info[command].c;
+> +	const char *p = *bol + 1;
+> +
+> +	return skip_prefix(*bol, str, bol) ||
+> +		((nick && **bol == nick) &&
+
+OK, making sure that nick is not NUL is the key to avoid stepping
+past the NUL after the line that begins at *bol, as explained in the
+additional paragraph in the proposed log message.
+
+Looking good.
+
+> +		 (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p) &&
+> +		 (*bol = p));
+> +}
+> +
+>  static int parse_insn_line(struct repository *r, struct todo_item *item,
+>  			   const char *buf, const char *bol, char *eol)
+>  {
+> @@ -2097,12 +2109,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>  	}
+>  
+>  	for (i = 0; i < TODO_COMMENT; i++)
+> -		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+> -			item->command = i;
+> -			break;
+> -		} else if ((bol + 1 == eol || bol[1] == ' ' || bol[1] == '\t') &&
+> -			   *bol == todo_command_info[i].c) {
+> -			bol++;
+> +		if (is_command(i, &bol)) {
+>  			item->command = i;
+>  			break;
+>  		}
