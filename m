@@ -2,278 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8BB41F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 23:22:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C64871F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 23:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfF0XWL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 19:22:11 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36339 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfF0XWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 19:22:11 -0400
-Received: by mail-ed1-f65.google.com with SMTP id k21so8707729edq.3
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 16:22:09 -0700 (PDT)
+        id S1726752AbfF0Xj1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 19:39:27 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:53046 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbfF0Xj1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 19:39:27 -0400
+Received: by mail-wm1-f67.google.com with SMTP id s3so7283929wms.2
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 16:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IBwhFtXUXPZ75m5JpOqdzepf8zx65wSKeLGQpH0xLJs=;
-        b=KfD00giE11vDcG14UqTEHakxoAFWML5Hn3rl6zLXScbru7pvv2Z+jth5xGx3ptSZUa
-         kQs55+spNbvPLlx+rA38/M3A6fn1lapnBEIGzK5ba7f7wO9PClceXt1zekRxtiLFkf7y
-         XZIeNnuQnYVld3h9ZIlgNX9co6h55vXCiBxH3AtWSEwct57vZBEzpI/qXcgtpZ1Mmx/3
-         QUV3FUPtZ7eeuA6qSf/icTITWH3wy+pDrR1Hj4o+80uFRH2JVd2wFCqk1a9MdvRBC2GZ
-         Ulx2Uy1n7b12prJ8iCHeQJDgBsmFD0zEVdYiLg2pTNaB5UYZmJ0IsqV/Jhy3SXKPfs//
-         cR0w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jGETbHwR8FkQ1GAWFD9sYLqQAWVHiYH/Mnhtx31OTo0=;
+        b=R0o5kPVKPyiEFhWIQkfwrU+k9zgyEJqg2GXi5pVCCpKzsxf6zJFmrTayp+5wzYJ4Bs
+         s0vRecsnqSkW8wSU/9WZKwUgKnRuM/PnErYTcztEYfk9xwNSkfYiPnTYnDItQxxI0aSb
+         GUoVfPL9n38TjLcR1BHh1rVa5c4+grPyoM7cuduLUOuI2yYQoH1l+a5/cCSDJRaAWEy5
+         oGf0qxrjoCeLeNQSCM0roz+WIzk4GVHWjxbBX4NU9UidS1GJ8K8uNGWWuHo5EhbX0XCJ
+         24c/q2Xm9m2XqkiKnkYy7/wgAkvnPdm5calzNf9vux/FEXO0vsv7tIUqZzxnjVpll1An
+         gSAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IBwhFtXUXPZ75m5JpOqdzepf8zx65wSKeLGQpH0xLJs=;
-        b=FsBUUO/0JRuHeFBqeCx3FqoyKqgeaL0MLUJtUjLe73gxI3DkKkHDMa3N6c+tlMRAOP
-         znZiByC66UVcFlT/mXiM/OYfGKa6AUW3urNAhZP73j2sEr8N+8CENuPEs5vDeybrPQ+H
-         9A4ugJ6n1Sy7R863mKM6wTPbKvYUxYdQtW9SdQkHRbLwUDUxwioHye9j1CDq3oQopiPe
-         7w/VRYX/Nn/HN0y5XPQce1Bmyyct06EkK7nMbQ2CD9rZAamdJiObncIVPMpGTfWRyFta
-         UP3Bh6hXXjgYXp0D68dG+PNHQjCiVXrvQP8nXwnnerKaKy3KBBa+JzjIFbK2JnNReBqW
-         KAyQ==
-X-Gm-Message-State: APjAAAXXwNH94Os09Z+bMC0xXiOTHCnN/KG3cpc/mIaRKNpN+bv08vRh
-        8frbEIiiEqGmE2jKEregkLybQFDRzx1LBsuWbwKAbw==
-X-Google-Smtp-Source: APXvYqxeOZbYUOVW3ZLQ0j6BSQFEx9Z3yn+ALOuGB2A2SaPrcYREiUOY5iXNLGspK90hfdYQfqSK3qJNlcbnXaoZQNI=
-X-Received: by 2002:a17:906:f0cd:: with SMTP id dk13mr5749005ejb.84.1561677728804;
- Thu, 27 Jun 2019 16:22:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jGETbHwR8FkQ1GAWFD9sYLqQAWVHiYH/Mnhtx31OTo0=;
+        b=HqKUaL99GJCMTDgaRSMGsTj+XhqqxKdlnHvyRSNc4sj4t4o5x89g/zVcTddO78DLt8
+         a9rM0D2q32B4iZbewBekcQUYiDfOSD2CIURPRjV1GUmjJuMApQrPg1aSvhhW0RmNc5oo
+         P3cfEZMjzcEml67x/nR3IMH+DqbAnvdpkgwy0EkNytIgNdnrua4BqCZEf8G60gO74yaa
+         DDXlZseyr8lddbb1m7Hr5+D/HRlOpRjGxbKfi9D57PxgcwGySDgIIlgbcg1UQp1kUmGI
+         kOz3zDfycYECikB4duNcmD862ArmxX5nh7HZcA6vW+QJwz27JVlaP+VQeykE8Q0BEltU
+         ubkg==
+X-Gm-Message-State: APjAAAUMU/w+6ZV5zFeRF7RssIrgrgNXxlbUW3PIEp1G0kboyg6US3Jd
+        oyhmhKHBOpd0X+SCX6GKiJHZh+Gk
+X-Google-Smtp-Source: APXvYqyLTX0/1z452RBMpQsntl3YfmIUn1tVaC0H8kKudYl9KlRzosFWAKeschP1/GtevRNQJdpHvA==
+X-Received: by 2002:a1c:4054:: with SMTP id n81mr4861417wma.78.1561678765099;
+        Thu, 27 Jun 2019 16:39:25 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x16sm720530wmj.4.2019.06.27.16.39.24
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 27 Jun 2019 16:39:24 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     git-packagers@googlegroups.com, gitgitgadget@gmail.com,
+        gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/9] log tests: test regex backends in "--encode=<enc>" tests
+Date:   Fri, 28 Jun 2019 01:39:04 +0200
+Message-Id: <20190627233912.7117-2-avarab@gmail.com>
+X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
+In-Reply-To: <20190626000329.32475-1-avarab@gmail.com>
+References: <20190626000329.32475-1-avarab@gmail.com>
 MIME-Version: 1.0
-References: <cover.1561588479.git.me@ttaylorr.com> <e41db267f7b7086126e9fd3fd5b1a02e38c8c077.1561588479.git.me@ttaylorr.com>
-In-Reply-To: <e41db267f7b7086126e9fd3fd5b1a02e38c8c077.1561588479.git.me@ttaylorr.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 27 Jun 2019 16:21:57 -0700
-Message-ID: <CA+P7+xqhFY2gcV=3f8TgemOPPiPnyZU1CgXoNSzoh60bdw1OYQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] ref-filter.c: find disjoint pattern prefixes
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 26, 2019 at 3:44 PM Taylor Blau <me@ttaylorr.com> wrote:
->
+Improve the tests added in 04deccda11 ("log: re-encode commit messages
+before grepping", 2013-02-11) to test the regex backends. Those tests
+never worked as advertised, due to the is_fixed() optimization in
+grep.c (which was in place at the time), and the needle in the tests
+being a fixed string.
 
-Ok, now I've got some time to look at the code itself.
+We'd thus always use the "fixed" backend during the tests, which would
+use the kwset() backend. This backend liberally accepts any garbage
+input, so invalid encodings would be silently accepted.
 
->  ref-filter.c            | 89 +++++++++++++++++++++++++++++------------
->  t/t6300-for-each-ref.sh | 26 ++++++++++++
->  2 files changed, 89 insertions(+), 26 deletions(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8500671bc6..3e10fd647b 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -20,6 +20,7 @@
->  #include "commit-slab.h"
->  #include "commit-graph.h"
->  #include "commit-reach.h"
-> +#include "argv-array.h"
->
->  static struct ref_msg {
->         const char *gone;
-> @@ -1790,21 +1791,62 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
->         return match_pattern(filter, refname);
->  }
->
-> -/*
-> - * Find the longest prefix of pattern we can pass to
-> - * `for_each_fullref_in()`, namely the part of pattern preceding the
-> - * first glob character. (Note that `for_each_fullref_in()` is
-> - * perfectly happy working with a prefix that doesn't end at a
-> - * pathname component boundary.)
-> - */
-> -static void find_longest_prefix(struct strbuf *out, const char *pattern)
-> +static int qsort_strcmp(const void *va, const void *vb)
->  {
-> -       const char *p;
-> +       const char *a = *(const char **)va;
-> +       const char *b = *(const char **)vb;
->
-> -       for (p = pattern; *p && !is_glob_special(*p); p++)
-> -               ;
-> +       return strcmp(a, b);
-> +}
->
-> -       strbuf_add(out, pattern, p - pattern);
-> +static void find_longest_prefixes_1(struct string_list *out,
-> +                                 struct strbuf *prefix,
-> +                                 const char **patterns, size_t nr)
-> +{
-> +       size_t i;
-> +
-> +       for (i = 0; i < nr; i++) {
-> +               char c = patterns[i][prefix->len];
-> +               if (!c || is_glob_special(c)) {
-> +                       string_list_append(out, prefix->buf);
-> +                       return;
-> +               }
-> +       }
+In a follow-up commit we'll fix this bug, this test just demonstrates
+the existing issue.
 
-Ok, so we loop over the patterns, find the last character up to our
-current prefix length, and check if it's either the end of the string,
-or a special glob character. I assume that the patterns are sorted so
-that prefix->len never goes past the array?
+In practice this issue happened on Windows, see [1], but due to the
+structure of the existing tests & how liberal the kwset code is about
+garbage we missed this.
 
-If we find one, we just add this to the list and return, since we
-found an unambigous one.
+Cover this blind spot by testing all our regex engines. The PCRE
+backend will spot these invalid encodings. It's possible that this
+test breaks the "basic" and "extended" backends on some systems that
+are more anal than glibc about the encoding of locale issues with
+POSIX functions that I can remember, but PCRE is more careful about
+the validation.
 
-Otherwise, we keep searching recursively.
+1. https://public-inbox.org/git/nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet/
 
-So, prefix is a strbuf, and its length will initially be zero. So, we
-check all patterns, up to the prefix length and check the character
-just past the end of our prefix. If it matches a NUL or glob
-character, then we have found an exact match up to a glob, so this
-gets returned.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t4210-log-i18n.sh | 41 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
 
-Otherwise we continue:
+diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
+index 7c519436ef..86d22c1d4c 100755
+--- a/t/t4210-log-i18n.sh
++++ b/t/t4210-log-i18n.sh
+@@ -1,12 +1,15 @@
+ #!/bin/sh
+ 
+ test_description='test log with i18n features'
+-. ./test-lib.sh
++. ./lib-gettext.sh
+ 
+ # two forms of é
+ utf8_e=$(printf '\303\251')
+ latin1_e=$(printf '\351')
+ 
++# invalid UTF-8
++invalid_e=$(printf '\303\50)') # ")" at end to close opening "("
++
+ test_expect_success 'create commits in different encodings' '
+ 	test_tick &&
+ 	cat >msg <<-EOF &&
+@@ -53,4 +56,40 @@ test_expect_success 'log --grep does not find non-reencoded values (latin1)' '
+ 	test_must_be_empty actual
+ '
+ 
++for engine in fixed basic extended perl
++do
++	prereq=
++	result=success
++	if test $engine = "perl"
++	then
++		result=failure
++		prereq="PCRE"
++	else
++		prereq=""
++	fi
++	force_regex=
++	if test $engine != "fixed"
++	then
++	    force_regex=.*
++	fi
++	test_expect_$result GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
++		cat >expect <<-\EOF &&
++		latin1
++		utf8
++		EOF
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$latin1_e\" >actual &&
++		test_cmp expect actual
++	"
++
++	test_expect_success GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$utf8_e\" >actual &&
++		test_must_be_empty actual
++	"
++
++	test_expect_$result GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$invalid_e\" >actual &&
++		test_must_be_empty actual
++	"
++done
++
+ test_done
+-- 
+2.22.0.455.g172b71a6c5
 
-> +
-> +       i = 0;
-> +       while (i < nr) {
-> +               size_t end;
-> +
-
-Here, we're going to loop from beginning to end of all of the strings.
-
-> +               /*
-> +               * Set "end" to the index of the element _after_ the last one
-> +               * in our group.
-> +               */
-> +               for (end = i + 1; end < nr; end++) {
-> +                       if (patterns[i][prefix->len] != patterns[end][prefix->len])
-> +                               break;
-> +               }
-> +
-
-We break on the first string which doesn't have the same length as our
-current prefix, but start with the ones after the current loop
-iteration.
-
-> +               strbuf_addch(prefix, patterns[i][prefix->len]);
-> +               find_longest_prefixes_1(out, prefix, patterns + i, end - i);
-> +               strbuf_setlen(prefix, prefix->len - 1);
-> +
-
-We'll add the next character to the prefix, and then find longest
-prefixes again.
-
-This basically has us recurse and keep adding additional characters,
-essentially splitting the strings apart by their disjoint sets.
-
-I think this works, but it's definitely not clear from reading exactly
-what is going on. I think this algorithm would benefit from a comment,
-since it doesn't quite seem to match your description in the commit
-message.
-
-> +               i = end;
-> +       }
-> +}
-> +
-> +static void find_longest_prefixes(struct string_list *out,
-> +                                 const char **patterns)
-> +{
-> +       struct argv_array sorted = ARGV_ARRAY_INIT;
-> +       struct strbuf prefix = STRBUF_INIT;
-> +
-> +       argv_array_pushv(&sorted, patterns);
-> +       QSORT(sorted.argv, sorted.argc, qsort_strcmp);
-> +
-
-We've sorted the patterns, and then we call find_longest_prefixes_1. Ok.
-
-> +       find_longest_prefixes_1(out, &prefix, sorted.argv, sorted.argc);
-> +
-> +       argv_array_clear(&sorted);
-> +       strbuf_release(&prefix);
->  }
->
->  /*
-> @@ -1817,7 +1859,8 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
->                                        void *cb_data,
->                                        int broken)
->  {
-> -       struct strbuf prefix = STRBUF_INIT;
-> +       struct string_list prefixes = STRING_LIST_INIT_DUP;
-> +       struct string_list_item *prefix;
->         int ret;
->
->         if (!filter->match_as_path) {
-> @@ -1843,21 +1886,15 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
->                 return for_each_fullref_in("", cb, cb_data, broken);
->         }
->
-> -       if (filter->name_patterns[1]) {
-> -               /*
-> -                * multiple patterns; in theory this could still work as long
-> -                * as the patterns are disjoint. We'd just make multiple calls
-> -                * to for_each_ref(). But if they're not disjoint, we'd end up
-> -                * reporting the same ref multiple times. So let's punt on that
-> -                * for now.
-> -                */
-> -               return for_each_fullref_in("", cb, cb_data, broken);
-> +       find_longest_prefixes(&prefixes, filter->name_patterns);
-> +
-> +       for_each_string_list_item(prefix, &prefixes) {
-> +               ret = for_each_fullref_in(prefix->string, cb, cb_data, broken);
-> +               if (ret)
-> +                       break;
->         }
->
-> -       find_longest_prefix(&prefix, filter->name_patterns[0]);
-> -
-> -       ret = for_each_fullref_in(prefix.buf, cb, cb_data, broken);
-> -       strbuf_release(&prefix);
-> +       string_list_clear(&prefixes, 0);
->         return ret;
->  }
->
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index d9235217fc..ab69aa176d 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -345,6 +345,32 @@ test_expect_success 'Verify descending sort' '
->         test_cmp expected actual
->  '
->
-> +cat >expected <<\EOF
-> +refs/tags/testtag
-> +refs/tags/testtag-2
-> +EOF
-> +
-> +test_expect_success 'exercise patterns with prefixes' '
-> +       git tag testtag-2 &&
-> +       test_when_finished "git tag -d testtag-2" &&
-> +       git for-each-ref --format="%(refname)" \
-> +               refs/tags/testtag refs/tags/testtag-2 >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +cat >expected <<\EOF
-> +refs/tags/testtag
-> +refs/tags/testtag-2
-> +EOF
-> +
-> +test_expect_success 'exercise glob patterns with prefixes' '
-> +       git tag testtag-2 &&
-> +       test_when_finished "git tag -d testtag-2" &&
-> +       git for-each-ref --format="%(refname)" \
-> +               refs/tags/testtag "refs/tags/testtag-*" >actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  cat >expected <<\EOF
->  'refs/heads/master'
->  'refs/remotes/origin/master'
-> --
-> 2.21.0.203.g358da99528
