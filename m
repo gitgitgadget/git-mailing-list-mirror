@@ -2,129 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43FB91F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 13:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09E6E1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 13:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726511AbfF0NMt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 09:12:49 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:45772 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbfF0NMt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 09:12:49 -0400
-Received: by mail-io1-f65.google.com with SMTP id e3so4529617ioc.12
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 06:12:49 -0700 (PDT)
+        id S1726480AbfF0NXZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 09:23:25 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41589 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbfF0NXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 09:23:25 -0400
+Received: by mail-wr1-f67.google.com with SMTP id c2so2544879wrm.8
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 06:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=woHe8hLOgc3AZIQfUFjPb4En7JyPGWGgbA5az012YaY=;
-        b=gAp9OG37Jr1TNMzMhwaHELCvxxrraGfkWFif3pIeXdgnNUNcJ9Qv+aCZ+BF/I9DKd5
-         PtYlNWME6QZkv3sE98Fv1knhyw684LfS8JCJcHRyf/k1qB60O3b9yZBJzgpzsjNjsq8c
-         C6XbOTeUsM0ifwN2YIdXyFoFkZLcmNht9rYzhCZksEAQ6JMxa+PmHexVLgFki7eD9BZC
-         3DBUC4S+Q1E05V6NJ8zMppjn5+AuvT0M3W+0XhFlCAuPvAiekLgUxgs3Y2INGrJd7Zqq
-         E3wog95ue3+zuqChVtyrASNYvCMThH1/Zmf9icaJpq5g3CvsqEjJK1WXzqbEDzmujhJ6
-         eIsQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1DPoFun9C+9ZkZtUO8EI29oT4j3upY3JKlybVf0Uxxc=;
+        b=Ib5mJobiT60LRxSZZDE4XhmdocktOQokjaW0vgwsYysazNqXfIrBLSvEImefC4NlJ3
+         bhRbgdXuFy5k4P3bSCOW5E/yqNQiZUoOEn2TisPonLawuzKSH3Ch02ztXM/uGjESoyoB
+         lbdm9ijVnscbxEbBY5AUUdyxj524ccHuPelKFDLWd9toJR0m8UOob0FLpFlx3N7GZsNl
+         mT8CmMJm79rDIdPON3UFgdN3AT52rC/PwDOw7fPgNeDW9qa9CQ0y2bPyRx8VAMy0oJ/k
+         aih1jGQxS2P+lmtpjxBa5RN3Og876QT1ZoY8Oppib8xjqBJNp8t6UIBapVeL0QukK2AT
+         gKUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=woHe8hLOgc3AZIQfUFjPb4En7JyPGWGgbA5az012YaY=;
-        b=MM7AWSNBcKjB/ZtS3nCKwfvXLyPeRxzoHU3maz0I7/9vVks9pte0W8PgANVEDN0566
-         x7SzhMC+8/mpCXDtp4b3I+zYRBUYZ1TSFt8ZMFUqEdcFgYLKU21c0Lezwz29oZWBCH9O
-         4ecLSTf39IqlXxLspfiXmr5/pG7FydYZvynLZGjsnx1O7vdr4uB+vVmjQVEfDipXfP00
-         XyhTXiLxfkAk0BTbdEAe1C0rio+0pLc78XcjDLjxIbd24XDPxjql/TGinBkBVXbpxmq8
-         J/HoXpoVvDvBSzhFLVJGtaDtWNQKnoHRfcqBlaLpDRxNrt6GysjcuXjC4umvY9GjIBIH
-         rDpg==
-X-Gm-Message-State: APjAAAVCD8XDcv8IPvYzJzbIuk90stsNzFDtMGkWf0pLJmHkc5OzwVe3
-        tkG7nf0Be7SUGWDWOKMJLn069oVNw32SuVtAhQ0=
-X-Google-Smtp-Source: APXvYqx6abkEp1pN06md6QAeE7KdQ6naqWEPtpE2lVQAZToGylcm3zjmQS5BAkPHORs9ld0SqbZw3SMoWR0dgza3feg=
-X-Received: by 2002:a6b:f80b:: with SMTP id o11mr4425751ioh.40.1561641168672;
- Thu, 27 Jun 2019 06:12:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1DPoFun9C+9ZkZtUO8EI29oT4j3upY3JKlybVf0Uxxc=;
+        b=a2Gkl/GTfIK2sDeCYpUuMp57R4TFYWbTs96donDsQfSOzswk8iSs/HVn2ZF3FAxZg0
+         Hr1C5gJz/32xf306zdUBEx0Vq7BT/GmeA1zd7xhx305gSOTLJwPmnC5MxMM6GtsnEBBE
+         8QgwBNPPr+2DPsVriRlYktmaEmV/jKBoJscXOWYQP53o+U8hkQAEhUzGzDX0NsTzHEBZ
+         8Uel+4q5UPoYZQhsw4NtU4pjtQS0ktuQsPkwpq2QF37XpazuNG6ZevGt9E5vvQUxDatR
+         VtogkIyYlvOhygicLjLxpIid3Rh1fj30MLTcFRlPHjf+RqVF7x4rAEdkwMwEtLItzu0E
+         2zyQ==
+X-Gm-Message-State: APjAAAVcz/y9syEl5fZ/TPJij8ZKopBYtP/aXYOVHhFWzUxWOS0Ce8mq
+        g6xD1oqDjcJzvu4Tsd+Gnos=
+X-Google-Smtp-Source: APXvYqzecejALS5GaCEPAkexlqeb8tMXwcwtVAie8ADVYn6cUDtubVsW9smUIO52BEC6RQEOkSWSNg==
+X-Received: by 2002:a5d:63c9:: with SMTP id c9mr3517841wrw.81.1561641802872;
+        Thu, 27 Jun 2019 06:23:22 -0700 (PDT)
+Received: from szeder.dev (x4d0c4603.dyn.telefonica.de. [77.12.70.3])
+        by smtp.gmail.com with ESMTPSA id m9sm3276607wrn.92.2019.06.27.06.23.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Jun 2019 06:23:21 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 15:23:19 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Travis not looking so good
+Message-ID: <20190627132319.GB21574@szeder.dev>
+References: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+ <20190601004143.GN8616@genre.crustytoothpaste.net>
+ <20190602112239.GO951@szeder.dev>
+ <20190626203559.GA71590@TaylorsMBP3745.attlocal.net>
 MIME-Version: 1.0
-References: <20190624095533.22162-1-pclouds@gmail.com> <20190624095533.22162-2-pclouds@gmail.com>
- <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1906271448290.44@tvgsbejvaqbjf.bet>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Jun 2019 20:12:22 +0700
-Message-ID: <CACsJy8Avw0hh61Rr-xAWpOT_J8GKwFq=e4BYtFOfXHvpfpR0rw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] sha1-file.c: remove the_repo from read_object_with_reference()
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190626203559.GA71590@TaylorsMBP3745.attlocal.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 7:54 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Duy,
->
-> On Mon, 24 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index 580fd38f41..85da7ee542 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
-> >               object =3D parse_object_or_die(oid, oid_to_hex(oid));
+On Wed, Jun 26, 2019 at 03:35:59PM -0500, Taylor Blau wrote:
+> Hi Gábor,
+> 
+> On Sun, Jun 02, 2019 at 01:22:39PM +0200, SZEDER Gábor wrote:
+> > On Sat, Jun 01, 2019 at 12:41:43AM +0000, brian m. carlson wrote:
+> > > On 2019-05-30 at 19:32:41, Johannes Schindelin wrote:
+> > > > Hi Gábor,
+> > > >
+> > > > do you have any idea why Travis is failing like this in the macOS/gcc
+> > > > job?
+> > > >
+> > > > > +case "$jobname" in
+> > > > > +brew link gcc@8
+> > > > > Error: No such keg: /usr/local/Cellar/gcc@8
+> > > > > The command "ci/install-dependencies.sh" failed and exited with 1 during .
+> > > >
+> > > > I usually only look at the Azure Pipelines (which gives me plenty enough
+> > > > to do, what with pu's individual branches being tested individually), but
+> > > > couldn't fail to notice that *all* four branches (maint, master, next and
+> > > > pu) fail in Travis' macOS/gcc job (and only there, the Azure Pipelines are
+> > > > all green):
+> > > >
+> > > > https://github.com/git/git/branches/all
+> > > >
+> > > > What's going on?
 > >
-> >               grep_read_lock();
-> > -             data =3D read_object_with_reference(&object->oid, tree_ty=
-pe,
-> > +             data =3D read_object_with_reference(opt->repo,
-> > +                                               &object->oid, tree_type=
-,
->
-> Junio's hunch was absolutely spot on. This conversion is incorrect. If yo=
-u
-> replace this `opt->repo` and...
->
-> >                                                 &size, NULL);
-> >               grep_read_unlock();
+> > The usual: Homebrew desperately tries to be overly clever and helpful,
+> > but ends up being dumb and annoying. :)
 > >
-> > @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const =
-struct pathspec *pathspec,
-> >               int hit, len;
+> > I was hoping that this issue will just solve itself, like several
+> > other brew breakages in the past, but apparently it won't...
+> 
+> I have noticed this as well on my own fork's TravisCI builds.
+> 
+> > > I suspect if we want to use GCC 8, we need to explicitly install it by
+> > > using "brew install gcc@8", or we can just pick the latest released GCC
+> > > by using "brew install gcc" if we like that better. We will still need
+> > > to do "brew link gcc" (or "gcc@8"), since I suspect Homebrew won't
+> > > auto-link it since macOS provides a gcc binary.
 > >
-> >               grep_read_lock();
-> > -             data =3D read_object_with_reference(&obj->oid, tree_type,
-> > +             data =3D read_object_with_reference(opt->repo,
->
-> ... this one with `the_repository`, t7814 starts passing again.
->
-> It makes me very wary of this patch series that this bug has only been
-> caught by a CI build. You probably did not run the test suite before
-> sending this patch series.
+> > Yeah, installing gcc@8 or gcc works.  Back in 2c8921db2b (travis-ci:
+> > build with the right compiler, 2019-01-17) I opted for simply linking
+> > the already installed gcc@8 package, because GCC is big, installing it
+> > takes time, and the macOS build jobs have always been prone to
+> > exceeding the time limit.
 
-I did. After Junio reported, I've ran a lot more and had the same
-pass/fail-sometimes behavior.
+Oh, and now I recall that simply running 'brew install gcc@8' back
+then (or running it before 'brew update' nowadays) errored out with
+something along the lines of "gcc@8 is already installed, you only
+have to link it".
 
-> I also wonder what the rationale was to deviate from the strategy used in
-> the remainder of the call sites, where no attempt was made to use an
-> already-available repository pointer that might, or might not, be the
-> correct one.
+> > (Note that these packages provide 'gcc-8'
+> > and 'gcc-9' binaries, not 'gcc', and after 'brew install'-ing them we
+> > won't need an additional link step (I'm not sure why linking is
+> > necessary with the gcc@8 package already installed in the Travis CI
+> > image).)
+> 
+> I wrote something like this up in [1] before I realized that you had
+> your own patches in [2]. This did fix things, but it's kind of awkward
+> in the sense that we're not really "installing" anything (in fact, the
+> patch in [1] incorrectly indicates that we are), but instead nudging it
+> after it discovers v8.3.
+> 
+> 
+> > Another possibilities are:
+> >
+> >   - Running 'brew link gcc@8' before 'brew update' works:
+> >
+> >       https://travis-ci.org/szeder/git/jobs/540027012#L139
+> >
+> >   - Not running 'brew update' at all works as well:
+> >
+> >       https://travis-ci.org/szeder/git/jobs/514960153#L179
+> 
+> I'd be just as happy to do something similar to what I did as really
+> either of these. Getting rid of 'brew update' entirely would make me
+> happiest, since it takes a *long* time for one of these to complete.
 
-My strategy has always been "use the right repo if available, fall
-back to the_repo otherwise". This code path has struct repo, my
-mistake was not realize soon enough that there are two repos, not once
-(Ironically I made the conversion to add subrepo here).
+I would love to see 'brew update' go away, partly because it takes so
+long, and partly because the update of Homebrew itself broke our
+builds once or twice in the past (though they usually sorted out the
+breakage in a few days) [1].
 
-> It strikes me as a pretty important goal of this patch series to _not_
-> change any behavior, and this bug makes me dubious that all diligence has
-> been done to assure that.
+However, we've always used the macOS build jobs as "build and test
+with the latest and greatest", i.e. they install the latest available
+Perforce and Git-LFS.  To keep up with this tradition we'd need to run
+'brew update' and in turn would need to 'brew install gcc'.
 
-Sooner or later all the_repo must be converted, what makes _this_
-series different from other conversion series? Yes I slipped, I should
-have been more careful to the parts related to submodule.
---=20
-Duy
+[1] See e.g. a1ccaedd62 (travis-ci: make the OSX build jobs' 'brew
+    update' more quiet, 2019-02-02) or
+
+    https://public-inbox.org/git/20180907032002.23366-1-szeder.dev@gmail.com/T/#u
+
+
+> But, I'd almost prefer explicitly running 'brew install gcc@8' to
+> running 'brew link gcc@8' before 'brew update'. The later seems fragile
+> and awfully prone to break, especially when we are just doing it to try
+> and work around a Homebrew quirk.
+> 
+> If you don't have any plans to send your patches upstream, and feel OK
+> running 'brew install', let me know and I will send my patch in [1].
+> 
+> Thanks,
+> Taylor
+> 
+> [1]: https://github.com/ttaylorr/git/commit/a20e34d143a4a15b6b15ccb5bfb996fab9551b76
+> [2]: https://github.com/szeder/git/commit/ca29709d09a440d98857efb2575a3f92feaab29f
