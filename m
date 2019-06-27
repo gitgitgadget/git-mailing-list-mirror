@@ -2,68 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7E71F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 17:10:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8975A1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 17:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbfF0RKk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 13:10:40 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:50068 "EHLO
-        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726482AbfF0RKk (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Jun 2019 13:10:40 -0400
-Received: from [2001:16b8:5c9f:4300:b800:7b22:1f7c:dc45]; authenticated
-        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hgXuw-0005Rd-Da; Thu, 27 Jun 2019 19:10:38 +0200
-Subject: Re: [PATCH] make slash-rules more readable
-To:     Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
-References: <20190604173446.2664-1-admin@in-ici.net>
- <bd722415-1547-8db5-f88a-c35c8b48d8be@in-ici.net>
- <13f99ce6-f856-6554-5c14-1b1838d697d0@iee.org>
-From:   "Dr. Adam Nielsen" <admin@in-ici.net>
-Message-ID: <d1d2ebec-a94a-0092-4a6d-8ae32db1573b@in-ici.net>
-Date:   Thu, 27 Jun 2019 19:10:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726590AbfF0RLk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 13:11:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59528 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfF0RLk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 13:11:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7B627B14E;
+        Thu, 27 Jun 2019 13:11:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z+Bt9vYhWSLcYipDl4x9H+HsFU4=; b=Rxy6jp
+        DgG7ZZgZRX2dFCgIaMKKIIHyS6py1q3j5om6iatkHfoq0jV1MPDfgEPfYpef0NBq
+        +p3XAtGeZn1IIrCUrCgp+Mq9G0g4SaGkzqIR8JTndbcWRXzIaNS6BUBRvUzlvjcE
+        lm4qW8RmuSbLLueT7pRMUTkvULFN2nfp27qOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ACjvwiVDIpDAERhvzF1apZOebRXvVe4E
+        bUB+vPTug/qABI4QCi/Z+m7r2ildVYvvppGGMy1VwIdB+Vf1rzrpv/nEPb/k4dMN
+        dme3h6lpEF3hve0eu/FMkdGJGfDl5pdYKIJyNTBlnh6l5dAqlpq1Kz0l9gtw5pk0
+        JUIpeE+WkGQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DF6E57B14C;
+        Thu, 27 Jun 2019 13:11:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CCEED7B14B;
+        Thu, 27 Jun 2019 13:11:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com
+Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
+References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
+        <20190626224147.75686-1-jonathantanmy@google.com>
+Date:   Thu, 27 Jun 2019 10:11:34 -0700
+In-Reply-To: <20190626224147.75686-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Wed, 26 Jun 2019 15:41:47 -0700")
+Message-ID: <xmqqpnmzar7d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <13f99ce6-f856-6554-5c14-1b1838d697d0@iee.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1561655440;a146eb43;
-X-HE-SMSGID: 1hgXuw-0005Rd-Da
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F055894-98FE-11E9-AC93-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-On 25.06.19 13:31, Philip Oakley wrote:
-> only one minor point...
+> Junio, what do you think of this small patch that just updates a test:
+>
+> https://public-inbox.org/git/20190605192624.129677-1-jonathantanmy@google.com/
+>
+> For what it's worth, Stolee and Peff have replied and both of them seem
+> to be OK with it.
 
- >>> + - For example, a pattern `doc/frotz/` matches `doc/frotz` directory,
- >>> +   but not `a/doc/frotz` directory; however `frotz/` matches `frotz`
- >
- > her I misread this as:  "but not a `doc/frotz` directory;"
- > i.e. the leading 'a' is too easy to skim over as is part of the
- > sentence's prose, so maybe change to a 'baz' lead directory (bar already
- > having been used below).
+Thanks for pointing out a thread fell in the cracks.  The default
+for a patch that have been reviewed and received favourably is to
+queue, but sometimes I miss a thread or two among dozens.
 
-Yes we could change that.
-
-> Have you tried it out on any StackOverflow replies to see if those that 
-> inhabit that zone find it helpful?
-> Philip
-I answered one person who had a hard time reading the docs at SO, but he 
-didn't respond and the last time he was online was 2018, so I didn't 
-made the effort to edit my answer with the current version.
-
--
-
-What are the next steps? If there are no more responses, does it imply 
-that everyone agrees with this patch? Can we publish it online?
+Very much appreciated.
 
