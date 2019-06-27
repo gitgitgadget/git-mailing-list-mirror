@@ -2,83 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D2321F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 21:55:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E1361F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 22:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbfF0Vzv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 17:55:51 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53955 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726441AbfF0Vzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 17:55:51 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2ACF66B67C;
-        Thu, 27 Jun 2019 17:55:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7Uldxm6VmeXpa3nAthlVaPfw2Ns=; b=QNbQVp
-        M7QI0Xr1a+zsoEy3W16805EBIkEf4vplTNpMr7jQZwvkQYAwcfcMXWyEAdXdPjzX
-        j5kHAAzcgG8s6EKpgMRmWcDvEDQhOIOrUf59mJoS2lMCSNoXOlo2brqleEnVTFxa
-        5h55lZeUnq1RMLvXpCaIBoI2wNIoIJy3LNcYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CeheaaB8IAgEmhj3qppPx1zLzr4PibgV
-        GZd7SWX5OrO5N/SX/AYgvcX+p+ZSTSRLxOVcQootwzpbkQKk9Ekt2BkvodUbbDWG
-        7Lc8s8OdTruhNBLahunODypeA8aLbEtz6Fnc3ky9DZ9D3SN3kqchL+qtbswuu+2f
-        KHhAEBMOSlg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21E796B67B;
-        Thu, 27 Jun 2019 17:55:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4DB026B677;
-        Thu, 27 Jun 2019 17:55:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: fprintf_ln() is slow
-References: <20190627052515.GA21207@sigill.intra.peff.net>
-        <20190627055739.GA9322@sigill.intra.peff.net>
-        <CACsJy8Cjn2z7TrH9HLQ94Ph7qPZ0fC01J=Lq7GcrhvaCQZaSmg@mail.gmail.com>
-        <20190627212154.GB20250@sigill.intra.peff.net>
-Date:   Thu, 27 Jun 2019 14:55:44 -0700
-In-Reply-To: <20190627212154.GB20250@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 27 Jun 2019 17:21:54 -0400")
-Message-ID: <xmqqimsqae1r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726571AbfF0WMJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 18:12:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:46486 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbfF0WMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 18:12:08 -0400
+Received: by mail-pf1-f196.google.com with SMTP id 81so1883337pfy.13
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 15:12:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=89ylcwu4f+ddkKRvQEXrSaF4FA7ZjVrHWN8u7H5OpC0=;
+        b=fRNbSGFJUf0ssBZovxeKNv2OAoetDHV+/M057dFhNcd6Jbr+dlNpogXuruJhnakqLe
+         FumsWVPDdXifCybzgOyDCd7SlqrH3E93m32tpDc4qpcinEd9UbdHCZEcaRMqgyJpoiir
+         Tlh2KXuR6ebda/XKEK6NaG8FUF6BXRg2ne64clN/ng50tCkPW5v3Ba4SVdfrxxtGeiB9
+         6f2WUCCy+7M9uj1KrH741sXVbZLEEmLRI1aH7ykSlRwGuu1RtPiukBKOKOGYOQNlwj2u
+         pkdqS6FwM6T2pNWPmkWS4msaClkdF/uBJTztp8wQkdjfSQDUkZTws1INzZjuTDR6sknI
+         kOJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=89ylcwu4f+ddkKRvQEXrSaF4FA7ZjVrHWN8u7H5OpC0=;
+        b=HXxm/4VzqqqkC1uPvCAcz2/XMb2Va7ZU0qit6g4BCFKDJeXnK2j90bQFaulN+5fiQV
+         yJlySWjCm2+fkvalUtUwBmochW0uNfj1lv+ypwZCvoh4Vw8azf54OIzKZj5yRIfjSQg1
+         ckxAnQo+zvp5Zm4RJUlXAVOoEvk+GtPPYzmySd3PiZv3JsCUxSIkzgvii17KZORhKvmQ
+         pQNYKO38nYuS42mX0sqpMeREebk6ZaPQwQgpdXcKMJQwVcoUjbaFE4JzyMrrG8xTs1e6
+         wvsvpYa5pNWfyr8OYf5Tw/kLxwP0KFOtSvyX398jsuVFomkkyDC4YAC6bIWI2SjLO70f
+         DnAA==
+X-Gm-Message-State: APjAAAXXNHty5nZJunmG3yW72+warD4fl1+axascRmy1uda7VNEg/BTy
+        5QBeeJqBjSj2/r9x+94FHtmwjltqc20=
+X-Google-Smtp-Source: APXvYqxu2lfUUXAhh18OCc50aAcGGVoYUCrYAZ2pk6txl5uMmR8nCWQH4NVANbXLOX1Vz2jeVnDGXg==
+X-Received: by 2002:a63:1f23:: with SMTP id f35mr6058305pgf.160.1561673527559;
+        Thu, 27 Jun 2019 15:12:07 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id u75sm119140pgb.92.2019.06.27.15.12.06
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 27 Jun 2019 15:12:06 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 15:12:01 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 08/13] walken: demonstrate various topographical
+ sorts
+Message-ID: <20190627221201.GF245941@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com>
+ <20190626235032.177551-9-emilyshaffer@google.com>
+ <CAPig+cQGcNS476e+eDqyyfeVWDsi4=BGS=aTvYZ3=6BdP-0_Uw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 514D134E-9926-11E9-AAEA-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQGcNS476e+eDqyyfeVWDsi4=BGS=aTvYZ3=6BdP-0_Uw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 27, 2019 at 01:22:10AM -0400, Eric Sunshine wrote:
+> On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> > Order the revision walk by author or commit dates, to demonstrate how to
+> 
+> s/,//
 
-> I'm also not entirely convinced it's worth caring about this problem at
-> all (whether the solution is buffering here, or just adding the "\n"
-> back to the original strings). It's true that p1451 shows off a
-> measurable improvement, but I think it's a silly, pathological case. I'd
-> be surprised if anybody ever noticed the difference in the real world.
-
-Yup, exactly my thought.
-
-> The biggest benefit I see to dealing with it is not performance, but
-> that it makes our messages more likely to appear atomically in the
-> output (if multiple entities are writing to stderr).
-
-I was primarily in favor of getting rid of *printf_ln() functions
-(there are some 200+ callsites if I counted correctly) as I found it
-a bit distracting.
+Done.
