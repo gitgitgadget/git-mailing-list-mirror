@@ -8,105 +8,150 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB43C1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 09:21:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4E11F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 09:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726437AbfF0JVS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 05:21:18 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:45891 "EHLO
+        id S1726463AbfF0J1f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 05:27:35 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:34581 "EHLO
         mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbfF0JVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 05:21:18 -0400
-Received: by mail-io1-f67.google.com with SMTP id e3so3137638ioc.12
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 02:21:18 -0700 (PDT)
+        with ESMTP id S1726293AbfF0J1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 05:27:35 -0400
+Received: by mail-io1-f67.google.com with SMTP id k8so3276130iot.1
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 02:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=oc+VU3poGMUmz8XjZSRULDH4xvxdgnciMrX/IyKmwlU=;
-        b=QxNbyFXtsTXpsSoTumFf0XYk37PrHqF89c9+7bQfLHHdIHJjx+2PShsXcbqhx08kce
-         SXmPbUZpe3VrtgQ18oaSIfV95UAnxhU2YTDQEBn8SHzxd7J2CSWZ68qNm73ai4mkBbD5
-         IbMYyBVFi6H2aY4pcbjg2wwFkxAgMmQTc4KANaOGbG5JFnnq35cZToqtrlqhBBOnymg7
-         sdaM3Y8+lqQGdJQCY/UXEzIQQzYti2KmD8qyzN8jiYmyfj7SzNAT3IaN5XfeP4lZ7E5t
-         bw/IQQ+7QG0Mf+kLMw1i7EqAx9FXlMab2zbbnygGl663DxJh3CX3iIlS0bURkodfff6y
-         fCJA==
+        bh=dfVlg0okTnAglNr+WkYw5gKfxQUp7Y/WzkVSZLnJFYE=;
+        b=G6MQ9rjihtfbaqOmVJc2KCeArtnlnGV3RXsa/MO+exdng2qWH7shMApuuxQ2BC2oJH
+         s8km3SM52Jr88k4rYU39Gmk2xmt4sBmnCsMAsxq7HnruFJXLwbTug//tE20Wsz8DQydH
+         5aycccdAjNH3VrfrLJMQ+SgE7jZkY/233kHzfVe6bwCz9FQjoFZRMhOVTS7yVhvxzGXB
+         OmIXsUMJWoMVD7KPhR8m+7WtoenHEVIbcXhlX62A+K5sTyM1BhjkjeLu+FIWut7WXJyI
+         fO+xRcUHaRpyqjma8Z+mbjfVQxh2wkuLfCnmHzSMfP+53D4gjOX4gRvksHsy4wA4fRq/
+         GyRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=oc+VU3poGMUmz8XjZSRULDH4xvxdgnciMrX/IyKmwlU=;
-        b=jQu6aMFoikIuo189fJ9GREUaAQToFmDVxh9I1RSKGxxiRtJwOwcf1NoPY7PCd5EqEa
-         YuwoUAVw1gbH2LnLiV3WMNatULfNfAPBN3f1ddyziJt3BuHVLuxf0zsk5vjwpsrX2kOD
-         9Utm2igSc/FrtNzZlVX5jCNO6B9VyX8ra+i9HG8qe6ddBGuu1L4jBWihx+bmzTSKPFIa
-         pYVQLJBUTo+3InOXTU0XnRVlbpWLUUetiqxOf2CSgbDk7P8g9RRK1yjhD+FFLT76w40i
-         ADD3isFVN1EjOypPpKwPe2G90id22YtPLOcdsMSGJ+kyjbk6uTrLzLiK0R+/QE4mPj73
-         mjxA==
-X-Gm-Message-State: APjAAAXKUZtWSlLQQt3hYM8ZrUCCbT7GNuhfVRS5UeEBVLvskZ5hA0hS
-        MtohP3IsXQuJCRX44Fo0hOGxSmGIVu5gbZaYePo=
-X-Google-Smtp-Source: APXvYqyAji8keeZ+rEdxQ8RW6HT7DDBDkR4DPcY+IKw4InvM5NhrstEWUSEWw2ebhC8txMV1mYBJtjMy7FWyCYOwBFM=
-X-Received: by 2002:a02:5a89:: with SMTP id v131mr3468330jaa.130.1561627277713;
- Thu, 27 Jun 2019 02:21:17 -0700 (PDT)
+        bh=dfVlg0okTnAglNr+WkYw5gKfxQUp7Y/WzkVSZLnJFYE=;
+        b=nhzEiGw7INkKM92A90GiH/FfcP16bKKbS/JZN0EvW1W7FXn8FhbcYDu8GQOzIyu10j
+         KyvbZJ3fWQpez/jcTQEqaa6hTdBVS7gm+FPWkPl1n6MeC1keqOb5dVuirZJNLP2DLlS+
+         rJ9XyRVJI4m370YF6x87fn/EH4xHmsonS1Bl6xHWoXaQb2e4dANr55hw3CSp5bTK7XzT
+         gcXoUY759dFapPaLy6nLpgB1EXEwRd9APz0aN5wvFNsU0XSmvBg2oNam+Si/fLc9Vx/x
+         LQobNxo/0e5r95HKZ++tTt81MrAkvBM1cz5cnhlLuvsA0pqCzb75RlKvlYU4XZ3sv36t
+         HKPA==
+X-Gm-Message-State: APjAAAU1LXg8UzIXZe3rMBvlvtvlFpZsNyFwvey8MfjNBJz2p01yjg+h
+        fkY+XhaX9jTR/WKq/Xa0Fpp3LNLVxNMD5KEcDRvNiw==
+X-Google-Smtp-Source: APXvYqxonvHDFvgplRDvfq3KmGTJw6B08/4wQeADyqtzkokV/tpuEbT9dt3i0JfcUCDweVs1oP1CIVwZTPHSI6Ik6q4=
+X-Received: by 2002:a6b:b497:: with SMTP id d145mr3445394iof.17.1561627654265;
+ Thu, 27 Jun 2019 02:27:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
- <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
- <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+References: <20190627052515.GA21207@sigill.intra.peff.net> <20190627055739.GA9322@sigill.intra.peff.net>
+In-Reply-To: <20190627055739.GA9322@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Jun 2019 16:20:51 +0700
-Message-ID: <CACsJy8BHWvbL_rPuRN-=Q4sDL+wkJUNAoPhdjcrs+VqY5-Kr5w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Date:   Thu, 27 Jun 2019 16:27:07 +0700
+Message-ID: <CACsJy8Cjn2z7TrH9HLQ94Ph7qPZ0fC01J=Lq7GcrhvaCQZaSmg@mail.gmail.com>
+Subject: Re: fprintf_ln() is slow
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 1:04 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jun 27, 2019 at 1:00 PM Jeff King <peff@peff.net> wrote:
 >
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Thu, Jun 27, 2019 at 01:25:15AM -0400, Jeff King wrote:
 >
-> > Hi Matheus,
+> > Taylor and I noticed a slowdown in p1451 between v2.20.1 and v2.21.0. I
+> > was surprised to find that it bisects to bbb15c5193 (fsck: reduce word
+> > legos to help i18n, 2018-11-10).
 > >
-> > On Tue, 18 Jun 2019, Matheus Tavares wrote:
+> > The important part, as it turns out, is the switch to using fprintf_ln()
+> > instead of a regular fprintf() with a "\n" in it. Doing this:
+> > [...]
+> > on top of the current tip of master yields this result:
 > >
-> >>[...]
-> >> +/*
-> >> + * Look for a recursive symlink at iter->base.path pointing to any directory on
-> >> + * the previous stack levels. If it is found, return 1. If not, return 0.
-> >> + */
-> >> +static int find_recursive_symlinks(struct dir_iterator_int *iter)
-> >> +{
-> >> +    int i;
-> >> +
-> >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
-> >> +        !S_ISDIR(iter->base.st.st_mode))
-> >> +            return 0;
-> >>
-> >> +    for (i = 0; i < iter->levels_nr; ++i)
-> >> +            if (iter->base.st.st_ino == iter->levels[i].ino)
-> >
-> > This does not work on Windows. [[ Windows port does not have
-> > usable st_ino field ]]]
+> >   Test                                             HEAD^             HEAD
+> >   -----------------------------------------------------------------------------------------
+> >   1451.3: fsck with 0 skipped bad commits          9.78(7.46+2.32)   8.74(7.38+1.36) -10.6%
+> >   1451.5: fsck with 1 skipped bad commits          9.78(7.66+2.11)   8.49(7.04+1.44) -13.2%
+> >   1451.7: fsck with 10 skipped bad commits         9.83(7.45+2.37)   8.53(7.26+1.24) -13.2%
+> >   1451.9: fsck with 100 skipped bad commits        9.87(7.47+2.40)   8.54(7.24+1.30) -13.5%
+> >   1451.11: fsck with 1000 skipped bad commits      9.79(7.67+2.12)   8.48(7.25+1.23) -13.4%
+> >   1451.13: fsck with 10000 skipped bad commits     9.86(7.58+2.26)   8.38(7.09+1.28) -15.0%
+> >   1451.15: fsck with 100000 skipped bad commits    9.58(7.39+2.19)   8.41(7.21+1.19) -12.2%
+> >   1451.17: fsck with 1000000 skipped bad commits   6.38(6.31+0.07)   6.35(6.26+0.07) -0.5%
 >
-> And if you cross mountpoint, st_ino alone does not guarantee
-> uniqueness; you'd need to combine it with st_dev, I would think,
-> even on POSIX systems.
+> Ah, I think I see it.
+>
+> See how the system times for HEAD^ (with fprintf_ln) are higher? We're
+> flushing stderr more frequently (twice as much, since it's unbuffered,
+> and we now have an fprintf followed by a putc).
+>
+> I can get similar speedups by formatting into a buffer:
+>
+> diff --git a/strbuf.c b/strbuf.c
+> index 0e18b259ce..07ce9b9178 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -880,8 +880,22 @@ int printf_ln(const char *fmt, ...)
+>
+>  int fprintf_ln(FILE *fp, const char *fmt, ...)
+>  {
+> +       char buf[1024];
+>         int ret;
+>         va_list ap;
+> +
+> +       /* Fast path: format it ourselves and dump it via fwrite. */
+> +       va_start(ap, fmt);
+> +       ret = vsnprintf(buf, sizeof(buf), fmt, ap);
+> +       va_end(ap);
+> +       if (ret < sizeof(buf)) {
+> +               buf[ret++] = '\n';
+> +               if (fwrite(buf, 1, ret, fp) != ret)
+> +                       return -1;
+> +               return ret;
+> +       }
+> +
+> +       /* Slow path: a normal fprintf/putc combo */
+>         va_start(ap, fmt);
+>         ret = vfprintf(fp, fmt, ap);
+>         va_end(ap);
+>
+> But we shouldn't have to resort to that. We can use setvbuf() to toggle
+> buffering back and forth, but I'm not sure if there's a way to query the
+> current buffering scheme for a stdio stream. We'd need that to be able
+> to switch back correctly (and to avoid switching for things that are
+> already buffered).
+>
+> I suppose it would be enough to check for "fp == stderr", since that is
+> the only unbuffered thing we'd generally see.
+>
+> And it may be that the code above is really not much different anyway.
+> For an unbuffered stream, I'd guess it dumps an fwrite() directly to
+> write() anyway (since by definition it does not need to hold onto it,
+> and nor is there anything in the buffer ahead of it).
+>
+> Something like:
+>
+>   char buf[1024];
+>   if (fp == stderr)
+>         setvbuf(stream, buf, _IOLBF, sizeof(buf));
+>
+>   ... do fprintf and putc ...
+>
+>   if (fp == stderr)
+>         setvbuf(stream, NULL, _IONBF, 0);
+>
+> feels less horrible, but it's making the assumption that we were
+> unbuffered coming into the function. I dunno.
 
-which should be protected by USE_STDEV. There's another code that
-ignore st_ino on Windows in entry.c. Maybe it's time to define
-USE_STINO instead of spreading "#if GIT_WINDOWS_NATIVE" more.
+How about do all the formatting in strbuf and only fwrite last minute?
+A bit more overhead with malloc(), so I don't know if it's an
+improvement or not.
 -- 
 Duy
