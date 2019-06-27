@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7391F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 09:37:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E39A31F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 09:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbfF0JhU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 05:37:20 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:38699 "EHLO
+        id S1726422AbfF0JhX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 05:37:23 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36646 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbfF0JhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 05:37:20 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r12so6442019edo.5
-        for <git@vger.kernel.org>; Thu, 27 Jun 2019 02:37:19 -0700 (PDT)
+        with ESMTP id S1725385AbfF0JhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 05:37:21 -0400
+Received: by mail-ed1-f68.google.com with SMTP id k21so6436562edq.3
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 02:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4+gp3uuNF3krmaCy5OasHmhrNPLO3UreB+T9T9nltgk=;
-        b=sifNOtKsB7dYMYZbj5Gpvxh48VnWR9UtsyWXUbm29GQIUvw7logQ4UmDIRhmS+gF35
-         PNubWd40sWksJ4lrIYiYb7E5+/6ZNTxopidf+IH73MDABc/gK0nxSFgrit0zmChjvJg+
-         kA5BgslVPbMw+GOkP9JkuvGHcbmQjivTbLP3Vyfn5k/1SzaOPcotxWmB3TxDxUkTe939
-         jXe5I6fcXj3oO21ZdNZ6JoPhE+2kXPqe9by9wXkMFpueNRHzXI1s0vaPTdDzBY+6wZW3
-         iHfTj+aMzL2YlnQQv2MBUd0kmrQI89loQ/TA/K+GYQF3xVQlp/gNDQ2hUGvcj9EaQT3a
-         j9wg==
+        bh=1CDfdhP570sImu/DzEwADEdEZiPT3stXLqJRWefM8gc=;
+        b=nAXEIofSn1Xx6qsu6i8DgLc6C8yJsVUUpca6fjW52Xwt4GcGmhu1powH/PFA6vJJ/0
+         sdsg7Xw6f4OPR3trEcd3GlC3Xx6tKZu1dUhVXJtDYjy6NnjqsJruzjiXcRJaVUpT2tdo
+         pb0HecPOjkLhjtkmuc60yECZd9Y8ibAJgHhhF4gjCyRFucBlV41x3NXnEw3udygKjKzY
+         u6xUmgl0Gu62WivhM8cRRVr5jdbvSEVP0DDK/qoRB3XtI5aSl3SS9e9dqWU3fSS7reOz
+         pR71Hjizm0iZUmA5omWvyz1JhB6EpsRkavHR72y9Ol6vRntOzMpLiXAtsiJ/Jne+GSWN
+         qHGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4+gp3uuNF3krmaCy5OasHmhrNPLO3UreB+T9T9nltgk=;
-        b=Px2N/HbphBsYeE0MYwaHeaPAKVyUed64YqUxmIQC4yGyn0pxqfeqh6f58o2n05qLkJ
-         mq8l4DnIPe23lmxbY9aLeez2eP3pHIIh8ODrFCzPm4Epf9Yfjae52etTktABRp7hxVaV
-         b7ASyPkv7Q+RZFLUtCQUEYfIfpGQQh+Gq85yb46mFvxyu2aZ7Ojawjkt2NgEGMkdFykO
-         3zW+ebqJpelTwjLP6o9QmfcJWayChKL5NMEz2sZ9UwY9MXuxkK7IK8+tvB5Z5PZrKgRH
-         Bp/892czqs1k28Wfv59a6HdQBhg+GkOvLuSCOR/E16zaFec1Je7/2HcUYez9WEUqSIJU
-         CgSg==
-X-Gm-Message-State: APjAAAWpuuEOcCNuSmXzWfOvUuNBUK6AxqRhBMnvA9c3gShylrvayVPC
-        vNsyU2Ngc5RWnWjbuZgsT1AMeuGK
-X-Google-Smtp-Source: APXvYqxfrnAqsSc7cTbYqAmP4N5LQXCLpW7T/zYqsJpXgyHs3dUMd1HiY0AHjn6VEDi2+42NxufNew==
-X-Received: by 2002:a17:906:318e:: with SMTP id 14mr2156013ejy.85.1561628239051;
+        bh=1CDfdhP570sImu/DzEwADEdEZiPT3stXLqJRWefM8gc=;
+        b=Y46vnq+aqOYTo1DvEk0/FxCbNcA/S4rEr+TjoJ2YEWbV2jRjM8aFgAyMPqxwgbO6AI
+         7oxZ7hbWm8TlHwSjQAVm3RtXQxVRNkkhm/D+wQj1t7WV8Uv0h7a7ho7l7hLoDd2Rf27P
+         9gk+JTenAezCC6Aw6wBSx4Y6L24z2WxsmTqBgPIgAQcnnjsp2rZ9PBlIClDhgMOn+Nlz
+         K7teTaYqFmcawzWZzBsD3Vl/zXYspblooHtDypP/Y2XtFdaE2I0Ev+ZeagzSAhcpnYL8
+         Sq6Oy0acy/W0FUaeWXVoJx2KbYxy5x69l1gHueOJaLZJtkxMBjKKqK2D0EqPXKdPjXwY
+         kZKw==
+X-Gm-Message-State: APjAAAXT+Um3QCB8DAdC0+pc+bdUO1vR0EVRJ0iEXkmjki+ZN5uCgZI1
+        jul/nHFnkFcRsFDPiQrS/udLjsLT
+X-Google-Smtp-Source: APXvYqyw63ESujrw5cwf8ltDzaX7+YyVvil4xrSbMT0D8TraY3utnQO+vINEMSenidqip84MEopGQQ==
+X-Received: by 2002:a17:906:1f43:: with SMTP id d3mr2100613ejk.169.1561628239691;
         Thu, 27 Jun 2019 02:37:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p22sm322514ejm.38.2019.06.27.02.37.18
+        by smtp.gmail.com with ESMTPSA id j9sm322801ejm.68.2019.06.27.02.37.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Jun 2019 02:37:18 -0700 (PDT)
-Date:   Thu, 27 Jun 2019 02:37:18 -0700 (PDT)
-X-Google-Original-Date: Thu, 27 Jun 2019 09:37:15 GMT
-Message-Id: <54fff4ef40d1dba2153de27413fb53e992228b5b.1561628237.git.gitgitgadget@gmail.com>
+        Thu, 27 Jun 2019 02:37:19 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 02:37:19 -0700 (PDT)
+X-Google-Original-Date: Thu, 27 Jun 2019 09:37:16 GMT
+Message-Id: <0c9d2aead5f729942968314679c5a1ca2e0370d0.1561628237.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.147.git.gitgitgadget@gmail.com>
 References: <pull.147.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] mingw: get pw_name in UTF-8 format
+Subject: [PATCH 2/2] mingw: use Unicode functions explicitly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,43 +71,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Previously, we would have obtained the user name encoded in whatever the
-current code page is.
+Many Win32 API functions actually exist in two variants: one with
+the `A` suffix that takes ANSI parameters (`char *` or `const char *`)
+and one with the `W` suffix that takes Unicode parameters (`wchar_t *`
+or `const wchar_t *`).
 
-Note: the "user name" here does not denote the full name but instead the
-short logon name.
+The ANSI variant assumes that the strings are encoded according to
+whatever is the current locale. This is not what Git wants to use on
+Windows: we assume that `char *` variables point to strings encoded in
+UTF-8.
+
+There is a pseudo UTF-8 locale on Windows, but it does not work
+as one might expect. In addition, if we overrode the user's locale, that
+would modify the behavior of programs spawned by Git (such as editors,
+difftools, etc), therefore we cannot use that pseudo locale.
+
+Further, it is actually highly encouraged to use the Unicode versions
+instead of the ANSI versions, so let's do precisely that.
+
+Note: when calling the Win32 API functions _without_ any suffix, it
+depends whether the `UNICODE` constant is defined before the relevant
+headers are #include'd. Without that constant, the ANSI variants are
+used. Let's be explicit and avoid that ambiguity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ compat/mingw.c     |  2 +-
+ compat/poll/poll.c |  2 +-
+ compat/winansi.c   | 10 ++++++----
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 9b6d2400e1..8526876262 100644
+index 8526876262..b8a62bf914 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1946,13 +1946,19 @@ struct passwd *getpwuid(int uid)
- 	static unsigned initialized;
- 	static char user_name[100];
- 	static struct passwd *p;
-+	wchar_t buf[100];
- 	DWORD len;
+@@ -1407,7 +1407,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
+ 	do_unset_environment_variables();
  
- 	if (initialized)
- 		return p;
- 
--	len = sizeof(user_name);
--	if (!GetUserName(user_name, &len)) {
-+	len = sizeof(buf);
-+	if (!GetUserNameW(buf, &len)) {
-+		initialized = 1;
-+		return NULL;
-+	}
-+
-+	if (xwcstoutf(user_name, buf, sizeof(user_name)) < 0) {
- 		initialized = 1;
- 		return NULL;
+ 	/* Determine whether or not we are associated to a console */
+-	cons = CreateFile("CONOUT$", GENERIC_WRITE,
++	cons = CreateFileW(L"CONOUT$", GENERIC_WRITE,
+ 			FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+ 			FILE_ATTRIBUTE_NORMAL, NULL);
+ 	if (cons == INVALID_HANDLE_VALUE) {
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index 4459408c7d..8f24b80252 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -150,7 +150,7 @@ win32_compute_revents (HANDLE h, int *p_sought)
+       if (!once_only)
+ 	{
+ 	  NtQueryInformationFile = (PNtQueryInformationFile)
+-	    GetProcAddress (GetModuleHandle ("ntdll.dll"),
++	    GetProcAddress (GetModuleHandleW (L"ntdll.dll"),
+ 			    "NtQueryInformationFile");
+ 	  once_only = TRUE;
  	}
+diff --git a/compat/winansi.c b/compat/winansi.c
+index f4f08237f9..cd947e048e 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -599,7 +599,7 @@ int winansi_isatty(int fd)
+ void winansi_init(void)
+ {
+ 	int con1, con2;
+-	char name[32];
++	wchar_t name[32];
+ 
+ 	/* check if either stdout or stderr is a console output screen buffer */
+ 	con1 = is_console(1);
+@@ -619,13 +619,15 @@ void winansi_init(void)
+ 	}
+ 
+ 	/* create a named pipe to communicate with the console thread */
+-	xsnprintf(name, sizeof(name), "\\\\.\\pipe\\winansi%lu", GetCurrentProcessId());
+-	hwrite = CreateNamedPipe(name, PIPE_ACCESS_OUTBOUND,
++	if (swprintf(name, ARRAY_SIZE(name) - 1, L"\\\\.\\pipe\\winansi%lu",
++		     GetCurrentProcessId()) < 0)
++		die("Could not initialize winansi pipe name");
++	hwrite = CreateNamedPipeW(name, PIPE_ACCESS_OUTBOUND,
+ 		PIPE_TYPE_BYTE | PIPE_WAIT, 1, BUFFER_SIZE, 0, 0, NULL);
+ 	if (hwrite == INVALID_HANDLE_VALUE)
+ 		die_lasterr("CreateNamedPipe failed");
+ 
+-	hread = CreateFile(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
++	hread = CreateFileW(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
+ 	if (hread == INVALID_HANDLE_VALUE)
+ 		die_lasterr("CreateFile for named pipe failed");
+ 
 -- 
 gitgitgadget
-
