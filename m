@@ -2,123 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 156381F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 18:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 938B31F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 18:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbfF0Sxs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 14:53:48 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44881 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726426AbfF0Sxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 14:53:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561661620;
-        bh=7LGVsscWb4y5RDtNpDvYpQIxpjW+awkrT/lz5NZLxig=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XybiU4/FImwAg5PolwiCWr8zkLJWITm2GJzDIph23dFQaVg6dyGIlh3F6efd5jkfK
-         xZBRzr/w6Q04az/v5w6+YZP50wxuyh9Nq6NvkZHtALvwJs4ePalFUih0C9XiZQBCpP
-         pREQuE4xVfArQs5atCwOrY56e/1HxnyojNfwKA1Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ33z-1hcQvA3YNH-005KOL; Thu, 27
- Jun 2019 20:53:39 +0200
-Date:   Thu, 27 Jun 2019 20:54:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726525AbfF0S4e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 14:56:34 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:38340 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726476AbfF0S4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 14:56:34 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y15so1685165pfn.5
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 11:56:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BW/RLfmDeMoKviwTid3P3ufxyVvjEK+srDAI2vtOGyY=;
+        b=rXknrJPqIKOvBIND6180KNT1KFlN5u7LaV8AgaXkuL5qLHI8cvdP5Ke7L2GbP2FF2q
+         v98/zTdmcZ2ddtfP35kO4SulBVVgqiLWqqMwC0TgAy0iT5DtXlVxD57DoCGuqNL9ht4q
+         lIQKwvy0L905enXqzGD+O14pdZAv5mZLYEHlKxN7IdLxTMQ4rXDlMORv1/QgyUiF6dw8
+         pMbTmOJdPTw2fs8fqXqPSaSKCJT+IGpDgRcda6YfGIYuauHZPSNfS0Co/LPO7+5TEtDo
+         zBtf+Vj0khbxxb3iROtuAv1kT1wWjMRtcaZ7Jqs3y02DzwgIwDXGLajjNjyUHgtdIs5S
+         vSNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BW/RLfmDeMoKviwTid3P3ufxyVvjEK+srDAI2vtOGyY=;
+        b=nlv2gPOpAWI6vWUfDZkUw+JSvg6SwPm+LiiBzGC4+mWRAm4W2G6IqwJSINI6Ug9a/g
+         mKgsgLp6R/cUQp+u5JIarWBjf4jYDJVeAeQXUHk64yN8esIXC+JfIv7OJmY+fXVWR7LA
+         bAC61kiAf7qiTqr1dilEs5FD2ySAfdqCJaqcbmct6grnmSbZZRYkcmHCGM9v+u/96czg
+         eXG6vq9yRw5BlAB/FUgcsWj8emqBE4X2v9ZSKX1vuR4ouR77grvuDkLiRqUBm7fXX0a5
+         URRyuFMsHmTryRecEroruK+HJrvRGMgPXcyZcZIMlvc97ahnma14PgJTBHpKfKBHZkGa
+         EzbQ==
+X-Gm-Message-State: APjAAAXtizVO11Txcfpf6eeOWw3VbqF/KqFmBPn7QCfkzHPV2MCF3hlm
+        suNaU3CfweD4JfpAY7upjbHlRjl3Ru4=
+X-Google-Smtp-Source: APXvYqz1RP4SexSJgrd8pOjKr3MFwlAOAeGA0XoyC0L2fncU/d+EmHK0YNXnKPDQ2OkSzrjdDwqJbg==
+X-Received: by 2002:a17:90a:bb0c:: with SMTP id u12mr7997246pjr.132.1561661793007;
+        Thu, 27 Jun 2019 11:56:33 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id k22sm4362870pfg.77.2019.06.27.11.56.32
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 27 Jun 2019 11:56:32 -0700 (PDT)
+Date:   Thu, 27 Jun 2019 11:56:27 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] mingw: use Unicode functions explicitly
-In-Reply-To: <CAPig+cTkzeyGjvftxmaA5Du2Dm4myzchJhrnHi=noJ7nLiLp-A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906272051240.44@tvgsbejvaqbjf.bet>
-References: <pull.147.git.gitgitgadget@gmail.com> <0c9d2aead5f729942968314679c5a1ca2e0370d0.1561628237.git.gitgitgadget@gmail.com> <CAPig+cTkzeyGjvftxmaA5Du2Dm4myzchJhrnHi=noJ7nLiLp-A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 05/13] walken: configure rev_info and prepare for
+ walk
+Message-ID: <20190627185627.GC245941@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com>
+ <20190626235032.177551-6-emilyshaffer@google.com>
+ <CAPig+cRduaOcVyrvhXc2moKSUsZa7-7HLh197xYT035HTQp61w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1B/QZpdQpqpC8peu9wm/Eu34KgMguNfeOQ4E91leFSN3cGt7lru
- ig2ChQEtym51rtkP8+xJVcuZj4Wa97wiLI5Ir1I6PmlbEnD9bE4DpMmDnA8jHfO9lpkS8Ns
- 0mZcKlYkOiFWfjZjBT1dfpAvgfR4MUgwLb0wdmf6ZEaDof0gKNC+uuNVdjHBUQs/jxRnltn
- BNhAoXbZx4x9j4HJj78fg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nDEneCu2qiM=:tEfHiNA9FEncBTCre6IoSz
- GMlF1eUsPe7W8keRnyRTw9g8pXDGuRx2nfkzxX0or/R5movqo/AuNi7wxUT9riYbofSDAQcP8
- wpCjWw13RAr7gqVn6MmtVmFoywlk35jcBqf+yvV0R/zT7vNmdBc/+dI1C8RJ823oi85k62j9P
- kEUufIxfEiJyl+0z4u9A2VtN6g2wDr1ZV4ls2ROrIMpHfXZ5psKE20n4GKPpCZ3FA438kStYH
- nCYaOgOQr2lDNkNoGetwWLzZ5SOcdG1d8/pcQviSIp1NCFWwjGNTvLTNY8rzbCGy+ZCS9Tin+
- 8m5I2LImIRL1IXQrKhQ9ukugAFuJI0DyQ+IRok6X/5zWsq+guJusuy21k9J2taLCCubO3dJf3
- Ae3N/NRwipzaaSJhITvUFHKp3/7xZ6iWQ0kw8fKJVjUD5IaA+DcT5OLUwbSpAfUEznjaXYr2a
- Br8HwFTMd7yA/Q4E/e/a0QpjgTFzu4WF9HBD/GWpTUuFlwIL34SHli9NMliLdLBSl6HOowCpM
- itq0+SdgMdZJl0zxloSSFboG763PmK2j9H/lKmaXc1/4w4Ww6AeiUeSNW3fHtrX8GWAALmGHo
- LWqtbfh9eDK5HIGNjo1PO236gtvp8B6piK5mEDgBzxqKGbg/RiCBg6MLkG+ZomqoXu/blcm+/
- tU+BEiHPr7knhlvaOhXtPQkewuflgDxuflWg8nft57OwqOs8mJZ8OQK+4vv86VpFJDOLi+/zV
- z4yG99iQTuzwFo2LufIxy2+QWeWBu5Dmf5As2XyDnGjET95n6q6nCuxFFeazOdc1+wbtzFLla
- VeMDdCveVXHoQXcult362XcrHBaT0dzHoAOh4aA40fafEzKUuKGGqF2ZLJH6v52QZpm9Hxavm
- Kfxi/lXH0Sa1+fGCjIKshCFThdREQ9IEeOShIO6SOLZ2n/gqwE9X/VcdiBMTtZHBGKCaBJSEb
- Ol+Fu1gWDndSR/FBo6OvN0bCTQ7xkDUH2UlLkkW+hXhoQRZMz0v6/kJyfe8fSZ9/PWNtVGoPH
- k79+EC2PS8M4cYjSftd4BC56lKI7EX5o5pvy929/Lcujj9M3NuQlVe4MyfBt6XZcoctY4+xF/
- OvqB0gEjAIohgVwnERn/bJnWxzxmhj/Ah4k
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRduaOcVyrvhXc2moKSUsZa7-7HLh197xYT035HTQp61w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Thu, Jun 27, 2019 at 01:06:32AM -0400, Eric Sunshine wrote:
+> On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> > `struct rev_info` is what's used by the struct itself.
+> 
+> What "struct itself"? Do you mean 'struct rev_info' is used by the
+> _walk_ itself? Or something?
 
-On Thu, 27 Jun 2019, Eric Sunshine wrote:
+Yep, that's the one. Thanks for the fresh eyes.
 
-> On Thu, Jun 27, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > Many Win32 API functions actually exist in two variants: one with
-> > the `A` suffix that takes ANSI parameters (`char *` or `const char *`)
-> > and one with the `W` suffix that takes Unicode parameters (`wchar_t *`
-> > or `const wchar_t *`).
-> >
-> > The ANSI variant assumes that the strings are encoded according to
-> > whatever is the current locale. This is not what Git wants to use on
-> > Windows: we assume that `char *` variables point to strings encoded in
-> > UTF-8.
-> >
-> > There is a pseudo UTF-8 locale on Windows, but it does not work
-> > as one might expect.
->
-> What does "does not work as one might expect" mean? The reader is left
-> hanging, not knowing why or how the UTF-8 locale on Windows is
-> undesirable.
+> 
+> > `repo_init_revisions()` initializes the struct; then we need to set it
+> > up for the walk we want to perform, which is done in
+> > `final_rev_info_setup()`.
+> > [...]
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> > diff --git a/builtin/walken.c b/builtin/walken.c
+> > @@ -30,6 +31,40 @@ static void init_walken_defaults(void)
+> > +/*
+> > + * cmd_log calls a second set of init after the repo_init_revisions call. We'll
+> > + * mirror those settings in post_repo_init_init.
+> > + */
+> 
+> What is 'post_repo_init_init'?
+> 
+> I found the reference to cmd_log() confusing because I was looking for
+> it in this patch (as if it was being introduced here). Newcomers might
+> be even more confused. Perhaps if you state explicitly that you're
+> referring to existing code in an existing file, it might be clearer.
+> Maybe:
+> 
+>     builtin/log.c:cmd_log() calls a second ...
+> 
+> Overall, I find this entire function comment mystifying.
 
-Should I really bore the reader with half-details? At least one of those
-behaviors was reported as an unbootable Windows 7, but some others could
-not reproduce.
+Yeah, this is very stale and never got updated when I realized cmd_log()
+was calling two init functions for apparently legacy reasons, and I
+didn't need to mirror it here. Again a case where fresh eyes caught
+something that became invisible after I stared at it for weeks. I really
+appreciate you doing the deep review, Eric.
 
-I really did not want to write a novel here that is 1) largely irrelevant
-and 2) would take way too long to write because I forgot most of the
-details and would have to look them up again.
+I've replaced it:
 
-Hopefully we can do without the full story here, as even one report that
-it does not work as expected is enough to make this an unfeasible option
-for us, and that's that as far as I am concerned.
+ /*
+  * Perform configuration for commit walk here. Within this function we set a
+  * starting point, and can customize our walk in various ways.
+  */
 
-Ciao,
-Dscho
+> 
+> > +static void final_rev_info_setup(int argc, const char **argv, const char *prefix,
+> > +               struct rev_info *rev)
+> > +{
+> > +       /*
+> > +        * Optional:
+> > +        * setup_revision_opt is used to pass options to the setup_revisions()
+> > +        * call. It's got some special items for submodules and other types of
+> > +        * optimizations, but for now, we'll just point it to HEAD and call it
+> > +        * good. First we should make sure to reset it. This is useful for more
+> > +        * complicated stuff but a decent shortcut for the first pass is
+> > +        * add_head_to_pending().
+> > +        */
+> 
+> I had to pause over "call it good" for several seconds (since I
+> couldn't understand why someone would want to write "bad" code) until
+> I figured out you meant "do nothing else". It would be clearer simply
+> to drop that, ending the sentence at "HEAD":
+> 
+>     ..., but for now, we'll just point it at HEAD.
 
->
-> > In addition, if we overrode the user's locale, that
-> > would modify the behavior of programs spawned by Git (such as editors,
-> > difftools, etc), therefore we cannot use that pseudo locale.
-> >
-> > Further, it is actually highly encouraged to use the Unicode versions
-> > instead of the ANSI versions, so let's do precisely that.
-> >
-> > Note: when calling the Win32 API functions _without_ any suffix, it
-> > depends whether the `UNICODE` constant is defined before the relevant
-> > headers are #include'd. Without that constant, the ANSI variants are
-> > used. Let's be explicit and avoid that ambiguity.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
+Definitely. Done.
+
+> 
+> > +       /*
+> > +        * struct setup_revision_opt opt;
+> > +
+> > +        * memset(&opt, 0, sizeof(opt));
+> > +        * opt.def = "HEAD";
+> > +        * opt.revarg_opt = REVARG_COMMITTISH;
+> > +        * setup_revisions(argc, argv, rev, &opt);
+> > +        */
+> > +
+> > +       /* Let's force oneline format. */
+> > +       get_commit_format("oneline", rev);
+> > +       rev->verbose_header = 1;
+> > +
+> > +       /* add the HEAD to pending so we can start */
+> > +       add_head_to_pending(rev);
+> > +}
+> 
+> It would be easier for the reader to associate the
+> add_head_to_pending() invocation with the commented-out setting of
+> "HEAD" via 'setup_revision_opt' if the two bits abutted one another
+> without being separated by the "oneline" gunk.
+
+Good point, done.
