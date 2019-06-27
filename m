@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7243A1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 05:42:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFD681F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 05:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbfF0Fm6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 01:42:58 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46927 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbfF0Fm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 01:42:58 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n4so907642wrw.13
-        for <git@vger.kernel.org>; Wed, 26 Jun 2019 22:42:56 -0700 (PDT)
+        id S1726382AbfF0FpJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 01:45:09 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40649 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbfF0FpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 01:45:09 -0400
+Received: by mail-wm1-f68.google.com with SMTP id v19so4290200wmj.5
+        for <git@vger.kernel.org>; Wed, 26 Jun 2019 22:45:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BJTRsACX3trnzMeD0c3IXjJQcMWnuZsXcI++pD5eaHg=;
-        b=jdlNW3tzYg0jjooYvFEqbq1rThIi8j7+qfscKeIT/INGRGkjCFg+7lQcBUiem4V/Dx
-         bxw/9gnjzwBzSbKxcvTjPU+DpZnmHEM5u4q9hgAP4/Uy1Pj9//KlGgQ89ZCLk0/OCyc1
-         d0Ap1UPwHyumQbJVg05V9HVL6aaKp1eJ0sjFwFvie/XtixrovWEqxE/QGoxvHN4hVAra
-         2sCqQ/WU+N2Ciso5el9j48TSQ9TJUvwl4IVJm1jhG3TSVNpJaR4qxsh7uzE6PMIb771w
-         EEBIidtNBzlfua7nJSAb7Swpp+S8xREhTPvhzQo2eZ+8yNd3+kVZykP7KL2o0stcVani
-         DNIg==
-X-Gm-Message-State: APjAAAVwxReWJuu124LSvqgVk2hk5Z3DHbqjwKsaHOQvMtGOGhNUiFYF
-        yTBdFtPkTqUmosk24YJXhqLFzb7tMWCszF5eP2kCN3r3
-X-Google-Smtp-Source: APXvYqz/gq74k14Ykd9dS2kjVzsUhMEQ6wkxFNaw4f655buMEe8OfBVGwmWJZ73owAVQ1iJc5vrXwh8kxOYWyPD31uk=
-X-Received: by 2002:a5d:554b:: with SMTP id g11mr1339279wrw.10.1561614176136;
- Wed, 26 Jun 2019 22:42:56 -0700 (PDT)
+        bh=7oIN/6LsZGyfJBDziZmiwVxe17+BPA85zfdWHxiOjfI=;
+        b=glnGMrb6tsBuXZQsEgxP96SRIicOxViZHJ22PkDmmT36Kr2QbZsVlqvyRi1Z5fGLc7
+         dawbhbrl6l6OQ57/8x8L1VB8YYAOIPl8j+scGx+w63fkNEBs/vw/aZJRPvPEdmlUliaU
+         QnuBo034sLCpSTp3J6bhO0nB96GZc0Jw6EWvNoSOQN+aKMxvFAc6UflBrF0LX4B5/VfP
+         mpiOPPVdNzYRodd2UdbxWu7oLAaw3CV4VxhjoZXzCnxfnBmYe+w98lTC7Kmz1ATC44gV
+         z+o55vpXrATzlVxN5tc4ZcTpOnPP/lM/YZCuvNaUCLZ+LeG3FvHNqqrb6AKTe5UgZPK4
+         S5kw==
+X-Gm-Message-State: APjAAAUI+VKfuwmv2s02QLdbfiMpaAWCqPrg2599wv8AxvznW1seXpGC
+        2WMGOzcnHlrrhlk8PtUdSSeAyd5irk/cTy/vSCI=
+X-Google-Smtp-Source: APXvYqz0+bKHLl1eMsi6mc79ZB51IepZ6eMVA6vk0lHHqMTL69JqPedEKLEq6wHlMTiI7kCwd49mpjS+cTvm3Zqr/08=
+X-Received: by 2002:a1c:f319:: with SMTP id q25mr1606727wmq.129.1561614308018;
+ Wed, 26 Jun 2019 22:45:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-12-emilyshaffer@google.com>
-In-Reply-To: <20190626235032.177551-12-emilyshaffer@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com> <20190626235032.177551-13-emilyshaffer@google.com>
+In-Reply-To: <20190626235032.177551-13-emilyshaffer@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 27 Jun 2019 01:42:45 -0400
-Message-ID: <CAPig+cSJLbeVawxRhHwqLEXBr6-3QoaYd+1zF169m5N=kq4J4Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 11/13] walken: add filtered object walk
+Date:   Thu, 27 Jun 2019 01:44:57 -0400
+Message-ID: <CAPig+cTQ3HG6tvWD=7ZqXF-HKTfqUjqmOW95d-LOaGv3T9HpbQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 12/13] walken: count omitted objects
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -50,50 +50,19 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jun 26, 2019 at 7:51 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> Demonstrate how filter specs can be used when performing a revision walk
-> of all object types. In this case, tree depth is used. Contributors who
-> are following the revision walking tutorial will be encouraged to run
-> the revision walk with and without the filter in order to compare the
-> number of objects seen in each case.
->
+> It may be illuminating to see which objects were not included within a
+> given filter. This also demonstrates, since filter-spec "tree:1" is
+> used, that the 'omitted' list contains all objects which are omitted,
+> not just the first objects which were omitted - that is, it continues to
+> dereference omitted trees and commits.
+> [...]
 > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
 > diff --git a/builtin/walken.c b/builtin/walken.c
-> @@ -143,6 +144,10 @@ static void walken_show_object(struct object *obj, const char *str, void *buf)
->  static void walken_object_walk(struct rev_info *rev)
->  {
-> +       struct list_objects_filter_options filter_options = {};
-> +
-> +       printf("walken_object_walk beginning...\n");
+> @@ -45,7 +45,7 @@ static void init_walken_defaults(void)
+>  static void final_rev_info_setup(int argc, const char **argv, const char *prefix,
+> -               struct rev_info *rev)
+> +                                struct rev_info *rev)
 
-Is this debugging code which you accidentally left in? Or is it meant
-to use trace_printf()? Or something else? If it is a genuine message,
-should it be localizable?
-
-> @@ -157,7 +162,24 @@ static void walken_object_walk(struct rev_info *rev)
->         blob_count = 0;
->         tree_count = 0;
->
-> -       traverse_commit_list(rev, walken_show_commit, walken_show_object, NULL);
-> +       if (1) {
-> +               /* Unfiltered: */
-
-The subject talks about adding a _filtered_ object walk (which is in
-the 'else' arm), so should this be "if (0)" instead?
-
-> +               trace_printf(_("Unfiltered object walk.\n"));
-> +               traverse_commit_list(rev, walken_show_commit,
-> +                               walken_show_object, NULL);
-> +       } else {
-> +               trace_printf(_("Filtered object walk with filterspec "
-> +                               "'tree:1'.\n"));
-> +               /*
-> +                * We can parse a tree depth of 1 to demonstrate the kind of
-> +                * filtering that could occur during various operations (see
-> +                * `git help rev-list` and read the entry on `--filter`).
-> +                */
-> +               parse_list_objects_filter(&filter_options, "tree:1");
-> +
-> +               traverse_commit_list_filtered(&filter_options, rev,
-> +                       walken_show_commit, walken_show_object, NULL, NULL);
-> +       }
+Use the correct indentation in the patch which introduces this code
+rather than adjusting it in this patch.
