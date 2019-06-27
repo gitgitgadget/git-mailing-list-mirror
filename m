@@ -2,118 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20BDD1F461
-	for <e@80x24.org>; Thu, 27 Jun 2019 09:16:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB43C1F461
+	for <e@80x24.org>; Thu, 27 Jun 2019 09:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfF0JQB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Jun 2019 05:16:01 -0400
-Received: from mout.gmx.net ([212.227.15.15]:41247 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726293AbfF0JQA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jun 2019 05:16:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561626941;
-        bh=BElO9u7cq6n3WbuFiZ7zjOeIxe7Oj8O7Cy8DtwPgB2I=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ahvIpG7jnKgh3FGTCz0MjcjI/MlbFPbEVwZ8OG6OqntZzlW5ALiRsBhanjqelIyWc
-         bkLxM9B3ibBTr+veDiHOBvg678RTCD89jsW29TBqpGw2ZPtJTemo8mszo+A4+oQR+y
-         sx5CFZn/VrEUzg7GXic7/ZZRiWY2Lzfjj0eMTbVk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y8F-1iZ4p01WxD-00v5YU; Thu, 27
- Jun 2019 11:15:41 +0200
-Date:   Thu, 27 Jun 2019 11:16:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [RFC/PATCH 0/7] grep: move from kwset to optional PCRE v2
-In-Reply-To: <nycvar.QRO.7.76.6.1906261601270.44@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet>
-References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1906261601270.44@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726437AbfF0JVS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Jun 2019 05:21:18 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:45891 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbfF0JVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jun 2019 05:21:18 -0400
+Received: by mail-io1-f67.google.com with SMTP id e3so3137638ioc.12
+        for <git@vger.kernel.org>; Thu, 27 Jun 2019 02:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oc+VU3poGMUmz8XjZSRULDH4xvxdgnciMrX/IyKmwlU=;
+        b=QxNbyFXtsTXpsSoTumFf0XYk37PrHqF89c9+7bQfLHHdIHJjx+2PShsXcbqhx08kce
+         SXmPbUZpe3VrtgQ18oaSIfV95UAnxhU2YTDQEBn8SHzxd7J2CSWZ68qNm73ai4mkBbD5
+         IbMYyBVFi6H2aY4pcbjg2wwFkxAgMmQTc4KANaOGbG5JFnnq35cZToqtrlqhBBOnymg7
+         sdaM3Y8+lqQGdJQCY/UXEzIQQzYti2KmD8qyzN8jiYmyfj7SzNAT3IaN5XfeP4lZ7E5t
+         bw/IQQ+7QG0Mf+kLMw1i7EqAx9FXlMab2zbbnygGl663DxJh3CX3iIlS0bURkodfff6y
+         fCJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oc+VU3poGMUmz8XjZSRULDH4xvxdgnciMrX/IyKmwlU=;
+        b=jQu6aMFoikIuo189fJ9GREUaAQToFmDVxh9I1RSKGxxiRtJwOwcf1NoPY7PCd5EqEa
+         YuwoUAVw1gbH2LnLiV3WMNatULfNfAPBN3f1ddyziJt3BuHVLuxf0zsk5vjwpsrX2kOD
+         9Utm2igSc/FrtNzZlVX5jCNO6B9VyX8ra+i9HG8qe6ddBGuu1L4jBWihx+bmzTSKPFIa
+         pYVQLJBUTo+3InOXTU0XnRVlbpWLUUetiqxOf2CSgbDk7P8g9RRK1yjhD+FFLT76w40i
+         ADD3isFVN1EjOypPpKwPe2G90id22YtPLOcdsMSGJ+kyjbk6uTrLzLiK0R+/QE4mPj73
+         mjxA==
+X-Gm-Message-State: APjAAAXKUZtWSlLQQt3hYM8ZrUCCbT7GNuhfVRS5UeEBVLvskZ5hA0hS
+        MtohP3IsXQuJCRX44Fo0hOGxSmGIVu5gbZaYePo=
+X-Google-Smtp-Source: APXvYqyAji8keeZ+rEdxQ8RW6HT7DDBDkR4DPcY+IKw4InvM5NhrstEWUSEWw2ebhC8txMV1mYBJtjMy7FWyCYOwBFM=
+X-Received: by 2002:a02:5a89:: with SMTP id v131mr3468330jaa.130.1561627277713;
+ Thu, 27 Jun 2019 02:21:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1527059421-1561626963=:44"
-X-Provags-ID: V03:K1:X5y9P1My8SIZqi0VyNxGKrFZsOpyQWJQW3R6dDqwDkvH8xNM3F7
- JeH7FGYDUgkpc8OJePDwTNwwprKhrA9gz2oDV0Cm/R8qedAnJhzBwF4XrvPYzWRflrcACTk
- k0U3wRw9tkoSlTpG2hgRg1FTZCEoJdq7eTcZTWcy4uZHC6kFM/RRAzA2pHD9Zsvfy3w95v0
- +J3sT3wPiPGhGTytMDfiQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:c/VroQojQ98=:/jrn+nRa4Ik5F5RXjSN/q8
- ZIVvR6nLPGjqk06VXVkMAbk3k6YPIlGeXaBG/OPPMx6CQTNVYUypJL+1Oz9hbfKBwL7peSFCU
- mdS4+SdfoDsNbppBd/q7dMm3qTfmKRJ+ak3RffiyUAmKvRkK1RvTTOXJK21MFn2UGwApO6vqH
- vWizkARK9B6LpPUVFfXJmSrMRaaehRd3ThORFAywKuHAyFd+xtXUv6J00ODURy/EBlgS+RvLC
- T8HkAOg7iG5UhYyflxhDcdiGBxCEkGV4VyX/rbiCWcujni71TX6qF+gzT60WoLeNXuJRGW/MG
- ZQIhwFIQrKdy8tgzbK2sJu3cpFcDPVDj6nnEP/Inz9Oyv6+FHfjZqL6r0k+WrIXVoGZRGn3U4
- b5VwV/7adPqjQQtgL9yX61/JsXW8TOUvW40JG5GLjCfKA2JgGvz38KECxy1l9KL5XJoYhe+EJ
- 0mdZhcWSrJpl0i0hv4VicqYJizx8LGMDgDHriLjJFaH1G9C1s3W0LvMst9dqaJBSfXxp0P5yU
- EW3ep1vSh4ykIkstoTo8mjVT+OigVeUpktwZuDYW291llLVxF74uzUObf+G+5V89QB+CpCKoX
- kdE1FtNr833uqanVdGgV0F7yOmAgBlW9M4G6b4A62xmfaGMPlsD+5h07d/tv8ugSNIArEHTIo
- 4eeNW+LJSRqzkMPbFqR09ls4ePSjhlWa4XsXtR4VeC/WEXowBOhpChZFXzY9rg3kiBQ6NBjja
- pX2Y5nmQKftoo/E3WDeRmy8gBWsYA3aYQw1ff3m40MAiFkaxMfPATlfnSNWbqdNfsUmYB6Mk7
- 9sTYYmGW4m072ILptqmm7J+5lFC69GR8e0k1lyGt/GcyGpkxOB0uaD3q+mXEm8rGixTau/Vza
- MfeotGMVREnCYeiNbvr1wHNZi2/Nc611zZBxbB8xZhXSvjVF8NPwWDJCyuT3MZiVCR3RcWvej
- A8Nv/cNLArkiIne4D1dWLAgdwEunXLIdvtZadx6824AMiCNJ1FUQj
+References: <cover.1560898723.git.matheus.bernardino@usp.br>
+ <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
+ <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 27 Jun 2019 16:20:51 +0700
+Message-ID: <CACsJy8BHWvbL_rPuRN-=Q4sDL+wkJUNAoPhdjcrs+VqY5-Kr5w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        kernel-usp@googlegroups.com,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1527059421-1561626963=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi =C3=86var,
-
-On Wed, 26 Jun 2019, Johannes Schindelin wrote:
-
-> On Wed, 26 Jun 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, Jun 27, 2019 at 1:04 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > This speeds things up a lot, but as shown in the patches & tests
-> > changed modifies the behavior where we have \0 in *patterns* (only
-> > possible with 'grep -f <file>').
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I agree that it is not worth a lot to care about NULs in search patterns=
-.
+> > Hi Matheus,
+> >
+> > On Tue, 18 Jun 2019, Matheus Tavares wrote:
+> >
+> >>[...]
+> >> +/*
+> >> + * Look for a recursive symlink at iter->base.path pointing to any directory on
+> >> + * the previous stack levels. If it is found, return 1. If not, return 0.
+> >> + */
+> >> +static int find_recursive_symlinks(struct dir_iterator_int *iter)
+> >> +{
+> >> +    int i;
+> >> +
+> >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
+> >> +        !S_ISDIR(iter->base.st.st_mode))
+> >> +            return 0;
+> >>
+> >> +    for (i = 0; i < iter->levels_nr; ++i)
+> >> +            if (iter->base.st.st_ino == iter->levels[i].ino)
+> >
+> > This does not work on Windows. [[ Windows port does not have
+> > usable st_ino field ]]]
 >
-> So I am in favor of the goal of this patch series.
+> And if you cross mountpoint, st_ino alone does not guarantee
+> uniqueness; you'd need to combine it with st_dev, I would think,
+> even on POSIX systems.
 
-There seems to be a Windows-specific test failure:
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11535&view=
-=3Dms.vss-test-web.build-test-results-tab&runId=3D28232&resultId=3D101315&=
-paneView=3Ddebug
-
-The output is this:
-
-=2D- snip --
-not ok 5 - log --grep does not find non-reencoded values (latin1)
-
-expecting success:
-	git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D$utf8_e >actual
-&&
-	test_must_be_empty actual
-
-++ git log --encoding=3DISO-8859-1 --format=3D%s --grep=3D=C3=A9
-fatal: pcre2_match failed with error code -8: UTF-8 error: byte 2 top bits
-not 0x80
-=2D- snap --
-
-Any quick ideas? (I _could_ imagine that it is yet another case of passing
-non-UTF-8-encoded stuff via command-line vs via file, which does not work
-on Windows.)
-
-Ciao,
-Dscho
-
---8323328-1527059421-1561626963=:44--
+which should be protected by USE_STDEV. There's another code that
+ignore st_ino on Windows in entry.c. Maybe it's time to define
+USE_STINO instead of spreading "#if GIT_WINDOWS_NATIVE" more.
+-- 
+Duy
