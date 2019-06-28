@@ -2,163 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57BE81F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47DBB1F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 12:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726632AbfF1MvA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:51:00 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56477 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726590AbfF1MvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:51:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561726245;
-        bh=/yLrgm6ucMSoF5gUrF/ZXt2U0EOYdYHqHN8TDHKwN18=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YqC8DOgSzEKCGpagKXX5jiRMcqj+hXXxTVCc/BpRLFHPX8JnuIaNkT9dQlGhEFrPp
-         rqL+YELBmhNQHL8/i7u4wVRl4Gih4sN0QOPLOddzIX/GuKuGpRPRrsOk+aRbnbJ3j9
-         y7eVWj4qvyQjokBcFKADatlhfNHoanlZ/cbvIlvo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTRQq-1i8Qpd1OTE-00Tlpw; Fri, 28
- Jun 2019 14:50:45 +0200
-Date:   Fri, 28 Jun 2019 14:51:07 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to
- dir_iterator_begin
-In-Reply-To: <CAHd-oW6c7EoY+t-ymkcBmZM20YcGb1SWhM7XMO35Fofj-UNmYQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906281449250.44@tvgsbejvaqbjf.bet>
-References: <cover.1560898723.git.matheus.bernardino@usp.br> <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
- <CAHd-oW5zea9wzobAQG4FzN-KSS5BsRoM5vf_x_F83=yqGRfUQw@mail.gmail.com> <nycvar.QRO.7.76.6.1906272046180.44@tvgsbejvaqbjf.bet> <CAHd-oW6c7EoY+t-ymkcBmZM20YcGb1SWhM7XMO35Fofj-UNmYQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726711AbfF1MvG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 08:51:06 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:45684 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726590AbfF1MvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 08:51:06 -0400
+Received: by mail-qk1-f195.google.com with SMTP id s22so4636943qkj.12
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oq20PANyFr8yya8uxTBv+9FXHyBqHcKU4DAljW6O1qs=;
+        b=e5VdzwhzLFSMttzMQsWcd+3m0BfF2g87LEQL2MTPq6EzEGRYAfSHfylezlfryWWx7B
+         A4bVcFrbWT45fKVKJ6flgJaoz76vgDT0YR22FmMjiTj8hIboIlpTxiXYGuRhLS1vckee
+         aztV3rdU6ocUpteFD/AZm8boRUwT8hJ0DT1w+7R0d4JoIqIIZ66OJO7/tsJE22v7FykJ
+         6AG8N2fE79LBXcoObkW0lo1hSWXnSiSrEaIDWjhxYOidIFFewKw17bTuPi11DepAIPhX
+         YCVOM0WWiCThLSWjEkDhN1UAk+IMI3GKVIbg7Hs3W6Csx10sm1ydjwIiY07LB887csAz
+         t5rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oq20PANyFr8yya8uxTBv+9FXHyBqHcKU4DAljW6O1qs=;
+        b=guYJxlVfBVb9/AyrsRmNNbaozRttE7fmDzxe7Gze7h861NoCDR+U3eLAGl94mJyyTi
+         lt8fKJv7ub/I7cSXkm5Uxgm/lhHgdAZpOPKlGkcOMf7dvCJUUXjNq2DAQO3HNjN3d1OX
+         YMj7gmLP2yxmOatoMdhe7IJhL39KcFM/FwIJMgYcU61lWbczo3WS9qoPoXjQSEtpJGzI
+         9b8UmAC9RofAftm3NH5xUMzU20OAEXDmR0wmZ4k8GZydRG03yElHSqn9f4q6rgK638qy
+         3pU6hO3SPk+CdZsTGBKSCOplsM2ryutSGcSEzT4N9GksISTwUSvtCKMq7sSOHIv560FB
+         9OTA==
+X-Gm-Message-State: APjAAAWvcT55Uu1EQ+Xn8hYQ/fb93e6WeJLADQ/LyUmTRiHqsSi8tFp7
+        6qkV7/esAEh1pP+zZcpQQjE=
+X-Google-Smtp-Source: APXvYqz0DOghaekk+bAAENKfMIN+P+Hw/PFZPpNIAHgTxhxuMvBQZEtD3ZFSKPl3br46cRDfemZS1w==
+X-Received: by 2002:ae9:ef4a:: with SMTP id d71mr7852225qkg.406.1561726265402;
+        Fri, 28 Jun 2019 05:51:05 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:54b1:2872:57:b107? ([2001:4898:a800:1012:5e5:2872:57:b107])
+        by smtp.gmail.com with ESMTPSA id s25sm889770qkm.130.2019.06.28.05.51.04
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Jun 2019 05:51:04 -0700 (PDT)
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips are
+ valid
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
+Date:   Fri, 28 Jun 2019 08:51:04 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XnqCGMfDwaAlLE+dRqZkMSqMmF7ApC56/sjwkYnTKsWJqDVTEbC
- xzR47U7PLiFSOyYUbY4pKjk0sU4VeAc+97NqFPgXmWuZJc0FlU7ABkvkylufMjzDpRSu8/f
- DeYhtRcx7yNPehEwh3v08Wg3c7R6B44J+uQdd81rGMnu6OONCCQKrkwpZxKeIoktXErQXXc
- 7upvU4nNVTk46HzHLVb4A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R0mxKFpv8XQ=:cTNvuR9V/m31JPCHD+xYSS
- Q8EzvTTFKsYhwMv26oTP30d3gEYnFGZGUN5k7mw3Riwp8d1CayesSMVrc2YDwc5k+QN6HYWgH
- L2g6Wl/FShi5LuBe5DUD2CDs5KnL/8a7PLIZfKvrIWWw06RHrwV8AhCai3vi+rLTE0PEdqgA2
- 9uc86zGZKNYZwXBGDwz8lblLDLZtwtBReE9xN80v0dgYBbZAT0h2rwYIZAFA8+W36HxJ6Pkfg
- QPriooz8lJJNmkRzGZQoza3ZKFcBBCA4VJRSTWoHUKuWRoTpxHcJmS5Y3qwqZaiqsEduB4u2K
- yNGMw9tDcxfks29btsES/8jpvq8cZjdkHGE6zUMb9+T6caS6QBIKqwjuLdKQ5PHW+hlcSDgun
- X2PKZM8/ZbJ7atj2IrCVmOKdJUWg4z/bPr/YR2iWko2DxJ/5e6/ojUV9KOCqP7PWe4B2muVZU
- 6aLlrxC4kh9TqN13wX+qdM01gy0dk9wfGBnAMNWRUYKcHJ5La2b9Em8c+7TNZuln286OnuWlP
- csLbJiVHcFyKL10/tsCUcmeQQoP3YtGnMbWwAvcO+HknjOwjlQ2G8vzU0cJUWEP/rVUQ1cKDJ
- aOfgUkLud+tVI/wDEDTRdEgvvSJLZBgQGqtpxyZ6uJtC+tID4tXuXy4Ds1ZUTDOc6SNykHyww
- bUQ8qbRZhvlq37817TRRJRTM5Fd5HAp0fRUb59MWUIxhZEr08BInKKgFh1rDrW8gmftwFsZS7
- v2VPhgbPrGgfeGCo3upbuIpNMXiyO7b3GfkBBslrAqDizt44Zgtmmi+Pxt42maLzl9uwDmuFN
- tO/Lhg5JR99EcsBut7fq3jQiIaKu4yqJa74S8RXgPD5aNIxUEdOZubOj5XaSGzHSOPkJgs406
- yfbIiUrv21VBgsxMSiX170T/Gw7alIrDo7ZNxjhU/K4Z0aLt6zFiPwWpQZyIX9vtrSEFV/DhI
- bOKGXhrzvimJ8917laU71zLWjJp3RdOMAz19nFcNSTpmy9K1YpxsJhd2quZZ0ChVmF2gPhvsi
- 9gj9eZERiM4QTuE5gXEXAEzcscb51/d4b1/eXXEeLwAnRvArX30YA2DBUNvmlNvj/6d5+BZ/A
- pgKj3NvB9BWh74xGGXnusVlIWayqof8VvTl
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190628101131.GA22862@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+On 6/28/2019 6:11 AM, Jeff King wrote:
+> When we receive a remote ref update to sha1 "X", we want to check that
+> we have all of the objects needed by "X". We can assume that our
+> repository is not currently corrupted, and therefore if we have a ref
+> pointing at "Y", we have all of its objects. So we can stop our
+> traversal from "X" as soon as we hit "Y".
+> 
+> If we make the same non-corruption assumption about any repositories we
+> use to store alternates, then we can also use their ref tips to shorten
+> the traversal.
 
-On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
+I was confused by this paragraph, because I didn't know about
+for_each_alternate_ref() and how refs_From_alternate_cb() will
+strip the "/objects" and append "/refs" to check refs if they
+exist. All of that logic is in transport.c but used by
+fetch-pack.c and builtin/receive-pack.c. But now we are adding
+to revision.c, so the restriction to "this helps data transfer"
+is getting murkier.
 
-> On Thu, Jun 27, 2019 at 3:47 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
-> >
-> > > On Wed, Jun 26, 2019 at 3:04 PM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > > >
-> > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > > >
-> > > > > On Tue, 18 Jun 2019, Matheus Tavares wrote:
-> > > > >
-> > > > >>[...]
-> > > > >> +/*
-> > > > >> + * Look for a recursive symlink at iter->base.path pointing to=
- any directory on
-> > > > >> + * the previous stack levels. If it is found, return 1. If not=
-, return 0.
-> > > > >> + */
-> > > > >> +static int find_recursive_symlinks(struct dir_iterator_int *it=
-er)
-> > > > >> +{
-> > > > >> +    int i;
-> > > > >> +
-> > > > >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
-> > > > >> +        !S_ISDIR(iter->base.st.st_mode))
-> > > > >> +            return 0;
-> > > > >>
-> > > > >> +    for (i =3D 0; i < iter->levels_nr; ++i)
-> > > > >> +            if (iter->base.st.st_ino =3D=3D iter->levels[i].in=
-o)
-> > > > >
-> > > > > This does not work on Windows. [[ Windows port does not have
-> > > > > usable st_ino field ]]]
-> > > >
-> > > > And if you cross mountpoint, st_ino alone does not guarantee
-> > > > uniqueness; you'd need to combine it with st_dev, I would think,
-> > > > even on POSIX systems.
-> > >
-> > > Ok, thanks for letting me know. I'm trying to think of another
-> > > approach to test for recursive symlinks that does not rely on inode:
-> > > Given any symlink, we could get its real_path() and compare it with
-> > > the path of the directory current being iterated. If the first is a
-> > > prefix of the second, than we mark it as a recursive symlink.
-> > >
-> > > What do you think of this idea?
-> >
-> > I think this would be pretty expensive. Too expensive.
->
-> Hmm, yes unfortunately :(
->
-> > A better method might be to rely on st_ino/st_dev when we can, and jus=
-t
-> > not bother looking for recursive symlinks when we cannot,
->
-> What if we fallback on the path prefix strategy when st_ino is not
-> available? I mean, if we don't look for recursive symlinks, they would
-> be iterated over and over until we get an ELOOP error. So I think
-> using real_path() should be less expensive in this case. (But just as
-> a fallback to st_ino, off course)
->
-> > like I did in
-> > https://github.com/git-for-windows/git/commit/979b00ccf44ec31cff4686e2=
-4adf27474923c33a
->
-> Nice! At dir-iterator.h the documentation says that recursive symlinks
-> will be ignored. If we don't implement any fallback, should we add
-> that this is not available on Windows, perhaps?
+Is this something that should be extracted to the object-store
+layer? Or is it so tricky to use that we shouldn't make it too
+easy to fall into a bad pattern?
 
-I do not really care, unless it breaks things on Windows that were not
-broken before.
+> This is especially useful when cloning with "--reference", as we
+> otherwise do not have any local refs to check against, and have to
+> traverse the whole history, even though the other side may have sent us
+> few or no objects. Here are results for the included perf test (which
+> shows off more or less the maximal savings, getting one new commit and
+> sharing the whole history):
+> 
+> Test                        HEAD^             HEAD
+> --------------------------------------------------------------------
+> [on git.git]
+> 5600.3: clone --reference   2.94(2.86+0.08)   0.09(0.08+0.01) -96.9%
+> [on linux.git]
+> 5600.3: clone --reference   45.74(45.34+0.41)   0.36(0.30+0.08) -99.2%
 
-You might also want to guard this behind `USE_STDEV` as Duy suggested (and
-maybe use the opportunity to correct that constant to `USE_ST_DEV`; I
-looked for it and did not find it because of that naming mistake).
+It's really hard to argue with numbers like these. Kudos!
 
-Ciao,
-Dscho
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/rev-list-options.txt |  8 ++++
+>  connected.c                        |  1 +
+>  revision.c                         | 30 +++++++++++++++
+>  t/perf/p5600-clone-reference.sh    | 27 ++++++++++++++
+>  t/t5618-alternate-refs.sh          | 60 ++++++++++++++++++++++++++++++
+
+Other than the high-level questions above, the code and tests look
+good to me.
+
+Thanks,
+-Stolee 
+
