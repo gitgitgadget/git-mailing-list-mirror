@@ -7,109 +7,1109 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CD5C1F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 22:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24B451F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 22:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbfF1WJI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 18:09:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61022 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726916AbfF1WJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 18:09:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B915272945;
-        Fri, 28 Jun 2019 18:09:02 -0400 (EDT)
+        id S1726707AbfF1WSC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 18:18:02 -0400
+Received: from pb-sasl-trial21.pobox.com ([173.228.157.51]:63723 "EHLO
+        pb-sasl-trial21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbfF1WSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 18:18:01 -0400
+Received: from pb-sasl-trial21.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial21.pobox.com (Postfix) with ESMTP id 377FD32485;
+        Fri, 28 Jun 2019 18:17:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Xy60zlsXQKipgwOkIHIhhGGiHI8=; b=jMHMkC
-        bp5i+3Q6nCUyM71gnRI3rjdPT004Y529/SbWqzOG84VJHpscfOhKzjnOdlk07d9w
-        Acyd+S+lFw6Soc6ybGgqf8QBO+VFCzv1GObXgI5jF5KZYoRaWhMz1Xw5loe/ZYIu
-        hphatCQteEkIl8w9QR6Gqj+mPZ1harT9ox794=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=R9Aqf6wtk+6SX0y27pMGPiAFDozF6CZa
-        rHzx0+gMxMQ7LD6H5DFDgxSgUjMitJDhcW+ZMAxJCy9aszsQ/uzEgGUiacGstSzg
-        t/cFZgUZBaScMw7qlbDNLCdJE0kE1QKF8uvEbi3RlvDNzWxKhEMaDKViKquoi1nJ
-        zlgMkSNdp3Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B026772944;
-        Fri, 28 Jun 2019 18:09:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=0
+        /FGO3w933/EndNaec6QjtbeOoY=; b=JbZIy3IkPU7whE2aTOT9PTsXvIVumd/tF
+        i+UuXC/UVKJ0h6daJ7hD/e0H3t1hoLQYD2VDTIK7+jD7EvEd9BHcIvx/sDaD7nTP
+        f43xREiEFB3c0r8ossrP+1HgFCPs85Ld+0tr59Ln6HdKJHOQ8/RI8lYvq1zUB8cK
+        s/XdMv4dms=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=gBd
+        hGjd+xT2xwOJEor7XeiXtHDfJcWUi9CDtbV6AQ44M2LIeJC/IlRRMEUP89rLnmG6
+        +Hq68g4hYGjhNOLO2EGk+TZYHJl6GmGYTWDgW6O0YC60vRDbtoyKRx/VOma6GERt
+        1Fq/KAVv3gIXGPw603ZSz5tinm37laQM8mykEaBI=
+Received: from pb-smtp21.sea.icgroup.com (pb-smtp21.pobox.com [10.110.30.21])
+        by pb-sasl-trial21.pobox.com (Postfix) with ESMTP id 19C7732484;
+        Fri, 28 Jun 2019 18:17:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DA52C72941;
-        Fri, 28 Jun 2019 18:08:59 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DCBD6837C0;
+        Fri, 28 Jun 2019 18:17:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>
-Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect interactive rebases
-References: <pull.253.git.gitgitgadget@gmail.com>
-        <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
-        <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet>
-        <e332eb5f-0818-763c-9de0-889644446a35@gmail.com>
-Date:   Fri, 28 Jun 2019 15:08:57 -0700
-In-Reply-To: <e332eb5f-0818-763c-9de0-889644446a35@gmail.com> (Phillip Wood's
-        message of "Fri, 28 Jun 2019 14:44:07 +0100")
-Message-ID: <xmqq4l498irq.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Jun 2019, #07; Fri, 28)
+X-master-at: 8dca754b1e874719a732bc9ab7b0e14b21b1bc10
+X-next-at: 81fc6c5d4a7fb145529da1dfc407c4e0c0e8ae8e
+Date:   Fri, 28 Jun 2019 15:17:42 -0700
+Message-ID: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 54B92EE8-99F1-11E9-B7C8-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 8DBB931A-99F2-11E9-A03B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
->>> I wonder if users understand that '-x' is "an interctive rebase".
->>> The documentation can read both ways, and one of these may want to
->>> be clarified.
->>>
->>> 	-x <cmd>, --exec <cmd>
->>> 	...
->>> 	This uses the --interactive machinery internally, but it can
->>> 	be run without an explicit --interactive.
->>>
->>> Is it saying that use of interactive machinery is an impelementation
->>> detail the users should not concern themselves (in which case, the
->>> message given to "die()" above is misleading---not a new problem
->>> with this patch, though)?  Is it saying "-x" makes it plenty clear
->>> that the user wants interactive behaviour, so the users do not need
->>> to spell out --interactive in order to ask for it (in which case,
->>> "die()" message is fine, but "... internally, but ..." is
->>> misleading)?
->>
->> Hmm. What would you think about:
->>
->>    		die(_("--reschedule-failed-exec requires --exec or --interactive"));
+The third batch of topics post 2.22 are now in 'master', and the tip
+of 'next' has been rewound.
 
-I was leaning towards admitting that the use of the interactive
-machinery in "-x" is not merely an implementation detail and fixing
-the documentation, leaving the die() message in the patch as-is.
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-But ...
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-> I was wondering about requiring --exec with --reschedule-failed-exec
-> rather than checking is_interactive() as that would be easier to
-> understand.
+--------------------------------------------------
+[New Topics]
 
-... I find this a reasonable way to think about the issue.  The
-option only matters when we are doing "--exec".  And the usual
-convenience measure we'd use, i.e. with --reschedule-failed-exec we
-consider that we are implicitly in --exec mode, would not work
-because there is no default "command" to be executed.
+* cb/windows-manifest (2019-06-27) 1 commit
+ - mingw: embed a manifest to trick UAC into Doing The Right Thing
 
-> One potential problem is if someone has an alias that
-> always sets --reschedule-failed-exec but does not always add --exec to
-> the command line.
+ Windows update.
 
-Such a use case would be hitting this die() already without this
-topic, wouldn't it?  In which case we can say there is no "someone"
-with such an alias.
+ Will merge to 'next'.
+
+
+* js/mingw-gcc-stash-protect (2019-06-27) 1 commit
+ - mingw: enable stack smashing protector
+
+ Windows update.
+
+ Will merge to 'next'.
+
+
+* js/mingw-use-utf8 (2019-06-27) 2 commits
+ - mingw: use Unicode functions explicitly
+ - mingw: get pw_name in UTF-8 format
+
+ Windows update.
+
+ Will merge to 'next'.
+
+
+* kb/windows-force-utf8 (2019-06-27) 1 commit
+ - gettext: always use UTF-8 on native Windows
+
+ Windows update.
+
+ Will merge to 'next'.
+
+
+* js/rebase-reschedule-applies-only-to-interactive (2019-06-27) 1 commit
+ - rebase: ignore rebase.reschedulefailedexec unless interactive
+
+ The configuration variable rebase.rescheduleFailedExec should be
+ effective only while running an interactive rebase and should not
+ affect anything when running an non-interactive one, which was not
+ the case.  This has been corrected.
+
+ Almost there, modulo minor nits.
+ 
+
+
+* jt/t5551-test-chunked (2019-06-27) 1 commit
+ - t5551: test usage of chunked encoding explicitly
+
+ Update smart-http test.
+
+ Will merge to 'next'.
+
+
+* tb/ref-filter-multiple-patterns (2019-06-27) 1 commit
+ - ref-filter.c: find disjoint pattern prefixes
+
+ "git for-each-ref" with multiple patterns have been optimized.
+
+ Will merge to 'next'.
+
+
+* ew/repack-with-bitmaps-by-default (2019-06-28) 1 commit
+ - repack: disable bitmaps-by-default if .keep files exist
+
+ Generation of pack bitmaps are now disabled when .keep files exist,
+ as these are mutually exclusive features.
+
+
+* jk/br-blame-ignore-unused-fix (2019-06-28) 1 commit
+ - blame: drop some unused function parameters
+ (this branch uses br/blame-ignore.)
+
+ Move this into the base topic, once acked.
+
+
+* jk/check-connected-with-alternates (2019-06-28) 1 commit
+ - check_connected: assume alternate ref tips are valid
+
+ The tips of refs from the alternate object store can be used as
+ starting point for reachability computation now.
+
+ Will merge to 'next'.
+
+
+* jk/test-commit-bulk (2019-06-28) 6 commits
+ - t6200: use test_commit_bulk
+ - t5703: use test_commit_bulk
+ - t5702: use test_commit_bulk
+ - t3311: use test_commit_bulk
+ - t5310: increase the number of bitmapped commits
+ - test-lib: introduce test_commit_bulk
+
+ A test helper has been introduced to optimize preparation of test
+ repositories with many simple commits, and a handful of test
+ scripts have been updated to use it.
+
+ Will merge to 'next'.
+ I think I spotted one unused command, which we may want to remove, though.
+
+--------------------------------------------------
+[Stalled]
+
+* jn/unknown-index-extensions (2018-11-21) 2 commits
+ - index: offer advice for unknown index extensions
+ - index: do not warn about unrecognized extensions
+
+ A bit too alarming warning given when unknown index extensions
+ exist is getting revamped.
+
+ Expecting a reroll.
+
+
+* jc/format-patch-delay-message-id (2019-04-05) 1 commit
+ - format-patch: move message-id and related headers to the end
+
+ The location "git format-patch --thread" adds the Message-Id:
+ header in the series of header fields has been moved down, which
+ may help working around a suspected bug in GMail MSA, reported at
+ <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
+
+ Waiting for feedback to see if it truly helps.
+ Needs tests.
+
+
+* jt/fetch-cdn-offload (2019-03-12) 9 commits
+ - SQUASH???
+ - upload-pack: send part of packfile response as uri
+ - fetch-pack: support more than one pack lockfile
+ - upload-pack: refactor reading of pack-objects out
+ - Documentation: add Packfile URIs design doc
+ - Documentation: order protocol v2 sections
+ - http-fetch: support fetching packfiles by URL
+ - http: improve documentation of http_pack_request
+ - http: use --stdin when getting dumb HTTP pack
+
+ WIP for allowing a response to "git fetch" to instruct the bulk of
+ the pack contents to be instead taken from elsewhere (aka CDN).
+
+ Stalled
+
+
+* js/protocol-advertise-multi (2018-12-28) 1 commit
+ - protocol: advertise multiple supported versions
+
+ The transport layer has been updated so that the protocol version
+ used can be negotiated between the parties, by the initiator
+ listing the protocol versions it is willing to talk, and the other
+ side choosing from one of them.
+
+ Expecting a reroll.
+ cf. <CANq=j3u-zdb_FvNJGPCmygNMScseav63GhVvBX3NcVS4f7TejA@mail.gmail.com>
+
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+
+* dl/remote-save-to-push (2018-12-11) 1 commit
+ - remote: add --save-to-push option to git remote set-url
+
+ "git remote set-url" learned a new option that moves existing value
+ of the URL field to pushURL field of the remote before replacing
+ the URL field with a new value.
+
+ Anybody who wants to champion this topic?
+ I am personally not yet quite convinced if this is worth pursuing.
+
+--------------------------------------------------
+[Cooking]
+
+* ab/test-env (2019-06-21) 8 commits
+ - tests: make GIT_TEST_FAIL_PREREQS a boolean
+ - tests: replace test_tristate with "git env--helper"
+ - tests README: re-flow a previously changed paragraph
+ - tests: make GIT_TEST_GETTEXT_POISON a boolean
+ - t6040 test: stop using global "script" variable
+ - config.c: refactor die_bad_number() to not call gettext() early
+ - env--helper: new undocumented builtin wrapping git_env_*()
+ - config tests: simplify include cycle test
+
+ Many GIT_TEST_* environment variables control various aspects of
+ how our tests are run, but a few followed "non-empty is true, empty
+ or unset is false" while others followed the usual "there are a few
+ ways to spell true, like yes, on, etc., and also ways to spell
+ false, like no, off, etc." convention.
+
+
+* cc/first-contrib-tutorial (2019-06-24) 1 commit
+  (merged to 'next' on 2019-06-27 at a9f2ab2f21)
+ + doc: improve usage string in MyFirstContribution
+
+ Update docs used in a tutorial.
+
+ Will merge to 'master'.
+
+
+* ds/early-access (2019-06-20) 3 commits
+ - repo-settings: pack.useSparse=true
+ - repo-settings: use index.version=4 by default
+ - repo-settings: create core.featureAdoptionRate setting
+
+ A mechanism to enable newish configuration settings in bulk has
+ been invented.
+
+ Looked mostly sane, modulo minor nits.
+
+
+* jh/msvc (2019-06-25) 20 commits
+  (merged to 'next' on 2019-06-27 at 5a16e3d67c)
+ + msvc: ignore .dll and incremental compile output
+ + msvc: avoid debug assertion windows in Debug Mode
+ + msvc: do not pretend to support all signals
+ + msvc: add pragmas for common warnings
+ + msvc: add a compile-time flag to allow detailed heap debugging
+ + msvc: support building Git using MS Visual C++
+ + msvc: update Makefile to allow for spaces in the compiler path
+ + msvc: fix detect_msys_tty()
+ + msvc: define ftello()
+ + msvc: do not re-declare the timespec struct
+ + msvc: mark a variable as non-const
+ + msvc: define O_ACCMODE
+ + msvc: include sigset_t definition
+ + msvc: fix dependencies of compat/msvc.c
+ + mingw: replace mingw_startup() hack
+ + obstack: fix compiler warning
+ + cache-tree/blame: avoid reusing the DEBUG constant
+ + t0001 (mingw): do not expect a specific order of stdout/stderr
+ + Mark .bat files as requiring CR/LF endings
+ + mingw: fix a typo in the msysGit-specific section
+
+ Support to build with MSVC has been updated.
+
+ Will merge to 'master'.
+
+
+* jk/delta-islands-progress-fix (2019-06-20) 1 commit
+  (merged to 'next' on 2019-06-27 at 644526ba73)
+ + delta-islands: respect progress flag
+
+ The codepath to compute delta islands used to spew progress output
+ without giving the callers any way to squelch it, which has been
+ fixed.
+
+ Will merge to 'master'.
+
+
+* jk/oidhash (2019-06-20) 17 commits
+  (merged to 'next' on 2019-06-27 at 7bf6b87738)
+ + hashmap: convert sha1hash() to oidhash()
+ + hash.h: move object_id definition from cache.h
+ + khash: rename oid helper functions
+ + khash: drop sha1-specific map types
+ + pack-bitmap: convert khash_sha1 maps into kh_oid_map
+ + delta-islands: convert island_marks khash to use oids
+ + khash: rename kh_oid_t to kh_oid_set
+ + khash: drop broken oid_map typedef
+ + object: convert create_object() to use object_id
+ + object: convert internal hash_obj() to object_id
+ + object: convert lookup_object() to use object_id
+ + object: convert lookup_unknown_object() to use object_id
+ + pack-objects: convert locate_object_entry_hash() to object_id
+ + pack-objects: convert packlist_find() to use object_id
+ + pack-bitmap-write: convert some helpers to use object_id
+ + upload-pack: rename a "sha1" variable to "oid"
+ + describe: fix accidental oid/hash type-punning
+
+ Code clean-up to remove hardcoded SHA-1 hash from manty places.
+
+ Will merge to 'master'.
+
+
+* nd/fetch-capability-tweak (2019-06-20) 3 commits
+  (merged to 'next' on 2019-06-27 at dedbcb31a1)
+ + fetch-pack: print server version at the top in -v -v
+ + fetch-pack: print all relevant supported capabilities with -v -v
+ + fetch-pack: move capability names out of i18n strings
+
+ Protocol capabilities that go over wire should never be translated,
+ but it was incorrectly marked for translation, which has been
+ corrected.  The output of protocol capabilities for debugging has
+ been tweaked a bit.
+
+ Will merge to 'master'.
+
+
+* nd/index-dump-in-json (2019-06-26) 11 commits
+ - SQUASH???
+ - t3008: use the new SINGLE_CPU prereq
+ - read-cache.c: dump "IEOT" extension as json
+ - read-cache.c: dump "EOIE" extension as json
+ - resolve-undo.c: dump "REUC" extension as json
+ - fsmonitor.c: dump "FSMN" extension as json
+ - split-index.c: dump "link" extension as json
+ - dir.c: dump "UNTR" extension as json
+ - cache-tree.c: dump "TREE" extension as json
+ - read-cache.c: dump common extension info in json
+ - ls-files: add --json to dump the index
+
+ "ls-files" learned "--debug-json" option to dump the contents and
+ the extensions of the index file.
+
+ At least the fixup at the tip needs to be squashed into the right
+ commit.
+
+
+* rs/config-unit-parsing (2019-06-24) 3 commits
+  (merged to 'next' on 2019-06-27 at db633f85fe)
+ + config: simplify parsing of unit factors
+ + config: don't multiply in parse_unit_factor()
+ + config: use unsigned_mult_overflows to check for overflows
+ (this branch uses js/gcc-8-and-9.)
+
+ The code to parse scaled numbers out of configuration files has
+ been made more robust and also easier to follow.
+
+ Will merge to 'master'.
+
+
+* ab/fail-prereqs-in-test (2019-06-21) 1 commit
+  (merged to 'next' on 2019-06-27 at 4df04aa1a0)
+ + tests: mark two failing tests under FAIL_PREREQS
+
+ Test updates.
+
+ Will merge to 'master'.
+
+
+* ds/fetch-disable-force-notice (2019-06-21) 3 commits
+  (merged to 'next' on 2019-06-27 at 3ff4516f85)
+ + pull: add --[no-]show-forced-updates passthrough
+ + fetch: warn about forced updates in branch listing
+ + fetch: add --[no-]show-forced-updates argument
+
+ "git fetch" and "git pull" reports when a fetch results in
+ non-fast-forward updates to let the user notice unusual situation.
+ The commands learned "--no-shown-forced-updates" option to disable
+ this safety feature.
+
+ Will merge to 'master'.
+
+
+* jh/status-aheadbehind (2019-06-21) 3 commits
+  (merged to 'next' on 2019-06-27 at 362ee6b059)
+ + status: ignore status.aheadbehind in porcelain formats
+ + status: warn when a/b calculation takes too long
+ + status: add status.aheadbehind setting
+
+ "git status" can be told a non-standard default value for the
+ "--[no-]ahead-behind" option with a new configuration variable
+ status.aheadBehind.
+
+ Will merge to 'master'.
+
+
+* js/t0001-case-insensitive (2019-06-24) 1 commit
+  (merged to 'next' on 2019-06-27 at 6c0001aebb)
+ + t0001: fix on case-insensitive filesystems
+
+ Test update.
+
+ Will merge to 'master'.
+
+
+* dr/progress-i18n (2019-06-24) 1 commit
+ - l10n: localizable upload progress messages
+
+ Progress messages have been made localizable.
+
+ Not quite with the code duplication...
+
+
+* jw/gitweb-sample-update (2019-06-24) 1 commit
+  (merged to 'next' on 2019-06-27 at 30a5e91e76)
+ + doc: don't use git.kernel.org as example gitweb URL
+
+ Doc update.
+
+ Will merge to 'master'.
+
+
+* ms/submodule-foreach-fix (2019-06-25) 1 commit
+  (merged to 'next' on 2019-06-27 at ccd37d4dac)
+ + submodule foreach: fix recursion of options
+
+ "git submodule foreach" did not protect command line options passed
+ to the command to be run in each submodule correctly, when the
+ "--recursive" option was in use.
+
+ Will merge to 'master'.
+
+
+* pw/status-with-corrupt-sequencer-state (2019-06-27) 3 commits
+ - status: do not report errors in sequencer/todo
+ - sequencer: factor out todo command name parsing
+ - sequencer: always allow tab after command name
+
+ The code to read state files used by the sequencer machinery for
+ "git status" has been made more robust against a corrupt or stale
+ state files.
+
+ Will merge to 'next'.
+
+
+* sg/t5551-fetch-smart-error-is-translated (2019-06-25) 1 commit
+  (merged to 'next' on 2019-06-27 at 967c03da24)
+ + t5551: use 'test_i18ngrep' to check translated output
+
+ Test update.
+
+ Will merge to 'master'.
+
+
+* ab/no-kwset (2019-06-28) 9 commits
+ - grep: use PCRE v2 for optimized fixed-string search
+ - grep: remove the kwset optimization
+ - grep: drop support for \0 in --fixed-strings <pattern>
+ - grep: make the behavior for NUL-byte in patterns sane
+ - grep tests: move binary pattern tests into their own file
+ - grep tests: move "grep binary" alongside the rest
+ - grep: inline the return value of a function call used only once
+ - grep: don't use PCRE2?_UTF8 with "log --encoding=<non-utf8>"
+ - log tests: test regex backends in "--encode=<enc>" tests
+
+ Retire use of kwset library, which is an optimization for looking
+ for fixed strings, with use of pcre2 JIT.
+
+ Will merge to 'next'.
+
+
+* mt/dir-iterator-updates (2019-06-25) 10 commits
+ - clone: replace strcmp by fspathcmp
+ - clone: use dir-iterator to avoid explicit dir traversal
+ - clone: extract function from copy_or_link_directory
+ - clone: copy hidden paths at local clone
+ - dir-iterator: add flags parameter to dir_iterator_begin
+ - dir-iterator: refactor state machine model
+ - dir-iterator: use warning_errno when possible
+ - dir-iterator: add tests for dir-iterator API
+ - clone: better handle symlinked files at .git/objects/
+ - clone: test for our behavior on odd objects/* content
+
+ Adjust the dir-iterator API and apply it to the local clone
+ optimization codepath.
+
+ Is this ready for 'next'?
+
+
+* nd/tree-walk-with-repo (2019-06-28) 7 commits
+ - t7814: do not generate same commits in different repos
+ - Use the right 'struct repository' instead of the_repository
+ - match-trees.c: remove the_repo from shift_tree*()
+ - tree-walk.c: remove the_repo from get_tree_entry_follow_symlinks()
+ - tree-walk.c: remove the_repo from get_tree_entry()
+ - tree-walk.c: remove the_repo from fill_tree_descriptor()
+ - sha1-file.c: remove the_repo from read_object_with_reference()
+
+ The tree-walk API learned to pass an in-core repository
+ instance throughout more codepaths.
+
+
+* cb/fsmonitor-intfix (2019-06-17) 1 commit
+  (merged to 'next' on 2019-06-26 at bed7c7e78b)
+ + fsmonitor: avoid signed integer overflow / infinite loop
+
+ Variable type fix.
+
+ Will merge to 'master'.
+
+
+* es/rev-list-no-object-names (2019-06-20) 1 commit
+  (merged to 'next' on 2019-06-27 at 6d95228e01)
+ + rev-list: teach --no-object-names to enable piping
+
+ "git rev-list --objects" learned with "--no-object-names" option to
+ squelch the path to the object that is used as a grouping hint for
+ pack-objects.
+
+ Will merge to 'master'.
+
+
+* md/list-objects-filter-combo (2019-06-28) 10 commits
+ - list-objects-filter-options: make parser void
+ - list-objects-filter-options: clean up use of ALLOC_GROW
+ - list-objects-filter-options: allow mult. --filter
+ - strbuf: give URL-encoding API a char predicate fn
+ - list-objects-filter-options: make filter_spec a string_list
+ - list-objects-filter-options: move error check up
+ - list-objects-filter: implement composite filters
+ - list-objects-filter-options: always supply *errbuf
+ - list-objects-filter: put omits set in filter struct
+ - list-objects-filter: encapsulate filter components
+
+ The list-objects-filter API (used to create a sparse/lazy clone)
+ learned to take a combined filter specification.
+
+ There is a bit of interaction with cc/multi-promisor topic, whose
+ conflict resolution I have no confidence in X-<.
+
+
+* pw/doc-synopsis-markup-opmode-options (2019-06-17) 1 commit
+  (merged to 'next' on 2019-06-26 at 4258eddd2d)
+ + show --continue/skip etc. consistently in synopsis
+
+ Docfix.
+
+ Will merge to 'master'.
+
+
+* rs/copy-array (2019-06-17) 2 commits
+  (merged to 'next' on 2019-06-26 at dfaa162f88)
+ + use COPY_ARRAY for copying arrays
+ + coccinelle: use COPY_ARRAY for copying arrays
+
+ Code clean-up.
+
+ Will merge to 'master'.
+
+
+* cb/mkstemps-uint-type-fix (2019-06-19) 1 commit
+  (merged to 'next' on 2019-06-26 at df44db4a69)
+ + wrapper: avoid undefined behaviour in macOS
+
+ Variable type fix.
+
+ Will merge to 'master'.
+
+
+* cb/xdiff-no-system-includes-in-dot-c (2019-06-19) 1 commit
+ - xdiff: avoid accidental redefinition of LFS feature in OpenIndiana
+
+ Compilation fix.
+
+ Will be rerolled together with patches from the
+ jk/no-system-includes-in-dot-c topic.
+
+
+* jk/no-system-includes-in-dot-c (2019-06-19) 2 commits
+ - wt-status.h: drop stdio.h include
+ - verify-tag: drop signal.h include
+
+ Compilation fix.
+
+ Will be rerolled with the above.
+
+
+* jk/trailers-use-config (2019-06-19) 1 commit
+  (merged to 'next' on 2019-06-26 at 1ba8a7c2dd)
+ + interpret-trailers: load default config
+
+ "git interpret-trailers" always treated '#' as the comment
+ character, regardless of core.commentChar setting, which has been
+ corrected.
+
+ Will merge to 'master'.
+
+
+* nd/fetch-multi-gc-once (2019-06-19) 1 commit
+  (merged to 'next' on 2019-06-27 at 0225ada5e2)
+ + fetch: only run 'gc' once when fetching multiple remotes
+
+ "git fetch" that grabs from a group of remotes learned to run the
+ auto-gc only once at the very end.
+
+ Will merge to 'master'.
+
+
+* ra/cherry-pick-revert-skip (2019-06-24) 6 commits
+ - cherry-pick/revert: advise using --skip
+ - cherry-pick/revert: add --skip option
+ - sequencer: use argv_array in reset_merge
+ - sequencer: rename reset_for_rollback to reset_merge
+ - sequencer: add advice for revert
+ - advice: add sequencerInUse config variable
+
+ "git cherry-pick/revert" learned a new "--skip" action.
+
+ Will merge to 'next'.
+
+
+* tg/stash-ref-by-index-fix (2019-06-19) 1 commit
+  (merged to 'next' on 2019-06-26 at ee2e6308ae)
+ + stash: fix show referencing stash index
+
+ "git stash show 23" used to work, but no more after getting
+ rewritten in C; this regression has been corrected.
+
+ Will merge to 'master'.
+
+
+* js/gcc-8-and-9 (2019-06-13) 4 commits
+  (merged to 'next' on 2019-06-27 at 92bb0db3c7)
+ + config: avoid calling `labs()` on too-large data type
+ + winansi: simplify loading the GetCurrentConsoleFontEx() function
+ + kwset: allow building with GCC 8
+ + poll (mingw): allow compiling with GCC 8 and DEVELOPER=1
+ (this branch is used by rs/config-unit-parsing.)
+
+ Code clean-up for new compilers.
+
+ Will merge to 'master'.
+ The 'kwset' one may get a wholesale replacement, either with new
+ version of kwset from upstream or removal of its users, but in the
+ meantime, it is probably OK to merge it down.
+
+
+* pw/add-p-recount (2019-06-13) 1 commit
+  (merged to 'next' on 2019-06-26 at 63e063d65d)
+ + add -p: fix checkout -p with pathological context
+
+ "git checkout -p" needs to selectively apply a patch in reverse,
+ which did not work well.
+
+ Will merge to 'master'.
+
+
+* rs/avoid-overflow-in-midpoint-computation (2019-06-13) 1 commit
+  (merged to 'next' on 2019-06-26 at e6bd5b496b)
+ + cleanup: fix possible overflow errors in binary search, part 2
+
+ Code clean-up to avoid signed integer overlaps during binary search.
+
+ Will merge to 'master'.
+
+
+* js/t3404-typofix (2019-06-14) 1 commit
+  (merged to 'next' on 2019-06-26 at ba3fcc1fc1)
+ + t3404: fix a typo
+
+ Typofix.
+
+ Will merge to 'master'.
+
+
+* mo/hpux-dynpath (2019-06-07) 1 commit
+  (merged to 'next' on 2019-06-26 at 5add3b28b2)
+ + configure: Detect linking style for HP aCC on HP-UX
+
+ Auto-detect how to tell HP-UX aCC where to use dynamically linked
+ libraries from at runtime.
+
+ Will merge to 'master'.
+
+
+* js/mergetool-optim (2019-06-12) 4 commits
+  (merged to 'next' on 2019-06-26 at 8ad650bfa8)
+ + mergetool: use shell variable magic instead of `awk`
+ + mergetool: dissect strings with shell variable magic instead of `expr`
+ + t7610-mergetool: use test_cmp instead of test $(cat file) = $txt
+ + t7610-mergetool: do not place pipelines headed by `yes` in subshells
+
+ "git mergetool" and its tests now spawn fewer subprocesses.
+
+ Will merge to 'master'.
+
+
+* cc/test-oidmap (2019-06-17) 4 commits
+  (merged to 'next' on 2019-06-27 at 247a4341ca)
+ + test-hashmap: remove 'hash' command
+ + oidmap: use sha1hash() instead of static hash() function
+ + t: add t0016-oidmap.sh
+ + t/helper: add test-oidmap.c
+
+ Extend the test coverage a bit.
+
+ Will merge to 'master'.
+
+
+* ds/midx-expire-repack (2019-06-11) 11 commits
+  (merged to 'next' on 2019-06-27 at 35e6e3b38d)
+ + t5319-multi-pack-index.sh: test batch size zero
+ + midx: add test that 'expire' respects .keep files
+ + multi-pack-index: test expire while adding packs
+ + midx: implement midx_repack()
+ + multi-pack-index: prepare 'repack' subcommand
+ + multi-pack-index: implement 'expire' subcommand
+ + midx: refactor permutation logic and pack sorting
+ + midx: simplify computation of pack name lengths
+ + multi-pack-index: prepare for 'expire' subcommand
+ + Docs: rearrange subcommands for multi-pack-index
+ + repack: refactor pack deletion for future use
+
+ "git multi-pack-index" learned expire and repack subcommands.
+
+ Will merge to 'master'.
+
+
+* md/sort-detached-head-first (2019-06-19) 1 commit
+  (merged to 'next' on 2019-06-27 at dc50dbe045)
+ + ref-filter: sort detached HEAD lines firstly
+
+ "git branch --list" learned to always output the detached HEAD as
+ the first item (when the HEAD is detached, of course), regardless
+ of the locale.
+
+ Will merge to 'master'.
+
+
+* nd/completion-no-cache-failure (2019-06-12) 1 commit
+  (merged to 'next' on 2019-06-26 at f7b5a0a622)
+ + completion: do not cache if --git-completion-helper fails
+
+ An incorrect list of options was cached after command line
+ completion failed (e.g. trying to complete a command that requires
+ a repository outside one), which has been corrected.
+
+ Will merge to 'master'.
+
+
+* sg/rebase-progress (2019-06-27) 5 commits
+  (merged to 'next' on 2019-06-27 at 425dd45c81)
+ + progress: use term_clear_line()
+ + rebase: fix garbled progress display with '-x'
+ + pager: add a helper function to clear the last line in the terminal
+ + t3404: make the 'rebase.missingCommitsCheck=ignore' test more focused
+ + t3404: modernize here doc style
+
+ Use "Erase in Line" CSI sequence that is already used in the editor
+ support to clear cruft in the progress output.
+
+ Will merge to 'master'.
+
+
+* sg/trace2-rename (2019-06-27) 2 commits
+  (merged to 'next' on 2019-06-27 at 6e189bdb20)
+ + trace2: correct typo in technical documentation
+  (merged to 'next' on 2019-06-26 at 8ee228c455)
+ + Revert "test-lib: whitelist GIT_TR2_* in the environment"
+
+ Dev support update to help tracing out tests.
+
+ Will merge to 'master'.
+
+
+* fc/fetch-with-import-fix (2019-06-04) 5 commits
+  (merged to 'next' on 2019-06-26 at b7e7f359a9)
+ + fetch: fix regression with transport helpers
+ + fetch: make the code more understandable
+ + fetch: trivial cleanup
+ + t5801 (remote-helpers): add test to fetch tags
+ + t5801 (remote-helpers): cleanup refspec stuff
+
+ Code restructuring during 2.20 period broke fetching tags via
+ "import" based transports.
+
+ Will merge to 'master'.
+
+
+* jl/status-reduce-vertical-blank (2019-06-21) 1 commit
+ - status: remove the empty line after hints
+ (this branch uses nd/switch-and-restore.)
+
+ Extra blank lines in "git status" output have been reduced.
+
+ Needs to wait on nd/switch-and-restore to stabilize.
+
+
+* dl/config-alias-doc (2019-06-06) 2 commits
+  (merged to 'next' on 2019-06-26 at 3776902022)
+ + config/alias.txt: document alias accepting non-command first word
+ + config/alias.txt: change " and ' to `
+
+ Doc update.
+
+ Will merge to 'master'.
+
+
+* dl/includeif-onbranch (2019-06-05) 1 commit
+  (merged to 'next' on 2019-06-27 at ef7250bbae)
+ + config: learn the "onbranch:" includeIf condition
+
+ The conditional inclusion mechanism learned to base the choice on
+ the branch the HEAD currently is on.
+
+ Will merge to 'master'.
+
+
+* ds/commit-graph-incremental (2019-06-19) 18 commits
+ - commit-graph: test verify across alternates
+ - commit-graph: normalize commit-graph filenames
+ - commit-graph: test --split across alternate without --split
+ - commit-graph: test octopus merges with --split
+ - commit-graph: clean up chains after flattened write
+ - commit-graph: verify chains with --shallow mode
+ - commit-graph: create options for split files
+ - commit-graph: expire commit-graph files
+ - commit-graph: allow cross-alternate chains
+ - commit-graph: merge commit-graph chains
+ - commit-graph: add --split option to builtin
+ - commit-graph: write commit-graph chains
+ - commit-graph: rearrange chunk count logic
+ - commit-graph: add base graphs chunk
+ - commit-graph: load commit-graph chains
+ - commit-graph: rename commit_compare to oid_compare
+ - commit-graph: prepare for commit-graph chains
+ - commit-graph: document commit-graph chains
+ (this branch uses ds/close-object-store and ds/commit-graph-write-refactor.)
+
+ The commits in a repository can be described by multiple
+ commit-graph files now, which allows the commit-graph files to be
+ updated incrementally.
+
+ Will merge to 'next'.
+
+
+* tm/tag-gpgsign-config (2019-06-05) 1 commit
+  (merged to 'next' on 2019-06-26 at 015709def5)
+ + tag: add tag.gpgSign config option to force all tags be GPG-signed
+
+ A new tag.gpgSign configuration variable turns "git tag -a" into
+ "git tag -s".
+
+ Will merge to 'master'.
+
+
+* po/doc-branch (2019-05-29) 1 commit
+  (merged to 'next' on 2019-06-26 at 0debcb13e5)
+ + doc branch: provide examples for listing remote tracking branches
+
+ Doc update.
+
+ Will merge to 'master'.
+
+
+* ds/close-object-store (2019-06-12) 3 commits
+  (merged to 'next' on 2019-06-26 at 86b60f2631)
+ + packfile: rename close_all_packs to close_object_store
+ + packfile: close commit-graph in close_all_packs
+ + commit-graph: use raw_object_store when closing
+ (this branch is used by ds/commit-graph-incremental; uses ds/commit-graph-write-refactor.)
+
+ The commit-graph file is now part of the "files that the runtime
+ may keep open file descriptors on, all of which would need to be
+ closed when done with the object store", and the file descriptor to
+ an existing commit-graph file now is closed before "gc" finalizes a
+ new instance to replace it.
+
+ Will merge to 'master'.
+
+
+* pw/rebase-abort-clean-rewritten (2019-05-15) 4 commits
+  (merged to 'next' on 2019-06-27 at 97c9f12c4d)
+ + rebase --abort/--quit: cleanup refs/rewritten
+ + sequencer: return errors from sequencer_remove_state()
+ + rebase: warn if state directory cannot be removed
+ + rebase: fix a memory leak
+
+ "git rebase --abort" used to leave refs/rewritten/ when concluding
+ "git rebase -r", which has been corrected.
+
+ Will merge to 'master'.
+ cf. <2a37d4c2-6eec-548d-0bd0-12bbd49c8071@gmail.com>
+
+
+* nb/branch-show-other-worktrees-head (2019-05-07) 3 commits
+  (merged to 'next' on 2019-06-26 at ae3b7a626d)
+ + branch: add worktree info on verbose output
+ + branch: update output to include worktree info
+ + ref-filter: add worktreepath atom
+
+ "git branch --list" learned to show branches that are checked out
+ in other worktrees connected to the same repository prefixed with
+ '+', similar to the way the currently checked out branch is shown
+ with '*' in front.
+
+ Will merge to 'master'.
+
+
+* cc/multi-promisor (2019-06-25) 15 commits
+ - Move core_partial_clone_filter_default to promisor-remote.c
+ - Move repository_format_partial_clone to promisor-remote.c
+ - Remove fetch-object.{c,h} in favor of promisor-remote.{c,h}
+ - remote: add promisor and partial clone config to the doc
+ - partial-clone: add multiple remotes in the doc
+ - t0410: test fetching from many promisor remotes
+ - builtin/fetch: remove unique promisor remote limitation
+ - promisor-remote: parse remote.*.partialclonefilter
+ - Use promisor_remote_get_direct() and has_promisor_remote()
+ - promisor-remote: use repository_format_partial_clone
+ - promisor-remote: add promisor_remote_reinit()
+ - promisor-remote: implement promisor_remote_get_direct()
+ - Add initial support for many promisor remotes
+ - fetch-object: make functions return an error code
+ - t0410: remove pipes after git commands
+
+ Teach the lazy clone machinery that there can be more than one
+ promisor remote and consult them in order when downloading missing
+ objects on demand.
+
+ There is a bit of interaction with md/list-objects-filter-combo
+ topic, whose conflict resolution I have no confidence in X-<.
+
+
+* nd/switch-and-restore (2019-06-20) 46 commits
+  (merged to 'next' on 2019-06-27 at 85f83ad8d6)
+ + completion: disable dwim on "git switch -d"
+ + switch: allow to switch in the middle of bisect
+ + t2027: use test_must_be_empty
+ + Declare both git-switch and git-restore experimental
+ + help: move git-diff and git-reset to different groups
+ + doc: promote "git restore"
+ + user-manual.txt: prefer 'merge --abort' over 'reset --hard'
+ + completion: support restore
+ + t: add tests for restore
+ + restore: support --patch
+ + restore: replace --force with --ignore-unmerged
+ + restore: default to --source=HEAD when only --staged is specified
+ + restore: reject invalid combinations with --staged
+ + restore: add --worktree and --staged
+ + checkout: factor out worktree checkout code
+ + restore: disable overlay mode by default
+ + restore: make pathspec mandatory
+ + restore: take tree-ish from --source option instead
+ + checkout: split part of it to new command 'restore'
+ + doc: promote "git switch"
+ + completion: support switch
+ + t: add tests for switch
+ + switch: make --orphan switch to an empty tree
+ + switch: reject if some operation is in progress
+ + switch: no worktree status unless real branch switch happens
+ + switch: implicit dwim, use --no-guess to disable it
+ + switch: add short option for --detach
+ + switch: only allow explicit detached HEAD
+ + switch: reject "do nothing" case
+ + switch: stop accepting pathspec
+ + switch: remove -l
+ + switch: add --discard-changes
+ + switch: better names for -b and -B
+ + checkout: split part of it to new command 'switch'
+ + checkout: split options[] array in three pieces
+ + checkout: move 'confict_style' and 'dwim_..' to checkout_opts
+ + checkout: make "opts" in cmd_checkout() a pointer
+ + checkout: factor out some code in parse_branchname_arg()
+ + checkout: keep most #include sorted
+ + checkout: inform the user when removing branch state
+ + checkout: advice how to get out of detached HEAD mode
+ + t: rename t2014-switch.sh to t2014-checkout-switch.sh
+ + git-checkout.txt: fix monospace typeset
+ + doc: document --overwrite-ignore
+ + git-checkout.txt: fix one syntax line
+ + git-checkout.txt: spell out --no-option
+ (this branch is used by jl/status-reduce-vertical-blank.)
+
+ Two new commands "git switch" and "git restore" are introduced to
+ split "checking out a branch to work on advancing its history" and
+ "checking out paths out of the index and/or a tree-ish to work on
+ advancing the current history" out of the single "git checkout"
+ command.
+
+ Will merge to 'master'.
+ cf. <20190329103919.15642-1-pclouds@gmail.com> (switch v6)
+ cf. <20190425094600.15673-1-pclouds@gmail.com> (restore v3)
+
+
+* jc/format-patch-noclobber (2019-02-22) 1 commit
+ - format-patch: --no-clobber refrains from overwriting output files
+
+ "git format-patch" used to overwrite an existing patch/cover-letter
+ file.  A new "--no-clobber" option stops it.
+
+ Undecided but inclined to discard.
+
+
+* am/p4-branches-excludes (2019-04-02) 8 commits
+  (merged to 'next' on 2019-06-27 at 5b4fb87c45)
+ + git-p4: respect excluded paths when detecting branches
+ + git-p4: add failing test for "git-p4: respect excluded paths when detecting branches"
+ + git-p4: don't exclude other files with same prefix
+ + git-p4: add failing test for "don't exclude other files with same prefix"
+ + git-p4: don't groom exclude path list on every commit
+ + git-p4: match branches case insensitively if configured
+ + git-p4: add failing test for "git-p4: match branches case insensitively if configured"
+ + git-p4: detect/prevent infinite loop in gitCommitByP4Change()
+
+ "git p4" update.
+
+ Will merge to 'master'.
+
+
+* dl/rebase-i-keep-base (2019-04-25) 6 commits
+ - rebase: teach rebase --keep-base
+ - rebase: fast-forward --fork-point in more cases
+ - rebase: fast-forward --onto in more cases
+ - rebase: refactor can_fast_forward into goto tower
+ - t3432: test rebase fast-forward behavior
+ - t3431: add rebase --fork-point tests
+
+ "git rebase --keep-base <upstream>" tries to find the original base
+ of the topic being rebased and rebase on top of that same base,
+ which is useful when running the "git rebase -i" (and its limited
+ variant "git rebase -x").
+
+ The command also has learned to fast-forward in more cases where it
+ can instead of replaying to recreate identical commits.
+
+ On hold.
+ cf. <20190508001252.15752-1-avarab@gmail.com>
+ cf. <xmqqa7fxionx.fsf@gitster-ct.c.googlers.com>
+
+
+* ds/commit-graph-write-refactor (2019-06-12) 11 commits
+  (merged to 'next' on 2019-06-26 at 5430eafe51)
+ + commit-graph: extract write_commit_graph_file()
+ + commit-graph: extract copy_oids_to_commits()
+ + commit-graph: extract count_distinct_commits()
+ + commit-graph: extract fill_oids_from_all_packs()
+ + commit-graph: extract fill_oids_from_commit_hex()
+ + commit-graph: extract fill_oids_from_packs()
+ + commit-graph: create write_commit_graph_context
+ + commit-graph: remove Future Work section
+ + commit-graph: collapse parameters into flags
+ + commit-graph: return with errors during write
+ + commit-graph: fix the_repository reference
+ (this branch is used by ds/close-object-store and ds/commit-graph-incremental.)
+
+ Renamed from commit-graph-format-v2 and changed scope.
+
+ Will merge to 'master'.
+
+
+* br/blame-ignore (2019-06-20) 9 commits
+  (merged to 'next' on 2019-06-27 at 36b91a787f)
+ + blame: add a test to cover blame_coalesce()
+ + blame: use the fingerprint heuristic to match ignored lines
+ + blame: add a fingerprint heuristic to match ignored lines
+ + blame: optionally track line fingerprints during fill_blame_origin()
+ + blame: add config options for the output of ignored or unblamable lines
+ + blame: add the ability to ignore commits and their changes
+ + blame: use a helper function in blame_chunk()
+ + Move oidset_parse_file() to oidset.c
+ + fsck: rename and touch up init_skiplist()
+ (this branch is used by jk/br-blame-ignore-unused-fix.)
+
+ "git blame" learned to "ignore" commits in the history, whose
+ effects (as well as their presence) get ignored.
+
+ Needs a touch-up to reduce -Wunused-parameters error.
