@@ -2,139 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32001F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 13:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFFBA1F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 13:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbfF1NjQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 09:39:16 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:38184 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726655AbfF1NjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 09:39:16 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r12so10930441edo.5
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 06:39:15 -0700 (PDT)
+        id S1726664AbfF1NoM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 09:44:12 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37558 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726606AbfF1NoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 09:44:12 -0400
+Received: by mail-wm1-f66.google.com with SMTP id f17so9031163wme.2
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 06:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vntox4bsl2L1to0rSmmPWs8t408kAu8p+N/OICulnMY=;
-        b=ALvERPuSpMpgPBCyU+iPFUenOOoUpZZ7/7DqNdhnZOaEvie+jhiQ7JOh2mbZtOAMw6
-         qnt/ucLs5JrBPG4IR6mkoydkHu1Q7iKlZaxdAiYspsZKlQdIYUWZ03BPiNTt49jhxtib
-         oVM1Hf/Vema/jHlUqTq1B3R9eoDpCwlMwkNL+i9wOBDQ4EVg8SMTvGb4CIkTydNOBsE8
-         oVu1V7R1ZyNcasJ/eP2Fbv3R6c0zQx50Z5LRO1KzUmXzS1pUwhz+6PxSJxLU/Ck0FQmi
-         LF5jkxloRXrzQiamLR2IvlIP8K3ReyecwgScGk5dRBaAuYaa+/lcAqZHHcUrz5HakjrU
-         9fJw==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SS+yOIcneAKpeIgVHz3Enug0sdf8o5P9DFP0wv57jfs=;
+        b=OdA6T2/YRTZvQ+4PTrqLtdfdUTsAg1CCRjEK5CrF93QuippBxp+6fkwwUUFsK8/gtz
+         L2X6D8921wKigoowT6XdYz1EixWRdOGjxJ24oQrnknU5odHTaALheT/krirFuP08tRdF
+         xNi6OvLokl/1rnxvEXCPPLcBLu1vDmStvCY3v40O2uh0al+2aiShUlvgFi0WxfbOBzIX
+         VktPb6s5JLUlJtTLT+A7kLZC2pvlGIO/yobIUxlS8TGSHgkbwEsARvTawwaADUXcAYMQ
+         vnIaUXDbl+WucbKSa8OqThqUM/fvQE5L6sxCrOsSuKItFQJbo39VOKyixYFGVPru8mVy
+         c0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vntox4bsl2L1to0rSmmPWs8t408kAu8p+N/OICulnMY=;
-        b=r8q7Dm4iQdOOhKj7pXNJdWHlC9WYhaFAJ8SBqlFPB5CeiZlJV6YXFQi1jE6GCL3IL1
-         Z02jCuY87ORuS15EXHGNJbXunDLB1ksZhJYzowo/XElgw1q0q/HJjdoWMZttMVlwxzhM
-         bxHy7lth11fPx+3TQqgOzMewhbukZqWQxrlbPhlKYExAGdhSTBjrKj53NonAueqQOzuY
-         DLAQ6xd5TIegrL2kgfMkJM/nPMTUNRUG6Zci/z7rVAUetMO82xFTzGbwMEp//WnSSasb
-         a8wK8m3Gy8g3JEeX8u/mnO7r9ZmP6o7rBg4IPXBve+kvw6X9wd9z5XJ89tPBvmVrdgNU
-         aidA==
-X-Gm-Message-State: APjAAAVvTj3D8t3vSVWKqT+J9eu91WqYgsf/pt9OchRDrbRyYo3LsgIe
-        k5XCgaGl7BlCQ9vGy4IhBUW2KBfIiC4RKNsiNJV8ThJl
-X-Google-Smtp-Source: APXvYqwPk0aP5Q9ePHwjHYAlWwsfBtX7H8chaVEvWKA5Q9jOyDPZy7orT7PLbpDvYrl1LTKdu857SzdjPRfqZtK2X6s=
-X-Received: by 2002:a17:906:2594:: with SMTP id m20mr8843680ejb.217.1561729154769;
- Fri, 28 Jun 2019 06:39:14 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=SS+yOIcneAKpeIgVHz3Enug0sdf8o5P9DFP0wv57jfs=;
+        b=dAfo2fUer7zXWV5eYY4h++x++kkDLgEi0gTrSjvomXW6mcJGU7imbSrPtxJboTaoYa
+         8n+RV09PTFOjuDLbvk/RV2+LQK9k8fwE2rHrLzl4o9iBRuMIYpb0nPCQPvo1M0HHddTW
+         d8vytj56e9vK844pccdLyaJ1xoptNDRQoqr1AuUNc7mLYglvZdRfrMyGXhp9iHrOsjii
+         8kG9/+m3uRIhq0HC6OGpH2voALGlPWdcA8aaoG2JY4IajmSJwUfoMslho0l4NX1tv9O1
+         H31k2YF8islaxSL/rOVCOnhrJSQOuECdV1lmnR3X3i90WdvDi7evzTgF3BHdCYVzJQkA
+         Wjjg==
+X-Gm-Message-State: APjAAAUj+1CDMYT/ctAldWrKVWSiHH1tAbDRr29KlX/GOsiAgTFM5eB3
+        iAFbqYo3juT5zYH7pi3RaBE=
+X-Google-Smtp-Source: APXvYqyEfp4UMkhZkGWToNMogQZoMoBVwtz0TgvV1/co8E7J3qvzp60mVVYh2CvVD+L/4NL/iIrRAg==
+X-Received: by 2002:a1c:770d:: with SMTP id t13mr5857358wmi.79.1561729449506;
+        Fri, 28 Jun 2019 06:44:09 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id s188sm2286646wmf.40.2019.06.28.06.44.08
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Jun 2019 06:44:08 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect
+ interactive rebases
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>
+References: <pull.253.git.gitgitgadget@gmail.com>
+ <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
+ <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <e332eb5f-0818-763c-9de0-889644446a35@gmail.com>
+Date:   Fri, 28 Jun 2019 14:44:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com> <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
-In-Reply-To: <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 28 Jun 2019 15:39:03 +0200
-Message-ID: <CAP8UFD3VFdCUwDBTb9en22FO7HnWc4vgQ4h0hhariCB=om4b8A@mail.gmail.com>
-Subject: Re: Git Test Coverage Report (Thurs. June 27)
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 27, 2019 at 7:35 PM Derrick Stolee <stolee@gmail.com> wrote:
->
-> Here are some interesting sections I found when examining the test coverage
-> report. I am only highlighting these sections because they seem to include
-> non-trivial logic. In some cases, maybe the code isn't needed.
->
-> On 6/27/2019 1:05 PM, Derrick Stolee wrote:
-> > promisor-remote.c
-> > db27dca5 25) die(_("Remote with no URL"));
-> > 48de3158 61) warning(_("promisor remote name cannot begin with '/': %s"),
-> > 48de3158 63) return NULL;
-> > faf2abf4 93) previous->next = r->next;
-> > 4ca9474e 108) return git_config_string(&core_partial_clone_filter_default,
-> > fa3d1b63 139) return 0;
-> > 9e27beaa 202) static int remove_fetched_oids(struct repository *repo,
-> > 9e27beaa 206) int i, remaining_nr = 0;
-> > 9e27beaa 207) int *remaining = xcalloc(oid_nr, sizeof(*remaining));
-> > 9e27beaa 208) struct object_id *old_oids = *oids;
-> > 9e27beaa 211) for (i = 0; i < oid_nr; i++)
-> > 9e27beaa 212) if (oid_object_info_extended(repo, &old_oids[i], NULL,
-> > 9e27beaa 214) remaining[i] = 1;
-> > 9e27beaa 215) remaining_nr++;
-> > 9e27beaa 218) if (remaining_nr) {
-> > 9e27beaa 219) int j = 0;
-> > 9e27beaa 220) new_oids = xcalloc(remaining_nr, sizeof(*new_oids));
-> > 9e27beaa 221) for (i = 0; i < oid_nr; i++)
-> > 9e27beaa 222) if (remaining[i])
-> > 9e27beaa 223) oidcpy(&new_oids[j++], &old_oids[i]);
-> > 9e27beaa 224) *oids = new_oids;
-> > 9e27beaa 225) if (to_free)
-> > 9e27beaa 226) free(old_oids);
-> > 9e27beaa 229) free(remaining);
-> > 9e27beaa 231) return remaining_nr;
-> > 9e27beaa 248) if (remaining_nr == 1)
-> > 9e27beaa 249) continue;
-> > 9e27beaa 250) remaining_nr = remove_fetched_oids(repo, &remaining_oids,
-> > 9e27beaa 252) if (remaining_nr) {
-> > 9e27beaa 253) to_free = 1;
-> > 9e27beaa 254) continue;
-> > 9e27beaa 262) free(remaining_oids);
->
-> Christian: this section continues to be untested, but I think you were
-> working on creating tests for this.
+Hi Junio and Dscho
 
-Yeah, I am planning to work on this soon.
+On 28/06/2019 12:49, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Thu, 27 Jun 2019, Junio C Hamano wrote:
+> 
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>>>
+>>> -	if (options.reschedule_failed_exec && !is_interactive(&options))
+>>> +	if (reschedule_failed_exec > 0 && !is_interactive(&options))
+>>
+>> OK, it used to be that we got affected by what came from "options",
+>> which was read from the configuration.  Now we only pay attention to
+>> the command line, which makes sense.
+>>
+>> At this point, we have already examined '-x' and called
+>> imply_interative(), so this should trigger for '-x' (without '-i'),
+>> right?
+> 
+> Yes, at this point we have done all the parsing and automatic implying,
+> and check for incompatible options.
+> 
+>>>   		die(_("--reschedule-failed-exec requires an interactive rebase"));
+>>
+>> I wonder if users understand that '-x' is "an interctive rebase".
+>> The documentation can read both ways, and one of these may want to
+>> be clarified.
+>>
+>> 	-x <cmd>, --exec <cmd>
+>> 	...
+>> 	This uses the --interactive machinery internally, but it can
+>> 	be run without an explicit --interactive.
+>>
+>> Is it saying that use of interactive machinery is an impelementation
+>> detail the users should not concern themselves (in which case, the
+>> message given to "die()" above is misleading---not a new problem
+>> with this patch, though)?  Is it saying "-x" makes it plenty clear
+>> that the user wants interactive behaviour, so the users do not need
+>> to spell out --interactive in order to ask for it (in which case,
+>> "die()" message is fine, but "... internally, but ..." is
+>> misleading)?
+> 
+> Hmm. What would you think about:
+> 
+>    		die(_("--reschedule-failed-exec requires --exec or --interactive"));
+> 
 
-> > t/helper/test-oidmap.c
-> > 11510dec 52) if (get_oid(p1, &oid)) {
-> > 11510dec 53) printf("Unknown oid: %s\n", p1);
-> > 11510dec 54) continue;
-> > 11510dec 58) FLEX_ALLOC_STR(entry, name, p2);
-> > 11510dec 59) oidcpy(&entry->entry.oid, &oid);
-> > 11510dec 62) oidmap_put(&map, entry);
->
-> Christian: this block looks like the test-oidmap helper never uses the "add"
-> subcommand. Is that correct?
+I was wondering about requiring --exec with --reschedule-failed-exec 
+rather than checking is_interactive() as that would be easier to 
+understand. One potential problem is if someone has an alias that always 
+sets --reschedule-failed-exec but does not always add --exec to the 
+command line. We could just emit a warning along the lines of "ignoring 
+--reschedule-failed-exec without --exec". I'm not sure that we really 
+need to error out, unless we think that the missing --exec is an 
+indication that the user forgot --exec and so would not want the rebase 
+to start, in which case just dying on --reschedule-failed-exec without 
+--exec would be fine.
 
-Yeah, I initially copied it from hashmap, but then I realized that it
-was nearly identical as the "put" subcommand, so not worth testing
-separately. I should have removed it and will do it soon.
+Best Wishes
 
-> > 11510dec 97) if (get_oid(p1, &oid)) {
-> > 11510dec 98) printf("Unknown oid: %s\n", p1);
-> > 11510dec 99) continue;
-> > 11510dec 103) entry = oidmap_remove(&map, &oid);
-> > 11510dec 106) puts(entry ? entry->name : "NULL");
-> > 11510dec 107) free(entry);
->
-> Similarly, this block means we are not using the "remove" subcommand.
+Phillip
 
-Yeah, it looks like I forgot to implement a test for that subcommand.
-Will add it soon.
-
-Thanks,
-Christian.
+> 
+> It is still not _complete_, but at least it should be a ton less
+> confusing.
+> 
+>>> +	if (reschedule_failed_exec >= 0)
+>>> +		options.reschedule_failed_exec = reschedule_failed_exec;
+>>
+>> OK, here we recover the bit that is only stored in a local variable
+>> and pass it into cmd_rebase__interactive() machinery via the options
+>> structure, which lets the codepath after this point oblivious to
+>> this change, which is good ;-).
+>>
+>>>   	if (options.git_am_opts.argc) {
+>>>   		/* all am options except -q are compatible only with --am */
+>>> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+>>> index bdaa511bb0..4eff14dae5 100755
+>>> --- a/t/t3418-rebase-continue.sh
+>>> +++ b/t/t3418-rebase-continue.sh
+>>> @@ -265,4 +265,12 @@ test_expect_success '--reschedule-failed-exec' '
+>>>   	test_i18ngrep "has been rescheduled" err
+>>>   '
+>>>
+>>> +test_expect_success 'rebase.reschedulefailedexec only affects `rebase -i`' '
+>>> +	test_config rebase.reschedulefailedexec true &&
+>>> +	test_must_fail git rebase -x false HEAD^ &&
+>>
+>> These three lines gives us a concise summary of this patch ;-)
+>>
+>>   - The test title can serve as a starting point for a much better
+>>     patch title.
+>>
+>>   - We trigger for '-x' without requiring '-i'.
+> 
+> I changed the oneline to
+> 
+> 	rebase --am: ignore rebase.reschedulefailedexec
+> 
+> This gives credit to the implementation details, as appropriate for commit
+> messages, and the error message still tries to be as helpful as possible
+> for users (who do not necessarily need to know that there are two
+> backends).
+> 
+> At this point, I am _really_ glad that we only have two backends left (for
+> all practical purposes, I don't count --preserve-merges).
+> 
+> Ciao,
+> Dscho
+> 
+>>> +	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
+>>> +	git rebase --abort &&
+>>> +	git rebase HEAD^
+>>> +'
+>>> +
+>>>   test_done
+>>
