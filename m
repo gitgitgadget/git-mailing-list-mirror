@@ -7,66 +7,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50B371F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 23:55:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B50811F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 23:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726731AbfF1Xzf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 19:55:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54678 "HELO cloud.peff.net"
+        id S1726817AbfF1X7F (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 19:59:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54690 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726643AbfF1Xzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 19:55:35 -0400
-Received: (qmail 15979 invoked by uid 109); 28 Jun 2019 23:55:35 -0000
+        id S1726643AbfF1X7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 19:59:05 -0400
+Received: (qmail 15989 invoked by uid 109); 28 Jun 2019 23:59:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 28 Jun 2019 23:55:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 28 Jun 2019 23:59:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21963 invoked by uid 111); 28 Jun 2019 23:56:26 -0000
+Received: (qmail 21987 invoked by uid 111); 28 Jun 2019 23:59:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 28 Jun 2019 19:56:26 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 28 Jun 2019 19:59:57 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2019 19:55:33 -0400
-Date:   Fri, 28 Jun 2019 19:55:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2019 19:59:03 -0400
+Date:   Fri, 28 Jun 2019 19:59:03 -0400
 From:   Jeff King <peff@peff.net>
-To:     "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: GIT issue while cloning (fatal: pack is corrupted (SHA1
- mismatch)) !!!
-Message-ID: <20190628235532.GA2625@sigill.intra.peff.net>
-References: <20190528093728.GA15106@sigill.intra.peff.net>
- <TU4PR8401MB1216A7B920D40B5063123A94E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
- <20190528213004.GF24650@sigill.intra.peff.net>
- <TU4PR8401MB12166DBE2156683ADF28E9A4E11F0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
- <TU4PR8401MB1216339F1E7A378C45DF9B36E11F0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
- <20190530115742.GC31607@sigill.intra.peff.net>
- <TU4PR8401MB12163C00148C39F0083C732DE1ED0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
- <TU4PR8401MB1216962E3F135E850E81E407E1EA0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
- <6e78d3b7-07f2-f635-1dac-c4d98961b8eb@jeffhostetler.com>
- <TU4PR8401MB1216FC788B6A421F8FD82B2EE1FC0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (Thurs. June 27)
+Message-ID: <20190628235903.GB2625@sigill.intra.peff.net>
+References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
+ <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
+ <20190628064520.GB19777@sigill.intra.peff.net>
+ <ddf13a6b-42f4-57ae-49f1-8cc758b1dc4b@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <TU4PR8401MB1216FC788B6A421F8FD82B2EE1FC0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <ddf13a6b-42f4-57ae-49f1-8cc758b1dc4b@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 04:18:37PM +0000, Vanak, Ibrahim wrote:
+On Fri, Jun 28, 2019 at 08:23:49AM -0400, Derrick Stolee wrote:
 
-> But HPUX Dev team have seen one significance difference, when they
-> were triaging this issue, the ways GIT operations handled by 2 OSs: On
-> linux, around 40 processes are spawned for handling a GIT operation
-> whereas on HPUX only one process manages the operation. Is there
-> something special being written for linux on GIT code ?
+> On 6/28/2019 2:45 AM, Jeff King wrote:
+> > On Thu, Jun 27, 2019 at 01:35:17PM -0400, Derrick Stolee wrote:
+> > 
+> >>> t/helper/test-example-decorate.c
+> >>> 0ebbcf70 29) one = lookup_unknown_object(&one_oid);
+> >>> 0ebbcf70 30) two = lookup_unknown_object(&two_oid);
+> >>> 0ebbcf70 59) three = lookup_unknown_object(&three_oid);
+> >>
+> >> Peff: again interesting that these lines you refactored were not covered, especially
+> >> because they are part of a test helper. Perhaps the tests they were intended for are
+> >> now defunct?
+> > 
+> > They should be run by t9004 (and if I replace them with a `die`, they
+> > clearly are). Are you sure your coverage script is not mistaken?
+> 
+> It looks like I'm missing the 9000+ tests. The following line was in the script
+> I adapted from another CI job:
+> 
+> 	rm -f t/t9*.sh
+> 
+> This was probably because the job I adapted from needed to run quickly, but for
+> this coverage report we should do the hard work of running whatever t9*.sh tests
+> we can.
 
-On Linux (and any platform that supports pthreads), Git will do the
-lstat() operations to refresh the index in parallel. See the
-core.preloadIndex option (which I think defaults to true).
+I suspect most of those _are_ low-value. The git-p4 tests, for instance,
+are mostly exercising the p4 script and not our C code, and the same
+with git-svn. However I wouldn't be surprised if there are a few dusty
+corners they manage to hit that aren't covered elsewhere.
 
-If you have a very high-latency lstat() and your build does not have
-pthread support, that could be a significant difference.
-
-That might be worth exploring.
+Still, if it's not too painful to add them in time-wise, it probably
+makes sense for the coverage tests to be as exhaustive as possible.
 
 -Peff
