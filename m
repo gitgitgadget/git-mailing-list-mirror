@@ -2,85 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 006B21F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:53:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C32001F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 13:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbfF1MxI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:53:08 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49385 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726619AbfF1MxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:53:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561726383;
-        bh=bqv2qFkPSya1MncmNFRtT2wfQ7pLs6ILVSzZqAV/flQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OoIfT+R6rPol5FPa1aHMOq0XWm/U7nNYF5YRWu94Et2ajvQpKdXk6VRKYjSzALMY7
-         pXfQkMSrRwnF/ljnNjq60H1CyjKn1x8SBckm8z6FMnia3xaHHI3fuADkMPLljKkk+G
-         Gl/6ytgA3Vs5ZxCYFm6WjkzdgC884tP5MlkiLgyA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEFvj-1hoqa20HOH-00ACDp; Fri, 28
- Jun 2019 14:53:03 +0200
-Date:   Fri, 28 Jun 2019 14:53:26 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/6] easy bulk commit creation in tests
-In-Reply-To: <20190628093751.GA3569@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1906281452251.44@tvgsbejvaqbjf.bet>
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com> <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com> <20190628064103.GA19777@sigill.intra.peff.net> <20190628093751.GA3569@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726739AbfF1NjQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 09:39:16 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38184 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726655AbfF1NjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 09:39:16 -0400
+Received: by mail-ed1-f68.google.com with SMTP id r12so10930441edo.5
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 06:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vntox4bsl2L1to0rSmmPWs8t408kAu8p+N/OICulnMY=;
+        b=ALvERPuSpMpgPBCyU+iPFUenOOoUpZZ7/7DqNdhnZOaEvie+jhiQ7JOh2mbZtOAMw6
+         qnt/ucLs5JrBPG4IR6mkoydkHu1Q7iKlZaxdAiYspsZKlQdIYUWZ03BPiNTt49jhxtib
+         oVM1Hf/Vema/jHlUqTq1B3R9eoDpCwlMwkNL+i9wOBDQ4EVg8SMTvGb4CIkTydNOBsE8
+         oVu1V7R1ZyNcasJ/eP2Fbv3R6c0zQx50Z5LRO1KzUmXzS1pUwhz+6PxSJxLU/Ck0FQmi
+         LF5jkxloRXrzQiamLR2IvlIP8K3ReyecwgScGk5dRBaAuYaa+/lcAqZHHcUrz5HakjrU
+         9fJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vntox4bsl2L1to0rSmmPWs8t408kAu8p+N/OICulnMY=;
+        b=r8q7Dm4iQdOOhKj7pXNJdWHlC9WYhaFAJ8SBqlFPB5CeiZlJV6YXFQi1jE6GCL3IL1
+         Z02jCuY87ORuS15EXHGNJbXunDLB1ksZhJYzowo/XElgw1q0q/HJjdoWMZttMVlwxzhM
+         bxHy7lth11fPx+3TQqgOzMewhbukZqWQxrlbPhlKYExAGdhSTBjrKj53NonAueqQOzuY
+         DLAQ6xd5TIegrL2kgfMkJM/nPMTUNRUG6Zci/z7rVAUetMO82xFTzGbwMEp//WnSSasb
+         a8wK8m3Gy8g3JEeX8u/mnO7r9ZmP6o7rBg4IPXBve+kvw6X9wd9z5XJ89tPBvmVrdgNU
+         aidA==
+X-Gm-Message-State: APjAAAVvTj3D8t3vSVWKqT+J9eu91WqYgsf/pt9OchRDrbRyYo3LsgIe
+        k5XCgaGl7BlCQ9vGy4IhBUW2KBfIiC4RKNsiNJV8ThJl
+X-Google-Smtp-Source: APXvYqwPk0aP5Q9ePHwjHYAlWwsfBtX7H8chaVEvWKA5Q9jOyDPZy7orT7PLbpDvYrl1LTKdu857SzdjPRfqZtK2X6s=
+X-Received: by 2002:a17:906:2594:: with SMTP id m20mr8843680ejb.217.1561729154769;
+ Fri, 28 Jun 2019 06:39:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JRg/vhxA13uA1MrgrkQxHbslBM39lcF5Js1BXyVbVSysE3Yqku3
- G1ti8WTfFSbE/cxV6p2gTbwroh0utygSGKMq1cFg3F2/si/gqW63HLvK68C6dI78Z5L5KGW
- 789RQsZsBU2Puead9/mrvVqgAZuNnrM3bMfp/Orw6Jf158c+XL8UDnbC3R4vsTu6B/4OTbE
- UOmFVHsd0bDRcUHLC9tmg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:L3GoZnVBs5U=:DR4d4dkTq/62w+ntD6cqPT
- aSYPKV5IGqGGjnOZAtlhLS1GVKIX8eKmd6VE95bEabFfWSTJh7RK0Pv+3d+SxAc1b8f42bRX7
- HXbKkuIW+pmyafwiQehyV+q3H3jU3Cifq/KQpX1XzyLFZBK2qBWzpICIqXGAmRYaBJb4O6GUm
- EE8bfliwDsRWAVr0WeIsUtkAu28+oSGWfL5uTbjDRhxhb0gw9VXzWTQbVcaXmdQqies93U1GY
- ueu/5q9WKoPkGkgh1QXLXL5TyRIezKnTndmZ6B9vsPmV5KsJHiz2ueXQ8eR+o8NpRuezzvZV4
- MBba83RSv1tGWstoW4AWrcKQmf8YH4F5l1ZjBaqaTdN8IM7L3uu1ZExPLp+e5wZimSjBgKiuV
- I6Y5dCSpztFL3D5KflUp/EaNQqoJugT4QcJSiWCCVcjF1E+YNGeChYHxVRMDNbnJVY4NogMvp
- mJVQ37HnSY8TzF+yLvJQF9viG3bPDL7jja3iEaDydijYv629vnRPLdV53dQ4ehzwpYSiFnAwS
- nW+bLbXJuGoumJ+6uXsi13yU3kVR4lHpri7Fs0yPxM+Vgnquy0XSycrVAkPjgEft7+4d6XE+9
- 2GtY9Dtt7RZvLYwyGhhPGIVf4WmAxFDNAyHV8mlkqapg1cRubEs7C2aawBU2WCJQRkGGxiUsL
- OHmzyRB6PLVqipJ8GpXHXxY5TayIkb5MegrQNpdADIx28f4Gp/QSqX0tlI1xAO/Dp9zYgH/6h
- dZFCo1fOBdwppmPQVgA2SmC93eHoUwZ6KEwVQeskko94N2d5/6Ce9vrma6iXTSaq7ZinHlSTG
- dZhGVKpfe/v5Fu4MGfOlsJL1twYlmrT0cYKqt3H6FfqHHQyo2Uo7ZGE6Kjf/11Ibms9NfLh5x
- 32Cy4AZNzkcrTZpo8TmOIN8THt4Z3QOXV266V7kno1vtnb3uORI7x27p/Y2SyE5K5f4+swgoG
- yUbKIONOHtmu9eVjfXXUm/y9M9rxksDrKlV2XYom7FlVX6gnxm9Gn8nQCV/LhbhULTNKm1Oez
- 68mctKLHKmyObotDoniH8+2kxdH/jYYwE5CONzSe2YTAMNuz5yqK1AlEsGSaUEvb/jiwuHX3B
- QddS/15hvYHqeNg6W+lmJ5i99snKU2kDvrS
-Content-Transfer-Encoding: quoted-printable
+References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com> <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
+In-Reply-To: <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 28 Jun 2019 15:39:03 +0200
+Message-ID: <CAP8UFD3VFdCUwDBTb9en22FO7HnWc4vgQ4h0hhariCB=om4b8A@mail.gmail.com>
+Subject: Re: Git Test Coverage Report (Thurs. June 27)
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Fri, 28 Jun 2019, Jeff King wrote:
-
-> On Fri, Jun 28, 2019 at 02:41:03AM -0400, Jeff King wrote:
+On Thu, Jun 27, 2019 at 7:35 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> > It would be nice if we had a "test_commits_bulk" that used fast-import
-> > to create larger numbers of commits.
+> Here are some interesting sections I found when examining the test coverage
+> report. I am only highlighting these sections because they seem to include
+> non-trivial logic. In some cases, maybe the code isn't needed.
 >
-> So here's a patch to do that.
+> On 6/27/2019 1:05 PM, Derrick Stolee wrote:
+> > promisor-remote.c
+> > db27dca5 25) die(_("Remote with no URL"));
+> > 48de3158 61) warning(_("promisor remote name cannot begin with '/': %s"),
+> > 48de3158 63) return NULL;
+> > faf2abf4 93) previous->next = r->next;
+> > 4ca9474e 108) return git_config_string(&core_partial_clone_filter_default,
+> > fa3d1b63 139) return 0;
+> > 9e27beaa 202) static int remove_fetched_oids(struct repository *repo,
+> > 9e27beaa 206) int i, remaining_nr = 0;
+> > 9e27beaa 207) int *remaining = xcalloc(oid_nr, sizeof(*remaining));
+> > 9e27beaa 208) struct object_id *old_oids = *oids;
+> > 9e27beaa 211) for (i = 0; i < oid_nr; i++)
+> > 9e27beaa 212) if (oid_object_info_extended(repo, &old_oids[i], NULL,
+> > 9e27beaa 214) remaining[i] = 1;
+> > 9e27beaa 215) remaining_nr++;
+> > 9e27beaa 218) if (remaining_nr) {
+> > 9e27beaa 219) int j = 0;
+> > 9e27beaa 220) new_oids = xcalloc(remaining_nr, sizeof(*new_oids));
+> > 9e27beaa 221) for (i = 0; i < oid_nr; i++)
+> > 9e27beaa 222) if (remaining[i])
+> > 9e27beaa 223) oidcpy(&new_oids[j++], &old_oids[i]);
+> > 9e27beaa 224) *oids = new_oids;
+> > 9e27beaa 225) if (to_free)
+> > 9e27beaa 226) free(old_oids);
+> > 9e27beaa 229) free(remaining);
+> > 9e27beaa 231) return remaining_nr;
+> > 9e27beaa 248) if (remaining_nr == 1)
+> > 9e27beaa 249) continue;
+> > 9e27beaa 250) remaining_nr = remove_fetched_oids(repo, &remaining_oids,
+> > 9e27beaa 252) if (remaining_nr) {
+> > 9e27beaa 253) to_free = 1;
+> > 9e27beaa 254) continue;
+> > 9e27beaa 262) free(remaining_oids);
+>
+> Christian: this section continues to be untested, but I think you were
+> working on creating tests for this.
 
-I like the direction, especially because it would make it super easy to go
-one step further that would probably make a huge difference on Windows: to
-move `test_commit_bulk` to `test-tool commit-bulk`.
+Yeah, I am planning to work on this soon.
+
+> > t/helper/test-oidmap.c
+> > 11510dec 52) if (get_oid(p1, &oid)) {
+> > 11510dec 53) printf("Unknown oid: %s\n", p1);
+> > 11510dec 54) continue;
+> > 11510dec 58) FLEX_ALLOC_STR(entry, name, p2);
+> > 11510dec 59) oidcpy(&entry->entry.oid, &oid);
+> > 11510dec 62) oidmap_put(&map, entry);
+>
+> Christian: this block looks like the test-oidmap helper never uses the "add"
+> subcommand. Is that correct?
+
+Yeah, I initially copied it from hashmap, but then I realized that it
+was nearly identical as the "put" subcommand, so not worth testing
+separately. I should have removed it and will do it soon.
+
+> > 11510dec 97) if (get_oid(p1, &oid)) {
+> > 11510dec 98) printf("Unknown oid: %s\n", p1);
+> > 11510dec 99) continue;
+> > 11510dec 103) entry = oidmap_remove(&map, &oid);
+> > 11510dec 106) puts(entry ? entry->name : "NULL");
+> > 11510dec 107) free(entry);
+>
+> Similarly, this block means we are not using the "remove" subcommand.
+
+Yeah, it looks like I forgot to implement a test for that subcommand.
+Will add it soon.
 
 Thanks,
-Dscho
+Christian.
