@@ -2,79 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3C931F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:23:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A11451F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 12:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbfF1MXU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:23:20 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45657 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727087AbfF1MXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:23:12 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a14so10602029edv.12
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:23:11 -0700 (PDT)
+        id S1727151AbfF1MYD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 08:24:03 -0400
+Received: from mail-qk1-f178.google.com ([209.85.222.178]:34474 "EHLO
+        mail-qk1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727050AbfF1MXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 08:23:54 -0400
+Received: by mail-qk1-f178.google.com with SMTP id t8so4594182qkt.1
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:23:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=EDEZ7CJ9a5gOCaEKCSYA2CkHm2YrIFlhrhE8yrYn53I=;
-        b=FOEZP2Ggt5pkaMVLlfdK4aSVYRMIt3nZDK9pisjwvO6S6GPK3iMVNHZI9NbkXjKCCl
-         VqMJphMJK46WzVQFFgionXurb8SYaQUCLP7YHsoj2/VjAh9muA8qV9aSBr+mnCG7Exaz
-         Rla94K+2g5G5IjBrHnP+m6MrPJrO4Z5JN0Tn8kDTa/P9Td+XiPMF5m5RpxT++SXf2hvy
-         z77r90kRwLAuLOb+KcrXFqk3m2QbXTP6Qy5s8kaOYNEGOrgP79qKzQ+Wm1r4DCUYKmsz
-         SThi9LIt2w0ibNh4igYnvy7zOfvQ1bUVwgPKYxY4d8R0+4rPmM2lqvvJtftWX/1G9Z6U
-         WY2w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=aTEiYUlHTTg2UirE1BR2ZxlTnL4JoJz4KSddpZnqB3w=;
+        b=hXg9CCfia6uizUz0SpPhDWglWefnS8H1I0VeBDCxWYNd+ApTRsdQ8g+0fGHU3X/DSe
+         7A7CLAasHfb0E/O2zlArQtpqb6/RvA7eGNNDYAhNp6ncynKbmPfvfr59lAEJ6enEHtBl
+         uAUcAWpFM3avgMZjcM2hM4KtDSf7WAe3Qr0ol1/VEi4jZ7SpdS0p/QI6q4yH659dTE+D
+         oiOcag+e1tC5Ms7zAORR8YTXIjFMfWzapf+b+E8h23mETiNAJZcRqg/UJrkjx6vzAChx
+         JybvkJnpMpKmIR8dWz321ce8dH/zFfDqNFekA0aI+GM/nTKMuVQH6u5TvEl6RYve+jUk
+         Ti8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=EDEZ7CJ9a5gOCaEKCSYA2CkHm2YrIFlhrhE8yrYn53I=;
-        b=pp+wrHKG89cl5dt07y53C/B91uap+Bp5oZdtWCR6vMs74FbDkvs3VltIGYlexjMKpy
-         x8t3K6n7KwWVH3OjKbWOFHnqE02kg4v/iXqJXukZKwtinVZHD9c2A2rARAm2mE+wyHAr
-         SIrmauPjz6srQcNbMSwrMOYZdT7B18xA9Bk4uNxcZKh67zhW3auL+dPeK80on2lWSTbr
-         Ib+EA9kn2MRdxcJtg7PlfHVflEFQDA8RSWTO62jszyeIbo0A2/ELBfEH3cAq8qQfN7Oc
-         KGYLrkqIlAdALDguPkzHrhPMinkPPZg9z/bmN3JmhM6auW2Md7hvblFw9kZvVa4pv0ZT
-         TYLQ==
-X-Gm-Message-State: APjAAAWe5gcQ6EgTCpCz35esf6gIX09RmYVitYl2qKNVfeUHx393uJ4+
-        IWbB0RyRG7kXAM3bfLLcFcXJGgYGyZit6bUMUu/bFnt/q6A=
-X-Google-Smtp-Source: APXvYqyJnc/LW7cb3/jWyXZSReF5rpSSoGCjQzuBDAoh2rs/eZu8r9KuT5mi8OHf+NkZkYPTRyZczfVDk/f2T+S4jZQ=
-X-Received: by 2002:a17:906:1914:: with SMTP id a20mr7999624eje.294.1561724590259;
- Fri, 28 Jun 2019 05:23:10 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=aTEiYUlHTTg2UirE1BR2ZxlTnL4JoJz4KSddpZnqB3w=;
+        b=RCAExvHaO0BAh9yOcxgseL0yH17U+1GYy1lSqULs1BR+uesv73qO1C1Fax+91R7i+M
+         Pz8+zAuDicxu6Lm1lzqpaoTtgsI0XFh7K/e1xz/NQd9gXCAwvpoc58FqWlX5mMqZtb+d
+         /Na9YsI7gizDhIjwhFSI8mOdn3K0c7q0QNP88dxj8VYVw+yk4idiZ3yAFi/hJ/+vAWvc
+         hdscDV1+FSCf/nnlm0ITVXt5wMc+YimOonzh+YAnlca3PUzc0W5JysXcQ6vcJxQ/UR/Q
+         WX1CJ1xgOaSpFkwyZwNOVee8Bk4GpFdcQt+ONKxZrvrS7ynPW4JES6xsPMrJDkwGbChB
+         xpog==
+X-Gm-Message-State: APjAAAUhJ0WNvsnzFQbQrL8oImVMGvskQ/jI3lp7hWaU3WsHnH/b5AdM
+        qWkV35F1qGkbjWR1AB5nL8LrRcVw
+X-Google-Smtp-Source: APXvYqxYNn4VvBT9BBVhuu7tfLMOkrg6Y36pTO6ZMxUQ0PbCAZMvyI7Ndrt46+5PtOnuquZjRRAcFw==
+X-Received: by 2002:a37:7ec1:: with SMTP id z184mr8272135qkc.491.1561724633667;
+        Fri, 28 Jun 2019 05:23:53 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:54b1:2872:57:b107? ([2001:4898:a800:1010:5e7:2872:57:b107])
+        by smtp.gmail.com with ESMTPSA id d31sm976530qta.39.2019.06.28.05.23.53
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Jun 2019 05:23:53 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Thurs. June 27)
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
+ <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
+ <20190628064520.GB19777@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ddf13a6b-42f4-57ae-49f1-8cc758b1dc4b@gmail.com>
+Date:   Fri, 28 Jun 2019 08:23:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 28 Jun 2019 14:22:58 +0200
-Message-ID: <CAP8UFD3AbZAfdG92orA=dv6qQ74Qk3-yVKQ1gRunZnkcvwC75A@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 52
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        David Pursehouse <dpursehouse@collab.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190628064520.GB19777@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On 6/28/2019 2:45 AM, Jeff King wrote:
+> On Thu, Jun 27, 2019 at 01:35:17PM -0400, Derrick Stolee wrote:
+> 
+>>> t/helper/test-example-decorate.c
+>>> 0ebbcf70 29) one = lookup_unknown_object(&one_oid);
+>>> 0ebbcf70 30) two = lookup_unknown_object(&two_oid);
+>>> 0ebbcf70 59) three = lookup_unknown_object(&three_oid);
+>>
+>> Peff: again interesting that these lines you refactored were not covered, especially
+>> because they are part of a test helper. Perhaps the tests they were intended for are
+>> now defunct?
+> 
+> They should be run by t9004 (and if I replace them with a `die`, they
+> clearly are). Are you sure your coverage script is not mistaken?
 
-The 52nd edition of Git Rev News is now published:
+It looks like I'm missing the 9000+ tests. The following line was in the script
+I adapted from another CI job:
 
-  https://git.github.io/rev_news/2019/06/28/edition-52/
+	rm -f t/t9*.sh
 
-Thanks a lot to Jeff Hostetler, David Pursehouse and Johannes
-Schindelin who contributed this month!
+This was probably because the job I adapted from needed to run quickly, but for
+this coverage report we should do the hard work of running whatever t9*.sh tests
+we can.
 
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+Sorry for the noise here, and thanks for checking!
+
+-Stolee
