@@ -2,109 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 721401F4B6
-	for <e@80x24.org>; Fri, 28 Jun 2019 18:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75F761F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 19:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbfF1Ste (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 14:49:34 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37508 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbfF1Ste (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 14:49:34 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w13so12022025eds.4
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 11:49:33 -0700 (PDT)
+        id S1726875AbfF1TLi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 15:11:38 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54998 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726565AbfF1TLi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 15:11:38 -0400
+Received: by mail-wm1-f67.google.com with SMTP id g135so10090905wme.4
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 12:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=1FDSW20vZ7PQkFZjdBjBWT3JGfpawjCYaUVeNduSVJ0=;
-        b=CLAYsJzWaYsorNmBIXHT+93eZnkdXV9m1BvM68oryUaBJdJi0FABkNB/LgfbQ8DP2A
-         oEvsScOEWXN8lYUmBWGlMZwRZdBWw52QYO3n9AFY08fr5MED2xaHAs5GiRO33RRXrUys
-         N3EpycnK0g7dIVc7D7wTk2QcU0Xq1BGAFi3Xc77tmrb1runSQVhpnqr8PAGigz9hNQhz
-         4mjsMAuM9aO1tC5rTsErpPdzPhkJAr0x07L1+a2MfwhTf3pwkguroW1/dPAQ9ivY6nya
-         Fa9lBpEh8YAs12rrqAvhVibSX20xWzb1X+uxN7H+ndSLwN7tKhzhI6Uxd6x+3Rj3nk8R
-         srBQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=n+LTJU5RlfvSaUtTEMGxryCMk1hA/IVLttJ8H4fXOfQ=;
+        b=r8wSQKVBn+WdsbDi1eNsIAHQdepFJ933NgM0yBemKe7vTkGTcmW4Tw4X2NcW7v/Abq
+         m+3eicLCzWQz29jwRy96do5Sjkr0C8BIXCgP7EuRC3GNF2hXE0mITjC7pUzCshmyVsB2
+         Zbbi1ha0eAI2Q9iP8qPHNPWVgcZl/LUX4b0J8TyDXHy4tgxia+3k7hmyLK1f4r3Oy2F4
+         AoDgmYlD3BT9cvivaXxdZsfVrn1c3eDPLiDKMt7iAvB+FrflLrqzIJeKoIz/lNPlP65b
+         UKoBIapHHrbyk0h1VHFXU+/kZKoYEwW4iLszdUR6HJU0VuxcI28CdNHci7UbykTKpmW5
+         dcmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=1FDSW20vZ7PQkFZjdBjBWT3JGfpawjCYaUVeNduSVJ0=;
-        b=NTMVGEfU7Xt6Qm8Gspi4DmHBOCRLSdZlZuwW0Es7wAm+jMY65Pz7tp4E9EhyyXCO1l
-         pyBWlwao2AbC+XEdkRm29839XYhnDzbhr6sqSZIWtxJLOxgyu8MZTmQGNJXzRqlvg9Tc
-         LsZojueLnSlmTuj0PbXsTLjFHAbfZs7AtTVjO+79oCJLqODk05LTacxiKTmHLO7CIA4/
-         KeomTVjBVnUvvjEgrZ/w8JAvMrjrTXwiy8uLRyT4FcjXK0xvcP9bApHtiq5C2iTUjikk
-         df6ZEPdcndS9iRqU7bYTpuxQ9HTUTlTGsl5spp6C/L1pBZkm1j3bTcOg/uP67+whOi4b
-         6egw==
-X-Gm-Message-State: APjAAAXwtcUt9KsvTohuERQNL1z/zAotvfnnn8IpaFoApZzPAyc0lIC3
-        074yS8xux5Zcewzs8rvhhCc=
-X-Google-Smtp-Source: APXvYqzovaIk8y5Wq7hgpuJCe1N5/yMP84TroUbyqLw/GgpJvSpwRzjujpvIgrcSH7MoRQ7UZuqaMw==
-X-Received: by 2002:aa7:cdc6:: with SMTP id h6mr13199088edw.5.1561747772376;
-        Fri, 28 Jun 2019 11:49:32 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id k10sm935248eda.9.2019.06.28.11.49.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=n+LTJU5RlfvSaUtTEMGxryCMk1hA/IVLttJ8H4fXOfQ=;
+        b=RNACGx7Vyyk/eyJGpqibzV1QO4YvVnsRejUE0TL2q5S4xnG0DE+QCaKB7cj6zu6GnJ
+         7/+fL4zMj5OE7UZsO5ghwaJnabqMM/ETt5PcK09BCU/CDqoQy+BMdCgnafvTDDnzpnhK
+         dh7z8KDUPs++v6iCKiQjbpJq+0GCPJQQn75DUn4Ey8tnQaL9N6idCTipdIQeyBuafLxd
+         RGYvYgm2Q7tJXUpiUmBbwki01BjezEpfj5y4pbq7IUNSMd268NThEjltKOuMPySTox31
+         emlw5HKau8sK0+R6aOudpJXGKNfwxb0HWgavgMa7jgWfMAOvoYy9LdAOM3kCgBxaaGW2
+         FsqA==
+X-Gm-Message-State: APjAAAXU1wIgM2YZdWwSEwlotzXuQQRxz/wUsCdzGXmtC5J1V0HNy6X3
+        tTAty0ZiW81FzxxygztliDw=
+X-Google-Smtp-Source: APXvYqzg1mntfuSBINJq76TjyLht5/jM6Q5WJiE7mRB1nh3Sz/4+zi+hyY/MT4fozjDyQhi7yD+vOg==
+X-Received: by 2002:a1c:c74a:: with SMTP id x71mr8234855wmf.121.1561749096109;
+        Fri, 28 Jun 2019 12:11:36 -0700 (PDT)
+Received: from localhost (adsl-24.176.58.195.tellas.gr. [176.58.195.24])
+        by smtp.gmail.com with ESMTPSA id g8sm5104263wme.20.2019.06.28.12.11.34
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 28 Jun 2019 11:49:31 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/6] easy bulk commit creation in tests
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com> <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com> <20190628064103.GA19777@sigill.intra.peff.net> <20190628093751.GA3569@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190628093751.GA3569@sigill.intra.peff.net>
-Date:   Fri, 28 Jun 2019 20:49:30 +0200
-Message-ID: <87v9wp7dfp.fsf@evledraar.gmail.com>
+        Fri, 28 Jun 2019 12:11:35 -0700 (PDT)
+Date:   Fri, 28 Jun 2019 20:11:33 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
+Message-ID: <20190628191133.GA15477@hank.intra.tgummerer.com>
+References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 06/26, Junio C Hamano wrote:
+> * ra/cherry-pick-revert-skip (2019-06-24) 6 commits
+>  - cherry-pick/revert: advise using --skip
+>  - cherry-pick/revert: add --skip option
+>  - sequencer: use argv_array in reset_merge
+>  - sequencer: rename reset_for_rollback to reset_merge
+>  - sequencer: add advice for revert
+>  - advice: add sequencerInUse config variable
+> 
+>  "git cherry-pick/revert" learned a new "--skip" action.
+> 
+>  Is this one ready for 'next'?
 
-On Fri, Jun 28 2019, Jeff King wrote:
+Yes, I believe this is ready for 'next'.  I had a look at the latest
+round, and only had a minor comment on the organization of the patch
+series that is probably not worth a re-roll.
 
-> On Fri, Jun 28, 2019 at 02:41:03AM -0400, Jeff King wrote:
->
->> I think this would exercise it, at the cost of making the test more
->> expensive:
->>
->> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
->> index 82d7f7f6a5..8ed6982dcb 100755
->> --- a/t/t5310-pack-bitmaps.sh
->> +++ b/t/t5310-pack-bitmaps.sh
->> @@ -21,7 +21,7 @@ has_any () {
->>  }
->>
->>  test_expect_success 'setup repo with moderate-sized history' '
->> -	for i in $(test_seq 1 10)
->> +	for i in $(test_seq 1 100)
->>  	do
->>  		test_commit $i
->>  	done &&
->>
->> It would be nice if we had a "test_commits_bulk" that used fast-import
->> to create larger numbers of commits.
->
-> So here's a patch to do that. Writing the bulk commit function was a fun
-> exercise, and I found a couple other places to apply it, too, shaving
-> off ~7.5 seconds from my test runs. Not ground-breaking, but I think
-> it's nice to have a solution where we don't have to be afraid to
-> generate a bunch of commits.
-
-Nice.
-
-Just a side-note: I've wondered how much we could speed up the tests in
-other places if rather than doing setup all over the place we simply
-created a few "template" repository shapes, and the common case for
-tests would be to simply cp(1) those over.
-
-I.e. for things like fsck etc. we really do need some specific
-repository layout, but a lot of our tests are simply re-doing setup
-slightly differently just to get things like "I want a few commits on a
-few branches" or "set up a repo like <that> but with some remotes" etc.
+I also added Phillip to Cc, as he's been heavily involved in reviewing
+this series, in case he has any more comments.
