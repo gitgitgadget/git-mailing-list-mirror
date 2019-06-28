@@ -2,87 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F17C11F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 16:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0221F4B6
+	for <e@80x24.org>; Fri, 28 Jun 2019 17:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726829AbfF1QXB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 12:23:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55105 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726667AbfF1QXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 12:23:00 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B65B715DC4D;
-        Fri, 28 Jun 2019 12:22:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=K6+WoZhHqX8gg2gbEUfGAi/3Q5s=; b=qM/cEb
-        WgL1E+Ro/6VTbtNnhLfETZc3VpqB/yYREcCpAjLCVPMvFlZWcxyEya6XIUtrOxhc
-        3e74zD93+iT8mM+OjHeQaKPGEF19HPJ2EfkUsnuiOv53IlbYVTkZXEi/4N0iSFeN
-        eX8q05C1ugi2DNpTlNmKtgVhfrXwP675fdLuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IpkaTBVaGmmn50PFJ4PExaOrrVtBTGFw
-        at4tVvNSzMrXKi07I7kVPXztDOr2NQOM9wbDw1jI6c9UoEgw6OlN4v/Vwq1Q/QDs
-        Eb6X2cRGH+pyodCgT+D7zQsxqUhmUAZc5ql45dK8bwXB8Xm82dwF4P3zsZJ0aqyI
-        8jQku67uVYg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA73015DC4C;
-        Fri, 28 Jun 2019 12:22:58 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F097515DC4B;
-        Fri, 28 Jun 2019 12:22:57 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips are valid
-References: <20190628101131.GA22862@sigill.intra.peff.net>
-Date:   Fri, 28 Jun 2019 09:22:56 -0700
-In-Reply-To: <20190628101131.GA22862@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 28 Jun 2019 06:11:31 -0400")
-Message-ID: <xmqqpnmx8ysf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FDA9A752-99C0-11E9-BC58-46F8B7964D18-77302942!pb-smtp1.pobox.com
+        id S1726720AbfF1RQh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 13:16:37 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:34165 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbfF1RQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 13:16:37 -0400
+Received: by mail-qk1-f201.google.com with SMTP id h198so7186723qke.1
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 10:16:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bEIoF6/BWfCenrxHZijqhOSlJwELG5sFloXHjhzxB0Q=;
+        b=gNdvrF9f5QUQsmXxfnIGfUiWtwqi7LoHtQIEXdzQzhaq7ptffLegIQus2+mjOy/3Lh
+         rppvcLv38cYRxE3BxwCQonAH1km/y0aKdDCCnhoTTtEJRJfoYLr2sQcJB0KQcpBf/MZ8
+         BBQVWtP/ypXoynHT611pti5eoMPL6QjK5vKp623OkaQxUHNxh5IHQ2J6syhqVnNiqcRe
+         spYpl/Y2uBC4Ra3Fc9qjy3px4DpVUtZMJOyPHQmwXIG/PXvPrJK/eWnEEBbKROHNeyNI
+         8KInbwonmq03IV6LLm/mQMIF59qkoUf8+e4pLTKnpcBOxnCJA1PUhmBJyBAmrF2gyRq9
+         JfTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bEIoF6/BWfCenrxHZijqhOSlJwELG5sFloXHjhzxB0Q=;
+        b=chCkxuYQDS5Ak1z0LG273Y082d29C0B7dZzALZja7t/Pb0d/hrHxM7OnRa7fhDF84x
+         PKAbUuFGJF8Pc9KbJ/+h4cIhM7LBfwJMggJ/W1o9f/DiLeDQcX9wgXZKYOV2LQGgaHhQ
+         EVqSO5stEUMmgA3qu1xZhtQm39imeaEQ3NzT2xnphIHDyoxu0XUg7nmRjrXzrjkyVajt
+         kztEhJbjfEK4L1p/SBsCoylW5mQHdWXWtqRA28Da0fsEAIlWl2986DZpDpH/nP0+qmna
+         Bt7te73oM+LODNKRHZ1uig9cGWR6RVE/XwjOiKsGZ19wcoq2n+vZHI54tUX2dn4fGK6O
+         ykgw==
+X-Gm-Message-State: APjAAAXxliwbRb/sLWX6WWfM29HHnPQTCg2Y1Eo7tJERSphzb1eHRUNY
+        IehACWKgGgZW2sL9ZpH140tzzB4nITGBAsy6JESv
+X-Google-Smtp-Source: APXvYqyA4wQueQ70FVheRaPp2WnbAJwr4p6lCFxxfZw64Xi7o+6AGKVB4rnPyv+aEdlvlI53btakIPCmy+nhBlAJilwB
+X-Received: by 2002:a37:484a:: with SMTP id v71mr9448984qka.29.1561742196156;
+ Fri, 28 Jun 2019 10:16:36 -0700 (PDT)
+Date:   Fri, 28 Jun 2019 10:16:32 -0700
+In-Reply-To: <cover.1561675151.git.matvore@google.com>
+Message-Id: <20190628171632.114453-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1561675151.git.matvore@google.com>
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: Re: [PATCH v5 00/10] Filter combination
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     matvore@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+> This applies suggestions made by Jonathan Tan, as well as fixes a
+> Coccinelle-breaking error in strbuf usage, and makes an additional string
+> localizable.
+> 
+> Thanks,
+> 
+> Matthew DeVore (10):
+>   list-objects-filter: encapsulate filter components
+>   list-objects-filter: put omits set in filter struct
+>   list-objects-filter-options: always supply *errbuf
+>   list-objects-filter: implement composite filters
+>   list-objects-filter-options: move error check up
+>   list-objects-filter-options: make filter_spec a string_list
+>   strbuf: give URL-encoding API a char predicate fn
+>   list-objects-filter-options: allow mult. --filter
+>   list-objects-filter-options: clean up use of ALLOC_GROW
+>   list-objects-filter-options: make parser void
 
-> When we receive a remote ref update to sha1 "X", we want to check that
-> we have all of the objects needed by "X". We can assume that our
-> repository is not currently corrupted, and therefore if we have a ref
-> pointing at "Y", we have all of its objects. So we can stop our
-> traversal from "X" as soon as we hit "Y".
->
-> If we make the same non-corruption assumption about any repositories we
-> use to store alternates, then we can also use their ref tips to shorten
-> the traversal.
-> ...
-> diff --git a/connected.c b/connected.c
-> index 1ab481fed6..cd9b324afa 100644
-> --- a/connected.c
-> +++ b/connected.c
-> @@ -80,6 +80,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->  		argv_array_push(&rev_list.args, "--all");
->  	}
->  	argv_array_push(&rev_list.args, "--quiet");
-> +	argv_array_push(&rev_list.args, "--alternate-refs");
->  	if (opt->progress)
->  		argv_array_pushf(&rev_list.args, "--progress=%s",
->  				 _("Checking connectivity"));
-
-Quite honestly, I am very surprised that we did not do this.  The
-idea of alternate object store, as well as reducing transfer cost by
-advertising their tips as '.have' phony refs, is almost as old as
-the pack protocol itself.
+Thanks - the range-diff looks good to me. (I generated the range diff using a
+base of a6a95cd1b4 for v4 and 8dca754b1 for v5.)
