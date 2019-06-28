@@ -2,81 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F33B1F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 10:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 612F91F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 10:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbfF1KY3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 06:24:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53812 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726524AbfF1KY3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 06:24:29 -0400
-Received: (qmail 14594 invoked by uid 109); 28 Jun 2019 10:24:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 28 Jun 2019 10:24:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16629 invoked by uid 111); 28 Jun 2019 10:25:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 28 Jun 2019 06:25:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2019 06:24:27 -0400
-Date:   Fri, 28 Jun 2019 06:24:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: fprintf_ln() is slow
-Message-ID: <20190628102427.GB23052@sigill.intra.peff.net>
-References: <20190627052515.GA21207@sigill.intra.peff.net>
- <20190627055739.GA9322@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1906271358260.44@tvgsbejvaqbjf.bet>
- <20190627210959.GA20250@sigill.intra.peff.net>
- <374b237e-a29f-5983-0932-63f1c2ebcbbe@gmail.com>
+        id S1726646AbfF1K4d (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 06:56:33 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58727 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726514AbfF1K4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 06:56:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561719371;
+        bh=IRia9uH29k0gTKxAAD/BGkIr2ksub9whmGKu8MgAIPU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PeZrMw9WnggnjGkiTxGJIktGE4op9eqp2yRcScs9h20Uys3gdReynKNBtkuBB5ypH
+         RshXkPurqvAWWn4BmX9QvEafUPf+zp8XXhqZkR8dbvuaF5tENLTM1oSTpRGXB04qRm
+         NYmak5n4Tonbmg0tP6iDtgGjmP5hhlWPIH3H61H8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOzOw-1hv2YB2aei-00PNRg; Fri, 28
+ Jun 2019 12:56:11 +0200
+Date:   Fri, 28 Jun 2019 12:56:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        git-packagers@googlegroups.com, gitgitgadget@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net, szeder.dev@gmail.com
+Subject: Re: [RFC/PATCH 7/7] grep: use PCRE v2 for optimized fixed-string
+ search
+In-Reply-To: <xmqqv9wqalv2.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1906281254370.44@tvgsbejvaqbjf.bet>
+References: <87r27u8pie.fsf@evledraar.gmail.com> <20190626000329.32475-8-avarab@gmail.com> <nycvar.QRO.7.76.6.1906261610310.44@tvgsbejvaqbjf.bet> <xmqqo92kchjm.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1906271129370.44@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1906272042350.44@tvgsbejvaqbjf.bet> <xmqqv9wqalv2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <374b237e-a29f-5983-0932-63f1c2ebcbbe@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cwHmqs0bE1aOS84lkzeSfUAUFp/VHOR8//EuWWJ4EtmqUVh68is
+ e2gospNevpSMYz2CkPdIaxMIdTGGalrQ54OZ/yENhBJTXfo5slrjAfTuCs8XEvUrE0Eq4Ak
+ pQq9cPXG1fgPeyNOcURnI3bf1U8ivP+1T0qZhAYQJXm1LZSOCafdhFcWPWOxjpaxzVG2zvL
+ t9zYSOYuuh5pJfq+lANhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:J7yQZdx6rn4=:oChUrXqJO2pO63ZKGRfnDb
+ R2YM0Q4S/dubFTnnd56jvEemukpwHv/bTarTkZ8cElO6RQBFxM9VZpGvhsks0eOQzm5aAjiKh
+ ln5sGm53iIuU7DxXdIZNFteuYJj+cHPV5HdUXh0XDfGQ5BVN+F9OWqsfBCYaDL0hwxgHPSnLY
+ g1K6Ik7wLxevLwEF/EV07tSJCuXkSx6jdStN1Qkg/M712XVnivGSBImNJthMOD92jTYIuwo1F
+ 8ICtg60oxOe394eQtG5mTsIt3GRPT1IRZvjNgirHywkjDdhe7ZaP6bkRzbCUnqJjYbvPEDoOg
+ K+WAsbn14OytpB/IvnTIP87voKpHnS9ykxvn/95f4wZxZisgkGTvu4ncd9HWcktzLA7kht30m
+ JEYAASwk3KjqD3OIMXinCSKYGxOgmmfXjahOIoxmoSyD05CqxS/mKRKLwla/YMNyYeQAInk0p
+ YZSnplDmVmYf7aEWTmpTHWP9CAyVUweQsY1RxOR8tmN9dEf0J+JOa0upeKeefx+ImZVD15QxV
+ 705EWVdJqSndEYvBVPSgxen/ABGfubeneCWtfhRo8u/BXm7U07DLQ3YlwTt6FJvwxBxpMViOi
+ TYgGBihLz2pP/m+HCFD/iCClcssvuuNopttZncyUrB7TkA+XIWx6GNsL3yjyUp6ZY2XsLEAwd
+ D3bHwec3R5v+mvfe9jMUuddWCwKTs0hDD8sML2pycw4OFvhHcWvtVHkoD0r6lsjgAoM0s8r7K
+ XnWFQ7gVsgxxzHAmoj27u7W4pCBqyNjgkjNhaOVeADc8FC1ASvNbmAv9uLFq8PoWf3JLkRJTs
+ IQKsTOmMRqoNZ/6ACeXjwZLpnXl9T5CmlK5xAjPUw2RyupdCWWqXKuGubOcKCATUI6xQjQzTJ
+ S2U+GmTxwAi4AYnYeW4UtdUar8WiHfLp49NRcIiqyz+UvCyoybSaYbBUew0DDdF9/Sh4QsJpr
+ MqMUJFDfYlDWNo596+WKBzB1PR3oGO2D7XRUG7JL6k6zSMAJXUhEW22IoY4qxkldy0JlONqDl
+ oG2VBQh8EKoozZqdq80fkhxEfOdv8l79iecafiLt4JzvxiGtWTzd8eVlpfUV4i5uZs9HIDLCR
+ fujqKhEyjA/+5ny+fc31eKQdrc3Q8YvjFUk
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 11:03:27AM +0100, Phillip Wood wrote:
+Hi Junio,
 
-> > I considered that, too, but I think it is safe. stdio has its own
-> > locking, so every individual call is atomic. The potentially problematic
-> > case would be where we switch back from line buffering to no-buffering,
-> > and somebody else has written some content into our stack-based buffer
-> > (that is about to go out of scope!). But I'd assume that as part of the
-> > switch to no-buffering that any stdio implementation would flush out the
-> > buffer that it's detaching from (while under lock). Nothing else makes
-> > sense.
-> 
-> The C standard section 7.19.5.6 says that
->   The setvbuf function may be used only after the stream pointed to by
->   a stream has been associated with an open file and before any other
->   operation (other than an unsuccessful call to setvbuf) is performed
->   on the stream.
-> 
-> The is a note about the buffer that says
->   The buffer has to have a lifetime at least as great as the open
->   stream, so the stream should be closed before a buffer that has
->   automatic storage duration is deallocated upon block exit.
-> 
-> So changing the buffer in the way that has been proposed is undefined
-> behavior on two counts I think.
+On Thu, 27 Jun 2019, Junio C Hamano wrote:
 
-Oof, thanks for the reference. That is much less safe than I had
-imagined. We used to do this kind of setvbuf() munging in vreportf.
-Interestingly, it was in released versions for about 2 years, but I
-don't recall anybody complaining (we eventually reverted it to have more
-flexibility in sanitizing the results before writing them out).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> > > If we would not have plenty of exercise for the PCRE2 build
+> >> > > options, I would be worried. But AFAICT the CI build includes
+> >> > > this all the time, so we're fine.
+> >> >
+> >> > Well, I'd feel safer if it were not "all the time", i.e. we know we
+> >> > are testing both sides of the coin.
+> >>
+> >> AFAIR at least the Linux32 job is built without PCRE2 by default. I
+> >> might be wrong on that, though...
+> >
+> > Actually, it seems that _all_ of the Linux builds in our Azure Pipelin=
+e
+> > compile without pcre2. It seems you have to pass `USE_LIBPCRE2=3D1` to
+> > `make`, and we do not do that in `ci/run-build-and-tests.sh` nor in
+> > `azure-pipelines.yml`. I do not even see that for the macOS builds.
+> >
+> > So we got PCRE2 covered only in the Windows build, it seems.
+>
+> OK, it sounds like we have sufficient coverage on both fronts.
 
-Anyway, I think we're all agreed that's the wrong approach here.
+Maybe not. With the bug I uncovered that is _only_ triggering an error
+message if the PCRE2 in question does not support JIT'ed operations, I am
+a bit wary now.
 
--Peff
+But I cannot really see a reasonable way to add those axes to the CI
+builds.
+
+Ciao,
+Dscho
