@@ -8,173 +8,131 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30BB1F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:35:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A88F1F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 12:39:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726712AbfF1Mfb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:35:31 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:38070 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726578AbfF1Mfb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:35:31 -0400
-Received: by mail-qt1-f195.google.com with SMTP id n11so6020133qtl.5
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:35:30 -0700 (PDT)
+        id S1726787AbfF1Mju (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 08:39:50 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:46173 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbfF1Mju (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 08:39:50 -0400
+Received: by mail-qk1-f196.google.com with SMTP id x18so4586503qkn.13
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+O+94vG/g04/4i8z6JoTqZZOTjEEexOXzPZEZILl8zU=;
-        b=vXKHr3aczJaGVl87CNv/4agF/aHdWpc8Sfm1eg6n8oQXjrxSvMKfivu6TCiJf/Xbzs
-         TGP8HloLKpOhFUc9SubmvNALAox397atLTQCPRvTWJmVu1523PyjXnCVVCJDXMU+Kbyy
-         bvinJuU2oWRgu/GakNvexec6kRcHgod95YztbZJB1JQteuotc2ifKkFtcTS+KtUZVEiO
-         oqKIptB2iICLgEroy8TeTdSaw8KilltOP+bu/FkbAGg2qCUOxaLECh2o3uldIA9nsWgE
-         /Y46cTRF+ez5uNSdsdXC4hmnZ2SK3LQwuOSUwwIxprrbWEgXk/e8/x/WUNJDRQ6342Il
-         EjjQ==
+        bh=Q7qpgx+aI047HH4TtpijJwvLuJUJ+0F3coCz04TK3Hc=;
+        b=kIQU8787KSRL2EweDX59Ok3S9Sak+kt6gfFpIhm7eFJ3hfOoXKN0Dv6JVwu98xC4CC
+         gHzxeeD8Ujf9E8AZr66JnrfyF2KO/AOb7uFQ+TIai1cTnNR2yiKnn0CmkAQyN6XaubFX
+         uR939yN4JtMkvNw9SMTFdIAkYVEVMf5qCNCm80E+oyVzYE8sRj6KMPJJfH1nDrE1n94d
+         Q06SZ6jQcc6lJkS1UX6k1C4vRkz8Pi+z4CM9E0mx0Zl9iZezPa38FxG2GPnq9ZMnMOgt
+         F5sOpexPIqOucfPG8XW0PbPbCnrLj0E4C7N3KSM1EbMRUI1Ckd36a/KbFmfqrVwuf78x
+         AzRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=+O+94vG/g04/4i8z6JoTqZZOTjEEexOXzPZEZILl8zU=;
-        b=XuNSXPkwbuuLEDFV5E01YUwNNrprh8I3YY8M3cag1ivSR8xaji0aKQvfMtbcn+wFZz
-         AM6t2abPtx6artMq00D1/Ue2M5mAj71E97+5BfbYdUxz0bvmrWK1avhKdpXyVSd1tn5a
-         BeAQ6lcUYtt1qtDuHyu4RxpJ4Ypmu2MqFP0GraoSId076n7Qa9wcMmQb/Y5/GsLQQ3Qp
-         iF7IiIKXhgUgE/e7JEH/1RWU+1SuIgAV5gw7Qth5ZbXiaD6mY21ow90jwya/Jlv3EwqA
-         dF8IpvbRkMC9iv3LCqfNItRGxfRSbx+bP2JEmWZdBoVvGUB+t+zFayd40iw1575uk4WC
-         Z7gw==
-X-Gm-Message-State: APjAAAWkFGWEiNUIUt+7eZLplvXPnlOLxVKijN3KA+Xk5rHccW29UJHW
-        fLTcNuDrV6f48ymqhQaVhcq81ctF
-X-Google-Smtp-Source: APXvYqzJ+D4WyDDoqyzFPFGMvYQdmDkNO1QKhzbk8NnIc8t64sZUNX4kYL8d+1nAvWoN8WggdwV+6Q==
-X-Received: by 2002:aed:3e1d:: with SMTP id l29mr7866556qtf.175.1561725329739;
-        Fri, 28 Jun 2019 05:35:29 -0700 (PDT)
+        bh=Q7qpgx+aI047HH4TtpijJwvLuJUJ+0F3coCz04TK3Hc=;
+        b=KWLG8kiETzkSEkeq9fGXCRc9WdVIGUI98AkiCnS72GA7Pn+B5nOFnzKppy8EM7RAE0
+         HsCDTfv86OK7YaVhMKBUqojBMjRHNvW78e+09cg3dnUD4JbN12LJH1uKl8+cbJQnwf1b
+         LbLbryiw3ec6/hpL98y+IWMqgTBPYy3iCf3WutBUG0S6Q2N9oey+KfLcV02eGcg8mqDG
+         ppt8/xfqaKiTWsGv/0ZX3J0b+t3Rwis2n/DyljWdulwpDaPT7sUleCS8kUhIHvARG+E+
+         JeQVeLNCXOgVMFCLz0C07/SA8XU4CxdW49ukSY9DhNqEm1sSIObj2VLe9n+XxXkMVUdk
+         lcTA==
+X-Gm-Message-State: APjAAAXFcqEgYJXsGATIfUqTKQFyeTB+gYs4E0WBQ5qXSrpFgNTyh5VG
+        xXoJ3+d3mmX7Vpq8L9uZ5KMRP//E
+X-Google-Smtp-Source: APXvYqxN66JPYG8+uDChejWgUEOmOez+I52BqVdWqQjImW/r98Tj18urIM3JgzSEsWMrlydpIRCl3Q==
+X-Received: by 2002:a37:b87:: with SMTP id 129mr8154536qkl.132.1561725589131;
+        Fri, 28 Jun 2019 05:39:49 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:54b1:2872:57:b107? ([2001:4898:a800:1010:5e7:2872:57:b107])
-        by smtp.gmail.com with ESMTPSA id m44sm956907qtm.54.2019.06.28.05.35.28
+        by smtp.gmail.com with ESMTPSA id t80sm893118qka.87.2019.06.28.05.39.48
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jun 2019 05:35:29 -0700 (PDT)
-Subject: Re: [PATCH 1/6] test-lib: introduce test_commit_bulk
-To:     Jeff King <peff@peff.net>
+        Fri, 28 Jun 2019 05:39:48 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Thurs. June 27)
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
-References: <20190628093751.GA3569@sigill.intra.peff.net>
- <20190628093911.GA27329@sigill.intra.peff.net>
+References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
+ <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
+ <CACsJy8C7Qr3JauRqUkB957ZDzVVZ0+wofzs7N2NzCbu+e00JnQ@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2d4410a9-fd3e-8b9f-00b5-f8eba4d51b42@gmail.com>
-Date:   Fri, 28 Jun 2019 08:35:28 -0400
+Message-ID: <e9c14b58-2704-4750-9c37-7a7b15e596dc@gmail.com>
+Date:   Fri, 28 Jun 2019 08:39:48 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <20190628093911.GA27329@sigill.intra.peff.net>
+In-Reply-To: <CACsJy8C7Qr3JauRqUkB957ZDzVVZ0+wofzs7N2NzCbu+e00JnQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2019 5:39 AM, Jeff King wrote:
-> Some tests need to create a string of commits. Doing this with
-> test_commit is very heavy-weight, as it needs at least one process per
-> commit (and in fact, uses several).
+On 6/28/2019 5:47 AM, Duy Nguyen wrote:
+> On Fri, Jun 28, 2019 at 12:35 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>> dir.c
+>>> 3b2385cf 2840) static void jw_object_untracked_cache_dir(struct json_writer *jw,
+>>> 3b2385cf 2845) jw_object_bool(jw, "valid", ucd->valid);
+>>> 3b2385cf 2846) jw_object_bool(jw, "check-only", ucd->check_only);
+>>> 3b2385cf 2847) jw_object_stat_data(jw, "stat", &ucd->stat_data);
+>>> 3b2385cf 2848) jw_object_string(jw, "exclude-oid", oid_to_hex(&ucd->exclude_oid));
+>>> 3b2385cf 2849) jw_object_inline_begin_array(jw, "untracked");
+>>> 3b2385cf 2850) for (i = 0; i < ucd->untracked_nr; i++)
+>>> 3b2385cf 2851) jw_array_string(jw, ucd->untracked[i]);
+>>> 3b2385cf 2852) jw_end(jw);
+>>> 3b2385cf 2854) jw_object_inline_begin_object(jw, "dirs");
+>>> 3b2385cf 2855) for (i = 0; i < ucd->dirs_nr; i++) {
+>>> 3b2385cf 2856) jw_object_inline_begin_object(jw, ucd->dirs[i]->name);
+>>> 3b2385cf 2857) jw_object_untracked_cache_dir(jw, ucd->dirs[i]);
+>>> 3b2385cf 2858) jw_end(jw);
+>>> 3b2385cf 2860) jw_end(jw);
+>>> 3b2385cf 2861) }
+>>> 3b2385cf 2958) jw_object_inline_begin_object(jw, "root");
+>>> 3b2385cf 2959) jw_object_untracked_cache_dir(jw, uc->root);
+>>> 3b2385cf 2960) jw_end(jw);
+>>
+>> Duy: I know you were working on some tests for these options. This is specifically
+>> in the "untracked cache" mode, so enabling the cache with at least one entry and
+>> running --debug-json should be sufficient.
 > 
-> For bulk creation, we can do much better by using fast-import, but it's
-> often a pain to generate the input. Let's provide a helper to do so.
+> It's a bit more complicated than that, but I see your point.
 
-What a quick turnaround! I'm happy to nerd-snipe you here, and am glad
-the result was so positive.
+It usually is. I don't mean to underestimate the effort here.
 
-> We'll use t5310 as a guinea pig, as it has three 10-commit loops. Here
-> are hyperfine results before and after:
+> I initially looked at the output and saw "something" and moved on. I
+> should have examined the json output more carefully.
+
+Thanks for taking a second look!
+
+>>> read-cache.c
+>>> 8eeabe15 1752) ret = error(_("index uses %.4s extension, which we do not understand"),
+>>> ee70c128 1754) if (advice_unknown_index_extension) {
+>>> ee70c128 1755) warning(_("ignoring optional %.4s index extension"), ext);
+>>> ee70c128 1756) advise(_("This is likely due to the file having been written by a newer\n"
+>>> 272b3f2a 2026) jw_object_true(jw, "assume_unchanged");
+>>> 272b3f2a 2030) jw_object_true(jw, "skip_worktree");
+>>> 272b3f2a 2032) jw_object_intmax(jw, "stage", ce_stage(ce));
+>>> f0f544da 2309) ieot = read_ieot_extension(istate, mmap, mmap_size, extension_offset);
+>>> f0f544da 3651) static struct index_entry_offset_table *read_ieot_extension(
+>>> f0f544da 3673) return do_read_ieot_extension(istate, index, extsize);
+>>
+>> Duy: more JSON output cases that could be interesting to cover.
 > 
->   [before]
->   Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
->     Time (mean ± σ):      2.846 s ±  0.305 s    [User: 3.042 s, System: 0.919 s]
->     Range (min … max):    2.250 s …  3.210 s    10 runs
-> 
->   [after]
->   Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
->     Time (mean ± σ):      2.210 s ±  0.174 s    [User: 2.570 s, System: 0.604 s]
->     Range (min … max):    1.999 s …  2.590 s    10 runs
+> This is because I changed the function signature, I think. Both IEOT
+> and EOIE extensions, if I'm not mistaken, are never tested in the test
+> suite. You need to set GIT_TEST_INDEX_THREADS, then the last three
+> lines should be covered.
 
-I ran these tests on my Windows machine, where the process startup time is
-a higher cost. The improvement is noticeable from just watching the test lines
-pause on the steps creating the commits.
+Thanks! Unfortunately, the threading is removed at compile-time in
+order to prevent race conditions with the gcov output. This means
+the report will never report the threading code as covered. :(
 
- Before: 30.8-31.2s
-  After: 23.5-23.8s
+Does that same reasoning apply to the assume_unchanged, skip_worktree,
+and "stage" lines?
 
-> So we're over 20% faster, while making the callers slightly shorter.
-
-I see about the same relative measurement (~23%). The callers are a bit
-cleaner, which is good. They are also slightly less clear of what's
-happening, but that's the cost of abstraction. Definitely worth it in
-this case!
- 
-> +# Similar to test_commit, but efficiently create <nr> commits, each with a
-> +# unique number $n (from 1 to <nr> by default) in the commit message.
-> +#
-> +# Usage: test_commit_bulk [options] <nr>
-> +#   -C <dir>:
-> +#	Run all git commands in directory <dir>
-> +#   --ref=<n>:
-> +#	ref on which to create commits (default: HEAD)
-> +#   --start=<n>:
-> +#	number commit messages from <n> (default: 1)
-> +#   --message=<msg>:
-> +#	use <msg> as the commit mesasge (default: "commit $n")
-> +#   --filename=<fn>:
-> +#	modify <fn> in each commit (default: $n.t)
-> +#   --contents=<string>:
-> +#	place <string> in each file (default: "content $n")
-> +#   --id=<string>:
-> +#	shorthand to use <string> and $n in message, filename, and contents
-> +#
-> +# The message, filename, and contents strings are evaluated by the shell inside
-> +# double-quotes, with $n set to the current commit number. So you can do:
-> +#
-> +#   test_commit_bulk --filename=file --contents='modification $n'
-> +#
-> +# to have every commit touch the same file, but with unique content. Spaces are
-> +# OK, but you must escape any metacharacters (like backslashes or
-> +# double-quotes) you do not want expanded.
-> +#
-
-I appreciate all the documentation here!
-
-> +		while test "$total" -gt 0
-> +		do
-> +			echo "commit $ref" &&
-> +			printf 'author %s <%s> %s\n' \
-> +				"$GIT_AUTHOR_NAME" \
-> +				"$GIT_AUTHOR_EMAIL" \
-> +				"$cur_time -0700" &&
-> +			printf 'committer %s <%s> %s\n' \
-> +				"$GIT_COMMITTER_NAME" \
-> +				"$GIT_COMMITTER_EMAIL" \
-> +				"$cur_time -0700" &&
-> +			echo "data <<EOF" &&
-> +			eval "echo \"$message\"" &&
-> +			echo "EOF" &&
-> +			eval "echo \"M 644 inline $filename\"" &&
-> +			echo "data <<EOF" &&
-> +			eval "echo \"$contents\"" &&
-> +			echo "EOF" &&
-> +			echo &&
-> +			n=$((n + 1)) &&
-> +			cur_time=$((cur_time + 1)) &&
-> +			total=$((total - 1)) ||
-> +			echo "poison fast-import stream"
-> +		done
-
-I am not very good at the nitty-gritty details of our scripts, but
-looking at this I wonder if there is a cleaner and possibly faster
-way to do this loop. The top thing on my mind are the 'eval "echo X"'
-lines. If they start processes, then we can improve the performance.
-If not, then it may not be worth it.
-
-In wonder if instead we could create some format string outside the
-loop and then pass the values that change between iterations into
-that format string.
-
-Thanks,
 -Stolee
 
