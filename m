@@ -2,113 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF9EB1F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 21:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 121561F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 21:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbfF1VIX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 17:08:23 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:42416 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbfF1VIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 17:08:23 -0400
-Received: by mail-qt1-f196.google.com with SMTP id s15so7894568qtk.9
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 14:08:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uSyRkrI35t9fDJBaYDwrUL7ua1bcsI+Vj7z86KNxW7M=;
-        b=s5cU8WEDXSMQHMzQutUkoS9Dvvo2hz/RPEXQwc1xQmU+X2oTdkcCv/E5/Avr2iaq/C
-         oI9big3YKvE/wVoG+dFEOqVxT8LSDGdt8ooQoG89kZUNsDkgTo1G5bAxqTyqmmku81Wa
-         34htg/5oq6P4XYZKT8xwwabjN3wkpDG8z+84oyrzPvd8fqfOzfLL0r43gPLMbA1a7uxZ
-         fIXo3neV+TwRBjNUF4cukcJml+qUwMrsztRpccPMjBVAyOO3iVRspVyW5Icq4H0XZsZj
-         ZSIqg4mrLFMwQLCZIfeLjDg7vjmf5lWx2ZPBoH2ZccM2BMtj05Dj3OLapW3YMfrj5/kl
-         9Snw==
+        id S1726586AbfF1Vcs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 17:32:48 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40738 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbfF1Vcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 17:32:48 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p11so7642039wre.7
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 14:32:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uSyRkrI35t9fDJBaYDwrUL7ua1bcsI+Vj7z86KNxW7M=;
-        b=UT6joP2xY+xXsNPC2Oha1fL+YMAjj42vp6IrGQV3AzYQ2iLmXNX8Ekqn8XGPGUNWfT
-         B55F0QjlCIVuXHjZZfVVM1ujR6kvZPGE3iLQms9KFVEKSV8cDCv0peZm9SM4QRYv2Hwz
-         jgI5qd1jz+lxcP1+QhSSLr8ufUEgwibHKBUz4OSIVpk9pQOAIkAc9FXOE//IuEuOt0Dy
-         0NytyDqGz6+Krf39sF99pbIGfStFqRIHHbfpA3YQt30efIQic5XilIABnaZghcGooftt
-         npfSDGOXtpCOu5jrUcPacdmiUUk+buMYE3dB3RAkYG26Rxw0fnxdnZkk9HxrMc9cuNnF
-         oH4w==
-X-Gm-Message-State: APjAAAWnS6ag+2cZP4vSKXJD3Sma/gmNNaHo1bJBwOg+t09wpeUJxMQk
-        /Y/f9XPd2zQ5Vm3kHzdXSFc=
-X-Google-Smtp-Source: APXvYqwezeiWNwbde6wnlce+sHND3mooF4gLxZ1pbw3JUq6qzWaoH9A0L8uryiIrDB8jaZ3BwDslGw==
-X-Received: by 2002:a0c:d0fa:: with SMTP id b55mr10051463qvh.209.1561756102335;
-        Fri, 28 Jun 2019 14:08:22 -0700 (PDT)
-Received: from [10.0.1.15] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id d38sm1550253qtb.95.2019.06.28.14.08.21
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jun 2019 14:08:21 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate
- setting
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.254.git.gitgitgadget@gmail.com>
- <pull.254.v2.git.gitgitgadget@gmail.com>
- <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
- <xmqqd0ix8me1.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <de9f547a-ac01-29c4-a330-1a7e7a7b1c20@gmail.com>
-Date:   Fri, 28 Jun 2019 17:08:19 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Cx+c9irOOvhkyfBxZCB9sNo9FQjn3kKFKpMteF9U6Wo=;
+        b=WHfi/uW67arK5kNEXKnkEMx2FJjPkPYwPu4bpo8zw8r1ll2yb1o1yMbTvsdNqqZ+0J
+         TeBPFrlEAsMPzCJyNKIr+Wp7pWgyvxh+f8D1tuqIQBxYCyyrl7wo++Q3YLPoj430T7b5
+         DAuFYWY59ZUMFgIJKrMf7mnDTZEZfuMtAhKZWABjtOB+//7eBflpTVlZWHbF1E+p2gIT
+         /LWULLdXYqIm9f9/A4yH7sF2MJBZSpt4Dhmfs7CjoapAiS60yp+n86VmZlCxvuuMBG+h
+         J50ygATU8N+TRVyW0QJS16hk5ciLOPY7zBCEkBlBA+6gtxhHoe5syv806WtU9Ka+Md59
+         KXFw==
+X-Gm-Message-State: APjAAAX45SfsqGa3yuaQH3qJJlyU2u9RcTC5JyCfZMGEswR2Nmz1cLTL
+        tcBgcGB0Q9vXPzR9lXYn/4QjpK4o6J0ZYIsJGCrQAGkJ
+X-Google-Smtp-Source: APXvYqwkDtXiqT5XSLU8bRUJfDxcCQDZ1AgRYocoRGSrNKb8vCMoVaLfoQoF1HvCg7gg068Mt4+1XlFdfOWWMqJ+UKQ=
+X-Received: by 2002:a5d:554b:: with SMTP id g11mr7461245wrw.10.1561757565961;
+ Fri, 28 Jun 2019 14:32:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0ix8me1.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190628093751.GA3569@sigill.intra.peff.net> <20190628093911.GA27329@sigill.intra.peff.net>
+In-Reply-To: <20190628093911.GA27329@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 28 Jun 2019 17:32:35 -0400
+Message-ID: <CAPig+cQAKVOqYH-CcqzViP_zuKwg5fWO2_i8=Z5t=BVf9uoAXQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] test-lib: introduce test_commit_bulk
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2019 4:50 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +core.featureAdoptionRate::
->> +	Set an integer value on a scale from 0 to 10 describing your
->> +	desire to adopt new performance features. Defaults to 0. As
->> +	the value increases, features are enabled by changing the
->> +	default values of other config settings. If a config variable
->> +	is specified explicitly, the explicit value will override these
->> +	defaults:
->> ++
->> +If the value is at least 3, then the following defaults are modified.
->> +These represent relatively new features that have existed for multiple
->> +major releases, and present significant performance benefits. They do
->> +not modify the user-facing output of porcelain commands.
->> ++
->> +* `core.commitGraph=true` enables reading commit-graph files.
->> ++
->> +* `gc.writeCommitGraph=true` eneables writing commit-graph files during
->> +`git gc`.
-> 
-> I was re-reading the whole series, and found that the phrase
-> "present significant benefits" was somewhat overselling.  Wouldn't
-> that claim largely depend on the end-user's workflow?  The same
-> comment applies to the description of "at least 5" level, too.
-> 
-> I would not mind if we say "enabling this may present performance
-> benefits", with or without "significant" before "performance
-> benefits", and with or without ", depending how your repository is
-> used" at the end.
+On Fri, Jun 28, 2019 at 5:39 AM Jeff King <peff@peff.net> wrote:
+> [...]
+> For bulk creation, we can do much better by using fast-import, but it's
+> often a pain to generate the input. Let's provide a helper to do so.
+> [...]
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -233,6 +233,137 @@ test_merge () {
+> +# Similar to test_commit, but efficiently create <nr> commits, each with a
+> +# unique number $n (from 1 to <nr> by default) in the commit message.
+> +#
+> +# Usage: test_commit_bulk [options] <nr>
+> +#   [...]
+> +#
+> +# The message, filename, and contents strings are evaluated by the shell inside
+> +# double-quotes, with $n set to the current commit number. So you can do:
+> +#
+> +#   test_commit_bulk --filename=file --contents='modification $n'
 
-Thanks for taking such a close look. Indeed, it is not appropriate
-to over-sell here. I will take another stab at this documentation
-next week.
+Considering that test_commit_bulk() is intended to be used within a
+test body, and considering that test bodies are almost always
+encapsulated in single quotes, recommending single quoting the value
+of --contents= seems contraindicated. Double quotes likely would be
+better.
 
--Stolee
+> +# to have every commit touch the same file, but with unique content. Spaces are
+> +# OK, but you must escape any metacharacters (like backslashes or
+> +# double-quotes) you do not want expanded.
+> +#
+> +test_commit_bulk () {
+> +       [...]
+> +       in_dir=${indir:+-C "$indir"}
+
+Doesn't this suffer the problem in which some older/broken
+shells[1][2][3][4] incorrectly expand this to:
+
+    "-C <dir>"
+
+rather than the expected:
+
+    -C "<dir>"
+
+? Is this something we still care about?
+
+Same comment applies to other instances of ${indir:+-C "$indir"} below.
+
+[1]: http://public-inbox.org/git/20160517215214.GA16905@sigill.intra.peff.net/
+[2]: http://public-inbox.org/git/e3bfc53363b14826d828e1adffbbeea@74d39fa044aa309eaea14b9f57fe79c/
+[3]: http://public-inbox.org/git/20160518010609.Horde.sM8QUFek6WMAAwho56DDob8@webmail.informatik.kit.edu/
+[4]: http://public-inbox.org/git/1240044459-57227-1-git-send-email-ben@ben.com/
