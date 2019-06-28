@@ -7,109 +7,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01A081F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 17:53:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE7D1F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 18:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726586AbfF1Rxq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 13:53:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50544 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726565AbfF1Rxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 13:53:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E64D154FBA;
-        Fri, 28 Jun 2019 13:53:43 -0400 (EDT)
+        id S1726694AbfF1SFK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 14:05:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57339 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726416AbfF1SFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 14:05:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C8E0982388;
+        Fri, 28 Jun 2019 14:05:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L5ZECkK9ktAUbCndajN/DRiyQ3k=; b=uZu4Sb
-        5nevEW+WRIi/epc/v3NePjaDn188KW+tTRJfAE7t1xVODIu6MYv0fj2bpyMpeLfl
-        naob2TkvRAEDi2EAQFqPvogu20kLCppT6sqM1Z2hWgTW5H1q12FZgVZMrg/zJOL/
-        mDGz+cSzW3f3nbgzrvf64/et50yc8NvjnUeiU=
+        :content-type; s=sasl; bh=ekiJhJ/WRnU5uo09H0rI1JHkJiU=; b=KcVUHp
+        m6kuMnZduSflcyTrM7BD8fQxhUXXS+Q8lKYj1eW2cie8loY+RcmEyMH7a/51KgMd
+        +m+4qdTNP65u2DMczT1JPwVuZlT6iKiL9uZEv+NHjeZhl1XNS0GJ6I8okMk7r0CZ
+        bupP7OeiF6gyiH7wACiUPWhPWORKYP+vY249k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X27I0fAZQLvxKSbgbwh5o9UW/rsY/UJW
-        vLhUIceHqqbguqG4s14rODLt50e00smS45eEHp45rnTa4bhr5ROXB7Zju35lX11e
-        7LiQPL86lSJ14T3rXmRKFfohw/SWCCguTDCqmWC7LrGLjfYzOOYKt+/K3xd7efg3
-        c/rx/cuSk+o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72928154FB9;
-        Fri, 28 Jun 2019 13:53:43 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=QJoMEGD0YqtGm+A/NzRkytCBLWOHH3vu
+        Xj12r/EfYuA7CcC+Vx6yfLHHuWpOJ2B/HEXoubcn62Qr6K9coVC5Pe5BWf/VUGtQ
+        Q5jd8XtexO4naaYIMQ75/iQJB2+78tGrh5hs1qAtS0xWjZ5qHY364vfOjznDHFbg
+        Qyuxl3dS9fs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFE8F82387;
+        Fri, 28 Jun 2019 14:05:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BFD1C154FB8;
-        Fri, 28 Jun 2019 13:53:42 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1060B82386;
+        Fri, 28 Jun 2019 14:05:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
 Subject: Re: [PATCH 1/6] test-lib: introduce test_commit_bulk
 References: <20190628093751.GA3569@sigill.intra.peff.net>
         <20190628093911.GA27329@sigill.intra.peff.net>
-Date:   Fri, 28 Jun 2019 10:53:41 -0700
-In-Reply-To: <20190628093911.GA27329@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 28 Jun 2019 05:39:11 -0400")
-Message-ID: <xmqqlfxl8ul6.fsf@gitster-ct.c.googlers.com>
+        <2d4410a9-fd3e-8b9f-00b5-f8eba4d51b42@gmail.com>
+Date:   Fri, 28 Jun 2019 11:05:03 -0700
+In-Reply-To: <2d4410a9-fd3e-8b9f-00b5-f8eba4d51b42@gmail.com> (Derrick
+        Stolee's message of "Fri, 28 Jun 2019 08:35:28 -0400")
+Message-ID: <xmqqh8898u28.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AB0401DE-99CD-11E9-806F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 42480C24-99CF-11E9-99DF-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> +# The message, filename, and contents strings are evaluated by the shell inside
-> +# double-quotes, with $n set to the current commit number. So you can do:
-> +#
-> +#   test_commit_bulk --filename=file --contents='modification $n'
-> +#
-> +# to have every commit touch the same file, but with unique content. Spaces are
-> +# OK, but you must escape any metacharacters (like backslashes or
-> +# double-quotes) you do not want expanded.
+> way to do this loop. The top thing on my mind are the 'eval "echo X"'
+> lines. If they start processes, then we can improve the performance.
+> If not, then it may not be worth it.
 
-Nice.
+Sigh.  
 
-> +test_commit_bulk () {
-> +	indir=
-> + ...
-> +	while test $# -gt 0
-> +	do
-> +		case "$1" in
-> +		-C)
-> +			indir=$2
-> +			shift
-> +			;;
-> + ...
-> +		esac
-> +		shift
-> +	done
-> +	total=$1
-> +
-> +	in_dir=${indir:+-C "$indir"}
+Do you mean 'echo' run inside 'eval' is one extra process?  In most
+modern shells, it is a built-in and you need another process.
 
-I thought that this assignment to $in_dir would be unnecessary if we
-parsed -C directly into it, i.e.
+Do you mean 'eval' running anything is one extra process?  Because
+anything done inside eval must be visible to the shell running it,
+e.g.
 
-		...
-		-C)
-			in_dir="-C $indir"
-			shift
-			;;
-		...
+	var=myvar; eval "$var=val"
 
-but you probably could pass -C '' to defeat an $in_dir that was set
-earlier by using a separate variable?
+would evaluate string 'myvar=val' inside that shell itself and it
+must be able to update the value of $myvar, whatever it does must
+not add any extra process.
 
-Messages and other stuff are made `eval`-safe, but this one does not
-care much about quoting, which made me curious.
+The primary reason why the loop in question uses eval is to allow
+the callers to pass $n in single-quote to have it interpolated
+lazily.
 
-Reading further, though, I do not seem to see where this variable is
-referred to, and that is the answer to my puzzlement.  This must be
-a leftover that was written once before but no longer is used.  We
-can remove $in_dir while keeping the initialization and assignment
-to $indir as-is, I think.
+	message='message $n'
+	for n in 1 2 3
+	do
+		echo "$message"
+		eval "echo \"$message\""
+	done
 
-All uses of $indir in the remainder of the function look $IFS-safe,
-which is good.
+Each iteration, the first line gives
+
+	message $n
+
+which is the thing that gets passed to 'echo' in the second line, so
+you'll see
+
+	message $n
+	message 1
+	message $n
+	message 2
+	message $n
+	message 3
+
+as the result.
