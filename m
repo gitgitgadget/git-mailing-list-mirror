@@ -2,137 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A88F1F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 028B71F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 12:46:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726787AbfF1Mju (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:39:50 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:46173 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbfF1Mju (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:39:50 -0400
-Received: by mail-qk1-f196.google.com with SMTP id x18so4586503qkn.13
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 05:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Q7qpgx+aI047HH4TtpijJwvLuJUJ+0F3coCz04TK3Hc=;
-        b=kIQU8787KSRL2EweDX59Ok3S9Sak+kt6gfFpIhm7eFJ3hfOoXKN0Dv6JVwu98xC4CC
-         gHzxeeD8Ujf9E8AZr66JnrfyF2KO/AOb7uFQ+TIai1cTnNR2yiKnn0CmkAQyN6XaubFX
-         uR939yN4JtMkvNw9SMTFdIAkYVEVMf5qCNCm80E+oyVzYE8sRj6KMPJJfH1nDrE1n94d
-         Q06SZ6jQcc6lJkS1UX6k1C4vRkz8Pi+z4CM9E0mx0Zl9iZezPa38FxG2GPnq9ZMnMOgt
-         F5sOpexPIqOucfPG8XW0PbPbCnrLj0E4C7N3KSM1EbMRUI1Ckd36a/KbFmfqrVwuf78x
-         AzRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Q7qpgx+aI047HH4TtpijJwvLuJUJ+0F3coCz04TK3Hc=;
-        b=KWLG8kiETzkSEkeq9fGXCRc9WdVIGUI98AkiCnS72GA7Pn+B5nOFnzKppy8EM7RAE0
-         HsCDTfv86OK7YaVhMKBUqojBMjRHNvW78e+09cg3dnUD4JbN12LJH1uKl8+cbJQnwf1b
-         LbLbryiw3ec6/hpL98y+IWMqgTBPYy3iCf3WutBUG0S6Q2N9oey+KfLcV02eGcg8mqDG
-         ppt8/xfqaKiTWsGv/0ZX3J0b+t3Rwis2n/DyljWdulwpDaPT7sUleCS8kUhIHvARG+E+
-         JeQVeLNCXOgVMFCLz0C07/SA8XU4CxdW49ukSY9DhNqEm1sSIObj2VLe9n+XxXkMVUdk
-         lcTA==
-X-Gm-Message-State: APjAAAXFcqEgYJXsGATIfUqTKQFyeTB+gYs4E0WBQ5qXSrpFgNTyh5VG
-        xXoJ3+d3mmX7Vpq8L9uZ5KMRP//E
-X-Google-Smtp-Source: APXvYqxN66JPYG8+uDChejWgUEOmOez+I52BqVdWqQjImW/r98Tj18urIM3JgzSEsWMrlydpIRCl3Q==
-X-Received: by 2002:a37:b87:: with SMTP id 129mr8154536qkl.132.1561725589131;
-        Fri, 28 Jun 2019 05:39:49 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:54b1:2872:57:b107? ([2001:4898:a800:1010:5e7:2872:57:b107])
-        by smtp.gmail.com with ESMTPSA id t80sm893118qka.87.2019.06.28.05.39.48
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jun 2019 05:39:48 -0700 (PDT)
-Subject: Re: Git Test Coverage Report (Thurs. June 27)
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
- <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
- <CACsJy8C7Qr3JauRqUkB957ZDzVVZ0+wofzs7N2NzCbu+e00JnQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e9c14b58-2704-4750-9c37-7a7b15e596dc@gmail.com>
-Date:   Fri, 28 Jun 2019 08:39:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        id S1727086AbfF1Mqg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 08:46:36 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49771 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726564AbfF1Mqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 08:46:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561725990;
+        bh=SBnWwI+0CHhN0M0lO7h6AfNEqlCuuLDCJne6+JZ5DCk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Y1aN/9YbnunZkfQFFMQHamWEfzp6Cv8pXkfX9UlNrbtI1JzdFdMFc9HHsiEMjEH2t
+         UOXBHU6KbYW3IaZo9mPo014Q2M0kwVe0H84TDTsgpatRRtTKcva6DfPGEZNhWvKV67
+         g3a9cRzYnOlJcUIbjfiJW+7NKDmQfP7StADW6fuc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1Obh-1iibCH2o95-012tNS; Fri, 28
+ Jun 2019 14:46:30 +0200
+Date:   Fri, 28 Jun 2019 14:46:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 1/6] sha1-file.c: remove the_repo from
+ read_object_with_reference()
+In-Reply-To: <20190627092852.11326-2-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906281440400.44@tvgsbejvaqbjf.bet>
+References: <20190624095533.22162-1-pclouds@gmail.com> <20190627092852.11326-1-pclouds@gmail.com> <20190627092852.11326-2-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8C7Qr3JauRqUkB957ZDzVVZ0+wofzs7N2NzCbu+e00JnQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1586258442-1561726014=:44"
+X-Provags-ID: V03:K1:s60QCSXHu6ulO0Z5SSjqqNjsX7/MKNAolnBZtEW2VuGK+b+Qh0G
+ LHMOCOw6wpjxoHc+McK3GaKIwiAggFO07ucctn81GlSY2DJAei90l3woQD1G6CngpiY0znI
+ rRRanhSOT3cc6WFxm+yzlTLh3HXmErwTiWL0FuNT88JB/XDFGTMT5fG57kqPDmdDH8JY3vX
+ pnuoXRkviGEQKv9UkeZGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w1vgtgFzVoM=:TXMXTYm7btVTJlIeRMfeWk
+ F8bXwEGX1XSzdEncP6iES7kSj4gl/Js/p+IkhW9CgntpQPj9GQ67rfLJawFp084+W6DXN5ief
+ qMpNpg7VDt3ul7hBzKnaLT61tOesC352KsUk6SlzQNBnnzWYPf6JJFjZO0NhFJx4x6G7YZcpP
+ nwdNSZ3VLC2nIhtVBDCsK8orGgTlZ5DDwKvChb4ZoiSY2jTrNZ4E8OowrDUmlMt0+7AOIFyil
+ uB3/ITfLEprm26N3FDXyR0AJPZPGyhM2mq+4vGtZsUthfGxVuTA1RLgOnkbqkBuu8QoUt7pfE
+ xJGv2LebihS1CPN4yBbxdC5jwhWnxA7PulzjmhYz6K+sMlAiKnhntjsSkQ1drWIawjPYn1Y4Z
+ kOLA5BLH+UWvB+CveXFJkJJLHQ6EbvXJ3eEXq/Ky6DTDTMdgBNVSogRo+COAQwR1tQSpVELSt
+ HAQ5AaoGOvOHTDwtTff+9rTNKf2Aa0kyL8KMjRGqriAsCp0olX2LJNGrHAPBdRhLyaK3cfPyB
+ f6a1gm6OGKz4bpL9htvBhSpgpps/kdXJhJ5jXfK9L/YYF28S7Ec3U8VV91svzLI307CcicPc9
+ GpLEz+OPA5GgVG6/320/WRc+HEQdqmiy8IlNMRTGqczqzz/ajpvevp92IbD2QQARdoQalGEV3
+ O8QgglWeBW7LZpaw7Z2Xpcu8Jgr2K9H6OC/JbnpuhP2hjuUyeAHhj4PaIVrHexBSycMJUY3mF
+ KVTRsjCRU3OQZjLR4cdwToryn+JOFiyoJkN8CQ0IJGDAZremO0kQFRkJLuQb+6irExUqB4Krw
+ mP7KsuA0LtRxQkO/9A6EQFO0SK0rRzlQNHM/IjOYp4i8nRsNG49Z3b6rQjsV8YlL6EBUYHti2
+ +JvjIY3lXv03w6L5V5rTY2kazGhL4wqC5iufnBKIEdaGmBXt9KCYh+v9fxdWoD0Kx1vP0ZX0v
+ LpzFsQgGuQGGh+uw4878hd+S1M13bQ4zDq5Vn05e/7FrQeJh9R3GPyMnHtNHcLirtsSadTH7c
+ 6GhL5xVPOMesBh86mGx/BNzi+igBUvFUU97hLw5+O0P+gsVttcTYwQxwxAjubxMNJR/PKGlzu
+ juGLPUyw+IUf/d9BJYTGQ9l1+EXu8pBmtSC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2019 5:47 AM, Duy Nguyen wrote:
-> On Fri, Jun 28, 2019 at 12:35 AM Derrick Stolee <stolee@gmail.com> wrote:
->>> dir.c
->>> 3b2385cf 2840) static void jw_object_untracked_cache_dir(struct json_writer *jw,
->>> 3b2385cf 2845) jw_object_bool(jw, "valid", ucd->valid);
->>> 3b2385cf 2846) jw_object_bool(jw, "check-only", ucd->check_only);
->>> 3b2385cf 2847) jw_object_stat_data(jw, "stat", &ucd->stat_data);
->>> 3b2385cf 2848) jw_object_string(jw, "exclude-oid", oid_to_hex(&ucd->exclude_oid));
->>> 3b2385cf 2849) jw_object_inline_begin_array(jw, "untracked");
->>> 3b2385cf 2850) for (i = 0; i < ucd->untracked_nr; i++)
->>> 3b2385cf 2851) jw_array_string(jw, ucd->untracked[i]);
->>> 3b2385cf 2852) jw_end(jw);
->>> 3b2385cf 2854) jw_object_inline_begin_object(jw, "dirs");
->>> 3b2385cf 2855) for (i = 0; i < ucd->dirs_nr; i++) {
->>> 3b2385cf 2856) jw_object_inline_begin_object(jw, ucd->dirs[i]->name);
->>> 3b2385cf 2857) jw_object_untracked_cache_dir(jw, ucd->dirs[i]);
->>> 3b2385cf 2858) jw_end(jw);
->>> 3b2385cf 2860) jw_end(jw);
->>> 3b2385cf 2861) }
->>> 3b2385cf 2958) jw_object_inline_begin_object(jw, "root");
->>> 3b2385cf 2959) jw_object_untracked_cache_dir(jw, uc->root);
->>> 3b2385cf 2960) jw_end(jw);
->>
->> Duy: I know you were working on some tests for these options. This is specifically
->> in the "untracked cache" mode, so enabling the cache with at least one entry and
->> running --debug-json should be sufficient.
-> 
-> It's a bit more complicated than that, but I see your point.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It usually is. I don't mean to underestimate the effort here.
+--8323328-1586258442-1561726014=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> I initially looked at the output and saw "something" and moved on. I
-> should have examined the json output more carefully.
+Hi Duy,
 
-Thanks for taking a second look!
+On Thu, 27 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
->>> read-cache.c
->>> 8eeabe15 1752) ret = error(_("index uses %.4s extension, which we do not understand"),
->>> ee70c128 1754) if (advice_unknown_index_extension) {
->>> ee70c128 1755) warning(_("ignoring optional %.4s index extension"), ext);
->>> ee70c128 1756) advise(_("This is likely due to the file having been written by a newer\n"
->>> 272b3f2a 2026) jw_object_true(jw, "assume_unchanged");
->>> 272b3f2a 2030) jw_object_true(jw, "skip_worktree");
->>> 272b3f2a 2032) jw_object_intmax(jw, "stage", ce_stage(ce));
->>> f0f544da 2309) ieot = read_ieot_extension(istate, mmap, mmap_size, extension_offset);
->>> f0f544da 3651) static struct index_entry_offset_table *read_ieot_extension(
->>> f0f544da 3673) return do_read_ieot_extension(istate, index, extsize);
->>
->> Duy: more JSON output cases that could be interesting to cover.
-> 
-> This is because I changed the function signature, I think. Both IEOT
-> and EOIE extensions, if I'm not mistaken, are never tested in the test
-> suite. You need to set GIT_TEST_INDEX_THREADS, then the last three
-> lines should be covered.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+> ---
 
-Thanks! Unfortunately, the threading is removed at compile-time in
-order to prevent race conditions with the gcov output. This means
-the report will never report the threading code as covered. :(
+This commit is _awfully_ short given that...
 
-Does that same reasoning apply to the assume_unchanged, skip_worktree,
-and "stage" lines?
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 580fd38f41..560051784e 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
+>  		object =3D parse_object_or_die(oid, oid_to_hex(oid));
+>
+>  		grep_read_lock();
+> -		data =3D read_object_with_reference(&object->oid, tree_type,
+> +		data =3D read_object_with_reference(&subrepo,
+> +						  &object->oid, tree_type,
 
--Stolee
+... this change and...
 
+>  						  &size, NULL);
+>  		grep_read_unlock();
+>
+> @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const s=
+truct pathspec *pathspec,
+>  		int hit, len;
+>
+>  		grep_read_lock();
+> -		data =3D read_object_with_reference(&obj->oid, tree_type,
+> +		data =3D read_object_with_reference(opt->repo,
+> +						  &obj->oid, tree_type,
+
+... this change is totally not what would be intuitively the easiest: to
+use `the_repository` in all built-ins.
+
+It might take quite a lot of convincing that these changes are correct, in
+particular in light of the regressions introduced by the first iteration
+(to paraphrase Warren Buffet [*1*]: one slip in a patch series touching as
+central parts as this one will need a lot of time to restore trust in
+subsequent iterations' correctness.)
+
+In short: with such an empty commit message, this patch is no good. It's
+as if it was optimized to pass the test suite on Linux instead of a best
+effort to make the conversion as correct as you can make it.
+
+Ciao,
+Johannes
+
+Footnote *1*:
+https://www.forbes.com/sites/jamesberman/2014/04/20/the-three-essential-wa=
+rren-buffett-quotes-to-live-by/
+
+--8323328-1586258442-1561726014=:44--
