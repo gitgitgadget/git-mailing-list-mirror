@@ -8,128 +8,157 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 028B71F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 12:46:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57BE81F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 12:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727086AbfF1Mqg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 08:46:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49771 "EHLO mout.gmx.net"
+        id S1726632AbfF1MvA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 08:51:00 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56477 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726564AbfF1Mqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 08:46:35 -0400
+        id S1726590AbfF1MvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 08:51:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561725990;
-        bh=SBnWwI+0CHhN0M0lO7h6AfNEqlCuuLDCJne6+JZ5DCk=;
+        s=badeba3b8450; t=1561726245;
+        bh=/yLrgm6ucMSoF5gUrF/ZXt2U0EOYdYHqHN8TDHKwN18=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Y1aN/9YbnunZkfQFFMQHamWEfzp6Cv8pXkfX9UlNrbtI1JzdFdMFc9HHsiEMjEH2t
-         UOXBHU6KbYW3IaZo9mPo014Q2M0kwVe0H84TDTsgpatRRtTKcva6DfPGEZNhWvKV67
-         g3a9cRzYnOlJcUIbjfiJW+7NKDmQfP7StADW6fuc=
+        b=YqC8DOgSzEKCGpagKXX5jiRMcqj+hXXxTVCc/BpRLFHPX8JnuIaNkT9dQlGhEFrPp
+         rqL+YELBmhNQHL8/i7u4wVRl4Gih4sN0QOPLOddzIX/GuKuGpRPRrsOk+aRbnbJ3j9
+         y7eVWj4qvyQjokBcFKADatlhfNHoanlZ/cbvIlvo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1Obh-1iibCH2o95-012tNS; Fri, 28
- Jun 2019 14:46:30 +0200
-Date:   Fri, 28 Jun 2019 14:46:53 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTRQq-1i8Qpd1OTE-00Tlpw; Fri, 28
+ Jun 2019 14:50:45 +0200
+Date:   Fri, 28 Jun 2019 14:51:07 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 1/6] sha1-file.c: remove the_repo from
- read_object_with_reference()
-In-Reply-To: <20190627092852.11326-2-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906281440400.44@tvgsbejvaqbjf.bet>
-References: <20190624095533.22162-1-pclouds@gmail.com> <20190627092852.11326-1-pclouds@gmail.com> <20190627092852.11326-2-pclouds@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to
+ dir_iterator_begin
+In-Reply-To: <CAHd-oW6c7EoY+t-ymkcBmZM20YcGb1SWhM7XMO35Fofj-UNmYQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906281449250.44@tvgsbejvaqbjf.bet>
+References: <cover.1560898723.git.matheus.bernardino@usp.br> <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+ <CAHd-oW5zea9wzobAQG4FzN-KSS5BsRoM5vf_x_F83=yqGRfUQw@mail.gmail.com> <nycvar.QRO.7.76.6.1906272046180.44@tvgsbejvaqbjf.bet> <CAHd-oW6c7EoY+t-ymkcBmZM20YcGb1SWhM7XMO35Fofj-UNmYQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1586258442-1561726014=:44"
-X-Provags-ID: V03:K1:s60QCSXHu6ulO0Z5SSjqqNjsX7/MKNAolnBZtEW2VuGK+b+Qh0G
- LHMOCOw6wpjxoHc+McK3GaKIwiAggFO07ucctn81GlSY2DJAei90l3woQD1G6CngpiY0znI
- rRRanhSOT3cc6WFxm+yzlTLh3HXmErwTiWL0FuNT88JB/XDFGTMT5fG57kqPDmdDH8JY3vX
- pnuoXRkviGEQKv9UkeZGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w1vgtgFzVoM=:TXMXTYm7btVTJlIeRMfeWk
- F8bXwEGX1XSzdEncP6iES7kSj4gl/Js/p+IkhW9CgntpQPj9GQ67rfLJawFp084+W6DXN5ief
- qMpNpg7VDt3ul7hBzKnaLT61tOesC352KsUk6SlzQNBnnzWYPf6JJFjZO0NhFJx4x6G7YZcpP
- nwdNSZ3VLC2nIhtVBDCsK8orGgTlZ5DDwKvChb4ZoiSY2jTrNZ4E8OowrDUmlMt0+7AOIFyil
- uB3/ITfLEprm26N3FDXyR0AJPZPGyhM2mq+4vGtZsUthfGxVuTA1RLgOnkbqkBuu8QoUt7pfE
- xJGv2LebihS1CPN4yBbxdC5jwhWnxA7PulzjmhYz6K+sMlAiKnhntjsSkQ1drWIawjPYn1Y4Z
- kOLA5BLH+UWvB+CveXFJkJJLHQ6EbvXJ3eEXq/Ky6DTDTMdgBNVSogRo+COAQwR1tQSpVELSt
- HAQ5AaoGOvOHTDwtTff+9rTNKf2Aa0kyL8KMjRGqriAsCp0olX2LJNGrHAPBdRhLyaK3cfPyB
- f6a1gm6OGKz4bpL9htvBhSpgpps/kdXJhJ5jXfK9L/YYF28S7Ec3U8VV91svzLI307CcicPc9
- GpLEz+OPA5GgVG6/320/WRc+HEQdqmiy8IlNMRTGqczqzz/ajpvevp92IbD2QQARdoQalGEV3
- O8QgglWeBW7LZpaw7Z2Xpcu8Jgr2K9H6OC/JbnpuhP2hjuUyeAHhj4PaIVrHexBSycMJUY3mF
- KVTRsjCRU3OQZjLR4cdwToryn+JOFiyoJkN8CQ0IJGDAZremO0kQFRkJLuQb+6irExUqB4Krw
- mP7KsuA0LtRxQkO/9A6EQFO0SK0rRzlQNHM/IjOYp4i8nRsNG49Z3b6rQjsV8YlL6EBUYHti2
- +JvjIY3lXv03w6L5V5rTY2kazGhL4wqC5iufnBKIEdaGmBXt9KCYh+v9fxdWoD0Kx1vP0ZX0v
- LpzFsQgGuQGGh+uw4878hd+S1M13bQ4zDq5Vn05e/7FrQeJh9R3GPyMnHtNHcLirtsSadTH7c
- 6GhL5xVPOMesBh86mGx/BNzi+igBUvFUU97hLw5+O0P+gsVttcTYwQxwxAjubxMNJR/PKGlzu
- juGLPUyw+IUf/d9BJYTGQ9l1+EXu8pBmtSC
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XnqCGMfDwaAlLE+dRqZkMSqMmF7ApC56/sjwkYnTKsWJqDVTEbC
+ xzR47U7PLiFSOyYUbY4pKjk0sU4VeAc+97NqFPgXmWuZJc0FlU7ABkvkylufMjzDpRSu8/f
+ DeYhtRcx7yNPehEwh3v08Wg3c7R6B44J+uQdd81rGMnu6OONCCQKrkwpZxKeIoktXErQXXc
+ 7upvU4nNVTk46HzHLVb4A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R0mxKFpv8XQ=:cTNvuR9V/m31JPCHD+xYSS
+ Q8EzvTTFKsYhwMv26oTP30d3gEYnFGZGUN5k7mw3Riwp8d1CayesSMVrc2YDwc5k+QN6HYWgH
+ L2g6Wl/FShi5LuBe5DUD2CDs5KnL/8a7PLIZfKvrIWWw06RHrwV8AhCai3vi+rLTE0PEdqgA2
+ 9uc86zGZKNYZwXBGDwz8lblLDLZtwtBReE9xN80v0dgYBbZAT0h2rwYIZAFA8+W36HxJ6Pkfg
+ QPriooz8lJJNmkRzGZQoza3ZKFcBBCA4VJRSTWoHUKuWRoTpxHcJmS5Y3qwqZaiqsEduB4u2K
+ yNGMw9tDcxfks29btsES/8jpvq8cZjdkHGE6zUMb9+T6caS6QBIKqwjuLdKQ5PHW+hlcSDgun
+ X2PKZM8/ZbJ7atj2IrCVmOKdJUWg4z/bPr/YR2iWko2DxJ/5e6/ojUV9KOCqP7PWe4B2muVZU
+ 6aLlrxC4kh9TqN13wX+qdM01gy0dk9wfGBnAMNWRUYKcHJ5La2b9Em8c+7TNZuln286OnuWlP
+ csLbJiVHcFyKL10/tsCUcmeQQoP3YtGnMbWwAvcO+HknjOwjlQ2G8vzU0cJUWEP/rVUQ1cKDJ
+ aOfgUkLud+tVI/wDEDTRdEgvvSJLZBgQGqtpxyZ6uJtC+tID4tXuXy4Ds1ZUTDOc6SNykHyww
+ bUQ8qbRZhvlq37817TRRJRTM5Fd5HAp0fRUb59MWUIxhZEr08BInKKgFh1rDrW8gmftwFsZS7
+ v2VPhgbPrGgfeGCo3upbuIpNMXiyO7b3GfkBBslrAqDizt44Zgtmmi+Pxt42maLzl9uwDmuFN
+ tO/Lhg5JR99EcsBut7fq3jQiIaKu4yqJa74S8RXgPD5aNIxUEdOZubOj5XaSGzHSOPkJgs406
+ yfbIiUrv21VBgsxMSiX170T/Gw7alIrDo7ZNxjhU/K4Z0aLt6zFiPwWpQZyIX9vtrSEFV/DhI
+ bOKGXhrzvimJ8917laU71zLWjJp3RdOMAz19nFcNSTpmy9K1YpxsJhd2quZZ0ChVmF2gPhvsi
+ 9gj9eZERiM4QTuE5gXEXAEzcscb51/d4b1/eXXEeLwAnRvArX30YA2DBUNvmlNvj/6d5+BZ/A
+ pgKj3NvB9BWh74xGGXnusVlIWayqof8VvTl
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Matheus,
 
---8323328-1586258442-1561726014=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
 
-Hi Duy,
-
-On Thu, 27 Jun 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
-> ---
-
-This commit is _awfully_ short given that...
-
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 580fd38f41..560051784e 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -458,7 +458,8 @@ static int grep_submodule(struct grep_opt *opt,
->  		object =3D parse_object_or_die(oid, oid_to_hex(oid));
+> On Thu, Jun 27, 2019 at 3:47 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
+> >
+> > > On Wed, Jun 26, 2019 at 3:04 PM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> > > >
+> > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > > >
+> > > > > On Tue, 18 Jun 2019, Matheus Tavares wrote:
+> > > > >
+> > > > >>[...]
+> > > > >> +/*
+> > > > >> + * Look for a recursive symlink at iter->base.path pointing to=
+ any directory on
+> > > > >> + * the previous stack levels. If it is found, return 1. If not=
+, return 0.
+> > > > >> + */
+> > > > >> +static int find_recursive_symlinks(struct dir_iterator_int *it=
+er)
+> > > > >> +{
+> > > > >> +    int i;
+> > > > >> +
+> > > > >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
+> > > > >> +        !S_ISDIR(iter->base.st.st_mode))
+> > > > >> +            return 0;
+> > > > >>
+> > > > >> +    for (i =3D 0; i < iter->levels_nr; ++i)
+> > > > >> +            if (iter->base.st.st_ino =3D=3D iter->levels[i].in=
+o)
+> > > > >
+> > > > > This does not work on Windows. [[ Windows port does not have
+> > > > > usable st_ino field ]]]
+> > > >
+> > > > And if you cross mountpoint, st_ino alone does not guarantee
+> > > > uniqueness; you'd need to combine it with st_dev, I would think,
+> > > > even on POSIX systems.
+> > >
+> > > Ok, thanks for letting me know. I'm trying to think of another
+> > > approach to test for recursive symlinks that does not rely on inode:
+> > > Given any symlink, we could get its real_path() and compare it with
+> > > the path of the directory current being iterated. If the first is a
+> > > prefix of the second, than we mark it as a recursive symlink.
+> > >
+> > > What do you think of this idea?
+> >
+> > I think this would be pretty expensive. Too expensive.
 >
->  		grep_read_lock();
-> -		data =3D read_object_with_reference(&object->oid, tree_type,
-> +		data =3D read_object_with_reference(&subrepo,
-> +						  &object->oid, tree_type,
-
-... this change and...
-
->  						  &size, NULL);
->  		grep_read_unlock();
+> Hmm, yes unfortunately :(
 >
-> @@ -623,7 +624,8 @@ static int grep_object(struct grep_opt *opt, const s=
-truct pathspec *pathspec,
->  		int hit, len;
+> > A better method might be to rely on st_ino/st_dev when we can, and jus=
+t
+> > not bother looking for recursive symlinks when we cannot,
 >
->  		grep_read_lock();
-> -		data =3D read_object_with_reference(&obj->oid, tree_type,
-> +		data =3D read_object_with_reference(opt->repo,
-> +						  &obj->oid, tree_type,
+> What if we fallback on the path prefix strategy when st_ino is not
+> available? I mean, if we don't look for recursive symlinks, they would
+> be iterated over and over until we get an ELOOP error. So I think
+> using real_path() should be less expensive in this case. (But just as
+> a fallback to st_ino, off course)
+>
+> > like I did in
+> > https://github.com/git-for-windows/git/commit/979b00ccf44ec31cff4686e2=
+4adf27474923c33a
+>
+> Nice! At dir-iterator.h the documentation says that recursive symlinks
+> will be ignored. If we don't implement any fallback, should we add
+> that this is not available on Windows, perhaps?
 
-... this change is totally not what would be intuitively the easiest: to
-use `the_repository` in all built-ins.
+I do not really care, unless it breaks things on Windows that were not
+broken before.
 
-It might take quite a lot of convincing that these changes are correct, in
-particular in light of the regressions introduced by the first iteration
-(to paraphrase Warren Buffet [*1*]: one slip in a patch series touching as
-central parts as this one will need a lot of time to restore trust in
-subsequent iterations' correctness.)
-
-In short: with such an empty commit message, this patch is no good. It's
-as if it was optimized to pass the test suite on Linux instead of a best
-effort to make the conversion as correct as you can make it.
+You might also want to guard this behind `USE_STDEV` as Duy suggested (and
+maybe use the opportunity to correct that constant to `USE_ST_DEV`; I
+looked for it and did not find it because of that naming mistake).
 
 Ciao,
-Johannes
-
-Footnote *1*:
-https://www.forbes.com/sites/jamesberman/2014/04/20/the-three-essential-wa=
-rren-buffett-quotes-to-live-by/
-
---8323328-1586258442-1561726014=:44--
+Dscho
