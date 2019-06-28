@@ -2,89 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75F761F461
-	for <e@80x24.org>; Fri, 28 Jun 2019 19:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20A0B1F461
+	for <e@80x24.org>; Fri, 28 Jun 2019 20:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726875AbfF1TLi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 15:11:38 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54998 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726565AbfF1TLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 15:11:38 -0400
-Received: by mail-wm1-f67.google.com with SMTP id g135so10090905wme.4
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 12:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=n+LTJU5RlfvSaUtTEMGxryCMk1hA/IVLttJ8H4fXOfQ=;
-        b=r8wSQKVBn+WdsbDi1eNsIAHQdepFJ933NgM0yBemKe7vTkGTcmW4Tw4X2NcW7v/Abq
-         m+3eicLCzWQz29jwRy96do5Sjkr0C8BIXCgP7EuRC3GNF2hXE0mITjC7pUzCshmyVsB2
-         Zbbi1ha0eAI2Q9iP8qPHNPWVgcZl/LUX4b0J8TyDXHy4tgxia+3k7hmyLK1f4r3Oy2F4
-         AoDgmYlD3BT9cvivaXxdZsfVrn1c3eDPLiDKMt7iAvB+FrflLrqzIJeKoIz/lNPlP65b
-         UKoBIapHHrbyk0h1VHFXU+/kZKoYEwW4iLszdUR6HJU0VuxcI28CdNHci7UbykTKpmW5
-         dcmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=n+LTJU5RlfvSaUtTEMGxryCMk1hA/IVLttJ8H4fXOfQ=;
-        b=RNACGx7Vyyk/eyJGpqibzV1QO4YvVnsRejUE0TL2q5S4xnG0DE+QCaKB7cj6zu6GnJ
-         7/+fL4zMj5OE7UZsO5ghwaJnabqMM/ETt5PcK09BCU/CDqoQy+BMdCgnafvTDDnzpnhK
-         dh7z8KDUPs++v6iCKiQjbpJq+0GCPJQQn75DUn4Ey8tnQaL9N6idCTipdIQeyBuafLxd
-         RGYvYgm2Q7tJXUpiUmBbwki01BjezEpfj5y4pbq7IUNSMd268NThEjltKOuMPySTox31
-         emlw5HKau8sK0+R6aOudpJXGKNfwxb0HWgavgMa7jgWfMAOvoYy9LdAOM3kCgBxaaGW2
-         FsqA==
-X-Gm-Message-State: APjAAAXU1wIgM2YZdWwSEwlotzXuQQRxz/wUsCdzGXmtC5J1V0HNy6X3
-        tTAty0ZiW81FzxxygztliDw=
-X-Google-Smtp-Source: APXvYqzg1mntfuSBINJq76TjyLht5/jM6Q5WJiE7mRB1nh3Sz/4+zi+hyY/MT4fozjDyQhi7yD+vOg==
-X-Received: by 2002:a1c:c74a:: with SMTP id x71mr8234855wmf.121.1561749096109;
-        Fri, 28 Jun 2019 12:11:36 -0700 (PDT)
-Received: from localhost (adsl-24.176.58.195.tellas.gr. [176.58.195.24])
-        by smtp.gmail.com with ESMTPSA id g8sm5104263wme.20.2019.06.28.12.11.34
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 28 Jun 2019 12:11:35 -0700 (PDT)
-Date:   Fri, 28 Jun 2019 20:11:33 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
-Message-ID: <20190628191133.GA15477@hank.intra.tgummerer.com>
-References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
+        id S1726631AbfF1Uuv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 16:50:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63245 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726537AbfF1Uuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 16:50:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C2171560DF;
+        Fri, 28 Jun 2019 16:50:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=un9h5ZxpufmVWG/4CY/1bgF4Cpg=; b=cQv2at
+        6NHG76TJkK9Bie1SzR2o2Ujfb3yG6Q/D4q5Lu3sh/47sUdRRVKsoL64PhfCr0Ac/
+        Q4CWKFa3iICEUAAWCY3t4mWFL4nVaoJJ+HmDFZguJOT6jnLBFqKln+WAqGWfMqad
+        AwgfH5zMQ5uGbLRpWGEV7CbMBnCkXKRDV0198=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UCuw3V8+aduLuWIkzYTh7f4GtarnpPQV
+        y5vkcaD89TUZuKVuYuJc/L9T+wP43tXI23LkrHCLJqcx7/aHPgJfARbIrr7YpAlf
+        UTWlgLeDybVQF253afzsyK8mRHMB7xrxCOnGf5oGrgBonvSU4bnH08VJFAo6uMDX
+        iMHQhKPV5IM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 734D91560DE;
+        Fri, 28 Jun 2019 16:50:48 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C43E21560DC;
+        Fri, 28 Jun 2019 16:50:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate setting
+References: <pull.254.git.gitgitgadget@gmail.com>
+        <pull.254.v2.git.gitgitgadget@gmail.com>
+        <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+Date:   Fri, 28 Jun 2019 13:50:46 -0700
+In-Reply-To: <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 19 Jun 2019
+        08:12:00 -0700 (PDT)")
+Message-ID: <xmqqd0ix8me1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 680551EE-99E6-11E9-92FB-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/26, Junio C Hamano wrote:
-> * ra/cherry-pick-revert-skip (2019-06-24) 6 commits
->  - cherry-pick/revert: advise using --skip
->  - cherry-pick/revert: add --skip option
->  - sequencer: use argv_array in reset_merge
->  - sequencer: rename reset_for_rollback to reset_merge
->  - sequencer: add advice for revert
->  - advice: add sequencerInUse config variable
-> 
->  "git cherry-pick/revert" learned a new "--skip" action.
-> 
->  Is this one ready for 'next'?
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yes, I believe this is ready for 'next'.  I had a look at the latest
-round, and only had a minor comment on the organization of the patch
-series that is probably not worth a re-roll.
+> +core.featureAdoptionRate::
+> +	Set an integer value on a scale from 0 to 10 describing your
+> +	desire to adopt new performance features. Defaults to 0. As
+> +	the value increases, features are enabled by changing the
+> +	default values of other config settings. If a config variable
+> +	is specified explicitly, the explicit value will override these
+> +	defaults:
+> ++
+> +If the value is at least 3, then the following defaults are modified.
+> +These represent relatively new features that have existed for multiple
+> +major releases, and present significant performance benefits. They do
+> +not modify the user-facing output of porcelain commands.
+> ++
+> +* `core.commitGraph=true` enables reading commit-graph files.
+> ++
+> +* `gc.writeCommitGraph=true` eneables writing commit-graph files during
+> +`git gc`.
 
-I also added Phillip to Cc, as he's been heavily involved in reviewing
-this series, in case he has any more comments.
+I was re-reading the whole series, and found that the phrase
+"present significant benefits" was somewhat overselling.  Wouldn't
+that claim largely depend on the end-user's workflow?  The same
+comment applies to the description of "at least 5" level, too.
+
+I would not mind if we say "enabling this may present performance
+benefits", with or without "significant" before "performance
+benefits", and with or without ", depending how your repository is
+used" at the end.
+
+Thanks.
