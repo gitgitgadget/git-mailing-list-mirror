@@ -2,120 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7972E1F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 00:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 696FA1F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 01:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbfF2AqB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 20:46:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54768 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726643AbfF2AqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 20:46:01 -0400
-Received: (qmail 16151 invoked by uid 109); 29 Jun 2019 00:46:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Jun 2019 00:46:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22200 invoked by uid 111); 29 Jun 2019 00:46:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 28 Jun 2019 20:46:52 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Jun 2019 20:45:59 -0400
-Date:   Fri, 28 Jun 2019 20:45:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/6] easy bulk commit creation in tests
-Message-ID: <20190629004559.GC3094@sigill.intra.peff.net>
+        id S1726795AbfF2BgS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Jun 2019 21:36:18 -0400
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:46588 "EHLO
+        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726723AbfF2BgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jun 2019 21:36:18 -0400
+Received: by mail-qt1-f173.google.com with SMTP id h21so8433064qtn.13
+        for <git@vger.kernel.org>; Fri, 28 Jun 2019 18:36:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wKQEcnN9wRCCwsnhnjYOu3A6RhnKKd2Ccm4HEQbJXT8=;
+        b=GGg6WYMM0pckAgtaZIgYmOKPMUcBcKogGtmWt1mSXdEbvJgxdXQTHyPlJJPtEPw2m7
+         xjbtdSqt2HnZ+gfSau8c5JrJCEWd8L+dS/p7wbj/a6MEilEAZwMN/nnq9lBy6hjuS86E
+         3KHDCgkqAM0eKnAlqRvd399mGVUcCa4l5mwoEeLSj0lEJjslFO6FzUV/G1O2ONdEExsV
+         bnw0tzglr4llcZZ3RQIUp0h04Fg85WACpJBhXs0JkhfKyyIKscTVx2st+QmOs/6AraIy
+         rnZPH5/UVZXvh8RMXwqyj83Xy+RpM3zS0LQ5PTJKiF+C3Wy18atAYl7U3PUz966wU0rH
+         iwuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wKQEcnN9wRCCwsnhnjYOu3A6RhnKKd2Ccm4HEQbJXT8=;
+        b=mzUcWal0fe/4/5IDzt802k5Sy5m7yek34ad1PCsrWtGzi/T37q2bYPRcXCdGPBzk03
+         QG4Moop74vGsh9MADcs9lFQg+w4hFmtx30vgktzU2PDYMaTMA0rRzj9j4FCL9T09WCgQ
+         C31uYVJCuM+197f0EXqbRvSMw7hEIBq0PNXGt0Rr0gR/EWYL6Z5T2RN3TBKXQ1UvWzal
+         rpyke4Oi6oS5VLT9xC3qJZiBT4OcO12ajURLyy0dcug84MAlCfgYTbhaFnvr/I9i9Zup
+         XXTC5QRbz7SxCsuZCT1UshHM3wx979yyUQZIma9FRV+YxsCf96An3xKL9DTml1B7DrZA
+         e8qA==
+X-Gm-Message-State: APjAAAXKC4As9ckCWJRSmuBH/hU8rAkAVUDGq/z7ULV1K9hPv5tGxpKi
+        EKd44yxMaZcfhCtZRU6pkKQonk/6
+X-Google-Smtp-Source: APXvYqzSfuae+H76mkKfKcpZz4Hwfm8aooIkTwVoMCNJUcGRdTZp1fkO6NmMB9wVD+rDIcUjKlpSoA==
+X-Received: by 2002:ac8:7555:: with SMTP id b21mr7399646qtr.292.1561772177054;
+        Fri, 28 Jun 2019 18:36:17 -0700 (PDT)
+Received: from [10.0.1.15] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id s79sm637442qka.85.2019.06.28.18.36.15
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Jun 2019 18:36:16 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Thurs. June 27)
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
 References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
  <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
- <20190628064103.GA19777@sigill.intra.peff.net>
- <20190628093751.GA3569@sigill.intra.peff.net>
- <87v9wp7dfp.fsf@evledraar.gmail.com>
+ <20190628064520.GB19777@sigill.intra.peff.net>
+ <ddf13a6b-42f4-57ae-49f1-8cc758b1dc4b@gmail.com>
+ <20190628235903.GB2625@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c2e0ceef-c14d-ea1d-7522-eab0bf2e48ce@gmail.com>
+Date:   Fri, 28 Jun 2019 21:36:14 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
+In-Reply-To: <20190628235903.GB2625@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v9wp7dfp.fsf@evledraar.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 08:49:30PM +0200, Ævar Arnfjörð Bjarmason wrote:
-
-> > So here's a patch to do that. Writing the bulk commit function was a fun
-> > exercise, and I found a couple other places to apply it, too, shaving
-> > off ~7.5 seconds from my test runs. Not ground-breaking, but I think
-> > it's nice to have a solution where we don't have to be afraid to
-> > generate a bunch of commits.
+On 6/28/2019 7:59 PM, Jeff King wrote:
+> On Fri, Jun 28, 2019 at 08:23:49AM -0400, Derrick Stolee wrote:
 > 
-> Nice.
+>> On 6/28/2019 2:45 AM, Jeff King wrote:
+>>> On Thu, Jun 27, 2019 at 01:35:17PM -0400, Derrick Stolee wrote:
+>>>
+>>>>> t/helper/test-example-decorate.c
+>>>>> 0ebbcf70 29) one = lookup_unknown_object(&one_oid);
+>>>>> 0ebbcf70 30) two = lookup_unknown_object(&two_oid);
+>>>>> 0ebbcf70 59) three = lookup_unknown_object(&three_oid);
+>>>>
+>>>> Peff: again interesting that these lines you refactored were not covered, especially
+>>>> because they are part of a test helper. Perhaps the tests they were intended for are
+>>>> now defunct?
+>>>
+>>> They should be run by t9004 (and if I replace them with a `die`, they
+>>> clearly are). Are you sure your coverage script is not mistaken?
+>>
+>> It looks like I'm missing the 9000+ tests. The following line was in the script
+>> I adapted from another CI job:
+>>
+>> 	rm -f t/t9*.sh
+>>
+>> This was probably because the job I adapted from needed to run quickly, but for
+>> this coverage report we should do the hard work of running whatever t9*.sh tests
+>> we can.
 > 
-> Just a side-note: I've wondered how much we could speed up the tests in
-> other places if rather than doing setup all over the place we simply
-> created a few "template" repository shapes, and the common case for
-> tests would be to simply cp(1) those over.
+> I suspect most of those _are_ low-value. The git-p4 tests, for instance,
+> are mostly exercising the p4 script and not our C code, and the same
+> with git-svn. However I wouldn't be surprised if there are a few dusty
+> corners they manage to hit that aren't covered elsewhere.
+> 
+> Still, if it's not too painful to add them in time-wise, it probably
+> makes sense for the coverage tests to be as exhaustive as possible.
 
-That thought also occurred to me while writing this. I've worked with
-test suites that have those kind of "fixtures" before, and I generally
-like it less, for two reasons:
+Unfortunately, even running the t9*.sh tests once (among the two runs:
+first with default options and then with several GIT_TEST_* options)
+causes the build to go beyond the three hour limit, and the builds time
+out.
 
-  - it's much harder to understand what's important about the fixture,
-    because you're seeing the end result of running a bunch of commands.
-    Whereas the individual commands that show you _how_ it was derived
-    are generally instructive; they give you the steps that the author
-    was thinking about.
+I'll just need to keep this in mind and do some more diligence myself
+to check if things are covered in the 9000 tests before bugging people
+about coverage.
 
-  - it's more annoying to update them because you don't just change the
-    instructions. You have to extract the fixture into a real repo,
-    manipulate it, then convert it back into whatever storage format we
-    use (which can't just be a real repo, because we don't allow
-    embedding repos).
-
-But what I think _would_ be cool is to treat the command instructions as
-the source of truth, but allow caching of the on-disk state at certain
-points in a test script. I.e., imagine that we annotate some test
-snippets to say "I am setup, and it's OK if you don't run me every
-time". Like:
-
-  test_expect_success SETUP 'a really slow setup step' '
-	for i in $(test_seq 1000)
-	do
-		test_commit horribly-slow-$i
-	done
-  '
-
-and then the test harness would recognize the SETUP prereq as magical,
-and:
-
-  - look for t/cache/t1234.42.tar; if it exists, then replace the whole
-    trash-dir state with it and skip the test
-
-  - otherwise run the snippet and create t1234.42.tar for next time
-
-Bonus points if you could specifically ask to cache t1234.57, even if it
-_isn't_ marked as SETUP, and then restart the script from that point,
-skipping over the intermediate tests (whether they were cached or not).
-That would let you then run subsequent tests from a known point
-instantly (e.g., if you're debugging some later test in the script and
-want to run it over and over).
-
-The downsides I see are:
-
-  1. It doesn't exercise the setup snippets as much. The idea is that
-     this shouldn't matter if it's just setup code, but I'm sure we do
-     get some extra coverage from it. But any fixture-based scheme
-     suffers from this.
-
-  2. Cache invalidation (isn't it always?). If you changed the setup
-     test or even fixed a bug elsewhere in Git, you'd want to re-run the
-     setup steps. It's always OK to blow away the cache and get a fresh
-     run, but sometimes it's easy to forget to do so (and the results
-     can be confusing).
-
--Peff
+Thanks,
+-Stolee
+ 
