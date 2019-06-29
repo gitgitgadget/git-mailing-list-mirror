@@ -4,135 +4,195 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 742401F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 08:25:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE801F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 10:11:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbfF2IZC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jun 2019 04:25:02 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34197 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726766AbfF2IZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jun 2019 04:25:02 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u18so375910wru.1
-        for <git@vger.kernel.org>; Sat, 29 Jun 2019 01:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=lAJJ9ANFYzsa3KcaGvysvyCgjfEPvuUqViD63nvZ6yk=;
-        b=bJDpQd/FHZ2PqWMqT9e+cbDuUUD4izRcqYd8WnoWE9+sA8xbV4XDHhEaQ9TdH65z0f
-         gcEpZtwlsvy3TFEF1M99eYMBBKPdUWoTB3SMgfjpesSdVabjIVKR/ehFn/QLqYinmVqB
-         1vGjMIOHW6VJoslSKJfID5cxOltNy04mko+mTUC+xMFopPPuVew6AYJBmPFQGVwinsa+
-         SNtkGAGT1Ho11UONpTYzRl8le3kFBk/enef2r7X88AS/6GeykyshjER443pJVzwGb/wM
-         /9E+Mm544rL5d1PU020LosJbcFym83LwnmGbUpJ6J0zeKMQfQr3NFKG6rdCjiUkCL26k
-         jpPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=lAJJ9ANFYzsa3KcaGvysvyCgjfEPvuUqViD63nvZ6yk=;
-        b=e1VA30P5OJaAzsYQqUQPXy04kwkqnuRMffU4ZMwQiof9NLF4U/KMhOg1gfiLjq0Qdk
-         jzW1F/suHLVt18E86lSTXSBelqhkS/tGSYwvGT8hZAeIgyOxwolhcYGQX7dnI8U98eo3
-         9dRgjVfrYvVydZscRsd19dc1Cc6EM4HBkbdkoiff/UnAzteXDMkhs5wgPhsw9j4gbnE0
-         c1b5+uGiVnd7VU++ipaUenp2jv4nHdFoGjTUofnbTFNYOmNm6zelXQIHBiBBhw1TUrMp
-         OlXb9Tpj5RZGxJv+Lz8JIq1wp2FgzEw0zmXyrEoq02qoEMXS606mZZtb8KU0aO7Wd/8A
-         GW1Q==
-X-Gm-Message-State: APjAAAUuCHE2nKD58AOLHBmzABdY+jtZ/0Y6IegGjlzkLCSJKHDdMpFE
-        QWiaTOWwGutFfhgRDjqKaNM=
-X-Google-Smtp-Source: APXvYqxUlHbGoWy0/5w1P1S3pN6xmRvi16C5Gj4x39z1c5fJAhPOANhkhbGXzdzibDPLRtV+Y4k3TA==
-X-Received: by 2002:adf:fb84:: with SMTP id a4mr11733664wrr.41.1561796699649;
-        Sat, 29 Jun 2019 01:24:59 -0700 (PDT)
-Received: from szeder.dev (x4db511ea.dyn.telefonica.de. [77.181.17.234])
-        by smtp.gmail.com with ESMTPSA id l1sm3293600wmg.13.2019.06.29.01.24.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Jun 2019 01:24:58 -0700 (PDT)
-Date:   Sat, 29 Jun 2019 10:24:57 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/6] test-lib: introduce test_commit_bulk
-Message-ID: <20190629082457.GE21574@szeder.dev>
-References: <20190628093751.GA3569@sigill.intra.peff.net>
- <20190628093911.GA27329@sigill.intra.peff.net>
- <CAPig+cQAKVOqYH-CcqzViP_zuKwg5fWO2_i8=Z5t=BVf9uoAXQ@mail.gmail.com>
- <20190628230417.GC21574@szeder.dev>
- <CAPig+cQnvotvJakCp1ic_WP3AMojNmfZw-PoinR=VOODmtNBtw@mail.gmail.com>
+        id S1726894AbfF2KLc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jun 2019 06:11:32 -0400
+Received: from forward104j.mail.yandex.net ([5.45.198.247]:40973 "EHLO
+        forward104j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726839AbfF2KLc (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 29 Jun 2019 06:11:32 -0400
+X-Greylist: delayed 340 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Jun 2019 06:11:29 EDT
+Received: from mxback23g.mail.yandex.net (mxback23g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:323])
+        by forward104j.mail.yandex.net (Yandex) with ESMTP id 9BD974A10BF
+        for <git@vger.kernel.org>; Sat, 29 Jun 2019 13:05:47 +0300 (MSK)
+Received: from smtp1p.mail.yandex.net (smtp1p.mail.yandex.net [2a02:6b8:0:1472:2741:0:8b6:6])
+        by mxback23g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id tjh9ggqQst-5lo4AZeM;
+        Sat, 29 Jun 2019 13:05:47 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1561802747;
+        bh=16gFfJTjktUHLu3ilVjJoNfDTIOwFgaTk/9s0Kj5xTo=;
+        h=Subject:To:From:Date:Message-ID;
+        b=YrGSyVFw7xsl4yXSjlVLjZLsH6raqc4gEmJy7xYMsxzFkcbbe2qnb3eotqeykKV1O
+         yI8hJqiqIbujPyNtlLt9FPqukPw3yYLRRu/1b3EJwc8ShYq1dm4ZLucuXQTvf15Wev
+         FjDs6nExdSuz+CcN19aeAuHX/8JNItmZ1PodBaZs=
+Authentication-Results: mxback23g.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by smtp1p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 7AV1EQYgFr-5k4aGSt4;
+        Sat, 29 Jun 2019 13:05:46 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (Client certificate not present)
+Date:   Sat, 29 Jun 2019 13:05:45 +0300
+From:   Eugen Konkov <kes-kes@yandex.ru>
+Message-ID: <1936584831.20190629130545@yandex.ru>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Why "Updated upstream" block is so small?
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQnvotvJakCp1ic_WP3AMojNmfZw-PoinR=VOODmtNBtw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 07:46:02PM -0400, Eric Sunshine wrote:
-> On Fri, Jun 28, 2019 at 7:04 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> > On Fri, Jun 28, 2019 at 05:32:35PM -0400, Eric Sunshine wrote:
-> > > On Fri, Jun 28, 2019 at 5:39 AM Jeff King <peff@peff.net> wrote:
-> > > > +       in_dir=${indir:+-C "$indir"}
-> > >
-> > > Doesn't this suffer the problem in which some older/broken
-> > > shells[1][2][3][4] incorrectly [...]
-> >
-> > I think we don't need any of those "${indir:+-C "$indir"}" parameter
-> > expansions and could simply use 'git -C "$indir" cmd...' everywhere.
-> > $indir is set to empty right at the start of the function, and 'git -C
-> > "" ...' works and doesn't change the working directory.
-> 
-> I recall the discussion around the meaning of `-C ""` when that
-> command line option was introduced. The conclusion was that  the
-> zero-length argument should mean "this directory" since that's how `cd
-> ""` behaves. However, I don't think that behavior ever got documented,
+Hello
 
-Although it's not documented (but see the patch below), we do
-explicitly test it since 6a536e2076 (git: treat "git -C '<path>'" as a
-no-op when <path> is empty, 2015-03-06) and e.g. our completion script
-relies on this behavior.
+I want to apply this patch from stage:
 
-> and it's not necessarily obvious. An alternative would be to default
-> 'indir' to ".", which should give the same result and be easily
-> understood.
-
-That's fine for me as well.
+diff --git a/lib/App/Schema/Result/Invoice.pm b/lib/App/Schema/Result/Invoice.pm
+index 0176916f..0ce2d698 100644
+--- a/lib/App/Schema/Result/Invoice.pm
++++ b/lib/App/Schema/Result/Invoice.pm
+@@ -219,14 +219,14 @@ sub new_package {
+     # my $package_type =  $package->Invoice->Order->Tariff->type;
+     my $pass =  $package->password;
+     ($pass) =  (`smbencrypt $pass` =~ /([^\s]+)$/s);
+-    $sth->execute( $package->login, 'NT-Password', ':=', $pass );
++    $sth->execute( $package->login, 'NT-Password', ':=', $pass //'');
+     $sth->execute( $package->login, 'NAS-Identifier', '=~', 'ppp' );
+ 
+     $sth =  $radius_dbh->prepare(
+         "INSERT INTO radreply ( username, attribute, op, value, nasip) values ( ?, 'Framed-IP-Address', '=', ?, ? )"
+     );
+     my $ip =  $package->Ips->first;
+-    $sth->execute( $package->login, $ip->ip, $ip->Listener->first->nas_ip );
++    # $sth->execute( $package->login, $ip->ip, $ip->Listener->first->nas_ip );
+ 
+     $radius_dbh->commit;
+     # NOTICE: This is a bit inconsistent
 
 
-   --- >8 ---
+after applying I get merge conflict:
 
-Subject: [PATCH] Document that 'git -C ""' works and doesn't change directory
 
-It's been behaving so since 6a536e2076 (git: treat "git -C '<path>'"
-as a no-op when <path> is empty, 2015-03-06).
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- Documentation/git.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index f9b09db89b..a9deca0acb 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -57,7 +57,8 @@ help ...`.
- 	Run as if git was started in '<path>' instead of the current working
- 	directory.  When multiple `-C` options are given, each subsequent
- 	non-absolute `-C <path>` is interpreted relative to the preceding `-C
--	<path>`.
-+	<path>`.  If '<path>' is present but empty, e.g. `-C ""`, then the
-+	current working directory is left unchanged.
+diff --cc lib/App/Schema/Result/Invoice.pm
+index e3f55654,0ce2d698..00000000
+--- a/lib/App/Schema/Result/Invoice.pm
++++ b/lib/App/Schema/Result/Invoice.pm
+@@@ -211,33 -204,34 +211,87 @@@ sub new_package 
+     }
+  
+     ## Create radius account
+ +   eval{
+         my $radius_dbh =  $self->result_source->storage->schema->{ _radius_dbh };
+ -   if( !$radius_dbh->FETCH('AutoCommit') ) {
+ +       $radius_dbh->begin_work;
+ +       my $sth =  $radius_dbh->prepare(
+ +           "INSERT INTO radusergroup ( username, groupname, priority ) values (?,'static',1)"
+ +       );
+ +       $sth->execute( $package->login );
  +
- This option affects options that expect path name like `--git-dir` and
- `--work-tree` in that their interpretations of the path names would be
+ +       $sth =  $radius_dbh->prepare(
+ +           "INSERT INTO radcheck ( username, attribute, op, value ) values ( ?, ?, ?, ? )"
+ +       );
+ +       # my $package_type =  $package->Invoice->Order->Tariff->type;
+ +       my $pass =  $package->password;
+ +       ($pass) =  (`smbencrypt $pass` =~ /([^\s]+)$/s);
+ +       $sth->execute( $package->login, 'NT-Password', ':=', $pass //'' );
+ +       $sth->execute( $package->login, 'NAS-Identifier', '=~', 'ppp' );
+ +
+ +       $sth =  $radius_dbh->prepare(
+ +           "INSERT INTO radreply ( username, attribute, op, value, nasip) values ( ?, 'Framed-IP-Address', '=', ?, ? )"
+ +       );
+ +       my $ip =  $package->Ips->first;
+ +       $sth->execute( $package->login, $ip->ip, $ip->Listener->first->nas_ip );
+ +
+         $radius_dbh->commit;
+++<<<<<<< Updated upstream
+ +       # NOTICE: This is a bit inconsistent
+ +       # if whole payment failed we will have radius account without payment
+ +   };
+++||||||| merged common ancestors
+++   }
+++   $radius_dbh->begin_work;
+++   my $sth =  $radius_dbh->prepare(
+++       "INSERT INTO radusergroup ( username, groupname, priority ) values (?,'static',1)"
+++   );
+++   $sth->execute( $package->login );
+++
+++   $sth =  $radius_dbh->prepare(
+++       "INSERT INTO radcheck ( username, attribute, op, value ) values ( ?, ?, ?, ? )"
+++   );
+++   # my $package_type =  $package->Invoice->Order->Tariff->type;
+++   my $pass =  $package->password;
+++   ($pass) =  (`smbencrypt $pass` =~ /([^\s]+)$/s);
+++   $sth->execute( $package->login, 'NT-Password', ':=', $pass );
+++   $sth->execute( $package->login, 'NAS-Identifier', '=~', 'ppp' );
+++
+++   $sth =  $radius_dbh->prepare(
+++       "INSERT INTO radreply ( username, attribute, op, value, nasip) values ( ?, 'Framed-IP-Address', '=', ?, ? )"
+++   );
+++   my $ip =  $package->Ips->first;
+++   $sth->execute( $package->login, $ip->ip, $ip->Listener->first->nas_ip );
+++
+++   $radius_dbh->commit;
+++   # NOTICE: This is a bit inconsistent
+++   # if whole payment failed we will have radius account without payment
+++=======
++    }
++    $radius_dbh->begin_work;
++    my $sth =  $radius_dbh->prepare(
++        "INSERT INTO radusergroup ( username, groupname, priority ) values (?,'static',1)"
++    );
++    $sth->execute( $package->login );
++ 
++    $sth =  $radius_dbh->prepare(
++        "INSERT INTO radcheck ( username, attribute, op, value ) values ( ?, ?, ?, ? )"
++    );
++    # my $package_type =  $package->Invoice->Order->Tariff->type;
++    my $pass =  $package->password;
++    ($pass) =  (`smbencrypt $pass` =~ /([^\s]+)$/s);
++    $sth->execute( $package->login, 'NT-Password', ':=', $pass //'');
++    $sth->execute( $package->login, 'NAS-Identifier', '=~', 'ppp' );
++ 
++    $sth =  $radius_dbh->prepare(
++        "INSERT INTO radreply ( username, attribute, op, value, nasip) values ( ?, 'Framed-IP-Address', '=', ?, ? )"
++    );
++    my $ip =  $package->Ips->first;
++    # $sth->execute( $package->login, $ip->ip, $ip->Listener->first->nas_ip );
++ 
++    $radius_dbh->commit;
++    # NOTICE: This is a bit inconsistent
++    # if whole payment failed we will have radius account without payment
+++>>>>>>> Stashed changes
+  
+  
+     return $package;
+
+
+
+Why updated upstream block is so small?
+
+++<<<<<<< Updated upstream
+ +       # NOTICE: This is a bit inconsistent
+ +       # if whole payment failed we will have radius account without payment
+ +   };
+++||||||| merged common ancestors
+
+ 
+I suppose it should start from to line line:
+
+     +       $radius_dbh->begin_work;
+     ...
+    +    # if whole payment failed we will have radius account without payment
+
+
+
+
 -- 
-2.22.0.589.g5bd7971b91
+Best regards,
+Eugen Konkov
 
