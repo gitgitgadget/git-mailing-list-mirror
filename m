@@ -2,125 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A16D21F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 16:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E74151F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 17:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726911AbfF2Qiz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jun 2019 12:38:55 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:39070 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbfF2Qiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jun 2019 12:38:55 -0400
-Received: by mail-vs1-f65.google.com with SMTP id u3so6140395vsh.6
-        for <git@vger.kernel.org>; Sat, 29 Jun 2019 09:38:55 -0700 (PDT)
+        id S1726867AbfF2RBO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jun 2019 13:01:14 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:46058 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726864AbfF2RBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jun 2019 13:01:14 -0400
+Received: by mail-wr1-f44.google.com with SMTP id f9so9347256wre.12
+        for <git@vger.kernel.org>; Sat, 29 Jun 2019 10:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uMugqz7iwctZU3kQRcJYRcd3q+jcgmr95vpMgUc6Ybc=;
-        b=DgHAxwkFBAiez1aJvSa+5KCHw8KhhFcwHr4eFbl6KbRGrRmes+18KNMKoa1KOUR5GM
-         do1FdiOLNIJ2vtO4joQcWfc1Fj4+MU8sUNOTjBlaThAjUUN5RShUvSjorcWHPV3qpdyr
-         DfwlXqXGsEM8AHgTUKKnxCnG0D+8p20azJoPX8LXRQjIn83ZqbSths/QZqo5uj1yG3P8
-         aoVDmGMThSsAt9CpWibWRJv+4IpWCEWCNQI6khHblp6sni+BUnG+7N0UB0KX50s30joK
-         BjMSg/skEd+3I44jVewpiorEDSfbnRHTkBQmMxIndDDfSX8Mj7ScPdDRV1MDWG3+qcyR
-         9hxw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=i9TMo0Y6vhI1eCP75hKvCIZEb/a8IJwqgFiPfSvec/g=;
+        b=D8nb7pnQOu0ZZOLLIXfX98E33uaI8yuUQj4QbDYLTDP7p31a3hW1kVdF8/56tSuaoJ
+         gfUwPMBi57mOhOOQj8WXTia5ebZ6SWngfUzf7SF3d0rJ0QV5l1om4MJtEpyF2PuyP9fz
+         RcgUmY3WDwV8ugG2RlWE6K2R8qXQ0VzGUKdXd9+/z74Dzo8LT1CaiStqI1888845enbK
+         76wnE+RcFGP+5xKhHUY1imoTdWWhvlF0ChNViXi8Uh/olQuhIaM45ywQF7rC/KT3o3Wv
+         eAuB3ZcaecW7DK4OCVh25hKRDfuhLmsb5pj3VMHGYLCWxdcYJzhRwnE7TfVeb9O9a5J+
+         QlXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uMugqz7iwctZU3kQRcJYRcd3q+jcgmr95vpMgUc6Ybc=;
-        b=fTeyJ8ZDpZA6VR6zYouTc5qRNu7vh+RGfab2fL57+oJxxXg2yQp8WnJg7619IVjtj9
-         dB56KkvJd8YBnUBHwGoxv/FiMqwNNfDwluSkif6qXdoBqrpQ+XBEuJHsFSXW6nMbVJf8
-         crGakcbzEYrkLqkGpF7KDpDsCcOSAuC3taMQril64l6Klkw4KsgTAnDJyM/r3D9zDCrw
-         6EG9mDBlAWgRn+Sn5Y634cfFIXsXSoRFlnX24VoVtz6EKTCyJTiRN5fqEvy5zmiYQtW4
-         2n7ThvTIm7o5rl7okL7NRqPxP5D5tIAdhinCYdc719jxnWW0FqXgHLvE6AB7azsynfd8
-         rEug==
-X-Gm-Message-State: APjAAAU4SrwfpDICnzRrfcBvQ17BdlrSwtPxpfsxt0lNOH6b7usrwzIs
-        61j+R6nyCcFNRblsI90xJ2K8njqVoGBHVRoetmk=
-X-Google-Smtp-Source: APXvYqz5Z2gUidLbm71aHLUd5GQJaCzIeMCve9zKC+wwoPktJJkMMmxfBLPIgZLvIPRhUR1vekJXXWe5IQKlbu5moN0=
-X-Received: by 2002:a05:6102:252:: with SMTP id a18mr9849885vsq.53.1561826334393;
- Sat, 29 Jun 2019 09:38:54 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=i9TMo0Y6vhI1eCP75hKvCIZEb/a8IJwqgFiPfSvec/g=;
+        b=a5J8wcC6Ln1Dk/N0Khbtgtv10iNYALFV8GbDABx4LbUssDfCf7dr9S4Gmg1XOPhaMw
+         AmqfzSI8QGQs0SAU8ka1XG+3y1o+LHVh++D+rPdfwM/GV/P2sl7jnHpdZeiUgOcRsr6l
+         w1quDhkwOThZxUt+ZZJQxDzENHQDNqveVbhfCF1wqE/uEiF5A9UCeYhdj+kLOjyFrIXV
+         Xl9PD+6+FJCClYx0Z+rOqBxsJIx8LlroiuMCI5xnZp36FXgjCeNuJivhQ2FMbkqIDj9Z
+         yxNXWzlyw5IuqLdHfU2bDA18f1RKpVeFRk/yu27dUD1CkVkOl27vSlLqiDWDBvc3Dg6i
+         qyBw==
+X-Gm-Message-State: APjAAAV8Y0Baytr/+2A2K9D2DDo4AMWvXyKd5xknGhCo4J1H5Pek9DTk
+        tB2FN+n1ESWGFiUKvGnRv7o=
+X-Google-Smtp-Source: APXvYqyQfQ2uU9DJ7Mv0fslBdlwOdyCXYnpSYPzrsxS98/jz7kQ534ip6YRkmK0g/4+rr7o0MN+pUw==
+X-Received: by 2002:a5d:4e4d:: with SMTP id r13mr12931117wrt.295.1561827671817;
+        Sat, 29 Jun 2019 10:01:11 -0700 (PDT)
+Received: from szeder.dev (x4db511ea.dyn.telefonica.de. [77.181.17.234])
+        by smtp.gmail.com with ESMTPSA id v67sm5687571wme.24.2019.06.29.10.01.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 29 Jun 2019 10:01:10 -0700 (PDT)
+Date:   Sat, 29 Jun 2019 19:01:08 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Travis not looking so good
+Message-ID: <20190629170108.GF21574@szeder.dev>
+References: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+ <20190601004143.GN8616@genre.crustytoothpaste.net>
+ <20190602112239.GO951@szeder.dev>
+ <20190626203559.GA71590@TaylorsMBP3745.attlocal.net>
+ <20190627132319.GB21574@szeder.dev>
+ <xmqqy31nasck.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
- <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com> <20190628064103.GA19777@sigill.intra.peff.net>
- <20190628093751.GA3569@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1906281452251.44@tvgsbejvaqbjf.bet>
- <20190629003057.GB3094@sigill.intra.peff.net>
-In-Reply-To: <20190629003057.GB3094@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 29 Jun 2019 10:38:43 -0600
-Message-ID: <CABPp-BEyq-9sj_9wxLdh66BJqqjQ80a8sCpXd_cMCArAHnM7kA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] easy bulk commit creation in tests
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqy31nasck.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 6:32 PM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Jun 28, 2019 at 02:53:26PM +0200, Johannes Schindelin wrote:
->
-> > > > It would be nice if we had a "test_commits_bulk" that used fast-import
-> > > > to create larger numbers of commits.
-> > >
-> > > So here's a patch to do that.
+On Thu, Jun 27, 2019 at 09:46:51AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > However, we've always used the macOS build jobs as "build and test
+> > with the latest and greatest", i.e. they install the latest available
+> > Perforce and Git-LFS.  To keep up with this tradition we'd need to run
+> > 'brew update' and in turn would need to 'brew install gcc'.
 > >
-> > I like the direction, especially because it would make it super easy to go
-> > one step further that would probably make a huge difference on Windows: to
-> > move `test_commit_bulk` to `test-tool commit-bulk`.
->
-> I actually considered going directly there, but I don't think it would
-> make a big difference. In the biggest case we dropped 900 processes to
-> 4. If we really want to drop that to 1, we can:
->
->   - use a temp-file to avoid the left-hand-pipe subshell
->
->   - add a feature to fast-import to say "build on top of ref X", instead
->     of using to use rev-parse to manually generates a "reset" line
->     (maybe this is even possible already; I searched for it, but not
->     very hard).
+> > [1] See e.g. a1ccaedd62 (travis-ci: make the OSX build jobs' 'brew
+> >     update' more quiet, 2019-02-02) or
+> >
+> >     https://public-inbox.org/git/20180907032002.23366-1-szeder.dev@gmail.com/T/#u
+> 
+> Is the reason why you did not submit your bonus patch [*1*] in the series at
+> 
+>   https://public-inbox.org/git/20190614100059.13540-1-szeder.dev@gmail.com/
+> 
+> because it goes the opposite way, i.e. "build and test with whatever
+> happens to be in the image"?
 
-It already exists; quoting the fast-import documentation:
+Basically yes... with the other factor being that when I'm not
+particularly happy with any of the possible solutions for an issue,
+then it tends to end up on a back burner and forgotten for a while...
 
-"The special case of restarting an incremental import from the
-current branch value should be written as:
+> Unless what happens to come in the image at travis-ci.org is
+> hopelessly outdated and does not match what normal users run,
 
-            from refs/heads/branch^0
+We explicitly specify which macOS image we want to use in our builds
+on Travis CI, see 2000ac9fbf (travis-ci: switch to Xcode 10.1 macOS
+image, 2019-01-17), so it's up to us to change that.
 
-The ^0 suffix is necessary as fast-import does not permit a branch
-to start from itself, and the branch is created in memory before
-the from command is even read from the input. Adding ^0 will force
-fast-import to resolve the commit through Git's revision parsing
-library, rather than its internal branch table, thereby loading in
-the existing value of the branch."
+Travis CI's current default macOS image is still Xcode 9.4, as it was
+at the time of 2000ac9fbf, and the newest is 10.2, which now comes
+with GCC 8.3 properly preinstalled (i.e. no 'brew link gcc@8'
+necessary).
 
->   - add a feature to fast-import to have it check out the result of HEAD
->     if it was updated
+> isn't
+> it is better to test with "whatever happens to be there" than not to
+> test at all due to missing compiler?
 
-That'd be cool if you could work out the various special cases; it'd
-be nice to avoid the 'git reset --hard HEAD' afterwards that I always
-do.
+Better, sure...  Right?  I'm not sure.
 
-> The third one is a little less elegant to me, because there are a lot of
-> questions about how to checkout (e.g., with "-f", what happens to
-> deleted files, etc).
 
-There's a question with deleted files?  Why wouldn't you just delete
-them from the index and working tree?  The more interesting questions
-to me in this case is what to do if the index or working tree were
-dirty before the import started; that seems like a mess, though maybe
-it's just a case where you abort before even importing.  On a similar
-note, though, there could have been an untracked file that is in the
-way of a now-to-be-tracked file that you might not want to lose.
+> [Reference]
+> 
+> *1* ... what I picked up from your branch reproduced here
+> 
+>   https://public-inbox.org/git/xmqqy324t4g0.fsf@gitster-ct.c.googlers.com/
+> 
+> It is missing explanation and sign-off,
 
-Elijah
+And that patch should be split into two, of course: setting
+HOMEBREW_NO_AUTO_UPDATE first to fix the build, and then set
+HOMEBREW_NO_INSTALL_CLEANUP separately for a bit of additional
+speedup.
+
+> but if it lets the build
+> jobs run, even in a tad stale environment, it may be worth
+> resurrecting until those who want macOS port working can come up
+> with a real "with the latest and greatest" alternative.
+
+'brew update && brew install gcc && export CC=gcc-9' will do it...
+but then we'll still spend that ~2.5 minutes spent on updating
+Homebrew itself, and there's the possibility that Homebrew breaks, and
+eventually GCC 10 will be released and we'll need to update that CC
+variable.
+
+Anyway, will look into this again later during the weekend.
+
