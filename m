@@ -2,108 +2,281 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C14D1F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 01:43:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D1981F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 04:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726905AbfF2BnI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Jun 2019 21:43:08 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:41192 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726682AbfF2BnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jun 2019 21:43:08 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d17so8475575qtj.8
-        for <git@vger.kernel.org>; Fri, 28 Jun 2019 18:43:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/Z64Jq4e6L5+kfXBUPK8t4Gy91gFNNiNCsokFQw3ZIU=;
-        b=RkeK9ppDwexVysoaCxfg+372vu0fTT1PbuMi6mUm5sonPbG9ysTzhHoR0LaHhq+Jgk
-         RdnTo9emz4Y86PyuV0BQSlDN9SDbol1/vF33Nx5xgXVcU2Ji6crh93ZeNbE4pkeDdU0J
-         em9Rwmm38dxp6bBJIwB8V+eU4hT9mUkI/ZdbSPptBgg+Ikc2dV3dJGzwWr4N02V+Jo2F
-         VRSB1R2tGCPbJyJlJZkWUzfJ0VgLFXp9iDey9slcpuULjcs7nc9wTT1PzCVLOv6yoKv2
-         gb/5U2b2+8XjWgqqwmredifmEInVOcNfDZtc7yqSHSu+vfO0Ix2PtdkpTd7Am2xDlNNL
-         tzSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/Z64Jq4e6L5+kfXBUPK8t4Gy91gFNNiNCsokFQw3ZIU=;
-        b=WIrD6F4QbvSD1RmNclHFXFPOHYzP9z5nA3dWOtJV9WMuMqVfiNYj8nVEio9dAbBfcb
-         /5+mgu/6W3dvyRJ7FhnWSRitCAwqBwV1Y+zSK4BXpoynczskMvtVlN23fkOyGOiyzox1
-         7CeB3AzSuYJt8VmcH8fSeopbeMjMBeMvgojWZNrE5eXfr+pozJqcQYZVnugn43iKi3Fe
-         NPnlaILPTs6YPHRckhZKFTNF+gwju8BJ2ttWwDt1ERBANjL9Jrftb8ISqGe02tLee19T
-         qGVag4n3fCjBJmmfSg1Kh6ycGcf7gzncbsdWbfpZpgmbLlcIauNtdJVCeKZmZf86k8dj
-         6GDA==
-X-Gm-Message-State: APjAAAV47ZzwsLuITJjMt3w9f5uZESoHMFiDfzEAFR+qZMRDTs7tZaOa
-        wn65jcJZwpSdUH8lXcw7hXA=
-X-Google-Smtp-Source: APXvYqzOwTMQPf80/M2LkQKFhvu0cUuSMafRniwheMRPwh9Hb+rfdtneywBB/+oo4/HdihIkJNaPtA==
-X-Received: by 2002:ac8:264a:: with SMTP id v10mr10513172qtv.255.1561772587067;
-        Fri, 28 Jun 2019 18:43:07 -0700 (PDT)
-Received: from [10.0.1.15] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id l4sm1733073qtd.25.2019.06.28.18.43.05
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Jun 2019 18:43:06 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate
- setting
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.254.git.gitgitgadget@gmail.com>
- <pull.254.v2.git.gitgitgadget@gmail.com>
- <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
- <xmqq8stl8k09.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e684ad41-ca93-bad5-cf39-9dcf578a04ae@gmail.com>
-Date:   Fri, 28 Jun 2019 21:43:05 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        id S1726364AbfF2ExZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jun 2019 00:53:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54826 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726146AbfF2ExZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jun 2019 00:53:25 -0400
+Received: (qmail 17032 invoked by uid 109); 29 Jun 2019 04:53:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Jun 2019 04:53:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22829 invoked by uid 111); 29 Jun 2019 04:54:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Jun 2019 00:54:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Jun 2019 00:53:22 -0400
+Date:   Sat, 29 Jun 2019 00:53:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: [PATCH v2 1/6] test-lib: introduce test_commit_bulk
+Message-ID: <20190629045322.GA8155@sigill.intra.peff.net>
+References: <20190628093751.GA3569@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqq8stl8k09.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190628093751.GA3569@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2019 5:42 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +struct repo_settings {
->> +	char core_commit_graph;
->> +	char gc_write_commit_graph;
->> +};
-> 
-> I do not see a particular reason to favor type "char" here. "char"
-> is wider than e.g. "signed int :2", if you wanted to save space
-> compared to a more obvious and naive type, e.g. "int".  More
-> importantly, the language does not guarantee signedness of "char",
-> so the sentinel value of "-1" is a bit tricky to use, as you have to
-> be prepared to see your code used on an "unsigned char" platform.
+Here's a re-roll of just the first patch of this series, since that was
+the one that got all the comments (and the others are textually
+independent).
 
-I was unaware that platforms could change the signedness of "char".
-Thanks for guarding against it.
+The changes are:
 
-You're right that it probably isn't worth saving space here, as these
-values are replacing existing globals somewhere anyway. If we start
-worrying about these being present for each of thousands of submodules
-then we probably have bigger problems.
+  - drop the leftover in_dir assignment
 
-> Use of "signed char" would be OK, but this is a singleton instance
-> per repository, so I am not sure how much it matters to save a few
-> words here by not using the most natural "int" type.
+  - replace ${indir:+} magic with defaulting indir=. (so we always pass
+    it to "-C"
 
-I'll use 'int' in v2.
+  - replace eval formatting magic with "%s" printf formatters (safer and
+    gets rid of quoting issues in the callers).
 
-Thanks,
--Stolee
+  - use a tempfile to avoid significant logic on the left-hand subshell
+    of a pipe. This actually  _doesn't_ save a process because we end up
+    having to call "rm" to get rid of the tempfile. But I think it makes
+    the logic easier to follow (we can get just call test_tick as normal
+    in our loop), and as a bonus it leaves something you can inspect if
+    the fast-import fails.
+
+  - I dropped the comparison to test_commit in the documentation, since
+    it isn't a direct replacement due to the lack of tag creation. I
+    think that makes it clear enough.
+
+    I _didn't_ move the documentation out to t/README. IMHO we should be
+    moving in the opposite direction. But either way, I think it's
+    something we should handle separately (either consistently moving it
+    all into t/README, or moving it closer to the definitions).
+
+I didn't re-run all of the timings, but I spot-checked a few and got
+similar improvements (weirdly all of my timings, both before and after,
+seem slightly faster today; apparently gremlins were slowing my machine
+down yesterday?).
+
+-- >8 --
+Subject: test-lib: introduce test_commit_bulk
+Some tests need to create a string of commits. Doing this with
+test_commit is very heavy-weight, as it needs at least one process per
+commit (and in fact, uses several).
+
+For bulk creation, we can do much better by using fast-import, but it's
+often a pain to generate the input. Let's provide a helper to do so.
+
+We'll use t5310 as a guinea pig, as it has three 10-commit loops. Here
+are hyperfine results before and after:
+
+  [before]
+  Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
+    Time (mean ± σ):      2.846 s ±  0.305 s    [User: 3.042 s, System: 0.919 s]
+    Range (min … max):    2.250 s …  3.210 s    10 runs
+
+  [after]
+  Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
+    Time (mean ± σ):      2.210 s ±  0.174 s    [User: 2.570 s, System: 0.604 s]
+    Range (min … max):    1.999 s …  2.590 s    10 runs
+
+So we're over 20% faster, while making the callers slightly shorter. We
+added a lot more lines in test-lib-function.sh, of course, and the
+helper is way more featureful than we need here. But my hope is that it
+will be flexible enough to use in more places.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5310-pack-bitmaps.sh |  15 +----
+ t/test-lib-functions.sh | 123 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 126 insertions(+), 12 deletions(-)
+
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index a26c8ba9a2..3aab7024ca 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -21,15 +21,9 @@ has_any () {
+ }
+ 
+ test_expect_success 'setup repo with moderate-sized history' '
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit $i
+-	done &&
++	test_commit_bulk --id=file 10 &&
+ 	git checkout -b other HEAD~5 &&
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit side-$i
+-	done &&
++	test_commit_bulk --id=side 10 &&
+ 	git checkout master &&
+ 	bitmaptip=$(git rev-parse master) &&
+ 	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
+@@ -106,10 +100,7 @@ test_expect_success 'clone from bitmapped repository' '
+ '
+ 
+ test_expect_success 'setup further non-bitmapped commits' '
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit further-$i
+-	done
++	test_commit_bulk --id=further 10
+ '
+ 
+ rev_list_tests 'partial bitmap'
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0367cec5fd..9fd0fa2a89 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -233,6 +233,129 @@ test_merge () {
+ 	git tag "$1"
+ }
+ 
++# Efficiently create <nr> commits, each with a unique number (from 1 to <nr>
++# by default) in the commit message.
++#
++# Usage: test_commit_bulk [options] <nr>
++#   -C <dir>:
++#	Run all git commands in directory <dir>
++#   --ref=<n>:
++#	ref on which to create commits (default: HEAD)
++#   --start=<n>:
++#	number commit messages from <n> (default: 1)
++#   --message=<msg>:
++#	use <msg> as the commit mesasge (default: "commit %s")
++#   --filename=<fn>:
++#	modify <fn> in each commit (default: %s.t)
++#   --contents=<string>:
++#	place <string> in each file (default: "content %s")
++#   --id=<string>:
++#	shorthand to use <string> and %s in message, filename, and contents
++#
++# The message, filename, and contents strings are evaluated by printf, with the
++# first "%s" replaced by the current commit number. So you can do:
++#
++#   test_commit_bulk --filename=file --contents="modification %s"
++#
++# to have every commit touch the same file, but with unique content.
++#
++test_commit_bulk () {
++	tmpfile=.bulk-commit.input
++	indir=.
++	ref=HEAD
++	n=1
++	message='commit %s'
++	filename='%s.t'
++	contents='content %s'
++	while test $# -gt 0
++	do
++		case "$1" in
++		-C)
++			indir=$2
++			shift
++			;;
++		--ref=*)
++			ref=${1#--*=}
++			;;
++		--start=*)
++			n=${1#--*=}
++			;;
++		--message=*)
++			message=${1#--*=}
++			;;
++		--filename=*)
++			filename=${1#--*=}
++			;;
++		--contents=*)
++			contents=${1#--*=}
++			;;
++		--id=*)
++			message="${1#--*=} %s"
++			filename="${1#--*=}-%s.t"
++			contents="${1#--*=} %s"
++			;;
++		-*)
++			BUG "invalid test_commit_bulk option: $1"
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++	total=$1
++
++	{
++		# A "reset ... from" instructs fastimport to build on an
++		# existing branch tip rather than trying to overwrite.
++		if tip=$(git -C "$indir" rev-parse --verify "$ref" 2>/dev/null)
++		then
++			echo "reset $ref"
++			echo "from $tip"
++		fi
++
++		while test "$total" -gt 0
++		do
++			test_tick &&
++			echo "commit $ref"
++			printf 'author %s <%s> %s\n' \
++				"$GIT_AUTHOR_NAME" \
++				"$GIT_AUTHOR_EMAIL" \
++				"$GIT_AUTHOR_DATE"
++			printf 'committer %s <%s> %s\n' \
++				"$GIT_COMMITTER_NAME" \
++				"$GIT_COMMITTER_EMAIL" \
++				"$GIT_COMMITTER_DATE"
++			echo "data <<EOF"
++			printf "$message\n" $n
++			echo "EOF"
++			printf "M 644 inline $filename\n" $n
++			echo "data <<EOF"
++			printf "$contents\n" $n
++			echo "EOF"
++			echo
++			n=$((n + 1))
++			total=$((total - 1))
++		done
++
++	} >"$tmpfile"
++
++	git -C "$indir" \
++	    -c fastimport.unpacklimit=0 \
++	    fast-import <"$tmpfile" || return 1
++
++	# This will be left in place on failure, which may aid debugging.
++	rm -f "$tmpfile"
++
++	# If we updated HEAD, then be nice and update the index and working
++	# tree, too.
++	if test "$ref" = "HEAD"
++	then
++		git -C "$indir" checkout -f HEAD || return 1
++	fi
++
++}
++
+ # This function helps systems where core.filemode=false is set.
+ # Use it instead of plain 'chmod +x' to set or unset the executable bit
+ # of a file in the working directory and add it to the index.
+-- 
+2.22.0.775.g4ba9815492
