@@ -2,92 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6E31F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 05:19:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EFEA1F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 07:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbfF2FQB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jun 2019 01:16:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54840 "HELO cloud.peff.net"
+        id S1726818AbfF2Hnv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jun 2019 03:43:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54854 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726352AbfF2FQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jun 2019 01:16:01 -0400
-Received: (qmail 17510 invoked by uid 109); 29 Jun 2019 05:16:02 -0000
+        id S1726796AbfF2Hnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jun 2019 03:43:51 -0400
+Received: (qmail 18546 invoked by uid 109); 29 Jun 2019 07:43:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Jun 2019 05:16:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Jun 2019 07:43:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23022 invoked by uid 111); 29 Jun 2019 05:16:53 -0000
+Received: (qmail 23324 invoked by uid 111); 29 Jun 2019 07:44:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Jun 2019 01:16:53 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Jun 2019 03:44:42 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Jun 2019 01:15:59 -0400
-Date:   Sat, 29 Jun 2019 01:15:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Jun 2019 03:43:49 -0400
+Date:   Sat, 29 Jun 2019 03:43:49 -0400
 From:   Jeff King <peff@peff.net>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Git Test Coverage Report (Thurs. June 27)
-Message-ID: <20190629051559.GA8908@sigill.intra.peff.net>
-References: <49d98293-9f0b-44e9-cb07-d6b7ac791eb6@gmail.com>
- <14689d27-eecd-2e0a-715d-796b20d573e5@gmail.com>
- <20190628064520.GB19777@sigill.intra.peff.net>
- <ddf13a6b-42f4-57ae-49f1-8cc758b1dc4b@gmail.com>
- <20190628235903.GB2625@sigill.intra.peff.net>
- <c2e0ceef-c14d-ea1d-7522-eab0bf2e48ce@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips
+ are valid
+Message-ID: <20190629074348.GA5080@sigill.intra.peff.net>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+ <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c2e0ceef-c14d-ea1d-7522-eab0bf2e48ce@gmail.com>
+In-Reply-To: <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 09:36:14PM -0400, Derrick Stolee wrote:
+On Fri, Jun 28, 2019 at 08:51:04AM -0400, Derrick Stolee wrote:
 
-> > Still, if it's not too painful to add them in time-wise, it probably
-> > makes sense for the coverage tests to be as exhaustive as possible.
+> On 6/28/2019 6:11 AM, Jeff King wrote:
+> > When we receive a remote ref update to sha1 "X", we want to check that
+> > we have all of the objects needed by "X". We can assume that our
+> > repository is not currently corrupted, and therefore if we have a ref
+> > pointing at "Y", we have all of its objects. So we can stop our
+> > traversal from "X" as soon as we hit "Y".
+> > 
+> > If we make the same non-corruption assumption about any repositories we
+> > use to store alternates, then we can also use their ref tips to shorten
+> > the traversal.
 > 
-> Unfortunately, even running the t9*.sh tests once (among the two runs:
-> first with default options and then with several GIT_TEST_* options)
-> causes the build to go beyond the three hour limit, and the builds time
-> out.
+> I was confused by this paragraph, because I didn't know about
+> for_each_alternate_ref() and how refs_From_alternate_cb() will
+> strip the "/objects" and append "/refs" to check refs if they
+> exist. All of that logic is in transport.c but used by
+> fetch-pack.c and builtin/receive-pack.c. But now we are adding
+> to revision.c, so the restriction to "this helps data transfer"
+> is getting murkier.
 
-Is that because you're running the tests sequentially, due to the
-corruption of the gcov files?
+Using it for data transfer is still the main thing for our internal
+calls, but I think it's worth exposing it for general use via rev-list.
+I imagine it would mostly be for poking around and debugging, but it
+should allow things like:
 
-I think something like this would work to get per-script profiles:
+  # what do we have that our alternate does not
+  git rev-list --all --not --alternate-refs
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4b346467df..81841191d2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -369,6 +369,9 @@ TZ=UTC
- export LANG LC_ALL PAGER TZ
- EDITOR=:
- 
-+GCOV_PREFIX=$TEST_RESULTS_BASE.gcov
-+export GCOV_PREFIX
-+
- # GIT_TEST_GETTEXT_POISON should not influence git commands executed
- # during initialization of test-lib and the test repo. Back it up,
- # unset and then restore after initialization is finished.
+> Is this something that should be extracted to the object-store
+> layer? Or is it so tricky to use that we shouldn't make it too
+> easy to fall into a bad pattern?
 
-
-And then you can reassemble that with something like this (gcov-tool
-comes with gcc):
-
-  for i in t/test-results/t*.gcov; do
-    echo >&2 "Merging $i..."
-    gcov-tool merge -o . . "$i/$PWD"
-  done
-
-The merge is pretty slow, though (and necessarily serial). I wonder if
-you'd do better to dump gcov output from each directory and then collate
-it as text. I've heard lcov also has better support for handling
-multiple runs like this.
+I'm not sure what you have in mind, exactly. If you are asking whether
+there are more places that alternate refs could be used, I can't think
+of any. If you are asking whether this is in the wrong place, no, I
+think it's the right place. :)
 
 -Peff
