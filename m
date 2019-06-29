@@ -8,89 +8,132 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 306231F461
-	for <e@80x24.org>; Sat, 29 Jun 2019 17:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3AF61F461
+	for <e@80x24.org>; Sat, 29 Jun 2019 17:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbfF2RXk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Jun 2019 13:23:40 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55256 "EHLO
+        id S1726887AbfF2RaG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Jun 2019 13:30:06 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33840 "EHLO
         mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726837AbfF2RXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jun 2019 13:23:40 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g135so11940246wme.4
-        for <git@vger.kernel.org>; Sat, 29 Jun 2019 10:23:38 -0700 (PDT)
+        with ESMTP id S1726849AbfF2RaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jun 2019 13:30:06 -0400
+Received: by mail-wm1-f66.google.com with SMTP id w9so11428243wmd.1
+        for <git@vger.kernel.org>; Sat, 29 Jun 2019 10:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=8A7rhKxjABJ6q+ygMDlFPAFl4t/indN9hKUco/1qp7A=;
-        b=gOSf1yJhSNGc/tyleUTDfDQVpX7Ba7/BsFjyBlpQJ6S8Bd/KWh1ILJy+PN1yPBJQrI
-         xAF5+PQaa8FoxduM8izUBMqGYxFesdlagX31h8KrrKBq1lutnXqQLX4AReHA9W3hQ8dr
-         MXm1dcLX0qDxSKV5wjAFCjnqp6v49iwsHmjd8q7R7JY9CzYjTNvrRCfvBFr169yjVebi
-         L7SCYeI9WuOeOjs9HUnw/dL8ZzgyZBdUEBny6IcUVuusSNC20XPTJ2Gt2Lnmi1vYPZ4M
-         ieGUaXERVRpC70GJhFvjGnUJ+Z/smdtuB9YNzdLvBX5Dd7eq0jZSfNtTHwEx78aU7ePx
-         6iXw==
+        bh=Dur/D8eI/qEjO+O83BGO9nBFghAhfpORPlhWkcgPUoI=;
+        b=kFNQA9HPCvMQToJBi/MP7VwwrOpmOD3o3a3reCMUvzL6b3xzij2yybtFDW8m/Y4WKA
+         8adGcjhfl9eCsZdU/5gWR4Y3uf7E24TNRT+7ljuPACSZSMq2p5Q30Vpg3hfG6LllQ0SK
+         vKj6o+YuSMfEQN03PPYCGP3YcvxaxBYKwRT/M8TmmLRQsizdNEgVXn0QbEL4xn44Pj/Q
+         l4MdVFTLE7fNO46lr2x8q43cGK283qpUrhx33jwtlyTg5+ByD6T80FHiNbxMYB+9qCJE
+         NL/L/AEKg+7vZSwdM1wqbvNR0a2zqRyHCbqwpszaCqWpZOtCeEIG7hxBlQ7Muuys4Ft9
+         UsiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8A7rhKxjABJ6q+ygMDlFPAFl4t/indN9hKUco/1qp7A=;
-        b=XgPHhTDNjhGD3sZHVcBpt1if2hnbAjBqtd0GZ5iqjvL02BwajH0kLzIqmF83fqUL6Z
-         oLtG1R2gG29HpoUNTu+3bosPWpr0CkiF6FqnnCpx/Vycbpy8we8IwVT06SuqGHyqV4lw
-         8BaeCYpglurF4D1tmUcuHsHqdVBi9F4VoIOPN9ZDTuVgZOcJUT6fOveDKxP78kKhcMS5
-         nAgdoBj9hWi21FyBMpuhTUztG+DOyVP3zN0tMYMC5kQsvC9e/qH/bbG13BwOvOWO2ldn
-         aOK6lyJwVY1QZBeeZ1sLvDlRy2DJR3aQwTUXg8kJoqmI/3MH605p0fMtPgeLYQW/dnEa
-         gb2A==
-X-Gm-Message-State: APjAAAUKvXlLx+KeLQWurwFZPRc/RuQle9oDPpG5BV02HUgM4OTz36l5
-        swkVdEY3tmyHCLPs8LGkZ1I=
-X-Google-Smtp-Source: APXvYqzjyI9ZA0HO8gFxTm91ba2RF+Nr0tNHNwSejuuGB7tRRF66/kmQPT2HT/YfNCXRHBGpBTS2hg==
-X-Received: by 2002:a1c:5f87:: with SMTP id t129mr11921869wmb.150.1561829017906;
-        Sat, 29 Jun 2019 10:23:37 -0700 (PDT)
+        bh=Dur/D8eI/qEjO+O83BGO9nBFghAhfpORPlhWkcgPUoI=;
+        b=SiwYKMyQemo76iPd8svRmcGXGvijiWJgklJbzdgyhRgzHMIzLT/DeAonx8JJaqCpQz
+         z8jCn5z2Th7/Po9wbZzzb61ILgNKeGlN3SyJIqBN7KtrH84ljTrmwwnZ3UIYoOAElsDZ
+         0OPyc9xSJElQ/JKyFfmq470sANmQ8ehAcezybF49QCEYE02YfWnRtF2sHaErlpqe4tFz
+         JcMSc1W+QTc+iAghTBd/VCKEqDbRlYPH6eV2TBz70HPWrUcctgKJYa6M+7YFiAviHgPy
+         AMb89Y4ZOBlhJLflxNaSqwYvIOnXNGT9GHrQdh+yJaPBiC+LAUrQF9+8nbL3qPiMKoW5
+         XxmQ==
+X-Gm-Message-State: APjAAAX0nOQ2X2GRw96esN6ab/XGbYrPT9NLproXquK6fVChQ+K4SZVF
+        /m4YH669UmLFrgGxrIVSV/w=
+X-Google-Smtp-Source: APXvYqzCULOvjyw9l/GQFpG4inQSWPEK9XoPJzlctpaMNasm6CUDkJn4U/mC+y0+92LOFboFsmor7w==
+X-Received: by 2002:a7b:c444:: with SMTP id l4mr11233704wmi.15.1561829403944;
+        Sat, 29 Jun 2019 10:30:03 -0700 (PDT)
 Received: from szeder.dev (x4db511ea.dyn.telefonica.de. [77.181.17.234])
-        by smtp.gmail.com with ESMTPSA id h133sm4930953wme.28.2019.06.29.10.23.36
+        by smtp.gmail.com with ESMTPSA id c1sm11619161wrh.1.2019.06.29.10.30.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Jun 2019 10:23:37 -0700 (PDT)
-Date:   Sat, 29 Jun 2019 19:23:35 +0200
+        Sat, 29 Jun 2019 10:30:03 -0700 (PDT)
+Date:   Sat, 29 Jun 2019 19:30:01 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        avarab@gmail.com, peff@peff.net,
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler,
         Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v5 02/11] commit-graph: return with errors during write
-Message-ID: <20190629172335.GH21574@szeder.dev>
-References: <pull.112.v4.git.gitgitgadget@gmail.com>
- <pull.112.v5.git.gitgitgadget@gmail.com>
- <95f66e85b2fe93a218dad4c04c16718d053fb002.1560346173.git.gitgitgadget@gmail.com>
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/3] status: add status.aheadbehind setting
+Message-ID: <20190629173001.GI21574@szeder.dev>
+References: <pull.272.git.gitgitgadget@gmail.com>
+ <2f0f2a2df9410947b985d83a924d2549d62bb65f.1560889284.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <95f66e85b2fe93a218dad4c04c16718d053fb002.1560346173.git.gitgitgadget@gmail.com>
+In-Reply-To: <2f0f2a2df9410947b985d83a924d2549d62bb65f.1560889284.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 12, 2019 at 06:29:37AM -0700, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index e80c1cac02..3b6fd0d728 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -23,6 +23,14 @@ test_expect_success 'write graph with no packs' '
->  	test_path_is_file info/commit-graph
+On Tue, Jun 18, 2019 at 01:21:25PM -0700, Jeff Hostetler via GitGitGadget wrote:
+> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+> index 716283b274..febf63f28a 100755
+> --- a/t/t6040-tracking-info.sh
+> +++ b/t/t6040-tracking-info.sh
+> @@ -159,6 +159,19 @@ test_expect_success 'status -s -b --no-ahead-behind (diverged from upstream)' '
+>  	test_i18ncmp expect actual
 >  '
 >  
-> +test_expect_success 'close with correct error on bad input' '
-> +	cd "$TRASH_DIRECTORY/full" &&
-> +	echo doesnotexist >in &&
-> +	{ git commit-graph write --stdin-packs <in 2>stderr; ret=$?; } &&
-> +	test "$ret" = 1 &&
+> +cat >expect <<\EOF
+> +## b1...origin/master [different]
+> +EOF
+> +
+> +test_expect_success 'status.aheadbehind=false status -s -b (diverged from upstream)' '
+> +	(
+> +		cd test &&
+> +		git checkout b1 >/dev/null &&
+> +		git -c status.aheadbehind=false status -s -b | head -1
 
-This could be: 
+These tests specifically check 'git status', but the pipe hides its
+exit code.  Please use an intermediate file instead.
 
-  test_expect_code 1 git commit-graph write --stdin-packs <in 2>stderr
+> +	) >actual &&
 
+I found it odd to save the output of a whole subshell and redirect
+'git checkout's stdout to /dev/null to prevent it from itnerfering
+with the stdout of the subshell, instead of saving only the stdout of
+the command the test focuses on.
 
-> +	test_i18ngrep "error adding pack" stderr
+> +	test_i18ncmp expect actual
 > +'
+> +
+>  cat >expect <<\EOF
+>  On branch b1
+>  Your branch and 'origin/master' have diverged,
+> @@ -174,6 +187,15 @@ test_expect_success 'status --long --branch' '
+>  	test_i18ncmp expect actual
+>  '
+>  
+> +test_expect_success 'status --long --branch' '
+> +	(
+> +		cd test &&
+> +		git checkout b1 >/dev/null &&
+> +		git -c status.aheadbehind=true status --long -b | head -3
+> +	) >actual &&
+> +	test_i18ncmp expect actual
+> +'
+> +
+>  cat >expect <<\EOF
+>  On branch b1
+>  Your branch and 'origin/master' refer to different commits.
+> @@ -188,6 +210,15 @@ test_expect_success 'status --long --branch --no-ahead-behind' '
+>  	test_i18ncmp expect actual
+>  '
+>  
+> +test_expect_success 'status.aheadbehind=false status --long --branch' '
+> +	(
+> +		cd test &&
+> +		git checkout b1 >/dev/null &&
+> +		git -c status.aheadbehind=false status --long -b | head -2
+> +	) >actual &&
+> +	test_i18ncmp expect actual
+> +'
+> +
+>  cat >expect <<\EOF
+>  ## b5...brokenbase [gone]
+>  EOF
