@@ -2,118 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC6291F461
-	for <e@80x24.org>; Sun, 30 Jun 2019 15:09:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 853C71F461
+	for <e@80x24.org>; Sun, 30 Jun 2019 18:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbfF3PJn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jun 2019 11:09:43 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:34412 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbfF3PJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jun 2019 11:09:43 -0400
-Received: by mail-pl1-f196.google.com with SMTP id i2so5953221plt.1
-        for <git@vger.kernel.org>; Sun, 30 Jun 2019 08:09:42 -0700 (PDT)
+        id S1726660AbfF3SS6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jun 2019 14:18:58 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46108 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726572AbfF3SS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jun 2019 14:18:58 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n4so11281393wrw.13
+        for <git@vger.kernel.org>; Sun, 30 Jun 2019 11:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LWJQlCwHKI92aMjKEn8XmZjal9fD4I7W1RSU2bm20so=;
-        b=jIrTH61osvfzQ6t9NDV8Zdf7Uf5EKTy0doUo1Jk4YLOfqH8ISxYBlPjPtFlY1hznNu
-         K734e9G1YXyUqECy8UQjYm06izIPt4jGEnVzUIwPVUEx2MFKqj/x1XmAd/yO3dLArZpq
-         YIqqH8hwvE3zZY0/EMcXSx1568mgdL9/xEw4NPktfGtwK/GdQXvfc6hRPBRrvZl+fllm
-         GtzUfmd/GCgApuWegmXo4Lr0+/PKjtr1LcdEPttjfYV1DQeirDEw0n9llSPRVp/kQtMY
-         Yx+z057KPO3qqh1eYO0MqCaUheMr6aeL+MAWccCk9Ce5j4KPdTtS4+v+cYkiZ1RDnk7e
-         om4Q==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CtJV3qrcHPMwL9nKrWWkml2fWtZa5GMyNRvH2/34jYo=;
+        b=BZMZrsljRM5SoL4oui1YaOTC+Lg56uAJhxK3+yxbz9m0hR9cMfASvEYmk2xaNPxDPR
+         96MEAxc/VRzb/jDJsKPSI7F9mCemEBTs+Yj5jWznjWqFiSj+sabKtbCqYRSzIewKS+nJ
+         g5ZsDw2XkARwAMQM0BFnAFMWUCa72MaQ3tn/TeTwFAma22k7r7g0PUwLN3egmYx2Ih8a
+         5Jr1NMbMQsZrRNoYM2yEb+m8FL3YCBQTHidDqQb4GNCqfV1LRLYgTHSzAG0bK7+47FGg
+         XhNiTE7KEvcfFdt1EdaKp/KGjb0311WOG7clZbKXaTzIfNc2LW/efuNgm5l8n0esUF/Z
+         imow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LWJQlCwHKI92aMjKEn8XmZjal9fD4I7W1RSU2bm20so=;
-        b=V3tVyGU61z+z8AWZkAURKx/xRne4GrEqb0WkUndR7AI9fqMVJyoiNlY3PRJhFh3Cql
-         uF6X6g53RSYzSQAao2lhxCHqCVRo2aANhT5tFR1JBlAlsLo15aKa9t/0KDBGSlAOm7xH
-         u/6AGgeLdJOtcgK8Q4A9eFUsO+rfoO6I0WTrwtIcgcLVi32NZK/ZmsspkuLA98L4JxvU
-         OKGLRF1VY0VWsrnHo22iYyPCXY81xxAknTPThtZlWaznDlGYEyA+wYamGrbn+cpzFIsa
-         JaqBPqBQv8vjQHdfKLVAB8jekIN90H+MwRdjRncPI8U8C8jTnmAO6mzJzTQdaiRVJVoZ
-         GwqQ==
-X-Gm-Message-State: APjAAAWAN+x42mQ/l2DV3PUqXGW2KCpk22UTJ4+WOOk6STY9CFsOcQCn
-        AF1AtYWlJfBQR1JgH/rZB8tq19ZMr5zg1RmqFOthSCcC
-X-Google-Smtp-Source: APXvYqzHIfquvAgsHpuerEwDYO47dywkY2N8om95kmtPtHMyiNikonY8vNiqKgQzLbcPtXm6KoY7wGxFhp0KFgJd4NI=
-X-Received: by 2002:a17:902:2889:: with SMTP id f9mr22333422plb.230.1561907382325;
- Sun, 30 Jun 2019 08:09:42 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=CtJV3qrcHPMwL9nKrWWkml2fWtZa5GMyNRvH2/34jYo=;
+        b=Dh3G2jsTajEK/KloSs6X3xSsI5nkdxT4LyUraQrPhWpi7I5qy3Xg1Cf/XOfpWrZHQC
+         CWd5XWfJl8O88GEi3HU/jJytaphy6fJiCNZfs3jh1Zp4Fgl04a/aJTgQRHF54ZHB/axG
+         TsQX1tMCggxstMJG/g5IORoXKaX6VMXwW6VFj7TYoSQlNA0wK+E37bX6263hc5oWRJfu
+         72A26yqBx3QLjWE644NuLZTkQhjxxNKds6MXANhh0m7f4V8fYqSsiPS3oLsQcyS2e3bW
+         9I9mR6XRwETvqI5Ucrhw4npm7CjMIiCwWL+X1xhyaJKm3taiZirZY5YQCTviajnBCFUc
+         8urA==
+X-Gm-Message-State: APjAAAWgjGVx7sqKGsf0zPxLT8kLBEApHaqcS8mrjRQQiPmFq3JfwVTv
+        5AGiy1RGfvZHttzSFHrXm967BVxWLTuEkg==
+X-Google-Smtp-Source: APXvYqyIIxvdwlQJasQw7NWoWoskYEhEzaFjaYHtf1BnAdVZVyfYWbnB70sBOMJVb84VE0NDbhU5aw==
+X-Received: by 2002:a5d:4ec1:: with SMTP id s1mr14664594wrv.19.1561918736010;
+        Sun, 30 Jun 2019 11:18:56 -0700 (PDT)
+Received: from localhost.localdomain (cpc91214-cmbg18-2-0-cust207.5-4.cable.virginm.net. [81.102.75.208])
+        by smtp.gmail.com with ESMTPSA id x17sm5974911wrq.64.2019.06.30.11.18.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 30 Jun 2019 11:18:55 -0700 (PDT)
+From:   michael@platin.gs
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Barret Rhoden <brho@google.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Subject: [PATCH] t8014: remove unnecessary braces
+Date:   Sun, 30 Jun 2019 19:17:32 +0100
+Message-Id: <20190630181732.4128-1-michael@platin.gs>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190629171954.GG21574@szeder.dev>
+References: <20190629171954.GG21574@szeder.dev>
 MIME-Version: 1.0
-References: <20190630051816.8814-1-eantoranz@gmail.com> <20190630065358.GB31264@sigill.intra.peff.net>
-In-Reply-To: <20190630065358.GB31264@sigill.intra.peff.net>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Sun, 30 Jun 2019 09:09:31 -0600
-Message-ID: <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com>
-Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 12:54 AM Jeff King <peff@peff.net> wrote:
->
->
-> and then do:
->
->   git merge --squash feature
->
-> I get the same merge that rebuash is doing (with R6 as the merge base,
-> so we see F5 and R7 conflicting with each other). And then when I finish
-> it with "git commit", the result is a linear strand with M3 at the tip
-> (and its commit message is even auto-populated with information from the
-> squashed commits).
->
-> -Peff
+From: Michael Platings <michael@platin.gs>
 
-From the point of view of the revisions that you produce in the end,
-it's the same thing, but you are not rebasing/squashing your feature
-branch, you are moving your upstream branch to where you want the
-squashed/rebased branch to be. So, in fact you would need more steps,
-something like (starting from your feature branch being checked out):
+Signed-off-by: Michael Platings <michael@platin.gs>
+---
+ t/t8014-blame-ignore-fuzzy.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-git checkout --detach $( git rev-parse --abbrev-ref --symbolic-full-name @{u} )
-git merge --squash my-feature-branch
-git branch -f my-feature-branch
-git checkout my-feature-branch
+diff --git a/t/t8014-blame-ignore-fuzzy.sh b/t/t8014-blame-ignore-fuzzy.sh
+index 6f1a94caef..6e61882b6f 100755
+--- a/t/t8014-blame-ignore-fuzzy.sh
++++ b/t/t8014-blame-ignore-fuzzy.sh
+@@ -298,28 +298,28 @@ EOF
+ last_test=13
+ 
+ test_expect_success setup '
+-	{ for i in $(test_seq 2 $last_test)
++	for i in $(test_seq 2 $last_test)
+ 	do
+ 		# Append each line in a separate commit to make it easy to
+ 		# check which original line the blame output relates to.
+ 
+ 		line_count=0 &&
+-		{ while IFS= read line
++		while IFS= read line
+ 		do
+ 			line_count=$((line_count+1)) &&
+ 			echo "$line" >>"$i" &&
+ 			git add "$i" &&
+ 			test_tick &&
+ 			GIT_AUTHOR_NAME="$line_count" git commit -m "$line_count"
+-		done } <"a$i"
+-	done } &&
++		done <"a$i"
++	done &&
+ 
+-	{ for i in $(test_seq 2 $last_test)
++	for i in $(test_seq 2 $last_test)
+ 	do
+ 		# Overwrite the files with the final content.
+ 		cp b$i $i &&
+ 		git add $i
+-	done } &&
++	done &&
+ 	test_tick &&
+ 
+ 	# Commit the final content all at once so it can all be
+-- 
+2.21.0
 
-Yes, it works. Only that with rebuash you would do (starting from the
-feature branch being checked out branch):
-
-git rebuash
-
-as long as the upstream branch is set, of course.
-
-I think it makes more sense in terms of development flow of feature
-branches, if you know in the end you will give up a squashed branch:
-
-modify
-commit
-modify
-commit
-git pull # no need to use pull --rebase, merges will be fine
-modify
-commit
-modify
-commit
-git pull
-git modify
-# now I'm ready to rebase/squash
-git fetch
-git rebuash
-
-adding history could be done with an additional option (--hist
-(default) and --no-hist?)
-
-But, as you said, it's not like it's not possible to do it (with a
-little more effort) with available tools like merge --squash
