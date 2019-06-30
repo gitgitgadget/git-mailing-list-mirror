@@ -2,119 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6A1D1F461
-	for <e@80x24.org>; Sun, 30 Jun 2019 09:30:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17CC91F461
+	for <e@80x24.org>; Sun, 30 Jun 2019 10:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfF3JaI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jun 2019 05:30:08 -0400
-Received: from mail-lj1-f172.google.com ([209.85.208.172]:46336 "EHLO
-        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726482AbfF3JaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jun 2019 05:30:07 -0400
-Received: by mail-lj1-f172.google.com with SMTP id v24so10009473ljg.13
-        for <git@vger.kernel.org>; Sun, 30 Jun 2019 02:30:06 -0700 (PDT)
+        id S1726523AbfF3KDT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jun 2019 06:03:19 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50385 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726482AbfF3KDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jun 2019 06:03:19 -0400
+Received: by mail-wm1-f67.google.com with SMTP id n9so1092440wmi.0
+        for <git@vger.kernel.org>; Sun, 30 Jun 2019 03:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=YosS3o4Bm40ymZII5sLv5UukNx9COQ8pplQS8ySe2C0=;
-        b=op6K3uuNqqawOUDSs/pbhxiwIqir0tuz0lXOKuW6LDLUJLD9Q1QUHaHSGobwRVoiot
-         Y5UqHwnej6q47jcKbtVM9JD1MrYsxVjfpfjrXUXDFpMHDY9RJz8LFXjn35qz15c8smtu
-         MPCkmWCbj45k5UwEEXeOsfYeVJuOdpybD35q6cQynmG9ZMAskUu9dhd6yIO1HXyXgwH6
-         FV5cupzUt4yGKjrlt+VdaSb5Hogqqem1A0IzRaoWAe7FaBn0D2RRqimwmiKGWvhCsfWV
-         W8C6UdT9Cfpv1g+lXnbiX9B9puOpAtr3cOboBnlZWiCw9/pjXtB69jqh9oMDIQ2NlTXK
-         FKzg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=n8erTNA4W11a8hQxfkM8/sBwXNl4SwhmLIFJymEZXBw=;
+        b=dq+SQEjEj4me2cIzXN18SQtjgTAQjS2zjZKKXM8y0FizHdR8kOrMQAp+b+bugK8JNj
+         iYHMrI49B7uYVv2ThAeBGfzuYhkBHuUiaBAfiUdjIglVHIXDKHXhuD/ltbLdybJMDFlZ
+         XuE6RBh1t87/Fh1fGeTL+UADZYExahoXew/HF3ReEsGAkYPLGzZDIEAdtkT1QhddUA/q
+         6l5pWN4KBiF90pOnLc/qTtLMurqnpJ72LeABrsJED3ER5fYEureMjuVDfTjIVv+vPjNn
+         c2UB2cD81dHoOJYFoMRq/WcMgAfTrbHyjeYnwPxcqF1ZX7AgkKPKWo30V50RD5/41QvC
+         Qq6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=YosS3o4Bm40ymZII5sLv5UukNx9COQ8pplQS8ySe2C0=;
-        b=NN0ZCVYZ1/ilXSrXs5ROHMEKBnaZUgUeteegfaG7KnDMRzNDEz1TrkSpq3H9WwXMqo
-         MNxfHx02T0jmawmDLizrrvsC8vIgS3VclP979e39AbaeevIDZbYmx28PkcMYB0gGkYlw
-         bkPHyYQNey7tUTfhGMYgeGTyPtgX18ycKm4xpZLorvlWZPyDi34Rjl+FZedkXiG8HHLt
-         o7UQVF05Px7KX0sK7qIxo+aOKcUFQDk/Gc/7yxe5F+8LxSwWCClgbZs/8WZcut+vBD+j
-         bZNCxqvZ1KjcX5TsQpd0h31zbKnzugBBdoyhp/SL9GWgesE/Ac2SZ2VM5sS7MPW/3NCb
-         bTtg==
-X-Gm-Message-State: APjAAAUooVuAXINVcCkhq4BiOTd4YRGt9+UAiJztMUazENe1xQpaDAB1
-        b7oWXi/uedIXUZrNmOCjuxg=
-X-Google-Smtp-Source: APXvYqwADRw/ZgOrAwyFFedikV5bUj9CAKBp3ZMrQuDpxNjJg+fpFoK2RQ1k9eOYPAVVbNOJdVWFlA==
-X-Received: by 2002:a2e:5b94:: with SMTP id m20mr10818075lje.7.1561887005691;
-        Sun, 30 Jun 2019 02:30:05 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 ([158.75.2.130])
-        by smtp.gmail.com with ESMTPSA id b62sm2449711ljb.71.2019.06.30.02.30.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 30 Jun 2019 02:30:04 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        kyle@kyleam.com, Heiko.Boettger@karlstorz.com
-Subject: Re: [PATCH/RFC] get_oid: new extended SHA-1 syntax to control resolution process
-References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
-        <20190626084139.30246-1-pclouds@gmail.com>
-Date:   Sun, 30 Jun 2019 11:30:01 +0200
-In-Reply-To: <20190626084139.30246-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 26 Jun 2019 15:41:39 +0700")
-Message-ID: <86a7dz4e06.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=n8erTNA4W11a8hQxfkM8/sBwXNl4SwhmLIFJymEZXBw=;
+        b=q7WaKl1W/swBsLNWh2jAl++7HEc6ijLUl9maEmbMLskkfGtKZloVv06MqrNiKi4PMe
+         s5QrLq5/sDyO9rZQZwm5SAQQ3jwFosRra+czS/e7qDx0Ppcc8aoKcy9bd8OZkoK6FybD
+         92JrzvZDYErmbIG58no1r8ZxDA9nor27wtGE1+dAZ2yyhpivQTXgVFK+B54ZFyscjQC9
+         ze/Sjo56XJc8m2+WbDYdnTKExcvJYYShkZHjdi1dS8RkuzjwaMe/vEUh9gdrSyztY5An
+         W3DCeveY2OlEwwkgErBLL2yziJ61MAv3mbW8vvCdaufnrlc9/v/S1+eOqniI00KY/H+E
+         OLQA==
+X-Gm-Message-State: APjAAAVy0k/B6tCdiNFQ7ULiMNg1nloeQD6g6uSk5sictI+CdLG0igx5
+        jIpkfBW+JTEGWu/Qerw6/xs=
+X-Google-Smtp-Source: APXvYqwK7ncc4KroJfZ3UFUrMpPz7SILHLg8zwea/3SCk5aFqPLL5t/QF7SOhKRqrDA0Zu8wi2glAQ==
+X-Received: by 2002:a1c:18a:: with SMTP id 132mr13527221wmb.15.1561888997134;
+        Sun, 30 Jun 2019 03:03:17 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id u2sm15042715wmc.3.2019.06.30.03.03.15
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sun, 30 Jun 2019 03:03:16 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect
+ interactive rebases
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>
+References: <pull.253.git.gitgitgadget@gmail.com>
+ <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com>
+ <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet>
+ <e332eb5f-0818-763c-9de0-889644446a35@gmail.com>
+ <xmqq4l498irq.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <70648c5b-00ff-d7aa-f1f7-8bb7bf663829@gmail.com>
+Date:   Sun, 30 Jun 2019 11:03:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq4l498irq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bikeshed painting ahead.
+On 28/06/2019 23:08, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>>> I wonder if users understand that '-x' is "an interctive rebase".
+>>>> The documentation can read both ways, and one of these may want to
+>>>> be clarified.
+>>>>
+>>>> 	-x <cmd>, --exec <cmd>
+>>>> 	...
+>>>> 	This uses the --interactive machinery internally, but it can
+>>>> 	be run without an explicit --interactive.
+>>>>
+>>>> Is it saying that use of interactive machinery is an impelementation
+>>>> detail the users should not concern themselves (in which case, the
+>>>> message given to "die()" above is misleading---not a new problem
+>>>> with this patch, though)?  Is it saying "-x" makes it plenty clear
+>>>> that the user wants interactive behaviour, so the users do not need
+>>>> to spell out --interactive in order to ask for it (in which case,
+>>>> "die()" message is fine, but "... internally, but ..." is
+>>>> misleading)?
+>>>
+>>> Hmm. What would you think about:
+>>>
+>>>     		die(_("--reschedule-failed-exec requires --exec or --interactive"));
+> 
+> I was leaning towards admitting that the use of the interactive
+> machinery in "-x" is not merely an implementation detail and fixing
+> the documentation, leaving the die() message in the patch as-is.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
-[...]
-> The problem is we try every possible way to resolve a rev. Let's have
-> some annotation to express that we only want to resolve a rev in a
-> certain way:
->
-> - <hash>@{hash} only accepts a full hash or a short hash. If it's a
->   short hash, it cannot be ambiguous.
->
-> - <ref>@{literal} only accepts full ref. No turning "master" into
->   "refs/heads/master".
->
-> - <output>@{describe} interprets <output> as git-describe output
->   only, not an object name or a reference.
->
-> This gives scripts much better control over get_oid(), which
-> translates to rev-parse and a bunch other commands.
->
-> PS. The new syntax can stack with existing ones. E.g. you could write
-> refs/heads/master@{literal}@{yesterday} or <hash>@{hash}^{tree}.
-> Perhaps I should allow these tags at the end too, so you can enforce a
-> variable like "$REV"@{literal} where $REV could be even HEAD~123
+I'd really like to try and hide that as much as possible from users - 
+it's just confusing. (though sometimes we can't)
+> But ...
+> 
+>> I was wondering about requiring --exec with --reschedule-failed-exec
+>> rather than checking is_interactive() as that would be easier to
+>> understand.
+> 
+> ... I find this a reasonable way to think about the issue.  The
+> option only matters when we are doing "--exec".  And the usual
+> convenience measure we'd use, i.e. with --reschedule-failed-exec we
+> consider that we are implicitly in --exec mode, would not work
+> because there is no default "command" to be executed.
+ >
+>> One potential problem is if someone has an alias that
+>> always sets --reschedule-failed-exec but does not always add --exec to
+>> the command line.
+> 
+> Such a use case would be hitting this die() already without this
+> topic, wouldn't it?  In which case we can say there is no "someone"
+> with such an alias.
 
-I think it would be better to use <hash>^{hash} instead of
-<hash>@{hash}.
+It depends what else the alias includes, if it also includes 
+-i/-k/-r/--signoff then it wont have been dying but will if we start 
+requiring --exec and they don't set that.
 
-The <ref-ish>@{<something>} is used currently for information that is
-outside the DAG, like @{<date>}, @{<n>}, @{-<n>} uses information from
-reflog, and @{upstream} and @{push} uses information from the config.
+Best Wishes
 
-On the other hand ^{<type>}, ^{/<search text>}, and the future
-^{<hashalgo>} all use DAG-only information.
-
-Though one could argue that refs information _is_ outside the DAG...
-
-
-P.S. We have 'git show-ref --verify' that requires exact match (no
-DWIM-mery), which can be used together with '--quiet' in a script.
-But this doesn't allow for checking if an exact match, or a describe
-output exists in repository.
-
-
-Thanks for taking it up,
---
-Jakub Nar=C4=99bski
+Phillip
