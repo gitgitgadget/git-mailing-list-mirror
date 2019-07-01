@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
-	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD0261F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 19:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 513991F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 19:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726565AbfGATY4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 15:24:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56803 "EHLO
+        id S1726813AbfGATfC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 15:35:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54103 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfGATY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 15:24:56 -0400
+        with ESMTP id S1726442AbfGATfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 15:35:02 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D1A914B369;
-        Mon,  1 Jul 2019 15:24:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F15DA14B46B;
+        Mon,  1 Jul 2019 15:35:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KxDM83I8Blk4LmJUVR5ks8CGxGg=; b=oeFjOP
-        M2PBEoeQzq4I0+AbRaswagDvmacfvXWTggI7493uxWnqDjAeKvDuI83oI3r9iFmi
-        vjk/0E7TYq+vFZ2Jg5ZHWciE4sfU35KGk5h3pVnhRwYhVR7IHi+5PdkxbfV7JMPL
-        TfYQOZdefy4Q37uF+yn6+P3VopFUita6eyR4o=
+        :content-type; s=sasl; bh=4nvMpcs49fcNJZ+bUhrp6tVdwNg=; b=c9Xtjo
+        kvp1sYSzZ/Rso6z/pj8+GoYtLXBajSbLBL5HxZMvvMP0jJRKnM0d6ctHPvkreN8i
+        pHmOFHwdPdDRWC2XrBjpbsPwkXlaU546bo8DfotxY7G7Uf2uGCEiHBCGv6U51HwT
+        YzDci2pW6PpTkojuFTlqDN1LEpYa4HL2/WeeI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hN+3qvFynQr/wMgR2FyGX9iZQcAJ7zUv
-        ywFEUxEXXBObHVB4/X0rWENfE6QfPkY4/rA6Zb4+aLkFg+3Ew6IzFOpnrWeGo4NH
-        rGmIFjNdpcWtJvawZK1ezzTMGMnTwP8UYIEZRArpyYWbKhfajhdFsRM1Fr0KLtEW
-        LzWm4V+HLTs=
+        :content-type; q=dns; s=sasl; b=kxKK/x8NlDkV9IvuXnNj0l7nKVMYQwcK
+        Hu7M1kzvyiFGgbrSyJiCKyZEF2QxXWo7iFKCPYbD+qS9nkvF0RMJwGW14+JvMtDG
+        M6P8h+xFHLAFLArIo0MMPzTsTDe07AFHSjCW85ebcWCVIcrQEKu1FHVMzuLEgzV7
+        Mp47Ks2ZkMw=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22DDA14B367;
-        Mon,  1 Jul 2019 15:24:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C741614B46A;
+        Mon,  1 Jul 2019 15:35:00 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A8AC14B366;
-        Mon,  1 Jul 2019 15:24:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA73114B469;
+        Mon,  1 Jul 2019 15:34:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Derrick Stolee <stolee@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jrnieder@gmail.com, avarab@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
-References: <pull.261.git.gitgitgadget@gmail.com>
-        <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
-        <87muhxr7xv.fsf@igel.home>
-Date:   Mon, 01 Jul 2019 12:24:52 -0700
-In-Reply-To: <87muhxr7xv.fsf@igel.home> (Andreas Schwab's message of "Mon, 01
-        Jul 2019 19:17:00 +0200")
-Message-ID: <xmqqtvc55zi3.fsf@gitster-ct.c.googlers.com>
+To:     Eric Kulcyk <Eric.kulcyk@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Tracking parent branches in Git
+References: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com>
+Date:   Mon, 01 Jul 2019 12:34:58 -0700
+In-Reply-To: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com>
+        (Eric Kulcyk's message of "Mon, 1 Jul 2019 18:50:43 +0000")
+Message-ID: <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E70E5F2A-9C35-11E9-931B-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5088AF54-9C37-11E9-AD18-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+Eric Kulcyk <Eric.kulcyk@microsoft.com> writes:
 
-> On Jun 30 2019, Johannes Sixt <j6t@kdbg.org> wrote:
->
->> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
->> index 79bfaeafa9..4b4d06a1c8 100755
->> --- a/t/t5319-multi-pack-index.sh
->> +++ b/t/t5319-multi-pack-index.sh
->> @@ -443,7 +443,7 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
->>  		touch -m -t 201901010002 .git/objects/pack/pack-B* &&
->>  		touch -m -t 201901010003 .git/objects/pack/pack-A* &&
->>  		ls .git/objects/pack >expect &&
->> -		MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
->> +		MINSIZE=$(stat -c %s .git/objects/pack/*pack | sort -n | head -n 1) &&
->
-> You could also use ls -n.
+[Overly long lines are not appreciated around here.]
 
-Nice ;-)
+> We would like to track parent branches so that creating pull
+> requests can automatically determine the correct branch to merge
+> against.  I understand that this would require tracking more
+> information than is currently available right now in git.  Also,
+> it seems that if some cases, it is not possible to determine a
+> parent branch, in which case it would just be empty/null.
+
+Do you mean by "parent branch" what people usually call "upstream
+branch" (i.e. when that branch on the other side gains more commits
+independent from what you have been working on, then you would want
+to rebase your work on top of the updated state of that branch on
+the other side) around here?  Perhaps "git help glossary", look
+for "upstream branch" and start from there?  The entry mentions the
+configuration variables used to keep track of that information,
+which are described in "git help config", I think.
+
+> If I made a change to track the parent branch for each branch,
+> would this feature be accepted/welcomed as part of git, even if it
+> off by default?
+
+Regardless of what is being proposed, this is often not a very
+useful question.  Something worth doing for yourself is worth doing
+whether others also find it useful ;-)  And others usually do not
+have enough information to judge if such a change is welcome until
+seeing it in a bit more concrete form.
+
+Thanks.
+
