@@ -8,48 +8,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD6641F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 14:46:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4F6C1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 14:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727946AbfGAOqB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 10:46:01 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:41489 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727714AbfGAOqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 10:46:01 -0400
-Received: by mail-qt1-f201.google.com with SMTP id e39so13536733qte.8
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:46:00 -0700 (PDT)
+        id S1727998AbfGAOqE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 10:46:04 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:45997 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727714AbfGAOqE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 10:46:04 -0400
+Received: by mail-pg1-f202.google.com with SMTP id n7so7763884pgr.12
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=/e64JBKVFOqgVCrYxrVdCT1xh0yjDU9e3COYl4KIzy8=;
-        b=QC+5chXcXtBzWXpUyx43uB5Bm1vtdkrY1AvOhs0y23XohKdErrPRiRaBAbr6GGxMJ1
-         skN780KKUCMHhwGsr5OV6b0QM1aXk5tseE7OWVf0pvi/fySRqIPiwgowtOAJwvh6Lsnl
-         dcq8SvpGtcUYmHb8DPkjbRIfkP6lB0zc4eyM2GL3ylu7cXM1Z2sg1NeFV3Rgq1ahZCe1
-         jSY7w2Wjciw6iFEzhTYF0YIYflI2JWhKsME7qm2e6yrrlkHOwz4TQXpmIZMlUm0nFRYd
-         iraNdGjj1tFDRzjn6Q1EZjDlzq0xumm8QhFB9omjoW5u5HJo9lBA/FJz4GVCJnf8y21f
-         KSTg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=T6e6gPqlkRPSRXWcnblPBQNF/TMjH+mE+j/ew3Vnn80=;
+        b=EoN162AOzWkMoY0eL4RtxC1Pj4OpnXXqsR1UHw69wJL18+B2rjnKYuMs1CRMsqKACv
+         JIXNsfNFNf3gSJGCuWezZE3VGhOVxtdikcN4Iu6EO5eE3uE30tGUdB91Q7iWCY98uQ6l
+         CjbUH6BYjmbVezyPrhnmjBpvfofaIp/rIEfyUdA14YpFPbMwo4Bhbl3RROMwIhijreXP
+         47h4H+kBjjJoryz93HExnMg+m0gX0W9tLlx4y/70J+GpgsH00Rh5a8ZrCkI9xJpo8oO+
+         CQzoaw9vPBfymIPqptsZoSRUwxAWVmRvb8CEQu7Fa/HRFXpeI/mv6SN0mTDU8bgxuug0
+         aw/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=/e64JBKVFOqgVCrYxrVdCT1xh0yjDU9e3COYl4KIzy8=;
-        b=PKRa2sv2ZERbUGPwt1q/qBgNjh3eD8ECaIPi1uRX2tysJY9hq/8Epjt6vCHLo8yvTF
-         ip++vc+A5eccrDRVruCMQ3UVG7/VfYMqnLrlq7bYK7wjF9WUZ2vxB40Cp4o0MpI5+zQU
-         ASY6s5IU2iFM+4dtR8WLySlzQwjZt9PuFOhEIJWaOKIyKbaMxUESbymsuDgsOss5hvFT
-         NnVbPymo/yZ7y2NLY/GiQWy4ejO4bvFWAq7JQtCnAjn5o9hx/pSpTqYj6jseNwG5Nw8d
-         Ud6uH8r3m61Pu2ZY0XzFnQM+pHL0pevB1u2Z53X3YxFkc75lZ+R3Tm00rdKaJOoLXd0c
-         rzbg==
-X-Gm-Message-State: APjAAAWprA9tD8Vtc827n71FnQ4s/+3xjFhk6m788sUqfGQ3C9B+Nwgs
-        iHYT33TpcPp6xbyQSS5Rkl0UWjqbsvMLHg+iPZ0EMu6YASvWviHFG90zT31f3xIrphIwAFSSGxe
-        fcUML77tRXKKKuyx/WDptrIgaJaKWsokZeEkqKaWGCslvtzjsrH1u
-X-Google-Smtp-Source: APXvYqwvCN0hw8v7VY4vMoHlZZajyp7vi+YytqwMVgIo07EXzhHf5zdmiX8BvOGQEcnoMF4xWFDNaNbE
-X-Received: by 2002:a0c:8a23:: with SMTP id 32mr22113027qvt.231.1561992359940;
- Mon, 01 Jul 2019 07:45:59 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 10:45:39 -0400
-Message-Id: <20190701144548.129635-1-brho@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=T6e6gPqlkRPSRXWcnblPBQNF/TMjH+mE+j/ew3Vnn80=;
+        b=AuKJ4fXROtTpYs+0yYUkqJggqafwmjZoZmU6GmHvLGtsM4Q+ZgrWv8bfqftiJPWxW6
+         RZSwPwX1sEHcGBd+bUIsNJzF9otV2DGtV6jZO39+rYrRJ4sKeHs2i0sID91vt8F3dypX
+         7XrYskXoTiLvKz22dijyTsGkmw4Jaicn1bgJZnq4ge4DNBXC3cn9MroqwxEW5aPB3T1K
+         79AeimaH1xJIWX7iuZHuQZKCk26zWOisVmZUhJ1OIB1MDa7jTMW4s8osHf8VSQsmlcYM
+         ovRByP7tAJ+oiea2LOQMH8SHPYi9+6qNps6rehm5/CuvGrFPRq0RjKPxeQrv//yxtI1L
+         7Lkw==
+X-Gm-Message-State: APjAAAWupFw7VTXeYIz/3ZUoZjAPMRaxUDggFsbzWbltvQh1uh/XOt25
+        iSLzU6dqDVIIg7JQtmYbjh5HhQkzxnYfId0/WUfjuSShyjXbxSg/kfgMqvlAyqstX+/DVM4s/Lz
+        Addf5w7qfj3DRaqqE5ajfqKl4E3MzfY0DUHIBtTAQprCf0c70y6e7
+X-Google-Smtp-Source: APXvYqwQKRrFvCUPekh71aOyTfbr4P+cXQmJUC6vr2A2RTu2vvIrY8wLkf9sRCOePUbevHZRYTRoyhdp
+X-Received: by 2002:a65:50cb:: with SMTP id s11mr25056909pgp.371.1561992362674;
+ Mon, 01 Jul 2019 07:46:02 -0700 (PDT)
+Date:   Mon,  1 Jul 2019 10:45:40 -0400
+In-Reply-To: <20190701144548.129635-1-brho@google.com>
+Message-Id: <20190701144548.129635-2-brho@google.com>
 Mime-Version: 1.0
+References: <20190701144548.129635-1-brho@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v10 0/9] blame: add the ability to ignore commits
+Subject: [PATCH v10 1/9] fsck: rename and touch up init_skiplist()
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -66,154 +70,127 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch set adds the ability to ignore a set of commits and their
-changes when blaming.  This can be used to ignore a commit deemed 'not
-interesting,' such as reformatting.
+init_skiplist() took a file consisting of SHA-1s and comments and added
+the objects to an oidset.  This functionality is useful for other
+commands and will be moved to oidset.c in a future commit.
 
-v9 -> v10
-v9: https://public-inbox.org/git/20190620163820.231316-1-brho@google.com
-- Fixed left-over unused variables
-- Removed unnecessary braces in t8014
-- Rebased onto master
+In preparation for that move, this commit renames it to
+oidset_parse_file() to reflect its more generic usage and cleans up a
+few of the names.
 
-v8 -> v9
-v8: https://public-inbox.org/git/20190610153014.42055-1-brho@google.com
-- Fixed tests that had git-blame's output piped to another command
-- Rebased onto master
+Signed-off-by: Barret Rhoden <brho@google.com>
+---
+ fsck.c                          | 18 +++++++++---------
+ t/t5504-fetch-receive-strict.sh | 14 +++++++-------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
 
-v7 -> v8
-v7: https://public-inbox.org/git/20190515214503.77162-1-brho@google.com
-- Added Junio's fixes for test portability.
-- Removed unreachable code exposed by Derrick's test coverage report.
-- Added a test to ensure blame_coalesce() is covered.
-- Rebased onto master.
-
-v6 -> v7
-v6: https://public-inbox.org/git/20190410162409.117264-1-brho@google.com
-- Split the init_skiplist commit into two commits: "change variable
-  names" then "move the function".
-- Fixed the test's usage of grep, from grep "\+" to grep -E "+".
-- Fixed comments related to fsck.skipList, added them to
-  config/blame.txt
-- A line in the blame output is either "ignored" or "unblamable", not
-  both.
-- Changed the way we mark lines.  In particular, we don't zero-out the
-  hash anymore for unblamables, since all zeros already had a meaning.
-  We also distinguish between ignored and unblamable.  Here's the new
-  style:
-	? for ignored
-	* for unblamable
-  Both of those markings are controlled by config vars; the discussion
-  on the list shows that no default style works for everyone:
-        if blame.markIgnoredLines
-	    Line was attributed to a commit that was not the most recent
-	    to change it (i.e. the ignored commit) and will be marked
-	    with '?'.  Lines touched by an ignored commit that we could
-	    not blame on another are unmarked.
-        if blame.markUnblamableLines
-	    Lines touched by an ignored commit that we could not blame
-	    on another are marked with *.  I wanted to differentiate
-	    between Ignored and Unblamable, so a single ? isn't enough.
-- Added Michael's fuzzy fingerprinting code.
-- We guess_line_blames() for an entire chunk, instead of per-blame
-  entry.  A diff chunk can be made up of more than one blame_entry,
-  which made the job of the heuristic unnecessarily difficult.
-- Rebased onto master.
-
-v5 -> v6
-v5: https://public-inbox.org/git/20190403160207.149174-1-brho@google.com/
-- The "guess" heuristic can now look anywhere in the parent file for a
-  matching line, instead of just looking in the parent chunk.  The
-  chunks passed to blame_chunk() are smaller than you'd expect: they are
-  just adjacent '-' and '+' sections.  Any diff 'context' is a chunk
-  boundary.
-- Fixed the parent_len calculation.  I had been basing it off of
-  e->num_lines, and treating the blame entry as if it was the target
-  chunk, but the individual blame entries are subsets of the chunk.  I
-  just pass the parent chunk info all the way through now.
-- Use Michael's newest fingerprinting code, which is a large speedup.
-- Made a config option to zero the hash for an ignored line when the
-  heuristic could not find a line in the parent to blame.  Previously,
-  this was always 'on'.
-- Moved the for loop variable declarations out of the for ().
-- Rebased on master.
-
-v4 -> v5
-v4: https://public-inbox.org/git/20190226170648.211847-1-brho@google.com/
-- Changed the handling of blame_entries from ignored commits so that you
-  can use any algorithm you want to map lines from the diff chunk to
-  different parts of the parent commit.
-- fill_origin_blob() optionally can track the offsets of the start of
-  every line, similar to what we do in the scoreboard for the final
-  file.  This can be used by the matching algorithm.  It has no effect
-  if you are not ignoring commits.
-- RFC of a fuzzy/fingerprinting heuristic, based on Michael Platings RFC
-  at https://public-inbox.org/git/20190324235020.49706-2-michael@platin.gs/
-- Made the tests that detect unblamable entries more resilient to
-  different heuristics.
-- Fixed a few bugs:
-	- tests were not grepping the line number from --line-porcelain
-	  correctly.
-	- In the old version, when I passed the "upper" part of the
-	  blame entry to the target and marked unblamable, the suspect
-	  was incorrectly marked as the parent.  The s_lno was also in
-	  the parent's address space.
-
-v3 -> v4
-v3: https://public-inbox.org/git/20190212222722.240676-1-brho@google.com/
-- Cleaned up the tests, especially removing usage of sed -i.
-- Squashed the 'tests' commit into the other blame commits.  Let me know
-  if you'd like further squashing.
-
-v2 -> v3
-v2: https://public-inbox.org/git/20190117202919.157326-1-brho@google.com/
-- SHA-1 -> "object name", and fixed other comments
-- Changed error string for oidset_parse_file()
-- Adjusted existing fsck tests to handle those string changes
-- Return hash of all zeros for lines we know we cannot identify
-- Allow repeated options for blame.ignoreRevsFile and
-  --ignore-revs-file.  An empty file name resets the list.  Config
-  options are parsed before the command line options.
-- Rebased to master
-- Added regression tests
-
-v1 -> v2
-v1: https://public-inbox.org/git/20190107213013.231514-1-brho@google.com/
-- extracted the skiplist from fsck to avoid duplicating code
-- overhauled the interface and options
-- split out markIgnoredFiles
-- handled merges
-Barret Rhoden (8):
-  fsck: rename and touch up init_skiplist()
-  Move oidset_parse_file() to oidset.c
-  blame: use a helper function in blame_chunk()
-  blame: add the ability to ignore commits and their changes
-  blame: add config options for the output of ignored or unblamable
-    lines
-  blame: optionally track line fingerprints during fill_blame_origin()
-  blame: use the fingerprint heuristic to match ignored lines
-  blame: add a test to cover blame_coalesce()
-
-Michael Platings (1):
-  blame: add a fingerprint heuristic to match ignored lines
-
- Documentation/blame-options.txt |   19 +
- Documentation/config/blame.txt  |   16 +
- Documentation/git-blame.txt     |    1 +
- blame.c                         | 1015 +++++++++++++++++++++++++++++--
- blame.h                         |    6 +
- builtin/blame.c                 |   56 ++
- fsck.c                          |   37 +-
- oidset.c                        |   35 ++
- oidset.h                        |    8 +
- t/t5504-fetch-receive-strict.sh |   14 +-
- t/t8003-blame-corner-cases.sh   |   36 ++
- t/t8013-blame-ignore-revs.sh    |  274 +++++++++
- t/t8014-blame-ignore-fuzzy.sh   |  437 +++++++++++++
- 13 files changed, 1855 insertions(+), 99 deletions(-)
- create mode 100755 t/t8013-blame-ignore-revs.sh
- create mode 100755 t/t8014-blame-ignore-fuzzy.sh
-
+diff --git a/fsck.c b/fsck.c
+index 4703f5556145..a28cba6b05dd 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -181,7 +181,7 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+ 	return msg_type;
+ }
+ 
+-static void init_skiplist(struct fsck_options *options, const char *path)
++void oidset_parse_file(struct oidset *set, const char *path)
+ {
+ 	FILE *fp;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -189,26 +189,26 @@ static void init_skiplist(struct fsck_options *options, const char *path)
+ 
+ 	fp = fopen(path, "r");
+ 	if (!fp)
+-		die("Could not open skip list: %s", path);
++		die("could not open object name list: %s", path);
+ 	while (!strbuf_getline(&sb, fp)) {
+ 		const char *p;
+-		const char *hash;
++		const char *name;
+ 
+ 		/*
+ 		 * Allow trailing comments, leading whitespace
+ 		 * (including before commits), and empty or whitespace
+ 		 * only lines.
+ 		 */
+-		hash = strchr(sb.buf, '#');
+-		if (hash)
+-			strbuf_setlen(&sb, hash - sb.buf);
++		name = strchr(sb.buf, '#');
++		if (name)
++			strbuf_setlen(&sb, name - sb.buf);
+ 		strbuf_trim(&sb);
+ 		if (!sb.len)
+ 			continue;
+ 
+ 		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+-			die("Invalid SHA-1: %s", sb.buf);
+-		oidset_insert(&options->skiplist, &oid);
++			die("invalid object name: %s", sb.buf);
++		oidset_insert(set, &oid);
+ 	}
+ 	if (ferror(fp))
+ 		die_errno("Could not read '%s'", path);
+@@ -284,7 +284,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+ 		if (!strcmp(buf, "skiplist")) {
+ 			if (equal == len)
+ 				die("skiplist requires a path");
+-			init_skiplist(options, buf + equal + 1);
++			oidset_parse_file(&options->skiplist, buf + equal + 1);
+ 			buf += len + 1;
+ 			continue;
+ 		}
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index 7bc706873c5b..fdfe179b1188 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -164,9 +164,9 @@ test_expect_success 'fsck with unsorted skipList' '
+ test_expect_success 'fsck with invalid or bogus skipList input' '
+ 	git -c fsck.skipList=/dev/null -c fsck.missingEmail=ignore fsck &&
+ 	test_must_fail git -c fsck.skipList=does-not-exist -c fsck.missingEmail=ignore fsck 2>err &&
+-	test_i18ngrep "Could not open skip list: does-not-exist" err &&
++	test_i18ngrep "could not open.*: does-not-exist" err &&
+ 	test_must_fail git -c fsck.skipList=.git/config -c fsck.missingEmail=ignore fsck 2>err &&
+-	test_i18ngrep "Invalid SHA-1: \[core\]" err
++	test_i18ngrep "invalid object name: \[core\]" err
+ '
+ 
+ test_expect_success 'fsck with other accepted skipList input (comments & empty lines)' '
+@@ -193,7 +193,7 @@ test_expect_success 'fsck no garbage output from comments & empty lines errors'
+ test_expect_success 'fsck with invalid abbreviated skipList input' '
+ 	echo $commit | test_copy_bytes 20 >SKIP.abbreviated &&
+ 	test_must_fail git -c fsck.skipList=SKIP.abbreviated fsck 2>err-abbreviated &&
+-	test_i18ngrep "^fatal: Invalid SHA-1: " err-abbreviated
++	test_i18ngrep "^fatal: invalid object name: " err-abbreviated
+ '
+ 
+ test_expect_success 'fsck with exhaustive accepted skipList input (various types of comments etc.)' '
+@@ -226,10 +226,10 @@ test_expect_success 'push with receive.fsck.skipList' '
+ 	test_must_fail git push --porcelain dst bogus &&
+ 	git --git-dir=dst/.git config receive.fsck.skipList does-not-exist &&
+ 	test_must_fail git push --porcelain dst bogus 2>err &&
+-	test_i18ngrep "Could not open skip list: does-not-exist" err &&
++	test_i18ngrep "could not open.*: does-not-exist" err &&
+ 	git --git-dir=dst/.git config receive.fsck.skipList config &&
+ 	test_must_fail git push --porcelain dst bogus 2>err &&
+-	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
++	test_i18ngrep "invalid object name: \[core\]" err &&
+ 
+ 	git --git-dir=dst/.git config receive.fsck.skipList SKIP &&
+ 	git push --porcelain dst bogus
+@@ -255,10 +255,10 @@ test_expect_success 'fetch with fetch.fsck.skipList' '
+ 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
+ 	git --git-dir=dst/.git config fetch.fsck.skipList does-not-exist &&
+ 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
+-	test_i18ngrep "Could not open skip list: does-not-exist" err &&
++	test_i18ngrep "could not open.*: does-not-exist" err &&
+ 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/config &&
+ 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
+-	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
++	test_i18ngrep "invalid object name: \[core\]" err &&
+ 
+ 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/SKIP &&
+ 	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
