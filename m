@@ -2,107 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEFB91F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C909A1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 20:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbfGAUU4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 16:20:56 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:42411 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbfGAUUz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 16:20:55 -0400
-Received: by mail-pf1-f202.google.com with SMTP id y7so9442852pfy.9
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:55 -0700 (PDT)
+        id S1726673AbfGAUkW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 16:40:22 -0400
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:40657 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbfGAUkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 16:40:21 -0400
+Received: by mail-wm1-f54.google.com with SMTP id v19so894380wmj.5
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Pp0OkZW/FgkuU6MiSbk6EZpEpgnCMkWIlsh0VlMIusk=;
-        b=Tj3+tv+4giqrTHNSkH/DgANQm0r/3P9slff4GkYHfcInV5R3R0xsCcP5Qe+iHW/Xwv
-         DWkWCtoyWh3W1ldgAdQIvAcCe6IY4TqXAGJ4ejYQneFDH9zXAjZ0nh3D32A7xFHG06gz
-         IiINT6d1hZ8ZyF764jvaUw4nHMbzVTvYkR5bJobvARcCHPtbWTlRxEAcr3tvi9s5d4Bc
-         jEdv2SQVkSn8RaMgVSfT7DJLiovgnzqMGhCRrqByq7CY2eYcmsNIbt9xqyak+tJuew7a
-         G4qKurvutyayW/V4kk4p2oIa/c3yZZcYOoecCLBpkMg2mxXcR7MUB9p8KFEWWvPEzKOV
-         U6yg==
+        d=googlemail.com; s=20161025;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dKQmGYEFj8bHbHRXR5PVseIbkqG1Ym35uFa+tRp9CcQ=;
+        b=UzQGU9ILcUgRiOlcY31FgxdYOVUZRac59ncHpKOyHngQdxa65t4za6jRyZC22bFjnV
+         PJVUrxQGZ2a8I/AWGaNczG6jeAubs0O0Dd8+XaE3vhlh0htXhDzKF4G2Ov5jKLK1TzYz
+         SlfLR7kLWsHdsE9LzElYgmHrCNXsJoK4agZo+mJs4F2JkQPcNoA8wh3PSN33WyK78Lnk
+         w5gYRp82gg0IHj0H+GvSYQGRNCE56Md+TnGGbl9D35pG5qEXiZP3IDSQSpPb/8MwQSKN
+         IfgcF32S+psP9TC6eNNqFPEsYclatNoKf9gCAXm8jn7yua2/1d4y51RRy864txigWIsX
+         8jIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Pp0OkZW/FgkuU6MiSbk6EZpEpgnCMkWIlsh0VlMIusk=;
-        b=CIsKKgfMePg2eYB/nXNIwkEj1WPgxbrGBrXwiugRuS6xOFqUy684zqz5ZYMCKPKI7R
-         RkYWMYHbx8uDj3VCrn1Xq7l7k2q7J9xBx+xzL4RGclAeB35+6e5DZU1WSWwjiF1xzqsR
-         8JnOkwgm0hgIi3h6hAf71tFxi78FiN2T7kACM+cG+3p20Z2VRqfsOBG7aVzhdJqqm0vS
-         xfZdoJWv/Lbyt1+fppleFdH1lSQE3DEERAwKO5X6AUljLNab+ZKRPJJNgfJ8G6hYpxs0
-         dcSD9C4LZnZ3/ZJh9LQV8AubFTCgYWvoZTVMPgLhxXMu+aAT5IrzkpajkjHn2XDlg4BA
-         R6HQ==
-X-Gm-Message-State: APjAAAU3KnOAAfvMrZrm3JBv6nOSIVxlL6Rl1Y3nOWhOyv3XSqCfjpBn
-        3+Q+I4bv6ypcC6EEqAJlDalxzns8oGGhccc7YEyKeulBTgKDrDLiPMA8SOkZ51a4FxgncJW+c5O
-        nVU3YLxt8mf9V0uv8eKw7QSGZZmEagsMVgvTAR6LfZcY32Df5hfW7NVbeoWO8/fOFdVD1D8lH+w
-        ==
-X-Google-Smtp-Source: APXvYqxav2W9gm9cqfdaCDjIwfga0lAM2wsvqZaL0ECVPBuiwUOnDhSc17nkhKnU1OUOMtB0Pacf9drkMara7BZZuIs=
-X-Received: by 2002:a63:e317:: with SMTP id f23mr26143784pgh.39.1562012454769;
- Mon, 01 Jul 2019 13:20:54 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 13:20:14 -0700
-In-Reply-To: <20190701202014.34480-1-emilyshaffer@google.com>
-Message-Id: <20190701202014.34480-14-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v3 13/13] walken: reverse the object walk order
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dKQmGYEFj8bHbHRXR5PVseIbkqG1Ym35uFa+tRp9CcQ=;
+        b=qaBLwTOjpf74zEToGo2mdnnT8yiwia6w7VFCpwprcsgDsG6z7r2t38TfDv8Puq9zXs
+         JiUIxNXRHuxe4JEK6O/qZ4ffb5kvtiXEFaZKem7FML0X+zT5tgy4poaz7TTTPkZ0JsHs
+         FWmiuOVFjAGgWvGZFaRP7Iz+9s0Akl9sdOqubhakoC2im1i6VeFIknjzsDJNyJ5NCrpU
+         enppJTIxo3py7QlrWaJJGhYeLfru3Bu5B8X1Cd2AgsnaGz4QpHFOWn6XNQU03AmEl/xj
+         1BgH9Vb06gJwbvBmQdXQHkaC0rI/poG8MEr4On65Ul9q2W9/7oaJJTFB+rnfoUWkCarn
+         dBQQ==
+X-Gm-Message-State: APjAAAUHGkFvAfIGhbljlJbneBUXHH1HQgzxMVK3DNenGoH2p/z2ZB3U
+        vyRQuNrJ3duTtfFWf4klNH8=
+X-Google-Smtp-Source: APXvYqwwZ9XJVCT8/RZmBGlHd5sOR8whJG756a2BvgVzrH6A3uVolXWOrSm0J7c4AVfW80Lh4e/z4A==
+X-Received: by 2002:a1c:7503:: with SMTP id o3mr613909wmc.170.1562013619964;
+        Mon, 01 Jul 2019 13:40:19 -0700 (PDT)
+Received: from esm (ipbcc038b1.dynamic.kabel-deutschland.de. [188.192.56.177])
+        by smtp.gmail.com with ESMTPSA id y1sm491773wma.32.2019.07.01.13.40.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 13:40:19 -0700 (PDT)
+From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
+X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
+Date:   Mon, 1 Jul 2019 22:40:17 +0200
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Kulcyk <Eric.kulcyk@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Tracking parent branches in Git
+Message-ID: <20190701204017.GA7537@esm>
+References: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com>
+ <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com>
+ <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Demonstrate that just like commit walks, object walks can have their
-order reversed. Additionally, add verbose logging of objects encountered
-in order to let contributors prove to themselves that the walk has
-actually been reversed. With this commit, `git walken` becomes extremely
-chatty - it's recommended to pipe the output through `head` or `tail` or
-to redirect it into a file.
+On Mon, Jul 01, 2019 at 12:48:16PM -0700, Bryan Turner wrote:
+> Since branches are ephemeral names and have no intrinsic metadata of
+> their own (unlike, say, annotated tags or commits), I suspect
+> implementing something like this may be more complicated than it might
+> initially appear, especially if said metadata needs to be communicated
+> to remote repositories (which implies it might require changes to the
+> wire protocol as well).
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Change-Id: I91883b209a61ae4d87855878291e487fe36220c4
----
- builtin/walken.c | 3 +++
- 1 file changed, 3 insertions(+)
+You can right now give meta data of your choice with --push-option to
+the push command. The Gerrit system makes use of that already. However,
+this would not be intrinsic to Git, but the serve needs to react on
+those options. And it should be in good company with suitable client
+tools.
 
-diff --git a/builtin/walken.c b/builtin/walken.c
-index 1638f679f2..2eb12f92ed 100644
---- a/builtin/walken.c
-+++ b/builtin/walken.c
-@@ -104,11 +104,13 @@ static int git_walken_config(const char *var, const char *value, void *cb)
- 
- static void walken_show_commit(struct commit *cmt, void *buf)
- {
-+	printf("commit: %s\n", oid_to_hex(&cmt->object.oid));
- 	commit_count++;
- }
- 
- static void walken_show_object(struct object *obj, const char *str, void *buf)
- {
-+	printf("%s: %s\n", type_name(obj->type), oid_to_hex(&obj->oid));
- 	switch (obj->type) {
- 	case OBJ_TREE:
- 		tree_count++;
-@@ -157,6 +159,7 @@ static void walken_object_walk(struct rev_info *rev)
- 	rev->tag_objects = 1;
- 	rev->tree_blobs_in_commit_order = 1;
- 	rev->exclude_promisor_objects = 1;
-+	rev->reverse = 1;
- 
- 	if (prepare_revision_walk(rev))
- 		die(_("revision walk setup failed"));
--- 
-2.22.0.410.gd8fdbe21b5-goog
-
+Take care,
+Eckhard
