@@ -2,123 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE581F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 12:11:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D10831F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727683AbfGAMLh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 08:11:37 -0400
-Received: from mout.gmx.net ([212.227.17.21]:38915 "EHLO mout.gmx.net"
+        id S1727697AbfGAMPX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:15:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35071 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727187AbfGAMLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 08:11:36 -0400
+        id S1727334AbfGAMPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:15:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561983079;
-        bh=noK08a3Tdav03EnXHqflgY6dxnuo+9uGjVKAMs/FUbc=;
+        s=badeba3b8450; t=1561983311;
+        bh=PyQYtJelbP1+L559J4yccl83xM0DmI/7HOu1Nc7fAtk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HjqoPsuKxuzxeLnQmMTDx9mmAuRx1/gQcRI/kal0wZyfsIfvfSxpcGjxVRiQoF8hh
-         zTJqzw6q3dpgz1WjzL8MUtlZG/6HjfUjvr/6HCFRAUARefH58qUILmoHfGnkKhWC3Z
-         t+Y01alZxz+xWgZa01Z6JEYvm+Bhz7G/vb2B4G5Q=
+        b=AJ0fHe1FZ8ALrR6d2ABS0MlhVMqpADR1CutvjegWn5NhL6c1ZVIgXXyT8ylQ/NUMs
+         m+HVd/KzPEg/WBWFioQOPAapfnK7HgeH0YtmvKZzoLndHcCFTcvndeenI2x/58OUq1
+         KPfSwTPj7nfcDzOJcMZwy55t/LmDjPA7BmJN8DbE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjuR3-1iEV1535In-00bsf9; Mon, 01
- Jul 2019 14:11:18 +0200
-Date:   Mon, 1 Jul 2019 14:11:43 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKKZ3-1hyciG0aFT-00LoqY; Mon, 01
+ Jul 2019 14:15:11 +0200
+Date:   Mon, 1 Jul 2019 14:15:35 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
-In-Reply-To: <20190630222537.GA21696@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
-References: <pull.261.git.gitgitgadget@gmail.com> <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org> <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com> <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
- <20190630222537.GA21696@sigill.intra.peff.net>
+        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to
+ dir_iterator_begin
+In-Reply-To: <CAHd-oW45RAov-5paURQ7j5dg0nZktF2J0bME7Wo1pF8YCd2cww@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907011413530.44@tvgsbejvaqbjf.bet>
+References: <cover.1560898723.git.matheus.bernardino@usp.br> <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.1906261528360.44@tvgsbejvaqbjf.bet> <xmqqwoh8cjeg.fsf@gitster-ct.c.googlers.com>
+ <CAHd-oW5zea9wzobAQG4FzN-KSS5BsRoM5vf_x_F83=yqGRfUQw@mail.gmail.com> <nycvar.QRO.7.76.6.1906272046180.44@tvgsbejvaqbjf.bet> <CAHd-oW6c7EoY+t-ymkcBmZM20YcGb1SWhM7XMO35Fofj-UNmYQ@mail.gmail.com> <nycvar.QRO.7.76.6.1906281449250.44@tvgsbejvaqbjf.bet>
+ <CAHd-oW45RAov-5paURQ7j5dg0nZktF2J0bME7Wo1pF8YCd2cww@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sQDWYNswyzp4mDYBPcEV6QXt7sxZv4DSPVTcZiS0t+62obzmAfu
- mQeuj+/VI+ldvQUi5/RVWiU87Caw2rBeKF32ud7eyImk33krrNrdSV2CqotwRsZHi52JyXP
- oyhkuDu0dVCg7gI+2Ykedjb6dSUorWRsGI4S0MxwWERS0U5cEfmol+ht7BJaZ99hpHwKQps
- 7obQ9Ru/KLNYeWOA76diQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:G0ZqAZ5rgws=:mhOurAg7RcQ3DZQX+2vpMr
- LAYJ/xAI5qHlRus6zpuii70cby2G5KjYqEzckXH90X7tSh7Pg7Yiu6qubNi3JDYfIJ+gZFzyZ
- /PF4wKd3toMk8nbd1Q8in0YEx91bCbc60aeQ23ENoDYdV/53cBkhAS3Wam1CB1aqyIvhqTXei
- LJO/55eJk8/RmCmoybyRtX2TL1oIO3qs9TVtsH1DE/pMOtbmMzwZxkDCWomABaHUxDWBoPgIl
- jH0RDKGgS7CHG6JExdNdPI7FKdhU1xyXx9Zkx31c5TeGLqJpqyW+x1I+UizZwhWe53EPQYpRO
- XWXvmgrs/DCvB7OWSzjBKKVJZ9r2b7Uprs0xW9ty1ga5WoZPGNulEZtxwRoblFpjWGgqV0oG1
- 7+7BTm16jFT5uc1Og2D8eMdJoEgkr9FH0At1MNbcEYSUxFRfkFJsVF7s7JIzpUQ+1GDISr9QA
- y7nogML3w2wpsS3TpFYdnlMdViwjR5ZVoHEhdejQlFRX90HzN38zWF3LBUe4c6zecteg4G1gr
- RYORxpz4JsmRAQaldLsgXCmnwtqwEfpdniFx55rgHjS9Kt/ms8sRVM6v377ijZ0XZiRZ507xo
- 6wK75PmB5mm0poby4LmkAOiyqIQIN3UibHhJIem2kuVci3Oc3Lu2Pp6vEtLZNvQqbGGUMk+Ac
- 9jCG8JmR+Y+IdlW1Zhiz3XNJ+Kk/CkmkjjaUEcTHT40F2EmGDnXs4E4G+VrM0AUoVgzrkZpUq
- sPuOmYzDv3oT1r4DOyyH5wuTyAWvgRxHXUC/t+VQ9jF0AwWvqe3rVhIsNe85SGR6AOVphyXGn
- 35bTph4mnag9d6O5vXfEwIIRTmZBhZVpHaVKEPuSchetZdoTs5tm2bFp8avaLoIfn7ufJRUMd
- veqjIlPnB+q7AVQbKSmMSPeumSuNo3veLsy7JhjQJxx31SqxHWq9s2OTipRNaZ+JgsB+m6+v2
- lBc4ke4vb8fEm2HLWmX0Brl/mxNogbWfyZlX1+rnSsIZ/N+4PXuMaArHtYiHPkFnW1kfpjng8
- /Nqu1Vbdhe1jJ7VBWsKZwQpZWRYbAfKNy+jbPzOLTuHDqRYYCRKD/eAFSQRL8s67htZS04eGy
- wAhYdhjRxlS2HcNMgiDbvaMk0OyUuawAPYN
+X-Provags-ID: V03:K1:MaRmFMcWqlPUki3mbrBbcohAQTy6AaiPGZNE7nc7059CmijxgbS
+ EI52HfdHLjI1wMCfZ6C8Q+s3wxzBYvUXrFyLiSf7y7jg1D8OTeSheGWG10boJSqRX7RkC/F
+ 9BygHvFd4kDgJZXDMTcMQlq7rwxsX2HcdyvNOpgFUPMVPXPaP7JnayJB0bi048vVmSctdl5
+ badSSUGl9HetCZp5OhrqQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ATHM7pINgG0=:wsmFS/h+fjCEy7nFeE9blN
+ g0lVZI1wiw1vLX1J/56mzYpmwrxOhv4/Uojb2XVkFf2haLUfdJtRNttYcf34KPZOqyZN3L3hw
+ stLvb4B6+lJ25z+pJt1tbCB6WwwAjeiCmSmzRhcxa3QSRwShWrzp6NnBjHrgUwInSFIEKuHE3
+ jYg12RswP5L3dWyJx8YbMUnuGsn2Vb3hCt/UrbiGNRP67IBp2FYdbxS0ssN/GGQDxZVmFsKnD
+ 1RQeQQcdpf8xpzF6Rl2Co3E1E2YK6eypK4/xXvESfb1QjAVEGtw/ghzzPbGfool07aI1PQzvI
+ 8A3p2QK052UIwzZsNy93ztrojb3OMrZULw/sby7VGn6G7DMj0uUaXRVl+4cdmsE+KADIyO6j4
+ /BAt00aiWORk/BXAQNad9fttJAxsHzGbYpUl6nq8DfVop065CwOnmHeA7eiInCfC72xbubGA9
+ NGe/JIUUAGKPcIoUiQS744YR1oL5wHU11b5jFFqVfcjDzOiv06wCKWFGOd9qbqnyutT8MqQJa
+ jlDSfetbBwevhphic48P+pO/OwVerGCGWT/SXSqouDX2u+VXLoeBxt9NLecb5vepBlKRGOL6f
+ 2zYzcNRmCg9uy8MjhGAP0lgDIqHd3d4Sx7aVEh6E7aGCe2U78fNSF/PQpxd3TurN34uKrSmvZ
+ ZltXN0r2DSpaIeLW9WmMjj1VwcvAqXrVgCzJZK7Y4lkQfiIKsqOQMyyjfjqVi9nHkLwlcJEnJ
+ oCecLI9Rvl42H8L8PjvjKeE1aIbknrwM4dpii1/1M5fh0sBG+1KZSlu8RyI5Ia2LNedKXRC4U
+ 8ZCOZsLiKz5q+AwNGqtf/LZoKDeVIn5yOxjRZEZ+skKcepHdRcLox89Dray5eJZHAI3QlJFEJ
+ j4EdF+CAELs+sEriGYHU7R9N6e7xCdyX0VaWus/rpLKwo6/Qm03x7SAybL4OC30UKKOlsJuYW
+ nmybrjGuB/puvwD4Rb6HNuW9G6+e1pdvtPYU6j9jSIXr11Ddol+Xy1BeD1AcR48Wx9oV+sXlv
+ B9nrah7x0nrGWU/faRdTfqz45YkLlY/lyceBUFLylB8egYDx0h8VB28pAwUG2oVYy76J9yN22
+ Cej9TpNPmeLBLMSQKh9PEtUCe3cu83AvSkD
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Matheus,
 
-On Sun, 30 Jun 2019, Jeff King wrote:
+On Fri, 28 Jun 2019, Matheus Tavares Bernardino wrote:
 
-> On Sun, Jun 30, 2019 at 10:59:34PM +0200, Johannes Sixt wrote:
->
-> > Am 30.06.19 um 21:48 schrieb Eric Sunshine:
-> > > On Sun, Jun 30, 2019 at 2:57 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> > >> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index=
-.sh
-> > >> @@ -443,7 +443,7 @@ test_expect_success 'repack with minimum size d=
-oes not alter existing packs' '
-> > >> -               MINSIZE=3D$(ls -l .git/objects/pack/*pack | awk "{p=
-rint \$5;}" | sort -n | head -n 1) &&
-> > >> +               MINSIZE=3D$(stat -c %s .git/objects/pack/*pack | so=
-rt -n | head -n 1) &&
-> > >
-> > > Unfortunately, this is not portable. While "stat -c %s" works on Lin=
-ux
-> > > and MSYS2, neither that option nor the format directive are recogniz=
-ed
-> > > on BSD-like platforms (I tested Mac OS and FreeBSD), which instead
-> > > need "stat -f %z".
+> On Fri, Jun 28, 2019 at 9:50 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > Ouch! I did notice that stat(1) is not in POSIX, but hoped that it was
-> > sufficiently portable. I need a new idea...
+> > Hi Matheus,
+> >
+> > On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
+> >
+> > > On Thu, Jun 27, 2019 at 3:47 PM Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > On Thu, 27 Jun 2019, Matheus Tavares Bernardino wrote:
+> > > >
+> > > > > On Wed, Jun 26, 2019 at 3:04 PM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> > > > > >
+> > > > > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > > > > >
+> > > > > > > On Tue, 18 Jun 2019, Matheus Tavares wrote:
+> > > > > > >
+> > > > > > >>[...]
+> > > > > > >> +/*
+> > > > > > >> + * Look for a recursive symlink at iter->base.path pointin=
+g to any directory on
+> > > > > > >> + * the previous stack levels. If it is found, return 1. If=
+ not, return 0.
+> > > > > > >> + */
+> > > > > > >> +static int find_recursive_symlinks(struct dir_iterator_int=
+ *iter)
+> > > > > > >> +{
+> > > > > > >> +    int i;
+> > > > > > >> +
+> > > > > > >> +    if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
+> > > > > > >> +        !S_ISDIR(iter->base.st.st_mode))
+> > > > > > >> +            return 0;
+> > > > > > >>
+> > > > > > >> +    for (i =3D 0; i < iter->levels_nr; ++i)
+> > > > > > >> +            if (iter->base.st.st_ino =3D=3D iter->levels[i=
+].ino)
+> > > > > > >
+> > > > > > > This does not work on Windows. [[ Windows port does not have
+> > > > > > > usable st_ino field ]]]
+> > > > > >
+> > > > > > And if you cross mountpoint, st_ino alone does not guarantee
+> > > > > > uniqueness; you'd need to combine it with st_dev, I would thin=
+k,
+> > > > > > even on POSIX systems.
+> > > > >
+> > > > > Ok, thanks for letting me know. I'm trying to think of another
+> > > > > approach to test for recursive symlinks that does not rely on in=
+ode:
+> > > > > Given any symlink, we could get its real_path() and compare it w=
+ith
+> > > > > the path of the directory current being iterated. If the first i=
+s a
+> > > > > prefix of the second, than we mark it as a recursive symlink.
+> > > > >
+> > > > > What do you think of this idea?
+> > > >
+> > > > I think this would be pretty expensive. Too expensive.
+> > >
+> > > Hmm, yes unfortunately :(
+> > >
+> > > > A better method might be to rely on st_ino/st_dev when we can, and=
+ just
+> > > > not bother looking for recursive symlinks when we cannot,
+> > >
+> > > What if we fallback on the path prefix strategy when st_ino is not
+> > > available? I mean, if we don't look for recursive symlinks, they wou=
+ld
+> > > be iterated over and over until we get an ELOOP error. So I think
+> > > using real_path() should be less expensive in this case. (But just a=
+s
+> > > a fallback to st_ino, off course)
+> > >
+> > > > like I did in
+> > > > https://github.com/git-for-windows/git/commit/979b00ccf44ec31cff46=
+86e24adf27474923c33a
+> > >
+> > > Nice! At dir-iterator.h the documentation says that recursive symlin=
+ks
+> > > will be ignored. If we don't implement any fallback, should we add
+> > > that this is not available on Windows, perhaps?
+> >
+> > I do not really care, unless it breaks things on Windows that were not
+> > broken before.
+> >
+> > You might also want to guard this behind `USE_STDEV` as Duy suggested =
+(and
+> > maybe use the opportunity to correct that constant to `USE_ST_DEV`; I
+> > looked for it and did not find it because of that naming mistake).
 >
-> If we are OK relying on rudimentary perl[1], then:
->
->   perl -le "print((stat)[7]) for @ARGV"
->
-> works. If you want it more readable, then maybe:
->
->   perl -MFile::stat -le "print stat(\$_)->size for @ARGV"
+> Ok, just to confirm, what I should do is send your fixup patch with
+> the USE_STDEV guard addition, right? Also, USE_STDEV docs says it is
+> used "from the update-index perspective", should I make it more
+> generic as we're using it for other purposes or is it OK like this?
 
-Or we stop introducing new Perl calls, and use the perfectly fine
-`test-tool path-utils file-size` command:
+I thought Duy had verified that `USE_STDEV` would make sense in this
+instance, but I agree with you that the idea of that compile time flag was
+not to guard against a missing `st_dev` field, but about trusting it in
+the presence of network filesystems.
 
-https://github.com/git/git/blob/v2.22.0/t/helper/test-path-utils.c#L302-L3=
-12
+So no, I revert my vote for using `USE_STDEV`.
 
-This solves not only portability problems but also avoids yet another
-obstacle into making a `NO_PERL` test suite run really work without Perl.
+Thanks for the sanity check.
 
 Ciao,
 Dscho
