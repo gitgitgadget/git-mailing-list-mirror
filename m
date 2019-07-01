@@ -2,96 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E6301F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 18:51:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7965A1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 19:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726618AbfGASvD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 14:51:03 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54603 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfGASvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 14:51:03 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 734BF6EED7;
-        Mon,  1 Jul 2019 14:51:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3G1sxCHR2THVJvDA9g1C/tTK5O0=; b=gyzXOn
-        GcVhrsuprX9ZvI3oeSw1xltEsN3hQ04Vtj7wY6YwhHwij2jLAbfm/pFCzr5RScoW
-        b0ShNibigP4+mvz6q8pNWQi9mana44RDiGlD/9e9zdlv7AB05V25EQIr3Bzg+KJ3
-        K21c1gjFTXzlYoO42GyNFqqrvQ7dIdSW4t7NQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FUNnNbH1hKjFzf4iGIii13QhF5lwqGf4
-        ooppg77ffm/t+8kuwymyKtziSM18R1VcvQSoUAGqAcb5UlbnTKJHU5yox7MC5tXs
-        Ir1A6aNMYd9TqUmBeqLylz/LozxnGmPqCm8oUj15SmkZNA4KSzOdqOS19oRcBTXm
-        qON2+GnwMbw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C8C46EED6;
-        Mon,  1 Jul 2019 14:51:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 922A26EED1;
-        Mon,  1 Jul 2019 14:50:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
-References: <20190630051816.8814-1-eantoranz@gmail.com>
-        <20190630065358.GB31264@sigill.intra.peff.net>
-        <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com>
-        <20190630223951.GB21696@sigill.intra.peff.net>
-        <CAOc6etZxHWQ24TNsYDf74zgn-VJzbwDsxWxO4-tMkvv92KRKkw@mail.gmail.com>
-Date:   Mon, 01 Jul 2019 11:50:55 -0700
-In-Reply-To: <CAOc6etZxHWQ24TNsYDf74zgn-VJzbwDsxWxO4-tMkvv92KRKkw@mail.gmail.com>
-        (Edmundo Carmona Antoranz's message of "Sun, 30 Jun 2019 19:37:07
-        -0600")
-Message-ID: <xmqqy31h612o.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726576AbfGATUF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 15:20:05 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44197 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfGATUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 15:20:05 -0400
+Received: by mail-pf1-f195.google.com with SMTP id t16so7019100pfe.11
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 12:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cLHmBHQX4icPHyiFpVOrlxSgzNl5OrkuXzZXh+45vbY=;
+        b=skWMyDEz7TRjH38eHyqllVf+sBYS/yuaRqJ96HrQh5Sy1P+fNKK28x0y/SXCEMrmSJ
+         kuOby9FNgOi6iu+9Ul2cIxc9bgMDDaAWfttAjOBu9hregIeS7DbBpUeR4ICRvUYHpDtO
+         eGYrnyGHTIYFtC99gQFyC9gMJs74Kdfz304pb81IBYHE/MNUTt+JYJHyXJeAfLkFLnPh
+         OdYH0yhasYfUY3Ai1zhAtpndd6ZIqBiaOyAZnBNTaeSY/+mNB/7CQgaxuqu84SqIic7X
+         8iDOiVeaEwWcyKDKK/yFBqjB3LkS975OYMXzyBqhlTDPzROTXWLcj5+6uOu3m0ssXbdn
+         wsVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cLHmBHQX4icPHyiFpVOrlxSgzNl5OrkuXzZXh+45vbY=;
+        b=WHc45drck8RSG0Sjkjx++vzjVPH7/RlCZG/86cv6m1UhV7kdPIUpx5FjMl2qK3U+Lo
+         xl0wtRCRbVjXmXT6I3Da0bKL3Uk4/JESCMo2JaEOyKYPqm5q9GwXMMC0qcl2KdzKebYs
+         WUVxZrJhndlA7aCsYbgTcVWys2ZjNXWqFgrGoNFHFCNZkHHrjrD64thcYOrUBtevYGcJ
+         NPHAGbKgmAl0en6Zlxd2Ut3zYHb9PU4xZOB13LdnR72YLj3SyUxfMVYOuMqN+fIBFykN
+         89gMdPaj/o6FlNVYx6owEXF4bq12cMcCbDUpdW/5Pm2+0aRSRZ8gg0y2nZKhV0kY8gKl
+         fgHw==
+X-Gm-Message-State: APjAAAVVq2ChSGiARJSP3iXho6e+/Jf4ycGTD7WFxCcbTauawKnJipIH
+        x0pryNtTS2KO/NJTtQslUqRktzg5p+s=
+X-Google-Smtp-Source: APXvYqzHOksVxx1GSC+aLtrvaNdh6gSWskq2Un0EH8FIMA7FTkj9p4SiFtz5SIFwvE4907FOFChjmw==
+X-Received: by 2002:a63:490a:: with SMTP id w10mr25906273pga.6.1562008804049;
+        Mon, 01 Jul 2019 12:20:04 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id k22sm15681744pfk.157.2019.07.01.12.20.03
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 01 Jul 2019 12:20:03 -0700 (PDT)
+Date:   Mon, 1 Jul 2019 12:19:59 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 10/13] walken: add unfiltered object walk from HEAD
+Message-ID: <20190701191959.GK245941@google.com>
+References: <20190626235032.177551-1-emilyshaffer@google.com>
+ <20190626235032.177551-11-emilyshaffer@google.com>
+ <CAPig+cR7rHokaTtZcJJg8trJ14xO3hdeWHqLnB4aOnEUak051w@mail.gmail.com>
+ <20190627223110.GH245941@google.com>
+ <CAPig+cRB2=3j6BfuU00YWj1iSMi0qxE+0P7LCXHMtYpWdgam-A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2A28962C-9C31-11E9-A628-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRB2=3j6BfuU00YWj1iSMi0qxE+0P7LCXHMtYpWdgam-A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
+On Thu, Jun 27, 2019 at 08:48:31PM -0400, Eric Sunshine wrote:
+> On Thu, Jun 27, 2019 at 6:31 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> > On Thu, Jun 27, 2019 at 01:37:58AM -0400, Eric Sunshine wrote:
+> > > Don't localize the die() message via _() here or in the preceding
+> > > OBJ_COMMIT case.
+> >
+> > I'm a little surprised by that. Is it because die() is expected to only
+> > be seen by the developer?
+> 
+> Sorry, I was reading those as BUG(), not die(), and we don't localize
+> BUG() text. But, why aren't those BUG()? Can those cases arise in
+> practice? (Genuine question; I haven't familiarized myself with that
+> code yet.)
+> 
+> If they legitimately should be die(), then ignore my comment about not
+> localizing them.
 
-> Hmm... I as a gatekeeper would rather get either a straight line of
-> revisions for a feature with no merges (even if a final merge takes
-> care of solving conflicts with the upstream branch) or a single
-> revision (if I thought that the change is not worth having more than a
-> single revision). I'd ask the developer to rebase the whole thing and
-> give a straight line (with rebase -i or cherry-picks) or to give me a
-> single revision (where rebuash would come into the picture).
+Hmmm. Yeah, I'll switch them to BUG() - I think there are other
+instances of die() in the example and it'd be good to describe yet
+another way of reporting behavior.
 
-That part is understandable, but is "rebase-and-squash" a tool
-intended to be used by the contributor to respond to that request?
+> 
+> > > The two die() messages are unnecessarily dissimilar. Try to unify them
+> > > so that they read in the same way.
+> >
+> > I'm a little surprised by this too; it seems to me the root cause of
+> > each would be different. In the former case, I'd guess that
+> > traverse_commit_list()'s behavior changed, and in the latter case I'd
+> > guess that a new object type was recently added to the model. Can you
+> > help me understand the motivation for making the messages similar?
+> 
+> Both causes you describe here sound like BUG() cases, not die(). If
+> I'm understanding correctly, they could only trigger if someone made
+> some breaking or behavior changing modifications within Git and failed
+> to update all the code in the project impacted by the change. In other
+> words, these can't be triggered by user input, hence they would be
+> BUG()s indicating that a Git developer needs to fix the code.
+> 
+> As for the messages themselves, I was referring to the grammatical
+> dissimilarity of "unexpectedly" and "unexpected", and I also don't
+> understand why one messages mentions walken_show_object() explicitly,
+> whereas the other does not.
 
-Wouldn't the developer just do
-
-	git checkout topic
-	git fetch
-	git rebase [-i] [@{upstream}]
-	git push [publish +topic]
-
-to update the topic and ask to be pulled again?  The two steps in
-the middle may be "pull --rebase", but my point is I do not quite
-see where the new squash/rebase-in-a-single-step thing comes into
-this picture.  There may be a different picture that it fits, but
-I do not think it is this one.
+I see - ok, I have reworded.
 
 
-
-
-
+Thanks!
+ - Emily
