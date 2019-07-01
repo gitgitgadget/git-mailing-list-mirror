@@ -2,161 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E48651F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 17:46:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 012A91F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 17:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729845AbfGARqF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 13:46:05 -0400
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:42944 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728298AbfGARqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 13:46:04 -0400
-Received: by mail-vk1-f194.google.com with SMTP id 130so2876581vkn.9
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 10:46:04 -0700 (PDT)
+        id S1728166AbfGARz5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 13:55:57 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:41308 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbfGARz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 13:55:57 -0400
+Received: by mail-pg1-f194.google.com with SMTP id q4so4904714pgj.8
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 10:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pTYhMI33zt6bR1pRb58pdOaCOFYl8G8oALuwsz02tL0=;
-        b=ADYaP6uYUuO5bjyFzfW92oz9UTs6d5UA4gKUOPqadOnDpmduohXLArFqwzEMWpZKAo
-         4HoMkknnv/I6ATUStlfnk18VuLlERxHEDLQMm5hHGN3f25a9v/7iXqYi8ZA/DIjFqd/8
-         PNUD/uX1gIlGzA1noUPXkCILZ8ypYavUHqzqSIPFpNusGe3NKV/92N07JivaY/397Stg
-         qy0xjscRai3MdVJTqDwrO0Hpphcqp+VVLQCID67zkKHZNUOFfI/Kc4xf3BXpf9Eom5cq
-         mk52cp2IS4UYp3I8n+isyvdNIQszLvFgSWTmhmAEtTY8azg4zL+fTY5puLIF3AEYYVN8
-         ojjQ==
+        d=google.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AajvnKWBaKwQVxpvgZRmYP4iWDdFLFtgyUD2SIK639k=;
+        b=MLLfgzdF1wPxL1JdouQyhq8FidqhrICYX8pJpzWyYyR6X+Qu30kxftw73f48wjUIx9
+         aRrw6FDrjCBIDnmI+HjBR3Sq8Og6xVnUvS11P1+/LdnjsehfyBppbhR1FqDTR/VUdH66
+         IGTO23bXxme6TllIi+v5arv1+uMRwOFh31i7AGZa+Dhbv58ETtDHDRQC7jv0Bgy1XZUK
+         67XJuA3V6HaXc2G/eWwgUNyJyv97WsDuvxI+WVx/dT7aMh3r2oDtfL6VExfekRby0vQF
+         i/tQTugMe1YNxtCGewZ6r37XkP2s+oQxSkU+E5aWSbMpuVwUQaTRc6SofHTa4aOi3p2b
+         CklQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pTYhMI33zt6bR1pRb58pdOaCOFYl8G8oALuwsz02tL0=;
-        b=CUoRv1oSD3N4Cor/AxVifb2uWsjBh4yz84bXB5kV+9kiPZfE59uRAfrP5mwDxORRkA
-         0aUkGH49HMBBlci1oMve/wIvfKpgeYXoh5XEPdjstZjhE2lyM+yE+p1QsFYx8aTGAOK6
-         8wjWFWrAXrJqaCgi8SbSJk1B3ouURHgzr2Nt7dM5tjWfjTcfTOQC58QZLY+m3XHneYU0
-         bVVdVM/g767H/yew7y8FXEDL2IuJiuk8z/e+WFCUC8r2spNDwMrWL2wl9UvJAUO4NDPL
-         0u0NaXiyRFygwhXPO+zCaBMsHJdIC3cX5DpsNGUoXNb87JgIYPbEvtmOGQ4urtEZoVn2
-         czSw==
-X-Gm-Message-State: APjAAAXJJe57Dlw9U41iVh9wiFzzu5Ok+6Ozx7mL+IJpBaxCGT/Z9+uD
-        5MQ6QOwgcNLHAcPd8Y+84E198IHk5qrFr+euYDqc082Xkoo=
-X-Google-Smtp-Source: APXvYqx9C3L6CDOTJaBGPg5RNohiB/VV4P/NrZrdpVQQElibFYrkP/SKQ/apvOj73A2qxfZUFrn8XgacFyQ2EboGDTk=
-X-Received: by 2002:a1f:8513:: with SMTP id h19mr8572791vkd.92.1562003163571;
- Mon, 01 Jul 2019 10:46:03 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AajvnKWBaKwQVxpvgZRmYP4iWDdFLFtgyUD2SIK639k=;
+        b=kUdR3TQtoiPjPOxDmuATe/ufbhtdQs/kiJyc4tEw9CGyMzpgWJChh4y/NBWqMUw7Ne
+         g2e5byG9SfwDW1l4xFv5tiiiIIv7HgbgcL45N/7h3vcoGCAc/cBmTJjaFdL60NTWNKVI
+         o9FLc8fv6l3zGqK4QvctsxQ4fA3ElURl8jcCWK/0/kuBz6VC3F5eaSDlexzWq7gai5XL
+         rRWYwKwydxg7jQVwJqwDBNwrmXsYQXP96Oky7UWJuz40YcBNps0dajlfvpN+OCcTyUYo
+         Hor/tAjtgBlM7kZOnj0yE2LLQwg3dLm521I662IrqMiI3eItvRRy4vSTkOavYjjLHwso
+         KixQ==
+X-Gm-Message-State: APjAAAWSjqIQgZhLgB1asG2V/40dDAfr+tDs7HAjl+Evoz4ZzTYoBJDq
+        yol2om6Dl+1wtPhN0/12CssESQ==
+X-Google-Smtp-Source: APXvYqzseTxkcvWC8i7VpklSd/MgbjI/jqXGnbIb3RU6+qkUg2WfjOqEV6LQZxra5maudwO/g1Y+UA==
+X-Received: by 2002:a63:4c14:: with SMTP id z20mr25787535pga.360.1562003756438;
+        Mon, 01 Jul 2019 10:55:56 -0700 (PDT)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.googlemail.com with ESMTPSA id m100sm185234pje.12.2019.07.01.10.55.55
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 10:55:55 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Jun 2019, #06; Wed, 26)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Michael Platings <michael@platin.gs>
+References: <xmqq36jwc75i.fsf@gitster-ct.c.googlers.com>
+ <20190628062457.GA18662@sigill.intra.peff.net>
+ <4d466fce-15df-3a73-f5f9-f29bc5b79a04@google.com>
+ <xmqqmuhx7m6i.fsf@gitster-ct.c.googlers.com>
+From:   Barret Rhoden <brho@google.com>
+Message-ID: <ad5d38d0-167e-4e34-e994-2bc2a271b50b@google.com>
+Date:   Mon, 1 Jul 2019 13:55:53 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <95EF0665-9882-4707-BB6A-94182C01BE91@gmail.com>
- <CABPp-BE8um5g98jqWawsuG2dAvO6AZcR54vrRzAkJbq+L3K6Zw@mail.gmail.com>
- <20190624185835.GA11720@sigill.intra.peff.net> <25624E1D-55F1-466D-92E0-F06C1909F920@gmail.com>
- <5b00da7c-6836-0e61-8262-a9035126b658@kdbg.org>
-In-Reply-To: <5b00da7c-6836-0e61-8262-a9035126b658@kdbg.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Jul 2019 11:45:52 -0600
-Message-ID: <CABPp-BE0wbgn1OaEH-6TgBaEDrab9C-ZiQLbT9sS8PTf8E=CNQ@mail.gmail.com>
-Subject: Re: [BUG] Symbolic links break "git fast-export"?
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqmuhx7m6i.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 12:28 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 30.06.19 um 15:05 schrieb Lars Schneider:
-> >> On Jun 24, 2019, at 11:58 AM, Jeff King <peff@peff.net> wrote:
-> >> You'd have to split the renames into separate delete/adds, since they
-> >> can have a circular dependency. E.g. renaming "foo" to "bar" and "bar"
-> >> to "foo", you must remove "foo" and "bar" both, and then add them back
-> >> in.
-> >
-> > @peff: Can you give me a hint how one would perform this circular
-> > dependency in a single commit? I try to write a test case for this.
->
-> git mv Makefile foo
-> git mv COPYING Makefile
-> git mv foo COPYING
-> git diff -B HEAD
->
-> -- Hannes
+On 7/1/19 12:29 PM, Junio C Hamano wrote:
+> Barret Rhoden <brho@google.com> writes:
+> 
+>> On 6/28/19 2:24 AM, Jeff King wrote:
+>>> On Wed, Jun 26, 2019 at 03:29:29PM -0700, Junio C Hamano wrote:
+>>>
+>>>> * br/blame-ignore (2019-06-20) 9 commits
+>>>>    - blame: add a test to cover blame_coalesce()
+>>>>    - blame: use the fingerprint heuristic to match ignored lines
+>>>>    - blame: add a fingerprint heuristic to match ignored lines
+>>>>    - blame: optionally track line fingerprints during fill_blame_origin()
+>>>>    - blame: add config options for the output of ignored or unblamable lines
+>>>>    - blame: add the ability to ignore commits and their changes
+>>>>    - blame: use a helper function in blame_chunk()
+>>>>    - Move oidset_parse_file() to oidset.c
+>>>>    - fsck: rename and touch up init_skiplist()
+>>>>
+>>>>    "git blame" learned to "ignore" commits in the history, whose
+>>>>    effects (as well as their presence) get ignored.
+>>>>
+>>>>    Will merge to 'next'.
+>>>>    cf. <20190620163820.231316-1-brho@google.com> (v9)
+>>>
+>>> My -Wunused-parameter branch complained about merging with this. Since
+>>> it's in 'next', we'd want something like this on top, I think (ideally
+>>> after Barret confirms my hand-waving below).
+>>
+>> Looks good to me.
+> 
+> Thanks for a quick response.  I'll queue Peff's fixup on top of what
+> is shown above.
+> 
+> The patches are already in 'next', so we'll go incremental to fix
+> any issues discovered in the series from here on, instead of
+> replacing the series wholesale.
+> 
+> Thanks.
+> 
 
-Interestingly, fast-export has special code to handle cases like this;
-possibly due to the understanding of how all
-filemodify/filedelete/filerename commands take effect immediately (see
-below for more on that).  If I make the above changes in git.git and
-commit them, then:
+Sounds good, thanks.  Please disregard my v10 series then.
 
-$ git diff --name-status -B HEAD~1 HEAD
-R100    Makefile        COPYING
-R100    COPYING Makefile
+The other change in my v10 was squashing the following commit, which you 
+might want to grab for next:
 
-BUT:
+https://public-inbox.org/git/20190630181732.4128-1-michael@platin.gs/
 
-$ git fast-export -B -M --no-data HEAD~2..HEAD | tail -n 10
-commit refs/heads/master
-mark :7
-author Elijah Newren <newren@gmail.com> 1562000065 -0600
-committer Elijah Newren <newren@gmail.com> 1562000065 -0600
-data 8
-Testing
-from :6
-R COPYING Makefile
-M 100644 8a7e2353520ddd7e0c8074d2b32d0441d97c1597 COPYING
+Thanks,
 
-I.e. fast-export breaks the rename and translates it into a modify
-instead.  This comes from here:
-
-        case DIFF_STATUS_COPIED:
-        case DIFF_STATUS_RENAMED:
-                /*
-                 * If a change in the file corresponding to ospec->path
-                 * has been observed, we cannot trust its contents
-                 * because the diff is calculated based on the prior
-                 * contents, not the current contents.  So, declare a
-                 * copy or rename only if there was no change observed.
-                 */
-                if (!string_list_has_string(changed, ospec->path)) {
-                        <snipped code for handling rename/copy>
-                }
-                /* fallthrough */
-        case DIFF_STATUS_TYPE_CHANGED:
-        case DIFF_STATUS_MODIFIED:
-        case DIFF_STATUS_ADDED:
-
-There is a question of whether fast-import should try to handle
-different exporters that aren't as careful; e.g. if one gets a stream
-like:
-
-commit refs/heads/master
-mark :4
-author Me My <self@and.eye> 110000000 -0700
-committer Me My <self@and.eye> 110000000 -0700
-data 11
-correction
-R letters numbers
-R numbers letters
-
-Should git-fast-import attempt to divine the user's intent to swap
-these two files (though it's not clear if that is the intent; see
-below), or would that violate the documented behavior:
-
-           A filerename command takes effect immediately. Once the source
-           location has been renamed to the destination any future commands
-           applied to the source location will create new files there and not
-           impact the destination of the rename.
-
-(I'm pretty sure Shawn would have said the latter; see e.g.
-https://public-inbox.org/git/20100706193455.GA19476@spearce.org/ and
-the follow-ups.)  I think the view of "immediately taking effect"
-implies that this is a rename of 'letters' to 'numbers' which deletes
-'numbers', and that the subsequent entry just renames the file back,
-making it an expensive almost no-op; almost because it has the
-side-effect of deleting the original 'numbers' file.  This is
-certainly what fast-import does right now.
-
-Elijah
+Barret
