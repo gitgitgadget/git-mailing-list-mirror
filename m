@@ -2,130 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDD611F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 00:31:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B17B71F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 01:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726954AbfGAAbI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jun 2019 20:31:08 -0400
-Received: from mail-io1-f47.google.com ([209.85.166.47]:34875 "EHLO
-        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbfGAAbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jun 2019 20:31:08 -0400
-Received: by mail-io1-f47.google.com with SMTP id m24so24826753ioo.2
-        for <git@vger.kernel.org>; Sun, 30 Jun 2019 17:31:07 -0700 (PDT)
+        id S1727183AbfGABhT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jun 2019 21:37:19 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41000 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727159AbfGABhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jun 2019 21:37:19 -0400
+Received: by mail-pg1-f195.google.com with SMTP id q4so3696274pgj.8
+        for <git@vger.kernel.org>; Sun, 30 Jun 2019 18:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ACFHeK5LTsJF5TqcH6+HxzHNAod41+VgQhi13LU/wxU=;
-        b=SmKxRhmE+1q819tvEQKNgt4Sgb/rhjm7OfqB7FvQzWtqipdmMZii8G+dCCOpLo1v4m
-         HZuwRvGSWx5DbFQRzgfDIxwI2GVRq9wRXZlOw8segttgSaSaKNfJljDa8cBJYQD6wT3a
-         UPEFCXbIP8w9OcUQxeI/d4QEej0e5EzMIVAjPAA+Ok7lUeWQ67wGUl23OsANBX9ue+zQ
-         g6XBD/ZbZeBFGnSd6PkUtbcPxXhETJpI8EYKhDQh9b3/zFfxx1P696+YZ1tI3RJ/Zdzf
-         3DGUdvCmXyrFrYQH2cA6HWGuwhLZOHFhDZAAbYqRGjMTdyFa561AKp2uLF0gag23Aetw
-         kogg==
+         :cc;
+        bh=CY/cigdIsZ06wo3ypY12Mx0HaNrU1KVo2hH8zSuL8Hs=;
+        b=RWSx5ygobKcXlxG909eTbkQFKL1YA5FmzFmabFuZumfW45B52GIUkozVo6lBka3NTP
+         7M/iIfAbwZH+bgFJvMCMSrTRuvjKRofuIfb34pYFcf1hMr861cuEQvcFeN+ogeBgWkcM
+         xUhh5DImZCx1VBg+/LgfJKQH8PzWa5A7j/+V92HHkrFbUvg4QEyAUhSkQRiacxRHXb6k
+         fsG+zwKgE7sY7isvBMNiBQbWo2qIeVYYd6TIyCrlV8Hl3WooBeH0Gb26EYHdKWEZCLWC
+         uuUE+6dfqCEcZNqPCa3pLf11LtC6FwaOt0QAE6fRVH05S3ia956rJFh/SYQ6+diBNq7j
+         GM7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ACFHeK5LTsJF5TqcH6+HxzHNAod41+VgQhi13LU/wxU=;
-        b=Os1tvg5wLX/ZaqeyIGqn1ZHKIKZaM0rOrE+B2l9xtu0bCikr/x62dkHcSSg80D6d08
-         y39sVFbl48vi7GGAKvG7pZvQQ/FiZHqynR+QHfLPfdqLZrIGkYFfTevmSCCTkAnpSGSW
-         XFNNDrkHBZIQ82XU0bKeaxlozma8YjiB0pvXz6OsZz8NDDdOG1vJV1PK54E+tkQMYx7s
-         boZjOU67HQrNRFr8Fs6Jerl0Ru7Pyf+TokK1on45osJYYiUlXSaVy3nCEIyDMNs14jxD
-         6xMvWQd2YTFReUffjVfl7H70dSOOvWl5/wzMKubtvAeJwE920JHpKlNGtnbS+fzgQCCu
-         UvEA==
-X-Gm-Message-State: APjAAAXXjTwbHQ2guqFePt5LuXQGWMQVU79o0RcVN3uUzVX2xqhyFn6q
-        ea20uTXJlMsq63HlhVVnnZWEof0vqsR3BpNkOo8=
-X-Google-Smtp-Source: APXvYqzR0t1aDxqB2K2tj9780iDlUkgPEZDi0ScRZEPNGQYC4Er4muTKwDsa+TAw7fkraXt3QdgXlTDLYne+9vUY948=
-X-Received: by 2002:a5d:8890:: with SMTP id d16mr6454577ioo.274.1561941067098;
- Sun, 30 Jun 2019 17:31:07 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=CY/cigdIsZ06wo3ypY12Mx0HaNrU1KVo2hH8zSuL8Hs=;
+        b=t/0QfP5dksDySKWqX6kh4Boak2xAAkm10VbhShdv1INv/Ne0vuDViDVLS4yq/oAKIV
+         Ri3ySIzkD4tw1ZQqT8txmTfuk9O4qYcdN6cRWBM6iEBomjidaUsYtD56yVHGDG/JGZMM
+         LJob3pwO3A9BS+HIZRwQnhJPTtUXxzQcyWw70Jg1LbRhBz0Swc5sIb98gXWB50XzwIzu
+         XJVoF4lK6i2o1earoDQh1wX+3ZXMrGRpla4nEFGH9qivc2+HOj2g1rUBjBBBNPLKLe53
+         lANAe3RIM3UtpZNwzW6JPZ35edqYu/NbVv0C0Wr3AcWFcJVn429H1/efZj44tNE16baq
+         GEVw==
+X-Gm-Message-State: APjAAAVeil7sU+cBKuFNbOCLjYkeUzIB1DFdOhfG72iVOBf4L7nZDh39
+        uLk+TiW07o0WSy4pWQasEPsEB11zIWUf2MYZPCAn8iwF
+X-Google-Smtp-Source: APXvYqy8fA4GIfPbP9p04kuRIQK0IZ9UPoHc5awmtYXHhUKCq5tG74IlAQ2IXrnSuDC1eDOewNwtkdKYwGIowTN9YrQ=
+X-Received: by 2002:a63:6b07:: with SMTP id g7mr22567127pgc.325.1561945038642;
+ Sun, 30 Jun 2019 18:37:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
- <20190626084139.30246-1-pclouds@gmail.com> <86a7dz4e06.fsf@gmail.com>
-In-Reply-To: <86a7dz4e06.fsf@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 1 Jul 2019 07:30:40 +0700
-Message-ID: <CACsJy8AQ=kiG4jH5WSujefoCQ2yCG4=dV7UUdVh-Gextoa_T7A@mail.gmail.com>
-Subject: Re: [PATCH/RFC] get_oid: new extended SHA-1 syntax to control
- resolution process
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Kyle Meyer <kyle@kyleam.com>,
-        "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20190630051816.8814-1-eantoranz@gmail.com> <20190630065358.GB31264@sigill.intra.peff.net>
+ <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com> <20190630223951.GB21696@sigill.intra.peff.net>
+In-Reply-To: <20190630223951.GB21696@sigill.intra.peff.net>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Sun, 30 Jun 2019 19:37:07 -0600
+Message-ID: <CAOc6etZxHWQ24TNsYDf74zgn-VJzbwDsxWxO4-tMkvv92KRKkw@mail.gmail.com>
+Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 4:30 PM Jakub Narebski <jnareb@gmail.com> wrote:
+On Sun, Jun 30, 2019 at 4:39 PM Jeff King <peff@peff.net> wrote:
 >
-> Bikeshed painting ahead.
 >
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
-> [...]
-> > The problem is we try every possible way to resolve a rev. Let's have
-> > some annotation to express that we only want to resolve a rev in a
-> > certain way:
-> >
-> > - <hash>@{hash} only accepts a full hash or a short hash. If it's a
-> >   short hash, it cannot be ambiguous.
-> >
-> > - <ref>@{literal} only accepts full ref. No turning "master" into
-> >   "refs/heads/master".
-> >
-> > - <output>@{describe} interprets <output> as git-describe output
-> >   only, not an object name or a reference.
-> >
-> > This gives scripts much better control over get_oid(), which
-> > translates to rev-parse and a bunch other commands.
-> >
-> > PS. The new syntax can stack with existing ones. E.g. you could write
-> > refs/heads/master@{literal}@{yesterday} or <hash>@{hash}^{tree}.
-> > Perhaps I should allow these tags at the end too, so you can enforce a
-> > variable like "$REV"@{literal} where $REV could be even HEAD~123
->
-> I think it would be better to use <hash>^{hash} instead of
-> <hash>@{hash}.
->
-> The <ref-ish>@{<something>} is used currently for information that is
-> outside the DAG, like @{<date>}, @{<n>}, @{-<n>} uses information from
-> reflog, and @{upstream} and @{push} uses information from the config.
->
-> On the other hand ^{<type>}, ^{/<search text>}, and the future
-> ^{<hashalgo>} all use DAG-only information.
+> But perhaps the squashed version is easier to work with for further
+> modifications? I'm not sure how, though. Certainly in your example
+> rewriting changes in F1 with "rebase --interactive" would be a pain. But
+> I think the end-state of the tree after your rebuash is identical to
+> what you'd get by just merging from master. So in either case, just
+> building new work on top should be the same.
 
-I wasn't aware of ^{<hashalgo>}. hash-function-transition.txt is a bit
-light on the exact behavior, but maybe we can just define it like
-<hash>@{hash} in this thread (then we don't even need to introduce
-@{hash})?
+> I'm still not quite sure of the greater workflow where having the
+> rebuash-ed commit on the feature branch is more useful than just having
+> a merge from master.
 
-That is, if <hash>^{<hashalgo>} fails to find a matching object, the
-get_oid() result is "not found", there will be no further attempt to
-interpret the given revision in a different way (e.g. try to see if
-the same ref exists...). It also means <hash>^{<hashalgo>} will remain
-supported even after the sha-512 transition period.
+Hmm... I as a gatekeeper would rather get either a straight line of
+revisions for a feature with no merges (even if a final merge takes
+care of solving conflicts with the upstream branch) or a single
+revision (if I thought that the change is not worth having more than a
+single revision). I'd ask the developer to rebase the whole thing and
+give a straight line (with rebase -i or cherry-picks) or to give me a
+single revision (where rebuash would come into the picture).
 
-@{describe} might go  the same way as @{hash} (that is, becoming
-^{describe}). I think it's just a slightly different way to write
-hashes.
+Also, I wonder how it would make life easier for people that are
+learning to use git and the command that they see thrown around very
+often is to use `git pull` in order to get updates from the other
+developers.
 
-> Though one could argue that refs information _is_ outside the DAG...
+But that might be me being opinionated.
 
-Refs info is outside DAG. But that's mostly for <ref>@{literal} and it
-allows something like <ref>@{literal}@{upstream}. But hash (or object
-name) is already used inside DAG (to link between commits, trees and
-blobs). Though one might still argue that's only true for full hash,
-not short ones.
---=20
-Duy
+PS About rebuash ordering not to use commit: Sure, at the moment,
+rebuash is not commit-safe.... or merge-continue-safe.... but I can
+add checks for that in case the user runs them before using rebuash
+--continue
