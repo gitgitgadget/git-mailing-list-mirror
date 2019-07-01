@@ -8,123 +8,115 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4243E1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 12:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDBE81F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:25:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbfGAMTC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 08:19:02 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38541 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727740AbfGAMTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 08:19:02 -0400
-Received: by mail-qk1-f193.google.com with SMTP id a27so10751327qkk.5
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 05:19:01 -0700 (PDT)
+        id S1728311AbfGAMZR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:25:17 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:44986 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727814AbfGAMZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:25:16 -0400
+Received: by mail-qk1-f195.google.com with SMTP id p144so10733246qke.11
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 05:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CCR7UUJ075awiICvvKXS+e+dUZcS7OUtzCXf7fT2730=;
-        b=tkyMhbTvYlnGBIy+VMlRBMAireYEIn30ghdRxQGwF0iomsP8SQJhwIyCpWGxIZqIWj
-         sJf289IILseHfv3GTb2lzeGW/kaZkGWMh6Y/WsYJuWz5SaNpKGjItQEe+v0yHNz7vXHR
-         34dXfakxsByxn+NI2tN5xA+Igke3sUnfOZlvoz4DNFYwjx/b3mIABbBKRrFWlAt08tu5
-         7e1P5r6R+ewqj6kCjYaO+F4q9hdSyCeLPHkMDInWrn6ZCFiS+0DBNufEzARzx1Azyj+g
-         dMae3+2RQet0ye7iEhMArfz14hBO1wV8C6SKfnnCxl1g0SZd996MOhBHrggr/ZGH/wnr
-         wBiQ==
+        bh=QVI/3eK/SntC0HTd1jeFNI5jB81V89nxhSvD+uuQovk=;
+        b=RtqnSfIbdw9oOW+OSd7XZiY1U6oRlknVjU+rL3eu3Q1Nv2LJeH0xIDXZv4MadNUac6
+         ccCHsPSVnRipJS0dJqMp41npSf8gZPAbySkOjgcR9P/0g56RO3HOqg06mWL7Emzn1FCI
+         yE3vIhvUfjhSH2MmStHf6FEkntn16YowEvFI+xkZflo2vvQNR87CCYLzn65UOWrqjNrq
+         TTtyKIND5K2lERuhxire5klVVrrWNjvx9OTuT5bCnMRSSrw/EkzBCFmJDDKS+jDiaNFe
+         hF+cfta7mi8ikWGxdxcUp5rlWAdkiKL/JF5QpqkG+yX+O0yxeH9aaxeuYc3LD18lE4ln
+         Jh4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=CCR7UUJ075awiICvvKXS+e+dUZcS7OUtzCXf7fT2730=;
-        b=B89OXl+FxfBDoS53qXgs+ZeR1RVvG9g1O7Hx72v8kT9SeLs5edklhzFjG1j1nXB1Aq
-         AVTzIGpEceZtMvhcFEYHM97061q6uVeQjwbnB44te30VxaLrPFLuAai7yswxtTw+PSDD
-         TWgcn1WCfV3/TreVQEU7fy2KzJ8lUlZspoCl06Y2YS7kIc5HepKklpf7pzDrjcFz56vD
-         qqZcBXpXvybtxxiicrYfrOwjSB1Mvd+tfyAMrsDBKi8PqAuD92yyzbCHbBXYuZSXGwYg
-         /SzuFnOx2k6T87HN9Y+PjCgiH9FqaS74KuQMDj1JMsPen3nNlZ+xWsha/IHWtuMu680b
-         jeiQ==
-X-Gm-Message-State: APjAAAW8wGZGtdsOW5X99+ejdoLkKb2GmISOJBTWY1fWTT56qP7GfVVK
-        XAVHrnWQBtm4V+V+YUXb8zU=
-X-Google-Smtp-Source: APXvYqwY8JTwkNVo/NNAg8cEANUu9eGSxg7e55mc7uD0+gwl8vvpBOtP4M0yzCbkNXp0xRb9XMPEmw==
-X-Received: by 2002:a37:aa8e:: with SMTP id t136mr20455640qke.222.1561983541249;
-        Mon, 01 Jul 2019 05:19:01 -0700 (PDT)
+        bh=QVI/3eK/SntC0HTd1jeFNI5jB81V89nxhSvD+uuQovk=;
+        b=XkFu3fqoUwQql9/+iPocH67A/cliVWWF8Ps9iSqx+ngKtWo1LFj9fOAQodK8MQFsFO
+         Ild3e1l9JAEhjIKTeevu0PJV82/QmlvLOGrVHM05Yd4FhDLgS6KOMO2rc1kskBnYDOYv
+         U7UmB6CdSvYVUh2v7TK94ZG/8AUWWslTR0RtCNOQfw8rRorLQyJYEIfcJsHaibNcSKEz
+         7JXuHGZBlTI+BOxWfDI4mlSyjd0DjSrbwXnC3X+WmCEuD1YOiHn+1CqyT3KBTN0BnWbv
+         Ky2XVQZopdD555Ncw4rp/at3nDvMIobxRMLbHc8sm8VcBqSHv1K2CjWBi/qHporNRg0V
+         Z6wA==
+X-Gm-Message-State: APjAAAWU+zybFrIBnu6FuwrMoWYr2q6xhcbYyaQOrg+pFZKKtYPLPmAe
+        OqVQTU9XR2ApejLR6s9U+QE=
+X-Google-Smtp-Source: APXvYqxs8lDaUm0wKubAKJOQJkSMG9BhYUvfB9P4mFnm757ajd89n1JbpD+LU0t9WUZOOkVnHX8bDg==
+X-Received: by 2002:a37:97c1:: with SMTP id z184mr11289003qkd.198.1561983915799;
+        Mon, 01 Jul 2019 05:25:15 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:8d39:716e:a6fa:35c4? ([2001:4898:a800:1012:3e6d:716e:a6fa:35c4])
-        by smtp.gmail.com with ESMTPSA id s44sm6189951qtc.8.2019.07.01.05.19.00
+        by smtp.gmail.com with ESMTPSA id v41sm5403165qta.78.2019.07.01.05.25.15
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 05:19:00 -0700 (PDT)
-Subject: Re: [PATCH v5 02/11] commit-graph: return with errors during write
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        avarab@gmail.com, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.112.v4.git.gitgitgadget@gmail.com>
- <pull.112.v5.git.gitgitgadget@gmail.com>
- <95f66e85b2fe93a218dad4c04c16718d053fb002.1560346173.git.gitgitgadget@gmail.com>
- <20190629172335.GH21574@szeder.dev>
+        Mon, 01 Jul 2019 05:25:15 -0700 (PDT)
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips are
+ valid
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+ <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
+ <20190629074348.GA5080@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0e7f4844-69a1-b910-979b-64bd99c240ed@gmail.com>
-Date:   Mon, 1 Jul 2019 08:19:00 -0400
+Message-ID: <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
+Date:   Mon, 1 Jul 2019 08:25:09 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <20190629172335.GH21574@szeder.dev>
+In-Reply-To: <20190629074348.GA5080@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/29/2019 1:23 PM, SZEDER Gábor wrote:
-> On Wed, Jun 12, 2019 at 06:29:37AM -0700, Derrick Stolee via GitGitGadget wrote:
->> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->> index e80c1cac02..3b6fd0d728 100755
->> --- a/t/t5318-commit-graph.sh
->> +++ b/t/t5318-commit-graph.sh
->> @@ -23,6 +23,14 @@ test_expect_success 'write graph with no packs' '
->>  	test_path_is_file info/commit-graph
->>  '
->>  
->> +test_expect_success 'close with correct error on bad input' '
->> +	cd "$TRASH_DIRECTORY/full" &&
->> +	echo doesnotexist >in &&
->> +	{ git commit-graph write --stdin-packs <in 2>stderr; ret=$?; } &&
->> +	test "$ret" = 1 &&
+On 6/29/2019 3:43 AM, Jeff King wrote:
+> On Fri, Jun 28, 2019 at 08:51:04AM -0400, Derrick Stolee wrote:
 > 
-> This could be: 
+>> On 6/28/2019 6:11 AM, Jeff King wrote:
+>>> When we receive a remote ref update to sha1 "X", we want to check that
+>>> we have all of the objects needed by "X". We can assume that our
+>>> repository is not currently corrupted, and therefore if we have a ref
+>>> pointing at "Y", we have all of its objects. So we can stop our
+>>> traversal from "X" as soon as we hit "Y".
+>>>
+>>> If we make the same non-corruption assumption about any repositories we
+>>> use to store alternates, then we can also use their ref tips to shorten
+>>> the traversal.
+>>
+>> I was confused by this paragraph, because I didn't know about
+>> for_each_alternate_ref() and how refs_From_alternate_cb() will
+>> strip the "/objects" and append "/refs" to check refs if they
+>> exist. All of that logic is in transport.c but used by
+>> fetch-pack.c and builtin/receive-pack.c. But now we are adding
+>> to revision.c, so the restriction to "this helps data transfer"
+>> is getting murkier.
 > 
->   test_expect_code 1 git commit-graph write --stdin-packs <in 2>stderr
+> Using it for data transfer is still the main thing for our internal
+> calls, but I think it's worth exposing it for general use via rev-list.
+> I imagine it would mostly be for poking around and debugging, but it
+> should allow things like:
 > 
+>   # what do we have that our alternate does not
+>   git rev-list --all --not --alternate-refs
+
+So this is an example where the alternate refs are being used without
+any network activity.
+
+>> Is this something that should be extracted to the object-store
+>> layer? Or is it so tricky to use that we shouldn't make it too
+>> easy to fall into a bad pattern?
 > 
->> +	test_i18ngrep "error adding pack" stderr
->> +'
+> I'm not sure what you have in mind, exactly. If you are asking whether
+> there are more places that alternate refs could be used, I can't think
+> of any. If you are asking whether this is in the wrong place, no, I
+> think it's the right place. :)
 
-Thanks!, you are right! test_expect_code is what I should have used here
-instead of finding the "ret=$?" trick in t0005-signals.sh, which needs to
-do more interesting logic on the return code.
+Just double-checking that it is appropriate for revision.c to take
+dependence on transport.h instead of moving the alternate ref stuff
+into a different header file. I trust your opinion.
 
-Here is your suggestion as a diff. Junio: could you squash this in, or
-should I submit a full patch?
-
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 22cb9d66430..4391007f4c1 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -26,8 +26,7 @@ test_expect_success 'write graph with no packs' '
- test_expect_success 'close with correct error on bad input' '
-        cd "$TRASH_DIRECTORY/full" &&
-        echo doesnotexist >in &&
--       { git commit-graph write --stdin-packs <in 2>stderr; ret=$?; } &&
--       test "$ret" = 1 &&
-+       test_expect_code 1 git commit-graph write --stdin-packs <in 2>stderr &&
-        test_i18ngrep "error adding pack" stderr
- '
-
-I took inventory of when we are using "=$?" in the test scripts and saw
-this was the only one that could easily be removed. Every other place is
-doing something that can't be replaced by test_expect_code.
-
-Thanks,
 -Stolee
