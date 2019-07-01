@@ -2,144 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3F931F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 11:58:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC241F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727425AbfGAL6R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 07:58:17 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36542 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727368AbfGAL6R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 07:58:17 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k21so4523686edq.3
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 04:58:16 -0700 (PDT)
+        id S1727653AbfGAMDS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:03:18 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:44245 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727256AbfGAMDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:03:18 -0400
+Received: by mail-qt1-f195.google.com with SMTP id x47so14259875qtk.11
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 05:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=EWHveCRWMuhib4b0nqXbxOeNG9CRyvGtUnz4YBpJi3A=;
-        b=SIb90pKe4SxrZkn4FD9hBadVF35ETrOdLj/4z6YHmFjyzCTmBfCsrF2qK6ZZ+FXnix
-         gj+kIpbxN85Iel7ursUTavpmmDM07cmhDpZS9cPBBqFa9D3zdSYW0f3/qHuKI0ceHf38
-         yyR0PDH6Kg4RuCX30IBmyvSx/Uxi4ZTG7eo+O4Wxu+z78MikmAMgbF+/oMUQJg4wzuCD
-         Ew61Ijb3vWgJgeIVpjeZKdhKvcuCZScWXm9Kgx2/natWYorJCyfFqrJY7qj3GlVke2zf
-         2+EBVzN7PjArOwxoPmnqfxULnWQU/ZpVN9Lj1ZeUvH6SFMDrJIrTc46aPUMgtqwBooPD
-         z3ng==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1jfE5HY82bYLaWx+Tyo9m8OgLEiXlMRxXJPp2y1i9m0=;
+        b=EJMD4n2LQGUEKnl+56RCGIc5nEvFuZpDDWSLX8NkunxlMgZH6b5whKm9l/XXkS8/TQ
+         gsP90oklvnQOR/Ik7zM8X6IuGGB+QhuHaJuW09twHthi8fh3AdtIC0aRVbNmQOX7fD98
+         rBKzWDLhAitQGOT1NugBEenT7gSUfgbjlxrw/+Ja+R9HRSKKgpXFmgOatHKeFtG9yNUi
+         0Xdvq4YKaaR4FCXA74xFW7t5v4MJcwCfBjou2r0iuEH8x8apIAjazzHhP02CWYsxhB5H
+         Yk4vjgNry9sP6ZNZXB5LNu1kCwTL1UwisOHPrWchwkG1vaEFeiPFQFCHaTBFRRp2QF2+
+         0hnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EWHveCRWMuhib4b0nqXbxOeNG9CRyvGtUnz4YBpJi3A=;
-        b=FYN48h9+mxbvmmk0x3wXbVVktTN28a8XVjNvJ4f/Uy+iHn5mcwNvvqqc/+5Y0D5RHh
-         rCGOQH2bVzTtIZLfDfqd4aEewhtSBDnD9NwqNE12a4howRIPQmAzHvoE7dUgd+KbGIw7
-         zVFdXfNA1Kl0BcypZgR6FctJ2Frv/AVyo/18o3NVzOatGmz5BTQl5lTVtd7f+8Il6kKV
-         YyHa1GXAg5u1q8Ncs8kKUzVTuzuNqhVdXVRLGA49TR01EhmFEvFe+bn/KYOxbOg7QGzU
-         AvHEsG7YzKSGTyRZUP3O2ypLKIjTYA8ea5BPYoXPf38jpUS4xsPgzrBkHzADUsniHOcW
-         IKFA==
-X-Gm-Message-State: APjAAAV536PwzOlAlLtpda5CsDkWCNzl+d5NZG9dndil7SBwQGly2kMN
-        b389Sq+KR+ipcUeoMzMRsWVloqyj
-X-Google-Smtp-Source: APXvYqzfmKb4PoqsnUUylQkFTFQ9+Ui7cTCVKTalqNFW8Cf9+gRo2JujFtCO36Fi23r2v+ee/Al1vw==
-X-Received: by 2002:a17:906:7f0f:: with SMTP id d15mr23143088ejr.39.1561982296032;
-        Mon, 01 Jul 2019 04:58:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g11sm2134646ejm.86.2019.07.01.04.58.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 04:58:15 -0700 (PDT)
-Date:   Mon, 01 Jul 2019 04:58:15 -0700 (PDT)
-X-Google-Original-Date: Mon, 01 Jul 2019 11:58:14 GMT
-Message-Id: <beaeb24bc0cee7d1d80dcc377f135e80782567af.1561982294.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.253.v2.git.gitgitgadget@gmail.com>
-References: <pull.253.git.gitgitgadget@gmail.com>
-        <pull.253.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] rebase --am: ignore rebase.reschedulefailedexec
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1jfE5HY82bYLaWx+Tyo9m8OgLEiXlMRxXJPp2y1i9m0=;
+        b=PHeBEogfv7aEgddePSH6hRjUywZqcF2LpWoLhcsP1NEaGPMoQMQB9GRA6SXE5plNGb
+         sUUST7SqIARWuV7llh03c6jG9ia1h4pWe/7RMBN9ruEQguKAWPR1bYLdWm530P4EAVtg
+         fgMG8IZUP7uf5LG074Mth2q91MFemuPoSr3eDa7EG8bFHiaRa6xZxok3HYGQuhnRYP+2
+         SDf02kbOY6PqZ2yQ3OTUnwQBHxgDU6BtTVAQFeigaHOB5p1qvof0BPLI96ZPz4oIdiUf
+         zztDPxkQ+QvhWCaA+KtoOTyOLNIW0XdCqHVZR7AkF4lLGvTG3xFHpXlbx7kZR0T3dU+N
+         1UWg==
+X-Gm-Message-State: APjAAAVhELNNGjWAtvkZFntp5iofjVyQMkmqOWH1tXXolokLlETaPSWP
+        JFZYd4mpcux9WSV1dw/Rbgo=
+X-Google-Smtp-Source: APXvYqwdYIrA8qe6VVJyWKmRQ6OmYKf0bS8+zlK33uHCTWQ4ThF5gCjPLJZPzJrJprKHY2qtsNCRYw==
+X-Received: by 2002:a0c:d91b:: with SMTP id p27mr20641856qvj.236.1561982596950;
+        Mon, 01 Jul 2019 05:03:16 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8d39:716e:a6fa:35c4? ([2001:4898:a800:1012:3e6d:716e:a6fa:35c4])
+        by smtp.gmail.com with ESMTPSA id j2sm5009445qtb.89.2019.07.01.05.03.15
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 05:03:16 -0700 (PDT)
+Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.261.git.gitgitgadget@gmail.com>
+ <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
+ <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com>
+ <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
+ <20190630222537.GA21696@sigill.intra.peff.net>
+ <3e5c0286-7514-9e00-fbc5-5b0ad9403d30@kdbg.org>
+ <20190701091602.GA24791@sigill.intra.peff.net>
+ <20190701113304.GK21574@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <100c5c85-59b6-f68c-7da6-b05637534858@gmail.com>
+Date:   Mon, 1 Jul 2019 08:03:15 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Vas Sudanagunta <vas@commonkarma.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20190701113304.GK21574@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Sorry I'm late to the thread. Thanks for reporting this issue, Johannes.
 
-The `exec` command is specific to the interactive backend, therefore it
-does not make sense for non-interactive rebases to heed that config
-setting.
+On 7/1/2019 7:33 AM, SZEDER Gábor wrote:
+> On Mon, Jul 01, 2019 at 05:16:02AM -0400, Jeff King wrote:
+>> I see Gábor suggested using "wc -c" elsewhere in the thread. That would
+>> be fine with me, too, though I think the required sed there may be
+>> getting pretty unreadable, too. :)
+> 
+> It could be done even without 'sed', though at the expense of running
+> a coupe more 'wc -c's in a loop:>
+> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+> index 79bfaeafa9..bacec5e2e4 100755
+> --- a/t/t5319-multi-pack-index.sh
+> +++ b/t/t5319-multi-pack-index.sh
+> @@ -443,7 +443,12 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
+>  		touch -m -t 201901010002 .git/objects/pack/pack-B* &&
+>  		touch -m -t 201901010003 .git/objects/pack/pack-A* &&
+>  		ls .git/objects/pack >expect &&
+> -		MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
+> +		MINSIZE=$(
+> +			for pack in .git/objects/pack/*pack
+> +			do
+> +				wc -c <"$pack"
+> +			done | sort -n | head -n 1
+> +		) &&
+>  		git multi-pack-index repack --batch-size=$MINSIZE &&
+>  		ls .git/objects/pack >actual &&
+>  		test_cmp expect actual
+> @@ -455,7 +460,12 @@ test_expect_success 'repack creates a new pack' '
+>  		cd dup &&
+>  		ls .git/objects/pack/*idx >idx-list &&
+>  		test_line_count = 5 idx-list &&
+> -		THIRD_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 3 | tail -n 1) &&
+> +		THIRD_SMALLEST_SIZE=$(
+> +			for pack in .git/objects/pack/*pack
+> +			do
+> +				wc -c <"$pack"
+> +			done | sort -n | head -n 3 | tail -n 1
+> +		) &&
+>  		BATCH_SIZE=$(($THIRD_SMALLEST_SIZE + 1)) &&
+>  		git multi-pack-index repack --batch-size=$BATCH_SIZE &&
+>  		ls .git/objects/pack/*idx >idx-list &&
+> 
+> Is it really better?  Dunno, but at least there is no subtlety with
+> the leading padding spaces.
 
-We still want to error out if a non-interactive rebase is started with
-`--reschedule-failed-exec`, of course.
+Your change is certainly more straight-forward, and avoids all issues
+around Perl compatibility.
 
-Reported by Vas Sudanagunta via:
-https://github.com/git/git/commit/969de3ff0e0#commitcomment-33257187
+It does have the issue of more 'wc' processes, which is a downside. The
+count here is not too bad, but if we need to duplicate this pattern elsewhere
+we may be better off creating a stat(1) replacement in test-lib.sh.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase.c           | 10 +++++++---
- t/t3418-rebase-continue.sh |  8 ++++++++
- 2 files changed, 15 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 4839e52555..b33d7f74d6 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -834,6 +834,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
- 	struct object_id squash_onto;
- 	char *squash_onto_name = NULL;
-+	int reschedule_failed_exec = -1;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
-@@ -929,7 +930,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "root", &options.root,
- 			 N_("rebase all reachable commits up to the root(s)")),
- 		OPT_BOOL(0, "reschedule-failed-exec",
--			 &options.reschedule_failed_exec,
-+			 &reschedule_failed_exec,
- 			 N_("automatically re-schedule any `exec` that fails")),
- 		OPT_END(),
- 	};
-@@ -1227,8 +1228,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		break;
- 	}
- 
--	if (options.reschedule_failed_exec && !is_interactive(&options))
--		die(_("--reschedule-failed-exec requires an interactive rebase"));
-+	if (reschedule_failed_exec > 0 && !is_interactive(&options))
-+		die(_("--reschedule-failed-exec requires "
-+		      "--exec or --interactive"));
-+	if (reschedule_failed_exec >= 0)
-+		options.reschedule_failed_exec = reschedule_failed_exec;
- 
- 	if (options.git_am_opts.argc) {
- 		/* all am options except -q are compatible only with --am */
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index bdaa511bb0..4eff14dae5 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -265,4 +265,12 @@ test_expect_success '--reschedule-failed-exec' '
- 	test_i18ngrep "has been rescheduled" err
- '
- 
-+test_expect_success 'rebase.reschedulefailedexec only affects `rebase -i`' '
-+	test_config rebase.reschedulefailedexec true &&
-+	test_must_fail git rebase -x false HEAD^ &&
-+	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
-+	git rebase --abort &&
-+	git rebase HEAD^
-+'
-+
- test_done
--- 
-gitgitgadget
+Thanks,
+-Stolee
