@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8196A1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 21:21:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87D0B1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 21:21:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbfGAVVM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 17:21:12 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36032 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbfGAVVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 17:21:12 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n4so15378191wrs.3
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:09 -0700 (PDT)
+        id S1726798AbfGAVVO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 17:21:14 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35893 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfGAVVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 17:21:13 -0400
+Received: by mail-wm1-f66.google.com with SMTP id u8so1020775wmm.1
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xRtZor2ThOzxTlO/uzt4TxTZD6fA187y4ITyvhEGfUY=;
-        b=c4io57UDk2BtqvW3IJVJAjOlNqDEAz4IZ4Q8HPGmXSTkmVoZYh80wvebRhalcdJKdc
-         mogs4DgKgswhI1Bg1s2Es4M8Ssi9fqInOwWL3P3AetyQlh4HW5qmDnr1hfPM+i242K6y
-         iy5Nh123TgF1pUCggrXRm8PPSmSShCYn3MxIticCsZ4VRwSwcqtadX7IG8xH0J7j+NKX
-         7nbhIE9JQFGqr93c/bQL04AredtseDdOe0irs9+gxQCFw+05b8WB4lGHPOP2nCWjxc+v
-         DBulz2MWxnsky9gvd8L+QlKCDusXtmPY2MLnDxnHqWonYY3VP1wQnqLYQpRiXo1oHHyo
-         IFaA==
+        bh=jGETbHwR8FkQ1GAWFD9sYLqQAWVHiYH/Mnhtx31OTo0=;
+        b=JrRGk1zlzDh6DJoLWvm0QG6wufkswfG6Tn3QUCf3ev2lViSz6is8glTkVcHURCK1vB
+         nhU22AY+SLAqf4kDKVtPWWJMXvTDdrRVypYgvPOQfEsPXvIZJgnwWvfRljai6/QLflIk
+         /yiWdNI76hOCo900hKuiiF2PHjxLVSOZUwfR/rlK3koQyDVQICG2e1Y5DFjM6YQ+IB0x
+         6Ul6NZc2pKi2c8hsIydVM0T+jMb/wMGDtqEw0PqIbDi7NrdQ1iOoSG5awlU70337MI93
+         U1YbXNS1/RIA0qmO9EY7ctsxZslIxVH0Cl6RoGesWO8SFM9iJc8rezPABmyDcjP0s2tK
+         Da0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xRtZor2ThOzxTlO/uzt4TxTZD6fA187y4ITyvhEGfUY=;
-        b=EXDZTTfjmTq3B26vJzah76kTpzylh+F1O6tVx/yOvzwSdDLI2jrSgw3RyJq4O+0Msx
-         gVItomppJmEVz5+Q6KuuNAFg4Oy9jnDejlUJfuLJkZS8G1Qig4DRlC8SoOQFar/loUF8
-         UUfHhnnhnVo4aAQgXDN+NK5ahG7YeQdqdGn8yibGlSNcu1quLZH9+LefrFkYlFonWgzh
-         dNR4HN16ivB/vRcmuAhLUvlAv5ujAI9KO0IQw/HUIXotcCNaKYWWkGtQhWSOB0pCLHqV
-         SgihFarNK0wQ60zCSl355bIc/O0rcpCjvT2td4euEic5jjkVGEVp2nD6MK4eYcx94p8y
-         Y5PQ==
-X-Gm-Message-State: APjAAAWaiSOWM3yQRHjrx3KzqJNjUADKoEhfEL+OrIaaVNR7CaQGanGj
-        gjDadXUwxBSvCJSWhdGPqneS/u6K
-X-Google-Smtp-Source: APXvYqyoTdnXTOpbL4ENzvyWyrUmKh9uCGZTel6rNPBfm9zfdGXxjr06n/Z1jccAKWNHakGkbPoNzg==
-X-Received: by 2002:a05:6000:1011:: with SMTP id a17mr10150927wrx.0.1562016068780;
-        Mon, 01 Jul 2019 14:21:08 -0700 (PDT)
+        bh=jGETbHwR8FkQ1GAWFD9sYLqQAWVHiYH/Mnhtx31OTo0=;
+        b=TLv5VE6HPiAFYGzIga/8/07F8ItFGsjPidR7+5utA663CiQI/R1rgZ0fsFG7PCb8YL
+         920K63lVuniAztbCC5EAeSSMFTrQRyFBrmzAXaIjYfbhgE2lwi3NbaHFglNPEzHJ37Wo
+         cDN41PQhFaOxq/5FLW1PAGu2Nkb1hxn8Ec7tXb/0S4C21lmAvAiZ/SqWeM+8SnmL1oKM
+         00EvkmsoMJkyi8bBDvMZMONJeEePX3NnGKoIyFuz7SJaqbFynI3kcBM8Qv97vYd1Orm5
+         +a1kRr6N0yU+WTTKcCnJx+H7hHujifc3A8g9rjhphi2jmcBNbLyv9o8PAaXksIDgG58u
+         ZvBg==
+X-Gm-Message-State: APjAAAXnaTT4UwdoSbPoOx98bCZkBrgEZkDBCWc1vdWum56fsEoovDBO
+        Q0oxz9PJdlrPyeXqp/VpSGoY7vkypFk=
+X-Google-Smtp-Source: APXvYqxEDJA2uPA+gZW6d05uXStjFicB/L9nFjKvo8U/4w12Jyuw1WwrdkFDzhnjKnkVTKS03BTuzQ==
+X-Received: by 2002:a1c:7a01:: with SMTP id v1mr742462wmc.10.1562016070486;
+        Mon, 01 Jul 2019 14:21:10 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.07
+        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.09
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 14:21:07 -0700 (PDT)
+        Mon, 01 Jul 2019 14:21:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     git-packagers@googlegroups.com, gitgitgadget@gmail.com,
         sandals@crustytoothpaste.net, szeder.dev@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 00/10] grep: move from kwset to optional PCRE v2
-Date:   Mon,  1 Jul 2019 23:20:50 +0200
-Message-Id: <20190701212100.27850-1-avarab@gmail.com>
+Subject: [PATCH v3 01/10] log tests: test regex backends in "--encode=<enc>" tests
+Date:   Mon,  1 Jul 2019 23:20:51 +0200
+Message-Id: <20190701212100.27850-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190627233912.7117-1-avarab@gmail.com>
 References: <20190627233912.7117-1-avarab@gmail.com>
@@ -72,71 +72,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This v3 has a new patch (3/10) that I believe fixes the regression on
-MinGW Johannes noted in
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1907011515150.44@tvgsbejvaqbjf.bet/
+Improve the tests added in 04deccda11 ("log: re-encode commit messages
+before grepping", 2013-02-11) to test the regex backends. Those tests
+never worked as advertised, due to the is_fixed() optimization in
+grep.c (which was in place at the time), and the needle in the tests
+being a fixed string.
 
-As noted in the updated commit message in 10/10 I believe just
-skipping this test & documenting this in a commit message is the least
-amount of suck for now. It's really an existing issue with us doing
-nothing sensible when the log/grep haystack encoding doesn't match the
-needle encoding supplied via the command line.
+We'd thus always use the "fixed" backend during the tests, which would
+use the kwset() backend. This backend liberally accepts any garbage
+input, so invalid encodings would be silently accepted.
 
-We swept that under the carpet with the kwset backend, but PCRE v2
-exposes it.
+In a follow-up commit we'll fix this bug, this test just demonstrates
+the existing issue.
 
-Ævar Arnfjörð Bjarmason (10):
-  log tests: test regex backends in "--encode=<enc>" tests
-  grep: don't use PCRE2?_UTF8 with "log --encoding=<non-utf8>"
-  t4210: skip more command-line encoding tests on MinGW
-  grep: inline the return value of a function call used only once
-  grep tests: move "grep binary" alongside the rest
-  grep tests: move binary pattern tests into their own file
-  grep: make the behavior for NUL-byte in patterns sane
-  grep: drop support for \0 in --fixed-strings <pattern>
-  grep: remove the kwset optimization
-  grep: use PCRE v2 for optimized fixed-string search
+In practice this issue happened on Windows, see [1], but due to the
+structure of the existing tests & how liberal the kwset code is about
+garbage we missed this.
 
- Documentation/git-grep.txt                    |  17 +++
- grep.c                                        | 115 +++++++---------
- grep.h                                        |   3 +-
- revision.c                                    |   3 +
- t/t4210-log-i18n.sh                           |  41 +++++-
- ...a1.sh => t7008-filter-branch-null-sha1.sh} |   0
- ...08-grep-binary.sh => t7815-grep-binary.sh} | 101 --------------
- t/t7816-grep-binary-pattern.sh                | 127 ++++++++++++++++++
- 8 files changed, 234 insertions(+), 173 deletions(-)
- rename t/{t7009-filter-branch-null-sha1.sh => t7008-filter-branch-null-sha1.sh} (100%)
- rename t/{t7008-grep-binary.sh => t7815-grep-binary.sh} (55%)
- create mode 100755 t/t7816-grep-binary-pattern.sh
+Cover this blind spot by testing all our regex engines. The PCRE
+backend will spot these invalid encodings. It's possible that this
+test breaks the "basic" and "extended" backends on some systems that
+are more anal than glibc about the encoding of locale issues with
+POSIX functions that I can remember, but PCRE is more careful about
+the validation.
 
-Range-diff:
- 1:  cfc01f49d3 =  1:  cfc01f49d3 log tests: test regex backends in "--encode=<enc>" tests
- 2:  4b59eb32f0 =  2:  4b59eb32f0 grep: don't use PCRE2?_UTF8 with "log --encoding=<non-utf8>"
- -:  ---------- >  3:  676c76afe4 t4210: skip more command-line encoding tests on MinGW
- 3:  cc4d3b50d5 =  4:  da9b491f70 grep: inline the return value of a function call used only once
- 4:  d9b29bdd89 =  5:  c42d3268fa grep tests: move "grep binary" alongside the rest
- 5:  f85614f435 =  6:  36b9c1c541 grep tests: move binary pattern tests into their own file
- 6:  90afca8707 =  7:  3c54e782e6 grep: make the behavior for NUL-byte in patterns sane
- 7:  526b925fdc =  8:  8e5f418189 grep: drop support for \0 in --fixed-strings <pattern>
- 8:  14269bb295 =  9:  d1cb8319d5 grep: remove the kwset optimization
- 9:  c0fd75d102 ! 10:  4de0c82314 grep: use PCRE v2 for optimized fixed-string search
-    @@ -15,6 +15,15 @@
-         makes the behavior harder to understand and document, and makes tests
-         for the different backends more painful.
-     
-    +    This does change the behavior under non-C locales when "log"'s
-    +    "--encoding" option is used and the heystack/needle in the
-    +    content/command-line doesn't have a matching encoding. See the recent
-    +    change in "t4210: skip more command-line encoding tests on MinGW" in
-    +    this series. I think that's OK. We did nothing sensible before
-    +    then (just compared raw bytes that had no hope of matching). At least
-    +    now the user will get some idea why their grep/log never matches in
-    +    that edge case.
-    +
-         I could also support the PCRE v1 backend here, but that would make the
-         code more complex. I'd rather aim for simplicity here and in future
-         changes to the diffcore. We're not going to have someone who
+1. https://public-inbox.org/git/nycvar.QRO.7.76.6.1906271113090.44@tvgsbejvaqbjf.bet/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t4210-log-i18n.sh | 41 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
+
+diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
+index 7c519436ef..86d22c1d4c 100755
+--- a/t/t4210-log-i18n.sh
++++ b/t/t4210-log-i18n.sh
+@@ -1,12 +1,15 @@
+ #!/bin/sh
+ 
+ test_description='test log with i18n features'
+-. ./test-lib.sh
++. ./lib-gettext.sh
+ 
+ # two forms of é
+ utf8_e=$(printf '\303\251')
+ latin1_e=$(printf '\351')
+ 
++# invalid UTF-8
++invalid_e=$(printf '\303\50)') # ")" at end to close opening "("
++
+ test_expect_success 'create commits in different encodings' '
+ 	test_tick &&
+ 	cat >msg <<-EOF &&
+@@ -53,4 +56,40 @@ test_expect_success 'log --grep does not find non-reencoded values (latin1)' '
+ 	test_must_be_empty actual
+ '
+ 
++for engine in fixed basic extended perl
++do
++	prereq=
++	result=success
++	if test $engine = "perl"
++	then
++		result=failure
++		prereq="PCRE"
++	else
++		prereq=""
++	fi
++	force_regex=
++	if test $engine != "fixed"
++	then
++	    force_regex=.*
++	fi
++	test_expect_$result GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
++		cat >expect <<-\EOF &&
++		latin1
++		utf8
++		EOF
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$latin1_e\" >actual &&
++		test_cmp expect actual
++	"
++
++	test_expect_success GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$utf8_e\" >actual &&
++		test_must_be_empty actual
++	"
++
++	test_expect_$result GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
++		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$invalid_e\" >actual &&
++		test_must_be_empty actual
++	"
++done
++
+ test_done
 -- 
 2.22.0.455.g172b71a6c5
 
