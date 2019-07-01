@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 072441F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 15:36:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B51D1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 16:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728262AbfGAPge (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 11:36:34 -0400
-Received: from mail-yw1-f52.google.com ([209.85.161.52]:41097 "EHLO
-        mail-yw1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbfGAPgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 11:36:33 -0400
-Received: by mail-yw1-f52.google.com with SMTP id y185so113156ywy.8
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 08:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+WyLaBK4vPitC195O3aTG+Ckp7sRNU3Gdc6kt2PWC/k=;
-        b=rAMUEn5nBOI37eevwKqEXgriKUeV+VHkepVLf3ZPVLWWOXMurjlQO+t2WtNrFKFs9H
-         mlXu0OR/0otvWdC1HAIvx3s/JYJMdpoG8YvrWjPgdumwSs7ZZogKw4MqCibqXQYGirIR
-         KrKVx4e3ocimDWwlhQj1uWDjCUrtjAhaEeMjZ7roleToffdKNZZcGJeDJ1qU7cW6jvqE
-         9MJFHZADN6yUdsIRIcLex9CA50U5LH64uCKm601HTgeWuc9UrsbXnJin9BAdVr8XN5Pf
-         FDeSt6imlT3XKJcoZu9hrMR/8jAnBPvGqxBYJyx8zyeWA0DURinlZydn1i5yDLFk2i1q
-         MPrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+WyLaBK4vPitC195O3aTG+Ckp7sRNU3Gdc6kt2PWC/k=;
-        b=qtjbobDTRn2bfHO3rBriOL7SxC2rijcmPykQ0PIFUKttJodsHq5Qwd+Xa2ot7buAx+
-         20n9ixA4d3753cfNxfkr9YFRHKQNMPShKlMHkhoeqjT3xzj6pImmH4VhNVcDqwwk4laz
-         IB3CBtvAnUTVnKCpveuxydbWadZmDdDf+gsbXvJdOc0ivzMFn5X884X0tcErQNrB3uDF
-         1vQBUoV3cwoQzGXaBnKMZQzMbioMruImiyrtqO4C5z+bwmIkN0ewpXdwTUPrMqw9GSvP
-         boRaicJhF5nv9o+PVVJUIXr0J8Q6znHv54SwZ8C5QPg+ZcgEneAGUGoTYQpe492uE1Kj
-         xMGA==
-X-Gm-Message-State: APjAAAWKYFtlmz8q2NwJU25IN1+S0ZKXMbU2N2wKroBzVYGEfKwQN1cu
-        LwFUC6sl69puZsD66tkKWqNGqPok/7+yjA==
-X-Google-Smtp-Source: APXvYqzWh6wUVnTtVLoqYovOFZ200iPnwmcfy/bIeO4V1+CPqH3geREICl8oYoSWcqcUT/nZIer3YA==
-X-Received: by 2002:a81:2914:: with SMTP id p20mr14875056ywp.69.1561995392936;
-        Mon, 01 Jul 2019 08:36:32 -0700 (PDT)
-Received: from localhost ([2600:1700:6e90:7930:6841:343f:64f7:7ef1])
-        by smtp.gmail.com with ESMTPSA id a82sm2591109ywh.42.2019.07.01.08.36.32
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 08:36:32 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Mon, 1 Jul 2019 10:36:31 -0500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+        id S1728474AbfGAQFL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 12:05:11 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59927 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbfGAQFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 12:05:11 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 614256BA07;
+        Mon,  1 Jul 2019 12:05:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tQFhcH48+H4cI3ZFn0UK+EXRteU=; b=Ane8UE
+        cHyL8i0xtDMRMdyxFJllSEYuBHmsTSUAM69NvE1hC1MP1ILUbaCRqXpkL/SqZkhA
+        8wt9IfRuNvyq8tkLINZ6W2Xff5qx/ZnfS9WuXeCBOI1qrhJVpw6xLqjVEfq46FSW
+        4Zq+FJJey6NfMGkzDSSh48e5QYfHRLHkexJ5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wXGliHKRCE2bsLQWpjU0wI5GQRLtAMw+
+        EJSCuBnBlVWT2PGnlRNyqqMO9nS1YiqoiR29IdfIEWkXwMNmha7rZyzcPGs9s9P1
+        n4uhPk5xE3BSPq1Wty1THm6f/y1GD7jr0sJJ/7CwyvnOZJgTCkrB8obdO1oWd16r
+        KcP1x/BLmdc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 59A8A6BA06;
+        Mon,  1 Jul 2019 12:05:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1211C6BA04;
+        Mon,  1 Jul 2019 12:05:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        t.gummerer@gmail.com
 Subject: Re: What's cooking in git.git (Jun 2019, #07; Fri, 28)
-Message-ID: <20190701153631.GA45707@TaylorsMBP5815.attlocal.net>
 References: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
+        <20190701150228.18471-1-rohit.ashiwal265@gmail.com>
+Date:   Mon, 01 Jul 2019 09:05:01 -0700
+In-Reply-To: <20190701150228.18471-1-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Mon, 1 Jul 2019 20:32:28 +0530")
+Message-ID: <xmqqv9wl7nbm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCCC5F68-9C19-11E9-8932-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 28, 2019 at 03:17:42PM -0700, Junio C Hamano wrote:
-> * jk/check-connected-with-alternates (2019-06-28) 1 commit
->  - check_connected: assume alternate ref tips are valid
->
->  The tips of refs from the alternate object store can be used as
->  starting point for reachability computation now.
->
->  Will merge to 'next'.
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-Ah, I didn't see that you had queued this one as well. We also have this
-patch in our fork. It has been in our fork a little longer than the
-ref-filter patches, but this one has also been running without issue.
+> On Fri, 28 Jun 2019 15:17:42 -0700 Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> [...]
+>> * ra/cherry-pick-revert-skip (2019-06-24) 6 commits
+>>  - cherry-pick/revert: advise using --skip
+>>  - cherry-pick/revert: add --skip option
+>>  - sequencer: use argv_array in reset_merge
+>>  - sequencer: rename reset_for_rollback to reset_merge
+>>  - sequencer: add advice for revert
+>>  - advice: add sequencerInUse config variable
+>>
+>>  "git cherry-pick/revert" learned a new "--skip" action.
+>>
+>>  Will merge to 'next'.
+>> [...]
+>
+> Phillip[1] and Thomas[2] suggested some changes which I believe will
+> improve the state of the patch series. Please wait for a little while
+> so that I can send another revision.
 
-Thanks,
-Taylor
+Will wait.  Thanks for a quick note.
