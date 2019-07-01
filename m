@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AFF1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEFB91F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbfGAUUx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 16:20:53 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:55902 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbfGAUUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 16:20:53 -0400
-Received: by mail-pf1-f201.google.com with SMTP id i26so9414410pfo.22
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:53 -0700 (PDT)
+        id S1727015AbfGAUU4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 16:20:56 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:42411 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726762AbfGAUUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 16:20:55 -0400
+Received: by mail-pf1-f202.google.com with SMTP id y7so9442852pfy.9
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=P9pKwrlGaOOfj9iFXWKlglN3yvYMcUQW+AiUlhwNiJ0=;
-        b=LzF0QmM5M/I6lBdKAhhlMmomK9n3Wx2T/lP1njlFJkDv2H3nKzeodP8+WaBvEoPD1u
-         sk0RbBBg8lvh60kt8gMTUv7rPiLXpU74EngBZWu3LuBb1bc0olIIdBXyo1FUAcP7ipYu
-         z7um6ErUMH0hdA7DrzlIFnIWzZMxkDffzViYaXyQui1nRbcGZYwEazluGLFmV9p/Zlod
-         s1Ood/Hpw0t6nniQIUqYSL55e33Ik4elctICyZoipFVOPIkO7N7sMyC4MOU4tPED7KwO
-         olV9xCiBWBAq52yHdg35eGwW8EkAl3Gp+To5j2J5h7M6miGeGmHgv2tkqVS9q/ObWPHw
-         KMvw==
+        bh=Pp0OkZW/FgkuU6MiSbk6EZpEpgnCMkWIlsh0VlMIusk=;
+        b=Tj3+tv+4giqrTHNSkH/DgANQm0r/3P9slff4GkYHfcInV5R3R0xsCcP5Qe+iHW/Xwv
+         DWkWCtoyWh3W1ldgAdQIvAcCe6IY4TqXAGJ4ejYQneFDH9zXAjZ0nh3D32A7xFHG06gz
+         IiINT6d1hZ8ZyF764jvaUw4nHMbzVTvYkR5bJobvARcCHPtbWTlRxEAcr3tvi9s5d4Bc
+         jEdv2SQVkSn8RaMgVSfT7DJLiovgnzqMGhCRrqByq7CY2eYcmsNIbt9xqyak+tJuew7a
+         G4qKurvutyayW/V4kk4p2oIa/c3yZZcYOoecCLBpkMg2mxXcR7MUB9p8KFEWWvPEzKOV
+         U6yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=P9pKwrlGaOOfj9iFXWKlglN3yvYMcUQW+AiUlhwNiJ0=;
-        b=efFgPFqW7vF6T94XZhN3mS+Z0T7/dDfjSL49XibI8fALN+UvfO/Gq8D2sBwtRJChh/
-         xYaZxaY+8NQ3gNDXQRv7TN3Rpaxysdx7JPdEcwG3xLJDQY11XrgDz9AVmuDZ5X7aOeON
-         c7eNmc61gN7GZZ9tmy4gihsfwohPr0iP47fkApwoSa89fW/S1UkCLK0yreIxGWO6L2ef
-         vOXpbArSZfsqmIKFwpXdX1P5b4WNnaBAZjsUXfsXo/bwovWDCVQGK+DOZZVPc8zRzEmN
-         MgvdzLS2uuIE4cSmXCX5VGWrky01nB9qs4jchpqxR90Ha6uc0o0yDCr2BvgWiXMDkPtk
-         hz2w==
-X-Gm-Message-State: APjAAAVi+dXWe4BGG3ckI9HQQu4NXMiMN3n8D6SZibF+3YyJ1uv18tTD
-        YDAepDAg0K1HTeWggYtxMXlD98FFwq4Erp+DMmwM9g/KmouFJsJlVI0voUpo2Bu9RQkO1d9DjDR
-        qrPP86hE+Xi01CnosuIDl9V1I6DPC4Y0BXMyw3CJJ4fuMldGDIKCK/0Nr2FZOOM6GY55niAT2iQ
+        bh=Pp0OkZW/FgkuU6MiSbk6EZpEpgnCMkWIlsh0VlMIusk=;
+        b=CIsKKgfMePg2eYB/nXNIwkEj1WPgxbrGBrXwiugRuS6xOFqUy684zqz5ZYMCKPKI7R
+         RkYWMYHbx8uDj3VCrn1Xq7l7k2q7J9xBx+xzL4RGclAeB35+6e5DZU1WSWwjiF1xzqsR
+         8JnOkwgm0hgIi3h6hAf71tFxi78FiN2T7kACM+cG+3p20Z2VRqfsOBG7aVzhdJqqm0vS
+         xfZdoJWv/Lbyt1+fppleFdH1lSQE3DEERAwKO5X6AUljLNab+ZKRPJJNgfJ8G6hYpxs0
+         dcSD9C4LZnZ3/ZJh9LQV8AubFTCgYWvoZTVMPgLhxXMu+aAT5IrzkpajkjHn2XDlg4BA
+         R6HQ==
+X-Gm-Message-State: APjAAAU3KnOAAfvMrZrm3JBv6nOSIVxlL6Rl1Y3nOWhOyv3XSqCfjpBn
+        3+Q+I4bv6ypcC6EEqAJlDalxzns8oGGhccc7YEyKeulBTgKDrDLiPMA8SOkZ51a4FxgncJW+c5O
+        nVU3YLxt8mf9V0uv8eKw7QSGZZmEagsMVgvTAR6LfZcY32Df5hfW7NVbeoWO8/fOFdVD1D8lH+w
         ==
-X-Google-Smtp-Source: APXvYqwjSK+R3xtIB5KFGKSkE0OA6BGoUeVDZmKh9/W3/jBDkvo75lMCc0sHGpPHcnQjKrpJRQ62FsRiYV5Ur9hEG7A=
-X-Received: by 2002:a63:6cc3:: with SMTP id h186mr26182874pgc.292.1562012452457;
- Mon, 01 Jul 2019 13:20:52 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 13:20:13 -0700
+X-Google-Smtp-Source: APXvYqxav2W9gm9cqfdaCDjIwfga0lAM2wsvqZaL0ECVPBuiwUOnDhSc17nkhKnU1OUOMtB0Pacf9drkMara7BZZuIs=
+X-Received: by 2002:a63:e317:: with SMTP id f23mr26143784pgh.39.1562012454769;
+ Mon, 01 Jul 2019 13:20:54 -0700 (PDT)
+Date:   Mon,  1 Jul 2019 13:20:14 -0700
 In-Reply-To: <20190701202014.34480-1-emilyshaffer@google.com>
-Message-Id: <20190701202014.34480-13-emilyshaffer@google.com>
+Message-Id: <20190701202014.34480-14-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v3 12/13] walken: count omitted objects
+Subject: [RFC PATCH v3 13/13] walken: reverse the object walk order
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,57 +64,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It may be illuminating to see which objects were not included within a
-given filter. This also demonstrates, since filter-spec "tree:1" is
-used, that the 'omitted' list contains all objects which are omitted,
-not just the first objects which were omitted - that is, it continues to
-dereference omitted trees and commits.
-
-This is part of a tutorial on performing revision walks.
+Demonstrate that just like commit walks, object walks can have their
+order reversed. Additionally, add verbose logging of objects encountered
+in order to let contributors prove to themselves that the walk has
+actually been reversed. With this commit, `git walken` becomes extremely
+chatty - it's recommended to pipe the output through `head` or `tail` or
+to redirect it into a file.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Change-Id: I91883b209a61ae4d87855878291e487fe36220c4
 ---
- builtin/walken.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ builtin/walken.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/builtin/walken.c b/builtin/walken.c
-index 7b46377a2e..1638f679f2 100644
+index 1638f679f2..2eb12f92ed 100644
 --- a/builtin/walken.c
 +++ b/builtin/walken.c
-@@ -146,6 +146,11 @@ static void walken_show_object(struct object *obj, const char *str, void *buf)
- static void walken_object_walk(struct rev_info *rev)
+@@ -104,11 +104,13 @@ static int git_walken_config(const char *var, const char *value, void *cb)
+ 
+ static void walken_show_commit(struct commit *cmt, void *buf)
  {
- 	struct list_objects_filter_options filter_options = {};
-+	struct oidset omitted;
-+	struct oidset_iter oit;
-+	struct object_id *oid = NULL;
-+	int omitted_count = 0;
-+	oidset_init(&omitted, 0);
- 
- 	rev->tree_objects = 1;
- 	rev->blob_objects = 1;
-@@ -180,13 +185,19 @@ static void walken_object_walk(struct rev_info *rev)
- 			walken_show_commit, walken_show_object, NULL, NULL);
- 	}
- 
-+	/* Count the omitted objects. */
-+	oidset_iter_init(&omitted, &oit);
-+
-+	while ((oid = oidset_iter_next(&oit)))
-+		omitted_count++;
-+
- 	/*
- 	 * This print statement is designed to be script-parseable. Script
- 	 * authors will rely on the output not to change, so we will not
- 	 * localize this string. It will go to stdout directly.
- 	 */
--	printf("commits %d\n blobs %d\n tags %d\n trees %d\n", commit_count,
--	       blob_count, tag_count, tree_count);
-+	printf("commits %d\n blobs %d\n tags %d\n trees %d omitted %d\n",
-+	       commit_count, blob_count, tag_count, tree_count, omitted_count);
++	printf("commit: %s\n", oid_to_hex(&cmt->object.oid));
+ 	commit_count++;
  }
  
- /*
+ static void walken_show_object(struct object *obj, const char *str, void *buf)
+ {
++	printf("%s: %s\n", type_name(obj->type), oid_to_hex(&obj->oid));
+ 	switch (obj->type) {
+ 	case OBJ_TREE:
+ 		tree_count++;
+@@ -157,6 +159,7 @@ static void walken_object_walk(struct rev_info *rev)
+ 	rev->tag_objects = 1;
+ 	rev->tree_blobs_in_commit_order = 1;
+ 	rev->exclude_promisor_objects = 1;
++	rev->reverse = 1;
+ 
+ 	if (prepare_revision_walk(rev))
+ 		die(_("revision walk setup failed"));
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
