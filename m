@@ -2,79 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C5DE1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 23:27:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D26BD1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 23:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726979AbfGAX1Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 19:27:16 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39530 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726347AbfGAX1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 19:27:16 -0400
-Received: by mail-io1-f66.google.com with SMTP id r185so32755718iod.6
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 16:27:15 -0700 (PDT)
+        id S1727000AbfGAX2b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 19:28:31 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44681 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726347AbfGAX2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 19:28:31 -0400
+Received: by mail-pf1-f194.google.com with SMTP id t16so7275322pfe.11
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 16:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5J/jApywo57AJgkXgiYRA3/vk45uUXJMjdkrBsDWtHo=;
-        b=CzcqObKziGn4Mf+862WL2kUTDBBIp3xQwVfZFrVoLW8GprrvzezdJgFmE6zuCK46dl
-         iz6v0Grx4nKtWv23jw75nbskOYuoz7xbq8TS9DsUNBmCeBxektW1/WLADNnF1MOggPYk
-         LcCrEeoAULkBsnH9+jXkPCzNUOjPp9z++b2x6HfuTA1smENRMbdRCGhNhvXRpVxuRHaa
-         aK/sBHnerdVR+9UdV+jc3xba2px7ipdWtBCKdUl6/+lf/MIUOZ5khRxVJcS91F003ZGf
-         yYcgDzDlXxw6osBggE1O0qC84PuVwyN1yW7DtQEI512AD22R8M2Cd1Ka4ZQxKBX2ukHx
-         zB4A==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=dBsezipqesHxhYYfbaCRw8uz8c7SFwpyRYAxWKEHW28=;
+        b=XBv6AYeTq6If3FS2vawtSJqLljhKj0Hk+gtxAtuxbwbmDMWwtQlzPKBQqmc4g2ZY75
+         23dUamR5QlptOz9SwHZitvbjG9xlVeA+fHm74HCi09OnuSHdNV4F0nT5nERd9Vd4YTeC
+         +jGcJwSBd/iTwF96uqSAqdBRybtSx6POb1Ep3/jmC36towUGVR1BFlK00H5e5RO7352R
+         KVptdKrHOxGDRiXsgYdVi4nS5y5pLvEq8h202DgM8Ur3i8MorugPE8WJoywk7RlJv8ru
+         Bt+yMPQRXgeK/KVyn4LDn3RH346yIHIwA6ZJ9hls5A5vKiz2AqmwWpXavwpv4/k+ZQZ2
+         Y9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5J/jApywo57AJgkXgiYRA3/vk45uUXJMjdkrBsDWtHo=;
-        b=c12qqKg5Fao9crIXG4yOjBeMc+ipgpoNyu60fuL8nx1Y1Vvpz6CTg2Tmzt/t6+eBLR
-         uTU2ocD23TtYmIfeW4x7ptxAFvZ1JmtnaS3Kxdnc++unf0RguzZ9WGJbcvTsW7/YA84+
-         4DQpChFyzFqyCKOikBpKxMLqm5zHVrNihv14zS93GP0qFhtSR6uDOdoWU7IjcD30lpJY
-         4I86nf3OyB0oeDpxfGU9+JN261S24n79irl4b7zFj8UUWYsJYaWkf/sdT11CZcK39CyO
-         I/l7EOBnz9JkjCgcPCO860ThdCpCCwlDaDv8tFj87ysbvg3ESHefHCZKWOeBaIC/u57y
-         BfXA==
-X-Gm-Message-State: APjAAAUtb4caUwZx3vLAtw0lao9DE+Pz6IxmPtwEcYK7o2K5lkQtvqKN
-        /OxEsoy4ez22ka9QV72jtlNZzf9nY3YC0HRjCGYo+Q==
-X-Google-Smtp-Source: APXvYqx4UaoiR3rTV0ChNTXzKl6YNAj4Ddy5F9qu6QkriFqbIeDh9SmcSa8nxqme2eEZXaL+zv1WmPTxJgKITUPN7OI=
-X-Received: by 2002:a6b:ef06:: with SMTP id k6mr883176ioh.70.1562023635297;
- Mon, 01 Jul 2019 16:27:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.254.v2.git.gitgitgadget@gmail.com> <pull.254.v3.git.gitgitgadget@gmail.com>
- <13b9e71b383485885c4823baa466c32511fd20bc.1561991348.git.gitgitgadget@gmail.com>
-In-Reply-To: <13b9e71b383485885c4823baa466c32511fd20bc.1561991348.git.gitgitgadget@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 1 Jul 2019 16:27:01 -0700
-Message-ID: <CAPUEspi_c9P=1LNEu2Oej3d5wcpYVVxys=aOT6Ow47vDY+0M8A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] repo-settings: create core.featureAdoptionRate setting
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=dBsezipqesHxhYYfbaCRw8uz8c7SFwpyRYAxWKEHW28=;
+        b=Pd9XsX9XxmwZvmgWPU1acf5Pol6k8XQGMMRy6LZqDAYXmnWRPj2Zqq1LU2Q/qrvklP
+         L7JZm+MoCknM3I10JyUI2XRq1Sv8U0fF2SRAnLjlT0YM6ZIjl5ig6SzAfBQQP5upGsHI
+         VfGcpZ9n/F8pMtU0i8QBDmDf7VCHfFWFZNn1f1jMmtALO2t+2zhgAEbQhpYiYrZjIOxI
+         Agi5hvudi/U6v7zQKkinAC5x7lTcn8tlWlioS6pzDB/8QMOhH+PMhwTFheWMPVOA8tNE
+         7fSedEB+Quab5qRCrVXz87mXe7qkc8yObc/MEjgqBIinHdQOirezzaxtSlMfoflnVUEo
+         ZUCA==
+X-Gm-Message-State: APjAAAXvA+3noSEuTWBSKV/DGMumOU7trPY4BKcp5/skuYaO5hpjuTCX
+        gwXaSeEx3YhEc9CgWoserAQ+NAjBC9l7jw==
+X-Google-Smtp-Source: APXvYqyv59RDzJsvpktpTo21P/POmcoWu0JxhhSrQ3aHo1ykPSwEC2f/E7RETXIPQl4WzEYeULlrDg==
+X-Received: by 2002:a65:530c:: with SMTP id m12mr27596976pgq.363.1562023710743;
+        Mon, 01 Jul 2019 16:28:30 -0700 (PDT)
+Received: from aermolenko.office.atlassian.com ([103.233.242.9])
+        by smtp.gmail.com with ESMTPSA id e5sm8713051pfd.56.2019.07.01.16.28.29
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 16:28:30 -0700 (PDT)
+From:   Anton Ermolenko <aermolenko@atlassian.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: [QUESTION] Git fails to detect merge conflict?
+Message-Id: <E42B8D46-0CA0-44E0-946F-8ADA96993629@atlassian.com>
+Date:   Tue, 2 Jul 2019 09:28:26 +1000
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 1, 2019 at 8:32 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> To centralize these config options and properly set the defaults,
-> create a repo_settings that contains chars for each config variable.
-> Use -1 as "unset", with 0 for false and 1 for true.
+Hello folks,
 
-minor nitpick that hopefully Junio can fix: s/chars/ints
+I'm writing on behalf of a customer and I wonder if you could help me to =
+clarify
+if the following test case should be considered a bug or if it is =
+expected
+behavior.
 
-> +* `gc.writeCommitGraph=true` eneables writing commit-graph files during
+  # create repository
+  git init
+  # add initial content
+  cat << EOF > example.txt
 
-typo: s/eneables/enable
+--- START ---
+  LINE 1
+  LINE 2
+  LINE 3
+---  END  ---
 
-Carlo
+EOF
+  # commit the changes
+  git add example.txt && git commit -m "Initial Commit"
+
+  # create a branch
+  git checkout -b change-a
+  # introduce a change
+  cat << EOF > example.txt
+
+--- START ---
+  LINE 1
+  LINE 2
+  LINE 3
+  LINE 4
+  LINE 5
+  LINE 6
+  LINE 7
+  LINE 8
+  LINE 9
+---  END  ---
+
+EOF
+  # commit the change
+  git commit -am "change a"
+
+  # return to master and create another branch
+  git checkout master && git checkout -b change-b
+  # introduce another change
+  cat << EOF > example.txt
+
+--- START ---
+  LINE 1
+  LINE B
+  LINE 3
+  LINE D
+  LINE E
+  LINE 3
+---  END  ---
+
+EOF
+  git commit -am "change b"
+
+At this point the "change-a" diff with master is:
+
+diff --git a/example.txt b/example.txt
+index 1cebaff..605f2b0 100644
+--- a/example.txt
++++ b/example.txt
+@@ -3,5 +3,11 @@
+   LINE 1
+   LINE 2
+   LINE 3
++  LINE 4
++  LINE 5
++  LINE 6
++  LINE 7
++  LINE 8
++  LINE 9
+ ---  END  ---
+
+and "change-b" diff with master is:
+
+diff --git a/example.txt b/example.txt
+index 1cebaff..cf5c0b2 100644
+--- a/example.txt
++++ b/example.txt
+@@ -1,7 +1,10 @@
+
+ --- START ---
+   LINE 1
+-  LINE 2
++  LINE B
++  LINE 3
++  LINE D
++  LINE E
+   LINE 3
+ ---  END  ---
+
+If a user to merge branches with "no-fast-forward" strategy, git does =
+not detect
+a conflict:
+
+  # merge change-a first
+  git merge --no-ff -m "merge change-a" change-a
+  # merge change-b now
+  git merge --no-ff -m "merge change-b" change-b
+
+And the resulting content of "example.txt" is:
+
+--- START ---
+  LINE 1
+  LINE B
+  LINE 3
+  LINE D
+  LINE E
+  LINE 3
+  LINE 4
+  LINE 5
+  LINE 6
+  LINE 7
+  LINE 8
+  LINE 9
+---  END  ---
+
+My understanding is that recursive merge here won't consider that =
+situation to
+be a merge conflict as the changes have been introduced in different =
+spots in
+the file.
+
+Am I correct or is this a bug?
+
+Thank you,
+Anton.
+
