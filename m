@@ -8,93 +8,86 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92AE81F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 11:47:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D451F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 11:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728700AbfGALry (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 07:47:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42191 "EHLO mout.gmx.net"
+        id S1728702AbfGALte (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 07:49:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53533 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727888AbfGALry (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 07:47:54 -0400
+        id S1728075AbfGALte (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 07:49:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561981666;
-        bh=M4fr3sg/SfgO0S0j97xBqxH//aiOiKUwWEdlPM9kANg=;
+        s=badeba3b8450; t=1561981767;
+        bh=PRca0WvKVHSBck6eqcgswDTwhpjwBFwXq5m/8DXXyCM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=h1bDnifQcJCbVg98x163hikg7tG/HbhShM6BvRsi08lN3R4BXM7YOMj1UuUwxaMLT
-         GrSRvCIu3DhLP+PkscO3zhNdKZyi0EGXw6PazpZBqJHDIIel2PgOwJgRfVRC26xNSx
-         LFt05QBHgcMtNXg8dIE+QaIYYkurRp0UA0Ud4xho=
+        b=Nn0zZCbPkQQbkid1kywrevxV1wglbKOgxJqeEyYbOybvUoDadpYwGZBpulZf0/4cg
+         OyKCYYvuuZEkYPdvmDyFT0KwwJRWXHxUvRTTlhgv9TYmED5tk5wu9CZOVbo9V1Qppl
+         Y30YGUg8cxykjgNHDYWiLsZZOyvii+xORiWaC87Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbRfl-1iEVeF23tx-00bqRL; Mon, 01
- Jul 2019 13:47:46 +0200
-Date:   Mon, 1 Jul 2019 13:48:12 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtZcC-1iiNKl1zCG-010rAH; Mon, 01
+ Jul 2019 13:49:27 +0200
+Date:   Mon, 1 Jul 2019 13:49:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Vas Sudanagunta <vas@commonkarma.org>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+        git@vger.kernel.org, Vas Sudanagunta <vas@commonkarma.org>
 Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect interactive
  rebases
-In-Reply-To: <0F745CE4-3203-4447-B1D5-937CCDCC64C7@commonkarma.org>
-Message-ID: <nycvar.QRO.7.76.6.1907011346411.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <xmqq4l498irq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907011348280.44@tvgsbejvaqbjf.bet>
 References: <pull.253.git.gitgitgadget@gmail.com> <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com> <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet> <e332eb5f-0818-763c-9de0-889644446a35@gmail.com>
- <xmqq4l498irq.fsf@gitster-ct.c.googlers.com> <0F745CE4-3203-4447-B1D5-937CCDCC64C7@commonkarma.org>
+ <xmqq4l498irq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-307196112-1561981693=:44"
-X-Provags-ID: V03:K1:DhLg+5+Hgszyf/1ykvMLT/5l026EFsOc5I3uirETOhNJEAwMM+K
- zys+zIs5qDtdZ0J2RVprrJVuZKB1aFimXR5wmzUqvsZEzRa3Efyj4OvgnH54zZKrdT6XddF
- pnk/PqVkSvaPBIzGCmX/qqwrXA98c3mO0fpJcYayrfIkMT1cxbe1ysobjNExhp8mLetrVMa
- I0vBMXJpAZm9wX3opTyzA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GHucQx4Kn1Y=:tYwr7P3Tnzg9j4IkSI58W5
- XR9b8yOH6eXcNCKN1lOpUT/uAJ7LELYqqOyN3RGOXX+MLG9XO279JQ+mjvlb25dmOOO85uAHK
- 1IbYEtEZKXm6uBJQ1AKbjyltsauj2bmTyiNAYQzL2Z4egHXvZJCoVYBzzVLzgODzv6Sl8Z9K4
- YM51pvm4rcbNxOU++k9qSHH5xOVHn1b9r63/UlkrNxiMzQ6aQqIH3jaeJuuYcTEcU1GQp4Ct+
- EkE3aCjbBE4ZD5YhX9oCkruY8vwHpFLwcVJP0Plsh/WDA15kkfuzpodJ09EvNFYp2huPQu3fM
- qTv8BZW6k0hw1AQObL0oexQ3Ur+jTxEonoV/wE+x/CC5cFmgPCMyq1teSugS/sIgrNxllva6h
- lRfxCQsskST8mjMLM2wtzD26plcbXRVudLmU29xwltoIgu81BGmGNhnA98Yey5yw6kh6cQgi4
- AcOK6ipJTGpVa8dji5M2KAYNhuLJvhbGsZs0og6llBNT3wTfKXCP3O29peulCJvzsoSifwonn
- fom5Hl48YLK3TKOM7VzxMHqRZk74axCpD2lulWmNw75yJIKABW7NjjZs9bb6gu4swnHfwe4BW
- bU/9f/lGI9xI0u6LNlh81Sxn0YnPvCv/1e6Re2SSVuFil15E7mD77rOnBIWXku42qS7t8EAQH
- UcOwznQtS3T4QadpHBIRTCsJyTsIwCLjaghtV6XkdC6ov+fveZyElijKsc7NHzJV17OqbIyBX
- 5Ps1AnrthP/mNOqSJmb5CTh2IH8u6eG9uRxgS6z3C+THdEyYJpwbZmgKNO0ti/tqb2VOVImUP
- psvdVHMCOJOt6fP98YbSYU/xBDJmFy8yg/XA1DACLfkenJklWK1KicwrZzCqg7VlAxxiiznFL
- dRAIQxWXYfDGO2aMAlhIvDnqgLPfde1KNcrIyIFt5eKA20xrgccRXwa1CZsfge88u4oraz4kb
- sYBehwiFGA1argZ8LnpyOS/XaO/lqqNt8tK56/McGp7swGJxnMIVhhu3spMHnD8pI9c1ZPJzX
- VPgNbR5RFK74MvmOfnVaMYIUKLxq1CaXm17hcrVr02AixEhtV2dYEQ3J6yNyfoWMIkjrEtnAP
- DTGceUJQU3MDLj7ni1nMLmlhjyGzz8d1vrw
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ObG8JfUAQCZofFa1g3k/z9kz6x1ScR+QlSRBN55lHGNCyhL3s+L
+ bvJtKckDwUhKj9iJ+AjImMlHbo9BaaL5fZzHzDnkKn5TPVo1Btlb2h14+k4glXuf9MMUnMT
+ 6eidVzw/DS6DKlW5ppTWuGga9n7mJCOGt0qpFGFMADSkkjya5PWl3T0/fZ55Q9JzEfvsvf4
+ Tv+SOSkk2hQrKhAiIVziA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YhPigF7yLCc=:Toe6ybSjfRWi7sfNkslL/d
+ VA3SyUKNMmlAh8aZmjxPzOy/L0mtM/Z4t/1shV/o8R3kysePWp8tpIP5aAE8vEtSYmlZQatqi
+ emiKQ2XjHVw4B7IEENwKu+HdtHXFF3nKQUSAfWtIzJK1bOvwXe6GzwQOoxR4stjIz9Da6otZm
+ qHMhudzUFZb2QdIOJrHOk+UFUBvf6QpINQpb+OBWcGT5fTeGYLTmq6V7ucjJwYu9mD7YuvE2n
+ wHx08q7WxSrruBca/Fk4NBn1M5h8T0yyyKPdZwXMkIoqx2BRdPfZF7ubPh9dwK8xdc2tPq5U1
+ Bh8ngXzNc6uaVTXDDg/3t/C62aqEOr9steSgpLMdyPJvD8E/5tJ/sHzymNVMmvDSVeAvJCjf2
+ M6GNNaiUJsstCnw/aS6qdCd8kjOEUc5ddJ8RtHkz3WJEDCWJN4Ux16p97qSnEEETptD35ZiVJ
+ yZoHv5H5kSJ/zjIqZHWdEKCn2WvofNc06F8FF0HsYKLBHMMlhCLP2xd7GzHeg5yEq7a0qQfgE
+ 6eecRvMDgV/BWZ8h0ox0xcRX8QN1Giqn8hwIpVQ45iQ8shQcvSidguEurJf6diwia3XzhEZdb
+ Tu008JqW3XfSaAwVFcWaNrBU58ApV19arBkC1oyjK3RBQRdHOIvv9BcTNo/LXTprlFJw331Of
+ 5r6vuCW/GGwRqcQ7M9ReQNqf/SmRuUCq7/Rh2URd0t57NU/BYWIQF75fZlZzPcXQ593x8N5xj
+ UOGUs3nMC42bOqVqBXb2eJuxvgmc8LNGPewwlAGQaIrx7NI3eIzEaNC/70s53hAD4ZVCluWlT
+ ZuhvdpBzfpbLI3K07AuhaaRJQrdLgIbdJEiJN9faw015Q9j2D8UYX+qsBmZOjShIiDMr8GIl7
+ XQSzqzbUqwJU34gT3kswig/aMcE4j392MpOn20HuAGSOg3y+0EbT/DH38nMTiIdVGxsZLAPLY
+ pHeOyi9Ii1hB/khL1Lc/BB6bw77H+Ub3S5KXlOrt2684fgBDNGASGrnp42w0m4iRfJobxwZ03
+ GNqwYI5NPLrHz20YYBjKmr5S8e5g9rX72NP+QQajTJZgTBQu/jxHzeIjUcze0esZ/C+7rWauT
+ VoujfjtGy4Bbn0v2KXYF9lNR55kfeOn3erA
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-307196112-1561981693=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
 Hi,
 
-On Fri, 28 Jun 2019, Vas Sudanagunta wrote:
+On Fri, 28 Jun 2019, Junio C Hamano wrote:
 
-> It seems unintuitive that including a command to execute between each
-> rebase merge implies an interactive rebase. It=E2=80=99s no more interac=
-tive
-> than a sequence of rebase merges without intervening commands. A command
-> failure interrupts a rebase just as a merge conflict does. If the fact
-> that a rebase can be interrupts mid-sequence, then all rebases are
-> interactive.
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > I was wondering about requiring --exec with --reschedule-failed-exec
+> > rather than checking is_interactive() as that would be easier to
+> > understand.
+>
+> ... I find this a reasonable way to think about the issue.
 
-Indeed. I would consider it an implementation detail that the `--exec`
-option uses the interactive rebase backend, and I would hate to force
-users to know about this.
+I don't: the `exec` command in interactive rebases' todo lists predates
+the `--exec` option by quite some time IIRC.
+
+In other words, `--reschedule-failed-exec` can very well influence a `git
+rebase -i` without `--exec`.
 
 Ciao,
-Johannes
-
---8323328-307196112-1561981693=:44--
+Dscho
