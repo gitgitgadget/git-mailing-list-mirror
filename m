@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10F121F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DEFF1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfGAUUX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 16:20:23 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:36582 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfGAUUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 16:20:23 -0400
-Received: by mail-pf1-f202.google.com with SMTP id b195so9034205pfb.3
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:22 -0700 (PDT)
+        id S1726738AbfGAUUZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 16:20:25 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:36233 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfGAUUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 16:20:25 -0400
+Received: by mail-pg1-f202.google.com with SMTP id s4so8207693pgr.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=jj14Fqja7l+FMw//jf/rk04k7ht0B33trxWsTxku1hk=;
-        b=lPSuge7dD8WUSA8si+8qqxXYAdBmsnOq0MvvtmjnEORqc+g8P6oTeKfZwn2WodUEFr
-         wJ+EuGZz6KwBk5Oeouh1K6QH44UDaowwv2f4qZCNleUcBmU/homr28PEDqn2c+xVI50B
-         sOnCgRR8NjvaYbIYZUb6hPEgfndJFj/USIgdmcw8XWBoDSHH+593i3p19U+wRhlI1wbn
-         uNHodbd4+UCn2eZUv65qR8OUd9Q+0u7xHVS7VieS2o/TMWuKeMRX86acwbWul5zzD3Pf
-         H1ntctEIHRoDJMN22NL+FeyW1KS4XHY9PoD6VBZWrMDgudhfIL4N/+W58xAV3F0AgECD
-         hfMg==
+        bh=h5tPu6j20EkRGmVU+jgtTRm2YSQXSICHUxEy38FikbE=;
+        b=dZVFrhGwRaQQ1LuJ2V7jGJ+ykxsvb4dPC56EA7nINtcAbXLPMVcs9uQRJsjhhyM4C3
+         lF1IffU3WVDEzVeC40uZDURMcuAnA3MDxqjdIJdYyUSypTSb875FnB5ayZ8Y2gUBzTFN
+         NlTQhFnZvbdK2RDOeW/hR2nZpiuDnHzdH6gBWKrLFRtw2PU7nGLR78aaKsChw4E+lNQb
+         yvA+JdmyD5Q+V171uujuxuSh0lvhgpxogrdvbAvWaWrFUVymP8xptU6vPkkkky6fW+FY
+         ri7OHg9hgNcXLIdWvh3njzrvtIdrr5V0NdB8Sl0AOzx2KD/pBuV2kfAfEJJ7qJ8fVzYI
+         AkSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=jj14Fqja7l+FMw//jf/rk04k7ht0B33trxWsTxku1hk=;
-        b=boO8wODsDmn4DLBSfo0hvyqlxi/1YI1e/LeqADzPhLnQvgMBjeJTBcezYpCq1mXOi2
-         0DKCgFqH5/X5sYVaPBnDyZnp6JSqpT/yGYOBKGuKSOn8LWPFkeK6rW6CJ5U9jTvs0bLz
-         nBgrKE+oaI4s4qxGJqJFrHMriE0hn0/RhIQ2LDXypg329vfcJnpS1Qcw8Ja4jMVbwuiN
-         RauiJQqtFIfaXUk+enEIBU0I70iyN5ADlFcy1qEBdsFo5kJQg+ay5i0qDN22gLqLNGih
-         bXXMytOHrF7o+3ae0eSIOLjuUVBzOYQ6UOKZJFWGJMd9Cwq0jPcyg/Fz54mm2dJ90xuq
-         ADzg==
-X-Gm-Message-State: APjAAAVurvDtIMK0oxIa6wfxnrFMVIAaYQZF4GRRnadR+dZqB5lSoDmC
-        PvAzbfg/11MsiTy/VsZL1p94gG/nG1k2lKYQFE1ZN29eERusitsamrmgI5NcNBlPzT2vrLP3lhY
-        +ukMDKXRU/+Hu0JJ7ehe1FbeTtcuuGj/DeICWeL+AWs/UpZ3yY/Wc2vOph0jrWAf1LgCYiS0Z5w
+        bh=h5tPu6j20EkRGmVU+jgtTRm2YSQXSICHUxEy38FikbE=;
+        b=WYjohMLwR+6/D0lbbGWoWfk8RXgDgFAsJ/69gRillYIlELySX9muVyTfeaJjZWkVVe
+         e8KoizYdD0j1a/Wvf61KcQFiygmUOaQ6wXPjXapS6QM00F3WmgIjdoAqLeN5hLQ/rW5t
+         S5coPycaH4xI+fpUYY4pTCyUQW5OQ54CktboZO/21i2F6qI+gM1n3HLv6MKyYaHT1gRl
+         OBFUJ8k2rHJaoVx55hTUNJztYbh2YGKpAmtvFiZhBf/K97sQhnxGlBA23FUdK4/T6G5q
+         mfOi7VNdaGfkAwP0LnaeXptds54R/QJaBL8zSZn8MdEluh4gbJFQf43vuxiq0SCUeyR7
+         yvKw==
+X-Gm-Message-State: APjAAAXvA4HEqP5JdkHAzua1r55bM7g7lRP716WVy7o0g56XZAORIPNP
+        IsE25ziFSdj4qG2bIZA07mhiwrlRRM7qfdsrTsZBHNut5kfVW0AD3xO4Eexah/qRp+VWM0Fe9ym
+        rPd7CFSIXmvXvXSoQ3dSxlADomL90OyK0rPfOJxLjThf0c8GBQEGeCGCHOukSYq7c752OcZKoLw
         ==
-X-Google-Smtp-Source: APXvYqzwo2mcE9o/Olq8+99PxP/iHf2WEOukSNVYPDmIplOcD1LEH55JkwojchUdpzvbVO8PYJV/JGVo9oYF8nFA+VY=
-X-Received: by 2002:a63:c60b:: with SMTP id w11mr25748193pgg.356.1562012422060;
- Mon, 01 Jul 2019 13:20:22 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 13:20:01 -0700
-In-Reply-To: <20190701201934.30321-1-emilyshaffer@google.com>
-Message-Id: <20190701202014.34480-1-emilyshaffer@google.com>
+X-Google-Smtp-Source: APXvYqw1yMYoVw1WVFSq0RVzAyq6cLzkM2wdV/6YH7z2JHYNAtZ3VbdZ3YL1QyXoCmnKT2urqUVp3qbSJTPP3NNcKVk=
+X-Received: by 2002:a63:5765:: with SMTP id h37mr8974312pgm.183.1562012424385;
+ Mon, 01 Jul 2019 13:20:24 -0700 (PDT)
+Date:   Mon,  1 Jul 2019 13:20:02 -0700
+In-Reply-To: <20190701202014.34480-1-emilyshaffer@google.com>
+Message-Id: <20190701202014.34480-2-emilyshaffer@google.com>
 Mime-Version: 1.0
-References: <20190701201934.30321-1-emilyshaffer@google.com>
+References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v3 00/13] example implementation of revwalk tutorial
+Subject: [RFC PATCH v3 01/13] walken: add infrastructure for revwalk demo
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,31 +64,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since v2, mostly reworded comments, plus fixed the issues mentioned in
-the tutorial itself. Thanks Eric for the review.
+Begin to add scaffolding for `git walken`, a toy command which we will
+teach to perform a number of revision walks, in order to demonstrate the
+mechanics of revision walking for developers new to the Git project.
 
-Emily Shaffer (13):
-  walken: add infrastructure for revwalk demo
-  walken: add usage to enable -h
-  walken: add placeholder to initialize defaults
-  walken: add handler to git_config
-  walken: configure rev_info and prepare for walk
-  walken: perform our basic revision walk
-  walken: filter for authors from gmail address
-  walken: demonstrate various topographical sorts
-  walken: demonstrate reversing a revision walk list
-  walken: add unfiltered object walk from HEAD
-  walken: add filtered object walk
-  walken: count omitted objects
-  walken: reverse the object walk order
+This commit is the beginning of an educational series which correspond
+to the tutorial in Documentation/MyFirstRevWalk.txt.
 
- Makefile         |   1 +
- builtin.h        |   1 +
- builtin/walken.c | 297 +++++++++++++++++++++++++++++++++++++++++++++++
- git.c            |   1 +
- 4 files changed, 300 insertions(+)
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Change-Id: I64297621919412f54701e111366e99c4ef0feae3
+---
+ Makefile         |  1 +
+ builtin.h        |  1 +
+ builtin/walken.c | 18 ++++++++++++++++++
+ 3 files changed, 20 insertions(+)
  create mode 100644 builtin/walken.c
 
+diff --git a/Makefile b/Makefile
+index f58bf14c7b..5bac1dbf8d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1137,6 +1137,7 @@ BUILTIN_OBJS += builtin/var.o
+ BUILTIN_OBJS += builtin/verify-commit.o
+ BUILTIN_OBJS += builtin/verify-pack.o
+ BUILTIN_OBJS += builtin/verify-tag.o
++BUILTIN_OBJS += builtin/walken.o
+ BUILTIN_OBJS += builtin/worktree.o
+ BUILTIN_OBJS += builtin/write-tree.o
+ 
+diff --git a/builtin.h b/builtin.h
+index ec7e0954c4..c919736c36 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -242,6 +242,7 @@ int cmd_var(int argc, const char **argv, const char *prefix);
+ int cmd_verify_commit(int argc, const char **argv, const char *prefix);
+ int cmd_verify_tag(int argc, const char **argv, const char *prefix);
+ int cmd_version(int argc, const char **argv, const char *prefix);
++int cmd_walken(int argc, const char **argv, const char *prefix);
+ int cmd_whatchanged(int argc, const char **argv, const char *prefix);
+ int cmd_worktree(int argc, const char **argv, const char *prefix);
+ int cmd_write_tree(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/walken.c b/builtin/walken.c
+new file mode 100644
+index 0000000000..db3ca50b04
+--- /dev/null
++++ b/builtin/walken.c
+@@ -0,0 +1,18 @@
++/*
++ * "git walken"
++ *
++ * Part of the "My First Revision Walk" tutorial.
++ */
++
++#include "builtin.h"
++
++int cmd_walken(int argc, const char **argv, const char *prefix)
++{
++	/*
++	 * This line is "human-readable" and we are writing a plumbing command,
++	 * so we localize it and use the trace library to print only when
++	 * the GIT_TRACE environment variable is set.
++	 */
++	trace_printf(_("cmd_walken incoming...\n"));
++	return 0;
++}
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
