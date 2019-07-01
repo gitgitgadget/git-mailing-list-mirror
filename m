@@ -2,100 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA72C1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 18:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E6301F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 18:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbfGASur (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 14:50:47 -0400
-Received: from mail-eopbgr650096.outbound.protection.outlook.com ([40.107.65.96]:16176
-        "EHLO NAM06-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726076AbfGASur (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 14:50:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Nhrm6XDLRJUg1W2DG5pGhnVeCtv4s3Wd2/Fh/LpU6lDxJbVetjQX3nvHqJPbOruxBOnJH2/CKlMkiZiKg8/ICGjT4/xAn/6iMMIbOqgg7AHDzdw12F1k51rh5ds6OBeN13WiB2TDnpP4dU5wNV+eHJ2gLhJAHxBhbbGucnEnLAVrcCAcHEYfp/NApOzDcqaLVpp0htW0oAI0ScdeWeGwvtu/Zl2vgBBn+aTIsHRnmf7Cx0lgYzJI+HxPY4BNNsqTN+1PkeIuBiPxN9s67nhnonGZxcoScxPXPsJzif0uPYEpW+LmSIthlhv9oqhV1Kpc72s9yZQeimf0ofiICdg/GA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RRppni2L1/Q14f9OpR6lkrjeRcOZTVBy/c/f/iIJgtk=;
- b=WwN8cup8E6xyeYMSTwbjFvFoKIsbtFjoXQ/mVktggYpGK+FzqGr2IrsIYnPy922VM/qZ9Tk5/CRlAB+WeNgr45b+VYLoDFpxUHABuaJNhtD4I0a8oeb4c59aJ7VL1U3YXaKk+N3h1VRNWyLz94LQQcYAbSKHRBsjOB204f5Voezs1qWrdXcimu3adLReonVVG0QVePHxZHD4Ia44XUHEVMczFRj9dzbEHZhcIcwIwjq0AsWXQussFKxL6WrjQ3IKaLDAk5YbghjIzIlJt0POYUEtVbFQ1zGvQXx+amICjERfn63LjFxC+D+P3IAGZx6KxD0wCpZOjBhnHZm500Pluw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
- smtp.mailfrom=microsoft.com;dmarc=pass action=none
- header.from=microsoft.com;dkim=pass header.d=microsoft.com;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RRppni2L1/Q14f9OpR6lkrjeRcOZTVBy/c/f/iIJgtk=;
- b=JqG7ZWP1XOOXemfPVSecvTbyIg4mLyxIU+3qhxrk6ACGjeyyzjb6y7CGUsfwz+5GSYHwZ9C4AFyV0cUDBiT3aEFURNRwcOCRUGYQs2b/FtkgwHN9MvvTIoJ4i8BuzKY1r86lLGQKtRJ2efTizkK+z6t9h/SpEB12rfDYILl7TGE=
-Received: from DM5PR00MB0408.namprd00.prod.outlook.com (52.132.129.32) by
- DM5PR00MB0373.namprd00.prod.outlook.com (52.132.129.20) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2086.0; Mon, 1 Jul 2019 18:50:43 +0000
-Received: from DM5PR00MB0408.namprd00.prod.outlook.com
- ([fe80::9923:ae05:ac1a:e3e0]) by DM5PR00MB0408.namprd00.prod.outlook.com
- ([fe80::9923:ae05:ac1a:e3e0%5]) with mapi id 15.20.2080.000; Mon, 1 Jul 2019
- 18:50:43 +0000
-From:   Eric Kulcyk <Eric.kulcyk@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Tracking parent branches in Git
-Thread-Topic: Tracking parent branches in Git
-Thread-Index: AQHVMD3i8/gIlx7oOE2G2ApKMwWLhA==
-Date:   Mon, 1 Jul 2019 18:50:43 +0000
-Message-ID: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-07-01T18:50:43.011Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Eric.kulcyk@microsoft.com; 
-x-originating-ip: [2001:4898:80e8:b:e561:6c02:9616:a3c8]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 206075cc-6edf-40c0-9804-08d6fe55052e
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:DM5PR00MB0373;
-x-ms-traffictypediagnostic: DM5PR00MB0373:
-x-microsoft-antispam-prvs: <DM5PR00MB0373DC5467B96AC8F9D8352AF1F90@DM5PR00MB0373.namprd00.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 00851CA28B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(346002)(366004)(136003)(39860400002)(396003)(376002)(189003)(199004)(74316002)(478600001)(7736002)(305945005)(25786009)(10290500003)(316002)(53936002)(22452003)(72206003)(6116002)(33656002)(8936002)(6506007)(7696005)(102836004)(186003)(1730700003)(81156014)(81166006)(68736007)(99286004)(8676002)(2351001)(10090500001)(2906002)(86362001)(8990500004)(14454004)(5640700003)(2501003)(6436002)(55016002)(9686003)(66556008)(64756008)(66446008)(6916009)(5660300002)(71200400001)(71190400001)(66946007)(476003)(66476007)(486006)(4744005)(256004)(46003)(73956011)(76116006)(52536014);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR00MB0373;H:DM5PR00MB0408.namprd00.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: ttJ7rMnszNps8/kCp7uRuCV5GwDSQWXXEWSDVlAGGh/XLNg8FxKLkPKrYVNuif6RtXshbHXInkCek2n0Z1VyI5alpkS4IT2cAdrMLYP+mv27K7zcldbKce3EoxYPypGq2G9luh89u/dT4GQ6xU24B39lF48CQ5gt4AV80uQkgw8tUSd5Tc7l+iN3Qpt97Teebtxx1mmTA4bpVxTI/lVYLGjotEHVcrAs3XCk3JAKr972NV1l/NgaTwn/FHZT/9mT9OTp1oACp7VYCfiHbvVwUVZpT1FHRbfrtwXt0CKjTO9iTMgP51I1GLZDG4VFjoa5kZ3/qVSOzUu23jY2AW80VZLLujtNqoGCPoUWPOh9uo3enTs3fcLqcSU+/BGcFuuqvxTIj3niUihuIoP09z0dlHHV2a3qY5naKGzp7cgsdnk=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1726618AbfGASvD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 14:51:03 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54603 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfGASvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 14:51:03 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 734BF6EED7;
+        Mon,  1 Jul 2019 14:51:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3G1sxCHR2THVJvDA9g1C/tTK5O0=; b=gyzXOn
+        GcVhrsuprX9ZvI3oeSw1xltEsN3hQ04Vtj7wY6YwhHwij2jLAbfm/pFCzr5RScoW
+        b0ShNibigP4+mvz6q8pNWQi9mana44RDiGlD/9e9zdlv7AB05V25EQIr3Bzg+KJ3
+        K21c1gjFTXzlYoO42GyNFqqrvQ7dIdSW4t7NQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FUNnNbH1hKjFzf4iGIii13QhF5lwqGf4
+        ooppg77ffm/t+8kuwymyKtziSM18R1VcvQSoUAGqAcb5UlbnTKJHU5yox7MC5tXs
+        Ir1A6aNMYd9TqUmBeqLylz/LozxnGmPqCm8oUj15SmkZNA4KSzOdqOS19oRcBTXm
+        qON2+GnwMbw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C8C46EED6;
+        Mon,  1 Jul 2019 14:51:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 922A26EED1;
+        Mon,  1 Jul 2019 14:50:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
+References: <20190630051816.8814-1-eantoranz@gmail.com>
+        <20190630065358.GB31264@sigill.intra.peff.net>
+        <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com>
+        <20190630223951.GB21696@sigill.intra.peff.net>
+        <CAOc6etZxHWQ24TNsYDf74zgn-VJzbwDsxWxO4-tMkvv92KRKkw@mail.gmail.com>
+Date:   Mon, 01 Jul 2019 11:50:55 -0700
+In-Reply-To: <CAOc6etZxHWQ24TNsYDf74zgn-VJzbwDsxWxO4-tMkvv92KRKkw@mail.gmail.com>
+        (Edmundo Carmona Antoranz's message of "Sun, 30 Jun 2019 19:37:07
+        -0600")
+Message-ID: <xmqqy31h612o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 206075cc-6edf-40c0-9804-08d6fe55052e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2019 18:50:43.1739
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: erickul@microsoft.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR00MB0373
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2A28962C-9C31-11E9-A628-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,=0A=
-=0A=
-We would like to track parent branches so that creating pull requests can a=
-utomatically determine the correct branch to merge against.  I understand t=
-hat this would require tracking more information than is currently availabl=
-e right now in git.  Also, it seems that if some cases, it is not possible =
-to determine a parent branch, in which case it would just be empty/null.  I=
-f I made a change to track the parent branch for each branch, would this fe=
-ature be accepted/welcomed as part of git, even if it off by default?=0A=
-=0A=
-Thanks,=0A=
-Eric=0A=
-=0A=
-:(){:|:&};:=
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
+
+> Hmm... I as a gatekeeper would rather get either a straight line of
+> revisions for a feature with no merges (even if a final merge takes
+> care of solving conflicts with the upstream branch) or a single
+> revision (if I thought that the change is not worth having more than a
+> single revision). I'd ask the developer to rebase the whole thing and
+> give a straight line (with rebase -i or cherry-picks) or to give me a
+> single revision (where rebuash would come into the picture).
+
+That part is understandable, but is "rebase-and-squash" a tool
+intended to be used by the contributor to respond to that request?
+
+Wouldn't the developer just do
+
+	git checkout topic
+	git fetch
+	git rebase [-i] [@{upstream}]
+	git push [publish +topic]
+
+to update the topic and ask to be pulled again?  The two steps in
+the middle may be "pull --rebase", but my point is I do not quite
+see where the new squash/rebase-in-a-single-step thing comes into
+this picture.  There may be a different picture that it fits, but
+I do not think it is this one.
+
+
+
+
+
