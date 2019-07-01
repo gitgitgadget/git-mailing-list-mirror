@@ -2,149 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 992581F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 12:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E75CB1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:33:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728488AbfGAMa7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 08:30:59 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45507 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727239AbfGAMa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 08:30:59 -0400
-Received: by mail-qt1-f194.google.com with SMTP id j19so14359791qtr.12
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 05:30:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sD6yzXr5EgqkpisDybDkrc1mSXi6P4ENy++zccyXzHc=;
-        b=FB6Jj3tpB4LBYySoqhuHCFSV48cK+FSw7N7KVa6m3dzqynomO1FwHLiXf/FOnkMmHw
-         de8cZeRvdJVCcSMmKuD5U0XLYKnzcK0X+W8jltPVgS5qhoKDA2ucKxJJ4PeZpLGL9i99
-         kWL3zU9ghTsw7qAb4ycSKzNRPop6fFK6xjZTOnWF3vRKTzBc8L7yeGfdE2sDOmH2FBD9
-         nuC/kaCmwoiVInJArkgUA7lM/KCdj0JYX+ScvYBsoRAtLpcv4EPtDUmd3a4smWQo9LEP
-         gA86YTNBBZGVRXa8isso5JGRtIkhSXfZzbXY9xk27U5NEtu+a7L678N5Y1ehET/nkDC2
-         jVJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sD6yzXr5EgqkpisDybDkrc1mSXi6P4ENy++zccyXzHc=;
-        b=te5XD5KIaUHNBy3s5bF85dpd0kO4pNmn5MiKUz0QilNiEx3MAn8v7vY4Si9c2kTnf/
-         z6E71p3gHi2K07M8B0T4AFtQ5WkS9lkq9VNC3UXI1siTLOFSM9bTWe3bmJYIk1QW7FEO
-         IufTas2ZSTLEsP5iBpli5jCAI1QMo83qL32LcJX4RP8yL0uVzRBMrgl+JHcZJmIndJNt
-         n87YfkLZH7Mp99/Lo2FwqPIWJnvzOmrb/a2fqdSXvjtyJF4T5LmXvvN6p8nCqcGzjbHl
-         nDkgpjPLHiwoh3RFoKnMiDEyY3DMfS/lA8aCcPr4B2U9c+qdDWebTxF8g3Y3V0ClWKdk
-         A5vw==
-X-Gm-Message-State: APjAAAUoXpR8k+gQSGEe2i6ISFmtEKNFgAmolWWywYbsibTzleI3zYSh
-        DFTeMLSxRozySRC9JrSkN/s=
-X-Google-Smtp-Source: APXvYqz3rdlszIRqqzYHyUyHD3mMHg/2W/Ry7JkIuLWCBjhhxe/hDFkpbh0aPgB3Fz+G5jixLxgwcg==
-X-Received: by 2002:ac8:156:: with SMTP id f22mr19858703qtg.58.1561984257969;
-        Mon, 01 Jul 2019 05:30:57 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:8d39:716e:a6fa:35c4? ([2001:4898:a800:1012:3e6d:716e:a6fa:35c4])
-        by smtp.gmail.com with ESMTPSA id w19sm4497236qkj.66.2019.07.01.05.30.56
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 05:30:56 -0700 (PDT)
-Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.261.git.gitgitgadget@gmail.com>
- <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
- <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com>
- <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
- <20190630222537.GA21696@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b1f6a752-6edd-d86c-7d69-7624a2c5407f@gmail.com>
-Date:   Mon, 1 Jul 2019 08:30:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        id S1727921AbfGAMdy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:33:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:47867 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727239AbfGAMdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:33:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561984432;
+        bh=MRnZk/BTGEygyk83jTP09N1e+0Z4x+6OJubyQVtE+xU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=kNHvd5VeXNsapT5FaFJIwKrBKSwxB+KEfdWPdBs5JJ9hMegBH0aqXQs3frDw2xUrx
+         5pNPUsxoevKskf6IhOd/tiVukaOfEmbBX5fjnNoTRM4H5bfAfYw0Uxdh4e9m/rzSdx
+         WciQ24e0XBFLo5zczBm9TNC0j9NrpbXUGnVvQQkw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Rm-1hytd00Nzi-00LSMd; Mon, 01
+ Jul 2019 14:33:52 +0200
+Date:   Mon, 1 Jul 2019 14:34:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Mateusz Loskot <mateusz@loskot.net>
+cc:     git@vger.kernel.org
+Subject: Re: [Git 2.22.0] git submodule foreach now requires quoted
+ command?
+In-Reply-To: <CABUeae90FQnxS1FCZLo+5LgMPD9xWQv6w7p7ymCtLdBoOijcRw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907011433531.44@tvgsbejvaqbjf.bet>
+References: <CABUeae90FQnxS1FCZLo+5LgMPD9xWQv6w7p7ymCtLdBoOijcRw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0NYwkMahd3sZlnvAXkBy7pn9cam7LhQG1O78qHn4iSnVqA7igQ7
+ ZsaC0pRz5kKrN8xZoULH3RPP1JTHA87b2ch0apLnn8V6tDJmMifpPxLBZZuZxUGwMyMxBW1
+ lC3B6TFEBBTbW1xFnXry2jf6P9LgI153rai32/1hho6uUliEJQmT3kooSD0DHW8C4HUoiGS
+ rMdNkMe3+oushzk2vvEBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RiBALuo4MmM=:nZv83uwaMMcj73k5hkrUxc
+ SzoxT5NYdglITkKAUCudE5YFzRmJf+PbdCZ7nDkBVjX4xhlxV3sVMyVdMBd12VmcnGHCalQtl
+ 9S/CwmINgoHAgtkx2GaAarmNWKkLIa/9RkOCh4SFGGBTSL7TjBSW/X5Ni1K8ArVOuqOeagdFw
+ nvgaxPRXmxlZXnJ6zwOFzffVhi3V5ocMJAbL7ermK+ddsITTVhyp2vo+Kp+9JDcLlBtIInAZo
+ Oz7s5+6bfDN7v0PjrSenvSYBhg1XqnrUlSWRzWTLV6QhEqza2cX1mde/xrmMCeJq/efGAS/ER
+ FuaRGXQXuwNw3A35jg/7qgOMi7RljlgdtzDOxdUwWJS2LHH51VF6vpapfOmfyNt18++ff8oOo
+ cAXolwKnGoT3ZNtk4zC9oKs5ULkoy9J2Oe6HNAjKvg2yO6ukii3XekJEj2VAwCdDB+LM6G15+
+ FchLXy42wp0bkmkzaqyg/W6UfZJTXIiQZChWMXJ1azApsyM1VYFpbjGGfPiXKz3O3QmtCW1CG
+ O/9tX8p0pyduvVMCjU+RJ+4lpLG28GHgcEFh8EBS9Fszo9Qrpih1gzKiU0J84sWTZmz0X2Xrl
+ 5NK48wkRn0MU2G9B1u1eP/tKtuquy+nj+++9hETex2H+o4xs0uNUHwzNDSz0U9eXLowo6LZZJ
+ qNn8+hK9IlIfalMQ8ffPjK3LRMMg7Va8ODjc0cWUTGwuFNudcu9Aj+cMQtZTYPKK5Hi84ETEv
+ t54eV5+5vMa6et3c+Db/IaT1cUDph2sQkFUQLm0eFMrVIAI4/RCGLkQcmqYrYAu5/B4IFGhJ0
+ S60s/wyXSw6R3V7ZSOh+Cg25OWXRNe+zEVA1NsBwbiQS/vb4xtpXBxDd9nS0gR2UKRY6zbBfA
+ 7YMSEafMuprCmrud440zr1ydyxozm9i/40V1Ui3bIxn5L23/ny6Ogym7MPBl9USqPU1nCned2
+ AW1AyKr5lwpJKBE/a0XZluNO3KmjnhOT0KsR+/Rn2+EqL/AWkLdmBwyXewy8Mpe6xiLK9R6PD
+ bunon2k/mUGTD/pdKuzhkpHXoGSj2lhYAdu9aB+595Sxs4AEbH9Ppo3pv734r1li1UZrLapol
+ ggib8dmRAOIQtHPXm6hHgzrw/4sux4VWKOU
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/1/2019 8:11 AM, Johannes Schindelin wrote:
-> Hi Peff,
-> 
-> On Sun, 30 Jun 2019, Jeff King wrote:
-> 
->> On Sun, Jun 30, 2019 at 10:59:34PM +0200, Johannes Sixt wrote:
->>
->>> Am 30.06.19 um 21:48 schrieb Eric Sunshine:
->>>> On Sun, Jun 30, 2019 at 2:57 PM Johannes Sixt <j6t@kdbg.org> wrote:
->>>>> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
->>>>> @@ -443,7 +443,7 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
->>>>> -               MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
->>>>> +               MINSIZE=$(stat -c %s .git/objects/pack/*pack | sort -n | head -n 1) &&
->>>>
->>>> Unfortunately, this is not portable. While "stat -c %s" works on Linux
->>>> and MSYS2, neither that option nor the format directive are recognized
->>>> on BSD-like platforms (I tested Mac OS and FreeBSD), which instead
->>>> need "stat -f %z".
->>>
->>> Ouch! I did notice that stat(1) is not in POSIX, but hoped that it was
->>> sufficiently portable. I need a new idea...
->>
->> If we are OK relying on rudimentary perl[1], then:
->>
->>   perl -le "print((stat)[7]) for @ARGV"
->>
->> works. If you want it more readable, then maybe:
->>
->>   perl -MFile::stat -le "print stat(\$_)->size for @ARGV"
-> 
-> Or we stop introducing new Perl calls, and use the perfectly fine
-> `test-tool path-utils file-size` command:
-> 
-> https://github.com/git/git/blob/v2.22.0/t/helper/test-path-utils.c#L302-L312
-> 
-> This solves not only portability problems but also avoids yet another
-> obstacle into making a `NO_PERL` test suite run really work without Perl.
-Thanks! This does seem like the best option. Thanks for bringing this to our
-attention. Here is a diff, and I'll prepare a full patch:
+Hi,
 
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index dd6083e61a2..5379e59168a 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -447,7 +447,7 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
-                touch -m -t 201901010002 .git/objects/pack/pack-B* &&
-                touch -m -t 201901010003 .git/objects/pack/pack-A* &&
-                ls .git/objects/pack >expect &&
--               MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
-+               MINSIZE=$(test-tool path-utils file-size .git/objects/pack/*pack | sort -n | head -n 1) &&
-                git multi-pack-index repack --batch-size=$MINSIZE &&
-                ls .git/objects/pack >actual &&
-                test_cmp expect actual
-@@ -459,7 +459,7 @@ test_expect_success 'repack creates a new pack' '
-                cd dup &&
-                ls .git/objects/pack/*idx >idx-list &&
-                test_line_count = 5 idx-list &&
--               THIRD_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 3 | tail -n 1) &&
-+               THIRD_SMALLEST_SIZE=$(test-tool path-utils file-size .git/objects/pack/*pack | sort -n | head -n 3 | tail -n 1) &&
-                BATCH_SIZE=$(($THIRD_SMALLEST_SIZE + 1)) &&
-                git multi-pack-index repack --batch-size=$BATCH_SIZE &&
-                ls .git/objects/pack/*idx >idx-list &&
+On Sat, 29 Jun 2019, Mateusz Loskot wrote:
 
-Thanks,
--Stolee
+> I have a script which I have used for long time, with numerous
+> git commands and one of commands is this trivial:
+>
+> git submodule foreach --recursive git clean -ffd
+>
+> I updated to Git 2.22.0 and noticed Git started to complain:
+>
+> ```
+> $ cd /d/boost
+> $ git submodule foreach --recursive git clean -ffd
+> Entering 'libs/accumulators'
+> error: unknown switch `f'
+> usage: git submodule--helper foreach [--quiet] [--recursive] [--] <comma=
+nd>
+>
+>     -q, --quiet           Suppress output of entering each submodule com=
+mand
+>     --recursive           Recurse into nested submodules
+>
+> fatal: run_command returned non-zero status while recursing in the
+> nested submodules of libs/accumulators
+> ```
+>
+> Apparently, I have to quote the command to avoid the error
+>
+> git submodule foreach --recursive 'git clean -ffd'
+>
+> Is this expected behaviour?
+> Could anyone help me to understand what has changed?
+> I can't find any related changes in the release notes.
+
+Probably fixed in https://github.com/gitgitgadget/git/pull/263
+
+Ciao,
+Johannes
