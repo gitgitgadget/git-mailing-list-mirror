@@ -2,128 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA0FD1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 11:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92AE81F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 11:47:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727318AbfGALdK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 07:33:10 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54109 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726967AbfGALdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 07:33:09 -0400
-Received: by mail-wm1-f66.google.com with SMTP id x15so15482321wmj.3
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 04:33:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=sQz8Ie5rRk2iJSiJl/EI/27sLvJCvqB5tRCnR4OEvF8=;
-        b=SihauTZpJuZZEnmXLMyc4CPNnJ2pJa1Mi9wr6nKhiN0qmJpelEIY9MmfQzvceatUAU
-         kpOhqqXOKgTLymer7IcPvZJMOi/fSijAX86CdS1a2yA/WUuJGueL5yVdXimT51NlnRUz
-         tvAFp04C2Y5C7kYCDkiIBsOpqO0u2tnLjS7d9V8WH6THJx3/t8AG63ATZapHc1BBGW++
-         mZw3dU4dK6saeIxrq3y7z9yfW3zFKJj1AbyVQ++wga4saXF01hRDpZWPg6ACIhL/yxxO
-         QR0GF5426ReFJA6/hZBGa6dyWdJUuifeH9f5Ql8giLZkfq4imOWvwAjtkVRp6Q4vY+D8
-         NGzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=sQz8Ie5rRk2iJSiJl/EI/27sLvJCvqB5tRCnR4OEvF8=;
-        b=GDx5NzmsaUZaHz3dL+aRm2GtlTg0yMenhhe6wsDPOmty7f8gJ60kWcZEShMrN3yHUV
-         +gIFoXQoxfkkUBfn/DprB/VFCOMFn46wcvLHBnSSpEmq07cIDqRoxm8aEkbGNfZTZaE0
-         e4k2xJKU95wX8KPtbJnp0MYx3kvflIueYkjOWpT3ZrkTJrj+TC+jPgpnS0bYeJd+FU1/
-         lrFGgcAYYW8aroLbbJTcaKx5QX1jtmQMa1W/ygj4avIqZxeHr2Vw/cT4HY7CPitSpwsL
-         vc8mLGIHQLKYKzuH7of/p7enCiWVpsGv6WWbqzydZZ9cPLqcEVefd6QOu/BD+d8esKX3
-         RnnA==
-X-Gm-Message-State: APjAAAXQ6PoA9R4rZ6IOIpR1GKtOx6CsTXu1T8vfHRGWBbQc6GmLwMPq
-        3pXNuLhdQzPfKUB4PVnhpDU=
-X-Google-Smtp-Source: APXvYqz0HkLgFYu4HRs2E18WBNwrPkVTVTnLOLJnowyX4EPxnDBjK2+FBVxTBVb1cNyiBI1vds5+Ow==
-X-Received: by 2002:a7b:cc86:: with SMTP id p6mr15637043wma.123.1561980787224;
-        Mon, 01 Jul 2019 04:33:07 -0700 (PDT)
-Received: from szeder.dev (x4db347f2.dyn.telefonica.de. [77.179.71.242])
-        by smtp.gmail.com with ESMTPSA id x3sm10302725wrp.78.2019.07.01.04.33.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 04:33:05 -0700 (PDT)
-Date:   Mon, 1 Jul 2019 13:33:04 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
-Message-ID: <20190701113304.GK21574@szeder.dev>
-References: <pull.261.git.gitgitgadget@gmail.com>
- <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
- <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com>
- <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
- <20190630222537.GA21696@sigill.intra.peff.net>
- <3e5c0286-7514-9e00-fbc5-5b0ad9403d30@kdbg.org>
- <20190701091602.GA24791@sigill.intra.peff.net>
+        id S1728700AbfGALry (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 07:47:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42191 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727888AbfGALry (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 07:47:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561981666;
+        bh=M4fr3sg/SfgO0S0j97xBqxH//aiOiKUwWEdlPM9kANg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h1bDnifQcJCbVg98x163hikg7tG/HbhShM6BvRsi08lN3R4BXM7YOMj1UuUwxaMLT
+         GrSRvCIu3DhLP+PkscO3zhNdKZyi0EGXw6PazpZBqJHDIIel2PgOwJgRfVRC26xNSx
+         LFt05QBHgcMtNXg8dIE+QaIYYkurRp0UA0Ud4xho=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbRfl-1iEVeF23tx-00bqRL; Mon, 01
+ Jul 2019 13:47:46 +0200
+Date:   Mon, 1 Jul 2019 13:48:12 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Vas Sudanagunta <vas@commonkarma.org>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Let rebase.reschedulefailedexec only affect interactive
+ rebases
+In-Reply-To: <0F745CE4-3203-4447-B1D5-937CCDCC64C7@commonkarma.org>
+Message-ID: <nycvar.QRO.7.76.6.1907011346411.44@tvgsbejvaqbjf.bet>
+References: <pull.253.git.gitgitgadget@gmail.com> <fab124da41858b849ae74dfb1fe403bb834870f1.1561623167.git.gitgitgadget@gmail.com> <xmqqzhm2ang5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1906281342280.44@tvgsbejvaqbjf.bet> <e332eb5f-0818-763c-9de0-889644446a35@gmail.com>
+ <xmqq4l498irq.fsf@gitster-ct.c.googlers.com> <0F745CE4-3203-4447-B1D5-937CCDCC64C7@commonkarma.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190701091602.GA24791@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/mixed; boundary="8323328-307196112-1561981693=:44"
+X-Provags-ID: V03:K1:DhLg+5+Hgszyf/1ykvMLT/5l026EFsOc5I3uirETOhNJEAwMM+K
+ zys+zIs5qDtdZ0J2RVprrJVuZKB1aFimXR5wmzUqvsZEzRa3Efyj4OvgnH54zZKrdT6XddF
+ pnk/PqVkSvaPBIzGCmX/qqwrXA98c3mO0fpJcYayrfIkMT1cxbe1ysobjNExhp8mLetrVMa
+ I0vBMXJpAZm9wX3opTyzA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GHucQx4Kn1Y=:tYwr7P3Tnzg9j4IkSI58W5
+ XR9b8yOH6eXcNCKN1lOpUT/uAJ7LELYqqOyN3RGOXX+MLG9XO279JQ+mjvlb25dmOOO85uAHK
+ 1IbYEtEZKXm6uBJQ1AKbjyltsauj2bmTyiNAYQzL2Z4egHXvZJCoVYBzzVLzgODzv6Sl8Z9K4
+ YM51pvm4rcbNxOU++k9qSHH5xOVHn1b9r63/UlkrNxiMzQ6aQqIH3jaeJuuYcTEcU1GQp4Ct+
+ EkE3aCjbBE4ZD5YhX9oCkruY8vwHpFLwcVJP0Plsh/WDA15kkfuzpodJ09EvNFYp2huPQu3fM
+ qTv8BZW6k0hw1AQObL0oexQ3Ur+jTxEonoV/wE+x/CC5cFmgPCMyq1teSugS/sIgrNxllva6h
+ lRfxCQsskST8mjMLM2wtzD26plcbXRVudLmU29xwltoIgu81BGmGNhnA98Yey5yw6kh6cQgi4
+ AcOK6ipJTGpVa8dji5M2KAYNhuLJvhbGsZs0og6llBNT3wTfKXCP3O29peulCJvzsoSifwonn
+ fom5Hl48YLK3TKOM7VzxMHqRZk74axCpD2lulWmNw75yJIKABW7NjjZs9bb6gu4swnHfwe4BW
+ bU/9f/lGI9xI0u6LNlh81Sxn0YnPvCv/1e6Re2SSVuFil15E7mD77rOnBIWXku42qS7t8EAQH
+ UcOwznQtS3T4QadpHBIRTCsJyTsIwCLjaghtV6XkdC6ov+fveZyElijKsc7NHzJV17OqbIyBX
+ 5Ps1AnrthP/mNOqSJmb5CTh2IH8u6eG9uRxgS6z3C+THdEyYJpwbZmgKNO0ti/tqb2VOVImUP
+ psvdVHMCOJOt6fP98YbSYU/xBDJmFy8yg/XA1DACLfkenJklWK1KicwrZzCqg7VlAxxiiznFL
+ dRAIQxWXYfDGO2aMAlhIvDnqgLPfde1KNcrIyIFt5eKA20xrgccRXwa1CZsfge88u4oraz4kb
+ sYBehwiFGA1argZ8LnpyOS/XaO/lqqNt8tK56/McGp7swGJxnMIVhhu3spMHnD8pI9c1ZPJzX
+ VPgNbR5RFK74MvmOfnVaMYIUKLxq1CaXm17hcrVr02AixEhtV2dYEQ3J6yNyfoWMIkjrEtnAP
+ DTGceUJQU3MDLj7ni1nMLmlhjyGzz8d1vrw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 01, 2019 at 05:16:02AM -0400, Jeff King wrote:
-> I see Gábor suggested using "wc -c" elsewhere in the thread. That would
-> be fine with me, too, though I think the required sed there may be
-> getting pretty unreadable, too. :)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It could be done even without 'sed', though at the expense of running
-a coupe more 'wc -c's in a loop:
+--8323328-307196112-1561981693=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 79bfaeafa9..bacec5e2e4 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -443,7 +443,12 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
- 		touch -m -t 201901010002 .git/objects/pack/pack-B* &&
- 		touch -m -t 201901010003 .git/objects/pack/pack-A* &&
- 		ls .git/objects/pack >expect &&
--		MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
-+		MINSIZE=$(
-+			for pack in .git/objects/pack/*pack
-+			do
-+				wc -c <"$pack"
-+			done | sort -n | head -n 1
-+		) &&
- 		git multi-pack-index repack --batch-size=$MINSIZE &&
- 		ls .git/objects/pack >actual &&
- 		test_cmp expect actual
-@@ -455,7 +460,12 @@ test_expect_success 'repack creates a new pack' '
- 		cd dup &&
- 		ls .git/objects/pack/*idx >idx-list &&
- 		test_line_count = 5 idx-list &&
--		THIRD_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 3 | tail -n 1) &&
-+		THIRD_SMALLEST_SIZE=$(
-+			for pack in .git/objects/pack/*pack
-+			do
-+				wc -c <"$pack"
-+			done | sort -n | head -n 3 | tail -n 1
-+		) &&
- 		BATCH_SIZE=$(($THIRD_SMALLEST_SIZE + 1)) &&
- 		git multi-pack-index repack --batch-size=$BATCH_SIZE &&
- 		ls .git/objects/pack/*idx >idx-list &&
+Hi,
 
-Is it really better?  Dunno, but at least there is no subtlety with
-the leading padding spaces.
+On Fri, 28 Jun 2019, Vas Sudanagunta wrote:
 
+> It seems unintuitive that including a command to execute between each
+> rebase merge implies an interactive rebase. It=E2=80=99s no more interac=
+tive
+> than a sequence of rebase merges without intervening commands. A command
+> failure interrupts a rebase just as a merge conflict does. If the fact
+> that a rebase can be interrupts mid-sequence, then all rebases are
+> interactive.
+
+Indeed. I would consider it an implementation detail that the `--exec`
+option uses the interactive rebase backend, and I would hate to force
+users to know about this.
+
+Ciao,
+Johannes
+
+--8323328-307196112-1561981693=:44--
