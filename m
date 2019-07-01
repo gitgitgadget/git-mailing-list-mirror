@@ -2,205 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85E261F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 14:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C578B1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 14:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729454AbfGAO3P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 10:29:15 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42901 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728145AbfGAO3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 10:29:13 -0400
-Received: by mail-ed1-f66.google.com with SMTP id z25so23861726edq.9
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:29:12 -0700 (PDT)
+        id S1727777AbfGAOjJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 10:39:09 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:37802 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbfGAOjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 10:39:09 -0400
+Received: by mail-yw1-f65.google.com with SMTP id u141so48000ywe.4
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=aLzGHjxVg7G7PS5Ao8bnhETVG+GIFT0QLeedM3KJh00=;
-        b=ad7FO1OYXA+rAsNJ8XnGkEwuq8CmSsTHjelBtidfBmc2SUdQayd9cJqINxKo2WZ8IC
-         +JOtjoP9p4X4oYOUXPZiab/ru7ryieNROR1leH80ADOSas3wIVc4TbQA3MQ/lCtBDCqt
-         4+GiaB8GiBc9gj6oXAc16KERBD/L6ZNrbDPHS2xvRkJwS6bPcju27khuprSD2cHp6jfi
-         ajEtBs2tBOoPNDCDC43qDEEg2nDQrvEnz1ZWVuLCQPz47W37jKGZU7y5ExjDQtnLAGIy
-         6lGqs0sh1wnSu6fphIIQiGvx1REQpq6+nKDFEoB67XWPtQMNx2pksov2HjKL6mdm/kPQ
-         CNuQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+J8kcg0lalf3+TWEa9Mxa05i9+4Qxqq3U0Fi1cCtmCE=;
+        b=sFAjHgo41E23rZRoDy7JLRiJ7bbsMLK3I4YkfAoolpvebmOeDg/8puhU81YswNVL/r
+         JcaFtduhGzDudMXLWIoGH4wdGxVF75YhhXkDukUpZYvUF/mQg/PdGmo8NF4xrtrAC3UA
+         0Vxv0Lujy58LsL+29/q3NLdN3mwqAaKhGYbD1zU2DN26yR3WI8W7mc/2HXXfymt5nDf8
+         m/o+Ee1krdhBoIQOtswgi9rJGMlc6ieT6f/Uopwq398jSIxbKBofptM7cgnZQJtqRUQA
+         ilCao7p2I+1gJBz9f12g7lesxRj6+PBhE1EvTngEzMTmpGqRk80HKpe8yO1613eMvxJL
+         fsBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aLzGHjxVg7G7PS5Ao8bnhETVG+GIFT0QLeedM3KJh00=;
-        b=D5b4zKa/77oJYj3q5fVn5kp8E9VNDtjwgZ67vtbUoxioLGIbeGnphs09CLlSWEr9Pv
-         oi6B80fRpCb1EWhiIUpazIZx3XUQl0GlrY873aw8KTe+4qIYotEL3yJPC+1+068aS7h7
-         1zFfa2iKnRnvAZ8kd8Xf+1MLc4YT40cv3jyoClAnOwy5Co6y4oGUAmVal+s21texppOg
-         bnpS8Y1XB9i8gfbR2Co9mFLoEeJai7AGFNPBqSxDFgsWh/ZsrkU67nweb3FdEmk2TZbf
-         zEs0BxrdO9YDy4RZBZTQlUt6RgiSXK/6jCfe/cqW4TRw2H677VMaVFK1n4E6Huufb2o3
-         KxpA==
-X-Gm-Message-State: APjAAAVZn+N3fEoSmRSRovFFZl5dV966BeFDktoZsqGGGSdy+eiQpR5s
-        ZQeUGyNZ5BACFbYfgjyp3MBC/Xgv
-X-Google-Smtp-Source: APXvYqxfT63bZBqRSur5VC/X773NngF+9I2t15FSUeh2NhcROKxBO2vkV5aGW81cegR/lOLXEpLn/w==
-X-Received: by 2002:a17:906:15d0:: with SMTP id l16mr23769288ejd.234.1561991351939;
-        Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e22sm3684733edd.25.2019.07.01.07.29.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
-Date:   Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
-X-Google-Original-Date: Mon, 01 Jul 2019 14:29:07 GMT
-Message-Id: <d080065a9208852a7e551cc8bef7d326576c076d.1561991348.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.254.v3.git.gitgitgadget@gmail.com>
-References: <pull.254.v2.git.gitgitgadget@gmail.com>
-        <pull.254.v3.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 3/3] repo-settings: pack.useSparse=true
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+J8kcg0lalf3+TWEa9Mxa05i9+4Qxqq3U0Fi1cCtmCE=;
+        b=M/Hmb8AeHGzlJKVBe78gvUZSJq4/Eb6IOPa/wfN1YV7QUhZ73LCRXjaJPqJ3o8M7KO
+         XiiqpQC2hNC5msVwqUSYKMVdUnhVKCfO0egdOvX4NFthFAnCY2YCll4IMK99/Ez/QS80
+         c2fbdEDs2o1ZJhk/jK6wJ2qFe2h9csuFY1x2eAJdslLQZa2imMdyRmrLbOpEJRhAZisK
+         UU3AFyd2ENQBiRVnTmWVwSRr4vb2yLFqVZMCPyWnOZIHxbgfmGOaX/pvCySKbGis1e+v
+         qeEXEa31uCbIPZq9zWPkFjRG5aljsGG/Mk5TKiS2Is3lRHnBWSVSykZ6kecdbq1/8Ne3
+         xoSw==
+X-Gm-Message-State: APjAAAVDtkUoOgIMMfrE2ORbAYdgY9znEnMMogtniRuCu5K6V1uikemx
+        WMl1IqNGywcf1D5TeNsXH49ciQ==
+X-Google-Smtp-Source: APXvYqxwr/AAChrp7Y1258Hw1a/7pLCCV805/SdDQOarpsLuRgrfhce1vvi6x5dW1sSpB4aM2zAo5A==
+X-Received: by 2002:a81:a1cb:: with SMTP id y194mr15831447ywg.104.1561991948537;
+        Mon, 01 Jul 2019 07:39:08 -0700 (PDT)
+Received: from localhost ([2600:1700:6e90:7930:6841:343f:64f7:7ef1])
+        by smtp.gmail.com with ESMTPSA id p185sm2502415ywb.92.2019.07.01.07.39.07
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 01 Jul 2019 07:39:07 -0700 (PDT)
+Date:   Mon, 1 Jul 2019 09:39:02 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] ref-filter.c: find disjoint pattern prefixes
+Message-ID: <20190701143759.GA38109@TaylorsMBP5715.attlocal.net>
+References: <cover.1561588479.git.me@ttaylorr.com>
+ <e41db267f7b7086126e9fd3fd5b1a02e38c8c077.1561588479.git.me@ttaylorr.com>
+ <CA+P7+xqQv4UZMy7fEHnGHejU6nvhVKgkSruXdmW-akqUG1TLKA@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+P7+xqQv4UZMy7fEHnGHejU6nvhVKgkSruXdmW-akqUG1TLKA@mail.gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Jacob,
 
-If a repo is large, then it probably has a very large working
-directory. In this case, a typical developer's edits usually impact
-many fewer paths than the full path set. The sparse treewalk
-algorithm is optimized for this case, speeding up 'git push' calls.
+On Wed, Jun 26, 2019 at 05:37:42PM -0700, Jacob Keller wrote:
+> [ ... ]
+>
+> > Instead, we want to partition the patterns into disjoint sets, where we
+> > know that no ref will be matched by any two patterns in different sets.
+> > In the above, these are:
+> >
+> >   - {'refs/heads/a/*', 'refs/heads/a/b/c'}, and
+> >   - {'refs/tags/v1.0.0'}
+>
+> Is this disjoint set calculation already existing, or did you have to
+> add it in this patch?
 
-Use pack.useSparse=true when core.featureAdoptionRate is at least
-five. This is the first setting where the feature has only been
-out for a single major version. This could be moved to the "at
-least three" category after another major version.
+Both the disjoint set calculation and the prefixing procedure are new in
+this patch. But, we're never actually computing this disjoint set
+explicitly, rather, we build it up implicitly while computing what will
+become the longest prefixes of each subset.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/config/core.txt | 9 +++++++++
- Documentation/config/pack.txt | 3 ++-
- builtin/pack-objects.c        | 9 +++++----
- repo-settings.c               | 8 ++++++++
- repo-settings.h               | 1 +
- 5 files changed, 25 insertions(+), 5 deletions(-)
+> >   4. Otherwise, recurse on step (3) with the slice of the list
+> >      corresponding to our current prefix (i.e., the subset of patterns
+> >      that have our prefix as a literal string prefix.)
+> >
+> > This algorithm is 'O(kn + n log(n))', where 'k' is max(len(pattern)) for
+> > each pattern in the list, and 'n' is len(patterns).
+> >
+>
+> ok, so if we can assume that k is some relatively small constant
+> number (since the maximum pattern length isn't likely to grow without
+> bounds), this is O(n*log(n)) on the number of patterns, so we don't
+> even approach n^2 even when we are given a large number of patterns.
+> Nice!
+>
+> > By discovering this set of interesting patterns, we reduce the runtime
+> > of multi-pattern 'git for-each-ref' (and other ref traversals) from
+> > O(N) to O(n log(N)), where 'N' is the total number of packed references.
+>
+> So here, n is the number of patterns still? This seems like a pretty
+> significant gane when we have a large number of packed references.
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 865252aba9..60356102a8 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -624,3 +624,12 @@ The settings do not modify the user-facing output of porcelain commands.
- +
- * `index.version=4` uses prefix-compression to reduce the size of the
- .git/index file.
-++
-+If the value is at least 5, then all of the defaults above are included,
-+plus the defaults below. These represent new features that present
-+significant performance benefits, but may not have been released for
-+multiple major versions.
-++
-+* `pack.useSparse=true` uses the sparse tree-walk algorithm, which is
-+optimized for enumerating objects during linkgit:git-push[1] from a
-+client machine.
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index 9cdcfa7324..9c4f8ea9ff 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -112,7 +112,8 @@ pack.useSparse::
- 	objects. This can have significant performance benefits when
- 	computing a pack to send a small change. However, it is possible
- 	that extra objects are added to the pack-file if the included
--	commits contain certain types of direct renames.
-+	commits contain certain types of direct renames. Defaults to
-+	false, unless `core.featureAdoptionRate` is at least five.
- 
- pack.writeBitmaps (deprecated)::
- 	This is a deprecated synonym for `repack.writeBitmaps`.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 41d7fc5983..f26b3f2892 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -34,6 +34,7 @@
- #include "dir.h"
- #include "midx.h"
- #include "trace2.h"
-+#include "repo-settings.h"
- 
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
- #define SIZE(obj) oe_size(&to_pack, obj)
-@@ -2707,10 +2708,6 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		use_bitmap_index_default = git_config_bool(k, v);
- 		return 0;
- 	}
--	if (!strcmp(k, "pack.usesparse")) {
--		sparse = git_config_bool(k, v);
--		return 0;
--	}
- 	if (!strcmp(k, "pack.threads")) {
- 		delta_search_threads = git_config_int(k, v);
- 		if (delta_search_threads < 0)
-@@ -3330,6 +3327,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	read_replace_refs = 0;
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", 0);
-+	prepare_repo_settings(the_repository);
-+	if (!sparse && the_repository->settings->pack_use_sparse != -1)
-+		sparse = the_repository->settings->pack_use_sparse;
-+
- 	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
- 
-diff --git a/repo-settings.c b/repo-settings.c
-index 5753153a84..c700edc286 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -16,6 +16,9 @@ static int git_repo_config(const char *key, const char *value, void *cb)
- 			UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
- 			UPDATE_DEFAULT(rs->index_version, 4);
- 		}
-+		if (rate >= 5) {
-+			UPDATE_DEFAULT(rs->pack_use_sparse, 1);
-+		}
- 		return 0;
- 	}
- 	if (!strcmp(key, "core.commitgraph")) {
-@@ -26,6 +29,10 @@ static int git_repo_config(const char *key, const char *value, void *cb)
- 		rs->gc_write_commit_graph = git_config_bool(key, value);
- 		return 0;
- 	}
-+	if (!strcmp(key, "pack.usesparse")) {
-+		rs->pack_use_sparse = git_config_bool(key, value);
-+		return 0;
-+	}
- 	if (!strcmp(key, "index.version")) {
- 		rs->index_version = git_config_int(key, value);
- 		return 0;
-@@ -44,6 +51,7 @@ void prepare_repo_settings(struct repository *r)
- 	/* Defaults */
- 	r->settings->core_commit_graph = -1;
- 	r->settings->gc_write_commit_graph = -1;
-+	r->settings->pack_use_sparse = -1;
- 	r->settings->index_version = -1;
- 
- 	repo_config(r, git_repo_config, r->settings);
-diff --git a/repo-settings.h b/repo-settings.h
-index b752dfe8b4..1151c2193a 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -4,6 +4,7 @@
- struct repo_settings {
- 	int core_commit_graph;
- 	int gc_write_commit_graph;
-+	int pack_use_sparse;
- 	int index_version;
- };
- 
--- 
-gitgitgadget
+Yes, 'n' is the number of patterns given. For e.g., the invocation
+
+  $ git for-each-ref 'refs/heads/*' 'refs/tags/*'
+
+has 'n = 2', and 'N' is unknown. The asymptotics here are really
+comparing the case where we previously didn't make any effort to compute
+good queries, and resorted to a linear scan of all packed references,
+compared to now where we have at most one query per pattern, resulting
+in a logarithmic-time scan of .git/packed-refs.
+
+> >
+> > Running 'git for-each-ref refs/tags/a refs/tags/b' on a repository with
+> > 10,000,000 refs in 'refs/tags/huge-N', my best-of-five times drop from:
+> >
+> >   real    0m5.805s
+> >   user    0m5.188s
+> >   sys     0m0.468s
+> >
+> > to:
+> >
+> >   real    0m0.001s
+> >   user    0m0.000s
+> >   sys     0m0.000s
+> >
+>
+> That's a pretty significant decrease!
+
+Yes, it's quite good here, but it's designed to be that way ;-). Like I
+note below, the real world speed-ups aren't quite as remarkable, but
+it's not uncommon for us at GitHub to have a repository of the above
+shape in terms of the number of references.
+
+So, it's an increase almost no matter where you are, but it works
+especially well for us.
+
+> > On linux.git, the times to dig out two of the latest -rc tags drops from
+> > 0.002s to 0.001s, so the change on repositories with fewer tags is much
+> > less noticeable.
+> >
+>
+> This explains why it might not have been done before.. many
+> repositories wouldn't benefit much.
+>
+> That said, the patch description doesn't make it seem very
+> complicated. I did run out of time reading the message, so I'll have
+> to follow up reviewing the actual change below later. I think the
+> description of the goal and solution is sound though.
+
+Thanks for the initial review :-).
+
+Thanks,
+Taylor
