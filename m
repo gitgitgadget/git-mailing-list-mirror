@@ -2,96 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3181F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 15:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A46D1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 15:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730002AbfGAPFB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 11:05:01 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:43044 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727568AbfGAPFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 11:05:01 -0400
-Received: by mail-pl1-f195.google.com with SMTP id cl9so7487460plb.10
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 08:05:00 -0700 (PDT)
+        id S1728040AbfGAPWS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 11:22:18 -0400
+Received: from mail-yw1-f43.google.com ([209.85.161.43]:39772 "EHLO
+        mail-yw1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726869AbfGAPWS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 11:22:18 -0400
+Received: by mail-yw1-f43.google.com with SMTP id u134so100210ywf.6
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 08:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=52u+Ls+p1TE2S4GRVz0lBBWLWrd+6d7SF0SBHqKA3fc=;
-        b=DDZd7DdwlY+Q66a9lVMKNJC3aRN1kUq5BrsGTvaJR0aB7+B/LzgPJynknikaKAiNfS
-         FepCtoyxKcn3wTxdwGro/nqYu8xb5dct4tmEgla+cJLCDt4fjpw0g3TaE+3dWiuaQ3fj
-         JBBNhejMHSJb98DetXNe+XMTXiCIeK5uWYkOW2VEb+H22ya7I8sASxRXdVAm3K/AMIbq
-         BJUA3X8s8+btcKUilvlLOqvStFDUUir5YlY6VAlO/obGOn+8oBYruEo+PhwerAxbgp8a
-         UOpGniNAOBfzjfIM3xmfNT5fbhEn1ZQLmGbMF0lYbpQ2OMPbwoWHeFUmPVsPWjMrBZ1d
-         s7Hg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NrPKgPQ9JBJ4Mifu7nkj6rL+CqhnBxHK/EgOkFRd61U=;
+        b=2OW9M4VZx87SuZLr34swnNaBDiJzZg5Sn/cjEFfOV6CU53+ysustmkwjs8maIVSdNV
+         DvxJHbBLHmS5+7eIJo2EHqoZXtpVCMTOmh++hReyjwdg6yySSm4ZNzWDwGe0aLOcWPRy
+         VuKYQ+ODEzktw/TtxOv+yJkpInWeDAsdFgJYZ8zFfmVBazX/JDZUtaDAhSr+cj2Qc7D9
+         gjpd+2+9pCVUjmkkfu0CPwZwrvvdBPZ+WQzCNBAkd0HEyUrYluueHrp2VwfyMQuEZ3T+
+         76I9vSAhDOVsccxngwXTMdv2U+uuSyqLlG4dHn5DAr26gKUqcYKLJASe9IB4qgE2mWVt
+         Gf2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=52u+Ls+p1TE2S4GRVz0lBBWLWrd+6d7SF0SBHqKA3fc=;
-        b=fABsk10TDryqBGUI11ycYbsp5ZCbi2oCYWK0u7XWWRlVjB54Zgf36VZG4FVEpq6dXc
-         hj5UlqK0Yv9y2N52n0N7G/XdTiAin1OfTCExhQsjklSSWkRxl3fhsro+9QWTFm30Sd1K
-         jyfmnSeXNi//asHJvdIsmzcMS2VS0HkYDUEsYRRCr6oAQXCii7dclOxJ6HaL4HJ14VHr
-         xfBVixc+gbRMfBRhxjgo2/0oyaPjtBKRl9CEHeniPkjjv2dRniydIm7345YELgBmGTpN
-         23JfIyJ64n4X5doGNhQeJ8kgNvVM3HQE8/9l4gCg9LMs9YtpIhIBaxXRNMehIwpzq7ee
-         7/yA==
-X-Gm-Message-State: APjAAAXFTOUuKe7BK8T6aoGrdIEVU2XkdlwDVyTpubOS4qwh4jIjF3MG
-        km92rrSz3JKC4ndQd7ITxaV0JCTnoFY=
-X-Google-Smtp-Source: APXvYqzqvAREqtj0J/P3qSUGSOdjz6IUFWy+5PnvCGCcqKE6ovSoqACnOeyDhDnPSWefkHaW6wJEGw==
-X-Received: by 2002:a17:902:44a4:: with SMTP id l33mr29449470pld.174.1561993500252;
-        Mon, 01 Jul 2019 08:05:00 -0700 (PDT)
-Received: from ar135.iitr.ac.in ([103.37.200.216])
-        by smtp.gmail.com with ESMTPSA id d26sm12208350pfn.29.2019.07.01.08.04.56
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NrPKgPQ9JBJ4Mifu7nkj6rL+CqhnBxHK/EgOkFRd61U=;
+        b=qgFOhl+fvjgQWO2bUtm5bhNrAmora5jkbFR6PSp4Xs0zFpv5vSqZ6YaVjT5mtBfHcM
+         FIBnz8OPAP53ct1750n2/9APwQ6vBMG28HVH+n7HQ9tRQan5l231wt1ln253cxDafmhJ
+         WCembRJlnlcvFjc80G6yvALU4zzf7W+Ev3K7qZXiVCoQAAodrW+W0bf0tqM6QXLcPdJ1
+         m0EskNoxnw78wR/r9O7yk/NrQPNo1Gost2ROlHEtIKxB9n/yQovho55BACWjS3P8U3GL
+         DgTj/kH7oVClnH5sO72yLsBjF5IK3dpm7SLZnXk6R6wNU421zDN3fIrs9JaWxeT1n1oH
+         Yj3w==
+X-Gm-Message-State: APjAAAWrmPoyapTCnrfllqKL9VlhBfg6Z+enY6Jc0zqXb6OB9sak9RYj
+        xW6OGGbUd6UUvcAPIXyWQ64XV4vRu7sO2w==
+X-Google-Smtp-Source: APXvYqxNAA4ri4mCbx4nMHsRHvasUkWFlXLhulbbvlxLpXapnsyb/ASJT6KTQV5w2YGvY3nOnY8HSA==
+X-Received: by 2002:a0d:d805:: with SMTP id a5mr14918052ywe.418.1561994537281;
+        Mon, 01 Jul 2019 08:22:17 -0700 (PDT)
+Received: from localhost ([2600:1700:6e90:7930:6841:343f:64f7:7ef1])
+        by smtp.gmail.com with ESMTPSA id d9sm2612720ywa.69.2019.07.01.08.22.16
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 08:04:59 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        t.gummerer@gmail.com
+        Mon, 01 Jul 2019 08:22:16 -0700 (PDT)
+Date:   Mon, 1 Jul 2019 10:22:15 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Jun 2019, #07; Fri, 28)
-Date:   Mon,  1 Jul 2019 20:32:28 +0530
-Message-Id: <20190701150228.18471-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
+Message-ID: <20190701152215.GA43911@TaylorsMBP5815.attlocal.net>
 References: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Junio,
 
-On Fri, 28 Jun 2019 15:17:42 -0700 Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Jun 28, 2019 at 03:17:42PM -0700, Junio C Hamano wrote:
+> * tb/ref-filter-multiple-patterns (2019-06-27) 1 commit
+>  - ref-filter.c: find disjoint pattern prefixes
 >
-> [...]
-> * ra/cherry-pick-revert-skip (2019-06-24) 6 commits
->  - cherry-pick/revert: advise using --skip
->  - cherry-pick/revert: add --skip option
->  - sequencer: use argv_array in reset_merge
->  - sequencer: rename reset_for_rollback to reset_merge
->  - sequencer: add advice for revert
->  - advice: add sequencerInUse config variable
->
->  "git cherry-pick/revert" learned a new "--skip" action.
+>  "git for-each-ref" with multiple patterns have been optimized.
 >
 >  Will merge to 'next'.
-> [...]
 
-Phillip[1] and Thomas[2] suggested some changes which I believe will
-improve the state of the patch series. Please wait for a little while
-so that I can send another revision.
+Thanks for queueing this patch. For what it's worth, we have had this
+patch in GitHub's fork for the past month (?) or so, and it has been
+running without issue.
 
-Thanks
-Rohit
-
-[1]: https://public-inbox.org/git/4f69c62f-f38b-7630-cd8a-ec152a8b6ad0@gmail.com/
-[2]: https://public-inbox.org/git/20190625091822.GB2423@hank.intra.tgummerer.com/
-
+Thanks,
+Taylor
