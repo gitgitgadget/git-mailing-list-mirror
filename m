@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC0B1F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81B461F461
 	for <e@80x24.org>; Mon,  1 Jul 2019 21:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726838AbfGAVVR (ORCPT <rfc822;e@80x24.org>);
+        id S1726865AbfGAVVR (ORCPT <rfc822;e@80x24.org>);
         Mon, 1 Jul 2019 17:21:17 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:56147 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfGAVVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 17:21:16 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a15so872903wmj.5
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:15 -0700 (PDT)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38617 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726509AbfGAVVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 17:21:17 -0400
+Received: by mail-wm1-f65.google.com with SMTP id s15so1005324wmj.3
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eXnMdLmuMsCvL2a+Rs3FbD+F0m7k0TY93UGAJ8b4tjo=;
-        b=VLstUddyi1x2sHCke0f5lzzUURH+cnJpprdwUhOf0WqkXXuSX9dNb9cLbMtUyvDNBP
-         m8McpECvsel/9JubjITJR3u2RT8mtNbthrcj7JZVSWV+dDvwQTKEJj2xLMgj4+xWpUQj
-         e7r64gOl5tGQTGcKk2hpuT39qO7GHAmQfIYfAH16MPY6S8+BrYIYij9i5HED83HNkTK8
-         XRIvibq0bhSn/2qjXZx4xR4unjxmSjI/VgPK4nhaJtPyGgm49FMPIW6UIpFj86aa9C97
-         XOLjkiKxd//n4BzlE2ZeqoePJO9eCycLQAsBHydhUoIu7PJ7agLyOjUDSDottPt9rQPK
-         E5UQ==
+        bh=bUiqybTOopFcwW4EfTGYqjTSRi5yZxqzQZSqNSqKeew=;
+        b=B5BFmQwZwJlgt4lKd8Az2Bcq8YEtctpoiGYUe938Cz2OJf29J+LQCPtqFiVPmsqAFo
+         Ne6XLaJ/8aDcGrriL0yvZ0DgF/6d2DZEuFotrbp4dI1HYLHn8CkYDn9FUesbbiCmXsas
+         BHQdXqa2IvG5+PmOpPrrR930Uq5Mb1LQmK/RAfDxSE7rlSo0CtY92hw0meNVm6pMJncq
+         ayRahwxuC6NMsTL4OO3pyZiW9e9lDaLucD94rvucLZYs10hJM7YRqHHS8sAX0EM2n9uZ
+         Io/WVSfhhjHnKdvHIdn0BDuNYGrCfxpxSXgfvU1OQGmTa8s88CDQvm3s98yl9zesQ13i
+         5bvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eXnMdLmuMsCvL2a+Rs3FbD+F0m7k0TY93UGAJ8b4tjo=;
-        b=I5JLDopDwR0pH3wyapm7oAg3FVonovy/kfGDF0MJrA3BQi/JhBFj1gpZQ7ZQNxbZ2V
-         pjewgt+aV3MbC2z7HXDn3dUOXWgVQ+LnPAZy8qGwD9MK7BxXTm7OuBavKlmnmuKyiHmm
-         CvY7C1qj039UG+iG/2F7qHWl7KGR6VNgFY8lUgA9rDoOqbbu+vfOfzmgXHH4syylsYgV
-         FbzbpgohqN4fcf5QIvirclLjqEIHfDxChpVSZhG+FSlpU5wDmOpXOXrrazMKI4TgwkMV
-         Y2WfzBcCPla7bmwVkym6GCd0bPOvhpXtzXmpeuG5IAlZN/qo/c2zeBRtHLtVXIVWBItM
-         TXaQ==
-X-Gm-Message-State: APjAAAX/3T1CnylyRiJzFIWzEyXq1O7oWFmL8Hol2jGS+xVD+R040OtQ
-        DDZWimZQ0dAdnmYgv3C+ZZhYb3P7TE0=
-X-Google-Smtp-Source: APXvYqxGDApdQV7oYE4kRdnh1pebIH4DQsTmSojL+UAck67+W7PxPO2Z/1rUUE+NmpP6FYPEVdlqDw==
-X-Received: by 2002:a1c:c289:: with SMTP id s131mr646718wmf.115.1562016074068;
-        Mon, 01 Jul 2019 14:21:14 -0700 (PDT)
+        bh=bUiqybTOopFcwW4EfTGYqjTSRi5yZxqzQZSqNSqKeew=;
+        b=aryKgvo3hTJjJcXj+RPrhJSJjHrt7YyA1A04PmQp+SoaJ1kIAWzclaJFj+eaprd8jp
+         ggsP6vbhhVD2queAoT/EaXbdI1f8zftEvGtLZVQ14lgrtX4NaqINTCcHeTnqGROQ5ksC
+         jHymQr+Z0Fa5Pc3Na/BxXAnMDkZT+PPbBr+iF3+GE14oGd8sqi3013TJPn2NtZHNymws
+         D7Ll0rJ7ygQ32fTYu71HdaotbkXdM2OJlm0LfGEPBr6oXHaiRukBmdjbbjO9Is3uWSmg
+         Oyf5kphWRNfeTzYC7+9HQ5F5DtXQK46UEM/PfUFPKGBkhvisfx+lcgZee/SFyW8vKOby
+         zKdA==
+X-Gm-Message-State: APjAAAWxRHIeEs6wyM+vlF7YHnCUc9vkTxxR7kM+4gnVk68T4jd8XtXY
+        ePfZlze77Udl21Wcmw9vLdpcBr6hulM=
+X-Google-Smtp-Source: APXvYqysdHzrlQeofC8reb9+GPI2R4l/SEK17CBHfCLPT394544IMDLe4eGy/RteCybHYjPvIdW3+A==
+X-Received: by 2002:a1c:9dc5:: with SMTP id g188mr704187wme.93.1562016075259;
+        Mon, 01 Jul 2019 14:21:15 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.12
+        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.14
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 14:21:13 -0700 (PDT)
+        Mon, 01 Jul 2019 14:21:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     git-packagers@googlegroups.com, gitgitgadget@gmail.com,
         sandals@crustytoothpaste.net, szeder.dev@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/10] t4210: skip more command-line encoding tests on MinGW
-Date:   Mon,  1 Jul 2019 23:20:53 +0200
-Message-Id: <20190701212100.27850-4-avarab@gmail.com>
+Subject: [PATCH v3 04/10] grep: inline the return value of a function call used only once
+Date:   Mon,  1 Jul 2019 23:20:54 +0200
+Message-Id: <20190701212100.27850-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190627233912.7117-1-avarab@gmail.com>
 References: <20190627233912.7117-1-avarab@gmail.com>
@@ -72,59 +72,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 5212f91deb ("t4210: skip command-line encoding tests on mingw",
-2014-07-17) the positive tests in this file were skipped. That left
-the negative tests that don't produce a match.
+Since e944d9d932 ("grep: rewrite an if/else condition to avoid
+duplicate expression", 2016-06-25) the "ascii_only" variable has only
+been used once in compile_regexp(), let's just inline it there.
 
-An upcoming change to migrate the "fixed" backend of grep to PCRE v2
-will cause these "log" commands to produce an error instead on
-MinGW. This is because the command-line on that platform implicitly
-has its encoding changed before being passed to git. See [1].
-
-1. https://public-inbox.org/git/nycvar.QRO.7.76.6.1907011515150.44@tvgsbejvaqbjf.bet/
+This makes the code easier to read, and might make it marginally
+faster depending on compiler optimizations.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4210-log-i18n.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ grep.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
-index 515bcb7ce1..6e61f57f09 100755
---- a/t/t4210-log-i18n.sh
-+++ b/t/t4210-log-i18n.sh
-@@ -51,7 +51,7 @@ test_expect_success !MINGW 'log --grep does not find non-reencoded values (utf8)
- 	test_must_be_empty actual
- '
+diff --git a/grep.c b/grep.c
+index 1de4ab49c0..4e8d0645a8 100644
+--- a/grep.c
++++ b/grep.c
+@@ -650,13 +650,11 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
  
--test_expect_success 'log --grep does not find non-reencoded values (latin1)' '
-+test_expect_success !MINGW 'log --grep does not find non-reencoded values (latin1)' '
- 	git log --encoding=ISO-8859-1 --format=%s --grep=$utf8_e >actual &&
- 	test_must_be_empty actual
- '
-@@ -70,7 +70,7 @@ do
- 	then
- 	    force_regex=.*
- 	fi
--	test_expect_success GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
-+	test_expect_success !MINGW,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
- 		cat >expect <<-\EOF &&
- 		latin1
- 		utf8
-@@ -79,12 +79,12 @@ do
- 		test_cmp expect actual
- 	"
+ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+-	int ascii_only;
+ 	int err;
+ 	int regflags = REG_NEWLINE;
  
--	test_expect_success GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
-+	test_expect_success !MINGW,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
- 		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$utf8_e\" >actual &&
- 		test_must_be_empty actual
- 	"
+ 	p->word_regexp = opt->word_regexp;
+ 	p->ignore_case = opt->ignore_case;
+-	ascii_only     = !has_non_ascii(p->pattern);
  
--	test_expect_success GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
-+	test_expect_success !MINGW,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
- 		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$invalid_e\" >actual &&
- 		test_must_be_empty actual
- 	"
+ 	/*
+ 	 * Even when -F (fixed) asks us to do a non-regexp search, we
+@@ -673,7 +671,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	if (opt->fixed ||
+ 	    has_null(p->pattern, p->patternlen) ||
+ 	    is_fixed(p->pattern, p->patternlen))
+-		p->fixed = !p->ignore_case || ascii_only;
++		p->fixed = !p->ignore_case || !has_non_ascii(p->pattern);
+ 
+ 	if (p->fixed) {
+ 		p->kws = kwsalloc(p->ignore_case ? tolower_trans_tbl : NULL);
 -- 
 2.22.0.455.g172b71a6c5
 
