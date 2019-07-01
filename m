@@ -2,110 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACD8D1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 19:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56CAB1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 20:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726843AbfGATs2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 15:48:28 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:36904 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfGATs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 15:48:28 -0400
-Received: by mail-io1-f65.google.com with SMTP id e5so31587421iok.4
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 12:48:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ytGZRZhBsD9RAqys8GtNzSMdWvh1Iy+HMn14LzsKN94=;
-        b=avqMY/7uhDdUoXpmJTWOo16kmd4UL/K9GPbfAKmq1HhIkeXKgMOaeQAsoRjkg1QTwF
-         fxDRl8uv7LzlZRLJUcfD28IxpbNHDtvpySKzG2gkEGytdiL1bKfeAlzYmi5XOBM0FHzm
-         ZKoeUH9x22L/2QJD5WTYL4vJR0/xFD17hliXM8ctJzNSfGakr2vLa1TxD6+00UxNBJGt
-         CWHa0X6y8yLv9mO4Y96nVm/5j0RWymtupEdLusaGQVH6P0fWBT0gnvkO8HpxUUF5Lt39
-         h4OR6MLn7vAKnHfUrbljM0YBiJYcZVz5oXQ0wenbVqdtPiAqcZQHSMN/Rydz+F85Kzz6
-         R9+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ytGZRZhBsD9RAqys8GtNzSMdWvh1Iy+HMn14LzsKN94=;
-        b=ECknBvAnoOyVgz2wIWXTkNuXa5B6ULO3EDvOyvUNSi/AaQLc0TkX/oheGWBsjeH3NI
-         FS2muTK+wcN4qN7RZHSSABk388J97lmxYHUvP7AlnE+IzdIf1dy1QZH5UEDbiO+vm1PR
-         bo1eEEabpydYYNfitH0wji6qiCDL2E6GA2phlhGNd3wOJpKIvOPfhjgWvz403NRRoy0F
-         StqUMrpoGTRwJ7dtdIIesuP+QRoX7j8GpBAoOMiHZaUaomVKpGIicOKDL8EzCLfuxagV
-         5ZdlqTk2uNQQbA2/+viJvrFIfmAuRbahaAC/XjEIRtOdIVmNQKqhqtrclxE5crTPIW24
-         5oDg==
-X-Gm-Message-State: APjAAAXksGA+IUmbEmaNSljkznOu8vlrJBD+8I9viWn+V/TLHib0bbwM
-        wFNCq9Mef9KYaPmC67y3e1Upy18GG3PLksNJoVf/Lw==
-X-Google-Smtp-Source: APXvYqwgSbB41nehWdUimx+svznPiLqTwcGh9T2HO7pWMfzaMRx40r730ebFy0yRtC5qs7ZoaxntL+97yxfMAQ7/lOE=
-X-Received: by 2002:a5d:9c4d:: with SMTP id 13mr16474824iof.47.1562010507580;
- Mon, 01 Jul 2019 12:48:27 -0700 (PDT)
+        id S1726761AbfGAUMh convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 1 Jul 2019 16:12:37 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:57387 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbfGAUMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 16:12:37 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Madrigal (b03e9f.lockharding.com [23.229.103.137] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x61KCN1E040099
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 1 Jul 2019 16:12:26 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   <rsbecker@nexbridge.com>
+To:     "'Bryan Turner'" <bturner@atlassian.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Eric Kulcyk'" <Eric.kulcyk@microsoft.com>, <git@vger.kernel.org>
+References: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com> <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com> <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+In-Reply-To: <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+Subject: RE: Tracking parent branches in Git
+Date:   Mon, 1 Jul 2019 16:12:06 -0400
+Message-ID: <007d01d53049$4db5bec0$e9213c40$@nexbridge.com>
 MIME-Version: 1.0
-References: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com>
- <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 1 Jul 2019 12:48:16 -0700
-Message-ID: <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
-Subject: Re: Tracking parent branches in Git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Kulcyk <Eric.kulcyk@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIIm/4Bxufqf2UaHYMxpB5SNwoS0gKMkoUAAh1oeoWmKgb6MA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On July 1, 2019 3:48 PM, Bryan Turner wrote:
 On Mon, Jul 1, 2019 at 12:35 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Eric Kulcyk <Eric.kulcyk@microsoft.com> writes:
 >
 > [Overly long lines are not appreciated around here.]
 >
-> > We would like to track parent branches so that creating pull
-> > requests can automatically determine the correct branch to merge
-> > against.  I understand that this would require tracking more
-> > information than is currently available right now in git.  Also,
-> > it seems that if some cases, it is not possible to determine a
-> > parent branch, in which case it would just be empty/null.
+> > We would like to track parent branches so that creating pull 
+> > requests can automatically determine the correct branch to merge 
+> > against.  I understand that this would require tracking more 
+> > information than is currently available right now in git.  Also, it 
+> > seems that if some cases, it is not possible to determine a parent 
+> > branch, in which case it would just be empty/null.
 >
-> Do you mean by "parent branch" what people usually call "upstream
-> branch" (i.e. when that branch on the other side gains more commits
-> independent from what you have been working on, then you would want
-> to rebase your work on top of the updated state of that branch on
-> the other side) around here?
+> Do you mean by "parent branch" what people usually call "upstream 
+> branch" (i.e. when that branch on the other side gains more commits 
+> independent from what you have been working on, then you would want to 
+> rebase your work on top of the updated state of that branch on the 
+> other side) around here?
 
-I suspect the question is in regards to "What branch did I create my
-local branch from?", especially given the pull request reference.
+I suspect the question is in regards to "What branch did I create my local branch from?", especially given the pull request reference.
 
 In other words, when I locally do:
 git checkout --no-track -b bturner-some-bugfix origin/release/5.16
 
-release/5.16 is the "parent branch" of my bugfix branch and, when I
-push my branch and try to open a pull request, release/5.16 is a
-_likely_ target for where I'd want to merge it. There may be a remote
-in the name, a la "origin" in my example, or it might be created on
-top of some other local branch. It's a common feature request for
-Bitbucket Server[1], for example, to automatically select the "right"
-target branch for a new pull request based on the ancestry of the
-branch in question--except branches have no ancestry. (This sort of
-metadata could potentially offer some benefits for building commit
-graphs (referring to UI treatments for visualizing the DAG, rather
-than Git's "commit-graph" functionality), depending on how it was
-implemented, since it would make branch points more stable.)
+release/5.16 is the "parent branch" of my bugfix branch and, when I push my branch and try to open a pull request, release/5.16 is a _likely_ target for where I'd want to merge it. There may be a remote in the name, a la "origin" in my example, or it might be created on top of some other local branch. It's a common feature request for Bitbucket Server[1], for example, to automatically select the "right"
+target branch for a new pull request based on the ancestry of the branch in question--except branches have no ancestry. (This sort of metadata could potentially offer some benefits for building commit graphs (referring to UI treatments for visualizing the DAG, rather than Git's "commit-graph" functionality), depending on how it was implemented, since it would make branch points more stable.)
 
-Since branches are ephemeral names and have no intrinsic metadata of
-their own (unlike, say, annotated tags or commits), I suspect
-implementing something like this may be more complicated than it might
-initially appear, especially if said metadata needs to be communicated
-to remote repositories (which implies it might require changes to the
-wire protocol as well).
+Since branches are ephemeral names and have no intrinsic metadata of their own (unlike, say, annotated tags or commits), I suspect implementing something like this may be more complicated than it might initially appear, especially if said metadata needs to be communicated to remote repositories (which implies it might require changes to the wire protocol as well).
 
 Best regards,
 Bryan Turner
@@ -114,19 +81,24 @@ Bryan Turner
 
 >
 > Perhaps "git help glossary", look
-> for "upstream branch" and start from there?  The entry mentions the
-> configuration variables used to keep track of that information,
-> which are described in "git help config", I think.
+> for "upstream branch" and start from there?  The entry mentions the 
+> configuration variables used to keep track of that information, which 
+> are described in "git help config", I think.
 >
-> > If I made a change to track the parent branch for each branch,
-> > would this feature be accepted/welcomed as part of git, even if it
-> > off by default?
+> > If I made a change to track the parent branch for each branch, would 
+> > this feature be accepted/welcomed as part of git, even if it off by 
+> > default?
 >
-> Regardless of what is being proposed, this is often not a very
-> useful question.  Something worth doing for yourself is worth doing
-> whether others also find it useful ;-)  And others usually do not
-> have enough information to judge if such a change is welcome until
-> seeing it in a bit more concrete form.
->
-> Thanks.
->
+> Regardless of what is being proposed, this is often not a very useful 
+> question.  Something worth doing for yourself is worth doing whether 
+> others also find it useful ;-)  And others usually do not have enough 
+> information to judge if such a change is welcome until seeing it in a 
+> bit more concrete form.
+
+Was there not, at some point in recent history (2019), a discussion about storing extra arbitrary data associated with a branch or other objects? My thought for satisfying what Eric was originally proposing is to store the root commit associated with the original branch HEAD when checkout -b/branch was done to create the branch. Presumably another datum could store the branch that the branch HEAD was on, but that may not be unique - which is a root part of the problem with this request, although it might be something that the user could select/specify - not sure how - at branch creation. 
+
+But aside from that both of the above are transient relative to the new branch and by the time you wanted to create a Pull Request, the information you originally wanted could irrelevant - at least to git. If I was the product manager on this, I would suggest going to GitLab, GitHub, or BitBucket and asking for some augmented capability of branch creation, that stores the data for future Pull Request management - instead of doing this in core git because of the transient nature of the relationship between a branch and a commit.
+
+My $0.02.
+Randall
+
