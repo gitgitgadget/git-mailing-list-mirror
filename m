@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81B461F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 21:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9EFE1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 21:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726865AbfGAVVR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 17:21:17 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38617 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbfGAVVR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 17:21:17 -0400
-Received: by mail-wm1-f65.google.com with SMTP id s15so1005324wmj.3
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:16 -0700 (PDT)
+        id S1726879AbfGAVVU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 17:21:20 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42529 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfGAVVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 17:21:18 -0400
+Received: by mail-wr1-f66.google.com with SMTP id x17so15331752wrl.9
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 14:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bUiqybTOopFcwW4EfTGYqjTSRi5yZxqzQZSqNSqKeew=;
-        b=B5BFmQwZwJlgt4lKd8Az2Bcq8YEtctpoiGYUe938Cz2OJf29J+LQCPtqFiVPmsqAFo
-         Ne6XLaJ/8aDcGrriL0yvZ0DgF/6d2DZEuFotrbp4dI1HYLHn8CkYDn9FUesbbiCmXsas
-         BHQdXqa2IvG5+PmOpPrrR930Uq5Mb1LQmK/RAfDxSE7rlSo0CtY92hw0meNVm6pMJncq
-         ayRahwxuC6NMsTL4OO3pyZiW9e9lDaLucD94rvucLZYs10hJM7YRqHHS8sAX0EM2n9uZ
-         Io/WVSfhhjHnKdvHIdn0BDuNYGrCfxpxSXgfvU1OQGmTa8s88CDQvm3s98yl9zesQ13i
-         5bvw==
+        bh=4ztwW1p0aQ2mCbzMuBeWwugeB5xsSD7QoczddYbD4PI=;
+        b=sehieitpg5I7HYawtF34csBWIpyvxZJuWvZHlMqO8b7K2Ocp3Olo40xK3COxf76NsO
+         xzT6EES0m1HzeycD2PSFvU++R1r0UavICX8ACooMZ1KBLQsQezcsU3DbkpfXiSwBzfgQ
+         xFu8iaDZ9jBJ9+sbwqAJWSzhHI+Y/+UkCZGWjyw/kQnHV+t7TS73CXPf5H/39DfNfITE
+         zJYgeWkaw41p2MW9xewPJjoH+I+cjp9X0/lPrgCrG2XbjmJ4vDhABZ8mpbxdTHXz9qQ4
+         3dQ/OumrRMW350tFk0J1vfRiRJasIj7B7BwJf0f9IVWh/DCLgSK0AZCDUPYkxQIjCKDN
+         Bu6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bUiqybTOopFcwW4EfTGYqjTSRi5yZxqzQZSqNSqKeew=;
-        b=aryKgvo3hTJjJcXj+RPrhJSJjHrt7YyA1A04PmQp+SoaJ1kIAWzclaJFj+eaprd8jp
-         ggsP6vbhhVD2queAoT/EaXbdI1f8zftEvGtLZVQ14lgrtX4NaqINTCcHeTnqGROQ5ksC
-         jHymQr+Z0Fa5Pc3Na/BxXAnMDkZT+PPbBr+iF3+GE14oGd8sqi3013TJPn2NtZHNymws
-         D7Ll0rJ7ygQ32fTYu71HdaotbkXdM2OJlm0LfGEPBr6oXHaiRukBmdjbbjO9Is3uWSmg
-         Oyf5kphWRNfeTzYC7+9HQ5F5DtXQK46UEM/PfUFPKGBkhvisfx+lcgZee/SFyW8vKOby
-         zKdA==
-X-Gm-Message-State: APjAAAWxRHIeEs6wyM+vlF7YHnCUc9vkTxxR7kM+4gnVk68T4jd8XtXY
-        ePfZlze77Udl21Wcmw9vLdpcBr6hulM=
-X-Google-Smtp-Source: APXvYqysdHzrlQeofC8reb9+GPI2R4l/SEK17CBHfCLPT394544IMDLe4eGy/RteCybHYjPvIdW3+A==
-X-Received: by 2002:a1c:9dc5:: with SMTP id g188mr704187wme.93.1562016075259;
-        Mon, 01 Jul 2019 14:21:15 -0700 (PDT)
+        bh=4ztwW1p0aQ2mCbzMuBeWwugeB5xsSD7QoczddYbD4PI=;
+        b=GfnmToHM1XBsQ921GYdE3a0SixGU7l+U25+3mhsw6aJAGO73osKGfGLDR2mTqvTRJf
+         +fIH22s0RoZh2JHdf0INhkjhRw7HzYh9eEWRaIrxlz61XfcKDISL5U2dtbRz6OuoIcAR
+         rDdMBn5rBto6W4TCU9HtuTVUiivaC7yEQCWOIVYUXNtp1BDaGQwR21vn0Ij2WptPZrEn
+         Bwt9HITrGo/JwjXrsMFSetlu31dPmbhr+9DpDsm3GHncMjVm5OkI9ATcIi5EBSNdLBLL
+         K1yy85jLBjV7KsdmYqXCKJZAvqahaWBxSJjqAKvHbvwaB2uv9HOFpYs6rS9h7gHMogbc
+         beHg==
+X-Gm-Message-State: APjAAAWKxlWkWgckkS/vZF6CmEzwvWiojVYp9pzVMt0VxYqmI7ebVQ/E
+        zgfnkT6FxElV89qPT6WLIYGlQ2NFeiE=
+X-Google-Smtp-Source: APXvYqyBL9QZazlvYYD6ylVXOVFGRblWGajQuHrC8oDqWx7uf/G9pvP8qP9+tTQsWWn84UHPgPQBPA==
+X-Received: by 2002:adf:e3cc:: with SMTP id k12mr1428811wrm.284.1562016076318;
+        Mon, 01 Jul 2019 14:21:16 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.14
+        by smtp.gmail.com with ESMTPSA id s2sm466824wmj.33.2019.07.01.14.21.15
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 14:21:14 -0700 (PDT)
+        Mon, 01 Jul 2019 14:21:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     git-packagers@googlegroups.com, gitgitgadget@gmail.com,
         sandals@crustytoothpaste.net, szeder.dev@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 04/10] grep: inline the return value of a function call used only once
-Date:   Mon,  1 Jul 2019 23:20:54 +0200
-Message-Id: <20190701212100.27850-5-avarab@gmail.com>
+Subject: [PATCH v3 05/10] grep tests: move "grep binary" alongside the rest
+Date:   Mon,  1 Jul 2019 23:20:55 +0200
+Message-Id: <20190701212100.27850-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190627233912.7117-1-avarab@gmail.com>
 References: <20190627233912.7117-1-avarab@gmail.com>
@@ -72,45 +72,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since e944d9d932 ("grep: rewrite an if/else condition to avoid
-duplicate expression", 2016-06-25) the "ascii_only" variable has only
-been used once in compile_regexp(), let's just inline it there.
-
-This makes the code easier to read, and might make it marginally
-faster depending on compiler optimizations.
+Move the "grep binary" test case added in aca20dd558 ("grep: add test
+script for binary file handling", 2010-05-22) so that it lives
+alongside the rest of the "grep" tests in t781*. This would have left
+a gap in the t/700* namespace, so move a "filter-branch" test down,
+leaving the "t7010-setup.sh" test as the next one after that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ ...ilter-branch-null-sha1.sh => t7008-filter-branch-null-sha1.sh} | 0
+ t/{t7008-grep-binary.sh => t7815-grep-binary.sh}                  | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t7009-filter-branch-null-sha1.sh => t7008-filter-branch-null-sha1.sh} (100%)
+ rename t/{t7008-grep-binary.sh => t7815-grep-binary.sh} (100%)
 
-diff --git a/grep.c b/grep.c
-index 1de4ab49c0..4e8d0645a8 100644
---- a/grep.c
-+++ b/grep.c
-@@ -650,13 +650,11 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
- 
- static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- {
--	int ascii_only;
- 	int err;
- 	int regflags = REG_NEWLINE;
- 
- 	p->word_regexp = opt->word_regexp;
- 	p->ignore_case = opt->ignore_case;
--	ascii_only     = !has_non_ascii(p->pattern);
- 
- 	/*
- 	 * Even when -F (fixed) asks us to do a non-regexp search, we
-@@ -673,7 +671,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 	if (opt->fixed ||
- 	    has_null(p->pattern, p->patternlen) ||
- 	    is_fixed(p->pattern, p->patternlen))
--		p->fixed = !p->ignore_case || ascii_only;
-+		p->fixed = !p->ignore_case || !has_non_ascii(p->pattern);
- 
- 	if (p->fixed) {
- 		p->kws = kwsalloc(p->ignore_case ? tolower_trans_tbl : NULL);
+diff --git a/t/t7009-filter-branch-null-sha1.sh b/t/t7008-filter-branch-null-sha1.sh
+similarity index 100%
+rename from t/t7009-filter-branch-null-sha1.sh
+rename to t/t7008-filter-branch-null-sha1.sh
+diff --git a/t/t7008-grep-binary.sh b/t/t7815-grep-binary.sh
+similarity index 100%
+rename from t/t7008-grep-binary.sh
+rename to t/t7815-grep-binary.sh
 -- 
 2.22.0.455.g172b71a6c5
 
