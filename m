@@ -2,108 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E75CB1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 12:33:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 233321F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727921AbfGAMdy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 08:33:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:47867 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727239AbfGAMdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 08:33:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1561984432;
-        bh=MRnZk/BTGEygyk83jTP09N1e+0Z4x+6OJubyQVtE+xU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kNHvd5VeXNsapT5FaFJIwKrBKSwxB+KEfdWPdBs5JJ9hMegBH0aqXQs3frDw2xUrx
-         5pNPUsxoevKskf6IhOd/tiVukaOfEmbBX5fjnNoTRM4H5bfAfYw0Uxdh4e9m/rzSdx
-         WciQ24e0XBFLo5zczBm9TNC0j9NrpbXUGnVvQQkw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Rm-1hytd00Nzi-00LSMd; Mon, 01
- Jul 2019 14:33:52 +0200
-Date:   Mon, 1 Jul 2019 14:34:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Mateusz Loskot <mateusz@loskot.net>
-cc:     git@vger.kernel.org
-Subject: Re: [Git 2.22.0] git submodule foreach now requires quoted
- command?
-In-Reply-To: <CABUeae90FQnxS1FCZLo+5LgMPD9xWQv6w7p7ymCtLdBoOijcRw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907011433531.44@tvgsbejvaqbjf.bet>
-References: <CABUeae90FQnxS1FCZLo+5LgMPD9xWQv6w7p7ymCtLdBoOijcRw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727550AbfGAMpa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:45:30 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33188 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfGAMp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:45:29 -0400
+Received: by mail-qt1-f195.google.com with SMTP id h24so11412743qto.0
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 05:45:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=l9cN1OknLr/c1RxnEDeGf7yp1432Dh6Cphb4OZNtCeQ=;
+        b=I4mfZP5cFXAhmjHmghp6FWr3buwhvEuoLcBPtaNCio/5OomVydYg10wd1oNL/gsKzl
+         RBy49WtYnu+Ci1LQ40NcohFLvbiccRt/uwnikscZ2WHFbSudv9aiJdz/k1c2ZO+HPpsw
+         AYU4BocJw43QnKWPlEa0WFmOBuJMdWO4yvM8RAZAc1hg8ge+rO95rCBT+cndeJLnrYqB
+         gDRKqam2bvVG0PCLBUme2l6Tfb18WAhy70WyOvDsAVuNx+bF0cdIp49PU9X5EzcpPCpi
+         +DyLP00COqZIdqigGBBbR7PXjOwejwgyFG1xnY9irEqgeuzAnBUg8zYgeDw8cqeJ1XZB
+         k2Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=l9cN1OknLr/c1RxnEDeGf7yp1432Dh6Cphb4OZNtCeQ=;
+        b=aB1oi65wMe9QnEmmj5V+J32T+d3+E50/GUjZqEAoQ3Xo0nEx5nvvITQW8e5fVIreB5
+         ou2G/Fmr5p7JqrhUjpGxX+YEXVXuzCxHZq5An4zhaimu9cusEdPXzRcQJMYGFE1LMwJW
+         qdOo+bHhVmhKHGBVwsXHpV043wEEb74IAyX8mpfl5pK/BXmXYzB4VOMdV1fiIdeF6KIS
+         +ZrluFo0HYj1xDSLd3hmFcvJICVwZtXgslUrD0BVHyJMzKzs579ja397hTK01WKjKFRB
+         Uc1AOaYPdEshjFjkGs+xIIinwZunkOpN1jrlYfbOZDCcmLP/e06l6tOANWFC6EqYrQYf
+         G9XQ==
+X-Gm-Message-State: APjAAAW5KVbLhBB1Ln1WcITq+IN+EsrAQ7TNQTg6OOn/RK+BbCY7dXGO
+        W8E/pEMtoQmGF8GufyolL3ndtt92FcY=
+X-Google-Smtp-Source: APXvYqzmm0Icuxwf5oHWI3JbuPNXcjf2Y+0oQth947BT9zUkgZJGsZu/Bu6m7NFbiIkAkp5l09zARw==
+X-Received: by 2002:ac8:1c65:: with SMTP id j34mr19855655qtk.323.1561985128999;
+        Mon, 01 Jul 2019 05:45:28 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8d39:716e:a6fa:35c4? ([2001:4898:a800:1012:3e6d:716e:a6fa:35c4])
+        by smtp.gmail.com with ESMTPSA id q3sm4826373qkq.133.2019.07.01.05.45.28
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 05:45:28 -0700 (PDT)
+Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate
+ setting
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.254.git.gitgitgadget@gmail.com>
+ <pull.254.v2.git.gitgitgadget@gmail.com>
+ <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+ <xmqq8stl8k09.fsf@gitster-ct.c.googlers.com>
+ <e684ad41-ca93-bad5-cf39-9dcf578a04ae@gmail.com>
+ <CAPUEspg8neAfmKUV3U2DWPnDHOawcbGMNNm_n1MCD7KtLNymLQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6cf903a0-03d8-2c18-639e-a89b953eceab@gmail.com>
+Date:   Mon, 1 Jul 2019 08:45:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0NYwkMahd3sZlnvAXkBy7pn9cam7LhQG1O78qHn4iSnVqA7igQ7
- ZsaC0pRz5kKrN8xZoULH3RPP1JTHA87b2ch0apLnn8V6tDJmMifpPxLBZZuZxUGwMyMxBW1
- lC3B6TFEBBTbW1xFnXry2jf6P9LgI153rai32/1hho6uUliEJQmT3kooSD0DHW8C4HUoiGS
- rMdNkMe3+oushzk2vvEBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RiBALuo4MmM=:nZv83uwaMMcj73k5hkrUxc
- SzoxT5NYdglITkKAUCudE5YFzRmJf+PbdCZ7nDkBVjX4xhlxV3sVMyVdMBd12VmcnGHCalQtl
- 9S/CwmINgoHAgtkx2GaAarmNWKkLIa/9RkOCh4SFGGBTSL7TjBSW/X5Ni1K8ArVOuqOeagdFw
- nvgaxPRXmxlZXnJ6zwOFzffVhi3V5ocMJAbL7ermK+ddsITTVhyp2vo+Kp+9JDcLlBtIInAZo
- Oz7s5+6bfDN7v0PjrSenvSYBhg1XqnrUlSWRzWTLV6QhEqza2cX1mde/xrmMCeJq/efGAS/ER
- FuaRGXQXuwNw3A35jg/7qgOMi7RljlgdtzDOxdUwWJS2LHH51VF6vpapfOmfyNt18++ff8oOo
- cAXolwKnGoT3ZNtk4zC9oKs5ULkoy9J2Oe6HNAjKvg2yO6ukii3XekJEj2VAwCdDB+LM6G15+
- FchLXy42wp0bkmkzaqyg/W6UfZJTXIiQZChWMXJ1azApsyM1VYFpbjGGfPiXKz3O3QmtCW1CG
- O/9tX8p0pyduvVMCjU+RJ+4lpLG28GHgcEFh8EBS9Fszo9Qrpih1gzKiU0J84sWTZmz0X2Xrl
- 5NK48wkRn0MU2G9B1u1eP/tKtuquy+nj+++9hETex2H+o4xs0uNUHwzNDSz0U9eXLowo6LZZJ
- qNn8+hK9IlIfalMQ8ffPjK3LRMMg7Va8ODjc0cWUTGwuFNudcu9Aj+cMQtZTYPKK5Hi84ETEv
- t54eV5+5vMa6et3c+Db/IaT1cUDph2sQkFUQLm0eFMrVIAI4/RCGLkQcmqYrYAu5/B4IFGhJ0
- S60s/wyXSw6R3V7ZSOh+Cg25OWXRNe+zEVA1NsBwbiQS/vb4xtpXBxDd9nS0gR2UKRY6zbBfA
- 7YMSEafMuprCmrud440zr1ydyxozm9i/40V1Ui3bIxn5L23/ny6Ogym7MPBl9USqPU1nCned2
- AW1AyKr5lwpJKBE/a0XZluNO3KmjnhOT0KsR+/Rn2+EqL/AWkLdmBwyXewy8Mpe6xiLK9R6PD
- bunon2k/mUGTD/pdKuzhkpHXoGSj2lhYAdu9aB+595Sxs4AEbH9Ppo3pv734r1li1UZrLapol
- ggib8dmRAOIQtHPXm6hHgzrw/4sux4VWKOU
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPUEspg8neAfmKUV3U2DWPnDHOawcbGMNNm_n1MCD7KtLNymLQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 6/30/2019 2:35 PM, Carlo Arenas wrote:
+> On Fri, Jun 28, 2019 at 6:44 PM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 6/28/2019 5:42 PM, Junio C Hamano wrote:
+>>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>
+>>> Use of "signed char" would be OK, but this is a singleton instance
+>>> per repository, so I am not sure how much it matters to save a few
+>>> words here by not using the most natural "int" type.
+>>
+>> I'll use 'int' in v2.
+> 
+> FWIW, this broke the build in (at least) Linux AArch64, unless the following
+> is applied on top of ds/early-access
 
-On Sat, 29 Jun 2019, Mateusz Loskot wrote:
+Thanks, Carlo, for reporting this. I'm glad we have someone running early
+builds on platforms with these special cases!
 
-> I have a script which I have used for long time, with numerous
-> git commands and one of commands is this trivial:
->
-> git submodule foreach --recursive git clean -ffd
->
-> I updated to Git 2.22.0 and noticed Git started to complain:
->
-> ```
-> $ cd /d/boost
-> $ git submodule foreach --recursive git clean -ffd
-> Entering 'libs/accumulators'
-> error: unknown switch `f'
-> usage: git submodule--helper foreach [--quiet] [--recursive] [--] <comma=
-nd>
->
->     -q, --quiet           Suppress output of entering each submodule com=
-mand
->     --recursive           Recurse into nested submodules
->
-> fatal: run_command returned non-zero status while recursing in the
-> nested submodules of libs/accumulators
-> ```
->
-> Apparently, I have to quote the command to avoid the error
->
-> git submodule foreach --recursive 'git clean -ffd'
->
-> Is this expected behaviour?
-> Could anyone help me to understand what has changed?
-> I can't find any related changes in the release notes.
+I'm working on rerolling to use int.
 
-Probably fixed in https://github.com/gitgitgadget/git/pull/263
+-Stolee
 
-Ciao,
-Johannes
