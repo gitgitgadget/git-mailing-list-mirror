@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39B581F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 14:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85E261F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 14:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729698AbfGAO3N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 10:29:13 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46084 "EHLO
+        id S1729454AbfGAO3P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 10:29:15 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:42901 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729621AbfGAO3N (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728145AbfGAO3N (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 1 Jul 2019 10:29:13 -0400
-Received: by mail-ed1-f66.google.com with SMTP id d4so23814617edr.13
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id z25so23861726edq.9
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9Kd58oQ37JlmBbaw1f94zJXKsBqneQOwNTD2aoWp8ow=;
-        b=hyh3KChtYSSSSkNNrxmR1yrWi+ZfUi7Dz7CbyY6J3KsB4JGhfrOnVi4cliwndrAQ4j
-         HCfdglj81sHEmSCVaUhT30IvLNJCSIx5GD9oWIEH+mn1vitae/OOTEB7mDZxmgLJonXq
-         +9Lmdna1yG1ZoU+efx5/J0LlEzWEjRwR+E3Dfr+UoAJPgFgGLXGJktJvzuxlU+46Ew49
-         OZ0lHas+RM4Q4gaox0pUrBZxoOUNrES7Fq+RtCHh2vCrOn5IJRgtjOaNKku/zFnXDD5+
-         Vj+9joHBUlY6rQ4oFzNN621BwLygH+9jDySv86m9rRETkJ9n0x5kFxd01FcOsHBRSSHu
-         eOfA==
+        bh=aLzGHjxVg7G7PS5Ao8bnhETVG+GIFT0QLeedM3KJh00=;
+        b=ad7FO1OYXA+rAsNJ8XnGkEwuq8CmSsTHjelBtidfBmc2SUdQayd9cJqINxKo2WZ8IC
+         +JOtjoP9p4X4oYOUXPZiab/ru7ryieNROR1leH80ADOSas3wIVc4TbQA3MQ/lCtBDCqt
+         4+GiaB8GiBc9gj6oXAc16KERBD/L6ZNrbDPHS2xvRkJwS6bPcju27khuprSD2cHp6jfi
+         ajEtBs2tBOoPNDCDC43qDEEg2nDQrvEnz1ZWVuLCQPz47W37jKGZU7y5ExjDQtnLAGIy
+         6lGqs0sh1wnSu6fphIIQiGvx1REQpq6+nKDFEoB67XWPtQMNx2pksov2HjKL6mdm/kPQ
+         CNuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9Kd58oQ37JlmBbaw1f94zJXKsBqneQOwNTD2aoWp8ow=;
-        b=rOCWWmOC7+dHKV3G3YHnI8Qal4SutjAJKG3OTc52Z6W3/eOAsKV0u96vt+P2BSy+6i
-         r/8t/bNo0QlNAzYOsxSAPnXTKTtHNAJayPpt0vNxWY09ZxnnyXVEPln2117+ZtE2u317
-         dfIUOn4SUEaO+dei90YIQCqdsRItFhCB1JXiIyqfnb5zAd/S7DALTmXoFo8hUGL8dk2u
-         sTkrHIHQjba2AoiJlmgUrB4qzJKtAKT9CLMOS0UsPEqnNKoWQioZQddR/PgtdfW3BKdS
-         N/kix738gI4lRDaH7alow23N9gI6/nlZeQAYIccH56RNukArz3REgU3/q+L0YydkpTg1
-         AxdQ==
-X-Gm-Message-State: APjAAAXdIXGA3mB6PcvheL9PW/y2jv5aRsVdb4w1gBg8jasOo7l6qoqw
-        SxIKxzuKqjFEIW7XjCIEGL4uC+a+
-X-Google-Smtp-Source: APXvYqwUYxilzthFvWdqScqeZdzg9wVkfD/ZPY9dqRZcICuXXRH3f08HEcNCy70yu4cj0UT3NPozcw==
-X-Received: by 2002:a17:906:9144:: with SMTP id y4mr23471961ejw.16.1561991350249;
-        Mon, 01 Jul 2019 07:29:10 -0700 (PDT)
+        bh=aLzGHjxVg7G7PS5Ao8bnhETVG+GIFT0QLeedM3KJh00=;
+        b=D5b4zKa/77oJYj3q5fVn5kp8E9VNDtjwgZ67vtbUoxioLGIbeGnphs09CLlSWEr9Pv
+         oi6B80fRpCb1EWhiIUpazIZx3XUQl0GlrY873aw8KTe+4qIYotEL3yJPC+1+068aS7h7
+         1zFfa2iKnRnvAZ8kd8Xf+1MLc4YT40cv3jyoClAnOwy5Co6y4oGUAmVal+s21texppOg
+         bnpS8Y1XB9i8gfbR2Co9mFLoEeJai7AGFNPBqSxDFgsWh/ZsrkU67nweb3FdEmk2TZbf
+         zEs0BxrdO9YDy4RZBZTQlUt6RgiSXK/6jCfe/cqW4TRw2H677VMaVFK1n4E6Huufb2o3
+         KxpA==
+X-Gm-Message-State: APjAAAVZn+N3fEoSmRSRovFFZl5dV966BeFDktoZsqGGGSdy+eiQpR5s
+        ZQeUGyNZ5BACFbYfgjyp3MBC/Xgv
+X-Google-Smtp-Source: APXvYqxfT63bZBqRSur5VC/X773NngF+9I2t15FSUeh2NhcROKxBO2vkV5aGW81cegR/lOLXEpLn/w==
+X-Received: by 2002:a17:906:15d0:: with SMTP id l16mr23769288ejd.234.1561991351939;
+        Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y18sm2174622ejh.84.2019.07.01.07.29.09
+        by smtp.gmail.com with ESMTPSA id e22sm3684733edd.25.2019.07.01.07.29.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 07:29:09 -0700 (PDT)
-Date:   Mon, 01 Jul 2019 07:29:09 -0700 (PDT)
-X-Google-Original-Date: Mon, 01 Jul 2019 14:29:05 GMT
-Message-Id: <13b9e71b383485885c4823baa466c32511fd20bc.1561991348.git.gitgitgadget@gmail.com>
+        Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
+Date:   Mon, 01 Jul 2019 07:29:11 -0700 (PDT)
+X-Google-Original-Date: Mon, 01 Jul 2019 14:29:07 GMT
+Message-Id: <d080065a9208852a7e551cc8bef7d326576c076d.1561991348.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.254.v3.git.gitgitgadget@gmail.com>
 References: <pull.254.v2.git.gitgitgadget@gmail.com>
         <pull.254.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 1/3] repo-settings: create core.featureAdoptionRate setting
+Subject: [PATCH v3 3/3] repo-settings: pack.useSparse=true
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,284 +73,134 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Several advanced config settings are highly recommended for clients
-using large repositories. Power users learn these one-by-one and
-enable them as they see fit. This could be made simpler, to allow
-more users to have access to these almost-always beneficial features
-(and more beneficial in larger repos).
+If a repo is large, then it probably has a very large working
+directory. In this case, a typical developer's edits usually impact
+many fewer paths than the full path set. The sparse treewalk
+algorithm is optimized for this case, speeding up 'git push' calls.
 
-Create a 'core.featureAdoptionRate' config setting that allows integer
-values. This is a rating from 0 to 10 for the user's willingness to
-adopt new or experimental features that improve Git performance.
-The default is 0, meaning "don't change anything!" A value of 10
-would mean "I'm willing for some behavior to change to get the
-best performance I can get, and can take experimental features
-in their first release." As we integrate this with more config
-settings, we will make this scale more clear.
-
-This config setting only changes the default values of other config
-settings. If the setting is given explicitly, then take the
-explicit value.
-
-This change adds these two defaults when core.featureAdoptionRate
-is at least three:
-
- * core.commitGraph=true
- * gc.writeCommitGraph=true
-
-The use of "three or higher" for these settings means that a value
-of 3 means "I'm willing to add optional features that can augment
-the data on disk in favor of improved performance, but those
-features should be stable after being included in multiple major
-releases."
-
-To centralize these config options and properly set the defaults,
-create a repo_settings that contains chars for each config variable.
-Use -1 as "unset", with 0 for false and 1 for true.
-
-The prepare_repo_settings() method ensures that this settings
-struct has been initialized, and avoids double-scanning the config
-settings.
+Use pack.useSparse=true when core.featureAdoptionRate is at least
+five. This is the first setting where the feature has only been
+out for a single major version. This could be moved to the "at
+least three" category after another major version.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/core.txt | 22 +++++++++++++++++-
- Documentation/config/gc.txt   |  4 ++--
- Makefile                      |  1 +
- builtin/gc.c                  |  6 ++---
- commit-graph.c                |  7 +++---
- repo-settings.c               | 44 +++++++++++++++++++++++++++++++++++
- repo-settings.h               | 13 +++++++++++
- repository.h                  |  3 +++
- 8 files changed, 91 insertions(+), 9 deletions(-)
- create mode 100644 repo-settings.c
- create mode 100644 repo-settings.h
+ Documentation/config/core.txt | 9 +++++++++
+ Documentation/config/pack.txt | 3 ++-
+ builtin/pack-objects.c        | 9 +++++----
+ repo-settings.c               | 8 ++++++++
+ repo-settings.h               | 1 +
+ 5 files changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 75538d27e7..bfe647c76f 100644
+index 865252aba9..60356102a8 100644
 --- a/Documentation/config/core.txt
 +++ b/Documentation/config/core.txt
-@@ -577,7 +577,8 @@ the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
- 
- core.commitGraph::
- 	If true, then git will read the commit-graph file (if it exists)
--	to parse the graph structure of commits. Defaults to false. See
-+	to parse the graph structure of commits. Defaults to false, unless
-+	`core.featureAdoptionRate` is at least three. See
- 	linkgit:git-commit-graph[1] for more information.
- 
- core.useReplaceRefs::
-@@ -601,3 +602,22 @@ core.abbrev::
- 	in your repository, which hopefully is enough for
- 	abbreviated object names to stay unique for some time.
- 	The minimum length is 4.
-+
-+core.featureAdoptionRate::
-+	Set an integer value on a scale from 0 to 10 describing your
-+	desire to adopt new performance features. Defaults to 0. As
-+	the value increases, features are enabled by changing the
-+	default values of other config settings. If a config variable
-+	is specified explicitly, the explicit value will override these
-+	defaults:
+@@ -624,3 +624,12 @@ The settings do not modify the user-facing output of porcelain commands.
+ +
+ * `index.version=4` uses prefix-compression to reduce the size of the
+ .git/index file.
 ++
-+If the value is at least 3, then the following defaults are modified.
-+These represent relatively new features that have existed for multiple
-+major releases, and may present performance benefits. These benefits
-+depend on the amount and kind of data in your repo and how you use it.
-+The settings do not modify the user-facing output of porcelain commands.
++If the value is at least 5, then all of the defaults above are included,
++plus the defaults below. These represent new features that present
++significant performance benefits, but may not have been released for
++multiple major versions.
 ++
-+* `core.commitGraph=true` enables reading commit-graph files.
-++
-+* `gc.writeCommitGraph=true` eneables writing commit-graph files during
-+`git gc`.
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 02b92b18b5..898263209c 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -63,8 +63,8 @@ gc.writeCommitGraph::
- 	If true, then gc will rewrite the commit-graph file when
- 	linkgit:git-gc[1] is run. When using `git gc --auto`
- 	the commit-graph will be updated if housekeeping is
--	required. Default is false. See linkgit:git-commit-graph[1]
--	for details.
-+	required. Default is false, unless `core.featureAdoptionRage`
-+	is at least three. See linkgit:git-commit-graph[1] for details.
++* `pack.useSparse=true` uses the sparse tree-walk algorithm, which is
++optimized for enumerating objects during linkgit:git-push[1] from a
++client machine.
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index 9cdcfa7324..9c4f8ea9ff 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -112,7 +112,8 @@ pack.useSparse::
+ 	objects. This can have significant performance benefits when
+ 	computing a pack to send a small change. However, it is possible
+ 	that extra objects are added to the pack-file if the included
+-	commits contain certain types of direct renames.
++	commits contain certain types of direct renames. Defaults to
++	false, unless `core.featureAdoptionRate` is at least five.
  
- gc.logExpiry::
- 	If the file gc.log exists, then `git gc --auto` will print
-diff --git a/Makefile b/Makefile
-index 8a7e235352..2d3499d7ac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -967,6 +967,7 @@ LIB_OBJS += refspec.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace-object.o
-+LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
- LIB_OBJS += resolve-undo.o
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 8943bcc300..6281aad961 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -27,6 +27,7 @@
- #include "pack-objects.h"
- #include "blob.h"
- #include "tree.h"
+ pack.writeBitmaps (deprecated)::
+ 	This is a deprecated synonym for `repack.writeBitmaps`.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 41d7fc5983..f26b3f2892 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -34,6 +34,7 @@
+ #include "dir.h"
+ #include "midx.h"
+ #include "trace2.h"
 +#include "repo-settings.h"
  
- #define FAILED_RUN "failed to run %s"
- 
-@@ -41,7 +42,6 @@ static int aggressive_depth = 50;
- static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 50;
--static int gc_write_commit_graph;
- static int detach_auto = 1;
- static timestamp_t gc_log_expire_time;
- static const char *gc_log_expire = "1.day.ago";
-@@ -148,7 +148,6 @@ static void gc_config(void)
- 	git_config_get_int("gc.aggressivedepth", &aggressive_depth);
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
--	git_config_get_bool("gc.writecommitgraph", &gc_write_commit_graph);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
- 	git_config_get_expiry("gc.pruneexpire", &prune_expire);
- 	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-@@ -685,7 +684,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		clean_pack_garbage();
+ #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
+ #define SIZE(obj) oe_size(&to_pack, obj)
+@@ -2707,10 +2708,6 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 		use_bitmap_index_default = git_config_bool(k, v);
+ 		return 0;
  	}
+-	if (!strcmp(k, "pack.usesparse")) {
+-		sparse = git_config_bool(k, v);
+-		return 0;
+-	}
+ 	if (!strcmp(k, "pack.threads")) {
+ 		delta_search_threads = git_config_int(k, v);
+ 		if (delta_search_threads < 0)
+@@ -3330,6 +3327,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	read_replace_refs = 0;
  
--	if (gc_write_commit_graph)
+ 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", 0);
 +	prepare_repo_settings(the_repository);
-+	if (the_repository->settings->gc_write_commit_graph == 1)
- 		write_commit_graph_reachable(get_object_directory(), 0,
- 					     !quiet && !daemonized);
- 
-diff --git a/commit-graph.c b/commit-graph.c
-index 7c5e54875f..b09c465a7a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -16,6 +16,7 @@
- #include "hashmap.h"
- #include "replace-object.h"
- #include "progress.h"
-+#include "repo-settings.h"
- 
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-@@ -311,7 +312,6 @@ static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
- static int prepare_commit_graph(struct repository *r)
- {
- 	struct object_directory *odb;
--	int config_value;
- 
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
- 		die("dying as requested by the '%s' variable on commit-graph load!",
-@@ -321,9 +321,10 @@ static int prepare_commit_graph(struct repository *r)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
- 
-+	prepare_repo_settings(r);
++	if (!sparse && the_repository->settings->pack_use_sparse != -1)
++		sparse = the_repository->settings->pack_use_sparse;
 +
- 	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
--	    (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
--	    !config_value))
-+	    r->settings->core_commit_graph != 1)
- 		/*
- 		 * This repository is not configured to use commit graphs, so
- 		 * do not load one. (But report commit_graph_attempted anyway
+ 	reset_pack_idx_option(&pack_idx_opts);
+ 	git_config(git_pack_config, NULL);
+ 
 diff --git a/repo-settings.c b/repo-settings.c
-new file mode 100644
-index 0000000000..f7fc2a1959
---- /dev/null
+index 5753153a84..c700edc286 100644
+--- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -0,0 +1,44 @@
-+#include "cache.h"
-+#include "repository.h"
-+#include "config.h"
-+#include "repo-settings.h"
-+
-+#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
-+
-+static int git_repo_config(const char *key, const char *value, void *cb)
-+{
-+	struct repo_settings *rs = (struct repo_settings *)cb;
-+
-+	if (!strcmp(key, "core.featureadoptionrate")) {
-+		int rate = git_config_int(key, value);
-+		if (rate >= 3) {
-+			UPDATE_DEFAULT(rs->core_commit_graph, 1);
-+			UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
+@@ -16,6 +16,9 @@ static int git_repo_config(const char *key, const char *value, void *cb)
+ 			UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
+ 			UPDATE_DEFAULT(rs->index_version, 4);
+ 		}
++		if (rate >= 5) {
++			UPDATE_DEFAULT(rs->pack_use_sparse, 1);
 +		}
+ 		return 0;
+ 	}
+ 	if (!strcmp(key, "core.commitgraph")) {
+@@ -26,6 +29,10 @@ static int git_repo_config(const char *key, const char *value, void *cb)
+ 		rs->gc_write_commit_graph = git_config_bool(key, value);
+ 		return 0;
+ 	}
++	if (!strcmp(key, "pack.usesparse")) {
++		rs->pack_use_sparse = git_config_bool(key, value);
 +		return 0;
 +	}
-+	if (!strcmp(key, "core.commitgraph")) {
-+		rs->core_commit_graph = git_config_bool(key, value);
-+		return 0;
-+	}
-+	if (!strcmp(key, "gc.writecommitgraph")) {
-+		rs->gc_write_commit_graph = git_config_bool(key, value);
-+		return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+void prepare_repo_settings(struct repository *r)
-+{
-+	if (r->settings)
-+		return;
-+
-+	r->settings = xmalloc(sizeof(*r->settings));
-+
-+	/* Defaults */
-+	r->settings->core_commit_graph = -1;
-+	r->settings->gc_write_commit_graph = -1;
-+
-+	repo_config(r, git_repo_config, r->settings);
-+}
+ 	if (!strcmp(key, "index.version")) {
+ 		rs->index_version = git_config_int(key, value);
+ 		return 0;
+@@ -44,6 +51,7 @@ void prepare_repo_settings(struct repository *r)
+ 	/* Defaults */
+ 	r->settings->core_commit_graph = -1;
+ 	r->settings->gc_write_commit_graph = -1;
++	r->settings->pack_use_sparse = -1;
+ 	r->settings->index_version = -1;
+ 
+ 	repo_config(r, git_repo_config, r->settings);
 diff --git a/repo-settings.h b/repo-settings.h
-new file mode 100644
-index 0000000000..7d44627bf0
---- /dev/null
+index b752dfe8b4..1151c2193a 100644
+--- a/repo-settings.h
 +++ b/repo-settings.h
-@@ -0,0 +1,13 @@
-+#ifndef REPO_SETTINGS_H
-+#define REPO_SETTINGS_H
-+
-+struct repo_settings {
-+	int core_commit_graph;
-+	int gc_write_commit_graph;
-+};
-+
-+struct repository;
-+
-+void prepare_repo_settings(struct repository *r);
-+
-+#endif /* REPO_SETTINGS_H */
-diff --git a/repository.h b/repository.h
-index 4fb6a5885f..352afc9cd8 100644
---- a/repository.h
-+++ b/repository.h
 @@ -4,6 +4,7 @@
- #include "path.h"
+ struct repo_settings {
+ 	int core_commit_graph;
+ 	int gc_write_commit_graph;
++	int pack_use_sparse;
+ 	int index_version;
+ };
  
- struct config_set;
-+struct repo_settings;
- struct git_hash_algo;
- struct index_state;
- struct lock_file;
-@@ -72,6 +73,8 @@ struct repository {
- 	 */
- 	char *submodule_prefix;
- 
-+	struct repo_settings *settings;
-+
- 	/* Subsystems */
- 	/*
- 	 * Repository's config which contains key-value pairs from the usual
 -- 
 gitgitgadget
-
