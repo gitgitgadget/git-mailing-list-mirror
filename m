@@ -7,61 +7,63 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B38A1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 12:53:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 491851F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 12:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727149AbfGAMxk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 08:53:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55828 "HELO cloud.peff.net"
+        id S1727645AbfGAM7s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 08:59:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55862 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726329AbfGAMxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 08:53:40 -0400
-Received: (qmail 25963 invoked by uid 109); 1 Jul 2019 12:53:39 -0000
+        id S1727306AbfGAM7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 08:59:48 -0400
+Received: (qmail 26000 invoked by uid 109); 1 Jul 2019 12:59:47 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 01 Jul 2019 12:53:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 01 Jul 2019 12:59:47 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4095 invoked by uid 111); 1 Jul 2019 12:54:32 -0000
+Received: (qmail 4187 invoked by uid 111); 1 Jul 2019 13:00:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 01 Jul 2019 08:54:32 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 01 Jul 2019 09:00:40 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jul 2019 08:53:37 -0400
-Date:   Mon, 1 Jul 2019 08:53:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jul 2019 08:59:46 -0400
+Date:   Mon, 1 Jul 2019 08:59:46 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
-Message-ID: <20190701125337.GA4704@sigill.intra.peff.net>
-References: <pull.261.git.gitgitgadget@gmail.com>
- <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
- <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com>
- <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
- <20190630222537.GA21696@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips
+ are valid
+Message-ID: <20190701125945.GB4704@sigill.intra.peff.net>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+ <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
+ <20190629074348.GA5080@sigill.intra.peff.net>
+ <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 01, 2019 at 02:11:43PM +0200, Johannes Schindelin wrote:
+On Mon, Jul 01, 2019 at 08:25:09AM -0400, Derrick Stolee wrote:
 
-> Or we stop introducing new Perl calls, and use the perfectly fine
-> `test-tool path-utils file-size` command:
+> > I'm not sure what you have in mind, exactly. If you are asking whether
+> > there are more places that alternate refs could be used, I can't think
+> > of any. If you are asking whether this is in the wrong place, no, I
+> > think it's the right place. :)
 > 
-> https://github.com/git/git/blob/v2.22.0/t/helper/test-path-utils.c#L302-L312
+> Just double-checking that it is appropriate for revision.c to take
+> dependence on transport.h instead of moving the alternate ref stuff
+> into a different header file. I trust your opinion.
 
-Ah, thanks, I missed that we had already added it. Certainly that seems
-like the right solution then.
+Ah, I see. I misunderstood you before.
+
+Yes, this is weakening the ties of the feature to the transport code.
+Traditionally transport-oriented code was the only user, but it also
+used the upload-pack transport under the hood to access the alternate
+(that was changed a while ago to for-each-ref for speed).
+
+I don't think there's any functional difference in having it there, but
+it could be moved to live alongside foreach_alt_odb() in sha1-file.c.
 
 -Peff
