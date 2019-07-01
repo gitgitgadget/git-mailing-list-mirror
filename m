@@ -2,99 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52CBA1F461
-	for <e@80x24.org>; Sun, 30 Jun 2019 22:39:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDD611F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 00:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727136AbfF3Wjx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Jun 2019 18:39:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55518 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727131AbfF3Wjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jun 2019 18:39:53 -0400
-Received: (qmail 24222 invoked by uid 109); 30 Jun 2019 22:39:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 30 Jun 2019 22:39:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32718 invoked by uid 111); 30 Jun 2019 22:40:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 30 Jun 2019 18:40:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Jun 2019 18:39:51 -0400
-Date:   Sun, 30 Jun 2019 18:39:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
-Message-ID: <20190630223951.GB21696@sigill.intra.peff.net>
-References: <20190630051816.8814-1-eantoranz@gmail.com>
- <20190630065358.GB31264@sigill.intra.peff.net>
- <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com>
+        id S1726954AbfGAAbI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Jun 2019 20:31:08 -0400
+Received: from mail-io1-f47.google.com ([209.85.166.47]:34875 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbfGAAbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jun 2019 20:31:08 -0400
+Received: by mail-io1-f47.google.com with SMTP id m24so24826753ioo.2
+        for <git@vger.kernel.org>; Sun, 30 Jun 2019 17:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ACFHeK5LTsJF5TqcH6+HxzHNAod41+VgQhi13LU/wxU=;
+        b=SmKxRhmE+1q819tvEQKNgt4Sgb/rhjm7OfqB7FvQzWtqipdmMZii8G+dCCOpLo1v4m
+         HZuwRvGSWx5DbFQRzgfDIxwI2GVRq9wRXZlOw8segttgSaSaKNfJljDa8cBJYQD6wT3a
+         UPEFCXbIP8w9OcUQxeI/d4QEej0e5EzMIVAjPAA+Ok7lUeWQ67wGUl23OsANBX9ue+zQ
+         g6XBD/ZbZeBFGnSd6PkUtbcPxXhETJpI8EYKhDQh9b3/zFfxx1P696+YZ1tI3RJ/Zdzf
+         3DGUdvCmXyrFrYQH2cA6HWGuwhLZOHFhDZAAbYqRGjMTdyFa561AKp2uLF0gag23Aetw
+         kogg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ACFHeK5LTsJF5TqcH6+HxzHNAod41+VgQhi13LU/wxU=;
+        b=Os1tvg5wLX/ZaqeyIGqn1ZHKIKZaM0rOrE+B2l9xtu0bCikr/x62dkHcSSg80D6d08
+         y39sVFbl48vi7GGAKvG7pZvQQ/FiZHqynR+QHfLPfdqLZrIGkYFfTevmSCCTkAnpSGSW
+         XFNNDrkHBZIQ82XU0bKeaxlozma8YjiB0pvXz6OsZz8NDDdOG1vJV1PK54E+tkQMYx7s
+         boZjOU67HQrNRFr8Fs6Jerl0Ru7Pyf+TokK1on45osJYYiUlXSaVy3nCEIyDMNs14jxD
+         6xMvWQd2YTFReUffjVfl7H70dSOOvWl5/wzMKubtvAeJwE920JHpKlNGtnbS+fzgQCCu
+         UvEA==
+X-Gm-Message-State: APjAAAXXjTwbHQ2guqFePt5LuXQGWMQVU79o0RcVN3uUzVX2xqhyFn6q
+        ea20uTXJlMsq63HlhVVnnZWEof0vqsR3BpNkOo8=
+X-Google-Smtp-Source: APXvYqzR0t1aDxqB2K2tj9780iDlUkgPEZDi0ScRZEPNGQYC4Er4muTKwDsa+TAw7fkraXt3QdgXlTDLYne+9vUY948=
+X-Received: by 2002:a5d:8890:: with SMTP id d16mr6454577ioo.274.1561941067098;
+ Sun, 30 Jun 2019 17:31:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOc6etYMzOpEDs1GpLChAEhp2SbZcKjO82S=qm4P-t6SkUEWcw@mail.gmail.com>
+References: <8C0042D8869AEA4AA334B49AFBBCEF820243C01B6A@TUT-EX01-PV.KSTG.corp>
+ <20190626084139.30246-1-pclouds@gmail.com> <86a7dz4e06.fsf@gmail.com>
+In-Reply-To: <86a7dz4e06.fsf@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 1 Jul 2019 07:30:40 +0700
+Message-ID: <CACsJy8AQ=kiG4jH5WSujefoCQ2yCG4=dV7UUdVh-Gextoa_T7A@mail.gmail.com>
+Subject: Re: [PATCH/RFC] get_oid: new extended SHA-1 syntax to control
+ resolution process
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Kyle Meyer <kyle@kyleam.com>,
+        "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 30, 2019 at 09:09:31AM -0600, Edmundo Carmona Antoranz wrote:
-
-> >   git merge --squash feature
+On Sun, Jun 30, 2019 at 4:30 PM Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> Bikeshed painting ahead.
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+> [...]
+> > The problem is we try every possible way to resolve a rev. Let's have
+> > some annotation to express that we only want to resolve a rev in a
+> > certain way:
 > >
-> > I get the same merge that rebuash is doing (with R6 as the merge base,
-> > so we see F5 and R7 conflicting with each other). And then when I finish
-> > it with "git commit", the result is a linear strand with M3 at the tip
-> > (and its commit message is even auto-populated with information from the
-> > squashed commits).
-> 
-> From the point of view of the revisions that you produce in the end,
-> it's the same thing, but you are not rebasing/squashing your feature
-> branch, you are moving your upstream branch to where you want the
-> squashed/rebased branch to be. So, in fact you would need more steps,
-> something like (starting from your feature branch being checked out):
+> > - <hash>@{hash} only accepts a full hash or a short hash. If it's a
+> >   short hash, it cannot be ambiguous.
+> >
+> > - <ref>@{literal} only accepts full ref. No turning "master" into
+> >   "refs/heads/master".
+> >
+> > - <output>@{describe} interprets <output> as git-describe output
+> >   only, not an object name or a reference.
+> >
+> > This gives scripts much better control over get_oid(), which
+> > translates to rev-parse and a bunch other commands.
+> >
+> > PS. The new syntax can stack with existing ones. E.g. you could write
+> > refs/heads/master@{literal}@{yesterday} or <hash>@{hash}^{tree}.
+> > Perhaps I should allow these tags at the end too, so you can enforce a
+> > variable like "$REV"@{literal} where $REV could be even HEAD~123
+>
+> I think it would be better to use <hash>^{hash} instead of
+> <hash>@{hash}.
+>
+> The <ref-ish>@{<something>} is used currently for information that is
+> outside the DAG, like @{<date>}, @{<n>}, @{-<n>} uses information from
+> reflog, and @{upstream} and @{push} uses information from the config.
+>
+> On the other hand ^{<type>}, ^{/<search text>}, and the future
+> ^{<hashalgo>} all use DAG-only information.
 
-Ah, OK, that's what I was missing. I agree that "merge --squash" isn't
-quite what you want, then. It's sort of a "reverse squash": do the
-merge, but use the _other_ side as the parent of the new squash commit.
+I wasn't aware of ^{<hashalgo>}. hash-function-transition.txt is a bit
+light on the exact behavior, but maybe we can just define it like
+<hash>@{hash} in this thread (then we don't even need to introduce
+@{hash})?
 
-I wonder if it might be easier to implement as an option to git-merge.
-I noticed when I hit a conflict with rebuash that it emphatically told
-me not to use "git commit" once I had resolved everything. If this were
-just a special case of a merge, that might be a bit more seamless
-(though I imagine it might still require teaching git-commit about the
-feature, since it generally wants to mark HEAD as the parent).
+That is, if <hash>^{<hashalgo>} fails to find a matching object, the
+get_oid() result is "not found", there will be no further attempt to
+interpret the given revision in a different way (e.g. try to see if
+the same ref exists...). It also means <hash>^{<hashalgo>} will remain
+supported even after the sha-512 transition period.
 
-> I think it makes more sense in terms of development flow of feature
-> branches, if you know in the end you will give up a squashed branch:
+@{describe} might go  the same way as @{hash} (that is, becoming
+^{describe}). I think it's just a slightly different way to write
+hashes.
 
-Yeah, I agree it is a separate operation that by itself makes sense. I
-do wonder a little why you'd care about squashing on the branch. If
-you're eventually going to squash the whole thing anyway, you don't care
-about a messy history. So you can just continue to back-merge from
-master into the feature branch and build on top.
+> Though one could argue that refs information _is_ outside the DAG...
 
-But perhaps the squashed version is easier to work with for further
-modifications? I'm not sure how, though. Certainly in your example
-rewriting changes in F1 with "rebase --interactive" would be a pain. But
-I think the end-state of the tree after your rebuash is identical to
-what you'd get by just merging from master. So in either case, just
-building new work on top should be the same.
-
-> But, as you said, it's not like it's not possible to do it (with a
-> little more effort) with available tools like merge --squash
-
-Yeah, but I agree with you that just because it is possible to do
-something does not mean that it is not a good idea to make the workflow
-easier or safer.
-
-I'm still not quite sure of the greater workflow where having the
-rebuash-ed commit on the feature branch is more useful than just having
-a merge from master.
-
--Peff
+Refs info is outside DAG. But that's mostly for <ref>@{literal} and it
+allows something like <ref>@{literal}@{upstream}. But hash (or object
+name) is already used inside DAG (to link between commits, trees and
+blobs). Though one might still argue that's only true for full hash,
+not short ones.
+--=20
+Duy
