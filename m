@@ -2,94 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA3EC1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 16:39:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD6921F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 17:02:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729497AbfGAQjy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 12:39:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54984 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727702AbfGAQjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 12:39:53 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB68416746E;
-        Mon,  1 Jul 2019 12:39:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=QVl52fvXVdiR
-        mjpYpbAKwDJvy3s=; b=XiV/gXiujjUUnWKEeJQvLcI8LtW3VIEq5p6FywhCl/WB
-        At8/y2B+byKAeBlNL1zTP3eRIq3qMnWq5ocM7zwJ1O3Za603KXev7DFvRtVUKpOA
-        QDVmLqVZkkLASC1WEgsPBhn8D306am7p/aDdIv4yzfgku1iIzvXBspS4lTR2ny0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PCQP5O
-        GRGa3sfC8tUU1mIPqGzUnFKlLCORG0b0NH2zgbYdDQtvVVizDejN8HSUlC3dSOvG
-        9sDq0ofBAVhQJdo77pt1ps4rBIBdVkcrO1rnWluZ8zQZOBkUrO7piYI6aZB1rq/c
-        HmJxhof2ApIKBn/jahAK0X7XEE7NsX89DCkBI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2DD816746D;
-        Mon,  1 Jul 2019 12:39:50 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 32F9116746C;
-        Mon,  1 Jul 2019 12:39:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: ab/no-kwset, was Re: What's cooking in git.git (Jun 2019, #07; Fri, 28)
-References: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907011515150.44@tvgsbejvaqbjf.bet>
-Date:   Mon, 01 Jul 2019 09:39:48 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1907011515150.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 1 Jul 2019 15:16:26 +0200 (CEST)")
-Message-ID: <xmqqimsl7lpn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729821AbfGARCs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 13:02:48 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:43379 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728253AbfGARCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 13:02:48 -0400
+Received: by mail-yw1-f66.google.com with SMTP id t2so222230ywe.10
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 10:02:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xRM1nbW0oK7Lhk4U1SkZY2y+wOUMk40bo9e0p2rkrwk=;
+        b=V0IZYi/gIAsa7PAmgrLUuhcc2UghmJFgnRxqg38lByBl8jqVqSxTZOvD3YGVijzIKy
+         5uzcJXTsKUl1k9RhSbjXqyHonjZdkmTPpn94cpEloRmgyEP7RJYix76PIIqU9VvxYlCH
+         JsuHh0pBjuH26J6qylS/40gN25eLxyTCAJsQQzBPQ7CmnaWTb5WFL68K7+tkwqJRFlnm
+         F6IXsmkp7nKVe+WD011PGRGfhTY/vd6uAhS8hZw2cv00bA906aq8aJGv2TPJLT0zUplz
+         SKScF3Xwq0pwHmGMWKymH2EY+Z98pHUv5oedvw1gqSUWND3XEoUfZCfr+lnXgo+L1DJf
+         WRjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xRM1nbW0oK7Lhk4U1SkZY2y+wOUMk40bo9e0p2rkrwk=;
+        b=bvLMyqMJU13x0jNPNAfq/y0w4u35RFVbRRcKEFSyDPszvhWPys89b/1KGlTKnVxDxI
+         2YxP7iFF2qDItDdWGivU/Km16OhapI+kc3fd/LiebFtuw9vtOzy2IVDj7k2V/4T/kXnx
+         BuCZMdLd73/jEv1h1jff54Nzg9qaw5+7WKU7mqF5EhryDqhd/Cb3YM+Vh/rSJXxKps+I
+         JhO9uJIal1V/Tul2Rl5UcUoSUP4lczcfWNY6DzUZuLfj4u14KsRrA3c+P0k3z9Md23MI
+         CSee/9Qy1RiovcMN4O+Rz31UUnaJEA36wbtZhz3WNGmEK5uQpBenDylkOKOcz9XNthTS
+         Dwfw==
+X-Gm-Message-State: APjAAAVg9p9JPmNQ8L5FV580WfZi8Vb5gDFpUTP/MxQ5X7UfAoyoa3om
+        NYl3R7zFCdHE1t6d2Z1+lHuYpQ==
+X-Google-Smtp-Source: APXvYqxRltmM+DoTiEZAHwxluUHe6RDSDBwvfLz7SMjB6YV/zKN/4lpLCEFYS4U7wArVP3EQi9/VWQ==
+X-Received: by 2002:a81:1f87:: with SMTP id f129mr15531141ywf.135.1562000566890;
+        Mon, 01 Jul 2019 10:02:46 -0700 (PDT)
+Received: from localhost ([2600:1700:6e90:7930:6841:343f:64f7:7ef1])
+        by smtp.gmail.com with ESMTPSA id u6sm2571031ywl.10.2019.07.01.10.02.45
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 01 Jul 2019 10:02:46 -0700 (PDT)
+Date:   Mon, 1 Jul 2019 12:02:45 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips
+ are valid
+Message-ID: <20190701170245.GA54693@TaylorsMBP5815.attlocal.net>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+ <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
+ <20190629074348.GA5080@sigill.intra.peff.net>
+ <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
+ <20190701125945.GB4704@sigill.intra.peff.net>
+ <20190701131713.GA25349@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D83BF33E-9C1E-11E9-AB19-72EEE64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20190701131713.GA25349@sigill.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Peff,
 
-> Hi Junio & =C3=86var,
+On Mon, Jul 01, 2019 at 09:17:13AM -0400, Jeff King wrote:
+> On Mon, Jul 01, 2019 at 08:59:45AM -0400, Jeff King wrote:
 >
-> On Fri, 28 Jun 2019, Junio C Hamano wrote:
+> > Yes, this is weakening the ties of the feature to the transport code.
+> > Traditionally transport-oriented code was the only user, but it also
+> > used the upload-pack transport under the hood to access the alternate
+> > (that was changed a while ago to for-each-ref for speed).
+> >
+> > I don't think there's any functional difference in having it there, but
+> > it could be moved to live alongside foreach_alt_odb() in sha1-file.c.
 >
->> * ab/no-kwset (2019-06-28) 9 commits
->>  - grep: use PCRE v2 for optimized fixed-string search
->>  - grep: remove the kwset optimization
->>  - grep: drop support for \0 in --fixed-strings <pattern>
->>  - grep: make the behavior for NUL-byte in patterns sane
->>  - grep tests: move binary pattern tests into their own file
->>  - grep tests: move "grep binary" alongside the rest
->>  - grep: inline the return value of a function call used only once
->>  - grep: don't use PCRE2?_UTF8 with "log --encoding=3D<non-utf8>"
->>  - log tests: test regex backends in "--encode=3D<enc>" tests
->>
->>  Retire use of kwset library, which is an optimization for looking
->>  for fixed strings, with use of pcre2 JIT.
->>
->>  Will merge to 'next'.
+> Looks like this hasn't quite hit 'next' yet, so perhaps we can
+> reorganize it as a preparatory patch.
 >
-> There is still a test failure that I am not sure how =C3=86var wants to
-> address:
+>   [1/2]: object-store.h: move for_each_alternate_ref() from transport.h
+>   [2/2]: check_everything_connected: assume alternate ref tips are valid
 >
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11535&v=
-iew=3Dms.vss-test-web.build-test-results-tab
+>  Documentation/rev-list-options.txt |  8 +++
+>  builtin/receive-pack.c             |  1 -
+>  connected.c                        |  1 +
+>  object-store.h                     |  2 +
+>  revision.c                         | 29 +++++++++
+>  sha1-file.c                        | 97 ++++++++++++++++++++++++++++++
+>  t/perf/p5600-clone-reference.sh    | 27 +++++++++
+>  t/t5618-alternate-refs.sh          | 60 ++++++++++++++++++
+>  transport.c                        | 97 ------------------------------
+>  transport.h                        |  2 -
+>  10 files changed, 224 insertions(+), 100 deletions(-)
+>  create mode 100755 t/perf/p5600-clone-reference.sh
+>  create mode 100755 t/t5618-alternate-refs.sh
 
-Thanks for a quick response to stop me.
+This looks good to me, too (and matches my recollection from our prior
+off-list review against GitHub's fork).
 
-As this is a mere swapping-an-optimization-with-yet-another-one, I
-do not think we are in a hurry to have it graduate.
+One thing that I didn't catch in my initial review that I am seeing now
+is the ".alternate" marker. Why did you choose this? I was thinking that
+".have" would make more sense since it's consistent with what's shown in
+the ref advertisement, but I think that actually ".alternate" is a
+_better_ choice: the two really do refer to different things.
 
+Either way, I don't think that it matters much: this series is already
+on 'next' and I think that either is fine (especially since ".have"
+refers to a nameless ref and ".alternate" refers to a nameless
+pseudo-remote).
+
+> -Peff
+
+Thanks,
+Taylor
