@@ -2,145 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 581541F4B6
-	for <e@80x24.org>; Mon,  1 Jul 2019 13:12:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 639271F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 13:16:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729086AbfGANMo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 09:12:44 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:41647 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728474AbfGANLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 09:11:54 -0400
-Received: by mail-ed1-f46.google.com with SMTP id p15so23430694eds.8
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 06:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=MOFIuzVUEWDvxwACbnEAaAdJ0v4d0KiO9ZgPlfd0bx8=;
-        b=OO8Cfun/tPF5rBwDEJjGiIpPw42SXiF1ENqgkWZgzRipSa+UC9t6wb0k8imq8nz0nV
-         N2dTx1YpJ1k6XEnDDGHa1ux1h2ZuDjClAPT8wqkAV+HlXTufiarUrNwqMunQojhY6mqe
-         UNaKmGbLoI2DAYQET2WS88zxkOCte1bHFqAah7YLNBFPYw4zIKiAuuEZFBFdXT58rOiW
-         uzXnItKn2U72lmScz/MYSk2lWgWG/xTGnfKAbk8zpZvb9jyKkN/mkoRQXrsFjoOH1/+E
-         NzFjoqiekBPPkoBxbu6Lcmiul5oixhCd9o0JjFE6om5pQWtSzCIyACgtrrizF8zsJH0L
-         g3qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MOFIuzVUEWDvxwACbnEAaAdJ0v4d0KiO9ZgPlfd0bx8=;
-        b=F7QV79DEnQLgpVYjmJ+y0NT521hXVGYvz9fWkBycfSdbySlU91XfMbihWRa+eGbLlg
-         tvhyuJnQ93jD9IfO+PPFVkmUEv4dg0Jq5sRpbSwe17goQ4wtcuZDvpmKg5+nAIuVIZtt
-         N4YlMZy8ohSbDIAsOQcGDkbrH780qknhqaPK1gJTDsYJGvMFfMt//0HTEhXuJR5YwKvQ
-         QkQzQKgl/2OkUBq03qN0dOG8q86UtCg21fXwNfr+PbAzruM3PhTbUh4T21k733HJ8a9T
-         xchp4D1gAZ3EjZ7w7UFJ5plS65hTopd8SuJkW2LO+jf9p6OhOLbJN6pzCe7z5abwm8Vm
-         Bk4Q==
-X-Gm-Message-State: APjAAAWYekJohmksnuEVX853UQbxKuXg5r283NxkXNjXFNAcwtN2/18U
-        P/gGSGJRL5/Z2MD2waY2HT5rbc+2
-X-Google-Smtp-Source: APXvYqzr/Z56d8GegSMyWRVN47Fxlm2sDZVzgBhayJnCjC9oVKe4O/N2yklu9HVJLDp4nHMHN/bUAg==
-X-Received: by 2002:a17:906:470a:: with SMTP id y10mr22780161ejq.115.1561986712534;
-        Mon, 01 Jul 2019 06:11:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o22sm3677705edc.37.2019.07.01.06.11.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jul 2019 06:11:52 -0700 (PDT)
-Date:   Mon, 01 Jul 2019 06:11:52 -0700 (PDT)
-X-Google-Original-Date: Mon, 01 Jul 2019 13:11:50 GMT
-Message-Id: <52501623f6b47447ce5da283ec11e378413899b7.1561986710.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.276.git.gitgitgadget@gmail.com>
-References: <pull.276.git.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t3420: remove progress lines before comparing output
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728518AbfGANQI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 09:16:08 -0400
+Received: from mout.gmx.net ([212.227.17.22]:35929 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726329AbfGANQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 09:16:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1561986961;
+        bh=o1Dna7/DhpCjtcc2APEAKUWje+STX7Oe/TmDQSgXQ6Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PYvmmyWLAz4SxpzZaSCYzi0gK0tdGhhPcqdTbXJBZMwjo5D5SK5nYHTwbtBdy8yuo
+         fh1BhJg1Ue0mMklHPCN1JcMLcyl+Q49IxdWNlnVjfeRQ73FMxxO7QKdJWrHrdloyjq
+         PFHrm6Hm79xxn/GaxkKnUknIXj4IKV0DsiJ04N4Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1hnCpK1hZP-00FFK4; Mon, 01
+ Jul 2019 15:16:01 +0200
+Date:   Mon, 1 Jul 2019 15:16:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org
+Subject: ab/no-kwset, was Re: What's cooking in git.git (Jun 2019, #07; Fri,
+ 28)
+In-Reply-To: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907011515150.44@tvgsbejvaqbjf.bet>
+References: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: multipart/mixed; boundary="8323328-286019804-1561986988=:44"
+X-Provags-ID: V03:K1:EOE9YgTB9vWQLcsCGfOxry0OPAsS2fljdyz6ayavu7awDVN1lyp
+ fEiA4U/XhqZ/feglbBHALeU6xMALn+U82Rki0s1bzr9nU7A4R7I1ufL63x670fxli+ifKLT
+ bEVoPUcDT8cXlNWbhUkWauCufB2LX3o3JQ8G8kAELv/nej2nfOGC2pJPryMh+tjuhSQMY+t
+ Zb7ZRMG7eJ2rdAiwPcIGg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qNQek9YOt8A=:okM4B+cHpUuLIrJTVsuuVN
+ zDCKp0A/4wgN0ldK61q0TG00Dfj/HJ9sD9Qcx/Z2y6bYHDN1PFULycddfx4fp3RbYh4ku6GPP
+ Cp1QYLm11bC8LxJ+ly4CbF5DrJL63XXisj+2K20v4sibSd7orL0lHIn/HyxOQ4MsLQlmwRuVI
+ mUZi4R8FpfmVW7lUdmhd8BG5QVKjS5bsfJ2fy6KkJnFJ7Y1g8EnfDa+KRyy/WnANYVe2/6Z2w
+ gzadB/dkL6kKnCF+wc7po54QyCRlfilBfW/R7rB7wtiJ1IgJP1mHXAf4xfLp5IRzivIK/QIhK
+ doUeDg9Pn8XNdfuKZ0ffrgZ+vhTFFo6saMwMOn7E2vI3pVzSgfMdonFnXdQI6+tOpf2bqVMNl
+ hE8MdvIHWIcKE9gQkK3MdkvsZyCIHfZiTEjlq02sP6TC7g/kiFA7OcE9It+7mQBHRORAABmSu
+ FfiNJnLhDvu1V/HhrxAoWNC3fYEsQrEQA0kiERuIgQjlB56H+edK7WKQG+2/wola/5i4EGyfl
+ VH+ZlNcpBpmSwR/rgsjeRx+Z7xRsKaf2fChbEcvHzGW7uFwA6IbD+ebJcrv9nuBcG5zOgkyLw
+ +u3IlrbwdphsSs8zYUkS9cl7PzMecvXEf0S5v1r7l767uj+cB60uZ7Ix1b4URobFPHNvkivF5
+ dfZ2eXwytTnMbwUE3vAXUecfLuNbXI9S1uWY7psWqBd6+xVRi0kzZb3/pGdkaQNqwlqtRnOAy
+ L1A7OUfyv3zdRTDlwCI24LwFoUVdsiiF0USHQNDP5/9BwoooXgPqRLv3JJFclKJbhU+bUuZi7
+ xG3gVVN7EewUrzWAX+qWersUWhEDylASWtOWlQKNUJz5+nBB+jcrpQ3eUUzsC7AQ+faddGbB5
+ TZVAcyVmffta2fLZM268OQ9qW6B9PmnfPFXx4tvtzynFCtgZEEZk+GEdtqEE4aNp30MUkWZpS
+ 9tHEgzpu/I6IecQSwlOJvCCtMF81h24h8JW/fvu86y2hxGvE3l8TKMJd0vpTp3d6eNJot/d7f
+ ATywTgOowEIDggG+0DKcF9SKNxS4w1BwY0jAS7CGcHM+Hvo6Ph3Mn7TwvDkHTuXtS20/WOJZL
+ EoNrtzfB7aX5gZQHAswivDVzFHEdSxP+kPU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Some of the tests check the output of rebase is what we expect. These
-were added after a regression that added unwanted stash output when
-using --autostash. They are useful as they prevent unintended changes to
-the output of the various rebase commands. However they also include all
-the progress output which is less useful as it only tests what would be
-written to a dumb terminal which is not the normal use case. The recent
-changes to fix clearing the line when printing progress necessarily
-meant making an ugly change to these tests. Address this my removing the
-progress output before comparing it to the expected output. We do this
-by removing everything before the final "\r" on each line as we don't
-care about the progress indicator, but we do care about what is printed
-immediately after it.
+--8323328-286019804-1561986988=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3420-rebase-autostash.sh | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+Hi Junio & =C3=86var,
 
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 9186e90127..0454018584 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -48,8 +48,8 @@ create_expected_success_interactive () {
- 	q_to_cr >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
- 	HEAD is now at $(git rev-parse --short feature-branch) third commit
--	Rebasing (1/2)QRebasing (2/2)QApplied autostash.
--	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
-+	Applied autostash.
-+	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
-@@ -67,13 +67,13 @@ create_expected_failure_am () {
- }
- 
- create_expected_failure_interactive () {
--	q_to_cr >expected <<-EOF
-+	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
- 	HEAD is now at $(git rev-parse --short feature-branch) third commit
--	Rebasing (1/2)QRebasing (2/2)QApplying autostash resulted in conflicts.
-+	Applying autostash resulted in conflicts.
- 	Your changes are safe in the stash.
- 	You can run "git stash pop" or "git stash drop" at any time.
--	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
-+	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
-@@ -109,7 +109,8 @@ testrebase () {
- 			suffix=interactive
- 		fi &&
- 		create_expected_success_$suffix &&
--		test_i18ncmp expected actual
-+		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
-+		test_i18ncmp expected actual2
- 	'
- 
- 	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
-@@ -209,7 +210,8 @@ testrebase () {
- 			suffix=interactive
- 		fi &&
- 		create_expected_failure_$suffix &&
--		test_i18ncmp expected actual
-+		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
-+		test_i18ncmp expected actual2
- 	'
- }
- 
--- 
-gitgitgadget
+On Fri, 28 Jun 2019, Junio C Hamano wrote:
+
+> * ab/no-kwset (2019-06-28) 9 commits
+>  - grep: use PCRE v2 for optimized fixed-string search
+>  - grep: remove the kwset optimization
+>  - grep: drop support for \0 in --fixed-strings <pattern>
+>  - grep: make the behavior for NUL-byte in patterns sane
+>  - grep tests: move binary pattern tests into their own file
+>  - grep tests: move "grep binary" alongside the rest
+>  - grep: inline the return value of a function call used only once
+>  - grep: don't use PCRE2?_UTF8 with "log --encoding=3D<non-utf8>"
+>  - log tests: test regex backends in "--encode=3D<enc>" tests
+>
+>  Retire use of kwset library, which is an optimization for looking
+>  for fixed strings, with use of pcre2 JIT.
+>
+>  Will merge to 'next'.
+
+There is still a test failure that I am not sure how =C3=86var wants to
+address:
+
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11535&view=
+=3Dms.vss-test-web.build-test-results-tab
+
+Thanks,
+Dscho
+
+--8323328-286019804-1561986988=:44--
