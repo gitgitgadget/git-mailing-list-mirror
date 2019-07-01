@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7668D1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF9401F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 20:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbfGAUUa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 16:20:30 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:51357 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfGAUUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 16:20:30 -0400
-Received: by mail-qk1-f202.google.com with SMTP id s25so14613479qkj.18
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:29 -0700 (PDT)
+        id S1726859AbfGAUUd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 16:20:33 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:54632 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfGAUUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 16:20:32 -0400
+Received: by mail-qt1-f201.google.com with SMTP id r57so14365365qtj.21
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 13:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=jSQvFaYx8OknHgkQjx11dVbZwuTNKQ0OGKIEhOezOSc=;
-        b=tcu32lbgfhr/V4kBI3vJYVa1WX42CwaqjjXPb49oDSYoufjlARA2XW9J/AYg/eSlM2
-         H3Hz4e/EaZhUsMRdPt5OKCKi34Dzi1SEWVEL6F47boAxbAtgcOy3c09AAScTF2KniaAW
-         ZbF9sgfWx7qyjxZA/BJXUW8vXf3tFUn8qAE3c9mFirv03FqIzmBKRDuG8TYtZ/OgI5Bh
-         SmBMNaLYjnhJobO0KC/81ZZyemgRuhNL9FRQgxJwgbQ7KbqJMjEsarszbNr/LSR2whXq
-         kaeS38hWwMkIFFa+zKpTmvarAE8yQmhw2iG/MGCIbT7H/CepMMIR5O+L9IuB5TvjMcVC
-         TkfQ==
+        bh=c8xROOoy7OcOqiVdstCH/iWg1ZGb/TGPkK7Dlp8iY2w=;
+        b=I1GNsZHcDfbO0G6dymYNnHv1hn1ez8BhWfnEEICivIrzWLf8gg8ZrFCYWloJDPn506
+         MoiJxFhg9nC9sJJHSM83Eq1vapW21FTa0Pe4Acuwt581Lwk9r3DIhu/STqS4dX4ckQld
+         W2XR2cCj8Z7TK5t6W6Nq2+j6rPOgrT/ec/mAF7y65n7zC2KKU4Nn6+tZZ/wypLnT9k5a
+         9YGl3/tZmLR2pbYYtZuUiTT4DNuLPIwQWaWRhF16rKrdF8bQRCBwbcNiwEuXHOQ57eFk
+         3XeYIP1Sw3B+S8tM5AKLLKuyEfWxsLdraDDy7y2nYUWqSvvz+GoeJjBwMCBlWdAx6+u2
+         ZX5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=jSQvFaYx8OknHgkQjx11dVbZwuTNKQ0OGKIEhOezOSc=;
-        b=CZF1zOIKoeihhhbLGsmEHDi0a7Ee3dCRea43UEnKXH1felL7Mn0h12hHcixJ21MT6G
-         ix9yTI6Yw67DhNMPe8WN9ZA26WekgroZdZ3TDB58IHTUL9XeHq/VtItPwT3bQIoLnlGo
-         pSb5xXdzwB2jveNYrHJsj2I82RWgkUVS2xguklPw47pelesSuWKNL0x1l7b/+W1FPPtg
-         fCJDjl1Bk9QYSrO+zPfisHAgloge2KfcWOKciYO097y2FWbOpsOSM0DnBgeLdl03JYNN
-         tmlkJXgP8CKFOGIgGcvpy9dwo8SjCzwjP8x77ARHUwJ9MBHu5zOVego3sjRaVP9CrPaK
-         6y6A==
-X-Gm-Message-State: APjAAAXjYPqDl1Lx7uORnVll8iM++6hgSv9EhYgg3u3HjybLoMrUn8iX
-        A4khL+sLq+VpEaDrhIwgdLEvC3HaI8hJTCU+EGkMWFsLCTG8eNa0JDP4JElobP3SFrFQwhVeh0C
-        E9ASPAUpArRRQTOsICJQNzPbtJdY3uyc6JzpqdQCWG2gss6yxa8beDpZjojsM5vzAMw14A100qA
+        bh=c8xROOoy7OcOqiVdstCH/iWg1ZGb/TGPkK7Dlp8iY2w=;
+        b=C6LqG5G/0/imWZ/D4Ul8cjQt0pAQoQ/MPTSf4866jv4R/DHcE+79yqkBSosjqblt0V
+         L5ayUMVVezMm0RRDQtW+RLGrTeobcH8t3AEKXAv7k9N77RnLxBxt1qLvmkMu2l0mqwdy
+         ZQLAyEMDAJO0dFgjqaGEK6KpO8EGNZneQxwIiiX0YaNfYMsb/NnhkWkW16VvoGcmX3Ja
+         WEy7fA6axVYNvswJNPmbu4T5TFtMqIJVDa45wjBtvUtqbB5EHJMVM6/UEcHfthwv0WHG
+         xdNrPMC5VUN3DeOaMBg+Pao2h1d3uT/ZHnLOQa9WC1Ge1iR82EMC0j0xccdIofrXoKGQ
+         oxkw==
+X-Gm-Message-State: APjAAAWH1MVsZEVyktefv9FQ5+D1Q/Wc5c2NxFJN3KbIX+8AAA7lfS9y
+        HL5FHv7vqDlOax4izlCQqPKrxlBxcoXDmlUSI8erxHmdbQVcJIT7vk37qI9u94yrOB7OieV3WwM
+        btesG/KL7oBvjO66+xcCkWJGZqEnSszyHoV1te59EWp82pxYa8DuMYPJVL3ffSnLsqQUU8672MA
         ==
-X-Google-Smtp-Source: APXvYqx7DwHpPTRbgX31B1k0sEHUL987WqrHykXif3uEoKBPdReguVa0CRecElvOs92vxM9D5/mX7UM6wShztCl/TSU=
-X-Received: by 2002:a37:c45:: with SMTP id 66mr22014245qkm.31.1562012429511;
- Mon, 01 Jul 2019 13:20:29 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 13:20:04 -0700
+X-Google-Smtp-Source: APXvYqyL+sIxqcaufTqkTHrI3tPujMAG4MReEQmhmSOvDFtAgdZg23gP5YE3F+PpaZarlPsjjUX2U1zdrttZTmD+kc8=
+X-Received: by 2002:ac8:156:: with SMTP id f22mr21774808qtg.58.1562012431791;
+ Mon, 01 Jul 2019 13:20:31 -0700 (PDT)
+Date:   Mon,  1 Jul 2019 13:20:05 -0700
 In-Reply-To: <20190701202014.34480-1-emilyshaffer@google.com>
-Message-Id: <20190701202014.34480-4-emilyshaffer@google.com>
+Message-Id: <20190701202014.34480-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [RFC PATCH v3 03/13] walken: add placeholder to initialize defaults
+Subject: [RFC PATCH v3 04/13] walken: add handler to git_config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,45 +64,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eventually, we will want a good place to initialize default variables
-for use during our revision walk(s) in `git walken`. For now, there's
-nothing to do here, but let's add the scaffolding so that it's easy to
-tell where to put the setup later on.
+For now, we have no configuration options we want to set up for
+ourselves, but in the future we may need to. At the very least, we
+should invoke git_default_config() for each config option; we will do so
+inside of a skeleton config callback so that we know where to add
+configuration handling later on when we need it.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- builtin/walken.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ builtin/walken.c | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/walken.c b/builtin/walken.c
-index dd55f3b350..19657b5e31 100644
+index 19657b5e31..e53c42ea18 100644
 --- a/builtin/walken.c
 +++ b/builtin/walken.c
-@@ -8,6 +8,19 @@
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "builtin.h"
++#include "config.h"
  #include "parse-options.h"
  
  
+@@ -16,11 +17,36 @@
+ static void init_walken_defaults(void)
+ {
+ 	/*
+-	 * We don't actually need the same components `git log` does; leave this
+-	 * empty for now.
++	 * We don't use any other components or have settings to initialize, so
++	 * leave this empty.
+ 	 */
+ }
+ 
 +/*
-+ * Within init_walken_defaults() we can call into other useful defaults to set
-+ * in the global scope or on the_repository. It's okay to borrow from other
-+ * functions which are doing something relatively similar to yours.
++ * This method will be called back by git_config(). It is used to gather values
++ * from the configuration files available to Git.
++ *
++ * Each time git_config() finds a configuration file entry, it calls this
++ * callback. Then, this function should compare it to entries which concern us,
++ * and make settings changes as necessary.
++ *
++ * If we are called with a config setting we care about, we should use one of
++ * the helpers which exist in config.h to pull out the value for ourselves, i.e.
++ * git_config_string(...) or git_config_bool(...).
++ *
++ * If we don't match anything, we should pass it along to another stakeholder
++ * who may otherwise care - in log's case, grep, gpg, and diff-ui. For our case,
++ * we'll ignore everybody else.
 + */
-+static void init_walken_defaults(void)
++static int git_walken_config(const char *var, const char *value, void *cb)
 +{
 +	/*
-+	 * We don't actually need the same components `git log` does; leave this
-+	 * empty for now.
++	 * For now, we don't have any custom configuration, so fall back on the
++	 * default config.
 +	 */
++	return git_default_config(var, value, cb);
 +}
 +
  int cmd_walken(int argc, const char **argv, const char *prefix)
  {
  	/*
-@@ -29,6 +42,8 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- 	 */
- 	argc = parse_options(argc, argv, prefix, options, walken_usage, 0);
+@@ -44,6 +70,8 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
  
-+	init_walken_defaults();
+ 	init_walken_defaults();
+ 
++	git_config(git_walken_config, NULL);
 +
  	/*
  	 * This line is "human-readable" and we are writing a plumbing command,
