@@ -2,268 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E45BE1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 13:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66B5C1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 13:23:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727852AbfGANST (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 09:18:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55968 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726329AbfGANSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 09:18:18 -0400
-Received: (qmail 26117 invoked by uid 109); 1 Jul 2019 13:18:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 01 Jul 2019 13:18:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4572 invoked by uid 111); 1 Jul 2019 13:19:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 01 Jul 2019 09:19:09 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Jul 2019 09:18:15 -0400
-Date:   Mon, 1 Jul 2019 09:18:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
+        id S1728433AbfGANXq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 09:23:46 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:41102 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727010AbfGANXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 09:23:46 -0400
+Received: by mail-qk1-f194.google.com with SMTP id c11so10907500qkk.8
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 06:23:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=r8e/RRY+a5gGf72wgUoIdFt0rbdwcPWbHOvwEEUq7b0=;
+        b=pCfnLO+U2P6AxVIX1RBJHUHqtExFlflxmNas/RwgRLgn/cgb8CkcAKunhIiD2xRFed
+         PsJbz8d6iDvxQULBL7/PH6rnGko5TOR59uI/rxJGY71p+3qa9V5RypQILTyJOVIr4AUl
+         cOgZgMppSmE1kqOi5iS+vP26kgdXKutsyBpl1szeNKM8sfr/HVPQHjNIJhq6HRN4KppC
+         Frw1UbiCczLo+AHFgPtooLSnAnpHNWcspH4EC5T9kb5m7Q6XUYuL2hEzDNxZ84KBYS5+
+         7pIBk73G1Hnzoyxfe9Z2E7167OiDfUgUlpDxi4C2O9nHU6ArHQ54eOeTAn4X94PW3IEw
+         kVCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=r8e/RRY+a5gGf72wgUoIdFt0rbdwcPWbHOvwEEUq7b0=;
+        b=nBi4JQ+q51YNe+/6hAqub1hkJdsjm7WZ5gAj0+WyN0IbXNud1KBdEP+0CPhW8FZiIH
+         Pg4p/i/W3Z8ajLuY1qn2VdWcZD3L8MRR+8X3DrUmhb6YK64IzSGNTG3u6yT+H8A1+b+f
+         9d5afNPGm3WjzBmFnE4Olh2GbG93jHAAvBeq8IX8uy+L+nGDMx2Ftgy0MpWngp8WJNy1
+         HkI16XBUqx3I8sGILIPTLlym4LGxg5qmslHiYSRzIMlV2BtuO9tozIZ5SAhGWMehwgIH
+         eM0twV9E+VjEBerELq9Zben3uu2XIgwjROcUzOeb5S+gJ9G0TWUJUh7eK1je83SNze+t
+         WYaA==
+X-Gm-Message-State: APjAAAUag1NQjMPHD39l0yNhQ6zut90PuxzMvW/9JLPtksu8GMQrbmQM
+        R0Noto6gknkKCh65SQapYpo=
+X-Google-Smtp-Source: APXvYqzArF3yIH9y4BeA/eR0iXFOSKl9q7WDsLMLZVTFVD0hIysQfENQFnzN4cI0DAX6SmUKDcKsCQ==
+X-Received: by 2002:ae9:c106:: with SMTP id z6mr21142397qki.285.1561987425186;
+        Mon, 01 Jul 2019 06:23:45 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8d39:716e:a6fa:35c4? ([2001:4898:a800:1012:3e6d:716e:a6fa:35c4])
+        by smtp.gmail.com with ESMTPSA id z8sm4626263qki.23.2019.07.01.06.23.44
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 06:23:44 -0700 (PDT)
+Subject: Re: [PATCH 1/2] object-store.h: move for_each_alternate_ref() from
+ transport.h
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 2/2] check_everything_connected: assume alternate ref tips
- are valid
-Message-ID: <20190701131815.GB2584@sigill.intra.peff.net>
 References: <20190701131713.GA25349@sigill.intra.peff.net>
+ <20190701131740.GA2584@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <877673cb-5b2b-6e65-9a03-a16de043990d@gmail.com>
+Date:   Mon, 1 Jul 2019 09:23:41 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
+In-Reply-To: <20190701131740.GA2584@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190701131713.GA25349@sigill.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we receive a remote ref update to sha1 "X", we want to check that
-we have all of the objects needed by "X". We can assume that our
-repository is not currently corrupted, and therefore if we have a ref
-pointing at "Y", we have all of its objects. So we can stop our
-traversal from "X" as soon as we hit "Y".
+On 7/1/2019 9:17 AM, Jeff King wrote:
+> There's nothing inherently transport-related about enumerating the
+> alternate ref tips. The code has lived in transport.[ch] because the
+> only use so far had been advertising available tips during transport.
+> But it could be used for more, and a future patch will teach rev-list to
+> access these refs.
+> 
+> Let's move it alongside the other alt-odb code, declaring it in
+> object-store.h with the implementation in sha1-file.c.
 
-If we make the same non-corruption assumption about any repositories we
-use to store alternates, then we can also use their ref tips to shorten
-the traversal.
+Thanks!
 
-This is especially useful when cloning with "--reference", as we
-otherwise do not have any local refs to check against, and have to
-traverse the whole history, even though the other side may have sent us
-few or no objects. Here are results for the included perf test (which
-shows off more or less the maximal savings, getting one new commit and
-sharing the whole history):
+> This lets us drop the inclusion of transport.h from receive-pack, which
+> perhaps shows how it was misplaced (though receive-pack is about
+> transporting objects, transport.h is mostly about the client side).
 
-Test                        HEAD^             HEAD
---------------------------------------------------------------------
-[on git.git]
-5600.3: clone --reference   2.94(2.86+0.08)   0.09(0.08+0.01) -96.9%
-[on linux.git]
-5600.3: clone --reference   45.74(45.34+0.41)   0.36(0.30+0.08) -99.2%
+That's an interesting de-coupling. Thanks for looking into reorganizing
+the code. This series looks good to me.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Identical to v1 except for dropping the transport.h include in
-revision.c.
-
- Documentation/rev-list-options.txt |  8 ++++
- connected.c                        |  1 +
- revision.c                         | 29 +++++++++++++++
- t/perf/p5600-clone-reference.sh    | 27 ++++++++++++++
- t/t5618-alternate-refs.sh          | 60 ++++++++++++++++++++++++++++++
- 5 files changed, 125 insertions(+)
- create mode 100755 t/perf/p5600-clone-reference.sh
- create mode 100755 t/t5618-alternate-refs.sh
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 71a1fcc093..90a2c027ea 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -182,6 +182,14 @@ explicitly.
- 	Pretend as if all objects mentioned by reflogs are listed on the
- 	command line as `<commit>`.
- 
-+--alternate-refs::
-+	Pretend as if all objects mentioned as ref tips of alternate
-+	repositories were listed on the command line. An alternate
-+	repository is any repository whose object directory is specified
-+	in `objects/info/alternates`.  The set of included objects may
-+	be modified by `core.alternateRefsCommand`, etc. See
-+	linkgit:git-config[1].
-+
- --single-worktree::
- 	By default, all working trees will be examined by the
- 	following options when there are more than one (see
-diff --git a/connected.c b/connected.c
-index 1ab481fed6..cd9b324afa 100644
---- a/connected.c
-+++ b/connected.c
-@@ -80,6 +80,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		argv_array_push(&rev_list.args, "--all");
- 	}
- 	argv_array_push(&rev_list.args, "--quiet");
-+	argv_array_push(&rev_list.args, "--alternate-refs");
- 	if (opt->progress)
- 		argv_array_pushf(&rev_list.args, "--progress=%s",
- 				 _("Checking connectivity"));
-diff --git a/revision.c b/revision.c
-index 621feb9df7..07412297f0 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1554,6 +1554,32 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
- 	free_worktrees(worktrees);
- }
- 
-+struct add_alternate_refs_data {
-+	struct rev_info *revs;
-+	unsigned int flags;
-+};
-+
-+static void add_one_alternate_ref(const struct object_id *oid,
-+				  void *vdata)
-+{
-+	const char *name = ".alternate";
-+	struct add_alternate_refs_data *data = vdata;
-+	struct object *obj;
-+
-+	obj = get_reference(data->revs, name, oid, data->flags);
-+	add_rev_cmdline(data->revs, obj, name, REV_CMD_REV, data->flags);
-+	add_pending_object(data->revs, obj, name);
-+}
-+
-+static void add_alternate_refs_to_pending(struct rev_info *revs,
-+					  unsigned int flags)
-+{
-+	struct add_alternate_refs_data data;
-+	data.revs = revs;
-+	data.flags = flags;
-+	for_each_alternate_ref(add_one_alternate_ref, &data);
-+}
-+
- static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
- 			    int exclude_parent)
- {
-@@ -1956,6 +1982,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	    !strcmp(arg, "--no-walk") || !strcmp(arg, "--do-walk") ||
- 	    !strcmp(arg, "--bisect") || starts_with(arg, "--glob=") ||
- 	    !strcmp(arg, "--indexed-objects") ||
-+	    !strcmp(arg, "--alternate-refs") ||
- 	    starts_with(arg, "--exclude=") ||
- 	    starts_with(arg, "--branches=") || starts_with(arg, "--tags=") ||
- 	    starts_with(arg, "--remotes=") || starts_with(arg, "--no-walk="))
-@@ -2442,6 +2469,8 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 		add_reflogs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--indexed-objects")) {
- 		add_index_objects_to_pending(revs, *flags);
-+	} else if (!strcmp(arg, "--alternate-refs")) {
-+		add_alternate_refs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--not")) {
- 		*flags ^= UNINTERESTING | BOTTOM;
- 	} else if (!strcmp(arg, "--no-walk")) {
-diff --git a/t/perf/p5600-clone-reference.sh b/t/perf/p5600-clone-reference.sh
-new file mode 100755
-index 0000000000..68fed66347
---- /dev/null
-+++ b/t/perf/p5600-clone-reference.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+
-+test_description='speed of clone --reference'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+test_expect_success 'create shareable repository' '
-+	git clone --bare . shared.git
-+'
-+
-+test_expect_success 'advance base repository' '
-+	# Do not use test_commit here; its test_tick will
-+	# use some ancient hard-coded date. The resulting clock
-+	# skew will cause pack-objects to traverse in a very
-+	# sub-optimal order, skewing the results.
-+	echo content >new-file-that-does-not-exist &&
-+	git add new-file-that-does-not-exist &&
-+	git commit -m "new commit"
-+'
-+
-+test_perf 'clone --reference' '
-+	rm -rf dst.git &&
-+	git clone --no-local --bare --reference shared.git . dst.git
-+'
-+
-+test_done
-diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
-new file mode 100755
-index 0000000000..3353216f09
---- /dev/null
-+++ b/t/t5618-alternate-refs.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='test handling of --alternate-refs traversal'
-+. ./test-lib.sh
-+
-+# Avoid test_commit because we want a specific and known set of refs:
-+#
-+#  base -- one
-+#      \      \
-+#       two -- merged
-+#
-+# where "one" and "two" are on separate refs, and "merged" is available only in
-+# the dependent child repository.
-+test_expect_success 'set up local refs' '
-+	git checkout -b one &&
-+	test_tick &&
-+	git commit --allow-empty -m base &&
-+	test_tick &&
-+	git commit --allow-empty -m one &&
-+	git checkout -b two HEAD^ &&
-+	test_tick &&
-+	git commit --allow-empty -m two
-+'
-+
-+# We'll enter the child repository after it's set up since that's where
-+# all of the subsequent tests will want to run (and it's easy to forget a
-+# "-C child" and get nonsense results).
-+test_expect_success 'set up shared clone' '
-+	git clone -s . child &&
-+	cd child &&
-+	git merge origin/one
-+'
-+
-+test_expect_success 'rev-list --alternate-refs' '
-+	git rev-list --remotes=origin >expect &&
-+	git rev-list --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rev-list --not --alternate-refs' '
-+	git rev-parse HEAD >expect &&
-+	git rev-list HEAD --not --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'limiting with alternateRefsPrefixes' '
-+	test_config core.alternateRefsPrefixes refs/heads/one &&
-+	git rev-list origin/one >expect &&
-+	git rev-list --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --source shows .alternate marker' '
-+	git log --oneline --source --remotes=origin >expect.orig &&
-+	sed "s/origin.* /.alternate /" <expect.orig >expect &&
-+	git log --oneline --source --alternate-refs >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.22.0.776.g16867c022c
+-Stolee
