@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 326B41F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 14:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A66901F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 14:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728084AbfGAOqH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 10:46:07 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:50112 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727714AbfGAOqG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 10:46:06 -0400
-Received: by mail-ua1-f73.google.com with SMTP id h37so2258152uad.16
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:46:06 -0700 (PDT)
+        id S1728202AbfGAOqJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 10:46:09 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:48086 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727714AbfGAOqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 10:46:09 -0400
+Received: by mail-pf1-f201.google.com with SMTP id f25so8911823pfk.14
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lY2g25qlH/7Gavjz5snKkuIJIxTc1qkxz3A0cDGgC5E=;
-        b=q0CutxMVDwcdy14NqWQn/e9QNpU+teoLx4fRa94ul867Gu/i2ehn/3QNsf7GRps2HK
-         rlmqspRHrIE8jl8vBbVxVcFSaAOqKXnM7sAqxS29hkCnhzBMjXtUmHseROso2El0iaQF
-         X/Yg5/2rAczmB6YJ5mxiI5+3w42xzPOlH4Vz+tq3QTDg/mgpJtqCeN4d4z49nmGTf9VY
-         DPRU3a83boD8e/JYrgrQ6S2U4fE133N63uvzTAG5Ct+haSCz7H49c8vqkACgWmc45G/b
-         jbJ9KTHmqK8k8iQt3ui7GO/gyggND02EWdnj+zssiz35gbLuTpBzAmfl/H0eKwOZ/Bgm
-         xS8A==
+        bh=0JhjSv/cDBl67LJ1rJqf4EGtcLtjCHcQTlMhWD7PD5s=;
+        b=Z1Vd7dr/QhxWq10LzZf26pay9WbN3pPRppvKzXT5d1h61rm2v2QjDc8OUfXX66KgCX
+         fpZ+pJrJIsuC8vAsaXgNQsQpfRlgJvzpKd/ESbwzTU0IOXMSMLwSsX+nfZ94mar7mUq6
+         zmwe/QPhz4vhedpLWOZ0fJ1iBlY6WJtMpwMfeDbag42pxLNBpXivmnWtwI9m+w53CEFM
+         bDkFPu/wQRrf9mekVr9rok/C6kQhcJxAuJunOl7+WvSR8qN4MUP0/iUES+rvECLD+dRo
+         UYpvd5SZxrTtG6fotzLIdeHatAFfw3P0TQ7C+dWqt7cwU27aQXPjbNc1Y2KSWOtcvnKe
+         QNYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lY2g25qlH/7Gavjz5snKkuIJIxTc1qkxz3A0cDGgC5E=;
-        b=uCk6u626Qe/hzHiLUbGLHaOzN1JxUl7DpY5+oRpl7oJV+9/DoYfo3LOm5Dvfpph79Z
-         R5GYWTSzapLpzJ6vE9Wx4+CAii8BsXrS6uJ6d+4kXbo6yyrJIHkD06IZdwcV4fcA3Jhg
-         OvSD4zPG3EBpZ5Q/Lzt5UdV7KgqJDTedjOd5ZED5PcgsfdDM/v8RWInwmRdvZV8ASwH0
-         zJz/Jmlh8G3HgudUpfBd6cByxmKNnUUtnTpYn8Tx4ZdQCRoIJjlrt/k4iq+Y8tTqwmkl
-         7iKhADLYmEWgPqlkQtFdrdj3r2hg7Rmiqa1iCG8sx6pA46GNYD/I0KGeQJwuvUXQAXfj
-         lgJQ==
-X-Gm-Message-State: APjAAAW9L/8dfkJ6tBjq+0NbCNbfJKJCHB0RGO115WSxC2/8dV1mSoGy
-        MVUEL4sUk0eNdDQZuPisluLIuROnx2j/VsRH8AHjusjI0/lKSd+vPVAJoZwboT4LOKEcAoOYu0D
-        xUJ7aBClpkhidYbor6rPzGCoTRFqL5pg0qGPi0kzS4H0IF787Jr9w
-X-Google-Smtp-Source: APXvYqyh1vIkwgCJhRe6jdpCcyAMysVRjgjRIbbKcuXxV1PNe5tQ6Pawst8opuM663pdhJtp4m42xQsy
-X-Received: by 2002:a67:9946:: with SMTP id b67mr14933499vse.37.1561992365665;
- Mon, 01 Jul 2019 07:46:05 -0700 (PDT)
-Date:   Mon,  1 Jul 2019 10:45:41 -0400
+        bh=0JhjSv/cDBl67LJ1rJqf4EGtcLtjCHcQTlMhWD7PD5s=;
+        b=J+ivbA9TO3/gdh5sa76m0vzoNusM45Ft2Hvxs+F70kkJ/tNOGq23AgjO4BCYDAuEsf
+         wdTAx/kht10M4zyOYXBp0u2A1g7kwTQ43gxz1pqK0uGr5TLxlVjybXKLqviyNPw2iPKg
+         bZrzDZN4Tx+zanxaGhFqJfQli5jArJkxrKweawWyBw61g1qDDQ6zUDsUxW2hzcmSrjmK
+         H8uV87VkCIEzAXhDNa0lm7xyiImoMN4iiR/qLuKobaZIZMkJ+vJ22AymxTAfuQLHhc1G
+         toDIVL6n19bHgJuhSdVQRXNEFKZuqzZenUWwJtBWUMFlGvcUGo0MNsmxFyXk9DIaLoTg
+         85og==
+X-Gm-Message-State: APjAAAXpSZ4eL8zTtlttFXVupoJepTSRedf6b0S2yIdHgIlXcky1h6rF
+        V9jgPPNTIzbFFPXolry+sTKmLRKPj3FU1bCWQE7kJIaG4J7SaB7kMUaKQEVBjMfD2SeLhx70Hgu
+        A2+SVs8Vcfr+EzX3TEdGOqwoccimZELeIzIfOatmgOQYpTfphx57a
+X-Google-Smtp-Source: APXvYqyX+f+RtHfNWCexohrrBsHEnA0y3YUolPCGhnWjh8M0DtUVJsRQXDoWZtKbOJD1kTw/KsbMc5lx
+X-Received: by 2002:a65:5c47:: with SMTP id v7mr3363344pgr.44.1561992368245;
+ Mon, 01 Jul 2019 07:46:08 -0700 (PDT)
+Date:   Mon,  1 Jul 2019 10:45:42 -0400
 In-Reply-To: <20190701144548.129635-1-brho@google.com>
-Message-Id: <20190701144548.129635-3-brho@google.com>
+Message-Id: <20190701144548.129635-4-brho@google.com>
 Mime-Version: 1.0
 References: <20190701144548.129635-1-brho@google.com>
 X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v10 2/9] Move oidset_parse_file() to oidset.c
+Subject: [PATCH v10 3/9] blame: use a helper function in blame_chunk()
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -70,121 +70,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The same code for splitting a blame_entry at a particular line was used
+twice in blame_chunk(), and I'll use the helper again in an upcoming
+patch.
+
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- fsck.c   | 35 -----------------------------------
- oidset.c | 35 +++++++++++++++++++++++++++++++++++
- oidset.h |  8 ++++++++
- 3 files changed, 43 insertions(+), 35 deletions(-)
+ blame.c | 44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index a28cba6b05dd..58ff3c4de992 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
- 	return msg_type;
+diff --git a/blame.c b/blame.c
+index 145eaf2faf9c..5369be9a2233 100644
+--- a/blame.c
++++ b/blame.c
+@@ -839,6 +839,27 @@ static struct blame_entry *reverse_blame(struct blame_entry *head,
+ 	return tail;
  }
  
--void oidset_parse_file(struct oidset *set, const char *path)
--{
--	FILE *fp;
--	struct strbuf sb = STRBUF_INIT;
--	struct object_id oid;
--
--	fp = fopen(path, "r");
--	if (!fp)
--		die("could not open object name list: %s", path);
--	while (!strbuf_getline(&sb, fp)) {
--		const char *p;
--		const char *name;
--
--		/*
--		 * Allow trailing comments, leading whitespace
--		 * (including before commits), and empty or whitespace
--		 * only lines.
--		 */
--		name = strchr(sb.buf, '#');
--		if (name)
--			strbuf_setlen(&sb, name - sb.buf);
--		strbuf_trim(&sb);
--		if (!sb.len)
--			continue;
--
--		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
--			die("invalid object name: %s", sb.buf);
--		oidset_insert(set, &oid);
--	}
--	if (ferror(fp))
--		die_errno("Could not read '%s'", path);
--	fclose(fp);
--	strbuf_release(&sb);
--}
--
- static int parse_msg_type(const char *str)
- {
- 	if (!strcmp(str, "error"))
-diff --git a/oidset.c b/oidset.c
-index fe4eb921df81..584be63e520a 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
- 	kh_release_oid(&set->set);
- 	oidset_init(set, 0);
- }
-+
-+void oidset_parse_file(struct oidset *set, const char *path)
-+{
-+	FILE *fp;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct object_id oid;
-+
-+	fp = fopen(path, "r");
-+	if (!fp)
-+		die("could not open object name list: %s", path);
-+	while (!strbuf_getline(&sb, fp)) {
-+		const char *p;
-+		const char *name;
-+
-+		/*
-+		 * Allow trailing comments, leading whitespace
-+		 * (including before commits), and empty or whitespace
-+		 * only lines.
-+		 */
-+		name = strchr(sb.buf, '#');
-+		if (name)
-+			strbuf_setlen(&sb, name - sb.buf);
-+		strbuf_trim(&sb);
-+		if (!sb.len)
-+			continue;
-+
-+		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
-+			die("invalid object name: %s", sb.buf);
-+		oidset_insert(set, &oid);
-+	}
-+	if (ferror(fp))
-+		die_errno("Could not read '%s'", path);
-+	fclose(fp);
-+	strbuf_release(&sb);
-+}
-diff --git a/oidset.h b/oidset.h
-index 14f18f791fea..2dbca84d798f 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -61,6 +61,14 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
-  */
- void oidset_clear(struct oidset *set);
- 
-+/**
-+ * Add the contents of the file 'path' to an initialized oidset.  Each line is
-+ * an unabbreviated object name.  Comments begin with '#', and trailing comments
-+ * are allowed.  Leading whitespace and empty or white-space only lines are
-+ * ignored.
++/*
++ * Splits a blame entry into two entries at 'len' lines.  The original 'e'
++ * consists of len lines, i.e. [e->lno, e->lno + len), and the second part,
++ * which is returned, consists of the remainder: [e->lno + len, e->lno +
++ * e->num_lines).  The caller needs to sort out the reference counting for the
++ * new entry's suspect.
 + */
-+void oidset_parse_file(struct oidset *set, const char *path);
++static struct blame_entry *split_blame_at(struct blame_entry *e, int len,
++					  struct blame_origin *new_suspect)
++{
++	struct blame_entry *n = xcalloc(1, sizeof(struct blame_entry));
 +
- struct oidset_iter {
- 	kh_oid_t *set;
- 	khiter_t iter;
++	n->suspect = new_suspect;
++	n->lno = e->lno + len;
++	n->s_lno = e->s_lno + len;
++	n->num_lines = e->num_lines - len;
++	e->num_lines = len;
++	e->score = 0;
++	return n;
++}
++
+ /*
+  * Process one hunk from the patch between the current suspect for
+  * blame_entry e and its parent.  This first blames any unfinished
+@@ -865,14 +886,9 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
+ 		 */
+ 		if (e->s_lno + e->num_lines > tlno) {
+ 			/* Move second half to a new record */
+-			int len = tlno - e->s_lno;
+-			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
+-			n->suspect = e->suspect;
+-			n->lno = e->lno + len;
+-			n->s_lno = e->s_lno + len;
+-			n->num_lines = e->num_lines - len;
+-			e->num_lines = len;
+-			e->score = 0;
++			struct blame_entry *n;
++
++			n = split_blame_at(e, tlno - e->s_lno, e->suspect);
+ 			/* Push new record to diffp */
+ 			n->next = diffp;
+ 			diffp = n;
+@@ -919,14 +935,10 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
+ 			 * Move second half to a new record to be
+ 			 * processed by later chunks
+ 			 */
+-			int len = same - e->s_lno;
+-			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
+-			n->suspect = blame_origin_incref(e->suspect);
+-			n->lno = e->lno + len;
+-			n->s_lno = e->s_lno + len;
+-			n->num_lines = e->num_lines - len;
+-			e->num_lines = len;
+-			e->score = 0;
++			struct blame_entry *n;
++
++			n = split_blame_at(e, same - e->s_lno,
++					   blame_origin_incref(e->suspect));
+ 			/* Push new record to samep */
+ 			n->next = samep;
+ 			samep = n;
 -- 
 2.22.0.410.gd8fdbe21b5-goog
 
