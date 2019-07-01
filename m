@@ -2,111 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 111B21F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 18:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 061DF1F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 18:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726747AbfGASf0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 14:35:26 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64654 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726316AbfGASfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 14:35:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4DA06C991;
-        Mon,  1 Jul 2019 14:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SAi6deg/TiDv/ds5WmIOfDd+7DQ=; b=T9jWK2
-        67f86Un3iSM8uji/gWCFIpn/ACRsNwAUpv7GHuZTYO1cZPRqKVhPIoD5aXEdVWY1
-        XB9vplQzcLB0rRRUZTEk/mp/NtNY0RDmfysEEX95c2WbJNYLJ3LNzVAhBPc7lY8U
-        ZkoNwO/dxTROuns522/TsOV/kPFGKGFitPlDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vVxwMx8LfUSawbFkLHtELXDU+lm5gpwV
-        bYYz8jvT3W2/pG+ELj4h96dKXBB8n8qbUKp1QeF5Q71SZWp6WshcL7mHMEgUF4cb
-        h5dIyH3XjVj1s7uubLvHUMbT9RJhMMXFPrK1ou6ZfFRKxqAJTNjZoTP9eMUv348y
-        zCBc2hWDVf8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC7776C990;
-        Mon,  1 Jul 2019 14:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E73CC6C98B;
-        Mon,  1 Jul 2019 14:35:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
-References: <20190630051816.8814-1-eantoranz@gmail.com>
-        <20190630065358.GB31264@sigill.intra.peff.net>
-Date:   Mon, 01 Jul 2019 11:35:15 -0700
-In-Reply-To: <20190630065358.GB31264@sigill.intra.peff.net> (Jeff King's
-        message of "Sun, 30 Jun 2019 02:53:59 -0400")
-Message-ID: <xmqq36jp7gd8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726671AbfGASrk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 14:47:40 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:37441 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725853AbfGASrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 14:47:39 -0400
+Received: by mail-qk1-f195.google.com with SMTP id d15so11871129qkl.4
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 11:47:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+FNzhor+C05GzS8/7N5AnRRAXAiwAj+nnegmjmJDIZI=;
+        b=UiMhMgGrU2n5fy2JNGBV9hMopick0yQo6jS7Rwx2yaGNMyMfDTEhY2Oyz1g7RftR+c
+         pAcxI0MfugqFPliDLfkf5Skl1/mfi9eADxGunF18sOdwR/piqDoFIXRSuvX2aTzI1scy
+         QAt/BkZAxt39ihVb5yfwvsmwikryiPpq7ZpRL1m8T81QLN+aqeQARrcTHKakg6zwUHq1
+         twEk/JPxYKtoox3kR6jkRyVfrtOwMCFL6tlTzx4z4o+eweBZzMiLD4GR30C3OHyW/MZu
+         jJ9rZymmGopTDUDqASToDHh3YX5xxvoRHD+w6KiL/0qEjX7lxb7SX8HgkZP+N31FEajy
+         PK3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+FNzhor+C05GzS8/7N5AnRRAXAiwAj+nnegmjmJDIZI=;
+        b=UqGItFy3g4dfv0WLu9LFSi2iAeBp5GKQSlfvu6uVoVKPGff7jKUN9bVYIZsRxXjLEc
+         s7k+azqAFIFRpyWnbut562uOhObVEMLvAk5NUe6RltQGcXBOdSqmJml90ByqSAZ74rcl
+         /WEHwIGwtHV/j7PM4eD8wr6sKEx1MyTfE35HWceiUqqSfhMSTo7iW33XP2m+TtFfuR6G
+         wz4iULKK9US+EcriRCdHcveUR4WZ3sEpy1InR30rvij1pcSusdUNzHAynfCTMlfx/HX9
+         HR9lBP8L3nLCuSilJ9MgmlSCKftF7w4i7l3upcsTKg2ZtutZeRzY+WtZwaVu+LVpl5zo
+         KlzA==
+X-Gm-Message-State: APjAAAWypJbcm/LjvWiAciVnrH22bZvYry7nPEa7xNvSVJnjBQNNSuAF
+        o+9/KDSC0iyGoCdu4k1QrzY=
+X-Google-Smtp-Source: APXvYqzjNazsemodo3ISkDoFNEWGi8K+VdK4TgqPhfk/qMc7WGdliijs02lk6apgEcmlyd9RLCmN+A==
+X-Received: by 2002:a37:6982:: with SMTP id e124mr21181253qkc.291.1562006858785;
+        Mon, 01 Jul 2019 11:47:38 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:858c:78f0:58f6:666c? ([2001:4898:a800:1010:36c2:78f0:58f6:666c])
+        by smtp.gmail.com with ESMTPSA id o54sm6114998qtb.63.2019.07.01.11.47.37
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 11:47:38 -0700 (PDT)
+Subject: Re: [PATCH] t5319: don't trip over a user name with whitespace
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.261.git.gitgitgadget@gmail.com>
+ <d4a3f56b-5eaa-1325-f8c1-be6797a9ac03@kdbg.org>
+ <CAPig+cRpOHRgtCXXiqAZtmEtkWnMy7=4GsTVv0XB9R3fF0-66A@mail.gmail.com>
+ <1a5bb5f9-e090-7f42-ec3f-cd74bcad831f@kdbg.org>
+ <20190630222537.GA21696@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1907011409420.44@tvgsbejvaqbjf.bet>
+ <b1f6a752-6edd-d86c-7d69-7624a2c5407f@gmail.com>
+ <3645e8cf-3538-7a4e-a54a-f58dc39510e1@kdbg.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f42b441e-b6ff-464a-6351-739993472ca6@gmail.com>
+Date:   Mon, 1 Jul 2019 14:47:37 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F97C6320-9C2E-11E9-AE9C-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <3645e8cf-3538-7a4e-a54a-f58dc39510e1@kdbg.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 7/1/2019 2:22 PM, Johannes Sixt wrote:
+> Am 01.07.19 um 14:30 schrieb Derrick Stolee:
+>> On 7/1/2019 8:11 AM, Johannes Schindelin wrote:
+>>> Or we stop introducing new Perl calls, and use the perfectly fine
+>>> `test-tool path-utils file-size` command:
+>>>
+>>> https://github.com/git/git/blob/v2.22.0/t/helper/test-path-utils.c#L302-L312
+>>>
+>>> This solves not only portability problems but also avoids yet another
+>>> obstacle into making a `NO_PERL` test suite run really work without Perl.
+>> Thanks! This does seem like the best option. Thanks for bringing this to our
+>> attention. Here is a diff, and I'll prepare a full patch:
+> 
+> Thanks. Please also explain why the first of the two tests does not fail
+> with a large --batch-size (unless it is obvious for people who know a
+> bit about multi-pack-index, of course).
 
->> First, we create a (temporary) merge commit of both branches (M3)
->> 
->> ------------
->> 	R1---R2---R3---R4---R5---R6---R7---M3
->> 	 \         \              \       /
->> 	  F1---F2---M1---F3---F4---M2---F5
->> ------------
->> 
->> At this point, all differences between M3 and R7 are the changes related to the
->> feature branch, so we can run git reset --soft from M3 to R7 to put all those
->> differeces in index, and then we create single revision that is both
->> squashed/rebased for our feature branch.
->
-> So if I understand correctly, our goal is:
->
->   R1--R2--...--R7--R8
->
-> where R8 has the same tree as M3?
->
-> Wouldn't doing "git merge --squash" do the same thing?
+Sorry about missing that. Here is an explanation:
 
-Yup, from Edmundo's description, I agree that they are equivalent,
-modulo the merge direction.
+The --batch-size=X option determines how much data we want to move in
+a single operation. Based on this value, we select packs greedily as
+follows:
 
-That affects two things, though.  Who becomes the first parent is
-obviously swapped, but equally importantly, the merge conflicts are
-presented as if you are merging from the upstream, taking assortment
-of random changes into a stale codebase with slight modification.
-Swapping the direction would present the merge much better in that
-it let you pretend as if you started from the up-to-date upstream
-and replayed your own changes in the topic, and because you are by
-definition more familiar with your own changes, during conflict
-resolution, you would understand the output from "git diff HEAD"
-much better than the case where you merge upstream into your topic.
+  1. If a pack has size at most X, include it.
+  2. If our total pack size is greater than X, stop.
 
-But "rebase the feature branch on updated upstream and then merge
-the result, optionally squashing all of them into one big ball of
-wax" *could* be a lot more useful feature, serving as poor-man's
-imitation of "git imerge", *but* only if the final squashing is made
-optional (that at the same time means that sometimes the M3 merge
-can be unmanageably messy and stepwise rebase may make it
-manageable).  
+At the end of this process, if we have zero or one packs we do nothing.
+That is why a small size does nothing.
 
-If M3 merge is always easier to manage than incremental stepwise
-rebase of the topic, then doing the "git merge --reverse-squash"
-would be a saner interface and also conceptually simpler.
+Also, if our total pack size is smaller than X, we do nothing. Our
+batch is not "full" enough to merit the work. This is why a large size
+does nothing.
 
+Thanks,
+-Stolee
