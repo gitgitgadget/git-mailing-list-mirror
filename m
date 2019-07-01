@@ -3,163 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C578B1F461
-	for <e@80x24.org>; Mon,  1 Jul 2019 14:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 705E11F461
+	for <e@80x24.org>; Mon,  1 Jul 2019 14:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727777AbfGAOjJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 10:39:09 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:37802 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfGAOjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jul 2019 10:39:09 -0400
-Received: by mail-yw1-f65.google.com with SMTP id u141so48000ywe.4
-        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:39:09 -0700 (PDT)
+        id S1729789AbfGAOlE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jul 2019 10:41:04 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51779 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728216AbfGAOlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jul 2019 10:41:04 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 207so16129629wma.1
+        for <git@vger.kernel.org>; Mon, 01 Jul 2019 07:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+J8kcg0lalf3+TWEa9Mxa05i9+4Qxqq3U0Fi1cCtmCE=;
-        b=sFAjHgo41E23rZRoDy7JLRiJ7bbsMLK3I4YkfAoolpvebmOeDg/8puhU81YswNVL/r
-         JcaFtduhGzDudMXLWIoGH4wdGxVF75YhhXkDukUpZYvUF/mQg/PdGmo8NF4xrtrAC3UA
-         0Vxv0Lujy58LsL+29/q3NLdN3mwqAaKhGYbD1zU2DN26yR3WI8W7mc/2HXXfymt5nDf8
-         m/o+Ee1krdhBoIQOtswgi9rJGMlc6ieT6f/Uopwq398jSIxbKBofptM7cgnZQJtqRUQA
-         ilCao7p2I+1gJBz9f12g7lesxRj6+PBhE1EvTngEzMTmpGqRk80HKpe8yO1613eMvxJL
-         fsBQ==
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HDdAD+o4iTHoano/T+wk3PaAeX6Lt/aMXJuz4pekNSU=;
+        b=ZZPVR1wJgCvCd6q+TJrdxpbsj5ZllfePHL/I86I4cavXQebrlXFvYo6Pr5dUq3axE9
+         2vJxLUr8B1XgV0mrNyKene15IMmPXgOROVb655a4YJ6wNnX37iC9m9JYZD3MDexkIgu9
+         HdCsoFvyXld+ENA3SWz556WKdLgkE/REues/Wio7f0JRpMaXbHizKmDPD4saZObgsHw/
+         uIPmqxFXKFlnUaHWRxuUm3sPp+xd3DZUqARue71puCpOk0cM+f/5vdWmuqRZZ6tJEpZb
+         wmT4jXwjTEn2uFV0fhLqyEQL+FHapqYX36OlJ2ic8tGnN4uC+LnN2EJJJGRGDJmE+r/L
+         WKTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+J8kcg0lalf3+TWEa9Mxa05i9+4Qxqq3U0Fi1cCtmCE=;
-        b=M/Hmb8AeHGzlJKVBe78gvUZSJq4/Eb6IOPa/wfN1YV7QUhZ73LCRXjaJPqJ3o8M7KO
-         XiiqpQC2hNC5msVwqUSYKMVdUnhVKCfO0egdOvX4NFthFAnCY2YCll4IMK99/Ez/QS80
-         c2fbdEDs2o1ZJhk/jK6wJ2qFe2h9csuFY1x2eAJdslLQZa2imMdyRmrLbOpEJRhAZisK
-         UU3AFyd2ENQBiRVnTmWVwSRr4vb2yLFqVZMCPyWnOZIHxbgfmGOaX/pvCySKbGis1e+v
-         qeEXEa31uCbIPZq9zWPkFjRG5aljsGG/Mk5TKiS2Is3lRHnBWSVSykZ6kecdbq1/8Ne3
-         xoSw==
-X-Gm-Message-State: APjAAAVDtkUoOgIMMfrE2ORbAYdgY9znEnMMogtniRuCu5K6V1uikemx
-        WMl1IqNGywcf1D5TeNsXH49ciQ==
-X-Google-Smtp-Source: APXvYqxwr/AAChrp7Y1258Hw1a/7pLCCV805/SdDQOarpsLuRgrfhce1vvi6x5dW1sSpB4aM2zAo5A==
-X-Received: by 2002:a81:a1cb:: with SMTP id y194mr15831447ywg.104.1561991948537;
-        Mon, 01 Jul 2019 07:39:08 -0700 (PDT)
-Received: from localhost ([2600:1700:6e90:7930:6841:343f:64f7:7ef1])
-        by smtp.gmail.com with ESMTPSA id p185sm2502415ywb.92.2019.07.01.07.39.07
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 01 Jul 2019 07:39:07 -0700 (PDT)
-Date:   Mon, 1 Jul 2019 09:39:02 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] ref-filter.c: find disjoint pattern prefixes
-Message-ID: <20190701143759.GA38109@TaylorsMBP5715.attlocal.net>
-References: <cover.1561588479.git.me@ttaylorr.com>
- <e41db267f7b7086126e9fd3fd5b1a02e38c8c077.1561588479.git.me@ttaylorr.com>
- <CA+P7+xqQv4UZMy7fEHnGHejU6nvhVKgkSruXdmW-akqUG1TLKA@mail.gmail.com>
+        h=x-gm-message-state:reply-to:subject:from:to:cc:references
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=HDdAD+o4iTHoano/T+wk3PaAeX6Lt/aMXJuz4pekNSU=;
+        b=PIt5g9qOWf817l8V5gnwrx4SdOJgzhXW2BUW1ezX8Lf3p9RpmLLUbzVJmHlRyT0mkv
+         0J3tHnVwmhqatBMnsMRCIQxveltXUY8+V4F/z0gYPB+cCsohSxyF5vTyMp3umWitaZC+
+         leqnnicypNts01UEQTBduqzI3v+OEhombqj9OWir0EsVU8IS4jZbrdno8Bwy1vOEA8WV
+         dE2R97XaMMLqGX7ayHUA+CHhu+KUaqolEt1in9OMHkZkdnBevZqYywW807yffQWpejTH
+         LQVTcR0FXpMBHo25rDIYzRoJETgoZkWyH4xi7+T+MCIN38IjyEi9xVg+ksDB9a+268tp
+         MA5w==
+X-Gm-Message-State: APjAAAVYa0wTJnVaZq86Ns4bMGFZWZtDeEKo9GrS3ga0W6U50EIzCpzC
+        HWsz73Z3HymF2MuXASN9qxY=
+X-Google-Smtp-Source: APXvYqxWsxIOgNoqGUsxcrYpvgdBgymhwyEn7Fj1XSygTPbR2oRqV1+gZ3VWkOQ9zFSZzwETr8bTcg==
+X-Received: by 2002:a1c:a842:: with SMTP id r63mr17300607wme.117.1561992060884;
+        Mon, 01 Jul 2019 07:41:00 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id g5sm10364389wrp.29.2019.07.01.07.40.58
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jul 2019 07:40:59 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] status: do not report errors in sequencer/todo
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.275.git.gitgitgadget@gmail.com>
+ <af4b823caac84899b5ac71da61af5ec00f88bb2f.1561457483.git.gitgitgadget@gmail.com>
+ <xmqqo92le6ns.fsf@gitster-ct.c.googlers.com>
+ <51d31257-7093-a0fa-9681-929b9fea059c@gmail.com>
+Message-ID: <1015625d-9975-3991-ebd2-25ba212286e3@gmail.com>
+Date:   Mon, 1 Jul 2019 15:40:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xqQv4UZMy7fEHnGHejU6nvhVKgkSruXdmW-akqUG1TLKA@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <51d31257-7093-a0fa-9681-929b9fea059c@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jacob,
+On 26/06/2019 09:57, Phillip Wood wrote:
+> On 25/06/2019 21:44, Junio C Hamano wrote:
+>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>
+>>> commit 4a72486de9 ("fix cherry-pick/revert status after commit",
+>>> 2019-04-16) used parse_insn_line() to parse the first line of the todo
+>>> list to check if it was a pick or revert. However if the todo list is
+>>> left over from an old cherry-pick or revert and references a commit that
+>>> no longer exists then parse_insn_line() prints an error message which is
+>>> confusing for users [1]. Instead parse just the command name so that the
+>>> user is alerted to the presence of stale sequencer state by status
+>>> reporting that a cherry-pick or revert is in progress.
+>>
+>> Or is it likely that such an effort would end up being wasted, as...
+>>
+>>> Note that we should not be leaving stale sequencer state lying around
+>>> (or at least not as often) after commit b07d9bfd17 ("commit/reset: try
+>>> to clean up sequencer state", 2019-04-16).
+>>
+>> ...this already happened?
+> 
+> Probably. It is still possible for the user to run checkout in the 
+> middle of a cherry-pick and forget to finish it but if they're using a 
+> prompt with git support it should tell them that a cherry-pick is in 
+> progress as `git status` detects that it is.
 
-On Wed, Jun 26, 2019 at 05:37:42PM -0700, Jacob Keller wrote:
-> [ ... ]
->
-> > Instead, we want to partition the patterns into disjoint sets, where we
-> > know that no ref will be matched by any two patterns in different sets.
-> > In the above, these are:
-> >
-> >   - {'refs/heads/a/*', 'refs/heads/a/b/c'}, and
-> >   - {'refs/tags/v1.0.0'}
->
-> Is this disjoint set calculation already existing, or did you have to
-> add it in this patch?
+Unfortunately it is not true that the prompt will see the in-progress 
+cherry-pick as it does not use git status - see 
+https://public-inbox.org/git/0f04fa2930d5cc7dfd2a5c5185573f7ecefa6055.1561990865.git.gitgitgadget@gmail.com/T/#u 
+for a fix
 
-Both the disjoint set calculation and the prefixing procedure are new in
-this patch. But, we're never actually computing this disjoint set
-explicitly, rather, we build it up implicitly while computing what will
-become the longest prefixes of each subset.
+Best Wishes
 
-> >   4. Otherwise, recurse on step (3) with the slice of the list
-> >      corresponding to our current prefix (i.e., the subset of patterns
-> >      that have our prefix as a literal string prefix.)
-> >
-> > This algorithm is 'O(kn + n log(n))', where 'k' is max(len(pattern)) for
-> > each pattern in the list, and 'n' is len(patterns).
-> >
->
-> ok, so if we can assume that k is some relatively small constant
-> number (since the maximum pattern length isn't likely to grow without
-> bounds), this is O(n*log(n)) on the number of patterns, so we don't
-> even approach n^2 even when we are given a large number of patterns.
-> Nice!
->
-> > By discovering this set of interesting patterns, we reduce the runtime
-> > of multi-pattern 'git for-each-ref' (and other ref traversals) from
-> > O(N) to O(n log(N)), where 'N' is the total number of packed references.
->
-> So here, n is the number of patterns still? This seems like a pretty
-> significant gane when we have a large number of packed references.
-
-Yes, 'n' is the number of patterns given. For e.g., the invocation
-
-  $ git for-each-ref 'refs/heads/*' 'refs/tags/*'
-
-has 'n = 2', and 'N' is unknown. The asymptotics here are really
-comparing the case where we previously didn't make any effort to compute
-good queries, and resorted to a linear scan of all packed references,
-compared to now where we have at most one query per pattern, resulting
-in a logarithmic-time scan of .git/packed-refs.
-
-> >
-> > Running 'git for-each-ref refs/tags/a refs/tags/b' on a repository with
-> > 10,000,000 refs in 'refs/tags/huge-N', my best-of-five times drop from:
-> >
-> >   real    0m5.805s
-> >   user    0m5.188s
-> >   sys     0m0.468s
-> >
-> > to:
-> >
-> >   real    0m0.001s
-> >   user    0m0.000s
-> >   sys     0m0.000s
-> >
->
-> That's a pretty significant decrease!
-
-Yes, it's quite good here, but it's designed to be that way ;-). Like I
-note below, the real world speed-ups aren't quite as remarkable, but
-it's not uncommon for us at GitHub to have a repository of the above
-shape in terms of the number of references.
-
-So, it's an increase almost no matter where you are, but it works
-especially well for us.
-
-> > On linux.git, the times to dig out two of the latest -rc tags drops from
-> > 0.002s to 0.001s, so the change on repositories with fewer tags is much
-> > less noticeable.
-> >
->
-> This explains why it might not have been done before.. many
-> repositories wouldn't benefit much.
->
-> That said, the patch description doesn't make it seem very
-> complicated. I did run out of time reading the message, so I'll have
-> to follow up reviewing the actual change below later. I think the
-> description of the goal and solution is sound though.
-
-Thanks for the initial review :-).
-
-Thanks,
-Taylor
+Phillip
