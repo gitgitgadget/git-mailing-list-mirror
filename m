@@ -2,85 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 284B41F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 19:06:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32DD41F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 19:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbfGBTGI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 15:06:08 -0400
-Received: from mail-io1-f46.google.com ([209.85.166.46]:39851 "EHLO
-        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfGBTGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 15:06:08 -0400
-Received: by mail-io1-f46.google.com with SMTP id r185so39647362iod.6
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 12:06:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ekC7XBNdH736nypa6iFeYFYTz1+PVvmicdMYPhq/jVM=;
-        b=h13aGyg0ZQUjPnBTF+We4dL4U+sKxYHFAAoV+elbflVmLWm3lAhX2Uh6gdIhGqON9p
-         59eHP1tR1+mQFerFAJbusAqXkRtqqICRbqyRJHRAdWt7dkCrObKRk1a8umzqaNpNMdGY
-         cJD4+GvOc1lyOCeOotWw5oKfjLnAnN3TQCACXYdkIv70oGtgKo+GRy2joOU+NIvdrf3I
-         3EkucPXcI5CuGbv7+9T8JJonstVG5v6A8gYNtrekvlRaqHlFUuknFXHFp9G3okQ33Y8k
-         0HSpFxmWnqr4lE3/l/e8prYP7xqUeReMlNyVyhhTEidkiGU7JSRuPfAn9CVChI55UVYK
-         p0kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ekC7XBNdH736nypa6iFeYFYTz1+PVvmicdMYPhq/jVM=;
-        b=cpk/eQS6P2NJkP0sZ71miMf3dEchUg+hHRNxzPwVreYIpV8gQpmmPTA+ib6xvrXQGg
-         YoItEMEZRtFUPw7D0qeZuS7g0o+8YYHwgNdmNAmEfXzDXrI07sGvbQcblwYEObyMDqcW
-         hhgE5KufONAbw7D3moN1llD7hb8UPH+l7tH6pbZEcgLnjZUDpkTj6sbfvKD82SRIkv76
-         TelL3aVexK2msIeQPZSS5QEqGhKEmoNKrju1QYR2z+V62nugzD4iugiuuMaluQ4OXWeQ
-         YQcVsv9WW0P2BnzCqKKMCtANLFgmKoszH8QMh6O3RJTipwPaycgKWqoKoAD/e9wcPils
-         AoHg==
-X-Gm-Message-State: APjAAAWnKqGr5v3xI99+nnrCWAe2I/U9yt2akX4KMfwwGc+0KWxvUWyG
-        p1uuavInSHuoJWKPHJExyxdvbSrXInsN1LjA/ULtgw==
-X-Google-Smtp-Source: APXvYqzrVsgfewjv7Tf7m9yY7Asv0sdIh/sUA5UaN0Q74b2WGhml5X7IEthoOAxs2U4RpwHz1sg70ClYnrz/ygeVZEQ=
-X-Received: by 2002:a5d:9c4d:: with SMTP id 13mr22335503iof.47.1562094366966;
- Tue, 02 Jul 2019 12:06:06 -0700 (PDT)
+        id S1726767AbfGBTGP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 15:06:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63143 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfGBTGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 15:06:15 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E75B1153D60;
+        Tue,  2 Jul 2019 15:06:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kYYFUlAcWqjBWWnTOsh6ksZTurw=; b=FuHB0b
+        Jyc9tJEseWrravJA3Xleya+FkYVbSYM4b5eJxiTCtSDNBsBydApBfY4MRVk5Or/e
+        OjYaOtJo2ixr7jkBA2GtqnNBVHnHLm9S06Gy5/KT7F4dNe44s2aoRJcvyXqeh7WV
+        Ei7IrWGeTmWie0qzlu1HuhyN8J9kBdbtpataQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dQnpdSTJRqbXGd+HCmLz2IlDp1QP/N6G
+        MPGJUH1Cj8Q8HQSYl90Lq9ELFg3u3FMrfFeArzzPgN3yTPbf/8gTVDWhA8JjRNk1
+        8eBDqpijReaXgnjOR+pKGRpiDqP+giWItWX73fGswzZxZx1e2HsJLb5tLQbddQpX
+        ZDemXNzsIkU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF714153D5F;
+        Tue,  2 Jul 2019 15:06:09 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19990153D5E;
+        Tue,  2 Jul 2019 15:06:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] transport-helper: enforce atomic in push_refs_with_push
+References: <20190702005340.66615-1-emilyshaffer@google.com>
+Date:   Tue, 02 Jul 2019 12:06:07 -0700
+In-Reply-To: <20190702005340.66615-1-emilyshaffer@google.com> (Emily Shaffer's
+        message of "Mon, 1 Jul 2019 17:53:40 -0700")
+Message-ID: <xmqq1rz845pc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOt2X9sqbpK2qaKk9uf7fL=WCdzJr4+bx-0CsgjssTKkEhd++Q@mail.gmail.com>
-In-Reply-To: <CAOt2X9sqbpK2qaKk9uf7fL=WCdzJr4+bx-0CsgjssTKkEhd++Q@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 2 Jul 2019 12:05:56 -0700
-Message-ID: <CAGyf7-Ewm3A7h0vcbahMM+Jf=TcygVrkUob5YaAdH9HByh3asw@mail.gmail.com>
-Subject: Re: [Bug] Unexpected behavior on case insensitive filesystems
-To:     Alex Brachet-Mialot <alexbrachetmialot@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73466B6A-9CFC-11E9-9E4A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 2, 2019 at 10:23 AM Alex Brachet-Mialot
-<alexbrachetmialot@gmail.com> wrote:
+Emily Shaffer <emilyshaffer@google.com> writes:
+
+> diff --git a/transport-helper.c b/transport-helper.c
+> index c7e17ec9cb..6b05a88faf 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -853,6 +853,7 @@ static int push_refs_with_push(struct transport *transport,
+>  {
+>  	int force_all = flags & TRANSPORT_PUSH_FORCE;
+>  	int mirror = flags & TRANSPORT_PUSH_MIRROR;
+> +	int atomic = flags & TRANSPORT_PUSH_ATOMIC;
+>  	struct helper_data *data = transport->data;
+>  	struct strbuf buf = STRBUF_INIT;
+>  	struct ref *ref;
+> @@ -872,6 +873,11 @@ static int push_refs_with_push(struct transport *transport,
+>  		case REF_STATUS_REJECT_NONFASTFORWARD:
+>  		case REF_STATUS_REJECT_STALE:
+>  		case REF_STATUS_REJECT_ALREADY_EXISTS:
+> +			if (atomic) {
+> +				string_list_clear(&cas_options, 0);
+> +				return 0;
+> +			} else
+> +				continue;
+
+Ah, this looks vaguely familiar.  Thanks for resurrecting the topic.
+
+The clearing is merely to avoid leaks, and the primary change to the
+function is to immediately return 0.
+
+>  		case REF_STATUS_UPTODATE:
+>  			continue;
+>  		default:
+> diff --git a/transport.c b/transport.c
+> index f1fcd2c4b0..f4d6b38f9d 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1226,10 +1226,23 @@ int transport_push(struct repository *r,
+>  		err = push_had_errors(remote_refs);
+>  		ret = push_ret | err;
+
+Here, before reporting the push result, when we are doing ATOMIC,
+we tweak the result we are going to report to atomic-push-failed.
+
+> +		if ((flags & TRANSPORT_PUSH_ATOMIC) && err) {
+> +			for (struct ref *it = remote_refs; it; it = it->next)
+> +				switch (it->status) {
+> +				case REF_STATUS_NONE:
+> +				case REF_STATUS_UPTODATE:
+> +				case REF_STATUS_OK:
+> +					it->status = REF_STATUS_ATOMIC_PUSH_FAILED;
+> +				default:
+> +					continue;
+> +				}
+> +		}
+
+This roughly corresponds to what send-pack.c::atomic_push_failure()
+does.  Here, we avoid overwriting a status that already signals a
+failure.  The list of "good" statuses used here match what is used
+at the end of send_pack.c::send_pack(), which decides the final
+outcome of "git push" for the native transport.
+
+Looks good.
+
+By the way, I rearranged the patch as I happen to agree with Dscho
+that the additional {} was unwarranted and made it harder to review.
+It is clear that we need to tweak the status before reporting.
+
 >
-> Branches behave weirdly for case insensitive filesystems, and I'm
-> guessing other things as well. For example say I am on a branch other
-> than master, checking out 'Master' will _work_, I will of course be on
-> the right branch but git status will say I am on 'Master' (expected
-> just 'master') and git branch will highlight no branch.
-
-This comes up on the list fairly often. A couple of recent threads are:
-https://public-inbox.org/git/d4d8d8208b6a41c380ecf20807763bcf@XCH15-05-02.nw.nos.boeing.com/t/#u
-https://public-inbox.org/git/CAGyf7-E3-0SiqweoX-uLotwcCcy5MSxG6Zh+DRo6zQPKqTQQpA@mail.gmail.com/t/#u
-
-This also comes up for files within a repository:
-https://public-inbox.org/git/trinity-4a160867-2036-4f8a-8363-7bf2e021d840-1558184320864@3c-app-gmx-bs48/t/#u
-https://public-inbox.org/git/AANLkTi=87fUaOH3Y0PVeeH5N7oCVVJyKY3jsf93jw-t7@mail.gmail.com/t/#u
-
-The replies to the first thread explain the behavior, why it does what
-it does, and why it hasn't been changed yet. It happens on
-case-insensitive macOS filesystems and on NTFS on Windows.
-
-Hope this helps!
-
-Bryan
+> 		if (!quiet || err)
+>  			transport_print_push_status(transport->url, remote_refs,
+>  					verbose | porcelain, porcelain,
+>  					reject_reasons);
+>  
+>  		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
+>  			set_upstreams(transport, remote_refs, pretend);
