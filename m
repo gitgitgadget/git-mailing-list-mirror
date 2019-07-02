@@ -2,62 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 459171F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 17:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5C5A1F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 17:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726591AbfGBRXA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 13:23:00 -0400
-Received: from mail-io1-f54.google.com ([209.85.166.54]:46982 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfGBRXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 13:23:00 -0400
-Received: by mail-io1-f54.google.com with SMTP id i10so25034517iol.13
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 10:22:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mhhtDnkr9NRFSWAzV5dOYMzcYdz/g3NL4gXwzrF/kVg=;
-        b=T8Oko8+1JSRF44od8dZqnlA5uV2Et0toU1DSWpRtXnCn5rcEeESdmte7OHpdlba4qU
-         8aEQwc168SWRxHNozE5Fdk3iJXs45Wv+4BGR4pIdSYUjSpKhvmAmHyHQeAJ+rMpy+SOE
-         MKxVoUoq5tYatnttdoiP9x5BzlP5ypaqopQhOy+F6hoEujQecgybOkR4FU8RRm1chIfQ
-         Ws1H8nu2lozDFnqIJaj6TuRaS2JbueAPCEWts1LasvNUZf80Vp9rW/n3Gu+30Xj+rYBL
-         kyB4Jkd3rs7ps0BKinsGygG7QLCHjR9o0CMsirZfNS3zZLPAsA2E3uIESP0EyWI6966J
-         sLzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mhhtDnkr9NRFSWAzV5dOYMzcYdz/g3NL4gXwzrF/kVg=;
-        b=jAHD+c30sDV4wWYVL8Rh2h0m+MViXvp7QLl/Un4Kg173fF6IMJs4a5IJhN44jrQAvr
-         nlhCOfbVsuRzBceOG91Zzcw6tTAryFqsnhPzV+PqGMwE5+ozz0OxLKMAKkjVyPx9BjoL
-         Vu/vRXQBPiCVJLrsob1KI4CLeHnHXBPOupr72Fr4kfWtmz3Y30bQWZyM+jPnepW+Lbyy
-         NVlQfA10DsCjbkSIOHFFgVq5tUQkQXjHadK56fMJccKQ+ZM1xhxNZNAPYFDFTSoq1wk6
-         Oyqt4KYuIM4R6GlDjhooLzVXpFXZ0EIjNjnfmRX5bpgCeje/eOQfgSlP0INZU+JX1mVw
-         6tKw==
-X-Gm-Message-State: APjAAAUmGWvzXG75/LFNCx+8VahoE/6zHhDFCZJD9uy54wmoxmKAbMts
-        qQXWKwgvcfc1JVse72REZ6UcBROaTw6/lZy9d5x3/Xsk8J8=
-X-Google-Smtp-Source: APXvYqzLzDu6DiwCmV8JPj324Qk9Wa5rPE5TIOTP7DoquHwo8QjnWTkZTFHBaTcz9tv5nrxaJMFugINUpVdTk1VzZTk=
-X-Received: by 2002:a02:4484:: with SMTP id o126mr37298200jaa.34.1562088179254;
- Tue, 02 Jul 2019 10:22:59 -0700 (PDT)
+        id S1726664AbfGBRX4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 13:23:56 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59329 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfGBRX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 13:23:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A643973AEE;
+        Tue,  2 Jul 2019 13:23:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JQ00i5mP4BUbErzL3w9+RkZsBXE=; b=HxfDk8
+        GJLmWwrhu7yKxOmjbU5eqA8DkFGFkcaGAFx97QRl4S3M/3PQbFmOUxbKMiREi3NZ
+        ZhTcxTmWSEg2KK8npzhcL1dsDuizw7gXyDJ4ZIWZsZHjdE2YX32/uxq3h501YBKX
+        imjvfwPoVjv4vhvISAKPv1VIcJWlOms7fZRJU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lf9cuV9HJdc/11jfhrRnfNab5q1JMFMc
+        DSqHDiS41lv4hG9UCbrr1TO2TtbR0TykA9TWirBSySRA9DGXockpbYtX+KIhTt6r
+        qMHG1F6zHDlAGBUBTK2uKLCHgUx36m0TpzP8LX4/3RTVYOSjSLEfaAJl9XHKz2bY
+        KpHArff1rXc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E31D73AED;
+        Tue,  2 Jul 2019 13:23:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9D0973AEB;
+        Tue,  2 Jul 2019 13:23:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/1] t3420: remove progress lines before comparing output
+References: <pull.276.git.gitgitgadget@gmail.com>
+        <52501623f6b47447ce5da283ec11e378413899b7.1561986710.git.gitgitgadget@gmail.com>
+        <xmqqimsl5v1u.fsf@gitster-ct.c.googlers.com>
+        <2a0a968e-6929-71eb-77cf-ec3ee28fd734@gmail.com>
+Date:   Tue, 02 Jul 2019 10:23:49 -0700
+In-Reply-To: <2a0a968e-6929-71eb-77cf-ec3ee28fd734@gmail.com> (Phillip Wood's
+        message of "Tue, 2 Jul 2019 16:54:08 +0100")
+Message-ID: <xmqqmuhw4afu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Alex Brachet-Mialot <alexbrachetmialot@gmail.com>
-Date:   Tue, 2 Jul 2019 13:22:48 -0400
-Message-ID: <CAOt2X9sqbpK2qaKk9uf7fL=WCdzJr4+bx-0CsgjssTKkEhd++Q@mail.gmail.com>
-Subject: [Bug] Unexpected behavior on case insensitive filesystems
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 292C4490-9CEE-11E9-AC2D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Branches behave weirdly for case insensitive filesystems, and I'm
-guessing other things as well. For example say I am on a branch other
-than master, checking out 'Master' will _work_, I will of course be on
-the right branch but git status will say I am on 'Master' (expected
-just 'master') and git branch will highlight no branch.
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+>> As long as sed implementation used here does not do anything funny
+>> to CR, I think the approach to strip everything before the last CR
+>> on the line is sensible.  As I am not familiar with how Windows port
+>> of sed wants to treat a CR byte in the pattern, I am not sure about
+>> the precondition of the above statement, though.
+>
+> I wondered about that too, but it passes the CI tests under windows.
+
+Hopefully Git for Windows, MinGW, and CygWin would all behave
+similarly.
+
+>> I also have to wonder if we can/want to do this without an extra
+>> printf process every time we sanitize the output, though I do not
+>> think I care too deeply about it.
+>
+> I could add 're="$(printf ...)"' to the setup at the top of the file
+> if you want
+
+As I do not care too deeply about it, we recently saw a lot about
+reducing number of processes in the tests, so apparently some folks
+care and I presume they want to see something like that to happen.
+I do not think $re is a good name for such a variable, though ;-)
