@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1ADF1F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 10:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5701F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 10:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfGBKrT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 06:47:19 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43290 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbfGBKrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 06:47:19 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e3so26795323edr.10
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 03:47:18 -0700 (PDT)
+        id S1726344AbfGBKxv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 06:53:51 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39467 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725767AbfGBKxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 06:53:50 -0400
+Received: by mail-ed1-f66.google.com with SMTP id m10so26829457edv.6
+        for <git@vger.kernel.org>; Tue, 02 Jul 2019 03:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=6ZcBamMrF7OdfrMAgrJlzOm1D6mOljyZI3/fv1W79ZQ=;
-        b=L3ltciIEcK8mu/qQra1nJOM96EohBSOaYEjgJxWZUM+2yA/I9iNi+FQgqEdp9DP02X
-         UEg2HhRNg39VZxMG7v1tcudhyxHX3o7Kh3JjhLVI+9YCOS1Oh9sfZ8TeA/HnhFBfw9xh
-         ZLhQUpO+9NVllutMJVPjdDegryR00Y8Uyybao3/G45zaorwmM7fEfPFUUS5PwzddH6ap
-         gxKH2M9QFr4fjsZmartQakqkmt5zIdM0Rgs4rj4YrRP73XjSxo8vv0k0WG6ShMtGsSsG
-         sZkeZI8sZLYUPaZIuvRwheCvjO+DPeGUe3Dfkr5bdZZ5yltI7MUnf2Ni+G91wk9KijkB
-         VpQg==
+        bh=eheZrq4RfV7m/smyhmaG1+aKu6R6UcM3hKnRsdWnhPU=;
+        b=UbI9d+eYoh0vvvJ2OrmHg0na9iCGze2armv3BBfQAog/j57GSIWo9TZ6GNUi1eEFlZ
+         jrwLHs2ykXPbeyJnhq/R+bfFhOfTIILfFnlZg48hMnIg0BGysikECL5+Q2j/W8Kw87NA
+         WlKApAmL4k/JArtofQC0CjOJxbui4F0NS3+hoLfwyOgLjy7YDrS1U3f6ly6IR+Uvt3cE
+         Dh0+JejKMjsOq8ctK5S7Xkd+IVI7SvFE0bzD3pPx4m8WAyVSVVxvk7zKJ+WWi9t3DHNG
+         rCTqfyCOR1rVFuuKpGjjfWpWTrVtSuqSZZX3bCSbVFXemuWjJDPb4E/Oju1hu/pmZZWN
+         kiAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=6ZcBamMrF7OdfrMAgrJlzOm1D6mOljyZI3/fv1W79ZQ=;
-        b=lcCKxUtD52Cyl4OCxUHPnQnktx/G4WWgyHx5LdnDDvku4nSW1FHOrNzohrWh4mJung
-         FsWH/ZozGAfsGdrpCVrDyqlTLQAD3UHQ4KIYSHpAb9Yimu4lytVbsRzoG0+g73Htb13N
-         q7ULU61Wq7mdmeCXT/yygbEOvqwOn8yT3LUwADtvUrHi6VoBQWUwpIxLCn9UjjzwrH4H
-         6Y+9LEvoyBp70JIaO+ShX+wKhyZVRRhvV/dEXNc/ETyXpg00Ampp6g1rltXrsNmW/TKt
-         EYBOGmwwVlqc1N8tAttwy14WkIZ9emkmRpSty8zxhhOrF7lcII3lr3KgrzbWmvEzHskY
-         efpA==
-X-Gm-Message-State: APjAAAV0v4Nwra+rDWHS1PSH3+4i2ZNP/y9233snLJQvl/uKoVbodrxC
-        LFDtoh6DOOW4b16L+GprAtKoUXhHcxU=
-X-Google-Smtp-Source: APXvYqwUeGtx5QtIdtKkW4sRnjLeuTfQByzLI+9dAbzlMcIKqwqusrIVAKFmkw55fmgXzjmQmIOF9w==
-X-Received: by 2002:a17:906:2ecc:: with SMTP id s12mr7620762eji.110.1562064437149;
-        Tue, 02 Jul 2019 03:47:17 -0700 (PDT)
+        bh=eheZrq4RfV7m/smyhmaG1+aKu6R6UcM3hKnRsdWnhPU=;
+        b=K02CaJ4VGxdDmpLjwPSd0u6Y/INI6p45vsmksS+6s0G46YZA/PlUegr/Zf+tkTw+z6
+         QsBeJBjyKalg1HKIZCkQ40/oxiLEtW9mjA3ASc8GhezbRFHUAr4EQXCgCzMwfWqkQrAa
+         tqU2Ak6Tg28nlim132CzwHdaSjKWmXQwNpNbIu2brA+Z0lwTiXIKUOjPy9xwNQuPS2Rq
+         MJvjKFiPi9O3lunH/7OYygLIrlxDIPwXxgCCvjTfmAhNrTNNuU4lSV65Bk8J7YOlBxsL
+         X8JAzIYGZtiUb1J7GfzBfrv00VS1VNAoHWsQqI2uH9ZgtnHevkx5d1sTadNH3D46IL3R
+         ZTdw==
+X-Gm-Message-State: APjAAAWF3j7EEbjDVEjLDeEsrE1tnnTLPN5xDosWZywxbQkyA7N2otlf
+        yStEtPEOcmLv/b7JYDwdlaE=
+X-Google-Smtp-Source: APXvYqzo1UZHCt0PoKt24ceFfFuVRw3hgUKdr6OR5tXQfoN5TMtjNgYW69/ItEBjrpTFZj1Yt36FSA==
+X-Received: by 2002:a17:906:5399:: with SMTP id g25mr27449171ejo.247.1562064829083;
+        Tue, 02 Jul 2019 03:53:49 -0700 (PDT)
 Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id h10sm4554263eda.85.2019.07.02.03.47.16
+        by smtp.gmail.com with ESMTPSA id x10sm4546899edd.73.2019.07.02.03.53.48
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 02 Jul 2019 03:47:16 -0700 (PDT)
+        Tue, 02 Jul 2019 03:53:48 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate setting
-References: <pull.254.git.gitgitgadget@gmail.com> <pull.254.v2.git.gitgitgadget@gmail.com> <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 1/3] repo-settings: create core.featureAdoptionRate setting
+References: <pull.254.v2.git.gitgitgadget@gmail.com> <pull.254.v3.git.gitgitgadget@gmail.com> <13b9e71b383485885c4823baa466c32511fd20bc.1561991348.git.gitgitgadget@gmail.com> <CACsJy8Cwxov9VWq_MpeWstGtMB-rTy6LYyFj_PF9oSP0kqcDXQ@mail.gmail.com>
 User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
-Date:   Tue, 02 Jul 2019 12:47:15 +0200
-Message-ID: <87sgro7lxo.fsf@evledraar.gmail.com>
+In-reply-to: <CACsJy8Cwxov9VWq_MpeWstGtMB-rTy6LYyFj_PF9oSP0kqcDXQ@mail.gmail.com>
+Date:   Tue, 02 Jul 2019 12:53:47 +0200
+Message-ID: <87r2787lms.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -70,72 +71,42 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jun 19 2019, Derrick Stolee via GitGitGadget wrote:
+On Tue, Jul 02 2019, Duy Nguyen wrote:
 
->  core.commitGraph::
->  	If true, then git will read the commit-graph file (if it exists)
-> -	to parse the graph structure of commits. Defaults to false. See
-> +	to parse the graph structure of commits. Defaults to false, unless
-> +	`core.featureAdoptionRate` is at least three. See
->  	linkgit:git-commit-graph[1] for more information.
+> On Mon, Jul 1, 2019 at 10:32 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> @@ -601,3 +602,22 @@ core.abbrev::
+>>         in your repository, which hopefully is enough for
+>>         abbreviated object names to stay unique for some time.
+>>         The minimum length is 4.
+>> +
+>> +core.featureAdoptionRate::
+>> +       Set an integer value on a scale from 0 to 10 describing your
+>> +       desire to adopt new performance features. Defaults to 0. As
+>> +       the value increases, features are enabled by changing the
+>> +       default values of other config settings. If a config variable
+>> +       is specified explicitly, the explicit value will override these
+>> +       defaults:
 >
->  core.useReplaceRefs::
-> @@ -601,3 +602,21 @@ core.abbrev::
->  	in your repository, which hopefully is enough for
->  	abbreviated object names to stay unique for some time.
->  	The minimum length is 4.
-> +
-> +core.featureAdoptionRate::
-> +	Set an integer value on a scale from 0 to 10 describing your
-> +	desire to adopt new performance features. Defaults to 0. As
-> +	the value increases, features are enabled by changing the
-> +	default values of other config settings. If a config variable
-> +	is specified explicitly, the explicit value will override these
-> +	defaults:
-> ++
-> +If the value is at least 3, then the following defaults are modified.
-> +These represent relatively new features that have existed for multiple
-> +major releases, and present significant performance benefits. They do
-> +not modify the user-facing output of porcelain commands.
-> ++
-> +* `core.commitGraph=true` enables reading commit-graph files.
-> ++
-> +* `gc.writeCommitGraph=true` eneables writing commit-graph files during
+> This is because I'd like to keep core.* from growing too big (it's
+> already big), hard to read, search and maintain. Perhaps this should
+> belong to a separate group? Something like tuning.something or
+> defaults.something.
 
-I barked up a similar tree in
-https://public-inbox.org/git/CACBZZX5SbYo5fVPtK6LW1FF96nR5591RHHC-5wdjW-fmg1R0EQ@mail.gmail.com/
+The main thing users look at is "man git-config" (or its web rendering)
+which renders it all in one page anyway.
 
-I wonder if you've seen that & what you think about that
-approach. I.e. have a core.version=2.28 (or core.version=+6) or whatever
-to opt-in to features we'd make default in 2.28. Would that be your
-core.featureAdoptionRate=6 (28-28 = 6)?
+I think in general adding more things to core.* sucks less than
+explaining the special-case that "tuning.*" isn't a config for
+git-tuning(1) (although we have some of that already, e.g. with
+trace2.*).
 
-I admit that question is partly rhetorical, because I think it suggests
-how hard it would be for users to reason about this.
+Documentation/config/core.txt is ~600 lines. Maybe it would be a good
+idea to split it up, similar to your split of
+Documentation/config/*.txt, but let's not conflate how we'd like to
+maintain stuff in git.git with a config interface we expose externally.
 
-The "core.version" idea also sucks, but at least it's bound to our
-advertised version number, so it's obvious if you set it to e.g. +2 what
-feature track you're on, and furthermore when we'd commit to making that
-the default for users who don't set core.version (although we could of
-course always change our minds...). It's also something that mirrors how
-e.g. Perl, C compilers (with --std=*) treat this sort of thing.
-
-So I'm all for a facility to have a setting to collectively opt-in to
-new things early. But I think for such a thing we really should a) at
-least in principle commit to making those things the default eventually
-(if they don't suck) b) it needs to be obvious to the user how the
-"rate" relates to git releases.
-
-This "core.featureAdoptionRate" value seems more like zlib compression
-values & unrelated to release numbers. It's also for "performance
-features" only but squats a more general name. I suggested
-"core.version" & then "core.uiVersion" (in
-https://public-inbox.org/git/87pnunxz5i.fsf@evledraar.gmail.com/).
-
-Regardless of whether we want to pin opt-in early-bird features to
-version numbers in some way, which I think is a good idea, but maybe
-others disagree. I think if it's "just performance" it's good to put
-that in the key name in such a way that we can have "early UI" features,
-or other non-UI non-performance.
-
-Thanks for working on this!
+It's going to be very confusing for users if some settings that
+otherwise would be in core aren't there because a file in git.git was
+"too big" at the time. Users (mostly) aren't going to know/care in what
+chronological order we added config keys.
