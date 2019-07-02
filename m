@@ -2,160 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D8B01F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 15:54:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4571C1F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 16:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726575AbfGBPyO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 11:54:14 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50317 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726358AbfGBPyO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 11:54:14 -0400
-Received: by mail-wm1-f65.google.com with SMTP id n9so1378365wmi.0
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 08:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cUfeQBGbLIKoDJLDEE0Zfo78SH1eDATQhEocb+0fi/k=;
-        b=m6agON+AoUSPFerLkWvmtfPg7B1vAiyXLRRVnT1NmAWYJKLDV82ZfX+/JKqspSaAXP
-         qN7JVoZyOCFVucraH2WmHw0yoyW3VAf1NuBm8zGx9Ynu4FqIBMPt+AcfnwVMnz92hGQx
-         mq9ZFMSLa3PiJIaoNYAozVKHI+lP4mcuFMTvs7nSSNzsPp662/1PZ3POA4/71iEVMQ0g
-         TYJXhY3lpcblvEqGHf/R388/yU1fAX8olupuHbrAByjmDUChJb/24laq9TzHYiP+GIlv
-         WN576n45Qgj3+9mwoNDhq7W0bX2x/kVmxZ02v2h0MfgX0p2ipY/PlW+uReaVirOnyB8G
-         LYsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=cUfeQBGbLIKoDJLDEE0Zfo78SH1eDATQhEocb+0fi/k=;
-        b=IQK2z9B6OaVzQ+WTlM//y+tLVm03xWkeNgJe52wh7BzRDUhzWKfl29sUBa25P/XRAo
-         gjjOv09i0puRvGjLad9ezlY1BRedSc/+le7qEABockAHT2HmfMIwcJloeY3sPN0RF3kM
-         4eUxNO1Mhf/CoqiBUwSCEX0YpRTj+0nxQFOjOhF0+AdnHkiy+cTcys901j0KY4cHeJri
-         yG5D6WCiwXHPcqfD7IEs+jxhgRWtdBX743US6Lzu45hpaqLcrkvFSHh60Utm42G3u/sr
-         HK6oezb/gMTKj2gIQP6ZKVSPFQiEow2Rrs3BIu99o3W7YtTtGokAlhVeykmW0HoY6zj8
-         IfmA==
-X-Gm-Message-State: APjAAAUlkJ9DB+0VdYUDq1RiwaattjkIa/4qKYzIIwySJ0HCSYmLUcDd
-        KyOnpYPAwJJyPFIzLDoueXc=
-X-Google-Smtp-Source: APXvYqzCR8dTRhhqFxE5CevYFEPpuAGp7OVWLBOCFLK3vVwxLGeUHEevtDlnr4n1dQ/mJBdqoUXAuw==
-X-Received: by 2002:a1c:6641:: with SMTP id a62mr3747707wmc.175.1562082852508;
-        Tue, 02 Jul 2019 08:54:12 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id r5sm27722421wrg.10.2019.07.02.08.54.09
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jul 2019 08:54:10 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] t3420: remove progress lines before comparing output
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
+        id S1726358AbfGBQ73 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 12:59:29 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52638 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726193AbfGBQ73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 12:59:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 096D17384D;
+        Tue,  2 Jul 2019 12:59:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=y8Qc7fdPBZH04wYk5TyMJ0QirV8=; b=SNsrx2
+        pijYAIa15ZL5Ba8rScL2jvcsB4hAUTr1z+UUema99S4QAA4c9v7wSfCW1r7KmI4W
+        dSrn7apncMBMsMtl6EhCU4/veMmopfv9K7xNTjLZ+7WWfgToJ0z7Eknd5V4EvTC5
+        4hmMXfJduy8MrN3wcCBIpRWFCXVdX2vELuQWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WsItKi4FzhBmHvxq8DfaghqPw6Gb3rMX
+        Xk1em8udOFb87iXtO5+17KQiYjUdlOxrME+wPHoBvz09l46DF8izwqVaU0rNbU3r
+        91M2Uz1FYVxfHkbDZDBZ60F6jxPOBU68xZWrWWncbtZXzMPI+zk9X0pHjR7oDkCI
+        5x8RgKJortk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 256AE7384C;
+        Tue,  2 Jul 2019 12:59:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4924D7384A;
+        Tue,  2 Jul 2019 12:59:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.276.git.gitgitgadget@gmail.com>
- <52501623f6b47447ce5da283ec11e378413899b7.1561986710.git.gitgitgadget@gmail.com>
- <xmqqimsl5v1u.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <2a0a968e-6929-71eb-77cf-ec3ee28fd734@gmail.com>
-Date:   Tue, 2 Jul 2019 16:54:08 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate setting
+References: <pull.254.git.gitgitgadget@gmail.com>
+        <pull.254.v2.git.gitgitgadget@gmail.com>
+        <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+        <87sgro7lxo.fsf@evledraar.gmail.com>
+        <CACsJy8Aqdb_-5ituTQMNjacHiJbw4abV=HsH9s6PoAGKyuwdJg@mail.gmail.com>
+Date:   Tue, 02 Jul 2019 09:59:20 -0700
+In-Reply-To: <CACsJy8Aqdb_-5ituTQMNjacHiJbw4abV=HsH9s6PoAGKyuwdJg@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 2 Jul 2019 18:09:41 +0700")
+Message-ID: <xmqqv9wk4bkn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqimsl5v1u.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: BDDCF58E-9CEA-11E9-8036-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/07/2019 22:01, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> progress output before comparing it to the expected output. We do this
->> by removing everything before the final "\r" on each line as we don't
->> care about the progress indicator, but we do care about what is printed
->> immediately after it.
-> 
-> As long as sed implementation used here does not do anything funny
-> to CR, I think the approach to strip everything before the last CR
-> on the line is sensible.  As I am not familiar with how Windows port
-> of sed wants to treat a CR byte in the pattern, I am not sure about
-> the precondition of the above statement, though.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I wondered about that too, but it passes the CI tests under windows.
+>> So I'm all for a facility to have a setting to collectively opt-in to
+>> new things early. But I think for such a thing we really should a) at
+>> least in principle commit to making those things the default eventually
+>
+> Some features may be best enabled for certain setups. This is why I
+> set configuration variables repo size, worktree size.. instead of just
+> one number.
 
-> I also have to wonder if we can/want to do this without an extra
-> printf process every time we sanitize the output, though I do not
-> think I care too deeply about it.
+Yeah, I think the concept of core.fetureAdoptionRate is faulty at
+multiple counts, and I admit I am guilty of making at least one
+aspect worse by giving the topic branch to queue these patches a
+mistaken name of "early-adoption".
 
-I could add 're="$(printf ...)"' to the setup at the top of the file if 
-you want
+Some tweaks, like the use of index version 4, may be something we
+strive to make it eventually suitable for _all_ users.  
 
-Best Wishes
+The effort may involve multiple iterations of things like "gee, the
+prefix-compression works very well for really big tree, but sucks
+for a project of medium size; lets tweak to automatically
+enable/disable it based on the size of the tree", but the main point
+is that we want to eventually make it good for projects of all sizes
+and different access patterns.  While we do the treaking, the user
+experience may be rocky, and "early adoption" model is perfectly
+suitable for a thing like this.
 
-Phillip
+But some other tweaks, like the ahead-behind thing, are what we
+would never make it the default for everybody.  They are "Git is
+never designed to be used like this, but if we disable small things
+like this and that, the end user experience for those who used to
+have them might suffer, but other aspect of the system becomes
+usable" tradeoffs.  When we are done experimenting and know what
+kind of system castration may give acceptable trade off, we know the
+subset of users to whom these tweaks give benefit (and others to whom
+these are not improvements).  Opting into these things is not about
+"early adoption".
 
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   t/t3420-rebase-autostash.sh | 16 +++++++++-------
->>   1 file changed, 9 insertions(+), 7 deletions(-)
->>
->> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
->> index 9186e90127..0454018584 100755
->> --- a/t/t3420-rebase-autostash.sh
->> +++ b/t/t3420-rebase-autostash.sh
->> @@ -48,8 +48,8 @@ create_expected_success_interactive () {
->>   	q_to_cr >expected <<-EOF
->>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
->>   	HEAD is now at $(git rev-parse --short feature-branch) third commit
->> -	Rebasing (1/2)QRebasing (2/2)QApplied autostash.
->> -	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
->> +	Applied autostash.
->> +	Successfully rebased and updated refs/heads/rebased-feature-branch.
->>   	EOF
->>   }
->>   
->> @@ -67,13 +67,13 @@ create_expected_failure_am () {
->>   }
->>   
->>   create_expected_failure_interactive () {
->> -	q_to_cr >expected <<-EOF
->> +	cat >expected <<-EOF
->>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
->>   	HEAD is now at $(git rev-parse --short feature-branch) third commit
->> -	Rebasing (1/2)QRebasing (2/2)QApplying autostash resulted in conflicts.
->> +	Applying autostash resulted in conflicts.
->>   	Your changes are safe in the stash.
->>   	You can run "git stash pop" or "git stash drop" at any time.
->> -	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
->> +	Successfully rebased and updated refs/heads/rebased-feature-branch.
->>   	EOF
->>   }
->>   
->> @@ -109,7 +109,8 @@ testrebase () {
->>   			suffix=interactive
->>   		fi &&
->>   		create_expected_success_$suffix &&
->> -		test_i18ncmp expected actual
->> +		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
->> +		test_i18ncmp expected actual2
->>   	'
->>   
->>   	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
->> @@ -209,7 +210,8 @@ testrebase () {
->>   			suffix=interactive
->>   		fi &&
->>   		create_expected_failure_$suffix &&
->> -		test_i18ncmp expected actual
->> +		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
->> +		test_i18ncmp expected actual2
->>   	'
->>   }
+Also as raised in another message in this thread, I do agree that
+the configuration does not belong to the "core." hierarchy.  It is
+more like a macro, that flips individual configuration based on a
+higher level "grouping" (e.g. my project falls into "large but
+infrequently updated" category) to suit the access pattern.
+
+> I see this more like gcc =O options. And for those options, the
+> developers decide what to include. If you know what you want already,
+> you can just turn specific keys on. Otherwise you count on devs to do
+> the right things.
+
+Yup.  Sorry for backing a wrong model.  And I kind of like the word
+"bundled" you mention below, not as in "bundled with Git", but more
+as in "these configuration settings are bundled together to serve
+users of this kind of project".
+
+> Which makes me think about a slightly different implementation detail
+> (which I ignored because I didn't think further about per-release
+> stuff): since these are basically meta config to change defaults, we
+> can just implement them as a (builtin, or bundled) config file. The
+> user can see what are included much easier we have several different
+> config "profiles" (deep history, large worktree, bleeding-edge...) and
+> the user can include one or all [1].
+>
+> [1] it also opens up the opportunity to have a standard (but optional)
+> set of aliases. But that's a touchy topic.
