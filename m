@@ -2,117 +2,272 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DCFB1F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 01:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D53101F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 05:16:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726869AbfGBB42 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jul 2019 21:56:28 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:34880
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726781AbfGBB42 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 1 Jul 2019 21:56:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1562032586;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=UYeNMt0snQKirpJFz22VYLQ5fMeGgpkWsj+L1CTQNA0=;
-        b=WzLNYgmKjW1HZkBXB1Efqxvi5oIgOrbBn9Jvklo7TYdz+XaDPj/0vQYSBw8Y0MwS
-        OdBU+FNscUIEZouEBo5CXsBG8HZDXruwRLsViSyyor4OFzB2EPgDuudACdK97lzYiTO
-        bJ46x0kEr3jsNR+IFAHrtF4GPmSvvRYT8RzuNxPY=
-From:   Max Rothman <max.r.rothman@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com>
-References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] completion: add missing completions for log, diff, show
+        id S1725819AbfGBFQw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 01:16:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57024 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725775AbfGBFQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 01:16:51 -0400
+Received: (qmail 30621 invoked by uid 109); 2 Jul 2019 05:16:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jul 2019 05:16:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11794 invoked by uid 111); 2 Jul 2019 05:17:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Jul 2019 01:17:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jul 2019 01:16:49 -0400
+Date:   Tue, 2 Jul 2019 01:16:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/6] test-lib: introduce test_commit_bulk
+Message-ID: <20190702051649.GA16344@sigill.intra.peff.net>
+References: <20190628093751.GA3569@sigill.intra.peff.net>
+ <20190629045322.GA8155@sigill.intra.peff.net>
+ <xmqq7e915r6k.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 2 Jul 2019 01:56:26 +0000
-X-SES-Outgoing: 2019.07.02-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq7e915r6k.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bash completion script knows some options to "git log" and
-"git show" only in the positive form, (e.g. "--abbrev-commit"), but not
-in their negative form (e.g. "--no-abbrev-commit"). Add them.
+On Mon, Jul 01, 2019 at 03:24:35PM -0700, Junio C Hamano wrote:
 
-Also, the bash completion script is missing some other options to
-"git diff", and "git show" (and thus, all other commands that take
-"git diff"'s options). Add them. Of note, since "--indent-heuristic" is
-no longer experimental, add that too.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Here's a re-roll of just the first patch of this series, since that was
+> > the one that got all the comments (and the others are textually
+> > independent).
+> 
+> OK, will replace and then queue an adjustment for 6200 which used to
+> use \$n but now must use %s instead.  Let's see if people spot things
+> worth pointing out in the remainder of the series (or this one, of
+> course, but I found this step quite sensible).
 
-Signed-off-by: Max Rothman <max.r.rothman@gmail.com>
+Urgh, I forgot I did have to tweak that later test. Thanks for noticing.
+
+I do have one more update based on the comments from Elijah: using
+"from" in the initial commit lets us simplify a few things (I posted the
+incremental earlier in the thread, but here it is as a complete
+replacement for patch 1).
+
+-- >8 --
+Subject: [PATCH v3] test-lib: introduce test_commit_bulk
+
+Some tests need to create a string of commits. Doing this with
+test_commit is very heavy-weight, as it needs at least one process per
+commit (and in fact, uses several).
+
+For bulk creation, we can do much better by using fast-import, but it's
+often a pain to generate the input. Let's provide a helper to do so.
+
+We'll use t5310 as a guinea pig, as it has three 10-commit loops. Here
+are hyperfine results before and after:
+
+  [before]
+  Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
+    Time (mean ± σ):      2.846 s ±  0.305 s    [User: 3.042 s, System: 0.919 s]
+    Range (min … max):    2.250 s …  3.210 s    10 runs
+
+  [after]
+  Benchmark #1: ./t5310-pack-bitmaps.sh --root=/var/ram/git-tests
+    Time (mean ± σ):      2.210 s ±  0.174 s    [User: 2.570 s, System: 0.604 s]
+    Range (min … max):    1.999 s …  2.590 s    10 runs
+
+So we're over 20% faster, while making the callers slightly shorter. We
+added a lot more lines in test-lib-function.sh, of course, and the
+helper is way more featureful than we need here. But my hope is that it
+will be flexible enough to use in more places.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- contrib/completion/git-completion.bash | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ t/t5310-pack-bitmaps.sh |  15 +----
+ t/test-lib-functions.sh | 123 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 126 insertions(+), 12 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9f71bcde967bc..b6d18710135ec 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1474,6 +1474,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--dirstat-by-file= --cumulative
- 			--diff-algorithm=
- 			--submodule --submodule= --ignore-submodules
-+			--indent-heuristic --no-indent-heuristic
-+			--textconv --no-textconv
- "
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index a26c8ba9a2..3aab7024ca 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -21,15 +21,9 @@ has_any () {
+ }
  
- _git_diff ()
-@@ -1782,6 +1784,10 @@ _git_log ()
- 		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
- 		return
- 		;;
-+	--no-walk=*)
-+		__gitcomp "sorted unsorted" "" "${cur##--no-walk=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "
- 			$__git_log_common_options
-@@ -1789,16 +1795,19 @@ _git_log ()
- 			$__git_log_gitk_options
- 			--root --topo-order --date-order --reverse
- 			--follow --full-diff
--			--abbrev-commit --abbrev=
-+			--abbrev-commit --no-abbrev-commit --abbrev=
- 			--relative-date --date=
- 			--pretty= --format= --oneline
- 			--show-signature
- 			--cherry-mark
- 			--cherry-pick
- 			--graph
--			--decorate --decorate=
-+			--decorate --decorate= --no-decorate
- 			--walk-reflogs
-+			--no-walk --no-walk= --do-walk
- 			--parents --children
-+			--expand-tabs --expand-tabs= --no-expand-tabs
-+			--patch
- 			$merge
- 			$__git_diff_common_options
- 			--pickaxe-all --pickaxe-regex
-@@ -2525,8 +2534,9 @@ _git_show ()
- 		return
- 		;;
- 	--*)
--		__gitcomp "--pretty= --format= --abbrev-commit --oneline
--			--show-signature
-+		__gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
-+			--oneline --show-signature --patch
-+			--expand-tabs --expand-tabs= --no-expand-tabs
- 			$__git_diff_common_options
- 			"
- 		return
+ test_expect_success 'setup repo with moderate-sized history' '
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit $i
+-	done &&
++	test_commit_bulk --id=file 10 &&
+ 	git checkout -b other HEAD~5 &&
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit side-$i
+-	done &&
++	test_commit_bulk --id=side 10 &&
+ 	git checkout master &&
+ 	bitmaptip=$(git rev-parse master) &&
+ 	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
+@@ -106,10 +100,7 @@ test_expect_success 'clone from bitmapped repository' '
+ '
+ 
+ test_expect_success 'setup further non-bitmapped commits' '
+-	for i in $(test_seq 1 10)
+-	do
+-		test_commit further-$i
+-	done
++	test_commit_bulk --id=further 10
+ '
+ 
+ rev_list_tests 'partial bitmap'
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0367cec5fd..6083cf483a 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -233,6 +233,129 @@ test_merge () {
+ 	git tag "$1"
+ }
+ 
++# Efficiently create <nr> commits, each with a unique number (from 1 to <nr>
++# by default) in the commit message.
++#
++# Usage: test_commit_bulk [options] <nr>
++#   -C <dir>:
++#	Run all git commands in directory <dir>
++#   --ref=<n>:
++#	ref on which to create commits (default: HEAD)
++#   --start=<n>:
++#	number commit messages from <n> (default: 1)
++#   --message=<msg>:
++#	use <msg> as the commit mesasge (default: "commit %s")
++#   --filename=<fn>:
++#	modify <fn> in each commit (default: %s.t)
++#   --contents=<string>:
++#	place <string> in each file (default: "content %s")
++#   --id=<string>:
++#	shorthand to use <string> and %s in message, filename, and contents
++#
++# The message, filename, and contents strings are evaluated by printf, with the
++# first "%s" replaced by the current commit number. So you can do:
++#
++#   test_commit_bulk --filename=file --contents="modification %s"
++#
++# to have every commit touch the same file, but with unique content.
++#
++test_commit_bulk () {
++	tmpfile=.bulk-commit.input
++	indir=.
++	ref=HEAD
++	n=1
++	message='commit %s'
++	filename='%s.t'
++	contents='content %s'
++	while test $# -gt 0
++	do
++		case "$1" in
++		-C)
++			indir=$2
++			shift
++			;;
++		--ref=*)
++			ref=${1#--*=}
++			;;
++		--start=*)
++			n=${1#--*=}
++			;;
++		--message=*)
++			message=${1#--*=}
++			;;
++		--filename=*)
++			filename=${1#--*=}
++			;;
++		--contents=*)
++			contents=${1#--*=}
++			;;
++		--id=*)
++			message="${1#--*=} %s"
++			filename="${1#--*=}-%s.t"
++			contents="${1#--*=} %s"
++			;;
++		-*)
++			BUG "invalid test_commit_bulk option: $1"
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++	total=$1
++
++	add_from=
++	if git -C "$indir" rev-parse --verify "$ref"
++	then
++		add_from=t
++	fi
++
++	while test "$total" -gt 0
++	do
++		test_tick &&
++		echo "commit $ref"
++		printf 'author %s <%s> %s\n' \
++			"$GIT_AUTHOR_NAME" \
++			"$GIT_AUTHOR_EMAIL" \
++			"$GIT_AUTHOR_DATE"
++		printf 'committer %s <%s> %s\n' \
++			"$GIT_COMMITTER_NAME" \
++			"$GIT_COMMITTER_EMAIL" \
++			"$GIT_COMMITTER_DATE"
++		echo "data <<EOF"
++		printf "$message\n" $n
++		echo "EOF"
++		if test -n "$add_from"
++		then
++			echo "from $ref^0"
++			add_from=
++		fi
++		printf "M 644 inline $filename\n" $n
++		echo "data <<EOF"
++		printf "$contents\n" $n
++		echo "EOF"
++		echo
++		n=$((n + 1))
++		total=$((total - 1))
++	done >"$tmpfile"
++
++	git -C "$indir" \
++	    -c fastimport.unpacklimit=0 \
++	    fast-import <"$tmpfile" || return 1
++
++	# This will be left in place on failure, which may aid debugging.
++	rm -f "$tmpfile"
++
++	# If we updated HEAD, then be nice and update the index and working
++	# tree, too.
++	if test "$ref" = "HEAD"
++	then
++		git -C "$indir" checkout -f HEAD || return 1
++	fi
++
++}
++
+ # This function helps systems where core.filemode=false is set.
+ # Use it instead of plain 'chmod +x' to set or unset the executable bit
+ # of a file in the working directory and add it to the index.
+-- 
+2.22.0.776.g16867c022c
 
---
-https://github.com/git/git/pull/426
