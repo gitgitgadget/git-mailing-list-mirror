@@ -7,69 +7,72 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6021F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 05:22:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E0C1F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 05:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725808AbfGBFWq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 01:22:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57040 "HELO cloud.peff.net"
+        id S1726878AbfGBF3l (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 01:29:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57048 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725789AbfGBFWq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 01:22:46 -0400
-Received: (qmail 30637 invoked by uid 109); 2 Jul 2019 05:22:46 -0000
+        id S1725981AbfGBF3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 01:29:40 -0400
+Received: (qmail 30658 invoked by uid 109); 2 Jul 2019 05:29:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jul 2019 05:22:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jul 2019 05:29:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11820 invoked by uid 111); 2 Jul 2019 05:23:38 -0000
+Received: (qmail 11845 invoked by uid 111); 2 Jul 2019 05:30:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Jul 2019 01:23:38 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Jul 2019 01:30:33 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jul 2019 01:22:44 -0400
-Date:   Tue, 2 Jul 2019 01:22:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jul 2019 01:29:39 -0400
+Date:   Tue, 2 Jul 2019 01:29:39 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/6] test-lib: introduce test_commit_bulk
-Message-ID: <20190702052243.GB16344@sigill.intra.peff.net>
-References: <20190628093751.GA3569@sigill.intra.peff.net>
- <20190629045322.GA8155@sigill.intra.peff.net>
- <xmqq36jp5qzm.fsf@gitster-ct.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips
+ are valid
+Message-ID: <20190702052938.GC16344@sigill.intra.peff.net>
+References: <20190628101131.GA22862@sigill.intra.peff.net>
+ <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
+ <20190629074348.GA5080@sigill.intra.peff.net>
+ <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
+ <20190701125945.GB4704@sigill.intra.peff.net>
+ <20190701131713.GA25349@sigill.intra.peff.net>
+ <20190701170245.GA54693@TaylorsMBP5815.attlocal.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq36jp5qzm.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20190701170245.GA54693@TaylorsMBP5815.attlocal.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 01, 2019 at 03:28:45PM -0700, Junio C Hamano wrote:
+On Mon, Jul 01, 2019 at 12:02:45PM -0500, Taylor Blau wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >   - replace eval formatting magic with "%s" printf formatters (safer and
-> >     gets rid of quoting issues in the callers).
-> 
-> This one actually made me think twice about safety, as we'd be using
-> end-user supplied formatting string without any inspection.  I think
-> it is fine as it is merely a test helper.
+> One thing that I didn't catch in my initial review that I am seeing now
+> is the ".alternate" marker. Why did you choose this? I was thinking that
+> ".have" would make more sense since it's consistent with what's shown in
+> the ref advertisement, but I think that actually ".alternate" is a
+> _better_ choice: the two really do refer to different things.
 
-Yeah, and most shells do something sensible with nonsense formats.
-E.g., "%s %s" will yield an empty string for the second one in both dash
-and bash (and that's what POSIX says, though I'd be happy with any
-implementation that avoids segfaulting).
+Yeah, I had called these ".have" originally, but decided that was too
+tied up with the current users, and not with the concept. I think
+keeping the leading "." is worthwhile as that's an invalid refname.
 
-> If somebody is later making it into a test-tool function, I expect
-> that our interpolation engine, not the bare sprintf(), would be used
-> there, and it would hopefully also be safe?
+I also thought about an empty string, but it's probably more informative
+to show _something_. After all, the user would not see these unless they
+specifically asked for them _and_ used something like --source, so
+presumably it's a useful piece of information at that point (I don't
+know of any other way to show these names except for --source).
 
-Yes, that was exactly my plan. It would also let you mention the number
-more than once in the format, though I doubt any callers would care
-about that feature.
+I suppose one other option would be to name them after the oid itself.
+So with --source you'd find out that 1234abcd came from 1234abcd (duh),
+but also that its children came from 1234abcd. Maybe that has value. I
+dunno.
 
-I also think more potential callers could be converted if the refname
-was formatted, too (e.g., some of them seem to write to branch-1,
-branch-2, etc). I drew the line there, but anybody is welcome to explore
-it further.
+It would be easy to change, but I'd also be OK punting until somebody
+comes up with a compelling use case.
 
 -Peff
