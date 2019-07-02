@@ -8,172 +8,164 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22B731F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 14:37:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3FC01F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 14:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726623AbfGBOhn (ORCPT <rfc822;e@80x24.org>);
+        id S1726695AbfGBOho (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 10:37:44 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:35150 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfGBOhn (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Jul 2019 10:37:43 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45523 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbfGBOhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 10:37:43 -0400
-Received: by mail-ed1-f65.google.com with SMTP id a14so27504861edv.12
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 07:37:41 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id w20so27543239edd.2
+        for <git@vger.kernel.org>; Tue, 02 Jul 2019 07:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=imkaCsd+yNx1b3RiTftq8426o77yODewxlEKAq67y2E=;
-        b=doGskoAbrq3AVaz7zcmaHNtrwfhF4p+kM2BxKo9f185I+CoJz9lzE4/3fP/6eYLNAu
-         p+fiEBMuL0zy6yvIWBdCabIhkEVrbQAyrheYXAR+BYZMcVkxWDYG+hfS6Cs7wjVoC3E/
-         ECTKI3DBQ5kog128PksQ9AbZSbZUzBhScKarDiggw18TJ5QMABBwbiJK98TjAg0Jz/N2
-         RD2z4joJd2CooRaNT8spp6yqfMFrLtNCwpbK6JL4AbY5qjgr9NyWAeJfrFYSgVxhNJgi
-         6s3NrkT1ruk/SVtyaYoinxvXo07Uciw84DNe9VptlIAaCWItIHnjJA46ZOK0slhAvftg
-         lEHw==
+        bh=E9TEE/loUb4wUtr+pcp/3dczXcJEgvMEGYVRVCwsPkE=;
+        b=eanT8qxzw+Fya6ZdQc9wk1AOMfglH5klwXAbrWhTBA78IZ0fuyFrOW3B1xWNWnqsW2
+         KDqTa41VpwGsIpMxqF7sM/9tRqfQimKeiJo6rif6caJPvxrIz1C1B0vtui/fdQTV9PW9
+         8jbx3tZZnN73PR5ng4MH+SFMIq+lmDn7bRs4CwUDwl75OYU/4XLIu9faiVY/LI7NbbpX
+         m1eiCesAXO3cnRLdD4eyTbZOtcG+Wgaa2TLM+iWR/CBFzyMI/1cOcDMIqtfpKW0ESiM2
+         SbFM3no0ZVaqs8Vhb4cRiGWb3YCnbpRfTeD9XztfYcxngPhGGh3YEiSDhhHF8HJ3Jy6V
+         v6XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=imkaCsd+yNx1b3RiTftq8426o77yODewxlEKAq67y2E=;
-        b=qhfmYbX9pK77i2l1sAkS8RiZSHgx8crxl8INbtj0vYTP0VVLgN+RokdtTZuDkudkou
-         uFB1hBjMveZYRhrsnnuuTjmmXN8UzozOKZZH1GDE8F3IkdcXsHt8O1vluTHT6SMix8n9
-         MAJFkx88Y5Ftb/XX9Thid2BUT4DUjogIgoeqd914gCOlp9/qZIlsL//46pJ7sveio8b7
-         JTN8MwsdEzO8BzHzLHBYx8OCUr3cWPOXNUZzCwdp8tBjLPkUZfJtCuCTmJ/zvz1016hz
-         D6nGU4K97XebFrEMO6D34wH6FUf8oVHCIx7QBj7oaNj6kVVR2mFY4bgWCI0Onp9H5S6z
-         9duQ==
-X-Gm-Message-State: APjAAAUKP/Fgi/VuzgptRpZ7XLHsJvWLhbPOWg/nWsWgpmHMaj3++Yi2
-        +HLpRbNV0VM9Lj8eQFOFZpE+Iz9e
-X-Google-Smtp-Source: APXvYqxeyvZMw0NxSNrSm6FbsACEGLA2IdbDewZyWxMGeR2gBh9EKSMHSoq9V1Hz2tZEjLvLBf/qbg==
-X-Received: by 2002:a17:906:f0cd:: with SMTP id dk13mr28957074ejb.84.1562078260371;
-        Tue, 02 Jul 2019 07:37:40 -0700 (PDT)
+        bh=E9TEE/loUb4wUtr+pcp/3dczXcJEgvMEGYVRVCwsPkE=;
+        b=rlclLybLmvykX3DPkOfTqSqJ4eR6yDPWuxDHR5alAAf6GTnNV+PgrxxicJJlANBygR
+         05EPtRYdtccXBt+4WBejTwfot+l1HktxpIJCJTxK2aIXumapONIW2WQxmL+hqQWvzeWP
+         vVVgjPCrOkn4+i4nM6P/PMBTq7heWvyB4/KZ0FSeEdqsqUyKG2xwHvCezRv45x5Se3VV
+         i+H8tSICrkwWE3MWSXAv27sFsisnvNEwmdASoOwGyoccT78sAMyyLx4sYlAW6ZC0UCsA
+         b1AWHZydynIc12ZgA9ExZO7Gf+1eZpCmXsvPq39ffivLhE7xRSUdSCl97NxElKPkOGca
+         +dVQ==
+X-Gm-Message-State: APjAAAVR1fhru7qbIsDur2q+O2sNsAnfI9QAZoPjk0AWPiEgYI14B3ny
+        i5gi6hy8smyOpv7txiQCZVKQlyRz
+X-Google-Smtp-Source: APXvYqx/72XEXbc5HvjFCivphrsYwzc7ZPu/pq96dbzl7Xu0bCzlRl/8XHkZe8BiJ7cb8gFwKkbtVQ==
+X-Received: by 2002:aa7:d297:: with SMTP id w23mr35605966edq.128.1562078261735;
+        Tue, 02 Jul 2019 07:37:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r13sm4448544eds.35.2019.07.02.07.37.39
+        by smtp.gmail.com with ESMTPSA id 9sm2808152ejg.49.2019.07.02.07.37.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jul 2019 07:37:39 -0700 (PDT)
-Date:   Tue, 02 Jul 2019 07:37:39 -0700 (PDT)
-X-Google-Original-Date: Tue, 02 Jul 2019 14:37:37 GMT
-Message-Id: <pull.277.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.277.git.gitgitgadget@gmail.com>
+        Tue, 02 Jul 2019 07:37:41 -0700 (PDT)
+Date:   Tue, 02 Jul 2019 07:37:41 -0700 (PDT)
+X-Google-Original-Date: Tue, 02 Jul 2019 14:37:39 GMT
+Message-Id: <c562cf681f5c1c47cd77eead30ec9ae1eb7ca9e0.1562078259.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.277.v2.git.gitgitgadget@gmail.com>
 References: <pull.277.git.gitgitgadget@gmail.com>
+        <pull.277.v2.git.gitgitgadget@gmail.com>
 From:   "Quentin Nerden via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/2] Update git-clone doc: refer to long form of the options and list short form
- of the options first
+Subject: [PATCH v2 2/2] docs: git-clone: list short form of options first
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Quentin Nerden <quentin.nerden@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To make doc of git-clone easier to read, refer to the long version of the
-options (it is easier to guess what --verbose is doing than -v).
+From: Quentin Nerden <quentin.nerden@intel.com>
 
-Also: put the short options first, to match the doc of git-add, git-commit,
-git-clean, git-branch...
+List the short form of options (e.g.: '-l') before the long form (e.g.
+'--local').
+This is to match the doc of git-add, git-commit, git-clean, git-branch...
 
-Quentin Nerden (2):
-  docs: git-clone: refer to long form of options
-  docs: git-clone: list short form of options first
+Signed-off-by: Quentin Nerden <quentin.nerden@gmail.com>
+---
+ Documentation/git-clone.txt | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
- Documentation/git-clone.txt | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
-
-
-base-commit: 8dca754b1e874719a732bc9ab7b0e14b21b1bc10
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-277%2Fkenden%2Fpatch-1-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-277/kenden/patch-1-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/277
-
-Range-diff vs v1:
-
- -:  ---------- > 1:  d2f5540ea1 docs: git-clone: refer to long form of options
- 1:  0dd1b01769 ! 2:  c562cf681f docs: update git-clone doc: refer to long options
-     @@ -1,13 +1,10 @@
-     -Author: Quentin Nerden <quentin.nerden@gmail.com>
-     +Author: Quentin Nerden <quentin.nerden@intel.com>
-      
-     -    docs: update git-clone doc: refer to long options
-     +    docs: git-clone: list short form of options first
-      
-     -    To make the doc of git-clone easier to read,
-     -    refer to the long version of the options
-     -    (it is easier to guess what --verbose is doing than -v).
-     -
-     -    Also:
-     -    put the short options first, to match the doc of git-add, git-commit, git-clean, git-branch...
-     +    List the short form of options (e.g.: '-l') before the long form (e.g.
-     +    '--local').
-     +    This is to match the doc of git-add, git-commit, git-clean, git-branch...
-      
-          Signed-off-by: Quentin Nerden <quentin.nerden@gmail.com>
-      
-     @@ -34,19 +31,6 @@
-       	When the repository to clone is on the local machine,
-       	instead of using hard links, automatically setup
-       	`.git/objects/info/alternates` to share the objects
-     -@@
-     - If these objects are removed and were referenced by the cloned repository,
-     - then the cloned repository will become corrupt.
-     - +
-     --Note that running `git repack` without the `-l` option in a repository
-     -+Note that running `git repack` without the `--local` option in a repository
-     - cloned with `-s` will copy objects from the source repository into a pack
-     - in the cloned repository, removing the disk space savings of `clone -s`.
-     --It is safe, however, to run `git gc`, which uses the `-l` option by
-     -+It is safe, however, to run `git gc`, which uses the `--local` option by
-     - default.
-     - +
-     - If you want to break the dependency of a repository cloned with `-s` on
-      @@
-       	same repository, and this option can be used to stop the
-       	borrowing.
-     @@ -63,13 +47,6 @@
-       	Run verbosely. Does not affect the reporting of progress status
-       	to the standard error stream.
-       
-     - --progress::
-     - 	Progress status is reported on the standard error stream
-     --	by default when it is attached to a terminal, unless -q
-     -+	by default when it is attached to a terminal, unless `--quiet`
-     - 	is specified. This flag forces progress status even if the
-     - 	standard error stream is not directed to a terminal.
-     - 
-      @@
-       	When multiple `--server-option=<option>` are given, they are all
-       	sent to the other side in the order listed on the command line.
-     @@ -80,14 +57,6 @@
-       	No checkout of HEAD is performed after the clone is complete.
-       
-       --bare::
-     - 	Make a 'bare' Git repository.  That is, instead of
-     - 	creating `<directory>` and placing the administrative
-     - 	files in `<directory>/.git`, make the `<directory>`
-     --	itself the `$GIT_DIR`. This obviously implies the `-n`
-     -+	itself the `$GIT_DIR`. This obviously implies `--no-checkout`
-     - 	because there is nowhere to check out the working tree.
-     - 	Also the branch heads at the remote are copied directly
-     - 	to corresponding local branch heads, without mapping
-      @@
-       	that all these refs are overwritten by a `git remote update` in the
-       	target repository.
-     @@ -124,13 +93,3 @@
-       	Set a configuration variable in the newly-created repository;
-       	this takes effect immediately after the repository is
-       	initialized, but before the remote history is fetched or any
-     -@@
-     - 	The result is Git repository can be separated from working
-     - 	tree.
-     - 
-     ---j <n>::
-     - --jobs <n>::
-     -+-j <n>::
-     - 	The number of submodules fetched at the same time.
-     - 	Defaults to the `submodule.fetchJobs` option.
-     - 
-
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index cb3cf7a0fb..34011c2940 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -41,8 +41,8 @@ configuration variables.
+ 
+ OPTIONS
+ -------
+---local::
+ -l::
++--local::
+ 	When the repository to clone from is on a local machine,
+ 	this flag bypasses the normal "Git aware" transport
+ 	mechanism and clones the repository by making a copy of
+@@ -63,8 +63,8 @@ Git transport instead.
+ 	directory instead of using hardlinks. This may be desirable
+ 	if you are trying to make a back-up of your repository.
+ 
+---shared::
+ -s::
++--shared::
+ 	When the repository to clone is on the local machine,
+ 	instead of using hard links, automatically setup
+ 	`.git/objects/info/alternates` to share the objects
+@@ -116,13 +116,13 @@ objects from the source repository into a pack in the cloned repository.
+ 	same repository, and this option can be used to stop the
+ 	borrowing.
+ 
+---quiet::
+ -q::
++--quiet::
+ 	Operate quietly.  Progress is not reported to the standard
+ 	error stream.
+ 
+---verbose::
+ -v::
++--verbose::
+ 	Run verbosely. Does not affect the reporting of progress status
+ 	to the standard error stream.
+ 
+@@ -140,8 +140,8 @@ objects from the source repository into a pack in the cloned repository.
+ 	When multiple `--server-option=<option>` are given, they are all
+ 	sent to the other side in the order listed on the command line.
+ 
+---no-checkout::
+ -n::
++--no-checkout::
+ 	No checkout of HEAD is performed after the clone is complete.
+ 
+ --bare::
+@@ -164,13 +164,13 @@ objects from the source repository into a pack in the cloned repository.
+ 	that all these refs are overwritten by a `git remote update` in the
+ 	target repository.
+ 
+---origin <name>::
+ -o <name>::
++--origin <name>::
+ 	Instead of using the remote name `origin` to keep track
+ 	of the upstream repository, use `<name>`.
+ 
+---branch <name>::
+ -b <name>::
++--branch <name>::
+ 	Instead of pointing the newly created HEAD to the branch pointed
+ 	to by the cloned repository's HEAD, point to `<name>` branch
+ 	instead. In a non-bare repository, this is the branch that will
+@@ -178,8 +178,8 @@ objects from the source repository into a pack in the cloned repository.
+ 	`--branch` can also take tags and detaches the HEAD at that commit
+ 	in the resulting repository.
+ 
+---upload-pack <upload-pack>::
+ -u <upload-pack>::
++--upload-pack <upload-pack>::
+ 	When given, and the repository to clone from is accessed
+ 	via ssh, this specifies a non-default path for the command
+ 	run on the other end.
+@@ -188,8 +188,8 @@ objects from the source repository into a pack in the cloned repository.
+ 	Specify the directory from which templates will be used;
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+ 
+---config <key>=<value>::
+ -c <key>=<value>::
++--config <key>=<value>::
+ 	Set a configuration variable in the newly-created repository;
+ 	this takes effect immediately after the repository is
+ 	initialized, but before the remote history is fetched or any
 -- 
 gitgitgadget
