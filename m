@@ -2,143 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D67C1F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 10:43:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1ADF1F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 10:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725846AbfGBKnJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 06:43:09 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42663 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725767AbfGBKnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 06:43:09 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x17so17192112wrl.9
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 03:43:07 -0700 (PDT)
+        id S1726620AbfGBKrT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 06:47:19 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43290 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbfGBKrT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 06:47:19 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e3so26795323edr.10
+        for <git@vger.kernel.org>; Tue, 02 Jul 2019 03:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4kEWPBLulCI5h1irJ03T9oEh9JAT6xdNZxT83C9G3Ks=;
-        b=Ol+px/TnOmFtDHhTh3H3Ro6my9DAs14HOintIsMRSly83ffUmU66UN01VNuFvNqt7R
-         YhLv1DOfRwldRBm3S9I/B7XMVvQWW9IphGsNqea/0p0Yw37L8zIJpyztVVQbfZEngCr4
-         4dB14mw/c9CkNplbpn7HxhS+LeN22mOQiWqUCzpmcPY9sK3dmpbUdNbOBDYAJob0LREJ
-         5gF1PCGR3M1kPvmlwQg7ufXjnqGIB8I+EyUBNkrhhj0zE+bvhoq+l5vVxySGr47u/rHC
-         kAzC3vvGg9BZvardqQm0VGp1i2U1mjWU5zvxdTqipGRg1BEqzDGUH8bilQQ6qRT4M8QB
-         izzQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=6ZcBamMrF7OdfrMAgrJlzOm1D6mOljyZI3/fv1W79ZQ=;
+        b=L3ltciIEcK8mu/qQra1nJOM96EohBSOaYEjgJxWZUM+2yA/I9iNi+FQgqEdp9DP02X
+         UEg2HhRNg39VZxMG7v1tcudhyxHX3o7Kh3JjhLVI+9YCOS1Oh9sfZ8TeA/HnhFBfw9xh
+         ZLhQUpO+9NVllutMJVPjdDegryR00Y8Uyybao3/G45zaorwmM7fEfPFUUS5PwzddH6ap
+         gxKH2M9QFr4fjsZmartQakqkmt5zIdM0Rgs4rj4YrRP73XjSxo8vv0k0WG6ShMtGsSsG
+         sZkeZI8sZLYUPaZIuvRwheCvjO+DPeGUe3Dfkr5bdZZ5yltI7MUnf2Ni+G91wk9KijkB
+         VpQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4kEWPBLulCI5h1irJ03T9oEh9JAT6xdNZxT83C9G3Ks=;
-        b=L7w8LRshiDvtENC+nYx8ol78xazC+5rih7wSvWoLteJW7W0w4qzXiWmn0QgA556jCy
-         SAY/sn6USyvs9x4oxXiy2BPNrwwnblhm7C4NRQZVbErqd4A3f3etgsPaFTiSNEijETtZ
-         e78iXrIkR5YYqlnwveDRjdLC2uKBbF82YrqeYMT9ruQH/+glHChh0lYB+BjQPuBXjWBK
-         NWcatDc7+YEfyJDTEdTBDNvcUhd99YV5oBWWPq7FVPv35Eay6+ECTj/Gd4o4DlZ8sIcB
-         2jyHYiiCC6Mtf7Iu8uuejimvTIcpAaL2b1ilGYRJsCttKUMmtK1Pj4I/NSQKDy2QoZc7
-         Cntw==
-X-Gm-Message-State: APjAAAVtCOOAfduN8ipM7cfrQPW+YHWyOEoLD8phI2NmQNNHJo6omfu9
-        YClhzqkhE4J/xTm+Iq1Plk0PSk2w
-X-Google-Smtp-Source: APXvYqy39mDLKjgaBE9M7IH4YNxMGJ019dGuxtnYPKNFHdl8HIRwBc91UvvahuVTUxX/az2ujza4/g==
-X-Received: by 2002:a05:6000:1011:: with SMTP id a17mr13008545wrx.0.1562064186693;
-        Tue, 02 Jul 2019 03:43:06 -0700 (PDT)
-Received: from szeder.dev (x4dbd205f.dyn.telefonica.de. [77.189.32.95])
-        by smtp.gmail.com with ESMTPSA id b9sm7246965wrx.57.2019.07.02.03.43.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jul 2019 03:43:05 -0700 (PDT)
-Date:   Tue, 2 Jul 2019 12:43:03 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, eckhard.s.maass@googlemail.com,
-        git@vger.kernel.org, jacob.keller@gmail.com,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood123@gmail.com, rybak.a.v@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH v6 07/27] checkout: inform the user when removing branch
- state
-Message-ID: <20190702104303.GM21574@szeder.dev>
-References: <20190321131655.15249-1-pclouds@gmail.com>
- <20190329103919.15642-1-pclouds@gmail.com>
- <20190329103919.15642-8-pclouds@gmail.com>
- <20190702080611.GL21574@szeder.dev>
- <20190702090308.GA27775@ash>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=6ZcBamMrF7OdfrMAgrJlzOm1D6mOljyZI3/fv1W79ZQ=;
+        b=lcCKxUtD52Cyl4OCxUHPnQnktx/G4WWgyHx5LdnDDvku4nSW1FHOrNzohrWh4mJung
+         FsWH/ZozGAfsGdrpCVrDyqlTLQAD3UHQ4KIYSHpAb9Yimu4lytVbsRzoG0+g73Htb13N
+         q7ULU61Wq7mdmeCXT/yygbEOvqwOn8yT3LUwADtvUrHi6VoBQWUwpIxLCn9UjjzwrH4H
+         6Y+9LEvoyBp70JIaO+ShX+wKhyZVRRhvV/dEXNc/ETyXpg00Ampp6g1rltXrsNmW/TKt
+         EYBOGmwwVlqc1N8tAttwy14WkIZ9emkmRpSty8zxhhOrF7lcII3lr3KgrzbWmvEzHskY
+         efpA==
+X-Gm-Message-State: APjAAAV0v4Nwra+rDWHS1PSH3+4i2ZNP/y9233snLJQvl/uKoVbodrxC
+        LFDtoh6DOOW4b16L+GprAtKoUXhHcxU=
+X-Google-Smtp-Source: APXvYqwUeGtx5QtIdtKkW4sRnjLeuTfQByzLI+9dAbzlMcIKqwqusrIVAKFmkw55fmgXzjmQmIOF9w==
+X-Received: by 2002:a17:906:2ecc:: with SMTP id s12mr7620762eji.110.1562064437149;
+        Tue, 02 Jul 2019 03:47:17 -0700 (PDT)
+Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
+        by smtp.gmail.com with ESMTPSA id h10sm4554263eda.85.2019.07.02.03.47.16
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 02 Jul 2019 03:47:16 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 1/3] repo-settings: create core.featureAdoptionRate setting
+References: <pull.254.git.gitgitgadget@gmail.com> <pull.254.v2.git.gitgitgadget@gmail.com> <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <bdaee3ea9df0533c268d6bebbd252c00cfbaccd6.1560957119.git.gitgitgadget@gmail.com>
+Date:   Tue, 02 Jul 2019 12:47:15 +0200
+Message-ID: <87sgro7lxo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190702090308.GA27775@ash>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 02, 2019 at 04:03:09PM +0700, Duy Nguyen wrote:
-> On Tue, Jul 02, 2019 at 10:06:11AM +0200, SZEDER Gábor wrote:
-> > On Fri, Mar 29, 2019 at 05:38:59PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> > > After a successful switch, if a merge, cherry-pick or revert is ongoing,
-> > > it is canceled. This behavior has been with us from the very early
-> > > beginning, soon after git-merge was created but never actually
-> > > documented [1]. It may be a good idea to be transparent and tell the
-> > > user if some operation is canceled.
-> > 
-> > After this entered 'next' last week, today it greeted me with 167(!)
-> > of these warnings...  before I even had my breakfast.
-> > 
-> > Now, my script does a lot of repeated cherry-picks and expects that
-> > rerere is able to deal with most of the conflicts, i.e. it does
-> > approximately this:
-> > 
-> >   if ! git cherry-pick $oid >/dev/null 2>&1
-> >   then
-> >       if was_the_conflict_resolved
-> >       then
-> >           echo "using previous conflict resolution"
-> >           git commit --no-edit --cleanup=strip --quiet
-> >       else
-> >           die "uh-oh"
-> >       fi
-> >   fi
-> > 
-> > That 'git commit' in there always prints:
-> > 
-> >   warning: cancelling a cherry picking in progress
-> > 
-> > I don't understand why committing after a cherry-pick is considered
-> > "cancelling"...  in my view it's finishing it and there should be no
-> > warning whatsoever.
-> > 
-> 
-> I agree, this is not "canceling". I think this series causes conflicts
-> with pw/clean-sequencer-state-upon-final-commit and the warning is
-> accidentally enabled (partly my fault since I named the argument
-> "verbose").
-> 
-> Junio, in this conflict resolution (merging nd/switch-and-restore to
-> next), we should pass '0' instead of 'verbose' to
-> sequencer_post_commit_cleanup().
-> 
-> diff --cc builtin/commit.c
-> index 1921401117,fa5982cc86..145d50caf0
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@@ -1658,7 -1666,8 +1658,7 @@@ int cmd_commit(int argc, const char **a
->   		die("%s", err.buf);
->   	}
->   
-> - 	sequencer_post_commit_cleanup(the_repository);
->  -	unlink(git_path_cherry_pick_head(the_repository));
->  -	unlink(git_path_revert_head(the_repository));
-> ++	sequencer_post_commit_cleanup(the_repository, verbose);
->   	unlink(git_path_merge_head(the_repository));
->   	unlink(git_path_merge_msg(the_repository));
->   	unlink(git_path_merge_mode(the_repository));
 
-Thanks, this indeed takes care of it.
+On Wed, Jun 19 2019, Derrick Stolee via GitGitGadget wrote:
 
+>  core.commitGraph::
+>  	If true, then git will read the commit-graph file (if it exists)
+> -	to parse the graph structure of commits. Defaults to false. See
+> +	to parse the graph structure of commits. Defaults to false, unless
+> +	`core.featureAdoptionRate` is at least three. See
+>  	linkgit:git-commit-graph[1] for more information.
+>
+>  core.useReplaceRefs::
+> @@ -601,3 +602,21 @@ core.abbrev::
+>  	in your repository, which hopefully is enough for
+>  	abbreviated object names to stay unique for some time.
+>  	The minimum length is 4.
+> +
+> +core.featureAdoptionRate::
+> +	Set an integer value on a scale from 0 to 10 describing your
+> +	desire to adopt new performance features. Defaults to 0. As
+> +	the value increases, features are enabled by changing the
+> +	default values of other config settings. If a config variable
+> +	is specified explicitly, the explicit value will override these
+> +	defaults:
+> ++
+> +If the value is at least 3, then the following defaults are modified.
+> +These represent relatively new features that have existed for multiple
+> +major releases, and present significant performance benefits. They do
+> +not modify the user-facing output of porcelain commands.
+> ++
+> +* `core.commitGraph=true` enables reading commit-graph files.
+> ++
+> +* `gc.writeCommitGraph=true` eneables writing commit-graph files during
+
+I barked up a similar tree in
+https://public-inbox.org/git/CACBZZX5SbYo5fVPtK6LW1FF96nR5591RHHC-5wdjW-fmg1R0EQ@mail.gmail.com/
+
+I wonder if you've seen that & what you think about that
+approach. I.e. have a core.version=2.28 (or core.version=+6) or whatever
+to opt-in to features we'd make default in 2.28. Would that be your
+core.featureAdoptionRate=6 (28-28 = 6)?
+
+I admit that question is partly rhetorical, because I think it suggests
+how hard it would be for users to reason about this.
+
+The "core.version" idea also sucks, but at least it's bound to our
+advertised version number, so it's obvious if you set it to e.g. +2 what
+feature track you're on, and furthermore when we'd commit to making that
+the default for users who don't set core.version (although we could of
+course always change our minds...). It's also something that mirrors how
+e.g. Perl, C compilers (with --std=*) treat this sort of thing.
+
+So I'm all for a facility to have a setting to collectively opt-in to
+new things early. But I think for such a thing we really should a) at
+least in principle commit to making those things the default eventually
+(if they don't suck) b) it needs to be obvious to the user how the
+"rate" relates to git releases.
+
+This "core.featureAdoptionRate" value seems more like zlib compression
+values & unrelated to release numbers. It's also for "performance
+features" only but squats a more general name. I suggested
+"core.version" & then "core.uiVersion" (in
+https://public-inbox.org/git/87pnunxz5i.fsf@evledraar.gmail.com/).
+
+Regardless of whether we want to pin opt-in early-bird features to
+version numbers in some way, which I think is a good idea, but maybe
+others disagree. I think if it's "just performance" it's good to put
+that in the key name in such a way that we can have "early UI" features,
+or other non-UI non-performance.
+
+Thanks for working on this!
