@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34D111F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 19:30:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 361471F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 19:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727035AbfGBTaM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 15:30:12 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:23561 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726150AbfGBTaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 15:30:12 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45dZ8041X7z5tl9;
-        Tue,  2 Jul 2019 21:30:08 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id AAB4C1AEB;
-        Tue,  2 Jul 2019 21:30:07 +0200 (CEST)
-Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-        git@vger.kernel.org
-References: <20190630051816.8814-1-eantoranz@gmail.com>
- <20190630065358.GB31264@sigill.intra.peff.net>
- <xmqq36jp7gd8.fsf@gitster-ct.c.googlers.com>
- <2cece7ff-49af-0cae-7cb8-7cc1821be1ca@gmail.com>
- <xmqqr2784alt.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <e8a39f00-7f88-7c32-ac18-12f17faf2c72@kdbg.org>
-Date:   Tue, 2 Jul 2019 21:30:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1727047AbfGBTaR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 15:30:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63356 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfGBTaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 15:30:17 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E58C714B08A;
+        Tue,  2 Jul 2019 15:30:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jKTc98rCRqPejl+2gZvdE/ocHP8=; b=XhYwnh
+        RNid/whvF3JX44m3sCFd6f3kxuhiYs/ZNmtikCy3hMC6LhUbqb9VbnPBelYCupw6
+        b/RPAAmHbWmh1HET1n4pxcEGl9uaOs8UgrsMsgoFgJuT/jgxkOaG/7Wbq7Tovszp
+        bBTiCm5HpfRNjKl6tmrYwtDnKz/ABesdaYARI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZB6T9mzD5ub+VyuNZGPpvUn+uAbOfEJi
+        TP3JRYYahs58Y05GedLmw513WSTPVApPpW/jQckaiJuDf01DqKcLQqRY/voiDvv5
+        r25e8wIcfvKJtRveGKrfQcGNqRdLhxazo6FWygu7NetzWrnDx9TZ6mp43uZItEDd
+        +2Q62835vEw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DDF8F14B088;
+        Tue,  2 Jul 2019 15:30:14 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 57EFC14B087;
+        Tue,  2 Jul 2019 15:30:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v6] l10n: localizable upload progress messages
+References: <20190702182248.5322-2-dimitriy.ryazantcev@gmail.com>
+Date:   Tue, 02 Jul 2019 12:30:13 -0700
+In-Reply-To: <20190702182248.5322-2-dimitriy.ryazantcev@gmail.com> (Dimitriy
+        Ryazantcev's message of "Tue, 2 Jul 2019 21:22:48 +0300")
+Message-ID: <xmqqsgro2q0q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr2784alt.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0B6D2F0-9CFF-11E9-ADFD-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.07.19 um 19:20 schrieb Junio C Hamano:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> On 7/1/2019 2:35 PM, Junio C Hamano wrote:
->>> Jeff King <peff@peff.net> writes:
->>>
->>>>> First, we create a (temporary) merge commit of both branches (M3)
->>>>>
->>>>> ------------
->>>>> 	R1---R2---R3---R4---R5---R6---R7---M3
->>>>> 	 \         \              \       /
->>>>> 	  F1---F2---M1---F3---F4---M2---F5
->>>>> ------------
->>>>>
->> ...
->>> If M3 merge is always easier to manage than incremental stepwise
->>> rebase of the topic, then doing the "git merge --reverse-squash"
->>> would be a saner interface and also conceptually simpler.
->>
->> I agree that this would be a better way to expose this behavior,
->> and likely the implementation could be very clean.
-> 
-> What I was sort-of hoping to get comments on was actually something
-> else.
-> 
-> Would there be cases where the merge M3 gets unmanageably complex
-> even if rebasing the feature commits one by one is relatively simple
-> (and how often would that happen)?  "merge --squash" would not work
-> well (and extending the command to merge in a different direction
-> would not help) in such a situation, but "rebase -i" would work
-> much better (and "imerge" would, too).
+Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com> writes:
 
-I've come across the situation occasionally. Once I have resolved a
-bunch of conflicts in M1 and M2, I think twice whether I should rebase
-individual commits; it is typically much more tedious.
+> -void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+> +static void strbuf_humanise(struct strbuf *buf, off_t bytes,
+> +				 int humanise_rate)
+>  {
+>  	if (bytes > 1 << 30) {
+> -		strbuf_addf(buf, "%u.%2.2u GiB",
+> +		strbuf_addf(buf,
+> +				humanise_rate == 0 ?
+> +					/* TRANSLATORS: IEC 80000-13:2008 gibibyte */
+> +					_("%u.%2.2u GiB") :
+> +					/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second */
+> +					_("%u.%2.2u GiB/s"),
+>  			    (unsigned)(bytes >> 30),
+>  			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
 
-A common situation is that a line is "A" in F1, "B" in F2, and "C" in
-R3; then I have to resolve ONE conflict in M1 ("<B=C>"), but with
-individual commits rebased on top of R3, I have two conflicts, "<C=A>"
-and "<AC=B>", neither of which is helped by rerere.
+Thanks.  I guess that the previous attempt to make it more table
+driven was probably a bit overkill, and because it did not quite
+work well for Q_(), this would probably be the "good enough, let's
+move on" optimal solution ;-)
 
-After merges M1 and M2, it is all a done deal, and M3 is typically a
-much simpler merge than the sum of conflicts incurred by the individual
-commits. I would generally not recommend a rebase in this situation.
-
-But I wouldn't turn M3 into a squashed merged commit, either, as long as
-F1...F5 aren't messy.
-
--- Hannes
+Will queue.
