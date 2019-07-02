@@ -2,136 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CCCE1F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 11:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7E91F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 11:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726541AbfGBLKb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 07:10:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44860 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725868AbfGBLKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 07:10:31 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k8so26828470edr.11
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 04:10:30 -0700 (PDT)
+        id S1726787AbfGBLht (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 07:37:49 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43579 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726780AbfGBLhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 07:37:47 -0400
+Received: by mail-qt1-f193.google.com with SMTP id w17so17996065qto.10
+        for <git@vger.kernel.org>; Tue, 02 Jul 2019 04:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=kUS/9fHpBzxibXtX6pyuYuMvz9qTpIwsdUjrqi3oksg=;
-        b=dhZSCYlrWRWiKzJEIjC1RV76qFKPJx3YuuOTyvftvCMwpyosEPEKUMc9JclHDyXTTg
-         VyWq4yIEHSNsWIsh5+Am4dSo6ufEc01yb5GMzejNgCnvVN4wYpSVMohQAkuTo2l9H8Nm
-         c7orCar0gPRgecm58/2NmljY5lSJL6MHu7E/HEbuFdHfCJQhBNa7XTett7Ee7RK3AkE1
-         BJLIj9cwFcGUROAo4K/h57cGOTgmi2H7UjoCNve8MEh1WpgIa7bK1lhgk4qnnnd3SvcZ
-         ZOphx28T55Zt+P/gRONgJgIJuV9jcBIL8QbzCP3iXctg/PvXv0JJ6t3RmK3pqrONuGlP
-         GRMA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yX2mFb6DPGKgQrM9PxQqIq0uHfm7z6P/C1pV6QAmKQM=;
+        b=o9jZ/uVxWs568DWPPvoOQ5I6czidO/lsOkoGNeP8/9MAouS0QxdkR1xGZV4Bz+IsQz
+         8hmWMqugdQFomNmU39wzqVZVVwnlCX0M8Q7eEb9kKBo/6/CX/F+fc52pET9aSeumgmFl
+         W13PkDijRTB8OgDIayBVcKYWuPa8xppLxjeRkYUzbtD7Zm/OIuFLeqeplUD6pgzuLzaq
+         5izEbdStZ83Ulmcn3lBcVx/pwuBKv0wcGZLjnoMJ+PMSFN6rpvshDDzDydjQB+dhJZxR
+         32Qwh/9po6v8ax1Z6jH+fubRSg+a+1JAl1WMRT+5qVafnhLHRq+hwUl6iVcVtQzO8X+K
+         WZfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=kUS/9fHpBzxibXtX6pyuYuMvz9qTpIwsdUjrqi3oksg=;
-        b=AaaiEO6GG3yO6bs3dUFR7kxEO1+ioA4zmJqJk1xhKEAj6UPxDfhtes/SQFxyTTwqSY
-         aqpDh1xjg+NlXaEhE0g9Pxo0E0bVgExrSrcbGOr1uAmxrFGoRUxNJ3BaRYkIK6VnQcmL
-         yUmwiA6qzrySfHsRBGl/Z+8zUYhxs8Xv/0fDfJGKkJ2kaCsBghGonkMCWc0BU+q2Lby5
-         eAM8R5UxahKVLEK1JRY5Tfv1l5BZn9gfn8h+y0f9LSRSvOXiVYdsCCo88RsQr6dxAFss
-         a+chqNGbRPTo3fExJXr9wGzm43BtH/cjunDXQ0bHK2aDXTW3onJtH5+SxLflBWZvYs2C
-         gzAA==
-X-Gm-Message-State: APjAAAVmEjTXw7lIzqeJzm88Zs+8ldz9yIwExu4fzRNv9tzPYMXLN0GI
-        b/xOykrZDxCa8m72kDLeBR0=
-X-Google-Smtp-Source: APXvYqzY66Ty/DYIiOOxmD8cMdySkuXGNMLFhiDBG4rIVqgApUUavhd4BU77rGVCeZAy0jvUAhlcyA==
-X-Received: by 2002:a17:906:802:: with SMTP id e2mr18049649ejd.59.1562065829457;
-        Tue, 02 Jul 2019 04:10:29 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id r26sm1262325ejb.51.2019.07.02.04.10.28
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 02 Jul 2019 04:10:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, johannes.schindelin@gmx.de, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v3 00/10] grep: move from kwset to optional PCRE v2
-References: <20190627233912.7117-1-avarab@gmail.com> <20190701212100.27850-1-avarab@gmail.com> <xmqqef395tmi.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <xmqqef395tmi.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 02 Jul 2019 13:10:27 +0200
-Message-ID: <87pnms7kv0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yX2mFb6DPGKgQrM9PxQqIq0uHfm7z6P/C1pV6QAmKQM=;
+        b=HOKHbjQ7J4x/nhlBGPqvm2C8zNVcaooq7avcaSWBqt4wryn6J2zeY0J69oOzYmnIee
+         iOK1X1zF5jt8FTI7DaSZm9wkRHcMHncFIaqU45Z4N9Zx8jfL4QXqKZxPq2vBUgwL6FSg
+         1WxoIsZdkfOsLo+3Xf/q++CeTAlVFlxuZjzzvMVz0XLbVwGaWWbmI8YaB911xsANEjRR
+         jFyo977Philc4lU/zYEN8sVzWGkEcMrWmyptxpJdFWRXp8fN4J0+1z7qWlgxK4bbkO3v
+         MAJUDHFQEauTztirc49wI2hx0hs0Hc+G91kuIYosM58OzeuldgtpAeYlJUqXL+Z8Mt/E
+         ZYGA==
+X-Gm-Message-State: APjAAAVQD1nsd5+CY5m3bFMjlk2ney1zU1FnA5fV7dolhjFHyuvOycjv
+        dOls5f1PySMdPiHlpNFr5+zqw/suwNE=
+X-Google-Smtp-Source: APXvYqy24iYet1H+y/ED/aj3vtvf72Bd/s1Jil5u/6L5MjkxmpguxtepVgMqyqoxaOQkQXB7AlR59w==
+X-Received: by 2002:ac8:2d08:: with SMTP id n8mr24537592qta.383.1562067466196;
+        Tue, 02 Jul 2019 04:37:46 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:858c:78f0:58f6:666c? ([2001:4898:a800:1010:36c2:78f0:58f6:666c])
+        by smtp.gmail.com with ESMTPSA id n18sm5205264qtr.28.2019.07.02.04.37.44
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Jul 2019 04:37:45 -0700 (PDT)
+Subject: Re: [RFC/PATCH 1/2] rebuash - squash/rebase in a single step
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>, git@vger.kernel.org
+References: <20190630051816.8814-1-eantoranz@gmail.com>
+ <20190630065358.GB31264@sigill.intra.peff.net>
+ <xmqq36jp7gd8.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2cece7ff-49af-0cae-7cb8-7cc1821be1ca@gmail.com>
+Date:   Tue, 2 Jul 2019 07:37:39 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq36jp7gd8.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jul 01 2019, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> This v3 has a new patch (3/10) that I believe fixes the regression on
->> MinGW Johannes noted in
->> https://public-inbox.org/git/nycvar.QRO.7.76.6.1907011515150.44@tvgsbejv=
-aqbjf.bet/
+On 7/1/2019 2:35 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>>> First, we create a (temporary) merge commit of both branches (M3)
+>>>
+>>> ------------
+>>> 	R1---R2---R3---R4---R5---R6---R7---M3
+>>> 	 \         \              \       /
+>>> 	  F1---F2---M1---F3---F4---M2---F5
+>>> ------------
+>>>
+>>> At this point, all differences between M3 and R7 are the changes related to the
+>>> feature branch, so we can run git reset --soft from M3 to R7 to put all those
+>>> differeces in index, and then we create single revision that is both
+>>> squashed/rebased for our feature branch.
 >>
->> As noted in the updated commit message in 10/10 I believe just
->> skipping this test & documenting this in a commit message is the least
->> amount of suck for now. It's really an existing issue with us doing
->> nothing sensible when the log/grep haystack encoding doesn't match the
->> needle encoding supplied via the command line.
->
-> Is that quite the case?  If they do not match, not finding the match
-> is the right answer, because we are byte-for-byte matching/searching
-> IIUC.
->
->> We swept that under the carpet with the kwset backend, but PCRE v2
->> exposes it.
->
-> Is it exposing, or just showing the limitation of the rewritten
-> implementation where it cannot do byte-for-byte matching/searching
-> as we used to be able to?
->
-> Without having a way to know what encoding is used on the command
-> line, there is no sensible way to reencode them to match the
-> haystack encoding (even when it is known), so "you got to feed the
-> strings in the same encoding, as we are going to match/search
-> byte-for-byte" is the only sensible way to work, given the design
-> space, I would think.
->
-> Not that it is all that useful to be able to match/search
-> byte-for-byte, of course, so I am OK if we punt with these tests,
-> but I'd prefer to see us admit we are punting when we do ;-).
+>> So if I understand correctly, our goal is:
+>>
+>>   R1--R2--...--R7--R8
+>>
+>> where R8 has the same tree as M3?
+>>
+>> Wouldn't doing "git merge --squash" do the same thing?
+> 
+> Yup, from Edmundo's description, I agree that they are equivalent,
+> modulo the merge direction.
 
-I'm guilty as charged in punting this larger encoding issue. As it
-pertains to this patch series it unearths an obscure case I think nobody
-cares about in practice, and I'd like to move on with the "remove kwset"
-optimization.
+[snip]
 
-But I strongly believe that the new behavior with the PCRE v2
-optimization is the only sane thing to do, and to the extent we have
-anything left to do (#leftoverbits) it's that we should modify git more
-generally (aside from string searching) to do the same thing where
-appropriate.
+> If M3 merge is always easier to manage than incremental stepwise
+> rebase of the topic, then doing the "git merge --reverse-squash"
+> would be a saner interface and also conceptually simpler.
 
-Remember, this only happens if the user has set a UTF-8 locale and thus
-promised that they're going to give us UTF-8. We then take that promise
-and make e.g. "=C3=A6" match "=C3=86" under --ignore-case.
+I agree that this would be a better way to expose this behavior,
+and likely the implementation could be very clean.
 
-Just falling back on raw byte matching isn't going to cut it, because
-then "=C3=A6<invalid utf8>" won't match "=C3=86<same invalid utf8>" under
---ignore-case, and there's other cases like that with matching word
-boundaries & other Unicode gotchas.
+Thanks,
+-Stolee
+ 
 
-The best that can be hoped for at that point is some "loose UTF-8"
-mode. I see both perl & GNU grep seem to support that (although I'm sure
-it falls apart at some point). GNU grep will also die in the same way
-that we now die with --perl-regexp (since it also use PCRE).
-
-I think that's saner, if the user thinks they're feeding us UTF-8 but
-they're not I think they'd like to know rather than having the string
-matching library fall back.
