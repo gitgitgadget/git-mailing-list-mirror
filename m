@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71E0C1F461
-	for <e@80x24.org>; Tue,  2 Jul 2019 05:29:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CFA91F461
+	for <e@80x24.org>; Tue,  2 Jul 2019 06:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726878AbfGBF3l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 01:29:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57048 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725981AbfGBF3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 01:29:40 -0400
-Received: (qmail 30658 invoked by uid 109); 2 Jul 2019 05:29:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jul 2019 05:29:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11845 invoked by uid 111); 2 Jul 2019 05:30:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Jul 2019 01:30:33 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jul 2019 01:29:39 -0400
-Date:   Tue, 2 Jul 2019 01:29:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] check_everything_connected: assume alternate ref tips
- are valid
-Message-ID: <20190702052938.GC16344@sigill.intra.peff.net>
-References: <20190628101131.GA22862@sigill.intra.peff.net>
- <601d8561-6e24-559c-6fbb-fa25a7389fa0@gmail.com>
- <20190629074348.GA5080@sigill.intra.peff.net>
- <418213f2-82d6-f7bd-7379-7f20f0e83084@gmail.com>
- <20190701125945.GB4704@sigill.intra.peff.net>
- <20190701131713.GA25349@sigill.intra.peff.net>
- <20190701170245.GA54693@TaylorsMBP5815.attlocal.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S1726335AbfGBGs4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jul 2019 02:48:56 -0400
+Received: from waltz.apk.li ([185.177.140.48]:64342 "EHLO waltz.apk.li"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725812AbfGBGs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jul 2019 02:48:56 -0400
+X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jul 2019 02:48:56 EDT
+Received: from continuum.iocl.org (localhost [IPv6:::1])
+        by waltz.apk.li (Postfix) with ESMTP id 36BF1598041;
+        Tue,  2 Jul 2019 08:43:04 +0200 (CEST)
+Received: (from krey@localhost)
+        by continuum.iocl.org (8.11.3/8.9.3) id x626gqf27682;
+        Tue, 2 Jul 2019 08:42:52 +0200
+Date:   Tue, 2 Jul 2019 08:42:52 +0200
+From:   Andreas Krey <a.krey@gmx.de>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Kulcyk <Eric.kulcyk@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Tracking parent branches in Git
+Message-ID: <20190702064252.GA26953@inner.h.apk.li>
+References: <DM5PR00MB040845755401A07E5C90251CF1F90@DM5PR00MB0408.namprd00.prod.outlook.com> <xmqqpnmt5z19.fsf@gitster-ct.c.googlers.com> <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190701170245.GA54693@TaylorsMBP5815.attlocal.net>
+In-Reply-To: <CAGyf7-EBs_cRB5R7RyQhX0ZDNqLZWVJEYEtqkGRGJykRqKKTvA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 01, 2019 at 12:02:45PM -0500, Taylor Blau wrote:
+On Mon, 01 Jul 2019 12:48:16 +0000, Bryan Turner wrote:
+...
+> In other words, when I locally do:
+> git checkout --no-track -b bturner-some-bugfix origin/release/5.16
+> 
+> release/5.16 is the "parent branch" of my bugfix branch and, when I
+> push my branch and try to open a pull request, release/5.16 is a
+> _likely_ target for where I'd want to merge it.
 
-> One thing that I didn't catch in my initial review that I am seeing now
-> is the ".alternate" marker. Why did you choose this? I was thinking that
-> ".have" would make more sense since it's consistent with what's shown in
-> the ref advertisement, but I think that actually ".alternate" is a
-> _better_ choice: the two really do refer to different things.
+We have simply conventionalized this - the parent relation is in
+the branch names. Your bugfix branch would be release/5.16/bturner-some-bugfix
+(in the central repo; we don't care how you name it locally), and, because
+ref storage, the parent would be release/5.16/master.
 
-Yeah, I had called these ".have" originally, but decided that was too
-tied up with the current users, and not with the concept. I think
-keeping the leading "." is worthwhile as that's an invalid refname.
+You'd just do
 
-I also thought about an empty string, but it's probably more informative
-to show _something_. After all, the user would not see these unless they
-specifically asked for them _and_ used something like --source, so
-presumably it's a useful piece of information at that point (I don't
-know of any other way to show these names except for --source).
+  git create-br release/5.16/bturner-some-bugfix
 
-I suppose one other option would be to name them after the oid itself.
-So with --source you'd find out that 1234abcd came from 1234abcd (duh),
-but also that its children came from 1234abcd. Maybe that has value. I
-dunno.
+and it would be branched off the corresponding /master, be checked
+out, and tracking already been set up. Likewise we have a
 
-It would be easy to change, but I'd also be OK punting until somebody
-comes up with a compelling use case.
+  git update
 
--Peff
+which looks at the upstream name, deduces the parent, and pulls
+that in, with a suitable commit message. Finally,
+
+  git mkpullreq
+
+creates a pull request from the current to the parent branch.
+
+(I would like to have a way to make bitbucket server use the same
+convention for the default pull request target.)
+
+- Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
