@@ -2,57 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF601F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 01:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3E391F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 04:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbfGCBQg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jul 2019 21:16:36 -0400
-Received: from mail-yb1-f177.google.com ([209.85.219.177]:37922 "EHLO
-        mail-yb1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfGCBQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jul 2019 21:16:36 -0400
-Received: by mail-yb1-f177.google.com with SMTP id j199so370768ybg.5
-        for <git@vger.kernel.org>; Tue, 02 Jul 2019 18:16:35 -0700 (PDT)
+        id S1726363AbfGCEeq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 00:34:46 -0400
+Received: from mail-io1-f47.google.com ([209.85.166.47]:40470 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725535AbfGCEeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 00:34:46 -0400
+Received: by mail-io1-f47.google.com with SMTP id n5so1624806ioc.7
+        for <git@vger.kernel.org>; Tue, 02 Jul 2019 21:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=RR1vtALeuLaj8Q/xVieJ6ODo3MS8Uc+sgDZFn+dmamQ=;
+        b=n98OOTaLocTiFsXI98Qj/oYvzOLF/KGvT9IZRZV3Sg3xRvgn3UBnRUyrnadjeUeGPD
+         dSrLyfoTvIp1AKIkvNE/sSJ/0pelePbjoWm07RI2R1+j7YyRBMtHCCu6q1KYJkkhrdUX
+         g24fEJxh+GV1MSC0Px4fwAQ69UAI/mSHVCR6WU9HMGO0FFT9ARKZORSWrIAWa49qa9BA
+         ALrDR2vW2W41Oss0Jg48YyrHs4ODaMv1O+3D437flNmgTKgVvk/RMDVxpc7am6jLT7zk
+         qgfHLZXoDalasRhOOlQPBJYFO+GhUh5hnnpa7Md4MH7eKajng7P6PbQZm76cas88xZk9
+         vZaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QB1llH9BSpEbW4EnF/9Q97F49iAG6SX1PZ3OURaJMBU=;
-        b=nysWaUbM30GNnzmph1Zi6FXiz9j2E8hcpewFSrNgxF83HOWiB3/CHNUoHXG8TSRL71
-         ew7Zb4nJee9xPO7ghE6jmNMYuThvFUGghtBfoPBPKbvtdPp8GOVJNvQfo+DmwyrZPANQ
-         uG5SNs7+j5Jh7JwLHqnBGjylvoRbnRNjIzaFuEk1K1jQDINr9CkU66VdQehmlMPfmrk7
-         OLTUBcZFsjawMtWSTzYjXuS3sww43VOSYr8pYYBPlvmylJ7HO9ZZfuPseYmyUgvDD3q5
-         8R9+0M+f8XDMyc+psOdlPISLTrT5KGp4a4u72928gFW9ujDMifn5FzqRboey8UcyuZWO
-         qGuA==
-X-Gm-Message-State: APjAAAUxLxB2z3f2sQ76cG0+Auu7V+k8453KE6TZbg3NxzI2HYC2rnRF
-        w8bVBfpAs1C78jbiLMKPZQ7ps7KB8ZKzbWhGgBsnGFGE
-X-Google-Smtp-Source: APXvYqx6ziENMXxgZAXe+CRuK5xXH5v4HJBdZN8j5fSPl5zSWfpikHdRNRCqEm58xMMnILCfXBB8+PHhvQuJJrN0rsQ=
-X-Received: by 2002:a25:3cc7:: with SMTP id j190mr12368512yba.452.1562098049586;
- Tue, 02 Jul 2019 13:07:29 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=RR1vtALeuLaj8Q/xVieJ6ODo3MS8Uc+sgDZFn+dmamQ=;
+        b=efdaOCyh5FZ04MMOGUr/6pBS/ME2RhFd8jtrxnE6FYNKibtEzm2dDQLQ+ZeHp01WRk
+         2hCvMFyVExxoII4Bwx8g0JbvE/cZFhfteFG/cU6dG0WvmIF1ezNdK6ws534dNN99wfbq
+         f8BXR+SDyfPT7WC9ieJO+3C681GA0jokht4EN3rtz0oZgUU9/0c6XQ8dcqjJ5e4dmWPD
+         DY+p382UPEDWArstO2RyTdxyKvKqITU/Erg+zH2IWx1hTdyIgQcLK3N/N+p/S4KYAwcC
+         Z8sfcsax3betIgKhH7gvHZf5NncJBcGNXcrOkuOf6iaOQsVPsnt2KMpfQWfzZyjnwWi7
+         O6jw==
+X-Gm-Message-State: APjAAAUMMG0VMGGEyqLpbZXz4hb8DxBlxBCzsjtcyGEv9eYWrn4+idnE
+        bCJJJ6Vgz83RzCGMzZ1dYaXuRoIcfHPZtszaZUveU70yzVg=
+X-Google-Smtp-Source: APXvYqwnVbwUEMCTl55N5T0CcRNCraBpNpv3j6hkJjtlAQCWQHVhXHgiz7HPaDz2XhYP07ctcWSYOMZLChOlA5/QgNs=
+X-Received: by 2002:a02:c646:: with SMTP id k6mr39667536jan.134.1562128485558;
+ Tue, 02 Jul 2019 21:34:45 -0700 (PDT)
 MIME-Version: 1.0
-From:   Nathan Moreau <nathan.moreau@m4x.org>
-Date:   Tue, 2 Jul 2019 22:07:18 +0200
-Message-ID: <CADDcBWXzyK_-r6+R9NXwd1cMGb_iuTOv2cXRBu+A4uxhfYaLCQ@mail.gmail.com>
-Subject: [ANNOUNCE] diffr, a diff highlighting tool
-To:     git@vger.kernel.org
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 3 Jul 2019 01:34:34 -0300
+Message-ID: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
+Subject: [GSoC] My project blog
+To:     git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi, everyone
 
-diffr is a diff highlighting tool that tries to improve on
-diff-highlight by computing largest common subsequence on
-hunks with a word resolution.
-The resulting diff is displayed on top of the classic unified diff.
+I've been posting about the progress of my GSoC project at
+https://matheustavares.gitlab.io/gsoc/ I should have sent the link
+earlier but, please, let me know if you have any comments on my
+previous posts.
 
-I share it here in the hope that it can be useful.
-You can find it at https://github.com/mookid/diffr
+You can read my latest update here:
+https://matheustavares.gitlab.io/posts/week-7-race-conditions-on-delta-base-cache
+I've been working to allow parallel decompression when reading objects
+for git-grep.
 
-Nathan
+Thanks,
+Matheus
