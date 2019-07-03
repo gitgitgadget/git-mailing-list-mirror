@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43B8C1F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 11:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD2C1F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 11:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbfGCL1N (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 07:27:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:43203 "EHLO mout.gmx.net"
+        id S1726764AbfGCLta (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 07:49:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:45509 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726544AbfGCL1N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 07:27:13 -0400
+        id S1725786AbfGCLt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 07:49:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562153214;
-        bh=YjaowlWRg0U2bjiWggZq6vfC+ttj0c8EEPXKqOdbdk4=;
+        s=badeba3b8450; t=1562154557;
+        bh=FDpJtJcF5CLCOFolsXPUdwYc31T0MHCNfRj9jayP/40=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YD+7bbjuAERDYzv0gyxx3ZHtWocOZ2ki9RAgi5k/xUNZse0sEpba8lIxU76g8h2ho
-         iqAy2o1y5tfsuoF2lqzhAK9Evl2rpZjqZJRkSBaraYtmU0tthKkhaCgIw34KqshEZa
-         NEjy2EtgUeK6i7e2AcWGuSoaefJam2ICnyhUY6jw=
+        b=bTicczqsX4+vWm8jCvFZYTQIcma4awy42Ioh2ke1ZJ/ByvVALMauCitpYvkrFLtMO
+         hXMZ2TS7YMwZhVjHdhKr7K0qPQfPLIyCa+4C/ZFmZ8h42qN9JokWgYp+N4uAYxs83j
+         BeKiHFnd1tVH8elg/5/x8oLIqkKGVkJnCCajefpI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mv31c-1iZMUQ2G2K-00r2we; Wed, 03
- Jul 2019 13:26:54 +0200
-Date:   Wed, 3 Jul 2019 13:27:22 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjIBr-1iFEHq0mv1-00dask; Wed, 03
+ Jul 2019 13:49:17 +0200
+Date:   Wed, 3 Jul 2019 13:49:45 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v3 00/10] grep: move from kwset to optional PCRE v2
-In-Reply-To: <nycvar.QRO.7.76.6.1907031213220.44@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1907031326300.44@tvgsbejvaqbjf.bet>
-References: <20190627233912.7117-1-avarab@gmail.com> <20190701212100.27850-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1907021417050.48@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1907031213220.44@tvgsbejvaqbjf.bet>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci: disable Homebrew's auto cleanup
+In-Reply-To: <20190703104748.32533-2-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907031349250.44@tvgsbejvaqbjf.bet>
+References: <20190629170108.GF21574@szeder.dev> <20190703104748.32533-1-szeder.dev@gmail.com> <20190703104748.32533-2-szeder.dev@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1207080342-1562153244=:44"
-X-Provags-ID: V03:K1:fNn7txl0Chu2gLAygmF4iXNRLDGbT5LvlHgVOi1IMAX/kWhBq8Q
- rM65nQJDlrHJ7P13fO4kM4+cY8gBHwkLVEMZ0mSbfUONRgk5ICsv+HDX0hJfK/f1TVV6wNA
- 462EFviZaNfU3WDBRmJR7xgZ+0GGv3I2oK3/Anu5SNSsju0g+BK+Luk1w0hcpBMBNtbdsri
- ouCpCrxOGt6Q0d2alzyrA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZN06RetMGUQ=:r66zJVK3RHDlWvhSqZIrrf
- kdb46ddxHzdMh1dtJmz8s4xF/UEmWRNDE/IvGznBKf+R5cQYyvKVBjhfdfUkvhc3r/Hxf1wA1
- SvXoLDY6pH77ZtGxPGAgH0wxLD+IDRIzYfYSxDUFqkWts72Wsv0Mkyd/Ma8t3FJj9KPz3ZHtf
- s88lR99QGrRmioJk6n2bp4jKCC1PLgchNFgdZGuK3vFerJPcjVDQEFkMbabV3mxCVkr2D0QKt
- F8WpxHseIDjERmeNVf1lK6u+qNh/AlOetusVjxlAOyy15Tbgxw3D3yDLqKCxrM9s0ivwzmSAK
- w5n5Aq67BJxl2UQg0qOhThOFLYbl+sfWgUHXx/FltXSPSGW4Zk0KplpquPIdm94Ds++EO4QRY
- 8zSFvUnbDjG7G6wT3HY0o/8USnR3JkeZLn+GqFFoEprTBIdeIyds7wVqs/rFZMHmIyRUjstS9
- M5SsN6Jw2RypjuRIXuNO8MzABCeV4QOsA6/NoOcSqKay+F1s7jmTXHbbQvIJ2FRUO4BgdSZ0/
- N516JtQRJM7PyuRbcyQ69L77s7U9V+YMJqGNiHCPkNiX4WxnchR9VJhGN9UqEHOkpMNUwfsKV
- WQlMFavxgNarYwnWZQx9ZKzAvQrThdeGjcyydeXX+B8xSsmsGqrXWZLG2VZBI/A9L5WrI6Lbw
- oHRkOIzdvVkuX2NhJWCBmOVhGgNhf7Lel5rho9bIc52Pmg9bU+MQ8g79r01XnCENB2QMkEcyG
- 3tui1Qv0sqwz1KN1Uz1fl9qbGXQGxauiZEOaeY5tDw2JcNM4Atdf1AePrSWksRvTOK1PwQiNm
- KsO2nzYvyBi+GUCo7uhq/sasw7anf6zQq0Nvsqz2zUv4fSBqPcui/xsL9LnsJ7snx9OoCIlzn
- FQh/nqNXA7wYcy54sh0XgSJGY+2WkGTCSJr89Jea6MFUj9nc3V2wdTjrqMnyJJMP/YPuAYS8Y
- aJMoisoyUK4iFgAIu8rijgu/ZlHq2rMVSfhPpvXOsI33ZiuO1z90TWjkeI6jje1qDJMpJnZ8T
- gCCo1+Fj2vLK2qrjjjPfEd/ky/JLc15Yh/g/CsjiHkPsrebygIau5gcZC9gosDJQOAttIiqUt
- U1eXz4GdJOLzqRbeyQ/IE4+AUpkMphKdkyr
+Content-Type: multipart/mixed; boundary="8323328-647684965-1562154586=:44"
+X-Provags-ID: V03:K1:y7j/li7i+9tJYzFcwim3MiCbLW4MubWZ/2yrxbEtHyY9NbgzU8f
+ t8rNFance6KMTdShCIDcoBzkUPtyYVdTwMUycaW93lzBCZS6JQ+wQzTZODbKppsZG5opDJs
+ 5hVYu2YLc5UKmwxUuniDa1va1YGJYVdsp8BXLpuop9QuZW7JerobMCBiPlHOgEKcORMby7h
+ pnzL0UZsU3+TUtEodu8/A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KZvg1713yyQ=:c2pmcSErPvd532qTBzoETB
+ v5ZoGLl+L6ed3GAgcE0MbdNSZ+8g3GpSepqeloxfFrYrCjK4KO4XFGGCM5xIUghXxD70CwZCm
+ 8ZJdQLGWCRcsfzg2vCfx0PUFeu80eis/4mF+YT0X5uOzpfBWK3jKf6sbrhsNY0eSmM40Jvoeh
+ tr71xPdb31k2UKrn+3oGDui8znoMQf/PLW+5H/369i01dVOtG9Uwl9My9lY0mWUktyGcC9xeA
+ KAbd9RhwzvyMzxXKOblQ6WEyxZl603e0gLPH+CkulJzs5ios8lo9jOJM4UJgCzCnNsCxp7lQI
+ h74R9gy9Zf7YAuezjqAd2x4PoOT9YbRw6wHbrqD106OfA8ybvjcgfQ7/AD4g4VSAUB4W/NzID
+ VfQgltpM1Ye7G8InVOovxM2Ax46xuq0m2hh8Krx64XktKD6B05JmgMjGn4vyL7kpzr/289iyG
+ kQC6kcnJmtS7TNOiqHDl2a2qgWM9hZ4TNqfopK9Jyaupcw1rYMCNGEafpKadrQ5qVtMCcGX2B
+ fjjHxom+/Jd3GMSieo7kb9u5sWHsMBWFiOHixa0/uMlRWRjIDRfayUxRaYn/YSFTzw5V0bVuN
+ OKRljnM8YsN2i86901bt1aH7pMYlpSSjZ6WnCDVY93AbnmgHpLhKhKuKaxnZyAy6dZJpLPPhG
+ Wg/vCKCVn0ftJNFjdBwwfjEcPbyk7Dh1MbthWO5kBj2KmQDapmo23A3hz51ICYoxBTcXMdGMz
+ mK3cMcXDZi7a3Ixvk/Dk01/d+GDv3/nVmfKE9BVJZHatilnssc3DhpX1GqlFdh83Kk9gJRcLU
+ W/BWe+ucq/L2eqa1f6RFIqwCs1wUxiWCxGTpHBrqC8SmC7U/kexOJkTtjuh5HVjp+IG2gPEFA
+ FDH/CBt0CKQpl38CYWosMLfUwOHc9Ii9dWJkfyRsimFxUqtfMRQCVz8sdoHLeO74Txoonk/ky
+ SyFG6TLPvEmtTbuicyaiYFUlGEs65p/+9B3/Nvx2KOyCLB+StyObdHAj4e37wZveUzOmfI4/4
+ yD1RhFHAY3s0+/wS9HS4yECc+w06nQnq7PPxzEEx7OMW1SkBqGGDb3wV263Uvif2AkSGDuLGU
+ GuxyHP+tRleSQIDYqmG9qsl+Ovbz2tyCC39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,67 +71,27 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1207080342-1562153244=:44
+--8323328-647684965-1562154586=:44
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Wed, 3 Jul 2019, Johannes Schindelin wrote:
+On Wed, 3 Jul 2019, SZEDER G=C3=A1bor wrote:
 
-> Hi,
+> Lately Homebrew learned to automagically clean up information about
+> outdated packages during other 'brew' commands, which might be useful
+> for the avarage user, but is a waste of time in CI build jobs, because
+> the next build jobs will start from the exact same image containing
+> the same outdated packages anyway.
 >
-> On Tue, 2 Jul 2019, Johannes Schindelin wrote:
->
-> > [...] I probably failed to mention another breakage, though...:
-> >
-> > not ok 54 - LC_ALL=3D'C' git grep -P -f f -i '=C3=86<NUL>[=C3=90]' a
-> >
-> >  expecting success:
-> > 			>stderr &&
-> > 			printf '=C3=86Q[=C3=90]' | q_to_nul >f &&
-> > 			test_must_fail env LC_ALL=3D"C" git grep -P -f f -i a 2>stderr &&
-> > 			test_i18ngrep ! 'This is only supported with -P under PCRE v2' stde=
-rr
-> >
-> > ++ printf '=C3=86Q[=C3=90]'
-> > ++ q_to_nul
-> > ++ perl -pe 'y/Q/\000/'
-> > ++ command /usr/bin/perl -pe 'y/Q/\000/'
-> > ++ /usr/bin/perl -pe 'y/Q/\000/'
-> > ++ test_must_fail env LC_ALL=3DC git grep -P -f f -i a
-> > ++ case "$1" in
-> > ++ _test_ok=3D
-> > ++ env LC_ALL=3DC git grep -P -f f -i a
-> > Binary file a matches
-> > ++ exit_code=3D0
-> > ++ test 0 -eq 0
-> > ++ list_contains '' success
-> > ++ case ",$1," in
-> > ++ return 1
-> > ++ echo 'test_must_fail: command succeeded: env LC_ALL=3DC git grep -P=
- -f f -i a'
-> > test_must_fail: command succeeded: env LC_ALL=3DC git grep -P -f f -i =
-a
-> > ++ return 1
-> > error: last command exited with $?=3D1
-> >
-> > There are three more test cases in that test script that fail similarl=
-y. See
-> > https://dev.azure.com/Git-for-Windows/git/_build/results?buildId=3D388=
-52&view=3Dms.vss-test-web.build-test-results-tab&runId=3D1019770&resultId=
-=3D101368&paneView=3Ddebug
-> >
-> > I ran out of time to look into this in more detail :-(
->
-> I figured it out. It does not happen with your `ab/no-kwset` patch serie=
-s
-> in isolation, it's only when it is merged into `pu`, and the culprit is
-> the bad interaction with the `js/mingw-use-utf8` branch.
+> Export HOMEBREW_NO_AUTO_UPDATE=3D1 to disable this auto cleanup feature,
+> shaving off about 20-30s from the time needed to install dependencies
+> in our macOS build jobs on Travis CI.
 
-Whoops, it is the `kb/windows-force-utf8` branch instead.
+I am very much in favor of both of these patches.
 
-Ciao,
+Thanks,
 Dscho
 
---8323328-1207080342-1562153244=:44--
+--8323328-647684965-1562154586=:44--
