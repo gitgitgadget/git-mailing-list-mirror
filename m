@@ -2,133 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B1041F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 10:25:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 838071F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 10:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbfGCKZU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 06:25:20 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35545 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725820AbfGCKZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 06:25:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562149500;
-        bh=p70idFqc9T8vrJPadpwtDwObBThNBMg7mInfqWQUTVA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=C0jH57S0sHcDo+UKCzaj6Vtjl9mNiTFYDpEapiBZh26K6PqZ7egH0mt3rBgC9XYEJ
-         eKFqnIi/ic5OUHVn0LW7mqzJpvqSwyxgQAxO/7fsVIsOS3kXG/SsfuawoPDuph8O25
-         pwpPW0LHdLFVemHXntSzzwQCRhHhoRhHYX2n14Ns=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiHf-1htROG44h5-00Q9HS; Wed, 03
- Jul 2019 12:25:00 +0200
-Date:   Wed, 3 Jul 2019 12:25:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        gitgitgadget@gmail.com, gitster@pobox.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v3 00/10] grep: move from kwset to optional PCRE v2
-In-Reply-To: <nycvar.QRO.7.76.6.1907021417050.48@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1907031213220.44@tvgsbejvaqbjf.bet>
-References: <20190627233912.7117-1-avarab@gmail.com> <20190701212100.27850-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1907021417050.48@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726847AbfGCKsF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 06:48:05 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40401 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725796AbfGCKsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 06:48:05 -0400
+Received: by mail-wm1-f68.google.com with SMTP id v19so1829300wmj.5
+        for <git@vger.kernel.org>; Wed, 03 Jul 2019 03:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xg6mTTm5clE7WilKC7HpEb3NdQw0911UJzhqHjBsU3w=;
+        b=WjtvQqeyTaIZWXQlm6NhhOvLB/9CuZQpGd6yGXge6UGZ2gwqSk4+T0ysbb07tIz2TL
+         N/SXt/Pmd6051rNzkHGtANt+Bi9hZB4EItxQAVQpB1zZYtpABEQG8wr0ZBfau28zSbSK
+         RP37hCaNSy/XgyCcFBMfAYVHpVSdBAdf9Z/tQdJC0u04+yDJopMLi050Xq8NKMfmCOz8
+         6alZpHcbcmQbnH+mttFjwzwdchKINoz+Re4lRZIrLQF4jZ4MLd5entviNlJyu6PVmHFn
+         Ty8Wh9/5jWE9zWcWAoS38MsAhJtieM6VB4RKZFMNpH/RHrptfgzOxe3kQKvvW6b7jmek
+         Fdig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xg6mTTm5clE7WilKC7HpEb3NdQw0911UJzhqHjBsU3w=;
+        b=mtjOqt90S5gNkNx1nEdZOyJf35Q1mE9sYbaZlXOLQ6nUrgj70ttDMGD13QhmqDQppu
+         sTLh946mhq4e6f1Oj9n9v1y4jpZrYf8gzQeJkb6lBpjItjFtQHE+ABULQ10Fi8/zVBkD
+         nFOYtNEpOpLoKDHncT/Vsp/zLmdyZrFAHtOxtLHHTkdSK1ck89huPwG4X11Av6ZE9Ykv
+         QTEUWm6OGgWDaZ8qNC5tdMp8TYVkxMnAhimPSxqyjZ0NEapkZwOtPEhm8IamAibt+BWC
+         pYgASqKmjEPS+GQeYGk0GUotxQzFYMVLBtPfq5caRPzTshlsID7d2d+3kkIMfYpAv148
+         KWoQ==
+X-Gm-Message-State: APjAAAWOTuVrHluFQjGHljPj0xheKQX8rPKxWUUtjBoMjciYMXLgUCYc
+        +C9CjQRcawgbmXw4hXC/DHP2in7v
+X-Google-Smtp-Source: APXvYqwLL331ahetzpYd3wGVH170xqIgFPTFUf9oMksMEeY2pds1BfwoPtK93WrUOaGjFM8i+RhpXw==
+X-Received: by 2002:a1c:f115:: with SMTP id p21mr7098830wmh.134.1562150882843;
+        Wed, 03 Jul 2019 03:48:02 -0700 (PDT)
+Received: from localhost.localdomain (x4db51bef.dyn.telefonica.de. [77.181.27.239])
+        by smtp.gmail.com with ESMTPSA id h84sm2168562wmf.43.2019.07.03.03.48.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 03 Jul 2019 03:48:02 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 1/2] ci: don't update Homebrew
+Date:   Wed,  3 Jul 2019 12:47:47 +0200
+Message-Id: <20190703104748.32533-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.22.0.621.ge52941b842.dirty
+In-Reply-To: <20190629170108.GF21574@szeder.dev>
+References: <20190629170108.GF21574@szeder.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-542317010-1562149529=:44"
-X-Provags-ID: V03:K1:M1LVLegBsOBxUQgf+ytOWxIMlDeg828VZS3DMEReWSCzHwUbCad
- MRss5JxGFLPC3/th3SYiQSne+FFxzEgEQKXE9a15WV4wk7DN6eqv2mB1X7SggQi8cE8ScPv
- UYa7U6COwxHVFV+4OeIfq2eygkHLYP4HRyeBuFjLpd+oJIBJ/IK8epqYR0F3faTM+c5OW65
- 3nRGj7BK0JUQdp7TTfqPg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Xkzf1jFFxjE=:imDARxsg2wLEKnKeDc4yMe
- ho/CBNTGduQVPu3L8iglslBZaY8Os6rEG6kJZuTlzdqvDEo7XwOlrPvvdUgSTDHrIUp9RI5QQ
- R1KxvKBqp2EvUntC2Mi/8E9sNSMle3rLzPfbM9dhB8nB8YYXBP4adC/5zW8xs5l9IGeKQsjfo
- Ttrd0DQrDiYFXM8TZjk5YnWZpbeWoIOBjwnOmiH1Y45A1KY4zXH7y+KfQPN2R1UD3SBRIB19T
- HxdDXXYYTbqdnuZogqV8m6EKb/OSM6uOCvM1AyI1j+41x3KyYny7zhferXHrF/lOT9xU2rZDE
- 3ZS48vcPgDmxr+Y+QfjyQiGpEYmbAoi+kMgFAx2IGjcLPebHFGQ4dmju6746tIQCggYPXZay0
- FpPz1E6ebVk5SeWKRCprBQ4B8DG8dZ5W2NQzOj0tAwopCgUS5nPAtHlD57c686PGWDN3KoOHQ
- jArCXu8onIcpeXzM6nBTsfWLN30FKXK/qg+IAuan9g6Syx0lGxkfhjTYq5DF6IuXYwdExnxUN
- 1pzDcfvfb6tYNlBP0AsrgPtU66Sv0csNeirF3FmnM1UwFOGNu8E1PBY+wtRAi3/wi7PG6eRjZ
- bozi+thtW0ZVlu/m7wogBn3b7PE1puhv/acze8ayWrXNWVLZ9mWF/VK516Cz1/ETP8k5b5PRA
- 5JThjFcAohoNcg3Gnzurz61mY36OBVbTHx+9nwFaSGYHxMQqYCFby2FmRjEV+BXDU6szWNkLK
- MfgJjbEBNLZ+s8QwRVbePXXmHHAOuFVVzQ1OcGf+wCFvaMEnRNRc58azOPYh4NdnwZ5wuJX3U
- k7r5vJpi63KW6cUgaZJiVf/jJkxJ1coQ83fhEaA428sOd5hbQ6n1kJzlUGWmyk4Th4hFRjO3T
- 9ZU8pOPiKZSRf16vrpa5cwHqyyUUQMaFTer6wCDfOCrWm/VUZ07Wh/XB8rpmUWjkJG39Ulc7K
- mAomxIsyqZi6GVrZqF77NrLXOhbOSsDSFcvxWc5d6elkTs1Dz9IVL0DBm6neVtUPkRn7HRUkB
- hzVzH43VY6pP20h3ouXDtpObtbYmmPY8EtASJQIegrJmUqeiy6lA+jp9K7AxaVgekd+g+Upw8
- pMst1QIqci9lptJ2OWqZgk4OPRjaqd0FZGr
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Lately our GCC macOS build job on Travis CI has been erroring out
+while installing dependencies with:
 
---8323328-542317010-1562149529=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+  +brew link gcc@8
+  Error: No such keg: /usr/local/Cellar/gcc@8
+  The command "ci/install-dependencies.sh" failed and exited with 1 during .
 
-Hi,
+Now, while gcc@8 is still pre-installed (but not linked) and would be
+perfectly usable in the Travis CI macOS image we use [1], it's at
+version 8.2.  However, when installing dependencies we first
+explicitly run 'brew update', which spends over two minutes to update
+itself and information about the available packages, and it learns
+about GCC 8.3.  After that point gcc@8 exclusively refers to v8.3,
+and, unfortunately, 'brew' is just too dumb to be able to do anything
+with the still installed 8.2 package, and the subsequent 'brew link
+gcc@8' fails.  (Even 'brew uninstall gcc@8' fails with the same
+error!)
 
-On Tue, 2 Jul 2019, Johannes Schindelin wrote:
+Don't run 'brew update' to keep the already installed GCC 8.2 'brew
+link'-able.  Note that in addition we have to 'export
+HOMEBREW_NO_AUTO_UPDATE=1' first, because 'brew' is so very helpful
+that it would implicitly run update for us on the next 'brew install
+<pkg>' otherwise.
 
-> [...] I probably failed to mention another breakage, though...:
->
-> not ok 54 - LC_ALL=3D'C' git grep -P -f f -i '=C3=86<NUL>[=C3=90]' a
->
->  expecting success:
-> 			>stderr &&
-> 			printf '=C3=86Q[=C3=90]' | q_to_nul >f &&
-> 			test_must_fail env LC_ALL=3D"C" git grep -P -f f -i a 2>stderr &&
-> 			test_i18ngrep ! 'This is only supported with -P under PCRE v2' stderr
->
-> ++ printf '=C3=86Q[=C3=90]'
-> ++ q_to_nul
-> ++ perl -pe 'y/Q/\000/'
-> ++ command /usr/bin/perl -pe 'y/Q/\000/'
-> ++ /usr/bin/perl -pe 'y/Q/\000/'
-> ++ test_must_fail env LC_ALL=3DC git grep -P -f f -i a
-> ++ case "$1" in
-> ++ _test_ok=3D
-> ++ env LC_ALL=3DC git grep -P -f f -i a
-> Binary file a matches
-> ++ exit_code=3D0
-> ++ test 0 -eq 0
-> ++ list_contains '' success
-> ++ case ",$1," in
-> ++ return 1
-> ++ echo 'test_must_fail: command succeeded: env LC_ALL=3DC git grep -P -=
-f f -i a'
-> test_must_fail: command succeeded: env LC_ALL=3DC git grep -P -f f -i a
-> ++ return 1
-> error: last command exited with $?=3D1
->
-> There are three more test cases in that test script that fail similarly.=
- See
-> https://dev.azure.com/Git-for-Windows/git/_build/results?buildId=3D38852=
-&view=3Dms.vss-test-web.build-test-results-tab&runId=3D1019770&resultId=3D=
-101368&paneView=3Ddebug
->
-> I ran out of time to look into this in more detail :-(
+Disabling 'brew update' has additional benefits:
 
-I figured it out. It does not happen with your `ab/no-kwset` patch series
-in isolation, it's only when it is merged into `pu`, and the culprit is
-the bad interaction with the `js/mingw-use-utf8` branch.
+  - It shaves off 2-3mins from the ~4mins currently spent on
+    installing dependencies, and the macOS build jobs have always been
+    prone to exceeding the time limit on Travis CI.
 
-To fix it, I have a tentative patch:
-https://github.com/git-for-windows/git/commit/e561446d
+  - Our builds won't suddenly break because of the occasional Homebrew
+    breakages [2].
 
-So I'll head over to that patch series and add more information there.
+The drawback is that we'll be stuck with slightly older versions of
+the packages that we install via Homebrew (Git-LFS 2.5.2 and Perforce
+2018.1; they are currently at 2.7.2 and 2019.1, respectively).  We
+might want to reconsider this decision as time goes on and/or switch
+to a more recent macOS image as they become available.
 
-Ciao,
-Dscho
+[1] 2000ac9fbf (travis-ci: switch to Xcode 10.1 macOS image,
+    2019-01-17)
 
---8323328-542317010-1562149529=:44--
+[2] See e.g. a1ccaedd62 (travis-ci: make the OSX build jobs' 'brew
+    update' more quiet, 2019-02-02) or
+
+    https://public-inbox.org/git/20180907032002.23366-1-szeder.dev@gmail.com/T/#+u
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 7f6acdd803..7f546c8552 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -34,7 +34,7 @@ linux-clang|linux-gcc)
+ 	popd
+ 	;;
+ osx-clang|osx-gcc)
+-	brew update >/dev/null
++	export HOMEBREW_NO_AUTO_UPDATE=1
+ 	# Uncomment this if you want to run perf tests:
+ 	# brew install gnu-time
+ 	test -z "$BREW_INSTALL_PACKAGES" ||
+-- 
+2.22.0.621.ge52941b842.dirty
+
