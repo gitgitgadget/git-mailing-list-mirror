@@ -2,101 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 107381F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 19:01:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D9BC1F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 19:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727088AbfGCTB1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 15:01:27 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38405 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbfGCTB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 15:01:26 -0400
-Received: by mail-qk1-f193.google.com with SMTP id a27so3688584qkk.5
-        for <git@vger.kernel.org>; Wed, 03 Jul 2019 12:01:26 -0700 (PDT)
+        id S1727186AbfGCTGr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 15:06:47 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35483 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726473AbfGCTGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 15:06:47 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c27so4043860wrb.2
+        for <git@vger.kernel.org>; Wed, 03 Jul 2019 12:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=C4u7mTmf7WrQLNiFF8JYo2YLZMmvbrtztwVVstfKQEE=;
+        b=NUMUYbkOoLZOXI8u+0sjAxoWWfccnhnWusU2FpjmOO2OHT9kgUAXb2xS11b5gQtJ86
+         pX/kGqnUaw/KJ9Lo4cnp/mE7Mq42w5OMgFB2dLK8Q5y3ONYZOc20tA6h7DKcEvroGwbT
+         2iPA15RTRkiw6zdCj9tVeTp1F1vaeRzeZmAW7Yyn38bZoPxBc9mJJEog+rM/6MQPz/md
+         25CZ8T04DMta9LdcGN5AW/6CKYNOLtU7Dnrk9kBlDzNVHCUPNrv1mmdQFTdQl2bbHlSW
+         mlmeb2e8VJTzlW9aUr93U9nYyl+wbIhDAwsyb8eZCys6/GRh8Jm7ZR+WbGvMQM1CUT7g
+         Xpxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ijSbgobKlp5uC4by6fCQi+Th1XXOm/M06L7xQkjCwTU=;
-        b=D9VxAwFWLEdkz2NuiXKetC8Vsa0adbAvgHxBG6zgc5ATxaQ986zhDDpi7kD7kBYfM3
-         g/b7ewMmWMNjYnkm/7hwy+aW6Wtn13HjVAiU2epgX8O/F5YVqYkngEZlrSlPQnGuZg3J
-         Xek9lM9Q7Cr2fRj/J3Ot+89s8fpFGNqrM12zSQv8+agLPbrhKdL50M1r/jQdd6TBTvM1
-         EWpdSjb8EC0ojzn5Inq0m0IdTVibaeFG3fkpIhyJ6zeYClBoa2tjBsUUptqoK5tW5Tf5
-         DLitb8P8U2XPBFMjJtQLGVxgeGGTuWUxkgEGWnlrT6+fP6yf0TIabkNd+OvOa6EwDJ3b
-         6sBw==
-X-Gm-Message-State: APjAAAUZ2OD1Zvpnu+QzT19Wib1vskbLxAfH9WoIE8K9nWlwzj/XAPrk
-        qjux1LeLzhKoPFUX1/uaZzc+1jVv+p2hg1uIpuc=
-X-Google-Smtp-Source: APXvYqxQcr5S8C/78TD3yZJmI75CNP0ulQJtQ4Yri4S2ZBaLpWhlNpyWe1fbBSsKAnmdsApq4Pg++yTbnAu1r/ieKow=
-X-Received: by 2002:ae9:e306:: with SMTP id v6mr31646137qkf.145.1562180485501;
- Wed, 03 Jul 2019 12:01:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAMPRpjUWBXCEagDB5RwsBTYSJWeypOeY47CGWOO95oZiSCTOjw@mail.gmail.com>
- <xmqq7e8z0ypm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7e8z0ypm.fsf@gitster-ct.c.googlers.com>
-From:   Julius Smith <jos@ccrma.stanford.edu>
-Date:   Wed, 3 Jul 2019 12:00:49 -0700
-Message-ID: <CAMPRpjULRpzG+Xf8Ezc2+-4cVB7phGs9h+7nxhx-GP44__mfeg@mail.gmail.com>
-Subject: Re: Submodule "git branch" says (HEAD detached at <incorrect-commit>)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=C4u7mTmf7WrQLNiFF8JYo2YLZMmvbrtztwVVstfKQEE=;
+        b=c1YkJ2wRag3ximnsd905j4jZcX6pmm0GUF+RaLbZcrgnNcZinZbPqInO3jW/8UHIwf
+         bxyhl6HvVDyX5Qewakm7FiCZ6pASnIhT7xDdzCWZym+jxE59Fpzlwj/dCdewpDzU0QVp
+         qsFhllNnVMUvAJWKRMBnwf+QGYaI6Hr40ltmd1kU8HIvFQLgZyrDeGqqXHXTESYeD9rg
+         HycgM4BcBl1VTOh54FXGzO5hFcXvbmU0X3DXi3rZ1wB3cmwOIShFlS4nxYH2T8zAMHtP
+         /grjSCKl4nhSbwJWrlAc6VdFGyI0W5LWEOemi6dgw1A93JTpBO2NqukClN3BQIY7l2FR
+         CBzw==
+X-Gm-Message-State: APjAAAXsFncUXVUtpxCTAH20ej75RlnD9qNXYswT7TGY85AtS/JZsOtu
+        kV5ta8TGGiB2pCwSvCNFUH4=
+X-Google-Smtp-Source: APXvYqzvx3jeN8gwgFD+CTvpzSVXGa/QPDdAj4OFpJVU1HLyeUZq1BRanVSkjWQs9YwYdGbyY7AhZg==
+X-Received: by 2002:a5d:56cb:: with SMTP id m11mr30124013wrw.255.1562180804913;
+        Wed, 03 Jul 2019 12:06:44 -0700 (PDT)
+Received: from szeder.dev (x4db51bef.dyn.telefonica.de. [77.181.27.239])
+        by smtp.gmail.com with ESMTPSA id u1sm2441967wml.14.2019.07.03.12.06.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jul 2019 12:06:44 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 21:06:39 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 00/14] completion: a bunch of updates
+Message-ID: <20190703190639.GA20404@szeder.dev>
+References: <20190621223107.8022-1-felipe.contreras@gmail.com>
+ <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the explanation.  So then to find out the current commit of
-the submodule, I should cd into the submodule directory and say "git
-rev-parse HEAD" or "git log -n1", etc.
+On Wed, Jul 03, 2019 at 10:50:26AM -0700, Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Here's another try at completion fixes, cleanups, and more tests. Some
+> > of these have already been sent.
+> >
+> > Felipe Contreras (14):
+> >   completion: zsh: fix __gitcomp_direct()
+> >   completion: zsh: fix for directories with spaces
+> >   completion: remove zsh hack
+> >   completion: zsh: improve main function selection
+> >   completion: prompt: fix color for Zsh
+> >   completion: bash: cleanup cygwin check
+> >   completion: zsh: update installation instructions
+> >   completion: bash: remove old compat wrappers
+> >   completion: bash: remove zsh wrapper
+> >   completion: zsh: trivial cleanups
+> >   test: completion: tests for __gitcomp regression
+> >   test: completion: use global config
+> >   completion: add default options
+> >   completion: add default merge strategies
+> >
+> >  contrib/completion/git-completion.bash | 202 +++++++++++++------------
+> >  contrib/completion/git-completion.zsh  |  53 +++----
+> >  contrib/completion/git-prompt.sh       |  10 +-
+> >  t/t9902-completion.sh                  |  37 +++--
+> >  4 files changed, 161 insertions(+), 141 deletions(-)
+> 
+> Having scanned the discussion threads so far, I think the last four
+> patches are going against the list consensus of (1) it is OK to rely
+> on --git-completion-helper; using ancient Git with new completion
+> script won't obviously work, but that is "if it hurts, don't". (2)
+> some subcommands will fail the --git-completion-helper request
+> (e.g. outside a repository), but as long as the output from failed
+> request is not cached, it is OK.
+> 
+> But we haven't seen any response to the earlier zsh specific
+> patches.  Does it mean that nobody other than Felipe cares about
+> having a working Git completion for zsh?  Or does it mean that all
+> users other than Felipe are happy with the current Git completion
+> for zsh and it works very well for them already?  Or somewhere in
+> between?
+> 
+> What I am trying to get at is if we would want to keep the earlier
+> zsh parts of the series, but with nobody seemingly interested in, it
+> is hard for me to justify queuing them.
 
-Suggestion: for a moved HEAD, it would be nice to show "(detached from
-<original-commit> now at <current-commit>)".
+I'm not a Zsh user and am mostly unfamiliar with its antics, but
+FWIW...
 
-Thanks for considering, and thanks for a truly great software tool.
+Zsh has its own git completion routines, which are in some aspects
+more advanced than what can be achieved with Bash's completion
+facilities (or more wasteful in screen real estate, depending on your
+preferences :), e.g. Zsh's completion shows a short description for
+each completeable --option and whatnot).  I suppose that the avarage
+Zsh & Git user uses Zsh's own git completion instead of our Bash
+completion script wrapped for Zsh.
 
-- Julius
+Having said that, I applied the first 7 patches in my tree and then
+followed the updated installation instructions, and it finally worked.
+I remember trying it in the past once or twice, to check whether some
+of my bigger completion updates break something in Zsh, but it never
+worked.  So these patches (and perhaps patch 10 as well) seem to be a
+definite improvement (though admittedly I haven't tested them
+thoroughly).
 
-On Wed, Jul 3, 2019 at 11:17 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Julius Smith <jos@ccrma.stanford.edu> writes:
->
-> > "git branch" in the the submodule directory says "(detached from
-> > <commit-for-D>)" but this seems to be wrong.  I did "git diff
-> > <commit>" in the submodule directory to show that it was the C-commit
-> > and not the D-commit as it appeared.  Could "git branch" in the
-> > submodule directory be referring to the commit at the time it was
-> > first detached and not updating after a "git submodule update --init"
-> > in the parent?
->
-> There are "detached from" and "detached at" messages.  Their use was
-> somewhat inconsistent in the older version of Git, but at least
-> since 2.4.0 (quoting from Documentation/RelNotes/2.4.0.txt):
->
->  * The phrasing "git branch" uses to describe a detached HEAD has been
->    updated to agree with the phrasing used by "git status":
->
->     - When HEAD is at the same commit as when it was originally
->       detached, they now both show "detached at <commit object name>".
->
->     - When HEAD has moved since it was originally detached, they now
->       both show "detached from <commit object name>".
->
->    Previously, "git branch" always used "from".
->
-> "git branch" and "git status" should be using the same language to
-> describe the situation.
->
->
+As for the latter part of the series, I think the more hard-coded
+options we can get rid of the better we are off, and I would rather
+not see them making a comeback.  I don't really have an opinion about
+patches 8 and 9 (that old wrapper is probably just bitrotting away,
+but I just tried to source our bash completion script from Zsh, and
+apart from the deprecation warning it appeared to work).
 
-
--- 
-
-Julius O. Smith III <jos@ccrma.stanford.edu>
-Professor of Music and, by courtesy, Electrical Engineering
-CCRMA, Stanford University
-http://ccrma.stanford.edu/~jos/
