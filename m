@@ -2,116 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E91A1F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 13:04:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06781F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 13:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbfGCNEj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 09:04:39 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51598 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbfGCNEj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 09:04:39 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 207so2145061wma.1
-        for <git@vger.kernel.org>; Wed, 03 Jul 2019 06:04:37 -0700 (PDT)
+        id S1727336AbfGCNTI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 09:19:08 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:46424 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbfGCNTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 09:19:08 -0400
+Received: by mail-qt1-f175.google.com with SMTP id h21so798916qtn.13
+        for <git@vger.kernel.org>; Wed, 03 Jul 2019 06:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=UMKa+1KJQsAbqa63bNiR6jAwHDyJ9kfZnYvDSeQ+I3c=;
-        b=H811yVsjiQ7lwMSzq12KmX8r/gKZ12ysKbx9w7xd7QsaqWOba2AMsMfOMS4yCBRjxm
-         XlGpP+yU6UwqMkCEjkD1InzQgDiuunfST+werjTor1VbXseeJVKB9SNAV6QaIAkqc6as
-         QK4d+8muoA1GxSdOCoex9EvVGiPDsSEfBfHFn1lg3aaDNJgJmifW4dM2R3UJe+jF+TrV
-         X/lhTgTyE7lW2UgwHQXqLSyrgXRx8zGgTVbmmxsIWrmLWFPK1CLDeFwGwzVtHaUllctu
-         9r4Bb1N3p3Rn3yXfRbVUM4QJEx5FffhNhTKei3/Q5zSK3U4qYjwbdTzdXZGERrVJCinL
-         WdeQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=Wj01CyTsG/lWtIbD62vk0l0EV6ypqc+VLqxHrhqwxks=;
+        b=YE3TToEjfocuGFjJyjFiAunnReckdQgGwUnnnHREermEKNo2AwY0XL0ysqCuMLKtxl
+         tx71DW9lVxYLfbGJSGxML9hxuR7osBlTvr9w+XaNPb3QgpK23OGB86NHI/8iy6m6cGJx
+         8qJVdEVraYHnX4vTfNbuxzQtZroqapNW4HXH4mqpncjhdwOZP1+MpsbJskvq0h0mLVcs
+         abDAznz5QEp6bwgNQF/vvEW+LsGf22UaFuXRSwlQMU88kO7A7un+KEuaF5b4ZkaFAW5G
+         QpMbaSBCULj6Q81ofugmDxZ7VLNHoXvHSIWWWcxW0sONdykC1W9ukU2uGyYACG80cnzu
+         JAFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=UMKa+1KJQsAbqa63bNiR6jAwHDyJ9kfZnYvDSeQ+I3c=;
-        b=m/XiMnXzYupKezYBN+WPp/SMocFx0DIdpYiGxzqwPXIXxTtWLRMuD/1a+s940qwsNV
-         0ovuI9Z9Wgl0xLDfLF+ftREmDex0wn7+siF8yVXEkRdXkTYU3mbJwd7f9mznwCIT7ZgU
-         yWX6Wp7kDP5854pdLZtqkjpO+9SQgTsM3MrtshXNJzD5qOW+YLYTdp1H5EaP+G9Jbofy
-         bGsu21ePc2p8G6O+fKItlQA6PAgVL9Po9Mu3RaCNQYIXwYowatxrMokpg9a90Z/N56+O
-         dqbfNZyP4/KfABcbYM6FzINb/LlOdWwzLmno5dOdkJ7mYcLyC30NEbo4mS9LF4NlDLsu
-         uDMQ==
-X-Gm-Message-State: APjAAAX/AQs7qFEKRG2mpE5Is+7nkxsYIdH5Cww+ccR3O6azJ99prF/R
-        X09D1+i+mRQ7t8AmmQ0Av+s=
-X-Google-Smtp-Source: APXvYqzpeY+sN2jeYj9fyVPpftg3Aa/y2K9gkzdUcYJRDkmE9mCmgr3WS3d8LCRC4XSKZm4qtgutxg==
-X-Received: by 2002:a1c:a6d3:: with SMTP id p202mr8425047wme.26.1562159077195;
-        Wed, 03 Jul 2019 06:04:37 -0700 (PDT)
-Received: from szeder.dev (x4db51bef.dyn.telefonica.de. [77.181.27.239])
-        by smtp.gmail.com with ESMTPSA id u13sm2465588wrq.62.2019.07.03.06.04.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 06:04:36 -0700 (PDT)
-Date:   Wed, 3 Jul 2019 15:04:34 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci: disable Homebrew's auto cleanup
-Message-ID: <20190703130434.GR21574@szeder.dev>
-References: <20190629170108.GF21574@szeder.dev>
- <20190703104748.32533-1-szeder.dev@gmail.com>
- <20190703104748.32533-2-szeder.dev@gmail.com>
- <1d10ed33-5c33-8028-c375-d859ef6826dc@virtuell-zuhause.de>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Wj01CyTsG/lWtIbD62vk0l0EV6ypqc+VLqxHrhqwxks=;
+        b=GeV8pfWNYM2DTZlfdZdaFlZRufQd3+Lm0IgdrAfLCm3TSlABywVtZn3akKUVQ4eT7j
+         i2uO6cKUjX6hBYp8FohZBRPNBL6pexFTvsv76v7ufMfTjFzgUAVb47Nux5riYqqAq1Is
+         B9O0nAxihsocwn8s30sYgkBOmMhF42fd+YWrKExG44kyqUR6zEi5Uz9BmHRRJiVgOIfS
+         t1cFEZmEKl4p7ag12JIyJQ8yWDGbKiJ9vA2msD8OQD/c7tPQVt1KFRUzDPWwFqPpWI6g
+         knafxGXskbQdJAGn0cjdbnvshY2ZyFUgwLnwOvL8nxkrFkk+dBeFlBvOYMzgWG699wKf
+         3J5w==
+X-Gm-Message-State: APjAAAWRuvOXUKAIT4a+j8N7fHFUPXNZC5PcJrGTIoGG8TQwySHXfmyO
+        GEuKavdVJDALnytvNLGFONmNVzmZ
+X-Google-Smtp-Source: APXvYqypDNYSvks/wwLedGYnFtU2Cmnb76KRdn6pCiaPy3/awLw5433pvVuPpmo9g4ufwn8k4ElJjw==
+X-Received: by 2002:ac8:24cd:: with SMTP id t13mr30671475qtt.298.1562159947475;
+        Wed, 03 Jul 2019 06:19:07 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:4874:bb25:bd6e:32d3? ([2001:4898:a800:1012:f9a7:bb25:bd6e:32d3])
+        by smtp.gmail.com with ESMTPSA id k55sm1170381qtf.68.2019.07.03.06.19.06
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jul 2019 06:19:07 -0700 (PDT)
+Subject: Re: Virtual Git Contributor Summit
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <nycvar.QRO.7.76.6.1907031429420.44@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9fc48120-a380-8152-9544-534e366d3fab@gmail.com>
+Date:   Wed, 3 Jul 2019 09:19:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1907031429420.44@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1d10ed33-5c33-8028-c375-d859ef6826dc@virtuell-zuhause.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 03, 2019 at 02:26:21PM +0200, Thomas Braun wrote:
-> Am 03.07.2019 um 12:47 schrieb SZEDER Gábor:
-> > Lately Homebrew learned to automagically clean up information about
-> > outdated packages during other 'brew' commands, which might be useful
-> > for the avarage user, but is a waste of time in CI build jobs, because
-> > the next build jobs will start from the exact same image containing
-> > the same outdated packages anyway.
-> > 
-> > Export HOMEBREW_NO_AUTO_UPDATE=1 to disable this auto cleanup feature,
+On 7/3/2019 9:01 AM, Johannes Schindelin wrote:
+> Team,
 > 
-> The patch below adds HOMEBREW_NO_INSTALL_CLEANUP so maybe you meant
-> HOMEBREW_NO_INSTALL_CLEANUP here as well?
+> I kept talking about this idea of a purely online Git Contributor Summit,
+> and it is finally time for action.
 
-Thanks, good catch.  Apparently copy-pasted the wrong env var from the
-patch to the commit message...
+Thanks for organizing this!
 
-> > shaving off about 20-30s from the time needed to install dependencies
-> > in our macOS build jobs on Travis CI.
-> > 
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  ci/install-dependencies.sh | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> > index 7f546c8552..8cc72503cb 100755
-> > --- a/ci/install-dependencies.sh
-> > +++ b/ci/install-dependencies.sh
-> > @@ -34,7 +34,7 @@ linux-clang|linux-gcc)
-> >  	popd
-> >  	;;
-> >  osx-clang|osx-gcc)
-> > -	export HOMEBREW_NO_AUTO_UPDATE=1
-> > +	export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1
-> >  	# Uncomment this if you want to run perf tests:
-> >  	# brew install gnu-time
-> >  	test -z "$BREW_INSTALL_PACKAGES" ||
-> > 
-> 
+> To alleviate both of those points, we might want to consider spreading it
+> out over a couple of days? I already heard some fierce opposition against
+> that idea, though.
+
+I don't have fierce opposition, but I do recommend one 8-hour day with the
+intention of some contributors only able to join in the AM and some only in
+the PM hours. We should not require all participants to be present for the
+entire summit. By taking copious notes, we should be able to include the
+rest of the community in the discussion.
+
+Thanks,
+-Stolee
