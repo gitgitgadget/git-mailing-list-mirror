@@ -8,194 +8,102 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE5231F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 08:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6D711F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 09:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727019AbfGCI5c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 04:57:32 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54386 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbfGCI5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 04:57:32 -0400
-Received: by mail-wm1-f65.google.com with SMTP id g135so1329501wme.4
-        for <git@vger.kernel.org>; Wed, 03 Jul 2019 01:57:30 -0700 (PDT)
+        id S1727218AbfGCJIt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 05:08:49 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51241 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726670AbfGCJIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 05:08:49 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 207so1384114wma.1
+        for <git@vger.kernel.org>; Wed, 03 Jul 2019 02:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lb2Jbsm89ea107dFgMLWAsWU+eT0pg5B7kNmyXIxrpo=;
-        b=IiagPnyLlv5DdZbM2e0G1gcqi7uNobms8w5/E7eCYDhjLf5fCyVcnhW2UN/W5RxNMR
-         6yHYysSNRW3BzyjW/X/E4GGXjAZTpnXvFJnQUUL12dZ4buapw3zPsNxEKmvmWt5REuxe
-         92ygQmDaWid/rFjnSrtSpDGIUmGEiN8UZ0NcShmNQmv454fHekoZ4oDE6Oa66Xkgp6GX
-         KUjv4t4Smfx9oxOEwtTYX0QwnZZGhZbgmyM5l8SGIz6+sxdoO/MQNz0E2by9ITWwGTYq
-         cQC2fxyRJGiD+99hbevQ82PWAZIiJ5neYNa4ARSw3i7VMG/VLj+oSYNggdJw04lB2jJb
-         k5Ew==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=qLZhl67sKKipbrqxVaGRVsnynHyHchnFA2Xg8Jpo8WQ=;
+        b=oBQUwLe0+fFvPjkSzTRNooOyg+Q5sK1qstCJ3m4vP6SrpJS4BYG8aDtOzoijpjUxaW
+         DdRtZ5reHm9bfDTeIhCf7t99kIxm4VZBlZKksRdLe+qU6BBtdA8hLoZiDDhlIy/AKzOB
+         y0zJRtDKfjeo5gislX4HCELVaTVQKSNpWk7dYKiW/ewBC7E3STl11oQXFA1Iwvjy1zq+
+         2b3qS510Wi7o0n6GMVPvAbf8d5K2/hcGLQqvnxgSOYWHngJLY9fGDl+J5tcHjWcDzZKP
+         EJCdoPxcyUHMwU3H7XtCpeSSQRmIiVUq8VLEUlGo/+NuFQRfh73KUIAQBqOq3xAqz7/m
+         w4KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lb2Jbsm89ea107dFgMLWAsWU+eT0pg5B7kNmyXIxrpo=;
-        b=ZgGXRgNwibRHOOCMjBwtFcOFjNITTqV8uKrtZ5UV6Tr9erWvlmPTwcjmpDnKLTLtTQ
-         ym2yv2QZvW3zk+w9+Kb1mCRFyEjXnJ6iRYhwblWO4PbRpCtPQ7kznBh9aNe0S4jdBjDR
-         ntYUDz7BkGV3Vrdna69acKt35A2WDO2kFDbmwV+VVGxYYXyX+jE6kYzju6mLZZfTANiD
-         hYjvJWTNccbdY6DimSrnGcx8oapxg6kBhMEVS1pPufCFwalemu2j/iUz5qJI602QfwCK
-         GJUhnxe0nHYgaLjTEypEqQxdqxDx9IVaK2w/nAIaB7Z/b2McsjlwNNaZodF2oxQKAvSJ
-         NZ1Q==
-X-Gm-Message-State: APjAAAUrqQ1oyWPtz+zN1k6JR0pxMpqn5o0xMS9bXYl2ugcHcoicN72q
-        F4clTYyY+vjwPIKug1re3FY=
-X-Google-Smtp-Source: APXvYqwGX3HPTK4Zv0R8jhZ0x5RAH55mBvwaZMllXp2oMT4ynuw6Er6luFi21sNS/8PRZFp5KEuj7g==
-X-Received: by 2002:a1c:eb16:: with SMTP id j22mr6856945wmh.140.1562144249861;
-        Wed, 03 Jul 2019 01:57:29 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=qLZhl67sKKipbrqxVaGRVsnynHyHchnFA2Xg8Jpo8WQ=;
+        b=IbqHqrOUvoat0k0R1PrXhnYbACErx1B5qmwNTBgdoYy8A1TQL1J5HIBJxhon1K93W0
+         LxdbQz8Qjv5G0FrHNWbzeXA2xgV1KVupKzX0b4pz1Vtlwpdwj6USQtVSOj6Nc9fmo/55
+         vCLlOF81uUSkGfp1G8CI4W0aDUlueHt6g6qDwYG91tINjLbTib64GT+Y1FjlAutHSwDb
+         3B3Fw/rJVaeeUnUa5F1A8i1l3tdaSfxBOXLVPjcxHcl7Uc9ImRWoww3PB4h1S3vZouSw
+         hchN6sh+DIxTIW3x8nkRhtA42zscpvqdkMjU+PpT7q6wuNCHdYOqZodWsI4jhLJQ+6pW
+         rQnA==
+X-Gm-Message-State: APjAAAXhM8DrzIUL0buUoAJ7xSQLe2/8pLDnfwDgRNTBtK8uOAWGrMJh
+        rrGElEkOB+Ae+pMxR4jUDlk=
+X-Google-Smtp-Source: APXvYqwdqBEbR55g9cLv1QeE/dus2mSBuPbui/7nT0IibL/lxmb5OoEL5kkMz2GAKDB5LI3Hxe1uJw==
+X-Received: by 2002:a05:600c:2201:: with SMTP id z1mr6752469wml.59.1562144927018;
+        Wed, 03 Jul 2019 02:08:47 -0700 (PDT)
 Received: from szeder.dev (x4db51bef.dyn.telefonica.de. [77.181.27.239])
-        by smtp.gmail.com with ESMTPSA id t14sm1133040wrr.33.2019.07.03.01.57.27
+        by smtp.gmail.com with ESMTPSA id s10sm1948856wmf.8.2019.07.03.02.08.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 01:57:28 -0700 (PDT)
-Date:   Wed, 3 Jul 2019 10:57:26 +0200
+        Wed, 03 Jul 2019 02:08:46 -0700 (PDT)
+Date:   Wed, 3 Jul 2019 11:08:44 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Daniel Ferreira <bnmvco@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to
- dir_iterator_begin
-Message-ID: <20190703085726.GN21574@szeder.dev>
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
- <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 05/10] split-index.c: dump "link" extension as json
+Message-ID: <20190703090844.GO21574@szeder.dev>
+References: <20190624130226.17293-1-pclouds@gmail.com>
+ <20190624130226.17293-6-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190624130226.17293-6-pclouds@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
-> index c739ed7911..8f996a31fa 100755
-> --- a/t/t0066-dir-iterator.sh
-> +++ b/t/t0066-dir-iterator.sh
-> @@ -65,4 +65,99 @@ test_expect_success 'begin should fail upon non directory paths' '
->  	test_cmp expected-non-dir-output actual-non-dir-output
+On Mon, Jun 24, 2019 at 08:02:21PM +0700, Nguyễn Thái Ngọc Duy wrote:
+> diff --git a/t/t3011-ls-files-json.sh b/t/t3011-ls-files-json.sh
+> index 082fe8e966..dbb572ce9d 100755
+> --- a/t/t3011-ls-files-json.sh
+> +++ b/t/t3011-ls-files-json.sh
+> @@ -44,4 +44,18 @@ test_expect_success 'ls-files --json, main entries, UNTR and TREE' '
+>  	compare_json basic
 >  '
 >  
-> +test_expect_success POSIXPERM,SANITY 'advance should not fail on errors by default' '
-> +	cat >expected-no-permissions-output <<-EOF &&
-> +	[d] (a) [a] ./dir3/a
-> +	EOF
-> +
-> +	mkdir -p dir3/a &&
-> +	> dir3/a/b &&
-
-Style nit: space between redirection op and pathname.
-
-> +	chmod 0 dir3/a &&
-> +
-> +	test-tool dir-iterator ./dir3 >actual-no-permissions-output &&
-> +	test_cmp expected-no-permissions-output actual-no-permissions-output &&
-> +	chmod 755 dir3/a &&
-> +	rm -rf dir3
+> +test_expect_success 'ls-files --json, split index' '
+> +	git init split &&
+> +	(
+> +		cd split &&
+> +		echo one >one &&
+> +		git add one &&
+> +		git update-index --split-index &&
+> +		echo updated >>one &&
+> +		test_must_fail git -c splitIndex.maxPercentChange=100 update-index --refresh &&
+> +		cp ../filter.sed . &&
+> +		compare_json split-index
+> +	)
 > +'
-> +
-> +test_expect_success POSIXPERM,SANITY 'advance should fail on errors, w/ pedantic flag' '
-> +	cat >expected-no-permissions-pedantic-output <<-EOF &&
-> +	[d] (a) [a] ./dir3/a
-> +	dir_iterator_advance failure
-> +	EOF
-> +
-> +	mkdir -p dir3/a &&
-> +	> dir3/a/b &&
 
-Likewise.
+I think this test should 'sane_unset GIT_TEST_SPLIT_INDEX'.  Maybe
+it's not absolutely necessary, because the explicit '--split-index'
+and '-c splitIndex.maxPercentChange=100' would already fully control
+when index splitting is performed, eliminating any indeterminism
+inherent to GIT_TEST_SPLIT_INDEX...  but unsetting it would reduce the
+cognitive load on future readers.
 
-> +	chmod 0 dir3/a &&
-> +
-> +	test_must_fail test-tool dir-iterator --pedantic ./dir3 \
-> +		>actual-no-permissions-pedantic-output &&
-> +	test_cmp expected-no-permissions-pedantic-output \
-> +		actual-no-permissions-pedantic-output &&
-> +	chmod 755 dir3/a &&
-> +	rm -rf dir3
-> +'
-> +
-> +test_expect_success SYMLINKS 'setup dirs with symlinks' '
-> +	mkdir -p dir4/a &&
-> +	mkdir -p dir4/b/c &&
-> +	>dir4/a/d &&
-> +	ln -s d dir4/a/e &&
-> +	ln -s ../b dir4/a/f &&
-> +
-> +	mkdir -p dir5/a/b &&
-> +	mkdir -p dir5/a/c &&
-> +	ln -s ../c dir5/a/b/d &&
-> +	ln -s ../ dir5/a/b/e &&
-> +	ln -s ../../ dir5/a/b/f
-> +'
-> +
-> +test_expect_success SYMLINKS 'dir-iterator should not follow symlinks by default' '
-> +	cat >expected-no-follow-sorted-output <<-EOF &&
-> +	[d] (a) [a] ./dir4/a
-> +	[d] (b) [b] ./dir4/b
-> +	[d] (b/c) [c] ./dir4/b/c
-> +	[f] (a/d) [d] ./dir4/a/d
-> +	[s] (a/e) [e] ./dir4/a/e
-> +	[s] (a/f) [f] ./dir4/a/f
-> +	EOF
-> +
-> +	test-tool dir-iterator ./dir4 >out &&
-> +	sort <out >actual-no-follow-sorted-output &&
+The same might apply to GIT_TEST_FSMONITOR in the following patch, and
+perhaps even to GIT_TEST_INDEX_THREADS.
 
-Unnecessary redirection, 'sort' is capable to open the file on its
-own.
-
-> +
-> +	test_cmp expected-no-follow-sorted-output actual-no-follow-sorted-output
-> +'
-> +
-> +test_expect_success SYMLINKS 'dir-iterator should follow symlinks w/ follow flag' '
-> +	cat >expected-follow-sorted-output <<-EOF &&
-> +	[d] (a) [a] ./dir4/a
-> +	[d] (a/f) [f] ./dir4/a/f
-> +	[d] (a/f/c) [c] ./dir4/a/f/c
-> +	[d] (b) [b] ./dir4/b
-> +	[d] (b/c) [c] ./dir4/b/c
-> +	[f] (a/d) [d] ./dir4/a/d
-> +	[f] (a/e) [e] ./dir4/a/e
-> +	EOF
-> +
-> +	test-tool dir-iterator --follow-symlinks ./dir4 >out &&
-> +	sort <out >actual-follow-sorted-output &&
-
-Likewise.
-
-> +	test_cmp expected-follow-sorted-output actual-follow-sorted-output
-> +'
-> +
-> +
-> +test_expect_success SYMLINKS 'dir-iterator should ignore recursive symlinks w/ follow flag' '
-> +	cat >expected-rec-symlinks-sorted-output <<-EOF &&
-> +	[d] (a) [a] ./dir5/a
-> +	[d] (a/b) [b] ./dir5/a/b
-> +	[d] (a/b/d) [d] ./dir5/a/b/d
-> +	[d] (a/c) [c] ./dir5/a/c
-> +	EOF
-> +
-> +	test-tool dir-iterator --follow-symlinks ./dir5 >out &&
-> +	sort <out >actual-rec-symlinks-sorted-output &&
-
-Likewise.
-
-> +	test_cmp expected-rec-symlinks-sorted-output actual-rec-symlinks-sorted-output
-> +'
-> +
->  test_done
-> -- 
-> 2.22.0
-> 
