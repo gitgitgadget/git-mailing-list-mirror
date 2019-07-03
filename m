@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E90951F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 16:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDA6F1F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 17:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbfGCQ61 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 12:58:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63515 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbfGCQ61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 12:58:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2390115A92E;
-        Wed,  3 Jul 2019 12:58:22 -0400 (EDT)
+        id S1726686AbfGCRGB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 13:06:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50822 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726430AbfGCRGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 13:06:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78A8E1530FC;
+        Wed,  3 Jul 2019 13:05:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FmT8XeuLefDL
-        s3EUsfw5hmOufTU=; b=x4/5BfvgKtjJEHao0LwXSWuhYZV5uFYx0wfwaCYB2myT
-        LFFpa6Uw15Ov8oabKzUgJcNt7i65g0kxK2P/QwjH+6M3Dr5QqbYWv1oDY2xcnDr6
-        Tt5UN19sANvtZ4Mq16U/i6Bky0SWzFweboaoeRDrkSmHduPIsqgS38DtMWh8hi0=
+        :content-type:content-transfer-encoding; s=sasl; bh=ztb62yBvjsgK
+        2d5P7ogvrQcy4RI=; b=O1ThJjvKIaJPCSFnuwtM9uMAFXEIh2mrT7dr5OQUIKOy
+        h2ihPwGZQbr2Cw2VYJIYiA0SslhF7Yu8nXL8kgqguXKMiKz38jbNTTGQgv/l3kXD
+        B19nA4wsXb4TvCi6eQYxUtrZFM2GbwEVEeLMXiZr+r1Ce0KxWQz5/OOiAY/TrU8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Lia1n0
-        gMkTFiR8Ki+FugyxjgluSt1af6oLPDp9UrmvcymiXI4PGKrTppgH2K0vlIGOOM8J
-        x14dua9Ei/hpwAAUSNu9Q2PLQSLxEDkLsKpDYVYIFkxQoKY7ZzX8unsd39WN2zpQ
-        N/UuX8+qXfxnDC/0/wG/pq4EiAJX8pcBJFr6k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A72B15A92D;
-        Wed,  3 Jul 2019 12:58:22 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=m3iLYi
+        4QRy++Q8EDybd+2Hw5nuyUvsYv/rwtKNB+bTpH0tfRt8CdvbBAB+t/yLJD4tjYAB
+        rN6gC9g9dk+jLadf9lOG513C1YfYQtAV8NwdXJJdgbGB1Y2H+BzV5hN8SXB1711J
+        qfVDGqClPymYX42sGxQeF5t0GiiYYcoWhm6+M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 705471530FB;
+        Wed,  3 Jul 2019 13:05:58 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81F7A15A92C;
-        Wed,  3 Jul 2019 12:58:21 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A41AE1530F8;
+        Wed,  3 Jul 2019 13:05:57 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci: disable Homebrew's auto cleanup
-References: <20190629170108.GF21574@szeder.dev>
-        <20190703104748.32533-1-szeder.dev@gmail.com>
-        <20190703104748.32533-2-szeder.dev@gmail.com>
-        <1d10ed33-5c33-8028-c375-d859ef6826dc@virtuell-zuhause.de>
-        <20190703130434.GR21574@szeder.dev>
-Date:   Wed, 03 Jul 2019 09:58:20 -0700
-In-Reply-To: <20190703130434.GR21574@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 2/2] check_everything_connected: assume alternate ref tips are valid
+References: <20190701131713.GA25349@sigill.intra.peff.net>
+        <20190701131815.GB2584@sigill.intra.peff.net>
+        <20190703091225.GQ21574@szeder.dev>
+        <20190703164116.GA23260@sigill.intra.peff.net>
+        <20190703165036.GS21574@szeder.dev>
+Date:   Wed, 03 Jul 2019 10:05:56 -0700
+In-Reply-To: <20190703165036.GS21574@szeder.dev> ("SZEDER =?utf-8?Q?G?=
  =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Wed, 3 Jul 2019 15:04:34 +0200")
-Message-ID: <xmqq1rz72gyb.fsf@gitster-ct.c.googlers.com>
+        "Wed, 3 Jul 2019 18:50:36 +0200")
+Message-ID: <xmqqwogz1217.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C37676FE-9DB3-11E9-9B01-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D35BEC56-9DB4-11E9-A8AD-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,46 +66,43 @@ X-Mailing-List: git@vger.kernel.org
 
 SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> On Wed, Jul 03, 2019 at 02:26:21PM +0200, Thomas Braun wrote:
->> Am 03.07.2019 um 12:47 schrieb SZEDER G=C3=A1bor:
->> > Lately Homebrew learned to automagically clean up information about
->> > outdated packages during other 'brew' commands, which might be usefu=
-l
->> > for the avarage user, but is a waste of time in CI build jobs, becau=
-se
->> > the next build jobs will start from the exact same image containing
->> > the same outdated packages anyway.
->> >=20
->> > Export HOMEBREW_NO_AUTO_UPDATE=3D1 to disable this auto cleanup feat=
-ure,
+> On Wed, Jul 03, 2019 at 12:41:16PM -0400, Jeff King wrote:
+>> On Wed, Jul 03, 2019 at 11:12:25AM +0200, SZEDER G=C3=A1bor wrote:
 >>=20
->> The patch below adds HOMEBREW_NO_INSTALL_CLEANUP so maybe you meant
->> HOMEBREW_NO_INSTALL_CLEANUP here as well?
+>> > On Mon, Jul 01, 2019 at 09:18:15AM -0400, Jeff King wrote:
+>> > > diff --git a/t/t5618-alternate-refs.sh b/t/t5618-alternate-refs.sh
+>> > > new file mode 100755
+>> > > index 0000000000..3353216f09
+>> > > --- /dev/null
+>> > > +++ b/t/t5618-alternate-refs.sh
+>> > > @@ -0,0 +1,60 @@
+>> >=20
+>> > > +test_expect_success 'log --source shows .alternate marker' '
+>> > > +	git log --oneline --source --remotes=3Dorigin >expect.orig &&
+>> > > +	sed "s/origin.* /.alternate /" <expect.orig >expect &&
+>> >=20
+>> > Unnecessary redirection, 'sed' can open that file on its own as well=
+.
+>>=20
+>> Sure, but is there a compelling reason not to feed it as stdin?
 >
-> Thanks, good catch.  Apparently copy-pasted the wrong env var from the
-> patch to the commit message...
+> Not really, other than there is no compelling reason to do so :)
 
-Applied an obvious rewording manually while queuing.
+For this particular one, it would not make much difference, but when
+feeding a single file to a command that can take many instructions
+as command line arguments, I tend to prefer
 
-Thanks.
+	$ cmd <input \
+		-e 's/foo/bar/' \
+		-e 's/xyzzy/frotz/g' \
+		...
 
-commit af8ed04778781f2013d26cc450173190fb5876d6
-Author: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Date:   Wed Jul 3 12:47:48 2019 +0200
+which I find slightly easier to read than
 
-    ci: disable Homebrew's auto cleanup
-   =20
-    Lately Homebrew learned to automagically clean up information about
-    outdated packages during other 'brew' commands, which might be useful
-    for the avarage user, but is a waste of time in CI build jobs, becaus=
-e
-    the next build jobs will start from the exact same image containing
-    the same outdated packages anyway.
-   =20
-    Export HOMEBREW_NO_INSTALL_CLEANUP=3D1 to disable this auto cleanup f=
-eature,
-    shaving off about 20-30s from the time needed to install dependencies
-    in our macOS build jobs on Travis CI.
-   =20
-    Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+	$ cmd \
+		-e 's/foo/bar/' \
+		-e 's/xyzzy/frotz/g' \
+		... \
+		input
+
+
