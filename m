@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28EB1F461
-	for <e@80x24.org>; Wed,  3 Jul 2019 11:13:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D30E51F461
+	for <e@80x24.org>; Wed,  3 Jul 2019 11:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbfGCLN1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jul 2019 07:13:27 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54753 "EHLO mout.gmx.net"
+        id S1726780AbfGCLZy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jul 2019 07:25:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:37345 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726486AbfGCLN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jul 2019 07:13:27 -0400
+        id S1726581AbfGCLZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jul 2019 07:25:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562152400;
-        bh=XCHCwRAfbkhO8KrUayImooYfpe9x0qGyi2LETv7DyoU=;
+        s=badeba3b8450; t=1562153148;
+        bh=52J4CWnxL0VQMQOILkvE3zkx8EcuSBcFYc4tARCtC/s=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CPaNDkycVyIq/TWeE4EGHtCZihL1mdNbvwkI8UvpJeIqKvZK86PMjNiMWJ91OBDBw
-         W1bt3YSYZAoG+1B399Qj4P0XhuhTayfxMgeIBbcZvshXkMSaVD7gyvRuAB38KsSqIS
-         UKnC57yAW/FELxVH3RoiMdTMnrpVaYWDUCuKbrwA=
+        b=e6haSy2UTnou6ohWHqkkdV/4g+B9ANMkomMIgbJfFaSksDmpCzDykMaMFiF7gfLED
+         FXcVEP+iSCKTn+q2B685VqqZSyDds6C2jH2b/3SqaOVSr1BjQuLk2hYI75R6lQzzym
+         jpVp5FZul+fstc4/g4ZXLbMIe+QD5ka3olm4rmTg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MdFwl-1i17n10jEh-00ISa4; Wed, 03
- Jul 2019 13:13:20 +0200
-Date:   Wed, 3 Jul 2019 13:13:48 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lpspj-1iD0f63rzL-00flYE; Wed, 03
+ Jul 2019 13:25:48 +0200
+Date:   Wed, 3 Jul 2019 13:26:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2019, #07; Fri, 28)
-In-Reply-To: <xmqqftno2mku.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907031308150.44@tvgsbejvaqbjf.bet>
-References: <xmqqzhm173sp.fsf@gitster-ct.c.googlers.com> <xmqqftno2mku.fsf@gitster-ct.c.googlers.com>
+To:     Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>
+Subject: Re: [PATCH 1/1] gettext: always use UTF-8 on native Windows
+In-Reply-To: <ff37a2646a848e3eca8d02a001844986a3fa366b.1561625060.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907031321270.44@tvgsbejvaqbjf.bet>
+References: <pull.217.git.gitgitgadget@gmail.com> <ff37a2646a848e3eca8d02a001844986a3fa366b.1561625060.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ihaPJeSHStYMHl83IClPFBPm8AfFYH6LsI/N+5+gnrBzpS/OYdE
- J5OXUGFVrn6JFKBva4fvaNYxzuteRz2MpmYfphcU6K1y/z77ctoyP0myraX0bI/xEbkyQiT
- NUxkk1VlNUnEPneNzaRnClWbfSjL20GkwSsanyQI53ZFyftF6DW4Bt3QjFXJ9qz93fRmHzO
- PfXGoWvPZ+ozJK+4Swn0A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PnoJBqqYgLI=:ShZWBlk9iLCIYvVTPU8rmw
- NuiLUNngvKBWEeyvUOoQQtBbe6zICPir8gHTUZF59k8QOEGP7AQV2ccsQLCH+htJOkUVEzT6f
- XFWr7gdbqCo3lv+G25e9EJDxjXQaGE15BbnzF8sC+3nyAc5EmBZKBwpTamnHoJH8f2PMqpm1e
- cxq/mMConbhMjYox1lLsIqyltpI044pIcHDTdLAxUyiTYF6qFWrEML6kKtvjuMNLHqoVoNIXi
- cmV+ln2czUzwlY6Rt1R7UTlBRHgPapQE9Nm+kGQOplaTS2tqaVdYtw9I8r/EMQluJWrAOtt8Y
- ioGpgtod8LnAski2eCmnBRKC8UD83zmq/YIP1ncX75dcHwyrZytTL8ehPexOgzF5a+Pc5BZUy
- 8XLrIN0mCFQmPcmMUoxMWcJCfo3xgn3Goum2RvEWMu/d7E3koTz8VWkU43u+4qldyfxzbp2J2
- FH3ZvYf1rJlDlueS9sxTo1jUuf9oKbujnopowoCtSlZdA8MUibdRAcZ00cuYyzEBfOdc6GddN
- /ohYDK3h5gQQswJRk3prj5z+N3d2+cXblHIOqWgoPHstY6/LL93I5y4q96mnoP6vvbyLzeNzc
- PJu8ZHz6rzyFb9d0QRfYohVOQReAHMBGzbbhKQeTPjpxxqtF4gEadygaPuYEmZK3w39UMQrcw
- UGuubgPdC1q41WtY/aC79UugyzqwAU+aKz/SOSODbol1tvQCpDR74qkGijXP1u1LoGGv7MG6t
- CqX0zqfZgHQvyno749VldaWiEUNMGo2BbkIgyFsLyEbGdEI+f+5epcMO1CESz1yLfAyTCvmwk
- SNxLyGyTEWMq8dp/5wRzkRWWWBcuS5GolHPBx5vT7wKUAn2gipz+jxaQlnI5M+iqcHUR++ch9
- diGJuimI+CJ7z19LXmX/cSvGGojWcoINQrOPcslGEvUTAU2Dx4cYOQyN4Rew+8n1ddBxPZOqr
- mhS4P3haeXrBTHBO/4KRtubM67NAgOf8T7yNpyV7OWkVpcMLzYdNpMNegGoLk0qHCT8uEtQJB
- SMPwsnBV5BEQEbiDNs4vCjJyAmpb89ZIF0fzJ3R7z4o83MR0qan4ycBu7K3J5tvnxUFnZwUQ8
- KlPwqR8VORIoAq/V4AV94fojhczTqBOa4xh
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:D5aQrEXtAs+j6xUcyWDZhM7+XjIyJEUMOHH3Zx2H6aUvvIJdzcn
+ mhlIqQOj6bCs+mF+BgQUVBGDqO7VSiZtt/Ur52Kf0/lI02jF01nk52Cu+JjIi/ozzZ/ROdJ
+ Twui/N5gN4bR3Y5fgsT0B6N0q8TSOkMfoNczrRKkhKBUcf4wGCIkeS8uvPeqpK5k4uHQHmH
+ KJ7GjVfovetbEFWgAIYGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xj5ocEyKc9w=:ZWb8LzoMLiV6dg7LkJlYqp
+ S3QoFOPCdOYZc5BK0bp7GqH7MDpKfB7KHiX5zVR0b/9FUJ2ZGgseQIyjQtiuulv5YnYBv+6WG
+ 4VuiGJWjfdaiv7Dl6PoDusM7xq3Dz/MfD2Ron/IwH3oEOf6UrlvIoBXnV8C3UzjjLA3xozETv
+ JDUDl271lRdJk9kOoCAKNAknilmo6V9EcvRxH9Acaq1sN8whAoUyb2PN00YM9Y3azvqZSMvLj
+ AWO7W1rKGt3+aLcLSA3JnpUG0oY1eqvMOzM0gKJyEMbFpM+RvJi/ZqOybQkSA0YDZbCy+393Q
+ uydpritXWQcoKl3GTRiXV3+AdKJLBrr7FP3e5SZerUmnzeOTXPojkfbU8CnSJOQZasSKMu8wT
+ uYcUP4gu0cwp7a5oIIhHZHMG6L5wk2IUrQ0Vdo5TqDSPYQCyDSz9Y2GYIE2NjB0SCBPe0mX4x
+ ELiXb6tYWEQSRv7x4xZD6R7Ejvv9GDkTEbEj4ZdhAs4l55uKj1/TLsRsnaoQT12He56a/wBka
+ IeOMhaaRyUrGa0jhUEOxvLoWkoIgM2ru3nf4cQdC/u4PIjk2sWrhPRH9Qwfcnw5X18Qa7rvlQ
+ IPv2DO9hzvn585QnHxMOJO9TIq7ivUp8465LZUCGd37akV9aC0U7AAfQbqAxuCjKR/XCcAY4G
+ ta2WxL8fwOKYbz+64lbZnfS1yHvzn5xndNd7T3213u3Q6aFqaz1VMZlJuLCydVLzgnRMLdfAe
+ /h+Di/bETAS/yVOHNp3dbnhZiNbRKn4ijIa95QZKKbi8TychINel0X+7/ULHqnw0S6kBm1+gI
+ f+CIcSkX3nMALkBEXulGE6f3bUlz+18GJRjUM8pdu1QlTpwwQ//BJdxvHuiGTKZ5mI36beYWw
+ AdarX7buEWTWA0WpSAktn0EUbE8/lpomWj3BqOpVISOQUYRu5QLe3P3vFg7kmUW3nb29NTmxT
+ g7stN09PbYDnsYy+ZuYk3xEFJ6ycbTllBPdydd2nqSWw4VFHrz3Ls4JRcNRpk9tgPAG1/vPLP
+ Q/LOaVRtZMiyc2GTEQLqRBpS6dOIT+hVDdOHHnbG4ikteblUFShPdy5HB1YO1llO5fHuqep4v
+ 48G7UUblYz81/+1M60fuJgGbB1V8PgmN92Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,77 +69,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-On Tue, 2 Jul 2019, Junio C Hamano wrote:
+On Thu, 27 Jun 2019, Karsten Blees via GitGitGadget wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > * nd/index-dump-in-json (2019-06-26) 11 commits
-> >  - SQUASH???
-> >  - t3008: use the new SINGLE_CPU prereq
-> >  - read-cache.c: dump "IEOT" extension as json
-> >  - read-cache.c: dump "EOIE" extension as json
-> >  - resolve-undo.c: dump "REUC" extension as json
-> >  - fsmonitor.c: dump "FSMN" extension as json
-> >  - split-index.c: dump "link" extension as json
-> >  - dir.c: dump "UNTR" extension as json
-> >  - cache-tree.c: dump "TREE" extension as json
-> >  - read-cache.c: dump common extension info in json
-> >  - ls-files: add --json to dump the index
-> >
-> >  "ls-files" learned "--debug-json" option to dump the contents and
-> >  the extensions of the index file.
->
-> The t3011 test in this topic seems timing-dependent-flaky.
->
-> When we get "not ok 3 - ls-files --json, split index",
-> the "filtered" one looks like this:
->
-> $ diff -U999 t/t3011/split-index filtered
-> --- t/t3011/split-index	2019-07-02 13:17:19.676719212 -0700
-> +++ filtered	2019-07-02 13:40:32.068638361 -0700
-> @@ -1,39 +1,19 @@
->  {
->    "version": 2,
->    "oid": <string>,
->    "mtime_sec": <number>,
->    "mtime_nsec": <number>,
->    "entries": [
-> -    {
-> -      "id": 0,
-> -      "name": "",
-> -      "mode": "100644",
-> -      "flags": 0,
-> -      "oid": <string>,
-> -      "stat": {
-> -        "ctime_sec": <number>,
-> -        "ctime_nsec": <number>,
-> -        "mtime_sec": <number>,
-> -        "mtime_nsec": <number>,
-> -        "device": <number>,
-> -        "inode": <number>,
-> -        "uid": <number>,
-> -        "gid": <number>,
-> -        "size": 4
-> -      },
-> -      "file_offset": <number>
-> -    }
->    ],
->    "extensions": {
->      "link": {
->        "file_offset": <number>,
->        "ext_size": <number>,
->        "oid": <string>,
->        "delete_bitmap": [
->        ],
->        "replace_bitmap": [
-> -        0
->        ]
->      }
->    }
->  }
+> diff --git a/gettext.c b/gettext.c
+> index d4021d690c..d8423e5c41 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -12,7 +12,9 @@
+>  #ifndef NO_GETTEXT
+>  #	include <locale.h>
+>  #	include <libintl.h>
+> -#	ifdef HAVE_LIBCHARSET_H
+> +#	ifdef GIT_WINDOWS_NATIVE
+> +#		define locale_charset() "UTF-8"
+> +#	elif defined HAVE_LIBCHARSET_H
+>  #		include <libcharset.h>
+>  #	else
+>  #		include <langinfo.h>
 
-ACK, I saw this quite a couple of times in the Azure Pipeline, too. It's
-an unreliable test case all right.
+Sadly, this has a really unfortunate interaction with ab/no-kwset: the
+latter patch series contains test cases that rely on being able to
+use `LC_ALL=C` to prevent Git from assuming UTF-8 encoding.
+
+I have this tentative patch queued up on Git for Windows' `shears/pu`
+branch (i.e. the ever-green branch that continuously rebases all of Git
+for Windows' patch thicket on top of `pu`):
+https://github.com/git-for-windows/git/commit/e561446d
+
+For you convenience:
+
+-- snip --
+diff --git a/gettext.c b/gettext.c
+index 7da80db453c4..35d2c1218db2 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -13,7 +13,23 @@
+ #	include <locale.h>
+ #	include <libintl.h>
+ #	ifdef GIT_WINDOWS_NATIVE
+-#		define locale_charset() "UTF-8"
++
++static const char *locale_charset(void)
++{
++	const char *env = getenv("LC_ALL"), *dot;
++
++	if (!env || !*env)
++		env = getenv("LC_CTYPE");
++	if (!env || !*env)
++		env = getenv("LANG");
++
++	if (!env)
++		return "UTF-8";
++
++	dot = strchr(env, '.');
++	return !dot ? env : dot + 1;
++}
++
+ #	elif defined HAVE_LIBCHARSET_H
+ #		include <libcharset.h>
+ #	else
+-- snap --
+
+Junio, please hold off from advancing `kb/windows-force-utf8` until this
+is resolved.
+
+Also: does that diff look okay? Or would you rather want to avoid having
+that function defined in that #if...#endif block?
 
 Ciao,
 Dscho
