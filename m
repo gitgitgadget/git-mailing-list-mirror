@@ -2,134 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 401391F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 21:54:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 418F31F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 22:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727328AbfGDVyb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 17:54:31 -0400
-Received: from mail-gateway-shared10.cyon.net ([194.126.200.61]:46112 "EHLO
-        mail-gateway-shared10.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726069AbfGDVyb (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 4 Jul 2019 17:54:31 -0400
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared10.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1hj9gQ-0001eI-BA
-        for git@vger.kernel.org; Thu, 04 Jul 2019 23:54:28 +0200
-Received: from [10.20.10.233] (port=17892 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.92)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1hj9gP-00015o-3o; Thu, 04 Jul 2019 23:54:25 +0200
-Subject: Re: [PATCH 1/2] mingw: get pw_name in UTF-8 format
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.147.git.gitgitgadget@gmail.com>
- <54fff4ef40d1dba2153de27413fb53e992228b5b.1561628237.git.gitgitgadget@gmail.com>
- <9bd9efde-8971-08f2-8417-1036286c9d1a@drbeat.li>
- <nycvar.QRO.7.76.6.1907042350510.44@tvgsbejvaqbjf.bet>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <1ab5bb1e-140a-cee1-0910-33e495cde11e@drbeat.li>
-Date:   Thu, 4 Jul 2019 23:54:24 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.7.2
+        id S1726900AbfGDWg7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 18:36:59 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:37187 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfGDWg6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 18:36:58 -0400
+Received: by mail-ed1-f51.google.com with SMTP id w13so6597499eds.4
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=SqZJ5OMEVQPSWV1we1JDB1EUnwDZ0/fbccaMbsguJuU=;
+        b=jWDqIZqoGD3FjQJe+czsjvCHR/Tof/VBaPuV4HYICqDMGc5B2U4PTckl0ZgmF4uHod
+         HKvWfIDD7DGSLZU1YPBzsIlUZVqaW2iL0iIN8PlNJQFB+52lNE4/X7pJjrkZPqXkRNFm
+         9uFLPIB4wyotV1ygY1czRrjwJ/FCGmFWJe4jdw+Y9VaK/ZKDGJaweybWIie1gWJEL4+x
+         /z9XVJPGKlrQIfDTxbXF+JjgIWbAz0o3zJ0OkZw2ll8scVW7xqL/VD6d1qEj8cclXLtN
+         gQadvfHZ55sakTeI8jv8TUJemwzUExTNGkuLcnwrLH8pEJZb0a8ObZ9p7yVggBwQrCuK
+         Zmkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=SqZJ5OMEVQPSWV1we1JDB1EUnwDZ0/fbccaMbsguJuU=;
+        b=T0kf7YiQZriPd8z+ONjyMMijCLlhtzxORiTY+/KvJ6GOK9VXUJ35g5qQF22cSdHIeX
+         /rMPiaqoDE0LCI8QDR6jGvUZ+/v2YUdSfxq0EX8XkbigSKY8R9KhYTJ1ItwdmUc7jSkH
+         nkm568vuWXAPGk+vEohfTf4QypcrQ6p0Fx1t6zkGrLVDrSyfszj3MB1+tmpU4FN/OBur
+         qo67xFXtyla3qdi0wyEpihb1uDSvNUXjc9lgUySzXwLv1bSTsyjUk1+/xbDY53WmUm6v
+         UG0nNgOmyEuXni9QU9Xq6yFzCNP7bdmmly+v4WrF7bHfXXWjKAHFc7p0xW6XoFXhPHWC
+         TQBw==
+X-Gm-Message-State: APjAAAU6Qaf6mqwmfxfmXKUtJ530K3pef/ONRldJF+vOji+QQqgSqpq2
+        DgYacCUcPkjhE8ApyYUD0vUhE8xp
+X-Google-Smtp-Source: APXvYqxTgqlkOBO1e2rDeOQCGJS638hhzdiZF+dJQYIg4JkHh9IrFPuhXkACwDA63RjGz+XKqjB3vA==
+X-Received: by 2002:a17:906:2101:: with SMTP id 1mr530272ejt.182.1562279817157;
+        Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q50sm2051291edd.91.2019.07.04.15.36.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Jul 2019 15:36:56 -0700 (PDT)
+Date:   Thu, 04 Jul 2019 15:36:56 -0700 (PDT)
+X-Google-Original-Date: Thu, 04 Jul 2019 22:36:54 GMT
+Message-Id: <pull.283.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Follow-up on top of js/mingw-use-utf8
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1907042350510.44@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-OutGoing-Spam-Status: No, score=-1.0
+To:     git@vger.kernel.org
+Cc:     Beat Bolli <dev+git@drbeat.li>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+A quick fix for a patch that is already in next.
 
-On 04.07.19 23:52, Johannes Schindelin wrote:
-> Hi Beat,
-> 
-> On Thu, 4 Jul 2019, Beat Bolli wrote:
-> 
->> On 27.06.19 11:37, Johannes Schindelin via GitGitGadget wrote:
->>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>>
->>> Previously, we would have obtained the user name encoded in whatever the
->>> current code page is.
->>>
->>> Note: the "user name" here does not denote the full name but instead the
->>> short logon name.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>  compat/mingw.c | 10 ++++++++--
->>>  1 file changed, 8 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/compat/mingw.c b/compat/mingw.c
->>> index 9b6d2400e1..8526876262 100644
->>> --- a/compat/mingw.c
->>> +++ b/compat/mingw.c
->>> @@ -1946,13 +1946,19 @@ struct passwd *getpwuid(int uid)
->>>  	static unsigned initialized;
->>>  	static char user_name[100];
->>>  	static struct passwd *p;
->>> +	wchar_t buf[100];
->>>  	DWORD len;
->>>
->>>  	if (initialized)
->>>  		return p;
->>>
->>> -	len = sizeof(user_name);
->>> -	if (!GetUserName(user_name, &len)) {
->>> +	len = sizeof(buf);
->>
->> I think this should be "len = sizeof(buf) / sizeof(buf[0])".
->>
->> GetUserNameW() takes the number of characters, not bytes.
-> 
-> Good catch.
-> 
-> How about I use `ARRAY_SIZE(buf)`? Since this is already in `next`, I will
-> prepare a follow-up patch.
+Johannes Schindelin (1):
+  mingw: fix possible buffer overrun when calling `GetUserNameW()`
 
-Of course, ARRAY_SIZE() is even better. I didn't remember it existed.
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Cheers,
-Beat
 
-> 
-> Ciao,
-> Dscho
-> 
->>
->>> +	if (!GetUserNameW(buf, &len)) {
->>> +		initialized = 1;
->>> +		return NULL;
->>> +	}
->>> +
->>> +	if (xwcstoutf(user_name, buf, sizeof(user_name)) < 0) {
->>>  		initialized = 1;
->>>  		return NULL;
->>>  	}
->>>
->>
->> Cheers,
->> Beat
->>
-
+base-commit: 94238859b9809afc806919cb7022a45cdc8e6748
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-283%2Fdscho%2Fmingw-use-utf8-fixup-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-283/dscho/mingw-use-utf8-fixup-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/283
+-- 
+gitgitgadget
