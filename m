@@ -2,147 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94B81F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 22:50:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DEBB1F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 22:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727280AbfGDWrv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 18:47:51 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54144 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbfGDWrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 18:47:51 -0400
-Received: by mail-wm1-f65.google.com with SMTP id x15so6992810wmj.3
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 15:47:49 -0700 (PDT)
+        id S1726273AbfGDWx4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 18:53:56 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44573 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725917AbfGDWx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 18:53:56 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k8so6582946edr.11
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 15:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=EUqkWP6VlQfhrBmJ/Uhyl8BEZQnH/1uQC/QHx+D+JiU=;
-        b=kNOSbfnLOruI7rNXC1IInveD9+D1OMdaJ5S804SvvEKC6plbZ2LU483cJrztSmLtko
-         40RlQXVO4J/r7fI0HW9i2h1XnFHRV5DUkweHj1HbgSmHGd3Y5VndE16yvrYJ6IHUWfmL
-         WjyX/YA/O/V15IdOs+ErqSxjF2/Tg1YejjJcvRosByDEwHLUQPSGbkHoKS+KShl7iFyk
-         YQyFYsek3BsfIB6rWVoy+Vu93Q2nMT176NTTRmv9weP6g1h0ZCvCMgKH/wCotnCPxK5z
-         L+D+rQmmZw4ib4kkaIiCVYVlrLG2u5lQpqBz7JvAZdbELu3yJHy8DoDKS2fr5lOMMJ+y
-         cHzw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=83qKW8kdJ0qb80L6cYOuR3hWCw+V8UrLinvfiGmDkFQ=;
+        b=Y8QWYQGa6H+ldL7PcpBq1MVodm3dkZ4qhbe6axwMDaZHivP94khNkiJuq2iFm9VHlN
+         CuhiY6+JjCzosMF3iljObJlcqehK8K/AYOJBRhZV2BiGPYBKTdrz4ZU/gdC+36lnZMok
+         clA8ATIRAmmPMvAopytM78t+fqMX8U5aoUojdlM+1+dqdyT3wAIvmDjUIDBr+BslIjFF
+         MgA/zmWdSkFZR+1knaQVbvdAgW9i98hYTNnNjUL5thwZHoocuRbFxgGdQdKuJrlDlZmE
+         utij1PCN5P/Z9uERhcDCxN/7uDfD+nP+sybNsYGNz1c5CyGu9soL/BleQZ3orHjZHooT
+         wDmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=EUqkWP6VlQfhrBmJ/Uhyl8BEZQnH/1uQC/QHx+D+JiU=;
-        b=kaTrKnSRODd3Q8bDa0T/sQJ379e85YnQ3MxnYC5ujBnmOhVtrgo91z/qIuMzEtKzjd
-         R1eTiv0XbyDZQtTxEizwR0HtsnBz/X7hA8TF+YfoYFg/bWXyDsEYXGoFZwDvpugggA/5
-         xcvFdCID7vS+eMTlhzzbzv+VhAThieBWJTPNu9jWRZlkkEhFvl9wrV99scqmdMm5B7dS
-         kXkdp3YTIYl41DnNsgd/CYTiM4VO8brHwpjmuyXLX/rIHkfkSaGc31uWbyErhXNCPcsJ
-         IZjWA5Ge3tXoAZcezb5pH+vTzryHZlctQKOy1zti1pyIg2bpmR/vRZxXyVWkuulDUGpI
-         Mc0w==
-X-Gm-Message-State: APjAAAU+t8v7Q6x94PY6bk7es5xLLrWXbNLHkHaRvc+4jHlqydMjoUxT
-        nuGQhMVHVltpXNtm6xGYVQQ=
-X-Google-Smtp-Source: APXvYqx1+E2swfrFk8NOH/p97Yf7Czugs+lSGAYlkTlgiEKAGL5gNpDRhc9xJnQ2qIdDW+APZFxKPg==
-X-Received: by 2002:a7b:cd9a:: with SMTP id y26mr235053wmj.44.1562280468926;
-        Thu, 04 Jul 2019 15:47:48 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (enb96.neoplus.adsl.tpnet.pl. [83.21.247.96])
-        by smtp.gmail.com with ESMTPSA id m16sm6169993wrv.89.2019.07.04.15.47.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jul 2019 15:47:48 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 1/3] repo-settings: create core.featureAdoptionRate setting
-References: <pull.254.v2.git.gitgitgadget@gmail.com>
-        <pull.254.v3.git.gitgitgadget@gmail.com>
-        <13b9e71b383485885c4823baa466c32511fd20bc.1561991348.git.gitgitgadget@gmail.com>
-        <CACsJy8Cwxov9VWq_MpeWstGtMB-rTy6LYyFj_PF9oSP0kqcDXQ@mail.gmail.com>
-Date:   Fri, 05 Jul 2019 00:47:46 +0200
-In-Reply-To: <CACsJy8Cwxov9VWq_MpeWstGtMB-rTy6LYyFj_PF9oSP0kqcDXQ@mail.gmail.com>
-        (Duy Nguyen's message of "Tue, 2 Jul 2019 16:20:21 +0700")
-Message-ID: <86ftnl1kod.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=83qKW8kdJ0qb80L6cYOuR3hWCw+V8UrLinvfiGmDkFQ=;
+        b=AcXHVXfifjREujOYZandJ/QhlFsGkGvaTygkq339m+ihXvItFmBJ9O1s52+dVKJmgv
+         Yv00+4Pm8Onn8TnMSEvjKI45v41BecrGM1hBwob2QoDfxhXcqQkQhq24yUf0PcVLU5Go
+         4P+tXS1Q8OSoWhaDg5TNpvhNCROfRUb8iiSbUCSWS9+t7/Dz24tiRmNrr5gEYHp6b2Pu
+         +npqmcNWTDAyIu0rK5XL48sCXkbMLeWkJ6rIr6Z4KB8kLUI5UEwVV4mHcPwK6zX7OmzK
+         85CIwG/grq4XQEQQWkGQBGJCcgiPxoqhBNpKm9txPfJQ4MoseuRJ3bRqiZJdiyKLtuGe
+         LQlg==
+X-Gm-Message-State: APjAAAVRuC3f9csa+5OeMWjH7wyVUxURhppZq1PSoRgPTXkywechkrbQ
+        bW7i7OGUlQys0tO7jF1gm2mlcyQq
+X-Google-Smtp-Source: APXvYqybi+E63lyBvGJy9HPfLf8J8rSzzq8gE6erg0+yzWITjiNVXh+y/RUVOx8RcsyZFzIwzv2QRg==
+X-Received: by 2002:a50:b6e6:: with SMTP id f35mr1063230ede.82.1562280833796;
+        Thu, 04 Jul 2019 15:53:53 -0700 (PDT)
+Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
+        by smtp.gmail.com with ESMTPSA id o21sm226835edt.26.2019.07.04.15.53.52
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 04 Jul 2019 15:53:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/1] gettext: always use UTF-8 on native Windows
+References: <pull.217.git.gitgitgadget@gmail.com> <pull.217.v2.git.gitgitgadget@gmail.com> <2d2253faef14e5157f8aac4534d9ac9640f3d5fa.1562186762.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <2d2253faef14e5157f8aac4534d9ac9640f3d5fa.1562186762.git.gitgitgadget@gmail.com>
+Date:   Fri, 05 Jul 2019 00:53:52 +0200
+Message-ID: <87o92976nz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-> On Mon, Jul 1, 2019 at 10:32 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> @@ -601,3 +602,22 @@ core.abbrev::
->>         in your repository, which hopefully is enough for
->>         abbreviated object names to stay unique for some time.
->>         The minimum length is 4.
->> +
->> +core.featureAdoptionRate::
->> +       Set an integer value on a scale from 0 to 10 describing your
->> +       desire to adopt new performance features. Defaults to 0. As
->> +       the value increases, features are enabled by changing the
->> +       default values of other config settings. If a config variable
->> +       is specified explicitly, the explicit value will override these
->> +       defaults:
+
+On Wed, Jul 03 2019, Karsten Blees via GitGitGadget wrote:
+
+> From: Karsten Blees <blees@dcon.de>
 >
-> This is because I'd like to keep core.* from growing too big (it's
-> already big), hard to read, search and maintain. Perhaps this should
-> belong to a separate group? Something like tuning.something or
-> defaults.something.
-
-I'm not sure if I consider core.* too big.  Well, there are 55 or more
-entries in this namespace.
-
->> +If the value is at least 3, then the following defaults are modified.
->> +These represent relatively new features that have existed for multiple
->> +major releases, and may present performance benefits. These benefits
->> +depend on the amount and kind of data in your repo and how you use it.
+> On native Windows, Git exclusively uses UTF-8 for console output (both
+> with MinTTY and native Win32 Console). Gettext uses `setlocale()` to
+> determine the output encoding for translated text, however, MSVCRT's
+> `setlocale()` does not support UTF-8. As a result, translated text is
+> encoded in system encoding (as per `GetAPC()`), and non-ASCII chars are
+> mangled in console output.
 >
-> Then instead of numeric values, maybe the user should write some sort
-> description about the repo and we optimize for that, similar to gcc
-> -Os optimized for size, -Ofast for compiler speed (-O<n> is all about
-> execution speed).
-
-I also do not like those magic numbers.
-
+> Side note: There is actually a code page for UTF-8: 65001. In practice,
+> it does not work as expected at least on Windows 7, though, so we cannot
+> use it in Git. Besides, if we overrode the code page, any process
+> spawned from Git would inherit that code page (as opposed to the code
+> page configured for the current user), which would quite possibly break
+> e.g. diff or merge helpers. So we really cannot override the code page.
 >
-> We could write, for example, tuning.commitHistory =3D {small, medium,
-> large} and tuning.worktree =3D {small, large, medium} and maybe
-> tuning.refSize and use that to optimize. We can still have different
-> optimization levels (probably just "none", "recommended" vs
-> "aggressive" where agressive enables most new stuff),
+> In `init_gettext_charset()`, Git calls gettext's
+> `bind_textdomain_codeset()` with the character set obtained via
+> `locale_charset()`; Let's override that latter function to force the
+> encoding to UTF-8 on native Windows.
+>
+> In Git for Windows' SDK, there is a `libcharset.h` and therefore we
+> define `HAVE_LIBCHARSET_H` in the MINGW-specific section in
+> `config.mak.uname`, therefore we need to add the override before that
+> conditionally-compiled code block.
+>
+> Rather than simply defining `locale_charset()` to return the string
+> `"UTF-8"`, though, we are careful not to break `LC_ALL=C`: the
+> `ab/no-kwset` patch series, for example, needs to have a way to prevent
+> Git from expecting UTF-8-encoded input.
 
-I think we have three different things that are currently conflated in
-one config variable and one value.
+It's not just the ab/no-kwset I have cooking (but happy to have this
+take that into account), but also anything grep-like is usually must
+faster with LC_ALL=C. Isn't that also the case on Windows? Setting
+locales affects a large variety of libc functions and third party
+libraries (e.g. PCRE via us setting "use UTF-8" under locale).
 
-First is what we want to optimize for; is it on-disk repository size,
-command performance / execution speed, or maybe convenient information.
+> Signed-off-by: Karsten Blees <blees@dcon.de>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  gettext.c | 20 +++++++++++++++++++-
+>  1 file changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/gettext.c b/gettext.c
+> index d4021d690c..3f2aca5c3b 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -12,7 +12,25 @@
+>  #ifndef NO_GETTEXT
+>  #	include <locale.h>
+>  #	include <libintl.h>
+> -#	ifdef HAVE_LIBCHARSET_H
+> +#	ifdef GIT_WINDOWS_NATIVE
+> +
+> +static const char *locale_charset(void)
+> +{
+> +	const char *env = getenv("LC_ALL"), *dot;
+> +
+> +	if (!env || !*env)
+> +		env = getenv("LC_CTYPE");
+> +	if (!env || !*env)
+> +		env = getenv("LANG");
+> +
+> +	if (!env)
+> +		return "UTF-8";
+> +
+> +	dot = strchr(env, '.');
+> +	return !dot ? env : dot + 1;
+> +}
+> +
+> +#	elif defined HAVE_LIBCHARSET_H
+>  #		include <libcharset.h>
+>  #	else
+>  #		include <langinfo.h>
 
-Second is what type of repository we are dealing with.  Is there a
-problem with long history, large number of files in checkout, large
-and/or binary files, or all together?  The original `core.size=3Dlarge`
-(or proposed core.repositorySize) was all about this issue.  Another
-issue that might be important is that if it is leaf developer
-repository, or is it maintainer repository, etc. (which affects for
-example how the push looks like).
+I'll take it on faith that this is what the locale_charset() should look
+like.
 
-Third is what tradeoffs we are willing to accept to get required
-performance.  Are we willing to use additional stable optional features;
-are we willing to use new experimental optional features; are we
-willing; are we willing to sacrifice convenience (ahead/behind
-information in status, information bout forced updates in push output,
-etc.) for performance?  This what current proposal is about.
+I wonder if it wouldn't be better to always compile this function, and
+just have init_gettext_charset() switch between the two. We've moved
+more towards that sort of thing (e.g. with pthreads). I.e. prefer
+redundant compilation to ifdefing platform-only code (which then only
+gets compiled there). See "HAVE_THREADS" in the code.
 
-It may not nnned to be a separate confi variable for a separate aspect;
-it may be enough to have value that is space-separated list, or
-something like that.
+It looks to me that with this patch the HAVE_LIBCHARSET_H docs in
+"Makefile" become wrong. Shouldn't those be updated too?
 
-Best,
---
-Jakub Nar=EAbski
+We also still pass -DHAVE_LIBCHARSET_H to every file we compile, only to
+never use it under GIT_WINDOWS_NATIVE, but perhaps fixing that isn't
+possible with GIT_WINDOWS_NATIVE being a macro, and perhaps I've again
+gotten the "native" v.s. "mingw" etc. relationship wrong in my head and
+the HAVE_LIBCHARSET_H docs are fine.
+
+It just seems wrong that we have both the configure script &
+config.mak.uname look for / declare that we have libcharset.h, only to
+at this late point not use libcharset.h at all. Couldn't we just know if
+GIT_WINDOWS_NATIVE will be true earlier & move that check up, so it &
+HAVE_LIBCHARSET_H can be mutually exclusive (with accompanying #error if
+we have both)?
