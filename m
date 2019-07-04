@@ -2,98 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7C21F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 09:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A22601F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 09:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727413AbfGDJf7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 05:35:59 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43201 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727389AbfGDJf7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:35:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562232955;
-        bh=lSaN39rzzydH+jn1fCdm2tX8cEOAzwTwZ7jiSHmVAag=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=N+0MiKG8OMVqfSeCdWavDiIyz010N5UwH8lVRfJ9A7AWrL+6uSQk3lPdKxwpmalLs
-         Yxz0YhzzNiKsyZZqwsZ2FI46rC6Vz3EqQsiDw9Bfa+dgGRq5zEHk8wrI8TBesy7GSC
-         DorCRHEYNHg5n/YCEOVH0PtyUbgrLH6vyGqgdVjA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPlMc-1hf8fJ2s5K-004xuH; Thu, 04
- Jul 2019 11:35:55 +0200
-Date:   Thu, 4 Jul 2019 11:36:25 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: ab/no-kwset, was Re: What's cooking in git.git (Jul 2019, #01; Wed,
- 3)
-In-Reply-To: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907041135020.44@tvgsbejvaqbjf.bet>
-References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727433AbfGDJrD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 05:47:03 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:38803 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727257AbfGDJrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:47:03 -0400
+Received: by mail-ed1-f49.google.com with SMTP id r12so4842161edo.5
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FEL07sVLZVhLVyMM4xOkECsJsnMLW7NgBa0uw9rVJlA=;
+        b=EI1pG8n6ult66NfzDQHgTCulgevW0iqB56kaUD7oEJxs8FqW0C5ViHx0sYnIl4Y5Df
+         H4ElOUwwnoHgXi4Fe78/1ti3A8to73dNxEHOLkZu4Iebvoe3mR5J8PYeSwr80VTzH+Vs
+         h10A3/G4SXMl6Q5m7FX/Smz3DSaABa4izKmbScrB9dR8Snz88lnVpKBK9wS7/qgw34DZ
+         pO8oFUetdnrBpsm9qZLOmp0NVLQv1em/pLda3oLQ4o2zTGgWqNtEghd17ns3Ko8ll0c+
+         1GG1W/533tvcqViigcArTZmC2tZnF0Lo/voyM8eI4F+QIBFa4DFEFOWEp+lKuMNG+q1W
+         uO8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=FEL07sVLZVhLVyMM4xOkECsJsnMLW7NgBa0uw9rVJlA=;
+        b=ejZYiEkA1ZbBNqyg7BC0cgxc5KLaF8xyrVxv1DFzeiekp1j+xieY0a0nPu5lCfONIo
+         z8FgB/yCSwmLtEtoeYIcoxrU46fCyuBZFHYW20y3N+26WnUtchi/7iNNtLk1dumYymy8
+         zl58AUW+CwfQVQaMHPISgQo4mzwF3RefFQ9rEihx71VmB+qJ1iJtkE9muXUG2bel3CeZ
+         wYTXKtYgAPoFWImLCZj+XMTWnO4goGGAw9Fsd9fAJiThDL4PYQkSXvx5jtuzC2OYYML0
+         DaBBCZc0xYoILqshBXYBJSMljZE/qLx0cZPmofBLgRjfGr8EnFAqrnFQA4nzQEWOTbbl
+         u34w==
+X-Gm-Message-State: APjAAAVX5Kz1FOxfYC5TXZjKXm9+/qyvSS5O8I4SY7E2xA6U0l3LYImy
+        h/7tBSw084HmTtT/DpRM9G2wjJ5x
+X-Google-Smtp-Source: APXvYqyweTQY0dh9N+9+Icxz3tFb/kPhaaqPkmRquwopibN7780IdQ9SP1o6PsboVj2kTEUTOIImsQ==
+X-Received: by 2002:a50:b122:: with SMTP id k31mr48161806edd.204.1562233621951;
+        Thu, 04 Jul 2019 02:47:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s17sm968887ejz.70.2019.07.04.02.47.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Jul 2019 02:47:01 -0700 (PDT)
+Date:   Thu, 04 Jul 2019 02:47:01 -0700 (PDT)
+X-Google-Original-Date: Thu, 04 Jul 2019 09:46:59 GMT
+Message-Id: <pull.276.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.276.git.gitgitgadget@gmail.com>
+References: <pull.276.git.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] t3420 remove progress from output
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Cpx8bS5RVcY9xSibMdw5E2ebQdYvBRQhB2dlnU66EiAXUTyPHeg
- bh0fPE49huoNRlHr4VKlDIiRL1WfjUnBMn0xq/fhcXJWjBzSeKTE6CoXAPA06TJKQh+5fsR
- btCD2AuZn7Gomr7jFt4TNbZqyJLAbdLeRoOyDiXa34ob/DUajLjLyzcUnbhVw+JmO6TOXec
- YP2YA/sBbk+3GCsx2kHEw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:17rQ8QgCXtQ=:H0KFz3vBQIG2PEZvV0T3Nh
- wp3GmCOrTOFtyUO5WxZp/6R3XUTsbnUMVelsVaZZ6Xps1sSIo6W11H506TOrEweftkrl19lv+
- 3K0cZNLdiZX5DyvSj0Rmj8nW8gpmajuQxa3NfFDc9PolNnm4c3Q8uaQBFgkI88tZiKSqdXboU
- ZVI/Tn9O/dM8B9zh0qlroinNCqNfh3ME7DFoG9fm9FrqA7ozADG6daipozYFDtd+PmFqtL6Ol
- BCtQ41pMsgYaGcF4F0b7a2oIKLq7Uvot+UogfJG837SGd9MI1Cn8TNQ1JWvEk8zvvbNvEtnBv
- tHrxZJT3NBckefVWYUYtxQMxz2Imwjtc8Bn5CT6zZmHzo/JASUS2ZE2WuX2KLWJlwqpfHlPa+
- yEX4ioEuoot22hZ6d7NZh2/NaNROBVAz1ogWKHnsdu1qY1I5ugfu4vwvciU/uiuSqvoRFnYZH
- DrQO3JARPZjKi6QQbhraPOS/JHTyFULkd4VMp/0gVTVjDldtWGRAC5d7Jq4ZRoJwN8YOIz/Qd
- XFkaqrr2Ys8VvopfqHWI285cZ9cWCOvvXgpL/WyJNAdelYhZPvw+SmcB9E2y/os+FilArQp9k
- Fg+YLi/c7IdWE/BohAlsMMlh+w10YDXYgkZZHkiEdkOhpdesXsfPjJJ2hgGRNRX8EvDo//JTI
- Lc9C1tJnQgioi5d6bLEn99/eYPCLkhE3KqsA6AZfaiFeZy6Yd8aSPNBH+3bHkGJISpm+w+Owj
- raJz8ZtSgEB6jevgYPyKuo2tV1HjyRrWh/AZV71pICiaocdqc4ShF9KOtDEPE0AaXsSw63FMN
- oC+FuQ/igOO5GnaxWPN/RLGHzw0dEN8yqXUbAgNYwxGeOz2VxCQcr8KJjbQwtY6Tk0uHgcVL1
- kmNmbZgeCtcoev2etlJ3uwuoPUpSCO+ztfdVnWtTfiVfMkcsQG4IbqhyVaAoV9XvRdP7Cl5it
- CiEncK66vbAhmr2PEbpx3sqZNYDxAnFYy67jTFnpdDo2PVRBuFg98reLmwJduclrfmY0WE4Fh
- Gw4N7VkDTQWJNcXVIr7ebvHxFwgNpW5gd9r96SYOls80VikqII5oixFeiRlG0TvRM7gVnTFrv
- xLqyArLGzU1G0ppdHLs7D2Sq56bmGnJE5YX
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Remove ugliness in the tests that check the output of git rebase
 
-On Wed, 3 Jul 2019, Junio C Hamano wrote:
+I've updated this to avoid repeated calls to printf as suggested by Junio
 
-> * ab/no-kwset (2019-07-01) 10 commits
->  - grep: use PCRE v2 for optimized fixed-string search
->  - grep: remove the kwset optimization
->  - grep: drop support for \0 in --fixed-strings <pattern>
->  - grep: make the behavior for NUL-byte in patterns sane
->  - grep tests: move binary pattern tests into their own file
->  - grep tests: move "grep binary" alongside the rest
->  - grep: inline the return value of a function call used only once
->  - t4210: skip more command-line encoding tests on MinGW
->  - grep: don't use PCRE2?_UTF8 with "log --encoding=3D<non-utf8>"
->  - log tests: test regex backends in "--encode=3D<enc>" tests
->
->  Retire use of kwset library, which is an optimization for looking
->  for fixed strings, with use of pcre2 JIT.
->
->  On hold.
->  cf. <nycvar.QRO.7.76.6.1907021417050.48@tvgsbejvaqbjf.bet>
+Based-On: sg/rebase-progress
 
-Sorry for the confusion. This patch series is fine, it only exposed a
-problem in one of the Git for Windows patches I am trying to upstream.
+Phillip Wood (1):
+  t3420: remove progress lines before comparing output
 
-=46rom my side, this is good to go into `next` for some nice cooking.
+ t/t3420-rebase-autostash.sh | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-Ciao,
-Dscho
+
+base-commit: 5b12e3123b7b70e3875404a4ffe571ca079364fe
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-276%2Fphillipwood%2Fwip%2Ft3420-remove-progress-from-output-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-276/phillipwood/wip/t3420-remove-progress-from-output-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/276
+
+Range-diff vs v1:
+
+ 1:  52501623f6 ! 1:  e1b4023bc0 t3420: remove progress lines before comparing output
+     @@ -20,6 +20,16 @@
+       diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+       --- a/t/t3420-rebase-autostash.sh
+       +++ b/t/t3420-rebase-autostash.sh
+     +@@
+     + 	echo conflicting-change >file2 &&
+     + 	git add . &&
+     + 	test_tick &&
+     +-	git commit -m "related commit"
+     ++	git commit -m "related commit" &&
+     ++	remove_progress_re="$(printf "s/.*\\r//")"
+     + '
+     + 
+     + create_expected_success_am () {
+      @@
+       	q_to_cr >expected <<-EOF
+       	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+     @@ -53,7 +63,7 @@
+       		fi &&
+       		create_expected_success_$suffix &&
+      -		test_i18ncmp expected actual
+     -+		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
+     ++		sed "$remove_progress_re" <actual >actual2 &&
+      +		test_i18ncmp expected actual2
+       	'
+       
+     @@ -63,7 +73,7 @@
+       		fi &&
+       		create_expected_failure_$suffix &&
+      -		test_i18ncmp expected actual
+     -+		sed "$(printf "s/.*\\r//")" <actual >actual2 &&
+     ++		sed "$remove_progress_re" <actual >actual2 &&
+      +		test_i18ncmp expected actual2
+       	'
+       }
+
+-- 
+gitgitgadget
