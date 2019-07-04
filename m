@@ -8,67 +8,59 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C470D1F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 09:53:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 050F31F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 09:56:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbfGDJxm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 05:53:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37044 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727537AbfGDJxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:53:42 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v14so5930837wrr.4
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:53:40 -0700 (PDT)
+        id S1727405AbfGDJ4X (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 05:56:23 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38172 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727223AbfGDJ4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:56:22 -0400
+Received: by mail-wr1-f65.google.com with SMTP id p11so429883wro.5
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZhsZ+HlhV1sprvK47M+6DTZrJv9PcsYDZQbaI7C3LZA=;
-        b=gzk22tE/jC92Wfa0wV0Sg+LFStdElwoU+wG+Y03K75v27VOCVChnjmOs1zkZGlJpen
-         jsi/eQUi6Fx50+fretxwf7IKg7cqXxgbpaVb1lNwImVBrnWd0Ex5kVLdfneVmAIp1mz7
-         r6Y8OUBR7qxb92/T//2Ci5qpn3QZn+THwFmC1YTCfGwEdfhloeVCVVVvtJ11QdGqNzC8
-         QeJse/8HC5vuRz4Z9Mi+Tbjkr92m0+d19xpXWDwa7ZFHhdyItSr9VvdRPtSp+yKK5J5z
-         3xDwBx0B8iomZtUQ5USb7o9z8zUHyMI+Gljk3SlyrRQK3FJbPJcwjQ0X5YBL3z/7pF8E
-         ZH/A==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=g8BwA/TzAM7s5BDcflNgYH+7KttPvJU1Lx4dkkxMdLI=;
+        b=VmuZkRLCcH6eKTbvYoxnyZJDEzsj1HRA5tKqtR27SxCl2t41g/FzMkZgoy+Xqpcbis
+         opmO3Q+VUSOFUe38SjCLUWSVKM+YnyTK3ZuZwpVvwpf+ux8Kx2Nje56CS+/Fwi12P5kG
+         oK7Pn6+/TtKI+YaJMwp3RJC/9A14UKEIRkMJqYoo2LfP17Lu7oWsxKGlyRrKBR3Q8Bzi
+         NifqwX89pKUM4KL2teR7s08j5NsReCs3mK2eiqT3z2V3T6mwgeta9ROTAq1qrd2eScgM
+         TmrH645PgDQg9Sfc0yUW68pZAX4Q1oxIZeP9PGdq0Fgxtm3ZzSObLOqNFBaDCtJKNN6Z
+         Glxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ZhsZ+HlhV1sprvK47M+6DTZrJv9PcsYDZQbaI7C3LZA=;
-        b=dOY7VlHM9GKL+WEzkou9T3btYiLPxmwpxG9yEN7zyBR9nV54gSHSYCcTvaEEU9vzQZ
-         OP10vZiI3Cos74ecOHvDDvIGfwzCAJtLb5H616J4oDPqo6H3RDLmX3lymiCcgT5BeGDN
-         OuUSgzbxH68DfZfTG68bhsfkr8H/zN5G6xUVmVG35w20hxskKCSGveCr60gHlmkxXR3c
-         ImiclFm9/8w7W+ui8SBCwW37VPdwHgP4AYODzdk9ERQOYXCmWoNecNtxX2BGyuvp5U7U
-         BnlblsgQOunU0fvNeTm0EpDN1fiHkcYOT2/WFv56AymgbKc+/PfCeQiRLe/gQNNat0GE
-         fGkQ==
-X-Gm-Message-State: APjAAAVVteKaOqAOnsRtskN1TkEHXESQNhfyjr1+a5zZX6nWn3D97eIo
-        GHWXV3bQUBup5b7NegdOWVk=
-X-Google-Smtp-Source: APXvYqxyVVd72sBcQhq/RmhZYwYav2rO+uMqgng22yVge3/CZOcpmXuPnt58r69mOz+xsLQtUan0SA==
-X-Received: by 2002:adf:eecf:: with SMTP id a15mr9613859wrp.264.1562234019838;
-        Thu, 04 Jul 2019 02:53:39 -0700 (PDT)
+        bh=g8BwA/TzAM7s5BDcflNgYH+7KttPvJU1Lx4dkkxMdLI=;
+        b=Q/Sg6j8aP0Aclwyz7jNuWazNKZdOiAB5Kqeeh1RN6U27aC4txCTzkIi/MflLzupAQY
+         qxJ76RdMsN/lAOANzkUr27ROx+wNTAXHDRaYem8aEkGEBZ6AnWKB6V0quMlCQKrz7YkL
+         a5dGRsaTri19X04f+7i83rM4OA3Og44hu1KSEL7fyrvK/Y4PTCOQ7ZXwck3SYIlwd7gb
+         C1A6op7ROw640yhi58MFqq5n2gjjJVzr/9x0PvMZX+GL+OZBGk0iw/RDDjOZlyV7ZWUc
+         qYbVjcxLqOi7zJGjCSRqcKcrCOFcrWsHe8efofTiJOQqo810nX68nsDa0TO7BWZzWd8l
+         KBPg==
+X-Gm-Message-State: APjAAAUZfAME3J6Drz7DJteSedZdznheW65zUzQTbfpqmicibjlnxyPi
+        hVWyaser/XIKHvQ831PqQ6RxWxrc
+X-Google-Smtp-Source: APXvYqw6dH41sHF+BHbQ2phrhQE90TLdIF2MKRpyH7C1tHewjlhQ9yekRRpJY79BMLF2r/c+948jIg==
+X-Received: by 2002:adf:9d81:: with SMTP id p1mr34147494wre.294.1562234180682;
+        Thu, 04 Jul 2019 02:56:20 -0700 (PDT)
 Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id r2sm6104690wme.30.2019.07.04.02.53.38
+        by smtp.googlemail.com with ESMTPSA id l1sm3730829wmg.13.2019.07.04.02.56.20
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 02:53:39 -0700 (PDT)
-Subject: Re: [PATCH 1/1] t3420: remove progress lines before comparing output
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.276.git.gitgitgadget@gmail.com>
- <52501623f6b47447ce5da283ec11e378413899b7.1561986710.git.gitgitgadget@gmail.com>
- <xmqqimsl5v1u.fsf@gitster-ct.c.googlers.com>
- <2a0a968e-6929-71eb-77cf-ec3ee28fd734@gmail.com>
- <xmqqmuhw4afu.fsf@gitster-ct.c.googlers.com>
+        Thu, 04 Jul 2019 02:56:20 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Jul 2019, #01; Wed, 3)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <b7cdf6af-061f-6578-384f-e378b712eea6@gmail.com>
-Date:   Thu, 4 Jul 2019 10:53:40 +0100
+Message-ID: <9b0fa396-6aae-ff4b-afee-0310a4f601f9@gmail.com>
+Date:   Thu, 4 Jul 2019 10:56:21 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqmuhw4afu.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -77,35 +69,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/07/2019 18:23, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 03/07/2019 23:28, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
 > 
->>> As long as sed implementation used here does not do anything funny
->>> to CR, I think the approach to strip everything before the last CR
->>> on the line is sensible.  As I am not familiar with how Windows port
->>> of sed wants to treat a CR byte in the pattern, I am not sure about
->>> the precondition of the above statement, though.
->>
->> I wondered about that too, but it passes the CI tests under windows.
+> The third batch of topics post 2.22 are now in 'master', and the tip
+> of 'next' has been rewound.
 > 
-> Hopefully Git for Windows, MinGW, and CygWin would all behave
-> similarly.
+> You can find the changes described here in the integration branches
+> of the repositories listed at
 > 
->>> I also have to wonder if we can/want to do this without an extra
->>> printf process every time we sanitize the output, though I do not
->>> think I care too deeply about it.
->>
->> I could add 're="$(printf ...)"' to the setup at the top of the file
->> if you want
+>     http://git-blame.blogspot.com/p/git-public-repositories.html
 > 
-> As I do not care too deeply about it, we recently saw a lot about
-> reducing number of processes in the tests, so apparently some folks
-> care and I presume they want to see something like that to happen.
-> I do not think $re is a good name for such a variable, though ;-)
+> --------------------------------------------------
+> [New Topics]
+> 
+> * pw/rebase-progress-test-cleanup (2019-07-01) 1 commit
+>  - t3420: remove progress lines before comparing output
+>  (this branch uses sg/rebase-progress.)
+> 
+>  Test cleanup.
+> 
+>  Will merge to 'next'.
 
-Yes, $re was just a place holder - naming is hard ...
+I've just posted an update to this which avoids the repeated printf calls
 
 Best Wishes
 
 Phillip
-
