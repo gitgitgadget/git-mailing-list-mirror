@@ -2,157 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF6D31F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 09:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C470D1F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 09:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727501AbfGDJrF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 05:47:05 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:47062 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727338AbfGDJrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:47:04 -0400
-Received: by mail-ed1-f47.google.com with SMTP id d4so4815615edr.13
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:47:03 -0700 (PDT)
+        id S1727584AbfGDJxm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 05:53:42 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37044 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727537AbfGDJxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:53:42 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v14so5930837wrr.4
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=P+sm9/M+cNYaFTsruCLrWtUIpOyRvnHB/7dklHb+2p4=;
-        b=Vpe96jfYkXoMNBM8vwMVHTZiYY9hDQ6XYV1v/iavyKOD67A3xKLI0rcOvIrFXDeDJj
-         u2ZpreMJPZd1unn06ls+804PX39OjcwS6FpXOQyK5Lt3FxwVCBcdrnYtWbev6ReqJBoA
-         bAqE0bYPGosT0JI9Mn8WWqJelN3cO/KZME/X2dyYD+DdJeCXSuX/SZ0vd+zNu4qIUwSW
-         c+OnX6Lr30aKhbNqi3COAhGVQmu8ATnqM3YwTGDxzBCpgWArdkCw0faHUE0hUp0wf7uf
-         sTzKnF2RnF+t2X3cD6SXpnUQbhz7JZt6OMl6e0LCUQj8XXX7Qg2vpgn3Gtn/c7ELEhX4
-         0tQw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZhsZ+HlhV1sprvK47M+6DTZrJv9PcsYDZQbaI7C3LZA=;
+        b=gzk22tE/jC92Wfa0wV0Sg+LFStdElwoU+wG+Y03K75v27VOCVChnjmOs1zkZGlJpen
+         jsi/eQUi6Fx50+fretxwf7IKg7cqXxgbpaVb1lNwImVBrnWd0Ex5kVLdfneVmAIp1mz7
+         r6Y8OUBR7qxb92/T//2Ci5qpn3QZn+THwFmC1YTCfGwEdfhloeVCVVVvtJ11QdGqNzC8
+         QeJse/8HC5vuRz4Z9Mi+Tbjkr92m0+d19xpXWDwa7ZFHhdyItSr9VvdRPtSp+yKK5J5z
+         3xDwBx0B8iomZtUQ5USb7o9z8zUHyMI+Gljk3SlyrRQK3FJbPJcwjQ0X5YBL3z/7pF8E
+         ZH/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=P+sm9/M+cNYaFTsruCLrWtUIpOyRvnHB/7dklHb+2p4=;
-        b=TJ2YB2STyAGL5T+ET2yhAmSovOPGm7M6cPKrpjX8hcUoMDc718t4IwVwcSb3mN+ILE
-         1p0K3S/6ZJMYOo9kXQYBhpc9KFoi2Wll4BsMrCeRrgg1mSnkBsYjmyqJtfZxabXYW2NH
-         i+as86FcUPrL76GkCjWgP0GeU89PyBsXvaPw3CREZ9Al+nsohYw8a6rtJw9qDq7rhEc2
-         8/AyZwleCtuG+E7Cj2hV8MrRrgs4pxrDqH1DwMslkDuLjEZjO5i/Lwj2bSob2v1tFUHV
-         jnIYCjI3kAqqSt9vDIexzmVwhtq5EIsfvJoynX7pJLjfyF9dLbFF/TohRs5sIk1LuOap
-         Tw1w==
-X-Gm-Message-State: APjAAAU3WgALX/X7HaWN8zmq4lg9RGfDiPr6RoQGgjbSJqG1BoAvOkSV
-        QfVK7s1fasF/y3EE6j+YkhV4qmAP
-X-Google-Smtp-Source: APXvYqyMtDXS/ifn1uVXVjuoXvkvG8+ut2zlGVxl1fC1FTVWOlf98j4T2rkr3obj6f6wYZG11amLsQ==
-X-Received: by 2002:a50:aeaa:: with SMTP id e39mr46827553edd.190.1562233622572;
-        Thu, 04 Jul 2019 02:47:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m39sm1544504edm.96.2019.07.04.02.47.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 02:47:02 -0700 (PDT)
-Date:   Thu, 04 Jul 2019 02:47:02 -0700 (PDT)
-X-Google-Original-Date: Thu, 04 Jul 2019 09:47:00 GMT
-Message-Id: <e1b4023bc0e606079547f7a7562a283009e69530.1562233620.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.276.v2.git.gitgitgadget@gmail.com>
-References: <pull.276.git.gitgitgadget@gmail.com>
-        <pull.276.v2.git.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] t3420: remove progress lines before comparing output
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZhsZ+HlhV1sprvK47M+6DTZrJv9PcsYDZQbaI7C3LZA=;
+        b=dOY7VlHM9GKL+WEzkou9T3btYiLPxmwpxG9yEN7zyBR9nV54gSHSYCcTvaEEU9vzQZ
+         OP10vZiI3Cos74ecOHvDDvIGfwzCAJtLb5H616J4oDPqo6H3RDLmX3lymiCcgT5BeGDN
+         OuUSgzbxH68DfZfTG68bhsfkr8H/zN5G6xUVmVG35w20hxskKCSGveCr60gHlmkxXR3c
+         ImiclFm9/8w7W+ui8SBCwW37VPdwHgP4AYODzdk9ERQOYXCmWoNecNtxX2BGyuvp5U7U
+         BnlblsgQOunU0fvNeTm0EpDN1fiHkcYOT2/WFv56AymgbKc+/PfCeQiRLe/gQNNat0GE
+         fGkQ==
+X-Gm-Message-State: APjAAAVVteKaOqAOnsRtskN1TkEHXESQNhfyjr1+a5zZX6nWn3D97eIo
+        GHWXV3bQUBup5b7NegdOWVk=
+X-Google-Smtp-Source: APXvYqxyVVd72sBcQhq/RmhZYwYav2rO+uMqgng22yVge3/CZOcpmXuPnt58r69mOz+xsLQtUan0SA==
+X-Received: by 2002:adf:eecf:: with SMTP id a15mr9613859wrp.264.1562234019838;
+        Thu, 04 Jul 2019 02:53:39 -0700 (PDT)
+Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.googlemail.com with ESMTPSA id r2sm6104690wme.30.2019.07.04.02.53.38
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Jul 2019 02:53:39 -0700 (PDT)
+Subject: Re: [PATCH 1/1] t3420: remove progress lines before comparing output
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.276.git.gitgitgadget@gmail.com>
+ <52501623f6b47447ce5da283ec11e378413899b7.1561986710.git.gitgitgadget@gmail.com>
+ <xmqqimsl5v1u.fsf@gitster-ct.c.googlers.com>
+ <2a0a968e-6929-71eb-77cf-ec3ee28fd734@gmail.com>
+ <xmqqmuhw4afu.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <b7cdf6af-061f-6578-384f-e378b712eea6@gmail.com>
+Date:   Thu, 4 Jul 2019 10:53:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
+MIME-Version: 1.0
+In-Reply-To: <xmqqmuhw4afu.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 02/07/2019 18:23, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> As long as sed implementation used here does not do anything funny
+>>> to CR, I think the approach to strip everything before the last CR
+>>> on the line is sensible.  As I am not familiar with how Windows port
+>>> of sed wants to treat a CR byte in the pattern, I am not sure about
+>>> the precondition of the above statement, though.
+>>
+>> I wondered about that too, but it passes the CI tests under windows.
+> 
+> Hopefully Git for Windows, MinGW, and CygWin would all behave
+> similarly.
+> 
+>>> I also have to wonder if we can/want to do this without an extra
+>>> printf process every time we sanitize the output, though I do not
+>>> think I care too deeply about it.
+>>
+>> I could add 're="$(printf ...)"' to the setup at the top of the file
+>> if you want
+> 
+> As I do not care too deeply about it, we recently saw a lot about
+> reducing number of processes in the tests, so apparently some folks
+> care and I presume they want to see something like that to happen.
+> I do not think $re is a good name for such a variable, though ;-)
 
-Some of the tests check the output of rebase is what we expect. These
-were added after a regression that added unwanted stash output when
-using --autostash. They are useful as they prevent unintended changes to
-the output of the various rebase commands. However they also include all
-the progress output which is less useful as it only tests what would be
-written to a dumb terminal which is not the normal use case. The recent
-changes to fix clearing the line when printing progress necessarily
-meant making an ugly change to these tests. Address this my removing the
-progress output before comparing it to the expected output. We do this
-by removing everything before the final "\r" on each line as we don't
-care about the progress indicator, but we do care about what is printed
-immediately after it.
+Yes, $re was just a place holder - naming is hard ...
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3420-rebase-autostash.sh | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+Best Wishes
 
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 9186e90127..b8f4d03467 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -30,7 +30,8 @@ test_expect_success setup '
- 	echo conflicting-change >file2 &&
- 	git add . &&
- 	test_tick &&
--	git commit -m "related commit"
-+	git commit -m "related commit" &&
-+	remove_progress_re="$(printf "s/.*\\r//")"
- '
- 
- create_expected_success_am () {
-@@ -48,8 +49,8 @@ create_expected_success_interactive () {
- 	q_to_cr >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
- 	HEAD is now at $(git rev-parse --short feature-branch) third commit
--	Rebasing (1/2)QRebasing (2/2)QApplied autostash.
--	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
-+	Applied autostash.
-+	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
-@@ -67,13 +68,13 @@ create_expected_failure_am () {
- }
- 
- create_expected_failure_interactive () {
--	q_to_cr >expected <<-EOF
-+	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
- 	HEAD is now at $(git rev-parse --short feature-branch) third commit
--	Rebasing (1/2)QRebasing (2/2)QApplying autostash resulted in conflicts.
-+	Applying autostash resulted in conflicts.
- 	Your changes are safe in the stash.
- 	You can run "git stash pop" or "git stash drop" at any time.
--	Q                                                                                QSuccessfully rebased and updated refs/heads/rebased-feature-branch.
-+	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
- }
- 
-@@ -109,7 +110,8 @@ testrebase () {
- 			suffix=interactive
- 		fi &&
- 		create_expected_success_$suffix &&
--		test_i18ncmp expected actual
-+		sed "$remove_progress_re" <actual >actual2 &&
-+		test_i18ncmp expected actual2
- 	'
- 
- 	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
-@@ -209,7 +211,8 @@ testrebase () {
- 			suffix=interactive
- 		fi &&
- 		create_expected_failure_$suffix &&
--		test_i18ncmp expected actual
-+		sed "$remove_progress_re" <actual >actual2 &&
-+		test_i18ncmp expected actual2
- 	'
- }
- 
--- 
-gitgitgadget
+Phillip
+
