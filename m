@@ -8,76 +8,92 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 418F31F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 22:37:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33C4B1F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 22:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbfGDWg7 (ORCPT <rfc822;e@80x24.org>);
+        id S1727102AbfGDWhA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 18:37:00 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45505 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726273AbfGDWg7 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 4 Jul 2019 18:36:59 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:37187 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfGDWg6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 18:36:58 -0400
-Received: by mail-ed1-f51.google.com with SMTP id w13so6597499eds.4
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
+Received: by mail-ed1-f65.google.com with SMTP id a14so6561124edv.12
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 15:36:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=SqZJ5OMEVQPSWV1we1JDB1EUnwDZ0/fbccaMbsguJuU=;
-        b=jWDqIZqoGD3FjQJe+czsjvCHR/Tof/VBaPuV4HYICqDMGc5B2U4PTckl0ZgmF4uHod
-         HKvWfIDD7DGSLZU1YPBzsIlUZVqaW2iL0iIN8PlNJQFB+52lNE4/X7pJjrkZPqXkRNFm
-         9uFLPIB4wyotV1ygY1czRrjwJ/FCGmFWJe4jdw+Y9VaK/ZKDGJaweybWIie1gWJEL4+x
-         /z9XVJPGKlrQIfDTxbXF+JjgIWbAz0o3zJ0OkZw2ll8scVW7xqL/VD6d1qEj8cclXLtN
-         gQadvfHZ55sakTeI8jv8TUJemwzUExTNGkuLcnwrLH8pEJZb0a8ObZ9p7yVggBwQrCuK
-         Zmkw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=S+15odrXhALJBc1LsmekKklTe/3YE7TfvcUPAAJ2orA=;
+        b=WyTjdis6qWlklfvT85aGIrxuETHfO5R1uuCn2LlfVlucVZB4VedAn1I+4tbMzmlC88
+         KCenuCK4wgNUZSdJSVmTa3tuTe0vwPugWAOnlAn+BtGD9E2blGg+gqhQNa8n1oerwsoz
+         5mC0A/48fitqDoVSnik+ui2PL2CvVrnIkGZDkJjpZXtXQ3ylZUtsWsCmuRIQjav8jLeu
+         hyXld2+rzr1qE3Zs2I7/pUl0i3LzYMtM+j3mjj0f/vXVqpF0tw5IeQVx8ruvuj0dKhAg
+         Qh/DNL3hrKcUZ0XyMJgoC5QrkNA5SDE+rzO+Nw5Lhm4K8vtlCATkLBcpa4LT8NplBVR0
+         4o5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=SqZJ5OMEVQPSWV1we1JDB1EUnwDZ0/fbccaMbsguJuU=;
-        b=T0kf7YiQZriPd8z+ONjyMMijCLlhtzxORiTY+/KvJ6GOK9VXUJ35g5qQF22cSdHIeX
-         /rMPiaqoDE0LCI8QDR6jGvUZ+/v2YUdSfxq0EX8XkbigSKY8R9KhYTJ1ItwdmUc7jSkH
-         nkm568vuWXAPGk+vEohfTf4QypcrQ6p0Fx1t6zkGrLVDrSyfszj3MB1+tmpU4FN/OBur
-         qo67xFXtyla3qdi0wyEpihb1uDSvNUXjc9lgUySzXwLv1bSTsyjUk1+/xbDY53WmUm6v
-         UG0nNgOmyEuXni9QU9Xq6yFzCNP7bdmmly+v4WrF7bHfXXWjKAHFc7p0xW6XoFXhPHWC
-         TQBw==
-X-Gm-Message-State: APjAAAU6Qaf6mqwmfxfmXKUtJ530K3pef/ONRldJF+vOji+QQqgSqpq2
-        DgYacCUcPkjhE8ApyYUD0vUhE8xp
-X-Google-Smtp-Source: APXvYqxTgqlkOBO1e2rDeOQCGJS638hhzdiZF+dJQYIg4JkHh9IrFPuhXkACwDA63RjGz+XKqjB3vA==
-X-Received: by 2002:a17:906:2101:: with SMTP id 1mr530272ejt.182.1562279817157;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=S+15odrXhALJBc1LsmekKklTe/3YE7TfvcUPAAJ2orA=;
+        b=pOyV7tXNrpB63HJ78KDPnco/QMO6U0vB7UE/Ak79kQZX2ndoOA53Ca+qO7B+yOHjcW
+         c12hyH0Migh0WhMVUMoJ0l93DqedtahriXs9+OOSsdAEXl1v4ggoFq5zqiZwvMfrB7n8
+         /4vYj9j2yrCn4t4/TJil3YIiRp5lxndDj/PnT34WhPYHT6j+ZeHxWwCdMJa0tVqCjSdQ
+         0PISX/CAAWl0Yv9M9QZrIQbvuaY+rXk+FKIcVWYPBPzMQPHby08r/Uf+MzIm8dZZ8x3/
+         hKcA7vUSdfYQ91mnZwsWyBwfybAJSsxeU8vSXnVmcNNwFlJ0F6XCxfUPkrKpO+AcixUp
+         XEIg==
+X-Gm-Message-State: APjAAAWXztA9YLnuNfz1GgZdjUJ75VaGx2i427FeW40CSgj4D4i5yHWz
+        y0tB7gbr4uY1wnBHSM2+ICSGiVSm
+X-Google-Smtp-Source: APXvYqzUCz/oxONySaByl63ByRoObG/ZLtfWD+GLnzxV5KyWH+uakL+XYdFe4EQ4Tyos2knMZCqGhA==
+X-Received: by 2002:a17:906:7f0f:: with SMTP id d15mr532477ejr.39.1562279817833;
         Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q50sm2051291edd.91.2019.07.04.15.36.56
+        by smtp.gmail.com with ESMTPSA id f36sm2051028ede.47.2019.07.04.15.36.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 15:36:56 -0700 (PDT)
-Date:   Thu, 04 Jul 2019 15:36:56 -0700 (PDT)
-X-Google-Original-Date: Thu, 04 Jul 2019 22:36:54 GMT
-Message-Id: <pull.283.git.gitgitgadget@gmail.com>
+        Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
+Date:   Thu, 04 Jul 2019 15:36:57 -0700 (PDT)
+X-Google-Original-Date: Thu, 04 Jul 2019 22:36:55 GMT
+Message-Id: <15bd816ea576554beefe5b1d495e0ec2810a7d5b.1562279815.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.283.git.gitgitgadget@gmail.com>
+References: <pull.283.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Follow-up on top of js/mingw-use-utf8
+Subject: [PATCH 1/1] mingw: fix possible buffer overrun when calling
+ `GetUserNameW()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Beat Bolli <dev+git@drbeat.li>, Junio C Hamano <gitster@pobox.com>
+Cc:     Beat Bolli <dev+git@drbeat.li>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A quick fix for a patch that is already in next.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (1):
-  mingw: fix possible buffer overrun when calling `GetUserNameW()`
+In 39a98e9b68b8 (mingw: get pw_name in UTF-8 format, 2019-06-27), this
+developer missed the fact that the `GetUserNameW()` function takes the
+number of characters as `len` parameter, not the number of bytes.
 
+Reported-by: Beat Bolli <dev+git@drbeat.li>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  compat/mingw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 94238859b9809afc806919cb7022a45cdc8e6748
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-283%2Fdscho%2Fmingw-use-utf8-fixup-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-283/dscho/mingw-use-utf8-fixup-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/283
+diff --git a/compat/mingw.c b/compat/mingw.c
+index b8a62bf914..a0eb695653 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1952,7 +1952,7 @@ struct passwd *getpwuid(int uid)
+ 	if (initialized)
+ 		return p;
+ 
+-	len = sizeof(buf);
++	len = ARRAY_SIZE(buf);
+ 	if (!GetUserNameW(buf, &len)) {
+ 		initialized = 1;
+ 		return NULL;
 -- 
 gitgitgadget
