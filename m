@@ -8,83 +8,118 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B4471F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA3F31F461
 	for <e@80x24.org>; Thu,  4 Jul 2019 09:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbfGDJUf (ORCPT <rfc822;e@80x24.org>);
+        id S1727285AbfGDJUf (ORCPT <rfc822;e@80x24.org>);
         Thu, 4 Jul 2019 05:20:35 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40183 "EHLO
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40184 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727147AbfGDJUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:20:34 -0400
-Received: by mail-ed1-f67.google.com with SMTP id k8so4755391eds.7
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
+        with ESMTP id S1727169AbfGDJUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:20:35 -0400
+Received: by mail-ed1-f67.google.com with SMTP id k8so4755420eds.7
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=jAy2qdY0JenZTRZmDxb2kPKXc2Rc9smXX5uKlDjITew=;
-        b=GAX4EWModxhVTSZ9+dFYQUxYUGJDvp19zTMcJuAeWeQfaSz7lPNul2CXb4xld2kSIZ
-         5lKIn1ysICUiyml8UfwCCQucxX3DRx+xvuJ+pGI4gTP+/fcr+Jm5sBS1mNTwZRzfXySJ
-         k6RdTjskhbuv8tN7YOtJ4r7Q+GzPnyLcpneB97/uWwacXHsl9jJfMvvgzzDT+XgU3uiD
-         ofYnC+CikVneYUcqZCP9PhI9e5++Imc6aWnr6b0WwcBo51Yzt3v9HFokGUQOt7NCcrHi
-         23R+cyvOWdbCgekUcymhiwRFm7zeOMYgGEeYLSEgN2CNAMqTgOExLlsRRSXK9TdBwBGC
-         IP9g==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MYd/DZBiH1W4AfYONfD0OWk1sSUL5tSSlatSzxagg2s=;
+        b=mLqV7l8dzAZtHThxWpHk7XlMpTuDgGtbRcfXadyW2gs9pdzoNv6/lgnN0DkfWGa2p/
+         usmfvrWUiS0hAqxQ1wK/3Gl6kHL6GmFNA6UoPdEKR7Y0WIjb7IF+DtQK/x7hO6i2Idlb
+         mR8bH/oiDmeAyQTUZ6BV8+gsXPG6O1GGZWbuKHJiNZ+NQfG9xgaSoeq2EqEjjjIdRBQQ
+         2IZKmTaUg1aAVRvy687ur2YDhLNzVUWSDDZxyYuwJqraTwvHUwwKvQDEZdu6Qjmw5y5u
+         Q6ASq5Yf1eYeFox5CAZqh7Xdo2xU1dMB1gYW27NY3BYHbwoMOWiYi0Q9hm7UBZbFbk6d
+         iMDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jAy2qdY0JenZTRZmDxb2kPKXc2Rc9smXX5uKlDjITew=;
-        b=OV0s4iHEPd93XHQXNjK4LBwy28OJuBsm+8yohclMGjf60JqaiDLuBzg2VYZdmYr4oU
-         hoBeoKZCa7aDgshy+BG6thIRGt0uuM1GQJ/S1UiSwFSWZpfME0o65wMAlCl8x5vsPHBr
-         sFNr6jcObxnodrOpCc74CAzcJUNGxbQsuY9/9GElMLHuC/ukVBl3l6pbmwYksXwCjq8H
-         Sct5iCJ2LDq0BLj4MxKPe+Bl8N3mVu5iVaQnlEca/08j7oMqefftrUdrgbvleA7N43o2
-         8ihpKCrK+O5uoUp7+8lv2JdujIZxs+gV9O//CKGtkv8UPbHjgDIt00UP3r1VX2iga4qO
-         BrtQ==
-X-Gm-Message-State: APjAAAW00Tsd0yyySdL3uhMnSxtIM8QNS1OSTn8V+UPiJooHe0AvpLC4
-        HgSH2XJSV5RKnDBpLv6khQs6i3WO
-X-Google-Smtp-Source: APXvYqxc0+223NV9EFu5YO47h+mX388uMlx28kNoa0lGdaYxeUKf6yQYgKzuoxrnwEWYqBKX1ohQ+Q==
-X-Received: by 2002:a17:906:948c:: with SMTP id t12mr18498124ejx.222.1562232033048;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MYd/DZBiH1W4AfYONfD0OWk1sSUL5tSSlatSzxagg2s=;
+        b=NQ8V44SnJ4tI0wfpVoy8M8uNJHC1XRVf6Qnj43qeGk4qGIpCOkK9zx8io8QRk4O2Gc
+         Fy+rMg15im2MUYsncqFHr/vnPsUcg+dh5ZWmV8sgNlZth+py6dElQBikrt9+JkCIVj05
+         7ZWhLWknJ1wYc9sLUOBLnn7BpjVSJB7e9SR9AhoRlZ1+1nyxl562EVdwfvkEv5pCSWlG
+         NcSdoj7QvrtwD1gea8KePdFyuVnXTj9Mq7Zg6ssNiVDGGyJRjWUzJN/1rJjzK0SAhkj0
+         893Ab4pozfbF1Slxa2pe+rq1IYBgp2yI8+nMeVmJZrBIq0VbhBC35tSiGp8DnfFA5oLR
+         8FRA==
+X-Gm-Message-State: APjAAAUgOFr7s85tXzGYNM3Af2tMUib63hIiD1SzuwOQWmaY1ZvCYkCM
+        IXcETmaLdxVIV9DFwexrjkrngA7o
+X-Google-Smtp-Source: APXvYqymYB4CRFca3G8mhDkgOotbWCDtDd5Yb0TeaWDgc76ihSyHHen0F/N2EQ0kEYX/I0YAg+k8pg==
+X-Received: by 2002:a50:fd0c:: with SMTP id i12mr4850952eds.55.1562232033670;
         Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e2sm944994ejc.16.2019.07.04.02.20.32
+        by smtp.gmail.com with ESMTPSA id w24sm1490660edb.90.2019.07.04.02.20.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 02:20:32 -0700 (PDT)
-Date:   Thu, 04 Jul 2019 02:20:32 -0700 (PDT)
-X-Google-Original-Date: Thu, 04 Jul 2019 09:20:30 GMT
-Message-Id: <pull.218.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Give Git a HOME on Windows
+        Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
+Date:   Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
+X-Google-Original-Date: Thu, 04 Jul 2019 09:20:31 GMT
+Message-Id: <fd6df1795048ebebc54502ef8d2ddd7728a08085.1562232032.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.218.git.gitgitgadget@gmail.com>
+References: <pull.218.git.gitgitgadget@gmail.com>
+From:   "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] mingw: initialize HOME on startup
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Karsten Blees <blees@dcon.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The environment variable HOME is a well-known concept on Unix/Linux, but not
-so much on Windows. In fact, there are competing concepts, and they fulfill
-separate roles.
+From: Karsten Blees <blees@dcon.de>
 
-Let's try to map the closest that we can find to HOME so that Git is happy.
+HOME initialization was historically duplicated in many different places,
+including /etc/profile, launch scripts such as git-bash.vbs and gitk.cmd,
+and (although slightly broken) in the git-wrapper.
 
-Git for Windows carries this patch since 2015, so I think we're pretty sure
-that our chosen strategy works.
+Even unrelated projects such as GitExtensions and TortoiseGit need to
+implement the same logic to be able to call git directly.
 
-Karsten Blees (1):
-  mingw: initialize HOME on startup
+Initialize HOME in git's own startup code so that we can eventually retire
+all the duplicate initialization code.
 
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  compat/mingw.c | 24 ++++++++++++++++++++++++
  1 file changed, 24 insertions(+)
 
-
-base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-218%2Fdscho%2Fmingw-home-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-218/dscho/mingw-home-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/218
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 9b6d2400e1..1047427cb5 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2299,6 +2299,30 @@ static void setup_windows_environment(void)
+ 	/* simulate TERM to enable auto-color (see color.c) */
+ 	if (!getenv("TERM"))
+ 		setenv("TERM", "cygwin", 1);
++
++	/* calculate HOME if not set */
++	if (!getenv("HOME")) {
++		/*
++		 * try $HOMEDRIVE$HOMEPATH - the home share may be a network
++		 * location, thus also check if the path exists (i.e. is not
++		 * disconnected)
++		 */
++		if ((tmp = getenv("HOMEDRIVE"))) {
++			struct strbuf buf = STRBUF_INIT;
++			strbuf_addstr(&buf, tmp);
++			if ((tmp = getenv("HOMEPATH"))) {
++				strbuf_addstr(&buf, tmp);
++				if (is_directory(buf.buf))
++					setenv("HOME", buf.buf, 1);
++				else
++					tmp = NULL; /* use $USERPROFILE */
++			}
++			strbuf_release(&buf);
++		}
++		/* use $USERPROFILE if the home share is not available */
++		if (!tmp && (tmp = getenv("USERPROFILE")))
++			setenv("HOME", tmp, 1);
++	}
+ }
+ 
+ /*
 -- 
 gitgitgadget
