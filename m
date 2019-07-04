@@ -2,106 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA2D1F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 10:05:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE331F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 10:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbfGDKFf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 06:05:35 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:54536 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727399AbfGDKFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 06:05:34 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <mh@glandium.org>)
-        id 1hiycM-0006T1-N8
-        for git@vger.kernel.org; Thu, 04 Jul 2019 19:05:30 +0900
-Date:   Thu, 4 Jul 2019 19:05:30 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Subject: Surprising use of memory and time when repacking mozilla's gecko
- repository
-Message-ID: <20190704100530.smn4rpiekwtfylhz@glandium.org>
+        id S1727555AbfGDKiT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 06:38:19 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37605 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727385AbfGDKiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 06:38:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562236695;
+        bh=3g5vOULZJVB86PG1ttTqRDbqmGcIWYZ9qUJhdKN5oBQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AxSerTvgHFRhKYAaOGJE6prLQr+ugS4WGW7BtEzdbQwyalCsygg8ZnhMd7fSdUxWn
+         ftTsLPOzKKm/T95/rj0/yVd0K61bQAgTo9ieYRgzdeHAbjgZqgGz09IJJO2+k8T8Gc
+         1HjwbwR8u8mmYdWauAgk2yYlUV3swMi7qhRBwkzI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFMIO-1hmIWB1mAG-00EJsS; Thu, 04
+ Jul 2019 12:38:15 +0200
+Date:   Thu, 4 Jul 2019 12:38:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org
+Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
+In-Reply-To: <20190704080907.GA45656@book.hvoigt.net>
+Message-ID: <nycvar.QRO.7.76.6.1907041236200.44@tvgsbejvaqbjf.bet>
+References: <20190704080907.GA45656@book.hvoigt.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LVN6L/WEarDZkEB+E9B5eow//Mdj19ItD6Uax8+VPl7CuwBQFSw
+ PVZihLLzpQEYHoDuyYPY4rySeU0ei6I3RaIznZC0nXZJesB+qqpADBfJX8vOW1b4jLCOvY9
+ htzC27OO/MOC9x/nzEkUgNIGo8X7ekM5ik/QTOJXTYBT6+ulBBjPLPbLt95se6FItYXFhul
+ 813oBTHMLrFP53Gk4f9RQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4OXi6FkzEP8=:V7QY4BCIOIg9ksKo7iOks1
+ V07EgkGrcUOG0tUdQEgDhyPK2QMJUzGF+yYEsIJGOgpatjo8uDtbSFOTQSIeTBdoqcAVtvkh1
+ 78w8zWHWJFOPcktDOZPlWw02mgB8JAlbqsWu2XGaneMK0idvyXZx0hT5MPPSvRanmTinnc4OJ
+ OEBtHbNNQw9dT5r+/B2h1IzFKRa8l7HBT1w3LfDR7rSGajhi2eTu5Z6QEStLCDnaRWHsZYOgU
+ QdFD89Z3aySAdnpfeJBjK92C8y0KUvG4iPr0X2QUC1XOebrDuCWCajPSDhWx4Vi9CbV4tVA6l
+ +q8UwE78qqAI4Lqia3keCm6V/70Eka5mDjJeudcj/REXf+5ersOCDFD8NZxfmCnO1nsdndnhv
+ XtEsP3aDRF4y2qZrsHZ4xsX/KPY4ABoQ7Pb/+9zNCI+FIOsn213CNsvrvO/g/Md263J5qstkp
+ I6YV7SExKKdE9pkD4pULUlMcpBOjvBJSpUuUI2O41rPuND7Fb7Yoxlb6nssXgy5JNsT/+Y3e+
+ IwYGvU4d3guCrqqAuD2eu18kYkBJTAHhMIzMXKHnGAlFkDJOX8iMjoaI9NbouaEBTRJBWuALH
+ F+UMfrRR52BXiOEKIQTVcUU0nQHKUue0zNeFWJoIVXzrmvsF8wS6YHXrotqHXiDgxFwOl2UhW
+ 4O0xYIZ+6FTrRvymesgk2Qxac88qWGomjNXqlgmcuPPFjl2nH5/o0eTKbZiIkZrpjVFvsVqvM
+ HRLVm4SyLoit0pe1dPoy1oxB5qVNOYgi0/iycuG1PhbxvIs4ArFhqddaTNX45qF8HEjbVs7hC
+ 3h7BTOmXgzVezs9gKFb2jwP1CWvRuF1saVUaXOQnX1LtMTYMvvgQiBWWhtJne4SjKbeHbE7Bo
+ 1tJgeNKpEAAeRikLMMVtqASV24DKdXEI83f8Jyc86CrraFzdTvMEqAekg9r9SuhFHfVaCra+q
+ OoH2QrmW8hoj3TWIHEbB+d6unwyYwyJuE2iOi5Jvv44CBsNFYkwlSt5eQhmYLf1mhm0OnA0To
+ moogGKAs0JYHR1GpvQlf3HQ1480f/wCcJGb+Pvf0aoFpNT8KEPD1vWAiA4ARBP8WWxPPm3YPw
+ AtXlFr8PXd/kIf5giLjqQCH6qsgJWdzf5Yl
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Heiko,
 
-I was looking at the disk size of the gecko repository on github[1],
-which started at 4.7GB, and `git gc --aggressive`'d it, which made that
-into 2.0G. But to achieve that required quite some resources.
+On Thu, 4 Jul 2019, Heiko Voigt wrote:
 
-My first attempt failed with OOM, on an AWS instance with 16 cores and
-32GB RAM. I then went to another AWS instance, with 36 cores and 96GB
-RAM. And that went through after a while... with a peak memory usage
-above 60GB!
+> In commit 4d5e1b1319 ("gitk: Show detached HEAD if --all is specified",
+> 2014-09-09) the intention was to have detached HEAD shown when the --all
+> argument is given.
+>
+> This was solved by appending HEAD to the revs list. By doing that the
+> behavior using the --not argument is now broken, since that inverts the
+> meaning of all following arguments passed to git rev-parse.
+>
+> Lets fix this by prepending HEAD instead of appending, this way there
+> can not be any '--not' in front.
+>
+> This was discovered because
+>
+> 	gitk --all --not origin/master
+>
+> does not display the same revs as
+>
+> 	gitk --all ^origin/master
+>
+> which it should.
+>
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 
-Since then, Peff kindly repacked the repo on the github end, so it
-doesn't really need repacking locally anymore, but I can still reproduce
-the > 60GB memory usage with the packed repository.
+Good description.
 
-I gathered some data[2], all on the same 36 cores, 96GB RAM instance, with
-36, 16 and 1 threads, and here's what can be observed:
+> ---
+>  gitk | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gitk b/gitk
+> index a14d7a1..19d95cd 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -295,7 +295,7 @@ proc parseviewrevs {view revs} {
+>      if {$revs eq {}} {
+>  	set revs HEAD
+>      } elseif {[lsearch -exact $revs --all] >=3D 0} {
+> -	lappend revs HEAD
+> +	linsert revs 0 HEAD
 
-With 36 threads, the overall process takes 45 minutes:
-- 50 seconds enumerating and counting objects.
-- ~22 minutes compressing objects
-- ~22 minutes writing objects
+For a moment, I wondered whether there is any case where `HEAD` might not
+be appropriate as first argument, but you're right, the revision parsing
+machinery allows mixing options and rev arguments.
 
-Of the 22 minutes compressing objects, more than 15 minutes are spent on
-the last percent of objects, and only during that part the memory usage
-balloons above 20GB.
+In short: this patch looks good to me.
 
-Memory usage goes back to 2.4G after finishing to compress.
+Thanks,
+Dscho
 
-With 16 threads, the overall process takes about the same time as above,
-with about the same repartition.
-
-But less time is spent on compressing the last percent of objects, and
-memory usage goes above 20GB later than with 36 threads.
-
-Finally, with 1 thread, the picture changes greatly. The overall process
-takes 2.5h:
-- 50 seconds enumerating and counting objects.
-- ~2.5h compressing objects.
-- 3 minutes and 25 seconds writing objects!
-
-Memory usage stays reasonable, except at some point after 47 minutes,
-where it starts to increase up to 12.7GB, and then goes back down about
-half an hour later, all while stalling around the 13% progress mark.
-
-My guess is all those stalls are happening when processing the files I
-already had problems with in the past[3], except there are more of them
-now (thankfully, they were removed, so there won't be more, but that
-doesn't make the existing ones go away).
-
-I never ended up working on trying to make that diff faster, maybe that
-would help a little here, but that would probably not help much wrt the
-memory usage. I wonder what git could reasonably do to avoid OOMing in
-this case. Reduce the window size temporarily? Trade memory with time,
-by not keeping the objects in memory?
-
-I'm puzzled by the fact writing objects is so much faster with 1 thread.
-
-It's worth noting that the AWS instances don't have swap by default,
-which is actually good in this case, because if it had started to swap,
-it would have taken forever.
-
-1. https://github.com/mozilla/gecko
-2. https://docs.google.com/spreadsheets/d/1IE8E3BhKurXsXgwBYFXs4mRBT_512v--ip6Vhxc3o-Y/edit?usp=sharing
-3. https://public-inbox.org/git/20180703223823.qedmoy2imp4dcvkp@glandium.org/T/
-
-Any thoughts?
-
-Mike
+>      }
+>      if {[catch {set ids [eval exec git rev-parse $revs]} err]} {
+>  	# we get stdout followed by stderr in $err
+> --
+> 2.21.0
+>
+>
