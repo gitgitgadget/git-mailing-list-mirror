@@ -2,124 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA3F31F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 09:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0B891F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 09:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbfGDJUf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 05:20:35 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40184 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727169AbfGDJUf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:20:35 -0400
-Received: by mail-ed1-f67.google.com with SMTP id k8so4755420eds.7
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:20:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=MYd/DZBiH1W4AfYONfD0OWk1sSUL5tSSlatSzxagg2s=;
-        b=mLqV7l8dzAZtHThxWpHk7XlMpTuDgGtbRcfXadyW2gs9pdzoNv6/lgnN0DkfWGa2p/
-         usmfvrWUiS0hAqxQ1wK/3Gl6kHL6GmFNA6UoPdEKR7Y0WIjb7IF+DtQK/x7hO6i2Idlb
-         mR8bH/oiDmeAyQTUZ6BV8+gsXPG6O1GGZWbuKHJiNZ+NQfG9xgaSoeq2EqEjjjIdRBQQ
-         2IZKmTaUg1aAVRvy687ur2YDhLNzVUWSDDZxyYuwJqraTwvHUwwKvQDEZdu6Qjmw5y5u
-         Q6ASq5Yf1eYeFox5CAZqh7Xdo2xU1dMB1gYW27NY3BYHbwoMOWiYi0Q9hm7UBZbFbk6d
-         iMDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MYd/DZBiH1W4AfYONfD0OWk1sSUL5tSSlatSzxagg2s=;
-        b=NQ8V44SnJ4tI0wfpVoy8M8uNJHC1XRVf6Qnj43qeGk4qGIpCOkK9zx8io8QRk4O2Gc
-         Fy+rMg15im2MUYsncqFHr/vnPsUcg+dh5ZWmV8sgNlZth+py6dElQBikrt9+JkCIVj05
-         7ZWhLWknJ1wYc9sLUOBLnn7BpjVSJB7e9SR9AhoRlZ1+1nyxl562EVdwfvkEv5pCSWlG
-         NcSdoj7QvrtwD1gea8KePdFyuVnXTj9Mq7Zg6ssNiVDGGyJRjWUzJN/1rJjzK0SAhkj0
-         893Ab4pozfbF1Slxa2pe+rq1IYBgp2yI8+nMeVmJZrBIq0VbhBC35tSiGp8DnfFA5oLR
-         8FRA==
-X-Gm-Message-State: APjAAAUgOFr7s85tXzGYNM3Af2tMUib63hIiD1SzuwOQWmaY1ZvCYkCM
-        IXcETmaLdxVIV9DFwexrjkrngA7o
-X-Google-Smtp-Source: APXvYqymYB4CRFca3G8mhDkgOotbWCDtDd5Yb0TeaWDgc76ihSyHHen0F/N2EQ0kEYX/I0YAg+k8pg==
-X-Received: by 2002:a50:fd0c:: with SMTP id i12mr4850952eds.55.1562232033670;
-        Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w24sm1490660edb.90.2019.07.04.02.20.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
-Date:   Thu, 04 Jul 2019 02:20:33 -0700 (PDT)
-X-Google-Original-Date: Thu, 04 Jul 2019 09:20:31 GMT
-Message-Id: <fd6df1795048ebebc54502ef8d2ddd7728a08085.1562232032.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.218.git.gitgitgadget@gmail.com>
-References: <pull.218.git.gitgitgadget@gmail.com>
-From:   "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] mingw: initialize HOME on startup
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727325AbfGDJ0X (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 05:26:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54015 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727204AbfGDJ0W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 05:26:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562232376;
+        bh=bZoAG1xf543Jd69nNLdYU+G7z2k98FB+MJdEj+6Rfso=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bay0RAQojUk4dN+Vy4qgodKsk/c7eBXZYJT+B73pMXjSygs45+Ov7Ut3cyT/sIOG1
+         53mz0C8zE2IIHW8MDYL0RkhiIsmyY8CNUeT58o285NTtFvf6Rd+JMFUvCifRGwy2IN
+         cr0XpmKNsjP09kcpDQ85tzZjODW+WoYGepNbiYNo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtOGU-1iWoIo0sjG-00unMz; Thu, 04
+ Jul 2019 11:26:16 +0200
+Date:   Thu, 4 Jul 2019 11:26:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: kb/windows-force-utf8, was Re: What's cooking in git.git (Jul 2019,
+ #01; Wed, 3)
+In-Reply-To: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907041125410.44@tvgsbejvaqbjf.bet>
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Karsten Blees <blees@dcon.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SSPin99DnNABatKjtFT34jXwMmdZ5yUnh0NAf2P/Utk/y+BFHFs
+ OQPnANZaPZswVIaeafhjQ+2fTh2/C9OZJHT1ka4AaH0d1D/HoJpfaO5sfKnTGE/5SEpywJ3
+ BowAzHq+WXCdGf4MlXLS3di+nnZOyFdC/NchTShe+Ry9mqTJgPifwsYuFTHZQzSYsUX5eKn
+ R5FMg7qDmNugx3yxASJog==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DyTEKxdT2rM=:g47mMISqgEc4gD2RLv3TXY
+ KdJNE4wWyb/xDrR85gx+lA7nyWL3urjXtcmRp7DA0Gp8rwNXYoP0Heg+BG38Z8vuqFL3+1VSJ
+ u0CGzdFO7hScOpcqXo478vlMCdc72z9RxnV/lREnbgDSd7VEAgFfKCL3zDGgrwhHQRXSUHRN5
+ 9V9ClhSNTMTm0PYWolWQyjWBtB4VzPx6jkYZfXXHvyl75vrxI/n6CsXzDvGLVHvB6WLpczlvR
+ 3w5UTt7yNwUdBTR3XUQcvuML2eYd6clKEqPaZektIx2Edfh49VI4fwjh84cMaGZZhb/hFMUUO
+ 5csQpGxb34N2OUaGMc+q+fWKu7Xw06IW0a6+Nx7oi/nDjXsM1rMfiZIddjyID07MqZUwod6an
+ MUJ6VZ+tX87K2N/3fSJgxCBgSWXXTz+9UDWZTbfPxYMPHebXPtXtW9Fn93ResXhHvQRrSV29T
+ FWuouiXw9KsKdmACyKAp8Y2svIG7LsE6i8QVBOCShUd/8PRuGpXFcoLP1rePRIKn3FV56XfR3
+ 7FSfN300WKETe2bmJYdECOa/LeaQnp9l6CyGVeK5FyuHe+wl9dZiFJ+A2UVLWOYFsjkLG/lcX
+ qT4G6Kx2U5rPduxfbsTf3nqzyhwt8SeSlMf4dhfCXxm2VtGnTx96Lo5YM1RjqxRl3sQ4J+W6G
+ EBSK9SRz0u3QT9lseetJKrX3cUdZtsy6PJ5ZLTYrRdFkHqUjmZv+jKSlf5PARDe49rInqqOXa
+ xCn/IFniOxplNTn6KzU2EHl/JvjvtwfxtQf8w315PpZb2P6tL/qSGzpmZpjg+5y3jy5+NU3lQ
+ F9d9kffoorxg8Gnho5GKOgwkWt8RhjmquYp5/bkYf+iS6OxvDtH/fdwrPZSKhUoDZDe0f/2bd
+ jYjbHhmKB/y2f5ikCVQSHlT/RfiFtlxwoVZbdwF16wtlHjnxE1kcccClRJFScq35i11Ug8Emf
+ 244d10WmnWc6kjcdO5Ad6P7GqAagJABRfRIsHf1oxRDM0SIswWQTFRyfox0Omhl9bBhsgpCOG
+ Wk8rf0ntTCOxbKFGzEpFIEu0ebjIDaVJr5kiN5kqQujx7sVxqM6jotfZzlIo/lmkvP/2Eh2Dj
+ IHu7xjgV8Rvmx3vPvv5yLm/zpujq3EWTfzv
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Karsten Blees <blees@dcon.de>
+Hi Junio,
 
-HOME initialization was historically duplicated in many different places,
-including /etc/profile, launch scripts such as git-bash.vbs and gitk.cmd,
-and (although slightly broken) in the git-wrapper.
+On Wed, 3 Jul 2019, Junio C Hamano wrote:
 
-Even unrelated projects such as GitExtensions and TortoiseGit need to
-implement the same logic to be able to call git directly.
+> * kb/windows-force-utf8 (2019-06-27) 1 commit
+>  - gettext: always use UTF-8 on native Windows
+>
+>  Windows update.
+>
+>  On hold.
+>  cf. <nycvar.QRO.7.76.6.1907031321270.44@tvgsbejvaqbjf.bet>
 
-Initialize HOME in git's own startup code so that we can eventually retire
-all the duplicate initialization code.
+I submitted v2 in
+https://public-inbox.org/git/pull.217.v2.git.gitgitgadget@gmail.com which
+should address the issue.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 9b6d2400e1..1047427cb5 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2299,6 +2299,30 @@ static void setup_windows_environment(void)
- 	/* simulate TERM to enable auto-color (see color.c) */
- 	if (!getenv("TERM"))
- 		setenv("TERM", "cygwin", 1);
-+
-+	/* calculate HOME if not set */
-+	if (!getenv("HOME")) {
-+		/*
-+		 * try $HOMEDRIVE$HOMEPATH - the home share may be a network
-+		 * location, thus also check if the path exists (i.e. is not
-+		 * disconnected)
-+		 */
-+		if ((tmp = getenv("HOMEDRIVE"))) {
-+			struct strbuf buf = STRBUF_INIT;
-+			strbuf_addstr(&buf, tmp);
-+			if ((tmp = getenv("HOMEPATH"))) {
-+				strbuf_addstr(&buf, tmp);
-+				if (is_directory(buf.buf))
-+					setenv("HOME", buf.buf, 1);
-+				else
-+					tmp = NULL; /* use $USERPROFILE */
-+			}
-+			strbuf_release(&buf);
-+		}
-+		/* use $USERPROFILE if the home share is not available */
-+		if (!tmp && (tmp = getenv("USERPROFILE")))
-+			setenv("HOME", tmp, 1);
-+	}
- }
- 
- /*
--- 
-gitgitgadget
+Ciao,
+Dscho
