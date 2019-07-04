@@ -2,128 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE331F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 10:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF9F81F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 10:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727555AbfGDKiT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 06:38:19 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37605 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727385AbfGDKiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 06:38:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562236695;
-        bh=3g5vOULZJVB86PG1ttTqRDbqmGcIWYZ9qUJhdKN5oBQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AxSerTvgHFRhKYAaOGJE6prLQr+ugS4WGW7BtEzdbQwyalCsygg8ZnhMd7fSdUxWn
-         ftTsLPOzKKm/T95/rj0/yVd0K61bQAgTo9ieYRgzdeHAbjgZqgGz09IJJO2+k8T8Gc
-         1HjwbwR8u8mmYdWauAgk2yYlUV3swMi7qhRBwkzI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFMIO-1hmIWB1mAG-00EJsS; Thu, 04
- Jul 2019 12:38:15 +0200
-Date:   Thu, 4 Jul 2019 12:38:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org
-Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
-In-Reply-To: <20190704080907.GA45656@book.hvoigt.net>
-Message-ID: <nycvar.QRO.7.76.6.1907041236200.44@tvgsbejvaqbjf.bet>
-References: <20190704080907.GA45656@book.hvoigt.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727517AbfGDKke (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 06:40:34 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:10373 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727385AbfGDKkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 06:40:33 -0400
+Received: from [192.168.1.22] ([89.243.190.203])
+        by smtp.talktalk.net with SMTP
+        id izAFh6cf7nuQZizAFhluWX; Thu, 04 Jul 2019 11:40:31 +0100
+X-Originating-IP: [89.243.190.203]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=eLyEXkeXgyqjrUSteAL3aw==:117
+ a=eLyEXkeXgyqjrUSteAL3aw==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=N57GPqcwrc3o7O2WbGwA:9 a=QEXdDO2ut3YA:10
+Subject: Re: [PATCH] make slash-rules more readable
+To:     "Dr. Adam Nielsen" <admin@in-ici.net>, git@vger.kernel.org
+References: <20190604173446.2664-1-admin@in-ici.net>
+ <bd722415-1547-8db5-f88a-c35c8b48d8be@in-ici.net>
+ <13f99ce6-f856-6554-5c14-1b1838d697d0@iee.org>
+ <d1d2ebec-a94a-0092-4a6d-8ae32db1573b@in-ici.net>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <b33e42c2-96a7-88d8-03b1-2da317dfa692@iee.org>
+Date:   Thu, 4 Jul 2019 11:40:33 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LVN6L/WEarDZkEB+E9B5eow//Mdj19ItD6Uax8+VPl7CuwBQFSw
- PVZihLLzpQEYHoDuyYPY4rySeU0ei6I3RaIznZC0nXZJesB+qqpADBfJX8vOW1b4jLCOvY9
- htzC27OO/MOC9x/nzEkUgNIGo8X7ekM5ik/QTOJXTYBT6+ulBBjPLPbLt95se6FItYXFhul
- 813oBTHMLrFP53Gk4f9RQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4OXi6FkzEP8=:V7QY4BCIOIg9ksKo7iOks1
- V07EgkGrcUOG0tUdQEgDhyPK2QMJUzGF+yYEsIJGOgpatjo8uDtbSFOTQSIeTBdoqcAVtvkh1
- 78w8zWHWJFOPcktDOZPlWw02mgB8JAlbqsWu2XGaneMK0idvyXZx0hT5MPPSvRanmTinnc4OJ
- OEBtHbNNQw9dT5r+/B2h1IzFKRa8l7HBT1w3LfDR7rSGajhi2eTu5Z6QEStLCDnaRWHsZYOgU
- QdFD89Z3aySAdnpfeJBjK92C8y0KUvG4iPr0X2QUC1XOebrDuCWCajPSDhWx4Vi9CbV4tVA6l
- +q8UwE78qqAI4Lqia3keCm6V/70Eka5mDjJeudcj/REXf+5ersOCDFD8NZxfmCnO1nsdndnhv
- XtEsP3aDRF4y2qZrsHZ4xsX/KPY4ABoQ7Pb/+9zNCI+FIOsn213CNsvrvO/g/Md263J5qstkp
- I6YV7SExKKdE9pkD4pULUlMcpBOjvBJSpUuUI2O41rPuND7Fb7Yoxlb6nssXgy5JNsT/+Y3e+
- IwYGvU4d3guCrqqAuD2eu18kYkBJTAHhMIzMXKHnGAlFkDJOX8iMjoaI9NbouaEBTRJBWuALH
- F+UMfrRR52BXiOEKIQTVcUU0nQHKUue0zNeFWJoIVXzrmvsF8wS6YHXrotqHXiDgxFwOl2UhW
- 4O0xYIZ+6FTrRvymesgk2Qxac88qWGomjNXqlgmcuPPFjl2nH5/o0eTKbZiIkZrpjVFvsVqvM
- HRLVm4SyLoit0pe1dPoy1oxB5qVNOYgi0/iycuG1PhbxvIs4ArFhqddaTNX45qF8HEjbVs7hC
- 3h7BTOmXgzVezs9gKFb2jwP1CWvRuF1saVUaXOQnX1LtMTYMvvgQiBWWhtJne4SjKbeHbE7Bo
- 1tJgeNKpEAAeRikLMMVtqASV24DKdXEI83f8Jyc86CrraFzdTvMEqAekg9r9SuhFHfVaCra+q
- OoH2QrmW8hoj3TWIHEbB+d6unwyYwyJuE2iOi5Jvv44CBsNFYkwlSt5eQhmYLf1mhm0OnA0To
- moogGKAs0JYHR1GpvQlf3HQ1480f/wCcJGb+Pvf0aoFpNT8KEPD1vWAiA4ARBP8WWxPPm3YPw
- AtXlFr8PXd/kIf5giLjqQCH6qsgJWdzf5Yl
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <d1d2ebec-a94a-0092-4a6d-8ae32db1573b@in-ici.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfKnn0NHUMtNtRBqGtrH/5DAFfUyPahBuFF8XL8Do27EZpWloKofaBAzm9J4rL8U5LMe6d+Ijd1/J45qgF/Y5n53/tpYbcr5UzNssWaomsizuW0vkdnFm
+ ZY7ROd+VYak+Iz8E5EJjdR9261TnQ9m4mA1knogoHVR1ITA6QSHE5K3xdP8XNMneJh2+UNBjGFoaMEP0pJF617/sd9KqcgI/ym0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Heiko,
-
-On Thu, 4 Jul 2019, Heiko Voigt wrote:
-
-> In commit 4d5e1b1319 ("gitk: Show detached HEAD if --all is specified",
-> 2014-09-09) the intention was to have detached HEAD shown when the --all
-> argument is given.
+On 27/06/2019 18:10, Dr. Adam Nielsen wrote:
 >
-> This was solved by appending HEAD to the revs list. By doing that the
-> behavior using the --not argument is now broken, since that inverts the
-> meaning of all following arguments passed to git rev-parse.
+> On 25.06.19 13:31, Philip Oakley wrote:
+>> only one minor point...
 >
-> Lets fix this by prepending HEAD instead of appending, this way there
-> can not be any '--not' in front.
+> >>> + - For example, a pattern `doc/frotz/` matches `doc/frotz` 
+> directory,
+> >>> +   but not `a/doc/frotz` directory; however `frotz/` matches `frotz`
+> >
+> > her I misread this as:  "but not a `doc/frotz` directory;"
+> > i.e. the leading 'a' is too easy to skim over as is part of the
+> > sentence's prose, so maybe change to a 'baz' lead directory (bar 
+> already
+> > having been used below).
 >
-> This was discovered because
+> Yes we could change that.
 >
-> 	gitk --all --not origin/master
+>> Have you tried it out on any StackOverflow replies to see if those 
+>> that inhabit that zone find it helpful?
+>> Philip
+> I answered one person who had a hard time reading the docs at SO, but 
+> he didn't respond and the last time he was online was 2018, so I 
+> didn't made the effort to edit my answer with the current version.
 >
-> does not display the same revs as
+> -
 >
-> 	gitk --all ^origin/master
+> What are the next steps? If there are no more responses, does it imply 
+> that everyone agrees with this patch? Can we publish it online?
 >
-> which it should.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-
-Good description.
-
-> ---
->  gitk | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitk b/gitk
-> index a14d7a1..19d95cd 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -295,7 +295,7 @@ proc parseviewrevs {view revs} {
->      if {$revs eq {}} {
->  	set revs HEAD
->      } elseif {[lsearch -exact $revs --all] >=3D 0} {
-> -	lappend revs HEAD
-> +	linsert revs 0 HEAD
-
-For a moment, I wondered whether there is any case where `HEAD` might not
-be appropriate as first argument, but you're right, the revision parsing
-machinery allows mixing options and rev arguments.
-
-In short: this patch looks good to me.
-
-Thanks,
-Dscho
-
->      }
->      if {[catch {set ids [eval exec git rev-parse $revs]} err]} {
->  	# we get stdout followed by stderr in $err
-> --
-> 2.21.0
->
->
+If all the issues are cleared then I believe it is a case of providing a 
+clean reroll (maybe identical to previous..) to Junio and the list to 
+confirm that all issues have been resolved and it is ready for 
+pu->next->master in the normal way, which should then show up in his 
+'What's cooking' emails.
