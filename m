@@ -2,100 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 050F31F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 09:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 027D61F461
+	for <e@80x24.org>; Thu,  4 Jul 2019 10:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727405AbfGDJ4X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 05:56:23 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38172 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727223AbfGDJ4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 05:56:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id p11so429883wro.5
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 02:56:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=g8BwA/TzAM7s5BDcflNgYH+7KttPvJU1Lx4dkkxMdLI=;
-        b=VmuZkRLCcH6eKTbvYoxnyZJDEzsj1HRA5tKqtR27SxCl2t41g/FzMkZgoy+Xqpcbis
-         opmO3Q+VUSOFUe38SjCLUWSVKM+YnyTK3ZuZwpVvwpf+ux8Kx2Nje56CS+/Fwi12P5kG
-         oK7Pn6+/TtKI+YaJMwp3RJC/9A14UKEIRkMJqYoo2LfP17Lu7oWsxKGlyRrKBR3Q8Bzi
-         NifqwX89pKUM4KL2teR7s08j5NsReCs3mK2eiqT3z2V3T6mwgeta9ROTAq1qrd2eScgM
-         TmrH645PgDQg9Sfc0yUW68pZAX4Q1oxIZeP9PGdq0Fgxtm3ZzSObLOqNFBaDCtJKNN6Z
-         Glxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=g8BwA/TzAM7s5BDcflNgYH+7KttPvJU1Lx4dkkxMdLI=;
-        b=Q/Sg6j8aP0Aclwyz7jNuWazNKZdOiAB5Kqeeh1RN6U27aC4txCTzkIi/MflLzupAQY
-         qxJ76RdMsN/lAOANzkUr27ROx+wNTAXHDRaYem8aEkGEBZ6AnWKB6V0quMlCQKrz7YkL
-         a5dGRsaTri19X04f+7i83rM4OA3Og44hu1KSEL7fyrvK/Y4PTCOQ7ZXwck3SYIlwd7gb
-         C1A6op7ROw640yhi58MFqq5n2gjjJVzr/9x0PvMZX+GL+OZBGk0iw/RDDjOZlyV7ZWUc
-         qYbVjcxLqOi7zJGjCSRqcKcrCOFcrWsHe8efofTiJOQqo810nX68nsDa0TO7BWZzWd8l
-         KBPg==
-X-Gm-Message-State: APjAAAUZfAME3J6Drz7DJteSedZdznheW65zUzQTbfpqmicibjlnxyPi
-        hVWyaser/XIKHvQ831PqQ6RxWxrc
-X-Google-Smtp-Source: APXvYqw6dH41sHF+BHbQ2phrhQE90TLdIF2MKRpyH7C1tHewjlhQ9yekRRpJY79BMLF2r/c+948jIg==
-X-Received: by 2002:adf:9d81:: with SMTP id p1mr34147494wre.294.1562234180682;
-        Thu, 04 Jul 2019 02:56:20 -0700 (PDT)
-Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id l1sm3730829wmg.13.2019.07.04.02.56.20
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jul 2019 02:56:20 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Jul 2019, #01; Wed, 3)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <9b0fa396-6aae-ff4b-afee-0310a4f601f9@gmail.com>
-Date:   Thu, 4 Jul 2019 10:56:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
-MIME-Version: 1.0
+        id S1727468AbfGDKDA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 06:03:00 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37295 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727385AbfGDKC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 06:02:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562234573;
+        bh=VFxrxH6NdhvXNQrxpAUQXhIc/5JxZ6dTrYVSsUDO4/E=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WA2PZe2JqfhvYSycSbD+xsAWQats5BJ9vxs69vY8XpVU5zUfVPLQmQ+LnlwGVh4FZ
+         +JHGxDZs83QSGfANMIGPJEYXvYslAAgZoPzLaZ0/azBgFZ8XG4F3htMto5DkjxOnRS
+         GcdfGs8XqUP+UT8H8vPq4+90KzctHwdJj/KBINAw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9Fnj-1hdlNq2dAV-006PZq; Thu, 04
+ Jul 2019 12:02:53 +0200
+Date:   Thu, 4 Jul 2019 12:03:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+cc:     git@vger.kernel.org
+Subject: mt/dir-iterator-updates, was Re: What's cooking in git.git (Jul
+ 2019, #01; Wed, 3)
 In-Reply-To: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Message-ID: <nycvar.QRO.7.76.6.1907041136530.44@tvgsbejvaqbjf.bet>
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ucDfjp/oHX5fAI2ANrLSF8l7hDkbokqaw71piQ/rSxGd3kloBhb
+ 1kcTivbuB2ioEhT+rYqhB6knAoID10/qZuqe6O6LX+VBaIuuozk4J49kywjJNwZkFG3Klp+
+ tZGqLRZh4ObPHvZnYFxuP31o/HWPWBX8QtuwJQhFo+qKLbszNt32CpwXSwjz9ToS/h6RduY
+ +WXRdpsPUHnlC6V+ba6oQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uU9It7lbKeU=:hGnaxoby+BrJlOFFuCWfr3
+ 1YV6jHhmYhreTtCjzy3xPdV4UqkCoyKXpXp/PdPXwuqylRSdFaDDgYfWCX72wAKRRRkNY5AIP
+ mOMlf7XYBxBnMWNVGPXet8tiGMZeKJ0XhxxrjWATQlJ5Nv+nWQ7e4JAwFyp3qyBJggPm8JjlP
+ iGoqqc00+HjStGpOzK28ZPGdF5qDcRFkKkpUVi9ZP9kgj1uS1O77ARJAB6Ng19lexf2FhK2oo
+ NuNFtckZtzoq2kTRKpq2RimiUA0Q464BcdpEF8XhXQxe58J31VRqhOVUXevvz1fDR9xXD6OGO
+ 580/uoViI/Q0EY+qiFZEjpqBPh+BE09bnWKdyaWR6pa/lcElf01X44/aFor3ZYO0cO9irOoKl
+ Z3ZCQQb+v24UM53ZfhwRQgcG4jtPaugaB6FkLD97u9E3gkk7wHc0SiMf8BZ2giGPBufTOJOwy
+ 1facKaMNgCX5i6enb667ByZw+MA3/uB0OyuAVMbe2hCl3PeNSTMsDLwtNbmX+RTJ6uTKlJf67
+ fCXB7wN/Pn6uKcwDaOtqk82EeQUjZ8TrWLxC0xyIrp04EqIS2wOvl2AktLJ8pSx81jBRWw9mf
+ Oz9S4106yhexHYEoGzKsqV1rlgNlP784/XotK9C4H/BA7gAx/oQRYoSywR26qbUxrgZGgP9nU
+ IseKGzwo2xPOdpcRIq27OUlSVCCaW+baBTa/lk26zy7UeKxyi3fyjfGLjfCR2geAR0yXObZTn
+ mzkzXdfjRm1Hg/y3g4GGGdryxbCr/20skdYJEQjjME25VlqB82c8C52xjiwp+JG89p/uGCHpb
+ wNk2iEHCjXO/xvff9WFd6tkHgYcecw7Ue9j/8fqCuhS0l4KqOEhpgkqJLZ4flTDPbD7qacLsw
+ 2ZDCCTfwrB2y2aut4Bjq0lp65+H3vrt0GyakhDYH6VGY4gI53SePOeE/q8GtNIxQFTfNEoHW0
+ L7mT+2p3ORvmbaU51gV7+d5RoY0Zg+BEeSwhwOsra5fURGEqbr0KPHkq5EY86Od/enZH6k+Yb
+ PZiXNI0j9phLTbd2CNsivQ44nfpJDEZdzEgNk0uCQeA/JXZ9YlufXLTfxxOlTQr9ovUi9VnLM
+ CPczc+btddsx9u0vrNLPMmIa1S64XsOXJNa
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/07/2019 23:28, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> The third batch of topics post 2.22 are now in 'master', and the tip
-> of 'next' has been rewound.
-> 
-> You can find the changes described here in the integration branches
-> of the repositories listed at
-> 
->     http://git-blame.blogspot.com/p/git-public-repositories.html
-> 
-> --------------------------------------------------
-> [New Topics]
-> 
-> * pw/rebase-progress-test-cleanup (2019-07-01) 1 commit
->  - t3420: remove progress lines before comparing output
->  (this branch uses sg/rebase-progress.)
-> 
->  Test cleanup.
-> 
->  Will merge to 'next'.
+Hi Junio,
 
-I've just posted an update to this which avoids the repeated printf calls
+On Wed, 3 Jul 2019, Junio C Hamano wrote:
 
-Best Wishes
+> * mt/dir-iterator-updates (2019-06-25) 10 commits
+>  - clone: replace strcmp by fspathcmp
+>  - clone: use dir-iterator to avoid explicit dir traversal
+>  - clone: extract function from copy_or_link_directory
+>  - clone: copy hidden paths at local clone
+>  - dir-iterator: add flags parameter to dir_iterator_begin
+>  - dir-iterator: refactor state machine model
+>  - dir-iterator: use warning_errno when possible
+>  - dir-iterator: add tests for dir-iterator API
+>  - clone: better handle symlinked files at .git/objects/
+>  - clone: test for our behavior on odd objects/* content
+>
+>  Adjust the dir-iterator API and apply it to the local clone
+>  optimization codepath.
+>
+>  Is this ready for 'next'?
 
-Phillip
+No. It still breaks many dozens of test cases on Windows (if not more)
+because it thinks that it can rely on `st_ino` to detect circular
+symlinks.
+
+In
+https://public-inbox.org/git/nycvar.QRO.7.76.6.1906272046180.44@tvgsbejvaq=
+bjf.bet/
+I had suggested to do something like this:
+
+=2D- snip --
+diff --git a/dir-iterator.c b/dir-iterator.c
+index 52db87bdc99f..85cd04b7b571 100644
+=2D-- a/dir-iterator.c
++++ b/dir-iterator.c
+@@ -8,6 +8,7 @@ struct dir_iterator_level {
+
+ 	/* The inode number of this level's directory. */
+ 	ino_t ino;
++	dev_t dev;
+
+ 	/*
+ 	 * The length of the directory part of path at this level
+@@ -63,6 +64,7 @@ static int push_level(struct dir_iterator_int *iter)
+ 		strbuf_addch(&iter->base.path, '/');
+ 	level->prefix_len =3D iter->base.path.len;
+ 	level->ino =3D iter->base.st.st_ino;
++	level->dev =3D iter->base.st.st_dev;
+
+ 	level->dir =3D opendir(iter->base.path.buf);
+ 	if (!level->dir) {
+@@ -138,11 +140,14 @@ static int find_recursive_symlinks(struct dir_iterat=
+or_int *iter)
+ 	int i;
+
+ 	if (!(iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS) ||
+-	    !S_ISDIR(iter->base.st.st_mode))
++	    !S_ISDIR(iter->base.st.st_mode) ||
++	    /* On Windows, st_ino is always set to 0 */
++	    !iter->base.st.st_ino)
+ 		return 0;
+
+ 	for (i =3D 0; i < iter->levels_nr; ++i)
+-		if (iter->base.st.st_ino =3D=3D iter->levels[i].ino)
++		if (iter->base.st.st_ino =3D=3D iter->levels[i].ino &&
++		    iter->base.st.st_dev =3D=3D iter->levels[i].dev)
+ 			return 1;
+ 	return 0;
+ }
+=2D- snap --
+
+Duy had also suggested to guard part of this using `USE_STDEV`, but as
+Matheus figured out that would not make sense, as the `USE_STDEV` flag
+really is meant to work around issues with network filesystems where
+`st_dev` can be unreliable.
+
+However, in the meantime I thought about this a bit more and I remembered
+how this is done elsewhere: I saw many recursive symlink resolvers that
+just have an arbitrary cut-off after following, say, 32 links.
+
+In fact, Git itself already has this in abspath.c:
+
+	/* We allow "recursive" symbolic links. Only within reason, though. */
+	#ifndef MAXSYMLINKS
+	#define MAXSYMLINKS 32
+	#endif
+
+But then, the patch in question uses `stat()` instead of `lstat()`, so we
+would not have any way to count the number of symbolic links we followed.
+
+Do we _have_ to, though? At some stage the path we come up with is beyond
+`PATH_MAX` and we can stop right then and there.
+
+Besides, the way `find_recursive_symlinks()` is implemented adds quadratic
+behavior.
+
+So I would like to submit the idea of simplifying the code drastically,
+by skipping the `find_recursive_symlinks()` function altogether.
+
+This would solve another issue I have with that function, anyway: The name
+suggests, to me at least, that we follow symlinks recursively. It does
+not. I think that could have been addressed by using the adjective
+"circular" instead of "recursive". But I also think there are enough
+reasons to do away with this function in the first place.
+
+Ciao,
+Dscho
