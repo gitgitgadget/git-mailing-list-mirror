@@ -2,132 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D30171F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 00:22:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 439DE1F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 00:45:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727246AbfGEAWU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 20:22:20 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:50174 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727093AbfGEAWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 20:22:20 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <mh@glandium.org>)
-        id 1hjBzU-00054B-55
-        for git@vger.kernel.org; Fri, 05 Jul 2019 09:22:16 +0900
-Date:   Fri, 5 Jul 2019 09:22:16 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Subject: Re: Surprising use of memory and time when repacking mozilla's gecko
- repository
-Message-ID: <20190705002216.logqmvrk5s354jss@glandium.org>
-References: <20190704100530.smn4rpiekwtfylhz@glandium.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190704100530.smn4rpiekwtfylhz@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180716
+        id S1727406AbfGEApM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 20:45:12 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:46292 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727115AbfGEApM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 20:45:12 -0400
+Received: by mail-pl1-f169.google.com with SMTP id c2so2175105plz.13
+        for <git@vger.kernel.org>; Thu, 04 Jul 2019 17:45:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6Ezpenm74wX2oAiZ83o98rTT6EpZo5Im+wHiHFpPg7o=;
+        b=zouj1Hlm331hi3xquZ/umlT/Bn1rWlhIgG77SVSBnWnOIse5W67PQfioceRMn3Khu3
+         ql5DI+rT1nyrmPmbx5a2us4DMAYLoMJkkWBF36M9ewtxMTFrkDM7mpYzlr81UH98Ob8a
+         NpCiIsXEPjp1NX1wtpm0muJPommjHhsmVi3nyqli9rFqd4qmzCvOcoXrUpc6bGw8OSiF
+         xQQU9vnx7MCUC7i5S3ip4cXyrcTm1ixWBD2CewDPTG88eXBzcGHthiB85Bg3rc7sKb09
+         zsHaGaRlZbmnJo431207Glw0oGoWKiTHEfPpBrX7hM+kKJNinjAszCqcSclk4QhmXvGp
+         wEpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6Ezpenm74wX2oAiZ83o98rTT6EpZo5Im+wHiHFpPg7o=;
+        b=J7g2bliQOyxjNEUGBaAkrxTLFv8ULUl3ZiToYv+vxEglpmX8racqQqjxfFBOg7Vgzy
+         yYHAu6XXCSXsmOftlOSlBGU/iDBpJmcNedOBa+dCFrxaNLPc8jCUUcyRaeFf/Jj+Vdb8
+         1/vWuFCprMqlgs/907MaOYxuZxFCglvGxVftEka4aYNqsEh9xCF6mIi1nJAYzh6umbay
+         DfNprPxKLSewpRXi6IAVzXZvHycJliH0eLjYsTTAUpiaJ4qV7p4tmwCV8k5oGyZZa28p
+         ocSIqsDKg0OvnFcSLJJ81vLVtar4LWmRDLBEg5NokfKIeQGp/nBe0b8a9UpvIO1jdwM+
+         FB0Q==
+X-Gm-Message-State: APjAAAXTEr6EOJRtsnELq3ggTMaHkI9/RI6bIA5HHa2utRPy5+9Au9Rn
+        KfjBojXeU900PKMvSmfpLNqc8w==
+X-Google-Smtp-Source: APXvYqzfVQfAohkCftiCYmNN1eMbXLSQYb6X8GTNqfj9sS7wxXKBErfj3B5I0UcFu8F+sbUq07+b5w==
+X-Received: by 2002:a17:902:2bc5:: with SMTP id l63mr1138628plb.30.1562287511295;
+        Thu, 04 Jul 2019 17:45:11 -0700 (PDT)
+Received: from aermolenko.office.atlassian.com ([103.233.242.9])
+        by smtp.gmail.com with ESMTPSA id c98sm7493882pje.1.2019.07.04.17.45.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Jul 2019 17:45:10 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [QUESTION] Git fails to detect merge conflict?
+From:   Anton Ermolenko <aermolenko@atlassian.com>
+In-Reply-To: <20190702001528.GA94153@google.com>
+Date:   Fri, 5 Jul 2019 10:45:07 +1000
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <70A38295-66D4-43B0-87EF-EA3EB5C0CEAE@atlassian.com>
+References: <E42B8D46-0CA0-44E0-946F-8ADA96993629@atlassian.com>
+ <20190702001528.GA94153@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 04, 2019 at 07:05:30PM +0900, Mike Hommey wrote:
-> Hi,
-> 
-> I was looking at the disk size of the gecko repository on github[1],
-> which started at 4.7GB, and `git gc --aggressive`'d it, which made that
-> into 2.0G. But to achieve that required quite some resources.
-> 
-> My first attempt failed with OOM, on an AWS instance with 16 cores and
-> 32GB RAM. I then went to another AWS instance, with 36 cores and 96GB
-> RAM. And that went through after a while... with a peak memory usage
-> above 60GB!
-> 
-> Since then, Peff kindly repacked the repo on the github end, so it
-> doesn't really need repacking locally anymore, but I can still reproduce
-> the > 60GB memory usage with the packed repository.
-> 
-> I gathered some data[2], all on the same 36 cores, 96GB RAM instance, with
-> 36, 16 and 1 threads, and here's what can be observed:
-> 
-> With 36 threads, the overall process takes 45 minutes:
-> - 50 seconds enumerating and counting objects.
-> - ~22 minutes compressing objects
-> - ~22 minutes writing objects
-> 
-> Of the 22 minutes compressing objects, more than 15 minutes are spent on
-> the last percent of objects, and only during that part the memory usage
-> balloons above 20GB.
-> 
-> Memory usage goes back to 2.4G after finishing to compress.
-> 
-> With 16 threads, the overall process takes about the same time as above,
-> with about the same repartition.
-> 
-> But less time is spent on compressing the last percent of objects, and
-> memory usage goes above 20GB later than with 36 threads.
-> 
-> Finally, with 1 thread, the picture changes greatly. The overall process
-> takes 2.5h:
-> - 50 seconds enumerating and counting objects.
-> - ~2.5h compressing objects.
-> - 3 minutes and 25 seconds writing objects!
-> 
-> Memory usage stays reasonable, except at some point after 47 minutes,
-> where it starts to increase up to 12.7GB, and then goes back down about
-> half an hour later, all while stalling around the 13% progress mark.
-> 
-> My guess is all those stalls are happening when processing the files I
-> already had problems with in the past[3], except there are more of them
-> now (thankfully, they were removed, so there won't be more, but that
-> doesn't make the existing ones go away).
-> 
-> I never ended up working on trying to make that diff faster, maybe that
-> would help a little here, but that would probably not help much wrt the
-> memory usage. I wonder what git could reasonably do to avoid OOMing in
-> this case. Reduce the window size temporarily? Trade memory with time,
-> by not keeping the objects in memory?
-> 
-> I'm puzzled by the fact writing objects is so much faster with 1 thread.
+Hello!
 
-Here's a perf report from the portion of "Writing" that is particularly
-slow with compression having happened on 36 threads:
-  100.00%     0.00%  git      [unknown]           [k] 0xffffffffffffffff                    
-   99.97%     0.02%  git      git                 [.] write_one                             
-   99.97%     0.00%  git      git                 [.] write_pack_file                       
-   99.97%     0.00%  git      git                 [.] cmd_pack_objects                      
-   99.96%     0.00%  git      git                 [.] write_object (inlined)                
-   99.96%     0.00%  git      git                 [.] write_reuse_object (inlined)          
-   99.92%     0.00%  git      git                 [.] write_no_reuse_object                 
-   98.12%     0.00%  git      git                 [.] get_delta (inlined)                   
-   72.36%     0.00%  git      git                 [.] diff_delta (inlined)                  
-   64.86%    64.20%  git      git                 [.] create_delta_index                    
-   26.32%     0.00%  git      git                 [.] repo_read_object_file (inlined)       
-   26.32%     0.00%  git      git                 [.] read_object_file_extended             
-   26.32%     0.00%  git      git                 [.] read_object                           
-   26.32%     0.00%  git      git                 [.] oid_object_info_extended              
-   26.25%     0.00%  git      git                 [.] packed_object_info                    
-   26.24%     0.00%  git      git                 [.] cache_or_unpack_entry (inlined)       
-   24.30%     0.01%  git      git                 [.] unpack_entry                          
-   17.62%     0.00%  git      git                 [.] memcpy (inlined)                      
-   17.52%    17.46%  git      libc-2.27.so        [.] __memmove_avx_unaligned_erms          
-   15.98%     0.22%  git      git                 [.] patch_delta                           
-    7.60%     0.00%  git      git                 [.] unpack_compressed_entry               
-    7.49%     7.42%  git      git                 [.] create_delta                          
-    7.29%     0.00%  git      git                 [.] git_inflate                           
-    7.29%     0.23%  git      libz.so.1.2.11      [.] inflate                               
-    1.94%     0.00%  git      git                 [.] xmemdupz                              
-    1.14%     0.00%  git      git                 [.] do_compress                           
-    0.98%     0.98%  git      libz.so.1.2.11      [.] adler32_z                             
-    0.95%     0.00%  git      libz.so.1.2.11      [.] deflate                               
+Thanks for you answer.
 
-... that's a large portion of time spent on deltas...
 
-Mike
+The original content of the file:
+
+
+--- START ---
+  LINE 1
+  LINE 2
+  LINE 3
+---  END  =E2=80=94
+
+
+
+Branch =E2=80=9Cchange-a=E2=80=9D modifies it to become:
+
+
+--- START ---
+  LINE 1
+  LINE 2
+  LINE 3
+  LINE 4
+  LINE 5
+  LINE 6
+  LINE 7
+  LINE 8
+  LINE 9
+---  END  =E2=80=94
+
+While branch =E2=80=9Cchange-b=E2=80=9D modifies it to become:
+
+
+--- START ---
+  LINE 1
+  LINE B
+  LINE 3
+  LINE D
+  LINE E
+  LINE 3
+---  END  =E2=80=94
+
+Now, on master I=E2=80=99m able to perform =E2=80=9C=E2=80=94no-ff=E2=80=9D=
+ merge with and git does not detect any conflict.
+The result is this:
+
+
+--- START ---
+  LINE 1
+  LINE B
+  LINE 3
+  LINE D
+  LINE E
+  LINE 3
+  LINE 4
+  LINE 5
+  LINE 6
+  LINE 7
+  LINE 8
+  LINE 9
+---  END  =E2=80=94
+
+Which is both changes applied sequentially - first, the change from =
+=E2=80=9Cchange-b=E2=80=9D as it happens to be earlier in the file, then =
+change from =E2=80=9Cchange-a=E2=80=9D.
+
+
+Thank you,
+Anton.
+
+
+
+
+
+> On 2 Jul 2019, at 10:15 am, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+>=20
+> Anton Ermolenko wrote:
+>=20
+>> My understanding is that recursive merge here won't consider that =
+situation to
+>> be a merge conflict as the changes have been introduced in different =
+spots in
+>> the file.
+>=20
+> Yes, that seems right to me.
+>=20
+> Do you have more details about the context?  What do these files look
+> like?  Are there other cues that we could use to discover that the
+> customer intended the changes to conflict?
+>=20
+> Thanks,
+> Jonathan
+
