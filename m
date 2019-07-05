@@ -2,135 +2,308 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11B141F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 18:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92B421F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 19:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727317AbfGESwi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 14:52:38 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:37347 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfGESwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 14:52:38 -0400
-Received: by mail-ed1-f44.google.com with SMTP id w13so8698680eds.4
-        for <git@vger.kernel.org>; Fri, 05 Jul 2019 11:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=y3wJj71CYoqKAhr5RYQ1T+Lhq/A5EMvNc+Ad8solI7w=;
-        b=F4CLyghyi6BrpJeyyTHXWtg57/2s+g/dR0Gg7Ck3bmrLY8WXW/0H2yPUt4IhCtF577
-         LFfZLrhLhrLqYwu+SIN1bD2N8hXmZjEmUtv5MVuxZqMsuPbG0xl6/fPoZUq8heaHFiq+
-         0acmw7kT2VvZGFdHoFnJPiywiTcM7f4UT6c6pssRqv1wsJ1evaV6XDIcED+/FszweTzx
-         ILIg4XMANNCnGF/JiQRyDcqNsdBmfMWuWP+XcaJAASrwq611gjMmOfqRIXlrMPy4BgUX
-         vywT/WMilTCz4JqVH2SpoHfVq2T211Z3+YU3Gh6gAQ3MRDpCNYtcmLo3FEH89P8PdRfa
-         pkeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=y3wJj71CYoqKAhr5RYQ1T+Lhq/A5EMvNc+Ad8solI7w=;
-        b=Uth0BI8NuEKniAxusl72ueXZu96ISVBpokybCUXM8xqKz9lUDHJT+wRxfyPFhZGLIn
-         X4mF7OOw0VKLw2lA81b+cHtbIZky6af7qSAlRHh+wA9JFt7phh05p13NynjOp9X42wpY
-         SCsnQhrmgmKJmU6e0dbsCxpmm+vsvl/KK8GvNYpqvws5SfgHzbvF26Fv8VNkwVQRSF62
-         4IuOzYq/ISPi1xdETb8FRBYgK77kNolJRjUUUntJaMQfBy0ba9KZLp0EQvjAZts2fLQ9
-         haQRHSZI2VrWPiXwp4TZ5j6RDxTEk5hHpmUbzR/9BNxGFv9TIkU0fR4klBCTY3YLoB9T
-         MqdQ==
-X-Gm-Message-State: APjAAAVx0TJK8rOS8b/HZJQdlBwS1U2vxic4gUTCDWg4fpB8nk1XT7ja
-        pFM+GqJEToyOwQy3D2pdkaYUEl5f1kVWV2vzqVQ3ri7rqubnZQ==
-X-Google-Smtp-Source: APXvYqyhItBs9w5zODZr0oCmp+IaTC1Z/NO0hH/NdSEWcPSK/f6KgI9HN1K66931YPHV5Qhl/yQ6CX98IZowM79TTu0=
-X-Received: by 2002:a17:906:4a10:: with SMTP id w16mr4910914eju.299.1562352755927;
- Fri, 05 Jul 2019 11:52:35 -0700 (PDT)
+        id S1726660AbfGETEy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 15:04:54 -0400
+Received: from mout.gmx.net ([212.227.15.15]:41567 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725778AbfGETEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 15:04:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562353484;
+        bh=XA6xE4/jjFUml3RADqzCgPA5ZNxjKFNEBwbuYnVn8eU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FSH5TuUfpQ8syEhy6GmYQfMBrSZfh1JnvR01GHTxZiMUJG+HCFxU7ZIw/ul1pqZ/Z
+         UzDrD3OZ0RfyvUnhtMsgPvFpCjYMwQ2j6df5kXreadSrJvjOKiMULL4kNVvipNUQTQ
+         ESXml7zKL9tuIwn+BWjjCg/paILCXEY7/LOsYJYU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhlKs-1iE7R635dY-00dnoK; Fri, 05
+ Jul 2019 21:04:44 +0200
+Date:   Fri, 5 Jul 2019 21:05:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 09/14] range-diff: split lines manually
+In-Reply-To: <20190705170630.27500-10-t.gummerer@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907052052060.44@tvgsbejvaqbjf.bet>
+References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-10-t.gummerer@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CABUeae_90xG7avh1yt2_X78pmpYUvLtXAZ2Kd9A=FpcEayvi-Q@mail.gmail.com>
- <20190705162544.gckigv4cbr4k6zpz@tb-raspi4>
-In-Reply-To: <20190705162544.gckigv4cbr4k6zpz@tb-raspi4>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Fri, 5 Jul 2019 20:52:09 +0200
-Message-ID: <CABUeae-kmc7WV1iv5e1wY+BPMrpXpAoJY0H3B-iQ9D2yyg_hMg@mail.gmail.com>
-Subject: Re: Handling text files encoded in little-endian UTF-16 with BOM
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:B8D0awcre7FNcLa6Th9ib/HsYqfQUE5i83YDRnCAY34Y/jyP4Of
+ XPTfIs+0Y3GaC8MvmazHtej47GkNSQHp+Hy4HqlNrNAlxLAbWpDD/r83u+jyd1Ft6wrUSGp
+ Lce9+oL8+SFbWG+RIaEHvTRldt9MEYcVTC8nm7fpOocKL6qTDAjiT072+R49kVZrWYMN2DX
+ A13135spVnYQ5OZjXbfGA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:c7gnfmv9sXA=:+TmJd7ux36orKVuXIIYpKN
+ ug2csT6aoONpY+HHuh29/nc/nVQN5zZYQLuLUTjNzFbcf18fhb1YiVz/2BIRKv4MNUL3w6HVA
+ cjn6UexJQCTpvLuVudwaGbd+qFu/WnMp94nWLzNktdgJDf0KQag67UoLqXY09sBkJVpz4dSVw
+ 493oDKe1UA0NXR9LC8P+X28fQBJd0+Fdb5temFRaaqmFDmHx1utS4zWw0OF7BG3qJmVLGDTZ+
+ g6MUW0jodkk8Pr/HltvzzbnmDYg2CgOZ9PV7x/6QH+aLzueZIgQIN/2hx2bNQ7TI7D2R7KgcP
+ 05Dq7/cttSiK1IG9fvofs9n43TmK7hTWnwxlyC4y0jbobu1wCqyh61vj2qjlxaXUZdxxrakHt
+ bFfkeNp7faP2rGI8vGJpxc6/IFWfMX0DrzoZszLoiR1jhUkoGuP5+yR4ESMV6xw3aMbq/JORK
+ n2DNXtqQvCMcgVsb1tFeJk7fk7gWj/J/O1zvNo73EQQSTj7z05sdwL9Fi2JuA4xGuYy9h1QTn
+ itKlMIbTNGR2hl4oyVDTJ6BiA3hKAkPpxJ1Rr6oAQs4PUvOyFRzvJB8+lZ63QNkzgnl9mkwqB
+ YbjRvD9ztIFkJ9NVtfT/4W7rvZvxp1dpshyJfZrPO3yTrDlDCGGUR92fzPU5XmwxT+abzazYw
+ 8WaHnGICJPDFEPQdvroskI90FkfJ8xb3dsP6Mz0ggbOKzM0BwTPiJxmCoCTzDY/vHZwWsOUts
+ i30h7gKznfy6Xe0AdSG906IIADgtTqWqVFKC1fzHzwLfrPJSoWXYsD/6WGOAPFv9NhMKHiA43
+ AfxpHKRd5Xwpl47vp7vzKscGfUvCrOjYuja2WpvrMEPIzJ9ArllQ3SwLfyYDhTt4GpkvWl85p
+ 0zPsnJaWtD7E74u31Cf70yJfAocsBWZk1W4TU1/jeGpsoS5fZ8fKSqklAwcX+VCj6IvfpPyLp
+ 0sgDFVndsNIzssMqbluS7YjSEsT/xlVEmihlLzHBGnJauKIdFQC1yMT8nFOEVX3gFZIWUqbK0
+ UUGYVbTUkU/1e9qq9p0CM1RLBaiamVdwSX9IjvRwaQWymBL3NmRLdHu4dwJqbC3iGVC5CSoe4
+ yJFlvBqqjzMITH9w4LePPCVccPsa49QCQJ2
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 5 Jul 2019 at 18:25, Torsten B=C3=B6gershausen <tboegi@web.de> wrot=
-e:
-> On Fri, Jul 05, 2019 at 01:35:13PM +0200, Mateusz Loskot wrote:
-> >
-> > Using git version 2.22.0.windows.1
-> >
-> > I have a repository with number of .txt files encoded in
-> > little-endian UTF-16 with BOM.
-> >
-> > What are the best practice and recommended configuration to
-> > manage such files with Git to avoid unexpected re-encoding to
-> > UTF-8 or others?
-> >
-> > Currently, there is .gitattriuts with entries like
-> >
-> >    resource/*.txt   working-tree-encoding=3DUTF-16LE-BOM -text
-> >
-> > Despite that some of team members have noticed that the files
-> > occacionally get re-encoded to UTF-8. It is unknow what are
-> > actual steps leading to that. BTW, there a few Git clients
-> > in use: git in Git Bash, VSCode, Fork.
+Hi Thomas,
+
+
+On Fri, 5 Jul 2019, Thomas Gummerer wrote:
+
+> Currently range-diff uses the 'strbuf_getline()' function for doing
+> its line by line processing.  In a future patch we want to do parts of
+> that parsing using the 'parse_git_header()' function, which does
+
+If you like my suggestion in patch 7/14, this commit message needs to talk
+about the new name, too.
+
+> requires reading parts of the input from that function, which doesn't
+
+s/requires/require/
+
+> use strbufs.
 >
-> If possible, I don't want to comment on this kind of
-> "sometimes something happens something on someones computer" thing.
-
-Perfectly understood.
-
-> A little bit more information could be helpful.
-
-If there was more, I'd have provided.
-
-> > What bothers me in the .gitattributes is this `-text` attribute.
-> >
-> > Is the use of `working-tree-encoding` and `-text` together a
-> > valid combination at all?
+> Switch range-diff to do our own line by line parsing, so we can re-use
+> the parse_git_header function later.
 >
-> Yes, it means that the content re-encoded between the repo and the workin=
-g tree,
-> (that is what you want)
-> And the "-text" means "leave the line endings" (LF or CRLF) as is, don't =
-convert them.
-
-That's quite a useful insight. I understood "-text" means content is
-not a text, but binary.
-
-> In that sense you can call that a legal combination, but may be not a rec=
-ommended one.
-
-Right.
-
-> > The documentation at https://git-scm.com/docs/gitattributes
-> > does not seem to touch on that.
-> >
-> > I'll appreciate any suggestions on those UTF-16LE-BOM files.
-> >
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
 >
-> My suggestion would be to use the "text" attribute:
->   resource/*.txt   working-tree-encoding=3DUTF-16LE-BOM text
+> Longer term it might be better to have both range-diff and apply code
+> use strbufs.  However I didn't feel it's worth making that change for
+> this patch series.
+
+Makes sense.
+
+>  range-diff.c | 69 +++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 39 insertions(+), 30 deletions(-)
 >
-> And depending on your application: Do the resource files need a special l=
-ine ending ?
+> diff --git a/range-diff.c b/range-diff.c
+> index 9242b8975f..916afa44c0 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -24,6 +24,17 @@ struct patch_util {
+>  	struct object_id oid;
+>  };
+>
+> +static unsigned long linelen(const char *buffer, unsigned long size)
 
-I need CRLF.
+Shouldn't this be `size_t`?
 
-> The use either
->   resource/*.txt   working-tree-encoding=3DUTF-16LE-BOM text eol=3DLF
-> or
->   resource/*.txt   working-tree-encoding=3DUTF-16LE-BOM text eol=3DCRLF
+> +{
+> +	unsigned long len =3D 0;
 
-This is very helpful. Thanks!
+Likewise.
 
---=20
-Mateusz Loskot, http://mateusz.loskot.net
+> +	while (size--) {
+> +		len++;
+> +		if (*buffer++ =3D=3D '\n')
+> +			break;
+> +	}
+> +	return len;
+
+How about
+
+	const char *eol =3D memchr(buffer, '\n', size);
+
+	return !eol ? size : eol + 1 - buffer;
+
+instead?
+
+For an extra brownie point, you could even rename this function to
+`find_end_of_line()` and replace the LF by a NUL:
+
+	if (!eol)
+		return size;
+
+	*eol =3D '\0';
+	return eol + 1 - buffer;
+
+> +}
+> +
+>  /*
+>   * Reads the patches into a string list, with the `util` field being po=
+pulated
+>   * as struct object_id (will need to be free()d).
+> @@ -31,10 +42,12 @@ struct patch_util {
+>  static int read_patches(const char *range, struct string_list *list)
+>  {
+>  	struct child_process cp =3D CHILD_PROCESS_INIT;
+> -	FILE *in;
+> -	struct strbuf buf =3D STRBUF_INIT, line =3D STRBUF_INIT;
+> +	struct strbuf buf =3D STRBUF_INIT, file =3D STRBUF_INIT;
+
+This puzzled me. I'd like to suggest s/file/contents/
+
+>  	struct patch_util *util =3D NULL;
+>  	int in_header =3D 1;
+> +	char *line;
+> +	int offset, len;
+> +	size_t size;
+>
+>  	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+>  			"--reverse", "--date-order", "--decorate=3Dno",
+> @@ -54,17 +67,15 @@ static int read_patches(const char *range, struct st=
+ring_list *list)
+>
+>  	if (start_command(&cp))
+>  		return error_errno(_("could not start `log`"));
+> -	in =3D fdopen(cp.out, "r");
+> -	if (!in) {
+> -		error_errno(_("could not read `log` output"));
+> -		finish_command(&cp);
+> -		return -1;
+> -	}
+> +	strbuf_read(&file, cp.out, 0);
+
+Shouldn't we handle a negative return value here, erroring out with "could
+not read `log` output" as before?
+
+>
+> -	while (strbuf_getline(&line, in) !=3D EOF) {
+> +	line =3D strbuf_detach(&file, &size);
+
+I strongly suspect this to leak, given that `line` is subsequently
+advanced, and there is no backup copy.
+
+Maybe
+
+	line =3D file.buf;
+	size =3D file.len;
+
+would make more sense here?
+
+> +	for (offset =3D 0; size > 0; offset +=3D len, size -=3D len, line +=3D=
+ len) {
+>  		const char *p;
+>
+> -		if (skip_prefix(line.buf, "commit ", &p)) {
+> +		len =3D linelen(line, size);
+> +		line[len - 1] =3D '\0';
+> +		if (skip_prefix(line, "commit ", &p)) {
+>  			if (util) {
+>  				string_list_append(list, buf.buf)->util =3D util;
+>  				strbuf_reset(&buf);
+> @@ -75,8 +86,6 @@ static int read_patches(const char *range, struct stri=
+ng_list *list)
+>  				free(util);
+>  				string_list_clear(list, 1);
+>  				strbuf_release(&buf);
+> -				strbuf_release(&line);
+> -				fclose(in);
+
+We should release the file contents in `file` (or `contents`, if you like
+my suggestions) here.
+
+>  				finish_command(&cp);
+>  				return -1;
+>  			}
+> @@ -85,26 +94,28 @@ static int read_patches(const char *range, struct st=
+ring_list *list)
+>  			continue;
+>  		}
+>
+> -		if (starts_with(line.buf, "diff --git")) {
+> +		if (starts_with(line, "diff --git")) {
+>  			in_header =3D 0;
+>  			strbuf_addch(&buf, '\n');
+>  			if (!util->diff_offset)
+>  				util->diff_offset =3D buf.len;
+>  			strbuf_addch(&buf, ' ');
+> -			strbuf_addbuf(&buf, &line);
+> +			strbuf_addstr(&buf, line);
+>  		} else if (in_header) {
+> -			if (starts_with(line.buf, "Author: ")) {
+> -				strbuf_addbuf(&buf, &line);
+> +			if (starts_with(line, "Author: ")) {
+> +				strbuf_addstr(&buf, line);
+>  				strbuf_addstr(&buf, "\n\n");
+> -			} else if (starts_with(line.buf, "    ")) {
+> -				strbuf_rtrim(&line);
+> -				strbuf_addbuf(&buf, &line);
+> +			} else if (starts_with(line, "    ")) {
+> +				p =3D line + len - 2;
+> +				while (isspace(*p) && p >=3D line)
+> +					p--;
+> +				strbuf_add(&buf, line, p - line + 1);
+>  				strbuf_addch(&buf, '\n');
+>  			}
+>  			continue;
+> -		} else if (starts_with(line.buf, "@@ "))
+> +		} else if (starts_with(line, "@@ "))
+>  			strbuf_addstr(&buf, "@@");
+> -		else if (!line.buf[0] || starts_with(line.buf, "index "))
+> +		else if (!line[0] || starts_with(line, "index "))
+>  			/*
+>  			 * A completely blank (not ' \n', which is context)
+>  			 * line is not valid in a diff.  We skip it
+> @@ -117,25 +128,23 @@ static int read_patches(const char *range, struct =
+string_list *list)
+>  			 * we are not interested.
+>  			 */
+>  			continue;
+> -		else if (line.buf[0] =3D=3D '>') {
+> +		else if (line[0] =3D=3D '>') {
+>  			strbuf_addch(&buf, '+');
+> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> -		} else if (line.buf[0] =3D=3D '<') {
+> +			strbuf_addstr(&buf, line + 1);
+> +		} else if (line[0] =3D=3D '<') {
+>  			strbuf_addch(&buf, '-');
+> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> -		} else if (line.buf[0] =3D=3D '#') {
+> +			strbuf_addstr(&buf, line + 1);
+> +		} else if (line[0] =3D=3D '#') {
+>  			strbuf_addch(&buf, ' ');
+> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> +			strbuf_addstr(&buf, line + 1);
+>  		} else {
+>  			strbuf_addch(&buf, ' ');
+> -			strbuf_addbuf(&buf, &line);
+> +			strbuf_addstr(&buf, line);
+>  		}
+>
+>  		strbuf_addch(&buf, '\n');
+>  		util->diffsize++;
+>  	}
+> -	fclose(in);
+> -	strbuf_release(&line);
+
+We should release the file contents we previously read via `strbuf_read()`=
+ here.
+
+Ciao,
+Dscho
+
+>
+>  	if (util)
+>  		string_list_append(list, buf.buf)->util =3D util;
+> --
+> 2.22.0.510.g264f2c817a
+>
+>
