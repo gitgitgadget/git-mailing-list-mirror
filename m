@@ -8,27 +8,27 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92B421F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 19:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECF2D1F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 19:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726660AbfGETEy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 15:04:54 -0400
-Received: from mout.gmx.net ([212.227.15.15]:41567 "EHLO mout.gmx.net"
+        id S1726519AbfGETI4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 15:08:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:41211 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725778AbfGETEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 15:04:54 -0400
+        id S1725778AbfGETIz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 15:08:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562353484;
-        bh=XA6xE4/jjFUml3RADqzCgPA5ZNxjKFNEBwbuYnVn8eU=;
+        s=badeba3b8450; t=1562353729;
+        bh=9KtIJR8BLfZ6u/0cKS9ME6U0Zv9AUag1Zvoh401KuNk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FSH5TuUfpQ8syEhy6GmYQfMBrSZfh1JnvR01GHTxZiMUJG+HCFxU7ZIw/ul1pqZ/Z
-         UzDrD3OZ0RfyvUnhtMsgPvFpCjYMwQ2j6df5kXreadSrJvjOKiMULL4kNVvipNUQTQ
-         ESXml7zKL9tuIwn+BWjjCg/paILCXEY7/LOsYJYU=
+        b=ksRuAWMAs05onioi1Zq1WyXtQLrjhHr8zkhUlbxeN3W97RVmNiJMRxGzhhVzFtFH9
+         xDjoEDtC4flSwxNrMG7Tslzazrr7605cl4Gp5MAihfdMBvCnFE1KxOtjmAeuegsLiU
+         VFffwEgVBbz2IZVzrLMUbB+LA5BbIkBjX4LkTMdU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhlKs-1iE7R635dY-00dnoK; Fri, 05
- Jul 2019 21:04:44 +0200
-Date:   Fri, 5 Jul 2019 21:05:14 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Meh8S-1huZNg3U40-00OF92; Fri, 05
+ Jul 2019 21:08:48 +0200
+Date:   Fri, 5 Jul 2019 21:09:18 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Thomas Gummerer <t.gummerer@gmail.com>
@@ -36,34 +36,35 @@ cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 09/14] range-diff: split lines manually
-In-Reply-To: <20190705170630.27500-10-t.gummerer@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907052052060.44@tvgsbejvaqbjf.bet>
-References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-10-t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 10/14] range-diff: don't remove funcname from inner
+ diff
+In-Reply-To: <20190705170630.27500-11-t.gummerer@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907052106430.44@tvgsbejvaqbjf.bet>
+References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-11-t.gummerer@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:B8D0awcre7FNcLa6Th9ib/HsYqfQUE5i83YDRnCAY34Y/jyP4Of
- XPTfIs+0Y3GaC8MvmazHtej47GkNSQHp+Hy4HqlNrNAlxLAbWpDD/r83u+jyd1Ft6wrUSGp
- Lce9+oL8+SFbWG+RIaEHvTRldt9MEYcVTC8nm7fpOocKL6qTDAjiT072+R49kVZrWYMN2DX
- A13135spVnYQ5OZjXbfGA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:c7gnfmv9sXA=:+TmJd7ux36orKVuXIIYpKN
- ug2csT6aoONpY+HHuh29/nc/nVQN5zZYQLuLUTjNzFbcf18fhb1YiVz/2BIRKv4MNUL3w6HVA
- cjn6UexJQCTpvLuVudwaGbd+qFu/WnMp94nWLzNktdgJDf0KQag67UoLqXY09sBkJVpz4dSVw
- 493oDKe1UA0NXR9LC8P+X28fQBJd0+Fdb5temFRaaqmFDmHx1utS4zWw0OF7BG3qJmVLGDTZ+
- g6MUW0jodkk8Pr/HltvzzbnmDYg2CgOZ9PV7x/6QH+aLzueZIgQIN/2hx2bNQ7TI7D2R7KgcP
- 05Dq7/cttSiK1IG9fvofs9n43TmK7hTWnwxlyC4y0jbobu1wCqyh61vj2qjlxaXUZdxxrakHt
- bFfkeNp7faP2rGI8vGJpxc6/IFWfMX0DrzoZszLoiR1jhUkoGuP5+yR4ESMV6xw3aMbq/JORK
- n2DNXtqQvCMcgVsb1tFeJk7fk7gWj/J/O1zvNo73EQQSTj7z05sdwL9Fi2JuA4xGuYy9h1QTn
- itKlMIbTNGR2hl4oyVDTJ6BiA3hKAkPpxJ1Rr6oAQs4PUvOyFRzvJB8+lZ63QNkzgnl9mkwqB
- YbjRvD9ztIFkJ9NVtfT/4W7rvZvxp1dpshyJfZrPO3yTrDlDCGGUR92fzPU5XmwxT+abzazYw
- 8WaHnGICJPDFEPQdvroskI90FkfJ8xb3dsP6Mz0ggbOKzM0BwTPiJxmCoCTzDY/vHZwWsOUts
- i30h7gKznfy6Xe0AdSG906IIADgtTqWqVFKC1fzHzwLfrPJSoWXYsD/6WGOAPFv9NhMKHiA43
- AfxpHKRd5Xwpl47vp7vzKscGfUvCrOjYuja2WpvrMEPIzJ9ArllQ3SwLfyYDhTt4GpkvWl85p
- 0zPsnJaWtD7E74u31Cf70yJfAocsBWZk1W4TU1/jeGpsoS5fZ8fKSqklAwcX+VCj6IvfpPyLp
- 0sgDFVndsNIzssMqbluS7YjSEsT/xlVEmihlLzHBGnJauKIdFQC1yMT8nFOEVX3gFZIWUqbK0
- UUGYVbTUkU/1e9qq9p0CM1RLBaiamVdwSX9IjvRwaQWymBL3NmRLdHu4dwJqbC3iGVC5CSoe4
- yJFlvBqqjzMITH9w4LePPCVccPsa49QCQJ2
+X-Provags-ID: V03:K1:MouA4YA9ZFRoL4mN5XW7cROny9Bx0IqS9/zhxOeDdo5QZNLnM6U
+ VS0Ml6exHIlad2q4m7O4deZGN4X1Oc7sF6p/zGT9TH0+v4Orbev/qYgegEMkshBnLtPT2UR
+ rb35CPEJXi0Pwo2+U9h6rJTkttZUsDA68Ixs9KRYt1cRmCIHiTgaurYomIsH2DK2ity55iy
+ EoY20+VHggSl5EWV5IQsA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k6ZY7G80AsI=:XGshsy6r1hG9PSzIEUqhuD
+ 6x/sZMOrMeJ1QUXUYhCxHvR2Vlf9OpQM206cv/eJQ+S9CmsHGc3wI9zIT8xI07CT9R6r0JC+F
+ hjZVWNg08uRzHnxyzs0dOkyIUsMFIXwGC0nQPQH030tnhHWK3iD+JorwWrJexoO/GaggH9wZe
+ /5ZgQigN932ADAqWXMU+hcKzsngSThAxVfioyODHb6HOX3iNN7FTS+C1YaAViKlX1EDRM1bPf
+ WyYUnS6cwfQVbQjkPU1206J+pMAarglJu9IP2Xabh3/G6vy5EhUNXOfKRp4bmIp78GPKKnGsx
+ mtZEC6eJhjzgD9lyvPGRLc71xgOpm3fluB+MMXhLH0RvjYQxNMDiThZk1xIg36rEOd5znmNa0
+ yp1HHM0p156F7RxLnXOFzuSxudYwhCQG1C/+50XQrfoYozY6p9lWydTJKhuhMol0GanCDfbOq
+ uuNVD6YboMvVb5TCST/3XV4dkwsDg21GYf1J2PAaMP3fpVZ4XnkcZyU8MMsFTZpvnjWoe9jBJ
+ 4myVykrjmjGwbIApnj7Q5vzKmxEnSzMXBDeHmcjy7aH213XYx4Xzr7CL/ENEEwNGPR13YWmjN
+ sTbeQfsma+8sMC119OUpZGDaf1+oJjCFk7A49c4DCA9toP9DLjG13bwBBzbYmj66rRW4m0DrU
+ EIMoSo9vcFOQ5nQzUitYHQd9repA+b4a261a+mfnswG1tFLRzFI1LCW5/5lbCx68SQkm/gLS7
+ qeD0kNzdYq7YX86rckX41tG9z/l7flHl28eX21rBkzNGSGj5/8qzP27+c4YxjVBb7w+DxI0PX
+ JW95bk+PcYDZna5mKvlkwo+kE0M6oMIBGGWtqwyFF5MUWazbcxRusQUDfNcCKJux7MUmFvMuU
+ N2op4XruxfC3pwUQ7f5Y5nIC2wXgKibZZqmbW8oRb7zpkp3fh5ct0mdXryZTl4yk55ijCvGiO
+ 5oCwiz0f7pYYKx2E95zk8HHnBmtv/vzegJ4Jq/9thuz9pNA0r+72I183KVmttFLkUy+95Xbxc
+ 6S0K5CLvo7gErC5INNi92G++e4FZv7IrgblwyTiHfs4WQPW4PBHTlzITNe3JPBX35qWVF9/Yc
+ hxfiNGAruOeztJd0eypY6Rr1PjLpwMzWlcy
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,237 +73,103 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Thomas,
 
-
 On Fri, 5 Jul 2019, Thomas Gummerer wrote:
 
-> Currently range-diff uses the 'strbuf_getline()' function for doing
-> its line by line processing.  In a future patch we want to do parts of
-> that parsing using the 'parse_git_header()' function, which does
+> When postprocessing the inner diff in range-diff, we currently replace
+> the whole hunk header line with just "@@".  This matches how 'git
+> tbdiff' used to handle hunk headers as well.
 
-If you like my suggestion in patch 7/14, this commit message needs to talk
-about the new name, too.
+Right, that's why I did it this way: `tbdiff` did it.
 
-> requires reading parts of the input from that function, which doesn't
+> Most likely this is being done because line numbers in the hunk header
+> are not relevant without other changes.
 
-s/requires/require/
+Yep, and even worse, it also leads to uninteresting differences.
 
-> use strbufs.
+> They can for example easily change if a range is rebased, and lines are
+> added/removed before a change that we actually care about in our ranges.
+
+Exactly.
+
+> However it can still be useful to have the function name that 'git
+> diff' extracts as additional context for the change.
 >
-> Switch range-diff to do our own line by line parsing, so we can re-use
-> the parse_git_header function later.
->
+> Note that it is not guaranteed that the hunk header actually shows up
+> in the range-diff, and this change only aims to improve the case where
+> a hunk header would already be included in the final output.
+
+Very important paragraph here, thank you!
+
 > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
->
-> Longer term it might be better to have both range-diff and apply code
-> use strbufs.  However I didn't feel it's worth making that change for
-> this patch series.
-
-Makes sense.
-
->  range-diff.c | 69 +++++++++++++++++++++++++++++-----------------------
->  1 file changed, 39 insertions(+), 30 deletions(-)
+>  range-diff.c          | 8 +++++---
+>  t/t3206-range-diff.sh | 6 +++---
+>  2 files changed, 8 insertions(+), 6 deletions(-)
 >
 > diff --git a/range-diff.c b/range-diff.c
-> index 9242b8975f..916afa44c0 100644
+> index 916afa44c0..484b1ec5a9 100644
 > --- a/range-diff.c
 > +++ b/range-diff.c
-> @@ -24,6 +24,17 @@ struct patch_util {
->  	struct object_id oid;
->  };
->
-> +static unsigned long linelen(const char *buffer, unsigned long size)
-
-Shouldn't this be `size_t`?
-
-> +{
-> +	unsigned long len =3D 0;
-
-Likewise.
-
-> +	while (size--) {
-> +		len++;
-> +		if (*buffer++ =3D=3D '\n')
-> +			break;
-> +	}
-> +	return len;
-
-How about
-
-	const char *eol =3D memchr(buffer, '\n', size);
-
-	return !eol ? size : eol + 1 - buffer;
-
-instead?
-
-For an extra brownie point, you could even rename this function to
-`find_end_of_line()` and replace the LF by a NUL:
-
-	if (!eol)
-		return size;
-
-	*eol =3D '\0';
-	return eol + 1 - buffer;
-
-> +}
-> +
->  /*
->   * Reads the patches into a string list, with the `util` field being po=
-pulated
->   * as struct object_id (will need to be free()d).
-> @@ -31,10 +42,12 @@ struct patch_util {
->  static int read_patches(const char *range, struct string_list *list)
->  {
->  	struct child_process cp =3D CHILD_PROCESS_INIT;
-> -	FILE *in;
-> -	struct strbuf buf =3D STRBUF_INIT, line =3D STRBUF_INIT;
-> +	struct strbuf buf =3D STRBUF_INIT, file =3D STRBUF_INIT;
-
-This puzzled me. I'd like to suggest s/file/contents/
-
->  	struct patch_util *util =3D NULL;
->  	int in_header =3D 1;
-> +	char *line;
-> +	int offset, len;
-> +	size_t size;
->
->  	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
->  			"--reverse", "--date-order", "--decorate=3Dno",
-> @@ -54,17 +67,15 @@ static int read_patches(const char *range, struct st=
-ring_list *list)
->
->  	if (start_command(&cp))
->  		return error_errno(_("could not start `log`"));
-> -	in =3D fdopen(cp.out, "r");
-> -	if (!in) {
-> -		error_errno(_("could not read `log` output"));
-> -		finish_command(&cp);
-> -		return -1;
-> -	}
-> +	strbuf_read(&file, cp.out, 0);
-
-Shouldn't we handle a negative return value here, erroring out with "could
-not read `log` output" as before?
-
->
-> -	while (strbuf_getline(&line, in) !=3D EOF) {
-> +	line =3D strbuf_detach(&file, &size);
-
-I strongly suspect this to leak, given that `line` is subsequently
-advanced, and there is no backup copy.
-
-Maybe
-
-	line =3D file.buf;
-	size =3D file.len;
-
-would make more sense here?
-
-> +	for (offset =3D 0; size > 0; offset +=3D len, size -=3D len, line +=3D=
- len) {
->  		const char *p;
->
-> -		if (skip_prefix(line.buf, "commit ", &p)) {
-> +		len =3D linelen(line, size);
-> +		line[len - 1] =3D '\0';
-> +		if (skip_prefix(line, "commit ", &p)) {
->  			if (util) {
->  				string_list_append(list, buf.buf)->util =3D util;
->  				strbuf_reset(&buf);
-> @@ -75,8 +86,6 @@ static int read_patches(const char *range, struct stri=
-ng_list *list)
->  				free(util);
->  				string_list_clear(list, 1);
->  				strbuf_release(&buf);
-> -				strbuf_release(&line);
-> -				fclose(in);
-
-We should release the file contents in `file` (or `contents`, if you like
-my suggestions) here.
-
->  				finish_command(&cp);
->  				return -1;
->  			}
-> @@ -85,26 +94,28 @@ static int read_patches(const char *range, struct st=
-ring_list *list)
->  			continue;
->  		}
->
-> -		if (starts_with(line.buf, "diff --git")) {
-> +		if (starts_with(line, "diff --git")) {
->  			in_header =3D 0;
->  			strbuf_addch(&buf, '\n');
->  			if (!util->diff_offset)
->  				util->diff_offset =3D buf.len;
->  			strbuf_addch(&buf, ' ');
-> -			strbuf_addbuf(&buf, &line);
-> +			strbuf_addstr(&buf, line);
->  		} else if (in_header) {
-> -			if (starts_with(line.buf, "Author: ")) {
-> -				strbuf_addbuf(&buf, &line);
-> +			if (starts_with(line, "Author: ")) {
-> +				strbuf_addstr(&buf, line);
->  				strbuf_addstr(&buf, "\n\n");
-> -			} else if (starts_with(line.buf, "    ")) {
-> -				strbuf_rtrim(&line);
-> -				strbuf_addbuf(&buf, &line);
-> +			} else if (starts_with(line, "    ")) {
-> +				p =3D line + len - 2;
-> +				while (isspace(*p) && p >=3D line)
-> +					p--;
-> +				strbuf_add(&buf, line, p - line + 1);
+> @@ -113,9 +113,11 @@ static int read_patches(const char *range, struct s=
+tring_list *list)
 >  				strbuf_addch(&buf, '\n');
 >  			}
 >  			continue;
-> -		} else if (starts_with(line.buf, "@@ "))
-> +		} else if (starts_with(line, "@@ "))
->  			strbuf_addstr(&buf, "@@");
-> -		else if (!line.buf[0] || starts_with(line.buf, "index "))
-> +		else if (!line[0] || starts_with(line, "index "))
+> -		} else if (starts_with(line, "@@ "))
+> -			strbuf_addstr(&buf, "@@");
+> -		else if (!line[0] || starts_with(line, "index "))
+> +		} else if (skip_prefix(line, "@@ ", &p)) {
+> +			if (!(p =3D strstr(p, "@@")))
+> +				die(_("invalid hunk header in inner diff"));
+
+That's a bit more strict than the preimage. How about
+
+			p =3D strstr(p, "@@");
+			strbuf_addstr(&buf, p ? p : "@@");
+
+instead?
+
+The rest of the patch looks fine to me,
+Dscho
+
+> +			strbuf_addstr(&buf, p);
+> +		} else if (!line[0] || starts_with(line, "index "))
 >  			/*
 >  			 * A completely blank (not ' \n', which is context)
 >  			 * line is not valid in a diff.  We skip it
-> @@ -117,25 +128,23 @@ static int read_patches(const char *range, struct =
-string_list *list)
->  			 * we are not interested.
->  			 */
->  			continue;
-> -		else if (line.buf[0] =3D=3D '>') {
-> +		else if (line[0] =3D=3D '>') {
->  			strbuf_addch(&buf, '+');
-> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> -		} else if (line.buf[0] =3D=3D '<') {
-> +			strbuf_addstr(&buf, line + 1);
-> +		} else if (line[0] =3D=3D '<') {
->  			strbuf_addch(&buf, '-');
-> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> -		} else if (line.buf[0] =3D=3D '#') {
-> +			strbuf_addstr(&buf, line + 1);
-> +		} else if (line[0] =3D=3D '#') {
->  			strbuf_addch(&buf, ' ');
-> -			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> +			strbuf_addstr(&buf, line + 1);
->  		} else {
->  			strbuf_addch(&buf, ' ');
-> -			strbuf_addbuf(&buf, &line);
-> +			strbuf_addstr(&buf, line);
->  		}
->
->  		strbuf_addch(&buf, '\n');
->  		util->diffsize++;
->  	}
-> -	fclose(in);
-> -	strbuf_release(&line);
-
-We should release the file contents we previously read via `strbuf_read()`=
- here.
-
-Ciao,
-Dscho
-
->
->  	if (util)
->  		string_list_append(list, buf.buf)->util =3D util;
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 048feaf6dd..aebd4e3693 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -110,7 +110,7 @@ test_expect_success 'changed commit' '
+>  	      14
+>  	4:  a63e992 ! 4:  d966c5c s/12/B/
+>  	    @@ -8,7 +8,7 @@
+> -	     @@
+> +	     @@ A
+>  	      9
+>  	      10
+>  	    - B
+> @@ -169,7 +169,7 @@ test_expect_success 'changed commit with sm config' =
+'
+>  	      14
+>  	4:  a63e992 ! 4:  d966c5c s/12/B/
+>  	    @@ -8,7 +8,7 @@
+> -	     @@
+> +	     @@ A
+>  	      9
+>  	      10
+>  	    - B
+> @@ -231,7 +231,7 @@ test_expect_success 'dual-coloring' '
+>  	:      14<RESET>
+>  	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YE=
+LLOW> s/12/B/<RESET>
+>  	:    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
+> -	:    <CYAN> @@<RESET>
+> +	:    <CYAN> @@ A<RESET>
+>  	:      9<RESET>
+>  	:      10<RESET>
+>  	:    <REVERSE><RED>-<RESET><FAINT> BB<RESET>
 > --
 > 2.22.0.510.g264f2c817a
 >
