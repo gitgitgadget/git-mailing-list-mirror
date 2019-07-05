@@ -8,27 +8,27 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 867821F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 18:48:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52D831F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 18:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726601AbfGESsY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 14:48:24 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60659 "EHLO mout.gmx.net"
+        id S1727358AbfGESvE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 14:51:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59809 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725865AbfGESsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 14:48:24 -0400
+        id S1725778AbfGESvE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 14:51:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562352498;
-        bh=YFfJJOjfFtMTdxdr+PNXlRz7tOIHoPBaX0XdVAALRe8=;
+        s=badeba3b8450; t=1562352655;
+        bh=AwW/MG4Np8HENrmS96+fLdp41EXRn/+MFq6YIaExaOY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RP+Mqkbh5oDbF4vQDRaRADcC54uk1QcmK8+RYDe5mtx1sW69726sC7DE07MzfW8PS
-         QGpw2B+tNR1pcCRG56EwBSL+jYyiZ/LkGtaqMcDGPMu8OHDE25sM7ohZGsbzx/xvUa
-         jFYyj+Pg21btUCq3PWnH6a0iFj8PYf432pNNSm2A=
+        b=gju3ojxuo3gp9OaVpFXKDL6mLs8B/HYPe4SWpm9jJHIeFmwJA2Fsg3Wl8+96dnPvs
+         5moxVZKmzo2TmpPv/jdesxn6smZfVKkYxyl2cvmn3ukFR/AQiMcbp8pJbRkYqMY5Ov
+         d7LW9pGrkS9n6i1eWliW9CoLOp44j88vMXTG9TnE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKsnF-1hxYfH1FXR-00LBQ4; Fri, 05
- Jul 2019 20:48:18 +0200
-Date:   Fri, 5 Jul 2019 20:48:48 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsCdj-1ietqC2jPz-013wTL; Fri, 05
+ Jul 2019 20:50:55 +0200
+Date:   Fri, 5 Jul 2019 20:51:25 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Thomas Gummerer <t.gummerer@gmail.com>
@@ -36,34 +36,35 @@ cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 07/14] apply: make parse_git_header public
-In-Reply-To: <20190705170630.27500-8-t.gummerer@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907052047260.44@tvgsbejvaqbjf.bet>
-References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-8-t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 06/14] apply: only pass required data to gitdiff_*
+ functions
+In-Reply-To: <20190705170630.27500-7-t.gummerer@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907052048570.44@tvgsbejvaqbjf.bet>
+References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-7-t.gummerer@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wAv2XDmjOr0JMr2Kj9abM3Sg3UB9YbGhlaaEUqI1Z2ImlitAAnY
- +stkNmfQTI/pVOBhURh7j6zSi/K3q1bYUnMXTI30PPsuFqiM3Q6fAml78ksEn41woEhvFB8
- QTBzsdM+HGZbK+EiyO3Idt/yFZIKNkze6uKTgjUWAiWMkNPlJ2Au+z39I/DHPeeQ9xB456w
- dHJrSNo6qPIioYOyJwHkw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uEF37W16t/A=:g9Uu8QABrXNJKSxyMtT51/
- EwwT6E4lyD6lvlWzMTuiQa4xQJopVNj/BzPX6+mEM/q6Q5kDBC3Nvn5ehPoWNyH1I+210Ky60
- LGShlZTea8BuK62zK++Cx7Ow7xM0gGZ54ABTPmM9qrwld1GwS7SAnbvCvUIb+5F6i+GrBBkyP
- fWwhsVMLfhA5HBhZBkvc7uO+X79xEMrV7sVrE17Neiuqwvm7tnxhGOvfex65gCszgw/bD4LF+
- kzS+GFZpujKcEHCmcQWgCqXelJjwzWv2PCJk6BFsN5a2Lcu8giSZBSZ/TKtDYQcGFu6XYvMTQ
- 5oH5UcwkhodgmiSUhM89o/tX17WiKKEy2vHxhtUwhaP3i84bnzWcQREiJEjsP20KFpQfyogmy
- QPAaG8IPGcyg5OJgKjpp+ELhgdbIk/XalGj0lqp2fO2n24ucgoffoeDp4DIPihWErgq+aZ5z5
- IJ4HP1YTnm8D1V3g9KE/xuYKBf/xXSkAyQNHTzL8Z1fpU5+gWumKtLhQlj1igOH1D6+YlmiHG
- +D738tVihXhwZFtdpvgEJgvkH5t+o1iaAjFyZmk93r/wvujcU89CWccrpKA0UoU4hR8uKBw3r
- aw92fy3MxJGws9atSYuryBjv0M1KDqTR80EjTkGDqoJP2Vh6fo0+RQ0vxi5p401BiD3HyYhVQ
- Pek6SpZoRRXXIT0FgFdFBATDso69VJNdIs3BwZmp/pZ1D+zB3AqOyjmVY3qpON52W8qu2C4Ho
- f6lTK2ynq4+hvTK0WVxjcG8FE0/WiRT43wqP6pYKb7o/oCZYxRKFzv54zWPXt3DGVsYQxrUEG
- KOJ54dq6X+dQRB81c0rL5A0VQJWu7JTXZ8dnyvBesDYtBZ+p2r+qyBEhD0Aj6y74W4n/cwxIZ
- Wo8T0crcTZQ76U+oTJy7gPEqWGHRpRjpFXruEcPCk96LIE/RIMxh6pCOIOf9T6TpYw6VxYqnZ
- dXR98pvC2ZaqVFrFGvN243mag5Pos+QWEgfciSBBl4LTHxy+Mb0aft/2XcTtm2NXxt7ENYXfd
- eitYIGu05arXzUofg63nVpI1IYbyFHxlZ/eJIIcr+eYGLi3P1IIhZcWzA3ojkq9L0V0HsjmHA
- h0LGfQGiGaZC0vgbQ0dfoCJpZHAajPWRXMw
+X-Provags-ID: V03:K1:oHiLxoYvB4tNp+uHiicvvDVRvyoVFqfYBzTwGHaY++aBRZ07DlE
+ kzkBs3VKxnT0faGzKs58Xi+TRGwgS89rX6En5kUhjK5IC+Ve2Mf3VoGDFs/jnXKFLHzeKwb
+ v9G+Ar1nrD0GD8eE2rWQlfaNYdp0tkEgpiTCmiFrdIRGow4EdfBKQxcPbHHYOWegh03jC3e
+ a6660CqbyigZfsS6ng8fg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WNlhndwFi6s=:ECWmssLrfDFBH08+q4ga3t
+ /d4tqrp+rVjJdIrwJWb0/4UeXRq/yiWLGePNxkIZh0ad4UffMkaM3AMA+DIcaONaXJLwkkeQz
+ 8mX/g8bEvewjO0Z0veL81dq1RIsJKA4knnhSghMVv0H6Vsk6FndXPvoyHyTyKKYR2BzfihwJK
+ euJ3JioOESPWaamFZBtsh8G5rt5W6Lt5YDnoSnHGTTI3gNMJoGqlyCN8kI9bYiEhU+dc+a4oV
+ PLX431ULx4ESmphTH995DgJNgvHIH46kZ3bxRJcABHKdKY1RI92X3E9lI2775vTSDv3cmQknD
+ Ibh4bxFwdhMR7FWTSMEHY4glepFozI69arlJyA3RGEEncO3obPsL9uroHl/qU/RoB7y426ffz
+ mZpD3z3ZpP73iXZDTVfZ/NXbelXsMm51/hZD4YUxVYw5QniJWI5r1pw06SK16aFf5VxtDm7AT
+ NlaX7r44B5n9NQp3hGiJ47MymiAuJ2JOJvr2hEmMJ7/iP4lCCDuKVpbK0X8RiqONUYSrJltvz
+ /vqFpMVUcjt0cxDOVjZiUT3kRlffPkUxg0awm5r0bxNOONaKpUMliZtE9o26uvV82+EKj9b8m
+ erIRtNJQA730HjKQSNpXFyUByvqjCLYdmUyLS2xKiAtO3vXLkHkYwogsawr7qZBysSXo9F6ja
+ Bmk9vbyqW68XadKQged0clTUisXRTD3PMNeeDVoJHxBKuMMsUNxcCszUCY3Ler7XIInwtGof/
+ dIVxBuH37pIaY+BIuMItv63Bjy8x4MbJHp6gKNJZgUV2txHXkWMPzmdikTMV0it1W0P1TwPmt
+ INm+OhjfDDjMXgmmKtJV9Wt5iNz0Nku5dXoIDl5afuqcx67Zte7FCQl5CEWkuSMCmsifNrmSA
+ gVHDMEBDWuPM573fuGTl5EnGH/DWZgsdfK/ryNSuigbe8ZCFzgfe9VT/5BKeU2MXNbkmSN+We
+ dQdo9wibxbFrpdLeGPAzvc8mhDLOB2IYs6FtGrF5dlwEV6gH4u84yn0M4SrYR/+42NyGssjD0
+ O4NJWFnrzCVQJqw/eWzMYXhCAbJ6hf+X1YX3Q4jZmnPKuT8ydMCKugGy6TECTNt0U5DKJAMLX
+ CWTkELhycUIsZd8jorM6yOScS6WVesB+c6E
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -74,41 +75,52 @@ Hi Thomas,
 
 On Fri, 5 Jul 2019, Thomas Gummerer wrote:
 
-> Make parse_git_header a "public" function in apply.h, so we can re-use
-> it in range-diff in a subsequent commit.
-
-This function probably wants a different name when it becomes public, as
-it was relatively obvious inside `apply.c` that it was talking about a Git
-_diff_ header. Maybe `parse_git_diff_header()`?
-
-> @@ -127,6 +161,20 @@ int init_apply_state(struct apply_state *state,
->  void clear_apply_state(struct apply_state *state);
->  int check_apply_state(struct apply_state *state, int force_apply);
+> Currently the 'gitdiff_*()' functions take 'struct apply_state' as
+> parameter, even though they only needs the root, linenr and p_value
+> from that struct.
 >
-> +/*
-> + * Parse a get header, starting at line.  Fills the relevant metadata
+> These functions are in the callchain of 'parse_git_header()', which we
+> want to make more generally useful in a subsequent commit.  To make
+> that happen we only want to pass in the required data to
+> 'parse_git_header()', and not the whole 'struct apply_state', and thus
+> we want functions in the callchain of 'parse_git_header()' to only
+> take arguments they really need.
 
-s/get/git/
+This commit message follows the exact pattern of the previous patches (and
+they were pretty convincing to me), but...
+
+> diff --git a/apply.c b/apply.c
+> index 3cd4e3d3b3..468f1d3fee 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -22,6 +22,12 @@
+>  #include "rerere.h"
+>  #include "apply.h"
+>
+> +struct parse_git_header_state {
+> +	struct strbuf *root;
+> +	int linenr;
+> +	int p_value;
+> +};
+> +
+>  static void git_apply_config(void)
+>  {
+>  	git_config_get_string_const("apply.whitespace", &apply_default_whitesp=
+ace);
+> @@ -914,7 +920,7 @@ static int parse_traditional_patch(struct apply_stat=
+e *state,
+>  	return 0;
+>  }
+>
+> -static int gitdiff_hdrend(struct apply_state *state,
+> +static int gitdiff_hdrend(struct parse_git_header_state *state,
+
+... here we pass a different, newly-invented struct instead of passing the
+relevant information explicitly.
+
+My guess is that the code would look horribly verbose if we started
+passing three instead of one parameter? If that is the case, I think a
+little side note in the commit message might be warranted.
 
 Ciao,
 Dscho
-
-> + * information in 'struct patch'.
-> + *
-> + * Returns -1 on failure, the length of the parsed header otherwise.
-> + */
-> +int parse_git_header(struct strbuf *root,
-> +		     int *linenr,
-> +		     int p_value,
-> +		     const char *line,
-> +		     int len,
-> +		     unsigned int size,
-> +		     struct patch *patch);
-> +
->  /*
->   * Some aspects of the apply behavior are controlled by the following
->   * bits in the "options" parameter passed to apply_all_patches().
-> --
-> 2.22.0.510.g264f2c817a
->
->
