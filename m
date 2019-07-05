@@ -2,112 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47EAE1F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 14:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C71081F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 14:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727548AbfGEOJI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 10:09:08 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:46005 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbfGEOJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 10:09:08 -0400
-Received: from [192.168.1.22] ([89.243.190.203])
-        by smtp.talktalk.net with SMTP
-        id jOtdhARR7nuQZjOtdhmloE; Fri, 05 Jul 2019 15:09:06 +0100
-X-Originating-IP: [89.243.190.203]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=eLyEXkeXgyqjrUSteAL3aw==:117
- a=eLyEXkeXgyqjrUSteAL3aw==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=zrx41NgC3UInodjT9p4A:9 a=ZnI8S_KZ4Zjj3iZl:21
- a=ydX6-rsLYsO2Doo1:21 a=QEXdDO2ut3YA:10
-Subject: Re: Virtual Git Contributor Summit
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <nycvar.QRO.7.76.6.1907031429420.44@tvgsbejvaqbjf.bet>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <e7f2393a-0eb3-ad3e-4e0c-0500b974e3c5@iee.org>
-Date:   Fri, 5 Jul 2019 15:09:06 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1727066AbfGEO3e (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 10:29:34 -0400
+Received: from mail-io1-f42.google.com ([209.85.166.42]:45158 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725917AbfGEO3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 10:29:33 -0400
+Received: by mail-io1-f42.google.com with SMTP id g20so9938100ioc.12
+        for <git@vger.kernel.org>; Fri, 05 Jul 2019 07:29:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y0MYs0xezviIYElDuPpvlIyg/OdNGKrojd2fenEtpFM=;
+        b=Eg86gIatxVzeux3tVMCKuwFtP/A5avvPmo3vYqBOjP3u9cbOwjnmigujWTv7fCf8eA
+         FhAhAogWpkwgV0XcRcVvsYv9M83bEt36pgqnhkhrVsyQV7yhVWAMJU0AKtiWEkSwCohW
+         y6EboETrw05ipGzKZD4Dbl3hLl/EdD5limnphMZp2mYcJN0ab+qAaoHlUZAEX+nsVW2T
+         So89a5/CrFn8tFxprKyjSY6s0oKFU60USk5VGCHcZ7RJHtUVSf9bfa9mf5/nVqhfJSxj
+         PAQCqpqWy6mz2cZsuGeC5/7DIbXd1oW/yGsdqBANC0ZYv0MQ3+N8AaFtaMMp0MbCU3ds
+         KnsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y0MYs0xezviIYElDuPpvlIyg/OdNGKrojd2fenEtpFM=;
+        b=A+ZAhqzBU6IrNk1kLI1fIENXW9G764DoB29l4/E+Nx9Z1MZZPo9mr7esiG1VUu6mJv
+         Xb5IVnmJlwyTgGot6HNMDnqwE7tvZlWK/7Xh0oiufQrOQpsQV1v+rFO6+iispMhxdEdq
+         Lbny4ff+2iPdzx66GOGRNK46OtTbOHhnsNHVWf4rYSrG96SSNJcFbWe/4w63YHUljqLK
+         74boK9YBR3zNOHT/AYARiKmhmbA/r0089/83EaGldcK9PVsq+rva/q/t2YpEIg7InBGA
+         n9o3uAy95ZsBgeTCW1rDyvMKudnPHs40XN1Tshl/18QkChXxyZpO1MTOk/QoEMuV5ipb
+         digg==
+X-Gm-Message-State: APjAAAV3cSySsZsdUXiMVgFmvXTu77cqplIrY52uTuluF2OQvvg71XTF
+        GAVWEJ6WeGJcNdEsopdQJtgfu3i1R7AWf2faAb3+sw==
+X-Google-Smtp-Source: APXvYqwdy0lnRwMyaa6J66K+yy+ego54Jjxm17ndEVkFzYA8innjnPeEvhzGS3lA6nHh0E7glGrCZ9HbExVUDSMqS4c=
+X-Received: by 2002:a02:c6a9:: with SMTP id o9mr5123643jan.90.1562336972616;
+ Fri, 05 Jul 2019 07:29:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1907031429420.44@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfPbhFtIRsdQzotJJKacUkYIs42UfclONM4Ge/gRvpUhOB96irLJb8BGT8CC9R6HQBemo+FHuWDWhZfcftLyVhJ8lLf2dE/56Ctv9jk02HjecgZ/xA19F
- Juc+KL/ArQAQyphIex0Ajecyjt1ZYUAS9eZsOIyied0Vc6/b6NiImT3A2btY8Y0CiToMZ6y+At0luP6YwIINdjZWorVV3A3Y7As=
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1907041136530.44@tvgsbejvaqbjf.bet>
+ <CAHd-oW6s1kGJqaRhm2f5ZG1C48upZu8ypeB_rw7do2=Vi3jZqw@mail.gmail.com> <nycvar.QRO.7.76.6.1907042308200.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1907042308200.44@tvgsbejvaqbjf.bet>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 5 Jul 2019 11:29:21 -0300
+Message-ID: <CAHd-oW6PTFY=_j1RDh8_MdeBmMX77kF+=kOpd-GUnbegMC89yQ@mail.gmail.com>
+Subject: Re: mt/dir-iterator-updates, was Re: What's cooking in git.git (Jul
+ 2019, #01; Wed, 3)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On Thu, Jul 4, 2019 at 6:30 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Matheus,
+>
+> On Thu, 4 Jul 2019, Matheus Tavares Bernardino wrote:
+> >
+> > I wanted to take a look at the failures to see if I could help, [...]
+> > Could you point me to the right place, please?
+[...]
+>
+> I usually click on the "Tests" tab in that page:
+> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=11495&view=ms.vss-test-web.build-test-results-tab
+>
+> You can click on any of the 1,384 (!) failing test cases, it will pop up a
+> pane on the right-hand side that shows the trace of that failing test
+> case. For the full trace of that test script, go to "Attachments" and
+> download the `Standard_Error_Output.log` (via the horizontal bread-crumbs
+> menu you can see when hovering over the file name).
 
-On 03/07/2019 14:01, Johannes Schindelin wrote:
-> Team,
->
-> I kept talking about this idea of a purely online Git Contributor Summit,
-> and it is finally time for action.
->
-> The idea: just like the Git Contributor Summits we have on the day before
-> GitMerge, but instead of traveling to the same place, we'll use an online
-> conferencing system.
->
->  From my point of view, the main benefits of doing this online are:
->
-> - It should make it easier for all contributors to attend (yes, Junio, we
->    do miss you every single time you're not there).
->
-> - We will leave a substantially reduced carbon footprint.
->
-> - There won't be any jet-lag involved, including the consequences on
->    health/sleeping.
->
-> - It is substantially cheaper and more sustainable.
->
-> Of course, there are also some challenges:
->
-> - Timezones. My idea here is to have all participants put down their
->    preferred timezone and then compromising on some sort of Median.
->
-> - Timing. As it is not attached to a conference, we are less bound to a
->    specific date, and that flexibility might make it harder to agree
->    on one date.
->
-> To alleviate both of those points, we might want to consider spreading it
-> out over a couple of days? I already heard some fierce opposition against
-> that idea, though.
->
-> In any case, I think it would be good to give everybody some time to
-> coordinate and to shift work out of the way, so I propose that we look for
-> dates in the first two weeks of September.
->
-> Peff kindly agreed to use GitHub's Zoom license for this, which should
-> also make it easy to have a recording (and not having people in the same
-> room will benefit this, too).
->
-> To coordinate this event, I started a Google Spreadsheet where we can
-> decide on timezone, date(s), number of days, and later on try to imitate
-> the sticky game with virtual stickies for the discussions.
->
-> I will send out an invitation to the top 25 contributors (according to
-> `git shortlog -nse --since=1.year.ago`) after sending out this mail.
->
-> Obviously, there will be more people interested in participating; Please
-> do drop me an email if you're interested and I will send you a link to
-> that spreadsheet (as I do not read my mails continuously, it might take a
-> day, but I will, promise).
->
-> Thanks all,
-> Dscho
+Thanks for the explanation! I inspected some of the
+`Standard_Error_Output.log`'s and it seems the problem is always with
+local clone (which started to use dir-iterator in this series). It
+seems all .git/objects/ dirs are being ignored. That makes sense,
+since st_ino will always be 0 on Windows. But your fixup patch should
+solve this. Is there any azure build for it?
 
-Will there also be an opportunity for a listen/read -only mode for those 
-of us on the lower reaches of the contributor list? I'd certainly like 
-to at least keep up with progress.
---
-Philip
+[...]
+> >
+> > Hm, I think `stat()` itself uses this strategy of an arbitrary cut-off
+> > when resolving a path. So we may also "ignore" circular symlinks and
+> > let the iteration continue until the point where `stat()` will return
+> > an ELOOP. (But it may be expensive...)
+>
+> This would not be equivalent, though, as your code also tried to address
+> circular references when two or more symlinks are involved, e.g. when
+> one symlink points to a directory that has another symlink that points to
+> the directory containing the first symlink.
+
+Hm, `stat()` also addresses this case doesn't it? For example:
+
+$ mkdir a b
+$ ln -s ../a b/s2a
+$ ln -s ../b a/s2b
+$ stat b/s2a/s2b/s2a/.../s2b
+
+Gives me:
+"too many levels of symbolic links"
+
+> > > Do we _have_ to, though? At some stage the path we come up with is beyond
+> > > `PATH_MAX` and we can stop right then and there.
+> > >
+> > > Besides, the way `find_recursive_symlinks()` is implemented adds quadratic
+> > > behavior.
+> >
+> > Yes, indeed. But it only happens when we have a path like this:
+> > `symlink_to_dir1/symlink_to_dir2/symlink_to_dir3/symlink_to_dir4/...`,
+> > right? I think this case won't be very usual on actual filesystems,
+> > thought.
+>
+> No, the check is performed in a loop, and that loop is executed whether
+> you have symlinks or not. That loop is executed for every item in the
+> iteration, and as we cannot assume a flat directory in general (in fact,
+> we should assume a directory depth proportional to the total number of
+> files), that adds that quadratic behavior.
+
+Oh, you're right. Sorry for the noise, I forgot this function was not
+only called for symlinks but for every directory entry :(
+
+An alternative solution would be to use `lstat()` together with
+`stat()` to only feed symlinked dirs to this function. This should
+reduce a lot the number of calls. Although it'd still be quadratic in
+the worst case, would that be any good?
+
+[...]
+> > > But I also think there are enough
+> > > reasons to do away with this function in the first place.
+> >
+> > We can delegate the circular symlinks problem to `stat()'s ELOOP`
+>
+> Not really. I mean, we _already_ delegate to the `ELOOP` condition, we
+> cannot even avoid it as long as we keep using `stat()` instead of
+> `lstat()`
+
+Yes, indeed. What I meant is that we may chose to _fully_ delegate to
+ELOOP. The way it is now, we should detect circular symlinks way
+before stat() fails. For example, with the case I showed above, we
+would stop at "b/s2a/s2b" whereas stat() would only fail at a much
+longer "b/s2a/s2b/s2a/s2b/...", far beyond in the iteration.
+
+> but as I demonstrated above, that only catches part of the
+> circular symlinks.
+>
+> > or `path_len > PATH_MAX`.
+>
+> This would have the advantage of _not_ adding quadratic behavior.
+>
+> And just in case you think quadratic behavior would not matter much: Git
+> is used to manage the largest repository on this planet, which has over 3
+> million index entries when checked out.
+>
+> Quadratic behavior matters.
+>
+> I don't know where the dir-iterator is used, but we simply should try our
+> best to aim for the optimal time complexity in the first place.
+
+Currently, with the follow symlinks option, dir-iterator is only being
+used to iterate over .git/objects. As it's rather shallow, perhaps the
+quadratic complexity wouldn't be a huge deal in this case. But I agree
+with you that we should take care of performance so that this API may,
+as well, be used in other places, in the future.
+
+> > The only downside is the overhead of iterating through directories which
+> > will be latter discarded for being in circular symlinks' chains. I mean,
+> > the overhead at dir-iterator shouldn't be much, but the one on the code
+> > using this API to do something for each of these directories (and its
+> > contents), may be. Also we would need to "undo" the work done for each
+> > of these directories if we want to ignore circular symlinks and continue
+> > the iteration, whereas if we try to detect it a priori, we can skip it
+> > from the beginning.
+>
+> Given that the intent of this patch series is a mere refactoring, I wonder
+> why the new, contentious circular symlink detection is slipped into it
+> anyway. It complicates the task, makes reviewing a lot harder, and it
+> holds up the refactoring.
+
+Yes, I apologize for that. I should have split this into 2 or maybe 3
+patchsets... This series started really simple just trying to apply
+the dir-iterator API into local clone. But then, other things became
+necessary and it got more complex.
+
+So, should I send a fixup patch removing find_recursive_symlinks() or
+reroll the series? There's also the option to use stat()+lstat() to
+reduce calls to this function, but it doesn't solve the problem on
+Windows, anyway.
