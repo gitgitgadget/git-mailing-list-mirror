@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E22E1F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 17:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2ACEE1F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 17:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727401AbfGERHK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 13:07:10 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:37201 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727509AbfGERHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 13:07:09 -0400
-Received: by mail-wr1-f50.google.com with SMTP id n9so1461887wrr.4
-        for <git@vger.kernel.org>; Fri, 05 Jul 2019 10:07:07 -0700 (PDT)
+        id S1727565AbfGERHN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 13:07:13 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43096 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727510AbfGERHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 13:07:11 -0400
+Received: by mail-wr1-f66.google.com with SMTP id p13so10588516wru.10
+        for <git@vger.kernel.org>; Fri, 05 Jul 2019 10:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S/ueWbv3h2I/NDQO9J3kaQ5tAa9DjsWFQXjijZ6/KJ4=;
-        b=Mrg5NKSIYMDWyQ9JgU4AT1sta2/GfXOgNIHyK52D8wGLZtam6M98idYOO0IZ9OjhCw
-         LxX+oYuJhjzrYkVpzBmidc4r/aKEfQaIwqaSadOvXQOSDOtrOHWZ2M/meGcB+5dUX/er
-         Y1q+1/RNurTTCqtfW5yyINtvqGpPc/af8XIHDHIUTKB/Y9EyEdmBLKc+THT26XbjgJY2
-         3GqwPxzofe1t9sS1weKqiCEwo8xPPmrMAXtklMjeffm3ug14yJzJqU54SUcBDxqFzqYZ
-         IBuDnjCXyYAeGl0poSzO+QI7z1EHSC25/efCvkweYbmALFoGBJoroUBQzJUPEJBPdfVD
-         fCVg==
+        bh=bunykNaHGdrBJ0t7SVGYq/jV9WCVTSz1n9AuYq76KD8=;
+        b=esHJ7iTIIMAMm2fmAVV+G6d0QKKfT27p77PHEckxlb7KUMFi47wTuwxhbpsyhbxM0m
+         L6UxoGIvp9G+psZm2LWgA7VPXH93dAVLDN0UUph5OPGlk+iXlgyjFzYIpP3mLyZ1hxfK
+         JL/27A6fevO4jMxGkDF1Yk2HeEqO0uddSDKJsPRQ+CryqM6LIENzBqTLOWAqfaOr7qtA
+         0brgIfExYMCJYpe7gjUoyVQX2hpAn6lv3C+gTiqY/AptNHkYLX6DbJuyrfbugmFP/jHW
+         Im8QV4JP5nCIedcd0IxU5za+mMGUt0duM03aiD5G02hpAKVyqtcAbvYHUZQ+zBFU/eqt
+         EQ6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S/ueWbv3h2I/NDQO9J3kaQ5tAa9DjsWFQXjijZ6/KJ4=;
-        b=XLB+4tZj7wL61oJqDMKFTu/mrAVdVXk9nL81cdblc77MVLhGXXbXAzJlCizqHt4uUo
-         RJnlmqQyaUMEEVDunn+ZmJJDw9iCL1dOZZkk6ejkYV22fpWoarCj/xNNZa1I7GiBntQL
-         mPvEuz9mnsKuJI6+UqVqCaTYsc+ktydr/IwIBYhDY5OMVQ9R3VT/0wrJbTfcN53tYNeg
-         DVN1xz3yi9zKkHY3zlMECILaTbIBgLNaGrDa7oxZYkayC7HdXDTp+wHr+osRoZNlJkmr
-         LWp0F2sC5mZxanHrs3Osk9Ic2U0/64aXZetiwCEsjjWOIS0XltzRuK0ZH1aQMs0xKjub
-         zjXQ==
-X-Gm-Message-State: APjAAAXJ6gmVrDGuZubeLPGdcGqZhlu51f3PB6ylUn7zj9rnIrpxF9yn
-        YGNRsYKBC6cMnozL7oW4yfxO8xLX
-X-Google-Smtp-Source: APXvYqxH8FwO+DflJtN88UkI0z4VuYgqICyd35Kv+eVmxXduYkj5w5monWmasj0fh7u324d5lLNUWw==
-X-Received: by 2002:a5d:4f92:: with SMTP id d18mr4809440wru.132.1562346426496;
-        Fri, 05 Jul 2019 10:07:06 -0700 (PDT)
+        bh=bunykNaHGdrBJ0t7SVGYq/jV9WCVTSz1n9AuYq76KD8=;
+        b=tLWLrH9CaB/cCW7tfzKGgPyycNifVB9pKFuseqD2+WJ+W79UNCRDSE6iCwGZSmW2bW
+         qZuCY2t4s3qXxF+jc0Zs7s3xf6pw1sid6DcGSqchiGl7LnKuLCfpuWWOBYTd6xIIRaNd
+         oPHMyNGYHN1XoGzWpUhJGPsF1mrKtsGLt9aeeHkEtwX//ZXDEcvdY5idG7nH1VblJCCw
+         tTav5zvxrEngl5ejoqdg7j1cMsaigtNmjes3LlxPzDMLaAKcMIzNaYcY+MFjKDmJMvmp
+         Wmt1lXBOyhmVHmvir+JW4Ap54H81hZjFFiwe8F3mFUeuSvTOWeXZTktUjjaIzNhiXfu3
+         baOA==
+X-Gm-Message-State: APjAAAXOqN1ss4HlpiiQjBzOCK+qmQH7UclSfESl+Q2HQ8hYQXDnfWg1
+        zP+Toa6LYS0n7qvT9zNAFgx9+YGJ
+X-Google-Smtp-Source: APXvYqzDBGHsraIhHsJG/SgtVZAV8/IZwEAvigQWxj5UTJXeMnAQjRpezLZJN3kNIDS7Z3Q3ajvIag==
+X-Received: by 2002:a5d:4ac3:: with SMTP id y3mr5053607wrs.187.1562346427843;
+        Fri, 05 Jul 2019 10:07:07 -0700 (PDT)
 Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id v18sm11217128wrs.80.2019.07.05.10.07.05
+        by smtp.gmail.com with ESMTPSA id g14sm9452104wro.11.2019.07.05.10.07.06
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 05 Jul 2019 10:07:05 -0700 (PDT)
+        Fri, 05 Jul 2019 10:07:07 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 10/14] range-diff: don't remove funcname from inner diff
-Date:   Fri,  5 Jul 2019 18:06:26 +0100
-Message-Id: <20190705170630.27500-11-t.gummerer@gmail.com>
+Subject: [PATCH v2 11/14] range-diff: suppress line count in outer diff
+Date:   Fri,  5 Jul 2019 18:06:27 +0100
+Message-Id: <20190705170630.27500-12-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190705170630.27500-1-t.gummerer@gmail.com>
 References: <20190414210933.20875-1-t.gummerer@gmail.com/>
@@ -72,78 +72,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When postprocessing the inner diff in range-diff, we currently replace
-the whole hunk header line with just "@@".  This matches how 'git
-tbdiff' used to handle hunk headers as well.
+The line count in the outer diff's hunk headers of a range diff is not
+all that interesting.  It merely shows how far along the inner diff
+are on both sides.  That number is of no use for human readers, and
+range-diffs are not meant to be machine readable.
 
-Most likely this is being done because line numbers in the hunk header
-are not relevant without other changes.  They can for example easily
-change if a range is rebased, and lines are added/removed before a
-change that we actually care about in our ranges.
-
-However it can still be useful to have the function name that 'git
-diff' extracts as additional context for the change.
-
-Note that it is not guaranteed that the hunk header actually shows up
-in the range-diff, and this change only aims to improve the case where
-a hunk header would already be included in the final output.
+In a subsequent commit we're going to add some more contextual
+information such as the filename corresponding to the diff to the hunk
+headers.  Remove the unnecessary information, and just keep the "@@"
+to indicate that a new hunk of the outer diff is starting.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- range-diff.c          | 8 +++++---
- t/t3206-range-diff.sh | 6 +++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ diff.c                |  5 ++++-
+ diff.h                |  1 +
+ range-diff.c          |  1 +
+ t/t3206-range-diff.sh | 16 ++++++++--------
+ 4 files changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/diff.c b/diff.c
+index ec5c095199..9c28ff0a92 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1672,7 +1672,10 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (ecbdata->opt->flags.dual_color_diffed_diffs)
+ 		strbuf_addstr(&msgbuf, reverse);
+ 	strbuf_addstr(&msgbuf, frag);
+-	strbuf_add(&msgbuf, line, ep - line);
++	if (ecbdata->opt->flags.suppress_hunk_header_line_count)
++		strbuf_add(&msgbuf, atat, sizeof(atat));
++	else
++		strbuf_add(&msgbuf, line, ep - line);
+ 	strbuf_addstr(&msgbuf, reset);
+ 
+ 	/*
+diff --git a/diff.h b/diff.h
+index c9db9825bb..49913049f9 100644
+--- a/diff.h
++++ b/diff.h
+@@ -98,6 +98,7 @@ struct diff_flags {
+ 	unsigned stat_with_summary;
+ 	unsigned suppress_diff_headers;
+ 	unsigned dual_color_diffed_diffs;
++	unsigned suppress_hunk_header_line_count;
+ };
+ 
+ static inline void diff_flags_or(struct diff_flags *a,
 diff --git a/range-diff.c b/range-diff.c
-index 916afa44c0..484b1ec5a9 100644
+index 484b1ec5a9..b31fbab026 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -113,9 +113,11 @@ static int read_patches(const char *range, struct string_list *list)
- 				strbuf_addch(&buf, '\n');
- 			}
- 			continue;
--		} else if (starts_with(line, "@@ "))
--			strbuf_addstr(&buf, "@@");
--		else if (!line[0] || starts_with(line, "index "))
-+		} else if (skip_prefix(line, "@@ ", &p)) {
-+			if (!(p = strstr(p, "@@")))
-+				die(_("invalid hunk header in inner diff"));
-+			strbuf_addstr(&buf, p);
-+		} else if (!line[0] || starts_with(line, "index "))
- 			/*
- 			 * A completely blank (not ' \n', which is context)
- 			 * line is not valid in a diff.  We skip it
+@@ -480,6 +480,7 @@ int show_range_diff(const char *range1, const char *range2,
+ 			opts.output_format = DIFF_FORMAT_PATCH;
+ 		opts.flags.suppress_diff_headers = 1;
+ 		opts.flags.dual_color_diffed_diffs = dual_color;
++		opts.flags.suppress_hunk_header_line_count = 1;
+ 		opts.output_prefix = output_prefix_cb;
+ 		strbuf_addstr(&indent, "    ");
+ 		opts.output_prefix_data = &indent;
 diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 048feaf6dd..aebd4e3693 100755
+index aebd4e3693..9f89af7178 100755
 --- a/t/t3206-range-diff.sh
 +++ b/t/t3206-range-diff.sh
-@@ -110,7 +110,7 @@ test_expect_success 'changed commit' '
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
- 	    @@ -8,7 +8,7 @@
--	     @@
-+	     @@ A
+@@ -99,7 +99,7 @@ test_expect_success 'changed commit' '
+ 	1:  4de457d = 1:  a4b3333 s/5/A/
+ 	2:  fccce22 = 2:  f51d370 s/4/A/
+ 	3:  147e64e ! 3:  0559556 s/11/B/
+-	    @@ -10,7 +10,7 @@
++	    @@
  	      9
  	      10
- 	    - B
-@@ -169,7 +169,7 @@ test_expect_success 'changed commit with sm config' '
+ 	     -11
+@@ -109,7 +109,7 @@ test_expect_success 'changed commit' '
+ 	      13
  	      14
  	4:  a63e992 ! 4:  d966c5c s/12/B/
- 	    @@ -8,7 +8,7 @@
--	     @@
-+	     @@ A
+-	    @@ -8,7 +8,7 @@
++	    @@
+ 	     @@ A
  	      9
  	      10
- 	    - B
-@@ -231,7 +231,7 @@ test_expect_success 'dual-coloring' '
- 	:      14<RESET>
- 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
- 	:    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
--	:    <CYAN> @@<RESET>
-+	:    <CYAN> @@ A<RESET>
+@@ -158,7 +158,7 @@ test_expect_success 'changed commit with sm config' '
+ 	1:  4de457d = 1:  a4b3333 s/5/A/
+ 	2:  fccce22 = 2:  f51d370 s/4/A/
+ 	3:  147e64e ! 3:  0559556 s/11/B/
+-	    @@ -10,7 +10,7 @@
++	    @@
+ 	      9
+ 	      10
+ 	     -11
+@@ -168,7 +168,7 @@ test_expect_success 'changed commit with sm config' '
+ 	      13
+ 	      14
+ 	4:  a63e992 ! 4:  d966c5c s/12/B/
+-	    @@ -8,7 +8,7 @@
++	    @@
+ 	     @@ A
+ 	      9
+ 	      10
+@@ -191,7 +191,7 @@ test_expect_success 'changed message' '
+ 	sed s/Z/\ /g >expected <<-EOF &&
+ 	1:  4de457d = 1:  f686024 s/5/A/
+ 	2:  fccce22 ! 2:  4ab067d s/4/A/
+-	    @@ -2,6 +2,8 @@
++	    @@
+ 	    Z
+ 	    Z    s/4/A/
+ 	    Z
+@@ -210,7 +210,7 @@ test_expect_success 'dual-coloring' '
+ 	sed -e "s|^:||" >expect <<-\EOF &&
+ 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
+ 	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
+-	:    <REVERSE><CYAN>@@ -2,6 +2,8 @@<RESET>
++	:    <REVERSE><CYAN>@@<RESET>
+ 	:     <RESET>
+ 	:         s/4/A/<RESET>
+ 	:     <RESET>
+@@ -220,7 +220,7 @@ test_expect_success 'dual-coloring' '
+ 	:      --- a/file<RESET>
+ 	:      +++ b/file<RESET>
+ 	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
+-	:    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
++	:    <REVERSE><CYAN>@@<RESET>
  	:      9<RESET>
  	:      10<RESET>
- 	:    <REVERSE><RED>-<RESET><FAINT> BB<RESET>
+ 	:    <RED> -11<RESET>
+@@ -230,7 +230,7 @@ test_expect_success 'dual-coloring' '
+ 	:      13<RESET>
+ 	:      14<RESET>
+ 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
+-	:    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
++	:    <REVERSE><CYAN>@@<RESET>
+ 	:    <CYAN> @@ A<RESET>
+ 	:      9<RESET>
+ 	:      10<RESET>
 -- 
 2.22.0.510.g264f2c817a
 
