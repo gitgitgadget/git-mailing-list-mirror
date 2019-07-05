@@ -2,285 +2,235 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64DC91F461
-	for <e@80x24.org>; Fri,  5 Jul 2019 17:07:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7951F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 18:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727546AbfGERHQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jul 2019 13:07:16 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39790 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727510AbfGERHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jul 2019 13:07:15 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x4so10598391wrt.6
-        for <git@vger.kernel.org>; Fri, 05 Jul 2019 10:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FwmKo5F9XWK+RATPlC8vHDBTyjgZ96P6m5HL8HY1oZc=;
-        b=MT0CaelE4xt8NQbPuMM0LlxqDI0muPXH4Jix+LWMHFryHVHJbBWq0WMjzLD8zpMLVw
-         8uQ/SJajy/6dVQuvutJuYEKFDuBE7Jf+tGzqHnpowzpWSJQwIGPSUHkg0vcG41a41Lyp
-         x4hFweOV4gLTdkmr0ZSRCFjqRwzWuf6jrORMFvf1ad7cXo4Wdmr+6iw5T5lToK1TxhWT
-         eorJxySqdUF9ksv/BmQn/i3lUHn8pCdwdfm4frh1LezqJAwNtOtmxVTnH6TXc4hZ995H
-         WX3i5YOO8v2lgAT6rBJBOebvQIkVtlmgkZK3Z/I1QkXK4tipyhubDNSCu6pj5PLAl2bf
-         wJpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FwmKo5F9XWK+RATPlC8vHDBTyjgZ96P6m5HL8HY1oZc=;
-        b=gLGoFtBIdhmmCuBWbZibjY9c1Lrv+4iA1sRhrB7sBOBsCC8kQBu0iSanQY3gAitRML
-         EIiRN/AfoRmmC8bWzLovEXf/jCb9OBWnmDMAG5p3fQTNxC7j8cRrQxnMiPkwQQ36xSyk
-         Q/l+foYtDg53/IZu46vCY4JF8i2/xIBhxlbX5g9laeG5wr8Y5XXbfz/BkDHC5lWQEpJF
-         5rpL6/8N1tcLHeOHRug7nZGBf7gHq3JWNfpmOio9YIAhbqjD2qNNuijMevjP5E6qi3oP
-         8Z3VdizZx95vFs3IGgkvOwryj7nQKPc36k4TI6PQsJEBRFQQ56lRu/N58hPrnWEIKbtM
-         sMSQ==
-X-Gm-Message-State: APjAAAXTPS6lM5CFwxmVkGW1DVpf5VjaHBXHf/dQclSnMkTanB0DwydW
-        lBYCLZcNjjtZsz+rN4NZZrgXwoqP
-X-Google-Smtp-Source: APXvYqwE7gRPJDLueoCkoDw7KJ31AlnwdqDtlmN0FVTY9VaCLnt06SobioNqIvrq0AxQ0xGvGNll7w==
-X-Received: by 2002:a5d:55cc:: with SMTP id i12mr5012569wrw.201.1562346432544;
-        Fri, 05 Jul 2019 10:07:12 -0700 (PDT)
-Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id b15sm1061294wrt.77.2019.07.05.10.07.11
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 05 Jul 2019 10:07:11 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 14/14] range-diff: add headers to the outer hunk header
-Date:   Fri,  5 Jul 2019 18:06:30 +0100
-Message-Id: <20190705170630.27500-15-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.22.0.510.g264f2c817a
-In-Reply-To: <20190705170630.27500-1-t.gummerer@gmail.com>
-References: <20190414210933.20875-1-t.gummerer@gmail.com/>
- <20190705170630.27500-1-t.gummerer@gmail.com>
+        id S1727190AbfGESRZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jul 2019 14:17:25 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725730AbfGESRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jul 2019 14:17:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562350638;
+        bh=Voy2/8uG+nGFMpsujZNEExMrzWye065QX4yJbo4M8oY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XuZL+CVbn3awV7NNbduVMQvPuBdpecoKIhwLic91+KkmiorrDUFrGbvN0ATnzUvS/
+         yh2lccZPDkAwmPf1FPd+ZKMVEUl48VH6qAMdpxGsCZVK9ZyBb8uArT2QeipoF0nuE1
+         uulEAbjZ/7PTByvgCgRGAfDIF760V7E+2k03hY7Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Leux5-1iIp743y3j-00qgsM; Fri, 05
+ Jul 2019 20:17:18 +0200
+Date:   Fri, 5 Jul 2019 20:17:47 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: mt/dir-iterator-updates, was Re: What's cooking in git.git (Jul
+ 2019, #01; Wed, 3)
+In-Reply-To: <CAHd-oW6PTFY=_j1RDh8_MdeBmMX77kF+=kOpd-GUnbegMC89yQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907052009590.44@tvgsbejvaqbjf.bet>
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1907041136530.44@tvgsbejvaqbjf.bet> <CAHd-oW6s1kGJqaRhm2f5ZG1C48upZu8ypeB_rw7do2=Vi3jZqw@mail.gmail.com> <nycvar.QRO.7.76.6.1907042308200.44@tvgsbejvaqbjf.bet>
+ <CAHd-oW6PTFY=_j1RDh8_MdeBmMX77kF+=kOpd-GUnbegMC89yQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ejGAApN+8qeHMkVq5uhOQ6qMMoNKb7TXBcpFez5uQb0A9ktY1IN
+ vtEzDzCQL3UQ0oUEfVTr7/NS/h04FxV/Evti0flvyALbnD1B8PFfJ08eGlur3TidkwnvHaH
+ RmKzhKyhW2G8TPL7hUiByz30Vp/Udzeuz0fn+8BaitQvfhiOrgkyasl0xsL4OhRZRZFZfCy
+ og1k7CdsG1Zfj4xU3j1MA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ASLepTsQ9x0=:cWCOJaGuEsZNit+a2SVqFE
+ kDg5d34giA08oeBJEyRcdmylq3bukUOtP3yDaXMIcOikiWCr1XDjEibInjuZXyLoo6lskWR1i
+ Pq3qHIjDaC/oR4JJeslT8ddAKdlisPCu+pxxrEI7pcT5qZASL52mEJ2+I6sufLe36eWIYSVNG
+ v9ZPlgSud8ZXnx49lt56UEEQ1FWABR8b7VVSIEE7qlwqF3h4t2DWRvDmDFb6mkHNUw96P2Gut
+ efRCokN/tM7IARUUBK8RuRnrwHbyeGNPcIzndk1eyyvnpYruKh6VChkeBx2uPZTvk2XlEFTcL
+ /CkKHGRLgKRzhQCB+piC/a5DSWSZstsWhtXnpDT/FS17iyhjfO8aNhQXF3/JbbxDI6sKxXx5Y
+ vC8OXDWyQqdDGV31FsvDO+3NKB7OkXxwS5dumkMqUEXq2wr0EMpAao6u2P3dhQ7djh+KmHqAO
+ DRv6Dh7FJi3ZdAKBCuYV64rR0k5ylWwsXGtVohwsiyLzBU2tUwu7izdkKJTx2y1yDJ7vVBQao
+ g+n+H1tXmrVc5wolxMXoXaSn4Xo28UefZQpsSGKAhS1TJAfTPLtce2UKzZU6YzGM/vFHQHgJS
+ IOyhroaGkP7Tfr9FksswAlAtAHig6eemPnPh1byMdc/6JA/ZhXe1OodM/1yLwwFrtyv/1IKh9
+ SYr6oH3KI6C8hwdHJbU9iMbyCJ6i13DzDlZCcx2lN8tbxtaJgpubGNQNV0Wv0VCF/cQNbQAik
+ zkMriEm4HmK1h/tiz43izGxF8ZXzd9d+CBK8GjXP/w+ZLCqPo7BcqoTkMaGL9Xw1W7eNuIh1I
+ x/IiOAcnkToZN+IBtMvQR8t3IQwDj5OQdrkQxE4vhMHWDgHyjdPi7T2pDm+qUzc1kkvSb2M+U
+ 7K6vEHHraHMcEZvuCyYgSlxP5ziATmgSBCHkWb5WtX1eypTIQQl18QPS3FcHmkmr29BkqN7me
+ wrdrwfYkc/iOxv7r4JTyl3+Hd+wbrQTKHI+nmSg+9h63nMpy9XHAPyUgZLokqkz4DyHTGUe6E
+ LUt2GGudHS/zXKVx7lk2xp3We87TAz18BZVHHsJC60XAylJtc5Z9VkgdCgo3RUXeax1PT/PWD
+ uq9kOV7sG6kNGnS+iNB3YlBn1rBmoyxZdyT
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the section headers/hunk headers we introduced in the previous
-commits to the outer diff's hunk headers.  This makes it easier to
-understand which change we are actually looking at.  For example an
-outer hunk header might now look like:
+Hi Matheus,
 
-    @@  Documentation/config/interactive.txt
+On Fri, 5 Jul 2019, Matheus Tavares Bernardino wrote:
 
-while previously it would have only been
+> On Thu, Jul 4, 2019 at 6:30 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Hi Matheus,
+> >
+> > On Thu, 4 Jul 2019, Matheus Tavares Bernardino wrote:
+> > >
+> > > I wanted to take a look at the failures to see if I could help, [...=
+]
+> > > Could you point me to the right place, please?
+> [...]
+> >
+> > I usually click on the "Tests" tab in that page:
+> > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D11495&=
+view=3Dms.vss-test-web.build-test-results-tab
+> >
+> > You can click on any of the 1,384 (!) failing test cases, it will pop =
+up a
+> > pane on the right-hand side that shows the trace of that failing test
+> > case. For the full trace of that test script, go to "Attachments" and
+> > download the `Standard_Error_Output.log` (via the horizontal bread-cru=
+mbs
+> > menu you can see when hovering over the file name).
+>
+> Thanks for the explanation! I inspected some of the
+> `Standard_Error_Output.log`'s and it seems the problem is always with
+> local clone (which started to use dir-iterator in this series). It
+> seems all .git/objects/ dirs are being ignored. That makes sense,
+> since st_ino will always be 0 on Windows. But your fixup patch should
+> solve this. Is there any azure build for it?
 
-    @@
+There is no direct Azure Pipeline run for it, as I have not created a
+branch with the fixup on top of your branch. But the shears/pu branch in
+https://github.com/git-for-windows/git/branches does have the fixup, and
+passes all tests.
 
-which doesn't give a lot of context for the change that follows.
+> [...]
+> > >
+> > > Hm, I think `stat()` itself uses this strategy of an arbitrary cut-o=
+ff
+> > > when resolving a path. So we may also "ignore" circular symlinks and
+> > > let the iteration continue until the point where `stat()` will retur=
+n
+> > > an ELOOP. (But it may be expensive...)
+> >
+> > This would not be equivalent, though, as your code also tried to addre=
+ss
+> > circular references when two or more symlinks are involved, e.g. when
+> > one symlink points to a directory that has another symlink that points=
+ to
+> > the directory containing the first symlink.
+>
+> Hm, `stat()` also addresses this case doesn't it? For example:
+>
+> $ mkdir a b
+> $ ln -s ../a b/s2a
+> $ ln -s ../b a/s2b
+> $ stat b/s2a/s2b/s2a/.../s2b
+>
+> Gives me:
+> "too many levels of symbolic links"
 
-For completeness also add section headers for the commit metadata and
-the commit message, although they are arguably less important.
+Okay, then. Even better.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- range-diff.c          |  9 ++++++---
- t/t3206-range-diff.sh | 41 ++++++++++++++++++++++-------------------
- 2 files changed, 28 insertions(+), 22 deletions(-)
+(With the caveat that I don't know how ubiquitous this behavior is, I
+assume you only tested on Linux.)
 
-diff --git a/range-diff.c b/range-diff.c
-index 09cb1ddbb1..f43b229031 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -134,8 +134,10 @@ static int read_patches(const char *range, struct string_list *list)
- 			strbuf_addstr(&buf, " ##");
- 		} else if (in_header) {
- 			if (starts_with(line, "Author: ")) {
-+				strbuf_addstr(&buf, " ## Metadata ##\n");
- 				strbuf_addstr(&buf, line);
- 				strbuf_addstr(&buf, "\n\n");
-+				strbuf_addstr(&buf, " ## Commit message ##\n");
- 			} else if (starts_with(line, "    ")) {
- 				p = line + len - 2;
- 				while (isspace(*p) && p >= line)
-@@ -396,8 +398,9 @@ static void output_pair_header(struct diff_options *diffopt,
- 	fwrite(buf->buf, buf->len, 1, diffopt->file);
- }
- 
--static struct userdiff_driver no_func_name = {
--	.funcname = { "$^", 0 }
-+static struct userdiff_driver section_headers = {
-+	.funcname = { "^ ## (.*) ##$\n"
-+		      "^.?@@ (.*)$", REG_EXTENDED }
- };
- 
- static struct diff_filespec *get_filespec(const char *name, const char *p)
-@@ -409,7 +412,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
- 	spec->size = strlen(p);
- 	spec->should_munmap = 0;
- 	spec->is_stdin = 1;
--	spec->driver = &no_func_name;
-+	spec->driver = &section_headers;
- 
- 	return spec;
- }
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index d4de270979..ec548654ce 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -99,7 +99,7 @@ test_expect_success 'changed commit' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@
-+	    @@ file: A
- 	      9
- 	      10
- 	     -11
-@@ -109,7 +109,7 @@ test_expect_success 'changed commit' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@
-+	    @@ file
- 	     @@ file: A
- 	      9
- 	      10
-@@ -158,7 +158,7 @@ test_expect_success 'changed commit with sm config' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@
-+	    @@ file: A
- 	      9
- 	      10
- 	     -11
-@@ -168,7 +168,7 @@ test_expect_success 'changed commit with sm config' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@
-+	    @@ file
- 	     @@ file: A
- 	      9
- 	      10
-@@ -186,9 +186,10 @@ test_expect_success 'renamed file' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  f258d75 s/5/A/
- 	2:  fccce22 ! 2:  017b62d s/4/A/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/4/A/
- 	    +    s/4/A/ + rename file
- 	    Z
-@@ -198,8 +199,8 @@ test_expect_success 'renamed file' '
- 	    Z 1
- 	    Z 2
- 	3:  147e64e ! 3:  3ce7af6 s/11/B/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/11/B/
- 	    Z
- 	    - ## file ##
-@@ -210,8 +211,8 @@ test_expect_success 'renamed file' '
- 	    Z 9
- 	    Z 10
- 	4:  a63e992 ! 4:  1e6226b s/12/B/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/12/B/
- 	    Z
- 	    - ## file ##
-@@ -230,30 +231,32 @@ test_expect_success 'file added and later removed' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  096b1ba s/5/A/
- 	2:  fccce22 ! 2:  d92e698 s/4/A/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/4/A/
- 	    +    s/4/A/ + new-file
- 	    Z
- 	    Z ## file ##
- 	    Z@@
--	    @@
-+	    @@ file
- 	    Z A
- 	    Z 6
- 	    Z 7
- 	    +
- 	    + ## new-file (new) ##
- 	3:  147e64e ! 3:  9a1db4d s/11/B/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/11/B/
- 	    +    s/11/B/ + remove file
- 	    Z
- 	    Z ## file ##
- 	    Z@@ file: A
--	    @@
-+	    @@ file: A
- 	    Z 12
- 	    Z 13
- 	    Z 14
-@@ -274,8 +277,8 @@ test_expect_success 'changed message' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  f686024 s/5/A/
- 	2:  fccce22 ! 2:  4ab067d s/4/A/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/4/A/
- 	    Z
- 	    +    Also a silly comment here!
-@@ -293,8 +296,8 @@ test_expect_success 'dual-coloring' '
- 	sed -e "s|^:||" >expect <<-\EOF &&
- 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
- 	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
--	:     <RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>Metadata<RESET>
-+	:      ## Commit message ##<RESET>
- 	:         s/4/A/<RESET>
- 	:     <RESET>
- 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
-@@ -303,7 +306,7 @@ test_expect_success 'dual-coloring' '
- 	:    <CYAN> @@<RESET>
- 	:      1<RESET>
- 	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>file: A<RESET>
- 	:      9<RESET>
- 	:      10<RESET>
- 	:    <RED> -11<RESET>
-@@ -313,7 +316,7 @@ test_expect_success 'dual-coloring' '
- 	:      13<RESET>
- 	:      14<RESET>
- 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>file<RESET>
- 	:    <CYAN> @@ file: A<RESET>
- 	:      9<RESET>
- 	:      10<RESET>
--- 
-2.22.0.510.g264f2c817a
+> > > > Do we _have_ to, though? At some stage the path we come up with is=
+ beyond
+> > > > `PATH_MAX` and we can stop right then and there.
+> > > >
+> > > > Besides, the way `find_recursive_symlinks()` is implemented adds q=
+uadratic
+> > > > behavior.
+> > >
+> > > Yes, indeed. But it only happens when we have a path like this:
+> > > `symlink_to_dir1/symlink_to_dir2/symlink_to_dir3/symlink_to_dir4/...=
+`,
+> > > right? I think this case won't be very usual on actual filesystems,
+> > > thought.
+> >
+> > No, the check is performed in a loop, and that loop is executed whethe=
+r
+> > you have symlinks or not. That loop is executed for every item in the
+> > iteration, and as we cannot assume a flat directory in general (in fac=
+t,
+> > we should assume a directory depth proportional to the total number of
+> > files), that adds that quadratic behavior.
+>
+> Oh, you're right. Sorry for the noise, I forgot this function was not
+> only called for symlinks but for every directory entry :(
+>
+> An alternative solution would be to use `lstat()` together with
+> `stat()` to only feed symlinked dirs to this function. This should
+> reduce a lot the number of calls. Although it'd still be quadratic in
+> the worst case, would that be any good?
 
+Why not just skip this logic? At least for now? It really blocks the
+development of this patch series, causing `pu` to be broken until the test
+failures are resolved.
+
+> [...]
+> > > > But I also think there are enough
+> > > > reasons to do away with this function in the first place.
+> > >
+> > > We can delegate the circular symlinks problem to `stat()'s ELOOP`
+> >
+> > Not really. I mean, we _already_ delegate to the `ELOOP` condition, we
+> > cannot even avoid it as long as we keep using `stat()` instead of
+> > `lstat()`
+>
+> Yes, indeed. What I meant is that we may chose to _fully_ delegate to
+> ELOOP. The way it is now, we should detect circular symlinks way
+> before stat() fails. For example, with the case I showed above, we
+> would stop at "b/s2a/s2b" whereas stat() would only fail at a much
+> longer "b/s2a/s2b/s2a/s2b/...", far beyond in the iteration.
+
+Sounds like the solution to me that I wanted: drop the special code to
+detect circular symlinks. In other words: I like that idea.
+
+> > > The only downside is the overhead of iterating through directories w=
+hich
+> > > will be latter discarded for being in circular symlinks' chains. I m=
+ean,
+> > > the overhead at dir-iterator shouldn't be much, but the one on the c=
+ode
+> > > using this API to do something for each of these directories (and it=
+s
+> > > contents), may be. Also we would need to "undo" the work done for ea=
+ch
+> > > of these directories if we want to ignore circular symlinks and cont=
+inue
+> > > the iteration, whereas if we try to detect it a priori, we can skip =
+it
+> > > from the beginning.
+> >
+> > Given that the intent of this patch series is a mere refactoring, I wo=
+nder
+> > why the new, contentious circular symlink detection is slipped into it
+> > anyway. It complicates the task, makes reviewing a lot harder, and it
+> > holds up the refactoring.
+>
+> Yes, I apologize for that. I should have split this into 2 or maybe 3
+> patchsets... This series started really simple just trying to apply
+> the dir-iterator API into local clone. But then, other things became
+> necessary and it got more complex.
+>
+> So, should I send a fixup patch removing find_recursive_symlinks() or
+> reroll the series? There's also the option to use stat()+lstat() to
+> reduce calls to this function, but it doesn't solve the problem on
+> Windows, anyway.
+
+I would suggest to send another iteration that removes
+`find_recursive_symlinks()`. Junio most likely interpreted my objections
+as a veto against advancing the current iteration to `next`, meaning that
+you're good to even rewrite completely in the next iteration, should you
+feel the need to. No need for "Oops, fix that" follow-up commits at this
+stage.
+
+Ciao,
+Dscho
