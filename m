@@ -2,94 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF54B1F461
-	for <e@80x24.org>; Thu,  4 Jul 2019 23:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D30171F461
+	for <e@80x24.org>; Fri,  5 Jul 2019 00:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727621AbfGDX5b (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jul 2019 19:57:31 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:46626 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727313AbfGDX5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jul 2019 19:57:30 -0400
-Received: by mail-io1-f66.google.com with SMTP id i10so15532522iol.13
-        for <git@vger.kernel.org>; Thu, 04 Jul 2019 16:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NoPCEGmm+yhOXYHlRtggVPygF4gXnNm5p7FDRa1sl7g=;
-        b=HqawTskvYYUzem0HiMe4ZiiXMPMqwOVK+aYdcJ655PYgLgy5wpdalZa1XBQyyjR+aN
-         iVATqaRZ3rmfTfoF4jzXpIg05eI6Ndh4DY3pQrNMTx0EU8dt7EfWc+eaDGNCpK007+0a
-         HFLxeX4BwWMAu8EGX/mUfA57s8FljPDsYv73ZeoZGaOaXN7Whun5yFSYzY/tW0SC0ryO
-         bYI9rlzfvpk0uE8hGjuHiSg5xVnGAk924A55TAuwg66yHBH81OszcRU1PzGD5Ad15dak
-         FqzeWLyI2jHAmxVSMHmEZIdCkTZ46K9UnZcykN9UTfuwDUUZ6K+Idt8+l3S2s/ILFlow
-         bUVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NoPCEGmm+yhOXYHlRtggVPygF4gXnNm5p7FDRa1sl7g=;
-        b=j7HC2wJVDZnW+Jw9RyUv49g2UtP5Q6kRFdpXJhqPM9bBdsW8dU4/nDnDPXbWeciLYL
-         48LlqiFfvl1dcGgx4XvA6KcMht5Hkz2rSe+36Z+dkIK7XBZHmd2G84K8fo6YXa7PkhiL
-         Pz6KZ8e5BWx1at8glILvZYaZRhMCXcKz+Sar+ddwV0uYR6utOaVRXkj5eWTV1xSVPzYR
-         HrM9/kxC4Ft05X1kaKOoNqtpbkgW5VvigTCsM77nWQX6kHDp94o+lvr1eAFk28t6E46u
-         jTMA5K0G1cfF5/LymjchqREohr6I43RG6fkhgh0SGeprdHyjB6+qV8VV2hVPkvSyehGN
-         bWZQ==
-X-Gm-Message-State: APjAAAXGdiDrZ+IIb4tsNCJK7UjWlaksyYahrws6J8QbJjQlKsQsEqWx
-        QV1VjKoLsfKH5DTelGQDRtLDqQ3ZhUKYLtVU+iqVZg==
-X-Google-Smtp-Source: APXvYqw0NUsmXGPrqk5NOPPkOrMTL9xvVUzEPajFjKlFG0QY3DNb1kXLPE9W58+xpoYQ+7UXTG64B01lqxE3rA6aZWc=
-X-Received: by 2002:a5d:8347:: with SMTP id q7mr836370ior.277.1562284650034;
- Thu, 04 Jul 2019 16:57:30 -0700 (PDT)
+        id S1727246AbfGEAWU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jul 2019 20:22:20 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:50174 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727093AbfGEAWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jul 2019 20:22:20 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1hjBzU-00054B-55
+        for git@vger.kernel.org; Fri, 05 Jul 2019 09:22:16 +0900
+Date:   Fri, 5 Jul 2019 09:22:16 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Subject: Re: Surprising use of memory and time when repacking mozilla's gecko
+ repository
+Message-ID: <20190705002216.logqmvrk5s354jss@glandium.org>
+References: <20190704100530.smn4rpiekwtfylhz@glandium.org>
 MIME-Version: 1.0
-References: <20190321131655.15249-1-pclouds@gmail.com> <20190329103919.15642-1-pclouds@gmail.com>
- <20190329103919.15642-8-pclouds@gmail.com> <20190702080611.GL21574@szeder.dev>
- <20190702090308.GA27775@ash> <xmqqa7dw4966.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa7dw4966.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 5 Jul 2019 06:57:03 +0700
-Message-ID: <CACsJy8Agbvn0OYiM8z_r6PAJW0Tov9eQyN3NviD8rLQKNdc45A@mail.gmail.com>
-Subject: Re: [PATCH v6 07/27] checkout: inform the user when removing branch state
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190704100530.smn4rpiekwtfylhz@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 3, 2019 at 12:51 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Duy Nguyen <pclouds@gmail.com> writes:
->
-> > I agree, this is not "canceling". I think this series causes conflicts
-> > with pw/clean-sequencer-state-upon-final-commit and the warning is
-> > accidentally enabled (partly my fault since I named the argument
-> > "verbose").
-> >
-> > Junio, in this conflict resolution (merging nd/switch-and-restore to
-> > next), we should pass '0' instead of 'verbose' to
-> > sequencer_post_commit_cleanup().
->
-> Thanks for an update to the merge-fix.  What should the name of the
-> parameter to the sequencer_post_commit_cleanup() funcion be then,
-> though?  Perhaps we'd want an update after the topic graduates to
-> the 'master' branch.
+On Thu, Jul 04, 2019 at 07:05:30PM +0900, Mike Hommey wrote:
+> Hi,
+> 
+> I was looking at the disk size of the gecko repository on github[1],
+> which started at 4.7GB, and `git gc --aggressive`'d it, which made that
+> into 2.0G. But to achieve that required quite some resources.
+> 
+> My first attempt failed with OOM, on an AWS instance with 16 cores and
+> 32GB RAM. I then went to another AWS instance, with 36 cores and 96GB
+> RAM. And that went through after a while... with a peak memory usage
+> above 60GB!
+> 
+> Since then, Peff kindly repacked the repo on the github end, so it
+> doesn't really need repacking locally anymore, but I can still reproduce
+> the > 60GB memory usage with the packed repository.
+> 
+> I gathered some data[2], all on the same 36 cores, 96GB RAM instance, with
+> 36, 16 and 1 threads, and here's what can be observed:
+> 
+> With 36 threads, the overall process takes 45 minutes:
+> - 50 seconds enumerating and counting objects.
+> - ~22 minutes compressing objects
+> - ~22 minutes writing objects
+> 
+> Of the 22 minutes compressing objects, more than 15 minutes are spent on
+> the last percent of objects, and only during that part the memory usage
+> balloons above 20GB.
+> 
+> Memory usage goes back to 2.4G after finishing to compress.
+> 
+> With 16 threads, the overall process takes about the same time as above,
+> with about the same repartition.
+> 
+> But less time is spent on compressing the last percent of objects, and
+> memory usage goes above 20GB later than with 36 threads.
+> 
+> Finally, with 1 thread, the picture changes greatly. The overall process
+> takes 2.5h:
+> - 50 seconds enumerating and counting objects.
+> - ~2.5h compressing objects.
+> - 3 minutes and 25 seconds writing objects!
+> 
+> Memory usage stays reasonable, except at some point after 47 minutes,
+> where it starts to increase up to 12.7GB, and then goes back down about
+> half an hour later, all while stalling around the 13% progress mark.
+> 
+> My guess is all those stalls are happening when processing the files I
+> already had problems with in the past[3], except there are more of them
+> now (thankfully, they were removed, so there won't be more, but that
+> doesn't make the existing ones go away).
+> 
+> I never ended up working on trying to make that diff faster, maybe that
+> would help a little here, but that would probably not help much wrt the
+> memory usage. I wonder what git could reasonably do to avoid OOMing in
+> this case. Reduce the window size temporarily? Trade memory with time,
+> by not keeping the objects in memory?
+> 
+> I'm puzzled by the fact writing objects is so much faster with 1 thread.
 
-Definitely. I was thinking something with "warn" and "cancel", which
-is more the the point. Probably warn_cancel_in_progress, or something.
--- 
-Duy
+Here's a perf report from the portion of "Writing" that is particularly
+slow with compression having happened on 36 threads:
+  100.00%     0.00%  git      [unknown]           [k] 0xffffffffffffffff                    
+   99.97%     0.02%  git      git                 [.] write_one                             
+   99.97%     0.00%  git      git                 [.] write_pack_file                       
+   99.97%     0.00%  git      git                 [.] cmd_pack_objects                      
+   99.96%     0.00%  git      git                 [.] write_object (inlined)                
+   99.96%     0.00%  git      git                 [.] write_reuse_object (inlined)          
+   99.92%     0.00%  git      git                 [.] write_no_reuse_object                 
+   98.12%     0.00%  git      git                 [.] get_delta (inlined)                   
+   72.36%     0.00%  git      git                 [.] diff_delta (inlined)                  
+   64.86%    64.20%  git      git                 [.] create_delta_index                    
+   26.32%     0.00%  git      git                 [.] repo_read_object_file (inlined)       
+   26.32%     0.00%  git      git                 [.] read_object_file_extended             
+   26.32%     0.00%  git      git                 [.] read_object                           
+   26.32%     0.00%  git      git                 [.] oid_object_info_extended              
+   26.25%     0.00%  git      git                 [.] packed_object_info                    
+   26.24%     0.00%  git      git                 [.] cache_or_unpack_entry (inlined)       
+   24.30%     0.01%  git      git                 [.] unpack_entry                          
+   17.62%     0.00%  git      git                 [.] memcpy (inlined)                      
+   17.52%    17.46%  git      libc-2.27.so        [.] __memmove_avx_unaligned_erms          
+   15.98%     0.22%  git      git                 [.] patch_delta                           
+    7.60%     0.00%  git      git                 [.] unpack_compressed_entry               
+    7.49%     7.42%  git      git                 [.] create_delta                          
+    7.29%     0.00%  git      git                 [.] git_inflate                           
+    7.29%     0.23%  git      libz.so.1.2.11      [.] inflate                               
+    1.94%     0.00%  git      git                 [.] xmemdupz                              
+    1.14%     0.00%  git      git                 [.] do_compress                           
+    0.98%     0.98%  git      libz.so.1.2.11      [.] adler32_z                             
+    0.95%     0.00%  git      libz.so.1.2.11      [.] deflate                               
+
+... that's a large portion of time spent on deltas...
+
+Mike
