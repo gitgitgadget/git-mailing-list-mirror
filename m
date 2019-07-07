@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7441F461
-	for <e@80x24.org>; Sun,  7 Jul 2019 08:30:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0271F461
+	for <e@80x24.org>; Sun,  7 Jul 2019 08:30:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727254AbfGGIaf (ORCPT <rfc822;e@80x24.org>);
+        id S1727261AbfGGIag (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jul 2019 04:30:36 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55981 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727245AbfGGIaf (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 7 Jul 2019 04:30:35 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55979 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725822AbfGGIae (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jul 2019 04:30:34 -0400
-Received: by mail-wm1-f67.google.com with SMTP id a15so12873491wmj.5
-        for <git@vger.kernel.org>; Sun, 07 Jul 2019 01:30:33 -0700 (PDT)
+Received: by mail-wm1-f65.google.com with SMTP id a15so12873540wmj.5
+        for <git@vger.kernel.org>; Sun, 07 Jul 2019 01:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vTlXERrzqpLHSY1faQeiwbQoiCrRbG52FZPiZbO8hMg=;
-        b=Y8y5Sp6WamJ8nbsOxAe/VleYJ2FQRGPCk7G8+n18MTwsSvsi0peefNnjL2++BpnJUO
-         do4a7cxV7Cl1Jg+J50DLHxL9uSE1PAGubdQ4CPIs6+Y4aDkAF1YFoeF0l/L/H9+ZHMqp
-         DGUQTFtuyBuiQCHvrC1LLWwXx0FJPucDhJmmqN71O50NvEWyrH3DtrsngkuPi6BUeOZa
-         gYfK1UHZlXyAxWZ5GGJdHZDMvHyPZK1nfrfcUMwKbpZdjyPbAoHuYN4WdjnilhHL2GKr
-         aiIs8MPOzRse9JfK0o5EQqZiRJyh7T5ymDQze1xY2cLVV3CE5+VBiO8EfT0IgwIECMZz
-         KQAQ==
+        bh=aPqw6dLbiA0kdIhGVZt90Qm7ihjawq/cBMoPZ0zLKAs=;
+        b=fiDWy89Kkjkafo/n8nf84ZEp8Yon0D7f0NooWXgsuwOdTLIvqhbqAexYqMy4lkidGF
+         pEI9UPvtN7y5jSXz7uO/s+u/tYnEkXcyxmhNTC54v+12HbBIaegQV7vohwfoypxsu23F
+         oyrAIdLP2DpjrO14/cYOoWBif8MurCGGZYje1/F81uNW/6Pty9vcz0ZcL4SoJ5U5MNTt
+         Eg8Wq6Cu1odEaUAfTCz5cwiiu6w2sxNNDQ709PEdMQmdbJhz6DumXhUG5AhucUO+t6t7
+         UVwZXNlO3KHm+riNVyguP3WcxmOK89Th4Xux+OiUjFWjBCEonGzMLSVN97m2UYZvdoOB
+         oonw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vTlXERrzqpLHSY1faQeiwbQoiCrRbG52FZPiZbO8hMg=;
-        b=gB4+uDfyT0sfMGatFMqHLCKEZbXmPlRL+RHzy4ufaMjHPgq4vLfpPTWinT4IiGMuKb
-         HTSu1HOu3Z2jh2jE+lB4Dr1FWQWBgEoK7xhVrT90wyo/4AwwoIXbJL5AiD2fQEJhSxXa
-         P6IF10wj/Z8R2aTt3ZtGjMz3J134uthKqLkHcXjpJGt+Y90axdB0aVSHyH8bzx7EeLnz
-         6mYRbZR7C3KqReEPQbyCFRBpq4gIOCqUG8/mUwneyrBI3FPgu2SvH67JHZuRiSczmMGa
-         fGJvSZ7uYph3xRZbGu8ah8nZwQkkacN6mJTJoJpmxB7eJegMrc92ZDa6YB8GXXt12l42
-         l9sQ==
-X-Gm-Message-State: APjAAAWvnOoni0ihwLqAD3BNAiXT6ZHSKB9ypAuCWNJHu0t19x1xpYGZ
-        aaWTrHcpOt8mk3jw3D926PeJfTmG2Y4=
-X-Google-Smtp-Source: APXvYqwMH8lxWFSGwBAnNTW5ZK/KAZjqtnFDXcRf6Qb8lrG7+hwrcyYE3oYUXnzk1afJK8143yRQ+A==
-X-Received: by 2002:a1c:5453:: with SMTP id p19mr10528644wmi.148.1562488231885;
-        Sun, 07 Jul 2019 01:30:31 -0700 (PDT)
+        bh=aPqw6dLbiA0kdIhGVZt90Qm7ihjawq/cBMoPZ0zLKAs=;
+        b=DlpMlwjxJUwwh/++EZRnUXtd1Zi2ZOSHDVojxzs2Z4ELon2Y+cDUmQDJAgODnonLcT
+         u3MRjIda5ciywcCUsxwNbOSIAaoSlf3xoHoiDzL3NsgshS/BOU5buN4cD6047uOCOIHz
+         Mfu3ZROj8MF7tDq8OiHpIuHOf1r037Jiui5xT0f8Ghz+Kf8aOBb3NsRsZqKlMZLQiGW+
+         X3OHp2d38bZOVXwuAPUfRW8tA4Y1EXA7RSgjQYMKt79t7vcjwXIJOeDlooc06bwgNR2E
+         rf4FKckKKGe1FpO0pZ4FChb8o3yH6ONgQ40tbf7LQVGff5x8KbGBvFF5KBgPx261vU9V
+         mpnQ==
+X-Gm-Message-State: APjAAAW1HLXYMEdkaGUQZ87W2fDp8JUllHdyCLrCEWI5m0CcurBgy7fK
+        jqpul2O3BiPxpLdqph9FD42qq1D0X3I=
+X-Google-Smtp-Source: APXvYqzabATUThqLHQAgj7D6JMkzev5RD2L9G4/gBB/eX+F1oFcl0W7omT4MhMQ9o9/yr/4WRJgtPA==
+X-Received: by 2002:a7b:c95a:: with SMTP id i26mr11836054wml.175.1562488233115;
+        Sun, 07 Jul 2019 01:30:33 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:10c1:a195:f489:5ba4:f140:8c9a])
-        by smtp.gmail.com with ESMTPSA id u186sm9606319wmu.26.2019.07.07.01.30.30
+        by smtp.gmail.com with ESMTPSA id u186sm9606319wmu.26.2019.07.07.01.30.32
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 07 Jul 2019 01:30:31 -0700 (PDT)
+        Sun, 07 Jul 2019 01:30:32 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC PATCH 2/5] oidmap: add oidmap_get_next()
-Date:   Sun,  7 Jul 2019 10:29:59 +0200
-Message-Id: <20190707083002.7037-3-chriscool@tuxfamily.org>
+Subject: [RFC PATCH 3/5] test-oidmap: add back proper 'add' subcommand
+Date:   Sun,  7 Jul 2019 10:30:00 +0200
+Message-Id: <20190707083002.7037-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.22.0.514.g3228928bce.dirty
 In-Reply-To: <20190707083002.7037-1-chriscool@tuxfamily.org>
 References: <20190707083002.7037-1-chriscool@tuxfamily.org>
@@ -72,52 +72,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For now "oidmap.h" gives us no way to get all the entries that have the
-same oid key from an oidmap, as oidmap_get() will always return the first
-entry. So let's add oidmap_get_next() for this purpose.
+Let's making it ppossible to test oidmap_add() by adding an 'add'
+subcommand.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- oidmap.c | 8 ++++++++
- oidmap.h | 6 ++++++
- 2 files changed, 14 insertions(+)
+ t/helper/test-oidmap.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/oidmap.c b/oidmap.c
-index bfb290ee01..9cf9dfd533 100644
---- a/oidmap.c
-+++ b/oidmap.c
-@@ -32,6 +32,14 @@ void *oidmap_get(const struct oidmap *map, const struct object_id *key)
- 	return hashmap_get_from_hash(&map->map, oidhash(key), key);
- }
+diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
+index 0acf99931e..c19b41aa4f 100644
+--- a/t/helper/test-oidmap.c
++++ b/t/helper/test-oidmap.c
+@@ -65,6 +65,23 @@ int cmd__oidmap(int argc, const char **argv)
+ 			puts(entry ? entry->name : "NULL");
+ 			free(entry);
  
-+void *oidmap_get_next(const struct oidmap *map, const void *entry)
-+{
-+	if (!map->map.cmpfn)
-+		return NULL;
++		} else if (!strcmp("add", cmd) && p1 && p2) {
 +
-+	return hashmap_get_next(&map->map, entry);
-+}
++			if (get_oid(p1, &oid)) {
++				printf("Unknown oid: %s\n", p1);
++				continue;
++			}
 +
- void *oidmap_remove(struct oidmap *map, const struct object_id *key)
- {
- 	struct hashmap_entry entry;
-diff --git a/oidmap.h b/oidmap.h
-index 21d929ad79..5aad22784a 100644
---- a/oidmap.h
-+++ b/oidmap.h
-@@ -49,6 +49,12 @@ void oidmap_free(struct oidmap *map, int free_entries);
- void *oidmap_get(const struct oidmap *map,
- 		 const struct object_id *key);
++			/* create entry with oid_key = p1, name_value = p2 */
++			FLEX_ALLOC_STR(entry, name, p2);
++			oidcpy(&entry->entry.oid, &oid);
++
++			/* add entry */
++			oidmap_add(&map, entry);
++
++			/* print added entry */
++			puts(entry->name);
++
+ 		} else if (!strcmp("get", cmd) && p1) {
  
-+/*
-+ * Returns the next equal oidmap entry, or NULL if not found. This can be
-+ * used to iterate over duplicate entries (see `oidmap_add`).
-+ */
-+void *oidmap_get_next(const struct oidmap *map, const void *entry);
-+
- /*
-  * Adds an oidmap entry. This allows to add duplicate entries (i.e.
-  * separate values with the same oid key).
+ 			if (get_oid(p1, &oid)) {
 -- 
 2.22.0.514.g3228928bce.dirty
 
