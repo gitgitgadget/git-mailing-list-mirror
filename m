@@ -2,75 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2266D1F461
-	for <e@80x24.org>; Sun,  7 Jul 2019 03:15:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E92531F461
+	for <e@80x24.org>; Sun,  7 Jul 2019 05:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbfGGDPN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Jul 2019 23:15:13 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45967 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727071AbfGGDPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Jul 2019 23:15:12 -0400
-Received: by mail-pg1-f194.google.com with SMTP id o13so5937929pgp.12
-        for <git@vger.kernel.org>; Sat, 06 Jul 2019 20:15:12 -0700 (PDT)
+        id S1725843AbfGGFvh (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jul 2019 01:51:37 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:35492 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725800AbfGGFvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jul 2019 01:51:37 -0400
+Received: by mail-pf1-f202.google.com with SMTP id r142so8066223pfc.2
+        for <git@vger.kernel.org>; Sat, 06 Jul 2019 22:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=CiC4NdRsxndLY7yPypBM+JRymmu4f7D8LCAx6GQBXHk=;
-        b=TGijbmYkiEU+9wJvz3cgkXux9mxhZb1EH29MR2Bt0F4OBiKRkSpp8+iuXxoy8hdWZQ
-         tftZUoDyULS18S7DbShFaMswtTZ5HwUJxQtKG8Ghk1GORRXVaJyU48sfQOsf+CXSLD4F
-         TOftUfzpUy4eVR9c9cIk3mBEgZnQT+9/OamjEQobt55xAXcfbtsSbIHaGJcdQNA91s4O
-         CSXBqYwCXOXylwgCoO5CcuyJo8FAvMF2GbRbbLQnDecp0eeUNnSNZSERFR61Y7iaSl2a
-         WCISozSvAdRkzHIN4US+0vCSbsj5iSAJjuwum7h3jpvhpsP68J6boYK3060GRggyBYNC
-         YX7w==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=cl+HIBp1IRJ9czZhK8I5Ki4EQ1RNmKb48ilvIJTLcW4=;
+        b=Cj/xA0boIKpWdc38BZhAAKPHVuauX9FlM226LOCl85XtyfpPrnT25q2Y2UzcxSgYCu
+         vxJizM+GkJ6Zv85YidDSaZLzBhi82liLegLqX7CBSyOv3Mf04irmSlO/rMPb5tM7iyAo
+         LonM+kOiHW8nWDLn+uSCVUNOO3qxJAn0elAFjp7QOr4GFnV39LZdIGmyECZqXVSbXw+A
+         7z1/vkloUHYpgqH2FhToiyMeo1ZyCyM6QmTcsWh9cWC33hZ3Pls/xXI5qKejhaIn1tsK
+         Y10FSvs98fDu/+Qo/aDJajopuXBWZoVzfP+fURRlo/63rk5yadZymdL/x4g2jcOt1lqJ
+         HKCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=CiC4NdRsxndLY7yPypBM+JRymmu4f7D8LCAx6GQBXHk=;
-        b=Q1dmKT2KstpxsvVSa6FzNHvgQHlqUkZecZP6M0HOf2PJOTY8HOwyBBAJlOSJp5TdIP
-         YFJsC7P8s6FKQkGgIXxY+gwz1mjt2xz+FMyWlXv0SGmlWFUws72zpBuGvPMd6fmfrsWV
-         IsV/O5JvDFlbd5Ly6XVyXnTIKOPxyfeHLb07iO5EkKbi18f4uLHOzopFKkkcUhj4WSKY
-         9ZlZsazXawNdZcPDgs7NLAfVkyDxoH759wtexcPrFtPJzfxDBWTyJLzlL9ELsZi8eygG
-         VwxhW7J/zjWL1lg4h4+hnOg3eNJSimNm03oYx9GwxpEj/qSg6rgFsEJbP7Eb7WAkVPSM
-         HJ9g==
-X-Gm-Message-State: APjAAAW4brjnsYknFiUqGAWGa0dzojfnLQVwA+kHAZOkBhE3/SIiy2q5
-        E9rqDyWRRBf3fCdduOULZPH3a1vTf41wkqKKBy+YNw==
-X-Google-Smtp-Source: APXvYqxp24ddBR76OCLvn9zxVfDd9gPxPOkjf7i5BqEE83jtShMEUf29F4CiPs+fCkUT2XY6EeBDaoj+pQmnpUuuf4M=
-X-Received: by 2002:a63:2252:: with SMTP id t18mr8015793pgm.5.1562469312036;
- Sat, 06 Jul 2019 20:15:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190707000052.26057-1-eantoranz@gmail.com>
-In-Reply-To: <20190707000052.26057-1-eantoranz@gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Sat, 6 Jul 2019 21:15:01 -0600
-Message-ID: <CAOc6etYGA_rHhrDgMbf4x_GxdWwgWy7W2Kqvv6PsMMHFP0U_vA@mail.gmail.com>
-Subject: Re: [PATCH v1] builtin/merge.c - cleanup of code in for-cycle that
- tests strategies
-To:     Git List <git@vger.kernel.org>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=cl+HIBp1IRJ9czZhK8I5Ki4EQ1RNmKb48ilvIJTLcW4=;
+        b=WXM1E/CUkmgCODquR4y7UHN/5zxtZvq3LoMYQaUpPft4bNk1Kme+NhsOXXpgUWhdSC
+         zGBm2oCxYypK9UPsIwQUiPjZsRrNqpfUhK4puT/bpdqL/LmTl7BpK06WxacoI0X6F9jt
+         7/LHIAZDBxk1a5XtF7oPkFQ2crgKTMNlAz11inlIbZeXSLg6UzcRe8IyNrmLAv/xyTBV
+         /h89IrLL/Lme9ut+45ewPUzyU+yVnj+0JugN+Uk5CrA6k7WBkmt9lJFG+sD1K56UYW79
+         h2g5byh8Ucsp85k53vASu+VZ6hffy03LCRyqzilJdeqV6cCNQ2s1rhT8IlHVn+4RzOpy
+         yE2w==
+X-Gm-Message-State: APjAAAWOSQnsxfGTjer3n/KiQnbhd/TPOPdUNduU03h+2Bu9Kl3hw3kU
+        79Q50EykQDZ9OCbzLvjV2H6iClea6B5zxPJqnq31QYNSx0cDFYOhmr66XpEhx/+KHgEj1TWimKl
+        a+FgAl0HYL53HMFRFr//us4RaWRCEOGi7v2Gz7XToj9/F6XF3u7PCrWqobuqIhU5r1yQFzQTs1g
+        ==
+X-Google-Smtp-Source: APXvYqxAE6lHW2MnbRWbB91Jy/o9AT6NvaPCskC65vBZh7Yu083bLTQ9S5vEhZaLXZd+5jX9ocCIrEvv37p7UQMvmmI=
+X-Received: by 2002:a63:5765:: with SMTP id h37mr14153720pgm.183.1562478695861;
+ Sat, 06 Jul 2019 22:51:35 -0700 (PDT)
+Date:   Sat,  6 Jul 2019 22:51:32 -0700
+Message-Id: <20190707055132.103736-1-masayasuzuki@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: [PATCH] credential: add nocache option to the credentials API
+From:   Masaya Suzuki <masayasuzuki@google.com>
+To:     git@vger.kernel.org
+Cc:     Masaya Suzuki <masayasuzuki@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 6, 2019 at 6:00 PM Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> @@ -1645,6 +1631,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->          * auto resolved the merge cleanly.
->          */
->         if (automerge_was_ok) {
-> +               write_tree_trivial(&result_tree);
->                 ret = finish_automerge(head_commit, head_subsumed,
->                                        common, remoteheads,
->                                        &result_tree, wt_strategy);
+The credentials API calls credentials helpers in order. If a
+username/password pair is returned the helpers and if it's used for
+authentication successfully, it's announced to the helpers and they can
+store it for later use.
 
-I realized later that the call to write_tree_trivial could be included
-in finish_automerge. Will include this change on v2 of the patch (if
-there's a v2, depending on feedback).
+Some credentials are valid only for the limited time and should not be
+cached. In this case, because the credential is announced to all helpers
+and they can independently decide whether they will cache it or not,
+those short-lived credentials can be cached.
+
+This change adds an option that a credential helper can specify that the
+credential returned by the helper should not be cached. If this is
+specified, even after the credential is used successfully, it won't be
+announced to other helpers for store.
+
+Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+---
+ Documentation/technical/api-credentials.txt | 4 +++-
+ credential.c                                | 4 +++-
+ credential.h                                | 3 ++-
+ t/t0300-credentials.sh                      | 9 +++++++++
+ 4 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/technical/api-credentials.txt b/Documentation/technical/api-credentials.txt
+index 75368f26ca..3db5841b40 100644
+--- a/Documentation/technical/api-credentials.txt
++++ b/Documentation/technical/api-credentials.txt
+@@ -251,7 +251,9 @@ even no values at all if it has nothing useful to provide. Any provided
+ attributes will overwrite those already known about by Git.  If a helper
+ outputs a `quit` attribute with a value of `true` or `1`, no further
+ helpers will be consulted, nor will the user be prompted (if no
+-credential has been provided, the operation will then fail).
++credential has been provided, the operation will then fail). If a helper outputs
++a `nocache` attribute with a value of `true` or `1`, `credential_approve` will
++not be called even after the credential is used for authentication sucessfully.
+ 
+ For a `store` or `erase` operation, the helper's output is ignored.
+ If it fails to perform the requested operation, it may complain to
+diff --git a/credential.c b/credential.c
+index 62be651b03..db7b351447 100644
+--- a/credential.c
++++ b/credential.c
+@@ -179,6 +179,8 @@ int credential_read(struct credential *c, FILE *fp)
+ 			credential_from_url(c, value);
+ 		} else if (!strcmp(key, "quit")) {
+ 			c->quit = !!git_config_bool("quit", value);
++		} else if (!strcmp(key, "nocache")) {
++			c->no_cache= !!git_config_bool("nocache", value);
+ 		}
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+@@ -296,7 +298,7 @@ void credential_approve(struct credential *c)
+ {
+ 	int i;
+ 
+-	if (c->approved)
++	if (c->approved || c->no_cache)
+ 		return;
+ 	if (!c->username || !c->password)
+ 		return;
+diff --git a/credential.h b/credential.h
+index 6b0cd16be2..be0f35d841 100644
+--- a/credential.h
++++ b/credential.h
+@@ -8,7 +8,8 @@ struct credential {
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 quit:1,
+-		 use_http_path:1;
++		 use_http_path:1,
++		 no_cache:1;
+ 
+ 	char *username;
+ 	char *password;
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 82eaaea0f4..ad06f6fe11 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -118,6 +118,15 @@ test_expect_success 'do not bother storing password-less credential' '
+ 	EOF
+ '
+ 
++test_expect_success 'credential_approve does not call helpers for nocache' '
++	check approve useless <<-\EOF
++	username=foo
++	password=bar
++	nocache=1
++	--
++	--
++	EOF
++'
+ 
+ test_expect_success 'credential_reject calls all helpers' '
+ 	check reject useless "verbatim one two" <<-\EOF
+-- 
+2.22.0.410.gd8fdbe21b5-goog
+
