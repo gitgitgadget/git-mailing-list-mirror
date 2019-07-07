@@ -2,122 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D97C1F4B6
-	for <e@80x24.org>; Sun,  7 Jul 2019 08:30:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95FB31F461
+	for <e@80x24.org>; Sun,  7 Jul 2019 15:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbfGGIai (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jul 2019 04:30:38 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35341 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727245AbfGGIah (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jul 2019 04:30:37 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y4so5235166wrm.2
-        for <git@vger.kernel.org>; Sun, 07 Jul 2019 01:30:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cHpsrlzp5Lnx2I0k5648FxkcMn9lYUrfU2xTwbpTOPs=;
-        b=i5oMuzhPW4Hu2x6OyvLZFPsYUYIfATwAnk3+FWY6QrQUoSabM/vTFiJVIuAiqi77pY
-         R6J7N+bC1nxHzhYb/OoMSAtbT2CJYSweVUPv8nEGaub+Q7vOpVeOmEe6/SoeGbqjrnAl
-         hlT8eDo2XrqVjxfugZwLLpiEqiWePMXPDzga1vSIDvh25bmrb0MgQXz2LsIVOdbc0PLg
-         ZlR6C+W3l9UiwsDCM0idAoUTDQsPh3d5XU1rUwIjhzdhG+IwdzllqrnidWLiKvg6gorL
-         +KYTdE0nxn/v2sqPDYktFRBM1Jw98SPKzy4ebDMGAKB/OP5uJcuZQOdsXhnXG/n/BcKI
-         Vuzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cHpsrlzp5Lnx2I0k5648FxkcMn9lYUrfU2xTwbpTOPs=;
-        b=oTCUhanQ5wv/Jg0MFMjB1dBU0PWVgWcY8R+ckcLqKG+BmaW8DYrRB7Nk2Q0GJQjtn5
-         pbISJ1EJq9J8jdKeExwoJoS/G7wRrjJM441A7U+vn1+bMoDnFaxf5zok4BbDPL6asxQh
-         wGUScT2BRcqM79rXuVpPs36b/kt8Ve5Hk/CzqJtwE1VXojX2cxUT5zZ9ax7p9YHMoHgy
-         wKuY+XPjA5o2b/OyhwG+gy9SKlewRDLCw05aUJRoC6EVj7sWQLykdybTNPIn2tCZytGP
-         ZGIZ6EnAwH3xHZx1Lw/WwTvcmq4d2xQjDe/rIaXvhWo2Ov2K6qPoRPL+GK2ErceGMQER
-         9HKA==
-X-Gm-Message-State: APjAAAW7mSPJIg7jS7UpMPnY7cOjc+DsXFO0DoxB34iyDO0Nwly331KW
-        okfUhbeXE1xpEiCeW6GC3UJkuKsL/L4=
-X-Google-Smtp-Source: APXvYqyZz0NPNO7neWpnaGckpCBwtDxi4umo53DaQz4HFEJbC/3SjOHe6kQfps0CF3eleDdsg3voDw==
-X-Received: by 2002:a5d:468a:: with SMTP id u10mr12758645wrq.177.1562488235631;
-        Sun, 07 Jul 2019 01:30:35 -0700 (PDT)
-Received: from localhost.localdomain ([2a04:cec0:10c1:a195:f489:5ba4:f140:8c9a])
-        by smtp.gmail.com with ESMTPSA id u186sm9606319wmu.26.2019.07.07.01.30.34
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 07 Jul 2019 01:30:35 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+        id S1727161AbfGGPnP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jul 2019 11:43:15 -0400
+Received: from m42-6.mailgun.net ([69.72.42.6]:36097 "EHLO m42-6.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726779AbfGGPnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jul 2019 11:43:15 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Jul 2019 11:43:14 EDT
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=ojford.com; q=dns/txt; s=k1;
+ t=1562514194; h=Content-Type: Subject: To: From: Date: Message-Id:
+ Mime-Version: Sender; bh=Mn6qRyMM29GXo/Ady440NjbyfLfRzuDFWrKbLajanYc=;
+ b=QZZy9w1RqhYWWeH+kzJYsP9lLiJOUI9+cbUxTJmdPxs4FQlZkNyApGMr76Bkmc1omGGClrh0
+ qCIEG7sw8fbhcDxSogA0rC5Cmx+WkVjT+majJUlAABgjIe1HFV+6ddQHehcB3E7FBwfcIQSU
+ g3b+F7t+4DzVoh0G5YhYH5dt7uc=
+X-Mailgun-Sending-Ip: 69.72.42.6
+X-Mailgun-Sid: WyJmOTkyYyIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgIjMzYWI2Il0=
+Received: from auth1-smtp.messagingengine.com (auth1-smtp.messagingengine.com [66.111.4.227])
+ by mxa.mailgun.org with ESMTP id 5d2211e5.7f95e34df660-smtp-out-n01;
+ Sun, 07 Jul 2019 15:38:13 -0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailauth.nyi.internal (Postfix) with ESMTP id 03733213CA
+        for <git@vger.kernel.org>; Sun,  7 Jul 2019 11:38:13 -0400 (EDT)
+Received: from imap37 ([10.202.2.87])
+  by compute3.internal (MEProxy); Sun, 07 Jul 2019 11:38:13 -0400
+X-ME-Sender: <xms:5BEiXcFu47nnzSrC6AajbM_nI76vgunWjH7FZli_KlzVZqlpIp967w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrfeekgdelgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
+    ertdenucfhrhhomhepfdfqlhhivhgvrhcuhfhorhgufdcuoeguvghvsehojhhfohhrugdr
+    tghomheqnecurfgrrhgrmhepmhgrihhlfhhrohhmpehojhhfohhrugdomhgvshhmthhprg
+    huthhhphgvrhhsohhnrghlihhthidqieeiheekheejjeeiqddujeeghedtheeikedquggv
+    vheppehojhhfohhrugdrtghomhesfhgrshhtmhgrihhlrdgtohhmnecuvehluhhsthgvrh
+    fuihiivgeptd
+X-ME-Proxy: <xmx:5BEiXdOY7g1fm_i6gqa75meGL1KyE6j82snchWWnvt8ckofUQ2sVxw>
+    <xmx:5BEiXVgDHNz1iYgYcnSkoQvu69msbm55fCC7npAm9QpqW0Gx4ePNjA>
+    <xmx:5BEiXV0EYFwaEo-4EsKpAgCMr5dXWGxtQbto6DiV_bi9ckghed3JMw>
+    <xmx:5REiXQTniGoCFXL3NhJ-FKjdVus8TOHYFoAahX7uJ9wyQ5LiqCg8Og>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id C0705318009F; Sun,  7 Jul 2019 11:38:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-731-g19d3b16-fmstable-20190627v1
+Mime-Version: 1.0
+Message-Id: <2cf30314-d9a3-4be3-80bf-46f283010e5d@www.fastmail.com>
+Date:   Sun, 07 Jul 2019 16:36:45 +0100
+From:   "Oliver Ford" <dev@ojford.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC PATCH 5/5] t0016: add 'add' and 'get_all' subcommand test
-Date:   Sun,  7 Jul 2019 10:30:02 +0200
-Message-Id: <20190707083002.7037-6-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.22.0.514.g3228928bce.dirty
-In-Reply-To: <20190707083002.7037-1-chriscool@tuxfamily.org>
-References: <20190707083002.7037-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: rev-parse's show-{cdup,prefix} inconsistent when pwd symlink
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's add a test case to test both the 'add' and 'get_all' subcommand
-from "test-oidmap.c", and through them oidmap_add() and
-oidmap_get_next() from "oidmap.{c,h}".
+`git rev-parse --show-prefix` gives the symlinked directory, not pwd:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t0016-oidmap.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+```
+$ git init
+Initialized empty Git repository in [~]/git-test/.git/
+$ mkdir realdir
+$ ln -s realdir symdir
+$ cd symdir
+$ pwd
+[~]/misc/git-test/symdir
+$ git rev-parse --show-prefix
+realdir/
+```
 
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-index bbe719e950..1d3196d624 100755
---- a/t/t0016-oidmap.sh
-+++ b/t/t0016-oidmap.sh
-@@ -67,6 +67,32 @@ Unknown oid: invalidOid
- 
- '
- 
-+test_expect_success 'add and get_all' '
-+
-+test_oidmap "add one 1
-+add one un
-+add two 2
-+add two deux
-+add three 3
-+get_all two
-+get_all four
-+get_all invalidOid
-+get_all three
-+get_all one" "1
-+un
-+2
-+deux
-+3
-+deux
-+2
-+NULL
-+Unknown oid: invalidOid
-+3
-+un
-+1"
-+
-+'
-+
- test_expect_success 'remove' '
- 
- test_oidmap "put one 1
+That might arguably be desirable, (though not in my prompt) but I don't think this is:
+
+```
+$ cd ..
+$ mkdir realdir/2
+$ ln -s realdir/2 symdir2
+$ cd symdir2
+$ pwd
+[~]/misc/git-test/symdir2
+$ git rev-parse --show-cdup
+../../
+```
+
+that is, `--show-cdup` gives a 'cd up' that is incorrect for where we actually are.
+
+
+Apologies if I've just missed an option,
+
 -- 
-2.22.0.514.g3228928bce.dirty
-
+Oliver Ford
