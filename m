@@ -2,152 +2,239 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 509F91F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 11:45:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7B71F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 12:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730548AbfGHLpu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 07:45:50 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39239 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727862AbfGHLpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 07:45:50 -0400
-Received: by mail-wm1-f65.google.com with SMTP id z23so16078240wma.4
-        for <git@vger.kernel.org>; Mon, 08 Jul 2019 04:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XVbLYv1Eayse/PfFF0v/LNgAHcsaGOeO2W5x5fVhlw0=;
-        b=tD7mdvq3A94kho9xhYc1dRW405Vqi5gyzbBDpwiFvktDNTnDgbp/G73FxKRCVFZplS
-         8MbNUhu7BCzrEtE/mKfs1nRylK3KygUrCjZQU7Q3I465cqqKjgpppV8wB7oCs4pqRX0S
-         pddKs29fEpp8BA825V11z7Q2SDnJtY98EbUPEJ181ABJRG0EyaIFG+wGzuA9/mrQlzEr
-         t5FHZNSnrTCjvf+XbHrrRYQZA1sPOoCO8SIQue9lXOvPwdHu37MGcLsjOdEblf2CHfxd
-         nRRsTqaVEEwe5M69Ym0jIyoJrJ5+bBuXC+BnjM3pMl5gesYt1bDc2mYYqxflGm75tL0b
-         dI/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XVbLYv1Eayse/PfFF0v/LNgAHcsaGOeO2W5x5fVhlw0=;
-        b=e2oWZVtUzwNVKZRCAz4tslAhj/YtO2Qtl46A1w7J4cgylFuN0E/i/NRjQw0tXTN8h4
-         71h0j/N9scsGlNDlP7eXcC7Aa0RKU0wgla1K+BU573Uz5hRD6PwWkHjKpu42rbbX3d88
-         oRBj30BkRZG3plXq8kg1DgW+COKagp/gt21l7vbt+9DtdF68g88+H3xqRRldmYBz6OBI
-         mem9tRDm1yR9KvMcAHHr9FwElhckAwE5aV16Nq1HlUBbGsplMIAvoPJdjesELIY6hWyc
-         xcsAFi/lPKnNVA7lUqohHENrdYKwPGGHQioHB0/mfgKIMUwzWWFCYlCmvbCDZzjU4iw9
-         Liig==
-X-Gm-Message-State: APjAAAXhJhHpGeQ7b00J08Nbv7xAKiWzr2e7b7RfRbCp+z0JY2SYnOFj
-        2mT+8HXprKhWLyq+q51IBT0=
-X-Google-Smtp-Source: APXvYqx6X0Wm9BRv2Fm+nZEj7dxB6xxaWYUA5WkbspRpE9LLX6uJb1TFIdCh1azjCqoosBig/02rtA==
-X-Received: by 2002:a05:600c:1008:: with SMTP id c8mr16782597wmc.133.1562586348361;
-        Mon, 08 Jul 2019 04:45:48 -0700 (PDT)
-Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id s10sm13644232wrt.49.2019.07.08.04.45.47
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Jul 2019 04:45:47 -0700 (PDT)
-Date:   Mon, 8 Jul 2019 12:45:46 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 00/14] output improvements for git range-diff
-Message-ID: <20190708114546.GD16825@hank.intra.tgummerer.com>
-References: <20190414210933.20875-1-t.gummerer@gmail.com/>
- <20190705170630.27500-1-t.gummerer@gmail.com>
- <nycvar.QRO.7.76.6.1907052138370.44@tvgsbejvaqbjf.bet>
+        id S1731124AbfGHM5d (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 08:57:33 -0400
+Received: from mout.gmx.net ([212.227.17.21]:43257 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727663AbfGHM5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 08:57:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562590643;
+        bh=Ua32DSrGFdVsAP+7wMN/yoHXq3H2qc3OXO1WMO6iYnE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LC83/fmrsGoUZmER/upqMd7Oc3U/MtoFjYq8NGFNHQOmSHFuBdmvqrVqUTa6dMkXR
+         N6fIWSVFSfV8qS0CXk7gweD0LRsrR6ePKb99a8tgIvuze0tut5Wwn7PZfEsLFUn8GB
+         Fz0ebXwfVfbFtBDRN1f9icPD5xQcibEuyCyL1Jkk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbA4j-1iCszy04VN-00kgj9; Mon, 08
+ Jul 2019 14:57:23 +0200
+Date:   Mon, 8 Jul 2019 14:57:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>
+Subject: Re: [PATCH v2 1/1] gettext: always use UTF-8 on native Windows
+In-Reply-To: <87o92976nz.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907081446030.44@tvgsbejvaqbjf.bet>
+References: <pull.217.git.gitgitgadget@gmail.com> <pull.217.v2.git.gitgitgadget@gmail.com> <2d2253faef14e5157f8aac4534d9ac9640f3d5fa.1562186762.git.gitgitgadget@gmail.com> <87o92976nz.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1907052138370.44@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: multipart/mixed; boundary="8323328-649694082-1562590677=:44"
+X-Provags-ID: V03:K1:tg6oB5uCPit5uFcG+fOxza3Y0zik48aXBoabzCbZfcwly4btI0h
+ bv1gabkE+M/ViU47zbq6ktOiDRA3z5UyXLIf4L/eK7VyV0oIaBfMKE9EkiyrHeFCpnf5PAj
+ 8kj+f9oYl1lFygxASFB8jcmHn5mIOh/SaWVifdpVSZ/AwXda3wHeEn81Dn28Rr0xkkoPQT6
+ vLjJCMbZoK4KOM/JMMB2w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:i1R/8Zdz6YQ=:TMwvLnBsstPVI5Mdu30zsh
+ 1KVpfOrJWVq1b+D/Ziylh6/irxxaLDRuyMBPKYViyV99MFOJqf869PAh00wTJ1yu591A6LSXr
+ zrIG/s/kjuAl+OsS3dEjb8Tw17eKQb0oTT74NzK8oPpLKkaKBuWic3pK3WdUXUqUlch+0RVQy
+ 3T52nApEUkuAMpeK6DYhcBeFNbBpan9QJGAygvjGtbCsQtcTiqRN5K6jr+sgE48WVhXwIg6rm
+ 2tfSUKdNnjdAD4YMecAUkAwK0JpS5NaGQqeJ394T8vK4BRLSf1JDDxBf8+3SQw14QfEuZBihN
+ xQ0QmL4+t8kgJcrbv/60jxBkd2v9qPpkG5K1hQxa/0M4UenRtOJKDh6FW3yP1STJz3XmL01mh
+ 92E753hYjeLefB++ZubjA3yHrW2kvPz88RULGLbnFUJvlyixu017TlwpCJD1j4t0YYxsnzZpk
+ IDRq3Kfb+VXEt6qxweLAAgrEHfB3SRs6pzuIdTAwi9YHLy84gP/P7OQUCBs06CwYh+0ZtY1AC
+ vpvy/uez7AWvt1dBB6iJ9CgJQMTXpZtZAvB/P0HBvoWFV3TtNx9xustEDTIw1jL+fpk6y52bZ
+ y5aLse2FJvWpv/fAAhRcZoq31x4M/UKL0CtHlGQTaHUx8yMFImDLpOyU3anjBfVtzY7/9UFHh
+ P+klWEGWovA+yfLMVLjU7PzMhYK7P9aceZyVjEoTdWk0vnVY680c8r1kWKPU2UC2YCMqdMaDD
+ gDCcZ1P4db7/1AKrBMfrwU/NtDEQjVX7INfC9iiKpr2ZLRjoM3RQfIafennM2irhJL2s3kNPH
+ oMhhng1rTpeI9gbqBY68JpS1eOuiV3Yc6BDrNn1nqCjnX9gorh2wJirOtAGPKXa6b9TJ8GvIG
+ nB637FTz1rMqoCOpUjZpMOjU6+6Dcjg6ejsMc2ZZ5WyIfa/vmLKw/1e+1/vW19eamOGziEdil
+ 8Wwjx82opF7duTLhgh2bOMyl1AA4Wx+0iv+NW3D7C0oYGy0Uaa9/mZw5oZchi2O5aQc1lBja0
+ E3QzCkEZlZUTGId920CXx1AoFjICfuj5NKc9fS23YLGoLo17WVy5eLeIzsXGPUtNRrBAd5wAS
+ Rt/i0RDXFFghcz6ARPbjiMK4SQcDl+IVZ+u
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/05, Johannes Schindelin wrote:
-> Hi Thomas,
-> 
-> On Fri, 5 Jul 2019, Thomas Gummerer wrote:
-> 
-> > It's been quite a while since I sent the RFC [1] (thanks all for the
-> > comments on that), and the series changed shapes quite a bit since the
-> > last round.
-> >
-> > Since it's been such a long time, just to remind everyone, the goal of
-> > this series is to make the range-diff output clearer, by showing
-> > information about the filenames to which the current diff belongs.
-> 
-> Thank you for that reminder ;-)
-> 
-> > In the previous round, we did this using "section headers" that
-> > include information about the current file and adding that to the
-> > outer diff's hunk headers.
-> >
-> > In this round we still keep the section headers (with slightly more
-> > information), but in addition we also add the filename to the inner
-> > diff hunk headers.  In the outer diff hunk headers we then display
-> > either the section header or the inner diff hunk header using a
-> > userdiff pattern.
-> 
-> 
-> I like this idea!
-> 
-> > In terms of code changes the biggest change is that we're now re-using
-> > the 'parse_git_header' function from the apply code to parse the diff
-> > headers, instead of trying to parse them with some hacky parsing code
-> > in range-diff.c.  This way we are sure that the diff headers are
-> > properly parsed.
-> 
-> Yep, very good.
-> 
-> > I had also considered just outputting the section headers directly
-> > from 'git log', but then decided against that.  Parsing the headers
-> > allows a future enhancement of range-diff, where we would allow
-> > parsing an mbox file [2].
-> 
-> Thanks you for your consideration; I still would like to have the option
-> at some stage to compare a patch series from public-inbox.org/git to the
-> commits in `pu`, without having to fiddle with finding a valid base commit
-> to apply the patches on.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yeah, I would like that as well ;)
+--8323328-649694082-1562590677=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> > I split the "only pass required data" commits up, in the hopes of
-> > making them easier to review, but I'm also happy to squash them if
-> > people feel like that makes it easier to review them.
-> 
-> I found it very easy to review in the current form, thank you for putting
-> in the extra effort.
-> 
-> > An added advantage of this is that we're also getting rid of things
-> > like the similarity index, which are not important in the range-diff,
-> > and are thus not represented in the "section header".
-> >
-> > One thing that did not change is that the new/deleted strings are not
-> > translated in this version either.  This is similar to the regular
-> > diff output, where we also don't translate these.  We can still
-> > consider translating them in the future though.
-> >
-> > [1]: https://public-inbox.org/git/20190414210933.20875-1-t.gummerer@gmail.com/
-> > [2]: https://github.com/gitgitgadget/git/issues/207
-> >
-> > I'm including the range-diff between this version of the series and
-> > the RFC, and a diff between the range diff and the range-diff without
-> > these changes below.  Probably not useful in reviewing the code, but
-> > good to show off the changes made in this series.
-> 
-> Indeed!
-> 
-> I very much like the idea, and the current iteration. I offered a couple
-> of minor suggestions, in the hope that you find them helpful.
+Hi =C3=86var,
 
-Thanks for your review!  I did find the suggestions very helpful
-indeed :)
+On Fri, 5 Jul 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Wed, Jul 03 2019, Karsten Blees via GitGitGadget wrote:
+>
+> > From: Karsten Blees <blees@dcon.de>
+> >
+> > On native Windows, Git exclusively uses UTF-8 for console output (both
+> > with MinTTY and native Win32 Console). Gettext uses `setlocale()` to
+> > determine the output encoding for translated text, however, MSVCRT's
+> > `setlocale()` does not support UTF-8. As a result, translated text is
+> > encoded in system encoding (as per `GetAPC()`), and non-ASCII chars ar=
+e
+> > mangled in console output.
+> >
+> > Side note: There is actually a code page for UTF-8: 65001. In practice=
+,
+> > it does not work as expected at least on Windows 7, though, so we cann=
+ot
+> > use it in Git. Besides, if we overrode the code page, any process
+> > spawned from Git would inherit that code page (as opposed to the code
+> > page configured for the current user), which would quite possibly brea=
+k
+> > e.g. diff or merge helpers. So we really cannot override the code page=
+.
+> >
+> > In `init_gettext_charset()`, Git calls gettext's
+> > `bind_textdomain_codeset()` with the character set obtained via
+> > `locale_charset()`; Let's override that latter function to force the
+> > encoding to UTF-8 on native Windows.
+> >
+> > In Git for Windows' SDK, there is a `libcharset.h` and therefore we
+> > define `HAVE_LIBCHARSET_H` in the MINGW-specific section in
+> > `config.mak.uname`, therefore we need to add the override before that
+> > conditionally-compiled code block.
+> >
+> > Rather than simply defining `locale_charset()` to return the string
+> > `"UTF-8"`, though, we are careful not to break `LC_ALL=3DC`: the
+> > `ab/no-kwset` patch series, for example, needs to have a way to preven=
+t
+> > Git from expecting UTF-8-encoded input.
+>
+> It's not just the ab/no-kwset I have cooking (but happy to have this
+> take that into account), but also anything grep-like is usually must
+> faster with LC_ALL=3DC. Isn't that also the case on Windows?
+
+Probably. I have never tested this.
+
+> Setting locales affects a large variety of libc functions and third
+> party libraries (e.g. PCRE via us setting "use UTF-8" under locale).
+
+Yes, but as I mentioned in the commit message, setting locales in MINGW
+programs is murky at best. There is the idea of gettext, and there is the
+idea of Windows, and they are likely a bit different from one another.
+
+> > Signed-off-by: Karsten Blees <blees@dcon.de>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  gettext.c | 20 +++++++++++++++++++-
+> >  1 file changed, 19 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/gettext.c b/gettext.c
+> > index d4021d690c..3f2aca5c3b 100644
+> > --- a/gettext.c
+> > +++ b/gettext.c
+> > @@ -12,7 +12,25 @@
+> >  #ifndef NO_GETTEXT
+> >  #	include <locale.h>
+> >  #	include <libintl.h>
+> > -#	ifdef HAVE_LIBCHARSET_H
+> > +#	ifdef GIT_WINDOWS_NATIVE
+> > +
+> > +static const char *locale_charset(void)
+> > +{
+> > +	const char *env =3D getenv("LC_ALL"), *dot;
+> > +
+> > +	if (!env || !*env)
+> > +		env =3D getenv("LC_CTYPE");
+> > +	if (!env || !*env)
+> > +		env =3D getenv("LANG");
+> > +
+> > +	if (!env)
+> > +		return "UTF-8";
+> > +
+> > +	dot =3D strchr(env, '.');
+> > +	return !dot ? env : dot + 1;
+> > +}
+> > +
+> > +#	elif defined HAVE_LIBCHARSET_H
+> >  #		include <libcharset.h>
+> >  #	else
+> >  #		include <langinfo.h>
+>
+> I'll take it on faith that this is what the locale_charset() should look
+> like.
+
+I copy/edited that code from a later code block in `is_utf8_locale()` that
+is also conditional (under `NO_GETTEXT`, hence no attempt to refactor it,
+as that would make the code even less readable).
+
+So I am fairly confident that the code is _correct_.
+
+Whether it is elegant, I cannot really say. It strikes me as ugly, in
+those indented `#ifdef..#endif` guards, yet I did not find a way to make
+it less ugly.
+
+> I wonder if it wouldn't be better to always compile this function, and
+> just have init_gettext_charset() switch between the two.
+
+Based on what? If the switch is a compile time switch, then this function
+must be under the same compile time guard, otherwise GCC will complain
+about an unused static function.
+
+> We've moved more towards that sort of thing (e.g. with pthreads). I.e.
+> prefer redundant compilation to ifdefing platform-only code (which then
+> only gets compiled there). See "HAVE_THREADS" in the code.
+
+How does that even avoid complaints by GCC about dead code.
+
+> It looks to me that with this patch the HAVE_LIBCHARSET_H docs in
+> "Makefile" become wrong. Shouldn't those be updated too?
+
+That comment says:
+
+# Define HAVE_LIBCHARSET_H if you haven't set NO_GETTEXT and you can't
+# trust the langinfo.h's nl_langinfo(CODESET) function to return the
+# current character set. [...]
+
+I think it still applies.
+
+> We also still pass -DHAVE_LIBCHARSET_H to every file we compile, only to
+> never use it under GIT_WINDOWS_NATIVE, but perhaps fixing that isn't
+> possible with GIT_WINDOWS_NATIVE being a macro, and perhaps I've again
+> gotten the "native" v.s. "mingw" etc. relationship wrong in my head and
+> the HAVE_LIBCHARSET_H docs are fine.
+
+MinGW is a really old, outdated thing. These days, mingw-w64 is the rage
+(it even supports building 64-bit binaries, would you believe that?
+</sarcasm>). And neither is "native", strictly, although it is as native
+as you can get with GCC.
+
+And as you say, the macro thing makes it hard/impossible to decide in
+Makefile whether we want to pass HAVE_LIBCHARSET_H or not. So we should do
+it independently of whether we're on Windows or not.
+
+> It just seems wrong that we have both the configure script &
+> config.mak.uname look for / declare that we have libcharset.h, only to
+> at this late point not use libcharset.h at all. Couldn't we just know if
+> GIT_WINDOWS_NATIVE will be true earlier & move that check up, so it &
+> HAVE_LIBCHARSET_H can be mutually exclusive (with accompanying #error if
+> we have both)?
+
+I don't think that this is wrong, as it is correct in pretty much all
+circumstances except Git for Windows. And even in Git for Windows it is
+correct: we do have a `libcharset.h`. We just can't use it to determine
+the current locale.
+
+Ciao,
+Dscho
+
+--8323328-649694082-1562590677=:44--
