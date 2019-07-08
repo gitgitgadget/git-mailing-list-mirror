@@ -8,233 +8,183 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7B71F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 12:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A57DC1F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 13:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731124AbfGHM5d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 08:57:33 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43257 "EHLO mout.gmx.net"
+        id S1728922AbfGHNMa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 09:12:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35603 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727663AbfGHM5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 08:57:32 -0400
+        id S1727663AbfGHNMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 09:12:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562590643;
-        bh=Ua32DSrGFdVsAP+7wMN/yoHXq3H2qc3OXO1WMO6iYnE=;
+        s=badeba3b8450; t=1562591544;
+        bh=QOnL/iy5489UNWhazwKHt0MHIf8nwC66KXpJYLjrhyY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LC83/fmrsGoUZmER/upqMd7Oc3U/MtoFjYq8NGFNHQOmSHFuBdmvqrVqUTa6dMkXR
-         N6fIWSVFSfV8qS0CXk7gweD0LRsrR6ePKb99a8tgIvuze0tut5Wwn7PZfEsLFUn8GB
-         Fz0ebXwfVfbFtBDRN1f9icPD5xQcibEuyCyL1Jkk=
+        b=eFkNIcUGUawD6X21uB1zhOd9mH2HoUBYbZfpZ9UZUJtTKUQkZ56vaRUjrcoE6Rb7B
+         iF+fA6r2CJ9ouqkUmfiuL+vb8gQngqjV7Q5GC5b+WDsabO9Fbl+iCCfkLdnjcH23sD
+         Dm68V3aYJNqn6mKpUZ+YlJ+yEwtiw36qsyW+7NEI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbA4j-1iCszy04VN-00kgj9; Mon, 08
- Jul 2019 14:57:23 +0200
-Date:   Mon, 8 Jul 2019 14:57:56 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MF3He-1hiKlj3iq8-00FPNE; Mon, 08
+ Jul 2019 15:12:24 +0200
+Date:   Mon, 8 Jul 2019 15:12:57 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Karsten Blees <blees@dcon.de>
-Subject: Re: [PATCH v2 1/1] gettext: always use UTF-8 on native Windows
-In-Reply-To: <87o92976nz.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907081446030.44@tvgsbejvaqbjf.bet>
-References: <pull.217.git.gitgitgadget@gmail.com> <pull.217.v2.git.gitgitgadget@gmail.com> <2d2253faef14e5157f8aac4534d9ac9640f3d5fa.1562186762.git.gitgitgadget@gmail.com> <87o92976nz.fsf@evledraar.gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 12/14] range-diff: add section header instead of diff
+ header
+In-Reply-To: <20190708114422.GC16825@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1907081507540.44@tvgsbejvaqbjf.bet>
+References: <20190414210933.20875-1-t.gummerer@gmail.com/> <20190705170630.27500-1-t.gummerer@gmail.com> <20190705170630.27500-13-t.gummerer@gmail.com> <nycvar.QRO.7.76.6.1907052114480.44@tvgsbejvaqbjf.bet> <20190708114422.GC16825@hank.intra.tgummerer.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-649694082-1562590677=:44"
-X-Provags-ID: V03:K1:tg6oB5uCPit5uFcG+fOxza3Y0zik48aXBoabzCbZfcwly4btI0h
- bv1gabkE+M/ViU47zbq6ktOiDRA3z5UyXLIf4L/eK7VyV0oIaBfMKE9EkiyrHeFCpnf5PAj
- 8kj+f9oYl1lFygxASFB8jcmHn5mIOh/SaWVifdpVSZ/AwXda3wHeEn81Dn28Rr0xkkoPQT6
- vLjJCMbZoK4KOM/JMMB2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:i1R/8Zdz6YQ=:TMwvLnBsstPVI5Mdu30zsh
- 1KVpfOrJWVq1b+D/Ziylh6/irxxaLDRuyMBPKYViyV99MFOJqf869PAh00wTJ1yu591A6LSXr
- zrIG/s/kjuAl+OsS3dEjb8Tw17eKQb0oTT74NzK8oPpLKkaKBuWic3pK3WdUXUqUlch+0RVQy
- 3T52nApEUkuAMpeK6DYhcBeFNbBpan9QJGAygvjGtbCsQtcTiqRN5K6jr+sgE48WVhXwIg6rm
- 2tfSUKdNnjdAD4YMecAUkAwK0JpS5NaGQqeJ394T8vK4BRLSf1JDDxBf8+3SQw14QfEuZBihN
- xQ0QmL4+t8kgJcrbv/60jxBkd2v9qPpkG5K1hQxa/0M4UenRtOJKDh6FW3yP1STJz3XmL01mh
- 92E753hYjeLefB++ZubjA3yHrW2kvPz88RULGLbnFUJvlyixu017TlwpCJD1j4t0YYxsnzZpk
- IDRq3Kfb+VXEt6qxweLAAgrEHfB3SRs6pzuIdTAwi9YHLy84gP/P7OQUCBs06CwYh+0ZtY1AC
- vpvy/uez7AWvt1dBB6iJ9CgJQMTXpZtZAvB/P0HBvoWFV3TtNx9xustEDTIw1jL+fpk6y52bZ
- y5aLse2FJvWpv/fAAhRcZoq31x4M/UKL0CtHlGQTaHUx8yMFImDLpOyU3anjBfVtzY7/9UFHh
- P+klWEGWovA+yfLMVLjU7PzMhYK7P9aceZyVjEoTdWk0vnVY680c8r1kWKPU2UC2YCMqdMaDD
- gDCcZ1P4db7/1AKrBMfrwU/NtDEQjVX7INfC9iiKpr2ZLRjoM3RQfIafennM2irhJL2s3kNPH
- oMhhng1rTpeI9gbqBY68JpS1eOuiV3Yc6BDrNn1nqCjnX9gorh2wJirOtAGPKXa6b9TJ8GvIG
- nB637FTz1rMqoCOpUjZpMOjU6+6Dcjg6ejsMc2ZZ5WyIfa/vmLKw/1e+1/vW19eamOGziEdil
- 8Wwjx82opF7duTLhgh2bOMyl1AA4Wx+0iv+NW3D7C0oYGy0Uaa9/mZw5oZchi2O5aQc1lBja0
- E3QzCkEZlZUTGId920CXx1AoFjICfuj5NKc9fS23YLGoLo17WVy5eLeIzsXGPUtNRrBAd5wAS
- Rt/i0RDXFFghcz6ARPbjiMK4SQcDl+IVZ+u
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vV7oGY8w9hZp/RvutXC/UaWjQepGikisW2lvs26JkE/CTaoiAxF
+ er3+rC4tsBdMWVU5yHGX8rwaCKM31NrSI05X3aYFtqiBn5BaTtNlYjD/TgFv2a9vDDeG68N
+ +UdRpQNDv5iXvnDLsY9NP+wm541svd/kpujzpEn5tPnHsGX03QDjMzFDLj2OCmgBUUXUFeH
+ a1GxIHTifvI5i5BascSew==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UOquKrPQfBE=:/iWDdTaYGKm1C8Uz0eHS44
+ c+QHlrgndE7oBhKStqUSeE7NuvhozZfjk28HnmdV/bJ+dLHR1m2bwZ2VLKo9oTALyJPwCLh+D
+ K7C3/nC/VSOuPJi4nrxkabqrp5eJi5FK2Akx4pwua/Ru4lvUO2PPGRvIu5UcROOMsN1aB0i/0
+ tly0jAQvMl8kACQMweKB3SwHioGOyAM7RZB9D/Cnw/TD/IRun+x0Mji1aUvK5Hvpi/qz4YLfP
+ YKXbAz7GyQF+vis7R9vAQQ765Pu0TzpMa7WMgaj+3cYmHaZpjObWe6ppIUh+AXDRv8Y6mM75V
+ /dXrPD3blrKss3STUqzyawYKPclPtXCA5V8kQCKnDTf/XZ6HvbQb3Vh5aYyh0JsDiaLFyXe+J
+ /Kb6l4G5MCId6XXeF5jdUwHirjxoA7TM9Se/WSZ+EQ2SWkFoQEOlxb5wlIFpP2ZzzXQtJ8x3r
+ vYHWwmucsTo5CiLO/j3BctMIUOpfBPrSD9A5ik0qzPtcwdtzkCdLr6rsvr9UPs1Hvn5Z9Ol8R
+ rPWiIbYS7MELRlpP0oLIOk1eI7xTVEEcihN3iR6Zv+tE2EUVm6A777zwL48yCR2v9EQ9UNCqc
+ sbOjo5K/2M9ZIa2RICN6W0JP6AP57aMIqOkumhV7HO4PSyFOrsPTP8N5nICMqVT8NBd/wLanf
+ +kezeqZFbk7/TRvqVZ4/RvPSVDV5iSEyitT97MlEhYhqDG7KqxVOoRVHT1iuMf7eRFYw9LCVX
+ TkTASzgVAKvB6O+/yN18y+LDYV1XsVLf3HKMuONVK18GKlhfQlWIeuE4LAv8m6zZdVegkjvGA
+ bzrJIQpPbewHmfZu9x2mt20+qaiXd3S3opbBLuNvGPkiuRUtH5m79BAhPZeU93TE0TGn6f7yp
+ HRcdTaF7iRqyMDaU4Psk0YEUDmEXN2IZTMSU4ekU6w7dlLpNNUWzLn5dion7c4nhKNGtUbQFt
+ VnTO+AWNW5b/Pgsq9/FR+rJfpOC9iwB3MHw5ridVkDulkycTo7dlq1wUxUHInh8fWB4DNhebN
+ wurYCeKLW2aAI/LdxWWNdjBQXEvQSOTdXjrwvehllHzwaqE+TWqkqoFPwC0TM+IXIDMhj2kyY
+ eGcp+j3EpzF8gvpbkDwJn+39EYYQoI5JAua
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Thomas,
 
---8323328-649694082-1562590677=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 8 Jul 2019, Thomas Gummerer wrote:
 
-Hi =C3=86var,
-
-On Fri, 5 Jul 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Wed, Jul 03 2019, Karsten Blees via GitGitGadget wrote:
+> On 07/05, Johannes Schindelin wrote:
 >
-> > From: Karsten Blees <blees@dcon.de>
+> > >  			 */
+> > >  			continue;
+> > >  		else if (line[0] =3D=3D '>') {
+> > > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > > index 9f89af7178..c277756057 100755
+> > > --- a/t/t3206-range-diff.sh
+> > > +++ b/t/t3206-range-diff.sh
+> > > @@ -181,6 +181,85 @@ test_expect_success 'changed commit with sm con=
+fig' '
+> > >  	test_cmp expected actual
+> > >  '
+> > >
+> > > +test_expect_success 'renamed file' '
+> > > +	git range-diff --no-color --submodule=3Dlog topic...renamed-file >=
+actual &&
+> > > +	sed s/Z/\ /g >expected <<-EOF &&
+> > > +	1:  4de457d =3D 1:  f258d75 s/5/A/
+> > > +	2:  fccce22 ! 2:  017b62d s/4/A/
+> > > +	    @@
+> > > +	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
+> > > +	    Z
+> > > +	    -    s/4/A/
+> > > +	    +    s/4/A/ + rename file
+> > > +	    Z
+> > > +	    - ## file ##
+> > > +	    + ## file =3D> renamed-file ##
 > >
-> > On native Windows, Git exclusively uses UTF-8 for console output (both
-> > with MinTTY and native Win32 Console). Gettext uses `setlocale()` to
-> > determine the output encoding for translated text, however, MSVCRT's
-> > `setlocale()` does not support UTF-8. As a result, translated text is
-> > encoded in system encoding (as per `GetAPC()`), and non-ASCII chars ar=
-e
-> > mangled in console output.
-> >
-> > Side note: There is actually a code page for UTF-8: 65001. In practice=
-,
-> > it does not work as expected at least on Windows 7, though, so we cann=
-ot
-> > use it in Git. Besides, if we overrode the code page, any process
-> > spawned from Git would inherit that code page (as opposed to the code
-> > page configured for the current user), which would quite possibly brea=
-k
-> > e.g. diff or merge helpers. So we really cannot override the code page=
-.
-> >
-> > In `init_gettext_charset()`, Git calls gettext's
-> > `bind_textdomain_codeset()` with the character set obtained via
-> > `locale_charset()`; Let's override that latter function to force the
-> > encoding to UTF-8 on native Windows.
-> >
-> > In Git for Windows' SDK, there is a `libcharset.h` and therefore we
-> > define `HAVE_LIBCHARSET_H` in the MINGW-specific section in
-> > `config.mak.uname`, therefore we need to add the override before that
-> > conditionally-compiled code block.
-> >
-> > Rather than simply defining `locale_charset()` to return the string
-> > `"UTF-8"`, though, we are careful not to break `LC_ALL=3DC`: the
-> > `ab/no-kwset` patch series, for example, needs to have a way to preven=
-t
-> > Git from expecting UTF-8-encoded input.
+> > I guess there is no good way to suppress the `- ## file ##` line in th=
+is
+> > case? It is a bit distracting...
 >
-> It's not just the ab/no-kwset I have cooking (but happy to have this
-> take that into account), but also anything grep-like is usually must
-> faster with LC_ALL=3DC. Isn't that also the case on Windows?
+> No, I can't think of a good way.  I'm also not sure it would be right
+> to remove it.  In this case it means that in the previous version this
+> was only called 'file', while in the new version it was renamend in
+> this patch to 'renamed-file', so it does give some useful information.
 
-Probably. I have never tested this.
+Oh, I misunderstood! You're right, this is useful information, and I just
+have to learn how to read that variant of the range-diffs.
 
-> Setting locales affects a large variety of libc functions and third
-> party libraries (e.g. PCRE via us setting "use UTF-8" under locale).
+In other words: please leave this part of your patch series as-is.
 
-Yes, but as I mentioned in the commit message, setting locales in MINGW
-programs is murky at best. There is the idea of gettext, and there is the
-idea of Windows, and they are likely a bit different from one another.
-
-> > Signed-off-by: Karsten Blees <blees@dcon.de>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  gettext.c | 20 +++++++++++++++++++-
-> >  1 file changed, 19 insertions(+), 1 deletion(-)
+> > > @@ -216,9 +295,9 @@ test_expect_success 'dual-coloring' '
+> > >  	:     <RESET>
+> > >  	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<=
+RESET>
+> > >  	:    <REVERSE><GREEN>+<RESET>
+> > > -	:      diff --git a/file b/file<RESET>
+> > > -	:      --- a/file<RESET>
+> > > -	:      +++ b/file<RESET>
+> > > +	:      ## file ##<RESET>
+> > > +	:    <CYAN> @@<RESET>
+> > > +	:      1<RESET>
 > >
-> > diff --git a/gettext.c b/gettext.c
-> > index d4021d690c..3f2aca5c3b 100644
-> > --- a/gettext.c
-> > +++ b/gettext.c
-> > @@ -12,7 +12,25 @@
-> >  #ifndef NO_GETTEXT
-> >  #	include <locale.h>
-> >  #	include <libintl.h>
-> > -#	ifdef HAVE_LIBCHARSET_H
-> > +#	ifdef GIT_WINDOWS_NATIVE
-> > +
-> > +static const char *locale_charset(void)
-> > +{
-> > +	const char *env =3D getenv("LC_ALL"), *dot;
-> > +
-> > +	if (!env || !*env)
-> > +		env =3D getenv("LC_CTYPE");
-> > +	if (!env || !*env)
-> > +		env =3D getenv("LANG");
-> > +
-> > +	if (!env)
-> > +		return "UTF-8";
-> > +
-> > +	dot =3D strchr(env, '.');
-> > +	return !dot ? env : dot + 1;
-> > +}
-> > +
-> > +#	elif defined HAVE_LIBCHARSET_H
-> >  #		include <libcharset.h>
-> >  #	else
-> >  #		include <langinfo.h>
+> > I am a bit confused where these last two lines come from all of a
+> > sudden... They were not there before, and I do not see any code change=
+ in
+> > this patch that would be responsible for them, either...
+> >
+> > Could you help me understand?
 >
-> I'll take it on faith that this is what the locale_charset() should look
-> like.
+> Sure.  The actual change (in the range-diff) here is that "Also a
+> silly comment here!" was added to the commit message.  The diff header
+> is context lines after that.
+>
+> We now replace the diff header with the new "section header", which is
+> only a single line, so we get a couple of additional lines of the
+> context of the subsequent inner diff.
 
-I copy/edited that code from a later code block in `is_utf8_locale()` that
-is also conditional (under `NO_GETTEXT`, hence no attempt to refactor it,
-as that would make the code even less readable).
+You know what? This is my typical mistake when reading uncolored
+range-diffs: _of course_ I missed that this is talking about context
+lines. I really thought they were added by the new iteration. My bad. And
+thanks for explaining this patiently to me.
 
-So I am fairly confident that the code is _correct_.
+> > >  	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET=
+><YELLOW> s/11/B/<RESET>
+> > >  	:    <REVERSE><CYAN>@@<RESET>
+> > >  	:      9<RESET>
+> > > diff --git a/t/t3206/history.export b/t/t3206/history.export
+> > > index b8ffff0940..7bb3814962 100644
+> > > --- a/t/t3206/history.export
+> > > +++ b/t/t3206/history.export
+> > > @@ -22,8 +22,8 @@ data 51
+> > >  19
+> > >  20
+> > >
+> > > -reset refs/heads/removed
+> > > -commit refs/heads/removed
+> > > +reset refs/heads/renamed-file
+> > > +commit refs/heads/renamed-file
+> >
+> > Hmm. Is the `removed` ref no longer required by the 'removed a commit'
+> > test case?
+>
+> It is, and it still exists.  I'm not entirely familar with the format
+> for fast-export/fast-import scripts.  What I did was just fast-import
+> the existing script, create the new refs that were required for the
+> tests and then fast-export'ed it again.
+>
+> So not sure exactly why this changed, but the 'removed' ref still
+> exists :)
 
-Whether it is elegant, I cannot really say. It strikes me as ugly, in
-those indented `#ifdef..#endif` guards, yet I did not find a way to make
-it less ugly.
+Right, it would still exist because earlier parts of the script would have
+created that ref (otherwise `reset refs/heads/removed` would have failed).
 
-> I wonder if it wouldn't be better to always compile this function, and
-> just have init_gettext_charset() switch between the two.
+Your strategy to update the script sounds like the best way to go, it just
+runs afoul of topological ordering that somehow makes this patch look as
+if you had removed parts of the commit history. I believe you when you say
+that you didn't, of course.
 
-Based on what? If the switch is a compile time switch, then this function
-must be under the same compile time guard, otherwise GCC will complain
-about an unused static function.
-
-> We've moved more towards that sort of thing (e.g. with pthreads). I.e.
-> prefer redundant compilation to ifdefing platform-only code (which then
-> only gets compiled there). See "HAVE_THREADS" in the code.
-
-How does that even avoid complaints by GCC about dead code.
-
-> It looks to me that with this patch the HAVE_LIBCHARSET_H docs in
-> "Makefile" become wrong. Shouldn't those be updated too?
-
-That comment says:
-
-# Define HAVE_LIBCHARSET_H if you haven't set NO_GETTEXT and you can't
-# trust the langinfo.h's nl_langinfo(CODESET) function to return the
-# current character set. [...]
-
-I think it still applies.
-
-> We also still pass -DHAVE_LIBCHARSET_H to every file we compile, only to
-> never use it under GIT_WINDOWS_NATIVE, but perhaps fixing that isn't
-> possible with GIT_WINDOWS_NATIVE being a macro, and perhaps I've again
-> gotten the "native" v.s. "mingw" etc. relationship wrong in my head and
-> the HAVE_LIBCHARSET_H docs are fine.
-
-MinGW is a really old, outdated thing. These days, mingw-w64 is the rage
-(it even supports building 64-bit binaries, would you believe that?
-</sarcasm>). And neither is "native", strictly, although it is as native
-as you can get with GCC.
-
-And as you say, the macro thing makes it hard/impossible to decide in
-Makefile whether we want to pass HAVE_LIBCHARSET_H or not. So we should do
-it independently of whether we're on Windows or not.
-
-> It just seems wrong that we have both the configure script &
-> config.mak.uname look for / declare that we have libcharset.h, only to
-> at this late point not use libcharset.h at all. Couldn't we just know if
-> GIT_WINDOWS_NATIVE will be true earlier & move that check up, so it &
-> HAVE_LIBCHARSET_H can be mutually exclusive (with accompanying #error if
-> we have both)?
-
-I don't think that this is wrong, as it is correct in pretty much all
-circumstances except Git for Windows. And even in Git for Windows it is
-correct: we do have a `libcharset.h`. We just can't use it to determine
-the current locale.
-
-Ciao,
+Thanks,
 Dscho
-
---8323328-649694082-1562590677=:44--
