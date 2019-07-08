@@ -2,97 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A43B41F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 19:01:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A261D1F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 19:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731340AbfGHTBj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 15:01:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50973 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728461AbfGHTBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 15:01:39 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E1C914C9C3;
-        Mon,  8 Jul 2019 15:01:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Kz0E5xprPLf1DKMf/ixriOE7JbE=; b=GZGIXZ
-        E4HiAYdQzS8ajDWC7c9u1Y8gMCGRc07mAoEtNZbH74DFeEz0+rcyo4lEDFDQNgAS
-        W9So6Cr+mZ/CouC/Q/dhtYRMj7W/igsRuuDBRH27Lpv4qmE9ZGtBTHVhaUFJQSHz
-        xlTIE81sN/T9FSeoUJg8bo1YgtYSUz5bnWUMY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PzaXkjz9X9omobMHvkxvQgFSbheKbgLY
-        4GSANkf61VHFJRUByP12l5BAv4fuyF1j77Kp5g0y9bamrD3jS5BidN3w35g+ea8Z
-        xcZWQ/HugBCUACZYK4gun+TmomsP0Hud+mQ4lJN9joD/9tdL7BVg2ahCkhBY0SFG
-        V2F+smwxBrM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DECF14C9C2;
-        Mon,  8 Jul 2019 15:01:37 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A67B314C9BF;
-        Mon,  8 Jul 2019 15:01:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org
-Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
-References: <20190704080907.GA45656@book.hvoigt.net>
-Date:   Mon, 08 Jul 2019 12:01:35 -0700
-In-Reply-To: <20190704080907.GA45656@book.hvoigt.net> (Heiko Voigt's message
-        of "Thu, 4 Jul 2019 10:09:07 +0200")
-Message-ID: <xmqq4l3wz6y8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2391644AbfGHTWy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 15:22:54 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:34723 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728461AbfGHTWy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 15:22:54 -0400
+Received: by mail-qk1-f194.google.com with SMTP id t8so14247400qkt.1
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 12:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GjEv3zPzjA0VtEPVairfjdbq5WzEAarWtUbhmyFdoQU=;
+        b=pviQ/HWnnEmCdwSzMg93Wzzc16DpQ88yI7QRWnJE7SgesRX8ZE9lOypN333M/ZU9SV
+         5rZFMry9Y3hQdEIJthnkVhIyDR210h2zQPcdIrRFUuP5QajGZlhrMzl/Yroe2iFIkT95
+         5WFOJxA69vthsHjXyySCvgnp+G3BjR/5GcFswmqsnCxcnWD6iAB+vOBZOpejn4fmCI3c
+         7lZ9UiOurSClDTGadEXjoGPE4o58TwFYqe/9fnR9UQMTB/xnjZrrERucP5fzh2Ev8DsY
+         +tcNnNlJJUdNmVaGjxwE6kEFfLQr3QDCFaSHlxAPQgQxNYMbT+IxiwSY7uUXPcgehTYh
+         UkRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GjEv3zPzjA0VtEPVairfjdbq5WzEAarWtUbhmyFdoQU=;
+        b=BTWch4xoODu2hOoAHKYVmayrUFf3ZGeQQGwaIMkegLPLwaZ1utmK/EiZ+8kmovo+2n
+         BExKnRi6qLaN7K8+BTHA8JSznhaa07dC9hmyOgvMldzIVF/jN7e31ctLsWvYIKBIqxoH
+         569u5PouzL1RBhjmOAHmi2GF6tB0hDFk8/7u2smu0n2czoKSQvFjtRoT1CjDQaQ2JLjz
+         LH3qh/5V/Frtc1yO+cu5T2wSHJVhAzlXpEidNEzyPNiikMWfaqHxJxhXeDzpsDyjBCHj
+         +i+4POORGcQzW+0udj/FH5X4yhxkw2d+ykMshIhBQtpilOo9rrMShTxervSqNgeKA7lx
+         jEXA==
+X-Gm-Message-State: APjAAAX1vAEH9rKxM2dNgO8wMTk+x1wacwbjSH/f5Qi7BycBNizCZbFV
+        PzGtXFOgNT+I3M2jzzHbH/l+nupZ
+X-Google-Smtp-Source: APXvYqyvJvIDuXKoHO0cPOkxoX4oXqQnIb8axFoGbrpxqPiWaV9xhELzt/oDs59RGgvNBNMiklBNQA==
+X-Received: by 2002:a05:620a:15e5:: with SMTP id p5mr11516717qkm.409.1562613772904;
+        Mon, 08 Jul 2019 12:22:52 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:7947:4e73:17b:b8ef? ([2001:4898:a800:1012:2a7b:4e73:17b:b8ef])
+        by smtp.gmail.com with ESMTPSA id z18sm8213918qka.12.2019.07.08.12.22.51
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jul 2019 12:22:51 -0700 (PDT)
+Subject: Re: [PATCH v3 0/3] [RFC] Create 'core.featureAdoptionRate' setting to
+ update config defaults
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, peff@peff.net,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.254.v2.git.gitgitgadget@gmail.com>
+ <pull.254.v3.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <50955e76-8b61-8ffd-b8ee-3621ecbd912b@gmail.com>
+Date:   Mon, 8 Jul 2019 15:22:49 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CF603F7E-A1B2-11E9-86A1-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <pull.254.v3.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+On 7/1/2019 10:29 AM, Derrick Stolee via GitGitGadget wrote:
+> Here is a second run at this RFC, which aims to create a "meta" config
+> setting that automatically turns on other settings according to a user's
+> willingness to trade new Git behavior or new feature risk for performance
+> benefits. The new name for the setting is "core.featureAdoptionRate" and is
+> an integer scale from 0 to 10. There will be multiple "categories" of
+> settings, and the intention is to allow more granular levels as necessary.
 
-> In commit 4d5e1b1319 ("gitk: Show detached HEAD if --all is specified",
-> 2014-09-09) the intention was to have detached HEAD shown when the --all
-> argument is given.
+(Adding people who contributed feedback to CC line.)
 
-The "do we have --all?" test added by that old commit is not quite
-satisfying in the first place.  E.g. we do not check if there is a
-double-dash before it.  This change also relies on an ancient design
-mistake of allowing non-dashed options before a dashed one, adding
-more to dissatisfaction by making a future change to correct the
-design mistake harder.
+It seems that this "Feature Adoption Rate" idea was too simplistic, and
+had several issues. Time to take a different stab at this direction, but
+with these clear goals in mind:
 
-I think in the longer term we should consider changing "git
-rev-parse --all" to include HEAD in the concept of "all refs"
-instead.  But in the meantime, this patch is not making things
-drastically wrong, so let's take it as is.
+ 1. We want intermediate users to be able to take advantage of new config
+    options without watching every release for new config options.
 
-Thanks.
+ 2. The config name should match the general effect of the implied
+    settings.
 
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->  gitk | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitk b/gitk
-> index a14d7a1..19d95cd 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -295,7 +295,7 @@ proc parseviewrevs {view revs} {
->      if {$revs eq {}} {
->  	set revs HEAD
->      } elseif {[lsearch -exact $revs --all] >= 0} {
-> -	lappend revs HEAD
-> +	linsert revs 0 HEAD
->      }
->      if {[catch {set ids [eval exec git rev-parse $revs]} err]} {
->  	# we get stdout followed by stderr in $err
+ 3. There are orthogonal settings that may not apply beneficially to
+    all repos.
+
+With this in mind, I propose instead a set of "feature.*" config settings
+that form groups of "community recommended" settings (with some caveats).
+In the space below, I'll list a set of possible feature names and the
+implied config options.
+
+First, the main two categories we've discussed so far: many commits and
+many files. These two feature sets are for when your repo is large in
+one of these dimensions. Perhaps there are other settings to include
+in these?
+
+	feature.manyFiles:
+		index.version = 4
+		index.threads = true
+		core.untrackedCache = true
+
+	feature.manyCommits:
+		core.commitGraph = true
+		gc.writeCommitGraph = true
+		(future: fetch.writeSplitCommitGraph = true)
+
+Note: the `fetch.writeSplitCommitGraph` does not exist yet, but could
+be introduced in a later release to write a new commit-graph (with --split)
+on fetch.
+
+The other category that has been discussed already is that of "experimental
+features that we generally think are helpful but change behavior slightly in
+some cases".
+
+	feature.experimental:
+		pack.useSparse = true
+		status.aheadBehind = false
+		fetch.showForcedUpdates = false
+		merge.directoryRenames = true
+		protocol.version = 2
+		fetch.negotiationAlgorithm = skipping
+
+We have not discussed anything like the next category, but Dscho thought
+a set of configs to make pretty diffs could be a fun "meta-config" setting:
+
+	feature.prettyDiff:
+		diff.color = auto
+		ui.color = auto
+		diff.context = 5
+		diff.colorMoved = true
+		diff.colorMovedWs = allow-indentation-change
+		diff.algorithm = minimal
+
+These are just a first round of suggestions. I'm sure we would enjoy a
+debate around an optimal set of diff settings.
+
+Finally, here is a kind of feature that I could imagine being helpful
+in the future, but maybe is not a good idea to pursue right now. In
+some cases users use "gc.auto = 0" to prevent all user-time blocking
+maintenance. This can degrade performance over time as loose objects
+and pack-files accumulate. The performance could mostly be recovered
+by using a multi-pack-index, but there is not current way to automatically
+write the file. This would not solve the space issues that happen here.
+
+	feature.noGC:
+		gc.auto = 0
+		core.multiPackIndex = true
+		(future: fetch.writeMultiPackIndex = true)
+
+What do people think about this general idea? Are there any other
+feature.* settings that could be useful? Any additional settings
+to add to these groups?
+
+Thanks,
+-Stolee
