@@ -3,75 +3,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D89C31F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 22:02:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 348221F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 22:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405415AbfGHWCN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 18:02:13 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51228 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405412AbfGHWCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 18:02:13 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C2397DD19;
-        Mon,  8 Jul 2019 18:02:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9JkrmknvjeE+c6taavG9RlmBs80=; b=WoTadM
-        sEM+I9wAjdaaNJO3NWLLju99eKXjvY/jFF+W80voBn1nZlPTFqDZmm5dFwXFSpyu
-        EP6GEQA9AKrQ8g8dCkTHZ2A47LGygPRkHVCjL5wyN6JCQ2lk/VykR7pzxi5Wru/v
-        JcUntuYTsZ1LZwSI43E/jU2U0Mx4ufVXZRTAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BcveIhdv5FjYL1rLNjRz+Mon2yrHLH58
-        gLEdKJaXnd6kxM23pkvzWORNsSnCA1vBJCoRxp/UmHBydThmAocMmXV3plBESD0G
-        Ob7gfrHjYKxUhWeT4a1B/CAbrlDD14chndg03IhlCchX+FN0u2H79zZylfq6r0dk
-        YrSfEkkzQns=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 644DA7DD18;
-        Mon,  8 Jul 2019 18:02:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0DEF57DD14;
-        Mon,  8 Jul 2019 18:02:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2019, #01; Wed, 3)
-References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
-        <9b0fa396-6aae-ff4b-afee-0310a4f601f9@gmail.com>
-Date:   Mon, 08 Jul 2019 22:02:07 +0000
-In-Reply-To: <9b0fa396-6aae-ff4b-afee-0310a4f601f9@gmail.com> (Phillip Wood's
-        message of "Thu, 4 Jul 2019 10:56:21 +0100")
-Message-ID: <xmqqzhlow5gg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732838AbfGHWVz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 18:21:55 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:38760 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730462AbfGHWVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 18:21:55 -0400
+Received: by mail-io1-f67.google.com with SMTP id j6so38895110ioa.5
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 15:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=75GBEHHw66QZCvI6/llOr4tiiA47z1S7IhgXNiHz33g=;
+        b=R0VlQc4OvFrKUt/g4crC1RHuvhtg6TccyRDHbY6faHggFNRwYev5/84N/EuNOcQZUP
+         pTCajwAFvVDZWsm6NL+syhv4oJT7UrWXkZSI4ez5KzeNMGGAVf5z7o1/tIUrcugoJzjr
+         cpuNOmU3KvnLcAMSaSWPLjn00pR2AT7fdgooDr8ZZ3Q4/RVX5JP/ReZ+mAxoH7j+SlhC
+         99VyIGcKIjbWV0XLuHfoxBP9MwRlvUfkTh4N91eZ86sZhCYHVUg6D4L57n5SfSjeV6IP
+         XOBqokY3w6oSr8ESdOK8YPsRcFqcDc9xXYmJkwhFVGsDbBIxkTGOT8EgGqbncumxIym5
+         hKvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=75GBEHHw66QZCvI6/llOr4tiiA47z1S7IhgXNiHz33g=;
+        b=gJrKQ39hT30DyV51udKLTkFbUMk2TwRKmhp3kScfsOZ/Wlxii3KA9oGRINjzKn9Jbm
+         xSP6jqua0n9I4G8noE6Xus6fB6YNnjGMnjEnfAj/OG96nc/fCU3EHWg8ay+carf/j7cO
+         FOrN2420H78mLSCMmI+Xf4SU0/lNugcp4bcaPp1Y9DI4fRMfd8z4ai30Gi+3oW9/lHFD
+         51ouvlqP0R63be0sq2n1rkDcnauvDnYVac++4IWzeRPrgAj7VOsz3qjRjWp8Fe06UA4k
+         YiF7VSDz/EUNr4SxL1m3WL4Weq81MhfFruEWGZL/9rfcAYWADXAF/i2P8jAQgScqq3Ys
+         tRQA==
+X-Gm-Message-State: APjAAAUiSDvKiL2fluTceIVKxvY3gquP1ajTqKapvsRKJyGzoA7jSEU3
+        YKCNMzKN3eq/hpaSqgwEG4lwApBbyimlqCYduPa5Ww==
+X-Google-Smtp-Source: APXvYqx0zdD6DHmNxSQDtBOUGZk9SeM3DAGa9Q7TFqcgIGzRBTROLOZaSujB4mU96J+lDtvHQo7/3DyqUwTpf1auTaE=
+X-Received: by 2002:a05:6602:cc:: with SMTP id z12mr2555790ioe.86.1562624513611;
+ Mon, 08 Jul 2019 15:21:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0892B182-A1CC-11E9-807A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <cover.1560898723.git.matheus.bernardino@usp.br>
+ <5a678ee74de42f1373deeed718fa24d368347d13.1560898723.git.matheus.bernardino@usp.br>
+ <20190703085726.GN21574@szeder.dev>
+In-Reply-To: <20190703085726.GN21574@szeder.dev>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 8 Jul 2019 19:21:42 -0300
+Message-ID: <CAHd-oW4kFtCaogk17r4r1+b3Z_j75+_vcMfunRr5M1XE0VKU8Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v7 06/10] dir-iterator: add flags parameter to dir_iterator_begin
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Thanks for the review. I'll address those issues in v8.
 
->> * pw/rebase-progress-test-cleanup (2019-07-01) 1 commit
->>  - t3420: remove progress lines before comparing output
->>  (this branch uses sg/rebase-progress.)
->> 
->>  Test cleanup.
->> 
->>  Will merge to 'next'.
+Best,
+Matheus
+
+
+On Wed, Jul 3, 2019 at 5:57 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
+te:
 >
-> I've just posted an update to this which avoids the repeated printf calls
-
-Thanks.  Picked up the one from "Date: Thu Jul 4 02:47:02 2019 -0700".
-
+> > diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
+> > index c739ed7911..8f996a31fa 100755
+> > --- a/t/t0066-dir-iterator.sh
+> > +++ b/t/t0066-dir-iterator.sh
+> > @@ -65,4 +65,99 @@ test_expect_success 'begin should fail upon non dire=
+ctory paths' '
+> >       test_cmp expected-non-dir-output actual-non-dir-output
+> >  '
+> >
+> > +test_expect_success POSIXPERM,SANITY 'advance should not fail on error=
+s by default' '
+> > +     cat >expected-no-permissions-output <<-EOF &&
+> > +     [d] (a) [a] ./dir3/a
+> > +     EOF
+> > +
+> > +     mkdir -p dir3/a &&
+> > +     > dir3/a/b &&
+>
+> Style nit: space between redirection op and pathname.
+>
+> > +     chmod 0 dir3/a &&
+> > +
+> > +     test-tool dir-iterator ./dir3 >actual-no-permissions-output &&
+> > +     test_cmp expected-no-permissions-output actual-no-permissions-out=
+put &&
+> > +     chmod 755 dir3/a &&
+> > +     rm -rf dir3
+> > +'
+> > +
+> > +test_expect_success POSIXPERM,SANITY 'advance should fail on errors, w=
+/ pedantic flag' '
+> > +     cat >expected-no-permissions-pedantic-output <<-EOF &&
+> > +     [d] (a) [a] ./dir3/a
+> > +     dir_iterator_advance failure
+> > +     EOF
+> > +
+> > +     mkdir -p dir3/a &&
+> > +     > dir3/a/b &&
+>
+> Likewise.
+>
+> > +     chmod 0 dir3/a &&
+> > +
+> > +     test_must_fail test-tool dir-iterator --pedantic ./dir3 \
+> > +             >actual-no-permissions-pedantic-output &&
+> > +     test_cmp expected-no-permissions-pedantic-output \
+> > +             actual-no-permissions-pedantic-output &&
+> > +     chmod 755 dir3/a &&
+> > +     rm -rf dir3
+> > +'
+> > +
+> > +test_expect_success SYMLINKS 'setup dirs with symlinks' '
+> > +     mkdir -p dir4/a &&
+> > +     mkdir -p dir4/b/c &&
+> > +     >dir4/a/d &&
+> > +     ln -s d dir4/a/e &&
+> > +     ln -s ../b dir4/a/f &&
+> > +
+> > +     mkdir -p dir5/a/b &&
+> > +     mkdir -p dir5/a/c &&
+> > +     ln -s ../c dir5/a/b/d &&
+> > +     ln -s ../ dir5/a/b/e &&
+> > +     ln -s ../../ dir5/a/b/f
+> > +'
+> > +
+> > +test_expect_success SYMLINKS 'dir-iterator should not follow symlinks =
+by default' '
+> > +     cat >expected-no-follow-sorted-output <<-EOF &&
+> > +     [d] (a) [a] ./dir4/a
+> > +     [d] (b) [b] ./dir4/b
+> > +     [d] (b/c) [c] ./dir4/b/c
+> > +     [f] (a/d) [d] ./dir4/a/d
+> > +     [s] (a/e) [e] ./dir4/a/e
+> > +     [s] (a/f) [f] ./dir4/a/f
+> > +     EOF
+> > +
+> > +     test-tool dir-iterator ./dir4 >out &&
+> > +     sort <out >actual-no-follow-sorted-output &&
+>
+> Unnecessary redirection, 'sort' is capable to open the file on its
+> own.
+>
+> > +
+> > +     test_cmp expected-no-follow-sorted-output actual-no-follow-sorted=
+-output
+> > +'
+> > +
+> > +test_expect_success SYMLINKS 'dir-iterator should follow symlinks w/ f=
+ollow flag' '
+> > +     cat >expected-follow-sorted-output <<-EOF &&
+> > +     [d] (a) [a] ./dir4/a
+> > +     [d] (a/f) [f] ./dir4/a/f
+> > +     [d] (a/f/c) [c] ./dir4/a/f/c
+> > +     [d] (b) [b] ./dir4/b
+> > +     [d] (b/c) [c] ./dir4/b/c
+> > +     [f] (a/d) [d] ./dir4/a/d
+> > +     [f] (a/e) [e] ./dir4/a/e
+> > +     EOF
+> > +
+> > +     test-tool dir-iterator --follow-symlinks ./dir4 >out &&
+> > +     sort <out >actual-follow-sorted-output &&
+>
+> Likewise.
+>
+> > +     test_cmp expected-follow-sorted-output actual-follow-sorted-outpu=
+t
+> > +'
+> > +
+> > +
+> > +test_expect_success SYMLINKS 'dir-iterator should ignore recursive sym=
+links w/ follow flag' '
+> > +     cat >expected-rec-symlinks-sorted-output <<-EOF &&
+> > +     [d] (a) [a] ./dir5/a
+> > +     [d] (a/b) [b] ./dir5/a/b
+> > +     [d] (a/b/d) [d] ./dir5/a/b/d
+> > +     [d] (a/c) [c] ./dir5/a/c
+> > +     EOF
+> > +
+> > +     test-tool dir-iterator --follow-symlinks ./dir5 >out &&
+> > +     sort <out >actual-rec-symlinks-sorted-output &&
+>
+> Likewise.
+>
+> > +     test_cmp expected-rec-symlinks-sorted-output actual-rec-symlinks-=
+sorted-output
+> > +'
+> > +
+> >  test_done
+> > --
+> > 2.22.0
+> >
