@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E12FA1F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 16:38:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 095DF1F4BF
+	for <e@80x24.org>; Mon,  8 Jul 2019 16:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730621AbfGHQiI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 12:38:08 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39827 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730495AbfGHQiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:38:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x4so17868131wrt.6
-        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:38:04 -0700 (PDT)
+        id S1730472AbfGHQiC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 12:38:02 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40165 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730436AbfGHQiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 12:38:01 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r1so11536352wrl.7
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ke93K8MCfZTOpFN6h+SvDkqgwsTG3sIHO4fNip/unDI=;
-        b=Xj2yHWSWZViG8zOFJDKr+FQnRz9hFBzy4ENMBZoVcW6T43zi8EaLc7zGskNXkoSevV
-         xXew2LvQYDr0QKFJ+civ0PEmdRGa3ALF3H2z2AeneprFjrVaRw6jEoaOMHlzxFW0SRy+
-         oF6M5pRigfDPm2jSyax/YfBaab3KPaYSGYeLVq0nrlg6bD95DrrCglt7PWhufL/3WYDc
-         8XqAw/JVvHYDnj6l9IMzq2zQYmyps+aeF7DxyGm6Gon5HI4e6nzuB+jRrBNAusgluXxN
-         qXv9xumHvYLOV0z2zekDR5vK+b4kP0+v1EUbKRJDMf/1Q9a9Jz+s/Na3gC/edLQUCN9W
-         ifjA==
+        bh=GHvYJZH4IZ7ELFv3K/QTLwxkP5gJcypPwWDqRBGoxgc=;
+        b=uCsrf9jVXrFvs/J515RSwoCM2AgX0XSomrlNtYeFHByBDuXdpolQwpfcHDaBM9tDHE
+         hPMGcfXIMgbxdHqUnTjorw/KTBjblHYxcsXtPi3mvVIDK1+/59upn45YuLJdGiQ/rDfk
+         Z03bXJnBtg58mtl5NNTKuIlaEq3QLFLU7whwhJuO3wSvj70D0D67fL1vmj51v6opVbVD
+         hQBidOR26EG23Xa2t+/EM9KJjXp+epGQvJWqvZEMJjKpj85XDG27gr6H5OqxOlLD+MI7
+         lC6jkxLGXw1gh6tSFGLigODdTlcAC8f8dmLzIf0/ehPu9zk/KKojTn11cZhCDZad70Vr
+         qzdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ke93K8MCfZTOpFN6h+SvDkqgwsTG3sIHO4fNip/unDI=;
-        b=Vu4JVuOMWPCfclMLoe5RbQ/ULl6WPwQqZtBRNmlQLcnF9oW8oC8v6SNwjW+62TKoke
-         wcKI0JItSf5Epxh503L4YqJ6c68iePD3a7B5I7sPoMJFhLESw6D76jtpPYTPr6syJGoN
-         xR68EI1uJEzFIAmIzM7w3HwkTtHAZXvkJ1udOUErpXA3eA/xtry6qqiUTUZn7JZ27T0p
-         4Q7p19WsBo+mhAv5StDP153hUfcgFZI6DDWMZBWTNgSo5hrlu1+z2+RhZWzdKlk+/QuG
-         DPDRPWy2eWa3FZZxQc6vdBH2y36sejiWSDffT3e/j09AUVBp7O5VruKudt4QSHaqI36d
-         rRxg==
-X-Gm-Message-State: APjAAAXgUlPb8MCAnnhmBKC9JkT+H4keBTyk1WSD5aPOoA9jqzv/xi82
-        l23ohcezBkPiBaOh74oKEgOvInK0
-X-Google-Smtp-Source: APXvYqwS0SD2GPHUs0PJklzAR+UbHfQl2olO7gm+S7DuD1iusHaZ0+McDpjRZTZ7EDxTlXw4hceNMA==
-X-Received: by 2002:adf:e6c5:: with SMTP id y5mr20549623wrm.235.1562603883782;
-        Mon, 08 Jul 2019 09:38:03 -0700 (PDT)
+        bh=GHvYJZH4IZ7ELFv3K/QTLwxkP5gJcypPwWDqRBGoxgc=;
+        b=Oef3uaHOSlzZldw5VMC/7F/6WK0nm1LissVik1YEM9UPbrx0ZdiOEJiOwoPrlG0lqu
+         GwFB7BGyFym5O/DdrvvTZPuGDntyYG0d/+CE0xRDr7h3VKn/bykHRTShM2zA3gLggwA4
+         OwedexawencSpNDMUXn1fFsc8h2JkYEXLY3KzlLmZk9R1PFCf1PI/L2jB3Iv5xddHe5x
+         qubnvn/rJaLwusjU4IzYTeK6Dnmdx4tO+zdlTmjGwQluV3/wrPlu8e8PKfJf5sUXGMwS
+         EuVXFhy3ltHMNFAZgaRLgkQez+vRYXkz1nKTVJR6UOTlACuisweqZ7WRE3/uOGoG+eZL
+         taVA==
+X-Gm-Message-State: APjAAAXAmB5N7GALItHp/O7kqsP3eSL6+llSwWBaVTHPgozldPbZMFZO
+        nMqJGtd7cZqfZSr+yUPykKHa9jvZ
+X-Google-Smtp-Source: APXvYqz9mOHt6yuEPdPJ6y2upqSWbTnrx8lXQ9x2j4Z/BIFtdCjkt41PpbmYjVAJlpfAYCNX/wNMEA==
+X-Received: by 2002:adf:d852:: with SMTP id k18mr20627375wrl.76.1562603878145;
+        Mon, 08 Jul 2019 09:37:58 -0700 (PDT)
 Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id 66sm85893wma.11.2019.07.08.09.38.02
+        by smtp.gmail.com with ESMTPSA id h19sm46804544wrb.81.2019.07.08.09.37.57
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Jul 2019 09:38:03 -0700 (PDT)
+        Mon, 08 Jul 2019 09:37:57 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 09/14] range-diff: split lines manually
-Date:   Mon,  8 Jul 2019 17:33:10 +0100
-Message-Id: <20190708163315.29912-10-t.gummerer@gmail.com>
+Subject: [PATCH v3 05/14] apply: only pass required data to find_name_*
+Date:   Mon,  8 Jul 2019 17:33:06 +0100
+Message-Id: <20190708163315.29912-6-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190708163315.29912-1-t.gummerer@gmail.com>
 References: <20190705170630.27500-1-t.gummerer@gmail.com>
@@ -72,165 +72,199 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently range-diff uses the 'strbuf_getline()' function for doing
-its line by line processing.  In a future patch we want to do parts of
-that parsing using the 'parse_git_diff_header()' function.  That
-function does its own line by line reading of the input, and doesn't
-use strbufs.  This doesn't match with how we do the line-by-line
-processing in range-diff currently.
+Currently the 'find_name_*()' functions take 'struct apply_state' as
+parameter, even though they only need the 'root' member from that
+struct.
 
-Switch range-diff to do our own line by line parsing, so we can re-use
-the 'parse_git_diff_header()' function later.
+These functions are in the callchain of 'parse_git_header()', which we
+want to make more generally useful in a subsequent commit.  To make
+that happen we only want to pass in the required data to
+'parse_git_header()', and not the whole 'struct apply_state', and thus
+we want functions in the callchain of 'parse_git_header()' to only
+take arguments they really need.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- range-diff.c | 68 ++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 42 insertions(+), 26 deletions(-)
+ apply.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/range-diff.c b/range-diff.c
-index 9242b8975f..784fac301b 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -24,6 +24,17 @@ struct patch_util {
- 	struct object_id oid;
- };
+diff --git a/apply.c b/apply.c
+index 1602fd5db0..3cd4e3d3b3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -469,7 +469,7 @@ static char *squash_slash(char *name)
+ 	return name;
+ }
  
-+static size_t find_end_of_line(char *buffer, unsigned long size)
-+{
-+	char *eol = memchr(buffer, '\n', size);
-+
-+	if (!eol)
-+		return size;
-+
-+	*eol = '\0';
-+	return eol + 1 - buffer;
-+}
-+
- /*
-  * Reads the patches into a string list, with the `util` field being populated
-  * as struct object_id (will need to be free()d).
-@@ -31,10 +42,12 @@ struct patch_util {
- static int read_patches(const char *range, struct string_list *list)
+-static char *find_name_gnu(struct apply_state *state,
++static char *find_name_gnu(struct strbuf *root,
+ 			   const char *line,
+ 			   int p_value)
  {
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	FILE *in;
--	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
- 	struct patch_util *util = NULL;
- 	int in_header = 1;
-+	char *line;
-+	int offset, len;
-+	size_t size;
+@@ -495,8 +495,8 @@ static char *find_name_gnu(struct apply_state *state,
+ 	}
  
- 	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
- 			"--reverse", "--date-order", "--decorate=no",
-@@ -54,17 +67,20 @@ static int read_patches(const char *range, struct string_list *list)
+ 	strbuf_remove(&name, 0, cp - name.buf);
+-	if (state->root.len)
+-		strbuf_insert(&name, 0, state->root.buf, state->root.len);
++	if (root->len)
++		strbuf_insert(&name, 0, root->buf, root->len);
+ 	return squash_slash(strbuf_detach(&name, NULL));
+ }
  
- 	if (start_command(&cp))
- 		return error_errno(_("could not start `log`"));
--	in = fdopen(cp.out, "r");
--	if (!in) {
-+	if (strbuf_read(&contents, cp.out, 0) < 0) {
- 		error_errno(_("could not read `log` output"));
- 		finish_command(&cp);
+@@ -659,7 +659,7 @@ static size_t diff_timestamp_len(const char *line, size_t len)
+ 	return line + len - end;
+ }
+ 
+-static char *find_name_common(struct apply_state *state,
++static char *find_name_common(struct strbuf *root,
+ 			      const char *line,
+ 			      const char *def,
+ 			      int p_value,
+@@ -702,30 +702,30 @@ static char *find_name_common(struct apply_state *state,
+ 			return squash_slash(xstrdup(def));
+ 	}
+ 
+-	if (state->root.len) {
+-		char *ret = xstrfmt("%s%.*s", state->root.buf, len, start);
++	if (root->len) {
++		char *ret = xstrfmt("%s%.*s", root->buf, len, start);
+ 		return squash_slash(ret);
+ 	}
+ 
+ 	return squash_slash(xmemdupz(start, len));
+ }
+ 
+-static char *find_name(struct apply_state *state,
++static char *find_name(struct strbuf *root,
+ 		       const char *line,
+ 		       char *def,
+ 		       int p_value,
+ 		       int terminate)
+ {
+ 	if (*line == '"') {
+-		char *name = find_name_gnu(state, line, p_value);
++		char *name = find_name_gnu(root, line, p_value);
+ 		if (name)
+ 			return name;
+ 	}
+ 
+-	return find_name_common(state, line, def, p_value, NULL, terminate);
++	return find_name_common(root, line, def, p_value, NULL, terminate);
+ }
+ 
+-static char *find_name_traditional(struct apply_state *state,
++static char *find_name_traditional(struct strbuf *root,
+ 				   const char *line,
+ 				   char *def,
+ 				   int p_value)
+@@ -734,7 +734,7 @@ static char *find_name_traditional(struct apply_state *state,
+ 	size_t date_len;
+ 
+ 	if (*line == '"') {
+-		char *name = find_name_gnu(state, line, p_value);
++		char *name = find_name_gnu(root, line, p_value);
+ 		if (name)
+ 			return name;
+ 	}
+@@ -742,10 +742,10 @@ static char *find_name_traditional(struct apply_state *state,
+ 	len = strchrnul(line, '\n') - line;
+ 	date_len = diff_timestamp_len(line, len);
+ 	if (!date_len)
+-		return find_name_common(state, line, def, p_value, NULL, TERM_TAB);
++		return find_name_common(root, line, def, p_value, NULL, TERM_TAB);
+ 	len -= date_len;
+ 
+-	return find_name_common(state, line, def, p_value, line + len, 0);
++	return find_name_common(root, line, def, p_value, line + len, 0);
+ }
+ 
+ /*
+@@ -759,7 +759,7 @@ static int guess_p_value(struct apply_state *state, const char *nameline)
+ 
+ 	if (is_dev_null(nameline))
  		return -1;
+-	name = find_name_traditional(state, nameline, NULL, 0);
++	name = find_name_traditional(&state->root, nameline, NULL, 0);
+ 	if (!name)
+ 		return -1;
+ 	cp = strchr(name, '/');
+@@ -883,17 +883,17 @@ static int parse_traditional_patch(struct apply_state *state,
+ 	if (is_dev_null(first)) {
+ 		patch->is_new = 1;
+ 		patch->is_delete = 0;
+-		name = find_name_traditional(state, second, NULL, state->p_value);
++		name = find_name_traditional(&state->root, second, NULL, state->p_value);
+ 		patch->new_name = name;
+ 	} else if (is_dev_null(second)) {
+ 		patch->is_new = 0;
+ 		patch->is_delete = 1;
+-		name = find_name_traditional(state, first, NULL, state->p_value);
++		name = find_name_traditional(&state->root, first, NULL, state->p_value);
+ 		patch->old_name = name;
+ 	} else {
+ 		char *first_name;
+-		first_name = find_name_traditional(state, first, NULL, state->p_value);
+-		name = find_name_traditional(state, second, first_name, state->p_value);
++		first_name = find_name_traditional(&state->root, first, NULL, state->p_value);
++		name = find_name_traditional(&state->root, second, first_name, state->p_value);
+ 		free(first_name);
+ 		if (has_epoch_timestamp(first)) {
+ 			patch->is_new = 1;
+@@ -940,7 +940,7 @@ static int gitdiff_verify_name(struct apply_state *state,
+ 			       int side)
+ {
+ 	if (!*name && !isnull) {
+-		*name = find_name(state, line, NULL, state->p_value, TERM_TAB);
++		*name = find_name(&state->root, line, NULL, state->p_value, TERM_TAB);
+ 		return 0;
  	}
  
--	while (strbuf_getline(&line, in) != EOF) {
-+	line = contents.buf;
-+	size = contents.len;
-+	for (offset = 0; size > 0; offset += len, size -= len, line += len) {
- 		const char *p;
+@@ -949,7 +949,7 @@ static int gitdiff_verify_name(struct apply_state *state,
+ 		if (isnull)
+ 			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+ 				     *name, state->linenr);
+-		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
++		another = find_name(&state->root, line, NULL, state->p_value, TERM_TAB);
+ 		if (!another || strcmp(another, *name)) {
+ 			free(another);
+ 			return error((side == DIFF_NEW_NAME) ?
+@@ -1032,7 +1032,7 @@ static int gitdiff_copysrc(struct apply_state *state,
+ {
+ 	patch->is_copy = 1;
+ 	free(patch->old_name);
+-	patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->old_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
  
--		if (skip_prefix(line.buf, "commit ", &p)) {
-+		len = find_end_of_line(line, size);
-+		line[len - 1] = '\0';
-+		if (skip_prefix(line, "commit ", &p)) {
- 			if (util) {
- 				string_list_append(list, buf.buf)->util = util;
- 				strbuf_reset(&buf);
-@@ -75,8 +91,7 @@ static int read_patches(const char *range, struct string_list *list)
- 				free(util);
- 				string_list_clear(list, 1);
- 				strbuf_release(&buf);
--				strbuf_release(&line);
--				fclose(in);
-+				strbuf_release(&contents);
- 				finish_command(&cp);
- 				return -1;
- 			}
-@@ -85,26 +100,28 @@ static int read_patches(const char *range, struct string_list *list)
- 			continue;
- 		}
+@@ -1042,7 +1042,7 @@ static int gitdiff_copydst(struct apply_state *state,
+ {
+ 	patch->is_copy = 1;
+ 	free(patch->new_name);
+-	patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->new_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
  
--		if (starts_with(line.buf, "diff --git")) {
-+		if (starts_with(line, "diff --git")) {
- 			in_header = 0;
- 			strbuf_addch(&buf, '\n');
- 			if (!util->diff_offset)
- 				util->diff_offset = buf.len;
- 			strbuf_addch(&buf, ' ');
--			strbuf_addbuf(&buf, &line);
-+			strbuf_addstr(&buf, line);
- 		} else if (in_header) {
--			if (starts_with(line.buf, "Author: ")) {
--				strbuf_addbuf(&buf, &line);
-+			if (starts_with(line, "Author: ")) {
-+				strbuf_addstr(&buf, line);
- 				strbuf_addstr(&buf, "\n\n");
--			} else if (starts_with(line.buf, "    ")) {
--				strbuf_rtrim(&line);
--				strbuf_addbuf(&buf, &line);
-+			} else if (starts_with(line, "    ")) {
-+				p = line + len - 2;
-+				while (isspace(*p) && p >= line)
-+					p--;
-+				strbuf_add(&buf, line, p - line + 1);
- 				strbuf_addch(&buf, '\n');
- 			}
- 			continue;
--		} else if (starts_with(line.buf, "@@ "))
-+		} else if (starts_with(line, "@@ "))
- 			strbuf_addstr(&buf, "@@");
--		else if (!line.buf[0] || starts_with(line.buf, "index "))
-+		else if (!line[0] || starts_with(line, "index "))
- 			/*
- 			 * A completely blank (not ' \n', which is context)
- 			 * line is not valid in a diff.  We skip it
-@@ -117,25 +134,24 @@ static int read_patches(const char *range, struct string_list *list)
- 			 * we are not interested.
- 			 */
- 			continue;
--		else if (line.buf[0] == '>') {
-+		else if (line[0] == '>') {
- 			strbuf_addch(&buf, '+');
--			strbuf_add(&buf, line.buf + 1, line.len - 1);
--		} else if (line.buf[0] == '<') {
-+			strbuf_addstr(&buf, line + 1);
-+		} else if (line[0] == '<') {
- 			strbuf_addch(&buf, '-');
--			strbuf_add(&buf, line.buf + 1, line.len - 1);
--		} else if (line.buf[0] == '#') {
-+			strbuf_addstr(&buf, line + 1);
-+		} else if (line[0] == '#') {
- 			strbuf_addch(&buf, ' ');
--			strbuf_add(&buf, line.buf + 1, line.len - 1);
-+			strbuf_addstr(&buf, line + 1);
- 		} else {
- 			strbuf_addch(&buf, ' ');
--			strbuf_addbuf(&buf, &line);
-+			strbuf_addstr(&buf, line);
- 		}
+@@ -1052,7 +1052,7 @@ static int gitdiff_renamesrc(struct apply_state *state,
+ {
+ 	patch->is_rename = 1;
+ 	free(patch->old_name);
+-	patch->old_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->old_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
  
- 		strbuf_addch(&buf, '\n');
- 		util->diffsize++;
- 	}
--	fclose(in);
--	strbuf_release(&line);
-+	strbuf_release(&contents);
+@@ -1062,7 +1062,7 @@ static int gitdiff_renamedst(struct apply_state *state,
+ {
+ 	patch->is_rename = 1;
+ 	free(patch->new_name);
+-	patch->new_name = find_name(state, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->new_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
  
- 	if (util)
- 		string_list_append(list, buf.buf)->util = util;
 -- 
 2.22.0.510.g264f2c817a
 
