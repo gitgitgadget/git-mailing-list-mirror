@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF921F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 16:37:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E12FA1F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 16:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730427AbfGHQh5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 12:37:57 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33476 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbfGHQh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:37:57 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n9so17909698wru.0
-        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:37:56 -0700 (PDT)
+        id S1730621AbfGHQiI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 12:38:08 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39827 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730495AbfGHQiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 12:38:06 -0400
+Received: by mail-wr1-f65.google.com with SMTP id x4so17868131wrt.6
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aZ9kFX0N72mcSGgn7JN2fNtiXauZXqmYq3Ey8+GVM3Y=;
-        b=oQRFcIFYb3ONF7X7nLmIyH/7xs89hWpG59Zv6saDE3cWBxduj9ECOJp2G1kCGziD/z
-         7SKk9Ps43k8uasGj8sFgYPuBNJzB/+cD2jAKOZiQVBZo1CtKdyg6xZsKf9pq1xgTc6jT
-         cF8VnGxx91G2g3GISLHnL3FS+qWLmcdxoECxP2tgR8XNzDH6+9AjSaaSaGOrTyTiEZ71
-         guB3YT3AG2fQ1TIe/u2YhcceBCsOzM12v3oJBa3DbOs2AqaC90NS8lmFFf3pHmlMf9BP
-         iFXNU3Tf2ScCZ3iG0guFoWZoEUZjF7rfmjebzKLCgXVMjpOPSCSYZSOeoLL2wfh4PR02
-         Jbig==
+        bh=ke93K8MCfZTOpFN6h+SvDkqgwsTG3sIHO4fNip/unDI=;
+        b=Xj2yHWSWZViG8zOFJDKr+FQnRz9hFBzy4ENMBZoVcW6T43zi8EaLc7zGskNXkoSevV
+         xXew2LvQYDr0QKFJ+civ0PEmdRGa3ALF3H2z2AeneprFjrVaRw6jEoaOMHlzxFW0SRy+
+         oF6M5pRigfDPm2jSyax/YfBaab3KPaYSGYeLVq0nrlg6bD95DrrCglt7PWhufL/3WYDc
+         8XqAw/JVvHYDnj6l9IMzq2zQYmyps+aeF7DxyGm6Gon5HI4e6nzuB+jRrBNAusgluXxN
+         qXv9xumHvYLOV0z2zekDR5vK+b4kP0+v1EUbKRJDMf/1Q9a9Jz+s/Na3gC/edLQUCN9W
+         ifjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aZ9kFX0N72mcSGgn7JN2fNtiXauZXqmYq3Ey8+GVM3Y=;
-        b=XQBzVI93U+g7O1xl1UuUxQconu7C1/Cs3fWZjg49b+VqofPkX5UySP65nrc/9V/J2f
-         1bzMHyrZeTkYthQKBNoEy41QCC0tGRVogqY1nPhPCmLBYs0k680/HQgZQFjoGpB2Sftd
-         WzFd9evf22Oh/tYkQe6s0RLwA74llrtG9+A4qc5hl263B8NK/WrE4tIZXIb4cO1ZlpdB
-         Nl2IwVykLd2G4jNtlEGwxiW+1H2asOdUcLU61tpho7Od7Lyb+bqyfQ6xIIGN4zRcFdRp
-         M5zUmr9qN+2EL2ctPJDLPj2DOnkQ7m4lPicJB8NUm9kzzJu8saHdtYDohsAwGN7RQ7J4
-         ks/g==
-X-Gm-Message-State: APjAAAX1oXse9LdRfA+hWecSDx9myjTYcjR1ERQhfq1fML57+cnXFry5
-        LIDoxdyT+3bSwEGAYPOeRg/3jCeX
-X-Google-Smtp-Source: APXvYqx8b9Pq49IVR6hqZzc8+caVfrV5K8edcU/a8Zf8KPcbkKQJLNWT4VYOsCyuwjlxzP0CPoAIRA==
-X-Received: by 2002:adf:f182:: with SMTP id h2mr13990794wro.132.1562603875261;
-        Mon, 08 Jul 2019 09:37:55 -0700 (PDT)
+        bh=ke93K8MCfZTOpFN6h+SvDkqgwsTG3sIHO4fNip/unDI=;
+        b=Vu4JVuOMWPCfclMLoe5RbQ/ULl6WPwQqZtBRNmlQLcnF9oW8oC8v6SNwjW+62TKoke
+         wcKI0JItSf5Epxh503L4YqJ6c68iePD3a7B5I7sPoMJFhLESw6D76jtpPYTPr6syJGoN
+         xR68EI1uJEzFIAmIzM7w3HwkTtHAZXvkJ1udOUErpXA3eA/xtry6qqiUTUZn7JZ27T0p
+         4Q7p19WsBo+mhAv5StDP153hUfcgFZI6DDWMZBWTNgSo5hrlu1+z2+RhZWzdKlk+/QuG
+         DPDRPWy2eWa3FZZxQc6vdBH2y36sejiWSDffT3e/j09AUVBp7O5VruKudt4QSHaqI36d
+         rRxg==
+X-Gm-Message-State: APjAAAXgUlPb8MCAnnhmBKC9JkT+H4keBTyk1WSD5aPOoA9jqzv/xi82
+        l23ohcezBkPiBaOh74oKEgOvInK0
+X-Google-Smtp-Source: APXvYqwS0SD2GPHUs0PJklzAR+UbHfQl2olO7gm+S7DuD1iusHaZ0+McDpjRZTZ7EDxTlXw4hceNMA==
+X-Received: by 2002:adf:e6c5:: with SMTP id y5mr20549623wrm.235.1562603883782;
+        Mon, 08 Jul 2019 09:38:03 -0700 (PDT)
 Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id x129sm40204wmg.44.2019.07.08.09.37.54
+        by smtp.gmail.com with ESMTPSA id 66sm85893wma.11.2019.07.08.09.38.02
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Jul 2019 09:37:54 -0700 (PDT)
+        Mon, 08 Jul 2019 09:38:03 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 03/14] apply: only pass required data to git_header_name
-Date:   Mon,  8 Jul 2019 17:33:04 +0100
-Message-Id: <20190708163315.29912-4-t.gummerer@gmail.com>
+Subject: [PATCH v3 09/14] range-diff: split lines manually
+Date:   Mon,  8 Jul 2019 17:33:10 +0100
+Message-Id: <20190708163315.29912-10-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190708163315.29912-1-t.gummerer@gmail.com>
 References: <20190705170630.27500-1-t.gummerer@gmail.com>
@@ -72,97 +72,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently the 'git_header_name()' function takes 'struct apply_state'
-as parameter, even though it only needs the p_value from that struct.
+Currently range-diff uses the 'strbuf_getline()' function for doing
+its line by line processing.  In a future patch we want to do parts of
+that parsing using the 'parse_git_diff_header()' function.  That
+function does its own line by line reading of the input, and doesn't
+use strbufs.  This doesn't match with how we do the line-by-line
+processing in range-diff currently.
 
-This function is in the callchain of 'parse_git_header()', which we
-want to make more generally useful in a subsequent commit.  To make
-that happen we only want to pass in the required data to
-'parse_git_header()', and not the whole 'struct apply_state', and thus
-we want functions in the callchain of 'parse_git_header()' to only
-take arguments they really need.
+Switch range-diff to do our own line by line parsing, so we can re-use
+the 'parse_git_diff_header()' function later.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- apply.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ range-diff.c | 68 ++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 42 insertions(+), 26 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index fc7083fcbc..ac668e754d 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1164,7 +1164,7 @@ static const char *skip_tree_prefix(int p_value,
-  * creation or deletion of an empty file.  In any of these cases,
-  * both sides are the same name under a/ and b/ respectively.
-  */
--static char *git_header_name(struct apply_state *state,
-+static char *git_header_name(int p_value,
- 			     const char *line,
- 			     int llen)
+diff --git a/range-diff.c b/range-diff.c
+index 9242b8975f..784fac301b 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -24,6 +24,17 @@ struct patch_util {
+ 	struct object_id oid;
+ };
+ 
++static size_t find_end_of_line(char *buffer, unsigned long size)
++{
++	char *eol = memchr(buffer, '\n', size);
++
++	if (!eol)
++		return size;
++
++	*eol = '\0';
++	return eol + 1 - buffer;
++}
++
+ /*
+  * Reads the patches into a string list, with the `util` field being populated
+  * as struct object_id (will need to be free()d).
+@@ -31,10 +42,12 @@ struct patch_util {
+ static int read_patches(const char *range, struct string_list *list)
  {
-@@ -1184,7 +1184,7 @@ static char *git_header_name(struct apply_state *state,
- 			goto free_and_fail1;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	FILE *in;
+-	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
+ 	struct patch_util *util = NULL;
+ 	int in_header = 1;
++	char *line;
++	int offset, len;
++	size_t size;
  
- 		/* strip the a/b prefix including trailing slash */
--		cp = skip_tree_prefix(state->p_value, first.buf, first.len);
-+		cp = skip_tree_prefix(p_value, first.buf, first.len);
- 		if (!cp)
- 			goto free_and_fail1;
- 		strbuf_remove(&first, 0, cp - first.buf);
-@@ -1201,7 +1201,7 @@ static char *git_header_name(struct apply_state *state,
- 		if (*second == '"') {
- 			if (unquote_c_style(&sp, second, NULL))
- 				goto free_and_fail1;
--			cp = skip_tree_prefix(state->p_value, sp.buf, sp.len);
-+			cp = skip_tree_prefix(p_value, sp.buf, sp.len);
- 			if (!cp)
- 				goto free_and_fail1;
- 			/* They must match, otherwise ignore */
-@@ -1212,7 +1212,7 @@ static char *git_header_name(struct apply_state *state,
- 		}
+ 	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+ 			"--reverse", "--date-order", "--decorate=no",
+@@ -54,17 +67,20 @@ static int read_patches(const char *range, struct string_list *list)
  
- 		/* unquoted second */
--		cp = skip_tree_prefix(state->p_value, second, line + llen - second);
-+		cp = skip_tree_prefix(p_value, second, line + llen - second);
- 		if (!cp)
- 			goto free_and_fail1;
- 		if (line + llen - cp != first.len ||
-@@ -1227,7 +1227,7 @@ static char *git_header_name(struct apply_state *state,
+ 	if (start_command(&cp))
+ 		return error_errno(_("could not start `log`"));
+-	in = fdopen(cp.out, "r");
+-	if (!in) {
++	if (strbuf_read(&contents, cp.out, 0) < 0) {
+ 		error_errno(_("could not read `log` output"));
+ 		finish_command(&cp);
+ 		return -1;
  	}
  
- 	/* unquoted first name */
--	name = skip_tree_prefix(state->p_value, line, llen);
-+	name = skip_tree_prefix(p_value, line, llen);
- 	if (!name)
- 		return NULL;
+-	while (strbuf_getline(&line, in) != EOF) {
++	line = contents.buf;
++	size = contents.len;
++	for (offset = 0; size > 0; offset += len, size -= len, line += len) {
+ 		const char *p;
  
-@@ -1243,7 +1243,7 @@ static char *git_header_name(struct apply_state *state,
- 			if (unquote_c_style(&sp, second, NULL))
- 				goto free_and_fail2;
+-		if (skip_prefix(line.buf, "commit ", &p)) {
++		len = find_end_of_line(line, size);
++		line[len - 1] = '\0';
++		if (skip_prefix(line, "commit ", &p)) {
+ 			if (util) {
+ 				string_list_append(list, buf.buf)->util = util;
+ 				strbuf_reset(&buf);
+@@ -75,8 +91,7 @@ static int read_patches(const char *range, struct string_list *list)
+ 				free(util);
+ 				string_list_clear(list, 1);
+ 				strbuf_release(&buf);
+-				strbuf_release(&line);
+-				fclose(in);
++				strbuf_release(&contents);
+ 				finish_command(&cp);
+ 				return -1;
+ 			}
+@@ -85,26 +100,28 @@ static int read_patches(const char *range, struct string_list *list)
+ 			continue;
+ 		}
  
--			np = skip_tree_prefix(state->p_value, sp.buf, sp.len);
-+			np = skip_tree_prefix(p_value, sp.buf, sp.len);
- 			if (!np)
- 				goto free_and_fail2;
- 
-@@ -1287,7 +1287,7 @@ static char *git_header_name(struct apply_state *state,
+-		if (starts_with(line.buf, "diff --git")) {
++		if (starts_with(line, "diff --git")) {
+ 			in_header = 0;
+ 			strbuf_addch(&buf, '\n');
+ 			if (!util->diff_offset)
+ 				util->diff_offset = buf.len;
+ 			strbuf_addch(&buf, ' ');
+-			strbuf_addbuf(&buf, &line);
++			strbuf_addstr(&buf, line);
+ 		} else if (in_header) {
+-			if (starts_with(line.buf, "Author: ")) {
+-				strbuf_addbuf(&buf, &line);
++			if (starts_with(line, "Author: ")) {
++				strbuf_addstr(&buf, line);
+ 				strbuf_addstr(&buf, "\n\n");
+-			} else if (starts_with(line.buf, "    ")) {
+-				strbuf_rtrim(&line);
+-				strbuf_addbuf(&buf, &line);
++			} else if (starts_with(line, "    ")) {
++				p = line + len - 2;
++				while (isspace(*p) && p >= line)
++					p--;
++				strbuf_add(&buf, line, p - line + 1);
+ 				strbuf_addch(&buf, '\n');
+ 			}
+ 			continue;
+-		} else if (starts_with(line.buf, "@@ "))
++		} else if (starts_with(line, "@@ "))
+ 			strbuf_addstr(&buf, "@@");
+-		else if (!line.buf[0] || starts_with(line.buf, "index "))
++		else if (!line[0] || starts_with(line, "index "))
+ 			/*
+ 			 * A completely blank (not ' \n', which is context)
+ 			 * line is not valid in a diff.  We skip it
+@@ -117,25 +134,24 @@ static int read_patches(const char *range, struct string_list *list)
+ 			 * we are not interested.
  			 */
- 			if (!name[len + 1])
- 				return NULL; /* no postimage name */
--			second = skip_tree_prefix(state->p_value, name + len + 1,
-+			second = skip_tree_prefix(p_value, name + len + 1,
- 						  line_len - (len + 1));
- 			if (!second)
- 				return NULL;
-@@ -1333,7 +1333,7 @@ static int parse_git_header(struct apply_state *state,
- 	 * or removing or adding empty files), so we get
- 	 * the default name from the header.
- 	 */
--	patch->def_name = git_header_name(state, line, len);
-+	patch->def_name = git_header_name(state->p_value, line, len);
- 	if (patch->def_name && state->root.len) {
- 		char *s = xstrfmt("%s%s", state->root.buf, patch->def_name);
- 		free(patch->def_name);
+ 			continue;
+-		else if (line.buf[0] == '>') {
++		else if (line[0] == '>') {
+ 			strbuf_addch(&buf, '+');
+-			strbuf_add(&buf, line.buf + 1, line.len - 1);
+-		} else if (line.buf[0] == '<') {
++			strbuf_addstr(&buf, line + 1);
++		} else if (line[0] == '<') {
+ 			strbuf_addch(&buf, '-');
+-			strbuf_add(&buf, line.buf + 1, line.len - 1);
+-		} else if (line.buf[0] == '#') {
++			strbuf_addstr(&buf, line + 1);
++		} else if (line[0] == '#') {
+ 			strbuf_addch(&buf, ' ');
+-			strbuf_add(&buf, line.buf + 1, line.len - 1);
++			strbuf_addstr(&buf, line + 1);
+ 		} else {
+ 			strbuf_addch(&buf, ' ');
+-			strbuf_addbuf(&buf, &line);
++			strbuf_addstr(&buf, line);
+ 		}
+ 
+ 		strbuf_addch(&buf, '\n');
+ 		util->diffsize++;
+ 	}
+-	fclose(in);
+-	strbuf_release(&line);
++	strbuf_release(&contents);
+ 
+ 	if (util)
+ 		string_list_append(list, buf.buf)->util = util;
 -- 
 2.22.0.510.g264f2c817a
 
