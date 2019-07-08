@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7F91F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 16:38:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 748AB1F4C0
+	for <e@80x24.org>; Mon,  8 Jul 2019 16:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730528AbfGHQiH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 12:38:07 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50480 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730469AbfGHQiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:38:05 -0400
-Received: by mail-wm1-f66.google.com with SMTP id v15so186943wml.0
-        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:38:04 -0700 (PDT)
+        id S1730478AbfGHQiC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 12:38:02 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40165 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725807AbfGHQiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 12:38:01 -0400
+Received: by mail-wr1-f65.google.com with SMTP id r1so11536430wrl.7
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZK6F8I9MMRXb1nyoGtw4TkkqOifbnYF7o0+q1l/W/JM=;
-        b=bwB5LeaSfPBqluihCsf/uv/pUZgqxLT+TdFUrv7RK4uCnqk/aLEX/96YKt29DCNJEm
-         qUEEQORVepdkscK+N1ykKB9ilHTXcQ7Trrp7gMSRqUrHEIvy607Tmkzyx7TLD//aURn+
-         o6lkkRArRdZxIKbs3mZZFYwjzMARxhZhwmNTqvvMg9iSnmvs4wrO8n8yedz/va3UQfco
-         J/i7DAw8nD8R9JGIwU8gWdX6DAEwR3dK7NyGc0I8zGcQPmhw7k4jvCVOVF514eLXxjMG
-         6e8vxUDM5mRgs0JQXgMPbyG8hHK6lBA0TKlN9suGlRPA/nr+Kq7Pe23mXuJZhghL0laS
-         Fe2w==
+        bh=zpszmeiDGoE95yhbjtGiZDVw4dl2nsB9nuVIP6nMgZ0=;
+        b=HKqwSpRDb6IGWiuzGQeTe7RGg/b00aCiG9zKSZIpZ/RTXmQnkzPahSeXUhLbmDpJZw
+         zcSqShvr0TJZxe7CrPKgeUzVptlVHOkTDnEkKpfn+2Fdwi9ITuGwIBD4RvX9LYxLlKTp
+         VmwT0C/ufko9mT/g8rq3KnwHmJhXOHPDhShGsZiFmzzlfjsuXhv0LVi4Q2UxLfs6t34g
+         eoqxXJrg7OSiopWrj/nIS79W4trRTvqodTWb6PmyDcT302mdnqzfM4dEqZ+srSY5H2sU
+         mozYo1rUkG2aHPxJQu431alJhj9ZYjIbQB20ChF+XyCShiDuT9CuWb/JpXMnUcI2xsh5
+         Lxmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZK6F8I9MMRXb1nyoGtw4TkkqOifbnYF7o0+q1l/W/JM=;
-        b=K9pUlJch07jLc0rNkMHaq0dwdsqxFjCnqUbR8CuaiMr0p9rQwv0hEETKOrd8F1SJmF
-         AhU5nRK6OU/jnLBh2VoJE1ZJO0bRA3d2bjkmy4G2u02GXhM2/IN5nJszNJJUs2aOHRxb
-         /pwjRKiTAUldc8VPDcCNR4tsdB7PlHvXF6bvpHl7UWwyVMJywb03+JtmRvZem4s6NMTv
-         DMv/nS0LFFufYNxcAYXow/TLHpycw8woMHhPH0je1l4iku3DUPmYJaEA5wRy7e2KEalj
-         KCWyPYnmaELITfk1kd+DNvaszDGMhcLnMRT0CInG8udvzpC3/cxm0M9jT7sFzmRrDRHP
-         O0mw==
-X-Gm-Message-State: APjAAAUO9uKZPpOIleOiOlhZDR8YLdM84310bUnEjkagCJ+4jzqklUN/
-        2ErANFt885E1Bj7atAKosCSufyIc
-X-Google-Smtp-Source: APXvYqxlhDUDsDNf+3SWBEP5F7/ru5MAs/FQ6HZ0iOkzhMA0VXC7SogmsbMw8pHIWZK6zlrVO+kLcw==
-X-Received: by 2002:a1c:c90f:: with SMTP id f15mr4550838wmb.98.1562603882343;
-        Mon, 08 Jul 2019 09:38:02 -0700 (PDT)
+        bh=zpszmeiDGoE95yhbjtGiZDVw4dl2nsB9nuVIP6nMgZ0=;
+        b=c0p5myl5HOI44BQc+qVpbrkomu/w9ZC+MfyHxlrg2SYU6ijUMYfcJ3lIa+7n4CEx9V
+         V631ZaC4asiS3EUb+o2cWHJr4BqUrVKjisFsMRQUTbSsJOzBknxomLB+p8nDH2Qm5IwB
+         X3jBiM7H5SdvElsOw1uwE55Ml58RkVbnqL1ouZmsATvcRgh2gQ09xmed7kqqSZKfpiZv
+         p7W0mDxsOQvCn7NAHvKKZ0GlPXe4YU/30v72C08bXn/MPqk7I/vtWWMjS0oidqdT2fFr
+         CRspAucSwZtXU6/LBz5SmfGMFg2QNV9ENiQPi0ftXlsi9XSbxgbZ7iYRY4b48no3a9To
+         oZ+g==
+X-Gm-Message-State: APjAAAVQs2tpaH57aRQmGWmfFTMvEyEs1Fc5C7BFpRjIvWxz/yOq+QiL
+        wneSjS9R29pfOXAN+ZS1RVupeAWo
+X-Google-Smtp-Source: APXvYqzZJyuPBO+i9HeVcoHk1SAi2AYbxEJqZ5ZR4JN26flKyVWHwwESX15NtkWVK/+xvPWZ8JKm1g==
+X-Received: by 2002:a5d:4212:: with SMTP id n18mr15485892wrq.261.1562603879451;
+        Mon, 08 Jul 2019 09:37:59 -0700 (PDT)
 Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id m16sm16424996wrv.89.2019.07.08.09.38.01
+        by smtp.gmail.com with ESMTPSA id 5sm45076wmg.42.2019.07.08.09.37.58
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Jul 2019 09:38:01 -0700 (PDT)
+        Mon, 08 Jul 2019 09:37:58 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 08/14] range-diff: fix function parameter indentation
-Date:   Mon,  8 Jul 2019 17:33:09 +0100
-Message-Id: <20190708163315.29912-9-t.gummerer@gmail.com>
+Subject: [PATCH v3 06/14] apply: only pass required data to gitdiff_* functions
+Date:   Mon,  8 Jul 2019 17:33:07 +0100
+Message-Id: <20190708163315.29912-7-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190708163315.29912-1-t.gummerer@gmail.com>
 References: <20190705170630.27500-1-t.gummerer@gmail.com>
@@ -72,36 +72,249 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the indentation of the function parameters for a couple of
-functions, to match the style in the rest of the file.
+Currently the 'gitdiff_*()' functions take 'struct apply_state' as
+parameter, even though they only needs the root, linenr and p_value
+from that struct.
+
+These functions are in the callchain of 'parse_git_header()', which we
+want to make more generally useful in a subsequent commit.  To make
+that happen we only want to pass in the required data to
+'parse_git_header()', and not the whole 'struct apply_state', and thus
+we want functions in the callchain of 'parse_git_header()' to only
+take arguments they really need.
+
+As these functions are called in a loop using their function pointers,
+each function needs to be passed all the parameters even if only one
+of the functions actually needs it.  We therefore pass this data along
+in a struct to avoid adding too many unused parameters to each
+function and making the code very verbose in the process.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- range-diff.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ apply.c | 59 ++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 35 insertions(+), 24 deletions(-)
 
-diff --git a/range-diff.c b/range-diff.c
-index 48b0e1b4ce..9242b8975f 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -148,7 +148,7 @@ static int read_patches(const char *range, struct string_list *list)
+diff --git a/apply.c b/apply.c
+index 3cd4e3d3b3..468f1d3fee 100644
+--- a/apply.c
++++ b/apply.c
+@@ -22,6 +22,12 @@
+ #include "rerere.h"
+ #include "apply.h"
+ 
++struct parse_git_header_state {
++	struct strbuf *root;
++	int linenr;
++	int p_value;
++};
++
+ static void git_apply_config(void)
+ {
+ 	git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
+@@ -914,7 +920,7 @@ static int parse_traditional_patch(struct apply_state *state,
+ 	return 0;
  }
  
- static int patch_util_cmp(const void *dummy, const struct patch_util *a,
--		     const struct patch_util *b, const char *keydata)
-+			  const struct patch_util *b, const char *keydata)
+-static int gitdiff_hdrend(struct apply_state *state,
++static int gitdiff_hdrend(struct parse_git_header_state *state,
+ 			  const char *line,
+ 			  struct patch *patch)
  {
- 	return strcmp(a->diff, keydata ? keydata : b->diff);
- }
-@@ -373,7 +373,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
+@@ -933,14 +939,14 @@ static int gitdiff_hdrend(struct apply_state *state,
+ #define DIFF_OLD_NAME 0
+ #define DIFF_NEW_NAME 1
+ 
+-static int gitdiff_verify_name(struct apply_state *state,
++static int gitdiff_verify_name(struct parse_git_header_state *state,
+ 			       const char *line,
+ 			       int isnull,
+ 			       char **name,
+ 			       int side)
+ {
+ 	if (!*name && !isnull) {
+-		*name = find_name(&state->root, line, NULL, state->p_value, TERM_TAB);
++		*name = find_name(state->root, line, NULL, state->p_value, TERM_TAB);
+ 		return 0;
+ 	}
+ 
+@@ -949,7 +955,7 @@ static int gitdiff_verify_name(struct apply_state *state,
+ 		if (isnull)
+ 			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+ 				     *name, state->linenr);
+-		another = find_name(&state->root, line, NULL, state->p_value, TERM_TAB);
++		another = find_name(state->root, line, NULL, state->p_value, TERM_TAB);
+ 		if (!another || strcmp(another, *name)) {
+ 			free(another);
+ 			return error((side == DIFF_NEW_NAME) ?
+@@ -965,7 +971,7 @@ static int gitdiff_verify_name(struct apply_state *state,
+ 	return 0;
  }
  
- static void patch_diff(const char *a, const char *b,
--			      struct diff_options *diffopt)
-+		       struct diff_options *diffopt)
+-static int gitdiff_oldname(struct apply_state *state,
++static int gitdiff_oldname(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
  {
- 	diff_queue(&diff_queued_diff,
- 		   get_filespec("a", a), get_filespec("b", b));
+@@ -974,7 +980,7 @@ static int gitdiff_oldname(struct apply_state *state,
+ 				   DIFF_OLD_NAME);
+ }
+ 
+-static int gitdiff_newname(struct apply_state *state,
++static int gitdiff_newname(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+@@ -992,21 +998,21 @@ static int parse_mode_line(const char *line, int linenr, unsigned int *mode)
+ 	return 0;
+ }
+ 
+-static int gitdiff_oldmode(struct apply_state *state,
++static int gitdiff_oldmode(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+ 	return parse_mode_line(line, state->linenr, &patch->old_mode);
+ }
+ 
+-static int gitdiff_newmode(struct apply_state *state,
++static int gitdiff_newmode(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+ 	return parse_mode_line(line, state->linenr, &patch->new_mode);
+ }
+ 
+-static int gitdiff_delete(struct apply_state *state,
++static int gitdiff_delete(struct parse_git_header_state *state,
+ 			  const char *line,
+ 			  struct patch *patch)
+ {
+@@ -1016,7 +1022,7 @@ static int gitdiff_delete(struct apply_state *state,
+ 	return gitdiff_oldmode(state, line, patch);
+ }
+ 
+-static int gitdiff_newfile(struct apply_state *state,
++static int gitdiff_newfile(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+@@ -1026,47 +1032,47 @@ static int gitdiff_newfile(struct apply_state *state,
+ 	return gitdiff_newmode(state, line, patch);
+ }
+ 
+-static int gitdiff_copysrc(struct apply_state *state,
++static int gitdiff_copysrc(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+ 	patch->is_copy = 1;
+ 	free(patch->old_name);
+-	patch->old_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->old_name = find_name(state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
+ 
+-static int gitdiff_copydst(struct apply_state *state,
++static int gitdiff_copydst(struct parse_git_header_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+ 	patch->is_copy = 1;
+ 	free(patch->new_name);
+-	patch->new_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->new_name = find_name(state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
+ 
+-static int gitdiff_renamesrc(struct apply_state *state,
++static int gitdiff_renamesrc(struct parse_git_header_state *state,
+ 			     const char *line,
+ 			     struct patch *patch)
+ {
+ 	patch->is_rename = 1;
+ 	free(patch->old_name);
+-	patch->old_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->old_name = find_name(state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
+ 
+-static int gitdiff_renamedst(struct apply_state *state,
++static int gitdiff_renamedst(struct parse_git_header_state *state,
+ 			     const char *line,
+ 			     struct patch *patch)
+ {
+ 	patch->is_rename = 1;
+ 	free(patch->new_name);
+-	patch->new_name = find_name(&state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
++	patch->new_name = find_name(state->root, line, NULL, state->p_value ? state->p_value - 1 : 0, 0);
+ 	return 0;
+ }
+ 
+-static int gitdiff_similarity(struct apply_state *state,
++static int gitdiff_similarity(struct parse_git_header_state *state,
+ 			      const char *line,
+ 			      struct patch *patch)
+ {
+@@ -1076,7 +1082,7 @@ static int gitdiff_similarity(struct apply_state *state,
+ 	return 0;
+ }
+ 
+-static int gitdiff_dissimilarity(struct apply_state *state,
++static int gitdiff_dissimilarity(struct parse_git_header_state *state,
+ 				 const char *line,
+ 				 struct patch *patch)
+ {
+@@ -1086,7 +1092,7 @@ static int gitdiff_dissimilarity(struct apply_state *state,
+ 	return 0;
+ }
+ 
+-static int gitdiff_index(struct apply_state *state,
++static int gitdiff_index(struct parse_git_header_state *state,
+ 			 const char *line,
+ 			 struct patch *patch)
+ {
+@@ -1126,7 +1132,7 @@ static int gitdiff_index(struct apply_state *state,
+  * This is normal for a diff that doesn't change anything: we'll fall through
+  * into the next diff. Tell the parser to break out.
+  */
+-static int gitdiff_unrecognized(struct apply_state *state,
++static int gitdiff_unrecognized(struct parse_git_header_state *state,
+ 				const char *line,
+ 				struct patch *patch)
+ {
+@@ -1322,6 +1328,7 @@ static int parse_git_header(struct apply_state *state,
+ 			    struct patch *patch)
+ {
+ 	unsigned long offset;
++	struct parse_git_header_state parse_hdr_state;
+ 
+ 	/* A git diff has explicit new/delete information, so we don't guess */
+ 	patch->is_new = 0;
+@@ -1343,10 +1350,14 @@ static int parse_git_header(struct apply_state *state,
+ 	line += len;
+ 	size -= len;
+ 	state->linenr++;
++	parse_hdr_state.root = &state->root;
++	parse_hdr_state.linenr = state->linenr;
++	parse_hdr_state.p_value = state->p_value;
++
+ 	for (offset = len ; size > 0 ; offset += len, size -= len, line += len, state->linenr++) {
+ 		static const struct opentry {
+ 			const char *str;
+-			int (*fn)(struct apply_state *, const char *, struct patch *);
++			int (*fn)(struct parse_git_header_state *, const char *, struct patch *);
+ 		} optable[] = {
+ 			{ "@@ -", gitdiff_hdrend },
+ 			{ "--- ", gitdiff_oldname },
+@@ -1377,7 +1388,7 @@ static int parse_git_header(struct apply_state *state,
+ 			int res;
+ 			if (len < oplen || memcmp(p->str, line, oplen))
+ 				continue;
+-			res = p->fn(state, line + oplen, patch);
++			res = p->fn(&parse_hdr_state, line + oplen, patch);
+ 			if (res < 0)
+ 				return -1;
+ 			if (check_header_line(state->linenr, patch))
 -- 
 2.22.0.510.g264f2c817a
 
