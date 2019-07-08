@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91D971F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 16:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE17D1F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 16:37:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730010AbfGHQhz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 12:37:55 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53005 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729506AbfGHQhy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 12:37:54 -0400
-Received: by mail-wm1-f67.google.com with SMTP id s3so173015wms.2
-        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:37:53 -0700 (PDT)
+        id S1730339AbfGHQh4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 12:37:56 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55199 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729610AbfGHQh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 12:37:56 -0400
+Received: by mail-wm1-f68.google.com with SMTP id p74so164026wme.4
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 09:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2xXqebNTZyy/qKd0wKsFDUyNRx/QP5rWyLVrMPAhmVU=;
-        b=PYnRx8zbQNrEeaVRHIohl6gWIJAMFzUIY2PvuO+J5MqbX+vIKEGfMkYKZ7DGiVMjWB
-         jzdo7T1IBgTFu7iQApGbjklY22G4tPD5FwiwkWJAxxgkbGvSUpX+KCWDFPWto+dYcv+e
-         8Rao5IOZHwgHVVVxVT9Fl7/EoNMELh699gXi45UeAPidgD+F/9Xl9cXgCayBNCkWXwUi
-         SAIzxP5JuqARcbljvLKlqxJlz7hpiQRwmepuFx8xETmcTwwU6G1A/GOhIVAVQcKxKLYd
-         d3Sn0BMQ2Ieax5+Rzjcw/tgs0D5voEqQcGZEimW64J2n2FMp9/MrNonb3HbOtGWzHlnx
-         OKhw==
+        bh=gIbXyTxlwMdejKMx7NpVdVDXqC/2s+5mFLjBN4bTADg=;
+        b=um/9zOcBiOyw+NiulWlXwTkJJZOb/1/RiYr67/KXdYil+Qhj242aLZMNOxbKpUvf7+
+         7l/3/SoIBCEL9BfBTHuq6wdkS/YQNZNmUfRans+6XUf9Z/jjiq/sirCft+G+7hR5Pq14
+         TdDjVN7iWCHtnkTJIZCQ0Z5PU6JOHQ+BnD8C8Wgk24x4aaGRzi87RkJZV5NhXFKTmDVR
+         5lnviNw3kYOmYJAqjqWcF9lpG40+WFNjD/QdQo+XFxIykVAySaloWSHxocjnsOT3TXV1
+         jW0HcYp8y/RWVwlFOGQ2Tx3FDa7Om32ZmteDh7rDVlZ6aFyMJp/JbsDrIJXllBSS/4Ok
+         bQZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2xXqebNTZyy/qKd0wKsFDUyNRx/QP5rWyLVrMPAhmVU=;
-        b=MedK8HP3Bla1j1a2e6C3YS/5ewxmP5AN75k5US7NAwshKzcxagCSXzB1njRiW7Fwki
-         wknWX/yg/x7uPnO8xW510lm9E9hrNtFFE/QyjEleKRpOdAVt4MjMLFAYKCmMtCZA0y93
-         +nIQJqP6ZHK/l/Vd7/wJUZFgwJaULyUv04k8vm1yNsXdEEXMJknOPCmvlx9588C5CoGa
-         d0tL6F87TOlpPkmwajQMmRKo2OLiqttPhsYB8v1WcrT+fLBjDvNoYkzxTWialbAXgLYH
-         92hWEcjNHjiThlrwtW24Sqfhsvpuhd1AfTlG/JHbubiqqms+vrs+20VugOIG+AyZpLS8
-         HD4g==
-X-Gm-Message-State: APjAAAVRIFT70aYEYBPSjbDA4t+6BCh3QiTjeQdzlNiQ29cweCca2Oqv
-        Oazn5F7vt+XfOhq+BQ5dqS/V52yN
-X-Google-Smtp-Source: APXvYqx+gEoOw6XZ3ua4IUbD006bsRVdQCJj8TEEqGTtRm18Ls+JxyShy/iyEBSid/LO7h/ycaP5vQ==
-X-Received: by 2002:a7b:c0c6:: with SMTP id s6mr4907274wmh.115.1562603872265;
-        Mon, 08 Jul 2019 09:37:52 -0700 (PDT)
+        bh=gIbXyTxlwMdejKMx7NpVdVDXqC/2s+5mFLjBN4bTADg=;
+        b=SnPd0Onl4F46ykZSviY5qiMr8uX8ijc4Pv5AleO/K7dnQsl7OpaHo3N9lzML7SrLsQ
+         rios/qJ5QCjimVbYEMYTzCGY7fbHFICGhMNm9ppUY8EgGnbb+0ASGshbcX43MVTxm5yO
+         toeCSF87MW+cojIdBNvTxOOzfd842oGo1ZdPojlXWbC12qQLrpGpsmOaOkCbRXENb67r
+         K0ZQQyMEPF09Sp2vngkyDkBZoK/+pVLZw7ixW0fwgDpxVAcGTcu+s8mJfSdrAx+3H7L4
+         xXqDK4FvQonR+RQnZTPC5j+Ivw7Reb1+VpcUXUDsIssQIkzoykRnY21DQ6Ksv2K80saB
+         kWMg==
+X-Gm-Message-State: APjAAAXaKMpA0OiBnfjp1TLaWuuI7LIXLRH3uXR/3SOu0ixCdJfmGwuz
+        udsLn19N4FqMcRpQhWOucgJo3GXu
+X-Google-Smtp-Source: APXvYqw9t5UKSQNkCTrWGjFuSFGJCNenqokPRjGysLOYECI/S8O+LlhN7CvtW8WpXhK27UKTGV+QAQ==
+X-Received: by 2002:a1c:a186:: with SMTP id k128mr16195191wme.74.1562603873819;
+        Mon, 08 Jul 2019 09:37:53 -0700 (PDT)
 Received: from localhost ([95.148.214.18])
-        by smtp.gmail.com with ESMTPSA id g11sm14442258wru.24.2019.07.08.09.37.50
+        by smtp.gmail.com with ESMTPSA id d10sm19632112wro.18.2019.07.08.09.37.52
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Jul 2019 09:37:51 -0700 (PDT)
+        Mon, 08 Jul 2019 09:37:53 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 01/14] apply: replace marc.info link with public-inbox
-Date:   Mon,  8 Jul 2019 17:33:02 +0100
-Message-Id: <20190708163315.29912-2-t.gummerer@gmail.com>
+Subject: [PATCH v3 02/14] apply: only pass required data to skip_tree_prefix
+Date:   Mon,  8 Jul 2019 17:33:03 +0100
+Message-Id: <20190708163315.29912-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190708163315.29912-1-t.gummerer@gmail.com>
 References: <20190705170630.27500-1-t.gummerer@gmail.com>
@@ -72,29 +72,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-public-inbox.org links include the whole message ID by default.  This
-means the message can still be found even if the site goes away, which
-is not the case with the marc.info link.  Replace the marc.info link
-with a more future proof one.
+Currently the 'skip_tree_prefix()' function takes 'struct apply_state'
+as parameter, even though it only needs the p_value from that struct.
+
+This function is in the callchain of 'parse_git_header()', which we
+want to make more generally useful in a subsequent commit.  To make
+that happen we only want to pass in the required data to
+'parse_git_header()', and not the whole 'struct apply_state', and thus
+we want functions in the callchain of 'parse_git_header()' to only
+take arguments they really need.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ apply.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index f15afa9f6a..599cf8956f 100644
+index 599cf8956f..fc7083fcbc 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -478,7 +478,7 @@ static char *find_name_gnu(struct apply_state *state,
+@@ -1137,17 +1137,17 @@ static int gitdiff_unrecognized(struct apply_state *state,
+  * Skip p_value leading components from "line"; as we do not accept
+  * absolute paths, return NULL in that case.
+  */
+-static const char *skip_tree_prefix(struct apply_state *state,
++static const char *skip_tree_prefix(int p_value,
+ 				    const char *line,
+ 				    int llen)
+ {
+ 	int nslash;
+ 	int i;
  
- 	/*
- 	 * Proposed "new-style" GNU patch/diff format; see
--	 * http://marc.info/?l=git&m=112927316408690&w=2
-+	 * https://public-inbox.org/git/7vll0wvb2a.fsf@assigned-by-dhcp.cox.net/
- 	 */
- 	if (unquote_c_style(&name, line, NULL)) {
- 		strbuf_release(&name);
+-	if (!state->p_value)
++	if (!p_value)
+ 		return (llen && line[0] == '/') ? NULL : line;
+ 
+-	nslash = state->p_value;
++	nslash = p_value;
+ 	for (i = 0; i < llen; i++) {
+ 		int ch = line[i];
+ 		if (ch == '/' && --nslash <= 0)
+@@ -1184,7 +1184,7 @@ static char *git_header_name(struct apply_state *state,
+ 			goto free_and_fail1;
+ 
+ 		/* strip the a/b prefix including trailing slash */
+-		cp = skip_tree_prefix(state, first.buf, first.len);
++		cp = skip_tree_prefix(state->p_value, first.buf, first.len);
+ 		if (!cp)
+ 			goto free_and_fail1;
+ 		strbuf_remove(&first, 0, cp - first.buf);
+@@ -1201,7 +1201,7 @@ static char *git_header_name(struct apply_state *state,
+ 		if (*second == '"') {
+ 			if (unquote_c_style(&sp, second, NULL))
+ 				goto free_and_fail1;
+-			cp = skip_tree_prefix(state, sp.buf, sp.len);
++			cp = skip_tree_prefix(state->p_value, sp.buf, sp.len);
+ 			if (!cp)
+ 				goto free_and_fail1;
+ 			/* They must match, otherwise ignore */
+@@ -1212,7 +1212,7 @@ static char *git_header_name(struct apply_state *state,
+ 		}
+ 
+ 		/* unquoted second */
+-		cp = skip_tree_prefix(state, second, line + llen - second);
++		cp = skip_tree_prefix(state->p_value, second, line + llen - second);
+ 		if (!cp)
+ 			goto free_and_fail1;
+ 		if (line + llen - cp != first.len ||
+@@ -1227,7 +1227,7 @@ static char *git_header_name(struct apply_state *state,
+ 	}
+ 
+ 	/* unquoted first name */
+-	name = skip_tree_prefix(state, line, llen);
++	name = skip_tree_prefix(state->p_value, line, llen);
+ 	if (!name)
+ 		return NULL;
+ 
+@@ -1243,7 +1243,7 @@ static char *git_header_name(struct apply_state *state,
+ 			if (unquote_c_style(&sp, second, NULL))
+ 				goto free_and_fail2;
+ 
+-			np = skip_tree_prefix(state, sp.buf, sp.len);
++			np = skip_tree_prefix(state->p_value, sp.buf, sp.len);
+ 			if (!np)
+ 				goto free_and_fail2;
+ 
+@@ -1287,7 +1287,7 @@ static char *git_header_name(struct apply_state *state,
+ 			 */
+ 			if (!name[len + 1])
+ 				return NULL; /* no postimage name */
+-			second = skip_tree_prefix(state, name + len + 1,
++			second = skip_tree_prefix(state->p_value, name + len + 1,
+ 						  line_len - (len + 1));
+ 			if (!second)
+ 				return NULL;
 -- 
 2.22.0.510.g264f2c817a
 
