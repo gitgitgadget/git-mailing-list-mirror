@@ -2,125 +2,321 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD9231F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 09:59:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 415C11F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 11:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729289AbfGHJ7s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 05:59:48 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52635 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727874AbfGHJ7r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 05:59:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562579975;
-        bh=iFw6JNxfIJXsqpCvJz2Oewp/gYY+Pza4daKi1ty7WMc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GW+YJNIDh4McEF/9msN5lB/TmWZfn2hKmXl8z30+6PWJbwzlkCmGV1nmdtgVGF76s
-         0iWULCZfXa3W5lRSf78ZQKREG7mVFdDLCH4c/kuLAORNK3JtGMFtRCoz8GhSG0B3ti
-         36F0vtgtXsMPiy7CkkE1zad+GDwdOHAvZUi1PyJo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAVV-1i6CZz3Js9-00MJ8L; Mon, 08
- Jul 2019 11:59:34 +0200
-Date:   Mon, 8 Jul 2019 12:00:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1.1] ci/lib.sh: update a comment about installed P4 and
- Git-LFS versions
-In-Reply-To: <20190706162114.21169-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907081159520.44@tvgsbejvaqbjf.bet>
-References: <20190706161648.20836-1-szeder.dev@gmail.com> <20190706162114.21169-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730469AbfGHLYb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 07:24:31 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35067 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730466AbfGHLYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 07:24:31 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y4so8038501wrm.2
+        for <git@vger.kernel.org>; Mon, 08 Jul 2019 04:24:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yFS+gsK4c55cOP9sYVa0lPjWyLgOyiJLKBco20fisSU=;
+        b=orlLnR46FEeV05cPEEaxt772pf+FFhPCBnO8NBgxvbzCoB+6uWfTsi/G1826U955fk
+         Y1VJ48UIn5CpgChvKE2z6/mtIqAirsemx7srquf4YWuCmHjaLoueAkn/c8QC2/vhmbPL
+         PnWYqdoQspETZZfSYDRRCMcQAXL1UyUvwI958Vm/hX+0SIhU4z2h+WZURkoWiA9Qe+Up
+         XuUyCTMiSZDINhCYNFh6QmW0gdIkPsYhCye0iJt3n+u5BXCXRkv4Zu6/i11WKaKWUS2F
+         zruK+eKbnnrD6Un0z3Ms+8UNhqUrsQLk3G9Y3SUZjopGXTiykC3tCkyb7qlhXmB+nqL4
+         udmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yFS+gsK4c55cOP9sYVa0lPjWyLgOyiJLKBco20fisSU=;
+        b=dsz728ybfimevYHx4WfnJ3YsVCaBAzuTb275TAeU8SJZXN7yH3ZWBxMUpiMPgfE9cB
+         6f723b4UwGM5QFYVSD+3niWlC7bes4l0pbKabZU7mYMoLUTUK6H7myQEjwqVMXZ52gAk
+         kRf2UQstGVbG/f1cWLQSGISaCMGujN06tL6ZkDOBoVQ576Mc43gNN3mIQMAavCbogaxs
+         ipOwzOI927t8aTPOqqFT+e6rO+3On33AF0crYZO5jRrvn0dLxb71JpKGpyIFJU7Z4aA6
+         PArkW49DdXvqHZVp4iO5Orc+C0/dLB8fhxnVr8NdPuvMg8zjtfdOtLdXZdcV7LIGcfbX
+         S6bw==
+X-Gm-Message-State: APjAAAUy/Mesb+8VQ8DlfCwZp1xNPCwdMNns4TTf//anFs+n2zgUGTvs
+        wBxXQotKudyYj5sWH/vr9hA=
+X-Google-Smtp-Source: APXvYqyx7k74tMGRqcdosX0m3cHc4Xd9wIRX8TcYP0XCr4ts96lt1DzITdb5U6ir6Lw5X7PUWwpekw==
+X-Received: by 2002:a5d:5302:: with SMTP id e2mr18148435wrv.347.1562585068126;
+        Mon, 08 Jul 2019 04:24:28 -0700 (PDT)
+Received: from localhost ([95.148.214.18])
+        by smtp.gmail.com with ESMTPSA id h133sm21131719wme.28.2019.07.08.04.24.26
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 08 Jul 2019 04:24:27 -0700 (PDT)
+Date:   Mon, 8 Jul 2019 12:24:15 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 09/14] range-diff: split lines manually
+Message-ID: <20190708112415.GB16825@hank.intra.tgummerer.com>
+References: <20190414210933.20875-1-t.gummerer@gmail.com/>
+ <20190705170630.27500-1-t.gummerer@gmail.com>
+ <20190705170630.27500-10-t.gummerer@gmail.com>
+ <nycvar.QRO.7.76.6.1907052052060.44@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1757722204-1562580009=:44"
-X-Provags-ID: V03:K1:HjaF+um6W+ASjbCdkoNqazAvBhstwzBSr5/Tyr7SvX+cQrWufTM
- vpY2QFZ+etbYE7Cs2D2XCQa8/+LIhuPFiIk4HEenNz7Nwik3y/bUaiAMYCpOwFkRYKjw0HK
- NWflHkY4pRzlVIQMsH3Nz3F0wMSEJVu86/dZSCME7wTPy0GcNCNNewTjb9eLCYo4vC+lf7M
- hRgpUlVwanVnIrbVZrphw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hXsgDlr+e6g=:1smhQ+Hxw9M0Oq4WoX4xp8
- jYH95NTeebX1To5BN+pj+oe3g7H7hGQiPK/4byD7Cfu5b2iMUL2GOduKn2UIawUZGmcdWH4j2
- rc5SpA9S8FSFwLriL8hIj4OtCTV3q14/gpGXhqIVOYq6KRfYbn02VgkmSnxFF/LMBA8xxh/h/
- WdHZPtBbJX4y9AwmloznL/pC3g8G4IP1kCcizS5Jf7jPJ9ZgYDJhqGbNgZ6I7D9x82UxIEkm+
- 18iFL0x/EFWVc0ZsGN/8ImAVEojDQmNSAMweO57MapyUgwZPlrshZeGaTbn4u362nu6SxfsLY
- 3iNfoPOxfmgTl25fyGLskUyjwTEElClFHMcGrEuvnw2Q6eN0y/OYsTHWO0cQ1/HsgLcO38dmC
- 4xWK8vP9XeuUWwXV+YZ5LknIOJ+BuTTQCiqkYt1Pv3AegH5tpaQN7Ym6QxJEsQjX3Yno3b06B
- J/k9lRazbK0003fNXGmlJb5wm1yi+Y0WXwlE8KlV2ufm8oKCWwMHe2FBkxZV12wvXKBKUscrl
- QJP2coAXZALwdd0bopFg/lFTsp+G+CFgc41sKpf+WKtDETboELPECRzv8/tefI6BWyWyG+jmB
- 0LzUaDJjh7AyJnT9wMmADoGiu5+2UlOL9Qk4Wq7IB8BsRQgP9XEgP4N6vYl4oA4ugyDIyu8Wj
- gccC2B9sE+8k4X2vK7tsQd0KZYCVI5+De5rGI7ABeIH5Bpmd4rGe68kelCsPzUooxaBv4f1T+
- YIaVNro7ZY+l8FIzW/yDCIdTdyhuuHC0LDhAfis6l8BlhCTM7BGMPpmg4upUJOyp36+UC97G9
- W6hwRMsk/nP21DznvVE/Fpvdu0+ubMqGo/tL9UENaygFVXGpnZ5G8UOKU8MSOWourAKEIwa7n
- uzaUy5SkkroK/mk9QrN3e6KkOG6ARzVd3jArOdvfPv5J6bbA+Y56u4AjbY5t5QYn1P57ET4xA
- R97IuR2KWVUN+bO4POIH/c2A+qnWAy8y/HRIIHDpENd3ami9qkRQU1JCL/yBBiuCmClnF5RTr
- v2bjTo7+1hHlxX9kHqGHK+7E/+Qs4JntnOc1HmDm2SC+YPgDJA8jMaKcRk00QNsKh89UwrO6C
- pZcFG/e5S7G7bGOyPENrNlV46hJk/3A2u5f
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1907052052060.44@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.12.0 (2019-05-25)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 07/05, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> 
+> On Fri, 5 Jul 2019, Thomas Gummerer wrote:
+> 
+> > Currently range-diff uses the 'strbuf_getline()' function for doing
+> > its line by line processing.  In a future patch we want to do parts of
+> > that parsing using the 'parse_git_header()' function, which does
+> 
+> If you like my suggestion in patch 7/14, this commit message needs to talk
+> about the new name, too.
 
---8323328-1757722204-1562580009=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks for the reminder here!  I do indeed like the new name, but
+would probably have forgotten to change it in the commit message here.
 
-Hi G=C3=A1bor,
+> > requires reading parts of the input from that function, which doesn't
+> 
+> s/requires/require/
+> 
+> > use strbufs.
+> >
+> > Switch range-diff to do our own line by line parsing, so we can re-use
+> > the parse_git_header function later.
+> >
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> >
+> > Longer term it might be better to have both range-diff and apply code
+> > use strbufs.  However I didn't feel it's worth making that change for
+> > this patch series.
+> 
+> Makes sense.
+> 
+> >  range-diff.c | 69 +++++++++++++++++++++++++++++-----------------------
+> >  1 file changed, 39 insertions(+), 30 deletions(-)
+> >
+> > diff --git a/range-diff.c b/range-diff.c
+> > index 9242b8975f..916afa44c0 100644
+> > --- a/range-diff.c
+> > +++ b/range-diff.c
+> > @@ -24,6 +24,17 @@ struct patch_util {
+> >  	struct object_id oid;
+> >  };
+> >
+> > +static unsigned long linelen(const char *buffer, unsigned long size)
+> 
+> Shouldn't this be `size_t`?
+> 
+> > +{
+> > +	unsigned long len = 0;
+> 
+> Likewise.
+> 
+> > +	while (size--) {
+> > +		len++;
+> > +		if (*buffer++ == '\n')
+> > +			break;
+> > +	}
+> > +	return len;
+> 
+> How about
+> 
+> 	const char *eol = memchr(buffer, '\n', size);
+> 
+> 	return !eol ? size : eol + 1 - buffer;
+> 
+> instead?
+> 
+> For an extra brownie point, you could even rename this function to
+> `find_end_of_line()` and replace the LF by a NUL:
+> 
+> 	if (!eol)
+> 		return size;
+> 
+> 	*eol = '\0';
+> 	return eol + 1 - buffer;
 
-On Sat, 6 Jul 2019, SZEDER G=C3=A1bor wrote:
+I like this, thank you!
 
-> A comment in 'ci/lib.sh' claims that the "OS X build installs the
-> latest available versions" of P4 and Git-LFS, but since 02373e56bd
-> (ci: don't update Homebrew, 2019-07-03) that's no longer the case, as
-> it will install the versions which were recorded in the image's
-> Homebrew database when the image was created.
->
-> Update this comment accordingly.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> > +}
+> > +
+> >  /*
+> >   * Reads the patches into a string list, with the `util` field being populated
+> >   * as struct object_id (will need to be free()d).
+> > @@ -31,10 +42,12 @@ struct patch_util {
+> >  static int read_patches(const char *range, struct string_list *list)
+> >  {
+> >  	struct child_process cp = CHILD_PROCESS_INIT;
+> > -	FILE *in;
+> > -	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
+> > +	struct strbuf buf = STRBUF_INIT, file = STRBUF_INIT;
+> 
+> This puzzled me. I'd like to suggest s/file/contents/
 
-ACK,
-Dscho
+Thanks, will change.
 
-> ---
->
-> Sigh...  Same patch as before, but corrected a grammar error in the
-> commit message.
->
->  ci/lib.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index 288a5b3884..0c7171a173 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -163,8 +163,10 @@ linux-clang|linux-gcc)
->  	export GIT_TEST_HTTPD=3DYesPlease
->
->  	# The Linux build installs the defined dependency versions below.
-> -	# The OS X build installs the latest available versions. Keep that
-> -	# in mind when you encounter a broken OS X build!
-> +	# The OS X build installs much more recent versions, whichever
-> +	# were recorded in the Homebrew database upon creating the OS X
-> +	# image.
-> +	# Keep that in mind when you encounter a broken OS X build!
->  	export LINUX_P4_VERSION=3D"16.2"
->  	export LINUX_GIT_LFS_VERSION=3D"1.5.2"
->
-> --
-> 2.22.0.667.g5c3548c1fe
->
->
+> >  	struct patch_util *util = NULL;
+> >  	int in_header = 1;
+> > +	char *line;
+> > +	int offset, len;
+> > +	size_t size;
+> >
+> >  	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+> >  			"--reverse", "--date-order", "--decorate=no",
+> > @@ -54,17 +67,15 @@ static int read_patches(const char *range, struct string_list *list)
+> >
+> >  	if (start_command(&cp))
+> >  		return error_errno(_("could not start `log`"));
+> > -	in = fdopen(cp.out, "r");
+> > -	if (!in) {
+> > -		error_errno(_("could not read `log` output"));
+> > -		finish_command(&cp);
+> > -		return -1;
+> > -	}
+> > +	strbuf_read(&file, cp.out, 0);
+> 
+> Shouldn't we handle a negative return value here, erroring out with "could
+> not read `log` output" as before?
 
---8323328-1757722204-1562580009=:44--
+Yeah, that was an oversight, we should definitely still handle errors
+here.
+
+> >
+> > -	while (strbuf_getline(&line, in) != EOF) {
+> > +	line = strbuf_detach(&file, &size);
+> 
+> I strongly suspect this to leak, given that `line` is subsequently
+> advanced, and there is no backup copy.
+> 
+> Maybe
+> 
+> 	line = file.buf;
+> 	size = file.len;
+> 
+> would make more sense here?
+
+Hmm good point, that makes more sense indeed.
+
+> > +	for (offset = 0; size > 0; offset += len, size -= len, line += len) {
+> >  		const char *p;
+> >
+> > -		if (skip_prefix(line.buf, "commit ", &p)) {
+> > +		len = linelen(line, size);
+> > +		line[len - 1] = '\0';
+> > +		if (skip_prefix(line, "commit ", &p)) {
+> >  			if (util) {
+> >  				string_list_append(list, buf.buf)->util = util;
+> >  				strbuf_reset(&buf);
+> > @@ -75,8 +86,6 @@ static int read_patches(const char *range, struct string_list *list)
+> >  				free(util);
+> >  				string_list_clear(list, 1);
+> >  				strbuf_release(&buf);
+> > -				strbuf_release(&line);
+> > -				fclose(in);
+> 
+> We should release the file contents in `file` (or `contents`, if you like
+> my suggestions) here.
+
+Yeah, I thought it was no longer necessary because of the
+'strbuf_detach()' earlier, but that obviously leaks in a different way
+as you pointed out.  Will release 'contents' here and below. 
+
+> >  				finish_command(&cp);
+> >  				return -1;
+> >  			}
+> > @@ -85,26 +94,28 @@ static int read_patches(const char *range, struct string_list *list)
+> >  			continue;
+> >  		}
+> >
+> > -		if (starts_with(line.buf, "diff --git")) {
+> > +		if (starts_with(line, "diff --git")) {
+> >  			in_header = 0;
+> >  			strbuf_addch(&buf, '\n');
+> >  			if (!util->diff_offset)
+> >  				util->diff_offset = buf.len;
+> >  			strbuf_addch(&buf, ' ');
+> > -			strbuf_addbuf(&buf, &line);
+> > +			strbuf_addstr(&buf, line);
+> >  		} else if (in_header) {
+> > -			if (starts_with(line.buf, "Author: ")) {
+> > -				strbuf_addbuf(&buf, &line);
+> > +			if (starts_with(line, "Author: ")) {
+> > +				strbuf_addstr(&buf, line);
+> >  				strbuf_addstr(&buf, "\n\n");
+> > -			} else if (starts_with(line.buf, "    ")) {
+> > -				strbuf_rtrim(&line);
+> > -				strbuf_addbuf(&buf, &line);
+> > +			} else if (starts_with(line, "    ")) {
+> > +				p = line + len - 2;
+> > +				while (isspace(*p) && p >= line)
+> > +					p--;
+> > +				strbuf_add(&buf, line, p - line + 1);
+> >  				strbuf_addch(&buf, '\n');
+> >  			}
+> >  			continue;
+> > -		} else if (starts_with(line.buf, "@@ "))
+> > +		} else if (starts_with(line, "@@ "))
+> >  			strbuf_addstr(&buf, "@@");
+> > -		else if (!line.buf[0] || starts_with(line.buf, "index "))
+> > +		else if (!line[0] || starts_with(line, "index "))
+> >  			/*
+> >  			 * A completely blank (not ' \n', which is context)
+> >  			 * line is not valid in a diff.  We skip it
+> > @@ -117,25 +128,23 @@ static int read_patches(const char *range, struct string_list *list)
+> >  			 * we are not interested.
+> >  			 */
+> >  			continue;
+> > -		else if (line.buf[0] == '>') {
+> > +		else if (line[0] == '>') {
+> >  			strbuf_addch(&buf, '+');
+> > -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> > -		} else if (line.buf[0] == '<') {
+> > +			strbuf_addstr(&buf, line + 1);
+> > +		} else if (line[0] == '<') {
+> >  			strbuf_addch(&buf, '-');
+> > -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> > -		} else if (line.buf[0] == '#') {
+> > +			strbuf_addstr(&buf, line + 1);
+> > +		} else if (line[0] == '#') {
+> >  			strbuf_addch(&buf, ' ');
+> > -			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> > +			strbuf_addstr(&buf, line + 1);
+> >  		} else {
+> >  			strbuf_addch(&buf, ' ');
+> > -			strbuf_addbuf(&buf, &line);
+> > +			strbuf_addstr(&buf, line);
+> >  		}
+> >
+> >  		strbuf_addch(&buf, '\n');
+> >  		util->diffsize++;
+> >  	}
+> > -	fclose(in);
+> > -	strbuf_release(&line);
+> 
+> We should release the file contents we previously read via `strbuf_read()` here.
+> 
+> Ciao,
+> Dscho
+> 
+> >
+> >  	if (util)
+> >  		string_list_append(list, buf.buf)->util = util;
+> > --
+> > 2.22.0.510.g264f2c817a
+> >
+> >
