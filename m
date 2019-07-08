@@ -2,126 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 170B81F461
-	for <e@80x24.org>; Mon,  8 Jul 2019 20:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C40A91F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 20:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730140AbfGHUJN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 16:09:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56532 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727663AbfGHUJM (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Jul 2019 16:09:12 -0400
-Received: from genre.crustytoothpaste.net (rrcs-71-42-118-242.sw.biz.rr.com [71.42.118.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S2404796AbfGHUPN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 16:15:13 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53324 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727774AbfGHUPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jul 2019 16:15:12 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8BE7C7D39E;
+        Mon,  8 Jul 2019 16:15:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z9QRS2y+C86Us73292E1/c9K5gU=; b=QyAyyQ
+        uvY0sJN9W7x+vjefGFebcPBY+nGCuoMsXa4+ehc4NNBiBfi2w+33kXsVer0s26Ju
+        rJ6pul1Go8oAsJhvoCYW2pllDA71LDAkhm32/bUVvpK6At5fUpza7xnICtQJB8yX
+        ZW0DpzXHgxrTBzbyuaFFXeiJB5WlPoWY3nrnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=b6WQAEzHYJEQqVku5/tBO8GBhTO60FsA
+        DP2WNiLLTFBdfZxTtJ7vbNAyXJWwd1fhJlSN3zmtYyqM5tRK7+CuQ7U4CP3VY7Sv
+        ET5+R8bLXmcqJIbzpyGkDtcrx/dppHDThrF3IqREz9awcKoq4oNlaZ4ka6USzNZH
+        YVgLaCXbdAI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 843A47D39D;
+        Mon,  8 Jul 2019 16:15:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE63660436;
-        Mon,  8 Jul 2019 20:09:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1562616551;
-        bh=hVF1C+Gj490K6RmwwlO+RoeccklRojpm6+1KovN0mcA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=te2VVdRxWW9IeFuIQn8UE+5c6Uw9t/aHua0fXSutIODm620YFmAgBIvtBzYMo7LDK
-         tFLXWusTDwB8JJgueLsmaQoJUNxI+zhcHYPGvrTH0zkSmVZyh/wL6BPoL4/GooefG7
-         HNR67KyBb1vq+W8bXH5eIN0qfGQ2LWCuuQE6sKyvj84r+KOcbSZl5SIw2Ml8gmPLIq
-         57IyrDfUMPg5CnJWuoY6prvmFQyyHJyYZ9XCXqweM+Abe/LyZ00Jz7mI5oksnigzs0
-         1JzGpDcfvbBfruQjp5vbqoTwdEayHEa4lvOIPwVuJYPgEyYJ6vauOCveIsOv8FRo+d
-         easWhLC2bSmg1Rm72UGB+lNYbemDglXki9akGANkKWoveIPhsNviBxL8mdqarUOWeA
-         qMNEPRbrjtZ19+ZEhXgVL8HszTBkSGBS4x22HXIfRfMEs0YVcUFcwFmjVUnsfSJu1I
-         bZwTJ39croPL6meBKluUhhLiDfJEVqrhcLfr9sInt7jYkEbSC5x
-Date:   Mon, 8 Jul 2019 20:09:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     scott douglass <scott0douglass@gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B21917D39C;
+        Mon,  8 Jul 2019 16:15:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Fwd: Discovering the new parents in commit hooks
-Message-ID: <20190708200906.GF9224@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        scott douglass <scott0douglass@gmail.com>, git@vger.kernel.org
-References: <CAOqHT5KUFOY9g-PDDq=PaXdqS41ZGYGMAUuBkU-UrPiSumqhTQ@mail.gmail.com>
- <CAOqHT5K_JZDZ1agEL4ceVdYY=4YYO715v+j_bNbJWOoV=KNqQQ@mail.gmail.com>
+Subject: Re: [PATCH v1] builtin/merge.c - cleanup of code in for-cycle that tests strategies
+References: <20190707000052.26057-1-eantoranz@gmail.com>
+Date:   Mon, 08 Jul 2019 13:15:05 -0700
+In-Reply-To: <20190707000052.26057-1-eantoranz@gmail.com> (Edmundo Carmona
+        Antoranz's message of "Sat, 6 Jul 2019 18:00:52 -0600")
+Message-ID: <xmqqh87wxoza.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0hHDr/TIsw4o3iPK"
-Content-Disposition: inline
-In-Reply-To: <CAOqHT5K_JZDZ1agEL4ceVdYY=4YYO715v+j_bNbJWOoV=KNqQQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 14909F4E-A1BD-11E9-835F-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
---0hHDr/TIsw4o3iPK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Previous code was a little convoluted to follow logic
+> New code is shorter and logic is easier to follow
 
-On 2019-07-05 at 22:01:59, scott douglass wrote:
-> Hi,
->=20
-> I=E2=80=99d like to be able to discover the new parents-to-be SHA-1s duri=
-ng
-> the hooks that run before a commit*.  Essentially I=E2=80=99d like be abl=
-e to
-> distinguish the =E2=80=98git commit=E2=80=99 case from =E2=80=98git commi=
-t =E2=80=94amend=E2=80=99. Is there
-> already a way to do this that I have overlooked? (I=E2=80=99ve read =E2=
-=80=98man
-> githooks=E2=80=99 and searched the wiki and various other places.)
+In the body of the proposed commit log message, please finish each
+sentence with a full-stop.
 
-I'm not aware of a way to distinguish this currently, although I agree
-having a way would be valuable. There are of course heuristic ways, but
-they can be fooled.
+> - Easier to see what happens when merge is successful
+> 	and how --no-commit affects result
+> - Simpler to see that for-cycle will stop when merge_was_ok is set
+> - Easier to spot what logic will run through best_strategy
+> - Easier to see that in case of ret being 2, cycle will continue
 
-> If not, I would propose that perhaps the hooks could be passed a
-> GIT_PARENTS (or perhaps GIT_NEW_PARENTS) environment variable which in
-> the =E2=80=98not amend=E2=80=99 case would contain the SHA-1 for HEAD and=
- MERGE_HEAD
-> (if appropriate) and in the =E2=80=98=E2=80=94amend' case would contain H=
-EAD^@ (all of
-> the parents of HEAD).
+These bullets are all subjective, and do not add any value to what
+you already said in the second sentence.
 
-I think we'd probably skip such functionality in favor of exposing
-whether a commit is to be amended or not and let you script the parents
-yourself.
+> - Keep a single break case (when automerge succedes and a revision will
+>   be created)
+> - Put together closing actions when automerge succedes if a revision
+>   will be created
 
-There are a lot of cases where one might want to know whether a commit
-was amended, but knowing that, you can determine the parents and
-anything else without much difficulty, so the amended option seems like
-the more general feature to implement.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+These are facts that readers can see for themselves and agree with.
 
---0hHDr/TIsw4o3iPK
-Content-Type: application/pgp-signature; name="signature.asc"
+Something like...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.16 (GNU/Linux)
+	The cmd_merge() function has a loop that tries different
+	merge strategies in turn, and stops when a strategy gets a
+	clean merge, while keeping the "best" conflicted merge so
+	far.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0jouEACgkQv1NdgR9S
-9otkDg/+MXawpUtZSM8hmTfl56rmed6mqbJISpy80CVbxTNiZNc6qGu8frm3+dfd
-FBqqCNRX1XwiFkTlbuml40ug39daSmZPYD5Wzf2hGsnRRjPPE3SnGI1ycE+XUvJX
-WuVwdbW/u7cN6Y4xMcZ6AUD+tT4j/0Csb0ItBW/wcbjxXGUzvErc7p1joZZjG4vQ
-asOwo9aMVTbM1fH54UMp41La9VLwSZcN47KJnWLgyjZ4iFolHb/MIqGZ5DbHZnyJ
-S3cTOC4UCf3e7hrZtsbBswo4GrtV/F77usJ/iqORNJTia+OtdkAobsjl9dJs7LbB
-BXR7P9kehS0LWW3Bm+ScQuFbub5jLJqkWcMd87hiAzOPsSFlWh3iVJtjQtg7Y1UF
-R8m2zYwZtD8gIF5CMJXWN1wvsB1RsqJe8w0R+jNlIcHdSQEdbIijFPwoIN9Gu7sD
-u5plbe/Ns4yIGP0JasYcPIarggxH90W+/rRWsiDDgbtDVKTxivwwTVg/JkK8zNp1
-euSL5IGoc1f0LqC3jcvOA8v3DHX4mXwwiFHp3R86FxqS8yckGdVD9/38tinDiFnn
-11oJ3dRlWeBo3AhvOjXY3RDG7vtMDp2Dvwq/femRnccbocwULdIolNMPQ1NGMbbx
-755ljQwWrVgeYdqMn4tuTHkYp/c+hdAclvd1ZY9A9W9C8aXVVSA=
-=4m+w
------END PGP SIGNATURE-----
+	Make the loop easier to follow by moving the code around,
+	ensuring that there is only one "break" in the loop where
+	an automerge succeeds.  Also group the actions that are
+	performed after an automerge succeeds together to a single
+	location, outside and after the loop.
 
---0hHDr/TIsw4o3iPK--
+perhaps?
+
+> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+> ---
+>  builtin/merge.c | 51 ++++++++++++++++++-------------------------------
+>  1 file changed, 19 insertions(+), 32 deletions(-)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 6e99aead46..94f2713bea 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1586,7 +1586,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  	    save_state(&stash))
+>  		oidclr(&stash);
+>  
+> -	for (i = 0; i < use_strategies_nr; i++) {
+> +	for (i = 0; !merge_was_ok && i < use_strategies_nr; i++) {
+>  		int ret;
+>  		if (i) {
+>  			printf(_("Rewinding the tree to pristine...\n"));
+> @@ -1604,40 +1604,26 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		ret = try_merge_strategy(use_strategies[i]->name,
+>  					 common, remoteheads,
+>  					 head_commit);
+> -		if (!option_commit && !ret) {
+> -			merge_was_ok = 1;
+> -			/*
+> -			 * This is necessary here just to avoid writing
+> -			 * the tree, but later we will *not* exit with
+> -			 * status code 1 because merge_was_ok is set.
+> -			 */
+> -			ret = 1;
+> -		}
+> -
+> -		if (ret) {
+> -			/*
+> -			 * The backend exits with 1 when conflicts are
+> -			 * left to be resolved, with 2 when it does not
+> -			 * handle the given merge at all.
+> -			 */
+> -			if (ret == 1) {
+> -				int cnt = evaluate_result();
+> -
+> -				if (best_cnt <= 0 || cnt <= best_cnt) {
+> -					best_strategy = use_strategies[i]->name;
+> -					best_cnt = cnt;
+> +		/*
+> +		 * The backend exits with 1 when conflicts are
+> +		 * left to be resolved, with 2 when it does not
+> +		 * handle the given merge at all.
+> +		 */
+> +		if (ret < 2) {
+> +			if (!ret) {
+> +				if (option_commit) {
+> +					/* Automerge succeeded. */
+> +					automerge_was_ok = 1;
+> +					break;
+>  				}
+> +				merge_was_ok = 1;
+> +			}
+> +			int cnt = evaluate_result();
+
+This introduces -Wdeclaration-after-statement, doesn't it?
+Perhaps just declare the variable at the top of the for loop, next
+to where the local 'ret' is declared?
+
+Other than this single glitch, I think the code with this patch does
+become easier to follow.
+
+> +			if (best_cnt <= 0 || cnt <= best_cnt) {
+> +				best_strategy = use_strategies[i]->name;
+> +				best_cnt = cnt;
+>  			}
+> -			if (merge_was_ok)
+> -				break;
+> -			else
+> -				continue;
+>  		}
+> -
+> -		/* Automerge succeeded. */
+> -		write_tree_trivial(&result_tree);
+> -		automerge_was_ok = 1;
+> -		break;
+>  	}
+>  
+>  	/*
+> @@ -1645,6 +1631,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  	 * auto resolved the merge cleanly.
+>  	 */
+>  	if (automerge_was_ok) {
+> +		write_tree_trivial(&result_tree);
+>  		ret = finish_automerge(head_commit, head_subsumed,
+>  				       common, remoteheads,
+>  				       &result_tree, wt_strategy);
