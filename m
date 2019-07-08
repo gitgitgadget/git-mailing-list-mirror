@@ -2,142 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EE851F4B6
-	for <e@80x24.org>; Mon,  8 Jul 2019 20:02:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 170B81F461
+	for <e@80x24.org>; Mon,  8 Jul 2019 20:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404826AbfGHUCZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jul 2019 16:02:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51071 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404790AbfGHUCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jul 2019 16:02:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F4136AEA2;
-        Mon,  8 Jul 2019 16:02:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6k9s2AxSlOsnBqYJvS8Ol/cgv1E=; b=AXiOBR
-        YtqpvycUX6S5maEOraQR0QVk6sPLnOdqh2OE0GgDCDLjhgcSjYdEcG1u5UwAE5mH
-        bqGf1IOo4FR2KP9HnA7EOW01s8q4dwFh3qnUXldFf6dkd2D35jF5AAEjZc/4T7kr
-        IW1X7Ad1+wJbYSN9U2PGVVi3ggqElBjRnh9Qk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ACoFYUkuOeNJbKkih7e6ArTTggF2oKpt
-        XTynep/Qc/cz/PX3hmJ7kKrJt7Tl+LM/QJT4TU1esh++A2Yv6/RjbeFy0mrIcBqW
-        cuK38cYi9qNStamfVFCpO9pHmtd4qVCHeV1n1YWRH+0+ntZ7esicvwE4q0w9Tgap
-        WNl1Ja9Nj7U=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1718E6AEA1;
-        Mon,  8 Jul 2019 16:02:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1730140AbfGHUJN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jul 2019 16:09:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56532 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727663AbfGHUJM (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 8 Jul 2019 16:09:12 -0400
+Received: from genre.crustytoothpaste.net (rrcs-71-42-118-242.sw.biz.rr.com [71.42.118.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 457E56AEA0;
-        Mon,  8 Jul 2019 16:02:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE63660436;
+        Mon,  8 Jul 2019 20:09:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1562616551;
+        bh=hVF1C+Gj490K6RmwwlO+RoeccklRojpm6+1KovN0mcA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=te2VVdRxWW9IeFuIQn8UE+5c6Uw9t/aHua0fXSutIODm620YFmAgBIvtBzYMo7LDK
+         tFLXWusTDwB8JJgueLsmaQoJUNxI+zhcHYPGvrTH0zkSmVZyh/wL6BPoL4/GooefG7
+         HNR67KyBb1vq+W8bXH5eIN0qfGQ2LWCuuQE6sKyvj84r+KOcbSZl5SIw2Ml8gmPLIq
+         57IyrDfUMPg5CnJWuoY6prvmFQyyHJyYZ9XCXqweM+Abe/LyZ00Jz7mI5oksnigzs0
+         1JzGpDcfvbBfruQjp5vbqoTwdEayHEa4lvOIPwVuJYPgEyYJ6vauOCveIsOv8FRo+d
+         easWhLC2bSmg1Rm72UGB+lNYbemDglXki9akGANkKWoveIPhsNviBxL8mdqarUOWeA
+         qMNEPRbrjtZ19+ZEhXgVL8HszTBkSGBS4x22HXIfRfMEs0YVcUFcwFmjVUnsfSJu1I
+         bZwTJ39croPL6meBKluUhhLiDfJEVqrhcLfr9sInt7jYkEbSC5x
+Date:   Mon, 8 Jul 2019 20:09:06 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     scott douglass <scott0douglass@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1] merge - rename a shadowed variable in cmd_merge
-References: <20190705203227.23451-1-eantoranz@gmail.com>
-Date:   Mon, 08 Jul 2019 13:02:15 -0700
-In-Reply-To: <20190705203227.23451-1-eantoranz@gmail.com> (Edmundo Carmona
-        Antoranz's message of "Fri, 5 Jul 2019 14:32:27 -0600")
-Message-ID: <xmqqlfx8xpko.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+Subject: Re: Fwd: Discovering the new parents in commit hooks
+Message-ID: <20190708200906.GF9224@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        scott douglass <scott0douglass@gmail.com>, git@vger.kernel.org
+References: <CAOqHT5KUFOY9g-PDDq=PaXdqS41ZGYGMAUuBkU-UrPiSumqhTQ@mail.gmail.com>
+ <CAOqHT5K_JZDZ1agEL4ceVdYY=4YYO715v+j_bNbJWOoV=KNqQQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 49584774-A1BB-11E9-979F-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0hHDr/TIsw4o3iPK"
+Content-Disposition: inline
+In-Reply-To: <CAOqHT5K_JZDZ1agEL4ceVdYY=4YYO715v+j_bNbJWOoV=KNqQQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
-> variable ret used in cmd_merge introduced in d5a35c114ab was already
-> a local variable used inside a for loop inside the function.
+--0hHDr/TIsw4o3iPK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Strictly speaking, there was a local variable 'ret' inside for loop,
-which is unrelated to the variable introduced by the said commit.
-The only resemblance was that they happen to share the same name.
-So "was already a local variable" is not quite right, and made my
-reading hiccup.
+On 2019-07-05 at 22:01:59, scott douglass wrote:
+> Hi,
+>=20
+> I=E2=80=99d like to be able to discover the new parents-to-be SHA-1s duri=
+ng
+> the hooks that run before a commit*.  Essentially I=E2=80=99d like be abl=
+e to
+> distinguish the =E2=80=98git commit=E2=80=99 case from =E2=80=98git commi=
+t =E2=80=94amend=E2=80=99. Is there
+> already a way to do this that I have overlooked? (I=E2=80=99ve read =E2=
+=80=98man
+> githooks=E2=80=99 and searched the wiki and various other places.)
 
-> for-local variable is being renamed to ret_try_merge to avoid shadow.
+I'm not aware of a way to distinguish this currently, although I agree
+having a way would be valuable. There are of course heuristic ways, but
+they can be fooled.
 
-Is this really a problem that needs to be changed?  What compiler
-is having trouble with the code?
+> If not, I would propose that perhaps the hooks could be passed a
+> GIT_PARENTS (or perhaps GIT_NEW_PARENTS) environment variable which in
+> the =E2=80=98not amend=E2=80=99 case would contain the SHA-1 for HEAD and=
+ MERGE_HEAD
+> (if appropriate) and in the =E2=80=98=E2=80=94amend' case would contain H=
+EAD^@ (all of
+> the parents of HEAD).
 
-I am reasonably negative on this change.  But as you seem to be a
-new contributor, let me grab this opportunity to comment on other
-aspects of the patch.
+I think we'd probably skip such functionality in favor of exposing
+whether a commit is to be amended or not and let you script the parents
+yourself.
 
-> ---
+There are a lot of cases where one might want to know whether a commit
+was amended, but knowing that, you can determine the parents and
+anything else without much difficulty, so the amended option seems like
+the more general feature to implement.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Missing sign-off.
+--0hHDr/TIsw4o3iPK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-In the proposed commit log message body, write full sentences just
-like normal English, e.g. a sentence begins with a capital letter,
-etc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.16 (GNU/Linux)
 
-The usual pattern used in our log messages is first to give an
-observation of the current state and state what the problem is,
-and then write orders you give to the codebase to be like so to fix
-the problem, e.g.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0jouEACgkQv1NdgR9S
+9otkDg/+MXawpUtZSM8hmTfl56rmed6mqbJISpy80CVbxTNiZNc6qGu8frm3+dfd
+FBqqCNRX1XwiFkTlbuml40ug39daSmZPYD5Wzf2hGsnRRjPPE3SnGI1ycE+XUvJX
+WuVwdbW/u7cN6Y4xMcZ6AUD+tT4j/0Csb0ItBW/wcbjxXGUzvErc7p1joZZjG4vQ
+asOwo9aMVTbM1fH54UMp41La9VLwSZcN47KJnWLgyjZ4iFolHb/MIqGZ5DbHZnyJ
+S3cTOC4UCf3e7hrZtsbBswo4GrtV/F77usJ/iqORNJTia+OtdkAobsjl9dJs7LbB
+BXR7P9kehS0LWW3Bm+ScQuFbub5jLJqkWcMd87hiAzOPsSFlWh3iVJtjQtg7Y1UF
+R8m2zYwZtD8gIF5CMJXWN1wvsB1RsqJe8w0R+jNlIcHdSQEdbIijFPwoIN9Gu7sD
+u5plbe/Ns4yIGP0JasYcPIarggxH90W+/rRWsiDDgbtDVKTxivwwTVg/JkK8zNp1
+euSL5IGoc1f0LqC3jcvOA8v3DHX4mXwwiFHp3R86FxqS8yckGdVD9/38tinDiFnn
+11oJ3dRlWeBo3AhvOjXY3RDG7vtMDp2Dvwq/femRnccbocwULdIolNMPQ1NGMbbx
+755ljQwWrVgeYdqMn4tuTHkYp/c+hdAclvd1ZY9A9W9C8aXVVSA=
+=4m+w
+-----END PGP SIGNATURE-----
 
-	The commit d5a35c11 ("Copy resolve_ref() return value for
-	longer use", 2011-11-13) introduced a variable 'ret' to
-	cmd_merge() to keep the final return value from the
-	function.  There however was an unrelated variable that is
-	local to a for loop that shared the same name.  Because the
-	statements inside of the loop do not have enough information
-	to decide the final outcome of the function, there is no
-	need for the outer 'ret' to be visible to them, which is
-	a perfectly good reason to use the "shadowing" technique.
-
-	Rename the local variable used inside the for loop to avoid
-	warnings when compiled with -Wshadow; this will expose the
-	outer 'ret' to the statements in the loop, allowing them to
-	mistakenly making an assignment to it, though.
-
-is how I would describe this change.  As you can see, this trades
-"make -Wshadow less noisy" with "make it easier to make mistakes"
-and I am not sure if it is a good trade-off.
-
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 6e99aead46..972b6c376a 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1587,7 +1587,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		oidclr(&stash);
-
-Interesting.
-
-All assignments to ret up to this point are all followed by "goto
-done" to jump over the "for" loop we are looking at this patch.
-So we know that when the control reaches at this point, ret has its
-initial value 0.
-
-So an alternative approach would be to just ...
-
->  	for (i = 0; i < use_strategies_nr; i++) {
-> -		int ret;
-> +		int ret_try_merge;
-
-... drop this local variable declaration and let it contaminate the
-outer 'ret', and then after the loop is done, assign 0 to ret.  That
-would squelch "-Wshallow" and at the same time makes sure that the
-loop won't corrupt the "proposed final outcome" stored in 'ret'.
-
-Quite honestly, I think the easiest "solution" would be not to use
-"-Wshadow" in your compilation.  Thsi file has a handful other
-instances of variable shadowing, and most of them do not look
-confusing or problematic.
+--0hHDr/TIsw4o3iPK--
