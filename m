@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 307421F461
-	for <e@80x24.org>; Tue,  9 Jul 2019 13:27:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFB341F461
+	for <e@80x24.org>; Tue,  9 Jul 2019 14:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbfGIN1T (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jul 2019 09:27:19 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54923 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726977AbfGIN1T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jul 2019 09:27:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562678833;
-        bh=vY5miicNmUONWJJl1oRHlNSXJyZNOIQexIB6ERsYQUI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=N5wgpvvvi1qqWmsnnUk0nHPIUdlhxbWtTsEMV50ybvLtrqZ+iZ/VFI88G7hRDyJvC
-         dpTvwzOTsdnf2mdtacX2PW/M2yHpgpjw54uxvwW3WEL9UVB2fQADmpCRssn3na3ZtZ
-         bLULJ4+KnKO0rtDcXiNiH0XMp5qFONvy92GAE64A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.104.164.78] ([194.69.102.78]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3u86-1ic7IA3wCA-00rV0S; Tue, 09
- Jul 2019 15:27:13 +0200
-Date:   Tue, 9 Jul 2019 15:27:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1726232AbfGIOnK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jul 2019 10:43:10 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60307 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbfGIOnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jul 2019 10:43:09 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C10B0705A0;
+        Tue,  9 Jul 2019 10:43:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UByagNCJlB5BWATfC+/0ETFltWc=; b=aETYlC
+        BbtMg2dVYBXIk6Ns98lOGOtCzev99Wj9Dlqa0TnLm69rWv1Prkp+lkDGoec69wUL
+        drRzXw+M8c5m/HqJXXsNIkD/ag1+GFvbIS9q3AZ3CglsxR42Ccg/revcp1Ee7Gu9
+        12KdIwxW5HKj/e2sSy9FO+N+4D+K2X9fNjzW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WjDEmyFx2T4qP0xlwgzygkNjRWxv0q+k
+        Qr6UiMg/ZypsxLa2GfphLrfycoEKg0Axvu/MqtythNRijKdknpQVj+q4yy54Jjc2
+        21p07RYi82p6jcDap9JBGSoFY1u+YGwqNxA047J+EMs22je4VbePKL29YROv+iaa
+        8p9iEb6QjNM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA1107059F;
+        Tue,  9 Jul 2019 10:43:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E4A447059E;
+        Tue,  9 Jul 2019 10:43:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Avoid illegal filenames when building Documentation
- on NTFS
-In-Reply-To: <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907091524460.5700@tvgsbejvaqbjf.bet>
-References: <pull.216.git.gitgitgadget@gmail.com> <1f0f4fe6fbf0e7a7eea1f3d49db183c70693a895.1562231679.git.gitgitgadget@gmail.com> <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [PATCH 1/1] Avoid illegal filenames when building Documentation on NTFS
+References: <pull.216.git.gitgitgadget@gmail.com>
+        <1f0f4fe6fbf0e7a7eea1f3d49db183c70693a895.1562231679.git.gitgitgadget@gmail.com>
+        <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1907091524460.5700@tvgsbejvaqbjf.bet>
+Date:   Tue, 09 Jul 2019 07:43:02 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1907091524460.5700@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Tue, 9 Jul 2019 15:27:11 +0200
+        (CEST)")
+Message-ID: <xmqqef2zw9op.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1RLa7YJ5agRzamhSR4pb4D8TSS9cWe55LNF3fgGB4XiFDA+Q3vu
- g+lxvJkXXuTExz7L4d+0xwGatY9p2HMk6ra6pT97eYHR2mUzTznsrCZWwyC59HZRZ6bI/4r
- ToMXkJgORR1X6mt4tUI74GWbumACQ69/LJrdef66AZCoJAMBoF9SeMNx0p9A6EkDcmomM3d
- Xe501l0Jw/6uT/Jkj8HTw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gMNl1ZY32eQ=:g/Vm5f4TaFdglYP94XJeSq
- zQxLNbfYPSFsNGzR4lyf1VsTWiKOfXTKvzp4tQMTlAzp44mTRkI3CadczKf2Q3g/RdDv3AdIE
- SuTmfFKkwmrmppJG/7FJWx290F9TPap18ebbni1Rzo8Ts4UJ9MeWwv30FOiCubDLX1OYikYJX
- 2C2rDHrNNC0Kch1DflBLfaymcSEzFl2rBLm1XEPDHhT5bCVwu6nGGIPBji16cg2cubFzxREot
- rOBynRh6XQgTxQZja+iwfqEafnpAIhqjuEnm/0Jjfm8nMMPdoikjV2kTWy7kMuY3Hjt4O4pU0
- V41nFpD+H+ToqMFcfF705eDzdSEuQmi9qBQq+z+xsQywz77Sj4FIuwZRE2WIaX2ykdFjSOJhl
- 5BcABveZGSmzJSVSCc0itTdogMPe8UoWxjK1yZXJXaS6dFFe1gb02ekczwYNRKVRVzTHY8pwe
- Yn0SQk/1KNToNV/tzvmMBoyIc0rnpF6HpEpp1fT3kxq2/Ji2217yd4hpVFSedBfQOYXSxAf8e
- q65yCGRV0/KZYtYwYxVQpQW6e9Eo8Bkyubt0AhazEUyIDTixC/dT24CG379CzsQnZR7Pv/Dc3
- 3BA6D6b3D0q7h1TRHCjFkEhxdNmstTZQfh8Qp1lm6woAayUAD7/T8Fja94yTAHRZJakJNCPHT
- qBN6pokeA1awcAsbLtKE6wY61EuZEgNyfxDmVW7VBkf3neF68J19+8g8OAh3NSGjQjCMqZTvP
- 6U/rFNyz6bwpu57djuz6/93jOANQL+6JNBk8qlV5ltHyt0GAC4qtbQn/etFX2vnnVMv9RDcD0
- vqt8bmfHT3qUOkEBWhlvDaluMlvZouSLiIh5v8Xbl4aCkKZwusGUp4k3FpI63fspINqq9p3hX
- F2trOHDEOH7UHAWQdAFIdVEaGhy/85Yw/wLBJrehJIooKWRhURJ5DrURCDJgAbk0qZDCRk6ZC
- qNQoZkP6Djm+n56Z0VonV6yMEmcrGNLRhXbslaTtJibSlkVJmCO3ODJQHc5kYJ7acWy3sh7/U
- zHGvJJKHCFdFx3oRZ8Lm/FjnifQHlUinmozH12OeSFqDvSGMafAtfMbzRKJseoIwI4lOHZWfN
- /CiawlGBj95ZXXxPFzrwNfJhaUyGXTL9fvg
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DC11E1A0-A257-11E9-9329-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 8 Jul 2019, Junio C Hamano wrote:
+> Using `.lock` is actually an even more established pattern. (I used `.new`
+> because the intention is not to lock files, but I would be prepared to
+> change the patch to that end.)
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > A `+` is not a valid part of a filename with Windows file systems (it =
-is
-> > reserved because the `+` operator meant file concatenation back in the
-> > DOS days).
->
-> I'd rather not to take this patch, because "generate in the target
-> with plus appended, make sure it succeeds, and then rename it to the
-> real target" is quite an established pattern not limited to the
-> Documentation/ directory of this project, if your tooling has been
-> supporting it and can continue to do so (which was the impression I
-> got from the cover letter).  Even the top-level .gitignore file
-> knows about it, so does the top-level Makefile and it uses the same
-> pattern.
+When I said that the plus convention is established in this project
+and not limited to the Documentation subdirectory, what I meant was
+that your patch is insufficient if your goal is to depart from the
+convention.
 
-Using `.lock` is actually an even more established pattern. (I used `.new`
-because the intention is not to lock files, but I would be prepared to
-change the patch to that end.)
+The pattern "*+" is known bythe top-level .gitignore file (not just
+in Documentation/.gitignore) and that is because the build procedure
+outside Documentation/ also follow the convention, e.g. the toplevel
+Makefile.  Futzing with only one Makefile is not enough.
 
-In addition, your `+` scheme will break on Windows once it uses `git.exe`
-or any other non-MSYS2 helper, so it is not future-proof, no matter how
-established you claim it to be.
+I think I saw "generate in .tmp, then move to final" pattern used in
+projects by others.  The plus-sign is a lot shorter than anything
+else and it is cute, but if some filesystems cannot deal with it,
+changing it to something else may be a plausible workaround, as long
+as it is done consistently and throughout the codebase.
 
-Ciao,
-Dscho
+> In addition, your `+` scheme will break on Windows once it uses `git.exe`
+> or any other non-MSYS2 helper...
+
+I am not sure what you mean here.  Is your git.exe disabled not to
+be able to do this: "git.exe add hello+kitty.txt"?  I think that is
+a more grave problem, and not limited to the Makefile in the
+Documentation/ directory.
