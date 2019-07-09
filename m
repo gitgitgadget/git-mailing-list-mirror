@@ -2,150 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 144751F461
-	for <e@80x24.org>; Tue,  9 Jul 2019 12:56:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 307421F461
+	for <e@80x24.org>; Tue,  9 Jul 2019 13:27:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbfGIM4Y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jul 2019 08:56:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32962 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725947AbfGIM4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jul 2019 08:56:23 -0400
-Received: (qmail 7387 invoked by uid 109); 9 Jul 2019 12:56:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Jul 2019 12:56:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32715 invoked by uid 111); 9 Jul 2019 12:57:18 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Jul 2019 08:57:18 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jul 2019 07:56:20 -0500
-Date:   Tue, 9 Jul 2019 07:56:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] credential: add nocache option to the credentials API
-Message-ID: <20190709125620.GA18175@sigill.intra.peff.net>
-References: <20190707055132.103736-1-masayasuzuki@google.com>
+        id S1726980AbfGIN1T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jul 2019 09:27:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54923 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726977AbfGIN1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jul 2019 09:27:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562678833;
+        bh=vY5miicNmUONWJJl1oRHlNSXJyZNOIQexIB6ERsYQUI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=N5wgpvvvi1qqWmsnnUk0nHPIUdlhxbWtTsEMV50ybvLtrqZ+iZ/VFI88G7hRDyJvC
+         dpTvwzOTsdnf2mdtacX2PW/M2yHpgpjw54uxvwW3WEL9UVB2fQADmpCRssn3na3ZtZ
+         bLULJ4+KnKO0rtDcXiNiH0XMp5qFONvy92GAE64A=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.104.164.78] ([194.69.102.78]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3u86-1ic7IA3wCA-00rV0S; Tue, 09
+ Jul 2019 15:27:13 +0200
+Date:   Tue, 9 Jul 2019 15:27:11 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Avoid illegal filenames when building Documentation
+ on NTFS
+In-Reply-To: <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907091524460.5700@tvgsbejvaqbjf.bet>
+References: <pull.216.git.gitgitgadget@gmail.com> <1f0f4fe6fbf0e7a7eea1f3d49db183c70693a895.1562231679.git.gitgitgadget@gmail.com> <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190707055132.103736-1-masayasuzuki@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1RLa7YJ5agRzamhSR4pb4D8TSS9cWe55LNF3fgGB4XiFDA+Q3vu
+ g+lxvJkXXuTExz7L4d+0xwGatY9p2HMk6ra6pT97eYHR2mUzTznsrCZWwyC59HZRZ6bI/4r
+ ToMXkJgORR1X6mt4tUI74GWbumACQ69/LJrdef66AZCoJAMBoF9SeMNx0p9A6EkDcmomM3d
+ Xe501l0Jw/6uT/Jkj8HTw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gMNl1ZY32eQ=:g/Vm5f4TaFdglYP94XJeSq
+ zQxLNbfYPSFsNGzR4lyf1VsTWiKOfXTKvzp4tQMTlAzp44mTRkI3CadczKf2Q3g/RdDv3AdIE
+ SuTmfFKkwmrmppJG/7FJWx290F9TPap18ebbni1Rzo8Ts4UJ9MeWwv30FOiCubDLX1OYikYJX
+ 2C2rDHrNNC0Kch1DflBLfaymcSEzFl2rBLm1XEPDHhT5bCVwu6nGGIPBji16cg2cubFzxREot
+ rOBynRh6XQgTxQZja+iwfqEafnpAIhqjuEnm/0Jjfm8nMMPdoikjV2kTWy7kMuY3Hjt4O4pU0
+ V41nFpD+H+ToqMFcfF705eDzdSEuQmi9qBQq+z+xsQywz77Sj4FIuwZRE2WIaX2ykdFjSOJhl
+ 5BcABveZGSmzJSVSCc0itTdogMPe8UoWxjK1yZXJXaS6dFFe1gb02ekczwYNRKVRVzTHY8pwe
+ Yn0SQk/1KNToNV/tzvmMBoyIc0rnpF6HpEpp1fT3kxq2/Ji2217yd4hpVFSedBfQOYXSxAf8e
+ q65yCGRV0/KZYtYwYxVQpQW6e9Eo8Bkyubt0AhazEUyIDTixC/dT24CG379CzsQnZR7Pv/Dc3
+ 3BA6D6b3D0q7h1TRHCjFkEhxdNmstTZQfh8Qp1lm6woAayUAD7/T8Fja94yTAHRZJakJNCPHT
+ qBN6pokeA1awcAsbLtKE6wY61EuZEgNyfxDmVW7VBkf3neF68J19+8g8OAh3NSGjQjCMqZTvP
+ 6U/rFNyz6bwpu57djuz6/93jOANQL+6JNBk8qlV5ltHyt0GAC4qtbQn/etFX2vnnVMv9RDcD0
+ vqt8bmfHT3qUOkEBWhlvDaluMlvZouSLiIh5v8Xbl4aCkKZwusGUp4k3FpI63fspINqq9p3hX
+ F2trOHDEOH7UHAWQdAFIdVEaGhy/85Yw/wLBJrehJIooKWRhURJ5DrURCDJgAbk0qZDCRk6ZC
+ qNQoZkP6Djm+n56Z0VonV6yMEmcrGNLRhXbslaTtJibSlkVJmCO3ODJQHc5kYJ7acWy3sh7/U
+ zHGvJJKHCFdFx3oRZ8Lm/FjnifQHlUinmozH12OeSFqDvSGMafAtfMbzRKJseoIwI4lOHZWfN
+ /CiawlGBj95ZXXxPFzrwNfJhaUyGXTL9fvg
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 06, 2019 at 10:51:32PM -0700, Masaya Suzuki wrote:
+Hi Junio,
 
-> The credentials API calls credentials helpers in order. If a
-> username/password pair is returned the helpers and if it's used for
-> authentication successfully, it's announced to the helpers and they can
-> store it for later use.
-> 
-> Some credentials are valid only for the limited time and should not be
-> cached. In this case, because the credential is announced to all helpers
-> and they can independently decide whether they will cache it or not,
-> those short-lived credentials can be cached.
-> 
-> This change adds an option that a credential helper can specify that the
-> credential returned by the helper should not be cached. If this is
-> specified, even after the credential is used successfully, it won't be
-> announced to other helpers for store.
+On Mon, 8 Jul 2019, Junio C Hamano wrote:
 
-I think this makes sense to do, though note that there's an old
-discussion which covers some alternatives:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > A `+` is not a valid part of a filename with Windows file systems (it =
+is
+> > reserved because the `+` operator meant file concatenation back in the
+> > DOS days).
+>
+> I'd rather not to take this patch, because "generate in the target
+> with plus appended, make sure it succeeds, and then rename it to the
+> real target" is quite an established pattern not limited to the
+> Documentation/ directory of this project, if your tooling has been
+> supporting it and can continue to do so (which was the impression I
+> got from the cover letter).  Even the top-level .gitignore file
+> knows about it, so does the top-level Makefile and it uses the same
+> pattern.
 
-  https://public-inbox.org/git/20120407033417.GA13914@sigill.intra.peff.net/
+Using `.lock` is actually an even more established pattern. (I used `.new`
+because the intention is not to lock files, but I would be prepared to
+change the patch to that end.)
 
-In that patch, I essentially proposed making all gathered credentials as
-nocache. That's a more secure default (though in some cases less
-convenient).
+In addition, your `+` scheme will break on Windows once it uses `git.exe`
+or any other non-MSYS2 helper, so it is not future-proof, no matter how
+established you claim it to be.
 
-It did break a case Shawn had of caching the result of another helper. I
-showed some options there for providing a mechanism to chain helpers
-together explicitly.
-
-We also discussed helpers passing out an explicit ttl. That's a more
-general case of your nocache flag (i.e., ttl=0 covers that case, but we
-could additionally pass "ttl" to the cache helper to let it be smarter).
-
-Given the age of that discussion and the fact that nobody has really
-complained much in the interim, I'm OK to go with your much simpler
-approach. But I think it's worth at least thinking for a few minutes on
-whether there's anything to pull from that discussion. :)
-
-(As a side note, I've had all those patches on my "to revisit and send
-upstream" queue for 7 years; if we take yours, maybe I can finally let
-them go. ;) ).
-
->  Documentation/technical/api-credentials.txt | 4 +++-
->  credential.c                                | 4 +++-
->  credential.h                                | 3 ++-
->  t/t0300-credentials.sh                      | 9 +++++++++
->  4 files changed, 17 insertions(+), 3 deletions(-)
-
-The patch itself looks good; two minor comments:
-
-> @@ -296,7 +298,7 @@ void credential_approve(struct credential *c)
->  {
->  	int i;
->  
-> -	if (c->approved)
-> +	if (c->approved || c->no_cache)
->  		return;
->  	if (!c->username || !c->password)
->  		return;
-
-Here we're disallowing a "nocache" credential from being passed to _any_
-helper, whether it's caching or not. It could be storing permanently,
-though perhaps that's semantic nitpicking (if it's not to be cached, it
-probably shouldn't be stored permanently either). Other helpers could in
-theory be doing something else with the data, though in practice I doubt
-here are any uses beyond debugging.
-
-I dunno. I started writing that paragraph to suggest calling it
-"nostore" or something, but I think that is really no better than
-"nocache".
-
-If we did have a ttl, I'd expect to see a check for "ttl=0" here, but
-then otherwise pass the ttl along to the helper (and a matching change
-in credential-cache to use the minimum of the credential-specific ttl or
-the global-configured one).
-
-> diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-> index 82eaaea0f4..ad06f6fe11 100755
-> --- a/t/t0300-credentials.sh
-> +++ b/t/t0300-credentials.sh
-> @@ -118,6 +118,15 @@ test_expect_success 'do not bother storing password-less credential' '
->  	EOF
->  '
->  
-> +test_expect_success 'credential_approve does not call helpers for nocache' '
-> +	check approve useless <<-\EOF
-> +	username=foo
-> +	password=bar
-> +	nocache=1
-> +	--
-> +	--
-> +	EOF
-> +'
-
-At first I thought this test was doing nothing, since we don't generally
-expect a helper to produce output for an "approve" request (and there
-are cases in lib-credential.sh that rely on that). But the "useless"
-helper is intentionally chatty, so it produces output for all requests,
-and this would fail without your patch. Good.
-
-The cases in lib-credential also omit the "--" for empty sections, but I
-see the similar "do not bother..." test above includes them. It
-shouldn't matter either way.
-
-So I think this looks good.
-
--Peff
+Ciao,
+Dscho
