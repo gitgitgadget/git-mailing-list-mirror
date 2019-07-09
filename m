@@ -2,148 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49D4A1F461
-	for <e@80x24.org>; Tue,  9 Jul 2019 17:00:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB3B1F461
+	for <e@80x24.org>; Tue,  9 Jul 2019 18:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbfGIRAk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jul 2019 13:00:40 -0400
-Received: from mx2.mailbox.org ([80.241.60.215]:61778 "EHLO mx2.mailbox.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725816AbfGIRAj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jul 2019 13:00:39 -0400
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:105:465:1:2:0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by mx2.mailbox.org (Postfix) with ESMTPS id BC8B7A1196;
-        Tue,  9 Jul 2019 19:00:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mailbox.org; h=
-        content-transfer-encoding:content-type:content-type:mime-version
-        :subject:subject:references:in-reply-to:message-id:from:from
-        :date:date:received; s=mail20150812; t=1562691634; bh=9fJ2uwhflj
-        I3PAzixZoyGkjbJttndc05LNitQ9W0cfc=; b=x7PAv24YQjkKuVqdNR4KZJ1o4f
-        7dgVe4YgO44ht34xZ3JMinGFciLr1yvSk+QHGVmdwLQyOdjVdn41RUO2xOdl37zX
-        R+8mLKgEhF9o9t1qAOsIl+pW8XEszWxy4lEdXIzwH2JPL86Z+kDJBuIYUzquIqbJ
-        xspRkQPhK56JXQyR941L515fQoBSAHJTA8fUHufWdBvRh3C+dFAfVwo1THLXFBFc
-        GjcjXOvjRgmGiBkN2L5qCB3DbCgEhRPHyDYiSkdmBPP/ijIXLi2sI2xdDZ3tQhki
-        UJwtqEP4/M4CeuOBVTwTEAl4M1ymirpOqU2UzRdxlFoXXOWVAmCO/BlNXS2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-        t=1562691637; h=from:from:sender:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OJF2R5m2gqTBHgPy5VplkDpENu8T4F3CEa1XqNxor8I=;
-        b=w2oZY/uyyWULalRGJq8pQJx8+YOpSstN4/VxOtABgJ2g/Q5Die9pAh1cBmLybNZxCaDHZE
-        nC1752/0YZoClGv4NdXLQ98Y3v6nqWCjTYeigXFyss7MAcm1zYSFMbBaIrgL0QS55iZ5ae
-        BIhgkYRoVF9KNY2cZvl9srYx/qU5G2Obat1ZgRNMYonIhIGdVo6KrTadavragSGvv1vXsL
-        Ibjpr1YEsfInVvbfSGlFampuj7Ry0G+s9vCD/ZB8tzbukMuXPTBmhFMlxZvqZ+IJV1zw59
-        WbXwQfBje22uTLtxPorQInRdAKKYiWwchbg3elFnkmkpAEd+0mJpZhmAy0t5Ug==
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp2.mailbox.org ([80.241.60.241])
-        by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
-        with ESMTP id FOJyoB6YhYok; Tue,  9 Jul 2019 19:00:34 +0200 (CEST)
-Date:   Tue, 9 Jul 2019 19:00:33 +0200 (CEST)
-From:   usbuser@mailbox.org
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <275487563.12198.1562691633735@office.mailbox.org>
-In-Reply-To: <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
-References: <423596682.8516.1562665372094@office.mailbox.org>
- <xmqqa7dnw9b1.fsf@gitster-ct.c.googlers.com>
- <1152121968.7459.1562688927235@office.mailbox.org>
- <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
-Subject: Re: Unexpected or wrong ff, no-ff and ff-only behaviour
+        id S1727764AbfGISzz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jul 2019 14:55:55 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:43977 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726491AbfGISzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jul 2019 14:55:55 -0400
+Received: by mail-yw1-f67.google.com with SMTP id n205so4942462ywb.10
+        for <git@vger.kernel.org>; Tue, 09 Jul 2019 11:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=smfDyWf/zTF+AMJ+fnARgcPnuM8PFC7mhdFbNvGBB1A=;
+        b=y8Z2sZDxAJ35RMsJmitFHkB29QA/A6Ni54stLg0S3bgZlWA/OX47TvwFqmm+/Yb9PT
+         b9kziRvxX9t1nDDZY9IHkNYglZciFRbNT6qYVUa56o3gn4/EY/pytY8r2q/JAd0lpvu7
+         VHP+OEUe28Kp42lw055WxQDT6xwsiVk+yhtCQxzbRTb1qECEGPWl+qiKt2XmL6cpvIL6
+         wzDOQ6M4qI8blECQWIz2OPwNakqUf2ixA26OW3s+CfDKVJ44z0vyOuKqM/M1VXAN3M9/
+         U2glAZAqhPzi8RrclECYLyilrAKCVY0nYNwCtZALmrMB9+jQ4qOjPDTa9FrntHVRYYTk
+         JXSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=smfDyWf/zTF+AMJ+fnARgcPnuM8PFC7mhdFbNvGBB1A=;
+        b=f1LUPQwYr7J1qOougBNgTgdPetBJLXfT5xCpu2sOmdDQAjp+s4SenNhVCej+YBXEHE
+         QhG8Tg86DKRlbTwbckOEAJLyjNzbkU6lxHsCrAhhSO0zMDINmbAnMNqqCXgygrSs3AQA
+         SXVs1i4Y75HsdCznga9W0yipHlGLSqNSu9Kw/0N2QOdUmUoQUDdwgtb/vT3H4JPLfwQu
+         6+GgMeaJyrMhTNEc0rdIL59kvCvhR22pB/jruVwZJk6Y48UIx5XgAivEXMBCXBi80nKj
+         +ITmiBcsOduRPtXK+ZpPDvYrzyYmSnkhp/KE5lOvqv3yqtTYCV2Xe64Cw4uyhPx+E24W
+         vQbQ==
+X-Gm-Message-State: APjAAAWEUzMWRMX3FxPvo6IZ1gwIDN39C184Fvm6yB5ukqgaCFv6xoJQ
+        PgQRjfq1EM04OHmsxUChaOTItA==
+X-Google-Smtp-Source: APXvYqx6EE+i5ayOqHfkp5GcC1mBgJE+UvhiKmL8/HRUpj6YdJ76jxk+4J7ApwxBW4W3wtHeF0UxAQ==
+X-Received: by 2002:a0d:fb83:: with SMTP id l125mr2837508ywf.43.1562698553866;
+        Tue, 09 Jul 2019 11:55:53 -0700 (PDT)
+Received: from localhost ([2600:1700:6e90:7930:2c87:56eb:7a09:3754])
+        by smtp.gmail.com with ESMTPSA id d124sm3816389ywc.100.2019.07.09.11.55.52
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 09 Jul 2019 11:55:53 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Tue, 9 Jul 2019 13:55:52 -0500
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        Junio C Hamano <gitster@pobox.com>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 0/3] [RFC] Create 'core.featureAdoptionRate' setting
+ to update config defaults
+Message-ID: <20190709185552.GA84865@TaylorsMBP6986.attlocal.net>
+References: <pull.254.v2.git.gitgitgadget@gmail.com>
+ <pull.254.v3.git.gitgitgadget@gmail.com>
+ <50955e76-8b61-8ffd-b8ee-3621ecbd912b@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Medium
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <50955e76-8b61-8ffd-b8ee-3621ecbd912b@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On 09 July 2019 at 18:35 Elijah Newren <newren@gmail.com> wrote:
->=20
->=20
-> Hi Roland,
->=20
-> On Tue, Jul 9, 2019 at 9:17 AM Roland J=C3=A4ger <eyenseo@mailbox.org> wr=
-ote:
-> >
-> > Thanks for answering Junio.
-> >
-> > I get what git does. But I believe that either the documentation ist wr=
-ong/ambiguous or --no-ff and --ff-only should be able to be combined and ei=
-ther should be fixed - preferably the later. What I want to say to git is "=
-I never accept a real merge; please make a merge commit, even if it is redu=
-ndant/empty". And I believe that github and gitlab allow to configure somet=
-hing like that.
->=20
-> Please don't top-post on this list.
->=20
-> I agree, the documentation is wrong or misleading and there is a
-> wording change we could make to improve it.  But, in particular,
-> --no-ff and -ff-only are completely incompatible.  A fast forward
-> implies no commits of any kind are created, while --no-ff explicitly
-> requires one to be created.  More on that below...
->=20
-> > My manpage tells me the following:
-> >
-> > --ff When the merge resolves as a fast-forward, only update the branch =
-pointer, without creating a merge commit. This is the default behavior.
-> > =3D> Allow either
->=20
-> Yes.
->=20
-> > --no-ff Create a merge commit even when the merge resolves as a fast-fo=
-rward. This is the default behaviour when merging an annotated (and possibl=
-y signed) tag that is not stored in its natural place in refs/tags/ hierarc=
-hy.
-> > =3D> Always create a commit, even when FF
->=20
-> Not quite; I'd instead say:
->=20
-> =3D> Always create a merge commit, even if FF is instead possible.
->=20
-> In particular, FF means there is no commit creation.  I agree the
-> documentation needs correction here, it should be:
->=20
-> "--no-ff: Create a merge commit even when the merge could instead
-> resolve as a fast-forward..."
->=20
-> Would you like to try your hand at submitting a patch with this change?
->=20
-> > --ff-only Refuse to merge and exit with a non-zero status unless the cu=
-rrent HEAD is already up to date or the merge can be resolved as a fast-for=
-ward.
-> > =3D> Fail if FF is not possible
->=20
-> Yes.
->=20
->=20
-> Hope that helps,
-> Elijah
+Hi Derrick,
 
-I hope this is not-top-posting? I'm new to this and know nothing apparently=
-.
+I'm a little bit late to the part, but I think that this is a really
+interesting feature with a lot of really interesting discussion so far.
 
-If I were to write a patch then I would very much prefer to implement the b=
-ehaviour that I expected and want to exist - either by a new flag and fixed=
- wording, or just fixed behaviour. I guess the latter is a no go. Could you=
- point me in the right direction where I would need to start to add such a =
-flag?
+I hope you don't mind me throwing in my $.02 as well :-).
 
-Additionally I would also want to change the wording for --ff-only, as it c=
-urrently reads as if it only performs a check (which would lead to the expe=
-cted behaviour) but does more than that, as it prevents "real merges" altog=
-ether.
+On Mon, Jul 08, 2019 at 03:22:49PM -0400, Derrick Stolee wrote:
+> On 7/1/2019 10:29 AM, Derrick Stolee via GitGitGadget wrote:
+> > Here is a second run at this RFC, which aims to create a "meta" config
+> > setting that automatically turns on other settings according to a user's
+> > willingness to trade new Git behavior or new feature risk for performance
+> > benefits. The new name for the setting is "core.featureAdoptionRate" and is
+> > an integer scale from 0 to 10. There will be multiple "categories" of
+> > settings, and the intention is to allow more granular levels as necessary.
+>
+> (Adding people who contributed feedback to CC line.)
+>
+> It seems that this "Feature Adoption Rate" idea was too simplistic, and
+> had several issues. Time to take a different stab at this direction, but
+> with these clear goals in mind:
+>
+>  1. We want intermediate users to be able to take advantage of new config
+>     options without watching every release for new config options.
+>
+>  2. The config name should match the general effect of the implied
+>     settings.
+>
+>  3. There are orthogonal settings that may not apply beneficially to
+>     all repos.
 
-Thank you for your time,
-Roland
+I think that this is a clear representation of the initial reaction I
+had to the 'core.featureAdoptionRate' idea. I had drafted a response to
+advance these concerns before realizing that this subsequent RFC
+existed, which does a nice job highlighting the concerns that I had.
+
+> With this in mind, I propose instead a set of "feature.*" config settings
+> that form groups of "community recommended" settings (with some caveats).
+> In the space below, I'll list a set of possible feature names and the
+> implied config options.
+
+I think that 'feature.*' configuration settings are a good idea. They
+address each of the above (3) concerns, since they are:
+
+  1. Can be easily adopted by even novice-level users. Perhaps
+     novice-users will not be setting 'feature.manyFiles = 1', but they
+     can easily opt-in to organization-level features that have been
+     defined to handle organization-specific concerns.
+
+  2. This one is straightforward: I think that setting
+     'feature.manyFiles = 1' is clearer than 'feature.adoptionRate = 3'.
+
+  3. Right. Windows developers may have a different set of what features
+     are interesting to adopt than, say, every-day users, and likewise
+     for kernel developers, too.
+
+> First, the main two categories we've discussed so far: many commits and
+> many files. These two feature sets are for when your repo is large in
+> one of these dimensions. Perhaps there are other settings to include
+> in these?
+>
+> 	feature.manyFiles:
+> 		index.version = 4
+> 		index.threads = true
+> 		core.untrackedCache = true
+>
+> 	feature.manyCommits:
+> 		core.commitGraph = true
+> 		gc.writeCommitGraph = true
+> 		(future: fetch.writeSplitCommitGraph = true)
+
+I think that for this *feature* (pun mostly unintended) to really shine,
+we ought to adopt Junio's suggestion in [1] that we allow users to:
+
+  * use pre-baked features that are defined within and shipped with
+    Git itself.
+
+  * define their own features and second-order features that can
+    reference both pre-baked and user-defined feature groups.
+
+I think that this will let, say, folks at Microsoft to define a set of
+features that are interesting to Windows developers, that are separate
+from the features that core Git thinks will be interesting to every-day
+users.
+
+>
+> <snip>
+>
+> Thanks,
+> -Stolee
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/xmqqftonsr6a.fsf@gitster-ct.c.googlers.com/
