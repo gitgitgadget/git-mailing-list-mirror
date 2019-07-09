@@ -8,88 +8,82 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0E061F461
-	for <e@80x24.org>; Tue,  9 Jul 2019 23:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F53C1F461
+	for <e@80x24.org>; Tue,  9 Jul 2019 23:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbfGIXF7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jul 2019 19:05:59 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:46506 "EHLO
+        id S1726945AbfGIXJF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jul 2019 19:09:05 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:54088 "EHLO
         mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbfGIXF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jul 2019 19:05:57 -0400
-Received: by mail-pf1-f202.google.com with SMTP id g21so132817pfb.13
-        for <git@vger.kernel.org>; Tue, 09 Jul 2019 16:05:57 -0700 (PDT)
+        with ESMTP id S1726218AbfGIXJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jul 2019 19:09:04 -0400
+Received: by mail-pf1-f202.google.com with SMTP id 191so126803pfy.20
+        for <git@vger.kernel.org>; Tue, 09 Jul 2019 16:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=tsFeOsdJLwKrgVd7r4XPCeNal7PifK6CpiAuVCrBZYM=;
-        b=IJH356Ufloz5Un81/6D/9VZbErLBIi1SqaFoOU/S11WX3MuWx6m5tCooFAqjhPek1U
-         +e9Ra+uQbPHeg2u2goKINbbINEByBULAMJBdM+/yuw8ST8QPsycg/YbBWDUWINJcwO2e
-         57fRI3cpVBMBtTnAKJEf//uVGzgBrkzXxb/O3qBO73JES1729n5XL66DLJNhlOBnmyI/
-         QUJQ6dlQAGMViBaNmQhVHRsir2RSA81SPPhbAWRcvBX8edlvAoDOtBZYPMy5KmExdK2h
-         6WcSLS1O+tEJzoeCJKvZCHE0Jx70vS8aceFoIw2VKH0Llv54mfQMeR1+92RZkqJ/PTf3
-         ACEA==
+        h=date:message-id:mime-version:subject:from:to;
+        bh=nWgNDSp+xcVVbY1rq659H+vMaycRlPjHLA5201hcSlo=;
+        b=wAvVl6KwU/077Ts3pyVZ8SROQXDUzA53Q6cPPhx506Ei3hPlVScwqxPII+O91C21g5
+         drqzY7Zsj2BwNeShnMX7Cs2Km0gRIhBIIK2FQAtOOXP6MMDFaymH+zyivf6r7eoFBF5R
+         70zsagwc6c/qUo70422j2fq90ZpO6pgTMi/REEdBg7ad9kUAxqikjaZ31VJa09056OVn
+         TNRZ/hNoBHnyzOWAsYmKCwXyBXxrd/6y7g2RnvWBBdlK0YUfqnRWJhR8yaEj+tLDPhmk
+         f66vWY++M27bt/tI/1bfyfLJ8RcOhcdxvCsHzu2BGqP0rDUztEt+/GJhIw4Xl8x7y7SN
+         R+pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=tsFeOsdJLwKrgVd7r4XPCeNal7PifK6CpiAuVCrBZYM=;
-        b=sAlyIKNSiGl9pOb6UUF0KVYMGNMAYvADdF23P3YpB6A2k40zV+LuJYiSBcTcSP45vU
-         hZiRD6fIooLPfFob3fFfjfE/i+xH1vugWQd4mxBhajljA3W20qcQIyXCcQ516/+HAiAF
-         1JVQk8HN/LEUNk9oF16T7ufoFcM1syiW4jPP/wDb9cte1hYd2kNQ/8efCuWhNPiNprCP
-         RwGD+u0l3eRg63ApAkTbua6PzrSRofdsEhnbWjmc8ZO85uu6wxbRq4D4x8OowsOKq97d
-         D3/1Ah6tjbPTk3kEVVPaDvpftzofAJwJVlSMf/Sabxigp3qdQ8fstTX6ygrJgdD2bFZs
-         VXWw==
-X-Gm-Message-State: APjAAAWpcEdDLy3LhceJobihQDW9AmABFHlM9jCj14gRSFAIxocwov8K
-        sX3XcakRJjCRwpXg6+m2KT4smZoVo+3RmeVFG0rpQkDaMzcsqJ+PsiMmPMlz48DRjw+wLrXo6I4
-        XXXy0tcUMf8JLVAthJsXryOuXiiTtQB/QLLMT3HaDV7276ToRvmldlqwUy1wZAtc=
-X-Google-Smtp-Source: APXvYqxnl3XF4cHHpZb3HxXCe3bGApdGT63gKAKw4VmwjN6tE2aKFL5xRTq9HEyuNPZK2rZ/mpdK5SRyNoQacA==
-X-Received: by 2002:a63:1310:: with SMTP id i16mr32832475pgl.187.1562713556543;
- Tue, 09 Jul 2019 16:05:56 -0700 (PDT)
-Date:   Tue,  9 Jul 2019 16:05:45 -0700
-In-Reply-To: <cover.1562712943.git.steadmon@google.com>
-Message-Id: <acf3aebcaa60270ef3bc94547a3aec50f39038fe.1562712943.git.steadmon@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=nWgNDSp+xcVVbY1rq659H+vMaycRlPjHLA5201hcSlo=;
+        b=qQ2AILznyrBbwytwIjsPz/9jMjDzyjGgYKJT+YqBMWojWPhZpruw3eU0Ard2jUIzgy
+         fxtdEsD64Otxioewu6eJsU+d9qMX5+Mk3U1KWBZ8E14Te6pozlsYpf/Dd472mQJieMzN
+         UVl6LBIwTkgtK7NmQpWL7s5sz5ajh14c9BgMmH/4V72Fq6oZgZRyIeiE09Pm+EZuu9Dg
+         2MxCiAz3l61aC5O232Z2EWDzTd0yALkDe+u+8wbQmmtd+EBvySNE3DgYU3NO4w2v5vq6
+         4aj7orFyvAOybhIb4udE26w4pBNY7SBNAr4+u3Yot0W0OH2g06JB+QAKh+9b7InHqQG3
+         O7LQ==
+X-Gm-Message-State: APjAAAUQxy5Ws7T5ZaNwsZa5xkoM4srGcwWxyzllqKEDZeZdmzYf3joX
+        ktgPIL12aB+MaXB1WBHvUsjleLb+CzTaBHviD0bMhPuSDQH0dl4cFK2ztv282AP3ZcBD8OK8s3M
+        ygh4AnaGpre61jO2Vus7Z3kFs0pxiP4LAiBznMM/LasT4Bp9KuBLTpI2aOMQsZhs=
+X-Google-Smtp-Source: APXvYqzW/6wZf7lhNYM2mQlWkio5+3JTn9jYkYz8JW58Lb1NW3+ExvrPwi42WGuYVM4+dbRqKM/yS/1kEGnAnQ==
+X-Received: by 2002:a63:124a:: with SMTP id 10mr2192020pgs.254.1562713743776;
+ Tue, 09 Jul 2019 16:09:03 -0700 (PDT)
+Date:   Tue,  9 Jul 2019 16:09:01 -0700
+Message-Id: <3f950d9fd772897edc02e9258267759d4244c1f8.1562713651.git.steadmon@google.com>
 Mime-Version: 1.0
-References: <cover.1560295286.git.steadmon@google.com> <cover.1562712943.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a-goog
-Subject: [RFC PATCH v2 3/3] ci: run trace2 schema validation in the CI suite
+Subject: [PATCH] trace2: correct trace2 field name documentation
 From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        avarab@gmail.com, peff@peff.net, jnareb@gmail.com
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Correct the api-trace2 documentation, which lists "signal" as an
+expected field for the signal event type, but which actually outputs
+"signo" as the field name.
+
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- ci/run-build-and-tests.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+This patch has been split off from the "Add a JSON Schema for trace2
+events" series. The documentation discrepancy was discovered in the
+process of testing the schema validation in that series.
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cdd2913440..0707c90549 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -14,6 +14,8 @@ make
- make test
- if test "$jobname" = "linux-gcc"
- then
-+	make -C t/trace_schema_validator
-+	export GIT_TRACE2_EVENT=$(mktemp)
- 	export GIT_TEST_SPLIT_INDEX=yes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
- 	export GIT_TEST_OE_SIZE=10
-@@ -21,6 +23,9 @@ then
- 	export GIT_TEST_COMMIT_GRAPH=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
- 	make test
-+	t/trace_schema_validator/trace_schema_validator \
-+		--trace2_event_file=${GIT_TRACE2_EVENT} \
-+		--schema_file=t/trace_schema_validator/strict_schema.json
- fi
+ Documentation/technical/api-trace2.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 23c3cc7a37..fd1e628944 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -668,7 +668,7 @@ completed.)
+ 	"event":"signal",
+ 	...
+ 	"t_abs":0.001227,  # elapsed time in seconds
+-	"signal":13        # SIGTERM, SIGINT, etc.
++	"signo":13         # SIGTERM, SIGINT, etc.
+ }
+ ------------
  
- check_unignored_build_artifacts
 -- 
 2.22.0.510.g264f2c817a-goog
 
