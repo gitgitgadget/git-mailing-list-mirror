@@ -2,88 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F53C1F461
-	for <e@80x24.org>; Tue,  9 Jul 2019 23:09:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC4151F461
+	for <e@80x24.org>; Tue,  9 Jul 2019 23:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726945AbfGIXJF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jul 2019 19:09:05 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:54088 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbfGIXJE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jul 2019 19:09:04 -0400
-Received: by mail-pf1-f202.google.com with SMTP id 191so126803pfy.20
-        for <git@vger.kernel.org>; Tue, 09 Jul 2019 16:09:04 -0700 (PDT)
+        id S1726380AbfGIXNM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jul 2019 19:13:12 -0400
+Received: from mail-vs1-f54.google.com ([209.85.217.54]:36457 "EHLO
+        mail-vs1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbfGIXNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jul 2019 19:13:12 -0400
+Received: by mail-vs1-f54.google.com with SMTP id y16so273687vsc.3
+        for <git@vger.kernel.org>; Tue, 09 Jul 2019 16:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=nWgNDSp+xcVVbY1rq659H+vMaycRlPjHLA5201hcSlo=;
-        b=wAvVl6KwU/077Ts3pyVZ8SROQXDUzA53Q6cPPhx506Ei3hPlVScwqxPII+O91C21g5
-         drqzY7Zsj2BwNeShnMX7Cs2Km0gRIhBIIK2FQAtOOXP6MMDFaymH+zyivf6r7eoFBF5R
-         70zsagwc6c/qUo70422j2fq90ZpO6pgTMi/REEdBg7ad9kUAxqikjaZ31VJa09056OVn
-         TNRZ/hNoBHnyzOWAsYmKCwXyBXxrd/6y7g2RnvWBBdlK0YUfqnRWJhR8yaEj+tLDPhmk
-         f66vWY++M27bt/tI/1bfyfLJ8RcOhcdxvCsHzu2BGqP0rDUztEt+/GJhIw4Xl8x7y7SN
-         R+pA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0GAR6cXCpRq7MrxBpOkqoI+NoQrcnXBmpWX4s0MJL38=;
+        b=X1ux1zUXJPy3frebd2E2w0bPu9qGs1qMrT5tSrp8PD92SR2be7CBUVcXGgyCklHkAv
+         OOpgZnEPrXazFR2aF3AaaDUksmeO7fSBqpEzslTljmbBSihpN8sAOH8y0FzXSptQJnpt
+         sv+X8jsON0L2t3bLM5W6/jO+pjPg652qxfxYQhd0YldGP9MkmNCCbceOM66QLy0q357H
+         cm8BcSH+XaLQzu/WJARytJSci4QBvmvxBXNMhmvCXbKt/ctleFZJCQHBjEZvYXm/uroL
+         WnrEX3vtZzslTJkRuaIVWrnA6bedXhRlbaCyo6OJKYxoz9WwLCK69NuU2Zr+F2ftO1yb
+         3CQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=nWgNDSp+xcVVbY1rq659H+vMaycRlPjHLA5201hcSlo=;
-        b=qQ2AILznyrBbwytwIjsPz/9jMjDzyjGgYKJT+YqBMWojWPhZpruw3eU0Ard2jUIzgy
-         fxtdEsD64Otxioewu6eJsU+d9qMX5+Mk3U1KWBZ8E14Te6pozlsYpf/Dd472mQJieMzN
-         UVl6LBIwTkgtK7NmQpWL7s5sz5ajh14c9BgMmH/4V72Fq6oZgZRyIeiE09Pm+EZuu9Dg
-         2MxCiAz3l61aC5O232Z2EWDzTd0yALkDe+u+8wbQmmtd+EBvySNE3DgYU3NO4w2v5vq6
-         4aj7orFyvAOybhIb4udE26w4pBNY7SBNAr4+u3Yot0W0OH2g06JB+QAKh+9b7InHqQG3
-         O7LQ==
-X-Gm-Message-State: APjAAAUQxy5Ws7T5ZaNwsZa5xkoM4srGcwWxyzllqKEDZeZdmzYf3joX
-        ktgPIL12aB+MaXB1WBHvUsjleLb+CzTaBHviD0bMhPuSDQH0dl4cFK2ztv282AP3ZcBD8OK8s3M
-        ygh4AnaGpre61jO2Vus7Z3kFs0pxiP4LAiBznMM/LasT4Bp9KuBLTpI2aOMQsZhs=
-X-Google-Smtp-Source: APXvYqzW/6wZf7lhNYM2mQlWkio5+3JTn9jYkYz8JW58Lb1NW3+ExvrPwi42WGuYVM4+dbRqKM/yS/1kEGnAnQ==
-X-Received: by 2002:a63:124a:: with SMTP id 10mr2192020pgs.254.1562713743776;
- Tue, 09 Jul 2019 16:09:03 -0700 (PDT)
-Date:   Tue,  9 Jul 2019 16:09:01 -0700
-Message-Id: <3f950d9fd772897edc02e9258267759d4244c1f8.1562713651.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.510.g264f2c817a-goog
-Subject: [PATCH] trace2: correct trace2 field name documentation
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0GAR6cXCpRq7MrxBpOkqoI+NoQrcnXBmpWX4s0MJL38=;
+        b=fCtOI6JDjpw2wrWSkIaMFMxAdOG8UBR6rmjC1cOtDPO00GYWPxGyVaKm2hXBqrXRrp
+         X72vo0HHmNlGyt/tvUtagyXsoMmBqvuVWoaOH0kuyiCqSusaVP8rE/qcTqmdGAxxwph1
+         ki3+7UIXKD8opdgKTWIQ7WbgKTRAEF1LdfOU3jBLdnRFMPzAzT7JkYJqsvx9qR4hx98T
+         qSX9v1wYUo0kcTd3x8KIOc8dSifgO75IQLIccn2zpnLzIkcO8OPe4qJhtso4OpWup0Vj
+         y8mGQ8WeTcj6bayJIosSVYlqHLzFwSDiFXOXTFM5KD4u3320xIMcfOh8w+Ubr2SjJvtd
+         RV7g==
+X-Gm-Message-State: APjAAAWgg+RhZWAnb0nAguESmTF9ERMPJ7yPMS4ffzqgn8xF1sMNw8s2
+        DXYfGduw6/TIrf13wuwbGl3wu1IRb6V45yXT9Dw=
+X-Google-Smtp-Source: APXvYqxhUSTXgDhhNxcukDXBY3cDsMP2ebgjuYgTywPAt+N05ZvxT4d94bJxHqEAglk7BUhCZG+eMswaZG0CPFsyUYk=
+X-Received: by 2002:a67:300f:: with SMTP id w15mr16522136vsw.116.1562713991581;
+ Tue, 09 Jul 2019 16:13:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <1288734232ea45e0be655668ac60d98f@ASGEXCPWP07.ga.com>
+In-Reply-To: <1288734232ea45e0be655668ac60d98f@ASGEXCPWP07.ga.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 9 Jul 2019 16:13:00 -0700
+Message-ID: <CABPp-BE1fQs99ipi9Y8gfQO3QHkxzQhn1uriEbj6YjdYH839eQ@mail.gmail.com>
+Subject: Re: Problem with git diff
+To:     "McRoberts, John" <John.McRoberts@ga.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Correct the api-trace2 documentation, which lists "signal" as an
-expected field for the signal event type, but which actually outputs
-"signo" as the field name.
+Hi John,
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-This patch has been split off from the "Add a JSON Schema for trace2
-events" series. The documentation discrepancy was discovered in the
-process of testing the schema validation in that series.
+On Tue, Jul 9, 2019 at 3:57 PM McRoberts, John <John.McRoberts@ga.com> wrote:
+>
+> I am responsible for generating a list of all files changed between two
+> successive releases of software. I was using 'git diff' but have run into a
+> problem.
+>
+> Consider the following situation: A development branch comes off of commit A
+> and files are changed three times.  A tag (REL1) is placed on the third
+> commit.  Then the branch is merged back to master.  At this point, master's
+> HEAD is at C (and it remains there).  Two development branches are created
+> off of master, the first of which is not important here.  In the second one,
+> there are files changed and a tag (REL2) applied.
+>
+>
+> ---------------------[I]
+>
+> /      {dev branch}
+>
+> /
+>
+> /
+>              {master branch}
+> /
+>  [A] ---------------------------------[B]------------------------------->[C]
+> master <HEAD>
+>    \                               filelist 6                           /  \
+>     \                                                                  /
+> \
+>      \                                                                /
+> \
+>       \                                                              /
+> \
+>        \                {development branch}                        /
+> \
+>         \------->[D]----------------------->[E]-------------------[F]
+> \------[G]--------[H]
+>                                                                  REL1
+> REL2
+>                 fileset 1               fileset 2           fileset 3
+> fileset 4    fileset 5
+>
+> At this point, I run
+>     'git diff  -m --first-parent --pretty=fuller --decorate=short
+> --name-only REL2..REL2'
 
- Documentation/technical/api-trace2.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Wow, we really, really need to throw errors and warnings when people
+use crazy range operators with diff.[1][2]  What version of git are
+you using that accepts --decorate=short as an argument to `git diff`?
+And why in the world does git diff accept --first-parent or
+--pretty=fuller?!?  That's insane for git-diff to swallow that.
+(#leftoverbits?)  Also, I think you meant `REL1` one of the two times
+you wrote `REL2`, which makes me suspect you may have done some
+copy-edit-paste and didn't try this actual command.
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 23c3cc7a37..fd1e628944 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -668,7 +668,7 @@ completed.)
- 	"event":"signal",
- 	...
- 	"t_abs":0.001227,  # elapsed time in seconds
--	"signal":13        # SIGTERM, SIGINT, etc.
-+	"signo":13         # SIGTERM, SIGINT, etc.
- }
- ------------
- 
--- 
-2.22.0.510.g264f2c817a-goog
+> I expect to see only filesets 4 and 5 listed.  I also see filesets 1, 2 and
+> 3 showing up.  This means that the git diff command is showing files that,in
+> fact, did not change between the two tags.  By the way, I verified with a
+> file by file comparison that under REL2 and REL1, the files represented by
+> filesets 1, 2 and 3 had identical contents.
 
+From your description, I assume you actually ran something like
+  git diff --name-only REL1..REL2
+
+which compares REL2 to the merge base of REL1 and REL2 (yes, this is
+totally counter-intuitive to a large percentage of the git userbase,
+but it is well documented and hard to change).  Also from your
+description, what you seem to want is
+  git diff --name-only REL1 REL2
+
+since you want to compare the two endpoints.  Does that help get what you want?
+
+Hope that helps,
+Elijah
+
+[1] https://public-inbox.org/git/CABPp-BECj___HneAYviE3SB=wU6OTcBi3S=+Un1sP6L4WJ7agA@mail.gmail.com/
+[2] https://public-inbox.org/git/CABPp-BGg_iSx3QMc-J4Fov97v9NnAtfxZGMrm3WfrGugOThjmA@mail.gmail.com/
