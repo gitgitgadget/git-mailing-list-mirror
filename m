@@ -2,120 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97CE31F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 18:37:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C091F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 18:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728361AbfGJSh1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 14:37:27 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:45359 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728349AbfGJSh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 14:37:27 -0400
-Received: by mail-lf1-f67.google.com with SMTP id u10so2272531lfm.12
-        for <git@vger.kernel.org>; Wed, 10 Jul 2019 11:37:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=he+bfYTaMvabn/fKges5vgvhBZ9/CKEokVhHZxfYeP8=;
-        b=cq1hgCTMZ/+XvMUH+ts7c6XJiqxi2cE++TX9JU3N7JwDV9ZzUzh9SoCuA38vLdhJUZ
-         EjIJVAhAsae0bQqDQ+lD20sgg1pUxHE0DKvNcx56eUs9GUFDDC8vGQOo4MW0UJdTIKZJ
-         7ygH/IGFzvSomM3m17Kysr2XiBhscxaEA4SsvsL58cD1UHfOO7tauMbTSrmuBGGAu41V
-         o0+hlywv4Xm60fpsagZU19WVg6FITJmpB6c6yVCTD6mNJ9bsTaKQhqx3zHiMVJD7NhHz
-         x6epu4wLPc5tyPP29l/EtmbaiNrtxNTgCdGQsWw6mNEx8A0OnFGEUNiCJisdR/tJIjG6
-         T0gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=he+bfYTaMvabn/fKges5vgvhBZ9/CKEokVhHZxfYeP8=;
-        b=Eotq5po4Iuvnrlf7hj76kFCcqCb77+WI4VZMWGm6zirPvE3dF8OixwEKRm9ifSWVWV
-         4IxP9hFXocTX7Hsi0t/Zx2KYCuJAikdfuKfJIzvLD+wEbac21YNrMpuDqmD3jfI9gMxY
-         R06hVb4CKivAapuBJtls6FdTxR9hUQ/Rc2Ty2eyeVpAqYe58JGhA8N1z2gkRHOg/AZoU
-         hSmuTfXwoHMD/7Wdhja/Y2kwmJc0JkTdPqZtJc/J/bnayD1UYnzBSe2W2NIL5JWwryry
-         vukJP3sV8j7TjZTS3ke22fVMJg0Ws/QOX4SSNokF3jTyH/oixlN2EXcWoTiPJ/+/XPIg
-         8SxA==
-X-Gm-Message-State: APjAAAUHJomrAeccki9V5Gy8GKo5Eu/ccWaOD9wgg0Y1R+kNK/yP7JIW
-        TooQsp2MkoDCjOjDnjNmvO+1if9B
-X-Google-Smtp-Source: APXvYqxzxZvi8szdvMpmBM7Wt1wX9fb8QmU7XqfQvMm/e4LLNzhIjlVMAEuB/VcO5416fDKigR3L2w==
-X-Received: by 2002:ac2:4ac4:: with SMTP id m4mr541789lfp.172.1562783844841;
-        Wed, 10 Jul 2019 11:37:24 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id h1sm456959lfj.21.2019.07.10.11.37.23
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 10 Jul 2019 11:37:24 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] ref-filter: fix memory leak in `free_array_item()`
-Date:   Wed, 10 Jul 2019 20:36:39 +0200
-Message-Id: <20190710183639.4123992-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.22.0.428.g6d5b264208
+        id S1727541AbfGJSk6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 14:40:58 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52678 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726245AbfGJSk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 14:40:58 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ECE2263160;
+        Wed, 10 Jul 2019 14:40:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LFHfbPho/u3obPO+tx8XXmvuAIE=; b=YqucaN
+        V+/C4o7gERK1H9EPoql3xXzvAulxCLNPs82TKWsZczU4qNClBGoAyLVxF1RTTg54
+        YQPTRWvlsDXPi6VIH/Pe3ulHr+SlC1niQCu0LqG7k2psCbeyiMjpHKNM7BLG3EpL
+        t7AmzX2E4I/VhZPSVx1RoRV86qiIPxrc4Q81s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MTR5icj220w0/HAYH7xbrohnLPvGpbVk
+        krIR2ZDRMa5ossY+I6R2rjYDjKxI2thATnXDVmIDFxh5pA3R9b0Hm6xi5sGby0Tb
+        Ehnt8ryJWCr8JSdEj5KGwyzfiwt8ZkhFRciZLulaDW1I4bwiC54Ry+3gdx/g0kaX
+        0xzPIHPFqz4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E60FC6315F;
+        Wed, 10 Jul 2019 14:40:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1D2326315E;
+        Wed, 10 Jul 2019 14:40:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
+References: <20190704080907.GA45656@book.hvoigt.net>
+        <xmqq4l3wz6y8.fsf@gitster-ct.c.googlers.com>
+        <xmqqr26zx0wr.fsf@gitster-ct.c.googlers.com>
+        <xmqqk1crwzwd.fsf@gitster-ct.c.googlers.com>
+        <20190710075835.GB65621@book.hvoigt.net>
+Date:   Wed, 10 Jul 2019 11:40:50 -0700
+In-Reply-To: <20190710075835.GB65621@book.hvoigt.net> (Heiko Voigt's message
+        of "Wed, 10 Jul 2019 09:58:35 +0200")
+Message-ID: <xmqqa7dlu40d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3EFB11F2-A342-11E9-A42B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We treat the `value` pointer as a pointer to a struct and free its `s`
-field. But `value` is in fact an array of structs. As a result, we only
-free the first `s` out of `used_atom_cnt`-many and leak the rest. Make
-sure we free all items in `value`.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-In the caller, `ref_array_clear()`, this means we need to be careful not
-to zero `used_atom_cnt` until after we've called `free_array_item()`. We
-could move just a single line, but let's keep related things close
-together instead, by first handling `array`, then `used_atom`.
+> behavior. How about '--all-include-head'. Then e.g.
+>
+>     git rev-parse --all-include-head --all --not origin/master
+>
+> would include the head ref like you proposed below?
+>
+> What do you think? Or would you rather go the route of changing
+> rev-parse behavior?
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- ref-filter.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+Depends on what you mean by the above.  Do you mean that now the end
+user needs to say
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 791f0648a6..1c1a2af880 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2105,7 +2105,9 @@ static void free_array_item(struct ref_array_item *item)
- {
- 	free((char *)item->symref);
- 	if (item->value) {
--		free((char *)item->value->s);
-+		int i;
-+		for (i = 0; i < used_atom_cnt; i++)
-+			free((char *)item->value[i].s);
- 		free(item->value);
- 	}
- 	free(item);
-@@ -2116,14 +2118,16 @@ void ref_array_clear(struct ref_array *array)
- {
- 	int i;
- 
--	for (i = 0; i < used_atom_cnt; i++)
--		free((char *)used_atom[i].name);
--	FREE_AND_NULL(used_atom);
--	used_atom_cnt = 0;
- 	for (i = 0; i < array->nr; i++)
- 		free_array_item(array->items[i]);
- 	FREE_AND_NULL(array->items);
- 	array->nr = array->alloc = 0;
-+
-+	for (i = 0; i < used_atom_cnt; i++)
-+		free((char *)used_atom[i].name);
-+	FREE_AND_NULL(used_atom);
-+	used_atom_cnt = 0;
-+
- 	if (ref_to_worktree_map.worktrees) {
- 		hashmap_free(&(ref_to_worktree_map.map), 1);
- 		free_worktrees(ref_to_worktree_map.worktrees);
--- 
-2.22.0.428.g6d5b264208
+	gitk --all-include-head --not origin/master
 
+to get a rough equivalent of
+
+	git log --graph --oneline --all --not origin/master
+
+due to the discrepancy between how "rev-parse" and "rev-list" treat
+their "--all" option?  Or do you mean that the end user still says
+"--all", and after (reliably by some means) making sure that "--all"
+given by the end-user is a request for "all refs and HEAD", we turn
+that into the above internal rev-parse call?
+
+If the former, then quite honestly, we shouldn't doing anything,
+perhaps other than reverting 4d5e1b1319.  The users can type
+
+	$ gitk --all HEAD --not origin/master
+	$ gitk $commit --not --all HEAD
+
+themselves, instead of --all-include-head.
+
+If the latter, I am not sure what the endgame should be.  
+
+It certainly *is* safer not to unconditionallyl and unilaterally
+change the behaviour of "rev-parse --all", so I am all for starting
+with small and fully backward compatible change, but wouldn't
+scripts other than gitk want the same behaviour?  
+
+To put it the other way around, what use case would we have that we
+want to enumerate all refs but not HEAD, *and* exclude HEAD only
+when HEAD is detached?  I can see the use of "what are commits
+reachable from the current HEAD but not reachable from any of the
+refs/*?" and that would be useful whether HEAD is detached or is on
+a concrete branch, so "rev-parse --all" that does not include
+detached HEAD alone does not feel so useful at least to me.
+
+I am reasonably sure that back when "rev-parse --all" was invented,
+the use of detached HEAD was not all that prevalent (I would not be
+surprised if it hadn't been invented yet), so it being documented to
+enumerate all refs does not necessarily contradict to include HEAD
+if it is different from any of the ref tips (i.e. detached).
+
+And if we cannot commit to changing the "rev-parse --all" (and I am
+not sure I can at this point---I am wary of changes), as we know
+where "--all" appeared on the command line, inserting HEAD immediately
+after it at the script level is probably the change with the least
+potential damage we can make, without changing anything else.
+
+
+
+>
+> Cheers Heiko
+>
+>> 
+>>  builtin/rev-parse.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>> 
+>> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+>> index f8bbe6d47e..94f9a6efba 100644
+>> --- a/builtin/rev-parse.c
+>> +++ b/builtin/rev-parse.c
+>> @@ -766,6 +766,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>>  			}
+>>  			if (!strcmp(arg, "--all")) {
+>>  				for_each_ref(show_reference, NULL);
+>> +				head_ref(show_reference, NULL);
+>>  				clear_ref_exclusion(&ref_excludes);
+>>  				continue;
+>>  			}
