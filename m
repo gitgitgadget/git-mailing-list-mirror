@@ -2,139 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4969F1F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 14:46:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 338DA1F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 16:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727491AbfGJOqQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 10:46:16 -0400
-Received: from mail.javad.com ([54.86.164.124]:60457 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726163AbfGJOqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 10:46:16 -0400
-X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jul 2019 10:46:15 EDT
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id D57FB3E9AE;
-        Wed, 10 Jul 2019 14:36:21 +0000 (UTC)
-Authentication-Results: mail.javad.com;
-        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=YjDV99Wd;
-        dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1562769382;
-        bh=PnCT7t+SC1n9ILQ0eURI9lZvKbH4/P10ZxKCyxSicw4=; l=2286;
-        h=Received:From:To:Subject;
-        b=YjDV99WdW8J2g92NYpOSMcrmZ5qNngWDvzu7dDZ6K5bgOOWHcJR3+jw99OIq8T6ZZ
-         kd573I7aYE+7mSswySW66K3Keon1s/6PUBFgb0tBXAGO9UM95yoOoAiynrKkapkZVw
-         Ec/X+nB8wcAw2YT1FF5zwN9cBJnDXoWam/9sZmtc=
-Authentication-Results: ip-172-31-2-110;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1hlDhk-0008AL-DI; Wed, 10 Jul 2019 17:36:20 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Roland =?utf-8?Q?J=C3=A4ger?= <eyenseo@mailbox.org>,
-        Junio C Hamano <gitster@pobox.com>, usbuser@mailbox.org,
+        id S1727761AbfGJQew (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 12:34:52 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59121 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727308AbfGJQew (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 12:34:52 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D83A879109;
+        Wed, 10 Jul 2019 12:34:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/o9TUdR2vPMW3hZ0Tuvm1dsqa6A=; b=SXz1II
+        xL6Chp6vs1XJpU3PEA78WumPKKoeSPWfGNWnHnn2LCmuRFhZ+gbTAGqYw/Tn22ed
+        M2RvvPoDBP6b4BqUDc6HWGA7yA/MwzBRRumYbVuqT/YTkvWucHnvlxU9BwBKP0U6
+        Sb2IcOreibPhP8obimYUQWmNurN21VXnK9KjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BBNlD9ZGfCIMj25tFMnbBekH+5Wnz/Rn
+        kH8fX7SaYPDZKdYR0dAi2oCDNxfYr+ptsEVCQn7wphjNxRxzA8WFnAVGoK9Zm+ee
+        HAJ7u+cbAyNqDijUhTWuERmXCGEh+oDFSelwzYD47/LPf06bnUsILvdjyN8voZ4r
+        XrwHh8rwOg4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D13DF79108;
+        Wed, 10 Jul 2019 12:34:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F159B79107;
+        Wed, 10 Jul 2019 12:34:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Elijah Newren <newren@gmail.com>, usbuser@mailbox.org,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: Unexpected or wrong ff, no-ff and ff-only behaviour
 References: <423596682.8516.1562665372094@office.mailbox.org>
         <xmqqa7dnw9b1.fsf@gitster-ct.c.googlers.com>
         <1152121968.7459.1562688927235@office.mailbox.org>
         <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
-Date:   Wed, 10 Jul 2019 17:36:20 +0300
-In-Reply-To: <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 9 Jul 2019 09:35:09 -0700")
-Message-ID: <87y316gdnf.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        <275487563.12198.1562691633735@office.mailbox.org>
+        <CABPp-BGPLxR7NgXRHppLy_W0c=Odhhns2RjcQ4iWKKQMz+SpDQ@mail.gmail.com>
+        <CAGyf7-FW-_4AbWE735-=7WjZAaTLHOT_QuWOoHKAjOzZCbWhFA@mail.gmail.com>
+Date:   Wed, 10 Jul 2019 09:34:39 -0700
+In-Reply-To: <CAGyf7-FW-_4AbWE735-=7WjZAaTLHOT_QuWOoHKAjOzZCbWhFA@mail.gmail.com>
+        (Bryan Turner's message of "Tue, 9 Jul 2019 13:51:39 -0700")
+Message-ID: <xmqqtvbtu9uo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9E3C9238-A330-11E9-9E88-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Bryan Turner <bturner@atlassian.com> writes:
 
-Elijah Newren <newren@gmail.com> writes:
-
-> Hi Roland,
+> I think this is something I've seen come up on the list before[1]
+> (Roland can correct me if I'm wrong). What I've seen asked for before
+> is the ability to pass the combination "--ff-only --no-ff" and have
+> that:
+> * Ensure the branch to be merged is fast-forward from the current
+> branch (i.e., to ensure no merge commit is actually necessary), but
+> * Create a redundant merge commit anyway
 >
-> On Tue, Jul 9, 2019 at 9:17 AM Roland Jäger <eyenseo@mailbox.org> wrote:
->>
->> Thanks for answering Junio.
->>
->> I get what git does. But I believe that either the documentation ist
->> wrong/ambiguous or --no-ff and --ff-only should be able to be
->> combined and either should be fixed - preferably the later. What I
->> want to say to git is "I never accept a real merge; please make a
->> merge commit, even if it is redundant/empty". And I believe that
->> github and gitlab allow to configure something like that.
->
-> Please don't top-post on this list.
->
-> I agree, the documentation is wrong or misleading and there is a
-> wording change we could make to improve it.  But, in particular,
-> --no-ff and -ff-only are completely incompatible.
+> This retains the ancestry (as in, it shows where the branches were
+> merged), but the merge is always effectively a no-op (no risk of
+> unintended interactions, the sort of subtle breakages where the merge
+> succeeds but the code on each "side" isn't entirely compatible,
+> resulting in broken compilation and/or tests and/or runtime).
 
-They currently are compatible, but in a weird manner, see below.
+Hmph.  I know that the above was totally outside of expected use
+pattern back when --ff/--no-ff and --ff-only were invented.  As I
+still cannot tell if the use pattern makes sense, or even is
+internally consistent, I am not ready to say if the omission was a
+bad thing, though.  We did not omit it deliberately, but we might
+have been lucky to omit it, which may have prevented a wrong
+workflow from spreading.  If it is a wrong workflow, that is, and I
+am yet not sure it is not.
 
-I'd prefer they were perfectly compatible and orthogonal, as using both
-would be the safe way to create cleanest possible merge -- the one that
-introduces on the mainline the /exact/ changes made on side-branch:
+The "--no-ff" part is a way to ensure that the series of commits are
+still grouped together after they hit the mainline of the history,
+so it expresses a wish (by the project using the use pattern) that
+they care about topic branch workflow.  A group of commits belonging
+to one single topic is about doing one single thing, not a random
+collection.  "Make sure we always create a merge to record which
+ones are from the side branch and which ones are the mainline" is a
+reasonable way to ensure that.
 
---ff-only: tells git to refuse operation (actual merge) if FF is
-impossible, that for this particular use-case would ensure the merge, when
-actually created, is the "cleanest possible" one
+The "the tip being merged into the mainline must always be
+fast-forwardable", however, is not consistent with the topic branch
+workflow, and I do not mean this in the sense that you should never
+rebase just before submitting (which is a bad practice).  For an
+initial merge of the topic to the mainline, the project can keep
+rebasing to the then-current tip of the mainline, and as long as
+they can afford the cycle to test the result, "record the range of
+the topic branch by making a redundant merge" would work.  
 
-and then
+But that is true only when you have one mainline.  You cannot reuse
+the topic to maintain an older mainline (i.e. a maintenance track),
+because of the "topic must contain the then-current tip of the
+mainline" rule.  A topic forked from the tip of master cannot be
+merged to maint without dragging all the other crap happened since
+maint to master, and a topic forked from the tip of maint, which can
+be merged to maint without problem, cannot be merged to master due
+to this "must contain the tip of master" rule.
 
---no-ff: forces git to create actual (cleanest possible) merge commit,
-that otherwise it wouldn't, as it defaults to --ff, and --ff-only above
-ensures FF is possible.
+It gets worse when you need to make a fix-up to the topic.  Has any
+of those who advocate this workflow considered a case where a topic
+later needs fixups?  Do they always produce a 100% bug-free code so
+that they do not need to?
 
-Right now (in my git 2.10) it seems these options somehow cancel each
-other, that is both useless and surprising:
+If you have a topic with initially 1 commit, merged to the mainline,
+with the "record a redundant merge of fast-forwardable side branch",
+you would get this:
 
-When FF is possible:
 
-$ git merge --ff-only --no-ff side_branch
+    ----O---1--- mainline
+         \ /
+          A      topic
 
-Merge made by the 'recursive' strategy.
-[...]
 
-Good!
+where the topic only has commit A.  How would you apply a fix this
+commit?  "A merged branch must have forked from the then-current tip"
+would mean you would do this:
 
-$ git reset --hard HEAD~1
-[...]
-$ git merge --no-ff --ff-only side_branch
-Updating eafaed6..b83db07
-Fast-forward    
-[...]
+    ----O---1-----2--- mainline
+         \ / \   /
+          A   \ /  topic
+               B   topic-fix
 
-??? I said --no-ff: how comes you did fast-forward?!
+i.e. you cannot touch 'topic' branch, which has 'A', that is sealed
+by the fact that it was already merged to the mainline and the rule
+that you reject a merge of any side branch that does not fork from
+the then-current tip.  You are forced to create B forked from the
+mainline to fix A and merge it back to mainline, losing the valuable
+"these commits, together, achieves this thing" grouping you wanted
+to achieve with the topic-branch workflow, which is what "--no-ff"
+is asking.  This is the reason why I doubt the workflow that wants
+to say "record a merge with a side branch that contains the current
+tip of the mainline" is not even internally consistent.
 
-When FF is impossible:
+So, I dunno.
 
-$ git merge --ff-only --no-ff side_branch
 
-Merge made by the 'recursive' strategy.
-[...] 
-??? I said --ff-only: how comes you didn't bail out?!
-
-$ git reset --hard HEAD~1
-[...]
-$ git merge --no-ff --ff-only side_branch
-fatal: Not possible to fast-forward, aborting.
-
-Good!
-
--- Sergey
-
-git version 2.10.0.1.g57b01a3
