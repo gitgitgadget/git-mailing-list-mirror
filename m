@@ -2,70 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F41F51F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 05:06:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D26DA1F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 06:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbfGJFGW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 01:06:22 -0400
-Received: from mail-lj1-f180.google.com ([209.85.208.180]:46972 "EHLO
-        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726092AbfGJFGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 01:06:21 -0400
-Received: by mail-lj1-f180.google.com with SMTP id v24so668444ljg.13
-        for <git@vger.kernel.org>; Tue, 09 Jul 2019 22:06:20 -0700 (PDT)
+        id S1726221AbfGJGnP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 02:43:15 -0400
+Received: from mail-io1-f50.google.com ([209.85.166.50]:35040 "EHLO
+        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbfGJGnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 02:43:15 -0400
+Received: by mail-io1-f50.google.com with SMTP id m24so2398330ioo.2
+        for <git@vger.kernel.org>; Tue, 09 Jul 2019 23:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=cF64BJHeGSEsv51cLU3Y1GhUdOcYWOdQa1Axw7cLHyI=;
-        b=TXoHdbzzL2K5EBERptJFDChLWPMI/DlxTo3ijGtbpoWMsJsN/jsBgJ188DBcuoiwz8
-         o7PXCxmZBPiGkoap7G3uq9JBxLGk3nRHHe6O/QQSEETl26tnYb4MMGSGUtptCbPQRb/2
-         Ca+BIDhhLevbKXwt8COXaIJdMEYYfKt1PHci0=
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Vjs5/uJT1Uz6Tt2mJSVu7SjsSQvhk6Tkb/HvG2Jpml8=;
+        b=qkSMYWhR1iuZzc5cVfjLEsNO/RI20cjifHMw/ohbN1Q7ERMP4FDnTNUnmseTK08JJZ
+         h1oRdXLNqXERz9UhCsiHiXpqS1WwFbTUZPSPfS8EVtl8JvI4JwQ/R/An6W8/6I5plgH1
+         1SuwehLgIIf+AtJs8+0zZiVR9lAhLW47hkLaB6KAhTnuNMsiGBnbIxEFrWkRQUnoNOry
+         pyf7NDEfKkR4Ecq88R28Jo/SnH1YywzMQtZGOhD53WFZenhMwDVClAh6gSjOBVo/pUpX
+         ZkTSaXUJMve1yj3xFf1dCyodieGb/Wos/X5lUnaCvs72W5IBVFYVRusU400QxEbrw7CC
+         n49Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=cF64BJHeGSEsv51cLU3Y1GhUdOcYWOdQa1Axw7cLHyI=;
-        b=iAdA8Q6aECfUj9HuRPlK7i07ZAG91pb6D6uDP2xGHQw8KL6Og8kwdaxUzl8pFniDj6
-         adq2pUyMeQfpqJ+Ale3eFXmpF8b8hOPhZZLWb4pl7w9btY6EEiSqcSNvlMykMgyhUUsU
-         +xxWIVKMAySyQU1pJ7xjqT0qW933VDlT9N9GhhsmEHk1ANfmjS+4S8DABYySG3Dz2hXJ
-         ySFBvbK1CTtQ+hJ0qXRyG4Qt8PZvVXJRJtIChATR43XS9Rq6MQtS7qa0PYqezEF2CKDm
-         TpXFZC3HQNb8TfyZyZsPdT7LrUm448HayLLlAR9+EUAn2cF7txXFyH8FG14A1SGadM1d
-         rqQQ==
-X-Gm-Message-State: APjAAAXvUxXXHrhk5l3YG2RtHzghSH0oDHqdoVt1w9VvRCxlCEyBq8Pn
-        pbXne4n6N8rKXTyO1ZfjcCuLGqNF6rjnEbRU9qpUI97YocTqjVTR
-X-Google-Smtp-Source: APXvYqzkb0hB3CtSTosVhhKW+HhB4bVEp9XsqjhYfQ9zUMKcYfWHe1Xl3irV6QVvxw6vEa3lplhwLhGcHgjNT7x77vU=
-X-Received: by 2002:a2e:9b48:: with SMTP id o8mr16032561ljj.122.1562735179495;
- Tue, 09 Jul 2019 22:06:19 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Vjs5/uJT1Uz6Tt2mJSVu7SjsSQvhk6Tkb/HvG2Jpml8=;
+        b=tmR6JBRa89citxka+Y63i2vPGrsHz1UxlL8P3tkPaSrGlob7EsY0Lw1zqQkgisUGY9
+         7KHWDwH5PYlEz2JgR5k2T3ECw/WgqtjnxDGL7nBPIYC8QMJtWOKAJohzuIEEB7Mly+Ap
+         kDZRigdOqaI+hl9ic93r/EiIG839WZ//D2bNJFqrgknZHoT2nRycK1Rq5nDjkEQ2/PHX
+         yU/8v7lgOKHh65D/0P+FgLXPXDlcgvKKiC9uVsb+XUwGIv1ifOkOXret/aeC8VPmAn2o
+         A+xknLlKXqBALt/vqFHL8JYs9M3lAcnJxqjFGf2lBtHp+ImEzCEZ8JZSVR9PCfL3paFs
+         k7vg==
+X-Gm-Message-State: APjAAAXf9j6DLAvapk6LAK+DmI8H9ogMOWeQ5miyMWfYI3MBzNVMS4vT
+        ae1EohhU6afhBXykengV8C61iDG6dSpFXCx3qV6ljg==
+X-Google-Smtp-Source: APXvYqzcXbZNZwGFCPpFabuFnpOyUEOrOFyMD3obcqLR5UaBwLmrM+SS066Eawwr/QeWi6PIBujZhm6+gUCJQFPkMSA=
+X-Received: by 2002:a02:c646:: with SMTP id k6mr23142595jan.134.1562740994533;
+ Tue, 09 Jul 2019 23:43:14 -0700 (PDT)
 MIME-Version: 1.0
-From:   Mark Florian <mflorian@gitlab.com>
-Date:   Wed, 10 Jul 2019 13:06:08 +0800
-Message-ID: <CANC=f2c8eynWJ1r=zwZq1qwrDE85LVFMU2mjLU26HYMDGaD4iA@mail.gmail.com>
-Subject: `@` alias for `HEAD` not working in `git push -u origin @`
-To:     git@vger.kernel.org
+References: <20190708111459.135abe50@zen>
+In-Reply-To: <20190708111459.135abe50@zen>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 10 Jul 2019 03:43:02 -0300
+Message-ID: <CAHd-oW5Q1PWDzWKpsmdv4ecUMrQTj4Vyh_SoVu6vaFeSFmxE5g@mail.gmail.com>
+Subject: Re: Weird behavior with git grep --recurse-submodules
+To:     Daniel Zaoui <jackdanielz@eyomi.org>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+On Mon, Jul 8, 2019 at 5:22 AM Daniel Zaoui <jackdanielz@eyomi.org> wrote:
+>
+> Hi guys,
 
-I learned today that `@` is a shortcut for `HEAD`. From `git help reivisions`:
+Hi, Daniel
 
-    @ alone is a shortcut for HEAD.
+> I work with submodules and use git grep a lot.
+>
+> I noted that when it is invoked used with --recurse-submodules, the resul=
+t is not as expected for the submodules. I get submodules results as if no =
+files were modified (like --cached option) although I would expect results =
+taking into account the modifications.
+>
+> Expected behavior:
+> git grep --recurse-submodules string:
+> - git grep string // search into main repo
+> - for each submodule, git grep string // search into submodule
+>
+> Actual behavior:
+> git grep --recurse-submodules string:
+> - git grep string // search into main repo
+> - for each submodule, git grep --cached string // search into submodule
+>
+> Do you get the same behavior? Am I doing something wrong? Was I understan=
+dable :-)? Is it a bug?
 
-However, when I tried to use it in a command I frequently use, I got an error:
+It seems git-grep was taking into account the worktree modifications
+in submodules before f9ee2fc ("grep: recurse in-process using 'struct
+repository'", 02-08-2017). I'm not sure, thought, if this behavior
+change was a bug during the conversion or a project decision.
 
-    $ git push -u origin @
-    fatal: invalid refspec '@'
+CC-ing Brandon, in case he has other inputs
 
-I'm running git version 2.22.0 on Linux.
+> git --version: git version 2.22.0
+> uname -a: Linux daniel 5.1.15-arch1-1-ARCH #1 SMP PREEMPT Tue Jun 25 04:4=
+9:39 UTC 2019 x86_64 GNU/Linux
+>
+> Thanks
+> Daniel
 
-Is this a bug, or have I misunderstood how this is supposed to work?
-
-Cheers,
-Mark
+Best,
+Matheus
