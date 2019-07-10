@@ -2,100 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 892691F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 20:35:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83C141F4B6
+	for <e@80x24.org>; Wed, 10 Jul 2019 20:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727402AbfGJUfz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 16:35:55 -0400
-Received: from mout.gmx.net ([212.227.17.22]:46801 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727102AbfGJUfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 16:35:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562790950;
-        bh=/0whHagEcBB/ChT3SYiF5+TmeUfLTmxoXidl7HUVLPI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hQ/nOAMA1qVCl7B5uQxR2vl5p2bxqWHEA3hMPEfBEwryD1XzkCj7orS0K4aKunRqo
-         bu+YOsvPI4aqjRno19qrQapARUnswIZoc4N1WM0PefTwY93goEL9ivgs2A6lKiLxgI
-         jZ1/8L575q6HOKRuNN4UtgVYptEFvhtMpEJRC9HQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M72sJ-1hqXiT0UZj-008ZhG; Wed, 10
- Jul 2019 22:35:50 +0200
-Date:   Wed, 10 Jul 2019 22:35:34 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Avoid illegal filenames when building Documentation
- on NTFS
-In-Reply-To: <xmqqef2xu4oz.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907102137060.46@tvgsbejvaqbjf.bet>
-References: <pull.216.git.gitgitgadget@gmail.com> <1f0f4fe6fbf0e7a7eea1f3d49db183c70693a895.1562231679.git.gitgitgadget@gmail.com> <xmqqv9wcxre3.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1907091524460.5700@tvgsbejvaqbjf.bet> <xmqqef2zw9op.fsf@gitster-ct.c.googlers.com>
- <xmqqef2xu4oz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727359AbfGJUlY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 16:41:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56177 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbfGJUlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 16:41:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA7B715D8CC;
+        Wed, 10 Jul 2019 16:41:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=5tlGuuCY/rQS
+        jAfc8k9ffRZpV60=; b=ElAHNODo8oWk++2G9bnD+wnO0034FINmsCWUER2zm848
+        SM+eaHPSNvh09bBv0GgkNP97NYt7sbLroCn4JdEyGSVbxrg7Wd52TUk/COZXgb5x
+        nHKXJoLgMEh27cSA2+lKXmht4vixvd2oEh7sDB65vLmnSt5XXVgzUL28rX8zrAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ok8l2+
+        4mSRbTOdJ+ASF1uBW8dXSIdVgNQE6sLeULRxA6Jgf4JiiYVF+QHpCqkSvkonEMFQ
+        N0sErrzigxgBF+uZ4bC+dIn3FuYtdcxcvMeF5rtdNTo3SyGSTCD9A9j4fPiaKIqj
+        ZKcIhd4F4JJgjXE0ZDIHXPtKmzOcdqQNQCTZo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFE8115D8CB;
+        Wed, 10 Jul 2019 16:41:18 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 20BED15D8CA;
+        Wed, 10 Jul 2019 16:41:18 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] ref-filter: fix memory leak in `free_array_item()`
+References: <20190710183639.4123992-1-martin.agren@gmail.com>
+Date:   Wed, 10 Jul 2019 13:41:16 -0700
+In-Reply-To: <20190710183639.4123992-1-martin.agren@gmail.com> ("Martin
+        =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 10 Jul 2019 20:36:39 +0200")
+Message-ID: <xmqqr26xsjv7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UUTh1sD9TK4dhvMRjHN1Suy9XdBqLHt/qlts0PZckAF8EYm/MTu
- M1OWk1s0HQlTAhl7kQOVPbZtsfYwQDgmb2GKfco7lZIQw8fncC0HAxoSwKOTAHSfJl3caTX
- QbpsIMDi3xSoBN2kn3+ac7K85GWv0FFk5/KDub2P0LFh7N4DuhJaswky6j+dneWTDTGC2VH
- 6I/LptfFaNAdbbnj4nkyw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/Abc6OK84jk=:GF7HswfPxo8/Bkn5ItbwqV
- MhJ0v8/ucmDP6x8DKWbyu59r96iTNkWb4k5zyaBvcC2OLoiafWi8kuC/WhZckw3WLREd1Qo4M
- aaevsd0Bw0uwUeZciOvanlRgyNED5Rrf5TzqJcbiga4jkhGIMJaOrjn676e0li8+JMtC5ng86
- FrnuC81zY0cuuZOJK+LJDNKcGiU2Fna0BpoxIRAdmRGtqWXkcii5awpb4uVToqgfg64ZwaD5p
- dxsYEjx0ZaNsAOl4qkHG0AHSOJl3J5nvrhPWAq2S3q/3KKzlYXbOGWlkzI416lmbkDLJxB6iu
- HuHOgfZzBLht2qXQfl+p3N4kPCXnI8RbRr9vRk3I3Br0Xw8yTK4bULnbfZj4IisLpD5PMDiw8
- m1aSWtzKXoVo7jZk15jCuHbQaIIazDBLHQWhkObh317hILV2gD78VZSkGz82p/OYd+xLZ3i+M
- UqnLAyIM/DI3jbvdDvjuOen1/T/q8bfzkwsirk5ydC/S7kUgk0M961w3treXZHPmv3/4kuyzt
- 3Gmq0XVTjV6xVJjLVK5jL4X1yTCMBXahGn9fJhtRT6sWSBvkJjYXUVL/o88B3zFl/TyEUr7Vs
- NvhVedwhK7IHj+ufPWiu5/HWb39CmGTtupiyqIgWGYwQlXs9/9vPNPQdONlBzbQnSb4rvxqYf
- MfIk8aT2vxnCijH5/vxxdeCtEyIrkhhphe4EF0qkXE9V1vwURaHgjoktT2zzeeXgOqU1EvSg0
- KmzPrgWqNBNhLpLcUr4uTwPKvkztJNNhf2XmYjDpXJmq23tHclFCwcDJaW0lYYNaNSquKcGxv
- PMSNTg8/pNezqY5/Pzcw7ejAKnKl+xCcRrI++VFpYCQbUDuTLjxQcpFUcSREVdiR5rP/34aXI
- MoA2PhITJ8fGjeOBhzkoqJJOVAS4pTP5JWLgYxgTnO0QGOLgJE0Mqm18xduS5zS28YPscOmQA
- DpRGXEcaX5J6BBKb8H0YrqiU4BUQbi/u30Moonpvu9+XeX/kDwaeHeLAzCCb8Y1XhJRBzzB2T
- EngUz/078D2N3zh8ofgbpxinqqikQlwRNV1Gs6NaHTIzfNQw565iev64rbrzxXIvFNRPNzU4r
- O1vsXg9QQfvGSApJfa73KBFqIYOlqSJ9bJ1
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 116D318C-A353-11E9-9F73-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-On Wed, 10 Jul 2019, Junio C Hamano wrote:
+> We treat the `value` pointer as a pointer to a struct and free its `s`
+> field. But `value` is in fact an array of structs. As a result, we only
+> free the first `s` out of `used_atom_cnt`-many and leak the rest. Make
+> sure we free all items in `value`.
 
-> Junio C Hamano <gitster@pobox.com> writes:
+Thanks for spotting.  We do allocate an array of used_atom_cnt elements
+in populate_value() and we need to free them all.
+
+> In the caller, `ref_array_clear()`, this means we need to be careful no=
+t
+> to zero `used_atom_cnt` until after we've called `free_array_item()`. W=
+e
+> could move just a single line, but let's keep related things close
+> together instead, by first handling `array`, then `used_atom`.
+
+Yup.  Looking good.
+
+Thanks.
+
 >
-> >> In addition, your `+` scheme will break on Windows once it uses `git.=
-exe`
-> >> or any other non-MSYS2 helper...
-> >
-> > I am not sure what you mean here.  Is your git.exe disabled not to
-> > be able to do this: "git.exe add hello+kitty.txt"?
-
-It's not that. The `+` is not allowed on Windows in general.
-
-Mind you, I just read up on the details (see e.g.
-https://en.wikipedia.org/wiki/Filename#Comparison_of_filename_limitations)
-and it looks as if NTFS actually _allows_ this. Even VFAT allows it, but
-FAT32 does not.
-
-So I guess I retract my objections, as there are probably smarter ideas
-than building Git for Windows on a FAT32 drive.
-
-For aesthetical reasons, I still do not like the convention to append a
-`+` when appending `.new` would make things clearer, but this is not a
-hill I am prepared to die on.
-
-Ciao,
-Dscho
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+>  ref-filter.c | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 791f0648a6..1c1a2af880 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2105,7 +2105,9 @@ static void free_array_item(struct ref_array_item=
+ *item)
+>  {
+>  	free((char *)item->symref);
+>  	if (item->value) {
+> -		free((char *)item->value->s);
+> +		int i;
+> +		for (i =3D 0; i < used_atom_cnt; i++)
+> +			free((char *)item->value[i].s);
+>  		free(item->value);
+>  	}
+>  	free(item);
+> @@ -2116,14 +2118,16 @@ void ref_array_clear(struct ref_array *array)
+>  {
+>  	int i;
+> =20
+> -	for (i =3D 0; i < used_atom_cnt; i++)
+> -		free((char *)used_atom[i].name);
+> -	FREE_AND_NULL(used_atom);
+> -	used_atom_cnt =3D 0;
+>  	for (i =3D 0; i < array->nr; i++)
+>  		free_array_item(array->items[i]);
+>  	FREE_AND_NULL(array->items);
+>  	array->nr =3D array->alloc =3D 0;
+> +
+> +	for (i =3D 0; i < used_atom_cnt; i++)
+> +		free((char *)used_atom[i].name);
+> +	FREE_AND_NULL(used_atom);
+> +	used_atom_cnt =3D 0;
+> +
+>  	if (ref_to_worktree_map.worktrees) {
+>  		hashmap_free(&(ref_to_worktree_map.map), 1);
+>  		free_worktrees(ref_to_worktree_map.worktrees);
