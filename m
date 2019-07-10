@@ -2,104 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D26DA1F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 06:43:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DF01F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 07:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726221AbfGJGnP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 02:43:15 -0400
-Received: from mail-io1-f50.google.com ([209.85.166.50]:35040 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfGJGnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 02:43:15 -0400
-Received: by mail-io1-f50.google.com with SMTP id m24so2398330ioo.2
-        for <git@vger.kernel.org>; Tue, 09 Jul 2019 23:43:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Vjs5/uJT1Uz6Tt2mJSVu7SjsSQvhk6Tkb/HvG2Jpml8=;
-        b=qkSMYWhR1iuZzc5cVfjLEsNO/RI20cjifHMw/ohbN1Q7ERMP4FDnTNUnmseTK08JJZ
-         h1oRdXLNqXERz9UhCsiHiXpqS1WwFbTUZPSPfS8EVtl8JvI4JwQ/R/An6W8/6I5plgH1
-         1SuwehLgIIf+AtJs8+0zZiVR9lAhLW47hkLaB6KAhTnuNMsiGBnbIxEFrWkRQUnoNOry
-         pyf7NDEfKkR4Ecq88R28Jo/SnH1YywzMQtZGOhD53WFZenhMwDVClAh6gSjOBVo/pUpX
-         ZkTSaXUJMve1yj3xFf1dCyodieGb/Wos/X5lUnaCvs72W5IBVFYVRusU400QxEbrw7CC
-         n49Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Vjs5/uJT1Uz6Tt2mJSVu7SjsSQvhk6Tkb/HvG2Jpml8=;
-        b=tmR6JBRa89citxka+Y63i2vPGrsHz1UxlL8P3tkPaSrGlob7EsY0Lw1zqQkgisUGY9
-         7KHWDwH5PYlEz2JgR5k2T3ECw/WgqtjnxDGL7nBPIYC8QMJtWOKAJohzuIEEB7Mly+Ap
-         kDZRigdOqaI+hl9ic93r/EiIG839WZ//D2bNJFqrgknZHoT2nRycK1Rq5nDjkEQ2/PHX
-         yU/8v7lgOKHh65D/0P+FgLXPXDlcgvKKiC9uVsb+XUwGIv1ifOkOXret/aeC8VPmAn2o
-         A+xknLlKXqBALt/vqFHL8JYs9M3lAcnJxqjFGf2lBtHp+ImEzCEZ8JZSVR9PCfL3paFs
-         k7vg==
-X-Gm-Message-State: APjAAAXf9j6DLAvapk6LAK+DmI8H9ogMOWeQ5miyMWfYI3MBzNVMS4vT
-        ae1EohhU6afhBXykengV8C61iDG6dSpFXCx3qV6ljg==
-X-Google-Smtp-Source: APXvYqzcXbZNZwGFCPpFabuFnpOyUEOrOFyMD3obcqLR5UaBwLmrM+SS066Eawwr/QeWi6PIBujZhm6+gUCJQFPkMSA=
-X-Received: by 2002:a02:c646:: with SMTP id k6mr23142595jan.134.1562740994533;
- Tue, 09 Jul 2019 23:43:14 -0700 (PDT)
+        id S1726924AbfGJHon (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 03:44:43 -0400
+Received: from mx2.mailbox.org ([80.241.60.215]:17854 "EHLO mx2.mailbox.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726132AbfGJHom (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 03:44:42 -0400
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by mx2.mailbox.org (Postfix) with ESMTPS id 834E6A10BA;
+        Wed, 10 Jul 2019 09:44:40 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+        by spamfilter04.heinlein-hosting.de (spamfilter04.heinlein-hosting.de [80.241.56.122]) (amavisd-new, port 10030)
+        with ESMTP id GIUEXp7eanxb; Wed, 10 Jul 2019 09:44:30 +0200 (CEST)
+Date:   Wed, 10 Jul 2019 09:44:28 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org
+Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
+Message-ID: <20190710074428.GA65621@book.hvoigt.net>
+References: <20190704080907.GA45656@book.hvoigt.net>
+ <xmqq4l3wz6y8.fsf@gitster-ct.c.googlers.com>
+ <xmqqr26zx0wr.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190708111459.135abe50@zen>
-In-Reply-To: <20190708111459.135abe50@zen>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 10 Jul 2019 03:43:02 -0300
-Message-ID: <CAHd-oW5Q1PWDzWKpsmdv4ecUMrQTj4Vyh_SoVu6vaFeSFmxE5g@mail.gmail.com>
-Subject: Re: Weird behavior with git grep --recurse-submodules
-To:     Daniel Zaoui <jackdanielz@eyomi.org>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr26zx0wr.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 8, 2019 at 5:22 AM Daniel Zaoui <jackdanielz@eyomi.org> wrote:
->
-> Hi guys,
+On Mon, Jul 08, 2019 at 09:55:00PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Heiko Voigt <hvoigt@hvoigt.net> writes:
+> >
+> >> In commit 4d5e1b1319 ("gitk: Show detached HEAD if --all is specified",
+> >> 2014-09-09) the intention was to have detached HEAD shown when the --all
+> >> argument is given.
+> >
+> > The "do we have --all?" test added by that old commit is not quite
+> > satisfying in the first place.  E.g. we do not check if there is a
+> > double-dash before it.  This change also relies on an ancient design
+> > mistake of allowing non-dashed options before a dashed one, adding
+> > more to dissatisfaction by making a future change to correct the
+> > design mistake harder.
+> 
+> Actually, I do not think this patch is a good idea.
+> 
+[...]
+> 
+> As the code is _already_ finding the _exact_ location on the command
+> line where "--all" appears, I think you can go one step further and
+> make sure you insert the "HEAD" immediately after "--all", as that
+> exactly matches what you (and the ancient 4d5e1b1319) are trying to
+> achieve: pretend as if "--all" always include "HEAD", even when it
+> is detached.
+> 
+> This is orthogonal to the question I posed in my earlier reply
+> (i.e. "we found --all; is it really a 'give me all refs' request
+> given by the user, or something else (is it an argument to another
+> option, like "--grep '--all'", or is it pathspec after '--'), but
+> assuming that we have reliably found the "--all" on the command line
+> the user meant as "give me all refs", I think inserting HEAD
+> immediately after that location would be the right solution.  It is
+> incorrect to unconditionally append as your original example shows,
+> but it is equally incorrect to unconditionally prepend.
 
-Hi, Daniel
+Yes I agree, there are too many other use cases that my change will
+break. I tried to replace a hack with another quick hack, but that did
+not make it better.
 
-> I work with submodules and use git grep a lot.
->
-> I noted that when it is invoked used with --recurse-submodules, the resul=
-t is not as expected for the submodules. I get submodules results as if no =
-files were modified (like --cached option) although I would expect results =
-taking into account the modifications.
->
-> Expected behavior:
-> git grep --recurse-submodules string:
-> - git grep string // search into main repo
-> - for each submodule, git grep string // search into submodule
->
-> Actual behavior:
-> git grep --recurse-submodules string:
-> - git grep string // search into main repo
-> - for each submodule, git grep --cached string // search into submodule
->
-> Do you get the same behavior? Am I doing something wrong? Was I understan=
-dable :-)? Is it a bug?
+Will reply to the other mail with some more questions.
 
-It seems git-grep was taking into account the worktree modifications
-in submodules before f9ee2fc ("grep: recurse in-process using 'struct
-repository'", 02-08-2017). I'm not sure, thought, if this behavior
-change was a bug during the conversion or a project decision.
-
-CC-ing Brandon, in case he has other inputs
-
-> git --version: git version 2.22.0
-> uname -a: Linux daniel 5.1.15-arch1-1-ARCH #1 SMP PREEMPT Tue Jun 25 04:4=
-9:39 UTC 2019 x86_64 GNU/Linux
->
-> Thanks
-> Daniel
-
-Best,
-Matheus
+Cheers Heiko
