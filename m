@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 209871F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 23:59:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31DA11F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 23:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727622AbfGJX7g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 19:59:36 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:43556 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727386AbfGJX7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 19:59:36 -0400
-Received: by mail-qt1-f195.google.com with SMTP id w17so4450818qto.10
-        for <git@vger.kernel.org>; Wed, 10 Jul 2019 16:59:34 -0700 (PDT)
+        id S1727681AbfGJX7s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 19:59:48 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34260 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727386AbfGJX7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 19:59:48 -0400
+Received: by mail-qt1-f194.google.com with SMTP id k10so4507564qtq.1
+        for <git@vger.kernel.org>; Wed, 10 Jul 2019 16:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CcQ7pP1ZfBMO1uGb5Oe17FrSCskIikm/t2kiS9FywJ8=;
-        b=002Ma1gEwiwHoTRj98sw9ysPnGaVz4uOyVSZNuB2gG1G/mxhtdhVizJrL0AZBcKrcA
-         gnGwUd7tV+2TC8koaPxaWDkSP4bSFH4osFkQWy7JgjWiaSsfFy0RQA3QrikqZSEt9iLW
-         81tLjL/mX+x2ZN2/CskdJC9JGRENpMqvi62mDgihigqx+syDgiNd+DHKTL9e6qc1Ib8V
-         A0a26x5SLSEeC5q3KsJqrkwgbulwyITE9un/j6RUKkXvvvW85wJf38hKuE9B3RMfoP9t
-         VeNrFjb1qLSLHPCDgzmreCDMZiFygjrhm+AeJnzUKzbrHWZGRhR0YuiaFjknbgOMibZg
-         qXOA==
+        bh=827o5jTxvqpUS+kthYBZwPX8/7/R8qFkd0KFNyuG3b8=;
+        b=xjAVvVmZ1/alk4JgzpKrN9IEy8hK96HsaWF8byFczFEdFYopXSIE6GcF4hqPboilmc
+         PXihJ0/ldEuXKSJpx5ZMZxOBgOiiMVwYQhn2n/il8Az7etJQwwROypafnjq2JKytr/MX
+         BEOjmRSLFqEyN40eXrAfFnMUk+IgDe+l/GMKUl5dKt8/myhXENEBXxO8DelSK5fQWoc7
+         yjjZTbldJd8z2VyIjNBdLdZU80O5BuBoxtVQL/N3oue1RCIe7AE2q7RKXqsE3osuAlr7
+         vje7bbHgc0k3NtmVj8wRy63Q4A0ujPUPzELssQLIgyLqVHTl8xEkA4gmikAeZFbt43Zr
+         7Bag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CcQ7pP1ZfBMO1uGb5Oe17FrSCskIikm/t2kiS9FywJ8=;
-        b=rN/TMzovMYZDvBsFzstTikc+QGUNXqtQ39luKV1Y8C0wxOrOQ59rWOaWkbtuVuYZUi
-         fFkJNvcq0QgPupU0Xm9OiXUF7vanmdTSCoGjxVICMpwcPQP7ZxO5+N3ft21X6WunVkMJ
-         vketQ36qUtAGluvN0lAgcRiDpI05tL9et952rT0SqYM8zsXBoZp5nGd0AQi6qQHtf938
-         kmBX/G7JJzIadnoFOdQ4GZRo+/O/Z/1Ew93GH8GaXH2BeNjxrcFG4KEzZWmsMPVC2/Pq
-         fBlXjsbuPxTcsTrnlxf5JXbkRkExi5/lokEmK35LOqqKYoVF2Te1uAxiRwr1FwxWFKzi
-         4DyQ==
-X-Gm-Message-State: APjAAAUQBoCwrjoeWmDwyPjrMSCTvK886pcfkAh7JoDn8Qc8pume0uDm
-        jtJlKWqsgIksZQKFbOMop9flDQ==
-X-Google-Smtp-Source: APXvYqwjNdV8o25i/PLwuyYNQW9PD9Dl+8WujHbGzXqBCcihUeMvqqH4jMbf8MC9x7uDP7OHVJT3cw==
-X-Received: by 2002:a0c:aed0:: with SMTP id n16mr443881qvd.101.1562803173597;
-        Wed, 10 Jul 2019 16:59:33 -0700 (PDT)
+        bh=827o5jTxvqpUS+kthYBZwPX8/7/R8qFkd0KFNyuG3b8=;
+        b=JLbzlY/Jk62x4yL4+vo1Wuu0mgPmMYInL5xKgFXN8HK65OC9cqtY6p14D9w2+IW5qR
+         VPDV7oLGLhHn6JXOf2bdBU3hrcNcID/bW5SN8V131B7tmk/Yvck0/omIpeyx2RyRpLMf
+         tvYzm7bKNiwWHXcf7RaoMNi2Zk/nGgHMgD7dadb14mwoLEA9rLzW8e7hL9pD8NWR4TqS
+         w7btxLFqFJfqhkllz2z81z+n6cSD0HQkDd5XUrUgjDVAS1FZC0rG0dXoCS9lRS1KVwCf
+         LzX4+sr+fBHlHcrt+n/qZM6eZeWcudtgzOProRhUufTRWBpCPEdMb3sALN7CKM0GG0zd
+         eQpg==
+X-Gm-Message-State: APjAAAWN2XZNra+W1in4jGEo52uhMVHDx42kapeNJrDq3TPvQBIVcBAQ
+        +Yyoj4UoPBOjSv4w2fi7UNQ9KA==
+X-Google-Smtp-Source: APXvYqzvjPfgNvlFT/HgNCBmHNXS7iuxQJhP6jlKtrrPnHY6SKZtj0CHxA/wcBW6Y9grlHdlAgYOKQ==
+X-Received: by 2002:ac8:30d2:: with SMTP id w18mr622082qta.296.1562803186668;
+        Wed, 10 Jul 2019 16:59:46 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id x8sm1714546qkl.27.2019.07.10.16.59.29
+        by smtp.gmail.com with ESMTPSA id x8sm1714546qkl.27.2019.07.10.16.59.40
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 10 Jul 2019 16:59:33 -0700 (PDT)
+        Wed, 10 Jul 2019 16:59:46 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
@@ -59,10 +59,10 @@ Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Olga Telezhnaya <olyatelezhnaya@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        kernel-usp@googlegroups.com, Alex Riesen <raa.lkml@gmail.com>
-Subject: [GSoC][PATCH v8 01/10] clone: test for our behavior on odd objects/* content
-Date:   Wed, 10 Jul 2019 20:58:55 -0300
-Message-Id: <a2016d9d3b8e54ff9b9e6dfbd3ab4ce4a1bf7e4d.1562801254.git.matheus.bernardino@usp.br>
+        kernel-usp@googlegroups.com
+Subject: [GSoC][PATCH v8 02/10] clone: better handle symlinked files at .git/objects/
+Date:   Wed, 10 Jul 2019 20:58:56 -0300
+Message-Id: <47a4f9b31c03499bc1317b9a0fccb11c2f5b4d34.1562801254.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <cover.1562801254.git.matheus.bernardino@usp.br>
 References: <cover.1562801254.git.matheus.bernardino@usp.br>
@@ -74,156 +74,137 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+There is currently an odd behaviour when locally cloning a repository
+with symlinks at .git/objects: using --no-hardlinks all symlinks are
+dereferenced but without it, Git will try to hardlink the files with the
+link() function, which has an OS-specific behaviour on symlinks. On OSX
+and NetBSD, it creates a hardlink to the file pointed by the symlink
+whilst on GNU/Linux, it creates a hardlink to the symlink itself.
 
-Add tests for what happens when we perform a local clone on a repo
-containing odd files at .git/object directory, such as symlinks to other
-dirs, or unknown files.
+On Manjaro GNU/Linux:
+    $ touch a
+    $ ln -s a b
+    $ link b c
+    $ ls -li a b c
+    155 [...] a
+    156 [...] b -> a
+    156 [...] c -> a
 
-I'm bending over backwards here to avoid a SHA-1 dependency. See [1]
-for an earlier and simpler version that hardcoded SHA-1s.
+But on NetBSD:
+    $ ls -li a b c
+    2609160 [...] a
+    2609164 [...] b -> a
+    2609160 [...] c
 
-This behavior has been the same for a *long* time, but hasn't been
-tested for.
+It's not good to have the result of a local clone to be OS-dependent and
+besides that, the current behaviour on GNU/Linux may result in broken
+symlinks. So let's standardize this by making the hardlinks always point
+to dereferenced paths, instead of the symlinks themselves. Also, add
+tests for symlinked files at .git/objects/.
 
-There's a good post-hoc argument to be made for copying over unknown
-things, e.g. I'd like a git version that doesn't know about the
-commit-graph to copy it under "clone --local" so a newer git version
-can make use of it.
+Note: Git won't create symlinks at .git/objects itself, but it's better
+to handle this case and be friendly with users who manually create them.
 
-In follow-up commits we'll look at changing some of this behavior, but
-for now, let's just assert it as-is so we'll notice what we'll change
-later.
-
-1. https://public-inbox.org/git/20190226002625.13022-5-avarab@gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-[matheus.bernardino: improved and split tests in more than one patch]
-Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Co-authored-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5604-clone-reference.sh | 111 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 111 insertions(+)
+ builtin/clone.c            |  2 +-
+ t/t5604-clone-reference.sh | 27 ++++++++++++++++++++-------
+ 2 files changed, 21 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5b9ebe9947..4a0a2455a7 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -445,7 +445,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 		if (unlink(dest->buf) && errno != ENOENT)
+ 			die_errno(_("failed to unlink '%s'"), dest->buf);
+ 		if (!option_no_hardlinks) {
+-			if (!link(src->buf, dest->buf))
++			if (!link(real_path(src->buf), dest->buf))
+ 				continue;
+ 			if (option_local > 0)
+ 				die_errno(_("failed to create link '%s'"), dest->buf);
 diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
-index 4320082b1b..11250cab40 100755
+index 11250cab40..459ad8a20b 100755
 --- a/t/t5604-clone-reference.sh
 +++ b/t/t5604-clone-reference.sh
-@@ -221,4 +221,115 @@ test_expect_success 'clone, dissociate from alternates' '
- 	( cd C && git fsck )
+@@ -266,7 +266,7 @@ test_expect_success 'clone a repo with garbage in objects/*' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'setup repo with garbage in objects/*' '
-+	git init S &&
-+	(
-+		cd S &&
-+		test_commit A &&
-+
-+		cd .git/objects &&
-+		>.some-hidden-file &&
-+		>some-file &&
-+		mkdir .some-hidden-dir &&
-+		>.some-hidden-dir/some-file &&
-+		>.some-hidden-dir/.some-dot-file &&
-+		mkdir some-dir &&
-+		>some-dir/some-file &&
-+		>some-dir/.some-dot-file
-+	)
-+'
-+
-+test_expect_success 'clone a repo with garbage in objects/*' '
-+	for option in --local --no-hardlinks --shared --dissociate
-+	do
-+		git clone $option S S$option || return 1 &&
-+		git -C S$option fsck || return 1
-+	done &&
-+	find S-* -name "*some*" | sort >actual &&
-+	cat >expected <<-EOF &&
-+	S--dissociate/.git/objects/.some-hidden-file
-+	S--dissociate/.git/objects/some-dir
-+	S--dissociate/.git/objects/some-dir/.some-dot-file
-+	S--dissociate/.git/objects/some-dir/some-file
-+	S--dissociate/.git/objects/some-file
-+	S--local/.git/objects/.some-hidden-file
-+	S--local/.git/objects/some-dir
-+	S--local/.git/objects/some-dir/.some-dot-file
-+	S--local/.git/objects/some-dir/some-file
-+	S--local/.git/objects/some-file
-+	S--no-hardlinks/.git/objects/.some-hidden-file
-+	S--no-hardlinks/.git/objects/some-dir
-+	S--no-hardlinks/.git/objects/some-dir/.some-dot-file
-+	S--no-hardlinks/.git/objects/some-dir/some-file
-+	S--no-hardlinks/.git/objects/some-file
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknown files at objects/' '
-+	git init T &&
-+	(
-+		cd T &&
-+		git config gc.auto 0 &&
-+		test_commit A &&
-+		git gc &&
-+		test_commit B &&
-+
-+		cd .git/objects &&
-+		mv pack packs &&
-+		ln -s packs pack &&
-+		find ?? -type d >loose-dirs &&
-+		last_loose=$(tail -n 1 loose-dirs) &&
+-test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknown files at objects/' '
++test_expect_success SYMLINKS 'setup repo with manually symlinked or unknown files at objects/' '
+ 	git init T &&
+ 	(
+ 		cd T &&
+@@ -280,10 +280,19 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
+ 		ln -s packs pack &&
+ 		find ?? -type d >loose-dirs &&
+ 		last_loose=$(tail -n 1 loose-dirs) &&
+-		rm -f loose-dirs &&
+ 		mv $last_loose a-loose-dir &&
+ 		ln -s a-loose-dir $last_loose &&
++		first_loose=$(head -n 1 loose-dirs) &&
 +		rm -f loose-dirs &&
-+		mv $last_loose a-loose-dir &&
-+		ln -s a-loose-dir $last_loose &&
-+		find . -type f | sort >../../../T.objects-files.raw &&
-+		echo unknown_content >unknown_file
-+	) &&
-+	git -C T fsck &&
-+	git -C T rev-list --all --objects >T.objects
-+'
 +
++		cd $first_loose &&
++		obj=$(ls *) &&
++		mv $obj ../an-object &&
++		ln -s ../an-object $obj &&
 +
-+test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files at objects/' '
-+	for option in --local --no-hardlinks --shared --dissociate
-+	do
-+		git clone $option T T$option || return 1 &&
-+		git -C T$option fsck || return 1 &&
-+		git -C T$option rev-list --all --objects >T$option.objects &&
-+		test_cmp T.objects T$option.objects &&
-+		(
-+			cd T$option/.git/objects &&
-+			find . -type f | sort >../../../T$option.objects-files.raw
-+		)
-+	done &&
-+
-+	for raw in $(ls T*.raw)
-+	do
-+		sed -e "s!/../!/Y/!; s![0-9a-f]\{38,\}!Z!" -e "/commit-graph/d" \
-+		    -e "/multi-pack-index/d" <$raw >$raw.de-sha || return 1
-+	done &&
-+
-+	cat >expected-files <<-EOF &&
-+	./Y/Z
-+	./Y/Z
-+	./a-loose-dir/Z
-+	./Y/Z
-+	./info/packs
-+	./pack/pack-Z.idx
-+	./pack/pack-Z.pack
-+	./packs/pack-Z.idx
-+	./packs/pack-Z.pack
-+	./unknown_file
-+	EOF
-+
-+	for option in --local --dissociate --no-hardlinks
-+	do
-+		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1
-+	done &&
-+
-+	echo ./info/alternates >expected-files &&
-+	test_cmp expected-files T--shared.objects-files.raw
-+'
-+
++		cd ../ &&
+ 		find . -type f | sort >../../../T.objects-files.raw &&
++		find . -type l | sort >../../../T.objects-symlinks.raw &&
+ 		echo unknown_content >unknown_file
+ 	) &&
+ 	git -C T fsck &&
+@@ -291,7 +300,7 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
+ '
+ 
+ 
+-test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files at objects/' '
++test_expect_success SYMLINKS 'clone repo with symlinked or unknown files at objects/' '
+ 	for option in --local --no-hardlinks --shared --dissociate
+ 	do
+ 		git clone $option T T$option || return 1 &&
+@@ -300,7 +309,8 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
+ 		test_cmp T.objects T$option.objects &&
+ 		(
+ 			cd T$option/.git/objects &&
+-			find . -type f | sort >../../../T$option.objects-files.raw
++			find . -type f | sort >../../../T$option.objects-files.raw &&
++			find . -type l | sort >../../../T$option.objects-symlinks.raw
+ 		)
+ 	done &&
+ 
+@@ -314,6 +324,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
+ 	./Y/Z
+ 	./Y/Z
+ 	./a-loose-dir/Z
++	./an-object
+ 	./Y/Z
+ 	./info/packs
+ 	./pack/pack-Z.idx
+@@ -323,13 +334,15 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
+ 	./unknown_file
+ 	EOF
+ 
+-	for option in --local --dissociate --no-hardlinks
++	for option in --local --no-hardlinks --dissociate
+ 	do
+-		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1
++		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1 &&
++		test_must_be_empty T$option.objects-symlinks.raw.de-sha || return 1
+ 	done &&
+ 
+ 	echo ./info/alternates >expected-files &&
+-	test_cmp expected-files T--shared.objects-files.raw
++	test_cmp expected-files T--shared.objects-files.raw &&
++	test_must_be_empty T--shared.objects-symlinks.raw
+ '
+ 
  test_done
 -- 
 2.22.0
