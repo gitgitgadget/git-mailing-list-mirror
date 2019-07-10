@@ -2,146 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5FB01F461
-	for <e@80x24.org>; Wed, 10 Jul 2019 18:33:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97CE31F461
+	for <e@80x24.org>; Wed, 10 Jul 2019 18:37:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727636AbfGJSdD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 14:33:03 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38105 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727063AbfGJSdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 14:33:02 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g17so3518828wrr.5
-        for <git@vger.kernel.org>; Wed, 10 Jul 2019 11:33:01 -0700 (PDT)
+        id S1728361AbfGJSh1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 14:37:27 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:45359 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728349AbfGJSh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 14:37:27 -0400
+Received: by mail-lf1-f67.google.com with SMTP id u10so2272531lfm.12
+        for <git@vger.kernel.org>; Wed, 10 Jul 2019 11:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tulKnroNuSDIoOAhHme/uy6q6ha1+v+ip7QSZTmeWtk=;
-        b=FmTomECkADQ2CQUPBYRAZuEI6VcQGOeIcq2eC/y2+SbWB5uR6ZDdUBp4N+W6TF2S8E
-         uOiBdoEu8C3GWXtFaEMDSAos8mToPHpfNE3qn+4HmfwFo7/3ZNsL2gg/HzD55xYJLUkf
-         NktBu6tbbAHCC6mM6H4cGIpGBSsTdVRsOQJs6QE4GM48IghjoFH8shHYeqUXLqlnzLy7
-         AEktBaUwhhLuDBeBMAcyzxEy2lHqVtoktJ3Ta1KfF7de7XQR56BZ9te8RGB30Ziq5NdJ
-         /GniBaBqbZR3IxgTB9QF8RaVsJWjctTLXQOYR5jbip8Gl4NDk49+pj66Ej3z647Js8qZ
-         XUKw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=he+bfYTaMvabn/fKges5vgvhBZ9/CKEokVhHZxfYeP8=;
+        b=cq1hgCTMZ/+XvMUH+ts7c6XJiqxi2cE++TX9JU3N7JwDV9ZzUzh9SoCuA38vLdhJUZ
+         EjIJVAhAsae0bQqDQ+lD20sgg1pUxHE0DKvNcx56eUs9GUFDDC8vGQOo4MW0UJdTIKZJ
+         7ygH/IGFzvSomM3m17Kysr2XiBhscxaEA4SsvsL58cD1UHfOO7tauMbTSrmuBGGAu41V
+         o0+hlywv4Xm60fpsagZU19WVg6FITJmpB6c6yVCTD6mNJ9bsTaKQhqx3zHiMVJD7NhHz
+         x6epu4wLPc5tyPP29l/EtmbaiNrtxNTgCdGQsWw6mNEx8A0OnFGEUNiCJisdR/tJIjG6
+         T0gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=tulKnroNuSDIoOAhHme/uy6q6ha1+v+ip7QSZTmeWtk=;
-        b=tFS41r0kTkwpY8o7pi9e5I2pK99psODVOcSn/R5TCz7kj//YRjPktRmsqoC2r7/Dcg
-         CiDZizhdZvlRfTBx3U9XsI3vlevADd4wIBWuBQfgeDW1wn36Z5+l16b8npTpIzw5Ur6u
-         xPaHwos66Q81kcb/ak+zvrg4e2LeJMEKdOVOf4GG9+iTfnHMvlLlQIFCPxlZQTNyapks
-         4RwKrChwxySupNKCCk7z/yhw8jrkYj2InrgN0gzHLkuUl4qj5cCuBq71WqBGY479ndrZ
-         8UkLCcT89hEluzqTRRi+PZVqhmw1j4j/pTBHFGGNNOeQgG74WmxsWEV4L3IpmXsVZwEm
-         P00Q==
-X-Gm-Message-State: APjAAAXcncKVLPEu32T0sFmnmxNEZ9uSAOmntEM3HHm1kUttB6jgjDiA
-        Rlw2Ufmdh33z10JTrkkvaHbD/3ItbS8=
-X-Google-Smtp-Source: APXvYqwlGlxRq8KGsDheFcSzNcnvOlFxP+ElNgTbtdlNxiSiKMmec6BOSxL1g9zPwBD7mp9ROeePow==
-X-Received: by 2002:a05:6000:2:: with SMTP id h2mr14051463wrx.90.1562783580766;
-        Wed, 10 Jul 2019 11:33:00 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egd227.neoplus.adsl.tpnet.pl. [83.21.67.227])
-        by smtp.gmail.com with ESMTPSA id f17sm2911082wmf.27.2019.07.10.11.32.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Jul 2019 11:33:00 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        avarab@gmail.com, peff@peff.net
-Subject: Re: [RFC PATCH v2 1/3] trace2: Add a JSON schema for trace2 events
-References: <cover.1560295286.git.steadmon@google.com>
-        <cover.1562712943.git.steadmon@google.com>
-        <a949db776c77e5c97c78055f1bb0f2101096f861.1562712943.git.steadmon@google.com>
-Date:   Wed, 10 Jul 2019 20:32:55 +0200
-In-Reply-To: <a949db776c77e5c97c78055f1bb0f2101096f861.1562712943.git.steadmon@google.com>
-        (Josh Steadmon's message of "Tue, 9 Jul 2019 16:05:43 -0700")
-Message-ID: <86wogp68q0.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=he+bfYTaMvabn/fKges5vgvhBZ9/CKEokVhHZxfYeP8=;
+        b=Eotq5po4Iuvnrlf7hj76kFCcqCb77+WI4VZMWGm6zirPvE3dF8OixwEKRm9ifSWVWV
+         4IxP9hFXocTX7Hsi0t/Zx2KYCuJAikdfuKfJIzvLD+wEbac21YNrMpuDqmD3jfI9gMxY
+         R06hVb4CKivAapuBJtls6FdTxR9hUQ/Rc2Ty2eyeVpAqYe58JGhA8N1z2gkRHOg/AZoU
+         hSmuTfXwoHMD/7Wdhja/Y2kwmJc0JkTdPqZtJc/J/bnayD1UYnzBSe2W2NIL5JWwryry
+         vukJP3sV8j7TjZTS3ke22fVMJg0Ws/QOX4SSNokF3jTyH/oixlN2EXcWoTiPJ/+/XPIg
+         8SxA==
+X-Gm-Message-State: APjAAAUHJomrAeccki9V5Gy8GKo5Eu/ccWaOD9wgg0Y1R+kNK/yP7JIW
+        TooQsp2MkoDCjOjDnjNmvO+1if9B
+X-Google-Smtp-Source: APXvYqxzxZvi8szdvMpmBM7Wt1wX9fb8QmU7XqfQvMm/e4LLNzhIjlVMAEuB/VcO5416fDKigR3L2w==
+X-Received: by 2002:ac2:4ac4:: with SMTP id m4mr541789lfp.172.1562783844841;
+        Wed, 10 Jul 2019 11:37:24 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id h1sm456959lfj.21.2019.07.10.11.37.23
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 10 Jul 2019 11:37:24 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] ref-filter: fix memory leak in `free_array_item()`
+Date:   Wed, 10 Jul 2019 20:36:39 +0200
+Message-Id: <20190710183639.4123992-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.22.0.428.g6d5b264208
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+We treat the `value` pointer as a pointer to a struct and free its `s`
+field. But `value` is in fact an array of structs. As a result, we only
+free the first `s` out of `used_atom_cnt`-many and leak the rest. Make
+sure we free all items in `value`.
 
-> Define a JSON schema[1] that can be used to validate trace2 event
-> objects. This can be used to add regression tests to verify that the
-> event output format does not change unexpectedly.
->
-> Two versions of the schema are provided:
+In the caller, `ref_array_clear()`, this means we need to be careful not
+to zero `used_atom_cnt` until after we've called `free_array_item()`. We
+could move just a single line, but let's keep related things close
+together instead, by first handling `array`, then `used_atom`.
 
-Actually, four versions of the schema are provided, as you have written
-in the t/trace_schema_validator/README file.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ ref-filter.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-> * event_schema.json is more permissive. It verifies that all expected
->   fields are present in each trace event, but it allows traces to have
->   unexpected additional fields. This allows the schema to be specified
->   more concisely by factoring out the common fields into a reusable
->   sub-schema.
-> * strict_schema.json is more restrictive. It verifies that all expected
->   fields are present and no unexpected fields are present in each trace
->   event. Due to this additional restriction, the common fields cannot be
->   factored out into a re-usable subschema (at least as-of draft-07) [2],
->   and must be repeated for each event definition.
->
-> [1]: https://json-schema.org/
-> [2]: https://json-schema.org/understanding-json-schema/reference/combinin=
-g.html#allof
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  t/trace_schema_validator/README               |  23 +
->  t/trace_schema_validator/event_schema.json    | 398 ++++++++++++++
->  t/trace_schema_validator/list_schema.json     | 401 ++++++++++++++
->  .../strict_list_schema.json                   | 514 ++++++++++++++++++
->  t/trace_schema_validator/strict_schema.json   | 511 +++++++++++++++++
->  5 files changed, 1847 insertions(+)
->  create mode 100644 t/trace_schema_validator/README
->  create mode 100644 t/trace_schema_validator/event_schema.json
->  create mode 100644 t/trace_schema_validator/list_schema.json
->  create mode 100644 t/trace_schema_validator/strict_list_schema.json
->  create mode 100644 t/trace_schema_validator/strict_schema.json
->
-> diff --git a/t/trace_schema_validator/README b/t/trace_schema_validator/R=
-EADME
-> new file mode 100644
-> index 0000000000..45f0e6f0c4
-> --- /dev/null
-> +++ b/t/trace_schema_validator/README
-> @@ -0,0 +1,23 @@
-> +These JSON schemas[1] can be used to validate trace2 event objects. They
-> +can be used to add regression tests to verify that the event output
-> +format does not change unexpectedly.
-> +
-> +Four versions of the schema are provided:
-> +* event_schema.json is more permissive. It verifies that all expected
-> +  fields are present in a trace event, but it allows traces to have
-> +  unexpected additional fields. This allows the schema to be specified
-> +  more concisely by factoring out the common fields into a reusable
-> +  sub-schema.
-> +* strict_schema.json is more restrictive. It verifies that all expected
-> +  fields are present and no unexpected fields are present in the trace
-> +  event. Due to this additional restriction, the common fields cannot be
-> +  factored out into a re-usable subschema (at least as-of draft-07) [2],
-> +  and must be repeated for each event definition.
-> +* list_schema.json is like event_schema.json above, but validates a JSON
-> +  array of trace events, rather than a single event.
-> +* strict_list_schema.json is like strict_schema.json above, but
-> +  validates a JSON array of trace events, rather than a single event.
-> +
-> +[1]: https://json-schema.org/
-> +[2]: https://json-schema.org/understanding-json-schema/reference/combini=
-ng.html#allof
-[...]
+diff --git a/ref-filter.c b/ref-filter.c
+index 791f0648a6..1c1a2af880 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2105,7 +2105,9 @@ static void free_array_item(struct ref_array_item *item)
+ {
+ 	free((char *)item->symref);
+ 	if (item->value) {
+-		free((char *)item->value->s);
++		int i;
++		for (i = 0; i < used_atom_cnt; i++)
++			free((char *)item->value[i].s);
+ 		free(item->value);
+ 	}
+ 	free(item);
+@@ -2116,14 +2118,16 @@ void ref_array_clear(struct ref_array *array)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < used_atom_cnt; i++)
+-		free((char *)used_atom[i].name);
+-	FREE_AND_NULL(used_atom);
+-	used_atom_cnt = 0;
+ 	for (i = 0; i < array->nr; i++)
+ 		free_array_item(array->items[i]);
+ 	FREE_AND_NULL(array->items);
+ 	array->nr = array->alloc = 0;
++
++	for (i = 0; i < used_atom_cnt; i++)
++		free((char *)used_atom[i].name);
++	FREE_AND_NULL(used_atom);
++	used_atom_cnt = 0;
++
+ 	if (ref_to_worktree_map.worktrees) {
+ 		hashmap_free(&(ref_to_worktree_map.map), 1);
+ 		free_worktrees(ref_to_worktree_map.worktrees);
+-- 
+2.22.0.428.g6d5b264208
 
---=20
-Jakub Nar=C4=99bski
