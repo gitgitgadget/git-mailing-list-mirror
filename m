@@ -2,100 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE0E51F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 00:00:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A875B1F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 00:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727844AbfGKAAj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jul 2019 20:00:39 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:38952 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727386AbfGKAAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jul 2019 20:00:38 -0400
-Received: by mail-qt1-f194.google.com with SMTP id l9so4467383qtu.6
-        for <git@vger.kernel.org>; Wed, 10 Jul 2019 17:00:38 -0700 (PDT)
+        id S1727546AbfGKACU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jul 2019 20:02:20 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:45476 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727386AbfGKACU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jul 2019 20:02:20 -0400
+Received: by mail-io1-f53.google.com with SMTP id g20so8578760ioc.12
+        for <git@vger.kernel.org>; Wed, 10 Jul 2019 17:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TA7qLhwVjgT7/njeUhcABACRPDG7IyBV0uSnJgIka+0=;
-        b=lYz1Vvn1ABgdlgooOpEjaqM0BTPoM/K66YIOgC0TWF5GpNQs67s0wjNmbfQjsYVBNi
-         amwvVA3BicggBGSh7WLJdBRqdwfq6E/3ol72Yn4BbXFJI+1QFg2OhdCRqC9YYb3GUhGm
-         Bq31njUI18j9Vm2vDb1Z0PSN2PoZrX5NGSzQ1Ns76kh7+JKYDpQ58hI0zrpIzifgu7IH
-         3lWLbTRuT+NJY0UqIknPXx6DwwbU61mZIhxi3lEkqp9QwCHUZFVCLCgj4urigwKOkJrO
-         nsZrEPDXS7+0SyC9bqU80m6izoVp6QCRAbVLJfhtZXhzTtvnWVy1xiuu9pLI386ab0Xh
-         oW6A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OwT3Lf3NItDjTaqGPJDupUQTP+Om7Z7sHwzDg6SDKkQ=;
+        b=z7TRV0yiJUFG43Gi5GjG/cy1jmmPc5sbDacRqAUZZZpg8C2cxvOl9HQvVBpadeoRxK
+         uPX6gihi5hpiS0xkSL1mOUoLQnPrfxN0cNYp5P+svcjjxEO5k+xiSu0KMF7IbLJhD0au
+         bcSjYBgwTJE/AhGmFyaCXVXE+uMRMqzYuiZC/UYyY8cOeg0TBUg5gOIPkl/IGgAIS5Ct
+         2kUsBs15qrM/m+c/YmLZ8B3ZFGxbv78mxDIsET2mLx5VsNOdY2zyDkuBF0JcvyKaMVnB
+         E03UMxzWkqsgThc7AhOnBEBApcj8jdaOVgBzjFDqntXxGCFtIJGBG+orQqs6GGn6qFUW
+         MICA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TA7qLhwVjgT7/njeUhcABACRPDG7IyBV0uSnJgIka+0=;
-        b=XWI2duvhnL3WnJWoFPctPoJQQZHk8vDozppIzVSUpQMNoxhwJrlZGPIaMtYkfM8InY
-         pVlCGVSjff+nktx3/8NS2FSaG1yN72LwV4HTY19Pj6dvNYwSDYeZRdKPYM3x5URqHGVH
-         tAjR7BJseGSABKfR2WhcuNge4uWaecur5jvFrMZ9F3gVHMrWt0V1yg5vRl/9TwtYNFvU
-         MSLw3IMv4BHz+6JA7fbf8HqsG89nHs20xX4R++DuyHFNGTYG2dXcVcAPqghLlTEkL0RE
-         AHLHDP12X0gHuZm93H9QocE5dgQ+DnqikRmxmFsS2zZU/E2g8E0fm1nMJHOLhPmBGCoL
-         GqHw==
-X-Gm-Message-State: APjAAAVYEulHhPlC0ch5Yt7btvFsqdu4LpQMoZm1ix5E3hI9dSJWeORa
-        XPydzgpBLz59mzyvgMicelaAAA==
-X-Google-Smtp-Source: APXvYqyRrRbPKjhKn0qhq6l47wNGeLxYn7BYr93KT7HT8M86MNWvXax/yghxrnx0g0JwgFKQIiGS1w==
-X-Received: by 2002:ac8:359a:: with SMTP id k26mr578155qtb.87.1562803237774;
-        Wed, 10 Jul 2019 17:00:37 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id x8sm1714546qkl.27.2019.07.10.17.00.32
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 10 Jul 2019 17:00:37 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        kernel-usp@googlegroups.com, Jeff King <peff@peff.net>
-Subject: [GSoC][PATCH v8 10/10] clone: replace strcmp by fspathcmp
-Date:   Wed, 10 Jul 2019 20:59:04 -0300
-Message-Id: <782ca07eed2c9bac4378e5128ff996b25ed86a43.1562801255.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1562801254.git.matheus.bernardino@usp.br>
-References: <cover.1562801254.git.matheus.bernardino@usp.br>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OwT3Lf3NItDjTaqGPJDupUQTP+Om7Z7sHwzDg6SDKkQ=;
+        b=kauY5hx+XBSpFQGhWNXjNM76ifkGCsfl9U2wrQSUHo0vTRBeFZ5br4BFNfPkVpFesy
+         627pDwwnG6mvrn9wCOMaDoRZYeotMklcq/vNWWhoJQJ9HVT7NBOPotgxBy5z1Qz0yStS
+         9bEM511mXUwAxS39QDpJ0JeUhal9204SyVW1IUDpIm7tInvJRmvXyXibpH8mCmvnhy2K
+         yCMXuAHt4iKvOjIAeklPd5FFlBg8vxV5bkMIBVQycZEcXMe21BOjhf/omsr2+fhQ1ka5
+         5Ure+iDHtlI6MDB8p68S856bOnRRzj0JjIf9Zq4qJ1CNCTapSo+hyxtGe/pgHSXgkavi
+         NTdg==
+X-Gm-Message-State: APjAAAU+OAfdwYxwhUAVPSShxwqfMAskwtWxQTDkEdt8faeU3IRjIPI7
+        3fKx8e++ZOH1EpM0cnCJwZii7jezzJ4QnWr0Xf0oaQ==
+X-Google-Smtp-Source: APXvYqxlFn0PdimNq79GJq+JMKjzDD6rlZH5l9bnmWUnRr2/mnkKl8jYNsjMz/De9iZM6fI+279VmJWhBR7rTtoOZXU=
+X-Received: by 2002:a02:c646:: with SMTP id k6mr1016978jan.134.1562803339525;
+ Wed, 10 Jul 2019 17:02:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqq36jeva9e.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1907102050100.46@tvgsbejvaqbjf.bet>
+ <xmqq5zo9u36m.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq5zo9u36m.fsf@gitster-ct.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 10 Jul 2019 21:02:08 -0300
+Message-ID: <CAHd-oW4-+XE_etXbDCvOX2Cdx1PcW-0oQWeq+jr=VPsf=EpgTg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2019, #02; Tue, 9)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the use of strcmp by fspathcmp at copy_or_link_directory, which
-is more permissive/friendly to case-insensitive file systems.
+On Wed, Jul 10, 2019 at 3:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > Hi Junio,
+> >
+> > On Tue, 9 Jul 2019, Junio C Hamano wrote:
+> >
+> >> * mt/dir-iterator-updates (2019-06-25) 10 commits
+> >>  - clone: replace strcmp by fspathcmp
+> >>  - clone: use dir-iterator to avoid explicit dir traversal
+> >>  - clone: extract function from copy_or_link_directory
+> >>  - clone: copy hidden paths at local clone
+> >>  - dir-iterator: add flags parameter to dir_iterator_begin
+> >>  - dir-iterator: refactor state machine model
+> >>  - dir-iterator: use warning_errno when possible
+> >>  - dir-iterator: add tests for dir-iterator API
+> >>  - clone: better handle symlinked files at .git/objects/
+> >>  - clone: test for our behavior on odd objects/* content
+> >>
+> >>  Adjust the dir-iterator API and apply it to the local clone
+> >>  optimization codepath.
+> >>
+> >>  Is this ready for 'next'?
+> >
+> > I am afraid that still, just like I said in response to the previous
+> > "What's cooking" mail, this is not ready (which is unsurprising, given
+> > that it has not changed): it breaks 1,384 test cases.
+>
+> Let's kick it out of 'pu' for now to help ci runs on Windows, which
+> would be swamped with failures from this.  Thanks for reminding me.
 
-Suggested-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- builtin/clone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sorry for the delay. I just sent v8[1] with Dscho's suggestions, which
+should fix all those test failures on Windows.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 47cb4a2a8e..8da696ef30 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -444,7 +444,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 		}
- 
- 		/* Files that cannot be copied bit-for-bit... */
--		if (!strcmp(iter->relative_path, "info/alternates")) {
-+		if (!fspathcmp(iter->relative_path, "info/alternates")) {
- 			copy_alternates(src, src_repo);
- 			continue;
- 		}
--- 
-2.22.0
+Thanks,
+Matheus
 
+[1]: https://public-inbox.org/git/cover.1562801254.git.matheus.bernardino@usp.br/
