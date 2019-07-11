@@ -7,52 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB8761F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 14:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2021F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 15:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728474AbfGKOsf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 10:48:35 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56560 "EHLO
+        id S1728550AbfGKPTI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 11:19:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56564 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728178AbfGKOsf (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 11 Jul 2019 10:48:35 -0400
+        by vger.kernel.org with ESMTP id S1728194AbfGKPTI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 11 Jul 2019 11:19:08 -0400
 Received: from genre.crustytoothpaste.net (rrcs-50-84-77-156.sw.biz.rr.com [50.84.77.156])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5A18B605AA;
-        Thu, 11 Jul 2019 14:48:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 08BB260436;
+        Thu, 11 Jul 2019 15:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1562856513;
-        bh=pUyK+kDqBlgE2t/uGQk4rkQLcwOskuHQ3YrwBuBRQ5M=;
+        s=default; t=1562858345;
+        bh=FNzLYzhJ1NweAZOxAlZAXYsvpSmuWinzfkyoMkAFwQI=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=SlN7ZX+nAoO/NOguMhmASFGxhJec2AJ38W045Acbh+cmOhKbdeiHBPkpLLsjQPzrB
-         lM/ugukL0/Q6OHxsScS9Cequye+TLZAAsPojPlSbN6pj6MPd5Pp9+gTqKvJL5PKYUJ
-         Vub+wlwXObZ9VUajpm4O7aL+C5i6SXLCjqOtSeW0re+7PjECZAbnGDetHe2P5s8qJJ
-         vdFxZAwj37npC0aPG5b8FhQCUhkhlk4uCEjUlyjveaJy+CpBqyHjiVrImWAzQO4wPa
-         HivvvIwqgQpULVp5FfUsC0zYrg4Pq6m1mhLvqoOG8BC9lUtcdPudWYOS+9u6aGqY1a
-         VhBeGW1DthpSMvVMaqOTtbW+5qZcA5flinoY3aKbgr3l5QkFy6f02XIlkEOekhSR7B
-         gVoc/wNAwXQAk9WB4Lp4lUjnUaxuooy4K6DW87nuO04j0RWVuUPXiLgVVHbohkNq4/
-         WzNXGVisYNZ1nN3jgQXh1QX5OAuTDN+QBIuPMVh+ztz1YycemQF
-Date:   Thu, 11 Jul 2019 14:48:28 +0000
+        b=sHn0kZMH8jrObCULNVMXQBStc+I5zIWFgDcUcsGu3heElqxwO/WzWs3dMud8mZi5q
+         zG4rergIGKpmZUBP+f2eVvP/Jfw3QEDYyX3kAUrq83/0TQLkXXLyW9wic27u3hrb16
+         JFQMxInUFibIUXd5K39B0UgPSkSQXfTsZcdl04908XxSUYffhRJdbkSVGKHACNLvkF
+         pc/Zl23ipT1VwgdABWPTd5iumdXj0ng5kNKosO7kQ2V+xltMPjkdFWR/CQi7eqYxTe
+         7e0HnfmWdHb82H57tuEz6LpZ/iHQ3VuUt3ZdjmGcWq8rLMEROow0OgrEnA5QbPJTL/
+         D1DO526rvIYtocCWrp+IaBF/cMSoZ/iyeAzwvADi+l/w44fLsqo6Y78ftCX1I8EG71
+         7IRioKc+juEhyInFX1oY/ILy6bmcnxLiGP28DC9exMEJGwfyCL08o5nYGft+cSuINH
+         VYtYwxFdIowb21d+ERIsF4ldVyWrAMbkz7pp1UJOmaPCHBPmvlU
+Date:   Thu, 11 Jul 2019 15:19:00 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Mark Florian <mflorian@gitlab.com>, git@vger.kernel.org
-Subject: Re: `@` alias for `HEAD` not working in `git push -u origin @`
-Message-ID: <20190711144828.GH9224@genre.crustytoothpaste.net>
+To:     Ariadne Conill <ariadne@dereferenced.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] log: use mailmap by default
+Message-ID: <20190711151900.GI9224@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Mark Florian <mflorian@gitlab.com>, git@vger.kernel.org
-References: <CANC=f2c8eynWJ1r=zwZq1qwrDE85LVFMU2mjLU26HYMDGaD4iA@mail.gmail.com>
- <20190710233937.GG9224@genre.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1907111141380.46@tvgsbejvaqbjf.bet>
+        Ariadne Conill <ariadne@dereferenced.org>, git@vger.kernel.org
+References: <20190711081958.2201-1-ariadne@dereferenced.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2oox5VnwalALFvA7"
+        protocol="application/pgp-signature"; boundary="hABqaeELJqnDDeDE"
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1907111141380.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <20190711081958.2201-1-ariadne@dereferenced.org>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-5-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -63,60 +60,53 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---2oox5VnwalALFvA7
+--hABqaeELJqnDDeDE
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-07-11 at 09:46:26, Johannes Schindelin wrote:
-> After reading that thread, I come to the conclusion that it was not so
-> much a decision not to pick it up, but more like a falling between the
-> cracks.
+On 2019-07-11 at 08:19:58, Ariadne Conill wrote:
+> The `git log` command shows the author and committer name recorded in
+> the git repository itself, while other commands respect `.mailmap`
+> by default.  I believe this is a bad design: it causes log entries to
+> reflect inaccurate information: anyone who changes their name or
+> e-mail address will not have that change (recorded in mailmap file)
+> reflected when using `git log` by default.
 >=20
-> I would be in favor of this patch.
+> Anyone who explicitly wants the current behaviour can clearly request
+> it by setting the `log.mailmap` setting to `false` in their
+> `.gitconfig` file.
 
-I think there was some later follow-up in a different thread (one of the
-"What's cooking" threads) that expressed reservations about it, but I
-can't find that thread right now.
+While I'm in favor of using the mailmap by default, typically we want a
+way people can override a default setting from the command line.
 
-Regardless, if there's interest, I can certainly resend and see how
-folks on the list feel about it.
-
-> Since I have your attention and since I am interested in a related issue
-> (when I wanted to propose a GSoC mini project to let `git fetch <remote>
-> @` expand the `@` to the current (local) branch name, Matthieu Moy
-> pointed out that `git fetch --current <remote>` might be a better UI):
-> what does your patch do with `git fetch`'s refspec arguments?
-
-I haven't checked. I believe it would resolve "git fetch origin @" to
-"git fetch origin HEAD" and "git fetch origin @:refs/heads/master" to
-"git fetch origin HEAD:refs/heads/master".
-
-I can add some additional tests for this case, although I'm not
-especially sure that it provides useful behavior people will want.
+So in this case, we have "--use-mailmap", but we don't have a
+"--no-use-mailmap" (at least, it's not documented in the manpage). I
+think we'd want to add such an option so that people can set it if they
+need non-default behavior.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---2oox5VnwalALFvA7
+--hABqaeELJqnDDeDE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.16 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0nTDwACgkQv1NdgR9S
-9otfsg/+L8N4MFLjjFLGBdIfhh92xw3o6g2RQcrTyqUIKK9CTOYSCSpENtd0Uovw
-VnnG17ckY519hDBpfeMPiHpGe2enPc3aXC0F4q/A4SkvF9E5kO5bgR/EC7SGDA5g
-INzXNtfj/ocOr3iJ0ROplUSCohbU1YsvZVMTytaVX4yutL6f6lGFvbIGYnQAfP+A
-Tj+P0W+5Ui0Ai7RaOpMA7NL92jjmxRuhuxkHyUV0kPQIWQR5MqRoO1gDmbr1z5bN
-4tFrkT4xzH6DbWp+1DFc+jH9MR6Xp/slt3icjSvYuQaQkp6N41xDY03tAKbHVtVm
-EjYojwkOzHVPDM3vE3GVJXv0NQuSDGEMWRijog/sFJEkqRfOs131WaZ4hx7JItR/
-P3jZjeRD2YaO2hGO/C5RaXhkLA/cx1WUWJqwaMJXpsF6Qx2MWpNp3C2hUl2ZkLqD
-nln/QHIhtrKjKDQZ60YUrC85J+eG0fw4fbOMA5dKnMUC7dgRxWFICDDP0h5B98Yl
-gBK3KQb72xS2RWPKjWY+lfhAYgOfTtZXKxUXz3MGIZ1Jckthb4uJGe4SjCE+fjTu
-rKol3mp66Ey4J4SAM78gOIOebKzomNax4Aq4nhYcXEYQRmhPzJ+zw+Cud5V/8RQ8
-kN8fMb+BZW3wwpYfFkYrDSQ0XZlx5NzwPEWlm46/vY8kc9dBlUE=
-=MAPs
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0nU2MACgkQv1NdgR9S
+9otr3Q/9FumN+Gq0OL1Gp+ywM1XfJP/sJt7Zviz/+RloREVTuMblMwOxA+DH04pp
+z2YvYmOK+7EzPZVE9JBJaX3rfS5p2DI39Pn05gPdWvMZ2GwtDpx49JuDkjW7Pr98
+7uHqVProW/wOpsJX0yA5auquHMvfPooIDQXpccUHdCJh3WPJ7IbZe9itj7FPWgxU
+EgAPTiqCamdujdqL2CxhsZUb9Eljf1M+G93z6MGEHsLYasMAlGiXF/6o8sYpZplR
+3k/xVF0OI1Cnx+7oaiZgzbN1Gg2GRnZPyx908qvya/XTBXDzfe/rFlHpbYR0GSu7
+uhyrK3zGJz8FKoYnHfuGcH17JZEcCCACy4hBb/C7Gok66DGTewpHORK+nubrzGYN
+nEkuYhp5YwB0lV2IS3VlPUhl/lcC52vZDewEA0V2qupCt4rcthKhsLPOlpTBC0W9
+2PAYgp3V9fyGFTjmU2sPxpPMNqy5STRanSeoerhJQlGND/oyZL/tWZUHCyIt2VOX
+BVPlr+Kcw7muwe9tuVZDM47vN5jBUe/bhvpTW/GuRFVhIDW63UdAVo5/SVuC77Cj
+rISdn4iY7XMlQQT3e8ASEWkY9DbYT/9WvqequKjFN3SSv0aL4STn31M7zJAXLpRI
+u8gbVh3jHcQbHAlf2xLoZRKChB9PwctYi6WEeUkIFR5UEPgSq1Y=
+=Ic3l
 -----END PGP SIGNATURE-----
 
---2oox5VnwalALFvA7--
+--hABqaeELJqnDDeDE--
