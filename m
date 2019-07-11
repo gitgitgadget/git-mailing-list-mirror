@@ -2,98 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A3121F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 19:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC4561F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 19:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726576AbfGKTav (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 15:30:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63960 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726116AbfGKTau (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 15:30:50 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 771521707F4;
-        Thu, 11 Jul 2019 15:30:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9slSca+aP707tHqu85MAw7Vm8Ss=; b=Bv7wOI
-        qdyJjWtz+71AARE/xrSn3LELe7q2u2r1trYUrcsG8Z6L1FBCzG6HgBigXUGYVjkp
-        uh54UunQ73AP0tJXVNAX8qrMx3VZ33XxO2t53+JjTSHwgtOBoRsDOglVXB6Arejq
-        7w1JH0Oi/httOWTcGGnvEBqKQfKtFPK5wdZAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pEIWw977Hh/6kVU4o/VklCIIH7PoUYvc
-        DlTgx0SiqqpIIEcewdgFAIsUTXLcSKYgddtffXHvCYoNR3kvDFY9ueKG5Z/qVx+N
-        FapdLuKsiH9nhFGe5fjMo7OKgIzTViF8x3c71VTGIq6jX6zE1g7y5Nv4efxK7X5q
-        ScU434k3iWA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CF2A1707F3;
-        Thu, 11 Jul 2019 15:30:48 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C5FCC1707F2;
-        Thu, 11 Jul 2019 15:30:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ariadne Conill <ariadne@dereferenced.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 0/3] use mailmap by default in git log
-References: <20190711183727.8058-1-ariadne@dereferenced.org>
-Date:   Thu, 11 Jul 2019 12:30:46 -0700
-In-Reply-To: <20190711183727.8058-1-ariadne@dereferenced.org> (Ariadne
-        Conill's message of "Thu, 11 Jul 2019 13:37:24 -0500")
-Message-ID: <xmqqy314qsgp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728561AbfGKTch (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 15:32:37 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:46918 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbfGKTcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 15:32:35 -0400
+Received: by mail-pl1-f193.google.com with SMTP id c2so3516750plz.13
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 12:32:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hxJ3nfJd7dAM8CdxKICMInEp9FtNU9RJTuDWRigC6oo=;
+        b=mQghdzq8mHuPru3PGqBh16yuwoX0eJzXlKAGZH4KpvIjkJLRy6rX8I9XjqwhvXryg9
+         uYhREEITFencBCKN/jTgg+DCTliK4Zy5GLD04PQ2JvwE1v3N2CYc/0zDYiidqABOnMfg
+         o3amCLyW8JIjrafuy5hMnDvXoZoKaWyy2eummnrHSN5X3iWja4W7VGW3BmaS7afdiHTy
+         RYWRnpGvqpkMuRmDcB47QZKHjstrffSHVQ7DoNjAod6zh5KY6i3UamAarJiIHXfE5pqA
+         dmNgXOc5xzVPJpImC091tur7rtjAji9V7s1mEj02KgkDifa9/tPn15BQ3iITpOgH/ow1
+         QDHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hxJ3nfJd7dAM8CdxKICMInEp9FtNU9RJTuDWRigC6oo=;
+        b=WtGgVbYzhfGZgJpA8BafcOxvUxEAQVFnCjDdWTPhjUivmQkiTvEOZvVvTv6/IPz9ZL
+         IXx+3CM9HJoBCHbOlDskBBDeMolbhHr/2ARAR6Xudpu/sN9xgVJDMBkh1Wg+vUrExDim
+         N0BqIDGRZiKRLuCctkRVGokZdxjLsPRq0UtKGVTwM031GLJ1Hr9+pJXRKMcazOoYK2Pl
+         nZkCr1xlfABg7WM9fRbFIK7HhXhb+9qT9IAtUsiWNpneTzqMP+hYFaxjlwNaKoyXvVta
+         7V6tOpO6EbroHXXbh7iyo75ta5e0EsdDKFtTPByDfdmMTwpCliAxENiMbyYy4UFB5Ukl
+         B1iA==
+X-Gm-Message-State: APjAAAXl9ZbARfl0ZBOdANrNth8rTETksSN91hYRydY4HaR0+8+kK0kv
+        Q7HjSNzmR9KgVrIsz0OMgV1qTLcextxFHjwAkVs=
+X-Google-Smtp-Source: APXvYqxWSRW6KrwrrTaUwqiNPGd6WrxQX5KPw+pCA9FCZjhFTeBsTL5W8RrSmb8tcmT3fkZZ/wR/3BYKmIIdqBvDmVY=
+X-Received: by 2002:a17:902:8509:: with SMTP id bj9mr6565892plb.79.1562873554782;
+ Thu, 11 Jul 2019 12:32:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 625F0A06-A412-11E9-8AC9-46F8B7964D18-77302942!pb-smtp1.pobox.com
+References: <20190711183727.8058-1-ariadne@dereferenced.org> <20190711183727.8058-4-ariadne@dereferenced.org>
+In-Reply-To: <20190711183727.8058-4-ariadne@dereferenced.org>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 11 Jul 2019 21:32:23 +0200
+Message-ID: <CAN0heSqQTVzqceJTma4KJ28KLGk6Z0+2uheVPpQjRqc0YvWnFQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] tests: rework mailmap tests for git log
+To:     Ariadne Conill <ariadne@dereferenced.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ariadne Conill <ariadne@dereferenced.org> writes:
-
-> It is not uncommon for people to change their name or e-mail address.
-> To facilitate this, Git provides support for the `.mailmap` file,
-> which contains a list of identities and previously used e-mail
-> addresses that are associated with that identity.
+On Thu, 11 Jul 2019 at 20:39, Ariadne Conill <ariadne@dereferenced.org> wrote:
 >
-> Unfortunately, while Git's support for the `.mailmap` file is generally
-> excellent, I recently discovered that `git log` does not treat the
-> mail map file the same as the other tools, instead requiring an
-> explicit flag to use the mailmap file.
+> In order to prove that the --no-use-mailmap option works as expected,
+> we add a test for it which runs with -c log.mailmap=true to ensure that
+> the option successfully negates the configured default.
 
-Make "the other tools" a bit more explicit.  Making things
-consistent is good but which way the consistency should go
-needs more data than the above to decide.
+I believe that testing with `-c log.mailmap=true` is not doing much --
+if we ignored that config entirely, we would still produce the wanted
+result. I think it's more important to test with "...=false". (Testing
+something like `-c log.mailmap=false -c log.mailmap=true` would
+basically just test our config-parsing in general, and we don't need to
+do that here -- there are other tests for that. Anyway, I digress.)
 
-Even though I personally think it is an OK longer-term end goal, the
-execution looks too hasty.  The normal way we handle a big behaviour
-change like this is to do the following in steps, in different
-releases:
+You or others might very well disagree with me, so feel free to wait
+for a while to see if others chime in. Just so you don't have to change
+back and forth due to my whims.
 
- - In the first release, introduce an early adoptor option (say
-   log.usemailmap) that can be turned on by the user, but is off by
-   default.  IOW, the initial step is "no change in behaviour,
-   unless you ask for it".  This step also makes sure that the way
-   to disable it for those who opt into the option from the command
-   line (i.e.  the --no-use-mailmap option) works well.
+> Additionally, since --use-mailmap is now the default behaviour, we
+> remove mentions of --use-mailmap from the tests, since they are
+> redundant.  We also rework some tests to explicitly define the
+> log.mailmap variable in both true and false states.
+>
+> Signed-off-by: Ariadne Conill <ariadne@dereferenced.org>
+> ---
+>  t/t4203-mailmap.sh | 49 ++++++++++++++++++++++++++++++++++++++--------
+>  1 file changed, 41 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 43b1522ea2..3d6086ff96 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -422,8 +422,8 @@ Author: Some Dude <some@dude.xx>
+>  Author: A U Thor <author@example.com>
+>  EOF
+>
+> -test_expect_success 'Log output with --use-mailmap' '
+> -       git log --use-mailmap | grep Author >actual &&
+> +test_expect_success 'Log output with mailmap enabled (default)' '
+> +       git log | grep Author >actual &&
+>         test_cmp expect actual
+>  '
 
- - In the second release, when "git log" is run without command line
-   "--[no-]use-mailmap" and "log.usemailmap" is not set by the user,
-   give warning about an upcoming flipping of the default, with an
-   advice message that the user can squelch the warning by setting
-   the option.
+It's a bit unfortunate that we're ignoring the exit status of `git log`
+since that is the exact command we want to test here. I know you're just
+following suit here, but if you're touching this line /anyway/, it might
+make sense to rewrite this into
 
- - In the final release, flip the default and remove the warning.
+  git log ... >out &&
+  grep Author out >actual &&
+  ...
 
-Usually there needs sufficient time between the second step and the
-third step, so that people will not miss the warning.
+> -test_expect_success 'Log output with log.mailmap' '
+> +test_expect_success 'Log output with log.mailmap enabled in config' '
+>         git -c log.mailmap=True log | grep Author >actual &&
+>         test_cmp expect actual
+>  '
 
-Thanks.
+Then the question is if you should change this line "while at it", or
+start with a preparatory patch to first just convert all these "git log
+| grep" to the pattern I showed above, then have a patch 2/2 with the
+actual change you want to make. I'm sure there are different opinions
+here about what is right and not. Anyway, I'm not the one to complain if
+you just ignore all of these "not so optimal" lines that you're not
+touching anyway.
+
+BTW, this is a test where I wonder if it's really worth running. We
+basically just check that we won't choke completely on this redundant
+config.
+
+> +cat >expect <<\EOF
+> +Author: CTO <cto@coompany.xx>
+> +Author: claus <me@company.xx>
+> +Author: santa <me@company.xx>
+> +Author: nick2 <nick2@company.xx>
+> +Author: nick2 <bugs@company.xx>
+> +Author: nick1 <bugs@company.xx>
+> +Author: A U Thor <author@example.com>
+> +EOF
+> +
+> +test_expect_success 'Log output with log.mailmap disabled in config' '
+> +       git -c log.mailmap=False log | grep Author >actual &&
+> +       test_cmp expect actual
+> +'
+
+Now this test, on the other hand, I really like having!
+
+Again, you're just following suit: Nowadays, we try to run things like
+"cat ...>expect ..." as part of a "test_expect_success" block. Same
+question about how maybe one should first convert all existing
+instances. And again, IMHO it's perfectly fine if you ignore the
+existing ones, but do it the "correct" way for the ones you're adding.
+
+> +
+>  cat >expect <<\EOF
+>  Author: Santa Claus <santa.claus@northpole.xx>
+>  Author: Santa Claus <santa.claus@northpole.xx>
+>  EOF
+>
+> -test_expect_success 'Grep author with --use-mailmap' '
+> -       git log --use-mailmap --author Santa | grep Author >actual &&
+> +test_expect_success 'Grep author with mailmap enabled (default)' '
+> +       git log --author Santa | grep Author >actual &&
+>         test_cmp expect actual
+>  '
+>  cat >expect <<\EOF
+> @@ -456,16 +471,34 @@ Author: Santa Claus <santa.claus@northpole.xx>
+>  Author: Santa Claus <santa.claus@northpole.xx>
+>  EOF
+>
+> -test_expect_success 'Grep author with log.mailmap' '
+> +test_expect_success 'Grep author with log.mailmap enabled' '
+>         git -c log.mailmap=True log --author Santa | grep Author >actual &&
+>         test_cmp expect actual
+>  '
+
+(Again, I kind of wonder what this buys us.)
+
+> -test_expect_success 'Only grep replaced author with --use-mailmap' '
+> -       git log --use-mailmap --author "<cto@coompany.xx>" >actual &&
+> +test_expect_success 'Grep author with log.mailmap disabled' '
+> +       git -c log.mailmap=False log --author "<santa.claus@northpole.xx>" >actual &&
+> +       test_must_be_empty actual
+> +'
+
+Nice.
+
+> +test_expect_success 'Grep author with --no-use-mailmap' '
+> +       git log --no-use-mailmap --author "<santa.claus@northpole.xx>" >actual &&
+>         test_must_be_empty actual
+>  '
+
+Nice.
+
+> +test_expect_success 'Only grep replaced author with mailmap enabled' '
+> +       git log --author "<cto@coompany.xx>" >actual &&
+> +       test_must_be_empty actual
+> +'
+> +cat >expect <<\EOF
+> +Author: santa <me@company.xx>
+> +EOF
+> +
+> +test_expect_success 'Grep author with --no-use-mailmap + log.mailmap=True' '
+> +       git -c log.mailmap=True log --no-use-mailmap --author santa | grep Author >actual &&
+> +       test_cmp expect actual
+> +'
+
+It should be possible to drop "-c log.mailmap=true" from this.
+
+I think you could just squash these three commits into one. It would
+tell a consistent story about how the specification changes, and the
+tests and the implementation follow suit.
+
+One last thing: I'm kind of assuming this change of default is something
+that is actually wanted. I don't have strong opinions there, and maybe
+others disagree. I know something like this has been discussed before,
+and I kind of suspect the reason it hasn't been done before is that
+nobody has done it -- not that it isn't wanted. You could probably find
+more in the archives, e.g., at public-inbox.org/git.
+
+Martin
