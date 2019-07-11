@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D88601F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 05:13:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A88571F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 08:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726290AbfGKFNd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 01:13:33 -0400
-Received: from mail-lf1-f41.google.com ([209.85.167.41]:35254 "EHLO
-        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbfGKFNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 01:13:33 -0400
-Received: by mail-lf1-f41.google.com with SMTP id p197so3138264lfa.2
-        for <git@vger.kernel.org>; Wed, 10 Jul 2019 22:13:31 -0700 (PDT)
+        id S1728170AbfGKIUG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 04:20:06 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:47072 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725963AbfGKIUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 04:20:06 -0400
+Received: by mail-ot1-f67.google.com with SMTP id z23so4955198ote.13
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 01:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AHzw8Uge+5jFM0hzVOHUqLS8Kre/50a5EDomwnuduLg=;
-        b=msiQ4p32cIUl0vNP/3PC6H+/cyiCvf+mE1Lwb7+AJwjzsUFEhXPhY1lLONWgU4hvkT
-         XbaERQcRN/vbyzypFYrcyL1NpFUcIM3f9lX3H/yDNg9LEvAYAxpJakl3W9FSc++NboaL
-         m/Po2VautIoQleCb37J8HK1c5jBkVhuKtiVHddstKrukya2SgXgRjy+HmDIFds//C9NZ
-         Y4qkqUJABcbLn62HSy80YONmudoThRgTraF/oDLzKBpYt3c7rqVk9rg26EZ+JbPwzmH0
-         Hsvzpvbozxo7peUDLrSdT8dgqM07eIJLppoLh1/IJbFKZRXZoHltL0UM07Ng6VrQND27
-         E6pw==
+        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=IV1auwxcdZtAwcxkvhE496emdG7y9WCOfhu9LZcvbE0=;
+        b=UtAme6aKBbNasbFsjoBufXCAsrDNi7sZ3GhdkuHWUDRVFyFw0Rpy/i/GA4+ff05BYO
+         /5sIaZndmfXZWAVV4SaLOdhcVChSFgVam/FkGqJgNhVhnOV9qC9y2qqzBsTOkxYO2iW1
+         FTRVN7LYd2qBIyROUc0nYtd3o2hA2AAUSW9/1GDYd78Nn7E3ARXnGuPFx1VR//S4cE4o
+         dWOv0duBQO3QUMjZo2MdgDBrBglmSlMeY/n7E0lvLBcrDG3pPXATHITtO1rvP4kw7c6e
+         4yE9uHoC+YjfhHteYOjXEbpRLwiMVa8YPcfjttincuazeWWZB++bKpe05aNssPN3xVF8
+         pmKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=AHzw8Uge+5jFM0hzVOHUqLS8Kre/50a5EDomwnuduLg=;
-        b=jVfm6I+JzE/TIkHP+ZY/kbkuxXrrkV7Jwv4NHi6n7QoFJM189GRY5pJlbXCU5ljVu9
-         ZfQAd/SwUMpnMjoXKiY8cw2sKliGcDNi11SUcPle1Jz+y6F45IaMWrAcSB5CvdSuwSja
-         QRuxzeowRsU+geclWgjVqBVCf2dZ7bwS46vC8Z7YNiIOIDjBdBCqi/LBZP43FtO6WCqq
-         FjVJ/o1929Jeyzo/kcWeDk6P5rUycC13bVdnVG+ShpkBzjVbIAviXQYfjAbcfoiLlg5+
-         VBGNpSzuVwcrNyeAdNxi6Oil+VK9Z91LR3J7Xg/rtcYeC4eNA4y7xTZJFF9vRL9TY1IN
-         uhPQ==
-X-Gm-Message-State: APjAAAX4Vlnxw7zIG1M8Lo90aUF2Aai6KHs5B3WfxqEmPoPbMUBkMRuq
-        q14ZewMyNHfpCuTfTiLE/DDlSRCH
-X-Google-Smtp-Source: APXvYqzYceuc10GNpfXdW7wnDVr2p4yhuTW6Vr8k6wXuJXel0Ez8btEai3UTuXiVX9iMVHQdznR7NA==
-X-Received: by 2002:a05:6512:244:: with SMTP id b4mr745147lfo.114.1562822010669;
-        Wed, 10 Jul 2019 22:13:30 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q2sm591043lfj.25.2019.07.10.22.13.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=IV1auwxcdZtAwcxkvhE496emdG7y9WCOfhu9LZcvbE0=;
+        b=Pt5MEcQQlKHANrAOKOrNQcg/RN1NnrfgkngDS7Md/EmgyUb6Ik+Elh9KzRJtvUDfeP
+         F/+hQXtpOMJqXpAVmPIkCS85qzxvbE2fGtwmKoujbTm9atZXmv+S7Lkl2GlgsmI8sSCB
+         cb3vGLPVUG9vQPlKnpkVSE+uXeMGexMbPWICyT+boMGzMbLvuGfKcgazs879sjn+SVqh
+         SeRwYPldhxWMI+ezPbQDB68Hjfw2rGnOO3NZXSfWFk3KguVsBNLaMp6plRzYSIyrbPyR
+         B7v3/vBS6oeH2se2H5dbxrDp3bbJkZCUgSHOVTZUsNqV7bYfFvgzOglOBhtFtm3Qf4if
+         IG1A==
+X-Gm-Message-State: APjAAAWVG/rEudZ/vnSCthR7mEEuhoLWO8Yd3D5MGpw5wJlgZI2WY5hF
+        v3ZOVVYdDTAzPkd1LYLTryPotqfB
+X-Google-Smtp-Source: APXvYqxmCE/ivRTpoJkAcYMYRN1hJ9HugDl4MnbQI65UnyMqqCFG6hi1bsHKNEmNYHFqfXcfTeEK1A==
+X-Received: by 2002:a9d:4d81:: with SMTP id u1mr2233450otk.221.1562833204985;
+        Thu, 11 Jul 2019 01:20:04 -0700 (PDT)
+Received: from nanabozho.attlocal.net ([2600:1700:8660:6160:4095:967b:6f89:2333])
+        by smtp.gmail.com with ESMTPSA id r130sm1877884oib.41.2019.07.11.01.20.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Jul 2019 22:13:30 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Elijah Newren <newren@gmail.com>, usbuser@mailbox.org,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Unexpected or wrong ff, no-ff and ff-only behaviour
-References: <423596682.8516.1562665372094@office.mailbox.org>
-        <xmqqa7dnw9b1.fsf@gitster-ct.c.googlers.com>
-        <1152121968.7459.1562688927235@office.mailbox.org>
-        <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
-        <275487563.12198.1562691633735@office.mailbox.org>
-        <CABPp-BGPLxR7NgXRHppLy_W0c=Odhhns2RjcQ4iWKKQMz+SpDQ@mail.gmail.com>
-        <CAGyf7-FW-_4AbWE735-=7WjZAaTLHOT_QuWOoHKAjOzZCbWhFA@mail.gmail.com>
-        <xmqqtvbtu9uo.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 11 Jul 2019 08:13:28 +0300
-In-Reply-To: <xmqqtvbtu9uo.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 10 Jul 2019 09:34:39 -0700")
-Message-ID: <87sgrdf91j.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Thu, 11 Jul 2019 01:20:04 -0700 (PDT)
+From:   Ariadne Conill <ariadne@dereferenced.org>
+To:     git@vger.kernel.org
+Cc:     Ariadne Conill <ariadne@dereferenced.org>
+Subject: [PATCH] log: use mailmap by default
+Date:   Thu, 11 Jul 2019 03:19:58 -0500
+Message-Id: <20190711081958.2201-1-ariadne@dereferenced.org>
+X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The `git log` command shows the author and committer name recorded in
+the git repository itself, while other commands respect `.mailmap`
+by default.  I believe this is a bad design: it causes log entries to
+reflect inaccurate information: anyone who changes their name or
+e-mail address will not have that change (recorded in mailmap file)
+reflected when using `git log` by default.
 
-[...]
+Anyone who explicitly wants the current behaviour can clearly request
+it by setting the `log.mailmap` setting to `false` in their
+`.gitconfig` file.
 
-> The "the tip being merged into the mainline must always be
-> fast-forwardable",
+Signed-off-by: Ariadne Conill <ariadne@dereferenced.org>
+---
+ builtin/log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It's rather "the tip being merged into the mainline must be fast-forwardable the
-first time it is merged".
+diff --git a/builtin/log.c b/builtin/log.c
+index 7c8767d3bc..3d2ce8fa3d 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -47,7 +47,7 @@ static int default_follow;
+ static int default_show_signature;
+ static int decoration_style;
+ static int decoration_given;
+-static int use_mailmap_config;
++static int use_mailmap_config = 1;
+ static const char *fmt_patch_subject_prefix = "PATCH";
+ static const char *fmt_pretty;
+ 
+-- 
+2.17.1
 
-> however, is not consistent with the topic branch workflow, and I do
-> not mean this in the sense that you should never rebase just before
-> submitting (which is a bad practice). For an initial merge of the
-> topic to the mainline, the project can keep rebasing to the
-> then-current tip of the mainline, and as long as they can afford the
-> cycle to test the result, "record the range of the topic branch by
-> making a redundant merge" would work.
-
-Yes, that's exactly it, and, as the rule holds for the first topic merge
-only, the rest of workflow is as usual, no drastic changes.
-
-Overall, it only ensures the first merge of the topic is semantically
-simpler, nothing more.
-
--- Sergey
