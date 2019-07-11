@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3DFE1F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42A011F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728574AbfGKQJZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 12:09:25 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33045 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728456AbfGKQJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 12:09:24 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n9so6969401wru.0
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 09:09:23 -0700 (PDT)
+        id S1728588AbfGKQJ2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 12:09:28 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44929 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728571AbfGKQJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 12:09:26 -0400
+Received: by mail-wr1-f67.google.com with SMTP id p17so6897432wrf.11
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 09:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=udrGBbeDOfJexYXQeYvgplKe+0XhIyUM+81mT/hCb/k=;
-        b=Y8klEKFTFbZBRYbtzAlJHZ/sVhwAqTHhGRK54uqH13UtcdEotjITefPxxQJJsPEy/Y
-         3L3VfHSakxmyUs2aND3raGAl3xflql3dQiKzf+92zfsyKUZVesIFGvGPz+WEYC/gZiSd
-         S+wMUiv3k2WxWgy1aZjEKw8zIkSpLabltA0Es+PQc1+GO1fsjq0pfWArusFtTK3B+4y+
-         xQCAw0pflkOTHALh5vD2cUwQHJwZnkVCPWunGj9LQr1jawm2agRArO+glVQEVvH4cpYG
-         7ahEOm0Y9B9c4u7x0NfTg+T/PCpe/VcZKDQWFy4XPRovXwK5mnv42wcsqcIZ126dicZg
-         1D+w==
+        bh=zoIqHKw3zDEACzwLd448WaYWaae1CraA0g3v4j0IPiY=;
+        b=bFTvw/dyhkdir0Kn5YN0POj5ELryPqAVxqYzL+mcv4uw9wOvTrwRcCMm8WYigRedn6
+         ywT/gXhMuSJ4KQSDB8nfXV2LjCVJdot4hPOpAkZpAgu+nrgkkkcU8bpM3pWxdCZifVjs
+         FTRPH6A5DuwaRY1cZUZZVKan99Mi2hwfb6Gi3ZEyYlf+BlE73DtiVHKd72KvpQQFsOn+
+         +yd3MzSlzh2s4sosDVZtGLwZW3BbTq+XIDpUgo9qU05eU7r/VYqd3UAcTfqAOm8f7JcS
+         t4qiMl2YBBPt/muIuxdPke7e0Pf+l6ni9J2wQahPdlvQdnfnJTScd6BEwRpyFjsAv6/a
+         c+eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=udrGBbeDOfJexYXQeYvgplKe+0XhIyUM+81mT/hCb/k=;
-        b=XVK14y51GEXSBd4Xa50CAmE4UdKkdO9Ie2CUyWw11H1xNmyW0krDr9Aoqu/p9qfWax
-         EA7ar1byjgaPRwpn027SspNx/YXadrusHNPmwAqgbe62qX9h9hR2ilek7V+NdKOWFDGV
-         RAMhxemypiuKVukgHa+X+ZM2E+ddYFsS9d7DRZIoINetiwWCiLSXle5HLwuC9j103zKe
-         fYMB6agYLqHv7VjVHjq5l7t1GFYffb3FZsm6kJ4V0kFlvFH58xOakcmXwjJ/1E+4NbnO
-         W7ulHoCyP4lz+5zDXL8kux028M3EOteS2y6NKxHxRrXZxkP8wmb6dhrub8ZPDQYStBNQ
-         GqUQ==
-X-Gm-Message-State: APjAAAVLf4TWDRl/QdR12+WHIAmtFvMaEMWHzZ6ZOHFcZ7VWKHrDJlQ6
-        QBJg7hKYE6gk+XJru1Ji0GiqdTsSZ2Q=
-X-Google-Smtp-Source: APXvYqz4CWXjsjIDsqH2on43ukpjuhR3mHHqKTXe0gCjwbg2iuEninimLC5Us4SahvGbSAjo8byydg==
-X-Received: by 2002:a05:6000:14b:: with SMTP id r11mr6040583wrx.196.1562861362299;
-        Thu, 11 Jul 2019 09:09:22 -0700 (PDT)
+        bh=zoIqHKw3zDEACzwLd448WaYWaae1CraA0g3v4j0IPiY=;
+        b=MmgX2zXwCK58NrWHGhwMPWdyhEQdB1D+608o0+8j32DntGuKMoPDJMkqoMmPW9PuqE
+         uj6nK7H+wHNjjCFuayOxLPQUpdf8driRmXKQTIbcRfhnXFEDpKAG8T2Gqb3Z/bVicRAm
+         jeUG3mffRjjzOqDajtJXqAB13FC1SzQ+/7qEttdAhaY4j5xw2d5ZtATWU2/MMXhubslK
+         ZfTBqhGE+a9AVDLTQLfe3gFwjeXiKEv2kMBa9R65vVFT8EF2ytxgzE9Bo9d1cbW64trl
+         WyenzYgIEfnJIcmbnAHXSeaNsxPkLBiYYIJMbQmEdjBjpQhHTsIBokOPV6DDpUPm2lCS
+         CZ1Q==
+X-Gm-Message-State: APjAAAWPDcwLUUKGRM9da6Asj1mSyJZ4HkgshknqgfllLAVl2yShrcOW
+        LsDXxGaq0HsxRmVYEybmAZkIrIaNjo4=
+X-Google-Smtp-Source: APXvYqzX5nGvQCPNQB1aECIsBp+QGMv2Ol9ubtu6bXW/Ww+2ONxsA6K0xg/3e22X5Vbf1M6q8KsVhQ==
+X-Received: by 2002:adf:afe7:: with SMTP id y39mr5878274wrd.350.1562861364191;
+        Thu, 11 Jul 2019 09:09:24 -0700 (PDT)
 Received: from localhost (host232-157-dynamic.24-79-r.retail.telecomitalia.it. [79.24.157.232])
-        by smtp.gmail.com with ESMTPSA id y12sm3549237wrm.79.2019.07.11.09.09.20
+        by smtp.gmail.com with ESMTPSA id u6sm7805911wml.9.2019.07.11.09.09.23
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 09:09:21 -0700 (PDT)
+        Thu, 11 Jul 2019 09:09:23 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 13/14] range-diff: add filename to inner diff
-Date:   Thu, 11 Jul 2019 17:08:50 +0100
-Message-Id: <20190711160851.14380-14-t.gummerer@gmail.com>
+Subject: [PATCH v4 14/14] range-diff: add headers to the outer hunk header
+Date:   Thu, 11 Jul 2019 17:08:51 +0100
+Message-Id: <20190711160851.14380-15-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190711160851.14380-1-t.gummerer@gmail.com>
 References: <20190708163315.29912-1-t.gummerer@gmail.com>
@@ -72,138 +72,215 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a range-diff it's not always clear which file a certain funcname of
-the inner diff belongs to, because the diff header (or section header
-as added in a previous commit) is not always visible in the
-range-diff.
+Add the section headers/hunk headers we introduced in the previous
+commits to the outer diff's hunk headers.  This makes it easier to
+understand which change we are actually looking at.  For example an
+outer hunk header might now look like:
 
-Add the filename to the inner diffs header, so it's always visible to
-users.
+    @@  Documentation/config/interactive.txt
 
-This also allows us to add the filename + the funcname to the outer
-diffs hunk headers using a custom userdiff pattern, which will be done
-in the next commit.
+while previously it would have only been
+
+    @@
+
+which doesn't give a lot of context for the change that follows.
+
+For completeness also add section headers for the commit metadata and
+the commit message, although they are arguably less important.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- range-diff.c          | 15 +++++++++++++--
- t/t3206-range-diff.sh | 16 ++++++++++------
- 2 files changed, 23 insertions(+), 8 deletions(-)
+ range-diff.c          |  9 ++++++---
+ t/t3206-range-diff.sh | 41 ++++++++++++++++++++++-------------------
+ 2 files changed, 28 insertions(+), 22 deletions(-)
 
 diff --git a/range-diff.c b/range-diff.c
-index 5f64380fe4..7a96a587f1 100644
+index 7a96a587f1..ba1e9a4265 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -46,7 +46,7 @@ static int read_patches(const char *range, struct string_list *list)
- 	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
- 	struct patch_util *util = NULL;
- 	int in_header = 1;
--	char *line;
-+	char *line, *current_filename = NULL;
- 	int offset, len;
- 	size_t size;
+@@ -139,8 +139,10 @@ static int read_patches(const char *range, struct string_list *list)
+ 			strbuf_addstr(&buf, " ##");
+ 		} else if (in_header) {
+ 			if (starts_with(line, "Author: ")) {
++				strbuf_addstr(&buf, " ## Metadata ##\n");
+ 				strbuf_addstr(&buf, line);
+ 				strbuf_addstr(&buf, "\n\n");
++				strbuf_addstr(&buf, " ## Commit message ##\n");
+ 			} else if (starts_with(line, "    ")) {
+ 				p = line + len - 2;
+ 				while (isspace(*p) && p >= line)
+@@ -402,8 +404,9 @@ static void output_pair_header(struct diff_options *diffopt,
+ 	fwrite(buf->buf, buf->len, 1, diffopt->file);
+ }
  
-@@ -125,6 +125,12 @@ static int read_patches(const char *range, struct string_list *list)
- 			else
- 				strbuf_addstr(&buf, patch.new_name);
+-static struct userdiff_driver no_func_name = {
+-	.funcname = { "$^", 0 }
++static struct userdiff_driver section_headers = {
++	.funcname = { "^ ## (.*) ##$\n"
++		      "^.?@@ (.*)$", REG_EXTENDED }
+ };
  
-+			free(current_filename);
-+			if (patch.is_delete > 0)
-+				current_filename = xstrdup(patch.old_name);
-+			else
-+				current_filename = xstrdup(patch.new_name);
-+
- 			if (patch.new_mode && patch.old_mode &&
- 			    patch.old_mode != patch.new_mode)
- 				strbuf_addf(&buf, " (mode change %06o => %06o)",
-@@ -145,7 +151,11 @@ static int read_patches(const char *range, struct string_list *list)
- 			continue;
- 		} else if (skip_prefix(line, "@@ ", &p)) {
- 			p = strstr(p, "@@");
--			strbuf_addstr(&buf, p ? p : "@@");
-+			strbuf_addstr(&buf, "@@");
-+			if (current_filename && p[2])
-+				strbuf_addf(&buf, " %s:", current_filename);
-+			if (p)
-+				strbuf_addstr(&buf, p + 2);
- 		} else if (!line[0])
- 			/*
- 			 * A completely blank (not ' \n', which is context)
-@@ -177,6 +187,7 @@ static int read_patches(const char *range, struct string_list *list)
- 	if (util)
- 		string_list_append(list, buf.buf)->util = util;
- 	strbuf_release(&buf);
-+	free(current_filename);
+ static struct diff_filespec *get_filespec(const char *name, const char *p)
+@@ -415,7 +418,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
+ 	spec->size = strlen(p);
+ 	spec->should_munmap = 0;
+ 	spec->is_stdin = 1;
+-	spec->driver = &no_func_name;
++	spec->driver = &section_headers;
  
- 	if (finish_command(&cp))
- 		return -1;
+ 	return spec;
+ }
 diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index c277756057..d4de270979 100755
+index d4de270979..ec548654ce 100755
 --- a/t/t3206-range-diff.sh
 +++ b/t/t3206-range-diff.sh
-@@ -110,7 +110,7 @@ test_expect_success 'changed commit' '
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
- 	    @@
--	     @@ A
-+	     @@ file: A
+@@ -99,7 +99,7 @@ test_expect_success 'changed commit' '
+ 	1:  4de457d = 1:  a4b3333 s/5/A/
+ 	2:  fccce22 = 2:  f51d370 s/4/A/
+ 	3:  147e64e ! 3:  0559556 s/11/B/
+-	    @@
++	    @@ file: A
  	      9
  	      10
- 	    - B
-@@ -169,7 +169,7 @@ test_expect_success 'changed commit with sm config' '
+ 	     -11
+@@ -109,7 +109,7 @@ test_expect_success 'changed commit' '
+ 	      13
  	      14
  	4:  a63e992 ! 4:  d966c5c s/12/B/
- 	    @@
--	     @@ A
-+	     @@ file: A
+-	    @@
++	    @@ file
+ 	     @@ file: A
  	      9
  	      10
- 	    - B
-@@ -203,20 +203,24 @@ test_expect_success 'renamed file' '
+@@ -158,7 +158,7 @@ test_expect_success 'changed commit with sm config' '
+ 	1:  4de457d = 1:  a4b3333 s/5/A/
+ 	2:  fccce22 = 2:  f51d370 s/4/A/
+ 	3:  147e64e ! 3:  0559556 s/11/B/
+-	    @@
++	    @@ file: A
+ 	      9
+ 	      10
+ 	     -11
+@@ -168,7 +168,7 @@ test_expect_success 'changed commit with sm config' '
+ 	      13
+ 	      14
+ 	4:  a63e992 ! 4:  d966c5c s/12/B/
+-	    @@
++	    @@ file
+ 	     @@ file: A
+ 	      9
+ 	      10
+@@ -186,9 +186,10 @@ test_expect_success 'renamed file' '
+ 	sed s/Z/\ /g >expected <<-EOF &&
+ 	1:  4de457d = 1:  f258d75 s/5/A/
+ 	2:  fccce22 ! 2:  017b62d s/4/A/
+-	    @@
++	    @@ Metadata
+ 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
+ 	    Z
++	    Z ## Commit message ##
+ 	    -    s/4/A/
+ 	    +    s/4/A/ + rename file
+ 	    Z
+@@ -198,8 +199,8 @@ test_expect_success 'renamed file' '
+ 	    Z 1
+ 	    Z 2
+ 	3:  147e64e ! 3:  3ce7af6 s/11/B/
+-	    @@
+-	    Z
++	    @@ Metadata
++	    Z ## Commit message ##
  	    Z    s/11/B/
  	    Z
  	    - ## file ##
-+	    -@@ file: A
- 	    + ## renamed-file ##
--	    Z@@ A
-+	    +@@ renamed-file: A
- 	    Z 8
+@@ -210,8 +211,8 @@ test_expect_success 'renamed file' '
  	    Z 9
-+	    Z 10
+ 	    Z 10
  	4:  a63e992 ! 4:  1e6226b s/12/B/
- 	    @@
- 	    Z
+-	    @@
+-	    Z
++	    @@ Metadata
++	    Z ## Commit message ##
  	    Z    s/12/B/
  	    Z
  	    - ## file ##
-+	    -@@ file: A
- 	    + ## renamed-file ##
--	    Z@@ A
-+	    +@@ renamed-file: A
- 	    Z 9
- 	    Z 10
-+	    Z B
- 	EOF
- 	test_cmp expected actual
- '
-@@ -248,7 +252,7 @@ test_expect_success 'file added and later removed' '
+@@ -230,30 +231,32 @@ test_expect_success 'file added and later removed' '
+ 	sed s/Z/\ /g >expected <<-EOF &&
+ 	1:  4de457d = 1:  096b1ba s/5/A/
+ 	2:  fccce22 ! 2:  d92e698 s/4/A/
+-	    @@
++	    @@ Metadata
+ 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
+ 	    Z
++	    Z ## Commit message ##
+ 	    -    s/4/A/
+ 	    +    s/4/A/ + new-file
+ 	    Z
+ 	    Z ## file ##
+ 	    Z@@
+-	    @@
++	    @@ file
+ 	    Z A
+ 	    Z 6
+ 	    Z 7
+ 	    +
+ 	    + ## new-file (new) ##
+ 	3:  147e64e ! 3:  9a1db4d s/11/B/
+-	    @@
++	    @@ Metadata
+ 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
+ 	    Z
++	    Z ## Commit message ##
+ 	    -    s/11/B/
  	    +    s/11/B/ + remove file
  	    Z
  	    Z ## file ##
--	    Z@@ A
-+	    Z@@ file: A
- 	    @@
+ 	    Z@@ file: A
+-	    @@
++	    @@ file: A
  	    Z 12
  	    Z 13
-@@ -310,7 +314,7 @@ test_expect_success 'dual-coloring' '
- 	:      14<RESET>
- 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
- 	:    <REVERSE><CYAN>@@<RESET>
--	:    <CYAN> @@ A<RESET>
-+	:    <CYAN> @@ file: A<RESET>
+ 	    Z 14
+@@ -274,8 +277,8 @@ test_expect_success 'changed message' '
+ 	sed s/Z/\ /g >expected <<-EOF &&
+ 	1:  4de457d = 1:  f686024 s/5/A/
+ 	2:  fccce22 ! 2:  4ab067d s/4/A/
+-	    @@
+-	    Z
++	    @@ Metadata
++	    Z ## Commit message ##
+ 	    Z    s/4/A/
+ 	    Z
+ 	    +    Also a silly comment here!
+@@ -293,8 +296,8 @@ test_expect_success 'dual-coloring' '
+ 	sed -e "s|^:||" >expect <<-\EOF &&
+ 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
+ 	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
+-	:    <REVERSE><CYAN>@@<RESET>
+-	:     <RESET>
++	:    <REVERSE><CYAN>@@<RESET> <RESET>Metadata<RESET>
++	:      ## Commit message ##<RESET>
+ 	:         s/4/A/<RESET>
+ 	:     <RESET>
+ 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
+@@ -303,7 +306,7 @@ test_expect_success 'dual-coloring' '
+ 	:    <CYAN> @@<RESET>
+ 	:      1<RESET>
+ 	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
+-	:    <REVERSE><CYAN>@@<RESET>
++	:    <REVERSE><CYAN>@@<RESET> <RESET>file: A<RESET>
  	:      9<RESET>
  	:      10<RESET>
- 	:    <REVERSE><RED>-<RESET><FAINT> BB<RESET>
+ 	:    <RED> -11<RESET>
+@@ -313,7 +316,7 @@ test_expect_success 'dual-coloring' '
+ 	:      13<RESET>
+ 	:      14<RESET>
+ 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
+-	:    <REVERSE><CYAN>@@<RESET>
++	:    <REVERSE><CYAN>@@<RESET> <RESET>file<RESET>
+ 	:    <CYAN> @@ file: A<RESET>
+ 	:      9<RESET>
+ 	:      10<RESET>
 -- 
 2.22.0.510.g264f2c817a
 
