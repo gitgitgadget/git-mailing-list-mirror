@@ -2,182 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E92FC1F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 12:25:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B183F1F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 13:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728576AbfGKMZ2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 08:25:28 -0400
-Received: from mx1.mailbox.org ([80.241.60.212]:14020 "EHLO mx1.mailbox.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725971AbfGKMZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 08:25:28 -0400
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [80.241.60.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728445AbfGKNCU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 09:02:20 -0400
+Received: from gate3.osm-gmbh.de ([194.77.68.107]:59773 "EHLO
+        gate3.osm-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728180AbfGKNCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 09:02:20 -0400
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Jul 2019 09:02:19 EDT
+Received: from mail.osm-gmbh.de (vmmail.osm-gmbh.de [193.101.76.128])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mx1.mailbox.org (Postfix) with ESMTPS id C58F454363;
-        Thu, 11 Jul 2019 14:25:24 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp2.mailbox.org ([80.241.60.241])
-        by spamfilter02.heinlein-hosting.de (spamfilter02.heinlein-hosting.de [80.241.56.116]) (amavisd-new, port 10030)
-        with ESMTP id TSClNAe-vzUm; Thu, 11 Jul 2019 14:25:00 +0200 (CEST)
-Date:   Thu, 11 Jul 2019 14:24:52 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     paulus@samba.org, max@max630.net, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] gitk: fix --all behavior combined with --not
-Message-ID: <20190711122452.GC65621@book.hvoigt.net>
-References: <20190704080907.GA45656@book.hvoigt.net>
- <xmqq4l3wz6y8.fsf@gitster-ct.c.googlers.com>
- <xmqqr26zx0wr.fsf@gitster-ct.c.googlers.com>
- <xmqqk1crwzwd.fsf@gitster-ct.c.googlers.com>
- <20190710075835.GB65621@book.hvoigt.net>
- <xmqqa7dlu40d.fsf@gitster-ct.c.googlers.com>
+        by gate3.osm-gmbh.de (Postfix) with ESMTPS id A2F103C0E1
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 14:55:45 +0200 (CEST)
+Received: from pcmn.osm-gmbh.de (pcmn.osm-gmbh.de [193.101.76.39])
+        by mail.osm-gmbh.de (OSM Mailserver) with ESMTP id A57A03DC01F
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 14:55:45 +0200 (CEST)
+Date:   Thu, 11 Jul 2019 14:55:43 +0200 (CEST)
+From:   Martin Nicolay <m.nicolay@osm-ag.de>
+Reply-To: Martin Nicolay <m.nicolay@osm-ag.de>
+To:     git@vger.kernel.org
+Subject: Bug with deleted files and stash-push --keep-idex
+Message-ID: <alpine.LSU.2.20.1907111452560.3570@cpza.bfz-tzou.qr>
+User-Agent: Alpine 2.20 (LSU 67 2015-01-07)
+X-Virus-Scanned: by "The Virus" itself
+X-Mailer: Pine 4.63
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa7dlu40d.fsf@gitster-ct.c.googlers.com>
+Content-Type: multipart/mixed; BOUNDARY="1707157324-927516998-1562849745=:3570"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 10, 2019 at 11:40:50AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > behavior. How about '--all-include-head'. Then e.g.
-> >
-> >     git rev-parse --all-include-head --all --not origin/master
-> >
-> > would include the head ref like you proposed below?
-> >
-> > What do you think? Or would you rather go the route of changing
-> > rev-parse behavior?
-> 
-> Depends on what you mean by the above.  Do you mean that now the end
-> user needs to say
-> 
-> 	gitk --all-include-head --not origin/master
-> 
-> to get a rough equivalent of
-> 
-> 	git log --graph --oneline --all --not origin/master
-> 
-> due to the discrepancy between how "rev-parse" and "rev-list" treat
-> their "--all" option?  Or do you mean that the end user still says
-> "--all", and after (reliably by some means) making sure that "--all"
-> given by the end-user is a request for "all refs and HEAD", we turn
-> that into the above internal rev-parse call?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Sorry for being not specific enough. I would be aiming for the latter
-and gitk would prepend --all-include-head to its rev-parse call. To have some
-code to talk about something like this (based on your pointer and also not
-compile tested):
+--1707157324-927516998-1562849745=:3570
+Content-Type: text/plain; format=flowed; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index f8bbe6d47e..03928ee566 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -585,6 +585,7 @@ static void handle_ref_opt(const char *pattern, const char *prefix)
- int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- {
-        int i, as_is = 0, verify = 0, quiet = 0, revs_count = 0, type = 0;
-+       int all_include_head = 0;
-        int did_repo_setup = 0;
-        int has_dashdash = 0;
-        int output_prefix = 0;
-@@ -764,8 +765,14 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
-                                }
-                                continue;
-                        }
-+                       if (!strcmp(arg, "--all-include-head")) {
-+                               all_include_head = 1;
-+                               continue;
-+                       }
-                        if (!strcmp(arg, "--all")) {
-                                for_each_ref(show_reference, NULL);
-+                               if (all_include_head)
-+                                       head_ref(show_reference, NULL);
-                                clear_ref_exclusion(&ref_excludes);
-                                continue;
-                        }
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a14d7a16b2..ddd1de5377 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -294,8 +294,8 @@ proc parseviewrevs {view revs} {
- 
-     if {$revs eq {}} {
-        set revs HEAD
--    } elseif {[lsearch -exact $revs --all] >= 0} {
--       lappend revs HEAD
-+    } else {
-+       linsert revs 0 --all-include-head
-     }
-     if {[catch {set ids [eval exec git rev-parse $revs]} err]} {
-        # we get stdout followed by stderr in $err
+Hi!
 
-> If the former, then quite honestly, we shouldn't doing anything,
-> perhaps other than reverting 4d5e1b1319.  The users can type
-> 
-> 	$ gitk --all HEAD --not origin/master
-> 	$ gitk $commit --not --all HEAD
-> 
-> themselves, instead of --all-include-head.
+I don't know if this is a software or documentation bug.
 
-Yes the former would not make anything better.
+man git-stash says about --keep-index:
+     If the --keep-index option is used, all changes already added to
+     the index are left intact.
 
-> If the latter, I am not sure what the endgame should be.  
+If a file is deleted and this deletion is in the index a following
+     $ git stash push --keep-index
+keeps this deletion in the index but not in the working-tree.
 
-Please see the diff above.
+If a file is changed and this change is in the index a following
+     $ git stash push --keep-index
+keeps this change in the index and also in the working-tree.
 
-> It certainly *is* safer not to unconditionallyl and unilaterally
-> change the behaviour of "rev-parse --all", so I am all for starting
-> with small and fully backward compatible change, but wouldn't
-> scripts other than gitk want the same behaviour?  
+This is inconsistent.
 
-Yes probably, but in my experience, if some behavior is around for a long time,
-someone will rely on it and rev-parse seems like a candidate that might get
-used in scripts for CIs or similar. E.g. in a bare repo someone might
-explicitely want to omit HEAD.
+------------- deletion -------------
+$ git status
+On branch master
+Changes to be committed:
+   (use "git reset HEAD <file>..." to unstage)
 
-> To put it the other way around, what use case would we have that we
-> want to enumerate all refs but not HEAD, *and* exclude HEAD only
-> when HEAD is detached?  I can see the use of "what are commits
-> reachable from the current HEAD but not reachable from any of the
-> refs/*?" and that would be useful whether HEAD is detached or is on
-> a concrete branch, so "rev-parse --all" that does not include
-> detached HEAD alone does not feel so useful at least to me.
+         deleted:    test-file
 
-What about my example. My use case is: Show me everything that is not merged
-into a stable branch (i.e. origin/master). For a human viewer it does not
-really matter if an extra detachted HEAD is shown, but for a CI script it
-might. Ok this might be quite artificial, what do you think?
+$ git stash push --keep-index
+Saved working directory and index state WIP on master: a3171f887b new test-file
+$ git status
+On branch master
+Changes to be committed:
+   (use "git reset HEAD <file>..." to unstage)
 
-> I am reasonably sure that back when "rev-parse --all" was invented,
-> the use of detached HEAD was not all that prevalent (I would not be
-> surprised if it hadn't been invented yet), so it being documented to
-> enumerate all refs does not necessarily contradict to include HEAD
-> if it is different from any of the ref tips (i.e. detached).
+         deleted:    test-file
 
-I just dug up the old discussion to this to find some reasoning why this was
-not changed. So you have changed your mind about this? [1]
+Untracked files:
+   (use "git add <file>..." to include in what will be committed)
 
-> And if we cannot commit to changing the "rev-parse --all" (and I am
-> not sure I can at this point---I am wary of changes), as we know
-> where "--all" appeared on the command line, inserting HEAD immediately
-> after it at the script level is probably the change with the least
-> potential damage we can make, without changing anything else.
+         test-file
 
-Well this should be better than the current solution. But there is still your
-point about not taking -- into account. So how about my backwards compatible
-suggestion above, what do you think?
+------------- change -------------
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
 
-Cheers Heiko
+Changes to be committed:
+   (use "git reset HEAD <file>..." to unstage)
 
-[1] https://public-inbox.org/git/xmqqsika2c2i.fsf@gitster.dls.corp.google.com/
+         modified:   test-file
+
+$ git stash push --keep-index
+Saved working directory and index state WIP on master: a3171f887b new test-file
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+   (use "git reset HEAD <file>..." to unstage)
+
+         modified:   test-file
+
+--------------------------
+
+My expectation was that the deletion would be preserved within the
+working-tree because this is a change added to the index and should be
+left intact.
+
+Best regards
+Martin Nicolay
+
+-- 
+
+No MS-Word attachments (http://www.gnu.org/philosophy/no-word-attachments.html)
+_______________________________________________________________________________
+OSM AG | Ruhrallee 191 | 45136 Essen | Fon: 0201-89 555 | Fax: 0201-89 55 400
+web: www.osm-ag.de | e-mail: info@osm-ag.de
+IBAN: DE67 4325 0030 0001 0059 82 | BIC: WELADED1HRN
+USt-ldNr.: DE163337313 | HRB: 28171 Essen
+Aufsichtsratsvorsitzende: Dipl.-Kff. Sabine Elsas
+Vorstand: Johannes Kuhn (Vorsitzender), Christian Damsky, Axel Roland
+
+--
+Diese E-Mail enthält vertrauliche und/oder rechtlich geschützte Informationen.
+Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrtümlich erhalten
+haben, informieren Sie bitte sofort den Absender und vernichten Sie diese Mail.
+Das unerlaubte Kopieren sowie die unbefugte Weitergabe dieser Mail ist nicht
+gestattet.
+_______________________________________________________________________________
+--1707157324-927516998-1562849745=:3570--
