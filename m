@@ -2,108 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4616B1F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 08:23:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 609121F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 09:46:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728325AbfGKIXo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 04:23:44 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:38805 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728177AbfGKIXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 04:23:43 -0400
-Received: by mail-wr1-f53.google.com with SMTP id g17so5248174wrr.5
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 01:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=RzoiV1siSLUuFR/GiKjsWcjfiQe42SAneMxFQ8a+aZU=;
-        b=DWqTfqJI/aEruE9mDplXqHYWuYmo0okzn8wcRGfs1BVE5lxvgPog7Z/kxQ/3b9+Htd
-         xJzLcOyO94mkoaiRKad25hAnGpz/9PeBDTBPrLo6W48UVEK6tTKtbIohKZ735ixFBwnx
-         KpVSErCdg3PCEorKV1/hvkmCH6rJ4+qT790AsEvIW2xvcS9M9iwR2GTAnF/Kd8e4MARg
-         bwxGIA+DHDIJxniRNMwu0AP3tkJmSoaDN9T9V9hONv+DDU51LxMeE+rNRutwpZk56bIl
-         qWklnSNK1v0ilLlOop0ZSgPUoKOO12VHRhZSHcNQK7EKrTeYD6VIq4cpnYkGEj8INDnS
-         MPYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RzoiV1siSLUuFR/GiKjsWcjfiQe42SAneMxFQ8a+aZU=;
-        b=JwRn0853fsq8CpP9caqTNtolWLv1Goiur1V+su5E/RK+GxBOjTPgXEKW49La4TlZ5r
-         FZoLNBEWU4/JUSC2AOkNn/8Q+XAlThLc/9Crn8qF1AnKWz0m62qMbryxcoQFRUCyl2bx
-         eI4sO+y7+NSzMuNH1grwN47Ua9S8pIiLMlspXy4uPdnx5WRoPuFCe0flLG4CHMSLtaYj
-         jbj4AQcrY9/K0fMq35KmC86VWv2X6IHilZYqj66xjY8XHgyIc6NTPFrzW2+tb/YBU5D0
-         p75yXdGwfbRvoyp7C10aaBNlo2PhD5KZc3ZG6Vi4DB+PK88K999ABi5SRPklWO971sCW
-         K9WQ==
-X-Gm-Message-State: APjAAAU2NW4XHu+tquy+Ms6Av4YZmPn+wQGpF4QjtskceG1s6nViVoa7
-        VVKTQcmlp0+Md2w733SIuIcNjJ6I
-X-Google-Smtp-Source: APXvYqzsM4SCgphVRf+g476Ds2iv6OoAP1oh4afVNlFhhcJeuFgN9cMYFNbvaHhFnYIiCYbcuiDq2Q==
-X-Received: by 2002:adf:e483:: with SMTP id i3mr3430703wrm.210.1562833421823;
-        Thu, 11 Jul 2019 01:23:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e3sm4313383wrt.93.2019.07.11.01.23.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Jul 2019 01:23:41 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 01:23:41 -0700 (PDT)
-X-Google-Original-Date: Thu, 11 Jul 2019 08:23:39 GMT
-Message-Id: <8a0213291b2afc8db9243808319dc86b736122c8.1562833419.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.213.v2.git.gitgitgadget@gmail.com>
-References: <pull.213.git.gitgitgadget@gmail.com>
-        <pull.213.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] diff: munmap() file contents before running external
- diff
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728324AbfGKJqw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 05:46:52 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53831 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726088AbfGKJqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 05:46:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1562838403;
+        bh=P1mNW8OEaxo/szrDFWulxpmnui7X/u/2s9OMfmqJ0/E=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=kj05MtFDb3cUnv1WxiemgsBOucq5wFf8I4RI5BA/ySggPIKCRKCLSeIzlaAJWJLni
+         vyqgPAbuQAw08MQ2/B3xF4bIOFfeiqaN/4NWf6AVSGciOFMu3UJvIT8H3UZv2woSCx
+         1Mu87Oy1wpjpwo4jxi6rZOLPM8LP/jPKWYKREfnE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgeFd-1iF7GJ3oSz-00nurL; Thu, 11
+ Jul 2019 11:46:43 +0200
+Date:   Thu, 11 Jul 2019 11:46:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Mark Florian <mflorian@gitlab.com>, git@vger.kernel.org
+Subject: Re: `@` alias for `HEAD` not working in `git push -u origin @`
+In-Reply-To: <20190710233937.GG9224@genre.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1907111141380.46@tvgsbejvaqbjf.bet>
+References: <CANC=f2c8eynWJ1r=zwZq1qwrDE85LVFMU2mjLU26HYMDGaD4iA@mail.gmail.com> <20190710233937.GG9224@genre.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:A1FffStv8mOYDn4ONUcOvH0wedwvUCjm8xyx9PZbnUmIfKPlYQF
+ e0K8rOMkAJ+9QbbTwtjgWcJf7bDJn5eEJo0grF4XbSXQ3LfcF9J+0E3muhq0Bct+f+aKQaX
+ xswufdNAiX0FMK5x2bdVRlMwWLMYEYyttRmm2f2N5PrDcxK6i5gfgRk2tZ4WIe4xN9BM4iT
+ O/SbnJArrbpVvrXqGODtg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mBRKkM/N2jw=:YeOTuv5DQ2Qxk8CA2oTKn8
+ /f22kVDhYuc7lqV6PB4FbODp+rmWwtkuN+l9Hl85DcEZwhK+/kNvzg3mWeeGtz9EhZhw3sdkH
+ 13ICMToAhgChJqhiIXXkDk3/E1bTDlveYHC6GyDmQnOnezZbH3v65+ZXRcDPLSZdu23hAxlca
+ kDDqP5uN2IEa/P1dvje03XaFdXmsxbWEWjAi8WXffiQKTKcGJf9jt+ya6stGT3T8LGWphJNYX
+ Y9DuIliF7mhdOQRtT+HPFhY93gUxhtWXiy8DmAQKa3OLuUVyKGA1MbabDtS8yjvLQqQuiMSWn
+ zAx5p8e6xjvJT2w8R6M7ILlqYxMEB3UCFHofcTxo67oEqDC7aWL/yzn/tnEHNLDX6WhRjZcty
+ EP9jmHBO2+aLU+e9PCbrltLmwaDxJ95fqbxkWl0k4+BHWnuydmiP2BtUxbcdDKJ3KERtmBM4I
+ eq7mpqcwk+y/68BZDfZF7diTih2NZadyHglZCdxRpzH3IfVH10kY1DXsmjCyDyGPCcSGr3Y33
+ 4Md96jyAiMz7lJeNnJES05yzT3+fwnW8C/XSpUxRAh73aa7mXHxnZg0RuZI6hU6H5D2RUWT8d
+ 2QeeplEjEgdV7V5kqJ2oe3koAc9ggr6DPXjHBrsj8xJMTYXuctuNpsVJg94MJMZwBTXKKCoz+
+ p32UNB3utjkrpw7SL13XLmRIbMkUUI3ArYxr65F0ZbOfY7+Nx7g4PQoYmPNcerBGSkjkHbEAq
+ DUK/OHcUAVTz1IWO9Y7efCpFkXM4dRECxIrZn93SjS2qP2xUsW6VATMYWFCek2uiYhL2pm8mF
+ nmRKLpT+lAMoH1BjY99pVZ2dDiUsWioqqqJURNttjktYojk6Q1vHybzHHwFxfLBcDyCOB+WlL
+ cRv4rcmHrNs4xgJ8UBJz0UCoAruZE/CvBKJB2u2wPmPoHk2fEYLNZxpb8nP/Oi/sIfh8+YJp2
+ sJmrzzl2FL9I6ZNhuo0ACpCUb+YUykpbVN0BZu9ko+bHUluGJ6GghASM6EeWT1Bal81X0CwqH
+ IDBzJkQ16v+jBUlZu3nDD3ll7+61l8Wp2SC/ws1eZDJsWbu3kgeoH/xfFYRL+xeyLcMGqAfyd
+ mUTmD3m1xKrePpnsCgMFk9X/G3FHbls3Yxw
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi brian,
 
-When running an external diff from, say, a diff tool, it is safe to
-assume that we want to write the files in question. On Windows, that
-means that there cannot be any other process holding an open handle to
-said files, or even just a mapped region.
+On Wed, 10 Jul 2019, brian m. carlson wrote:
 
-So let's make sure that `git diff` itself is not holding any open handle
-to the files in question.
+> On 2019-07-10 at 05:06:08, Mark Florian wrote:
+> >
+> > I learned today that `@` is a shortcut for `HEAD`. From `git help reiv=
+isions`:
+> >
+> >     @ alone is a shortcut for HEAD.
+> >
+> > However, when I tried to use it in a command I frequently use, I got a=
+n error:
+> >
+> >     $ git push -u origin @
+> >     fatal: invalid refspec '@'
+> >
+> > I'm running git version 2.22.0 on Linux.
+> >
+> > Is this a bug, or have I misunderstood how this is supposed to work?
+>
+> This is a bug. If the destination side of a refspec is omitted, and the
+> source side resolves to a ref starting with "refs/heads/" or
+> "refs/tags/" (which I expect it does here), then that ref is used as the
+> destination.
+>
+> I submitted a patch at [0], but it was decided not to pick it up. If
+> Junio and the list decide that it's wanted, I'm happy to resend or
+> revise and resend.
+>
+> [0] https://public-inbox.org/git/20180729192803.1047050-1-sandals@crusty=
+toothpaste.net/
 
-In fact, we will just release the file pair right away, as the external
-diff uses the files we just wrote, so we do not need to hold the file
-contents in memory anymore.
+After reading that thread, I come to the conclusion that it was not so
+much a decision not to pick it up, but more like a falling between the
+cracks.
 
-This fixes https://github.com/git-for-windows/git/issues/1315
+I would be in favor of this patch.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff.c | 2 ++
- 1 file changed, 2 insertions(+)
+Since I have your attention and since I am interested in a related issue
+(when I wanted to propose a GSoC mini project to let `git fetch <remote>
+@` expand the `@` to the current (local) branch name, Matthieu Moy
+pointed out that `git fetch --current <remote>` might be a better UI):
+what does your patch do with `git fetch`'s refspec arguments?
 
-diff --git a/diff.c b/diff.c
-index 4d3cf83a27..42affb6dcf 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4206,6 +4206,8 @@ static void run_external_diff(const char *pgm,
- 	argv_array_pushf(&env, "GIT_DIFF_PATH_COUNTER=%d", ++o->diff_path_counter);
- 	argv_array_pushf(&env, "GIT_DIFF_PATH_TOTAL=%d", q->nr);
- 
-+	diff_free_filespec_data(one);
-+	diff_free_filespec_data(two);
- 	if (run_command_v_opt_cd_env(argv.argv, RUN_USING_SHELL, NULL, env.argv))
- 		die(_("external diff died, stopping at %s"), name);
- 
--- 
-gitgitgadget
+Ciao,
+Dscho
