@@ -2,89 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66C511F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 15:25:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D991F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 15:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728561AbfGKPY7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 11:24:59 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46698 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728438AbfGKPY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 11:24:59 -0400
-Received: by mail-io1-f68.google.com with SMTP id i10so13326059iol.13
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 08:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UY7D6Kgcu5bB+7C2Y653ZFcNUcyrArTsFBx63dsw26g=;
-        b=aMpcGDVRFVZABQvVT3jBytLbaf6cCus+vdkVGitXVDE5cqZqREPjpZMVLXj6WfuLDk
-         cm3S35mKwESgxsYw+Op+KAg2yOnofiffOyLtYIOhGIjA8nH098URsMQjhb7TiMcDGtqg
-         McPVYaYc0WzZ+rYZZRDsdtDDNCAGPUhBpK7q7SnySQGwzFLkQ0sobxHfV17+tIBkHvfT
-         /EPHY/EpoH1KrnOalJWWAsTUyBq+fMsxbrNYgJXX2dI4YDfkhLawWhPO12HirhWKyAVM
-         4s6Q4XNbKN5ZcoMA+racZ7skDULYcSQ7YywQgf7KQcCUGp9qYH5LxAAWI2gTsA6lDYk+
-         98gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UY7D6Kgcu5bB+7C2Y653ZFcNUcyrArTsFBx63dsw26g=;
-        b=HCNA62GZdJA7359a65tveYCcYjPQeNb3O6T4brGS7g2ZjYuT86Nw6XmIGzWyvt61WS
-         N6Sj/oPkRYB3y3VBrnwKjbi5bL6u8Soom4h7L36I/x/aai7wViZrZVjb06Vqfrqc/slh
-         BikaieAa60rgwRgWSRAlZOYrOmJT1/uOHg7o9lpZUv2EGQk5PeJRxpkKJYJ2kV7Dgqsf
-         c26NqQgI0jVq1UzCell7ovLHsLCUpbq9e0Hk/3kdUiXju3pz5tTFPqlfA4iv3hUcpcKF
-         gk4erdgeVy7YGeAvCE7U4sln6QFMB0P4GKzfq7W57gcjsiUTdXxqtwGXAfj8pxDR7Aka
-         gaAg==
-X-Gm-Message-State: APjAAAVsdvOWQL6wS8gmcvJJt1XpECip+R15GxEKGHoB5A42HEHRDEGM
-        JIDlgfOO6edUCt/uWA3Y7sC3SMeWsk7UAC1/ESvSpg==
-X-Google-Smtp-Source: APXvYqzcWEoAoWd0GHB0UEQOjDQBI4nFWikwnAokfVbDmAxak+oJ8HLCDIk8xCvu884Ch/xsF4qXcVZlzzT1TsJOdAE=
-X-Received: by 2002:a5d:9613:: with SMTP id w19mr5009141iol.140.1562858698148;
- Thu, 11 Jul 2019 08:24:58 -0700 (PDT)
+        id S1728624AbfGKP2b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 11:28:31 -0400
+Received: from mail-eopbgr730088.outbound.protection.outlook.com ([40.107.73.88]:55528
+        "EHLO NAM05-DM3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728102AbfGKP2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 11:28:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ra.rockwell.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aeQwwxK9Xm5i+olwQoh/No//I6SGDR3NZS9PyUT5HwU=;
+ b=l8llVpQSJaeMBMcYs1paN7lcZlvA1up5h8d7hgmYV0xvqB3W9eJHbtfzPc7eQBpN52pSu2J4XhGOyHh4UtLHCONoiKVTuhjQnAk40BT9bATdd2Fa3L9IdjsBfRF9KmSYrhtGn1tOu6VrxOciUPEjexomUV9BGAayArmuVpgoleo=
+Received: from CY4PR2201MB1559.namprd22.prod.outlook.com (10.171.214.147) by
+ CY4PR2201MB1640.namprd22.prod.outlook.com (10.171.241.35) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2052.19; Thu, 11 Jul 2019 15:28:28 +0000
+Received: from CY4PR2201MB1559.namprd22.prod.outlook.com
+ ([fe80::a492:8110:c29:3f13]) by CY4PR2201MB1559.namprd22.prod.outlook.com
+ ([fe80::a492:8110:c29:3f13%2]) with mapi id 15.20.2052.019; Thu, 11 Jul 2019
+ 15:28:28 +0000
+From:   "Mark T. Ortell" <mtortell@ra.rockwell.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: List of Known Issues for a particular release
+Thread-Topic: List of Known Issues for a particular release
+Thread-Index: AdU3/UEayPYJJwlLQxGa0N35DX3aTQ==
+Date:   Thu, 11 Jul 2019 15:28:27 +0000
+Message-ID: <CY4PR2201MB1559C26C1D75B4F649AD38049AF30@CY4PR2201MB1559.namprd22.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=mtortell@ra.rockwell.com; 
+x-originating-ip: [205.175.240.241]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 933eb845-ea6f-4bbf-00de-08d706146c2b
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:CY4PR2201MB1640;
+x-ms-traffictypediagnostic: CY4PR2201MB1640:
+x-microsoft-antispam-prvs: <CY4PR2201MB164049CDFF6CD7545B122E709AF30@CY4PR2201MB1640.namprd22.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 0095BCF226
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(376002)(396003)(136003)(346002)(366004)(39860400002)(189003)(199004)(74316002)(68736007)(102836004)(256004)(33656002)(6916009)(2906002)(316002)(186003)(14454004)(8676002)(3846002)(476003)(71200400001)(71190400001)(8936002)(2351001)(1730700003)(81156014)(81166006)(6116002)(7736002)(305945005)(53936002)(86362001)(486006)(26005)(5660300002)(25786009)(478600001)(6436002)(55016002)(52536014)(9686003)(5640700003)(66066001)(76116006)(66946007)(6506007)(2501003)(66446008)(7696005)(66556008)(64756008)(66476007)(99286004)(340984004)(554374003);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR2201MB1640;H:CY4PR2201MB1559.namprd22.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: ra.rockwell.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: FIr7HcCcMEaD84iDqsWuVr3u1WeTwHgJp3VoxRQymXe8P3fKs0NWB6QRlULC5mqM3Ut6A07E+8lpXFmWEmXCdFTB5LT7YAi97E9pzCC9ZE88otoVaLNExDGkB/NX0loqQQz0lKpzIvSry1wDnh6H1vCLXtWxW946fOu7GhRq7JH+njLONs6oXxdpxlKDZDoPQfJsJTfgw5QKIs+2j2Y59ykxcYfKjixAl8a/v6r0wG5xblJMAANsMCd3GjuVZ9fs67EjilmVtd1W3oveDItqgKLRvgLIm0Tn2KvLyqAu2E+eqGtxVS3UQs+w1BJCC9BUskg5uBtPcycYnlOMf1+k+ongfwSK7+zxkxavEO8NKQrAzOt6IfZe/xdqGDCL8ePXddBEtd9zwabLYuXej/HuROgSqy8rjb+eytrWZzEi0Fw=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <cover.1560898723.git.matheus.bernardino@usp.br>
- <cover.1562801254.git.matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.1907111355360.47@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1907111355360.47@tvgsbejvaqbjf.bet>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 11 Jul 2019 12:24:46 -0300
-Message-ID: <CAHd-oW7jwkHXjpExZOsP3OfJN4HP2ZmLR5h+NphovYoShC2OVQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v8 00/10] clone: dir-iterator refactoring with tests
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: ra.rockwell.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 933eb845-ea6f-4bbf-00de-08d706146c2b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jul 2019 15:28:27.9354
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 855b093e-7340-45c7-9f0c-96150415893e
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: mtortell@rockwellautomation.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR2201MB1640
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 11, 2019 at 8:56 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Matheus,
->
-> On Wed, 10 Jul 2019, Matheus Tavares wrote:
->
-> > - a replacement of explicit recursive dir iteration at
-> >   copy_or_link_directory for the dir-iterator API;
->
-> As far as I can see, it was not replaced, but just dropped. Which is
-> good, as it will most likely address the CI failures.
+Hello,
 
-You mean the circular symlink checker, right? Yes, it was dropped. At
-this item I was referring to a dir iteration code at builtin/clone.c
-(using opendir/readdir) which was replaced by the dir-iterator API.
+I am doing a software tool assessment for functional safety and I am review=
+ing the use of Git as the SCM. One thing that I need to do is review the li=
+st of "known issues" with the Git release being used. I have gone through t=
+he release notes and found that it only contains the fixes and enhancements=
+ in a particular release of Git, it does not contain a list of known issues=
+/errata in a particular release. The github project also does not include t=
+he bug tracking list, so I am not able to figure out a way to review the kn=
+own issues for a particular release. I considered reviewing the fixes in re=
+leases beyond the release used, but that has 2 problems. One, it doesn't co=
+ntain any issues that are yet to be fixed. Two, only the fixes in the "next=
+" release are truly relevant because fixes after that could have been intro=
+duced in a release after the release being used. An additional note is that=
+ the Git for Windows project does provide a list of known issues in the ins=
+tall=20
 
-> Thanks,
-> Dscho
+Could someone in this mailing list assist me in finding the known issues fo=
+r a particular version?=20
+
+Best Regards,
+Mark Ortell
+
