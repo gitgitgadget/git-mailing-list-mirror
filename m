@@ -2,115 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 609121F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 09:46:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3931B1F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 09:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728324AbfGKJqw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 05:46:52 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53831 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726088AbfGKJqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 05:46:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562838403;
-        bh=P1mNW8OEaxo/szrDFWulxpmnui7X/u/2s9OMfmqJ0/E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kj05MtFDb3cUnv1WxiemgsBOucq5wFf8I4RI5BA/ySggPIKCRKCLSeIzlaAJWJLni
-         vyqgPAbuQAw08MQ2/B3xF4bIOFfeiqaN/4NWf6AVSGciOFMu3UJvIT8H3UZv2woSCx
-         1Mu87Oy1wpjpwo4jxi6rZOLPM8LP/jPKWYKREfnE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgeFd-1iF7GJ3oSz-00nurL; Thu, 11
- Jul 2019 11:46:43 +0200
-Date:   Thu, 11 Jul 2019 11:46:26 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Mark Florian <mflorian@gitlab.com>, git@vger.kernel.org
-Subject: Re: `@` alias for `HEAD` not working in `git push -u origin @`
-In-Reply-To: <20190710233937.GG9224@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1907111141380.46@tvgsbejvaqbjf.bet>
-References: <CANC=f2c8eynWJ1r=zwZq1qwrDE85LVFMU2mjLU26HYMDGaD4iA@mail.gmail.com> <20190710233937.GG9224@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728312AbfGKJvS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 05:51:18 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:39629 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727960AbfGKJvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 05:51:18 -0400
+Received: by mail-wr1-f48.google.com with SMTP id x4so5544185wrt.6
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 02:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=C6oVCnFML5yLnU1sxCzVe5S+1wtPXlaO+oRY5PjdBQQ=;
+        b=f7F2vGQfepglqfT6SG942TQL6D0N9Rxp6BK281AVOgPlv0e28NlHXl7aDdxt9mBMR+
+         /bQERUdEKfgAJqxm1P9/iXuzW/Q7HfOfQN8yV7Md99uRpc6H0hnWVgaZS9mP66PKkJNt
+         EgeSpqHxX4psuxdq119sqgMU9G/c7GjqCqkCPPi843NSW71F936wk7SlqYiDGgQPA07h
+         EiVv5MJfBkmdCobXPw7iO2lnuIo3Bniixdrht75rpn39zCblMOr11rQT/ysUIJlLquEk
+         H70MSjtQODJfgn/f/BtkugjiAwNR9SowfPg7Bd9yijADJr6tnK11b8IM/hFfg7moRVd8
+         CdfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=C6oVCnFML5yLnU1sxCzVe5S+1wtPXlaO+oRY5PjdBQQ=;
+        b=E7i6NRH1Ez166w0YXf+koaZwxcJh6rFMo/5gDphQLWKkBIVTvPXVTBA92sK93GHi88
+         WEK4+kikUX+Q/ohOwRP8sVaxQEPDVDJISUWI7kYnmUbgEc8f5o2mJVxGxS8J4Z8BSeaa
+         CbkfKWS9KBXfGZWsMPB9Xdq3IBjSvWePEmwBLxPfVA6m4K8jPXvGH/XbNHdzHx9C1izo
+         5NPWdHQCGM7TgKnGzhseUCxWOPtg/fRDqQNwSuQeQzwJCUI2n19DTiIYW1/Af0lTtfDc
+         ptxb4NyekeoJkl4Zhbc+xOHQGtfu6FudxxjTG/anVjkcusEh+tQCVDOQD94P7RQbEanC
+         FtCA==
+X-Gm-Message-State: APjAAAVxadLZHlEGgWmLVQ3gG1NG05fpGH2u4dWxsE9AFXSxXszUvzmD
+        xmox7Vmiq37uiraOA9mAqbrvyLGR
+X-Google-Smtp-Source: APXvYqyrJYFcZ56QEpmTATyZlB6cBD44sCF2JLZhNGN+6EHTWgQopaIpmiG70qxz1c79KZGV9HeU2w==
+X-Received: by 2002:adf:db07:: with SMTP id s7mr3979211wri.10.1562838675691;
+        Thu, 11 Jul 2019 02:51:15 -0700 (PDT)
+Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.googlemail.com with ESMTPSA id c78sm5442533wmd.16.2019.07.11.02.51.14
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Jul 2019 02:51:15 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Jul 2019, #01; Wed, 3)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqpnmqzrbg.fsf@gitster-ct.c.googlers.com>
+ <9b0fa396-6aae-ff4b-afee-0310a4f601f9@gmail.com>
+ <xmqqzhlow5gg.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <709484e2-599f-db83-190b-9bd0203cc7d7@gmail.com>
+Date:   Thu, 11 Jul 2019 10:51:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:A1FffStv8mOYDn4ONUcOvH0wedwvUCjm8xyx9PZbnUmIfKPlYQF
- e0K8rOMkAJ+9QbbTwtjgWcJf7bDJn5eEJo0grF4XbSXQ3LfcF9J+0E3muhq0Bct+f+aKQaX
- xswufdNAiX0FMK5x2bdVRlMwWLMYEYyttRmm2f2N5PrDcxK6i5gfgRk2tZ4WIe4xN9BM4iT
- O/SbnJArrbpVvrXqGODtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mBRKkM/N2jw=:YeOTuv5DQ2Qxk8CA2oTKn8
- /f22kVDhYuc7lqV6PB4FbODp+rmWwtkuN+l9Hl85DcEZwhK+/kNvzg3mWeeGtz9EhZhw3sdkH
- 13ICMToAhgChJqhiIXXkDk3/E1bTDlveYHC6GyDmQnOnezZbH3v65+ZXRcDPLSZdu23hAxlca
- kDDqP5uN2IEa/P1dvje03XaFdXmsxbWEWjAi8WXffiQKTKcGJf9jt+ya6stGT3T8LGWphJNYX
- Y9DuIliF7mhdOQRtT+HPFhY93gUxhtWXiy8DmAQKa3OLuUVyKGA1MbabDtS8yjvLQqQuiMSWn
- zAx5p8e6xjvJT2w8R6M7ILlqYxMEB3UCFHofcTxo67oEqDC7aWL/yzn/tnEHNLDX6WhRjZcty
- EP9jmHBO2+aLU+e9PCbrltLmwaDxJ95fqbxkWl0k4+BHWnuydmiP2BtUxbcdDKJ3KERtmBM4I
- eq7mpqcwk+y/68BZDfZF7diTih2NZadyHglZCdxRpzH3IfVH10kY1DXsmjCyDyGPCcSGr3Y33
- 4Md96jyAiMz7lJeNnJES05yzT3+fwnW8C/XSpUxRAh73aa7mXHxnZg0RuZI6hU6H5D2RUWT8d
- 2QeeplEjEgdV7V5kqJ2oe3koAc9ggr6DPXjHBrsj8xJMTYXuctuNpsVJg94MJMZwBTXKKCoz+
- p32UNB3utjkrpw7SL13XLmRIbMkUUI3ArYxr65F0ZbOfY7+Nx7g4PQoYmPNcerBGSkjkHbEAq
- DUK/OHcUAVTz1IWO9Y7efCpFkXM4dRECxIrZn93SjS2qP2xUsW6VATMYWFCek2uiYhL2pm8mF
- nmRKLpT+lAMoH1BjY99pVZ2dDiUsWioqqqJURNttjktYojk6Q1vHybzHHwFxfLBcDyCOB+WlL
- cRv4rcmHrNs4xgJ8UBJz0UCoAruZE/CvBKJB2u2wPmPoHk2fEYLNZxpb8nP/Oi/sIfh8+YJp2
- sJmrzzl2FL9I6ZNhuo0ACpCUb+YUykpbVN0BZu9ko+bHUluGJ6GghASM6EeWT1Bal81X0CwqH
- IDBzJkQ16v+jBUlZu3nDD3ll7+61l8Wp2SC/ws1eZDJsWbu3kgeoH/xfFYRL+xeyLcMGqAfyd
- mUTmD3m1xKrePpnsCgMFk9X/G3FHbls3Yxw
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqzhlow5gg.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+On 08/07/2019 23:02, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> * pw/rebase-progress-test-cleanup (2019-07-01) 1 commit
+>>>  - t3420: remove progress lines before comparing output
+>>>  (this branch uses sg/rebase-progress.)
+>>>
+>>>  Test cleanup.
+>>>
+>>>  Will merge to 'next'.
+>>
+>> I've just posted an update to this which avoids the repeated printf calls
+> 
+> Thanks.  Picked up the one from "Date: Thu Jul 4 02:47:02 2019 -0700".
 
-On Wed, 10 Jul 2019, brian m. carlson wrote:
+Yes, that's the one - sorry I forgot to add a link to my original email
 
-> On 2019-07-10 at 05:06:08, Mark Florian wrote:
-> >
-> > I learned today that `@` is a shortcut for `HEAD`. From `git help reiv=
-isions`:
-> >
-> >     @ alone is a shortcut for HEAD.
-> >
-> > However, when I tried to use it in a command I frequently use, I got a=
-n error:
-> >
-> >     $ git push -u origin @
-> >     fatal: invalid refspec '@'
-> >
-> > I'm running git version 2.22.0 on Linux.
-> >
-> > Is this a bug, or have I misunderstood how this is supposed to work?
->
-> This is a bug. If the destination side of a refspec is omitted, and the
-> source side resolves to a ref starting with "refs/heads/" or
-> "refs/tags/" (which I expect it does here), then that ref is used as the
-> destination.
->
-> I submitted a patch at [0], but it was decided not to pick it up. If
-> Junio and the list decide that it's wanted, I'm happy to resend or
-> revise and resend.
->
-> [0] https://public-inbox.org/git/20180729192803.1047050-1-sandals@crusty=
-toothpaste.net/
+Best Wishes
 
-After reading that thread, I come to the conclusion that it was not so
-much a decision not to pick it up, but more like a falling between the
-cracks.
+Phillip
 
-I would be in favor of this patch.
-
-Since I have your attention and since I am interested in a related issue
-(when I wanted to propose a GSoC mini project to let `git fetch <remote>
-@` expand the `@` to the current (local) branch name, Matthieu Moy
-pointed out that `git fetch --current <remote>` might be a better UI):
-what does your patch do with `git fetch`'s refspec arguments?
-
-Ciao,
-Dscho
