@@ -2,127 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 068781F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 21:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 025461F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 21:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728640AbfGKVXv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 17:23:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63634 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbfGKVXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 17:23:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C705014A1A8;
-        Thu, 11 Jul 2019 17:23:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SNd1S07O5Y1toPc+hwomZUnKR2I=; b=eWC9PO
-        7IldLPw0M+bEjP/YVJ7iYtBqBVN99kWr2Qd2LiNZnHZXGeteBN1KX+X9xuXWBvZ1
-        8wutFcvelZUAONTngn5JfBQAvIkN/gIi4qxzfp8HBdhaQS67FSfsKNvPBO24pxEK
-        YBH1aJFwUtpPR6JeXOYgX6ByGzvnTfp3M9GbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jGGfvB3t0HhBVjNhg9gRHfAS+mbPVKg/
-        Xl3C5Y/lPArQz0pJBu2M6KEnHU0EAHEAZ5QjVIoxYDSB/SJX9MWJ2x9NnWM/Hrei
-        Ux+VWSkcErdpIVanqOwjd4it8kEqbqKEkNMX0yPab3/jlHGbvhfq7cb1YVKhOJnd
-        ewzk9KmlqJI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF6C114A1A7;
-        Thu, 11 Jul 2019 17:23:45 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D5B914A1A5;
-        Thu, 11 Jul 2019 17:23:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Martin Nicolay <m.nicolay@osm-ag.de>, git@vger.kernel.org
-Subject: Re: [PATCH] stash: fix handling removed files with --keep-index
-References: <alpine.LSU.2.20.1907111452560.3570@cpza.bfz-tzou.qr>
-        <20190711174828.GF15477@hank.intra.tgummerer.com>
-Date:   Thu, 11 Jul 2019 14:23:44 -0700
-In-Reply-To: <20190711174828.GF15477@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Thu, 11 Jul 2019 18:48:28 +0100")
-Message-ID: <xmqqims8qn8f.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727956AbfGKVhE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 17:37:04 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:46419 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726199AbfGKVhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 17:37:03 -0400
+Received: by mail-ed1-f48.google.com with SMTP id d4so7297272edr.13
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 14:37:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=college-harvard-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=NGQHjtVUX2i1QHK6CBQmU9Uj9m9lv8Of+E9npcrd3c8=;
+        b=d2ukJnmQJ5RT2ayHBC0P+yTiuZybD11jACr9VcqVuqEEYt+d/CzoH4pAkwT1L7Ys8s
+         SyYf33t2G11kOUzdjVPkq9slfvgaaoc6y+sg9wYMM85aCb1naGrGwOgY5xTgMrAwSjxo
+         P4GlQTlr3Pe2qtvgkVz4BGv0IS5R0qSzM2ZKtpxKCey+Kl6iDE8PSjiA5B0jLRbLey62
+         HoXgd37FBbdYXAMsWEinXZmt7/dgoyRNYDOMOqOf80BWjJrbXidkJ/SAq+C1HNaeWIX8
+         xOIW7tL7J0UfZb8ULMYRxgm4RsL2xtoHly1win1yJ3AimNZ2UofcHLE4kZXPHJwIEIVb
+         NIGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=NGQHjtVUX2i1QHK6CBQmU9Uj9m9lv8Of+E9npcrd3c8=;
+        b=hSlZejldJdVrt9ddEHwJsGKViZ7XJasMSBwyDDUpoevK9ys2Ix9nMFtj3fNZsGgL6T
+         dRsggbG2sbgncdLbGejnLctJUKrkZIsftCvPTfTaSSOjS5feptGJ2x/CtP/eYT9PWVyP
+         XHrRna7JCqIJOikRSRIBqni40VjYt69cF7VXMyBdKDHHHQNbSDNRiHxfHPrZIY2tyJ9x
+         eAmpwA7ocYLqrtIz+I++Gkeq/I+4SVVSptdiyZKVSM4jcAOPw+3VHOv3S8CZjkcRy3by
+         OgU5bU+TA/lI1YXR0KMAG02Wp3x7gdW80vMbobh9r4R6G56YGE/JzXa0EPwX1LG8sCIc
+         1BpQ==
+X-Gm-Message-State: APjAAAUhwxQxe8e6nN9r2wITJxjk280PZJxRLTsEuK6F2J6fdKkvcew7
+        Ay5aOLpvQHSlQKCg8bsfMmXEAowe6I94Jpc9AWRI8SBwhGRN2Q==
+X-Google-Smtp-Source: APXvYqyK7v7MgTChji464TTaJzNFV+Goql8D0+Xz+MRk7HLlk6wFSnwhpPu/qtS5ov05KsLpXUqgN08/Cwx63XpbPus=
+X-Received: by 2002:a05:6402:78c:: with SMTP id d12mr5930921edy.160.1562881021596;
+ Thu, 11 Jul 2019 14:37:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2A0033AA-A422-11E9-88CF-46F8B7964D18-77302942!pb-smtp1.pobox.com
+From:   Michael Kielstra <pmkielstra@college.harvard.edu>
+Date:   Thu, 11 Jul 2019 17:36:50 -0400
+Message-ID: <CACf0ZibKt-mpqpavmK3SVMC-Lqm9KB9kUvPj-KFkvT_LVRyOZw@mail.gmail.com>
+Subject: Pull vs push messages
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi all,
 
-> Fix that behaviour by using 'git restore' which can faithfully restore
-> the index and working tree.  This also simplifies the code.
+I noticed that git pull reports "Already up to date." but git push
+reports "Everything up-to-date".  (I'm using git 2.20.1, the latest in
+the Ubuntu repos.)  Just for a consistent user experience, would it be
+worth standardizing on:
 
-Hmph.  I would have preferred to see we stayed away from 'restore'
-(and used 'checkout' instead, if you must use a Porcelain command),
-so that the "fix" can go to maintenance tracks, if distro packagers
-choose to backport it.
+Hyphenation (up-to-date vs up to date)?
+Periods at the end of one-sentence messages?
+Colloquialisms and tone of voice?  "Already up to date." sounds like a
+terse error message but "Everything up-to-date" sounds like a chatty
+friend.
 
-Isn't the machinery for "git status" (in wt-status.c) mature enough
-to allow us to learn what got changed all in-core, without spawning
-an external process these days, though?
+Maybe none of this is worth the effort, but I thought I'd mention it
+just in case.
 
->  		if (keep_index == 1 && !is_null_oid(&info.i_tree)) {
-> -			struct child_process cp_ls = CHILD_PROCESS_INIT;
-> -			struct child_process cp_checkout = CHILD_PROCESS_INIT;
-> -			struct strbuf out = STRBUF_INIT;
-> -
-> -			if (reset_tree(&info.i_tree, 0, 1)) {
-> -				ret = -1;
-> -				goto done;
-> -			}
-> -
-> -			cp_ls.git_cmd = 1;
-> -			argv_array_pushl(&cp_ls.args, "ls-files", "-z",
-> -					 "--modified", "--", NULL);
-> -
-> -			add_pathspecs(&cp_ls.args, ps);
-> -			if (pipe_command(&cp_ls, NULL, 0, &out, 0, NULL, 0)) {
-> -				ret = -1;
-> -				goto done;
-> -			}
-> -
-> -			cp_checkout.git_cmd = 1;
-> -			argv_array_pushl(&cp_checkout.args, "checkout-index",
-> -					 "-z", "--force", "--stdin", NULL);
-> -			if (pipe_command(&cp_checkout, out.buf, out.len, NULL,
-> -					 0, NULL, 0)) {
-> +			struct child_process cp_restore = CHILD_PROCESS_INIT;
-> +
-> +			cp_restore.git_cmd = 1;
-> +			argv_array_pushl(&cp_restore.args, "restore", "--source", oid_to_hex(&info.i_tree),
-> +					 "--staged", "--worktree", NULL);
-> +			if (!ps->nr)
-> +				argv_array_push(&cp_restore.args, ".");
-> +			else
-> +				add_pathspecs(&cp_restore.args, ps);
-> +			if (run_command(&cp_restore)) {
->  				ret = -1;
->  				goto done;
->  			}
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index b22e671608..b8e337893f 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -1234,4 +1234,11 @@ test_expect_success 'stash works when user.name and user.email are not set' '
->  	)
->  '
->  
-> +test_expect_success 'stash --keep-index with file deleted in index does not resurrect it on disk' '
-> +	test_commit to-remove to-remove &&
-> +	git rm to-remove &&
-> +	git stash --keep-index &&
-> +	test_path_is_missing to-remove
-> +'
-> +
->  test_done
+Michael Kielstra
