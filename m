@@ -2,285 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42A011F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5C2A1F4B6
+	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728588AbfGKQJ2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 12:09:28 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44929 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728571AbfGKQJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 12:09:26 -0400
-Received: by mail-wr1-f67.google.com with SMTP id p17so6897432wrf.11
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 09:09:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zoIqHKw3zDEACzwLd448WaYWaae1CraA0g3v4j0IPiY=;
-        b=bFTvw/dyhkdir0Kn5YN0POj5ELryPqAVxqYzL+mcv4uw9wOvTrwRcCMm8WYigRedn6
-         ywT/gXhMuSJ4KQSDB8nfXV2LjCVJdot4hPOpAkZpAgu+nrgkkkcU8bpM3pWxdCZifVjs
-         FTRPH6A5DuwaRY1cZUZZVKan99Mi2hwfb6Gi3ZEyYlf+BlE73DtiVHKd72KvpQQFsOn+
-         +yd3MzSlzh2s4sosDVZtGLwZW3BbTq+XIDpUgo9qU05eU7r/VYqd3UAcTfqAOm8f7JcS
-         t4qiMl2YBBPt/muIuxdPke7e0Pf+l6ni9J2wQahPdlvQdnfnJTScd6BEwRpyFjsAv6/a
-         c+eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zoIqHKw3zDEACzwLd448WaYWaae1CraA0g3v4j0IPiY=;
-        b=MmgX2zXwCK58NrWHGhwMPWdyhEQdB1D+608o0+8j32DntGuKMoPDJMkqoMmPW9PuqE
-         uj6nK7H+wHNjjCFuayOxLPQUpdf8driRmXKQTIbcRfhnXFEDpKAG8T2Gqb3Z/bVicRAm
-         jeUG3mffRjjzOqDajtJXqAB13FC1SzQ+/7qEttdAhaY4j5xw2d5ZtATWU2/MMXhubslK
-         ZfTBqhGE+a9AVDLTQLfe3gFwjeXiKEv2kMBa9R65vVFT8EF2ytxgzE9Bo9d1cbW64trl
-         WyenzYgIEfnJIcmbnAHXSeaNsxPkLBiYYIJMbQmEdjBjpQhHTsIBokOPV6DDpUPm2lCS
-         CZ1Q==
-X-Gm-Message-State: APjAAAWPDcwLUUKGRM9da6Asj1mSyJZ4HkgshknqgfllLAVl2yShrcOW
-        LsDXxGaq0HsxRmVYEybmAZkIrIaNjo4=
-X-Google-Smtp-Source: APXvYqzX5nGvQCPNQB1aECIsBp+QGMv2Ol9ubtu6bXW/Ww+2ONxsA6K0xg/3e22X5Vbf1M6q8KsVhQ==
-X-Received: by 2002:adf:afe7:: with SMTP id y39mr5878274wrd.350.1562861364191;
-        Thu, 11 Jul 2019 09:09:24 -0700 (PDT)
-Received: from localhost (host232-157-dynamic.24-79-r.retail.telecomitalia.it. [79.24.157.232])
-        by smtp.gmail.com with ESMTPSA id u6sm7805911wml.9.2019.07.11.09.09.23
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 09:09:23 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 14/14] range-diff: add headers to the outer hunk header
-Date:   Thu, 11 Jul 2019 17:08:51 +0100
-Message-Id: <20190711160851.14380-15-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.22.0.510.g264f2c817a
-In-Reply-To: <20190711160851.14380-1-t.gummerer@gmail.com>
-References: <20190708163315.29912-1-t.gummerer@gmail.com>
- <20190711160851.14380-1-t.gummerer@gmail.com>
+        id S1728571AbfGKQJy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 12:09:54 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56586 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728474AbfGKQJy (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 11 Jul 2019 12:09:54 -0400
+Received: from genre.crustytoothpaste.net (rrcs-50-84-77-156.sw.biz.rr.com [50.84.77.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A1BDD60436;
+        Thu, 11 Jul 2019 16:09:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1562861392;
+        bh=5ssslUG7U3WL4wkw8Ddr5Z15dJF9GgvIZi/zsI9yITM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fUgxlKkafld1RSDAC45NdclXQssaNn2TgK6IlMNkneKa3Ye0YHYUAKcTq8Osnm7NG
+         SC36+hlT7rWvrS2xXRmBdLzWjUhk4w6UE76g0J3YMH/GnJRHyYrhv+kzSGBEsNU5x1
+         gUvn9jchgnbd3cw8d3FnCeDSWHzqMJs++F1/l8RnRDAIhhQr88qW0PwDBvXa/EzVCK
+         8lNAIqTzeLwTbZpvnUh9wbPU+3oMxBHJBsEt2+gZJX0pkbxt4o0dtEujmATQdk9gf0
+         qXYT/kBynHfuthQFlhprnMWvoZ1h6f4RiwNA3KLqsmK9MWt0lEK7LsRzume9u0vyqb
+         vM2beISJ3urzr7ODgccWbLRsKlelm0C1LlzMeTjgL1uoMLmDO7EG8iLu/Qcjvtgh09
+         hMSCttpYRr2HfkbyS9sshRA0+cCyfSZ+SUxmuMT8uf5KclVI3R+knGJseR9IBLQsY/
+         qqCgUoACfX2qB1JRekIKFzmy7gdsvru55Poazhw1MAcqTcrl4bU
+Date:   Thu, 11 Jul 2019 16:09:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Mark T. Ortell" <mtortell@ra.rockwell.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: List of Known Issues for a particular release
+Message-ID: <20190711160948.GK9224@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Mark T. Ortell" <mtortell@ra.rockwell.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CY4PR2201MB1559C26C1D75B4F649AD38049AF30@CY4PR2201MB1559.namprd22.prod.outlook.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rwbb4r/vLufKlfJs"
+Content-Disposition: inline
+In-Reply-To: <CY4PR2201MB1559C26C1D75B4F649AD38049AF30@CY4PR2201MB1559.namprd22.prod.outlook.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the section headers/hunk headers we introduced in the previous
-commits to the outer diff's hunk headers.  This makes it easier to
-understand which change we are actually looking at.  For example an
-outer hunk header might now look like:
 
-    @@  Documentation/config/interactive.txt
+--rwbb4r/vLufKlfJs
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-while previously it would have only been
+On 2019-07-11 at 15:28:27, Mark T. Ortell wrote:
+> Hello,
+>=20
+> I am doing a software tool assessment for functional safety and I am revi=
+ewing the use of Git as the SCM. One thing that I need to do is review the =
+list of "known issues" with the Git release being used. I have gone through=
+ the release notes and found that it only contains the fixes and enhancemen=
+ts in a particular release of Git, it does not contain a list of known issu=
+es/errata in a particular release. The github project also does not include=
+ the bug tracking list, so I am not able to figure out a way to review the =
+known issues for a particular release. I considered reviewing the fixes in =
+releases beyond the release used, but that has 2 problems. One, it doesn't =
+contain any issues that are yet to be fixed. Two, only the fixes in the "ne=
+xt" release are truly relevant because fixes after that could have been int=
+roduced in a release after the release being used. An additional note is th=
+at the Git for Windows project does provide a list of known issues in the i=
+nstall
+>=20
+> Could someone in this mailing list assist me in finding the known issues =
+for a particular version?
 
-    @@
+It sounds like what you're asking is for a bug tracker that lists all
+known issues. Git doesn't have one of those; we instead use the mailing
+list for reporting issues. We've considered using a bug tracker in the
+past, but the idea hasn't caught on yet.
 
-which doesn't give a lot of context for the change that follows.
+The GitHub project is a mirror; it isn't the canonical resource, and the
+Git project doesn't use it for issues or pull requests. Both of these
+are also the same policy as for the Linux kernel[0], which you may or
+may not use.
 
-For completeness also add section headers for the commit metadata and
-the commit message, although they are arguably less important.
+If you're looking for an easy way to check off a compliance box, you may
+need to work with your management and/or auditors to see what approach
+you use for other software (such as Linux) that has nontraditional bug
+reporting practices. If you typically use a Linux distro that addresses
+this issue for you, then you'll probably want to use Git from that
+source as well.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- range-diff.c          |  9 ++++++---
- t/t3206-range-diff.sh | 41 ++++++++++++++++++++++-------------------
- 2 files changed, 28 insertions(+), 22 deletions(-)
+Alternatively, you can use Git for Windows on a non-Windows system; it
+should compile and run just fine on Linux, macOS, and Windows, although
+it tends to carry more patches than Git itself.
 
-diff --git a/range-diff.c b/range-diff.c
-index 7a96a587f1..ba1e9a4265 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -139,8 +139,10 @@ static int read_patches(const char *range, struct string_list *list)
- 			strbuf_addstr(&buf, " ##");
- 		} else if (in_header) {
- 			if (starts_with(line, "Author: ")) {
-+				strbuf_addstr(&buf, " ## Metadata ##\n");
- 				strbuf_addstr(&buf, line);
- 				strbuf_addstr(&buf, "\n\n");
-+				strbuf_addstr(&buf, " ## Commit message ##\n");
- 			} else if (starts_with(line, "    ")) {
- 				p = line + len - 2;
- 				while (isspace(*p) && p >= line)
-@@ -402,8 +404,9 @@ static void output_pair_header(struct diff_options *diffopt,
- 	fwrite(buf->buf, buf->len, 1, diffopt->file);
- }
- 
--static struct userdiff_driver no_func_name = {
--	.funcname = { "$^", 0 }
-+static struct userdiff_driver section_headers = {
-+	.funcname = { "^ ## (.*) ##$\n"
-+		      "^.?@@ (.*)$", REG_EXTENDED }
- };
- 
- static struct diff_filespec *get_filespec(const char *name, const char *p)
-@@ -415,7 +418,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
- 	spec->size = strlen(p);
- 	spec->should_munmap = 0;
- 	spec->is_stdin = 1;
--	spec->driver = &no_func_name;
-+	spec->driver = &section_headers;
- 
- 	return spec;
- }
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index d4de270979..ec548654ce 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -99,7 +99,7 @@ test_expect_success 'changed commit' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@
-+	    @@ file: A
- 	      9
- 	      10
- 	     -11
-@@ -109,7 +109,7 @@ test_expect_success 'changed commit' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@
-+	    @@ file
- 	     @@ file: A
- 	      9
- 	      10
-@@ -158,7 +158,7 @@ test_expect_success 'changed commit with sm config' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@
-+	    @@ file: A
- 	      9
- 	      10
- 	     -11
-@@ -168,7 +168,7 @@ test_expect_success 'changed commit with sm config' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@
-+	    @@ file
- 	     @@ file: A
- 	      9
- 	      10
-@@ -186,9 +186,10 @@ test_expect_success 'renamed file' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  f258d75 s/5/A/
- 	2:  fccce22 ! 2:  017b62d s/4/A/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/4/A/
- 	    +    s/4/A/ + rename file
- 	    Z
-@@ -198,8 +199,8 @@ test_expect_success 'renamed file' '
- 	    Z 1
- 	    Z 2
- 	3:  147e64e ! 3:  3ce7af6 s/11/B/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/11/B/
- 	    Z
- 	    - ## file ##
-@@ -210,8 +211,8 @@ test_expect_success 'renamed file' '
- 	    Z 9
- 	    Z 10
- 	4:  a63e992 ! 4:  1e6226b s/12/B/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/12/B/
- 	    Z
- 	    - ## file ##
-@@ -230,30 +231,32 @@ test_expect_success 'file added and later removed' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  096b1ba s/5/A/
- 	2:  fccce22 ! 2:  d92e698 s/4/A/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/4/A/
- 	    +    s/4/A/ + new-file
- 	    Z
- 	    Z ## file ##
- 	    Z@@
--	    @@
-+	    @@ file
- 	    Z A
- 	    Z 6
- 	    Z 7
- 	    +
- 	    + ## new-file (new) ##
- 	3:  147e64e ! 3:  9a1db4d s/11/B/
--	    @@
-+	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-+	    Z ## Commit message ##
- 	    -    s/11/B/
- 	    +    s/11/B/ + remove file
- 	    Z
- 	    Z ## file ##
- 	    Z@@ file: A
--	    @@
-+	    @@ file: A
- 	    Z 12
- 	    Z 13
- 	    Z 14
-@@ -274,8 +277,8 @@ test_expect_success 'changed message' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  f686024 s/5/A/
- 	2:  fccce22 ! 2:  4ab067d s/4/A/
--	    @@
--	    Z
-+	    @@ Metadata
-+	    Z ## Commit message ##
- 	    Z    s/4/A/
- 	    Z
- 	    +    Also a silly comment here!
-@@ -293,8 +296,8 @@ test_expect_success 'dual-coloring' '
- 	sed -e "s|^:||" >expect <<-\EOF &&
- 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
- 	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
--	:     <RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>Metadata<RESET>
-+	:      ## Commit message ##<RESET>
- 	:         s/4/A/<RESET>
- 	:     <RESET>
- 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
-@@ -303,7 +306,7 @@ test_expect_success 'dual-coloring' '
- 	:    <CYAN> @@<RESET>
- 	:      1<RESET>
- 	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>file: A<RESET>
- 	:      9<RESET>
- 	:      10<RESET>
- 	:    <RED> -11<RESET>
-@@ -313,7 +316,7 @@ test_expect_success 'dual-coloring' '
- 	:      13<RESET>
- 	:      14<RESET>
- 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
--	:    <REVERSE><CYAN>@@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET> <RESET>file<RESET>
- 	:    <CYAN> @@ file: A<RESET>
- 	:      9<RESET>
- 	:      10<RESET>
--- 
-2.22.0.510.g264f2c817a
+[0] Yes, kernel.org has a bug tracker, but it is known to be incomplete
+and many issues are raised only on the various mailing lists.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
+--rwbb4r/vLufKlfJs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.16 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl0nX0sACgkQv1NdgR9S
+9ot7hg/9GPZS2rHG2itzMJLwb5576urWbVUasSn9hHct3A2rWaFOUCaD/bBRsvMl
+VyrKJEWHfSJZqDMR8V3TW97kDa0wUB37kCBMGkqgShHWq5Pe7a4F5ZVEEr7oeqaA
+xW/53yGqHyEUpnVRVBjjakg1iCimI8FlK5K8Q/pHfoH5Rj/5UAw+cdp24UdgU7Ye
+5Jb3YytUYq+MB/svf34TjfHjeoMDQvEe6evGGXTnnEFLqUSD2FhNhipi+JxidikU
+ut27UTJh2ZuCtNtHUgQNdkZp6WpPTFhFM/2wx28CwK2P+NGTN6JMXBzUtlGUOad/
+sgR/R1EpEh/bFZEuyeZ5DlY0m7T/DqmJ0s/gkIBqTCNaFUq1AA7bD2OuiJhGxIoN
+UojK1FwFncuk8lhn6ld61SlsQlCkGTgvPQwyvj+fwQd4BHVchQN0maJNPPZlbaP6
+lOT3vxkBZ53GxmXn+i4RPQ2QGnlEiLzR+TcBD0Uygb1C5JKpLMoawv6/JRp+1f3N
+JfELAt58R6lAGaypuRUIXCR0kB6yPryVi590M4lTVuHjnuzukXEH/Ou7HCCysqoN
+NjIDb2qlmF2AygkOQRo+wX1o1Nv+UzUvZhJFUsztMvg5msdOEF8dE5kXsP7s/Q2T
+OXsPBxqST7pBODzEB9F8XT5hXiS8e0vzpSEUp8k2s0p36vYUJDk=
+=E4d4
+-----END PGP SIGNATURE-----
+
+--rwbb4r/vLufKlfJs--
