@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA0EC1F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F39511F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 16:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728555AbfGKQJX (ORCPT <rfc822;e@80x24.org>);
+        id S1728563AbfGKQJX (ORCPT <rfc822;e@80x24.org>);
         Thu, 11 Jul 2019 12:09:23 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34469 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728552AbfGKQJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 12:09:21 -0400
-Received: by mail-wr1-f68.google.com with SMTP id 31so6951535wrm.1
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 09:09:19 -0700 (PDT)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39601 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728554AbfGKQJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jul 2019 12:09:22 -0400
+Received: by mail-wm1-f65.google.com with SMTP id z23so2041034wma.4
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 09:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MBG8XPPKz8ibxbYni/vjeLuUiVvXX0RsyKnVNaocxMY=;
-        b=mp5skgw7IPsRUntebd6QgFKZpmSxCBkQKj1JkmdM5jiy9rdwaPtHUR97k5PAmQSQyL
-         Uc6gzBioBin2LSOYdPK8bEKQIUC8QdThMcNu6c4fNiOdJIkG8cDpPpXnQfNtbX+3EVak
-         ZNGeN+vBODlBjL0PPy5W6jkTJyu7lXNszBHaM9b8doOi+CjQXtuv3Lv4ZSMmQX49s/bm
-         a0FNlG8CvS6ByFlbY9h+j/wOP+Hg3zHXO22rEupcVwq86ZMo8I3PCpCyhElIWDGVTw9n
-         Syl3BNttYhljwkWNQeR5REmL/ENnDE5xWLK6dLTq3nrYZT+NqgqtrrHfSJfH4R9dGSK7
-         0fHg==
+        bh=HIiDotHve9IS3xSWO+oP+cT/BF0N0P0ryS3crNa3M7E=;
+        b=MqXVA61vwS9NhWy2/1/P15UG+cnO2ds7ldR/e8KwGK0FL8VPcO40N/YV4a1wvlJqSe
+         lEBI8wuUq7jCIq7aSSapgLewUzE2DWkAr7lMqstjmeaL1FpyBNUfVQEBo1SMPgGwB1CK
+         4EiiSvTxqGzo9kLFaQLMRez6MvwSzxOCbbX3kjHVjTv+jBSv2lDYb5YkEWRxxfOGMVmw
+         LlXdvEjPtUtVFIrk1Q20s97+ggVP+o2KZkChX+MViWiJF4eNXa3ppon5/C2F3i9wUdBR
+         BgZIn/TnuEOiipXaGdHlNzC5BcITK4yFhfK6XceNH2ZkyzT6r4kl54T1x2HUHdMFLRW7
+         OYFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MBG8XPPKz8ibxbYni/vjeLuUiVvXX0RsyKnVNaocxMY=;
-        b=byJ2Ee6QewvfnF3smZL0Dd5fLId3RKhwgcMuh6YgBN4Y1plW0xiJb9hrn/N0cA+Ojv
-         htjXFPqxt04lCj+nNjGyqDA2s8Jd11Z7QwmF9H3BCkjfxRa6xvV+nik6GdzJGPBBhKwy
-         AUMsO5Jr3hSWk4HnjNNFUqdzgUdXuUzMDiHclG840Ev64FdDmY+VFk4sdD+z+Bi2sC9O
-         voJe052lmupxbmQ5zpxaGFfuzO8w/aza6T7P6qxL/FLPaAsxIWln+ku9E9vRnI+mxgir
-         EpMo/Hh8z2KUE+i1HMXtS06W9MMRyc6sje0+afTwGKqt7K8D/ypgs1Th2OBfrIIFVEl/
-         jQWw==
-X-Gm-Message-State: APjAAAXgyDXfC5Jrzby6RJrUUp21EQXHyX5Std9o4ICGpepgpm73XXl2
-        pWuJxRSpn+Gn4d7AHI6CGa2RhbCwlsc=
-X-Google-Smtp-Source: APXvYqy2fQKrDI+BUdu76Soi79sW/cQAgXspYBLow89mH3fv1co+kNfPlcIzZyfb04iZjUTB+ob48g==
-X-Received: by 2002:a5d:6205:: with SMTP id y5mr5754187wru.314.1562861357993;
-        Thu, 11 Jul 2019 09:09:17 -0700 (PDT)
+        bh=HIiDotHve9IS3xSWO+oP+cT/BF0N0P0ryS3crNa3M7E=;
+        b=ql3XktmICIzo/sllfgdJHhviExjOnrDIoo9cUjZM1yygiOoY5psPlNAeL11wBF3W/f
+         aa2tpqqzoVCeeHqF1XDRBgqVpNAeY49reQO47MhGrbB89iG2y8qKr+LbPISmSaGy/JDf
+         5NqSTYoMtoDwjRyX0B+/p/Du4LxfD2Udyj+uSCZuqYjTf3+FH5+GuLZ4sDsIgyTjqgqf
+         UjaH8u9GZbTmCzpBfuY9rAbzcoZ+vMD3BatQRcGj0qB+kbqGOc3UFviuJikDkO1ZBxSb
+         1Lm1inQh06pfOf4ewoca6ZHsdUzQiBzgnB2kyHiaJTHBxjOLRUXaHuoLygn2POFMrAsE
+         wxMw==
+X-Gm-Message-State: APjAAAV/UAdkuYpBiAp0AMDwOKAP54wmrxmANP1G/w7RSA1OCXlgEkxW
+        jNpZIgoSBNeoLC+MudlsTOUqcVGNRjU=
+X-Google-Smtp-Source: APXvYqw2BrQSwjK6lMhmx54MqBhXE4dOStn755gR0fy6JlxDU9woL7q0IZ/omsYpFx1hH7nzR7djrg==
+X-Received: by 2002:a7b:c202:: with SMTP id x2mr4773805wmi.49.1562861359993;
+        Thu, 11 Jul 2019 09:09:19 -0700 (PDT)
 Received: from localhost (host232-157-dynamic.24-79-r.retail.telecomitalia.it. [79.24.157.232])
-        by smtp.gmail.com with ESMTPSA id g8sm7152773wme.20.2019.07.11.09.09.16
+        by smtp.gmail.com with ESMTPSA id f70sm6300750wme.22.2019.07.11.09.09.18
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 11 Jul 2019 09:09:17 -0700 (PDT)
+        Thu, 11 Jul 2019 09:09:19 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 11/14] range-diff: suppress line count in outer diff
-Date:   Thu, 11 Jul 2019 17:08:48 +0100
-Message-Id: <20190711160851.14380-12-t.gummerer@gmail.com>
+Subject: [PATCH v4 12/14] range-diff: add section header instead of diff header
+Date:   Thu, 11 Jul 2019 17:08:49 +0100
+Message-Id: <20190711160851.14380-13-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a
 In-Reply-To: <20190711160851.14380-1-t.gummerer@gmail.com>
 References: <20190708163315.29912-1-t.gummerer@gmail.com>
@@ -72,140 +72,322 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The line count in the outer diff's hunk headers of a range diff is not
-all that interesting.  It merely shows how far along the inner diff
-are on both sides.  That number is of no use for human readers, and
-range-diffs are not meant to be machine readable.
+Currently range-diff keeps the diff header of the inner diff
+intact (apart from stripping lines starting with index).  This diff
+header is somewhat useful, especially when files get different
+names in different ranges.
 
-In a subsequent commit we're going to add some more contextual
-information such as the filename corresponding to the diff to the hunk
-headers.  Remove the unnecessary information, and just keep the "@@"
-to indicate that a new hunk of the outer diff is starting.
+However there is no real need to keep the whole diff header for that.
+The main reason we currently do that is probably because it is easy to
+do.
+
+Introduce a new range diff hunk header, that's enclosed by "##",
+similar to how line numbers in diff hunks are enclosed by "@@", and
+give human readable information of what exactly happened to the file,
+including the file name.
+
+This improves the readability of the range-diff by giving more concise
+information to the users.  For example if a file was renamed in one
+iteration, but not in another, the diff of the headers would be quite
+noisy.  However the diff of a single line is concise and should be
+easier to understand.
+
+Additionally, this allows us to add these range diff section headers to
+the outer diffs hunk headers using a custom userdiff pattern, which
+should help making the range-diff more readable.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- diff.c                |  5 ++++-
- diff.h                |  1 +
- range-diff.c          |  1 +
- t/t3206-range-diff.sh | 16 ++++++++--------
- 4 files changed, 14 insertions(+), 9 deletions(-)
+ range-diff.c           | 34 ++++++++++++----
+ t/t3206-range-diff.sh  | 91 +++++++++++++++++++++++++++++++++++++++---
+ t/t3206/history.export | 84 ++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 192 insertions(+), 17 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index ec5c095199..9c28ff0a92 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1672,7 +1672,10 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	if (ecbdata->opt->flags.dual_color_diffed_diffs)
- 		strbuf_addstr(&msgbuf, reverse);
- 	strbuf_addstr(&msgbuf, frag);
--	strbuf_add(&msgbuf, line, ep - line);
-+	if (ecbdata->opt->flags.suppress_hunk_header_line_count)
-+		strbuf_add(&msgbuf, atat, sizeof(atat));
-+	else
-+		strbuf_add(&msgbuf, line, ep - line);
- 	strbuf_addstr(&msgbuf, reset);
- 
- 	/*
-diff --git a/diff.h b/diff.h
-index c9db9825bb..49913049f9 100644
---- a/diff.h
-+++ b/diff.h
-@@ -98,6 +98,7 @@ struct diff_flags {
- 	unsigned stat_with_summary;
- 	unsigned suppress_diff_headers;
- 	unsigned dual_color_diffed_diffs;
-+	unsigned suppress_hunk_header_line_count;
- };
- 
- static inline void diff_flags_or(struct diff_flags *a,
 diff --git a/range-diff.c b/range-diff.c
-index a5202d8b6c..f4a90b33b8 100644
+index f4a90b33b8..5f64380fe4 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -486,6 +486,7 @@ int show_range_diff(const char *range1, const char *range2,
- 			opts.output_format = DIFF_FORMAT_PATCH;
- 		opts.flags.suppress_diff_headers = 1;
- 		opts.flags.dual_color_diffed_diffs = dual_color;
-+		opts.flags.suppress_hunk_header_line_count = 1;
- 		opts.output_prefix = output_prefix_cb;
- 		strbuf_addstr(&indent, "    ");
- 		opts.output_prefix_data = &indent;
+@@ -10,6 +10,7 @@
+ #include "commit.h"
+ #include "pretty.h"
+ #include "userdiff.h"
++#include "apply.h"
+ 
+ struct patch_util {
+ 	/* For the search for an exact match */
+@@ -101,12 +102,35 @@ static int read_patches(const char *range, struct string_list *list)
+ 		}
+ 
+ 		if (starts_with(line, "diff --git")) {
++			struct patch patch = { 0 };
++			struct strbuf root = STRBUF_INIT;
++			int linenr = 0;
++
+ 			in_header = 0;
+ 			strbuf_addch(&buf, '\n');
+ 			if (!util->diff_offset)
+ 				util->diff_offset = buf.len;
+-			strbuf_addch(&buf, ' ');
+-			strbuf_addstr(&buf, line);
++			line[len - 1] = '\n';
++			len = parse_git_diff_header(&root, &linenr, 1, line,
++						    len, size, &patch);
++			if (len < 0)
++				die(_("could not parse git header '%.*s'"), (int)len, line);
++			strbuf_addstr(&buf, " ## ");
++			if (patch.is_new > 0)
++				strbuf_addf(&buf, "%s (new)", patch.new_name);
++			else if (patch.is_delete > 0)
++				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
++			else if (patch.is_rename)
++				strbuf_addf(&buf, "%s => %s", patch.old_name, patch.new_name);
++			else
++				strbuf_addstr(&buf, patch.new_name);
++
++			if (patch.new_mode && patch.old_mode &&
++			    patch.old_mode != patch.new_mode)
++				strbuf_addf(&buf, " (mode change %06o => %06o)",
++					    patch.old_mode, patch.new_mode);
++
++			strbuf_addstr(&buf, " ##");
+ 		} else if (in_header) {
+ 			if (starts_with(line, "Author: ")) {
+ 				strbuf_addstr(&buf, line);
+@@ -122,17 +146,13 @@ static int read_patches(const char *range, struct string_list *list)
+ 		} else if (skip_prefix(line, "@@ ", &p)) {
+ 			p = strstr(p, "@@");
+ 			strbuf_addstr(&buf, p ? p : "@@");
+-		} else if (!line[0] || starts_with(line, "index "))
++		} else if (!line[0])
+ 			/*
+ 			 * A completely blank (not ' \n', which is context)
+ 			 * line is not valid in a diff.  We skip it
+ 			 * silently, because this neatly handles the blank
+ 			 * separator line between commits in git-log
+ 			 * output.
+-			 *
+-			 * We also want to ignore the diff's `index` lines
+-			 * because they contain exact blob hashes in which
+-			 * we are not interested.
+ 			 */
+ 			continue;
+ 		else if (line[0] == '>') {
 diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index aebd4e3693..9f89af7178 100755
+index 9f89af7178..c277756057 100755
 --- a/t/t3206-range-diff.sh
 +++ b/t/t3206-range-diff.sh
-@@ -99,7 +99,7 @@ test_expect_success 'changed commit' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@ -10,7 +10,7 @@
+@@ -181,6 +181,85 @@ test_expect_success 'changed commit with sm config' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'renamed file' '
++	git range-diff --no-color --submodule=log topic...renamed-file >actual &&
++	sed s/Z/\ /g >expected <<-EOF &&
++	1:  4de457d = 1:  f258d75 s/5/A/
++	2:  fccce22 ! 2:  017b62d s/4/A/
 +	    @@
- 	      9
- 	      10
- 	     -11
-@@ -109,7 +109,7 @@ test_expect_success 'changed commit' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@ -8,7 +8,7 @@
++	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
++	    Z
++	    -    s/4/A/
++	    +    s/4/A/ + rename file
++	    Z
++	    - ## file ##
++	    + ## file => renamed-file ##
++	    Z@@
++	    Z 1
++	    Z 2
++	3:  147e64e ! 3:  3ce7af6 s/11/B/
 +	    @@
- 	     @@ A
- 	      9
- 	      10
-@@ -158,7 +158,7 @@ test_expect_success 'changed commit with sm config' '
- 	1:  4de457d = 1:  a4b3333 s/5/A/
- 	2:  fccce22 = 2:  f51d370 s/4/A/
- 	3:  147e64e ! 3:  0559556 s/11/B/
--	    @@ -10,7 +10,7 @@
++	    Z
++	    Z    s/11/B/
++	    Z
++	    - ## file ##
++	    + ## renamed-file ##
++	    Z@@ A
++	    Z 8
++	    Z 9
++	4:  a63e992 ! 4:  1e6226b s/12/B/
 +	    @@
- 	      9
- 	      10
- 	     -11
-@@ -168,7 +168,7 @@ test_expect_success 'changed commit with sm config' '
- 	      13
- 	      14
- 	4:  a63e992 ! 4:  d966c5c s/12/B/
--	    @@ -8,7 +8,7 @@
++	    Z
++	    Z    s/12/B/
++	    Z
++	    - ## file ##
++	    + ## renamed-file ##
++	    Z@@ A
++	    Z 9
++	    Z 10
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'file added and later removed' '
++	git range-diff --no-color --submodule=log topic...added-removed >actual &&
++	sed s/Z/\ /g >expected <<-EOF &&
++	1:  4de457d = 1:  096b1ba s/5/A/
++	2:  fccce22 ! 2:  d92e698 s/4/A/
 +	    @@
- 	     @@ A
- 	      9
- 	      10
-@@ -191,7 +191,7 @@ test_expect_success 'changed message' '
- 	sed s/Z/\ /g >expected <<-EOF &&
- 	1:  4de457d = 1:  f686024 s/5/A/
- 	2:  fccce22 ! 2:  4ab067d s/4/A/
--	    @@ -2,6 +2,8 @@
++	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
++	    Z
++	    -    s/4/A/
++	    +    s/4/A/ + new-file
++	    Z
++	    Z ## file ##
++	    Z@@
 +	    @@
++	    Z A
++	    Z 6
++	    Z 7
++	    +
++	    + ## new-file (new) ##
++	3:  147e64e ! 3:  9a1db4d s/11/B/
++	    @@
++	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
++	    Z
++	    -    s/11/B/
++	    +    s/11/B/ + remove file
++	    Z
++	    Z ## file ##
++	    Z@@ A
++	    @@
++	    Z 12
++	    Z 13
++	    Z 14
++	    +
++	    + ## new-file (deleted) ##
++	4:  a63e992 = 4:  fea3b5c s/12/B/
++	EOF
++	test_cmp expected actual
++'
++
+ test_expect_success 'no commits on one side' '
+ 	git commit --amend -m "new message" &&
+ 	git range-diff master HEAD@{1} HEAD
+@@ -197,9 +276,9 @@ test_expect_success 'changed message' '
  	    Z
- 	    Z    s/4/A/
- 	    Z
-@@ -210,7 +210,7 @@ test_expect_success 'dual-coloring' '
- 	sed -e "s|^:||" >expect <<-\EOF &&
- 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
- 	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
--	:    <REVERSE><CYAN>@@ -2,6 +2,8 @@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET>
+ 	    +    Also a silly comment here!
+ 	    +
+-	    Z diff --git a/file b/file
+-	    Z --- a/file
+-	    Z +++ b/file
++	    Z ## file ##
++	    Z@@
++	    Z 1
+ 	3:  147e64e = 3:  b9cb956 s/11/B/
+ 	4:  a63e992 = 4:  8add5f1 s/12/B/
+ 	EOF
+@@ -216,9 +295,9 @@ test_expect_success 'dual-coloring' '
  	:     <RESET>
- 	:         s/4/A/<RESET>
- 	:     <RESET>
-@@ -220,7 +220,7 @@ test_expect_success 'dual-coloring' '
- 	:      --- a/file<RESET>
- 	:      +++ b/file<RESET>
+ 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
+ 	:    <REVERSE><GREEN>+<RESET>
+-	:      diff --git a/file b/file<RESET>
+-	:      --- a/file<RESET>
+-	:      +++ b/file<RESET>
++	:      ## file ##<RESET>
++	:    <CYAN> @@<RESET>
++	:      1<RESET>
  	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
--	:    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET>
+ 	:    <REVERSE><CYAN>@@<RESET>
  	:      9<RESET>
- 	:      10<RESET>
- 	:    <RED> -11<RESET>
-@@ -230,7 +230,7 @@ test_expect_success 'dual-coloring' '
- 	:      13<RESET>
- 	:      14<RESET>
- 	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
--	:    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
-+	:    <REVERSE><CYAN>@@<RESET>
- 	:    <CYAN> @@ A<RESET>
- 	:      9<RESET>
- 	:      10<RESET>
+diff --git a/t/t3206/history.export b/t/t3206/history.export
+index b8ffff0940..7bb3814962 100644
+--- a/t/t3206/history.export
++++ b/t/t3206/history.export
+@@ -22,8 +22,8 @@ data 51
+ 19
+ 20
+ 
+-reset refs/heads/removed
+-commit refs/heads/removed
++reset refs/heads/renamed-file
++commit refs/heads/renamed-file
+ mark :2
+ author Thomas Rast <trast@inf.ethz.ch> 1374424921 +0200
+ committer Thomas Rast <trast@inf.ethz.ch> 1374484724 +0200
+@@ -599,6 +599,82 @@ s/12/B/
+ from :46
+ M 100644 :28 file
+ 
+-reset refs/heads/removed
+-from :47
++commit refs/heads/added-removed
++mark :48
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574151 +0100
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++blob
++mark :49
++data 0
++
++commit refs/heads/added-removed
++mark :50
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574177 +0100
++data 18
++s/4/A/ + new-file
++from :48
++M 100644 :5 file
++M 100644 :49 new-file
++
++commit refs/heads/added-removed
++mark :51
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574177 +0100
++data 22
++s/11/B/ + remove file
++from :50
++M 100644 :7 file
++D new-file
++
++commit refs/heads/added-removed
++mark :52
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574177 +0100
++data 8
++s/12/B/
++from :51
++M 100644 :9 file
++
++commit refs/heads/renamed-file
++mark :53
++author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574309 +0100
++data 7
++s/5/A/
++from :2
++M 100644 :3 file
++
++commit refs/heads/renamed-file
++mark :54
++author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574312 +0100
++data 21
++s/4/A/ + rename file
++from :53
++D file
++M 100644 :5 renamed-file
++
++commit refs/heads/renamed-file
++mark :55
++author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574319 +0100
++data 8
++s/11/B/
++from :54
++M 100644 :7 renamed-file
++
++commit refs/heads/renamed-file
++mark :56
++author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
++committer Thomas Gummerer <t.gummerer@gmail.com> 1556574319 +0100
++data 8
++s/12/B/
++from :55
++M 100644 :9 renamed-file
+ 
 -- 
 2.22.0.510.g264f2c817a
 
