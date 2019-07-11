@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D60A01F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB00F1F4B6
 	for <e@80x24.org>; Thu, 11 Jul 2019 18:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728851AbfGKSHT (ORCPT <rfc822;e@80x24.org>);
+        id S1728910AbfGKSHU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 14:07:20 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:41842 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728532AbfGKSHT (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 Jul 2019 14:07:19 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:34538 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728532AbfGKSHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 14:07:18 -0400
-Received: by mail-oi1-f194.google.com with SMTP id l12so5244342oil.1
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 11:07:18 -0700 (PDT)
+Received: by mail-ot1-f67.google.com with SMTP id o101so6779151ota.8
+        for <git@vger.kernel.org>; Thu, 11 Jul 2019 11:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ql+1M1X+uH6O7JjHfE97tWCvISHIa5cdnRwNP2RM9FI=;
-        b=AdJB03QBYzPTmMzY3M7tyhF282R9gcnFYEOPu0TCK4dZMl/Z7nXBM/E1t8gVVXwjJ4
-         AvazZE58uH3AO0ROueP/m0axGdyjiYh37xGS5qXmO7ho/hoc5S7ajTVhOosr79L8ahaf
-         2AQHRV5fCcQD1h+vmpnL1esJpZBcYbUm98GWZuSMZsTdyeVk7QzaCnC7OwdDx3Uz8lKg
-         3IunuTVSwokhXnjXQ8xj//diofO4sZjZVrHVPvkP4Eo1VaeV1X+xexC/QPm74Z01AFly
-         09qiSDsCwJhMKG+iLRsKIiwyfgRqImp/nqYL/BJDpODD9zn928YsMwysdMmgJEw3swzg
-         mMMQ==
+        bh=T5HgDcmCmGFRLPxSmjAeyz1noFR9+xePQ7dovYxMi2s=;
+        b=FdDlAg0XvdBpg6gZzK3+9bX+F1+qQdkaz47MxovO0i4SW4Mpt4CESzQis2bK1l3+/K
+         OqUDQ9/7aTtpymwpuXbB/CDvojyRbGBwAXBR434aMReMT7g1oJXi0N5KlR08GaQjaEKG
+         gujkUe3xyfBOHvRdWyoHBjI+xHhjtXzTBqjbkycpyErud1La4fkAYJLEYcvqrkc8YK5h
+         vGLWEKxs5ZkF4i054ndDx+A8oNOgAWrusw17tXgbuUloCtN7evcSHkUSAL8g04X0G0ar
+         IqjAbstEqKvZU1Mi/iZgV6lvjUnp4Ml+IK/0sLrLwxG3sym/8kyR3Hk1oOfWEzzu9rJO
+         i/fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Ql+1M1X+uH6O7JjHfE97tWCvISHIa5cdnRwNP2RM9FI=;
-        b=mhZm4sWQE5iqZaj2dGHpl6FWWdCqg/bKPzluK0sZzZQIl+urRljN6nbHTx8AT6TMp6
-         fa8AV54oCJ0ip5OHoYVUho7ROoQKZiVy0tZ6A+wDP67vp8XOxtiCKYg7ax2D9WGvkOi+
-         IS68r9VhRx+juOZB/Z6BGGlFnmI+8gIxYvLLHaOFVKjYA5+/XuqXpYBLR34qBwls01wP
-         65Hyyjq9DEmU4yQTx/yprPL2jGnFVCD/wdsMobb5awg396kdGtU3edTfqe79Y2nV9Dh1
-         TbCXSiVBN7UYuAF01EsfNkLWcBsJQAegjb5k397E+pax3y4UaMynaJxULSVXZsQ1evLS
-         Il5Q==
-X-Gm-Message-State: APjAAAUPkqTfdriW/HmS9dZJRfT8ETC1/P1fsv8UudSv/zRFMvMAb39V
-        0N3yd2NKVlfYRKNH10Vzpa4KnZaT
-X-Google-Smtp-Source: APXvYqw1l6Oc2j0OmA12YPvupmK/VBEJ7tJ35fuAaGT7lIwZOyXJ7AAeQxUIZoqTE0xuFCbrSpOtTw==
-X-Received: by 2002:aca:dc86:: with SMTP id t128mr3334016oig.130.1562868437681;
-        Thu, 11 Jul 2019 11:07:17 -0700 (PDT)
+        bh=T5HgDcmCmGFRLPxSmjAeyz1noFR9+xePQ7dovYxMi2s=;
+        b=Cl2JzWlPEiaV9qIU+3krgWxaVc/Cu4pVGoPY5822sFKPzs8MK26czvbmRqO00aI+9Q
+         21ijcCki6/ciYh1u/5CLbVAewkz8pP0wWC0AABBhXejZaPeslkGhhAekG20nQ2CO/g6Q
+         aR/Mznfcq1xNTwKgwuViVNmIHsvxT630zRwXM9s1w3Re9LZeGX3FwsvonQ4Uf2kMx4aY
+         8/2UprqrunR4mcfK0T3Byhmw+UTpswon8UVxMRERR10Y/cxgzdFNKJeT8pdggYhLoTqE
+         2OFoTewW9kJF1WNF3txGx521kO1VwZlBHxP3l30BZzyqANFsFbZyGKrieVWCLUPr7SiO
+         a6cw==
+X-Gm-Message-State: APjAAAVKDgIe/5upVyK3VZvK5nNmegjHmy4Z7eAVkyfpF1VDNP5brIOO
+        tjxKx9p+Qw1gYd9QmqBFDE/ekwzs
+X-Google-Smtp-Source: APXvYqyERePZS08kfwN3LXbrP3vMgPKnsTI6qWqsoqfa7iNiigf1aeHnEGPRXP4heGcGfqwqNbkylw==
+X-Received: by 2002:a9d:61c7:: with SMTP id h7mr4148425otk.357.1562868438782;
+        Thu, 11 Jul 2019 11:07:18 -0700 (PDT)
 Received: from nanabozho.attlocal.net ([2600:1700:8660:6160:5d50:4f59:ae8:3eb7])
-        by smtp.gmail.com with ESMTPSA id 132sm2131545oid.47.2019.07.11.11.07.17
+        by smtp.gmail.com with ESMTPSA id 132sm2131545oid.47.2019.07.11.11.07.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Jul 2019 11:07:17 -0700 (PDT)
+        Thu, 11 Jul 2019 11:07:18 -0700 (PDT)
 From:   Ariadne Conill <ariadne@dereferenced.org>
 To:     git@vger.kernel.org
 Cc:     Ariadne Conill <ariadne@dereferenced.org>
-Subject: [PATCH v3 2/3] log: add --no-use-mailmap option to complement --use-mailmap option
-Date:   Thu, 11 Jul 2019 13:06:43 -0500
-Message-Id: <20190711180644.30417-3-ariadne@dereferenced.org>
+Subject: [PATCH v3 3/3] tests: rework mailmap tests for git log
+Date:   Thu, 11 Jul 2019 13:06:44 -0500
+Message-Id: <20190711180644.30417-4-ariadne@dereferenced.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190711180644.30417-1-ariadne@dereferenced.org>
 References: <20190711180644.30417-1-ariadne@dereferenced.org>
@@ -62,51 +62,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When mailmap is enabled by default or by configuration, it may be
-useful to override the default behaviour.  Previously, it was
-possible to enable the mailmap feature when it was disabled by
-default or in the configuration, but it was not possible to disable
-the mailmap feature when it was enabled by default or by the
-configuration.
+In order to prove that the --no-use-mailmap option works as expected,
+we add a test for it which runs with -c log.mailmap=true to ensure that
+the option successfully negates the configured default.
 
-The --no-use-mailmap option equalizes this by allowing the user to
-explicitly enable or disable the mailmap feature according to their
-requirements.
+Additionally, since --use-mailmap is now the default behaviour, we
+remove mentions of --use-mailmap from the tests, since they are
+redundant.  We also rework some tests to explicitly define the
+log.mailmap variable in both true and false states.
 
 Signed-off-by: Ariadne Conill <ariadne@dereferenced.org>
 ---
- Documentation/git-log.txt | 5 +++++
- builtin/log.c             | 1 +
- 2 files changed, 6 insertions(+)
+ t/t4203-mailmap.sh | 49 ++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 41 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index b02e922dc3..50bc8f7da2 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -54,6 +54,11 @@ OPTIONS
- 	addresses to canonical real names and email addresses. See
- 	linkgit:git-shortlog[1].
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 43b1522ea2..3d6086ff96 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -422,8 +422,8 @@ Author: Some Dude <some@dude.xx>
+ Author: A U Thor <author@example.com>
+ EOF
  
-+--no-use-mailmap::
-+	Do not use the mailmap file to map author and commiter names
-+	and email addresses to canonical real names and email addresses.
-+	See linkgit:git-shortlog[1].
+-test_expect_success 'Log output with --use-mailmap' '
+-	git log --use-mailmap | grep Author >actual &&
++test_expect_success 'Log output with mailmap enabled (default)' '
++	git log | grep Author >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -437,18 +437,33 @@ Author: Some Dude <some@dude.xx>
+ Author: A U Thor <author@example.com>
+ EOF
+ 
+-test_expect_success 'Log output with log.mailmap' '
++test_expect_success 'Log output with log.mailmap enabled in config' '
+ 	git -c log.mailmap=True log | grep Author >actual &&
+ 	test_cmp expect actual
+ '
+ 
++cat >expect <<\EOF
++Author: CTO <cto@coompany.xx>
++Author: claus <me@company.xx>
++Author: santa <me@company.xx>
++Author: nick2 <nick2@company.xx>
++Author: nick2 <bugs@company.xx>
++Author: nick1 <bugs@company.xx>
++Author: A U Thor <author@example.com>
++EOF
 +
- --full-diff::
- 	Without this flag, `git log -p <path>...` shows commits that
- 	touch the specified paths, and diffs about the same specified
-diff --git a/builtin/log.c b/builtin/log.c
-index 3d2ce8fa3d..a9195bcb34 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -167,6 +167,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 		OPT__QUIET(&quiet, N_("suppress diff output")),
- 		OPT_BOOL(0, "source", &source, N_("show source")),
- 		OPT_BOOL(0, "use-mailmap", &mailmap, N_("Use mail map file")),
-+		OPT_NEGBIT(0, "no-use-mailmap", &mailmap, N_("Do not use mail map file"), 1),
- 		OPT_STRING_LIST(0, "decorate-refs", &decorate_refs_include,
- 				N_("pattern"), N_("only decorate refs that match <pattern>")),
- 		OPT_STRING_LIST(0, "decorate-refs-exclude", &decorate_refs_exclude,
++test_expect_success 'Log output with log.mailmap disabled in config' '
++	git -c log.mailmap=False log | grep Author >actual &&
++	test_cmp expect actual
++'
++
+ cat >expect <<\EOF
+ Author: Santa Claus <santa.claus@northpole.xx>
+ Author: Santa Claus <santa.claus@northpole.xx>
+ EOF
+ 
+-test_expect_success 'Grep author with --use-mailmap' '
+-	git log --use-mailmap --author Santa | grep Author >actual &&
++test_expect_success 'Grep author with mailmap enabled (default)' '
++	git log --author Santa | grep Author >actual &&
+ 	test_cmp expect actual
+ '
+ cat >expect <<\EOF
+@@ -456,16 +471,34 @@ Author: Santa Claus <santa.claus@northpole.xx>
+ Author: Santa Claus <santa.claus@northpole.xx>
+ EOF
+ 
+-test_expect_success 'Grep author with log.mailmap' '
++test_expect_success 'Grep author with log.mailmap enabled' '
+ 	git -c log.mailmap=True log --author Santa | grep Author >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'Only grep replaced author with --use-mailmap' '
+-	git log --use-mailmap --author "<cto@coompany.xx>" >actual &&
++test_expect_success 'Grep author with log.mailmap disabled' '
++	git -c log.mailmap=False log --author "<santa.claus@northpole.xx>" >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'Grep author with --no-use-mailmap' '
++	git log --no-use-mailmap --author "<santa.claus@northpole.xx>" >actual &&
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'Only grep replaced author with mailmap enabled' '
++	git log --author "<cto@coompany.xx>" >actual &&
++	test_must_be_empty actual
++'
++cat >expect <<\EOF
++Author: santa <me@company.xx>
++EOF
++
++test_expect_success 'Grep author with --no-use-mailmap + log.mailmap=True' '
++	git -c log.mailmap=True log --no-use-mailmap --author santa | grep Author >actual &&
++	test_cmp expect actual
++'
++
+ # git blame
+ cat >expect <<\EOF
+ ^OBJI (A U Thor     DATE 1) one
 -- 
 2.17.1
 
