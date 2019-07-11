@@ -2,108 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2398B1F461
-	for <e@80x24.org>; Thu, 11 Jul 2019 17:28:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 919161F461
+	for <e@80x24.org>; Thu, 11 Jul 2019 17:33:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728491AbfGKR2f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jul 2019 13:28:35 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46453 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728355AbfGKR2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jul 2019 13:28:35 -0400
-Received: by mail-wr1-f67.google.com with SMTP id z1so7129760wru.13
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 10:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=x+KaemgUVKyxGdWikjeZcCwmxXj480feW2ukSLj4NT0=;
-        b=ReFyVe3kzgQbiDmETdK3bw+lL3VV4v5dQ78VTDSfozW1ASt3m5hkB/6X8emiR+9cHq
-         9iPBqSmUuw8iegecXLAxjgReSl1/lC2xbiPt8YgWWFS+O6VPx9SBhD+yDAIOoqti3Q8M
-         89RAcFJptwo/RE6nSbzo0xEo3/tiHUBlJOB31bt8LCCVX/zkb2kmisOcB3tfyRl6IgNX
-         P2Vjxt5g+NXrtVT3wskjEbQac3Ogg0NTnqiY3j75IbrrHX4lKHnhDdmvG4Qrl6OsitZc
-         QE47JqR82Y4jfvzjvQcx5h4l3bdBEpmboF6l6shwwL5dXZM2rYS3UB8a8ry5pUJo35hE
-         9crQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=x+KaemgUVKyxGdWikjeZcCwmxXj480feW2ukSLj4NT0=;
-        b=IJJrzay+dCS35kME6GdPTcJZlXBA89z7dMd4dru1phAWB0D8RZlBr9szTKH1LgmiyV
-         bQG9+cCRo26QFz6fqRMh3xMO5Hz8+5hx9ilLuQIPLWFy1L7Yi6zOQFfSx1saEbkIG0KV
-         y5E8PFvCRN8eVoTFUH7LbCDz5KhYDAgxCbwE1UlnPJxpTc6/39kfupwW6On55pB5fvI/
-         Qd9UroqhQk2fN4G27s3wEFebsdQsyiA5DyPEChgMuPtx9pH4lcW/5VrAhhFxIXQuxoX1
-         4LRZzQMOsGJ8njIer4TNB1o/Z7pHFh5zqsEZhvTSDOVCmP+BnDNq8ZiSqi2927nnebMA
-         kYog==
-X-Gm-Message-State: APjAAAXMl1p/Do3EsJSAjXaxXUA89VTKbHOcysb0YxlLrsLqZ5PAmnOd
-        Koj+MudTyxPkHwn4bF9BYQyMUY9v+Ig=
-X-Google-Smtp-Source: APXvYqzqjw52ll1PV13G1gZ4flUAT6shjlcWPHHVbuigZlsEKfxqMGmscogQHReem7Yw9zZYqJ/USg==
-X-Received: by 2002:adf:e446:: with SMTP id t6mr6402437wrm.115.1562866113340;
-        Thu, 11 Jul 2019 10:28:33 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egd227.neoplus.adsl.tpnet.pl. [83.21.67.227])
-        by smtp.gmail.com with ESMTPSA id f204sm6982534wme.18.2019.07.11.10.28.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Jul 2019 10:28:32 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
-Subject: Re: [Question] Diff text filters and git add
-References: <009201d5369f$4da5d030$e8f17090$@nexbridge.com>
-        <20190709215104.GA20936@sigill.intra.peff.net>
-        <00bb01d5371d$453a8520$cfaf8f60$@nexbridge.com>
-Date:   Thu, 11 Jul 2019 19:28:29 +0200
-In-Reply-To: <00bb01d5371d$453a8520$cfaf8f60$@nexbridge.com> (Randall
-        S. Becker's message of "Wed, 10 Jul 2019 08:44:47 -0400")
-Message-ID: <86h87sa3b6.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1728478AbfGKRdB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jul 2019 13:33:01 -0400
+Received: from mail-gateway-shared14.cyon.net ([194.126.200.67]:33420 "EHLO
+        mail-gateway-shared14.cyon.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728268AbfGKRdB (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 11 Jul 2019 13:33:01 -0400
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared14.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1hlcwA-0004Ly-Rk
+        for git@vger.kernel.org; Thu, 11 Jul 2019 19:32:58 +0200
+Received: from [10.20.10.233] (port=62502 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.92)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1hlcw9-0003K8-LT; Thu, 11 Jul 2019 19:32:53 +0200
+Subject: Re: [PATCH v2 3/3] tests: add test for git log --no-use-mailmap
+To:     Ariadne Conill <ariadne@dereferenced.org>, git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+References: <20190711172626.16480-1-ariadne@dereferenced.org>
+ <20190711172626.16480-4-ariadne@dereferenced.org>
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <f2cd0072-95de-3e60-d860-a5dd2c58c41a@drbeat.li>
+Date:   Thu, 11 Jul 2019 19:32:51 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.7.2
 MIME-Version: 1.0
+In-Reply-To: <20190711172626.16480-4-ariadne@dereferenced.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-OutGoing-Spam-Status: No, score=-1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> On July 9, 2019 5:51 PM, Peff wrote:
-[...]
->> No, textconv only applies when generating a diff to output, and will nev=
-er
->> impact what's stored in Git.
->>=20
->> It sounds like you might want a clean filter instead, to sanitize the fi=
-le
->> contents as they come into Git (and perhaps a matching smudge filter to
->> convert back to the working-tree version if necessary).
->>=20
->> You're talking about "the diff engine" here, but note that git-add would=
- never
->> do a diff at all. It cares only about full sha1s (and optimizes out re-c=
-omputing
->> the sha1 on each invocation by using stat data). So outside of clean/smu=
-dge,
->> there's nothing else going on.
->
-> Thanks. I can script this instead. Will do an external diff then
-> --assume-unchanged when I detect an equivalence.
+On 11.07.19 19:26, Ariadne Conill wrote:
+> In order to prove that the --no-use-mailmap option works as expected,
+> we add a test for it which runs with -Dlog.mailmap=true to ensure that
 
-If you want to ignore changes, --assume-unchanged (i.e. lying to Git) is
-a wrong solution, as it can lead to data loss.  It is meant as
-performance optimization.
+s/-D/-c /
 
-A better solution would be to use --skip-worktree, which though meant
-for sparse checkout can be used for ignoring changes.  The only problem
-is that it can prevent some safe operations, like git-stash, because git
-thinks that it could lead to data loss.
+This ain't Java :-)
 
-Though I am not sure if they are needed with clean/smudge filter.
+> the option successfully negates the configured default.
+> 
+> Signed-off-by: Ariadne Conill <ariadne@dereferenced.org>
+> ---
+>  t/t4203-mailmap.sh | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 43b1522ea2..23a8947bce 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -465,6 +465,14 @@ test_expect_success 'Only grep replaced author with --use-mailmap' '
+>  	git log --use-mailmap --author "<cto@coompany.xx>" >actual &&
+>  	test_must_be_empty actual
+>  '
+> +cat >expect <<\EOF
+> +Author: santa <me@company.xx>
+> +EOF
+> +
+> +test_expect_success 'Grep author with --no-use-mailmap + log.mailmap=True' '
+> +	git -c log.mailmap=True log --no-use-mailmap --author santa | grep Author >actual &&
+> +	test_cmp expect actual
+> +'
+>  
+>  # git blame
+>  cat >expect <<\EOF
+> 
 
-Best,
---=20
-Jakub Nar=C4=99bski
+
+Cheers,
+Beat
