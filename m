@@ -2,99 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 077ED1F461
-	for <e@80x24.org>; Fri, 12 Jul 2019 06:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F20CB1F461
+	for <e@80x24.org>; Fri, 12 Jul 2019 08:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725840AbfGLGju (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jul 2019 02:39:50 -0400
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:36503 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725562AbfGLGju (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jul 2019 02:39:50 -0400
-Received: by mail-pl1-f175.google.com with SMTP id k8so4300778plt.3
-        for <git@vger.kernel.org>; Thu, 11 Jul 2019 23:39:50 -0700 (PDT)
+        id S1726159AbfGLIkZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jul 2019 04:40:25 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38305 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725877AbfGLIkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jul 2019 04:40:24 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y15so4008742pfn.5
+        for <git@vger.kernel.org>; Fri, 12 Jul 2019 01:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=6DoVg9gSn4qE9DTU1oL/KPD5tRXPSz+PILr/Mae4yrE=;
-        b=r88vgLWmm8u+sbJMjWD9khnqhmL4iCLPElXUEhJW4sMxuDFmUP725gWJ6g8KmKA19V
-         9+P3Sf5T1nqQEuVPvFy/rF/Zif5PYA1nuDkw+Nz/Z0XY1uH1yIpInltGFeszIIl33LsX
-         GjWdPENX1eRbS5W6+kjjQweETjVvvvyKMWdwlP9RZNHvmeQ/jDeAt+KGRKKoNC8AmSkU
-         A+Rnu/w75gyrHR/99ky7lsy0aLqaxFDjm+mK0LjFyWa3WcIdDbzITYYHEUzDIz0XTuiS
-         38I8hWU1VnAiaY7a73oC6/fqu6IpQ05QDXtbvDXhGEtuPq5XeZj2PTvpPv+Y7mt9Pqzv
-         qdTg==
+        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pVUYbqUrWBGJ9gOxBtxnfjPhibGE9pRHDY2iWuXGWI8=;
+        b=ksbjok2D008KemZhic+XsoAn48gQbmR2BcoCCwpd1s/VNKQYN5NUSEhx5MqPQATPie
+         Fz/mbCI3tvKrHpiJ96TGYx1eDyYXIRAprGejF4L9QKfhsg2NPgDhgAl87gocWJh6pPji
+         UySYnyiT3ANNVOxTuHV3iiOV7x35gBVW++yYe1GzgndisBgfAsaGwbYWG1N0/1sB1VaW
+         gv5jaxeBCEOMZB4a/74I1lhpQGw5nQBvYcsHBxM8xbpWaKGBkPZEryPdErnSeAMnuh+I
+         XCR4299MSgaHhHnH6t8ckhOzdsFUNbiBonjCRFLfWfDkJMUTsLAvIUba4fTrGeQxn3CC
+         i72g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=6DoVg9gSn4qE9DTU1oL/KPD5tRXPSz+PILr/Mae4yrE=;
-        b=k0DwG/D8Gqd1zovae9vJvyuAxLcRovwZrpO8W2E/REWWrwXU76xJTHWyNd731+J9dz
-         NWOs+rpo6u0vTcUZgiIsrb21RNTlL9Lq6VrkpPyTDnd3BRHEGk8BlpzlwJ2X14nuAOze
-         M0JGLo00Om7jwEnMRKgs5uJU82MKp7+am645k9mCEk2yZGJKTNgp7lNUG01gmC9R9p0M
-         URU0S6sZup6f71NtPxhzHDiFwYdK2zGNSpoAy9z/eKdssjdR27rcF5mQdAaKPUbL5Ycw
-         XXSMZJmkS9eqzIerZdW95ElljnE2pjOAAXUXOpbjpXgsrgVX8bUxkiQipyEG+v7uflxA
-         aG8Q==
-X-Gm-Message-State: APjAAAUVBuAUeYQcuEP7O9jyGBof+G8Onlrqzs+6GmtHQRKdYAZcE2G8
-        Ll033He/H8kk61Ov8f9bzakk81LRwzE1VcdUfIcEesvf
-X-Google-Smtp-Source: APXvYqwV5XOu++5K99qb83lcuL9VNAQ1HI6WMIF23q/LjQP6BtP/q/Z1dMtA3yzeLjKpIoYwTUOqVO85hwfOQ7wWBTU=
-X-Received: by 2002:a17:902:204:: with SMTP id 4mr9257332plc.178.1562913589717;
- Thu, 11 Jul 2019 23:39:49 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=pVUYbqUrWBGJ9gOxBtxnfjPhibGE9pRHDY2iWuXGWI8=;
+        b=Yca7TolEBgvoElsOQsgydGqoteaHltKRw/gIEF/VoBawxH2FKB2I9zCP+/rjFuHOhb
+         sVpXD/x1zHOWgELu3GSODF6J7bm9s7RH9ynAlSnDRv4TvWEsr0iivAFtIWiFojGLaM1p
+         avF/RglxN7FRtglEZczUZ8KYyKWkWstg6muBQDI0PRrLcL7/1CqnJ+WkrfEkwW7ok4M4
+         04PQEVbzVfrehzY3I1Ct8JskD2ieNE9fLUwzi6wVgE5b7HqVIlsrI9Lsdr0u4U4/51YW
+         tAqTe7ZOj83buMLi6dKx6lwRGApoCmIyk5PLXTrzfAI0h0dWh6oNK8slEn1lQcmgAi7W
+         Thyg==
+X-Gm-Message-State: APjAAAUNs89lMgGjVUibA7Z8mL2SglHKBk4tEes7pdL0ESpM+nfPWvaA
+        EDJGVNg/n80/4a3Sm2/ZnXqcHi6jfBRz9CqgaaK3OA==
+X-Google-Smtp-Source: APXvYqzl6Qt3lsSbiwDrfgQIavzUNv1pKqQrCVG1qWT97M2iOUOSipESe4kZcv24Yj//fgDfobxGT+JtP04d5PMFN7Y=
+X-Received: by 2002:a17:90a:8b98:: with SMTP id z24mr10357839pjn.77.1562920824015;
+ Fri, 12 Jul 2019 01:40:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <CACf0ZibKt-mpqpavmK3SVMC-Lqm9KB9kUvPj-KFkvT_LVRyOZw@mail.gmail.com>
- <20190711220118.GL9224@genre.crustytoothpaste.net>
-In-Reply-To: <20190711220118.GL9224@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 12 Jul 2019 08:39:36 +0200
-Message-ID: <CAN0heSp9ZsEkxNReV8EMpNzTWJCLqL2hjQir+oA8bkEE6zv5uA@mail.gmail.com>
-Subject: Re: Pull vs push messages
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Michael Kielstra <pmkielstra@college.harvard.edu>,
-        Git Mailing List <git@vger.kernel.org>
+References: <20190711183727.8058-1-ariadne@dereferenced.org>
+ <xmqqy314qsgp.fsf@gitster-ct.c.googlers.com> <xmqqtvbsqs9x.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvbsqs9x.fsf@gitster-ct.c.googlers.com>
+From:   Ariadne Conill <ariadne@dereferenced.org>
+Date:   Fri, 12 Jul 2019 03:40:13 -0500
+Message-ID: <CAAOiGNwGqtSoG8vsy+3gb0=tDVvA1YcA3FcDP0KQMa0=xp5j9w@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] use mailmap by default in git log
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 12 Jul 2019 at 00:16, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Hello,
+
+On Thu, Jul 11, 2019 at 2:34 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 2019-07-11 at 21:36:50, Michael Kielstra wrote:
-> > Hi all,
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Even though I personally think it is an OK longer-term end goal, the
+> > execution looks too hasty.  The normal way we handle a big behaviour
+> > change like this is to do the following in steps, in different
+> > releases:
 > >
-> > I noticed that git pull reports "Already up to date." but git push
-> > reports "Everything up-to-date".  (I'm using git 2.20.1, the latest in
-> > the Ubuntu repos.)  Just for a consistent user experience, would it be
-> > worth standardizing on:
+> >  - In the first release, introduce an early adoptor option (say
+> >    log.usemailmap) that can be turned on by the user, but is off by
+> >    default.  IOW, the initial step is "no change in behaviour,
+> >    unless you ask for it".  This step also makes sure that the way
+> >    to disable it for those who opt into the option from the command
+> >    line (i.e.  the --no-use-mailmap option) works well.
 > >
-> > Hyphenation (up-to-date vs up to date)?
-> > Periods at the end of one-sentence messages?
-> > Colloquialisms and tone of voice?  "Already up to date." sounds like a
-> > terse error message but "Everything up-to-date" sounds like a chatty
-> > friend.
+> >  - In the second release, when "git log" is run without command line
+> >    "--[no-]use-mailmap" and "log.usemailmap" is not set by the user,
+> >    give warning about an upcoming flipping of the default, with an
+> >    advice message that the user can squelch the warning by setting
+> >    the option.
+> >
+> >  - In the final release, flip the default and remove the warning.
+> >
+> > Usually there needs sufficient time between the second step and the
+> > third step, so that people will not miss the warning.
 >
-> I'd be happy to review a patch that changes this, if you think it's
-> worth changing. Generally the way things work here is that except for
-> obvious bugs, people send patches for things they care about, and then
-> other folks will review and make suggestions, or sometimes there won't
-> be any interest in a change, and the patch is dropped.
->
-> We'd probably want to standardize on "up to date", since that's the
-> correct form here according to the Chicago Manual of Style, and drop the
-> period, since this isn't a complete sentence.
+> IIUC, we are between step 1 and step 2.  The configuration already
+> exists and uses the safe (i.e. the same as before) default.  Your
+> change combines the step 2 and step 3 into one, which will not work.
 
-There's 7560f547e6 ('treewide: correct several "up-to-date" to "up to
-date"', 2017-08-23), which changed a few of these, but also explains why
-it leaves "Everything up-to-date" unchanged. Whether that assessment is
-the One True Way now 2 years later, I'm not the right person to say.
+Makes sense.
 
-Michael, you can perhaps find some discussion leading up to / about that
-patch on https://public-archive.org/git/
+> What we need at this point is the "second release" phase, i.e.
+> additional warnings without yet changing the default behaviour.
+> After it is given to the end users and sufficient time passes, we
+> can flip the default.
 
-Martin
+Do you have a proposed timetable for this?  I can add a warning
+message and we can proceed with the warning message for now and then
+flip the defaults later.  I just need to know what version you would
+like to do the flip in (3.0?) so that I can write the warning message.
+
+Assuming the release you would like to flip the setting in is 3.0, I
+would propose something like this:
+
+Warning: The `git log` command will default to using the mailmap file
+if present to map contributor names as of Git 3.0.  If you want to
+enable this behaviour now, use `git config --global log.mailmap true`
+to enable it.  If you want to explicitly disable this behaviour in the
+future, use `git config --global log.mailmap false` to disable it.
+
+Your thoughts on this message?
+
+Ariadne
