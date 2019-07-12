@@ -2,363 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A5B31F461
-	for <e@80x24.org>; Fri, 12 Jul 2019 10:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A1131F461
+	for <e@80x24.org>; Fri, 12 Jul 2019 13:50:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726763AbfGLKpG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jul 2019 06:45:06 -0400
-Received: from mout.gmx.net ([212.227.17.22]:35325 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726576AbfGLKpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jul 2019 06:45:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1562928297;
-        bh=rtetGd1Hkt1KcZDMtc+9qsMAI4/zDAznYWHRx654bHg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UJ8LF32WVWw319ascm84G8RW0p5WUFbaxvngomh1rRIO0LsCQwTws71o8CVKAaaN8
-         /Nlv16l2Mp7jhW/kyQfi86QZh8TnuGMQIIC/g5ipwSWMF/zCddZ5GRLhP3kH3ulO1C
-         QGu7Tb00Nlm0BZMArAzbhPC8uiVqsk3+kiIlo8Lc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LrJTs-1iSp2z0v08-01331y; Fri, 12
- Jul 2019 12:44:57 +0200
-Date:   Fri, 12 Jul 2019 12:44:55 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 00/14] output improvements for git range-diff
-In-Reply-To: <20190711160851.14380-1-t.gummerer@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907121244270.47@tvgsbejvaqbjf.bet>
-References: <20190708163315.29912-1-t.gummerer@gmail.com> <20190711160851.14380-1-t.gummerer@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727234AbfGLNuP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jul 2019 09:50:15 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:36062 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbfGLNuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jul 2019 09:50:15 -0400
+Received: by mail-lj1-f175.google.com with SMTP id i21so9413784ljj.3
+        for <git@vger.kernel.org>; Fri, 12 Jul 2019 06:50:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZRnYYW87GRgxUJgENbTziriWzEioHJsWj4cLe46N5nU=;
+        b=fJzGzPCmrTVfdA3mYAQmnsG2S0YhJ3u1nILcTiwwM5+89UKem//7elf8Xa7yxh2/KW
+         lysCf5l9IrQAPPrVGUzUOaMhp3+KKiSR4qDDRLhIi6t5V6zzUm50vD2Uy1b8bnY1HSWL
+         ax8B1d+VFAJx8188Ldijc2QJz9eqzumiuaPkejOfDYr1rOTKNALWykVO3FM0Mj3S6dEm
+         jwhLeQGYa0aZvLhi3Dh4CxWaInjFjErB/wHYBTmYf0ys+e0+KCG3UR7UVcN6JLp39rry
+         YJJVpYcwicsOK3UAo6KTDHPRZa8BX1kBV4E8dwmGZy15kqD7wkRAqFy7uNd84Zty78OB
+         DDzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=ZRnYYW87GRgxUJgENbTziriWzEioHJsWj4cLe46N5nU=;
+        b=N4caUfsZ+LyBqAwTEbDbdylxuHpox0RKwkj84kyWL6Vq9YF15t4keDbJUgxMCH94yC
+         oB0CVRfZhGZCOlqQmMOHSFe1xbTbCS+YH1xEmlcQobdgHTOJiQM77MTjCuNJYqYyYBdt
+         +sZCUBMTMiR/3jdIEQp23kbTHpJP/zMLp8O+14hcivQobgnaJ4MlVtxhmiUY2Bgu8ge3
+         /sp1YoXVqkn25IiXwtia7ADmAdBTbyegAIufCmxUfkx13HhCdEQXt2RrxZ2tgVcER0hh
+         OX8C/scqo9zuhhrTCjLSQmr8HNGgUBiuVdm+Ab0y0QgjcbmVUDSbAbHX7tiB3a7V/5p2
+         rlJw==
+X-Gm-Message-State: APjAAAW7VQ3rcoQyCvrFp/1d27TVGYRx/p4gdnXREImbqRhSbBiqRduk
+        TD1LLBIJRf6u0G/ueppZTBOYF9Bt
+X-Google-Smtp-Source: APXvYqxPkTTQKvH6U3twMCHAjIY2R29/oEdqHCpSFokEmwhVMgyeYln8ZIYEIHJ+lduJW84FhHyDJQ==
+X-Received: by 2002:a2e:900c:: with SMTP id h12mr5749007ljg.197.1562939412346;
+        Fri, 12 Jul 2019 06:50:12 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id l24sm1487764lji.78.2019.07.12.06.50.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 Jul 2019 06:50:11 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Elijah Newren <newren@gmail.com>, usbuser@mailbox.org,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Unexpected or wrong ff, no-ff and ff-only behaviour
+References: <423596682.8516.1562665372094@office.mailbox.org>
+        <xmqqa7dnw9b1.fsf@gitster-ct.c.googlers.com>
+        <1152121968.7459.1562688927235@office.mailbox.org>
+        <CABPp-BHpkcOSkTrNDPGWRgSJgbqkc0PRqMqmesg7tQdS5TfMDA@mail.gmail.com>
+        <275487563.12198.1562691633735@office.mailbox.org>
+        <CABPp-BGPLxR7NgXRHppLy_W0c=Odhhns2RjcQ4iWKKQMz+SpDQ@mail.gmail.com>
+        <CAGyf7-FW-_4AbWE735-=7WjZAaTLHOT_QuWOoHKAjOzZCbWhFA@mail.gmail.com>
+        <xmqqtvbtu9uo.fsf@gitster-ct.c.googlers.com>
+        <87sgrdf91j.fsf@osv.gnss.ru>
+        <xmqqftncsdv4.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 12 Jul 2019 16:50:10 +0300
+In-Reply-To: <xmqqftncsdv4.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 11 Jul 2019 10:03:11 -0700")
+Message-ID: <87blxz9xbh.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ta1HFSNC9HCVFTdNxzOKJstrDVFdaGuweqRXLAXfQ07pmM2KQVB
- 1p8DirihVqdc1agSDJl5E9+kI5uLx6ad87BWE+kUPiRBT23AfP7bHxgGOB3lwH1dh4lWgt8
- zNkw0UCgdHUytjsJWNBPwQqTQNfwnXBTcnXECncIzSYJvcgXsL5tSFn6O4Qm9GrBnQb9JA+
- wSG2hKnDZXKLscnk4JcyA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:scM1CX+Wk6E=:HuufjuYETX3Lo3X0IQhgSa
- pKO/ZXE0USyOdtfJ2pb0cDGVXLY9BnTw8w8RyYX1TISM0H5bgU5u3vroLMu6FAD9ipDyI5MdU
- Cih5i4pS2lHw7LmVJQiXfQdV26GJp0yeS4/coprk+lWQtULYX2ejdmWj/uQCqZSws58fc+rXH
- uVBuXOYII5ZaZZhoUrgdQ21rkU2x27F1XvYhhNRoJPYxDW7cDywsLd+IlB/Xd7Bbq0WFpvA61
- Nz4/DWWvnJTjR9hJAWP5TzgmvsIL7QzXb4lkw9pdNCEbwLwBT/amfx0OtUHTmw1PjqxBWew8V
- 6xe9lC+vMIpkK+qXt/gD3SNFCqbEulnwHcHjn4dFHMrA/oHcNCRbfcZV0jq0YlzLGsfEZG5jj
- C5DtDnOYY1PwscF8XwXpWz5hf1TG6G85sfcXvbrWRcpDn1s7TGIAX4TZ8V3UCoYgIMO4/JCWR
- nUfYfZ3B1vK3MY9iD5u5oDEqqVpqZJObVquSlAZXFoWXszw90ZwPPhFKS93sJPTaCVyTiWAGY
- PjIAjza2VUKV918F+MtyZohk9SNaDK+bv29kZWpEXaUOViJKWl8l1KwrawTnUMVX47yV109Cq
- pp4cqOKYwZHwrZAUj0svsxjhT4/A8MbUbSvTgv/7C+3j15ICtQ8M0H66o4ajVdbYhHwReMMDz
- 48FL6HhA/dXEf/p9L4uN5mutAFu7te1eThpzTMgHbRXSlD5F3fo2yJj4SB0J3fJQY7+sx2UX0
- 4z/o63CqhrrWSvH2A5f+niMPwh9rr47q14F1vZShYUFrF/xqfxl0pne0arG9g3PgtKgfLlC0c
- DA6VGDOTEiRgEQxSR8zQnMzyKmUiSoOWPR/eGDCs9gg8X7dnBm1cTF6QMJMnjqKCxUIicAm2K
- zi39orkp9GolPFI+RlHU/lIyYS1WFJN5psu6I/iRXmfwoRyHKobcGjwgCYuuM6rAf29SwaEVe
- sVM+ZO/6V6VGR7VnZ3+OIv15hmDghXVEft1cy9r9t6eJz1m1HAwMxmclirE/pjRGxX+j6AEUp
- QaUDTJe00Ak55vysH2YWYvwtKULkhBHSUVmV6h7vCoQ+JK/+MA+3xuhyAq5qCVJw3MoQY0BKl
- PgbgXLlF8+uZNJPUuFtchyORTV+PHBF2mqe
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, 11 Jul 2019, Thomas Gummerer wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> [...]
+>>
+>>> The "the tip being merged into the mainline must always be
+>>> fast-forwardable",
+>>
+>> It's rather "the tip being merged into the mainline must be fast-forwardable the
+>> first time it is merged".
+>>
+>>> however, is not consistent with the topic branch workflow, and I do
+>>> not mean this in the sense that you should never rebase just before
+>>> submitting (which is a bad practice). For an initial merge of the
+>>> topic to the mainline, the project can keep rebasing to the
+>>> then-current tip of the mainline, and as long as they can afford the
+>>> cycle to test the result, "record the range of the topic branch by
+>>> making a redundant merge" would work.
+>>
+>> Yes, that's exactly it, and, as the rule holds for the first topic merge
+>> only, the rest of workflow is as usual, no drastic changes.
+>>
+>> Overall, it only ensures the first merge of the topic is semantically
+>> simpler, nothing more.
+>
+> But then you have to know to say or omit --ff-only if you are
+> mergint the topic for the first time.  The second and subsequent
+> merges, your merges won't be "semantically simple" at all.
 
-> Thanks Junio for the comment on the previous round [1].  This round
-> reanmes the struct we're using in apply.c to 'struct gitdiff_data',
-> and updates the commit message of 7/14 to reflect the new name of the
-> renamed function.
-
-Yep, and the range-diff looks good to me, too.
-
-Thank you!
-Dscho
+Yes, the second and the rest (if any) won't differ, but having the first
+one, that supposedly introduces most of changes, "semantically simple"
+is still an advantage.
 
 >
-> [1]: https://public-inbox.org/git/20190708163315.29912-1-t.gummerer@gmai=
-l.com/
+> And your first "semantically simple" merge is likely to be a merge
+> between the then-current tip, and a topic that has been prepared
+> over a few hours (or longer) and has sufficiently been tested, but
+> has gotten rebased immediately before being merged because of this
+> "must fast-forwardable to maintain semantic simplicity" policy to
+> catch up with the ever-moving-forward tip of the mainline.  The end
+> result of such a "semantically simpler" merge is as good as the
+> "freshly rebased, never had sufficient time to verify the result"
+> iteration of the topic branch.
+
+Yes, this makes sense only in otherwise rebase-based workflows, when you
+do rebase anyway.
+
+> How would such a state that was freshly rebased without chance of
+> enough validation be better than merging the "sufficiently been
+> tested in isolation" state without doing such a rebase?  If your
+> answer is "but the contributor would test after rebasing and before
+> doing the --ff-only-plus-no-ff merge", then perhaps the contributor
+> can also test the result of a (trial) merge before it actually gets
+> merged, no?
+
+Yes, I mean a workflow where testing of rebased (or merged, doesn't
+matter, as they should actually be the same thing) version is possible
+or even required, and I believe that in this particular case testing
+rebased version and merging the result makes more sense, see below.
+
 >
-> Thomas Gummerer (14):
->   apply: replace marc.info link with public-inbox
->   apply: only pass required data to skip_tree_prefix
->   apply: only pass required data to git_header_name
->   apply: only pass required data to check_header_line
->   apply: only pass required data to find_name_*
->   apply: only pass required data to gitdiff_* functions
->   apply: make parse_git_diff_header public
->   range-diff: fix function parameter indentation
->   range-diff: split lines manually
->   range-diff: don't remove funcname from inner diff
->   range-diff: suppress line count in outer diff
->   range-diff: add section header instead of diff header
->   range-diff: add filename to inner diff
->   range-diff: add headers to the outer hunk header
+> If we have a project like this:
 >
->  apply.c                | 186 ++++++++++++++++++-----------------------
->  apply.h                |  48 +++++++++++
->  diff.c                 |   5 +-
->  diff.h                 |   1 +
->  range-diff.c           | 124 +++++++++++++++++++--------
->  t/t3206-range-diff.sh  | 124 ++++++++++++++++++++++-----
->  t/t3206/history.export |  84 ++++++++++++++++++-
->  7 files changed, 409 insertions(+), 163 deletions(-)
+>         A               topic that is slightly stale
+>        /
+>   o---F---o---o---X     mainline
 >
-> Range-diff against v3:
->  1:  ef2245edda =3D  1:  ef2245edda apply: replace marc.info link with p=
-ublic-inbox
->  2:  94578fa45c =3D  2:  94578fa45c apply: only pass required data to sk=
-ip_tree_prefix
->  3:  988269a68e =3D  3:  988269a68e apply: only pass required data to gi=
-t_header_name
->  4:  a2c1ef3f5f =3D  4:  a2c1ef3f5f apply: only pass required data to ch=
-eck_header_line
->  5:  0f4cfe21cb =3D  5:  0f4cfe21cb apply: only pass required data to fi=
-nd_name_*
->  6:  07a271518d !  6:  42665e5295 apply: only pass required data to gitd=
-iff_* functions
->     @@ -28,7 +28,7 @@
->       #include "rerere.h"
->       #include "apply.h"
+> M, A', and N should end up with identical trees:
 >
->     -+struct parse_git_header_state {
->     ++struct gitdiff_data {
->      +	struct strbuf *root;
->      +	int linenr;
->      +	int p_value;
->     @@ -42,7 +42,7 @@
->       }
 >
->      -static int gitdiff_hdrend(struct apply_state *state,
->     -+static int gitdiff_hdrend(struct parse_git_header_state *state,
->     ++static int gitdiff_hdrend(struct gitdiff_data *state,
->       			  const char *line,
->       			  struct patch *patch)
->       {
->     @@ -51,7 +51,7 @@
->       #define DIFF_NEW_NAME 1
+>         A-----------M   topic that is slightly stale, merged into mainline
+>        /           /
+>   o---F---o---o---X---N mainline with A' merged
+>                    \ /
+>                     A'  mainline with A rebased on top as A'
 >
->      -static int gitdiff_verify_name(struct apply_state *state,
->     -+static int gitdiff_verify_name(struct parse_git_header_state *stat=
-e,
->     ++static int gitdiff_verify_name(struct gitdiff_data *state,
->       			       const char *line,
->       			       int isnull,
->       			       char **name,
->     @@ -77,7 +77,7 @@
->       }
+> And by forcing to rebase A to A' before merging into the mainline as
+> N, compared to advancing mainline from X to M, one major difference
+> the workflow is making is to _lose_ the information that the topic
+> was cooked in the context of an older mainline and did not take what
+> happened since F until X into account.  Rebasing it to A' without
+> giving the result sufficient vetting means you are forcing the
+> updated topic to pretend as if it also took F..X into account,
+> making it harder to diagnose subtle interactions with A and F..X
+> later that you did not spot when you made A'; merging to create M
+> does not have such a problem.  As A' and M would have the identical
+> trees, the same bug resulting from such a subtle interactions would
+> be there if A' has such an issue, but at least M is more honest and
+> lets us know that A itself predated what happened between F..X.
 >
->      -static int gitdiff_oldname(struct apply_state *state,
->     -+static int gitdiff_oldname(struct parse_git_header_state *state,
->     ++static int gitdiff_oldname(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -86,7 +86,7 @@
->       }
->
->      -static int gitdiff_newname(struct apply_state *state,
->     -+static int gitdiff_newname(struct parse_git_header_state *state,
->     ++static int gitdiff_newname(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -95,7 +95,7 @@
->       }
->
->      -static int gitdiff_oldmode(struct apply_state *state,
->     -+static int gitdiff_oldmode(struct parse_git_header_state *state,
->     ++static int gitdiff_oldmode(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -103,7 +103,7 @@
->       }
->
->      -static int gitdiff_newmode(struct apply_state *state,
->     -+static int gitdiff_newmode(struct parse_git_header_state *state,
->     ++static int gitdiff_newmode(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -111,7 +111,7 @@
->       }
->
->      -static int gitdiff_delete(struct apply_state *state,
->     -+static int gitdiff_delete(struct parse_git_header_state *state,
->     ++static int gitdiff_delete(struct gitdiff_data *state,
->       			  const char *line,
->       			  struct patch *patch)
->       {
->     @@ -120,7 +120,7 @@
->       }
->
->      -static int gitdiff_newfile(struct apply_state *state,
->     -+static int gitdiff_newfile(struct parse_git_header_state *state,
->     ++static int gitdiff_newfile(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -129,7 +129,7 @@
->       }
->
->      -static int gitdiff_copysrc(struct apply_state *state,
->     -+static int gitdiff_copysrc(struct parse_git_header_state *state,
->     ++static int gitdiff_copysrc(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -141,7 +141,7 @@
->       }
->
->      -static int gitdiff_copydst(struct apply_state *state,
->     -+static int gitdiff_copydst(struct parse_git_header_state *state,
->     ++static int gitdiff_copydst(struct gitdiff_data *state,
->       			   const char *line,
->       			   struct patch *patch)
->       {
->     @@ -153,7 +153,7 @@
->       }
->
->      -static int gitdiff_renamesrc(struct apply_state *state,
->     -+static int gitdiff_renamesrc(struct parse_git_header_state *state,
->     ++static int gitdiff_renamesrc(struct gitdiff_data *state,
->       			     const char *line,
->       			     struct patch *patch)
->       {
->     @@ -165,7 +165,7 @@
->       }
->
->      -static int gitdiff_renamedst(struct apply_state *state,
->     -+static int gitdiff_renamedst(struct parse_git_header_state *state,
->     ++static int gitdiff_renamedst(struct gitdiff_data *state,
->       			     const char *line,
->       			     struct patch *patch)
->       {
->     @@ -177,7 +177,7 @@
->       }
->
->      -static int gitdiff_similarity(struct apply_state *state,
->     -+static int gitdiff_similarity(struct parse_git_header_state *state=
-,
->     ++static int gitdiff_similarity(struct gitdiff_data *state,
->       			      const char *line,
->       			      struct patch *patch)
->       {
->     @@ -186,7 +186,7 @@
->       }
->
->      -static int gitdiff_dissimilarity(struct apply_state *state,
->     -+static int gitdiff_dissimilarity(struct parse_git_header_state *st=
-ate,
->     ++static int gitdiff_dissimilarity(struct gitdiff_data *state,
->       				 const char *line,
->       				 struct patch *patch)
->       {
->     @@ -195,7 +195,7 @@
->       }
->
->      -static int gitdiff_index(struct apply_state *state,
->     -+static int gitdiff_index(struct parse_git_header_state *state,
->     ++static int gitdiff_index(struct gitdiff_data *state,
->       			 const char *line,
->       			 struct patch *patch)
->       {
->     @@ -204,7 +204,7 @@
->        * into the next diff. Tell the parser to break out.
->        */
->      -static int gitdiff_unrecognized(struct apply_state *state,
->     -+static int gitdiff_unrecognized(struct parse_git_header_state *sta=
-te,
->     ++static int gitdiff_unrecognized(struct gitdiff_data *state,
->       				const char *line,
->       				struct patch *patch)
->       {
->     @@ -212,7 +212,7 @@
->       			    struct patch *patch)
->       {
->       	unsigned long offset;
->     -+	struct parse_git_header_state parse_hdr_state;
->     ++	struct gitdiff_data parse_hdr_state;
->
->       	/* A git diff has explicit new/delete information, so we don't gu=
-ess */
->       	patch->is_new =3D 0;
->     @@ -228,7 +228,7 @@
->       		static const struct opentry {
->       			const char *str;
->      -			int (*fn)(struct apply_state *, const char *, struct patch *);
->     -+			int (*fn)(struct parse_git_header_state *, const char *, struct=
- patch *);
->     ++			int (*fn)(struct gitdiff_data *, const char *, struct patch *);
->       		} optable[] =3D {
->       			{ "@@ -", gitdiff_hdrend },
->       			{ "--- ", gitdiff_oldname },
->  7:  9cb6732a5f !  7:  3068fda8a9 apply: make parse_git_header public
->     @@ -1,9 +1,12 @@
->      Author: Thomas Gummerer <t.gummerer@gmail.com>
->
->     -    apply: make parse_git_header public
->     +    apply: make parse_git_diff_header public
->
->     -    Make parse_git_header a "public" function in apply.h, so we can=
- re-use
->     -    it in range-diff in a subsequent commit.
->     +    Make 'parse_git_header()' (renamed to 'parse_git_diff_header()'=
-) a
->     +    "public" function in apply.h, so we can re-use it in range-diff=
- in a
->     +    subsequent commit.  We're renaming the function to make it clea=
-rer in
->     +    other parts of the codebase that we're talking about a diff hea=
-der and
->     +    not just any header.
->
->          Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
->
->     @@ -70,7 +73,7 @@
->      +			  struct patch *patch)
->       {
->       	unsigned long offset;
->     - 	struct parse_git_header_state parse_hdr_state;
->     + 	struct gitdiff_data parse_hdr_state;
->      @@
->       	 * or removing or adding empty files), so we get
->       	 * the default name from the header.
->     @@ -100,7 +103,7 @@
->      +	for (offset =3D len ; size > 0 ; offset +=3D len, size -=3D len, =
-line +=3D len, (*linenr)++) {
->       		static const struct opentry {
->       			const char *str;
->     - 			int (*fn)(struct parse_git_header_state *, const char *, struct=
- patch *);
->     + 			int (*fn)(struct gitdiff_data *, const char *, struct patch *);
->      @@
->       			res =3D p->fn(&parse_hdr_state, line + oplen, patch);
->       			if (res < 0)
->  8:  76a11ce995 =3D  8:  781d054cab range-diff: fix function parameter i=
-ndentation
->  9:  6f70e7faa6 =3D  9:  68a2953310 range-diff: split lines manually
-> 10:  6618cdff2c =3D 10:  8ae95d053b range-diff: don't remove funcname fr=
-om inner diff
-> 11:  2667df4fa5 =3D 11:  e572510c52 range-diff: suppress line count in o=
-uter diff
-> 12:  47cd8c6733 =3D 12:  45605db760 range-diff: add section header inste=
-ad of diff header
-> 13:  f67fd5dd9a =3D 13:  89a27fbeaa range-diff: add filename to inner di=
-ff
-> 14:  812893a5dc =3D 14:  8bee2c525f range-diff: add headers to the outer=
- hunk header
->
-> --
-> 2.22.0.510.g264f2c817a
->
+> So...
+
+So it has a disadvantage for the workflow you have in mind, and you
+won't use the feature should you decide the disadvantage outweighs the
+aforementioned advantage, as usual.
+
+However, committing untested M still doesn't taste as the best possible
+way of handling things in general. It'd be best to actually test M or N
+before publishing. In a workflow where there are measures to do it,
+testing A' (= N) and publishing N both makes more sense and results in
+simpler history than merging A and then testing and publishing M.
+
+That said, even if we rather all do agree rebase workflow is always
+inferior to merge one, is it satisfactory excuse to actively resist
+otherwise logical behavior of 'git merge' that is even documented? I
+don't think so.
+
+Thus, one way or another, I'd still vote for keeping options description
+intact, and rather fix the implementation to match the manual, i.e.,
+make the --[no]-ff actually orthogonal to --ff-only.
+
+-- Sergey
