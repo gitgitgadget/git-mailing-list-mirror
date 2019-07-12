@@ -2,88 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 538971F461
-	for <e@80x24.org>; Fri, 12 Jul 2019 21:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 994E11F461
+	for <e@80x24.org>; Fri, 12 Jul 2019 23:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727682AbfGLV6Y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jul 2019 17:58:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35336 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727245AbfGLV6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jul 2019 17:58:24 -0400
-Received: (qmail 30892 invoked by uid 109); 12 Jul 2019 21:58:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 12 Jul 2019 21:58:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5054 invoked by uid 111); 12 Jul 2019 21:59:20 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 12 Jul 2019 17:59:20 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jul 2019 16:58:16 -0500
-Date:   Fri, 12 Jul 2019 16:58:16 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 0/5] oidmap: handle entries with the same key
-Message-ID: <20190712215815.GB3593@sigill.intra.peff.net>
-References: <20190707083002.7037-1-chriscool@tuxfamily.org>
- <xmqqd0ikxok6.fsf@gitster-ct.c.googlers.com>
- <xmqqlfx3p0zo.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlfx3p0zo.fsf@gitster-ct.c.googlers.com>
+        id S1727703AbfGLXCK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jul 2019 19:02:10 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:40599 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727698AbfGLXCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jul 2019 19:02:10 -0400
+Received: by mail-ot1-f66.google.com with SMTP id e8so11007752otl.7
+        for <git@vger.kernel.org>; Fri, 12 Jul 2019 16:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=OMzvkrEbOjhacFuFWR5bNiLZEVr1R8eqU8Ldc7iLi1g=;
+        b=Q5H8U+7Bbc5vVlN+cWygIogEtvEi5lUTs9rAPI/TU25VlZkO+Tc78Dxz+bY2f7ZXHg
+         q4AKAPac0MVJFmPoko+jp1+4/VtTJoquUgQ3Ad2a5TpXtQdqq5H3yLXaTq/5LX04CXUQ
+         FpYrNK1SbGCCmQlym8XvmOdIeUnPZIELpsusLJaKmrjpDobUee2fF5TUeXBLMWroHNXn
+         IDck+doo257WV00SlgbpSrIaNOuf+5p2RGEENK8hV/+bgJhAEiDQe+q7Od4jfcBQjFBc
+         zTaArme/zE12i1kUF3UMmUoyftLiz3VALurYVfK3ZcLgOAWoqEvTL3dQTKuixFgX4UW4
+         fnZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OMzvkrEbOjhacFuFWR5bNiLZEVr1R8eqU8Ldc7iLi1g=;
+        b=DZ1nsAHsF/KfREmH4xRdT15k8JKv2NbcnV5RlDTazMHOTLcwEXoaHhMR6ZBfsHSQD+
+         XZDuObo1J45wX2GOCHui0D6YCvm1LEidQmYWg0vK5d2nw57dUMciIgIB0jJIfaun6ay3
+         Apj0gb7abTSoF4bEt3yXmm378iFX8y8T+6ONpY4wdlFGykilGwBY8BOkCH6fXJYp7Kza
+         ZbeJ1/JSC8zgXkMTIoTLP6jj5Wo8NXaIVtcVppLmJEV+PRPz3Fx8+ODdNIZcwNxei4fq
+         VKJWqL8pem9VYstpV+72mCDw6IwIXA0NoQTcnE5nX9wMkvvqg+n8hSKvEwiOBzFqXKYI
+         ekpA==
+X-Gm-Message-State: APjAAAX9RUIV7M9wD87hcF2J37G2g1fswRURmHyrBUNy2VlKDSf7Xk+1
+        cXDst1/N3/Qi4FXH9BIDkpLpMRY8
+X-Google-Smtp-Source: APXvYqxX1AeMq/tU+0QUxoGlM9I9ta9GvP6aTQXUph72W0zefn8C2KJDy9JEsoA+UFG1kBfcnuL8CQ==
+X-Received: by 2002:a9d:7d92:: with SMTP id j18mr10417103otn.339.1562972529411;
+        Fri, 12 Jul 2019 16:02:09 -0700 (PDT)
+Received: from nanabozho.attlocal.net ([2600:1700:8660:6160:c055:b92a:b249:c6a6])
+        by smtp.gmail.com with ESMTPSA id i21sm3260066otl.24.2019.07.12.16.02.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 Jul 2019 16:02:08 -0700 (PDT)
+From:   Ariadne Conill <ariadne@dereferenced.org>
+To:     git@vger.kernel.org
+Cc:     Ariadne Conill <ariadne@dereferenced.org>
+Subject: [PATCH v2 0/3] document deprecation of log.mailmap=false default
+Date:   Fri, 12 Jul 2019 18:02:01 -0500
+Message-Id: <20190712230204.16749-1-ariadne@dereferenced.org>
+X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 12, 2019 at 11:21:47AM -0700, Junio C Hamano wrote:
+Based on the discussion of the previous patches, we concluded that
+changing the default will require a transitional period.
 
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> >> This is an RFC patch series that is not intended to be merged for now,
-> >> as it looks like we don't need oidmaps that can handle several entries
-> >> with the same key yet.
-> >
-> > What does it even mean for a map to allow multiple entries per key?
-> 
-> Ah, one thing that I was missing (perhaps it was obvious to
-> everybody else but me X-<) was that this is merely to expose what is
-> already available in the underlying hashmap API, so let's not bother
-> with the "don't people usually do a single key to a value, which
-> happens to be a bag of stuff (not just a single stuff)?" question.
-> 
-> And from that "a generic hashmap can do this, and an upcoming code
-> needs to use a hashmap keyed with oid in the same fashion" point of
-> view, the new wrappers the patches add all made sense to me.
+As such, I have introduced a deprecation warning that is printed when
+the log builtin commands are used.
 
-FWIW, I went through the same thought process. :)
+Thanks to Junio and everyone else for providing feedback on how to
+proceed.
 
-One devil's advocate point against, though: we found recently that khash
-performs much better than hashmap.[ch] for the oidset data structure.
-AFAIK nobody has looked at whether the same is true for oidmap. But if
-it is, then this strategy may make it harder to switch.
+New in version 2:
+- The warning is disabled when `--format` is used.
+- The warning is disabled when not called from a controlling terminal.
+- Tests which fake a controlling terminal have been defanged.
 
-(OTOH, we already have kh_oid_map, so the two could probably co-exist
-and we could just convert particular callers from one to the other).
+Ariadne Conill (3):
+  log: add warning for unspecified log.mailmap setting
+  documentation: mention --no-use-mailmap and log.mailmap false setting
+  tests: defang pager tests by explicitly disabling the log.mailmap
+    warning
 
-> > I actually think that showing how it is used in the real application
-> > (reftable?) is the best way to illustrate why this is useful and to
-> > get opinions from others.
-> 
-> This part still stands, though.
+ Documentation/config/log.txt |  3 ++-
+ Documentation/git-log.txt    |  2 +-
+ builtin/log.c                | 25 ++++++++++++++++++++++++-
+ t/t7006-pager.sh             | 10 ++++++++++
+ 4 files changed, 37 insertions(+), 3 deletions(-)
 
-Agreed.
+-- 
+2.17.1
 
--Peff
