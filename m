@@ -2,91 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0C691F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 00:57:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A60871F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 03:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728095AbfGNAvc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jul 2019 20:51:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35766 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728026AbfGNAvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jul 2019 20:51:31 -0400
-Received: (qmail 2176 invoked by uid 109); 14 Jul 2019 00:51:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 14 Jul 2019 00:51:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13457 invoked by uid 111); 14 Jul 2019 00:52:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 13 Jul 2019 20:52:27 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Jul 2019 20:51:29 -0400
-Date:   Sat, 13 Jul 2019 20:51:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
-Message-ID: <20190714005129.GA4525@sigill.intra.peff.net>
-References: <e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com>
- <41a60e60-d2c0-7d54-5456-e44d106548a4@kdbg.org>
- <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
- <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
- <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
- <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
+        id S1728106AbfGNDCZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Jul 2019 23:02:25 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39352 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727918AbfGNDCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jul 2019 23:02:24 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u17so6175975pgi.6
+        for <git@vger.kernel.org>; Sat, 13 Jul 2019 20:02:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZMU7gcpr01/sJa2qvcHhdq/4odlcfJ5CK8RaJPoaFOU=;
+        b=T3xN9GUs2DJNXEjn2tIpgBvEiroiJUoL0mfIFZ2xv7cy8vM4zMyP+xxNOXcZ2IRBVF
+         EavzVoKg0DMjXqeMK0Wuysp9PH64HcObOUYJB4Pm49d+b9VQEXAs5WBoMKJ8Jpl6tuNd
+         qUdjgWResT+/foeF9hFuieZEeVXDF6NrUSnEPnBS9P4T686TlGoM9ZutdjR0mt1OFQ3w
+         BF9xpniBPBD36FBDmffdsGnPS5Rkr6W0BKSueChSMaSuu0Ma0CM+Lizyj88yht8lEsnj
+         y8dXLPXG4HM9p226oM2bI80XLgkMxhBFXchid0Ab4XQymBd7YJ+6tRDtDgPnWNkzNWGA
+         DIyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZMU7gcpr01/sJa2qvcHhdq/4odlcfJ5CK8RaJPoaFOU=;
+        b=BDwauKPWgtByluPgiKfTrxeQttCpeLrMLLSCrcoiwQMsz4UAb7dTjKdMDgF/dMv9Lk
+         t/tmJicA9BGP6EUBibrYR8VV3oTCLmTaGMcifBzt9Sd4L32gLNECqBMQ9SwZEIrfHp2q
+         uoR0pYyVWR7jxnvLIOszesH5QYXFmRqyKiS0BCrYMukJ2GgBaSod68Ax02+6lAjf0amf
+         V8LqeEtpbBxutxGP64cz8hORR4ERuoR1RJmIwu3q28VGJreeaC9gz1tOeKwOnLyUlvIz
+         wdEbnz/cxjbZ0oujXLG8mCE3pp3rqOp3N6J72dR7etwXqFHQUR2fxwFjdYkYvaSouInq
+         b1zQ==
+X-Gm-Message-State: APjAAAVC2gVBkIFtJ8vgKKMqcOKtEWUtu1ibol87K7um+EQpgSCBQdX8
+        5bEZ7wRwWR0zTkPYRWzuhtjqHfhB
+X-Google-Smtp-Source: APXvYqwxzASrqeY46daMi9whiuapeMPN1G41WNcCklXp+yaZ5/sKJ3Q3BnAlbgwjEqna/tsZUeHD/Q==
+X-Received: by 2002:a17:90a:1c17:: with SMTP id s23mr21537259pjs.108.1563073343936;
+        Sat, 13 Jul 2019 20:02:23 -0700 (PDT)
+Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
+        by smtp.googlemail.com with ESMTPSA id i7sm10875069pjk.24.2019.07.13.20.02.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 13 Jul 2019 20:02:23 -0700 (PDT)
+From:   Varun Naik <vcnaik94@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Varun Naik <vcnaik94@gmail.com>
+Subject: [PATCH] read-cache.c: do not die if mmap fails
+Date:   Sat, 13 Jul 2019 20:01:53 -0700
+Message-Id: <20190714030153.22022-1-vcnaik94@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 13, 2019 at 03:22:03PM -0700, Carlo Arenas wrote:
+do_read_index() mmaps the index, or tries to die with an error message
+on failure. It should call xmmap_gently(), which returns MAP_FAILED,
+rather than xmmap(), which dies with its own error message.
 
-> On Sat, Jul 13, 2019 at 2:29 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > I wish if we could say
-> >
-> >         struct patch patch = {};
-> 
-> that is actually a GNU extension that is supported by gcc and clang (at least)
-> and that sparse also recognizes as valid; it is also valid C++ so it might be
-> even supported by MSVC.
-> 
-> it will obviously trigger warnings if using pedantic mode and is IMHO not worth
-> the hassle to maintain in a portable codebase like git, but also wish could be
-> added to C2X
+An easy way to cause this mmap to fail is by setting $GIT_INDEX_FILE to
+a path to a directory and then invoking any command that reads from the
+index.
 
-I wonder if we could come up with a definition of INIT_ZERO such that:
+Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+---
+I believe this is the only place that calls xmmap() when it should be
+calling xmmap_gently(). There is a related recent commit 3203566a71
+("Use xmmap_gently instead of xmmap in use_pack", 2019-05-16).
 
-  struct foo bar = { INIT_ZERO };
+ read-cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-worked everywhere. IMHO that is more readable than "{}" anyway. In
-GNU-compatible compilers, it is just:
+diff --git a/read-cache.c b/read-cache.c
+index 22e7b9944e..4e30dafa9d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2140,7 +2140,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	if (mmap_size < sizeof(struct cache_header) + the_hash_algo->rawsz)
+ 		die(_("%s: index file smaller than expected"), path);
+ 
+-	mmap = xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	mmap = xmmap_gently(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	if (mmap == MAP_FAILED)
+ 		die_errno(_("%s: unable to map index file"), path);
+ 	close(fd);
+-- 
+2.22.0
 
-  #define INIT_ZERO
-
-Unfortunately I can't think of a fallback that would work universally.
-It cannot just be "0", as we run into the NULL thing (not to mention
-when the first member is itself a struct). It does not help us to
-add an explicit cast, because the type of the cast is dependent on the
-context in which the macro is used. Nor do I think typeof() could save
-us (if we could even assume it exists everywhere we need the fallback,
-which we almost certainly can't).
-
-But it does seem a real shame there is no way to say "zero-initialize
-this struct" in C without providing at least a single member value.
-Ordering struct definitions to put an arithmetic type at the start is an
-OK workaround (to just let "0" work everywhere). But it does fall down
-when the first element _has_ to be a struct (like, say, any user of our
-hashmap.[ch] interface).
-
--Peff
