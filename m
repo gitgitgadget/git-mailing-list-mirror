@@ -2,82 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB41E1F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 08:30:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D344F1F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 11:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728009AbfGNIa3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jul 2019 04:30:29 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:19571 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726728AbfGNIa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jul 2019 04:30:29 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45mfxH5d83z5tl9;
-        Sun, 14 Jul 2019 10:30:27 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 5BFB71D1E;
-        Sun, 14 Jul 2019 10:30:27 +0200 (CEST)
-Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
-To:     Jeff King <peff@peff.net>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com>
- <41a60e60-d2c0-7d54-5456-e44d106548a4@kdbg.org>
- <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
- <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
- <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
- <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
- <20190714005129.GA4525@sigill.intra.peff.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <54c2ee44-ee99-ea4a-3154-f642e0060877@kdbg.org>
-Date:   Sun, 14 Jul 2019 10:30:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1728296AbfGNLAx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jul 2019 07:00:53 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:45163 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728208AbfGNLAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jul 2019 07:00:52 -0400
+Received: by mail-ed1-f41.google.com with SMTP id x19so6882166eda.12
+        for <git@vger.kernel.org>; Sun, 14 Jul 2019 04:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fx7IATtF3LOFeFWmMaQvFmPfbmICjbkveA5dxZftdrQ=;
+        b=m2sQupS30OIFGh+n236NRvztX5MRcXDsxhDNqAMT5Use86B4xBMiBC1kvQYkYlqqAf
+         wXyHARanPUpXXy+DMeu/PbiUdL1JKH6MatsCaWFkNxUaOMXfOfgfZsppCdM7qwCODHfU
+         vGVcbxaXNbYGlbLulZ5DVYUnxIkhdS82QQRCL3nhMvnGg3tj02sFolqxLkSc7LqPNDjJ
+         O3qeIbFIBByjs0Egy6XIGYEg95IzuVDj4iH47NsFAgwiQPMujm9phPX/y3iy/asTtGt4
+         GtPOSGK829aBGrjd7kelJsDaNXgYSsiEN2FJHncZ3NivVvKXQ7AJQwnaFekbjLQB15wj
+         i3kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fx7IATtF3LOFeFWmMaQvFmPfbmICjbkveA5dxZftdrQ=;
+        b=NmQFlXJUIL2HtlCUGBmd0NFbAwBoAi0449fzOXwLQfQqYJb2Qy5Kt8Abkw1PkLwjKQ
+         R9kU6Rqm2uNz82Q9MvGeslXzrXeOVbqm3y+0EdYs0E2Q5Zv3jCnIaxkzXMC7OOHdJQN4
+         PXDdRQXdPd0wJwmOcQKGaxAI0n9CeTeszr1cMFwJU06jbVb5QHWNXHoj/wJDugkML85f
+         vC18wMLZk87KijZPsibL4aRalLT71PeNYkpMxNEHHajaZ6XS5J1oAMWwRfWaFLleWfRI
+         SM4VILmlLWt2OcJoeu55VTlwgW6Bt6yoGYOoiNg+3V/DFWwrAncjXR5epAVnJMoVC7mD
+         SvQg==
+X-Gm-Message-State: APjAAAW3GqsSjA5z0+dTwDYDZ8cHwtJDFRl6ensZnpUxXYPo8iAHZQ4i
+        kg6RVP9yCFo9cbIW0HO4f5o3yzNNj4shreb1ouo=
+X-Google-Smtp-Source: APXvYqyCOdt+m0qZKFc+AnEm1EI6FVuLYlBFUXzuVRIvAvueazIrHO61EJ8B9901KloVh2fzDL57lK4mXH0IZCXwbcQ=
+X-Received: by 2002:a50:eb92:: with SMTP id y18mr17755005edr.245.1563102050702;
+ Sun, 14 Jul 2019 04:00:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190714005129.GA4525@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
+ <CAHd-oW7V_oK5Tqg-fF3G-7r+k7eX8czyaT77yBPoEDoXVthj8g@mail.gmail.com>
+In-Reply-To: <CAHd-oW7V_oK5Tqg-fF3G-7r+k7eX8czyaT77yBPoEDoXVthj8g@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 14 Jul 2019 13:00:39 +0200
+Message-ID: <CAP8UFD2eHq+BynC9LHNvPB6Sk=1zTvM-r2VRD8sdxhCe+uNrVQ@mail.gmail.com>
+Subject: Re: [GSoC] My project blog
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.07.19 um 02:51 schrieb Jeff King:
-> I wonder if we could come up with a definition of INIT_ZERO such that:
-> 
->   struct foo bar = { INIT_ZERO };
-> 
-> worked everywhere. IMHO that is more readable than "{}" anyway.
+Hi Matheus,
 
-Not when = {} becomes a well-established way to express
-zero-initialization. At that point, your suggested macro would obfuscate
-the construct.
+On Sun, Jul 14, 2019 at 9:38 AM Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> I just posted a new update about my GSoC project here:
+> https://matheustavares.gitlab.io/posts/week-8-a-working-parallel-inflation
+> Please, feel free to leave any comments. I've finally solved the race
+> condition problem and now we have a working parallel inflation :) But
+> there's still some tasks to be done on it before I have a proper
+> patchset.
 
-> But it does seem a real shame there is no way to say "zero-initialize
-> this struct" in C without providing at least a single member value.
+Great that you solved the race condition!
 
-Indeed. For this reason, I'm arguing for the second-best form that
-places a 0 between the braces.
+I agree with the tasks you list in the next steps. I would even
+suggest that, right after splitting the changes into logical patches,
+you ask your mentors (Olga and me) to review it, and then send it as
+an RFC patch series to the mailing list. When you do that though,
+please list the other tasks and limitations of your patch series in
+the cover letter.
 
-> Ordering struct definitions to put an arithmetic type at the start is an
-> OK workaround (to just let "0" work everywhere).
-Why would you re-order members? There's nothing wrong when a pointer is
-initialized by 0.
-
-> But it does fall down
-> when the first element _has_ to be a struct (like, say, any user of our
-> hashmap.[ch] interface).
-
-No, it does not. It is not necessary to spell out nested structs in the
-initializer.
-
--- Hannes
+Thanks,
+Christian.
