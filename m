@@ -2,98 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A60871F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 03:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09A1C1F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 07:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728106AbfGNDCZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jul 2019 23:02:25 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39352 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727918AbfGNDCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jul 2019 23:02:24 -0400
-Received: by mail-pg1-f194.google.com with SMTP id u17so6175975pgi.6
-        for <git@vger.kernel.org>; Sat, 13 Jul 2019 20:02:24 -0700 (PDT)
+        id S1728065AbfGNHPe (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jul 2019 03:15:34 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:32871 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726677AbfGNHPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jul 2019 03:15:34 -0400
+Received: by mail-pl1-f193.google.com with SMTP id c14so6745660plo.0
+        for <git@vger.kernel.org>; Sun, 14 Jul 2019 00:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZMU7gcpr01/sJa2qvcHhdq/4odlcfJ5CK8RaJPoaFOU=;
-        b=T3xN9GUs2DJNXEjn2tIpgBvEiroiJUoL0mfIFZ2xv7cy8vM4zMyP+xxNOXcZ2IRBVF
-         EavzVoKg0DMjXqeMK0Wuysp9PH64HcObOUYJB4Pm49d+b9VQEXAs5WBoMKJ8Jpl6tuNd
-         qUdjgWResT+/foeF9hFuieZEeVXDF6NrUSnEPnBS9P4T686TlGoM9ZutdjR0mt1OFQ3w
-         BF9xpniBPBD36FBDmffdsGnPS5Rkr6W0BKSueChSMaSuu0Ma0CM+Lizyj88yht8lEsnj
-         y8dXLPXG4HM9p226oM2bI80XLgkMxhBFXchid0Ab4XQymBd7YJ+6tRDtDgPnWNkzNWGA
-         DIyg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=eKzl0qkdkHPn2nOG4b8wBXibC/N8QFgTMOX1UhRnWE8=;
+        b=gbAgQ8OTnSXa5kkqit434pTINsw2/ex8z9DV6a8Gcz2Q5iNlIo0i4c7psAudLxw8iR
+         xxJPOGRUWYxf75z9Iw69q/XwAe+3B4iC27CwlY+Iv492cwieO4uAZbRz1cO8cVIl5Lo7
+         HXInPZ7sFrGlIn062B7XESg8yHkoazs8xlRc8r9KIHPNZuGGlFv2XxwAL+eQGgyvRWL9
+         2rtYl0jedm5w609kfhWe47OiY6BS2hqePn/UweJURexg8fhqKhLqywhtz4//0ySO5ba4
+         uYCgr0Waoq5/XsicgYAVvuj5ZmHGFBYYUJGcEXk14W90m9dBolhKvX7uADKpVvMNJfcb
+         Jc0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZMU7gcpr01/sJa2qvcHhdq/4odlcfJ5CK8RaJPoaFOU=;
-        b=BDwauKPWgtByluPgiKfTrxeQttCpeLrMLLSCrcoiwQMsz4UAb7dTjKdMDgF/dMv9Lk
-         t/tmJicA9BGP6EUBibrYR8VV3oTCLmTaGMcifBzt9Sd4L32gLNECqBMQ9SwZEIrfHp2q
-         uoR0pYyVWR7jxnvLIOszesH5QYXFmRqyKiS0BCrYMukJ2GgBaSod68Ax02+6lAjf0amf
-         V8LqeEtpbBxutxGP64cz8hORR4ERuoR1RJmIwu3q28VGJreeaC9gz1tOeKwOnLyUlvIz
-         wdEbnz/cxjbZ0oujXLG8mCE3pp3rqOp3N6J72dR7etwXqFHQUR2fxwFjdYkYvaSouInq
-         b1zQ==
-X-Gm-Message-State: APjAAAVC2gVBkIFtJ8vgKKMqcOKtEWUtu1ibol87K7um+EQpgSCBQdX8
-        5bEZ7wRwWR0zTkPYRWzuhtjqHfhB
-X-Google-Smtp-Source: APXvYqwxzASrqeY46daMi9whiuapeMPN1G41WNcCklXp+yaZ5/sKJ3Q3BnAlbgwjEqna/tsZUeHD/Q==
-X-Received: by 2002:a17:90a:1c17:: with SMTP id s23mr21537259pjs.108.1563073343936;
-        Sat, 13 Jul 2019 20:02:23 -0700 (PDT)
-Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
-        by smtp.googlemail.com with ESMTPSA id i7sm10875069pjk.24.2019.07.13.20.02.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 13 Jul 2019 20:02:23 -0700 (PDT)
-From:   Varun Naik <vcnaik94@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Varun Naik <vcnaik94@gmail.com>
-Subject: [PATCH] read-cache.c: do not die if mmap fails
-Date:   Sat, 13 Jul 2019 20:01:53 -0700
-Message-Id: <20190714030153.22022-1-vcnaik94@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=eKzl0qkdkHPn2nOG4b8wBXibC/N8QFgTMOX1UhRnWE8=;
+        b=FvMyKAs4aW95kRo1qgV5QlM6JsvQ0fwvxIFIf+6VhtSJAckWwUhPS2lBOkVYSl4177
+         PnthuKFcAyvwKgU1dAvxZ/JzoObUo0zRFDKyrBCvjD1H7o+g+4jLFdLSMnQyJdXQKBkZ
+         l7yh+fmSC9tFXv+lk12KBKa+r1umMGCawlWYR9avQsynR+FAagEd4UV2o9iqw/18Q+DF
+         2bVAVE8jkDUszu6DrZmRzSEzybJCgqRKoSOt0NlkjeMdOff1BS42acwR5/K7ptJnxKXM
+         R5poFJOTDYeicVvpU73BfpR2WzeOEwKaPp6/mbzuVEHIEboZtzE04qMi4zPwsAQRYye+
+         OMBQ==
+X-Gm-Message-State: APjAAAXQktAIva1bGlFnHkBY9uQHwuXV+ERXgEasIzcHh/EERKChn5EK
+        pwT7ukBcUX5zMS2W7PDSqT6BLrqvfFNSF1l0YcUi5U+g
+X-Google-Smtp-Source: APXvYqyKQ4e+HBc5YPelRQh8P/rB5SYP7VcyXy/Uh2BaBvjbDKkn2H/8U8PB1Vd/AxlHCB4q7/20/ZS0qxHV86fLYOM=
+X-Received: by 2002:a17:902:2889:: with SMTP id f9mr20433715plb.230.1563088533798;
+ Sun, 14 Jul 2019 00:15:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190713051804.12893-1-eantoranz@gmail.com>
+In-Reply-To: <20190713051804.12893-1-eantoranz@gmail.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Sun, 14 Jul 2019 01:15:22 -0600
+Message-ID: <CAOc6eta-jX93k6twcrJOeRt+JHtLk4mUs7YD_bG=Ggvw4thAZQ@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/merge: allow --squash to commit if there are
+ no conflicts
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-do_read_index() mmaps the index, or tries to die with an error message
-on failure. It should call xmmap_gently(), which returns MAP_FAILED,
-rather than xmmap(), which dies with its own error message.
+On Fri, Jul 12, 2019 at 11:18 PM Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+>
+> Option -m can be used to defined the message for the revision instead
+> of the default message that contains all squashed revisions info.
+>
 
-An easy way to cause this mmap to fail is by setting $GIT_INDEX_FILE to
-a path to a directory and then invoking any command that reads from the
-index.
-
-Signed-off-by: Varun Naik <vcnaik94@gmail.com>
----
-I believe this is the only place that calls xmmap() when it should be
-calling xmmap_gently(). There is a related recent commit 3203566a71
-("Use xmmap_gently instead of xmmap in use_pack", 2019-05-16).
-
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 22e7b9944e..4e30dafa9d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2140,7 +2140,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	if (mmap_size < sizeof(struct cache_header) + the_hash_algo->rawsz)
- 		die(_("%s: index file smaller than expected"), path);
- 
--	mmap = xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	mmap = xmmap_gently(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	if (mmap == MAP_FAILED)
- 		die_errno(_("%s: unable to map index file"), path);
- 	close(fd);
--- 
-2.22.0
-
+I have noticed that just adding the support for -m in squash is more
+complex than this patch is reaching so I think I will break this patch
+into two parts:
+- squash in a shot if there are no conflicts
+- support -m with squash
+Disregard this patch, please.
