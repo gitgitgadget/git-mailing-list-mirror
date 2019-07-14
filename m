@@ -7,88 +7,113 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C8C81F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 18:59:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4CFA1F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 21:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728700AbfGNS74 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jul 2019 14:59:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59810 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728125AbfGNS74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jul 2019 14:59:56 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD4B9160B9B;
-        Sun, 14 Jul 2019 14:59:55 -0400 (EDT)
+        id S1728891AbfGNVzZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jul 2019 17:55:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62698 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728719AbfGNVzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jul 2019 17:55:25 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6CCFD7F8A0;
+        Sun, 14 Jul 2019 17:55:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6RkoBN2xRnTuWc8IL95hl2oOuZA=; b=LVrLxF
-        YfEE0Il+TCoPxeWdllgpO59+t+4ZhU9m+dVL3kOqFDxnuggHskzbSAZ95W8IIf4C
-        omYTzEdbBBsRLs+G9+nD5hcMiV5kakyzUvnB8YrSytGmGYD96QV1RExX2AA+qcrg
-        mzdbojiJc9O0RIFVDa5KWr4zpkIZt5tSxw0qE=
+        :content-type; s=sasl; bh=oNwybt12WNcsE+Xniy0KSbuz/CU=; b=I+xFqr
+        qHZd6Yki7bsx4hilAXHA4YmwEJ0aKfp/B3F/0NIKkYmYPd5f2RMIYRNjvFrbfG2C
+        dNAlvAgGZduUhJxptFg0bwJ8yUnSmbb5hmkAwfCigwtQCDPyMrBzkdjwmeqR5gz3
+        gQegAxCe6l0Vl2XCFO++ZMRfLOzNi9se3UyLg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LlXzgiB6UqK1XF/uiVkwS5l9bgcsYado
-        GBBwISLbaFY9nAnIaTxoS6Ur3j4uVseZ4QiL2YL2F8xOzeLn+cf8mRZVt+H4ZMa0
-        4DkDZfghUTxuUx2jwfxbaPylV7+477HA3bTGjVEHhE+FC7pNEv6mQrb5SjiYkAKt
-        v+0CzPUcgD4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5981160B9A;
-        Sun, 14 Jul 2019 14:59:55 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=qaVU6yJBGNWDDeG5Kpb9yP0VR0hRomqz
+        CouJbgiedudJ2Vzr847WazyNoGom6h4NduIdsZBwihnwKE0hdFWPZLYxDazcETHh
+        6JrlGS71mjotzH+v+Zhp43xZ8XgTVo+aQTbjnDyWSIez3CUPjkB4R70Q/BoMJcnC
+        p5tYgf/zeMo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 655847F89F;
+        Sun, 14 Jul 2019 17:55:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 304DF160B98;
-        Sun, 14 Jul 2019 14:59:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 96D717F89E;
+        Sun, 14 Jul 2019 17:55:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Varun Naik <vcnaik94@gmail.com>
+To:     Ariadne Conill <ariadne@dereferenced.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] read-cache.c: do not die if mmap fails
-References: <20190714030153.22022-1-vcnaik94@gmail.com>
-Date:   Sun, 14 Jul 2019 11:59:54 -0700
-In-Reply-To: <20190714030153.22022-1-vcnaik94@gmail.com> (Varun Naik's message
-        of "Sat, 13 Jul 2019 20:01:53 -0700")
-Message-ID: <xmqq7e8k5tn9.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 1/3] log: add warning for unspecified log.mailmap setting
+References: <20190712230204.16749-1-ariadne@dereferenced.org>
+        <20190712230204.16749-2-ariadne@dereferenced.org>
+Date:   Sun, 14 Jul 2019 14:55:19 -0700
+In-Reply-To: <20190712230204.16749-2-ariadne@dereferenced.org> (Ariadne
+        Conill's message of "Fri, 12 Jul 2019 18:02:02 -0500")
+Message-ID: <xmqqzhlg46yg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 915DA80E-A669-11E9-95B0-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 139A58FE-A682-11E9-AC86-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Varun Naik <vcnaik94@gmail.com> writes:
+Ariadne Conill <ariadne@dereferenced.org> writes:
 
-> do_read_index() mmaps the index, or tries to die with an error message
-> on failure. It should call xmmap_gently(), which returns MAP_FAILED,
-> rather than xmmap(), which dies with its own error message.
->
-> An easy way to cause this mmap to fail is by setting $GIT_INDEX_FILE to
-> a path to a directory and then invoking any command that reads from the
-> index.
->
-> Signed-off-by: Varun Naik <vcnaik94@gmail.com>
-> ---
-> I believe this is the only place that calls xmmap() when it should be
-> calling xmmap_gently(). There is a related recent commit 3203566a71
-> ("Use xmmap_gently instead of xmmap in use_pack", 2019-05-16).
+> +	if (mailmap < 0) {
+> +		/*
+> +		 * Only display the warning if the session is interactive
+> +		 * and pretty_given is false. We determine that the session
+> +		 * is interactive by checking if auto_decoration_style()
+> +		 * returns non-zero.
+> +		 */
+> +		if (auto_decoration_style() && !rev->pretty_given)
+> +			warning("%s\n", _(warn_unspecified_mailmap_msg));
 
-Nice find and thanks for checking other callsites of xmmap().
+The huge comment can go if you refactored the helper function a
+little bit and will give us a much better better organization.
 
->
->  read-cache.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/read-cache.c b/read-cache.c
-> index 22e7b9944e..4e30dafa9d 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2140,7 +2140,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
->  	if (mmap_size < sizeof(struct cache_header) + the_hash_algo->rawsz)
->  		die(_("%s: index file smaller than expected"), path);
->  
-> -	mmap = xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
-> +	mmap = xmmap_gently(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
->  	if (mmap == MAP_FAILED)
->  		die_errno(_("%s: unable to map index file"), path);
->  	close(fd);
+static int auto_decoration_style(void)
+{
+	return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
+}
+
+The existing helper is meant to help those who are interested in the
+decoration feature, and the fact that it kicks in by default when
+the condition (isatty(1) || pager_in_use()) is true is a mere
+"decoration feature happens to be designed that way right now".
+There is no logical reason to expect that the decoration feature and
+mailmap feature's advicse messages will be triggered by the same
+condition forever.
+
+Think a bit and what the condition "means".  You wrote a good one
+yourself above: "the session is interactive".  Introduce a helper
+that checks exatly that, by reusing what auto_decoration_style()
+already uses. i.e.
+
+	static int session_is_interactive(void)
+	{
+		return isatty(1) || pager_in_use();
+	}
+
+	static int auto_decoration_style(void)
+	{
+		return session_is_interactive() ? DECORATE_SHORT_REFS : 0;
+	}
+
+and then the above hunk becomes
+
+	if (session_is_interactive() && !rev->pretty_given)
+		warning(...);
+
+It is clear enough and there is no need for your 2 sentence comment,
+as (1) the first sentence is exactly what the implementation is, and
+(2) we no longer abuse auto_decoration_style() outside its intended
+purpose.
+
+
+
+
