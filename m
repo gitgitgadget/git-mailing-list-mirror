@@ -2,97 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3931F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 16:38:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEC0C1F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 18:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728382AbfGNQio (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jul 2019 12:38:44 -0400
-Received: from mail-io1-f50.google.com ([209.85.166.50]:46344 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728218AbfGNQio (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jul 2019 12:38:44 -0400
-Received: by mail-io1-f50.google.com with SMTP id i10so30374878iol.13
-        for <git@vger.kernel.org>; Sun, 14 Jul 2019 09:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gTilezLw0tlvSuypNI+4fz3eggqVuTMAIUN5H9x74HM=;
-        b=Bco6qXZU67Oo0B8aZp7wKei7WbstSL8uh03dJ9SonZXZPXLRBGZIM53fRdanAbfSUr
-         U7mjfVwysp3TUJQwNXFXBgQF0qAzIIEC9ueWcllEIPJKdH4CL1paKK3bvzRrBN/WcokG
-         rFnwRlQn6YAp/7mav4mx+HEOwUBR43VWvyCsRETZ8Ld1xKBXUJQ8Eojeee7qvjkVI8UX
-         MQnz11w731YvYDPcOscXM72NQSu/40Bsn3fL9EXia3vEyHRfzt5DJLBvTgB5ZeD0H/KX
-         JcrZbskW6AuZS8C1Ji1Gt0TzwscjzytwhL1ovYaD9MECxSusgVvobC439SbenXxVa/DP
-         nLWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gTilezLw0tlvSuypNI+4fz3eggqVuTMAIUN5H9x74HM=;
-        b=FNwvkhwgbdUTkKjGTiW6mGI02rNSSKtSlIjZDF//DTzapop1z/Yup2eOvvSwqFf6UZ
-         oswHIDO4Mfe9yJ3tBnnN1DTV6pAbs7IlA00Kl00ZYeGQZFdBpTnLBeZDc7vffET7LlzS
-         n96zk4ITV4ObGJLimRTT9r4mOJAIf4h1O+eT6k0o48FRKdVKRoI9Vx2uQNoOE5Hdh1MN
-         I3MTSSryW43dkfxIgx5rtoNtyMREIV8JgIG78KyMz1pPXq2GYEFk3xbO2KwxZ6oaVmjy
-         bRIwVm1DChtrGR+SeUZcYHCDbPIT4ApYgr2uRWkgX1n1BYkbEMzJdhfIZdwHlga3zvBj
-         PsqQ==
-X-Gm-Message-State: APjAAAWdL0Q1spxDcqJyToADB02yz8ssl7AQW8EdcfYonYMER85vtMc8
-        XDZDoS4VJuruCJ9hB28z7o0NeP1gUZxZAX23Nq2n8w==
-X-Google-Smtp-Source: APXvYqxDO5Pe0CbbonQ1F41tTpPMOQIMLNXs5K66wh10rsksZHzuqTzyZ7N5zxgNjkubNsJbv3DM1nTB24H8ffcVEjw=
-X-Received: by 2002:a5d:9711:: with SMTP id h17mr20514127iol.280.1563122323313;
- Sun, 14 Jul 2019 09:38:43 -0700 (PDT)
+        id S1728442AbfGNS7U (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jul 2019 14:59:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60718 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728125AbfGNS7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jul 2019 14:59:20 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22988156A73;
+        Sun, 14 Jul 2019 14:59:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=j+sq0slf7056uINlvuvCQoADMdQ=; b=GCvK1q
+        fY4TOn4LDAQReZXUFzcYVvr2tvm0NROQ1GBoEvkfnVPL5393F3w/2GIYvkd49qMs
+        CkBN6bIYSQhh3RwhwKx/zs+dGNVd7YOdAAXDOefXK1X+lELe04y6qQGTAuzlP72O
+        dy+KQzBSSBWLj8rkaPchQedcy00aXNdVW+87Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uVuX8C9xuePB5KxUAj1pVuk8GehWlZQa
+        DXkCDjOC7h4G1eK+ljvSMPw0BqGptnUyB7fTA8D+2MOsz9wc605RFt57yuGAelEd
+        i3mqDPBI9JhFsjlZ0fjPQt8ykJiY9w6/SFBn546XMPs2qUNoIVWqbknySnXDO8Jd
+        lgWy+aKG2FU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C70A156A72;
+        Sun, 14 Jul 2019 14:59:16 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 881AA156A71;
+        Sun, 14 Jul 2019 14:59:15 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] builtin/merge: allow --squash to commit if there are no conflicts
+References: <20190713051804.12893-1-eantoranz@gmail.com>
+        <CAOc6etb_XFbQWDHg3YRNiskkntS0ro2MYgXCfp6oPv4LutQFGA@mail.gmail.com>
+Date:   Sun, 14 Jul 2019 11:59:14 -0700
+In-Reply-To: <CAOc6etb_XFbQWDHg3YRNiskkntS0ro2MYgXCfp6oPv4LutQFGA@mail.gmail.com>
+        (Edmundo Carmona Antoranz's message of "Fri, 12 Jul 2019 23:27:06
+        -0600")
+Message-ID: <xmqqblxw5tod.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
- <CAHd-oW7V_oK5Tqg-fF3G-7r+k7eX8czyaT77yBPoEDoXVthj8g@mail.gmail.com> <CAP8UFD2eHq+BynC9LHNvPB6Sk=1zTvM-r2VRD8sdxhCe+uNrVQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2eHq+BynC9LHNvPB6Sk=1zTvM-r2VRD8sdxhCe+uNrVQ@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sun, 14 Jul 2019 13:38:32 -0300
-Message-ID: <CAHd-oW6MkZ+R1YZo9GNyJgJ=mwVdEwutiY1JhizibiVN-AvjPg@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 79BCCE8C-A669-11E9-822C-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 14, 2019 at 8:00 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi Matheus,
->
-> On Sun, Jul 14, 2019 at 9:38 AM Matheus Tavares Bernardino
-> <matheus.bernardino@usp.br> wrote:
-> >
-> > I just posted a new update about my GSoC project here:
-> > https://matheustavares.gitlab.io/posts/week-8-a-working-parallel-inflation
-> > Please, feel free to leave any comments. I've finally solved the race
-> > condition problem and now we have a working parallel inflation :) But
-> > there's still some tasks to be done on it before I have a proper
-> > patchset.
->
-> Great that you solved the race condition!
->
-> I agree with the tasks you list in the next steps. I would even
-> suggest that, right after splitting the changes into logical patches,
-> you ask your mentors (Olga and me) to review it, and then send it as
-> an RFC patch series to the mailing list. When you do that though,
-> please list the other tasks and limitations of your patch series in
-> the cover letter.
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
-OK, I will do that.
+> One question that I have is if it makes sense to set option_commit
+> to 0 if the user didn't specify --commit when using --squash, so
+> that the current behavior of git is not broken.  
 
-Thanks,
-Matheus
+If you mean that "git merge --squash <other args but not
+--[no-]commit>" should behave identically with or without your
+patch, then I think the answer is definitely yes.
 
-> Thanks,
-> Christian.
+> Like you run merge --squash, git will stop as it currently
+> does... but it would be possible to run with --squash --commit so
+> that the revision is created if there are no issues to take care
+> of (currently impossible, you would see that message saying "You
+> cannot combine --squash with --commit.").
+
+That is exactly a safe way to extend the system by adding a new mode
+of operation in a backward compatible fashion.  Good thinking.
+
