@@ -2,76 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 092EA1F461
-	for <e@80x24.org>; Sun, 14 Jul 2019 07:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9EA1F461
+	for <e@80x24.org>; Sun, 14 Jul 2019 08:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728009AbfGNHiW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jul 2019 03:38:22 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:38402 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726783AbfGNHiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jul 2019 03:38:22 -0400
-Received: by mail-io1-f45.google.com with SMTP id j6so29140906ioa.5
-        for <git@vger.kernel.org>; Sun, 14 Jul 2019 00:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fjYspN6CKRIpmFVrFVQx0/0I8QP0d4NuF5fQo3FVlQE=;
-        b=jJASGeTv3aZW7ra54xuvK4/7/LrBDwOs27vmXC2TFNkBAl+Mxy0Liu4MlsqDzn+2Le
-         PC0n/TSvzJU8csKm6ku6B98jicsGu9rOWo/F62Hb1FqB4VixZiW7b2ca9VzhDKKVGztK
-         hyM9iasNTNU9PwEHx3RCpc3g/TxVzApXBYI3Fsmpd997FIjSfdBTXvgElsJ0+U9uF4zD
-         UtuRKcVFyPbNHAdE5qoujxMtO2vsFUNc1BUnMKWNUJ6ZhKx6TEYW3uO19Fexx2Y5uG9V
-         TlALxvde/JarOKDfyXqN2RXzz8BYUarsuQqFwXBgi74YgxOoXMcIvR0E/BXA58f17XqS
-         JVUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fjYspN6CKRIpmFVrFVQx0/0I8QP0d4NuF5fQo3FVlQE=;
-        b=BYGupDnST1QvdbasqrU5KGbWTcw3MrRY3iynRx6NrKph6Vqa/CgBWgsGjAW5tGsTPU
-         NiMA9z1/NgjP0xANl6t7lnfx5/0VwPHooXhKq/HcFJex6QHmftJPVn8m/n7xc209eoH1
-         HEgUTNH7w1v6H8KsL0IV+fxK6m0rDdayQLIuFBHAs6ZtQp/XI7pSrD45muogiQMPPoPh
-         lsbuk7XjavWVQ0Mu6tB1fd3E+7oQAzUzHnGI8uwMLNVYGfC0jm6Rka2QLKJydJC9HjwY
-         slX19Yx1nDPlMjopE4MpKpBryb4CDcD4gI55gnU3PM4mRRfPl1YlXluOU69VDxHxnA7Y
-         5kZA==
-X-Gm-Message-State: APjAAAXngWsNKugQXKv6mf6oiIUvpspk7dmcadHLT4ruI24KuDTaPb86
-        VdA4wvkaiqSP+7lA8l08r9PbreLZfNeE1iAHec2VROgBwvQ=
-X-Google-Smtp-Source: APXvYqypRzHi3ucTTePr6YuPVS46nhraV5PM9jFJFKPBfc5RO0YMYo8DeaGM7TFR2bCiM+8QJv/Q5LLhox5oAMJzRIQ=
-X-Received: by 2002:a05:6602:cc:: with SMTP id z12mr6584794ioe.86.1563089901329;
- Sun, 14 Jul 2019 00:38:21 -0700 (PDT)
+        id S1728106AbfGNIPa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jul 2019 04:15:30 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:12743 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726799AbfGNIPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jul 2019 04:15:30 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45mfbz4f55z5tl9;
+        Sun, 14 Jul 2019 10:15:27 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 957401D1E;
+        Sun, 14 Jul 2019 10:15:26 +0200 (CEST)
+Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+References: <e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com>
+ <41a60e60-d2c0-7d54-5456-e44d106548a4@kdbg.org>
+ <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
+ <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
+ <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <9d6c7595-e320-7fa2-1f02-2f078b3831fa@kdbg.org>
+Date:   Sun, 14 Jul 2019 10:15:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sun, 14 Jul 2019 04:38:10 -0300
-Message-ID: <CAHd-oW7V_oK5Tqg-fF3G-7r+k7eX8czyaT77yBPoEDoXVthj8g@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+Am 13.07.19 um 23:29 schrieb Junio C Hamano:
+> I do not think this position is maintainable, especially if you
+> agree with me (and everybody else, including sparse) that this is a
+> bad idea:
+> 
+>>   struct string_list dup_it = { 0, 0, 0, 1, 0 };
+> 
+> The way I read "6.7.8 Initialization" (sorry, I only have committee
+> draft wg14/n1124 of 2005 handy) is that
+> 
+> 	struct patch patch = { 0 };
+> 
+> has an initializer for a structure with an automatic storage
+> duration, and for each of the subsequent fields of the structure
+> (i.e. we ran out the initializer after dealing with that single zero
+> that talks about the first field), due to "all subobjects that are
+> not initialized explicitly shall be initialized implicitly the same
+> as objects that have static storage duration." rule, "if it has a
+> pointer type, it is initialized to a null pointer", which is exactly
+> in line with your (and our) position that the first example I left
+> in the above (new_name gets assigned NULL).  So we are fine with the
+> fields that are not speled out.
+> 
+> But then what about the explicitly spelled out 0 for the first
+> field?
 
-I just posted a new update about my GSoC project here:
-https://matheustavares.gitlab.io/posts/week-8-a-working-parallel-inflation
-Please, feel free to leave any comments. I've finally solved the race
-condition problem and now we have a working parallel inflation :) But
-there's still some tasks to be done on it before I have a proper
-patchset.
+You are putting too much meaning in the token '0' when it appears in the
+token sequence '= { 0 }'. I understand this sequence as a signal to the
+reader of the code that "the whole struct is to be zero-initialized".
+NOT "the first member is set to zero and everything else the default
+zero value".
 
-Thanks,
-Matheus
+It just so happens that the compiler does the right thing with that '0'
+regardless of what type the first member has. (It even works when it is
+a struct, Peff!) That zero is a null pointer constant if the first
+member happens to be a pointer, i.e., the same value that is used for
+all other implicitly zero-initialized pointers.
+
+>  It is like an assignment, so by arguing that we should have
+> 0 over there and not NULL, you are essentially arguing for
+> 
+> 	patch.new_name = 0; /* not NULL */
+> 
+> aren't you?
+
+No,no. You are stretching my argument too far. I really only mean the
+sequence = { 0 } as a signal. When this form of zero-initialization
+becomes established, it takes away mental burden from the reader. It
+need not be decomposed into its parts; there is no question of what is
+it that is initialized by '0', and what happens to the rest of the
+struct. It means "zero, all of it" without thinking.
+
+> I wish if we could say
+> 
+> 	struct patch patch = {};
+> 
+> so that we an leave all fields to have their natural zero value
+
+YES!
+
+-- Hannes
