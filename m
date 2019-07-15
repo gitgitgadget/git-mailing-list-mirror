@@ -2,70 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8486A1F461
-	for <e@80x24.org>; Mon, 15 Jul 2019 17:30:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C55D1F461
+	for <e@80x24.org>; Mon, 15 Jul 2019 17:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732093AbfGORaV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jul 2019 13:30:21 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:61521 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732032AbfGORaN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jul 2019 13:30:13 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45nVsZ4Mw7z5tl9;
-        Mon, 15 Jul 2019 19:30:10 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id E4759F9B;
-        Mon, 15 Jul 2019 19:30:09 +0200 (CEST)
-Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
-To:     Jeff King <peff@peff.net>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com>
- <41a60e60-d2c0-7d54-5456-e44d106548a4@kdbg.org>
- <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
- <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
- <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
- <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
- <20190714005129.GA4525@sigill.intra.peff.net>
- <54c2ee44-ee99-ea4a-3154-f642e0060877@kdbg.org>
- <20190715144602.GA26636@sigill.intra.peff.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <4be7a0a1-0256-40c3-4abc-d3d9302f527b@kdbg.org>
-Date:   Mon, 15 Jul 2019 19:30:09 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1732081AbfGOR5W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jul 2019 13:57:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51219 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731078AbfGOR5W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jul 2019 13:57:22 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0090215D5F6;
+        Mon, 15 Jul 2019 13:57:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BqKBe4HDijv/OATv0J4dY3lfJbM=; b=x1LUGc
+        ECeZr9jFm12u/MhY8W0e2A3WoSDpo/cMrbHBDL33+ptzv28AHLb97+wWFbzDsrfA
+        fO4j5heY16JW/W0lyDMJHYERuVi4e8TWbWXO+za8NlLBz6rev6uMKJAPUCgcNhYk
+        GGTOwSagfkBzEhHfa5uS+8QrhWOZLOaK8O+/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aiK2Cm5KkIrS2rC30Tc4wCyVDdz5sqx/
+        AFACzM6nPlPMvTry49a18XB1F5wdpbZNwBGXruzEVRAkH9gMre5RbKCVhN6RoHV3
+        P450K5tfrNsRVpo2EW+DBHG+LEkOVXt4F6RrTk9DELV6Td/UyzlNxqXOCvFZOk4J
+        jrN1/h6J4k8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC4E115D5F4;
+        Mon, 15 Jul 2019 13:57:19 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 48A8815D5F3;
+        Mon, 15 Jul 2019 13:57:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        martin.agren@gmail.com, Johannes.Schindelin@gmx.de
+Subject: Re: [GSoC][PATCH 1/1] rebase -i: add --ignore-whitespace flag
+References: <20190712185015.20585-1-rohit.ashiwal265@gmail.com>
+        <20190712185015.20585-2-rohit.ashiwal265@gmail.com>
+Date:   Mon, 15 Jul 2019 10:57:18 -0700
+In-Reply-To: <20190712185015.20585-2-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Sat, 13 Jul 2019 00:20:15 +0530")
+Message-ID: <xmqqlfwz41vl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190715144602.GA26636@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FD16D208-A729-11E9-BF91-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.07.19 um 16:46 schrieb Jeff King:
-> On Sun, Jul 14, 2019 at 10:30:27AM +0200, Johannes Sixt wrote:
->>> But it does fall down
->>> when the first element _has_ to be a struct (like, say, any user of our
->>> hashmap.[ch] interface).
->>
->> No, it does not. It is not necessary to spell out nested structs in the
->> initializer.
-> 
-> Ah, that is news to me. I know that this compiles OK with "gcc -Wall",
-> but is it guaranteed by the standard?
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-Yes; see http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1124.pdf,
-6.7.8 §20, in particular, the sentence beginning with "Otherwise".
+> +	if (opts->ignore_whitespace) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +
+> +		if (opts->strategy_opts)
+> +			strbuf_addstr(&buf, opts->strategy_opts);
+> +
+> +		strbuf_addstr(&buf, " --ignore-space-change");
+> +		free(opts->strategy_opts);
 
--- Hannes
+Is this call to free() safe?
+
+> +		opts->strategy_opts = strbuf_detach(&buf, NULL);
+> +	}
+> +
+> @@ -1821,6 +1836,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	if (options.rebase_merges) {
+> +		if (options.ignore_whitespace)
+> +			die(_("cannot combine '--rebase-merges' with "
+> +			      "'--ignore-whitespace'"));
+
+Hmph, this is unfortunate.  The patch is not making things worse, though.
+
+
+
+
