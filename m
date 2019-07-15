@@ -2,103 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB661F461
-	for <e@80x24.org>; Mon, 15 Jul 2019 18:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B3D81F461
+	for <e@80x24.org>; Mon, 15 Jul 2019 18:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730233AbfGOSPa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jul 2019 14:15:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36816 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729535AbfGOSPa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jul 2019 14:15:30 -0400
-Received: (qmail 22266 invoked by uid 109); 15 Jul 2019 18:15:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Jul 2019 18:15:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24315 invoked by uid 111); 15 Jul 2019 18:16:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Jul 2019 14:16:26 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jul 2019 14:15:27 -0400
-Date:   Mon, 15 Jul 2019 14:15:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
-Message-ID: <20190715181527.GA30747@sigill.intra.peff.net>
-References: <e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com>
- <41a60e60-d2c0-7d54-5456-e44d106548a4@kdbg.org>
- <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
- <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
- <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
- <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
- <20190714005129.GA4525@sigill.intra.peff.net>
- <54c2ee44-ee99-ea4a-3154-f642e0060877@kdbg.org>
- <20190715144602.GA26636@sigill.intra.peff.net>
- <4be7a0a1-0256-40c3-4abc-d3d9302f527b@kdbg.org>
+        id S1729590AbfGOSa7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jul 2019 14:30:59 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:37185 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729277AbfGOSa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jul 2019 14:30:59 -0400
+Received: by mail-io1-f45.google.com with SMTP id q22so35699687iog.4
+        for <git@vger.kernel.org>; Mon, 15 Jul 2019 11:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=PjI+to5rbstRUGaBjDSGHL5J6TYsqIWVK2SCaMAWlZI=;
+        b=FTqLqj8jmgEcc+m8BHx0merOn5G/bxZUhkvb0LYx3hZzyJonGgjadxujkVHnfNuzlq
+         kUGNSG9i1okuvrPEJfYjsjfmr0B6PbU2SKVWFPARZUX/V4KiICdLpaaSkq1BS3Op2Lqj
+         CQ8bv4L+TybjM++ii/WrYc6/xsA26oXcPEXKMFB2L2kYb2nfefOYphc25Le4023CRH4j
+         UCW/x4DSIoktCJKyISyGd5uEBetkhGxUjQJhmCTX9anKynTFn7rgFShgPVNnajR9g09H
+         tYvcMZE2pIjQD+S6WBqxNRs+qJUl6LTD1N1KvRif7Y+1oyfm0JVzdsXyqSLyqt90J6gs
+         npJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=PjI+to5rbstRUGaBjDSGHL5J6TYsqIWVK2SCaMAWlZI=;
+        b=lO6selRAXZOIdyTctUO7ClJxdByR7AYhLhsDqjHIGNhrTYCOiWDQ+AJRz1VFgSdmWU
+         RxhQxT31Z7OYndr/S1TVJU1kENt0ZKq4WniW5atrYaM4JaS21tPMyuWPVZstXOSUhRwW
+         2HayNbr1MR17RTpmymPtcM0LEOmUn6IKIjz2w4xmO2Nx1jjcn0QKhujUDQ7NeXeIOTiU
+         UWfT+yutvt75NuLK1hb1OAR/zX94TEoqxrYYLf0XLmcLf1jHu7vmOa+CrE7WsMDpqLyd
+         oP/ujQN6idjdO2E7mxBicF5wnwMEyq1wzrqxCCLc17cXjxVrneq/Ks4sY5U7pUj1yqlB
+         4AlA==
+X-Gm-Message-State: APjAAAWF/qgnrHTCGo4kVge5zE2VombWYVj4VWvWXLd+ecG6d/HSPauQ
+        6+Ix22ucsW58f+fMBBOsZBDRGLYNcXf8AOTzYdggTHN4
+X-Google-Smtp-Source: APXvYqwNMGTMtKC49KgkEdy6V+GfuOoUgAU5QGxwjlElhhDKu9DN3ERMmr40btQOXWrx4I95RY36qNnKTf7LjUR4EIo=
+X-Received: by 2002:a5d:9d58:: with SMTP id k24mr25862582iok.116.1563215458091;
+ Mon, 15 Jul 2019 11:30:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4be7a0a1-0256-40c3-4abc-d3d9302f527b@kdbg.org>
+From:   Danny Lin <danny0838@gmail.com>
+Date:   Tue, 16 Jul 2019 02:30:44 +0800
+Message-ID: <CAMbsUu5bYN9q34st8AhOCv8y5eJQpVpEKOO3ebTi+CxbYetgmQ@mail.gmail.com>
+Subject: [BUG] Branches before "git subtree add --squash" are pushed via "git
+ subtree push"
+To:     git develop <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 15, 2019 at 07:30:09PM +0200, Johannes Sixt wrote:
+Say we have a repository with "master" and "sub" branches like below:
 
-> Am 15.07.19 um 16:46 schrieb Jeff King:
-> > On Sun, Jul 14, 2019 at 10:30:27AM +0200, Johannes Sixt wrote:
-> >>> But it does fall down
-> >>> when the first element _has_ to be a struct (like, say, any user of our
-> >>> hashmap.[ch] interface).
-> >>
-> >> No, it does not. It is not necessary to spell out nested structs in the
-> >> initializer.
-> > 
-> > Ah, that is news to me. I know that this compiles OK with "gcc -Wall",
-> > but is it guaranteed by the standard?
-> 
-> Yes; see http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1124.pdf,
-> 6.7.8 §20, in particular, the sentence beginning with "Otherwise".
+    A---B---C---D---E---F  master
+               /
+          X---Y
 
-Thanks, I didn't know about that subtlety.
+    X---Y  sub
 
-I think relying on that flattening would be a terrible style choice to
-use for initializing to particular values, but it makes perfect sense in
-the context of using a single 0 to mean "zero-initialize the whole
-struct".
+where commits A and B include changes in subdirectory "sub", commit C
+removes subdirectory "sub", commit D is generated by "git subtree add
+-P sub Y", and commits E and F also include changes in subdirectory
+"sub".
 
-That actually kind of makes me think that reordering our struct members
-(to put an arithmetic type or a struct containing one at the beginning)
-_might_ be worth doing as a workaround to tools like sparse. It's hacky,
-but it puts the effort of dealing with this problem only in one spot
-(the struct definition) instead of many (everywhere the struct is used).
+We'd get this if we run "git subtree push -P sub . sub" on master at F:
 
-But I'd be happy if we could address it in another way (e.g., convincing
-sparse to stop complaining about it, or just decide it's not worth
-dealing with). One other thing I haven't seen discussed in this thread:
-we could actually make our preferred style be for all structs to define
-a FOO_INIT initializer, like we already do for STRBUF_INIT, etc. That's
-a much more heavyweight solution than what's being discussed here, but
-it comes with an extra benefit: it's easy to catch and change all users
-if the struct switches away from zero-initialization.
+    X---Y---E'--F'  sub (after push)
 
-I'm on the fence on whether having non-zero initializers is a good
-strategy overall.  You can always bootstrap any other on-demand setup
-from the zero-initialized state, but it does sometimes lead to more
-awkward code (e.g., needing an explicit call to initialized_if_needed()
-in every function that works with the struct, or inverting the sense of
-boolean members so that the default is always "0").
+On the other hand, if we have simliar trees except that commit D is
+generated by "git subtree add --squash -P sub Y":
 
--Peff
+    A---B---C---D---E---F  master
+               /
+              Y'
+
+    X---Y  sub
+
+We'd expect to get this when we run "git subtree push -P sub . sub" on
+master at F:
+
+    X---Y---E'--F'  sub (after push, expected)
+
+But actually we get this (in Git 2.22.0):
+
+    A---B---C---D'--E'--F'  sub (after push, actual)
+               /
+          X---Y
+
+This seems to be a side effect of 2.7.0 -> 2.7.1 in which a change is
+made to include merged branches in "git subtree push", but mistakenly
+causes branches before "git subtree add --squash" be included.
