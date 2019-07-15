@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95861F461
-	for <e@80x24.org>; Mon, 15 Jul 2019 12:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C25CF1F461
+	for <e@80x24.org>; Mon, 15 Jul 2019 12:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730089AbfGOMlP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jul 2019 08:41:15 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:41824 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728933AbfGOMlP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jul 2019 08:41:15 -0400
-Received: by mail-ot1-f65.google.com with SMTP id o101so16762702ota.8
-        for <git@vger.kernel.org>; Mon, 15 Jul 2019 05:41:14 -0700 (PDT)
+        id S1730075AbfGOMlQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jul 2019 08:41:16 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:39941 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730080AbfGOMlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jul 2019 08:41:16 -0400
+Received: by mail-oi1-f195.google.com with SMTP id w196so12481332oie.7
+        for <git@vger.kernel.org>; Mon, 15 Jul 2019 05:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=txvecSw9jqUzzh7fTMrwuQR6LGkiq6U0h8j626J3XHQ=;
-        b=qEbsgBWc5JxAKXHqLHKSLfFwBQbYEooLPcObeFoWwPXAp+WGi5uu/llbFeAqQpn71U
-         1p2rpBTf3A1aiM01tfYsAUajvfoadXRR0yHpq+Dhu/jXPymyGVdbJSfHF82KtkMSmxhK
-         D86xRDQsn3Y+3YRlD8mauPCLJcIcj8FiiTh5sDO8FboCtAG9RLkUW0XZKqoSyM3jJlBO
-         KA+f01kMX8KnolTk2u7INtIq4Ld2EZudnUTupTaAqdgyF2j1Ht6E4Ew6xOC6tt1N6E8c
-         kTMS5VRJ8lOQSpwe19LLPikMMnbQBrXO5h6LSXFy4grJKwZriK3MEb7523v5v19U3NXW
-         LQvQ==
+        bh=LeGAz0yRAOiGIYngIHwCQse59qL/ypm7DFPdmVYusTg=;
+        b=EbghEL9QZ+zrj9XVeY7l4wcWTUGXgHlEdPNjVVWJYvMJat0iv9js7wFmZzNg7iQ6Hs
+         FSBKUE7HT6qxcFXAP91KShrbMNoVnPYusqGE10HmdM54vHcGExZdG6hIsmgLBP2H2L8F
+         a1CE6ADk/jRXVckLoQ3Nv+JP673FhFK28cAOrvPSlDK8Wu1RLLSRtP6hNBWdZTu9/On4
+         +rmfCAZgNXZOOeZaKR3ksbwxAB8HTi5RhsgSasAVhxWRprs+UxEftnSWLOz/VyGYKdnj
+         IjFtvq/N1u5Gl4BrZsnuvwpeC5I93R6C/UDWZ//xfWzSK2WO1ClDf9uQ5TtOWPVABey3
+         d7Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=txvecSw9jqUzzh7fTMrwuQR6LGkiq6U0h8j626J3XHQ=;
-        b=b5duJPhF2xzeNbPMlVKFiqJL1798tBE2SLlFGY7Y7RLtcF38oQEZTP50PQDaF/07Bj
-         /ScfN0JZPXS0ZJmCVluh/2AxAW21XtUT58p4AxKSoEOeVumiv5haaSvqv6pbEzzE93H0
-         AkfAuSI/KlR9eDjt6PVPFXFJKgBC8wfEcBg0LzvXRgQjgIesEJw9RxmfJ74jloCPXmPT
-         szhhu0AQIufzxB7z69vRKsVUY3oiY8qXsJbrDDf6WNfKCGiQQrF6h9ToHo1+lOcjypE3
-         3tYf+1arVyRVOQaw13FVcjGEudgnPi/V9nb+r+wsQnBW7BMC2P5xHZqSVLvDi/FCUw1P
-         2AOQ==
-X-Gm-Message-State: APjAAAVXSldCCmGYPqNKxPQblqOEQyoY9qSGBB4puwZrBbzd18q/NRmx
-        6pzLwJcNiRiDNdYarqiI2idRAdDT
-X-Google-Smtp-Source: APXvYqzGYsg9onHLOyvkQnMC1y3wEg65TP96xUkaTMkr0veUshz7oBa70WCAHwCL1V44VWppZYAnSw==
-X-Received: by 2002:a9d:6ad7:: with SMTP id m23mr19623800otq.306.1563194474099;
-        Mon, 15 Jul 2019 05:41:14 -0700 (PDT)
+        bh=LeGAz0yRAOiGIYngIHwCQse59qL/ypm7DFPdmVYusTg=;
+        b=inqCkqwL5BKR+0VJy4bCPQvuHu/IXoQ9V8iH3rFFGA+yW8ZL7tgY5ic+CrztfWlO8g
+         7LSIeLOo0tSR62g3IrgMrwT4Am1XLENU0OgnxZN+B0ObSA/UOgCxSlKf04pntmCyc9O4
+         v30lggtsuB9qAsxOjiU/69zKaSBA2BhdvtL2pDOMcWEWc9KQpZZA0Iqupc6a47GXA6fr
+         TaUSVF3JeDLbQwPPVv4tbhWKLRmwfFKp0xNQGETn0qHyKdXOdcpSszT3pqV7cYy/ipvC
+         mHMwqcZM/SlbQXJYe814yZZ+ib/ek/dVXuZ0r398+O9L5E+0EQvvHvBrlVLNMma937hh
+         E5zg==
+X-Gm-Message-State: APjAAAVY2TLAkYo/dTKcwjUROeLtL5zZqPU+EAtL/ym9JQDMQd6VkP+3
+        pCBMmLAJIkB6sJEkkB8Bu/nRd9Mb
+X-Google-Smtp-Source: APXvYqxopquCSR6Cy/VdGxUuAwpIV9DS8eQte8sh8U1ErNFNDKyli5m/Bnq5kkhioIbQzai6OlyWug==
+X-Received: by 2002:aca:ac48:: with SMTP id v69mr12573681oie.48.1563194475108;
+        Mon, 15 Jul 2019 05:41:15 -0700 (PDT)
 Received: from nanabozho.attlocal.net ([2600:1700:8660:6160:5c00:b322:c4d8:3df5])
-        by smtp.gmail.com with ESMTPSA id q17sm6085893otf.54.2019.07.15.05.41.13
+        by smtp.gmail.com with ESMTPSA id q17sm6085893otf.54.2019.07.15.05.41.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jul 2019 05:41:13 -0700 (PDT)
+        Mon, 15 Jul 2019 05:41:14 -0700 (PDT)
 From:   Ariadne Conill <ariadne@dereferenced.org>
 To:     git@vger.kernel.org
 Cc:     Ariadne Conill <ariadne@dereferenced.org>
-Subject: [PATCH v3 2/3] documentation: mention --no-use-mailmap and log.mailmap false setting
-Date:   Mon, 15 Jul 2019 07:41:05 -0500
-Message-Id: <20190715124106.12642-3-ariadne@dereferenced.org>
+Subject: [PATCH v3 3/3] tests: defang pager tests by explicitly disabling the log.mailmap warning
+Date:   Mon, 15 Jul 2019 07:41:06 -0500
+Message-Id: <20190715124106.12642-4-ariadne@dereferenced.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190715124106.12642-1-ariadne@dereferenced.org>
 References: <20190715124106.12642-1-ariadne@dereferenced.org>
@@ -62,44 +62,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The log.mailmap setting may be explicitly set to false, which disables
-the mailmap feature implicity. In practice, doing so is equivalent to
-always using the previously undocumented --no-use-mailmap option on the
-command line.
+In the previous patch, we added a deprecation warning for the current
+log.mailmap setting. This warning only appears when git is attached to
+a controlling terminal. Some tests however run under an emulated
+terminal, so we need to disable the warning for those tests.
 
-Accordingly, we document both the existence of --no-use-mailmap as
-well as briefly discuss the equivalence of it to log.mailmap=False.
+Thanks to Junio for suggesting that we do this in the setup function.
 
 Signed-off-by: Ariadne Conill <ariadne@dereferenced.org>
 ---
- Documentation/config/log.txt | 3 ++-
- Documentation/git-log.txt    | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ t/t7006-pager.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
-index 78d9e4453a..7798e10cb0 100644
---- a/Documentation/config/log.txt
-+++ b/Documentation/config/log.txt
-@@ -40,4 +40,5 @@ log.showSignature::
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 00e09a375c..7976fa7bcc 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -7,6 +7,8 @@ test_description='Test automatic use of a pager.'
+ . "$TEST_DIRECTORY"/lib-terminal.sh
  
- log.mailmap::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
--	linkgit:git-whatchanged[1] assume `--use-mailmap`.
-+	linkgit:git-whatchanged[1] assume `--use-mailmap`, otherwise
-+	assume `--no-use-mailmap`. False by default.
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index b02e922dc3..b406bc4c48 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -49,7 +49,7 @@ OPTIONS
- 	Print out the ref name given on the command line by which each
- 	commit was reached.
+ test_expect_success 'setup' '
++	: squelch advice messages during the transition &&
++	git config --global log.mailmap false &&
+ 	sane_unset GIT_PAGER GIT_PAGER_IN_USE &&
+ 	test_unconfig core.pager &&
  
----use-mailmap::
-+--[no-]use-mailmap::
- 	Use mailmap file to map author and committer names and email
- 	addresses to canonical real names and email addresses. See
- 	linkgit:git-shortlog[1].
 -- 
 2.17.1
 
