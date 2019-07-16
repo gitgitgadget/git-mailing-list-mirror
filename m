@@ -7,64 +7,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBC761F4B6
-	for <e@80x24.org>; Tue, 16 Jul 2019 20:09:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9521A1F461
+	for <e@80x24.org>; Tue, 16 Jul 2019 20:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388616AbfGPUJC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 16:09:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54700 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728799AbfGPUJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 16:09:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A24878C62C;
-        Tue, 16 Jul 2019 16:08:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1729076AbfGPU2Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 16:28:25 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51395 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728575AbfGPU2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 16:28:25 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BB0316EF94;
+        Tue, 16 Jul 2019 16:28:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5c3rfBF6xmRMj+ZHwTE+ExOHhG0=; b=TYZoh2
-        J4wPxevNzNP+rxdKRO+HDGHx53Bj7ymhuvweZX+kt/co8mOuZJlupeXarRZ774aN
-        s1V5BaZwmznPR7qAlxbwdtBc3x0KPC7uI0kulhIeX5WZzq91c0EebcfhQ198TLLd
-        S8f+rAHEIcq1T8fzX4y2N+IkYlkVpjGjCraMk=
+        :content-type; s=sasl; bh=I8n9/Gk8r3BCTTEUuqZ5/EiNym0=; b=wn6Swh
+        Pu9ff76aYSzCPwfqUv9HbFjAkw1yqEQ5y0VdPMqg6Gt913aBSt/JvmlrIyNtjEZs
+        VayyXwhjarvp3gew6XJeN4+nU7j0K863haSHeAMCoZNwEwbpYMHVsZPU/lVIF1Nt
+        RmAzwGP6dIa/+xf2mYCtCvY8WLIO0Fy1ktiWI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qQNr+aTjOZZ8II2Bf5zrEWVmIittsXr5
-        z2yVIvIgO1yZyROGKjS6hfE6cUABrVmNjV2mtRfslFQb6akxt3HWAPYjQhmG7/Hw
-        XGP6cCk3iWMe2+fr3LDVX6QwSjKoa//S6nHbEyw7GPQl/yOLlAUFZ0ICOgxsiAm6
-        k65CMc1cTrA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A6C88C62B;
-        Tue, 16 Jul 2019 16:08:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=EztrKkUQjzVDvLZFC3mahr5zuP4ymjKX
+        Az+0+OnKxfK48Vl269iZiAeVysLVz25XF7n93XstQYG5lJNgXf4qukY/AoCrLv1M
+        yp3OdCEoHbwwR4h7BCLvrp4eQUzt5tKEGwNgP8vVG8JEhcwg+M6HtR42o5IU6O80
+        /185OwN+KJk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2245C16EF93;
+        Tue, 16 Jul 2019 16:28:23 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CE0158C62A;
-        Tue, 16 Jul 2019 16:08:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 844A516EF92;
+        Tue, 16 Jul 2019 16:28:22 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Martin Nicolay <m.nicolay@osm-ag.de>, git@vger.kernel.org
-Subject: Re: [PATCH v2] stash: fix handling removed files with --keep-index
-References: <alpine.LSU.2.20.1907111452560.3570@cpza.bfz-tzou.qr>
-        <20190711174828.GF15477@hank.intra.tgummerer.com>
-        <20190716142322.GH15477@hank.intra.tgummerer.com>
-Date:   Tue, 16 Jul 2019 13:08:54 -0700
-In-Reply-To: <20190716142322.GH15477@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Tue, 16 Jul 2019 15:23:22 +0100")
-Message-ID: <xmqq7e8h3fop.fsf@gitster-ct.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: [PATCH] transport-helper: avoid var decl in for () loop control
+References: <20190702005340.66615-1-emilyshaffer@google.com>
+        <20190709211043.48597-1-emilyshaffer@google.com>
+        <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
+        <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 16 Jul 2019 13:28:21 -0700
+In-Reply-To: <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 16 Jul 2019 09:53:59 -0700")
+Message-ID: <xmqq36j53esa.fsf_-_@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8ACE4DD4-A805-11E9-A030-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 419D81EA-A808-11E9-8971-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+We do allow a few selected C99 constructs in our codebase these
+days, but this is not among them (yet).
 
-> git stash push --keep-index is supposed to keep all changes that have
-> been added to the index, both in the index and on disk.
+Reported-by: Carlo Arenas <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ transport.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Thanks, will queue.
+diff --git a/transport.c b/transport.c
+index d768bc275e..453de8f704 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1227,7 +1227,8 @@ int transport_push(struct repository *r,
+ 		ret = push_ret | err;
+ 
+ 		if ((flags & TRANSPORT_PUSH_ATOMIC) && err) {
+-			for (struct ref *it = remote_refs; it; it = it->next)
++			struct ref *it;
++			for (it = remote_refs; it; it = it->next)
+ 				switch (it->status) {
+ 				case REF_STATUS_NONE:
+ 				case REF_STATUS_UPTODATE:
