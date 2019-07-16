@@ -2,125 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33F871F461
-	for <e@80x24.org>; Tue, 16 Jul 2019 18:39:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF081F461
+	for <e@80x24.org>; Tue, 16 Jul 2019 18:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728535AbfGPSjA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 14:39:00 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38699 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728121AbfGPSjA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 14:39:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563302326;
-        bh=9dPTrpDKW0dahq9VVPCQcXSnNdF7ovemlmHtfNh5qkk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BprSMWtdrlJl/WFtwF8dWx83QmsxQQK/DG8zrLx10lo4yrR5ekErCOJ0NYh9+NBDg
-         bFOCFmNmIKfwW7CvKGwAvNkp5z6DHzs7wyvqhbop26csSQE+CX0xqh62mUo8+tHMn4
-         yPtGqc5L/65emU860E5aEH6HRv0r+4ANwUv9CaBY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MowGa-1iEYYK12ys-00qSjx; Tue, 16
- Jul 2019 20:38:46 +0200
-Date:   Tue, 16 Jul 2019 20:38:20 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/11] git add -i: add a rudimentary version in C
- (supporting only status and help  so far)
-In-Reply-To: <pull.170.v3.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907162037430.47@tvgsbejvaqbjf.bet>
-References: <pull.170.v2.git.gitgitgadget@gmail.com> <pull.170.v3.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388414AbfGPSsP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 14:48:15 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:44237 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728137AbfGPSsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 14:48:15 -0400
+Received: by mail-yw1-f68.google.com with SMTP id l79so9342692ywe.11
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 11:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=M3Nj7ywVqIgMXKie2FINECyL580Bk6qtYnYGwP4sPF0=;
+        b=XFKpfRKaD8CZ2WngjA5Ff/Lr/5fFdS5xmhT2GijRBCH+smflp1TUUJwxYXKO8AyWXh
+         lJD8oRcIJBwKrhOiLg/4/kvEybZ0dVzseW/IiJ/BmMckkxxWfDQJ0ume1cE85CQydfer
+         bvDafGRoaqez55PKbMOvin+i7RnQEZ+xX5HWuGmrN+s0oFk/2ME9ZxQX4Hq4v+8Q2oYL
+         ijviUYdTDhjDUr72Vltm0d9XbdEp/ItzQ41+pIxX5SGa9kN9bMLu7dj5iJDXxqKIVMGl
+         P4tOBZjw/o8vbuZbtld4bp35ckmmDhnzKxmDToT8RKVneJabuoldBWShnnImRn+WCEey
+         WA8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M3Nj7ywVqIgMXKie2FINECyL580Bk6qtYnYGwP4sPF0=;
+        b=GHxb8otikaFWJ0rx08KczaQ69Qv/lSRuIBkAuZ7/6ecy3ptx/J6aSF5uA0jHbJWok+
+         9vR/YLM1vlC7YaaUneXeb6TzuMeKrS4W1DhBfPlRfWXom1TgyS6GugaUwVnWrzxtQONH
+         LM1nYuDyqm4j98vpmX/JJjWWoAJ9l2OCS5GW/I+SM/ZwMTCgfA3puEau1KOuo0Cd32wm
+         62Td+KW2CN7vjIEcXoOXX1OleunNFUTOrkocQUjG76PJxFJeOqNe/YSFceeGv0ukENxC
+         RUJD6sqjOQSQLCuSpUJRtwcFNzLiIVfYZCVGm7b/suwQyYM1XYONYva2114GVJWhabKe
+         c5OQ==
+X-Gm-Message-State: APjAAAVpg91Nf3gsPBi4cs+C1IDbWwuJk66hhRHLpYGg2++FJ2/DnT/1
+        ZtR5JrO3geK4zmXBXIRsXi5drLJmPEK6iKBHD6A5aw==
+X-Google-Smtp-Source: APXvYqw8BVGwFjspPVA/GgSfd+2OtTYnFQ+OQmz1SR2hiBpkPFuOaR9l91eS36tYFFpJ3wra36MLeMHuQUtaoc6XSvE=
+X-Received: by 2002:a0d:c301:: with SMTP id f1mr19641828ywd.494.1563302894146;
+ Tue, 16 Jul 2019 11:48:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-788669485-1563302326=:47"
-X-Provags-ID: V03:K1:QY6Ai+WSqBBsCoemDMtzU9OKroHp/yinOtqEolhTSXfpbi1i3tT
- doRkmFF5iqXyRfNEiuK440445dIzkEvNEx3fUrpaAACuhcSDp3WGyjGtoD7KsWLi2i7A3tD
- fUbDadFzun7z6S4utxGWolH4bsXC+I+OgLUC8ltwrNUEmap4zpgWU+YhNiTRfBWptiFnX4F
- FP/VMXD+sJM6neJAKXIqg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0d/htQzONKU=:M/Llxc/scM/TzlFiD8kwYQ
- 1EO01tQr+XZr9j0fBPlQ87/mCjhdKYSb4bHiavRK4l6heI3wfwnilGM0JWtUOy2r0o1VEW1NS
- CWSIbL0Ef/U7VdpMx/cMijPfGFfeGTgvMpnbm3ASxcmS++P7hXOEJwHWUQxlsllmRWmioGyKR
- HdD3dqo20lzMBlGUETs95zAyAOYzjBLB5Qr8FQm+w/usjDR2o1j00lQ8vA/dOCKBwraoIABvq
- 4T+Ofl6KChTonx9JSIKWtcmPtV8EYbSE4mrablYiYx88fpNPqZAy/5RmeoNQ169189Jl2bgjh
- 15G13JwI+1N44cZYedZqymAKBJxH0jGRl7QedqR5q/Hf+/BSWsqDJru3bxkRg/MR5ZkRaHSy1
- tBedgYO3JtH40QemrFwO386ODn9F4GR3pP2OvWzdU1u3QsRAOHsg8fWRGqC0xCp++JdL+uoGi
- GxEVUi6+KNeLsFX90HrUyI6XTEUTKc/m4OvugDqjbGTkbvJz6z87F2D5ZcRLoVy518bwopiAR
- TnKGUHZtJbipRXwKCTkSizJ6asjWT3bx0B1wZFJfGqIJMQjLDhU+QyMMSeoa8Jv4S+WiroyDm
- J5FBmwXevug22h3aCLOSWyZ1uz+l6VgfzNkisJFph6y8eT7mZgSLc1jcYXWucszbM1QHxm3Za
- amyZn3orKbs32f9obkrYEZAaS+SppjeiRbgXFowMMhA8vSw1y5V8ir1ay3nAL9Icb3TtZhuAY
- aW9IJ7WtJtJ0DMmlrT5MdaSy6DYT032GFheLADrsqC/eQzaLy+Ds9MP59EdSbQ38QF0XpnnzS
- 0/WqcjshGvyqMU3fifrztRKV2nYLmxiMj3XkexSAcFNGajj0F+5+WDviIzH7dwmv+0HZeiZ87
- d3tT9X5uUjOOZtQNzesNKmxS3HOFY3Uje93650vUPyDv+n6hF4Q52MGvNr30TeUYDO5GP+Z0x
- sVKWq47bc46eHz4xruLQr1x6lwqIbAovId9VKJvFJ6DQ1cSJg/kd//08gcwxAsXI32rhaBNoo
- Cgvd7UNcdTgk5ns3Xlw02KtFGJ9xfrrtWTHSA8Z3Vk3Vaxsj1m4wAz6has7hCmCYAo/GV0qnz
- ei3bCA9j/Gu9gqg3KhvojprMc0tyrPOWT/F
+References: <CAOGP0GoYviFHhFzhqEimEw+ebd=DJx9JucG4BNvSvPuDudoWxw@mail.gmail.com>
+ <xmqqsgr53kov.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgr53kov.fsf@gitster-ct.c.googlers.com>
+From:   Steven Roberts <fenderq@gmail.com>
+Date:   Tue, 16 Jul 2019 11:47:37 -0700
+Message-ID: <CAOGP0Gp6zUVeBZjMaCuoHcoHhGJZyC1T1SFNtZSDTL1rXA8eCw@mail.gmail.com>
+Subject: Re: git segfault in tag verify (patch included)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000af0112058dd0d115"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+--000000000000af0112058dd0d115
+Content-Type: text/plain; charset="UTF-8"
 
---8323328-788669485-1563302326=:47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks. I hope this works ok for you (see attached).
 
-Hi Junio,
-
-
-On Tue, 16 Jul 2019, Johannes Schindelin via GitGitGadget wrote:
-
-> This is the first leg on the long journey to a fully built-in git add -i
-> (next up: parts 2 [https://github.com/gitgitgadget/git/pull/171], 3
-> [https://github.com/gitgitgadget/git/pull/172], 4
-> [https://github.com/gitgitgadget/git/pull/173], 5
-> [https://github.com/gitgitgadget/git/pull/174], and 6
-> [https://github.com/gitgitgadget/git/pull/175]). Note: the latter PRs ar=
-e
-> not necessarily up to date, and will be re-targeted to the appropriate
-> branches in https://github.com/gitster/git as soon as Junio picks them u=
-p.
+On Tue, Jul 16, 2019 at 11:20 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This here patch series reflects the part that was submitted a couple of
-> times (see https://github.com/gitgitgadget/git/pull/103) during the
-> Outreachy project by Slavica =C3=90ukic that continued the journey based=
- on an
-> initial patch series by Daniel Ferreira.
+> Steven Roberts <fenderq@gmail.com> writes:
 >
-> It only implements the status and the help part, in the interest of maki=
-ng
-> the review remotely more reviewable.
+> > I believe I have found an off-by-one error in git.
+> >
+> > Please see https://marc.info/?l=openbsd-ports&m=156326783610123&w=2
 >
-> As I am a heavy user of git add -p myself and use a patched version for
-> weeks already (it is so nice to not suffer over one second startup until=
- the
-> MSYS2 Perl finally shows me anything, instead it feels instantaneous), I
-> integrated these patch series into Git for Windows' master already, as a=
-n
-> opt-in feature guarded by the config variable add.interactive.useBuiltin
-> (and Git for Windows' installer is prepared to detect this version and o=
-ffer
-> the option in the graphical user interface).
+> That is this thing.
 >
-> I had planned on submitting this before v2.22.0-rc0, but there was such =
-a
-> backlog of builds from a big pushout that I had to wait ;-)
+>         static void parse_gpg_output(struct signature_check *sigc)
+>         {
+>                 const char *buf = sigc->gpg_status;
+>                 const char *line, *next;
+>                 int i, j;
+>                 int seen_exclusive_status = 0;
+>
+>                 /* Iterate over all lines */
+>                 for (line = buf; *line; line = strchrnul(line+1, '\n')) {
+>                         while (*line == '\n')
+>                                 line++;
+>                         /* Skip lines that don't start with GNUPG status */
+>                         if (!skip_prefix(line, "[GNUPG:] ", &line))
+>                                 continue;
+>
+> If the GPG output ends with a trailing blank line, we skip and get
+> to the terminating NUL, then find that it does not begin with
+> the "[GNUPG:] " prefix, and hit the continue.  We try to scan and
+> look for LF (or stop at the end of the string) for the next round,
+> starting at one past where we are, which is already the terminating
+> NUL.  Ouch.
+>
+> Good finding.
+>
+> We need your sign-off (see Documentation/SubmittingPatches).
+>
+> Thanks.
+>
+>
+> -- >8 --
+> From: Steven Roberts <fenderq@gmail.com>
+> Subject: gpg-interface: do not scan past the end of buffer
+>
+> If the GPG output ends with trailing blank lines, after skipping
+> them over inside the loop to find the terminating NUL at the end,
+> the loop ends up looking for the next line, starting past the end.
+>
+> ---
+>  gpg-interface.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 8ed274533f..eb55d46ea4 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -116,6 +116,9 @@ static void parse_gpg_output(struct signature_check *sigc)
+>         for (line = buf; *line; line = strchrnul(line+1, '\n')) {
+>                 while (*line == '\n')
+>                         line++;
+> +               if (!*line)
+> +                       break;
+> +
+>                 /* Skip lines that don't start with GNUPG status */
+>                 if (!skip_prefix(line, "[GNUPG:] ", &line))
+>                         continue;
+>
 
-FWIW the v2 round has not seen any objections...
 
-Maybe pick it up in `pu` this time round?
+-- 
+Steven Roberts | https://www.fenderq.com/
 
-Thanks,
-Dscho
+--000000000000af0112058dd0d115
+Content-Type: text/x-patch; charset="US-ASCII"; 
+	name="0001-gpg-interface-do-not-scan-past-the-end-of-buffer.patch"
+Content-Disposition: attachment; 
+	filename="0001-gpg-interface-do-not-scan-past-the-end-of-buffer.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jy664d8u0>
+X-Attachment-Id: f_jy664d8u0
 
---8323328-788669485-1563302326=:47--
+RnJvbSBkNDg4MTQyNzNhNTBjZjBiMjkzMTQ4Y2M0MGE2YTVjYzdjMTM2ODZlIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBTdGV2ZW4gUm9iZXJ0cyA8c3JvYmVydHNAZmVuZGVycS5jb20+
+CkRhdGU6IFR1ZSwgMTYgSnVsIDIwMTkgMTE6NDA6NDYgLTA3MDAKU3ViamVjdDogW1BBVENIXSBn
+cGctaW50ZXJmYWNlOiBkbyBub3Qgc2NhbiBwYXN0IHRoZSBlbmQgb2YgYnVmZmVyCgpTaWduZWQt
+b2ZmLWJ5OiBTdGV2ZW4gUm9iZXJ0cyA8c3JvYmVydHNAZmVuZGVycS5jb20+Ci0tLQogZ3BnLWlu
+dGVyZmFjZS5jIHwgNSArKysrKwogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQoKZGlm
+ZiAtLWdpdCBhL2dwZy1pbnRlcmZhY2UuYyBiL2dwZy1pbnRlcmZhY2UuYwppbmRleCA4ZWQyNzQ1
+MzNmLi43NzU0NzUxMzFkIDEwMDY0NAotLS0gYS9ncGctaW50ZXJmYWNlLmMKKysrIGIvZ3BnLWlu
+dGVyZmFjZS5jCkBAIC0xMTYsNiArMTE2LDExIEBAIHN0YXRpYyB2b2lkIHBhcnNlX2dwZ19vdXRw
+dXQoc3RydWN0IHNpZ25hdHVyZV9jaGVjayAqc2lnYykKIAlmb3IgKGxpbmUgPSBidWY7ICpsaW5l
+OyBsaW5lID0gc3RyY2hybnVsKGxpbmUrMSwgJ1xuJykpIHsKIAkJd2hpbGUgKCpsaW5lID09ICdc
+bicpCiAJCQlsaW5lKys7CisKKwkJLyogQnJlYWsgb3V0IG9mIHRyYWlsaW5nICdcbicgKi8KKwkJ
+aWYgKCEqbGluZSkKKwkJCWJyZWFrOworCiAJCS8qIFNraXAgbGluZXMgdGhhdCBkb24ndCBzdGFy
+dCB3aXRoIEdOVVBHIHN0YXR1cyAqLwogCQlpZiAoIXNraXBfcHJlZml4KGxpbmUsICJbR05VUEc6
+XSAiLCAmbGluZSkpCiAJCQljb250aW51ZTsKLS0gCjIuMjEuMAoK
+--000000000000af0112058dd0d115--
