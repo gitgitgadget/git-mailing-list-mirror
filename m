@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6A11F461
-	for <e@80x24.org>; Tue, 16 Jul 2019 14:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759AE1F461
+	for <e@80x24.org>; Tue, 16 Jul 2019 14:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387995AbfGPO6q (ORCPT <rfc822;e@80x24.org>);
+        id S1728137AbfGPO6r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 10:58:47 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43053 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387969AbfGPO6q (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Jul 2019 10:58:46 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44215 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387962AbfGPO6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 10:58:44 -0400
-Received: by mail-wr1-f65.google.com with SMTP id p17so21288695wrf.11
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 07:58:42 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id p13so21292149wru.10
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 07:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/KqPZlUxRsgNntn0WLaUbVxLgJmF5S4QnKcevndi45E=;
-        b=iAbDObpbsfnFQrSYt7wUwm7iMlEAx/7GDMXdXyi4ortQDhg/uZyI9nLbA3dAy1XBFD
-         4zzxK+NJjjXK+LjPfGhQfuz78HI4/v1zjvSCOCk7HQl4HOw19MhDAMViEttgAutBxttR
-         UwUTFTSCOhnw+Omi5fUVpTE8p4l5bisHJvZY0WTCuNLVHLjDbHdGaTseP6S0v039as4J
-         cwe4KtqPUuBZ2ae6CV1w19+8s54+kOJv+f59K+jrLR6VzhFBtLoDN9+vpMpBmtqhmK2b
-         SgcCPnmtyWMzGocROoLiRf98fPmIYtg+QoYVNxKl2zhNr4yxc1ms4X+7G+845z/iyAjD
-         sS1g==
+        bh=maXgbBZIfSjyQDIgjTn7ji0VBOqIZyKDH4hVyNWT1Xs=;
+        b=kRWrjDQMLiMONbpuKUKgoPCIW/EYkBON6KUD+XBLWbq5AwoxRDW99jsQrek6+9TdRs
+         JndslaC0rbZHVajP+8gfdYcnBrs9krtB1mMeDog6kOoGLhTF0wUf7v9NNGtZKjdXA7vn
+         ec0BmRFpT5hzHMMfP2izSTV5B1XQ4korqCLlBzUuMuRkuVRAVGH9yfiMWOSzMYRlKlKp
+         oBV+kHY1Wo8ySlE/o76ryqdu3N2KNLj50RizZhceC6NC5PLW5Y2nVgRk8PM4FJ+Z8TKa
+         GngldJJeeTuyUPQWlmbWHjIAIFkzMP0rw886BsKo+okIWR5Hm6RvZUZZsgWEGgSZHLJj
+         pO9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/KqPZlUxRsgNntn0WLaUbVxLgJmF5S4QnKcevndi45E=;
-        b=LZqNoVcDT66hoCeVAJ9eVN5yAX3PA7N4tmpkyPPaWjAkQpbi7gh07k84UkhZDRYOfp
-         VCHAMQHm6dq0DOPZw3j5URabSJzvGADLM4eW2blC0t4xN/X7d3AuiG733cyoxLUEs45e
-         9Q8nPcWAzgqK5iu4rT52Rr5rkUTFlZejde2Dr1Rhe0jEhoPiE/45ThmjM3652S961GnF
-         vcLQzdJLvJS/rcDlRcfZZVGuUbrusXzANrR9AAFq/bIag5PZMNG1BL9gJg2z98F7pyv4
-         9JLbcGxUa8naKYWA1zJ35pQvHKqfUipe0ZDmtyhyrPPoS4nxl5t1qjX59x/JBYl7bBEh
-         /Wjw==
-X-Gm-Message-State: APjAAAUvLWbzzlVQ0eZFwig0bFF6RU5bycr9QKmBJ3PfE7GUoaS/SEYD
-        kfw7ubhdH2nFiOA+QrgD8Ip6ZC3a
-X-Google-Smtp-Source: APXvYqxfxJe5xNulTvQLOUnUDEEvdfE8Ia7aJ49gQhzPnZFGe1bhnS/JrLQDqbtjRGa0jTVhE1y0vA==
-X-Received: by 2002:adf:8bd1:: with SMTP id w17mr38715940wra.50.1563289121809;
-        Tue, 16 Jul 2019 07:58:41 -0700 (PDT)
+        bh=maXgbBZIfSjyQDIgjTn7ji0VBOqIZyKDH4hVyNWT1Xs=;
+        b=cccsTP0ZVkcSN/35cSvsNmvTwUlgBM0nJdoKrF5sEoN4n86t6NwNtZXLSI7RHTjkji
+         AZoQEpf7ZI2uTMXNafWCt/9/1T+pWRlqy7OjAWA7V+2AWelQgHyJ2/GsIpXgkYPtDzXP
+         G3jZD2L0Ff51v4jLlt8xzN1iFi6gWZ+rfAXXfQsjoeIVTx6EhL4mcVSK8jAiT2qYPxn0
+         2YAM+5/gevoI/nB494Cba5h7SSAAj6lf/v13QSYqqR5e4zW5iIYU+mz0/p8K97UJa5+a
+         kSC2tnUr3YOhweVSnMlwFKltfWK5jf8PeJqkrPsMoGmadroSEHbUIBh9vzowL35pnqWj
+         +6VA==
+X-Gm-Message-State: APjAAAU/3q4jQXI/z/46Zedp+QNU4SPaTAjE4P9uEH0yBJWQij8+mL1S
+        5uKlruiQnH7AGrLnSRSpZ9QIDWOF
+X-Google-Smtp-Source: APXvYqwoiqz6JHx/p8WXGOQjA4Ruqew3+SIRt3f2uR7da7xQKfa7dnFU5fIuJGF6mF/GC7GHzNC1dA==
+X-Received: by 2002:adf:cc85:: with SMTP id p5mr34551362wrj.47.1563289123395;
+        Tue, 16 Jul 2019 07:58:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y10sm17337354wmj.2.2019.07.16.07.58.41
+        by smtp.gmail.com with ESMTPSA id i13sm20939443wrr.73.2019.07.16.07.58.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jul 2019 07:58:41 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 07:58:41 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Jul 2019 14:58:30 GMT
-Message-Id: <175409aaae0f3127b92126dc201faa4b41da0870.1563289115.git.gitgitgadget@gmail.com>
+        Tue, 16 Jul 2019 07:58:42 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 07:58:42 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Jul 2019 14:58:32 GMT
+Message-Id: <e23ddebfbf17adfa13fe52516bd9130d7a1b6db7.1563289115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v3.git.gitgitgadget@gmail.com>
 References: <pull.170.v2.git.gitgitgadget@gmail.com>
         <pull.170.v3.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 06/11] built-in add -i: implement the main loop
+From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 08/11] built-in add -i: show unique prefixes of the
+ commands
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,236 +66,185 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Slavica Djukic <slawica92@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Slavica Djukic <slawica92@hotmail.com>
 
-The reason why we did not start with the main loop to begin with is that
-it is the first user of `list_and_choose()`, which uses the `list()`
-function that we conveniently introduced for use by the `status`
-command.
+Just like in the Perl script `git-add--interactive.perl`, for each
+command a unique prefix is determined (if there exists any within the
+given parameters), and shown in the list, and accepted as a shortcut for
+the command.
 
-Apart from the "and choose" part, there are more differences between the
-way the `status` command calls the `list_and_choose()` function in the
-Perl version of `git add -i` compared to the other callers of said
-function. The most important ones:
+We use the prefix map implementation that we just added in the previous
+commit for that purpose.
 
-- The list is not only shown, but the user is also asked to make a
-  choice, possibly selecting multiple entries.
-
-- The list of items is prefixed with a marker indicating what items have
-  been selected, if multi-selection is allowed.
-
-- Initially, for each item a unique prefix (if there exists any within
-  the given parameters) is determined, and shown in the list, and
-  accepted as a shortcut for the selection.
-
-These features will be implemented later, except the part where the user
-can choose a command. At this stage, though, the built-in `git add -i`
-still only supports the `status` command, with the remaining commands to
-follow over the course of the next commits.
-
-In addition, we also modify `list()` to support displaying the commands
-in columns, even if there is currently only one.
-
-The Perl script `git-add--interactive.perl` mixed the purposes of the
-"list" and the "and choose" part into the same function. In the C
-version, we will keep them separate instead, calling the `list()`
-function from the `list_and_choose()` function.
-
-Note that we only have a prompt ending in a single ">" at this stage;
-later commits will add commands that display a double ">>" to indicate
-that the user is in a different loop than the main one.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 ---
- add-interactive.c | 129 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 127 insertions(+), 2 deletions(-)
+ add-interactive.c | 69 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 56 insertions(+), 13 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 6c2fca12c1..0ea4f3edb8 100644
+index 0ea4f3edb8..7ff87bae1b 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -51,6 +51,7 @@ struct item {
- };
+@@ -5,6 +5,7 @@
+ #include "diffcore.h"
+ #include "revision.h"
+ #include "refs.h"
++#include "prefix-map.h"
  
- struct list_options {
-+	int columns;
- 	const char *header;
- 	void (*print_item)(int i, struct item *item, void *print_item_data);
- 	void *print_item_data;
-@@ -59,7 +60,7 @@ struct list_options {
- static void list(struct item **list, size_t nr,
- 		 struct add_i_state *s, struct list_options *opts)
- {
--	int i;
-+	int i, last_lf = 0;
- 
- 	if (!nr)
- 		return;
-@@ -70,8 +71,97 @@ static void list(struct item **list, size_t nr,
- 
- 	for (i = 0; i < nr; i++) {
- 		opts->print_item(i, list[i], opts->print_item_data);
-+
-+		if ((opts->columns) && ((i + 1) % (opts->columns))) {
-+			putchar('\t');
-+			last_lf = 0;
-+		}
-+		else {
-+			putchar('\n');
-+			last_lf = 1;
-+		}
-+	}
-+
-+	if (!last_lf)
- 		putchar('\n');
-+}
-+struct list_and_choose_options {
-+	struct list_options list_opts;
-+
-+	const char *prompt;
-+};
-+
-+#define LIST_AND_CHOOSE_ERROR (-1)
-+#define LIST_AND_CHOOSE_QUIT  (-2)
-+
-+/*
-+ * Returns the selected index.
-+ *
-+ * If an error occurred, returns `LIST_AND_CHOOSE_ERROR`. Upon EOF,
-+ * `LIST_AND_CHOOSE_QUIT` is returned.
-+ */
-+static ssize_t list_and_choose(struct item **items, size_t nr,
-+			       struct add_i_state *s,
-+			       struct list_and_choose_options *opts)
-+{
-+	struct strbuf input = STRBUF_INIT;
-+	ssize_t res = LIST_AND_CHOOSE_ERROR;
-+
-+	for (;;) {
-+		char *p, *endp;
-+
-+		strbuf_reset(&input);
-+
-+		list(items, nr, s, &opts->list_opts);
-+
-+		printf("%s%s", opts->prompt, "> ");
-+		fflush(stdout);
-+
-+		if (strbuf_getline(&input, stdin) == EOF) {
-+			putchar('\n');
-+			res = LIST_AND_CHOOSE_QUIT;
-+			break;
-+		}
-+		strbuf_trim(&input);
-+
-+		if (!input.len)
-+			break;
-+
-+		p = input.buf;
-+		for (;;) {
-+			size_t sep = strcspn(p, " \t\r\n,");
-+			ssize_t index = -1;
-+
-+			if (!sep) {
-+				if (!*p)
-+					break;
-+				p++;
-+				continue;
-+			}
-+
-+			if (isdigit(*p)) {
-+				index = strtoul(p, &endp, 10) - 1;
-+				if (endp != p + sep)
-+					index = -1;
-+			}
-+
-+			p[sep] = '\0';
-+			if (index < 0 || index >= nr)
-+				printf(_("Huh (%s)?\n"), p);
-+			else {
-+				res = index;
-+				break;
-+			}
-+
-+			p += sep + 1;
-+		}
-+
-+		if (res != LIST_AND_CHOOSE_ERROR)
-+			break;
- 	}
-+
-+	strbuf_release(&input);
-+	return res;
- }
- 
- struct adddel {
-@@ -285,17 +375,40 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ struct add_i_state {
+ 	struct repository *r;
+@@ -46,18 +47,32 @@ static int init_add_i_state(struct repository *r, struct add_i_state *s)
  	return 0;
  }
  
-+static void print_command_item(int i, struct item *item,
-+			       void *print_command_item_data)
+-struct item {
+-	const char *name;
+-};
++static ssize_t find_unique(const char *string,
++			   struct prefix_item **list, size_t nr)
 +{
-+	printf(" %2d: %s", i + 1, item->name);
-+}
++	ssize_t found = -1, i;
 +
-+struct command_item {
-+	struct item item;
-+	int (*command)(struct add_i_state *s, const struct pathspec *ps,
-+		       struct file_list *files, struct list_options *opts);
-+};
-+
- int run_add_i(struct repository *r, const struct pathspec *ps)
- {
- 	struct add_i_state s = { NULL };
-+	struct list_and_choose_options main_loop_opts = {
-+		{ 4, N_("*** Commands ***"), print_command_item, NULL },
-+		N_("What now")
-+	};
-+	struct command_item
-+		status = { { "status" }, run_status };
-+	struct command_item *commands[] = {
-+		&status
-+	};
-+
- 	struct print_file_item_data print_file_item_data = {
- 		"%12s %12s %s", STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
- 	};
- 	struct list_options opts = {
--		NULL, print_file_item, &print_file_item_data
-+		0, NULL, print_file_item, &print_file_item_data
- 	};
- 	struct strbuf header = STRBUF_INIT;
- 	struct file_list files = { NULL };
-+	ssize_t i;
- 	int res = 0;
- 
- 	if (init_add_i_state(r, &s))
-@@ -310,6 +423,18 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	if (run_status(&s, ps, &files, &opts) < 0)
- 		res = -1;
- 
-+	for (;;) {
-+		i = list_and_choose((struct item **)commands,
-+				    ARRAY_SIZE(commands), &s, &main_loop_opts);
-+		if (i == LIST_AND_CHOOSE_QUIT) {
-+			printf(_("Bye.\n"));
-+			res = 0;
-+			break;
-+		}
-+		if (i != LIST_AND_CHOOSE_ERROR)
-+			res = commands[i]->command(&s, ps, &files, &opts);
++	for (i = 0; i < nr; i++) {
++		struct prefix_item *item = list[i];
++		if (!starts_with(item->name, string))
++			continue;
++		if (found >= 0)
++			return -1;
++		found = i;
 +	}
 +
- 	release_file_list(&files);
- 	strbuf_release(&print_file_item_data.buf);
- 	strbuf_release(&print_file_item_data.index);
++	return found;
++}
+ 
+ struct list_options {
+ 	int columns;
+ 	const char *header;
+-	void (*print_item)(int i, struct item *item, void *print_item_data);
++	void (*print_item)(int i, struct prefix_item *item,
++			   void *print_item_data);
+ 	void *print_item_data;
+ };
+ 
+-static void list(struct item **list, size_t nr,
++static void list(struct prefix_item **list, size_t nr,
+ 		 struct add_i_state *s, struct list_options *opts)
+ {
+ 	int i, last_lf = 0;
+@@ -100,13 +115,15 @@ struct list_and_choose_options {
+  * If an error occurred, returns `LIST_AND_CHOOSE_ERROR`. Upon EOF,
+  * `LIST_AND_CHOOSE_QUIT` is returned.
+  */
+-static ssize_t list_and_choose(struct item **items, size_t nr,
++static ssize_t list_and_choose(struct prefix_item **items, size_t nr,
+ 			       struct add_i_state *s,
+ 			       struct list_and_choose_options *opts)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	ssize_t res = LIST_AND_CHOOSE_ERROR;
+ 
++	find_unique_prefixes(items, nr, 1, 4);
++
+ 	for (;;) {
+ 		char *p, *endp;
+ 
+@@ -146,6 +163,9 @@ static ssize_t list_and_choose(struct item **items, size_t nr,
+ 			}
+ 
+ 			p[sep] = '\0';
++			if (index < 0)
++				index = find_unique(p, items, nr);
++
+ 			if (index < 0 || index >= nr)
+ 				printf(_("Huh (%s)?\n"), p);
+ 			else {
+@@ -171,7 +191,7 @@ struct adddel {
+ 
+ struct file_list {
+ 	struct file_item {
+-		struct item item;
++		struct prefix_item item;
+ 		struct adddel index, worktree;
+ 	} **file;
+ 	size_t nr, alloc;
+@@ -337,12 +357,29 @@ static void populate_wi_changes(struct strbuf *buf,
+ 		strbuf_addstr(buf, no_changes);
+ }
+ 
++/* filters out prefixes which have special meaning to list_and_choose() */
++static int is_valid_prefix(const char *prefix, size_t prefix_len)
++{
++	return prefix_len && prefix &&
++		/*
++		 * We expect `prefix` to be NUL terminated, therefore this
++		 * `strcspn()` call is okay, even if it might do much more
++		 * work than strictly necessary.
++		 */
++		strcspn(prefix, " \t\r\n,") >= prefix_len &&	/* separators */
++		*prefix != '-' &&				/* deselection */
++		!isdigit(*prefix) &&				/* selection */
++		(prefix_len != 1 ||
++		 (*prefix != '*' &&				/* "all" wildcard */
++		  *prefix != '?'));				/* prompt help */
++}
++
+ struct print_file_item_data {
+ 	const char *modified_fmt;
+ 	struct strbuf buf, index, worktree;
+ };
+ 
+-static void print_file_item(int i, struct item *item,
++static void print_file_item(int i, struct prefix_item *item,
+ 			    void *print_file_item_data)
+ {
+ 	struct file_item *c = (struct file_item *)item;
+@@ -369,20 +406,26 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 		return -1;
+ 
+ 	if (files->nr)
+-		list((struct item **)files->file, files->nr, s, opts);
++		list((struct prefix_item **)files->file, files->nr, s, opts);
+ 	putchar('\n');
+ 
+ 	return 0;
+ }
+ 
+-static void print_command_item(int i, struct item *item,
++static void print_command_item(int i, struct prefix_item *item,
+ 			       void *print_command_item_data)
+ {
+-	printf(" %2d: %s", i + 1, item->name);
++	if (!item->prefix_length ||
++	    !is_valid_prefix(item->name, item->prefix_length))
++		printf(" %2d: %s", i + 1, item->name);
++	else
++		printf(" %3d: [%.*s]%s", i + 1,
++		       (int)item->prefix_length, item->name,
++		       item->name + item->prefix_length);
+ }
+ 
+ struct command_item {
+-	struct item item;
++	struct prefix_item item;
+ 	int (*command)(struct add_i_state *s, const struct pathspec *ps,
+ 		       struct file_list *files, struct list_options *opts);
+ };
+@@ -424,7 +467,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 		res = -1;
+ 
+ 	for (;;) {
+-		i = list_and_choose((struct item **)commands,
++		i = list_and_choose((struct prefix_item **)commands,
+ 				    ARRAY_SIZE(commands), &s, &main_loop_opts);
+ 		if (i == LIST_AND_CHOOSE_QUIT) {
+ 			printf(_("Bye.\n"));
 -- 
 gitgitgadget
 
