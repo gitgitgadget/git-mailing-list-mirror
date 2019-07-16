@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6131F461
-	for <e@80x24.org>; Tue, 16 Jul 2019 14:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A93C1F461
+	for <e@80x24.org>; Tue, 16 Jul 2019 14:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387980AbfGPO6o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 10:58:44 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38132 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387944AbfGPO6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 10:58:43 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g17so21324314wrr.5
+        id S2387986AbfGPO6p (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 10:58:45 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39443 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387892AbfGPO6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 10:58:42 -0400
+Received: by mail-wm1-f68.google.com with SMTP id u25so8669656wmc.4
         for <git@vger.kernel.org>; Tue, 16 Jul 2019 07:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Fq8JyL/8QrjGUewxn4JGjB/dR3S9hr5kcLA1dQyWxH0=;
-        b=ex+d2UT6geeUHW4lzJeQT6inqYoLx+9wVWfC6Es6BGxD+gTNOBNdi/QbxqvxO7SyFF
-         rCTiZbpzXMdshpLCcLLSLSfdeCLkcp/E6t1/JdNe16MpOZX869yVxiW4l/KTwSeBFXdl
-         eb9+ExJFJXKx03aRuSdlhq8rdUyh+ZaExvkZUxDvXI9GpaF2pAHM9OvbkX+GskBLfPL6
-         Efk18my6xjDrk0US8/mIxALAzSeknVLGaZB9MZfJm+1qQm+j8OMw06RGECXKeaS5dX7L
-         Io3IeE8zmdP3ic0I5Y85JfRwlakkJJ0TXeRQNuskT3qx2o6Nrswc1Td6nv0o4RNh6573
-         xcrg==
+        bh=P7jQhWPXBPxz68xc689tXGFF0a+aNHSo6WXuMRQbPO0=;
+        b=i/kjGYXKtTyMG7EJ8DJGWxB1fvCvTdkn+7MvH9EwJvNK5WiSD6rNRLiujCBDWKl0Mp
+         oYQoQstFphleaJ1jIEGfa3MtfIHb+Kgrh5CgOZWRXbxaiNx/9gilKGs8J3FzCwAe4RJI
+         vNDiFSmQjGkSl1nFqXfWhS8njDAmmQyyIfT+b2qO1lXGzIjnRD5DlL0h2SxHUr8TEkhm
+         LFSFRis4XSFMSFYAbVudggRiAO7fpSAZedgGcLRTxDdF863ktgs+2mUmKYkcjRsmTKUU
+         TTniISEYwxgV1OeXA0YP+hcIV2wg7t9KZAdstdutggCxtAKZHjXfk8PNGfzHkFLKGtUl
+         5tVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Fq8JyL/8QrjGUewxn4JGjB/dR3S9hr5kcLA1dQyWxH0=;
-        b=kxOHE0jHWR4qUMA3oZ6ElVmu65PjW/9/I5z6lDArIV9dWuN/+5m6A3zLXv9GeCWa5W
-         Ng+Q5wPrtPiMfRQSOnGh3p2b0TsXSBTtmpvPWR2WAza+0jeFuk9LoGKbvBvlQgyuQAr3
-         kr/K6baF77jOYxT2TjNKYOO1ROzV0VfwvsudgNOt0o7gvLwfVfwep333qNNd4w9B+DaA
-         D2VWblog/7lrSm6RNZthge+cNInbPCiuux80v0YBklD0kK258DJwUo4d/lreoTK1Kj7M
-         p5RGXWByMixuGPem/H9ANj3lkw0TxQK1Lnt9Xw1Spr2xFVNM5yjmHR3ljP8i7tJg0E/+
-         NlBQ==
-X-Gm-Message-State: APjAAAWggJRxsUlstcmJ0jSuwDP0CNnnV9/Ko/hcqG1d/SmnNs6w6KGP
-        VqhtWbepmxOJQEzj+j/tk6X2XsNu
-X-Google-Smtp-Source: APXvYqwoQLMjItm3nrerL5UvaV2ua6CMza5kiTQMbeG9XlMv1B/uDdWiXqVv1Gp6MUbowQIzfXjtXg==
-X-Received: by 2002:a05:6000:100f:: with SMTP id a15mr17057496wrx.325.1563289121113;
-        Tue, 16 Jul 2019 07:58:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s10sm25503301wmf.8.2019.07.16.07.58.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=P7jQhWPXBPxz68xc689tXGFF0a+aNHSo6WXuMRQbPO0=;
+        b=juF5XM/7DOKlfxatEvEdRipmsD107bCXWBSZ6Ew0FEXSvK0w6Bf5Zi5lPg9Y5ueNie
+         bwcP9MnPMrtpR/PvtYyT9AYXMCVqb7EYKnBAoI4TxnHDr/bnT5WzPgUi8h6tncqZYNZ4
+         eJwUh5fxsFftIoW4g44qwX2juIWhRKy6PhcmC0V7iJPO5G+CI61E4xvjhkA1wJOCP5e/
+         oKU4aXTM7PuX0PVsD9kteOSDgPfrVPrKu1FT0iP2XWFxVDqTQwvfx0cadlWNdU3yHEJo
+         3Ozu3PACNZ6j8ErkEq4oMjjygl7rXxDmQ0EqP4S2+lrq2c/1buAsnnd/zHdXKS+re2uJ
+         MInw==
+X-Gm-Message-State: APjAAAWXxA7g2d9+1kn652p1oiANphUvM6ezmW6D6LYdiPCUZhghdbdc
+        56vcn1kZxcyZL1KgQ7ItFGssTJsr
+X-Google-Smtp-Source: APXvYqyAWQtXKjpdqsfRlSm+jtHjJX3wOO+/uAHRTVbI0kRgwfuzNN4YAIYpfRpz8GwGAVMhoh715g==
+X-Received: by 2002:a1c:6882:: with SMTP id d124mr30404803wmc.40.1563289120330;
         Tue, 16 Jul 2019 07:58:40 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 07:58:40 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Jul 2019 14:58:29 GMT
-Message-Id: <15f18f5b3ebe77a79886dbcdb7a900647be943dd.1563289115.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t63sm16683898wmt.6.2019.07.16.07.58.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jul 2019 07:58:39 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 07:58:39 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Jul 2019 14:58:28 GMT
+Message-Id: <daff24074a604271d66e6a854ea44546b951f489.1563289115.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v3.git.gitgitgadget@gmail.com>
 References: <pull.170.v2.git.gitgitgadget@gmail.com>
         <pull.170.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 05/11] built-in add -i: color the header in the `status`
- command
+Subject: [PATCH v3 04/11] built-in add -i: refresh the index before running
+ `status`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,139 +74,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-For simplicity, we only implemented the `status` command without colors.
-This patch starts adding color, matching what the Perl script
-`git-add--interactive.perl` does.
+This is what the Perl version does, and therefore it is what the
+built-in version should do, too.
 
-Original-Patch-By: Daniel Ferreira <bnmvco@gmail.com>
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 60 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 54 insertions(+), 6 deletions(-)
+ add-interactive.c |  4 +++-
+ repository.c      | 19 +++++++++++++++++++
+ repository.h      |  7 +++++++
+ 3 files changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 2dbf29dee2..6c2fca12c1 100644
+index 59b28011f7..2dbf29dee2 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -1,9 +1,51 @@
- #include "cache.h"
- #include "add-interactive.h"
-+#include "color.h"
-+#include "config.h"
- #include "diffcore.h"
- #include "revision.h"
- #include "refs.h"
- 
-+struct add_i_state {
-+	struct repository *r;
-+	int use_color;
-+	char header_color[COLOR_MAXLEN];
-+};
-+
-+static void init_color(struct repository *r, struct add_i_state *s,
-+		       const char *slot_name, char *dst,
-+		       const char *default_color)
-+{
-+	char *key = xstrfmt("color.interactive.%s", slot_name);
-+	const char *value;
-+
-+	if (!s->use_color)
-+		dst[0] = '\0';
-+	else if (repo_config_get_value(r, key, &value) ||
-+		 color_parse(value, dst))
-+		strlcpy(dst, default_color, COLOR_MAXLEN);
-+
-+	free(key);
-+}
-+
-+static int init_add_i_state(struct repository *r, struct add_i_state *s)
-+{
-+	const char *value;
-+
-+	s->r = r;
-+
-+	if (repo_config_get_value(r, "color.interactive", &value))
-+		s->use_color = -1;
-+	else
-+		s->use_color =
-+			git_config_colorbool("color.interactive", value);
-+	s->use_color = want_color(s->use_color);
-+
-+	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
-+
-+	return 0;
-+}
-+
- struct item {
- 	const char *name;
- };
-@@ -14,7 +56,8 @@ struct list_options {
- 	void *print_item_data;
- };
- 
--static void list(struct item **list, size_t nr, struct list_options *opts)
-+static void list(struct item **list, size_t nr,
-+		 struct add_i_state *s, struct list_options *opts)
- {
- 	int i;
- 
-@@ -22,7 +65,8 @@ static void list(struct item **list, size_t nr, struct list_options *opts)
- 		return;
- 
- 	if (opts->header)
--		printf("%s\n", opts->header);
-+		color_fprintf_ln(stdout, s->header_color,
-+				 "%s", opts->header);
- 
- 	for (i = 0; i < nr; i++) {
- 		opts->print_item(i, list[i], opts->print_item_data);
-@@ -226,16 +270,16 @@ static void print_file_item(int i, struct item *item,
- 	printf(" %2d: %s", i + 1, d->buf.buf);
- }
- 
--static int run_status(struct repository *r, const struct pathspec *ps,
-+static int run_status(struct add_i_state *s, const struct pathspec *ps,
- 		      struct file_list *files, struct list_options *opts)
- {
- 	reset_file_list(files);
- 
--	if (get_modified_files(r, files, ps) < 0)
-+	if (get_modified_files(s->r, files, ps) < 0)
- 		return -1;
- 
- 	if (files->nr)
--		list((struct item **)files->file, files->nr, opts);
-+		list((struct item **)files->file, files->nr, s, opts);
- 	putchar('\n');
- 
- 	return 0;
-@@ -243,6 +287,7 @@ static int run_status(struct repository *r, const struct pathspec *ps,
- 
- int run_add_i(struct repository *r, const struct pathspec *ps)
- {
-+	struct add_i_state s = { NULL };
- 	struct print_file_item_data print_file_item_data = {
- 		"%12s %12s %s", STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
- 	};
-@@ -253,13 +298,16 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	struct file_list files = { NULL };
- 	int res = 0;
- 
-+	if (init_add_i_state(r, &s))
-+		return error("could not parse `add -i` config");
-+
- 	strbuf_addstr(&header, "      ");
- 	strbuf_addf(&header, print_file_item_data.modified_fmt,
+@@ -258,7 +258,9 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
  		    _("staged"), _("unstaged"), _("path"));
  	opts.header = header.buf;
  
- 	repo_refresh_and_write_index(r, REFRESH_QUIET, 1);
--	if (run_status(r, ps, &files, &opts) < 0)
-+	if (run_status(&s, ps, &files, &opts) < 0)
- 		res = -1;
+-	res = run_status(r, ps, &files, &opts);
++	repo_refresh_and_write_index(r, REFRESH_QUIET, 1);
++	if (run_status(r, ps, &files, &opts) < 0)
++		res = -1;
  
  	release_file_list(&files);
+ 	strbuf_release(&print_file_item_data.buf);
+diff --git a/repository.c b/repository.c
+index 682c239fe3..def35c40fc 100644
+--- a/repository.c
++++ b/repository.c
+@@ -275,3 +275,22 @@ int repo_hold_locked_index(struct repository *repo,
+ 		BUG("the repo hasn't been setup");
+ 	return hold_lock_file_for_update(lf, repo->index_file, flags);
+ }
++
++int repo_refresh_and_write_index(struct repository *r,
++				 unsigned int flags, int gentle)
++{
++	struct lock_file lock_file = LOCK_INIT;
++	int fd;
++
++	if (repo_read_index_preload(r, NULL, 0) < 0)
++		return error(_("could not read index"));
++	fd = repo_hold_locked_index(r, &lock_file, 0);
++	if (!gentle && fd < 0)
++		return error(_("could not lock index for writing"));
++	refresh_index(r->index, flags, NULL, NULL, NULL);
++	if (0 <= fd)
++		repo_update_index_if_able(r, &lock_file);
++	rollback_lock_file(&lock_file);
++
++	return 0;
++}
+diff --git a/repository.h b/repository.h
+index 4fb6a5885f..cf5d5bab48 100644
+--- a/repository.h
++++ b/repository.h
+@@ -157,5 +157,12 @@ int repo_read_index_unmerged(struct repository *);
+  */
+ void repo_update_index_if_able(struct repository *, struct lock_file *);
+ 
++/*
++ * Refresh the index and write it out. If the index file could not be
++ * locked, error out, except in gentle mode. The flags will be passed
++ * through to refresh_index().
++ */
++int repo_refresh_and_write_index(struct repository *r,
++				 unsigned int flags, int gentle);
+ 
+ #endif /* REPOSITORY_H */
 -- 
 gitgitgadget
 
