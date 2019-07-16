@@ -2,120 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A591F461
-	for <e@80x24.org>; Tue, 16 Jul 2019 19:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D76481F461
+	for <e@80x24.org>; Tue, 16 Jul 2019 20:01:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728579AbfGPT4y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 15:56:54 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58995 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbfGPT4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 15:56:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79C8E6F2DC;
-        Tue, 16 Jul 2019 15:56:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8H5AHZNjs+LC
-        p4vu+VqT3oOEiXo=; b=BMT1ElgMt9fM7nhHKahjHOFZQqA++jUesuDSto0+h8O4
-        vKQKfrHaF2gUILP1iwOmah70g38WCY3mzzQ6xZQB5oPlpYXqTfHiPcz+IXFVndxI
-        ICqZ1HhwbvORRayRJDfWRoe7aEfd26fdfmXBHOlQ4+DVn66rsorx31OCTRgVcYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Yt1CZl
-        zlmWtzdxerO5Nq4r3b/5wNNUNTS1nIJPTBWAEYhWoyVDw4tSODw6fIFUJYLYXRNX
-        NWGoH/i7wBzJ5j8WIeDvpHkciIrJBSFo4AI2UFzZqF1wVYXaXz4yoqyTv2ICEdH2
-        QPKiaZBle1xJ9zugGGswYXym+0GBILYa7rw/k=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 704026F2DA;
-        Tue, 16 Jul 2019 15:56:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D9656F2D9;
-        Tue, 16 Jul 2019 15:56:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] clean: show an error message when the path is too long
-References: <pull.219.git.gitgitgadget@gmail.com>
-        <36677556a26cca9eafd859c88aa9b2c5a6cde309.1563285862.git.gitgitgadget@gmail.com>
-        <a7fee3c7-8fd5-11ef-8b0d-ff8053987b0c@web.de>
-Date:   Tue, 16 Jul 2019 12:56:44 -0700
-In-Reply-To: <a7fee3c7-8fd5-11ef-8b0d-ff8053987b0c@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 16 Jul 2019 17:01:27 +0200")
-Message-ID: <xmqqftn53g8z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729076AbfGPUBD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 16:01:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37948 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728366AbfGPUBD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 16:01:03 -0400
+Received: (qmail 10954 invoked by uid 109); 16 Jul 2019 20:01:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 16 Jul 2019 20:01:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2927 invoked by uid 111); 16 Jul 2019 20:02:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 16 Jul 2019 16:02:00 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jul 2019 16:01:01 -0400
+Date:   Tue, 16 Jul 2019 16:01:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Carlo Arenas <carenas@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] range-diff: fix some 'hdr-check' and sparse warnings
+Message-ID: <20190716200101.GA6558@sigill.intra.peff.net>
+References: <xmqqy313p5hn.fsf@gitster-ct.c.googlers.com>
+ <ec635d0d-00ca-2419-3c1a-9b0343b46daa@kdbg.org>
+ <xmqq1rytpqse.fsf@gitster-ct.c.googlers.com>
+ <CAPUEspgD8E02FcNvBx96neGEejdqMDWoH8NgpsHyGPo_KM09FA@mail.gmail.com>
+ <20190714005129.GA4525@sigill.intra.peff.net>
+ <54c2ee44-ee99-ea4a-3154-f642e0060877@kdbg.org>
+ <20190715144602.GA26636@sigill.intra.peff.net>
+ <4be7a0a1-0256-40c3-4abc-d3d9302f527b@kdbg.org>
+ <20190715181527.GA30747@sigill.intra.peff.net>
+ <xmqqo91t3itl.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D821BD66-A803-11E9-B48A-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqo91t3itl.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Tue, Jul 16, 2019 at 12:01:10PM -0700, Junio C Hamano wrote:
 
->> diff --git a/builtin/clean.c b/builtin/clean.c
->> index aaba4af3c2..7be689f480 100644
->> --- a/builtin/clean.c
->> +++ b/builtin/clean.c
->> @@ -194,7 +194,8 @@ static int remove_dirs(struct strbuf *path, const =
-char *prefix, int force_flag,
->>  		strbuf_setlen(path, len);
->>  		strbuf_addstr(path, e->d_name);
->>  		if (lstat(path->buf, &st))
->> -			; /* fall thru */
->
-> I don't understand the "fall thru" comment here.  It only makes sense i=
-n
-> switch statements, doesn't it?  And the code after this if/else-if/else
-> block is only executed if we pass through here, so why was it placed wa=
-y
-> down in the first place?  Perhaps for historical reasons.
+> And that "quiet and nice" form is a moral equivalent of
+> 
+> 	struct foo foo = { 0 };
+> 
+> that has been discussed in this thread.  I'd rather not to see it
+> turned into distinct FOO_INIT, BAR_INIT, etc. to force the reader to
+> think these structures all need their specific initialization and
+> wonder what's the reason for each of them.
 
-f538a91e ("git-clean: Display more accurate delete messages",
-2013-01-11) introduced that line when it first introduced the
-function and it is not inherited from anything else.  As the if/else
-cascade has a catch-all else that always continues at the end, failing
-lstat is the only way for the entire loop to break out early, so as
-you hinted above, having the "fail, break and return" right there would
-probably be a better organization of this loop.
+I'm on the fence for that style myself. But we've definitely been
+trending in that direction. Look at `git grep _INIT *.h`, many of which
+are clearly zero-initializers.
 
-> Anyway, I'd keep that strange comment, as I don't see a connection to
-> your changes.  (Or explain in the commit message why we no longer "fall
-> thru", whatever that may mean.  Or perhaps I'm just thick.)
->
->> +			warning("Could not stat path '%s': %s",
->> +				path->buf, strerror(errno));
->
-> The other warnings in that function are issued using warning_errno()
-> (shorter code, consistency is enforced) and messages are marked for
-> translation.  That would be nice to have here as well, no?
+I do think it's nice to be able to modify the initializers later and
+feel confident that you're catching all of the users. But even then:
 
-Absolutely.  Also, downcase "Could" and perhaps use _() around.
+  - it's not like we get any kind of static warning for a
+    zero-initialized variant (be it static or with a manual {0}
+    initializer)
 
-As to the "fall thru" comment, I tend to agree that it does not fall
-through to the next "case" in the usual sense and is confusing.
-Mentioning that we removed a confusing and pointless comment in the
-log message would be nice, but I'd vote for removing it if I was
-asked.
+  - I know I've run into problems where code assumed memset() worked,
+    but it didn't (I think diff_options was one such case).
 
-Thanks.
+So at best it's "feel more confident", not "feel confident". :)
 
+> One universal "struct foo foo = STRUCT_ZERO_INIT;" that is applied
+> to all kinds of structure I could live with (but only if we have a
+> good way to squelch sparse from bitching about it).  Perhaps we
+> could define it as "{}" for GCC, while keeping it "{ 0 }" for
+> others.  As I said, { 0 } is undefensible if we insist that a null
+> pointer must be spelled NULL and not 0 (as CodingGuidelines says),
+> but as long as we declare that we take "{ 0 }" as a mere convention
+> (like we used to use the "int foo = foo;" convention to squelch
+> "uninitialized but used" warnings) that is outside the purview of
+> language-lawyers, I am perfectly fine with it, and if it is hidden
+> behind a macro, that would be even better ;-)
 
+Yeah, I am OK with that. My big question is if we use "{}" for gcc (and
+compatible friends), does that squelch all of the complaints from other
+compilers and tools that might see the "{0}" version? In particular,
+does it work for sparse?
 
-
-
+-Peff
