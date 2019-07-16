@@ -8,230 +8,212 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91BCE1F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD4A31F461
 	for <e@80x24.org>; Tue, 16 Jul 2019 14:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387954AbfGPO6k (ORCPT <rfc822;e@80x24.org>);
+        id S2387958AbfGPO6l (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 10:58:41 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37604 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387943AbfGPO6k (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Jul 2019 10:58:40 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36731 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387892AbfGPO6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 10:58:40 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n4so21358196wrs.3
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 07:58:37 -0700 (PDT)
+Received: by mail-wm1-f67.google.com with SMTP id f17so19028302wme.2
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 07:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jUa58BvZN96ixvX41CYQgbkqauEdJj7m0AM6Rf1CJIM=;
-        b=IplXiave8E7g7uqOF32z948SIpEop878rts5Grt6/9fRw9cywBezpz2MPXI/NJ2Rh0
-         PF1yh0AgxZYqLujEheginvHabO6MeO58AXaHlHqwefV96egYTSGuthFkLnO/lAtHTZ/P
-         hF2AfKRShtzu3B0jRRNvRuMoFQzmVEAzL0tQsS2fCUyC39kRfr0dUJiH4otzf4wgZ+kl
-         k8kXoPiVBWDo+t1DJ8Zq0tvMscQlQvmpXn87sbt4ks5XYxhc7Hvc8uW2DcFYZ3sM0/RS
-         bbhEWlpE52oHRPprKB/lq6CYj3lNiuAOkq2EQgR/5lJfCygDmdKPu3kuW5sa99slp5kC
-         sSYg==
+        bh=pLQdIAlPTGeJFKOpkVCELoHJWpFnDOwPQDBKkdcQHUc=;
+        b=ZYTliWulV+6D3LKqEuA+v+CTDhLZEA08VBb/40FcS+xqf4DPW27Qjlsztd7h6PnOZl
+         UAZfaOQfcRPu9a5uhQhx31hAnEXu8ivpP05N4WBNHEtZ7bm3CUvY7Y2fpIZQNxubbsNv
+         /eIOJieJrjVWsVd/uAkHY7GXN4CDHmztmt59fW/GZIIIJhpL93DDvoaczS7axyGxbaAd
+         17RQIc5v5kOhNIewNBaoj7rWDjiO5CVITtCH1BbbpdN98sAa0UIayTDTBdELTt2NcO57
+         zZdF1znSzR02mp4+ecCHbfvh7t/JstO/J05nXqiqe0VSU5Woc280kM/Xut5p97LmZYfc
+         DNjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jUa58BvZN96ixvX41CYQgbkqauEdJj7m0AM6Rf1CJIM=;
-        b=FLIsvJ7vYf0ogNEQEXHi3qf58ac946ljMeJNm9S4WD9WzDGhQFbgTb1WWvUKfzxL7l
-         JW031IOVcLNY/RMw5YHeSNNkjGBcLiZuKnHq0JOlEN3Qavx75AB2jR+USS5jwcyi9+cS
-         OP2JrOJboYq4aFsrbkd2rj7f3ubepbvCk730eZcprYXd+X40Gv60kUOK9xuGjH9C/PSy
-         GzS2amOZpuomGhkcMXM2N5sA+NAND+xL+zE3r4LCBpcLLBdbxnsEdC8oy/WTWWgHbXHX
-         FhJvKAD7ZBP9z25SEc0nuYwBIkOIzSMZCpd4wzNzBH9tQ2xzwM0P5kBNAOM0nymbllwV
-         XzJg==
-X-Gm-Message-State: APjAAAVlJGPy9ZGAoDvycZ3EUcCawg8Ii6PSQapzAvrGCsgE7K8FQO+o
-        pZmSAiNCHxnPMtTsaaJD51Pkg5Hc
-X-Google-Smtp-Source: APXvYqw4EwMP1Lt+8wrwXMYGGgf5NUTv78yAHglUwnPZt9St1w6chV5va8n6O263uVDja4oGNL2WTQ==
-X-Received: by 2002:a5d:6508:: with SMTP id x8mr7573475wru.310.1563289117126;
+        bh=pLQdIAlPTGeJFKOpkVCELoHJWpFnDOwPQDBKkdcQHUc=;
+        b=IU03bkx1h2pc1xyPkCi8MHgdR3ywpvvNZ7QhnDsQMoLsGlZfjZXSy+mH9Pc5rdO7s3
+         v8zXQl/oSHH9OhzPtfWtSR+JSrnQkKnhEMXms4MZFFY6YVh9AvBSFMsnmiA+bojJLIqp
+         /evXR8I0P23/YwlBtUw+LXUVJ/8gQvguM9jpFgUCOdHbyqK7aml7UR2iOhJ8dn8xtFJq
+         8s2ujk5Hpe0g8KFcukiSUpKH5fVyIxRjgpjR1aL+A1yG+IEFSJEBDp/Ki07HS/9cNmWW
+         wHcrb/7LWtcRbU+hzX8jfWEfGeT1IGk2J8t4wYJ64AXsh9fSpgBkqZfK1QrNovmPkzUE
+         xFMQ==
+X-Gm-Message-State: APjAAAVaNE1VbM5xQSZSwnUiBxENR540WYo5e+G1FbHQmryGueUE0RQo
+        rvU2Wxu8XNcqyzxsWi//euWoELTz
+X-Google-Smtp-Source: APXvYqwL+TheCZngEc28iknbGeFTkrz24ejXGDcp3bMDQFJlwLFlxPWXGHgcLraiqiTm2VVHHggRXQ==
+X-Received: by 2002:a1c:f009:: with SMTP id a9mr30156470wmb.32.1563289117897;
         Tue, 16 Jul 2019 07:58:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s12sm19095247wmh.34.2019.07.16.07.58.36
+        by smtp.gmail.com with ESMTPSA id s10sm25503138wmf.8.2019.07.16.07.58.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jul 2019 07:58:36 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 07:58:36 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Jul 2019 14:58:24 GMT
-Message-Id: <pull.170.v3.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.170.v2.git.gitgitgadget@gmail.com>
+        Tue, 16 Jul 2019 07:58:37 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 07:58:37 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Jul 2019 14:58:25 GMT
+Message-Id: <0a5ec9345d2f9cc6cd348231219d4af428a28e94.1563289115.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.170.v3.git.gitgitgadget@gmail.com>
 References: <pull.170.v2.git.gitgitgadget@gmail.com>
+        <pull.170.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 00/11] git add -i: add a rudimentary version in C (supporting only status and help 
- so far)
+Subject: [PATCH v3 01/11] Start to implement a built-in version of `git add
+ --interactive`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the first leg on the long journey to a fully built-in git add -i 
-(next up: parts 2 [https://github.com/gitgitgadget/git/pull/171], 3
-[https://github.com/gitgitgadget/git/pull/172], 4
-[https://github.com/gitgitgadget/git/pull/173], 5
-[https://github.com/gitgitgadget/git/pull/174], and 6
-[https://github.com/gitgitgadget/git/pull/175]). Note: the latter PRs are
-not necessarily up to date, and will be re-targeted to the appropriate
-branches in https://github.com/gitster/git as soon as Junio picks them up.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This here patch series reflects the part that was submitted a couple of
-times (see https://github.com/gitgitgadget/git/pull/103) during the
-Outreachy project by Slavica Ðukic that continued the journey based on an
-initial patch series by Daniel Ferreira.
+This is hardly the first conversion of a Git command that is implemented
+as a script to a built-in. So far, the most successful strategy for such
+conversions has been to add a built-in helper and call that for more and
+more functionality from the script, as more and more parts are
+converted.
 
-It only implements the status and the help part, in the interest of making
-the review remotely more reviewable.
+With the interactive add, we choose a different strategy. The sole
+reason for this is that on Windows (where such a conversion has the most
+benefits in terms of speed and robustness) we face the very specific
+problem that a `system()` call in Perl seems to close `stdin` in the
+parent process when the spawned process consumes even one character from
+`stdin`. And that just does not work for us here, as it would stop the
+main loop as soon as any interactive command was performed by the
+helper. Which is almost all of the commands in `git add -i`.
 
-As I am a heavy user of git add -p myself and use a patched version for
-weeks already (it is so nice to not suffer over one second startup until the
-MSYS2 Perl finally shows me anything, instead it feels instantaneous), I
-integrated these patch series into Git for Windows' master already, as an
-opt-in feature guarded by the config variable add.interactive.useBuiltin 
-(and Git for Windows' installer is prepared to detect this version and offer
-the option in the graphical user interface).
+It is almost as if Perl told us once again that it does not want us to
+use it on Windows.
 
-I had planned on submitting this before v2.22.0-rc0, but there was such a
-backlog of builds from a big pushout that I had to wait ;-)
+Instead, we follow the opposite route where we start with a bare-bones
+version of the built-in interactive add, guarded by the new
+`add.interactive.useBuiltin` config variable, and then add more and more
+functionality to it, until it is feature complete.
 
-Changes since v2:
+At this point, the built-in version of `git add -i` only states that it
+cannot do anything yet ;-)
 
- * Rebased to master to avoid merge conflicts.
- * Renumbered the prefix-map test to avoid conflicts with two patch series
-   that are currently in-flight in pu.
-
-Changes since v1:
-
- * The config machinery was reworked completely, to not use a callback to 
-   git_config(), but instead to query the config via the repo_config_get_*() 
-   functions. This also prevents a future "Huh???" moment: the internal add
-   --interactive API accepts a parameter of type struct repository *r, but
-   the previous configuration did not use that to query the config (and
-   could in the future be a repository other than the_repository).
-   
-   
- * As a consequence, the color sequences are no longer stored in file-local
-   variables, but passed around via a struct.
-   
-   
- * Instead of using the magical constant -2 to quit the main loop, it is now
-   defined as LIST_AND_CHOOSE_QUIT (and likewise, LIST_AND_CHOOSE_ERROR is
-   defined as -1 and used where appropriate).
-   
-   
- * Improved the add_prefix_item() function by avoiding buffer overruns, not
-   reusing the struct that is used for lookup also for adding the new item,
-   and by strengthening the bug check.
-
-Daniel Ferreira (2):
-  diff: export diffstat interface
-  built-in add -i: implement the `status` command
-
-Johannes Schindelin (6):
-  Start to implement a built-in version of `git add --interactive`
-  built-in add -i: refresh the index before running `status`
-  built-in add -i: color the header in the `status` command
-  built-in add -i: implement the main loop
-  built-in add -i: support `?` (prompt help)
-  built-in add -i: implement the `help` command
-
-Slavica Djukic (3):
-  Add a function to determine unique prefixes for a list of strings
-  built-in add -i: show unique prefixes of the commands
-  built-in add -i: use color in the main loop
-
- Documentation/config/add.txt |   5 +
- Makefile                     |   3 +
- add-interactive.c            | 558 +++++++++++++++++++++++++++++++++++
- add-interactive.h            |   8 +
- builtin/add.c                |  10 +
- diff.c                       |  37 +--
- diff.h                       |  19 ++
- prefix-map.c                 | 109 +++++++
- prefix-map.h                 |  40 +++
- repository.c                 |  19 ++
- repository.h                 |   7 +
- t/README                     |   4 +
- t/helper/test-prefix-map.c   |  58 ++++
- t/helper/test-tool.c         |   1 +
- t/helper/test-tool.h         |   1 +
- t/t0018-prefix-map.sh        |  10 +
- t/t3701-add-interactive.sh   |  25 ++
- 17 files changed, 892 insertions(+), 22 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/config/add.txt |  5 +++++
+ Makefile                     |  1 +
+ add-interactive.c            |  7 +++++++
+ add-interactive.h            |  8 ++++++++
+ builtin/add.c                | 10 ++++++++++
+ t/README                     |  4 ++++
+ 6 files changed, 35 insertions(+)
  create mode 100644 add-interactive.c
  create mode 100644 add-interactive.h
- create mode 100644 prefix-map.c
- create mode 100644 prefix-map.h
- create mode 100644 t/helper/test-prefix-map.c
- create mode 100755 t/t0018-prefix-map.sh
 
-
-base-commit: 9d418600f4d10dcbbfb0b5fdbc71d509e03ba719
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-170%2Fdscho%2Fadd-i-in-c-status-and-help-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-170/dscho/add-i-in-c-status-and-help-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/170
-
-Range-diff vs v2:
-
-  1:  ed53346b92 !  1:  0a5ec9345d Start to implement a built-in version of `git add --interactive`
-     @@ -47,7 +47,7 @@
-       --- a/Makefile
-       +++ b/Makefile
-      @@
-     - 	-name '*.h' -print)
-     + 	-name '*.h' -print))
-       
-       LIB_OBJS += abspath.o
-      +LIB_OBJS += add-interactive.o
-     @@ -121,7 +121,7 @@
-       --- a/t/README
-       +++ b/t/README
-      @@
-     - builtin version of git-rebase. See 'rebase.useBuiltin' in
-     + built-in version of git-stash. See 'stash.useBuiltin' in
-       git-config(1).
-       
-      +GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
-  2:  bc99009fbf =  2:  c7a377890d diff: export diffstat interface
-  3:  5e23c0756b =  3:  b93b055ebe built-in add -i: implement the `status` command
-  4:  8cafc6ae8d =  4:  daff24074a built-in add -i: refresh the index before running `status`
-  5:  83d92a9762 =  5:  15f18f5b3e built-in add -i: color the header in the `status` command
-  6:  3eec219124 =  6:  175409aaae built-in add -i: implement the main loop
-  7:  e02a52c3ac !  7:  3000d7d08d Add a function to determine unique prefixes for a list of strings
-     @@ -299,10 +299,10 @@
-       int cmd__reach(int argc, const char **argv);
-       int cmd__read_cache(int argc, const char **argv);
-      
-     - diff --git a/t/t0016-prefix-map.sh b/t/t0016-prefix-map.sh
-     + diff --git a/t/t0018-prefix-map.sh b/t/t0018-prefix-map.sh
-       new file mode 100755
-       --- /dev/null
-     - +++ b/t/t0016-prefix-map.sh
-     + +++ b/t/t0018-prefix-map.sh
-      @@
-      +#!/bin/sh
-      +
-  8:  ced9b6aced =  8:  e23ddebfbf built-in add -i: show unique prefixes of the commands
-  9:  7378af60ad =  9:  d8c012fce8 built-in add -i: support `?` (prompt help)
- 10:  36edef85e6 = 10:  8121a3ca1b built-in add -i: use color in the main loop
- 11:  266dbf2a6b ! 11:  db70c6475d built-in add -i: implement the `help` command
-     @@ -61,9 +61,10 @@
-       --- a/t/t3701-add-interactive.sh
-       +++ b/t/t3701-add-interactive.sh
-      @@
-     - 	test_cmp expected-2 actual
-     + 	test_write_lines a b a b a a b a b a >expect &&
-     + 	test_cmp expect a
-       '
-     - 
-     ++
-      +test_expect_success 'show help from add--helper' '
-      +	git reset --hard &&
-      +	cat >expect <<-EOF &&
-
+diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
+index 4d753f006e..c9f748f81c 100644
+--- a/Documentation/config/add.txt
++++ b/Documentation/config/add.txt
+@@ -5,3 +5,8 @@ add.ignore-errors (deprecated)::
+ 	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
+ 	as it does not follow the usual naming convention for configuration
+ 	variables.
++
++add.interactive.useBuiltin::
++	[EXPERIMENTAL] Set to `true` to use the experimental built-in
++	implementation of the interactive version of linkgit:git-add[1]
++	instead of the Perl script version. Is `false` by default.
+diff --git a/Makefile b/Makefile
+index 98a0588416..0a47200f47 100644
+--- a/Makefile
++++ b/Makefile
+@@ -824,6 +824,7 @@ LIB_H := $(sort $(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null
+ 	-name '*.h' -print))
+ 
+ LIB_OBJS += abspath.o
++LIB_OBJS += add-interactive.o
+ LIB_OBJS += advice.o
+ LIB_OBJS += alias.o
+ LIB_OBJS += alloc.o
+diff --git a/add-interactive.c b/add-interactive.c
+new file mode 100644
+index 0000000000..482e458dc6
+--- /dev/null
++++ b/add-interactive.c
+@@ -0,0 +1,7 @@
++#include "cache.h"
++#include "add-interactive.h"
++
++int run_add_i(struct repository *r, const struct pathspec *ps)
++{
++	die(_("No commands are available in the built-in `git add -i` yet!"));
++}
+diff --git a/add-interactive.h b/add-interactive.h
+new file mode 100644
+index 0000000000..7043b8741d
+--- /dev/null
++++ b/add-interactive.h
+@@ -0,0 +1,8 @@
++#ifndef ADD_INTERACTIVE_H
++#define ADD_INTERACTIVE_H
++
++struct repository;
++struct pathspec;
++int run_add_i(struct repository *r, const struct pathspec *ps);
++
++#endif
+diff --git a/builtin/add.c b/builtin/add.c
+index dd18e5c9b6..4f625691b5 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -20,6 +20,7 @@
+ #include "bulk-checkin.h"
+ #include "argv-array.h"
+ #include "submodule.h"
++#include "add-interactive.h"
+ 
+ static const char * const builtin_add_usage[] = {
+ 	N_("git add [<options>] [--] <pathspec>..."),
+@@ -185,6 +186,14 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+ {
+ 	int status, i;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
++	int use_builtin_add_i =
++		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
++	if (use_builtin_add_i < 0)
++		git_config_get_bool("add.interactive.usebuiltin",
++				    &use_builtin_add_i);
++
++	if (use_builtin_add_i == 1 && !patch_mode)
++		return !!run_add_i(the_repository, pathspec);
+ 
+ 	argv_array_push(&argv, "add--interactive");
+ 	if (patch_mode)
+@@ -319,6 +328,7 @@ static int add_config(const char *var, const char *value, void *cb)
+ 		ignore_add_errors = git_config_bool(var, value);
+ 		return 0;
+ 	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+diff --git a/t/README b/t/README
+index 9747971d58..28999cebd3 100644
+--- a/t/README
++++ b/t/README
+@@ -397,6 +397,10 @@ GIT_TEST_STASH_USE_BUILTIN=<boolean>, when false, disables the
+ built-in version of git-stash. See 'stash.useBuiltin' in
+ git-config(1).
+ 
++GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
++builtin version of git add -i. See 'add.interactive.useBuiltin' in
++git-config(1).
++
+ GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
+ of the index for the whole test suite by bypassing the default number of
+ cache entries and thread minimums. Setting this to 1 will make the
 -- 
 gitgitgadget
+
