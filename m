@@ -2,130 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C29B1F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 01:09:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE1381F4B6
+	for <e@80x24.org>; Wed, 17 Jul 2019 02:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728924AbfGQBJT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 21:09:19 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45803 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728529AbfGQBJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 21:09:18 -0400
-Received: by mail-io1-f68.google.com with SMTP id g20so43078787ioc.12
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 18:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OMX5PKTrH7tNH7IFbQLAhYCPVKQOzeqoGfMPoRH2T64=;
-        b=PwA4SxFIlnc6LVVE38Eolckhx1CaREjo/k2cdiZxTGlIOhg++uecm/ZgQ6t9oImk0V
-         sgeoffO6/jOzBEJiwrFpEGtCVCzg8iohiTkqqSWRNtL2O21PPhVCripuA8zTeiNQ6ZJ0
-         gw60vR+ZnK+bD+ZEYF7M+72A+PxyCblMsjr0MomBBWELLTtcoRKpLbhPyKdgeZV1GmZA
-         sVvt2hK3FEhgyYt1n097oLN9enkF0e9KJ9Nb4NyzZqkckxlLy5TiwfP8UoPLLte1gdcK
-         VL0GkEl3ogSFa0hrUcshFvqMo9+9/C5T5FwFdXB+VFCfNzwpRtN72KZShNXDvEYKL93u
-         55Og==
+        id S1726069AbfGQCAE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 22:00:04 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37259 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725906AbfGQCAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 22:00:04 -0400
+Received: by mail-pl1-f195.google.com with SMTP id b3so11082524plr.4
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 19:00:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OMX5PKTrH7tNH7IFbQLAhYCPVKQOzeqoGfMPoRH2T64=;
-        b=rSEMUI3jH3wan0a+FZoN9W9qdIDBq9J3EAjqnhfkg3v2Nftc5HS69dYeo3RuQfEv/1
-         C+BMTxFtfFDf2ch3F3l7sWSqQqI8tgGMSl5lxhJS6szG7JjiOoxUF1oOGYJ2yFuP/iSR
-         tqu58pHc2DBrz6+DJcpy/SBVwEr8szLHWJo0voWMMnIYoUv/SQj4J+m7RS/1rzrtb4Qp
-         gZjormCUkDaPxibVUzvdQeQud55tFJbcLHbUKCFpcc6gZCLhSJgjIgZLmI7RkWQaQNvs
-         aH06XnkCdE85s+WBTHqD++Bg+4U8Xxet0vdgkIIs+8IV6VHNkYQF7s1cNyXMBYQJQ5RF
-         tfVA==
-X-Gm-Message-State: APjAAAVwMIItDcvRm2/UU6i5GOg2w0jhLpZTwJrWS0+iU1CRGQ4aOwio
-        NDZZ4SA6mqyZ20SbkqZFkcQBH1VB9cJLeJnpGv9L2g==
-X-Google-Smtp-Source: APXvYqxKkqSMTFkq/lZ4b/OWGtlcand+fd146qrs5AmU7nMGWuTHVsrC8EEXuHt86LGpR4O3WmbHfj583FBhqJrLPvQ=
-X-Received: by 2002:a02:9f84:: with SMTP id a4mr33791912jam.20.1563325757814;
- Tue, 16 Jul 2019 18:09:17 -0700 (PDT)
+        h=x-gm-message-state:subject:date:message-id:mime-version
+         :content-transfer-encoding:cc:from:to;
+        bh=kjwEi5/ytOQoUq1XL+FGUsqCwyDsz4QTWn9rHtfVKwA=;
+        b=l+QHmf65VEHQTaSRt9A4VXDmxRY9gx3jXG+pvY/GbZK0+CEL/6bez6y458qLGYHEkD
+         DQvbEomodNVrd8XrKh97HCOfCEj2k2HcZyhjqJLwlL9QxojvNoSbm9onmVzQYd4X3Qbf
+         sH0TDQDPM8ag/ZjNzqqcAbZZcu9bA+H20C4TjgqtKaT2BIx5NMwsLLZ9/uEOupygx04w
+         pgAZCd+QOKlWoqmuFXYUh+bfycYM5Nv2GZPIJjD7i78FbquV7gKLEH3+fMbxroBrjm7W
+         Xnd1spKDTJCGwDUMr8rACGvA+BHUWlfy4BqH8B+H3AkrT1D3CMXBb0gzod03OtAzDCjk
+         f02A==
+X-Gm-Message-State: APjAAAW2SkSRzK/kh6Ea1c3vAfXKVvJ+Dj/7SlqYB9dUpICqCgQFJFxE
+        aZ7NdZ9nmvYPa0hx99yG5kg=
+X-Google-Smtp-Source: APXvYqwu9xJR/oQsOMcpVHROkZFi/Ww70nd8j30DJXMv0ROEcdGCkFlZrmcIG0gWRu9nUb3yImwuJA==
+X-Received: by 2002:a17:902:aa09:: with SMTP id be9mr38470913plb.52.1563328803294;
+        Tue, 16 Jul 2019 19:00:03 -0700 (PDT)
+Received: from localhost ([12.206.222.5])
+        by smtp.gmail.com with ESMTPSA id x26sm29776958pfq.69.2019.07.16.19.00.02
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 16 Jul 2019 19:00:02 -0700 (PDT)
+Subject: [PATCH] fetch: add "--parallel", which fetches all remotes in parallel
+Date:   Tue, 16 Jul 2019 18:59:03 -0700
+Message-Id: <20190717015903.4384-1-palmer@sifive.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190702005340.66615-1-emilyshaffer@google.com>
- <20190709211043.48597-1-emilyshaffer@google.com> <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
- <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com> <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 16 Jul 2019 18:09:06 -0700
-Message-ID: <CAGyf7-EWuW5NX27YPeSb9+5iMU0pftUs-WxvUH1NqpGeNsXESg@mail.gmail.com>
-Subject: Re: [RFC/PATCH] CodingGuidelines: spell out post-C89 rules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Users <git@vger.kernel.org>, Carlo Arenas <carenas@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Cc:     peff@peff.net, e@80x24.org, chriscool@tuxfamily.org,
+        gitster@pobox.com, jonathantanmy@google.com, tboegi@web.de,
+        bwilliams.eng@gmail.com, jeffhost@microsoft.com,
+        Palmer Dabbelt <palmer@sifive.com>
+From:   Palmer Dabbelt <palmer@sifive.com>
+To:     git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 16, 2019 at 10:21 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Even though we have been sticking to C89, there are a few handy
-> features we borrow from more recent C language in our codebase after
-> trying them in weather balloons and saw that nobody screamed.
->
-> Spell them out.
->
-> While at it, extend the existing variable declaration rule a bit to
-> read better with the newly spelled out rule for the for loop.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/CodingGuidelines | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
-nes
-> index 1169ff6c8e..53903b14c8 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -195,10 +195,24 @@ For C programs:
->     by e.g. "echo DEVELOPER=3D1 >>config.mak".
->
->   - We try to support a wide range of C compilers to compile Git with,
-> -   including old ones. That means that you should not use C99
-> -   initializers, even if a lot of compilers grok it.
-> +   including old ones. That means that you should not use certain C99
-> +   features, even if your compiler groks it.  There are a few
-> +   exceptions:
->
-> - - Variables have to be declared at the beginning of the block.
-> +   . since early 2012 with e1327023ea, we have been using an enum
-> +     definition whose last element is followed by a comma.
+I have a handful of repositories with a bunch of remotes and this week
+I'm on an internet connection with a high bandwidth high latency
+connection to those remotes.  This results in "fetch --all" being
+painfully slow: 3-4 seconds per remote, all at almost zero link
+utilization (presumably doing an SSH handshake), for a total of a
+minute or so.
 
-Is there a significance to the leading . here versus a leading - below?
+This patch fixes the issue in the simplest way I could come up with: it
+adds a "--parallel" argument to fetch that selects when to block on the
+fetch children.  This results in every fetch child running in parallel,
+which provides per-remote parallelism.  My "fetch --all" times go down
+from ~60 seconds to ~5 seconds, which is great!
 
-> +
-> +   . since mid 2017 with cbc0f81d and 512f41cf, we have been using
-> +     designated initializers for struct and array.
-> +
-> +   These used to be forbidden, but we have not heard breakage report,
-> +   so they are assumed to be safe.
+Signed-off-by: Palmer Dabbelt <palmer@sifive.com>
 
-With the placement here, is it possible that someone might read the
-=E2=80=9CThese used to be forbidden=E2=80=9D as applying to the items that =
-follow
-after it, rather than the items that preceded it? Put a different way,
-could there be some value in having some additional verbiage here that
-indicates something along the lines of =E2=80=9CAside from those exceptions=
-,
-other C99 features are not allowed. Some common examples are:=E2=80=9D
+---
 
-Just a thought. (Pardon the suggestion from the peanut gallery!)
+This is more of an RFC that an actual patch, for three reasons:
 
-> +
-> + - Variables have to be declared at the beginning of the block, before
-> +   the first statement (i.e. -Wdeclaration-after-statement).
-> +
-> + - Declaring a variable in the for loop "for (int i =3D 0; i < 10; i++)"
-> +   is still not allowed in this codebase.
->
->   - NULL pointers shall be written as NULL, not as 0.
->
->
+* I'm not sure if it's safe to access the .git database from multiple
+  processes at the same time.  This is my first time messing around with
+  git to this degree, so I figured it's better to just ask than to try
+  to figure it out.
+* As I was writing the documentation I found "fetch --jobs".  It seems
+  like I should use that instead of adding a new argrument, but I wasn't
+  sure.  If I do this, I'd add some other config argument because
+  submodule.jobs seems like a bad name for this.
+* This implementation is recursive and I'm a bit worried about stack
+  usage.  The stack-based implementation doesn't make nearly as much
+  sense with --jobs, so I'd probably just do it right.
+
+It's at the point where I've spent about as long writing the code as
+I'll save waiting on "fetch --all" over the rest of my life, and given
+the unknows I thought it would be best to just send out the patch and
+see if it has any legs.
+
+If this seems reasonable then I'll try to find some time to finish it.
+Specificially, I'd like to:
+
+* Use "--jobs" instead of "--parallel", to avoid the extra argument.
+* Write some sort of test case.
+---
+ Documentation/fetch-options.txt |  3 +++
+ builtin/fetch.c                 | 45 +++++++++++++++++++++++----------
+ 2 files changed, 34 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 3c9b4f9e0951..99666f40e405 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -92,6 +92,9 @@ ifndef::git-pull[]
+ 	Run `git gc --auto` at the end to perform garbage collection
+ 	if needed. This is enabled by default.
+ 
++--parallel::
++	Fetch all remotes in parallel.
++
+ -p::
+ --prune::
+ 	Before fetching, remove any remote-tracking references that no
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 53ce99d2bbc4..2dfdeea3b3ec 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -71,6 +71,7 @@ static struct refspec refmap = REFSPEC_INIT_FETCH;
+ static struct list_objects_filter_options filter_options;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
+ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
++static int parallel = 0;
+ 
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+@@ -178,6 +179,8 @@ static struct option builtin_fetch_options[] = {
+ 			TRANSPORT_FAMILY_IPV6),
+ 	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
+ 			N_("report that we have only objects reachable from this object")),
++	OPT_BOOL(0, "parallel", &parallel,
++		 N_("fetch in parallel from each remote")),
+ 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 	OPT_BOOL(0, "auto-gc", &enable_auto_gc,
+ 		 N_("run 'gc --auto' after fetching")),
+@@ -1456,12 +1459,15 @@ static void add_options_to_argv(struct argv_array *argv)
+ 
+ }
+ 
+-static int fetch_multiple(struct string_list *list)
++static int fetch_multiple(struct string_list *list, int i)
+ {
+-	int i, result = 0;
++	int result = 0;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
++	const char *name = list->items[i].string;
++	struct child_process cmd = CHILD_PROCESS_INIT;
++	int code;
+ 
+-	if (!append && !dry_run) {
++	if (i == 0 && !append && !dry_run) {
+ 		int errcode = truncate_fetch_head();
+ 		if (errcode)
+ 			return errcode;
+@@ -1469,20 +1475,31 @@ static int fetch_multiple(struct string_list *list)
+ 
+ 	argv_array_pushl(&argv, "fetch", "--append", "--no-auto-gc", NULL);
+ 	add_options_to_argv(&argv);
++	argv_array_push(&argv, name);
+ 
+-	for (i = 0; i < list->nr; i++) {
+-		const char *name = list->items[i].string;
+-		argv_array_push(&argv, name);
+-		if (verbosity >= 0)
+-			printf(_("Fetching %s\n"), name);
+-		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+-			error(_("Could not fetch %s"), name);
+-			result = 1;
+-		}
+-		argv_array_pop(&argv);
++	if (verbosity >= 0)
++		printf(_("Fetching %s\n"), name);
++
++	cmd.argv = argv.argv;
++	cmd.git_cmd = 1;
++	code = start_command(&cmd);
++
++	if (!code && !parallel)
++		code = finish_command(&cmd);
++
++	if (i+1 < list->nr)
++		result |= fetch_multiple(list, i+1);
++
++	if (!code && parallel)
++		code |= finish_command(&cmd);
++
++	if (code) {
++		error(_("Could not fetch %s"), name);
++		result |= 1;
+ 	}
+ 
+ 	argv_array_clear(&argv);
++
+ 	return result;
+ }
+ 
+@@ -1696,7 +1713,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			die(_("--filter can only be used with the remote "
+ 			      "configured in extensions.partialclone"));
+ 		/* TODO should this also die if we have a previous partial-clone? */
+-		result = fetch_multiple(&list);
++		result = fetch_multiple(&list, 0);
+ 	}
+ 
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+-- 
+2.21.0
+
