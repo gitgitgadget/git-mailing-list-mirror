@@ -8,57 +8,59 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82D4E1F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 14:41:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B26661F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 14:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbfGQOlx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jul 2019 10:41:53 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39093 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbfGQOlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jul 2019 10:41:53 -0400
-Received: by mail-wm1-f65.google.com with SMTP id u25so12077566wmc.4
-        for <git@vger.kernel.org>; Wed, 17 Jul 2019 07:41:51 -0700 (PDT)
+        id S1727210AbfGQOlz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jul 2019 10:41:55 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39964 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbfGQOlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jul 2019 10:41:55 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r1so25108531wrl.7
+        for <git@vger.kernel.org>; Wed, 17 Jul 2019 07:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M8Z567y3WSYFVT4MEV/SNreiKz86Ye7xfQZPbw9GqJw=;
-        b=mGJqEIUXyNavoER6D9TDp3chmg+OF1YgSwzKwGlbgJnke15K3JNYcKqcKe6V+KOEik
-         LLKuURcwiYqMt+63H7Lfn7P/1Ogvp7AsnoSDCfTEKwyy11dnLBMaNmnjLEOjbDGFnY+x
-         TJtnOK5b0WpAMXFBdklJmYVS6v5TMfxnLCQgM44H13GXVzuzdn7E4qk4lRnJuQsWQHJz
-         yXO2g05mfKL2CTh1pCTLZO91Y78dX0kppWSJ/OCO5J7dUaljxO5NQaemt1I7Qw+er9vN
-         pGhe9cgBuDWHRNsKcoE2H4lsE5PT7xUO8ND6nuNUL3ctQ+dmw0fE43m/vhuJEMAb65GT
-         Ul7w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GdMD/fAN+lZwJ82MReeYciRQSDLmINXX7d7VjAd675k=;
+        b=n0UxQnJpWlTVM2Lb3Dtlbr/4CGZLU97dIwPl5YjEi6oP3oQMmttjvtdITgiaI0Rp3D
+         TQY6LsG8mdXnYQtHLQ5r6rUlAQoYzWXx3hzCjpkyXXbX79UMQQNuZtaQ80lIZRg9WqPt
+         ofPlEDaCUNW2hmQCCq+h16+aPGT0WaL1rtGoVlRNWi6BSP7JDzN4PzM+hYFMdGKuAdlz
+         qeoOMXiz46AIgRfWIZzjjmpAuK9KSR7ST2UEtBrwaC1wSwmpcsGo1F6Hi9TVlIZSATR6
+         UoxtB2BMTxBe7+/25wOShs8qbQWJ2sGVHMMkfcWXdPKMWA4aZ+lBuW2c9/G4zr77vlCp
+         00Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M8Z567y3WSYFVT4MEV/SNreiKz86Ye7xfQZPbw9GqJw=;
-        b=rZf3/avtFUAt+2cE8N7BG0rrQ6Xi3NsIH5YpZTxTgfZwRdDFQJ8I2VipPtYdqhturR
-         A/joLEDe259e2RdIkFdQEA1fbsLlFJcdOdBseHAg6M1MV5kvT2oRtrid7eRLDWMZnErC
-         bPNMVJ8pO2PupMpqQ59x489KhZNRMm8E5ak2bCB6g2ygsl/20eN2NqevcbGIyXjR6Sre
-         yB40Ow6LZ3pTsDRUTdpFbA+zUXoxOirr80ZGPkT2JOyOwBmCRebqJW9wPuXRZqEqsSqq
-         +CzKHriUK11hkosJ9MZZi1ppg6YuvCBc3akwcDdUh5G9+9Pb2D/R9c0AZ3ZD1NU7X620
-         RxGg==
-X-Gm-Message-State: APjAAAXVQ6gWj3mlKEXFNnDoPxlAhLb63cZwV+B3s89b28HIwq9sNIGH
-        orLQasTM7ThEuRTFKdMbtqBv3x6f
-X-Google-Smtp-Source: APXvYqzYfOsjUPOR+uc6h2mJaHiF4+Jr5EouxC6Iz2sou07YgZNeWmVgYttb9wypjqCvMlfRsxT1ig==
-X-Received: by 2002:a1c:2e09:: with SMTP id u9mr37271492wmu.137.1563374510881;
-        Wed, 17 Jul 2019 07:41:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GdMD/fAN+lZwJ82MReeYciRQSDLmINXX7d7VjAd675k=;
+        b=mWdnL3reqFFRAIHlKvWS8WXK3TiIK9aA7XHZwCsV7r321zleGWbaYg2s5ALH6mkC02
+         HTdRF7mXnmSok7KcOhuVTbiaHlY/nymnqSsB09osS2zPzP5sldyb0ELVJMOFwgML0EJW
+         CroYeGTCo6zJjyFUFiY0ENUTisq4ybnbWiQ8YPNw8Vgo6lphLqvg6gRv5UULgm8LGjTT
+         DJEHej//fjIZOJggrOtFEwZRhvkne3ZmUVSFBZn3tXJ9rK/eUvDTv6ch9ktRs38TqKvV
+         /No9CHbBCiILSr6bWytbReQ1/czI7KGZk5nNdH1adqkFbtY28riAYzyiTGv/l1/Pq6lq
+         kCxA==
+X-Gm-Message-State: APjAAAWOLJZlYxD4X5WJRZdJl6svGZlGiqBDzifgjkvmm4nihUS/Yq0W
+        cn+skBw8kMzq/y2mwJSCt+UI9biG
+X-Google-Smtp-Source: APXvYqxOipvshELRoFAkh4y6uFQYXldRE0N6Pxigum8RxkmdP0GJxPuMbtIkkogAgrIFFNgIYODf0g==
+X-Received: by 2002:adf:fe4f:: with SMTP id m15mr13568106wrs.36.1563374513063;
+        Wed, 17 Jul 2019 07:41:53 -0700 (PDT)
 Received: from localhost.localdomain (atoulouse-658-1-183-65.w86-199.abo.wanadoo.fr. [86.199.38.65])
-        by smtp.googlemail.com with ESMTPSA id p18sm21815968wrm.16.2019.07.17.07.41.49
+        by smtp.googlemail.com with ESMTPSA id p18sm21815968wrm.16.2019.07.17.07.41.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Jul 2019 07:41:50 -0700 (PDT)
+        Wed, 17 Jul 2019 07:41:52 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [RFC PATCH 0/9] rebase -i: extend rebase.missingCommitsCheck to `--edit-todo' and co.
-Date:   Wed, 17 Jul 2019 16:39:09 +0200
-Message-Id: <20190717143918.7406-1-alban.gruin@gmail.com>
+Subject: [RFC PATCH 1/9] t3404: demonstrate that --edit-todo does not check for dropped commits
+Date:   Wed, 17 Jul 2019 16:39:10 +0200
+Message-Id: <20190717143918.7406-2-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190717143918.7406-1-alban.gruin@gmail.com>
+References: <20190717143918.7406-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -66,61 +68,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prevent mistakes when editing a branch, rebase features a knob,
-rebase.missingCommitsCheck, to warn the user if a commit was dropped.
-Unfortunately, this check is only effective for the initial edit, which
-means that if you edit the todo list at a later point of the rebase and
-dropped a commit, no warnings or errors would be issued.
+When set to "warn" or "error", `rebase.missingCommitCheck' would make
+rebase -i warn if the user removed commits from the todo list to prevent
+mistakes.  Unfortunately, rebase --edit-todo and rebase --continue don't
+take it into account.
 
-This adds the ability to check if commits were dropped when resuming a
-rebase (with `rebase --continue'), when editing the todo list (with
-`rebase --edit-todo'), or when reloading the todo list after an `exec'
-command.
+This adds three tests to t3404 to demonstrate this.  The first one is
+not broken, as when `rebase.missingCommitsCheck' is not set, nothing in
+particular must be done towards dropped commits.  The two others are
+broken, demonstrating the problem.
 
-The idea to extend this feature was suggested to me more than a year ago
-by Phillip Wood, if I'm not mistaken.  I postponed this until four month
-ago, when ag/sequencer-reduce-rewriting-todo finally hit master, but I
-had to stop because of other obligations.  I could go back to work one
-month ago, when I did the bulk of this series, but I lacked time to
-polish it, so it waited a bit more.  Now, I think it is in a good shape
-to be sent, although it is still RFC-quality to me.  The advertised
-functionality should work well, but perhaps there is some flaws I
-missed.
-
-The first two patches are new tests, demonstrating that after the
-initial edit, the check is not done.  The next four are what could be
-qualified as omissions from ag/sequencer-reduce-rewriting-todo, but they
-are quite important (IMHO) for the rest of the series.  The last three
-actually extend rebase.missingCommitsCheck.
-
-This is based on master (9d418600f4, "The fifth batch").
-
-The tip of this series is tagged as "edit-todo-drop-rfc" in
-https://github.com/agrn/git.
-
-Alban Gruin (9):
-  t3404: demonstrate that --edit-todo does not check for dropped commits
-  t3429: demonstrate that rebase exec does not check for dropped commits
-  sequencer: update `total_nr' when adding an item to a todo list
-  sequencer: update `done_nr' when skipping commands in a todo list
-  sequencer: move the code writing total_nr on the disk to a new
-    function
-  sequencer: add a parameter to sequencer_continue() to accept a todo
-    list
-  rebase-interactive: todo_list_check() also uses the done list
-  rebase-interactive: warn if commit is dropped with --edit-todo
-  sequencer: have read_populate_todo() check for dropped commits
-
- builtin/rebase.c              |  2 +-
- builtin/revert.c              |  2 +-
- rebase-interactive.c          | 67 +++++++++++++++++++++++-----
- rebase-interactive.h          |  6 ++-
- sequencer.c                   | 53 ++++++++++++++--------
- sequencer.h                   |  3 +-
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
  t/t3404-rebase-interactive.sh | 82 +++++++++++++++++++++++++++++++++++
- t/t3429-rebase-edit-todo.sh   | 44 ++++++++++++++++++-
- 8 files changed, 224 insertions(+), 35 deletions(-)
+ 1 file changed, 82 insertions(+)
 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 461dd539ff..f5c0a8d2bb 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1345,6 +1345,88 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
+ 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+ '
+ 
++test_expect_success 'rebase --edit-todo respects rebase.missingCommitsCheck = ignore' '
++	test_config rebase.missingCommitsCheck ignore &&
++	rebase_setup_and_clean missing-commit &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="1 2 bad 3 4" \
++		git rebase -i --root >/dev/null 2>stderr &&
++	FAKE_LINES="1 2 4" git rebase --edit-todo &&
++	git rebase --continue 2>actual &&
++	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
++	test_i18ngrep \
++		"Successfully rebased and updated refs/heads/missing-commit" \
++		actual
++'
++
++cat >expect <<EOF
++error: invalid line 5: badcmd $(git rev-list --pretty=oneline --abbrev-commit -1 master)
++Warning: some commits may have been dropped accidentally.
++Dropped commits (newer to older):
++ - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
++To avoid this message, use "drop" to explicitly remove a commit.
++
++Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
++The possible behaviours are: ignore, warn, error.
++
++EOF
++
++tail -n 8 <expect >expect.2
++
++test_expect_failure 'rebase --edit-todo respects rebase.missingCommitsCheck = warn' '
++	test_config rebase.missingCommitsCheck warn &&
++	rebase_setup_and_clean missing-commit &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="1 2 3 4 bad 5" \
++		git rebase -i --root >/dev/null 2>stderr &&
++	FAKE_LINES="1 2 3 4" git rebase --edit-todo 2>actual &&
++	test_i18ncmp expect actual &&
++	git rebase --continue 2>actual.2 &&
++	head -n 8 <actual.2 >actual &&
++	test_i18ncmp expect.2 actual &&
++	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
++	test_i18ngrep \
++		"Successfully rebased and updated refs/heads/missing-commit" \
++		actual.2
++'
++
++cat >expect <<EOF
++error: invalid line 3: badcmd $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
++Warning: some commits may have been dropped accidentally.
++Dropped commits (newer to older):
++ - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
++ - $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
++To avoid this message, use "drop" to explicitly remove a commit.
++
++Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
++The possible behaviours are: ignore, warn, error.
++
++EOF
++
++tail -n 9 <expect >expect.2
++
++test_expect_failure 'rebase --edit-todo respects rebase.missingCommitsCheck = error' '
++	test_config rebase.missingCommitsCheck error &&
++	rebase_setup_and_clean missing-commit &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="1 2 bad 3 4" \
++		git rebase -i --root >/dev/null 2>stderr &&
++	test_must_fail env FAKE_LINES="1 2 4" \
++		git rebase --edit-todo 2>actual &&
++	test_i18ncmp expect actual &&
++	test_must_fail git rebase --continue 2>actual &&
++	test_i18ncmp expect.2 actual &&
++	cp .git/rebase-merge/git-rebase-todo.backup \
++		.git/rebase-merge/git-rebase-todo &&
++	FAKE_LINES="1 2 drop 3 4 drop 5" \
++		git rebase --edit-todo &&
++	git rebase --continue 2>actual &&
++	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
++	test_i18ngrep \
++		"Successfully rebased and updated refs/heads/missing-commit" \
++		actual
++'
++
+ test_expect_success 'respects rebase.abbreviateCommands with fixup, squash and exec' '
+ 	rebase_setup_and_clean abbrevcmd &&
+ 	test_commit "first" file1.txt "first line" first &&
 -- 
 2.22.0
 
