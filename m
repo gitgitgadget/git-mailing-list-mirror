@@ -2,139 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C60531F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 00:55:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C29B1F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 01:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729127AbfGQAzk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 20:55:40 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45266 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727956AbfGQAzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 20:55:40 -0400
-Received: by mail-pl1-f196.google.com with SMTP id y8so10988381plr.12
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:55:40 -0700 (PDT)
+        id S1728924AbfGQBJT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 21:09:19 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:45803 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728529AbfGQBJS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 21:09:18 -0400
+Received: by mail-io1-f68.google.com with SMTP id g20so43078787ioc.12
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 18:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hDzyBAg6w2T3fcMfOKgpx4hG3i025I1z0ELBH0hXGQc=;
-        b=J2Md5BZHApfUC/7aNtrpLJgxAMfX1Io47v9r0zeVwYRhwnPWMMff5msmU9fNcYDNWL
-         Ng/cneAMbGcUZad6QGOFOlUuSGYMsbyjiPUDNCCUosV/EQbIRooIU3UmmoubfAOeAQHR
-         70A5wwFiyx7niDiBIvwLTCwKonpHfbZHHieUAVKrmZ8KeU37+VcQ2HCqBUX9WNtgQfX/
-         Zw5J0IF9X3Nv28F/QLPA4dFc/x6C1pexX8BoW62TrJJFvuZpMcXZh9N6uB92AmBdnQwO
-         ujultjKHCz8YvfR2s2xXyzIGmWMkJV4mvr/zLEMVROw+MX9rhxRHoeOyajUHdqPhvObP
-         8O0A==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OMX5PKTrH7tNH7IFbQLAhYCPVKQOzeqoGfMPoRH2T64=;
+        b=PwA4SxFIlnc6LVVE38Eolckhx1CaREjo/k2cdiZxTGlIOhg++uecm/ZgQ6t9oImk0V
+         sgeoffO6/jOzBEJiwrFpEGtCVCzg8iohiTkqqSWRNtL2O21PPhVCripuA8zTeiNQ6ZJ0
+         gw60vR+ZnK+bD+ZEYF7M+72A+PxyCblMsjr0MomBBWELLTtcoRKpLbhPyKdgeZV1GmZA
+         sVvt2hK3FEhgyYt1n097oLN9enkF0e9KJ9Nb4NyzZqkckxlLy5TiwfP8UoPLLte1gdcK
+         VL0GkEl3ogSFa0hrUcshFvqMo9+9/C5T5FwFdXB+VFCfNzwpRtN72KZShNXDvEYKL93u
+         55Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hDzyBAg6w2T3fcMfOKgpx4hG3i025I1z0ELBH0hXGQc=;
-        b=QOD4gqcZzl/O5OT7F70bbyC35jUXkzlIRjDN8uDw2LIJS4wmzsAwxr9epz/B8AanMU
-         evRKH9NfozRIU1k7txeOfkIyi/ebKOOfbznJZ1bUCddUVXPo0ksnshjo/HcuTyrp/RBH
-         2ZNGyjIrn9n6UV0nUGrUzyazrI9bhaqm1xaflSuFFdBghRGkDgewo9pTdoTxa44BjiA4
-         07ezpC/xweyQcGWCEbQ5DzsjuF+Snw0mRTjzdd7FvliKGhsb4eqeO/XXA4RVzgA0VggK
-         kzpmlpBOXmZOM3CG+C3BEWTmOYoTwKbY0FlMFBoH8ItVdxl9I7sl6yIM4Ik0sc+1/e0N
-         DOJA==
-X-Gm-Message-State: APjAAAWEzOnnpAdnkbNcWZWNOwHmxUZyGomyU8RFUJeN9zL9vBzOAjRy
-        fz0ZJwC2b8U9fw5YW6N0pHY=
-X-Google-Smtp-Source: APXvYqy4sFXMTqnfz6T0oDSX610ZyTydgD57t6Qv8x/hfKJoPvsZsDQktTnDL87YNtip2mjYzbZC8Q==
-X-Received: by 2002:a17:902:758d:: with SMTP id j13mr36024842pll.197.1563324939357;
-        Tue, 16 Jul 2019 17:55:39 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id g2sm34145573pfq.88.2019.07.16.17.55.38
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 16 Jul 2019 17:55:38 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 17:55:37 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [RFC/PATCH] CodingGuidelines: spell out post-C89 rules
-Message-ID: <20190717005537.GB93801@google.com>
-References: <20190702005340.66615-1-emilyshaffer@google.com>
- <20190709211043.48597-1-emilyshaffer@google.com>
- <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
- <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
- <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OMX5PKTrH7tNH7IFbQLAhYCPVKQOzeqoGfMPoRH2T64=;
+        b=rSEMUI3jH3wan0a+FZoN9W9qdIDBq9J3EAjqnhfkg3v2Nftc5HS69dYeo3RuQfEv/1
+         C+BMTxFtfFDf2ch3F3l7sWSqQqI8tgGMSl5lxhJS6szG7JjiOoxUF1oOGYJ2yFuP/iSR
+         tqu58pHc2DBrz6+DJcpy/SBVwEr8szLHWJo0voWMMnIYoUv/SQj4J+m7RS/1rzrtb4Qp
+         gZjormCUkDaPxibVUzvdQeQud55tFJbcLHbUKCFpcc6gZCLhSJgjIgZLmI7RkWQaQNvs
+         aH06XnkCdE85s+WBTHqD++Bg+4U8Xxet0vdgkIIs+8IV6VHNkYQF7s1cNyXMBYQJQ5RF
+         tfVA==
+X-Gm-Message-State: APjAAAVwMIItDcvRm2/UU6i5GOg2w0jhLpZTwJrWS0+iU1CRGQ4aOwio
+        NDZZ4SA6mqyZ20SbkqZFkcQBH1VB9cJLeJnpGv9L2g==
+X-Google-Smtp-Source: APXvYqxKkqSMTFkq/lZ4b/OWGtlcand+fd146qrs5AmU7nMGWuTHVsrC8EEXuHt86LGpR4O3WmbHfj583FBhqJrLPvQ=
+X-Received: by 2002:a02:9f84:: with SMTP id a4mr33791912jam.20.1563325757814;
+ Tue, 16 Jul 2019 18:09:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20190702005340.66615-1-emilyshaffer@google.com>
+ <20190709211043.48597-1-emilyshaffer@google.com> <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
+ <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com> <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
 In-Reply-To: <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 16 Jul 2019 18:09:06 -0700
+Message-ID: <CAGyf7-EWuW5NX27YPeSb9+5iMU0pftUs-WxvUH1NqpGeNsXESg@mail.gmail.com>
+Subject: Re: [RFC/PATCH] CodingGuidelines: spell out post-C89 rules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>, Carlo Arenas <carenas@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-
+On Tue, Jul 16, 2019 at 10:21 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
 > Even though we have been sticking to C89, there are a few handy
 > features we borrow from more recent C language in our codebase after
 > trying them in weather balloons and saw that nobody screamed.
 >
 > Spell them out.
-
-Thanks for this.  It gives a place to advertise future weather balloons,
-too.
-
-[...]
+>
+> While at it, extend the existing variable declaration rule a bit to
+> read better with the newly spelled out rule for the for loop.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/CodingGuidelines | 20 +++++++++++++++++---
+>  1 file changed, 17 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
+nes
+> index 1169ff6c8e..53903b14c8 100644
 > --- a/Documentation/CodingGuidelines
 > +++ b/Documentation/CodingGuidelines
 > @@ -195,10 +195,24 @@ For C programs:
->     by e.g. "echo DEVELOPER=1 >>config.mak".
->  
+>     by e.g. "echo DEVELOPER=3D1 >>config.mak".
+>
 >   - We try to support a wide range of C compilers to compile Git with,
 > -   including old ones. That means that you should not use C99
 > -   initializers, even if a lot of compilers grok it.
 > +   including old ones. That means that you should not use certain C99
 > +   features, even if your compiler groks it.  There are a few
 > +   exceptions:
-> +
+>
+> - - Variables have to be declared at the beginning of the block.
 > +   . since early 2012 with e1327023ea, we have been using an enum
 > +     definition whose last element is followed by a comma.
 
-This is an interesting one: it's super convenient, but we have received
-patches every 10 years or so to remove the trailing comma --- e.g.
-https://public-inbox.org/git/20100311163235.GC7877@thor.il.thewrittenword.com/
-
-I *think* these were motivated by wanting to be able to build Git with
-old compilers with pedantic warnings on, and certainly the last seven
-years of silence on the subject suggests it's okay.  Should we be even
-more prescriptive and say that the last element should always be
-followed by a comma, for ease of later patching?
+Is there a significance to the leading . here versus a leading - below?
 
 > +
 > +   . since mid 2017 with cbc0f81d and 512f41cf, we have been using
 > +     designated initializers for struct and array.
-
-Can this include an example for the benefit of readers that don't know
-what a designated initializer is?  E.g.
-
-      . since mid 2017 with cb0f81d and 512f41cf, we have been using
-        designated initializers for struct members ("{ .alloc = 1 }")
-	and array members ("[5] = 0").
-
 > +
 > +   These used to be forbidden, but we have not heard breakage report,
 > +   so they are assumed to be safe.
 
-nit: missing article "any" before "breakage reports".
+With the placement here, is it possible that someone might read the
+=E2=80=9CThese used to be forbidden=E2=80=9D as applying to the items that =
+follow
+after it, rather than the items that preceded it? Put a different way,
+could there be some value in having some additional verbiage here that
+indicates something along the lines of =E2=80=9CAside from those exceptions=
+,
+other C99 features are not allowed. Some common examples are:=E2=80=9D
 
->  
-> - - Variables have to be declared at the beginning of the block.
+Just a thought. (Pardon the suggestion from the peanut gallery!)
+
+> +
 > + - Variables have to be declared at the beginning of the block, before
 > +   the first statement (i.e. -Wdeclaration-after-statement).
 > +
-> + - Declaring a variable in the for loop "for (int i = 0; i < 10; i++)"
+> + - Declaring a variable in the for loop "for (int i =3D 0; i < 10; i++)"
 > +   is still not allowed in this codebase.
-
-Nice.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Thanks.
+>
+>   - NULL pointers shall be written as NULL, not as 0.
+>
+>
