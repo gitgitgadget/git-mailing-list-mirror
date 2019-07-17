@@ -2,346 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-0.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1B61F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 00:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8D81F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 00:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728746AbfGQALz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 20:11:55 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:33172 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbfGQALy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 20:11:54 -0400
-Received: by mail-pf1-f202.google.com with SMTP id d190so13329702pfa.0
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:11:54 -0700 (PDT)
+        id S1728848AbfGQAmg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 20:42:36 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37288 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726344AbfGQAmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 20:42:36 -0400
+Received: by mail-pl1-f194.google.com with SMTP id b3so10994481plr.4
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:42:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=NF7GhKq2AJlxfGeqD8ogMQSq2CDDcmKTYNjXphe2oQ4=;
-        b=LyOa+tn9BcMXz9Oiv/taMeaqM3FdG49exyI6FF2sjWEbCuUIp9eIBuOTccwPGyj98f
-         ZSnJ0NNvAPOj0XRlht5cvGeiAz4sIQQdrl4HAEoyCPAy2SVujZar2yRMnRA58ihJ12Ob
-         Y4V7H/9LqPKiaQPB0EmyqO7B30yTiWnzN4ZMtAgDK5mnPqJxI/t8etNMLWVSjosXRsUk
-         LyfwE6ie/6kkMDYv5hGfZxZKt2GdLwR8KfCmmRdkCUxoOaakYk69H/GebP4LG7iTAiba
-         iTFwhdYyOcRV0gYAzdipiv/BF2q07yh4s4jBn6BdieU0d3r+ZMjZIPJToUkkv0r4yos2
-         v3jw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=H/XAAytDE81mEJgrihmmrxF90L4Og4JVu//n9qtcRtc=;
+        b=BP+m2XB85afgv/GQTUD1pI0pMk13ZNS3kv1UbL86WI/rQ1gezBBnwZASlzv98SXa9N
+         YIAbd753PrcRspKG4eVfh/DxtCN+pQqAJknxWFBVnNEBBi7qu+xNYB6NP7UvRMhNVN4v
+         4Ft5RUsl5U7hbrpM4Xf76TznkjX0VU1Zu1mr7bCxtxaaSX0YoXUV0n+YafjcMN1VFg8U
+         P5eJCQtXprICYTyuaoY/nry6QylqLvo7odv2lfqJ7uRc9TOXQEtri0XJx2ePZOBfemSS
+         qm6NESM65fMQRcIlb0nusanzG2o5I6IRr5G4/5sJlT1/2YeVyZY3y4h5xtNQryTgtzwC
+         FnyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=NF7GhKq2AJlxfGeqD8ogMQSq2CDDcmKTYNjXphe2oQ4=;
-        b=pNnChsmuIEVoUoV3iDBaoHw47I1GenVhcy+HHrSkTu5Vk3YATvMxM5fGM3TXl6mnob
-         s/EG6Ro4/HVHBHQA6Ty/oAM6gd1u/X9JSwOsg1eZ6NeLsU8bFGcabW+8v7yO/ExbNdkx
-         D2vWX2C0NgVlfS7+6TRmG2xkroGQ5gkCVVIwfLJLp8vHCwLuVBSlVj5REdTWBIOA5KwJ
-         cp3B+/prX7G7zpKS8Tgtv+LESciJtN93UjYDJUy3LyjhS4BMY3W0veWUXHmzFZwpk9vf
-         ZTOdssyVSUjlToo7WZxpLRaed4u18FVvY3Zvp7hze3RJmK1PyU+P1SdUUdUdL0lmkCtn
-         y8xQ==
-X-Gm-Message-State: APjAAAXAzOqrIjcWhc0sYk0tDLIHuUiT6XTYDW4x6zU7Zp19mB9UenG5
-        J6sFxBKvgHiN6nTb+gWnEk3/Tm25ZJDfrKXla9eIvvg6bspFkQTwrkPpOvlP7YnoFxtDAhsTAnX
-        i2hpDaYcvcicCM+IqOQRQDuHemjmfT3KAOLNdJfa/thgJNigyz/IB8Fkw8dVzHaQ=
-X-Google-Smtp-Source: APXvYqyeF3PXYvL+hLHMcPV0JscpENeaBVrCj6QzL51sQ2zgmiJdeOk1gdKeGs6ltVx6TDNGYgzvXpgJGUPhuQ==
-X-Received: by 2002:a63:6056:: with SMTP id u83mr33973019pgb.181.1563322313306;
- Tue, 16 Jul 2019 17:11:53 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 17:11:49 -0700
-Message-Id: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
-Subject: [PATCH] submodule: plumb --filter to cloned submodules
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=H/XAAytDE81mEJgrihmmrxF90L4Og4JVu//n9qtcRtc=;
+        b=SMlDGAByg2epvWTdzriABLLPo0QC3jYFVqR/Pbkmk+REksfWhydvihs0sCMelcMqIY
+         4xLRtTuJOVUnE9d0EAFbiAslm8eRwtGkvNnZOUSBOxQGoLa17b0g6EBvgqduhcCBX0Bb
+         3rGAlaSaxbBme79JYBEYlxUICe5M59CiIu6qRlNT5igW/HfSw4s5iDcukgLqriCsneGW
+         Ad+pRcSDGqR33zozlMoXuVQVDAbARvdCpKp/KkI0DfoxZrQI6XFI4PSueNc90BzgKAxJ
+         tKIaGO2WVJ2JmK3jORotZsBzyan5MlRAR1KMc7odNK3hxABAuOIXJU+0ZHxPY4bS/ElU
+         ek/Q==
+X-Gm-Message-State: APjAAAUUx8QjbZLifpRHwOhlMjHc+MxQvkW2/95ad9JQ9RyrD15ShOfe
+        0TkB60q5TtmeEEJVKmR81UQ=
+X-Google-Smtp-Source: APXvYqz4vWabv4oTp+cIbAM9eLq9iJ6vnP7QpCFbNoQwvUycGJQ5MtwspLVmULRlKiwKx9onB4yKRA==
+X-Received: by 2002:a17:902:9896:: with SMTP id s22mr37645235plp.4.1563324154975;
+        Tue, 16 Jul 2019 17:42:34 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id x67sm24897675pfb.21.2019.07.16.17.42.33
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 16 Jul 2019 17:42:34 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 17:42:31 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] transport-helper: avoid var decl in for () loop control
+Message-ID: <20190717004231.GA93801@google.com>
+References: <20190702005340.66615-1-emilyshaffer@google.com>
+ <20190709211043.48597-1-emilyshaffer@google.com>
+ <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
+ <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
+ <xmqq36j53esa.fsf_-_@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq36j53esa.fsf_-_@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cloning a repo with a --filter and with --recurse-submodules
-enabled, the partial clone filter only applies to the top-level repo.
-This can lead to unexpected bandwidth and disk usage for projects which
-include large submodules.
+Junio C Hamano wrote:
 
-Fix this by plumbing the --filter argument from git-clone through
-git-submodule and git-submodule--helper.
+> We do allow a few selected C99 constructs in our codebase these
+> days, but this is not among them (yet).
+>
+> Reported-by: Carlo Arenas <carenas@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  transport.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- builtin/clone.c                    |  9 +++++++
- builtin/submodule--helper.c        | 41 +++++++++++++++++++++++++-----
- git-submodule.sh                   | 17 ++++++++++++-
- t/t5617-clone-submodules-remote.sh | 19 ++++++++++++++
- 4 files changed, 79 insertions(+), 7 deletions(-)
+Yes, gcc 4.8 fails to build without this:
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a4fe72879d..2e7ecbd019 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -798,6 +798,15 @@ static int checkout(int submodule_progress)
- 			argv_array_push(&args, "--no-fetch");
- 		}
- 
-+		if (filter_options.choice) {
-+			struct strbuf expanded_filter = STRBUF_INIT;
-+			expand_list_objects_filter_spec(&filter_options,
-+							&expanded_filter);
-+			argv_array_pushf(&args, "--filter=%s",
-+					 expanded_filter.buf);
-+			strbuf_release(&expanded_filter);
-+		}
-+
- 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
- 		argv_array_clear(&args);
- 	}
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 909e77e802..1383a5ae74 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -19,6 +19,7 @@
- #include "diffcore.h"
- #include "diff.h"
- #include "object-store.h"
-+#include "list-objects-filter-options.h"
- 
- #define OPT_QUIET (1 << 0)
- #define OPT_CACHED (1 << 1)
-@@ -1222,7 +1223,8 @@ static int module_deinit(int argc, const char **argv, const char *prefix)
- 
- static int clone_submodule(const char *path, const char *gitdir, const char *url,
- 			   const char *depth, struct string_list *reference, int dissociate,
--			   int quiet, int progress)
-+			   int quiet, int progress,
-+			   const struct list_objects_filter_options *filter_options)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 
-@@ -1244,6 +1246,12 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 		argv_array_push(&cp.args, "--dissociate");
- 	if (gitdir && *gitdir)
- 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
-+	if (filter_options->choice) {
-+		struct strbuf expanded_filter = STRBUF_INIT;
-+		expand_list_objects_filter_spec(filter_options, &expanded_filter);
-+		argv_array_pushf(&cp.args, "--filter=%s", expanded_filter.buf);
-+		strbuf_release(&expanded_filter);
-+	}
- 
- 	argv_array_push(&cp.args, "--");
- 	argv_array_push(&cp.args, url);
-@@ -1359,6 +1367,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	char *p, *path = NULL, *sm_gitdir;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct string_list reference = STRING_LIST_INIT_NODUP;
-+	struct list_objects_filter_options filter_options;
- 	int dissociate = 0;
- 	char *sm_alternate = NULL, *error_strategy = NULL;
- 
-@@ -1386,16 +1395,18 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		OPT__QUIET(&quiet, "Suppress output for cloning a submodule"),
- 		OPT_BOOL(0, "progress", &progress,
- 			   N_("force cloning progress")),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 		OPT_END()
- 	};
- 
- 	const char *const git_submodule_helper_usage[] = {
- 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
- 		   "[--reference <repository>] [--name <name>] [--depth <depth>] "
--		   "--url <url> --path <path>"),
-+		   "[--filter <filter-spec>] --url <url> --path <path>"),
- 		NULL
- 	};
- 
-+	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_clone_options,
- 			     git_submodule_helper_usage, 0);
- 
-@@ -1420,7 +1431,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		prepare_possible_alternates(name, &reference);
- 
- 		if (clone_submodule(path, sm_gitdir, url, depth, &reference, dissociate,
--				    quiet, progress))
-+				    quiet, progress, &filter_options))
- 			die(_("clone of '%s' into submodule path '%s' failed"),
- 			    url, path);
- 	} else {
-@@ -1454,6 +1465,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	free(sm_gitdir);
- 	free(path);
- 	free(p);
-+	list_objects_filter_release(&filter_options);
- 	return 0;
- }
- 
-@@ -1539,6 +1551,7 @@ struct submodule_update_clone {
- 	const char *depth;
- 	const char *recursive_prefix;
- 	const char *prefix;
-+	const struct list_objects_filter_options *filter_options;
- 
- 	/* to be consumed by git-submodule.sh */
- 	struct update_clone_data *update_clone;
-@@ -1555,7 +1568,7 @@ struct submodule_update_clone {
- };
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
- 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
--	NULL, NULL, NULL, \
-+	NULL, NULL, NULL, NULL, \
- 	NULL, 0, 0, 0, NULL, 0, 0, 1}
- 
- 
-@@ -1681,6 +1694,12 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		argv_array_pushl(&child->args, "--prefix", suc->prefix, NULL);
- 	if (suc->recommend_shallow && sub->recommend_shallow == 1)
- 		argv_array_push(&child->args, "--depth=1");
-+	if (suc->filter_options->choice) {
-+		struct strbuf expanded_filter = STRBUF_INIT;
-+		expand_list_objects_filter_spec(suc->filter_options, &expanded_filter);
-+		argv_array_pushf(&child->args, "--filter=%s", expanded_filter.buf);
-+		strbuf_release(&expanded_filter);
-+	}
- 	argv_array_pushl(&child->args, "--path", sub->path, NULL);
- 	argv_array_pushl(&child->args, "--name", sub->name, NULL);
- 	argv_array_pushl(&child->args, "--url", url, NULL);
-@@ -1844,6 +1863,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	const char *update = NULL;
- 	struct pathspec pathspec;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
-+	struct list_objects_filter_options filter_options;
-+	int ret;
- 
- 	struct option module_update_clone_options[] = {
- 		OPT_STRING(0, "prefix", &prefix,
-@@ -1870,6 +1891,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 		OPT__QUIET(&suc.quiet, N_("don't print cloning progress")),
- 		OPT_BOOL(0, "progress", &suc.progress,
- 			    N_("force cloning progress")),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 		OPT_END()
- 	};
- 
-@@ -1882,6 +1904,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	update_clone_config_from_gitmodules(&suc.max_jobs);
- 	git_config(git_update_clone_config, &suc.max_jobs);
- 
-+	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
- 
-@@ -1889,13 +1912,19 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 		if (parse_submodule_update_strategy(update, &suc.update) < 0)
- 			die(_("bad value for update parameter"));
- 
--	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
-+	suc.filter_options = &filter_options;
-+
-+	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0) {
-+		list_objects_filter_release(&filter_options);
- 		return 1;
-+	}
- 
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
--	return update_submodules(&suc);
-+	ret = update_submodules(&suc);
-+	list_objects_filter_release(&filter_options);
-+	return ret;
- }
- 
- static int resolve_relative_path(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index c7f58c5756..64c5bdaacc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -10,7 +10,7 @@ USAGE="[--quiet] [--cached]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init [--filter=<filter-spec>]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-@@ -45,6 +45,7 @@ custom_name=
- depth=
- progress=
- dissociate=
-+filter=
- 
- die_if_unmatched ()
- {
-@@ -520,6 +521,14 @@ cmd_update()
- 		--jobs=*)
- 			jobs=$1
- 			;;
-+		--filter)
-+			case "$2" in '') usage ;; esac
-+			filter="--filter=$2"
-+			shift
-+			;;
-+		--filter=*)
-+			filter=$1
-+			;;
- 		--)
- 			shift
- 			break
-@@ -534,6 +543,11 @@ cmd_update()
- 		shift
- 	done
- 
-+	if test -n "$filter" && test "$init" != "1"
-+	then
-+		usage
-+	fi
-+
- 	if test -n "$init"
- 	then
- 		cmd_init "--" "$@" || return
-@@ -550,6 +564,7 @@ cmd_update()
- 		${depth:+--depth "$depth"} \
- 		$recommend_shallow \
- 		$jobs \
-+		$filter \
- 		-- \
- 		"$@" || echo "#unmatched" $?
- 	} | {
-diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
-index 37fcce9c40..49448e5a88 100755
---- a/t/t5617-clone-submodules-remote.sh
-+++ b/t/t5617-clone-submodules-remote.sh
-@@ -24,6 +24,13 @@ test_expect_success 'setup' '
- 	)
- '
- 
-+# bare clone giving "srv.bare" for use as our server.
-+test_expect_success 'setup bare clone for server' '
-+	git clone --bare "file://$(pwd)/." srv.bare &&
-+	git -C srv.bare config --local uploadpack.allowfilter 1 &&
-+	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
-+'
-+
- test_expect_success 'clone with --no-remote-submodules' '
- 	test_when_finished "rm -rf super_clone" &&
- 	git clone --recurse-submodules --no-remote-submodules "file://$pwd/." super_clone &&
-@@ -51,4 +58,16 @@ test_expect_success 'check the default is --no-remote-submodules' '
- 	)
- '
- 
-+# do basic partial clone from "srv.bare"
-+# confirm partial clone was registered in the local config for super and sub.
-+test_expect_success 'clone with --filter' '
-+	git clone --recurse-submodules --filter blob:none "file://$pwd/srv.bare" super_clone &&
-+	test "$(git -C super_clone config --local core.repositoryformatversion)" = "1" &&
-+	test "$(git -C super_clone config --local extensions.partialclone)" = "origin" &&
-+	test "$(git -C super_clone config --local core.partialclonefilter)" = "blob:none" &&
-+	test "$(git -C super_clone/sub config --local core.repositoryformatversion)" = "1" &&
-+	test "$(git -C super_clone/sub config --local extensions.partialclone)" = "origin" &&
-+	test "$(git -C super_clone/sub config --local core.partialclonefilter)" = "blob:none"
-+'
-+
- test_done
--- 
-2.22.0.657.g960e92d24f-goog
+ transport.c:1234:4: error: ‘for’ loop initial declarations are only allowed in C99 mode
+     for (struct ref *it = remote_refs; it; it = it->next)
+     ^
+ transport.c:1234:4: note: use option -std=c99 or -std=gnu99 to compile your code
 
+Arguably it would be nice to use -std=gnu99 for better consistency
+between gcc versions, but it's moot here: avoiding the declaration in
+for loop initializer is more consistent with
+-Wdeclaration-after-statement anyway.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks.
