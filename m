@@ -2,187 +2,346 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D3111F461
-	for <e@80x24.org>; Tue, 16 Jul 2019 21:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1B61F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 00:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731273AbfGPVtu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 17:49:50 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:58539 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728235AbfGPVtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 17:49:50 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190716214948euoutp0142c8e9b53e7ea026cd0fc707a09c8da9~yAZujdjzs1369613696euoutp01n
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 21:49:48 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190716214948euoutp0142c8e9b53e7ea026cd0fc707a09c8da9~yAZujdjzs1369613696euoutp01n
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563313788;
-        bh=qbKNko5nNNKSDHrlnLx1PMILp24coWnW673c0iKIRVY=;
-        h=To:Cc:From:Subject:Date:References:From;
-        b=uoCJWlo8mAmolPXoxtuWdHR2rAWeY54ayoibcyde9251MyaqzTvsU9A7oF4dcdURS
-         1+005f1R2b+oUk0KWs6/X89+rp+DUZiTfZBXtoB5S+VOUoHzla8qSX2wHHCkepf59D
-         itkbn1B1gYWRRsIkWFrscv1SxFbrcSlhuK8N/TRQ=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190716214947eucas1p1a433b297eed97f54988cd54c5c1fbd83~yAZtQjEoS2498924989eucas1p1u;
-        Tue, 16 Jul 2019 21:49:47 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id EC.9E.04377.A764E2D5; Tue, 16
-        Jul 2019 22:49:46 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190716214945eucas1p299e23651b7bc1738d0c3bf2d227d4e46~yAZruVKI_0741507415eucas1p2u;
-        Tue, 16 Jul 2019 21:49:45 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190716214945eusmtrp265378d5cf4c8f288f794f6bfa95091c2~yAZrgXYJK2373123731eusmtrp2c;
-        Tue, 16 Jul 2019 21:49:45 +0000 (GMT)
-X-AuditID: cbfec7f4-12dff70000001119-a3-5d2e467adb1a
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 96.45.04146.9764E2D5; Tue, 16
-        Jul 2019 22:49:45 +0100 (BST)
-Received: from [192.168.56.1] (unknown [106.210.237.40]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190716214944eusmtip226d2a3bf5bb30b7462461e5557778cdc~yAZq_z5jd2427624276eusmtip25;
-        Tue, 16 Jul 2019 21:49:44 +0000 (GMT)
+        id S1728746AbfGQALz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 20:11:55 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:33172 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726446AbfGQALy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 20:11:54 -0400
+Received: by mail-pf1-f202.google.com with SMTP id d190so13329702pfa.0
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=NF7GhKq2AJlxfGeqD8ogMQSq2CDDcmKTYNjXphe2oQ4=;
+        b=LyOa+tn9BcMXz9Oiv/taMeaqM3FdG49exyI6FF2sjWEbCuUIp9eIBuOTccwPGyj98f
+         ZSnJ0NNvAPOj0XRlht5cvGeiAz4sIQQdrl4HAEoyCPAy2SVujZar2yRMnRA58ihJ12Ob
+         Y4V7H/9LqPKiaQPB0EmyqO7B30yTiWnzN4ZMtAgDK5mnPqJxI/t8etNMLWVSjosXRsUk
+         LyfwE6ie/6kkMDYv5hGfZxZKt2GdLwR8KfCmmRdkCUxoOaakYk69H/GebP4LG7iTAiba
+         iTFwhdYyOcRV0gYAzdipiv/BF2q07yh4s4jBn6BdieU0d3r+ZMjZIPJToUkkv0r4yos2
+         v3jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=NF7GhKq2AJlxfGeqD8ogMQSq2CDDcmKTYNjXphe2oQ4=;
+        b=pNnChsmuIEVoUoV3iDBaoHw47I1GenVhcy+HHrSkTu5Vk3YATvMxM5fGM3TXl6mnob
+         s/EG6Ro4/HVHBHQA6Ty/oAM6gd1u/X9JSwOsg1eZ6NeLsU8bFGcabW+8v7yO/ExbNdkx
+         D2vWX2C0NgVlfS7+6TRmG2xkroGQ5gkCVVIwfLJLp8vHCwLuVBSlVj5REdTWBIOA5KwJ
+         cp3B+/prX7G7zpKS8Tgtv+LESciJtN93UjYDJUy3LyjhS4BMY3W0veWUXHmzFZwpk9vf
+         ZTOdssyVSUjlToo7WZxpLRaed4u18FVvY3Zvp7hze3RJmK1PyU+P1SdUUdUdL0lmkCtn
+         y8xQ==
+X-Gm-Message-State: APjAAAXAzOqrIjcWhc0sYk0tDLIHuUiT6XTYDW4x6zU7Zp19mB9UenG5
+        J6sFxBKvgHiN6nTb+gWnEk3/Tm25ZJDfrKXla9eIvvg6bspFkQTwrkPpOvlP7YnoFxtDAhsTAnX
+        i2hpDaYcvcicCM+IqOQRQDuHemjmfT3KAOLNdJfa/thgJNigyz/IB8Fkw8dVzHaQ=
+X-Google-Smtp-Source: APXvYqyeF3PXYvL+hLHMcPV0JscpENeaBVrCj6QzL51sQ2zgmiJdeOk1gdKeGs6ltVx6TDNGYgzvXpgJGUPhuQ==
+X-Received: by 2002:a63:6056:: with SMTP id u83mr33973019pgb.181.1563322313306;
+ Tue, 16 Jul 2019 17:11:53 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 17:11:49 -0700
+Message-Id: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
+Subject: [PATCH] submodule: plumb --filter to cloned submodules
+From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
-Cc:     cedric.ollivier@orange.com,
-        DEBEAU Eric IMT/OLN <eric.debeau@orange.com>
-From:   Krzysztof Opasiak <k.opasiak@samsung.com>
-Subject: [BUG] Recursive submodules fails to track branch correctly if . is
- used
-Message-ID: <08844c07-5192-0645-9bfc-62e1b16e39a8@samsung.com>
-Date:   Tue, 16 Jul 2019 23:49:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.2
-MIME-Version: 1.0
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42LZduzned0qN71Yg67DFhYfF81gsth98yuj
-        RdeVbiYHZo+WZyfZPD5vkgtgiuKySUnNySxLLdK3S+DKeHb5KlPBBdGKHa1L2BsYJwh2MXJy
-        SAiYSEztPc7cxcjFISSwglHi+sK3jBDOF0aJEwcfskA4nxklHvWtZodpOdZ2kBHEFhJYziix
-        YI4vRNFbRomZm7vAikQExCXeHp8JZjML+Ehc+dwM1MDBwSagLzFvlyhIWFggSOLk2XNgJbwC
-        dhJN058yg9gsAqoS2xYfBpsvKhAhcerIPBaIGkGJkzOfsECMFJe49WQ+E4QtL7H97RywFyQE
-        HrNJHJk3mRHiUBeJ2XuOQh0tLPHq+BYoW0bi/06QZpCGZkaJr0dPsEE4PYwSu95AXCohYC3x
-        booNiMksoCmxfpc+RK+jxOmHx1kgKvgkbrwVhLiBT2LStunMEGFeiY42IYhqZYn77Q9YIWxJ
-        ie+rd0Nd4CGxZeZNxgmMirOQfDYLyWezkHw2C+GGBYwsqxjFU0uLc9NTi43yUsv1ihNzi0vz
-        0vWS83M3MQJTx+l/x7/sYNz1J+kQowAHoxIPr8dh3Vgh1sSy4srcQ4wSHMxKIry2X7VjhXhT
-        EiurUovy44tKc1KLDzFKc7AoifNWMzyIFhJITyxJzU5NLUgtgskycXBKNTDuODjrbVaynnDx
-        5OMT3c9z6h6of+XO7rkqIcXtawnjdxEzpsy1H5oFPdqlCxf/2HDhzlmbazsrZ22/b/FMzpev
-        1OB20BErhf2tcie2OqVJ5202MHhzmUlJruvz79wkyb/9Z1bXnzCrc9+R2ndk/hlBdt8ot0/P
-        n27XbJlgsXhv66KzRczd32YrsRRnJBpqMRcVJwIAovnr8RkDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkkeLIzCtJLcpLzFFi42I5/e/4Pd1KN71YgzNrmC0+LprBZLH75ldG
-        i64r3UwOzB4tz06yeXzeJBfAFKVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSq
-        pG9nk5Kak1mWWqRvl6CX8ezyVaaCC6IVO1qXsDcwThDsYuTkkBAwkTjWdpCxi5GLQ0hgKaNE
-        x+5uFoiEpMT0FyeYIWxhiT/Xutggil4zSnxZfYsRJCEiIC7x9vhMdhCbWcBH4srnZqA4Bweb
-        gL7EvF2iIGFhgSCJk2fPgZXwCthJNE1/CjaTRUBVYtviw2BjRAUiJCZd28kCUSMocXLmExaI
-        kWYS8zY/ZIawxSVuPZnPBGHLS2x/O4d5AqPALCQts5C0zELSMgtJywJGllWMIqmlxbnpucWG
-        esWJucWleel6yfm5mxiBwb/t2M/NOxgvbQw+xCjAwajEw+txWDdWiDWxrLgy9xCjBAezkgiv
-        7VftWCHelMTKqtSi/Pii0pzU4kOMpkAPTWSWEk3OB0ZmXkm8oamhuYWlobmxubGZhZI4b4fA
-        wRghgfTEktTs1NSC1CKYPiYOTqkGxoQEaf7TDs6tq9PLXk/frJ382urpaUn3yTUOgnbrP6be
-        ltwnMsHV+OhhN/k9rL+PCOgtntAXmLvHSt6srEAlIcgn4Qi7N9OWuql3Ju2VYXr5Kyr0ysw7
-        TXrNF2JPba/el33mibHwDAG1pS3G4ToX0gPvPE25sVl2kab+/fcNnreM277wnF8zWYmlOCPR
-        UIu5qDgRAMilCdiUAgAA
-X-CMS-MailID: 20190716214945eucas1p299e23651b7bc1738d0c3bf2d227d4e46
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190716214945eucas1p299e23651b7bc1738d0c3bf2d227d4e46
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190716214945eucas1p299e23651b7bc1738d0c3bf2d227d4e46
-References: <CGME20190716214945eucas1p299e23651b7bc1738d0c3bf2d227d4e46@eucas1p2.samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git community,
+When cloning a repo with a --filter and with --recurse-submodules
+enabled, the partial clone filter only applies to the top-level repo.
+This can lead to unexpected bandwidth and disk usage for projects which
+include large submodules.
 
-I'd like to report you a potential bug in git submodule implementation.
+Fix this by plumbing the --filter argument from git-clone through
+git-submodule and git-submodule--helper.
 
-* Problem statement
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ builtin/clone.c                    |  9 +++++++
+ builtin/submodule--helper.c        | 41 +++++++++++++++++++++++++-----
+ git-submodule.sh                   | 17 ++++++++++++-
+ t/t5617-clone-submodules-remote.sh | 19 ++++++++++++++
+ 4 files changed, 79 insertions(+), 7 deletions(-)
 
-According to doc a special value of "." can be used as a branch name to 
-track. This means that git should trace the same branch as is currently 
-in use in superproject. This works perfectly fine as long as you don't 
-try to add superproject (SUP1) with such configuration as a submodule to 
-another superproject (SUP2). The nesting structure would look like this:
-
-SUP2
-     - SUP1
-         - SUB_PROJECT
-
-If you try to do this you won't be able to execute any of the following 
-commands:
-
-$ git clone --recursive SUP2
-
-$ git clone SUP2 & git submodule update --init --recursive --remote
-
-$ git submodule update --init --recursive --remote
-
-as every time you will get an error message similar to this one:
-
-fatal: Submodule (SUB_PROJECT) branch configured to inherit branch from 
-superproject, but the superproject is not on any branch
-fatal: Needed a single revision
-Unable to find current origin/ revision in submodule path 'SUB_PROJECT'
-
-* Initial investigation results
-
-The error message comes from remote_submodule_branch():1938 in 
-submodule--helper.c and it is generated called from SUP1 dir (due to 
---recursive flag). Actually this function behaves correctly. If you go 
-to SUP1 dir and check the branch info you will notice that the repo is 
-in detached head state.
-
-* Probable root cause
-
-The root cause is that the traced branch information is never propagated 
-to the submodules. All the submodules are always initialized in a 
-detached head state and there is no way to change this behavior nor to 
-propagate the traced branch information to submodules.
-
-* Workaround script
-
-I managed to workaround this bug by dropping the recursive option and 
-after the top level project has been cloned I go through every 
-submodule, set local branch to point to current head and then just do 
-git checkout and I do this recursively in all modules. After this I'm 
-able to successfully execute:
-
-$ git submodule update --rebase --recursive --remote
-
-The script (to be executed in SUP2 right after clone):
-
-#!/bin/bash
-
-function prepare_submodules {
-	git submodule update --init
-	local SUBMODULE_LIST=`git submodule--helper status | awk '{print $2}'`
-	while read -r submod; do
-		local PARENT_DIR=`pwd`
-		local BRANCH=`git submodule--helper remote-branch ${submod}`
-
-		cd ${submod}
-		git branch -f ${BRANCH} HEAD;
-		git checkout ${BRANCH}
-		if [ ! -z "`git submodule status`" ]; then
-			prepare_submodules;
-		fi
-		cd ${PARENT_DIR}
-	done <<< "$SUBMODULE_LIST"
-}
-
-prepare_submodules
-
-Best regards,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a4fe72879d..2e7ecbd019 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -798,6 +798,15 @@ static int checkout(int submodule_progress)
+ 			argv_array_push(&args, "--no-fetch");
+ 		}
+ 
++		if (filter_options.choice) {
++			struct strbuf expanded_filter = STRBUF_INIT;
++			expand_list_objects_filter_spec(&filter_options,
++							&expanded_filter);
++			argv_array_pushf(&args, "--filter=%s",
++					 expanded_filter.buf);
++			strbuf_release(&expanded_filter);
++		}
++
+ 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 		argv_array_clear(&args);
+ 	}
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 909e77e802..1383a5ae74 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -19,6 +19,7 @@
+ #include "diffcore.h"
+ #include "diff.h"
+ #include "object-store.h"
++#include "list-objects-filter-options.h"
+ 
+ #define OPT_QUIET (1 << 0)
+ #define OPT_CACHED (1 << 1)
+@@ -1222,7 +1223,8 @@ static int module_deinit(int argc, const char **argv, const char *prefix)
+ 
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+ 			   const char *depth, struct string_list *reference, int dissociate,
+-			   int quiet, int progress)
++			   int quiet, int progress,
++			   const struct list_objects_filter_options *filter_options)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 
+@@ -1244,6 +1246,12 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 		argv_array_push(&cp.args, "--dissociate");
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
++	if (filter_options->choice) {
++		struct strbuf expanded_filter = STRBUF_INIT;
++		expand_list_objects_filter_spec(filter_options, &expanded_filter);
++		argv_array_pushf(&cp.args, "--filter=%s", expanded_filter.buf);
++		strbuf_release(&expanded_filter);
++	}
+ 
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_push(&cp.args, url);
+@@ -1359,6 +1367,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	char *p, *path = NULL, *sm_gitdir;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct string_list reference = STRING_LIST_INIT_NODUP;
++	struct list_objects_filter_options filter_options;
+ 	int dissociate = 0;
+ 	char *sm_alternate = NULL, *error_strategy = NULL;
+ 
+@@ -1386,16 +1395,18 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&quiet, "Suppress output for cloning a submodule"),
+ 		OPT_BOOL(0, "progress", &progress,
+ 			   N_("force cloning progress")),
++		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 		OPT_END()
+ 	};
+ 
+ 	const char *const git_submodule_helper_usage[] = {
+ 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+ 		   "[--reference <repository>] [--name <name>] [--depth <depth>] "
+-		   "--url <url> --path <path>"),
++		   "[--filter <filter-spec>] --url <url> --path <path>"),
+ 		NULL
+ 	};
+ 
++	memset(&filter_options, 0, sizeof(filter_options));
+ 	argc = parse_options(argc, argv, prefix, module_clone_options,
+ 			     git_submodule_helper_usage, 0);
+ 
+@@ -1420,7 +1431,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		prepare_possible_alternates(name, &reference);
+ 
+ 		if (clone_submodule(path, sm_gitdir, url, depth, &reference, dissociate,
+-				    quiet, progress))
++				    quiet, progress, &filter_options))
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    url, path);
+ 	} else {
+@@ -1454,6 +1465,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	free(sm_gitdir);
+ 	free(path);
+ 	free(p);
++	list_objects_filter_release(&filter_options);
+ 	return 0;
+ }
+ 
+@@ -1539,6 +1551,7 @@ struct submodule_update_clone {
+ 	const char *depth;
+ 	const char *recursive_prefix;
+ 	const char *prefix;
++	const struct list_objects_filter_options *filter_options;
+ 
+ 	/* to be consumed by git-submodule.sh */
+ 	struct update_clone_data *update_clone;
+@@ -1555,7 +1568,7 @@ struct submodule_update_clone {
+ };
+ #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+ 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+-	NULL, NULL, NULL, \
++	NULL, NULL, NULL, NULL, \
+ 	NULL, 0, 0, 0, NULL, 0, 0, 1}
+ 
+ 
+@@ -1681,6 +1694,12 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 		argv_array_pushl(&child->args, "--prefix", suc->prefix, NULL);
+ 	if (suc->recommend_shallow && sub->recommend_shallow == 1)
+ 		argv_array_push(&child->args, "--depth=1");
++	if (suc->filter_options->choice) {
++		struct strbuf expanded_filter = STRBUF_INIT;
++		expand_list_objects_filter_spec(suc->filter_options, &expanded_filter);
++		argv_array_pushf(&child->args, "--filter=%s", expanded_filter.buf);
++		strbuf_release(&expanded_filter);
++	}
+ 	argv_array_pushl(&child->args, "--path", sub->path, NULL);
+ 	argv_array_pushl(&child->args, "--name", sub->name, NULL);
+ 	argv_array_pushl(&child->args, "--url", url, NULL);
+@@ -1844,6 +1863,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	const char *update = NULL;
+ 	struct pathspec pathspec;
+ 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
++	struct list_objects_filter_options filter_options;
++	int ret;
+ 
+ 	struct option module_update_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -1870,6 +1891,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&suc.quiet, N_("don't print cloning progress")),
+ 		OPT_BOOL(0, "progress", &suc.progress,
+ 			    N_("force cloning progress")),
++		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 		OPT_END()
+ 	};
+ 
+@@ -1882,6 +1904,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	update_clone_config_from_gitmodules(&suc.max_jobs);
+ 	git_config(git_update_clone_config, &suc.max_jobs);
+ 
++	memset(&filter_options, 0, sizeof(filter_options));
+ 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+ 			     git_submodule_helper_usage, 0);
+ 
+@@ -1889,13 +1912,19 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 		if (parse_submodule_update_strategy(update, &suc.update) < 0)
+ 			die(_("bad value for update parameter"));
+ 
+-	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
++	suc.filter_options = &filter_options;
++
++	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0) {
++		list_objects_filter_release(&filter_options);
+ 		return 1;
++	}
+ 
+ 	if (pathspec.nr)
+ 		suc.warn_if_uninitialized = 1;
+ 
+-	return update_submodules(&suc);
++	ret = update_submodules(&suc);
++	list_objects_filter_release(&filter_options);
++	return ret;
+ }
+ 
+ static int resolve_relative_path(int argc, const char **argv, const char *prefix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c7f58c5756..64c5bdaacc 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -10,7 +10,7 @@ USAGE="[--quiet] [--cached]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init [--filter=<filter-spec>]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+@@ -45,6 +45,7 @@ custom_name=
+ depth=
+ progress=
+ dissociate=
++filter=
+ 
+ die_if_unmatched ()
+ {
+@@ -520,6 +521,14 @@ cmd_update()
+ 		--jobs=*)
+ 			jobs=$1
+ 			;;
++		--filter)
++			case "$2" in '') usage ;; esac
++			filter="--filter=$2"
++			shift
++			;;
++		--filter=*)
++			filter=$1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -534,6 +543,11 @@ cmd_update()
+ 		shift
+ 	done
+ 
++	if test -n "$filter" && test "$init" != "1"
++	then
++		usage
++	fi
++
+ 	if test -n "$init"
+ 	then
+ 		cmd_init "--" "$@" || return
+@@ -550,6 +564,7 @@ cmd_update()
+ 		${depth:+--depth "$depth"} \
+ 		$recommend_shallow \
+ 		$jobs \
++		$filter \
+ 		-- \
+ 		"$@" || echo "#unmatched" $?
+ 	} | {
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
+index 37fcce9c40..49448e5a88 100755
+--- a/t/t5617-clone-submodules-remote.sh
++++ b/t/t5617-clone-submodules-remote.sh
+@@ -24,6 +24,13 @@ test_expect_success 'setup' '
+ 	)
+ '
+ 
++# bare clone giving "srv.bare" for use as our server.
++test_expect_success 'setup bare clone for server' '
++	git clone --bare "file://$(pwd)/." srv.bare &&
++	git -C srv.bare config --local uploadpack.allowfilter 1 &&
++	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
++'
++
+ test_expect_success 'clone with --no-remote-submodules' '
+ 	test_when_finished "rm -rf super_clone" &&
+ 	git clone --recurse-submodules --no-remote-submodules "file://$pwd/." super_clone &&
+@@ -51,4 +58,16 @@ test_expect_success 'check the default is --no-remote-submodules' '
+ 	)
+ '
+ 
++# do basic partial clone from "srv.bare"
++# confirm partial clone was registered in the local config for super and sub.
++test_expect_success 'clone with --filter' '
++	git clone --recurse-submodules --filter blob:none "file://$pwd/srv.bare" super_clone &&
++	test "$(git -C super_clone config --local core.repositoryformatversion)" = "1" &&
++	test "$(git -C super_clone config --local extensions.partialclone)" = "origin" &&
++	test "$(git -C super_clone config --local core.partialclonefilter)" = "blob:none" &&
++	test "$(git -C super_clone/sub config --local core.repositoryformatversion)" = "1" &&
++	test "$(git -C super_clone/sub config --local extensions.partialclone)" = "origin" &&
++	test "$(git -C super_clone/sub config --local core.partialclonefilter)" = "blob:none"
++'
++
+ test_done
 -- 
-Krzysztof Opasiak
-Samsung R&D Institute Poland
-Samsung Electronics
+2.22.0.657.g960e92d24f-goog
+
