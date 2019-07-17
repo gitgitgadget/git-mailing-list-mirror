@@ -8,67 +8,64 @@ X-Spam-Status: No, score=-0.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8D81F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 00:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C60531F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 00:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728848AbfGQAmg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 20:42:36 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:37288 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbfGQAmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 20:42:36 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b3so10994481plr.4
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:42:35 -0700 (PDT)
+        id S1729127AbfGQAzk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 20:55:40 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45266 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727956AbfGQAzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 20:55:40 -0400
+Received: by mail-pl1-f196.google.com with SMTP id y8so10988381plr.12
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 17:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=H/XAAytDE81mEJgrihmmrxF90L4Og4JVu//n9qtcRtc=;
-        b=BP+m2XB85afgv/GQTUD1pI0pMk13ZNS3kv1UbL86WI/rQ1gezBBnwZASlzv98SXa9N
-         YIAbd753PrcRspKG4eVfh/DxtCN+pQqAJknxWFBVnNEBBi7qu+xNYB6NP7UvRMhNVN4v
-         4Ft5RUsl5U7hbrpM4Xf76TznkjX0VU1Zu1mr7bCxtxaaSX0YoXUV0n+YafjcMN1VFg8U
-         P5eJCQtXprICYTyuaoY/nry6QylqLvo7odv2lfqJ7uRc9TOXQEtri0XJx2ePZOBfemSS
-         qm6NESM65fMQRcIlb0nusanzG2o5I6IRr5G4/5sJlT1/2YeVyZY3y4h5xtNQryTgtzwC
-         FnyA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=hDzyBAg6w2T3fcMfOKgpx4hG3i025I1z0ELBH0hXGQc=;
+        b=J2Md5BZHApfUC/7aNtrpLJgxAMfX1Io47v9r0zeVwYRhwnPWMMff5msmU9fNcYDNWL
+         Ng/cneAMbGcUZad6QGOFOlUuSGYMsbyjiPUDNCCUosV/EQbIRooIU3UmmoubfAOeAQHR
+         70A5wwFiyx7niDiBIvwLTCwKonpHfbZHHieUAVKrmZ8KeU37+VcQ2HCqBUX9WNtgQfX/
+         Zw5J0IF9X3Nv28F/QLPA4dFc/x6C1pexX8BoW62TrJJFvuZpMcXZh9N6uB92AmBdnQwO
+         ujultjKHCz8YvfR2s2xXyzIGmWMkJV4mvr/zLEMVROw+MX9rhxRHoeOyajUHdqPhvObP
+         8O0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=H/XAAytDE81mEJgrihmmrxF90L4Og4JVu//n9qtcRtc=;
-        b=SMlDGAByg2epvWTdzriABLLPo0QC3jYFVqR/Pbkmk+REksfWhydvihs0sCMelcMqIY
-         4xLRtTuJOVUnE9d0EAFbiAslm8eRwtGkvNnZOUSBOxQGoLa17b0g6EBvgqduhcCBX0Bb
-         3rGAlaSaxbBme79JYBEYlxUICe5M59CiIu6qRlNT5igW/HfSw4s5iDcukgLqriCsneGW
-         Ad+pRcSDGqR33zozlMoXuVQVDAbARvdCpKp/KkI0DfoxZrQI6XFI4PSueNc90BzgKAxJ
-         tKIaGO2WVJ2JmK3jORotZsBzyan5MlRAR1KMc7odNK3hxABAuOIXJU+0ZHxPY4bS/ElU
-         ek/Q==
-X-Gm-Message-State: APjAAAUUx8QjbZLifpRHwOhlMjHc+MxQvkW2/95ad9JQ9RyrD15ShOfe
-        0TkB60q5TtmeEEJVKmR81UQ=
-X-Google-Smtp-Source: APXvYqz4vWabv4oTp+cIbAM9eLq9iJ6vnP7QpCFbNoQwvUycGJQ5MtwspLVmULRlKiwKx9onB4yKRA==
-X-Received: by 2002:a17:902:9896:: with SMTP id s22mr37645235plp.4.1563324154975;
-        Tue, 16 Jul 2019 17:42:34 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hDzyBAg6w2T3fcMfOKgpx4hG3i025I1z0ELBH0hXGQc=;
+        b=QOD4gqcZzl/O5OT7F70bbyC35jUXkzlIRjDN8uDw2LIJS4wmzsAwxr9epz/B8AanMU
+         evRKH9NfozRIU1k7txeOfkIyi/ebKOOfbznJZ1bUCddUVXPo0ksnshjo/HcuTyrp/RBH
+         2ZNGyjIrn9n6UV0nUGrUzyazrI9bhaqm1xaflSuFFdBghRGkDgewo9pTdoTxa44BjiA4
+         07ezpC/xweyQcGWCEbQ5DzsjuF+Snw0mRTjzdd7FvliKGhsb4eqeO/XXA4RVzgA0VggK
+         kzpmlpBOXmZOM3CG+C3BEWTmOYoTwKbY0FlMFBoH8ItVdxl9I7sl6yIM4Ik0sc+1/e0N
+         DOJA==
+X-Gm-Message-State: APjAAAWEzOnnpAdnkbNcWZWNOwHmxUZyGomyU8RFUJeN9zL9vBzOAjRy
+        fz0ZJwC2b8U9fw5YW6N0pHY=
+X-Google-Smtp-Source: APXvYqy4sFXMTqnfz6T0oDSX610ZyTydgD57t6Qv8x/hfKJoPvsZsDQktTnDL87YNtip2mjYzbZC8Q==
+X-Received: by 2002:a17:902:758d:: with SMTP id j13mr36024842pll.197.1563324939357;
+        Tue, 16 Jul 2019 17:55:39 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id x67sm24897675pfb.21.2019.07.16.17.42.33
+        by smtp.gmail.com with ESMTPSA id g2sm34145573pfq.88.2019.07.16.17.55.38
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 16 Jul 2019 17:42:34 -0700 (PDT)
-Date:   Tue, 16 Jul 2019 17:42:31 -0700
+        Tue, 16 Jul 2019 17:55:38 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 17:55:37 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] transport-helper: avoid var decl in for () loop control
-Message-ID: <20190717004231.GA93801@google.com>
+Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [RFC/PATCH] CodingGuidelines: spell out post-C89 rules
+Message-ID: <20190717005537.GB93801@google.com>
 References: <20190702005340.66615-1-emilyshaffer@google.com>
  <20190709211043.48597-1-emilyshaffer@google.com>
  <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
  <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
- <xmqq36j53esa.fsf_-_@gitster-ct.c.googlers.com>
+ <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq36j53esa.fsf_-_@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l3l520f.fsf_-_@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -77,26 +74,67 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano wrote:
 
-> We do allow a few selected C99 constructs in our codebase these
-> days, but this is not among them (yet).
+> Even though we have been sticking to C89, there are a few handy
+> features we borrow from more recent C language in our codebase after
+> trying them in weather balloons and saw that nobody screamed.
 >
-> Reported-by: Carlo Arenas <carenas@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  transport.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> Spell them out.
 
-Yes, gcc 4.8 fails to build without this:
+Thanks for this.  It gives a place to advertise future weather balloons,
+too.
 
- transport.c:1234:4: error: ‘for’ loop initial declarations are only allowed in C99 mode
-     for (struct ref *it = remote_refs; it; it = it->next)
-     ^
- transport.c:1234:4: note: use option -std=c99 or -std=gnu99 to compile your code
+[...]
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -195,10 +195,24 @@ For C programs:
+>     by e.g. "echo DEVELOPER=1 >>config.mak".
+>  
+>   - We try to support a wide range of C compilers to compile Git with,
+> -   including old ones. That means that you should not use C99
+> -   initializers, even if a lot of compilers grok it.
+> +   including old ones. That means that you should not use certain C99
+> +   features, even if your compiler groks it.  There are a few
+> +   exceptions:
+> +
+> +   . since early 2012 with e1327023ea, we have been using an enum
+> +     definition whose last element is followed by a comma.
 
-Arguably it would be nice to use -std=gnu99 for better consistency
-between gcc versions, but it's moot here: avoiding the declaration in
-for loop initializer is more consistent with
--Wdeclaration-after-statement anyway.
+This is an interesting one: it's super convenient, but we have received
+patches every 10 years or so to remove the trailing comma --- e.g.
+https://public-inbox.org/git/20100311163235.GC7877@thor.il.thewrittenword.com/
+
+I *think* these were motivated by wanting to be able to build Git with
+old compilers with pedantic warnings on, and certainly the last seven
+years of silence on the subject suggests it's okay.  Should we be even
+more prescriptive and say that the last element should always be
+followed by a comma, for ease of later patching?
+
+> +
+> +   . since mid 2017 with cbc0f81d and 512f41cf, we have been using
+> +     designated initializers for struct and array.
+
+Can this include an example for the benefit of readers that don't know
+what a designated initializer is?  E.g.
+
+      . since mid 2017 with cb0f81d and 512f41cf, we have been using
+        designated initializers for struct members ("{ .alloc = 1 }")
+	and array members ("[5] = 0").
+
+> +
+> +   These used to be forbidden, but we have not heard breakage report,
+> +   so they are assumed to be safe.
+
+nit: missing article "any" before "breakage reports".
+
+>  
+> - - Variables have to be declared at the beginning of the block.
+> + - Variables have to be declared at the beginning of the block, before
+> +   the first statement (i.e. -Wdeclaration-after-statement).
+> +
+> + - Declaring a variable in the for loop "for (int i = 0; i < 10; i++)"
+> +   is still not allowed in this codebase.
+
+Nice.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Thanks.
