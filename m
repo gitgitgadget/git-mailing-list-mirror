@@ -2,210 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1381F4B6
-	for <e@80x24.org>; Wed, 17 Jul 2019 02:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B73651F461
+	for <e@80x24.org>; Wed, 17 Jul 2019 02:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726069AbfGQCAE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jul 2019 22:00:04 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37259 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725906AbfGQCAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jul 2019 22:00:04 -0400
-Received: by mail-pl1-f195.google.com with SMTP id b3so11082524plr.4
-        for <git@vger.kernel.org>; Tue, 16 Jul 2019 19:00:03 -0700 (PDT)
+        id S1728220AbfGQCtg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jul 2019 22:49:36 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33683 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725294AbfGQCtg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jul 2019 22:49:36 -0400
+Received: by mail-wm1-f66.google.com with SMTP id h19so18043135wme.0
+        for <git@vger.kernel.org>; Tue, 16 Jul 2019 19:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=1BmWC7VtREGfiAJsGt9Z+Md93qC7Dv3VhhHPulnP2kE=;
+        b=cThxhfyvqQJmxVbgDHLJln/XGH6UORkpQ/0VnfyBNxYLtSh5FemCqnOMj+c6Y93Jb/
+         M61D9qAyd5RzsSx83v3qEp1ryHcU8PoIUm75SwvW3WXs+/hisq0c/dkAvl7O00X7MBnF
+         m4LzuDsuDHnf9asNyoPNtBI9pZBVDzzhYzSWD/KFGvyGfjgEpIvBv7GU2cJfCXPCvvbu
+         pHP9HNCPmk6Fr2KWbkv7lStXcet/kwQcdGkrj5d9cAYrBkucSav2o7xgB6OlASQ/JgKo
+         C8d+0GDe/GoQpms3ks67GTEaSsBuRENuUxUlB7sV7Ce3NlBzh32AOm/HZDd5IXuW1vD4
+         sgIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:date:message-id:mime-version
-         :content-transfer-encoding:cc:from:to;
-        bh=kjwEi5/ytOQoUq1XL+FGUsqCwyDsz4QTWn9rHtfVKwA=;
-        b=l+QHmf65VEHQTaSRt9A4VXDmxRY9gx3jXG+pvY/GbZK0+CEL/6bez6y458qLGYHEkD
-         DQvbEomodNVrd8XrKh97HCOfCEj2k2HcZyhjqJLwlL9QxojvNoSbm9onmVzQYd4X3Qbf
-         sH0TDQDPM8ag/ZjNzqqcAbZZcu9bA+H20C4TjgqtKaT2BIx5NMwsLLZ9/uEOupygx04w
-         pgAZCd+QOKlWoqmuFXYUh+bfycYM5Nv2GZPIJjD7i78FbquV7gKLEH3+fMbxroBrjm7W
-         Xnd1spKDTJCGwDUMr8rACGvA+BHUWlfy4BqH8B+H3AkrT1D3CMXBb0gzod03OtAzDCjk
-         f02A==
-X-Gm-Message-State: APjAAAW2SkSRzK/kh6Ea1c3vAfXKVvJ+Dj/7SlqYB9dUpICqCgQFJFxE
-        aZ7NdZ9nmvYPa0hx99yG5kg=
-X-Google-Smtp-Source: APXvYqwu9xJR/oQsOMcpVHROkZFi/Ww70nd8j30DJXMv0ROEcdGCkFlZrmcIG0gWRu9nUb3yImwuJA==
-X-Received: by 2002:a17:902:aa09:: with SMTP id be9mr38470913plb.52.1563328803294;
-        Tue, 16 Jul 2019 19:00:03 -0700 (PDT)
-Received: from localhost ([12.206.222.5])
-        by smtp.gmail.com with ESMTPSA id x26sm29776958pfq.69.2019.07.16.19.00.02
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 16 Jul 2019 19:00:02 -0700 (PDT)
-Subject: [PATCH] fetch: add "--parallel", which fetches all remotes in parallel
-Date:   Tue, 16 Jul 2019 18:59:03 -0700
-Message-Id: <20190717015903.4384-1-palmer@sifive.com>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1BmWC7VtREGfiAJsGt9Z+Md93qC7Dv3VhhHPulnP2kE=;
+        b=E8F0Iv83Vi9OOtdCf95vHTDMVFb6h/rPvXco6kzo6LcxRzL7ftZHoD7LzQMvn9p9Wm
+         BIQj6i7wKb9pCi1tEmMB4qaZHdFKaIDh6qtXqvm/ra0UEGgKe2DBPlaaoUhAJk9DVbMY
+         VlFOkHDNHKAjjfYZKp02J9n+zsDGEqug+PDzJ+ALE+GNEV+t5NULtMNvnbJFg2j/GRoE
+         xbxS/RyyejmKywE2YDHDb1/XRvO9gr65lX7om65U1x8iUZQfqeAoi0FOoiD2HZF5kFPM
+         L1xj2n/gAnWJcLpS1axJdOTB91qVOKgRQK/wUlJF+Ktungo6F/XI6VFW9vs6a+5J77n/
+         M29A==
+X-Gm-Message-State: APjAAAUibHoNvOzvOAx4YBlbZVRw2tchoEqYm2k8J7BfvxN5mkxpALJl
+        dgQAMVav95jDi5tA27FVWM2uit1U
+X-Google-Smtp-Source: APXvYqwApxne0cqXkZ3gnjoSZbIxZbrBrB3ofp7P2Gg/8qLzbRWwg0JISmGHk5ZirR3PoKFrMwSClg==
+X-Received: by 2002:a1c:6641:: with SMTP id a62mr32021130wmc.175.1563331774100;
+        Tue, 16 Jul 2019 19:49:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f192sm27843695wmg.30.2019.07.16.19.49.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jul 2019 19:49:33 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 19:49:33 -0700 (PDT)
+X-Google-Original-Date: Wed, 17 Jul 2019 02:49:31 GMT
+Message-Id: <pull.264.git.gitgitgadget@gmail.com>
+From:   "Thurston via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Adding git-ignore command, tests, and documentation.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc:     peff@peff.net, e@80x24.org, chriscool@tuxfamily.org,
-        gitster@pobox.com, jonathantanmy@google.com, tboegi@web.de,
-        bwilliams.eng@gmail.com, jeffhost@microsoft.com,
-        Palmer Dabbelt <palmer@sifive.com>
-From:   Palmer Dabbelt <palmer@sifive.com>
+MIME-Version: 1.0
 To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a handful of repositories with a bunch of remotes and this week
-I'm on an internet connection with a high bandwidth high latency
-connection to those remotes.  This results in "fetch --all" being
-painfully slow: 3-4 seconds per remote, all at almost zero link
-utilization (presumably doing an SSH handshake), for a total of a
-minute or so.
+git-ignore will allow users to quickly add entries to the gitignore files in
+the repositories.
 
-This patch fixes the issue in the simplest way I could come up with: it
-adds a "--parallel" argument to fetch that selects when to block on the
-fetch children.  This results in every fetch child running in parallel,
-which provides per-remote parallelism.  My "fetch --all" times go down
-from ~60 seconds to ~5 seconds, which is great!
+Many times, I'll have a config file or log file buried in a series of
+sub-directories and find it frustrating to edit the right git ignore with
+the right relative path to the file that i want to add. This script makes
+adding items to a gitignore file easier.
 
-Signed-off-by: Palmer Dabbelt <palmer@sifive.com>
+Instead of managing paths and relative paths such as echo
+"path/to/the/file.txt" >../../../../../../.gitignore git ignore
+path/to/the/file.txt No matter what directory that is in, the correct
+relative path will be added to the gitignore.
 
----
+This script will also give the ability to add directories, extention globs,
+and files to any gitignore in parent directories. Furthermore, it allows you
+to easily open the gitignore file in your favorite editor from anywhere
+using: git ignore --edit
 
-This is more of an RFC that an actual patch, for three reasons:
+I have been using this script for years and it has made things much easier
+for me, so I figured I'd contribute.
 
-* I'm not sure if it's safe to access the .git database from multiple
-  processes at the same time.  This is my first time messing around with
-  git to this degree, so I figured it's better to just ask than to try
-  to figure it out.
-* As I was writing the documentation I found "fetch --jobs".  It seems
-  like I should use that instead of adding a new argrument, but I wasn't
-  sure.  If I do this, I'd add some other config argument because
-  submodule.jobs seems like a bad name for this.
-* This implementation is recursive and I'm a bit worried about stack
-  usage.  The stack-based implementation doesn't make nearly as much
-  sense with --jobs, so I'd probably just do it right.
+Thurston Stone (1):
+  Adding git ignore command
 
-It's at the point where I've spent about as long writing the code as
-I'll save waiting on "fetch --all" over the rest of my life, and given
-the unknows I thought it would be best to just send out the patch and
-see if it has any legs.
+ .gitignore                   |   1 +
+ Documentation/git-ignore.txt | 116 ++++++++++++++++++
+ Makefile                     |   1 +
+ git-ignore.sh                | 222 +++++++++++++++++++++++++++++++++++
+ t/t7070-ignore.sh            | 180 ++++++++++++++++++++++++++++
+ 5 files changed, 520 insertions(+)
+ create mode 100644 Documentation/git-ignore.txt
+ create mode 100755 git-ignore.sh
+ create mode 100755 t/t7070-ignore.sh
 
-If this seems reasonable then I'll try to find some time to finish it.
-Specificially, I'd like to:
 
-* Use "--jobs" instead of "--parallel", to avoid the extra argument.
-* Write some sort of test case.
----
- Documentation/fetch-options.txt |  3 +++
- builtin/fetch.c                 | 45 +++++++++++++++++++++++----------
- 2 files changed, 34 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 3c9b4f9e0951..99666f40e405 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -92,6 +92,9 @@ ifndef::git-pull[]
- 	Run `git gc --auto` at the end to perform garbage collection
- 	if needed. This is enabled by default.
- 
-+--parallel::
-+	Fetch all remotes in parallel.
-+
- -p::
- --prune::
- 	Before fetching, remove any remote-tracking references that no
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 53ce99d2bbc4..2dfdeea3b3ec 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -71,6 +71,7 @@ static struct refspec refmap = REFSPEC_INIT_FETCH;
- static struct list_objects_filter_options filter_options;
- static struct string_list server_options = STRING_LIST_INIT_DUP;
- static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
-+static int parallel = 0;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
-@@ -178,6 +179,8 @@ static struct option builtin_fetch_options[] = {
- 			TRANSPORT_FAMILY_IPV6),
- 	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
- 			N_("report that we have only objects reachable from this object")),
-+	OPT_BOOL(0, "parallel", &parallel,
-+		 N_("fetch in parallel from each remote")),
- 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 	OPT_BOOL(0, "auto-gc", &enable_auto_gc,
- 		 N_("run 'gc --auto' after fetching")),
-@@ -1456,12 +1459,15 @@ static void add_options_to_argv(struct argv_array *argv)
- 
- }
- 
--static int fetch_multiple(struct string_list *list)
-+static int fetch_multiple(struct string_list *list, int i)
- {
--	int i, result = 0;
-+	int result = 0;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
-+	const char *name = list->items[i].string;
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	int code;
- 
--	if (!append && !dry_run) {
-+	if (i == 0 && !append && !dry_run) {
- 		int errcode = truncate_fetch_head();
- 		if (errcode)
- 			return errcode;
-@@ -1469,20 +1475,31 @@ static int fetch_multiple(struct string_list *list)
- 
- 	argv_array_pushl(&argv, "fetch", "--append", "--no-auto-gc", NULL);
- 	add_options_to_argv(&argv);
-+	argv_array_push(&argv, name);
- 
--	for (i = 0; i < list->nr; i++) {
--		const char *name = list->items[i].string;
--		argv_array_push(&argv, name);
--		if (verbosity >= 0)
--			printf(_("Fetching %s\n"), name);
--		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
--			error(_("Could not fetch %s"), name);
--			result = 1;
--		}
--		argv_array_pop(&argv);
-+	if (verbosity >= 0)
-+		printf(_("Fetching %s\n"), name);
-+
-+	cmd.argv = argv.argv;
-+	cmd.git_cmd = 1;
-+	code = start_command(&cmd);
-+
-+	if (!code && !parallel)
-+		code = finish_command(&cmd);
-+
-+	if (i+1 < list->nr)
-+		result |= fetch_multiple(list, i+1);
-+
-+	if (!code && parallel)
-+		code |= finish_command(&cmd);
-+
-+	if (code) {
-+		error(_("Could not fetch %s"), name);
-+		result |= 1;
- 	}
- 
- 	argv_array_clear(&argv);
-+
- 	return result;
- }
- 
-@@ -1696,7 +1713,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			die(_("--filter can only be used with the remote "
- 			      "configured in extensions.partialclone"));
- 		/* TODO should this also die if we have a previous partial-clone? */
--		result = fetch_multiple(&list);
-+		result = fetch_multiple(&list, 0);
- 	}
- 
- 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+base-commit: 8dca754b1e874719a732bc9ab7b0e14b21b1bc10
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-264%2Ftstone2077%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-264/tstone2077/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/264
 -- 
-2.21.0
-
+gitgitgadget
