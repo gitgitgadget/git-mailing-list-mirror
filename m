@@ -8,56 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 489311F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1CE01F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390559AbfGRNTW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 09:19:22 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44669 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390469AbfGRNTT (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2390571AbfGRNTY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 09:19:24 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39238 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390523AbfGRNTT (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Jul 2019 09:19:19 -0400
-Received: by mail-wr1-f66.google.com with SMTP id p17so28637847wrf.11
+Received: by mail-wr1-f65.google.com with SMTP id x4so28651035wrt.6
         for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4E39/cJgnjFrWFwm9MSBe6qrPTWmtaSUqvous69vE58=;
-        b=ni++GqyqdNNnTdbPuixwK+Argi0qD3HOMzUThLS2oiGiykyO7icRrYyJOKS7uDXAOc
-         iKRqYlShaRZioYdDo626xk58d2ANUKjlTIxcAoAHIMpaWcQDsNrZDmgDpjS90+8ke9By
-         CcCIrrY+A0hmy3bp7JCdaVpQ25178K9UAsTfgUvdO5v6NCAsRNnKfm945rq2GmftYHo8
-         tiI7BzqeaPMh+jnBpHpfDfZYLd1An5MW26o2U7DvF6oOKTucGqmJhk7XBbDgIjUuIn4M
-         VV9nwLJxETYtaMBbWSnrCIU8roWqJOLKBXsh63y0nEUujwKK4R6u97fZaKWEwXk6XK3u
-         jQ8Q==
+        bh=+6H0fHX/mTATCap1vwfdLXRxarE76b8uk9+FtkHdS0I=;
+        b=Ca4uBMVSQeY+/KXBOka2+R8an5lbpCcPGYNP7hR1fih+su5tuB719O7nO0gABXocFs
+         Xcv904hSGqKoTlKx7Fk1Idy+tZEdGE0c2ajReJ80N0uyk6XjsjxXMQsZICfkYAdyJHGp
+         0RiVyR20rspcBPoEhAkrvkBRv03AjyHpSYGHdiFOHI9yT+Cfbx9Hx9EohbbOyufQEEFm
+         X+K0jl0hdbM6jWSctA7EHW65le1rZoLEFnMSDgWrEifCJLK0XVN3qDmj69u2UYtDOkUI
+         n1Nisj6SOEEK8jQxCKzipZ40U2O5pBezsfdRJlePPXkzGqFaswypkjBerfxZkJvnqRkW
+         YpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4E39/cJgnjFrWFwm9MSBe6qrPTWmtaSUqvous69vE58=;
-        b=Q6F1Gx6zKBmZn1X+YsyBuW1XkIa1KsfYp4w00PBAX3FFHsSz2aqNG5GYGiXZjIC5ZT
-         gDXvPt/bY68vc36j21Q3auP+7VePgJtPXiES+CMl6oG4XGC6ylzikuhIaiAfMyaV3YJg
-         dO4Lie3TNJB22SwErB3f+108A/hJws0Yl+w7sZ1QoXF32nzASJm8pX8cBB/7Khb2J5Tq
-         wCELpDeAuek0irsrCDXtfkcL6DSki1WQcm62zQswMLq0IoBrE62tlUEQyDs8BprduSAe
-         DbMdyd/SUiw8mtYMWYP41IRRWcrXhLdqAVzGIkHD9tnWRf9Yf8XrfuwZ7BdSL0ZWxeKs
-         46sg==
-X-Gm-Message-State: APjAAAU88vsyvAgOsG+7HxagA8HQCd5+O1LEC1NVFpZ3fKljIHjd7gI1
-        V18wDA0Y43yrpKtJ+lbPG+zhUR8k
-X-Google-Smtp-Source: APXvYqyroCV7deNO2RdW+eFxHI+yn/0756ZSYb+Ev2KQeZ+03I5RH6IQYerOWq5u2g2uLuvtXrXpbw==
-X-Received: by 2002:a5d:5012:: with SMTP id e18mr21486717wrt.166.1563455957149;
-        Thu, 18 Jul 2019 06:19:17 -0700 (PDT)
+        bh=+6H0fHX/mTATCap1vwfdLXRxarE76b8uk9+FtkHdS0I=;
+        b=EjG5AqreK/eFQEJkrjtBuORxSdXZxaGNnPJ8Bdr/XKx7JJVeqXy58VVHCiVr1ZBK1R
+         X6CpVizkTVB4fnc3rZS+8mb0ApMXQKlsKyN+5f+Z9U7kRPtudR9QwFkrxpe7qp4id1jL
+         6szzQBpxCGl7eHkKEyX3yn9j35gHQ/64is5+cVo/AnVN5pi/Xop6yTfYoFImmN1h6R9t
+         6To5oOWa+kGNnX7llcFrj4lzkj8tcC6dsTC5Pi4ujhuQxfFz1HFfRmS4hn/rnpd44iNS
+         HdW0lVqKSU+mvbnyKuXGgWV5jmMtc3Bq1q8YYi9jQv1a6qSYKI7Lfs/OnFzI8e7WalYZ
+         3KRw==
+X-Gm-Message-State: APjAAAUJUb8H0K/MkqBSi9Y40npyIy8N8LpqCWscND1jcvUKkfVmUMDm
+        IuFCTWHHneWl+E7Ix5GFYxKIUmux
+X-Google-Smtp-Source: APXvYqyEeyZMjG9ClTpe/uqHHAnroMoeWN/QyvZTmHoKBtg8LjrQllehagHJ07zZBRZddI95uI/Dzw==
+X-Received: by 2002:adf:f3d1:: with SMTP id g17mr20437279wrp.38.1563455956551;
+        Thu, 18 Jul 2019 06:19:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12sm29863785wrg.5.2019.07.18.06.19.16
+        by smtp.gmail.com with ESMTPSA id s15sm13218439wrw.21.2019.07.18.06.19.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Thu, 18 Jul 2019 06:19:16 -0700 (PDT)
 Date:   Thu, 18 Jul 2019 06:19:16 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:59 GMT
-Message-Id: <151b9921d09dd622e27caa4571d260ed24f4d69b.1563455939.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:58 GMT
+Message-Id: <db69b33ff4a583f75e07f15d10dba70bd99fcaf7.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 24/24] git: avoid calling aliased builtins via their dashed
- form
+Subject: [PATCH 23/24] t5505,t5516: create .git/branches/ when needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,42 +71,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is one of the few places where Git violates its own deprecation of
-the dashed form. It is not necessary, either.
+It is a real old anachronism from the Cogito days to have a
+.git/branches/ directory. And to have tests that ensure that Cogito
+users can migrate away from using that directory.
 
-As of 595d59e2b53 (git.c: ignore pager.* when launching builtin as
-dashed external, 2017-08-02), Git wants to ignore the pager.* config
-setting when expanding aliases. So let's strip out the
-check_pager_config(<command-name>) call from the copy-edited code.
+But so be it, let's continue testing it.
 
-This code actually made it into upstream git.git already, but it was
-disabled in `#if 0 ... #endif` guards so far.
+Let's make sure, however, that git init does not need to create that
+directory.
+
+This bug was noticed when testing with templates that had been
+pre-committed, skipping the empty branches/ directory of course because
+Git does not track empty directories.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git.c | 3 ---
- 1 file changed, 3 deletions(-)
+ t/t5505-remote.sh     | 2 ++
+ t/t5516-fetch-push.sh | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/git.c b/git.c
-index f4c0478f32..3049dae85b 100644
---- a/git.c
-+++ b/git.c
-@@ -743,8 +743,6 @@ static int run_argv(int *argcp, const char ***argv)
- 		 */
- 		if (!done_alias)
- 			handle_builtin(*argcp, *argv);
--
--#if 0 // TODO In GFW, need to amend a7924b655e940b06cb547c235d6bed9767929673 to include trace2_ and _tr2 lines.
- 		else if (get_builtin(**argv)) {
- 			struct argv_array args = ARGV_ARRAY_INIT;
- 			int i;
-@@ -779,7 +777,6 @@ static int run_argv(int *argcp, const char ***argv)
- 				exit(i);
- 			die("could not execute builtin %s", **argv);
- 		}
--#endif // a7924b655e940b06cb547c235d6bed9767929673
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 883b32efa0..1132964044 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -824,6 +824,7 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
+ 	(
+ 		cd six &&
+ 		git remote rm origin &&
++		mkdir -p .git/branches &&
+ 		echo "$origin_url" >.git/branches/origin &&
+ 		git remote rename origin origin &&
+ 		test_path_is_missing .git/branches/origin &&
+@@ -838,6 +839,7 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)'
+ 	(
+ 		cd seven &&
+ 		git remote rm origin &&
++		mkdir -p .git/branches &&
+ 		echo "quux#foom" > .git/branches/origin &&
+ 		git remote rename origin origin &&
+ 		test_path_is_missing .git/branches/origin &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index c81ca360ac..47c2959a90 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -866,6 +866,7 @@ test_expect_success 'fetch with branches' '
+ 	mk_empty testrepo &&
+ 	git branch second $the_first_commit &&
+ 	git checkout second &&
++	mkdir -p testrepo/.git/branches &&
+ 	echo ".." > testrepo/.git/branches/branch1 &&
+ 	(
+ 		cd testrepo &&
+@@ -879,6 +880,7 @@ test_expect_success 'fetch with branches' '
  
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
+ test_expect_success 'fetch with branches containing #' '
+ 	mk_empty testrepo &&
++	mkdir -p testrepo/.git/branches &&
+ 	echo "..#second" > testrepo/.git/branches/branch2 &&
+ 	(
+ 		cd testrepo &&
+@@ -893,6 +895,7 @@ test_expect_success 'fetch with branches containing #' '
+ test_expect_success 'push with branches' '
+ 	mk_empty testrepo &&
+ 	git checkout second &&
++	mkdir -p .git/branches &&
+ 	echo "testrepo" > .git/branches/branch1 &&
+ 	git push branch1 &&
+ 	(
+@@ -905,6 +908,7 @@ test_expect_success 'push with branches' '
+ 
+ test_expect_success 'push with branches containing #' '
+ 	mk_empty testrepo &&
++	mkdir -p .git/branches &&
+ 	echo "testrepo#branch3" > .git/branches/branch2 &&
+ 	git push branch2 &&
+ 	(
 -- 
 gitgitgadget
+
