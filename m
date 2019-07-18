@@ -3,95 +3,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 517BA1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 19:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0211F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 19:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391028AbfGRTIr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 15:08:47 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:33412 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727685AbfGRTIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 15:08:47 -0400
-Received: by mail-wm1-f42.google.com with SMTP id h19so22155242wme.0
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 12:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qBodtc+nQsKkrkX7XijlUHkOPgV73AO+9pay6OBsVgg=;
-        b=gAoahqanNjRh7WOaBMsRkL7KcNUbEcO+qnh5nJ7m1jhHGhfNrkZK7+yaQVyGcnHoBe
-         w9lxAp96N0Iu5KzG9A83fm0/YHVddZB908nZ2aiRaxHdHeg9fUT+B/tSSi0itG2oh63i
-         oS3dNPtt+Tb7RBh1K80xcibZB0+SKF72eFfONygyYsf+nosypNJKXYtd3oiWEX2lk7PD
-         sBfkfzzVyea1KuMGeN4B9caPfVoQKo2EuEO2ECGZLw3yk+egMAC5enaqK1M4R+9QZ/E8
-         Sdw9br3ifFkHO5/hK/s55+hAJ+1YX2c2fTHQoZVfZUT/9OZFAB/UwCG1vC4ZH7MLEygO
-         EJqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qBodtc+nQsKkrkX7XijlUHkOPgV73AO+9pay6OBsVgg=;
-        b=J6EW8py3nvorp1xhv7A6yVBASBNyq0sAr9q2vk8D/omuHX6a3jXShzk2h8AjTwicea
-         AfoC1hJ2NKFunSd34HAraGWHkDW2r2tNBLfVfKTlm8ly2bRT0h1w6w+ZeJmPi/VRP/mZ
-         RZs9mAMdHWgJrbo11nOdL9ljjr14H1nAADltIe5nQF/lLPmzVbxGK+CBM84QSb9wP6dY
-         VWS79+esrxZhbTj4XXqlQv0Pd+jt4kUf4/ZHYSHFnaKvESaUY5dUS7e9M8ySJ0cBPgnn
-         2b/D4irGZaz+iTPNejtFDdoW+R72GtJzcp3OhG3OcsqEaVLhENEDaK46SKOJNdzs4j9U
-         gvBw==
-X-Gm-Message-State: APjAAAVkRJNJR6Q2ZzhD50pL8oJsDYiK2rMg5o279UlDcbR8moBLbMC+
-        FRsszh3UtSXE0ZB0OisWkYjARne0
-X-Google-Smtp-Source: APXvYqxzhBsQQR3NeKZD5oGk3z7UixpAR0grbT1Mv6+CBfL9NlzgQFV9at/YXyx04NFhFnfHMsQQzw==
-X-Received: by 2002:a7b:c0d0:: with SMTP id s16mr32186729wmh.136.1563476926174;
-        Thu, 18 Jul 2019 12:08:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x83sm28850997wmb.42.2019.07.18.12.08.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 12:08:45 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 12:08:45 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 19:08:44 GMT
-Message-Id: <439190dd3a24ac4c9d6300e68cc15c45e3d0fea8.1563476924.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.289.git.gitgitgadget@gmail.com>
-References: <pull.289.git.gitgitgadget@gmail.com>
-From:   "Doug Ilijev via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] README: fix rendering of text in angle brackets
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2390915AbfGRTwT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 15:52:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63370 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728025AbfGRTwS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 15:52:18 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9489815A669;
+        Thu, 18 Jul 2019 15:52:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OlsYBfcNevqAFB1YyxJM5rkdVi0=; b=ivi6ne
+        ZjVL9+PjQQCYfdDERUNO5v8wRUPE4PUmCu/KhppSekYZUNr8skaLBhzjVsh+4vZe
+        DT1fe9Q+oubmY0IMcIC2Zy9qzGUF+bCw+3+JxcAp0qOWi+dSyTU1qGdH0rcqdZ0R
+        cQ178HOwwdcUtSIrnSuW06H6x6RPKRx6K48T4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bugHb0Ftp8hM/+eCL39NISLctu8LwTct
+        k4Tlj0qlg9lfMZnmcPvTOnVwTpjsc70AOd2pfN4bcEszuFHniEe7wv7TTl+3GBiy
+        1o7rLrIqvX2Nawqmt7Y7XWtC+eZEEfVkCQJzJ2Km6S4KF5XD8r1iaoExOYXkUpvr
+        8Z/bDQLhDPI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A50715A668;
+        Thu, 18 Jul 2019 15:52:14 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 02DF215A667;
+        Thu, 18 Jul 2019 15:52:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH 3/9] sequencer: update `total_nr' when adding an item to a todo list
+References: <20190717143918.7406-1-alban.gruin@gmail.com>
+        <20190717143918.7406-4-alban.gruin@gmail.com>
+Date:   Thu, 18 Jul 2019 12:52:13 -0700
+In-Reply-To: <20190717143918.7406-4-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Wed, 17 Jul 2019 16:39:12 +0200")
+Message-ID: <xmqqsgr3xgr6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Doug Ilijev <doug.ilijev@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 89E5DBF8-A995-11E9-8D1C-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Doug Ilijev <doug.ilijev@gmail.com>
+Alban Gruin <alban.gruin@gmail.com> writes:
 
-Markdown incorrectly interpreted `<commandname>` as an HTML tag;
-use backticks to escape `Documentation/git-<commandname>.txt` to ensure
-that it renders the text as intended.
+> `total_nr' is the total amount of items, done and toto, that are in a
 
-Signed-off-by: Doug Ilijev <doug.ilijev@gmail.com>
----
- README.md | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+"amount" -> "number" perhaps.  Also s/toto/todo/ perhaps but I am
+not sure what you wanted to say here, so...
 
-diff --git a/README.md b/README.md
-index 88f126184c..e1d2b82209 100644
---- a/README.md
-+++ b/README.md
-@@ -19,7 +19,7 @@ including full documentation and Git related tools.
- 
- See [Documentation/gittutorial.txt][] to get started, then see
- [Documentation/giteveryday.txt][] for a useful minimum set of commands, and
--Documentation/git-<commandname>.txt for documentation of each command.
-+`Documentation/git-<commandname>.txt` for documentation of each command.
- If git has been correctly installed, then the tutorial can also be
- read with `man gittutorial` or `git help tutorial`, and the
- documentation of each command with `man git-<commandname>` or `git help
--- 
-gitgitgadget
+> todo list.  But unlike `nr', it was not updated when an item was
+> appended to the list.
+
+Good finding.
+
+>
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  sequencer.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index cf262701e8..e61ae75451 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2070,6 +2070,7 @@ void todo_list_release(struct todo_list *todo_list)
+>  static struct todo_item *append_new_todo(struct todo_list *todo_list)
+>  {
+>  	ALLOC_GROW(todo_list->items, todo_list->nr + 1, todo_list->alloc);
+> +	++todo_list->total_nr;
+
+When we do not use the value in an expression, we prefer post
+increment, not pre increment.
+
+>  	return todo_list->items + todo_list->nr++;
+>  }
