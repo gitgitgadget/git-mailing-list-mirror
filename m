@@ -2,71 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD7FB1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 02:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC35F1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 08:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728079AbfGRCdJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jul 2019 22:33:09 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:35106 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727787AbfGRCdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jul 2019 22:33:09 -0400
-Received: by mail-pf1-f193.google.com with SMTP id u14so11843515pfn.2
-        for <git@vger.kernel.org>; Wed, 17 Jul 2019 19:33:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ksG26A+GEJVxnICtIU0hXtCRihitn4+b/+Wun0meVe0=;
-        b=AN05XNu9vELS6Rznp+6uZqeU8T0DyL5X3rQZwcFyDiiSKIxiHx0Px32HiLxtSD5gv0
-         XJW7diAPMn6LZ5iwmr6K4msFc8gwQDnRMbFEEksovfoefyFrrvGErjFE4HpOYOlQ1ZGN
-         N3407j5BTx4EyVuK8UWMRbbe/E14+nGb99aePwi3H9Cl7fuhUjBuU315lMa+2YgVYhER
-         bmrwuSsg/HknP1jfPzkOv2gUhmpbJdpt879KmO1J1vUuzUMa59haveZ8eq72piHIC6Y8
-         Bq1q2PHLJbdfFqNBNZTqV03RNueoxNoTMeGcGMaeBsczhFeXEVwfNYs6P40aB4Dlj7dv
-         jIKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ksG26A+GEJVxnICtIU0hXtCRihitn4+b/+Wun0meVe0=;
-        b=EUed2WAUuxLpj6oMDOTyEzj3fNk8IyPWCATA5ulAb5yQq7cOvWEPaooxr79wBkZq5B
-         Ol7cLVfMbXCDZNwY5f2QCtA71dLqfA5bDBdJPpncQtzD4GcUz8z6u6Hz95bkhl4lH/Uz
-         G502x2J5ZCR8Nu0fFh5oUIVH7AJJmDJSPi0Z4HzUPvrK/6BybtZirCH4vpp6gKbVTYza
-         9rDdVBvOl4td6AGbofQCoHj+UIc0OodS5x8CTw1HWRYIGXZ1QYodl79w0E9wcwZO3OPg
-         lXOAXNR4/4c+1x1m2xq+Ai/CuNLnNXNVUNWnN8V5klZpuk/iwnn79qB3zSwZc8XIHYYD
-         vA1A==
-X-Gm-Message-State: APjAAAU1LKZWfvfXrCYzkB0r8W0+LKqzh2QWDa2EMwvtF+7S0iBwdnXI
-        8rJgSm49w3k81ytV59iy4q15E3s3nsQhkJ58JY4=
-X-Google-Smtp-Source: APXvYqwXRXBuP+yY8MHPFs0VOXYxL96r664WiwRrviHip/Ofp53BtfyJ2bYD4h2JgFE+yaDiqXAKMEwG3vxqu/UXPiA=
-X-Received: by 2002:a63:2252:: with SMTP id t18mr45103645pgm.5.1563417188204;
- Wed, 17 Jul 2019 19:33:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190713051804.12893-1-eantoranz@gmail.com> <CAOc6eta-jX93k6twcrJOeRt+JHtLk4mUs7YD_bG=Ggvw4thAZQ@mail.gmail.com>
- <xmqq5zo01qnv.fsf@gitster-ct.c.googlers.com> <CAOc6etYM6DSDQ_H=eJs1xuGU9a83kTe2-vEy9+FEgHobT77_Eg@mail.gmail.com>
-In-Reply-To: <CAOc6etYM6DSDQ_H=eJs1xuGU9a83kTe2-vEy9+FEgHobT77_Eg@mail.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Wed, 17 Jul 2019 20:32:56 -0600
-Message-ID: <CAOc6etY0tGNeekO7n5pqE_emtRytuSE77o1-fPetpzZPpkfMtA@mail.gmail.com>
-Subject: Re: [PATCH v2] builtin/merge: allow --squash to commit if there are
- no conflicts
+        id S1726972AbfGRIuE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 04:50:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56561 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726397AbfGRIuD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 04:50:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1563439795;
+        bh=Av+ZqEKJ/VjZrq3EExhtRQnSxs7DZ8jx85yD+3ts8L8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bv3FfsSc2FmWlaFF2+rUo4iHPr+fJgVdG7hpjg7RJYdPUFJ1yOh+YnUZUamX9Y1aV
+         LVgxp1uLXKKsQzA9WwO43JiqfgJZKqNZIb2nxOeP/AXSVDm/hXBSD/twN+4fDEV+e9
+         81w9ptePEBI7U8q1yFI5vhk+7M4xK0qp166llBwg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lrviw-1ia3v32xfa-013c7m; Thu, 18
+ Jul 2019 10:49:55 +0200
+Date:   Thu, 18 Jul 2019 10:49:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+cc:     git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 1/1] clean: show an error message when the path is too
+ long
+In-Reply-To: <xmqqsgr4zea9.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907181048280.47@tvgsbejvaqbjf.bet>
+References: <pull.219.git.gitgitgadget@gmail.com> <36677556a26cca9eafd859c88aa9b2c5a6cde309.1563285862.git.gitgitgadget@gmail.com> <a7fee3c7-8fd5-11ef-8b0d-ff8053987b0c@web.de> <xmqqftn53g8z.fsf@gitster-ct.c.googlers.com>
+ <xmqqsgr4zea9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1277090141-1563439796=:47"
+X-Provags-ID: V03:K1:4BGAxaP4B+RwidqME2OW+EiK2CWSHl/8oXYS1zOM+dmrIup33gW
+ +v8SloyvbcWyFhhXn/46qk1iaSwjGwwPqZzj9HJZjaruI4kVesSpgV0RRSWRgNvW2HXRBXS
+ h0xQbG84na6SRczdq9tnK7VUcq7TTRWJfn8V9WGioL5rcgE8Pz59FaGGDOexcxKNiTHAXs3
+ 6yrnK5fMRb6k2VpdhytLA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ICtBzmREao0=:otwsNPZYpV62cRkDSdztHj
+ Kh/DdrZmc+4K4Drn+oMOls15MnUR2BUdK5OTVIgc2bPuzCFy1EQhUIwC86Xr21/2X2ptJ3vdq
+ TRbwNM1F2LlfklTPHEDsB3xYUHMVjAKwgjURoYOkkrkEHHYsaDgatd7XZ63GQNYoPAgNLbmDq
+ +rx9Z2NK2RCafHEpPWmYMuVy6Sx14V6uvEQJLdnake4hSmn0yJsGdvOqTMggx0shqFeFq1dFt
+ eAVy19eosEm/W6O3cgT37/kqA7/w3g9QOpKdbkhyyjkzGdUvNOP0MeXhrzQszblUxPPiU7qIW
+ zzd8/Mj3OCypVVHf2RK0TktFkJpyivr21mzfej6sNriQiMa12iVbnLwHXwv81MZJPm02WrRXt
+ G91n9NwoIWk2xMRuWvM38+9D3LIeOOX2iv8yvuC0Awp3eJjVVzhTI3wHj3Bvgwov4cA95qDCC
+ W0aEuXrGbtp84lZveJblCdjBKGr0UcbY5VukmmP4W7ZPwDpJ6/sx05lV8Yv+allPnViLaX+g5
+ EcrZTDNej4hUR3Rs0vdv8md21hu2D35a3SUP/1K+qNe7y+qQdLoVCz3YWSLlHLZ3kAxf97ybq
+ tqDYMktC/4ISs1UZ4DvK7fz/tnIgL5GMUXEySW+HURJYtt+f7/TCsZ/WCnd+odp8212eZ8SYM
+ uJazRLzUPjhLS2PujEVpGG0tDC4V1Kz3blMfmyHci6c5zqJtsdvPmd3T/i0yG1YSaZ4GcbbCb
+ xACRl01cIkIaSVs9xtDpb3U9ZMJgcmyeb2ciw3piECiKfZH7HVWouuGUfMTOLu/QaUqinKTZe
+ ZFFCv0gqMtmMGUWphBZZPxspFiMA/KqkGTQAKaSFze6tUxxsnmobufslxzI+691j/IQES1pX1
+ o8hHDFtR0r8Yq+Lc08m8pYZ+qzf8iHmc69MZlUg5d1vmhB3nUa4eSzs6CgSbkr4N6nUO+9q5i
+ OmE/ZQkBv8PizumwTnk5jPERwpDUdteMPZwyxKq8RPzgn5QZdQvwjiClNELCYNzDp71C7dcCD
+ bOgFCCW38orgph1VCizzb8n6HqiRoVUPH9XrnBgGw3WrOMM3h7IYElk+5ST9aqM407p8izNFr
+ 2FP+rxXF+PuehjeBofxgFSFw+I3XZRuftFM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 17, 2019 at 6:41 PM Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
->
->
-> Does it make sense to keep this file in those two situations?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-yes it does. disregard the question.
+--8323328-1277090141-1563439796=:47
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Wed, 17 Jul 2019, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> >> The other warnings in that function are issued using
+> >> warning_errno() (shorter code, consistency is enforced) and
+> >> messages are marked for translation.  That would be nice to have
+> >> here as well, no?
+> >
+> > Absolutely.  Also, downcase "Could" and perhaps use _() around.
+>
+>
+> This one is easy enough (not just in the technical sense, but in the
+> sense that it has little room wasting our time bikeshedding), so let's
+> tie the loose ends and move on.
+>
+> I was tempted to fix the proposed log message to excise exaggeration
+> (I prefer not to see "very", "important", etc.---other things that is
+> said in the message should be enough to convince readers about the
+> importance), but didn't.
+>
+> What I did do was to not just rephrasing the warning message, but to
+> give it its own constant and to feed it to warning_errno(), to match
+> the other warning message.
+>
+> I also saved one (or perhaps two) fork(s) from the test script ;-) and
+> added a portability note there.
+
+Thanks!
+
+On top, I integrated Gab=C3=B3r's suggestion to use `test_config` and thre=
+w
+in a paragraph in the commit message to explain why the `core.longpaths`
+variable is touched at all.
+
+v2 incoming,
+Dscho
+
+--8323328-1277090141-1563439796=:47--
