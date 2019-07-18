@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE51B1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 381FE1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390486AbfGRNTM (ORCPT <rfc822;e@80x24.org>);
+        id S2390491AbfGRNTM (ORCPT <rfc822;e@80x24.org>);
         Thu, 18 Jul 2019 09:19:12 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55431 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726735AbfGRNTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 09:19:06 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a15so25558731wmj.5
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40893 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390449AbfGRNTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 09:19:10 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r1so28655629wrl.7
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MswVhO2Yoph6d7/DqSxFIx79+SyDFpptAibZXsGzuXc=;
-        b=PybcT27zwXUVBF2P+iYhnTD+c/eXnSVpfMGC2dvYwSVjJSzfAwjIb/e0+a9/2NS8s0
-         sFDsR99Wa5dQhdFfPa3jV2dSBSvlEPW2huq3R/+o/Cs0bS0Heh2wc8/DfNIAqoHpkEgk
-         jV9WAn7K+8ssegMsQzok6PThHxjBxa1/0IQrGN7m6/JnuoYNa5NgMiWiHNMddTqk8mvV
-         AMGwRkKp8IKuUcDlZM20NthREoulezjXa/exe/EVRQ4kbJsyqZHGPPpRy6QNJWl0mvE7
-         FnVlhNL3+HA997UxMvSiYS09f4LEyo6lDiTyhqepx6NM9ksw68QDJ3mzuBW4R82r2Saa
-         M/kQ==
+        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
+        b=JQR0fsaCWXzYDios6pijrwH8AKldikj5F3bAe/waXoRmfBrZZoMvPkP+Q0+GCJt09L
+         B7mQAI22SJ0DOwNPyAqZdTpQRxaMaCbFtErderW/nwGEM+LD4SEJc3TOzWWE5B/uq+yy
+         x2pc2NUkdpbnVfTFD2PrwRA27fzorSDcOrlDbi6gfaCVEK0IuDkcR5yzpqo/fURHU1xz
+         Z/9RIvLXEoS+NLoJusj9XsQ+J5h7bUyQxUtLoukBokMyiPzQtHuwrQgO65a57SDSp8YZ
+         ujlYDwG73iVzdrKhY8OBXy6Ph+B/bW69GjaOLvnFDYaGphUhbZkXWVA+MYvbiQRzJfUD
+         fVbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MswVhO2Yoph6d7/DqSxFIx79+SyDFpptAibZXsGzuXc=;
-        b=ZMyNEbLmKniesQZOeWxxFUwBIulwcoY435mbbqd+jdZBokVL634HGV2TdLB3U6O9ky
-         izXzTqMWlLS7iUhtyzRctBbUlBDgOG6WYnCCc+MIJP06NsrTFVidDuGYH4/I/B0hq40j
-         2yEXaHP9n5tqxpO5UiDPF8Yrpchyc3NJRL49zOi6S+cAcoEsp/7FDhU33oEBKuBdgPgk
-         utMVhYQlwuiyUZw5ZYo5qcBdUS317aYG+1r0Dv/5RbZUUI5cvfuDrc3zIUKfej4lZaU4
-         JZCq7+kvH2rCPd2SH+4E+qveBo2JM9RKaN5BxEXOuFH2tdBIH9PIfBXjIcK0JdVyPZ2/
-         q6cw==
-X-Gm-Message-State: APjAAAWaCNDsmZ2+ExHqJwBXHOabcHR8VhZfaGjtv8tFbWSJbNfRgGye
-        ztXeVbjO5U5TE2MbYLp1y3SDJPIY
-X-Google-Smtp-Source: APXvYqw2kMN1ItIfc8gnymEjEfl/W6BG5+D886PqVdfXdpZQYRloCg3a6bwfI2qQsT3SPSfScaVl6Q==
-X-Received: by 2002:a7b:c5c2:: with SMTP id n2mr41515281wmk.92.1563455944550;
-        Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
+        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
+        b=Mf8iobDmzSZfDFjPDrINyrzSbrdRDFspjmYwskJLblSWGdTwRuWLj/TsHXjfgTrGgn
+         +Gb9NNNa2W46XKWv2QckccEFGCPWSMHnqTwg10FcgIRcEUeju3ZFmrDRqniBsXqAxf91
+         tvwq5DwlvcXeE0uNqki89iyX9AZ430XtcGH/wTua+MODZnoyrjTbcx6F3AwOCrC8PNoq
+         OwiJi5U07QcCrRU0puVF0tWg+saj+LLgJfG5q4ssiqJcKrjMeEdNUmDL2pTJaD+o6Dv8
+         Ac3nYvQxwLaigumwZo/FvND6T4SwSYIQH+Ne8NGTM4X13NmOZ64o+TYKtmyzpNfddF8s
+         91+A==
+X-Gm-Message-State: APjAAAVxeNMe3jH1cpuMfMBqjvNz3n718p5NcYlR4TPy6o+Dr82qrTVP
+        6toZCHY/DnZORXNmr7uerLM19su3
+X-Google-Smtp-Source: APXvYqz+3XOA4bdyBzixV3cuBtPE8IL+b+wnEnv/z5wUdhJkkUUrnLJhUYQtPjGQuXbZo+R6yXQOTQ==
+X-Received: by 2002:adf:f544:: with SMTP id j4mr50365519wrp.150.1563455947930;
+        Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v23sm24190622wmj.32.2019.07.18.06.19.04
+        by smtp.gmail.com with ESMTPSA id c9sm23564433wml.41.2019.07.18.06.19.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:40 GMT
-Message-Id: <82e820017b6ab7ce8612742a85679ea837d3596b.1563455939.git.gitgitgadget@gmail.com>
+        Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:45 GMT
+Message-Id: <3cfbb7843ac3a27c79da4554cc550608b19f2d55.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
 From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 05/24] contrib/buildsystems: ignore invalidcontinue.obj
+Subject: [PATCH 10/24] contrib/buildsystems: redirect errors of the dry run
+ into a log file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,62 +72,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philip Oakley <philipoakley@iee.org>
 
-Since 4b623d8 (MSVC: link in invalidcontinue.obj for better POSIX
-compatibility, 2014-03-29), invalidcontinue.obj is linked in the MSVC
-build, but it was not parsed correctly by the buildsystem. Ignore it, as
-it is known to Visual Studio and will be handled elsewhere.
+Rather than swallowing the errors, it is better to have them in a file.
 
-Also only substitute filenames ending with .o when generating the
-source .c filename, otherwise we would start to expect .cbj files to
-generate .obj files (which are not generated by our build)...
+To make it obvious what this is about, use the file name
+'msvc-build-makedryerrors.txt'.
 
-In the future there may be source files that produce .obj files
-so keep the two issues (.obj files with & without source files)
-separate.
+Further, if the output is empty, simply delete that file. As we target
+Git for Windows' SDK (which, unlike its predecessor msysGit, offers Perl
+versions newer than 5.8), we can use the quite readable syntax `if -f -z
+$ErrsFile` (available in Perl >=5.10).
+
+Note that the file will contain the new values of the GIT_VERSION and
+GITGUI_VERSION if they were generated by the make file. They are omitted
+if the release is tagged and indentically defined in their respective
+GIT_VERSION_GEN file DEF_VER variables.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
-Signed-off-by: Duncan Smart <duncan.smart@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/engine.pl | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ contrib/buildsystems/engine.pl | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 23da787dc5..53e65d4db7 100755
+index 9db3d43a1e..de5c0b6b25 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -282,7 +282,7 @@ sub handleLibLine
- #    exit(1);
-     foreach (@objfiles) {
-         my $sourcefile = $_;
--        $sourcefile =~ s/\.o/.c/;
-+        $sourcefile =~ s/\.o$/.c/;
-         push(@sources, $sourcefile);
-         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
-         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
-@@ -326,8 +326,12 @@ sub handleLinkLine
-         } elsif ($part =~ /\.(a|lib)$/) {
-             $part =~ s/\.a$/.lib/;
-             push(@libs, $part);
--        } elsif ($part =~ /\.(o|obj)$/) {
-+        } elsif ($part eq 'invalidcontinue.obj') {
-+            # ignore - known to MSVC
-+        } elsif ($part =~ /\.o$/) {
-             push(@objfiles, $part);
-+        } elsif ($part =~ /\.obj$/) {
-+            # do nothing, 'make' should not be producing .obj, only .o files
-         } else {
-             die "Unhandled lib option @ line $lineno: $part";
-         }
-@@ -336,7 +340,7 @@ sub handleLinkLine
- #    exit(1);
-     foreach (@objfiles) {
-         my $sourcefile = $_;
--        $sourcefile =~ s/\.o/.c/;
-+        $sourcefile =~ s/\.o$/.c/;
-         push(@sources, $sourcefile);
-         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
-         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+@@ -73,7 +73,12 @@ sub showUsage
+ EOM
+ 
+ # Pipe a make --dry-run into a variable, if not already loaded from file
+-@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
++# Capture the make dry stderr to file for review (will be empty for a release build).
++
++my $ErrsFile = "msvc-build-makedryerrors.txt";
++@makedry = `make -C $git_dir -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
++# test for an empty Errors file and remove it
++unlink $ErrsFile if -f -z $ErrsFile;
+ 
+ # Parse the make output into usable info
+ parseMakeOutput();
 -- 
 gitgitgadget
 
