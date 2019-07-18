@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381FE1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAF711F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390491AbfGRNTM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 09:19:12 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40893 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390449AbfGRNTK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2390501AbfGRNTO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 09:19:14 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35582 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390452AbfGRNTK (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Jul 2019 09:19:10 -0400
-Received: by mail-wr1-f68.google.com with SMTP id r1so28655629wrl.7
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:08 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id y4so28695067wrm.2
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
-        b=JQR0fsaCWXzYDios6pijrwH8AKldikj5F3bAe/waXoRmfBrZZoMvPkP+Q0+GCJt09L
-         B7mQAI22SJ0DOwNPyAqZdTpQRxaMaCbFtErderW/nwGEM+LD4SEJc3TOzWWE5B/uq+yy
-         x2pc2NUkdpbnVfTFD2PrwRA27fzorSDcOrlDbi6gfaCVEK0IuDkcR5yzpqo/fURHU1xz
-         Z/9RIvLXEoS+NLoJusj9XsQ+J5h7bUyQxUtLoukBokMyiPzQtHuwrQgO65a57SDSp8YZ
-         ujlYDwG73iVzdrKhY8OBXy6Ph+B/bW69GjaOLvnFDYaGphUhbZkXWVA+MYvbiQRzJfUD
-         fVbg==
+        bh=OUw7wM3WNOYiu6Xi2N0y7apcoGabVxzK3EzQKZinpnw=;
+        b=EDnKNX/4nMDERo47Lhk7ciNpBLHd0X/iy0rJH1OThhqiOycIV1hqsyJtBjhmLOYzmW
+         KtOlCcH3eoylJ+qZYUt2506Y7S58JorEbQ2wOYFTMkvveFece0aOYoozxxv4WlH83BYe
+         oj9ZKo7m8fBrNWdcG7x2IYD7MH1diSLA0m+SZgOtm0KneP3HDlwNIG6SoOC2a0aAeoA5
+         I3eKcz2wM9xl8qZD/YzShn83B3QRroTe4PV6elyAWQrcGQoYcl8agxeiB5dIodmPbTbO
+         4tKRMyR14fXb7BlTxMPkSIZL6ftBlypDicb+ZCjwdIu+jhf2LkpVJGHecR9srVBQ+yQg
+         km/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
-        b=Mf8iobDmzSZfDFjPDrINyrzSbrdRDFspjmYwskJLblSWGdTwRuWLj/TsHXjfgTrGgn
-         +Gb9NNNa2W46XKWv2QckccEFGCPWSMHnqTwg10FcgIRcEUeju3ZFmrDRqniBsXqAxf91
-         tvwq5DwlvcXeE0uNqki89iyX9AZ430XtcGH/wTua+MODZnoyrjTbcx6F3AwOCrC8PNoq
-         OwiJi5U07QcCrRU0puVF0tWg+saj+LLgJfG5q4ssiqJcKrjMeEdNUmDL2pTJaD+o6Dv8
-         Ac3nYvQxwLaigumwZo/FvND6T4SwSYIQH+Ne8NGTM4X13NmOZ64o+TYKtmyzpNfddF8s
-         91+A==
-X-Gm-Message-State: APjAAAVxeNMe3jH1cpuMfMBqjvNz3n718p5NcYlR4TPy6o+Dr82qrTVP
-        6toZCHY/DnZORXNmr7uerLM19su3
-X-Google-Smtp-Source: APXvYqz+3XOA4bdyBzixV3cuBtPE8IL+b+wnEnv/z5wUdhJkkUUrnLJhUYQtPjGQuXbZo+R6yXQOTQ==
-X-Received: by 2002:adf:f544:: with SMTP id j4mr50365519wrp.150.1563455947930;
-        Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
+        bh=OUw7wM3WNOYiu6Xi2N0y7apcoGabVxzK3EzQKZinpnw=;
+        b=XdVGRQjSDxjJ06XwGLVk2tqPSLW+3p64HNickdmEbf955MpBQP4mbTvUBXQpGtYIp/
+         ZBOSlbmreP68bdf1Eqqpz6WBsM/qf3FRgEOknMW1ZSiwEdgwp+ofrQqIx/e4nNIF7qL0
+         gHhzN5v/cN3ED9NvalnpJLQvrflN3wbHQVPwguJGzhTfF7+3CAuEZ6GUSnbmn5B1qNA7
+         VkcvS3ezrE2aXT93T3j2CNUkTiHrkv3zVOcCpy1SF7hooUNxVjQ7V4KZAzQBvi2PMl5a
+         SQdwqtWdfOC76PYky7c0Fh9iCyc9RU6M6Cct90iU0horXoehY7FEayg9mLjYdV7/KMGV
+         8RxA==
+X-Gm-Message-State: APjAAAWDo8pZV7uidzidSSJ2fZ+0KqTsU9ba7kLk3mGe3MjVId5IUR1g
+        sQ50Pa4lohxSu72CZ78mixEAEYUO
+X-Google-Smtp-Source: APXvYqxXYye+Z5Ev6NZ2VkYeJuErYzDfwaFVLUtiIajJIxtVlgeXDFMEhA0RB/8OsqFi5rsIY2RxJA==
+X-Received: by 2002:adf:90e7:: with SMTP id i94mr21185244wri.224.1563455948616;
+        Thu, 18 Jul 2019 06:19:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c9sm23564433wml.41.2019.07.18.06.19.07
+        by smtp.gmail.com with ESMTPSA id s10sm21053311wrt.49.2019.07.18.06.19.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:45 GMT
-Message-Id: <3cfbb7843ac3a27c79da4554cc550608b19f2d55.1563455939.git.gitgitgadget@gmail.com>
+        Thu, 18 Jul 2019 06:19:08 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 06:19:08 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:46 GMT
+Message-Id: <eaf1dd449d541d7b8272c6f95af056a548b577ef.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
 From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 10/24] contrib/buildsystems: redirect errors of the dry run
- into a log file
+Subject: [PATCH 11/24] contrib/buildsystems: optionally capture the dry-run in
+ a file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,45 +72,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philip Oakley <philipoakley@iee.org>
 
-Rather than swallowing the errors, it is better to have them in a file.
+Add an option for capturing the output of the make dry-run used in
+determining the msvc-build structure for easy debugging.
 
-To make it obvious what this is about, use the file name
-'msvc-build-makedryerrors.txt'.
-
-Further, if the output is empty, simply delete that file. As we target
-Git for Windows' SDK (which, unlike its predecessor msysGit, offers Perl
-versions newer than 5.8), we can use the quite readable syntax `if -f -z
-$ErrsFile` (available in Perl >=5.10).
-
-Note that the file will contain the new values of the GIT_VERSION and
-GITGUI_VERSION if they were generated by the make file. They are omitted
-if the release is tagged and indentically defined in their respective
-GIT_VERSION_GEN file DEF_VER variables.
+You can use the output of `--make-out <path>` in subsequent runs via the
+`--in <path>` option.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/engine.pl | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ contrib/buildsystems/engine.pl | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 9db3d43a1e..de5c0b6b25 100755
+index de5c0b6b25..732239d817 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -73,7 +73,12 @@ sub showUsage
+@@ -32,6 +32,7 @@ sub showUsage
+   -g <GENERATOR>  --gen <GENERATOR> Specify the buildsystem generator    (default: $gen)
+                                     Available: $genlist
+   -o <PATH>       --out <PATH>      Specify output directory generation  (default: .)
++                  --make-out <PATH> Write the output of GNU Make into a file
+   -i <FILE>       --in <FILE>       Specify input file, instead of running GNU Make
+   -h,-?           --help            This help
  EOM
+@@ -39,6 +40,7 @@ sub showUsage
+ }
  
- # Pipe a make --dry-run into a variable, if not already loaded from file
--@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
-+# Capture the make dry stderr to file for review (will be empty for a release build).
+ # Parse command-line options
++my $make_out;
+ while (@ARGV) {
+     my $arg = shift @ARGV;
+     if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
+@@ -46,6 +48,8 @@ sub showUsage
+ 	exit(0);
+     } elsif("$arg" eq "--out" || "$arg" eq "-o") {
+ 	$out_dir = shift @ARGV;
++    } elsif("$arg" eq "--make-out") {
++	$make_out = shift @ARGV;
+     } elsif("$arg" eq "--gen" || "$arg" eq "-g") {
+ 	$gen = shift @ARGV;
+     } elsif("$arg" eq "--in" || "$arg" eq "-i") {
+@@ -80,6 +84,12 @@ sub showUsage
+ # test for an empty Errors file and remove it
+ unlink $ErrsFile if -f -z $ErrsFile;
+ 
++if (defined $make_out) {
++    open OUT, ">" . $make_out;
++    print OUT @makedry;
++    close OUT;
++}
 +
-+my $ErrsFile = "msvc-build-makedryerrors.txt";
-+@makedry = `make -C $git_dir -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
-+# test for an empty Errors file and remove it
-+unlink $ErrsFile if -f -z $ErrsFile;
- 
  # Parse the make output into usable info
  parseMakeOutput();
+ 
 -- 
 gitgitgadget
 
