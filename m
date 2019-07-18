@@ -7,139 +7,196 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342BD1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 17:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD32B1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 18:31:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbfGRRpJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 13:45:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50005 "EHLO
+        id S2391461AbfGRSbf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 14:31:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62580 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726715AbfGRRpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 13:45:09 -0400
+        with ESMTP id S2391446AbfGRSbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 14:31:34 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 938721721C0;
-        Thu, 18 Jul 2019 13:45:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D379817250C;
+        Thu, 18 Jul 2019 14:31:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bExevB84fzEbwq9tIwEUQ0ChCqo=; b=mzn8G+
-        knqEQ62C+NyFa1oJ4jD5vgNlCRf8iH37AY9p6duKrV/u/JlFKYJhWq6u0gBx6c0/
-        e/ilYFkSB41Sb4dqVidK/HNbvyvs9qWRBILZKngT2gm73tpsOeDgnikUxLQZtmTU
-        +Y2cgfcrYvaplFy4xcNta9YlyxR9DMuXi7WkU=
+        :content-type; s=sasl; bh=QTne71MBSwy4cSDttg3vHdTExuQ=; b=L/jx8t
+        SPPg7ZKaOSiXppHE8P7BM1GAd4R6Jx7J5fiu/dJBzcrrSj5LPvRrp3VZP2Fg+uag
+        gz58RCCAoy13I8i/pKTfejSO+J4sGhGw1knnfXOAgnW+Km/uzZPnSCSfEfHOYpEz
+        +OYqeo4enFr3j15fv4homT+A0sroDyOLx/Jzs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QlkdFekPqxKqNwrDooc1eLW9M8UFm9AY
-        onZlQjZSQ1hLanbWuT4eadgG5aMDvx5uO5i2UDU6gtzKJS7/Z8Rk7Le3mjZM5w5l
-        N+Lsi8oARqX2bn9pkUzPO6V3epHs2adjk1rG/ambF+x37JV2I9Nb8A1zAgi45aZP
-        HdxQSRgYfJE=
+        :content-type; q=dns; s=sasl; b=vxS96rSRDsqVTtPjsciSlFjoyDg7w462
+        Ui9V02PcF3d549Ada7x5F5wypa4egWFmizJrX3yZdSfz3ebRbK6q87poiZSsUzE1
+        S88D82RCN1/LvJ8YFVYHnsBXOYk+NlFYtTWz0esEjtuiPo4nMiUa+LLnNqplnPzp
+        r4AtEI5it44=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8830E1721BE;
-        Thu, 18 Jul 2019 13:45:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB0A517250B;
+        Thu, 18 Jul 2019 14:31:24 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BD5951721BD;
-        Thu, 18 Jul 2019 13:45:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2ED3017250A;
+        Thu, 18 Jul 2019 14:31:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Palmer Dabbelt <palmer@sifive.com>
-Cc:     git@vger.kernel.org, peff@peff.net, e@80x24.org,
-        chriscool@tuxfamily.org, jonathantanmy@google.com, tboegi@web.de,
-        bwilliams.eng@gmail.com, jeffhost@microsoft.com
-Subject: Re: [PATCH] fetch: add "--parallel", which fetches all remotes in parallel
-References: <20190717015903.4384-1-palmer@sifive.com>
-Date:   Thu, 18 Jul 2019 10:45:04 -0700
-In-Reply-To: <20190717015903.4384-1-palmer@sifive.com> (Palmer Dabbelt's
-        message of "Tue, 16 Jul 2019 18:59:03 -0700")
-Message-ID: <xmqq5znzz17j.fsf@gitster-ct.c.googlers.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH 1/9] t3404: demonstrate that --edit-todo does not check for dropped commits
+References: <20190717143918.7406-1-alban.gruin@gmail.com>
+        <20190717143918.7406-2-alban.gruin@gmail.com>
+Date:   Thu, 18 Jul 2019 11:31:22 -0700
+In-Reply-To: <20190717143918.7406-2-alban.gruin@gmail.com> (Alban Gruin's
+        message of "Wed, 17 Jul 2019 16:39:10 +0200")
+Message-ID: <xmqqwogfxkhx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C71E292E-A983-11E9-AA08-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 3F2E7544-A98A-11E9-9B72-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Palmer Dabbelt <palmer@sifive.com> writes:
+Alban Gruin <alban.gruin@gmail.com> writes:
 
-> * I'm not sure if it's safe to access the .git database from multiple
->   processes at the same time.
-
-It is supposed to, and also you are supposed to keep it that way ;-)
-
-> * As I was writing the documentation I found "fetch --jobs".  It seems
->   like I should use that instead of adding a new argrument, but I wasn't
->   sure.
-
-Why not?  What makes you feel it is a bad idea to follow that
-pattern?
-
-Ah, --jobs that is taken already is right now too tied to fetches
-that happen in submodules, which arguably was a design mistake.
-
-    -j::
-    --jobs=<n>::
-            Number of parallel children to be used for fetching
-            submodules.  Each will fetch from different submodules,
-            such that fetching many submodules will be faster. By
-            default submodules will be fetched one at a time.
-
-The simplest endgame would be to replace "submodule" with
-"repository" in the above description, perhaps like
-
-	Number of parallel jobs to be used for fetching from
-	multiple repositories (both fetching with "--multiple" from
-	multiple repositories, and also fetching updated contents
-	for submodules).  By default, fetching from multiple
-	repositories and submodules is done one at a time.
-
-and nobody would have complained if the system were like so from the
-beginning.  Existing users, however, may want extra flexibility, and
-would complain loudly if we did the above, in which case, we may
-have to
-
- - introduce --fetch-jobs=<n> for what you are adding;
-
- - introduce --submodule-fetch-jobs=<n> as a synonym for existing
-   --jobs=<n> and deprecate the current use of --jobs=<n>;
-
- - eventually repurpose --jobs=<n> as a short-hand to give both
-   --fetch-jobs and --submoduje-fetch-jobs at the same time.
-
-> +static int parallel = 0;
-
-Don't explicitly "= 0;" initialize file-scope static.  Instead let
-BSS take care of it.
-
->  static int git_fetch_config(const char *k, const char *v, void *cb)
->  {
-> @@ -178,6 +179,8 @@ static struct option builtin_fetch_options[] = {
->  			TRANSPORT_FAMILY_IPV6),
->  	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
->  			N_("report that we have only objects reachable from this object")),
-> +	OPT_BOOL(0, "parallel", &parallel,
-> +		 N_("fetch in parallel from each remote")),
->  	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
->  	OPT_BOOL(0, "auto-gc", &enable_auto_gc,
->  		 N_("run 'gc --auto' after fetching")),
-> @@ -1456,12 +1459,15 @@ static void add_options_to_argv(struct argv_array *argv)
+> When set to "warn" or "error", `rebase.missingCommitCheck' would make
+> rebase -i warn if the user removed commits from the todo list to prevent
+> mistakes.  Unfortunately, rebase --edit-todo and rebase --continue don't
+> take it into account.
+>
+> This adds three tests to t3404 to demonstrate this.  The first one is
+> not broken, as when `rebase.missingCommitsCheck' is not set, nothing in
+> particular must be done towards dropped commits.  The two others are
+> broken, demonstrating the problem.
+>
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  t/t3404-rebase-interactive.sh | 82 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+>
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 461dd539ff..f5c0a8d2bb 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1345,6 +1345,88 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
+>  	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
+>  '
 >  
->  }
->  
-> -static int fetch_multiple(struct string_list *list)
-> +static int fetch_multiple(struct string_list *list, int i)
->  {
-> -	int i, result = 0;
+> +test_expect_success 'rebase --edit-todo respects rebase.missingCommitsCheck = ignore' '
+> +	test_config rebase.missingCommitsCheck ignore &&
+> +	rebase_setup_and_clean missing-commit &&
+> +	set_fake_editor &&
+> +	test_must_fail env FAKE_LINES="1 2 bad 3 4" \
+> +		git rebase -i --root >/dev/null 2>stderr &&
 
-'i' is perfectly a good name for a local variable that is used for
-loop control purposes, but makes a horrible name for a parameter.
+Do you need to capture into stderr?  Nobody seems to use it.
 
-Existing 'list' is not any better either---we know it is a list by
-its type already, the name should say what the list is about, what
-it represents.  But having a horribly named parameter already is not
-a good reason to make the code even worse.
+> +	FAKE_LINES="1 2 4" git rebase --edit-todo &&
+> +	git rebase --continue 2>actual &&
+> +	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
+> +	test_i18ngrep \
+> +		"Successfully rebased and updated refs/heads/missing-commit" \
+> +		actual
+> +'
+> +
+> +cat >expect <<EOF
+> +error: invalid line 5: badcmd $(git rev-list --pretty=oneline --abbrev-commit -1 master)
+> +Warning: some commits may have been dropped accidentally.
+> +Dropped commits (newer to older):
+> + - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
+> +To avoid this message, use "drop" to explicitly remove a commit.
+> +
+> +Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
+> +The possible behaviours are: ignore, warn, error.
+> +
+> +EOF
+> +
+> +tail -n 8 <expect >expect.2
 
-And as you said, recursion makes the code structure harder to follow
-here.  Keeping an array of --jobs=<n> cmd structures, looping to
-fill them by starting, doing wait() to reap any of the started ones
-that first exits to refill the slot just opened, etc. would be easier
-to see if done in a loop, I think.
+Having this outside the test_expect_success block that uses the file
+is bad.  You may have mimicked other tests in the same script, but
+that is not a good excuse to make things worse.  Just make sure
+these new stuff follow the best-current-practice pattern without
+touching the existing bad examples (and later fix them up after the
+dust settles, but don't let it distract you from the theme these
+patches are addressing).
+
+> +
+> +test_expect_failure 'rebase --edit-todo respects rebase.missingCommitsCheck = warn' '
+> +	test_config rebase.missingCommitsCheck warn &&
+> +	rebase_setup_and_clean missing-commit &&
+> +	set_fake_editor &&
+> +	test_must_fail env FAKE_LINES="1 2 3 4 bad 5" \
+> +		git rebase -i --root >/dev/null 2>stderr &&
+
+Ditto.
+
+> +	FAKE_LINES="1 2 3 4" git rebase --edit-todo 2>actual &&
+> +	test_i18ncmp expect actual &&
+
+So, after "--edit-todo", you are supposed to get an error and a warning,
+but ...
+
+> +	git rebase --continue 2>actual.2 &&
+> +	head -n 8 <actual.2 >actual &&
+> +	test_i18ncmp expect.2 actual &&
+
+... after "--continue", you do not get any error, as you removed
+'bad' from the input, but you still get a warning, followed by a
+report of the fact that a commit has been dropped.  OK.
+
+> +	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
+> +	test_i18ngrep \
+> +		"Successfully rebased and updated refs/heads/missing-commit" \
+> +		actual.2
+> +'
+> +
+> +cat >expect <<EOF
+> +error: invalid line 3: badcmd $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
+> +Warning: some commits may have been dropped accidentally.
+> +Dropped commits (newer to older):
+> + - $(git rev-list --pretty=oneline --abbrev-commit -1 master)
+> + - $(git rev-list --pretty=oneline --abbrev-commit -1 master~2)
+> +To avoid this message, use "drop" to explicitly remove a commit.
+> +
+> +Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
+> +The possible behaviours are: ignore, warn, error.
+> +
+> +EOF
+> +
+> +tail -n 9 <expect >expect.2
+> +
+> +test_expect_failure 'rebase --edit-todo respects rebase.missingCommitsCheck = error' '
+> +	test_config rebase.missingCommitsCheck error &&
+> +	rebase_setup_and_clean missing-commit &&
+> +	set_fake_editor &&
+> +	test_must_fail env FAKE_LINES="1 2 bad 3 4" \
+> +		git rebase -i --root >/dev/null 2>stderr &&
+> +	test_must_fail env FAKE_LINES="1 2 4" \
+> +		git rebase --edit-todo 2>actual &&
+> +	test_i18ncmp expect actual &&
+> +	test_must_fail git rebase --continue 2>actual &&
+
+OK, and this one fails as the configuration is set to 'error'.
+
+> +	test_i18ncmp expect.2 actual &&
+> +	cp .git/rebase-merge/git-rebase-todo.backup \
+> +		.git/rebase-merge/git-rebase-todo &&
+
+Why?  Who uses this copy?
+
+> +	FAKE_LINES="1 2 drop 3 4 drop 5" \
+> +		git rebase --edit-todo &&
+> +	git rebase --continue 2>actual &&
+> +	test D = $(git cat-file commit HEAD | sed -ne \$p) &&
+> +	test_i18ngrep \
+> +		"Successfully rebased and updated refs/heads/missing-commit" \
+> +		actual
+> +'
+> +
+>  test_expect_success 'respects rebase.abbreviateCommands with fixup, squash and exec' '
+>  	rebase_setup_and_clean abbrevcmd &&
+>  	test_commit "first" file1.txt "first line" first &&
