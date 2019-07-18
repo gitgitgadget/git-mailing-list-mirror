@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8A181F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE51B1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390480AbfGRNTL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 09:19:11 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41669 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390444AbfGRNTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 09:19:07 -0400
-Received: by mail-wr1-f66.google.com with SMTP id c2so25468760wrm.8
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:06 -0700 (PDT)
+        id S2390486AbfGRNTM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 09:19:12 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55431 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726735AbfGRNTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 09:19:06 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a15so25558731wmj.5
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZsMTYhK2ok2pSdGHeJ351sDFGcg+R6HsHq5y8VmRNuU=;
-        b=ckQuryfu7HYvLbbDRYkUUmLd4jPcItl9zMMXubNF5gjYm6NwaMXDvtoK3whuIKlhjf
-         Pz6eR5BUpMKD1XQl5hZEIn6LwXGDU5xLXsj12QyRbYdHnMo5AbPlj9+3mRGHGumEX22p
-         Ek5hPm26HFXy65Ai//UkLu5gtPX0EYCFbm8Zl4j1ZiNPj1IVeAebzt/pN4MoJ1pNU1jX
-         8cJQvP6cP1yAXtfS9jS1Eo0a1ZGrFoXRCN9lA8zt1KpbeyyzLoVxnZT45O/bL7SYYqGa
-         x7zQfUeOz5WQSJFuxKyEraYUXPT9dldEF55rkGxR4kAOg+S2JwNJafKZkIsVXMrLsKcn
-         l+nw==
+        bh=MswVhO2Yoph6d7/DqSxFIx79+SyDFpptAibZXsGzuXc=;
+        b=PybcT27zwXUVBF2P+iYhnTD+c/eXnSVpfMGC2dvYwSVjJSzfAwjIb/e0+a9/2NS8s0
+         sFDsR99Wa5dQhdFfPa3jV2dSBSvlEPW2huq3R/+o/Cs0bS0Heh2wc8/DfNIAqoHpkEgk
+         jV9WAn7K+8ssegMsQzok6PThHxjBxa1/0IQrGN7m6/JnuoYNa5NgMiWiHNMddTqk8mvV
+         AMGwRkKp8IKuUcDlZM20NthREoulezjXa/exe/EVRQ4kbJsyqZHGPPpRy6QNJWl0mvE7
+         FnVlhNL3+HA997UxMvSiYS09f4LEyo6lDiTyhqepx6NM9ksw68QDJ3mzuBW4R82r2Saa
+         M/kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZsMTYhK2ok2pSdGHeJ351sDFGcg+R6HsHq5y8VmRNuU=;
-        b=XzFVdOrcU9QHRJJJQnvc//0jZSQ6tCw7Oq557TZXn9xTdnZYu70xq3MksN1ij8It5w
-         IKECy/XE91YUoEO+OzeMc3FJWePrEoXHrJesDyYYjde7sycwtaYsHrBiaoLQ0jAxf4GM
-         GvJaeBxrHsa+qh7rRN4/Z65lrv/pa9L+KV7HBDv3aieqdT1f6N7d+LUakj2jri1MF5mg
-         jjxyyi1RtxVY9YV76YnuIwajLDQAwMbFsP8WpBKcKGgYqO2wCZ6PM4OTMfJpjAALn9a3
-         iijiF39Gt048ryFRFf7J4fjfMTH6z+z8oZWvwiT2KeOahMIOagvuMa0la6V4qP/8C6Ot
-         xPAA==
-X-Gm-Message-State: APjAAAXgFwlu9ltmv0cWnPE6UQUUbOBbwcJ8s3lpz8b3SM+ATB+/z9qe
-        4XjD65EJbWK6HqgbjOvNnh8ejc6V
-X-Google-Smtp-Source: APXvYqxALZxv7S90u3zuc0DP6ioLhJRaL/iqr9XYxSUTnjK4miPsOMBgr6Fg5VshykScVPIUrJ47YQ==
-X-Received: by 2002:a5d:6406:: with SMTP id z6mr49133569wru.280.1563455946013;
-        Thu, 18 Jul 2019 06:19:06 -0700 (PDT)
+        bh=MswVhO2Yoph6d7/DqSxFIx79+SyDFpptAibZXsGzuXc=;
+        b=ZMyNEbLmKniesQZOeWxxFUwBIulwcoY435mbbqd+jdZBokVL634HGV2TdLB3U6O9ky
+         izXzTqMWlLS7iUhtyzRctBbUlBDgOG6WYnCCc+MIJP06NsrTFVidDuGYH4/I/B0hq40j
+         2yEXaHP9n5tqxpO5UiDPF8Yrpchyc3NJRL49zOi6S+cAcoEsp/7FDhU33oEBKuBdgPgk
+         utMVhYQlwuiyUZw5ZYo5qcBdUS317aYG+1r0Dv/5RbZUUI5cvfuDrc3zIUKfej4lZaU4
+         JZCq7+kvH2rCPd2SH+4E+qveBo2JM9RKaN5BxEXOuFH2tdBIH9PIfBXjIcK0JdVyPZ2/
+         q6cw==
+X-Gm-Message-State: APjAAAWaCNDsmZ2+ExHqJwBXHOabcHR8VhZfaGjtv8tFbWSJbNfRgGye
+        ztXeVbjO5U5TE2MbYLp1y3SDJPIY
+X-Google-Smtp-Source: APXvYqw2kMN1ItIfc8gnymEjEfl/W6BG5+D886PqVdfXdpZQYRloCg3a6bwfI2qQsT3SPSfScaVl6Q==
+X-Received: by 2002:a7b:c5c2:: with SMTP id n2mr41515281wmk.92.1563455944550;
+        Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o11sm26574488wmh.37.2019.07.18.06.19.05
+        by smtp.gmail.com with ESMTPSA id v23sm24190622wmj.32.2019.07.18.06.19.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:42 GMT
-Message-Id: <b8eb868316990ae180323d04efe08ed7d48c61ef.1563455939.git.gitgitgadget@gmail.com>
+        Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:40 GMT
+Message-Id: <82e820017b6ab7ce8612742a85679ea837d3596b.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
 From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 07/24] contrib/buildsystems: fix misleading error message
+Subject: [PATCH 05/24] contrib/buildsystems: ignore invalidcontinue.obj
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,28 +71,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philip Oakley <philipoakley@iee.org>
 
-The error message talked about a "lib option", but it clearly referred
-to a link option.
+Since 4b623d8 (MSVC: link in invalidcontinue.obj for better POSIX
+compatibility, 2014-03-29), invalidcontinue.obj is linked in the MSVC
+build, but it was not parsed correctly by the buildsystem. Ignore it, as
+it is known to Visual Studio and will be handled elsewhere.
+
+Also only substitute filenames ending with .o when generating the
+source .c filename, otherwise we would start to expect .cbj files to
+generate .obj files (which are not generated by our build)...
+
+In the future there may be source files that produce .obj files
+so keep the two issues (.obj files with & without source files)
+separate.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
+Signed-off-by: Duncan Smart <duncan.smart@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/engine.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/buildsystems/engine.pl | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 53e65d4db7..11f0e16dda 100755
+index 23da787dc5..53e65d4db7 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -333,7 +333,7 @@ sub handleLinkLine
-         } elsif ($part =~ /\.obj$/) {
-             # do nothing, 'make' should not be producing .obj, only .o files
+@@ -282,7 +282,7 @@ sub handleLibLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+@@ -326,8 +326,12 @@ sub handleLinkLine
+         } elsif ($part =~ /\.(a|lib)$/) {
+             $part =~ s/\.a$/.lib/;
+             push(@libs, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
++        } elsif ($part eq 'invalidcontinue.obj') {
++            # ignore - known to MSVC
++        } elsif ($part =~ /\.o$/) {
+             push(@objfiles, $part);
++        } elsif ($part =~ /\.obj$/) {
++            # do nothing, 'make' should not be producing .obj, only .o files
          } else {
--            die "Unhandled lib option @ line $lineno: $part";
-+            die "Unhandled link option @ line $lineno: $part";
+             die "Unhandled lib option @ line $lineno: $part";
          }
-     }
- #    print "AppOut: '$appout'\nLFlags: @lflags\nLibs  : @libs\nOfiles: @objfiles\n";
+@@ -336,7 +340,7 @@ sub handleLinkLine
+ #    exit(1);
+     foreach (@objfiles) {
+         my $sourcefile = $_;
+-        $sourcefile =~ s/\.o/.c/;
++        $sourcefile =~ s/\.o$/.c/;
+         push(@sources, $sourcefile);
+         push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+         push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
 -- 
 gitgitgadget
 
