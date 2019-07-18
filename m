@@ -3,131 +3,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0DF21F461
-	for <e@80x24.org>; Wed, 17 Jul 2019 20:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB56B1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 00:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727291AbfGQUin (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jul 2019 16:38:43 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61199 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726598AbfGQUin (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jul 2019 16:38:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 799006BB11;
-        Wed, 17 Jul 2019 16:38:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7Ru7k+JEqtwen75RmRyWbRQBISU=; b=BoFtwQ
-        FGabPiX9f6tM6SLGCbLh8R39MmpAwoTFc1LKgbVifPWwIm1llZ8rI3kqYlAEcnxm
-        S80l1acWMRBb151pkzWcV0zE7hZon//QVrdOP4c0XrHhOHvPlxRiRUcRCd332nfR
-        mxuabUlv/iAQPKClkCwK44wbma4HTWl/OEdJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pGYAteRUJbSonCRBJWu0Ce4750zbryFV
-        Ur3gAEiWBSnAUppgJVRtKlJ10xJccqlj4+t/0Za/jXYCUvmR6oYsoA1GFejYpGek
-        FcKqzikSBvtWE8VZ3HPJWEsil75NboRGVGrM6pEXCO8nVVq2DGLbgI6Gl4IqIEr4
-        WFb6bOdiaA0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 713B26BB10;
-        Wed, 17 Jul 2019 16:38:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5432F6BB0B;
-        Wed, 17 Jul 2019 16:38:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <git@vger.kernel.org>
-Cc:     "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: [PATCH] rm: resolving by removal is not a warning-worthy event
-References: <5D2ED50D020000A100032435@gwsmtp.uni-regensburg.de>
-        <xmqqd0i81ui4.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 17 Jul 2019 13:38:35 -0700
-In-Reply-To: <xmqqd0i81ui4.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 17 Jul 2019 09:44:03 -0700")
-Message-ID: <xmqqims0z99w.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727563AbfGRAlt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jul 2019 20:41:49 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:37483 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727505AbfGRAls (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jul 2019 20:41:48 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i70so1239221pgd.4
+        for <git@vger.kernel.org>; Wed, 17 Jul 2019 17:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zW7MYAf8MHUeJLbr8E3gIuKchlNqlEmKkuEYIAqanvs=;
+        b=OZe++a0X+AAjrA8Tl6UGjzNMbffRZ/PtVwaJMgvGUxm7loGRdg+Nr1RE3DgBIV2JDb
+         40sDkFyIIlsWw/fdIIurvMdVSBtpdXGhi8OWoJ5L8s46yqG0fAoPgklHTOmCENVv2N7X
+         LJWlJH2Tn+pSc4VZeZaoFSv1kdpQxDlJj5AMUrEjyZ5+uUeQh+ZI9n/8UE8lMA+46lxe
+         LeNxksHLyLWh2i5Yb9R90iyHsdvkFY2aFbPMySfpFendNLjkv1LwNC/PQvpeNXRq+aH1
+         m5fA912UrDB3OT0+NPfDCbx848vWhcAxgGcTnd0SWGaFOUIMugaBsGLMC3lbtcnLBHU7
+         O1BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zW7MYAf8MHUeJLbr8E3gIuKchlNqlEmKkuEYIAqanvs=;
+        b=FucnQIHBDqP7+mwyfCm1pGOsQz8NseYToB3MxBtRRoOfEtB4JPNP6+yU/LZJNoUDTV
+         9IhUQ2deMwADaUHKEchcAOM9teSBnqdnxjkIxJLqk7fHKRHwTdtX654pntrxzYzOvZyA
+         t0LS40PufTTcfoZA0Y62nC83Riwkrp/0kWtvjtmBDtd8W3QfhrEA0dT6FKe7113gSpvp
+         JaaFNZ4u2yXsPZ6YBpnJGPAT+mTK2qwy2uq7KWP/yQZqU/1e/pd4davC5KRhc1FwmBqd
+         wWC692CtBl4/cRcKtVYc7O/QktHZleDn2cijNe+yEDVLUv+N/xw8rr3XWXMYGLQbnATS
+         4H6g==
+X-Gm-Message-State: APjAAAXJ3RIH9Z6m8SCsOrQpa2CV0Q/whNUJhMXO+Mdgs1gycG+IqxOM
+        s0ku35t7lYgssAh/o4dI0LK+hxO2/qA9IOEVuap0P/+5
+X-Google-Smtp-Source: APXvYqynXhjOJFCBwbek9hu7tEhfugL+8CEyDFFBsdgpoha4xaJ7V7XolF6/cZyXOEzMo/NBfJqyNzDMkO1JWhHLrPQ=
+X-Received: by 2002:a63:2252:: with SMTP id t18mr44704821pgm.5.1563410507995;
+ Wed, 17 Jul 2019 17:41:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DA7ACEF2-A8D2-11E9-846F-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20190713051804.12893-1-eantoranz@gmail.com> <CAOc6eta-jX93k6twcrJOeRt+JHtLk4mUs7YD_bG=Ggvw4thAZQ@mail.gmail.com>
+ <xmqq5zo01qnv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq5zo01qnv.fsf@gitster-ct.c.googlers.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Wed, 17 Jul 2019 18:41:36 -0600
+Message-ID: <CAOc6etYM6DSDQ_H=eJs1xuGU9a83kTe2-vEy9+FEgHobT77_Eg@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/merge: allow --squash to commit if there are
+ no conflicts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When resolving a conflict on a path in favor of removing it, using
-"git rm" on it is the standard way to do so.  The user however is
-greeted with a "needs merge" message during that operation:
+On Wed, Jul 17, 2019 at 12:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Sure.  I started skimming and then gave up after seeing that quite a
+> lot of code has been shuffled around without much explanation (e.g.
+> printing of "Squash commit -- not updating HEAD" is gone from the
+> callee and now it is a responsibility of the caller), making it
+> harder than necessary to see if there is any unintended behaviour
+> change when the new feature is not in use.  Whatever you are trying,
+> it does look like the change deserves to be split into a smaller
+> pieces to become more manageable.
+>
+> Thanks.
+>
 
-	$ git merge side-branch
-	$ edit conflicted-path-1
-	$ git add conflicted-path-1
-	$ git rm conflicted-path-2
-	conflicted-path-2: needs merge
-	rm 'conflicted-path-2'
+yw!
 
-The removal by "git rm" does get performed, but an uninitiated user
-may find it confusing, "needs merge? so I need to resolve conflict
-before being able to remove it???"
+I'm focusing on the squash --commit part only. I think I'm close to
+getting the desired result and now I'm taking a close look at the unit
+tests and a question came up on two tests of t7600-merge.sh:
 
-The message is coming from "update-index --refresh" that is called
-internally to make sure "git rm" knows which paths are clean and
-which paths are dirty, in order to prevent removal of paths modified
-relative to the index without the "-f" option.  We somehow ended up
-not squelching this message which seeped through to the UI surface.
+merge c0 with c1 (squash)
+merge c0 with c1 (squash, ff-only)
 
-Use the same mechanism used by "git commit", "git describe", etc. to
-squelch the message.
+In both cases it's a FF (right?) so no new revision is created. The
+unit tests are requiring that $GIT_DIR/squash_msg have some content:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/rm.c  |  2 +-
- t/t3600-rm.sh | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+not ok 20 - merge c0 with c1 (squash, ff-only)
+#
+#               git reset --hard c0 &&
+#               git merge --squash --ff-only c1 &&
+#               verify_merge file result.1 &&
+#               verify_head $c0 &&
+#               verify_no_mergehead &&
+#               test_cmp squash.1 .git/SQUASH_MSG
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 65b448ef8e..b63c86ae92 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -272,7 +272,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD,
- 		       prefix, argv);
--	refresh_index(&the_index, REFRESH_QUIET, &pathspec, NULL, NULL);
-+	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
- 
- 	seen = xcalloc(pathspec.nr, 1);
- 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index b8fbdefcdc..5aae78ccc4 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -251,6 +251,19 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
- 	test_path_is_missing .git/index.lock
- '
- 
-+test_expect_success 'Resolving by removal is not a warning-worthy event' '
-+	git reset -q --hard &&
-+	test_when_finished "rm -f .git/index.lock msg && git reset -q --hard" &&
-+	qfwfq=$(echo qfwfq | git hash-object -w --stdin) &&
-+	for stage in 1 2 3
-+	do
-+		echo "100644 $qfwfq $stage	qfwfq"
-+	done | git update-index --index-info &&
-+	git rm qfwfq >msg &&
-+	test_i18ngrep ! "needs merge" msg &&
-+	test_must_fail git ls-files -s --error-unmatch qfwfq
-+'
-+
- test_expect_success 'rm removes subdirectories recursively' '
- 	mkdir -p dir/subdir/subsubdir &&
- 	echo content >dir/subdir/subsubdir/file &&
--- 
-2.22.0-653-g37fc7794bc
 
+not ok 18 - merge c0 with c1 (squash)
+#
+#               git reset --hard c0 &&
+#               git merge --squash c1 &&
+#               verify_merge file result.1 &&
+#               verify_head $c0 &&
+#               verify_no_mergehead &&
+#               test_cmp squash.1 .git/SQUASH_MSG
+
+
+Does it make sense to keep this file in those two situations?
