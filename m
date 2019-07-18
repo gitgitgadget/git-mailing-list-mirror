@@ -8,98 +8,119 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DE4B1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 844911F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390591AbfGRNTe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 09:19:34 -0400
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:34942 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390487AbfGRNTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 09:19:13 -0400
-Received: by mail-wm1-f50.google.com with SMTP id l2so25677670wmg.0
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:12 -0700 (PDT)
+        id S2390463AbfGRNTK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 09:19:10 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42076 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390445AbfGRNTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 09:19:08 -0400
+Received: by mail-wr1-f67.google.com with SMTP id x1so13672589wrr.9
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=D4hbnnz1wl16W68xXYb3sjuP3z16WnFfPUUKFYLJTlU=;
-        b=gyaKNea/PoHWNXCd5oajLXwC6GnmxfiH76UEzLYNf6Qr36vDG01/RUQXqkVAP77nRi
-         vMddAVBeWOmeq/kOLbGr6+AXWmwk7NdZLjCp/SUyLVgsaEVJfU4H2QNuFjb+CJbskowM
-         OpeTcxzA8K2QtNRxkjf/hwWkbteK81NB7kDmRu/2b7L0Tws4pfSjcpBkcWWX02vYyzxz
-         x6Ik0hCMFXrO5ilGLTcQluoSmv79JC1GzLmgQc05auiHEI/D6MtOko/XO7hkDjODspC/
-         7MKoVVUTKzsw/cdKcFpEbx4YBddVrowW1/3kROJbgDIAa9r91FQ2iaJwQk9ploFLXAkP
-         Pgpg==
+        bh=78g8+gaDXo8uS1s5S5WVm7dLUprygkhQyQhnC+pZgoE=;
+        b=fN47fop3fMrRmgQKWYFxls5BaU1bTINa1gLrgAVqJ8iu+ZSKqjXcXqBGfrFk1c4KX5
+         J+6ZnYuQXx/TyTpKIMs+gs895QIZemSU3Tpvq7Rm21y3uRn3a6vc9yCCZnD78xf95l7W
+         YNuJ8yLu7XalfqJ36Hx2AKp16YgKSsMr0/Kv0LlDhUZowalLyhJV6FNA5kof81m7FYPC
+         VhEAINPu6/Q5ve11P/CkRAMT50eqJOJ+ZfI3D7ob5XyQxCa7VWqB4oKWZ24tc/8r6bB0
+         Vm7esRhD3RmluXjFi4KiM6kG5/LAtmLHcOTmtReZC/2EhbN9l52a6qTT4AYKmsztRgj9
+         emqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=D4hbnnz1wl16W68xXYb3sjuP3z16WnFfPUUKFYLJTlU=;
-        b=gVw/nUMo9I5yYt15QXrvQaT/EJgxNa3CHR4y+IkTD5bR8i2TYXOEA7d0Kyc04XznMn
-         vzJs473J2S+QEpcImYSC139SNHLR1qfUKaiOthgtJ1TZ2jj6eA0FhU7tuufhPGQuXy8B
-         Nrh31HC8f70UW0f0sBXYXOEyUgm8XO/4fKcsHeldqyc7OQgjFVGHk85WFQVXmKJXWmlt
-         bNZD5k/9pV2Fcc6Gw51EbrpFlnCKBHyen3+y6+IBggtwk2vLHQqt2HIeh6jTWCpAgaFp
-         xzQnsa0UnTesqvc6Y6iuY766IbAuiFOeDv/pXLZ1aiNfcDbzHiGkpensAY34bYH2gOnW
-         cU9w==
-X-Gm-Message-State: APjAAAXm3cjYpG/iAmAMieANh6S2/RVR8TqxxR8gQYManyCY8kiE2fZK
-        nPgE8w71o93UelV5iUyzwKYydA1y
-X-Google-Smtp-Source: APXvYqyvMj/eogJyhB4RJ0HhnUlZq2+hJc9hvxOuTV0yhOgimGlUcX9x8Tf5ocAgtQCKhMpeRyJiPQ==
-X-Received: by 2002:a05:600c:24a:: with SMTP id 10mr43522296wmj.7.1563455951742;
-        Thu, 18 Jul 2019 06:19:11 -0700 (PDT)
+        bh=78g8+gaDXo8uS1s5S5WVm7dLUprygkhQyQhnC+pZgoE=;
+        b=IaOzX3Njq72QgO/R9JCARvjOozLmoAD8lf5hTEN3gLp1gje8xFDjbEQeIRavmT233f
+         SSgyvopFckJeNxqpkMdNpTJmC0P9ckzT6S3RT/ucBZ826kE2QOjX06ipTkA9d661WVo7
+         anCxX9uQsrGZQQd101bIMGREfiXChMK0n+qt7EHethD5PWYz5nrt2WZfPmyoaisldrfB
+         BrH9NdXRtsplSpReWL0RXfdLZ6Fk+zuYnh4c+vXhBwBa3hf8RZmub+3AHGkqrlYTWyha
+         hQ+wTZheZIa70Cv5JgINCdMzXzeH3Ug6YT9sqSZecgH22qYfR8aMrc+KTt+MDjK5rthr
+         Ac9w==
+X-Gm-Message-State: APjAAAW6TAPm7PaUEDrdM9WyQ5en3W9SxZgMxPfGq1lFvU14C5hBPdQ4
+        A5aj5fO6PvZ7wWlqvyNxNWPLrtn+
+X-Google-Smtp-Source: APXvYqzCBa1onqGoyFpG02vPX/diFiIhhLhNMUEBYwJi5Av/ssMSB4chA2Cj7G3TvnoaXWfdcfVPmQ==
+X-Received: by 2002:a5d:60c5:: with SMTP id x5mr49725276wrt.253.1563455946630;
+        Thu, 18 Jul 2019 06:19:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6sm21575843wrp.12.2019.07.18.06.19.11
+        by smtp.gmail.com with ESMTPSA id c9sm23564375wml.41.2019.07.18.06.19.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 06:19:11 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 06:19:11 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:51 GMT
-Message-Id: <1d4c5539ef5e9c1e83e0ce6d641c535dabf5d242.1563455939.git.gitgitgadget@gmail.com>
+        Thu, 18 Jul 2019 06:19:06 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 06:19:06 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:43 GMT
+Message-Id: <c10fd668ef943c2bfc0cfb909e5807ee87d65e23.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 16/24] contrib/buildsystems: handle options starting with a
- slash
+From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 08/24] contrib/buildsystems: handle quoted spaces in filenames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Philip Oakley <philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Philip Oakley <philipoakley@iee.org>
 
-With the recent changes to allow building with MSVC=1, we now pass the
-/OPT:REF option to the compiler. This confuses the parser that wants to
-turn the output of a dry run into project definitions for QMake and Visual
-Studio:
+The engine.pl script expects file names not to contain spaces. However,
+paths with spaces are quite prevalent on Windows. Use shellwords() rather
+than split() to parse them correctly.
 
-	Unhandled link option @ line 213: /OPT:REF at [...]
-
-Let's just extend the code that passes through options that start with a
-dash, so that it passes through options that start with a slash, too.
-
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/engine.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/buildsystems/engine.pl | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 9bde7ae15b..8bb07e8e25 100755
+index 11f0e16dda..ad6a82c30c 100755
 --- a/contrib/buildsystems/engine.pl
 +++ b/contrib/buildsystems/engine.pl
-@@ -351,7 +351,7 @@ sub handleLinkLine
-             push(@libs, "expat.lib");
-         } elsif ("$part" eq "-liconv") {
-             push(@libs, "libiconv.lib");
--        } elsif ($part =~ /^-/) {
-+        } elsif ($part =~ /^[-\/]/) {
+@@ -12,6 +12,7 @@
+ use File::Spec;
+ use Cwd;
+ use Generators;
++use Text::ParseWords;
+ 
+ my (%build_structure, %compile_options, @makedry);
+ my $out_dir = getcwd();
+@@ -231,7 +232,7 @@ sub removeDuplicates
+ sub handleCompileLine
+ {
+     my ($line, $lineno) = @_;
+-    my @parts = split(' ', $line);
++    my @parts = shellwords($line);
+     my $sourcefile;
+     shift(@parts); # ignore cmd
+     while (my $part = shift @parts) {
+@@ -265,7 +266,7 @@ sub handleLibLine
+     my (@objfiles, @lflags, $libout, $part);
+     # kill cmd and rm 'prefix'
+     $line =~ s/^rm -f .* && .* rcs //;
+-    my @parts = split(' ', $line);
++    my @parts = shellwords($line);
+     while ($part = shift @parts) {
+         if ($part =~ /^-/) {
              push(@lflags, $part);
-         } elsif ($part =~ /\.(a|lib)$/) {
-             $part =~ s/\.a$/.lib/;
+@@ -306,7 +307,7 @@ sub handleLinkLine
+ {
+     my ($line, $lineno) = @_;
+     my (@objfiles, @lflags, @libs, $appout, $part);
+-    my @parts = split(' ', $line);
++    my @parts = shellwords($line);
+     shift(@parts); # ignore cmd
+     while ($part = shift @parts) {
+         if ($part =~ /^-IGNORE/) {
 -- 
 gitgitgadget
 
