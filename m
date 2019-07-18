@@ -8,165 +8,94 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19BB21F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E91191F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 13:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390448AbfGRNTG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 09:19:06 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34388 "EHLO
+        id S2390467AbfGRNTK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 09:19:10 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38531 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390416AbfGRNTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 09:19:04 -0400
-Received: by mail-wr1-f67.google.com with SMTP id 31so28715634wrm.1
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:03 -0700 (PDT)
+        with ESMTP id S2390440AbfGRNTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 09:19:07 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g17so28683328wrr.5
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=IpYxuyg0d7h+PkcMcFpH5/CrbD7XZfHhe7dTuXO7RfQ=;
-        b=h4aYuniVkesHL9f24toKHoMLPneANtpykMkku9DdGbPOnV7xhReg6GHUY6CIJJHr9k
-         bi3UVBdhSA2zUHRkI3uyqSgvmUVRl0/sm4/doKayTDu64eYbemc6Z/A7pQsapo4lgEL4
-         lUvWZB9oRskpq9owA8ieMxY4sD/LCbcOvEycpTQkMeKwkKe11aaVjfwlh663AU5HVeQg
-         iFI0qA+HVV7kIjmfF7wg8DrN+KzElKhzSHhn85aOTsNZcjT88R9o59ctSZXZHLYrXvn8
-         F59NdS3eEz2ouezMdjje0OB90/eynh9qFg07akV/6Ctt1YNNl+zIlAIeDjYFSNrVIwRQ
-         7e5Q==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Tou9s6+lKBEd+336v5AuGx7s+2YDAAuPHyoFqMGnXRQ=;
+        b=WfhQ8RIckQrezGR2weIw4A0Hvt3FS/TENZ2wyuO1pkBeo7ypwEBypYXZ+o3GZAL30I
+         TXBULrFGysmE9EJZ3CXKxbf0+ISz+XJCKluhMpxkcTBQXqQscZ8DzpaR4zDEZ57set/K
+         Md/mJqzRbDtvY9Vsbf8N+Ij1LnmOlB/ZlhBlWrACFw3lXuhsvo/6vbTfB5I3B1o86BA1
+         /FNIzLO1WskmzvZgj6RwLcp3+h4DSZwynEkLW5DZUJCeeogMjA7k8JwVZ5GGlN11aB8u
+         c8lFFlxzrP75q7Mgqa5Vxs8JJ5thwvHdftd11l2ljGfN/1jBJVfZQ1YfdamdxFF5NKu8
+         3+0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=IpYxuyg0d7h+PkcMcFpH5/CrbD7XZfHhe7dTuXO7RfQ=;
-        b=OahM1ZuZG0FvDkNqd2H/oUZ7PzV0KNEzBC47OrfGujZwAB/CcHWAK+MNHChUjprElp
-         gmds1amExfw6EQxsHI8JyVFY/hYBERf6dJ0glPREbnZpElFodfExt5JGeVqi5Ae7Tdou
-         2tp1KPaBUY1AGdgNGYBwHRBCwzwJrellh/4JNY36j6p+OJuAs0nPLp6DBi9ZHVfqYz78
-         +bPND2d3giUXrRhzQBaOU6Fgo6/A388nfBWhcj850kWwvQSj8gVvT46PwDT7ouvO5qaZ
-         QleQhccRGjj0Thtacr6pzZzGh/49t4RytrWHAAqlApB9E2Dp5Fm5NvlLgsxIgVX0KtCw
-         KtLA==
-X-Gm-Message-State: APjAAAUkGpmifOHkyTwtDeDS2HAnjP7iwS8AIZYGuo3uC+EuPwjoVhSC
-        0pb39SptaoJ0pvlpjEX5rSlvSdG7
-X-Google-Smtp-Source: APXvYqwluHOj/lqaokF6lRK8jsxzYvi5JKfYW/bjjw+qcpthYrHtXRXTtkIVpLnOZz1jD4nNYNifEQ==
-X-Received: by 2002:adf:e790:: with SMTP id n16mr34847894wrm.120.1563455942558;
-        Thu, 18 Jul 2019 06:19:02 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Tou9s6+lKBEd+336v5AuGx7s+2YDAAuPHyoFqMGnXRQ=;
+        b=iileme3iYu0nULenZCOSDr0SYJ++QLMtwbr2JanBaRkEPRiMf3zmhuGNcvinu4Haj+
+         niSDV0I91Ji2dil21IIJv5NXXEt7qk4/rfMgPlbNi8EAVc3i2h+LRAHEnshFQQDjvYBT
+         xRB8eqPOu9KqYHwH06fs/mIIeUB7LxPqv4lCn5GD2///XImDZorlDkboSTUiHSWPJ3wb
+         kN/GnExAGqN9XkTAEtmcHJJ4+Zbc3h3oZyExdFnFWtfzGnwWGZFDcKNEx6S4SleO+vJP
+         cca/YzhT1SSU7DQ9FBG2CXVueMhQVKzN+SYneIPolff/iX4V0DY5MBere5m16/PGU8Ok
+         /WUA==
+X-Gm-Message-State: APjAAAW6EpNycu+biqX5pLNGteITY+hot7okWNaceo/mvKrLiGgi6iGr
+        GZZIWIK0JztdSmEe2BuR+SEcRaD6
+X-Google-Smtp-Source: APXvYqyKLdc667j5nK5IIuZUnHaztdvK+2Y62U2uED8Vq6tu+W4df2XQwc8NBDHT06SiHrIuBd7KLw==
+X-Received: by 2002:a5d:4403:: with SMTP id z3mr51219347wrq.29.1563455945336;
+        Thu, 18 Jul 2019 06:19:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y16sm26624105wrw.33.2019.07.18.06.19.01
+        by smtp.gmail.com with ESMTPSA id c3sm31440792wrx.19.2019.07.18.06.19.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jul 2019 06:19:02 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 06:19:02 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Jul 2019 13:18:37 GMT
-Message-Id: <a7898b002590adcfb103e6851d84267715ee05b0.1563455939.git.gitgitgadget@gmail.com>
+        Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 06:19:04 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 13:18:41 GMT
+Message-Id: <60a45f26948989f928ca439a2860433c0f08f412.1563455939.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 02/24] Vcproj.pm: list git.exe first to be startup project
-MIME-Version: 1.0
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 06/24] contrib/buildsystems: ignore irrelevant files in
+ Generators/
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Visual Studio takes the first listed application/library as the default
-startup project [1].
+The Generators/ directory can contain spurious files such as editors'
+backup files. Even worse, there could be .swp files which are not even
+valid Perl scripts.
 
-Detect the 'git' project and place it at the head of the project list,
-rather than at the tail.
+Let's just ignore anything but .pm files in said directory.
 
-Export the apps list before libs list for both the projects and global
-structures of the .sln file.
-
-[1] http://stackoverflow.com/questions/1238553/
-vs2008-where-is-the-startup-project-setting-stored-for-a-solution
-    "In the solution file, there are a list of pseudo-XML "Project"
-    entries. It turns out that whatever is the first one ends up as
-    the Startup Project, unless it’s overridden in the suo file. Argh.
-    I just rearranged the order in the file and it’s good."
-
-    "just moving the pseudo-xml isn't enough. You also have to move the
-    group of entries in the "GlobalSection(ProjectConfigurationPlatforms)
-    = postSolution" group that has the GUID of the project you moved to
-    the top. So there are two places to move lines."
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/Generators/Vcproj.pm | 33 +++++++++++++----------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ contrib/buildsystems/Generators.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
-index c79b706bc8..d862cae503 100644
---- a/contrib/buildsystems/Generators/Vcproj.pm
-+++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -513,20 +513,18 @@ sub createGlueProject {
-     foreach (@apps) {
-         $_ =~ s/\//_/g;
-         $_ =~ s/\.exe//;
--        push(@tmp, $_);
-+        if ($_ eq "git" ) {
-+            unshift(@tmp, $_);
-+        } else {
-+            push(@tmp, $_);
-+        }
-     }
-     @apps = @tmp;
- 
-     open F, ">git.sln" || die "Could not open git.sln for writing!\n";
-     binmode F, ":crlf";
-     print F "$SLN_HEAD";
--    foreach (@libs) {
--        my $libname = $_;
--        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
--        print F "$SLN_PRE";
--        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uuid}\"";
--        print F "$SLN_POST";
--    }
-+
-     my $uuid_libgit = $build_structure{"LIBS_libgit_GUID"};
-     my $uuid_xdiff_lib = $build_structure{"LIBS_xdiff_lib_GUID"};
-     foreach (@apps) {
-@@ -540,6 +538,13 @@ sub createGlueProject {
-         print F "	EndProjectSection";
-         print F "$SLN_POST";
-     }
-+    foreach (@libs) {
-+        my $libname = $_;
-+        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
-+        print F "$SLN_PRE";
-+        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uuid}\"";
-+        print F "$SLN_POST";
-+    }
- 
-     print F << "EOM";
- Global
-@@ -551,17 +556,17 @@ sub createGlueProject {
-     print F << "EOM";
- 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
- EOM
--    foreach (@libs) {
--        my $libname = $_;
--        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
-+    foreach (@apps) {
-+        my $appname = $_;
-+        my $uuid = $build_structure{"APPS_${appname}_GUID"};
-         print F "\t\t${uuid}.Debug|Win32.ActiveCfg = Debug|Win32\n";
-         print F "\t\t${uuid}.Debug|Win32.Build.0 = Debug|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.ActiveCfg = Release|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.Build.0 = Release|Win32\n";
-     }
--    foreach (@apps) {
--        my $appname = $_;
--        my $uuid = $build_structure{"APPS_${appname}_GUID"};
-+    foreach (@libs) {
-+        my $libname = $_;
-+        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
-         print F "\t\t${uuid}.Debug|Win32.ActiveCfg = Debug|Win32\n";
-         print F "\t\t${uuid}.Debug|Win32.Build.0 = Debug|Win32\n";
-         print F "\t\t${uuid}.Release|Win32.ActiveCfg = Release|Win32\n";
+diff --git a/contrib/buildsystems/Generators.pm b/contrib/buildsystems/Generators.pm
+index 408ef714b8..aa4cbaa2ad 100644
+--- a/contrib/buildsystems/Generators.pm
++++ b/contrib/buildsystems/Generators.pm
+@@ -17,7 +17,7 @@ BEGIN
+     $me = dirname($me);
+     if (opendir(D,"$me/Generators")) {
+         foreach my $gen (readdir(D)) {
+-            next if ($gen  =~ /^\.\.?$/);
++            next unless ($gen  =~ /\.pm$/);
+             require "${me}/Generators/$gen";
+             $gen =~ s,\.pm,,;
+             push(@AVAILABLE, $gen);
 -- 
 gitgitgadget
 
