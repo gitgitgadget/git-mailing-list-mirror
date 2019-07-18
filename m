@@ -2,120 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC35F1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 08:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 930B61F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 09:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726972AbfGRIuE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 04:50:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56561 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726397AbfGRIuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 04:50:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563439795;
-        bh=Av+ZqEKJ/VjZrq3EExhtRQnSxs7DZ8jx85yD+3ts8L8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bv3FfsSc2FmWlaFF2+rUo4iHPr+fJgVdG7hpjg7RJYdPUFJ1yOh+YnUZUamX9Y1aV
-         LVgxp1uLXKKsQzA9WwO43JiqfgJZKqNZIb2nxOeP/AXSVDm/hXBSD/twN+4fDEV+e9
-         81w9ptePEBI7U8q1yFI5vhk+7M4xK0qp166llBwg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lrviw-1ia3v32xfa-013c7m; Thu, 18
- Jul 2019 10:49:55 +0200
-Date:   Thu, 18 Jul 2019 10:49:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 1/1] clean: show an error message when the path is too
- long
-In-Reply-To: <xmqqsgr4zea9.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907181048280.47@tvgsbejvaqbjf.bet>
-References: <pull.219.git.gitgitgadget@gmail.com> <36677556a26cca9eafd859c88aa9b2c5a6cde309.1563285862.git.gitgitgadget@gmail.com> <a7fee3c7-8fd5-11ef-8b0d-ff8053987b0c@web.de> <xmqqftn53g8z.fsf@gitster-ct.c.googlers.com>
- <xmqqsgr4zea9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1733131AbfGRJaf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 05:30:35 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41677 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726383AbfGRJaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 05:30:35 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c2so24677704wrm.8
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 02:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=p7eP5Sc6L2fqVToLGvbuRAYmJvldRFimIuxrVEy3uco=;
+        b=aLiSNxtOVkmuF6Yy9B4e99+XZQit0sqJFxo1ynsvA66KdnR2T+GpmQgyJxk35coXWX
+         MwWbFVv873E1VJLnnTovILH/SwBz+UhYR9UtQ95KFJqOmYDzX7p5N/xYkGe+weoMQSJ5
+         /13pa76hSy4tl4gtnWDAS2qKmuHHdB2RV2VtJwyp1QfMQ05hQDv3EIBQ1NsH90h55Anc
+         XnIiAStI3jxtEdzO6RB/6gHdnoM05XOAmUXWlf+6G+eR50gKzTHk2/+ZJQNmBUGgK4Iu
+         ePqo8vVQgZ4RiMQuawXMMAdzK1KYw4Pz9Qg+/y5f6uYM+6B5/z6hw3Z6Ol0eAmOe5Bqp
+         gqVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=p7eP5Sc6L2fqVToLGvbuRAYmJvldRFimIuxrVEy3uco=;
+        b=T+NbOf13veBRt4FqG67+00/KzAPowxBlNzJNegtpr/MSlK9QVNMZ9Yz8gfx7m9l1hG
+         bk/rOwavpy/t8AW/kAYwPQkd4o+2d8xqlRo+WhtNeJ+JSawDDPziPOC8WmTZ+UWIfmpa
+         GjUTNaGhEB+G4WayBUM+psCcuYDxSzksGRHSdOtfe6Th4eyRUAKiZ7OmnvUrXnjrutYv
+         WB335LjQXF99cciV4E9eXYK/lbkLPALdpjqCTLLtfWXq3DA1R9enExa8W4/oqGUzglBK
+         fhKladHZPZrikzcGjswZEKJG28GH+8Gs+bLQoSqCiShmaLzM+t5eiOwSIzEsfh64OnAm
+         dXrw==
+X-Gm-Message-State: APjAAAUKQ+dpLgPSsSVAtaYtqzUZRU6EMyVB03PZxAxjAR0pzUtOfUuX
+        36JzkHd5wQ30twNK1Znv8FHVt6qT
+X-Google-Smtp-Source: APXvYqx/VnrylAptPYdrugqjPu7aPoACHAUfYNRvHrRuL1hQDZAsGn4/1QdcTQrbCeMfPdQqNr/sgg==
+X-Received: by 2002:a5d:4484:: with SMTP id j4mr48733120wrq.143.1563442232744;
+        Thu, 18 Jul 2019 02:30:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o7sm22608588wmc.36.2019.07.18.02.30.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jul 2019 02:30:32 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 02:30:32 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Jul 2019 09:30:30 GMT
+Message-Id: <pull.219.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.219.git.gitgitgadget@gmail.com>
+References: <pull.219.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] Show an error if too-long paths are seen by git clean -dfx
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1277090141-1563439796=:47"
-X-Provags-ID: V03:K1:4BGAxaP4B+RwidqME2OW+EiK2CWSHl/8oXYS1zOM+dmrIup33gW
- +v8SloyvbcWyFhhXn/46qk1iaSwjGwwPqZzj9HJZjaruI4kVesSpgV0RRSWRgNvW2HXRBXS
- h0xQbG84na6SRczdq9tnK7VUcq7TTRWJfn8V9WGioL5rcgE8Pz59FaGGDOexcxKNiTHAXs3
- 6yrnK5fMRb6k2VpdhytLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ICtBzmREao0=:otwsNPZYpV62cRkDSdztHj
- Kh/DdrZmc+4K4Drn+oMOls15MnUR2BUdK5OTVIgc2bPuzCFy1EQhUIwC86Xr21/2X2ptJ3vdq
- TRbwNM1F2LlfklTPHEDsB3xYUHMVjAKwgjURoYOkkrkEHHYsaDgatd7XZ63GQNYoPAgNLbmDq
- +rx9Z2NK2RCafHEpPWmYMuVy6Sx14V6uvEQJLdnake4hSmn0yJsGdvOqTMggx0shqFeFq1dFt
- eAVy19eosEm/W6O3cgT37/kqA7/w3g9QOpKdbkhyyjkzGdUvNOP0MeXhrzQszblUxPPiU7qIW
- zzd8/Mj3OCypVVHf2RK0TktFkJpyivr21mzfej6sNriQiMa12iVbnLwHXwv81MZJPm02WrRXt
- G91n9NwoIWk2xMRuWvM38+9D3LIeOOX2iv8yvuC0Awp3eJjVVzhTI3wHj3Bvgwov4cA95qDCC
- W0aEuXrGbtp84lZveJblCdjBKGr0UcbY5VukmmP4W7ZPwDpJ6/sx05lV8Yv+allPnViLaX+g5
- EcrZTDNej4hUR3Rs0vdv8md21hu2D35a3SUP/1K+qNe7y+qQdLoVCz3YWSLlHLZ3kAxf97ybq
- tqDYMktC/4ISs1UZ4DvK7fz/tnIgL5GMUXEySW+HURJYtt+f7/TCsZ/WCnd+odp8212eZ8SYM
- uJazRLzUPjhLS2PujEVpGG0tDC4V1Kz3blMfmyHci6c5zqJtsdvPmd3T/i0yG1YSaZ4GcbbCb
- xACRl01cIkIaSVs9xtDpb3U9ZMJgcmyeb2ciw3piECiKfZH7HVWouuGUfMTOLu/QaUqinKTZe
- ZFFCv0gqMtmMGUWphBZZPxspFiMA/KqkGTQAKaSFze6tUxxsnmobufslxzI+691j/IQES1pX1
- o8hHDFtR0r8Yq+Lc08m8pYZ+qzf8iHmc69MZlUg5d1vmhB3nUa4eSzs6CgSbkr4N6nUO+9q5i
- OmE/ZQkBv8PizumwTnk5jPERwpDUdteMPZwyxKq8RPzgn5QZdQvwjiClNELCYNzDp71C7dcCD
- bOgFCCW38orgph1VCizzb8n6HqiRoVUPH9XrnBgGw3WrOMM3h7IYElk+5ST9aqM407p8izNFr
- 2FP+rxXF+PuehjeBofxgFSFw+I3XZRuftFM
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe_=3Cl=2Es=2Er=40web=2Ede=3E=2C_SZEDER_G=C3=A1bor?= 
+        <szeder.dev@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This is particularly important on Windows, where PATH_MAX is very small
+compared to Unix/Linux.
 
---8323328-1277090141-1563439796=:47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Changes since v1:
 
-Hi,
+ * Matched the warning message style to existing ones,
+ * Fixed test in multiple ways: * Avoiding touch in favor of : >.
+    * Using test_config.
+    * Using test_i18ngrep instead of grep to avoid localization problems.
+    * Add helpful comments.
+   
+   
+ * The commit message now talks about lstat() instead of stat().
+ * The commit message also explains where that core.longpaths comes from.
 
-On Wed, 17 Jul 2019, Junio C Hamano wrote:
+Johannes Schindelin (1):
+  clean: show an error message when the path is too long
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> >> The other warnings in that function are issued using
-> >> warning_errno() (shorter code, consistency is enforced) and
-> >> messages are marked for translation.  That would be nice to have
-> >> here as well, no?
-> >
-> > Absolutely.  Also, downcase "Could" and perhaps use _() around.
->
->
-> This one is easy enough (not just in the technical sense, but in the
-> sense that it has little room wasting our time bikeshedding), so let's
-> tie the loose ends and move on.
->
-> I was tempted to fix the proposed log message to excise exaggeration
-> (I prefer not to see "very", "important", etc.---other things that is
-> said in the message should be enough to convince readers about the
-> importance), but didn't.
->
-> What I did do was to not just rephrasing the warning message, but to
-> give it its own constant and to feed it to warning_errno(), to match
-> the other warning message.
->
-> I also saved one (or perhaps two) fork(s) from the test script ;-) and
-> added a portability note there.
+ builtin/clean.c  |  3 ++-
+ t/t7300-clean.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-Thanks!
 
-On top, I integrated Gab=C3=B3r's suggestion to use `test_config` and thre=
-w
-in a paragraph in the commit message to explain why the `core.longpaths`
-variable is touched at all.
+base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-219%2Fdscho%2Fclean-long-paths-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-219/dscho/clean-long-paths-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/219
 
-v2 incoming,
-Dscho
+Range-diff vs v1:
 
---8323328-1277090141-1563439796=:47--
+ 1:  36677556a2 ! 1:  c7b11fe410 clean: show an error message when the path is too long
+     @@ -2,7 +2,7 @@
+      
+          clean: show an error message when the path is too long
+      
+     -    Without an error message when stat() failed, e.g. `git clean` would
+     +    Without an error message when `lstat()` failed, `git clean` would
+          abort without an error message, leaving the user quite puzzled.
+      
+          In particular on Windows, where the default maximum path length is quite
+     @@ -15,18 +15,32 @@
+      
+                  https://github.com/git-for-windows/git/issues/521
+      
+     +    Note that we temporarily set `core.longpaths = false` in the regression
+     +    test; This ensures forward-compatibility with the `core.longpaths`
+     +    feature that has not yet been upstreamed from Git for Windows.
+     +
+     +    Helped-by: René Scharfe <l.s.r@web.de>
+     +    Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       diff --git a/builtin/clean.c b/builtin/clean.c
+       --- a/builtin/clean.c
+       +++ b/builtin/clean.c
+     +@@
+     + static const char *msg_skip_git_dir = N_("Skipping repository %s\n");
+     + static const char *msg_would_skip_git_dir = N_("Would skip repository %s\n");
+     + static const char *msg_warn_remove_failed = N_("failed to remove %s");
+     ++static const char *msg_warn_lstat_failed = N_("could not lstat %s\n");
+     + 
+     + enum color_clean {
+     + 	CLEAN_COLOR_RESET = 0,
+      @@
+       		strbuf_setlen(path, len);
+       		strbuf_addstr(path, e->d_name);
+       		if (lstat(path->buf, &st))
+      -			; /* fall thru */
+     -+			warning("Could not stat path '%s': %s",
+     -+				path->buf, strerror(errno));
+     ++			warning_errno(_(msg_warn_lstat_failed), path->buf);
+       		else if (S_ISDIR(st.st_mode)) {
+       			if (remove_dirs(path, prefix, force_flag, dry_run, quiet, &gone))
+       				ret = 1;
+     @@ -39,14 +53,15 @@
+       '
+       
+      +test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
+     -+	git config core.longpaths false &&
+     -+	test_when_finished git config --unset core.longpaths &&
+     ++	test_config core.longpaths false &&
+      +	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
+      +	mkdir -p $a50$a50/$a50$a50/$a50$a50 &&
+     -+	touch $a50$a50/test.txt &&
+     -+	touch $a50$a50/$a50$a50/$a50$a50/test.txt &&
+     ++	: >"$a50$a50/test.txt" 2>"$a50$a50/$a50$a50/$a50$a50/test.txt" &&
+     ++	# create a temporary outside the working tree to hide from "git clean"
+      +	test_must_fail git clean -xdf 2>.git/err &&
+     -+	grep "too long" .git/err
+     ++	# grepping for a strerror string is unportable but it is OK here with
+     ++	# MINGW prereq
+     ++	test_i18ngrep "too long" .git/err
+      +'
+      +
+       test_done
+
+-- 
+gitgitgadget
