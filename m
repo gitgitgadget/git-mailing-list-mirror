@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A20CE1F461
-	for <e@80x24.org>; Thu, 18 Jul 2019 22:57:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC67C1F461
+	for <e@80x24.org>; Thu, 18 Jul 2019 22:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391683AbfGRW5q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jul 2019 18:57:46 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:49205 "EHLO
+        id S2391701AbfGRW5t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jul 2019 18:57:49 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:50699 "EHLO
         mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728157AbfGRW5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jul 2019 18:57:46 -0400
-Received: by mail-pl1-f202.google.com with SMTP id 65so14704303plf.16
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 15:57:46 -0700 (PDT)
+        with ESMTP id S2391694AbfGRW5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jul 2019 18:57:49 -0400
+Received: by mail-pl1-f202.google.com with SMTP id d6so14685592pls.17
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 15:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=DIajGHrNK3Npd7GQVfTeYgeCH1+xoCJxtXGvMriPIBM=;
-        b=cRrDF24FMWEUpe5N9jneB/YGjXjDWW3P+7OpWVrkFt6thgdQBF76mAidjlC+crCLEw
-         4UzjmAT57W9IrQxCG1Vba7ktsCpSaPOTTilQ9RRIxFEO7dND90KgOohVt4v4BRIpibg8
-         TuIHheYloKB1BYNCx+q5eQi/QJl4ZTDTz5W69XEldNOGcncVnR8WzeMQX0fLKpCxxeqo
-         jL6Jmfx33yVJzbPO6jZc7NatPRrI8y/HFQdX02d85Apx6J3WjV/8pjZck77uU6QqCWNf
-         SKnOXJHtIE7/d4ZKSHG+470MKxRCYN9vD+9T5/p4qcQEshx+a7GD+Z7VRmZk1vUpvB5C
-         55WA==
+        bh=TwXFnN45bQNJGnf+JFRU3LRku9SErp7XAGlWfvtMdTg=;
+        b=LwuVdUaEwUlgVGPwTqIsRqph3mYCBeK4IA9pyD5+qex4xijADT1kxxk4p5u65xrdTv
+         oPFwHxhbWYJHnNAQtOaC/8rz9cg54R0OXFC08nns29xlDCLthFI0dwC9VM7+Q1nLIeNh
+         ViPYAA2wP6BqtdrKXzEVibxJBcQKKdeuofRapSXTrRNd9W7l9KQlAePzIhxUBDnw/xY/
+         lBsJnOf7JGlvfE0ggKhqNGxMmn79qQ4kgFB2qdUOW2ys0P/EM7kPRsEDDpJjbKQsD3T7
+         UtKS6o8x3193AM2LcloZySIXD8skNdLl8BoTt2VvZadPkVsy2nU0QeF86ruzsGaLmLhT
+         1bsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=DIajGHrNK3Npd7GQVfTeYgeCH1+xoCJxtXGvMriPIBM=;
-        b=IiWRweE0N5sjGmBep298C89NK7zmjDE4ruBmA1fdh9VjyRexNxvPv8+80h7MLHjh6x
-         00HJrOd+RbaJor7MjiB1UFfmXuk6c1tdlYDy8gA5uGk6jHKMytSWU3cPeh0D41Nnum3i
-         te3OeQHB/g+ipKeuvfQcEEZogmaosqz7Rndqv8zwg+T7sX8e3/ahPdR6n5bhhhooKEyD
-         Fw7BKpt+OzwpRccuBntNKb/GZjHO67JZ2MWs76ml0BOfS0eFwh/GJ91SdqPZ4bqeraaI
-         fh+G7SUz8iCmpNZSxxvLr8epKgm6JkEdMF0uMa2z3wwrSSujptAGEN232uKv+N6s++9R
-         ijjg==
-X-Gm-Message-State: APjAAAXsUU5u8cVlXKoQWSv7sge720kVafj4qTRAeUx6Dp8Aq222WJjc
-        xKOKaDW1wZ01VXd9VsEMsZ8Rh+2hR0/hQ/onDqOjuwmC7y8X1/Yhrjjr7PbwGZ8lqTSOQRpjx9j
-        8N3T2lbgttqQFZ9jMjDnCA2DayupBzLoIMx+UVrhg3BY77sLBxbhEwLPeJWp9uHE=
-X-Google-Smtp-Source: APXvYqweFIGnGFJ4KAV9hNshZ2a2H1diYZs53rX0ILRv6ix52rtV3eYLPu1HAoj6dJxw1DY0t0jBm/8jCQND+A==
-X-Received: by 2002:a63:9a41:: with SMTP id e1mr51161811pgo.210.1563490665443;
- Thu, 18 Jul 2019 15:57:45 -0700 (PDT)
-Date:   Thu, 18 Jul 2019 15:57:37 -0700
+        bh=TwXFnN45bQNJGnf+JFRU3LRku9SErp7XAGlWfvtMdTg=;
+        b=lO8x8DbO9kL8AqQ0SqirdSccleN2Bh1K75h+RS+G4tjy4kkp6F8HhP20y2ow4y4XjF
+         bgBHeJqGneZdaSevyoMsPBM0KhG2SnIFURSeys+ugy0cvbBsqtKc7z2WSjYz2PVk4dmc
+         tU/ovsd+8WlKQrGhiMrcrdZlRF8p4Z00YdApuN7ZNtFEnNWq64Hzam68S3vbUA4iiWC+
+         eulRzlJ0GK1B8UFzC2g1NV8zfTs3+SPrd/3EscKM2nlXaKd9OX1XPYGDY6WdX5vgANQ4
+         S3V0c9X6ppHCfNumwBhel9L81VX5/Xusy841dz+C7FgBiRDFjJ/uTOXbQ7glkdZpjSjb
+         BkeQ==
+X-Gm-Message-State: APjAAAV3F9zVnZx1d/bOVMfSQFoJR/cy3nWQq7jkPEI6vHeD7aTQA32E
+        xeK9ee8KhKpJjQ8XqKbvP7uYHJW73HdwePDAr43TbuLy/DLliJc3OTVE0cCqFyDiphUU6UfUpYP
+        FR+pnpPd4d4tBa3wFF6iyeeG1EtjqiY0YY7afa2pVojzI73UHFrFfbLvexAC53dw=
+X-Google-Smtp-Source: APXvYqy7pcyaFm4U0xnFNzViCpGMh8vNizEGf1CdwYNLUgWz7iKNhG7tGZk1CFAzgkKlym4vecN0+OrKA/PuRA==
+X-Received: by 2002:a63:f401:: with SMTP id g1mr51705764pgi.314.1563490668072;
+ Thu, 18 Jul 2019 15:57:48 -0700 (PDT)
+Date:   Thu, 18 Jul 2019 15:57:38 -0700
 In-Reply-To: <cover.1563490164.git.steadmon@google.com>
-Message-Id: <e8b3fd8a5bf8f77795454a901fecaa585701eeb2.1563490164.git.steadmon@google.com>
+Message-Id: <36406a85beaf63d356fa9818463f73140acf1ec9.1563490164.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <xmqqbml6pgfm.fsf@gitster.mtv.corp.google.com> <cover.1563490164.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
-Subject: [PATCH v2 1/4] git-merge: Honor pre-merge hook
+Subject: [PATCH v2 2/4] merge: do no-verify like commit
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@grubix.eu, stefanbeller@gmail.com,
@@ -66,87 +66,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Michael J Gruber <git@grubix.eu>
 
-git-merge does not honor the pre-commit hook when doing automatic merge
-commits, and for compatibility reasons this is going to stay.
+f8b863598c ("builtin/merge: honor commit-msg hook for merges", 2017-09-07)
+introduced the no-verify flag to merge for bypassing the commit-msg
+hook, though in a different way from the implementation in commit.c.
 
-Introduce a pre-merge hook which is called for an automatic merge commit
-just like pre-commit is called for a non-automatic merge commit (or any
-other commit).
+Change the implementation in merge.c to be the same as in commit.c so
+that both do the same in the same way. This also changes the output of
+"git merge --help" to be more clear that the hook return code is
+respected by default.
 
-[js: addressed review comments:
-     * clarified that hook should write messages to stderr
-     * only discard the index if the hook is actually present
-]
+[js: reworded commit message, and moved documentation changes from patch
+ 3/4 to this commit.]
 
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- Documentation/githooks.txt        |  7 +++++++
- builtin/merge.c                   | 12 ++++++++++++
- templates/hooks--pre-merge.sample | 13 +++++++++++++
- 3 files changed, 32 insertions(+)
- create mode 100755 templates/hooks--pre-merge.sample
+ Documentation/git-merge.txt     | 2 +-
+ Documentation/merge-options.txt | 4 ++++
+ builtin/merge.c                 | 6 +++---
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 786e778ab8..dcc6606d44 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -103,6 +103,13 @@ The default 'pre-commit' hook, when enabled--and with the
- `hooks.allownonascii` config option unset or set to false--prevents
- the use of non-ASCII filenames.
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index c01cfa6595..f71ed1d0f9 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
++	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+ 'git merge' --abort
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 79a00d2a4a..d6a9f4b96f 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -105,6 +105,10 @@ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
  
-+pre-merge
-+~~~~~~~~~
++--no-verify::
++	This option bypasses the pre-merge and commit-msg hooks.
++	See also linkgit:githooks[5].
 +
-+This hook is invoked by 'git merge' when doing an automatic merge
-+commit; it is equivalent to 'pre-commit' for a non-automatic commit
-+for a merge.
-+
- prepare-commit-msg
- ~~~~~~~~~~~~~~~~~~
- 
+ -s <strategy>::
+ --strategy=<strategy>::
+ 	Use the given merge strategy; can be supplied more than
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 6e99aead46..5cd7752191 100644
+index 5cd7752191..5bbef203f3 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -816,6 +816,18 @@ static void write_merge_heads(struct commit_list *);
- static void prepare_to_commit(struct commit_list *remoteheads)
- {
- 	struct strbuf msg = STRBUF_INIT;
-+	const char *index_file = get_index_file();
-+
-+	if (run_commit_hook(0 < option_edit, index_file, "pre-merge", NULL))
-+		abort_commit(remoteheads, NULL);
-+	/*
-+	 * Re-read the index as pre-merge hook could have updated it,
-+	 * and write it out as a tree.  We must do this before we invoke
-+	 * the editor and after we invoke run_status above.
-+	 */
-+	if (find_hook("pre-merge"))
-+		discard_cache();
-+	read_cache_from(index_file);
- 	strbuf_addbuf(&msg, &merge_msg);
- 	if (squash)
- 		BUG("the control must not reach here under --squash");
-diff --git a/templates/hooks--pre-merge.sample b/templates/hooks--pre-merge.sample
-new file mode 100755
-index 0000000000..f459b3db44
---- /dev/null
-+++ b/templates/hooks--pre-merge.sample
-@@ -0,0 +1,13 @@
-+#!/bin/sh
-+#
-+# An example hook script to verify what is about to be committed.
-+# Called by "git merge" with no arguments.  The hook should
-+# exit with non-zero status after issuing an appropriate message to
-+# stderr if it wants to stop the merge commit.
-+#
-+# To enable this hook, rename this file to "pre-merge".
-+
-+. git-sh-setup
-+test -x "$GIT_DIR/hooks/pre-commit" &&
-+        exec "$GIT_DIR/hooks/pre-commit"
-+:
+@@ -81,7 +81,7 @@ static int show_progress = -1;
+ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
+-static int verify_msg = 1;
++static int no_verify;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -287,7 +287,7 @@ static struct option builtin_merge_options[] = {
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+-	OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
++	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass commit-msg hook")),
+ 	OPT_END()
+ };
+ 
+@@ -854,7 +854,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 			abort_commit(remoteheads, NULL);
+ 	}
+ 
+-	if (verify_msg && run_commit_hook(0 < option_edit, get_index_file(),
++	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
+ 					  "commit-msg",
+ 					  git_path_merge_msg(the_repository), NULL))
+ 		abort_commit(remoteheads, NULL);
 -- 
 2.22.0.657.g960e92d24f-goog
 
