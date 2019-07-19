@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B4851F461
-	for <e@80x24.org>; Fri, 19 Jul 2019 12:53:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 706001F461
+	for <e@80x24.org>; Fri, 19 Jul 2019 13:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728575AbfGSMx6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jul 2019 08:53:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:34423 "EHLO mout.gmx.net"
+        id S1727910AbfGSNYI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jul 2019 09:24:08 -0400
+Received: from mout.gmx.net ([212.227.17.22]:48949 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726239AbfGSMx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jul 2019 08:53:57 -0400
+        id S1727717AbfGSNYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jul 2019 09:24:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563540829;
-        bh=P+Fnc1wLk1bTXm+JwoboyQweLjBWvOo0xLED3umREuE=;
+        s=badeba3b8450; t=1563542626;
+        bh=GRRwb3vYfcPvlCawi6l/cEb/8JIbpCUQ7VKJDsbUMg0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XRtxpLsW1tyssRCcS7wpY/z8bsz8C/Pnlevsz9eMSohvkvRFqmsScZNAy1nAI96Jw
-         Wj4LS5MFshfrtn3sJm3HElwuUVE8J8c23z8Eiy4CKFbf/7zrK5BwW+wGO1r+0nCdlC
-         YRh11qXut/ccNyhyfiZI+b3+SAnEamGZRZxqDG5k=
+        b=kB07LdaIiLh2Kvt9o4rL6jc68uAXwusNRpg/ENUZ9MZt5L7lnTCUhnJUhKe8McdxR
+         cxvXpQxByUgzKET+tzasuS3F6BVTWycnTG1DZ+1rL0eilF9UJ1k1COlm7KDpmGA2UU
+         OqFSso2LAoEy5sirKQEGLDI/DpjuvcpuMrmmNuyg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRGPP-1i0qyw1Trj-00UYXz; Fri, 19
- Jul 2019 14:53:49 +0200
-Date:   Fri, 19 Jul 2019 14:53:33 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2V0B-1iZs8z2w8d-013uM7; Fri, 19
+ Jul 2019 15:23:46 +0200
+Date:   Fri, 19 Jul 2019 15:23:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        "=?UTF-8?Q?Ren=C3=A9_Scharfe_=3Cl=2Es=2Er=40web=2Ede=3E=2C_SZEDER_?=
-        =?UTF-8?Q?G=C3=A1bor?=" <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 1/1] clean: show an error message when the path is
- too long
-In-Reply-To: <xmqqef2nz5xe.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907191452270.47@tvgsbejvaqbjf.bet>
-References: <pull.219.git.gitgitgadget@gmail.com> <pull.219.v2.git.gitgitgadget@gmail.com> <c7b11fe410196c14e142756a036e2bdae5d4bcab.1563442231.git.gitgitgadget@gmail.com> <xmqqef2nz5xe.fsf@gitster-ct.c.googlers.com>
+cc:     Palmer Dabbelt <palmer@sifive.com>, git@vger.kernel.org,
+        peff@peff.net, e@80x24.org, chriscool@tuxfamily.org,
+        jonathantanmy@google.com, tboegi@web.de, bwilliams.eng@gmail.com,
+        jeffhost@microsoft.com
+Subject: Re: [PATCH] fetch: add "--parallel", which fetches all remotes in
+ parallel
+In-Reply-To: <xmqq5znzz17j.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1907191507420.47@tvgsbejvaqbjf.bet>
+References: <20190717015903.4384-1-palmer@sifive.com> <xmqq5znzz17j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gc8ebksbz6N7EBe3pDk4O7gFIa4NV08R6aQsviirFw7UOqd11Td
- Av1coM86UlSm4tFRU+asQ3NjRg54VHXvaVqQD1Yg3M6FxVDm8Wnw7nrSbn/UfOAPR30ZPDN
- sh8Se4su4DFfFerD15W/yYCK+nlhRGxEDSlFL4COEdqk36OEo5izOQdqvVLK4kqtxJi757Q
- oZ9rgbfiA9H92FKbGAVAQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MIbaiU3t+Es=:bo3F78nAhg+d6WwldVL3kO
- NZsYrpJwoGtwlrvias8EgOmTQDMAnc0iHsD+1ZnwG9XKKrWVMZC1YeuBdOf1yqeTKw2sUqKEL
- nGzZs6z9nxAData/zgUKtkF9ydNNP7TwwJBT1AOZs3hQmLESBIPykKytB0mJFztcpYhNyIj6Y
- SH5idAmS9zyTIT9i8LsqrKF4s/tFxiQIEJsvw3IO9LpZm5uXI6JkV3f9Oej6aDU6D3SiqI7gF
- yYLAObpZtwRmXiC5WofL1fRAxrKQf3Y9Z4PSGn/8ZkhVcdA/DezZSw4sWOHDJwttpWnnVSaZu
- 6M2T4UZ8bb8Jf7be2cay2AWCYfkz6Gfxica1REECgFHFJ7uoWlxu9ZkmBc8FI5RQFQhX3bbSH
- cgxD1NF6ptCk571N2P+0mPhJB54YPy2qNzpE8wH3fULU/bwPFzPxRfW06OWyfkl8ms78sdeFb
- OsZnqxR5OsZcIpfhO6cd5bv5TbSnQEHcQFfW5EcTTHBcIR09qmikvxRNiIoMFpeMJyQ/5Omx8
- m62c56GhJ7DrxrVyWC0Lk/qCK9ojz85cBOTMiSghZIUoPsAnIZm8L8il2+rYZBdCGezRGmBDU
- UIWp30fKIpeRWIWjDebuH7T5YRusF3izMbFLU6lazk4SoaPuv+sDLd+uf64t4gkjUeH53/ELG
- DZoq/LpUypL8WuyYFXTvCZ8bn04b/jNjO7RsL6wjUTa39cV4oJTtPxqnkcSkRpNKWMafbXat8
- Rn4HXsMAEdw+7LhEGaS/294KPnaO/Jlm1CnzBwKQ/v/y5Hz6Nu6qmatQYOZRbxD71whhmAe9F
- 1IaP4+GUfQ//MTkV88lzaQvzCRKIXLgQMy7vccXnrYcodiTLijs8vntJEG1922T91fTNYLKNG
- CPXqoUXW0RCx/fqXlPnLM4Fgmq8Ye6Fpuwss9P/Ji3RgdQOnCO+T4ZFD2LVLpHhxQwSadfVPv
- FxLxuscbqjgrcU8it/ACazJV+Hg/V5kcUfMxnRHOXxjN1kfdj4Hsl7BfRuPfOq6i7dBftBdGd
- D8MsPlmSPQfcU4kF2AmL+hG3tZ93b3ioSfszefRPvk5IeylnnzIwPR80f+puZ/cD8Rc8YUXrc
- MG9rWD1YQvX6ZyjS/dxtAuQTtOMQXxoHXc7
+X-Provags-ID: V03:K1:9fMlQxGYjD9mGjCEieklfq8Va3gczAJTW6JZRtT5vcvmm1l2tDt
+ mnGjVqfFVeau8+3q9BbCfp9is97wk7bJQt0ecjXo3cer2qSI6UijormFxQqDbHKoxzCGzzL
+ MMQBR3u1kihG9voE7I7qT3SftBRuELCijmB9Slc3WZExms2sBE63OG7MqHJ6cVSUoV++xQi
+ NOHrPRKWM5T0uNRjM018A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VEYrxmYzirU=:cEu2ygo4L/sKUFDe4j1Uc2
+ bJ1c24BQsTpQVJAxgy1YlT84nGp9hJmz35Ggl8NP3pkU2PQoyb75jtGmZZgfCAVDvZzow2o2m
+ NhCrf6KiXGPqAXPrim4cDRl5YiRfe5yG7/likFHN0Bvra060qmOSGdtK3NxIiuvs0Ni96qd8e
+ GRvMo98xfcDeu8Gweo1TA93rF9V6rgYLU6AiMsPmZrp+8TxCr6IxX2w16FZZRmmgTng2qy1Fm
+ z2C170Sh1svJXOTywUWNLFhdq6suQaw0ieMx9y+XD+7jaZKkl/yXPWX804lrwsYAmv9kT7Az4
+ onUDO3Drwj6CvpUeyL0IhCSfhdWMhDCmr3N9Vm0f9hKFsOyZlddsGNCgNX561qtT4h1zLVyea
+ M7pzgh2uJOw21IzbienHe7uZ8gA0OlPpAoQfLrvjFzakjXO4j4HALy8B/tsg2dhQQv7uh1/Er
+ rSl24i9As6v4i8yvBKplKa6JWathEKKPrYekKpoBy4Ia3+TjC3+tDGHIWiT/jkxixD1lI5TdK
+ wfcKXrWxBUkiF3pTgM/+xe74E/V8y0/UaaTMjAzALOXOYrwQy9bk7bi2P3DgmQmd4H7H8Bfle
+ TtV35Y990obbYk05pqPTZ40524BpejytJjo/Wo7qAMYec7S+fJdeR6w7GdbipIWp/3EMiVNDu
+ h42Tdzb0OD1uVRhmq9PVHGu4MBIeOg9L7HqgH+KU/+sk/t+EJUhP1Yk3fEW6CEALAU60eqw6M
+ u0KfwIwTNuchpshVhEjoSBDO9hVo4jsVH3iRsK0Wq0EVJsOt3WbRkWMO+qRso2zGNLhxhHF50
+ sxJUa7aJ9z3G48gZxFbE+iFrOqfhUKWuBKfY1+kTwEPPODWpcT6/Y3s3Tb5a8Nn2MNSdGu/EW
+ 2QtYOHvFrt5Jn251H5GOm2FmwT3oYmrAzjGGyt9wQiB9uHXADY/wr2sD63yUrM8VU8zg76VoB
+ UkqrBcc7fHfPY54azEf9rlbRHhy1RaKVoWixRsfq8V7uTKXS8eTcpdxhg668mru3FsQDkbD/M
+ QT7DgrPgsOs5g4TcxitAY1K8lkCxZ9IfMDvM86IKLmpal+uYjdPJvbMk/uQ0jybtfa0ChLUDo
+ O8WIxUMaP9i71MJDXlf9sOe3zazjCqiseg2
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -75,30 +75,139 @@ Hi Junio,
 
 On Thu, 18 Jul 2019, Junio C Hamano wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> Palmer Dabbelt <palmer@sifive.com> writes:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > * As I was writing the documentation I found "fetch --jobs".  It seems
+> >   like I should use that instead of adding a new argrument, but I wasn=
+'t
+> >   sure.
+>
+> Why not?  What makes you feel it is a bad idea to follow that
+> pattern?
+>
+> Ah, --jobs that is taken already is right now too tied to fetches
+> that happen in submodules, which arguably was a design mistake.
+>
+>     -j::
+>     --jobs=3D<n>::
+>             Number of parallel children to be used for fetching
+>             submodules.  Each will fetch from different submodules,
+>             such that fetching many submodules will be faster. By
+>             default submodules will be fetched one at a time.
+>
+> The simplest endgame would be to replace "submodule" with
+> "repository" in the above description, perhaps like
+>
+> 	Number of parallel jobs to be used for fetching from
+> 	multiple repositories (both fetching with "--multiple" from
+> 	multiple repositories, and also fetching updated contents
+> 	for submodules).  By default, fetching from multiple
+> 	repositories and submodules is done one at a time.
+>
+> and nobody would have complained if the system were like so from the
+> beginning.  Existing users, however, may want extra flexibility, and
+> would complain loudly if we did the above, in which case, we may
+> have to
+>
+>  - introduce --fetch-jobs=3D<n> for what you are adding;
+>
+>  - introduce --submodule-fetch-jobs=3D<n> as a synonym for existing
+>    --jobs=3D<n> and deprecate the current use of --jobs=3D<n>;
+>
+>  - eventually repurpose --jobs=3D<n> as a short-hand to give both
+>    --fetch-jobs and --submoduje-fetch-jobs at the same time.
+
+Given that the relevant code looks like this:
+
+        if (remote) {
+                if (filter_options.choice || repository_format_partial_clo=
+ne)
+                        fetch_one_setup_partial(remote);
+                result =3D fetch_one(remote, argc, argv, prune_tags_ok);
+        } else {
+                if (filter_options.choice)
+                        die(_("--filter can only be used with the remote "
+                              "configured in extensions.partialclone"));
+                /* TODO should this also die if we have a previous partial=
+-clone? */
+                result =3D fetch_multiple(&list);
+        }
+
+        if (!result && (recurse_submodules !=3D RECURSE_SUBMODULES_OFF)) {
+                struct argv_array options =3D ARGV_ARRAY_INIT;
+
+                add_options_to_argv(&options);
+                result =3D fetch_populated_submodules(the_repository,
+                                                    &options,
+                                                    submodule_prefix,
+                                                    recurse_submodules,
+                                                    recurse_submodules_def=
+ault,
+                                                    verbosity < 0,
+                                                    max_children);
+                argv_array_clear(&options);
+        }
+
+i.e. the `fetch_multiple()` call is _strictly_ before the call to
+`fetch_populated_submodules()`, I would contend that this level of
+separation does not serve anybody but a fan of the complicators' gloves.
+
+You would also find yourself in quite a pickle if you wanted to explain
+to a user why those `--fetch-jobs` and `--submodule-fetch-jobs` are
+separate options _and_ why they repeat the command name in the option
+name. And if it is hard to explain, there is usually a better design
+choice in the first place.
+
+In other words, I would be much more in favor of `--jobs` _also_
+extending to the `fetch_multiple()` call, not just the
+`fetch_populated_submodules()` call.
+
+> > @@ -1456,12 +1459,15 @@ static void add_options_to_argv(struct argv_ar=
+ray *argv)
 > >
-> > Without an error message when `lstat()` failed, `git clean` would
-> > abort without an error message, leaving the user quite puzzled.
+> >  }
+> >
+> > -static int fetch_multiple(struct string_list *list)
+> > +static int fetch_multiple(struct string_list *list, int i)
+> >  {
+> > -	int i, result =3D 0;
 >
-> Let's drop the first three words ;-)  Sorry for not catching it
-> earlier and parrotting the same mistake in my variant yesterday.
-
-You mean the first four words.
-
-> > In particular on Windows, where the default maximum path length is qui=
-te
-> > small (yet there are ways to circumvent that limit in many cases), it =
-is
-> > very important that users be given an indication why their command
-> > failed because of too long paths when it did.
+> 'i' is perfectly a good name for a local variable that is used for
+> loop control purposes, but makes a horrible name for a parameter.
 >
-> s/it is very important that users be given/it helps to give users/
+> Existing 'list' is not any better either---we know it is a list by
+> its type already, the name should say what the list is about, what
+> it represents.  But having a horribly named parameter already is not
+> a good reason to make the code even worse.
+>
+> And as you said, recursion makes the code structure harder to follow
+> here.  Keeping an array of --jobs=3D<n> cmd structures, looping to
+> fill them by starting, doing wait() to reap any of the started ones
+> that first exits to refill the slot just opened, etc. would be easier
+> to see if done in a loop, I think.
 
-If you really feel it important to invalidate my personal style of
-expression, sure.
+I have to admit that I'd _much_ rather see the strategy of
+`fetch_populated_submodules()` emulated, where it uses the
+`run_processes_parallel_tr2()` function to perform the actual fetches.
+
+That buys us a lot of advantages:
+
+- the recursion problems mentioned in the original mail will _not_ be
+  any issue,
+- the progress won't be garbled,
+- we can automatically restrict the maximal number of parallel fetches.
+
+It should be super easy to get started with this, simply by moving the
+`list` and the `i` variables into a `struct` that is then passed to
+`run_processes_parallel_tr2()`, then implementing the three callbacks.
+
+Those callbacks can take inspiration from `submodule.c`'s
+`get_next_submodule()`, `fetch_start_failure()`, and `fetch_finish()`
+functions, but rest assured that the `fetch_multiple()` ones will look
+_a lot_ simpler.
 
 Ciao,
 Dscho
+
+P.S.: It would probably also make sense to extend this contribution by a
+second patch that teaches `git remote update` a `--jobs` option.
