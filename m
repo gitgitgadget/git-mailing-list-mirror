@@ -2,181 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 969D11F461
-	for <e@80x24.org>; Fri, 19 Jul 2019 22:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32CD91F461
+	for <e@80x24.org>; Fri, 19 Jul 2019 23:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732108AbfGSWgZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jul 2019 18:36:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58860 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727344AbfGSWgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jul 2019 18:36:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87E831629E9;
-        Fri, 19 Jul 2019 18:36:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zRBnx7viHeC+9MH14zsQlI4QCns=; b=Pmc+4o
-        IR1rNj4nfAOLgIDW96XOkEdQFg0lVvcWfyy8SLWx7vMb83YNlbyqU+qx7bcmTpIp
-        kV6lQKLxM8Wm721lQjb8Y64ebP0rD75NJgnpfcBoukotH3zunHTsXY+bb1I3GdPd
-        VVfCG/IawdEMjmrKMhM6y5EbMUbwzCxMRvj2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DFQvl3iLYPOvAr0kM38eGx89Li5dYAJQ
-        s2DWAPiI148hy6o59fM6BW3+cgI7gcEKeGcCfPTkfKsNIIrAovbVX9twfUdqabnj
-        Xgg4p0UJsRU5taixGOfjkCRGMU7vw4cuEgd5tdzs5WE34+1S/IAopa88EJIksa0O
-        gnnvCfRuu1s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F1C51629E8;
-        Fri, 19 Jul 2019 18:36:17 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CEEAD1629E6;
-        Fri, 19 Jul 2019 18:36:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Dscho <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin <martin.agren@gmail.com>,
-        Phillip <phillip.wood123@gmail.com>,
-        Thomas <t.gummerer@gmail.com>, Elijah <newren@gmail.com>
-Subject: Re: [GSoC][PATCH v2 2/2] rebase -i: support --committer-date-is-author-date
-References: <20190712185357.21211-1-rohit.ashiwal265@gmail.com>
-        <20190718190314.20549-1-rohit.ashiwal265@gmail.com>
-        <20190718190314.20549-3-rohit.ashiwal265@gmail.com>
-Date:   Fri, 19 Jul 2019 15:36:15 -0700
-In-Reply-To: <20190718190314.20549-3-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Fri, 19 Jul 2019 00:33:14 +0530")
-Message-ID: <xmqqwogdtzxc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732541AbfGSXJI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jul 2019 19:09:08 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:45790 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728747AbfGSXJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jul 2019 19:09:08 -0400
+Received: by mail-qt1-f196.google.com with SMTP id x22so27870469qtp.12
+        for <git@vger.kernel.org>; Fri, 19 Jul 2019 16:09:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8FFCZr1RrcYKsOkHatp+JB8+CCOdQY8zAe6OLsAbEaw=;
+        b=iGWNzqW1zFRVvsh3qWUy2eBsB1M7/7tgaNqNL0J8e17gcauLKNQmev4k64rzJKzPRz
+         qK/70uarJmzP5MTOzyTyVNJfo5retu1qhgpjdrr1n6Whs1KWNiYkvuOoROYSQ56vbt3l
+         2tA0vKP/b9k2MLHjcRK4FAHOcqes1juGqWrRLox19OYhfUqSXLi93pRmh1Zv7qRJtq7q
+         XuxItiVRlFZ1JofdR59Q+1yTkT7S+p2HTbjsiIY7KA66rO62sp15gpbVWzu5te8vCYsv
+         THimtHDYgXdrliJqslsc3Shayby3346napU/EmtYwLKLbOV01rqtaZs03yq8JL4r8cHl
+         rAkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8FFCZr1RrcYKsOkHatp+JB8+CCOdQY8zAe6OLsAbEaw=;
+        b=lQ6F4Bqd/JYM7LHRuoNFrDjVEqZdUxnLvwYDmYc3YIoq3KLnPZpmBTcZ78k0jGCfkK
+         NGblCyIWIE8AH72rSsRH7fvQFpWr2oXUTz5SesuizEqQv9aU7XJ4jtU0xMWOs19isJ2A
+         0BctdbpHEERuLPAua6oj1SerCOXNO5Ddp99jQi5qVLzCdfk7JcHYkFtEFu/WwEFs6ozh
+         /OcY3uPsgaj5jOcWpYE7S8B0RRluMI4AC8uRLLKEo1u7WtBc4c6w/yNja5js60R8oZF0
+         U4tizOSKpHeiLw/WpBdSrn8aE3Qgp20aIZHSvJdkTSsn+N3FHnHM7r2T6csacpL5QG2/
+         EKQQ==
+X-Gm-Message-State: APjAAAXcPQ1+bUuG+T/iY/QnYXqmFz23o5ajcOZTyE2l3WM7ywqRoGXD
+        q+Z0gyYT+MBgS9XCmFbxwM48GmB434s=
+X-Google-Smtp-Source: APXvYqzdNyQwSKgra4xSyyiwnZIAbcbkJr22DWwEm+fyUo3GHoGKB8bwj7T8isoqmrbB5370VbvUlQ==
+X-Received: by 2002:a0c:983b:: with SMTP id c56mr41305627qvd.131.1563577746710;
+        Fri, 19 Jul 2019 16:09:06 -0700 (PDT)
+Received: from localhost.localdomain ([170.82.202.216])
+        by smtp.gmail.com with ESMTPSA id s127sm14469035qkd.107.2019.07.19.16.09.03
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 19 Jul 2019 16:09:06 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, kernel-usp@googlegroups.com
+Subject: [GSoC][RFC WIP PATCH 0/3] grep: allow parallelism in zlib inflation
+Date:   Fri, 19 Jul 2019 20:08:51 -0300
+Message-Id: <cover.1563570204.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F19D232-AA75-11E9-BDB0-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+Threads were disabled in git-grep for non-worktree case at 53b8d93
+("grep: disable threading in non-worktree case", 12-12-2011), due to
+perfomance drops. 
 
-> @@ -1688,10 +1699,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		    state_dir_base, cmd_live_rebase, buf.buf);
->  	}
->  
-> +	if (options.committer_date_is_author_date)
-> +		options.flags |= REBASE_FORCE;
-> +
->  	for (i = 0; i < options.git_am_opts.argc; i++) {
->  		const char *option = options.git_am_opts.argv[i], *p;
-> -		if (!strcmp(option, "--committer-date-is-author-date") ||
-> -		    !strcmp(option, "--ignore-date") ||
-> +		if (!strcmp(option, "--ignore-date") ||
->  		    !strcmp(option, "--whitespace=fix") ||
->  		    !strcmp(option, "--whitespace=strip"))
->  			options.flags |= REBASE_FORCE;
+To regain performance, this series work on the object reading code so
+that zlib inflation may be performed in parallel. This is a good hotspot
+for parallelism as, in some test cases[1], it accounts for up to 48% of
+execution time. And besides that, inflation tasks are already
+independent from one another.
 
-This is needed here, because am-opts no longer has the
-committer-date-is-author-date passed through with the
-parse_options() call in cmd_rebase(), which makes sense.
+Grep'ing 'abcd[02]' ("Regex 1") and '(static|extern) (int|double) \*'
+("Regex 2") at chromium's repository[2], I got:
 
-> diff --git a/sequencer.c b/sequencer.c
-> index a2d7b0925e..a65f01a422 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -986,10 +999,17 @@ static int run_git_commit(struct repository *r,
->  
->  		if (res <= 0)
->  			res = error_errno(_("could not read '%s'"), defmsg);
-> -		else
-> +		else {
-> +			if (opts->committer_date_is_author_date) {
-> +				char *date = read_author_date_or_die();
-> +				setenv("GIT_COMMITTER_DATE", date, 1);
-> +				free(date);
-> +			}
+     Threads |   Regex 1  |  Regex 2
+    ---------|------------|-----------
+        1    |  17.5815s  | 21.7217s
+        2    |   9.7983s  | 11.3965s
+        8    |   6.3097s  |  6.9667s
+    
+These are all means of 30 executions after 2 warmup runs. All tests were
+executed on a i7-7700HQ with 16GB of RAM and SSD. The output was also
+validated against current git-grep.
 
-Hmph, are we sure that author-script is always available at this
-point so that a call to read_author_date_or_die() is safe?  There
-are three callers to the run_git_commit() function and I am not sure
-if codepaths that reach all of them prepared the input to the
-read_author_script() helper.
+I still want to repeat the test in an HDD machine and in a repo with
+mainly loose objects.
 
-> @@ -1019,6 +1039,11 @@ static int run_git_commit(struct repository *r,
->  		argv_array_push(&cmd.args, "--amend");
->  	if (opts->gpg_sign)
->  		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
-> +	if (opts->committer_date_is_author_date) {
-> +		char *date = read_author_date_or_die();
-> +		argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s", date);
-> +		free(date);
-> +	}
->  	if (defmsg)
->  		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
->  	else if (!(flags & EDIT_MSG))
-> @@ -1467,6 +1492,12 @@ static int try_to_commit(struct repository *r,
->  
->  	reset_ident_date();
->  
-> +	if (opts->committer_date_is_author_date) {
-> +		char *date = read_author_date_or_die();
-> +		setenv("GIT_COMMITTER_DATE", date, 1);
-> +		free(date);
-> +	}
-> +
+There're still some open issues thought:
 
-In the same function, we seem to be grabbing the author ident by
-calling get_author(message), where the message is an in-core copy of
-a commit object, which suggests me that we may not necessarily be
-working with the on-disk information read_author_date_or_die() is
-prepared to deal with.  Are we sure we have the needed information
-on disk so that read_author_date_or_die() will read the correct
-information from the disk?
+1) To allow parallel inflation, the `obj_read_mutex` is released at
+`unpack_compressed_entry()` and `get_size_from_delta()` right before
+calling `git_inflate()` (and re-acquired right after). For git-grep it
+seems to be OK. But, besides git-grep, if it's wanted to read objects
+and perform other operations in parallel, we probably cannot guarantee
+that the lock will be held by the current thread when it gets to those
+two functions. Also, as the lock does only protect this call tree, if
+those other operations access the same global states through other
+paths, we may also have race conditions.
 
-> @@ -2538,6 +2569,11 @@ static int read_populate_opts(struct replay_opts *opts)
->  			opts->signoff = 1;
->  		}
->  
-> +		if (file_exists(rebase_path_cdate_is_adate())) {
-> +			opts->allow_ff = 0;
-> +			opts->committer_date_is_author_date = 1;
-> +		}
-> +
->  		if (file_exists(rebase_path_reschedule_failed_exec()))
->  			opts->reschedule_failed_exec = 1;
->  
-> @@ -2620,6 +2656,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
->  		write_file(rebase_path_gpg_sign_opt(), "-S%s\n", opts->gpg_sign);
->  	if (opts->signoff)
->  		write_file(rebase_path_signoff(), "--signoff\n");
-> +	if (opts->committer_date_is_author_date)
-> +		write_file(rebase_path_cdate_is_adate(), "%s", "");
->  	if (opts->reschedule_failed_exec)
->  		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+2) git-grep operations on textconv and submodules are still
+unprotected and should result in race conditions. I'm not sure if
+having two separate mutexes for them would fix it as the latter also has
+to access the object store.
 
-These two are propagating the option across rebase invocations, and
-they should be correct (as correct as how correctly other options
-are propagated ;-)).
+Any comments on the series and open issues will be highly appreciated.
 
-> @@ -3437,6 +3475,12 @@ static int do_merge(struct repository *r,
->  		argv_array_push(&cmd.args, git_path_merge_msg(r));
->  		if (opts->gpg_sign)
->  			argv_array_push(&cmd.args, opts->gpg_sign);
-> +		if (opts->committer_date_is_author_date) {
-> +			char *date = read_author_date_or_die();
-> +			argv_array_pushf(&cmd.env_array,
-> +					 "GIT_COMMITTER_DATE=%s", date);
-> +			free(date);
+[1]: https://matheustavares.gitlab.io/posts/week-6-working-at-zlib-inflation#multithreading-zlib-inflation 
+[2]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
+     04-06-2019), after a 'git gc' execution.
 
-This codepath does have read_env_script() which reads from the
-author script an earlier call to write_author_script() would have
-left on disk (at least when do_merge() is called with 'commit'
-argument, anyway), so we should be able to read from it (or the
-existing code is already buggy---and this patch just makes it
-slightly worse by depending on a wrong assumption even more).  OK.
+travis build: https://travis-ci.org/matheustavares/git/builds/561200398
+
+
+Matheus Tavares (3):
+  object-store: make read_object_file_extended() thread-safe
+  grep: remove locks on object reading operations
+  grep: re-enable threads in non-worktree case
+
+ builtin/grep.c | 20 ++++--------------
+ grep.c         |  3 ---
+ object-store.h |  4 ++++
+ packfile.c     |  7 +++++++
+ sha1-file.c    | 56 +++++++++++++++++++++++++++++++++++++++++++++-----
+ 5 files changed, 66 insertions(+), 24 deletions(-)
+
+-- 
+2.22.0
 
