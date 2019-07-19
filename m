@@ -2,82 +2,390 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 988061F461
-	for <e@80x24.org>; Fri, 19 Jul 2019 04:50:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9440C1F461
+	for <e@80x24.org>; Fri, 19 Jul 2019 05:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726941AbfGSEt7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jul 2019 00:49:59 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:38758 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726135AbfGSEt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jul 2019 00:49:59 -0400
-Received: by mail-io1-f65.google.com with SMTP id j6so23499705ioa.5
-        for <git@vger.kernel.org>; Thu, 18 Jul 2019 21:49:59 -0700 (PDT)
+        id S1726534AbfGSFkJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jul 2019 01:40:09 -0400
+Received: from mail-vs1-f53.google.com ([209.85.217.53]:41474 "EHLO
+        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbfGSFkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jul 2019 01:40:09 -0400
+Received: by mail-vs1-f53.google.com with SMTP id 2so20758392vso.8
+        for <git@vger.kernel.org>; Thu, 18 Jul 2019 22:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HmmIANP9COr2bcjCTpaiGSK53+J1/bdLf71QQdl5ZfQ=;
-        b=Sj1BFr2mabR6/gFHm+tatuKMq6Lc8Dtl7P7Yg3mdYYv8bZ3YhQku07dOXKyFy7vanJ
-         /tu1Lmtn566q8LCa2i27lrxc5c8p3/G3cp3ToJjptgWTU521hU9S8kBR516gfh1wK4Nd
-         TGGZQsCbmBl+dLvNLCGxz1gSvWvFNQmei2G2G2nHiwdsUMrymP4Dn5C8NxxkFBKE2MKA
-         N60mG6nh0rJeB2gyvwD0x5+R/RZeZyxibaYKnOxorU8tq0jHqHS6DZISo3AOBNCAAEpt
-         SzaiAAZiFlpqQpXVCHATi+/nFffjyisEZgfQmffLurbgmujMFBuoH7yMCUNSSyg5RBKa
-         qY+A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vGCkm3DzsEWQDru3qiCxPmv6BvhWSVdenCWXa8CGXJA=;
+        b=RctKN9xZEfk3Q5EpbCCOcGyLvCRtZTYKF+LNbZUpZe9kWLIBSgkcdD4cBIQTuGrJMR
+         1SYMfv7hjiBgE+WuRC9M0FPLwS//tgle3A+C7Rx4yd3RPKzo+0VBIsjZjZjxvofJMDfh
+         DN2Oe697LJru/o0T7gOECkTlJj0a/pHcarz9aWQeKhJSEFhBktpFJVnWXH5AIgFoWwNv
+         gxEreFz1qDaYBG/LySakxFf89CL8V6olNfWjEic5H3q73DcC5GmY9NPdMCLc2ItPDmFB
+         6JkSNuf908MTjFqFvB76v6ZdR5H640rwDJYJBxAn1laRAaofE1KtYzx88WeunbJ4qhXH
+         APsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HmmIANP9COr2bcjCTpaiGSK53+J1/bdLf71QQdl5ZfQ=;
-        b=svIZX5brsv/KyMPMpogGTTiRLc1D2R3+qnulbK6cIuA4840IdQPo0W0CzKLVtDNI9b
-         8AOBvrJZ/Fpk+7cLsTn+y3r1TrpPj8PcBx50GHaC1zSgZvLADvSAMP2fFk4a1h0tVeSb
-         SQkEXA5RfSaUETr4C9EcoeJecihUdSMbPrvQG7Pvbvz0lb9BjYAuvjgqEqPl/YYdKCrs
-         lHQyO+u+dsadGcEdTM6XudrSa9z+Y27RP/qvH/H89vy1CFUQX1FNEtohbQoI4051J4Y+
-         jDcnq9h1fHk/cokfFtLV1Ub8FXdMBk8e7diCy+EWCrtj2dtaFPomMakwIDz8eEDavAuO
-         Bz8w==
-X-Gm-Message-State: APjAAAXRBFvE8z3+GizEGls1jyCGH2wdy+6jycbY2//hRzzbI7HY10T5
-        fBbNGy3JM8GOIAefRdBoJLafxddsIJ86lxD9eUE=
-X-Google-Smtp-Source: APXvYqwAvhoygMSMcIKnqHtEXjXt/3k7DM9Wc1tI1hwD67mSG4lAXAwasx+X3lJ/pCZMgVnubLeyCpvHd4SsVQzSXYk=
-X-Received: by 2002:a5e:cb43:: with SMTP id h3mr6588939iok.252.1563511798695;
- Thu, 18 Jul 2019 21:49:58 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vGCkm3DzsEWQDru3qiCxPmv6BvhWSVdenCWXa8CGXJA=;
+        b=tVVyH7vGRbsEkDdAnevQOBAtyRyOnT6eaVEHdvKVvsUX9u+/udKCc0DIJBD80ie+2v
+         /DWJbOzFEUoWfU5Nri5njyoAviXvkNP6fEu1xpxrIjEt2wi+qesVXT+HyJ1ZugVygc+1
+         MLvqz+FTqSjelOkLPDrBUBv2K8yDfHO4gL8Wudw97lDjkBttctIRftU0/+3xAMvxT5kx
+         cDTRHrfp6jNYfCqR0lV74EUhPsyfdHeAZg9puX5tiwRZ0nCfJ+D0dqlMW/LZHDy68x59
+         sX+soR9YaKwXvh6KMepcayVdw3aH+CHU7Qq9mC9tlBb4B8aR3PIkyseyPwEZ73YBFhP6
+         Cgxg==
+X-Gm-Message-State: APjAAAWAYDAjrP6Kgy0EVMsec4s8MGcLeuhVdSLw5pxrULP+DNrItPrV
+        9/ayq3d+y6u/78kjrdtTU04bSE40aFg=
+X-Google-Smtp-Source: APXvYqzNAKJggBDicgENfpMOv11hnd6XMMjVXF450e4d+NvWLiNeHpLSzpWwXQJyaP8H2Hy4zugTeA==
+X-Received: by 2002:a67:ee16:: with SMTP id f22mr31952763vsp.191.1563514807463;
+        Thu, 18 Jul 2019 22:40:07 -0700 (PDT)
+Received: from linuxerio.localdomain ([186.32.195.224])
+        by smtp.gmail.com with ESMTPSA id l184sm14275876vsl.8.2019.07.18.22.40.06
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 18 Jul 2019 22:40:06 -0700 (PDT)
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: [PATCH v3] builtin/merge: support --squash --commit
+Date:   Thu, 18 Jul 2019 23:39:52 -0600
+Message-Id: <20190719053952.13516-1-eantoranz@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <20190702005340.66615-1-emilyshaffer@google.com>
- <20190709211043.48597-1-emilyshaffer@google.com> <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
- <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com> <20190718152234.GI20404@szeder.dev>
- <20190719013128.GB251102@google.com>
-In-Reply-To: <20190719013128.GB251102@google.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 18 Jul 2019 21:49:47 -0700
-Message-ID: <CAPUEsphnCvK+RZ+h30ZarA1zo9yZ=ndEBrcAbKGf4W92j647vA@mail.gmail.com>
-Subject: Re: [PATCH v2] transport-helper: enforce atomic in push_refs_with_push
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 18, 2019 at 6:31 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> This makes sense to me.  Not really for the 'for' loop declaration
-> aspect: for that, I'd want some more specialized tool that allows
-> turning on such a check specifically.  But more because Ubuntu trusty
-> is still a platform that some people use (though hopefully not for
-> long), so it's helpful as a representative old platform to see if we
-> break the build on it.
+Using --squash made git stop regardless of conflicts so that the
+user could finish the operation with a later call to git-commit.
 
-FWIW this also breaks Centos 7 using gcc 4.8.5, as well as the one
-originally reported (Centos 6), and anything else that uses gcc 4
-(tested up to 4.9.4)
+Now --squash --commit allows for the operation to finish with the
+new revision if there are no conflicts. If the user does not use
+--commit, then --no-commit is used as default so that it doesn't
+break previous git behavior.
 
-Carlo
+Function squash_message() now saves the value in merge_msg so that
+the message with the squashed revisions is readily available when
+calling finish_automerge() to create new revision object.
+
+Function finish() used to skip execution paths if using --squash
+because there would be no new revision object created. Also, it
+now makes sure to skip reflog update if using --squash _without_
+--commit.
+
+Function finish_automerge() allows to create a new revision object
+for an squashed merge (sets parent to current revision only,
+merge_msg will be set to squashed revisions by calling
+squash_message()), sets the reflog message to specify that it was
+a merge-squash operation and removes the $GIT_DIR/SQUASH_MSG file
+if needed.
+
+Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+---
+ builtin/merge.c  | 93 +++++++++++++++++++++++++++++-------------------
+ t/t7600-merge.sh | 86 ++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 136 insertions(+), 43 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index aad5a9504c..ad9c6e900a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -390,11 +390,13 @@ static void finish_up_to_date(const char *msg)
+ static void squash_message(struct commit *commit, struct commit_list *remoteheads)
+ {
+ 	struct rev_info rev;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct commit_list *j;
+ 	struct pretty_print_context ctx = {0};
+ 
+-	printf(_("Squash commit -- not updating HEAD\n"));
++	strbuf_release(&merge_msg);
++
++	if (!option_commit)
++		printf(_("Squash commit -- not updating HEAD\n"));
+ 
+ 	repo_init_revisions(the_repository, &rev, NULL);
+ 	rev.ignore_merges = 1;
+@@ -414,15 +416,14 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
+ 	ctx.date_mode = rev.date_mode;
+ 	ctx.fmt = rev.commit_format;
+ 
+-	strbuf_addstr(&out, "Squashed commit of the following:\n");
++	strbuf_addstr(&merge_msg, "Squashed commit of the following:\n");
+ 	while ((commit = get_revision(&rev)) != NULL) {
+-		strbuf_addch(&out, '\n');
+-		strbuf_addf(&out, "commit %s\n",
++		strbuf_addch(&merge_msg, '\n');
++		strbuf_addf(&merge_msg, "commit %s\n",
+ 			oid_to_hex(&commit->object.oid));
+-		pretty_print_commit(&ctx, commit, &out);
++		pretty_print_commit(&ctx, commit, &merge_msg);
+ 	}
+-	write_file_buf(git_path_squash_msg(the_repository), out.buf, out.len);
+-	strbuf_release(&out);
++	write_file_buf(git_path_squash_msg(the_repository), merge_msg.buf, merge_msg.len);
+ }
+ 
+ static void finish(struct commit *head_commit,
+@@ -440,22 +441,22 @@ static void finish(struct commit *head_commit,
+ 		strbuf_addf(&reflog_message, "%s: %s",
+ 			getenv("GIT_REFLOG_ACTION"), msg);
+ 	}
+-	if (squash) {
++	if (squash)
+ 		squash_message(head_commit, remoteheads);
+-	} else {
+-		if (verbosity >= 0 && !merge_msg.len)
+-			printf(_("No merge message -- not updating HEAD\n"));
+-		else {
+-			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
+-			update_ref(reflog_message.buf, "HEAD", new_head, head,
+-				   0, UPDATE_REFS_DIE_ON_ERR);
+-			/*
+-			 * We ignore errors in 'gc --auto', since the
+-			 * user should see them.
+-			 */
+-			close_object_store(the_repository->objects);
+-			run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+-		}
++	if (verbosity >= 0 && !merge_msg.len)
++		printf(_("No merge message -- not updating HEAD\n"));
++	else if (squash && !option_commit)
++		; /* avoid calling update_ref */
++	else {
++		const char *argv_gc_auto[] = { "gc", "--auto", NULL };
++		update_ref(reflog_message.buf, "HEAD", new_head, head,
++			   0, UPDATE_REFS_DIE_ON_ERR);
++		/*
++		 * We ignore errors in 'gc --auto', since the
++		 * user should see them.
++		 */
++		close_object_store(the_repository->objects);
++		run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+ 	}
+ 	if (new_head && show_diffstat) {
+ 		struct diff_options opts;
+@@ -893,17 +894,26 @@ static int finish_automerge(struct commit *head,
+ 	struct object_id result_commit;
+ 
+ 	free_commit_list(common);
+-	parents = remoteheads;
+-	if (!head_subsumed || fast_forward == FF_NO)
+-		commit_list_insert(head, &parents);
+-	prepare_to_commit(remoteheads);
++	if (squash) {
++		squash_message(head, remoteheads);
++		parents = commit_list_insert(head, &parents);
++	} else {
++		parents = remoteheads;
++		if (!head_subsumed || fast_forward == FF_NO)
++			commit_list_insert(head, &parents);
++		prepare_to_commit(remoteheads);
++	}
+ 	if (commit_tree(merge_msg.buf, merge_msg.len, result_tree, parents,
+ 			&result_commit, NULL, sign_commit))
+-		die(_("failed to write commit object"));
+-	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
++		die(squash ? _("failed to write commit object on squash") :
++			_("failed to write commit object"));
++	strbuf_addf(&buf, "Merge made by the '%s' strategy", wt_strategy);
++	strbuf_addstr(&buf, squash ? " (squashed)." : ".");
+ 	finish(head, remoteheads, &result_commit, buf.buf);
+ 	strbuf_release(&buf);
+ 	remove_merge_branch_state(the_repository);
++	if (squash && option_commit)
++		unlink(git_path_squash_msg(the_repository));
+ 	return 0;
+ }
+ 
+@@ -1345,14 +1355,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (squash) {
+ 		if (fast_forward == FF_NO)
+ 			die(_("You cannot combine --squash with --no-ff."));
+-		if (option_commit > 0)
+-			die(_("You cannot combine --squash with --commit."));
++
+ 		/*
+-		 * squash can now silently disable option_commit - this is not
+-		 * a problem as it is only overriding the default, not a user
+-		 * supplied option.
++		 * In order to not break current behavior for --squash, if the user
++		 * does not specify --commit, we assume it's --no-commit
+ 		 */
+-		option_commit = 0;
++		if (option_commit < 0)
++			option_commit = 0;
+ 	}
+ 
+ 	if (option_commit < 0)
+@@ -1510,6 +1519,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
+ 
++		if (squash && option_commit) {
++			ret = finish_automerge(head_commit, 1, common,
++					       remoteheads, get_commit_tree_oid(commit),
++					       "Fast-forward");
++			goto done;
++		}
++
+ 		finish(head_commit, remoteheads, &commit->object.oid, msg.buf);
+ 		remove_merge_branch_state(the_repository);
+ 		goto done;
+@@ -1682,8 +1698,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		write_merge_state(remoteheads);
+ 
+ 	if (merge_was_ok)
+-		fprintf(stderr, _("Automatic merge went well; "
+-			"stopped before committing as requested\n"));
++		if (!option_commit)
++			fprintf(stderr, _("Automatic merge went well; "
++				"stopped before committing as requested\n"));
++		else
++			;
+ 	else
+ 		ret = suggest_conflicts();
+ 
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 132608879a..c3d824247f 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -107,6 +107,10 @@ verify_no_mergehead () {
+ 	! test -e .git/MERGE_HEAD
+ }
+ 
++verify_no_squash_msg () {
++	! test -e .git/SQUASH_MSG
++}
++
+ test_expect_success 'setup' '
+ 	git add file &&
+ 	test_tick &&
+@@ -246,6 +250,25 @@ test_expect_success 'merge --squash c3 with c7' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'merge --squash --commit c3 with c7' '
++	git reset --hard c3 &&
++	test_must_fail git merge --squash --commit c7 &&
++	cat result.9z >file &&
++	git commit --no-edit -a &&
++
++	cat >expect <<-EOF &&
++	Squashed commit of the following:
++
++	$(git show -s c7)
++
++	# Conflicts:
++	#	file
++	EOF
++	git cat-file commit HEAD >raw &&
++	sed -e '1,/^$/d' raw >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'merge c3 with c7 with commit.cleanup = scissors' '
+ 	git config commit.cleanup scissors &&
+ 	git reset --hard c3 &&
+@@ -294,6 +317,32 @@ test_expect_success 'merge c3 with c7 with --squash commit.cleanup = scissors' '
+ 
+ test_debug 'git log --graph --decorate --oneline --all'
+ 
++test_expect_success 'merge c3 with c7 with --squash --commit commit.cleanup = scissors' '
++	git config commit.cleanup scissors &&
++	git reset --hard c3 &&
++	test_must_fail git merge --squash --commit c7 &&
++	cat result.9z >file &&
++	git commit --no-edit -a &&
++
++	cat >expect <<-EOF &&
++	Squashed commit of the following:
++
++	$(git show -s c7)
++
++	# ------------------------ >8 ------------------------
++	# Do not modify or remove the line above.
++	# Everything below it will be ignored.
++	#
++	# Conflicts:
++	#	file
++	EOF
++	git cat-file commit HEAD >raw &&
++	sed -e '1,/^$/d' raw >actual &&
++	test_i18ncmp expect actual
++'
++
++test_debug 'git log --graph --decorate --oneline --all'
++
+ test_expect_success 'merge c1 with c2 and c3' '
+ 	git reset --hard c1 &&
+ 	test_tick &&
+@@ -367,6 +416,26 @@ test_expect_success 'merge c0 with c1 (squash)' '
+ 
+ test_debug 'git log --graph --decorate --oneline --all'
+ 
++test_expect_success 'merge c0 with c1 (squash --commit)' '
++	git reset --hard c0 &&
++	git merge --squash --commit c1 &&
++	verify_merge file result.1 &&
++	verify_parents $c0 &&
++	verify_no_mergehead &&
++	verify_no_squash_msg &&
++
++	cat >expect <<-EOF &&
++	Squashed commit of the following:
++
++	$(git show -s c1)
++	EOF
++	git cat-file commit HEAD >raw &&
++	sed -e '1,/^$/d' raw >actual &&
++	test_cmp expect actual
++'
++
++test_debug 'git log --graph --decorate --oneline --all'
++
+ test_expect_success 'merge c0 with c1 (squash, ff-only)' '
+ 	git reset --hard c0 &&
+ 	git merge --squash --ff-only c1 &&
+@@ -389,6 +458,17 @@ test_expect_success 'merge c1 with c2 (squash)' '
+ 
+ test_debug 'git log --graph --decorate --oneline --all'
+ 
++test_expect_success 'merge c1 with c2 (squash --commit)' '
++	git reset --hard c1 &&
++	git merge --squash --commit c2 &&
++	verify_merge file result.1-5 &&
++	verify_parents $c1 &&
++	verify_no_mergehead &&
++	verify_no_squash_msg
++'
++
++test_debug 'git log --graph --decorate --oneline --all'
++
+ test_expect_success 'unsuccessful merge of c1 with c2 (squash, ff-only)' '
+ 	git reset --hard c1 &&
+ 	test_must_fail git merge --squash --ff-only c2
+@@ -570,12 +650,6 @@ test_expect_success 'combining --squash and --no-ff is refused' '
+ 	test_must_fail git merge --no-ff --squash c1
+ '
+ 
+-test_expect_success 'combining --squash and --commit is refused' '
+-	git reset --hard c0 &&
+-	test_must_fail git merge --squash --commit c1 &&
+-	test_must_fail git merge --commit --squash c1
+-'
+-
+ test_expect_success 'option --ff-only overwrites --no-ff' '
+ 	git merge --no-ff --ff-only c1 &&
+ 	test_must_fail git merge --no-ff --ff-only c2
+-- 
+2.20.1
+
