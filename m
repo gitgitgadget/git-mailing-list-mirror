@@ -2,94 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB1021F461
-	for <e@80x24.org>; Fri, 19 Jul 2019 16:30:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBE311F461
+	for <e@80x24.org>; Fri, 19 Jul 2019 18:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728487AbfGSQan (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jul 2019 12:30:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58574 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727577AbfGSQan (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jul 2019 12:30:43 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 64CD715123B;
-        Fri, 19 Jul 2019 12:30:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FKjIycr5pJm60dZHfd0ex8yMbd8=; b=FKFjC+
-        hfTfMZoHBgwPANdL6xT2TSie+UPLnXbFqw8/ioen3/HFnTEFsfUTCdw/eXoXF4qA
-        xvLh/hhPo0Q+2tIuTmh5Y89kigZEK0Rm+qC+osHp1/4os5hmP9OkK10kupNKOPD3
-        zqW1vMyG0Om7v0EdxieaS6k11ydh1jbFZ6BUQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t+HVb5oMUQ8unZSJp3Cz4hVcp9eeuAM4
-        7qOtV6LU3Fzn7iEwKhP4Tii3y61EGk220x/ExZvQLpqLLtP30lH9mECU0mC4OGyu
-        LK9IzjEpWW56YEhg/CXbcurHRNEwG/dG7BV4kqAvwciK0BKlvYcJpM6sKWlnbSdW
-        P0fVyFHhE8E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DDAF15123A;
-        Fri, 19 Jul 2019 12:30:41 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BD45D151238;
-        Fri, 19 Jul 2019 12:30:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 23/24] t5505,t5516: create .git/branches/ when needed
-References: <pull.287.git.gitgitgadget@gmail.com>
-        <db69b33ff4a583f75e07f15d10dba70bd99fcaf7.1563455939.git.gitgitgadget@gmail.com>
-        <xmqqftn3xet7.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907191555180.47@tvgsbejvaqbjf.bet>
-        <xmqqd0i6vxwt.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 19 Jul 2019 09:30:39 -0700
-In-Reply-To: <xmqqd0i6vxwt.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 19 Jul 2019 08:36:50 -0700")
-Message-ID: <xmqq8ssuvvf4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731299AbfGSSMh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jul 2019 14:12:37 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40599 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728995AbfGSSMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jul 2019 14:12:37 -0400
+Received: by mail-wm1-f68.google.com with SMTP id v19so29846783wmj.5
+        for <git@vger.kernel.org>; Fri, 19 Jul 2019 11:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1fnymX75Mwp7fndyDl7fkHrjGPFPbJ04RbWPBV/azD4=;
+        b=XZup1hqIE4jNYXfVIpcx2HwF4oyyccO8q+wFY7dZxOvWDUtqHE7lM3OTCDQS5x3WSO
+         WQtPJt74ChFBCFSmv+GAbUDg0hd9PHnxbhx+fx539995/Fug5tWFi1pJUU72HWoNwV0/
+         twYcqeplU4Idgqu76iRHrjqSlW6Sm0+SRFCQLiySvI08T2UvrO8ESp13Mc1mmQ4fgRSW
+         H3r5V7zsNSAo/CzraER4bWlVlYAfIl7CQyZAKzawKE8TkwB0mmBFQ2DHVHEj6CgsM7fa
+         KzxC/5nzgZFNVn6nlLzDxT2WBEnGmZ7nzSgjGX2HcsO89KJhXER6idZ6CEQtBlPD2YPz
+         wFlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1fnymX75Mwp7fndyDl7fkHrjGPFPbJ04RbWPBV/azD4=;
+        b=ay5Df9kJjB+pk8W19wtr/JnJ2NcgAluBUPa6ka1Fjr6Egt+rlW0xMJn6n0Y3I5xRqn
+         dzh65jYQCY13F2iVtggZs1vj3TSHd9ncGl93NLks1XDzyazjK6fDT/L2fnQfr78fWVlQ
+         spLvanFjEiTjyRsoLQkDFkRYkfK1EySby17kk6rmZCLuez9XXZEv2qjSLlY8A15ZlgVb
+         e4IyHJ0vytusVOk8srYWELMmmGQl5BjFhm7qBDiy5ZuhhpQgDa3TpC4sAyl3/CAdVC3A
+         rltriu14P3GCbLS/eql5vHBJuM7TiUPJQ0cZfhFIQoSjacglCLNG6GklIaSA8pSIbVDY
+         Xg8g==
+X-Gm-Message-State: APjAAAXf8qd6kMd9z09u6FVCQ3J851brZUcHI/yqRtBzDoYIyeo9LP/5
+        WDugDaCguVrqoigOCqnRcfAGy+kT
+X-Google-Smtp-Source: APXvYqyiCO19RCR0cE6uz/0WIroehj2N323dnQDaNIa7xn1Y6X2j2cTne2vmntcqzvqQaoU3AR06rQ==
+X-Received: by 2002:a1c:4184:: with SMTP id o126mr47985376wma.68.1563559954848;
+        Fri, 19 Jul 2019 11:12:34 -0700 (PDT)
+Received: from andromeda.localnet ([80.214.30.27])
+        by smtp.gmail.com with ESMTPSA id l17sm18055259wrr.94.2019.07.19.11.12.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 19 Jul 2019 11:12:34 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH 1/9] t3404: demonstrate that --edit-todo does not check for dropped commits
+Date:   Fri, 19 Jul 2019 20:12:27 +0200
+Message-ID: <2836634.HGSAIcGHtf@andromeda>
+In-Reply-To: <xmqqwogfxkhx.fsf@gitster-ct.c.googlers.com>
+References: <20190717143918.7406-1-alban.gruin@gmail.com> <20190717143918.7406-2-alban.gruin@gmail.com> <xmqqwogfxkhx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8C2E3100-AA42-11E9-A02F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Junio,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> You probably forgot that I already proposed that, long time ago:
->> https://public-inbox.org/git/cover.1494509599.git.johannes.schindelin@gmx.de/
->
-> No, I haven't.  It was actually meant as an invitation to you to
-> help us come up with a reasonable deprecation path.
+Le 18/07/2019 =C3=A0 20:31, Junio C Hamano a =C3=A9crit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
+> > When set to "warn" or "error", `rebase.missingCommitCheck' would make
+> > rebase -i warn if the user removed commits from the todo list to prevent
+> > mistakes.  Unfortunately, rebase --edit-todo and rebase --continue don't
+> > take it into account.
+> >=20
+> > This adds three tests to t3404 to demonstrate this.  The first one is
+> > not broken, as when `rebase.missingCommitsCheck' is not set, nothing in
+> > particular must be done towards dropped commits.  The two others are
+> > broken, demonstrating the problem.
+> >=20
+> > Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> > ---
+> >=20
+> >  t/t3404-rebase-interactive.sh | 82 +++++++++++++++++++++++++++++++++++
+> >  1 file changed, 82 insertions(+)
+> >=20
+> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+=2Esh
+> > index 461dd539ff..f5c0a8d2bb 100755
+> > --- a/t/t3404-rebase-interactive.sh
+> > +++ b/t/t3404-rebase-interactive.sh
+> > @@ -1345,6 +1345,88 @@ test_expect_success 'rebase -i respects
+> > rebase.missingCommitsCheck =3D error' '>=20
+> >  	test B =3D $(git cat-file commit HEAD^ | sed -ne \$p)
+> > =20
+> >  '
+> >=20
+> > +test_expect_success 'rebase --edit-todo respects
+> > rebase.missingCommitsCheck =3D ignore' ' +	test_config
+> > rebase.missingCommitsCheck ignore &&
+> > +	rebase_setup_and_clean missing-commit &&
+> > +	set_fake_editor &&
+> > +	test_must_fail env FAKE_LINES=3D"1 2 bad 3 4" \
+> > +		git rebase -i --root >/dev/null 2>stderr &&
+>=20
+> Do you need to capture into stderr?  Nobody seems to use it.
+>=20
 
-By the way, while the "deprecation plan" still has my attention ;-),
-there is another thing I've been wanting to see happen *without*
-burning me like the last time it was brought up [*1*], which is also
-hard to come up with a reasonable deprecation path.
+No.  I=E2=80=99m changing this.
 
-A newer port like Git for Windows, where I suspect that most of the
-users are not even aware of the "git-foo" form, can probably get
-away by not shipping the libexec/git/git-foo without getting its
-users complaining (and as you repeatedly said, nobody on Windows
-write shell scripts, so lack of support for old scripts writtin in
-the days back when git-foo was a norm is perfectly fine there).  But
-I am not sure about my tree where audiences are beyond Windows, and
-I certainly do not want to get burned again myself.  
+> > +	FAKE_LINES=3D"1 2 4" git rebase --edit-todo &&
+> > +	git rebase --continue 2>actual &&
+> > +	test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
+> > +	test_i18ngrep \
+> > +		"Successfully rebased and updated refs/heads/missing-
+commit" \
+> > +		actual
+> > +'
+> > +
+> > +cat >expect <<EOF
+> > +error: invalid line 5: badcmd $(git rev-list --pretty=3Doneline
+> > --abbrev-commit -1 master) +Warning: some commits may have been dropped
+> > accidentally.
+> > +Dropped commits (newer to older):
+> > + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
+> > +To avoid this message, use "drop" to explicitly remove a commit.
+> > +
+> > +Use 'git config rebase.missingCommitsCheck' to change the level of
+> > warnings. +The possible behaviours are: ignore, warn, error.
+> > +
+> > +EOF
+> > +
+> > +tail -n 8 <expect >expect.2
+>=20
+> Having this outside the test_expect_success block that uses the file
+> is bad.  You may have mimicked other tests in the same script, but
+> that is not a good excuse to make things worse.  Just make sure
+> these new stuff follow the best-current-practice pattern without
+> touching the existing bad examples (and later fix them up after the
+> dust settles, but don't let it distract you from the theme these
+> patches are addressing).
+>=20
 
-Somebody else volunteering to take both blame (and flame) and credit
-would be most welcomed ;-).
+Okay.
+
+> > +
+> > +test_expect_failure 'rebase --edit-todo respects
+> > rebase.missingCommitsCheck =3D warn' ' +	test_config
+> > rebase.missingCommitsCheck warn &&
+> > +	rebase_setup_and_clean missing-commit &&
+> > +	set_fake_editor &&
+> > +	test_must_fail env FAKE_LINES=3D"1 2 3 4 bad 5" \
+> > +		git rebase -i --root >/dev/null 2>stderr &&
+>=20
+> Ditto.
+>=20
+> > +	FAKE_LINES=3D"1 2 3 4" git rebase --edit-todo 2>actual &&
+> > +	test_i18ncmp expect actual &&
+>=20
+> So, after "--edit-todo", you are supposed to get an error and a warning,
+> but ...
+>=20
+> > +	git rebase --continue 2>actual.2 &&
+> > +	head -n 8 <actual.2 >actual &&
+> > +	test_i18ncmp expect.2 actual &&
+>=20
+> ... after "--continue", you do not get any error, as you removed
+> 'bad' from the input, but you still get a warning, followed by a
+> report of the fact that a commit has been dropped.  OK.
+>=20
+> > +	test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
+> > +	test_i18ngrep \
+> > +		"Successfully rebased and updated refs/heads/missing-
+commit" \
+> > +		actual.2
+> > +'
+> > +
+> > +cat >expect <<EOF
+> > +error: invalid line 3: badcmd $(git rev-list --pretty=3Doneline
+> > --abbrev-commit -1 master~2) +Warning: some commits may have been dropp=
+ed
+> > accidentally.
+> > +Dropped commits (newer to older):
+> > + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master)
+> > + - $(git rev-list --pretty=3Doneline --abbrev-commit -1 master~2)
+> > +To avoid this message, use "drop" to explicitly remove a commit.
+> > +
+> > +Use 'git config rebase.missingCommitsCheck' to change the level of
+> > warnings. +The possible behaviours are: ignore, warn, error.
+> > +
+> > +EOF
+> > +
+> > +tail -n 9 <expect >expect.2
+> > +
+> > +test_expect_failure 'rebase --edit-todo respects
+> > rebase.missingCommitsCheck =3D error' ' +	test_config
+> > rebase.missingCommitsCheck error &&
+> > +	rebase_setup_and_clean missing-commit &&
+> > +	set_fake_editor &&
+> > +	test_must_fail env FAKE_LINES=3D"1 2 bad 3 4" \
+> > +		git rebase -i --root >/dev/null 2>stderr &&
+> > +	test_must_fail env FAKE_LINES=3D"1 2 4" \
+> > +		git rebase --edit-todo 2>actual &&
+> > +	test_i18ncmp expect actual &&
+> > +	test_must_fail git rebase --continue 2>actual &&
+>=20
+> OK, and this one fails as the configuration is set to 'error'.
+>=20
+> > +	test_i18ncmp expect.2 actual &&
+> > +	cp .git/rebase-merge/git-rebase-todo.backup \
+> > +		.git/rebase-merge/git-rebase-todo &&
+>=20
+> Why?  Who uses this copy?
+>=20
+
+The same technique is used in "rebase -i respects rebase.missingCommitsChec=
+k =3D=20
+error".
+
+> > +	FAKE_LINES=3D"1 2 drop 3 4 drop 5" \
+> > +		git rebase --edit-todo &&
+> > +	git rebase --continue 2>actual &&
+> > +	test D =3D $(git cat-file commit HEAD | sed -ne \$p) &&
+> > +	test_i18ngrep \
+> > +		"Successfully rebased and updated refs/heads/missing-
+commit" \
+> > +		actual
+> > +'
+> > +
+> >=20
+> >  test_expect_success 'respects rebase.abbreviateCommands with fixup,
+> >  squash and exec' '> =20
+> >  	rebase_setup_and_clean abbrevcmd &&
+> >  	test_commit "first" file1.txt "first line" first &&
 
 
-[Reference]
 
-*1* https://public-inbox.org/git/7vr68b8q9p.fsf@gitster.siamese.dyndns.org/
