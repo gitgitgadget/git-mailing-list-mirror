@@ -2,121 +2,403 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88A191F461
-	for <e@80x24.org>; Sat, 20 Jul 2019 12:51:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A50111F461
+	for <e@80x24.org>; Sat, 20 Jul 2019 14:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728327AbfGTMvd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jul 2019 08:51:33 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36455 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728031AbfGTMvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jul 2019 08:51:32 -0400
-Received: by mail-wm1-f68.google.com with SMTP id g67so27199958wme.1
-        for <git@vger.kernel.org>; Sat, 20 Jul 2019 05:51:31 -0700 (PDT)
+        id S1725996AbfGTO44 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jul 2019 10:56:56 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39875 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725792AbfGTO44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jul 2019 10:56:56 -0400
+Received: by mail-wr1-f66.google.com with SMTP id x4so34947049wrt.6
+        for <git@vger.kernel.org>; Sat, 20 Jul 2019 07:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=M0TJWNxAnDX0bg+Ifeap64CsH/Sd5cbaIxpqa3fZhN4=;
-        b=WcwPZLeGr641bbbuJEW1nhvrcyU2dQWU40ip/+mN73xk7HtjsKaohm0ZKa+5z6RK5G
-         arY6yWZ1Xql4PHAKnkZFHOig0XTGYV/guoaXufdpYA5rd+1oa+ysp9a1n9rxiujLTEV9
-         PYrvcNIgyJ+c9I6Px5DAy/WHLvegVNx3ZrAx2Wt0ayhVkFIikOlYSIEqiJlkUub24lmk
-         nMJ//OlmGzm1CbCy2Gt6v2ZfwRI/hVPkHQNz8RksyTq0iUYBBRv4GxvPYP4Qmuh6aNVx
-         86C0Owy+20i0mRp0ikffo7py4e915H+Y1KrV83P5QfJwTRhamO6T8iUiNDrJgvlofBP/
-         PNnw==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JPMa9rqHAfmDgDCUegqBeuWtufAoa1DG2cKShZWMFhI=;
+        b=jPSIUA/LFD3RH0qlTTQi9U5S6SiivGos++g8zAeLw6YxM7zn5B4Z9IhhWYWD+528la
+         kKpQHsirFvpDsM6hYyR/DxREImAKFpqfUHS4ilJdrCPIeT6fJfmdbJkXs9wPJJ95Ixig
+         AAntFpo5c5EuZU4v6zrWPDyOBXcjamtE5YjKYtaiUvEL7CCSzkCe9yT2+WO2qLv15Wt8
+         FHDTflDrocKPHZMIaZfHbzyfaHsQYT2LJx8x+KJpnsUAPnhxDj1xGMv0rMA48ggwhDTG
+         opMAOWi4w4eLANO0fiXasb+0aZA8RvHAD2m2LwrOf9sU3GsBqPxs/jVyvYt3w363iyHv
+         9bxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=M0TJWNxAnDX0bg+Ifeap64CsH/Sd5cbaIxpqa3fZhN4=;
-        b=MdGdv0DTN3mkiZAgqL6UwsVNWTr2wUrFWjIX/e9b9rYQFqSshT1B7QHn2MNqv2WK/y
-         392QTpT07TmgwzhohssLPGNozlPsEH5Aea6kPOs7Ao2+1Bvv8cIngFd4HRjizl8IH0OA
-         cBtoV+8UjJnM9DZDFQ/RKyQVXwGclmDw0gk66FW7+8lymEu5xyNC3AnlxUlgcTLDAEBB
-         QB2sUFGx02fBvVPLz+N/eBrVWzjEfqZHgXyYO6lHR/HVzr8+bsG3LX3jxAn3xQ3qovLC
-         LBXbhdl6mJJ09YFCD3XXk+yJ5yf17bha3hi6Y+fxuy6VracorPYxwchoQU7BQnU5FUe8
-         B9ug==
-X-Gm-Message-State: APjAAAUgzHqFhy330/nVF9ekDDiigqfLAONKdY4VKB21AHyApviqT4RN
-        BvoyjHnSEp/UB2tAHKyoZi4=
-X-Google-Smtp-Source: APXvYqzYDHtc7o/IgzsEkrzXCRa+AceJxlJ0ppR6ivFacIsKPV3EuovTav+OaMnL6w38DvU4ndbPIA==
-X-Received: by 2002:a1c:1f4e:: with SMTP id f75mr52113168wmf.137.1563627090751;
-        Sat, 20 Jul 2019 05:51:30 -0700 (PDT)
-Received: from szeder.dev (x4dbd64a2.dyn.telefonica.de. [77.189.100.162])
-        by smtp.gmail.com with ESMTPSA id 15sm24290823wmk.34.2019.07.20.05.51.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Jul 2019 05:51:29 -0700 (PDT)
-Date:   Sat, 20 Jul 2019 14:51:27 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     cclauss via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        cclauss <cclauss@me.com>, Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 1/1] Travis CI: Lint for Python syntax errors and
- undefined names
-Message-ID: <20190720125127.GK20404@szeder.dev>
-References: <pull.290.git.gitgitgadget@gmail.com>
- <ad1fdb86ae42378d10584deb58115adf11de8ef7.1563545933.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=JPMa9rqHAfmDgDCUegqBeuWtufAoa1DG2cKShZWMFhI=;
+        b=JMnQwXllwDh+CGuU8Tevx7MG3RGHHKDT3VaYHdUZPvmXpCV9MkzpyWbJjvP4nvas4X
+         rzca6F5miM/uU90nNFNNM/tWiDcqFq2fXYu86XKp54QWVc5Xxux9gAk/pkQ+f7U1i5kT
+         rbC5mVe/v1QYgPHi2n49JkzCgDU84/ftvGsU68+abpk2+55zVgxtUS5VErk9lauDmItQ
+         30lFSEATDlAmrjbo8B8PyQF40GskkK/lnEwGLxOnIwxyAkxaak6rfcy0bfc/oOat0Cvo
+         tKqgrdwKhYp54lMrg2MBdaQCs498nvzdvRH/EftYCgPb3HTLiHSXGlMlkPotuS55dKBm
+         ZKpA==
+X-Gm-Message-State: APjAAAX8Ts6JWDwTyxC8lgmxEg+QFUO1otzDG5xvhlQOBd6PoiqiLqUx
+        NgHC+dRCYXPADaqSxjwCW/8=
+X-Google-Smtp-Source: APXvYqxiQc2tFaLbq2k9rtMqp877vMbFsyLbuA9hjgEvAMHhFYeJ6tOLQidOlHkkJF5zIkJtu89Yfg==
+X-Received: by 2002:adf:f3d1:: with SMTP id g17mr33138917wrp.38.1563634612723;
+        Sat, 20 Jul 2019 07:56:52 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id e6sm34237269wrw.23.2019.07.20.07.56.51
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sat, 20 Jul 2019 07:56:52 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v2 2/2] rebase -i: support
+ --committer-date-is-author-date
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Dscho <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio <gitster@pobox.com>, Martin <martin.agren@gmail.com>,
+        Thomas <t.gummerer@gmail.com>, Elijah <newren@gmail.com>
+References: <20190712185357.21211-1-rohit.ashiwal265@gmail.com>
+ <20190718190314.20549-1-rohit.ashiwal265@gmail.com>
+ <20190718190314.20549-3-rohit.ashiwal265@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <7f53b294-57f7-77bf-ca0a-e9621227377c@gmail.com>
+Date:   Sat, 20 Jul 2019 15:56:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ad1fdb86ae42378d10584deb58115adf11de8ef7.1563545933.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190718190314.20549-3-rohit.ashiwal265@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 19, 2019 at 07:18:55AM -0700, cclauss via GitGitGadget wrote:
-> Several things were changed between Python 2 and Python 3.
-> There are a few Python 3 incompatibilities to work on.
-> Here we are making changes to make the code run on both Py2 and Py3.
-> We are doing this because the end of life of Python 2 is in 167 days.
-> We are using print() function because legacy print statements are syntax
-> errors on Py3.
-> reduce() was moved in Python 3 and raw_input() was removed so we make
-> changes to avoid NameErrors being raised at runtime.
-> We are also putting flake8 lint tests in place on Travis CI to avoid
-> any backsliding on future pull requests.
+Hi Rohit
 
-It seems to me that this patch does too many things at once, and
-perhaps it would be better to split it into a couple of smaller
-patches that do only one thing, e.g.:
+It's good to see this patch reducing the differences between the rebase 
+backends.
 
-  - use print function instead of statement in 'hg-to-git' (which
-    constitutes the bulk of this patch),
-  - do the same in 'contrib/fast-import/import-zips.py'
-  - import 'reduce' and fix 'raw_input' in 'git-p4'
-  - and once all that is done and the linter runs clean, add the
-    linter job to Travis CI.
+On 18/07/2019 20:03, Rohit Ashiwal wrote:
+> rebase am already has this flag to "lie" about the committer date
+> by changing it to the author date. Let's add the same for
+> interactive machinery.
+> 
+> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> ---
+>   Documentation/git-rebase.txt            |  7 ++--
+>   builtin/rebase.c                        | 23 ++++++++++---
+>   sequencer.c                             | 46 ++++++++++++++++++++++++-
+>   sequencer.h                             |  1 +
+>   t/t3422-rebase-incompatible-options.sh  |  1 -
+>   t/t3431-rebase-options-compatibility.sh | 21 +++++++++++
+>   6 files changed, 90 insertions(+), 9 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index eda52ed824..ddd111de69 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -383,8 +383,12 @@ default is `--no-fork-point`, otherwise the default is `--fork-point`.
+>   See also INCOMPATIBLE OPTIONS below.
+>   
+>   --committer-date-is-author-date::
+> +	Instead of recording the time the rebased commits are
+> +	created as the committer date, reuse the author date
+> +	as the committer date. This implies --force-rebase.
+> +
+>   --ignore-date::
+> -	These flags are passed to 'git am' to easily change the dates
+> +	This flag is passed to 'git am' to change the author date
+>   	of the rebased commits (see linkgit:git-am[1]).
+>   +
+>   See also INCOMPATIBLE OPTIONS below.
+> @@ -522,7 +526,6 @@ INCOMPATIBLE OPTIONS
+>   
+>   The following options:
+>   
+> - * --committer-date-is-author-date
+>    * --ignore-date
+>    * --whitespace
+>    * -C
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index afe376c3fe..c317fbe53c 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -82,6 +82,7 @@ struct rebase_options {
+>   	int ignore_whitespace;
+>   	char *gpg_sign_opt;
+>   	int autostash;
+> +	int committer_date_is_author_date;
+>   	char *cmd;
+>   	int allow_empty_message;
+>   	int rebase_merges, rebase_cousins;
+> @@ -113,6 +114,8 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   	replay.allow_empty_message = opts->allow_empty_message;
+>   	replay.verbose = opts->flags & REBASE_VERBOSE;
+>   	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+> +	replay.committer_date_is_author_date =
+> +					opts->committer_date_is_author_date;
+>   	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>   	replay.strategy = opts->strategy;
+>   	if (opts->strategy_opts)
+> @@ -467,6 +470,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>   		OPT_BOOL(0, "autosquash", &opts.autosquash,
+>   			 N_("move commits that begin with squash!/fixup!")),
+>   		OPT_BOOL(0, "signoff", &opts.signoff, N_("sign commits")),
+> +		OPT_BOOL(0, "committer-date-is-author-date",
+> +			 &opts.committer_date_is_author_date,
+> +			 N_("make committer date match author date")),
 
-This would ease the job of the reader, now and in the future, and it
-would better stand out that ...
+I guess it's good to do this for completeness but does 
+rebase--preserver-merges.sh support --committer-date-is-author-date? It 
+is the only caller of rebase--interactive I think so would be the only 
+user of this code.
 
-> diff --git a/git-p4.py b/git-p4.py
-> index 3991e7d1a7..9faee25db2 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
+>   		OPT_BIT('v', "verbose", &opts.flags,
+>   			N_("display a diffstat of what changed upstream"),
+>   			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+> @@ -534,6 +540,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>   		warning(_("--[no-]rebase-cousins has no effect without "
+>   			  "--rebase-merges"));
+>   
+> +	if (opts.committer_date_is_author_date)
+> +		opts.flags |= REBASE_FORCE;
+> +
+>   	return !!run_rebase_interactive(&opts, command);
+>   }
+>   
+> @@ -972,6 +981,8 @@ static int run_am(struct rebase_options *opts)
+>   
+>   	if (opts->ignore_whitespace)
+>   		argv_array_push(&am.args, "--ignore-whitespace");
+> +	if (opts->committer_date_is_author_date)
+> +		argv_array_push(&opts->git_am_opts, "--committer-date-is-author-date");
+>   	if (opts->action && !strcmp("continue", opts->action)) {
+>   		argv_array_push(&am.args, "--resolved");
+>   		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+> @@ -1419,9 +1430,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+>   		OPT_BOOL(0, "signoff", &options.signoff,
+>   			 N_("add a Signed-off-by: line to each commit")),
+> -		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+> -				  &options.git_am_opts, NULL,
+> -				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+> +		OPT_BOOL(0, "committer-date-is-author-date",
+> +			 &options.committer_date_is_author_date,
+> +			 N_("make committer date match author date")),
+>   		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
+>   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>   		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+> @@ -1688,10 +1699,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		    state_dir_base, cmd_live_rebase, buf.buf);
+>   	}
+>   
+> +	if (options.committer_date_is_author_date)
+> +		options.flags |= REBASE_FORCE;
+> +
+>   	for (i = 0; i < options.git_am_opts.argc; i++) {
+>   		const char *option = options.git_am_opts.argv[i], *p;
+> -		if (!strcmp(option, "--committer-date-is-author-date") ||
+> -		    !strcmp(option, "--ignore-date") ||
+> +		if (!strcmp(option, "--ignore-date") ||
+>   		    !strcmp(option, "--whitespace=fix") ||
+>   		    !strcmp(option, "--whitespace=strip"))
+>   			options.flags |= REBASE_FORCE;
+> diff --git a/sequencer.c b/sequencer.c
+> index a2d7b0925e..a65f01a422 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -147,6 +147,7 @@ static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
+>    * command-line.
+>    */
+>   static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+> +static GIT_PATH_FUNC(rebase_path_cdate_is_adate, "rebase-merge/cdate_is_adate")
+>   static GIT_PATH_FUNC(rebase_path_orig_head, "rebase-merge/orig-head")
+>   static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
+>   static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+> @@ -876,6 +877,18 @@ static char *get_author(const char *message)
+>   	return NULL;
+>   }
+>   
+> +/* Returns a "date" string that needs to be free()'d by the caller */
+> +static char *read_author_date_or_die(void)
+> +{
+> +	char *date;
+> +
+> +	if (read_author_script(rebase_path_author_script(),
+> +			       NULL, NULL, &date, 0))
+> +		die(_("failed to read author date"));
 
-> @@ -3968,6 +3970,7 @@ def renameBranch(self, branch_name):
->                  break
->  
->          if not found:
-> +            sync = P4Sync()
+Can we have this return an error please - we try quite hard in the 
+sequencer not to die in library code.
 
-... this change is not mentioned in the commit message.
+> +
+> +	return date;
+> +}
+> +
+>   /* Read author-script and return an ident line (author <email> timestamp) */
+>   static const char *read_author_ident(struct strbuf *buf)
+>   {
+> @@ -986,10 +999,17 @@ static int run_git_commit(struct repository *r,
+>   
+>   		if (res <= 0)
+>   			res = error_errno(_("could not read '%s'"), defmsg);
+> -		else
+> +		else {
+> +			if (opts->committer_date_is_author_date) {
+> +				char *date = read_author_date_or_die();
+> +				setenv("GIT_COMMITTER_DATE", date, 1);
+> +				free(date);
+> +			}
+> +
+>   			res = commit_tree(msg.buf, msg.len, cache_tree_oid,
+>   					  NULL, &root_commit, author,
+>   					  opts->gpg_sign);
+> +		}
+>   
+>   		strbuf_release(&msg);
+>   		strbuf_release(&script);
+> @@ -1019,6 +1039,11 @@ static int run_git_commit(struct repository *r,
+>   		argv_array_push(&cmd.args, "--amend");
+>   	if (opts->gpg_sign)
+>   		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+> +	if (opts->committer_date_is_author_date) {
+> +		char *date = read_author_date_or_die();
+> +		argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s", date);
+> +		free(date);
+> +	}
 
-Is this something the linter complains about?
-It doesn't look like a Python 2 vs. 3 compatibility fix to me, so it
-might deserve a dedicated patch.
+It's a shame to be doing this twice is slightly different ways in the 
+same function (and again in try_to_commit() but I don't think that can 
+be avoided as not all callers of run_git_commit() go through 
+try_to_commit()). As I think the child inherits the current environment 
+modified by cmd.env_array we could just call setenv() at the top of the 
+function. It would be worth looking to see if it would be simpler to do 
+the setenv() call in the loop that picks the commits, then we would 
+avoid having to do it in do_merge() and try_to_commit() separately.
 
-Cc-ing Luke for this bit.
+>   	if (defmsg)
+>   		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+>   	else if (!(flags & EDIT_MSG))
+> @@ -1467,6 +1492,12 @@ static int try_to_commit(struct repository *r,
+>   
+>   	reset_ident_date();
+>   
+> +	if (opts->committer_date_is_author_date) {
+> +		char *date = read_author_date_or_die();
+> +		setenv("GIT_COMMITTER_DATE", date, 1);
+> +		free(date);
+> +	}
+> +
+>   	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+>   				 oid, author, opts->gpg_sign, extra)) {
+>   		res = error(_("failed to write commit object"));
+> @@ -2538,6 +2569,11 @@ static int read_populate_opts(struct replay_opts *opts)
+>   			opts->signoff = 1;
+>   		}
+>   
+> +		if (file_exists(rebase_path_cdate_is_adate())) {
+> +			opts->allow_ff = 0;
 
->              sys.exit("gave up trying to rename existing branch {0}".format(sync.branch))
->  
->      def findLastP4Revision(self, starting_point):
-> -- 
-> gitgitgadget
+This is safe as we don't save the state of allow_ff for rebases so it 
+wont be overridden later. It would be an idea to add to the checks in 
+the assert() at the beginning of pick_commits() no we have another 
+option that implies --force-rebase.
+
+Best Wishes
+
+Phillip
+
+> +			opts->committer_date_is_author_date = 1;
+> +		}
+> +
+>   		if (file_exists(rebase_path_reschedule_failed_exec()))
+>   			opts->reschedule_failed_exec = 1;
+>   
+> @@ -2620,6 +2656,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+>   		write_file(rebase_path_gpg_sign_opt(), "-S%s\n", opts->gpg_sign);
+>   	if (opts->signoff)
+>   		write_file(rebase_path_signoff(), "--signoff\n");
+> +	if (opts->committer_date_is_author_date)
+> +		write_file(rebase_path_cdate_is_adate(), "%s", "");
+>   	if (opts->reschedule_failed_exec)
+>   		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+>   
+> @@ -3437,6 +3475,12 @@ static int do_merge(struct repository *r,
+>   		argv_array_push(&cmd.args, git_path_merge_msg(r));
+>   		if (opts->gpg_sign)
+>   			argv_array_push(&cmd.args, opts->gpg_sign);
+> +		if (opts->committer_date_is_author_date) {
+> +			char *date = read_author_date_or_die();
+> +			argv_array_pushf(&cmd.env_array,
+> +					 "GIT_COMMITTER_DATE=%s", date);
+> +			free(date);
+> +		}
+>   
+>   		/* Add the tips to be merged */
+>   		for (j = to_merge; j; j = j->next)
+> diff --git a/sequencer.h b/sequencer.h
+> index 303047a133..0cfe184fc2 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -44,6 +44,7 @@ struct replay_opts {
+>   	int quiet;
+>   	int reschedule_failed_exec;
+>   	int ignore_whitespace;
+> +	int committer_date_is_author_date;
+>   
+>   	int mainline;
+>   
+> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+> index 4342f79eea..7402f7e3da 100755
+> --- a/t/t3422-rebase-incompatible-options.sh
+> +++ b/t/t3422-rebase-incompatible-options.sh
+> @@ -61,7 +61,6 @@ test_rebase_am_only () {
+>   }
+>   
+>   test_rebase_am_only --whitespace=fix
+> -test_rebase_am_only --committer-date-is-author-date
+>   test_rebase_am_only -C4
+>   
+>   test_expect_success REBASE_P '--preserve-merges incompatible with --signoff' '
+> diff --git a/t/t3431-rebase-options-compatibility.sh b/t/t3431-rebase-options-compatibility.sh
+> index f38ae6f5fc..c3f7f6d5d0 100755
+> --- a/t/t3431-rebase-options-compatibility.sh
+> +++ b/t/t3431-rebase-options-compatibility.sh
+> @@ -7,6 +7,9 @@ test_description='tests to ensure compatibility between am and interactive backe
+>   
+>   . ./test-lib.sh
+>   
+> +GIT_AUTHOR_DATE="1999-04-02T08:03:20+05:30"
+> +export GIT_AUTHOR_DATE
+> +
+>   # This is a special case in which both am and interactive backends
+>   # provide the same outputs. It was done intentionally because
+>   # --ignore-whitespace both the backends fall short of optimal
+> @@ -63,4 +66,22 @@ test_expect_success '--ignore-whitespace works with interactive backend' '
+>   	test_cmp expect file
+>   '
+>   
+> +test_expect_success '--committer-date-is-author-date works with am backend' '
+> +	git rebase -f HEAD^ &&
+> +	git rebase --committer-date-is-author-date HEAD^ &&
+> +	git cat-file commit HEAD | sed -e "/^\$/q" >head &&
+> +	sed -ne "/^author /s/.*> //p" head >authortime &&
+> +	sed -ne "/^committer /s/.*> //p" head >committertime &&
+> +	test_cmp authortime committertime
+> +'
+> +
+> +test_expect_success '--committer-date-is-author-date works with interactive backend' '
+> +	git rebase -f HEAD^ &&
+> +	git rebase -i --committer-date-is-author-date HEAD^ &&
+> +	git cat-file commit HEAD | sed -e "/^\$/q" >head &&
+> +	sed -ne "/^author /s/.*> //p" head >authortime &&
+> +	sed -ne "/^committer /s/.*> //p" head >committertime &&
+> +	test_cmp authortime committertime
+> +'
+> +
+>   test_done
+> 
