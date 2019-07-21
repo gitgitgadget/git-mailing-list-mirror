@@ -2,69 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A77F21F461
-	for <e@80x24.org>; Sun, 21 Jul 2019 18:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAD711F461
+	for <e@80x24.org>; Sun, 21 Jul 2019 19:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727491AbfGUSer convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 21 Jul 2019 14:34:47 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54502 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbfGUSer (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jul 2019 14:34:47 -0400
-Received: by mail-wm1-f68.google.com with SMTP id p74so33031190wme.4
-        for <git@vger.kernel.org>; Sun, 21 Jul 2019 11:34:46 -0700 (PDT)
+        id S1727101AbfGUTk4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Jul 2019 15:40:56 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43896 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726323AbfGUTkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Jul 2019 15:40:55 -0400
+Received: by mail-pg1-f194.google.com with SMTP id f25so16575612pgv.10
+        for <git@vger.kernel.org>; Sun, 21 Jul 2019 12:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R78c7j/BB3KJT+dajb12nN7wpnV8ZjF26Tk9qXthWIs=;
+        b=o93os3ukCFBzwgCjjCR/tFw4UvW2wGq5QHwvEx89mvp0Nb4rSzt62EuMtqVm75NCUu
+         w7DwjNyoJFfzZlvnM3WtLr8X82ki/7C4vdbtm5xy1YJo10MMQk/g680isqVamQ8wuEXZ
+         wzVGUhH2wArKpRqOTVRrHYyLorZWKqtF0si1maPefaUl5lStkuj5ZLRRYdOMqz9Hwisq
+         YBKN/RX2mdYKdzvWMZh92KU/34WE17OXFwmgm2xOnBtjZG5U8TxcYXCY5X1MUdTGDcS6
+         zL5U3zVZm+b6E8mXTO34K75aH+bJDappnVF+br/mc7tg73d/xNRJOdys+OZBwmegcdtg
+         masA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CKf2T60+FflxfN9bOhMN7GqIcukz10l+yJIbSCAJLCI=;
-        b=Xbz07hKsb9vW8A3kI8gDlfWDLXJEFC+f1AGHVcs+Cb4bd5pOCJVvWpZuXiUQ5mClat
-         yxtavOg/Nlf1us4+0Itqly5owliyeOj9oTJMJvJlk2OCByIUifNmM0A3dikQJ1XUGBAl
-         ApVCQnLLfGZAs8uy9Qnl4UDVwsBjQPfYP8ZQkvDYs8d3xSkSwZaAfs/73QTA58PMxYhi
-         Fzaaijvw0rwPRzs7HaqkxfYq1NixDNHpSKJYQsKalz6jE+3iO2E1O43XwDN+oIr7mOvJ
-         f+9rOPcW47Lg9q7UJc6SjUeVuhKAVR6BRyCZ+iuZZDNngMK/ALbFLSsBXzSvJFFQF9R9
-         TH/A==
-X-Gm-Message-State: APjAAAUaui0u9iKu7WIUgbVP3liKe05xsihMgC7J0UXac8xtIuV9e0c+
-        Q1sGHdbXDX62wojAMp0mQPfeNe65LabJO0jL64g=
-X-Google-Smtp-Source: APXvYqyNjFn8znu+sj15yvhIo5mECi19YhMMAq8HxC+iGnzI5GmI56X4B4WTTAciWVaOUA5BOa7mH3VfefemnoIexTY=
-X-Received: by 2002:a1c:720e:: with SMTP id n14mr59474402wmc.53.1563734085790;
- Sun, 21 Jul 2019 11:34:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R78c7j/BB3KJT+dajb12nN7wpnV8ZjF26Tk9qXthWIs=;
+        b=YUx8Y0tr9udStca9FTivndvUfgVKAG9hDmmLARsbmnpkyrBmmo5h5//TrlKjR57/fs
+         pcc6vsQUHxD4vfBvaexuQUeD49GSLYSPYa6KvKJW8QboVGUwtXM2OnzR01ckdv/pG9s4
+         Uvi4cwwNSvSROFNipfKySlmM6bEQu6d89Z8AeSSkP02H3QLLLuKcYvnP7IYzEkpkslci
+         wpVVZKDnXVZNbx7X1LyJVd/Wl5pSPOJ1K2QOi3PXQ5982DyaEsxK/a0FNDRUI+w7OGv8
+         ggvOmKWMd59iTny0MpTGKec7J/II2SIuwBFUxx98ARIxc2jG2sZyuwBNcr4oYI3qC5s8
+         GDCw==
+X-Gm-Message-State: APjAAAWP1tYo98WvjQTcCtPtLUK/6oB5KBPklnGNSSCrSmDTlDZogyBX
+        QfqcLt2GLQ5AkPxJNk83NfP/RaTJ
+X-Google-Smtp-Source: APXvYqz+60VgwEdtiA2yBseTBhHYHpl/hniOa80AYvf1/2b6VcLTu1yymyIL4MblfKYj297kab5Z0A==
+X-Received: by 2002:a63:f452:: with SMTP id p18mr42086254pgk.373.1563738054832;
+        Sun, 21 Jul 2019 12:40:54 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id m11sm26839477pgl.8.2019.07.21.12.40.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 21 Jul 2019 12:40:54 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com
+Subject: [PATCH] grep: use custom JIT stack with pcre2
+Date:   Sun, 21 Jul 2019 12:40:52 -0700
+Message-Id: <20190721194052.15440-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <20190721183115.14985-1-carenas@gmail.com>
-In-Reply-To: <20190721183115.14985-1-carenas@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 21 Jul 2019 14:34:34 -0400
-Message-ID: <CAPig+cTXNvOXfLMgu-b36xzdBabwQuV-hJNNdDYYC_bj11DJJQ@mail.gmail.com>
-Subject: Re: [PATCH] grep: skip UTF8 checks explicitally
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 21, 2019 at 2:31 PM Carlo Marcelo Arenas Belón
-<carenas@gmail.com> wrote:
-> grep: skip UTF8 checks explicitally
+94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) allocate
+a stack and assign it to a match context, but never pass it to
+pcre2_jit_match, using instead the default.
 
-s/explicitally/explicitly/
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+This might have positive performance consequences (per the comments)
+but haven't tested them; if there is no difference might be better
+instead to remove the stack and match_context and save the related
+memory, since it seems the default was working fine anyway.
 
-> Usually PCRE is compiled with JIT support, and therefore the code
-> path used includes calling pcre2_jit_match (for PCRE2), that ignores
-> invalid UTF-8 in the corpus.
->
-> Make that option explicit so it can be also used when JIT is not
-> enabled and pcre2_match is called instead, preventing `git grep`
-> to abort when hitting the first binary blob in a fixed match
-> after ed0479ce3d ("Merge branch 'ab/no-kwset' into next", 2019-07-15)
->
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+ grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grep.c b/grep.c
+index 146093f590..ff76907ceb 100644
+--- a/grep.c
++++ b/grep.c
+@@ -564,7 +564,7 @@ static int pcre2match(struct grep_pat *p, const char *line, const char *eol,
+ 	if (p->pcre2_jit_on)
+ 		ret = pcre2_jit_match(p->pcre2_pattern, (unsigned char *)line,
+ 				      eol - line, 0, flags, p->pcre2_match_data,
+-				      NULL);
++				      p->pcre2_match_context);
+ 	else
+ 		ret = pcre2_match(p->pcre2_pattern, (unsigned char *)line,
+ 				  eol - line, 0, flags, p->pcre2_match_data,
+-- 
+2.22.0
+
