@@ -2,152 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C58681F461
-	for <e@80x24.org>; Mon, 22 Jul 2019 17:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02B661F461
+	for <e@80x24.org>; Mon, 22 Jul 2019 17:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727036AbfGVRbH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 13:31:07 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:41330 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbfGVRbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jul 2019 13:31:07 -0400
-Received: by mail-lf1-f66.google.com with SMTP id 62so22373256lfa.8
-        for <git@vger.kernel.org>; Mon, 22 Jul 2019 10:31:05 -0700 (PDT)
+        id S1730612AbfGVRyX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 13:54:23 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40296 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730452AbfGVRyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jul 2019 13:54:23 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r1so40334012wrl.7
+        for <git@vger.kernel.org>; Mon, 22 Jul 2019 10:54:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rWvdY+Dcg4kB1rMmvENDz7qgFOI4rT2H9R2puZIV4rw=;
-        b=kcWSxxSlxnLWI+Mo3XIYMVfR01kGZ/QlPQ4Bq7uUkqe23byxf9BdMH1/EEycyq9+Y7
-         kGTwjBiy4I1bU/nwqpQAy2/KumIk63hq++VoDqzp7GMaF1Lwbce0lIFUjr51q2OYLRAb
-         MfPTzs4VET4+XzxDyHRRUVIMZqMCuMqRIeUv3P/Y/4m20KjC/s+Ljz4ItfIzG74DtwS3
-         HGCP0JyEePiMAZRVLrZ33gs1RmcCsNm47Iz7Z1Tlw5LB+krGic+9vSVGqV45nk3AL1W/
-         gHeJpA1shqhsRXZUlclgcFfnNMISdCAdtsyXthQbLgFRuN6pJ9rFutosoymuwYbq640E
-         DPkA==
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=lZBozKiLsRSjgHURbRotE3npFGFpTBkGTxlMw/31/70=;
+        b=P0JhqXfClI8oczDsMb/P3oj/Q7S+nL8Z9HL56lYmIe+iNDR9NHU3lbcs3RBKB/vSA1
+         IB9c22YsWW71kj4y97B5PLOeKeh+jkGEqS9IseB/uHROVwKV7CeqRXMqxfuHYET8E8BE
+         HoxoFS3QoTMEamdpfsbFVidxOUr2mDmq51VVYEOc/yKJUuvTON1AEMwI0K3sGzJLPc9I
+         29sfDhK6iVOslcxgE/ZrMDTb3fg/nsFFDaPQKUCy9IzPFpqwuWQpEon3x8s/3LgPCWVa
+         l8tlWzcaQiZo3XKP1VFBbrGDdG+9JTxc2hqwXpbNiZ/yPBIBqf2Usw2qiZ9X8KPL99b/
+         7+WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rWvdY+Dcg4kB1rMmvENDz7qgFOI4rT2H9R2puZIV4rw=;
-        b=f3fNZ6vkPqMvSpMQWKOrQvUhwwtUKnRLYZudVfHXAEVElsCaQ/ARy+fdY2N5/7A9zM
-         JnAkGpEXt+xguSrdkaagt2CIcWnimQiOuRJGsq2R15cT6a8Kdn4ARjl4Bd2XQu2RmLY7
-         hwXBQ6iyzN0BUQbhIC3JznVzCAgYuHLOwNbwn13Ll9pnUtBMZPXbDuMoUsW3VJnLI8+K
-         xElN520mUMMxtg8mn8I9xE/j8EN9qyUxQLirD/nAoOCqPX3xJBi3aj2XbIXZmvDPXBrl
-         HHe/DWoTXs6vPZ7sgDeVTm5T7GEVnl5SEj/8Pt1Sz44D+4tH285rAAroUBBWmuf0VQ94
-         DANQ==
-X-Gm-Message-State: APjAAAUMRhIXulfk8FX059n0ktKrEHDrrGYAPY7GyfzfenYWdjeip4hT
-        oxFc9TvzLRKHIv+8iFmRYvxiThyLyVu+mUUWX/GU7g==
-X-Google-Smtp-Source: APXvYqzsDUdisx4W8iJnTXlfs8gxsaIagPtxzwNRkvezkd3aG6iSTaFFQJ4rewFxWKEGgzhb2S8zQTlspfRJmyEPueM=
-X-Received: by 2002:ac2:455a:: with SMTP id j26mr31994405lfm.18.1563816664624;
- Mon, 22 Jul 2019 10:31:04 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lZBozKiLsRSjgHURbRotE3npFGFpTBkGTxlMw/31/70=;
+        b=OkjzDsUiVX4gjqdmZPQzFO5jamalkr/yOYd0QFYisFna4ATXFAtXw4H7Ikyzlg1Rli
+         xQGuGpM3G90F7ssOMz+Bbge7wuUXb6ZTbwAI6amo1rgOlfFxfVTvz9nUFwDM3QUpBFic
+         +U6iaQOcMXQvzarOvjoW2Afu3sKZ6we7vFs3V8QwiUdqZ5QVgyXlu3jaceQmPuAGFxM5
+         iatcrs0xbJjqv3tfhOjnQFwBbItOKtPdA5iPknv464qwQ0jJKlmeRqdXFm92wMHTXvhk
+         /U8N4fBWY4ap4GmQSaIqCNagsbMP0aDrncfxrURRBJivkfROBey6w8nxaA+HW76SwfK2
+         NGKQ==
+X-Gm-Message-State: APjAAAWs74LBu+iHuf7MjSUpDZStGI2Hd9JkwK4c8ygndHokwrrvLru4
+        AMscf8kHQfZVUrXf831e1QBIgC6A
+X-Google-Smtp-Source: APXvYqzL9iipanXm6KBJlnJTJJy/Xebz0CIPTk68E6snfzX7a8FCjnZVa3IxKPbtKAKCltlcVm4ZCQ==
+X-Received: by 2002:a5d:50c2:: with SMTP id f2mr46191783wrt.106.1563818061263;
+        Mon, 22 Jul 2019 10:54:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r14sm35670878wrx.57.2019.07.22.10.54.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Jul 2019 10:54:20 -0700 (PDT)
+Date:   Mon, 22 Jul 2019 10:54:20 -0700 (PDT)
+X-Google-Original-Date: Mon, 22 Jul 2019 17:54:14 GMT
+Message-Id: <pull.292.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/5] Create 'feature.*' config area and some centralized config parsing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20190707055132.103736-1-masayasuzuki@google.com> <20190709125620.GA18175@sigill.intra.peff.net>
-In-Reply-To: <20190709125620.GA18175@sigill.intra.peff.net>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Mon, 22 Jul 2019 10:30:52 -0700
-Message-ID: <CAJB1erXRg4S-vzRZwA-Q5cXAPayRE0dAjFjjkNQ9CoKiXF=7EQ@mail.gmail.com>
-Subject: Re: [PATCH] credential: add nocache option to the credentials API
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, peff@peff.net, jnareb@gmail.com,
+        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 9, 2019 at 5:56 AM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Jul 06, 2019 at 10:51:32PM -0700, Masaya Suzuki wrote:
->
-> > The credentials API calls credentials helpers in order. If a
-> > username/password pair is returned the helpers and if it's used for
-> > authentication successfully, it's announced to the helpers and they can
-> > store it for later use.
-> >
-> > Some credentials are valid only for the limited time and should not be
-> > cached. In this case, because the credential is announced to all helpers
-> > and they can independently decide whether they will cache it or not,
-> > those short-lived credentials can be cached.
-> >
-> > This change adds an option that a credential helper can specify that the
-> > credential returned by the helper should not be cached. If this is
-> > specified, even after the credential is used successfully, it won't be
-> > announced to other helpers for store.
->
-> I think this makes sense to do, though note that there's an old
-> discussion which covers some alternatives:
->
->   https://public-inbox.org/git/20120407033417.GA13914@sigill.intra.peff.net/
->
-> In that patch, I essentially proposed making all gathered credentials as
-> nocache. That's a more secure default (though in some cases less
-> convenient).
->
-> It did break a case Shawn had of caching the result of another helper. I
-> showed some options there for providing a mechanism to chain helpers
-> together explicitly.
+This is a brand-new thread to replace ds/early-access. The discussion on
+that thread was very helpful [1].
 
-I think that it's better to make it nocache by default. Having one
-helper produce a credential and having another cache it looks storage.
-But since this is the current behavior, I'm OK with just keeping
-nocache an option. It's backward compatible.
+With this in mind, I propose instead a set of "feature.*" config settings
+that form groups of "community recommended" settings (with some caveats). In
+the space below, I'll list a set of possible feature names and the implied
+config options.
 
-> We also discussed helpers passing out an explicit ttl. That's a more
-> general case of your nocache flag (i.e., ttl=0 covers that case, but we
-> could additionally pass "ttl" to the cache helper to let it be smarter).
+First, the main two categories we've discussed so far: many commits and many
+files. These two feature sets are for when your repo is large in one of
+these dimensions. Perhaps there are other settings to include in these?
 
-TTL sounds like it's a generalized version. It might be a bit awkward
-because the existing credential helpers that don't support TTL would
-anyway cache the credentials. I think in practice the password saving
-feature is mainly used by those password management software (like
-git-credential-osxkeychain), and they wouldn't support a short-lived
-credential. Just having nocache seems fine to me. As you said, if
-needed, "ttl" can be added and "nocache" can be just a shorthand of
-"ttl=0".
+feature.manyFiles:
+    index.version = 4
+    core.untrackedCache = true
 
-> Given the age of that discussion and the fact that nobody has really
-> complained much in the interim, I'm OK to go with your much simpler
-> approach. But I think it's worth at least thinking for a few minutes on
-> whether there's anything to pull from that discussion. :)
->
-> (As a side note, I've had all those patches on my "to revisit and send
-> upstream" queue for 7 years; if we take yours, maybe I can finally let
-> them go. ;) ).
->
-> >  Documentation/technical/api-credentials.txt | 4 +++-
-> >  credential.c                                | 4 +++-
-> >  credential.h                                | 3 ++-
-> >  t/t0300-credentials.sh                      | 9 +++++++++
-> >  4 files changed, 17 insertions(+), 3 deletions(-)
->
-> The patch itself looks good; two minor comments:
->
-> > @@ -296,7 +298,7 @@ void credential_approve(struct credential *c)
-> >  {
-> >       int i;
-> >
-> > -     if (c->approved)
-> > +     if (c->approved || c->no_cache)
-> >               return;
-> >       if (!c->username || !c->password)
-> >               return;
->
-> Here we're disallowing a "nocache" credential from being passed to _any_
-> helper, whether it's caching or not. It could be storing permanently,
-> though perhaps that's semantic nitpicking (if it's not to be cached, it
-> probably shouldn't be stored permanently either). Other helpers could in
-> theory be doing something else with the data, though in practice I doubt
-> here are any uses beyond debugging.
+feature.manyCommits:
+    core.commitGraph = true
+    gc.writeCommitGraph = true
+    (future: fetch.writeSplitCommitGraph = true)
 
-I cannot think of a usage either. If there's a good usage, I would
-change this, but if it's for debugging, it's better to be done with
-those debugging features (like GIT_TRACE_CURL). Note that this is
-called only when the credential is successfully used. We probably want
-to use such debugging feature for the credentials that are not
-successfully used.
+Note: the fetch.writeSplitCommitGraph does not exist yet, but could be
+introduced in a later release to write a new commit-graph (with --split) on
+fetch.
+
+The other category that has been discussed already is that of "experimental
+features that we generally think are helpful but change behavior slightly in
+some cases".
+
+feature.experimental:
+    pack.useSparse = true
+    merge.directoryRenames = true
+    fetch.negotiationAlgorithm = skipping
+
+Specifically, this setting is for config values we are not sure will ever be
+on by default, but additional testing is needed to be sure. This is
+different than a possible 'feature.preview' setting that would include
+config settings that we are committed to updating the defaults in a future
+release. There are many ways we can take this idea in the future (including
+more additions to these categories).
+
+Thanks, -Stolee
+
+[1] https://public-inbox.org/git/pull.254.git.gitgitgadget@gmail.com/
+
+Derrick Stolee (5):
+  repo-settings: consolidate some config settings
+  repo-settings: add feature.manyCommits setting
+  repo-settings: parse core.untrackedCache
+  repo-settings: create feature.manyFiles setting
+  repo-settings: create feature.experimental setting
+
+ Documentation/config.txt             |   2 +
+ Documentation/config/core.txt        |   7 +-
+ Documentation/config/feature.txt     |  42 +++++++++++
+ Documentation/config/fetch.txt       |   3 +-
+ Documentation/config/gc.txt          |   4 +-
+ Documentation/config/index.txt       |   1 +
+ Documentation/config/merge.txt       |   3 +-
+ Documentation/config/pack.txt        |   3 +-
+ Makefile                             |   1 +
+ builtin/am.c                         |   4 +-
+ builtin/gc.c                         |  13 ++--
+ builtin/pack-objects.c               |   9 ++-
+ builtin/update-index.c               |   7 +-
+ commit-graph.c                       |   7 +-
+ config.c                             |  24 ------
+ fetch-negotiator.c                   |  26 ++++---
+ fetch-negotiator.h                   |   5 +-
+ fetch-pack.c                         |  11 ++-
+ merge-recursive.c                    |  32 ++++----
+ merge-recursive.h                    |   1 -
+ read-cache.c                         |  31 ++++----
+ repo-settings.c                      | 108 +++++++++++++++++++++++++++
+ repo-settings.h                      |  29 +++++++
+ repository.h                         |   3 +
+ t/t1600-index.sh                     |  31 ++++++--
+ t/t5552-skipping-fetch-negotiator.sh |  23 ------
+ 26 files changed, 303 insertions(+), 127 deletions(-)
+ create mode 100644 Documentation/config/feature.txt
+ create mode 100644 repo-settings.c
+ create mode 100644 repo-settings.h
+
+
+base-commit: 9c9b961d7eb15fb583a2a812088713a68a85f1c0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-292%2Fderrickstolee%2Frepo-settings%2Fhead-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-292/derrickstolee/repo-settings/head-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/292
+-- 
+gitgitgadget
