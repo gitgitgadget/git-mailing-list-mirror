@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C4D41F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02691F461
 	for <e@80x24.org>; Mon, 22 Jul 2019 17:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730661AbfGVRy1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 13:54:27 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42925 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730583AbfGVRyZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730657AbfGVRy0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 13:54:26 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44485 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730613AbfGVRyZ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 22 Jul 2019 13:54:25 -0400
-Received: by mail-wr1-f67.google.com with SMTP id x1so25349920wrr.9
-        for <git@vger.kernel.org>; Mon, 22 Jul 2019 10:54:23 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id p17so40307521wrf.11
+        for <git@vger.kernel.org>; Mon, 22 Jul 2019 10:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cyAOMMH1whMqdnKFrzzpquQ2nXvUE88NdzKeW3RK24Q=;
-        b=OX7FKUA9QNkRj6MqoFdPJq57rsLWFTvI1hl4hgK7UyvNpv36ZnTmF30Hz2wnTSATxc
-         w/pMxgM9oYgFnWuLmEma+4X7FOKUxZtMZbbaotz4Au8kn1o2JzPJoCVCJYomDzACXD11
-         UH2vq+DE9jTAa1W0wjPnOOmKPNeL1RozEIarv6KuIVrCPk3zKlv8M6Vm6hZuzJw1XyIo
-         DKZ6flfJzF/JyWiBrqslUGw7Uyxkr1bCXJLlvj6941J5O4T1L1jSORFhzyOTr8ixhMok
-         Kh2M4ieLAhOlgTUjgSoefTPUBc29VFHpO9Yr6HyxXX5Zt0PAmatGbuELfI5RXT3EWdHS
-         vziA==
+        bh=lOX80uVC2U2fQKJu8kcG4KezDPftBgNdrsTDy0EN1A8=;
+        b=L1q3KiXIG//PZZXq61lQuCm/7iBmUk2QV+Gj2I3fH8LpYRJUXyTj/z9BSAW+tWZqWO
+         Dac7HKPeXauPEogzq4RKxaQcSy5oMf4DOTucnV2DkjtDZe0AbxWbWbFOA67znb7/m0kn
+         3x24QeWeZTlw9fzFown5rh+fJbSV5/t8OJKP2FaV4iiYGviFZEt8XFCniLj4y3aREgRB
+         IIoPlD6KEU5TJbGZKfwbqy/Qy4daKQIZUQcWJVNtBAMIiksBJQh8vfAfILiAQfdlsFnp
+         zD0MlKxzba6VxqiORbMyUYdbesjDCv+X/bitzgQOhWw1dZlImxnPYpNpXob20xVS05bd
+         /XVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cyAOMMH1whMqdnKFrzzpquQ2nXvUE88NdzKeW3RK24Q=;
-        b=Y6Jzj/jcocYFqEtWl+oii6rgdrATtI4Eh5yxKcfrTzXOwTMfQhKtRdhx+4E/bbhElD
-         JCkviHUzpwx9EYEpXbSL7o6NPBV++7MHP/BlOELpRb8JDSivd0hkvX9wMtLFRcKV6Opu
-         5D7OceeboR2AXm2JmIhb5t0GlXmgtgnYfSYf7COgGJ1GJVFfj8um6O8pojm42oJ2EZoc
-         uitRY49kmfGT3QlAceS3C+IFguFtYe3UjJhIDGB7P8ByuuL4dxsUe4xQvrswddlR2cP+
-         Z68cJ3hTXN9ZN62OfZwnKzVa22Qo8tvDnAjhSHKciRuknj7+K6o7cmrm/YwtOmpK1ij6
-         887w==
-X-Gm-Message-State: APjAAAXUVRVImoWoU4etOzPFPebYGTvKRxVl1A6429Qdi5CNYP/Kv9+B
-        IqXnTVuUdsg2fARi4a/sld5Uxz0E
-X-Google-Smtp-Source: APXvYqyFJNrIfhhm6GfXJ0YQmSovTUIqri7ChvuhURWkE1U7AHZ3ITjSROjE34UJHfLIZ8pl5Q2bxg==
-X-Received: by 2002:adf:ca0f:: with SMTP id o15mr75917364wrh.135.1563818062862;
-        Mon, 22 Jul 2019 10:54:22 -0700 (PDT)
+        bh=lOX80uVC2U2fQKJu8kcG4KezDPftBgNdrsTDy0EN1A8=;
+        b=Y16ptJFXGeZ+y+ae6QT18o6ywUHBdxAhms5VqKCEBzGcg6Qxpa+erHmzyVQzdCqp/3
+         oZNr66c4qD36b3krEP3iG55wgrSByJarI5WRNSUMBX75Ur8lsZNAJAAe5vai3LRwS0TQ
+         GeBg3s77X/vbzZXMPYdaaYWw428BYnUhW1SUlQwEht3bfPTF7UFgFdV8ToAFE9a3zI5l
+         EXahNajLecXZLV1SIOXJaTtbco4JwJ3xm38ZeWvZwznYY8DNF7wZiTJHAp68rBupjJqc
+         xxzNIlnGzA+Fj5tzx2lK+LNx/Q7hySDA4B9CM2fqnjC3j+KC7p/xsVPhuvnGAgeQi5ER
+         hk3w==
+X-Gm-Message-State: APjAAAUHnBeyjoeGENqmg5I5yMpnIas8j7RxGebZShzlXwFcMWVi/bPo
+        izMkc92EI0Z2iXT+MiEwJN61BQTg
+X-Google-Smtp-Source: APXvYqz+VO9kT8BlD/JE/sYd1RuspxNBLY3tD7JfpS6g9d7bTccEgGAs1SkrRtS1vT1uLY+o0s4CqA==
+X-Received: by 2002:adf:de10:: with SMTP id b16mr43122769wrm.296.1563818064371;
+        Mon, 22 Jul 2019 10:54:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i13sm36139825wrr.73.2019.07.22.10.54.22
+        by smtp.gmail.com with ESMTPSA id j9sm43916639wrn.81.2019.07.22.10.54.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jul 2019 10:54:22 -0700 (PDT)
-Date:   Mon, 22 Jul 2019 10:54:22 -0700 (PDT)
-X-Google-Original-Date: Mon, 22 Jul 2019 17:54:16 GMT
-Message-Id: <e00a1be75b410694374b0d9bd60ab16d67ef6d20.1563818059.git.gitgitgadget@gmail.com>
+        Mon, 22 Jul 2019 10:54:23 -0700 (PDT)
+Date:   Mon, 22 Jul 2019 10:54:23 -0700 (PDT)
+X-Google-Original-Date: Mon, 22 Jul 2019 17:54:18 GMT
+Message-Id: <63b522a858bdd2fad78da53eae207e64f2f7a6e0.1563818059.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.292.git.gitgitgadget@gmail.com>
 References: <pull.292.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/5] repo-settings: add feature.manyCommits setting
+Subject: [PATCH 4/5] repo-settings: create feature.manyFiles setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,110 +73,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When a repo has many commits, it is helpful to write and read the
-commit-graph file. Future changes to Git may include new config
-settings that are benefitial in this scenario.
+The feature.manyFiles setting is suitable for repos with many
+files in the working directory. By setting index.version=4 and
+core.untrackedCache=true, commands such as 'git status' should
+improve.
 
-Create the 'feature.manyCommits' config setting that changes the
-default values of 'core.commitGraph' and 'gc.writeCommitGraph' to
-true.
+While adding this setting, modify the index version precedence
+tests to check how this setting overrides the default for
+index.version is unset.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config.txt         |  2 ++
- Documentation/config/core.txt    |  3 ++-
- Documentation/config/feature.txt | 15 +++++++++++++++
- Documentation/config/gc.txt      |  4 ++--
- repo-settings.c                  |  7 +++++++
- 5 files changed, 28 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/config/feature.txt
+ Documentation/config/core.txt    |  4 +++-
+ Documentation/config/feature.txt | 12 +++++++++++-
+ Documentation/config/index.txt   |  1 +
+ repo-settings.c                  |  6 ++++++
+ t/t1600-index.sh                 | 31 ++++++++++++++++++++++++++-----
+ 5 files changed, 47 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e3f5bc3396..77f3b1486b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -345,6 +345,8 @@ include::config/difftool.txt[]
- 
- include::config/fastimport.txt[]
- 
-+include::config/feature.txt[]
-+
- include::config/fetch.txt[]
- 
- include::config/format.txt[]
 diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 75538d27e7..d80162681a 100644
+index d80162681a..7a2a33bc8c 100644
 --- a/Documentation/config/core.txt
 +++ b/Documentation/config/core.txt
-@@ -577,7 +577,8 @@ the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
+@@ -86,7 +86,9 @@ core.untrackedCache::
+ 	it will automatically be removed, if set to `false`. Before
+ 	setting it to `true`, you should check that mtime is working
+ 	properly on your system.
+-	See linkgit:git-update-index[1]. `keep` by default.
++	See linkgit:git-update-index[1]. `keep` by default, unless
++	`feature.manyFiles` is enabled which sets this setting to
++	`true` by default.
  
- core.commitGraph::
- 	If true, then git will read the commit-graph file (if it exists)
--	to parse the graph structure of commits. Defaults to false. See
-+	to parse the graph structure of commits. Defaults to false, unless
-+	`feature.manyCommits` is enabled. See
- 	linkgit:git-commit-graph[1] for more information.
- 
- core.useReplaceRefs::
+ core.checkStat::
+ 	When missing or is set to `default`, many fields in the stat
 diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
-new file mode 100644
-index 0000000000..f74314ae90
---- /dev/null
+index f74314ae90..c2d9ef7473 100644
+--- a/Documentation/config/feature.txt
 +++ b/Documentation/config/feature.txt
-@@ -0,0 +1,15 @@
-+feature.*::
-+	The config settings that start with `feature.` modify the defaults of
-+	a group of other config settings. These groups are created by the Git
-+	developer community as recommended defaults and are subject to change.
-+	In particular, new config options may be added with different defaults.
-+
-+feature.manyCommits::
-+	Enable config options that optimize for repos with many commits. This
-+	setting is recommended for repos with at least 100,000 commits. The
-+	new default values are:
-++
-+* `core.commitGraph=true` enables reading the commit-graph file.
-++
-+* `gc.writeCommitGraph=true` enables writing the commit-graph file during
-+garbage collection.
+@@ -12,4 +12,14 @@ feature.manyCommits::
+ * `core.commitGraph=true` enables reading the commit-graph file.
+ +
+ * `gc.writeCommitGraph=true` enables writing the commit-graph file during
+-garbage collection.
 \ No newline at end of file
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 02b92b18b5..31a5fc4f75 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -63,8 +63,8 @@ gc.writeCommitGraph::
- 	If true, then gc will rewrite the commit-graph file when
- 	linkgit:git-gc[1] is run. When using `git gc --auto`
- 	the commit-graph will be updated if housekeeping is
--	required. Default is false. See linkgit:git-commit-graph[1]
--	for details.
-+	required. Default is false, unless `feature.manyCommits`
-+	is enabled. See linkgit:git-commit-graph[1] for details.
- 
- gc.logExpiry::
- 	If the file gc.log exists, then `git gc --auto` will print
++garbage collection.
++
++feature.manyFiles::
++	Enable config options that optimize for repos with many files in the
++	working directory. With many files, commands such as `git status` and
++	`git checkout` may be slow and these new defaults improve performance:
+++
++* `index.version=4` enables path-prefix compression in the index.
+++
++* `core.untrackedCache=true` enables the untracked cache. This setting assumes
++that mtime is working on your machine.
+\ No newline at end of file
+diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
+index f181503041..7cb50b37e9 100644
+--- a/Documentation/config/index.txt
++++ b/Documentation/config/index.txt
+@@ -24,3 +24,4 @@ index.threads::
+ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
++	If `feature.manyFiles` is enabled, then the default is 4.
 diff --git a/repo-settings.c b/repo-settings.c
-index 13a9128f62..f328602fd7 100644
+index 807c5a29d6..9e4b8e6268 100644
 --- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -3,10 +3,17 @@
- #include "config.h"
- #include "repo-settings.h"
- 
-+#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
-+
- static int git_repo_config(const char *key, const char *value, void *cb)
- {
- 	struct repo_settings *rs = (struct repo_settings *)cb;
- 
-+	if (!strcmp(key, "feature.manycommits")) {
-+		UPDATE_DEFAULT(rs->core_commit_graph, 1);
-+		UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
+@@ -14,6 +14,12 @@ static int git_repo_config(const char *key, const char *value, void *cb)
+ 		UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
+ 		return 0;
+ 	}
++	if (!strcmp(key, "feature.manyfiles")) {
++		UPDATE_DEFAULT(rs->index_version, 4);
++		UPDATE_DEFAULT(rs->core_untracked_cache,
++			       CORE_UNTRACKED_CACHE_KEEP | CORE_UNTRACKED_CACHE_WRITE);
 +		return 0;
 +	}
  	if (!strcmp(key, "core.commitgraph")) {
  		rs->core_commit_graph = git_config_bool(key, value);
  		return 0;
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index 42962ed7d4..c77721b580 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -59,17 +59,38 @@ test_expect_success 'out of bounds index.version issues warning' '
+ 	)
+ '
+ 
+-test_expect_success 'GIT_INDEX_VERSION takes precedence over config' '
++test_index_version () {
++	INDEX_VERSION_CONFIG=$1 &&
++	FEATURE_MANY_FILES=$2 &&
++	ENV_VAR_VERSION=$3
++	EXPECTED_OUTPUT_VERSION=$4 &&
+ 	(
+ 		rm -f .git/index &&
+-		GIT_INDEX_VERSION=4 &&
+-		export GIT_INDEX_VERSION &&
+-		git config --add index.version 2 &&
++		rm -f .git/config &&
++		if test "$INDEX_VERSION_CONFIG" -ne 0
++		then
++			git config --add index.version $INDEX_VERSION_CONFIG
++		fi &&
++		git config --add feature.manyFiles $FEATURE_MANY_FILES
++		if test "$ENV_VAR_VERSION" -ne 0
++		then
++			GIT_INDEX_VERSION=$ENV_VAR_VERSION &&
++			export GIT_INDEX_VERSION
++		else
++			unset GIT_INDEX_VERSION
++		fi &&
+ 		git add a 2>&1 &&
+-		echo 4 >expect &&
++		echo $EXPECTED_OUTPUT_VERSION >expect &&
+ 		test-tool index-version <.git/index >actual &&
+ 		test_cmp expect actual
+ 	)
++}
++
++test_expect_success 'index version config precedence' '
++	test_index_version 2 false 4 4 &&
++	test_index_version 2 true 0 2 &&
++	test_index_version 0 true 0 4 &&
++	test_index_version 0 true 2 2
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
