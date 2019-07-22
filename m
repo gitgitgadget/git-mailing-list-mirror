@@ -7,97 +7,105 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A9871F461
-	for <e@80x24.org>; Mon, 22 Jul 2019 21:00:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2054B1F461
+	for <e@80x24.org>; Mon, 22 Jul 2019 21:12:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730592AbfGVVAj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 17:00:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48736 "HELO cloud.peff.net"
+        id S1730914AbfGVVMV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 17:12:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48752 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730554AbfGVVAj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jul 2019 17:00:39 -0400
-Received: (qmail 32473 invoked by uid 109); 22 Jul 2019 21:00:39 -0000
+        id S1730092AbfGVVMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jul 2019 17:12:20 -0400
+Received: (qmail 32542 invoked by uid 109); 22 Jul 2019 21:12:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jul 2019 21:00:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jul 2019 21:12:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4522 invoked by uid 111); 22 Jul 2019 21:01:37 -0000
+Received: (qmail 4591 invoked by uid 111); 22 Jul 2019 21:13:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jul 2019 17:01:37 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jul 2019 17:13:19 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 22 Jul 2019 17:00:38 -0400
+Date:   Mon, 22 Jul 2019 17:12:19 -0400
 From:   Jeff King <peff@peff.net>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] credential: add nocache option to the credentials API
-Message-ID: <20190722210037.GA31664@sigill.intra.peff.net>
-References: <20190707055132.103736-1-masayasuzuki@google.com>
- <20190709125620.GA18175@sigill.intra.peff.net>
- <CAJB1erXRg4S-vzRZwA-Q5cXAPayRE0dAjFjjkNQ9CoKiXF=7EQ@mail.gmail.com>
+To:     "Raitanen, Adam" <araitane@ciena.com>
+Cc:     James Knight <james.d.knight@live.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Possible bug in Makefile when executing curl-config
+Message-ID: <20190722211219.GB31664@sigill.intra.peff.net>
+References: <DM6PR04MB47939645A97D099241AD25F0D0C40@DM6PR04MB4793.namprd04.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJB1erXRg4S-vzRZwA-Q5cXAPayRE0dAjFjjkNQ9CoKiXF=7EQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DM6PR04MB47939645A97D099241AD25F0D0C40@DM6PR04MB4793.namprd04.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 22, 2019 at 10:30:52AM -0700, Masaya Suzuki wrote:
+[+cc the author of that patch]
 
-> > In that patch, I essentially proposed making all gathered credentials as
-> > nocache. That's a more secure default (though in some cases less
-> > convenient).
-> >
-> > It did break a case Shawn had of caching the result of another helper. I
-> > showed some options there for providing a mechanism to chain helpers
-> > together explicitly.
+On Mon, Jul 22, 2019 at 07:46:37PM +0000, Raitanen, Adam wrote:
+
+> I believe there may be a bug in the Makefile introduced by the following commit:
 > 
-> I think that it's better to make it nocache by default. Having one
-> helper produce a credential and having another cache it looks storage.
-> But since this is the current behavior, I'm OK with just keeping
-> nocache an option. It's backward compatible.
-
-Yeah, I think that make sense.
-
-> > We also discussed helpers passing out an explicit ttl. That's a more
-> > general case of your nocache flag (i.e., ttl=0 covers that case, but we
-> > could additionally pass "ttl" to the cache helper to let it be smarter).
+> https://github.com/git/git/commit/23c4bbe28e61974577164db09cbd1d1c7e568ca4
 > 
-> TTL sounds like it's a generalized version. It might be a bit awkward
-> because the existing credential helpers that don't support TTL would
-> anyway cache the credentials. I think in practice the password saving
-> feature is mainly used by those password management software (like
-> git-credential-osxkeychain), and they wouldn't support a short-lived
-> credential. Just having nocache seems fine to me. As you said, if
-> needed, "ttl" can be added and "nocache" can be just a shorthand of
-> "ttl=0".
-
-I was thinking that Git itself could treat "ttl=0" specially, the same
-as your nocache, and avoid passing it along to any helpers during the
-approve stage. That would make it exactly equivalent to your patch
-(modulo the name change).
-
-> > Here we're disallowing a "nocache" credential from being passed to _any_
-> > helper, whether it's caching or not. It could be storing permanently,
-> > though perhaps that's semantic nitpicking (if it's not to be cached, it
-> > probably shouldn't be stored permanently either). Other helpers could in
-> > theory be doing something else with the data, though in practice I doubt
-> > here are any uses beyond debugging.
+> The commit was merged in 2.20.0:
 > 
-> I cannot think of a usage either. If there's a good usage, I would
-> change this, but if it's for debugging, it's better to be done with
-> those debugging features (like GIT_TRACE_CURL). Note that this is
-> called only when the credential is successfully used. We probably want
-> to use such debugging feature for the credentials that are not
-> successfully used.
+> * The way -lcurl library gets linked has been simplified by taking
+>    advantage of the fact that we can just ask curl-config command how.
+> 
+> Unfortunately it assumes that curl-config is in the path which is not
+> always the case. When using "--with-curl=/path/to/curl" in the
+> configure command, the path to the actual curl-config executable is
+> ignored and the build fails around here:
+> 
+>     CC http-fetch.o
+> make: curl-config: Command not found
+>     LINK git-http-fetch
+> http.o: In function `fill_active_slots':
+> /tmp/git-2.21.0/http.c:1385: undefined reference to `curl_easy_cleanup'
+> .
+> 
+> We were able to workaround this by forcing the correct path into the make env:
+> 
+> make CURL_LDFLAGS="$(/path/to/curl/curl-config --libs)".
+> 
+> I reproduced the problem in the latest version 2.22.0.
 
-Yeah, I don't think debugging is worth caring about here. As you say, we
-can dump the data readily through other means. I was more wondering if
-there was some legitimate use where a helper wanted to see (but not
-store!) an existing credential. But again, I don't know of one.
+For the case without autoconf, I think using CURL_LDFLAGS is the
+intended safety valve. Though perhaps we should be falling back more
+gracefully to the old behavior, like:
 
-And as you noted above, if we don't suppress the helper calls inside
-Git, then every matching storage helper needs to learn about "nocache"
-(or "ttl") before it will do any good.
+diff --git a/Makefile b/Makefile
+index 11ccea4071..27e546bbfc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1343,7 +1343,7 @@ else
+ ifdef CURL_LDFLAGS
+ 	CURL_LIBCURL += $(CURL_LDFLAGS)
+ else
+-	CURL_LIBCURL += $(shell $(CURL_CONFIG) --libs)
++	CURL_LIBCURL += $(shell $(CURL_CONFIG) --libs || echo -lcurl)
+ endif
+ 
+ 	REMOTE_CURL_PRIMARY = git-remote-http$X
+
+which should work on most systems.
+
+For your specific case, where you _do_ have curl-config but it's just
+not in the PATH, then I think:
+
+  make CURL_CONFIG=/path/to/curl-config
+
+would be a slightly cleaner solution.
+
+But it sounds like you _did_ use the autoconf script, but it did not
+correctly set CURL_CONFIG. Do you have a config.mak.autogen file after
+running ./configure, and if so, does it have an entry for CURL_CONFIG?
+
+I'm not too familiar with our configure.ac, but it looks like
+--with-curl might just point some paths for header/include files, and
+not actually update the curl-config path.
 
 -Peff
