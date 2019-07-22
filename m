@@ -2,113 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D62651F461
-	for <e@80x24.org>; Mon, 22 Jul 2019 14:16:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0631F461
+	for <e@80x24.org>; Mon, 22 Jul 2019 14:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730809AbfGVOQn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 10:16:43 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:40087 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727880AbfGVOQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jul 2019 10:16:43 -0400
-Received: by mail-oi1-f195.google.com with SMTP id w196so8343511oie.7
-        for <git@vger.kernel.org>; Mon, 22 Jul 2019 07:16:42 -0700 (PDT)
+        id S1726271AbfGVOnx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 10:43:53 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36588 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726084AbfGVOnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jul 2019 10:43:53 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r7so17483761pfl.3
+        for <git@vger.kernel.org>; Mon, 22 Jul 2019 07:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=yvA664SRkCTMGGEW1M8QKut9vruOz/6lBd3iWB6gqT0=;
-        b=D8Nto7oTmysXR4VQuk1vbjlbRu+t/LDbDviavnnnm+t7rN6m5DOZXsAFGUE8zTNzqx
-         N3kgZ1MO3uWEDJ/3Bpz9usXPbcwccHnMBWPgwB0bezp0R2bcoZema5zAR+dIeR24zko7
-         lpYsAJwsdypAdK6xtNQb1mWRavVXEDcgT4rxZvfaJO/tGts6pqlcV/dHJ0l8o21dOFsA
-         3VHWt9Ex1v77h0bPmahSXBbHFPQokejs+VWQlohyoFr2LwHd2YxSY03TvgjeLISYzMJ2
-         T408kA5+w1/jt90bbfa5fNo/2y0/0/orsxo/iPMJFT4dZjjIhBKyOFD5GwLEiqoFo6Mv
-         rQWg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Da5RAfGtM00pRWhb/QLSBy+wcmlN/YDt+CzAkDW3z8c=;
+        b=FAr6gZ9J+ENYw2GvaQWD1mi/KLU94Hjc5xlbtVeWCrheLmZD9CKXJaFOypWefK9K35
+         fORfnZUukZnR5XIGLd84m0eDi/a1eLAn7gOj6vtteFZQ9ih7wjwk4iTjx9MGzDxwWaMO
+         /+jw/Tmm+/TXFQTVFk4fEWTdsDQh8dtWmq7g7v8S6CfwW+xeitAmb6DDxLP1Vh1uO5kr
+         w3yrM6r7gqD3i4+R47wZc+dRCAxwZTKzkjovQGnG9TAt6yynZR/+A9kNQsBAd8svaVqy
+         cHo6+qyhBaGms+dYqF+dcaIm6Vw4ER65j8QcQ9iD3KnKVDhcvnfML7lP+ihBsKipeNvp
+         jrqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=yvA664SRkCTMGGEW1M8QKut9vruOz/6lBd3iWB6gqT0=;
-        b=qJ5kEE6p787BK2q+0gyNQ1AZkApeofD47tv6O9mdS63d0cxzORpEJX/IWtJ29ISOEp
-         mXcp+LHhftwNrH/IHLd1BkbM00yEcfV++rhVj/N6H9KIQfPgtT/8u+OWEgeSUnuTMVJV
-         N8N7mNKeVUi+0kKmdji+FCYLFpfnvMgSsQspB4pzuJhfLiYOsvLqiHgkwoGE6A6x3WLU
-         TDEjmkDtDGSD6VuvhV0gSTIaPapuui3JzaoDh2S1pHkETuICpKuXPmXrDze5VrUjLsa8
-         y5vVpUBeC2CKx+jz9Kc5hdJoTi+iTSMaRXlVw+Da/mdNCfsldqMZ3Sq6CogbOa9ur2qd
-         qvFw==
-X-Gm-Message-State: APjAAAVDAy11xmZ5L7R8LPsMg1Il80hMV1LxDN2IeLkOcVKl19TD2AOY
-        Uo8vO7S65xUW+RkzBYmodjMw8vwzmT1WlDUJeLP03RyzRBQ=
-X-Google-Smtp-Source: APXvYqxyF7xGuggrZ/z8bec86jRpf/BLSgyML8Z4jgIFjz+UwDZfArKC9KEoUl0Ju95L0uNTHXeu5nGNQSWG7y9KjCY=
-X-Received: by 2002:aca:4d8:: with SMTP id 207mr8543892oie.88.1563805001959;
- Mon, 22 Jul 2019 07:16:41 -0700 (PDT)
-MIME-Version: 1.0
-From:   Ibrahim El Rhezzali <ibrahim.elrhezzali@gmail.com>
-Date:   Mon, 22 Jul 2019 16:16:15 +0200
-Message-ID: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
-Subject: [RFC] Improved git signing interface
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Da5RAfGtM00pRWhb/QLSBy+wcmlN/YDt+CzAkDW3z8c=;
+        b=fCDenlXx8Ifjwud+BtdpdUPqCsjUO8yiD29RX7Fatz/ODQh7KydVaNCOsEW6r41rB/
+         Ew7XjwAtvvD8u8t6xGoqL4ZRq2ka/AjUqBmQgf89cRbDms7IC3vt7OYSa2FHWVDBFrG0
+         V4oWic7n9Zpl7KuNOAiuVfcPDKpLvApeoTSPTRtQcvdO94TsD2FncEDPDtrGUFidRumN
+         jDbhsW2NX8Xp36mSk5gjDkXjHmFDcRHZM5Jzq2G1KuMu1sYZt7/D88FkVPfQu3D36S7B
+         GSooCLcdrtFlko2UEVR0OVx4w6toy96XAoGQTPGGDPeQNcqFX7khTu9fMMl741NRZTY9
+         9eVg==
+X-Gm-Message-State: APjAAAXUujZQh/s9NuXhTF3LdHNrySwriclDgoeXUwtzeCJwQnkJb4R1
+        7shRO05cz6VdEuTTxk7Edr0o+pmL
+X-Google-Smtp-Source: APXvYqwjqTLYsPxgQDJ54zOSfqlENiSsdDbRP8XvGEIsARuKwFpSKjpH0SSXjG9NMbWDcYwOewiFEw==
+X-Received: by 2002:a17:90a:1c1:: with SMTP id 1mr77643296pjd.72.1563806632272;
+        Mon, 22 Jul 2019 07:43:52 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id t11sm46740744pgb.33.2019.07.22.07.43.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 22 Jul 2019 07:43:51 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     gitster@pobox.com, avarab@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] grep: skip UTF8 checks explicitly
+Date:   Mon, 22 Jul 2019 07:43:50 -0700
+Message-Id: <20190722144350.46458-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Everyone,
+Usually PCRE is compiled with JIT support, and therefore the code
+path used includes calling pcre2_jit_match (for PCRE2), that ignores
+invalid UTF-8 in the corpus.
 
-I have been selected by the Linux Foundation to work on a summer
-project. I would like to abstract the git signing interface and add
-support for signatures using decentralized identifiers (DID).
-Decentralized identifiers are an emerging standard [0] that allows
-individuals to control their own digital identities, and is often
-called self-sovereign identity (SSI). The SSIMeetup is a good place to
-learn more about SSI [1] and DIDs [2].
+Make that option explicit so it can be also used when JIT is not
+enabled and pcre2_match is called instead, preventing `git grep`
+to abort when hitting the first binary blob in a fixed match
+after ed0479ce3d ("Merge branch 'ab/no-kwset' into next", 2019-07-15)
 
-The project=E2=80=99s current goal is to abstract the current GPG interface
-into a more =E2=80=98generic=E2=80=99 API that supports the existing OpenPG=
-P and X.509
-functionality while creating the ability to write additional signature
-drivers.
+Reviewed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+V2: spelling fixes from Eric Sunshine
 
-I have implemented a prototype that works and passes all tests, and in
-the coming weeks I plan to submit a series of patches for your review.
-I first need to clean up the Git history to make it easy to follow. I
-will also ensure that people using the current approach to GPG signing
-can use the proposed approach with only minor changes. The flag
-=E2=80=9C--gpg-sign=E2=80=9D would evolve to =E2=80=9C---sign=E2=80=9D, tho=
-ugh I would like to
-preserve an alias to the old flag if possible. My prototype has
-already implemented configuration aliases to ensure that the new
-approach is backwards compatible with previous configuration. I am
-also working to update the documentation to explain the new approach.
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-You can inspect my work in my fork of Git here:
-https://github.com/ibrahimel/did-git-impl
+diff --git a/grep.c b/grep.c
+index fc0ed73ef3..146093f590 100644
+--- a/grep.c
++++ b/grep.c
+@@ -409,7 +409,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+-	int ovector[30], ret, flags = 0;
++	int ovector[30], ret, flags = PCRE_NO_UTF8_CHECK;
+ 
+ 	if (eflags & REG_NOTBOL)
+ 		flags |= PCRE_NOTBOL;
+@@ -554,7 +554,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ static int pcre2match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+-	int ret, flags = 0;
++	int ret, flags = PCRE2_NO_UTF_CHECK;
+ 	PCRE2_SIZE *ovector;
+ 	PCRE2_UCHAR errbuf[256];
+ 
+-- 
+2.22.0
 
-I created a view model diagram to describe the intended result and the
-files that would be impacted and can be viewed here:
-https://github.com/ibrahimel/did-git-impl/blob/did-git-impl-signing/Documen=
-tation/technical/signing-interface.png
-
-This project is a continuation of David Huseby=E2=80=99s previous work on t=
-he
-subject, which can be found here:
-https://github.com/dhuseby/did-git-spec
-
-Please let me know if you have any comment on the design and the
-previous work done so far. I look forward to learning from your
-experience.
-
-Thanks,
-Ibrahim
-
-[0] https://w3c-ccg.github.io/did-spec/
-[1] https://ssimeetup.org/story-open-ssi-standards-drummond-reed-evernym-we=
-binar-1/
-[2] https://ssimeetup.org/decentralized-identifiers-did-fundamental-block-s=
-elf-sovereign-identity-drummond-reed-webinar-2/
