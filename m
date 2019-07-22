@@ -2,138 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BCAE1F461
-	for <e@80x24.org>; Mon, 22 Jul 2019 11:55:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68E231F461
+	for <e@80x24.org>; Mon, 22 Jul 2019 12:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730077AbfGVLzx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 07:55:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:34853 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729126AbfGVLzx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jul 2019 07:55:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563796546;
-        bh=AHaJZF9BDMQiDNNSC0PXbAAVB81W2cgxWZ5t6pLppEs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ieqBknoBXL0i+Ogfhav3tDz5OGIGPHrfxkAljtM/53fVFm1Sh3M4OmQzQoiveLnyQ
-         DK/+iRFOT7S11rYzRQBR7pu4ZLDLHPbr6/RVTT3+RflKTs61KlWEUVn7MCnv7ovRPp
-         HoHUTsL2b0+OOVrshkocqZy3HioUu7V/+4yiDXxA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VHG-1iVnom09O6-016xM1; Mon, 22
- Jul 2019 13:55:46 +0200
-Date:   Mon, 22 Jul 2019 13:55:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH] grep: skip UTF8 checks explicitally
-In-Reply-To: <20190721183115.14985-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet>
-References: <20190721183115.14985-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728930AbfGVMLC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 08:11:02 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:43737 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727164AbfGVMLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jul 2019 08:11:01 -0400
+Received: by mail-qk1-f193.google.com with SMTP id m14so2691508qka.10
+        for <git@vger.kernel.org>; Mon, 22 Jul 2019 05:11:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wxC/LLjzFdN7NCoGnF5wao34HEsj4eJmxp//qKMwtvU=;
+        b=nvQJiIuhpBJpEvlfFSdw3N9MP+Hw0wVLNITDjBALifIAOlSd9dcTmuAJULuC/7icD3
+         +V4rQ1BZuBHqcPUYbCwn5iE0lX+mNSqU3qtHj8LE/hnrgERcHeShcZ3G/IejDKwQWiKq
+         2luSFfaLvBWmjEsnPMZAxkbvrrnHrXGgXShcC/j2gOJDdieFhVsp4OcPm1NMBKOln1CG
+         JEB8Vcs4d+k04hwF4tYIsGHnh5xAvD9xlf7Ek9MTpRy3puE0r0Ywo/yFsecZeJkFR7g1
+         2XNemnEueQ1s0iJp4FaiG3WIeKN9Lr0lJOyIYgvJeBkO205vVCJdjkXBMlcGaWty52YG
+         Fjyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wxC/LLjzFdN7NCoGnF5wao34HEsj4eJmxp//qKMwtvU=;
+        b=Y9drpvGzNzCN0Ea992/7H7Ll2fSwTvxIa9CFZpPfk3XxqqiI2CD1K34USdS86n/heC
+         nbBWLdMSbQXGz60hDu95fDbNySsODtMZCT3u0hZQDnhtCMGXDkBlg0Y6KjLyt7klJ/H4
+         FOXKuskGEP0sBtPgSO6wkHC78ito/DLSWGsyK6JBor58aF0CZk+xMnCrXT+q1Y+ZUI08
+         phUXPO0YdrwgaZ5uKMcgh3moJZWw9km4WXVQ7MCwSbUOZagL0PSxL9utGkTZBpU6Rzev
+         p8A3PZNXE6wZCK1a/ClTm0YgNCVzgdD+QdM8kH8cKxqE7VC05u4HHaSAdMf0icG5U1ll
+         4N5A==
+X-Gm-Message-State: APjAAAXUgSIDYU2VL7h9MlY6bR9pK6MhrhwY1tnD071+mg5Pzx726M18
+        fIQ48KPv3rCfK1NkBJoTrXo=
+X-Google-Smtp-Source: APXvYqzTKkO6cB8yaGX38W2XjkuKK3IW39EUZR2iFKOTWGXRAKVI9sqmwvpLSr90lX3hCKjonGWVsA==
+X-Received: by 2002:a37:5d87:: with SMTP id r129mr13536789qkb.388.1563797460913;
+        Mon, 22 Jul 2019 05:11:00 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:444e:8321:4ee:a890? ([2001:4898:a800:1012:f581:8321:4ee:a890])
+        by smtp.gmail.com with ESMTPSA id v28sm16841284qkj.11.2019.07.22.05.10.59
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Jul 2019 05:11:00 -0700 (PDT)
+Subject: Re: [PATCH v3 0/3] [RFC] Create 'core.featureAdoptionRate' setting to
+ update config defaults
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.254.v2.git.gitgitgadget@gmail.com>
+ <pull.254.v3.git.gitgitgadget@gmail.com>
+ <50955e76-8b61-8ffd-b8ee-3621ecbd912b@gmail.com>
+ <xmqqo923ui7x.fsf@gitster-ct.c.googlers.com>
+ <afdaaa93-8769-c859-e957-e61d27b6d5a9@gmail.com>
+ <xmqqef2yvp7v.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <be4f9cc9-ee20-8e4f-c45a-26e93b51c4f3@gmail.com>
+Date:   Mon, 22 Jul 2019 08:10:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1824183362-1563796546=:47"
-X-Provags-ID: V03:K1:yM2Pn4eIFqoCB/f4OfI1JM1GvvD5MPzoIATE79S0+0WEQ58wIWV
- iMCaWAXJO3ppTxlPPNoe7WzOWlZhZIMO4mjsHRnfobvoFs+AHF4H7MkW91pisBmIa9N8Glk
- h+dFVA9e7jjMHHRep85AvJkXDAETOC5tdoybJxLnvMvzQbl2CRRiRLVZYQTzaN6rax2JNrx
- lrm0oo4JyZsKN56t58+Bw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iC9i6SnlFRw=:8GZeD0NfRNDevMdShNBIm8
- v00hpQR5Jkhxc091jVpWRZUic8IBKgIi9qe20N/kMHozYIilVO37aCIRMob+BYDI2sBB1aYq4
- gU8aqhsgqaJ3iwoO7/9DZEDkARvttkOJQzqO4pJgv8DTtFGSkGQlLnrio8Tors40y485YUv9Y
- 4KDO3rtDfvKTz9e2BfEg+e2vC5yszWd508wJvV+mQoZ9i8hBKu9+TUndJWxqitM7gsRdaarab
- aI9FUaRhxdpjnxb8r6BmlHS3Yx6kwX1sOU425N6yNYHn3O11iiVstxIgxTZTBwEXIYEnrxltH
- /eioGuO9eQ1KkEy/I6sD7718pMAAqP4T36lZOR2nqBvIn4tKmmA8CpCM8g3YV735U3bSVcwkA
- GzuBnxVNDtEzOs/lR1/lkCvHc/8YDXEpwHmOnbvjVLgVvVhMf3RZrBv5FF/9wQbPNKV8Yuf4A
- tF42EZdsEng9kFkUtuL0rpOXmxxXBoIxA0dMz1A1JjnP6lyR4c69w7mIAon5MWTIc6/C8epf7
- LGa2RjaMrXb5nwZlGs6xGazwTYu2XF15EKqu5G/iqRgd6BkwU6vTAsNRMgL79jt/7JlcdbzPx
- db/nw9wr/kvxSkf7ycaw7mYKYlbJsifRA6UzQi/EiNsIw2tGOaysFMih1vuQiHuufYUjlk+/S
- QnXxd8gb6vG1oeAvJ3+aFdOzDNczj+M8vl5ehzotajGLHCA8SRkAOdbqUqidu+jzbAHoQyDlB
- WrLlOTyraqgMjWZ+KyO3b+3/wtM3AkCTGvXAY6mBXAXLpCHuSI1YMfSgCHGRif+wgp9aDhuI4
- ZKpSqTDY0l5xIhQ42vOHl4cKxuYRXNGZBfMDfnUhERKpYPdVGkSjJWfJg5qe3Dlm51wXY80j5
- uHJPb2k2QOKR7a/ewsZGmH/sWpdrYqjYHTsFru/ANbdfjAHX/HoM+BL6KtIXAg3DSlegwhorI
- Ze2ak9GqnQyxyWl63onvhGnk/n2JETVj9dalAkns55R326lxQxr/iBmCBdeacveCjDRxY0VYQ
- KNuPyKFXpmdQ2f1bpQQk0y0ru0O4HGOlSnrEQRfOnkqhACZgJJZpt8x8MyXuaUSAdXjxByik7
- Nsc11a+m39v26XiacsEIETJAe8AlguG8V+r
+In-Reply-To: <xmqqef2yvp7v.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 7/9/2019 6:05 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> From this list, do you think any of these settings are likely to
+>> become defaults? It seems that protocol.version = 2 may be a default
+>> now that _most_ services have an implementation, and it always falls
+>> back to protocol v1 without extra cost.
+>>
+>> When pack.useSparse was first introduced, I considered making it true
+>> by default after a while. But you protested, saying you want people
+>> knocking at the door saying it is useful. What if it lived here?
+>>
+>> fetch.negotiationAlgorithm and merge.directoryRenames seem like
+>> valuable features and maybe just need more time out in the world
+>> before they could be considered defaults.
+> 
+> I mostly agree with the categorization you gave above.
+> 
+> I think it is perfectly fine for a knob, after proving its worth by
+> existing in the world without being a part of any feature.* set, to
+> become part of feature.experimental, and then later be ejected
+> without ever becoming the default in response to reactions by real
+> world users.  This would be easier to arrange if we had at least two
+> experiment levels.  One class would be "we are firmly committed to
+> make these default in the future and ironing kinks out---please help
+> by setting feature.experimental on" and is more for early adopter
+> testing.  The other class may be "we try this on users to see if
+> there are some populations of them with usage patterns we did not
+> anticipate, and will yank it out if it turns out to be problematic
+> to some users."  The more guinea pig users opt into the latter
+> "Highly Experimental" category, the more help they can give us to
+> prevent an ill-thought-out feature that does not universally help to
+> become a new default.
 
---8323328-1824183362-1563796546=:47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+How about "feature.preview" for defaults we expect to change in a later
+version, while "feature.experimental" is for defaults we are not sure
+about?
 
-Hi Carlo,
+-Stolee
 
-On Sun, 21 Jul 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-
-> Usually PCRE is compiled with JIT support, and therefore the code
-> path used includes calling pcre2_jit_match (for PCRE2), that ignores
-> invalid UTF-8 in the corpus.
->
-> Make that option explicit so it can be also used when JIT is not
-> enabled and pcre2_match is called instead, preventing `git grep`
-> to abort when hitting the first binary blob in a fixed match
-> after ed0479ce3d ("Merge branch 'ab/no-kwset' into next", 2019-07-15)
-
-Good idea.
-
-The flag has been in PCRE1 since at least March 5, 2007, when the
-pcre.h.in file was first recorded in their Subversion repository:
-https://vcs.pcre.org/pcre/code/trunk/pcre.h.in?view=3Dlog
-
-It also was part of PCRE2 from the first revision (rev 4, in fact, where
-pcre2.h.in was added):
-https://vcs.pcre.org/pcre2/code/trunk/src/pcre2.h.in?view=3Dlog
-
-So I am fine with this patch.
-
-Thanks,
-Dscho
-
-> ---
->  grep.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/grep.c b/grep.c
-> index fc0ed73ef3..146093f590 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -409,7 +409,7 @@ static void compile_pcre1_regexp(struct grep_pat *p,=
- const struct grep_opt *opt)
->  static int pcre1match(struct grep_pat *p, const char *line, const char =
-*eol,
->  		regmatch_t *match, int eflags)
->  {
-> -	int ovector[30], ret, flags =3D 0;
-> +	int ovector[30], ret, flags =3D PCRE_NO_UTF8_CHECK;
->
->  	if (eflags & REG_NOTBOL)
->  		flags |=3D PCRE_NOTBOL;
-> @@ -554,7 +554,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  static int pcre2match(struct grep_pat *p, const char *line, const char =
-*eol,
->  		regmatch_t *match, int eflags)
->  {
-> -	int ret, flags =3D 0;
-> +	int ret, flags =3D PCRE2_NO_UTF_CHECK;
->  	PCRE2_SIZE *ovector;
->  	PCRE2_UCHAR errbuf[256];
->
-> --
-> 2.22.0
->
->
-
---8323328-1824183362-1563796546=:47--
