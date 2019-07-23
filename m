@@ -2,160 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 122591F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 20:05:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE9931F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 20:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732547AbfGWUFR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 16:05:17 -0400
-Received: from mx0a-00103a01.pphosted.com ([67.231.144.234]:39306 "EHLO
-        mx0a-00103a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727811AbfGWUFQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Jul 2019 16:05:16 -0400
-X-Greylist: delayed 1316 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jul 2019 16:05:15 EDT
-Received: from pps.filterd (m0174892.ppops.net [127.0.0.1])
-        by mx0a-00103a01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x6NJdxpl007875;
-        Tue, 23 Jul 2019 15:43:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ciena.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=06252019;
- bh=f6ENWuwUG9ZqJ15EVPmduizAQ7jnyaDQH+7uI0t0KP0=;
- b=YE61nlF61n+AY7Z/U94YXPVKsWqsNnCEWwHT1U7dPRGWVN/xe9gTbV3qmDJcZ+kBuVUX
- t4Ls17J7X3jwYs9meLLkgLbZq9iyUNuvjycoAHrvZRjqh2ZGk0TJviV05nxq821nxDpd
- T76fM2rGBQhWvaGIF9pR5UH2c9qBLpZhtyrQLsiV6vzfB15fUyIfFOfaDQxqV7VL7RuJ
- METeI7X/uocVdl7nyVfRZ8pUND35xpYG8aabBuR8bmkhcCXgIzdXM/geWt0YakdaYJMK
- F+U0VU19fpcy9UIjv/AoEtDPC46c8nnQUzRUmzcgsYOsaZfoWMaJaUhVMt4blrLxBHqe qg== 
-Received: from nam05-dm3-obe.outbound.protection.outlook.com (mail-dm3nam05lp2056.outbound.protection.outlook.com [104.47.49.56])
-        by mx0a-00103a01.pphosted.com with ESMTP id 2tx61rgv2c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Tue, 23 Jul 2019 15:43:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EOF8kZJ8VRwbbGOQGT47/6pNjCcR3YamPVQO8IMDalFe1cPZK7H2lbmOVv3uP/8EmJn2/vxXLSqOr9+yd8nAjVthzttdI8fe0mkxhR4yc76HEeEfxaK3NesH+MgRgJT7n4GlPGrR5vYsmv6Cji7/lI29lH8akhD87TXTLlfsoAn54C268+nxR/4BJxpwV3/QoJ81y4xHbNblPdzmbFtgMwC+o3WU5C/FmASYtGPGBVepjkM0KQtXbgy7eqn1iqd9QicsSL6xYTVW6DN1rljunR5IPcDpWmfPb+pfTnYjO8UPKQz9FwON6K1b5cmWhuDH2QyH5XN94T5Kum/Ctq4QpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f6ENWuwUG9ZqJ15EVPmduizAQ7jnyaDQH+7uI0t0KP0=;
- b=MBKXyu+GCiVbnVq5ChhOgUhMz7iLkNXiBJTG/ZqRcvDyqhPotjsgHiaqAfO1F6tA9/NX+3DhbgYmx3U/Ib8zggVQZx/BPuXjgjs0+7vYed2qjUgASfqMzOKre4KRPhzPhfK9QbyoI6zwY80ljZjV6TYfjenOglSitj2JQdUYSG0LaoklfnYYiuYCsHDCq3SNMOyydi03SNCc5n3FwCQh2krYM4G+ynVeLIN9D5lV9ynMNyA35pehdxgQTNUniYEY+kOif7RnOi4CkS8qxLfKakIBIQ9oM6/SwsyStcVQI5Kj/HU+73awnXHuVxBAXOTBNsFv2UakStRD/RUjHfKlig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
- smtp.mailfrom=ciena.com;dmarc=pass action=none
- header.from=ciena.com;dkim=pass header.d=ciena.com;arc=none
-Received: from DM6PR04MB4793.namprd04.prod.outlook.com (20.176.107.210) by
- DM6PR04MB3932.namprd04.prod.outlook.com (20.176.87.13) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2094.17; Tue, 23 Jul 2019 19:43:02 +0000
-Received: from DM6PR04MB4793.namprd04.prod.outlook.com
- ([fe80::a023:f649:f717:6068]) by DM6PR04MB4793.namprd04.prod.outlook.com
- ([fe80::a023:f649:f717:6068%6]) with mapi id 15.20.2094.013; Tue, 23 Jul 2019
- 19:43:01 +0000
-From:   "Raitanen, Adam" <araitane@ciena.com>
-To:     Jeff King <peff@peff.net>
-CC:     James Knight <james.d.knight@live.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [**EXTERNAL**] Re: Possible bug in Makefile when executing
- curl-config
-Thread-Topic: [**EXTERNAL**] Re: Possible bug in Makefile when executing
- curl-config
-Thread-Index: AdVAxiwguVNvTN0bQWKLWMnA3UfWZQAC/kmAAC8NhxA=
-Date:   Tue, 23 Jul 2019 19:43:01 +0000
-Message-ID: <DM6PR04MB479387667E7EDEF2A27BFCA2D0C70@DM6PR04MB4793.namprd04.prod.outlook.com>
-References: <DM6PR04MB47939645A97D099241AD25F0D0C40@DM6PR04MB4793.namprd04.prod.outlook.com>
- <20190722211219.GB31664@sigill.intra.peff.net>
-In-Reply-To: <20190722211219.GB31664@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [174.115.212.20]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ced4b264-a217-496f-85e2-08d70fa5f91d
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:DM6PR04MB3932;
-x-ms-traffictypediagnostic: DM6PR04MB3932:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <DM6PR04MB39323CCB405C72058F7A979DD0C70@DM6PR04MB3932.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 0107098B6C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(979002)(4636009)(396003)(136003)(376002)(346002)(39860400002)(366004)(13464003)(199004)(189003)(55016002)(99286004)(33656002)(2906002)(6916009)(14444005)(6246003)(256004)(81156014)(6506007)(53546011)(53936002)(54906003)(26005)(14454004)(316002)(486006)(229853002)(81166006)(76176011)(966005)(186003)(8936002)(102836004)(8676002)(478600001)(4326008)(6436002)(25786009)(64756008)(74316002)(66556008)(66446008)(66946007)(66476007)(305945005)(446003)(66066001)(5660300002)(86362001)(7736002)(3846002)(476003)(52536014)(71190400001)(71200400001)(7696005)(6116002)(9686003)(11346002)(68736007)(76116006)(6306002)(969003)(989001)(999001)(1009001)(1019001);DIR:OUT;SFP:1101;SCL:1;SRVR:DM6PR04MB3932;H:DM6PR04MB4793.namprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: ciena.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 1Ov4o3AOnViIqHZRvslv39bgVRfttpfFEzk4cMenSXx7i3weWbwJsoUOa5JEpriv0ykb2UYMzCkPRvHSBatFVTDEAWa4OSZgdKC/aTceTYDmhU8TLEUjRRY85QCorMFWnyEdbX4yS+azIGFcibn5qNJ7iUvQwpP2ojpucj+6D5tcaZZ+RIX4+gBXvUct7f8DRxENHoJ/fiytGYNRLp/ZaQWwtXN2l4PT7YW74oZ7Cw7ZEqT9a/47N2BVpZ2C5Y/0OHEf+Gp4QwgkSaQhMHNO4cU54nqw4/hKbQIJiVSs2KqnLLdrt9J1qDljlAupeS5c0rntQrxRRavmBrkKvv/ld+3F3g5r/fJWjTMYg1Qs8yOZ19xn4+458HtAM+Td5Bsu8gax10JH9ukMlIp+nq2Gp96j2sPHQJbtegLdAzWia58=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1728939AbfGWUIv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 16:08:51 -0400
+Received: from mout.web.de ([212.227.17.11]:51905 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726343AbfGWUIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 16:08:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1563912519;
+        bh=nqgPickk0lqWmBeA4juZzGUJ4NniaMmh5sYhtfbmw/k=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=lk2LjbVWNO+YvVyPelGRrySS+uavD+xMpE3QO8Y6wcwCBUYn1j90sgIeEn+361+bc
+         IWC0b8fMDLveEeNQh/l3arnbuMlpEWrUM6Y54ZjdTzyyc4tlEoEGrSdhoIRrYGMq6j
+         7Buv2JEHC6MZcCW8jDMmGdGDFXXnzZD7MVrZU3mg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LyUgM-1iS1Sb1psU-015pD5; Tue, 23
+ Jul 2019 22:08:39 +0200
+Subject: Re: [PATCH] archive: Store checksum correctly
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Matt Turner <mattst88@gmail.com>,
+        David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20190723025736.23036-1-mattst88@gmail.com>
+ <xmqqd0i0u253.fsf@gitster-ct.c.googlers.com>
+ <14410e00-4701-40d0-6960-e481fea50ed0@web.de>
+Message-ID: <9a0c89e4-b216-86f1-c721-c54fb2ee0a10@web.de>
+Date:   Tue, 23 Jul 2019 22:08:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OriginatorOrg: ciena.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ced4b264-a217-496f-85e2-08d70fa5f91d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jul 2019 19:43:01.8467
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 457a2b01-0019-42ba-a449-45f99e96b60a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: araitane@ciena.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB3932
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:5.22.84,1.0.8
- definitions=2019-07-23_08:2019-07-23,2019-07-23 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
- priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1906280000 definitions=main-1907230200
+In-Reply-To: <14410e00-4701-40d0-6960-e481fea50ed0@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:b/p6/S18PjtvAZPVjP5KGtBhhxl6VKWRYSwXg4DyCGeBITfIuee
+ v1VN6XeeWl1fht4rojrP0EySLTXr793k6vORPotYan5/3xuNla1UujxxgECwj8qMScNPHc9
+ ZisSh2Jy1EkicWwvB/AHW+EYiy0f5pghwWmB7Yu5VugD0W1m6Ciw1pMjQObxqFGsdf5iklE
+ nyg5r0tdXmKk42/yUdxCQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dwIUaURHdVQ=:9NCMuTuNqfS7JgUzesa9+8
+ xMW0F242uEkhcjG6PhrslBkDtubqHS9APAzuz39Ih/u75/GDG+6lGV7T/6J0ORUhJnsOEii2Q
+ RDMCdvoIpe/FtXe2ydG9ngYGjFnetb/gEsCq1KbLR2jh/jGZZZl7IC0TuumOzzNvnWNsfGvF7
+ ypnokk9AErnhJE6826y3uwLYqF4/CNeBVNKkAa4H1kZWlTIWM+Z0OhN6i3HuHEZBm49vttBWm
+ V6B4uQYAmGAUKIZO5Qv2SsU2oGs6U+cP6ZQDlYhIx6XsaM8FQIsuyQNgxaATgBUBwngFaeye1
+ GoLmqegNQey11nlL0SP7Z+LWRgBGGIAIL6/c6ysj74zhFW403JpHNy+1mKJhFO25qR8lFKkdL
+ 4XKeroviD3YJUlE/+1vqzORcrYWTbycP3DetS2s+9nJNzR3JcgRPbfIdT9RmQaue0j+049KQC
+ o8XWBpTKVuGPzFkvWhkvrNByT0WvBFU9wjioLixBw/Vo2j6i6/2LZrxO+Hodw9FyvEjl8CFVx
+ LCW4uuGahfYdtQSKJpfKN85Xs6Fv4scVeqg+8kSf4uUdzpjWLZDsqiqA4cCJ3r1ZBZS6M6qHO
+ beOt0UISWvh9QPsoz2imfuVjOiwrSV88+nx15wIPPjMoEJ2nKKCyxJot7IbRR31tFcwG+hTML
+ GOxG3BKZhQmHv2EMbZBQSF4UUt/Xz+LCRFb0uooNptRd0EJAUJ4xXXTP45R4+xBddohLmVlQ4
+ KrWrxea6fic3j+wj99oeAJSOm+iTIf5A2p/6pEOghBIwzKrPtJv8PkwTAvHfRSkH3qPzCoeP9
+ jj7OxZ/iy4qQPQqUAjDdQH/8Eo93mnwRy0Zzn6bnRax++6q+yBMi2J8tb20jq0BpRzsh0PKSM
+ E7gdiKDXkRWlLoWHVzekM3ZJH6MS1OVe5QLCovF6QgkMnoV/+HivTrb5G49iSglq4StNK+Kkv
+ rYw3de+HzbiQfRFJlCnCpGaHISyB+otLrxhyJzlMDvK4nDS2umPyQdP+KJh2vO5IYbAGC4HHr
+ SPRUM/DX2S2RIZPkjfWdgGMDhXw3+2pnzpqeD7JqHltgR5MNiJBBWEt1lvYPwnBoMl0yJV1g8
+ yvPFQ7ftpVT6uE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-WWVzIHRoZXJlIGlzIGEgY29uZmlnLm1hay5hdXRvZ2VuIGFuZCBpdCBkb2VzIG5vdCBoYXZlIGFu
-IGVudHJ5IGZvciBDVVJMX0NPTkZJRywgYWx0aG91Z2ggaXQgaGFzIGEgY29ycmVjdCBlbnRyeSBm
-b3IgQ1VSTERJUi4NCg0KVGhlIGNvbmZpZy5sb2cgYWxzbyBzaG93cyBpdCBjaGVja2luZyBmb3Ig
-Y3VybC1jb25maWcgYW5kIG5vdCBmaW5kaW5nIGl0IHRoZW4gcHJvY2VlZGluZyBhbnl3YXk6DQoN
-CmNvbmZpZ3VyZTo1OTE3OiBjaGVja2luZyBmb3IgY3VybC1jb25maWcNCmNvbmZpZ3VyZTo1OTQ1
-OiByZXN1bHQ6IG5vDQouLi4NCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEpl
-ZmYgS2luZyA8cGVmZkBwZWZmLm5ldD4gDQpTZW50OiBNb25kYXksIEp1bHkgMjIsIDIwMTkgNTox
-MiBQTQ0KVG86IFJhaXRhbmVuLCBBZGFtIDxhcmFpdGFuZUBjaWVuYS5jb20+DQpDYzogSmFtZXMg
-S25pZ2h0IDxqYW1lcy5kLmtuaWdodEBsaXZlLmNvbT47IGdpdEB2Z2VyLmtlcm5lbC5vcmcNClN1
-YmplY3Q6IFsqKkVYVEVSTkFMKipdIFJlOiBQb3NzaWJsZSBidWcgaW4gTWFrZWZpbGUgd2hlbiBl
-eGVjdXRpbmcgY3VybC1jb25maWcNCg0KWytjYyB0aGUgYXV0aG9yIG9mIHRoYXQgcGF0Y2hdDQoN
-Ck9uIE1vbiwgSnVsIDIyLCAyMDE5IGF0IDA3OjQ2OjM3UE0gKzAwMDAsIFJhaXRhbmVuLCBBZGFt
-IHdyb3RlOg0KDQo+IEkgYmVsaWV2ZSB0aGVyZSBtYXkgYmUgYSBidWcgaW4gdGhlIE1ha2VmaWxl
-IGludHJvZHVjZWQgYnkgdGhlIGZvbGxvd2luZyBjb21taXQ6DQo+IA0KPiBodHRwczovL2dpdGh1
-Yi5jb20vZ2l0L2dpdC9jb21taXQvMjNjNGJiZTI4ZTYxOTc0NTc3MTY0ZGIwOWNiZDFkMWM3ZTU2
-DQo+IDhjYTQNCj4gDQo+IFRoZSBjb21taXQgd2FzIG1lcmdlZCBpbiAyLjIwLjA6DQo+IA0KPiAq
-IFRoZSB3YXkgLWxjdXJsIGxpYnJhcnkgZ2V0cyBsaW5rZWQgaGFzIGJlZW4gc2ltcGxpZmllZCBi
-eSB0YWtpbmcNCj4gwqDCoCBhZHZhbnRhZ2Ugb2YgdGhlIGZhY3QgdGhhdCB3ZSBjYW4ganVzdCBh
-c2sgY3VybC1jb25maWcgY29tbWFuZCBob3cuDQo+IA0KPiBVbmZvcnR1bmF0ZWx5IGl0IGFzc3Vt
-ZXMgdGhhdCBjdXJsLWNvbmZpZyBpcyBpbiB0aGUgcGF0aCB3aGljaCBpcyBub3QgDQo+IGFsd2F5
-cyB0aGUgY2FzZS4gV2hlbiB1c2luZyAiLS13aXRoLWN1cmw9L3BhdGgvdG8vY3VybCIgaW4gdGhl
-IA0KPiBjb25maWd1cmUgY29tbWFuZCwgdGhlIHBhdGggdG8gdGhlIGFjdHVhbCBjdXJsLWNvbmZp
-ZyBleGVjdXRhYmxlIGlzIA0KPiBpZ25vcmVkIGFuZCB0aGUgYnVpbGQgZmFpbHMgYXJvdW5kIGhl
-cmU6DQo+IA0KPiDCoMKgwqAgQ0MgaHR0cC1mZXRjaC5vDQo+IG1ha2U6IGN1cmwtY29uZmlnOiBD
-b21tYW5kIG5vdCBmb3VuZA0KPiDCoMKgwqAgTElOSyBnaXQtaHR0cC1mZXRjaA0KPiBodHRwLm86
-IEluIGZ1bmN0aW9uIGBmaWxsX2FjdGl2ZV9zbG90cyc6DQo+IC90bXAvZ2l0LTIuMjEuMC9odHRw
-LmM6MTM4NTogdW5kZWZpbmVkIHJlZmVyZW5jZSB0byBgY3VybF9lYXN5X2NsZWFudXAnDQo+IC4N
-Cj4gDQo+IFdlIHdlcmUgYWJsZSB0byB3b3JrYXJvdW5kIHRoaXMgYnkgZm9yY2luZyB0aGUgY29y
-cmVjdCBwYXRoIGludG8gdGhlIG1ha2UgZW52Og0KPiANCj4gbWFrZSBDVVJMX0xERkxBR1M9IiQo
-L3BhdGgvdG8vY3VybC9jdXJsLWNvbmZpZyAtLWxpYnMpIi4NCj4gDQo+IEkgcmVwcm9kdWNlZCB0
-aGUgcHJvYmxlbSBpbiB0aGUgbGF0ZXN0IHZlcnNpb24gMi4yMi4wLg0KDQpGb3IgdGhlIGNhc2Ug
-d2l0aG91dCBhdXRvY29uZiwgSSB0aGluayB1c2luZyBDVVJMX0xERkxBR1MgaXMgdGhlIGludGVu
-ZGVkIHNhZmV0eSB2YWx2ZS4gVGhvdWdoIHBlcmhhcHMgd2Ugc2hvdWxkIGJlIGZhbGxpbmcgYmFj
-ayBtb3JlIGdyYWNlZnVsbHkgdG8gdGhlIG9sZCBiZWhhdmlvciwgbGlrZToNCg0KZGlmZiAtLWdp
-dCBhL01ha2VmaWxlIGIvTWFrZWZpbGUNCmluZGV4IDExY2NlYTQwNzEuLjI3ZTU0NmJiZmMgMTAw
-NjQ0DQotLS0gYS9NYWtlZmlsZQ0KKysrIGIvTWFrZWZpbGUNCkBAIC0xMzQzLDcgKzEzNDMsNyBA
-QCBlbHNlDQogaWZkZWYgQ1VSTF9MREZMQUdTDQogCUNVUkxfTElCQ1VSTCArPSAkKENVUkxfTERG
-TEFHUykNCiBlbHNlDQotCUNVUkxfTElCQ1VSTCArPSAkKHNoZWxsICQoQ1VSTF9DT05GSUcpIC0t
-bGlicykNCisJQ1VSTF9MSUJDVVJMICs9ICQoc2hlbGwgJChDVVJMX0NPTkZJRykgLS1saWJzIHx8
-IGVjaG8gLWxjdXJsKQ0KIGVuZGlmDQogDQogCVJFTU9URV9DVVJMX1BSSU1BUlkgPSBnaXQtcmVt
-b3RlLWh0dHAkWA0KDQp3aGljaCBzaG91bGQgd29yayBvbiBtb3N0IHN5c3RlbXMuDQoNCkZvciB5
-b3VyIHNwZWNpZmljIGNhc2UsIHdoZXJlIHlvdSBfZG9fIGhhdmUgY3VybC1jb25maWcgYnV0IGl0
-J3MganVzdCBub3QgaW4gdGhlIFBBVEgsIHRoZW4gSSB0aGluazoNCg0KICBtYWtlIENVUkxfQ09O
-RklHPS9wYXRoL3RvL2N1cmwtY29uZmlnDQoNCndvdWxkIGJlIGEgc2xpZ2h0bHkgY2xlYW5lciBz
-b2x1dGlvbi4NCg0KQnV0IGl0IHNvdW5kcyBsaWtlIHlvdSBfZGlkXyB1c2UgdGhlIGF1dG9jb25m
-IHNjcmlwdCwgYnV0IGl0IGRpZCBub3QgY29ycmVjdGx5IHNldCBDVVJMX0NPTkZJRy4gRG8geW91
-IGhhdmUgYSBjb25maWcubWFrLmF1dG9nZW4gZmlsZSBhZnRlciBydW5uaW5nIC4vY29uZmlndXJl
-LCBhbmQgaWYgc28sIGRvZXMgaXQgaGF2ZSBhbiBlbnRyeSBmb3IgQ1VSTF9DT05GSUc/DQoNCkkn
-bSBub3QgdG9vIGZhbWlsaWFyIHdpdGggb3VyIGNvbmZpZ3VyZS5hYywgYnV0IGl0IGxvb2tzIGxp
-a2UgLS13aXRoLWN1cmwgbWlnaHQganVzdCBwb2ludCBzb21lIHBhdGhzIGZvciBoZWFkZXIvaW5j
-bHVkZSBmaWxlcywgYW5kIG5vdCBhY3R1YWxseSB1cGRhdGUgdGhlIGN1cmwtY29uZmlnIHBhdGgu
-DQoNCi1QZWZmDQo=
+Am 23.07.19 um 21:38 schrieb Ren=C3=A9 Scharfe:
+> is_checksum_valid() in
+> https://github.com/AgentD/squashfs-tools-ng/blob/master/lib/tar/checksum=
+.c
+> compares the formatted checksum byte-by-byte.  That seems
+> unnecessarily strict.  Parsing and comparing the numerical value
+> of the checksum would be more forgiving, better adhere to POSIX and
+> might be a tiny bit quicker.
+
+I mean something like the patch below.  Code and text size are bigger,
+but it's more lenient and writes less.  Untested.
+
+(Side note: I'm a bit surprised that GCC 8.3 adds the eight spaces one
+ by one in the middle loop with -O2..)
+
+=2D--
+ lib/tar/checksum.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/lib/tar/checksum.c b/lib/tar/checksum.c
+index a2a101a..af94ab4 100644
+=2D-- a/lib/tar/checksum.c
++++ b/lib/tar/checksum.c
+@@ -1,15 +1,27 @@
+ /* SPDX-License-Identifier: GPL-3.0-or-later */
+ #include "internal.h"
+
+-void update_checksum(tar_header_t *hdr)
++static unsigned int get_checksum(const tar_header_t *hdr)
+ {
++	const unsigned char *header_start =3D (const unsigned char *)hdr;
++	const unsigned char *chksum_start =3D (const unsigned char *)hdr->chksum=
+;
++	const unsigned char *header_end =3D header_start + sizeof(*hdr);
++	const unsigned char *chksum_end =3D chksum_start + sizeof(hdr->chksum);
++	const unsigned char *p;
+ 	unsigned int chksum =3D 0;
+-	size_t i;
+
+-	memset(hdr->chksum, ' ', sizeof(hdr->chksum));
++	for (p =3D header_start; p < chksum_start; p++)
++		chksum +=3D *p;
++	for (; p < chksum_end; p++)
++		chksum +=3D ' ';
++	for (; p < header_end; p++)
++		chksum +=3D *p;
++	return chksum;
++}
+
+-	for (i =3D 0; i < sizeof(*hdr); ++i)
+-		chksum +=3D ((unsigned char *)hdr)[i];
++void update_checksum(tar_header_t *hdr)
++{
++	unsigned int chksum =3D get_checksum(hdr);
+
+ 	sprintf(hdr->chksum, "%06o", chksum);
+ 	hdr->chksum[6] =3D '\0';
+@@ -18,9 +30,10 @@ void update_checksum(tar_header_t *hdr)
+
+ bool is_checksum_valid(const tar_header_t *hdr)
+ {
+-	tar_header_t copy;
++	unsigned int calculated_chksum =3D get_checksum(hdr);
++	uint64_t read_chksum;
+
+-	memcpy(&copy, hdr, sizeof(*hdr));
+-	update_checksum(&copy);
+-	return memcmp(hdr, &copy, sizeof(*hdr)) =3D=3D 0;
++	if (read_octal(hdr->chksum, sizeof(hdr->chksum), &read_chksum))
++		return 0;
++	return read_chksum =3D=3D calculated_chksum;
+ }
+=2D-
+2.22.0
