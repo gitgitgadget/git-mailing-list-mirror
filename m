@@ -2,110 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 548121F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 19:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3B6D1F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 19:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731962AbfGWTT1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 15:19:27 -0400
-Received: from mout.gmx.net ([212.227.17.20]:46223 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728437AbfGWTT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 15:19:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563909558;
-        bh=w+QW95gAcrEHSqlnzj0cmT+aFX2XNLXVScyGTu5PGag=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Av59lIyyPzA78PYTHYI6QAqz1fteEZsynmdJ89l1bQxmn8ixm2nHTNevfDYl8oa9o
-         sslQNV440abUU7gqfMFZibsAhCWCJ79X/wC4tuwzgDQ7tTp1besobNHa8McfvPTItj
-         Q+ixr9eh0naEivi9S9cS5x/7Pm951QKUt0CP/QgQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1hsCB40ccy-002G5U; Tue, 23
- Jul 2019 21:19:18 +0200
-Date:   Tue, 23 Jul 2019 21:19:16 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Beat Bolli <dev+git@drbeat.li>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] grep: print the pcre2_jit_on value
-In-Reply-To: <20190722181923.21572-1-dev+git@drbeat.li>
-Message-ID: <nycvar.QRO.7.76.6.1907232118460.21907@tvgsbejvaqbjf.bet>
-References: <20190722181923.21572-1-dev+git@drbeat.li>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726308AbfGWT1G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 15:27:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49548 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725372AbfGWT1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 15:27:06 -0400
+Received: (qmail 9830 invoked by uid 109); 23 Jul 2019 19:27:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jul 2019 19:27:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12371 invoked by uid 111); 23 Jul 2019 19:28:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jul 2019 15:28:09 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 23 Jul 2019 15:27:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?5YiY54Kc?= <lw17qhdz@gmail.com>
+Subject: [PATCH] xdiff: clamp function context indices in post-image
+Message-ID: <20190723192704.GA4065@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jgbIzNC4dTKbw756kkwHrGvJogEEhHJ4y1ZIcxAjcrHfFYY2osz
- 7M6nWSaYCAkbb42CgH7YCt+QQl0S7nCyrgioZ3BcYiXn8Fb1DOFZb3KOyhe7UQ7W2N+5pO5
- lQ6ZnyBUKqn9sVbbGQkwICxSU9S9pi5KPhzziugGyHW1VOPlEnCzwkLxjp7VdvQHmwXznn/
- nKYK2gDZOQsBlWG7Gx6lA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mpNzTMzeQEg=:6a9qTmse0Z06+YP8I8qmL7
- FTs99WE5XCcsHekvz0mpzxv6irzlDUH9EafucOP6DMxhge6BONm1TisYP8shaaGot5ZcVsrRH
- QiQK+3jRK9k3XJPj7ci0VBDjcnlZvWvhDAdw8O6RD8p4s3uv0bkpGcPzTtaTh5GrCiBjpZ3qU
- IWsSMZ1GgQNZvOn6VQ3Y8Fo4BHJ8OT/nOjYTKgD0+a86HhAOC/wywa+7u8doAZVX72CLg12Wi
- gk2TqpjEAEAFZeT2OPqe8UkSC3pxKeP10k+2LdOFnfyf7PDJO95jCadTmq9uPEC17pZ/K1yPp
- GO6SZG1khS7SkQO0BpC43p3R0xvtYKKYBogJXpMzNE5ZK2xtSLtzQynHZQ9j+ePYgup0d5egb
- XAZJyHXsEZHdYz5Mgczaj2WvSjsBncg5nLpPbaM293uzFycslFgX/brgCDSxo3mjwdp/teRV6
- lzkh2RCLAnHz/wBPX0yGOzwEQ4lf8V1PSTEPGnDLmCDecAvQ1Jwjje43JgxeAUCvOgqTaEKrU
- 2DbE/wY+5WboR+FypgO9V7Tm7qhLac++O6tqDhWUxP3oX8H6vTKNxXf0SRDAJjH0OcYw5wpYR
- /4PahvradSijFglcywJCcOiTdUjuRlZUn+F1RiPvmEIrpbLB3pdUGDTBMP8UydicBwspmlMoG
- 7wT81YDuIpGoH3t2pjfxcLVza+49QH6qwaG3rkyl9oRiGX8LyxKp5M3k+0u9hFF+hTACECDsn
- 5mcKG6OCewu9Z9y2+ktYq7tipjMQmQ973fzGTK2188iN0jAfdrXi2aFtn+bnX81z9jehnL2+D
- sBRvs8/aH2a50PkLnaAfew1BztnMaDiD9nz+19JxTGUSwFXKeVO4sk2QwNH3Bw46FPlpLu8Oq
- fRkbU0qx+8y0eTdcMCo9wwIDU/wetHU4lQRRfm5DJVvFLZtCRXzqhpGRC/RuUgrQfgP5Zl7Bi
- bXpVpejSp76ZinLh569SjNvNQeP86EbljoW/oGj0O/GGAtMCMckm687yxOo0CsGdEqPW4x8zr
- zfCpOpMRAz82vTf1J+vuk2hbDVX9iH00SRUclMQ1rQEQBaEfvp5zFwaQX4YAzrnqct76i6mR7
- zTcfFyhZVAqs0cBd/2j+P2Q/dqh2oIClC5R
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Beat,
+After finding a function line for --function-context in the pre-image,
+xdl_emit_diff() calculates the equivalent line in the post-image.  It
+assumes that the lines between changes are the same on both sides.  If
+the option --ignore-blank-lines was also given then this is not
+necessarily true.
 
-On Mon, 22 Jul 2019, Beat Bolli wrote:
+Clamp the calculation results for start and end of the function context
+to prevent out-of-bounds array accesses.
 
-> When pcre2_jit_on is neither 1 nor 0, the BUG() call printed the value
-> of pcre1_jit_on.
->
-> Print the value of pcre2_jit_on instead.
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->  grep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/grep.c b/grep.c
-> index f7c3a5803e..cd952ef5d3 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -559,7 +559,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  		pcre2_jit_stack_assign(p->pcre2_match_context, NULL, p->pcre2_jit_sta=
-ck);
->  	} else if (p->pcre2_jit_on !=3D 0) {
->  		BUG("The pcre2_jit_on variable should be 0 or 1, not %d",
-> -		    p->pcre1_jit_on);
-> +		    p->pcre2_jit_on);
+Note that this _just_ fixes the case where our mismatch sends us off the
+beginning of the file. There are likely other cases where our assumption
+causes us to go to the wrong line within the file. Nobody has developed
+a test case yet, and the ultimate fix is likely more complicated than
+this patch. But this at least prevents a segfault in the meantime.
 
-Seems obviously good.
+Credit for finding the bug goes to "Liu Wei of Tencent Security Xuanwu
+Lab".
 
-Maybe while you're in the vicinity, you can add that information to the
-`--debug` output?
+Reported-by: 刘炜 <lw17qhdz@gmail.com>
+Helped-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t4015-diff-whitespace.sh | 22 ++++++++++++++++++++++
+ xdiff/xemit.c              |  4 ++--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-Thanks,
-Dscho
-
->  	}
->  }
->
-> --
-> 2.21.0.1020.gf2820cf01a
->
->
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index ab4670d236..6b087df3dc 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -2008,4 +2008,26 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
+ 	test_cmp expected actual
+ '
+ 
++# Note that the "6" in the expected hunk header below is funny, since we only
++# show 5 lines (the missing one was blank and thus ignored). This is how
++# --ignore-blank-lines behaves even without --function-context, and this test
++# is just checking the interaction of the two features. Don't take it as an
++# endorsement of that output.
++test_expect_success 'combine --ignore-blank-lines with --function-context' '
++	test_write_lines 1 "" 2 3 4 5 >a &&
++	test_write_lines 1    2 3 4   >b &&
++	test_must_fail git diff --no-index \
++		--ignore-blank-lines --function-context a b >actual.raw &&
++	sed -n "/@@/,\$p" <actual.raw >actual &&
++	cat <<-\EOF >expect &&
++	@@ -1,6 +1,4 @@
++	 1
++	 2
++	 3
++	 4
++	-5
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 7778dc2b19..30713ae9a9 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -210,7 +210,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 			if (fs1 < 0)
+ 				fs1 = 0;
+ 			if (fs1 < s1) {
+-				s2 -= s1 - fs1;
++				s2 = XDL_MAX(s2 - (s1 - fs1), 0);
+ 				s1 = fs1;
+ 			}
+ 		}
+@@ -232,7 +232,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 			if (fe1 < 0)
+ 				fe1 = xe->xdf1.nrec;
+ 			if (fe1 > e1) {
+-				e2 += fe1 - e1;
++				e2 = XDL_MIN(e2 + (fe1 - e1), xe->xdf2.nrec);
+ 				e1 = fe1;
+ 			}
+ 
+-- 
+2.22.0.993.gcc1030c86b
