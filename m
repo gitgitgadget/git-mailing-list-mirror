@@ -7,90 +7,62 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77261F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 15:42:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5391F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 15:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727314AbfGWPmI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 11:42:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63531 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbfGWPmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 11:42:07 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A333C16D5FF;
-        Tue, 23 Jul 2019 11:42:03 -0400 (EDT)
+        id S1732232AbfGWPv1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 11:51:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61355 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730008AbfGWPv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 11:51:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B4B51590C2;
+        Tue, 23 Jul 2019 11:51:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sU4+/PhtGthK9+3uhDH131Umf+A=; b=fTmHKm
-        8aHK1HF1DQzkdXR0SKTi9vqCzfuduLvJYWj+6ORpTEb6Tz7Ho2WFtcaBMrfQWuXo
-        lBKotx+g6HV6u7IwffHN/77IqXoqsoqGyTtM0/cm4ptuuhuuVrNU+M87e02AMpfd
-        0IkiPavOrqqgQHx67wFuxPxzgkkDZP8K+bS3s=
+        :content-type; s=sasl; bh=6B1V16tN2yk9V+58r2WoU0ad3rs=; b=lg59qN
+        M7i+e3Duhjyl3moUJS0Str0vgBiQ5DFM+tMIvPc282rkkZynSygyMrQxJSeMctZK
+        FXSLn8Mg1w0Rc599XNKCb+DOZvJxZxl2vaL1cgxYj/vQ3XGRCNGoK7NhkQ34eTwt
+        3Xiw0H4aElGdUqWDkzDb6WC17tmKmHgM7noRA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p5nNcEA3F9mzg/08BnN2zq2kO2Xl4C+O
-        tnyEVbZsD8pBrpqw+yKXWcu3p3VnC8tbLpadktjSMMMXqifjaIVwflKxQDIk1pqL
-        lODvMWB4G3Ei2gPwnF8BkvSPPAN3Gi/fIxqvrUtOViYmn/fU66tEV7TbG6T8s9JT
-        XGqE8lvV5go=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AF2216D5FE;
-        Tue, 23 Jul 2019 11:42:03 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=OAeG5+ia3EficXdF9X1PRDBM9rJ9w9Cr
+        OfGrwD7lkvCdm4uJ4SDiJ3T3kNGdTV0ee6avRsjqFYb0KkIwaqEExsTkuVJZb2T2
+        YVqlC6On4Rq2gGbhvqhCT2jpMlwFmquTI6yPlGTEH81s6HZztwl6C7p42yFp1AlC
+        m5Ma7nq/Pco=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63B501590C1;
+        Tue, 23 Jul 2019 11:51:26 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DA89116D5FD;
-        Tue, 23 Jul 2019 11:42:02 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA4DD1590C0;
+        Tue, 23 Jul 2019 11:51:25 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+To:     Matthew DeVore <matvore@comcast.net>
 Cc:     git@vger.kernel.org
-Subject: Re: jk/test-commit-bulk,
-References: <xmqqef2lvkg5.fsf@gitster-ct.c.googlers.com>
-        <20190719215417.GA31841@sigill.intra.peff.net>
-Date:   Tue, 23 Jul 2019 08:42:00 -0700
-In-Reply-To: <20190719215417.GA31841@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 19 Jul 2019 17:54:17 -0400")
-Message-ID: <xmqqsgqwu59z.fsf@gitster-ct.c.googlers.com>
+Subject: Re: What's cooking in git.git (Jul 2019, #04; Thu, 18)
+References: <xmqqtvbjvull.fsf@gitster-ct.c.googlers.com>
+        <20190722193535.GA11274@comcast.net>
+Date:   Tue, 23 Jul 2019 08:51:24 -0700
+In-Reply-To: <20190722193535.GA11274@comcast.net> (Matthew DeVore's message of
+        "Mon, 22 Jul 2019 12:35:35 -0700")
+Message-ID: <xmqqo91ku4ub.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6AA533C8-AD60-11E9-A525-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BA2D0A64-AD61-11E9-A36D-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Matthew DeVore <matvore@comcast.net> writes:
 
->>  Needs a bit more polishing.
->>  I think I spotted one unused command, which we may want to remove, though.
+> I gave some
+> input earlier in this message:
 >
-> I think these comments are out-of-date. The unused command was fixed up
-> in v2 of the first patch, and then I did a little extra polishing in v3:
->
->   https://public-inbox.org/git/20190702051649.GA16344@sigill.intra.peff.net/
+> https://public-inbox.org/git/20190714231558.GA24609@comcast.net/
 
-Thanks, indeed.  I've been a bit under the weather and my responses
-may be a bit slow (haven't caught up with my mailbox, either X-<).
-
-Will replace.  Thanks for all the help.
-
->
-> Together with your SQUASH fixup, I think that covers all comments. For
-> convenience, here's v3 again as a whole series which can replace what
-> you have already (including the squash).
->
->   [1/6]: test-lib: introduce test_commit_bulk
->   [2/6]: t5310: increase the number of bitmapped commits
->   [3/6]: t3311: use test_commit_bulk
->   [4/6]: t5702: use test_commit_bulk
->   [5/6]: t5703: use test_commit_bulk
->   [6/6]: t6200: use test_commit_bulk
->
->  t/t3311-notes-merge-fanout.sh      |  10 +--
->  t/t5310-pack-bitmaps.sh            |  15 +---
->  t/t5702-protocol-v2.sh             |  10 +--
->  t/t5703-upload-pack-ref-in-want.sh |   4 +-
->  t/t6200-fmt-merge-msg.sh           |   7 +-
->  t/test-lib-functions.sh            | 123 +++++++++++++++++++++++++++++
->  6 files changed, 136 insertions(+), 33 deletions(-)
->
-> -Peff
+Thanks, that helped a lot and I think what we have is good now.
