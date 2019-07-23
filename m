@@ -2,65 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92C4F1F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 17:35:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 548121F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 19:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732899AbfGWRfE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 13:35:04 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50769 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726252AbfGWRfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 13:35:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1737575930;
-        Tue, 23 Jul 2019 13:35:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/d5ja5a3JXDGWss3OQ/hHuDFptE=; b=vRGZVN
-        6yY269IfX06bPJFUc4UPRm3Zsaz+2cOLAeTjQHd0vaVb9DpzyWCaQ54jHb8jN1kS
-        +wo9JXr4lSf/pU7vWodHmIUiFD/3ecKPZiYpqxkPeNm2ENcrlhBeA9JkUM/KqIAv
-        r321P39Th2odp5c4H3qiHpapZHNfps/46y0tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GZcBd/tTPGeszX/7GyoAYE40LGLAg7dg
-        L+NiXHWAjJRqljnEU2AqSpXfPBCX2gaGouLAn/+YJVbsid6GmRCxT5EBAIRgD2yU
-        8yvuSE7uTSiOrNfOHiuoSZZ+NwknKZGCogOvmikwETNnRKp0xaVpEqmmUm9dfdnx
-        4xORAljFzSU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FAC27592F;
-        Tue, 23 Jul 2019 13:35:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1E4F57592B;
-        Tue, 23 Jul 2019 13:34:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1731962AbfGWTT1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 15:19:27 -0400
+Received: from mout.gmx.net ([212.227.17.20]:46223 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728437AbfGWTT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 15:19:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1563909558;
+        bh=w+QW95gAcrEHSqlnzj0cmT+aFX2XNLXVScyGTu5PGag=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Av59lIyyPzA78PYTHYI6QAqz1fteEZsynmdJ89l1bQxmn8ixm2nHTNevfDYl8oa9o
+         sslQNV440abUU7gqfMFZibsAhCWCJ79X/wC4tuwzgDQ7tTp1besobNHa8McfvPTItj
+         Q+ixr9eh0naEivi9S9cS5x/7Pm951QKUt0CP/QgQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1hsCB40ccy-002G5U; Tue, 23
+ Jul 2019 21:19:18 +0200
+Date:   Tue, 23 Jul 2019 21:19:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     git@vger.kernel.org
+cc:     git@vger.kernel.org, gitster@pobox.com
 Subject: Re: [PATCH] grep: print the pcre2_jit_on value
+In-Reply-To: <20190722181923.21572-1-dev+git@drbeat.li>
+Message-ID: <nycvar.QRO.7.76.6.1907232118460.21907@tvgsbejvaqbjf.bet>
 References: <20190722181923.21572-1-dev+git@drbeat.li>
-Date:   Tue, 23 Jul 2019 10:34:57 -0700
-In-Reply-To: <20190722181923.21572-1-dev+git@drbeat.li> (Beat Bolli's message
-        of "Mon, 22 Jul 2019 20:19:23 +0200")
-Message-ID: <xmqq1rygu01q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3195F3F0-AD70-11E9-83A6-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jgbIzNC4dTKbw756kkwHrGvJogEEhHJ4y1ZIcxAjcrHfFYY2osz
+ 7M6nWSaYCAkbb42CgH7YCt+QQl0S7nCyrgioZ3BcYiXn8Fb1DOFZb3KOyhe7UQ7W2N+5pO5
+ lQ6ZnyBUKqn9sVbbGQkwICxSU9S9pi5KPhzziugGyHW1VOPlEnCzwkLxjp7VdvQHmwXznn/
+ nKYK2gDZOQsBlWG7Gx6lA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mpNzTMzeQEg=:6a9qTmse0Z06+YP8I8qmL7
+ FTs99WE5XCcsHekvz0mpzxv6irzlDUH9EafucOP6DMxhge6BONm1TisYP8shaaGot5ZcVsrRH
+ QiQK+3jRK9k3XJPj7ci0VBDjcnlZvWvhDAdw8O6RD8p4s3uv0bkpGcPzTtaTh5GrCiBjpZ3qU
+ IWsSMZ1GgQNZvOn6VQ3Y8Fo4BHJ8OT/nOjYTKgD0+a86HhAOC/wywa+7u8doAZVX72CLg12Wi
+ gk2TqpjEAEAFZeT2OPqe8UkSC3pxKeP10k+2LdOFnfyf7PDJO95jCadTmq9uPEC17pZ/K1yPp
+ GO6SZG1khS7SkQO0BpC43p3R0xvtYKKYBogJXpMzNE5ZK2xtSLtzQynHZQ9j+ePYgup0d5egb
+ XAZJyHXsEZHdYz5Mgczaj2WvSjsBncg5nLpPbaM293uzFycslFgX/brgCDSxo3mjwdp/teRV6
+ lzkh2RCLAnHz/wBPX0yGOzwEQ4lf8V1PSTEPGnDLmCDecAvQ1Jwjje43JgxeAUCvOgqTaEKrU
+ 2DbE/wY+5WboR+FypgO9V7Tm7qhLac++O6tqDhWUxP3oX8H6vTKNxXf0SRDAJjH0OcYw5wpYR
+ /4PahvradSijFglcywJCcOiTdUjuRlZUn+F1RiPvmEIrpbLB3pdUGDTBMP8UydicBwspmlMoG
+ 7wT81YDuIpGoH3t2pjfxcLVza+49QH6qwaG3rkyl9oRiGX8LyxKp5M3k+0u9hFF+hTACECDsn
+ 5mcKG6OCewu9Z9y2+ktYq7tipjMQmQ973fzGTK2188iN0jAfdrXi2aFtn+bnX81z9jehnL2+D
+ sBRvs8/aH2a50PkLnaAfew1BztnMaDiD9nz+19JxTGUSwFXKeVO4sk2QwNH3Bw46FPlpLu8Oq
+ fRkbU0qx+8y0eTdcMCo9wwIDU/wetHU4lQRRfm5DJVvFLZtCRXzqhpGRC/RuUgrQfgP5Zl7Bi
+ bXpVpejSp76ZinLh569SjNvNQeP86EbljoW/oGj0O/GGAtMCMckm687yxOo0CsGdEqPW4x8zr
+ zfCpOpMRAz82vTf1J+vuk2hbDVX9iH00SRUclMQ1rQEQBaEfvp5zFwaQX4YAzrnqct76i6mR7
+ zTcfFyhZVAqs0cBd/2j+P2Q/dqh2oIClC5R
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+Hi Beat,
+
+On Mon, 22 Jul 2019, Beat Bolli wrote:
 
 > When pcre2_jit_on is neither 1 nor 0, the BUG() call printed the value
 > of pcre1_jit_on.
@@ -69,10 +78,6 @@ Beat Bolli <dev+git@drbeat.li> writes:
 >
 > Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 > ---
-
-Thanks.
-
-
 >  grep.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
@@ -80,11 +85,27 @@ Thanks.
 > index f7c3a5803e..cd952ef5d3 100644
 > --- a/grep.c
 > +++ b/grep.c
-> @@ -559,7 +559,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
->  		pcre2_jit_stack_assign(p->pcre2_match_context, NULL, p->pcre2_jit_stack);
->  	} else if (p->pcre2_jit_on != 0) {
+> @@ -559,7 +559,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>  		pcre2_jit_stack_assign(p->pcre2_match_context, NULL, p->pcre2_jit_sta=
+ck);
+>  	} else if (p->pcre2_jit_on !=3D 0) {
 >  		BUG("The pcre2_jit_on variable should be 0 or 1, not %d",
 > -		    p->pcre1_jit_on);
 > +		    p->pcre2_jit_on);
+
+Seems obviously good.
+
+Maybe while you're in the vicinity, you can add that information to the
+`--debug` output?
+
+Thanks,
+Dscho
+
 >  	}
 >  }
+>
+> --
+> 2.21.0.1020.gf2820cf01a
+>
+>
