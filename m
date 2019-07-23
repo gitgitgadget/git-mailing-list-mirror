@@ -7,117 +7,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3B6D1F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 19:27:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D28761F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 19:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbfGWT1G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 15:27:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49548 "HELO cloud.peff.net"
+        id S1731962AbfGWTbV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 15:31:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49562 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725372AbfGWT1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 15:27:06 -0400
-Received: (qmail 9830 invoked by uid 109); 23 Jul 2019 19:27:06 -0000
+        id S1726308AbfGWTbV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 15:31:21 -0400
+Received: (qmail 9870 invoked by uid 109); 23 Jul 2019 19:31:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jul 2019 19:27:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jul 2019 19:31:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12371 invoked by uid 111); 23 Jul 2019 19:28:09 -0000
+Received: (qmail 12465 invoked by uid 111); 23 Jul 2019 19:32:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jul 2019 15:28:09 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jul 2019 15:32:24 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 23 Jul 2019 15:27:05 -0400
+Date:   Tue, 23 Jul 2019 15:31:19 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?5YiY54Kc?= <lw17qhdz@gmail.com>
-Subject: [PATCH] xdiff: clamp function context indices in post-image
-Message-ID: <20190723192704.GA4065@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matt Turner <mattst88@gmail.com>, Rene Scharfe <l.s.r@web.de>,
+        git@vger.kernel.org,
+        David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+Subject: Re: [PATCH] archive: Store checksum correctly
+Message-ID: <20190723193119.GA3879@sigill.intra.peff.net>
+References: <20190723025736.23036-1-mattst88@gmail.com>
+ <xmqqd0i0u253.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqd0i0u253.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After finding a function line for --function-context in the pre-image,
-xdl_emit_diff() calculates the equivalent line in the post-image.  It
-assumes that the lines between changes are the same on both sides.  If
-the option --ignore-blank-lines was also given then this is not
-necessarily true.
+On Tue, Jul 23, 2019 at 09:49:44AM -0700, Junio C Hamano wrote:
 
-Clamp the calculation results for start and end of the function context
-to prevent out-of-bounds array accesses.
+> I think a change like this would impact kernel.org folks' tarball
+> uploading tool, but that is not a reason not to apply this patch.
 
-Note that this _just_ fixes the case where our mismatch sends us off the
-beginning of the file. There are likely other cases where our assumption
-causes us to go to the wrong line within the file. Nobody has developed
-a test case yet, and the ultimate fix is likely more complicated than
-this patch. But this at least prevents a segfault in the meantime.
+That was my thought, too. Distro projects like homebrew rely on
+stable hashes of upstream tarballs, and they get cranky when those
+tarballs change. Ideally the projects they package would provide
+byte-stable tarballs, but many of them rely on on-the-fly tarball
+generation by hosting sites like GitHub.
 
-Credit for finding the bug goes to "Liu Wei of Tencent Security Xuanwu
-Lab".
+Which isn't to say we should never fix bugs in the tarballs that we
+produce, but it's not entirely clear to me that this _is_ a bug, and not
+just one tool being overly picky.
 
-Reported-by: 刘炜 <lw17qhdz@gmail.com>
-Helped-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t4015-diff-whitespace.sh | 22 ++++++++++++++++++++++
- xdiff/xemit.c              |  4 ++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index ab4670d236..6b087df3dc 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -2008,4 +2008,26 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 	test_cmp expected actual
- '
- 
-+# Note that the "6" in the expected hunk header below is funny, since we only
-+# show 5 lines (the missing one was blank and thus ignored). This is how
-+# --ignore-blank-lines behaves even without --function-context, and this test
-+# is just checking the interaction of the two features. Don't take it as an
-+# endorsement of that output.
-+test_expect_success 'combine --ignore-blank-lines with --function-context' '
-+	test_write_lines 1 "" 2 3 4 5 >a &&
-+	test_write_lines 1    2 3 4   >b &&
-+	test_must_fail git diff --no-index \
-+		--ignore-blank-lines --function-context a b >actual.raw &&
-+	sed -n "/@@/,\$p" <actual.raw >actual &&
-+	cat <<-\EOF >expect &&
-+	@@ -1,6 +1,4 @@
-+	 1
-+	 2
-+	 3
-+	 4
-+	-5
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 7778dc2b19..30713ae9a9 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -210,7 +210,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			if (fs1 < 0)
- 				fs1 = 0;
- 			if (fs1 < s1) {
--				s2 -= s1 - fs1;
-+				s2 = XDL_MAX(s2 - (s1 - fs1), 0);
- 				s1 = fs1;
- 			}
- 		}
-@@ -232,7 +232,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			if (fe1 < 0)
- 				fe1 = xe->xdf1.nrec;
- 			if (fe1 > e1) {
--				e2 += fe1 - e1;
-+				e2 = XDL_MIN(e2 + (fe1 - e1), xe->xdf2.nrec);
- 				e1 = fe1;
- 			}
- 
--- 
-2.22.0.993.gcc1030c86b
+-Peff
