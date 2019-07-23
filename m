@@ -2,253 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C600C1F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 12:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0CE61F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 13:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389872AbfGWMrg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 08:47:36 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60577 "EHLO mout.gmx.net"
+        id S1732538AbfGWNNa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 09:13:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35243 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731293AbfGWMrf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 08:47:35 -0400
+        id S1727311AbfGWNNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 09:13:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563886048;
-        bh=+Gw1kfhEWH9S6a6gsAFG2TegjWLFjB7Whj6+8HLTFd4=;
+        s=badeba3b8450; t=1563887597;
+        bh=WSuyd8z6RSB+qI+ZbOZVSj+i+HSjuwcNJl3hCdd2Nu4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KAZ8oOglTkpk6AK7VeAjqnfib20LoT3GSuD6RJNeDh5sMx71ZOvkD1UZKmfxmwvKP
-         a30ZVJy8RTOHRlTvWroWaaU/7OJy2KAOjg6r0br3almU01aqtXtgDZo/IRWpuAAO1X
-         MODtvkWRIzxc/l0whn1PnoFijSq/apkktGJuKnKg=
+        b=bhbgAXFuogMoG6ZwfTbtG29cGBOAWv474KEIXatGEmFYOiF+nOJcS/1KhyfmVhmkO
+         V/7fOJwTw6G8d4/QmhZC1L4HMHeCB5ebGbtktaoFXj+sswntYbMzQUiC92pG6SXayz
+         6HdocQawibcvyQV0R/N+KVoS7RHFu5+W4c5CZuAA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.21.16.31] ([194.69.102.31]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQ5vc-1i3Bqu1o2K-00M11s; Tue, 23
- Jul 2019 14:47:28 +0200
-Date:   Tue, 23 Jul 2019 14:46:39 +0200 (CEST)
+Received: from [172.21.16.31] ([194.69.102.31]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJFBe-1hrZIO1Gqw-002oS0; Tue, 23
+ Jul 2019 15:13:17 +0200
+Date:   Tue, 23 Jul 2019 15:12:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Carlo Arenas <carenas@gmail.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] grep: skip UTF8 checks explicitally
-In-Reply-To: <CAPUEspg1nUoPApTk5J2r_-9psxTTSC7nRAPw_X9no+2sFVSxAA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907231444250.47@tvgsbejvaqbjf.bet>
-References: <20190721183115.14985-1-carenas@gmail.com> <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet> <87muh57t5r.fsf@evledraar.gmail.com> <CAPUEspg1nUoPApTk5J2r_-9psxTTSC7nRAPw_X9no+2sFVSxAA@mail.gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
+        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/5] repo-settings: consolidate some config settings
+In-Reply-To: <72f652b89c71526cc423e7812de66f41a079f181.1563818059.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907231512130.21907@tvgsbejvaqbjf.bet>
+References: <pull.292.git.gitgitgadget@gmail.com> <72f652b89c71526cc423e7812de66f41a079f181.1563818059.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1350122143-1563886042=:47"
-X-Provags-ID: V03:K1:rDoOAYJTr3wW4UWcm3sggC2jQ6WMUSf04KrpuSwlSpVrbFF+j8S
- D/oh5w6lK9vMx8d/griYeEcfZDGFyTvgxDlei8wbLev85K4YT4z3sf+uyu/MMlJmD0hX6GF
- A+oyc8m5wefIFN+z6f07NMezjmQCp7Nt8UZM8jCucEqNfSAEgrldm+Ms5QNqlYsnhLlXs89
- X7HEMUhPAf1MXeRo9Sr4Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TLHOtZUrpdw=:FCnzyDifXPAL6Vf7fm9Af/
- 3n1+qr5AE4M3rLPrE8xwH507+PYTOlxghMRK4h/9JSo1WuR9NDL8E50KtWvRm5Qgk75Nb7Lpw
- vrV4UoGXrgJNOomu5qOFj990+FQG1e1pODFPp4oiKps/I6N+avNyrImAKwLOd5qHdxpHB+ijN
- Kek9v3YeSIDtMeMimM4gIcnARIcygOdBQGJDurGYDfhFhCVIJZXDs2T/Xot35Db7sqfV3J+5I
- A8l/wfYscrmKD+4OoSSbXNKJGN7KvFU4A3Ci3GVFBcbW3LC2TUSK1I+uUODsOrniQpBugnuR3
- mKE2L4EvcJqUMteNCvZoUolgx1hJ19+kcZCaC4MqkGadreJiF5lkJSmQvj+8FW3smC4pigKf2
- K6mhy+q/7DaEgYJRIKS0O2GiTodScShRFMVjrmU3swyYaXOWwIzlpNbNFcPjTOTlEzUZHfA/4
- DTPhvH/dhV+493zvii52pEk+wMOy1yr3GGfjA/7mDT8FS6HZwmn6Su/RKCxsMWoq1LE6CcmgU
- xbipxxdz8pgGlwsU0G6a67KO/9+fKKM62/xALqEI6AQxc6Z76F3p/9eMbuP2Ri0al2lbYHFcH
- DT0AONAdssYVKifx3LucWKpHkmCIO3qGNf105kERj1M6NYZtWcOT794CTTlo0Dyt6OqmzYoo+
- vLdUy0rAujs/ocdj3uWLYD7G6Vizlw6gq1pkHjVaL7JOhl3/wkGf1QdWhtNm7BA1WzN3wiKd5
- sbkNpx7HmbKIG1btmZKelTECKEfF7HhCvsK5TdJTisX44iBMXe0q6VyItQBC306jN5VatS0Fz
- G+BWRI3Lm7iUSRJtYE2G/zMgccKxiOtn8yk3g3HCCqs8dWp5WsMSeJnp+AD+G06rMH10+waHX
- +HFnpM2+d+P21Cei7peUsvUoiZCNgU+xBV2XzWGcoMlOPTfndMfWDEHEbGsl1QYS5+a2ndL81
- 3iqoH4fD2juC+HAxeSea3VJ2/ZVWPAjfiSxcTP2BXeackp6SLO1JlEgSW/dW3satKp269olex
- XEp+ADKg4Zgtoy2pFqcdFgu2AHJ6KTsAb7t4e4yMYF89tjKTyE55r/Kl5DI2AkCDcFpoIeSkq
- yCrPTfKHzZ4yCU2s2mq2ffGUf78+vSuXaaY
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ddIC1B8Tl1QZsTn7b9vFDHJ5M2yqGVinmPLos4B65MpYF0t4n6b
+ UugGzUXTbnVMoCwrccISDXJNNpAVQNfydkL/HCZ1L4rRkeyAlKMyx4etY9KV5DkRpmwbFBq
+ BEKqd7PkjEY3Zm78fHRXKzuCjsC5ziMWZfhsFMyHNN0bXAGY+pvS5o/3zqWDZ4laYrNeJWo
+ Tt8NFzbS1J/rUT3YnnHlQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:I3vez+1fRRg=:mHyLSWMlr2oDkqtUW+fWUe
+ IQV7hEWb5+120CV5h9K5Empr4A+Pth3pLqmAYzLpsDT7aVgJuIfZpOqgDWhE0kIHMsvV8K+59
+ jrpLvVrScX+lk33D+xgDvHmzlCUxDiv/p7fvsoiJin8sORFFSRDH8DEaP4iyQg5gjDBxCNno3
+ fLcduU6SUHQ1JDBM9WQy8ErON01WG13L7Cci3XZ27Om/7vkZ68hseI0iWvhF1MEo1glETzawI
+ wYlOC1v3r6Bp2HneLpGUXMl8aLyC8SgxVeCPXOR0n70VjF82xwlAmBtjBn71idULXKTXQOkoL
+ mIENSdY0ajfmHDj8TWJXmxmiNco+dkts0bhrRX6ShsKCxWR3mi0o3LcjVDwdZ5KIwt1I1EkBl
+ 95hFhQvgDH080fvmKq3tWLf2DqFuw+iGwJe5P4musUD4g0BhVJUg37apSXCcKbC7ntF/42Agk
+ V1Y+hj8RkvlmVPyI/qzZgBHexd/DMCamc2d7OT78EGCWWR+Pcws0TcdSxDZBUc6ChfjJ4j91k
+ 8BkBklCFEyQ5sXPxbaZwB2/vj/q3Uo4s+OVQXNEm9t8DN7lE01ZXaxwuMbLCcfrGYTfz/B/7V
+ OrF6lm56nMI7w9HUSq27FSUo5iZMdt/7PywfOh8D3yj8fcjveuKR/mYCd/DWd4TGYIQ5BU3Zp
+ XP2f80BxGy3YtwNDzR+5EXj5xSYcbJ0HAexYR0nR37zQ10jTsDCQ7hFXjKaWJx7gGFuq0p9TB
+ rcgqbJ52eGfm8A2fZTgB5NganeKYM3kzjFnA39pNW3nLyjVWPaI5TlprzGPG/fjVsUhDiOqvZ
+ xC0z6uxITxspk6byd3v04hf3TeEL3JRYGe28WFvK8d5INHNh5p+ynbUg1OGKYzZzJtFSg2qSY
+ ZLgjzqwvXDVkCNIMvffcDkBP8sAGb2hl4XBN+JGxf+keNWYCkhbyhJLgjUsIyqSa61r1IJ+RN
+ kbL1/zwIU/3RvGyBL41jiblOmBtZnzHljp9ulf3TJDS77ZYamAz516IHKG9i5EFZySkozGt0b
+ xiM1ovimBp3Hoe1n0KY7zzW+KRPUPV119mpv88aRvbj/D0tvm/PwuoanB8LC+7ODS2+zohRB5
+ uqyLOjc9GFYE80VeZs/3b/pdJDsN38k20ip
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Stolee,
 
---8323328-1350122143-1563886042=:47
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 22 Jul 2019, Derrick Stolee via GitGitGadget wrote:
 
-Hi Carlo,
-
-On Mon, 22 Jul 2019, Carlo Arenas wrote:
-
-> On Mon, Jul 22, 2019 at 12:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > On Mon, Jul 22 2019, Johannes Schindelin wrote:
-> >
-> > > So I am fine with this patch.
-> >
-> > I'm not, not because I dislike the approach. I haven't made up my mind
-> > yet.
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index c18efadda5..243be2907b 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -27,6 +27,7 @@
+>  #include "pack-objects.h"
+>  #include "blob.h"
+>  #include "tree.h"
+> +#include "repo-settings.h"
 >
-> my bad, I should had explained better the regression I was trying to
-> fix with this patch :
+>  #define FAILED_RUN "failed to run %s"
 >
-> $ git version
-> git version 2.22.0.709.g102302147b.dirty
-> $ git grep "Nguy=E1=BB=85n Th=C3=A1i"
-> .mailmap:Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> fatal: pcre2_match failed with error code -22: UTF-8 error: isolated
-> byte with 0x80 bit set
-> $ git grep -I "Nguy=E1=BB=85n Th=C3=A1i"
-> .mailmap:Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> po/TEAMS:Members:       Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclou=
-ds AT gmail.com>
-> po/vi.po:# Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-, 2012.
-> t/t1302-repo-version.sh:# Copyright (c) 2007 Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy
-> t/t2104-update-index-skip-worktree.sh:# Copyright (c) 2008 Nguy=E1=BB=85=
-n Th=C3=A1i Ng=E1=BB=8Dc Duy
-> fatal: pcre2_match failed with error code -8: UTF-8 error: byte 2 top
-> bits not 0x80
+> @@ -41,7 +42,6 @@ static int aggressive_depth =3D 50;
+>  static int aggressive_window =3D 250;
+>  static int gc_auto_threshold =3D 6700;
+>  static int gc_auto_pack_limit =3D 50;
+> -static int gc_write_commit_graph;
 
-This is worrisome.
+I _really_ like that direction. Anything that removes global state will
+improve Git's source code.
 
-The entire reason why we switch on Unicode mode is because it matters
-for regular expressions. Take for example this one:
-
-	Nguy=E1=BB=85*n
-
-See how the =E1=BB=85 is supposed to be present an arbitrary number of tim=
-es
-(including 0 times)? If PCRE2 was to interpret this as UTF-8, it would
-understand that the bytes 0xe1 0xbb 0x85 had to be repeated (or be
-missing), but if it interprets it _not_ as UTF-8, then it would handle
-_only the last_ byte, 0x85, that way, which will not work correctly.
-
-So when PCRE2 complains about the top two bits not being 0x80, it fails
-to parse the bytes correctly (byte 2 is 0xbb, whose two top bits are
-indeed 0x80).
-
-Maybe this is a bug in your PCRE2 version? Mine is 10.33... and this
-does not happen here... But then, I don't need the `-I` option, and my
-output looks like this:
-
-=2D- snip --
-$ git grep --perl-regexp "Nguy=E1=BB=85n Th=C3=A1i"
-.mailmap:Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-po/TEAMS:Members:       Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds=
- AT gmail.com>
-po/vi.po:# Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>, =
-2012.
-t/t1302-repo-version.sh:# Copyright (c) 2007 Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy
-t/t2104-update-index-skip-worktree.sh:# Copyright (c) 2008 Nguy=E1=BB=85n =
-Th=C3=A1i Ng=E1=BB=8Dc Duy
-t/t7011-skip-worktree-reading.sh:# Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=
-=A1i Ng=E1=BB=8Dc Duy
-t/t7012-skip-worktree-writing.sh:# Copyright (c) 2008 Nguy=E1=BB=85n Th=C3=
-=A1i Ng=E1=BB=8Dc Duy
-=2D- snap --
-
-No error, you see?
-
-Or maybe it is a problem with the locale? Is your locale using an
-encoding different than UTF-8?
-
-> > I stopped paying attention to this error-with-not-JIT discussion when =
-I
-> > heard that some other series going into next for Windows fixed that
-> > issue[1]
-> >
-> > But now we have it again in some form? My ab/no-kwset has a lot of tes=
-ts
-> > for encodings & locales combined with grep, don't some of those trigge=
-r
-> > this? If so we should make any such failure a test & part of this patc=
-h.
+> [...]
+> diff --git a/read-cache.c b/read-cache.c
+> index c701f7f8b8..ee1aaa8917 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> [...]
+> @@ -2765,7 +2767,7 @@ static int do_write_index(struct index_state *ista=
+te, struct tempfile *tempfile,
+>  	}
 >
-> I don't have a windows environment to test, and I admit I wasn't
-> following clearly the whole conversation but at least in my case, I
-> never got any test to fail, and I haven't seen any test with broken
-> UTF-8.
+>  	if (!istate->version) {
+> -		istate->version =3D get_index_format_default();
+> +		istate->version =3D get_index_format_default(the_repository);
 
-The problem was not Windows-specific. It was specific to PCRE2 versions
-compiled without JIT support (which was the case in Git for Windows'
-SDK, but I fixed this on July 5th).
+It is too bad that `read-cache.h` is not `the_repository`-free at the
+moment...
 
-Your patch adequately addresses this problem: instead of erroring out in
-the non-JIT version and passing in the JIT version, it will let also the
-non-JIT version pass.
+>  		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
+>  			init_split_index(istate);
+>  	}
+> diff --git a/repo-settings.c b/repo-settings.c
+> new file mode 100644
+> index 0000000000..13a9128f62
+> --- /dev/null
+> +++ b/repo-settings.c
+> @@ -0,0 +1,44 @@
+> +#include "cache.h"
+> +#include "repository.h"
+> +#include "config.h"
+> +#include "repo-settings.h"
+> +
+> +static int git_repo_config(const char *key, const char *value, void *cb=
+)
+> +{
+> +	struct repo_settings *rs =3D (struct repo_settings *)cb;
+> +
+> +	if (!strcmp(key, "core.commitgraph")) {
+> +		rs->core_commit_graph =3D git_config_bool(key, value);
+> +		return 0;
+> +	}
+> +	if (!strcmp(key, "gc.writecommitgraph")) {
+> +		rs->gc_write_commit_graph =3D git_config_bool(key, value);
+> +		return 0;
+> +	}
+> +	if (!strcmp(key, "pack.usesparse")) {
+> +		rs->pack_use_sparse =3D git_config_bool(key, value);
+> +		return 0;
+> +	}
+> +	if (!strcmp(key, "index.version")) {
+> +		rs->index_version =3D git_config_int(key, value);
+> +		return 0;
+> +	}
 
-But still, I think the issue you found merits some deeper investigation,
-methinks.
+I would actually prefer to use the `repo_config_get_*()` family here.
+That way, we really avoid re-parsing the config.
 
-> > As noted in [2] I'd be inclined to go the other way, if we indeed have
-> > some cases where PCRE skips its own checks does not dying actually giv=
-e
-> > us anything useful? I'd think not, so just ignoring the issue seems li=
-ke
-> > the wrong thing to do.
->
-> we could reenable the checks by moving out of the JIT fast path in pcre =
-so
-> that pcre2_match is used for all matches (with JIT compiled as an optimi=
-zation)
-> and that might have the added benefit of solving the PCRE errors when JI=
-T is
-> broken[1]
->
-> $ git version
-> git version 2.22.0
-> $ git grep "Nguy=E1=BB=85n Th=C3=A1i"
-> .mailmap:Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> po/TEAMS:Members:       Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclou=
-ds AT gmail.com>
-> po/vi.po:# Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-, 2012.
-> t/t1302-repo-version.sh:# Copyright (c) 2007 Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy
-> t/t2104-update-index-skip-worktree.sh:# Copyright (c) 2008 Nguy=E1=BB=85=
-n Th=C3=A1i Ng=E1=BB=8Dc Duy
-> t/t7011-skip-worktree-reading.sh:# Copyright (c) 2008 Nguy=E1=BB=85n Th=
-=C3=A1i Ng=E1=BB=8Dc Duy
-> t/t7012-skip-worktree-writing.sh:# Copyright (c) 2008 Nguy=E1=BB=85n Th=
-=C3=A1i Ng=E1=BB=8Dc Duy
->
-> important to note that at least on my system (macOS 10.14.6) the output =
-of all
-> engines for grep is the same for a UTF-8 pattern match, even if using in=
-valid
-> UTF-8 in the corpus, and I would expect that to be a better indicative
-> of correctness
+> +
+> +	return 1;
+> +}
+> +
+> +void prepare_repo_settings(struct repository *r)
+> +{
+> +	if (r->settings)
+> +		return;
+> +
+> +	r->settings =3D xmalloc(sizeof(*r->settings));
+> +
+> +	/* Defaults */
+> +	r->settings->core_commit_graph =3D -1;
+> +	r->settings->gc_write_commit_graph =3D -1;
+> +	r->settings->pack_use_sparse =3D -1;
+> +	r->settings->index_version =3D -1;
+> +
+> +	repo_config(r, git_repo_config, r->settings);
+> +}
+> diff --git a/repo-settings.h b/repo-settings.h
+> new file mode 100644
+> index 0000000000..1151c2193a
+> --- /dev/null
+> +++ b/repo-settings.h
+> @@ -0,0 +1,15 @@
+> +#ifndef REPO_SETTINGS_H
+> +#define REPO_SETTINGS_H
+> +
+> +struct repo_settings {
+> +	int core_commit_graph;
+> +	int gc_write_commit_graph;
+> +	int pack_use_sparse;
+> +	int index_version;
+> +};
+> +
+> +struct repository;
+> +
+> +void prepare_repo_settings(struct repository *r);
 
-Right. It is _inconsistent_ at the moment, and with your patch it would
-at least be consistent again.
+Hmm. I can see that you wanted to encapsulate this, but I do not really
+agree that this needs to be encapsulated away from `repository.h`. I'd
+rather declare `struct repo_settings` in `repository.h` and then make
+the `settings` a field of that type (as opposed to a pointer to that
+type). In general, I like to avoid unnecessary `malloc()`s, and this
+here instance is one of them.
 
-So I still would prefer your patch over "going the other way".
-
-> FWIW GNU grep (with -P) also ignores UTF-8 errors using the same flag an=
-d
-> even PCRE seems to be going in the other direction with the recent addit=
-ion
-> of PCRE2_MATCH_INVALID_UTF[1]
-
-Good point!
-
-Ciao,
+Thanks,
 Dscho
 
+> +
+> +#endif /* REPO_SETTINGS_H */
+> diff --git a/repository.h b/repository.h
+> index 4fb6a5885f..352afc9cd8 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -4,6 +4,7 @@
+>  #include "path.h"
 >
-> $ od -b int.p
-> 0000000   102 145 154 303 263 156 012 303
-> $ pcre2grep -U 'Bel=C3=B3' int.p
-> Bel=C3=B3n
+>  struct config_set;
+> +struct repo_settings;
+>  struct git_hash_algo;
+>  struct index_state;
+>  struct lock_file;
+> @@ -72,6 +73,8 @@ struct repository {
+>  	 */
+>  	char *submodule_prefix;
 >
-> Carlo
+> +	struct repo_settings *settings;
+> +
+>  	/* Subsystems */
+>  	/*
+>  	 * Repository's config which contains key-value pairs from the usual
+> --
+> gitgitgadget
 >
-> [1] https://public-inbox.org/git/20181209230024.43444-1-carenas@gmail.co=
-m/
-> [2] https://lists.exim.org/lurker/message/20190528.141422.2af1e386.gl.ht=
-ml
 >
-
---8323328-1350122143-1563886042=:47--
