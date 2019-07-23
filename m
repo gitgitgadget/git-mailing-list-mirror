@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 660051F4B6
-	for <e@80x24.org>; Tue, 23 Jul 2019 20:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE9D11F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 20:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731403AbfGWUAM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 16:00:12 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44135 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729853AbfGWUAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 16:00:12 -0400
-Received: by mail-pl1-f195.google.com with SMTP id t14so20989480plr.11
-        for <git@vger.kernel.org>; Tue, 23 Jul 2019 13:00:12 -0700 (PDT)
+        id S2391749AbfGWUBJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 16:01:09 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35217 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726305AbfGWUBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 16:01:08 -0400
+Received: by mail-pg1-f195.google.com with SMTP id s1so13633844pgr.2
+        for <git@vger.kernel.org>; Tue, 23 Jul 2019 13:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tshyk+gM7tzvrE0mGaGXxOqZdJL9X+ucdP/75aDQ668=;
-        b=nsAteAj5UpN/4ZocdUkYCpOP7kj3/bdu3cJ0Ie6U6sX23xjQIo/wVp7Kz6+PG1bo9/
-         9PyffyplS4pPyH7ZRaMcK7UI5eWIx9lfiL3OLOLHMWSLNidUVFzK7CE0RLxj/K4hoCH3
-         JwpJ7z4wYxQQXQ9VW7Gu1DhrvEW5TILAN4507QWkahCx0iCkCDi+o0Ixk6pOAp+GdIXd
-         MjQgw8++LzbfEcJnZm1dVtroi1QBH6lpNhK14JB7xNwvBJU64wfTemysvVAdZrkXR/0k
-         yUgwunHvIQx+8+SKDKlTa7927k7mIpyWBw3EXeiEQZYgLiKnClQlEdTzPNEAuOdemQ3K
-         Xw0g==
+        bh=gSaXwSZadC+uNZOtIrgaE08Az3YaH2npooJAm4egKhI=;
+        b=aGZc8AEKAXqMyRK53sTfN0pN/id7Cn0ut4oOk+swrn4j9yiyrQ+bTbM6P1ZGcl22Cz
+         CBAn3eCk9EPWOr/CJFCsNi58ob9mKVcZCfdBa9wOFlYVJH0mWXaHtwRhvddxdE0gu+Zb
+         VNEG/aXQA2PO0q9ZCh8XxNn/ap2IhgYX5OjwM1+PxdgqWyGzfuu1Qc8ibqTcIlYHJFuC
+         mBxMxJ8LIpCMBl4V+jo7mu+sNfqik8Ie5h+6EmQ49J7iNAM25D3NjTmIwj2eLQRT+tYL
+         w7+0jKk0hTprTdqmJaPCdo/W9/jId/EmIKo4SumRbRGEjeTjyJ/44RgbPijYX2OPzsbV
+         FNig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tshyk+gM7tzvrE0mGaGXxOqZdJL9X+ucdP/75aDQ668=;
-        b=MKCVcWRXITMa+olmEjfzqbLMY+VmWLgEBDOxjdZCdemm/Ya8DIUMCXpeQaoLG4T45H
-         y6O9pShBBBw/3ChB0lHU/4GIZLbT5yQgeHCS9sl7xds/VFsL+uPBL6yO8IqKs3mWfvFW
-         veRh0ImtuIfK8DBlkOJf/B+vlp/vAxHbx2Pnk33G1ErdFK/S3zcY1R7wbKaRjolIuPxV
-         vMadGIuR8a6664ssUKWMV+h278QLgZ7YITqCYHh0O/pO4xytPWLGqvmiCt138rAdbex2
-         pz9To7GmZmmtF1Cdg9kKd73oa4MBvm2GpYba6fRpFeIuaUoi1pBQf/2zRG/f5kUEsFGp
-         VN6Q==
-X-Gm-Message-State: APjAAAUfsmNdt/JkKmlVKhNwEz/NpGFyN9QwTU60maNNeW+3PQjtyyID
-        /mTgFWSlqiVauuxE78ZuEco=
-X-Google-Smtp-Source: APXvYqznEj2WiU5oswgW6lVtuVIcZ/ufTERgptdYhCaBwQUwMy3FrarbiKOTP/HsC5dybu7agG4pKw==
-X-Received: by 2002:a17:902:b582:: with SMTP id a2mr83437725pls.128.1563912011345;
-        Tue, 23 Jul 2019 13:00:11 -0700 (PDT)
+        bh=gSaXwSZadC+uNZOtIrgaE08Az3YaH2npooJAm4egKhI=;
+        b=MbnEvl/2QB7ab91b0VL1rsMzT8XY06oZwDG2oZHt7F5Q8sLBdIYHi4O/91ppMgj1Bg
+         FRT2BecX1nQHWTOTxOY+zZBnxg6HSxy95Xq+tyOcs4wOkrK+fk2herNpZILf6yvR+X9B
+         wqsC3KsnNvpSl0ZDh2wTbjSCkxlRP5GPecoJBrbZza++l7XeanS/Vr3OGL7+/2Nr1MB3
+         c0tygNKRxaiLlyRL8WOK/Ej/ib/VmMZGSx53NkK6TlffJXm/HzMwPcKKMPP/GHtAeXlM
+         Rj+EQIvXvjRlV0NkhG4d1ftOvpijo2m7w5Gxv1qmoer5zMuoxgLhfE5xa206gRIXbzTt
+         G7EA==
+X-Gm-Message-State: APjAAAX2m0wOS4nYAqjZi1jO4Vf4dFyvt4DlAac8uD5hDcVGSPSAgqRX
+        MgBCj5Mm/G5vcxEVkdVjCF0=
+X-Google-Smtp-Source: APXvYqxd18YlgfOR4jhQY98HehamMcvvgvOfuIV9Fe3Gv9+xOqRoZna8uVWS9Xw22HWPBJR4kVeMlQ==
+X-Received: by 2002:a17:90b:8c8:: with SMTP id ds8mr85398521pjb.89.1563912067945;
+        Tue, 23 Jul 2019 13:01:07 -0700 (PDT)
 Received: from ar135.iitr.ac.in ([103.37.200.220])
-        by smtp.gmail.com with ESMTPSA id s15sm43098826pfd.183.2019.07.23.13.00.07
+        by smtp.gmail.com with ESMTPSA id 10sm48435421pfb.30.2019.07.23.13.01.04
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 23 Jul 2019 13:00:10 -0700 (PDT)
+        Tue, 23 Jul 2019 13:01:07 -0700 (PDT)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 To:     Phillip <phillip.wood123@gmail.com>
 Cc:     Dscho <Johannes.Schindelin@gmx.de>,
         Git Mailing List <git@vger.kernel.org>,
         Junio <gitster@pobox.com>, Martin <martin.agren@gmail.com>,
-        Phillip <phillip.wood@dunelm.org.uk>,
         Thomas <t.gummerer@gmail.com>, Elijah <newren@gmail.com>
-Subject: Re: [GSoC][PATCH v2 2/2] rebase -i: support --committer-date-is-author-date
-Date:   Wed, 24 Jul 2019 01:27:22 +0530
-Message-Id: <20190723195722.16745-1-rohit.ashiwal265@gmail.com>
+Subject: Re: [GSoC][PATCH v2 1/1] rebase -i: add --ignore-whitespace flag
+Date:   Wed, 24 Jul 2019 01:28:20 +0530
+Message-Id: <20190723195820.16856-1-rohit.ashiwal265@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <7f53b294-57f7-77bf-ca0a-e9621227377c@gmail.com>
-References: <7f53b294-57f7-77bf-ca0a-e9621227377c@gmail.com>
+In-Reply-To: <6e61e65e-53c2-eb49-2197-03fe9796ef1f@gmail.com>
+References: <6e61e65e-53c2-eb49-2197-03fe9796ef1f@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -72,74 +71,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Phillip
 
-On Sat, 20 Jul 2019 15:56:50 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Mon, 22 Jul 2019 11:00:40 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
 > 
 > [...]
-> 
-> > @@ -467,6 +470,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
-> >   		OPT_BOOL(0, "autosquash", &opts.autosquash,
-> >   			 N_("move commits that begin with squash!/fixup!")),
-> >   		OPT_BOOL(0, "signoff", &opts.signoff, N_("sign commits")),
-> > +		OPT_BOOL(0, "committer-date-is-author-date",
-> > +			 &opts.committer_date_is_author_date,
-> > +			 N_("make committer date match author date")),
-> 
-> I guess it's good to do this for completeness but does
-> rebase--preserver-merges.sh support --committer-date-is-author-date? It
-> is the only caller of rebase--interactive I think so would be the only
-> user of this code.
-
-Oh! Yes, I did it for the completeness. Let's add the flag while we
-still have that _rebase--interactive_ command hanging out with us.
-
-> [...]
-> 
-> > +	if (read_author_script(rebase_path_author_script(),
-> > +			       NULL, NULL, &date, 0))
-> > +		die(_("failed to read author date"));
-> 
-> Can we have this return an error please - we try quite hard in the
-> sequencer not to die in library code.
-
-Yes, we can through an error and continue, but then the user will
-see the unchanged author date which is against his / her will but
-it will not crash the program at least.
-
-> [...]
-> 
-> > +	if (opts->committer_date_is_author_date) {
-> > +		char *date = read_author_date_or_die();
-> > +		argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s", date);
-> > +		free(date);
+> >
+> > +	if (opts->ignore_whitespace) {
+> > +		struct strbuf buf = STRBUF_INIT;
+> > +
+> > +		if (opts->strategy_opts)
+> > +			strbuf_addstr(&buf, opts->strategy_opts);
+> > +
+> > +		strbuf_addstr(&buf, " --ignore-space-change");
+> > +		free(opts->strategy_opts);
+> > +		opts->strategy_opts = strbuf_detach(&buf, NULL);
 > > +	}
+> > +
 > 
-> It's a shame to be doing this twice is slightly different ways in the
-> same function (and again in try_to_commit() but I don't think that can
-> be avoided as not all callers of run_git_commit() go through
-> try_to_commit()). As I think the child inherits the current environment
-> modified by cmd.env_array we could just call setenv() at the top of the
-> function. It would be worth looking to see if it would be simpler to do
-> the setenv() call in the loop that picks the commits, then we would
-> avoid having to do it in do_merge() and try_to_commit() separately.
+> I think this would fit better in get_replay_opts()
 
-Ok, I'll have to change the code according to what Junio suggested.
-Let's see how this area will look after that.
+Agreed, I'll move this to get_replay_opts().
 
 > [...]
 > 
-> > +		if (file_exists(rebase_path_cdate_is_adate())) {
-> > +			opts->allow_ff = 0;
+> > @@ -489,6 +501,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+> >  		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign_opt, N_("key-id"),
+> >  			N_("GPG-sign commits"),
+> >  			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> > +		OPT_BOOL(0, "ignore-whitespace", &opts.ignore_whitespace,
+> > +			 N_("ignore changes in whitespace")),
 > 
-> This is safe as we don't save the state of allow_ff for rebases so it
-> wont be overridden later. It would be an idea to add to the checks in
-> the assert() at the beginning of pick_commits() no we have another
-> option that implies --force-rebase.
+> As with the other patch is this actually going to be used by
+> rebase--preserve-merges.sh?
 
-Are you suggesting to modify this assert() call (in pick_commits())?
+I added this just for the completness. Is there any discussion on
+dropping rebase--interactive as command and may be lib'fying it while
+deprecating rebase--preserve-merges?
 
-    if (opts->allow_ff)
-        assert(!(opts->signoff || opts->no_commit ||
-                opts->record_origin || opts->edit));
+> [...]
+> 
+> > @@ -43,6 +43,7 @@ struct replay_opts {
+> >  	int verbose;
+> >  	int quiet;
+> >  	int reschedule_failed_exec;
+> > +	int ignore_whitespace;
+> 
+> Is this new field used anywhere - we add -Xignore-space-change to
+> replay_opts.xopts so why do we need this as well?
+
+Ah! I just realised cmd_rebase__interactive use rebase_options and
+not replay_options. I too think this field is not required.
 
 Thanks
 Rohit
