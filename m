@@ -2,91 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35D251F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 21:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F2E31F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 21:34:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392013AbfGWVVU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 17:21:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63913 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726950AbfGWVVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 17:21:19 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 984017707F;
-        Tue, 23 Jul 2019 17:21:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4DsdkhCGRme9
-        lI0FMMptFVfgBo4=; b=LjoWJvAtagxOa4YWTBc3qFQ3KjyT2efIV1HTW9EVkp8F
-        3tmlFAbzV8YuIAmYaWAZpKleEDrwZfMYhAx7Ajq7HVdoqrqgZaZlk5fbydDP3jyP
-        Le7UJhVnTZI4edj8/syW8wF9t5Ns9PJl3hlpYfV/tkgPIpRUvQwAfVewhOSGDXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JyoupK
-        UuY4eitEa+lyb6RHITwl855KKU1UVENVUS+A7t31Q300MZj6jwzB8eLT6VGU1HjH
-        y20kSrGtrcx4dOnaWSVZv01NY2HzEbMLjGBD4Z5fudL6+YUotvjNfIHo+3bZl2aD
-        k7Yz0+qxzStqFulmRmxhoT1jN9e3EFLquqbzs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F24E7707E;
-        Tue, 23 Jul 2019 17:21:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C034C7707B;
-        Tue, 23 Jul 2019 17:21:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Matt Turner <mattst88@gmail.com>, git@vger.kernel.org,
-        David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+        id S2392124AbfGWVea convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 23 Jul 2019 17:34:30 -0400
+Received: from lilium.sigma-star.at ([109.75.188.150]:55998 "EHLO
+        lilium.sigma-star.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387491AbfGWVe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 17:34:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by lilium.sigma-star.at (Postfix) with ESMTP id 2177718108D3D;
+        Tue, 23 Jul 2019 23:34:27 +0200 (CEST)
+Received: from lilium.sigma-star.at ([127.0.0.1])
+        by localhost (lilium.sigma-star.at [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id SydQEmKvsS5d; Tue, 23 Jul 2019 23:34:26 +0200 (CEST)
+Received: from lilium.sigma-star.at ([127.0.0.1])
+        by localhost (lilium.sigma-star.at [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id WU2FveK3aas7; Tue, 23 Jul 2019 23:34:25 +0200 (CEST)
 Subject: Re: [PATCH] archive: Store checksum correctly
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Matt Turner <mattst88@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20190723025736.23036-1-mattst88@gmail.com>
-        <xmqqd0i0u253.fsf@gitster-ct.c.googlers.com>
-        <14410e00-4701-40d0-6960-e481fea50ed0@web.de>
-Date:   Tue, 23 Jul 2019 14:21:12 -0700
-In-Reply-To: <14410e00-4701-40d0-6960-e481fea50ed0@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 23 Jul 2019 21:38:47 +0200")
-Message-ID: <xmqqef2gsb07.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+ <xmqqd0i0u253.fsf@gitster-ct.c.googlers.com>
+ <14410e00-4701-40d0-6960-e481fea50ed0@web.de>
+ <9a0c89e4-b216-86f1-c721-c54fb2ee0a10@web.de>
+From:   David Oberhollenzer <david.oberhollenzer@sigma-star.at>
+Openpgp: preference=signencrypt
+Autocrypt: addr=david.oberhollenzer@sigma-star.at; prefer-encrypt=mutual;
+ keydata=
+ mQENBFZyf0YBCADHyKhABhxthCC9n48pvsuk5p3IEdYXMs8Apenh1N/Z4cViAz/d/nSCZ+FG
+ FX/PSubEzq8AilZLejchAltaORCvA1Y6FgTlpcdJ6gHDfStDbJL/vk5N8aL7YNF7VfjTRntB
+ tKbhKcrG05nbdNjIioAm04pt9rx5mV5KMbf22/FdZpOSSsC6/N7b/cFH9+fx8kwi4pNFuJwr
+ BkWRuQ7rEtCoSpd22t+Vh9qA7kymW9gWY405258jnN65jBO7ElqU2CCuGRPg6uryAHV3RVCB
+ 9j9AE3HLacQReFtt5ylyydSQbaK4K9asnd7U2/C11vIuuciXCppX4bPap/pMnGpzw0UNABEB
+ AAG0N0RhdmlkIE9iZXJob2xsZW56ZXIgPGRhdmlkLm9iZXJob2xsZW56ZXJAc2lnbWEtc3Rh
+ ci5hdD6JATcEEwEIACEFAlZyf0YCGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQvOXc
+ PHQaAtFuEAgArXOhaoaVvCMVCa5N25Q/+Q6K1wrVpPmkH89yhQqCmfM6f+2VM5MGFDPfaSJ3
+ 5fBDH0iwBQwlXIb7NSXWtzdXX9rMvJkJqv45TgeKtJApf/sRhmcN+clrwzP8oZQbxkP1YWzo
+ Vwo4lOb3Kv7aY9yeCjqNbdJJ57NpvYOUrzrCpGkrDPBBQOvKF3wbq3oU/o3dT23NDeQ20jXg
+ quJf/PCw6WCzRxqg58wH02MdMDQe8vByzVig2bM2e7DErtt+hPK/Dmdsqgns+Z+SrQcOvRa3
+ GMAHAuHB0u2LhYO6NyaNCgzdgutorilYcq7FEKr8XqwOnfVmZdCW3qGKmLbn6qMEdLkBDQRW
+ cn9GAQgAvugF8cFjv2Zs4BBb44SnxGawBySC1bMRas/MjA9EMHUAx/StcecQmxnl6BzEyGpr
+ +TRnXIzcb5xI8SxitBDU5MLvwsHgNvpYp9fscd4kWP7oMir9ta3Q8SvT4OLbO4FZBGaURzGP
+ ak8JmjMMtOoOBh4meOjz6GrJe9UIGxT94aB01w7YohfBANzK8xyk4ykKC5Op4XgaaMKOEQUa
+ h7wajcojYSlvgOiXqEisMHlRDAW6sXL2sEM7TIpvYhy9txMLllpkYb0Pu1BvUpY/unsybWKA
+ FyiTmeiY+nEveUvqX6Ef7BWdClBeCk2UaRvtcoLd22VxMlKTniHQcNMOXlRRawARAQABiQEf
+ BBgBCAAJBQJWcn9GAhsMAAoJELzl3Dx0GgLRPtcH/jD6rn2+VIKgrHdt3ao3Abpu2fqYfwbI
+ yPAtpXOddDptVq+0A/2arXT1Y8+jNSZpbAg8K+bLaEAcSUEjviKMpfI7ppTUBuGKrpgc5xsi
+ UpKkJCb7oB1ZraIBNBPtPPVUhbwLie4uW/LVt+8rBKz3W9KEDOsT0ZCG/pW8Ld+EpDR9l0fm
+ qoVHaw8PhLAtez+B7HS7Hv7iJPDtX85kFYpud8kIPENXVn9EjZudyMWgZb2LhYlcavNcszgR
+ 7In6ift5SNySojCOfAV0iKZb8QUXWktLleY8kQ8jltOsSRTuO4PDfzvtCQDixUw4tQ7WLwDT
+ qyUpot0oG03vtSG4LIRCdxI=
+Organization: sigma star gmbh
+Message-ID: <25d47ba2-a22c-cafc-150d-c649d6aead9f@sigma-star.at>
+Date:   Tue, 23 Jul 2019 23:34:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <9a0c89e4-b216-86f1-c721-c54fb2ee0a10@web.de>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CD50053C-AD8F-11E9-B6AB-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Hi,
 
->> Wow.  The choice of %07o is as old as the very original of tar-tree
->> implementation in our codebase, starting at ae64bbc1 ("tar-tree:
->> Introduce write_entry()", 2006-03-25).
+the implementation of tar2sqfs was primarily based on `man 5 tar`[0],
+Wikipedia[1] and trial/error with archives generated by GNU tar and
+samples from [2] which I also integrated as test cases.
+
+On 7/23/19 10:08 PM, René Scharfe wrote:
+> Am 23.07.19 um 21:38 schrieb René Scharfe:
+>> is_checksum_valid() in
+>> https://github.com/AgentD/squashfs-tools-ng/blob/master/lib/tar/checksum.c
+>> compares the formatted checksum byte-by-byte.  That seems
+>> unnecessarily strict.  Parsing and comparing the numerical value
+>> of the checksum would be more forgiving, better adhere to POSIX and
+>> might be a tiny bit quicker.
 >
-> Actually it's already in 731ab9ccf2 ("[PATCH] create tar archives of
-> tree on the fly", 2005-04-28).
 
-Yup, after viewing "git show ae64bbc1" I found out the commit added
-a new helper to do %07o without touching the existing one that did
-the same.  Problem with relying on "git blame" too much X-<.
+I agree with that. The current code was probably the simplest way to
+move forward with existing code after implementing sqfs2tar and it stayed
+that way, since it worked with all archives I tested it with.
 
->> I think the updated behaviour matches Wikipedia [*1*] where it
->> spells out that 6 octal is followed by a NUL and a SP; it also says
->> various implementations do not adhere to this format---perhaps they
->> meant us ;-)
->
-> OpenBSD's pax(1) does the same if I read
-> https://github.com/openbsd/src/blob/master/bin/pax/tar.c correctly.
+As for every file format parser, tar2sqfs should of course be as tolerant
+as possible in what it accepts.
 
-What's more interesting is that their verifier in tar_id() compares
-the ulong value read from textual checksum with the ulong value
-computed.  I agree with you that it would be the more robust way
-than what is done by squshfs tools (ng).
+> I mean something like the patch below.  Code and text size are bigger,
+> but it's more lenient and writes less.  Untested.
+> 
+I applied and tested the patch. It looks similar to the solution I came up
+with and the test cases still pass. Also, on my system tar2sqfs now accepts
+git-archive tar balls which it didn't before applying the patch, so I
+would go with this.
+
+Thanks,
+
+David
+
+
+[0] https://www.freebsd.org/cgi/man.cgi?query=tar&sektion=5&manpath=FreeBSD+12.0-RELEASE&arch=default&format=html
+[1] https://en.wikipedia.org/wiki/Tar_(computing)#File_format
+[2] https://dev.gentoo.org/~mgorny/articles/portability-of-tar-features.html
