@@ -2,228 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,UNWANTED_LANGUAGE_BODY shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0CE61F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 13:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 329C61F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 14:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732538AbfGWNNa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 09:13:30 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35243 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727311AbfGWNNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 09:13:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1563887597;
-        bh=WSuyd8z6RSB+qI+ZbOZVSj+i+HSjuwcNJl3hCdd2Nu4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bhbgAXFuogMoG6ZwfTbtG29cGBOAWv474KEIXatGEmFYOiF+nOJcS/1KhyfmVhmkO
-         V/7fOJwTw6G8d4/QmhZC1L4HMHeCB5ebGbtktaoFXj+sswntYbMzQUiC92pG6SXayz
-         6HdocQawibcvyQV0R/N+KVoS7RHFu5+W4c5CZuAA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.21.16.31] ([194.69.102.31]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJFBe-1hrZIO1Gqw-002oS0; Tue, 23
- Jul 2019 15:13:17 +0200
-Date:   Tue, 23 Jul 2019 15:12:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
-        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/5] repo-settings: consolidate some config settings
-In-Reply-To: <72f652b89c71526cc423e7812de66f41a079f181.1563818059.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1907231512130.21907@tvgsbejvaqbjf.bet>
-References: <pull.292.git.gitgitgadget@gmail.com> <72f652b89c71526cc423e7812de66f41a079f181.1563818059.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2390697AbfGWOp1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 10:45:27 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33308 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388229AbfGWOp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 10:45:26 -0400
+Received: by mail-qt1-f195.google.com with SMTP id r6so37959711qtt.0
+        for <git@vger.kernel.org>; Tue, 23 Jul 2019 07:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xiV2JOJyIdtwTAFL1hURmqnL1IGWG/XSZSaWI895qi4=;
+        b=NveMEYRuDlqdTwWISuYgp//G5x//+6GpHYNd2F4cmTx+9tvYiLqQVd7wyeWpFi6DKk
+         NJ0n9LAKHh1I0m/mTq+pe8mM+f721QCcS13QxatyksDsrzhKubf1cHjLRLOLtw5l958b
+         Ub13qs3em79rwJiHAQxUONVNHVaK3a7nlfIphPPSzDjgfzYX8KSnEq4ILH+uWnucKT28
+         E85nbjOtv/Sn51MvLddWp8BNkBv9I3Ir8/EsTTgqW0gRmq3ACskh0Sx3iFriN4zWLVZJ
+         qrt9E3DiW8AAjMZxt+aCTcoybgVqdOS58nhYTovEk3sT1dP2aGzGVDDuostpQzZ4NG2X
+         DIaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xiV2JOJyIdtwTAFL1hURmqnL1IGWG/XSZSaWI895qi4=;
+        b=t1GW+K/ZV8Ro5pFgVvb2Kq4BSLKJHrEhkyOaGLRY5C9MXFCCD3rkddLhkuXoqnq0OI
+         UHoeKhuD1rl1iicIU9Dz8MqeABt69Z6/X2LLoSdu/qXUipszhifmuyIfqQcoB5YqH0Vn
+         /TpK2nIwa7oTXnFFTX0Wn4wYINK+Jcdk4mjA/9GSGrnr8CZMXD4LBNicWLCNiOR7g5SN
+         k8Y+BAaAEUS48x59BC8ay/j3vft9RIC4SyIdxmhQYYnoPUS9SJ/1fzcHP7YO6um5RPbs
+         HdLkH33gbzf+JqFWtqXgGMIxx4fiF3i9r6zTirGip1hWNHsmMwfNwC0vFLj+0jw4Oi15
+         vbXw==
+X-Gm-Message-State: APjAAAW3mXmoDNXD1Pxm4dnGxotAzIL3R9FDpK6Q/DOaI4IFyblm/OB8
+        Uwb558yjTOR6g0NzWtvrCOw=
+X-Google-Smtp-Source: APXvYqzOKjVgW8Xh3nBSZoELQTA67yigyChdvMcPTFfwbwvjmVPv4IISOvB+mOwxKHJbxOuNZIRb6A==
+X-Received: by 2002:ac8:4252:: with SMTP id r18mr53569100qtm.357.1563893125745;
+        Tue, 23 Jul 2019 07:45:25 -0700 (PDT)
+Received: from localhost.localdomain ([186.158.9.226])
+        by smtp.gmail.com with ESMTPSA id z1sm22631875qkg.103.2019.07.23.07.45.24
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 23 Jul 2019 07:45:25 -0700 (PDT)
+From:   "Claudio J. Paz" <claudiojpaz@gmail.com>
+To:     christopher.diaz.riv@gmail.com, worldhello.net@gmail.com,
+        git@vger.kernel.org
+Cc:     "Claudio J. Paz" <claudiojpaz@gmail.com>
+Subject: [PATCH] l10n: es:  Amend accent marks
+Date:   Tue, 23 Jul 2019 11:44:52 -0300
+Message-Id: <20190723144452.23437-1-claudiojpaz@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ddIC1B8Tl1QZsTn7b9vFDHJ5M2yqGVinmPLos4B65MpYF0t4n6b
- UugGzUXTbnVMoCwrccISDXJNNpAVQNfydkL/HCZ1L4rRkeyAlKMyx4etY9KV5DkRpmwbFBq
- BEKqd7PkjEY3Zm78fHRXKzuCjsC5ziMWZfhsFMyHNN0bXAGY+pvS5o/3zqWDZ4laYrNeJWo
- Tt8NFzbS1J/rUT3YnnHlQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:I3vez+1fRRg=:mHyLSWMlr2oDkqtUW+fWUe
- IQV7hEWb5+120CV5h9K5Empr4A+Pth3pLqmAYzLpsDT7aVgJuIfZpOqgDWhE0kIHMsvV8K+59
- jrpLvVrScX+lk33D+xgDvHmzlCUxDiv/p7fvsoiJin8sORFFSRDH8DEaP4iyQg5gjDBxCNno3
- fLcduU6SUHQ1JDBM9WQy8ErON01WG13L7Cci3XZ27Om/7vkZ68hseI0iWvhF1MEo1glETzawI
- wYlOC1v3r6Bp2HneLpGUXMl8aLyC8SgxVeCPXOR0n70VjF82xwlAmBtjBn71idULXKTXQOkoL
- mIENSdY0ajfmHDj8TWJXmxmiNco+dkts0bhrRX6ShsKCxWR3mi0o3LcjVDwdZ5KIwt1I1EkBl
- 95hFhQvgDH080fvmKq3tWLf2DqFuw+iGwJe5P4musUD4g0BhVJUg37apSXCcKbC7ntF/42Agk
- V1Y+hj8RkvlmVPyI/qzZgBHexd/DMCamc2d7OT78EGCWWR+Pcws0TcdSxDZBUc6ChfjJ4j91k
- 8BkBklCFEyQ5sXPxbaZwB2/vj/q3Uo4s+OVQXNEm9t8DN7lE01ZXaxwuMbLCcfrGYTfz/B/7V
- OrF6lm56nMI7w9HUSq27FSUo5iZMdt/7PywfOh8D3yj8fcjveuKR/mYCd/DWd4TGYIQ5BU3Zp
- XP2f80BxGy3YtwNDzR+5EXj5xSYcbJ0HAexYR0nR37zQ10jTsDCQ7hFXjKaWJx7gGFuq0p9TB
- rcgqbJ52eGfm8A2fZTgB5NganeKYM3kzjFnA39pNW3nLyjVWPaI5TlprzGPG/fjVsUhDiOqvZ
- xC0z6uxITxspk6byd3v04hf3TeEL3JRYGe28WFvK8d5INHNh5p+ynbUg1OGKYzZzJtFSg2qSY
- ZLgjzqwvXDVkCNIMvffcDkBP8sAGb2hl4XBN+JGxf+keNWYCkhbyhJLgjUsIyqSa61r1IJ+RN
- kbL1/zwIU/3RvGyBL41jiblOmBtZnzHljp9ulf3TJDS77ZYamAz516IHKG9i5EFZySkozGt0b
- xiM1ovimBp3Hoe1n0KY7zzW+KRPUPV119mpv88aRvbj/D0tvm/PwuoanB8LC+7ODS2+zohRB5
- uqyLOjc9GFYE80VeZs/3b/pdJDsN38k20ip
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+Signed-off-by: Claudio J. Paz <claudiojpaz@gmail.com>
+---
+ po/es.po | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-On Mon, 22 Jul 2019, Derrick Stolee via GitGitGadget wrote:
+diff --git a/po/es.po b/po/es.po
+index edf7b25b8..bda3bbd41 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -3215,7 +3215,7 @@ msgstr "se esperaba '%s', se recibió '%s'"
+ #: fetch-pack.c:1234
+ #, c-format
+ msgid "unexpected acknowledgment line: '%s'"
+-msgstr "linea de confirmación inesperada: '%s'"
++msgstr "línea de confirmación inesperada: '%s'"
+ 
+ #: fetch-pack.c:1239
+ #, c-format
+@@ -7936,11 +7936,11 @@ msgstr[1] "Tu stash actualmente tiene %d entradas"
+ 
+ #: wt-status.c:928
+ msgid "Submodules changed but not updated:"
+-msgstr "Submodulos cambiados pero no actualizados:"
++msgstr "Submódulos cambiados pero no actualizados:"
+ 
+ #: wt-status.c:930
+ msgid "Submodule changes to be committed:"
+-msgstr "Submodulos cambiados listos para realizar commit:"
++msgstr "Submódulos cambiados listos para realizar commit:"
+ 
+ #: wt-status.c:1012
+ msgid ""
+@@ -9270,11 +9270,11 @@ msgstr "Ignorar diferencias de espacios en blanco"
+ 
+ #: builtin/blame.c:810
+ msgid "color redundant metadata from previous line differently"
+-msgstr "colorear metadata redundante de lineas previas de manera diferente"
++msgstr "colorear metadata redundante de líneas previas de manera diferente"
+ 
+ #: builtin/blame.c:811
+ msgid "color lines by age"
+-msgstr "colorear lineas por edad"
++msgstr "colorear líneas por edad"
+ 
+ #: builtin/blame.c:818
+ msgid "Use an experimental heuristic to improve diffs"
+@@ -19352,7 +19352,7 @@ msgstr "Submódulo '%s' (%s) no registrado para ruta '%s'\n"
+ #: builtin/submodule--helper.c:1186
+ msgid "Remove submodule working trees even if they contain local changes"
+ msgstr ""
+-"Remover arboles de trabajo de submódulos incluso si contienen cambios locales"
++"Remover árboles de trabajo de submódulos incluso si contienen cambios locales"
+ 
+ #: builtin/submodule--helper.c:1187
+ msgid "Unregister all submodules"
+@@ -19425,13 +19425,13 @@ msgstr "no se pudo obtener el directorio de submódulo para '%s'"
+ #: builtin/submodule--helper.c:1473
+ #, c-format
+ msgid "Invalid update mode '%s' for submodule path '%s'"
+-msgstr "Modo de actualización inválido '%s' para ruta de submodulo '%s'"
++msgstr "Modo de actualización inválido '%s' para ruta de submódulo '%s'"
+ 
+ #: builtin/submodule--helper.c:1477
+ #, c-format
+ msgid "Invalid update mode '%s' configured for submodule path '%s'"
+ msgstr ""
+-"Modo de actualización inválido '%s' configurado para ruta de submodulo '%s'"
++"Modo de actualización inválido '%s' configurado para ruta de submódulo '%s'"
+ 
+ #: builtin/submodule--helper.c:1570
+ #, c-format
+@@ -19940,7 +19940,7 @@ msgstr ""
+ 
+ #: builtin/update-index.c:1021
+ msgid "with --stdin: input lines are terminated by null bytes"
+-msgstr "con --stdin: las lineas de entrada son terminadas con bytes nulos"
++msgstr "con --stdin: las líneas de entrada son terminadas con bytes nulos"
+ 
+ #: builtin/update-index.c:1023
+ msgid "read list of paths to be updated from standard input"
+-- 
+2.20.1
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index c18efadda5..243be2907b 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -27,6 +27,7 @@
->  #include "pack-objects.h"
->  #include "blob.h"
->  #include "tree.h"
-> +#include "repo-settings.h"
->
->  #define FAILED_RUN "failed to run %s"
->
-> @@ -41,7 +42,6 @@ static int aggressive_depth =3D 50;
->  static int aggressive_window =3D 250;
->  static int gc_auto_threshold =3D 6700;
->  static int gc_auto_pack_limit =3D 50;
-> -static int gc_write_commit_graph;
-
-I _really_ like that direction. Anything that removes global state will
-improve Git's source code.
-
-> [...]
-> diff --git a/read-cache.c b/read-cache.c
-> index c701f7f8b8..ee1aaa8917 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> [...]
-> @@ -2765,7 +2767,7 @@ static int do_write_index(struct index_state *ista=
-te, struct tempfile *tempfile,
->  	}
->
->  	if (!istate->version) {
-> -		istate->version =3D get_index_format_default();
-> +		istate->version =3D get_index_format_default(the_repository);
-
-It is too bad that `read-cache.h` is not `the_repository`-free at the
-moment...
-
->  		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
->  			init_split_index(istate);
->  	}
-> diff --git a/repo-settings.c b/repo-settings.c
-> new file mode 100644
-> index 0000000000..13a9128f62
-> --- /dev/null
-> +++ b/repo-settings.c
-> @@ -0,0 +1,44 @@
-> +#include "cache.h"
-> +#include "repository.h"
-> +#include "config.h"
-> +#include "repo-settings.h"
-> +
-> +static int git_repo_config(const char *key, const char *value, void *cb=
-)
-> +{
-> +	struct repo_settings *rs =3D (struct repo_settings *)cb;
-> +
-> +	if (!strcmp(key, "core.commitgraph")) {
-> +		rs->core_commit_graph =3D git_config_bool(key, value);
-> +		return 0;
-> +	}
-> +	if (!strcmp(key, "gc.writecommitgraph")) {
-> +		rs->gc_write_commit_graph =3D git_config_bool(key, value);
-> +		return 0;
-> +	}
-> +	if (!strcmp(key, "pack.usesparse")) {
-> +		rs->pack_use_sparse =3D git_config_bool(key, value);
-> +		return 0;
-> +	}
-> +	if (!strcmp(key, "index.version")) {
-> +		rs->index_version =3D git_config_int(key, value);
-> +		return 0;
-> +	}
-
-I would actually prefer to use the `repo_config_get_*()` family here.
-That way, we really avoid re-parsing the config.
-
-> +
-> +	return 1;
-> +}
-> +
-> +void prepare_repo_settings(struct repository *r)
-> +{
-> +	if (r->settings)
-> +		return;
-> +
-> +	r->settings =3D xmalloc(sizeof(*r->settings));
-> +
-> +	/* Defaults */
-> +	r->settings->core_commit_graph =3D -1;
-> +	r->settings->gc_write_commit_graph =3D -1;
-> +	r->settings->pack_use_sparse =3D -1;
-> +	r->settings->index_version =3D -1;
-> +
-> +	repo_config(r, git_repo_config, r->settings);
-> +}
-> diff --git a/repo-settings.h b/repo-settings.h
-> new file mode 100644
-> index 0000000000..1151c2193a
-> --- /dev/null
-> +++ b/repo-settings.h
-> @@ -0,0 +1,15 @@
-> +#ifndef REPO_SETTINGS_H
-> +#define REPO_SETTINGS_H
-> +
-> +struct repo_settings {
-> +	int core_commit_graph;
-> +	int gc_write_commit_graph;
-> +	int pack_use_sparse;
-> +	int index_version;
-> +};
-> +
-> +struct repository;
-> +
-> +void prepare_repo_settings(struct repository *r);
-
-Hmm. I can see that you wanted to encapsulate this, but I do not really
-agree that this needs to be encapsulated away from `repository.h`. I'd
-rather declare `struct repo_settings` in `repository.h` and then make
-the `settings` a field of that type (as opposed to a pointer to that
-type). In general, I like to avoid unnecessary `malloc()`s, and this
-here instance is one of them.
-
-Thanks,
-Dscho
-
-> +
-> +#endif /* REPO_SETTINGS_H */
-> diff --git a/repository.h b/repository.h
-> index 4fb6a5885f..352afc9cd8 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -4,6 +4,7 @@
->  #include "path.h"
->
->  struct config_set;
-> +struct repo_settings;
->  struct git_hash_algo;
->  struct index_state;
->  struct lock_file;
-> @@ -72,6 +73,8 @@ struct repository {
->  	 */
->  	char *submodule_prefix;
->
-> +	struct repo_settings *settings;
-> +
->  	/* Subsystems */
->  	/*
->  	 * Repository's config which contains key-value pairs from the usual
-> --
-> gitgitgadget
->
->
