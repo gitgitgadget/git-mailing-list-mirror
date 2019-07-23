@@ -2,150 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,UNWANTED_LANGUAGE_BODY shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 329C61F461
-	for <e@80x24.org>; Tue, 23 Jul 2019 14:45:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 861C81F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 14:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390697AbfGWOp1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jul 2019 10:45:27 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:33308 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388229AbfGWOp0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jul 2019 10:45:26 -0400
-Received: by mail-qt1-f195.google.com with SMTP id r6so37959711qtt.0
-        for <git@vger.kernel.org>; Tue, 23 Jul 2019 07:45:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xiV2JOJyIdtwTAFL1hURmqnL1IGWG/XSZSaWI895qi4=;
-        b=NveMEYRuDlqdTwWISuYgp//G5x//+6GpHYNd2F4cmTx+9tvYiLqQVd7wyeWpFi6DKk
-         NJ0n9LAKHh1I0m/mTq+pe8mM+f721QCcS13QxatyksDsrzhKubf1cHjLRLOLtw5l958b
-         Ub13qs3em79rwJiHAQxUONVNHVaK3a7nlfIphPPSzDjgfzYX8KSnEq4ILH+uWnucKT28
-         E85nbjOtv/Sn51MvLddWp8BNkBv9I3Ir8/EsTTgqW0gRmq3ACskh0Sx3iFriN4zWLVZJ
-         qrt9E3DiW8AAjMZxt+aCTcoybgVqdOS58nhYTovEk3sT1dP2aGzGVDDuostpQzZ4NG2X
-         DIaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xiV2JOJyIdtwTAFL1hURmqnL1IGWG/XSZSaWI895qi4=;
-        b=t1GW+K/ZV8Ro5pFgVvb2Kq4BSLKJHrEhkyOaGLRY5C9MXFCCD3rkddLhkuXoqnq0OI
-         UHoeKhuD1rl1iicIU9Dz8MqeABt69Z6/X2LLoSdu/qXUipszhifmuyIfqQcoB5YqH0Vn
-         /TpK2nIwa7oTXnFFTX0Wn4wYINK+Jcdk4mjA/9GSGrnr8CZMXD4LBNicWLCNiOR7g5SN
-         k8Y+BAaAEUS48x59BC8ay/j3vft9RIC4SyIdxmhQYYnoPUS9SJ/1fzcHP7YO6um5RPbs
-         HdLkH33gbzf+JqFWtqXgGMIxx4fiF3i9r6zTirGip1hWNHsmMwfNwC0vFLj+0jw4Oi15
-         vbXw==
-X-Gm-Message-State: APjAAAW3mXmoDNXD1Pxm4dnGxotAzIL3R9FDpK6Q/DOaI4IFyblm/OB8
-        Uwb558yjTOR6g0NzWtvrCOw=
-X-Google-Smtp-Source: APXvYqzOKjVgW8Xh3nBSZoELQTA67yigyChdvMcPTFfwbwvjmVPv4IISOvB+mOwxKHJbxOuNZIRb6A==
-X-Received: by 2002:ac8:4252:: with SMTP id r18mr53569100qtm.357.1563893125745;
-        Tue, 23 Jul 2019 07:45:25 -0700 (PDT)
-Received: from localhost.localdomain ([186.158.9.226])
-        by smtp.gmail.com with ESMTPSA id z1sm22631875qkg.103.2019.07.23.07.45.24
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 23 Jul 2019 07:45:25 -0700 (PDT)
-From:   "Claudio J. Paz" <claudiojpaz@gmail.com>
-To:     christopher.diaz.riv@gmail.com, worldhello.net@gmail.com,
-        git@vger.kernel.org
-Cc:     "Claudio J. Paz" <claudiojpaz@gmail.com>
-Subject: [PATCH] l10n: es:  Amend accent marks
-Date:   Tue, 23 Jul 2019 11:44:52 -0300
-Message-Id: <20190723144452.23437-1-claudiojpaz@gmail.com>
-X-Mailer: git-send-email 2.20.1
+        id S1731691AbfGWOxy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jul 2019 10:53:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55209 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729058AbfGWOxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jul 2019 10:53:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1563893623;
+        bh=QhBmyuFxP9nuiidaCvd8MIn5p+VOHQge+BuWMoNy8U8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XjaP2Qn6699ym+4WN3UNhGulMWfadroSzRDgDWpLrrO6V2fxF2qj9V33cSjp3DWFw
+         KlzuTUTDf63444Ca8s4S0i+HTGxKpKLJOsHIK3Hq9LZjKP2KbaUaclub74ZrRY8Ikl
+         4r+6hRH5UtY9iUNU+acGZjz9TWuOgT2opfXHiGOA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIMUZ-1hqCDo1K3D-004G54; Tue, 23
+ Jul 2019 16:53:43 +0200
+Date:   Tue, 23 Jul 2019 16:53:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        jnareb@gmail.com, pclouds@gmail.com, carenas@gmail.com,
+        avarab@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 2/5] repo-settings: add feature.manyCommits setting
+In-Reply-To: <e00a1be75b410694374b0d9bd60ab16d67ef6d20.1563818059.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907231544200.21907@tvgsbejvaqbjf.bet>
+References: <pull.292.git.gitgitgadget@gmail.com> <e00a1be75b410694374b0d9bd60ab16d67ef6d20.1563818059.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dZC7T+rPweTe06jTi6wcFFN/xvJ5yLuJb5Sd8UTZYz7qGJ7O243
+ a0BqbvWIha1DZA1Bes6OZ7cVzXHBvuzAW94EhX/5A3zlw8mQHsbY7XzEzzteGmm0zzuQggD
+ YjHDgyxgdh15b94M/Tgk6KUZOVtoIPEaY8jj0FKjjLH2WYzr+Gzc3dJ6R/Df5xU2cNY9oTC
+ zm8Se9HU97aGWAtjTjHkw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eK1TzRawzMo=:7sRsqhFdj0AVJAGju5Ny5O
+ az/xFDs+EZ4ybmgMNkdBgEsPJRBPunF8ZCZ1E0zJrClAOAtP+Ga4N3Lo+e43ifoQyjb7YC7D9
+ NhKln7WO4dbmtxi+/m+mIyj6N6kK79f37tnhWV+iXH2H2/AJeWX/F8tRkH9km6DfbVzz49/aw
+ yI87Bxwf0NedPJ3dForMGEIjTW0ico8TcjB4OzAGjnVQACK6GisTc7Pwktxq7ibUJuQfcCcJ/
+ giSIhaCVXrWKVygFN4ZxnEFv2cZGXI/BfpC7Acx67avXZsSeFJQ4LzPTIQ537aL1hJHcQD/Id
+ jIgVMINysQExZmEd5Y85tdEunXwTby2QC/T4dXHuFipHSsEB/Y3rjQEJcb80oP0F7BPrHRxl1
+ IFnfrQCSfNs9Q9+6ITCV2JASp1GdCv/2567SruupZlb6Gn4DSPKunPjkXltVX+ORpmzRLja5C
+ wdFlwwiKNeDilHRX5QWG0WgQWZ36Co5qZWRTPpAWur0DlM7slCCSO3MGdc2POe1ddNS1XgFEJ
+ jHGxCCp0PKdQcqjy2wyBgQqCvwNw/Tkx0vDuHZgDWdTPnIkvNblohCt5qSziF6TW4FGH6VSP8
+ f02gST2uDSejMygbMcPPeqNBILfkzsnd+j2UvFqTiXC/MQG1XtcOZ9l4/Hm0OBm6fHK0NeEvu
+ mOglrvOIMXvO9P/dKFTH3KwwxMMGiQIlNIhDJ+AtEDLNib0Vgv61xk2Ugebrcg7Cc0RLoLkbD
+ kjfXGL87udBR8qTdzVbyrOq110n+rDloGSTcBJbRNObf7cVi0cjqYZ3FZd6iCBmaojDClxG/H
+ LSHfhMvDB5pzwVKJIlrhmZKTtbz4e6NQBuRamkS/56GzeHFn5jjThcD4x9W6uzjL7aOCyFsV7
+ SB7Jhi3/c/hsHR9uK2sCMBEyBeZcxVWd/BVkbEmSGHd0IN3OuWW7ldZrtViuUbaUAP0pClQLX
+ mFjJ8+B8btvRZHuORKGJIWtNNMQ4p1yAmDW1IZhdsRDk3MQtN4Pt5/08jX4nSYJY5BVeEecVb
+ NVYtUaC90gFyfBb+KwlGQcjgqlHdD9c0i46As4i6oOwvfYb7FeisVa6ysiB4qixbw6m2miQh2
+ P2zPY+OcbMPAUaXtVSYuMnnYW5L+Jje+T2/
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Claudio J. Paz <claudiojpaz@gmail.com>
----
- po/es.po | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Hi Stolee,
 
-diff --git a/po/es.po b/po/es.po
-index edf7b25b8..bda3bbd41 100644
---- a/po/es.po
-+++ b/po/es.po
-@@ -3215,7 +3215,7 @@ msgstr "se esperaba '%s', se recibió '%s'"
- #: fetch-pack.c:1234
- #, c-format
- msgid "unexpected acknowledgment line: '%s'"
--msgstr "linea de confirmación inesperada: '%s'"
-+msgstr "línea de confirmación inesperada: '%s'"
- 
- #: fetch-pack.c:1239
- #, c-format
-@@ -7936,11 +7936,11 @@ msgstr[1] "Tu stash actualmente tiene %d entradas"
- 
- #: wt-status.c:928
- msgid "Submodules changed but not updated:"
--msgstr "Submodulos cambiados pero no actualizados:"
-+msgstr "Submódulos cambiados pero no actualizados:"
- 
- #: wt-status.c:930
- msgid "Submodule changes to be committed:"
--msgstr "Submodulos cambiados listos para realizar commit:"
-+msgstr "Submódulos cambiados listos para realizar commit:"
- 
- #: wt-status.c:1012
- msgid ""
-@@ -9270,11 +9270,11 @@ msgstr "Ignorar diferencias de espacios en blanco"
- 
- #: builtin/blame.c:810
- msgid "color redundant metadata from previous line differently"
--msgstr "colorear metadata redundante de lineas previas de manera diferente"
-+msgstr "colorear metadata redundante de líneas previas de manera diferente"
- 
- #: builtin/blame.c:811
- msgid "color lines by age"
--msgstr "colorear lineas por edad"
-+msgstr "colorear líneas por edad"
- 
- #: builtin/blame.c:818
- msgid "Use an experimental heuristic to improve diffs"
-@@ -19352,7 +19352,7 @@ msgstr "Submódulo '%s' (%s) no registrado para ruta '%s'\n"
- #: builtin/submodule--helper.c:1186
- msgid "Remove submodule working trees even if they contain local changes"
- msgstr ""
--"Remover arboles de trabajo de submódulos incluso si contienen cambios locales"
-+"Remover árboles de trabajo de submódulos incluso si contienen cambios locales"
- 
- #: builtin/submodule--helper.c:1187
- msgid "Unregister all submodules"
-@@ -19425,13 +19425,13 @@ msgstr "no se pudo obtener el directorio de submódulo para '%s'"
- #: builtin/submodule--helper.c:1473
- #, c-format
- msgid "Invalid update mode '%s' for submodule path '%s'"
--msgstr "Modo de actualización inválido '%s' para ruta de submodulo '%s'"
-+msgstr "Modo de actualización inválido '%s' para ruta de submódulo '%s'"
- 
- #: builtin/submodule--helper.c:1477
- #, c-format
- msgid "Invalid update mode '%s' configured for submodule path '%s'"
- msgstr ""
--"Modo de actualización inválido '%s' configurado para ruta de submodulo '%s'"
-+"Modo de actualización inválido '%s' configurado para ruta de submódulo '%s'"
- 
- #: builtin/submodule--helper.c:1570
- #, c-format
-@@ -19940,7 +19940,7 @@ msgstr ""
- 
- #: builtin/update-index.c:1021
- msgid "with --stdin: input lines are terminated by null bytes"
--msgstr "con --stdin: las lineas de entrada son terminadas con bytes nulos"
-+msgstr "con --stdin: las líneas de entrada son terminadas con bytes nulos"
- 
- #: builtin/update-index.c:1023
- msgid "read list of paths to be updated from standard input"
--- 
-2.20.1
+On Mon, 22 Jul 2019, Derrick Stolee via GitGitGadget wrote:
 
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> When a repo has many commits, it is helpful to write and read the
+> commit-graph file. Future changes to Git may include new config
+> settings that are benefitial in this scenario.
+
+s/benefitial/beneficial/
+
+>
+> Create the 'feature.manyCommits' config setting that changes the
+> default values of 'core.commitGraph' and 'gc.writeCommitGraph' to
+> true.
+
+Great!
+
+> diff --git a/repo-settings.c b/repo-settings.c
+> index 13a9128f62..f328602fd7 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -3,10 +3,17 @@
+>  #include "config.h"
+>  #include "repo-settings.h"
+>
+> +#define UPDATE_DEFAULT(s,v) do { if (s =3D=3D -1) { s =3D v; } } while(=
+0)
+> +
+>  static int git_repo_config(const char *key, const char *value, void *cb=
+)
+>  {
+>  	struct repo_settings *rs =3D (struct repo_settings *)cb;
+>
+> +	if (!strcmp(key, "feature.manycommits")) {
+> +		UPDATE_DEFAULT(rs->core_commit_graph, 1);
+> +		UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
+> +		return 0;
+> +	}
+>  	if (!strcmp(key, "core.commitgraph")) {
+>  		rs->core_commit_graph =3D git_config_bool(key, value);
+>  		return 0;
+
+Okay, this one is tricky. The behavior I would want is for
+`feature.manycommits` to override the _default_. And if I set
+`feature.manycommits =3D false` (e.g. via `git -c
+feature.manycommits=3Dfalse ...`), I would want the default to "go back".
+
+So I'd really rather see this as
+
+	if (!repo_config_get_bool(r, "feature.manycommits", &b) && b) {
+		rs->core_commit_graph =3D 1;
+		rs->gc_write_commit_graph =3D 1;
+	}
+
+	[...]
+
+	repo_config_get_bool(r, "core.commitgraph", &rs->core_commit_graph);
+
+I.e. override the default only if `feature.manyCommits` was true *in the
+end*.
+
+In any case, we really need to make sure to handle the `=3D false` case
+correctly here. We might want to override the setting from the
+command-line, or it might be set in `~/.gitconfig` and need to be
+overridden in a local repository. We need to handle it.
+
+Otherwise this looks good!
+Dscho
