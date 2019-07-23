@@ -2,95 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 118001F461
-	for <e@80x24.org>; Mon, 22 Jul 2019 22:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11ECE1F461
+	for <e@80x24.org>; Tue, 23 Jul 2019 01:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731495AbfGVWFM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jul 2019 18:05:12 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45791 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbfGVWFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jul 2019 18:05:12 -0400
-Received: by mail-ed1-f67.google.com with SMTP id x19so36053001eda.12
-        for <git@vger.kernel.org>; Mon, 22 Jul 2019 15:05:11 -0700 (PDT)
+        id S1728966AbfGWBNp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jul 2019 21:13:45 -0400
+Received: from mail-io1-f54.google.com ([209.85.166.54]:43824 "EHLO
+        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727619AbfGWBNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jul 2019 21:13:45 -0400
+Received: by mail-io1-f54.google.com with SMTP id k20so78203942ios.10
+        for <git@vger.kernel.org>; Mon, 22 Jul 2019 18:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nYuZQFDluY71e046aBU3Y/r/3li0i/1xCxqTZAhFGJI=;
-        b=Xa8vvELQHaJ6vtiXczkiNA3EmEPWX2E9HXyakT47SyRshzt7ZJlKu959f7JuMJm9mt
-         dldXn6EJqsae6a+9Q0LdyJByCj2gTTcab3ovoAdmBfWlw2EQrJaS4tRh2HMNCbYfDCpH
-         dEun7aKUb38j9jyex1M826s8vW14JHftL6tFKiBTl9s0WXwyv7ThC9A7yjKPYhjsFkHM
-         Q4a+iZ3u4n7J86DubdZAWBSEGZgbpdJDPUCa0WZI0LwAdJ6B6kyemkPWHsAspyT5yt/E
-         EPVpEqchqTbUv0tJGUFHLTEJ2FeWe8Djdlo6pN0QTllJAqlTgEenZ80qEEWLly2Op+p8
-         HLbw==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SilM8RvjDPhbcaX/3F6OLE6owQtPrKbOUtFac0MSz7Y=;
+        b=TrMuhERV9mtGWcHgpIppA3LZRkY5xTpjLH8xDK5bRnXhY9OYV+CkuNoa6tiWN2uROs
+         Yi6wVe4UeGhj+X09feVZN8mhtm0w2JVbGRK0eng3MI77svaUa8XmtTpe9Qiy6q7fGWw+
+         damZfmzhKhWahs3ivaxsSwKKbEjc1phl94ZWERwzM1zXWLTI87qLruNyWaeVHIH+20it
+         AyQLZHJKBAYNjpoJRlQQcSnJ+1/b9Vxl+kVpTN4Ci+Q8ZxG4Cr3xGX2KY+lFRRcpZawf
+         R0GTgAA9Tc5QFYQOt2CiDmnMpynQm1ngOoz1B0axMhu9gb2AIU/A4fqHP8+xpjRiscjq
+         b/Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nYuZQFDluY71e046aBU3Y/r/3li0i/1xCxqTZAhFGJI=;
-        b=Qu7tz2dDRGBvVZ/Mm7BtdSIntqUqMSdUi6x3B0Z0EPfCfc5NFYDznkh1rAwUyDLWHN
-         z83gFNMxitNfTHrKZe9LxInEGOS+jrRqNFky1Gmd4bIdR/LiH5VHBoFXHZjH1OxNBy6F
-         qy5l/HEJguEOBveN1ABONiPhrjbLiLa0d/aVTVKzYqsyOR974+lWSl+aT2uIYpJm7wGe
-         xWTwLQrDgx2LI3MYJsxgw94l9YZe3yZshMF9pD8nJ1EH1cLFTVg03V2j+1C/19Bwrhdk
-         WAys6UUyY3aC9NsveDBQYFYpSRA0Qk1URvl7w0AL204c3ilEB2qvZWcfqkxLncCiYIhU
-         NNwg==
-X-Gm-Message-State: APjAAAVy4lRAx1uKieuSPSS18KeeUk8nEtUVYhULpX1Dn+r80e63VsmY
-        zUbxujLX0XXV1W3sFYeQQZ1M8ixDnHonu3/MyDVoFjPDE9w=
-X-Google-Smtp-Source: APXvYqzT9d6K6EFg/6P+ZpvZB8wXOwKsi4tQ5X7BKaT+awEZsGEMRbgJfEcR4fdMI8o11fR7F6G8CVGb894NcWWyu8g=
-X-Received: by 2002:a17:906:6bd4:: with SMTP id t20mr52648082ejs.294.1563833110416;
- Mon, 22 Jul 2019 15:05:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SilM8RvjDPhbcaX/3F6OLE6owQtPrKbOUtFac0MSz7Y=;
+        b=EZOcnDnV6ptZ+5iVXMFOSjjo7PRb5TSyoR6LPfbU7/KICQo6q+aF5zhoEulptg3SSS
+         rwRBktcPEyiRHUiWwvvoIh6Bv868AGne73+2LgPZgTTne+YyeGZQ/Com5wlE+c169svM
+         QyjSVk8dPWEVLtSH7Cepl9dzBzHMeLfEUS4rRt14XFhuoa3vopyVKrla2j4YVu/bl2YS
+         Cj1mzptLsC8o7QHljEaAIfQgMKFpwhdRDbssRuRMqY0UTK7xGaN+GsNWoMpSl3BZfhXm
+         o97+ODpCa7WIwCCNH+weJKbDVUk3TKXmmo6Jqa79r8bMU8Knpe+cj0Yr5tfFOjyceoP1
+         4msg==
+X-Gm-Message-State: APjAAAU+PkDdarW2QMfhBRRiqzGyEdwiT064/uW2d3Z8WTPL80BDmyh2
+        6+JznEjhYp1S6Tb1y6q1Vgma8a/INHvPikY+LFUPKA6bP3E=
+X-Google-Smtp-Source: APXvYqyz68fvTCU0j1bKAojrK58yl8lqnOqGWedE53uCOfIRoTbRMQcdcuWeVJoYdVt+AbPR4mlyp9rHIZdUZ4ah5cw=
+X-Received: by 2002:a5d:9613:: with SMTP id w19mr30837529iol.140.1563844424262;
+ Mon, 22 Jul 2019 18:13:44 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 23 Jul 2019 00:04:59 +0200
-Message-ID: <CAP8UFD2b1xj6GVaUCmGbKE8toQ5yG0x-umCHhZOH7Q2jyv_E8A@mail.gmail.com>
-Subject: Draft of Git Rev News edition 53
+References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
+In-Reply-To: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 22 Jul 2019 22:13:33 -0300
+Message-ID: <CAHd-oW42zTcbeCC=eAmZ16B4MF4+jrOaUwHtO969f6jcoiSGDA@mail.gmail.com>
+Subject: Re: [GSoC] My project blog
 To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        jaime.rivas@synergy.page
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Hi, everyone
 
-A draft of a new Git Rev News edition is available here:
+Unfortunately, not quite much to report this week :( I'm attending
+DebConf until July 28th but I'm trying to conciliate that with the
+work on my project. You can see my brief report of last week here:
+https://matheustavares.gitlab.io/posts/week-9-an-rfc-on-parallel-inflation
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-53.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/384
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition late on Wednesday
-July 24th.
+As always, every comment is highly appreciated.
 
 Thanks,
-Christian.
+Matheus
