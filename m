@@ -8,79 +8,90 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 506E41F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 21:15:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0241F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 21:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728441AbfGXVPB (ORCPT <rfc822;e@80x24.org>);
+        id S1728935AbfGXVPC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 17:15:02 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:45536 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727223AbfGXVPB (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Jul 2019 17:15:01 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37074 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfGXVPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 17:15:01 -0400
-Received: by mail-wm1-f66.google.com with SMTP id f17so42813700wme.2
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 14:14:59 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id f9so48391275wre.12
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 14:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=p5jnXy088u5C54xb8QNLoDz6zYNYq4hqH+Y5+NMsm1c=;
-        b=QGH7m9FEC3Q3ClEb6TyAXrqIuGzHpwc4o5422VkAsZpF+3YOL2jbnTmdOsf8F1c1S0
-         pKBx6/MsV2rCX478I+cZmPpmE6AQGTupj7HjXfuQuXYwQavbNyrO+ToAOjEOg/W0eF5R
-         2HDVytkseI6UGEfX9lmpoFOLilq8j/ryT+WDi2nd+P5gkZIOsCzLwf2zIC7OVcuKgfgY
-         R3wCeYLEz0aUWhUUm6EGfXijK5QAe7EqLS12cS8F+tvsDoiBopBYosZNC+WBDbdfVPKu
-         7PKL6AAQEzbYdtZIPToOTcNDnyULqxen/1CqMdFb1xeIXG9zMqjfCsDXLffPpfWXdKxH
-         LSXg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=9/QhqfjyVFjEm4tyIE1riMFzAfqHqfme41NDsEDV9vo=;
+        b=hQYJ5TbdsEBczjcEyt4XzkMQ5hap28zzUNb0JAT5umdSoCHgJHW+02Wgm5Ir5qCozq
+         4km9J78yCWXaHWUJVXXi/txckJYigMpDa0Hulq314iOIA+aZ5e6QnAfqIked8kHPuXPB
+         +DCgo+DXbzWkPuiWjbBy/TTMe94Kd7VqzwNpzvzP++AGui1vFlssJt5TwcJhkPe1vpP8
+         ASP4qskGz04n8oeiRlJyr6QFUoc1zL849Epkds1X5OFmxMKiAw2ZdwcfFjZqgZx3ytvy
+         E/OkJf9jhwzsgSVm6FzzYmZrwPajB5sWktj5op3AbOmf7l7rRAOx7CIEAi8UU27bQPNd
+         v7Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=p5jnXy088u5C54xb8QNLoDz6zYNYq4hqH+Y5+NMsm1c=;
-        b=DRCYF42vqVfE3zd3H3VsUIJ4fI4Siw+cbqS7gOMz+w5+zKGh0W9sEiiwKthYsbIuNE
-         PIAcpXoVszlYpTIf2Bgk21zaZXq0rwlR1BVRmN5pqEsxBQB4PumQKwxsXKITcjtRB0dn
-         79TQeBabeym7xLKZQJ3l1VejI+dYcYskoTcgGqJO86WXDrTOYXgkzcxYCBijFblIA1mO
-         RP/EMgXwoTm7mHvurylQyRlW4143iJXjmXfDV60zpW2qPodIhQqfbgcbkcB/DVsk23HF
-         ipBztufd4rxzZXBc5XOcZMZB8Y5mi2W5IXU2elUU5MNvQoI08Dh/Rt3+4LY4oHHnWGbP
-         z+tw==
-X-Gm-Message-State: APjAAAVQCeIzflhpgOPWvDnA7QVY2SC+Dc20OEIyAB6ADjjyR6+M7Ppg
-        NNvxp8ftHvmYSkFP7QDLjQjcQGoP
-X-Google-Smtp-Source: APXvYqxVuHkCuChsYbryJn57FyX5IZBtFSLsLG3Ll+IPNxoXx6tNDquptjkkLgcWPQKRdo3eRlCPIQ==
-X-Received: by 2002:a1c:67c3:: with SMTP id b186mr71663922wmc.34.1564002899010;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=9/QhqfjyVFjEm4tyIE1riMFzAfqHqfme41NDsEDV9vo=;
+        b=WHdE+valVpiqn6fcUPgZSZCc+cTVNio25LJxOh0E9+49DpHgOrH0aho8Gbn7ajg11j
+         WJSry7pJkrx1/mk5dmkdDt7aEmIda9t1SNZnl055vmBqi+G7Gj7SriUOAlIRN0GDrsJM
+         klgHJM7QbEJAlWIHErk0oiySqIDLOXkLF58Ee5YbXlCuhoiszNOHiVGWQ3QWpCM4U8xY
+         bvqEm5tsLQuBVHxHPUWnu+IaQ6VE5h/a8FXqZ4FXT/p2QDfPg0t9iFDZl0ihjII2pfYp
+         Vianj+hjfWwZcP14LMdX4cxAVHMMRz301f1d/yjIZ/LXagq4sgkp4rDUfRW1RzghIpep
+         +Gzg==
+X-Gm-Message-State: APjAAAWU6G5O3vujzptFPWOQcePeWU4cnU2TDKEiz7/lU971lMoucLyd
+        QLpfFiFsEDY5DtTWKGZ2rJYMNRt0
+X-Google-Smtp-Source: APXvYqybhHl/oAodhCi26V2eAmIZD5zthZMAjXX37N0d+PXdM1xWxK+SegPfWoZPULYGBzK6dMY3Vg==
+X-Received: by 2002:adf:f646:: with SMTP id x6mr95194012wrp.18.1564002899842;
         Wed, 24 Jul 2019 14:14:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e19sm63830442wra.71.2019.07.24.14.14.58
+        by smtp.gmail.com with ESMTPSA id u1sm43384297wml.14.2019.07.24.14.14.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jul 2019 14:14:58 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 14:14:58 -0700 (PDT)
-X-Google-Original-Date: Wed, 24 Jul 2019 21:14:55 GMT
-Message-Id: <pull.293.git.gitgitgadget@gmail.com>
+        Wed, 24 Jul 2019 14:14:59 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 14:14:59 -0700 (PDT)
+X-Google-Original-Date: Wed, 24 Jul 2019 21:14:56 GMT
+Message-Id: <3bcebf1eae3cad9c55d233f2271126a99e9e34cb.1564002897.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.293.git.gitgitgadget@gmail.com>
+References: <pull.293.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] Clean up more of the fall-out from dropping the scripted git rebase
+Subject: [PATCH 1/2] rebase: fix white-space
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I had prepared these patches even before v2.22.0, but deemed them not
-critical enough to push into that release.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (2):
-  rebase: fix white-space
-  git: mark cmd_rebase as requiring a worktree
+This trailing space was inadvertently introduced in 9fbcc3d203 (Merge
+branch 'js/rebase-orig-head-fix', 2019-03-20).
 
- builtin/rebase.c | 6 +-----
- git.c            | 7 +------
- 2 files changed, 2 insertions(+), 11 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/rebase.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 082ef75b7bfc90ac236afbb857a9552a026832b8
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-293%2Fdscho%2Frebase-cleanup-more-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-293/dscho/rebase-cleanup-more-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/293
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 9c52144fc4..798b9ae2d7 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -2104,7 +2104,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	strbuf_addf(&msg, "%s: checkout %s",
+ 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
+ 	if (reset_head(&options.onto->object.oid, "checkout", NULL,
+-		       RESET_HEAD_DETACH | RESET_ORIG_HEAD | 
++		       RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+ 		       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+ 		       NULL, msg.buf))
+ 		die(_("Could not detach HEAD"));
 -- 
 gitgitgadget
+
