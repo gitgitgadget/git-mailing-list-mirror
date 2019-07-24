@@ -2,138 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B3971F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 21:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65B8B1F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 22:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387568AbfGXVZL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 17:25:11 -0400
-Received: from mail-gateway-shared03.cyon.net ([194.126.200.53]:44156 "EHLO
-        mail-gateway-shared03.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726622AbfGXVZL (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Jul 2019 17:25:11 -0400
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared03.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1hqOkz-0000Fm-DS
-        for git@vger.kernel.org; Wed, 24 Jul 2019 23:25:08 +0200
-Received: from [10.20.10.230] (port=65510 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.92)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1hqOky-0001ys-6u; Wed, 24 Jul 2019 23:25:04 +0200
-Subject: Re: [PATCH] grep: print the pcre2_jit_on value
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20190722181923.21572-1-dev+git@drbeat.li>
- <nycvar.QRO.7.76.6.1907232118460.21907@tvgsbejvaqbjf.bet>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <c85bcde8-2bef-3345-ec43-9ab44e587e39@drbeat.li>
-Date:   Wed, 24 Jul 2019 23:25:03 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1907232118460.21907@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-OutGoing-Spam-Status: No, score=-1.0
+        id S1726645AbfGXWSU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 18:18:20 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:45707 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfGXWSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 18:18:20 -0400
+Received: by mail-qt1-f202.google.com with SMTP id l9so42636000qtu.12
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 15:18:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=RLgYzM6qi1wjCTuw3NnQ6sSkU5WEbQEMhA73dNRMKxI=;
+        b=Ytr7/J6SlWxxL1tMfzUCCJmatXALVcvrQbIu0laA/jI8o1txqTu8fEZ6XiSxioLFro
+         NdgvrhgTqw4eISyYUEQihGjUY9uAJEk2pmPX2vmavUtJ2/Scc/66ANNFX2kviJ/nf/ro
+         DuwXrp5QH/tOME/u/gLZFmQl0n8tlT6XkLUoMuiAz8zDt4oQHi/f/LEImz/KGnFBKKOW
+         p5v1qTt2QHKoIV3SS4TiUaYovDeKWACkxbhyHwDhiB481vkTY0V7WGIe90JPWnfpvFAj
+         VaM1Ey2xjf4b0EzHgngLKIPPduMPetGNjhZm00T4uNuhihz9vd1QCzoIW5HFtkORg4aF
+         WPjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=RLgYzM6qi1wjCTuw3NnQ6sSkU5WEbQEMhA73dNRMKxI=;
+        b=SSV25hPP54On3SU3aXK+aBzdxD29NY54g+rVC4ljU9JG8wsjhz7ydcFNlqafHGHAtC
+         pO9hSoG40hJEkEONa1YVgMzw02WbNGgBQ0IlTY5C/XjPpW0yzB9Mgz4I5ZxFIK4C65Ez
+         nvuEY7YAgCAuFxz7hL0bXMs6iiBZOuL09Ls2S3nJWqDMDmyf0Fqllgf2Xz4iGXFf6jaC
+         EfcMk0NuHx0XMWnJUGveiBd//Evc7bGBzVYkiXMK6Wg0Di3Ak+IfLoqWDjFZwaRQkf3j
+         OZZ9U+tUhne1vfUSizThb9+lgE+bQrgmnjqx8MSzPEFhvflfJP8V+/E9m3eR85xyCi14
+         3XWQ==
+X-Gm-Message-State: APjAAAWOzc7W0Lee2zjuOUK5R9IafGAP+1KOEvbnbBjkh6m9WXmNZ9P9
+        fRhohL27Fh9VHjdW8j/XEqEA6vr0f0BQdCnKXqJ0
+X-Google-Smtp-Source: APXvYqwekauFJM+8QGgRkurVaG0gfJEKhY6DNF0JrMy8Yg1O9lJdKEdJr6aMe945MKdvD+MPYrGM+FruiKOs9xhUiSyo
+X-Received: by 2002:a0c:ffc5:: with SMTP id h5mr60887714qvv.43.1564006699096;
+ Wed, 24 Jul 2019 15:18:19 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 15:18:15 -0700
+In-Reply-To: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
+Message-Id: <20190724221815.187788-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
+X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
+Subject: Re: [PATCH] submodule: plumb --filter to cloned submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     steadmon@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
-
-On 23.07.19 21:19, Johannes Schindelin wrote:
-> Hi Beat,
+> When cloning a repo with a --filter and with --recurse-submodules
+> enabled, the partial clone filter only applies to the top-level repo.
+> This can lead to unexpected bandwidth and disk usage for projects which
+> include large submodules.
 > 
-> On Mon, 22 Jul 2019, Beat Bolli wrote:
+> Fix this by plumbing the --filter argument from git-clone through
+> git-submodule and git-submodule--helper.
 > 
->> When pcre2_jit_on is neither 1 nor 0, the BUG() call printed the value
->> of pcre1_jit_on.
->>
->> Print the value of pcre2_jit_on instead.
->>
->> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
->> ---
->>  grep.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/grep.c b/grep.c
->> index f7c3a5803e..cd952ef5d3 100644
->> --- a/grep.c
->> +++ b/grep.c
->> @@ -559,7 +559,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
->>  		pcre2_jit_stack_assign(p->pcre2_match_context, NULL, p->pcre2_jit_stack);
->>  	} else if (p->pcre2_jit_on != 0) {
->>  		BUG("The pcre2_jit_on variable should be 0 or 1, not %d",
->> -		    p->pcre1_jit_on);
->> +		    p->pcre2_jit_on);
-> 
-> Seems obviously good.
-> 
-> Maybe while you're in the vicinity, you can add that information to the
-> `--debug` output?
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
 
-Do you mean something like this?
-
-diff --git a/grep.c b/grep.c
-index cd952ef5d3..8a57ba998f 100644
---- a/grep.c
-+++ b/grep.c
-@@ -406,6 +406,8 @@ static void compile_pcre1_regexp(struct grep_pat *p,
-const struct grep_opt *opt)
-
- #ifdef GIT_PCRE1_USE_JIT
-        pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
-+       if (opt->debug)
-+               fprintf(stderr, "pcre1_jit_on=%d\n", p->pcre1_jit_on);
-        if (p->pcre1_jit_on == 1) {
-                p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
-                if (!p->pcre1_jit_stack)
-@@ -522,6 +524,8 @@ static void compile_pcre2_pattern(struct grep_pat
-*p, const struct grep_opt *opt
-        }
-
-        pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
-+       if (opt->debug)
-+               fprintf(stderr, "pcre2_jit_on=%d\n", p->pcre2_jit_on);
-        if (p->pcre2_jit_on == 1) {
-                jitret = pcre2_jit_compile(p->pcre2_pattern,
-PCRE2_JIT_COMPLETE);
-                if (jitret)
-
-If so, I'll wait a bit until it's clear whether Ævar's series [1] or my
-patch is going to be applied.
-
-If this is missing your intentions, I need more guidance ;-)
-
-[1] https://public-inbox.org/git/20190724151415.3698-1-avarab@gmail.com/
-
-
-> 
-> Thanks,
-> Dscho
-> 
->>  	}
->>  }
->>
-
-Cheers,
-Beat
+Sorry for not catching this earlier. The cloning itself might work, but
+I don't think we support partial-clone submodules right now. In
+particular, anything that operates on submodules in-process like grep
+(which either adds submodule objects as alternates or calls the
+object-loading functions using a different struct repo) will not work,
+because we only support lazy loading on the_repository. So if we want
+this feature, there is some other work that we will need to do first.
