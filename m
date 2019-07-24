@@ -2,80 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65B8B1F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 22:18:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E2681F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 22:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726645AbfGXWSU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 18:18:20 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:45707 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbfGXWSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 18:18:20 -0400
-Received: by mail-qt1-f202.google.com with SMTP id l9so42636000qtu.12
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 15:18:19 -0700 (PDT)
+        id S2387455AbfGXWiF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 18:38:05 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43411 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387405AbfGXWiF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 18:38:05 -0400
+Received: by mail-pg1-f194.google.com with SMTP id f25so21907724pgv.10
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 15:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=RLgYzM6qi1wjCTuw3NnQ6sSkU5WEbQEMhA73dNRMKxI=;
-        b=Ytr7/J6SlWxxL1tMfzUCCJmatXALVcvrQbIu0laA/jI8o1txqTu8fEZ6XiSxioLFro
-         NdgvrhgTqw4eISyYUEQihGjUY9uAJEk2pmPX2vmavUtJ2/Scc/66ANNFX2kviJ/nf/ro
-         DuwXrp5QH/tOME/u/gLZFmQl0n8tlT6XkLUoMuiAz8zDt4oQHi/f/LEImz/KGnFBKKOW
-         p5v1qTt2QHKoIV3SS4TiUaYovDeKWACkxbhyHwDhiB481vkTY0V7WGIe90JPWnfpvFAj
-         VaM1Ey2xjf4b0EzHgngLKIPPduMPetGNjhZm00T4uNuhihz9vd1QCzoIW5HFtkORg4aF
-         WPjA==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KZWawZ3aa2Ya0hZnV5mfr+hKM7dkKw5d2s1ADvXss2A=;
+        b=A986pas0HbdUwS1PKkbyHIZLW/Z230/s0g0IOm3+rPV3wHLl7xW7EaFd1qKNrFTLMZ
+         qYnh1g91iu2WkoClqnNNxZ+DqyV6w27sU5Sdss5duzRVvl5ng+0CjndAuTBlCZ2gGK5c
+         P7QO29I3F1ocu7v0SI3TgPs4oWdHY9O5R6rjsmipk9Uy/cPiHIsfYiJayco0BMd43cOF
+         JK9E5qns2Qwq5hPSsQceuSP2OdQ7c0WHESUOhTsKrKS8g0NTNUKAaw10gaZwR7OBGwRF
+         I/yaScYpbvHRFHjqdmd16LXjmxyPmvxiztBvEJd1ZxMqsemjdI/eJBxiNVVhO6W+RgIB
+         LkkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=RLgYzM6qi1wjCTuw3NnQ6sSkU5WEbQEMhA73dNRMKxI=;
-        b=SSV25hPP54On3SU3aXK+aBzdxD29NY54g+rVC4ljU9JG8wsjhz7ydcFNlqafHGHAtC
-         pO9hSoG40hJEkEONa1YVgMzw02WbNGgBQ0IlTY5C/XjPpW0yzB9Mgz4I5ZxFIK4C65Ez
-         nvuEY7YAgCAuFxz7hL0bXMs6iiBZOuL09Ls2S3nJWqDMDmyf0Fqllgf2Xz4iGXFf6jaC
-         EfcMk0NuHx0XMWnJUGveiBd//Evc7bGBzVYkiXMK6Wg0Di3Ak+IfLoqWDjFZwaRQkf3j
-         OZZ9U+tUhne1vfUSizThb9+lgE+bQrgmnjqx8MSzPEFhvflfJP8V+/E9m3eR85xyCi14
-         3XWQ==
-X-Gm-Message-State: APjAAAWOzc7W0Lee2zjuOUK5R9IafGAP+1KOEvbnbBjkh6m9WXmNZ9P9
-        fRhohL27Fh9VHjdW8j/XEqEA6vr0f0BQdCnKXqJ0
-X-Google-Smtp-Source: APXvYqwekauFJM+8QGgRkurVaG0gfJEKhY6DNF0JrMy8Yg1O9lJdKEdJr6aMe945MKdvD+MPYrGM+FruiKOs9xhUiSyo
-X-Received: by 2002:a0c:ffc5:: with SMTP id h5mr60887714qvv.43.1564006699096;
- Wed, 24 Jul 2019 15:18:19 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 15:18:15 -0700
-In-Reply-To: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
-Message-Id: <20190724221815.187788-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com>
-X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
-Subject: Re: [PATCH] submodule: plumb --filter to cloned submodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     steadmon@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=KZWawZ3aa2Ya0hZnV5mfr+hKM7dkKw5d2s1ADvXss2A=;
+        b=OJMPJ6f9V4Ul6X3i4cZ9PoBYblpl+cP/Av70v9bD/v1QH3hRUobA+Hmb1RZCzmDpwa
+         xsKzU2ZM3SBHeG7c0/pLy+VNE6xpt4Le8jrFf7BZvGM1ug1ftr6JJMQJ8LJ0xIzQm3yJ
+         J1td5hQ0r2tTuVL2nNjXUWYLsogAj/j4/jFgwUDXEvoRGYOQIzrAX59Z/w94DqByzhaO
+         66ydOIOkuM9My+cOgZJFPJUamGRQladupK9UkBwbyGNXyCbxQeGs0yfLa1vOCiCnXhli
+         AbJfIgRpysgZufOuBTxKTIqRb3D9mspLEsQjq3p+PyIjHbm+R8HQljNnR+I4zvRnZojz
+         KfSw==
+X-Gm-Message-State: APjAAAXnK5g7lmzRq4SwAmy+71DmicsAxQtcf0ANhp6JIg4oCgynT6uP
+        T+e7chvC7YOEkHEpmRJHlDCM6Q==
+X-Google-Smtp-Source: APXvYqzQ1f5jnfDt4KqubR6j8SUIN6vGOGYJ4q2w0AxzdBNxysTzUIzCB9xmuPcI8Rw04nj9GxfWAg==
+X-Received: by 2002:a63:60c1:: with SMTP id u184mr79496866pgb.275.1564007883571;
+        Wed, 24 Jul 2019 15:38:03 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
+        by smtp.gmail.com with ESMTPSA id o130sm78685884pfg.171.2019.07.24.15.38.02
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 24 Jul 2019 15:38:02 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 15:37:53 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
+        avarab@gmail.com, peff@peff.net
+Subject: Re: [RFC PATCH v2 1/3] trace2: Add a JSON schema for trace2 events
+Message-ID: <20190724223753.GB43313@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
+        peff@peff.net
+References: <cover.1560295286.git.steadmon@google.com>
+ <cover.1562712943.git.steadmon@google.com>
+ <a949db776c77e5c97c78055f1bb0f2101096f861.1562712943.git.steadmon@google.com>
+ <86wogp68q0.fsf@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86wogp68q0.fsf@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> When cloning a repo with a --filter and with --recurse-submodules
-> enabled, the partial clone filter only applies to the top-level repo.
-> This can lead to unexpected bandwidth and disk usage for projects which
-> include large submodules.
+On 2019.07.10 20:32, Jakub Narebski wrote:
+> Josh Steadmon <steadmon@google.com> writes:
 > 
-> Fix this by plumbing the --filter argument from git-clone through
-> git-submodule and git-submodule--helper.
+> > Define a JSON schema[1] that can be used to validate trace2 event
+> > objects. This can be used to add regression tests to verify that the
+> > event output format does not change unexpectedly.
+> >
+> > Two versions of the schema are provided:
 > 
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> Actually, four versions of the schema are provided, as you have written
+> in the t/trace_schema_validator/README file.
 
-Sorry for not catching this earlier. The cloning itself might work, but
-I don't think we support partial-clone submodules right now. In
-particular, anything that operates on submodules in-process like grep
-(which either adds submodule objects as alternates or calls the
-object-loading functions using a different struct repo) will not work,
-because we only support lazy loading on the_repository. So if we want
-this feature, there is some other work that we will need to do first.
+Thanks for the catch, will be fixed in V3.
