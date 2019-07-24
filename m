@@ -8,51 +8,51 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C871D1F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 23:07:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D70F11F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 23:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729676AbfGXXHE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 19:07:04 -0400
-Received: from mail-vs1-f74.google.com ([209.85.217.74]:52173 "EHLO
-        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbfGXXHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 19:07:04 -0400
-Received: by mail-vs1-f74.google.com with SMTP id b7so12837918vsr.18
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 16:07:03 -0700 (PDT)
+        id S1729679AbfGXXHG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 19:07:06 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:56374 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726388AbfGXXHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 19:07:06 -0400
+Received: by mail-pg1-f201.google.com with SMTP id h5so29313998pgq.23
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 16:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=HO7kB+uy+Vzh0iVuy0nkOYga1YzKJIrnasDVCbbacxI=;
-        b=FqKY0QRdQMDr5cmyB4HS4MCJ9k/nd6VdnmeRQ/Z8byQ1qlc7ZPftjdXW7yv25qO5tU
-         hSZcThS2dbiVNiK29vpj0hXRrgFgBfnobrAKs1ZUSDUvtBT3V7c0PQX4Q1mf+pk+1Lfm
-         5R9Qs1tww8cir5M5n1UywKto8IVcJqKrRky8cs+OzAIUy2Smplc8PoXs7GuKXQxOkV/Y
-         FVxg/jQeszeSFgmWuXRJ2yGiqrnYW0ZF5r3UAblSPOPoY1Lqmq/50l3GrKhg/nXniVsX
-         KRqcveWcTikYqGzUYHSH8nt0ZzjG8uYD9v5pNKUU3dBZiNXm9n6oJ1FMGUdj+nucNfIz
-         y7aQ==
+        bh=epdg1RkjPfSeOFnpJAwwZ+NvLq1FWWjtkuy12AzRRYk=;
+        b=WamYz3mOYY6E8ETIxAotJRQQzzb1jDnlqvuR/lUeeDhVkKzRZP8hG2O0XD9RDcRC3B
+         Zn4CSSmVM2Pga0n7DrDhyz6M1Yv2yv7Ya8WT3ACu7vgJrJ1NQQ9GYtSm3ZVIV7Fy7c52
+         /dAiUDytnvEVP2HDgenNILqMM+vrEGJKx+4JYAWf0t5K8dRMTJNCEaszK5B8lL0nqQbB
+         bhDGHwONn2XR563YboMsyxqa2EeSDeN6jWtSwGFECs1cfObBpfANljxEK0pOgpaJZaog
+         zpsxelK3HnC4obpQy1jcb254AB6CL9CzOMF1bRuGgIHyPtY1pn+6qNcUsOIesYYvagbn
+         dTqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to;
-        bh=HO7kB+uy+Vzh0iVuy0nkOYga1YzKJIrnasDVCbbacxI=;
-        b=dBTdb9XFX4RGfToRIEPyhck1ZzU9UpqcR5b74nPSNpugckVFyAssir+uWhrxnHpjHH
-         XVGefvTupXAhUXBS8ZvmmLWuZYQDc5HIKZE40USfLXu9Q3BNZWKKwylmQunAxUPByFhP
-         RoLiwQlpnpU7igjmgpze2ujltncJ0o3m7qXlQTySVX5/bPuL5HGG3Fid5HklfUqPvjBa
-         atCLw/TWaAhWLsrZ746v2aeDsPIKx/cU2aoqKt7SvJU5GTloprbwyUX4ZuDgu7XRmkNT
-         GmghvqPUFgaokPgndJ+0UTuxo0yW9Ta8Hkua82D8UAGqK/gdrvRo732zJJG5CEGrntZi
-         J/Dg==
-X-Gm-Message-State: APjAAAXDkeYMibS2uTCfSNS2JjtBNSWL22febDoAYbWoiuzdrAJ5uFf5
-        s6L6j3wh0eP1qPvIH0uk0mpWf5SHEKB0s3YmAAhFYq8fp3GBjkVQMmemLtDO8BYPksQHT/qId2V
-        njRq/vJSkDaiZ7ZJqL93ANR25fnt3hzLVX7qEAjTI9XiYO6wtykJ7tJWNE4xJEIw=
-X-Google-Smtp-Source: APXvYqwyOpXb5t3Y1D6joYRo7uFKyDww1SGh6hJORqUxiyZ5RDAYpuqOQRWcrW56nBaiBpucAsvAUbgrxhjuFQ==
-X-Received: by 2002:a1f:5cd:: with SMTP id 196mr33400331vkf.62.1564009622675;
- Wed, 24 Jul 2019 16:07:02 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 16:06:52 -0700
+        bh=epdg1RkjPfSeOFnpJAwwZ+NvLq1FWWjtkuy12AzRRYk=;
+        b=EYWB4WOLU3Pw2WsPRzKdXbAhAJT/z5JcWS2nR7nl2b2Wh1oOpBeDEyaAqCuq+NmPJ+
+         s+1P5bSQYZ7TviSsxZQSmJi3SleWnugnDLHCEKMGa/FxFt8RWSImy9nxWqWPXLmrADtB
+         OVgl5UqPc6qt0ftEfJPXcwCXKmuq0CPREhUK2MpOUtrdkapCbHITxqOlxBZLX79w+x0U
+         bfxoix4+oWQDPFkhkTihQWjM0eG7yk0G470Jnv3W+EKkiIIJ46120ef94HmnvuVWzPbF
+         Ky2HOUokvUFe8vCeHfIbd8q4QDy10k8ao62OUqBJr6XlbjEDlirFU9O22AfYz/P+MdHW
+         gzcg==
+X-Gm-Message-State: APjAAAU5ctPWrWzzr0G/11GpFvTIhk7Xp2p0m9DaUbCQ5dX4EygNjajl
+        Z4T9ap0+6PybOBCqoSvuTIHFwOttyu2XK7KId27kx/hsQctLG0IETb3/HL3m3v5dBo5G7Vhig3m
+        deWroh9vW41o7KFMxghtR3gdhPoeIMqAzE3RGN6LPooH4uj/SKzrp0bcLPuoJP/o=
+X-Google-Smtp-Source: APXvYqwrLI0dYRuwiednhiLp637z5MvM7yGlhBSO9HFz17sh53ob2RJvvaQO9Rr5+rigd8u6Zj4HKy9t4zZZew==
+X-Received: by 2002:a65:6102:: with SMTP id z2mr82763955pgu.391.1564009625082;
+ Wed, 24 Jul 2019 16:07:05 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 16:06:53 -0700
 In-Reply-To: <cover.1564009259.git.steadmon@google.com>
-Message-Id: <97cb6a3eb4f6c3f21fcdb69a15b0885c03526beb.1564009259.git.steadmon@google.com>
+Message-Id: <a07458b2e4d6bb128ca8480d4233bfd03d73c8d6.1564009259.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1560295286.git.steadmon@google.com> <cover.1564009259.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.709.g102302147b-goog
-Subject: [PATCH v3 2/3] trace2: add a schema validator for trace2 events
+Subject: [PATCH v3 3/3] ci: run trace2 schema validation in the CI suite
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
         avarab@gmail.com, peff@peff.net, jnareb@gmail.com
@@ -62,141 +62,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-trace_schema_validator can be used to verify that trace2 event output
-conforms to the expectations set by the API documentation and codified
-in event_schema.json (or strict_schema.json). This allows us to build a
-regression test to verify that trace2 output does not change
-unexpectedly.
-
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/trace_schema_validator/.gitignore           |  1 +
- t/trace_schema_validator/Makefile             | 18 ++++
- .../trace_schema_validator.go                 | 82 +++++++++++++++++++
- 3 files changed, 101 insertions(+)
- create mode 100644 t/trace_schema_validator/.gitignore
- create mode 100644 t/trace_schema_validator/Makefile
- create mode 100644 t/trace_schema_validator/trace_schema_validator.go
+ ci/run-build-and-tests.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/trace_schema_validator/.gitignore b/t/trace_schema_validator/.gitignore
-new file mode 100644
-index 0000000000..c3f1e04e9e
---- /dev/null
-+++ b/t/trace_schema_validator/.gitignore
-@@ -0,0 +1 @@
-+trace_schema_validator
-diff --git a/t/trace_schema_validator/Makefile b/t/trace_schema_validator/Makefile
-new file mode 100644
-index 0000000000..50bd266518
---- /dev/null
-+++ b/t/trace_schema_validator/Makefile
-@@ -0,0 +1,18 @@
-+RM = rm -f
-+PROGRAMS = trace_schema_validator
-+GOCMD = go
-+GOBUILD = $(GOCMD) build
-+GOGET = $(GOCMD) get
-+
-+.PHONY: fetch_deps clean
-+
-+all: $(PROGRAMS)
-+
-+trace_schema_validator: fetch_deps trace_schema_validator.go
-+	$(GOBUILD) -o trace_schema_validator
-+
-+fetch_deps:
-+	$(GOGET) github.com/xeipuuv/gojsonschema
-+
-+clean:
-+	$(RM) $(PROGRAMS)
-diff --git a/t/trace_schema_validator/trace_schema_validator.go b/t/trace_schema_validator/trace_schema_validator.go
-new file mode 100644
-index 0000000000..bfda3c405e
---- /dev/null
-+++ b/t/trace_schema_validator/trace_schema_validator.go
-@@ -0,0 +1,82 @@
-+// trace_schema_validator validates individual lines of an input file against a
-+// provided JSON-Schema for git trace2 event output.
-+//
-+// Note that this expects each object to validate to be on its own line in the
-+// input file (AKA JSON-Lines format). This is what Git natively writes with
-+// GIT_TRACE2_EVENT enabled.
-+//
-+// Traces can be collected by setting the GIT_TRACE2_EVENT environment variable
-+// to an absolute path and running any Git command; traces will be appended to
-+// the file.
-+//
-+// Traces can then be verified like so:
-+//   trace_schema_validator \
-+//     --trace2-event-file /path/to/trace/output \
-+//     --schema-file /path/to/schema
-+package main
-+
-+import (
-+	"bufio"
-+	"flag"
-+	"log"
-+	"os"
-+	"path/filepath"
-+
-+	"github.com/xeipuuv/gojsonschema"
-+)
-+
-+// Required flags
-+var schemaFile = flag.String("schema-file", "", "JSON-Schema filename")
-+var trace2EventFile = flag.String("trace2-event-file", "", "trace2 event filename")
-+var progress = flag.Int("progress", 0, "Print progress message each time we have validated this many lines. --progress=0 means no messages are printed")
-+
-+func main() {
-+	flag.Parse()
-+	if *schemaFile == "" || *trace2EventFile == "" {
-+		log.Fatal("Both --schema-file and --trace2-event-file are required.")
-+	}
-+	schemaURI, err := filepath.Abs(*schemaFile)
-+	if err != nil {
-+		log.Fatal("Can't get absolute path for schema file: ", err)
-+	}
-+	schemaURI = "file://" + schemaURI
-+
-+	schemaLoader := gojsonschema.NewReferenceLoader(schemaURI)
-+	schema, err := gojsonschema.NewSchema(schemaLoader)
-+	if err != nil {
-+		log.Fatal("Problem loading schema: ", err)
-+	}
-+
-+	tracesFile, err := os.Open(*trace2EventFile)
-+	if err != nil {
-+		log.Fatal("Problem opening trace file: ", err)
-+	}
-+	defer tracesFile.Close()
-+
-+	scanner := bufio.NewScanner(tracesFile)
-+
-+	count := 0
-+	for ; scanner.Scan(); count++ {
-+		if *progress != 0 && count%*progress == 0 {
-+			log.Print("Validated items: ", count)
-+		}
-+		event := gojsonschema.NewStringLoader(scanner.Text())
-+		result, err := schema.Validate(event)
-+		if err != nil {
-+			log.Fatal(err)
-+		}
-+		if !result.Valid() {
-+			log.Printf("Trace event line %d is invalid: %s", count+1, scanner.Text())
-+			for _, desc := range result.Errors() {
-+				log.Print("- ", desc)
-+			}
-+			os.Exit(1)
-+		}
-+	}
-+
-+	if err := scanner.Err(); err != nil {
-+		log.Fatal("Scanning error: ", err)
-+	}
-+
-+	log.Print("Validated events: ", count)
-+}
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index cdd2913440..ec38bf379a 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -14,6 +14,8 @@ make
+ make test
+ if test "$jobname" = "linux-gcc"
+ then
++	make -C t/trace_schema_validator
++	export GIT_TRACE2_EVENT=$(mktemp)
+ 	export GIT_TEST_SPLIT_INDEX=yes
+ 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+ 	export GIT_TEST_OE_SIZE=10
+@@ -21,6 +23,10 @@ then
+ 	export GIT_TEST_COMMIT_GRAPH=1
+ 	export GIT_TEST_MULTI_PACK_INDEX=1
+ 	make test
++	t/trace_schema_validator/trace_schema_validator \
++		--trace2_event_file=${GIT_TRACE2_EVENT} \
++		--schema_file=t/trace_schema_validator/strict_schema.json \
++		--progress=10000
+ fi
+ 
+ check_unignored_build_artifacts
 -- 
 2.22.0.709.g102302147b-goog
 
