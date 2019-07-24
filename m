@@ -2,239 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAFE21F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 20:34:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F661F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 21:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388263AbfGXUeI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 16:34:08 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:40072 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727743AbfGXT1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 15:27:11 -0400
-Received: by mail-qt1-f195.google.com with SMTP id a15so46636095qtn.7
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 12:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hILylbnGVoxZCd5OSbCq2bZZbvK5Zfo9WAhGttVOydw=;
-        b=O14pPBFbuVmtrPDNkJyKQ9K3CKhJWcJlPGYOnC7/EtDTib4/AMy9Y0Vd+7sa8K0Xrs
-         P2dc7GdpVSSR46wuMECtWKbLwJnUFdXzI/LJpg1YPmNbSsF6XmgcPrH4tMH0Xyo/uzLI
-         ZGZQN3K0A5nSz3LoUHEy0JXdBWp1kTEto9d2pnSnt4CwbzeC+StVph/zGDXwL92X+1SR
-         vgbbsFcoAkYzchDkWSf2PZjcGPa71piE91UCfC2bCOh0mKo253Tqh0me8LTTQmJOfsqF
-         Ufo0pG+9qWR0BHE9VIZbzaDW68Agf63gZxxfQoA9qpTmvNsUZHBZ/UH4/HIbt8WS9BVl
-         FEEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hILylbnGVoxZCd5OSbCq2bZZbvK5Zfo9WAhGttVOydw=;
-        b=DYd4LilS/Po3DnsLvuzV7Lad9ny04coHTcgSal7ncY9/dtpis1S25vtc6hwpx4WYSL
-         eCyn+GR1F1VpvAE1hf9ETtj+4mXPoRIGrsbrB7YBPxczqiNM/NxBGvtQo93kT2QXbZVd
-         /FDKvNx47kWxRn1gqekuBnJTtsartsYhh8yM66MJNbVYnuJj78aZulMMFdvKGQ+LojsD
-         xhPCVTduejvqwmc/6R7LZJZ/Zx2yn5+BuJZpLJ8DNMc3cDh70aOQ2y9IDGlp8zn3gdlF
-         P3c85acm9P5swPNlsD9a67s1HXRJC2ZwMdLgxESpTcJq+/qSSDagC+dMqDZzozpoeKPT
-         3KPQ==
-X-Gm-Message-State: APjAAAW7XoBK3KMCR773zctUOWXghNLV1NwWUMJJ9o2rmNlcrmW2j+bX
-        pQjNc7i3/c9GVdHU2bjkaF0=
-X-Google-Smtp-Source: APXvYqwqe9j3eXLgLaG3CE9mse0LyJyJ1fS/H5lphsL9UPfzPXkeEniZMvofonquJ6CSZinb8gAEvQ==
-X-Received: by 2002:a0c:d91b:: with SMTP id p27mr59507192qvj.236.1563996430590;
-        Wed, 24 Jul 2019 12:27:10 -0700 (PDT)
-Received: from [10.0.1.12] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id e18sm16652179qkm.49.2019.07.24.12.27.09
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jul 2019 12:27:09 -0700 (PDT)
-Subject: Re: [PATCH 3/5] repo-settings: parse core.untrackedCache
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
-        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.292.git.gitgitgadget@gmail.com>
- <47ae3e7d4d765a00d14e8892db88a8936d56591b.1563818059.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.1907231656580.21907@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6d7de6f0-f7cb-ba6b-85e9-fc466944ed6b@gmail.com>
-Date:   Wed, 24 Jul 2019 15:27:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        id S2387874AbfGXVE6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 17:04:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61765 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387546AbfGXVE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 17:04:58 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E870A1645D6;
+        Wed, 24 Jul 2019 17:04:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=SIZLLMqKrcKs
+        4m6buH/Wc3ao5UQ=; b=vqawN/zZoc8Y12cFAen2oXvLZQt4yupfFDMwtW2/9Bct
+        8MwM94DNVo+QQ+/S4D+1aaOxBkxz4dhkl1NmK6bbd9BCTTLv3U9pV+18tmPjmeMN
+        uJfcxo68kSw307Frp0HeOaFWk7DrMg9txY5PL+P52VHoi1IUnkE1kjv+BHqHruI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Qk4bzB
+        Nc/BQA8pkbYAqjw/z/hLaR2f8EcRZUZFAzJiVQW/2IYT8JYZOByEoM9x9AJalCmI
+        swDAiIlvPaUQ3XbSDuNr//kT3P4IlPyXoNt6jyzE8tH/xq6bbo9ZtmE0Kv4sOyof
+        Pb4cA09asA0C0Ltfmvzi4drW9ndQ4fu7Umb/M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEBD81645D5;
+        Wed, 24 Jul 2019 17:04:55 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 528F51645D4;
+        Wed, 24 Jul 2019 17:04:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] grep: skip UTF8 checks explicitally
+References: <20190721183115.14985-1-carenas@gmail.com>
+        <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet>
+        <87muh57t5r.fsf@evledraar.gmail.com>
+        <CAPUEspg1nUoPApTk5J2r_-9psxTTSC7nRAPw_X9no+2sFVSxAA@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1907231444250.47@tvgsbejvaqbjf.bet>
+        <CAPUEspgytjywYHywGT4yAwYpQbMUicN4bpHfoD+M_HMe8YdPtg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1907241245540.21907@tvgsbejvaqbjf.bet>
+        <87lfwn70nb.fsf@evledraar.gmail.com>
+Date:   Wed, 24 Jul 2019 14:04:54 -0700
+In-Reply-To: <87lfwn70nb.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 24 Jul 2019 20:22:48 +0200")
+Message-ID: <xmqqpnlzqh3d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1907231656580.21907@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: AFED98FC-AE56-11E9-9866-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
+> The PCRE2_NO_UTF_CHECK flag means "I have checked that this is a valid
+> UTF-8 string so you, PCRE, don't need to re-check it".
 
-On 7/23/2019 11:04 AM, Johannes Schindelin wrote:
-> Hi Stolee,
-> 
-> On Mon, 22 Jul 2019, Derrick Stolee via GitGitGadget wrote:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The core.untrackedCache config setting is slightly complicated,
->> so clarify its use and centralize its parsing into the repo
->> settings.
->>
->> The default value is "keep" (returned as -1), which persists the
->> untracked cache if it exists.
->>
->> If the value is set as "false" (returned as 0), then remove the
->> untracked cache if it exists.
->>
->> If the value is set as "true" (returned as 1), then write the
->> untracked cache and persist it.
->>
->> Instead of relying on magic values of -1, 0, and 1, split these
->> options into bitflags CORE_UNTRACKED_CACHE_KEEP and
->> CORE_UNTRACKED_CACHE_WRITE. This allows the use of "-1" as a
->> default value. After parsing the config options, if the value is
->> unset we can initialize it to CORE_UNTRACKED_CACHE_KEEP.
-> 
-> Nice!
-> 
->> [...]
->> diff --git a/read-cache.c b/read-cache.c
->> index ee1aaa8917..e67e6f6e3e 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -1846,18 +1846,17 @@ static void check_ce_order(struct index_state *istate)
->>
->>  static void tweak_untracked_cache(struct index_state *istate)
->>  {
->> -	switch (git_config_get_untracked_cache()) {
->> -	case -1: /* keep: do nothing */
->> -		break;
->> -	case 0: /* false */
->> +	struct repository *r = the_repository;
->> +
->> +	prepare_repo_settings(r);
->> +
->> +	if (!(r->settings->core_untracked_cache & CORE_UNTRACKED_CACHE_KEEP)) {
->>  		remove_untracked_cache(istate);
->> -		break;
->> -	case 1: /* true */
->> -		add_untracked_cache(istate);
->> -		break;
->> -	default: /* unknown value: do nothing */
->> -		break;
->> +		return;
->>  	}
->> +
->> +	if (r->settings->core_untracked_cache & CORE_UNTRACKED_CACHE_WRITE)
->> +		add_untracked_cache(istate);
-> 
-> This changes the flow in a subtle way: in the
-> `CORE_UNTRACKED_CACHE_WRITE` case, we used to _not_ remove the untracked
-> cache, but now we do.
-> 
-> I _think_ what you would want to do is replace the `!(..._KEEP)`
-> condition by `..._REMOVE`.
+OK, in short, barfing and stopping is a problem, but that flag is
+not the right knob to tweak.  And the right knob ...
 
-I believe the code as written is correct, but confusing. The value is not an enum, but instead a bitflag. When the config setting is given as "true", then both _KEEP and _WRITE are set, so the flow is identical.
+>  1) We're oversupplying PCRE2_UTF now, and one such case is what's bein=
+g
+>     reported here. I.e. there's no reason I can think of for why a
+>     fixed-string pattern should need PCRE2_UTF set when not combined
+>     with --ignore-case. We can just not do that, but maybe I'm missing
+>     something there.
+>
+>  2) We can do "try utf8, and fallback". A more advanced version of this
+>     is what the new PCRE2_MATCH_INVALID_UTF flag (mentioned upthread)
+>     does. I was thinking something closer to just carrying two compiled
+>     patterns, and falling back on the ~PCRE2_UTF one if we get a
+>     PCRE2_ERROR_UTF8_* error.
 
-However, you already suggested switching to an enum, in which case using _REMOVE would be clearer.
+... lies somewhere along that line.  I think that is very sensible.
+Let's make sure this gets sorted out soonish.
 
-> 
->>  }
->>
->>  static void tweak_split_index(struct index_state *istate)
->> diff --git a/repo-settings.c b/repo-settings.c
->> index f328602fd7..807c5a29d6 100644
->> --- a/repo-settings.c
->> +++ b/repo-settings.c
->> @@ -30,6 +30,20 @@ static int git_repo_config(const char *key, const char *value, void *cb)
->>  		rs->index_version = git_config_int(key, value);
->>  		return 0;
->>  	}
->> +	if (!strcmp(key, "core.untrackedcache")) {
->> +		int bool_value = git_parse_maybe_bool(value);
->> +		if (bool_value == 0)
->> +			rs->core_untracked_cache = 0;
->> +		else if (bool_value == 1)
->> +			rs->core_untracked_cache = CORE_UNTRACKED_CACHE_KEEP |
->> +						   CORE_UNTRACKED_CACHE_WRITE;
->> +		else if (!strcasecmp(value, "keep"))
->> +			rs->core_untracked_cache = CORE_UNTRACKED_CACHE_KEEP;
->> +		else
->> +			error(_("unknown core.untrackedCache value '%s'; "
->> +				"using 'keep' default value"), value);
->> +		return 0;
->> +	}
->>
->>  	return 1;
->>  }
->> @@ -46,6 +60,13 @@ void prepare_repo_settings(struct repository *r)
->>  	r->settings->gc_write_commit_graph = -1;
->>  	r->settings->pack_use_sparse = -1;
->>  	r->settings->index_version = -1;
->> +	r->settings->core_untracked_cache = -1;
-> 
-> At this point at the latest, I am starting to wonder whether it would
-> not make more sense to use `memset(..., -1, sizeof(struct
-> repo_settings)` instead.
-> 
->>
->>  	repo_config(r, git_repo_config, r->settings);
->> +
->> +	/* Hack for test programs like test-dump-untracked-cache */
->> +	if (ignore_untracked_cache_config)
->> +		r->settings->core_untracked_cache = CORE_UNTRACKED_CACHE_KEEP;
->> +	else
->> +		UPDATE_DEFAULT(r->settings->core_untracked_cache, CORE_UNTRACKED_CACHE_KEEP);
->>  }
->> diff --git a/repo-settings.h b/repo-settings.h
->> index 1151c2193a..bac9b87d49 100644
->> --- a/repo-settings.h
->> +++ b/repo-settings.h
->> @@ -1,11 +1,15 @@
->>  #ifndef REPO_SETTINGS_H
->>  #define REPO_SETTINGS_H
->>
->> +#define CORE_UNTRACKED_CACHE_WRITE (1 << 0)
->> +#define CORE_UNTRACKED_CACHE_KEEP (1 << 1)
-> 
-> I think it would read even nicer as an enum. In any case, using `1<<1`
-> suggests that this is a bit field, but I don't think that is what we
-> actually want here. Instead, what `core_untracked_cache` seems to be (at
-> least from my point of view) is a mode, where any two modes are mutually
-> exclusive.
-> 
-> For example, what is the difference between `(_KEEP | _WRITE)` and
-> `(_WRITE)` supposed to be? That the latter writes a fresh untracked
-> cache without looking at the previous one? That's not how the existing
-> code behaves, though...
+Thanks.
 
-Yes, there is no reason to have _WRITE without also _KEEP. An enum is better. Thanks!
-
-> 
-> Ciao,
-> Dscho
-> 
->> +
->>  struct repo_settings {
->>  	int core_commit_graph;
->>  	int gc_write_commit_graph;
->>  	int pack_use_sparse;
->>  	int index_version;
->> +	int core_untracked_cache;
->>  };
->>
->>  struct repository;
->> --
->> gitgitgadget
->>
->>
