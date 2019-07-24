@@ -8,84 +8,264 @@ X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E2681F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 22:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5681F462
+	for <e@80x24.org>; Wed, 24 Jul 2019 22:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387455AbfGXWiF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 18:38:05 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:43411 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387405AbfGXWiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 18:38:05 -0400
-Received: by mail-pg1-f194.google.com with SMTP id f25so21907724pgv.10
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 15:38:04 -0700 (PDT)
+        id S1729571AbfGXWrM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 18:47:12 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38420 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728048AbfGXWrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 18:47:12 -0400
+Received: by mail-pf1-f195.google.com with SMTP id y15so21651635pfn.5
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 15:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KZWawZ3aa2Ya0hZnV5mfr+hKM7dkKw5d2s1ADvXss2A=;
-        b=A986pas0HbdUwS1PKkbyHIZLW/Z230/s0g0IOm3+rPV3wHLl7xW7EaFd1qKNrFTLMZ
-         qYnh1g91iu2WkoClqnNNxZ+DqyV6w27sU5Sdss5duzRVvl5ng+0CjndAuTBlCZ2gGK5c
-         P7QO29I3F1ocu7v0SI3TgPs4oWdHY9O5R6rjsmipk9Uy/cPiHIsfYiJayco0BMd43cOF
-         JK9E5qns2Qwq5hPSsQceuSP2OdQ7c0WHESUOhTsKrKS8g0NTNUKAaw10gaZwR7OBGwRF
-         I/yaScYpbvHRFHjqdmd16LXjmxyPmvxiztBvEJd1ZxMqsemjdI/eJBxiNVVhO6W+RgIB
-         LkkQ==
+        bh=BAN9xHq9nTn95RvdOquNkyTRVHkKFKrQdEeprKSALfA=;
+        b=RGKpKsLXHzCLiRqjJ+Gd2WEhA9nSzj1rwzCFF5uKUVyrNAUz8majVaY6/WpzsY0qyM
+         7dM8tjE3Sgqp+H4IXiA/rAjd+YUymXbWu0pRK2V/yV1xbxqLxPK+ZoOFKESt23edt8cZ
+         SBt+HMsbEA+iFTBZuR3LpRu8KU40x8HMzXyxhoR2HvmmAVDFMIwl2tv8NJlwpiET9dZt
+         out8E4r8YIz4NAd62S80meYi1H4jGLVqoanhQQubmFSf6NgFYV2E88LJAR5Dr7r6lHMo
+         6d3AIAp71U1VU6LVhkNOXlIrZPCK+dUMeMvGLLUmJ4Kw4woWai3GtStG9Wn5oGcG/qRV
+         f1hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
          :in-reply-to:user-agent;
-        bh=KZWawZ3aa2Ya0hZnV5mfr+hKM7dkKw5d2s1ADvXss2A=;
-        b=OJMPJ6f9V4Ul6X3i4cZ9PoBYblpl+cP/Av70v9bD/v1QH3hRUobA+Hmb1RZCzmDpwa
-         xsKzU2ZM3SBHeG7c0/pLy+VNE6xpt4Le8jrFf7BZvGM1ug1ftr6JJMQJ8LJ0xIzQm3yJ
-         J1td5hQ0r2tTuVL2nNjXUWYLsogAj/j4/jFgwUDXEvoRGYOQIzrAX59Z/w94DqByzhaO
-         66ydOIOkuM9My+cOgZJFPJUamGRQladupK9UkBwbyGNXyCbxQeGs0yfLa1vOCiCnXhli
-         AbJfIgRpysgZufOuBTxKTIqRb3D9mspLEsQjq3p+PyIjHbm+R8HQljNnR+I4zvRnZojz
-         KfSw==
-X-Gm-Message-State: APjAAAXnK5g7lmzRq4SwAmy+71DmicsAxQtcf0ANhp6JIg4oCgynT6uP
-        T+e7chvC7YOEkHEpmRJHlDCM6Q==
-X-Google-Smtp-Source: APXvYqzQ1f5jnfDt4KqubR6j8SUIN6vGOGYJ4q2w0AxzdBNxysTzUIzCB9xmuPcI8Rw04nj9GxfWAg==
-X-Received: by 2002:a63:60c1:: with SMTP id u184mr79496866pgb.275.1564007883571;
-        Wed, 24 Jul 2019 15:38:03 -0700 (PDT)
+        bh=BAN9xHq9nTn95RvdOquNkyTRVHkKFKrQdEeprKSALfA=;
+        b=L1A0Yn7o7DrROl6SFcE/OKaCaeMmNcPeoRX81b+nZNbNRt/dmXLtAnSGhK/Mu+hw2d
+         brAAI45G+sHDrW2nVlsZi/NFBbRFgcC54YW/jxg1EuGawVgQjUKIgNbFnucRHIyt2plS
+         MFh5wI/dFzEPlAANrXW4eW85XquOgiArtngfo3VFTJkc8S8iGtP2geoaer8Qk4soSNK6
+         dNqvRWERml11KT8Cw1mg5okBl7yzSB4kXRqQ9gu06ig5ePw6m42i53nr++hbbIcLYSiL
+         G+Jlu1X0KC4E46ESjNoGldoYQCd1coMPGMEPpF7wR0s7d/VHGC+kM53FLsTVSgImNmaM
+         blMA==
+X-Gm-Message-State: APjAAAWpr/dbyIiN5mBtczT5dEAixzXxeBTXLcW4j1DKHn5XGz6A+6o5
+        BekW1Nc9w1dwwtroKBXt1Ms56FZeVCV2Dg==
+X-Google-Smtp-Source: APXvYqy4WwJxnu5tImueGejMNwpI8d4wywFvtYveAheqzMUnC+ze8RfJRcYrhuaxN0SDeq/nplBSfQ==
+X-Received: by 2002:a65:4304:: with SMTP id j4mr85228297pgq.419.1564008430634;
+        Wed, 24 Jul 2019 15:47:10 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
-        by smtp.gmail.com with ESMTPSA id o130sm78685884pfg.171.2019.07.24.15.38.02
+        by smtp.gmail.com with ESMTPSA id g66sm48101433pfb.44.2019.07.24.15.47.09
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 24 Jul 2019 15:38:02 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 15:37:53 -0700
+        Wed, 24 Jul 2019 15:47:10 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 15:47:05 -0700
 From:   Josh Steadmon <steadmon@google.com>
 To:     Jakub Narebski <jnareb@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
         avarab@gmail.com, peff@peff.net
-Subject: Re: [RFC PATCH v2 1/3] trace2: Add a JSON schema for trace2 events
-Message-ID: <20190724223753.GB43313@google.com>
+Subject: Re: [RFC PATCH v2 2/3] trace2: add a schema validator for trace2
+ events
+Message-ID: <20190724224705.GC43313@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
         Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
         gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
         peff@peff.net
 References: <cover.1560295286.git.steadmon@google.com>
  <cover.1562712943.git.steadmon@google.com>
- <a949db776c77e5c97c78055f1bb0f2101096f861.1562712943.git.steadmon@google.com>
- <86wogp68q0.fsf@gmail.com>
+ <3fa4e9eef84ba00c631c82fb3a2eacb8439df9e5.1562712943.git.steadmon@google.com>
+ <86muhkae3r.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <86wogp68q0.fsf@gmail.com>
+In-Reply-To: <86muhkae3r.fsf@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.07.10 20:32, Jakub Narebski wrote:
+Thanks for the review, replies are inline below.
+
+On 2019.07.11 15:35, Jakub Narebski wrote:
 > Josh Steadmon <steadmon@google.com> writes:
 > 
-> > Define a JSON schema[1] that can be used to validate trace2 event
-> > objects. This can be used to add regression tests to verify that the
-> > event output format does not change unexpectedly.
+> > trace_schema_validator can be used to verify that trace2 event output
+> > conforms to the expectations set by the API documentation and codified
+> > in event_schema.json (or strict_schema.json). This allows us to build a
+> > regression test to verify that trace2 output does not change
+> > unexpectedly.
 > >
-> > Two versions of the schema are provided:
+> > Signed-off-by: Josh Steadmon <steadmon@google.com>
 > 
-> Actually, four versions of the schema are provided, as you have written
-> in the t/trace_schema_validator/README file.
+> Very nitpicky comments below.
+> 
+> > ---
+> >  t/trace_schema_validator/.gitignore           |  1 +
+> >  t/trace_schema_validator/Makefile             | 10 +++
+> >  .../trace_schema_validator.go                 | 78 +++++++++++++++++++
+> >  3 files changed, 89 insertions(+)
+> >  create mode 100644 t/trace_schema_validator/.gitignore
+> >  create mode 100644 t/trace_schema_validator/Makefile
+> >  create mode 100644 t/trace_schema_validator/trace_schema_validator.go
+> >
+> > diff --git a/t/trace_schema_validator/.gitignore b/t/trace_schema_validator/.gitignore
+> > new file mode 100644
+> > index 0000000000..c3f1e04e9e
+> > --- /dev/null
+> > +++ b/t/trace_schema_validator/.gitignore
+> > @@ -0,0 +1 @@
+> > +trace_schema_validator
+> > diff --git a/t/trace_schema_validator/Makefile b/t/trace_schema_validator/Makefile
+> > new file mode 100644
+> > index 0000000000..ed22675e5d
+> > --- /dev/null
+> > +++ b/t/trace_schema_validator/Makefile
+> > @@ -0,0 +1,10 @@
+> > +.PHONY: fetch_deps clean
+> > +
+> > +trace_schema_validator: fetch_deps trace_schema_validator.go
+> > +	go build
+> 
+> I don't know the Go build process, but shouldn't the name of target and
+> the name of actual source file passed to the command?
+> 
+> Though I don't think we would _need_ for example being able to configure
+> Go build process via Makefile variables, like e.g. $(GOBUILD) in
+> https://sohlich.github.io/post/go_makefile/
 
-Thanks for the catch, will be fixed in V3.
+Yeah it seems optional for Go, but fixed to make things more consistent
+with the other makefiles.
+
+> > +
+> > +fetch_deps:
+> > +	go get github.com/xeipuuv/gojsonschema
+> > +
+> > +clean:
+> > +	rm -f trace_schema_validator
+> 
+> In git Makefile we use
+> 
+>   clean:
+>   	$(RM) $(PROGRAMS)
+> 
+> I'm not sure if it is needed for operating system independence, but
+> using $(RM) is a standard way to create 'clean' targets...
+
+Fixed in V3.
+
+> > diff --git a/t/trace_schema_validator/trace_schema_validator.go
+> > b/t/trace_schema_validator/trace_schema_validator.go
+> > new file mode 100644
+> > index 0000000000..f779ac5ff5
+> > --- /dev/null
+> > +++ b/t/trace_schema_validator/trace_schema_validator.go
+> > @@ -0,0 +1,78 @@
+> > +// trace_schema_validator validates individual lines of an input file against a
+> > +// provided JSON-Schema for git trace2 event output.
+> > +//
+> > +// Traces can be collected by setting the GIT_TRACE2_EVENT environment variable
+> > +// to an absolute path and running any Git command; traces will be appended to
+> > +// the file.
+> > +//
+> > +// Traces can then be verified like so:
+> > +//   trace_schema_validator \
+> > +//     --trace2_event_file /path/to/trace/output \
+> > +//     --schema_file /path/to/schema
+> > +package main
+> > +
+> > +import (
+> > +	"bufio"
+> > +	"flag"
+> > +	"log"
+> > +	"os"
+> > +	"path/filepath"
+> > +
+> > +	"github.com/xeipuuv/gojsonschema"
+> > +)
+> > +
+> > +// Required flags
+> > +var schemaFile = flag.String("schema_file", "", "JSON-Schema filename")
+> > +var trace2EventFile = flag.String("trace2_event_file", "", "trace2 event filename")
+> 
+> The standard for long options is to use "kebab case", not "snake case"
+> for them, i.e. --schema-file not current --schema_file, etc.
+
+Fixed in V3.
+
+> > +
+> > +func main() {
+> > +	flag.Parse()
+> > +	if *schemaFile == "" || *trace2EventFile == "" {
+> > +		log.Fatal("Both --schema_file and --trace2_event_file are required.")
+> > +	}
+> 
+> I guess that you prefer required options with explicit arguments instead
+> of positional arguments (that is requiring the command to be called with
+> two arguments, first being schema file, second being event file to
+> validate).
+
+Yeah, that's the style I'm used to at work, but I can change this if
+positional args are more acceptable for Git.
+
+> > +	schemaURI, err := filepath.Abs(*schemaFile)
+> > +	if err != nil {
+> > +		log.Fatal("Can't get absolute path for schema file: ", err)
+> > +	}
+> > +	schemaURI = "file://" + schemaURI
+> > +
+> > +	schemaLoader := gojsonschema.NewReferenceLoader(schemaURI)
+> > +	schema, err := gojsonschema.NewSchema(schemaLoader)
+> > +	if err != nil {
+> > +		log.Fatal("Problem loading schema: ", err)
+> > +	}
+> > +
+> > +	tracesFile, err := os.Open(*trace2EventFile)
+> > +	if err != nil {
+> > +		log.Fatal("Problem opening trace file: ", err)
+> > +	}
+> > +	defer tracesFile.Close()
+> > +
+> > +	scanner := bufio.NewScanner(tracesFile)
+> > +
+> > +	count := 0
+> > +	for ; scanner.Scan(); count++ {
+> 
+> I see that you assume JSON-Lines format, i.e. one JSON object per line
+> in the file.
+
+Yeah, I'll add a comment noting this. This won't work with the provided
+list schemas unless we reformat everything to be on a single line.
+
+> 
+> > +		if count%10000 == 0 {
+> > +			// Travis-CI expects regular output or it will time out.
+> > +			log.Print("Validated items: ", count)
+> 
+> I wonder if it wouldn't be better to provide --progress flag, which
+> Travis-CI job would turn on.
+
+Done, thanks for the suggestion.
+
+> > +		}
+> > +		event := gojsonschema.NewStringLoader(scanner.Text())
+> > +		result, err := schema.Validate(event)
+> > +		if err != nil {
+> > +			log.Fatal(err)
+> > +		}
+> > +		if !result.Valid() {
+> > +			log.Print("Trace event is invalid: ", scanner.Text())
+> 
+> It might be good idea to print the line (i.e. the value of `count`
+> variable).
+> 
+> I guess that conforming to the <filename>:<line>: prefix (like e.g. gcc
+> uses for errors) would be unnecessary.
+
+Done in V3.
+
+> > +			for _, desc := range result.Errors() {
+> > +				log.Print("- ", desc)
+> > +			}
+> > +			os.Exit(1)
+> > +		}
+> > +	}
+> > +
+> > +	if err := scanner.Err(); err != nil {
+> > +		log.Fatal("Scanning error: ", err)
+> > +	}
+> > +
+> > +	log.Print("Validated events: ", count)
+> > +}
