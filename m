@@ -4,95 +4,91 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 163DD1F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 11:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00AD1F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 11:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403987AbfGYLSJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 07:18:09 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50934 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403886AbfGYLSI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 07:18:08 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v15so44645142wml.0
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 04:18:07 -0700 (PDT)
+        id S2391949AbfGYLeq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 07:34:46 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:35210 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388479AbfGYLeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 07:34:44 -0400
+Received: by mail-ed1-f44.google.com with SMTP id w20so49891680edd.2
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 04:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=38jGZ/LhxhtJkf4KscE+6H3Ungbii2aFJUvZUFyRYlU=;
-        b=oxiHpWj7CiMzHNFV/0BEiDxFwsErsARWChKROuDlJG5benqxzjopYnLlPoFOJ8q7s7
-         i8dYAxAgqvzcCmZQ9J+Vs6zJwj13/rbtrbpxFUtw0nqiYV7fJpEAQ4Unl08ZaTJZUK32
-         8PyDtPqdI9DWF3TxAYdr/MrwOblQgXvTqTL3WL4vRdWPr1v0nmZEH6swqLr1c0HqXpwA
-         ieo1LyUKN2qvYYf3bNC16hgR8nehtMT1lJjNjHkNV9DxhGF3jbpGP+Bc4UQ7F6l1ZXGq
-         7+wvz5MFQYkbo59Sj6f6c5rzKve4KTlD3oDlmAnjY6IS2UUpzxiNQow9LRu0+HYh6K5s
-         odeQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hd7Lb6peGVYwWMRiWn0yb7NrNP/05hdA/hlNnQfgJX4=;
+        b=SxPbxjI0ljSE9kyaWWmTzaAZYEuiNl86nDcz9aT+rqrQvjrn8HTiUlS7BQfpqTA2uM
+         7A49H4b5BqampC39vgIIv2SnZMBN1VwdrKudrU+OCItZjw41kduYqdHUx2PAvoMS/RWT
+         L6zcafYKh6gzJMYKV4xGuey0TfZh5nPlUZUWPxJKc/Xo6W4mE8pQxTu4u6yJT3tiDfue
+         JDG72axGKiuzYa9uhCBGNusWXXgeghmdItqgRYhqnZJMYec969OnXx8BvdOtIc9Qd/6t
+         9k7c8jQN7q0LKffuuW5WQQNSlkx+Yi8eEsQYHezYEEO3ST0J6+mccqfgDprLgUuy43yR
+         MBwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=38jGZ/LhxhtJkf4KscE+6H3Ungbii2aFJUvZUFyRYlU=;
-        b=hdPWSnORv5wNTgBwMs4XnKTCmJ3VpPPOPALvhQqnNTh+ZA/JbRhu8wNVrm6aMudTBg
-         cUXHnxSGdTJuWYlBYL5B2TB8HMA3XcPX96mVD9OvgQLrU75RKi4cBIGrQFRkGoK7DkGx
-         m0uHX5XC4fNF1uSg3KSSniZSuwfJtBb3dFsRbZvk9a28OinFwzxsYywIS1+WBTb1Q3EF
-         DG4I6fXHQOzVR7hd3wiDUn06+HpovRcF8xNI3we3T4COgMmpKgBDTQBzxU//R0tWcqkS
-         gBNjP8YnikISDMMRbNGuCTuQJA+OOENQEp/GxIqWl1szjOnzjzkOilkQhtHAOYLDH1M6
-         v57Q==
-X-Gm-Message-State: APjAAAU4d8iiL8bka42VCBjn/oxWklkkJXMFpSfZgRXmemznW+T6rMFn
-        2kCH4ELEbDUxAL7Pi0KuTvo=
-X-Google-Smtp-Source: APXvYqzu7MFBbmywolYbWXYcWZynOj0kz/6terS38GgklKViVyawjtNPmOt2G4S5W5MxXhjANWXTfg==
-X-Received: by 2002:a7b:cae9:: with SMTP id t9mr78988465wml.126.1564053487290;
-        Thu, 25 Jul 2019 04:18:07 -0700 (PDT)
-Received: from szeder.dev (x4db5738c.dyn.telefonica.de. [77.181.115.140])
-        by smtp.gmail.com with ESMTPSA id k124sm79132529wmk.47.2019.07.25.04.18.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 04:18:06 -0700 (PDT)
-Date:   Thu, 25 Jul 2019 13:18:03 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        avarab@gmail.com, peff@peff.net, jnareb@gmail.com
-Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
-Message-ID: <20190725111803.GL20404@szeder.dev>
-References: <cover.1560295286.git.steadmon@google.com>
- <cover.1564009259.git.steadmon@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hd7Lb6peGVYwWMRiWn0yb7NrNP/05hdA/hlNnQfgJX4=;
+        b=q5LtL7DEKn8OI43DMtAOGJ9Xgk36kteZVM6hfLFQ7JwMmREvzCtqVXO84GjaxOe1N5
+         apsmO29ldTzYeCFkgMoKqNXO3Hp45ZAM1cyjfA4/2+WZ9jDmcL+jpdfS5sVJxY0ltJ2r
+         tC7mXLpxz1/KBjtEHHGTJOZb8kHElhWEWLXG4GcmSl+pU1eKGBpKm0gbJ0TJGUVXvyfc
+         6RedOiiexLfgB8gjkJypzrNUGeiztU14eQdtO85LNSTUJczhoBwNqlaLsZdDuYIcvZgD
+         mOk2Y5FDHCQsFu5MG1Vnzsp0BVo5FFDUBpb3czu7PX4ETGVKkkvQhQdpuB8DbiTO4nh7
+         t+Ew==
+X-Gm-Message-State: APjAAAX6kCmKNY6sWjIJlSfeOsk8boPV3PwZ+1vXjRo/NCCj32fcndOi
+        RAELUtVOr+R54N5kIHzRxjxZXcOfgn9CGUBuFz7LKs6Y
+X-Google-Smtp-Source: APXvYqwOw4onseGCPpAUNyeVEXDQndHnH5/kieHY6SpWlYvok0Y9XrX1GZWfanAv07cb5o/hsAZkElAmhn4rkAgSN8k=
+X-Received: by 2002:a50:9107:: with SMTP id e7mr77087020eda.280.1564054482094;
+ Thu, 25 Jul 2019 04:34:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1564009259.git.steadmon@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com>
+In-Reply-To: <35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 25 Jul 2019 13:34:30 +0200
+Message-ID: <CAP8UFD1C_FD5TLz0oyn6QzGU2rdvvTe6PNhpK29vkMfuHim-qg@mail.gmail.com>
+Subject: Re: Where do I send patches for git-gui?
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Pat Thoyts <patthoyts@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 24, 2019 at 04:06:50PM -0700, Josh Steadmon wrote:
-> This is a proof of concept series that formalizes the structure of trace2 event
-> output using JSON-Schema [1].
-> 
-> It provides a validator (written in Go) that verifies the events in a given
-> trace2 event output file match the schema. I am happy to rewrite this validator
-> in some other language, provided that the language has a JSON-Schema library
-> supporting at least draft-04.
-> 
-> It runs the validator as part of the CI suite (it increase the runtime
-> by about 15 minutes). It tests that the trace output of "make test"
-> conforms to the schema.
+Hi Pratyush,
 
-I don't like this approach.  15 minutes is a lot, and spending that
-much time on JSON schema validation in every CI build is overkill and
-(IMO unacceptably) wasteful.  I mean, the test suite involves e.g.
-thousands of 'git (add|commit|checkout|reset|...)' executions to set
-up the test cases, but surely it's not necessary to validate the trace
-output of every single one of them.
+On Wed, Jul 24, 2019 at 11:43 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>
+> I have a quick little feature to add to git-gui, and I'm wondering where
+> should I discuss it and send patches. The git-gui repo [0] has no readme
+> I can see that would point me in the right direction. Googling around
+> didn't get me anything either.
+>
+> Should I send it here on this list or is it somewhere else?
 
-> I would appreciate any feedback on better ways to integrate the
-> validator into the CI suite.
+It seems to me that people have been sending patches to git-gui to
+this mailing list indeed.
 
-How about adding a test script dedicated to JSON schema validation,
-which runs only as many git commands as needed to cover all trace2
-events.
+According to the following discussions:
 
+  - https://public-inbox.org/git/xmqqbm36w7hl.fsf@gitster-ct.c.googlers.com/
+  - https://public-inbox.org/git/nycvar.QRO.7.76.6.1905272135280.28524@tvgsbejvaqbjf.bet/
+
+Pat Thoyts (in CC) used to be the git-gui maintainer but we haven't
+been hearing from him for a long time, so we are looking for a new
+maintainer.
+
+
+
+
+
+> Also, is the project even actively maintained any more? The last commit
+> was in 2017.
