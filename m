@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 500A51F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 10:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF74A1F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 10:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389736AbfGYKPN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 06:15:13 -0400
-Received: from mx2.uni-regensburg.de ([194.94.157.147]:37086 "EHLO
-        mx2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389517AbfGYKPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 06:15:13 -0400
-Received: from mx2.uni-regensburg.de (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id DAAB6600004E
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 12:15:09 +0200 (CEST)
-Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-        by mx2.uni-regensburg.de (Postfix) with ESMTP id C4195600004D
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 12:15:09 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
-        with Novell_GroupWise; Thu, 25 Jul 2019 12:15:09 +0200
-Message-Id: <5D39812C020000A10003265F@gwsmtp.uni-regensburg.de>
-X-Mailer: Novell GroupWise Internet Agent 18.1.1 
-Date:   Thu, 25 Jul 2019 12:15:08 +0200
-From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     <git@vger.kernel.org>
-Subject: Antw: Re: blank lines in pre-created merge message
-References: <5D382AC1020000A100032608@gwsmtp.uni-regensburg.de>
- <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
+        id S2389951AbfGYKQd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 06:16:33 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41663 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389934AbfGYKQc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 06:16:32 -0400
+Received: by mail-pf1-f194.google.com with SMTP id m30so22528826pff.8
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 03:16:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=qmOdBYtr2dTz71XnFumyHgBktx1sgLDFQuGwjf0xq9w=;
+        b=PDZM6V3k+yzqLbeSXzFD9CXCnod1BUgCCWkvw7QO4SbGku0I05QMhporoLnuxtffK/
+         wjICv0150UylJdqt5v9WvIoxioLvvcAhqdWxaD2BOyaPSzqpWQ4zwoc7e/6RkaYQZysB
+         9nHylCDrlHy1r6J5VqftPQHvv2rllPCBjyrmW2cIoD5UV/fLMqwDxoyBmWAZITp1SpmN
+         v1/g+3oe7wO6GFkT57L803D9WlC1EDRh93AnMP+XSE7Ol17JPXiik0T0J9NWGLwbuEuK
+         r3s44oNxJj8Y3WvXTCS3USpCxn5IM0dP2VkeucuJvXskpxNeJx6esx6WaBn5Rk557bJp
+         LbjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qmOdBYtr2dTz71XnFumyHgBktx1sgLDFQuGwjf0xq9w=;
+        b=bsA3Huxo1+iAy35cAZ63HYzdn0UOPSBFXWn6f+qjv1eI1uNNYNFPqnMnCUP9+hBTIh
+         DI8v5tAXBqm0BVZ2ILGf9hjTrRboICYaArQMCIFPnsRsl0H4Yx+wwPyerPKzCPi9sFnD
+         OD4SM3opAnd+LrGu9OjSs4HOuUerjPjJ4kbh9GYkmo+tKaUPy6Xy3b1ViAQoVnA8Z1Va
+         ej/Fg0ATmEJ/vV5PNeUS16yhEO7c0wl4u3w/kqvK4gLVV5OgZY3Y5bWa/jYSk1AqZAhH
+         xn3pJeUTgRSUvKyBVbr3uYd/NSur1kxySePb82OJVsa917OF4GFRiSAGFJUttlviCXl3
+         vDaQ==
+X-Gm-Message-State: APjAAAVM7jIDpy75GNxbUPvLSSu7Zx+N6R2tuHX0UO6IdrJDMRwIEnlh
+        nbXuDgA/aHO3DGR6Ee9sOLQe2rqMp7w=
+X-Google-Smtp-Source: APXvYqzVpltOgpyFcQIs2CFh0cbOuwoeIno+ikC8aYkji7Dy/5tiufKhXY/t3y/kTeGc531+qOs94g==
+X-Received: by 2002:a17:90a:601:: with SMTP id j1mr90285191pjj.96.1564049791080;
+        Thu, 25 Jul 2019 03:16:31 -0700 (PDT)
+Received: from centos7.localdomain ([154.48.254.150])
+        by smtp.gmail.com with ESMTPSA id a128sm54161644pfb.185.2019.07.25.03.16.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Jul 2019 03:16:30 -0700 (PDT)
+From:   simon gao <simon29rock@gmail.com>
+To:     git@vger.kernel.org
+Cc:     simon gao <simon29rock@gmail.com>
+Subject: [PATCH] stop it from failing silently when git apply patch and show err info
+Date:   Thu, 25 Jul 2019 06:16:22 -0400
+Message-Id: <1564049782-68817-1-git-send-email-simon29rock@gmail.com>
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb am 25.07.2019 um
-12:07
-in Nachricht <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>:
-> Hi Ulrich,
-> 
-> On Wed, 24 Jul 2019, Ulrich Windl wrote:
-> 
->> I think I had tried bringing this to your attention before, but I think it
+Signed-off-by: simon gao <simon29rock@gmail.com>
+---
+ apply.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> was
->> without success.
->> The issue may seem purely cosmetical, while being easy to fix (is my
-guess):
->>
->> When using "git merge --no-ff --no-commit ..", the pre-created merge
-message
->> always contains two empty lines in between the comment lines. However if 
-> there
->> was a merge conflict (being resolved) an extra blank line is added after
-the
->> first line.
->>
->> In vi those empty lines are easy to spot, and I routinely remove them. But
->> maybe it's better not to create them at the beginning. (A "normal commit" 
-> never
->> creates any emüpty lines in the pre-created comment)
-> 
-> I could imagine that
-> https://github.com/gitgitgadget/git/commit/b2f5171ecc2feb4192acd80f5a6b05c06
-
-> e099e97
-> addresses that. Would be good if you could try; just build `pu` from
-> https://github.com/git/git (`make install` will install it into your
-> `$HOME/bin` and you can test that easily).
-> 
-> If not, how about giving it a try to fix it yourself? This is open
-> source, giving you great power to change the entire source code in your
-> local repository as you wish. And of course, with great power... comes
-> great responsibility.
-
-I agree, but git isn't a tiny project: Could anybody provide a rough overview
-how and where these editor comments are created? Then I could have a look
-myself.
-
-> 
->> My Git version is 2.12.3, but the bug is probably quite old...
-> 
-> You might think that the bug is probably quite old, but what is really
-> old is your Git version. The current one is v2.22.0.
-
-With old I mean 1.7.12 or older ;-)
-
-> 
-> First order of business should be to verify that it has not been fixed
-> in the meantime ;-)
-
-Yeah, but for a fast-paced project you often find yourself busy with updating
-all the time, leaving no time for your productive work (like Android
-development).
-Don't expect too much from someone that drives as 26 year old car... (it's
-easier to handle than the new ones) ;-)
-
-Regards,
-Ulrich
+diff --git a/apply.c b/apply.c
+index 4992eca..f66a6ff 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2094,6 +2094,7 @@ static int use_patch(struct apply_state *state, struct patch *p)
+ 	if (state->prefix && *state->prefix) {
+ 		const char *rest;
+ 		if (!skip_prefix(pathname, state->prefix, &rest) || !*rest)
++            error(_("%s doesn't contain the prefix(%s)"), pathname, state->prefix);
+ 			return 0;
+ 	}
+ 
+-- 
+1.8.3.1
 
