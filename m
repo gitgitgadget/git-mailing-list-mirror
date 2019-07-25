@@ -2,152 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9CA1F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 19:58:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFB211F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 20:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726432AbfGYT6s (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 15:58:48 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:36012 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725819AbfGYT6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 15:58:48 -0400
-Received: by mail-ua1-f67.google.com with SMTP id v20so20371533uao.3
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 12:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cSHvxuIOoOjK+U5Ero3o4vv2f+IrLJTyWsr6T0/rQDk=;
-        b=WsKygdzg4fj1hxKKguA37DXPiByE6lkBpte6l6TKG8ouCX0KKvjmY98JgF1c+E/EXd
-         bIHCjGmKZiCVFX1afeqMm1Nznn41p7IDos7w9jz625gPrFwmGzQtPqsJ8VxRfIHxCiwj
-         rmH2SlmmAqyZtCTXUaaS+P2h+IyJ1EdPQNEAvIT9oEBgkDhwXdMkUu6o/1ur/mwf3IF6
-         806wUQTL8GZPd8er6x8WeNYtjza7WiAHvMMnX5GelwqRHntsZW0eFFih8hW9P8+leCiC
-         F83vwsEbee6Jdt3dTsbXSVtDfFJJI8bLQPfW4AH+crHCID4agtXyeye8/0P0yfPZPMtU
-         z6qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cSHvxuIOoOjK+U5Ero3o4vv2f+IrLJTyWsr6T0/rQDk=;
-        b=jyfdZBvaWMo0iRNTyMQBjgmpTzz0q/pNv8N4stqf+4srtiikcKemNc4fLeCg63l5vT
-         4XTQM0Ucc5r2uqkLbeYvYaXhYx7KRzqp7OXvXrA19aPwvvwSQx9XZ3gsESv3nNhYdRYZ
-         a3bpUiOz2Yt2EUV/TcxRo1e4gpAEYyL8s3AWUXGHPoe+CC4odpCRpQ3mDUcPuVRaqbI8
-         8Dat0oEZYeSRMTTkbv+GW8rk7ysMGRSwm0+vk7FBL2CV7lKbtQi1nGzNZJoenvGJz/17
-         gvPQcJcQEjYREKQloX31KtcrsiGZRCCnVrFIkJQLtHkWE+J+SU6TDp7hRaQmUUnpncqx
-         Cvnw==
-X-Gm-Message-State: APjAAAWthe0XwGnU4uXrogqD79LRSOBAvw4SB8EjDKZyQseqP6HHvu6u
-        jKd/jJBUdU23VQYi1QcdjgmaGlhHNO3DMPv+6LJNcw==
-X-Google-Smtp-Source: APXvYqxuvACjdhqkJMTupkRs4FCSJxLoKalvtLH9lG1f3h17fjgiaDDMhwAUBC4JuIQcSD/OpRtPSkqT9ij8yOlaECo=
-X-Received: by 2002:ab0:3159:: with SMTP id e25mr8805729uam.81.1564084727002;
- Thu, 25 Jul 2019 12:58:47 -0700 (PDT)
+        id S1726413AbfGYUCx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 16:02:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:35433 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726115AbfGYUCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 16:02:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1564084968;
+        bh=uZui6ZdQZgy/Lb89Ofz6GX6hR0Il2pV6V115moNe6Ik=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hWnBS/KJ0KSqCjp1D/Gfgqt4Kf3axKMaHQwUIW77I4fk5Usz5IwCHbogtsxTgXcLl
+         XZiIqRGJz/QsxKHxVo3LBpQPennloHs5RMlKYPHbKwjwzKvibz8dXv1WXDxJMqygpQ
+         9B47T8GUFe798Z0vfY8VxDJuhQZOtc73/jpetvkY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1fmq-1iWliB44Sm-011yfK; Thu, 25
+ Jul 2019 22:02:48 +0200
+Date:   Thu, 25 Jul 2019 22:02:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/19] merge-recursive: rename 'mrtree' to 'result_tree',
+ for clarity
+In-Reply-To: <20190725174611.14802-11-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907252159250.21907@tvgsbejvaqbjf.bet>
+References: <20190725174611.14802-1-newren@gmail.com> <20190725174611.14802-11-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190725174611.14802-1-newren@gmail.com> <20190725174611.14802-4-newren@gmail.com>
- <nycvar.QRO.7.76.6.1907252120300.21907@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1907252120300.21907@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 25 Jul 2019 12:58:35 -0700
-Message-ID: <CABPp-BHahUojy1+cBrOTCvg-w3n-xJp3yE3Br6v8jMwnMzQwCQ@mail.gmail.com>
-Subject: Re: [PATCH 03/19] Ensure index matches head before invoking merge
- machinery, round N
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:fHD9x6XKdC9I3FGD9NGqZY9+kZNqFzTRy2yU45x+v7YWxnsT8s0
+ qdK7bWyNr7zvak/dKqfCxhkdmrBfRtlag8disxiGF/0y9TMZ5dkheDbjslloBf6JucZzgOj
+ BqI97B4scbQ/m8PH7fZX5dN8ILP57KV9zvyTg9sEeClnqkOl4tTnJqKvpyDNpdx7RqWuwck
+ j7KOhYdkAHghScxkY5Ebw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yje6DAJXevo=:8dLG3Iuhlri8nCv5Unh0ec
+ jXKI6R80EbYP6RL/3/HrisiDLMmxHvZ07E/ZPiIf+M0GHfCHpGsBdV/ADo6axoSFRbifk77QS
+ z2B9M57jOI81nmYxFe62kcV8VIfVELYm6Sf6gaZV6sxxwIaCzFxvcduX/RMY5W8wA0ilSIe52
+ a4Zf9ZWkWXqZdQ6eSCyYnrxyp3ssIvosI36DKCR+S/qxOnIX7c11Pt6pLgs8PYhbuLOBYSnll
+ /0U81i2CJBpnFioRCS3HljjZjUBKrXHNsJpell8esxzdmAS/G+uDvA/b6yTXTpL3gq+udKarr
+ bXMXm6JHpzlvu1zfipzpCQwjoViCHVo1eYLEN+OxvbXdNHKkc3wU1D29XIedJxdmOARo2Hs4p
+ nHeU2q9DLiZAczjLHlb0cnNzzguL4TE5MtCp03gzov62+T0rddSKRvSfQtNYmw7udS8yTsuoR
+ IX+ueoYkQ67+tdwA/tG8kawXmWnk10omnXspbvCna5xKUv1Xdd5czGRRYAl+EO5iCiV6GM1Jv
+ UJNLy51eS/q56ufxV5l3pCFFcDWHkmfrjJEfjp3Vgs13+zp+28anzrYlfsF9NaLHuqvGU8/h+
+ Tv/7NGJQr54n5aq2bVP8Tvj5zwUSlK/+hX9eHs8wTihB3fqgpIHTV7nB3lPtfKRPPuQioP3du
+ T+rtLW1GIgGGk/VQMi5oeWF/3UT+UGEH/8JNR6QcrSWn09HTR1p548YpncS4H62sYNXlvMVtT
+ bxZWcx2eje9KL5GvkrXWS7BEbbYajGV3Vb0FjoGsgAeCJW7wGjJQ//3thpN6Hk0Qzbz4ZKu/3
+ DWRnz0ZsLd2Vsz3BL98VXFMryPE/hykqxNBAtkt5T+5mj/zH/otuRH7a+tJeSAwSbsbXXoU5o
+ URZXAGaWxwyyMc4rX36tIYNwBjam5uA3oTRpFhgMr8kMzmpd/FOdHESS//pYl3yq4jmTDj5pZ
+ onp59lihOVhbBLhF9QfkAug8eGM7l8pxUqYtgRf5ELLhvNOAGbjzuhAjVStdGFDHkkYBz7rr6
+ DVj2SoehGpUMgZ+77zG4tetsVVghoLcxDF6X1MKToZSLIuoQpvwo8kAoAVzrnue6uSkGnRAiX
+ POsXhJ13WaXX1pat6WrGLqgR1gkCA4aYMzf
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Hi Elijah,
 
-On Thu, Jul 25, 2019 at 12:41 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Thu, 25 Jul 2019, Elijah Newren wrote:
+
+> It is not at all clear what 'mr' was supposed to stand for, at least not
+> to me.  Pick a clearer name for this variable.
+
+I got curious, and it looks as if I introduced this in 3af244caa82
+(Cumulative update of merge-recursive in C, 2006-07-27), where I moved
+the variable of type `struct tree` out of a `struct merge_tree_result`
+(probably because I found the latter a bit pointless).
+
+The best backsplanation I have for the "mr" is therefore "merge result".
+
+I like `result_tree` better.
+
+Thanks,
+Dscho
+
 >
-> Hi Elijah,
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 >
-> On Thu, 25 Jul 2019, Elijah Newren wrote:
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 0a90546824..61faa26c4f 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3475,7 +3475,7 @@ static int merge_recursive_internal(struct merge_o=
+ptions *opt,
+>  {
+>  	struct commit_list *iter;
+>  	struct commit *merged_merge_bases;
+> -	struct tree *mrtree;
+> +	struct tree *result_tree;
+>  	int clean;
 >
-<snip>
-> > ...And it was fixed again in commit
-> >   160252f81626 ("git-merge-ours: make sure our index matches HEAD", 2005-11-03)
-> > ...and it was fixed again in commit
-> >   3ec62ad9ffba ("merge-octopus: abort if index does not match HEAD", 2016-04-09)
-> > ...and again in commit
-> >   65170c07d466 ("merge-recursive: avoid incorporating uncommitted changes in a merge", 2017-12-21)
-> > ...and again in commit
-> >   eddd1a411d93 ("merge-recursive: enforce rule that index matches head before merging", 2018-06-30)
-> >
-> > ...with multiple testcases added to the testsuite that could be
-> > enumerated in even more commits.
-> >
-> > Then, finally, in a patch in the same series as the last fix above, the
-> > documentation about this requirement was fixed in commit 55f39cf7551b
-> > ("merge: fix misleading pre-merge check documentation", 2018-06-30), and
-> > we all lived happily ever after...
-> >
-> > </quick summary>
+>  	if (show(opt, 4)) {
+> @@ -3545,14 +3545,15 @@ static int merge_recursive_internal(struct merge=
+_options *opt,
+>  				     repo_get_commit_tree(opt->repo, h2),
+>  				     repo_get_commit_tree(opt->repo,
+>  							  merged_merge_bases),
+> -				     &mrtree);
+> +				     &result_tree);
+>  	if (clean < 0) {
+>  		flush_output(opt);
+>  		return clean;
+>  	}
 >
-> Whoa. What a story.
-
-I know, right?
-
-> > diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-> > index 5b910e351e..a4bfd8fc51 100644
-> > --- a/builtin/merge-recursive.c
-> > +++ b/builtin/merge-recursive.c
-> > @@ -1,3 +1,4 @@
-> > +#include "cache.h"
-> >  #include "builtin.h"
-> >  #include "commit.h"
-> >  #include "tag.h"
-> > @@ -63,6 +64,9 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
-> >       if (argc - i != 3) /* "--" "<head>" "<remote>" */
-> >               die(_("not handling anything other than two heads merge."));
-> >
-> > +     if (repo_read_index_unmerged(the_repository))
-> > +             die_resolve_conflict("merge");
+>  	if (opt->call_depth) {
+> -		*result =3D make_virtual_commit(opt->repo, mrtree, "merged tree");
+> +		*result =3D make_virtual_commit(opt->repo, result_tree,
+> +					      "merged tree");
+>  		commit_list_insert(h1, &(*result)->parents);
+>  		commit_list_insert(h2, &(*result)->parents->next);
+>  	}
+> --
+> 2.22.0.559.g28a8880890.dirty
 >
-> For a moment I was unsure whether `_unmerged()` is the right thing to do
-> here, as it specifically allows to read the index even when there are
-> conflict stages. But I guess it does not matter too much here. I
-> probably would have opted for `repo_read_index()` instead, though.
-
-The names repo_read_index() and repo_read_index_unmerged() actually
-seem slightly misleading to me; they seem to do the opposite of what
-you'd think they do.
-
-repo_read_index() reads in an index and allows unmerged entries and
-returns istate->cache_nr.
-
-repo_read_index_unmerged() calls repo_read_index(), then checks to see
-if any of the entries are unmerged and returns whether or not any
-unmerged entries were found.
-
-So, the way to disallow conflict stages isn't to use
-repo_read_index(), but to use repo_read_index_unmerged(), as I did.
-Counter-intuitive, I know.
-
-<snip>
-
-> But of course, if there are uncommitted changes, this would write a tree
-> different from HEAD, then reset the index to match HEAD, so indeed, this
-> discard/read dance is necessary.
 >
-> So this hunk is good.
->
-<snip>
->
-> This is obviously a good change: it strengthens the test case by fixing
-> a subtle bug.
->
-> Thanks,
-> Dscho
-
-
-Thanks for taking a look!
