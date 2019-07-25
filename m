@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 443B41F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 10:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2BE41F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 10:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388922AbfGYKL1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 06:11:27 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:34844 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388781AbfGYKLZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 06:11:25 -0400
-Received: by mail-wr1-f45.google.com with SMTP id y4so50146770wrm.2
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 03:11:24 -0700 (PDT)
+        id S2388644AbfGYKLW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 06:11:22 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39582 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388446AbfGYKLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 06:11:21 -0400
+Received: by mail-wr1-f65.google.com with SMTP id x4so50075145wrt.6
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 03:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CtvvfYhgHWuUdEUTYi70g5UR7x+H96DzbzyHvJ14ZZk=;
-        b=RQwzVIyr8TlLkv6dnneascZEDFS6SAdeAHfkBMp5+7joISr7Vqykxhb2HeVm3HsnmA
-         ARyUoJwvjBMqCvpxtyy3TfMlzoEuIeIG7cVxtOZm/82LeYI3qq3HV/8U5dQyWpMUARXr
-         uv09+isT5GFXPqmPFGmjIOoUcSJKp1+OmODQxoGodMwe79c64UXKhw4esQ7zrK/Qfl55
-         hClpP22Pn4ZZCFZH0KOBMfIXLVAD0I9qDN7OI3qhpfw+onONAdsJ8LbaVupcfA7yXEP8
-         gclao2WnoOf412zRdhxW3NiOJ6ZVqB/n96IwWSKG9uC46SE+7MtbdqTVyAMbI0YRIGmX
-         ySqw==
+        bh=Q3GR+HmC4hanNi6lsfFbMIJErTjBCcGre4Jjgg3o/LM=;
+        b=EaP+uesEqU3uWG4fq7yw5mtCKmt+pnQaIxNPs+qoErXbdnc7yesVmciHs7YaPoS4jy
+         EDxg6haji0PPQ0D+lweYOiHhu1nbnh+6b5fRZGsfIuGNwt8oeey9JOrdUX6Bf/2Z0xzg
+         KtQik/p/2RAP8+tl7Xx0HU+8F/NbQfw2nqF5Jy2jAm2Wqe46uiCIwbQr5mEpvlBJDPmH
+         MI7yqPI9gun9tuyVx44fzOinb949ppyRL9cnqnx3ZPLGeuDR7CTr0vEw1rT5udnqochL
+         CBn1AkSaIv+ab4V+uPgIgTso68oe8fe35HhQmX/bB7kVVvaFWXBS/0B+HzmaeHyWO8d7
+         7oog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CtvvfYhgHWuUdEUTYi70g5UR7x+H96DzbzyHvJ14ZZk=;
-        b=VPw+HshTBiPk+bFHX2PheV9mVulvleGGf8PuhAmacFujSHxu3mbDVwBR6Xxfh5nl+7
-         mdy3+5uw2r/Q4IIL5VG0GAmb8BXuy38Q+8crorhstbqlQH48PpRBpzjObPv++8HLlPlU
-         3IloqDv/4pj7fxiBL16+9Pn0xTjYcO4OkiyDR6kvm/Keo/LLA7Ez9oMIieiFsAU/wSXB
-         HE0tYRXzRutM0NyRxM9NBg+yLAW3F74cR33XDb5W8RtKC/iVplK5lS7CCKZ2BOw0pjom
-         kBDfqJ/eL5yA60t5Bevq05P3F2bc/ybHlv+WOW60bT9TjrSQK1r6YYbiv5FhDcIaRMjp
-         wggA==
-X-Gm-Message-State: APjAAAVlYCJqm+qC6k7c9we/dt+Qzj0DDPbf4AXD9Dy8v1/adeiiaK4Y
-        QXvJRFuvcEJabJV6xGhX2CuLO6lZ
-X-Google-Smtp-Source: APXvYqzglpDFVs4PwZYrq8UitvPq/84wOZWjWWbUpadJZhqllDsGRiyQ6fLgZeY1tcyNjo3jcUxFCA==
-X-Received: by 2002:adf:dfc4:: with SMTP id q4mr91858447wrn.54.1564049483489;
-        Thu, 25 Jul 2019 03:11:23 -0700 (PDT)
+        bh=Q3GR+HmC4hanNi6lsfFbMIJErTjBCcGre4Jjgg3o/LM=;
+        b=nd9d/EVhxXOAAthGcDzCQMqzjB9h5yJch+RQqbAe2AgPP0YpdevSV8PNeyKnXKxeKI
+         NQl75zoemFjIcnh5QK75JGJtsIGF/kOxlnOziIwMxiGbeny4rhDb751quyPQ6KqgvsPt
+         fwJqytxHhmyQPwVJSx/FJYBw3aDbMsS41Ux+dtNgozj40RvcDhB/tKTfXqy8YJWUuhlt
+         esmZh3q+Rbqp1bg3I4KzVRoHhYIuMaHRg2ScLvRtzS4GdNk5sLwpWaBnrsWxTcyN3tik
+         dXTgSHBUbimrifxt3tmtseEoYB3Krhi+9+CXpK2AnBRaY/2wSExU6423ahZk7maLhiU1
+         ewhg==
+X-Gm-Message-State: APjAAAXkuHy9KkODRzLSMx34eQpPm5E7NRXo+wBmR+fuLyLo4mfK8NOG
+        7U8X8uUZPRrEErf34Wew2YX7orDD
+X-Google-Smtp-Source: APXvYqxz4utVHxw5EUj7v0+nNFjLkEUAb13Yy2JdMhR/FRfnlfcPaDKAU0AP/Q2DlsHdEGiU+KMnVA==
+X-Received: by 2002:adf:fd08:: with SMTP id e8mr96899767wrr.147.1564049479901;
+        Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f204sm71892533wme.18.2019.07.25.03.11.23
+        by smtp.gmail.com with ESMTPSA id y6sm60632252wmd.16.2019.07.25.03.11.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 03:11:23 -0700 (PDT)
-Date:   Thu, 25 Jul 2019 03:11:23 -0700 (PDT)
-X-Google-Original-Date: Thu, 25 Jul 2019 10:11:12 GMT
-Message-Id: <a326be77aa05b88bfa9fc036b1551e7c2ae3ab2a.1564049474.git.gitgitgadget@gmail.com>
+        Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
+Date:   Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
+X-Google-Original-Date: Thu, 25 Jul 2019 10:11:07 GMT
+Message-Id: <261825fe442a428ea0724ab6ae9d8d351bda8d3e.1564049473.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.294.git.gitgitgadget@gmail.com>
 References: <pull.294.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 11/12] t3418: test `rebase -r` with merge strategies
+Subject: [PATCH 06/12] t3427: accommodate for the `rebase --merge` backend
+ having been replaced
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,44 +72,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There is a test case in this script that verifies that `git rebase
---preserve-merges` works all right with non-default merge strategies or
-non-default merge strategy options.
+Since 68aa495b590 (rebase: implement --merge via the interactive
+machinery, 2018-12-11), the job of the old `--merge` backend is now
+performed by the `--interactive` backend, too.
 
-Now that `git rebase --rebase-merges` learned about merge strategies,
-let's copy-edit this test case to verify that that works as intended,
-too.
+One consequence is that empty commits are no longer rebased by default.
+
+Meaning that the test case that calls `git rebase -Xsubtree` (which used
+to be handled by the `--merge` backend) now needs to ask explicitly for
+the empty commit to be rebased.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3418-rebase-continue.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ t/t3427-rebase-subtree.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index bdaa511bb0..fbf9addfd1 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -120,6 +120,20 @@ test_expect_success REBASE_P 'rebase passes merge strategy options correctly' '
- 	git rebase --continue
+diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+index 8c4ddd3408..b490919c60 100755
+--- a/t/t3427-rebase-subtree.sh
++++ b/t/t3427-rebase-subtree.sh
+@@ -83,10 +83,10 @@ test_expect_failure 'Rebase -Xsubtree --keep-empty --preserve-merges --onto comm
  '
  
-+test_expect_success 'rebase -r passes merge strategy options correctly' '
-+	rm -fr .git/rebase-* &&
-+	git reset --hard commit-new-file-F3-on-topic-branch &&
-+	test_commit merge-theirs &&
-+	git reset --hard HEAD^ &&
-+	test_commit some-other-commit &&
-+	test_tick &&
-+	git merge --no-ff merge-theirs &&
-+	FAKE_LINES="1 3 edit 4 5 7 8 9" git rebase -i -f -r -m \
-+		-s recursive --strategy-option=theirs HEAD~2 &&
-+	test_commit force-change-ours &&
-+	git rebase --continue
-+'
-+
- test_expect_success '--skip after failed fixup cleans commit message' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout -b with-conflicting-fixup &&
+ # FAILURE: fatal: Could not parse object
+-test_expect_failure 'Rebase -Xsubtree --onto commit' '
++test_expect_failure 'Rebase -Xsubtree --keep-empty --onto commit' '
+ 	reset_rebase &&
+ 	git checkout -b rebase-onto to-rebase &&
+-	git rebase -Xsubtree=files_subtree --onto files-master master &&
++	git rebase -Xsubtree=files_subtree --keep-empty --onto files-master master &&
+ 	verbose test "$(commit_message HEAD~2)" = "master4" &&
+ 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
 -- 
 gitgitgadget
 
