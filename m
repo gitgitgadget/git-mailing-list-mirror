@@ -2,109 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72EF81F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 09:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7920E1F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 09:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390299AbfGYJQg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 05:16:36 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43485 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390290AbfGYJQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 05:16:36 -0400
-Received: by mail-wr1-f66.google.com with SMTP id p13so49896547wru.10
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 02:16:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=iZL9JYiXw6dg3Nz1c9biyGAnt+uDxq8AO8eCx9SLiUE=;
-        b=nd5tMLC/L/VxABTGc1OrUmrxNyGiQ6Hof2yvHB+uYybcahVRNPY5f0TCyf7EIS5Z2V
-         +3zAIC17jjoGlixoVj7vbQFycMwtprQSp3QUdwd4Tf0fspIEvz3etj6+cCT/8qI8MX00
-         VXh9OMA8tVW9Aoa8Fdqq+38yUkaPM+zTQZco89HvYa6NYRWgCA1xb7/gMMUbatTmn27M
-         uYaGXXQNPegFUSuFUwwiQC/XfqELdgy4NQUmCQpOuySvrPJxlw/TebI6teLiUQ6dewT8
-         BWpsPGZndeOUGOFA62jB7/89QaZVu6XVtbvLCEAEhQgU6NBjgdJ53BYr7dzbYXaw52aH
-         nTCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iZL9JYiXw6dg3Nz1c9biyGAnt+uDxq8AO8eCx9SLiUE=;
-        b=INXRSvQMrToKsC8ORK/VAZIrjgf5N3HC8lnrNTo3s7iGrfVJFuP4zO5ktRVo8ZbL67
-         7DZo9TfML2lHtgd4vFwWN0jgO2H3yhDDq809GFx9royR1orz9UstLN0/wjHa7VzLaKHN
-         yT6lgloM4scSnSUVNKthCoFwxpPiQXS81Z8tISAWFpk3/QGBNP3zQcbAPlrC1vaUKqIw
-         RTPysKedSqZ4dCLy7uLf/0mCKDK8TAp5EUMMtFowvx+WE/uAex3DHqNFtyz5zRsNMsjt
-         F5Alkg5plGCGrfS/Dw8N9H3xVeZqKudk9bl9JZQQ/mFnCMzMWOPoa2/bBg07oIajnK4c
-         ANIQ==
-X-Gm-Message-State: APjAAAWLEC2e5shy18Z/t8GAylfo2fFeK74P+QKYW2H4lj2w/j5RO1gG
-        zEjbBKU51v+NcX73xirCfNFM3vqh
-X-Google-Smtp-Source: APXvYqxUgcTFCp9kRCrFoRy4cVppflE/bWJ4tmgIGw5M9j2zlwAFPCgFq/5thLr50aza7dQ0kUYQzw==
-X-Received: by 2002:a5d:65c5:: with SMTP id e5mr45359160wrw.266.1564046194468;
-        Thu, 25 Jul 2019 02:16:34 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f3sm30838124wrt.56.2019.07.25.02.16.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 02:16:33 -0700 (PDT)
-Date:   Thu, 25 Jul 2019 02:16:33 -0700 (PDT)
-X-Google-Original-Date: Thu, 25 Jul 2019 09:16:31 GMT
-Message-Id: <ed41e8d7abc93603063e9a99f628548608413d34.1564046191.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.296.git.gitgitgadget@gmail.com>
-References: <pull.296.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t3422: mark two test cases as requiring support for
- `--preserve-merges`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2389260AbfGYJZG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 05:25:06 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51859 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388704AbfGYJZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 05:25:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1564046703;
+        bh=vLqBM/MM6JreYu/+Ddz9kQDtkooMJrV8KE6JZ8YhEbI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WevhsKQxNn/tCFaorJ15m+Dx/fqheUlBq4o611fU7Q3av/HUXrxK6GS7LwHvbv1QH
+         mDZzI/pPbKWi4QMvkqjVgnmGCYTaTisNhohRf8PA9QSMnY7IYai9asdATKQIPtbxez
+         h78t+HKRy5h7p12gAmMVk+9vEA8DBLHrp0RNBmAw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MPGVx-1i2JxD3n6z-00PhBf; Thu, 25
+ Jul 2019 11:25:03 +0200
+Date:   Thu, 25 Jul 2019 11:25:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v3 00/13] example implementation of revwalk
+ tutorial
+In-Reply-To: <20190701202014.34480-1-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1907251122260.21907@tvgsbejvaqbjf.bet>
+References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WvBpun1/65daA6E8AedggPR8Yz2RN3+FWwd/9xnYHitttLe+dye
+ d76+vUVSGvaPlyCTtdt5s3+N9LcXMH7W5qvtaq3Az6ORw66BHQxnUjDFZvpaxvgCfqYA+2N
+ S6qbYpOCKnG2OK4V54XFJOFqKpGYCogYDIeOhl9/Pww1o/wEN2WXr3Nsqy/EZ+OPit0yC/w
+ znZd1aQ76byP9+Nsaldng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:B0q/OOlZTHM=:W30gLGft57baLDhI/tyznf
+ pXDp34lTPBdbmL1/Pu4rtJMBFKDA5FbdReoSfj9m65SXcHvLiJHAPA7Nofbs5biPuT1xNqWgz
+ PNxLOPBcYB6QSnXd40goP5VK/AeOt7JpZAAYZHB4cX8m5xbYDlL22ew5xT3f//J3Jx+Kd7AOm
+ BvvhghyQ5VGrnMWzPumWr2LroohoyiH3XdTjOWhQDnarI6H6mtbXywcXsU25SIsAMmlX4vuxL
+ IPpCqbvFdUkgytHwo2rvhcGRPkl2+DwmizRZm2ni9cIPG8xB48sQ15flMoZhWzXnLCzjNaY8Y
+ EIfvumkDixb2H/PH+/2GUjV5dQnT+stp4S7oEwTua1rvwbbOXGVHUXpE199uiBabVqfRr5yyq
+ 4nSiW2JRrZzNKkrPyoVbXl2rIpW13CVmVQkAKwrXQxf0SAdOKUFBT+iSUptRXQe/GXfMdzjzf
+ OgAqgIsh/84g/lCqE7/fJU6wlP1/7yWke5TUG2qQTdINYHkvM9b7R7a9t7ggkWnwlz/jKvdA8
+ 0M1fGR442Q7UMNNdB4p4Q47ZunP0WpSCsslXDn3tYMlQNERCtaYMBYfi7WKD4JB2Mduv+svQ+
+ 360kWQo2wSZgI1/bxSqSNqkBb2P1hysiz3+XF9TUGWBecWBIr6JwDu9ra0t7jDmrKbQKzmrjB
+ FZifgKgYqV/JMreTmCr6XJwLN52G92iGwudRdEVUn1aquE81JUaLmCuEehPx7dmTDy6+PiJXl
+ 7k9JsVFAQ4U5t1YkKdc+k6gPmZdpdiPTV5rQDdR6DBrBe/HMfiz12vkLI7Bh79HGgWCVDWMxd
+ bScqt3uK3teJro26T7wFj+YFlp0b4v2CAGnocoQAVx1fg7t2rk8IEgLj5B4jT0rAMCzGv5tBB
+ xjaHsxCSKaq8HhPxuv3k/HtnKeBquh6riDF89Mw2HByax6/gjDaGOIuaty8EILHb4YxNnrvPI
+ xYRpjm2d+ZB3oliOWVT/xaryZWGGlC+BkSJKsxzEhtsWHT5iXDPzDiskkR6oet5ZYP3XX549h
+ Jq17n+lh9QfLz/17RHvD8Uir8hB72k1LGZMPLAPCmSPRtNDil8vZLs95lFYUauXJJwqVZ5exM
+ JY7d7qL022BCj+WexebRT5aQxBesB8c8rcc
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Emily,
 
-We started marking all of those test cases that require `git rebase -p`
-to work in the recent past, to allow for skipping them (because the
-`--preserve-merges` backend is already deprecated and will be removed in
-one of the next major versions, so it is a bit pointless to test its
-functionality all the time).
+On Mon, 1 Jul 2019, Emily Shaffer wrote:
 
-This patch marks two previously forgotten test cases with the `REBASE_P`
-prerequisite, to allow skipping them via setting the environment
-variable `GIT_TEST_SKIP_REBASE_P`.
+> Since v2, mostly reworded comments, plus fixed the issues mentioned in
+> the tutorial itself. Thanks Eric for the review.
+>
+> Emily Shaffer (13):
+>   walken: add infrastructure for revwalk demo
+>   walken: add usage to enable -h
+>   walken: add placeholder to initialize defaults
+>   walken: add handler to git_config
+>   walken: configure rev_info and prepare for walk
+>   walken: perform our basic revision walk
+>   walken: filter for authors from gmail address
+>   walken: demonstrate various topographical sorts
+>   walken: demonstrate reversing a revision walk list
+>   walken: add unfiltered object walk from HEAD
+>   walken: add filtered object walk
+>   walken: count omitted objects
+>   walken: reverse the object walk order
+>
+>  Makefile         |   1 +
+>  builtin.h        |   1 +
+>  builtin/walken.c | 297 +++++++++++++++++++++++++++++++++++++++++++++++
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t3422-rebase-incompatible-options.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Since this is not really intended to be an end user-facing command, I
+think it should not become a built-in, to be carried into every Git
+user's setup.
 
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index bb78a6ec86..eb5cb67b06 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -65,12 +65,12 @@ test_rebase_am_only --ignore-whitespace
- test_rebase_am_only --committer-date-is-author-date
- test_rebase_am_only -C4
- 
--test_expect_success '--preserve-merges incompatible with --signoff' '
-+test_expect_success REBASE_P '--preserve-merges incompatible with --signoff' '
- 	git checkout B^0 &&
- 	test_must_fail git rebase --preserve-merges --signoff A
- '
- 
--test_expect_success '--preserve-merges incompatible with --rebase-merges' '
-+test_expect_success REBASE_P '--preserve-merges incompatible with --rebase-merges' '
- 	git checkout B^0 &&
- 	test_must_fail git rebase --preserve-merges --rebase-merges A
- '
--- 
-gitgitgadget
+Instead, I would recommend to implement this as a test helper.
+
+This would have the following advantages:
+
+- it won't clutter the end user installations,
+
+- it will still be compile-tested with every build (guaranteeing that
+  the tutorial won't become stale over time as so many other tutorials),
+
+- it really opens the door very wide to follow up with another tutorial
+  to guide new contributors to write stellar regression tests.
+
+Thanks,
+Dscho
+
+>  git.c            |   1 +
+>  4 files changed, 300 insertions(+)
+>  create mode 100644 builtin/walken.c
+>
+> --
+> 2.22.0.410.gd8fdbe21b5-goog
+>
+>
+>
