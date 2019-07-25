@@ -2,140 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87B611F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 17:42:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A72F81F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730039AbfGYRmP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 13:42:15 -0400
-Received: from mail-lj1-f172.google.com ([209.85.208.172]:33195 "EHLO
-        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbfGYRmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 13:42:14 -0400
-Received: by mail-lj1-f172.google.com with SMTP id h10so48829401ljg.0
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:42:13 -0700 (PDT)
+        id S2403771AbfGYRqS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 13:46:18 -0400
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:42326 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726738AbfGYRqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 13:46:18 -0400
+Received: by mail-pf1-f170.google.com with SMTP id q10so23108329pff.9
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1hrBWe2QTMuv44fqYzrQYm8nidKLO+0Nt4tC0CFGT5Q=;
-        b=i6r6DSaMAgqeCuw1OXxv8cRtPDTpI3oqfxbNmudRL2gVKutK2t2fosbDHzvItaah3R
-         kQ3g0WffCHhkWCdb7bVYH754qXxK+O+fCrr1xhay6M4w6TcwA84BgCWYH7qTDtTQj4dX
-         qrNqHxyaT/8+u6U8seIM6jyhy75QeqMiCDSCp8BPGaIs6/NJtlA8LQVTd/4rJzyPLK29
-         ZootpE7I4VL1dIhcLxd6l8qVn6sVaNEIEaaqeCUUpffAWDVj71S/XHV2KGwXi5AEbOfp
-         5dnsT1yvPso/PO6EIDyHeTI79FQWw/oZaFeZZfT2mnPrn3/E9SyrLUfWuXZJY1LMiD4d
-         HLLA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e3LHto13lSPz6bYcWc5gbvnriJxaFRtqS1x6atwTrus=;
+        b=ALjVJEsRxky3cOda9Ko1EZGFrlJgn82khd+I4ukZ18x0QZ3nX64nenP3+Uvpy9Elyx
+         PbzyuyBKqwODMvfmv79akUsD+QpX5k63ojwv5n+ptFMtkFUfpxOjHXqeI2NP0qybR5Nz
+         lRXGMhI5ipVRUQp0Bffe8NsqKNsnzKsqz4vkoi5byh8+FxYqjceAFYUBB2SVkbHllKOZ
+         p6ypV4EpMl7iY9SAIEc3shgP23Yl6dtd4/yDAb3VCx4Mc+f7VKrDFiTyDklxOE12pERw
+         5NsSnAVuIhuBiv2Om0su+u8xA6lBTqhi9y3iTnoiuYcLcsySQtw4KYHFIxgu8i1cUfAi
+         PsLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1hrBWe2QTMuv44fqYzrQYm8nidKLO+0Nt4tC0CFGT5Q=;
-        b=sdVtO0aWzWFA8vXdPgD0LeHFi5kdIL8NCGsRHJBxn+o0F2w0HXumRF9j0MCQ+Jiait
-         JADisD0C5P6Q6+rZw2v4qFmM7MNkphFrNia/b4C8Q6KNVfmW3iPZhxS6z9G/yeOkYru6
-         QaF+BS3h8hjSS60FYlRBqa4lQsUrUwYHIhPqAA23aM2guJRXHXHEOjDOsbVNbmTVkby3
-         E63GSCvzzLiGKrB3di0dCzqS9XPcjfnqTVXpHD55I4Y6vPDcSGbrGtPBvpTezUSgv/1P
-         +VyNMji8PFi2y/nLNn9wH9EWj/Hhc87KAVTy1pRMahK8rpCv8fPAh0UsabiYTED139iQ
-         Ex+A==
-X-Gm-Message-State: APjAAAUgFjXczaELtQvSv6IfZWU5LI4kx77Y8KpqC+iuIfgBC+44oPLg
-        9NwQFhghHOCGqGgipPIGjOWheKVnlwWCZg==
-X-Google-Smtp-Source: APXvYqzjlvEyf8yXZyezvRkkZ73gtxWCT0k7bkJSATIxiWJ+peiAjs49rKZEJM8tmGTr99zD2YsQRA==
-X-Received: by 2002:a2e:a16c:: with SMTP id u12mr44790458ljl.59.1564076533064;
-        Thu, 25 Jul 2019 10:42:13 -0700 (PDT)
-Received: from [192.168.2.33] ([109.197.31.38])
-        by smtp.gmail.com with ESMTPSA id w21sm7679608lfl.84.2019.07.25.10.42.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 10:42:12 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [git for translators] How to always generate conflicts for
- merges?
-From:   Ilya Kantor <iliakan@gmail.com>
-In-Reply-To: <xmqqtvbaoysd.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 25 Jul 2019 20:42:09 +0300
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <15314A71-8121-428D-A62D-08E1C1AC0E1B@gmail.com>
-References: <C9A27ED4-CBD9-4FCD-B78F-8A1010D24D06@gmail.com>
- <xmqqtvbaoysd.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e3LHto13lSPz6bYcWc5gbvnriJxaFRtqS1x6atwTrus=;
+        b=CT/F0btX6NycXX3KXJwuOD0VgOIpWOo/jg4I2KxNB5MGb+V1hfxo7TwOoONDX+lj5a
+         rGX4if9PjgkTZkCR2pu9a6jcBbDXvkfVmnTAfcN9C04KUH5/kKuwW9c0bGEDgmSvgQnv
+         Zceb7RoWZQFW1sg5v95Ra4aTccHX9aAO4B3Z4ajMARInw2irdHIOSPCcC5RrCFeMeAJk
+         431LzTpzMXdsTG+gnuJWRbDqR1WBb95watWJHDB24wCCMw45ByCmmEQlrvQROIfvjv8R
+         /QYsE4/+/0hsUd5A2/Z0XEAz2CkVVLzJM/r0Ww2l8fisqj76c+3xaPuimU7qV4xk02e8
+         /xCA==
+X-Gm-Message-State: APjAAAXMFgiJqhsw70zGPJSzOPCNZGhFeoCM4rVaI6uIIAkBoFUnvt6g
+        p+Qpr1uht/leubbA7wyhnJM36x9m
+X-Google-Smtp-Source: APXvYqwqdPL3BN4hoqOAQF5OeFqfhRGvzSJm9gemvBvgH60D0vrLMHSPmCcYD+gISASot4cOHiOPSg==
+X-Received: by 2002:a62:1c93:: with SMTP id c141mr18395182pfc.9.1564076777199;
+        Thu, 25 Jul 2019 10:46:17 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Jul 2019 10:46:16 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH 00/19] Cleanup merge API
+Date:   Thu, 25 Jul 2019 10:45:52 -0700
+Message-Id: <20190725174611.14802-1-newren@gmail.com>
+X-Mailer: git-send-email 2.22.0.559.g28a8880890.dirty
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Before writing a replacement merge strategy for recursive, I decided
+to first cleanup the merge API -- streamlining merge-recursive.h and
+making it more readable.  It includes some fixes I noticed along the
+way, and the last two patches were some forgotten changes of mine I
+rediscovered that had minor textual conflicts before I rebased them on
+this series.
 
-There's a repo for each language, with the same file structure.
+    While there are minor textual and semantic dependencies between
+    these patches (preventing me from splitting up this series), they
+    are logically separate and can be reviewed independently.
 
-For example, English version (upstream):
-=
-https://github.com/javascript-tutorial/en.javascript.info/blob/master/1-js=
-/01-getting-started/1-intro/article.md
+Stuff I'd most welcome review on:
+  * Is cache-tree.c the right place for write_tree_from_memory()?
+    [see patch 7]  Should there be docs on how it differs from
+    write_index_as_tree(), already found in cache-tree?  What does
+    the latter even do?
 
-Japanese:
-=
-https://github.com/javascript-tutorial/ja.javascript.info/blob/master/1-js=
-/01-getting-started/1-intro/article.md
+Some notes:
+  * Applies on master, merges cleanly to next & pu
+  * Only patches 3, 5-7 touch anything outside of merge-recursive
+  * Patches 1 & 3 are bugfixes, 2 & 4 arguably are too, but all are
+    quite minor and do not need to be part of the impending release
+    candidates or 2.23.0.
+  * I'm going to be out next week (July 29-Aug 3), so I can only
+    respond to feedback for the next couple days or it'll have to
+    wait until the 5th.
 
-As English version is updated, changes need to be delivered to =
-translations.
-That's done with "git pull upstream master" from translations.
+Stuff I didn't address:
+  * merge_recursive() empties the commit_list of merge_bases it is
+    passed, so the caller is expected to NOT use it afterwards.  Seems
+    suboptimal to place such an expectation on the caller.
+  * All current callers (3 of them?) of merge_recursive() always pass
+    it a specially created reversed-list for the merge_bases.  Some
+    history spelunking provides no details on any of these about why;
+    it appears that the 2nd and 3rd callers reversed the list because
+    the first did, and I'm guessing the first did in an attempt to
+    exactly match the git-merge-recursive.py scripts' behavior.  But
+    if the API needs them in a reverse order from what people would
+    normally expect to pass them in, shouldn't it reverse them itself
+    instead of making all callers do it?  Also, the order shouldn't
+    matter when there are no conflicts, and when there are conflicts
+    it'd only change which side of the conflict markers the made-up
+    virtual merge base would list things in.  However, we do have
+    tests with recursive virtual merge bases and which test the
+    output, and I didn't want to try to clean those all up.  Besides,
+    the current order shows nicely when commits are named things like
+    "L1", "L2", "R1", "R2" -- it's nice having a well defined left and
+    right side.  Wasn't sure what to do yet, so I just punted for now;
+    this series is already long enough...
 
-As the text structure (paragraphs) is the same, usually merges give =
-conflicts exactly in the places where English version changed.
 
-Sometimes though, e.g. when a new chapter is added to upstream, the =
-merge just goes through "successfully".
+Elijah Newren (19):
+  merge-recursive: fix minor memory leak in error condition
+  merge-recursive: remove another implicit dependency on the_repository
+  Ensure index matches head before invoking merge machinery, round N
+  merge-recursive: exit early if index != head
+  merge-recursive: don't force external callers to do our logging
+  Change call signature of write_tree_from_memory()
+  Move write_tree_from_memory() from merge-recursive to cache-tree
+  merge-recursive: fix some overly long lines
+  merge-recursive: use common name for ancestors/common/base_list
+  merge-recursive: rename 'mrtree' to 'result_tree', for clarity
+  merge-recursive: rename merge_options argument to opt in header
+  merge-recursive: move some definitions around to clean up the header
+  merge-recursive: consolidate unnecessary fields in merge_options
+  merge-recursive: comment and reorder the merge_options fields
+  merge-recursive: split internal fields into a separate struct
+  merge-recursive.c: alphabetize include list
+  merge-recursive: rename MERGE_RECURSIVE_* to MERGE_VARIANT_*
+  merge-recursive: be consistent with assert
+  merge-recursive: provide a better label for diff3 common ancestor
 
-That's what I'd like to avoid, as all changes need to be =
-human-controlled.
+ builtin/checkout.c                |   2 +-
+ builtin/merge-recursive.c         |   4 +
+ builtin/stash.c                   |   2 +
+ cache-tree.c                      |  30 ++
+ cache-tree.h                      |   2 +
+ merge-recursive.c                 | 517 +++++++++++++++++-------------
+ merge-recursive.h                 | 119 +++----
+ sequencer.c                       |   1 -
+ t/t3030-merge-recursive.sh        |   9 +-
+ t/t6036-recursive-corner-cases.sh |   8 +-
+ t/t6047-diff3-conflict-markers.sh | 191 +++++++++++
+ 11 files changed, 589 insertions(+), 296 deletions(-)
+ create mode 100755 t/t6047-diff3-conflict-markers.sh
 
----
-Ilya Kantor
-https://javascript.info
-
-> On 25 Jul 2019, at 19:37, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Ilya Kantor <iliakan@gmail.com> writes:
->=20
->> We're using Git to manage translations of an open-source book, and
->> most of time it works well. But there's also a problem.
->>=20
->> When we pull changes from upstream (English) to translation
->> (e.g. Japanese), git auto-merges them.
->>=20
->> Sometimes there conflicts, but not all the time.
->>=20
->> For example, when a new file is added to English, it just gets
->> auto-merged into Japanese.  But all new changes must be
->> human-controlled, translated.
->>=20
->> Is there a way to force git always generate a conflict, even if
->> changes could be auto-merged?
->=20
-> I am not sure what the workflow here and if it makes sense.  When
-> you have a file, "chapter47.txt", whose original is in English, the
-> translation projects (there are N of them, one for each language)
-> will have their own "chapter47.txt" that has translated text in the
-> same place?  It looks to me that, working that way, the project for
-> translating into e.g. Japanese have no way to keep any of the
-> original English version, in which case why are you even "merging"
-> the English version in the first place?
->=20
-> I would have understood if the original "chapter47.txt" is translated
-> into "chapter47_ja.txt" and friends, like "chapter47_fr.txt", all of
-> which sit next to the original "chapter47.txt".  Then merging an
-> updated version of the original from time to time would make perfect
-> sense to me---that would give you a way to see what changed in the
-> original (e.g. "git show --first-parent -m -p master chapter47.txt")
-> to guide you find the places you would need to make corresponding
-> changes to the variant of your language, e.g. "chapter47_??.txt".
->=20
+-- 
+2.22.0.564.gb52f8ae349
 
