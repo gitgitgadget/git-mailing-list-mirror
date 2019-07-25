@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E75B1F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 02:23:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D16141F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 02:23:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388086AbfGYCXS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 22:23:18 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54058 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387891AbfGYCXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 22:23:18 -0400
-Received: by mail-wm1-f65.google.com with SMTP id x15so43477757wmj.3
+        id S2388870AbfGYCXT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 22:23:19 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38773 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387933AbfGYCXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 22:23:19 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g17so48957273wrr.5
         for <git@vger.kernel.org>; Wed, 24 Jul 2019 19:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QTdg6VwW3R+WGE2Fh7CSuYzkFulUqcJMSNMpAwx7qD4=;
-        b=Yxr5HTvesgfaIb5KgC6L6lYMfUKoeXPLOJJn8hRUDvfcFgzkglYXRKmnJQZ+LppR9N
-         MqP93Wat4sxmlaNjDh5bLpJ8jhq62usfyIqeCTaUgzSL5qI1jQ4bmaUdvixliUWn5NJK
-         tubY/K07QNuAJROFzrqUPt8MxtZNUBPtvzWczxcAdmWgLoEqoGa2U/0PCqxHRyYfmiw7
-         8KA+1i2KxCix5/087tAYwyiRKfdWeiDqheDU+I83WRT7T5wDM3/TePSoWBiCG20e6s0y
-         qeUbSNaH4Uoq1cf8NFRkLw+IL5N3SScsYAAHcmsUqFasSY9UETtf2b5uf08XMtFOGuiA
-         SLrA==
+        bh=6ZlBC78mwHouVI+oKBj3adbBX91NbubjtF0qo50X5oY=;
+        b=fQSE71mIti5RnU3A085brbW0zimDzzvJd29Fa12CZLgP0IRZgmjAYGeO4CpZtG4aZR
+         pu0ARYARMoKnffwy2bswLZJ3bD2jRCGftW7eMBQkNe1h7CrwZBzKvEjEE/wqUf2CCQWZ
+         5IhUAd4EOplcQ4k59wlCX1SC3voMYwI8DmVufZy7Y2UyXOSE7njX1bOFLtwD+NuPtC9+
+         zWLa0dYndK034oKZ3G1doN7H8MhPnleA2FgC8M39YOj7o045yJTme61iN0Og75zwviGJ
+         2HkTkzMR15BiPoRFkgGr+TyBVn7FujdaqPiIelXMvTEWzIUkmgAeLkCYfN8mbAeXubLJ
+         4DQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QTdg6VwW3R+WGE2Fh7CSuYzkFulUqcJMSNMpAwx7qD4=;
-        b=RELgDqCCPM9xAaElJ2kWn8DH08TehJkph9IkLV8BPSNL6D+nOqlBS2AiLmxg6rIuMn
-         4oPes92CXbtAyor55CbG7ViPvjSCmaVizFZ6rmdb6nyLD5sCjULSrdeSn2NAUrpjNnll
-         9hQDxT1fDfyqFUylHA0X22hk2sxRf9uliJ+3kJFSgJ1yS+G/AjqUouMoXsbh38xEK2Hu
-         XmrNHiGC3ENez5rXONmmaNC0pHE+f6Qih6mvUKMuhvVfBUfIPpyRk0El9Bv07hYa4BoB
-         dYHdUz92b0SBFsq+Z7Gr4p3P9pV7v9zeTgTa/ZNIh0cKIOlpRC5k9BfX66HOr0QjtsYp
-         B2TA==
-X-Gm-Message-State: APjAAAUCMO8uQDItK61Z+dh0Uqc+rXqtZgYgKk5WKs64h0z8iLMdnVIe
-        tUYj4n6tAZhxryVtMCnpFm3eM/vu
-X-Google-Smtp-Source: APXvYqyItxFr7c69s7Cq5dKKU0XSF2GSOsY/8998Poy+/oOv9enK45EBbeqcQspUCvLV0nCZy4KVDw==
-X-Received: by 2002:a1c:6a17:: with SMTP id f23mr14965860wmc.91.1564021395439;
-        Wed, 24 Jul 2019 19:23:15 -0700 (PDT)
+        bh=6ZlBC78mwHouVI+oKBj3adbBX91NbubjtF0qo50X5oY=;
+        b=jcNEA1VVQ6cnvablYlY8DKOPWP6MKDKPut8/KPXVwVHusaZHW05I8JqqUvCZV1UWdb
+         8KkXphAOYaF7mkP3chWZ0mfkVPZtdTIMraN09o/icOmiqbSolN0v2mzE+2TqFarFhOy7
+         m9/7bE0rHrrpiToqHm+o8LfxFpKcY/hBzVBeC9I24jf8wgcGhW59KIR+/ouFd1Ns73qX
+         0INEX+QAODAGMpL6UOFMBSVWedKEf+x5pEMv+k+Jz/XJtaOP394UosZCJQy9f1ZivD8l
+         UkBub+QHD+UuKdPYuJClgUKyleew9eB73EbEifBXmRoezE4fyoIOP7BmFVxUUzZnCcfy
+         eykg==
+X-Gm-Message-State: APjAAAVE4wcIIhKOB4DfvmvKAwr6MdZSSpbIYVRqDIxoK2ooPULWqY5i
+        /9UvR5qaNos7XCcb7A2rep/JT148
+X-Google-Smtp-Source: APXvYqy30GYBSF+m8J+zBoPc4rh3+Pc0xDbw+tn8ulswUf+BlzrRlnMII2ZmV+52W4X9s/8KYM6ZhQ==
+X-Received: by 2002:adf:f6d2:: with SMTP id y18mr15469592wrp.102.1564021396209;
+        Wed, 24 Jul 2019 19:23:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e19sm64571807wra.71.2019.07.24.19.23.14
+        by smtp.gmail.com with ESMTPSA id p18sm48169376wrm.16.2019.07.24.19.23.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 24 Jul 2019 19:23:15 -0700 (PDT)
 Date:   Wed, 24 Jul 2019 19:23:15 -0700 (PDT)
-X-Google-Original-Date: Thu, 25 Jul 2019 02:23:08 GMT
-Message-Id: <597ab7d621983b5ad35006a2530aa70b452e895f.1564021392.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Thu, 25 Jul 2019 02:23:09 GMT
+Message-Id: <86380c78321528221c6b0dd6520e714104dbcd18.1564021393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.292.v2.git.gitgitgadget@gmail.com>
 References: <pull.292.git.gitgitgadget@gmail.com>
         <pull.292.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/5] repo-settings: consolidate some config settings
+Subject: [PATCH v2 2/5] repo-settings: add feature.manyCommits setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,280 +74,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-There are a few important config settings that are not loaded
-during git_default_config. These are instead loaded on-demand.
+When a repo has many commits, it is helpful to write and read the
+commit-graph file. Future changes to Git may include new config
+settings that are beneficial in this scenario.
 
-Centralize these config options to a single scan, and store
-all of the values in a repo_settings struct. The values for
-each setting are initialized as negative to indicate "unset".
-
-This centralization will be particularly important in a later
-change to introduce "meta" config settings that change the
-defaults for these config settings.
+Create the 'feature.manyCommits' config setting that changes the
+default values of 'core.commitGraph' and 'gc.writeCommitGraph' to
+true.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile               |  1 +
- builtin/gc.c           | 13 ++++++-------
- builtin/pack-objects.c |  9 +++++----
- commit-graph.c         |  7 ++++---
- read-cache.c           | 12 +++++++-----
- repo-settings.c        | 28 ++++++++++++++++++++++++++++
- repo-settings.h        | 17 +++++++++++++++++
- repository.h           |  5 +++++
- 8 files changed, 73 insertions(+), 19 deletions(-)
- create mode 100644 repo-settings.c
- create mode 100644 repo-settings.h
+ Documentation/config.txt         |  2 ++
+ Documentation/config/core.txt    |  3 ++-
+ Documentation/config/feature.txt | 15 +++++++++++++++
+ Documentation/config/gc.txt      |  4 ++--
+ repo-settings.c                  |  7 +++++++
+ 5 files changed, 28 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/config/feature.txt
 
-diff --git a/Makefile b/Makefile
-index 11ccea4071..032fe9b5f9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -964,6 +964,7 @@ LIB_OBJS += refspec.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace-object.o
-+LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
- LIB_OBJS += resolve-undo.o
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c18efadda5..5e365049aa 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -27,6 +27,7 @@
- #include "pack-objects.h"
- #include "blob.h"
- #include "tree.h"
-+#include "repo-settings.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e3f5bc3396..77f3b1486b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -345,6 +345,8 @@ include::config/difftool.txt[]
  
- #define FAILED_RUN "failed to run %s"
+ include::config/fastimport.txt[]
  
-@@ -41,7 +42,6 @@ static int aggressive_depth = 50;
- static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 50;
--static int gc_write_commit_graph;
- static int detach_auto = 1;
- static timestamp_t gc_log_expire_time;
- static const char *gc_log_expire = "1.day.ago";
-@@ -148,7 +148,6 @@ static void gc_config(void)
- 	git_config_get_int("gc.aggressivedepth", &aggressive_depth);
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
--	git_config_get_bool("gc.writecommitgraph", &gc_write_commit_graph);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
- 	git_config_get_expiry("gc.pruneexpire", &prune_expire);
- 	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-@@ -685,11 +684,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		clean_pack_garbage();
- 	}
- 
--	if (gc_write_commit_graph &&
--	    write_commit_graph_reachable(get_object_directory(),
--					 !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0,
--					 NULL))
--		return 1;
-+	prepare_repo_settings(the_repository);
-+	if (the_repository->settings.gc_write_commit_graph == 1)
-+		write_commit_graph_reachable(get_object_directory(),
-+					     !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0,
-+					     NULL);
- 
- 	if (auto_gc && too_many_loose_objects())
- 		warning(_("There are too many unreachable loose objects; "
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 267c562b1f..20bcd57033 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -34,6 +34,7 @@
- #include "dir.h"
- #include "midx.h"
- #include "trace2.h"
-+#include "repo-settings.h"
- 
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
- #define SIZE(obj) oe_size(&to_pack, obj)
-@@ -2709,10 +2710,6 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		use_bitmap_index_default = git_config_bool(k, v);
- 		return 0;
- 	}
--	if (!strcmp(k, "pack.usesparse")) {
--		sparse = git_config_bool(k, v);
--		return 0;
--	}
- 	if (!strcmp(k, "pack.threads")) {
- 		delta_search_threads = git_config_int(k, v);
- 		if (delta_search_threads < 0)
-@@ -3332,6 +3329,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	read_replace_refs = 0;
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", 0);
-+	prepare_repo_settings(the_repository);
-+	if (!sparse && the_repository->settings.pack_use_sparse != -1)
-+		sparse = the_repository->settings.pack_use_sparse;
++include::config/feature.txt[]
 +
- 	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
+ include::config/fetch.txt[]
  
-diff --git a/commit-graph.c b/commit-graph.c
-index b3c4de79b6..0c2dadab9b 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -16,6 +16,7 @@
- #include "hashmap.h"
- #include "replace-object.h"
- #include "progress.h"
-+#include "repo-settings.h"
+ include::config/format.txt[]
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 75538d27e7..d80162681a 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -577,7 +577,8 @@ the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
  
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-@@ -466,7 +467,6 @@ static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
- static int prepare_commit_graph(struct repository *r)
- {
- 	struct object_directory *odb;
--	int config_value;
+ core.commitGraph::
+ 	If true, then git will read the commit-graph file (if it exists)
+-	to parse the graph structure of commits. Defaults to false. See
++	to parse the graph structure of commits. Defaults to false, unless
++	`feature.manyCommits` is enabled. See
+ 	linkgit:git-commit-graph[1] for more information.
  
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
- 		die("dying as requested by the '%s' variable on commit-graph load!",
-@@ -476,9 +476,10 @@ static int prepare_commit_graph(struct repository *r)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
- 
-+	prepare_repo_settings(r);
+ core.useReplaceRefs::
+diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+new file mode 100644
+index 0000000000..f74314ae90
+--- /dev/null
++++ b/Documentation/config/feature.txt
+@@ -0,0 +1,15 @@
++feature.*::
++	The config settings that start with `feature.` modify the defaults of
++	a group of other config settings. These groups are created by the Git
++	developer community as recommended defaults and are subject to change.
++	In particular, new config options may be added with different defaults.
 +
- 	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
--	    (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
--	    !config_value))
-+	    r->settings.core_commit_graph != 1)
- 		/*
- 		 * This repository is not configured to use commit graphs, so
- 		 * do not load one. (But report commit_graph_attempted anyway
-diff --git a/read-cache.c b/read-cache.c
-index c701f7f8b8..bda665a25a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -25,6 +25,7 @@
- #include "fsmonitor.h"
- #include "thread-utils.h"
- #include "progress.h"
-+#include "repo-settings.h"
++feature.manyCommits::
++	Enable config options that optimize for repos with many commits. This
++	setting is recommended for repos with at least 100,000 commits. The
++	new default values are:
+++
++* `core.commitGraph=true` enables reading the commit-graph file.
+++
++* `gc.writeCommitGraph=true` enables writing the commit-graph file during
++garbage collection.
+\ No newline at end of file
+diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+index 02b92b18b5..31a5fc4f75 100644
+--- a/Documentation/config/gc.txt
++++ b/Documentation/config/gc.txt
+@@ -63,8 +63,8 @@ gc.writeCommitGraph::
+ 	If true, then gc will rewrite the commit-graph file when
+ 	linkgit:git-gc[1] is run. When using `git gc --auto`
+ 	the commit-graph will be updated if housekeeping is
+-	required. Default is false. See linkgit:git-commit-graph[1]
+-	for details.
++	required. Default is false, unless `feature.manyCommits`
++	is enabled. See linkgit:git-commit-graph[1] for details.
  
- /* Mask for the name length in ce_flags in the on-disk index */
- 
-@@ -1599,16 +1600,17 @@ struct cache_entry *refresh_cache_entry(struct index_state *istate,
- 
- #define INDEX_FORMAT_DEFAULT 3
- 
--static unsigned int get_index_format_default(void)
-+static unsigned int get_index_format_default(struct repository *r)
- {
- 	char *envversion = getenv("GIT_INDEX_VERSION");
- 	char *endp;
--	int value;
- 	unsigned int version = INDEX_FORMAT_DEFAULT;
- 
- 	if (!envversion) {
--		if (!git_config_get_int("index.version", &value))
--			version = value;
-+		prepare_repo_settings(r);
-+
-+		if (r->settings.index_version >= 0)
-+			version = r->settings.index_version;
- 		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
- 			warning(_("index.version set, but the value is invalid.\n"
- 				  "Using version %i"), INDEX_FORMAT_DEFAULT);
-@@ -2765,7 +2767,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	}
- 
- 	if (!istate->version) {
--		istate->version = get_index_format_default();
-+		istate->version = get_index_format_default(the_repository);
- 		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
- 			init_split_index(istate);
- 	}
+ gc.logExpiry::
+ 	If the file gc.log exists, then `git gc --auto` will print
 diff --git a/repo-settings.c b/repo-settings.c
-new file mode 100644
-index 0000000000..2c33810cc6
---- /dev/null
+index 2c33810cc6..3face7d8b9 100644
+--- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -0,0 +1,28 @@
-+#include "cache.h"
-+#include "repository.h"
-+#include "config.h"
-+#include "repo-settings.h"
-+
-+void prepare_repo_settings(struct repository *r)
-+{
-+	int value;
-+
-+	if (r->settings_initialized)
-+		return;
-+
-+	/* Defaults */
-+	memset(&r->settings, -1, sizeof(r->settings));
-+
-+	if (!repo_config_get_bool(r, "core.commitgraph", &value))
-+		r->settings.core_commit_graph = value;
-+	if (!repo_config_get_bool(r, "gc.writecommitgraph", &value))
-+		r->settings.gc_write_commit_graph = value;
-+
-+	if (!repo_config_get_bool(r, "index.version", &value))
-+		r->settings.index_version = value;
-+
-+	if (!repo_config_get_bool(r, "pack.usesparse", &value))
-+		r->settings.pack_use_sparse = value;
-+
-+	r->settings_initialized = 1;
-+}
-diff --git a/repo-settings.h b/repo-settings.h
-new file mode 100644
-index 0000000000..89fb0159bf
---- /dev/null
-+++ b/repo-settings.h
-@@ -0,0 +1,17 @@
-+#ifndef REPO_SETTINGS_H
-+#define REPO_SETTINGS_H
-+
-+struct repo_settings {
-+	int core_commit_graph;
-+	int gc_write_commit_graph;
-+
-+	int index_version;
-+
-+	int pack_use_sparse;
-+};
-+
-+struct repository;
-+
-+void prepare_repo_settings(struct repository *r);
-+
-+#endif /* REPO_SETTINGS_H */
-diff --git a/repository.h b/repository.h
-index 4fb6a5885f..a817486825 100644
---- a/repository.h
-+++ b/repository.h
-@@ -2,8 +2,10 @@
- #define REPOSITORY_H
+@@ -3,6 +3,8 @@
+ #include "config.h"
+ #include "repo-settings.h"
  
- #include "path.h"
-+#include "repo-settings.h"
- 
- struct config_set;
-+struct repo_settings;
- struct git_hash_algo;
- struct index_state;
- struct lock_file;
-@@ -72,6 +74,9 @@ struct repository {
- 	 */
- 	char *submodule_prefix;
- 
-+	int settings_initialized;
-+	struct repo_settings settings;
++#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
 +
- 	/* Subsystems */
- 	/*
- 	 * Repository's config which contains key-value pairs from the usual
+ void prepare_repo_settings(struct repository *r)
+ {
+ 	int value;
+@@ -24,5 +26,10 @@ void prepare_repo_settings(struct repository *r)
+ 	if (!repo_config_get_bool(r, "pack.usesparse", &value))
+ 		r->settings.pack_use_sparse = value;
+ 
++	if (!repo_config_get_bool(r, "feature.manycommits", &value) && value) {
++		UPDATE_DEFAULT(r->settings.core_commit_graph, 1);
++		UPDATE_DEFAULT(r->settings.gc_write_commit_graph, 1);
++	}
++
+ 	r->settings_initialized = 1;
+ }
 -- 
 gitgitgadget
 
