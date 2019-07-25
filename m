@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 471251F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 153A61F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403797AbfGYRqZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 13:46:25 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37602 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403788AbfGYRqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 13:46:23 -0400
-Received: by mail-pg1-f194.google.com with SMTP id i70so12659206pgd.4
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:23 -0700 (PDT)
+        id S2403859AbfGYRql (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 13:46:41 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41164 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403819AbfGYRqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 13:46:30 -0400
+Received: by mail-pg1-f195.google.com with SMTP id x15so13052607pgg.8
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y4c/YPBnjMIXkYUz2kwf+SuiNKhrLX2Lj/RZ4xscmX0=;
-        b=aSC/N7ncOjsi6jB+brCEmMVVNZWKtDJfL2Tfw0IpQdi7CgMQgSJOvbURmqPqEwTGhk
-         EwS3kbX0uR8cHrp6yTOUTbgiyD7pGQnZNkkuV7SCKPnHBBY60JatVUKoph1+Fsd17bIk
-         kwCoLnVIUTVRTitduffWQ9sY/gY/tNr1XC77DvybCD7a3hKevKpxkZe671QcOI8D2Kvu
-         ix7kumx/0CQCiTGHBcPVdiZNOve2UbcwJinHktdNDq/3V7mm/XxiNeRUFrnXTaFDQFfY
-         298ueRQ+qPb9fC96KJVOvfKxkx4rmIG58WY6VLc/REoLNAwxPwawxTUpzzEIRJOumbAA
-         Z62w==
+        bh=G10c1w06uQnqmylTjKG3KM9E0KPRforP1yuDiNluXYg=;
+        b=Xm0Pu0vFbPGhuaP1p2yIa1KjyVzLQUPKYJHqnTdRmpWJxEoiS5pJTxDFQrrJRALpev
+         hYcrxoHM7G8zC/1hMI7PCsymhxFqZRe4ym5doaRnJhVz6BNYphdpAp3UoJN8QYYaqJH7
+         3gRpYP4Dwvx6T26AwNkw4zB+v0FgPmYxD2FqqCS/KWJzjY/4QykpUkH/dhubaMG+az0t
+         sejlqqLR74FTsnxIt5hruq262/b39MPj/e6MX8ppZa3Da8ZAsHqSUbWQI9CrUhQYKcjd
+         vll6i09id8MsS1XMILb4fW1ICKXQro8duz3ol45rxjA7pzI3eJf332fpn6HWDTUeW+OH
+         gyRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y4c/YPBnjMIXkYUz2kwf+SuiNKhrLX2Lj/RZ4xscmX0=;
-        b=W/nWHHCkicKA9rp8YMJ/9b/h6z4nX7IWzZz4xsgu1tofwi4p6D2kmaNYZJWeWuCMbQ
-         LwuEymhmLlm3AMI0paFcIm6A3HepFqZmGwZ0wul/RtjWZhwoHF5iU/opLPFoCHcbSZZ8
-         wp8S24nfkmT7Vp3wTtVJTjtAh/TmVb5Cn8dQiYmRrFpxlT3um5gPGmoz8CCLz6DRtMAK
-         5qru9glTA4nOrRoWjB6oI3TrEzcu9fOml/5X+9IWS6ZAEPwC67gNxM2oU1WW8ULckdpU
-         q672yx6ZFedzp32NbzxN7JxTUZBvzp1nTexsc9om7+sxpXYf6Xw+RxCE2PBUEcMch2zo
-         /Ufg==
-X-Gm-Message-State: APjAAAVBwjoDCRSkKOijT7wc4P6Wh1yuAdF6PG+yPujFtwKCjn6VhgaU
-        KGHj4WLqtkFUza5dOXt2CFN14utQ
-X-Google-Smtp-Source: APXvYqyeT09zBEqpTAjEI3/CVfUYy8L+zPk4s1pOiwyxYMEohj59LjGiR59+pkZGUQThLZdI9TAqzA==
-X-Received: by 2002:a62:1d8f:: with SMTP id d137mr18288076pfd.207.1564076782829;
-        Thu, 25 Jul 2019 10:46:22 -0700 (PDT)
+        bh=G10c1w06uQnqmylTjKG3KM9E0KPRforP1yuDiNluXYg=;
+        b=O4jWWU7kb/9061UwHFxBV9o5QF8l8XtUjNkJNaPObP0REzrt2e/FcCru7L47sMoM3D
+         HhVgbIpAURZqtxSuEtqavv+WKDk7fm1x+bfAXe2SCILrqyFe9aCJTNKPABYatrQ7iCTz
+         gG8ZrBOWJZwoh0245XDHRUJ+p82QUiJKoicjoEdI3LdYxmiepDAOhV0X2LtnMQh64wDy
+         HHE3mxmgmlpc7c0FyCGniErY/+MI+/C0T0hWsS+Wlt3AUebgipY+ptwz3YAmwZTbsqex
+         AowL1GhOvCoZXZChksRfvJulMUPVggO+6ig7j4n6jZ0ZE7DCIPgZebg/5S/oKS5Xm4/5
+         /xUA==
+X-Gm-Message-State: APjAAAX9NESZp5lAM37MwKw3Q/IqC42rTvi9TzbHEc8Yk4uHQvWnhL+X
+        bkScobcOc4qrre7O1jL2CHausvHj
+X-Google-Smtp-Source: APXvYqyNconFJ4pdvHAfcCCEwmUdVot/LPhe46DpIF0dRuxjQGeG212fjPW8/PfoqK/j2Kj+rrSIrA==
+X-Received: by 2002:a65:534c:: with SMTP id w12mr87608794pgr.51.1564076789787;
+        Thu, 25 Jul 2019 10:46:29 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.22
+        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jul 2019 10:46:22 -0700 (PDT)
+        Thu, 25 Jul 2019 10:46:29 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 06/19] Change call signature of write_tree_from_memory()
-Date:   Thu, 25 Jul 2019 10:45:58 -0700
-Message-Id: <20190725174611.14802-7-newren@gmail.com>
+Subject: [PATCH 14/19] merge-recursive: comment and reorder the merge_options fields
+Date:   Thu, 25 Jul 2019 10:46:06 -0700
+Message-Id: <20190725174611.14802-15-newren@gmail.com>
 X-Mailer: git-send-email 2.22.0.559.g28a8880890.dirty
 In-Reply-To: <20190725174611.14802-1-newren@gmail.com>
 References: <20190725174611.14802-1-newren@gmail.com>
@@ -67,97 +67,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-write_tree_from_memory() is more of a cache-tree thing than a
-merge-recursive thing (especially since it is called from checkout.c in
-a context before doing anything with merging), but in particular there
-is no need for it to take a merge_options struct when it only really
-needs a repository struct.
-
-One small wrinkle in this is that there is a call to err(), which takes
-a merge_options.  However, this did not used to be there.  In commits
-6003303a1e50 ("merge-recursive: switch to returning errors instead of
-dying", 2016-07-26) and 033abf97fcbc ("Replace all die("BUG: ...") calls
-by BUG() ones", 2018-05-02), all the calls to die() were switched over
-to either err() or BUG() -- and this particular case was converted
-incorrectly; it should have been a BUG().
-
-So, convert write_tree_from_memory()'s current call to err() to instead
-call BUG(), and then make it take a struct repository instead of a
-struct merge_options.
+The merge_options struct had lots of fields, making it a little
+imposing, but the options naturally fall into multiple different groups.
+Grouping similar options and adding a comment or two makes it easier to
+read, easier for new folks to figure out which options are related, and
+thus easier for them to find the options they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/checkout.c |  2 +-
- merge-recursive.c  | 11 +++++------
- merge-recursive.h  |  2 +-
- 3 files changed, 7 insertions(+), 8 deletions(-)
+ merge-recursive.c | 16 +++++++++++-----
+ merge-recursive.h | 34 +++++++++++++++++++++++-----------
+ 2 files changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 91f8509f85..ec13116354 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -760,7 +760,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 */
- 			init_merge_options(&o, the_repository);
- 			o.verbosity = 0;
--			work = write_tree_from_memory(&o);
-+			work = write_tree_from_memory(the_repository);
- 
- 			ret = reset_tree(new_tree,
- 					 opts, 1,
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 7f56cb0ed1..1a3c6ab7f3 100644
+index 0f8d451f2e..a5049b06a3 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -412,10 +412,10 @@ static void unpack_trees_finish(struct merge_options *opt)
- 	clear_unpack_trees_porcelain(&opt->unpack_opts);
- }
- 
--struct tree *write_tree_from_memory(struct merge_options *opt)
-+struct tree *write_tree_from_memory(struct repository *repo)
+@@ -3735,21 +3735,27 @@ void init_merge_options(struct merge_options *opt,
  {
- 	struct tree *result = NULL;
--	struct index_state *istate = opt->repo->index;
-+	struct index_state *istate = repo->index;
- 
- 	if (unmerged_index(istate)) {
- 		int i;
-@@ -434,11 +434,10 @@ struct tree *write_tree_from_memory(struct merge_options *opt)
- 
- 	if (!cache_tree_fully_valid(istate->cache_tree) &&
- 	    cache_tree_update(istate, 0) < 0) {
--		err(opt, _("error building trees"));
--		return NULL;
-+		BUG("error building trees");
- 	}
- 
--	result = lookup_tree(opt->repo, &istate->cache_tree->oid);
-+	result = lookup_tree(repo, &istate->cache_tree->oid);
- 
- 	return result;
+ 	const char *merge_verbosity;
+ 	memset(opt, 0, sizeof(struct merge_options));
++
+ 	opt->repo = repo;
++
++	opt->detect_renames = -1;
++	opt->detect_directory_renames = 1;
++	opt->rename_limit = -1;
++
+ 	opt->verbosity = 2;
+ 	opt->buffer_output = 1;
+-	opt->rename_limit = -1;
++	strbuf_init(&opt->obuf, 0);
++
+ 	opt->renormalize = 0;
+-	opt->detect_renames = -1;
+-	opt->detect_directory_renames = 1;
++
++	string_list_init(&opt->df_conflict_file_set, 1);
++
+ 	merge_recursive_config(opt);
+ 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+ 	if (merge_verbosity)
+ 		opt->verbosity = strtol(merge_verbosity, NULL, 10);
+ 	if (opt->verbosity >= 5)
+ 		opt->buffer_output = 0;
+-	strbuf_init(&opt->obuf, 0);
+-	string_list_init(&opt->df_conflict_file_set, 1);
  }
-@@ -3471,7 +3470,7 @@ static int merge_trees_internal(struct merge_options *opt,
  
- 	unpack_trees_finish(opt);
- 
--	if (opt->call_depth && !(*result = write_tree_from_memory(opt)))
-+	if (opt->call_depth && !(*result = write_tree_from_memory(opt->repo)))
- 		return -1;
- 
- 	return clean;
+ int parse_merge_opt(struct merge_options *opt, const char *s)
 diff --git a/merge-recursive.h b/merge-recursive.h
-index c2b7bb65c6..33f3d53c09 100644
+index e63483b8db..d57fce0daa 100644
 --- a/merge-recursive.h
 +++ b/merge-recursive.h
-@@ -97,7 +97,7 @@ int merge_recursive_generic(struct merge_options *o,
+@@ -9,32 +9,44 @@ struct commit;
+ struct repository;
  
- void init_merge_options(struct merge_options *o,
- 			struct repository *repo);
--struct tree *write_tree_from_memory(struct merge_options *o);
-+struct tree *write_tree_from_memory(struct repository *repo);
+ struct merge_options {
++	struct repository *repo;
++
++	/* ref names used in console messages and conflict markers */
+ 	const char *ancestor;
+ 	const char *branch1;
+ 	const char *branch2;
++
++	/* rename related options */
++	int detect_renames;
++	int detect_directory_renames;
++	int rename_limit;
++	int rename_score;
++	int show_rename_progress;
++
++	/* xdiff-related options (patience, ignore whitespace, ours/theirs) */
++	long xdl_opts;
+ 	enum {
+ 		MERGE_RECURSIVE_NORMAL = 0,
+ 		MERGE_RECURSIVE_OURS,
+ 		MERGE_RECURSIVE_THEIRS
+ 	} recursive_variant;
+-	const char *subtree_shift;
++
++	/* console output related options */
++	int verbosity;
+ 	unsigned buffer_output; /* 1: output at end, 2: keep buffered */
++	struct strbuf obuf;     /* output buffer */
++
++	/* miscellaneous control options */
++	const char *subtree_shift;
+ 	unsigned renormalize : 1;
+-	long xdl_opts;
+-	int verbosity;
+-	int detect_directory_renames;
+-	int detect_renames;
+-	int rename_limit;
+-	int rename_score;
+-	int needed_rename_limit;
+-	int show_rename_progress;
++
++	/* internal fields used by the implementation (do NOT set these) */
+ 	int call_depth;
+-	struct strbuf obuf;
++	int needed_rename_limit;
+ 	struct hashmap current_file_dir_set;
+ 	struct string_list df_conflict_file_set;
+ 	struct unpack_trees_options unpack_opts;
+ 	struct index_state orig_index;
+-	struct repository *repo;
+ };
  
- int parse_merge_opt(struct merge_options *out, const char *s);
- 
+ void init_merge_options(struct merge_options *opt, struct repository *repo);
 -- 
 2.22.0.559.g28a8880890.dirty
 
