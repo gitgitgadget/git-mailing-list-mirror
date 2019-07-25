@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45C891F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB70F1F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403784AbfGYRqW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 13:46:22 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45219 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403778AbfGYRqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 13:46:21 -0400
-Received: by mail-pf1-f196.google.com with SMTP id r1so23110770pfq.12
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:21 -0700 (PDT)
+        id S2403802AbfGYRq1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 13:46:27 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36127 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403778AbfGYRqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 13:46:24 -0400
+Received: by mail-pf1-f195.google.com with SMTP id r7so23121791pfl.3
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Win7FCjRnwg4TJ1gnz9BGEQdPlAg4NQu2na0Ig24bHA=;
-        b=g/4jHRYP3vSE1FqqNbax9DHS/l6aVoAl8oPG9wvqV5Oxu+L2TWl/DqNtLxiWXGAjOa
-         OMJqX24hcXKGHG4Dqsu3yMjUnI6dkEOD8TuCkXuL72awXP7f48Hwh2G+BLBNxco3eAHY
-         NMniL1nOeLyKSLNZ+85ZYOmMNm2ODv6DakfoskYHNZSPAAyR1I8NuOTnGxWDipYJZ/6/
-         qCptiEGxaXhLuKOuhG75VScitrj8NTrj7GItK0d3OweLQ2g2Wex448dN36kyx0m1p15g
-         nmfUEXfikV1z4Fx+AaM+jIuAZfMI+oyJUfdlDijo7DbSRkePpgHWbnvwGpskzOvXyfVD
-         XT6Q==
+        bh=6bpk3wr41CYiAJ4HkSwkwTEWE0aKVSlGBPncgk2Hk5E=;
+        b=hbmF3RdplgXorAm1bSOi2xZxDysiteUrnaEKOXIJorSql6UtZuYnhUJ+LOKkmGx55b
+         IlBnfSF/Qab6XMsVnoM5FHuZ3hDF0dJunAtXBJR9c9U4k8vDRx+WYwIgm+CAyCnJNyKj
+         IC/9QEhnnGC9XV0O8fTJTovdX7BM2FgHsZ0xFfsZqbUqa8Yj0QtL04hbfOQM6OC8uo2C
+         KnRm5/TI8964P4EQdudcc+HT5OVP2EUcUD4+63Zg45wOeFJFeaxW3YbyPuR9kR8rRABc
+         XFuT1u3JN2sgsIl0ltawfnSiCOUQWN/US4wWAvtgprVMVJnyzHlTzUAGwp8o24ys/lp2
+         898Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Win7FCjRnwg4TJ1gnz9BGEQdPlAg4NQu2na0Ig24bHA=;
-        b=SZLKyImMW/U9sybOSrkCEmOnerkBwc8ZVwEfTtDx6KEv7AU+Bs0StqVBw3xWOjTKr7
-         u9M9vKFcl7ofr0sTNSOGvl+Mjhm1mWH2wH2hBwNIbjhAO9ykS8pLpiVg9kfa+KglDl30
-         nilNHNVEeSbVSrpqHp917nYX7nh0pIczZzPELx+2289zIxgpy59K+If8c7xiRH487pkH
-         DjPisnA/ef1eycNPTJw0My79Rs1m+cOCczl85/hwa4iDIkcgUvRGRmRTd3Zt5dkbTRSg
-         XBS+N6C/fscS5XUZLjoUoxj4DaHKUaLOiCxipDBrAp2GGnokh4fPreSWM2F4WcWlw1sX
-         KSEQ==
-X-Gm-Message-State: APjAAAUv8V/Ty+SlriAQic6wdLfhl/brUfwRv4PILWPlZCb6O88VcSux
-        93Apf47LtthmiJJgrPWL9Bv1bBWZ
-X-Google-Smtp-Source: APXvYqwa6uNKJbgzTgbX9U5XSWyzXc41yXhHBCRBBEgSDoRx5kxYPudloUCyif4XJ55DtpTXLNHK5A==
-X-Received: by 2002:a62:16:: with SMTP id 22mr18490484pfa.151.1564076780369;
-        Thu, 25 Jul 2019 10:46:20 -0700 (PDT)
+        bh=6bpk3wr41CYiAJ4HkSwkwTEWE0aKVSlGBPncgk2Hk5E=;
+        b=opcPNe1YHQqkpd9GXRKf7hzcpLIDqi/+UhJHsFXPVDvveBVNG4NVXM8UI5bpKlMdn5
+         ol/Ao6lv3vczgOIzLuzIUEU2bShl8m6cnq1Btn0NKVihNG6bJ7Ghef438K0Dsd30awGm
+         zJMYHK9OIEEH4c7619zN6puo4APFccuaVgLTFe3Ksj2ML/xHVg7HI1j24rttZL0BPQww
+         jdxwju/+in3VZYg7/7iRoY/3s2pb7tvF3WJW6qzYE4pRzYWq8y+bVIVOip6FtxxRbfUK
+         iabDojexVbRG8lsmlv1QQ5CAmYRfWCltSldpmNHWDaRVDETQ0LXiXYa+eDZVZc+27qh6
+         6OGQ==
+X-Gm-Message-State: APjAAAWd3IiLGPhUVwkZM5nkqIF6hjyfCyMhxWPlJo15wzqnqVTYPEbN
+        QKcyF3RBG9nP/3H922H5x8SoI53+
+X-Google-Smtp-Source: APXvYqzvAfb8T6Cfe01p0HAwnZdimqKmFOEpR4hlM5OMkVWDvUgpO7fmgbKJhFaq2wMy8vcehSMNBg==
+X-Received: by 2002:a63:24a:: with SMTP id 71mr9411533pgc.273.1564076783699;
+        Thu, 25 Jul 2019 10:46:23 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.19
+        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jul 2019 10:46:19 -0700 (PDT)
+        Thu, 25 Jul 2019 10:46:23 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 03/19] Ensure index matches head before invoking merge machinery, round N
-Date:   Thu, 25 Jul 2019 10:45:55 -0700
-Message-Id: <20190725174611.14802-4-newren@gmail.com>
+Subject: [PATCH 07/19] Move write_tree_from_memory() from merge-recursive to cache-tree
+Date:   Thu, 25 Jul 2019 10:45:59 -0700
+Message-Id: <20190725174611.14802-8-newren@gmail.com>
 X-Mailer: git-send-email 2.22.0.559.g28a8880890.dirty
 In-Reply-To: <20190725174611.14802-1-newren@gmail.com>
 References: <20190725174611.14802-1-newren@gmail.com>
@@ -67,166 +67,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the bug that just won't die; there always seems to be another
-form of it somewhere.  See the commit message of 55f39cf7551b ("merge:
-fix misleading pre-merge check documentation", 2018-06-30) for a more
-detailed explanation), but in short:
-
-<quick summary>
-
-builtin/merge.c contains this important requirement for merge
-strategies:
-
-    ...the index must be in sync with the head commit.  The strategies are
-    responsible to ensure this.
-
-This condition is important to enforce because there are two likely
-failure cases when the index isn't in sync with the head commit:
-
-  * we silently throw away changes the user had staged before the merge
-
-  * we accidentally (and silently) include changes in the merge that
-    were not part of either of the branches/trees being merged
-
-Discarding users' work and mis-merging are both bad outcomes, especially
-when done silently, so naturally this rule was stated sternly -- but,
-unfortunately totally ignored in practice unless and until actual bugs
-were found.  But, fear not: the bugs from this were fixed in commit
-  ee6566e8d70d ("[PATCH] Rewrite read-tree", 2005-09-05)
-through a rewrite of read-tree (again, commit 55f39cf7551b has a more
-detailed explanation of how this affected merge).  And it was fixed
-again in commit
-  160252f81626 ("git-merge-ours: make sure our index matches HEAD", 2005-11-03)
-...and it was fixed again in commit
-  3ec62ad9ffba ("merge-octopus: abort if index does not match HEAD", 2016-04-09)
-...and again in commit
-  65170c07d466 ("merge-recursive: avoid incorporating uncommitted changes in a merge", 2017-12-21)
-...and again in commit
-  eddd1a411d93 ("merge-recursive: enforce rule that index matches head before merging", 2018-06-30)
-
-...with multiple testcases added to the testsuite that could be
-enumerated in even more commits.
-
-Then, finally, in a patch in the same series as the last fix above, the
-documentation about this requirement was fixed in commit 55f39cf7551b
-("merge: fix misleading pre-merge check documentation", 2018-06-30), and
-we all lived happily ever after...
-
-</quick summary>
-
-Unfortunately, "ever after" apparently denotes a limited time and it
-expired today.  The merge-recursive rule to enforce that index matches
-head was at the beginning of merge_trees() and would only trigger when
-opt->call_depth was 0.  Since merge_recursive() doesn't call
-merge_trees() until after returning from recursing, this meant that the
-check wasn't triggered by merge_recursive() until it had first finished
-all the intermediate merges to create virtual merge bases.  That is a
-potentially HUGE amount of computation (and writing of intermediate
-merge results into the .git/objects directory) before it errors out and
-says, in effect, "Sorry, I can't do any merging because you have some
-local changes that would be overwritten."
-
-Trying to enforce that all of merge_trees(), merge_recursive(), and
-merge_recursive_generic() checked the index == head condition earlier
-resulted in a bunch of broken tests.  It turns out that
-merge_recursive() has code to drop and reload the cache while recursing
-to create intermediate virtual merge bases, but unfortunately that code
-runs even when no recursion is necessary.  This unconditional dropping
-and reloading of the cache masked a few bugs:
-
-  * builtin/merge-recursive.c: didn't even bother loading the index.
-
-  * builtin/stash.c: feels like a fake 'builtin' because it repeatedly
-    invokes git subprocesses all over the place, mixed with other
-    operations.  In particular, invoking "git reset" will reset the
-    index on disk, but the parent process that invoked it won't
-    automatically have its in-memory index updated.
-
-  * t3030-merge-recursive.h: this test has always been broken in that it
-    didn't make sure to make index match head before running.  But, it
-    didn't care about the index or even the merge result, just the
-    verbose output while running.  While commit eddd1a411d93
-    ("merge-recursive: enforce rule that index matches head before
-    merging", 2018-06-30) should have uncovered this broken test, it
-    used a test_must_fail wrapper around the merge-recursive call
-    because it was known that the merge resulted in a rename/rename
-    conflict.  Thus, that fix only made this test fail for a different
-    reason, and since the index == head check didn't happen until after
-    coming all the way back out of the recursion, the testcase had
-    enough information to pass the one check that it did perform.
-
-So, load the index in builtin/merge-recursive.c, reload the in-memory
-index in builtin/stash.c, and modify the t3030 testcase to correctly
-setup the index and make sure that the test fails in the expected way
-(meaning it reports a rename/rename conflict).
+No code changes, just moving the function to what seems like a more
+logical place.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge-recursive.c  | 4 ++++
- builtin/stash.c            | 2 ++
- t/t3030-merge-recursive.sh | 9 ++++++++-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ cache-tree.c      | 30 ++++++++++++++++++++++++++++++
+ cache-tree.h      |  2 ++
+ merge-recursive.c | 30 ------------------------------
+ merge-recursive.h |  1 -
+ 4 files changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 5b910e351e..a4bfd8fc51 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -1,3 +1,4 @@
-+#include "cache.h"
- #include "builtin.h"
- #include "commit.h"
- #include "tag.h"
-@@ -63,6 +64,9 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
- 		die(_("not handling anything other than two heads merge."));
+diff --git a/cache-tree.c b/cache-tree.c
+index 706ffcf188..d2baf6baf5 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -659,6 +659,36 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ 	return ret;
+ }
  
-+	if (repo_read_index_unmerged(the_repository))
-+		die_resolve_conflict("merge");
++struct tree *write_tree_from_memory(struct repository *repo)
++{
++	struct tree *result = NULL;
++	struct index_state *istate = repo->index;
 +
- 	o.branch1 = argv[++i];
- 	o.branch2 = argv[++i];
- 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index fde6397caa..bec011c1bb 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -427,6 +427,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 				return error(_("could not save index tree"));
- 
- 			reset_head();
-+			discard_cache();
-+			read_cache();
- 		}
- 	}
- 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index ff641b348a..a37bcc58a0 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -667,15 +667,22 @@ test_expect_success 'merging with triple rename across D/F conflict' '
- test_expect_success 'merge-recursive remembers the names of all base trees' '
- 	git reset --hard HEAD &&
- 
-+	# make the index match $c1 so that merge-recursive below does not
-+	# fail early
-+	git diff --binary HEAD $c1 -- | git apply --cached &&
++	if (unmerged_index(istate)) {
++		int i;
++		fprintf(stderr, "BUG: There are unmerged index entries:\n");
++		for (i = 0; i < istate->cache_nr; i++) {
++			const struct cache_entry *ce = istate->cache[i];
++			if (ce_stage(ce))
++				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
++					(int)ce_namelen(ce), ce->name);
++		}
++		BUG("unmerged index entries in merge-recursive.c");
++	}
 +
- 	# more trees than static slots used by oid_to_hex()
- 	for commit in $c0 $c2 $c4 $c5 $c6 $c7
- 	do
- 		git rev-parse "$commit^{tree}"
- 	done >trees &&
- 
--	# ignore the return code -- it only fails because the input is weird
-+	# ignore the return code; it only fails because the input is weird...
- 	test_must_fail git -c merge.verbosity=5 merge-recursive $(cat trees) -- $c1 $c3 >out &&
- 
-+	# ...but make sure it fails in the expected way
-+	test_i18ngrep CONFLICT.*rename/rename out &&
++	if (!istate->cache_tree)
++		istate->cache_tree = cache_tree();
 +
- 	# merge-recursive prints in reverse order, but we do not care
- 	sort <trees >expect &&
- 	sed -n "s/^virtual //p" out | sort >actual &&
++	if (!cache_tree_fully_valid(istate->cache_tree) &&
++	    cache_tree_update(istate, 0) < 0) {
++		BUG("error building trees");
++	}
++
++	result = lookup_tree(repo, &istate->cache_tree->oid);
++
++	return result;
++}
++
+ static void prime_cache_tree_rec(struct repository *r,
+ 				 struct cache_tree *it,
+ 				 struct tree *tree)
+diff --git a/cache-tree.h b/cache-tree.h
+index 757bbc48bc..4d67c237ba 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -47,6 +47,8 @@ void cache_tree_verify(struct repository *, struct index_state *);
+ #define WRITE_TREE_PREFIX_ERROR (-3)
+ 
+ int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
++struct tree *write_tree_from_memory(struct repository *repo);
++
+ void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+ 
+ int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1a3c6ab7f3..937a816288 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -412,36 +412,6 @@ static void unpack_trees_finish(struct merge_options *opt)
+ 	clear_unpack_trees_porcelain(&opt->unpack_opts);
+ }
+ 
+-struct tree *write_tree_from_memory(struct repository *repo)
+-{
+-	struct tree *result = NULL;
+-	struct index_state *istate = repo->index;
+-
+-	if (unmerged_index(istate)) {
+-		int i;
+-		fprintf(stderr, "BUG: There are unmerged index entries:\n");
+-		for (i = 0; i < istate->cache_nr; i++) {
+-			const struct cache_entry *ce = istate->cache[i];
+-			if (ce_stage(ce))
+-				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
+-					(int)ce_namelen(ce), ce->name);
+-		}
+-		BUG("unmerged index entries in merge-recursive.c");
+-	}
+-
+-	if (!istate->cache_tree)
+-		istate->cache_tree = cache_tree();
+-
+-	if (!cache_tree_fully_valid(istate->cache_tree) &&
+-	    cache_tree_update(istate, 0) < 0) {
+-		BUG("error building trees");
+-	}
+-
+-	result = lookup_tree(repo, &istate->cache_tree->oid);
+-
+-	return result;
+-}
+-
+ static int save_files_dirs(const struct object_id *oid,
+ 			   struct strbuf *base, const char *path,
+ 			   unsigned int mode, int stage, void *context)
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 33f3d53c09..973f2729a8 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -97,7 +97,6 @@ int merge_recursive_generic(struct merge_options *o,
+ 
+ void init_merge_options(struct merge_options *o,
+ 			struct repository *repo);
+-struct tree *write_tree_from_memory(struct repository *repo);
+ 
+ int parse_merge_opt(struct merge_options *out, const char *s);
+ 
 -- 
 2.22.0.559.g28a8880890.dirty
 
