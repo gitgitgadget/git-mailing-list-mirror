@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB70F1F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE7211F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 17:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403802AbfGYRq1 (ORCPT <rfc822;e@80x24.org>);
+        id S2403804AbfGYRq1 (ORCPT <rfc822;e@80x24.org>);
         Thu, 25 Jul 2019 13:46:27 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36127 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403778AbfGYRqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 13:46:24 -0400
-Received: by mail-pf1-f195.google.com with SMTP id r7so23121791pfl.3
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:24 -0700 (PDT)
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39470 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403796AbfGYRqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 13:46:25 -0400
+Received: by mail-pf1-f196.google.com with SMTP id f17so19126080pfn.6
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 10:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6bpk3wr41CYiAJ4HkSwkwTEWE0aKVSlGBPncgk2Hk5E=;
-        b=hbmF3RdplgXorAm1bSOi2xZxDysiteUrnaEKOXIJorSql6UtZuYnhUJ+LOKkmGx55b
-         IlBnfSF/Qab6XMsVnoM5FHuZ3hDF0dJunAtXBJR9c9U4k8vDRx+WYwIgm+CAyCnJNyKj
-         IC/9QEhnnGC9XV0O8fTJTovdX7BM2FgHsZ0xFfsZqbUqa8Yj0QtL04hbfOQM6OC8uo2C
-         KnRm5/TI8964P4EQdudcc+HT5OVP2EUcUD4+63Zg45wOeFJFeaxW3YbyPuR9kR8rRABc
-         XFuT1u3JN2sgsIl0ltawfnSiCOUQWN/US4wWAvtgprVMVJnyzHlTzUAGwp8o24ys/lp2
-         898Q==
+        bh=8HX9z/mA/McxOcB0ITfELPS/JX8fRksAzz4LbAfnomg=;
+        b=bkz11VId/ucqYnrwsfzJDYGhQZc6/8eZcsnOSPEWpYx3WrRnUaz7e8QXHOpOW8YKyA
+         qfubZfPeQWgGEzh9DKUsQe+t5+Fu9X+xPiW1Mlgqs//hS5/RihRYQATNoapaUCBCzeZg
+         FQGex7ppnUD9Tb4cf0MvV2jctKdPqEQj9JvDWSAnXXJH3cjlKO4/8fmWuyvvDYc23Qe0
+         Wou1ek5Ulk7berbFEhjgPvbd8aGrvNzd1VEbpR85Ki4wAmtp9MYz5z1uH88Ccbi12tef
+         mRkW+FyVXgDB8XGxgeAfAKHEVm3cs1ujHGX7jX6g5CZX/etwb/pipxqQXW0uCjOFPqLd
+         ygqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6bpk3wr41CYiAJ4HkSwkwTEWE0aKVSlGBPncgk2Hk5E=;
-        b=opcPNe1YHQqkpd9GXRKf7hzcpLIDqi/+UhJHsFXPVDvveBVNG4NVXM8UI5bpKlMdn5
-         ol/Ao6lv3vczgOIzLuzIUEU2bShl8m6cnq1Btn0NKVihNG6bJ7Ghef438K0Dsd30awGm
-         zJMYHK9OIEEH4c7619zN6puo4APFccuaVgLTFe3Ksj2ML/xHVg7HI1j24rttZL0BPQww
-         jdxwju/+in3VZYg7/7iRoY/3s2pb7tvF3WJW6qzYE4pRzYWq8y+bVIVOip6FtxxRbfUK
-         iabDojexVbRG8lsmlv1QQ5CAmYRfWCltSldpmNHWDaRVDETQ0LXiXYa+eDZVZc+27qh6
-         6OGQ==
-X-Gm-Message-State: APjAAAWd3IiLGPhUVwkZM5nkqIF6hjyfCyMhxWPlJo15wzqnqVTYPEbN
-        QKcyF3RBG9nP/3H922H5x8SoI53+
-X-Google-Smtp-Source: APXvYqzvAfb8T6Cfe01p0HAwnZdimqKmFOEpR4hlM5OMkVWDvUgpO7fmgbKJhFaq2wMy8vcehSMNBg==
-X-Received: by 2002:a63:24a:: with SMTP id 71mr9411533pgc.273.1564076783699;
-        Thu, 25 Jul 2019 10:46:23 -0700 (PDT)
+        bh=8HX9z/mA/McxOcB0ITfELPS/JX8fRksAzz4LbAfnomg=;
+        b=GRFL2SH6fTRU5I0ggbJGkJuKQNJ6Cz34xpjHwnmya8IeVAB4I/8j91Jqw8HQ3rW4GZ
+         GiNAgUQ1lI7TBIXzn/POAD6fS3hrC/ISvJkX6O8rJa6UvWb5gXuHlqMR0k0R6fjUqsPe
+         xpzf0YI1jKgh/0nweBwGulcU4PoDKBZP+ujz160nseaVIPQrfQJPM6+i8jtaVH53OsxD
+         RtZSkN8TdfQY0rTBpOPlubFZHipHcOamCpRQhKqigqVcXODsUvFUAo82bWgv1mXpDwH3
+         zMeipuKr/e9GgMRRlY/8eL+sWhmNz0EFjwIMbiwK5nC1i59mpFgdOfAnETn16EwtVu4G
+         DsAA==
+X-Gm-Message-State: APjAAAUt4yXdkao+2A0zKaRiolahx3htHUCJz560docBRSjy+8MmvsLK
+        Ct4saV9OkDYvLDKnGYHZpz8LQKp+
+X-Google-Smtp-Source: APXvYqwLhBlX4Xhr7Mozg01RQK7GI+5J8x8pP/TlnmsrR7QijonlqCDtVTOFVanYAIy6MJB04y222A==
+X-Received: by 2002:a63:9e56:: with SMTP id r22mr30462579pgo.221.1564076784808;
+        Thu, 25 Jul 2019 10:46:24 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.22
+        by smtp.gmail.com with ESMTPSA id v138sm58171800pfc.15.2019.07.25.10.46.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jul 2019 10:46:23 -0700 (PDT)
+        Thu, 25 Jul 2019 10:46:24 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 07/19] Move write_tree_from_memory() from merge-recursive to cache-tree
-Date:   Thu, 25 Jul 2019 10:45:59 -0700
-Message-Id: <20190725174611.14802-8-newren@gmail.com>
+Subject: [PATCH 08/19] merge-recursive: fix some overly long lines
+Date:   Thu, 25 Jul 2019 10:46:00 -0700
+Message-Id: <20190725174611.14802-9-newren@gmail.com>
 X-Mailer: git-send-email 2.22.0.559.g28a8880890.dirty
 In-Reply-To: <20190725174611.14802-1-newren@gmail.com>
 References: <20190725174611.14802-1-newren@gmail.com>
@@ -67,124 +67,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No code changes, just moving the function to what seems like a more
-logical place.
+No substantive code change, just add some line breaks to fix lines that
+have grown in length due to various refactorings.  Most remaining lines
+of excessive length in merge-recursive include error messages and it's
+not clear that splitting those improves things.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- cache-tree.c      | 30 ++++++++++++++++++++++++++++++
- cache-tree.h      |  2 ++
- merge-recursive.c | 30 ------------------------------
- merge-recursive.h |  1 -
- 4 files changed, 32 insertions(+), 31 deletions(-)
+ merge-recursive.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 706ffcf188..d2baf6baf5 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -659,6 +659,36 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 937a816288..104c70b787 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -681,7 +681,9 @@ static void add_flattened_path(struct strbuf *out, const char *s)
+ 			out->buf[i] = '_';
+ }
+ 
+-static char *unique_path(struct merge_options *opt, const char *path, const char *branch)
++static char *unique_path(struct merge_options *opt,
++			 const char *path,
++			 const char *branch)
+ {
+ 	struct path_hashmap_entry *entry;
+ 	struct strbuf newpath = STRBUF_INIT;
+@@ -915,7 +917,8 @@ static int update_file_flags(struct merge_options *opt,
+ 		}
+ 		if (S_ISREG(contents->mode)) {
+ 			struct strbuf strbuf = STRBUF_INIT;
+-			if (convert_to_working_tree(opt->repo->index, path, buf, size, &strbuf)) {
++			if (convert_to_working_tree(opt->repo->index,
++						    path, buf, size, &strbuf)) {
+ 				free(buf);
+ 				size = strbuf.len;
+ 				buf = strbuf_detach(&strbuf, NULL);
+@@ -3392,7 +3395,8 @@ static int merge_trees_internal(struct merge_options *opt,
+ 		 * opposed to decaring a local hashmap is for convenience
+ 		 * so that we don't have to pass it to around.
+ 		 */
+-		hashmap_init(&opt->current_file_dir_set, path_hashmap_cmp, NULL, 512);
++		hashmap_init(&opt->current_file_dir_set, path_hashmap_cmp,
++			     NULL, 512);
+ 		get_files_dirs(opt, head);
+ 		get_files_dirs(opt, merge);
+ 
+@@ -3498,7 +3502,8 @@ static int merge_recursive_internal(struct merge_options *opt,
+ 		struct tree *tree;
+ 
+ 		tree = lookup_tree(opt->repo, opt->repo->hash_algo->empty_tree);
+-		merged_common_ancestors = make_virtual_commit(opt->repo, tree, "ancestor");
++		merged_common_ancestors = make_virtual_commit(opt->repo,
++							      tree, "ancestor");
+ 	}
+ 
+ 	for (iter = ca; iter; iter = iter->next) {
+@@ -3609,7 +3614,8 @@ int merge_recursive(struct merge_options *opt,
  	return ret;
  }
  
-+struct tree *write_tree_from_memory(struct repository *repo)
-+{
-+	struct tree *result = NULL;
-+	struct index_state *istate = repo->index;
-+
-+	if (unmerged_index(istate)) {
-+		int i;
-+		fprintf(stderr, "BUG: There are unmerged index entries:\n");
-+		for (i = 0; i < istate->cache_nr; i++) {
-+			const struct cache_entry *ce = istate->cache[i];
-+			if (ce_stage(ce))
-+				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
-+					(int)ce_namelen(ce), ce->name);
-+		}
-+		BUG("unmerged index entries in merge-recursive.c");
-+	}
-+
-+	if (!istate->cache_tree)
-+		istate->cache_tree = cache_tree();
-+
-+	if (!cache_tree_fully_valid(istate->cache_tree) &&
-+	    cache_tree_update(istate, 0) < 0) {
-+		BUG("error building trees");
-+	}
-+
-+	result = lookup_tree(repo, &istate->cache_tree->oid);
-+
-+	return result;
-+}
-+
- static void prime_cache_tree_rec(struct repository *r,
- 				 struct cache_tree *it,
- 				 struct tree *tree)
-diff --git a/cache-tree.h b/cache-tree.h
-index 757bbc48bc..4d67c237ba 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -47,6 +47,8 @@ void cache_tree_verify(struct repository *, struct index_state *);
- #define WRITE_TREE_PREFIX_ERROR (-3)
- 
- int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
-+struct tree *write_tree_from_memory(struct repository *repo);
-+
- void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
- 
- int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1a3c6ab7f3..937a816288 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -412,36 +412,6 @@ static void unpack_trees_finish(struct merge_options *opt)
- 	clear_unpack_trees_porcelain(&opt->unpack_opts);
- }
- 
--struct tree *write_tree_from_memory(struct repository *repo)
--{
--	struct tree *result = NULL;
--	struct index_state *istate = repo->index;
--
--	if (unmerged_index(istate)) {
--		int i;
--		fprintf(stderr, "BUG: There are unmerged index entries:\n");
--		for (i = 0; i < istate->cache_nr; i++) {
--			const struct cache_entry *ce = istate->cache[i];
--			if (ce_stage(ce))
--				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
--					(int)ce_namelen(ce), ce->name);
--		}
--		BUG("unmerged index entries in merge-recursive.c");
--	}
--
--	if (!istate->cache_tree)
--		istate->cache_tree = cache_tree();
--
--	if (!cache_tree_fully_valid(istate->cache_tree) &&
--	    cache_tree_update(istate, 0) < 0) {
--		BUG("error building trees");
--	}
--
--	result = lookup_tree(repo, &istate->cache_tree->oid);
--
--	return result;
--}
--
- static int save_files_dirs(const struct object_id *oid,
- 			   struct strbuf *base, const char *path,
- 			   unsigned int mode, int stage, void *context)
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 33f3d53c09..973f2729a8 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -97,7 +97,6 @@ int merge_recursive_generic(struct merge_options *o,
- 
- void init_merge_options(struct merge_options *o,
- 			struct repository *repo);
--struct tree *write_tree_from_memory(struct repository *repo);
- 
- int parse_merge_opt(struct merge_options *out, const char *s);
- 
+-static struct commit *get_ref(struct repository *repo, const struct object_id *oid,
++static struct commit *get_ref(struct repository *repo,
++			      const struct object_id *oid,
+ 			      const char *name)
+ {
+ 	struct object *object;
+@@ -3644,7 +3650,8 @@ int merge_recursive_generic(struct merge_options *opt,
+ 		int i;
+ 		for (i = 0; i < num_base_list; ++i) {
+ 			struct commit *base;
+-			if (!(base = get_ref(opt->repo, base_list[i], oid_to_hex(base_list[i]))))
++			if (!(base = get_ref(opt->repo, base_list[i],
++					     oid_to_hex(base_list[i]))))
+ 				return err(opt, _("Could not parse object '%s'"),
+ 					   oid_to_hex(base_list[i]));
+ 			commit_list_insert(base, &ca);
 -- 
 2.22.0.559.g28a8880890.dirty
 
