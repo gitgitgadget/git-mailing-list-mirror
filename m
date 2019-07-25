@@ -2,97 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381351F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 12:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B83D81F97E
+	for <e@80x24.org>; Thu, 25 Jul 2019 12:15:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404412AbfGYMA1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 08:00:27 -0400
-Received: from mout.gmx.net ([212.227.17.21]:32855 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404362AbfGYMA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 08:00:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564056025;
-        bh=jB3MmV0CavN5LlRNel8XEV8uI99xES7UY/9r25buzeQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Beq6h90A9HIuafjo+OEXHJZWt4Alsf6OH5lvOcSYKEzWKsfxH+JsAD5Ur2AApI4X9
-         6Zw3HbfCKarOh2U9ebTvLHZO+I0gLoDfrTl+HqgZ4c8o7S/Py/8u8CTQfClJX0FMdD
-         19ps6Z833RsSq2lDdGWj7dHesw1qMGwm09KX8dgU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MKbZD-1hrzzy1CBr-001yvn; Thu, 25
- Jul 2019 14:00:25 +0200
-Date:   Thu, 25 Jul 2019 14:00:24 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratyush Yadav <me@yadavpratyush.com>
-cc:     git@vger.kernel.org
-Subject: Re: Where do I send patches for git-gui?
-In-Reply-To: <35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com>
-Message-ID: <nycvar.QRO.7.76.6.1907251358450.21907@tvgsbejvaqbjf.bet>
-References: <35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729250AbfGYMPz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 08:15:55 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:46710 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726814AbfGYMPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 08:15:55 -0400
+Received: by mail-ot1-f66.google.com with SMTP id z23so23043409ote.13
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 05:15:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5f38k0nIAGhz0d5uyHMZ5XoHbZB40VLtYE1zl/zkRjM=;
+        b=S2kIRjFF27kvwlW7obdvNx+9jdtC+HcQ44y/QkGiuSn4ZsZQTb3SJO79crIPr1/YNv
+         ClipG+QkIR7b8AMK82izQd6zP1r/6FZc3C/D/2JegVo0/go81JpRaACHksYUM/6oNbpo
+         1+mDNBuT0EhtVJvz2IUWXqFo3QDcHNnXz3mSOQ6INkHvmmDdOHBJxd+swx3HcYPVwLZD
+         5YP2H6FTFg38Rll27Bg5nY1N90gWs1q8VfqSrT8guihF6CucIXwK5mavpwutFwtnqNr7
+         TzdEF0inF3EIp7L2KBQg0Cw120qgzIdZamijmziun4okKm0gMU8iIljaBA/pxhtgRozg
+         L0bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=5f38k0nIAGhz0d5uyHMZ5XoHbZB40VLtYE1zl/zkRjM=;
+        b=P6tRVJRb8dIeDrfXtno1yjSpIPBXdUWwBd1h5PcFab8nwcYx+DAWb9n2R8QrkUN38L
+         QmXeSLa/H9xU6LrbhIORsDhht783iM4ujQeNYE4uX2RvKpc2ZVGNB6k8sAMEhGBLk1PQ
+         UDI5bdx9LgaFwofWyZID2J2EOk6Fmh5joacYdi2B8bPxvdTfl4sGZIkGPQmFFO95DTnt
+         hrGT4jgByeAH2kYL1lXmSJ0/2SKC4KO9w/ouD7YmEsnR4KjMHZei62F/x4kQ/JFGWN1q
+         5qTC/yLf1pkINRT8wEwbkxMiNoY0Z9Jq54EhfL8w+fnmSjaPAl+qKDhT+Gf1/AESzq2u
+         ISFw==
+X-Gm-Message-State: APjAAAXClCWtg6LqfzmXipIgqZff7NpA/qCNwzw04WOiljVDrrScAUmN
+        IVJZNoSlkwpFB621JM8ufOvcdR2+Ju0EQhQTihcsdBfTDCU=
+X-Google-Smtp-Source: APXvYqxo9MmkPIUd3fVsW8zFT6dMVxStoD4IhdFVsdd0UvIO8e+W4QJrWGz8RDSmAJEUzr3Kw0WULr/bLo/L+cDGLDQ=
+X-Received: by 2002:a9d:6d12:: with SMTP id o18mr31290798otp.166.1564056954497;
+ Thu, 25 Jul 2019 05:15:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HldhuT6Gb6oNtsp1mhICuVYuv4ksoDjnuPqx6GqyJUNHABmE67X
- go2oz971kvMf517eIEohUih962+kcBNma6Khhkx8CLW5tZzaWNLbQD7Np4GbiAsUBcnrZue
- LzIHmXBM4mx07/PjwhapzsoDg7pSfLSJ+kg2m12DSjzZC9jpRAWDuXQSWS1MPbsUFyCHnpH
- JVvT0/rmeEX0eIoVonyeg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:m+PW+jYyVbc=:Xabs139S56X7jgONHmaaCh
- GLo+V19veTfjFLc0KWyI9OeOHeRx3R5qEYxIyysG1QJgFvHv4ySTb3+yUpcG96pIRYeZxggks
- j2fXyn8HTo4zyvPDMk7UhjMLCXxWpIrj6dwAibQNneUGjLTaSwS+dBmm9pN6axgOeomS6cA3C
- czdYxzxrAaIsilHI6GGDX5v+7j4Kfou+vC+WDkfY1+c8k32Zi9Y1goeHKfmxWiSK0ZCFblm2+
- M/sZAnrHgbgtSOL2nu2xZd/T4asas5CAGGyQafIqAN5uUDLW5EVMvBAXC9gVWnKsqvXIDz9OE
- pQuBwNGvsrKiYa72TOc+sAhyY69pfohL7vQS2HzgovBPx9Tnd2OISiYh57WSsf7HWFKQJiLu/
- +V0z0rLzeUFMSTgY2zyFdqwsYt03nsyrZxl9cN2EcV2nOkB56KMtWZ1stSpCBzrlPP8nZrHjp
- N1O6Rxn399OH2+v235HeUJ4AcQJQD1AZStdQkhXvMpApC899v1cc5BMQnxXaS+1XVF0NxE3Hk
- IdIvgJCUhWfAFKfbNqtvqMdnD0gpnXgSvR4UzETNEPrL6pmiCVB6WoJYYIbhPc3NJqZecuog9
- QUH91aXzyz9HBI9SOH7lM9yD9RKEcd0P9oVoukoFZD9T1R+wK8CM5ebonJo6iCqABq9Jawu2i
- IOL+3pHQXWtpzDVZT+OtjVQEqlgOwzMBI2y4LesSI2WVVl8JqLuXI4fZ7zahPAO/vbBQB/DiM
- MEhvds/QerCL8yZP01nER9srWL+v0BZi5mkJnSl4WOgyGWgAKVD4OU4tzsFSJJYa9XQVaReQs
- xbcOxaILZBxFIuSFr/8g6DDqvRy1f4GOlrVFaITAqeqmYqkyGmjrlQGSjSQm5coOwvAswg9Vy
- Xi2qzBPVTNloCx767UlafTEvqajxTYEUPVOnajUYatyWnd5KJAHROmhF7EwzdY7dhka3DsM9/
- j0ZKtuxW7uZc2owC0W3uusg2zVyqrSnZPkY0LlSgodTLPezUJ0zQRLCODpzRAhVjeh/EiyxJ8
- +pzyx/tnXF0XSK9zbmFeQ6eeRSDKYLas6r9uMWTvTBo/6buZJvjGalVlIFmOmykmp7CHynMVs
- IPC729OzYYwTMxQQJDv3WJZEvYVAscdQA84
+References: <1564051425-69139-1-git-send-email-simon29rock@gmail.com>
+In-Reply-To: <1564051425-69139-1-git-send-email-simon29rock@gmail.com>
+From:   simon gao <simon29rock@gmail.com>
+Date:   Thu, 25 Jul 2019 20:15:43 +0800
+Message-ID: <CAGR3woXsDgYTMWcMKEXO_TkynrR3ZAYKn+fpAoThT=Ey4q+b1g@mail.gmail.com>
+Subject: Re: [PATCH] stop it from failing silently when git apply patch and
+ show err info
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I create 001.patch in dir, ceph_master
 
-On Wed, 24 Jul 2019, Pratyush Yadav wrote:
+ceph_master
+|--- .git
+|--- src
+|--- tools
+|--- ...
 
-> I have a quick little feature to add to git-gui, and I'm wondering
-> where should I discuss it and send patches. The git-gui repo [0] has
-> no readme I can see that would point me in the right direction.
-> Googling around didn't get me anything either.
+local project directory:
+storage
+|---.git
+|---ceph_**.*.**
+    |--- src
+    |--- tools
+    |--- ...
+
+I'm trying to apply the patch, and git apply patch doesn't give me any erro=
+rs.
+like this
+cd storage/ceph_**.*.** && git apply 001.patch
+I check code and I find that root directory need to be set using "--directo=
+ry"
+I think we need show some info about it.
+
+thinks
+
+
+simon gao <simon29rock@gmail.com> =E4=BA=8E2019=E5=B9=B47=E6=9C=8825=E6=97=
+=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=886:43=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Should I send it here on this list or is it somewhere else?
+> Signed-off-by: simon gao <simon29rock@gmail.com>
+> ---
+>  apply.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> Also, is the project even actively maintained any more? The last commit =
-was in
-> 2017.
+> diff --git a/apply.c b/apply.c
+> index 4992eca..47b16aa 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -2093,8 +2093,10 @@ static int use_patch(struct apply_state *state, st=
+ruct patch *p)
+>         /* Paths outside are not touched regardless of "--include" */
+>         if (state->prefix && *state->prefix) {
+>                 const char *rest;
+> -               if (!skip_prefix(pathname, state->prefix, &rest) || !*res=
+t)
+> +               if (!skip_prefix(pathname, state->prefix, &rest) || !*res=
+t){
+> +                       error(_("%s doesn't contain the prefix(%s)"), pat=
+hname, state->prefix);
+>                         return 0;
+> +               }
+>         }
 >
-> [0] http://repo.or.cz/w/git-gui.git/
-
-Sadly, it seems that we do not have any active Git GUI maintainer,
-indeed.
-
-The latest repository for Git GUI seems to have been
-https://github.com/patthoyts/git-gui, but even that has fallen dormant.
-
-Your best bet is to send the patch to this list, and we'll just have to
-try to work together to our best abilities to review and improve and
-integrate it.
-
-Ciao,
-Johannes
+>         /* See if it matches any of exclude/include rule */
+> --
+> 1.8.3.1
+>
