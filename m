@@ -2,127 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D1AA1F462
-	for <e@80x24.org>; Wed, 24 Jul 2019 23:32:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D6CB1F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 01:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729260AbfGXXc6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 19:32:58 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:48448 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729196AbfGXXc6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jul 2019 19:32:58 -0400
-Received: by mail-pf1-f201.google.com with SMTP id u21so29569511pfn.15
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 16:32:57 -0700 (PDT)
+        id S2388464AbfGYBrb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 21:47:31 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40858 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387798AbfGYBrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jul 2019 21:47:31 -0400
+Received: by mail-qt1-f195.google.com with SMTP id a15so47522707qtn.7
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 18:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=YhGYs3DXWq4zIhtc/jtiupG381LyCYoqOk9Ukdf9S9A=;
-        b=s4in41SY3gDrjpWqg9hwuDxVKtNzvK3dTKic2LibnVMhKqnNl61OwAaJxDpTB6UV/k
-         +zvhkPQay3PBsbCuS0qp8U1c6z7J/RWhQdds7SerXOpNE23yVA9qWQl53SX4VhGswniT
-         RbFu1Xvc7jG/5bUzk9u65ETvXwngoyH3EXq3oad0WKmgu7bybZ9O+aninNjqTrapxEwm
-         RDln9U5HLXnHH9L2PxvmtanCzITe1DtBb+ebwPPY9z6mDLJnPuYN9JjY/RZgOAfhBGZX
-         MEkfeG7XZcS+enUD0DlrTtkJkW+gWdKBdzN7HBfOfH7POuceuYcdoVd9FDHZ0LevlRGT
-         KSMg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=t0E5UhlD7zsZYi21cMiMTMM1kk+XmATm9k4pmSM1tpc=;
+        b=titQW/e+yaD9FwAvwTEAEv3C45cIy/O6dzyR36q/pWEnM19lY0Y8FZO3yOGHBpNVpC
+         8U1YTmvsIPToIB9iMIWEmYozmqIOAwklh9pZWDH7K4GG9lsGiBmvnYewLYLbwLdf4x5d
+         8Ddh1qkOV0SAtqVgrJNH4piveZkHkmScwag9Xb4dadOBoSNOmGA2YJTCOm8GqJrFll+B
+         wEP6pHqnXoatTyftZVCbNDF+78VJ8+S/fr/cqFML1LtwwLM3iqzLRPXv3b0WteEZ9soi
+         lsZVM/5uVyjGC7lHDfJNtSnJDLswffLNaOvAbnoPjjH76xy2UnkxAb290PpFm2/WIVAH
+         TKsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=YhGYs3DXWq4zIhtc/jtiupG381LyCYoqOk9Ukdf9S9A=;
-        b=nw1ZLn+jL8JQDN8c0nLEFNC7iTh2MdtUyFgbVPfjFOIJygNiES6gp2NB/OmK5wtzp2
-         aiGbHJVdL4rkJrK/3q8PlLcE+drh54SvQO1nT9YmXf+2FJ26a8qxIPpeVRnVXcWB1nng
-         oCghwV1b3Gv4rYMvP3n7yuFD7+ECxKIVDLeWvdkv68BOKcjckQx7qJzkFlyE9DxO6TQG
-         1cZs18m/qKVFfq1xVKLXuePYoioKKFI2oCybsxRaEOs8rl3IvjC7Xnszt8JQTBg6jeT+
-         1SmP52dMR3+UognyXdgjKHYBu/p6yOQLfecSWNs1kZFZDMQd7ocVIwjq4BTExhQcTQ99
-         zFtQ==
-X-Gm-Message-State: APjAAAVgzDv+TxpXGMFHIXrDix+Q/j6sjWXUTQl21AGfW82YVPEFjI3n
-        O3EMDYx+CPrmW7JtiMIuHxENydeeeTroNmZ5Clet
-X-Google-Smtp-Source: APXvYqw1eSwbXMK2yx5q20+5r0qybb2+2GNZDZbdUK8PpPNComwujzOhEqAq8FpgtIWt4hZ5sOGWEgCQDmb3sXxm5q1A
-X-Received: by 2002:a63:c03:: with SMTP id b3mr19395327pgl.23.1564011177037;
- Wed, 24 Jul 2019 16:32:57 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 16:32:53 -0700
-In-Reply-To: <20190701201934.30321-1-emilyshaffer@google.com>
-Message-Id: <20190724233253.208318-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190701201934.30321-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.22.0.657.g960e92d24f-goog
-Subject: Re: [PATCH v3] documentation: add tutorial for revision walking
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=t0E5UhlD7zsZYi21cMiMTMM1kk+XmATm9k4pmSM1tpc=;
+        b=t4LdKfXWXtfABwS03eUK31gs5lfeVJOYP3Jx7QUA537w7kjSCRKMjjPUkOTCaedbBr
+         C8FHJCkA6XHQ8m06zmWsnnzexHDg+0GHh1AC6crShZdLp2GXD831rS6duJhWhnAK9wzX
+         LOb9iWFOr4gIkfZRUPeDLbnbFbEO3JK1TS+TfaUgTm44dCEL1K37XM5CidPY3jRPJQmN
+         hq5qsNo5hIai1GCrnZkuDsv68EpCsjN2Va+PMbRMZExajQa2hjWoMh/z9K2IWouVB2sX
+         IgiwO1sqFMX4paBR9Il6Ki9sqZv/qE/XqajYmm6CsUjtkROzYqBbFieb6TKZQrj6ORk4
+         gMCw==
+X-Gm-Message-State: APjAAAU7aoCp6dJRbLU5MhjOidbBJub/lUZAMQ3rSHe0XpPQ/iQlcYtV
+        e06F7HQxsNFfw9d5dGJ1Jgk=
+X-Google-Smtp-Source: APXvYqzeeiRNiQ4tvvYTQXFG6EIwIMk5CHSoZETBfy4q94ww5Z/Ve0dysISfBVr4cEHTFL0I0ksEJQ==
+X-Received: by 2002:a0c:995b:: with SMTP id i27mr60657068qvd.159.1564019249917;
+        Wed, 24 Jul 2019 18:47:29 -0700 (PDT)
+Received: from [10.0.1.12] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id y9sm21173216qki.116.2019.07.24.18.47.28
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Jul 2019 18:47:28 -0700 (PDT)
+Subject: Re: [PATCH 5/5] repo-settings: create feature.experimental setting
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
+        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.292.git.gitgitgadget@gmail.com>
+ <da7685936f44a32121ec0568df2a9f23e4003506.1563818059.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1907231708280.21907@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b9843571-5358-a33e-40cf-0d6d30d30766@gmail.com>
+Date:   Wed, 24 Jul 2019 21:47:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
+MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1907231708280.21907@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks - I think this is a useful guide to what can be a complicated
-topic. It looks good overall; I just have some minor comments below.
+On 7/23/2019 11:20 AM, Johannes Schindelin wrote:
+> Hi Stolee,
+> 
+> On Mon, 22 Jul 2019, Derrick Stolee via GitGitGadget wrote:
+>>  struct path_hashmap_entry {
+>>  	struct hashmap_entry e;
+>> @@ -1375,10 +1376,14 @@ static int handle_rename_via_dir(struct merge_options *opt,
+>>  	 * there is no content merge to do; just move the file into the
+>>  	 * desired final location.
+>>  	 */
+>> +	struct repository *r = the_repository;
+>>  	const struct rename *ren = ci->ren1;
+>>  	const struct diff_filespec *dest = ren->pair->two;
+>>  	char *file_path = dest->path;
+>> -	int mark_conflicted = (opt->detect_directory_renames == 1);
+> 
+> I actually don't think that we want to do that; the `opt` parameter is
+> passed to the merge recursive algorithm specifically so that it can be
+> overridden by the caller.
+> 
+> Instead, what we should do, I think, is to change `init_merge_options()`
+> (which already gets a parameter of type `struct repository *`) so that
+> it does not hard-code the `detect_directory_renames` value to `1` but to
+> query the repo settings instead.
 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 76f2ecfc1b..91e5da67c4 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -78,6 +78,7 @@ SP_ARTICLES += $(API_DOCS)
->  
->  TECH_DOCS += MyFirstContribution
->  TECH_DOCS += SubmittingPatches
-> +TECH_DOCS += MyFirstRevWalk
+[snip]
+>> @@ -3687,7 +3690,6 @@ void init_merge_options(struct merge_options *opt,
+>>  	opt->renormalize = 0;
+>>  	opt->diff_detect_rename = -1;
+>>  	opt->merge_detect_rename = -1;
+>> -	opt->detect_directory_renames = 1;
+> 
+> In other words: here.
 
-Any reason why this is not in alphabetical order?
+Yes, thanks! Your suggestion makes much more sense and makes the diff
+much simpler. No reason to couple too closely to the config storage here.
 
-> +Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
-> +
-> +----
-> +extern int cmd_walken(int argc, const char **argv, const char *prefix);
-> +----
+I think you gave me enough feedback to merit a v2 before others chime
+in, so I'll send one after I validate my current version.
 
-builtin.h no longer has "extern", so we can delete it.
-
-> +Add it to the `Makefile` near the line for `builtin\worktree.o`:
-> +
-> +----
-> +BUILTIN_OBJS += builtin/walken.o
-> +----
-
-In the first line, change the backslash to a slash. (The line in
-Makefile for "builtin/worktree.o" uses a forward slash as expected.)
-
-> +NOTE: For a more exhaustive overview of the new command process, take a look at
-> +`Documentation/MyFirstContribution.txt`.
-> +
-> +NOTE: A reference implementation can be found at TODO LINK.
-
-I think you have a reference implementation at
-https://github.com/nasamuffin/git/tree/revwalk?
-
-> +We'll start by enabling all types of objects in the `struct rev_info`. Unless
-> +you cloned or fetched your repository earlier with a filter,
-> +`exclude_promisor_objects` is unlikely to make a difference, but we'll turn it
-> +on just to make sure our lives are simple. We'll also turn on
-> +`tree_blobs_in_commit_order`, which means that we will walk a commit's tree and
-> +everything it points to immediately after we find each commit, as opposed to
-> +waiting for the end and walking through all trees after the commit history has
-> +been discovered. With the appropriate settings configured, we are ready to call
-> +`prepare_revision_walk()`.
-> +
-> +----
-> +static void walken_object_walk(struct rev_info *rev)
-> +{
-> +	rev->tree_objects = 1;
-> +	rev->blob_objects = 1;
-> +	rev->tag_objects = 1;
-> +	rev->tree_blobs_in_commit_order = 1;
-> +	rev->exclude_promisor_objects = 1;
-
-Optional: I think we should not bother with exclude_promisor_objects. If
-the user really cloned with a filter, then every object would be a
-promisor object and the revision walk should output nothing, which is
-very confusing.
+Thanks,
+-Stolee
