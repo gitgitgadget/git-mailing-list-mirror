@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E291F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 13:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B31A91F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 15:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390099AbfGYNmv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 09:42:51 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:46753 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389989AbfGYNmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 09:42:51 -0400
-Received: by mail-lj1-f182.google.com with SMTP id v24so48137981ljg.13
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 06:42:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=kDNuWmJIofdxJwUcDc3YrLJQ3xtgscwQXsOQFgIokvY=;
-        b=PX4Z31XGIbtKCoVnuWHsNP50ySHuark6R8ylkLX9NuDXwsqZPvBdaKnIrLDkO82JfU
-         fNodYparVRfH0Coe23G0iRVkisHubDu5yO8/v3X0cpkEzY77+DfwpBTx3hVqTLYX08kU
-         TFnjgqdaqMn1aWl+QbspKqFkgzdiD2DOGb93ycuqEDmJ2iL+aXN2TWlbP+zHQLG9vhRo
-         J754/S0lFRaqVQ+w20jrrrz13o53+2z3PdVY39OyxHoRqurtIOqF/g7WO/aHrGXeHLQV
-         yLm0YtxAowrXYJNxQoaItHaA6Xntie+FIy/SuEYAVHY+GCxt6Wv4hrPaBaTfiGAnP6Lz
-         aYzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=kDNuWmJIofdxJwUcDc3YrLJQ3xtgscwQXsOQFgIokvY=;
-        b=EAWBnHX/vJvLnMNGW+onieRgYGAB7QodsmQA15Kv5j7dZv5z0jPpenWnObVJ+/rGm/
-         b/6ulgAj5TabVKOh5i525x82CS85wzzPgE054vpiWPG56l1isQN+XAyohgLJU/tkBl0S
-         cvlI7h3wMc/CyxNJdM0oGb28rYzxhzQUexit0l5WcQJYbWFxjYFuJBbI2PdUQIdag57p
-         nLttuDYcRFAeI8hSoLpKfUykIeNO8whb53x5mdJWHx9LkWZ9mEGUgF3gW2KyE2vAW2wK
-         T+1R0OeG5FGj9XvXalkKZ7dzym8KGYR3f7L+wvRKG/zMp0orKMlOV9VOwTzAK7wnVEh6
-         CHng==
-X-Gm-Message-State: APjAAAUSnsM3LEkGx1pNPs9Z6OqqUJMBTQZ52dNixqWlVUnXqmtYXnSW
-        6bGAI9VlAsixskd/zy+/BNlg5UFq2YmBZQ==
-X-Google-Smtp-Source: APXvYqxtDq8zl+HJXUD5/CPQBPWCUbIL+3cu8R2NWcMMRjg9NcV88MG22DkpH6JelPLLkPsqe8srww==
-X-Received: by 2002:a2e:7614:: with SMTP id r20mr46945207ljc.42.1564062169289;
-        Thu, 25 Jul 2019 06:42:49 -0700 (PDT)
-Received: from [192.168.2.33] ([109.197.31.38])
-        by smtp.gmail.com with ESMTPSA id p76sm9061824ljb.49.2019.07.25.06.42.48
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 06:42:48 -0700 (PDT)
-From:   Ilya Kantor <iliakan@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: [git for translators] How to always generate conflicts for merges?  
-Message-Id: <C9A27ED4-CBD9-4FCD-B78F-8A1010D24D06@gmail.com>
-Date:   Thu, 25 Jul 2019 16:42:48 +0300
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.104.11)
+        id S2388892AbfGYPQy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 11:16:54 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:54393 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388736AbfGYPQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 11:16:54 -0400
+X-Originating-IP: 1.186.12.7
+Received: from [10.86.0.100] (unknown [1.186.12.7])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 39947C0012;
+        Thu, 25 Jul 2019 15:16:50 +0000 (UTC)
+From:   Pratyush Yadav <me@yadavpratyush.com>
+Subject: Re: Where do I send patches for git-gui?
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Pat Thoyts <patthoyts@gmail.com>
+References: <35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com>
+ <CAP8UFD1C_FD5TLz0oyn6QzGU2rdvvTe6PNhpK29vkMfuHim-qg@mail.gmail.com>
+Message-ID: <31812838-0dc6-2a22-6f7d-bd39b1f0dc50@yadavpratyush.com>
+Date:   Thu, 25 Jul 2019 20:46:48 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <CAP8UFD1C_FD5TLz0oyn6QzGU2rdvvTe6PNhpK29vkMfuHim-qg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 25/07/19 5:04 PM, Christian Couder wrote:
+> Hi Pratyush,
+> 
+> On Wed, Jul 24, 2019 at 11:43 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
+>>
+>> I have a quick little feature to add to git-gui, and I'm wondering where
+>> should I discuss it and send patches. The git-gui repo [0] has no readme
+>> I can see that would point me in the right direction. Googling around
+>> didn't get me anything either.
+>>
+>> Should I send it here on this list or is it somewhere else?
+> 
+> It seems to me that people have been sending patches to git-gui to
+> this mailing list indeed.
 
-We're using Git to manage translations of an open-source book, and most =
-of time it works well. But there's also a problem.
+All right, I'll send it here.
 
-When we pull changes from upstream (English) to translation (e.g. =
-Japanese), git auto-merges them.
+> According to the following discussions:
+> 
+>    - https://public-inbox.org/git/xmqqbm36w7hl.fsf@gitster-ct.c.googlers.com/
+>    - https://public-inbox.org/git/nycvar.QRO.7.76.6.1905272135280.28524@tvgsbejvaqbjf.bet/
+> 
+> Pat Thoyts (in CC) used to be the git-gui maintainer but we haven't
+> been hearing from him for a long time, so we are looking for a new
+> maintainer.
 
-Sometimes there conflicts, but not all the time.
+Ah, that's too bad that there is no active maintainer. I recently 
+switched my text editor from Atom to Vim, and the only thing I am 
+missing is Atom's gui for looking at diffs and resolving merge 
+conflicts. I've only used git-gui for a couple days, but it looks like 
+just the tool I need.
 
-For example, when a new file is added to English, it just gets =
-auto-merged into Japanese.
-But all new changes must be human-controlled, translated.=20
+I can maintain it (as long as I'm using the tool at least). I'm not 
+particularly fluent with Tcl or Tk, but I'm learning them as I implement 
+the features I need.
 
-Is there a way to force git always generate a conflict, even if changes =
-could be auto-merged?
+Will I get commit access to the main git repo, or should I use a fork 
+and send the changes over here, and one of you folks will merge them?
 
-----
-Ilya
-https://javascript.info=
+> 
+> 
+> 
+>> Also, is the project even actively maintained any more? The last commit
+>> was in 2017.
+
+
+-- 
+Regards,
+Pratyush Yadav
