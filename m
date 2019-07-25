@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5941F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 707D11F462
 	for <e@80x24.org>; Thu, 25 Jul 2019 02:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389030AbfGYCXW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jul 2019 22:23:22 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35721 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387955AbfGYCXT (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2389034AbfGYCXX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jul 2019 22:23:23 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44947 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387891AbfGYCXT (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Jul 2019 22:23:19 -0400
-Received: by mail-wm1-f67.google.com with SMTP id l2so43215478wmg.0
-        for <git@vger.kernel.org>; Wed, 24 Jul 2019 19:23:17 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id p17so48914483wrf.11
+        for <git@vger.kernel.org>; Wed, 24 Jul 2019 19:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aGy3SlCJoVzMvuvx6qmq2C8aGYmxu6frNL3a/vFmo7c=;
-        b=nF5pl4ISGEWvgmvV9/ZDIgLeNjOLjgSaHUoI9GVTEZDIlftPVJ725VKcLVNeRIgsC5
-         7qzLqnq7Av/aKIHKAOKn8AvMJFGvhVhnmx+ieyVYtrKs4SN+NnL8l5OdQh16yMLlgztd
-         eyU0cmQXj8mVVmp86EalYZQcBimJCXBOyIuIdiKZsAsEbTX77XYpe5qI0XUvqKWEDfO+
-         CimQ4z6gMW1K+8LcGX35e6dU/GprzBIOpzuiT44Jq96cOwSfXKC5KxcRYqphRbAbY9p6
-         hu3OylJcONpax3y92DybpL2sTcL6LIRl1k6RMOgB3fWvg1q20NIOyIdA2aPtdl2Y4wwN
-         RpEA==
+        bh=WMGvNSbFOrxNYHiyE4LFbFR9o+mRviwzKKwZMxcizxQ=;
+        b=F2Bz/z7s2Q9/Xl71PFOdPwCKzfDdoqSeHJmszjorC2QvfalA5HqDrQL/8sglPIQguP
+         3o0rnaLeZtvoesDO7UqG7p4IoFlqriuo1fS+hk9a8wOfZTqINq+aaIuVKRMbwduINo9C
+         1Q5lE+rDsXyZWvJ4J/fAW1JWnz/R3jVJSIlIA2ROYdJA5Hu/pN5cCZmBPlKoIL8McNH1
+         EDsWYA3nlb1/zzTawemV847V7ygluwCxxo9aR7ot/onsNsQ6HVwzZ/7MurwZb8bWOESg
+         t6d25ZXbmzOZ2ue+yHcj2e6srRLA3M8h8/Tu10bNAhunsB+Xl4IzwKCafhz+DdkeFoFb
+         q9Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aGy3SlCJoVzMvuvx6qmq2C8aGYmxu6frNL3a/vFmo7c=;
-        b=YB4C0UHzlGYBRrQpY4162blAee9dMkVrbe6HeAeD4Qn4ETkCIQQyJWzsVmDO7fvWVY
-         Vd2Z8EMk4vtG8c5RtQW46tYW+j+YUecWEGszhPTABnq6LOIWWt6lhMameFaSGZZq7ln9
-         sE04lh9VqqwMVL8ZkhJVUPZ3tLW1Zme1a00JcLbth6bKrZSbimD7/0j60J1Z5u/mgHlI
-         uX8vtwmqsDZLTIP1KWaAun1trfa/QLScAdwzIGapAPsRf6LGWG5DVsl643MYC/fMGTtJ
-         pDIfIe8aVBf/+BcnD0r4JyGhmnzcx97EwKVjiCvG0FIv5f7zmK7+piZJ4PDoeRuHTCJp
-         herg==
-X-Gm-Message-State: APjAAAXvWfs81tyvktOtfQqK/PEkBPfar0AWErid5DiPjRBIqKyUnPoZ
-        konzs36awISjG2MyQmp98Wp5bfEj
-X-Google-Smtp-Source: APXvYqyCP2nQBgDp9w1kDe7/RhboK/xCk2kBquxW0dSIDV5odN+1eVfTbofnk/fMsg5Bfr79Gc0RWg==
-X-Received: by 2002:a1c:968c:: with SMTP id y134mr75207094wmd.75.1564021397015;
+        bh=WMGvNSbFOrxNYHiyE4LFbFR9o+mRviwzKKwZMxcizxQ=;
+        b=XFEEOelvHya5ovAMrJF1/dLjpvJnDgH4QINc+0Npdk9wMMAe8BKES81Z2I9JYdK0Op
+         BQUa6/If7AgrBmlqV4tF4s3NT70p/A35pp9XbhyZesoDG24XZUdhCLBA44I75q47TjNI
+         p3IVvZ6I9LTZTLw5RZolg85dRZ6KMSsHs+BNV3kqYNDnliWjWzOUsiJUJsxqsnObd9rz
+         awXOcveYNrVwf8TGzBpy2EhA+994CH+2+w4yM4v5KYUtdFB1B4Rcd8idtt8CvovAPEaJ
+         a/M3PqNd+V5FoB/44kB0m415R28RJTzYeLXtfm/agIwo750lvDOVk1RXBtBzPopa4MOS
+         QFDA==
+X-Gm-Message-State: APjAAAW1ECLO8oPYwXBub89pnRQ14RkCDJtM6WLJXMYQUUW7afgO2tMY
+        GCSEvLODsyUc2ORaKAaTO5tboaZ6
+X-Google-Smtp-Source: APXvYqx0P9IW25Bh6CTwUOB9OlKzGgtU/WykD0BJbKpEii8krKjTSJgGxY16xy4wnCvb3IRJ66AYoA==
+X-Received: by 2002:adf:f246:: with SMTP id b6mr63572048wrp.92.1564021397776;
         Wed, 24 Jul 2019 19:23:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l25sm36626502wme.13.2019.07.24.19.23.16
+        by smtp.gmail.com with ESMTPSA id 91sm99347408wrp.3.2019.07.24.19.23.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jul 2019 19:23:16 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 19:23:16 -0700 (PDT)
-X-Google-Original-Date: Thu, 25 Jul 2019 02:23:10 GMT
-Message-Id: <49be7a73454b13b04270531eece87a2c6f6d3189.1564021393.git.gitgitgadget@gmail.com>
+        Wed, 24 Jul 2019 19:23:17 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 19:23:17 -0700 (PDT)
+X-Google-Original-Date: Thu, 25 Jul 2019 02:23:11 GMT
+Message-Id: <86a5a0c5895b4cd99a3d42469abe8142be7ac380.1564021393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.292.v2.git.gitgitgadget@gmail.com>
 References: <pull.292.git.gitgitgadget@gmail.com>
         <pull.292.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/5] repo-settings: parse core.untrackedCache
+Subject: [PATCH v2 4/5] repo-settings: create feature.manyFiles setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,213 +74,133 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The core.untrackedCache config setting is slightly complicated,
-so clarify its use and centralize its parsing into the repo
-settings.
+The feature.manyFiles setting is suitable for repos with many
+files in the working directory. By setting index.version=4 and
+core.untrackedCache=true, commands such as 'git status' should
+improve.
 
-The default value is "keep" (returned as -1), which persists the
-untracked cache if it exists.
-
-If the value is set as "false" (returned as 0), then remove the
-untracked cache if it exists.
-
-If the value is set as "true" (returned as 1), then write the
-untracked cache and persist it.
-
-Instead of relying on magic values of -1, 0, and 1, split these
-options into an enum. This allows the use of "-1" as a
-default value. After parsing the config options, if the value is
-unset we can initialize it to UNTRACKED_CACHE_KEEP.
+While adding this setting, modify the index version precedence
+tests to check how this setting overrides the default for
+index.version is unset.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/update-index.c |  7 +++++--
- config.c               | 24 ------------------------
- read-cache.c           | 19 +++++++++----------
- repo-settings.c        | 21 ++++++++++++++++++++-
- repo-settings.h        |  8 ++++++++
- 5 files changed, 42 insertions(+), 37 deletions(-)
+ Documentation/config/core.txt    |  4 +++-
+ Documentation/config/feature.txt | 12 +++++++++++-
+ Documentation/config/index.txt   |  1 +
+ repo-settings.c                  |  4 ++++
+ t/t1600-index.sh                 | 31 ++++++++++++++++++++++++++-----
+ 5 files changed, 45 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index dff2f4b837..5ced51c1ee 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -18,6 +18,7 @@
- #include "dir.h"
- #include "split-index.h"
- #include "fsmonitor.h"
-+#include "repo-settings.h"
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index d80162681a..7a2a33bc8c 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -86,7 +86,9 @@ core.untrackedCache::
+ 	it will automatically be removed, if set to `false`. Before
+ 	setting it to `true`, you should check that mtime is working
+ 	properly on your system.
+-	See linkgit:git-update-index[1]. `keep` by default.
++	See linkgit:git-update-index[1]. `keep` by default, unless
++	`feature.manyFiles` is enabled which sets this setting to
++	`true` by default.
  
- /*
-  * Default to not allowing changes to the list of files. The
-@@ -966,6 +967,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	struct parse_opt_ctx_t ctx;
- 	strbuf_getline_fn getline_fn;
- 	int parseopt_state = PARSE_OPT_UNKNOWN;
-+	struct repository *r = the_repository;
- 	struct option options[] = {
- 		OPT_BIT('q', NULL, &refresh_args.flags,
- 			N_("continue refresh even when index needs update"),
-@@ -1180,11 +1182,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		remove_split_index(&the_index);
- 	}
- 
-+	prepare_repo_settings(r);
- 	switch (untracked_cache) {
- 	case UC_UNSPECIFIED:
- 		break;
- 	case UC_DISABLE:
--		if (git_config_get_untracked_cache() == 1)
-+		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
- 			warning(_("core.untrackedCache is set to true; "
- 				  "remove or change it, if you really want to "
- 				  "disable the untracked cache"));
-@@ -1196,7 +1199,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		return !test_if_untracked_cache_is_supported();
- 	case UC_ENABLE:
- 	case UC_FORCE:
--		if (git_config_get_untracked_cache() == 0)
-+		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
- 			warning(_("core.untrackedCache is set to false; "
- 				  "remove or change it, if you really want to "
- 				  "enable the untracked cache"));
-diff --git a/config.c b/config.c
-index faa57e436c..3241dbc54d 100644
---- a/config.c
-+++ b/config.c
-@@ -2277,30 +2277,6 @@ int git_config_get_expiry_in_days(const char *key, timestamp_t *expiry, timestam
- 	return -1; /* thing exists but cannot be parsed */
- }
- 
--int git_config_get_untracked_cache(void)
--{
--	int val = -1;
--	const char *v;
--
--	/* Hack for test programs like test-dump-untracked-cache */
--	if (ignore_untracked_cache_config)
--		return -1;
--
--	if (!git_config_get_maybe_bool("core.untrackedcache", &val))
--		return val;
--
--	if (!git_config_get_value("core.untrackedcache", &v)) {
--		if (!strcasecmp(v, "keep"))
--			return -1;
--
--		error(_("unknown core.untrackedCache value '%s'; "
--			"using 'keep' default value"), v);
--		return -1;
--	}
--
--	return -1; /* default value */
--}
--
- int git_config_get_split_index(void)
- {
- 	int val;
-diff --git a/read-cache.c b/read-cache.c
-index bda665a25a..3761b9a171 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1846,18 +1846,17 @@ static void check_ce_order(struct index_state *istate)
- 
- static void tweak_untracked_cache(struct index_state *istate)
- {
--	switch (git_config_get_untracked_cache()) {
--	case -1: /* keep: do nothing */
--		break;
--	case 0: /* false */
-+	struct repository *r = the_repository;
+ core.checkStat::
+ 	When missing or is set to `default`, many fields in the stat
+diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+index f74314ae90..c2d9ef7473 100644
+--- a/Documentation/config/feature.txt
++++ b/Documentation/config/feature.txt
+@@ -12,4 +12,14 @@ feature.manyCommits::
+ * `core.commitGraph=true` enables reading the commit-graph file.
+ +
+ * `gc.writeCommitGraph=true` enables writing the commit-graph file during
+-garbage collection.
+\ No newline at end of file
++garbage collection.
 +
-+	prepare_repo_settings(r);
-+
-+	if (r->settings.core_untracked_cache  == UNTRACKED_CACHE_REMOVE) {
- 		remove_untracked_cache(istate);
--		break;
--	case 1: /* true */
--		add_untracked_cache(istate);
--		break;
--	default: /* unknown value: do nothing */
--		break;
-+		return;
- 	}
-+
-+	if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
-+		add_untracked_cache(istate);
- }
- 
- static void tweak_split_index(struct index_state *istate)
++feature.manyFiles::
++	Enable config options that optimize for repos with many files in the
++	working directory. With many files, commands such as `git status` and
++	`git checkout` may be slow and these new defaults improve performance:
+++
++* `index.version=4` enables path-prefix compression in the index.
+++
++* `core.untrackedCache=true` enables the untracked cache. This setting assumes
++that mtime is working on your machine.
+\ No newline at end of file
+diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
+index f181503041..7cb50b37e9 100644
+--- a/Documentation/config/index.txt
++++ b/Documentation/config/index.txt
+@@ -24,3 +24,4 @@ index.threads::
+ index.version::
+ 	Specify the version with which new index files should be
+ 	initialized.  This does not affect existing repositories.
++	If `feature.manyFiles` is enabled, then the default is 4.
 diff --git a/repo-settings.c b/repo-settings.c
-index 3face7d8b9..65b980403c 100644
+index 65b980403c..3a5cf33814 100644
 --- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -8,6 +8,7 @@
- void prepare_repo_settings(struct repository *r)
- {
- 	int value;
-+	char *strval;
- 
- 	if (r->settings_initialized)
- 		return;
-@@ -22,14 +23,32 @@ void prepare_repo_settings(struct repository *r)
- 
- 	if (!repo_config_get_bool(r, "index.version", &value))
- 		r->settings.index_version = value;
-+	if (!repo_config_get_maybe_bool(r, "core.untrackedcache", &value)) {
-+		if (value == 0)
-+			r->settings.core_untracked_cache = UNTRACKED_CACHE_REMOVE;
-+		else
-+			r->settings.core_untracked_cache = UNTRACKED_CACHE_WRITE;
-+	} else if (!repo_config_get_string(r, "core.untrackedcache", &strval)) {
-+		if (!strcasecmp(strval, "keep"))
-+			r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
-+
-+		free(strval);
-+	}
-+
- 
- 	if (!repo_config_get_bool(r, "pack.usesparse", &value))
- 		r->settings.pack_use_sparse = value;
--
-+	
- 	if (!repo_config_get_bool(r, "feature.manycommits", &value) && value) {
+@@ -43,6 +43,10 @@ void prepare_repo_settings(struct repository *r)
  		UPDATE_DEFAULT(r->settings.core_commit_graph, 1);
  		UPDATE_DEFAULT(r->settings.gc_write_commit_graph, 1);
  	}
++	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
++		UPDATE_DEFAULT(r->settings.index_version, 4);
++		UPDATE_DEFAULT(r->settings.core_untracked_cache, UNTRACKED_CACHE_WRITE);
++	}
  
-+	/* Hack for test programs like test-dump-untracked-cache */
-+	if (ignore_untracked_cache_config)
-+		r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
-+	else
-+		UPDATE_DEFAULT(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
+ 	/* Hack for test programs like test-dump-untracked-cache */
+ 	if (ignore_untracked_cache_config)
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index 42962ed7d4..c77721b580 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -59,17 +59,38 @@ test_expect_success 'out of bounds index.version issues warning' '
+ 	)
+ '
+ 
+-test_expect_success 'GIT_INDEX_VERSION takes precedence over config' '
++test_index_version () {
++	INDEX_VERSION_CONFIG=$1 &&
++	FEATURE_MANY_FILES=$2 &&
++	ENV_VAR_VERSION=$3
++	EXPECTED_OUTPUT_VERSION=$4 &&
+ 	(
+ 		rm -f .git/index &&
+-		GIT_INDEX_VERSION=4 &&
+-		export GIT_INDEX_VERSION &&
+-		git config --add index.version 2 &&
++		rm -f .git/config &&
++		if test "$INDEX_VERSION_CONFIG" -ne 0
++		then
++			git config --add index.version $INDEX_VERSION_CONFIG
++		fi &&
++		git config --add feature.manyFiles $FEATURE_MANY_FILES
++		if test "$ENV_VAR_VERSION" -ne 0
++		then
++			GIT_INDEX_VERSION=$ENV_VAR_VERSION &&
++			export GIT_INDEX_VERSION
++		else
++			unset GIT_INDEX_VERSION
++		fi &&
+ 		git add a 2>&1 &&
+-		echo 4 >expect &&
++		echo $EXPECTED_OUTPUT_VERSION >expect &&
+ 		test-tool index-version <.git/index >actual &&
+ 		test_cmp expect actual
+ 	)
++}
 +
- 	r->settings_initialized = 1;
- }
-diff --git a/repo-settings.h b/repo-settings.h
-index 89fb0159bf..e9b028e1a9 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -1,11 +1,19 @@
- #ifndef REPO_SETTINGS_H
- #define REPO_SETTINGS_H
++test_expect_success 'index version config precedence' '
++	test_index_version 2 false 4 4 &&
++	test_index_version 2 true 0 2 &&
++	test_index_version 0 true 0 4 &&
++	test_index_version 0 true 2 2
+ '
  
-+enum untracked_cache_setting {
-+	UNTRACKED_CACHE_UNSET = -1,
-+	UNTRACKED_CACHE_REMOVE = 0,
-+	UNTRACKED_CACHE_KEEP = 1,
-+	UNTRACKED_CACHE_WRITE = 2
-+};
-+
- struct repo_settings {
- 	int core_commit_graph;
- 	int gc_write_commit_graph;
- 
- 	int index_version;
-+	enum untracked_cache_setting core_untracked_cache;
- 
- 	int pack_use_sparse;
- };
+ test_done
 -- 
 gitgitgadget
 
