@@ -2,108 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2BE41F462
-	for <e@80x24.org>; Thu, 25 Jul 2019 10:11:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500A51F462
+	for <e@80x24.org>; Thu, 25 Jul 2019 10:15:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388644AbfGYKLW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 06:11:22 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39582 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388446AbfGYKLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 06:11:21 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x4so50075145wrt.6
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 03:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Q3GR+HmC4hanNi6lsfFbMIJErTjBCcGre4Jjgg3o/LM=;
-        b=EaP+uesEqU3uWG4fq7yw5mtCKmt+pnQaIxNPs+qoErXbdnc7yesVmciHs7YaPoS4jy
-         EDxg6haji0PPQ0D+lweYOiHhu1nbnh+6b5fRZGsfIuGNwt8oeey9JOrdUX6Bf/2Z0xzg
-         KtQik/p/2RAP8+tl7Xx0HU+8F/NbQfw2nqF5Jy2jAm2Wqe46uiCIwbQr5mEpvlBJDPmH
-         MI7yqPI9gun9tuyVx44fzOinb949ppyRL9cnqnx3ZPLGeuDR7CTr0vEw1rT5udnqochL
-         CBn1AkSaIv+ab4V+uPgIgTso68oe8fe35HhQmX/bB7kVVvaFWXBS/0B+HzmaeHyWO8d7
-         7oog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Q3GR+HmC4hanNi6lsfFbMIJErTjBCcGre4Jjgg3o/LM=;
-        b=nd9d/EVhxXOAAthGcDzCQMqzjB9h5yJch+RQqbAe2AgPP0YpdevSV8PNeyKnXKxeKI
-         NQl75zoemFjIcnh5QK75JGJtsIGF/kOxlnOziIwMxiGbeny4rhDb751quyPQ6KqgvsPt
-         fwJqytxHhmyQPwVJSx/FJYBw3aDbMsS41Ux+dtNgozj40RvcDhB/tKTfXqy8YJWUuhlt
-         esmZh3q+Rbqp1bg3I4KzVRoHhYIuMaHRg2ScLvRtzS4GdNk5sLwpWaBnrsWxTcyN3tik
-         dXTgSHBUbimrifxt3tmtseEoYB3Krhi+9+CXpK2AnBRaY/2wSExU6423ahZk7maLhiU1
-         ewhg==
-X-Gm-Message-State: APjAAAXkuHy9KkODRzLSMx34eQpPm5E7NRXo+wBmR+fuLyLo4mfK8NOG
-        7U8X8uUZPRrEErf34Wew2YX7orDD
-X-Google-Smtp-Source: APXvYqxz4utVHxw5EUj7v0+nNFjLkEUAb13Yy2JdMhR/FRfnlfcPaDKAU0AP/Q2DlsHdEGiU+KMnVA==
-X-Received: by 2002:adf:fd08:: with SMTP id e8mr96899767wrr.147.1564049479901;
-        Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6sm60632252wmd.16.2019.07.25.03.11.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
-Date:   Thu, 25 Jul 2019 03:11:19 -0700 (PDT)
-X-Google-Original-Date: Thu, 25 Jul 2019 10:11:07 GMT
-Message-Id: <261825fe442a428ea0724ab6ae9d8d351bda8d3e.1564049473.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.294.git.gitgitgadget@gmail.com>
-References: <pull.294.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 06/12] t3427: accommodate for the `rebase --merge` backend
- having been replaced
-Fcc:    Sent
+        id S2389736AbfGYKPN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jul 2019 06:15:13 -0400
+Received: from mx2.uni-regensburg.de ([194.94.157.147]:37086 "EHLO
+        mx2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389517AbfGYKPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jul 2019 06:15:13 -0400
+Received: from mx2.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id DAAB6600004E
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 12:15:09 +0200 (CEST)
+Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by mx2.uni-regensburg.de (Postfix) with ESMTP id C4195600004D
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 12:15:09 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
+        with Novell_GroupWise; Thu, 25 Jul 2019 12:15:09 +0200
+Message-Id: <5D39812C020000A10003265F@gwsmtp.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.1.1 
+Date:   Thu, 25 Jul 2019 12:15:08 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     <git@vger.kernel.org>
+Subject: Antw: Re: blank lines in pre-created merge message
+References: <5D382AC1020000A100032608@gwsmtp.uni-regensburg.de>
+ <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb am 25.07.2019 um
+12:07
+in Nachricht <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>:
+> Hi Ulrich,
+> 
+> On Wed, 24 Jul 2019, Ulrich Windl wrote:
+> 
+>> I think I had tried bringing this to your attention before, but I think it
 
-Since 68aa495b590 (rebase: implement --merge via the interactive
-machinery, 2018-12-11), the job of the old `--merge` backend is now
-performed by the `--interactive` backend, too.
+> was
+>> without success.
+>> The issue may seem purely cosmetical, while being easy to fix (is my
+guess):
+>>
+>> When using "git merge --no-ff --no-commit ..", the pre-created merge
+message
+>> always contains two empty lines in between the comment lines. However if 
+> there
+>> was a merge conflict (being resolved) an extra blank line is added after
+the
+>> first line.
+>>
+>> In vi those empty lines are easy to spot, and I routinely remove them. But
+>> maybe it's better not to create them at the beginning. (A "normal commit" 
+> never
+>> creates any emüpty lines in the pre-created comment)
+> 
+> I could imagine that
+> https://github.com/gitgitgadget/git/commit/b2f5171ecc2feb4192acd80f5a6b05c06
 
-One consequence is that empty commits are no longer rebased by default.
+> e099e97
+> addresses that. Would be good if you could try; just build `pu` from
+> https://github.com/git/git (`make install` will install it into your
+> `$HOME/bin` and you can test that easily).
+> 
+> If not, how about giving it a try to fix it yourself? This is open
+> source, giving you great power to change the entire source code in your
+> local repository as you wish. And of course, with great power... comes
+> great responsibility.
 
-Meaning that the test case that calls `git rebase -Xsubtree` (which used
-to be handled by the `--merge` backend) now needs to ask explicitly for
-the empty commit to be rebased.
+I agree, but git isn't a tiny project: Could anybody provide a rough overview
+how and where these editor comments are created? Then I could have a look
+myself.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t3427-rebase-subtree.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+>> My Git version is 2.12.3, but the bug is probably quite old...
+> 
+> You might think that the bug is probably quite old, but what is really
+> old is your Git version. The current one is v2.22.0.
 
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index 8c4ddd3408..b490919c60 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -83,10 +83,10 @@ test_expect_failure 'Rebase -Xsubtree --keep-empty --preserve-merges --onto comm
- '
- 
- # FAILURE: fatal: Could not parse object
--test_expect_failure 'Rebase -Xsubtree --onto commit' '
-+test_expect_failure 'Rebase -Xsubtree --keep-empty --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto to-rebase &&
--	git rebase -Xsubtree=files_subtree --onto files-master master &&
-+	git rebase -Xsubtree=files_subtree --keep-empty --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "master4" &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
--- 
-gitgitgadget
+With old I mean 1.7.12 or older ;-)
+
+> 
+> First order of business should be to verify that it has not been fixed
+> in the meantime ;-)
+
+Yeah, but for a fast-paced project you often find yourself busy with updating
+all the time, leaving no time for your productive work (like Android
+development).
+Don't expect too much from someone that drives as 26 year old car... (it's
+easier to handle than the new ones) ;-)
+
+Regards,
+Ulrich
 
