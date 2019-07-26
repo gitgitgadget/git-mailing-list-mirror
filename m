@@ -2,79 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB5A11F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 20:23:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5ABE1F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 20:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfGZUXo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 16:23:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53638 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbfGZUXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 16:23:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B98D6B8E8;
-        Fri, 26 Jul 2019 16:23:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1e++Kt9M/eTZnMEE4bCMY9d+ygI=; b=gRWSjN
-        3vlwxdoIa7E3ZEWDPN5GSh6fVQrQBvZeSWgk929Tih9ADD2yaRnLPpNB19ldd9S8
-        aU+5jyhbHcTmPss8G9Rb2cUjTBGCGQx8EyXdxWU3Ga/IwiQunxvcmEj9rA+QkJBD
-        nAbruf9KA7+KdXfiANHrtZwxwjAp9OPMGaYS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cmg9YaC5TtJo3WZ1zgM855tHJ3qK0kPM
-        ByrN8dyIQ6fgtqMvNT9uq4nu4vFYwvNhRrdp17Qqw1zsrcpPIt6ti7L+vuA7bP64
-        Jc9nGuaSSt8eExZA+uKvR4y5YfjchEzeCSsD9OGCWZj/YZTCJwheu1U9I/pLgb0H
-        2n9+NEItKmc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D92CC6B8E7;
-        Fri, 26 Jul 2019 16:23:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1251F6B8E4;
-        Fri, 26 Jul 2019 16:23:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
-References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907261624130.21907@tvgsbejvaqbjf.bet>
-Date:   Fri, 26 Jul 2019 13:23:36 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1907261624130.21907@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Fri, 26 Jul 2019 16:33:00 +0200
-        (CEST)")
-Message-ID: <xmqqtvb8mto7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727811AbfGZU0u (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 16:26:50 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37933 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727530AbfGZU0t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 16:26:49 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f5so16459081pgu.5
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 13:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9otzOOPm/xgobry+Pu0tswrqWoROtmckoyjYOj8o+Ys=;
+        b=kXG8Omg+WPUL5eDwb5e2H2431cKkh5X87bho61e/OAW0+L2cHQh/SMdx+v2m9VsD9G
+         6QfGdq6qdlw568cD9arPd9cqOZQFobBoUX26K7bXCA2mnMh4Qt7/YVPgXCrEz9ZKDA1E
+         cX1qROZd3Sh7L63lXq2xB0AAmFzkl3d1U2bYdeCuH+kV93uC9wGKOO8Cdh8M8pOJLCcL
+         qm2H5PkfwSZIOIb/eXrMHv2t5WE6psG49E0xvuSt0O0667MJvmxHPdUfHeG110fuG3o9
+         yjOMT6lR9cos5Pj5qj1uitTHSJrGpmNHoUCU/asOSIJQ77eLZpFx5HTkA7em+63VPV/t
+         W14g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9otzOOPm/xgobry+Pu0tswrqWoROtmckoyjYOj8o+Ys=;
+        b=O7BXWgywBk7VpK30solUlDFWoCNpviTUg5iUMl4jb/QXkQWTFUOTj9oo6T8ArjtNgj
+         JCJc5tLVooVtb7Oh4tl3UjndP/XOtwormQFX6s8a9jW/XGaB2bbjU8LJum61GyG42c+f
+         arQ0iEiQt99Zma1CW56wwtV2KKIxy7fX7aEjVjOjaL5n1FKxZ3Gh5wsYZDEHm9NvmD7K
+         lqWRcEFVraqwzo8A6+h17rfmQ4C05wMOfHzGoMP9KbOkXgwfhfrwiJej0jBzalPWcJv6
+         Gb2yamg6VfTLh/Lz9Kuspui/yKLglrU+h8j+qzZWB2WMfEuBPb4LfuCSqhcaJL1pbVE3
+         7qBw==
+X-Gm-Message-State: APjAAAXnj2UI+FoNyfeiGT+HNLjRsRmPp0WwF9+5mOC5DGFXPyt5jjgR
+        aXkjEI7RpG6DTTqI0ODJ8D2f+tYQDpI=
+X-Google-Smtp-Source: APXvYqw0dQFKlklpyW+q33VX5haTdUmoykgMTASU9o+IisCpv4COwgzrjOI+wdxaiICYs0LLlH5UeA==
+X-Received: by 2002:a62:cdc3:: with SMTP id o186mr24356224pfg.168.1564172808845;
+        Fri, 26 Jul 2019 13:26:48 -0700 (PDT)
+Received: from localhost.localdomain ([205.209.24.227])
+        by smtp.gmail.com with ESMTPSA id 4sm63754514pfc.92.2019.07.26.13.26.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 26 Jul 2019 13:26:48 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, Johannes.Schindelin@gmx.de, dev+git@drbeat.li,
+        gitster@pobox.com
+Subject: [RFC PATCH 0/2] PCRE1 cleanup
+Date:   Fri, 26 Jul 2019 13:26:40 -0700
+Message-Id: <20190726202642.7986-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <87ftms7t6s.fsf@evledraar.gmail.com>
+References: <87ftms7t6s.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40C98EFC-AFE3-11E9-A4D1-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Sent as an RFC since it was meant to be applied against ab/pcre-jit-fixes
+but that is likely to change with the reroll of that branch.
 
-> Hi Junio,
->
-> On Thu, 25 Jul 2019, Junio C Hamano wrote:
->
->> The seventh batch is in; I've merged fix-up topics that has been in
->> 'master' for some time (i.e. up to the third batch of this cycle)
->> down to 'maint'.
->
-> Would you terribly mind also merging `js/gcc-8-and-9` into `maint`?
-> Otherwise, the CI build is broken after my upgrade of the Git for
-> Windows SDk to GCC v9.x.
+ [PATCH 1/2] grep: make sure NO_LIBPCRE1_JIT disable JIT in PCRE1
+ [PATCH 2/2] grep: refactor and simplify PCRE1 support
 
-I do not mind.  I am just taking things in smaller batches than just
-the whole ball of wax.
+The end result could be squashed together before merging but sent as
+independentt changes to make review easier, with the first change doing
+the minimum required to make PCRE1 great again.
+
+ Makefile |  9 ++-------
+ grep.c   | 15 +++++++++------
+ grep.h   | 11 -----------
+ 3 files changed, 11 insertions(+), 24 deletions(-)
+
+base-commit: 0f8c4ddfdddb72dc62d76864f5d3d31f136c7129
+-- 
+2.22.0
