@@ -2,102 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ADFE1F97E
-	for <e@80x24.org>; Fri, 26 Jul 2019 07:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96A031F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 08:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725953AbfGZHwR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 03:52:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57106 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725864AbfGZHwR (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 26 Jul 2019 03:52:17 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 503146081D;
-        Fri, 26 Jul 2019 07:52:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1564127535;
-        bh=STeU2w5KdyVqELvFrvTA9r7bTXwQIW4DoYL6gNAlvAM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=PdWRm0aehqwad/2PJwiSiDpfm7D/FW84P1+hei545DK9sMOiOM3uOxXoenvNRxE3y
-         dOnhv35IKDAW+hU2PvAyA92a+Op6k/nvpSot7/tnHnJeVTOUTYB31hDTvQIAJNRUbt
-         ndTjYfpcV52mXVMb3QrqTuINDkZOmND5/1+uRh6x2uQSdFmRqJ2Ky0A+g9QKuhaTJG
-         7KDZrJWpqDpe77ZY5ElebVaK3jE905UP4ieRp6AaZz8QfnBBcTPywr9ybFC9ym3zXC
-         WrMMOUVbWJE3WD5tt2EZO/bW5lreTX5l6QyD1JUR6XLf1uAx+guWPGVw1CQpPNDi2r
-         3LPC6MxeAUI8ittK2xrU5QW6T8hLnkrk54cMIrAuI0Zy3je9rTNQ2neIiBhsx3J9eS
-         eLQcE7ok1Dt+sGjN+2dFKbh7r2t+pbEbE2TzGSncxx02dEnSSfXGUurjVf3lAPggBG
-         bI2PBDbIw5nMxFLmBVSapXK6yCEQ84VZN4rYJezGI9ZleuXWymu
-Date:   Fri, 26 Jul 2019 07:52:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/12] rebase -r: support merge strategies other than
- recursive
-Message-ID: <20190726075210.GE9319@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.294.git.gitgitgadget@gmail.com>
+        id S1726195AbfGZI57 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 04:57:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52108 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725815AbfGZI56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 04:57:58 -0400
+Received: (qmail 9262 invoked by uid 109); 26 Jul 2019 08:57:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 26 Jul 2019 08:57:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5686 invoked by uid 111); 26 Jul 2019 08:59:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Jul 2019 04:59:15 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 26 Jul 2019 04:57:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Varun Naik <vcnaik94@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] checkout.c: unstage empty deleted ita files
+Message-ID: <20190726085756.GA20017@sigill.intra.peff.net>
+References: <20190726045645.2437-1-vcnaik94@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZRyEpB+iJ+qUx0kp"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.294.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 5.0.0-trunk-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190726045645.2437-1-vcnaik94@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jul 25, 2019 at 09:56:45PM -0700, Varun Naik wrote:
 
---ZRyEpB+iJ+qUx0kp
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It is possible to delete a committed file from the index and then add it
+> as intent-to-add. After `git checkout HEAD` or `git restore --staged`,
+> the file should be identical in the index and HEAD. This patch provides
+> the desired behavior even when the file is empty in the index.
 
-On 2019-07-25 at 10:11:14, Johannes Schindelin via GitGitGadget wrote:
-> This is the most notable shortcoming that --rebase-merges has, still,
-> relative to --preserve-merges' capabilities: it does not support passing
-> custom merge strategies or custom merge strategy options.
->=20
-> Let's fix this.
+OK, so the issue is that ITA entries have an empty-file sha1, so they
+confuse the logic to decide if we can use the old entry. Your fix makes
+sense.
 
-This looks like a great improvement. I'm glad to see --rebase-merges
-gaining feature parity with --preserve-merges.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> ---
+> CC Jeff because you wrote the code that I am changing now.
+> 
+> checkout.c:update_some() discards the newly created cache entry when its
+> mode and oid match those of the old entry. Since an ita file has the
+> same oid as an empty file, an empty deleted ita file passes both of
+> these checks, and the new entry is discarded. In this case, the file
+> should be added to the cache instead.
+> 
+> This change should not affect newly added ita files. For those, inside
+> tree.c:read_tree_1(), tree_entry_interesting() returns
+> entry_not_interesting, so fn (which points to update_some()) is never
+> called.
 
---ZRyEpB+iJ+qUx0kp
-Content-Type: application/pgp-signature; name="signature.asc"
+These two paragraphs would be a nice addition to the actual commit
+message.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 91f8509f85..27daa09c3c 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -126,6 +126,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
+>  	if (pos >= 0) {
+>  		struct cache_entry *old = active_cache[pos];
+>  		if (ce->ce_mode == old->ce_mode &&
+> +		    !ce_intent_to_add(old) &&
+>  		    oideq(&ce->oid, &old->oid)) {
+>  			old->ce_flags |= CE_UPDATE;
+>  			discard_cache_entry(ce);
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl06sSoACgkQv1NdgR9S
-9osUYw/9EOvg+dicnoVQG4ANerpk7fDzO64a5Chjcg2sPk4zMKIuBa1E++4OL3qp
-xOX6nO+EcbziG1Z1BZ1beU5zA9kJmxWvLEXTZB+bY6tKwWcsWEmv8Vr/VQp1GlHo
-wIjO2zdMeAwc7zO5YW6wWKa9U+/Mw2tXBo5TMkK2DGKAR9NN1gZxV43GpT1mqioP
-rwMK/bDFF+3bskJQNUlpunJGJX9HtIL+yS6PA4dZ6uFOsDxkE6kT0QHFQoD9JkWx
-dVbJgh8JTtZC8GzhMDbWmddVhTH34KEWfHtSGxbBtlFUCpO/VOiqQOWWrm8FlPU4
-ZhwEjy1Mbi4rpAE0f7Y7TRd4vJjApRAjXhvB4wCljRujoqb/9iIt3TpL1muR5Kqb
-9aNSqzExpmXAp+WPZcXhHnBV/qs3qA9RAHM1qk1EfXtb/Ukck3hZ4O7vkzcwnvxt
-WyTe+/5MIdqxwaXiDLzv1+nYR8fu/YJJP6GyOmtJaCz5ZDVizXujX/zItOZvY6iz
-x1BhbZQdeSzclCosd4sQUNX+yALu/QwQnp8PKQU3u17NvC1It9Gh3kcprlmR/16r
-IRTtE8/Ilv0psl+oyRMQRvQ9XBWuhs/a/IjmLRx1j82VT6WsF1KzX3HOQRSkv7Sh
-dYZwpNJJVqSPP2ft31ZrpItqACgihzspC3hK1lyxG53xygP7A+o=
-=Tvu1
------END PGP SIGNATURE-----
+My first thought here was that we could skip ITA entries here only when
+the HEAD hash is also the empty blob, which would let us retain index
+results in more cases. But it doesn't help. If the HEAD entry isn't the
+empty blob, then we'll have !oideq() and we'll skip anyway, because an
+ITA entry must be the empty blob (if we `git add` some other content,
+then it ceases to be ITA).
 
---ZRyEpB+iJ+qUx0kp--
+So it makes sense to just always skip this "retain the old index entry"
+block for any ITA entry.
+
+> +test_expect_success 'checkout HEAD adds deleted intent-to-add file back to index' '
+> +	echo "nonempty" >nonempty &&
+> +	>empty &&
+> +	git add nonempty empty &&
+> +	git commit -m "create files to be deleted" &&
+> +	git rm --cached nonempty empty &&
+> +	git add -N nonempty empty &&
+> +	git checkout HEAD nonempty empty &&
+> +	git diff --staged --exit-code
+> +'
+
+This clearly demonstrates the problem. Nice.
+
+> +test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
+> +	echo "nonempty" >nonempty &&
+> +	>empty &&
+> +	git add nonempty empty &&
+> +	git commit -m "create files to be deleted" &&
+> +	git rm --cached nonempty empty &&
+> +	git add -N nonempty empty &&
+> +	git restore --staged nonempty empty &&
+> +	git diff --staged --exit-code
+> +'
+
+Hmm. This git-restore test means we don't apply to maint. But wouldn't
+we want the fix for "checkout" there?
+
+I.e., I'd expect a patch to fix and test git-checkout, and then an
+additional patch to be added on the merge of that plus master to test
+git-restore.
+
+Other than that, the patch looks good to me.
+
+-Peff
