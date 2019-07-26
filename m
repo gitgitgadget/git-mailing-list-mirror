@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B83551F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 15:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 431EC1F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 15:09:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387760AbfGZPJK (ORCPT <rfc822;e@80x24.org>);
+        id S2387783AbfGZPJO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 11:09:14 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55545 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387757AbfGZPJK (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 26 Jul 2019 11:09:10 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39623 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387587AbfGZPJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 11:09:07 -0400
-Received: by mail-wr1-f65.google.com with SMTP id x4so1650508wrt.6
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:09:05 -0700 (PDT)
+Received: by mail-wm1-f66.google.com with SMTP id a15so48296999wmj.5
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eZ/w1lSHdkPbdWhdGQSuekUaVPK1hxxgQnFp3e4/tWc=;
-        b=QqQaCy43hmgV2+NGUm6TbF/ZMJyg22D0cjH3wCrks1GAGOGesdJ97Tlzg0wLlki8Ub
-         krPk1Jg6TXz+gTXXM+38S0gfkc5mLhTEEu78e4pIDNgnh15vZQViJrry88f7iNsqo9H3
-         EVMG+h25vva6YKkeeDPHd7C5KhhJcZyaeuKelr9xfQFHF+5/wooMCGb3aem81NlyBNzh
-         5LQQC6RRvwu1CPnfbz2eCdXoX+VPhhMA5tyc/xN1CR8yBzizO3Ml9yTeRVIbW/ZieiPy
-         jVw05wLxl56j3IVEWzNven5NVBU+s0eeEBizPpZf9daAep0gfvyC2RdRM6aKI0YBIZnr
-         45nw==
+        bh=OBkWT95Uwgo8haPGhHLiGW0JxysHkMuA1iAqHf/Uss4=;
+        b=Yug0/bi2t+3fsWAQEvKsS4SULX26Ms3WxmdMXf5Bdm3FnapFuy7aCEsS7D4sQXquMW
+         MxYm6OzZbctyQbfEe3+CmgJhKtOd6GqD3XU3vnmLpfFLfpKY4FlzDXXS3liyzoKspCri
+         TpUDlx1X4GlYxcpR8RdQhXzvCtVWGu/uMFkYAPppxz5ICxly1jqv5zF2qHmWSWLZvsct
+         ZpWCvarMg2WQKfOdVRNmXy16YYI70bbKhmmysFWEZvudyPA0Ps6TlJ3TBKXnSdsYmZr5
+         Mh+uuwQ9IBCAkFu8zs6iycIRZFXr4zZ4ywCv3ft/BKTKzqdF2mY4nKLdrKLHnvlytf4Z
+         XUrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eZ/w1lSHdkPbdWhdGQSuekUaVPK1hxxgQnFp3e4/tWc=;
-        b=sX5bS6eXuP1cgRfVV2quOBnFSeJpJtyas7GMVucQ8HMDpDvR8ydO3+ACYJIuhKJo2F
-         iTYKBP4vodquV15gtWWt6zWx4oRZvE4OrJ/gg97BKnAB1sdvwR5N9fw40ri0DOpli/2/
-         pRcT+lj+0Ty7eiRbSR7ZfxHTYeX7V2xTjhI7haI9ClflfdM8RN1kFj0tmxGl0shmLG/e
-         WjJjAnqjQtAfbgWsJlc9fIpXlnKp8R9ElJlHkfehvKTcYci4Qc45lf9jkgyuKucwNMlY
-         gOTnVpi95/Bu48U23UnRgOBq89fSVZOzV1TRVygJ2Ym5uFn30NhTyLuFylJFvBUJSqJ7
-         edVA==
-X-Gm-Message-State: APjAAAVEiQGkaPU8oH3mqSDoqsEkDVCcTFZUd8GUfwL41eL8ybYePsO8
-        2zCYzWE0XPEzhY5Xdl1ZT1yMAqD/jzs=
-X-Google-Smtp-Source: APXvYqyibzje7DvZ0txyy1/lCINh22bTZg9Qe/peWFe+7wbAMMHRN+dIeiTCWu1OmRXdppXNa2Qomg==
-X-Received: by 2002:adf:f601:: with SMTP id t1mr6170341wrp.337.1564153744266;
-        Fri, 26 Jul 2019 08:09:04 -0700 (PDT)
+        bh=OBkWT95Uwgo8haPGhHLiGW0JxysHkMuA1iAqHf/Uss4=;
+        b=rHGK5dcZHw+Qkg/lUmgVZ8Kr1NHdsKZP/NxmWuIb52ym8RJqbDhUJngQ/NtE/iwa0z
+         5hx2lk8nP6HXP5I2BCNXL3VCMfebjNNhWuP/puoB/FghzG7bkYRBbrmwQTApn6hmlHIf
+         muhYxghmuB6l7XFkJ9EiU4ojPBpN8ZpW+TJKT3HUrGVIx3ruboET+bZ497Z6mSLQNBi3
+         aCvtqiUc01KhDPF3WgjDdEk06T+AyFGbgzmaUm5u6jrrLK6+8lD/0uoGLy1b4CmYxNDT
+         I28GDfU4SLnoEaKUXyy+V+81MWOCtM2Xq+J2txSi5eW3cpzuDSz1pcUdw2fm9GMwI7RH
+         BhrA==
+X-Gm-Message-State: APjAAAVTi9fFvMNDuYFPhxwI53UndD8E2XCFbPRpx2/BvaRaxNWNxt4V
+        8+Q6noQxQ5eyz6VVbFe1EJG5E/cWexc=
+X-Google-Smtp-Source: APXvYqzI2fVsqaJWCpzpnFX6Kr5zgigMPaSv8EkyXkVAiPvY2VJOpaSeOlIche6f0DERHXEEzaFivg==
+X-Received: by 2002:a7b:c651:: with SMTP id q17mr79718213wmk.136.1564153746982;
+        Fri, 26 Jul 2019 08:09:06 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p63sm4814341wmp.45.2019.07.26.08.09.03
+        by smtp.gmail.com with ESMTPSA id p63sm4814341wmp.45.2019.07.26.08.09.05
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 26 Jul 2019 08:09:03 -0700 (PDT)
+        Fri, 26 Jul 2019 08:09:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 6/8] grep: stess test PCRE v2 on invalid UTF-8 data
-Date:   Fri, 26 Jul 2019 17:08:16 +0200
-Message-Id: <20190726150818.6373-7-avarab@gmail.com>
+Subject: [PATCH v2 8/8] grep: optimistically use PCRE2_MATCH_INVALID_UTF
+Date:   Fri, 26 Jul 2019 17:08:18 +0200
+Message-Id: <20190726150818.6373-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.22.0.455.g172b71a6c5
 In-Reply-To: <20190724151415.3698-1-avarab@gmail.com>
 References: <20190724151415.3698-1-avarab@gmail.com>
@@ -73,101 +73,148 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since my b65abcafc7 ("grep: use PCRE v2 for optimized fixed-string
-search", 2019-07-01) we've been dying on invalid UTF-8 data when
-grepping for fixed strings if the following are all true:
+As discussed in the "grep: stess test PCRE v2 on invalid UTF-8 data"
+commit leading up to this one there's a regression in
+b65abcafc7 ("grep: use PCRE v2 for optimized fixed-string search",
+2019-07-01) when matching UTF-8 data.
 
-    * The subject string is non-ASCII (e.g. "ævar")
-    * We're under a is_utf8_locale(), e.g. "en_US.UTF-8", not "C"
-    * We compiled with PCRE v2
-    * That PCRE v2 did not have JIT support
+This ultimately isn't straightforward to just "fix", because the kwset
+backend was so dumb about icase matching that we'd skip it entirely on
+non-ASCII. See the code removed in 48de2a768c ("grep: remove the kwset
+optimization", 2019-07-01).
 
-The last of those is why this wasn't caught earlier, per pcre2jit(3):
+Just going back to the C library for those isn't ideal, since it's
+likely to be even dumber about these mixed-encoding cases.
 
-    "unless PCRE2_NO_UTF_CHECK is set, a UTF subject string is tested
-    for validity. In the interests of speed, these checks do not
-    happen on the JIT fast path, and if invalid data is passed, the
-    result is undefined."
+So let's support this "properly" using the PCRE2_MATCH_INVALID_UTF
+flag. This is new code that's not in any released PCRE v2 version, so
+we might need a fix that emulates it somehow. I figure that the case
+that with the non-icase bug out of the way this is obscure enough to
+tell people "upgrade your PCRE v2 too!'. It'll likely be released by
+the time we release the git version this commit is part of.
 
-I.e. the subject being matched against our pattern was invalid, but we
-were lucky and getting away with it on the JIT path, but the non-JIT
-one is stricter.
+We can't just use PCRE2_NO_UTF_CHECK instead for the reasons discussed
+in [1].
 
-This patch does nothing to fix that, instead we sneak in support for
-fixed patterns starting with "(*NO_JIT)", this disables the PCRE v2
-jit with implicit fixed-string matching for testing, see
-pcre2syntax(3) the syntax.
-
-This is technically a change in behavior, but it's so obscure that I
-figured it was OK. We'd previously consider this an invalid regular
-expression as regcomp() would die on it, now we feed it to the PCRE v2
-fixed-string path. I thought this was better than introducing yet
-another GIT_TEST_* environment variable.
-
-We're also relying on a behavior of PCRE v2 that technically could
-change, but I think the test coverage is worth dipping our toe into
-some somewhat undefined behavior.
+1. https://public-inbox.org/git/87lfwn70nb.fsf@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c                          | 10 ++++++++++
- t/t7812-grep-icase-non-ascii.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+ Makefile                        |  1 +
+ grep.c                          |  2 +-
+ grep.h                          |  3 +++
+ t/helper/test-pcre2-config.c    | 12 ++++++++++++
+ t/helper/test-tool.c            |  1 +
+ t/helper/test-tool.h            |  1 +
+ t/t7812-grep-icase-non-ascii.sh | 13 ++++++++++++-
+ 7 files changed, 31 insertions(+), 2 deletions(-)
+ create mode 100644 t/helper/test-pcre2-config.c
 
+diff --git a/Makefile b/Makefile
+index bd246f2989..dd38d5e527 100644
+--- a/Makefile
++++ b/Makefile
+@@ -726,6 +726,7 @@ TEST_BUILTINS_OBJS += test-oidmap.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+ TEST_BUILTINS_OBJS += test-path-utils.o
++TEST_BUILTINS_OBJS += test-pcre2-config.o
+ TEST_BUILTINS_OBJS += test-pkt-line.o
+ TEST_BUILTINS_OBJS += test-prio-queue.o
+ TEST_BUILTINS_OBJS += test-reach.o
 diff --git a/grep.c b/grep.c
-index 6d60e2e557..5bc0f4f32a 100644
+index c7c06ae08d..8b8b9efe12 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -615,6 +615,16 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 		die(_("given pattern contains NULL byte (via -f <file>). This is only supported with -P under PCRE v2"));
+@@ -474,7 +474,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 	}
+ 	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern) &&
+ 	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
+-		options |= PCRE2_UTF;
++		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
  
- 	p->is_fixed = is_fixed(p->pattern, p->patternlen);
-+#ifdef USE_LIBPCRE2
-+       if (!p->fixed && !p->is_fixed) {
-+	       const char *no_jit = "(*NO_JIT)";
-+	       const int no_jit_len = strlen(no_jit);
-+	       if (starts_with(p->pattern, no_jit) &&
-+		   is_fixed(p->pattern + no_jit_len,
-+			    p->patternlen - no_jit_len))
-+		       p->is_fixed = 1;
-+       }
-+#endif
- 	if (p->fixed || p->is_fixed) {
+ 	p->pcre2_pattern = pcre2_compile((PCRE2_SPTR)p->pattern,
+ 					 p->patternlen, options, &error, &erroffset,
+diff --git a/grep.h b/grep.h
+index c0c71eb4a9..506f05b97b 100644
+--- a/grep.h
++++ b/grep.h
+@@ -21,6 +21,9 @@ typedef int pcre_extra;
  #ifdef USE_LIBPCRE2
- 		opt->pcre2 = 1;
+ #define PCRE2_CODE_UNIT_WIDTH 8
+ #include <pcre2.h>
++#ifndef PCRE2_MATCH_INVALID_UTF
++#define PCRE2_MATCH_INVALID_UTF 0
++#endif
+ #else
+ typedef int pcre2_code;
+ typedef int pcre2_match_data;
+diff --git a/t/helper/test-pcre2-config.c b/t/helper/test-pcre2-config.c
+new file mode 100644
+index 0000000000..5258fdddba
+--- /dev/null
++++ b/t/helper/test-pcre2-config.c
+@@ -0,0 +1,12 @@
++#include "test-tool.h"
++#include "cache.h"
++#include "grep.h"
++
++int cmd__pcre2_config(int argc, const char **argv)
++{
++	if (argc == 2 && !strcmp(argv[1], "has-PCRE2_MATCH_INVALID_UTF")) {
++		int value = PCRE2_MATCH_INVALID_UTF;
++		return !value;
++	}
++	return 1;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index ce7e89028c..e022ce0e48 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -40,6 +40,7 @@ static struct test_cmd cmds[] = {
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "parse-options", cmd__parse_options },
+ 	{ "path-utils", cmd__path_utils },
++	{ "pcre2-config", cmd__pcre2_config },
+ 	{ "pkt-line", cmd__pkt_line },
+ 	{ "prio-queue", cmd__prio_queue },
+ 	{ "reach", cmd__reach },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index f805bb39ae..acd8af2a9d 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -30,6 +30,7 @@ int cmd__oidmap(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+ int cmd__path_utils(int argc, const char **argv);
++int cmd__pcre2_config(int argc, const char **argv);
+ int cmd__pkt_line(int argc, const char **argv);
+ int cmd__prio_queue(int argc, const char **argv);
+ int cmd__reach(int argc, const char **argv);
 diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 0c685d3598..96c3572056 100755
+index 531eb59d57..848d46e4f9 100755
 --- a/t/t7812-grep-icase-non-ascii.sh
 +++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -53,4 +53,32 @@ test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
+@@ -74,11 +74,22 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invali
  	test_cmp expected actual
  '
  
-+test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: setup invalid UTF-8 data' '
-+	printf "\\200\\n" >invalid-0x80 &&
-+	echo "ævar" >expected &&
-+	cat expected >>invalid-0x80 &&
-+	git add invalid-0x80
+-test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
++test_lazy_prereq PCRE2_MATCH_INVALID_UTF '
++	test-tool pcre2-config has-PCRE2_MATCH_INVALID_UTF
 +'
 +
-+test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep ASCII from invalid UTF-8 data' '
-+	git grep -h "var" invalid-0x80 >actual &&
++test_expect_success GETTEXT_LOCALE,LIBPCRE2,!PCRE2_MATCH_INVALID_UTF 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
+ 	test_might_fail git grep -hi "Æ" invalid-0x80 >actual &&
+ 	test_cmp expected actual &&
+ 	test_must_fail git grep -hi "(*NO_JIT)Æ" invalid-0x80 &&
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success GETTEXT_LOCALE,LIBPCRE2,PCRE2_MATCH_INVALID_UTF 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
++	git grep -hi "Æ" invalid-0x80 >actual &&
 +	test_cmp expected actual &&
-+	git grep -h "(*NO_JIT)var" invalid-0x80 >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data' '
-+	test_might_fail git grep -h "æ" invalid-0x80 >actual &&
-+	test_cmp expected actual &&
-+	test_must_fail git grep -h "(*NO_JIT)æ" invalid-0x80 &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
-+	test_might_fail git grep -hi "Æ" invalid-0x80 >actual &&
-+	test_cmp expected actual &&
-+	test_must_fail git grep -hi "(*NO_JIT)Æ" invalid-0x80 &&
++	git grep -hi "(*NO_JIT)Æ" invalid-0x80 &&
 +	test_cmp expected actual
 +'
 +
