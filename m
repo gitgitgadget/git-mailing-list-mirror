@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F34BC1F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 15:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8AD1F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 15:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388467AbfGZPgs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 11:36:48 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:36960 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387842AbfGZPa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 11:30:59 -0400
-Received: by mail-vs1-f68.google.com with SMTP id v6so36387811vsq.4
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:30:58 -0700 (PDT)
+        id S2387442AbfGZPxH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 11:53:07 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:36976 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726791AbfGZPxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 11:53:07 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b3so24934399plr.4
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fCe9QET7dGGtL02Cy/9cpENQ9yYZiJ6RAyBlOBbN8b4=;
-        b=MPz8U+9jdRGRkgH+CLcy6m7Ux7oT26fCilFzuE06gGMc5+DM6TOEvCQKGAux2RPfxJ
-         Xc9jP7I8eu61iFvD33CLskwViPWKhXubLFqq+aS5oDCGREGgg2wMJWeyttcWlcwx37Zj
-         gQHx6L/tGCUdtQcnS5Bk7VR2Cy5yepQMN+X61Z0DUPIEiSghnJ1/Rz5uVNMgcmPF4CLm
-         erB6GparllLwfA2RdEc7Zvq1QYnBUBkIo6++luAeMK/CSIsB5M6kR/s1RZ4NAD/Nxin7
-         tTvEfVf7mCewh9H1QzN644/l6hTXtOkONpz6n6IkxRkJPJEFtKHgdfpqtx19lVd2Qu9s
-         lgHQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aSum+Jh11Oyos5gFJ/QTMvDCeh3RcHbNa4clahepe4g=;
+        b=NSCLTJ9yPJS6XrM3IlneZzUibqgbARaBm8diCTO+Y82C9XIBXU0Oz3X6+zTiClS2u6
+         pFzk5oQdKSl03PRFkRGituzZM3BXpROGwtmBBgQaJaH1iydVhbxBS/ixoSiSCHj6w1hk
+         6KhMvNWhbbvT1MOBK9YsIqacU/pxL5iuYkGoeIld4xredUwPYHkQ8zRza9bpb9LyqBWT
+         LUi4RTLMD1yi62y0Mr7hqLPIii6eEMz4ebOwGFTA0MTJgR1iweeLHJC91i8rXWqEQnQi
+         hSiGFFNKktx16ZzvRT6bK7KlaPlSdgeOCSzZNDqyTi97pg7Pul8gQyVVyzEwog+WeWB5
+         qjbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fCe9QET7dGGtL02Cy/9cpENQ9yYZiJ6RAyBlOBbN8b4=;
-        b=d0wX//vJFC4GPH4JkvJMc7u8At1wp6hUehwTHLckBqs+8mNO7v6tX4KpfXUz3/Ftam
-         y49j9KABN7rrUGKoduMnvfbN/ypepjI2gNI/0+IAWcgVogPFDSzO3b695MHyfmeN9WPa
-         +tbkW8oFaiSIAUf4PawSzJzJ002NtXKf9SYdiaGNjFhV7tMKOV9PeI6nv539mhcL636b
-         /MLN6FxAgOG+6OLdSxqErStvVqMVKnsacDo3mo1p1oQPrjB+whs2Fg1esu+B9gbEqgqA
-         m+s04JkxH0KHtd9d2zteSIItvdFUDOb/3CH3Y1/PtstCScRtVEkncRctmuzS/zTmT2vJ
-         5ztw==
-X-Gm-Message-State: APjAAAWLk6vVRV83UElKpiYIyqZ3BXiT1N97Oj3CqeiHQk99D5+VyK05
-        C5sYLbLWKVb1ozxjUDF6djFINhPHvHuqmDosWR4=
-X-Google-Smtp-Source: APXvYqwYQGApp/ClcG5kuxGRjDSlk7uOrwakewJn6vy2Ushxy5i2VPZbf0Ei+V4aIKZmfn2UrYmE7tKj8hNYvUHgk+Q=
-X-Received: by 2002:a67:c419:: with SMTP id c25mr60161655vsk.136.1564155057886;
- Fri, 26 Jul 2019 08:30:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190725174611.14802-1-newren@gmail.com> <20190725174611.14802-16-newren@gmail.com>
- <nycvar.QRO.7.76.6.1907252206180.21907@tvgsbejvaqbjf.bet> <CABPp-BGpCEZ-40_SsT_vU+hCP=MiKzhky6yBr6G=UMnwLNR2Ow@mail.gmail.com>
- <nycvar.QRO.7.76.6.1907261325120.21907@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1907261325120.21907@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aSum+Jh11Oyos5gFJ/QTMvDCeh3RcHbNa4clahepe4g=;
+        b=Opfwt6LfLDX0yyOM4BY85ZYY8ngRDJSj5+MLWz0VNjBxIrE2eh7fVDw/K/UOcRMt2X
+         U/bAAszc/WSHSO9r9BwTFxRE8YvqeAbk294HOgkmerUc2WUEM6NWT5AeVH3xkfWEsxru
+         WgTBimGumhUUfbjrA7gmksePeoFGdrpm5wWnS8lHAWYkTfy/0u670nNJd4gZRncOXSxL
+         TDnpURa1oNE9F5xppwKNfBn5D6s+J98q04Cu28T+OeKSKffcONw9dwzK2W7B7Lfz87cy
+         xe1J3B8kuIeiQksd+RUE+5vszD2YGQbVtg/ymUS6RJXd6KYFcF3RLFBFW/E3btCMughh
+         3ANQ==
+X-Gm-Message-State: APjAAAXsYH7RxshsX3Bzn8dgAcJT6/gLjj+ZsT9rB/QH1Uhk5GWiktpD
+        p2B/K6oB3TsYjPZp3Iyw8hnn1wbC
+X-Google-Smtp-Source: APXvYqwthATnV2SLqkk8ie8bENrq1lTvE6vOKipXLCrSg93y7abSFzy72QFldwLBsZzVjufREiCigw==
+X-Received: by 2002:a17:902:4c:: with SMTP id 70mr96695625pla.308.1564156385939;
+        Fri, 26 Jul 2019 08:53:05 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id f27sm36669638pgm.60.2019.07.26.08.53.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 26 Jul 2019 08:53:05 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 26 Jul 2019 08:30:46 -0700
-Message-ID: <CABPp-BFRftNf8hoj8nTDiw+akci=w2qVAgamVDyRw1NUk-QCNA@mail.gmail.com>
-Subject: Re: [PATCH 15/19] merge-recursive: split internal fields into a
- separate struct
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2 01/20] merge-recursive: fix minor memory leak in error condition
+Date:   Fri, 26 Jul 2019 08:52:39 -0700
+Message-Id: <20190726155258.28561-2-newren@gmail.com>
+X-Mailer: git-send-email 2.22.0.550.g71c37a0928.dirty
+In-Reply-To: <20190726155258.28561-1-newren@gmail.com>
+References: <20190725174611.14802-1-newren@gmail.com>
+ <20190726155258.28561-1-newren@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Returning before freeing the allocated buffer is suboptimal; as with
+elsewhere in the same function, make sure buf gets free'd.
 
-On Fri, Jul 26, 2019 at 4:25 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> On Thu, 25 Jul 2019, Elijah Newren wrote:
->
-> > On Thu, Jul 25, 2019 at 1:12 PM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-> > But, more importantly:
-> >   * I want to write an alternative merge strategy providing drop-in
-> > replacement functions for merge_trees(), merge_recursive(), and
-> > merge_recursive_generic(). Defining merge_options_internal inside
-> > merge-recursive.h would mean that I have to have _exactly_ the same
-> > internal options in my implementation of merge-ort.c.  That doesn't
-> > make sense.
->
-> Fair enough.
->
-> I'm curious: what merge strategy are you planning on implementing?
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 12300131fc..1163508811 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -934,9 +934,11 @@ static int update_file_flags(struct merge_options *opt,
+ 		}
+ 
+ 		buf = read_object_file(&contents->oid, &type, &size);
+-		if (!buf)
+-			return err(opt, _("cannot read object %s '%s'"),
+-				   oid_to_hex(&contents->oid), path);
++		if (!buf) {
++			ret = err(opt, _("cannot read object %s '%s'"),
++				  oid_to_hex(&contents->oid), path);
++			goto free_buf;
++		}
+ 		if (type != OBJ_BLOB) {
+ 			ret = err(opt, _("blob expected for %s '%s'"),
+ 				  oid_to_hex(&contents->oid), path);
+-- 
+2.22.0.550.g71c37a0928.dirty
 
-recursive, done right[1].  For now, I'm calling it "Ostensibly
-Recursive's Twin", or "ort" for short.  At first, people shouldn't be
-able to notice any difference between it and the current recursive
-strategy, other than the fact that I think I can make it a bit faster
-(especially for big repos).  But it should allow me to fix some
-(admittedly corner case) bugs that are harder to handle in the current
-design, and I think that a merge that doesn't touch $GIT_WORK_TREE or
-$GIT_INDEX_FILE will allow for some fun new features.  That's the hope
-anyway.
-
-[1] https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
