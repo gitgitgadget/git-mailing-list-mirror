@@ -8,46 +8,46 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8F91F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 15:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B51351F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 15:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387883AbfGZPx2 (ORCPT <rfc822;e@80x24.org>);
+        id S1728320AbfGZPx2 (ORCPT <rfc822;e@80x24.org>);
         Fri, 26 Jul 2019 11:53:28 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38178 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387864AbfGZPxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 11:53:24 -0400
-Received: by mail-pg1-f196.google.com with SMTP id f5so16156397pgu.5
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:53:24 -0700 (PDT)
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33676 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387870AbfGZPxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 11:53:25 -0400
+Received: by mail-pl1-f193.google.com with SMTP id c14so24855927plo.0
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 08:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LaUZndmPjTAJX+NfTNj1j3eHLbwDbmNx6hO86Wr0Cag=;
-        b=UYV6RzeBAL9xoQjvm3VrR51fcmdshOCLaay3gFNLYlEgbiI/xgkALiw/l6o9BWVlA0
-         SXIZaiWgzrYAIjUV8bR5BN6Dt9BK+MP3AcN8lSbqCr66jOWHzO88x8RWHplL1HX3NbIu
-         5jjDW5I8IvbGWGd9NRSERWKGgsTQZO4OKMp2yaq+VTA953Antp9Ae0EG2tc6QPOh+Bfe
-         fmxhubf7Wfu5sM0vLWIHOliH5trX6K68vg58I05tPDuLmalVhuhcIDw+AjVfYiB8A83V
-         PJnIvSs9vgB+lqvs1PB95jdIuvxoypQ9siVCjwSp489LrEVG44Y7KmP1iwFCCjL3ZY7d
-         wxdg==
+        bh=1Z6F9twMkSbreoW1v/Rpsvj7PeUmVMVkgcfx+om6qCU=;
+        b=Fxq5m6ZPf7aXxUu6nJj8m6QQzGEx7wb5Jj0mUhRQ+tdOEWDm+rccAiVtnCTtaQUo9U
+         ChlMb/oozVFVAhn9JrVY3Ux+RnYAwuNbRJvHlRigWTocPS+VX3JhEaiFdv05tGg/8kDG
+         00+JTJMx1HG57q0f9JrfvQvxAgZDr/GQISVbMyGxRRuBoFYUDWhHPfSZLryD0gEToYoZ
+         fWQuRdOdUEygPPrECAbhSeLya1Zs/wbATZFDUycZKMjHK1Q1QyjifHmuxYRDJkA6sTD0
+         Z6clf0xm8VoubqeaOBixQSmeccBiTHy0GUSoE7QDmNKi1oOTWf3yKw5JAMItOKLfi0Yh
+         IIkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LaUZndmPjTAJX+NfTNj1j3eHLbwDbmNx6hO86Wr0Cag=;
-        b=b6ct0pjqT/Y0/8ZUUDAzSCRhR62Io7dbdQlHdzltf/UzaZV1NT8IcgY/+/xjMVetaB
-         Lsp8roNHFwCQR77c7bt5mKJRjfqn7L45HNuZ1oEIkfQaHTwnfLlA7IOfqD/rPQlE2dMx
-         bsh087cSSOel78TX6H2gPKaSh/nc7uU+/acQPNtYeyz0B4HHT5YUzk76TIh8NBnaa9kr
-         OpeHAqT3UV2vv5XA4fGN+Sut46kyHH9urOHIlySiKRCatILv7f4+UYCFg7tk4KU7Ni0N
-         yECXvGBr0dbeCD5B6eCxgQ3Zb462s71o6E2dtvIe1Iz/Wnf8RqDieZ8O8h5ooOgtgqOM
-         hljQ==
-X-Gm-Message-State: APjAAAXZOfD0hcwrYM3G+QPmH3WFqwBuhSSyasCjXYR/00JZoVfkQDbR
-        qBeUFFpHgHLGQi0oD/g2c+IuJ6my
-X-Google-Smtp-Source: APXvYqwC2/FVVBU3DBtjM/v1ZCTPNsNPjPON1itg8LiNtfYEaDHInwR/eUkhbXDMw2ECi6oheKwhbg==
-X-Received: by 2002:aa7:8102:: with SMTP id b2mr23185220pfi.105.1564156403645;
-        Fri, 26 Jul 2019 08:53:23 -0700 (PDT)
+        bh=1Z6F9twMkSbreoW1v/Rpsvj7PeUmVMVkgcfx+om6qCU=;
+        b=c0Ry7E8OOlN8YwDhxS7EaMxvO5Ks8+Y35baWDL4kXCHtl1ockZOaunvHGuvwkLphvM
+         gcdCW2PeO+rhdQwam9fjL01cmxsCLRK2Afk03UGLn165iiTDR6xglIlicX2K4OX2MZC8
+         4P1x8ySISRJoWTC9vGh3ZU4wfogUNu32vnCwrXrPCqWMvP11/k+cnAupr3ZQJdJv2k92
+         vNI/yxH9CaSoLuUrOlAWT+nehl17hzerT7IlGmd0TWgY0eiskMa8pFfSdazWpISZY3Kn
+         qKIA6xaDiTBQH3C3kYr9C20bO1ZBw+50DGHEiNl164P28DKIWCE3TyRCffcPvDhvGgMh
+         ptGw==
+X-Gm-Message-State: APjAAAUxtPd4wxoM1xXDJgL1kUT347YkFY9vejUW6QVyxpWBFloHAjCn
+        R8BWxyMBQELu3rtEX/TbjBOjG/nU
+X-Google-Smtp-Source: APXvYqxR5IS2Pc0aDhsBLw7dLCNWHxdEaVx+EpuDCTyF3va2Jp+dbt2esxoareQedN+vFRlOEqciSg==
+X-Received: by 2002:a17:902:8489:: with SMTP id c9mr98098002plo.327.1564156404798;
+        Fri, 26 Jul 2019 08:53:24 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id f27sm36669638pgm.60.2019.07.26.08.53.22
+        by smtp.gmail.com with ESMTPSA id f27sm36669638pgm.60.2019.07.26.08.53.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 26 Jul 2019 08:53:23 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
@@ -55,9 +55,9 @@ To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 17/20] merge-recursive: alphabetize include list
-Date:   Fri, 26 Jul 2019 08:52:55 -0700
-Message-Id: <20190726155258.28561-18-newren@gmail.com>
+Subject: [PATCH v2 18/20] merge-recursive: rename MERGE_RECURSIVE_* to MERGE_VARIANT_*
+Date:   Fri, 26 Jul 2019 08:52:56 -0700
+Message-Id: <20190726155258.28561-19-newren@gmail.com>
 X-Mailer: git-send-email 2.22.0.550.g71c37a0928.dirty
 In-Reply-To: <20190726155258.28561-1-newren@gmail.com>
 References: <20190725174611.14802-1-newren@gmail.com>
@@ -69,68 +69,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Other than cache.h which needs to appear first, and merge-recursive.h
-which I want to be second so that we are more likely to notice if
-merge-recursive.h has any missing includes, the rest of the list is
-long and easier to look through if it's alphabetical.
+I want to implement the same outward facing API as found within
+merge-recursive.h in a different merge strategy.  However, that makes
+names like MERGE_RECURSIVE_{NORMAL,OURS,THEIRS} look a little funny;
+rename to MERGE_VARIANT_{NORMAL,OURS,THEIRS}.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ merge-recursive.c | 14 +++++++-------
+ merge-recursive.h |  6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index ba635ed753..27e0bdf48c 100644
+index 27e0bdf48c..49eb50c17b 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -4,30 +4,31 @@
-  * The thieves were Alex Riesen and Johannes Schindelin, in June/July 2006
-  */
- #include "cache.h"
--#include "config.h"
-+#include "merge-recursive.h"
-+
- #include "advice.h"
--#include "lockfile.h"
--#include "cache-tree.h"
--#include "object-store.h"
--#include "repository.h"
--#include "commit.h"
-+#include "alloc.h"
-+#include "attr.h"
- #include "blob.h"
- #include "builtin.h"
--#include "tree-walk.h"
-+#include "cache-tree.h"
-+#include "commit.h"
-+#include "commit-reach.h"
-+#include "config.h"
- #include "diff.h"
- #include "diffcore.h"
-+#include "dir.h"
-+#include "ll-merge.h"
-+#include "lockfile.h"
-+#include "object-store.h"
-+#include "repository.h"
-+#include "revision.h"
-+#include "string-list.h"
-+#include "submodule.h"
- #include "tag.h"
--#include "alloc.h"
-+#include "tree-walk.h"
- #include "unpack-trees.h"
--#include "string-list.h"
- #include "xdiff-interface.h"
--#include "ll-merge.h"
--#include "attr.h"
--#include "merge-recursive.h"
--#include "dir.h"
--#include "submodule.h"
--#include "revision.h"
--#include "commit-reach.h"
+@@ -1046,10 +1046,10 @@ static int merge_3way(struct merge_options *opt,
+ 		ll_opts.variant = 0;
+ 	} else {
+ 		switch (opt->recursive_variant) {
+-		case MERGE_RECURSIVE_OURS:
++		case MERGE_VARIANT_OURS:
+ 			ll_opts.variant = XDL_MERGE_FAVOR_OURS;
+ 			break;
+-		case MERGE_RECURSIVE_THEIRS:
++		case MERGE_VARIANT_THEIRS:
+ 			ll_opts.variant = XDL_MERGE_FAVOR_THEIRS;
+ 			break;
+ 		default:
+@@ -1359,15 +1359,15 @@ static int merge_mode_and_contents(struct merge_options *opt,
+ 							&b->oid);
+ 		} else if (S_ISLNK(a->mode)) {
+ 			switch (opt->recursive_variant) {
+-			case MERGE_RECURSIVE_NORMAL:
++			case MERGE_VARIANT_NORMAL:
+ 				oidcpy(&result->blob.oid, &a->oid);
+ 				if (!oid_eq(&a->oid, &b->oid))
+ 					result->clean = 0;
+ 				break;
+-			case MERGE_RECURSIVE_OURS:
++			case MERGE_VARIANT_OURS:
+ 				oidcpy(&result->blob.oid, &a->oid);
+ 				break;
+-			case MERGE_RECURSIVE_THEIRS:
++			case MERGE_VARIANT_THEIRS:
+ 				oidcpy(&result->blob.oid, &b->oid);
+ 				break;
+ 			}
+@@ -3786,9 +3786,9 @@ int parse_merge_opt(struct merge_options *opt, const char *s)
+ 	if (!s || !*s)
+ 		return -1;
+ 	if (!strcmp(s, "ours"))
+-		opt->recursive_variant = MERGE_RECURSIVE_OURS;
++		opt->recursive_variant = MERGE_VARIANT_OURS;
+ 	else if (!strcmp(s, "theirs"))
+-		opt->recursive_variant = MERGE_RECURSIVE_THEIRS;
++		opt->recursive_variant = MERGE_VARIANT_THEIRS;
+ 	else if (!strcmp(s, "subtree"))
+ 		opt->subtree_shift = "";
+ 	else if (skip_prefix(s, "subtree=", &arg))
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 0d5e928832..350fb43a01 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -28,9 +28,9 @@ struct merge_options {
+ 	/* xdiff-related options (patience, ignore whitespace, ours/theirs) */
+ 	long xdl_opts;
+ 	enum {
+-		MERGE_RECURSIVE_NORMAL = 0,
+-		MERGE_RECURSIVE_OURS,
+-		MERGE_RECURSIVE_THEIRS
++		MERGE_VARIANT_NORMAL = 0,
++		MERGE_VARIANT_OURS,
++		MERGE_VARIANT_THEIRS
+ 	} recursive_variant;
  
- struct merge_options_internal {
- 	int call_depth;
+ 	/* console output related options */
 -- 
 2.22.0.550.g71c37a0928.dirty
 
