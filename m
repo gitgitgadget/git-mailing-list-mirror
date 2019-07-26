@@ -8,46 +8,46 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68E041F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 20:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D39261F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 20:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727884AbfGZU0u (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 16:26:50 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:32850 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727530AbfGZU0u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 16:26:50 -0400
-Received: by mail-pf1-f195.google.com with SMTP id g2so25028394pfq.0
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 13:26:50 -0700 (PDT)
+        id S1727944AbfGZU0w (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 16:26:52 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44632 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727890AbfGZU0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 16:26:51 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t14so25125882plr.11
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 13:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QPRg0TP/1X96ckiWkeqcI8XRdMYMK1zmqI9Cl6zZj1g=;
-        b=DrCSFrFFZ/kJRXAxg8VR1P7t2yxcDIRStG5JYd8AfQOKC1uHkV8caHH29F/ufFjSc7
-         SMuTwGmZ8zqS/E6luaU3Iu1CJIaKb2ZenrAYqzBKkBFF0AO+1UTHZVnNH6KP7w0lVtIQ
-         IkUa4nYbNPJpc6o6F71JtA8VQuTlCh3+PKY6WhzlH2+Jye+7gjiJbEjfNOJZxfpHp7Jl
-         t2JyzmYtIMLRYHWLIojpCt6/29lyl47AMD+emzDXo+Cl0vf/Dv2oDsO6cfafdRV5ipwF
-         62pBtfUCBTL4FdHs4yRT06SqFzwK4qcPfB1z2bpUyD2gCMnmtLom4/LWchFdSkRWkcoW
-         14WA==
+        bh=tSwuau3D/fAu4yeunWTjek3TMQMN3nHdAnoldXpGKAQ=;
+        b=tIKzgUHRfHi2xsmLJCwG59swyjm3t7Oz+0JQoUp3i+KuWS9/M0E4fOqFFzqEByhBCO
+         gRMAm2vbHHjDftP6Scqj7QRfHJ+BeaQqBF7kqIxohtqi3LnnFoNKoTac3lHEGxO8WBCA
+         el4d780WHGTBqcTk0FUqzQ3Oi0BnSRlavSVpJskmDtm0dJdZ0qUOdg0jp5Dml4+SA2qe
+         5MHE4+B02AeLy0dkiz/4Bld6Qx0UUq25iEC9JeAo+J78RwQIfZymCzHu0s07MyGfsEnY
+         eIIUHpwI1hpEB+oYaoCGifAbN54HN7riaYBtF56uCqu91oIxOJKUL+V6mmdWfL6qW5k/
+         u+hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QPRg0TP/1X96ckiWkeqcI8XRdMYMK1zmqI9Cl6zZj1g=;
-        b=dYtL/GXjtEWMiFIV3M/y9epoz+Q8mdx5JOVeNo4ePIxJpLyGjL4V5ogGtSFazzjHkW
-         TT/UbqrEnVELGCpcZFwVYy/OskISnmtkr2mliwE+f7j7covwZbnMQMEeESHNaGh0Oq0b
-         OcuvM5Q/9YM91t8M1qJB33vroMyuI94CL7IZYsjVC63k+vd/CCCyblCEk5IoTDrMuE8f
-         50S7ltn/9Ti/EyhkrLWGSigvASLHHpXnePOCmihjhWszLawzSlCsKFjuOlEtvm1pf8vT
-         YB4G8TVzRsA2dHc9rP8q9r6jnvy5mROJX064J+7MVTMnWKDIukbPeYyEeMRVGlEqxVeH
-         pZGQ==
-X-Gm-Message-State: APjAAAUT32wiMQNqvg+16rRwKeG1VG4uSJ5S8yvHJNF5Pm6um+0p8dRa
-        3Y1i9lmvnLzy2a/HWZuZDZi8+MPudNA=
-X-Google-Smtp-Source: APXvYqxIeZM1Pa4WCSd3uyl/YAdziBnDIteMr93fQ8utenXOA9t6GBYpYSJRhnVPgwkAHg5DOrpbVA==
-X-Received: by 2002:a65:640a:: with SMTP id a10mr91721472pgv.338.1564172809522;
-        Fri, 26 Jul 2019 13:26:49 -0700 (PDT)
+        bh=tSwuau3D/fAu4yeunWTjek3TMQMN3nHdAnoldXpGKAQ=;
+        b=G2s6mB9ay9XD/3xxaNE4qlcfEo0Rp/Qj9TsTkaPu5+LpID2eX6eRAu7AYUDqiAoNEJ
+         TG28JWfsFgpxhviFmzaVmfnhbCpcU3spowqqb6p8bvqJG4L6guPPx7ngbhrNEp+pva29
+         e8fuDc8U8lEmRvXlD1mAggSlxcTqDtS8N0sKePYLOj5UoD247AxYYFyj6h3CF0NfRkW9
+         ZazjeN/VuD90Njc20bVkj1Pub60YJgHJef/z0aVADOp0PByonacN8l67pXVMoZpZEkjk
+         4yGxbX7tusBJVXDJ9bR2tyBmKvRrFia4nNP5r6R9YbOOBp8Rq84C4sPE/5O1f/4OvUF4
+         EVig==
+X-Gm-Message-State: APjAAAVTy0hNUXtEEVqCMc+WFO5e7IvSwN0T7hKTh2TTH0AAa9ktz0jr
+        Qgx6tDERi2S3tLLcDhwx7r/4n4o0n5k=
+X-Google-Smtp-Source: APXvYqxvYox1PAAIhYVTiPlGoRMVFgLlY0ZNMhjyhNW28yCD0OeLpL1+UxrL1tbY4ekca4IMrjVtAA==
+X-Received: by 2002:a17:902:e65:: with SMTP id 92mr94078379plw.13.1564172810523;
+        Fri, 26 Jul 2019 13:26:50 -0700 (PDT)
 Received: from localhost.localdomain ([205.209.24.227])
-        by smtp.gmail.com with ESMTPSA id 4sm63754514pfc.92.2019.07.26.13.26.48
+        by smtp.gmail.com with ESMTPSA id 4sm63754514pfc.92.2019.07.26.13.26.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 26 Jul 2019 13:26:49 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
@@ -55,9 +55,9 @@ From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?=
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, Johannes.Schindelin@gmx.de, dev+git@drbeat.li,
         gitster@pobox.com
-Subject: [RFC PATCH 1/2] grep: make sure NO_LIBPCRE1_JIT disable JIT in PCRE1
-Date:   Fri, 26 Jul 2019 13:26:41 -0700
-Message-Id: <20190726202642.7986-2-carenas@gmail.com>
+Subject: [RFC PATCH 2/2] grep: refactor and simplify PCRE1 support
+Date:   Fri, 26 Jul 2019 13:26:42 -0700
+Message-Id: <20190726202642.7986-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190726202642.7986-1-carenas@gmail.com>
 References: <87ftms7t6s.fsf@evledraar.gmail.com>
@@ -70,59 +70,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-e87de7cab4 ("grep: un-break building with PCRE < 8.32", 2017-05-25)
-added a restriction for JIT support that is no longer needed after
-pcre_jit_exec() calls were removed.
+The code used both a macro and a variable to keep track if JIT
+support was desired and relied on the fact that a non JIT
+enabled library will ignore a request for JIT compilation
+(as defined by the second parameter of the call to pcre_study)
 
-Reorganize the definitions in grep.h so that JIT support could be
-detected early and NO_LIBPCRE1_JIT could be used reliably to enforce
-JIT doesn't get used.
+Cleanup the multiple levels of macros used and call pcre_study
+with the right parameter after JIT support has been confirmed
+and unless it was requested to be disabled with NO_LIBPCRE1_JIT
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- Makefile | 9 ++-------
- grep.h   | 4 +---
- 2 files changed, 3 insertions(+), 10 deletions(-)
+ grep.c | 15 +++++++++------
+ grep.h |  9 ---------
+ 2 files changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 11ccea4071..7e0e6cc129 100644
---- a/Makefile
-+++ b/Makefile
-@@ -34,13 +34,8 @@ all::
- # library. Support for version 1 will likely be removed in some future
- # release of Git, as upstream has all but abandoned it.
- #
--# When using USE_LIBPCRE1, define NO_LIBPCRE1_JIT if the PCRE v1
--# library is compiled without --enable-jit. We will auto-detect
--# whether the version of the PCRE v1 library in use has JIT support at
--# all, but we unfortunately can't auto-detect whether JIT support
--# hasn't been compiled in in an otherwise JIT-supporting version. If
--# you have link-time errors about a missing `pcre_jit_exec` define
--# this, or recompile PCRE v1 with --enable-jit.
-+# When using USE_LIBPCRE1, define NO_LIBPCRE1_JIT if you want to
-+# disable JIT even if supported by your library.
- #
- # Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
- # in /foo/bar/include and /foo/bar/lib directories. Which version of
+diff --git a/grep.c b/grep.c
+index 6b52fed53a..599765c5c1 100644
+--- a/grep.c
++++ b/grep.c
+@@ -386,6 +386,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 	const char *error;
+ 	int erroffset;
+ 	int options = PCRE_MULTILINE;
++	int study_options = 0;
+ 
+ 	if (opt->ignore_case) {
+ 		if (has_non_ascii(p->pattern))
+@@ -400,13 +401,15 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 	if (!p->pcre1_regexp)
+ 		compile_regexp_failed(p, error);
+ 
+-	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, GIT_PCRE_STUDY_JIT_COMPILE, &error);
+-	if (!p->pcre1_extra_info && error)
+-		die("%s", error);
+-
+-#ifdef GIT_PCRE1_USE_JIT
++#if defined(PCRE_CONFIG_JIT) && !defined(NO_LIBPCRE1_JIT)
+ 	pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
++	if (p->pcre1_jit_on)
++		study_options = PCRE_STUDY_JIT_COMPILE;
+ #endif
++
++	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, study_options, &error);
++	if (!p->pcre1_extra_info && error)
++		die("%s", error);
+ }
+ 
+ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+@@ -435,7 +438,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ static void free_pcre1_regexp(struct grep_pat *p)
+ {
+ 	pcre_free(p->pcre1_regexp);
+-#ifdef GIT_PCRE1_USE_JIT
++#ifdef PCRE_CONFIG_JIT
+ 	if (p->pcre1_jit_on)
+ 		pcre_free_study(p->pcre1_extra_info);
+ 	else
 diff --git a/grep.h b/grep.h
-index a405fc870c..2a74e28d94 100644
+index 2a74e28d94..30f2503121 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -3,14 +3,12 @@
+@@ -3,15 +3,6 @@
  #include "color.h"
  #ifdef USE_LIBPCRE1
  #include <pcre.h>
+-#ifndef NO_LIBPCRE1_JIT
 -#ifdef PCRE_CONFIG_JIT
--#if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
- #ifndef NO_LIBPCRE1_JIT
-+#ifdef PCRE_CONFIG_JIT
- #define GIT_PCRE1_USE_JIT
- #define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
- #endif
- #endif
+-#define GIT_PCRE1_USE_JIT
+-#define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
 -#endif
- #ifndef GIT_PCRE_STUDY_JIT_COMPILE
- #define GIT_PCRE_STUDY_JIT_COMPILE 0
- #endif
+-#endif
+-#ifndef GIT_PCRE_STUDY_JIT_COMPILE
+-#define GIT_PCRE_STUDY_JIT_COMPILE 0
+-#endif
+ #else
+ typedef int pcre;
+ typedef int pcre_extra;
 -- 
 2.22.0
