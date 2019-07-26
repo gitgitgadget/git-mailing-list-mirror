@@ -2,152 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2EFC1F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 04:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DF931F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 04:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726082AbfGZE5I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 00:57:08 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41669 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726043AbfGZE5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 00:57:08 -0400
-Received: by mail-pf1-f193.google.com with SMTP id m30so23886827pff.8
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 21:57:08 -0700 (PDT)
+        id S1726007AbfGZE6z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 00:58:55 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:35413 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725983AbfGZE6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 00:58:55 -0400
+Received: by mail-vs1-f67.google.com with SMTP id u124so35290902vsu.2
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 21:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JEe/VDBkh7P3QXR8vgqkPB630JGrDQ+Rfr2P1/nBFgs=;
-        b=Q1ss/HYFnvBdhU+TPbwH76S5IMH7cHUhraWZvl0GgFjVFkAffC5U+nWfqd64eKNAIE
-         iQATI7mDOZo+Jj8kysViZiBtsaYmg/yCrvNGREIkGwO9sXLGUrh4xWfb+f1zHl/U7Sat
-         QXA6uFcHNTjcI2+BETdA0b2fjoAQvOuo6sQfjBQUQ1RgpLD8kAfXlMmPoa55TAHg/pnd
-         JyubI9hix4uboFq0QAWEHM4ByHYaMiSxX77fi8m3rdAOOahz5AMEFZxwj5pMf7I3V275
-         JbxmmSbXbx/0CUO5q9bumpBlmjWl3nYtDkYvAvd7fgddPCsItkA6iWy3jlqoh6m4q1wX
-         QEyA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XXTVXItrkRb2Zefgzpy5/8/1Bu527GtZg/M92TWkAkY=;
+        b=Ampf8GOWUKu16y8X6pohs1ieY2v7l928iv01uqRkxSY/29iolRlmXai9bPKQg3632l
+         tCFl7JaIve0CF1hq6jx6Zy+HupeyY8D4as+O9Jkra6+XFd4QtGGtPlbMhl97lb9/Qmfx
+         r8+dvEIb0Xj5Q/f6C3y6dWrl60DuGk8noSWptKhFZAvu23/gRejzGSKbmNZRqVBa8UtZ
+         0kgspY82W1pIM4Gjtb4zcAxkGf0CGRixcm37+YHWEhe4o0oX9FWoOuY3y9b3H4+VD/WZ
+         nepHZeTyvrc06QztjUkQ3k9iRfv5iDnwJHops+gjKtlu9/qXJGbu+/KxwD30tLA30b1Z
+         jDQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JEe/VDBkh7P3QXR8vgqkPB630JGrDQ+Rfr2P1/nBFgs=;
-        b=FF5LbjvtVnO8WIiBWKRDhIgHo3yyvi3TNmxambI4ds4/Cd2tKXMizdCotb5uQbqNCq
-         v0LA62BCK/1qrA/0wDeBpUvtEwCsW6P/wa4zuzo68slIKJmNscBKESVlpzdlvu+dhz4P
-         gcC/SL4F18SH2T5BpC6SX+KquMakjmKvm0CLPNOUZAQbLQzkEsStGRYJG3Cg/qhUZuCA
-         bP+Vj8oW2PJZyrCV2nbVyIs4d9xMZmG2C/2WF2dqAKR4M7UEMlMSQw+mitrn7GT2vgq8
-         j2lEFvjAfBBZMgm/lCTb/096pUsVDGE9aWo8mc2WsUWg1iOyJjBIBoW2LqRG3j/tIHre
-         GoeA==
-X-Gm-Message-State: APjAAAXe0JHj0XojeepZkaUH5M53tN2J5muQIQ1alBFbuW4d+r59BBss
-        3fELeyWg9JFEnUGBoYddwZM=
-X-Google-Smtp-Source: APXvYqxD4LnLhdsd6ijOahWHZXpRKjRnz5mOj8HHMWqTtwgyQ46yE3pvqiaP1EA/Or/6WqjMLbdXzw==
-X-Received: by 2002:a62:d0:: with SMTP id 199mr19411534pfa.253.1564117027654;
-        Thu, 25 Jul 2019 21:57:07 -0700 (PDT)
-Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
-        by smtp.googlemail.com with ESMTPSA id l1sm66430734pfl.9.2019.07.25.21.57.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jul 2019 21:57:07 -0700 (PDT)
-From:   Varun Naik <vcnaik94@gmail.com>
-To:     vcnaik94@gmail.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH] checkout.c: unstage empty deleted ita files
-Date:   Thu, 25 Jul 2019 21:56:45 -0700
-Message-Id: <20190726045645.2437-1-vcnaik94@gmail.com>
-X-Mailer: git-send-email 2.22.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XXTVXItrkRb2Zefgzpy5/8/1Bu527GtZg/M92TWkAkY=;
+        b=aaG307VBDP8+LV7SbmDEsV3MygsEZEI0s/oux2uVcDtBKPApmYQFST3CHNVJNtyQ3+
+         JuN9gHTmu51GAgUySyFvUczNmDAo8KYgbaM/e3aP7r9B0HpuTqhyd2vf+ZchAvo+xuJ7
+         +J+TkOK+FTpUwYQm9Rjys0EJTp36mC6wmw3IIzjAIol5cWoVK6jwyaG21b+Mlj2gyO3a
+         610ZK0VEQ2ISM5ZWYIbG4Uuo3PaLQWVKQJn76KOLHSR0ov/BHnkx7QEk4NPaE3kz37dX
+         GngBmss5c59jXznEDp5hqomlQxXD+VF87SL989QcXMY/GCAsbef/al+jJiTh5+Zc9/xF
+         lqUg==
+X-Gm-Message-State: APjAAAVNO63bOG8Jg9goEDZJAMWHX5es+tQyjgc6eh0/JpJYaFmARosq
+        cWoqgrx2SJjnTHfudxLrKtfRX/dQb9XxfcyudvA=
+X-Google-Smtp-Source: APXvYqxpfVUThORUgkne/8tLbq9XquQfh/nZH8F2XrmMvTfR/VKGocTrC+ApFL+pvYpvnSkUcTYukb3ZDzDNcYQyT5E=
+X-Received: by 2002:a67:c419:: with SMTP id c25mr58697162vsk.136.1564117134398;
+ Thu, 25 Jul 2019 21:58:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190725174611.14802-1-newren@gmail.com> <20190725174611.14802-7-newren@gmail.com>
+ <nycvar.QRO.7.76.6.1907252153530.21907@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1907252153530.21907@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 25 Jul 2019 21:58:43 -0700
+Message-ID: <CABPp-BHs47CQ8S72-Wq5SHr-BsBOA5tUcbTeYQupchz6Xi8T4w@mail.gmail.com>
+Subject: Re: [PATCH 06/19] Change call signature of write_tree_from_memory()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is possible to delete a committed file from the index and then add it
-as intent-to-add. After `git checkout HEAD` or `git restore --staged`,
-the file should be identical in the index and HEAD. This patch provides
-the desired behavior even when the file is empty in the index.
+Hi Dscho,
 
-Signed-off-by: Varun Naik <vcnaik94@gmail.com>
----
-CC Jeff because you wrote the code that I am changing now.
+On Thu, Jul 25, 2019 at 12:55 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Thu, 25 Jul 2019, Elijah Newren wrote:
+>
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index 7f56cb0ed1..1a3c6ab7f3 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > [...]
+> > @@ -434,11 +434,10 @@ struct tree *write_tree_from_memory(struct merge_options *opt)
+> >
+> >       if (!cache_tree_fully_valid(istate->cache_tree) &&
+> >           cache_tree_update(istate, 0) < 0) {
+> > -             err(opt, _("error building trees"));
+> > -             return NULL;
+> > +             BUG("error building trees");
+>
+> Hmm. Is it possible that something else than a bug in Git causes this to
+> fail?
+>
+> I wonder, for example, whether a full disk can cause
+> `cache_tree_update()` to return a negative value.
 
-checkout.c:update_some() discards the newly created cache entry when its
-mode and oid match those of the old entry. Since an ita file has the
-same oid as an empty file, an empty deleted ita file passes both of
-these checks, and the new entry is discarded. In this case, the file
-should be added to the cache instead.
-
-This change should not affect newly added ita files. For those, inside
-tree.c:read_tree_1(), tree_entry_interesting() returns
-entry_not_interesting, so fn (which points to update_some()) is never
-called.
-
-To the best of my understanding, the only other command that makes
-changes to the index differently for nonempty vs empty deleted ita files
-is "reset", which I am fixing in [0]. I am separating the two changes
-because this change affects "restore", which has not reached maint yet.
-
-[0]: https://public-inbox.org/git/20190726044806.2216-1-vcnaik94@gmail.com/
-
- builtin/checkout.c        |  1 +
- t/t2022-checkout-paths.sh | 11 +++++++++++
- t/t2070-restore.sh        | 11 +++++++++++
- 3 files changed, 23 insertions(+)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 91f8509f85..27daa09c3c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -126,6 +126,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
- 	if (pos >= 0) {
- 		struct cache_entry *old = active_cache[pos];
- 		if (ce->ce_mode == old->ce_mode &&
-+		    !ce_intent_to_add(old) &&
- 		    oideq(&ce->oid, &old->oid)) {
- 			old->ce_flags |= CE_UPDATE;
- 			discard_cache_entry(ce);
-diff --git a/t/t2022-checkout-paths.sh b/t/t2022-checkout-paths.sh
-index fc3eb43b89..74add853fd 100755
---- a/t/t2022-checkout-paths.sh
-+++ b/t/t2022-checkout-paths.sh
-@@ -78,4 +78,15 @@ test_expect_success 'do not touch files that are already up-to-date' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'checkout HEAD adds deleted intent-to-add file back to index' '
-+	echo "nonempty" >nonempty &&
-+	>empty &&
-+	git add nonempty empty &&
-+	git commit -m "create files to be deleted" &&
-+	git rm --cached nonempty empty &&
-+	git add -N nonempty empty &&
-+	git checkout HEAD nonempty empty &&
-+	git diff --staged --exit-code
-+'
-+
- test_done
-diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-index 2650df1966..09b1543a5b 100755
---- a/t/t2070-restore.sh
-+++ b/t/t2070-restore.sh
-@@ -95,4 +95,15 @@ test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
- 	)
- '
- 
-+test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
-+	echo "nonempty" >nonempty &&
-+	>empty &&
-+	git add nonempty empty &&
-+	git commit -m "create files to be deleted" &&
-+	git rm --cached nonempty empty &&
-+	git add -N nonempty empty &&
-+	git restore --staged nonempty empty &&
-+	git diff --staged --exit-code
-+'
-+
- test_done
--- 
-2.22.0
-
+Yeah, you're right.  Based on the conversation with Junio, I think I
+can modify the write_index_as_tree() function slightly to do what we
+need, then call it instead of write_tree_from_memory().  Since
+write_index_as_tree() doesn't try to output any error messages but
+just returns various error codes, I can then have the caller handle
+the output.  So I'll do that instead of this patch and the previous
+one.
