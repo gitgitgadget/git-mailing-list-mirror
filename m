@@ -2,88 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 689851F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 13:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54A841F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 13:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388829AbfGZNuX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 09:50:23 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36818 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388269AbfGZNuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 09:50:23 -0400
-Received: by mail-ed1-f68.google.com with SMTP id k21so53363952edq.3
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 06:50:21 -0700 (PDT)
+        id S2387806AbfGZNxY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 09:53:24 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54166 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387594AbfGZNxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 09:53:23 -0400
+Received: by mail-wm1-f67.google.com with SMTP id x15so48101130wmj.3
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 06:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=F0WyjhwfCp+aG5SBunkQuEd+WvyBCh13VeJqnqnaVNw=;
-        b=VtUa3VGnp3poHhv9/knK0fEEEkjHhGsAQQjDHfveGVComYV6DVje186QcfCTDBI7oa
-         3CEZ9ONtI7Qkpb6wwtZXl4FJqT2zyRcOISASemp7KRHFDt2Q34m6UUhSBlOyZgUjol9W
-         /VRpqYDOGrE92Vh3uryQJO27HNA0nEH/KEwsAuY+A/tl1ju6/GJcng7LYR6ANrpbjGHL
-         rzt0UVnSJnQmsH5Rsw05jJs7AHb9pegxy9QoFL7MlPZw2fBJA8EE+KaV4Oo42ROVqzar
-         6QEdYMelsiEKRx8IeQi/55NrTHQjiWZwMVLGLL3Z83iZ7gzfatSIv6CwQ7H2ooR49+46
-         PKNg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BP504LZG8ksHdbH+39JEtN4dTGMR/cikRN7UtYsbSds=;
+        b=qS2NGVklq5l74t3LDBwtCozwtwE8LXQx5y34LND33bMTIc5hEN9/SEJ1A4ffdXxs8a
+         i8y6w4DLOe+EgDeszSfpPUxyGuC2GYqmSJjTuHm/O92PYInh8ptRJ+QGtIu6Tp+BiniI
+         01DjpzvSLIy8IB9WyDvIh+HOLRM1MIgjLquI0FxpnHFVT1uPDuLOhKmp3woxCokAUYLv
+         b45k7RfOWgAZJQ8DFkGxNZVzK+A/LKJRqlEfyzZXiIsfJTaNnT56pAeYZFls7ObCWphc
+         HtyIJIyvLqehTQIi5vbTuooUeQCr2/dFB4DMr8Z0o0k75MQuIbe3WUsJOOPgFh8ijVvL
+         G1xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=F0WyjhwfCp+aG5SBunkQuEd+WvyBCh13VeJqnqnaVNw=;
-        b=jWjpM/Xf/Dw4Cuy9jyaqh/pEm3vHefoEGSfZzJKb9BMQc96ZJDc3ecAFiTtjfhZvlf
-         8XyrS0tsJWn4Uv5Q8bItdGUc5Hnx2kReKvFPJz/bc9MSZDYJD11/hdYT4tT0UH56qk82
-         kkqAh4MimzUSYy6bPu8+Rs55WNsxG3hUwGD8G3xBLmaEvOFjaft3Hz4nL8VLZ3HiWz3L
-         Np4w7P1aXwmsvV6wCGNI8zggzt0lLbqSyPCwC3fuOOF+OgcsXWjZNcGsRe1nUzYk0KCa
-         v5tcZiZ8VZF1KJjS6hBDt6kMfdSOxBCnHC6y4OjYezhUTTTDUe5JZvNBja0HuUvtIaHI
-         772Q==
-X-Gm-Message-State: APjAAAXRXGNRjXQuq0MwGzKkiMsFaiAO/GRK/8QJdENiAXd+sFIKvNt1
-        553pZc4WtGOITDRBYqfl/AE=
-X-Google-Smtp-Source: APXvYqw3wJ+4K7/ORLyJSFOvRvn7rlLyXIgW6IxqdeJemZ8qGLottJjvNhNcCXNO4ktqqXYHx/arJg==
-X-Received: by 2002:a50:a942:: with SMTP id m2mr82804411edc.73.1564149021252;
-        Fri, 26 Jul 2019 06:50:21 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id b25sm14100989eda.38.2019.07.26.06.50.20
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 26 Jul 2019 06:50:20 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] grep: stop using a custom JIT stack with PCRE v1
-References: <20190721194052.15440-1-carenas@gmail.com> <20190724151415.3698-4-avarab@gmail.com> <CAPUEspiCFup4wvNwOA+egiAjkUEPgU+YnU8x2DfKhdbqTdOV3w@mail.gmail.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAPUEspiCFup4wvNwOA+egiAjkUEPgU+YnU8x2DfKhdbqTdOV3w@mail.gmail.com>
-Date:   Fri, 26 Jul 2019 15:50:18 +0200
-Message-ID: <87h8787vmt.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BP504LZG8ksHdbH+39JEtN4dTGMR/cikRN7UtYsbSds=;
+        b=dE7LHKHvTMSBqGm0UX72QeepkW//XHIk+wW/l7Iq4l71N1CRjvZMGEBxu/BTFgD9Ai
+         OQv6JuLu/mXjAfG0Ap0pbl6Bz5LoknylSJy/HfYBIN3ZOQ1dj+K4jk3k7pNtawwEYKNa
+         xEUBibCJHo6EFWQNzuU+fnUXhp68aQf3nyGB+TK2CPASqOtt1pSkuXxjDOtS+rzLQLG4
+         F1777fbkzH/sPoYh7fBPCzah7HOFZbB9IOTR2eDJIat3a9nHUWxEjeLLDKIhxQEReucb
+         hTYJv1GA2A8U4iPNNFPOMz7Viaw/VT9o5OJwSjSQkd412QuclcFA9WuIMnmaUY4Xfnt+
+         AJVQ==
+X-Gm-Message-State: APjAAAUo4HJGyS6AOuvPqwbTCuoLoZRfVEgn4/fZ+K8NiSUhSwPZPoL4
+        JcWiR7CNr5rqgwstcq7RZ5Y=
+X-Google-Smtp-Source: APXvYqxVXrmxXdHyvwqhyBxBGzGabG5dotQZL0AYPJ7AzH4UNmmcbprEW3IVAs9dXxd7YmKthcSnhw==
+X-Received: by 2002:a05:600c:23d2:: with SMTP id p18mr13407365wmb.108.1564149201887;
+        Fri, 26 Jul 2019 06:53:21 -0700 (PDT)
+Received: from szeder.dev (x4dbd62e1.dyn.telefonica.de. [77.189.98.225])
+        by smtp.gmail.com with ESMTPSA id c6sm53069982wma.25.2019.07.26.06.53.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jul 2019 06:53:20 -0700 (PDT)
+Date:   Fri, 26 Jul 2019 15:53:18 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
+        peff@peff.net, jnareb@gmail.com
+Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
+Message-ID: <20190726135318.GN20404@szeder.dev>
+References: <cover.1560295286.git.steadmon@google.com>
+ <cover.1564009259.git.steadmon@google.com>
+ <20190725234229.GM20404@szeder.dev>
+ <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jul 26, 2019 at 02:12:39PM +0200, Johannes Schindelin wrote:
+> I was wary about this patch series ever since I got aware that it
+> refuses to use an already-available JSON schema validator (such as
+> `ajv`, a seemingly well-established all-purpose validator that even
+> claims to be the fastest validator) and instead tries to push down our
+> throat the first Go-implemented thing in git.git.
 
-On Fri, Jul 26 2019, Carlo Arenas wrote:
+Well, to be fair, the cover letters of all versions of this patch
+series included the following bit:
 
-> since this moves PCRE1 out of the JIT fast path,
+  I am happy to rewrite this validator in some other language,
+  provided that the language has a JSON-Schema library supporting at
+  least draft-04.
 
-I think you're mostly replying to the wrong thread. None of the patches
-I've sent disable PCRE v1 JIT, as the performance numbers show. The JIT
-stack is resized, and for v2 some dead code removed.
+Having said that, using an existing validator would make me happier,
+too.  At the very least the commit message of the patch adding the
+validator should argue convincingly why rolling our own is worth it.
 
-> introduces the regression where git grep will abort if there is binary
-> data or non UTF-8 text in the repository/log and should be IMHO hold
-> out until a fix for that can be merged.
 
-You're talking about the kwset series, not this cleanup series.
+> Besides, I have to admit that I am quite disheartened to see these lines
+> in the log:
+> 
+> -- snip --
+> 2019/07/26 11:39:28 Validated items: 0
+> 2019/07/26 11:39:32 Validated items: 10000
 
-> this also needs additional changes to better support NO_LIBPCRE1_JIT,
-> patch to follow
+These are necessary for Travis CI, which aborts the build if it
+doesn't receive output for 10 minutes, thinking that the tests hang
+somewhere.  Yeah, less lines like these would be sufficient to avoid
+that timeout, but, of course, the real solution would be to not
+validate all of 'make test'.
 
-Looking forward to it, thanks!
