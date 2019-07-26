@@ -2,117 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25A471F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 22:09:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF401F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 23:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbfGZWJf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 18:09:35 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34911 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726195AbfGZWJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 18:09:35 -0400
-Received: by mail-pg1-f194.google.com with SMTP id s1so19075548pgr.2
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 15:09:34 -0700 (PDT)
+        id S1726779AbfGZXUL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 19:20:11 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:38544 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726216AbfGZXUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 19:20:11 -0400
+Received: by mail-vk1-f195.google.com with SMTP id f68so11050349vkf.5
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 16:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=ayhV7FnrKtxuz0wIX5ZohbXxl+NZVXkgHoJRmEUiHog=;
-        b=GiQY9FXGNQxaeg/LzEvzB92XdfLlCEgpCkBO5fhGZTvRpdVTONcZ8Q0A317oGr7Z0L
-         6f/cI4RtbWA+BvVF1HELd3C4DTbjHegfA6OKcZHbKOvDna8VE7/Wwr2bgM3ddif65+7T
-         xkZ5mk002UBOmDu4ESVZ8sxprG/5P8i0Octnb004h4+9h4pP1s34Vn7tiq1f1cls9KLx
-         LDLN9qMNLAj0m00lLlvdbVJjYDRQjV3+cKHuqsuE2wEpd3xvfbZVoKjUfrFh0SRccPrB
-         2/53vIhmPZZmZVsOFVibAlIvVnzjtKCNinvQckJ9TVp5M/KYy2oy3EEkExdHfDHwc3j4
-         bxxg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kAjSfotMRzAytQ80xVfIDOMMhgscMoD3+T4b1mZ9yZA=;
+        b=li685BekVvrSwFqXWT0Yt0RiM+KTXXeSz3LQZ9+k3fT/Vzb5mJDjFIG+hrN3gMG25n
+         R44QQm4OSqcOlYHlVVSCyNnrq0lzn4g3h7kYaR37KP9TN/QBkhBPrlT+a+CelhhEPuD8
+         6QZ1FPcXCQDoSolVMmGCcamXuFKw6xLxlTnc7JMdiuZfwuhk+7CochxOOnKt61IVXygP
+         KpE83zg1+038A5zmNMScId/QrK6FuJq9bQ1t405uTI2Q95WUA2uPFFUPm1n6g0mizEo+
+         8bHo+Bzx9dOqYZAIUjDe+mPLDZydQPUXc5++wp0x2bQNj289YYuAwMyWw7hvTxaODxgI
+         Ka1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=ayhV7FnrKtxuz0wIX5ZohbXxl+NZVXkgHoJRmEUiHog=;
-        b=Ie7UU6/urRNAJjpJFgzS5T0pSbQLY7p5Oylu/4mRuc+XY2hD7uqrEPcFi2eFIyI04w
-         /omsOopncLjbgLYnftts82MVU7fW0Aw1CHrH9OlPTVLqPEjge0lf15sypb8sgtDYqTof
-         sRelJFLi9zUmvFEtw39efmTTR9rmfZGYfHBheFHy5y0NIguSvbUJSdVHOxez0a3DymKc
-         c9tTxFoTlNczXkqxjMt08wKglbqH1rY4LFiVMJBTpxmHXpCf7cqGzGT3OvWlZ2Hdnhgs
-         JQTPGciVJa2lITs9CTgnThApUhPaGsQC28KS8TnW9UbNaUHUJEF2ZzeYvLHxnH1s9Nd+
-         2kSA==
-X-Gm-Message-State: APjAAAWvn8/gfm4OFJ3t1vFEj2kE+W56Gty2DJ7hIH8LA8YjzLuZSuzP
-        nMEPdygNFo5ACgKmtanniU0Z+A==
-X-Google-Smtp-Source: APXvYqy6JhlKjPYKTUzFTmA4qnyKa0RqLM9W3C31hSsGlax5iGp8u0Vjm+pDwlewJD3MHMWlltF3BQ==
-X-Received: by 2002:a62:1ac8:: with SMTP id a191mr24514117pfa.164.1564178973805;
-        Fri, 26 Jul 2019 15:09:33 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id f27sm37181947pgm.60.2019.07.26.15.09.32
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 26 Jul 2019 15:09:33 -0700 (PDT)
-Date:   Fri, 26 Jul 2019 15:09:28 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     newren@gmail.com
-Cc:     git@vger.kernel.org, jrn@google.com
-Subject: BUG() during criss-cross merge with directory rename and deleted file
-Message-ID: <20190726220928.GG113966@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kAjSfotMRzAytQ80xVfIDOMMhgscMoD3+T4b1mZ9yZA=;
+        b=myeKUgw65kioVihi2hzbqF5p7fg19YKStaQPLIr35MkNjB19jgEvVYlONUDt9zw+R3
+         wQKiQQCd3DjGGOzDvTREYczOiMBfgdtMtfbjxApBWEB2N0DrMup81shXJwUYFTlzqQFJ
+         sq99sSY3uoDpIoMOXfbLTTxudXyCbH1o0Hzp3V2bkiD6nQWJoy890h0IRKltCjoByJHV
+         0a6Z38Ui8huymKe+24Yjq3q0BiYmGmCglqFr2dcsImVW1UlSAinzXEJFZkfmxhgmevUd
+         yd0t/Wg4HleSAdpQsHL+X545CDVxVnafbvTz2BHgJbEk8ppjJelJMpMOljkPNkKKbrcR
+         6RKQ==
+X-Gm-Message-State: APjAAAW0tWerCeHFIrZ9l42Ow4FGCLNyLEVBenfUjlNZdXGt/WkvT4pe
+        e35mQEzhXTgXMPkMKcZlYdSuOu5YLLaAd5X9urg=
+X-Google-Smtp-Source: APXvYqzKUNSKrh1azpxUGU4GiAoJ1ywflebudbKKkeRv9ntbc06wzsPXTYvzDiHioXvSMA7H6xHa6nOSQt90v8j1BFQ=
+X-Received: by 2002:a1f:1e47:: with SMTP id e68mr22451834vke.37.1564183209921;
+ Fri, 26 Jul 2019 16:20:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190725174611.14802-1-newren@gmail.com> <20190726155258.28561-1-newren@gmail.com>
+ <20190726155258.28561-2-newren@gmail.com> <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 26 Jul 2019 16:19:58 -0700
+Message-ID: <CABPp-BHWhhjovb0ENcUva1Y2hJ2GzypefhQhZba5usQUnaBWsQ@mail.gmail.com>
+Subject: Re: [PATCH v2 01/20] merge-recursive: fix minor memory leak in error condition
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Fri, Jul 26, 2019 at 11:31 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Returning before freeing the allocated buffer is suboptimal; as with
+> > elsewhere in the same function, make sure buf gets free'd.
+>
+> I do not have a real objection to the patch text, but the above
+> justification does not make much sense to me.  The original code
+> returned an error when buf is NULL, so there is no leak returning
+> directly, without jumping to free_buf: label (whose only effect is
+> to free(buf) and return the value in ret).
+>
+> The real value of this change is it may future-proof the codepath by
+> making sure that everybody after an error goes to the same place to
+> free all resources---which happens to be only buf in the current
+> code, but this change allows it to change in the future, where some
+> additional resources may have been allocated before the call to
+> read_object_file() and freed after free_buf: label.
 
-As mentioned during the standup in #git-devel today, we encountered a
-BUG() during certain circumstances of a criss-cross merge. Timing has
-prevented me from getting the repro case together to send just yet, but
-it appears that the issue is as follows:
-
- - During a merge in a repo with fairly complicated, merge-y history,
-   the following BUG() is seen:
-   "BUG: There are unmerged index entries:
-    BUG: 2 baz/bar.txt
-    BUG: merge-recursive.c:429: unmerged index entries in
-    merge-recursive.c
-    Aborted"
- - But when the user then runs `git status` (after clearing
-   .git/index.lock) the directory is clean.
- - The repo does not contain a 'baz/bar.txt' (although 'baz/' exists).
- - In the repo's history a 'foo/bar.txt' can be found (that is the only
-   'bar.txt' to ever exist in the project).
-
-Digging further shows:
-
- - The merge had  multiple closest shared ancestors (criss-cross
-   merge)
- - Directory 'foo/' was renamed on one side to 'baz/'...
- - ...and 'foo/bar.txt' was deleted on the other side.
- - When the virtual ancestor is generated, the directory rename can't be
-   resolved and leaves a conflict.
- - The virtual ancestor being written to disk is in a conflicted state.
- - This causes the top-level merge to fail, printing the BUG() above
-   which references a 'baz/bar.txt' that never really lived there.
-
-Furthermore...
-
- - If merge.directoryrenames is set to any value besides "conflict", the
-   merge succeeds (no BUG() generated).
-
-This seems to have been introduced in 8c8e5bd6eb331d055aa7fa6345f6dcdadd658979
-although I haven't bisected it yet.
-
-It seems like the solution is to watch for whether we're making a
-virtual ancestor during a recursive merge, and if so, to treat
-merge.directoryrenames = "conflict" as "true" or "false" instead.
-
-I plan to modify the tests added in 8c8e5bd6 to highlight this issue
-(just haven't had time, and probably won't til next week), and send a
-patch doing the special treatment on merge.directoryrenames.
-
-Happy to hear other ideas folks have.
-
- - Emily
+Indeed, not sure how I overlooked that buf was NULL since that was the
+precise check I was modifying.  I'll clean up the commit message.
