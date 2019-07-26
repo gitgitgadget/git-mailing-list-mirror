@@ -2,123 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4525F1F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 16:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 599291F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 18:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728487AbfGZQT5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 12:19:57 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64041 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726007AbfGZQT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 12:19:56 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F263969971;
-        Fri, 26 Jul 2019 12:19:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MSAg7Cr3cQep
-        RJoBoOGkWA8XAS0=; b=JQUHkPRzm8dgXxbvxpZFrxkzdoJygq63a5ejhz0wy/K2
-        xcCuqVjIdb9wHasz5HG+YHSlgRJK+kSSWPmq4TkT3xSkRe8OE6oATjyBmETgFL3C
-        eBRv4Wn0XzFm91UJEmu+gisbihD0AyW2Xytt9OyQ9fSjca3eL8dU1o+AztwFNnM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A4OEiC
-        v45Rc2fZKaTTGeZcmDgthW7qj7pBlD5vzjhKQ9AixF80Id+qfWIJNReZpD+fsk/5
-        GOp7p3j4rRiRrDYV7b3i1ip2acl+mnSt8ohkqzAqInggf+DxZilcFCzf6YUuTvvD
-        vgNWKME/9l76gRw3gWWFrWDttGu5mImTKqstw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9ECF69970;
-        Fri, 26 Jul 2019 12:19:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 200D469969;
-        Fri, 26 Jul 2019 12:19:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] grep: skip UTF8 checks explicitally
-References: <20190721183115.14985-1-carenas@gmail.com>
-        <nycvar.QRO.7.76.6.1907221340320.47@tvgsbejvaqbjf.bet>
-        <87muh57t5r.fsf@evledraar.gmail.com>
-        <CAPUEspg1nUoPApTk5J2r_-9psxTTSC7nRAPw_X9no+2sFVSxAA@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1907231444250.47@tvgsbejvaqbjf.bet>
-        <CAPUEspgytjywYHywGT4yAwYpQbMUicN4bpHfoD+M_HMe8YdPtg@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1907241245540.21907@tvgsbejvaqbjf.bet>
-        <87lfwn70nb.fsf@evledraar.gmail.com>
-        <xmqqpnlzqh3d.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907251143430.21907@tvgsbejvaqbjf.bet>
-        <xmqqlfwmqnb5.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907252021230.21907@tvgsbejvaqbjf.bet>
-        <87ef2c7roy.fsf@evledraar.gmail.com>
-Date:   Fri, 26 Jul 2019 09:19:46 -0700
-In-Reply-To: <87ef2c7roy.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 26 Jul 2019 17:15:25 +0200")
-Message-ID: <xmqqy30kojj1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727569AbfGZSLC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 14:11:02 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42331 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725899AbfGZSLC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 26 Jul 2019 14:11:02 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 2851D21B6A
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 14:11:01 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 26 Jul 2019 14:11:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jramsay.com.au;
+         h=from:to:subject:date:message-id:mime-version:content-type; s=
+        mesmtp; bh=HkJp6L9eWla3JPU5/7pvb+G71KxFC7TVufPlPYi8joM=; b=aOfNK
+        +XGodunc55utsEmjfSIWH/tNRmHGeTqY5+W1+iX88/4oxCszgafeqgPLShsq8QPK
+        FVSmgeyODRiyUfMSRitRLLl1sZRzwgCdXwK8vzyanTVLRH/Kr+JdqIRGEMldiO1v
+        GCpFQ2TorRY6/gyO27ORWRGtlPGXiItPJpt8e8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=HkJp6L9eWla3JPU5/7pvb+G71KxFC
+        7TVufPlPYi8joM=; b=BO9JYUOWYmX08YQs9PcHSXWCW1830PThq/03/PQTs8Vao
+        7QsJ+F+kXp4myh18U9oDBCZxAFdD/2KhHE2KSgnhn/LY0CtKyqsYSumuT3ndXVO9
+        fRpWa9aCf7yhY9FJ+FYb5t5Fxh7IVGO+WXX25de770iw8iKCEDj7YB9GTeevdNYL
+        KDdhVOJPps0+ROjafAXpMGPTMPGc7BzIUWnKGYn6j4PtPWh6t4TbRoDhE3LXTFhO
+        4XXWb5dC7LUCoRC8R6agPHe5uROlRmHIsNCmj8DvZV76+aV4T1KD2WNST4mLhkLM
+        o4s3vYP06UL3TW2rF7YvG4M8YOEck93Wzr6WaJbHg==
+X-ME-Sender: <xms:NEI7XYyO-vXSHvFKxTAUtBclATRBzP-UWCsjFIY9YEZiY675GgCf8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrkeeggdduvdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffokfggtgesthdtmhdtre
+    dttdenucfhrhhomhepfdflrghmvghsucftrghmshgrhidfuceojhgrmhgvshesjhhrrghm
+    shgrhidrtghomhdrrghuqeenucfkphepvdegrdduleefrddvvdelrddvudegnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehjrghmvghssehjrhgrmhhsrgihrdgtohhmrdgruhenucev
+    lhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:NEI7XQ9hXxeybsUHkcnUDu7NuutyxztM4ekxhvhf4bWb2Z8084lFcQ>
+    <xmx:NEI7XSOwFFybp6bxiecNmb-zYnqRIU1ArtigRUGxm1zibtacYlxmmA>
+    <xmx:NEI7XaSdBbijzNkmW7gWfzugQG-yIb-qK6hwFZh-BtvJWijuTWORbg>
+    <xmx:NUI7XZNEZoSJydfxkEPv81HClCnHzvJxoSXehljc9qhq8lcYOIpq7A>
+Received: from [192.168.128.94] (cpe-24-193-229-214.nyc.res.rr.com [24.193.229.214])
+        by mail.messagingengine.com (Postfix) with ESMTPA id C99BB380086
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 14:11:00 -0400 (EDT)
+From:   "James Ramsay" <james@jramsay.com.au>
+To:     git@vger.kernel.org
+Subject: Reporting reused packfile objects
+Date:   Fri, 26 Jul 2019 14:10:58 -0400
+X-Mailer: MailMate (1.12.5r5635)
+Message-ID: <3E56B0FD-EBE8-4057-A93A-16EBB09FBCE0@jramsay.com.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 30A9683E-AFC1-11E9-87D3-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+While investigating improvements to clone performance at GitLab we've 
+been looking at how to trigger packfile reuse during clones. A challenge 
+of the investigation and a future challenge of rolling out changes to 
+encourage more frequent packfile reuse is knowing when packfile reuse 
+kicks in and the extent of the reuse.
 
-> FWIW what I meant was not that we'd run around and iconv() things, it
-> wouldn't make much sense to e.g. iconv() some PNG data to be "UTF-8
-> valid", which presumably would be the end result of something like that=
-.
->
-> Rather that this model of assuming that a UTF-8 pattern means we can
-> consider everything in the repo UTF-8 in git-grep doesn't make sense. M=
-y
-> kwset patches *revealed* that problem in a painful way, but it was ther=
-e
-> already.
+I notice that GitHub outputs 'pack-reused' statistics when fetching. I 
+assume this is for similar reasons.
 
-We already do assume that pathnames are UTF-8 (pathspecs on MacOS
-are converted and then they are matched assuming that property).
-Further, with the same mechanism, I think there is an assumption
-that anything that comes from the command line is UTF-8 (and if I
-recall correctly, doesn't the Windows port of Git force us to use
-the same assumption---I recall we needed tests tweak for that).
+Would there be interest in including a reused packfile objects statistic 
+in the output of upload-pack?
 
-In the very very longer term, I do not think we would want to keep
-the assumption that the text encoding of blobs is always UTF-8, and
-it would be nice to extend the system, so that blob data could be
-marked in some way to say "I'm in Big-5, and not in UTF-8, so please
-treat me as such" and magically the needle and the haystack can be
-made to agree, with iconv() either one of them. =20
+I'm happy to contribute a patch (it is quite a small change), but it 
+might be more efficient to upstream the patch that GitHub appears to 
+already be running in production. Peff, what do you think?
 
-But I do not think the current topic to fix the immediate/imminent
-breakage should not be distracted by that.  Let's keep assuming that
-any blob, when it is text, is UTF-8.
-
-And from that point of view, I think the two pieces of idea in your
-earlier message does make sense.  We can try to match as binary most
-of the time, as UTF-8 would not let a valid UTF-8 needle match in
-the haystack starting in the middle of a character.  When the user
-is trying to match case-insensitively, we know the haystack in which
-the user is interested in finding the needle is text, even though
-there may be non-text blobs as well.
-
-For example, "git grep -i 'foo' t/" may find a few png files under
-the t/ directory.  We do not care if they happen to contain Foo and
-we do not mind if they appear or do not appear in the result.  The
-only two things we care about are (1) foo, Foo, FOO are found in the
-text files under t/ and (2) the command does not die in the middle,
-before processing all the files, only because a png file it found
-were not UTF-8 valid.
+Thanks,
+James
