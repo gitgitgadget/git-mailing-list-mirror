@@ -3,104 +3,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DABA41F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 03:18:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D40281F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 04:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726067AbfGZDSn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jul 2019 23:18:43 -0400
-Received: from mail-yb1-f182.google.com ([209.85.219.182]:35377 "EHLO
-        mail-yb1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbfGZDSn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jul 2019 23:18:43 -0400
-Received: by mail-yb1-f182.google.com with SMTP id p85so6523312yba.2
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 20:18:43 -0700 (PDT)
+        id S1725872AbfGZEse (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 00:48:34 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33782 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725836AbfGZEse (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 00:48:34 -0400
+Received: by mail-pg1-f193.google.com with SMTP id f20so14901119pgj.0
+        for <git@vger.kernel.org>; Thu, 25 Jul 2019 21:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=KFzEX3KyMpLch1BUwFGoqFjaJX5K9VUUMF+Mkdz73lw=;
-        b=EIGyFMkGBPzzZ+Sf6Ho2SCuDEsNGxI05i6JEJHXRADbdAhvPNOTa8+12kJF/yU0dzF
-         G0kww/it+rA61NsvfneSY0hU7ecyrIk7+QI+60poflMSMw36+SXCJD3s+MriV/FbJida
-         LbHnKr6du1mUTX6rXhgsz5JPk7DA6RlIdPA9yCFvn9eHWzu9fAuymrMx9o9S1FQ6oiDu
-         w4F2P4z/Lj1aCsiQH+UtZ5aI6kJf45sJauO8TMlJLalpEfHpqU3iXOG0IN28V++6hPdK
-         OHqVNrsdwju2lNuSC6IQGV8GuJjAzNRhl7vGrQldJbAOdMvUMDR2GbZu/hZ/9ulLs5Da
-         Z8xA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YF83dDDrqpWc+ojydVE0JZNsZD+hnlk4UTiy/UHfbKM=;
+        b=ArV8uswC6qXjZofKzs+KQCn0Aqmzc1rWAvxGzxaAad+h2i+N0h4F2pq70j4PwhEFAq
+         BCHKbV07C+9w44A68skcDmLdkbtJXRbTT3WoQPXVa5kAcAu2xRQ7wInUtJ+2qLPMcvvF
+         pThMn2rCS2PD9fiAfo5hVrrz4heqo4tTqla3Jma63UiBvU98l6cmxUYRDVaWDjXqzP+F
+         WnSo88VOg85tHSLFNW+rq1SfaOdBTR0e0y6YTJrUc1lrjEQ3bDkX4AlJb/qyCN4VjqPO
+         wZlV3zxAWQ10b9BW6yB23bLL242lqRo3cYoxrFvN1kTixfYDrVM6NMHa6gVvkXHNi9fd
+         9xAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=KFzEX3KyMpLch1BUwFGoqFjaJX5K9VUUMF+Mkdz73lw=;
-        b=CDbjHLYcIk2Kf+3UQXx2ioVX0QYzp48/NsvMrVIhYESO5XDoIl8pPJRWJAd5CQK+ez
-         c20DK0H0ykA0TtVhtX/QV/zfazA03ruKyO4UkMNse3uLWQgZR0y3x4fikhKEi8PTcAos
-         oBFVhZxqFiFJ/8VrYR0g7/HJLVsO9sFZ3rMwdhvJcFPkPEEGKIFl7pT/QasJ3T+uwc17
-         /VozwVc6CMFXxbDEG9KA+qAxvxF/wZOAqybmSZ10HL7rXwV0OFuoH5hoKi0xfluV5FFv
-         eJvOTEUwvVue9MCNYOjEtlAdPd8AHjrf7zr5cyOIPBWo5pbx40zyv5EqDvWVsLNrc1U1
-         NqZA==
-X-Gm-Message-State: APjAAAW6uKgiaIJc/zd2a9VpMzo4wSTa8SrL/xfAW58XjR/z3pOp/i4U
-        DgHW/s+QjpIxyz16dGbvK56+qWMK1qc=
-X-Google-Smtp-Source: APXvYqwkyOidge3GVBkeG8Iqf2knKeCpyMTR9wlT/2u46veANd+8QlekKIgan/7IR0Xw2dGUnKxHdw==
-X-Received: by 2002:a25:9101:: with SMTP id v1mr55218498ybl.73.1564111122351;
-        Thu, 25 Jul 2019 20:18:42 -0700 (PDT)
-Received: from localhost ([2600:1700:6e90:7930:604d:9323:afcb:22b6])
-        by smtp.gmail.com with ESMTPSA id r10sm12047959ywh.8.2019.07.25.20.18.41
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 25 Jul 2019 20:18:41 -0700 (PDT)
-Date:   Thu, 25 Jul 2019 22:18:40 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: Alternates advertisement on GitHub
-Message-ID: <20190726031840.GB23056@TaylorsMBP9145.attlocal.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YF83dDDrqpWc+ojydVE0JZNsZD+hnlk4UTiy/UHfbKM=;
+        b=jzv2UMxp8Ik0aT5MypR7LeRhgXjis20qKDICu2BsmC/Tr2ZVJqAot9KRQJV/UcG44+
+         rAUemlvfsrLTV13kBoUH6MFxGWXyo+XGSrIjcHj+6R00+plZ52FDprOwtJfMPIi2oRC+
+         pzF5Xde519atn7oKIEgSvlZ94KMxXyrLeFK/q4BdMVTggO+Ws83LdqEaZytGog08IT24
+         /0a5Ipum/P2tXRHC1vje0ioiih/utHXPE/DNCPeIXa/k5tv1nYBywN1N2MMgUQSXTiT2
+         umSTyNQxlgUUGp2SFQrxk0L4zaA42GrzVf9Fe+CFkUOpwCO/iQomzIADVYGrjFAtTOGp
+         taAQ==
+X-Gm-Message-State: APjAAAVo8zgD+TPkyUHaoBxPKbWLynXM5dOHWhXki/z7PgAZf/gbrb5b
+        1uHTTtESYVdoh2F4tGfpPbQ=
+X-Google-Smtp-Source: APXvYqw9ZIwZ39Bz/tM+MhghBUFeH5t7q+1hc5HWThCsJSRW45zXYVdNy7bo585H24YQMsLywb1q+w==
+X-Received: by 2002:a17:90a:9b08:: with SMTP id f8mr96777963pjp.103.1564116514015;
+        Thu, 25 Jul 2019 21:48:34 -0700 (PDT)
+Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
+        by smtp.googlemail.com with ESMTPSA id f15sm34942046pgu.2.2019.07.25.21.48.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Jul 2019 21:48:33 -0700 (PDT)
+From:   Varun Naik <vcnaik94@gmail.com>
+To:     vcnaik94@gmail.com
+Cc:     git@vger.kernel.org, pclouds@gmail.com
+Subject: [PATCH v2] reset: unstage empty deleted ita files
+Date:   Thu, 25 Jul 2019 21:48:06 -0700
+Message-Id: <20190726044806.2216-1-vcnaik94@gmail.com>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190712150235.12633-1-vcnaik94@gmail.com>
+References: <20190712150235.12633-1-vcnaik94@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+It is possible to delete a committed file from the index and then add it
+as intent-to-add. After `git reset HEAD`, the file should be identical
+in the index and HEAD. This patch provides the desired behavior even
+when the file is empty in the index.
 
-Pushes to forks of git.git hosted on GitHub now advertise the tips of
-git.git as well as branches from your fork.
+Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+---
+CC Duy because you seem to be the one who is most involved in changes to
+ita behavior.
 
-You may recall that Peff and I have sent a handful of patches to allow
-repositories to customize how they gather references to advertise from
-an alternate, and then to use those alternate tips as part of the
-connectivity check (in [1] and [2], respectively).
+The test description was incorrect, so I changed that now. I also
+figured out how to fix the related problem in "restore"; separate patch
+coming soon.
 
-GitHub used to advertise '.have's on pushes to forked repositories, but
-hasn't done so since 2012. We aggregate data from all forks into a
-'network.git', and expose the tips of each fork as:
+ builtin/reset.c  |  1 +
+ t/t7102-reset.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-  refs/remotes/<fork-id>/<refname>
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 26ef9a7bd0..47a088f4b7 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -163,6 +163,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.format_callback_data = &intent_to_add;
+ 	opt.flags.override_submodule_config = 1;
+ 	opt.repo = the_repository;
++	opt.ita_invisible_in_index = 1;
+ 
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 97be0d968d..9f3854e8f0 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -566,4 +566,15 @@ test_expect_success 'reset --mixed sets up work tree' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'reset --mixed adds deleted intent-to-add file back to index' '
++	echo "nonempty" >nonempty &&
++	>empty &&
++	git add nonempty empty &&
++	git commit -m "create files to be deleted" &&
++	git rm --cached nonempty empty &&
++	git add -N nonempty empty &&
++	git reset HEAD nonempty empty &&
++	git diff --staged --exit-code
++'
++
+ test_done
+-- 
+2.22.0
 
-Each fork lists the 'network.git' as its alternate, and thus the
-advertisement can get prohibitively large when there are many forks of a
-repository.
-
-Michael Haggerty's work on packed refs makes finding references
-pertaining only to the root computationally efficient, and [1] makes it
-possible to filter down when computing the set of references to
-advertise. With [1], we can specify that computation exactly and only
-advertise branch tips from the root of a fork network.
-
-We've been slowly rolling this out to a handful of repository networks,
-including forks of git.git hosted on GitHub. If you host your fork on
-GitHub, you shouldn't notice anything. Hopefully, pushes to your fork
-will result in smaller packfiles. In either case, nothing should break;
-if it does, please feel free to email me, or support@github.com.
-
-Thanks as well for reviewing both [1] and [2], and making this work
-possible. Enjoy :-).
-
-Thanks,
-Taylor
-
-[1]: https://public-inbox.org/git/cover.1537466087.git.me@ttaylorr.com/
-[2]: https://public-inbox.org/git/20190628101131.GA22862@sigill.intra.peff.net/
