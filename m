@@ -2,123 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 199F81F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 20:47:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 941791F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 21:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727476AbfGZUrW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 16:47:22 -0400
-Received: from forward500j.mail.yandex.net ([5.45.198.250]:33482 "EHLO
-        forward500j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726554AbfGZUrV (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 26 Jul 2019 16:47:21 -0400
-X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jul 2019 16:47:19 EDT
-Received: from mxback12j.mail.yandex.net (mxback12j.mail.yandex.net [IPv6:2a02:6b8:0:1619::87])
-        by forward500j.mail.yandex.net (Yandex) with ESMTP id 10E1511C2D48;
-        Fri, 26 Jul 2019 23:40:52 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback12j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id jmeCbNDDQS-ephWn1l9;
-        Fri, 26 Jul 2019 23:40:51 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1564173651;
-        bh=KN8trT9pSynUdHqasKdmqyFnmo1wNXGbnnajR25o7nk=;
-        h=Message-Id:Cc:Subject:Date:References:To:From;
-        b=ou8UyE3Uhbujw1mGfnoE8Yb6Jmf2Bs7e+Vs0YoOmM32rYrVPO+u9PBwLKjjNc7s0Z
-         4W5nfU7niECHTupJydMVxrWFT5RUedGV5z+KjQXqtegdjBYadFlEeHsy8e8DH/HcLM
-         EHLU/ksokXhFLNKMF8N5L+jFV7EotsyD/kD6EVpo=
-Authentication-Results: mxback12j.mail.yandex.net; dkim=pass header.i=@ya.ru
-Received: by iva7-56e9317134d0.qloud-c.yandex.net with HTTP;
-        Fri, 26 Jul 2019 23:40:51 +0300
-From:   Sergey Lukashev <lukashev.s@ya.ru>
-Envelope-From: lukashev-s@yandex.ru
-To:     Ilya Kantor <iliakan@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <C9A27ED4-CBD9-4FCD-B78F-8A1010D24D06@gmail.com>
-         <xmqqtvbaoysd.fsf@gitster-ct.c.googlers.com> <15314A71-8121-428D-A62D-08E1C1AC0E1B@gmail.com>
-Subject: Re: [git for translators] How to always generate conflicts for merges?
+        id S1727244AbfGZVHW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 17:07:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64126 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbfGZVHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 17:07:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F506151478;
+        Fri, 26 Jul 2019 17:07:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=uIZABb/i9NGc
+        7nVxuU+DZx4BxfQ=; b=LQ8YD7hHH2QX6ed33SoZBg3ikG9dxSZCxkyNmq3d2Jul
+        EEAMuX1LrdTB1rcZQaX5fxOdjrbQ+bg4ZtR1XiUE1bE0z+cOb7VNveae4jI3uDfa
+        pUnyqWu8vwhJEUv9rHvu67ld8HnQ/Q4vAdyXra1fhH2uyjZhieIps/LsPLM5VUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=h7ecme
+        IpZHdsBJ97RFZyuFzREap9tYYzmX/WqUC7YMgdPc5BscXSikHVx+GCHrR2WoaNwq
+        JwCoZMrTSlb9HFFWO4xxf41WnfvVnhLCwGOGO7qBEO+RRSDLwBzACH4bLk0QHztK
+        Q0R7ZQt62L2AMHsVAARbux2QiE2acEudED9i0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 65ED7151477;
+        Fri, 26 Jul 2019 17:07:17 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0489151475;
+        Fri, 26 Jul 2019 17:07:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Beat Bolli <dev+git@drbeat.li>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 8/8] grep: optimistically use PCRE2_MATCH_INVALID_UTF
+References: <20190724151415.3698-1-avarab@gmail.com>
+        <20190726150818.6373-9-avarab@gmail.com>
+Date:   Fri, 26 Jul 2019 14:07:15 -0700
+In-Reply-To: <20190726150818.6373-9-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 26 Jul 2019 17:08:18 +0200")
+Message-ID: <xmqqd0hwmrng.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Fri, 26 Jul 2019 23:40:51 +0300
-Message-Id: <318401564173651@iva7-56e9317134d0.qloud-c.yandex.net>
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 591AC998-AFE9-11E9-8618-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-As I see it, in Junio's approach you more likely to have a translation and original out of sync because you have to figure out whether the changes in the original are actually reflected in the translation, which could be a tedious thing to do again and again.
+> diff --git a/Makefile b/Makefile
+> index bd246f2989..dd38d5e527 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -726,6 +726,7 @@ TEST_BUILTINS_OBJS +=3D test-oidmap.o
+>  TEST_BUILTINS_OBJS +=3D test-online-cpus.o
+>  TEST_BUILTINS_OBJS +=3D test-parse-options.o
+>  TEST_BUILTINS_OBJS +=3D test-path-utils.o
+> +TEST_BUILTINS_OBJS +=3D test-pcre2-config.o
 
-In the approach that Ilya uses you HAVE TO manually fix just what has changed: you will have a content in the original language in places not yet translated. This approach abuses git a bit and, as I understand, works because all the repos with the translations were probably forked from the original repo so they are NOT unrelated.
+This won't even build with any released pcre version; shouldn't we
+make it at least conditionally compiled code?  Specifically...
 
-As the answer to the original problem I would ask if it really matters whether you have a conflict or not. Just fix conflicts, commit and review all the new stuff that was added in the commits just merged and fix it too. The process is still human-controlled: if you do forget to translate something, it will be left untraslated and is likely to be spotted soon. You want to have a conflict where there ain't one (a new content that does not exist in your translation). A conflict is when something has changed in different wayS since a common ancestor.
+>  TEST_BUILTINS_OBJS +=3D test-pkt-line.o
+>  TEST_BUILTINS_OBJS +=3D test-prio-queue.o
+>  TEST_BUILTINS_OBJS +=3D test-reach.o
+> diff --git a/grep.c b/grep.c
+> index c7c06ae08d..8b8b9efe12 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -474,7 +474,7 @@ static void compile_pcre2_pattern(struct grep_pat *=
+p, const struct grep_opt *opt
+>  	}
+>  	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->patte=
+rn) &&
+>  	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
+> -		options |=3D PCRE2_UTF;
+> +		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+> =20
+>  	p->pcre2_pattern =3D pcre2_compile((PCRE2_SPTR)p->pattern,
+>  					 p->patternlen, options, &error, &erroffset,
+> diff --git a/grep.h b/grep.h
+> index c0c71eb4a9..506f05b97b 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -21,6 +21,9 @@ typedef int pcre_extra;
+>  #ifdef USE_LIBPCRE2
+>  #define PCRE2_CODE_UNIT_WIDTH 8
+>  #include <pcre2.h>
+> +#ifndef PCRE2_MATCH_INVALID_UTF
+> +#define PCRE2_MATCH_INVALID_UTF 0
+> +#endif
 
+... unlike this piece of code ...
 
-25.07.2019, 20:42, "Ilya Kantor" <iliakan@gmail.com>:
-> Hi Junio,
->
-> There's a repo for each language, with the same file structure.
->
-> For example, English version (upstream):
-> https://github.com/javascript-tutorial/en.javascript.info/blob/master/1-js/01-getting-started/1-intro/article.md
->
-> Japanese:
-> https://github.com/javascript-tutorial/ja.javascript.info/blob/master/1-js/01-getting-started/1-intro/article.md
->
-> As English version is updated, changes need to be delivered to translations.
-> That's done with "git pull upstream master" from translations.
->
-> As the text structure (paragraphs) is the same, usually merges give conflicts exactly in the places where English version changed.
->
-> Sometimes though, e.g. when a new chapter is added to upstream, the merge just goes through "successfully".
->
-> That's what I'd like to avoid, as all changes need to be human-controlled.
->
-> ---
-> Ilya Kantor
-> https://javascript.info
->
->>  On 25 Jul 2019, at 19:37, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>  Ilya Kantor <iliakan@gmail.com> writes:
->>
->>>  We're using Git to manage translations of an open-source book, and
->>>  most of time it works well. But there's also a problem.
->>>
->>>  When we pull changes from upstream (English) to translation
->>>  (e.g. Japanese), git auto-merges them.
->>>
->>>  Sometimes there conflicts, but not all the time.
->>>
->>>  For example, when a new file is added to English, it just gets
->>>  auto-merged into Japanese. But all new changes must be
->>>  human-controlled, translated.
->>>
->>>  Is there a way to force git always generate a conflict, even if
->>>  changes could be auto-merged?
->>
->>  I am not sure what the workflow here and if it makes sense. When
->>  you have a file, "chapter47.txt", whose original is in English, the
->>  translation projects (there are N of them, one for each language)
->>  will have their own "chapter47.txt" that has translated text in the
->>  same place? It looks to me that, working that way, the project for
->>  translating into e.g. Japanese have no way to keep any of the
->>  original English version, in which case why are you even "merging"
->>  the English version in the first place?
->>
->>  I would have understood if the original "chapter47.txt" is translated
->>  into "chapter47_ja.txt" and friends, like "chapter47_fr.txt", all of
->>  which sit next to the original "chapter47.txt". Then merging an
->>  updated version of the original from time to time would make perfect
->>  sense to me---that would give you a way to see what changed in the
->>  original (e.g. "git show --first-parent -m -p master chapter47.txt")
->>  to guide you find the places you would need to make corresponding
->>  changes to the variant of your language, e.g. "chapter47_??.txt".
+>  #else
+>  typedef int pcre2_code;
+>  typedef int pcre2_match_data;
+> diff --git a/t/helper/test-pcre2-config.c b/t/helper/test-pcre2-config.=
+c
+> new file mode 100644
+> index 0000000000..5258fdddba
+> --- /dev/null
+> +++ b/t/helper/test-pcre2-config.c
+> @@ -0,0 +1,12 @@
+> +#include "test-tool.h"
+> +#include "cache.h"
+> +#include "grep.h"
+> +
+> +int cmd__pcre2_config(int argc, const char **argv)
+> +{
+> +	if (argc =3D=3D 2 && !strcmp(argv[1], "has-PCRE2_MATCH_INVALID_UTF"))=
+ {
+> +		int value =3D PCRE2_MATCH_INVALID_UTF;
 
-
+... this part does not have any fallback definition.
