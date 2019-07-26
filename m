@@ -8,52 +8,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF401F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 23:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 621F51F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 23:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbfGZXUL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 19:20:11 -0400
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:38544 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726216AbfGZXUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 19:20:11 -0400
-Received: by mail-vk1-f195.google.com with SMTP id f68so11050349vkf.5
-        for <git@vger.kernel.org>; Fri, 26 Jul 2019 16:20:10 -0700 (PDT)
+        id S1727198AbfGZXWr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 19:22:47 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:37855 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726220AbfGZXWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 19:22:47 -0400
+Received: by mail-ua1-f68.google.com with SMTP id z13so21882638uaa.4
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 16:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kAjSfotMRzAytQ80xVfIDOMMhgscMoD3+T4b1mZ9yZA=;
-        b=li685BekVvrSwFqXWT0Yt0RiM+KTXXeSz3LQZ9+k3fT/Vzb5mJDjFIG+hrN3gMG25n
-         R44QQm4OSqcOlYHlVVSCyNnrq0lzn4g3h7kYaR37KP9TN/QBkhBPrlT+a+CelhhEPuD8
-         6QZ1FPcXCQDoSolVMmGCcamXuFKw6xLxlTnc7JMdiuZfwuhk+7CochxOOnKt61IVXygP
-         KpE83zg1+038A5zmNMScId/QrK6FuJq9bQ1t405uTI2Q95WUA2uPFFUPm1n6g0mizEo+
-         8bHo+Bzx9dOqYZAIUjDe+mPLDZydQPUXc5++wp0x2bQNj289YYuAwMyWw7hvTxaODxgI
-         Ka1w==
+        bh=ZJn5LkYj+iMVPr3zUd70qLYCzj1fXJt8m2lzwGV5+cU=;
+        b=l300/bshWJzlKakpSXtC7sgJJpXrehdUhpM8g9paTKkvuOstcQCYM9L5TVqYe9f+Jx
+         2vFGqN44qYmT7AUgDSuOhP+M5r1yaZbumkw4B/YY0TeRhZZ11oirOL3LLR5Uo0YuJYO2
+         D2L59CbyXOg6uUsGIoWkh3iy+NjX2rVVA7M55wy1W16Skg15uG2azpzD77Y3XAmGAe0q
+         meTaem+YDujS9K38Pyf/mu5fL0RDAPdYHlMIl2WiSeH7hF5Na5TCLtjA/OQtoUAKAHtd
+         hV2IFl78aJDC9VE+NwURdzNd4neZvgWdVJREQIUU5jKojSNwmCRoFE3pyblCujG30/l4
+         YwwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kAjSfotMRzAytQ80xVfIDOMMhgscMoD3+T4b1mZ9yZA=;
-        b=myeKUgw65kioVihi2hzbqF5p7fg19YKStaQPLIr35MkNjB19jgEvVYlONUDt9zw+R3
-         wQKiQQCd3DjGGOzDvTREYczOiMBfgdtMtfbjxApBWEB2N0DrMup81shXJwUYFTlzqQFJ
-         sq99sSY3uoDpIoMOXfbLTTxudXyCbH1o0Hzp3V2bkiD6nQWJoy890h0IRKltCjoByJHV
-         0a6Z38Ui8huymKe+24Yjq3q0BiYmGmCglqFr2dcsImVW1UlSAinzXEJFZkfmxhgmevUd
-         yd0t/Wg4HleSAdpQsHL+X545CDVxVnafbvTz2BHgJbEk8ppjJelJMpMOljkPNkKKbrcR
-         6RKQ==
-X-Gm-Message-State: APjAAAW0tWerCeHFIrZ9l42Ow4FGCLNyLEVBenfUjlNZdXGt/WkvT4pe
-        e35mQEzhXTgXMPkMKcZlYdSuOu5YLLaAd5X9urg=
-X-Google-Smtp-Source: APXvYqzKUNSKrh1azpxUGU4GiAoJ1ywflebudbKKkeRv9ntbc06wzsPXTYvzDiHioXvSMA7H6xHa6nOSQt90v8j1BFQ=
-X-Received: by 2002:a1f:1e47:: with SMTP id e68mr22451834vke.37.1564183209921;
- Fri, 26 Jul 2019 16:20:09 -0700 (PDT)
+        bh=ZJn5LkYj+iMVPr3zUd70qLYCzj1fXJt8m2lzwGV5+cU=;
+        b=Qsa/5RYI3hsEFrYfXZIaZ+zca+PqqEDhJB9sIfpLlZ1K0koDxTSNhir8htKPwTLJNS
+         AfPlLeFlUcrBKMS8TnyIZWXjKklZWFXq8R1pm7igfNH9Rz0j+GaySIFYM5SscxdJYn09
+         9MNQjWRY2/nQIIy44tKb+Dne4afSIIft0ur4iHGMIxl9CVvcjLxYAeuAGOcVuV79NfiY
+         wcsFkoBr77MU8SDLC8YM2K5UeNXacbISMXjmaBhT+aatRc7rqmZWd2fiIf6OB7Bx1SFX
+         9jDLge54LAtJiMdj/mEpwSmJYtrnD9GRp18/Q5AKpc/+hQyFUUHrgpxli5nVcSu4vijh
+         XuEw==
+X-Gm-Message-State: APjAAAVC1DHjQnhkUH4KbCX4AHvFeBLPw3znQA/AbV3h3s6cKkcluTHJ
+        Lr9hT799H/QGBoQUBEynfhXqcAIiXfgcIujIXzM=
+X-Google-Smtp-Source: APXvYqx/aEiaKOt00f1GIN440b96Z74K2K31mE5lSAngxwJ8HVVD6bWLld4Etm2Mzu+qUAoqtqt7IgM+D10T/5iJNfg=
+X-Received: by 2002:ab0:3159:: with SMTP id e25mr12430824uam.81.1564183366035;
+ Fri, 26 Jul 2019 16:22:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190725174611.14802-1-newren@gmail.com> <20190726155258.28561-1-newren@gmail.com>
- <20190726155258.28561-2-newren@gmail.com> <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
+ <20190726155258.28561-4-newren@gmail.com> <xmqqftmsobf5.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftmsobf5.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 26 Jul 2019 16:19:58 -0700
-Message-ID: <CABPp-BHWhhjovb0ENcUva1Y2hJ2GzypefhQhZba5usQUnaBWsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/20] merge-recursive: fix minor memory leak in error condition
+Date:   Fri, 26 Jul 2019 16:22:34 -0700
+Message-ID: <CABPp-BFZvVDjg0tZM9EHh9cse2j0QXRdbVKmK0emq696xO3sEg@mail.gmail.com>
+Subject: Re: [PATCH v2 03/20] Ensure index matches head before invoking merge
+ machinery, round N
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
@@ -63,25 +64,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 11:31 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Jul 26, 2019 at 12:15 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Elijah Newren <newren@gmail.com> writes:
 >
-> > Returning before freeing the allocated buffer is suboptimal; as with
-> > elsewhere in the same function, make sure buf gets free'd.
+> > ...
+> > So, load the index in builtin/merge-recursive.c, reload the in-memory
+> > index in builtin/stash.c, and modify the t3030 testcase to correctly
+> > setup the index and make sure that the test fails in the expected way
+> > (meaning it reports a rename/rename conflict).
 >
-> I do not have a real objection to the patch text, but the above
-> justification does not make much sense to me.  The original code
-> returned an error when buf is NULL, so there is no leak returning
-> directly, without jumping to free_buf: label (whose only effect is
-> to free(buf) and return the value in ret).
->
-> The real value of this change is it may future-proof the codepath by
-> making sure that everybody after an error goes to the same place to
-> free all resources---which happens to be only buf in the current
-> code, but this change allows it to change in the future, where some
-> additional resources may have been allocated before the call to
-> read_object_file() and freed after free_buf: label.
+> The last paragraph is what describes what this step does.  What is
+> left unsaid is how that small step relates to the change in the
+> larger picture (including the title).  We do want to have a code
+> that ensures the index has no higher-stage entries and match HEAD
+> at the beginning of merge_recursive backend (as your lengthy preamble
+> leading to the paragraph explains), but adding the code to populate
+> in-core index to two codepaths does not make them check the condition
+> automatically---it is only half the story, no?
 
-Indeed, not sure how I overlooked that buf was NULL since that was the
-precise check I was modifying.  I'll clean up the commit message.
+Indeed; the other half is the movement of the index==head check in
+patch 4 so that it happens immediately and ensures we don't run into
+this problem again.  I can add a note to the commit message that the
+next patch in the series will be taking care of that half of the
+problem.
