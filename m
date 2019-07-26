@@ -2,156 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EFA41F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 05:01:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 662211F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 07:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbfGZFB0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 01:01:26 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:38107 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbfGZFBZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 01:01:25 -0400
-Received: by mail-qk1-f196.google.com with SMTP id a27so38223798qkk.5
-        for <git@vger.kernel.org>; Thu, 25 Jul 2019 22:01:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bkHYBxfAXNhVX++Tagct47fR2ih4TQi93TcUhogxx/E=;
-        b=pcjzx7Wf5U9I6UwjGgHsIh5dx7kb86JEjQIaPOVcx60GMJXjno+Bmuh4T3lkJ0raJl
-         URBEmEHI7soN2OmQWaGkk+ELP/X35tLhvQ5HSJ0F9/QWFifKb/cwIQuI0dXvpOJwtGLw
-         +wIW8DAIVhxiZPF99is4JNwM/T8sxfA7sskPjgUIk/hvxLBUIa0KuiBRx6mU+0Hd90dv
-         84QBHUzDGkUVd1iu07cT37kc0snWbahL08yYTmYCjwMOgzNWmLtZbbN3eawlTT+1ui1Y
-         /2lRsS8zUd57NWUPczTycKRaNoSKImbZmcSyYhtaGFaEqCZS74jGi/5uLifYy546bhnR
-         StQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bkHYBxfAXNhVX++Tagct47fR2ih4TQi93TcUhogxx/E=;
-        b=q2b/4yxoyJ6VzjHWU2QQIKrDZWX406jsExsEikUOe6ASek3TqwtXXdtINEkFWapb22
-         lARnvPvfm4arsOQIHB7G0LizaO40/Z+Bpuolo+6yeR8HeTZFlOi20F23qeVZQlqBVjPS
-         xv8BYUtzrgucP9hTeJCYbJhIeUGY/JlAR5lNW5tKx+hrqhydD/YesJDpHvXbZMfxPs4C
-         BAOXiZcAg+w1BZ6t7FNhpE617JRq6auPaGk9co0oLMqqJ+r3x2LzO2IPKHQbQpBBM4ZN
-         ry8+XTHcqfNxKCZRmNMBb6FrxGtppMpEVWTJ7/wKS4RZ17qHO2NhIP/60KwfomoNM0Qc
-         yA7g==
-X-Gm-Message-State: APjAAAVYkd7M5jS41lmwhyNrQ1Tv/jV90ac1crPbsK+pfdjSEL74EESg
-        ycnpRrTfYDWRGhZG/omY4xRSBwT1IgeHKYCIrOc=
-X-Google-Smtp-Source: APXvYqzovmdHNGpfUkvG2Fqd5oxL0+S9AtTn4gfDJN/grVIGi/N1XcHn0Q+k2qA2Fne28CpXXhEvN0XN/IK5XVrGdH0=
-X-Received: by 2002:a37:4986:: with SMTP id w128mr60068273qka.417.1564117284797;
- Thu, 25 Jul 2019 22:01:24 -0700 (PDT)
+        id S1725953AbfGZHn1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 03:43:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57100 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725903AbfGZHn0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 26 Jul 2019 03:43:26 -0400
+Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3B0EF6081D;
+        Fri, 26 Jul 2019 07:43:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1564127003;
+        bh=SM68Is1c3uutZTPTkW9yEKTq89pDhEa+mF3Xm9YR6Jk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=UHg5ZMGSoZ0H/px/p/QtZNiLPTKjBBPOwH1M5TA8+MlyC1GHzYKTMneXqBCjQp820
+         xEyChvzkq0t4upKSEOp42ZjgCi5X97S5UTbncMmIH8Wb4XDwp6H5Iw8KUCHD06MZkP
+         3ENsAo40qHlns3Mon+YRrjcVcesqQqEVocyuROcEfF6enMDV7raRTbb3cGzLcka5du
+         PxKy6GPbQAGRSIzf4FlvMv5Tgjpk+NIn9Wjk4NB8qylcsAFKwXEb3jbY/r6Ddkiu/b
+         2g6FurUHTTlybvflzMVaO5SeHPu87joKRzhLnvAKVCOBTrxIyzsM92dbN5Nh1nDVxJ
+         iflt18MXDv/xMOgpfUksPuGXRr41yAmmO5ff3/3ZGoiZNhxX91kJlCQfMg+e7/OJZE
+         CGj+zUM/Ux9juhSp2rw27hTFMptxiPpOrrQ493a4cuAdp335vcWJCGB0kVz75iibaB
+         /NK56Z9x2p2ut7NSrhcLpsVe+NrdHGuXKK8ogv8FqYTy2gPWTG7
+Date:   Fri, 26 Jul 2019 07:43:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 10/12] t/lib-rebase: prepare for testing `git rebase
+ --rebase-merges`
+Message-ID: <20190726074317.GD9319@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.294.git.gitgitgadget@gmail.com>
+ <ae9e72b73bf2da0de3a5369748ebd358656588d9.1564049474.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20190726045645.2437-1-vcnaik94@gmail.com>
-In-Reply-To: <20190726045645.2437-1-vcnaik94@gmail.com>
-From:   Varun Naik <vcnaik94@gmail.com>
-Date:   Thu, 25 Jul 2019 22:01:13 -0700
-Message-ID: <CAK_rgsG2ghwqDfRzyAy9MvFujsR=-Hy7YRiAv=RH1DpoZ-06hA@mail.gmail.com>
-Subject: Re: [PATCH] checkout.c: unstage empty deleted ita files
-To:     Varun Naik <vcnaik94@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qGV0fN9tzfkG3CxV"
+Content-Disposition: inline
+In-Reply-To: <ae9e72b73bf2da0de3a5369748ebd358656588d9.1564049474.git.gitgitgadget@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 5.0.0-trunk-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Got the CC list wrong in the first email...
 
-Varun
+--qGV0fN9tzfkG3CxV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-
-On Thu, Jul 25, 2019 at 9:57 PM Varun Naik <vcnaik94@gmail.com> wrote:
->
-> It is possible to delete a committed file from the index and then add it
-> as intent-to-add. After `git checkout HEAD` or `git restore --staged`,
-> the file should be identical in the index and HEAD. This patch provides
-> the desired behavior even when the file is empty in the index.
->
-> Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+On 2019-07-25 at 10:11:22, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> The format of the todo list is quite a bit different in the
+> `--rebase-merges` mode; Let's prepare the fake editor to handle those
+> todo lists properly, too.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> CC Jeff because you wrote the code that I am changing now.
->
-> checkout.c:update_some() discards the newly created cache entry when its
-> mode and oid match those of the old entry. Since an ita file has the
-> same oid as an empty file, an empty deleted ita file passes both of
-> these checks, and the new entry is discarded. In this case, the file
-> should be added to the cache instead.
->
-> This change should not affect newly added ita files. For those, inside
-> tree.c:read_tree_1(), tree_entry_interesting() returns
-> entry_not_interesting, so fn (which points to update_some()) is never
-> called.
->
-> To the best of my understanding, the only other command that makes
-> changes to the index differently for nonempty vs empty deleted ita files
-> is "reset", which I am fixing in [0]. I am separating the two changes
-> because this change affects "restore", which has not reached maint yet.
->
-> [0]: https://public-inbox.org/git/20190726044806.2216-1-vcnaik94@gmail.com/
->
->  builtin/checkout.c        |  1 +
->  t/t2022-checkout-paths.sh | 11 +++++++++++
->  t/t2070-restore.sh        | 11 +++++++++++
->  3 files changed, 23 insertions(+)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 91f8509f85..27daa09c3c 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -126,6 +126,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
->         if (pos >= 0) {
->                 struct cache_entry *old = active_cache[pos];
->                 if (ce->ce_mode == old->ce_mode &&
-> +                   !ce_intent_to_add(old) &&
->                     oideq(&ce->oid, &old->oid)) {
->                         old->ce_flags |= CE_UPDATE;
->                         discard_cache_entry(ce);
-> diff --git a/t/t2022-checkout-paths.sh b/t/t2022-checkout-paths.sh
-> index fc3eb43b89..74add853fd 100755
-> --- a/t/t2022-checkout-paths.sh
-> +++ b/t/t2022-checkout-paths.sh
-> @@ -78,4 +78,15 @@ test_expect_success 'do not touch files that are already up-to-date' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'checkout HEAD adds deleted intent-to-add file back to index' '
-> +       echo "nonempty" >nonempty &&
-> +       >empty &&
-> +       git add nonempty empty &&
-> +       git commit -m "create files to be deleted" &&
-> +       git rm --cached nonempty empty &&
-> +       git add -N nonempty empty &&
-> +       git checkout HEAD nonempty empty &&
-> +       git diff --staged --exit-code
-> +'
-> +
->  test_done
-> diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-> index 2650df1966..09b1543a5b 100755
-> --- a/t/t2070-restore.sh
-> +++ b/t/t2070-restore.sh
-> @@ -95,4 +95,15 @@ test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
->         )
->  '
->
-> +test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
-> +       echo "nonempty" >nonempty &&
-> +       >empty &&
-> +       git add nonempty empty &&
-> +       git commit -m "create files to be deleted" &&
-> +       git rm --cached nonempty empty &&
-> +       git add -N nonempty empty &&
-> +       git restore --staged nonempty empty &&
-> +       git diff --staged --exit-code
-> +'
-> +
->  test_done
-> --
-> 2.22.0
->
+>  t/lib-rebase.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+> index 7ea30e5006..662a958575 100644
+> --- a/t/lib-rebase.sh
+> +++ b/t/lib-rebase.sh
+> @@ -44,10 +44,10 @@ set_fake_editor () {
+>  	rm -f "$1"
+>  	echo 'rebase -i script before editing:'
+>  	cat "$1".tmp
+> -	action=3Dpick
+> +	action=3D\&
+
+So we set action to "&" so we can use it as the result in the sed
+expression below=E2=80=A6
+
+>  	for line in $FAKE_LINES; do
+>  		case $line in
+> -		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d)
+> +		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d|label|l|reset|r|merge|m)
+>  			action=3D"$line";;
+>  		exec_*|x_*|break|b)
+>  			echo "$line" | sed 's/_/ /g' >> "$1";;
+> @@ -61,8 +61,8 @@ set_fake_editor () {
+>  			echo "$action XXXXXXX False commit" >> "$1"
+
+but then here it doesn't look like "&" is a thing we'd want to use. Is
+there something I'm missing about this particular case?
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--qGV0fN9tzfkG3CxV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl06rxUACgkQv1NdgR9S
+9ouCGw/+NO7vrDMS3eUHGkwUNuManGkQls5rEh2yd6UCHLPTpDfHK6uOu511oNfv
+CtMclAG/veuYD4kP13AuUvLYJJIaWzTBw3gGfGzCqJw3ycaclOBjs+37MA/b6Lth
+cwPODNaknueeoTvtJs+OjIEPoYYd1W9WNiiJj8/PC4qE9sG1K1kymJO/cTyoXT5W
+vBDPfZbdk7679Qaw8/9gWHDZp0mZi/q9Bfl/eQ+jUb+H9VgG6ggBVjMVvAI6s46D
+/uHo0jhm8D1iz5zAaMKKeD1WmZIm2IGkOIdMdt2SPDKKgsB8o0hqt1DWvyjdYuC5
+FwedEckuFi0fLspXabNOalRywHXiJvcjchkgMWz7wDbxUg4n8Cd9bsOIBIdM/X78
+OUUDdrwEjhhHGS2ykxQRIROFR/UJ84Sy1EX+zrgNg693O1JUKReea7BuYcvpN9jK
+2pnpIGgrcGUgWyOgd+ErM8ErkKkkHxE9K4LK5DWu8KyTBNMrBLzUiqQHeNGlv6SP
+XH0LTK2l50ZW2pNWyCXWgpu9zFwt6UPkNdm7dlHNQpPdZKDhxBMIYTDccHLCisVj
+GKrhgFGRAkZlOq2l7QTFcC6v4JTKQUqtMgnFbokYwLQC7eWu4US+n7KpJAhpZqTb
+RHUq9DsAQTXgX1rgNtv8YPUsdB+/J1UlfiKX7VYJifOrGq5n5mY=
+=OYrG
+-----END PGP SIGNATURE-----
+
+--qGV0fN9tzfkG3CxV--
