@@ -2,104 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FAAA1F462
-	for <e@80x24.org>; Fri, 26 Jul 2019 14:07:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9221F462
+	for <e@80x24.org>; Fri, 26 Jul 2019 14:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbfGZOHz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jul 2019 10:07:55 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48289 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726784AbfGZOHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jul 2019 10:07:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564150069;
-        bh=+mMkFGXaXpTnR0ZVAblmmcdAoOGmTd+k7UXn6eFxNNE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GEvrQTdByR+q+4Ptu4UKqY0Y3LLMvDWtBcXK/uwNZGh9u443EbacHtMyQdLgD/Ifi
-         1axA/45uuMlcZ81d4Opt3BIrsJwBcNFWnjriM1mU/vy3shGb5nfQRu8Ab8EGfGgp1j
-         0ytaBLlfYAKtCsWbSZX5lMErU4bmsNyCh/fbnYSA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LobGI-1iJD5y45m6-00gWw3; Fri, 26
- Jul 2019 16:07:49 +0200
-Date:   Fri, 26 Jul 2019 16:07:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 00/19] Cleanup merge API
-In-Reply-To: <xmqq7e85pw3y.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1907261606570.21907@tvgsbejvaqbjf.bet>
-References: <20190725174611.14802-1-newren@gmail.com>        <xmqqblxioufc.fsf@gitster-ct.c.googlers.com>        <CABPp-BGkGch-ebOrJTprw3oGgubgZyyVBCCM30VLbC24BU+MUQ@mail.gmail.com> <xmqq7e85pw3y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727487AbfGZOMq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jul 2019 10:12:46 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:32825 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfGZOMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jul 2019 10:12:46 -0400
+Received: by mail-io1-f65.google.com with SMTP id z3so105129065iog.0
+        for <git@vger.kernel.org>; Fri, 26 Jul 2019 07:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8A79zlELf21A3+EBgYdqI3eVx49012Oj1MNKZhixJeM=;
+        b=mm+P6R5qgRzBE++RdIl0f5/9w0h+pRBA5y0UeW7AQJGmmneMYpfa60aCBnLksVVEha
+         TmQH6OkJet/SkcGgHZ54HvQHdW1sKVqrfJIcY2A927PtLYmS+BFuLZXyA2w+fPpJZqIs
+         hM5bkMBkNstmT/TKuj8lj+R4vGTI5vpg1zdbzUUR3cqLGbD98rbV9juf1KC7gOiPwVqs
+         DPZxEcz+/KkwVi6gLOR73kKTXJ0dahdeizJlWMpV6NyvjrLhKGsSe4JsksfBQUxSYqZb
+         RXhz3HRkE1ihhGmICz+iiN/XRdkRFKzerKP0Vv/SkaLuhLZF65KpJmj7gmCvbGSgCJ+z
+         uM1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8A79zlELf21A3+EBgYdqI3eVx49012Oj1MNKZhixJeM=;
+        b=jA8GcJ2D2gizfXPrmgbB+YsJsh+hiOmT7bI1eXel9kDukFpoOs3AQQhRnWFBj/L9L3
+         znKlqHfG7I6JkYFxC9epzYOhOTmnwqy8vhHH+Bb3PjMByQKZLdU2gcnSqvvQ3PRcbZIZ
+         PQFFOXYVhfHNV/p35E8omp+3RGj/bTG7TZh0SKBO9Ynm2Xgc2jpxyuxBFqURCy8jLaGH
+         k56Ac4EOorLlJbkesA25bgIqaK8S0Y7Xr2H1Hwlx6qzAQkWRcqRz4FmgngHbgGASM0ez
+         i1RHftmE3myaYmycoRSkpAezVK6YrjxjNJcNAI1az9svYVQ9BCX9sjgojhef8fkFqWEL
+         gJAA==
+X-Gm-Message-State: APjAAAWkA9cQo4jIs/qMHbsMPMMzEWQr7/boyP4GAbe04UtRqvD7eGx5
+        0Wl+7l9m8jsmGcneRkqyiiL2331HNdpY9VTwxcRKgROP
+X-Google-Smtp-Source: APXvYqwE3jbUYpO0uFXGW10APD0/cW/r5w3RpTR5N9nUpZUginH8v0wxkrCz9xZ4VUHedHPQv57BGf0/A6bIdfCWPo8=
+X-Received: by 2002:a6b:c38b:: with SMTP id t133mr23627491iof.162.1564150365267;
+ Fri, 26 Jul 2019 07:12:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kxRp2C6UCZ6ZB9d1ECDOdSmrhnrA2E4SWed1+OohNGNpyOnktIw
- Bwh/p/x/dvGf9jSQe20xdm6HrRLuWsEbDdJpbl+vqErXZmYrg2eaJRYYtI6uSIFDujIlwQ7
- 6afRa2Xh8453IMj7ByLqDYNGGObVA9JrSMinMOQmBnEfI78sVS4SUzD1ctn3McVS2lOAlkC
- dImBJEKyDHAyhxYioBDkw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P3BQmedMkdg=:frA+/3AlBsdZ4d3t6p1itQ
- eogkwlM3FOOb1olSlRR02QKCIPE0ufUfdB9aGmBwhppuUSkFe5U5hrLsic44l3nIOwrRzugTr
- 0kQ0Bg7ExsuecslcKYJobJzSKHaTSHAbGS0hrER7XrMTaPGf4xDs4Og22T9D7celkSlJDKPIb
- 7mer8wulu/4xjLvJoGU5iJnz1OhDIW3znLErqzY6EdDpPgPohAd4gTkwpyvERssVPTSNVaVwD
- /gvyQJcjlxhMprTelCCqThDLaYYb42YSX9jza7V2soSrv3U7piMePrPB8P5IojKm+JtZ1ik5V
- Q/iBNmv+N3ZIp813jb2HodQ7ipgOx/zdRON70GLHmPnyyQyMEMPldEvZMQ7i/ujxdHKIqmAch
- 3ijN/Phpb1wXoLiOf6u4KXw7Uh/Vy+8G9EjjynfljgLHxoaBTS3EESLsBnOJLUMIeHyMjstip
- PLfjPEUkHGZRAuVkfRItZboKxHI07z3dmVrP4dnk2v9J6Mjv4fDg78tHRNwPaQwlds0iO5BQp
- vKwsCgQiguSfVdJ3hXIBrxA+NnH0RapiH0fwE736LlZIeqGX1tUGhfzjP/DD50s1ROpe8Ib3D
- g+hyBNymogaHd5+Pnpk1Z4PjL5WFoS6g7Sshal6b8tR/37+B8cIdOzqcGncitDcoaC18xgJon
- +lK9WO4FSelBbI4Uj8m8mxa0dSl61PyDG5fnBZ3wBXWU+xSnyzf9byN+g3FMXYxTsTbOpGYHC
- XEAA53McFlYGMwHHP3p0RcNIfXCkqnPFtKm3Mc/TCs4RoewHNZVMyW8lAgY627PHl0C6VgyCm
- OmvOkFfNR+HmTEBaJIq3rgJq0Hf6gG4p0OTuY7KyC28PAwFIFMsDwb8Ra0zSVuqlv8okKRF9w
- 5jkNw9WT093v6lCyE1mQm+JMMn6Ao+rax3oG+dZoTmmJ12Zk8T8X7T9RJ6B1uLIZd0LJzg9j5
- Uo8LmQQWy6lGiOmwcCZhhBs8lmFiIpY9D9Qs4f4/CZUekxcERYgx5yNUtysuyoNa7wZCqBXa3
- e90Map3Mv6JOj3m7F9FReGvMPrVm2/R9H1aoF/w/b/tOU05mHMg/8qedxbCtjsaQRCn4nqaPY
- pz0KbMJn2wWiaifvomeydmRotCnZNf9l4tG
+References: <20190721194052.15440-1-carenas@gmail.com> <20190724151415.3698-4-avarab@gmail.com>
+ <CAPUEspiCFup4wvNwOA+egiAjkUEPgU+YnU8x2DfKhdbqTdOV3w@mail.gmail.com> <87h8787vmt.fsf@evledraar.gmail.com>
+In-Reply-To: <87h8787vmt.fsf@evledraar.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 26 Jul 2019 07:12:34 -0700
+Message-ID: <CAPUEsphZJ_Uv9o1-yDpjNLA_q-f7gWXz9g1gCY2pYAYN8ri40g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] grep: stop using a custom JIT stack with PCRE v1
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Thu, 25 Jul 2019, Junio C Hamano wrote:
-
-> Elijah Newren <newren@gmail.com> writes:
+On Fri, Jul 26, 2019 at 6:50 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> > On Thu, Jul 25, 2019 at 11:12 AM Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> >
-> >> > Stuff I'd most welcome review on:
-> >> >   * Is cache-tree.c the right place for write_tree_from_memory()?
-> >> >     [see patch 7]  Should there be docs on how it differs from
-> >> >     write_index_as_tree(), already found in cache-tree?  What does
-> >> >     the latter even do?
-> >>
-> >> write_index_as_tree() is supposed to write the contents of an index
-> >> state as a tree object, and return the object ID for the resulting
-> >> tree.  It is the primary interface designed to be used by
-> >> write-tree.
-> >
-> > Other than the last sentence, that also sounds like the description of
-> > write_index_as_tree() -- at least as best I understood it.
+> On Fri, Jul 26 2019, Carlo Arenas wrote:
 >
-> Yes, I didn't even know merge-recursive had its own variant.  I
-> suspect that back when "merge-recursive in C" was being developed,
-> it first used "git write-tree" via run_command(), and then just
-> copied and pasted what was done in the write-tree implementation
-> without bothering to refactor it into write_index_as_tree() and its
-> own bits about the unmerged index.
+> > since this moves PCRE1 out of the JIT fast path,
+>
+> I think you're mostly replying to the wrong thread. None of the patches
+> I've sent disable PCRE v1 JIT, as the performance numbers show. The JIT
+> stack is resized, and for v2 some dead code removed.
 
-FWIW that matches my understanding (i.e. one of those authors' of
-"merge-recursive in C").
+I didn't mean JIT was disabled, but that we are calling now the regular
+PCRE1 function which does UTF-8 validation (unlike the one used before)
 
-Thanks,
-Dscho
+> > introduces the regression where git grep will abort if there is binary
+> > data or non UTF-8 text in the repository/log and should be IMHO hold
+> > out until a fix for that can be merged.
+>
+> You're talking about the kwset series, not this cleanup series.
+
+a combination of both (as seen in pu) and that will also happen in next if
+this series get merged there.
+
+before this cleanup series, a git compiled against PCRE1 and not using
+NO_LIBPCRE1_JIT will use the jit fast path function and therefore would
+have no problems with binary or non UTF-8 content in the repository, but
+will regress after.
+
+Carlo
