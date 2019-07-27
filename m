@@ -2,175 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23C661F462
-	for <e@80x24.org>; Sat, 27 Jul 2019 16:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5106F1F462
+	for <e@80x24.org>; Sat, 27 Jul 2019 17:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387691AbfG0QLz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jul 2019 12:11:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64992 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728856AbfG0QLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jul 2019 12:11:54 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 689B9158B5E;
-        Sat, 27 Jul 2019 12:11:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=qrJH4CgmoBCO
-        sxODr+F7/tZpUnA=; b=OLv3NhhTEJ2X4a7MIiifTxsnqj3laDcwBYA6TBPuZHfA
-        akhXgoQ2wUAqDePkzyGUSWzJwGl8q2VVP+bD57gg10I3FWiMU5V9FZGhKCZJKrnt
-        kMiBJAKAOHYG5dW7NW5v/jbOrAoTa5dh0Y6soIQFZmrtgq2JLu4zTDu8rh/q9ks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rClCyv
-        Tw2nrpc1haJDOzC0/IJvIvdYpM/vdFLlJmXCKS9asHKLcggmGv0OixuOQl71WZj+
-        tg6kp8FnqhKTkUsslbbjePXLJ1NVTi7T8qlhFdLPRQzGcgLvYrOiLUeApdilIePW
-        caNIHzVmy0E1kN0QpffBpPnMknyAbSDrQCH8s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EF3B158B5D;
-        Sat, 27 Jul 2019 12:11:48 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C0C76158B5C;
-        Sat, 27 Jul 2019 12:11:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] transport-helper: enforce atomic in push_refs_with_push
-References: <20190702005340.66615-1-emilyshaffer@google.com>
-        <20190709211043.48597-1-emilyshaffer@google.com>
-        <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
-        <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
-        <20190718152234.GI20404@szeder.dev>
-        <20190727084348.GO20404@szeder.dev>
-Date:   Sat, 27 Jul 2019 09:11:46 -0700
-In-Reply-To: <20190727084348.GO20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Sat, 27 Jul 2019 10:43:48 +0200")
-Message-ID: <xmqq4l37mp8d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2387861AbfG0ROD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jul 2019 13:14:03 -0400
+Received: from lovelace.chead.ca ([162.223.226.168]:43568 "EHLO
+        lovelace.chead.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387665AbfG0ROC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jul 2019 13:14:02 -0400
+X-Greylist: delayed 1155 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Jul 2019 13:14:02 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chead.ca;
+         s=lovelace20151122; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:
+        Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=OftBB0lTXgcrlBzThbC1/ViKzUzwr56OEXr4YNYFR8g=; b=ZyeFGmAG0LY77+gNKf1DHd2yiY
+        jsTvBxrDKCyvmmnxa4jFHtESDJdYY8VBziEkXJgd7T6K94rGKFPFZBysq+dgtLB1ABxQcqrckehrE
+        FSwGo4HF2bY2t4C3S6h4N6vhVxk+3mvY0DuPowXUrpEW8eUMD8j34CZVrj3Amo8Y95iE=;
+Received: from [192.252.232.184] (helo=amdahl.home.chead.ca)
+        by lovelace.chead.ca with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.92)
+        (envelope-from <bugs@chead.ca>)
+        id 1hrPxz-0003oH-8N
+        for git@vger.kernel.org; Sat, 27 Jul 2019 09:54:43 -0700
+Date:   Sat, 27 Jul 2019 09:54:40 -0700
+From:   Christopher Head <bugs@chead.ca>
+To:     git@vger.kernel.org
+Subject: Push force-with-lease with multi-URL remote
+Message-ID: <20190727095440.1aac3b3c@amdahl.home.chead.ca>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3C2C4910-B089-11E9-95DB-46F8B7964D18-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="MP_/MmcJtnahYmKduTkLsCEB/Hh"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+--MP_/MmcJtnahYmKduTkLsCEB/Hh
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 
-> Junio,
->
-> On Thu, Jul 18, 2019 at 05:22:34PM +0200, SZEDER G=C3=A1bor wrote:
->> Subject: [PATCH] travis-ci: build with GCC 4.8 as well
->
-> This patch conflicts with topic 'js/trace2-json-schema', and the
-> current conflict resolution in 'pu' is not quite correct.
+Hi folks,
+When a single remote has multiple push URLs, Git’s force-with-lease
+logic appears to be:
 
-Thanks.
+For each URL:
+1. Read refs/heads/mybranch (call this commit X)
+2. Read refs/remotes/myremote/mybranch (call this commit Y)
+3. Send to the URL an atomic compare-and-swap, replacing Y with X.
+4. If step 3 succeeded, change refs/remotes/myremote/mybranch to X.
 
-"git diff ...MERGE_HEAD" during a merge of js/trace2-json-schema
-gives me this patch:
+This means that, assuming both URLs start out identical, the second URL
+will always fail because refs/remots/myremote/mybranch has been updated
+from Y to X, and therefore the second compare-and-swap fails. I can’t
+imagine any situation in which this behaviour is actually useful.
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cdd2913440..ec38bf379a 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -14,6 +14,8 @@ make
- make test
- if test "$jobname" =3D "linux-gcc"
- then
-+	make -C t/trace_schema_validator
-+	export GIT_TRACE2_EVENT=3D$(mktemp)
- 	export GIT_TEST_SPLIT_INDEX=3Dyes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=3Dtrue
- 	export GIT_TEST_OE_SIZE=3D10
-@@ -21,6 +23,10 @@ then
- 	export GIT_TEST_COMMIT_GRAPH=3D1
- 	export GIT_TEST_MULTI_PACK_INDEX=3D1
- 	make test
-+	t/trace_schema_validator/trace_schema_validator \
-+		--trace2_event_file=3D${GIT_TRACE2_EVENT} \
-+		--schema_file=3Dt/trace_schema_validator/strict_schema.json \
-+		--progress=3D10000
- fi
-=20
- check_unignored_build_artifacts
+This is what I would expect:
 
-i.e. they want to run an extra make in that validator directory,
-export another environment variable, and then run the validator
-*after* running the normal "make test", in linux-gcc job.
+1. Read refs/heads/mybranch (call this commit X)
+2. Read refs/remotes/myremote/mybranch (call this commit Y)
+3. For each URL:
+3a. Send to the URL an atomic compare-and-swap, replacing Y with X.
+4. If any (or maybe all) of the CAS operations in 3a succeeded, change
+refs/remotes/myremote/mybranch to X.
 
->> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
->> index cdd2913440..ff0ef7f08e 100755
->> --- a/ci/run-build-and-tests.sh
->> +++ b/ci/run-build-and-tests.sh
->> @@ -11,9 +11,9 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -a=
-w "$cache_dir/.prove")";;
->>  esac
->> =20
->>  make
->> -make test
->> -if test "$jobname" =3D "linux-gcc"
->> -then
->> +case "$jobname" in
->> +linux-gcc)
->> +	make test
->
-> This 'make test' here is important, but the confict resolution
-> accidentally removed it.
+Thoughts? Does anyone have a use case for the existing behaviour? I
+have attached a shell script which constructs some repos and
+demonstrates the situation.
 
-Right.  Thanks for spotting.
+Thanks!
+-- 
+Christopher Head
 
-I can see in "git diff pu~2 pu~1" that indeed the first 'make test'
-that we want to run without any of these environment variables is
-lost in the merge.  We want to run two tests, with or without these
-environment variables, and the validator wants to piggyback on the
-second one.
+--MP_/MmcJtnahYmKduTkLsCEB/Hh
+Content-Type: application/octet-stream; name=test
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=test
 
-Will fix in the meantime, but I was expecting that this "validator
-in CI" business to be redone differently, perhaps with a different
-validator implementation and either in a separate job or just part
-of an existing job but trace enabled only for some subset of the
-tests and/or only for new tests specifically written for trace
-coverage, so after that happens this may turn into a moot point.
+IyEvYmluL2Jhc2gKCnNldCAtZQoKIyBDcmVhdGUgcmVtb3RlMSwgcmVtb3RlMiwgbG9jYWwuCmdp
+dCBpbml0IC0tYmFyZSByZW1vdGUxCmdpdCBpbml0IC0tYmFyZSByZW1vdGUyCmdpdCBpbml0IGxv
+Y2FsCmNkIGxvY2FsCmdpdCByZW1vdGUgYWRkIG9yaWdpbiAuLi9yZW1vdGUxCmdpdCByZW1vdGUg
+c2V0LXVybCAtLXB1c2ggb3JpZ2luIC4uL3JlbW90ZTEKZ2l0IHJlbW90ZSBzZXQtdXJsIC0tcHVz
+aCAtLWFkZCBvcmlnaW4gLi4vcmVtb3RlMgoKIyBBZGQgY29tbWl0IEEgYW5kIHB1c2guCmVjaG8g
+J2hlbGxvIHdvcmxkJyA+IHRlc3QudHh0CmdpdCBhZGQgdGVzdC50eHQKZ2l0IGNvbW1pdCAtbSAn
+Q29tbWl0IEEnCmdpdCBwdXNoIC11IG9yaWdpbiBtYXN0ZXIKCiMgQW1lbmQgdG8gY29tbWl0IEIu
+CmVjaG8gJ2dvb2RieWUgd29ybGQnID4gdGVzdC50eHQKZ2l0IGFkZCB0ZXN0LnR4dApnaXQgY29t
+bWl0IC0tYW1lbmQgLS1uby1lZGl0CgojIEZvcmNlLXB1c2guCmdpdCBwdXNoIC0tZm9yY2Utd2l0
+aC1sZWFzZQo=
 
-The change the merge brings in to the file now reads like this.
-
-Thanks, again.
-
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index ff0ef7f08e..35ff4d3038 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -14,6 +14,9 @@ make
- case "$jobname" in
- linux-gcc)
- 	make test
-+
-+	make -C t/trace_schema_validator
-+	export GIT_TRACE2_EVENT=3D$(mktemp)
- 	export GIT_TEST_SPLIT_INDEX=3Dyes
- 	export GIT_TEST_FULL_IN_PACK_ARRAY=3Dtrue
- 	export GIT_TEST_OE_SIZE=3D10
-@@ -21,6 +24,11 @@ linux-gcc)
- 	export GIT_TEST_COMMIT_GRAPH=3D1
- 	export GIT_TEST_MULTI_PACK_INDEX=3D1
- 	make test
-+
-+	t/trace_schema_validator/trace_schema_validator \
-+		--trace2_event_file=3D${GIT_TRACE2_EVENT} \
-+		--schema_file=3Dt/trace_schema_validator/strict_schema.json \
-+		--progress=3D10000
- 	;;
- linux-gcc-4.8)
- 	# Don't run the tests; we only care about whether Git can be
+--MP_/MmcJtnahYmKduTkLsCEB/Hh--
