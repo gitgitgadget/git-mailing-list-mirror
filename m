@@ -2,74 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D395E1F462
-	for <e@80x24.org>; Sat, 27 Jul 2019 08:22:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96B431F462
+	for <e@80x24.org>; Sat, 27 Jul 2019 08:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbfG0IW5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jul 2019 04:22:57 -0400
-Received: from sender-of-o52.zoho.com ([135.84.80.217]:21487 "EHLO
-        sender-of-o52.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727466AbfG0IW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jul 2019 04:22:57 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Jul 2019 04:22:56 EDT
-ARC-Seal: i=1; a=rsa-sha256; t=1564214872; cv=none; 
-        d=zoho.com; s=zohoarc; 
-        b=dDe8ygcmAB8aZD0JNy4vfaj62Ue3ceswftLXJErUR+NDbedp/wlT2biQ7DqALwXPTWYdmdSGmISvSCmsQeuUu+UJ03RR1mTT9vP8FRGqYJyyM9hzZSg+4gEkaToB51JR2VmSfkNT6dH+mn0rfR1BqZCXSJ8n/p6iKK6kuVcRaiw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
-        t=1564214872; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To:ARC-Authentication-Results; 
-        bh=zPv4Ym8OYusp63YkgQG0fT3zTcxAx0P+AjoYXuD7tf4=; 
-        b=NVeFUrwWmZM6IQ2GNnRTw3/AChmmbEAN+qDaxuWJ6ZOrT4h7bAWaDMpDD1xlX4esO/Y+HLqG1v70pcPiBEmli46azuiUYyOak0Sqg9EvcsGtlHpTuqlaj6vSjzqgAlP73L2ynpwMQ32itu/XQqMdunJX74C7awNgMHXk+U1d970=
-ARC-Authentication-Results: i=1; mx.zoho.com;
-        dkim=pass  header.i=topbug.net;
-        spf=pass  smtp.mailfrom=hong@topbug.net;
-        dmarc=pass header.from=<hong@topbug.net> header.from=<hong@topbug.net>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1564214872;
-        s=zoho; d=topbug.net; i=hong@topbug.net;
-        h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        l=305; bh=zPv4Ym8OYusp63YkgQG0fT3zTcxAx0P+AjoYXuD7tf4=;
-        b=es9w+jG3upkZZEl+Ll5N4A6gb3QM2a2x7ELWK0lcbyGsQyxQ3U3AV+nmRtoEhOYT
-        eIoff+xytRnUlj0yivSn99S2hvia6Jpii+tLbKGFobwze2hnnVIt07V6hGZO3A1McJ8
-        XAJCVIGqsliOXYEeOMhQl8Om20++BvsaI9etKuuQ=
-Received: from [192.168.1.88] (69-215-149-151.lightspeed.sntcca.sbcglobal.net [69.215.149.151]) by mx.zohomail.com
-        with SMTPS id 1564214871490973.4084040252891; Sat, 27 Jul 2019 01:07:51 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   Hong Xu <hong@topbug.net>
-Subject: git gui blame: Possible to pass more options in?
-Openpgp: preference=signencrypt
-Message-ID: <2ebb18ea-26a9-68fe-7d5e-e75a18f70a1b@topbug.net>
-Date:   Sat, 27 Jul 2019 01:07:50 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728204AbfG0Inz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jul 2019 04:43:55 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33508 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727885AbfG0Inz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jul 2019 04:43:55 -0400
+Received: by mail-wm1-f68.google.com with SMTP id h19so39487062wme.0
+        for <git@vger.kernel.org>; Sat, 27 Jul 2019 01:43:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1eJSVMLDvKGG/DuF8VaGPYLi3VZ+H+gUKHzvZAT1nZA=;
+        b=HIYA4JYJElle+fGC/O/TRS0A7KqXOrZH7P7d0nKROehy0CbnuIuJ6Mn/bLuVOqbsfv
+         v+kAtlNF0KXryj+PdR7/Dw3Zzwadg6sJVfUWx9xvSs73/UNC7F7z7o9H4YPO9fw9+RRz
+         sWlXjrKOzM9Off3gb75AzTG5dlq6E77lQawP6IKJkbA+jCNshpYVOL9FpSE7UfDMd1NF
+         lAHAq+3ZhUIkMcYaS87kzaXciwbrYdl4TgXFszXqUK+2A61UVhNQgypjs6nhUl5d0WOw
+         TA6JZu+9u2kcJLTd3bhsNWPF7OvlNDSEklckdMxQCM2GFPo9a5ah4zRrL5zMBxDNX8Lz
+         Zu+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1eJSVMLDvKGG/DuF8VaGPYLi3VZ+H+gUKHzvZAT1nZA=;
+        b=APA554uKArVFZ41xm1t5DiBlL/a9Z0qFzR8HMjw5nKerFYLzwBvHv3mE5SHLoQuX91
+         IF4Ch7lFY/Hl88wiGW1DJgEIjbIO8CTVIOtCxMCc/h82x0+dgHJnm8JMoN7TOm6mMXfr
+         leE1b7BzDcnqkJcVR2Wjckfi4M9Kgiy6IpgHQvxeps3FTNZGmBq8w72WcmqtAf0Xj16s
+         fm9+KtsZR+t95RFTzoD2xsijn95jMMlQAoz+xU88LV7p0G/+YWTDjli9bxNLJ2+070US
+         S0AdgPyC9xNa2nDJqLsLBGOkdYS99WqegfESbYP20FxZpxNQ4GA4GskwB0CywGHXEExU
+         JdAg==
+X-Gm-Message-State: APjAAAU00CAeAYWemEa6abREjI3UXyD9sNhoJ4Rrot29F2ZMG2TvWVLx
+        wuMpC9xXYh5IG+antb3ScpWKt2+H
+X-Google-Smtp-Source: APXvYqyYBzPEv6ONW6XfqCtKhqUOms62n4wkQWQGdGnKWF4aoTRnC6LPAsWFnqAoWYcVw+N+eRb+yA==
+X-Received: by 2002:a05:600c:34d:: with SMTP id u13mr62753354wmd.48.1564217033626;
+        Sat, 27 Jul 2019 01:43:53 -0700 (PDT)
+Received: from szeder.dev (x4db47bfc.dyn.telefonica.de. [77.180.123.252])
+        by smtp.gmail.com with ESMTPSA id a81sm56763869wmh.3.2019.07.27.01.43.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Jul 2019 01:43:52 -0700 (PDT)
+Date:   Sat, 27 Jul 2019 10:43:48 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Arenas <carenas@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] transport-helper: enforce atomic in
+ push_refs_with_push
+Message-ID: <20190727084348.GO20404@szeder.dev>
+References: <20190702005340.66615-1-emilyshaffer@google.com>
+ <20190709211043.48597-1-emilyshaffer@google.com>
+ <CAPUEspgjSAqHUP2vsCCjqG8b0QkWdgoAByh4XdqsThQMt=V38w@mail.gmail.com>
+ <xmqq8ssx53a0.fsf@gitster-ct.c.googlers.com>
+ <20190718152234.GI20404@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190718152234.GI20404@szeder.dev>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Junio,
 
-I tried to run
+On Thu, Jul 18, 2019 at 05:22:34PM +0200, SZEDER Gábor wrote:
+> Subject: [PATCH] travis-ci: build with GCC 4.8 as well
 
-    git gui blame -C somefile
+This patch conflicts with topic 'js/trace2-json-schema', and the
+current conflict resolution in 'pu' is not quite correct.
 
-but I got the following error message:
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index cdd2913440..ff0ef7f08e 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -11,9 +11,9 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+>  esac
+>  
+>  make
+> -make test
+> -if test "$jobname" = "linux-gcc"
+> -then
+> +case "$jobname" in
+> +linux-gcc)
+> +	make test
 
-    error: Unknown switch `C'
-    usage: git cat-file (-t .... [What exactly "git cat-file -C" prints
-out for me]
+This 'make test' here is important, but the confict resolution
+accidentally removed it.
 
-Is there a way to pass in additional options to git gui blame for now?
-
-Thanks!
-
-Hong
-
+>  	export GIT_TEST_SPLIT_INDEX=yes
+>  	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+>  	export GIT_TEST_OE_SIZE=10
+> @@ -21,7 +21,16 @@ then
+>  	export GIT_TEST_COMMIT_GRAPH=1
+>  	export GIT_TEST_MULTI_PACK_INDEX=1
+>  	make test
+> -fi
+> +	;;
+> +linux-gcc-4.8)
+> +	# Don't run the tests; we only care about whether Git can be
+> +	# built with GCC 4.8, as it errors out on some undesired (C99)
+> +	# constructs that newer compilers seem to quietly accept.
+> +	;;
+> +*)
+> +	make test
+> +	;;
+> +esac
+>  
+>  check_unignored_build_artifacts
+>  
+> -- 
+> 2.22.0.810.g50207c7d84
+> 
+> 
