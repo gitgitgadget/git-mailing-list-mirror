@@ -2,106 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B4D41F462
-	for <e@80x24.org>; Sat, 27 Jul 2019 19:41:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75FB11F462
+	for <e@80x24.org>; Sat, 27 Jul 2019 20:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388060AbfG0TlI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jul 2019 15:41:08 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35293 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387995AbfG0TlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jul 2019 15:41:08 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w24so25980442plp.2
-        for <git@vger.kernel.org>; Sat, 27 Jul 2019 12:41:07 -0700 (PDT)
+        id S2388338AbfG0U2D (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jul 2019 16:28:03 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:41726 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387841AbfG0U2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jul 2019 16:28:03 -0400
+Received: by mail-pl1-f194.google.com with SMTP id m9so25897842pls.8
+        for <git@vger.kernel.org>; Sat, 27 Jul 2019 13:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bwsddKdJLmbVD+7CQ5tZSb+Jrnd6DuiZ26t9UMtoEms=;
-        b=S195uDrJueyR2ZWtUWWpOpyYfybnhk8R9Ke0Hx2E4kd9XlfPytJG09oyGbmQjI+3zp
-         2DtWLVWniTK5vJjSrStsWYS9dM6Ym85EClL4A4zirzo1KQv6D0fZOgsbMJkONq3Um6xh
-         7j5UxxG7TT07VDwTlM5MqHEsoNMt0uFdMEPSouRhT7XoXn2GOSQddiJ8RA6By43vJYDc
-         tx4puHtisULcW3hWI4I9EHP9p230cz4b7uctvwDvduzqk0FTvpeAozzll9URmJYef033
-         a4mNHaTqQ8ywG+j5+eyn5qwzWpKZOZao4VPGR1P+1F/mtZ0kMbXoCXIGI9tg/aZ733Np
-         NuUA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hKIsvC2375e7HLSn/vH5hJWZeEjTHtLOJlUs665wMGA=;
+        b=X1iniDqPJcPZ1Q2/uW07VkFyqsf8hCGr5Y5l2cGR59iS83IjAy4aT/bVLEq7jKcS1I
+         u10imPFFxD2rER+gdkwotvlNj09L0RcwDHiQYDmCixep4S3ydSNac0Ls7RrmXEQPuRay
+         aWZKl8BMjvX2Z1ATze85e5oeEdBaXvDyXf2DdQ3zMx2cgX2VZ5owkA+1bGcse3x88BHw
+         Jo+ye50MeL+/Xf2nua+novVySE7pZ6NWUNy0rwRs/8hkSUPBel/J25RQDNCFpwooiZNI
+         kDs+fBZ0yUgVwRpyfyYVJNkj+0FHQ8LqnR3MLvyWb63Jd7mTnQw4TdntqC91AT6GrMTj
+         vlIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bwsddKdJLmbVD+7CQ5tZSb+Jrnd6DuiZ26t9UMtoEms=;
-        b=d5pYzLvDiiRcdhQIpz1HjFV5NE6Y2PfU/t6tXLfrP9Te8eNDC2T5NWnF0NkYTw0Der
-         XeyzvsELXRoDv51EMOlXjW7CbLGX3PYioPe0BWQ/AEX/6iVtag+koDmuiFe8y6X3XiSn
-         RwMTvoQ/jgDV0VCg2gaNm5k3kwEdbkyiYLecX2dVWdbKf42KCfo5UTuRQZ5rF3w/9I18
-         XX89kQ+M942NIWFvZWgmls4IwOCDsvdBgX9JlGegSmEaL4OKuGfQjDVjQOA20Bw19AMk
-         9lHLreg9hxecxKg3Pp0QLN/LEhx6EUd2BHcpgKZzrIH0IM70z3Kf9sTN7GNtt58MYbSn
-         CWPA==
-X-Gm-Message-State: APjAAAWpkQc04RFEbjGqI2X34vnmtFZjAizDOW948KTwFEXYPnQmWutf
-        ytPn04AUHQTGMJt9UJouedaXIlTzzjw=
-X-Google-Smtp-Source: APXvYqzkXM5mWbFPp+u16On/Rq9tJ3Ra74AslsEdPO0+kurCBPr1vnWUfYzJ0OueFM3T9OWr9NmuqA==
-X-Received: by 2002:a17:902:b608:: with SMTP id b8mr104026413pls.303.1564256467020;
-        Sat, 27 Jul 2019 12:41:07 -0700 (PDT)
-Received: from ar135.iitr.ac.in ([103.37.200.218])
-        by smtp.gmail.com with ESMTPSA id u1sm53404991pgi.28.2019.07.27.12.41.03
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 27 Jul 2019 12:41:05 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
-Date:   Sun, 28 Jul 2019 01:08:13 +0530
-Message-Id: <20190727193814.7400-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
-References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hKIsvC2375e7HLSn/vH5hJWZeEjTHtLOJlUs665wMGA=;
+        b=U4tOI1Wo31nI05m516+NRd9MzfLd4cq9cuiMjfG1WW9eRqrX2YqY5D/AvvtAeZWdc6
+         i4A5VvF+fILjEBf8z1K8h88YLFKalVmQ3X4llU3e9wOxkSFhRheZAFvb5VALssb/z0Sn
+         WHT0ssLQN3uxqyWC6WBkyo9sFEQMDLqi4NlLaEuWiom20DpBww4MY+E6ygXlNbig4w++
+         KVBCEHmBuL08KrDMfWf8F6HwhDU1xn2L3bpElGArPKyE7ToM8e2Ji9+pLuvhy8cDn6Al
+         r/D/fEZjwdLMhO/t0j1D9uoGDzKND/gayFbphARNT7kkRYlGeIEjr9bFqtskZuOCx7WK
+         2KtA==
+X-Gm-Message-State: APjAAAWWTuqd4f+W/kuPhad+VjNcsgaoReVuUVktu6ZsdtSQRj5AYtFZ
+        43IQJfN1+t0320VLp2O7Pkm+bVt9lw0=
+X-Google-Smtp-Source: APXvYqzByYLwRNqgYdJbvyhr88Y1THAUyZcISco7Ld99VUkg8W5iJ6shelDbEiHktD9jPgipzyj5pQ==
+X-Received: by 2002:a17:902:24c:: with SMTP id 70mr101831345plc.2.1564259282320;
+        Sat, 27 Jul 2019 13:28:02 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id t8sm64671302pfq.31.2019.07.27.13.28.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 27 Jul 2019 13:28:01 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com
+Subject: [PATCH 0/3] grep: memory leak in PCRE2
+Date:   Sat, 27 Jul 2019 13:27:56 -0700
+Message-Id: <20190727202759.22310-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+This series fixes a small memory leak that was introduced when PCRE2
+support was added, and that should be visible with t7813 and valgrind
 
-On Thu, 25 Jul 2019 17:19:23 -0700 Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> [...]
-> [New Topics]
-> 
-> * bb/grep-pcre2-bug-message-fix (2019-07-23) 1 commit
->   (merged to 'next' on 2019-07-23 at 8bd5a68618)
->  + grep: print the pcre2_jit_on value
-> 
->  BUG() message fix.
-> 
->  The codepath may want to just simply be removed, though.
-> 
-> 
-> * ra/rebase-i-more-options (2019-07-23) 4 commits
->  - SQUASH???
+Applies cleanly to maint and master but will conflict slightly with
+ab/no-kwset (currently in next) and most likely other changes introduced
+about this same codebase (ex: ab/pcre-jit-fixes) but hopefully the
+spreading on short simple commits helps with reviewing.
 
-There are only 3 commits in this "series".
+Carlo Marcelo Arenas Belón (3):
+  grep: make pcre1_tables version agnostic
+  grep: use pcre_tables also for PCRE2
+  grep: plug leak of pcre chartables in PCRE2
 
->  - rebase -i: support --committer-date-is-author-date
->  - sequencer: add NULL checks under read_author_script
->  - rebase -i: add --ignore-whitespace flag
+ grep.c | 12 ++++++------
+ grep.h |  2 +-
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-The correct order should be:
-   - rebase -i: add --ignore-whitespace flag
-   - sequencer: add NULL checks under read_author_script
-   - rebase -i: support --committer-date-is-author-date
-
-I'll soon send another revision and while on it, let's merge
-these topics into one. Should I also rebase them on the tip
-of git/git's master?
-
-> [...]
-
-Best
-Rohit
-
+-- 
+2.22.0
