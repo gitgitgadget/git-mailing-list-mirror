@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 340CA1F462
-	for <e@80x24.org>; Sat, 27 Jul 2019 20:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 359071F462
+	for <e@80x24.org>; Sat, 27 Jul 2019 20:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388377AbfG0U2H (ORCPT <rfc822;e@80x24.org>);
+        id S2388379AbfG0U2H (ORCPT <rfc822;e@80x24.org>);
         Sat, 27 Jul 2019 16:28:07 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42076 "EHLO
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43271 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387841AbfG0U2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jul 2019 16:28:04 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t132so26313118pgb.9
-        for <git@vger.kernel.org>; Sat, 27 Jul 2019 13:28:04 -0700 (PDT)
+        with ESMTP id S2388368AbfG0U2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jul 2019 16:28:05 -0400
+Received: by mail-pg1-f196.google.com with SMTP id f25so26310115pgv.10
+        for <git@vger.kernel.org>; Sat, 27 Jul 2019 13:28:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MTgKGB9/foU9CKM1OKzZ7KBnzeV9cqs6O+EZ95aebic=;
-        b=IYmfLI6KD3YtT8vUUlOtoSoefkdxOACTykoQdLiVkwTB/yKEgJoe22dz+l4PLvNbf7
-         wCnGiK/mLl88R59fh1W1OMsFfYSz706Eo4Wr45PRa86KJbKXSVWMre5fzKkx6V8/GoPP
-         je2Us4URLntq/s9mW65/SwHlontmXPDupOKPReM/+58ja+bv0LR+kQ+B0sSASh6i1jAe
-         tUa4qrD8CbBo69NcDkGJrMcdpOj6VCL9ndBUVew4HBjGy2aeksAuSMISCtbw/6cB55vO
-         kdx+Ax3mCiR7P7+MK9mMMId9CbZoWLFx60leeJvTMDy6U4a9YC1bDu9aULfoPUSebTe3
-         216A==
+        bh=rcx1Qs3x+hKT/K4of3mciJhCswIiyW19mjDmLYzoLXA=;
+        b=eIMeViUXs75IcP6dEL6+P1wRjK5RW16r260d99EaS+KcCO3qFwX9XfT0dFYalyGlAQ
+         jG4BblzhhDU/821WSnoynz9VTYuB0oR/a1DtnV0glb8c1C4RmJTe4Cyrj7dmMrSoHZAA
+         Iv/gXl3DHpVA+xSkFccgweIDWkCEr4Pg6/q2rKNedpY9lWwC19PWxWNflJ8TmpGklO1F
+         azwFKCvw+dbhmRbSWhb7s6UnhPGDP3x3YkNs+iHN0v0EW/hXWp9DC7TC9AaYgrJKnMhW
+         5IRXVVZiZPLYgpc5fXeVFvq4BPQ3iQ+GUXNAUPwtyNoVjcUI6xEGd+7egYNvP3fiv4JI
+         9k/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MTgKGB9/foU9CKM1OKzZ7KBnzeV9cqs6O+EZ95aebic=;
-        b=jhZG9yAtzl3LDURmaq9q5cY+v8RoUo1S99KRKrcxjeo1cfdokzlsb5+RmXyA1YZnBv
-         iJOYcruGCgt6cL8j4Clw7gsFoEjgQlcF6gVBOrRM2uUY+JHt9w7x0o6/L1MHoVq1J0KA
-         jLycoECvBtaamE7IYlwi/yB+7zOGoTr3DvUlyKNpeh3tvh2Rk3ip55z0wjXJusgBTQwm
-         BxzRwcxFuPOS95c2GjdkUpMAPejRF44ejCEUuetC7f75HjyvUhs7U3vgIfD87k8JxSb6
-         cEeGSRmmCcuLPSPfIsmMqkSE+ZzVhZ3ZkH7c1jzED74fmcjNS0xhmcJ457hwh+9rSFR2
-         g0pQ==
-X-Gm-Message-State: APjAAAWmiQs7BZcMAtpoV9RBYERaNq5Xx734HnCj0r1FOLpueShyLU6H
-        zjaAXYHoq9DAHGfd+qnaoUabmrQObzw=
-X-Google-Smtp-Source: APXvYqzn9NIEyYEu9KDcgPn6qZ4OP39m+ecEvx5+54NrNl14fzB96sQFO0Be88TyiG2RfrHzGe1sEQ==
-X-Received: by 2002:a17:90a:9f08:: with SMTP id n8mr105326826pjp.102.1564259283686;
-        Sat, 27 Jul 2019 13:28:03 -0700 (PDT)
+        bh=rcx1Qs3x+hKT/K4of3mciJhCswIiyW19mjDmLYzoLXA=;
+        b=NYF9/hfIAXVW56AhBP05/6/GQfOgpOzRiZWhcPlRg64eDy9w68gj41TJqfKrMr7aYt
+         PglQYHdWZyRrXhmJRRlmnLRLcqVpN7cbmk34BFObI7lv32q0ddW2t7rhMLl9rxTfi9wk
+         SHB11GRI0g5xpaA4j87Ng/dQSTMY7UcP1LZSS1AFByY2IlJTAre58nThDmhhQXW6OIjW
+         wPVLrHsiPGrxSg8AvNBkC7PVdYyac2Lir9NSQynigHvtGkhYonLtwdRzOTwYOoZAtKz0
+         jemR9vGT2g4yX0nnrSpyKtMjxShpErid81bYyoBogrTdWKP2Ps+BCBnA99Iz2LEe8opZ
+         FL+A==
+X-Gm-Message-State: APjAAAVTBij6zjO97ktLO9QC/jKCDHs8ODJZeO5P6bOFL/5E1siB+vps
+        jFZisFN/Y8B67Qyd4l+Ydew+x17/ViE=
+X-Google-Smtp-Source: APXvYqzBXk9tDPuagNqpjmUSMGRj9rutJNPB6c4sEXE9eK4cIadwm72yufjNxJLU+x4IFeLrLiUcug==
+X-Received: by 2002:a17:90a:7787:: with SMTP id v7mr104721716pjk.143.1564259284392;
+        Sat, 27 Jul 2019 13:28:04 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
         by smtp.gmail.com with ESMTPSA id t8sm64671302pfq.31.2019.07.27.13.28.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 27 Jul 2019 13:28:03 -0700 (PDT)
+        Sat, 27 Jul 2019 13:28:04 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com
-Subject: [PATCH 2/3] grep: use pcre_tables also for PCRE2
-Date:   Sat, 27 Jul 2019 13:27:58 -0700
-Message-Id: <20190727202759.22310-3-carenas@gmail.com>
+Subject: [PATCH 3/3] grep: plug leak of pcre chartables in PCRE2
+Date:   Sat, 27 Jul 2019 13:27:59 -0700
+Message-Id: <20190727202759.22310-4-carenas@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190727202759.22310-1-carenas@gmail.com>
 References: <20190727202759.22310-1-carenas@gmail.com>
@@ -68,41 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) added a
-local variable to keep track of the chartables (used when locale
-is not UTF-8 but non-ASCII characters are needed)
+Just as it is done with PCRE1, make sure that the allocated chartables
+get free at cleanup time.
 
-Remove that local variable in favor of the shared one within the
-grep structure and that can be shared by all functions.
+This assumes no global context is used (NULL passed when created the
+tables), but will likely be updated in tandem if that ever changes.
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- grep.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ grep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/grep.c b/grep.c
-index cc65f7a987..d04635fad4 100644
+index d04635fad4..d9768c5f05 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -488,7 +488,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 	PCRE2_UCHAR errbuf[256];
- 	PCRE2_SIZE erroffset;
- 	int options = PCRE2_MULTILINE;
--	const uint8_t *character_tables = NULL;
- 	int jitret;
- 	int patinforet;
- 	size_t jitsizearg;
-@@ -499,9 +498,9 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 
- 	if (opt->ignore_case) {
- 		if (has_non_ascii(p->pattern)) {
--			character_tables = pcre2_maketables(NULL);
-+			p->pcre_tables = pcre2_maketables(NULL);
- 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
--			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
-+			pcre2_set_character_tables(p->pcre2_compile_context, p->pcre_tables);
- 		}
- 		options |= PCRE2_CASELESS;
- 	}
+@@ -604,6 +604,7 @@ static void free_pcre2_pattern(struct grep_pat *p)
+ 	pcre2_match_data_free(p->pcre2_match_data);
+ 	pcre2_jit_stack_free(p->pcre2_jit_stack);
+ 	pcre2_match_context_free(p->pcre2_match_context);
++	free((void *)p->pcre_tables);
+ }
+ #else /* !USE_LIBPCRE2 */
+ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
 -- 
 2.22.0
