@@ -8,94 +8,114 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D95361F462
-	for <e@80x24.org>; Sun, 28 Jul 2019 20:07:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 510411F462
+	for <e@80x24.org>; Sun, 28 Jul 2019 20:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726195AbfG1UH2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jul 2019 16:07:28 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45483 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbfG1UH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jul 2019 16:07:28 -0400
-Received: by mail-pg1-f196.google.com with SMTP id o13so27106251pgp.12
+        id S1726240AbfG1UHa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jul 2019 16:07:30 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45317 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726129AbfG1UH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jul 2019 16:07:29 -0400
+Received: by mail-pf1-f193.google.com with SMTP id r1so26878994pfq.12
         for <git@vger.kernel.org>; Sun, 28 Jul 2019 13:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2gJHpZDEJIeoxdpKcsAF/trs0Ix66ogCksFkLfDPAzI=;
-        b=jemg2JgX69fkV9lHAbDIPAFEkTT5BmwaNKPA2Tn1pI/gyFa7/vmKD4yIQ6H8mCauir
-         vmHNl8/+NJVJZvHZXjFR6tFKp4iBFZR2pzYfCXgh9J9xjDBrdJCdDc96NF5Q7oPCAGs/
-         2KLYXIP8ho/MsPSL+GzU7usOkHTH2HEXkk6b1Rj1xQKG3dUyAz+b+srPPX0HDNkabDep
-         iwFB6uip3SdvNuvYcjsHfZNTjwfsdIb0eOqtgF5x58Vo21shySPF/Qnnf3qdyYEKhZ9/
-         2sRv44GihQd+HnO7XzBvdpvsQ2XDYZbxY1ymoZedSUB3l6FAzcvOYlncX0xHvMC4XcYC
-         fVcA==
+        bh=evRuYE59yAU8+x5jb/VcugvLxrYWiYhmp8ukI8OjWZQ=;
+        b=azjj8FzKQ/4u9KrmU9/jfjuPWliWrYsET5uPOk4jcgzlUjjx3wsvU1HuASSjZW3VNH
+         X5aNivhqdGioM+0gt2HSqpf5nx99e580cXnm2R9AvB5aMW8XbCxyQs/bwYzAx5DT48Gf
+         bpcbXhuIWGH6lDQLn3XGu/TQvg2mJ9IMVgNFkin5LMwI4Lg2ZzRJy9UUx610KuJOs8Zf
+         0oJT/c/Qr8bLqlHQp7nOqvTJt+xzh4vAMWZodJFalnvLxFP1a9LnZckgc/8uSfdUZZr1
+         at7W4A+J914rvHpfMT4oSsn7vU0/LIDILzJ7zzkQJExKsdRNDkE/wcmOU8A4FMIqqnZn
+         YeCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2gJHpZDEJIeoxdpKcsAF/trs0Ix66ogCksFkLfDPAzI=;
-        b=HDMnez78jSvTdH25MZ4hnHvh/3zGWol7DBgotMYOR2LlX7ZaW1JszDAywlBGnhAYxv
-         Y5qJUtHwgG80UTk6Cju6R3UOSqd13gtqxkGlwRDZBx1Dd+AWEGFww9bS/WvPJyXFerb9
-         WcP9Ixn2BGPCEERnxOvHR0l30/nJNd73Npf9aWlZgZiviHjnLQqg2C/MlLvUkBdsCSGm
-         KDOGfQYHMYclcO1D02C1+qth1vGY8oUuxY0uz64iYCRa1Oc0rOvQq9uijq9UQi/w4PU9
-         ElMRJ+s2wmY+j0A96vj9gjLdnaadSeOORj9WBWp/tkmVu8HFsIBp2aFlUMV4G8u7pd+y
-         Brbg==
-X-Gm-Message-State: APjAAAVuv9R1yg/PJWG8vHs+OQ55Uk99fMavQb0Vk0fz1sDJ85+3bQL2
-        nOVyybFo/azXzqMk3q6pAmmk/Zi2XNM=
-X-Google-Smtp-Source: APXvYqy7mFZCA1knB9Qx2dBFGO5NvcVLFnATrkmy9ovGWugPjCU0jBxtNfStZYh13+equwBsBfqXPw==
-X-Received: by 2002:a63:9dcb:: with SMTP id i194mr55815474pgd.444.1564344447297;
-        Sun, 28 Jul 2019 13:07:27 -0700 (PDT)
+        bh=evRuYE59yAU8+x5jb/VcugvLxrYWiYhmp8ukI8OjWZQ=;
+        b=OD/Dp4hb8arkyEDNk+FESPanXgBvvS8OS6IxTeuH2q5p965o89BwQKjImqF9Sou8bD
+         eY83aBZ+O5M5s0IL6VpufDthDQAg1mnoDqauN84fjciBGM4pbzUeBaPZ7z926gjsN/ur
+         hLYTZ9hlZbrjGQmSNWUO45mgcHDhb4pNkMQrDvQxiVYhHD6k4KxNGQn6mQou5ALSiESo
+         5ni4DZD7aenNQ4Pm8fSBrtH2DcCOhphPQ31b7AJbrQGSXE+VzxQPSQj+TrzfZkOIg+lo
+         4aMQKVmfuLIxaxwydBN9OWOGNGhSwb/AcpDDcMz62ipdls3k2G0iZrlk2gwCUCgQE6fO
+         hoiw==
+X-Gm-Message-State: APjAAAXNRTZr22QWVoTiSN4GzfAq4zajINV0Y5JwjooXA50jYVrJX3tD
+        WL+AbrpDWNKRswnOn4maGYDFneu5mPQ=
+X-Google-Smtp-Source: APXvYqzC+n5n+B5z2BJm23+43KesdYixH3QrB7LPK6PwVd4be1iKOiaT1W5UTJ1w4/t3Y8qqkgujNg==
+X-Received: by 2002:a63:5b52:: with SMTP id l18mr101353184pgm.21.1564344448237;
+        Sun, 28 Jul 2019 13:07:28 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id z4sm92603491pfg.166.2019.07.28.13.07.25
+        by smtp.gmail.com with ESMTPSA id z4sm92603491pfg.166.2019.07.28.13.07.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 Jul 2019 13:07:26 -0700 (PDT)
+        Sun, 28 Jul 2019 13:07:27 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Johannes.Schindelin@gmx.de
-Subject: [PATCH v2 0/5] system header cleanup
-Date:   Sun, 28 Jul 2019 13:07:19 -0700
-Message-Id: <20190728200724.35630-1-carenas@gmail.com>
+Subject: [PATCH v2 1/5] verify-tag: drop signal.h include
+Date:   Sun, 28 Jul 2019 13:07:20 -0700
+Message-Id: <20190728200724.35630-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.22.0
-In-Reply-To: <CAPUEspjp3WkHk376hu5EvvyufGYQCSHKM6cTT3hnQyfNgpnLzg@mail.gmail.com>
+In-Reply-To: <20190728200724.35630-1-carenas@gmail.com>
 References: <CAPUEspjp3WkHk376hu5EvvyufGYQCSHKM6cTT3hnQyfNgpnLzg@mail.gmail.com>
+ <20190728200724.35630-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is a reroll of jk/no-system-includes-in-dot-c with
-cb/xdiff-no-system-includes-in-dot-c applied on top with minor
-fixes for the commit message based on feedback from Johannes
-and the example put forward by Peff with his own patches.
+From: Jeff King <peff@peff.net>
 
-The changes proposed shouldn't affect any systems (except for
-the 3rd one) and that has since shown to also be needed
-in Alpine Linux (because of _XOPEN_SOURCE redefinition).
+There's no reason verify-tag.c needs to include signal.h. It's already
+in git-compat-util.h, which we properly include as the first header.
+And there doesn't seem to be a particular reason for this include; it's
+just an artifact from the file creation in 2ae68fcb78 (Make verify-tag a
+builtin., 2007-07-27).
 
-The last 2 patches are new to the series and just cleanup
-the dependency list in xdiff.
+Likewise verify-commit.c has the same issue, probably because it was
+created using verify-tag as a template in d07b00b7f3 (verify-commit:
+scriptable commit signature verification, 2014-06-23).
 
-Carlo Marcelo Arenas Belón (3):
-  xdiff: drop system includes in xutils.c
-  xdiff: remove duplicate headers from xhistogram.c
-  xdiff: remove duplicate headers from xpatience.c
+These includes are probably just redundant, and not hurting anything by
+circumventing the order that git-compat-util.h tries to impose, since
+we'll always have loaded git-compat-util by the time we get to these. So
+this is just a cleanup, and shouldn't fix or break any platforms.
 
-Jeff King (2):
-  verify-tag: drop signal.h include
-  wt-status.h: drop stdio.h include
-
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
  builtin/verify-commit.c | 1 -
  builtin/verify-tag.c    | 1 -
- wt-status.h             | 1 -
- xdiff/xhistogram.c      | 2 --
- xdiff/xpatience.c       | 2 --
- xdiff/xutils.c          | 4 ----
- 6 files changed, 11 deletions(-)
+ 2 files changed, 2 deletions(-)
 
+diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
+index 7772c07ed7..4e93914e59 100644
+--- a/builtin/verify-commit.c
++++ b/builtin/verify-commit.c
+@@ -12,7 +12,6 @@
+ #include "repository.h"
+ #include "commit.h"
+ #include "run-command.h"
+-#include <signal.h>
+ #include "parse-options.h"
+ #include "gpg-interface.h"
+ 
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index 6fa04b751a..f45136a06b 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -10,7 +10,6 @@
+ #include "builtin.h"
+ #include "tag.h"
+ #include "run-command.h"
+-#include <signal.h>
+ #include "parse-options.h"
+ #include "gpg-interface.h"
+ #include "ref-filter.h"
 -- 
 2.22.0
+
