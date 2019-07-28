@@ -7,111 +7,106 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78A611F462
-	for <e@80x24.org>; Sun, 28 Jul 2019 07:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC12A1F462
+	for <e@80x24.org>; Sun, 28 Jul 2019 14:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725956AbfG1HaF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jul 2019 03:30:05 -0400
-Received: from libra.uberspace.de ([95.143.172.171]:34220 "EHLO
-        libra.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbfG1HaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jul 2019 03:30:05 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Jul 2019 03:30:04 EDT
-Received: (qmail 28685 invoked from network); 28 Jul 2019 07:23:21 -0000
-Received: from localhost (HELO localhost) (127.0.0.1)
-  by libra.uberspace.de with SMTP; 28 Jul 2019 07:23:21 -0000
-Date:   Sun, 28 Jul 2019 09:23:18 +0200
-From:   Matthias Beyer <mail@beyermatthias.de>
-To:     git@vger.kernel.org
-Subject: git maintainer workflow tools?
-Message-ID: <20190728072318.GO1402@hoshi>
-Reply-To: Matthias Beyer <mail@beyermatthias.de>
+        id S1726208AbfG1OUL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jul 2019 10:20:11 -0400
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:47073 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726043AbfG1OUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jul 2019 10:20:11 -0400
+Received: from callcc.thunk.org (96-72-102-169-static.hfc.comcastbusiness.net [96.72.102.169] (may be forged))
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id x6SEJw20011430
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 28 Jul 2019 10:20:00 -0400
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 2503F4202F5; Sun, 28 Jul 2019 10:19:57 -0400 (EDT)
+Date:   Sun, 28 Jul 2019 10:19:57 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     Matthias Beyer <mail@beyermatthias.de>
+Cc:     git@vger.kernel.org
+Subject: Re: git maintainer workflow tools?
+Message-ID: <20190728141957.GD1499@mit.edu>
+References: <20190728072318.GO1402@hoshi>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="hNweOTLwwbnii4NA"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-message-flag: Mails containing HTML will not be read!  Please send only
- plain text.
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <20190728072318.GO1402@hoshi>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jul 28, 2019 at 09:23:18AM +0200, Matthias Beyer wrote:
+> 
+> So what I am looking for is tools to automate contributor and maintainer
+> workflow, especially:
+> 
+> 1) Repliying to each emailpatch of a set of patches with
+>    "Reviewed-by: <user@host>" (or other trailers)
+> 
+>    Szenario: I see a patchset on a mailinglist. I apply this patchset to my
+>    local copy of the repository, review it and test it.
+>    I want to send "Reviewed-by" and "Tested-by" trailers for each patch.
 
---hNweOTLwwbnii4NA
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have the following in my ~/.emacs.el file:
 
-Hello git community,
+(defvar signed-off-by-address "Theodore Ts\'o <tytso@mit.edu>"
+  "Address used by insert-signed-off-by")
 
-I write this email because after several attempts over several months of
-searching the internet for this, I still fail to find a proper documentation
-and/or tools for the workflow. So this is my last resort.
+(defun insert-signed-off-by ()
+  (interactive)
+  (insert (concat "Signed-off-by: " signed-off-by-address "\n")))
 
-So what I am looking for is tools to automate contributor and maintainer
-workflow, especially:
+(defun insert-reviewed-by ()
+  (interactive)
+  (insert (concat "Reviewed-by: " signed-off-by-address "\n")))
 
-1) Repliying to each emailpatch of a set of patches with
-   "Reviewed-by: <user@host>" (or other trailers)
+(global-set-key "\^Cs" 'insert-signed-off-by)
+(global-set-key "\^Cr" 'insert-reviewed-by)
 
-   Szenario: I see a patchset on a mailinglist. I apply this patchset to my
-   local copy of the repository, review it and test it.
-   I want to send "Reviewed-by" and "Tested-by" trailers for each patch.
+If I see an e-mail on the mailing list for me to review, I may or may
+not apply it to my tree depending on how complex it is to review.  But
+then in the e-mail reply, I just type "^C r" to insert the Reviwed-by
+tag in my e-mail response.
 
+Typically my replies will end with something like this:
 
-2) Applying a set of emails as patches, where "Reviewed-by" and other trail=
-ers
-   from the tree of emails are automatically included in the commit message=
- when
-   applying (how do the kernel people do this? By hand? I don't think so, do
-   they?)
+	Once you address the above comments, feel free to add:
 
-   Szenario: I receive a patchset for my project. Contributors have started=
- a
-   discussion on PATCH 1/3, fixup commits/squash commits were sent to the m=
-ail
-   thread. After a bit of discussion, "Reviewed-by"/"Acked-by" trailers were
-   sent.  I want to apply the patches, and include all trailers in the comm=
-it
-   message that were sent for the corrosponding patchmail.
+	Reviewed-by: Theodore Ts'o <tytso@mit.edu>
 
+Or a straight LGTM:
 
-Fwiw, I'm using mutt as an email reader, but of course such tools can or ev=
-en
-should be MUA-agnostic, right?
+	Looks good, feel free to add:
 
-I know about git-interpret-trailers, but I fail to see how to use them to
-automate the process.
+	Reviewed-by: Theodore Ts'o <tytso@mit.edu>
 
-Maybe you know scripts/tools that are ready and available for accomplishing
-these tasks.
+> 
+> 2) Applying a set of emails as patches, where "Reviewed-by" and other trailers
+>    from the tree of emails are automatically included in the commit message when
+>    applying (how do the kernel people do this? By hand? I don't think so, do
+>    they?)
 
+Patchwork will automatically include the Reviwed-by tags from the
+e-mail thread.
 
---=20
-Mit freundlichen Gr=FC=DFen,
-Kind regards,
-Matthias Beyer
+So for example, see this patch:
 
---hNweOTLwwbnii4NA
-Content-Type: application/pgp-signature; name="signature.asc"
+	http://patchwork.ozlabs.org/patch/1064297/
 
------BEGIN PGP SIGNATURE-----
+If you click the series link, you'll get a Unix mbox file with all of
+the patches in the patch series, complete with the tags from the
+replies tagged.  (e.g, where people have replied with "Looks good,
+feel free to add...")  It is suitable for application using "git am -s".
 
-iQIzBAEBCAAdFiEEGg7ZGbdq/6NrnwfOzq8bZH7VayUFAl09TWQACgkQzq8bZH7V
-ayVcVw//UHp1u0ESU8jQ0qS+6rdFeXTs/Sp/+W2TWm3QioPHYmlybMxIYvfRvfIh
-Me9tKZRoud0oFC1q/HcJr0Mw3d2Ol/XOEPcnC40ARiE4RxpN+PKwvRICg9RmEQcC
-ZXubld7ayDwDA4mPrQBplpeBdtJZ6VbPchV537qoS9yEy7BKMe8a8Yao9roKV83C
-+o3zvYTp8fRfh1pAjjwi2cvGbRcNf4/I8xOlBblmo8v37gZsbc1KjaglU3doGISg
-eDt4f8972+2trM5DKS0l3jg3i4cI2Nup5bEtQ6HLP4uinfeheh3OzzBxEXEAmEBB
-gGaPsy5id0BTuZ5sCWHA+adf7nzCArRcwEJujqLIEy4b8FF+c2HXHA8Id4uSAZCn
-z1FxV/jh3t1y+LNxLzphLwfK1Mm9Z9RLwFLKMGrujNFRSmcKeytpaQEJ+GXAKDw0
-GS1zh8i4e/FoOaz+5JToWi8y9JC7WSEQMAvkAJ2lWAWu2HZZExtvKhGfTozWFu2A
-pXfTvrH3dnYyO1zo3hfWwqokkAsEPV3cbxxHNgIyDGYC2UBLm23zdKPztVa2UWXR
-pAZgXPHS4se/dnn26gh7pEAp0NGBK5LBc/1X+gQue9xcbHH+40msiy/d1zDkIAmD
-Kq1wpa6/kvIxsOjvdB3TFJ80SOcRtv9vpHQtOUpjilO1vTY8ZFM=
-=Xq4h
------END PGP SIGNATURE-----
+There are other tools and scripts people might use, but this is one
+such workflow.
 
---hNweOTLwwbnii4NA--
+Hope this helps,
+
+					- Ted
