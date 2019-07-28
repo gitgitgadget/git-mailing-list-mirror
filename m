@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0014B1F462
-	for <e@80x24.org>; Sun, 28 Jul 2019 01:41:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79EB1F462
+	for <e@80x24.org>; Sun, 28 Jul 2019 02:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729094AbfG1BlU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jul 2019 21:41:20 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46647 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbfG1BlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jul 2019 21:41:19 -0400
-Received: by mail-io1-f68.google.com with SMTP id i10so112546914iol.13
-        for <git@vger.kernel.org>; Sat, 27 Jul 2019 18:41:19 -0700 (PDT)
+        id S1725818AbfG1CuT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jul 2019 22:50:19 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:44074 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbfG1CuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jul 2019 22:50:19 -0400
+Received: by mail-io1-f67.google.com with SMTP id s7so112622432iob.11
+        for <git@vger.kernel.org>; Sat, 27 Jul 2019 19:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=SiX4+IufY1bba2ICGKXHbNeSLyyIRSy+wc+9Lt0kQ1U=;
-        b=OP30i+7YZCUr0gIO1MDBMnTxqfIeEOaRF8qGHWExd+mkqaTttMZp+erEVKmy9ux8Ff
-         a1Z/RoPwh+bQP/UF4O9DJc9qTQJX/uCd9e1Jyq7zdiXjIyImQyMlk0BBrgTTx87//mlQ
-         fo5rC8LWETT9XCqUI2NvMWx+iBIiuf/f8Xf245Ex77dmiaNe1Yr+rupRhEVXiR3RdGfr
-         99iOk3ARrQMw6rWEqcDue0/DMfO6A9LsEuPo+c46JyEG+EphTZ1d1yEdM8wo6OpmiOMm
-         cXOksm0th98g0nSB221DwRh7ADAcsIXT+E9zcKQNbc3sb74Ongw5g6YmSkzZkB8YhoBd
-         Px1g==
+        bh=aa+7fKK5J6y9mFyfjqdJqdFh1kgfGTKIIuO0d39f/5U=;
+        b=ip9V8ZCEPMzIlh52zsLeOdB/Ga63ZoH9n2BCt99sNMBT9ljvIiR2KcEP4wmIbj9bMl
+         TOlItMkq11a0hYWfCki0nlcOz/Gt943RDcxXtFrfa4JYqH+NzYBhBT9IyrflT2Jcc32f
+         4uPwR0krUcnYUShRfJNEQLMAAM1cNUTMIrQddtceBWJG/s8Uzu/uVE1aMAmL/WLiK/mv
+         1vMy0FyZOOKifDgUJzBQtuIduiV8lOBIDj4QEQVVP+rIN1W5JAKAMv9L2lnn4IFKvAae
+         GNr+erJymVddQ4fsomsVYH1bBq1zpQ1wJQMnIJvhfDb+MuEUFfMb+QWpUWhVHQVDxnDc
+         JaaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SiX4+IufY1bba2ICGKXHbNeSLyyIRSy+wc+9Lt0kQ1U=;
-        b=UT+v5G/IWGBDgAFMJFr0Mcug7+O/af07jIhNGYW5ubu1cyrInHS1hD/nRd+4oDJT3W
-         N22bnjNdCPuIq6gCx0+VEVBORmhFydhibtx4yZC6k6ZwSbmEvzP6vAH4AAmldDJCOOcL
-         DwabiErrCqkRUqU8ibfCOPQ0fMqMMvErvoZ3igpHNoaQ8yyE+8hjn7V0BTIILxeoJB2v
-         LOdes3+eKhO4F5z5Kxmk+bRtDoKbhB1zQSvWIwtEKHOOo3YGVqhjSKJiaFqy29hIG7co
-         oftR2FbQeGOGILsFCbzZGpjJbdybIKCqHcit8hOK6qD4lbSAjt2ha78wWHDnChJFy4US
-         nR6w==
-X-Gm-Message-State: APjAAAXogDW2N1iYYcmzHW33G9huy0pWzhT3InN6QduigDlPk0zvgS2/
-        37+xUD/8802NIBECniRzCtfIlaHpY09wIlNKvaM=
-X-Google-Smtp-Source: APXvYqwFcOQMZvlOzncWRkAyCPEwsdpnQUEvDYxdoMch10xn+lFC3f2OwFKTFnsNefKCgyNyOQOXNQq0TjCWJssAbYY=
-X-Received: by 2002:a02:bb05:: with SMTP id y5mr101777977jan.93.1564278078919;
- Sat, 27 Jul 2019 18:41:18 -0700 (PDT)
+        bh=aa+7fKK5J6y9mFyfjqdJqdFh1kgfGTKIIuO0d39f/5U=;
+        b=QKYLUvayQIsYjirJvEIsrFAML2tHUL1I377sbnGjcPaKqdJR/i5TR/SdmQHWhyyRnh
+         FChjT7nWmqATBQj86NOuYQ5hk4QwC5hXmjiW0RbBY63qu96jV+m7ndyp0YoQvYusEcZE
+         lzFYwGUDO9sOYfJaL0gJZdNVpSnGgb4E9lT0CEDvwtTPv9eQXgr17fr2ICy928yj16U+
+         yGg4rcx0pktZWl+66ODWTpfUEl0Vp21x81z6GmDrZ5OQg8eA4EnbehYhIgTaE/HDAaLQ
+         MIsN1UNRcQBIgS7UgeiDvWSaOzrnlhJrrPm5iunEKWNRcH/W/Y1ZmhNmgqTFS8efKNSq
+         Wzvw==
+X-Gm-Message-State: APjAAAUW41eisENeRiI9Ba9+XFuTOUEIkGZ/HALFfIqRZQP//CeoLte8
+        ifje15bei+8ZiHQF84YfnWuH6+jgsjV45dFzkFA=
+X-Google-Smtp-Source: APXvYqz/JjgBP0SpQ7vxZF3EzD8VSG2nag+aXQxY1P2/BxkND7ifa5MYcYccHvtzetQfB2NGL0ltYqZ0dGeEctynmWI=
+X-Received: by 2002:a5d:890d:: with SMTP id b13mr44722039ion.124.1564282218390;
+ Sat, 27 Jul 2019 19:50:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190727202759.22310-1-carenas@gmail.com> <20190727202759.22310-4-carenas@gmail.com>
- <874l376nud.fsf@evledraar.gmail.com>
-In-Reply-To: <874l376nud.fsf@evledraar.gmail.com>
+References: <20190727202759.22310-1-carenas@gmail.com> <20190727202759.22310-2-carenas@gmail.com>
+ <875znn6nvt.fsf@evledraar.gmail.com>
+In-Reply-To: <875znn6nvt.fsf@evledraar.gmail.com>
 From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 27 Jul 2019 18:41:08 -0700
-Message-ID: <CAPUEspgowrhj56SzW8cPKjZL28nPTkX-RScKrSAai8i0YkwFaA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] grep: plug leak of pcre chartables in PCRE2
+Date:   Sat, 27 Jul 2019 19:50:07 -0700
+Message-ID: <CAPUEspg255TAE-1ozc8CuC=k9oeP_WLD4TrFur5p=XY3s8PX3Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] grep: make pcre1_tables version agnostic
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -63,24 +63,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 27, 2019 at 4:48 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Sat, Jul 27, 2019 at 4:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> > +     free((void *)p->pcre_tables);
 >
-> Is the cast really needed? I'm rusty on the rules, removing it from the
-> pcre_free() you might have copied this from produces a warning for me,
-> but not for free() itself. This is on GCC 8.3.0. How about for you &
-> what compiler(s)?
+> On Sat, Jul 27 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>
+> > 6d4b5747f0 ("grep: change internal *pcre* variable & function names
+> > to be *pcre1*", 2017-05-25), renamed most variables to be PCRE1
+> > specific to give space to similarly named variables for PCRE2, but
+> > in this case the change wasn't needed as the types were compatible
+> > enough (const unsigned char* vs const uint8_t*) to be shared.
 
-both will trigger warnings for the same reason
-(-Wincompatible-pointer-types-discards-qualifiers)
-with Apple LLVM version 10.0.1 (clang-1001.0.46.4)
+reading this again, had to admit there is a fair amount of guessing on
+intent, but reading commits and the email discussion couldn't come
+up with a better explanation.
 
-gcc-9 in macOS triggers 2 "warnings"; one for discarding the const
-qualifier (-Wdiscarded-qualifiers)
-and another for mismatching parameter to free():
+is the root cause for the bug different?, could it be that the pcre2 API
+was misunderstood? and you expected this pointer will be free together
+with the context? (as it is done when a cloned context with tables is
+used?)
 
-note: expected 'void *' but argument is of type 'const uint8_t *' {aka
-'const unsigned char *'}
+> Both the v1 and v2 functions return const unsigned char *. I don't know
+> where I got the uint8_t from. This makes more sense.
+
+the type in PCRE2 is uint8_t, the documentation has a bug[1]
+almost every platform git cares for would have unsigned char =3D uint8_t
+though.
+
+> The point of 6d4b5747f0 was not to only split out those variables we
+> couldn't get away with re-using. Then I would have later re-used
+> e.g. pcre1_jit_on & pcre2_jit_on as just pcre_jit_on. We could also do
+> that now.
+
+IMHO pcre_jit_on makes more sense as a bit, with local variables being
+used for the pcre*_config() call with the right type.(uint32_t !=3D int)
+
+> I think doing that & this part of the your changes makes things less
+> readable. The two code branches we compile with ifdefs are mutually
+> exclusive, so having the variables be unique helps with eyeballing /
+> reasoning when changing the code.
+
+I thought that too until the typo[2] in the pcre?_jit_on variable (now
+in next) kind of
+proved us wrong.  Maybe the names are too similar?
+
+either way, would you rather drop this patch and make a replica variable?
+should I rebase to next with Reviewed-By tags so that all other changes
+in flight that would conflict could be corrected?
 
 Carlo
+
+[1] https://bugs.exim.org/show_bug.cgi?id=3D2420
+[2] https://public-inbox.org/git/20190722181923.21572-1-dev+git@drbeat.li/
