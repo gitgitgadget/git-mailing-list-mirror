@@ -8,53 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1C8C1F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 00:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 688371F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 00:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbfG2AJ2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jul 2019 20:09:28 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45817 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726554AbfG2AJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jul 2019 20:09:28 -0400
-Received: by mail-io1-f68.google.com with SMTP id g20so116237736ioc.12
-        for <git@vger.kernel.org>; Sun, 28 Jul 2019 17:09:27 -0700 (PDT)
+        id S1726440AbfG2Ad7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jul 2019 20:33:59 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:38893 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726216AbfG2Ad7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jul 2019 20:33:59 -0400
+Received: by mail-io1-f65.google.com with SMTP id j6so41167514ioa.5
+        for <git@vger.kernel.org>; Sun, 28 Jul 2019 17:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=lIVk+cSUVbRM6EJ8BKEC9FdMv88tRJqP4WNaSXgKwEI=;
-        b=BTDTUiL4HLNrTiTSzKSWWzmXrgXSpF7sa7kAXg99MHJy4EkJXEfzVnZ+5PZA3KnQfc
-         wd00Psh+8SprWUC/39eMSf98MW9djan1c0xf31oGTJvIIjBNwfRzGV4FL5+WEOcO8I/b
-         iYfso+FE5NgfykoKU2UNljNO+9pjzDieM+FS3pDZ6qxiycAYxFUAiNtd0YsamMX7tRIO
-         fdk+itjrrRBBKzfl1DPj3iogfzaMPjGr29DKoDPN4wYSGWtnMt8F0WWxisPiPS2zrXEg
-         V+KDE2aKXg9u+xZCFFRAq4dVioBTkjJg1lSEvHmrioag2LVxNNmsjhtCCllmA0B54tBM
-         t4iw==
+        bh=sDxo7XDGZuedZucXlxkxbkAYvphjhsgLID6yc/qBkLE=;
+        b=Y1ZXAZj1wthUILB98NJlU5V4QvAZs+1zzlQa5rwxD8o6K/KGmNWXMSm7usPMdwSPia
+         EPQ516iHW2e1WrpJekpEsY/HHlBX649j2GpTDiN/22mjPUTsZef5EQXHX7Oq4aLDnWav
+         I2pgjvVHT23Sun7OUOU3H+07FWQEkApQ84kBGSFtrT59Zr/W45vIZJCxj3lOq6GsRx9p
+         J7fd7U+ZnM8P7pSbFaIWoX/Dp4NNTtPYG7YlgXF7YCok4aa4PZdQDv0obsss7PL7N2Ba
+         34bV8oTOEQrqIZjvCmGkap5c3Ots1Kw47RAjyDaj/OpvtjZyOzb3a7dd0QUAy/Lq9NF8
+         mDqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lIVk+cSUVbRM6EJ8BKEC9FdMv88tRJqP4WNaSXgKwEI=;
-        b=WiJMVGS347LpJmoXcEXLLiNJUV1kJ58Wx+3dc33Tpf6Jsa3BK70zdvIlOaSe0ZkCKv
-         kN6uQGQmdyPVeMKP8V749NJC9CgSfnhTfMFmrLus9eJ5qWdeBgu+hk5sIbr08ACtZ5HR
-         Sw12w9Qh2aRLwVXNr840MMwpjymdsEnnIDDhzuKMLUNzVF7AwthCUpyYqHpkIPaeP1dM
-         tl+V9SfvilsUyb3xpMEskJ/yCWXYlfWUkqg7jdqiITrjrwONjGk0InBHm8257h1TyALr
-         13xhRZPKw1p89KhKznh1A5qe6r6r1qQA4+TFtcJrKUPM3fbFSJP2tYVzOgNazF4hB4Bv
-         LXDg==
-X-Gm-Message-State: APjAAAUYg+4kB2x/gqb5hjsx4KlU4fm6Ng+IzPqgkC0/K8gNlyXUjLTV
-        tM8MUrUZ8gCOszhUIxEEXkixPCD+5Ihy/rLSBvvhady/
-X-Google-Smtp-Source: APXvYqxloqQqqbhrtlG2EilEOnfKVQ+TNB5RqqC35yd+trK6a3sv3bRl6MKPb+LQxlQqvdQ7y7Kp4nPNz/OADl7xc2U=
-X-Received: by 2002:a05:6602:2413:: with SMTP id s19mr53819790ioa.161.1564358967180;
- Sun, 28 Jul 2019 17:09:27 -0700 (PDT)
+        bh=sDxo7XDGZuedZucXlxkxbkAYvphjhsgLID6yc/qBkLE=;
+        b=US2zHQd+K78r2wY6X4L9jglPeIIWFE8g3DSDvBIX8TITuIMCmTRPmy29Fqcx6QlmUI
+         /qO++Rk/4g74rBoa9ULb6aQRifekclzLnFxEFhxF2+ckqsZY80jpjCdi/B8RRDJeQ7H+
+         ECfQ43zMZtNFJakuSxDbrdXph1Hv+EWTvYf7kpGei4p5VvNKR8AUUcL51T+8Fnu8A9kg
+         8y4r+rDoWKCIQ4edHrU8ccNsEwKxQX6kDC78rW02k2AettMOp5+iYDydKodag6FUUMCs
+         RrUkPd+HttSrwetmL5yspCJoolf9E0qucCnegJp/1szOnCvUFIEyDx8sI2sa8Odq23Et
+         as1Q==
+X-Gm-Message-State: APjAAAWhVls08EDDNrO5B98why5gxuBYsmpiOHf+q6YlW9xux9oGI8CC
+        9rnr7QEd1BpTOwGbzOcQ4Ent+yrJpI8olkOX3aY=
+X-Google-Smtp-Source: APXvYqwO7wscEvrCMLkBLtd/15KFrhBKyQ/th8OvE3GvbbMUTP0ugg+ZrH5b1sC+mppPKyREVlYlAfZJqYfEC8aYoaY=
+X-Received: by 2002:a6b:c38b:: with SMTP id t133mr34510023iof.162.1564360438223;
+ Sun, 28 Jul 2019 17:33:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190728235427.41425-1-carenas@gmail.com>
-In-Reply-To: <20190728235427.41425-1-carenas@gmail.com>
+References: <20190724151415.3698-1-avarab@gmail.com> <20190726150818.6373-3-avarab@gmail.com>
+In-Reply-To: <20190726150818.6373-3-avarab@gmail.com>
 From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sun, 28 Jul 2019 17:09:16 -0700
-Message-ID: <CAPUEsphhsbdeutJ8=XrBx-y0shf+64O9o55AeQBhnXYso_1PyQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] grep: allow for run time disabling of JIT in PCRE
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, sandals@crustytoothpaste.net
+Date:   Sun, 28 Jul 2019 17:33:47 -0700
+Message-ID: <CAPUEspgUiicBPKPZPyDFryj3OmtyOWVgrytqpzMq-PZNv1f1Mg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/8] grep: stop "using" a custom JIT stack with PCRE v2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,33 +64,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 28, 2019 at 4:54 PM Carlo Marcelo Arenas Bel=C3=B3n
-<carenas@gmail.com> wrote:
-> @@ -125,6 +126,12 @@ int grep_config(const char *var, const char *value, =
-void *cb)
->                 return 0;
->         }
+On Fri, Jul 26, 2019 at 8:08 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> +       if (!strcmp(var, "pcre.jit")) {
-> +               int is_bool;
-> +               opt->pcre_jit =3D git_config_bool_or_int(var, value, &is_=
-bool);
-> +               return 0;
-> +       }
-> +
->         if (!strcmp(var, "color.grep"))
->                 opt->color =3D git_config_colorbool(var, value);
->         if (!strcmp(var, "color.grep.match")) {
+> As noted in [3] there are known regexes that will fail with the lower
+> stack limit, the way GNU grep fixed it is interesting, although I
+> believe the implementation is overly verbose, they could make PCRE v2
+> handle that gradual re-allocation, that's what min/max memory is
+> for.
 
-using git_config_bool_or_int, as I am hoping a future version will use
-a third value (maybe -1) to
-indicate JIT will be tried first, but then the interpreter will be
-used in case JIT is not available (as
-recommended in PCRE)
+The part I liked about the grep implementation was how they went above
+and beyond to make sure there was no abstraction leak and at the end
+the end user doesn't even see a PCRE error message.
 
-not sure also about the right name and where to document this flag, as
-this is not only restricted to
-the grep subcommand and the issue it is working around will be also
-relevant for log (including pickaxe)
+Presume thought that the end user we have is different, and might make
+sense to expose them to the underlying mechanism, but in that case we
+should also provide them with knobs to tweak (like the one I proposed
+to disable jit, and that in this case might be to set a stacksize)
+
+> So we might end up bringing this back, I'm more inclined to just kick
+> such cases upstairs to PCRE maintainers as a bug, perhaps they'll add
+> some overall "just allocate more then" flag to make this easier. In
+> any case there's no functional change here, we didn't have a custom
+> stack, so let's apply this first, we can always revert it later.
+
+agree, LGTM other than by the comment below
+
+> diff --git a/grep.c b/grep.c
+> index 95af88cb74..4b1e917ac5 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -534,14 +534,6 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>                         p->pcre2_jit_on =3D 0;
+>                         return;
+
+this return and brackets no longer needed
 
 Carlo
