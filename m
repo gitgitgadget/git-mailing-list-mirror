@@ -7,83 +7,63 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E22371F97E
-	for <e@80x24.org>; Mon, 29 Jul 2019 10:07:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75F381F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 10:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbfG2KHr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 06:07:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53896 "HELO cloud.peff.net"
+        id S1728103AbfG2KK4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 06:10:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53908 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726358AbfG2KHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 06:07:46 -0400
-Received: (qmail 21682 invoked by uid 109); 29 Jul 2019 10:07:46 -0000
+        id S1726358AbfG2KK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 06:10:56 -0400
+Received: (qmail 21727 invoked by uid 109); 29 Jul 2019 10:10:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 10:07:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 10:10:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26984 invoked by uid 111); 29 Jul 2019 10:09:21 -0000
+Received: (qmail 27004 invoked by uid 111); 29 Jul 2019 10:12:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 06:09:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 06:12:30 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 29 Jul 2019 06:07:45 -0400
+Date:   Mon, 29 Jul 2019 06:10:55 -0400
 From:   Jeff King <peff@peff.net>
-To:     Gregory Szorc <gregory.szorc@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
-Subject: Re: Warnings in gc.log can prevent gc --auto from running
-Message-ID: <20190729100745.GA2755@sigill.intra.peff.net>
-References: <qhdnuh$5m5r$1@blaine.gmane.org>
+To:     Gary Poli <GPoli@innout.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: 2.22 issue across samba
+Message-ID: <20190729101054.GB2755@sigill.intra.peff.net>
+References: <6e717834410e46d7b194785323dc4cbb@innout.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <qhdnuh$5m5r$1@blaine.gmane.org>
+In-Reply-To: <6e717834410e46d7b194785323dc4cbb@innout.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 25, 2019 at 07:18:57PM -0700, Gregory Szorc wrote:
+On Fri, Jul 26, 2019 at 08:15:49PM +0000, Gary Poli wrote:
 
-> I think I've found some undesirable behavior with regards to the
-> behavior of `git gc --auto`. The tl;dr is that a warning message written
-> to gc.log can result in `git gc --auto` effectively disabling itself for
-> gc.logExpiry. The problem is easier to trigger in 2.22 as a result of
-> enabling bitmap indices for bare repositories by default and the
-> behavior can easily result in performance degradation, especially on
-> servers.
+> I'm running git for windows installed locally. Windows 10 Pro version
+> 1903 OS Build 18362.239. I have a repository on a UNIX machine running
+> AIX 7.1 TL4 SP2. I use SAMBA 3.0.23d to mount the drive for use. I
+> upgraded to git 2.22 and am having issues. Even starting from a fresh
+> clone of the repo, the head immediately detaches. After a few commands
+> like status or branch it stops recognizing the repo altogether. I
+> suspect it is having trouble reading or writing to itself; perhaps the
+> index is getting corrupted. I reverted to git 2.14 and I'm working
+> fine again. I've got my system admin looking into updating both AIX
+> and SAMBA, but I thought I would report the issue here as well. Let me
+> know if you need anything else from me. Thanks.
 
-Yuck, thanks for reporting this.
+I don't have any particular thoughts on what might be the cause here.
+But if:
 
-As you note, this is a special case of a much larger problem. The other
-common case is the "oops, you still have a lot of loose objects after
-repacking" warning. There's more discussion and some patches here:
+  - you can reliably produce the problem on git 2.22 but not on git 2.14
 
-  https://public-inbox.org/git/20180716172717.237373-1-jonathantanmy@google.com/
+and
 
-though I don't think any of the work that came out of that fundamentally
-solves the issue.
+  - you are able to build Git from source
 
-> I don't prescribe to know the best way to solve this problem. I just
-> know it is a footgun sitting in the default Git configuration. And the
-> footgun became a lot easier to fire with the introduction of warning
-> messages related to bitmap indices and again when bitmap indices were
-> enabled by default for bare repositories in Git 2.22.
-
-IMHO one way to mitigate this is to simply warn less. In particular, if
-we are auto-enabling bitmaps, then it doesn't necessarily make sense for
-us to warn about them being disabled.
-
-In the case of .keep files, we've already got 7328482253 (repack:
-disable bitmaps-by-default if .keep files exist, 2019-06-29), which
-should be in the next released version of Git. But I suspect that's
-racy with respect to somebody creating .keep files, and as you note
-there are other config options that might prevent us from generating
-bitmaps.
-
-Instead, it may make sense to turn the --write-bitmap-index option of
-pack-objects into a tri-state: true/false/auto. Then pack-objects would
-know that we are in best-effort mode, and would avoid warning in that
-case. That would also let git-repack express its intentions better to
-git-pack-objects, so we could replace 7328482253, and keep more of the
-logic in pack-objects, which is ultimately what has to make the decision
-about whether it can generate bitmaps.
+then it would be useful to use git-bisect between those versions to find the
+commit introducing the problem.
 
 -Peff
