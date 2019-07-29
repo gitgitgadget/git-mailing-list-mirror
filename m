@@ -2,70 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BDA01F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 18:58:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EA9B1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 19:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727898AbfG2S6G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 14:58:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50951 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727514AbfG2S6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 14:58:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7989F15BDB0;
-        Mon, 29 Jul 2019 14:58:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KsdLExe3TnhelxXE345LVclHFu0=; b=fIgIyl
-        20Xre9fElLu0qCvtdPhbLKpSekzUt2binXJYNEZwYe0jXid1q9XiOjVbS15RK1+d
-        pCOLLXoGIH4Ho5jqS25IH/bHjoCZA28hc/Fb8Q2M4elkhplZp0UNGFwtuhxBSGGg
-        JwYn54kA8ao223NdxENZTwBL+KWcXztPEg+iU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EYeSC85Wr5s3d12Sg3J2CiA9CemVN4ox
-        7DKaNaNEw9kULP0fdtg0k14HWGVkYD1DNRRITnW48YRaaEDu+pdpohwBGYECjbsG
-        RpKGYr24il96KeeeMsVfT8kJibcq4VEQhuMutwlcUKgcPSkrij+soMz1obDZTzAE
-        Qz8oWid0XUI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7200715BDAF;
-        Mon, 29 Jul 2019 14:58:04 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D967315BDAB;
-        Mon, 29 Jul 2019 14:58:03 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ralph Maalouf <ralph.maalouf@caretrx.com>
-Cc:     "'git\@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: 'git show -c' omits hunk even though file was modified from all parents
-References: <MN2PR13MB2607878CB0C1E351B83F006BEADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
-Date:   Mon, 29 Jul 2019 11:58:02 -0700
-In-Reply-To: <MN2PR13MB2607878CB0C1E351B83F006BEADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
-        (Ralph Maalouf's message of "Mon, 29 Jul 2019 18:20:44 +0000")
-Message-ID: <xmqqd0hsvfb9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729361AbfG2TUm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 15:20:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54448 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729331AbfG2TUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 15:20:42 -0400
+Received: (qmail 27525 invoked by uid 109); 29 Jul 2019 19:20:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 19:20:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31969 invoked by uid 111); 29 Jul 2019 19:22:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 15:22:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 29 Jul 2019 15:20:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christopher Head <bugs@chead.ca>, git@vger.kernel.org
+Subject: Re: Push force-with-lease with multi-URL remote
+Message-ID: <20190729192040.GD14943@sigill.intra.peff.net>
+References: <20190727095440.1aac3b3c@amdahl.home.chead.ca>
+ <20190729102009.GC2755@sigill.intra.peff.net>
+ <xmqq7e81vuc3.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB384172-B232-11E9-AEFC-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7e81vuc3.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So in short, one side has 1/2/3//7/10/9 in fileA and the other side
-has 1/4/3//7/10/9, and the result of the merge is recorded as
-1/2/3//7/10/9.
+On Mon, Jul 29, 2019 at 06:33:32AM -0700, Junio C Hamano wrote:
 
-> I realize that this is because fileA in the merge commit's tree is
-> identical to what it was in branchA prior to the merge (so the
-> output of 'git show -m' only outputs the diff for one parent). But
-> I'm wondering if this is the intended behavior.
+> Jeff King <peff@peff.net> writes:
+> 
+> > My general feeling is that having multiple push URLs for a remote is a
+> > poorly designed feature in Git (and I think the discussion elsewhere in
+> > this thread went there, as well).
+> 
+> That's being generous.  I do not think it was even designed---at
+> least, the interaction with remote-tracking is ill thought out,
+> but I think the updating of remote-tracking by pretending to have
+> turned around and fetched immediately after it has done its thing
+> came much later than multiple URLs for push.  A remote with multiple
+> URLs without any remote-tracking (i.e. "push only remote") behaves
+> semi-sensibly.
 
-Yes, that is very much intended.  We do not show hunks that match
-one of the parents, and if there is no hunk to show, the path itself
-is not shown.
+Yeah, the auto-update of the tracking refs came later (so I think you
+could argue the bad interaction is my fault!).
+
+> > But since we do have it, and if we are not going to deprecate it[1], it
+> > seems like this case should pick the X value of myremote/mybranch ahead
+> > of time, and then use it consistently for each push.
+> 
+> I agree but only if the listed ones are separate ones.  If the URLs
+> are separate paths to reach the same remote (e.g. https:// and ssh://
+> going to the same place), the current definition would make more sense.
+
+Hmm, true. I'd almost argue that --force-with-lease, at least in its
+default mode with no explicit lease source specified, should allow an
+update from X to Y to be a successful noop if the remote "somehow"
+already moved to Y.
+
+This multi-URL push is one such "somehow", but I could imagine a case
+where two other independent processes are racing. And we do not care at
+all how we get to "Y", only that we get there.
+
+But I haven't thought it through carefully, and I wonder if some users
+would be unhappy not to find out that somebody had moved to "Y" already.
+
+-Peff
