@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 355FF1F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id C594F1F462
 	for <e@80x24.org>; Mon, 29 Jul 2019 20:08:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730205AbfG2UII (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 16:08:08 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:46976 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730176AbfG2UIF (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730216AbfG2UIJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 16:08:09 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:56194 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730177AbfG2UIF (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Jul 2019 16:08:05 -0400
-Received: by mail-wr1-f41.google.com with SMTP id z1so63182698wru.13
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:08:03 -0700 (PDT)
+Received: by mail-wm1-f67.google.com with SMTP id a15so54980219wmj.5
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bSwfkqEvi1VIklZAWl7sQi5JjPiQoxI4fZFH4WoHeuY=;
-        b=u/L5dhwpj5JrClO4fex+132E1lExSyhwh08gQ9Vb50z/7RGI1R1prdU5LG3KVcINGS
-         mOpnunP0uvUvJXEOZ+5mn9RWajNRsgY+MY7zRUtxRqk2zBwLs3PlhUJTKoF2oza0p43A
-         +Oy+5PR6omw9xkgbiFaAEcT2Vwpy9uhxNDnf/vSx139IM18XnYgzhROsGZc7lZ0wmyo4
-         ecztkFmS+KNMUzeeZuNEaIQMlUVDsXxbel9dDMi6L/45P/hpNu1zUZ6r2uaRoSoYfbXU
-         k5YN+LL4bA7X/aYUcLtiUPpqGEz5nOcQNIZcKQs6HCI+Wf03YjYGX2Q75GMdYGwoiRCo
-         /dTw==
+        bh=WbI3jo5hS0woR7wltjg1GZrZ7cNQ7AjPnEAyvlrHHUY=;
+        b=mkdRdxko7qrX6+LhbqxkbEACtRpOaqk4eqgzOsrxHYmoexE2tDOKgGS3HuqT70TKtz
+         EKapp3WrPte6QcsKNX8xqRKcQUA/f+x3nSz7eGhDCGWcu4qY4+pbJ90b9kpWciEjwce5
+         oujYKowOzJD/4ea8anWHt7QKZz/g/h+ED1qhxIpdPQtAP7MZVqczQB0jQF4pHAICK989
+         QyBwMxQRmKvVrD1sMb7JHksXdxSp90J71tXa4RL246N1kdd1ATvmun5H1xK98MIxzZIm
+         ppjKgRKgDJkTGctyW1xpzPzjnQtxIGz6pP+pejytSmCVThTZEN5Lga0f1B9owCYX/qor
+         se7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bSwfkqEvi1VIklZAWl7sQi5JjPiQoxI4fZFH4WoHeuY=;
-        b=YzB5eq/fehelkhRr2ZDiqHTaQkdqOCQnby3OCqpGJZ2IgxjMC5w9KU5mQvQuotX14w
-         FLdNsy2EXrM6vh5hk/VxZqn/IZ+23fSIdzaZEubMyWHbFIRAmfE0zLpa9vE1AERpPXVU
-         cc3ASYpi774Pc5pvJuI3PnU4msm0vtwsd3/i2QFH/sgnvqPy1o3S3ZM+Zn38Uu4V3vRw
-         g/PzYL6eOVi7BjxN6XgHi/YJ6HfiwPJjPvvnBXLh6REjR/6d7phztJ48OzYJ2btxpnnk
-         uL3R3N6vsig96FkpYS1B0IazArR2rjg8Fjovs37scL75RYRzb6qqjfX/IfNmq6cRx/uU
-         WxWw==
-X-Gm-Message-State: APjAAAVo3Y9WuBqTu9PL9cTArNx/0npPwsagIpmOjrzNU4QLM1HIOKbt
-        jgKyUom+7b3Plz55XU5vj8VTfeOf
-X-Google-Smtp-Source: APXvYqwUFq5F89IZtjBAW0QmbFL7AOBBgJ+/L+a2f75jZ+qsolj5sMYAU5WbX6Zv3NtBS6wiF8s6Cw==
-X-Received: by 2002:a5d:518d:: with SMTP id k13mr27286904wrv.40.1564430882929;
-        Mon, 29 Jul 2019 13:08:02 -0700 (PDT)
+        bh=WbI3jo5hS0woR7wltjg1GZrZ7cNQ7AjPnEAyvlrHHUY=;
+        b=E3Ar6NGcrUeanqIvkdLvHpOMR+TMm6wRmx8eFA3OpyjPf4ptDUcFzJ5hg8+0XhHX4N
+         rDFs2JZMuXW0NOsjq/q2zEbfavsh6LZ0DSXtToIEPVxvZZrxmw8HAwGjZ8+Os5uxGZjP
+         /0MDxc2FPmyyOEPCcsnrszFud5/TipgyOS1Oqvx1jv/DdlBGMG7JWM0drjP1kgHumAtf
+         4sXiVuQW3f49BDQ2T9WgA82QfEA5vCg+GfdXvsf/m00BnHOf68J6I7S1SwhWXkrKC9WA
+         OGfu41f3Dim1ChvwLm7yoktUXy/awlxG2eMm/ihApFXAK9Yt4xKc6791aUKCrbBxFX16
+         SCiA==
+X-Gm-Message-State: APjAAAUnAOn4I1HjQ/stcDAArboGwpeqnJjKziG0b1/QfRHxA8Q7R0af
+        f4T6QkGlSqVIy581/TrLoq0xyLtZ
+X-Google-Smtp-Source: APXvYqzvuT3+IACm13j4Xvnkf+UqzdNqh69/C51iuxLftf4JuayedaybS55ai8BcVNCHbU/ANoLJ1g==
+X-Received: by 2002:a1c:b146:: with SMTP id a67mr98532482wmf.124.1564430883674;
+        Mon, 29 Jul 2019 13:08:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o7sm33164274wru.58.2019.07.29.13.08.02
+        by smtp.gmail.com with ESMTPSA id u1sm57570787wml.14.2019.07.29.13.08.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jul 2019 13:08:02 -0700 (PDT)
-Date:   Mon, 29 Jul 2019 13:08:02 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Jul 2019 20:07:39 GMT
-Message-Id: <d42fd0fe2e8433b14b8efe4e788cc55e53c5c06d.1564430879.git.gitgitgadget@gmail.com>
+        Mon, 29 Jul 2019 13:08:03 -0700 (PDT)
+Date:   Mon, 29 Jul 2019 13:08:03 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Jul 2019 20:07:40 GMT
+Message-Id: <f4d41c65e92b2aab43986c2f3763f33e82f3120c.1564430879.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.v2.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
         <pull.287.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 03/23] Vcproj.pm: do not configure
- VCWebServiceProxyGeneratorTool
+Subject: [PATCH v2 04/23] Vcproj.pm: urlencode '<' and '>' when generating VC
+ projects
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,57 +73,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It is not necessary, and Visual Studio 2015 no longer supports it, anyway.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/Generators/Vcproj.pm | 12 ------------
- 1 file changed, 12 deletions(-)
+ contrib/buildsystems/Generators/Vcproj.pm | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
-index d862cae503..b17800184c 100644
+index b17800184c..737647e76a 100644
 --- a/contrib/buildsystems/Generators/Vcproj.pm
 +++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -115,9 +115,6 @@ sub createLibProject {
- 			<Tool
- 				Name="VCXMLDataGeneratorTool"
- 			/>
--			<Tool
--				Name="VCWebServiceProxyGeneratorTool"
--			/>
- 			<Tool
- 				Name="VCMIDLTool"
- 			/>
-@@ -181,9 +178,6 @@ sub createLibProject {
- 			<Tool
- 				Name="VCXMLDataGeneratorTool"
- 			/>
--			<Tool
--				Name="VCWebServiceProxyGeneratorTool"
--			/>
- 			<Tool
- 				Name="VCMIDLTool"
- 			/>
-@@ -339,9 +333,6 @@ sub createAppProject {
- 			<Tool
- 				Name="VCXMLDataGeneratorTool"
- 			/>
--			<Tool
--				Name="VCWebServiceProxyGeneratorTool"
--			/>
- 			<Tool
- 				Name="VCMIDLTool"
- 			/>
-@@ -410,9 +401,6 @@ sub createAppProject {
- 			<Tool
- 				Name="VCXMLDataGeneratorTool"
- 			/>
--			<Tool
--				Name="VCWebServiceProxyGeneratorTool"
--			/>
- 			<Tool
- 				Name="VCMIDLTool"
- 			/>
+@@ -59,6 +59,8 @@ sub createLibProject {
+     my $includes= join(";", sort(map("&quot;$rel_dir\\$_&quot;", @{$$build_structure{"LIBS_${libname}_INCLUDES"}})));
+     my $cflags  = join(" ", sort(@{$$build_structure{"LIBS_${libname}_CFLAGS"}}));
+     $cflags =~ s/\"/&quot;/g;
++    $cflags =~ s/</&lt;/g;
++    $cflags =~ s/>/&gt;/g;
+ 
+     my $cflags_debug = $cflags;
+     $cflags_debug =~ s/-MT/-MTd/;
+@@ -80,6 +82,8 @@ sub createLibProject {
+ 
+     $defines =~ s/-D//g;
+     $defines =~ s/\"/\\&quot;/g;
++    $defines =~ s/</&lt;/g;
++    $defines =~ s/>/&gt;/g;
+     $defines =~ s/\'//g;
+     $includes =~ s/-I//g;
+     mkdir "$target" || die "Could not create the directory $target for lib project!\n";
+@@ -271,6 +275,8 @@ sub createAppProject {
+     my $includes= join(";", sort(map("&quot;$rel_dir\\$_&quot;", @{$$build_structure{"APPS_${appname}_INCLUDES"}})));
+     my $cflags  = join(" ", sort(@{$$build_structure{"APPS_${appname}_CFLAGS"}}));
+     $cflags =~ s/\"/&quot;/g;
++    $cflags =~ s/</&lt;/g;
++    $cflags =~ s/>/&gt;/g;
+ 
+     my $cflags_debug = $cflags;
+     $cflags_debug =~ s/-MT/-MTd/;
+@@ -297,6 +303,8 @@ sub createAppProject {
+ 
+     $defines =~ s/-D//g;
+     $defines =~ s/\"/\\&quot;/g;
++    $defines =~ s/</&lt;/g;
++    $defines =~ s/>/&gt;/g;
+     $defines =~ s/\'//g;
+     $defines =~ s/\\\\/\\/g;
+     $includes =~ s/-I//g;
 -- 
 gitgitgadget
 
