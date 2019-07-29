@@ -7,77 +7,82 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFACF1F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 21:44:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6DE1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 21:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388147AbfG2VoH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 17:44:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59533 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726971AbfG2VoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 17:44:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F919855CD;
-        Mon, 29 Jul 2019 17:44:05 -0400 (EDT)
+        id S2388259AbfG2VqV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 17:46:21 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64710 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726971AbfG2VqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 17:46:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DAF576BE4E;
+        Mon, 29 Jul 2019 17:46:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GBmFy3S2Mc2B545WvvpobRdmo+c=; b=V2Ag8a
-        WgSbVFh/3VKO5xpc4EmKABBPWdRPxHE432FAd7fVEykkvVzhnbHU8VZHMhXMsI7f
-        ypDgq7WZJe9Wlevjm0DJscRg42HIE3vPE/lepV/qzJZrEAgd9a+lDOMJmIKLoXu8
-        Y8iF3XK8PvnonBiwR1jVdZ18VlujjrGfIyH+4=
+        :content-type; s=sasl; bh=y+VagkdprIgYFKpejacfKvhxlHE=; b=RZgauT
+        VKxAdg8TzPCcaD+YGMlNrYOlWI9B38O+7TCkBgApNmlxKemNa/TAarzsJrMBnRfZ
+        1KsXvNKzDA0OgjNv3yzy6ArPQdG2fysQy9ZJ87bvWVRvSG14vD6yWQEtP9SQe08g
+        h6wy+/ijK7DNJoUhW/O09AMp7lVn4S06B7XXA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=R6vC/+wDOGFrX8wegKQTuy7WmqV/i+yL
-        FaldRpyJnbkhJI6htzjyL+b1UOJf42UDLDx/9JF4iJxKnPjO2CBXH42tjNi7TE0B
-        x1PdchwPfPSGKbxv2wfl1jdkBXZmbVxXg5nV29C7FtmJFbsOfj0yezDFjfL95VsM
-        6KxkmPe5By4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 78D5D855CC;
-        Mon, 29 Jul 2019 17:44:05 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=rZPDND4p+fB4VSZXBxQuJsGla352jZxL
+        oydtL4i0XSD9dw6A/ZSjlvHs9/RffxUf0+3WjBWtlUegt3h8FIgfxUSoH7MVgpdr
+        Ko4MccUSmQP72c24sDLMJILJSgUm4E93czC5MUOpvYP3mK4jTjZfs37+tmLclghM
+        T94tLtzX188=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D3DC36BE4D;
+        Mon, 29 Jul 2019 17:46:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A7246855CB;
-        Mon, 29 Jul 2019 17:44:02 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0DB9F6BE4C;
+        Mon, 29 Jul 2019 17:46:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christopher Head <bugs@chead.ca>, git@vger.kernel.org
-Subject: Re: Push force-with-lease with multi-URL remote
-References: <20190727095440.1aac3b3c@amdahl.home.chead.ca>
-        <20190729102009.GC2755@sigill.intra.peff.net>
-        <xmqq7e81vuc3.fsf@gitster-ct.c.googlers.com>
-        <20190729192040.GD14943@sigill.intra.peff.net>
-Date:   Mon, 29 Jul 2019 14:44:00 -0700
-In-Reply-To: <20190729192040.GD14943@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 29 Jul 2019 15:20:40 -0400")
-Message-ID: <xmqqwog0tt27.fsf@gitster-ct.c.googlers.com>
+To:     Ralph Maalouf <ralph.maalouf@caretrx.com>
+Cc:     "'git\@vger.kernel.org'" <git@vger.kernel.org>
+Subject: Re: 'git show -c' omits hunk even though file was modified from all parents
+References: <MN2PR13MB2607878CB0C1E351B83F006BEADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+        <xmqqd0hsvfb9.fsf@gitster-ct.c.googlers.com>
+        <MN2PR13MB2607F47AC76601FC709A67A8EADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+Date:   Mon, 29 Jul 2019 14:46:13 -0700
+In-Reply-To: <MN2PR13MB2607F47AC76601FC709A67A8EADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+        (Ralph Maalouf's message of "Mon, 29 Jul 2019 19:52:55 +0000")
+Message-ID: <xmqqsgqotsyi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FB1F4360-B249-11E9-B92E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4A9E5EB2-B24A-11E9-934D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ralph Maalouf <ralph.maalouf@caretrx.com> writes:
 
-> Yeah, the auto-update of the tracking refs came later (so I think you
-> could argue the bad interaction is my fault!).
+> "We do not show hunks that match one of the parents ". But in case
+> 1 the second hunk matches one of the parents yet `git show -c`
+> still outputs it.
+>
+> diff --combined test1
+> index 02ef2b0,ffc05f2..59d575d
+> --- a/test1
+> +++ b/test1
+> @@@ -1,8 -1,8 +1,9 @@@
+>   One
+>  +Two
+> + Four
+>   Three
+>
+>
+>   Seven
+>  -Ten
+>  +Eight
+>   Nine
 
-Heh, I somehow thought it was somebody else.
-
-> Hmm, true. I'd almost argue that --force-with-lease, at least in its
-> default mode with no explicit lease source specified, should allow an
-> update from X to Y to be a successful noop if the remote "somehow"
-> already moved to Y.
-
-I've already written the --force-with-lease that expects what you
-have on your remote-tracking branch off as a gross misdesign that
-should be deprecated in the longer term; I do not have a strong
-opinion on the tweaks to be done to the feature until it gets
-dropped ;-)
-
+The above is a single hunk (whose definition is the group of lines
+delimited by @@@...@@@ lines).
