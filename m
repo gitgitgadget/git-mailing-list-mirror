@@ -2,138 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B36121F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 08:44:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58CB21F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 08:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbfG2Iof (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 04:44:35 -0400
-Received: from relay1-d.mail.gandi.net ([217.70.183.193]:33783 "EHLO
-        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727109AbfG2Iof (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 04:44:35 -0400
-X-Originating-IP: 157.49.185.144
-Received: from [192.168.43.207] (unknown [157.49.185.144])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id CEB02240008;
-        Mon, 29 Jul 2019 08:44:30 +0000 (UTC)
-Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
-To:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190728151726.9188-1-me@yadavpratyush.com>
- <20190728213634.GB162590@genre.crustytoothpaste.net>
- <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com>
- <20190728224943.GC162590@genre.crustytoothpaste.net>
- <xmqqef29l94s.fsf@gitster-ct.c.googlers.com>
-From:   Pratyush Yadav <me@yadavpratyush.com>
-Message-ID: <beebae61-6858-b866-f388-7aa7cc5aa9b1@yadavpratyush.com>
-Date:   Mon, 29 Jul 2019 14:14:29 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726795AbfG2Izb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 04:55:31 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36915 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726694AbfG2Izb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 04:55:31 -0400
+Received: by mail-ed1-f68.google.com with SMTP id w13so58638489eds.4
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 01:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LxcoU82fU2E4a3wjGU72RkO0S2C8GoFyqEPslZnsgAc=;
+        b=YG+jSyywlbVL1YI3nI1KpDjb3ODXKBUuyZ0AF1Fef2J5elp+08dk1YnVHM6rACPd3J
+         rX48Vgf9sMYmKbQtlTCGryA9/9ViM+czs6sRg0nCgKZD1fFs3Z1arlu4r0DjRIoGmUWA
+         kWW8zAlYK8rxvfWQ3FYvO93Co5oDpr6pDIGCBc8+5IfE5ihxLfSwKAO6vCQFXAEi+jns
+         0hT5xDl0taqKCZTnoGijpxe1takwN1Zh2IY2jbBaITsZHVaOF/nziUGW+WAZ96/DGqg/
+         Zz1lcUeZjD3rmfMnxkNt5ekB2kVu62KzhEHSLBY2CR8rwFT3XNpIl5CJ+HdpulHGlBmt
+         0Idw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=LxcoU82fU2E4a3wjGU72RkO0S2C8GoFyqEPslZnsgAc=;
+        b=iJrMrEAnw1gzDNJoKVdiBljMJikx8YKNgKSkoRogRPBAIa6dw8JITpzfMPLoC/uskD
+         u+uTLc1YII71KvGCm2knU6efSgoDiYe+MJKGbRlyppHURyonCkSfw8ugPDXVCtBsvxCy
+         2i2V3ZEOBKI9I50XqDzffcntS5/3f4KJSR2zk2+NBJYPT/I7JXh+80Nzf36XRBQIr6IH
+         BWbzudtMKuxI3mL60XmFgG/ZkcI4wljvchaCrMKRH9bhjTomn7qdvXSSlwwwaxCMCEnE
+         vGx9yfBaXZrow9xk57CVPXjOdLjKS35dfMdml/P3NTKOju9qrPQ4tONmu8nBC8O7T8O/
+         ki2w==
+X-Gm-Message-State: APjAAAXYo51Bo4kuY/8nGZbJHTvRQH/VP8AciAJ0dSc1Q19FH3u4Fntw
+        s/A2n/+tAuMllOg3e1WOQN8=
+X-Google-Smtp-Source: APXvYqxLzirsqLebOjbBHneL4Ubv8blIyDCZhI9eIy50pa41qUpcgPh/D7hBjo8I1h+JYPY+RRzPpA==
+X-Received: by 2002:a17:907:384:: with SMTP id ss4mr83864605ejb.166.1564390529158;
+        Mon, 29 Jul 2019 01:55:29 -0700 (PDT)
+Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
+        by smtp.gmail.com with ESMTPSA id si13sm11344951ejb.82.2019.07.29.01.55.28
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 29 Jul 2019 01:55:28 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
+Subject: Re: [RFC PATCH] grep: allow for run time disabling of JIT in PCRE
+References: <20190728235427.41425-1-carenas@gmail.com>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190728235427.41425-1-carenas@gmail.com>
+Date:   Mon, 29 Jul 2019 10:55:27 +0200
+Message-ID: <8736ip6wzk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqef29l94s.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/07/19 10:39 AM, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
->> These are probably pretty cheap on all but the largest repositories. I
->> was worried we were enumerating all refs or all history or something
->> like that.
->>
->>> ui_do_rescan changes the focus to the first diff. It is executed when you
->>> press F5 or choose Rescan from the menu. do_rescan does not do that.
->>>
->>> Resetting to first diff on focus change will get annoying when you are in
->>> the middle of looking at some other file. do_rescan just updates the
->>> software state without changing what file you are looking at or where in
->>> that file you are looking at.
->>
->> Yeah, this definitely seems like the right move.
-> 
-> "Right move" in the sense that it would try not to change what is
-> being shown too much.  Rescan will still not be without cost, so it
-> will be annoying if it happens when the user did not make any
-> change.
-> 
-> And it is annoying even more, if the user did make change in another
-> window.  You may make a change perhaps from the command line, write
-> a short e-mail about it to let others know in your MUA, and then
-> switch the focus back to git-gui to continue working.  Refreshing
-> upon git-gui getting focus is no better than manually pressing F5 or
-> whatever at that point.  It is too late at that point for spending
-> extra cycles without being asked without getting annoying to the user.
 
-On my system with a not-so-fast hard disk, it takes under 10ms to do a 
-rescan (4 to 7ms usually). Using it for some time, I never felt any 
-latency or lag. Maybe it will cause problems on other systems, but I'd 
-like to hear from more people about it.
+On Mon, Jul 29 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-Also, why is it no better than manually refreshing? Manually refreshing 
-gets annoying real quick (and that's why I sent this change in the first 
-place). Not having to hit refresh every time you make any change is 
-pretty sweet.
+> PCRE1 allowed for a compile time flag to disable JIT, but PCRE2 never
+> had one, forcing the use of JIT if -P was requested.
 
-Yes it maybe doesn't matter as much when you open git-gui _after_ you're 
-done making changes, and now only have to write the commit message. But 
-if you keep it open while you are editing code, and then when you are 
-done, you switch to it to commit, auto refresh is a great quality of 
-life improvement.
+What's that PCRE1 compile-time flag?
 
-Again, on my system at least, there is no noticeable latency when 
-switching focus. How about making rescan on focus optional? The user can 
-disable it if they feel like it is getting in their way.
+> After ed0479ce3d (Merge branch 'ab/no-kwset' into next, 2019-07-15)
+> the PCRE2 engine will be used more broadly and therefore adding this
+> knob will give users a fallback for situations like the one observed
+> in OpenBSD with a JIT enabled PCRE2, because of W^X restrictions:
+>
+>   $ git grep 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -G 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -E 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -F 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
 
-> 
-> The right time to spend cycles (in the background) in the above
-> sample sequence is immediately after you made a change and switch to
-> your MUA---while you are typing a few paragraphs, you would not mind
-> git-gui spending seconds to repaint.
+Yeah that obviously sucks more with ab/no-kwset, but that seems like a
+case where -P would have been completely broken before, and therefore I
+can't imagine the package ever passed "make test". Or is W^X also
+exposed as some run-time option on OpenBSD?
 
-FYI, we are not just repainting, we are also syncing the repo state with 
-the in-memory state when doing a rescan.
+I.e. aside from the merits of such a setting in general these examples
+seem like just working around something that should be fixed at make
+all/test time, or maybe I'm missing something.
 
-> 
-> So probably a more productive use of our time, if we were to futz
-> with git-gui, would be to figure out how git-gui can have an
-> background idle process that notices a change in the repository and
-> refreshes but only when you are *not* interacting with it (if it
-> does things while you are interacting with it, it would become
-> annoying and distracting), I would guess.  Just when you come back
-> is the worst, and the most annoying, time to auto-refresh.
-> 
+To the extent that we'd want to make this sort of thing configurable, I
+wonder if a continuation of my (*NO_JIT) patch isn't better, i.e. just
+adding the ability to configure some string we'd inject at the start of
+every pattern.
 
-So maybe something like inotify? tcl-inotify [0] (a tcl extension) can 
-be used for it I suppose, though I haven't looked into it much yet.
-
-My idea with this change was to keep it as minimal as possible. Doing a 
-rescan on focus seems like a good compromise to me. I can look into 
-inotify, but I'm not too aware of the performance impact it can have.
-
-Also, do you know how editors like Atom or VSCode refresh when there is 
-a change to the tree? I've seen them auto-update the GUI when you make 
-any changes from outside of them.
-
-I will look into tcl-inotify if there is a consensus that it is the 
-better way to go about this. It seems like a significant time 
-investment, and I'd rather not spend a lot of time doing something that 
-would get rejected instantly.
-
-[0] http://tcl-inotify.sourceforge.net/
-
--- 
-Regards,
-Pratyush Yadav
+That would allow for setting any other number of options in
+pcre2syntax(3) without us needing to carry config for each one,
+e.g. (*LIMIT_HEAP=3Dd), (*LIMIT_DEPTH=3Dd) etc. It does present a larger
+foot-gun surface though...
