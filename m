@@ -9,51 +9,51 @@ X-Spam-Status: No, score=2.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 239451F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 02:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89501F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 02:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726267AbfG2CuK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jul 2019 22:50:10 -0400
-Received: from mail-io1-f46.google.com ([209.85.166.46]:39428 "EHLO
-        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725681AbfG2CuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jul 2019 22:50:10 -0400
-Received: by mail-io1-f46.google.com with SMTP id f4so116837703ioh.6
-        for <git@vger.kernel.org>; Sun, 28 Jul 2019 19:50:09 -0700 (PDT)
+        id S1726281AbfG2Cus (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jul 2019 22:50:48 -0400
+Received: from mail-io1-f47.google.com ([209.85.166.47]:43571 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725681AbfG2Cur (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jul 2019 22:50:47 -0400
+Received: by mail-io1-f47.google.com with SMTP id k20so116764268ios.10
+        for <git@vger.kernel.org>; Sun, 28 Jul 2019 19:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:from:to:mime-version;
         bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=ONODbISpW5ScYxmBC9aorAgPP5/hv5DWgezaKh5Je6VtOVktPqM1aqUu8s1ipVuWV3
-         Sq1GhJQDffN2djk5b6bcaFzu43TgKhyNwyPU4dgTGZJ00sKKrsmWfWoA073qvEC0mYCH
-         KG6B1/aFwp5kHtbC0mkiQaBlfiumKCqSom1pLyHkuY9qo5Y5JcdlvpS2girXIdU5WazG
-         M/Hoj+Qpu/5rWzLXAJlXTOaQ8yEltwYL/xWcuUHG0+9w5c9KLpkzma68dnZhBFprRZge
-         8rvpYDiPAWVL52RMevXvxBSKcdUGdy05IDYOcS5j8mHcfLyhwWcYWAUgI0gjKMf/a/xZ
-         Oatg==
+        b=L0/3Icco1XbDVOTACpKP9n2Bm8ByJZOwDTa6btHWYj2d80MVt1om282BrdZlNN6/vy
+         BhZ9LdqwKe81ZH9VvZ1GM38nmY2wR38H6OY9U1h/nNDiQeB3oqGyexg8iMjjW0IJzJFK
+         FM0r8EDC+Qu6rP/ocjuzXnKHR8M9YlD7/H9c1v7Hq8tAqeU0S2a9unRvjmSymgYsxAOP
+         XiJicoJq6CnIzMmuojmEcFJ1/TY21DpCDKwPojsH6UEnRwHBu7aJrb1o/dbiexXPuG++
+         E7f/scE0zSwpeIXFdNKkAadK57OnIcjAv/XY5NAwO5kN3kKT04coTVh5nu0PXhNmpCNn
+         mnMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:from:to:mime-version;
         bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=Tgi3c3DssEQAef4/NC4zhBqQdw4sYDJDwjJEl1Io1AOwE/L+Db5Yf+wm/7eSeC//BP
-         7q91orOM/+OGd1/YOGKRupQx8wCXxdcsmvhJ6UQG+bffZ3jzwTebRUTwW2k1/P9oqP1i
-         mebUUYJAeWxMBzDyBOud+SPqSb+2a05Qcrr+wFXQ/G8v1tsw2Sw4knqKnRrpiLoxl3Jv
-         ormGfvcvf5LiIJABdhuncu7kClKxy3Sve4d9foVk2+MAaP14zIDzhlKV1JFmq3Wb7cSI
-         57y5u/5IAJvo6gafUkrxQNV4mNsSnYxu/UjvfnaTAlVzmMSP2QcUpoUNSZ4g7cgo5HNT
-         XtRg==
-X-Gm-Message-State: APjAAAVfqxbqCP5m5sMtp+7qMhyBjT9UienqvWzv549U7lPOUBVPixVk
-        t5OTcGoTZZm24KTB6t1cmNoejZ9hBsY=
-X-Google-Smtp-Source: APXvYqx7s5NHCmf0yPDPtDtgBu7iDD1679KSythcAHx+vOYUjjRGHBgbtZM6fPXipXXeTep7g6HDVg==
-X-Received: by 2002:a5d:87c6:: with SMTP id q6mr29724122ios.115.1564368609122;
-        Sun, 28 Jul 2019 19:50:09 -0700 (PDT)
+        b=Q8Gyd7bBzbkoNEEtW4PMqCZgea28x6lYpyFWZgH44qZ10tWHdXq+xU3jU71WwYbizl
+         ts4g/aCZiRHfRrRQIbgbzF6LyPmB85v2TVmo9SwX9vCUKIiXYDgVfCaU7JY8Bw8dW+W6
+         Ta12u8nClj5602IZpq1FeeazYk6Y0dyEQDc2XAvWvLKSHVQAU0EO87ClaNT9bokSkgnw
+         cP11oJbH0oZdjjawgDL6y2+iB4gNQ0YK3SweXpxYEjTC8ogIcOCY6EwITKIWXkZGw1hR
+         cMRBLuLb6G2fRfuMCUBvWDAUQCakSPgoOSpH3JI8mQSU62i/B1Is3OFJLg5ygfku8u3l
+         HFrg==
+X-Gm-Message-State: APjAAAVLAn0wExktxTuFnHW5oXZxF/wek4juPE4amjNB7aNPunZorx9W
+        jqBBMlWvx5I1fgKkOBCh3KOwYz/0uTo=
+X-Google-Smtp-Source: APXvYqykhYLMY7gfYFlJaw081cKTFO327KPiVV1KEjyyulJBOCqiH7V2O1GhFy7jlSO5EaavZeWKWQ==
+X-Received: by 2002:a02:cd82:: with SMTP id l2mr109122021jap.96.1564368646812;
+        Sun, 28 Jul 2019 19:50:46 -0700 (PDT)
 Received: from [192.168.254.28] (184-15-183-12.dsl2.chtn.wv.frontiernet.net. [184.15.183.12])
-        by smtp.gmail.com with ESMTPSA id z26sm59836535ioi.85.2019.07.28.19.50.07
+        by smtp.gmail.com with ESMTPSA id s4sm78476980iop.25.2019.07.28.19.50.46
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Jul 2019 19:50:08 -0700 (PDT)
-Date:   Sun, 28 Jul 2019 21:50:05 -0500
-Message-ID: <3etpo82nv4a0hcwn8w3a7u6s.1564368605100@email.android.com>
+        Sun, 28 Jul 2019 19:50:46 -0700 (PDT)
+Date:   Sun, 28 Jul 2019 21:50:43 -0500
+Message-ID: <cao5qcnieps35m4x4l6mi7kr.1564368627551@email.android.com>
 From:   Michael Anthony Rush <realrush81@gmail.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
+To:     "git@vger kernel. org" <git@vger.kernel.org>
 MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
