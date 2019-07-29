@@ -2,225 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8CB1F97E
-	for <e@80x24.org>; Mon, 29 Jul 2019 22:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2104E1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 22:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727993AbfG2WU6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 18:20:58 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:49340 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbfG2WU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 18:20:57 -0400
-Received: by mail-qk1-f201.google.com with SMTP id l14so53107306qke.16
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 15:20:56 -0700 (PDT)
+        id S1728767AbfG2W0p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 18:26:45 -0400
+Received: from mail-eopbgr800101.outbound.protection.outlook.com ([40.107.80.101]:51284
+        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727215AbfG2W0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 18:26:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SorqCg+K+kBjJkwf2plHAfql9w7ihjxg9tEKEwYez+jQhfqpeYB02gAsgwsbd8eRZumZK8pYRxSU5HO6R3+zBWQxa5mJ+jiF9Zv+O95ayf4es4toM7XWESt4M2CAyHU3anyfbF2f72Xutp7FeV50+Oxfz5r/Kb6fry5j2YYD95IZYP37kfYVQtfYHjAMFTiTWxNt8G8F8WxZrMjjrO2p3IQ25pxgPsU3ljKcD5tR5p6UIKSUIQlhiFwEY4mIpcC3xT88bSJ5R5tA3lGayxkiI2lsb/vNFfNYV4RcSNevaGGsPWKmfA98hIgno0PAcZlfpduorO0nq6gh106pHAUpCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aHG7PIs36lhVz3wJqZWiaKSUsY5MKoWojBCituTg/+I=;
+ b=oGCXTtdW3rR6PqHMGIMsueEYUMBfPNnzX8Bj0OmRX84xfzfuuAKPaYgKh+IxLhrH+iqgDuNRrvCvRmtehrVWUZuVGYFzCenL88ognyVGOUvIufT8lznhYISmTOW1sAT/98gtTe6nwvdecLtOOLzujdZAyaWfWd05huVtHq2uioTrOFsL0xLzzIx+gVG8tETsWvwmb7/6ty47bIezbdVqI7w8g2gN0uRTniu39rXrIS3v/r36rJY6HBqA8rtBKuQah8lOexzcg6itnZe60AEFDZYRAm3wwIVRpRco14r6kc9bff6Bi7adR4Mw6QUZoG9bJGaIyjQLqRpxXIt7wP9g4Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
+ smtp.mailfrom=caretrx.com;dmarc=pass action=none
+ header.from=caretrx.com;dkim=pass header.d=caretrx.com;arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=NYAUZdTyKy/QotdR40vLbL2Nfr93N1Bt1/g6frVAwKc=;
-        b=jsV0NAkCW1/hbZXOFXMiZEKcrZoqX7xA0TF0f4dzX9R9NhD6LuZQzjX9qrap/Paz0O
-         WlvzeEBUTKIwEdnzARuM586efE9XLDuGl1+wf1LvSVqasCq6VhlSi2t4UppkTY2eQbKx
-         u4V2Nkr0tEytqluA9jdF0C021PwEbBKf2QEUnPpfnxA6H71coYwXV+gNKHTRqnzmERRe
-         Tl9CVakEgMOOrOQCQYDqzNGgM6fN0JcuCpfFpmDGOPdUy+iIxNeIx7DATe/tmk7bCuxi
-         D7mj7JYJmJyBEFbsJmtSLxnkro2eTw0wMn8Cy09/rgtLJzbbMX2073CvWjOC4Qs+gorV
-         2wEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=NYAUZdTyKy/QotdR40vLbL2Nfr93N1Bt1/g6frVAwKc=;
-        b=fUK3b9sEVJXCfKW+MqhUFaIub9SXvTnq/X0lqi4XWu/tePlRnKONCeyrxGpfNEHkcI
-         NdrdKf8pgfgoxBRXQy1SnrTGhjveRz0BPekh7yHowBamATe1PbFSqesIfNVRKnkicinn
-         MJmiAgSU5bbyHIeQrD6xqr8iaHD7HAUrk510/phML2IYVtiUIA3wW5479P1cODAQnE25
-         uy1cuMz7yq/C1gQaRPLpVlXruGuwBXp/M9gKaw+vwoR9WwMujuzdgmSrPVOCu9DaQ8OT
-         wt4pDyKWQY+auFcutkjMoocmPU78fYhYy6/atsqypK2ZnHMDpLABKtIVu42Hp9RgjGia
-         z/0A==
-X-Gm-Message-State: APjAAAU0nMd14D9cJWdhQAu5qr7RNuocdX7kbmpHRrj9T4yt1SS5QI+0
-        vbYqEoT6hoAl3OrINIaLGuPLUF7CVU+3wcanGLPNe1BLrIm+Gdo6JnMgebZ01iSrnGrCMVHhIRM
-        oDUzlyQDW6uPGea2zoLBB5+5H8zsBGYjxLWW/KdFHJik20JFxRZWc0pcEiLIfGlM=
-X-Google-Smtp-Source: APXvYqwpGOu047yIWLUK/CVhNxCugnrBBCILhTWOGhZ4h9DGMHqo+PorNnvbWFJEH5LXdCyW6nNFfHSjhzhf4A==
-X-Received: by 2002:a37:9dc8:: with SMTP id g191mr74931338qke.431.1564438856125;
- Mon, 29 Jul 2019 15:20:56 -0700 (PDT)
-Date:   Mon, 29 Jul 2019 15:20:52 -0700
-Message-Id: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.22.0.709.g102302147b-goog
-Subject: [RFC PATCH] trace2: don't overload target directories
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ d=geckocap.onmicrosoft.com; s=selector1-geckocap-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aHG7PIs36lhVz3wJqZWiaKSUsY5MKoWojBCituTg/+I=;
+ b=BlTCZ11hudO9H+xCtVrOea9qUxcMWNL6q/PImjK2RJzUkIe8+0w1TiUaJvnie4/u6Zcstp5Fd1/C0wyuIBPxJ2eBfQysTEbhm238iWBSNDhYecinw+jXQXFGzAytvndzGftxA0HsVb7R8tGrmldLhTvfmJeGazNIQL00fTfdLkE=
+Received: from MN2PR13MB2607.namprd13.prod.outlook.com (20.178.251.13) by
+ MN2PR13MB3293.namprd13.prod.outlook.com (20.179.151.139) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2136.10; Mon, 29 Jul 2019 22:26:40 +0000
+Received: from MN2PR13MB2607.namprd13.prod.outlook.com
+ ([fe80::2cd9:7a94:3ce3:4bb7]) by MN2PR13MB2607.namprd13.prod.outlook.com
+ ([fe80::2cd9:7a94:3ce3:4bb7%4]) with mapi id 15.20.2136.010; Mon, 29 Jul 2019
+ 22:26:40 +0000
+From:   Ralph Maalouf <ralph.maalouf@caretrx.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: RE: 'git show -c' omits hunk even though file was modified from all
+ parents
+Thread-Topic: 'git show -c' omits hunk even though file was modified from all
+ parents
+Thread-Index: AQHVRj+QhLnTuL6OqEGKnVTUDfFpn6biIaNQgAAJt6A=
+Date:   Mon, 29 Jul 2019 22:26:39 +0000
+Message-ID: <MN2PR13MB2607F98BF473C36A0C8F17ECEADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+References: <MN2PR13MB2607878CB0C1E351B83F006BEADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+        <xmqqd0hsvfb9.fsf@gitster-ct.c.googlers.com>
+        <MN2PR13MB2607F47AC76601FC709A67A8EADD0@MN2PR13MB2607.namprd13.prod.outlook.com>
+ <xmqqsgqotsyi.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgqotsyi.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=ralph.maalouf@caretrx.com; 
+x-originating-ip: [173.48.235.24]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: dd43ffa1-6586-43cd-2ff7-08d71473d3f4
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(7021145)(8989299)(4534185)(7022145)(4603075)(4627221)(201702281549075)(8990200)(7048125)(7024125)(7027125)(7023125)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:MN2PR13MB3293;
+x-ms-traffictypediagnostic: MN2PR13MB3293:
+x-microsoft-antispam-prvs: <MN2PR13MB3293F32510987E3855843356EADD0@MN2PR13MB3293.namprd13.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 01136D2D90
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(136003)(346002)(396003)(39830400003)(199004)(189003)(66476007)(4744005)(305945005)(71190400001)(71200400001)(74316002)(508600001)(81156014)(2906002)(86362001)(316002)(53936002)(7696005)(8676002)(81166006)(99286004)(68736007)(8936002)(6916009)(186003)(66446008)(9686003)(102836004)(26005)(229853002)(6246003)(76116006)(76176011)(7736002)(66066001)(446003)(476003)(11346002)(6506007)(256004)(5660300002)(14454004)(55016002)(25786009)(6436002)(44832011)(52536014)(33656002)(486006)(6116002)(3846002)(4326008)(64756008)(66946007)(66556008);DIR:OUT;SFP:1102;SCL:1;SRVR:MN2PR13MB3293;H:MN2PR13MB2607.namprd13.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: caretrx.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: wKPqFXdqmSQVptJXeWUhlh4M7FF9/QvcsEfujQeVFAWJ5eRebkMNWrC4/MxQj/Iz4T7kzqVdmFBlwdf1fp/338gH7llMqH06hlvqBqJhPJGL8fuq7Cv7SQQy2XXjUtlIXG4Z0Zb5NWefRPqrMHdiNVuEHU4bjLpXAnt1o2RtnenjjNbSeZwnWJ3foZCt6BzXaWNYkfBXa9O3UDwLkjs9K32RyOFPnehe405w9yci1hThV8+S+m4s9uWhqjvaeyjUhbr499X9Mda3lIXGoOPbCRhJdxJHkjj0nyAFr/mqEch715hHDFxvtH1engHl4b5h4WVsKnvfKQY1ScqRUTE6DLMsdlNL3zS/YqtGWtLvTBScZWEmiSZLsOeGcWAPmzyD89Bzjvl3OnejRAOdnIXz96qHFNfWqBD1xCZ7m5Dv2JM=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: caretrx.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd43ffa1-6586-43cd-2ff7-08d71473d3f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2019 22:26:40.4715
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 85bc5f37-3133-4fd7-a2ab-54101a6ef85d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ralph.maalouf@geckocap.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR13MB3293
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-trace2 can write files into a target directory. With heavy usage, this
-directory can fill up with files, causing difficulty for
-trace-processing systems.
+Ahh that clears it up for me. I incorrectly assumed that at minimum that ea=
+ch "<<<<<<HEAD" represented a hunk..
 
-When trace2 would write a file to a target directory, first check
-whether or not the directory is overloaded. A directory is overloaded if
-there is a sentinel file declaring an overload, or if the number of
-files exceeds a threshold. If the latter, create a sentinel file to
-speed up later overload checks.
+I searched for the definition of hunk in gitglossary but couldn't find it.
 
-The file count threshold is currently set to 1M files, but this can be
-overridden for testing with GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT.
+Thanks for the clarification!
+Ralph
 
-The assumption is that a separate trace-processing system is dealing
-with the generated traces; once it processes and removes the sentinel
-file, it should be safe to generate new trace files again.
+-----Original Message-----
+From: Junio C Hamano <gitster@pobox.com>=20
+Sent: Monday, July 29, 2019 5:46 PM
+To: Ralph Maalouf <ralph.maalouf@caretrx.com>
+Cc: 'git@vger.kernel.org' <git@vger.kernel.org>
+Subject: Re: 'git show -c' omits hunk even though file was modified from al=
+l parents
 
-Potential future work:
-* Write a message into the sentinel file (should match the requested
-  trace2 output format).
-* Make the overload threshold (and the whole overload feature)
-  configurable.
+Ralph Maalouf <ralph.maalouf@caretrx.com> writes:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- t/t0210-trace2-normal.sh | 15 ++++++++
- trace2/tr2_dst.c         | 81 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 96 insertions(+)
+> "We do not show hunks that match one of the parents ". But in case
+> 1 the second hunk matches one of the parents yet `git show -c` still=20
+> outputs it.
+>
+> diff --combined test1
+> index 02ef2b0,ffc05f2..59d575d
+> --- a/test1
+> +++ b/test1
+> @@@ -1,8 -1,8 +1,9 @@@
+>   One
+>  +Two
+> + Four
+>   Three
+>
+>
+>   Seven
+>  -Ten
+>  +Eight
+>   Nine
 
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index ce7574edb1..e8a03e9212 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -186,4 +186,19 @@ test_expect_success 'using global config with include' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "don't overload target directory" '
-+	GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT=100 &&
-+	export GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT &&
-+	test_when_finished "rm -r trace_target_dir" &&
-+	mkdir trace_target_dir &&
-+	test_seq $GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT | sed "s#^#trace_target_dir/#" | sort > expected_filenames.txt &&
-+	xargs touch < expected_filenames.txt &&
-+	ls trace_target_dir | sed "s#^#trace_target_dir/#" > first_ls_output.txt &&
-+	test_cmp expected_filenames.txt first_ls_output.txt &&
-+	GIT_TRACE2="$(pwd)/trace_target_dir" test-tool trace2 001return 0 &&
-+	echo "trace_target_dir/git-trace2-overload" >> expected_filenames.txt &&
-+	ls trace_target_dir | sed "s#^#trace_target_dir/#" > second_ls_output.txt &&
-+	test_cmp expected_filenames.txt second_ls_output.txt
-+'
-+
- test_done
-diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
-index 5dda0ca1cd..3286297918 100644
---- a/trace2/tr2_dst.c
-+++ b/trace2/tr2_dst.c
-@@ -1,3 +1,5 @@
-+#include <dirent.h>
-+
- #include "cache.h"
- #include "trace2/tr2_dst.h"
- #include "trace2/tr2_sid.h"
-@@ -8,6 +10,18 @@
-  */
- #define MAX_AUTO_ATTEMPTS 10
- 
-+/*
-+ * Sentinel file used to detect when we're overloading a directory with too many
-+ * trace files.
-+ */
-+#define OVERLOAD_SENTINEL_NAME "git-trace2-overload"
-+
-+/*
-+ * How many files we can write to a directory before entering overload mode.
-+ * This can be overridden with the envvar GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT
-+ */
-+#define OVERLOAD_FILE_COUNT 1000000
-+
- static int tr2_dst_want_warning(void)
- {
- 	static int tr2env_dst_debug = -1;
-@@ -32,6 +46,63 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
- 	dst->need_close = 0;
- }
- 
-+/*
-+ * Check to make sure we're not overloading the target directory with too many
-+ * files. First check for the presence of a sentinel file, then check file
-+ * count. If we are overloaded, create the sentinel file if it doesn't already
-+ * exist.
-+ *
-+ * We expect that some trace processing system is gradually collecting files
-+ * from the target directory; after it removes the sentinel file we'll start
-+ * writing traces again.
-+ */
-+static int tr2_dst_overloaded(const char *tgt_prefix)
-+{
-+	int file_count = 0, overload_file_count = 0;
-+	char *test_threshold_val;
-+	DIR *dirp;
-+	struct strbuf path = STRBUF_INIT, sentinel_path = STRBUF_INIT;
-+	struct stat statbuf;
-+
-+	strbuf_addstr(&path, tgt_prefix);
-+	if (!is_dir_sep(path.buf[path.len - 1])) {
-+		strbuf_addch(&path, '/');
-+	}
-+
-+	/* check sentinel */
-+	strbuf_addstr(&sentinel_path, path.buf);
-+	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
-+	if (!stat(sentinel_path.buf, &statbuf)) {
-+		strbuf_release(&path);
-+		return 1;
-+	}
-+
-+	/* check if we're overriding the threshold (e.g., for testing) */
-+	test_threshold_val = getenv("GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT");
-+	if (test_threshold_val)
-+		overload_file_count = atoi(test_threshold_val);
-+	if (overload_file_count <= 0)
-+		overload_file_count = OVERLOAD_FILE_COUNT;
-+
-+
-+	/* check file count */
-+	dirp = opendir(path.buf);
-+	while (file_count < overload_file_count && dirp && readdir(dirp))
-+		file_count++;
-+	if (dirp)
-+		closedir(dirp);
-+
-+	if (file_count >= overload_file_count) {
-+		creat(sentinel_path.buf, S_IRUSR | S_IWUSR);
-+		/* TODO: Write a target-specific message? */
-+		strbuf_release(&path);
-+		return 1;
-+	}
-+
-+	strbuf_release(&path);
-+	return 0;
-+}
-+
- static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
- {
- 	int fd;
-@@ -50,6 +121,16 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
- 	strbuf_addstr(&path, sid);
- 	base_path_len = path.len;
- 
-+	if (tr2_dst_overloaded(tgt_prefix)) {
-+		strbuf_release(&path);
-+		if (tr2_dst_want_warning())
-+			warning("trace2: not opening %s trace file due to too "
-+				"many files in target directory %s",
-+				tr2_sysenv_display_name(dst->sysenv_var),
-+				tgt_prefix);
-+		return 0;
-+	}
-+
- 	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
- 		if (attempt_count > 0) {
- 			strbuf_setlen(&path, base_path_len);
--- 
-2.22.0.709.g102302147b-goog
-
+The above is a single hunk (whose definition is the group of lines delimite=
+d by @@@...@@@ lines).
