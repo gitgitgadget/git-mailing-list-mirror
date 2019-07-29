@@ -8,110 +8,95 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96B731F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 20:08:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3363E1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 20:08:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730270AbfG2UIN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 16:08:13 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43682 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730175AbfG2UIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 16:08:09 -0400
-Received: by mail-wr1-f65.google.com with SMTP id p13so63172426wru.10
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:08:08 -0700 (PDT)
+        id S1730259AbfG2UIL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 16:08:11 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39310 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730181AbfG2UIG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 16:08:06 -0400
+Received: by mail-wm1-f68.google.com with SMTP id u25so44215609wmc.4
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
-        b=uVo6Ei6FyHS1xxlwdzkAJqMZFCmhubA9L8T4IbZ1xEtc2qVcotc5P+A+1IGVKuwgZg
-         yhElbRe1wpXGhe/yaUxxb+ljZFEaC3FMU23MAZLTTbz6VIGGRKr0VjEBpS2pq4I+ajpd
-         YkzmPXs4px7DNoP+1r/wuPiqD3XzPRkevWH+tyDY/ZEGnzhJl3JYBXNu8OuF9PEepa3I
-         F2iJyWcVr7evOvjevbyjM6yW36fSmyIOlnhUGx+/hanKgQr+Cm6wbc5C/ljyVVADHqpd
-         1xafksScuUMR1K5za8C4CZ03FzHESN/vnGAjXMaKBu2t8MP3KHOkzk5wtdfgBsYQ/wl8
-         OlpA==
+        bh=Tou9s6+lKBEd+336v5AuGx7s+2YDAAuPHyoFqMGnXRQ=;
+        b=d9kjRB2z0lacLrPurqVL56LvL/rS7gkUsvRPBk3xeV3usNEHFVb6Frdlbv9ph2DNt4
+         a+ZADv4GNuF9MHqtnGzFm+LDCW1rVrqbyuqB6rhiL44ssfekb75a9hv+z2tc9RDYQNv6
+         ErulMqmPBh/2RnScWi5nRX+gJEdPsrzus2FQ4diNbSM4B2/4lrfJ6lx7XEkwIWa9wZYD
+         cq0Lzlvzq6MQOxeZoHQY8f820WHMX7x7TC/a2psgzfYgsMcjyU9DhppqW/5kPicKFf3U
+         LWO2VKdU+5cjN+NljYTKeiN4NKwTZBkJi50R0NOvnNXtbvV4i3WHabzkjU/Sk0k4eyfC
+         ntZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zuklBnmBkOH1DW/KuvkOJnWKJpRaISv/StUbkCyU4xc=;
-        b=eKB9SI9ws5dkM3r3BhhWmvb/kKX4/D4etvNpcWi3OdUEYY9i+b9RvolDHkmeMlrlVD
-         ivbZ4cVLONx9ApMJf8RVrvuac+CWb2lgD6OCuZThg22M3g+RtlXfOw8S1P9F+A/6aRuh
-         oYR+km8ZpLKBbDaSmGqOyAfGfukB9xwgomb6ruPTadGYrwVqyVBf927POsfFoRshEd/D
-         KZHA7F6xSCrWK16i3KwFVWPNH4TxzM0whO5zgSBQxlcdlgVpDfDOT+ba9u9NFC1+KFhL
-         ANdxbxhddoEGIS5Pg99sBtsbiOn9NDPcvnPlx+E1+KRAsnWwnzP+4MGSMnyiGrTvcOx5
-         o03A==
-X-Gm-Message-State: APjAAAU+NY60mbFK7SwtPRxS8em+eQHlXRVCZzaYh2ot+x0u6SFK5Lzn
-        Pgopk7EXL1QK5ozvG1wfhj42EgX2
-X-Google-Smtp-Source: APXvYqwo92nY7VBcaaWW3xfhl/TQA1aTDjqmDkAluOO48KMPg1Bm9tYNCb4w972+J3UBluigLsmbEg==
-X-Received: by 2002:adf:ab51:: with SMTP id r17mr95917503wrc.95.1564430887682;
-        Mon, 29 Jul 2019 13:08:07 -0700 (PDT)
+        bh=Tou9s6+lKBEd+336v5AuGx7s+2YDAAuPHyoFqMGnXRQ=;
+        b=SgHtbiYlRwiHuYPPbg8nIzF3iM0Fq67WjzjGSTMQfuMf39zGvDQorGcZdqhqLM0y9I
+         2+soNJIZh7G40/uexmY1ZNTrATVbYjUnbhHxFZ980xazroLXMY+80h8C+tu7Lgev07M2
+         5Zdi6mrdsGPAh03fwMcYryteAysrR0BQWPOMugjRi+N9ti8TBdExg89IfoSiUpIKKz+Y
+         4FCjUJIqOf1BXbiflEHohw18MncN7/Gr/CxRDWDfXUn0IOQi/5OA/Yf+7V8mFJeRhLIr
+         kaYpaD4lxUVa2kqQSwYJE6nI3B0ppy5xXQ+f/MtCD3tZQGIuiAyDDQnm2xwvNIAVXy+c
+         ZuCg==
+X-Gm-Message-State: APjAAAUYl/YVTsrsHOsdbZbkxLw/gLM77wCOXi60zB4qyk23DVKmnvzX
+        +Ww/rqysw9Kay+j+ecLr8F+Ow1ZX
+X-Google-Smtp-Source: APXvYqydEIpJHxDCAON9TbZoowcxkHAFvVn3JVZG3Ap9ZRPrW9Pv53awM5VGbOl6F7EipWAvX+nklw==
+X-Received: by 2002:a1c:cf0b:: with SMTP id f11mr104040407wmg.138.1564430885040;
+        Mon, 29 Jul 2019 13:08:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t3sm49576248wmi.6.2019.07.29.13.08.07
+        by smtp.gmail.com with ESMTPSA id k17sm80614454wrq.83.2019.07.29.13.08.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jul 2019 13:08:07 -0700 (PDT)
-Date:   Mon, 29 Jul 2019 13:08:07 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Jul 2019 20:07:46 GMT
-Message-Id: <3cfbb7843ac3a27c79da4554cc550608b19f2d55.1564430879.git.gitgitgadget@gmail.com>
+        Mon, 29 Jul 2019 13:08:04 -0700 (PDT)
+Date:   Mon, 29 Jul 2019 13:08:04 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Jul 2019 20:07:42 GMT
+Message-Id: <60a45f26948989f928ca439a2860433c0f08f412.1564430879.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.287.v2.git.gitgitgadget@gmail.com>
 References: <pull.287.git.gitgitgadget@gmail.com>
         <pull.287.v2.git.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 10/23] contrib/buildsystems: redirect errors of the dry run
- into a log file
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 06/23] contrib/buildsystems: ignore irrelevant files in
+ Generators/
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Rather than swallowing the errors, it is better to have them in a file.
+The Generators/ directory can contain spurious files such as editors'
+backup files. Even worse, there could be .swp files which are not even
+valid Perl scripts.
 
-To make it obvious what this is about, use the file name
-'msvc-build-makedryerrors.txt'.
+Let's just ignore anything but .pm files in said directory.
 
-Further, if the output is empty, simply delete that file. As we target
-Git for Windows' SDK (which, unlike its predecessor msysGit, offers Perl
-versions newer than 5.8), we can use the quite readable syntax `if -f -z
-$ErrsFile` (available in Perl >=5.10).
-
-Note that the file will contain the new values of the GIT_VERSION and
-GITGUI_VERSION if they were generated by the make file. They are omitted
-if the release is tagged and indentically defined in their respective
-GIT_VERSION_GEN file DEF_VER variables.
-
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/engine.pl | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ contrib/buildsystems/Generators.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 9db3d43a1e..de5c0b6b25 100755
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -73,7 +73,12 @@ sub showUsage
- EOM
- 
- # Pipe a make --dry-run into a variable, if not already loaded from file
--@makedry = `cd $git_dir && make -n MSVC=1 V=1 2>/dev/null` if !@makedry;
-+# Capture the make dry stderr to file for review (will be empty for a release build).
-+
-+my $ErrsFile = "msvc-build-makedryerrors.txt";
-+@makedry = `make -C $git_dir -n MSVC=1 V=1 2>$ErrsFile` if !@makedry;
-+# test for an empty Errors file and remove it
-+unlink $ErrsFile if -f -z $ErrsFile;
- 
- # Parse the make output into usable info
- parseMakeOutput();
+diff --git a/contrib/buildsystems/Generators.pm b/contrib/buildsystems/Generators.pm
+index 408ef714b8..aa4cbaa2ad 100644
+--- a/contrib/buildsystems/Generators.pm
++++ b/contrib/buildsystems/Generators.pm
+@@ -17,7 +17,7 @@ BEGIN
+     $me = dirname($me);
+     if (opendir(D,"$me/Generators")) {
+         foreach my $gen (readdir(D)) {
+-            next if ($gen  =~ /^\.\.?$/);
++            next unless ($gen  =~ /\.pm$/);
+             require "${me}/Generators/$gen";
+             $gen =~ s,\.pm,,;
+             push(@AVAILABLE, $gen);
 -- 
 gitgitgadget
 
