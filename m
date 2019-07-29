@@ -2,134 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD991F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 07:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 100C91F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 08:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbfG2H6z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 03:58:55 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:43421 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbfG2H6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 03:58:55 -0400
-Received: by mail-ed1-f49.google.com with SMTP id e3so58477446edr.10
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 00:58:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=puck-ch.20150623.gappssmtp.com; s=20150623;
-        h=from:mime-version:subject:message-id:date:cc:to;
-        bh=bTDFoC7HHsmYWrOB2yVm5ZQfLeOnErXUotHWvqlTsO8=;
-        b=cH+sy2ZqvqCNLALD5VYSjxebLues6RRyj8bHd2wwf31NZZ+Sm/Rm+qIkoqJ8wq196Y
-         SDWaXgsVMI3F1yxQKYh9Xf2Cm+gT4adiayEssQpFPB7LtlKDY5mj8pLezyzMoZzSVmsZ
-         wOlGIBCF8bsGRv6jL5qac7hMbmIbQAoWSpSRL0asyhuP4aW3RQnCAmMQg1PwlAskIdy/
-         o+MM7kf7LpeM552risyTxWxWq6pQXLnhKuda4Sb11Xlqjn7tC+J0mkBL1LdiLSMVgc2I
-         ZVb7wKYXOKQ9/FI4CqYBVxaaQgmUxq+Wlexjbit5fqNgMC8fKJUD33SH537H7v687qyy
-         YqfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:cc:to;
-        bh=bTDFoC7HHsmYWrOB2yVm5ZQfLeOnErXUotHWvqlTsO8=;
-        b=F2BO64fw0laZCOrqDM3q/bLlVE9AaIQglNNkN5V4fJnvVfcvnui2Ud3Olno8CKxEp+
-         axcxi23yx/A6sdHXttu0Zs6lQNs0lONtVJpc0Ry9J6ERND41SoJsI5HCO5Y4KxfbvfLF
-         LtytC9af9HgQM8/wCGz+AJ/UHf4I2DMEVXrBikjiY3jF7pqzfB0sZCPY/mvC8Y9e9QDO
-         sq7ztyZdfHwSQFyVbZGJidaVWUl6SUEIFfD3SrJCRuquhu08fYxkKqrtYZyzpcR5MPFd
-         A6bqctgcagcvlHmd/z5lzNjyHL0QL0o2Sy8WSDy0R23LG7zrEEOkY11KopBDdpIrsgcb
-         cAgg==
-X-Gm-Message-State: APjAAAX3cxFGGCjSP7/NRP1/3zXxp94zd/13Iz5qhoMtQcxjMJVE7aUH
-        WdLDokFCDlRSXRsw8VVCm131fY8=
-X-Google-Smtp-Source: APXvYqwE3IjJ1mV3+ijB9Fj8hvfndjstdKS0FQS0oA8YVSIywFoNKheC8SemDpA3jsOolpekAkWv+w==
-X-Received: by 2002:a50:eb0b:: with SMTP id y11mr94771058edp.224.1564387133710;
-        Mon, 29 Jul 2019 00:58:53 -0700 (PDT)
-Received: from ?IPv6:2001:620:7a3:701::acff:fe1d:13fd? ([2001:620:7a3:701:0:acff:fe1d:13fd])
-        by smtp.gmail.com with ESMTPSA id g7sm15549633eda.52.2019.07.29.00.58.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jul 2019 00:58:53 -0700 (PDT)
-From:   Olivier Bornet <olivier.bornet@puck.ch>
-X-Google-Original-From: Olivier Bornet <Olivier.Bornet@puck.ch>
-Content-Type: multipart/signed;
-        boundary="Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5";
-        protocol="application/pgp-signature";
-        micalg=pgp-sha1
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Problem with fsck and invalid submodule path in history
-Message-Id: <9C668779-15AC-4099-AAFA-7FFF519D426F@puck.ch>
-Date:   Mon, 29 Jul 2019 09:58:52 +0200
-Cc:     Olivier Bornet <Olivier.Bornet@puck.ch>
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.104.11)
+        id S1727061AbfG2IP4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 04:15:56 -0400
+Received: from relay9-d.mail.gandi.net ([217.70.183.199]:33195 "EHLO
+        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726690AbfG2IP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 04:15:56 -0400
+X-Originating-IP: 157.49.185.144
+Received: from [192.168.43.207] (unknown [157.49.185.144])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 6113AFF803;
+        Mon, 29 Jul 2019 08:15:48 +0000 (UTC)
+Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+To:     Mark Levedahl <mlevedahl@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190728151726.9188-1-me@yadavpratyush.com>
+ <20190728213634.GB162590@genre.crustytoothpaste.net>
+ <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com>
+ <20190728224943.GC162590@genre.crustytoothpaste.net>
+ <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
+From:   Pratyush Yadav <me@yadavpratyush.com>
+Message-ID: <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com>
+Date:   Mon, 29 Jul 2019 13:45:44 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 29/07/19 7:58 AM, Mark Levedahl wrote:
+> On 7/28/19 6:49 PM, brian m. carlson wrote:> On 2019-07-28 at 22:10:29, 
+> Pratyush Yadav wrote:
+>  >> The function is not documented, and I only started spelunking the 
+> code a
+>  >> couple days back, so I'll try to answer with what I know. It might 
+> not be
+>  >> the full picture.
+>  >>
+>  >> Running git-gui --trace, these commands are executed during a rescan:
+>  >>
+>  >> /usr/lib/git-core/git-rev-parse --verify HEAD
+>  >> /usr/lib/git-core/git-update-index -q --unmerged --ignore-missing 
+> --refresh
+>  >>
+>  >
+>  > Great. This sounds like a well-reasoned change. I'll let other folks who
+>  > use git-gui more chime in to see what they think as well.
+>  >
+> 
+> I'm assuming this does what is currently done by F5.
+> A simple rescan from git-gui in the git repository takes about 8 seconds 
+> on my corporate laptop running Windows, making this happen on change of 
+> window focus is definitely not a friendly change from my view point.
+> 
 
---Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+This is a Windows problem maybe? On my Linux machine with an almost dead 
+hard drive, it takes under 10ms to do a refresh on the git repository 
+(which has about 56,000 commits).
 
-Hello,
+Can you check what takes so long? I don't use Windows or I'd do this myself.
 
-I have a git repository with an error in a submodule path in the =
-history.
-The submodule path is =E2=80=9C-f=E2=80=9D, which is not allowed. But =
-for some reason, it=E2=80=99s in the history of the git, and I=E2=80=99m =
-trying to find a way to manage it without having to rewrite the full =
-history on the main gitlab (if possible)...
+Go to git-gui.sh and add some prints to the rescan procedure (line 1450) 
+to trace which operation takes time. It is not a shell script, but a tcl 
+script, so you'd need to add "puts <your_string_here>" just to have an 
+approximate idea of what takes so long.
 
-To reproduce this unwanted history:
+Can someone else who uses git-gui comment on the time taken to rescan on 
+the git repo (on Windows, Linux, or Mac)?
 
-    mkdir test-bad-history
-    cd test-bad-history
-    echo "Test git submodule problems" > README.md
-    git init
-    git add README.md
-    git commit --message=3D"Start test"
-    git submodule add https://github.com/leachim6/hello-world.git
-    git commit --message=3D"Commit new submodule with correct path"
-    # the bad part...
-    git mv hello-world -- -f
-    git commit --message=3D"Move submodule to an invalid path"
-    # correct it...
-    git mv -- -f valid-path
-    sed -i.bak 's/-f/valid-path/' .gitmodules
-    git add .gitmodules
-    git commit --message=3D"Back to a valid path"
+You can use this to see how long it takes to do a rescan. It will print 
+the time taken to stdout:
 
-After that, even if the git is working correctly, we have a =E2=80=9Cbad=E2=
-=80=9D history if we check with fsck:
+-- >8 --
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 8ca2033dc8..7f2962f060 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -2360,7 +2360,11 @@ proc do_rescan {} {
+  }
 
-    $ git fsck
-    Checking object directories: 100% (256/256), done.
-    error in blob 19a97d3b70760c74b780c8134e33f5392292c2e6: =
-gitmodulesPath: disallowed submodule path: -f
+  proc ui_do_rescan {} {
++	set t [clock milliseconds]
+  	rescan {force_first_diff ui_ready}
++	set t2 [clock milliseconds]
++
++	puts "Time elapsed in ui_do_rescan = [expr $t2 - $t]ms"
+  }
 
-Is it possible to correct it? Must git handle this kind of errors?
+  proc do_commit {} {
+-- >8 --
 
-Thanks in advance for any help.
-
---
-Olivier Bornet
-Olivier.Bornet@puck.ch
-
-
---Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF0EARECAB0WIQTQBq6Ke3j78UKE67h2PdH8xT2SGAUCXT6nPAAKCRB2PdH8xT2S
-GEkyAKDa1ZIZjJbp10UkCAjwRhbS8brtZACgi4pCWcFaeh2E1RJWLC3rQINkbAQ=
-=bPnx
------END PGP SIGNATURE-----
-
---Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5--
+-- 
+Regards,
+Pratyush Yadav
