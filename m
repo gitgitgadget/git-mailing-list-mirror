@@ -2,83 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41CA21F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 20:09:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CF811F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 20:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730073AbfG2UJV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 16:09:21 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38344 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730188AbfG2UJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 16:09:20 -0400
-Received: by mail-pl1-f194.google.com with SMTP id az7so27907337plb.5
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:09:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S2p1heH3zgT+xOBi4HBnkEqn/TFAsjtWwkZbA9ViN74=;
-        b=A+hfn9n7W+Yb9R7NJi65j/rDtRS28x0MX2ApOyN40AA0ugixxkVldkHOBLtqoOpkkR
-         wozztSItIXmeL86PkbKc2kogyKrasgD1XYoSSpqyiUdul1uJjsCqaYZnLfS4VPlQj/wq
-         c7IZPwkYQa3aDdP5wLGRbUOCIL+hMO516TlOjLEBEceeFmvDA6zYJ/QGxGqCL/LvEoPm
-         vt1g1D3/SmUBfTIKMiGTYmZr9tv0futg6k7iAxqUuzMOR5Z1cixfeK2gIoFQObUcfnb3
-         B04RHI0cNzQWAIRnuyt/59jp9U3n8Nsgh/QFjEF/KCr5aRmlQKfb/e2VgfQ8LZLWkKQx
-         sXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S2p1heH3zgT+xOBi4HBnkEqn/TFAsjtWwkZbA9ViN74=;
-        b=pu97slV7nEdwJe2KN6RwEnJPQPDoSwmBIsLY5W5EHlIK/GOYu5G2ybG/RG1NsijYnJ
-         6JMv4b8rsm+rRyDNYyD8ugN/9Wk3oPTHkXRIXqzLqKZMHeQmzj2ty/MCTGI6ljrvef3q
-         sR5hfDP79HXDUSQFFFj1Zg7MUh3NIYN0jvzjtmGK3zCIwsg/OiYZ1waPnPsgCA+Mp1z2
-         EXq43O1agRLECFLLZCJ6QWjkCLoftjs6mT1c2if9DlTtPbW3ReIemEPuR+DdWsEiDs/J
-         6hqGyvQU/+zc2Rd/JgLZMCIpG1KuXWXSEfZBWz9Pj6mjc706ofCZjbiOIGdFGCeTzQyE
-         93Jw==
-X-Gm-Message-State: APjAAAXG1+XNrPmZSo2H7y70Lrvr/oH3dKVsZEug3bffjQabESVImG+M
-        V7E/K1SSVqVl8Mlna9WjJIkD1vDEym8Aq1KlYtg=
-X-Google-Smtp-Source: APXvYqyu/N6Nqrmls/SlWZT1YcUX8GUNiha0978QUtUIi4XpxHPm8pTOQ8Bftyk+0DZr8SkTO2NfkpuRGmv/rqLKYAg=
-X-Received: by 2002:a17:902:758d:: with SMTP id j13mr109945945pll.197.1564430959977;
- Mon, 29 Jul 2019 13:09:19 -0700 (PDT)
+        id S1730440AbfG2UMj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 16:12:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54652 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728931AbfG2UMi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 16:12:38 -0400
+Received: (qmail 28249 invoked by uid 109); 29 Jul 2019 20:12:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 20:12:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 562 invoked by uid 111); 29 Jul 2019 20:14:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 16:14:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 29 Jul 2019 16:12:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Olivier Bornet <olivier.bornet@puck.ch>
+Subject: Re: [PATCH] Documentation/git-fsck.txt: include fsck.* config
+ variables
+Message-ID: <20190729201236.GF14943@sigill.intra.peff.net>
+References: <20190729093928.GP20404@szeder.dev>
+ <20190729095914.30573-1-szeder.dev@gmail.com>
+ <87sgqo6ejk.fsf@evledraar.gmail.com>
+ <xmqq36iox2nn.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <xmqqbml6pgfm.fsf@gitster.mtv.corp.google.com> <cover.1563490164.git.steadmon@google.com>
-In-Reply-To: <cover.1563490164.git.steadmon@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 29 Jul 2019 22:09:07 +0200
-Message-ID: <CAN0heSppzb9MCcR2296y1FFBoYyOs16e73DFhgV1bjkkxemRww@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] pre-merge hook
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>, stefanbeller@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq36iox2nn.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 19 Jul 2019 at 01:56, Josh Steadmon <steadmon@google.com> wrote:
-> * Martin's objection on 1/4 that the sample hook would always exit
->   successfully is (I believe) incorrect. To test this, I ran
->   "/bin/true && exec test 0 == 1" in a /bin/sh subshell, and it
->   correctly had a non-zero exit status.
+On Mon, Jul 29, 2019 at 08:48:28AM -0700, Junio C Hamano wrote:
 
-I retract my comment on this. It was incorrect, indeed.
+> > Before this include let's add:
+> >
+> >     The below documentation is the same as what’s found in
+> >     git-config(1):
+> 
+> I actually do not think we would want to do that.  I am all for the
+> kind of 'include' proposed by this patch, and we should strive to
+> make it easier for us to make sure the duplicated text are in sync.
+> 
+> But that would mean that the readers will have to see the "is the
+> same as the other one" over and over.  If our documentation set is
+> consistent, they should not have to.
+> 
+> I think we *must* make such a note in a total opposite case,
+> i.e. "here are the summary of the most often used options; for full
+> list, see git-config(1)".
 
->   git-merge: Honor pre-merge hook
+I disagree. _We_ know that the content is the same, because we are
+looking at the source that says "include". But as a user, how do I know
+when I get to one section or the other that it is something I have
+already read and can skip over?
 
-Nit: s/H/h/
+Perhaps if Git were entirely consistent here, they could make the
+assumption that "CONFIG" sections were always duplicated and know this
+already.  But I think even that is asking a bit much. Unless they are
+intimately familiar with our documentation, they don't know that we are,
+in fact, consistent. And we are in an uphill battle with every other
+thing the user has read, which may not agree with our assumptions of
+consistency. ;)
 
->   merge: do no-verify like commit
-
-Nit (maybe just me): this could be patch 1/N, before getting started
-with the real focus of this series.
+So IMHO it's worth leaving a note that guides the reader, as long as
+it's short (and I think this one is).
 
 
-Martin
+That said, I think an even _better_ solution would be to avoid includes,
+and instead make it clear when we are pointing the user to shared
+content. Then we get them to the right place _and_ explicitly instruct
+them that concepts/content are shared. For config, for example, I've
+worked with a previous system that did something like:
+
+  - include fsck.* documentation in the git-fsck manpage
+
+  - make a master table of config options in git-config.1 with _just_
+    the names and the associated manpage where the definition can be
+    found. This serves as an index if you don't know where to look.
+
+This would probably involve creating new concept-based pages for some of
+the groupings (e.g., where does "remote.*" config go?), but I think that
+would probably help round out our documentation (if there is a concept
+with related config options but we don't explain it anywhere, that is
+probably a gap we should fix).
+
+The biggest downside is that chasing down references in manpages sucks.
+For the HTML documentation we'd ideally hyperlink from the git-config.1
+index into each definition, but there's no way to do that with a regular
+manpage.
+
+-Peff
+
+PS This is an approach I've advocated for a while:
+
+    https://public-inbox.org/git/20110120233429.GB9442@sigill.intra.peff.net/
+
+   but haven't actually done much about, so perhaps I should be putting
+   my money where my mouth is. ;)
