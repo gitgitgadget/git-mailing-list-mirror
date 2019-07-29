@@ -2,80 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D22D1F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 14:06:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBCF31F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 14:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727624AbfG2OGJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 10:06:09 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36244 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727539AbfG2OGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 10:06:08 -0400
-Received: by mail-pf1-f195.google.com with SMTP id r7so28105559pfl.3
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 07:06:08 -0700 (PDT)
+        id S1727328AbfG2ONX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 10:13:23 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44086 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726371AbfG2ONW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 10:13:22 -0400
+Received: by mail-qt1-f193.google.com with SMTP id 44so28756992qtg.11
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 07:13:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=L/pEyk89AD7GjxMUviedJCLt9q5DR7BC67Om0SwaSV0=;
-        b=Ys6dpLQTigwhGrKzdB9mD6zgiJjM2hIWtd2u1UuhGm0rWYPliIOFkLHt8h+97Gha9g
-         tjgdO0GfLwIx03vAGPSu8VEBa9Tp1HsNwljbm0MrofCUkNIzouVF7d1PS9jLgTtH4U0T
-         KXsHffsBWKSc/R102tlvIJfnaEZi8dRPDZ032yGGspzMF5VqFVPQlyDgaHCDq2zjzAdH
-         xuAzZNZl7u2mt1zxWEBV3sX3j0YkBAb8Px+S5BavZc/5mMCk0Dm8TEm7OY0oDsi85uxs
-         neUMlOXgLHaVGWmB8mNB8+WIIiyPGuhxqQ/XvbOyoxK8igB2ctDeSxQ3NmPoreiM3tCP
-         bhNQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sNqM+4kktTw34TmFubsslTD7x4QVujXfOdFRGt2a4JY=;
+        b=kC950X1rftetaPG7+B9aAeAGTAqQ5ZDJ0uwSyqGuGnV3HfUa18SUprmXaZfgabVfR1
+         tN4jagvoFtrt6B8C9IF9uBlOx9qd62zskG6M/TQZ84huC1Bc5OmMaa0CI8mfIziz8H5o
+         ymf/0VGEtBJ3p1YesSV0drJUiwo1JDvNWbCEN+co833cHuAH0Jf7rv9ORMiXubLXWdOL
+         QcOoszOimJ3rD089fY09EuWTSH2gKuv/PDm1vDfp6KcvADs1UYSqE3eRJ6vNhobFtqf7
+         SReTUyVN8QmpIJvoOVnk4YtqfkeX8R8nRQASI7gp9rh+DzlS7SwioZtX+ZXEKKsqNlcP
+         /FIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=L/pEyk89AD7GjxMUviedJCLt9q5DR7BC67Om0SwaSV0=;
-        b=PONCNiHF1669fEB+eVFWJaUTMYrmUlhNCTlM6sMqMvrLXDw2o45UbGNYbVxl8dnuh+
-         gRSlLmyFkj3r2In8sp5UZuoTZs6ZQYUahVCJyym5bpYdw7XemSdB1tIesJCyYcypK47F
-         wHau0mQYhYL6Xsral05qnt9HAQ/gr7DDue2dLUr5pd7qvztjzLmW7KnkNp6yrb1gjebL
-         4s55zlgWYqHY7mShVTQ2vohINsH2QDp9L5xOVlI1AKrSOkym3Gzp0n71xPMcrMUhnZMt
-         YfTdq+X8jH3S0hjvfF0+AJEL2mqsK1GKUqpkQrFbWZhekZbr1Bp1yCSe2wo/EJ28zXWg
-         +y6w==
-X-Gm-Message-State: APjAAAXpCVF1TU4iJGWab9pi3NHCACys+eNZAwlP8CES+IUWDxBYW8ea
-        MSonAsOAKBBc5Q+vMl0D/uD6yUAIY42BTVznP08y+Z9b
-X-Google-Smtp-Source: APXvYqy3JDP6DuKASrIn+IfYlpq/QuBjJziyyP+XL/cf+qzsjO3Q5I5FBIb8i0cpZyyTtiw8JYKyK2yP7uiiX+2azSI=
-X-Received: by 2002:aa7:989a:: with SMTP id r26mr24589989pfl.232.1564409168065;
- Mon, 29 Jul 2019 07:06:08 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sNqM+4kktTw34TmFubsslTD7x4QVujXfOdFRGt2a4JY=;
+        b=jPrhRUAV3Psh8DPjPDd1NIg6vlUGc5Wll6EFWRXxDVeF9KpySl2Vs+TMWuMT73jz06
+         5uL0/N7qAgwPGgpsBQeYJSRkzuNBkhWaP+vo/qTCzbuyDOmR53fIhJyMhl5TAyt7EBNu
+         D/hSnV8jd6Gj+XiJBsZWz/ZVlD9mkv/+snPgog7Vh7kCWwFiz0nApB/q5IiWwb5x9taX
+         tumjzVcLONMkeeKHXtdRTiv4uKsLBAe8IZsVLCDAMSP80XWWh+nd3xSSZrML64tOEXgM
+         a8W51VY0BJC9FbMKWh63fTWL4MWUYqDMcf6WvxMMEWJe73IGAGekQ9iERbbmc/m7xB0u
+         b2fg==
+X-Gm-Message-State: APjAAAX950ORJEaZrS/k0OLCvelnhqmCBoRIv62O6ewOcWYH+Lhg698X
+        jF90TbjrgVwpp8mnhnyQVDWVa8CO
+X-Google-Smtp-Source: APXvYqxQ4t306Un4UGMCvhwlMgin8nNn3tZH2svIx0iapaHnyx5+rrP7BLibkx5PN5bTddBdXkzVBQ==
+X-Received: by 2002:ac8:7941:: with SMTP id r1mr72661414qtt.82.1564409601719;
+        Mon, 29 Jul 2019 07:13:21 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:1190:2f14:782d:822c? ([2001:4898:a800:1012:c2c3:2f14:782d:822c])
+        by smtp.gmail.com with ESMTPSA id r40sm37836144qtk.2.2019.07.29.07.13.20
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jul 2019 07:13:21 -0700 (PDT)
+Subject: Re: [PATCH v2 01/20] merge-recursive: fix minor memory leak in error
+ condition
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190725174611.14802-1-newren@gmail.com>
+ <20190726155258.28561-1-newren@gmail.com>
+ <20190726155258.28561-2-newren@gmail.com>
+ <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <698e7154-b625-dfe5-ccf7-87e34c77e480@gmail.com>
+Date:   Mon, 29 Jul 2019 10:13:19 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-References: <20190719053952.13516-1-eantoranz@gmail.com>
-In-Reply-To: <20190719053952.13516-1-eantoranz@gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Mon, 29 Jul 2019 08:05:57 -0600
-Message-ID: <CAOc6etZaNG9gU89S491emSr7PHj9a+p+_0gNYT+BWcydadM+NA@mail.gmail.com>
-Subject: Re: [PATCH v3] builtin/merge: support --squash --commit
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqo91godev.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 18, 2019 at 11:40 PM Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
->
-> Using --squash made git stop regardless of conflicts so that the
-> user could finish the operation with a later call to git-commit.
->
-> Now --squash --commit allows for the operation to finish with the
-> new revision if there are no conflicts. If the user does not use
-> --commit, then --no-commit is used as default so that it doesn't
-> break previous git behavior.
->
+On 7/26/2019 2:31 PM, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+>> Returning before freeing the allocated buffer is suboptimal; as with
+>> elsewhere in the same function, make sure buf gets free'd.
+> 
+> I do not have a real objection to the patch text, but the above
+> justification does not make much sense to me.  The original code
+> returned an error when buf is NULL, so there is no leak returning
+> directly, without jumping to free_buf: label (whose only effect is
+> to free(buf) and return the value in ret).
+> 
+> The real value of this change is it may future-proof the codepath by
+> making sure that everybody after an error goes to the same place to
+> free all resources---which happens to be only buf in the current
+> code, but this change allows it to change in the future, where some
+> additional resources may have been allocated before the call to
+> read_object_file() and freed after free_buf: label.
 
-What should I do to get this patch to move forward? Either get
-comments (as the previous versions did... thanks, Junio!) or be
-accepted? Given that I didn't get a feedback I thought that it had
-made it (always the optimistic) but I see that it's not in Junio's
-'what's cooking' mail from friday so I think it's fair to assume that
-this version of the patch is not gonna fly.
+It should be noted that any future change to make the "free_buf:" label
+mean "free everything" then it should be renamed to "cleanup:" or similar.
 
-Thanks in advance!
+Not that we should do that now, as that would muddy the blame.
+
+Thanks,
+-Stolee
