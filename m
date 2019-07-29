@@ -2,94 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402611F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7B451F462
 	for <e@80x24.org>; Mon, 29 Jul 2019 20:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391131AbfG2UAw (ORCPT <rfc822;e@80x24.org>);
+        id S2391133AbfG2UAw (ORCPT <rfc822;e@80x24.org>);
         Mon, 29 Jul 2019 16:00:52 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:36639 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390945AbfG2UAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 16:00:45 -0400
-Received: by mail-pl1-f194.google.com with SMTP id k8so27930604plt.3
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:00:45 -0700 (PDT)
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45398 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390673AbfG2UAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 16:00:44 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f9so63151993wre.12
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Kug54h3Rl3weT/vDIIyYWRRi4Dd6iJHwJ9YPDt5/Elo=;
-        b=CgEu9rxT4UGZRaGilPEiOYTGaM9nok/h71GIvFaTgeqJzpOHM5WDYG03n01ke0TaUI
-         0mHmbSf0/asZzHoB9kAP8tiBHIOvfsOqkxiB5q09nYxmVntWE5c0tnSSqXQJRAAT9r/V
-         WGvuTttlkrIgGKPHVUbbJd0K4WNMgMEhNnLIAR6+jnpJp2z7yKB6r3lxDEAGgGiSrbXp
-         kLYPvte1AWSuuzI4Slz1sYUJkabtefnCv8d4G1woFwn9BN48Svknyd0DW2c1u2jGg78L
-         rOLFUJUIBkFrU6p0/8Tv8bUO67cUNyk1dpvdzTlJLZrB48qd+CSakDj5oqtw1ipHcdch
-         Cz2Q==
+        d=rtfm-co-hu.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=zEyiicXMUVkcGTNSj/Dwuz+gh2/KziH9sTqKIZ1QZAY=;
+        b=uaIojva1ZfOcwpvYD+rwomUC10dP4OA3l0VeHcBMV5JQEbFt66ZqhHGphXEEHPVGJx
+         F4RXZY6PPLKdF6rL+zZFy8lMZvPnnHVTdoSn1g5MP1gfO8NEi43G+66AyJx669l0lZyC
+         w8IQhHTP2Q60Td5T2WRvWa18Nu1UjmwpRJdoITEQa6NXABPWyuCWYNZ5hA8YNVLJv1Uq
+         sMSD1iVLCA95S21Pxi2yXY+ORIp8EK6DGKvIcb8MPe5fZtzMQLl7FwJtZ5gl5bzuhWDW
+         4Q/l8kk5wvpsyn0a2wFkXn1hn2mXa9K2caZ5ploJbvtM9Km0OeWcX3HiFdk/HP7DWUeE
+         hqhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Kug54h3Rl3weT/vDIIyYWRRi4Dd6iJHwJ9YPDt5/Elo=;
-        b=j0OXrfqCRtdzTOmTEJpN8qGG73Sht7lHjHAWUcB2pengBugzEDhdDc8+HI2fKXu7Vk
-         2niRT6uEBDvvrL08HiF7ASWxXLPOsotxxVji3RODchceGotdz2R+4DYLgobvFFWI2+YO
-         EuOpPCT0x8N/lyXTVgM0FVneEAwPH1NPyPCHnQAVvrtpoDUhtgfj8FEsvrbyzwaxI0px
-         flT+0SF0RFgcCcD6GrMevo3TArnCH/Bfr5eL2tnK6RWi4aK3kYNrh6Q0otojPRiHqqUo
-         B/DgqGZQLRULJODoKI6QnNyNg1ydgNdzciaUffCpOZVrpLIE5N0ZG454doGspRmqtENU
-         FhbA==
-X-Gm-Message-State: APjAAAW0CtG0OEmFHV14z4oUdGtyFAUE84Rluu00cc+Fkpbn+xe9m14l
-        OOhQl+bkl5YBAM9pQ5f5SoaKm4ArAxBiZjHXWOk=
-X-Google-Smtp-Source: APXvYqwnC/C6sRaAI8Nsn74f5fCH8qaMWIS+y5SiSzv7/yCj+NXm2zS6EdqTEFdOWFgREhz2eKyFKrXpugd+VRBpvJQ=
-X-Received: by 2002:a17:902:758d:: with SMTP id j13mr109906184pll.197.1564430444899;
- Mon, 29 Jul 2019 13:00:44 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=zEyiicXMUVkcGTNSj/Dwuz+gh2/KziH9sTqKIZ1QZAY=;
+        b=pn6zi6VAHu6ITvIADI9V/ROz38jvhMxczw6usaktyCzlx+DO2lHShDEUXN2E+ZV/HN
+         HZKVl5vZhOFZKCDmIsJ3a0Zp3Tt1J87N85QMZ3h/aOOwywszonXyR3wC20/VZUkHpi2b
+         9kWawFeT/7N9qcr8Cit5f4lFyU0dMvUhBcCLtlaJrH4j38OBr8p0XfijiPHMA3F0MZe8
+         k0if8OPBB8FhJQpIEiLHOWQaoVVLenDvB4Rie54M376CzNbvbj0mLeldoJaj9hc8kKVA
+         r49b/ScYIQ9qgwkBXxQ72NKwwPiQ4JTGW0rvSlWwhC4gnB3fFYGwDuICNechRclaiqVp
+         3zzg==
+X-Gm-Message-State: APjAAAWMMHA8fnv+OAYZ2RLwxIzQvpl0V7Bz8vKW1TWZr0BMduFwaClN
+        2i7Lq1R2/gjWY1rhd9N/WZgXfLCp
+X-Google-Smtp-Source: APXvYqxYMy9/LN5vHzQ39WVqbidO+lwyD/OxXrvHKYNtVMxap6EuX4O5f6AFPkhVpjWFiTsqGSBTeA==
+X-Received: by 2002:adf:eacf:: with SMTP id o15mr38138079wrn.171.1564430441611;
+        Mon, 29 Jul 2019 13:00:41 -0700 (PDT)
+Received: from [192.168.160.67] (catv-176-63-72-133.catv.broadband.hu. [176.63.72.133])
+        by smtp.gmail.com with ESMTPSA id r11sm95427809wre.14.2019.07.29.13.00.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jul 2019 13:00:41 -0700 (PDT)
+Subject: Re: git name-rev segfault
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <799a4ba4-a2ae-7ce3-a6e4-acd329d062da@rtfm.co.hu>
+ <20190729195001.GE14943@sigill.intra.peff.net>
+From:   Tamas Papp <tamas.papp@rtfm.co.hu>
+Message-ID: <560b857a-808e-9ac6-ec3e-6778bb4c03e7@rtfm.co.hu>
+Date:   Mon, 29 Jul 2019 22:00:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <xmqqbml6pgfm.fsf@gitster.mtv.corp.google.com> <cover.1563490164.git.steadmon@google.com>
- <e8b3fd8a5bf8f77795454a901fecaa585701eeb2.1563490164.git.steadmon@google.com>
-In-Reply-To: <e8b3fd8a5bf8f77795454a901fecaa585701eeb2.1563490164.git.steadmon@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 29 Jul 2019 22:00:32 +0200
-Message-ID: <CAN0heSpi3rYAR5XmT4FM_YB746JjYHxmQHwASk4778saBKoUUA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] git-merge: Honor pre-merge hook
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>, stefanbeller@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190729195001.GE14943@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 19 Jul 2019 at 00:57, Josh Steadmon <steadmon@google.com> wrote:
-> --- /dev/null
-> +++ b/templates/hooks--pre-merge.sample
-> @@ -0,0 +1,13 @@
-> +#!/bin/sh
-> +#
-> +# An example hook script to verify what is about to be committed.
-> +# Called by "git merge" with no arguments.  The hook should
-> +# exit with non-zero status after issuing an appropriate message to
-> +# stderr if it wants to stop the merge commit.
-> +#
-> +# To enable this hook, rename this file to "pre-merge".
-> +
-> +. git-sh-setup
-> +test -x "$GIT_DIR/hooks/pre-commit" &&
-> +        exec "$GIT_DIR/hooks/pre-commit"
-> +:
-
-I'm pretty certain that my comment here was with respect to the ":",
-which made me think "hmmm, won't : always exit successfully?". My
-slightly less ignorant self of today answers "sure, but we won't always
-get that far" -- the "exec" is pretty important, and it will cause the
-current shell to be replaced with the hook invocation. So however the
-pre-commit hook decides to exit, that'll be our exit status.
-
-I retract my comment from back then.
+Thanks for letting me know and for the corrections too.
 
 
-Martin
+Cheers,
+
+tamas
+
+
+On 7/29/19 9:50 PM, Jeff King wrote:
+> On Mon, Jul 29, 2019 at 04:19:47PM +0200, Tamas Papp wrote:
+>
+>> Generate 100k file into a repository:
+>>
+>> #!/bin/bash
+>>
+>> rm -rf .git test.file
+>> git init
+>> git config user.email a@b
+>> git config user.name c
+>>
+>> time for i in {1..100000}
+>> do
+>>    [ $((i % 2)) -eq 1 ] && echo $i>test.file || echo 0 >test.file
+>>    git add test.file
+>>
+>>    git commit -m "$i committed"
+>>
+>> done
+> I lost patience kicking off two hundred thousand processes. Try this:
+>
+>    for i in {1..100000}
+>    do
+>      echo "commit HEAD"
+>      echo "committer c <a@b> $i +0000"
+>      echo "data <<EOF"
+>      echo "$i committed"
+>      echo "EOF"
+>      echo
+>    done | git fast-import
+>
+> which runs much faster. This doesn't change any files in each commit,
+> but I don't think it's necessary for what you're showing (name-rev
+> wouldn't ever look at the trees).
+>
+>> Run git on it:
+>>
+>> $ git name-rev a20f6989b75fa63ec6259a988e38714e1f5328a0
+> Anybody who runs your script will get a different sha1 because of the
+> change in timestamps. I guess this is HEAD, though. I also needed to
+> have an actual tag to find. So:
+>
+>    git tag old-tag HEAD~99999
+>    git name-rev HEAD
+>
+> segfaults for me.
+>
+>> Could you coment on it?
+> This is a known issue. The algorithm used by name-rev is recursive, and
+> you can run out of stack space in some deep cases. There's more
+> discussion this thread:
+>
+>    https://public-inbox.org/git/6a4cbbee-ffc6-739b-d649-079ba01439ca@grubix.eu/
+>
+> including some patches that document the problem with an expected
+> failure in our test suite. Nobody has actually rewritten the C code yet,
+> though.
+>
+> -Peff
