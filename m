@@ -2,75 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5F701F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 20:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2571F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 21:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729365AbfG2Ulk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 16:41:40 -0400
-Received: from mail-io1-f54.google.com ([209.85.166.54]:44683 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728518AbfG2Ulk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 16:41:40 -0400
-Received: by mail-io1-f54.google.com with SMTP id s7so122926026iob.11
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 13:41:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xnx4cDUXV5ZwNMPm7wi1Eik37W7XBJk0Xeupa04T7zM=;
-        b=0ItiRvd+MtXVxV/6ORRbYjqX83/a/jZkWeGqVp5k+vHo2hy/0+EiS2jwkv7onFVHrq
-         FiI3DADCDN6G/bQPpJNj/XgvYlXLF5e8AJIIBbD4+2fU2cyVK/L83NNLC/ci38EswQf1
-         7WZFfHQE/WzEjb/ZxrIiJxh1prNgHAl2HoFQDKLZT22NOJHQ+eJSIBSIOBYyoS+HGspe
-         gbqM9tMJfTMQ25FVD0/dhAdoKVCAXzHCkFU5WwSvxMGa/AiF38AotMMuuUgAi0/p9yL4
-         MbeaFkHDs64lbo5yzOr7H826+BzT9we8lvrn9m5egx5dOzu4KZB7CuHFF2ExRTHjZapQ
-         cHpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xnx4cDUXV5ZwNMPm7wi1Eik37W7XBJk0Xeupa04T7zM=;
-        b=d4kA5P2AznrHl4RC+HnTJqDmbXOcvakp0nKeH3yPy538iG1m6M2lhYGY+CmjS0ZULz
-         OP8SyOuCSpZ9h2KDGCLdRUi/6ESsSkajICQVMfFBYbZvJGeVjmddhQmhb2YyxYBpcYON
-         XVwPaGtxMhVNG3GGX4K3Tw9qgnZmpY7JdaKpNEFDR9LahX0+c9pDe4/h34Eu6DwxGfym
-         tQxmQNYuC4S9ws9PbeeLG3j4VwWRjcLHYrqJMQp7RXoZ82go9Nx18uw9WyUkFrcFPSAM
-         3HP9L0im/H5ZEtKFSCXqSTOglFUbKFwcaSIcrmLxvyQ7XeSVYXBGHlZrNZQjnFes/4oE
-         /eFA==
-X-Gm-Message-State: APjAAAWXcHChY3m1tDQfu+pyaCunk84d+0+vaZpcq1jQ3BHme3wszUYA
-        UBMOpNlWfEPZHiK6p9ErivggdOzNi0GPTjMd1eJGjpL1h3Y=
-X-Google-Smtp-Source: APXvYqxO/8+2LEHWD+TJR+VzwBKxfGjpK587xmbCkkNWULr7IMU5PQbOWcFIsRoNAUGglE5ftZlgpUmdOJ3xkaNmVTM=
-X-Received: by 2002:a5d:9613:: with SMTP id w19mr66548265iol.140.1564432899206;
- Mon, 29 Jul 2019 13:41:39 -0700 (PDT)
+        id S1729871AbfG2VcF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 17:32:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59102 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729617AbfG2VcF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 17:32:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AEF316C266;
+        Mon, 29 Jul 2019 17:32:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2t4xtw2eRK0Q
+        cg7iyfyku9MtrLw=; b=P5aU3xghaqc56WWSr12D6UBAMNXCRbVj76DZ1BdZcAyp
+        DR8FpZwWKLQ5BZR6vu44N+Zh+biGunv+8r1r0wixOp22cgt+gtrpJIVMyaeRDmZn
+        fmUoWKE7T/7tFFKPfrO1SdL2KqDtuIXyGSAR1zgF8wCS78iTLt3j5cnZd3ZVonw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pvhpsz
+        EXoyXTDQAZGGTyVliY4xktktpq3wAdC27s5OMZATdXiAPnHzQ/1NTux7GUsGEaLC
+        kaGwz+TJLCrMzmKsUow3g0iv0ESDRqa9jh1ADjq3+3UqmIv1SAUd+DSe2LytCyiU
+        etlG+KmXddt+/MSpk7zHv0W9T+pguBpOZjrfI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7283116C265;
+        Mon, 29 Jul 2019 17:32:03 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DABFF16C264;
+        Mon, 29 Jul 2019 17:32:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Olivier Bornet <olivier.bornet@puck.ch>
+Subject: Re: [PATCH] Documentation/git-fsck.txt: include fsck.* config variables
+References: <20190729093928.GP20404@szeder.dev>
+        <20190729095914.30573-1-szeder.dev@gmail.com>
+        <87sgqo6ejk.fsf@evledraar.gmail.com>
+        <xmqq36iox2nn.fsf@gitster-ct.c.googlers.com>
+        <20190729201236.GF14943@sigill.intra.peff.net>
+Date:   Mon, 29 Jul 2019 14:32:01 -0700
+In-Reply-To: <20190729201236.GF14943@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 29 Jul 2019 16:12:36 -0400")
+Message-ID: <xmqq5znkv86m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 29 Jul 2019 17:41:28 -0300
-Message-ID: <CAHd-oW6J4zOsr9jrbrZVMu6KyfYjoQTGQiABU6814t2J_3j82Q@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4E184352-B248-11E9-8D58-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+Jeff King <peff@peff.net> writes:
 
-I just posted an update about my project here:
-https://matheustavares.gitlab.io/posts/week-10-a-bug-in-git-grep-submodules
-This one is focused on a patch to correct a bug at git-grep
---recurse-submodules and some tests for the parallel inflation
-patchset. Please, feel free to leave any comments.
+> On Mon, Jul 29, 2019 at 08:48:28AM -0700, Junio C Hamano wrote:
+>
+>> > Before this include let's add:
+>> >
+>> >     The below documentation is the same as what=E2=80=99s found in
+>> >     git-config(1):
+>>=20
+>> I actually do not think we would want to do that.  I am all for the
+>> kind of 'include' proposed by this patch, and we should strive to
+>> make it easier for us to make sure the duplicated text are in sync.
+>>=20
+>> But that would mean that the readers will have to see the "is the
+>> same as the other one" over and over.  If our documentation set is
+>> consistent, they should not have to.
+>>=20
+>> I think we *must* make such a note in a total opposite case,
+>> i.e. "here are the summary of the most often used options; for full
+>> list, see git-config(1)".
+>
+> I disagree. _We_ know that the content is the same, because we are
+> looking at the source that says "include". But as a user, how do I know
+> when I get to one section or the other that it is something I have
+> already read and can skip over?
 
-Thanks,
-Matheus
+I want to raise the user expectation so that they would expect from
+our documentation, unless we say "these are different", we would
+never say conflicting things in two places.
+
+So,... I disagree.
