@@ -2,159 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A64AF1F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 06:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD991F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 07:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726973AbfG2Gyu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 02:54:50 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:35058 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726768AbfG2Gyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 02:54:50 -0400
-Received: by mail-qk1-f193.google.com with SMTP id r21so43451027qke.2
-        for <git@vger.kernel.org>; Sun, 28 Jul 2019 23:54:49 -0700 (PDT)
+        id S1726930AbfG2H6z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 03:58:55 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:43421 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfG2H6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 03:58:55 -0400
+Received: by mail-ed1-f49.google.com with SMTP id e3so58477446edr.10
+        for <git@vger.kernel.org>; Mon, 29 Jul 2019 00:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VQ+mrRJ1zBPM1zTxSwb7yi11QE0r6NrMuv1mc4bsmQg=;
-        b=jSQn09Lx6No3T3RQsR50nHvhdHOdK+fyMlPMU9nUT3G1u7Fa+kc/+Wk1FExxYcG1x6
-         1IwV7bamfu/+38Z1f+7os8SPG4aQ74/HC9y3KKG34HuVPB0NqgSNtkDI6OhcaOg8CPN+
-         AUGRXChvlCevAXnJ6kp78vJk7Y4jSzPL22gk1xw3nXpzjo+XdqYv7sA+3LXqyd6TvqdX
-         YbeyjTSJ5JebpIz04+rHy0YIfVSJSvSoCSbLlVPR/ig4rpC06+Dr6u1QSgadkGBlZC2S
-         2O7OiWf1cY7GYhTy7zqZjgQ9f5N/e549ug9qeZTL1l0Xuz46aujQ0mzHJzv2CeOeUKng
-         OKtA==
+        d=puck-ch.20150623.gappssmtp.com; s=20150623;
+        h=from:mime-version:subject:message-id:date:cc:to;
+        bh=bTDFoC7HHsmYWrOB2yVm5ZQfLeOnErXUotHWvqlTsO8=;
+        b=cH+sy2ZqvqCNLALD5VYSjxebLues6RRyj8bHd2wwf31NZZ+Sm/Rm+qIkoqJ8wq196Y
+         SDWaXgsVMI3F1yxQKYh9Xf2Cm+gT4adiayEssQpFPB7LtlKDY5mj8pLezyzMoZzSVmsZ
+         wOlGIBCF8bsGRv6jL5qac7hMbmIbQAoWSpSRL0asyhuP4aW3RQnCAmMQg1PwlAskIdy/
+         o+MM7kf7LpeM552risyTxWxWq6pQXLnhKuda4Sb11Xlqjn7tC+J0mkBL1LdiLSMVgc2I
+         ZVb7wKYXOKQ9/FI4CqYBVxaaQgmUxq+Wlexjbit5fqNgMC8fKJUD33SH537H7v687qyy
+         YqfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VQ+mrRJ1zBPM1zTxSwb7yi11QE0r6NrMuv1mc4bsmQg=;
-        b=ApA3tGv0v8EroWkFyw2AVY7V7lM4JCUiKO4wT9lPhQuSzUX11YJ2yyRaBXIZ8sWQID
-         WJgmtJccPDWzWNXSkhOM9oHg2BfSHbvmXmSLqbBgnd9dDIFLJEIyLui8oE4lTxoT6Fpq
-         1/YAcxn4KOWiTIxip0rKPB0EhI2UiDShw3O/fsZNiarzi6pnjxYdErYuaiM5J3lZAiOh
-         Su9+at63YeaK+8xfIoqXKOAsc6Qr57ZtRaDmb23gd7MewcCZbRd9xGKJuPRuNINoZrYg
-         Yx7TZF/BkeqOQNKwQlQozTN3faKIJJWmB39U8QuyTnVSdHyCHD2mMNHPi4MpvFUIzCkE
-         t/vw==
-X-Gm-Message-State: APjAAAVYc/E3VXSMwZy1d3jus/qaljH8mbycJt0OJjPKZ8M2kvc9exBQ
-        RPW/al/rE0ktQddJS1S/HvNlcGDAh2d5Ad91/qzfL6EtWIs=
-X-Google-Smtp-Source: APXvYqzXmOUIHkwqQAh5hfwQcwNKsdJFLi0jBQOrBkqhCraxsit2M5zpIy4fQ7BZLeARY3uTsdc7eLMfZH7zk8DYZyc=
-X-Received: by 2002:a37:8b86:: with SMTP id n128mr70418118qkd.446.1564383289437;
- Sun, 28 Jul 2019 23:54:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190726045645.2437-1-vcnaik94@gmail.com> <20190726085756.GA20017@sigill.intra.peff.net>
-In-Reply-To: <20190726085756.GA20017@sigill.intra.peff.net>
-From:   Varun Naik <vcnaik94@gmail.com>
-Date:   Sun, 28 Jul 2019 23:54:38 -0700
-Message-ID: <CAK_rgsH6hL3g+PVfcMuq1dQLeNJcii=D_dQ8anmWLvYrShmkNg@mail.gmail.com>
-Subject: Re: [PATCH] checkout.c: unstage empty deleted ita files
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:cc:to;
+        bh=bTDFoC7HHsmYWrOB2yVm5ZQfLeOnErXUotHWvqlTsO8=;
+        b=F2BO64fw0laZCOrqDM3q/bLlVE9AaIQglNNkN5V4fJnvVfcvnui2Ud3Olno8CKxEp+
+         axcxi23yx/A6sdHXttu0Zs6lQNs0lONtVJpc0Ry9J6ERND41SoJsI5HCO5Y4KxfbvfLF
+         LtytC9af9HgQM8/wCGz+AJ/UHf4I2DMEVXrBikjiY3jF7pqzfB0sZCPY/mvC8Y9e9QDO
+         sq7ztyZdfHwSQFyVbZGJidaVWUl6SUEIFfD3SrJCRuquhu08fYxkKqrtYZyzpcR5MPFd
+         A6bqctgcagcvlHmd/z5lzNjyHL0QL0o2Sy8WSDy0R23LG7zrEEOkY11KopBDdpIrsgcb
+         cAgg==
+X-Gm-Message-State: APjAAAX3cxFGGCjSP7/NRP1/3zXxp94zd/13Iz5qhoMtQcxjMJVE7aUH
+        WdLDokFCDlRSXRsw8VVCm131fY8=
+X-Google-Smtp-Source: APXvYqwE3IjJ1mV3+ijB9Fj8hvfndjstdKS0FQS0oA8YVSIywFoNKheC8SemDpA3jsOolpekAkWv+w==
+X-Received: by 2002:a50:eb0b:: with SMTP id y11mr94771058edp.224.1564387133710;
+        Mon, 29 Jul 2019 00:58:53 -0700 (PDT)
+Received: from ?IPv6:2001:620:7a3:701::acff:fe1d:13fd? ([2001:620:7a3:701:0:acff:fe1d:13fd])
+        by smtp.gmail.com with ESMTPSA id g7sm15549633eda.52.2019.07.29.00.58.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jul 2019 00:58:53 -0700 (PDT)
+From:   Olivier Bornet <olivier.bornet@puck.ch>
+X-Google-Original-From: Olivier Bornet <Olivier.Bornet@puck.ch>
+Content-Type: multipart/signed;
+        boundary="Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5";
+        protocol="application/pgp-signature";
+        micalg=pgp-sha1
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Problem with fsck and invalid submodule path in history
+Message-Id: <9C668779-15AC-4099-AAFA-7FFF519D426F@puck.ch>
+Date:   Mon, 29 Jul 2019 09:58:52 +0200
+Cc:     Olivier Bornet <Olivier.Bornet@puck.ch>
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 1:57 AM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Jul 25, 2019 at 09:56:45PM -0700, Varun Naik wrote:
->
-> > It is possible to delete a committed file from the index and then add it
-> > as intent-to-add. After `git checkout HEAD` or `git restore --staged`,
-> > the file should be identical in the index and HEAD. This patch provides
-> > the desired behavior even when the file is empty in the index.
->
-> OK, so the issue is that ITA entries have an empty-file sha1, so they
-> confuse the logic to decide if we can use the old entry. Your fix makes
-> sense.
->
-> > ---
-> > CC Jeff because you wrote the code that I am changing now.
-> >
-> > checkout.c:update_some() discards the newly created cache entry when its
-> > mode and oid match those of the old entry. Since an ita file has the
-> > same oid as an empty file, an empty deleted ita file passes both of
-> > these checks, and the new entry is discarded. In this case, the file
-> > should be added to the cache instead.
-> >
-> > This change should not affect newly added ita files. For those, inside
-> > tree.c:read_tree_1(), tree_entry_interesting() returns
-> > entry_not_interesting, so fn (which points to update_some()) is never
-> > called.
->
-> These two paragraphs would be a nice addition to the actual commit
-> message.
->
 
-I will add them to the commit message, with some minor changes.
+--Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index 91f8509f85..27daa09c3c 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -126,6 +126,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
-> >       if (pos >= 0) {
-> >               struct cache_entry *old = active_cache[pos];
-> >               if (ce->ce_mode == old->ce_mode &&
-> > +                 !ce_intent_to_add(old) &&
-> >                   oideq(&ce->oid, &old->oid)) {
-> >                       old->ce_flags |= CE_UPDATE;
-> >                       discard_cache_entry(ce);
->
-> My first thought here was that we could skip ITA entries here only when
-> the HEAD hash is also the empty blob, which would let us retain index
-> results in more cases. But it doesn't help. If the HEAD entry isn't the
-> empty blob, then we'll have !oideq() and we'll skip anyway, because an
-> ITA entry must be the empty blob (if we `git add` some other content,
-> then it ceases to be ITA).
->
-> So it makes sense to just always skip this "retain the old index entry"
-> block for any ITA entry.
->
-> > +test_expect_success 'checkout HEAD adds deleted intent-to-add file back to index' '
-> > +     echo "nonempty" >nonempty &&
-> > +     >empty &&
-> > +     git add nonempty empty &&
-> > +     git commit -m "create files to be deleted" &&
-> > +     git rm --cached nonempty empty &&
-> > +     git add -N nonempty empty &&
-> > +     git checkout HEAD nonempty empty &&
-> > +     git diff --staged --exit-code
-> > +'
->
-> This clearly demonstrates the problem. Nice.
->
-> > +test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
-> > +     echo "nonempty" >nonempty &&
-> > +     >empty &&
-> > +     git add nonempty empty &&
-> > +     git commit -m "create files to be deleted" &&
-> > +     git rm --cached nonempty empty &&
-> > +     git add -N nonempty empty &&
-> > +     git restore --staged nonempty empty &&
-> > +     git diff --staged --exit-code
-> > +'
->
-> Hmm. This git-restore test means we don't apply to maint. But wouldn't
-> we want the fix for "checkout" there?
->
-> I.e., I'd expect a patch to fix and test git-checkout, and then an
-> additional patch to be added on the merge of that plus master to test
-> git-restore.
->
+Hello,
 
-To make sure I understand, do you mean that I should omit the test
-case for "restore" right now, wait for the patch to reach master, and
-then create another patch for the "restore" test case?
+I have a git repository with an error in a submodule path in the =
+history.
+The submodule path is =E2=80=9C-f=E2=80=9D, which is not allowed. But =
+for some reason, it=E2=80=99s in the history of the git, and I=E2=80=99m =
+trying to find a way to manage it without having to rewrite the full =
+history on the main gitlab (if possible)...
 
-> Other than that, the patch looks good to me.
->
-> -Peff
+To reproduce this unwanted history:
 
-Varun
+    mkdir test-bad-history
+    cd test-bad-history
+    echo "Test git submodule problems" > README.md
+    git init
+    git add README.md
+    git commit --message=3D"Start test"
+    git submodule add https://github.com/leachim6/hello-world.git
+    git commit --message=3D"Commit new submodule with correct path"
+    # the bad part...
+    git mv hello-world -- -f
+    git commit --message=3D"Move submodule to an invalid path"
+    # correct it...
+    git mv -- -f valid-path
+    sed -i.bak 's/-f/valid-path/' .gitmodules
+    git add .gitmodules
+    git commit --message=3D"Back to a valid path"
+
+After that, even if the git is working correctly, we have a =E2=80=9Cbad=E2=
+=80=9D history if we check with fsck:
+
+    $ git fsck
+    Checking object directories: 100% (256/256), done.
+    error in blob 19a97d3b70760c74b780c8134e33f5392292c2e6: =
+gitmodulesPath: disallowed submodule path: -f
+
+Is it possible to correct it? Must git handle this kind of errors?
+
+Thanks in advance for any help.
+
+--
+Olivier Bornet
+Olivier.Bornet@puck.ch
+
+
+--Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF0EARECAB0WIQTQBq6Ke3j78UKE67h2PdH8xT2SGAUCXT6nPAAKCRB2PdH8xT2S
+GEkyAKDa1ZIZjJbp10UkCAjwRhbS8brtZACgi4pCWcFaeh2E1RJWLC3rQINkbAQ=
+=bPnx
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_BD6A03FD-D20F-433E-AEDF-36EEA69F84D5--
