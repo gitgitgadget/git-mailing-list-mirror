@@ -2,110 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E21CA1F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 09:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9F171F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 09:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726195AbfG2Jje (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 05:39:34 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:37445 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725818AbfG2Jjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 05:39:33 -0400
-Received: by mail-wr1-f44.google.com with SMTP id n9so35961831wrr.4
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 02:39:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=KteUGlY++1znoeMCjdCJE0hGR822St3yRo4UYroANLA=;
-        b=kFeGiPvSEIyM+XvbntEuFUURH5GYXnfY3niAGd/CPCvspPQQrED+rV6b61IwvPSetx
-         boHMYdcv2MWJ9vxZ6u9bVuXkFid5i4xqC9fUbhfnYqx/iNSTGW2yNVDxOSabfdwMqGlU
-         PLWQ8nKcxFtLJHkyFZ7OEDPIgur3DPnrZPr1wE9ZNzgTXWKs831hCXh3eyImPhsxlXOv
-         GB8e3Zm7M5klxxt6EPsvoHZE0MVe4PQiYjY2h1gPtL9GuNuqNMfQhSTxVPy+3/GppE71
-         0sAkOxAx+ROkcYtSB+36cQ8VzzMXemiBnAxyOG6kviOfpB1N6NQQGP86XvjdXqgX5jG0
-         E5Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=KteUGlY++1znoeMCjdCJE0hGR822St3yRo4UYroANLA=;
-        b=TBLNZeNYE2mgbNAd0nrP7fsQ7LLqX4B3gLILOEG2b2yTKnxOfjqheWJ56EZ7nDKkd6
-         FJOdr+mofHiSEpcPCqavW3oPiEMbaNvZ2zNmv6FWlLkzNLGxdD5e1jNySefnF0iyHLLw
-         XJgxKTR11eEvn4Ur34ayHW8krtcwfPbKNvCNvN4bRFXl8BUvm+B8db51cRk7cOoj+pCz
-         OAtFdncrVZH5ugh7CSGGg74ub5NEU9dnqj/oBfAZb9Kp0pRWh3Njn4P8KyO+1amQfevO
-         r2beYMMsYvUnJZrY4fPtFV8lTMyfq0uRjXRHrYwHsOTOuguKyiHYHQAKnhGcPU00sYHp
-         Pa3w==
-X-Gm-Message-State: APjAAAWNPbBOAEu8Mp8SiVeZjHPGsbMmHrpRQ8L0rGv5VgzqiOv7Qc+3
-        hdLgCOCXwtWGvHX8Hl3SPw8=
-X-Google-Smtp-Source: APXvYqxg1rUDm1mhiusVNfId6W+o3RFalusC7hExDeH9EBmxTn0YIDLduLnpL4Ooem4QojMY9jX9kA==
-X-Received: by 2002:a5d:428a:: with SMTP id k10mr1070180wrq.329.1564393172128;
-        Mon, 29 Jul 2019 02:39:32 -0700 (PDT)
-Received: from szeder.dev (x4dbd8f4e.dyn.telefonica.de. [77.189.143.78])
-        by smtp.gmail.com with ESMTPSA id q18sm73459672wrw.36.2019.07.29.02.39.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jul 2019 02:39:31 -0700 (PDT)
-Date:   Mon, 29 Jul 2019 11:39:28 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Olivier Bornet <olivier.bornet@puck.ch>
+        id S1726358AbfG2Jma (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 05:42:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53876 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725818AbfG2Jma (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 05:42:30 -0400
+Received: (qmail 21379 invoked by uid 109); 29 Jul 2019 09:42:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 09:42:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26801 invoked by uid 111); 29 Jul 2019 09:44:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 05:44:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 29 Jul 2019 05:42:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     ardi <ardillasdelmonte@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Problem with fsck and invalid submodule path in history
-Message-ID: <20190729093928.GP20404@szeder.dev>
-References: <9C668779-15AC-4099-AAFA-7FFF519D426F@puck.ch>
+Subject: Re: Settings for minimizing repacking (and keeping 'rsync' happy)
+Message-ID: <20190729094229.GA2415@sigill.intra.peff.net>
+References: <CA+fZqCXBjA5jsYg7L7X1VhJZXrp9NP+dR1SQWK9fAf9b1jgpCg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9C668779-15AC-4099-AAFA-7FFF519D426F@puck.ch>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CA+fZqCXBjA5jsYg7L7X1VhJZXrp9NP+dR1SQWK9fAf9b1jgpCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 29, 2019 at 09:58:52AM +0200, Olivier Bornet wrote:
-> I have a git repository with an error in a submodule path in the history.
-> The submodule path is “-f”, which is not allowed. But for some reason, it’s in the history of the git, and I’m trying to find a way to manage it without having to rewrite the full history on the main gitlab (if possible)...
+On Sun, Jul 28, 2019 at 01:41:34AM +0200, ardi wrote:
+
+> Some of my Git repositories have mirrors, maintained with 'rsync'. I
+> want to have some level of repacking, so that the repositories are
+> efficient, but I also want it to minimize it, so that 'rsync' never
+> has to perform a big transfer for the repositories.
+
+Yes, this is a common problem. The solutions I've seen/used are:
+
+  - use a git-aware transport like git-fetch that can negotiate which
+    objects to send
+
+  - use a tool that can find duplicated chunks across files. Many
+    de-duping backup systems (e.g., borg) use a rolling hash similar to
+    rsync to find moveable chunks, but then look up those chunks in a
+    master index (whereas rsync is always looking to match chunks in a
+    file of the same name). This works well in practice because Git is
+    not usually rewriting most of the data, but just shuffling it around
+    between files.
+
+    In theory it shouldn't be that hard to tell the receiving rsync to
+    look for source chunks not just in the file of the same name, but
+    from a set of existing packfiles (say, everything already in
+    .git/objects/pack/ on the receiver). But I don't know offhand of an
+    option to rsync to do so.
+
+> For example, I think it would be fine if files are repacked just once
+> in their lifetimes, and then that resulting pack file is never
+> repacked again. I did read the gc.bigPackThreshold and
+> gc.autoPackLimit settings, but I don't think they would accomplish
+> that.
 > 
-> To reproduce this unwanted history:
-
-> After that, even if the git is working correctly, we have a “bad” history if we check with fsck:
+> Basically, what I'm describing is the behaviour of not packing files
+> until the resulting pack would be a given size (say 10MB for example),
+> and then never repack such ~10MB packs again, ever.
 > 
->     $ git fsck
->     Checking object directories: 100% (256/256), done.
->     error in blob 19a97d3b70760c74b780c8134e33f5392292c2e6: gitmodulesPath: disallowed submodule path: -f
-> 
-> Is it possible to correct it? Must git handle this kind of errors?
+> Can this be done with some Git settings? And do you foresee any kind
+> of serious drawback or potential problem with this kind of behaviour?
 
-To correct without rewriting history, no.
+You can mark a pack to be kept forever by creating a matching
+"pack-1234abcd.keep" file. That doesn't do your automatic "I want 10MB
+packs" thing, but if you did it occasionally at the right frequency,
+you'd end up with a bunch of 10MB-ish packs.
 
-However, you can tell 'git fsck' to ignore it using the
-'fsck.skipList' configuration variable (see 'git help config'; for
-some reason it's not included in 'git fsck's documentation):
+But there are downsides to having a bunch of packs:
 
-  $ cat <<EOF >.git-fsck-skiplist
-  > # invalid submodule path
-  > 19a97d3b70760c74b780c8134e33f5392292c2e6
-  > EOF
-  $ git config fsck.skipList .git-fsck-skiplist
-  $ git fsck
-  Checking object directories: 100% (256/256), done.
+  - object lookups are O(log n) within a single pack, but O(n) over the
+    number of packs. So if you get a very large number of packs, normal
+    operations will start to suffer. This is mitigated by the new "midx"
+    feature, which generates an index for multiple packs.
 
-It may or may not be worth committing this file, I'm not quite sure
-what the best practice is.  By committing it others don't have to
-maintain such a skiplist file themselves, though they still have to
-set the config variable.  OTOH, if anyone sets this config variable
-and attempts to run 'git fsck' while on a branch that doesn't contain
-this file, then they will get a 'fatal: could not open object name
-list: .git-fsck-skiplist' error.
+  - git doesn't allow delta compression across packs. So imagine you
+    have ten versions of a file that's 5kb, and each version changes
+    about 100 bytes. In a single pack, we'd store one base object, plus
+    9 deltas, for a total of about 6kb (5000 + 9*100). Across two packs,
+    we'd store ~11kb (2*5000 + 8*100). And the worst case is ten packs
+    at 50kb.
 
-And it won't help anyone cloning the repository with
-'fetch.fsckObjects' enabled.
+    As a more real-world example, try this:
 
+      git -c pack.packsizelimit=10M repack -ad
+
+    In a fresh clone of git.git, the size of the pack directory jumps
+    from 88MB to 168MB. And in a time-based split (i.e., creating a new
+    10MB pack every week), it may be even worse. The command above
+    ordered the objects optimally to keep deltas together and _then_
+    split things. Whereas a time-based scheme would likely sprinkle
+    versions of a file across more packs.
+
+    It should be possible to loosen this restriction and allow
+    cross-pack deltas, but it would be very risky. The assumption that
+    packs are independent of each other is implicit in much of Git's
+    repacking code, so it would be easy to introduce a bug where we
+    generate a circular dependency (object A in pack X is a delta
+    against object B in pack Y, which is a delta against object A --
+    oops, we don't have a full copy anymore).
+
+-Peff
