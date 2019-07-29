@@ -2,107 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6391F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 15:33:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C469C1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 15:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388115AbfG2Pdz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 11:33:55 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42178 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387887AbfG2Pdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 11:33:54 -0400
-Received: by mail-ed1-f65.google.com with SMTP id v15so59735513eds.9
-        for <git@vger.kernel.org>; Mon, 29 Jul 2019 08:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+t11DXCLyk/c/2CdbkSPdAq+E30cVZHAU/WTu5bW7qM=;
-        b=tUHOKoN+Aip3lm544jwbkrEDmqm/xyhTRibXoDiOzgarHIsUkRAWFuxjex+3H6yADw
-         2SjLSn3NLwcgWC0rfXvB8Alu1v0P3zQfP+bneAYeguFvppDzGpQsLblyiBVyeiTeIRHn
-         r92yqvH4/wu+fjOUHuDPlMyU6og6HOPQOPpLvMT68815e3MdV5xSrLhsFIyOl4yCVRVg
-         p75BeH8a08HqsFOhapU0UnByqTdaTEM55N+8QYGYd/GcVXldQFV66IkyChgja7IOI0v+
-         Rhc8BkKV5TryI514XY9GXxmDS4HdHwR5zEWsQocuMyNkcZAsrX2zPvKOGO+0flTRtE0x
-         V9nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=+t11DXCLyk/c/2CdbkSPdAq+E30cVZHAU/WTu5bW7qM=;
-        b=CnwVF9d53cNTzscJC+g/aQEOrJBWFkd9UahV+WSbF1YmWFImlpdTsG9cUE6BQngX6v
-         G2dB7LIXAzSQ2v9fyCPlu4vaF5+MsTsHATvwxQ989fE2N8cGQysyUm1BVcYvLJSTspLL
-         2HdVfxjDHtyfdg/wYV3JdK8AkDpmMBFk1xgREZnyI0tBje+PTlSD/JWjyPXsNJGl3ae8
-         ht/WwyqfsxX/v62hULotLfpW9+a5HaCqvGNKseWDVR3TZoDnJ2sZawLCQLdu0d5iQ0cK
-         qYaVb1hOSNu7fKaA9iBH4WEGwjjNPWffBor+0xUEGYDYiQelDYtAYSAx091uvVanC3Hl
-         3U0A==
-X-Gm-Message-State: APjAAAWzJXwBTpUUFCKm/CHoYOyqWN1yoUZF9If9seKPPnlU975MtXtm
-        l3vzSNsaxX96+rgyh0NUaWg=
-X-Google-Smtp-Source: APXvYqwmA8HjF1qV3SMX8SNfG/rK+IzEJa3DT/kJztC9zV9wBJgKbO26eHuJIxUEtLyQVs6tkBcpCw==
-X-Received: by 2002:a17:907:20a6:: with SMTP id pw6mr74770407ejb.111.1564414432622;
-        Mon, 29 Jul 2019 08:33:52 -0700 (PDT)
-Received: from evledraar (i237193.upc-i.chello.nl. [62.195.237.193])
-        by smtp.gmail.com with ESMTPSA id jr20sm11505169ejb.88.2019.07.29.08.33.51
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 29 Jul 2019 08:33:51 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Olivier Bornet <olivier.bornet@puck.ch>
+        id S2388227AbfG2Psj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 11:48:39 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57085 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387495AbfG2Psj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 11:48:39 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 141FA83867;
+        Mon, 29 Jul 2019 11:48:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=peMN0sz9GA5B
+        0/6uuD781iW4nqM=; b=A3zJVPHqubU2HLIbB4HxrdPLssR1n+UZ+0f3qxMGzghU
+        aT14xS8HMHPzfv5gicC1JTnSlEaNPmO1TQWm8jjHi+SSy1PnaezKYo00RU80Sw5z
+        dSl6r8HIuDdqivUguL7G/Kxq1U7B3hyfIPcSCxlyPzfCZWvQfdUmGun5Xe83zs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZDaQmN
+        aeC3JNq5V/rc3kYKX/CuIrqnGkQqVajp2dR0KFSN0VVAqcHUtUxhsYPoNIHVlstF
+        xOikiJYni/afjcrHD9gPuVO0SbH0WgxT1hrPDPGszIAMMBfhPpyP30ezah5L/zZn
+        ISLGK3AXktbZjULc/buD6TesNFamjG8achdtI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0CE7583866;
+        Mon, 29 Jul 2019 11:48:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 359DF83865;
+        Mon, 29 Jul 2019 11:48:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Olivier Bornet <olivier.bornet@puck.ch>
 Subject: Re: [PATCH] Documentation/git-fsck.txt: include fsck.* config variables
-References: <20190729093928.GP20404@szeder.dev> <20190729095914.30573-1-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190729095914.30573-1-szeder.dev@gmail.com>
-Date:   Mon, 29 Jul 2019 17:33:51 +0200
-Message-ID: <87sgqo6ejk.fsf@evledraar.gmail.com>
+References: <20190729093928.GP20404@szeder.dev>
+        <20190729095914.30573-1-szeder.dev@gmail.com>
+        <87sgqo6ejk.fsf@evledraar.gmail.com>
+Date:   Mon, 29 Jul 2019 08:48:28 -0700
+In-Reply-To: <87sgqo6ejk.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 29 Jul 2019 17:33:51 +0200")
+Message-ID: <xmqq36iox2nn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5093FF3E-B218-11E9-842F-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Mon, Jul 29 2019, SZEDER G=C3=A1bor wrote:
-
-> The 'fsck.skipList' and 'fsck.<msg-id>' config variables might be
-> easier to discover when they are documented in 'git fsck's man page.
+> On Mon, Jul 29 2019, SZEDER G=C3=A1bor wrote:
 >
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  Documentation/git-fsck.txt | 5 +++++
->  1 file changed, 5 insertions(+)
+>> The 'fsck.skipList' and 'fsck.<msg-id>' config variables might be
+>> easier to discover when they are documented in 'git fsck's man page.
+>>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> ---
+>>  Documentation/git-fsck.txt | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+>> index e0eae642c1..d72d15be5b 100644
+>> --- a/Documentation/git-fsck.txt
+>> +++ b/Documentation/git-fsck.txt
+>> @@ -104,6 +104,11 @@ care about this output and want to speed it up fu=
+rther.
+>>  	progress status even if the standard error stream is not
+>>  	directed to a terminal.
+>>
+>> +CONFIGURATION
+>> +-------------
+>> +
+>> +include::config/fsck.txt[]
 >
-> diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-> index e0eae642c1..d72d15be5b 100644
-> --- a/Documentation/git-fsck.txt
-> +++ b/Documentation/git-fsck.txt
-> @@ -104,6 +104,11 @@ care about this output and want to speed it up furth=
-er.
->  	progress status even if the standard error stream is not
->  	directed to a terminal.
+> Before this include let's add:
 >
-> +CONFIGURATION
-> +-------------
-> +
-> +include::config/fsck.txt[]
+>     The below documentation is the same as what=E2=80=99s found in
+>     git-config(1):
 
-Before this include let's add:
+I actually do not think we would want to do that.  I am all for the
+kind of 'include' proposed by this patch, and we should strive to
+make it easier for us to make sure the duplicated text are in sync.
 
-    The below documentation is the same as what=E2=80=99s found in
-    git-config(1):
+But that would mean that the readers will have to see the "is the
+same as the other one" over and over.  If our documentation set is
+consistent, they should not have to.
 
-As I did for a similar change in git-gc in b6a8d09f6d ("gc docs: include
-the "gc.*" section from "config" in "gc"", 2019-04-07). Sometimes we
-repeat ourselves, it helps the reader to know this isn't some slightly
-different prose than what's in git-config.
+I think we *must* make such a note in a total opposite case,
+i.e. "here are the summary of the most often used options; for full
+list, see git-config(1)".
 
-> +
->  DISCUSSION
->  ----------
+> As I did for a similar change in git-gc in b6a8d09f6d ("gc docs: includ=
+e
+> the "gc.*" section from "config" in "gc"", 2019-04-07). Sometimes we
+> repeat ourselves, it helps the reader to know this isn't some slightly
+> different prose than what's in git-config.
+
+So, I think we should revert that part out of b6a8d09f6d, too.
