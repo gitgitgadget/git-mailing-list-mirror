@@ -7,63 +7,67 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75F381F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 10:10:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C65B01F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 10:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728103AbfG2KK4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 06:10:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53908 "HELO cloud.peff.net"
+        id S1728122AbfG2KUL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 06:20:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53922 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726358AbfG2KK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 06:10:56 -0400
-Received: (qmail 21727 invoked by uid 109); 29 Jul 2019 10:10:55 -0000
+        id S1726358AbfG2KUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 06:20:11 -0400
+Received: (qmail 21841 invoked by uid 109); 29 Jul 2019 10:20:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 10:10:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Jul 2019 10:20:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27004 invoked by uid 111); 29 Jul 2019 10:12:30 -0000
+Received: (qmail 27090 invoked by uid 111); 29 Jul 2019 10:21:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 06:12:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jul 2019 06:21:45 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 29 Jul 2019 06:10:55 -0400
+Date:   Mon, 29 Jul 2019 06:20:10 -0400
 From:   Jeff King <peff@peff.net>
-To:     Gary Poli <GPoli@innout.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: 2.22 issue across samba
-Message-ID: <20190729101054.GB2755@sigill.intra.peff.net>
-References: <6e717834410e46d7b194785323dc4cbb@innout.com>
+To:     Christopher Head <bugs@chead.ca>
+Cc:     git@vger.kernel.org
+Subject: Re: Push force-with-lease with multi-URL remote
+Message-ID: <20190729102009.GC2755@sigill.intra.peff.net>
+References: <20190727095440.1aac3b3c@amdahl.home.chead.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6e717834410e46d7b194785323dc4cbb@innout.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190727095440.1aac3b3c@amdahl.home.chead.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 26, 2019 at 08:15:49PM +0000, Gary Poli wrote:
+On Sat, Jul 27, 2019 at 09:54:40AM -0700, Christopher Head wrote:
 
-> I'm running git for windows installed locally. Windows 10 Pro version
-> 1903 OS Build 18362.239. I have a repository on a UNIX machine running
-> AIX 7.1 TL4 SP2. I use SAMBA 3.0.23d to mount the drive for use. I
-> upgraded to git 2.22 and am having issues. Even starting from a fresh
-> clone of the repo, the head immediately detaches. After a few commands
-> like status or branch it stops recognizing the repo altogether. I
-> suspect it is having trouble reading or writing to itself; perhaps the
-> index is getting corrupted. I reverted to git 2.14 and I'm working
-> fine again. I've got my system admin looking into updating both AIX
-> and SAMBA, but I thought I would report the issue here as well. Let me
-> know if you need anything else from me. Thanks.
+> For each URL:
+> 1. Read refs/heads/mybranch (call this commit X)
+> 2. Read refs/remotes/myremote/mybranch (call this commit Y)
+> 3. Send to the URL an atomic compare-and-swap, replacing Y with X.
+> 4. If step 3 succeeded, change refs/remotes/myremote/mybranch to X.
+> 
+> This means that, assuming both URLs start out identical, the second URL
+> will always fail because refs/remots/myremote/mybranch has been updated
+> from Y to X, and therefore the second compare-and-swap fails. I can’t
+> imagine any situation in which this behaviour is actually useful.
 
-I don't have any particular thoughts on what might be the cause here.
-But if:
+My general feeling is that having multiple push URLs for a remote is a
+poorly designed feature in Git (and I think the discussion elsewhere in
+this thread went there, as well).
 
-  - you can reliably produce the problem on git 2.22 but not on git 2.14
-
-and
-
-  - you are able to build Git from source
-
-then it would be useful to use git-bisect between those versions to find the
-commit introducing the problem.
+But since we do have it, and if we are not going to deprecate it[1], it
+seems like this case should pick the X value of myremote/mybranch ahead
+of time, and then use it consistently for each push. There are questions
+of partial push failures, etc, but as you note the current behavior
+isn't ever useful. I think it just a case where two features do not
+interact well (and since neither is used all that frequently, nobody has
+noticed).
 
 -Peff
+
+[1] I would not be at all sad to see multiple URLs like this get
+    deprecated in favor of multiple remotes with convenient grouping
+    options. If that happens, then your original problem goes away. ;)
