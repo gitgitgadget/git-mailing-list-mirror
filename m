@@ -7,177 +7,100 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEC291F462
-	for <e@80x24.org>; Mon, 29 Jul 2019 04:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F4A1F462
+	for <e@80x24.org>; Mon, 29 Jul 2019 05:10:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbfG2E51 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jul 2019 00:57:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65346 "EHLO
+        id S1726659AbfG2FJ1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jul 2019 01:09:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54436 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726134AbfG2E51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jul 2019 00:57:27 -0400
+        with ESMTP id S1726012AbfG2FJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jul 2019 01:09:27 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D8ED165C23;
-        Mon, 29 Jul 2019 00:57:21 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D9F8165DE1;
+        Mon, 29 Jul 2019 01:09:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dltvMPO4dF0p
-        9cZeXIC0G+jUs5k=; b=xStMkrXENiDyp/egAZ75NSGf/f9wTr7YHRtTv7kVztvK
-        FXVjcHn2cy6gWIopUgKV2ADtCkHVI7tZfFlWRhuXWL+Whrix41Z4+tfxHC0sE1vJ
-        09yC1xArsoA6mlZrtcqDMvNqZGyrZw9YsHOwleIsa0u8RpKHsDCg122O/YzjKQE=
+        :content-type; s=sasl; bh=H82BTxiSOZeZ8gclxSVvP1nDd7Q=; b=Vv0eRX
+        9pHnUodgQU1xbw1PDzsgG4jszses8UfhEOluAnl+ODwrEcCGSo7pRGOq1vl4I+LL
+        XkCsXTHyrKVfNl1WLeVyJ3pIYNjioQgLBLs8fe52ZbHBExEqagPZ/DUPZLfJ48YZ
+        humRhcBSwZy6t7hZ3cIaEbHzwRIuKcd4peepU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WW0cZM
-        6jeCPrhTxfqxBwDj0Xn7F3/sZCmhHqTDLNuyAVougP1Q5GgHLVXbLsKIHGPJihkt
-        WOAziucksH/Xdc4HFyF27IqNERy0lDv7wq+OEEhOURV4KecjbSDjbhZwpROrkuiD
-        39xSofzU7fI8fU2kyyUi7reZXLW1//wj+w1SM=
+        :content-type; q=dns; s=sasl; b=QMTnU7CF5FoE7eypbMUr4IiZIVEw7hps
+        zPXQ/HnQHaJbLw5EhlRCGBZbEAhOtJAukqV4CyqH+Kqlh8Me1wPuSOpjRe+p3w0N
+        f/P/JTkMSSZBnvn3ysuvIUHgp9mADhGix7JaeYJvtF/9pki6K2dKkbT7Nkk+Un6D
+        E4qjmoAVATg=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 444C8165C22;
-        Mon, 29 Jul 2019 00:57:21 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05BF5165DE0;
+        Mon, 29 Jul 2019 01:09:25 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A7068165C21;
-        Mon, 29 Jul 2019 00:57:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D4E5165DDF;
+        Mon, 29 Jul 2019 01:09:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, sandals@crustytoothpaste.net
-Subject: Re: [RFC PATCH] grep: allow for run time disabling of JIT in PCRE
-References: <20190728235427.41425-1-carenas@gmail.com>
-Date:   Sun, 28 Jul 2019 21:57:19 -0700
-In-Reply-To: <20190728235427.41425-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Sun, 28 Jul 2019 16:54:27 -0700")
-Message-ID: <xmqqimrll9ow.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+References: <20190728151726.9188-1-me@yadavpratyush.com>
+        <20190728213634.GB162590@genre.crustytoothpaste.net>
+        <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com>
+        <20190728224943.GC162590@genre.crustytoothpaste.net>
+Date:   Sun, 28 Jul 2019 22:09:23 -0700
+In-Reply-To: <20190728224943.GC162590@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 28 Jul 2019 22:49:44 +0000")
+Message-ID: <xmqqef29l94s.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 58B9ED50-B1BD-11E9-962B-46F8B7964D18-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 081F90FA-B1BF-11E9-B73F-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> PCRE1 allowed for a compile time flag to disable JIT, but PCRE2 never
-> had one, forcing the use of JIT if -P was requested.
+> These are probably pretty cheap on all but the largest repositories. I
+> was worried we were enumerating all refs or all history or something
+> like that.
 >
-> After ed0479ce3d (Merge branch 'ab/no-kwset' into next, 2019-07-15)
-> the PCRE2 engine will be used more broadly and therefore adding this
-> knob will give users a fallback for situations like the one observed
-> in OpenBSD with a JIT enabled PCRE2, because of W^X restrictions:
+>> ui_do_rescan changes the focus to the first diff. It is executed when you
+>> press F5 or choose Rescan from the menu. do_rescan does not do that.
+>> 
+>> Resetting to first diff on focus change will get annoying when you are in
+>> the middle of looking at some other file. do_rescan just updates the
+>> software state without changing what file you are looking at or where in
+>> that file you are looking at.
 >
->   $ git grep 'foo bar'
->   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
->   $ git grep -G 'foo bar'
->   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
->   $ git grep -E 'foo bar'
->   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
->   $ git grep -F 'foo bar'
->   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+> Yeah, this definitely seems like the right move.
 
-;-) Yeah, we should have known that security-paranoid distros would
-have W^X issues with this series, too.
+"Right move" in the sense that it would try not to change what is
+being shown too much.  Rescan will still not be without cost, so it
+will be annoying if it happens when the user did not make any
+change.
 
-I am not sure I like a config-only knob like this,
-though---shouldn't we have a command line knob to turn jit off
-first, and then for those who gets tired of having to type it all
-the time add the configuration to flip the default for them?
+And it is annoying even more, if the user did make change in another
+window.  You may make a change perhaps from the command line, write
+a short e-mail about it to let others know in your MUA, and then
+switch the focus back to git-gui to continue working.  Refreshing
+upon git-gui getting focus is no better than manually pressing F5 or
+whatever at that point.  It is too late at that point for spending
+extra cycles without being asked without getting annoying to the user.
 
-Other than that, the feature itself makes quite a lot of sense.
+The right time to spend cycles (in the background) in the above
+sample sequence is immediately after you made a change and switch to
+your MUA---while you are typing a few paragraphs, you would not mind
+git-gui spending seconds to repaint.
 
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  Documentation/git-grep.txt |  4 ++++
->  grep.c                     | 15 +++++++++++++--
->  grep.h                     |  1 +
->  3 files changed, 18 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index c89fb569e3..ff544bdeec 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -69,6 +69,10 @@ grep.fallbackToNoIndex::
->  	If set to true, fall back to git grep --no-index if git grep
->  	is executed outside of a git repository.  Defaults to false.
-> =20
-> +pcre.jit::
-> +	If set to false, disable JIT when using PCRE.  Defaults to
-> +	true.
-> +
-> =20
->  OPTIONS
->  -------
-> diff --git a/grep.c b/grep.c
-> index c7c06ae08d..3524d353dd 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -56,6 +56,7 @@ void init_grep_defaults(struct repository *repo)
->  	opt->repo =3D repo;
->  	opt->relative =3D 1;
->  	opt->pathname =3D 1;
-> +	opt->pcre_jit =3D 1;
->  	opt->max_depth =3D -1;
->  	opt->pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED;
->  	color_set(opt->colors[GREP_COLOR_CONTEXT], "");
-> @@ -125,6 +126,12 @@ int grep_config(const char *var, const char *value=
-, void *cb)
->  		return 0;
->  	}
-> =20
-> +	if (!strcmp(var, "pcre.jit")) {
-> +		int is_bool;
-> +		opt->pcre_jit =3D git_config_bool_or_int(var, value, &is_bool);
-> +		return 0;
-> +	}
-> +
->  	if (!strcmp(var, "color.grep"))
->  		opt->color =3D git_config_colorbool(var, value);
->  	if (!strcmp(var, "color.grep.match")) {
-> @@ -163,6 +170,7 @@ void grep_init(struct grep_opt *opt, struct reposit=
-ory *repo, const char *prefix
->  	opt->pattern_tail =3D &opt->pattern_list;
->  	opt->header_tail =3D &opt->header_list;
-> =20
-> +	opt->pcre_jit =3D def->pcre_jit;
->  	opt->only_matching =3D def->only_matching;
->  	opt->color =3D def->color;
->  	opt->extended_regexp_option =3D def->extended_regexp_option;
-> @@ -393,7 +401,8 @@ static void compile_pcre1_regexp(struct grep_pat *p=
-, const struct grep_opt *opt)
->  		die("%s", error);
-> =20
->  #ifdef GIT_PCRE1_USE_JIT
-> -	pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
-> +	if (opt->pcre_jit)
-> +		pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
->  #endif
->  }
-> =20
-> @@ -489,7 +498,9 @@ static void compile_pcre2_pattern(struct grep_pat *=
-p, const struct grep_opt *opt
->  		compile_regexp_failed(p, (const char *)&errbuf);
->  	}
-> =20
-> -	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
-> +	if (opt->pcre_jit)
-> +		pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
-> +
->  	if (p->pcre2_jit_on) {
->  		jitret =3D pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
->  		if (jitret)
-> diff --git a/grep.h b/grep.h
-> index c0c71eb4a9..fff152e606 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -151,6 +151,7 @@ struct grep_opt {
->  	int allow_textconv;
->  	int extended;
->  	int use_reflog_filter;
-> +	int pcre_jit;
->  	int pcre1;
->  	int pcre2;
->  	int relative;
+So probably a more productive use of our time, if we were to futz
+with git-gui, would be to figure out how git-gui can have an
+background idle process that notices a change in the repository and
+refreshes but only when you are *not* interacting with it (if it
+does things while you are interacting with it, it would become
+annoying and distracting), I would guess.  Just when you come back
+is the worst, and the most annoying, time to auto-refresh.
+
