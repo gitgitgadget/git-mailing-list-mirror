@@ -8,70 +8,72 @@ X-Spam-Status: No, score=-8.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F04A41F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 21:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECE9D1F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 22:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387819AbfG3VwP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 17:52:15 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39828 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728479AbfG3VwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 17:52:14 -0400
-Received: by mail-pg1-f194.google.com with SMTP id u17so30739321pgi.6
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 14:52:14 -0700 (PDT)
+        id S2387956AbfG3WCG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 18:02:06 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38610 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387561AbfG3WCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 18:02:05 -0400
+Received: by mail-pl1-f196.google.com with SMTP id az7so29403247plb.5
+        for <git@vger.kernel.org>; Tue, 30 Jul 2019 15:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hv8lRWv35QAqhOfgIKapMXOzQHgpfNx+yvhcM/mq3ns=;
-        b=iHnWW26OVBsjh1NJe9FHB2bOW1zOAvcApc0ZxSLRPJB77sxX5jVFFdJLwcOGOnjwEt
-         ETjLLn4e/zI6b9xx9vt6C8lQCOWk243brTJbyR4BRajWmL8bZrrB3Wzwy7TSv3v8SZka
-         mEFfDwuqOCuUaNLEenKtXkQgMS3KgGLqucoMAUdQvAiKLEnyVQyblrZjxKw9Kg77mV2c
-         kROESc/SvxDBAVSf8wukf7Ovsriz//yr2+3V8CibNK+kB6g4MfkoXdTL/4WZdVlUHr7+
-         BFOcfVmUW20InJGiE9InegBKpYiG2EG/XCLPp6ls4JtyTRYkHBm3d37u3k0kqGfZwIPf
-         C6FA==
+        bh=Dw3+PCfERjGQwFsU1BTY+zMjj+Opm3NV77eoT9q3/LU=;
+        b=Pyi42Kgth4QA66XKq+eWhNSUl49yHafAZMEDB+H4A2J5D7rW+LVnarUhnvqZFWaRW0
+         Cha8iNKhdnAspImiZgXzLgFFeDowEHgAhHViiH/9ITkU/qnspdAMmeXG6bFH8fZxelme
+         vp9e2S5CKKfpU4MWSLHqeipZgi0tKqNHXN7srH4fA4sMoQkQZFndfJOyk6TxKaU1L4df
+         uZh6jcDw0am4k5CM62R0VCmLjg69bZRn49dvvpiD0C3JSdC5F1NyIQYwG4tlcfcr8EzY
+         /BEAfNJT1NDOcjvm2gY9WF9uZIdAc8xXSaLpnaqi2CU2yX0gUG7YT7Z2FykHxKKH8kcN
+         DPMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
          :in-reply-to:user-agent;
-        bh=Hv8lRWv35QAqhOfgIKapMXOzQHgpfNx+yvhcM/mq3ns=;
-        b=iar7Xa/emoEOyJlPhO9eVCY1uSQy3Yg981GcPRmcGJK4BwWDMqi4R8WVriL7vw1DLi
-         VRQ7Pacz4dYXbydqTGMWyM1Qz+rK3luhPQkVtCLkic21/NWErkLBrndAnt4LLVr7WoqF
-         bFMtPXyzYpCgtznQrm0f7Y9G2eZn9A1SHBtYl9eLAoBfxnwyaXPyAa3TFX4/9SLJF6KI
-         ZvM7Zv4lEpAnIxNbo4b2BWI2TiI6G6tfZS9CAvNgyrINegQftqLvYV9x38JaJy+syH7t
-         VE6a0RbJlfOSePgq3G9EBMaGJArWemkwCdschb71FEjl0e69AhYI1ahwWgtx5M/ZcH6x
-         leoA==
-X-Gm-Message-State: APjAAAWEXy3CRBDt3YLWDIrK6tIDkIztK18h8qvzppvYBhUrzamD9UYO
-        z5nGkRSHi1Dbte3rk3n8WtxobER551USAw==
-X-Google-Smtp-Source: APXvYqx9UXF6zkd4EXfR7Cnl9vjOHbE3mGT/K3XivqwXL+aq+8FQicEShFXhB10b4feEOp82rJKrRg==
-X-Received: by 2002:a63:904:: with SMTP id 4mr38016714pgj.19.1564523533343;
-        Tue, 30 Jul 2019 14:52:13 -0700 (PDT)
+        bh=Dw3+PCfERjGQwFsU1BTY+zMjj+Opm3NV77eoT9q3/LU=;
+        b=n2++ZNwMmY/C14RhNWj45LulYiZsyWC0tyLEmAbJRvfq62CGjVgEtYTk6/Yf5wcAGz
+         NDOYrNigSK8oUK7hGcnax3NX13fufXosFrjC+eHCO7ykZgKFmkOHpsEZZ5DcFJwXmeVk
+         gwxl70jy/xVjK5pdtFNpO3fXGm+EaOW3JXAnRB+/HYp8wrZtWdRCQyZbI1w1R7fGhg84
+         KY+K2XcmJBXfrAJL60WMOI6g8jYU2l3gcZbz4hXGax8o/YcOnASQ79+MZXn04VV2VhuD
+         FC3CUtvKSiklEnnI2+reIKpqfcDrRnQ8NY7rRxCo5ynWlCQdZ9l9hHp7ZXT6FlxJ9OZz
+         +Cxg==
+X-Gm-Message-State: APjAAAWBG3MAggaL84JmhA9LIC9zaS8DD8gr/LdIg+U7NDNRrRoiydx7
+        yMdy1km3C94nKGssNK6L92go+wJpnAahQQ==
+X-Google-Smtp-Source: APXvYqwgmcGoF/xu4JS5fHqlNZ+HQYdQSWpuyj/JUhoIebY6ZfE/nkF3oMVbPMkanWgsItj/+9xPuA==
+X-Received: by 2002:a17:902:76c6:: with SMTP id j6mr116904473plt.102.1564524124471;
+        Tue, 30 Jul 2019 15:02:04 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
-        by smtp.gmail.com with ESMTPSA id q8sm132449511pjq.20.2019.07.30.14.52.12
+        by smtp.gmail.com with ESMTPSA id j20sm63227043pfr.113.2019.07.30.15.02.03
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 30 Jul 2019 14:52:12 -0700 (PDT)
-Date:   Tue, 30 Jul 2019 14:52:07 -0700
+        Tue, 30 Jul 2019 15:02:03 -0700 (PDT)
+Date:   Tue, 30 Jul 2019 15:01:58 -0700
 From:   Josh Steadmon <steadmon@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [RFC PATCH] trace2: don't overload target directories
-Message-ID: <20190730215207.GK43313@google.com>
+Message-ID: <20190730220158.GL43313@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
 References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
- <774bc2e2-2081-9969-f5d8-72231a9f7835@gmail.com>
+ <8612596d-1dfe-1b8e-9e01-c091e43c0556@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <774bc2e2-2081-9969-f5d8-72231a9f7835@gmail.com>
+In-Reply-To: <8612596d-1dfe-1b8e-9e01-c091e43c0556@jeffhostetler.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.07.30 09:29, Derrick Stolee wrote:
+On 2019.07.30 12:46, Jeff Hostetler wrote:
+> 
+> 
 > On 7/29/2019 6:20 PM, Josh Steadmon wrote:
 > > trace2 can write files into a target directory. With heavy usage, this
 > > directory can fill up with files, causing difficulty for
@@ -82,65 +84,91 @@ On 2019.07.30 09:29, Derrick Stolee wrote:
 > > there is a sentinel file declaring an overload, or if the number of
 > > files exceeds a threshold. If the latter, create a sentinel file to
 > > speed up later overload checks.
-> > 
+> 
+> Something about this idea bothers me, but I can't quite put my finger
+> on it.  You're filling a directory with thousands of files while
+> (hopefully simultaneously) having a post-processor/aggregator app
+> read and delete them.  I understand that if the aggregator falls
+> behind or isn't running, the files will just accumulate and that the
+> total number of files is the problem.  But I have to wonder if
+> contention on that directory is going to be a bottleneck and/or
+> a source of problems.  That is, you'll have one process reading and
+> deleting and one or more Git processes scanning/counting/creating.
+> It seems like there might be opportunity for some kinds of races
+> here.
+
+Yeah, this probably deserves some performance testing. I'll see what I
+can arrange prior to sending out V2. I don't think that racing issue is
+that big a deal, as there's not a ton of difference if we stop tracing
+after (say) 10**6 - 100 files vs 10**6 + 100 or whatever. But contention
+from multiple processes could definitely slow things down.
+
+
+> It have to wonder if it would be better to do some kind of directory
+> rotation rather than create a marker file.
+> 
+> Alternatively, I think it would be better to not have the marker
+> file be inside the directory, but rather have a lock file somewhere
+> to temporarily disable tracing.  Then your stat() call would not need
+> to effectively search the large directory.  Maybe make this
+> "<dirname>.lock" as a peer to "<dirname>/", for example.
+
+Yeah, this would make the stat() faster. But we'd have to add logic
+either to git or to the collection system to clean up the .lock files
+after we empty out the target directory. I'll have to think about this
+and see if the collection team is open to this.
+
+
 > > The file count threshold is currently set to 1M files, but this can be
 > > overridden for testing with GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT.
-> 
-> 1 million seems like a LOT, and the environment variable seems to be only
-> for testing.
-> 
-> * If the variable is only for testing, then it should start with GIT_TEST_
-> 
-> * Are we sure 1 million is the right number? I would imagine even 10,000
->   starting to be a problem. How would a user adjust this value if they
->   are having problems before 1,000,000?
-
-Yeah. I think we've only had reports of trouble starting around 5
-million files. This definitely feels more like a config variable, but on
-the other hand I thought there was some resistance towards adding the
-somewhat special early-initialization trace config variables. So for the
-first revision I figured I'd just throw out a constant and see if there
-were any objections.
-
-If people feel like it's OK to add this to the early trace2 config
-options, then I'd be happy to do that in V2.
-
+> > 
 > > The assumption is that a separate trace-processing system is dealing
 > > with the generated traces; once it processes and removes the sentinel
 > > file, it should be safe to generate new trace files again.
+> > 
+> > Potential future work:
+> > * Write a message into the sentinel file (should match the requested
+> >    trace2 output format).
+> > * Make the overload threshold (and the whole overload feature)
+> >    configurable.
 > 
-> This matches the model that you (Google) are using for collecting logs.
-> I'll trust your expertise here in how backed up these logs become. I
-> imagine that someone working without a network connection for a long
-> time would be likely to run into this problem.
->
-> [snip]
+> I'm wondering if we should just make this setting another
+> value in `tr2_sysenv_settings[]` rather than a *_TEST_* env var.
 > 
+> That would give you both env and system/global config support,
+> since I'm assuming you'd eventually want to have this be in
+> the user's global config with the other trace2 settings.
+> 
+> All of your tests could be expressed in terms of this new setting
+> and we wouldn't need this new test env var.
+
+I do think this makes more sense as a config variable, but as I
+mentioned in my reply to Stolee, my impression was that we were somewhat
+hesitant to add new trace config variables if they have to go through
+the special early config initialization. If that impression is wrong
+I'll add the config var.
+
+> > 
+> > Signed-off-by: Josh Steadmon <steadmon@google.com>
+> > ---
+> >   t/t0210-trace2-normal.sh | 15 ++++++++
+> >   trace2/tr2_dst.c         | 81 ++++++++++++++++++++++++++++++++++++++++
+> >   2 files changed, 96 insertions(+)
+> > 
+> > diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+> > index ce7574edb1..e8a03e9212 100755
+> > --- a/t/t0210-trace2-normal.sh
+> > +++ b/t/t0210-trace2-normal.sh
+> > @@ -186,4 +186,19 @@ test_expect_success 'using global config with include' '
+> >   	test_cmp expect actual
+> >   '
 > > +test_expect_success "don't overload target directory" '
 > > +	GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT=100 &&
-> 
-> For testing, does this need to be 100? Could it be 5?
-
-Sure, changed to 5 in V2.
-
-
 > > +	export GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT &&
-> 
-> To avoid leakage to other (future) tests, should these be in a subshell?
-
-Yes, thanks for the catch. Fixed in V2.
-
-
 > > +	test_when_finished "rm -r trace_target_dir" &&
 > > +	mkdir trace_target_dir &&
 > > +	test_seq $GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT | sed "s#^#trace_target_dir/#" | sort > expected_filenames.txt &&
 > > +	xargs touch < expected_filenames.txt &&
-> 
-> nit: no space between redirection and filename.
-
-Fixed in V2.
-
-
 > > +	ls trace_target_dir | sed "s#^#trace_target_dir/#" > first_ls_output.txt &&
 > > +	test_cmp expected_filenames.txt first_ls_output.txt &&
 > > +	GIT_TRACE2="$(pwd)/trace_target_dir" test-tool trace2 001return 0 &&
@@ -148,9 +176,39 @@ Fixed in V2.
 > > +	ls trace_target_dir | sed "s#^#trace_target_dir/#" > second_ls_output.txt &&
 > > +	test_cmp expected_filenames.txt second_ls_output.txt
 > > +'
-> 
-> [snip]
-> 
+> > +
+> >   test_done
+> > diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
+> > index 5dda0ca1cd..3286297918 100644
+> > --- a/trace2/tr2_dst.c
+> > +++ b/trace2/tr2_dst.c
+> > @@ -1,3 +1,5 @@
+> > +#include <dirent.h>
+> > +
+> >   #include "cache.h"
+> >   #include "trace2/tr2_dst.h"
+> >   #include "trace2/tr2_sid.h"
+> > @@ -8,6 +10,18 @@
+> >    */
+> >   #define MAX_AUTO_ATTEMPTS 10
+> > +/*
+> > + * Sentinel file used to detect when we're overloading a directory with too many
+> > + * trace files.
+> > + */
+> > +#define OVERLOAD_SENTINEL_NAME "git-trace2-overload"
+> > +
+> > +/*
+> > + * How many files we can write to a directory before entering overload mode.
+> > + * This can be overridden with the envvar GIT_TRACE2_TEST_OVERLOAD_FILE_COUNT
+> > + */
+> > +#define OVERLOAD_FILE_COUNT 1000000
+> > +
+> >   static int tr2_dst_want_warning(void)
+> >   {
+> >   	static int tr2env_dst_debug = -1;
+> > @@ -32,6 +46,63 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
+> >   	dst->need_close = 0;
+> >   }
 > > +/*
 > > + * Check to make sure we're not overloading the target directory with too many
 > > + * files. First check for the presence of a sentinel file, then check file
@@ -179,6 +237,10 @@ Fixed in V2.
 > > +	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
 > > +	if (!stat(sentinel_path.buf, &statbuf)) {
 > > +		strbuf_release(&path);
+> 
+> Also release sentinel_path ?
+> (And in both of the return statements below.)
+> 
 > > +		return 1;
 > > +	}
 > > +
@@ -200,12 +262,6 @@ Fixed in V2.
 > > +	if (file_count >= overload_file_count) {
 > > +		creat(sentinel_path.buf, S_IRUSR | S_IWUSR);
 > > +		/* TODO: Write a target-specific message? */
-> 
-> Perhaps leave the TODO out of the code? I did see it in your commit message.
-
-Fixed in V2.
-
-
 > > +		strbuf_release(&path);
 > > +		return 1;
 > > +	}
@@ -214,13 +270,12 @@ Fixed in V2.
 > > +	return 0;
 > > +}
 > > +
-> >  static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
-> >  {
-> >  	int fd;
+> >   static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
+> >   {
+> >   	int fd;
 > > @@ -50,6 +121,16 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
-> >  	strbuf_addstr(&path, sid);
-> >  	base_path_len = path.len;
-> >  
+> >   	strbuf_addstr(&path, sid);
+> >   	base_path_len = path.len;
 > > +	if (tr2_dst_overloaded(tgt_prefix)) {
 > > +		strbuf_release(&path);
 > > +		if (tr2_dst_want_warning())
@@ -231,13 +286,11 @@ Fixed in V2.
 > > +		return 0;
 > > +	}
 > > +
-> >  	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
-> >  		if (attempt_count > 0) {
-> >  			strbuf_setlen(&path, base_path_len);
+> >   	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
+> >   		if (attempt_count > 0) {
+> >   			strbuf_setlen(&path, base_path_len);
 > > 
 > 
-> Overall, this looks correct and the test is very clear. Seems to be a helpful feature!
+> hope this helps,
+> Jeff
 > 
-> I only have the nits mentioned above.
-
-Thanks for the review!
