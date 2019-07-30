@@ -2,97 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59A151F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 19:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24E891F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfG3Ttm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 15:49:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60449 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725209AbfG3Ttm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 15:49:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 817EE165F0E;
-        Tue, 30 Jul 2019 15:49:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=5u89lFcjIc3RUlVo2lryOQ3gQkc=; b=s9tZNqt
-        lwLN+vOUDSahA2U6K6dUmcxcm7uYCT5pj3BVkudnGR66r3DylNez2n9BzWoV2Il8
-        oEaLRwkz2BHys2F7Jd85wOCHzH8H1B5cdG2nIfzuaeO0R1w5m+ev46QFufsbv9YS
-        c8C5Ci/iDwmsxYiXb9a7I1RXNhwBHRn/aUaI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=shiFIepbKgGtYVXlQD9CKgBuFLYy4P/sm
-        U/FJwkkjKd42r9fyCvNrS4DB3Jef1a7WpAb7Su3alJU3W0019FrxIZjrziADh48p
-        qqB7JHl+Yg9AV41cqIQVbh7SMFG5GZ8XXEmjEUua8bZ2lVx8oIKIabTO/MSOJ6DT
-        75g0crDQD0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79064165F0D;
-        Tue, 30 Jul 2019 15:49:40 -0400 (EDT)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4041165F0C;
-        Tue, 30 Jul 2019 15:49:39 -0400 (EDT)
-Date:   Tue, 30 Jul 2019 15:49:38 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
+        id S1727473AbfG3UCF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:02:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55806 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726698AbfG3UCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:02:04 -0400
+Received: (qmail 7471 invoked by uid 109); 30 Jul 2019 20:02:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jul 2019 20:02:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10270 invoked by uid 111); 30 Jul 2019 20:03:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 16:03:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Jul 2019 16:02:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        git-packagers@googlegroups.com
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
 Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190730194938.GZ4545@pobox.com>
+Message-ID: <20190730200203.GA4882@sigill.intra.peff.net>
 References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+ <20190730194938.GZ4545@pobox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 2B0E7366-B303-11E9-9A98-72EEE64BB12D-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190730194938.GZ4545@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Jul 30, 2019 at 03:49:38PM -0400, Todd Zullinger wrote:
 
-[added Christian, SZEDER, and Jeff to Cc as author and
-helpers on the newly-added t0016-oidmap]
-
-Randall S. Becker wrote:
-> A preview of the situation with testing 2.23.0.rc0 on
-> NonStop is not great. We have had some new failures right
-> off the bat on our NonStop platforms. This is a preview of
-> what we find within the first bit of testing. The tests
-> run a long time, so more to come.
+> > Subtest 6 had an ordering issue. We do not know whether
+> > the problem is the code or the test result not keeping up
+> > with the code changes.
+> >
+> > --- expect      2019-07-30 16:56:36 +0000
+> > +++ actual      2019-07-30 16:56:36 +0000
+> > @@ -1,6 +1,6 @@
+> >  NULL
+> >  NULL
+> >  NULL
+> > +7c7cd714e262561f73f3079dfca4e8724682ac21 3
+> >  139b20d8e6c5b496de61f033f642d0e3dbff528d 2
+> >  d79ce1670bdcb76e6d1da2ae095e890ccb326ae9 1
+> > -7c7cd714e262561f73f3079dfca4e8724682ac21 3
 > 
-> t0016: oidmap
-> 
-> Subtest 6 had an ordering issue. We do not know whether
-> the problem is the code or the test result not keeping up
-> with the code changes.
->
-> --- expect      2019-07-30 16:56:36 +0000
-> +++ actual      2019-07-30 16:56:36 +0000
-> @@ -1,6 +1,6 @@
->  NULL
->  NULL
->  NULL
-> +7c7cd714e262561f73f3079dfca4e8724682ac21 3
->  139b20d8e6c5b496de61f033f642d0e3dbff528d 2
->  d79ce1670bdcb76e6d1da2ae095e890ccb326ae9 1
-> -7c7cd714e262561f73f3079dfca4e8724682ac21 3
+> I hit the same failure while building for Fedora on the
+> s390x architecture.  I have not dug into it much yet, but
+> perhaps this is an endianess issue?
 
-I hit the same failure while building for Fedora on the
-s390x architecture.  I have not dug into it much yet, but
-perhaps this is an endianess issue?
+Ah, of course. Our oid hashing is done by just picking off the first
+bytes of the sha1, and it doesn't care about endianness (because these
+are just internal-to-memory hashes).
 
--- 
-Todd
+We _could_ reconcile that like this:
+
+diff --git a/hashmap.h b/hashmap.h
+index 8424911566..493229ac54 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -116,19 +116,11 @@ unsigned int memihash_cont(unsigned int hash_seed, const void *buf, size_t len);
+  * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash code
+  * for use in hash tables. Cryptographic hashes are supposed to have
+  * uniform distribution, so in contrast to `memhash()`, this just copies
+- * the first `sizeof(int)` bytes without shuffling any bits. Note that
+- * the results will be different on big-endian and little-endian
+- * platforms, so they should not be stored or transferred over the net.
++ * the first `sizeof(int)` bytes without shuffling any bits.
+  */
+ static inline unsigned int oidhash(const struct object_id *oid)
+ {
+-	/*
+-	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
+-	 * platforms that don't support unaligned reads.
+-	 */
+-	unsigned int hash;
+-	memcpy(&hash, oid->hash, sizeof(hash));
+-	return hash;
++	return get_be32(oid->hash);
+ }
+ 
+ /*
+diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+index bbe719e950..6656db9d69 100755
+--- a/t/t0016-oidmap.sh
++++ b/t/t0016-oidmap.sh
+@@ -93,9 +93,9 @@ put three 3
+ iterate" "NULL
+ NULL
+ NULL
++$(git rev-parse three) 3
+ $(git rev-parse two) 2
+-$(git rev-parse one) 1
+-$(git rev-parse three) 3"
++$(git rev-parse one) 1"
+ 
+ '
+ 
+
+which not only fixes this test but any other hash-based oddities. I
+wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
+René into doing a bunch of measurements and explorations of the
+disassembled code. ;)
+
+-Peff
