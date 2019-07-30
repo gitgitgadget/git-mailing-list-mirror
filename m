@@ -2,97 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFA4E1F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 06:59:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B66381F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 07:13:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727868AbfG3G7v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 02:59:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55158 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727453AbfG3G7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 02:59:50 -0400
-Received: (qmail 2606 invoked by uid 109); 30 Jul 2019 06:59:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jul 2019 06:59:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5291 invoked by uid 111); 30 Jul 2019 07:01:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 03:01:30 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 30 Jul 2019 02:59:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ibrahim El Rhezzali <ibrahim.elrhezzali@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] Improved git signing interface
-Message-ID: <20190730065949.GB4901@sigill.intra.peff.net>
-References: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
+        id S1729473AbfG3HNj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 03:13:39 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37312 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727029AbfG3HNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 03:13:39 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i70so18822696pgd.4
+        for <git@vger.kernel.org>; Tue, 30 Jul 2019 00:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=3CifTvu7hhMDyipYJGtoWTg4Ao+dbCq+EbU7x3nQxRg=;
+        b=dXnRppEoEAaYJnxHs4qxUPp+NOKp0btY19BjCtHJYSTWpoYWXY/wpOszsjZdhklaiW
+         wCuH41abGx/LOfiLUrq7K8Po13eUHRMJLHkd/nteHRaH4pQ11Ty01HygX2/aqssMUE0w
+         u+xt0IX16QXEZpTAViOCDmv1rD/t3pQkXhlevVO9wDtpAcYv8bICqDph5OyGgZVAXY6n
+         TiRnbr5ifhvPbgun6+EeuAncuXLy05K3y/YDSdIZeRacpolQgTh0yvQ3EdvXm9rQE+km
+         d3mDYZPhgNOhl6VCeMU1+6Fr0Q42TcHHHbapjhJ1nZnxEYCOk/OK+udceA0wBYBQHLrC
+         gGNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=3CifTvu7hhMDyipYJGtoWTg4Ao+dbCq+EbU7x3nQxRg=;
+        b=Z+8k9TWj/SCzjkROcAHA0yYR1mm2uyS+HCK26+VQlbth/0XUfTNhFAnPgWR9OVLh+l
+         Txxxe2RXAlVRiKB9sLzz+ziAxcCsyUa+26iKNHrdB9MgOdtM1Rjv03QFpNBNX/Fh8b8V
+         scYOJsa7J+71fu4teLLSiVlGswnbOQjoHGntFC3u157+Evm6akTrsx00SmaIE0qzylCm
+         lXLu834AjCtxo2WNEq+IfwzaHYA+4CplksswxNpU7ZK+7ZRMI2nNu6ZB+urO0VzwxfXb
+         AJEupBYxRtpoNRY6IG4+JM25M3Dn/xuRcJkyK2A/hZP8RAkjsevcRms8pURuI7gPwtFt
+         q/mA==
+X-Gm-Message-State: APjAAAUOtT5ccuapnPWHqSdWa9+gewInd8CIMA3ubItfMz2dI+AQ0+go
+        bGusPbW3iB6xrFxqucLsLCC3eiTA4xm5/Uans/c=
+X-Google-Smtp-Source: APXvYqwqdKGHak37z36ipjF8vhGJNasHC4JQqXUJb1Wyek9gl7FoJq1vO3k4kak90m9BQ65bk7Wu46/HxPYpdSyCwgY=
+X-Received: by 2002:aa7:8dd2:: with SMTP id j18mr39945680pfr.88.1564470818968;
+ Tue, 30 Jul 2019 00:13:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
+References: <xmqqbml6pgfm.fsf@gitster.mtv.corp.google.com> <cover.1563490164.git.steadmon@google.com>
+ <69dc3696e715f9be9e545e0142244e16bdd489cc.1563490164.git.steadmon@google.com>
+ <CAN0heSoU7XUN8GOFzzBrLG0RbY65hhYUn_-_Ax1DfFsNZ64hpA@mail.gmail.com> <20190729234319.GJ43313@google.com>
+In-Reply-To: <20190729234319.GJ43313@google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 30 Jul 2019 09:13:26 +0200
+Message-ID: <CAN0heSodNUQ4eoipj7dVi7kr-NhHNyppcMm_SYpGTr_xZbgZHA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] t7503: add tests for pre-merge-hook
+To:     Josh Steadmon <steadmon@google.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, stefanbeller@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 22, 2019 at 04:16:15PM +0200, Ibrahim El Rhezzali wrote:
+On Tue, 30 Jul 2019 at 01:43, Josh Steadmon <steadmon@google.com> wrote:
+>
+> On 2019.07.29 22:04, Martin =C3=85gren wrote:
+> > This script seems to me like if it passes 100%, we can be fairly sure
+> > we're ok, but [...]
 
-> I have been selected by the Linux Foundation to work on a summer
-> project. I would like to abstract the git signing interface and add
-> support for signatures using decentralized identifiers (DID).
-> Decentralized identifiers are an emerging standard [0] that allows
-> individuals to control their own digital identities, and is often
-> called self-sovereign identity (SSI). The SSIMeetup is a good place to
-> learn more about SSI [1] and DIDs [2].
-> 
-> The project’s current goal is to abstract the current GPG interface
-> into a more ‘generic’ API that supports the existing OpenPGP and X.509
-> functionality while creating the ability to write additional signature
-> drivers.
+> Will squash these as you said in V3. Will also think about whether
+> another test approach would make more sense here.
 
-Neat. I'm always wary of supporting "emerging standards", because
-sometimes they turn out not to emerge and you are left with historical
-cruft. :) But if your changes to Git are mostly around making the
-signing config more generic, I think that is something people are
-interested in (signify has come up as a possibility before).
+Thinking a bit more about this, this test uses two identical hooks, runs
+some commands and verifies that "the" hook was run (or not, with
+--no-verify). If the implementation started calling the wrong hook
+(pre-commit / pre-merge) or both hooks, we wouldn't notice.
 
-You might find this discussion interesting (that patch and the
-sub-thread):
+Please forgive my braindump below, I'm on the run so I'm just throwing
+this out there:
 
- https://public-inbox.org/git/20180409204129.43537-9-mastahyeti@gmail.com/
+Perhaps (first do some modernizing of this script, to protect various
+setup steps, use "write_script", etc, then) make the existing hook a
+tiny bit pre-commit-specific, e.g., by doing something like "echo
+pre-commit >>executed-hooks", then at select places check "test_cmp
+executed-hooks pre-commit" (against "echo pre-commit >pre-commit"),
+"test_path_is_missing executed-hooks", and so on, coupled with some
+"test_when_finished 'rm -f executed_hooks'". Then the tests added for
+this series would use a very similar hook, appending and checking for
+"pre-merge[-commit]", That should make us fairly certain that we're
+running precisely the wanted hook, I think.
 
-One of the points I think people didn't like was how Git would detect
-signatures embedded in objects (i.e., is matching PEM-like lines enough,
-or what would other signing systems want?).
-
-That patch was later dropped in favor of the work from Henning Schild:
-
-  https://public-inbox.org/git/cover.1531208187.git.henning.schild@siemens.com/
-
-which is much more geared at just adding gpgsm support. There were
-various discussions about how it could eventually be extended to new
-formats. I skimmed over the documentation from your branch and it looks
-like a pretty sane layout, with backwards compatibility.
-
-> I have implemented a prototype that works and passes all tests, and in
-> the coming weeks I plan to submit a series of patches for your review.
-> I first need to clean up the Git history to make it easy to follow. I
-> will also ensure that people using the current approach to GPG signing
-> can use the proposed approach with only minor changes. The flag
-> “--gpg-sign” would evolve to “---sign”, though I would like to
-> preserve an alias to the old flag if possible.
-
-Yes, this must not be "minor changes" but "no changes" to be accepted.
-It's OK to deprecate things, but old options cannot immediately stop
-working. From this email and looking at your config patches, it looks
-like that's the route you plan to take. Good.
-
-I look forward to seeing the cleaned-up patches. :)
-
--Peff
+Martin
