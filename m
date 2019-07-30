@@ -2,190 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 715D61F97E
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:33:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE621F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbfG3Udc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:33:32 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:43597 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbfG3Udc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:33:32 -0400
-Received: by mail-wr1-f51.google.com with SMTP id p13so67146370wru.10
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 13:33:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arista.com; s=googlenew;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XQjj2VJtYLb4WveFAE4qIsPl7dN1eVVWd83zRNmkm2Y=;
-        b=jH/EBSj7i5iBVVfUBF6pAQqHVVE/D9sdxQcndKvNw7TIcNK89rfGa+ljPIPi2Vcvcj
-         xrm8HERC/OlVHfrhy3W/xlARjD3BKwyRjQotF3L/tp+/EzU8EKh8uRJpj/7mAdMu5/52
-         UOZ6+RXmGaSDZuR7qUOvHzH2NV02UlBbexGotreGQ6ghP8kcKNZJlCEDw9rK/JjmjL3B
-         9l472b7WNaLqdhNR7yVrtX4m30nYJxANvDAm5TyBZd8eMSkqFjSNd1q713XFxav4AFsp
-         cT5RqHGNJdTt1PMGywGzc4PCxCj8QukuBAoaH3yJxw6fWMEcfmVj6KwYNnxZU8nbiTCj
-         Am0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XQjj2VJtYLb4WveFAE4qIsPl7dN1eVVWd83zRNmkm2Y=;
-        b=sQ4xw98iXNYqZZkZO0dznVXeSI1c/pIT5gue2z7VgvhqpqcaZm0R3McDwEdfSxhXth
-         pv8D3t+ZciEI3oVHx730/3pYk8dtfzTC0tgUlOvR/h6HqoA575Ms1gN/E2NOem5ky92q
-         d8q0I1BFfZWSc/R/BKhegYt0LWZhv/3ozlIkg94VRxIfWfn7MOZOb2tVv/iXPyKKOAuh
-         dlJ+NK4g6W7fX2JoLT+VJskYar2e8+66x7bUQiWnujTL0ns47jPhyzJ52wtYHGUX8xdQ
-         vZPb2PWPUj0tsxvhzX2G2YANt7Ab9zVaJzXdn5Z11WlfJmNcc5MEKzbPTsuywLnSHJ+C
-         jhcQ==
-X-Gm-Message-State: APjAAAVtRAiSjHKo71Uc/PEinVATVTYk1rKkeYWrjiMA5bSR5p7+mefW
-        OffpwfCn1SveSpn2jIAeApjrZ79ef3KGeqNNzciBPdZKaIbGOK7iXXRLHJX6jY23wseCOqMY78X
-        F8RcmAkhmkkaxSM/fxYUfGYHQZOECAtdo1ZJHKQL9j+eoJisWrI8WWrN9YQL3aBZ4u42AkRp2tq
-        tfw2Hre6bAn6yOU+Q=
-X-Google-Smtp-Source: APXvYqxXJJhafdWIIhceasD6HPEdpwlIYgLHSNSe454/P7KxGKSLqc49zZQt9d0FF+2IuhsWUIO4kQ==
-X-Received: by 2002:adf:ed4a:: with SMTP id u10mr43435067wro.284.1564518808894;
-        Tue, 30 Jul 2019 13:33:28 -0700 (PDT)
-Received: from Mindolluin.ire.aristanetworks.com ([217.173.96.166])
-        by smtp.gmail.com with ESMTPSA id e19sm90769197wra.71.2019.07.30.13.33.27
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 30 Jul 2019 13:33:28 -0700 (PDT)
-From:   Dmitry Safonov <dima@arista.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Dmitry Safonov <0x7f454c46@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Dmitry Safonov <dima@arista.com>,
-        Andrei Vagin <avagin@openvz.org>
-Subject: [PATCHv3] send-email: Ask if a patch should be sent twice
-Date:   Tue, 30 Jul 2019 21:33:27 +0100
-Message-Id: <20190730203327.30958-1-dima@arista.com>
-X-Mailer: git-send-email 2.22.0
+        id S1728372AbfG3Uj4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:39:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50217 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728305AbfG3Ujz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:39:55 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1898760AF;
+        Tue, 30 Jul 2019 16:39:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=IqmDnbXeCA8T
+        +ZqBLzF5SCcYoqM=; b=eDNEpL4th3g2Utt6v8HCd5L6HL/i2Fe1wlsxQX2GcW2S
+        HrEIGDTTIoHX7BJmig04tDnCjN+f/CNA/R4j8K75r9sxktGs09TnPi11i8e7abg1
+        FOLFpNDFygZQv/tgwhGrSA3L4NSykcJPZ7xR6B9x3gCDFcDJplyx4eSBxfEVzaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tJoFEO
+        4A6VNuuXACuhVHYkJA9oVxCaqafuJI7wRzFJOZASRE2ir+fg8XwyeuntsknWmZKt
+        UbSe29CEXxiknvVr0yLN7FTkAdyrSxMlg//BS74XfpwkCZ77gCuxmMKjBbUyHTOM
+        w5TR1UHOzvxDdVshEPeckGz4JhWTsZMEy+BH0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A97D0760AD;
+        Tue, 30 Jul 2019 16:39:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C597B760AA;
+        Tue, 30 Jul 2019 16:39:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+        <20190730194938.GZ4545@pobox.com>
+        <20190730200203.GA4882@sigill.intra.peff.net>
+Date:   Tue, 30 Jul 2019 13:39:48 -0700
+In-Reply-To: <20190730200203.GA4882@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 30 Jul 2019 16:02:03 -0400")
+Message-ID: <xmqqpnlrs1d7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CLOUD-SEC-AV-Info: arista,google_mail,monitor
-X-CLOUD-SEC-AV-Sent: true
-X-Gm-Spam: 0
-X-Gm-Phishy: 0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2DA3F9FA-B30A-11E9-A3CB-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was almost certain that git won't let me send the same patch twice,
-but today I've managed to double-send a directory by a mistake:
-	git send-email --to linux-kernel@vger.kernel.org /tmp/timens/
-	    --cc 'Dmitry Safonov <0x7f454c46@gmail.com>' /tmp/timens/`
+Jeff King <peff@peff.net> writes:
 
-[I haven't noticed that I put the directory twice ^^]
+> @@ -116,19 +116,11 @@ unsigned int memihash_cont(unsigned int hash_seed=
+, const void *buf, size_t len);
+>   * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash c=
+ode
+>   * for use in hash tables. Cryptographic hashes are supposed to have
+>   * uniform distribution, so in contrast to `memhash()`, this just copi=
+es
+> - * the first `sizeof(int)` bytes without shuffling any bits. Note that
+> - * the results will be different on big-endian and little-endian
+> - * platforms, so they should not be stored or transferred over the net=
+.
 
-Prevent this shipwreck from happening again by asking if a patch
-is sent multiple times on purpose.
+;-)
 
-link: https://lkml.kernel.org/r/4d53ebc7-d5b2-346e-c383-606401d19d3a@gmail.com
-Cc: Andrei Vagin <avagin@openvz.org>
-Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Dmitry Safonov <dima@arista.com>
----
-v3: Use `test_i18ngrep` instead of plain `grep`
-v2: Moved the check under --validate,
-    fixed tests,
-    added a new test,
-    updated documentation for --validate
+> + * the first `sizeof(int)` bytes without shuffling any bits.
+>   */
+>  static inline unsigned int oidhash(const struct object_id *oid)
+>  {
+> -	/*
+> -	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
+> -	 * platforms that don't support unaligned reads.
+> -	 */
+> -	unsigned int hash;
+> -	memcpy(&hash, oid->hash, sizeof(hash));
+> -	return hash;
+> +	return get_be32(oid->hash);
+>  }
+> =20
+>  /*
+> diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+> index bbe719e950..6656db9d69 100755
+> --- a/t/t0016-oidmap.sh
+> +++ b/t/t0016-oidmap.sh
+> @@ -93,9 +93,9 @@ put three 3
+>  iterate" "NULL
+>  NULL
+>  NULL
+> +$(git rev-parse three) 3
+>  $(git rev-parse two) 2
+> -$(git rev-parse one) 1
+> -$(git rev-parse three) 3"
+> +$(git rev-parse one) 1"
+> =20
+>  '
+>
+> which not only fixes this test but any other hash-based oddities. I
+> wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
+> Ren=C3=A9 into doing a bunch of measurements and explorations of the
+> disassembled code. ;)
 
- Documentation/git-send-email.txt |  2 ++
- git-send-email.perl              | 14 ++++++++++++++
- t/t9001-send-email.sh            | 15 +++++++++++++++
- 3 files changed, 31 insertions(+)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index d93e5d0f58f0..0441bb1b5d3b 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -421,6 +421,8 @@ have been specified, in which case default to 'compose'.
- 			('auto', 'base64', or 'quoted-printable') is used;
- 			this is due to SMTP limits as described by
- 			http://www.ietf.org/rfc/rfc5322.txt.
-+		*	Ask confirmation before sending patches multiple times
-+			if the supplied patches set overlaps.
- --
- +
- Default is the value of `sendemail.validate`; if this is not set,
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5f92c89c1c1b..c1638d06f81d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -688,6 +688,9 @@ sub is_format_patch_arg {
- @files = handle_backup_files(@files);
- 
- if ($validate) {
-+	my %seen;
-+	my @dupes = grep { $seen{$_}++ } @files;
-+
- 	foreach my $f (@files) {
- 		unless (-p $f) {
- 			my $error = validate_patch($f, $target_xfer_encoding);
-@@ -695,6 +698,17 @@ sub is_format_patch_arg {
- 						  $f, $error);
- 		}
- 	}
-+	if (@dupes) {
-+		printf(__("Patches specified several times: \n"));
-+		printf(__("%s \n" x @dupes), @dupes);
-+		$_ = ask(__("Do you want to send those patches several times? Y/n "),
-+			default => "y",
-+			valid_re => qr/^(?:yes|y|no|n)/i);
-+		if (/^n/i) {
-+			cleanup_compose_files();
-+			exit(0);
-+		}
-+	}
- }
- 
- if (@files) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 997f90b42b3e..496005af1763 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -555,6 +555,7 @@ test_expect_success $PREREQ 'In-Reply-To without --chain-reply-to' '
- 		--no-chain-reply-to \
- 		--in-reply-to="$(cat expect)" \
- 		--smtp-server="$(pwd)/fake.sendmail" \
-+		--no-validate \
- 		$patches $patches $patches \
- 		2>errors &&
- 	# The first message is a reply to --in-reply-to
-@@ -577,6 +578,7 @@ test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
- 		--chain-reply-to \
- 		--in-reply-to="$(cat expect)" \
- 		--smtp-server="$(pwd)/fake.sendmail" \
-+		--no-validate \
- 		$patches $patches $patches \
- 		2>errors &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
-@@ -589,6 +591,19 @@ test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success $PREREQ 'ask confirmation for double-send' '
-+	clean_fake_sendmail &&
-+	echo y | \
-+		GIT_SEND_EMAIL_NOTTY=1 \
-+		git send-email --from=author@example.com \
-+			--to=nobody@example.com \
-+			--smtp-server="$(pwd)/fake.sendmail" \
-+			--validate \
-+			$patches $patches $patches \
-+			>stdout &&
-+	! test_i18ngrep "Patches specified several times: " stdout
-+'
-+
- test_expect_success $PREREQ 'setup fake editor' '
- 	write_script fake-editor <<-\EOF
- 	echo fake edit >>"$1"
--- 
-2.22.0
-
+I'd rather see us go in the direction of discouraging people from
+relying on the hash order.
