@@ -2,131 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 104E31F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 17:31:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F3EA1F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 17:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730131AbfG3Rbw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 13:31:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63755 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729238AbfG3Rbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 13:31:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9BA37173783;
-        Tue, 30 Jul 2019 13:31:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6l6P+QurhduEfLgTItMm4z1qLbk=; b=lktaOO
-        ARkmUSu3BIDm4lOcp8okKitVaRtjP/ctoNwB1CcQR3skHvAv453td+DtiB7Gaxc6
-        zuhyPzs8jNXK9T+LtU/PlaF+1gMA++EpKc3keHWE1bNyO7OAuqahd/gjRGa/NnAe
-        tzxN1vpf3AIzbJdFhRMJ1XTMJZF5H60k8J3fY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gl9imFu8dTwJf1jm0dFjZi/knZJosyD5
-        /vT6MjcTNXx5yZbBgGL5zk2GkrAV3cVscTrKH6M1Kd7Ds4A0WeYwMaNIEJT+EigP
-        ogw8/2vHf0NG5VjYKERvDXcPUHSmNYuf/e9YgJw8yUl8XnG1OmTZuQ+jiazcSMRl
-        oTJbj+KTOaw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92C75173782;
-        Tue, 30 Jul 2019 13:31:44 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F41ED173781;
-        Tue, 30 Jul 2019 13:31:43 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     <git@vger.kernel.org>, <git-packagers@googlegroups.com>
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
-Date:   Tue, 30 Jul 2019 10:31:42 -0700
-In-Reply-To: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com> (Randall
-        S. Becker's message of "Tue, 30 Jul 2019 13:08:37 -0400")
-Message-ID: <xmqq7e7zton5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731311AbfG3Rh0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 13:37:26 -0400
+Received: from mail-eopbgr780084.outbound.protection.outlook.com ([40.107.78.84]:24088
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726713AbfG3Rh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 13:37:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZZ+Gs0Z1PWYbSBNTGYn21/50W166kfGt/0NRepA7lQCofgXfvt7l+d7AiQvT83Cqo1do7fcSS3b3lEWGKoaRCLCnoanInnvDBi4UIwwknIU9/Z4OrvfrSJHm+75IR41RNJr6M8mL4a9BTwbE8DxtdaMOxLxvcV2dguqBzv3Y3Sz/dAh4TeQueImHVQeJIdn1oeiVNKJ6RX224kjtB8Ofk6PjWWQRDv3ZAQihhW+xIgOmHHyro+8mRyxnNGT1A9+KQwCSUe10ZKq2s8c12TSLECezyyEvWFW/x/KdxNPH2derD9FdJaa2GDRAw9D19QqFug57lyE/5VWRLp93MTMuTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jTjn2AgxqMHKl151FUhdSRdtYvpY2H2XLYPc40KVXZI=;
+ b=l7+cp+PlYvgibb3xkWiWNCSShgEss0pQAwbb7m1NS58b6PrsSm2Rp+nF7St2CPafIZrmLbBJJcTGcEq5B9CMdP0y0HoWdTF2wOiFrscRwJdYgcLCXIc0Gu3JuZTfee2jcKsuYicj3cdMhqe9qYRKH4sgntj0oeUj4+lgwdFmFZxvq5DXEF43K5HzEaA0Kw6syGdTrw2OJEKT6ju5FJpjSfK0OpEQ7KPXo6YM67baSzaOg2KNaAvYEUBN0EqIu3n9D7lh3UOqYrVc3Vx6OTs0vyTgZRYYD9t9OemkIZzdHuAcT3gTLpbILe9ucYBJMtN9pgzUsec3lq1t6pHMm9ORUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
+ smtp.mailfrom=bentley.com;dmarc=pass action=none
+ header.from=bentley.com;dkim=pass header.d=bentley.com;arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bentley.onmicrosoft.com; s=selector2-bentley-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jTjn2AgxqMHKl151FUhdSRdtYvpY2H2XLYPc40KVXZI=;
+ b=L07/tsDgsOW3ooGS7Pkc2k9nsFBxMa1dCEoFodb6Q+fSaaJ9OKBXezugDsDPJN5qY9RjnRpV2wlPZjV37QdmE273k38SPyQchDXEb5gN1E7yd4Ga5PuLOKqf7T9c9FFKL9j04EFvRhreGUosGdLqDfMB2Ajegwxtq5+j+BVSeSg=
+Received: from BL0PR1901MB2097.namprd19.prod.outlook.com (52.132.22.19) by
+ BL0PR1901MB2180.namprd19.prod.outlook.com (52.132.23.29) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2115.14; Tue, 30 Jul 2019 17:37:22 +0000
+Received: from BL0PR1901MB2097.namprd19.prod.outlook.com
+ ([fe80::2d4f:f059:cf4f:8f7b]) by BL0PR1901MB2097.namprd19.prod.outlook.com
+ ([fe80::2d4f:f059:cf4f:8f7b%4]) with mapi id 15.20.2094.017; Tue, 30 Jul 2019
+ 17:37:22 +0000
+From:   Philip McGraw <Philip.McGraw@bentley.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH] git-p4: close temporary file before removing
+Thread-Topic: [PATCH] git-p4: close temporary file before removing
+Thread-Index: AdVG9CjdiOqwVlefRbaG5Wv1p1dyog==
+Date:   Tue, 30 Jul 2019 17:37:22 +0000
+Message-ID: <BL0PR1901MB209738ADDF9D931253E8C317FFDC0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Philip.McGraw@bentley.com; 
+x-originating-ip: [64.90.224.37]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: bbb8122c-861c-4238-b5e6-08d715149444
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:BL0PR1901MB2180;
+x-ms-traffictypediagnostic: BL0PR1901MB2180:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <BL0PR1901MB2180591B22580E2681EE30C9FFDC0@BL0PR1901MB2180.namprd19.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3044;
+x-forefront-prvs: 0114FF88F6
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(39860400002)(366004)(346002)(136003)(376002)(396003)(199004)(189003)(5640700003)(66946007)(52536014)(66066001)(26005)(7736002)(53936002)(5660300002)(102836004)(6506007)(74316002)(305945005)(7696005)(66446008)(64756008)(66556008)(76116006)(316002)(476003)(486006)(186003)(14444005)(33656002)(66476007)(6116002)(3846002)(71200400001)(2351001)(8676002)(256004)(81166006)(81156014)(55016002)(6306002)(68736007)(99286004)(6916009)(6436002)(1730700003)(9686003)(8936002)(2501003)(478600001)(25786009)(14454004)(86362001)(71190400001)(2906002)(966005);DIR:OUT;SFP:1101;SCL:1;SRVR:BL0PR1901MB2180;H:BL0PR1901MB2097.namprd19.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: bentley.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: EvAtZ+t/y8qxIZgTh/iRv3wYXYWdQk/8Mnd1MZ5/CuZpT9S5OWph/PCdpzkiKHHu7TEjQO9h7q23ObOhHfwISpd0Ob58+j/1cHQpPSgw2sz/HyYEocVjkpsXwpDr0XuIqdFhuMQIudqUJ+bhG5gBjMEw9PR8/5mmEwG4/EubCA19Z3v/JMI1MyHa3KdjrQX3AVPdwRYN/CPDWvhGt+4iFHjZdoCNzHK4Dp6I3vZKJQ0sqwd5ayCyXJd4Yf3n+HdJ7PRQRHwNv7rlp0/UvgX7nY83bWZbBxES/ArbKHavn3Qo9IFAormS1bo2boyIlstFdPHPsvA4BplvYH0fTveaEdbyoaunA+WsI0qwSHBEvtQcPImFA7mUTOO1oFtdFxnaP9mgvywbAJShaoyRySuulcXIEmLteWAe72KDWNoQ00w=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E62D944C-B2EF-11E9-A6D2-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-OriginatorOrg: bentley.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bbb8122c-861c-4238-b5e6-08d715149444
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jul 2019 17:37:22.6105
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 067e9632-ea4c-4ed9-9e6d-e294956e284b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Philip.McGraw@bentley.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR1901MB2180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+python os.remove() throws exceptions on Windows platform when attempting
+to remove file while it is still open.  Need to grab filename while file op=
+en,
+close file handle, then remove by name.  Apparently other platforms are mor=
+e
+permissive of removing files while busy.
+reference: https://docs.python.org/3/library/os.html#os.remove
+---
+ git-p4.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> t0066: dir-iterator
->
-> Subtest 4 depends on a non-portable error code. ENOENT is not guaranteed ...
-> Subtest 5 also depends on a non-portable error code. ENOTDIR is not gua...
-
-Yikes, and sorry.  I've become somewhat complacent after relying on
-how good our other reviewers are, pretty much ignored the new code
-in fringes like t/helper/, and failed catch an obvious amateurish
-mistake like this one.
-
-I do not think of a portable way to map an int ENOENT to a string
-"ENOENT", but there are only only two errors test-dir-iterator test
-code cares about, so perhaps a patch like the following may be
-sufficient.
-
-I wonder if a tool like sparse can help us catch a pattern that
-feeds errno to "%d" format.
-
- t/helper/test-dir-iterator.c | 11 ++++++++++-
- t/t0066-dir-iterator.sh      |  4 ++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
-index a5b96cb0dc..c7c30664da 100644
---- a/t/helper/test-dir-iterator.c
-+++ b/t/helper/test-dir-iterator.c
-@@ -4,6 +4,15 @@
- #include "iterator.h"
- #include "dir-iterator.h"
- 
-+static const char *error_name(int error_number)
-+{
-+	switch (error_number) {
-+	case ENOENT: return "ENOENT";
-+	case ENOTDIR: return "ENOTDIR";
-+	default: return "ESOMETHINGELSE";
-+	}
-+}
-+
- /*
-  * usage:
-  * tool-test dir-iterator [--follow-symlinks] [--pedantic] directory_path
-@@ -31,7 +40,7 @@ int cmd__dir_iterator(int argc, const char **argv)
- 	diter = dir_iterator_begin(path.buf, flags);
- 
- 	if (!diter) {
--		printf("dir_iterator_begin failure: %d\n", errno);
-+		printf("dir_iterator_begin failure: %s\n", error_name(errno));
- 		exit(EXIT_FAILURE);
- 	}
- 
-diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
-index 9354d3f1ed..92910e4e6c 100755
---- a/t/t0066-dir-iterator.sh
-+++ b/t/t0066-dir-iterator.sh
-@@ -55,13 +55,13 @@ test_expect_success 'dir-iterator should list files in the correct order' '
- test_expect_success 'begin should fail upon inexistent paths' '
- 	test_must_fail test-tool dir-iterator ./inexistent-path \
- 		>actual-inexistent-path-output &&
--	echo "dir_iterator_begin failure: 2" >expected-inexistent-path-output &&
-+	echo "dir_iterator_begin failure: ENOENT" >expected-inexistent-path-output &&
- 	test_cmp expected-inexistent-path-output actual-inexistent-path-output
- '
- 
- test_expect_success 'begin should fail upon non directory paths' '
- 	test_must_fail test-tool dir-iterator ./dir/b >actual-non-dir-output &&
--	echo "dir_iterator_begin failure: 20" >expected-non-dir-output &&
-+	echo "dir_iterator_begin failure: ENOTDIR" >expected-non-dir-output &&
- 	test_cmp expected-non-dir-output actual-non-dir-output
- '
- 
+diff --git a/git-p4.py b/git-p4.py
+index c71a6832e2..6b9d2a8317 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1161,12 +1161,14 @@ def exceedsLargeFileThreshold(self, relPath, conten=
+ts):
+                 return False
+             contentTempFile =3D self.generateTempFile(contents)
+             compressedContentFile =3D tempfile.NamedTemporaryFile(prefix=
+=3D'git-p4-large-file', delete=3DFalse)
++            compressedContentFileName =3D compressedContentFile.name
+             zf =3D zipfile.ZipFile(compressedContentFile.name, mode=3D'w')
+             zf.write(contentTempFile, compress_type=3Dzipfile.ZIP_DEFLATED=
+)
+             zf.close()
+             compressedContentsSize =3D zf.infolist()[0].compress_size
+             os.remove(contentTempFile)
+-            os.remove(compressedContentFile.name)
++            compressedContentFile.close()
++            os.remove(compressedContentFileName)
+             if compressedContentsSize > gitConfigInt('git-p4.largeFileComp=
+ressedThreshold'):
+                 return True
+         return False
+--
+2.21.0.windows.1
