@@ -2,124 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24E891F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1BE1F97E
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbfG3UCF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:02:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55806 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726698AbfG3UCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:02:04 -0400
-Received: (qmail 7471 invoked by uid 109); 30 Jul 2019 20:02:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jul 2019 20:02:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10270 invoked by uid 111); 30 Jul 2019 20:03:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 16:03:46 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 30 Jul 2019 16:02:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190730200203.GA4882@sigill.intra.peff.net>
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
- <20190730194938.GZ4545@pobox.com>
+        id S1727845AbfG3UEx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:04:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53983 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfG3UEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:04:53 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EAE6A16601D;
+        Tue, 30 Jul 2019 16:04:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SnYafPvYKhBl2BIaAO1jiOXo7s4=; b=EA1Dnu
+        goP88lTZNm1cUbtxcgA7ggdBFxotXBhXy0WyimFZQ+j7fDvMxUQDXXoTHi82vzVG
+        TMt+OQwsSyt2vkq59/txpp2uslfMm/PaqtiWtTT5tRqigRBrLNomr67GQ/tzNtws
+        JxE8kSqYh/NbPCKG00j1i/zWlAWsAywg87psc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=X9si1Mw8PRKngEy46IqYPPsSAf2ydq2Y
+        cwjujehArsWPwbzYtxoJjI6iKbwhuaDfjnZTMQ2fMVlBI2MiLhfKPnSHkt+ulXpB
+        5S13M8QG3UbXyHuyzGb/8CDCI9hjTsHkTxUd4EPXAbwv2is8+ovp3+pW+QnNwV01
+        xZUTe45+E/4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E131716601C;
+        Tue, 30 Jul 2019 16:04:50 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4E31416601B;
+        Tue, 30 Jul 2019 16:04:50 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        kernel-usp@googlegroups.com, jackdanielz@eyomi.org,
+        Antonio Ospite <ao2@ao2.it>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>
+Subject: Re: [GSoC][PATCH] grep: fix worktree case in submodules
+References: <CAHd-oW61RFCySF+gUj8iYuV6afEoD0RD9oYE+N6rYd7rv3J2nA@mail.gmail.com>
+        <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
+Date:   Tue, 30 Jul 2019 13:04:49 -0700
+In-Reply-To: <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Tue, 30 Jul 2019 13:53:27 -0300")
+Message-ID: <xmqqtvb3s2zi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190730194938.GZ4545@pobox.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49A688F2-B305-11E9-B14F-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 30, 2019 at 03:49:38PM -0400, Todd Zullinger wrote:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-> > Subtest 6 had an ordering issue. We do not know whether
-> > the problem is the code or the test result not keeping up
-> > with the code changes.
-> >
-> > --- expect      2019-07-30 16:56:36 +0000
-> > +++ actual      2019-07-30 16:56:36 +0000
-> > @@ -1,6 +1,6 @@
-> >  NULL
-> >  NULL
-> >  NULL
-> > +7c7cd714e262561f73f3079dfca4e8724682ac21 3
-> >  139b20d8e6c5b496de61f033f642d0e3dbff528d 2
-> >  d79ce1670bdcb76e6d1da2ae095e890ccb326ae9 1
-> > -7c7cd714e262561f73f3079dfca4e8724682ac21 3
-> 
-> I hit the same failure while building for Fedora on the
-> s390x architecture.  I have not dug into it much yet, but
-> perhaps this is an endianess issue?
+> @@ -475,7 +475,7 @@ static int grep_submodule(struct grep_opt *opt,
+>  		strbuf_release(&base);
+>  		free(data);
+>  	} else {
+> -		hit = grep_cache(&subopt, pathspec, 1);
+> +		hit = grep_cache(&subopt, pathspec, cached);
+>  	}
 
-Ah, of course. Our oid hashing is done by just picking off the first
-bytes of the sha1, and it doesn't care about endianness (because these
-are just internal-to-memory hashes).
+Interesting.  It appears to me that this has always searched in
+submodule index and never working tree.  I am not sure if there was
+any specific reason to avoid looking into the working tree files.
 
-We _could_ reconcile that like this:
+Passing the 'cached' bit down from grep_cache() does look like a
+sensible way to go.
 
-diff --git a/hashmap.h b/hashmap.h
-index 8424911566..493229ac54 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -116,19 +116,11 @@ unsigned int memihash_cont(unsigned int hash_seed, const void *buf, size_t len);
-  * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash code
-  * for use in hash tables. Cryptographic hashes are supposed to have
-  * uniform distribution, so in contrast to `memhash()`, this just copies
-- * the first `sizeof(int)` bytes without shuffling any bits. Note that
-- * the results will be different on big-endian and little-endian
-- * platforms, so they should not be stored or transferred over the net.
-+ * the first `sizeof(int)` bytes without shuffling any bits.
-  */
- static inline unsigned int oidhash(const struct object_id *oid)
- {
--	/*
--	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
--	 * platforms that don't support unaligned reads.
--	 */
--	unsigned int hash;
--	memcpy(&hash, oid->hash, sizeof(hash));
--	return hash;
-+	return get_be32(oid->hash);
- }
- 
- /*
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-index bbe719e950..6656db9d69 100755
---- a/t/t0016-oidmap.sh
-+++ b/t/t0016-oidmap.sh
-@@ -93,9 +93,9 @@ put three 3
- iterate" "NULL
- NULL
- NULL
-+$(git rev-parse three) 3
- $(git rev-parse two) 2
--$(git rev-parse one) 1
--$(git rev-parse three) 3"
-+$(git rev-parse one) 1"
- 
- '
- 
+> @@ -523,7 +523,8 @@ static int grep_cache(struct grep_opt *opt,
+>  			}
+>  		} else if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
+>  			   submodule_path_match(repo->index, pathspec, name.buf, NULL)) {
+> -			hit |= grep_submodule(opt, pathspec, NULL, ce->name, ce->name);
+> +			hit |= grep_submodule(opt, pathspec, NULL, ce->name,
+> +					      ce->name, cached);
+>  		} else {
+>  			continue;
+>  		}
+> @@ -598,7 +599,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>  			free(data);
+>  		} else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
+>  			hit |= grep_submodule(opt, pathspec, &entry.oid,
+> -					      base->buf, base->buf + tn_len);
+> +					      base->buf, base->buf + tn_len,
+> +					      1); /* ignored */
 
-which not only fixes this test but any other hash-based oddities. I
-wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
-René into doing a bunch of measurements and explorations of the
-disassembled code. ;)
+The trailing comment is misleading.  In the context of reviewing
+this patch, we can probably tell it applies only to that "1", but
+if you read only the postimage, the "ignored" comment looks as if
+the call itself is somehow ignored by somebody unspecified.  It is
+not clear at all that it is only about the final parameter.
 
--Peff
+If you must...
+
+		hit |= grep_submodule(opt, pathspec, &entry.oid,
+				      base->buf, base->buf + tn_len,
+				      1 /* ignored */);
+
+... is a reasonable way to write it.
+
+> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+> index a11366b4ce..946f91fa57 100755
+> --- a/t/t7814-grep-recurse-submodules.sh
+> +++ b/t/t7814-grep-recurse-submodules.sh
+> @@ -408,4 +408,25 @@ test_expect_success 'grep --recurse-submodules with submodules without .gitmodul
+>  	test_cmp expect actual
+>  '
+>  
+> +reset_and_clean () {
+> +	git reset --hard &&
+> +	git clean -fd &&
+> +	git submodule foreach --recursive 'git reset --hard' &&
+> +	git submodule foreach --recursive 'git clean -fd'
+
+Do we need two separate foreach, instread of a single one that does
+both reset and clean (i.e. "git reset --hard && git clean -f -d")?
+
