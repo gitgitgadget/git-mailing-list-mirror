@@ -2,110 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 571831F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 18:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEE3C1F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 19:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727948AbfG3SgW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 14:36:22 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:45697 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726896AbfG3SgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 14:36:22 -0400
-Received: by mail-wr1-f53.google.com with SMTP id f9so66832996wre.12
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 11:36:20 -0700 (PDT)
+        id S1727621AbfG3TTN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 15:19:13 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:38214 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbfG3TTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 15:19:13 -0400
+Received: by mail-wr1-f48.google.com with SMTP id g17so66969787wrr.5
+        for <git@vger.kernel.org>; Tue, 30 Jul 2019 12:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YnRHdltfxQcjl9FNzrKWJffOIb5a/9s0JXM1tamI/cY=;
-        b=foizDwAD67Uoc9XOxrxuj3sHdr36R5G9WOt4M6iye6mkeV0QhEu3PnQfhx1K05JteO
-         Fa16LsvBBeS2tXeAWERIbIcHGpp9O2314k2MsdLFm/7L6WRJ3glbAm8/RQDHXtHnd3dk
-         aDp/iuqk21QicVf4g5lrexKJLp8BWrZQOvr9MQiPaAFKr+KIK0wKazD68Bo4S3ZsszGV
-         neNaAfAdOrQP3nX8eDe7K6Yhm9JfGZhnYoGAH84O4fCL8H9dxK2lsaZ9kQ3OcHA/DC36
-         Hp6wzM6hSOwqnNUyUpej4yYyP5wppqXEFNuDdbirMHTOnxslzQ9pvteY8bUEvliw0a8v
-         uang==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HaeuyDxda49Bez/jSoNVay8586vE9s+EgigClNyFpM4=;
+        b=JnR1+J/sIfM6gqzFBE8opvJ86Fml8YwxVq7B4ynggNoij8fXEWiQSoqgqxQ5c7CtmB
+         LSMQ4YDwU9hSMbeyvWXFtEPtXeMbDuI3gEQQeBa3N0tnLrbUdx6hpfq/th5sJtZDgoWQ
+         mAaLLbZGJFLPt+yF4F2vur/rqcHQhNTBhf49QC9Lxgg6UviPqzndM4b2aQS2OhdIInVD
+         N9ix8wK8Y9PmityUN3o3YQYzkVhmX1fYA4YUXAjuquJ15Dpb0o5Gik1xiYxWmwfrMZz8
+         9DIzji6XOWhud/IxvXXyJmS3JvB7fKuEp2nfe8QVZnrjw5/tqshcbiPAZWZ9Wu7nyeA3
+         cnRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YnRHdltfxQcjl9FNzrKWJffOIb5a/9s0JXM1tamI/cY=;
-        b=dlQse6XvKkZs2YKzn9ga/8Ox7ENGuCNG3+heRnS0rWzQk8edBFpHe4nhXspYfBgrkM
-         jhPglnJhmvdMkWNc1Bl2t97N+8hijZxoZexmF9HZNrXCfsoBdfYgY3ZNwGT13tri3BiN
-         7TzJ9SLlwhXT/m8sepvMGXouOol4N7lBNjuzP9oCLzulGFfhhX+mBLkzDwwezwoy/4Ag
-         GjMUnt7Q0ocwi6W5HwVGzx21WhinSWsiAP1xL9TQcMM8W+bBKFrYgspJ6Nx7xfynA8aJ
-         BE5wPZ7x6E3Dtt+nabIjK778FR42lrEV8pk45RkQKOCD7NfT8OKpIYUIS1XIewXM/FPt
-         PbEQ==
-X-Gm-Message-State: APjAAAVP6OrlV5ZCLCtnBSGDGUKeNipG9Ml7f6/iyM+8zZicJLKwlvCx
-        Cwyzu7MMWQ3GFQuycKC2pnfZZBAr
-X-Google-Smtp-Source: APXvYqweKB7+ebXYgBGorvglKIAbCyUcgWvc3I1NltYQHWw3u//BXNzv11rewtz+RYJsfOOfcAh5GQ==
-X-Received: by 2002:adf:de90:: with SMTP id w16mr31976411wrl.217.1564511779268;
-        Tue, 30 Jul 2019 11:36:19 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-23-226.as13285.net. [92.22.23.226])
-        by smtp.gmail.com with ESMTPSA id g12sm96140119wrv.9.2019.07.30.11.36.18
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Jul 2019 11:36:18 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [BUG]: Destructive behaviour of git revert
-To:     Andreas Wiesinger <awiesing90@gmail.com>, git@vger.kernel.org
-References: <CAP82knNJ7YH30R-Z61ake58qERp--6hdvgGasKpHQ2TbMPraiA@mail.gmail.com>
- <CAP82knOVE5RbcDbD-SqbkoZ_4qubi96n2p3M_vgc4xGFVwTpMw@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <015916f3-9386-d541-0603-b361c44a7ae8@gmail.com>
-Date:   Tue, 30 Jul 2019 19:36:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HaeuyDxda49Bez/jSoNVay8586vE9s+EgigClNyFpM4=;
+        b=nUIvgS/nOhLVby5mzOZ1WytWX0ApPwXzCD2VhHjWfYeMd5yitBn/BzmYkGfHSDiSnX
+         dAOA2axx4QpHg7qgwoAevf6UeR1tqv2GPCmyn7JpXKgp/+46aNtEDqmH88el6rbCMXbO
+         bL4DYLbmhx1S0JVsbibnEwFwUp7E1Uv16NUO2oWnHWdrsfQEdQrGze9QH1utHGb/0lov
+         Rw0Mz26EC6Mx3PqVhoNYLA9ujf6zth50QkNPXAvtXKGzLxdaT7weQ9dZP07/9YhP9NuU
+         3uaqUdgczNb/r59tPMQUymMNiRIW10N1l+16fjNN7dp1CuBpmNnm9fmJ4d7IH+goGihO
+         GB6Q==
+X-Gm-Message-State: APjAAAV7bHEYZf8mKa78v5ffpouwQE34GCdf/O7FtWtVOL7n/8FqD5Kw
+        5euYjZvRx7M0l8FyRAYOVXU=
+X-Google-Smtp-Source: APXvYqwLsfAe+K8+x4Lg9yfhKLNw0miasiCZpP4iRmKpn5kMSZdbgJeI2+eYsFwEIPfAIy8EatOhKA==
+X-Received: by 2002:adf:f544:: with SMTP id j4mr24318481wrp.150.1564514351249;
+        Tue, 30 Jul 2019 12:19:11 -0700 (PDT)
+Received: from szeder.dev (x4dbe512f.dyn.telefonica.de. [77.190.81.47])
+        by smtp.gmail.com with ESMTPSA id x16sm49741864wmj.4.2019.07.30.12.19.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jul 2019 12:19:10 -0700 (PDT)
+Date:   Tue, 30 Jul 2019 21:19:07 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Dmitry Safonov <dima@arista.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Dmitry Safonov <0x7f454c46@gmail.com>,
+        Andrei Vagin <avagin@openvz.org>
+Subject: Re: [PATCHv2] send-email: Ask if a patch should be sent twice
+Message-ID: <20190730191907.GQ20404@szeder.dev>
+References: <20190730162624.9226-1-dima@arista.com>
 MIME-Version: 1.0
-In-Reply-To: <CAP82knOVE5RbcDbD-SqbkoZ_4qubi96n2p3M_vgc4xGFVwTpMw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190730162624.9226-1-dima@arista.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andreas
+On Tue, Jul 30, 2019 at 05:26:24PM +0100, Dmitry Safonov wrote:
+> +	if (@dupes) {
+> +		printf(__("Patches specified several times: \n"));
 
-On 30/07/2019 18:24, Andreas Wiesinger wrote:
-> Hello,
-> 
-> git revert for merges will mark merged files as deleted and commit
-> them as if they would have been deleted, but that is for sure never
-> what anybody would expect and has deleted many files unintentionally
-> and unrecognized in our repo shortly.
-> 
-> I have reproduced this issue in a very small example repo here:
-> https://gitlab.com/electrocnic/git-revert-destructive-behaviour/tree/master
-> 
-> Expected behaviour would be:
-> 
-> A reverted merge should never mark any files or directories as
-> "deleted", and merging the branch where the other merge has been
-> reverted should not lead to the deletion of those files.
+Is this message translated?  (I don't know what __("<str>") does in
+Perl.)  If it is, then ...
 
-Thanks for creating an example. I've had a quick look at it and it 
-appears that you have a merge that adds a new file from the branch being 
-merged, then when you revert the merge that file is deleted. Could you 
-explain what you want to happen when you revert that merge? The idea of 
-revert is to undo the changes introduced by the commit that is being 
-reverted, I'm struggling to understand why you think revert should not 
-do this for files that are added.
+> @@ -589,6 +591,19 @@ test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success $PREREQ 'ask confirmation for double-send' '
+> +	clean_fake_sendmail &&
+> +	echo y | \
+> +		GIT_SEND_EMAIL_NOTTY=1 \
+> +		git send-email --from=author@example.com \
+> +			--to=nobody@example.com \
+> +			--smtp-server="$(pwd)/fake.sendmail" \
+> +			--validate \
+> +			$patches $patches $patches \
+> +			>stdout &&
+> +	! grep "Patches specified several times: " stdout
 
-Best Wishes
+... this here should be 'test_i18ngrep' instead of plain old 'grep'.
 
-Phillip
-
-> I classify this behaviour as really really destructive and clearly a
-> bug, even if this behaviour is by intention. It should not be by
-> intention then..
-> 
-> Best regards,
-> Andreas
-> 
