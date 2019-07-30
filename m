@@ -2,131 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 522E71F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:56:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ABB51F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728541AbfG3U43 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:56:29 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:39921 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbfG3U43 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:56:29 -0400
-Received: by mail-wm1-f42.google.com with SMTP id u25so47478651wmc.4
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 13:56:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=7FlwFCpGSq58dyNhfMyjnYfvKSQ2oXtVHpTBjKG93zI=;
-        b=PTFvsHl+9Zv3jZ3X/wyn7m7xm1uIDzk8IDyraqLj+Lhyt71nh+SJNVSAMTPABkVx8V
-         bZApjqRPioe6OLuVPDkpAMJaSU/OfQKgkPXj86AtHPa3gpBxWi6++bjWcjXCR+MIs/v4
-         e4yVCMjaFUHX4HtqRRyalppcR7W4pvUz26M/nT8OkDxmwaMQGc1pKf6JKrCzn/mwbjL2
-         3VCTGHCWxc1fPCzeasAlS+1KQRFAumXoWmlR0Rrlk1qRkNr/p50rlth1+DLJoFkqhVZI
-         lcv1V4tZzTUIfXj7Glmz+JZTe5Z1a34FKnpK8zPg9GggIHaaqYO5KkJpJoJEg4dOxfjJ
-         e2tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=7FlwFCpGSq58dyNhfMyjnYfvKSQ2oXtVHpTBjKG93zI=;
-        b=Iz5s4N3wG+URlcC0qJkmqS2CJJUjspiTCywHlS+TiQ78FJeBVtCoLDbbbFLuBfzR75
-         XGlRswzWpjAvd0yXFQtlVDq/kWniUigk/g9oaph1eXEXRSfWJLlCB1UNffFIreiyLE7U
-         +Lm9qA12GC12YdJDQJuEBZoZbmxsLG84V7yWxd7++JL5Q748UOUpeUHWvqQqmqsv5RAx
-         DikMky5CNXiLwiH/TOKgG4JRpN+YiCXbvp7QAQhfWJGXn82tMHF+I6BpYw8OflVRXsg1
-         Pj4Hl1DcORgcAgi+Xl+Xdx/GH+ue0lYNMLyDK9VaRnuPdbDxSjphxBis4suAS6ddMARy
-         v71g==
-X-Gm-Message-State: APjAAAXxy6d32P5BwtU3wdHkq5EjOJGK4o1TYgyGi17wPB3sKb7PLnET
-        pbibbtLzKypOrMtmPhbsMRs=
-X-Google-Smtp-Source: APXvYqx5MYX1+51jqbPXlaDNd1CNM+tORjofhUBiTdx7q3j16FNsrXIcu31sArZjNjZH7Zuw2pgCMg==
-X-Received: by 2002:a7b:ce01:: with SMTP id m1mr26081594wmc.1.1564520187147;
-        Tue, 30 Jul 2019 13:56:27 -0700 (PDT)
-Received: from szeder.dev (x4dbe512f.dyn.telefonica.de. [77.190.81.47])
-        by smtp.gmail.com with ESMTPSA id r12sm80040248wrt.95.2019.07.30.13.56.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Jul 2019 13:56:26 -0700 (PDT)
-Date:   Tue, 30 Jul 2019 22:56:24 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190730205624.GR20404@szeder.dev>
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
- <20190730194938.GZ4545@pobox.com>
- <20190730200203.GA4882@sigill.intra.peff.net>
+        id S1726078AbfG3U5b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:57:31 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63267 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727243AbfG3U5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:57:31 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE86A76231;
+        Tue, 30 Jul 2019 16:57:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IFf8c9E9hgElZd3WkLTRaeTiqGU=; b=hDG1zk
+        MccZAg3hB+dVSkVF/KSjhtSqyGQ8gA8GVy+HFfoTqYYdrYu9vzF18VaK2mWScQjr
+        KCo/XbvyII1yFFe7DNAKICWXmRcJY3IWI/2Na0qPCRZcv1Pdq0yMeGonaLLLiee+
+        Iq8Tr3Gou1aAQDNLWcCcDjQ8uIm3Asjbs+eU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KVwH01vHIyEmkjmoxU6sc0GTzFte0mJm
+        7PzNHSYmDz5Dcs2D/H/KPW3WocARd8i+1duF3Ww56k7gqki3k86e80tGHnMcPF+F
+        w4KYTGjy7mMAfq/1hnh3KxwtA+mWDMv4oNlFGnCtKmx9AVmpxslxEuLualsDKe+e
+        gfuApdLUZN8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C43EA76230;
+        Tue, 30 Jul 2019 16:57:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0066E7622F;
+        Tue, 30 Jul 2019 16:57:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        jnareb@gmail.com, pclouds@gmail.com, carenas@gmail.com,
+        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 2/5] repo-settings: add feature.manyCommits setting
+References: <pull.292.v2.git.gitgitgadget@gmail.com>
+        <pull.292.v3.git.gitgitgadget@gmail.com>
+        <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
+Date:   Tue, 30 Jul 2019 13:57:21 -0700
+In-Reply-To: <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 30 Jul 2019
+        12:35:27 -0700 (PDT)")
+Message-ID: <xmqqh873s0jy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190730200203.GA4882@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: A163FFDC-B30C-11E9-A46A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 30, 2019 at 04:02:03PM -0400, Jeff King wrote:
-> On Tue, Jul 30, 2019 at 03:49:38PM -0400, Todd Zullinger wrote:
-> 
-> > > Subtest 6 had an ordering issue. We do not know whether
-> > > the problem is the code or the test result not keeping up
-> > > with the code changes.
-> > >
-> > > --- expect      2019-07-30 16:56:36 +0000
-> > > +++ actual      2019-07-30 16:56:36 +0000
-> > > @@ -1,6 +1,6 @@
-> > >  NULL
-> > >  NULL
-> > >  NULL
-> > > +7c7cd714e262561f73f3079dfca4e8724682ac21 3
-> > >  139b20d8e6c5b496de61f033f642d0e3dbff528d 2
-> > >  d79ce1670bdcb76e6d1da2ae095e890ccb326ae9 1
-> > > -7c7cd714e262561f73f3079dfca4e8724682ac21 3
-> > 
-> > I hit the same failure while building for Fedora on the
-> > s390x architecture.  I have not dug into it much yet, but
-> > perhaps this is an endianess issue?
-> 
-> Ah, of course. Our oid hashing is done by just picking off the first
-> bytes of the sha1, and it doesn't care about endianness (because these
-> are just internal-to-memory hashes).
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yeah.
+> diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+> new file mode 100644
+> index 0000000000..f74314ae90
+> --- /dev/null
+> +++ b/Documentation/config/feature.txt
+> @@ -0,0 +1,15 @@
+> +feature.*::
+> +...
+> +* `gc.writeCommitGraph=true` enables writing the commit-graph file during
+> +garbage collection.
+> \ No newline at end of file
 
-> We _could_ reconcile that like this:
+No newline at end of file
 
-Do we really want that, though?  It's a hashmap, after all, and the
-order of iteration over various hashmap implementations tends to be
-arbitrary.  So an argument could be made that this test is overly
-specific by expecting a particular order of elements (and perhaps by
-checking the elements' oid as well), and it would be sufficient to
-check that it iterates over all elements, no matter the order (IOW
-sorting 'actual' before the comparison).
+> diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+> index 02b92b18b5..31a5fc4f75 100644
+> --- a/Documentation/config/gc.txt
+> +++ b/Documentation/config/gc.txt
+> @@ -63,8 +63,8 @@ gc.writeCommitGraph::
+>  	If true, then gc will rewrite the commit-graph file when
+>  	linkgit:git-gc[1] is run. When using `git gc --auto`
+>  	the commit-graph will be updated if housekeeping is
+> -	required. Default is false. See linkgit:git-commit-graph[1]
+> -	for details.
+> +	required. Default is false, unless `feature.manyCommits`
+> +	is enabled. See linkgit:git-commit-graph[1] for details.
+>  
+>  gc.logExpiry::
+>  	If the file gc.log exists, then `git gc --auto` will print
+> diff --git a/repo-settings.c b/repo-settings.c
+> index 309577f6bc..fc05f4fbc4 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -2,6 +2,8 @@
+>  #include "config.h"
+>  #include "repository.h"
+>  
+> +#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
 
-OTOH, this is not just any hashmap, but an oidmap, and I could imagine
-that there might be use cases where it would be beneficial if the
-iteration order were to match the oid order (but don't know whether we
-actually have such a use case).
+A few points:
 
+ 1. give 's' and 'v' a bit better name, perhaps 'slot' and 'value'?
 
-> I
-> wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
-> René into doing a bunch of measurements and explorations of the
-> disassembled code. ;)
+ 2. "do { if ((s) == -1) { (s) = (v); } } while(0)"
 
-Maybe it shows up in an oidmap-specific performance test, but with all
-that's usually going on in Git hashmap performance tends to be
-negligible (e.g. it's rarely visible in flame graphs).
+ 3. When we learn to set default values for variables that are not
+    boolean in the future, we will regret that we did not name it
+    UPDATE_DEFAULT_BOOL(slot, value).
 
