@@ -2,117 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ABB51F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9581F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 21:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbfG3U5b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:57:31 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63267 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727243AbfG3U5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:57:31 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE86A76231;
-        Tue, 30 Jul 2019 16:57:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IFf8c9E9hgElZd3WkLTRaeTiqGU=; b=hDG1zk
-        MccZAg3hB+dVSkVF/KSjhtSqyGQ8gA8GVy+HFfoTqYYdrYu9vzF18VaK2mWScQjr
-        KCo/XbvyII1yFFe7DNAKICWXmRcJY3IWI/2Na0qPCRZcv1Pdq0yMeGonaLLLiee+
-        Iq8Tr3Gou1aAQDNLWcCcDjQ8uIm3Asjbs+eU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KVwH01vHIyEmkjmoxU6sc0GTzFte0mJm
-        7PzNHSYmDz5Dcs2D/H/KPW3WocARd8i+1duF3Ww56k7gqki3k86e80tGHnMcPF+F
-        w4KYTGjy7mMAfq/1hnh3KxwtA+mWDMv4oNlFGnCtKmx9AVmpxslxEuLualsDKe+e
-        gfuApdLUZN8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C43EA76230;
-        Tue, 30 Jul 2019 16:57:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0066E7622F;
-        Tue, 30 Jul 2019 16:57:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        jnareb@gmail.com, pclouds@gmail.com, carenas@gmail.com,
-        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 2/5] repo-settings: add feature.manyCommits setting
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
-        <pull.292.v3.git.gitgitgadget@gmail.com>
-        <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
-Date:   Tue, 30 Jul 2019 13:57:21 -0700
-In-Reply-To: <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Tue, 30 Jul 2019
-        12:35:27 -0700 (PDT)")
-Message-ID: <xmqqh873s0jy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728515AbfG3VKR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 17:10:17 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41450 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726522AbfG3VKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 17:10:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id c2so64048175wrm.8
+        for <git@vger.kernel.org>; Tue, 30 Jul 2019 14:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MdtqX8YVY3WGcIKmzLCgmxtjPZqnNWZDmemYdI0VO0Q=;
+        b=FVGlZZDpTHo1zICmb/yvktA+mhMW6TLm0QSAEH0h/1Jft3ZI0hKrLgaXrbcns7eaUT
+         5YLArnXxZuzONigs8w2NoHoStMBGyakS3eb0Gp0QJ+QRRBUJ0Q8WYp9TRd3s2nckJ2Oi
+         GsPtnRqu/wvimfHHo3NqhHS/fBD5uYNdnw4+wJGhUUH794ukxMyLP4zBK4i4oWV45iu6
+         7jGdFEt4RtkVcee24rvU/if56a7BPZKvBCWrNTT+aeTuczjFsjCJ//XW2q+b/wP27QqH
+         +zo6qcMBph2/Kil5YvvocTL4d5b/lY9zpQvSAC5J8/UqDyYy1L/q6fpxrIGWGkX5CWyK
+         IfRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MdtqX8YVY3WGcIKmzLCgmxtjPZqnNWZDmemYdI0VO0Q=;
+        b=Q8jqWZIkwRUJsv3gnTCV4D8YNPTxJ+9Mr4tOkJ7EYZ6DtVzEwZfLueqMNV8w7kPmho
+         MFgN73yT3SV1YhJ+KT1EIKjmb0AYyj56R1n5XOFaVv01ZnO5pH++NX40vXGdPJoL+xws
+         P4jO2gkBH85r0WPipjOk1JuZYaTpxKBrVfeJJTqP9v9rH08bkChgSpaC4z64tODYT77P
+         HM/O03V8qFeTIZ10Hn2HcqRdS5i2Y9WXYUobKrwZVIcsQmh8k9+RcnmPs1wzXRS71zHa
+         km5rQTG7ujbVblpQikmLPlfihJSNNJCGB0I9Hr24QiJo6vBprF7E7Ld/Oj5V22JyzoAS
+         hpHw==
+X-Gm-Message-State: APjAAAVSCyFPliDFMbeFbNHMbYoDNOIQS9jlPjy0Imy376PXFdY1MOLp
+        N7qCTQAXTc+6mRHtiO5upAY=
+X-Google-Smtp-Source: APXvYqz/rvoXY+AGMty97V0LdRcdTrBdr9G0cx74+cPKrl/1tG/x3qXGvh7iA1dFLT3voeRW/iCGKg==
+X-Received: by 2002:a5d:4fc9:: with SMTP id h9mr2369813wrw.349.1564521015204;
+        Tue, 30 Jul 2019 14:10:15 -0700 (PDT)
+Received: from szeder.dev (x4dbe512f.dyn.telefonica.de. [77.190.81.47])
+        by smtp.gmail.com with ESMTPSA id a67sm73111919wmh.40.2019.07.30.14.10.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jul 2019 14:10:14 -0700 (PDT)
+Date:   Tue, 30 Jul 2019 23:10:12 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Dmitry Safonov <dima@arista.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Dmitry Safonov <0x7f454c46@gmail.com>,
+        Andrei Vagin <avagin@openvz.org>
+Subject: Re: [PATCHv3] send-email: Ask if a patch should be sent twice
+Message-ID: <20190730211012.GS20404@szeder.dev>
+References: <20190730203327.30958-1-dima@arista.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A163FFDC-B30C-11E9-A46A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190730203327.30958-1-dima@arista.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
-> new file mode 100644
-> index 0000000000..f74314ae90
-> --- /dev/null
-> +++ b/Documentation/config/feature.txt
-> @@ -0,0 +1,15 @@
-> +feature.*::
-> +...
-> +* `gc.writeCommitGraph=true` enables writing the commit-graph file during
-> +garbage collection.
-> \ No newline at end of file
-
-No newline at end of file
-
-> diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-> index 02b92b18b5..31a5fc4f75 100644
-> --- a/Documentation/config/gc.txt
-> +++ b/Documentation/config/gc.txt
-> @@ -63,8 +63,8 @@ gc.writeCommitGraph::
->  	If true, then gc will rewrite the commit-graph file when
->  	linkgit:git-gc[1] is run. When using `git gc --auto`
->  	the commit-graph will be updated if housekeeping is
-> -	required. Default is false. See linkgit:git-commit-graph[1]
-> -	for details.
-> +	required. Default is false, unless `feature.manyCommits`
-> +	is enabled. See linkgit:git-commit-graph[1] for details.
+On Tue, Jul 30, 2019 at 09:33:27PM +0100, Dmitry Safonov wrote:
+> @@ -589,6 +591,19 @@ test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
+>  	test_cmp expect actual
+>  '
 >  
->  gc.logExpiry::
->  	If the file gc.log exists, then `git gc --auto` will print
-> diff --git a/repo-settings.c b/repo-settings.c
-> index 309577f6bc..fc05f4fbc4 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -2,6 +2,8 @@
->  #include "config.h"
->  #include "repository.h"
->  
-> +#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
+> +test_expect_success $PREREQ 'ask confirmation for double-send' '
+> +	clean_fake_sendmail &&
+> +	echo y | \
+> +		GIT_SEND_EMAIL_NOTTY=1 \
+> +		git send-email --from=author@example.com \
+> +			--to=nobody@example.com \
+> +			--smtp-server="$(pwd)/fake.sendmail" \
+> +			--validate \
+> +			$patches $patches $patches \
+> +			>stdout &&
+> +	! test_i18ngrep "Patches specified several times: " stdout
 
-A few points:
+You should write this as 'test_i18ngrep ! <...>'.  When running the
+test with GIT_TEST_GETTEXT_POISON=true, then 'test_i18ngrep' is
+basically a noop and always returns with success, the leading ! would
+turn that into a failure, which then would fail the test.
 
- 1. give 's' and 'v' a bit better name, perhaps 'slot' and 'value'?
-
- 2. "do { if ((s) == -1) { (s) = (v); } } while(0)"
-
- 3. When we learn to set default values for variables that are not
-    boolean in the future, we will regret that we did not name it
-    UPDATE_DEFAULT_BOOL(slot, value).
+Sorry for not being specific enough.
 
