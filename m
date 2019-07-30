@@ -7,118 +7,111 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE621F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EAB11F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728372AbfG3Uj4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:39:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50217 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728305AbfG3Ujz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:39:55 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1898760AF;
-        Tue, 30 Jul 2019 16:39:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1728449AbfG3Urf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:47:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54331 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbfG3Urf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:47:35 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21C50151109;
+        Tue, 30 Jul 2019 16:47:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=IqmDnbXeCA8T
-        +ZqBLzF5SCcYoqM=; b=eDNEpL4th3g2Utt6v8HCd5L6HL/i2Fe1wlsxQX2GcW2S
-        HrEIGDTTIoHX7BJmig04tDnCjN+f/CNA/R4j8K75r9sxktGs09TnPi11i8e7abg1
-        FOLFpNDFygZQv/tgwhGrSA3L4NSykcJPZ7xR6B9x3gCDFcDJplyx4eSBxfEVzaU=
+        :content-type; s=sasl; bh=GEEefOYfpjhOuBk3+vgye7vCCYM=; b=lHtgD0
+        J3+4rEJzuV97danbpMTl0xX9AiknTdek5XVMxJ+aRltLv5am4tuNnFhwxxF3Hu3K
+        RcTHaDx0WaKXIwSMLTTvLjhSToxrBjnHRtidfwtGKbPjumU3nL0oLLWbAiIoT+9m
+        NnCxFHGaq7Wn04YRodTzbTHOUnSb6LXWFAZv0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tJoFEO
-        4A6VNuuXACuhVHYkJA9oVxCaqafuJI7wRzFJOZASRE2ir+fg8XwyeuntsknWmZKt
-        UbSe29CEXxiknvVr0yLN7FTkAdyrSxMlg//BS74XfpwkCZ77gCuxmMKjBbUyHTOM
-        w5TR1UHOzvxDdVshEPeckGz4JhWTsZMEy+BH0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A97D0760AD;
-        Tue, 30 Jul 2019 16:39:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=UlXTE/vvirO94oHnY0pufn31W52t7fK9
+        kqzKuBZ5HnhGVx2aZ2kl3QmT5w/Ym+2hUrbe2RdHi/grQPSBcgkihdHZsq121ggD
+        c4tekbZ/XBuYM44jaf7WDx3L92mqNEf990B6zO6Hy9oNuee3Heo5TZBqzYy2m6Sb
+        RdLqZFm7m/A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18492151107;
+        Tue, 30 Jul 2019 16:47:33 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C597B760AA;
-        Tue, 30 Jul 2019 16:39:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7DFB8151105;
+        Tue, 30 Jul 2019 16:47:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
-        <20190730194938.GZ4545@pobox.com>
-        <20190730200203.GA4882@sigill.intra.peff.net>
-Date:   Tue, 30 Jul 2019 13:39:48 -0700
-In-Reply-To: <20190730200203.GA4882@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 30 Jul 2019 16:02:03 -0400")
-Message-ID: <xmqqpnlrs1d7.fsf@gitster-ct.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        jnareb@gmail.com, pclouds@gmail.com, carenas@gmail.com,
+        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 1/5] repo-settings: consolidate some config settings
+References: <pull.292.v2.git.gitgitgadget@gmail.com>
+        <pull.292.v3.git.gitgitgadget@gmail.com>
+        <4d0db57ecb4d241b61ba1f9c6f23aedc6b9bb4d9.1564515324.git.gitgitgadget@gmail.com>
+Date:   Tue, 30 Jul 2019 13:47:31 -0700
+In-Reply-To: <4d0db57ecb4d241b61ba1f9c6f23aedc6b9bb4d9.1564515324.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 30 Jul 2019
+        12:35:26 -0700 (PDT)")
+Message-ID: <xmqqlfwfs10c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2DA3F9FA-B30A-11E9-A3CB-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 40D6C1BE-B30B-11E9-8B2F-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> @@ -116,19 +116,11 @@ unsigned int memihash_cont(unsigned int hash_seed=
-, const void *buf, size_t len);
->   * Converts a cryptographic hash (e.g. SHA-1) into an int-sized hash c=
-ode
->   * for use in hash tables. Cryptographic hashes are supposed to have
->   * uniform distribution, so in contrast to `memhash()`, this just copi=
-es
-> - * the first `sizeof(int)` bytes without shuffling any bits. Note that
-> - * the results will be different on big-endian and little-endian
-> - * platforms, so they should not be stored or transferred over the net=
-.
+> diff --git a/repository.h b/repository.h
+> index 4fb6a5885f..2bb2bc3eea 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -4,6 +4,7 @@
+>  #include "path.h"
+>  
+>  struct config_set;
+> +struct repo_settings;
 
-;-)
+Given that the next hunk you introduce the real thing, and nobody
+refers to it until then, I do not see why we want to have a forward
+declaration.
 
-> + * the first `sizeof(int)` bytes without shuffling any bits.
+>  struct git_hash_algo;
+>  struct index_state;
+>  struct lock_file;
+> @@ -11,6 +12,17 @@ struct pathspec;
+>  struct raw_object_store;
+>  struct submodule_cache;
+>  
+> +struct repo_settings {
+> +	int initialized;
+> +
+> +	int core_commit_graph;
+> +	int gc_write_commit_graph;
+> +
+> +	int index_version;
+> +
+> +	int pack_use_sparse;
+> +};
+> +
+>  struct repository {
+>  	/* Environment */
+>  	/*
+> @@ -72,6 +84,8 @@ struct repository {
+>  	 */
+>  	char *submodule_prefix;
+>  
+> +	struct repo_settings settings;
+> +
+>  	/* Subsystems */
+>  	/*
+>  	 * Repository's config which contains key-value pairs from the usual
+> @@ -157,5 +171,6 @@ int repo_read_index_unmerged(struct repository *);
 >   */
->  static inline unsigned int oidhash(const struct object_id *oid)
->  {
-> -	/*
-> -	 * Equivalent to 'return *(unsigned int *)oid->hash;', but safe on
-> -	 * platforms that don't support unaligned reads.
-> -	 */
-> -	unsigned int hash;
-> -	memcpy(&hash, oid->hash, sizeof(hash));
-> -	return hash;
-> +	return get_be32(oid->hash);
->  }
-> =20
->  /*
-> diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-> index bbe719e950..6656db9d69 100755
-> --- a/t/t0016-oidmap.sh
-> +++ b/t/t0016-oidmap.sh
-> @@ -93,9 +93,9 @@ put three 3
->  iterate" "NULL
->  NULL
->  NULL
-> +$(git rev-parse three) 3
->  $(git rev-parse two) 2
-> -$(git rev-parse one) 1
-> -$(git rev-parse three) 3"
-> +$(git rev-parse one) 1"
-> =20
->  '
->
-> which not only fixes this test but any other hash-based oddities. I
-> wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
-> Ren=C3=A9 into doing a bunch of measurements and explorations of the
-> disassembled code. ;)
-
-I'd rather see us go in the direction of discouraging people from
-relying on the hash order.
+>  void repo_update_index_if_able(struct repository *, struct lock_file *);
+>  
+> +void prepare_repo_settings(struct repository *r);
+>  
+>  #endif /* REPOSITORY_H */
