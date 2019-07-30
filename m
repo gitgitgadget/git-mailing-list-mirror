@@ -2,116 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EAB11F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 20:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 522E71F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 20:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728449AbfG3Urf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 16:47:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54331 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbfG3Urf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 16:47:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21C50151109;
-        Tue, 30 Jul 2019 16:47:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GEEefOYfpjhOuBk3+vgye7vCCYM=; b=lHtgD0
-        J3+4rEJzuV97danbpMTl0xX9AiknTdek5XVMxJ+aRltLv5am4tuNnFhwxxF3Hu3K
-        RcTHaDx0WaKXIwSMLTTvLjhSToxrBjnHRtidfwtGKbPjumU3nL0oLLWbAiIoT+9m
-        NnCxFHGaq7Wn04YRodTzbTHOUnSb6LXWFAZv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UlXTE/vvirO94oHnY0pufn31W52t7fK9
-        kqzKuBZ5HnhGVx2aZ2kl3QmT5w/Ym+2hUrbe2RdHi/grQPSBcgkihdHZsq121ggD
-        c4tekbZ/XBuYM44jaf7WDx3L92mqNEf990B6zO6Hy9oNuee3Heo5TZBqzYy2m6Sb
-        RdLqZFm7m/A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18492151107;
-        Tue, 30 Jul 2019 16:47:33 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7DFB8151105;
-        Tue, 30 Jul 2019 16:47:32 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
-        jnareb@gmail.com, pclouds@gmail.com, carenas@gmail.com,
-        avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 1/5] repo-settings: consolidate some config settings
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
-        <pull.292.v3.git.gitgitgadget@gmail.com>
-        <4d0db57ecb4d241b61ba1f9c6f23aedc6b9bb4d9.1564515324.git.gitgitgadget@gmail.com>
-Date:   Tue, 30 Jul 2019 13:47:31 -0700
-In-Reply-To: <4d0db57ecb4d241b61ba1f9c6f23aedc6b9bb4d9.1564515324.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Tue, 30 Jul 2019
-        12:35:26 -0700 (PDT)")
-Message-ID: <xmqqlfwfs10c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728541AbfG3U43 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 16:56:29 -0400
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:39921 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726652AbfG3U43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 16:56:29 -0400
+Received: by mail-wm1-f42.google.com with SMTP id u25so47478651wmc.4
+        for <git@vger.kernel.org>; Tue, 30 Jul 2019 13:56:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7FlwFCpGSq58dyNhfMyjnYfvKSQ2oXtVHpTBjKG93zI=;
+        b=PTFvsHl+9Zv3jZ3X/wyn7m7xm1uIDzk8IDyraqLj+Lhyt71nh+SJNVSAMTPABkVx8V
+         bZApjqRPioe6OLuVPDkpAMJaSU/OfQKgkPXj86AtHPa3gpBxWi6++bjWcjXCR+MIs/v4
+         e4yVCMjaFUHX4HtqRRyalppcR7W4pvUz26M/nT8OkDxmwaMQGc1pKf6JKrCzn/mwbjL2
+         3VCTGHCWxc1fPCzeasAlS+1KQRFAumXoWmlR0Rrlk1qRkNr/p50rlth1+DLJoFkqhVZI
+         lcv1V4tZzTUIfXj7Glmz+JZTe5Z1a34FKnpK8zPg9GggIHaaqYO5KkJpJoJEg4dOxfjJ
+         e2tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7FlwFCpGSq58dyNhfMyjnYfvKSQ2oXtVHpTBjKG93zI=;
+        b=Iz5s4N3wG+URlcC0qJkmqS2CJJUjspiTCywHlS+TiQ78FJeBVtCoLDbbbFLuBfzR75
+         XGlRswzWpjAvd0yXFQtlVDq/kWniUigk/g9oaph1eXEXRSfWJLlCB1UNffFIreiyLE7U
+         +Lm9qA12GC12YdJDQJuEBZoZbmxsLG84V7yWxd7++JL5Q748UOUpeUHWvqQqmqsv5RAx
+         DikMky5CNXiLwiH/TOKgG4JRpN+YiCXbvp7QAQhfWJGXn82tMHF+I6BpYw8OflVRXsg1
+         Pj4Hl1DcORgcAgi+Xl+Xdx/GH+ue0lYNMLyDK9VaRnuPdbDxSjphxBis4suAS6ddMARy
+         v71g==
+X-Gm-Message-State: APjAAAXxy6d32P5BwtU3wdHkq5EjOJGK4o1TYgyGi17wPB3sKb7PLnET
+        pbibbtLzKypOrMtmPhbsMRs=
+X-Google-Smtp-Source: APXvYqx5MYX1+51jqbPXlaDNd1CNM+tORjofhUBiTdx7q3j16FNsrXIcu31sArZjNjZH7Zuw2pgCMg==
+X-Received: by 2002:a7b:ce01:: with SMTP id m1mr26081594wmc.1.1564520187147;
+        Tue, 30 Jul 2019 13:56:27 -0700 (PDT)
+Received: from szeder.dev (x4dbe512f.dyn.telefonica.de. [77.190.81.47])
+        by smtp.gmail.com with ESMTPSA id r12sm80040248wrt.95.2019.07.30.13.56.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jul 2019 13:56:26 -0700 (PDT)
+Date:   Tue, 30 Jul 2019 22:56:24 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+Message-ID: <20190730205624.GR20404@szeder.dev>
+References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+ <20190730194938.GZ4545@pobox.com>
+ <20190730200203.GA4882@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40D6C1BE-B30B-11E9-8B2F-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190730200203.GA4882@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Jul 30, 2019 at 04:02:03PM -0400, Jeff King wrote:
+> On Tue, Jul 30, 2019 at 03:49:38PM -0400, Todd Zullinger wrote:
+> 
+> > > Subtest 6 had an ordering issue. We do not know whether
+> > > the problem is the code or the test result not keeping up
+> > > with the code changes.
+> > >
+> > > --- expect      2019-07-30 16:56:36 +0000
+> > > +++ actual      2019-07-30 16:56:36 +0000
+> > > @@ -1,6 +1,6 @@
+> > >  NULL
+> > >  NULL
+> > >  NULL
+> > > +7c7cd714e262561f73f3079dfca4e8724682ac21 3
+> > >  139b20d8e6c5b496de61f033f642d0e3dbff528d 2
+> > >  d79ce1670bdcb76e6d1da2ae095e890ccb326ae9 1
+> > > -7c7cd714e262561f73f3079dfca4e8724682ac21 3
+> > 
+> > I hit the same failure while building for Fedora on the
+> > s390x architecture.  I have not dug into it much yet, but
+> > perhaps this is an endianess issue?
+> 
+> Ah, of course. Our oid hashing is done by just picking off the first
+> bytes of the sha1, and it doesn't care about endianness (because these
+> are just internal-to-memory hashes).
 
-> diff --git a/repository.h b/repository.h
-> index 4fb6a5885f..2bb2bc3eea 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -4,6 +4,7 @@
->  #include "path.h"
->  
->  struct config_set;
-> +struct repo_settings;
+Yeah.
 
-Given that the next hunk you introduce the real thing, and nobody
-refers to it until then, I do not see why we want to have a forward
-declaration.
+> We _could_ reconcile that like this:
 
->  struct git_hash_algo;
->  struct index_state;
->  struct lock_file;
-> @@ -11,6 +12,17 @@ struct pathspec;
->  struct raw_object_store;
->  struct submodule_cache;
->  
-> +struct repo_settings {
-> +	int initialized;
-> +
-> +	int core_commit_graph;
-> +	int gc_write_commit_graph;
-> +
-> +	int index_version;
-> +
-> +	int pack_use_sparse;
-> +};
-> +
->  struct repository {
->  	/* Environment */
->  	/*
-> @@ -72,6 +84,8 @@ struct repository {
->  	 */
->  	char *submodule_prefix;
->  
-> +	struct repo_settings settings;
-> +
->  	/* Subsystems */
->  	/*
->  	 * Repository's config which contains key-value pairs from the usual
-> @@ -157,5 +171,6 @@ int repo_read_index_unmerged(struct repository *);
->   */
->  void repo_update_index_if_able(struct repository *, struct lock_file *);
->  
-> +void prepare_repo_settings(struct repository *r);
->  
->  #endif /* REPOSITORY_H */
+Do we really want that, though?  It's a hashmap, after all, and the
+order of iteration over various hashmap implementations tends to be
+arbitrary.  So an argument could be made that this test is overly
+specific by expecting a particular order of elements (and perhaps by
+checking the elements' oid as well), and it would be sufficient to
+check that it iterates over all elements, no matter the order (IOW
+sorting 'actual' before the comparison).
+
+OTOH, this is not just any hashmap, but an oidmap, and I could imagine
+that there might be use cases where it would be beneficial if the
+iteration order were to match the oid order (but don't know whether we
+actually have such a use case).
+
+
+> I
+> wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
+> René into doing a bunch of measurements and explorations of the
+> disassembled code. ;)
+
+Maybe it shows up in an oidmap-specific performance test, but with all
+that's usually going on in Git hashmap performance tends to be
+negligible (e.g. it's rarely visible in flame graphs).
+
