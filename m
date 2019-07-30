@@ -7,102 +7,92 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57CDF1F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 06:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFA4E1F462
+	for <e@80x24.org>; Tue, 30 Jul 2019 06:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729298AbfG3GwO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 02:52:14 -0400
-Received: from mx1.uni-regensburg.de ([194.94.157.146]:40388 "EHLO
-        mx1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729236AbfG3GwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 02:52:14 -0400
-Received: from mx1.uni-regensburg.de (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id 64314600004E
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 08:52:11 +0200 (CEST)
-Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-        by mx1.uni-regensburg.de (Postfix) with ESMTP id 50658600004D
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 08:52:11 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
-        with Novell_GroupWise; Tue, 30 Jul 2019 08:52:11 +0200
-Message-Id: <5D3FE919020000A100032932@gwsmtp.uni-regensburg.de>
-X-Mailer: Novell GroupWise Internet Agent 18.1.1 
-Date:   Tue, 30 Jul 2019 08:52:09 +0200
-From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     <git@vger.kernel.org>
-Subject: Re: Antw: Re: blank lines in pre-created merge message
-References: <5D382AC1020000A100032608@gwsmtp.uni-regensburg.de>
- <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>
- <5D39812C020000A10003265F@gwsmtp.uni-regensburg.de>
- <nycvar.QRO.7.76.6.1907251355500.21907@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1907251355500.21907@tvgsbejvaqbjf.bet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727868AbfG3G7v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 02:59:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55158 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727453AbfG3G7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 02:59:50 -0400
+Received: (qmail 2606 invoked by uid 109); 30 Jul 2019 06:59:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jul 2019 06:59:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5291 invoked by uid 111); 30 Jul 2019 07:01:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 03:01:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Jul 2019 02:59:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ibrahim El Rhezzali <ibrahim.elrhezzali@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] Improved git signing interface
+Message-ID: <20190730065949.GB4901@sigill.intra.peff.net>
+References: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb am 25.07.2019 um
-13:58
-in Nachricht <nycvar.QRO.7.76.6.1907251355500.21907@tvgsbejvaqbjf.bet>:
-> Hi Ulrich,
+On Mon, Jul 22, 2019 at 04:16:15PM +0200, Ibrahim El Rhezzali wrote:
+
+> I have been selected by the Linux Foundation to work on a summer
+> project. I would like to abstract the git signing interface and add
+> support for signatures using decentralized identifiers (DID).
+> Decentralized identifiers are an emerging standard [0] that allows
+> individuals to control their own digital identities, and is often
+> called self-sovereign identity (SSI). The SSIMeetup is a good place to
+> learn more about SSI [1] and DIDs [2].
 > 
-> On Thu, 25 Jul 2019, Ulrich Windl wrote:
-> 
->> >>> Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb am 25.07.2019
-um
->> 12:07
->> in Nachricht <nycvar.QRO.7.76.6.1907251204310.21907@tvgsbejvaqbjf.bet>:
->> >
->> > On Wed, 24 Jul 2019, Ulrich Windl wrote:
->> >
->> >> When using "git merge ‑‑no‑ff ‑‑no‑commit ..", the pre‑created
->> >> merge message always contains two empty lines in between the
->> >> comment lines. However if there was a merge conflict (being
->> >> resolved) an extra blank line is added after the fiVrst line.
->>
->> [...]
-> 
->> Could anybody provide a rough overview how and where these editor
->> comments are created?
-> 
-> The best bet would be to call `git grep` with text in that pre‑created
-> merge message, preferably some text that is most likely fixed, i.e. that
-> does not depend on the current worktree/commit.
-> 
-> If you give me an example of such a merge message, I can provide you
-> with the appropriate `git grep` call and the code locations to touch.
+> The project’s current goal is to abstract the current GPG interface
+> into a more ‘generic’ API that supports the existing OpenPGP and X.509
+> functionality while creating the ability to write additional signature
+> drivers.
 
-Hi!
+Neat. I'm always wary of supporting "emerging standards", because
+sometimes they turn out not to emerge and you are left with historical
+cruft. :) But if your changes to Git are mostly around making the
+signing config more generic, I think that is something people are
+interested in (signify has come up as a possibility before).
 
-Sorry for the delay:
-OK, here is an example where the auto-generated comment has two blank lines:
----snip---
-Merge branch 'shared'
-#
-# It looks like you may be committing a merge.
-# If this is not correct, please remove the file
-#       .git/MERGE_HEAD
-# and try again.
+You might find this discussion interesting (that patch and the
+sub-thread):
 
+ https://public-inbox.org/git/20180409204129.43537-9-mastahyeti@gmail.com/
 
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-# On branch master
-# All conflicts fixed but you are still merging.
-#
-# Changes to be committed:
-#       new file:   .filelist
-#       new file:   .gitignore
-...more lines omitted
----snip---
+One of the points I think people didn't like was how Git would detect
+signatures embedded in objects (i.e., is matching PEM-like lines enough,
+or what would other signing systems want?).
 
-> 
-> Ciao,
-> Johannes
+That patch was later dropped in favor of the work from Henning Schild:
 
+  https://public-inbox.org/git/cover.1531208187.git.henning.schild@siemens.com/
 
+which is much more geared at just adding gpgsm support. There were
+various discussions about how it could eventually be extended to new
+formats. I skimmed over the documentation from your branch and it looks
+like a pretty sane layout, with backwards compatibility.
 
+> I have implemented a prototype that works and passes all tests, and in
+> the coming weeks I plan to submit a series of patches for your review.
+> I first need to clean up the Git history to make it easy to follow. I
+> will also ensure that people using the current approach to GPG signing
+> can use the proposed approach with only minor changes. The flag
+> “--gpg-sign” would evolve to “---sign”, though I would like to
+> preserve an alias to the old flag if possible.
+
+Yes, this must not be "minor changes" but "no changes" to be accepted.
+It's OK to deprecate things, but old options cannot immediately stop
+working. From this email and looking at your config patches, it looks
+like that's the route you plan to take. Good.
+
+I look forward to seeing the cleaned-up patches. :)
+
+-Peff
