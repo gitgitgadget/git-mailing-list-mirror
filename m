@@ -2,119 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEDF91F462
-	for <e@80x24.org>; Wed, 31 Jul 2019 01:27:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 017461F462
+	for <e@80x24.org>; Wed, 31 Jul 2019 01:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725911AbfGaB1s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 21:27:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56280 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725209AbfGaB1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 21:27:48 -0400
-Received: (qmail 10232 invoked by uid 109); 31 Jul 2019 01:27:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 01:27:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12566 invoked by uid 111); 31 Jul 2019 01:29:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 21:29:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 30 Jul 2019 21:27:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190731012746.GB13880@sigill.intra.peff.net>
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
- <20190730194938.GZ4545@pobox.com>
- <20190730200203.GA4882@sigill.intra.peff.net>
- <20190730205624.GR20404@szeder.dev>
- <20190731005933.GA9610@sigill.intra.peff.net>
- <20190731012336.GA13880@sigill.intra.peff.net>
+        id S1727000AbfGaBsH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 21:48:07 -0400
+Received: from forward501j.mail.yandex.net ([5.45.198.251]:60371 "EHLO
+        forward501j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726670AbfGaBsH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jul 2019 21:48:07 -0400
+Received: from mxback10q.mail.yandex.net (mxback10q.mail.yandex.net [IPv6:2a02:6b8:c0e:1b4:0:640:b6ef:cb3])
+        by forward501j.mail.yandex.net (Yandex) with ESMTP id BCCD433803F4;
+        Wed, 31 Jul 2019 04:48:04 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback10q.mail.yandex.net (nwsmtp/Yandex) with ESMTP id ZQilKZoctJ-m3quISv2;
+        Wed, 31 Jul 2019 04:48:03 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1564537683;
+        bh=8agwZyA6ZK7mlgrvwXZy1patVZ9rYxUgCu55rIAq4CM=;
+        h=Message-Id:Subject:In-Reply-To:Date:References:To:From;
+        b=iiRvDQ5qN3ImW7JqbADs0e/NffV3eWai0utoGW/dRDseWXC+KhHfHHLOkSwz7L6ZU
+         gWhBUDRROfkxNwvQGGYfxKUM5I3n1nyBP4y7Jh0Xjt6Pk0uG1KmsrpGFlStOInY8NX
+         LmuYEX1kvuw1W1BNHYmS/0QM+nFdBtVSFd+bpFrs=
+Authentication-Results: mxback10q.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by vla1-53bffb0b04ed.qloud-c.yandex.net with HTTP;
+        Wed, 31 Jul 2019 04:48:03 +0300
+From:   Andrey <ahippo@yandex.ru>
+Envelope-From: ahippo@yandex.com
+To:     Philip McGraw <philip.mcgraw@bentley.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, luke@diamand.org
+In-Reply-To: <BL0PR1901MB209738ADDF9D931253E8C317FFDC0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+References: <BL0PR1901MB209738ADDF9D931253E8C317FFDC0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+Subject: Re: [PATCH] git-p4: close temporary file before removing
 MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 30 Jul 2019 21:48:03 -0400
+Message-Id: <1955471564537683@vla1-53bffb0b04ed.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190731012336.GA13880@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 30, 2019 at 09:23:36PM -0400, Jeff King wrote:
 
->  test_expect_success 'iterate (case insensitive)' '
-> -
-> -test_hashmap "put key1 value1
-> -put key2 value2
-> -put fooBarFrotz value3
-> -iterate" "NULL
-> -NULL
-> -NULL
-> -fooBarFrotz value3
-> -key2 value2
-> -key1 value1" ignorecase
 
-By the way, I found it curious that this test is repeated both with and
-without ignorecase, but in the case-insensitive we never have any
-case-equivalent names!
+30.07.2019, 13:37, "Philip McGraw" <philip.mcgraw@bentley.com>:
+> python os.remove() throws exceptions on Windows platform when attempting
+> to remove file while it is still open. Need to grab filename while file open,
+> close file handle, then remove by name. Apparently other platforms are more
+> permissive of removing files while busy.
+> reference: https://docs.python.org/3/library/os.html#os.remove
+> ---
+>  git-p4.py | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index c71a6832e2..6b9d2a8317 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1161,12 +1161,14 @@ def exceedsLargeFileThreshold(self, relPath, contents):
+>                  return False
+>              contentTempFile = self.generateTempFile(contents)
+>              compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
+> + compressedContentFileName = compressedContentFile.name
+>              zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
+>              zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+>              zf.close()
+>              compressedContentsSize = zf.infolist()[0].compress_size
+>              os.remove(contentTempFile)
+> - os.remove(compressedContentFile.name)
+> + compressedContentFile.close()
+> + os.remove(compressedContentFileName)
 
-I guess it is testing that we preserved the name of fooBarFrotz, but I
-would think that this:
+I'm not sure why NamedTemporaryFile() is called with delete=False above,
+but it appears to me that it can have delete=True instead,
+so that there is no need to call os.remove() explicitly
+and thus worry about remove vs close ordering at all.
 
-diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
-index 5343ffd3f9..2807dff644 100755
---- a/t/t0011-hashmap.sh
-+++ b/t/t0011-hashmap.sh
-@@ -195,14 +195,15 @@ test_expect_success 'iterate (case insensitive)' '
- 	put key1 value1
- 	put key2 value2
- 	put fooBarFrotz value3
-+	put foobarfrotz value4
- 	iterate
- 	EOF
- 
- 	cat >expect <<-\EOF &&
- 	NULL
- 	NULL
- 	NULL
--	fooBarFrotz value3
-+	fooBarFrotz value4
- 	key1 value1
- 	key2 value2
- 	EOF
+>              if compressedContentsSize > gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>                  return True
+>          return False
+> --
+> 2.21.0.windows.1
 
-on top of my other patch would be a good addition. However, it yields
-this result:
+Thank you,
+Andrey.
 
---- expect	2019-07-31 01:26:07.284231899 +0000
-+++ actual	2019-07-31 01:26:07.284231899 +0000
-@@ -1,6 +1,7 @@
- NULL
- NULL
- NULL
--fooBarFrotz value4
-+foobarfrotz value4
- key1 value1
- key2 value2
-+value3
-
-The first line is a matter of taste I think (whether to keep the
-original case or replace it with the new key). But the empty-keyed
-retention of value3 seems wrong. I'm not sure if this is a bug in the
-actual hashmap code, or just a weirdness with the way test-tool prints
-it.
-
-I'm going offline for a bit, so if anybody feels like following up on
-the mystery, be my guest. Otherwise I may take a look later tonight.
-
--Peff
