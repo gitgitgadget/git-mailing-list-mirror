@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CFAA1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 17:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC221F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 18:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728032AbfGaR7Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 13:59:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65025 "EHLO
+        id S1727441AbfGaSMI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 14:12:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61920 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726079AbfGaR7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 13:59:24 -0400
+        with ESMTP id S1728032AbfGaSMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 14:12:07 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB394159D2D;
-        Wed, 31 Jul 2019 13:59:18 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57A76159E78;
+        Wed, 31 Jul 2019 14:12:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IkX0OCEB80gEG7hBWJU3/OkKtSw=; b=VS6fal
-        Yi6AWR/Ly9gZBRmvOxInX5UdANL/PdT7A2BeJUMN6Tx8+K1sPOPj8jwWlMbrpbdc
-        qKf4MaEgMdHFifDUQhtZP7AruGLqkZxxwKkbpEkt5fIH0GsFcM0oChCVaCkCDo/P
-        zBvU1uKoUfIrVBSTVsXWulOcaVf2l9o4oDY3Y=
+        :content-type; s=sasl; bh=PRXM3dy3/ec2q9RMT9Nfz2ABZ/Y=; b=XnUC63
+        sp52FBd0jjOnAPRoGecnPl1xa4aGdlA0QQfpMNZUAoWPxv8KDDjdcuRd29tfyj7q
+        catnkP00NtbAxiVbzOZfHIRdV89dAxNlu2d3T3SliPtlQrd7bVFW24rYoae5s7uQ
+        uA2qAzV8N6wMU+Iyh6oL9yEIAyC5n4WVKDYzs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aE5iAlr+XVKZujuYH5Zu6Ue5ZZAk55YN
-        kDBvWxnHbbaDyT47DHaorYvpCsHe0N+XaScdIdsdW1bV1M1ITefe77Aq957dYSa0
-        TzHiVVMxa1ChllpVxpMiJYWTU/fXubdlPuLiUyLYZHJbhGqVvbaNuyalmtEw0dZo
-        3WzHB5yzCuQ=
+        :content-type; q=dns; s=sasl; b=cfSMwmvheTg333ZV7PV2FfdzOzBQzlcS
+        c5I4xsN1tNVkUIgLFyT0a+NIU6ELwvrG1QzWDIob1L27dW/I03lWTQsAmc0ZkfRp
+        IfuGhAWTO+cIDqdcbbn/RXJVZ7sHbP1HJ7PRdWeAMyIIZlblOggCl4MJ3oU/Rjel
+        /Mfrl2Ot+6Y=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFF3C159D2A;
-        Wed, 31 Jul 2019 13:59:18 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CC9D159E77;
+        Wed, 31 Jul 2019 14:12:05 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3448B159D29;
-        Wed, 31 Jul 2019 13:59:18 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 879E1159E76;
+        Wed, 31 Jul 2019 14:12:04 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
         Jeff King <peff@peff.net>, Daniel Ferreira <bnmvco@gmail.com>
-Subject: Re: [PATCH v3 02/11] diff: export diffstat interface
+Subject: Re: [PATCH v3 03/11] built-in add -i: implement the `status` command
 References: <pull.170.v2.git.gitgitgadget@gmail.com>
         <pull.170.v3.git.gitgitgadget@gmail.com>
-        <c7a377890d84849ea2f63099cfc081420a4de15d.1563289115.git.gitgitgadget@gmail.com>
-Date:   Wed, 31 Jul 2019 10:59:17 -0700
-In-Reply-To: <c7a377890d84849ea2f63099cfc081420a4de15d.1563289115.git.gitgitgadget@gmail.com>
+        <b93b055ebeef98be11a1658453df6f85fed87347.1563289115.git.gitgitgadget@gmail.com>
+Date:   Wed, 31 Jul 2019 11:12:02 -0700
+In-Reply-To: <b93b055ebeef98be11a1658453df6f85fed87347.1563289115.git.gitgitgadget@gmail.com>
         (Daniel Ferreira via GitGitGadget's message of "Tue, 16 Jul 2019
         07:58:38 -0700 (PDT)")
-Message-ID: <xmqqwofyozka.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqsgqmoyz1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EA93D87A-B3BC-11E9-90FF-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B35B2D7A-B3BE-11E9-994A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,84 +63,115 @@ X-Mailing-List: git@vger.kernel.org
 
 "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> @@ -6273,12 +6257,7 @@ void diff_flush(struct diff_options *options)
->  	    dirstat_by_line) {
->  		struct diffstat_t diffstat;
->  
-> -		memset(&diffstat, 0, sizeof(struct diffstat_t));
-> -		for (i = 0; i < q->nr; i++) {
-> -			struct diff_filepair *p = q->queue[i];
-> -			if (check_pair_status(p))
-> -				diff_flush_stat(p, options, &diffstat);
-> -		}
-> +		compute_diffstat(options, &diffstat, q);
->  		if (output_format & DIFF_FORMAT_NUMSTAT)
->  			show_numstat(&diffstat, options);
->  		if (output_format & DIFF_FORMAT_DIFFSTAT)
-> @@ -6611,6 +6590,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
->  	return ignored;
->  }
->  
-> +void compute_diffstat(struct diff_options *options,
-> +		      struct diffstat_t *diffstat,
-> +		      struct diff_queue_struct *q)
+> +struct item {
+> +	const char *name;
+> +};
+> +
+> +struct list_options {
+> +	const char *header;
+> +	void (*print_item)(int i, struct item *item, void *print_item_data);
+> +	void *print_item_data;
+> +};
+> +
+> +struct adddel {
+> +	uintmax_t add, del;
+> +	unsigned seen:1, binary:1;
+> +};
+> +
+> +struct file_list {
+> +	struct file_item {
+> +		struct item item;
+> +		struct adddel index, worktree;
+> +	} **file;
+> +	size_t nr, alloc;
+> +};
+> +
+> +struct pathname_entry {
+> +	struct hashmap_entry ent;
+> +	size_t index;
+> +	char pathname[FLEX_ARRAY];
+> +};
+
+All of the above are named too generic but assuming that add-i will
+stay to be a single file and these names will never leak outside the
+file to become global, it would be perfectly fine.
+
+> +static void populate_wi_changes(struct strbuf *buf,
+> +				struct adddel *ad, const char *no_changes)
 > +{
+> +	if (ad->binary)
+> +		strbuf_addstr(buf, _("binary"));
+> +	else if (ad->seen)
+> +		strbuf_addf(buf, "+%"PRIuMAX"/-%"PRIuMAX,
+> +			    (uintmax_t)ad->add, (uintmax_t)ad->del);
+> +	else
+> +		strbuf_addstr(buf, no_changes);
+> +}
+
+I offhand do not see the need for (uintmax_t) casts here...
+
+> +static int run_status(struct repository *r, const struct pathspec *ps,
+> +		      struct file_list *files, struct list_options *opts)
+> +{
+> +	reset_file_list(files);
+> +
+> +	if (get_modified_files(r, files, ps) < 0)
+> +		return -1;
+> +
+> +	if (files->nr)
+> +		list((struct item **)files->file, files->nr, opts);
+> +	putchar('\n');
+
+So, if there is anything to list, we show list() and then add an
+empty line; if there is nothing to list, we show an empty line
+anyway?
+
+As long as that matches the current scripted "add -i", it's
+perfectly fine.  It's just that the code structure above looked
+somewhat odd.
+
+> +static void collect_changes_cb(struct diff_queue_struct *q,
+> +			       struct diff_options *options,
+> +			       void *data)
+> +{
+> +	struct collection_status *s = data;
+> +	struct diffstat_t stat = { 0 };
 > +	int i;
 > +
-> +	memset(diffstat, 0, sizeof(struct diffstat_t));
-> +	for (i = 0; i < q->nr; i++) {
-> +		struct diff_filepair *p = q->queue[i];
-> +		if (check_pair_status(p))
-> +			diff_flush_stat(p, options, diffstat);
+> +	if (!q->nr)
+> +		return;
+> +
+> +	compute_diffstat(options, &stat, q);
+> +
+> +	for (i = 0; i < stat.nr; i++) {
+> +		const char *name = stat.files[i]->name;
+> +		int hash = strhash(name);
+> +		struct pathname_entry *entry;
+> +		size_t file_index;
+> +		struct file_item *file;
+> +		struct adddel *adddel;
+> +
+> +		entry = hashmap_get_from_hash(&s->file_map, hash, name);
+> +		if (entry)
+> +			file_index = entry->index;
+> +		else {
+> +			FLEX_ALLOC_STR(entry, pathname, name);
+> +			hashmap_entry_init(entry, hash);
+> +			entry->index = file_index = s->list->nr;
+> +			hashmap_add(&s->file_map, entry);
+> +
+> +			add_file_item(s->list, name);
+> +		}
+> +		file = s->list->file[file_index];
+> +
+> +		adddel = s->phase == FROM_INDEX ? &file->index : &file->worktree;
+> +		adddel->seen = 1;
+> +		adddel->add = stat.files[i]->added;
+> +		adddel->del = stat.files[i]->deleted;
+> +		if (stat.files[i]->is_binary)
+> +			adddel->binary = 1;
 > +	}
 > +}
 
-Hmm, (1) clearing diffstat struct to initialize, (2) looping over
-diff_queue to compute stat for each path, (3) using diffstat
-information and then (4) finally freeing the diffstat info is the
-bog-standard sequence of the user of this API.  Merging step (1) and
-(2) may probably be OK (iow, I do not think of a use pattern for
-future users where being able to do some custom things between steps
-(1) and (2) would be useful), which is this function is about.  (3)
-is what the user of this API would do, but shouldn't (4) be exported
-at the same time, if we are making (1+2) as an external API?
-
->  void diff_addremove(struct diff_options *options,
->  		    int addremove, unsigned mode,
->  		    const struct object_id *oid,
-> diff --git a/diff.h b/diff.h
-> index b680b377b2..34fc658946 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -244,6 +244,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
->  void diff_emit_submodule_pipethrough(struct diff_options *o,
->  				     const char *line, int len);
->  
-> +struct diffstat_t {
-> +	int nr;
-> +	int alloc;
-> +	struct diffstat_file {
-> +		char *from_name;
-> +		char *name;
-> +		char *print_name;
-> +		const char *comments;
-> +		unsigned is_unmerged:1;
-> +		unsigned is_binary:1;
-> +		unsigned is_renamed:1;
-> +		unsigned is_interesting:1;
-> +		uintmax_t added, deleted;
-> +	} **files;
-> +};
-> +
->  enum color_diff {
->  	DIFF_RESET = 0,
->  	DIFF_CONTEXT = 1,
-> @@ -333,6 +349,9 @@ void diff_change(struct diff_options *,
->  
->  struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
->  
-> +void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
-> +		      struct diff_queue_struct *q);
-> +
->  #define DIFF_SETUP_REVERSE      	1
->  #define DIFF_SETUP_USE_SIZE_CACHE	4
+Would resources held in the "stat" structure leak at the end of this
+function?
