@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C757E1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 15:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38DF51F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 15:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729449AbfGaPTT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 11:19:19 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37604 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728588AbfGaPSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:18:48 -0400
-Received: by mail-wm1-f68.google.com with SMTP id f17so60175472wme.2
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:47 -0700 (PDT)
+        id S1728492AbfGaPSq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 11:18:46 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36760 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727918AbfGaPSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 11:18:45 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n4so70201544wrs.3
+        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RJIBRcnb6Fyu7SUJHmDralrlG7XvAPezGLLixmCFhbQ=;
-        b=epTg1ycZdzZQFNcCaz9OCwhQbm7I0G5c0Jy79PTTcW5Xev6sRLUFlyLBdPCsREWOIl
-         SIoqRYL1hZvcPt08imomYLxZ5OvJqhb7/RH2QS9Nr3rUWJJukXaQzNQv5eIpIZQSEbZm
-         0iAFsBM5F5XvYPHHJAB/YOwdo4waD4RCiqHmMkm0IskNpeXxDeeW4pDwi8Yoc3WY2RdL
-         wzMgupbT+EyWY5ct/9A2ttJ93rBdC/2ARjkC28HjncgbBGLVYI2DTkdNzRnsfZw/Uspp
-         mtcDctToyB0n4Gk5XeZDCthA+YW65jfcGTua+8uWtpK3g1IpMBr5yU91vQ6LZQtYWhJo
-         SxTw==
+        bh=odFXuFT7sZLBagIRUB/2t/dJn4xMdo/dDOa1irtTdFM=;
+        b=H/Ec1l7wOCeqj3opKt8OYWT+p/8dAWTsasEkZjNkML8K96lA6Z+kd8+tarpYzRxsnt
+         EPLhahBM1mjnkP8nmg2tbdKFAs+V5j7Z/OuFbJxIIBwyYtgivHcGUB7PyrUtO9Ejcmfr
+         6ygXsiEjmYklBuk6YiwJCFUwwJMoiEbnvH/V1T/rs/ZpT4y7fNLSUhobCw6/xe0KXApJ
+         Sk2K3oT5rICpsZQZ3+QpbHCO5dVF7x6QwFGp29bXYxnqjIOPhjrxobw+763PzeRD2s12
+         HdAo8IqpkIkCe87urt+oGINhCwvqVWoF9pko5Q5aHrChUrQ1JvpkSdimvhyWX135bjh0
+         AY5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RJIBRcnb6Fyu7SUJHmDralrlG7XvAPezGLLixmCFhbQ=;
-        b=X507y/B811ygiqAlK+kYJdIDUGIh0IwWS7jWlQdq1BD5hp399EYv0v46ZF7MwWkBQi
-         3cdwtisUZ5SyfWkZ0kbiOjwQoEMEPOlshHtLrFBzFNhZagcMwJbP6bguAhE0MK5eHfAP
-         idN5KdJvNpBrDFkg6ps7YS0wmFw92fhjUojKtI6UJKvsS1bWJzO8Cb09nPhS2ZjKxnY2
-         di0iSrxuGEVKHh6SU4ZXHi40llyoORmt3zJktHJC9WCWys8MDdzbWUMGChQ/Ikln2QeW
-         jzdhEtfo36XOojWaCWaS5uHaUlikItvVxJDn0UY/iYrGSO8pXmjWo8h1sIMcv8wB0D4L
-         Y0BA==
-X-Gm-Message-State: APjAAAW5x2zx2vZXzaLU49q9gXGiEwRXWR7rxb9C+emfSGH/ja+riq0a
-        apfoLIjyvLPOYSAuR9tLiGh6Z2Ir
-X-Google-Smtp-Source: APXvYqxWOnCvfYdn7f/KyTY8a13KVoMZ9PXqjySEbZff8PLmL1uQUgfahxZuIrPm1ZqtQqKTKmxRaw==
-X-Received: by 2002:a1c:35c2:: with SMTP id c185mr109695420wma.58.1564586326385;
-        Wed, 31 Jul 2019 08:18:46 -0700 (PDT)
+        bh=odFXuFT7sZLBagIRUB/2t/dJn4xMdo/dDOa1irtTdFM=;
+        b=Y/YfJ+WErpeO7YgTNwfHjpHMvaBUelKRdV/ABgmP65pBlKWjDN/c/GyTthVqZqryeA
+         uyNdczZ35iZyTyV0oRmxVBxAv/cs7IfOzscE5UbVcn1u/Z3O4Q7ij/zs3g1mE/kOaClO
+         r25zD2gXiGGGpMwIziLNjPq9Da073LrJjUmKRB+2mxOvTdpTkDQdIZQAU8TXhY+8PZXu
+         v/HsFEJdUD1E8pl704raJ2L+3QZbqrv7o4rX6fGEJkQhcFuCVBzo+U//9gl2InQw8/Er
+         93eNhT7bkaGwYyVgXxrYihgkmHA2KioWyLsFfEQenqwqS9APBeJs/904WTKz04eJVD7Z
+         rPOQ==
+X-Gm-Message-State: APjAAAV141hjJdJA1LWimvZS8rGKN9ioDd8qYbk2g4Zi79pKgnE4ajhh
+        JjhYNS6g68tARsnJmd8mBf4H9opm
+X-Google-Smtp-Source: APXvYqxjzWfKSjbdOBKDe0AkBCbJwzKMW/Dp7Z3O9iYbhrYQnJs8Fjpe9SWLV8OeLVBAfkFQ+5Q61Q==
+X-Received: by 2002:a5d:514f:: with SMTP id u15mr36269233wrt.183.1564586323306;
+        Wed, 31 Jul 2019 08:18:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q1sm52284196wmq.25.2019.07.31.08.18.45
+        by smtp.gmail.com with ESMTPSA id x16sm51601045wmj.4.2019.07.31.08.18.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 08:18:45 -0700 (PDT)
-Date:   Wed, 31 Jul 2019 08:18:45 -0700 (PDT)
-X-Google-Original-Date: Wed, 31 Jul 2019 15:18:31 GMT
-Message-Id: <d73b0a05d90237253d0793580fe285df3aba689a.1564586316.git.gitgitgadget@gmail.com>
+        Wed, 31 Jul 2019 08:18:42 -0700 (PDT)
+Date:   Wed, 31 Jul 2019 08:18:42 -0700 (PDT)
+X-Google-Original-Date: Wed, 31 Jul 2019 15:18:27 GMT
+Message-Id: <c168c4499b674db3aefa4d0303c349a2464a3de1.1564586316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.294.v2.git.gitgitgadget@gmail.com>
 References: <pull.294.git.gitgitgadget@gmail.com>
         <pull.294.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 11/16] t3427: accommodate for the `rebase --merge` backend
- having been replaced
+Subject: [PATCH v2 07/16] t3427: simplify the `setup` test case significantly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,38 +73,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Since 68aa495b590 (rebase: implement --merge via the interactive
-machinery, 2018-12-11), the job of the old `--merge` backend is now
-performed by the `--interactive` backend, too.
-
-One consequence is that empty commits are no longer rebased by default.
-
-Meaning that the test case that calls `git rebase -Xsubtree` (which used
-to be handled by the `--merge` backend) now needs to ask explicitly for
-the empty commit to be rebased.
+It still does the very same thing as before, but expresses it in a much
+more succinct (and still quite readable) manner.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3427-rebase-subtree.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t3427-rebase-subtree.sh | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
 diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index 94cc532e10..a734716ea3 100755
+index 3a2ae7b55d..36c4f92e06 100755
 --- a/t/t3427-rebase-subtree.sh
 +++ b/t/t3427-rebase-subtree.sh
-@@ -83,10 +83,10 @@ test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --
+@@ -41,27 +41,21 @@ commit_message() {
+ 
+ test_expect_success 'setup' '
+ 	test_commit README &&
+-	mkdir files &&
+-	(
+-		cd files &&
+-		git init &&
+-		test_commit master1 &&
+-		test_commit master2 &&
+-		test_commit master3
+-	) &&
+-	git fetch files master &&
+-	git branch files-master FETCH_HEAD &&
+-	git read-tree --prefix=files_subtree files-master &&
+-	git checkout -- files_subtree &&
+-	tree=$(git write-tree) &&
+-	head=$(git rev-parse HEAD) &&
+-	rev=$(git rev-parse --verify files-master^0) &&
+-	commit=$(git commit-tree -p $head -p $rev -m "Add subproject master" $tree) &&
+-	git update-ref HEAD $commit &&
+-	(
+-		cd files_subtree &&
+-		test_commit master4
+-	) &&
++
++	git init files &&
++	test_commit -C files master1 &&
++	test_commit -C files master2 &&
++	test_commit -C files master3 &&
++
++	: perform subtree merge into files_subtree/ &&
++	git fetch files refs/heads/master:refs/heads/files-master &&
++	git merge -s ours --no-commit --allow-unrelated-histories \
++		files-master &&
++	git read-tree --prefix=files_subtree -u files-master &&
++	git commit -m "Add subproject master" &&
++
++	: add two extra commits to rebase &&
++	test_commit -C files_subtree master4 &&
+ 	test_commit files_subtree/master5
  '
  
- # FAILURE: fatal: Could not parse object
--test_expect_failure 'Rebase -Xsubtree --onto commit' '
-+test_expect_failure 'Rebase -Xsubtree --keep-empty --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto to-rebase &&
--	git rebase -Xsubtree=files_subtree --onto files-master master &&
-+	git rebase -Xsubtree=files_subtree --keep-empty --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "master4" &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
 -- 
 gitgitgadget
 
