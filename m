@@ -2,117 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 905651F462
-	for <e@80x24.org>; Wed, 31 Jul 2019 01:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CBD31F462
+	for <e@80x24.org>; Wed, 31 Jul 2019 03:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727931AbfGaB73 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 21:59:29 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57184 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727636AbfGaB72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 21:59:28 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA9D48CFAF;
-        Tue, 30 Jul 2019 21:59:23 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=Y44rR9bDyupDT2JqEmsQ1Z7n/e0=; b=XdV+TX4
-        epEz4RnAPTboiuxNMqlcwpNu3WqI12rBHi4SpR8YkLmLWIoVlWMgwMdwjJ50m7rf
-        RJfxLWykskk8CIfyKjLXQ07nSzXHibGxVhi3pTaDg7gL2uYsB8o3jsPRrMYz7H7e
-        p4j0GrcrVnAIl1Q01bRibJzIK6s4QlbSOjJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=XJ2hwWWIT6R2AppreDkMAIgkKgoL6RGZE
-        o+/FE3ksyH9D6MiQ1zCr7Hl5NR4FLul6xymqT9nJxrv9SnC/UXkBT6QFBLt/5t5J
-        HZECU2LA6yFoLZ4tFBPeGziR0ZORzhXf3XIF6i0N9Z2oNnnHl4I402TxvoiLQOO8
-        xc8ACQtCxw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 94B328CFAE;
-        Tue, 30 Jul 2019 21:59:23 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 03A6F8CFAD;
-        Tue, 30 Jul 2019 21:59:19 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Tue, 30 Jul 2019 21:59:17 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        id S1728419AbfGaD1h (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 23:27:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56390 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726440AbfGaD1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 23:27:37 -0400
+Received: (qmail 10834 invoked by uid 109); 31 Jul 2019 03:27:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 03:27:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13099 invoked by uid 111); 31 Jul 2019 03:29:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 23:29:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Jul 2019 23:27:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         'Junio C Hamano' <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         git@vger.kernel.org, git-packagers@googlegroups.com
 Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190731015917.GB4545@pobox.com>
+Message-ID: <20190731032735.GA14684@sigill.intra.peff.net>
 References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
  <20190730194938.GZ4545@pobox.com>
  <20190730200203.GA4882@sigill.intra.peff.net>
  <20190730205624.GR20404@szeder.dev>
  <20190731005933.GA9610@sigill.intra.peff.net>
  <20190731012336.GA13880@sigill.intra.peff.net>
+ <20190731015917.GB4545@pobox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190731012336.GA13880@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: CFB7E63A-B336-11E9-9FE5-B0405B776F7B-09356542!pb-smtp20.pobox.com
+In-Reply-To: <20190731015917.GB4545@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Tue, Jul 30, 2019 at 08:59:33PM -0400, Jeff King wrote:
+On Tue, Jul 30, 2019 at 09:59:17PM -0400, Todd Zullinger wrote:
+
+> At the risk of showing my complete lack of knowledge about
+> these tests, I was wondering if the order mattered for the
+> other tests in t0011 and t0016.  I had assumed it didn't and
+> had something like this for testing (and a similar change to
+> test_oidmap() in t0016):
 > 
->>> OTOH, this is not just any hashmap, but an oidmap, and I could imagine
->>> that there might be use cases where it would be beneficial if the
->>> iteration order were to match the oid order (but don't know whether we
->>> actually have such a use case).
->> 
->> I don't think we can promise anything about iteration order. This test
->> is relying on the order at least being deterministic between runs, but
->> if we added a new entry and had to grow the table, all bets are off.
->> 
->> So regardless of the endian thing above, it probably does make sense for
->> any hashmap iteration output to be sorted before comparing. That goes
->> for t0011, too; it doesn't have this endian thing, but it looks to be
->> relying on hash order that could change if we swapped out hash
->> functions.
+>  diff --git i/t/t0011-hashmap.sh w/t/t0011-hashmap.sh
+>  index 9c96b3e3b1..9ed1c4f14d 100755
+>  --- i/t/t0011-hashmap.sh
+>  +++ w/t/t0011-hashmap.sh
+>  @@ -4,8 +4,8 @@ test_description='test hashmap and string hash functions'
+>   . ./test-lib.sh
+>   
+>   test_hashmap() {
+>  -	echo "$1" | test-tool hashmap $3 > actual &&
+>  -	echo "$2" > expect &&
+>  +	echo "$1" | test-tool hashmap $3 | sort >actual &&
+>  +	echo "$2" | sort >expect &&
+>   	test_cmp expect actual
+>   }
 > 
-> So here's an actual patch.
+> You've got a more comprehensive patch and a proper commit
+> message, so this is really just a matter of curiosity.
 
-At the risk of showing my complete lack of knowledge about
-these tests, I was wondering if the order mattered for the
-other tests in t0011 and t0016.  I had assumed it didn't and
-had something like this for testing (and a similar change to
-test_oidmap() in t0016):
+I think the order does matter for those ones. E.g., the ones that run
+"get" want to make sure they're seeing the values in the same order in
+which they were requested.
 
- diff --git i/t/t0011-hashmap.sh w/t/t0011-hashmap.sh
- index 9c96b3e3b1..9ed1c4f14d 100755
- --- i/t/t0011-hashmap.sh
- +++ w/t/t0011-hashmap.sh
- @@ -4,8 +4,8 @@ test_description='test hashmap and string hash functions'
-  . ./test-lib.sh
-  
-  test_hashmap() {
- -	echo "$1" | test-tool hashmap $3 > actual &&
- -	echo "$2" > expect &&
- +	echo "$1" | test-tool hashmap $3 | sort >actual &&
- +	echo "$2" | sort >expect &&
-  	test_cmp expect actual
-  }
+One thing that makes it all a bit funky is that the "put" lines also
+output the old value (which is what all those NULLs) are. And I think
+that solves my "value3" puzzlement from earlier. It is not part of the
+iteration at all, but rather the result of the duplicate "put".
 
-You've got a more comprehensive patch and a proper commit
-message, so this is really just a matter of curiosity.
+That would perhaps be clearer if the "hashmap" tool actually did the
+sorting itself (so we'd sort _just_ the iteration, not the whole
+output). Something like this, though I'm on the fence about whether it
+is worth it:
 
--- 
-Todd
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index aaf17b0ddf..9f6901666e 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -2,6 +2,7 @@
+ #include "git-compat-util.h"
+ #include "hashmap.h"
+ #include "strbuf.h"
++#include "string-list.h"
+ 
+ struct test_entry
+ {
+@@ -221,10 +222,18 @@ int cmd__hashmap(int argc, const char **argv)
+ 
+ 		} else if (!strcmp("iterate", cmd)) {
+ 
++			struct string_list sorted = STRING_LIST_INIT_NODUP;
++			struct string_list_item *item;
+ 			struct hashmap_iter iter;
+ 			hashmap_iter_init(&map, &iter);
+-			while ((entry = hashmap_iter_next(&iter)))
+-				printf("%s %s\n", entry->key, get_value(entry));
++			while ((entry = hashmap_iter_next(&iter))) {
++				item = string_list_append(&sorted, entry->key);
++				item->util = (void *)get_value(entry);
++			}
++			string_list_sort(&sorted);
++			for_each_string_list_item(item, &sorted)
++				printf("%s %s\n", item->string, (const char *)item->util);
++			string_list_clear(&sorted, 0);
+ 
+ 		} else if (!strcmp("size", cmd)) {
+ 
