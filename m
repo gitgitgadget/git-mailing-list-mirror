@@ -2,134 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21DB51F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 18:39:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E98331F732
+	for <e@80x24.org>; Wed, 31 Jul 2019 19:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729012AbfGaSjl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 14:39:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55485 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727579AbfGaSjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 14:39:41 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A967A16E374;
-        Wed, 31 Jul 2019 14:39:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=StynU7Y35tcwLqn99MfCh/gVHg0=; b=Ok8Bqi
-        R0S0CXGNNQvLwtHywOwaXeXtxIhp/HOJO2gtObBH3DaSTAueCI8vfzNLxwFpEFhW
-        imQCYJoKfpa5Ft6qI/j1kRcKOsEdJ6vrEmDjbtZAzOC/4QpJjoLJPX6Z1L6boz+K
-        77ddgfEvYpVINhjsBUxri9QFO3P1y5to8egyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f96cd3dAvCHSFzjBmx/TY/rh5AOm2qLK
-        lotXODSUXGYtpPJiGGCnTHE+asGKcUTcjP4QJBjfTguswIJfXC11Vi1l0+V1lSG2
-        0EYcSp+EjdA/xT3uq3ZsG/KaO8uigR/fx4qjuu19+AsTLtbIo3sGqCZ6BwDdb9ML
-        atC94LT9nhQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A02EE16E372;
-        Wed, 31 Jul 2019 14:39:38 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 17F6716E370;
-        Wed, 31 Jul 2019 14:39:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH v3 07/11] Add a function to determine unique prefixes for a list of strings
-References: <pull.170.v2.git.gitgitgadget@gmail.com>
-        <pull.170.v3.git.gitgitgadget@gmail.com>
-        <3000d7d08dfb64511b4ebf9d05617897dd7252f7.1563289115.git.gitgitgadget@gmail.com>
-Date:   Wed, 31 Jul 2019 11:39:36 -0700
-In-Reply-To: <3000d7d08dfb64511b4ebf9d05617897dd7252f7.1563289115.git.gitgitgadget@gmail.com>
-        (Slavica Djukic via GitGitGadget's message of "Tue, 16 Jul 2019
-        07:58:42 -0700 (PDT)")
-Message-ID: <xmqqk1byoxp3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728704AbfGaTmQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 15:42:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42183 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727276AbfGaTmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 15:42:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1564602128;
+        bh=dHlV7dnKJ6o1ChF2fAjvvCZD5oJJ9DTUP0hej/EM60Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZeuUykKRU1OOKkBEOFAtgErU8VBL54fmPXcX4M/I1orE7xlGz3naWXNp0wsvmEBg9
+         467Jiscn3iPjS2XhPShPK4UWrJ14tpzGvcxcoQ9sLHabdXejI+oOtitDeAWoiY4qkS
+         3CyTww1nHaBI4J2l2yZsW1RQ6hRSwbu8zrGaus6Y=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7iCg-1iO28A3Br8-014lVT; Wed, 31
+ Jul 2019 21:42:08 +0200
+Date:   Wed, 31 Jul 2019 21:42:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Mark Levedahl <mlevedahl@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+In-Reply-To: <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet>
+References: <20190728151726.9188-1-me@yadavpratyush.com> <20190728213634.GB162590@genre.crustytoothpaste.net> <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com> <20190728224943.GC162590@genre.crustytoothpaste.net> <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
+ <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CF10070-B3C2-11E9-A6EE-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:kyWKJhLkecOkjzFl2CtKhsKpAMrp3D+URaXL/NGbB/vk817xsWz
+ LJ3uF+nr2n32c6w6wMh3Y+JYjZuwK9OCpEhSh8By7KzRoNflPsQ5vEcc7ubxWKGCt8bK234
+ QMnvwVpK0ESVcCYVxoxkwp1rHWUWt2EU/tmpUjpEpswHPq9gE8ucdq8ICNGxNS/sz4ZZV1C
+ TyQp++G749QjqXcG3a4ZQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AeZ9SEggACM=:JxzQQlAxVgSlsyJv3N/smj
+ ninh8tD5gpUYVemuzug24o/tD6cAGkrcMdV4lx2L//8Nahc18VZLaw5BrgcslckXPyKYCGBoz
+ 68ziKzUIBx7EnYV485KzYCs5e+cqihbfB3QRMvPlWgGEmfmhUgpyaJTBoMVrogPVzNVTMhvpT
+ G7SainQwTaCKjP2LkqvrDcE7oYi3m0qhbkn3s4gUzpF5Mzaa7pIfDIV5nsL2KrZBK9KjJ4YJe
+ QRJGH6SPlWzH0Jizla32pcpbU0qaiWbS4Hhym9MnNQaP8Zg7L+3Zo7vwrmmS/vSQpFTeANV0K
+ e0hMRxZRfyupR9/z8h1CLYDr6ZvXhw/TdXvsPXbiQ4Ovl7XjqEheaEiRAzgbamAJ0D5bMTEKe
+ k1I9w7iXZzKheHdkJIYKu7lzpRgnBD4GiZnHLuwQnQ2Z87Vp3qH8vQSZtfwMVAg7c1PBEYRb/
+ c8eIumb988HDsDEf1/L0D71WEVFDpnVLKJSjWsFF7QlClN7T2Wv+kkdDkjyMmhCom9f+ikQUE
+ mSIcA0FS5Irx+rtO0RVOMMG3YOHMbZyrA5YcJUZXX9TYjK2W+vtkKCESWnMkB/a20PZ4a88er
+ XduDuOROgT/7SQlXuIiKHQX51pgAPbO7M0cYriWtza6oaRxIDfxcZznfCtRhNB2Ltg+EOBum+
+ yl/OKQ9VSf7vpDTPWBunqFBA/UX0tXQQ4meS13j5Oyzu6eCrmT7REJYaXwe5Xqg80x+Cnv05x
+ LG2zwYCrLxelajK8+eikXmXbgdUl0JaKcUCHUuWo0GXpDcAO165spL7Ruwt+bcOqL247RAYKN
+ NbY5aZp/7lL61nQppSidJoeNERsCqESynqK9vZ6INnAqtNhE/eUPg8Uq+cJCHjL26nsEzU9kX
+ NrOoQdIjAk/+r1w/EDDnybOXUGmgJBj5/oIeHL0HIgaJ6D1MNE4GRDTKokIKmEIKt+MbNAXLb
+ Dq0CBleWagHuNgH1dd80BCo16I1hnTDDxItHIvrlYzpl56SkzcilP810TsgjIvnlfxKF0qPz0
+ KvT8AFvddfk7hLs8jWVGoSUweX0Vqv4xlUsaFvlyb5ubjgYI0ZMqsti/bU/5gSJgvHhTkDpg0
+ 8eprBmQYlbQnltUACO9RtLOvlSZdXNi2tVX
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> The idea: for each item that we add, we generate prefixes starting with
-> the first letter, then the first two letters, then three, etc, until we
-> find a prefix that is unique (or until the prefix length would be
-> longer than we want). If we encounter a previously-unique prefix on the
-> way, we adjust that item's prefix to make it unique again (or we mark it
-> as having no unique prefix if we failed to find one). These partial
-> prefixes are stored in a hash map (for quick lookup times).
+On Mon, 29 Jul 2019, Pratyush Yadav wrote:
 
-OK.  I suppose such a machinery that accepts a set of strings and
-then give us back a set of unique prefix length for each element of
-the set would be useful in general, even outside the "and choose"
-part of "list and choose".  Nice design.
+> On 29/07/19 7:58 AM, Mark Levedahl wrote:
+> > On 7/28/19 6:49 PM, brian m. carlson wrote:> On 2019-07-28 at
+> > 22:10:29, Pratyush Yadav wrote:
+> > > > The function is not documented, and I only started spelunking
+> > > > the code a couple days back, so I'll try to answer with what I
+> > > > know. It might not be the full picture.
+> > > >
+> > > > Running git-gui --trace, these commands are executed during a resc=
+an:
+> > > >
+> > > > /usr/lib/git-core/git-rev-parse --verify HEAD
+> > > > /usr/lib/git-core/git-update-index -q --unmerged --ignore-missing =
+--refresh
+> > > >
+> > >
+> > > Great. This sounds like a well-reasoned change. I'll let other folks=
+ who
+> > > use git-gui more chime in to see what they think as well.
+> > >
+> >
+> > I'm assuming this does what is currently done by F5.
+> > A simple rescan from git-gui in the git repository takes about 8 secon=
+ds on
+> > my corporate laptop running Windows, making this happen on change of w=
+indow
+> > focus is definitely not a friendly change from my view point.
+> >
+>
+> This is a Windows problem maybe? On my Linux machine with an almost dead=
+ hard
+> drive, it takes under 10ms to do a refresh on the git repository (which =
+has
+> about 56,000 commits).
 
-> To make sure that this function works as expected, we add a test using a
-> special-purpose test helper that was added for that purpose.
+I would be _extremely_ cautious to base an argument on one particular
+setup, using on particular hardware with one particular OS and one
+particular repository.
 
-Somehow the above repeatedly says how special purpose it is
-redundantly ;-)
+When it comes to repositories that are worked on actively, git.git is
+not actually a representative example, it is way smaller than what users
+deal with.
 
-> diff --git a/prefix-map.h b/prefix-map.h
-> new file mode 100644
-> index 0000000000..ce3b8a4a32
-> --- /dev/null
-> +++ b/prefix-map.h
-> @@ -0,0 +1,40 @@
-> +#ifndef PREFIX_MAP_H
-> +#define PREFIX_MAP_H
-> +
-> +#include "hashmap.h"
-> +
-> +struct prefix_item {
-> +	const char *name;
-> +	size_t prefix_length;
-> +};
-> +
-> +struct prefix_map_entry {
-> +	struct hashmap_entry e;
-> +	const char *name;
-> +	size_t prefix_length;
-> +	/* if item is NULL, the prefix is not unique */
-> +	struct prefix_item *item;
-> +};
-> +
-> +struct prefix_map {
-> +	struct hashmap map;
-> +	int min_length, max_length;
-> +};
-> +
-> +/*
-> + * Find unique prefixes in a given list of strings.
-> + *
-> + * Typically, the `struct prefix_item` information will be but a field in the
-> + * actual item struct; For this reason, the `list` parameter is specified as a
-> + * list of pointers to the items.
-> + *
-> + * The `min_length`/`max_length` parameters define what length the unique
-> + * prefixes should have.
-> + *
-> + * If no unique prefix could be found for a given item, its `prefix_length`
-> + * will be set to 0.
-> + */
-> +void find_unique_prefixes(struct prefix_item **list, size_t nr,
-> +			  int min_length, int max_length);
-> +
-> +#endif
+You might be one of those developers privileged enough to have a fast
+computer. Trying to extrapolate from such a vantage point does the rest
+of us Git users a big disservice.
 
-Looks like a quite sane interface to me.
+At this point, I am gently inclined against the presented approach, in
+particular given that even context menus reportedly trigger the re-scan
+(which I suspect might actually be a Linux-only issue, as context menus
+are top-level windows on X11, at least if I remember correctly, and I
+also seem to remember that they are dependent windows on Aqua and Win32,
+just to add yet another argument against overfitting considerations onto
+a single, specific setup).
 
-Thanks.
+Ciao,
+Johannes
