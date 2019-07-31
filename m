@@ -7,77 +7,81 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A22F1F732
-	for <e@80x24.org>; Wed, 31 Jul 2019 04:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15FB21F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 04:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387509AbfGaE2J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 00:28:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56464 "HELO cloud.peff.net"
+        id S1728711AbfGaEal (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 00:30:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56476 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2387473AbfGaE2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 00:28:09 -0400
-Received: (qmail 11280 invoked by uid 109); 31 Jul 2019 04:28:09 -0000
+        id S1726601AbfGaEak (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 00:30:40 -0400
+Received: (qmail 11303 invoked by uid 109); 31 Jul 2019 04:30:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 04:28:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 04:30:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13488 invoked by uid 111); 31 Jul 2019 04:29:53 -0000
+Received: (qmail 13511 invoked by uid 111); 31 Jul 2019 04:32:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 00:29:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 00:32:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 31 Jul 2019 00:28:08 -0400
+Date:   Wed, 31 Jul 2019 00:30:39 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Gregory Szorc <gregory.szorc@gmail.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org
-Subject: Re: Warnings in gc.log can prevent gc --auto from running
-Message-ID: <20190731042807.GA26237@sigill.intra.peff.net>
-References: <qhdnuh$5m5r$1@blaine.gmane.org>
- <20190729100745.GA2755@sigill.intra.peff.net>
- <87v9vl57in.fsf@evledraar.gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+Message-ID: <20190731043039.GB26237@sigill.intra.peff.net>
+References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+ <20190730194938.GZ4545@pobox.com>
+ <20190730200203.GA4882@sigill.intra.peff.net>
+ <20190730205624.GR20404@szeder.dev>
+ <20190731005933.GA9610@sigill.intra.peff.net>
+ <20190731012336.GA13880@sigill.intra.peff.net>
+ <20190731015917.GB4545@pobox.com>
+ <20190731032735.GA14684@sigill.intra.peff.net>
+ <b32a178d-0255-6c82-a3fd-ced2ec828fc8@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v9vl57in.fsf@evledraar.gmail.com>
+In-Reply-To: <b32a178d-0255-6c82-a3fd-ced2ec828fc8@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 29, 2019 at 02:50:56PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Jul 31, 2019 at 06:06:02AM +0200, René Scharfe wrote:
 
-> > Instead, it may make sense to turn the --write-bitmap-index option of
-> > pack-objects into a tri-state: true/false/auto. Then pack-objects would
-> > know that we are in best-effort mode, and would avoid warning in that
-> > case. That would also let git-repack express its intentions better to
-> > git-pack-objects, so we could replace 7328482253, and keep more of the
-> > logic in pack-objects, which is ultimately what has to make the decision
-> > about whether it can generate bitmaps.
+> Am 31.07.19 um 05:27 schrieb Jeff King:
+> > One thing that makes it all a bit funky is that the "put" lines also
+> > output the old value (which is what all those NULLs) are. And I think
+> > that solves my "value3" puzzlement from earlier. It is not part of the
+> > iteration at all, but rather the result of the duplicate "put".
+> >
+> > That would perhaps be clearer if the "hashmap" tool actually did the
+> > sorting itself (so we'd sort _just_ the iteration, not the whole
+> > output). Something like this, though I'm on the fence about whether it
+> > is worth it:
 > 
-> Sounds like pentastate to me :) (penta = 5, had to look it up). I.e. in
-> most cases of "auto" we pick a true/false at the outset, whereas this is
-> true/true-but-dont-care-much/false/false-but-dont-care-much with "auto"
-> picking the "-but-dont-care-much" versions of a "soft" true/false.
+> We already have a few other tests that sort and compare.  Perhaps it's
+> time for a test_cmp_ignore_order?
 
-I don't think we care about false-but-dont-care-much. Pack-objects just
-needs to know whether the bitmaps are the user's expressed intention, or
-just something that it should do if it's convenient.
+That would be OK with me, but I think it would just replace the calls to
+"sort". To do the "just sort the iteration, but not the rest of the
+output that I'm talking about above", the change _has_ to go into
+test-hashmap.c (but I think I still favor just sorting the whole thing
+for simplicity).
 
-I'll see if I can work up a patch to demonstrate.
+> And perhaps something like this might even be worth implementing as a
+> diff option?  https://github.com/l0b0/diff-ignore-moved-lines has
+> post-processing script for that..
 
-> On this general topic a *soft* poke about relying to
-> https://public-inbox.org/git/8736lnxlig.fsf@evledraar.gmail.com/ if you
-> have time. I think a "loose pack" might be a way forward for the loose
-> object proliferation, but maybe I'm wrong.
-
-I just left a reply, though I think most of the discussion there is
-about the actual pruning-corruption race. I'm totally on board with the
-idea of an "unreachable pack", but AFAIK nobody has produced any
-patches yet.
-
-> More generally we're really straining the gc.log pass-along-a-message
-> facility.
-
-I definitely agree with that. :)
+Given that we don't actually care that much about looking at the
+resulting diff (and so we don't care about preserving order), I think
+just sorting both sides gives equivalent results and is much simpler.
 
 -Peff
