@@ -2,39 +2,39 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4584C1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 03:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1B341F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 04:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387473AbfGaDxp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 23:53:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56416 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725970AbfGaDxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 23:53:45 -0400
-Received: (qmail 11069 invoked by uid 109); 31 Jul 2019 03:53:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 03:53:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13167 invoked by uid 111); 31 Jul 2019 03:55:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 23:55:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 30 Jul 2019 23:53:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        id S1726421AbfGaEGh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 00:06:37 -0400
+Received: from mout.web.de ([217.72.192.78]:37011 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726378AbfGaEGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 00:06:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1564545973;
+        bh=F62GK4eJu2CvdYqnk4Kg1c6wzjY+7xCIl962bDJWWwc=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=LMzPl6gIj0kfwK8zNUSaUsSGhuEDHdhH0YnnZtVmK//fD9dPVRlTYxpoV6Dbv9M4A
+         PXeIP8+rv7vvRj6k4ExgwDQcyzfyxtxtyuiwmiNzt12dAoAdqeIELH0hmMZJ9wmJcf
+         eMNBKgraXAowMQT52sTn3iKsVUgCqv3LWql0GtD4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgYSP-1ig3NI1I61-00o1A5; Wed, 31
+ Jul 2019 06:06:13 +0200
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+To:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         'Junio C Hamano' <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         git@vger.kernel.org, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-Message-ID: <20190731035344.GA26019@sigill.intra.peff.net>
 References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
  <20190730194938.GZ4545@pobox.com>
  <20190730200203.GA4882@sigill.intra.peff.net>
@@ -43,138 +43,58 @@ References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
  <20190731012336.GA13880@sigill.intra.peff.net>
  <20190731015917.GB4545@pobox.com>
  <20190731032735.GA14684@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <b32a178d-0255-6c82-a3fd-ced2ec828fc8@web.de>
+Date:   Wed, 31 Jul 2019 06:06:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 In-Reply-To: <20190731032735.GA14684@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:XJvA9cm810AybSt0JNtfb6ceVqhEkonD0+pOj6Kk0dahDjq01ve
+ OwkWKKXAnlrJ3G4YlVqX4VY3ReLER9x/45Cuq8tJQBX4DpPyDLrm0/3Tz+7uxuRL/umNN1n
+ QJyE4pY0kZmfVhEBj+W+lilE852v6ilK1n8RWQ7ydae5r/CUuRaRthIlG1NoTf78f9YE/cv
+ FMpgcvjQp2YucEoePuHFg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OaYmu3LuNb4=:p9LazyAqZdesi5h927gCxh
+ Vmj6FXzc5TQDmJjHUQTYGvAEprFWXcbfSwPdTK9wsYQP2ZTYZ3gH7Ur1xO10woNdJCf/qsp26
+ pRvawhunkE2+zv+7sE6cWKXmZCJJfgiwJq84NqneY51NAVN5ncVN3NrAY28fHZEkwZCQW6tPb
+ xjN8yyEZzX45upSLSE/1QZzzhxbp8WJkSAEyIybpv1mC1lZBxOcaM8vnYOA9XU4zuOiV6WHtV
+ HzIbbF8aAGUv6Jxav/QEYKbH/MV+SNZuqdVkqyrYze4hJIjJ565uIpUZptFCQo/FzAeojOL0Q
+ axsURU6Wk5bNOCw9pOWzfPV1Q4jXBP2W7n4UhfBMYrsToQ4obuO/+ADDn6ABIf+Iosc4qbJsV
+ ErkXWNPq/oQsLpnG9F2eDaIEivnhfzs3dmlcudIBL0weXmumH/wJrp6KTN93jULc38fmNyDwq
+ rP+05EEE8h4o0PSvDFIXJ4lN0KLpqePDjjutKqvMhw9sgfErbY0p0lLuG9gcUqbRIqS08BJ5F
+ ETFMPkV22+nA6Z4Rj1a7FWNsEL2gnm+lA18dckVoHjnF/siB7s9cncBrk+jEPyKwqCL1eyz+T
+ UxEs5HSl91kcMsW9LEpX70Wzoh66fhVdItlSl2MY9t6Rcwdje1ynKQt9r7C8FDtFyXSNiZdEE
+ du8enD35nmxLDGltEKJSwySGt7leZbT1aD1IQsNT7ymdI4GArb8LuvRM2zKzLIvhE4Iw1h6jY
+ Rk6qj4S2LK06mWzM6w3vssRz7TDw53gRUi58Kz6jBMDhBr/3xgaJ+wjymykXacb3uUlaQUs7H
+ mES9ZXyEICIH1IE8zQ5rMCfRRUnR6yXFHGf3MXCmvInLAWRnNJqXAv/NlRn1Kj64r1vhxlBnb
+ 0y6QymfNrSct8X9iM5ZAcUZw08NBQ7vy7FYp7Mmnvh+wh3YKnUO0n4HfOYIlm9hEsC2kI/SEn
+ 3W8/Wzv1QUKgU23ee//5Zh5hk9rvlT2/4CO0lcLpoqxXT3RCCjnyEi66gVytTtaIt0l0V/nK1
+ iOeYYDRZ91J5NCY8btFegJLqhQsgDIkH68+4BaTIY4UhXetZrc3/Xyb8QSNQBrhnS8UrmKljm
+ L/6+XMeaLlqCJ0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 30, 2019 at 11:27:35PM -0400, Jeff King wrote:
-
+Am 31.07.19 um 05:27 schrieb Jeff King:
+> One thing that makes it all a bit funky is that the "put" lines also
+> output the old value (which is what all those NULLs) are. And I think
+> that solves my "value3" puzzlement from earlier. It is not part of the
+> iteration at all, but rather the result of the duplicate "put".
+>
 > That would perhaps be clearer if the "hashmap" tool actually did the
 > sorting itself (so we'd sort _just_ the iteration, not the whole
 > output). Something like this, though I'm on the fence about whether it
 > is worth it:
-> [...]
 
-And here it is for reference with the matching change in test-oidmap,
-and the adjustments necessary for the test scripts (from master, not
-from my earlier patch). I think I prefer the simpler "just sort it all"
-version I posted with the commit message.
+We already have a few other tests that sort and compare.  Perhaps it's
+time for a test_cmp_ignore_order?
 
-The post-image in t0016 may be a new low: a command substitution in a DQ
-string fed to echo, itself inside a command substitution in a here-doc.
-Yuck. :)
+And perhaps something like this might even be worth implementing as a
+diff option?  https://github.com/l0b0/diff-ignore-moved-lines has
+post-processing script for that..
 
----
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index aaf17b0ddf..9f6901666e 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -2,6 +2,7 @@
- #include "git-compat-util.h"
- #include "hashmap.h"
- #include "strbuf.h"
-+#include "string-list.h"
- 
- struct test_entry
- {
-@@ -221,10 +222,18 @@ int cmd__hashmap(int argc, const char **argv)
- 
- 		} else if (!strcmp("iterate", cmd)) {
- 
-+			struct string_list sorted = STRING_LIST_INIT_NODUP;
-+			struct string_list_item *item;
- 			struct hashmap_iter iter;
- 			hashmap_iter_init(&map, &iter);
--			while ((entry = hashmap_iter_next(&iter)))
--				printf("%s %s\n", entry->key, get_value(entry));
-+			while ((entry = hashmap_iter_next(&iter))) {
-+				item = string_list_append(&sorted, entry->key);
-+				item->util = (void *)get_value(entry);
-+			}
-+			string_list_sort(&sorted);
-+			for_each_string_list_item(item, &sorted)
-+				printf("%s %s\n", item->string, (const char *)item->util);
-+			string_list_clear(&sorted, 0);
- 
- 		} else if (!strcmp("size", cmd)) {
- 
-diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
-index 0acf99931e..5fd059fe90 100644
---- a/t/helper/test-oidmap.c
-+++ b/t/helper/test-oidmap.c
-@@ -94,10 +94,19 @@ int cmd__oidmap(int argc, const char **argv)
- 
- 		} else if (!strcmp("iterate", cmd)) {
- 
-+			struct string_list sorted = STRING_LIST_INIT_DUP;
-+			struct string_list_item *item;
- 			struct oidmap_iter iter;
- 			oidmap_iter_init(&map, &iter);
--			while ((entry = oidmap_iter_next(&iter)))
--				printf("%s %s\n", oid_to_hex(&entry->entry.oid), entry->name);
-+			while ((entry = oidmap_iter_next(&iter))) {
-+				item = string_list_append(&sorted,
-+							  oid_to_hex(&entry->entry.oid));
-+				item->util = entry->name;
-+			}
-+			string_list_sort(&sorted);
-+			for_each_string_list_item(item, &sorted)
-+				printf("%s %s\n", item->string, (const char *)item->util);
-+			string_list_clear(&sorted, 0);
- 
- 		} else {
- 
-diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
-index 9c96b3e3b1..1adcd7762d 100755
---- a/t/t0011-hashmap.sh
-+++ b/t/t0011-hashmap.sh
-@@ -177,9 +177,9 @@ put fooBarFrotz value3
- iterate" "NULL
- NULL
- NULL
--key2 value2
-+fooBarFrotz value3
- key1 value1
--fooBarFrotz value3"
-+key2 value2"
- 
- '
- 
-@@ -192,8 +192,8 @@ iterate" "NULL
- NULL
- NULL
- fooBarFrotz value3
--key2 value2
--key1 value1" ignorecase
-+key1 value1
-+key2 value2" ignorecase
- 
- '
- 
-diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
-index bbe719e950..abeaa64159 100755
---- a/t/t0016-oidmap.sh
-+++ b/t/t0016-oidmap.sh
-@@ -93,9 +93,14 @@ put three 3
- iterate" "NULL
- NULL
- NULL
--$(git rev-parse two) 2
--$(git rev-parse one) 1
--$(git rev-parse three) 3"
-+$(
-+	# sort to avoid relying on exact oids
-+	{
-+		echo "$(git rev-parse one) 1"
-+		echo "$(git rev-parse two) 2"
-+		echo "$(git rev-parse three) 3"
-+	} | sort
-+)"
- 
- '
- 
+Ren=C3=A9
