@@ -2,99 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1B341F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 04:06:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 221371F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 04:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726421AbfGaEGh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 00:06:37 -0400
-Received: from mout.web.de ([217.72.192.78]:37011 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726378AbfGaEGh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 00:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1564545973;
-        bh=F62GK4eJu2CvdYqnk4Kg1c6wzjY+7xCIl962bDJWWwc=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=LMzPl6gIj0kfwK8zNUSaUsSGhuEDHdhH0YnnZtVmK//fD9dPVRlTYxpoV6Dbv9M4A
-         PXeIP8+rv7vvRj6k4ExgwDQcyzfyxtxtyuiwmiNzt12dAoAdqeIELH0hmMZJ9wmJcf
-         eMNBKgraXAowMQT52sTn3iKsVUgCqv3LWql0GtD4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgYSP-1ig3NI1I61-00o1A5; Wed, 31
- Jul 2019 06:06:13 +0200
-Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
-To:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        git@vger.kernel.org, git-packagers@googlegroups.com
-References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
- <20190730194938.GZ4545@pobox.com>
- <20190730200203.GA4882@sigill.intra.peff.net>
- <20190730205624.GR20404@szeder.dev>
- <20190731005933.GA9610@sigill.intra.peff.net>
- <20190731012336.GA13880@sigill.intra.peff.net>
- <20190731015917.GB4545@pobox.com>
- <20190731032735.GA14684@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b32a178d-0255-6c82-a3fd-ced2ec828fc8@web.de>
-Date:   Wed, 31 Jul 2019 06:06:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2387480AbfGaE0E (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 00:26:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56444 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2387473AbfGaE0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 00:26:04 -0400
+Received: (qmail 11250 invoked by uid 109); 31 Jul 2019 04:26:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 04:26:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13456 invoked by uid 111); 31 Jul 2019 04:27:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 00:27:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 31 Jul 2019 00:26:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH 0/4] gc docs: modernize and fix the documentation
+Message-ID: <20190731042601.GA26559@sigill.intra.peff.net>
+References: <20190318161502.7979-1-avarab@gmail.com>
+ <20190318215107.GH29661@sigill.intra.peff.net>
+ <87ftrjer8s.fsf@evledraar.gmail.com>
+ <20190319001829.GL29661@sigill.intra.peff.net>
+ <878svjj4t5.fsf@evledraar.gmail.com>
+ <20190507075158.GG28060@sigill.intra.peff.net>
+ <8736lnxlig.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190731032735.GA14684@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XJvA9cm810AybSt0JNtfb6ceVqhEkonD0+pOj6Kk0dahDjq01ve
- OwkWKKXAnlrJ3G4YlVqX4VY3ReLER9x/45Cuq8tJQBX4DpPyDLrm0/3Tz+7uxuRL/umNN1n
- QJyE4pY0kZmfVhEBj+W+lilE852v6ilK1n8RWQ7ydae5r/CUuRaRthIlG1NoTf78f9YE/cv
- FMpgcvjQp2YucEoePuHFg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OaYmu3LuNb4=:p9LazyAqZdesi5h927gCxh
- Vmj6FXzc5TQDmJjHUQTYGvAEprFWXcbfSwPdTK9wsYQP2ZTYZ3gH7Ur1xO10woNdJCf/qsp26
- pRvawhunkE2+zv+7sE6cWKXmZCJJfgiwJq84NqneY51NAVN5ncVN3NrAY28fHZEkwZCQW6tPb
- xjN8yyEZzX45upSLSE/1QZzzhxbp8WJkSAEyIybpv1mC1lZBxOcaM8vnYOA9XU4zuOiV6WHtV
- HzIbbF8aAGUv6Jxav/QEYKbH/MV+SNZuqdVkqyrYze4hJIjJ565uIpUZptFCQo/FzAeojOL0Q
- axsURU6Wk5bNOCw9pOWzfPV1Q4jXBP2W7n4UhfBMYrsToQ4obuO/+ADDn6ABIf+Iosc4qbJsV
- ErkXWNPq/oQsLpnG9F2eDaIEivnhfzs3dmlcudIBL0weXmumH/wJrp6KTN93jULc38fmNyDwq
- rP+05EEE8h4o0PSvDFIXJ4lN0KLpqePDjjutKqvMhw9sgfErbY0p0lLuG9gcUqbRIqS08BJ5F
- ETFMPkV22+nA6Z4Rj1a7FWNsEL2gnm+lA18dckVoHjnF/siB7s9cncBrk+jEPyKwqCL1eyz+T
- UxEs5HSl91kcMsW9LEpX70Wzoh66fhVdItlSl2MY9t6Rcwdje1ynKQt9r7C8FDtFyXSNiZdEE
- du8enD35nmxLDGltEKJSwySGt7leZbT1aD1IQsNT7ymdI4GArb8LuvRM2zKzLIvhE4Iw1h6jY
- Rk6qj4S2LK06mWzM6w3vssRz7TDw53gRUi58Kz6jBMDhBr/3xgaJ+wjymykXacb3uUlaQUs7H
- mES9ZXyEICIH1IE8zQ5rMCfRRUnR6yXFHGf3MXCmvInLAWRnNJqXAv/NlRn1Kj64r1vhxlBnb
- 0y6QymfNrSct8X9iM5ZAcUZw08NBQ7vy7FYp7Mmnvh+wh3YKnUO0n4HfOYIlm9hEsC2kI/SEn
- 3W8/Wzv1QUKgU23ee//5Zh5hk9rvlT2/4CO0lcLpoqxXT3RCCjnyEi66gVytTtaIt0l0V/nK1
- iOeYYDRZ91J5NCY8btFegJLqhQsgDIkH68+4BaTIY4UhXetZrc3/Xyb8QSNQBrhnS8UrmKljm
- L/6+XMeaLlqCJ0=
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8736lnxlig.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.07.19 um 05:27 schrieb Jeff King:
-> One thing that makes it all a bit funky is that the "put" lines also
-> output the old value (which is what all those NULLs) are. And I think
-> that solves my "value3" puzzlement from earlier. It is not part of the
-> iteration at all, but rather the result of the duplicate "put".
+On Fri, May 10, 2019 at 01:20:55AM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > Michael Haggerty and I have (off-list) discussed variations on that, but
+> > it opens up a lot of new issues.  Moving something into quarantine isn't
+> > atomic. So you've still corrupted the repo, but now it's recoverable by
+> > reaching into the quarantine. Who notices that the repo is corrupt, and
+> > how? When do we expire objects from quarantine?
+> >
+> > I think the heart of the issue is really the lack of atomicity in the
+> > operations. You need some way to mark "I am using this now" in a way
+> > that cannot race with "looks like nobody is using this, so I'll delete
+> > it".
+> >
+> > And ideally without traversing large bits of the graph on the writing
+> > side, and without requiring any stop-the-world locks during pruning.
+> 
+> I was thinking (but realize now that I didn't articulate) that the "gc
+> quarantine" would be another "alternate" implementing a copy-on-write
+> "lockless delete-but-be-able-to-rollback scheme" as you put it.
+> 
+> So "gc" would decide (racily) what's unreachable, but instead of
+> unlink()-ing it would "mv" the loose object/pack into the
+> "unreferenced-objects" quarantine.
+> 
+> Then in your example #1 "wants to reference ABCD. It sees that we have
+> it." would race on the "other side". I.e. maybe ABCD was *just* moved to
+> the quarantine. But in that case we'd move it back, which would bump the
+> mtime and thus make it ineligible for expiry.
+
+I think this is basically the same as the current freshening scheme,
+though. In general, you can replace "move it back" with "update its
+mtime". Neither is atomic with respect to other operations.
+
+It does seem like the twist is that "gc" is supposed to do the "move it
+back" step (and it's also the thing expiring, if we assume that there's
+only one gc running at a time). But again, how do we know somebody isn't
+referencing it _right now_ while we're deciding whether to move it back?
+
+I think there are lots of solutions you can come up with if you have
+atomicity. But fundamentally it isn't there in the way we handle updates
+now. You could imagine something like a shared/unique lock where anybody
+updating a ref takes the "shared" side, and multiple entities can hold
+it at once. But somebody pruning takes the "unique" side and excludes
+everybody else, stopping ref updates during the prune (which you'd
+obviously want to do in a way that you hold the lock for as short as
+possible; say, optimistically check reachability without the lock, then
+take the lock and check to see if anything has changed).
+
+(By shared/unique I basically mean a reader/writer lock, but I didn't
+want to use those terms in the paragraph since both holders are
+writing).
+
+It is tricky to find out when to hold the shared lock, though. It's
+_not_ just a ref write, for example. When you accept a push, you'd want
+to hold the lock while you are checking that you have all of the
+necessary objects to write the ref. For something like "git commit" it's
+even harder, because we implicitly rely on state created by commands run
+over the course of hours or days (e.g., "git add" to put a blob in the
+index and maybe create the tree via cache-tree, then a commit to
+reference it, and finally the ref write; each step adds state which the
+next step relies on).
+
+> Aside from that, I have a hunch that while it's theoretically true that
+> you can at any time re-reference some loose blob/tree/commit again, that
+> the likelyhood of that in practice goes down as it ages, since a user is
+> likely to e.g. re-push or rename some branch they pushed last week, not
+> last year.
 >
-> That would perhaps be clearer if the "hashmap" tool actually did the
-> sorting itself (so we'd sort _just_ the iteration, not the whole
-> output). Something like this, though I'm on the fence about whether it
-> is worth it:
+> Hence the mention of creating "unreferenced packs" with some new
+> --keep-unreachable mode. Since we'd pack those together they wouldn't
+> create the "ref explosion" problem we have with the loose refs, and thus
+> you could afford to keep them longer (even though the deltas would be
+> shittier).
 
-We already have a few other tests that sort and compare.  Perhaps it's
-time for a test_cmp_ignore_order?
+Yeah, that may make it less likely (and we'd like those unreferenced
+packs for other reasons anyway, so it's certainly worth a shot). But the
+whole race is kind of unlikely in the first place. If you have enough
+repositories, you see it eventually. ;)
 
-And perhaps something like this might even be worth implementing as a
-diff option?  https://github.com/l0b0/diff-ignore-moved-lines has
-post-processing script for that..
-
-Ren=C3=A9
+-Peff
