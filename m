@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7C9C1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 15:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E04EC1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 15:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbfGaPSn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 11:18:43 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40488 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727941AbfGaPSn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:18:43 -0400
-Received: by mail-wm1-f68.google.com with SMTP id v19so60217600wmj.5
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:41 -0700 (PDT)
+        id S1728703AbfGaPSs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 11:18:48 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35096 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727872AbfGaPSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 11:18:44 -0400
+Received: by mail-wr1-f67.google.com with SMTP id y4so70136407wrm.2
+        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cNyaNgBOebgF4ObFz+d5QNzmjWb1Wn62d3g6L1wBL6I=;
-        b=YB3ZVVSn3LG/wlFv8KhS90xWLZ4RhW16avD5nzD+8dRNi83P/Y/Wz92VBThmgnIb89
-         R39C/LEakPF2Vm7Mj3jN0iD/VfoFieGayIumU0npHSqOWRj5kzDVtDXfXHcyFAWrpOSw
-         rvlB+WcHX3jPNSLr2Ul2EX3J0UTEztQVCHUMm7HDEdN7oQTsgLo6PEXP1xhnyCnekxnj
-         kiAsLHjRGRYIYKv9FQI5lkkj78/q9E+rii7+uyYGQGgpeeGupzgEaF5400MuN11WRWw3
-         etbvlWmsuvFvhKjKJ6I3/5FZ7NN1nBgVwhwQBCPOUpJEEe56Z5q6ARf6QG1v/mKQ0tI6
-         rzHg==
+        bh=n/4VMb2nc3JMryIReRolxqsuypfGCsardDVCrpUP6OI=;
+        b=aVly2dPqmkqn/ATYxFmxXylCc1/WVJTx/6bRTvSgRpUVS+QGOqWrjCUq/f3xU+++DH
+         lWsWXiNZDcaILDpzRc3xOQfGTE/K91URv6GAGHU9MvREmzUfuO5YKQ7Kqq5mIeKPG+V3
+         d7LKuTdMfUQbAAlHEEpuDuT9y3SQU/vh+gHoT6JrEku7reUcI7j7jnqlaAXkASwLbBpg
+         ylox526Jn5vQsqWdy4K+y84kNsup3tTHVDe6QdJtfUEl7DL75dqrr6tzbSl0kD0ednfL
+         zQECLj1ZtGMABcF0O74WrjqL1Jsw3ESdvz5dMkGUcmfxpaBfejNz9BkNm8iedN5iOpIn
+         tFUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cNyaNgBOebgF4ObFz+d5QNzmjWb1Wn62d3g6L1wBL6I=;
-        b=t4rQW4p32riU3c6LYWkDriWoA7BUjWqrck1QVY12SQfjOSRlYjFrOY8PPvVVIbZzoV
-         Jyu/GNdEmI7LvfuasmRXDriix0L0z9N7ZF8cuu8/PCwU1TRmsKKalm1ztPOAAVYhslfY
-         t24WtWE+DVmtuPbrynmXre49Tv8eVBcqdmhgxKmSOQ6aTLQ3iCg8w5vDprACJgPfsXEi
-         9jbR61QKqNsvBXXbcpbPIb0HTQS5e+sU2JTrXacsWrVpAyMElmT5QhpTfO/TmmFIbcaS
-         V0hcjRYspNmoeSu5B+TrdSF+m3nBEYdkHiUjSB8XGxAZog0RguQAhUSqPak9phyl5EPw
-         +F1w==
-X-Gm-Message-State: APjAAAVSB9N3GIl5k3ai5EaajNeNKvdvALXSgYT6kNOAfP61htGf1XbF
-        wxlYzvKhEfgtrXGsJSEfzGrEbm2J
-X-Google-Smtp-Source: APXvYqw23T3cNnMNnFvSjCiBb1w0PZ3hOQrvrBwdrNuhTHI0zLjjp9gtiA/Ys42lQ/Z5sbGpVt5ICg==
-X-Received: by 2002:a1c:6c14:: with SMTP id h20mr7548421wmc.168.1564586321059;
+        bh=n/4VMb2nc3JMryIReRolxqsuypfGCsardDVCrpUP6OI=;
+        b=avUgZjqc2dEwZICqSzTPQKTi0Aer5/jTdH6ZDGKm5OT/HwlPMvYmaTUreNxJkd4WT3
+         ZJVEPKjQHYUtfT8MtldFaHQGqA4GdVAScrh1poMaeMsuQwpD0Mk8qlqYi8uaNFXEXf/3
+         7r4qgCDKQlC1MlYUQw4SSaDvuL8a8cBq4MUOAUnpZgLh3jgxSSSpty+l9amXCU3zLGOg
+         dODopvHgE2QAeTeutJUIxf2tucTKkEi/4a7oYIvjQg4r6OMOfJZ10saJzUjg6gy8Fsyl
+         FWOrQ8vJXwg/LORRaiztAA+j5p9e7HU+QiRlGNSOLroFhihGKmO74rxlmnWySMtx9Pl8
+         reNQ==
+X-Gm-Message-State: APjAAAVKfLGtVBiGP0X5r7keDgoI3pIto9srqBJ9WzCtcEZ114cpkSP1
+        rSqSYai3geo/IUzIO0wyf5g5YDlZ
+X-Google-Smtp-Source: APXvYqyVLg7FubxDyp9rDv7Hf6e9bVEKRBBMFClMHIrqktSgnQaJqAKyN1mJWbngzf0ld+mCAmnKYA==
+X-Received: by 2002:a5d:4108:: with SMTP id l8mr14697936wrp.113.1564586321706;
         Wed, 31 Jul 2019 08:18:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c1sm156066843wrh.1.2019.07.31.08.18.40
+        by smtp.gmail.com with ESMTPSA id k9sm48240514wmi.33.2019.07.31.08.18.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 08:18:40 -0700 (PDT)
-Date:   Wed, 31 Jul 2019 08:18:40 -0700 (PDT)
-X-Google-Original-Date: Wed, 31 Jul 2019 15:18:24 GMT
-Message-Id: <db9ec248e1be7144602b7dfff7972249851d30e1.1564586316.git.gitgitgadget@gmail.com>
+        Wed, 31 Jul 2019 08:18:41 -0700 (PDT)
+Date:   Wed, 31 Jul 2019 08:18:41 -0700 (PDT)
+X-Google-Original-Date: Wed, 31 Jul 2019 15:18:25 GMT
+Message-Id: <38c8e3e284f1ac3574e157786fc0b1d76491fa17.1564586316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.294.v2.git.gitgitgadget@gmail.com>
 References: <pull.294.git.gitgitgadget@gmail.com>
         <pull.294.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 04/16] sequencer: the `am` and `rebase--interactive`
- scripts are gone
+Subject: [PATCH v2 05/16] rebase: fold git-rebase--common into the -p backend
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,28 +73,203 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Update a code comment that referred to those files as if they were still
-there.
+The only remaining scripted part of `git rebase` is the
+`--preserve-merges` backend. Meaning: there is little reason to keep the
+"library of common rebase functions" as a separate file.
+
+While moving the functions to `git-rebase--preserve-merges.sh`, we also
+drop the `move_to_original_branch` function that is no longer used.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitignore                     |  1 -
+ Makefile                       |  1 -
+ builtin/rebase.c               |  3 +-
+ git-rebase--common.sh          | 69 ----------------------------------
+ git-rebase--preserve-merges.sh | 55 +++++++++++++++++++++++++++
+ 5 files changed, 56 insertions(+), 73 deletions(-)
+ delete mode 100644 git-rebase--common.sh
 
-diff --git a/sequencer.c b/sequencer.c
-index f88a97fb10..334de14542 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -767,7 +767,7 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
-  *	GIT_AUTHOR_DATE='$author_date'
-  *
-  * where $author_name, $author_email and $author_date are quoted. We are strict
-- * with our parsing, as the file was meant to be eval'd in the old
-+ * with our parsing, as the file was meant to be eval'd in the now-removed
-  * git-am.sh/git-rebase--interactive.sh scripts, and thus if the file differs
-  * from what this function expects, it is better to bail out than to do
-  * something that the user does not expect.
+diff --git a/.gitignore b/.gitignore
+index bcee4fda81..4470d7cfc0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -122,7 +122,6 @@
+ /git-range-diff
+ /git-read-tree
+ /git-rebase
+-/git-rebase--common
+ /git-rebase--preserve-merges
+ /git-receive-pack
+ /git-reflog
+diff --git a/Makefile b/Makefile
+index 63e1973333..6c3bfb1733 100644
+--- a/Makefile
++++ b/Makefile
+@@ -624,7 +624,6 @@ SCRIPT_SH += git-web--browse.sh
+ 
+ SCRIPT_LIB += git-mergetool--lib
+ SCRIPT_LIB += git-parse-remote
+-SCRIPT_LIB += git-rebase--common
+ SCRIPT_LIB += git-rebase--preserve-merges
+ SCRIPT_LIB += git-sh-setup
+ SCRIPT_LIB += git-sh-i18n
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 4dd76ee576..74a60e8c83 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1163,8 +1163,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+ 	}
+ 
+ 	strbuf_addf(&script_snippet,
+-		    ". git-sh-setup && . git-rebase--common &&"
+-		    " . %s && %s", backend, backend_func);
++		    ". git-sh-setup && . %s && %s", backend, backend_func);
+ 	argv[0] = script_snippet.buf;
+ 
+ 	status = run_command_v_opt(argv, RUN_USING_SHELL);
+diff --git a/git-rebase--common.sh b/git-rebase--common.sh
+deleted file mode 100644
+index f00e13e5d0..0000000000
+--- a/git-rebase--common.sh
++++ /dev/null
+@@ -1,69 +0,0 @@
+-
+-resolvemsg="
+-$(gettext 'Resolve all conflicts manually, mark them as resolved with
+-"git add/rm <conflicted_files>", then run "git rebase --continue".
+-You can instead skip this commit: run "git rebase --skip".
+-To abort and get back to the state before "git rebase", run "git rebase --abort".')
+-"
+-
+-write_basic_state () {
+-	echo "$head_name" > "$state_dir"/head-name &&
+-	echo "$onto" > "$state_dir"/onto &&
+-	echo "$orig_head" > "$state_dir"/orig-head &&
+-	test t = "$GIT_QUIET" && : > "$state_dir"/quiet
+-	test t = "$verbose" && : > "$state_dir"/verbose
+-	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
+-	test -n "$strategy_opts" && echo "$strategy_opts" > \
+-		"$state_dir"/strategy_opts
+-	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
+-		"$state_dir"/allow_rerere_autoupdate
+-	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_sign_opt
+-	test -n "$signoff" && echo "$signoff" >"$state_dir"/signoff
+-	test -n "$reschedule_failed_exec" && : > "$state_dir"/reschedule-failed-exec
+-}
+-
+-apply_autostash () {
+-	if test -f "$state_dir/autostash"
+-	then
+-		stash_sha1=$(cat "$state_dir/autostash")
+-		if git stash apply $stash_sha1 >/dev/null 2>&1
+-		then
+-			echo "$(gettext 'Applied autostash.')" >&2
+-		else
+-			git stash store -m "autostash" -q $stash_sha1 ||
+-			die "$(eval_gettext "Cannot store \$stash_sha1")"
+-			gettext 'Applying autostash resulted in conflicts.
+-Your changes are safe in the stash.
+-You can run "git stash pop" or "git stash drop" at any time.
+-' >&2
+-		fi
+-	fi
+-}
+-
+-move_to_original_branch () {
+-	case "$head_name" in
+-	refs/*)
+-		message="rebase finished: $head_name onto $onto"
+-		git update-ref -m "$message" \
+-			$head_name $(git rev-parse HEAD) $orig_head &&
+-		git symbolic-ref \
+-			-m "rebase finished: returning to $head_name" \
+-			HEAD $head_name ||
+-		die "$(eval_gettext "Could not move back to \$head_name")"
+-		;;
+-	esac
+-}
+-
+-output () {
+-	case "$verbose" in
+-	'')
+-		output=$("$@" 2>&1 )
+-		status=$?
+-		test $status != 0 && printf "%s\n" "$output"
+-		return $status
+-		;;
+-	*)
+-		"$@"
+-		;;
+-	esac
+-}
+diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
+index afbb65765d..dec90e9af6 100644
+--- a/git-rebase--preserve-merges.sh
++++ b/git-rebase--preserve-merges.sh
+@@ -77,6 +77,61 @@ rewritten_pending="$state_dir"/rewritten-pending
+ # and leaves CR at the end instead.
+ cr=$(printf "\015")
+ 
++resolvemsg="
++$(gettext 'Resolve all conflicts manually, mark them as resolved with
++"git add/rm <conflicted_files>", then run "git rebase --continue".
++You can instead skip this commit: run "git rebase --skip".
++To abort and get back to the state before "git rebase", run "git rebase --abort".')
++"
++
++write_basic_state () {
++	echo "$head_name" > "$state_dir"/head-name &&
++	echo "$onto" > "$state_dir"/onto &&
++	echo "$orig_head" > "$state_dir"/orig-head &&
++	test t = "$GIT_QUIET" && : > "$state_dir"/quiet
++	test t = "$verbose" && : > "$state_dir"/verbose
++	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
++	test -n "$strategy_opts" && echo "$strategy_opts" > \
++		"$state_dir"/strategy_opts
++	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
++		"$state_dir"/allow_rerere_autoupdate
++	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_sign_opt
++	test -n "$signoff" && echo "$signoff" >"$state_dir"/signoff
++	test -n "$reschedule_failed_exec" && : > "$state_dir"/reschedule-failed-exec
++}
++
++apply_autostash () {
++	if test -f "$state_dir/autostash"
++	then
++		stash_sha1=$(cat "$state_dir/autostash")
++		if git stash apply $stash_sha1 >/dev/null 2>&1
++		then
++			echo "$(gettext 'Applied autostash.')" >&2
++		else
++			git stash store -m "autostash" -q $stash_sha1 ||
++			die "$(eval_gettext "Cannot store \$stash_sha1")"
++			gettext 'Applying autostash resulted in conflicts.
++Your changes are safe in the stash.
++You can run "git stash pop" or "git stash drop" at any time.
++' >&2
++		fi
++	fi
++}
++
++output () {
++	case "$verbose" in
++	'')
++		output=$("$@" 2>&1 )
++		status=$?
++		test $status != 0 && printf "%s\n" "$output"
++		return $status
++		;;
++	*)
++		"$@"
++		;;
++	esac
++}
++
+ strategy_args=${strategy:+--strategy=$strategy}
+ test -n "$strategy_opts" &&
+ eval '
 -- 
 gitgitgadget
 
