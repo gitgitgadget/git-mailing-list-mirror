@@ -8,43 +8,44 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA9FD1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 18:36:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B42C81F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 18:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729449AbfGaSgQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 14:36:16 -0400
-Received: from m12-16.163.com ([220.181.12.16]:33704 "EHLO m12-16.163.com"
+        id S1729992AbfGaSgR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 14:36:17 -0400
+Received: from m12-16.163.com ([220.181.12.16]:33886 "EHLO m12-16.163.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727342AbfGaSgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 14:36:15 -0400
+        id S1727572AbfGaSgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 14:36:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id; bh=9xM7yKUvelPBnNYk1Y
-        VE68s7Pd/SeYV9pE7sGbiSqIs=; b=Yq02XNBRz7174ZlxLNYP/HacLKXQU4Z0zm
-        tEbSNc6SaQNx24ehDd3Oi7ZZ9BIXrvEZex2fqu8dM31Ntg0MqjlRDy7Q/NvW5I9Q
-        OvjuIgEP4ONGQFkD1ADXgW/WLHsi/eCi3YVa8oFYPDAX8hHZ3I2i+FVV5JiBGzz5
-        0bqwvjwIg=
+        s=s110527; h=From:Subject:Date:Message-Id; bh=nco6VAQueeuYfoEWsk
+        ZLz2bc7SlDPKfUAEsShpevxlU=; b=SyzjnLTszPbssZ3RosXBWmxsk7PD1Omutr
+        T4N8aeiAAi6WF3a2VMGnlhfT6qJTe3CNBN4YL0p1Wx9W+/E5C5iRIGVfbI8SH4r1
+        dkoymbxT22oiyG7+SkvwQe+EyuF4BoyFw8LSm6kvLvmo/YQq75dFHmpieDzYW7nx
+        orHgi9NJc=
 Received: from localhost.localdomain (unknown [113.118.224.79])
-        by smtp12 (Coremail) with SMTP id EMCowAB3PyuM30FdnWFpAA--.16797S3;
-        Thu, 01 Aug 2019 02:35:56 +0800 (CST)
+        by smtp12 (Coremail) with SMTP id EMCowAB3PyuM30FdnWFpAA--.16797S4;
+        Thu, 01 Aug 2019 02:36:01 +0800 (CST)
 From:   16657101987@163.com
 To:     peff@peff.net
 Cc:     16657101987@163.com, git@vger.kernel.org, gitster@pobox.com,
         mhagger@alum.mit.edu, sunchao9@huawei.com, worldhello.net@gmail.com
-Subject: [PATCH v2 0/1] pack-refs: always refreshing after take the lock file
-Date:   Thu,  1 Aug 2019 02:35:43 +0800
-Message-Id: <20190731183544.24406-1-16657101987@163.com>
+Subject: [PATCH v2 1/1] pack-refs: always refreshing after take the lock file
+Date:   Thu,  1 Aug 2019 02:35:44 +0800
+Message-Id: <20190731183544.24406-2-16657101987@163.com>
 X-Mailer: git-send-email 2.17.2 (Apple Git-113)
+In-Reply-To: <20190731183544.24406-1-16657101987@163.com>
+References: <20190730063634.GA4901@sigill.intra.peff.net>
+ <20190731183544.24406-1-16657101987@163.com>
 In-Reply-To: <20190730063634.GA4901@sigill.intra.peff.net>
 References: <20190730063634.GA4901@sigill.intra.peff.net>
-In-Reply-To: <20190730063634.GA4901@sigill.intra.peff.net>
-References: <20190730063634.GA4901@sigill.intra.peff.net>
-X-CM-TRANSID: EMCowAB3PyuM30FdnWFpAA--.16797S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWFy7CrW5tF1fJF1rKw4rZrb_yoW5uFyfpr
-        Z0kwsxKr4DA3WIgF17uw4UXFyrAw4rtryYqas3tr12vws5Wry0vr1SgryY9FW7Gr93G3yj
-        qr4vga97Cwn0vaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jYiifUUUUU=
+X-CM-TRANSID: EMCowAB3PyuM30FdnWFpAA--.16797S4
+X-Coremail-Antispam: 1Uf129KBjvJXoW3Gw4UAryrWw4xtrykJryUGFg_yoW7Ar48pr
+        Z8C3s8Gw4DCF1Svrn7Wr18XFW8Ga95tFy5Xr95W39F9w4UXw1IqrWfK3WYgrZxGrn3Aw4U
+        Zr45KrWkGFnYv37anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j3pnQUUUUU=
 X-Originating-IP: [113.118.224.79]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiPg0DglxBdC+fFgAAs9
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/xtbB0RQDglzH5US2IgAAsq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,97 +53,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sun Chao <16657101987@163.com>
 
-On Tue, 30 Jul 2019 02:36:35 -0400, Jeff King wrote:
+When a packed ref is deleted, the whole packed-refs file is
+rewrite and omit the ref that no longer exists. However if
+another gc command is running and call `pack-refs --all`
+simultaneously, there is a chance that a ref just updated
+will lost the newly commits.
 
-> You can do this step without the fetch, which makes it hit the race more
-> quickly. :) Try this:
-> 
->   # prime it with a single commit
->   git commit --allow-empty -m foo
->   while true; do
->     us=$(git commit-tree -m foo -p HEAD HEAD^{tree}) &&
->     git update-ref refs/heads/newbranch $us &&
->     git update-ref refs/heads/master $us &&
->     git update-ref -d refs/heads/newbranch &&
->     them=$(git rev-parse master) &&
->     if test "$them" != "$us"; then
->       echo >&2 "lost commit: $us"
->       exit 1
->     fi
->     # eye candy
->     printf .
->   done
+Through these steps, losting commits of newly updated refs
+could be demonstrated:
 
-Thanks, this could hit the race more quickly and I update it to the
-commit log.
+  # step 1: compile git without `USE_NSEC` option
+  Some kernerl releases does enable it by default while some
+  does not. And if we compile git without `USE_NSEC`, it
+  will be easier demonstrated by the following steps.
 
-> I don't think this is quite the same as racy-git. There we are comparing
-> stat entries for a file X to the timestamp of the index (and we are
-> concerned they were written in the same second).
-> 
-> But here we have no on-disk stat information to compare to. It's all
-> happening in-process. But you're right that it's a racy stat-validity
-> problem.
+  # step 2: setup a repository and add first commit
+  git init repo &&
+  (cd repo &&
+   git config core.logallrefupdates true &&
+   git commit --allow-empty -m foo)
 
-Yes, I agree with you.
+  # step 3: in one terminal, repack the refs repeatedly
+  cd repo &&
+  while true; do
+    git pack-refs --all
+  done
 
-> The stat-validity check here is actually more than the timestamp.
-> Specifically it's checking the inode and size. But because of the
-> specific set of operations you're performing, this ends up correlating
-> quite often:
-> 
->   - because our operations involve updating a single ref or
->     adding/deleting another ref, we'll oscillate between two sizes
->     (either one ref or two)
-> 
->   - likewise if nothing else is happening on the filesystem, pack-refs
->     may flip back and forth between two inodes (not the same one,
->     because our tempfile-and-rename strategy means we're still using the
->     old one while we write the new packed-refs file).
-> 
-> So I actually find this to be a fairly unlikely case in the real world,
-> but as your script demonstrates, it's not that hard to trigger it if
-> you're trying.
->
-> I'm not sure the second one actually fixes things entirely. What if I
-> have an older refs/heads/foo, and I do this:
-> 
->   git pack-refs
->   git pack-refs --all --prune
-> 
-> We still might hit the race here. The first pack-refs does not pack foo
-> (because we didn't say --all), then a simultaneous "update-ref -d" opens
-> `packed-refs`, then the second pack-refs packs it all in the same
-> second. Now "update-ref -d" uses the old packed-refs file, and we lose
-> the ref.
+  # step 4: in another terminal, simultaneously update the
+  # master with update-ref, and create and delete an
+  # unrelated ref also with update-ref
+  cd repo &&
+  while true; do
+    us=$(git commit-tree -m foo -p HEAD HEAD^{tree}) &&
+    git update-ref refs/heads/newbranch $us &&
+    git update-ref refs/heads/master $us &&
+    git update-ref -d refs/heads/newbranch &&
+    them=$(git rev-parse master) &&
+    if test "$them" != "$us"; then
+      echo >&2 "lost commit: $us"
+      exit 1
+    fi
+    # eye candy
+    printf .
+  done
 
-Yes, I agree with you. And in the real word if the git servers has some
-3rd-service which update repositories refs or pack-refs frequently may
-have this problem, my company's git servers works like this unfortunately.
+Though we have the packed-refs lock file and loose refs lock
+files to avoid updating conflicts, a ref will lost its newly
+commits if racy stat-validity of `packed-refs` file happens
+(which is quite same as the racy-git described in
+`Documentation/technical/racy-git.txt`), the following
+specific set of operations demonstrates the problem:
 
-> So I actually think the best path forward is just always refreshing when
-> we take the lock, something like:
-> 
-> Ultimately the best solution there is to move to a better format (like
-> the reftables proposal).
+  1. Call `pack-refs --all` to pack all the loose refs to
+     packed-refs, and let say the modify time of the
+     packed-refs is DATE_M.
 
-I do not know if we could get the new reftables in the next few versions,
-So I commit the changes as you suggested, which is also the same as
-another way I metioned in `PATCH v1`:
+  2. Call `update-ref` to update a new commit to master while
+     it is already packed.  the old value (let us call it
+     OID_A) remains in the packed-refs file and write the new
+     value (let us call it OID_B) to $GIT_DIR/refs/heads/master.
 
-**force `update-ref -d` to update the snapshot before rewrite packed-refs.**
+  3. Call `update-ref -d` within the same DATE_M from the 1th
+     step to delete a different ref newbranch which is packed
+     in the packed-refs file. It check newbranch's oid from
+     packed-refs file without locking it.
 
-But if the reftables is comeing soon, please just ignore my PATCH :)
+     Meanwhile it keeps a snapshot of the packed-refs file in
+     memory and record the file's attributes with the snapshot.
+     The oid of master in the packed-refs's snapshot is OID_A.
 
-**And thank a lot for your reply, it's great to me, because it's my first
-PATCh to git myself :)**
+  4. Call a new `pack-refs --all` to pack the loose refs, the
+     oid of master in packe-refs file is OID_B, and the loose
+     refs $GIT_DIR/refs/heads/master is removed. Let's say
+     the `pack-refs --all` is very quickly done and the new
+     packed-refs file's modify time is still DATE_M, and it
+     has the same file size, even the same inode.
 
-Sun Chao (1):
-  pack-refs: always refreshing after take the lock file
+  5. 3th step now goes on after checking the newbranch, it
+     begin to rewrite the packed-refs file. After get the
+     lock file of packed-ref file, it checks it's on-disk
+     file attributes with the snapshot, suck as the timestamp,
+     the file size and the inode value. If they are both the
+     same values, and the snapshot is not refreshed.
 
+     Because the loose ref of master is removed by 4th step,
+     `update-ref -d` will updates the new packed-ref to disk
+     which contains master with the oid OID_A. So now the
+     newly commit OID_B of master is lost.
+
+The best path forward is just always refreshing after take
+the lock file of `packed-refs` file. Traditionally we avoided
+that because refreshing it implied parsing the whole file.
+But these days we mmap it, so it really is just an extra
+open()/mmap() and a quick read of the header. That doesn't seem
+like an outrageous cost to pay when we're already taking the lock.
+
+Signed-off-by: Sun Chao <sunchao9@huawei.com>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Sun Chao <sunchao9@huawei.com>
+---
  refs/packed-backend.c | 23 ++++++++++++++++-------
  1 file changed, 16 insertions(+), 7 deletions(-)
 
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index c01c7f5901..4458a0f69c 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1012,14 +1012,23 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
+ 	}
+ 
+ 	/*
+-	 * Now that we hold the `packed-refs` lock, make sure that our
+-	 * snapshot matches the current version of the file. Normally
+-	 * `get_snapshot()` does that for us, but that function
+-	 * assumes that when the file is locked, any existing snapshot
+-	 * is still valid. We've just locked the file, but it might
+-	 * have changed the moment *before* we locked it.
++	 * There is a stat-validity problem might cause `update-ref -d`
++	 * lost the newly commit of a ref, because a new `packed-refs`
++	 * file might has the same on-disk file attributes such as
++	 * timestamp, file size and inode value, but has a changed
++	 * ref value.
++	 *
++	 * This could happen with a very small chance when
++	 * `update-ref -d` is called and at the same time another
++	 * `pack-refs --all` process is running.
++	 *
++	 * Now that we hold the `packed-refs` lock, it is important
++	 * to make sure we could read the latest version of
++	 * `packed-refs` file no matter we have just mmap it or not.
++	 * So what need to do is clear the snapshot if we hold it
++	 * already.
+ 	 */
+-	validate_snapshot(refs);
++	clear_snapshot(refs);
+ 
+ 	/*
+ 	 * Now make sure that the packed-refs file as it exists in the
 -- 
 2.22.0.214.g8dca754b1e
 
