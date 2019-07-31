@@ -3,163 +3,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59AE31F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 15:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59BF1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 15:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbfGaPgJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 11:36:09 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45276 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727961AbfGaPgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:36:08 -0400
-Received: by mail-qk1-f193.google.com with SMTP id s22so49598804qkj.12
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yXfxPzWNak9YSI5e0c49Fnv0hGNcR2aF7viOrArhXGQ=;
-        b=ZxkPsezBwPehrkgn5KhcLOklUAGZEvmaVwZormnAXmPlcCipCN13/+02Lt4Uxfapzs
-         rPWWnrady0DQQ7zRlrKmWC86K3pVqsz8mphlw9kKxjXYoWAewNpe17nyBkQh4zulRkN5
-         1zKmhZJ0aoy2ZldYAzw3zDLsXFCrxmYN6sr7zDyXqyXJplhWIe/J1lId6fajMqPMzgsR
-         i5+VViQU4+u02WDAR+Yu2XzGWhrq0OeAkBV6Vi/KQGZBcFkUTfUUl48yKKFhk7hExC0D
-         0prYwllReDoWZ5SpYDEetj4DPR5l47FO31/ZSK6g/5CEMzpmpowLn+d39Gkygq7djGCI
-         vj5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yXfxPzWNak9YSI5e0c49Fnv0hGNcR2aF7viOrArhXGQ=;
-        b=hUeuxG35jK4Bba+CPKsba+/uCDbjCzqY0piz6BDKVFEE+TdeR5dMHQHwYcIZkRGRFw
-         DHge1JEdNhc3to/kUAKj0UGQtZE62VisNzLiAOlLAula+PkeEd2xD3jbIyxbXGkKkeCW
-         vPH3JMDCSwGiHEHFBNo2iUnxbSSs+i2ZnFfndfrXVe6/6m8KtiB8Fza72VW5LbHkypae
-         7syekAj0n/jek+Pn6wv0onkwqPimYCaONCbS1z76RamUQ9wGUaOQnDF5qseMwofaLfaz
-         4RJ41Bbl+h7lrKk+E9lBD8en9SuY24luw0z2z/AiqNutPs3mAua2WHuTeuglgvUjkY5s
-         XW9g==
-X-Gm-Message-State: APjAAAXvS3vBeQyoQrE7DmgzGCjhzT7eFRkRsJzAqPSzpeDNjJbY0CgR
-        aDIHkEIpJ5D0/NSmn2OB0MipdXNPAP8=
-X-Google-Smtp-Source: APXvYqyn3QWJKNMevmDJErigLXoHn5UUeRxxJgrLPdZJHMY/yq/qrBKejSbXQMWJ/kPi0beJjotVXg==
-X-Received: by 2002:a37:7704:: with SMTP id s4mr81237860qkc.310.1564587367272;
-        Wed, 31 Jul 2019 08:36:07 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id w9sm29145025qts.25.2019.07.31.08.36.04
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 31 Jul 2019 08:36:06 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        kernel-usp@googlegroups.com, jackdanielz@eyomi.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC][PATCH v2] grep: fix worktree case in submodules
-Date:   Wed, 31 Jul 2019 12:35:32 -0300
-Message-Id: <d1fdd091f289e836633b875d87341a66d1fc528a.1564587317.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
-References: <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
+        id S1730301AbfGaPsj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 11:48:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59450 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729820AbfGaPsg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 11:48:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D19277D676;
+        Wed, 31 Jul 2019 11:48:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qZ0bo/0oaQx6k0B7gffkRNMq3FY=; b=nL6vnl
+        Zn9qE/uG781ju3RPrba9rmWmfvQF2zPHlba9QELKHg22FN8ktnoGkngykRr4A5ri
+        kxFswNPjgBSwsV2P8RMVPdCFEbfTscv302F4onAXiHlk/R5D3hMEtg/bdqu6iIwX
+        Fyw6JgL5fH3m/yfLrBvG3ltq04HsyaqPmgz9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NDEVWsS1WCByZi2sXc5DSvAcAFRE40Ze
+        f7VHLIC5pkbYju3dfDB3Ro+LZyFvcRJkyxqyIpum/Nd1EoPe6lrw2HROujDHtipQ
+        Yh6IhsqQVM6Mb/snpuIhFdOFJjnEWgPrL2zX4onlmrjmzSYJGpCxLFdjoJoaNUBf
+        +94cKCKxACU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C970F7D675;
+        Wed, 31 Jul 2019 11:48:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E98407D674;
+        Wed, 31 Jul 2019 11:48:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
+        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 2/5] repo-settings: add feature.manyCommits setting
+References: <pull.292.v2.git.gitgitgadget@gmail.com>
+        <pull.292.v3.git.gitgitgadget@gmail.com>
+        <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
+        <xmqqh873s0jy.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1907311515210.21907@tvgsbejvaqbjf.bet>
+Date:   Wed, 31 Jul 2019 08:48:30 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1907311515210.21907@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Wed, 31 Jul 2019 15:17:59 +0200
+        (CEST)")
+Message-ID: <xmqq1ry6ryr5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A6714F5E-B3AA-11E9-8238-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running git-grep with --recurse-submodules results in a cached grep for
-the submodules even when --cached is not used. This makes all
-modifications in submodules' tracked files be always ignored when
-grepping. Solve that making git-grep respect the cached option when
-invoking grep_cache() inside grep_submodule(). Also, add tests to
-ensure that the desired behavior is performed.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Reported-by: Daniel Zaoui <jackdanielz@eyomi.org>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
-Changes in v2:
-- repositioned the '/* ignored */' comment to avoid ambiguity
-- joined `git clean` and `git reset` invokations in a single `git
-  submodule foreach`. 
+> On Tue, 30 Jul 2019, Junio C Hamano wrote:
+>
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > +#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
+>>
+>> [...]
+>>  3. When we learn to set default values for variables that are not
+>>     boolean in the future, we will regret that we did not name it
+>>     UPDATE_DEFAULT_BOOL(slot, value).
+>
+> On the other hand, as we never promised any kind of API (and this is not
+> even an internal API to begin with), it will be _easy_ to rename it in
+> the unlikely event that we would ever introduce non-boolean defaults to
+> override, wouldn't you agree?
 
-travis build: https://travis-ci.org/matheustavares/git/builds/565749070
+I agree that it is easy to say that it is easy to rename it later
+and burden somebody else with the task.
 
-builtin/grep.c                     | 10 ++++++----
- t/t7814-grep-recurse-submodules.sh | 20 ++++++++++++++++++++
- 2 files changed, 26 insertions(+), 4 deletions(-)
+I know that the renaming itself is easy, when you limit yourself
+within the scope of a single topic, whether done now or later.  I
+also know that having to worry about other topics in flight has
+non-zero cost.  I also know that you are not the one who will bear
+it---I will be.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 560051784e..d9866dd936 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -403,7 +403,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- static int grep_submodule(struct grep_opt *opt,
- 			  const struct pathspec *pathspec,
- 			  const struct object_id *oid,
--			  const char *filename, const char *path)
-+			  const char *filename, const char *path, int cached)
- {
- 	struct repository subrepo;
- 	struct repository *superproject = opt->repo;
-@@ -475,7 +475,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		strbuf_release(&base);
- 		free(data);
- 	} else {
--		hit = grep_cache(&subopt, pathspec, 1);
-+		hit = grep_cache(&subopt, pathspec, cached);
- 	}
- 
- 	repo_clear(&subrepo);
-@@ -523,7 +523,8 @@ static int grep_cache(struct grep_opt *opt,
- 			}
- 		} else if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
- 			   submodule_path_match(repo->index, pathspec, name.buf, NULL)) {
--			hit |= grep_submodule(opt, pathspec, NULL, ce->name, ce->name);
-+			hit |= grep_submodule(opt, pathspec, NULL, ce->name,
-+					      ce->name, cached);
- 		} else {
- 			continue;
- 		}
-@@ -598,7 +599,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 			free(data);
- 		} else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
- 			hit |= grep_submodule(opt, pathspec, &entry.oid,
--					      base->buf, base->buf + tn_len);
-+					      base->buf, base->buf + tn_len,
-+					      1 /* ignored */);
- 		}
- 
- 		strbuf_setlen(base, old_baselen);
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index a11366b4ce..edb64690e6 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -408,4 +408,24 @@ test_expect_success 'grep --recurse-submodules with submodules without .gitmodul
- 	test_cmp expect actual
- '
- 
-+reset_and_clean () {
-+	git reset --hard &&
-+	git clean -fd &&
-+	git submodule foreach --recursive 'git reset --hard && git clean -fd'
-+}
-+
-+test_expect_success 'grep --recurse-submodules without --cached considers worktree modifications' '
-+	reset_and_clean &&
-+	echo "A modified line in submodule" >>submodule/a &&
-+	echo "submodule/a:A modified line in submodule" >expect &&
-+	git grep --recurse-submodules "A modified line in submodule" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'grep --recurse-submodules with --cached ignores worktree modifications' '
-+	reset_and_clean &&
-+	echo "A modified line in submodule" >>submodule/a &&
-+	test_must_fail git grep --recurse-submodules --cached "A modified line in submodule" >actual 2>&1 &&
-+	test_must_be_empty actual
-+'
- test_done
--- 
-2.22.0
+So from my point of view, if we can make a prediction, even with
+limited knowledge that a name may need to be renamed in the future,
+it is better not pick such a name and instead use one that we think
+it has a better chance of surviving without needing a rename.
 
