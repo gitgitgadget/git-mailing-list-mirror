@@ -2,146 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCB931F732
-	for <e@80x24.org>; Wed, 31 Jul 2019 22:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54FBC1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 23:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbfGaWeI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 18:34:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60638 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726231AbfGaWeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 18:34:08 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB5EF15BF94;
-        Wed, 31 Jul 2019 18:34:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OC09QW9jcDKMqECH9QfOSOJ/BOE=; b=X8QIZq
-        jbuiXRxqlHsQf6yUuE1FVDQjGjp6EIt2AO4g6zgRKQUKEARFw2YZq0Nli+Apqo0y
-        B7ibda5Kb6BSH9dDg5Q3hEq2dpgU+ua3pBM4tgR8zDmg3D4C9nYH5uLaM51KS4OF
-        RijP9sxhoWyBUWyKFnbUiEFFPcqBpMB1RJ5GQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=swbG4BlT7mOBW7oKPkxyKWM/glhba9cJ
-        jCg166jfha2Gv0BWpvJXsGq3Al7NWBpaPNLgF0deAskTMsSC+kx2VGYdQzpTCVFt
-        F7syohcMPYCNCEmWiienFM0yUieQ9jzfI0jvsa5148UtSjZyd7/KcIyVykm61mjT
-        PdLG/yhNWGk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1B5215BF93;
-        Wed, 31 Jul 2019 18:34:05 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4238A15BF92;
-        Wed, 31 Jul 2019 18:34:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Gregory Szorc <gregory.szorc@gmail.com>,
-        Eric Wong <e@80x24.org>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] repack: simplify handling of auto-bitmaps and .keep files
-References: <20190731053703.GA16709@sigill.intra.peff.net>
-        <20190731054055.GC16941@sigill.intra.peff.net>
-Date:   Wed, 31 Jul 2019 15:34:04 -0700
-In-Reply-To: <20190731054055.GC16941@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 31 Jul 2019 01:40:56 -0400")
-Message-ID: <xmqqzhktomub.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727520AbfGaXM7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 19:12:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57752 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725793AbfGaXM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 19:12:59 -0400
+Received: (qmail 21720 invoked by uid 109); 31 Jul 2019 23:12:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 23:12:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22965 invoked by uid 111); 31 Jul 2019 23:14:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 19:14:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 31 Jul 2019 19:12:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] config: work around bug with includeif:onbranch
+ and early config
+Message-ID: <20190731231257.GB1933@sigill.intra.peff.net>
+References: <pull.300.git.gitgitgadget@gmail.com>
+ <pull.300.v2.git.gitgitgadget@gmail.com>
+ <ea1a746113b85bde5319c410f68fe3dc75f8a328.1564603600.git.gitgitgadget@gmail.com>
+ <20190731220204.GA1933@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1908010004130.21907@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4DA1408A-B3E3-11E9-97D5-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1908010004130.21907@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 01, 2019 at 12:13:19AM +0200, Johannes Schindelin wrote:
 
-> Commit 7328482253 (repack: disable bitmaps-by-default if .keep files
-> exist, 2019-06-29) taught repack to prefer disabling bitmaps to
-> duplicating objects (unless bitmaps were asked for explicitly).
->
-> But there's an easier way to do this: if we keep passing the
-> --honor-pack-keep flag to pack-objects when auto-enabling bitmaps, then
-> pack-objects already makes the same decision (it will disable bitmaps
-> rather than duplicate). Better still, pack-objects can actually decide
-> to do so based not just on the presence of a .keep file, but on whether
-> that .keep file actually impacts the new pack we're making (so if we're
-> racing with a push or fetch, for example, their temporary .keep file
-> will not block us from generating bitmaps if they haven't yet updated
-> their refs).
->
-> And because repack uses the --write-bitmap-index-quiet flag, we don't
-> have to worry about pack-objects generating confusing warnings when it
-> does see a .keep file. We can confirm this by tweaking the .keep test to
-> check repack's stderr.
+> > This gets tricky, because some commands are intentionally avoiding the
+> > normal lookup procedure (e.g., clone or init, and probably things like
+> > upload-pack that want to enter another repo). So I think it is OK as
+> > long as the early-config code is explicitly saying "and please look at
+> > the refs in this specific direectory now", and it doesn't affect other
+> > possible code paths that might look at refs. I _think_ that's what
+> > you're suggesting above, but I just want to make sure (not that it
+> > matters either way for this patch).
+> 
+> I think we already have the `git clone` problem with
+> `includeif.gitdir:`. AFAICT we _will_ discover a Git directory when
+> cloning inside an existing Git worktree.
 
-This change is a bit too dense so I'll need to think about it a bit
-longer, but in the meantime it is queued alongside the other two.
+Yeah, I could well believe that. I think it's hard for the config code
+to say what's the right think to do here. If I'm running "git clone"
+from inside another repository, should I respect, say, an alias defined
+in that repository's config? Probably. But should I find that alias
+behind "includeif.gitdir"? I dunno. Maybe?
 
-Thanks.
+So I'm not 100% sure the current behavior is buggy. And mostly I'd be
+happy to ignore it until somebody comes up with a compelling
+(real-world) example either way.
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/repack.c  | 17 ++---------------
->  t/t7700-repack.sh |  3 ++-
->  2 files changed, 4 insertions(+), 16 deletions(-)
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index db93ca3660..632c0c0a79 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -89,17 +89,6 @@ static void remove_pack_on_signal(int signo)
->  	raise(signo);
->  }
->  
-> -static int has_pack_keep_file(void)
-> -{
-> -	struct packed_git *p;
-> -
-> -	for (p = get_all_packs(the_repository); p; p = p->next) {
-> -		if (p->pack_keep)
-> -			return 1;
-> -	}
-> -	return 0;
-> -}
-> -
->  /*
->   * Adds all packs hex strings to the fname list, which do not
->   * have a corresponding .keep file. These packs are not to
-> @@ -346,13 +335,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  
->  	if (write_bitmaps < 0) {
->  		if (!(pack_everything & ALL_INTO_ONE) ||
-> -		    !is_bare_repository() ||
-> -		    keep_pack_list.nr != 0 ||
-> -		    has_pack_keep_file())
-> +		    !is_bare_repository())
->  			write_bitmaps = 0;
->  	}
->  	if (pack_kept_objects < 0)
-> -		pack_kept_objects = !!write_bitmaps;
-> +		pack_kept_objects = write_bitmaps > 0;
->  
->  	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE))
->  		die(_(incremental_bitmap_conflict_error));
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index 54f815b8b9..4e855bc21b 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -245,7 +245,8 @@ test_expect_success 'no bitmaps created if .keep files present' '
->  	keep=${pack%.pack}.keep &&
->  	test_when_finished "rm -f \"\$keep\"" &&
->  	>"$keep" &&
-> -	git -C bare.git repack -ad &&
-> +	git -C bare.git repack -ad 2>stderr &&
-> +	test_must_be_empty stderr &&
->  	find bare.git/objects/pack/ -type f -name "*.bitmap" >actual &&
->  	test_must_be_empty actual
->  '
+> And as you say, there was no use case, and I would even contend that
+> there still is no use case. In the cover letter, I tried to concoct
+> something (using a branch-dependent pager) that sounds _really_
+> far-fetched to even me.
+
+Yeah. I'd be totally fine if we left it with your fix here and nobody
+ever found time to work on this. :)
+
+> > > -	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+> > > +	const char *refname = !the_repository || !the_repository->gitdir ?
+> > > +		NULL : resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+> >
+> > I think the_repository is always non-NULL.
+> 
+> No, it totally can be `NULL`. I know because my first version of the
+> patch did not have that extra check, and `git help -a` would segfault
+> outside a Git worktree when I had an `includeif.onbranch:` in my
+> `~/.gitconfig`.
+
+Hrm. But common-main calls initialize_the_repository(), which points it
+at &the_repo. And I can't find any other assignments. So how does it
+become NULL? And is every caller of have_git_dir() at risk of
+segfaulting?
+
+Ah, I see. I think it is that trace2 reads the configuration very early.
+I think we ought to do this:
+
+diff --git a/common-main.c b/common-main.c
+index 582a7b1886..89fd415e55 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -39,14 +39,14 @@ int main(int argc, const char **argv)
+ 
+ 	git_resolve_executable_dir(argv[0]);
+ 
++	initialize_the_repository();
++
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
+ 	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
+ 
+ 	git_setup_gettext();
+ 
+-	initialize_the_repository();
+-
+ 	attr_start();
+ 
+ 	result = cmd_main(argc, argv);
+
+or possibly even move the trace2 bits to the very end of that function.
+The point of common-main is to do very basic setup. Doing tentative repo
+discovery and config reading there at all is surprising to me, to say
+the least. But I think we can at least make sure the library code is
+initialized first.
+
+> > The way similar sites check this is withV
+> > "!startup_info->have_repository" or have_git_dir(). The early-config
+> > code uses the latter, so we should probably match it here.
+> 
+> Quite frankly, I'd rather not. At this point, it is not important
+> whether or not we discovered a Git directory, but whether or not we have
+> populated a dereference'able `the_repository`. Those are two different
+> things.
+
+What I'm concerned about it is whether there are cases where
+the_repository->gitdir is NULL, but we _could_ still look up refs. I.e.,
+why is the rest of the config code using have_git_dir(), and why is this
+code path special?
+
+Again, I _think_ we might be able to get rid of have_git_dir() now. Back
+when it was introduced get_git_dir() did lazy setup, and these days it
+looks like it's just peeking at the_repository->gitdir. But it makes
+sense to me for this fix to be consistent with the surrounding code, and
+then to investigate have_git_dir() separately.
+
+> >   Side note: I suspect there are some cleanup opportunities. IIRC, I had
+> >   to add have_git_dir() to cover some cases where $GIT_DIR was set but
+> >   we hadn't explicitly done a setup step, but there's been a lot of
+> >   refactoring and cleanup in the initialization code since then. I'm not
+> >   sure if it's still necessary.
+> 
+> Yeah, well, I am not necessarily certain that we always ask the right
+> questions, such as asking whether we found a startup repository when we
+> need, in fact, to know whether `the_repository->refs` would cause a
+> segmentation fault because we would dereference a `NULL` pointer ;-)
+
+If there are cases where startup_info->have_repository is non-zero but
+we'd segfault, then I think that's a bug that is going to affect more
+spots than this, and we need to investigate and fix. But I don't think
+that is the case. We should only be setting it after calling
+set_git_dir(), and poking at the current sites which set that leads me
+to believe this is true.
+
+-Peff
