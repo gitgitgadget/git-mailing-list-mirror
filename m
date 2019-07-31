@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2AE1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 04:38:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 329991F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 04:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728053AbfGaEiU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 00:38:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56508 "HELO cloud.peff.net"
+        id S1728221AbfGaEiW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 00:38:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56514 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726439AbfGaEiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 00:38:19 -0400
-Received: (qmail 11364 invoked by uid 109); 31 Jul 2019 04:38:19 -0000
+        id S1726439AbfGaEiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 00:38:21 -0400
+Received: (qmail 11370 invoked by uid 109); 31 Jul 2019 04:38:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 04:38:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 04:38:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13592 invoked by uid 111); 31 Jul 2019 04:40:03 -0000
+Received: (qmail 13608 invoked by uid 111); 31 Jul 2019 04:40:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 00:40:03 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 00:40:05 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 31 Jul 2019 00:38:18 -0400
+Date:   Wed, 31 Jul 2019 00:38:20 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/6] tree-walk: use size_t consistently
-Message-ID: <20190731043818.GC27170@sigill.intra.peff.net>
+Subject: [PATCH 4/6] tree-walk: accept a raw length for traverse_path_len()
+Message-ID: <20190731043820.GD27170@sigill.intra.peff.net>
 References: <20190731043659.GA27028@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,98 +39,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We store and manipulate the cumulative traverse_info.pathlen as an
-"int", which can overflow when we are fed ridiculously long pathnames
-(e.g., ones at the edge of 2GB or 4GB, even if the individual tree entry
-names are smaller than that). The results can be confusing, though
-after some prodding I was not able to use this integer overflow to cause
-an under-allocated buffer.
-
-Let's consistently use size_t to generarate and store these, and make
-sure our addition doesn't overflow.
+We take a "struct name_entry", but only care about the length of the
+path name. Let's just take that length directly, making it easier to use
+the function from callers that sometimes do not have a name_entry at
+all.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- tree-walk.c    | 4 ++--
- tree-walk.h    | 6 +++---
- unpack-trees.c | 6 +++---
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ builtin/merge-tree.c | 2 +-
+ tree-walk.h          | 5 +++--
+ unpack-trees.c       | 6 +++---
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 130d9f32f2..cf5af6a46b 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -170,7 +170,7 @@ int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index d8ace972c7..225460fe13 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -180,7 +180,7 @@ static struct merge_list *create_entry(unsigned stage, unsigned mode, const stru
  
- void setup_traverse_info(struct traverse_info *info, const char *base)
+ static char *traverse_path(const struct traverse_info *info, const struct name_entry *n)
  {
--	int pathlen = strlen(base);
-+	size_t pathlen = strlen(base);
- 	static struct traverse_info dummy;
+-	char *path = xmallocz(traverse_path_len(info, n));
++	char *path = xmallocz(traverse_path_len(info, tree_entry_len(n)));
+ 	return make_traverse_path(path, info, n->path, n->pathlen);
+ }
  
- 	memset(info, 0, sizeof(*info));
-@@ -186,7 +186,7 @@ void setup_traverse_info(struct traverse_info *info, const char *base)
- char *make_traverse_path(char *path, const struct traverse_info *info,
- 			 const char *name, size_t namelen)
- {
--	int pathlen = info->pathlen;
-+	size_t pathlen = info->pathlen;
- 
- 	path[pathlen + namelen] = 0;
- 	for (;;) {
 diff --git a/tree-walk.h b/tree-walk.h
-index 2c59caa38a..95de0506c8 100644
+index 95de0506c8..98580a6f0b 100644
 --- a/tree-walk.h
 +++ b/tree-walk.h
-@@ -62,7 +62,7 @@ struct traverse_info {
- 	size_t namelen;
- 	unsigned mode;
- 
--	int pathlen;
-+	size_t pathlen;
- 	struct pathspec *pathspec;
- 
- 	unsigned long df_conflicts;
-@@ -76,9 +76,9 @@ char *make_traverse_path(char *path, const struct traverse_info *info,
+@@ -76,9 +76,10 @@ char *make_traverse_path(char *path, const struct traverse_info *info,
  			 const char *name, size_t namelen);
  void setup_traverse_info(struct traverse_info *info, const char *base);
  
--static inline int traverse_path_len(const struct traverse_info *info, const struct name_entry *n)
-+static inline size_t traverse_path_len(const struct traverse_info *info, const struct name_entry *n)
+-static inline size_t traverse_path_len(const struct traverse_info *info, const struct name_entry *n)
++static inline size_t traverse_path_len(const struct traverse_info *info,
++				       size_t namelen)
  {
--	return info->pathlen + tree_entry_len(n);
-+	return st_add(info->pathlen, tree_entry_len(n));
+-	return st_add(info->pathlen, tree_entry_len(n));
++	return st_add(info->pathlen, namelen);
  }
  
  /* in general, positive means "kind of interesting" */
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 63cbddead8..a014ae9907 100644
+index a014ae9907..88e4e55a73 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
 @@ -686,7 +686,7 @@ static int index_pos_by_traverse_info(struct name_entry *names,
  				      struct traverse_info *info)
  {
  	struct unpack_trees_options *o = info->data;
--	int len = traverse_path_len(info, names);
-+	size_t len = traverse_path_len(info, names);
+-	size_t len = traverse_path_len(info, names);
++	size_t len = traverse_path_len(info, tree_entry_len(names));
  	char *name = xmalloc(len + 1 /* slash */ + 1 /* NUL */);
  	int pos;
  
-@@ -814,7 +814,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	newinfo.name = p->path;
- 	newinfo.namelen = p->pathlen;
- 	newinfo.mode = p->mode;
--	newinfo.pathlen += tree_entry_len(p) + 1;
-+	newinfo.pathlen = st_add3(newinfo.pathlen, tree_entry_len(p), 1);
- 	newinfo.df_conflicts |= df_conflicts;
+@@ -936,7 +936,7 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+ 	 * Even if the beginning compared identically, the ce should
+ 	 * compare as bigger than a directory leading up to it!
+ 	 */
+-	return ce_namelen(ce) > traverse_path_len(info, n);
++	return ce_namelen(ce) > traverse_path_len(info, tree_entry_len(n));
+ }
  
- 	/*
+ static int ce_in_traverse_path(const struct cache_entry *ce,
 @@ -960,7 +960,7 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
  	struct index_state *istate,
  	int is_transient)
  {
--	int len = traverse_path_len(info, n);
-+	size_t len = traverse_path_len(info, n);
+-	size_t len = traverse_path_len(info, n);
++	size_t len = traverse_path_len(info, tree_entry_len(n));
  	struct cache_entry *ce =
  		is_transient ?
  		make_empty_transient_cache_entry(len) :
