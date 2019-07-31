@@ -2,107 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC4A81F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 10:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E667C1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 11:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728067AbfGaKfq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 06:35:46 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:37905 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbfGaKfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 06:35:45 -0400
-Received: by mail-yw1-f67.google.com with SMTP id f187so24807170ywa.5
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 03:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YDDVTI/mw1StJWHJ3q2FbgKvZ1j85mACQcTxSkJqZQ8=;
-        b=EsXd4jh9Xi8Tr52VB7gdMXTNAZGWKTXJlCxf5G+7P9lgv7dG5PHi2jT6HiKjA0ecln
-         Anq1QuzFryshilUva1YTgNcelzx8HHB4W0Yabz4ppEqQ55ZbUkBlFEd4mZlSyIHMrSHT
-         glGpnG067jhdXm52zTzwM25LjJqoJfV95yVbg+VplBKOV11nZZYLwvbzI992114P5ejA
-         dzYEtFMxRsFWeYNIqgVLcvoPQNwyqfSBtFrMlln3nmjwFPxtys1kRJmFoJ1MRCpS8ulQ
-         eksigH2kGIYrcwzA8o2qqWT8/aqznFxwmT33nHGdTyHM9mbMVg6k5GkWszBF9l3I0s66
-         t6gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YDDVTI/mw1StJWHJ3q2FbgKvZ1j85mACQcTxSkJqZQ8=;
-        b=TOASOj+eLNj5i2L7lARlLlEh7aEBb4eEnHruNJNl65wic3kIQbGlethsZ1S6tYwUea
-         ZOeT6O2CVWHKKG9OMa90JFnKY9Hx9nFSdlwo+035Ntxggfee3k2CWkRRn/jkPFI5HT4t
-         68EynwaYC4ttVmau9wsuGhdvKB0tIqQX0VSBuGV/YOMFANMUfqizDnP0w7vDXb/x4VL0
-         FlOpO/4a09BmL1nT34xENEog1qf5w1LsRIwndwAobJhewd7imqvvZPX8qQHuCAWp233o
-         K85JN1qVoaITU2oxgZmajzdnoTMCsc9BJbJmqylnqshKy4XhwlVQ32gz5MMNXjChMHQ9
-         mnHw==
-X-Gm-Message-State: APjAAAVPQGQTy672n65J3qmFcTNwrSw0IKObAj0HEBcHzoI/OoD4hNx8
-        4pOVQac2hcw2kDZjo4/leM8FwUCt
-X-Google-Smtp-Source: APXvYqzEP9xnwoVMh+1jgjZpwMyPbpntiQbtit1qRMyLIxZhDmecZbU2faXH0W84ovhuKGZJuHv8RA==
-X-Received: by 2002:a81:3308:: with SMTP id z8mr72802902ywz.298.1564569344645;
-        Wed, 31 Jul 2019 03:35:44 -0700 (PDT)
-Received: from [192.168.1.12] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id 197sm15418174ywb.56.2019.07.31.03.35.43
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 03:35:44 -0700 (PDT)
-Subject: Re: [PATCH] t5510-fetch: fix negated 'test_i18ngrep' invocation
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <a4fe71618410bdb188b6850a61ec65e7b4da5897.1560889525.git.gitgitgadget@gmail.com>
- <20190730212915.3509-1-szeder.dev@gmail.com>
- <20190730214000.GT20404@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4305ddb1-304a-d2f1-7bb9-370ee8de7293@gmail.com>
-Date:   Wed, 31 Jul 2019 06:35:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1726694AbfGaLAQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 07:00:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40159 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725921AbfGaLAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 07:00:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1564570801;
+        bh=WQ2paOEESXWOY7LWsa01sLgCvSV5DviRSGal5asmW4M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Is3YKhUmzEKNx2xJFTBnn3e8l0p+QFe5pEBw7CoCukJJpO40PGwfXhBRD0lYF3ZPg
+         VanZ9xPqmXVpGeIdhEwvEZ+75M3VucXasc6jBufbwC6DWIt2OPzU5OojpTa9ucopjz
+         8vXBG9hjvgW4xKJPml9RoyUACTRnR9l243Gv9CM0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MF4iR-1i8PeN3SOJ-00GGwL; Wed, 31
+ Jul 2019 13:00:01 +0200
+Date:   Wed, 31 Jul 2019 13:00:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
+        peff@peff.net, jnareb@gmail.com
+Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
+In-Reply-To: <20190726135318.GN20404@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1907311256030.21907@tvgsbejvaqbjf.bet>
+References: <cover.1560295286.git.steadmon@google.com> <cover.1564009259.git.steadmon@google.com> <20190725234229.GM20404@szeder.dev> <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet> <20190726135318.GN20404@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20190730214000.GT20404@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-310960021-1564570802=:21907"
+X-Provags-ID: V03:K1:5tHf17gNVl8juw8pY9g/vIkGvYaw+4tYpFA4pBFU/g++GITSuN9
+ XFNcRYTeZFQCJMCGpxVURkdo1uJ459Wxzb+M2FsxWThQXk7BzqCFoHFLHcHVvJpu5YSMzdX
+ 4vEMbxbFWUfdXQK/KGv4OlofzK2nrLVdKMOk76dHivJUwou0djdQjbp+5h75gnOk0Jhuyjf
+ 3VER1G8re4OHUqd5PGiow==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Tq/ZQrMz9/c=:zGdOWzYeto0m9HPv8VCX9m
+ 0j5tW6V74OSobf1xmS9QNCyjBBg1Xe4qRxPJzTfzY8H4YV6EyG6ffIJ9hjz4oW6ZRbrLhAqnX
+ ErSTFHntgdnkeF6CcEiOsGZUnqxxdVTvs/vM3etygTUlS1fiAl7sm3E4Kv+VVvt+3MCbuEqYX
+ dSIGX16723nt8zto/ntalDAxUr9qdfbk/abnCgqoLJkDFiUubjcGEB3tqZZhE+c74PRrTbeLD
+ ilE5bDO/j35d2R38rMRutW/haU82KYRiVFaQGpD/DY6OgC2H/jdl4QWYaOoEfrn6TSMGVrV9Q
+ Z0tal20J8pBJtCOWPEBTp7NDRngHeld5m/2kzMzq1Z+ff5peE5nQrKH5Qes/3S1MEDJhwovL8
+ ci5tIONmTycHg95w7QKAf/AoDeGYk20f+UKNmbsFtjOvPoseM391Vc5zGfIJg/KgWvjkabZHS
+ QG2MJYt0TFXMuZMPdwBHrJimDhaum4Eli1iBAqFRcp4zPbKibeYPvn/9stc32Dyu4XQfgLzMv
+ +/PcWiQToXQLQ9g5pQnGuxGBjKZ053NtQQKicbcnSQHT7seFV2G7wvCXda3PcPvXytTKyn/DM
+ ENvNiqVFzfsMG3SkSDQ5W5PVfp6DaNdbc9TmIFji9So/+3zR2dZPAlPlBRll6byEzmqt1R6kp
+ ufqNMRAYRjvrnJsirhQiYAom7hK8pmY+zkmePk4lksjO7k/fI6TTOnL7xLmB8hE62dVt4nuUf
+ Mwvx0jToOkGmGOzRnpSSfzluERl8kM+vDAfDmzWRyNAypr8pmnfRV4x+f/DliTYSagcEfhEBj
+ sKzIugfA7r74ovRH4/DAz7NSfQ0DiXLBVmO2Pj3dyr2V4iB1Gb35Z8C3MAGQkdF+utjO7SnkW
+ xJHrjKwGydHsnvS9mZKFzDnyhBUSuDp8ItqyNKmfYAATyn2i8KRSHyT0yrB2kmgB+5AY2OmVT
+ zGgryqUGu9y47nO83GhxaobKHhaQ0eiAaj1y6ZUZqb4v9XoEiiXv2EtCvBcMQLSbH2qrFKfjX
+ w0/fT6rxv5DW/PmS4QrGeRqMkVaqOUexjxMLWy6XkWI8eYsr5WMAFpYu5DzVbiF2JvgOA8bR3
+ C+Neo3FcXDT6xAc0MmxjVARHVKCP5eZtvp9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/30/2019 5:40 PM, SZEDER Gábor wrote:
-> On Tue, Jul 30, 2019 at 11:29:15PM +0200, SZEDER Gábor wrote:
->> The test '--no-show-forced-updates' in 't5510-fetch.sh' added in
->> cdbd70c437 (fetch: add --[no-]show-forced-updates argument,
->> 2019-06-18) runs '! test_i18ngrep ...'.  This is wrong, because when
->> running the test with GIT_TEST_GETTEXT_POISON=true, then
->> 'test_i18ngrep' is basically a noop and always returns with success,
->> the leading ! turns that into a failure, which then fails the test.
->>
->> Use 'test_i18ngrep ! ...' instead.
->>
->> This went unnoticed by our GETTEXT_POISON CI builds, because those
->> builds don't run this test case: in those builds we don't install
->> Apache, and this test comes after 't5510' sources 'lib-httpd.sh',
->> which, consequently, skips all the remaining tests, including this
->> one.
-> 
-> Hrm...  It looks like there is nothing httpd-specific in this test
-> case, at all, so we could run it even if a webserver is not available.
-> Moving this test case earlier in the script seems to confirm it, as it
-> still succeeds.
-> 
-> However, I'm not really familiar with this
-> '--[no-]show-forced-updates' option, and this is not the time to get
-> up to speed, so I would let Derrick to decide and follow up...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I was about to recommend you move the test to before the check for
-the changes. I only put the test near the end as I normally don't want
-to insert into the middle of a test script.  It makes sense to do so
-here.
+--8323328-310960021-1564570802=:21907
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
--Stolee
+Hi G=C3=A1bor,
+
+On Fri, 26 Jul 2019, SZEDER G=C3=A1bor wrote:
+
+> On Fri, Jul 26, 2019 at 02:12:39PM +0200, Johannes Schindelin wrote:
+>
+> > Besides, I have to admit that I am quite disheartened to see these lin=
+es
+> > in the log:
+> >
+> > -- snip --
+> > 2019/07/26 11:39:28 Validated items: 0
+> > 2019/07/26 11:39:32 Validated items: 10000
+>
+> These are necessary for Travis CI, which aborts the build if it
+> doesn't receive output for 10 minutes, thinking that the tests hang
+> somewhere.  Yeah, less lines like these would be sufficient to avoid
+> that timeout, but, of course, the real solution would be to not
+> validate all of 'make test'.
+
+To be crystal clear: I was not disheartened by seeing the *amount* of
+lines, but by the sheer amount of time burned up just to verify
+a feature that only very, very few users will ever need.
+
+The entire validation's runtime rivals the one of a full run of the
+entire test suite. (Which _already_ takes too long to be effective. Just
+look how even at least one long-time contributor often simply skips
+running it before submitting patches, most likely because they don't
+want to wait.)
+
+Ciao,
+Dscho
+
+--8323328-310960021-1564570802=:21907--
