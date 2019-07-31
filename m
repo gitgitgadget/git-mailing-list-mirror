@@ -7,96 +7,100 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E59BF1F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 15:48:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79CAA1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 15:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730301AbfGaPsj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 11:48:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59450 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729820AbfGaPsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:48:36 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D19277D676;
-        Wed, 31 Jul 2019 11:48:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1727474AbfGaP5Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 11:57:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50178 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725209AbfGaP5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 11:57:24 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF49A16CF2C;
+        Wed, 31 Jul 2019 11:57:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qZ0bo/0oaQx6k0B7gffkRNMq3FY=; b=nL6vnl
-        Zn9qE/uG781ju3RPrba9rmWmfvQF2zPHlba9QELKHg22FN8ktnoGkngykRr4A5ri
-        kxFswNPjgBSwsV2P8RMVPdCFEbfTscv302F4onAXiHlk/R5D3hMEtg/bdqu6iIwX
-        Fyw6JgL5fH3m/yfLrBvG3ltq04HsyaqPmgz9M=
+        :content-type; s=sasl; bh=qYHcnygXyycwDq1RphP8G4cT6kA=; b=cRsLfM
+        Q+3m4leM0qfhrjoUeewtPQKRWWTeP3QoFp/utOMoBcBC2pbCZvt0qwCxuxLfa0Wx
+        a2FUCrpseO0LDaQi9eeZwvO2Zlt4/596qNatoC8hJ+nlWWbRtGxgQruEBZFIxGiC
+        jwFsdIpUKeyfcRRfWJuOCGQk1doc+4h2CdRGo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NDEVWsS1WCByZi2sXc5DSvAcAFRE40Ze
-        f7VHLIC5pkbYju3dfDB3Ro+LZyFvcRJkyxqyIpum/Nd1EoPe6lrw2HROujDHtipQ
-        Yh6IhsqQVM6Mb/snpuIhFdOFJjnEWgPrL2zX4onlmrjmzSYJGpCxLFdjoJoaNUBf
-        +94cKCKxACU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C970F7D675;
-        Wed, 31 Jul 2019 11:48:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=TcNvHrIKelce7BBtutilapyqHhFeEn/v
+        abHZtjzasEvcKtuQm1e4yoWHTz2OyNYssBPrKXCbARJtjEtDuPD8qCUpnaJAVevn
+        QyTROCeJ8cbwSsDjpn7bRkBM41oYdf9EB8ZbYT+ChhBPD2YEi5gEM/YyGPBZDvZw
+        0XsAsryn7w4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5F3916CF2B;
+        Wed, 31 Jul 2019 11:57:21 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E98407D674;
-        Wed, 31 Jul 2019 11:48:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 27D8216CF29;
+        Wed, 31 Jul 2019 11:57:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jnareb@gmail.com,
-        pclouds@gmail.com, carenas@gmail.com, avarab@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 2/5] repo-settings: add feature.manyCommits setting
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
-        <pull.292.v3.git.gitgitgadget@gmail.com>
-        <c0129066a02b39535110ae592c16ca0e5d6d6c24.1564515324.git.gitgitgadget@gmail.com>
-        <xmqqh873s0jy.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907311515210.21907@tvgsbejvaqbjf.bet>
-Date:   Wed, 31 Jul 2019 08:48:30 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1907311515210.21907@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 31 Jul 2019 15:17:59 +0200
-        (CEST)")
-Message-ID: <xmqq1ry6ryr5.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        kernel-usp@googlegroups.com, jackdanielz@eyomi.org,
+        Antonio Ospite <ao2@ao2.it>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>
+Subject: Re: [GSoC][PATCH] grep: fix worktree case in submodules
+References: <CAHd-oW61RFCySF+gUj8iYuV6afEoD0RD9oYE+N6rYd7rv3J2nA@mail.gmail.com>
+        <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
+        <xmqqtvb3s2zi.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD0bH7ZNWFt3MfkAQf2tkF6CAgFj5FsZyc9zechg7MkCUw@mail.gmail.com>
+Date:   Wed, 31 Jul 2019 08:57:20 -0700
+In-Reply-To: <CAP8UFD0bH7ZNWFt3MfkAQf2tkF6CAgFj5FsZyc9zechg7MkCUw@mail.gmail.com>
+        (Christian Couder's message of "Wed, 31 Jul 2019 00:02:44 +0200")
+Message-ID: <xmqqwofyqjrz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A6714F5E-B3AA-11E9-8238-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: E146A02E-B3AB-11E9-8698-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On Tue, 30 Jul 2019, Junio C Hamano wrote:
->
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On Tue, Jul 30, 2019 at 10:04 PM Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> > +#define UPDATE_DEFAULT(s,v) do { if (s == -1) { s = v; } } while(0)
->>
->> [...]
->>  3. When we learn to set default values for variables that are not
->>     boolean in the future, we will regret that we did not name it
->>     UPDATE_DEFAULT_BOOL(slot, value).
+>> Matheus Tavares <matheus.bernardino@usp.br> writes:
 >
-> On the other hand, as we never promised any kind of API (and this is not
-> even an internal API to begin with), it will be _easy_ to rename it in
-> the unlikely event that we would ever introduce non-boolean defaults to
-> override, wouldn't you agree?
+>> > @@ -598,7 +599,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>> >                       free(data);
+>> >               } else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
+>> >                       hit |= grep_submodule(opt, pathspec, &entry.oid,
+>> > -                                           base->buf, base->buf + tn_len);
+>> > +                                           base->buf, base->buf + tn_len,
+>> > +                                           1); /* ignored */
+>>
+>> The trailing comment is misleading.  In the context of reviewing
+>> this patch, we can probably tell it applies only to that "1", but
+>> if you read only the postimage, the "ignored" comment looks as if
+>> the call itself is somehow ignored by somebody unspecified.  It is
+>> not clear at all that it is only about the final parameter.
+>>
+>> If you must...
+>>
+>>                 hit |= grep_submodule(opt, pathspec, &entry.oid,
+>>                                       base->buf, base->buf + tn_len,
+>>                                       1 /* ignored */);
+>
+> Yeah, I suggested adding an "/* ignored */" comment, but I was indeed
+> thinking about something like this.
+>
+>> ... is a reasonable way to write it.
 
-I agree that it is easy to say that it is easy to rename it later
-and burden somebody else with the task.
-
-I know that the renaming itself is easy, when you limit yourself
-within the scope of a single topic, whether done now or later.  I
-also know that having to worry about other topics in flight has
-non-zero cost.  I also know that you are not the one who will bear
-it---I will be.
-
-So from my point of view, if we can make a prediction, even with
-limited knowledge that a name may need to be renamed in the future,
-it is better not pick such a name and instead use one that we think
-it has a better chance of surviving without needing a rename.
+Thanks.  In this case, I am not sure if the comment here really
+helps.  If anything, shouldn't there be a comment near the top of
+grep_submodule() that says 'cached bit is meaningful only when you
+feed an empty oid, aka "not grepping inside a tree object"'?
 
