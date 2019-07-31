@@ -2,148 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0984F1F462
-	for <e@80x24.org>; Tue, 30 Jul 2019 23:40:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3906E1F462
+	for <e@80x24.org>; Wed, 31 Jul 2019 00:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727770AbfG3XkQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jul 2019 19:40:16 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:36261 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbfG3XkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jul 2019 19:40:15 -0400
-Received: by mail-io1-f67.google.com with SMTP id o9so28608891iom.3
-        for <git@vger.kernel.org>; Tue, 30 Jul 2019 16:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DGbXABbsWymqmO8FsCw3s2gIX/ruDHJKFH7hx+Dr2GY=;
-        b=1IYn9/xxJ9b7RKQiyQ8k2lBhY0eehzlsS+9NXXBkIyb5vMUYvw5WSuWKb864afC/uL
-         7KOhGUmxoQ6fceRWs+grkUrrlR/JsJbKdOK+uTmg3pIBg5O6Edh0+lIaDsW9f4KdK4yD
-         yzBjBru0J2XP6oy51lPT7pxDBYDMEB48Xjuayt7P8xXfnLFFqCs4r6dy6WAtuwHbTUot
-         pVMLFlUUe5Iyo3xDymF5zCyuR+pNsbRVcAib8k2XejDFX4GO6FEdJUm+dihzzho7tU05
-         HAk5+nUeWMLGZ5S8gZsF6uAiBhwjllzxgpzw+Yb8ToCYJSXi66A6G1DKbB0kJarse2MG
-         DU7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DGbXABbsWymqmO8FsCw3s2gIX/ruDHJKFH7hx+Dr2GY=;
-        b=oTLky6njYWWYoO3vataYXHc9mbTmFhFirvN3txlWLG6qiTrr6kQJ2SBBkgHinH9WHz
-         BN76RL664HKxN4Ovs9rRVj04XzHVI3ScqDb1NHlQPclMO2mmyEfb1hy6dOpoZ9pJbImb
-         gudMPbmMY7iUZWddyITQlzxf7UYcf10GfMcpY4rKuOAq1ZBlJ4cn9A6/UKteVTQ/Djx5
-         LKxg292/Bn4brf6l94K1yk+L0Bk6duNKMEO8muVWxEaMpGD3tGdQC3cjOC6vGv2rARD/
-         Jgwh+4t37nov1lqUlDrBIF255qZrLSWCB98B9TmtyYdlK2LtP+sRrZsaggZHP2xdTrzo
-         sALA==
-X-Gm-Message-State: APjAAAXxl3XBjuNt7L/5e/1/1wpKWRYUQ1xs+Z1ubyCKoMWQeZipDyAb
-        MSf3AD7lxGGC4pPi/+MzfErpTOA7yiXk3bP5TphEBQ==
-X-Google-Smtp-Source: APXvYqxdYhxiA/FMe6+UrS0AH/w+9WeTFFHsawjl01Az9eo0Hu25AypiuSoFN3SrnrfXbey1Not0z0v4ghPbVvqpflY=
-X-Received: by 2002:a5d:9a04:: with SMTP id s4mr112846170iol.19.1564530014736;
- Tue, 30 Jul 2019 16:40:14 -0700 (PDT)
+        id S1727129AbfGaA7f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jul 2019 20:59:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726369AbfGaA7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jul 2019 20:59:35 -0400
+Received: (qmail 10007 invoked by uid 109); 31 Jul 2019 00:59:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 00:59:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12352 invoked by uid 111); 31 Jul 2019 01:01:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jul 2019 21:01:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Jul 2019 20:59:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+Message-ID: <20190731005933.GA9610@sigill.intra.peff.net>
+References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+ <20190730194938.GZ4545@pobox.com>
+ <20190730200203.GA4882@sigill.intra.peff.net>
+ <20190730205624.GR20404@szeder.dev>
 MIME-Version: 1.0
-References: <CAHd-oW61RFCySF+gUj8iYuV6afEoD0RD9oYE+N6rYd7rv3J2nA@mail.gmail.com>
- <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
- <xmqqtvb3s2zi.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvb3s2zi.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 30 Jul 2019 20:40:03 -0300
-Message-ID: <CAHd-oW48sa1Pc7AutxhKRQLry74wSYu_0xZmaz4XJnCjJdRH2A@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] grep: fix worktree case in submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>,
-        Daniel Zaoui <jackdanielz@eyomi.org>,
-        Antonio Ospite <ao2@ao2.it>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190730205624.GR20404@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 30, 2019 at 5:04 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > @@ -475,7 +475,7 @@ static int grep_submodule(struct grep_opt *opt,
-> >               strbuf_release(&base);
-> >               free(data);
-> >       } else {
-> > -             hit = grep_cache(&subopt, pathspec, 1);
-> > +             hit = grep_cache(&subopt, pathspec, cached);
-> >       }
->
-> Interesting.  It appears to me that this has always searched in
-> submodule index and never working tree.  I am not sure if there was
-> any specific reason to avoid looking into the working tree files.
+On Tue, Jul 30, 2019 at 10:56:24PM +0200, SZEDER Gábor wrote:
 
-It seems that git-grep was taking the worktree into account before
-f9ee2fc ("grep: recurse in-process using 'struct repository'",
-02-08-2017). So maybe it was just a mistake during the in-process
-conversion.
+> > Ah, of course. Our oid hashing is done by just picking off the first
+> > bytes of the sha1, and it doesn't care about endianness (because these
+> > are just internal-to-memory hashes).
+> 
+> Yeah.
+> 
+> > We _could_ reconcile that like this:
+> 
+> Do we really want that, though?  It's a hashmap, after all, and the
+> order of iteration over various hashmap implementations tends to be
+> arbitrary.  So an argument could be made that this test is overly
+> specific by expecting a particular order of elements (and perhaps by
+> checking the elements' oid as well), and it would be sufficient to
+> check that it iterates over all elements, no matter the order (IOW
+> sorting 'actual' before the comparison).
 
-> Passing the 'cached' bit down from grep_cache() does look like a
-> sensible way to go.
->
-> > @@ -523,7 +523,8 @@ static int grep_cache(struct grep_opt *opt,
-> >                       }
-> >               } else if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
-> >                          submodule_path_match(repo->index, pathspec, name.buf, NULL)) {
-> > -                     hit |= grep_submodule(opt, pathspec, NULL, ce->name, ce->name);
-> > +                     hit |= grep_submodule(opt, pathspec, NULL, ce->name,
-> > +                                           ce->name, cached);
-> >               } else {
-> >                       continue;
-> >               }
-> > @@ -598,7 +599,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >                       free(data);
-> >               } else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
-> >                       hit |= grep_submodule(opt, pathspec, &entry.oid,
-> > -                                           base->buf, base->buf + tn_len);
-> > +                                           base->buf, base->buf + tn_len,
-> > +                                           1); /* ignored */
->
-> The trailing comment is misleading.  In the context of reviewing
-> this patch, we can probably tell it applies only to that "1", but
-> if you read only the postimage, the "ignored" comment looks as if
-> the call itself is somehow ignored by somebody unspecified.  It is
-> not clear at all that it is only about the final parameter.
->
-> If you must...
->
->                 hit |= grep_submodule(opt, pathspec, &entry.oid,
->                                       base->buf, base->buf + tn_len,
->                                       1 /* ignored */);
->
-> ... is a reasonable way to write it.
+I'd agree that this test is being overly specific. I guess what I'm
+feeling is a vague notion that it might be better if Git behaves
+deterministically regardless of endian-ness. Not because it _should_
+matter for this test, but there could literally be a bug on big-endian
+platforms that nobody knows about because it's very rare for anybody to
+test there.
 
-Right, thanks.
+I admit that's pretty hand-wavy though. And there may actually be a
+benefit in finding such a bug, because it means that some part of the
+code (or a test) is relying on something it ought not to.
 
-> > diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-> > index a11366b4ce..946f91fa57 100755
-> > --- a/t/t7814-grep-recurse-submodules.sh
-> > +++ b/t/t7814-grep-recurse-submodules.sh
-> > @@ -408,4 +408,25 @@ test_expect_success 'grep --recurse-submodules with submodules without .gitmodul
-> >       test_cmp expect actual
-> >  '
-> >
-> > +reset_and_clean () {
-> > +     git reset --hard &&
-> > +     git clean -fd &&
-> > +     git submodule foreach --recursive 'git reset --hard' &&
-> > +     git submodule foreach --recursive 'git clean -fd'
->
-> Do we need two separate foreach, instread of a single one that does
-> both reset and clean (i.e. "git reset --hard && git clean -f -d")?
+> OTOH, this is not just any hashmap, but an oidmap, and I could imagine
+> that there might be use cases where it would be beneficial if the
+> iteration order were to match the oid order (but don't know whether we
+> actually have such a use case).
 
-Indeed! Thanks. I'll send a v2 addressing both comments.
+I don't think we can promise anything about iteration order. This test
+is relying on the order at least being deterministic between runs, but
+if we added a new entry and had to grow the table, all bets are off.
+
+So regardless of the endian thing above, it probably does make sense for
+any hashmap iteration output to be sorted before comparing. That goes
+for t0011, too; it doesn't have this endian thing, but it looks to be
+relying on hash order that could change if we swapped out hash
+functions.
+
+> > I
+> > wonder if it's appreciably less efficient. I'll bet I could nerd-snipe
+> > René into doing a bunch of measurements and explorations of the
+> > disassembled code. ;)
+> 
+> Maybe it shows up in an oidmap-specific performance test, but with all
+> that's usually going on in Git hashmap performance tends to be
+> negligible (e.g. it's rarely visible in flame graphs).
+
+That's my guess, too, but data trumps guesses (you'll note that I'm not
+volunteering to _collect_ the data, though, which perhaps gives a sense
+of how invested I am in it. ;) ).
+
+-Peff
