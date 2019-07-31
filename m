@@ -7,77 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DCF71F732
-	for <e@80x24.org>; Wed, 31 Jul 2019 05:37:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85DAA1F732
+	for <e@80x24.org>; Wed, 31 Jul 2019 05:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726806AbfGaFhF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 01:37:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56536 "HELO cloud.peff.net"
+        id S1726323AbfGaFhh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 01:37:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56550 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726798AbfGaFhF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 01:37:05 -0400
-Received: (qmail 11713 invoked by uid 109); 31 Jul 2019 05:37:05 -0000
+        id S1725866AbfGaFhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 01:37:37 -0400
+Received: (qmail 11733 invoked by uid 109); 31 Jul 2019 05:37:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 05:37:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Jul 2019 05:37:37 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13940 invoked by uid 111); 31 Jul 2019 05:38:49 -0000
+Received: (qmail 13971 invoked by uid 111); 31 Jul 2019 05:39:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 01:38:49 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 01:39:21 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 31 Jul 2019 01:37:04 -0400
+Date:   Wed, 31 Jul 2019 01:37:36 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Gregory Szorc <gregory.szorc@gmail.com>, Eric Wong <e@80x24.org>,
         git@vger.kernel.org
-Subject: [PATCH 0/3] handling warnings due to auto-enabled bitmaps
-Message-ID: <20190731053703.GA16709@sigill.intra.peff.net>
-References: <qhdnuh$5m5r$1@blaine.gmane.org>
- <20190729100745.GA2755@sigill.intra.peff.net>
- <87v9vl57in.fsf@evledraar.gmail.com>
- <20190731042807.GA26237@sigill.intra.peff.net>
+Subject: [PATCH 1/3] t7700: clean up .keep file in bitmap-writing test
+Message-ID: <20190731053735.GA16941@sigill.intra.peff.net>
+References: <20190731053703.GA16709@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190731042807.GA26237@sigill.intra.peff.net>
+In-Reply-To: <20190731053703.GA16709@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 31, 2019 at 12:28:07AM -0400, Jeff King wrote:
+After our test snippet finishes, the .keep file is left in place, making
+it hard to do further tests of the auto-bitmap-writing code (since it
+suppresses the feature completely). Let's clean it up.
 
-> On Mon, Jul 29, 2019 at 02:50:56PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > > Instead, it may make sense to turn the --write-bitmap-index option of
-> > > pack-objects into a tri-state: true/false/auto. Then pack-objects would
-> > > know that we are in best-effort mode, and would avoid warning in that
-> > > case. That would also let git-repack express its intentions better to
-> > > git-pack-objects, so we could replace 7328482253, and keep more of the
-> > > logic in pack-objects, which is ultimately what has to make the decision
-> > > about whether it can generate bitmaps.
-> > 
-> > Sounds like pentastate to me :) (penta = 5, had to look it up). I.e. in
-> > most cases of "auto" we pick a true/false at the outset, whereas this is
-> > true/true-but-dont-care-much/false/false-but-dont-care-much with "auto"
-> > picking the "-but-dont-care-much" versions of a "soft" true/false.
-> 
-> I don't think we care about false-but-dont-care-much. Pack-objects just
-> needs to know whether the bitmaps are the user's expressed intention, or
-> just something that it should do if it's convenient.
-> 
-> I'll see if I can work up a patch to demonstrate.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t7700-repack.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-This actually turned out pretty well, I think. I wish I had thought of
-it when were initially looking at the .keep stuff. :) It was not too
-hard to clean that up in the third patch, though.
-
-  [1/3]: t7700: clean up .keep file in bitmap-writing test
-  [2/3]: repack: silence warnings when auto-enabled bitmaps cannot be built
-  [3/3]: repack: simplify handling of auto-bitmaps and .keep files
-
- builtin/pack-objects.c | 21 ++++++++++++++++-----
- builtin/repack.c       | 24 +++++++-----------------
- t/t7700-repack.sh      | 15 ++++++++++++++-
- 3 files changed, 37 insertions(+), 23 deletions(-)
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 0e9af832c9..8d9a358df8 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -243,6 +243,7 @@ test_expect_success 'no bitmaps created if .keep files present' '
+ 	pack=$(ls bare.git/objects/pack/*.pack) &&
+ 	test_path_is_file "$pack" &&
+ 	keep=${pack%.pack}.keep &&
++	test_when_finished "rm -f \"\$keep\"" &&
+ 	>"$keep" &&
+ 	git -C bare.git repack -ad &&
+ 	find bare.git/objects/pack/ -type f -name "*.bitmap" >actual &&
+-- 
+2.23.0.rc0.426.gbdee707ba7
 
