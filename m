@@ -7,67 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8901F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 17:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27D7E1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 17:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729956AbfGaRPM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 13:15:12 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60486 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728879AbfGaRPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 13:15:12 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 19B776AE57;
-        Wed, 31 Jul 2019 13:15:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1730552AbfGaRRF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 13:17:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65401 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728718AbfGaRRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 13:17:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4CDA1597C0;
+        Wed, 31 Jul 2019 13:17:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4gOLNhqe8Vy3kIyZTanAsJo9+EY=; b=W0Y18E
-        vFanhpXMZZ3LnpKT172gJKFuzdLNyGepatL5czdcndfRpq3TC4z4/g5aP5eroQxb
-        tSaoyeuYZuaZZD4UjRqJ3rsKcvflito1cPL8SP+AIdzk6wonY+3C7Hn0K3tMMBPw
-        AndGaG9AhD+wfk7sl8UhwDSzOqIWbkvLGisn0=
+        :content-type; s=sasl; bh=k2NLJotxAkd7BmfgukwrcGBuJeQ=; b=wLAeZI
+        AGIeK+G+kVaNfW4hwYXnmwQ9xPkk4H1ZzPkXn5z6UjWNq5UUJuEHKe1lQlPajZ6Z
+        +/zSQMLFe69LFqePxJDYBkV4IXkJbyFr33WF9h1GKfUFuYm+gETTT5weQD0RGQAk
+        L+85hXLCjz5+3CIsryLq3aBB8Q5MUYJfMaf3g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PvCW4daP6/Ej4PIS18JW7MtaFT1Xfsnj
-        KBqA9ez6n8pmL5c8lZmfBMjYhhByANs4YTJlpV7HoycOURvTp/cJHnarWavRF3mw
-        DNUXNKCUNsc5EiLSVliS7chFRMlAyqPfgYv2cCxnGF2FJ4G1hoUADUR+3HwOlnh+
-        5OwkZOKxZM8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 124BC6AE56;
-        Wed, 31 Jul 2019 13:15:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=XfFwZagNMcZBo1M4JQgVqZbUi8hHNV7r
+        Y341UTTPsC1QrbDTs5M0dbV3gCYfMd0MuNzDdpk1MFDGEyBJQfiMzCUk3t0iACc0
+        AaRDvz0o6EqKI5+KrhkFPjVojYpqB1i6DuVKS4KO0wbMbECfmSvB/Kwe4SAoiGpN
+        AxE0E1Jz8iI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB3BF1597BF;
+        Wed, 31 Jul 2019 13:17:02 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 005D46AE54;
-        Wed, 31 Jul 2019 13:15:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50D971597BE;
+        Wed, 31 Jul 2019 13:17:02 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Support for --stdin-paths in commit, add, etc
-References: <a38bc928-7ccd-e2d9-b89b-23298e9fa95d@syntevo.com>
-Date:   Wed, 31 Jul 2019 10:15:03 -0700
-In-Reply-To: <a38bc928-7ccd-e2d9-b89b-23298e9fa95d@syntevo.com> (Alexandr
-        Miloslavskiy's message of "Wed, 31 Jul 2019 17:45:12 +0200")
-Message-ID: <xmqqa7cuqg6g.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.23.0-rc0 - Initial test failures on NonStop
+References: <049a01d546f9$70be7a30$523b6e90$@nexbridge.com>
+        <20190730194938.GZ4545@pobox.com>
+        <20190730200203.GA4882@sigill.intra.peff.net>
+        <20190730205624.GR20404@szeder.dev>
+        <20190731005933.GA9610@sigill.intra.peff.net>
+        <20190731012336.GA13880@sigill.intra.peff.net>
+        <20190731015917.GB4545@pobox.com>
+        <20190731032735.GA14684@sigill.intra.peff.net>
+        <20190731035344.GA26019@sigill.intra.peff.net>
+Date:   Wed, 31 Jul 2019 10:17:01 -0700
+In-Reply-To: <20190731035344.GA26019@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 30 Jul 2019 23:53:44 -0400")
+Message-ID: <xmqq5zniqg36.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BDBC8E6A-B3B6-11E9-9624-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 03133810-B3B7-11E9-8872-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> In our git UI, we sometimes run into OS commandline length limit when
-> trying to specify a list of pathspecs. For example, this happens when
-> user selects a large set of files and wants to commit them. As a
-> workaround, we split files and issue multiple git commands.
+> And here it is for reference with the matching change in test-oidmap,
+> and the adjustments necessary for the test scripts (from master, not
+> from my earlier patch). I think I prefer the simpler "just sort it all"
+> version I posted with the commit message.
 
-Yes, for plumbing commands meant for scripting, we really should
-strive to give scriptors way(s) to avoid the command line limit,
-and --stdin-paths is a very good approach to do so.
+Yeah, let's go with that version.
 
+I am wondering if we should follow suit to certain language's hash
+implementation to make sure the iteration order is unpredictable to
+catch bad scripts ;-)  Perhaps that is not worth it, either.
