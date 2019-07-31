@@ -8,238 +8,203 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 826441F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 11:25:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2BB1F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 12:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbfGaLZx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 07:25:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:40209 "EHLO mout.gmx.net"
+        id S1727626AbfGaMYN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 08:24:13 -0400
+Received: from mout.gmx.net ([212.227.15.18]:34267 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725793AbfGaLZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 07:25:53 -0400
+        id S1726561AbfGaMYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 08:24:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564572342;
-        bh=JmJZHaX07ECSuIL9xPI8eB6mM9YWtySuGIH/f3fJN0s=;
+        s=badeba3b8450; t=1564575842;
+        bh=xgiDcNPeDlqB3VWxK8QCQuzqfatl1/eS+SIXQuq7RL8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RdorbMh8cor0SPrwcqu0pDlg6QysuuFx5Mf3eRmam/Oclum7MywzPNaxQB4WlT3hF
-         5yVzvfHpNb+0x/VIjL3Rjd3WIiL3BTJC6LRHJr7YrrKdZ9lBoq0zu2polL+1HZ8X0c
-         dbUOCxCBPP9vEwa7ACTM50rS/Xe/nnHsgsy7CeVM=
+        b=dARVb2EwDieFX+SFAvue4LXrBVMZfoavF/Gw24Hmdl1SzoHFCw/gCE8Wn3U2odYxV
+         5teCnqU8MU+ALmz/KHmc16LMmowQB+SBU1oWxt4zz5Dzq4GxD6HDlDMhYl48W8/c+d
+         et9eIKhNpF5TPlzi+Sn1XDtAOaXVVmTLj2llCobo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZCbB-1hnzWB2VKj-00V9jd; Wed, 31
- Jul 2019 13:25:42 +0200
-Date:   Wed, 31 Jul 2019 13:25:42 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6sn7-1iR9e10NZf-018Gar; Wed, 31
+ Jul 2019 14:24:02 +0200
+Date:   Wed, 31 Jul 2019 14:24:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/12] t/lib-rebase: prepare for testing `git rebase
- --rebase-merges`
-In-Reply-To: <20190726210820.GF9319@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1907311306360.21907@tvgsbejvaqbjf.bet>
-References: <pull.294.git.gitgitgadget@gmail.com> <ae9e72b73bf2da0de3a5369748ebd358656588d9.1564049474.git.gitgitgadget@gmail.com> <20190726074317.GD9319@genre.crustytoothpaste.net> <nycvar.QRO.7.76.6.1907261555410.21907@tvgsbejvaqbjf.bet>
- <20190726210820.GF9319@genre.crustytoothpaste.net>
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org, avarab@gmail.com, sandals@crustytoothpaste.net
+Subject: Re: [RFC PATCH] grep: allow for run time disabling of JIT in PCRE
+In-Reply-To: <20190728235427.41425-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1907311421140.21907@tvgsbejvaqbjf.bet>
+References: <20190728235427.41425-1-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wjszJ4wHrPG/uP03JWSzAQsmon+OoJ7QIBdQMqLPDuY7+KpMJ18
- tmZUXS1QV6WFPN2RGm53Pin7smIYIn8g4XC+4OneEBxKkcN8PueswZ2K5z4L9VYl7jwjsPa
- gTxfm+8FxBk7Zk/sGBpFSaY7oKus9cv+KhmtbnhfjZdfDOu0McxNiYk6WFnYDv74PxGY3uj
- w1A9FtipDQ2CxxN8vU2OA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:s/HH5wGF2MQ=:a1uJ+Tu+LE69KM2LQKVgQg
- Nkr7enWTFLHSTEQnSxLQ+wGKePjJNx+TojSYPmMU8qVc313bOGgnDm7zxnMxnv32BuZFsPF8c
- zPF4khoYcbAFgLWTYF4JdgOpKA7wsBVXtKFh+FS8Z1c0bes1nhXswsG5QzHm9mKCGPHx0sSa2
- hcOoD3M8RR/r/tUFGzmxToOX2nqFpDA+ZDDuVzB5Ov+55tLguioyUQteD9Ugbfw3vbZ8QmM/D
- SmbaCYcmItT158zmkwk4RGpYZe3LJ83kyysC0ww46OlzC6EEKsBeTJu+QEv3rvWxN6X2n6pZ5
- AT8zdgoPKTSB7n7ErrHGBSkE+QYW+YF+mA6EGZY6ZPqem68W765RxtZ5UQheqolS66wNzKj0c
- 2IiO52ZgTxOOrI5BseeNOxtA8z2ITOp43NqI21qhNtcWyuz8WrB50KMep4ehaHMDPFzJnzV6n
- AgoWXL6lr11OZfQKEvGc3lo/3XS29M0JvAK66g0U5HT8tx3/XCn8V45iyObWlyOodiSmC4DFu
- b7clOtlw7AvNuBDy944RTD+4heoXVIlPvBoQ+h7CFlvjSGgz5ut3erEIGm0sI3tc18e0BJPnA
- Uz2QBYD1FmY9KvkjxHZc8FiM6WINL7jXoIY6uI0RdChQDk2ZfHFLVK75C8NeWQItAeWO2XAZn
- OThxTCrXAGvDlyeNH6ByXDboSrMhzNp0foAhVytDdMeeDzYwbAKUgrJKADBd8m+euXQ7k8/9t
- PbktubMaZcfLVJ11OKGtFa/EqXj8o/eWTu/1WLOjg3frxjfuMQUmtZ67zl29bE6fmWgIRuuW7
- 409oFkwKHMDhOiqMElNURNULaRgrSMFgWZxcax02Wpylw5F7iCrF3Dgn/bGtwVi1mSbLs08eh
- b+HzNTkwUDMXpR1gpo7Swri+yM/43/YorBJ7NsQKHjgICCOLWKSPliWvicadJRIhstSM/Bvx4
- CNm0ilrgtUQ5+99GKSqOA6VCvjcnpbAs+sbt+budLYZNiuLRiCB/BLtdkWFpsxe66zPIAsG8w
- sl5zF8YPy++/pnfzLhtRiV/6DIoz8u8x2+AigWfrBpZ6tWYMMN67TcpV4X0om80FhcXnE/EP6
- qfaf0PKUIU92+jrFk2mQYQnK9VxK+b67gWW
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-162684488-1564575843=:21907"
+X-Provags-ID: V03:K1:Xd9tkwSFnStJ+BDlEjIlf9g7eDdF6GrLxad+o9ae1VXJ73LpjQh
+ WifiJ9jypDaIf2zUx+q1mVgxtDFzlwd3/55T3/q7Pst4l/HU1BVhNEfcT0egVWNeQ/2+hoG
+ GjmqRYbMTOED+OnsbAe17qbAIh69F+PyEzSc3vOn4d6laqIW7ZUQ6rkwfi5vL1Apfuvb+yq
+ L/ZOqvn2GxDnJzE+e5nkg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Tuqbew2f9hw=:Aw2z8fthd9sTRSpJeKGhhN
+ GZhtoPnC74iLZPRye5o5S0PsduIEKfSqgrW+CPvQkxXqiHZ7leG/XJarqRQsTDOJmXTKNzCnF
+ S/zJjQr2CXUJXJG+W7avwgYAEyq4K/G7XV2IdG/bCOtseFkutKYvHhCflqkdjPd5NkWlgCnrN
+ IZxQA0zbgXuDZ4u7wp6alc23kx4kdEPkEyn77WVnDPBzW8iVXL0j4GIfe65pge+hL68r3I3Vv
+ I2WNmUF5vckLro73EBzaQJdQRqs54g0xWTgexjSWHkkvJQBZZuDFYyL5H/2W3+2C/H0kGHwKO
+ ClDiVaXWsufS6NW9P71NWibf4uKxTA9BlwMEX1ZyYV06YhYsXrG6CJa8UUSgzQ1NdrL4tnqkH
+ BGhi0HBFt9CGV7IS5Sg1H0Ufez3SGbsaAyccsONYJJvLdNOybU+m4sXbyKotaDZDS6nR0Y+Mq
+ YupVZUONSOmQRcIcP08ge+LVj6W/UIM0g6dTiH9+T83uiSRJpfYOrALlitWth84uSsYftfijn
+ tOmZ03BdTPnsYdYJqssVgS6ZEKd+Z81tpCSDkV3VTKMMVw81wBn9VI6/uXv2jmm5GrHQWfmVr
+ s6GHalw5tt/9NuRT0IcuOuctXikEgPig/kpnemVScf4t0WqbZblCRxaV1L0iHiD5uY2s2yF6c
+ 5uG2YhJu+YZ5caT58nwvKbVfDkRZaKnTNyNBG7sPYaJz+b45mb5gX34yZ4PkZDDU8cIJhTNZd
+ 08vOTxzWf56zkXrxCRGaCwhx+OeY0woo6s/dVi7p0cG8KdPz64bcoq/npGMdYeMWiY2SIBqQS
+ ewo5sHeUxP+iXtqxIQ/884euZPy7nrGQ4Upd3+MSyyH0PzdxwIyyUtlIUCosCPtxJ0dk4teKS
+ QsxHW5sQZhRivpqfJZWzMagjGP3JBbyQu7mi3BlPl18S/B/MzWz/MKI3CIu5Mm1oOMaohNK6d
+ V+cERSwjD06AF+cFkSQKHyL2gJXWAvNwtdP46iMUMtb2AJWgJ/ijvDHn1kZglXUHnXOwI0vJF
+ CSjfCC7oRiXYDNeqZGzn0YNgMcC7QVgd0oIyfPAYKJtEtuGn6qDsMhwYtRKc/k5VLVS/DI233
+ +wZmZX5vRxTG97tD9FMHIFgxgRsrnBh69zO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 26 Jul 2019, brian m. carlson wrote:
+--8323328-162684488-1564575843=:21907
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On 2019-07-26 at 14:01:03, Johannes Schindelin wrote:
-> > Actually, the part that uses it is not shown in the patch (one of the
-> > many, many reasons why I try to discourage patch review and encourage
-> > code review instead). The relevant section currently looks somewhat li=
-ke
-> > this:
+Hi,
+
+On Sun, 28 Jul 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> PCRE1 allowed for a compile time flag to disable JIT, but PCRE2 never
+> had one, forcing the use of JIT if -P was requested.
 >
-> I feel like I may have communicated poorly earlier, so let me retry
-> asking this in a different way.
+> After ed0479ce3d (Merge branch 'ab/no-kwset' into next, 2019-07-15)
+> the PCRE2 engine will be used more broadly and therefore adding this
+> knob will give users a fallback for situations like the one observed
+> in OpenBSD with a JIT enabled PCRE2, because of W^X restrictions:
 
-Actually, your communication was just fine, the misunderstanding was
-entirely on my side. My apologies.
+Just so that nobody else needs to feel like an idiot for not knowing
+what on the burning planet "W^X" is supposed to mean:
+https://en.wikipedia.org/wiki/W%5EX says it is essentially an OS-level
+mechanism to prevent executing code that was written into memory by the
+same process, i.e. JIT.
 
-> > -- snip --
-> > set_fake_editor () {
-> > 	write_script fake-editor.sh <<-\EOF
-> > 	case "$1" in
-> > 	*/COMMIT_EDITMSG)
-> > 		test -z "$EXPECT_HEADER_COUNT" ||
-> > 			test "$EXPECT_HEADER_COUNT" =3D "$(sed -n '1s/^# This is a combinat=
-ion of \(.*\) commits\./\1/p' < "$1")" ||
-> > 			test "# # GETTEXT POISON #" =3D "$(sed -n '1p' < "$1")" ||
-> > 			exit
-> > 		test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
-> > 		test -z "$FAKE_COMMIT_AMEND" || echo "$FAKE_COMMIT_AMEND" >> "$1"
-> > 		exit
-> > 		;;
-> > 	esac
-> > 	test -z "$EXPECT_COUNT" ||
-> > 		test "$EXPECT_COUNT" =3D $(sed -e '/^#/d' -e '/^$/d' < "$1" | wc -l)=
- ||
-> > 		exit
-> > 	test -z "$FAKE_LINES" && exit
-> > 	grep -v '^#' < "$1" > "$1".tmp
-> > 	rm -f "$1"
-> > 	echo 'rebase -i script before editing:'
-> > 	cat "$1".tmp
-> > 	action=3Dpick
->
-> I believe you changed this line to "action=3D\&".
->
-> > 	for line in $FAKE_LINES; do
-> > 		case $line in
-> > 		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d)
-> > 			action=3D"$line";;
-> > 		exec_*|x_*|break|b)
-> > 			echo "$line" | sed 's/_/ /g' >> "$1";;
-> > 		"#")
-> > 			echo '# comment' >> "$1";;
-> > 		">")
-> > 			echo >> "$1";;
-> > 		bad)
-> > 			action=3D"badcmd";;
-> > 		fakesha)
-> > 			echo "$action XXXXXXX False commit" >> "$1"
->
-> And my question was about this line.
+Makes me wonder whether node.js works on OpenBSD, or any decently fast
+web browser like Firefox or Chromium...
 
-Right. It would append `& XXXXXXX False commit`, which is not a valid
-todo command.
-
-So something like
-
--			echo "$action XXXXXXX False commit" >> "$1"
-+			test \& =3D "$action" && c=3Dpick || c=3D$action
-+			echo "$c XXXXXXX False commit" >>"$1"
-
-would be needed.
-
-However, what makes me really worried now is that our test suite did not
-have a fit about this. The CI build passes the test suite on Windows,
-macOS and Linux: https://github.com/gitgitgadget/git/runs/176651523.
->
-> > 			action=3Dpick;;
-> > 		*)
-> > 			sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
-> > 			action=3Dpick;;
-> > 		esac
-> > 	done
-> > 	echo 'rebase -i script after editing:'
-> > 	cat "$1"
-> > 	EOF
-> >
-> > 	test_set_editor "$(pwd)/fake-editor.sh"
-> > }
-> > -- snap --
-> >
-> > Most importantly, `action` is used here:
-> >
-> >                         sed -n "${line}s/^pick/$action/p" < "$1".tmp >=
-> "$1"
-> >
-> > and I changed it to
-> >
-> > 			sed -n "${line}s/^[a-z][a-z]*/$action/p" < "$1".tmp >> "$1"
-> >
-> > In other words, rather than expecting the lines that are used by the
-> > fake editor to start with `pick`, after this patch, the tests expect t=
-he
-> > todo lists to start with a command consisting of lower-case ASCII
-> > letters (which catches `pick`, of course, but also `label`, `reset` an=
-d
-> > `merge`).
-> >
-> > After this patch, the fake editor also does not try to replace whateve=
-r
-> > command it finds by `pick`, but it keeps it as-is instead.
->
-> Right, that's how I read it, and that part I agree with. I think my
-> question is this: in what case do we execute the "fakesha" case? Are we
-> guaranteed that when we do, action isn't "&"? "&" seems fine for the
-> right-hand side of a sed s-statement, but not as the beginning of a
-> typical line in a sequencer file.
-
-Indeed, the sequencer should throw a real tantrum about this and not
-even bother to start.
-
-But then, the same would hold true for an obviously invalid commit hash.
-
-> I ask because if we're testing a failure case, we want it to fail for
-> the right reason (e.g., the commit doesn't exist), and not because we're
-> producing invalid data.
-
-Indeed. I have even come to the conclusion that our
-`test_expect_failure` command encourages exactly this type of problem:
-in the beginning, those test cases might actually be correct, but over
-time they are prone to fail for all the wrong reasons, because we do not
-actually test for a specific failure more, we just say that we expect
-this test case to fail (and that this indicates a bug).
-
-> If the answer in this case is, "Well, we'll always have something else
-> before it which will set $action properly," then that's fine. This is
-> test code, so it need not be bulletproof, but I did want to ask.
-
-I think you are perfectly sane to question this, and to expect me to
-double check.
-
-So, double check I did. Turns out there is a single user of the
-`fakesha` thing, and it is hidden deep in t3404, prefixed by
-`test_must_fail`:
-
-=2D- snip --
-test_expect_success 'static check of bad SHA-1' '
-	rebase_setup_and_clean bad-sha &&
-	set_fake_editor &&
-	test_must_fail env FAKE_LINES=3D"1 2 edit fakesha 3 4 5 #" \
-		git rebase -i --root 2>actual &&
-	test_i18ngrep "edit XXXXXXX False commit" actual &&
-	test_i18ngrep "You can fix this with .git rebase --edit-todo.." actual &&
-	FAKE_LINES=3D"1 2 4 5 6" git rebase --edit-todo &&
-	git rebase --continue &&
-	test E =3D $(git cat-file commit HEAD | sed -ne \$p)
-'
-=2D- snap --
-
-As you can see, contrary to my expectations it does verify the output.
-It *also* changes the action to `edit`, which is the reason why there is
-no `&` ;-)
-
-But I think you are correct, I should make sure that the fake editor is
-still correct with respect to the `pick` command.
-
-> If I'm still misunderstanding something, I apologize.
-
-I am really impressed and inspired by your gentle language. Thank you
-for this.
+But I digress. I just wanted to chime in with the results of my web hunt
+for that "W^X" term.
 
 Ciao,
 Dscho
+
+>
+>   $ git grep 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -G 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -E 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>   $ git grep -F 'foo bar'
+>   fatal: Couldn't JIT the PCRE2 pattern 'foo bar', got '-48'
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  Documentation/git-grep.txt |  4 ++++
+>  grep.c                     | 15 +++++++++++++--
+>  grep.h                     |  1 +
+>  3 files changed, 18 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index c89fb569e3..ff544bdeec 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -69,6 +69,10 @@ grep.fallbackToNoIndex::
+>  	If set to true, fall back to git grep --no-index if git grep
+>  	is executed outside of a git repository.  Defaults to false.
+>
+> +pcre.jit::
+> +	If set to false, disable JIT when using PCRE.  Defaults to
+> +	true.
+> +
+>
+>  OPTIONS
+>  -------
+> diff --git a/grep.c b/grep.c
+> index c7c06ae08d..3524d353dd 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -56,6 +56,7 @@ void init_grep_defaults(struct repository *repo)
+>  	opt->repo =3D repo;
+>  	opt->relative =3D 1;
+>  	opt->pathname =3D 1;
+> +	opt->pcre_jit =3D 1;
+>  	opt->max_depth =3D -1;
+>  	opt->pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED;
+>  	color_set(opt->colors[GREP_COLOR_CONTEXT], "");
+> @@ -125,6 +126,12 @@ int grep_config(const char *var, const char *value,=
+ void *cb)
+>  		return 0;
+>  	}
+>
+> +	if (!strcmp(var, "pcre.jit")) {
+> +		int is_bool;
+> +		opt->pcre_jit =3D git_config_bool_or_int(var, value, &is_bool);
+> +		return 0;
+> +	}
+> +
+>  	if (!strcmp(var, "color.grep"))
+>  		opt->color =3D git_config_colorbool(var, value);
+>  	if (!strcmp(var, "color.grep.match")) {
+> @@ -163,6 +170,7 @@ void grep_init(struct grep_opt *opt, struct reposito=
+ry *repo, const char *prefix
+>  	opt->pattern_tail =3D &opt->pattern_list;
+>  	opt->header_tail =3D &opt->header_list;
+>
+> +	opt->pcre_jit =3D def->pcre_jit;
+>  	opt->only_matching =3D def->only_matching;
+>  	opt->color =3D def->color;
+>  	opt->extended_regexp_option =3D def->extended_regexp_option;
+> @@ -393,7 +401,8 @@ static void compile_pcre1_regexp(struct grep_pat *p,=
+ const struct grep_opt *opt)
+>  		die("%s", error);
+>
+>  #ifdef GIT_PCRE1_USE_JIT
+> -	pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
+> +	if (opt->pcre_jit)
+> +		pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
+>  #endif
+>  }
+>
+> @@ -489,7 +498,9 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>  		compile_regexp_failed(p, (const char *)&errbuf);
+>  	}
+>
+> -	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+> +	if (opt->pcre_jit)
+> +		pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+> +
+>  	if (p->pcre2_jit_on) {
+>  		jitret =3D pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+>  		if (jitret)
+> diff --git a/grep.h b/grep.h
+> index c0c71eb4a9..fff152e606 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -151,6 +151,7 @@ struct grep_opt {
+>  	int allow_textconv;
+>  	int extended;
+>  	int use_reflog_filter;
+> +	int pcre_jit;
+>  	int pcre1;
+>  	int pcre2;
+>  	int relative;
+> --
+> 2.22.0
+>
+>
+
+--8323328-162684488-1564575843=:21907--
