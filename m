@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 340321F731
-	for <e@80x24.org>; Wed, 31 Jul 2019 15:19:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A0E41F731
+	for <e@80x24.org>; Wed, 31 Jul 2019 15:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729078AbfGaPS7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 11:18:59 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40499 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728808AbfGaPSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 11:18:50 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v19so60217978wmj.5
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:48 -0700 (PDT)
+        id S1729353AbfGaPTE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 11:19:04 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46167 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728242AbfGaPSs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 11:18:48 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z1so70095694wru.13
+        for <git@vger.kernel.org>; Wed, 31 Jul 2019 08:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fDhcbLFegpFzgu6PRtAdOTyb6claf7pEsvDqo1JY5fU=;
-        b=UPOqebkrmLDF+EUxZaAFVLHdSrwvozEEOkdvkr25oXlKXMOQ7qyVlP2fgflefc9pID
-         p2OiQd/mLkOI0SARLuD/Awn5t+Xd2c5yepH8wz7K0iiblVs6dSscWrbmKzrODPMsIndY
-         Q7lWUsLH/hGCdtYlokXBjnOkZt0SOJRiPUj2jnvN0/mFEpz+ht1zOSgoOXivPAslc/W4
-         D1IiLqGhnc+A1IYqek+FcIOVO+NjXv2BhrkoMrRo2aa80m+2oPlAdhCJYfhlM59F/5Up
-         zfoiYwXdTQ0BeWb4vJZxk67SaDHPjuO6ALQuNmv50Tq9XWyI8bOq/lyW5AXwkObejjXR
-         5Xqw==
+        bh=d+B3IKDPR5LPMucqtsnn5xBAKgD+1jSjntMCODxJJqg=;
+        b=oLaHqMus22uVjPNCzmgy5YH07lR74HlllGWw0OIXj/ENmEi0IhdWAdxa04MEPragvM
+         eOR1Hr9LnGn5xUDILxsOziAxGoKH7C4KpdgPXkLT8oH4OsrGUi/Idk8PUzTiWZ40Ywg2
+         b6wu7elQetdZEUsa2/YuP9P7F8gvrbsRFxuOJVk765Y/nmR5u+i+/SvPooa3aKbTZuGY
+         js0lMeWAZVPzEjaArH7JOoezUUZTbTaM2LV1PsTV08RAJSNKsLs3mnoQDI5ue8IQUvIs
+         dfBy4hgOaJUezVF4SX6yZlk/NACgPoCQxGx0Q5Gv7EKYYfTAKgMfq7BfcOvjfkPKi1V6
+         yvDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fDhcbLFegpFzgu6PRtAdOTyb6claf7pEsvDqo1JY5fU=;
-        b=J66spIcKxxr3fs71dfPVFRxS8ZUcLRzXXkFuxLddmDyDDx6asuHzyW1cQUZ57kJCPE
-         87F7oPSgPzWuApV9mpENw1jAqiuN3LW85EaOySD6Q/v5oKNKp2cfB5BYOOtfC6O7sxQN
-         7pE7y43MkV69dXLYr6hkLVsjvRAhNvmfZ14/Nyt/G9schfOcwK3OlVdy7wED7csg8vWa
-         zI0m0vaWQ9avAiZeBscZX2aCTv0VzfnSiStDzmuYPM4OZMpyjJXE/rZ5DakrVMrG2/KD
-         xrp+kBVLV6MbyuudIceKq85M1bpdL99CQbpqNtTUTezJNGRsN9rPkFPAnh7eG7gJ3PvD
-         UDDQ==
-X-Gm-Message-State: APjAAAWWiAo+jBIfAYQT9tHllyjC4IeAvokzds853jJlxUiaFUfv5YNx
-        AHP2PACaX+JHCsT/V3BlxcrYOglQ
-X-Google-Smtp-Source: APXvYqwG5aJByReP0HWszckTYkxamPVi+2Onl3zTa4YWjIH1uUxL4DCUmM4sfIfe2PipzAOJpxNEcg==
-X-Received: by 2002:a7b:cc97:: with SMTP id p23mr11994710wma.120.1564586327869;
-        Wed, 31 Jul 2019 08:18:47 -0700 (PDT)
+        bh=d+B3IKDPR5LPMucqtsnn5xBAKgD+1jSjntMCODxJJqg=;
+        b=BarrczabYdgoTbydJPxoCt4jgoh6ZfPThWBwMyg1piSqnbclEgcBYTBhJV8PKcTnen
+         T634by5CEebPXqDBBCIDbpfdx1oEvoF4/oHf9VpqWzIHdtvb4sgqCv0Ebs+/Zi1SRTdi
+         52riKXUyALNeFzI6aIVQE+q8JsCyZgk1Ik1ImUtMI3FXDCOdwQDrQfGY5ytXIWd0KND/
+         gIH6IZlpA1cR+5h1DS3NG6rMi5rvCZktSCZVHlCrlHm8hquAVLPvPrSnpomq5hlAARpG
+         5/LlCNK86etXnyMcZCoY1lWCVX5zCHxDGUGrDQV31RpPenH7XMSuVOJYifDtI2Dtja0g
+         1J2w==
+X-Gm-Message-State: APjAAAVLNjSLaSnA0L5aWgIy/YbS37nm+FLDMtVIcvcvC5O/KCIR+LiS
+        eZWYByCWjCaNwPiUskqUQdRjAowK
+X-Google-Smtp-Source: APXvYqyAmKmrbyfj1Mr/9UUozSypW6oYe0g5gnra39Gh5PMN8hSngpTiQnpcyqosVR6eFs10GFfZ+A==
+X-Received: by 2002:a5d:54c7:: with SMTP id x7mr105795582wrv.39.1564586324814;
+        Wed, 31 Jul 2019 08:18:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t24sm65038548wmj.14.2019.07.31.08.18.47
+        by smtp.gmail.com with ESMTPSA id y16sm70346387wrw.33.2019.07.31.08.18.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jul 2019 08:18:47 -0700 (PDT)
-Date:   Wed, 31 Jul 2019 08:18:47 -0700 (PDT)
-X-Google-Original-Date: Wed, 31 Jul 2019 15:18:33 GMT
-Message-Id: <75b1395dae5f2fac28d3b200b12833821b7b1862.1564586316.git.gitgitgadget@gmail.com>
+        Wed, 31 Jul 2019 08:18:44 -0700 (PDT)
+Date:   Wed, 31 Jul 2019 08:18:44 -0700 (PDT)
+X-Google-Original-Date: Wed, 31 Jul 2019 15:18:29 GMT
+Message-Id: <46ef0053650d9bcc7c3218cfbf0cb729307c03f8.1564586316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.294.v2.git.gitgitgadget@gmail.com>
 References: <pull.294.git.gitgitgadget@gmail.com>
         <pull.294.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 13/16] rebase -r: support merge strategies other than
- `recursive`
+Subject: [PATCH v2 09/16] t3427: condense the unnecessarily repetitive test
+ cases into three
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,145 +74,111 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We already support merge strategies in the sequencer, but only for
-`pick` commands.
+Previously, this test script performed essentially three rebases and
+verified breakages by testing the post-rebase commits' messages.
 
-With this commit, we now also support them in `merge` commands. The
-approach is simple: if any merge strategy option is specified, or if any
-merge strategy other than `recursive` is specified, we simply spawn the
-`git merge` command. Otherwise, we handle the merge in-process just as
-before.
+To do so, the rebases were performed multiple times, though, once per
+commit message to test. This wastes electricity (and CO2) and time.
+
+Let's condense the test cases to the essential number: the number of
+different rebases to validate.
+
+On Windows, where the scripted nature of the `--preserve-merges` backend
+hurts performance rather badly, this reduces the overall runtime in this
+developer's setup from ~1m to ~28s while still performing the exact same
+testing as before.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-rebase.txt           |  2 --
- builtin/rebase.c                       |  9 ---------
- sequencer.c                            | 14 ++++++++++++--
- t/t3422-rebase-incompatible-options.sh | 10 ----------
- t/t3430-rebase-merges.sh               | 21 +++++++++++++++++++++
- 5 files changed, 33 insertions(+), 23 deletions(-)
+ t/t3427-rebase-subtree.sh | 61 +++++++--------------------------------
+ 1 file changed, 11 insertions(+), 50 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 5e4e927647..bc620c44e9 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -543,8 +543,6 @@ In addition, the following pairs of options are incompatible:
-  * --preserve-merges and --interactive
-  * --preserve-merges and --signoff
-  * --preserve-merges and --rebase-merges
-- * --rebase-merges and --strategy
-- * --rebase-merges and --strategy-option
- 
- BEHAVIORAL DIFFERENCES
- -----------------------
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 74a60e8c83..625f50c637 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1811,15 +1811,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			      "'--reschedule-failed-exec'"));
- 	}
- 
--	if (options.rebase_merges) {
--		if (strategy_options.nr)
--			die(_("cannot combine '--rebase-merges' with "
--			      "'--strategy-option'"));
--		if (options.strategy)
--			die(_("cannot combine '--rebase-merges' with "
--			      "'--strategy'"));
--	}
--
- 	if (!options.root) {
- 		if (argc < 1) {
- 			struct branch *branch;
-diff --git a/sequencer.c b/sequencer.c
-index 334de14542..d228448cd8 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3256,6 +3256,9 @@ static int do_merge(struct repository *r,
- 	struct commit *head_commit, *merge_commit, *i;
- 	struct commit_list *bases, *j, *reversed = NULL;
- 	struct commit_list *to_merge = NULL, **tail = &to_merge;
-+	const char *strategy = !opts->xopts_nr &&
-+		(!opts->strategy || !strcmp(opts->strategy, "recursive")) ?
-+		NULL : opts->strategy;
- 	struct merge_options o;
- 	int merge_arg_len, oneline_offset, can_fast_forward, ret, k;
- 	static struct lock_file lock;
-@@ -3404,7 +3407,7 @@ static int do_merge(struct repository *r,
- 		goto leave_merge;
- 	}
- 
--	if (to_merge->next) {
-+	if (strategy || to_merge->next) {
- 		/* Octopus merge */
- 		struct child_process cmd = CHILD_PROCESS_INIT;
- 
-@@ -3418,7 +3421,14 @@ static int do_merge(struct repository *r,
- 		cmd.git_cmd = 1;
- 		argv_array_push(&cmd.args, "merge");
- 		argv_array_push(&cmd.args, "-s");
--		argv_array_push(&cmd.args, "octopus");
-+		if (!strategy)
-+			argv_array_push(&cmd.args, "octopus");
-+		else {
-+			argv_array_push(&cmd.args, strategy);
-+			for (k = 0; k < opts->xopts_nr; k++)
-+				argv_array_pushf(&cmd.args,
-+						 "-X%s", opts->xopts[k]);
-+		}
- 		argv_array_push(&cmd.args, "--no-edit");
- 		argv_array_push(&cmd.args, "--no-ff");
- 		argv_array_push(&cmd.args, "--no-log");
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index a5868ea152..50e7960702 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -76,14 +76,4 @@ test_expect_success REBASE_P \
- 	test_must_fail git rebase --preserve-merges --rebase-merges A
+diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
+index 64ba95f3e0..b21925d279 100755
+--- a/t/t3427-rebase-subtree.sh
++++ b/t/t3427-rebase-subtree.sh
+@@ -64,70 +64,31 @@ test_expect_success 'setup' '
  '
  
--test_expect_success '--rebase-merges incompatible with --strategy' '
--	git checkout B^0 &&
--	test_must_fail git rebase --rebase-merges -s resolve A
+ # FAILURE: Does not preserve master4.
+-test_expect_failure REBASE_P \
+-	'Rebase -Xsubtree --preserve-merges --onto commit 4' '
++test_expect_failure REBASE_P 'Rebase -Xsubtree --preserve-merges --onto commit' '
+ 	reset_rebase &&
+-	git checkout -b rebase-preserve-merges-4 to-rebase &&
+-	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
+-	verbose test "$(commit_message HEAD~)" = "files_subtree/master4"
 -'
 -
--test_expect_success '--rebase-merges incompatible with --strategy-option' '
--	git checkout B^0 &&
--	test_must_fail git rebase --rebase-merges -Xignore-space-change A
--'
--
- test_done
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 42ba5b9f09..8ea6ff3548 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -412,4 +412,25 @@ test_expect_success '--continue after resolving conflicts after a merge' '
- 	test_path_is_missing .git/MERGE_HEAD
+-# FAILURE: Does not preserve master5.
+-test_expect_failure REBASE_P \
+-	'Rebase -Xsubtree --preserve-merges --onto commit 5' '
+-	reset_rebase &&
+-	git checkout -b rebase-preserve-merges-5 to-rebase &&
++	git checkout -b rebase-preserve-merges to-rebase &&
+ 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
++	verbose test "$(commit_message HEAD~)" = "files_subtree/master4" &&
+ 	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
  '
  
-+test_expect_success '--rebase-merges with strategies' '
-+	git checkout -b with-a-strategy F &&
-+	test_tick &&
-+	git merge -m "Merge conflicting-G" conflicting-G &&
-+
-+	: first, test with a merge strategy option &&
-+	git rebase -ir -Xtheirs G &&
-+	echo conflicting-G >expect &&
-+	test_cmp expect G.t &&
-+
-+	: now, try with a merge strategy other than recursive &&
-+	git reset --hard @{1} &&
-+	write_script git-merge-override <<-\EOF &&
-+	echo overridden$1 >>G.t
-+	git add G.t
-+	EOF
-+	PATH="$PWD:$PATH" git rebase -ir -s override -Xxopt G &&
-+	test_write_lines G overridden--xopt >expect &&
-+	test_cmp expect G.t
-+'
-+
- test_done
+ # FAILURE: Does not preserve master4.
+-test_expect_failure REBASE_P \
+-	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 4' '
++test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit' '
+ 	reset_rebase &&
+-	git checkout -b rebase-keep-empty-4 to-rebase &&
+-	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
+-	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
+-'
+-
+-# FAILURE: Does not preserve master5.
+-test_expect_failure REBASE_P \
+-	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 5' '
+-	reset_rebase &&
+-	git checkout -b rebase-keep-empty-5 to-rebase &&
+-	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
+-	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
+-'
+-
+-# FAILURE: Does not preserve Empty.
+-test_expect_failure REBASE_P \
+-	'Rebase -Xsubtree --keep-empty --preserve-merges --onto empty commit' '
+-	reset_rebase &&
+-	git checkout -b rebase-keep-empty-empty to-rebase &&
++	git checkout -b rebase-keep-empty to-rebase &&
+ 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
++	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4" &&
++	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ '
+ 
+ # FAILURE: fatal: Could not parse object
+-test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
+-	reset_rebase &&
+-	git checkout -b rebase-onto-4 to-rebase &&
+-	git rebase -Xsubtree=files_subtree --onto files-master master &&
+-	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
+-'
+-
+-# FAILURE: fatal: Could not parse object
+-test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
+-	reset_rebase &&
+-	git checkout -b rebase-onto-5 to-rebase &&
+-	git rebase -Xsubtree=files_subtree --onto files-master master &&
+-	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
+-'
+-# FAILURE: fatal: Could not parse object
+-test_expect_failure 'Rebase -Xsubtree --onto empty commit' '
++test_expect_failure 'Rebase -Xsubtree --onto commit' '
+ 	reset_rebase &&
+-	git checkout -b rebase-onto-empty to-rebase &&
++	git checkout -b rebase-onto to-rebase &&
+ 	git rebase -Xsubtree=files_subtree --onto files-master master &&
++	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4" &&
++	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
+ 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ '
+ 
 -- 
 gitgitgadget
 
