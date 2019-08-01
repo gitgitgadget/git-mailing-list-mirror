@@ -3,196 +3,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49A251F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 16:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E8561F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 16:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732799AbfHAQMP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 12:12:15 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:40819 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732797AbfHAQMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 12:12:14 -0400
-Received: by mail-io1-f66.google.com with SMTP id h6so20368322iom.7
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 09:12:13 -0700 (PDT)
+        id S1731719AbfHAQQW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 12:16:22 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34425 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727885AbfHAQQW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 12:16:22 -0400
+Received: by mail-pl1-f195.google.com with SMTP id i2so32447894plt.1
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 09:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AhdygbfuoADznz5cY8SBeKp6WIe7mTgAxzlCYW+jDWU=;
-        b=mOb/QzSKSHD0adCgpfKXnw/tWPpWzIzyBMexs/2eY3ZXmz7ZAew8167oeDVWUZjp6s
-         v3brxR7YF0VNMEg/V4oiP0GWi/9b3EPyUVBEdX+Yyod966Wrq1zvX69x/5bZGmN5Y/TK
-         ZoN/m5IAiWktj9jhvr0U1Y1gsLdWlxTUPn1VkDi8jH6X9dldY3UMArRIZDSqEUDiOyJe
-         rL0svH06CBFOn93zJ7JxiKoHdiBP/UdH1iyDw8PsNJhxQ3Ik+ZUIWK7l7z42aMpMt+mO
-         ZtAE3j/cn2fwfGJMbhLu1hQufBAzu1itwNVbvZI3N8LQJwFR0sC0hNwlTq2gZ1HdFiM/
-         2kLw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gsIp4oYn0HlNKz7anghHI6Lya8u90wtCs4lmVjSs9mY=;
+        b=Qns2KQdR9hfh6yQywbgU+zfY5smbvuIofaGszi3b3LddEuRixAWNJKEQX9wicCLb2s
+         bQZNd+DdiIxpPiVA1Dt3qE/vRqqbkz+ZoMQ5xgN1vlYzBYYk86ebLnqeZwpBWcFsURs+
+         ELK2RAl69bBRkMkGTJAdoEsZK0noFyrWyMocME4K99/oFPcBSAmVmPrg6U7e87U61CtG
+         payKvUWrS5byCYp7KkPWDdP/GHN+ExDBtbPoswkEWNC5irBgaB+qqBq8MvWWp7QBG79m
+         KosTvw36Fa5TVytvQm5WDLDw8xNOX/zJuMJiBrDUTlCNQlyp2nsajtXf7bUhQfRnNqmO
+         MG1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AhdygbfuoADznz5cY8SBeKp6WIe7mTgAxzlCYW+jDWU=;
-        b=NWvRxtmC+ymeaCpDxzdiME+QMCKrU3qsYxjToQ0qPSh5ts4tPFNaVTErgHYpNTr/xx
-         9XRpoFxlh/tBmBoITzX4vke6tEFzio1jYZXM64MHV9IWWhlWRg3rEOJ/YtFBcDvhkmB/
-         W3YdiHbMf9YbA2ynoOxhcsrS9uUDrym6T5jGxsm6D13HNnDL14iXqWumGa/siQN1td5z
-         8j1/9Mfx6r4Th5uCSVvb4il4JDPJYvOLJGMEFOs3QTNEbX/eP992wFUK2Q2s2B12+LZH
-         OI36elUByg9L/dgzYWo6UW6Rn/o1SkKZH6ermoE3azH/FvzEn7deCfqIyMplCE31pqeh
-         Uu6g==
-X-Gm-Message-State: APjAAAVIr5SVBMVN72egskn2DkBbK9X2MvmtlCpIHr0Y84neIktDzC66
-        odEgQGf2WGJn0n9DjwbUfAb6qFXNan7xyGH5t0Q=
-X-Google-Smtp-Source: APXvYqxMyAaBcE3T3pllZGF8XVGU2ns5aIsanmHbIHGxLwlTMFdh9zGrrK4bTj0Q/BXOtOURZSQNOJwfBtw56+2OC84=
-X-Received: by 2002:a5d:964d:: with SMTP id d13mr25256472ios.224.1564675933522;
- Thu, 01 Aug 2019 09:12:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gsIp4oYn0HlNKz7anghHI6Lya8u90wtCs4lmVjSs9mY=;
+        b=nhivDhOu9oTt4DgRQ89T5oi96e+iT80LHRO+PuUVtTuhHQ80xkmFFIF1uksvm1X2hh
+         PhjXPxqsFuvcCuK6hguS1RXSo2Q32FdCGrGr60L5nA000ethlPU+6YE+vi3L4n9wA9tx
+         xuSQ5alRhzMqsGOrZoZiprM3uL+G6rsmsF/WcVdMdtBxUDPub5Vmwp53UVynqAcFdkXo
+         Z1y7/9EsPH1Tm5prk6eM5ZTd/4I+RkSxlACw/XSVBumTFN8ta1MURVL79NwkgMlcBpgc
+         A7Y23d181f7wiAxe1EHATvLtq34qPp2kWaBsGQPBpihcabwT1WBy68h/dHaQYD+REeyn
+         yNMA==
+X-Gm-Message-State: APjAAAV3ChD65IHZ7GTSqYmV4DxhgEbCanAqOGFTaGAOJgwJvP1iixtC
+        otjn2oc4h9/OHwJ+y8FCun4=
+X-Google-Smtp-Source: APXvYqyHEHVyvdhTbf9JKn18ddBraYJ0QdLbEcobWpfChyspY4LnnCkF3XQ3F2xqfnhxl9cKPkVZCg==
+X-Received: by 2002:a17:902:9b94:: with SMTP id y20mr126611639plp.260.1564676181269;
+        Thu, 01 Aug 2019 09:16:21 -0700 (PDT)
+Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
+        by smtp.googlemail.com with ESMTPSA id b68sm88741663pfb.149.2019.08.01.09.16.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 01 Aug 2019 09:16:20 -0700 (PDT)
+From:   Varun Naik <vcnaik94@gmail.com>
+To:     vcnaik94@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
+Subject: [PATCH v3] diff-lib.c: handle empty deleted ita files
+Date:   Thu,  1 Aug 2019 09:15:58 -0700
+Message-Id: <20190801161558.12838-1-vcnaik94@gmail.com>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190712150235.12633-1-vcnaik94@gmail.com>
+References: <20190712150235.12633-1-vcnaik94@gmail.com>
 MIME-Version: 1.0
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
- <20190731231848.GC1933@sigill.intra.peff.net> <20190801002125.GA176307@google.com>
- <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
-From:   Ariadne Conill <ariadne@dereferenced.org>
-Date:   Thu, 1 Aug 2019 11:12:02 -0500
-Message-ID: <CAAOiGNzYUmC+Ns_CiVm-BL06=Sd5ZYuxEgnQK-04BUAwJAqWCQ@mail.gmail.com>
-Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-for-windows@googlegroups.com,
-        Git Mailing List <git@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+It is possible to delete a committed file from the index and then add it
+as intent-to-add. Certain forms of `git diff` should show the file.
+After `git reset HEAD`, the file should be identical in the index and
+HEAD. The commands already work correctly if the file has contents in
+HEAD. This patch provides the desired behavior even when the file is
+empty in HEAD.
 
-On Thu, Aug 1, 2019 at 10:46 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
-> > Although as Dscho mentions, it's particularly irritating because it is
-> > not part of the paginated output.
-> > ...
-> > Let's bite the bullet and jump straight to --use-mailmap in case (4).
-> >
-> > While at it, add a new log.mailmap setting "auto" that can be used to
-> > explicitly request the new automatic behavior (so that e.g. if
-> > log.mailmap is set to "true" system-side, I can set it to "auto" in my
-> > per-user configuration).
->
-> While I think "revert to hardcoded default" may be a good idea, I do
-> not think the hardcoded default you implemented that changes the
-> behaviour based on the output destination makes much sense.  If I
-> want to eradicate junkio@cox.net from my paged/interactive output, I
-> want to eradicate it also in the output piped to the script I use
-> for authorship stats.
->
-> I suspect that you may have misread the "is interactive" bit in the
-> original; that was used only to decide if we are going to warn.
->
-> Anyway, how about this much simplified version?
+The affected "diff" commands and the "reset" command call
+diff-lib.c:do_oneway_diff() with a cache entry in the index and a cache
+entry in HEAD. An ita file is represented in the index by a cache entry
+with the same hash as an empty file. For a nonempty deleted ita file,
+do_oneway_diff() calls show_modified(), which detects a diff between the
+cache entry in the index and the cache entry in HEAD and therefore deems
+the file "modified". However, for an empty deleted ita file,
+do_oneway_diff() previously detected no such diff between the two cache
+entries and therefore deemed the file "not modified". After this fix,
+for any deleted ita file, do_oneway_diff() calls diff_index_show_file()
+and deems the file "deleted".
 
-It looks good to me.
+`git diff-index --cached HEAD` prints a row of output for both a
+"modified" and a "deleted" file, although the output differs slightly.
+`git reset HEAD` treats a "modified" and a "deleted" file similarly,
+resurrecting the file in the index from HEAD.
 
-Acked-by: Ariadne Conill <ariadne@dereferenced.org>
+This change should not affect newly added ita files. For those, the
+"tree" cache entry is NULL, so the changed code is not executed.
 
->
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Thu, 1 Aug 2019 08:32:44 -0700
-> Subject: [PATCH] log: flip the --mailmap default unconditionally
->
-> It turns out that being cautious to warn against upcoming default
-> change was an unpopular behaviour, and such a care can easily be
-> defeated by distro packagers to render it ineffective anyway.
->
-> Just flip the default, with only a mention in the release notes.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/RelNotes/2.23.0.txt |  8 +++-----
->  builtin/log.c                     | 16 +---------------
->  t/t7006-pager.sh                  |  2 --
->  3 files changed, 4 insertions(+), 22 deletions(-)
->
-> diff --git a/Documentation/RelNotes/2.23.0.txt b/Documentation/RelNotes/2.23.0.txt
-> index 19e894a44e..6ef8f21b56 100644
-> --- a/Documentation/RelNotes/2.23.0.txt
-> +++ b/Documentation/RelNotes/2.23.0.txt
-> @@ -10,6 +10,9 @@ Backward compatibility note
->     prerequisite patches in an unstable way, which has been updated to
->     compute in a way that is compatible with "git patch-id --stable".
->
-> + * The "git log" command by default behaves as if the --mailmap option
-> +   was given.
-> +
->
->  UI, Workflows & Features
->
-> @@ -91,11 +94,6 @@ UI, Workflows & Features
->     commit-graph files now, which allows the commit-graph files to be
->     updated incrementally.
->
-> - * The "git log" command learns to issue a warning when log.mailmap
-> -   configuration is not set and --[no-]mailmap option is not used, to
-> -   prepare users for future versions of Git that uses the mailmap by
-> -   default.
-> -
->   * "git range-diff" output has been tweaked for easier identification
->     of which part of what file the patch shown is about.
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 1cf9e37736..40b4cbf57d 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -156,16 +156,6 @@ static void cmd_log_init_defaults(struct rev_info *rev)
->                 parse_date_format(default_date_mode, &rev->date_mode);
->  }
->
-> -static char warn_unspecified_mailmap_msg[] =
-> -N_("log.mailmap is not set; its implicit value will change in an\n"
-> -   "upcoming release. To squelch this message and preserve current\n"
-> -   "behaviour, set the log.mailmap configuration value to false.\n"
-> -   "\n"
-> -   "To squelch this message and adopt the new behaviour now, set the\n"
-> -   "log.mailmap configuration value to true.\n"
-> -   "\n"
-> -   "See 'git help config' and search for 'log.mailmap' for further information.");
-> -
->  static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->                          struct rev_info *rev, struct setup_revision_opt *opt)
->  {
-> @@ -214,12 +204,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->         memset(&w, 0, sizeof(w));
->         userformat_find_requirements(NULL, &w);
->
-> -       if (mailmap < 0) {
-> -               if (session_is_interactive() && !rev->pretty_given)
-> -                       warning("%s\n", _(warn_unspecified_mailmap_msg));
-> -
-> +       if (mailmap < 0)
->                 mailmap = 0;
-> -       }
->
->         if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
->                 rev->show_notes = 1;
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> index 7976fa7bcc..00e09a375c 100755
-> --- a/t/t7006-pager.sh
-> +++ b/t/t7006-pager.sh
-> @@ -7,8 +7,6 @@ test_description='Test automatic use of a pager.'
->  . "$TEST_DIRECTORY"/lib-terminal.sh
->
->  test_expect_success 'setup' '
-> -       : squelch advice messages during the transition &&
-> -       git config --global log.mailmap false &&
->         sane_unset GIT_PAGER GIT_PAGER_IN_USE &&
->         test_unconfig core.pager &&
->
-> --
-> 2.23.0-rc0-144-gce799e40b3
->
->
->
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+---
+I tried to limit the "blast radius" of affected commands as much as
+possible. To find commands that were affected, I ran the following:
+    git diff
+    git diff HEAD
+    git diff --cached HEAD
+    git diff-index HEAD
+    git diff-index --cached HEAD
+    git diff-files
+
+I also ran each command with the option "--ita-visible-in-index" and the
+option "--ita-invisible-in-index". Of these 18 commands, the following
+three showed a diff for nonempty deleted ita files, but no diff for
+empty deleted ita files. All three commands now work correctly, but I
+chose the first one for the test case because the option
+"--ita-visible-in-index" is still marked as experimental.
+    git diff-index --cached HEAD
+    git diff-index --cached --ita-visible-in-index HEAD
+    git diff --cached --ita-visible-in-index HEAD
+
+The `git add` at the end of the "diff-index" test case is necessary
+because `git reset --hard HEAD` at the beginning of the next test case
+_also_ breaks for empty deleted ita files. That command goes into
+unpack-trees.c:oneway_merge() rather than diff-lib.c:do_oneway_diff().
+I plan to create a separate patch to fix that, after I figure out which
+commands are part of its blast radius.
+
+ diff-lib.c            |  5 ++++-
+ t/t2203-add-intent.sh | 13 +++++++++++++
+ t/t7102-reset.sh      | 11 +++++++++++
+ 3 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index 61812f48c2..29dba467d5 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -433,8 +433,11 @@ static void do_oneway_diff(struct unpack_trees_options *o,
+ 
+ 	/*
+ 	 * Something removed from the tree?
++	 * Consider a file deleted from the index and added as ita to be "deleted",
++	 * even though it should arguably be "modified", because we want empty
++	 * deleted ita files to appear in the diff.
+ 	 */
+-	if (!idx) {
++	if (!idx || (cached && ce_intent_to_add(idx))) {
+ 		diff_index_show_file(revs, "-", tree, &tree->oid, 1,
+ 				     tree->ce_mode, 0);
+ 		return;
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index 68e54d5c44..4e4a972921 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -261,6 +261,19 @@ test_expect_success '"diff HEAD" includes ita as new files' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '"diff-index --cached HEAD" detects diff for deleted intent-to-add file' '
++	git reset --hard &&
++	echo "nonempty" >nonempty &&
++	>empty &&
++	git add nonempty empty &&
++	git commit -m "create files to be deleted" &&
++	git rm --cached nonempty empty &&
++	git add -N nonempty empty &&
++	test_expect_code 1 git diff-index --cached --exit-code HEAD nonempty &&
++	test_expect_code 1 git diff-index --cached --exit-code HEAD empty &&
++	git add nonempty empty
++'
++
+ test_expect_success 'apply --intent-to-add' '
+ 	git reset --hard &&
+ 	echo new >new-ita &&
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 97be0d968d..7b79502f7d 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -566,4 +566,15 @@ test_expect_success 'reset --mixed sets up work tree' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'reset --mixed removes deleted intent-to-add file from index' '
++	echo "nonempty" >nonempty &&
++	>empty &&
++	git add nonempty empty &&
++	git commit -m "create files to be deleted" &&
++	git rm --cached nonempty empty &&
++	git add -N nonempty empty &&
++	git reset HEAD nonempty empty &&
++	git diff --cached --exit-code nonempty empty
++'
++
+ test_done
+-- 
+2.22.0
+
