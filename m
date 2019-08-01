@@ -2,141 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BCE01F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 17:24:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2B9A1F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 17:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728916AbfHARYU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 13:24:20 -0400
-Received: from siwi.pair.com ([209.68.5.199]:64810 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726017AbfHARYU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 13:24:20 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 467893F40DA;
-        Thu,  1 Aug 2019 13:24:19 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:9bc:1dec:170a:44ce] (unknown [IPv6:2001:4898:a800:1010:baf1:1dec:170a:44ce])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729881AbfHAReR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 13:34:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53377 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728851AbfHAReR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 13:34:17 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D85E164791;
+        Thu,  1 Aug 2019 13:34:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fCop7DPo/90mbTucO+yz2eE1ITI=; b=JFNQ+9
+        Qn55LjRA/zOlauV2d5E8ohsyunMcJgzGSVjbQwUQZxQ3xA8q+3AM8AhHjyykKxJ+
+        mVQ0vkSSL5A4zg8lGvcxgkl5H5539vgUx/TwP1npY78DNRRc/eBSFzq+XDbWVoEl
+        Xx5R+r99YKTfLoVSRYmPnxQCbFnmig+DkYIgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Wvx9mOos53M5lsg0HLwkotQ1fRIXPU0I
+        8E1E1QTZ0bh3igVMiPfK3E0WIfPKiZAQ8rVqSebVT6BuG/RS2cnBCs1YFfIsKt+Y
+        AbdRXOo7cQKbZemVdgYzkhw1XumwKX8P5SNauNYyBToxnmnHWvmqVc+vdVWhpAGc
+        VcwRy5K3yM8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 65A74164790;
+        Thu,  1 Aug 2019 13:34:15 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E598B3F40D9;
-        Thu,  1 Aug 2019 13:24:18 -0400 (EDT)
-Subject: Re: [PATCH v2 1/1] config: work around bug with includeif:onbranch
- and early config
-To:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.300.git.gitgitgadget@gmail.com>
- <pull.300.v2.git.gitgitgadget@gmail.com>
- <ea1a746113b85bde5319c410f68fe3dc75f8a328.1564603600.git.gitgitgadget@gmail.com>
- <20190731220204.GA1933@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1908010004130.21907@tvgsbejvaqbjf.bet>
- <20190731231257.GB1933@sigill.intra.peff.net>
- <20190801004928.GA6351@sigill.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7f4257d3-5ae0-3a83-84f1-bee83682fa36@jeffhostetler.com>
-Date:   Thu, 1 Aug 2019 13:24:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF8A316478F;
+        Thu,  1 Aug 2019 13:34:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Varun Naik <vcnaik94@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2] checkout.c: unstage empty deleted ita files
+References: <20190726045645.2437-1-vcnaik94@gmail.com>
+        <20190801160756.12601-1-vcnaik94@gmail.com>
+Date:   Thu, 01 Aug 2019 10:34:13 -0700
+In-Reply-To: <20190801160756.12601-1-vcnaik94@gmail.com> (Varun Naik's message
+        of "Thu, 1 Aug 2019 09:07:56 -0700")
+Message-ID: <xmqq4l30okmi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190801004928.GA6351@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 94EAF0F4-B482-11E9-B2C2-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Varun Naik <vcnaik94@gmail.com> writes:
 
+> It is possible to delete a committed file from the index and then add it
+> as intent-to-add. After `git checkout HEAD`, the file should be
+> identical in the index and HEAD.
 
-On 7/31/2019 8:49 PM, Jeff King wrote:
-> On Wed, Jul 31, 2019 at 07:12:57PM -0400, Jeff King wrote:
-> 
->> Hrm. But common-main calls initialize_the_repository(), which points it
->> at &the_repo. And I can't find any other assignments. So how does it
->> become NULL? And is every caller of have_git_dir() at risk of
->> segfaulting?
->>
->> Ah, I see. I think it is that trace2 reads the configuration very early.
->> I think we ought to do this:
->>
->> diff --git a/common-main.c b/common-main.c
->> index 582a7b1886..89fd415e55 100644
->> --- a/common-main.c
->> +++ b/common-main.c
->> @@ -39,14 +39,14 @@ int main(int argc, const char **argv)
->>   
->>   	git_resolve_executable_dir(argv[0]);
->>   
->> +	initialize_the_repository();
->> +
->>   	trace2_initialize();
->>   	trace2_cmd_start(argv);
->>   	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
->>   
->>   	git_setup_gettext();
->>   
->> -	initialize_the_repository();
->> -
->>   	attr_start();
->>   
->>   	result = cmd_main(argc, argv);
-> 
-> By the way, I wondered why trace2's existing config reading did not
-> cause us to segfault because of this. It is because it invented the
-> "very early config" function which always ignores some config sources
-> (working around this problem, but also making it weirdly unlike most
-> other config).
+We should write this as `git checkout HEAD <pathspec>`; with the
+command without the <pathspec> form, the files changed in various
+ways should not be changed with it at all.
 
-Yes, I added the "very early config" to try to work around some of
-the chicken-n-egg problems.  I can't say that I was completely happy
-with having to do that.  I haven't had time to play with your patch
-suggestion here, but I think it would be fine to do if it will help
-with the original problem.
+	$ echo modified >>file1
+	$ rm file2
+	$ git rm --cached file3 && git add -N file3
+	$ git checkout HEAD
+	M	file1
+	D	file2
+	M	file3
 
-In [1] I added code to just start the clock in isolation (rather than
-being part of the trace2_initialize() -- which does all the config
-loading and subsystem initialization).  So it is OK to let the
-trace2_initialize() run a little later.  (Part of the reason for that
-split was to allow git_resolve_executable_dir() to run first, since
-that data was needed to find the location of the system config relative
-to the exe path (sigh).)
+> `git checkout HEAD` calls tree.c:read_tree_1(), with fn pointing to
+> checkout.c:update_some(). update_some() creates a new cache entry but
+> discards it when its mode and oid match those of the old entry. A cache
+> entry for an ita file and a cache entry for an empty file have the same
+> oid. Therefore, an empty deleted ita file previously passed both of
+> these checks, and the new entry was discarded, so the file remained
+> unchanged in the index. After this fix, if the file is marked as ita in
+> the cache, then we avoid discarding the new entry and add the new entry
+> to the cache instead.
 
-[1] a089724958a trace2: refactor setting process starting time
+Thanks; the flow of thought above is quite straight-forward to
+follow.
 
-
-So, as you suggested in your previous response, something like
-this would/should be fine.
-
-$ git diff
-diff --git a/common-main.c b/common-main.c
-index 582a7b1886..71e21dd20a 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -39,16 +39,16 @@ int main(int argc, const char **argv)
-
-         git_resolve_executable_dir(argv[0]);
-
--       trace2_initialize();
--       trace2_cmd_start(argv);
--       trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
--
-         git_setup_gettext();
-
-         initialize_the_repository();
-
-         attr_start();
-
-+       trace2_initialize();
-+       trace2_cmd_start(argv);
-+       trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
-+
-         result = cmd_main(argc, argv);
-
-         trace2_cmd_exit(result);
 
