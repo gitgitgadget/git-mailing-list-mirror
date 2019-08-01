@@ -2,102 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235E11F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 02:53:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 544D01F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 03:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727218AbfHACxo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 22:53:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57994 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726125AbfHACxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 22:53:44 -0400
-Received: (qmail 23069 invoked by uid 109); 1 Aug 2019 02:53:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Aug 2019 02:53:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24290 invoked by uid 111); 1 Aug 2019 02:55:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Jul 2019 22:55:33 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 31 Jul 2019 22:53:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ariadne Conill <ariadne@dereferenced.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        git-for-windows@googlegroups.com,
-        Git Mailing List <git@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
-Message-ID: <20190801025342.GA7102@sigill.intra.peff.net>
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
- <20190731231848.GC1933@sigill.intra.peff.net>
- <20190801002125.GA176307@google.com>
- <20190801010022.GA6553@sigill.intra.peff.net>
- <CAAOiGNwDV3LNGRVPQN6DgES6raG76u-rW0nBuw=i2oHTibVSPg@mail.gmail.com>
+        id S1728417AbfHADIX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 23:08:23 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:41345 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728217AbfHADIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jul 2019 23:08:23 -0400
+Received: by mail-io1-f67.google.com with SMTP id j5so136946426ioj.8
+        for <git@vger.kernel.org>; Wed, 31 Jul 2019 20:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OEJ0YhWVu7CG9utxjo+mrrdpO4kNS8cnYtpijr8onTs=;
+        b=O9IMxd0blLSSxvP78wfpnY7yLOn8nB+1aefXEa7cHCkz3RxuEgOlLVaVhGwXbG1Cc4
+         eHZqCC9LOhdtp6yEbpc7QZLwcd3HxO3pRvQ5ZZTQsbXg8mUvLklU1UnPOtey9tAek5W+
+         uLLe9n+nhBwiIjfbk4fM1wkQXWkqSFCPDLzDAVSEHyPY8uxQxMeuMKclhQA5nad5txTJ
+         nK8o1f1t2WaDoyCyfLsGRPBAWCPfXd/HOIlW7qeyBxQbi77NKfDLZelGx1gTGj4jjJpH
+         32Nlsh7Bsxa89mhhuQtxUwKx71M5AN4oQNj0IKAqidxxYu66f9IJ2z3KptWeoGyKTuRw
+         pTkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OEJ0YhWVu7CG9utxjo+mrrdpO4kNS8cnYtpijr8onTs=;
+        b=gaXlI4+clr2AWu0m7wYUyHrOEWLYb1xtaEHH53l9fqZktXNsbY9N/LIwF3Rehr7WDF
+         rsRhbIm4pIP75m3lEuARmsrOog0tcQQ3DSIjm/kW2Hg73a7z0fcKOu2KGo4NPk0lKl9l
+         eSiI/POLmwH9QSemuISPCCZ+6Kx9HSNODFL1G+Wd5dZLN17429NGgJ2sr4JC9KAYlhw6
+         /GtbSGQl73RFN92hexb/Dz6iuwOIOcZDB3MT8FNm+lNsoLAvF8gR2HHHG/NcZTZm3yWo
+         ASLFIWwbzBH/TVh5X2KpAZir061NZ+EbWWFEvDWSLzoL6Z495JXmX2FWyo94EkimAdsN
+         o5BA==
+X-Gm-Message-State: APjAAAUTG8DYNZLUZle22b/dS8OusZoUnrUmyud8yfzdBQSv9S3WAgGp
+        ORPc2vljZszNN03HE+RfBBhxHT3YVYoIY5O7QGLPvQ==
+X-Google-Smtp-Source: APXvYqwKKKRcdpdNApv96NA52k0pK6a43s99EMp3q4896saJahG4y2Ubnle7mr0M+PzTyj3iGJFWEUSU5gH5RtUj7dM=
+X-Received: by 2002:a5d:9613:: with SMTP id w19mr79553065iol.140.1564628901165;
+ Wed, 31 Jul 2019 20:08:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAAOiGNwDV3LNGRVPQN6DgES6raG76u-rW0nBuw=i2oHTibVSPg@mail.gmail.com>
+References: <CAHd-oW61RFCySF+gUj8iYuV6afEoD0RD9oYE+N6rYd7rv3J2nA@mail.gmail.com>
+ <ba3d8a953a2cc5b4ff03fefa434ffd7bd6a78f15.1564505605.git.matheus.bernardino@usp.br>
+ <xmqqtvb3s2zi.fsf@gitster-ct.c.googlers.com> <CAP8UFD0bH7ZNWFt3MfkAQf2tkF6CAgFj5FsZyc9zechg7MkCUw@mail.gmail.com>
+ <xmqqwofyqjrz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwofyqjrz.fsf@gitster-ct.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 1 Aug 2019 00:08:09 -0300
+Message-ID: <CAHd-oW78PpLspY94F9JDfw3C6v3oRbt0tZY1Jth4R_WbYUSQCg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] grep: fix worktree case in submodules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Daniel Zaoui <jackdanielz@eyomi.org>,
+        Antonio Ospite <ao2@ao2.it>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 31, 2019 at 08:38:14PM -0500, Ariadne Conill wrote:
-
-> > Something like:
+On Wed, Jul 31, 2019 at 12:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > On Tue, Jul 30, 2019 at 10:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Matheus Tavares <matheus.bernardino@usp.br> writes:
 > >
-> >   Author: A U Thor <author@example.com>
-> >   Original-Author: I M Mailmapped <orig@example.com>
+> >> > @@ -598,7 +599,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+> >> >                       free(data);
+> >> >               } else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
+> >> >                       hit |= grep_submodule(opt, pathspec, &entry.oid,
+> >> > -                                           base->buf, base->buf + tn_len);
+> >> > +                                           base->buf, base->buf + tn_len,
+> >> > +                                           1); /* ignored */
+> >>
+> >> The trailing comment is misleading.  In the context of reviewing
+> >> this patch, we can probably tell it applies only to that "1", but
+> >> if you read only the postimage, the "ignored" comment looks as if
+> >> the call itself is somehow ignored by somebody unspecified.  It is
+> >> not clear at all that it is only about the final parameter.
+> >>
+> >> If you must...
+> >>
+> >>                 hit |= grep_submodule(opt, pathspec, &entry.oid,
+> >>                                       base->buf, base->buf + tn_len,
+> >>                                       1 /* ignored */);
 > >
-> > gives even more information while leaving the "Author:" line untouched.
-> > But in introducing a new line, it may also be breaking somebody.
-> 
-> It also makes this entire exercise completely moot because not only
-> does it deadname the contributor, it discloses that it is deadnaming
-> the contributor while also telling you who they are now, which is even
-> worse than the current behaviour.  The purpose of this exercise is to
-> ensure that users have the *current* contact information of the
-> contributor by default, including their current name and e-mail.  My
-> entire goal behind transitioning this config default is to ensure that
-> git respects *present* identity information by default, while giving
-> access to the raw identity data in cases where it makes sense to do so
-> (such as historical research or whatever).  I don't really wish for
-> git to remind me of my previous identity while browsing through
-> historical git logs.  I also don't think most people care about the
-> previous identity data of contributors -- in most cases, if you're
-> looking up a commit's author, you're doing so because you intend to
-> ask them a question about the commit, and so, having the most current
-> identity data available is what actually makes sense.
+> > Yeah, I suggested adding an "/* ignored */" comment, but I was indeed
+> > thinking about something like this.
+> >
+> >> ... is a reasonable way to write it.
+>
+> Thanks.  In this case, I am not sure if the comment here really
+> helps.  If anything, shouldn't there be a comment near the top of
+> grep_submodule() that says 'cached bit is meaningful only when you
+> feed an empty oid, aka "not grepping inside a tree object"'?
 
-Fair enough. My thinking was just that it would make it clear to
-somebody who wasn't expecting the mailmap to be used what was going on:
-they would have seen "orig" in the old output, but now they are seeing
-"author". But I agree that most people wouldn't even _care_, and the
-orig name is just garbage in most cases.
-
-I had been thinking it would be a temporary measure during the
-transition period, but it probably isn't even worth the hassle and
-confusion it would cause during that period.
-
-By the way, we've been talking mostly about output in this thread. One
-thing that did catch me a little by surprise is that "--author", etc,
-will now use the mailmap by default, too. Which I think makes perfect
-sense, but when looking for my own mailmapped entries to run some
-examples on, I was surprised at first that "git log
---author=peff@github.com" didn't find anything.
-
-But aside from experimenting with this mailmap feature, I cannot think
-of a single time in the last decade I would have cared about that
-distinction (and in fact, most of the time I would be searching for my
-own commits by my mailmapped address, and would have preferred they be
-found in that group).
-
--Peff
+Right, it makes sense. I'll add that.
