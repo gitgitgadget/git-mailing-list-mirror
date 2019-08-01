@@ -7,56 +7,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BCF51F732
-	for <e@80x24.org>; Thu,  1 Aug 2019 15:58:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A596A1F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 16:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730216AbfHAP6Q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 11:58:16 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53436 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732315AbfHAP4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 11:56:38 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 779A9872E1;
-        Thu,  1 Aug 2019 11:56:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1732486AbfHAQA3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 12:00:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53847 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727899AbfHAQA3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 12:00:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E2DE14F8B0;
+        Thu,  1 Aug 2019 11:57:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=czFgz07WMsEw
-        8y3z3+tagi68xz0=; b=Uq6HoIHHkn93V/ORYeW12FJR6qGBJ1EmCQf7GVyRu7tq
-        Z8UXN3XSoj2jlBocwJcfXpmJXH7FBYuhsH/JqIo7LZeTeQXAlcI+4xQzvKDZDgP9
-        k0Vot4h6+vm8vMEpdmwJlQzqc0ZE+LyM6XxrCahCzozyPMz/WCDMsAT2TZ62mDU=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=dA7FvNBuiD7B
+        JvQ2yvVSeuLSFTY=; b=ZloMwb4WCEXk2dJVSCCOZ9U7T9R5RirnOTKHhE6X3W7a
+        lvUU8pg9Cz2zWmXspYCwFsQF1tbKD6281QIzS0jYWC/qMJsxSWArLAmEFT2OhZGc
+        8aPr94CzvEM5G10zM8H2TUrKWb4/p9AoTuK6HVMHdJl8sBuO87w3RgDWvVOkPl8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hTXKdF
-        SAq1ZgnxbdtHXrTwgSjk5fuHsUua/lcX5UotbQBh6bNcwkufjaIqi5TkMEAy6NjF
-        jDV8YIZoQo9UHlRyzjo7Ck0w6GCAkbPNXYRmw0h04jEb4P1zL2d3yWmZuYAFnn4O
-        /YATxO0qYW6wOkccZTZBgAT9scM0ME0ozNmfc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 700DA872E0;
-        Thu,  1 Aug 2019 11:56:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yZxy3b
+        pQBb9lCjXih9NiW632R+7Yp1jcsGTrJoNJPYRPmTZiLTCqDI7mG+s5F69S9R5kfm
+        uPr3WOjf7zq6HYFVZfOFFneyIpv6EpsdWxzwBhBbyy6EZeXHqkqFqXfpd/GTfT/F
+        VljVF5Fkbkh8tGhK4IGJXujkseg6Lxcl8dcjw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 560A914F8AF;
+        Thu,  1 Aug 2019 11:57:06 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 90D5A872DF;
-        Thu,  1 Aug 2019 11:56:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A71A814F8AC;
+        Thu,  1 Aug 2019 11:57:05 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] RelNotes/2.23.0: fix a few typos and other minor issues
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
-        <20190801141221.3626-1-martin.agren@gmail.com>
-Date:   Thu, 01 Aug 2019 08:56:30 -0700
 In-Reply-To: <20190801141221.3626-1-martin.agren@gmail.com> ("Martin
  =?utf-8?Q?=C3=85gren=22's?=
         message of "Thu, 1 Aug 2019 16:12:20 +0200")
-Message-ID: <xmqqa7csop5d.fsf@gitster-ct.c.googlers.com>
+References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
+        <20190801141221.3626-1-martin.agren@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+Date:   Thu, 01 Aug 2019 08:57:04 -0700
+Message-ID: <xmqq8sscop4f.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EEBD09AE-B474-11E9-BEC8-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 02766D8C-B475-11E9-9993-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -74,7 +71,9 @@ d
 >
 > Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
 
-Thanks.
+Thanks, but it would have been better for this to be in two
+patches.  I'll split them up.
+
 
 > ---
 >  Documentation/RelNotes/2.22.1.txt |  2 +-
