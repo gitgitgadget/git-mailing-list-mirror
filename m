@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C028D1F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 15:53:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95FF51F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 15:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731782AbfHAPxZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 11:53:25 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:39627 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729162AbfHAPxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 11:53:25 -0400
-Received: by mail-wr1-f41.google.com with SMTP id x4so20984151wrt.6
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 08:53:23 -0700 (PDT)
+        id S1732004AbfHAPx2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 11:53:28 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37276 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730541AbfHAPx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 11:53:26 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f17so63638860wme.2
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 08:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dVm1+jJFoGi87pJgpaoxTbBNmc9/KG4q0coYZj2PHBg=;
-        b=s1qHUBzdgyY2hr+wFf8HjalMMZ5PUbgIKvz/PSRkT1+3uR8Nl3KFz8TYAxRikTL8lF
-         JcrzZlfYSk9qAGYzY1hfeC7Uc6Rp9tBdPa3nwT8TcuKyrZtjT+C7/YCELgIpAnEIdZOI
-         UV1773dDNvrqrpxy4VazJYkkQ2gnmAg3IQ3hMpISs91tLOX+wfDDgl9Pknp//eu9WH+c
-         2zgvU2BQFwkFuceQBGZwe1YWC980A6WW9MtdqWrcwiZf2omYmBcBH5MdJuXKFPuqYbP/
-         nLTF3sc1MnqrYrLpteQXIZLYYjj8udzv4eeU8k66vTwd4JgXEr9uwppinSXgNWySTvNY
-         gNSw==
+        bh=6XZWqNe23BNdaGrEkB80ojuU5o+2UTNTM6wOSPJMGVc=;
+        b=QF3LNSz74TtHtJwbvg0F3nQar2l2F4AB2H+TUe1tn+FrEZUM8N7F4RJF91YdxSitK2
+         M+RiF8+0qS/bpd4Jb+5J0PGiUJYSlEh/qPVfNF30evN92TgdqdSm9dH3mPS/OgHQMxil
+         Zdi7AXcx0b6GBREcL1TVdWxDj/5EdcLl2rQzQZIATAxpvnlvmHPTE/wNDo8WqmfNo6WT
+         Wr+VNpmMndeV4+GOAKQIVBS7k0QDvqN52qaIFw4yCjIApawgdvjIUMEeqqmfACYvIz6w
+         xazbPfRZbA0ZBegXVz+Om73C432lxclQbPRxna7guxjS14S5r/BPfX6RFY9CkbaY3zFB
+         /eEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dVm1+jJFoGi87pJgpaoxTbBNmc9/KG4q0coYZj2PHBg=;
-        b=dD/LvudEhd8OHDuulV+M25CzexE/5KkPw7kNIItP7yfYdXUJB92lbTUJaaZk/qZUkE
-         I1VDpx62UUZV7lUaG0XDSy3uhinDPmqEG5pe9hMmioDIxsdAI2HP+DjtSO1RhDi5UyGC
-         by/xDtzmhTBfpHTavD1jHK49RXapqO917ax2j+LC42cBe2PqhPYVLiHyE6E1Czr1vnAt
-         5LlpnsMi/1DsXkr2CPPZOgk7T+DkLlyAFlDcYw3x2srRsvuweu4v0mPusIpDXdTmDRRu
-         gHldJU1uHYoqJJIGyBKOtA1K7UEvWE4Gd42Oi9P9P9luPZqBnilYh9lrMKzDn92rlxdo
-         WqPg==
-X-Gm-Message-State: APjAAAW0hURqKYNkhWAvegZQmXQmvBGJ/0Yi+0uXzqY9g3tWWGiIVgiE
-        LNUxqpDfat4+JDRgQmITqPI=
-X-Google-Smtp-Source: APXvYqyXzMikgbJphz6F9LrsoMOllbA3CfJ0mJ/bg7vVb+D1/A2fBP5WkGbIGc5jXdMHFZE0h/BHRQ==
-X-Received: by 2002:adf:80e1:: with SMTP id 88mr53972107wrl.127.1564674803244;
-        Thu, 01 Aug 2019 08:53:23 -0700 (PDT)
+        bh=6XZWqNe23BNdaGrEkB80ojuU5o+2UTNTM6wOSPJMGVc=;
+        b=DmgFOgMFYoxnsVlQKb92ZBTj9n9ira9eRqX+yU3Etj1TBjIi2zi185TSzweCBOnIxO
+         JBOxX1I1k/091M941fPu37d7BOvT4pjxn2zmGFV36EuwTiiVEX0/WkNl71R+ovJetwYy
+         JvNTzKAlEh03d97crfH3lMrnf2UQGRnP05AgMj2pv3UwA41+C1vmlbuJ0Yk3yX44Y5MG
+         LdQ2oGoLVQQ41tdXjMjd95A9NN087S4/zB7xatZ+4hANG78AKw606Dkiut/MIG4wr+bW
+         HbJzEqAHJW/QTwATrmthDzvOPUSIjzaCRNkCTbDf6vGKrBZIpvHCSNgtr1yKVvM/8Dyt
+         d6Ow==
+X-Gm-Message-State: APjAAAWQ7P8dyidm5Ph7qVA772xy97bcs+391J/BugH0aCBsox7PQHVz
+        tGNiXe99iQ41j1zTT5cvioY=
+X-Google-Smtp-Source: APXvYqyIrzUUkIrlfI6ewEHkQB7JqxwGdDmMg/m4ltR68ia7XxT5nAwaOkh0Wcz3bNTgtyR1YwtbrA==
+X-Received: by 2002:a1c:f409:: with SMTP id z9mr46839642wma.176.1564674804775;
+        Thu, 01 Aug 2019 08:53:24 -0700 (PDT)
 Received: from localhost.localdomain (x4dbd0ed1.dyn.telefonica.de. [77.189.14.209])
-        by smtp.gmail.com with ESMTPSA id g17sm55434473wrm.7.2019.08.01.08.53.21
+        by smtp.gmail.com with ESMTPSA id g17sm55434473wrm.7.2019.08.01.08.53.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Aug 2019 08:53:22 -0700 (PDT)
+        Thu, 01 Aug 2019 08:53:24 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/3] tests: run non-httpd-specific tests before sourcing 'lib-httpd.sh'
-Date:   Thu,  1 Aug 2019 17:53:06 +0200
-Message-Id: <20190801155309.15276-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/3] t5510-fetch: run non-httpd-specific test before sourcing 'lib-httpd.sh'
+Date:   Thu,  1 Aug 2019 17:53:07 +0200
+Message-Id: <20190801155309.15276-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.22.0.926.g602b9a0287
-In-Reply-To: <20190730214000.GT20404@szeder.dev>
+In-Reply-To: <20190801155309.15276-1-szeder.dev@gmail.com>
 References: <20190730214000.GT20404@szeder.dev>
+ <20190801155309.15276-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,39 +71,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Hrm...  It looks like there is nothing httpd-specific in this test
-> case, at all, so we could run it even if a webserver is not available.
-> Moving this test case earlier in the script seems to confirm it, as it
-> still succeeds.
+'t5510-fetch.sh' sources 'lib-httpd.sh' near the end to run a
+httpd-specific test, but 'lib-httpd.sh' skips all the rest of the test
+script if the dependencies for running httpd tests are not fulfilled.
+Alas, recently cdbd70c437 (fetch: add --[no-]show-forced-updates
+argument, 2019-06-18) appended a non-httpd-specific test at the end,
+and this test is then skipped as well when httpd tests can't be run.
 
-It turns out 't5510' is not the only test script that contains
-non-httpd-specific tests after sourcing 'lib-httpd.sh', but 't5703'
-did so as well.
+Move this new test earlier in the test script, before 'lib-httpd.sh'
+is sourced, so it will be run even when httpd tests aren't.
 
-The first patch is a follow-up to 'sg/t5510-test-i18ngrep-fix'.
-The second patch fixes a similar issue from the v2.19 era.
-The last one only adds comments to all the other test scripts sourcing
-'lib-httpd.sh' to warn against adding non-httpd-specific tests at the
-end, in the hope that it won't happen again.
+Also add a comment at the end of this test script to warn against
+adding non-httpd-specific tests at the end, in the hope that it will
+help prevent similar issues in the future.
 
-SZEDER Gábor (3):
-  t5510-fetch: run non-httpd-specific test before sourcing
-    'lib-httpd.sh'
-  t5703: run all non-httpd-specific tests before sourcing 'lib-httpd.sh'
-  tests: warn against appending non-httpd-specific tests at the end
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t5510-fetch.sh | 47 +++++++++++++++++++++++++----------------------
+ 1 file changed, 25 insertions(+), 22 deletions(-)
 
- t/t0410-partial-clone.sh           |   3 +
- t/t5500-fetch-pack.sh              |   3 +
- t/t5510-fetch.sh                   |  47 +++----
- t/t5537-fetch-shallow.sh           |   3 +
- t/t5545-push-options.sh            |   3 +
- t/t5601-clone.sh                   |   3 +
- t/t5616-partial-clone.sh           |   3 +
- t/t5700-protocol-v1.sh             |   3 +
- t/t5702-protocol-v2.sh             |   3 +
- t/t5703-upload-pack-ref-in-want.sh | 204 +++++++++++++++--------------
- 10 files changed, 153 insertions(+), 122 deletions(-)
-
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index f2481de577..34b486f1a4 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -902,6 +902,29 @@ test_expect_success C_LOCALE_OUTPUT 'fetch compact output' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--no-show-forced-updates' '
++	mkdir forced-updates &&
++	(
++		cd forced-updates &&
++		git init &&
++		test_commit 1 &&
++		test_commit 2
++	) &&
++	git clone forced-updates forced-update-clone &&
++	git clone forced-updates no-forced-update-clone &&
++	git -C forced-updates reset --hard HEAD~1 &&
++	(
++		cd forced-update-clone &&
++		git fetch --show-forced-updates origin 2>output &&
++		test_i18ngrep "(forced update)" output
++	) &&
++	(
++		cd no-forced-update-clone &&
++		git fetch --no-show-forced-updates origin 2>output &&
++		test_i18ngrep ! "(forced update)" output
++	)
++'
++
+ setup_negotiation_tip () {
+ 	SERVER="$1"
+ 	URL="$2"
+@@ -978,27 +1001,7 @@ test_expect_success '--negotiation-tip limits "have" lines sent with HTTP protoc
+ 	check_negotiation_tip
+ '
+ 
+-test_expect_success '--no-show-forced-updates' '
+-	mkdir forced-updates &&
+-	(
+-		cd forced-updates &&
+-		git init &&
+-		test_commit 1 &&
+-		test_commit 2
+-	) &&
+-	git clone forced-updates forced-update-clone &&
+-	git clone forced-updates no-forced-update-clone &&
+-	git -C forced-updates reset --hard HEAD~1 &&
+-	(
+-		cd forced-update-clone &&
+-		git fetch --show-forced-updates origin 2>output &&
+-		test_i18ngrep "(forced update)" output
+-	) &&
+-	(
+-		cd no-forced-update-clone &&
+-		git fetch --no-show-forced-updates origin 2>output &&
+-		test_i18ngrep ! "(forced update)" output
+-	)
+-'
++# DO NOT add non-httpd-specific tests here, because the last part of this
++# test script is only executed when httpd is available and enabled.
+ 
+ test_done
 -- 
 2.22.0.926.g602b9a0287
 
