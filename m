@@ -2,189 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1DF1F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 15:46:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C028D1F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 15:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729890AbfHAPqC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 11:46:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57196 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727537AbfHAPqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 11:46:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21BFF749FF;
-        Thu,  1 Aug 2019 11:46:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1EQAg8GyzkiAlrn/wTA5TGTh+CU=; b=WqSA++
-        blDFdKcDwMY8+o60yhh5GZNnbfLi78AFjMdSYCQE6ngd0AIR4llWw0jg3cKnapSb
-        k68UzEojEy+MQrPgnAcIiNtlEnpyWPeG1QukYUHXspSWSH/DQEI/LHircsal6k3B
-        LqB6fCMyjoG2KHLCPVbvBP4OO7Dek18aC7JdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EvH+rIo8xpJ9YQbymMUmVDuAEpDofBW5
-        rKtHYlGJPsG1Cpznntlm0RbvoF3Zp6LYOY6j/93Ub1LUyEo0N1JqAtUvcSjcgsuf
-        ZzBHHEoXM6jhIchJ0+SMH+0vjEnYjsCOdzc8Q3TSro7LbodWOTuc1DxLW4/TdBTv
-        ZHEO94mhJCg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 19424749FE;
-        Thu,  1 Aug 2019 11:46:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3DF9A749FC;
-        Thu,  1 Aug 2019 11:45:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com,
-        Ariadne Conill <ariadne@dereferenced.org>
-Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
-        <20190731231848.GC1933@sigill.intra.peff.net>
-        <20190801002125.GA176307@google.com>
-Date:   Thu, 01 Aug 2019 08:45:54 -0700
-In-Reply-To: <20190801002125.GA176307@google.com> (Jonathan Nieder's message
-        of "Wed, 31 Jul 2019 17:21:25 -0700")
-Message-ID: <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731782AbfHAPxZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 11:53:25 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:39627 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729162AbfHAPxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 11:53:25 -0400
+Received: by mail-wr1-f41.google.com with SMTP id x4so20984151wrt.6
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 08:53:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dVm1+jJFoGi87pJgpaoxTbBNmc9/KG4q0coYZj2PHBg=;
+        b=s1qHUBzdgyY2hr+wFf8HjalMMZ5PUbgIKvz/PSRkT1+3uR8Nl3KFz8TYAxRikTL8lF
+         JcrzZlfYSk9qAGYzY1hfeC7Uc6Rp9tBdPa3nwT8TcuKyrZtjT+C7/YCELgIpAnEIdZOI
+         UV1773dDNvrqrpxy4VazJYkkQ2gnmAg3IQ3hMpISs91tLOX+wfDDgl9Pknp//eu9WH+c
+         2zgvU2BQFwkFuceQBGZwe1YWC980A6WW9MtdqWrcwiZf2omYmBcBH5MdJuXKFPuqYbP/
+         nLTF3sc1MnqrYrLpteQXIZLYYjj8udzv4eeU8k66vTwd4JgXEr9uwppinSXgNWySTvNY
+         gNSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dVm1+jJFoGi87pJgpaoxTbBNmc9/KG4q0coYZj2PHBg=;
+        b=dD/LvudEhd8OHDuulV+M25CzexE/5KkPw7kNIItP7yfYdXUJB92lbTUJaaZk/qZUkE
+         I1VDpx62UUZV7lUaG0XDSy3uhinDPmqEG5pe9hMmioDIxsdAI2HP+DjtSO1RhDi5UyGC
+         by/xDtzmhTBfpHTavD1jHK49RXapqO917ax2j+LC42cBe2PqhPYVLiHyE6E1Czr1vnAt
+         5LlpnsMi/1DsXkr2CPPZOgk7T+DkLlyAFlDcYw3x2srRsvuweu4v0mPusIpDXdTmDRRu
+         gHldJU1uHYoqJJIGyBKOtA1K7UEvWE4Gd42Oi9P9P9luPZqBnilYh9lrMKzDn92rlxdo
+         WqPg==
+X-Gm-Message-State: APjAAAW0hURqKYNkhWAvegZQmXQmvBGJ/0Yi+0uXzqY9g3tWWGiIVgiE
+        LNUxqpDfat4+JDRgQmITqPI=
+X-Google-Smtp-Source: APXvYqyXzMikgbJphz6F9LrsoMOllbA3CfJ0mJ/bg7vVb+D1/A2fBP5WkGbIGc5jXdMHFZE0h/BHRQ==
+X-Received: by 2002:adf:80e1:: with SMTP id 88mr53972107wrl.127.1564674803244;
+        Thu, 01 Aug 2019 08:53:23 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd0ed1.dyn.telefonica.de. [77.189.14.209])
+        by smtp.gmail.com with ESMTPSA id g17sm55434473wrm.7.2019.08.01.08.53.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 01 Aug 2019 08:53:22 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/3] tests: run non-httpd-specific tests before sourcing 'lib-httpd.sh'
+Date:   Thu,  1 Aug 2019 17:53:06 +0200
+Message-Id: <20190801155309.15276-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.22.0.926.g602b9a0287
+In-Reply-To: <20190730214000.GT20404@szeder.dev>
+References: <20190730214000.GT20404@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 740BEC76-B473-11E9-9F0E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+> Hrm...  It looks like there is nothing httpd-specific in this test
+> case, at all, so we could run it even if a webserver is not available.
+> Moving this test case earlier in the script seems to confirm it, as it
+> still succeeds.
 
-> Although as Dscho mentions, it's particularly irritating because it is
-> not part of the paginated output.
-> ...
-> Let's bite the bullet and jump straight to --use-mailmap in case (4).
->
-> While at it, add a new log.mailmap setting "auto" that can be used to
-> explicitly request the new automatic behavior (so that e.g. if
-> log.mailmap is set to "true" system-side, I can set it to "auto" in my
-> per-user configuration).
+It turns out 't5510' is not the only test script that contains
+non-httpd-specific tests after sourcing 'lib-httpd.sh', but 't5703'
+did so as well.
 
-While I think "revert to hardcoded default" may be a good idea, I do
-not think the hardcoded default you implemented that changes the
-behaviour based on the output destination makes much sense.  If I
-want to eradicate junkio@cox.net from my paged/interactive output, I
-want to eradicate it also in the output piped to the script I use
-for authorship stats.  
+The first patch is a follow-up to 'sg/t5510-test-i18ngrep-fix'.
+The second patch fixes a similar issue from the v2.19 era.
+The last one only adds comments to all the other test scripts sourcing
+'lib-httpd.sh' to warn against adding non-httpd-specific tests at the
+end, in the hope that it won't happen again.
 
-I suspect that you may have misread the "is interactive" bit in the
-original; that was used only to decide if we are going to warn.
+SZEDER Gábor (3):
+  t5510-fetch: run non-httpd-specific test before sourcing
+    'lib-httpd.sh'
+  t5703: run all non-httpd-specific tests before sourcing 'lib-httpd.sh'
+  tests: warn against appending non-httpd-specific tests at the end
 
-Anyway, how about this much simplified version?
+ t/t0410-partial-clone.sh           |   3 +
+ t/t5500-fetch-pack.sh              |   3 +
+ t/t5510-fetch.sh                   |  47 +++----
+ t/t5537-fetch-shallow.sh           |   3 +
+ t/t5545-push-options.sh            |   3 +
+ t/t5601-clone.sh                   |   3 +
+ t/t5616-partial-clone.sh           |   3 +
+ t/t5700-protocol-v1.sh             |   3 +
+ t/t5702-protocol-v2.sh             |   3 +
+ t/t5703-upload-pack-ref-in-want.sh | 204 +++++++++++++++--------------
+ 10 files changed, 153 insertions(+), 122 deletions(-)
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Thu, 1 Aug 2019 08:32:44 -0700
-Subject: [PATCH] log: flip the --mailmap default unconditionally
-
-It turns out that being cautious to warn against upcoming default
-change was an unpopular behaviour, and such a care can easily be
-defeated by distro packagers to render it ineffective anyway.
-
-Just flip the default, with only a mention in the release notes.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/RelNotes/2.23.0.txt |  8 +++-----
- builtin/log.c                     | 16 +---------------
- t/t7006-pager.sh                  |  2 --
- 3 files changed, 4 insertions(+), 22 deletions(-)
-
-diff --git a/Documentation/RelNotes/2.23.0.txt b/Documentation/RelNotes/2.23.0.txt
-index 19e894a44e..6ef8f21b56 100644
---- a/Documentation/RelNotes/2.23.0.txt
-+++ b/Documentation/RelNotes/2.23.0.txt
-@@ -10,6 +10,9 @@ Backward compatibility note
-    prerequisite patches in an unstable way, which has been updated to
-    compute in a way that is compatible with "git patch-id --stable".
- 
-+ * The "git log" command by default behaves as if the --mailmap option
-+   was given.
-+
- 
- UI, Workflows & Features
- 
-@@ -91,11 +94,6 @@ UI, Workflows & Features
-    commit-graph files now, which allows the commit-graph files to be
-    updated incrementally.
- 
-- * The "git log" command learns to issue a warning when log.mailmap
--   configuration is not set and --[no-]mailmap option is not used, to
--   prepare users for future versions of Git that uses the mailmap by
--   default.
--
-  * "git range-diff" output has been tweaked for easier identification
-    of which part of what file the patch shown is about.
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 1cf9e37736..40b4cbf57d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -156,16 +156,6 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 		parse_date_format(default_date_mode, &rev->date_mode);
- }
- 
--static char warn_unspecified_mailmap_msg[] =
--N_("log.mailmap is not set; its implicit value will change in an\n"
--   "upcoming release. To squelch this message and preserve current\n"
--   "behaviour, set the log.mailmap configuration value to false.\n"
--   "\n"
--   "To squelch this message and adopt the new behaviour now, set the\n"
--   "log.mailmap configuration value to true.\n"
--   "\n"
--   "See 'git help config' and search for 'log.mailmap' for further information.");
--
- static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
- {
-@@ -214,12 +204,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 	memset(&w, 0, sizeof(w));
- 	userformat_find_requirements(NULL, &w);
- 
--	if (mailmap < 0) {
--		if (session_is_interactive() && !rev->pretty_given)
--			warning("%s\n", _(warn_unspecified_mailmap_msg));
--
-+	if (mailmap < 0)
- 		mailmap = 0;
--	}
- 
- 	if (!rev->show_notes_given && (!rev->pretty_given || w.notes))
- 		rev->show_notes = 1;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 7976fa7bcc..00e09a375c 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -7,8 +7,6 @@ test_description='Test automatic use of a pager.'
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
- test_expect_success 'setup' '
--	: squelch advice messages during the transition &&
--	git config --global log.mailmap false &&
- 	sane_unset GIT_PAGER GIT_PAGER_IN_USE &&
- 	test_unconfig core.pager &&
- 
 -- 
-2.23.0-rc0-144-gce799e40b3
-
-
+2.22.0.926.g602b9a0287
 
