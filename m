@@ -2,198 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68A3D1F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 15:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB2831F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 15:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732078AbfHAPxa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 11:53:30 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41416 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731801AbfHAPxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 11:53:30 -0400
-Received: by mail-wr1-f67.google.com with SMTP id c2so70923463wrm.8
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 08:53:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EdU9NOM3f+HsCfk1SA0uqzQnnqszZ1DIBNIE0nHRwNk=;
-        b=MJ3dXwohzR4wyt5rnfvj3E6Z2SC4VERgTeHXogamDLacJ1ubwEv/KmpLyWZmn+u4Ls
-         Ua8MnWjiaj5vdMcUI8oigaQyT4+If1WzMzrCoTIE4Vqr9j09F1YAzLVI9e86KNE5Upao
-         9Qa0L+j0QDNjUizXEBoXKOb6DtuEvftTMUjhvoYqVU5MheNNNjqMOOwxnNpjVHcXT+Lo
-         erYBRe/rDgPN1ZmQGwp36nSgDIfAGG+3hlrhyXCjoOG8EyH6sdcUo5vKdB9++jU+IUYc
-         oUqlKdIAuTwSuZBDmV7ttKVUmLpHJYHPiSw79ixEOkOaCZmANpaOSlvDzydw1+TKhZmS
-         KgpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EdU9NOM3f+HsCfk1SA0uqzQnnqszZ1DIBNIE0nHRwNk=;
-        b=IDapEtxdj5mdjBWFp0wzXcF8d72zjDxyLigGvFgoJ7XdrOQ/dZBOXeI1Vnthjw+7B9
-         dmk3A1A94jycRuMv+fKPX7vhQcxguXd9u7ZmLyXHQynT3QCzjlD9sJc3ED0dKKDAfFDi
-         86/4RrxqYpDQZ/OhnvO4P+9r2mAhIlYgFSWnpx5uae/slsXucAKjpqHdkPXd4gIWNtY0
-         E5QTxBo9loy3s8um9CD9TQnQsuAOue4EBCSxkSyzZnqrQew1ocJeY3LCo5P6y6sYSse4
-         C0Cx2oSO6nrKnW9+0HyXWEgBaZvu+aiJXXMJgv58w5tio0+kd7hAafciRXh3PMozfMiy
-         bgSQ==
-X-Gm-Message-State: APjAAAUdv7nX4BA8zFsQo+72qmIIkTcc+01Ki+0ZPZyC+8FCeTCJGZrg
-        LL9nNp6IohYzMuqXDC1Dvl0=
-X-Google-Smtp-Source: APXvYqwwZQSCIqwOzbjU2XENY4q0vjx3VpUWKK3Z653Gh3Ug47c8FQbUCdtUGRaXtP1JEaCVw+gJIQ==
-X-Received: by 2002:a5d:4fc8:: with SMTP id h8mr26067386wrw.177.1564674807076;
-        Thu, 01 Aug 2019 08:53:27 -0700 (PDT)
-Received: from localhost.localdomain (x4dbd0ed1.dyn.telefonica.de. [77.189.14.209])
-        by smtp.gmail.com with ESMTPSA id g17sm55434473wrm.7.2019.08.01.08.53.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Aug 2019 08:53:26 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/3] tests: warn against appending non-httpd-specific tests at the end
-Date:   Thu,  1 Aug 2019 17:53:09 +0200
-Message-Id: <20190801155309.15276-4-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.22.0.926.g602b9a0287
-In-Reply-To: <20190801155309.15276-1-szeder.dev@gmail.com>
-References: <20190730214000.GT20404@szeder.dev>
- <20190801155309.15276-1-szeder.dev@gmail.com>
+        id S1732407AbfHAP4W (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 11:56:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50770 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730216AbfHAP4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 11:56:21 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4FA914F896;
+        Thu,  1 Aug 2019 11:56:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=obIM0vXGdLxe
+        mWFJU/Lj6sFQNrk=; b=XbuOc69GYUF0rpx0ijIE4p5y3gLDSwyxAJGhzFWhe6Y7
+        kUaBfStkQmixm/RUsCl8cJp6vSH7pIYhfwEHz5fTwoUxeGixshGDrEcV2G7mZSNa
+        eG1u+1Ar5LjbfmOGucjUJkfR2opBD7/uBk5R/UUyTIT4U2QVhc4kmOH1Cwlp+IU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qD8Amd
+        55f77/TdOs79Xgv5wNePRc12/aiKYn8fRBN0v4CVnDZ5CFaJw1rz6w8XmwYjt27J
+        yIlBZ/OvGLYpkUnexVvW3KLh/giGWcWdLXzqUgUKRm8WYYXNOTJtOKDdiwyWV+2C
+        84Ni0UOXTONZXw/hWBn2EPrttPjLdc3sP2IJY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA6BD14F894;
+        Thu,  1 Aug 2019 11:56:19 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 098D814F893;
+        Thu,  1 Aug 2019 11:56:18 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        git@vger.kernel.org
+Subject: Re: Support for --stdin-paths in commit, add, etc
+References: <a38bc928-7ccd-e2d9-b89b-23298e9fa95d@syntevo.com>
+        <066cfd61-9700-e154-042f-fc9cffbd6346@web.de>
+Date:   Thu, 01 Aug 2019 08:56:17 -0700
+In-Reply-To: <066cfd61-9700-e154-042f-fc9cffbd6346@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 1 Aug 2019 16:26:23 +0200")
+Message-ID: <xmqqef24op5q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E6A9441C-B474-11E9-9978-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a couple of test scripts that are not completely
-httpd-specific, but do run a few httpd-specific tests at the end.
-These test scripts source 'lib-httpd.sh' somewhere mid-script, which
-then skips all the rest of the test script if the dependencies for
-running httpd tests are not fulfilled.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-As the previous two patches in this series show, already on two
-occasions non-httpd-specific tests were appended at the end of such
-test scripts, and, consequently, they were skipped as well when httpd
-tests couldn't be run.
+> Would it make sense to have a --paths-file parameter instead that allow=
+s
+> reading paths from a given file and honors the convention of reading
+> from stdin with the special argument "-"?  Reading from stdin would
+> still only work for one parameter at a time, but paths could also be
+> passed via a regular file or named pipe, allowing for more flexibility.
 
-Add a comment at the end of these test scripts to warn against adding
-non-httpd-specific tests at the end, in the hope that they will help
-prevent similar issues in the future.
+The command's primary function itself may want to use the standard
+input stream to read things other than the list of paths; if we are
+not limiting ourselves to plumbing (i.e. doing one thing well), the
+"--stdin-paths" may not be a general solution that is good enough.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t0410-partial-clone.sh | 3 +++
- t/t5500-fetch-pack.sh    | 3 +++
- t/t5537-fetch-shallow.sh | 3 +++
- t/t5545-push-options.sh  | 3 +++
- t/t5601-clone.sh         | 3 +++
- t/t5616-partial-clone.sh | 3 +++
- t/t5700-protocol-v1.sh   | 3 +++
- t/t5702-protocol-v2.sh   | 3 +++
- 8 files changed, 24 insertions(+)
-
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 5bd892f2f7..6415063980 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -518,4 +518,7 @@ test_expect_success 'fetching of missing objects from an HTTP server' '
- 	git verify-pack --verbose "$IDX" | grep "$HASH"
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 1c71c0ec77..8210f63d41 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -920,4 +920,7 @@ test_expect_success 'fetch with --filter=blob:limit=0 and HTTP' '
- 	fetch_filter_blob_limit_zero "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 66f0b64d39..97a67728ca 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -255,4 +255,7 @@ test_expect_success 'shallow fetches check connectivity before writing shallow f
- 	git -C client fsck
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index 6d1d59c9b1..04b34c4de1 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -278,4 +278,7 @@ test_expect_success 'push options keep quoted characters intact (http)' '
- 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 37d76808d4..4a3b901f06 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -739,4 +739,7 @@ test_expect_success 'partial clone using HTTP' '
- 	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index b91ef548f8..565254558f 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -417,4 +417,7 @@ test_expect_success 'tolerate server sending REF_DELTA against missing promisor
- 	! test -e "$HTTPD_ROOT_PATH/one-time-sed"
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index 7c9511c593..2571eb90b7 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -292,4 +292,7 @@ test_expect_success 'push with http:// using protocol v1' '
- 	grep "git< version 1" log
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 011b81d4fc..fbddd0aea9 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -723,4 +723,7 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
- 	test_i18ngrep "expected no other sections to be sent after no .ready." err
- '
- 
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
- test_done
--- 
-2.22.0.926.g602b9a0287
+So, reading paths from a file (which could be "-" as you suggest)
+would be a good solution for that.
 
