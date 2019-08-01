@@ -2,192 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E8561F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 16:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5286E1F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 17:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731719AbfHAQQW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 12:16:22 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34425 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727885AbfHAQQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 12:16:22 -0400
-Received: by mail-pl1-f195.google.com with SMTP id i2so32447894plt.1
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 09:16:21 -0700 (PDT)
+        id S1729881AbfHARJ5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 13:09:57 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38807 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725804AbfHARJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 13:09:57 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y15so34442008pfn.5
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 10:09:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gsIp4oYn0HlNKz7anghHI6Lya8u90wtCs4lmVjSs9mY=;
-        b=Qns2KQdR9hfh6yQywbgU+zfY5smbvuIofaGszi3b3LddEuRixAWNJKEQX9wicCLb2s
-         bQZNd+DdiIxpPiVA1Dt3qE/vRqqbkz+ZoMQ5xgN1vlYzBYYk86ebLnqeZwpBWcFsURs+
-         ELK2RAl69bBRkMkGTJAdoEsZK0noFyrWyMocME4K99/oFPcBSAmVmPrg6U7e87U61CtG
-         payKvUWrS5byCYp7KkPWDdP/GHN+ExDBtbPoswkEWNC5irBgaB+qqBq8MvWWp7QBG79m
-         KosTvw36Fa5TVytvQm5WDLDw8xNOX/zJuMJiBrDUTlCNQlyp2nsajtXf7bUhQfRnNqmO
-         MG1g==
+        bh=3hPsPItL8UlhGODMtdmrHFn4vDcj2yVnpE055Q5D+uo=;
+        b=RcnivDZNNRi1oo9SRKYHueuVfjefjyHaRht6x2YNwjkyCocCWILd/ynHzMHff4m9p3
+         hxIvES4h++H/E4WV3edgTfJPvf4srFOF1ninHHttj7R1lLnw0o8oNrzmp9PGCh2GCjIz
+         ixRo8IFuJ09QkkbjJX5rMZN1DPIv7q/a0d3cMdgUREeYJR8daymkxEW3cuH+TdCVl+W1
+         JddTQNhBdGppR1Ruc9HhPRIeZ54uQgtkFfqT4x6wEHxdrMGAIgQDZveU6kFJHPnFR4tE
+         f1z6THa+mTt67SNJYEARw58WfPMUOjXFVS0MFgCjMiOgGuHNpz2dOKdAn2x307jSW+kb
+         06oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gsIp4oYn0HlNKz7anghHI6Lya8u90wtCs4lmVjSs9mY=;
-        b=nhivDhOu9oTt4DgRQ89T5oi96e+iT80LHRO+PuUVtTuhHQ80xkmFFIF1uksvm1X2hh
-         PhjXPxqsFuvcCuK6hguS1RXSo2Q32FdCGrGr60L5nA000ethlPU+6YE+vi3L4n9wA9tx
-         xuSQ5alRhzMqsGOrZoZiprM3uL+G6rsmsF/WcVdMdtBxUDPub5Vmwp53UVynqAcFdkXo
-         Z1y7/9EsPH1Tm5prk6eM5ZTd/4I+RkSxlACw/XSVBumTFN8ta1MURVL79NwkgMlcBpgc
-         A7Y23d181f7wiAxe1EHATvLtq34qPp2kWaBsGQPBpihcabwT1WBy68h/dHaQYD+REeyn
-         yNMA==
-X-Gm-Message-State: APjAAAV3ChD65IHZ7GTSqYmV4DxhgEbCanAqOGFTaGAOJgwJvP1iixtC
-        otjn2oc4h9/OHwJ+y8FCun4=
-X-Google-Smtp-Source: APXvYqyHEHVyvdhTbf9JKn18ddBraYJ0QdLbEcobWpfChyspY4LnnCkF3XQ3F2xqfnhxl9cKPkVZCg==
-X-Received: by 2002:a17:902:9b94:: with SMTP id y20mr126611639plp.260.1564676181269;
-        Thu, 01 Aug 2019 09:16:21 -0700 (PDT)
-Received: from localhost.localdomain (92.18.24.136.in-addr.arpa. [136.24.18.92])
-        by smtp.googlemail.com with ESMTPSA id b68sm88741663pfb.149.2019.08.01.09.16.20
+        bh=3hPsPItL8UlhGODMtdmrHFn4vDcj2yVnpE055Q5D+uo=;
+        b=P8wY/dYYBh0zBhwMvxQAtuXlC0weI1bDKzCkCVmghh49Rjm2LFrHhgZ4zD9H/yXysB
+         vJCbKflupg0sju5tEQ7ynK93O4gbXzKWbZccQVeA1NCvzkDZaWcx+HTU2hAOKttPo/8X
+         cclbjXFbh/R+jeWHVvdK3d3B4nSS1ryUAIcBXlnPDDLIRqRbY8iEk/qdvw8tEI0AGpkJ
+         Xs/P+C670gGx0Z9uw4Ml8kMhBQNYkf660MuwKjV2Dnr4xwISiEqJxjU7kiO42Wi0Ugci
+         5l8H+Ddf5nHpUsFamc4yRTP2Uh2bD/PuD0WSIBeRjBFRcx7j6k2aeMTSkWuVmEKM1KWW
+         IsLg==
+X-Gm-Message-State: APjAAAVTjF9ficoci6V0jFNbAspJCb4xRoNO5Mcy9WGgVpM9Co90bzYp
+        LHixWNFOlmyr+omDNH13sAEwV/f2JhQ=
+X-Google-Smtp-Source: APXvYqwiPFjEp1APy6YMQ3eXxKnH+LMkq4vfuMBpWWt6wcTayJwyDVP8kvzMlKJn98CZxFcfxP/+qQ==
+X-Received: by 2002:a63:593:: with SMTP id 141mr117560006pgf.78.1564679395990;
+        Thu, 01 Aug 2019 10:09:55 -0700 (PDT)
+Received: from localhost.localdomain ([205.209.24.227])
+        by smtp.gmail.com with ESMTPSA id a1sm22802806pgh.61.2019.08.01.10.09.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Aug 2019 09:16:20 -0700 (PDT)
-From:   Varun Naik <vcnaik94@gmail.com>
-To:     vcnaik94@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-Subject: [PATCH v3] diff-lib.c: handle empty deleted ita files
-Date:   Thu,  1 Aug 2019 09:15:58 -0700
-Message-Id: <20190801161558.12838-1-vcnaik94@gmail.com>
+        Thu, 01 Aug 2019 10:09:55 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, l.s.r@web.de, gitster@pobox.com
+Subject: [PATCH v2] grep: avoid leak of chartables in PCRE2
+Date:   Thu,  1 Aug 2019 10:09:46 -0700
+Message-Id: <20190801170946.81221-1-carenas@gmail.com>
 X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190712150235.12633-1-vcnaik94@gmail.com>
-References: <20190712150235.12633-1-vcnaik94@gmail.com>
+In-Reply-To: <20190727202759.22310-1-carenas@gmail.com>
+References: <20190727202759.22310-1-carenas@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is possible to delete a committed file from the index and then add it
-as intent-to-add. Certain forms of `git diff` should show the file.
-After `git reset HEAD`, the file should be identical in the index and
-HEAD. The commands already work correctly if the file has contents in
-HEAD. This patch provides the desired behavior even when the file is
-empty in HEAD.
+94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) introduced
+a small memory leak visible with valgrind in t7813.
 
-The affected "diff" commands and the "reset" command call
-diff-lib.c:do_oneway_diff() with a cache entry in the index and a cache
-entry in HEAD. An ita file is represented in the index by a cache entry
-with the same hash as an empty file. For a nonempty deleted ita file,
-do_oneway_diff() calls show_modified(), which detects a diff between the
-cache entry in the index and the cache entry in HEAD and therefore deems
-the file "modified". However, for an empty deleted ita file,
-do_oneway_diff() previously detected no such diff between the two cache
-entries and therefore deemed the file "not modified". After this fix,
-for any deleted ita file, do_oneway_diff() calls diff_index_show_file()
-and deems the file "deleted".
+Complete the creation of a PCRE2 specific variable that was missing from
+the original change and free the generated table just like it is done
+for PCRE1.
 
-`git diff-index --cached HEAD` prints a row of output for both a
-"modified" and a "deleted" file, although the output differs slightly.
-`git reset HEAD` treats a "modified" and a "deleted" file similarly,
-resurrecting the file in the index from HEAD.
+The table cleanup use free as there is no global context defined when
+it was created (pcre2_maketables is passed a NULL pointer) but if that
+gets ever changed will need to be updated in tandem.
 
-This change should not affect newly added ita files. For those, the
-"tree" cache entry is NULL, so the changed code is not executed.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
-I tried to limit the "blast radius" of affected commands as much as
-possible. To find commands that were affected, I ran the following:
-    git diff
-    git diff HEAD
-    git diff --cached HEAD
-    git diff-index HEAD
-    git diff-index --cached HEAD
-    git diff-files
+V2:
+* better document why free is used as suggested by René
+* avoid reusing PCRE1 variable for easy of maintenance (per Ævar)
 
-I also ran each command with the option "--ita-visible-in-index" and the
-option "--ita-invisible-in-index". Of these 18 commands, the following
-three showed a diff for nonempty deleted ita files, but no diff for
-empty deleted ita files. All three commands now work correctly, but I
-chose the first one for the test case because the option
-"--ita-visible-in-index" is still marked as experimental.
-    git diff-index --cached HEAD
-    git diff-index --cached --ita-visible-in-index HEAD
-    git diff --cached --ita-visible-in-index HEAD
+ grep.c | 7 ++++---
+ grep.h | 1 +
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-The `git add` at the end of the "diff-index" test case is necessary
-because `git reset --hard HEAD` at the beginning of the next test case
-_also_ breaks for empty deleted ita files. That command goes into
-unpack-trees.c:oneway_merge() rather than diff-lib.c:do_oneway_diff().
-I plan to create a separate patch to fix that, after I figure out which
-commands are part of its blast radius.
-
- diff-lib.c            |  5 ++++-
- t/t2203-add-intent.sh | 13 +++++++++++++
- t/t7102-reset.sh      | 11 +++++++++++
- 3 files changed, 28 insertions(+), 1 deletion(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index 61812f48c2..29dba467d5 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -433,8 +433,11 @@ static void do_oneway_diff(struct unpack_trees_options *o,
+diff --git a/grep.c b/grep.c
+index f7c3a5803e..fbd3f3757c 100644
+--- a/grep.c
++++ b/grep.c
+@@ -488,7 +488,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 	PCRE2_UCHAR errbuf[256];
+ 	PCRE2_SIZE erroffset;
+ 	int options = PCRE2_MULTILINE;
+-	const uint8_t *character_tables = NULL;
+ 	int jitret;
+ 	int patinforet;
+ 	size_t jitsizearg;
+@@ -499,9 +498,10 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
  
- 	/*
- 	 * Something removed from the tree?
-+	 * Consider a file deleted from the index and added as ita to be "deleted",
-+	 * even though it should arguably be "modified", because we want empty
-+	 * deleted ita files to appear in the diff.
- 	 */
--	if (!idx) {
-+	if (!idx || (cached && ce_intent_to_add(idx))) {
- 		diff_index_show_file(revs, "-", tree, &tree->oid, 1,
- 				     tree->ce_mode, 0);
- 		return;
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 68e54d5c44..4e4a972921 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -261,6 +261,19 @@ test_expect_success '"diff HEAD" includes ita as new files' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '"diff-index --cached HEAD" detects diff for deleted intent-to-add file' '
-+	git reset --hard &&
-+	echo "nonempty" >nonempty &&
-+	>empty &&
-+	git add nonempty empty &&
-+	git commit -m "create files to be deleted" &&
-+	git rm --cached nonempty empty &&
-+	git add -N nonempty empty &&
-+	test_expect_code 1 git diff-index --cached --exit-code HEAD nonempty &&
-+	test_expect_code 1 git diff-index --cached --exit-code HEAD empty &&
-+	git add nonempty empty
-+'
-+
- test_expect_success 'apply --intent-to-add' '
- 	git reset --hard &&
- 	echo new >new-ita &&
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 97be0d968d..7b79502f7d 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -566,4 +566,15 @@ test_expect_success 'reset --mixed sets up work tree' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'reset --mixed removes deleted intent-to-add file from index' '
-+	echo "nonempty" >nonempty &&
-+	>empty &&
-+	git add nonempty empty &&
-+	git commit -m "create files to be deleted" &&
-+	git rm --cached nonempty empty &&
-+	git add -N nonempty empty &&
-+	git reset HEAD nonempty empty &&
-+	git diff --cached --exit-code nonempty empty
-+'
-+
- test_done
+ 	if (opt->ignore_case) {
+ 		if (has_non_ascii(p->pattern)) {
+-			character_tables = pcre2_maketables(NULL);
++			p->pcre2_tables = pcre2_maketables(NULL);
+ 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
+-			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
++			pcre2_set_character_tables(p->pcre2_compile_context,
++							p->pcre2_tables);
+ 		}
+ 		options |= PCRE2_CASELESS;
+ 	}
+@@ -605,6 +605,7 @@ static void free_pcre2_pattern(struct grep_pat *p)
+ 	pcre2_match_data_free(p->pcre2_match_data);
+ 	pcre2_jit_stack_free(p->pcre2_jit_stack);
+ 	pcre2_match_context_free(p->pcre2_match_context);
++	free((void *)p->pcre2_tables);
+ }
+ #else /* !USE_LIBPCRE2 */
+ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
+diff --git a/grep.h b/grep.h
+index 1875880f37..26d21a3433 100644
+--- a/grep.h
++++ b/grep.h
+@@ -96,6 +96,7 @@ struct grep_pat {
+ 	pcre2_compile_context *pcre2_compile_context;
+ 	pcre2_match_context *pcre2_match_context;
+ 	pcre2_jit_stack *pcre2_jit_stack;
++	const uint8_t *pcre2_tables;
+ 	uint32_t pcre2_jit_on;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
 -- 
 2.22.0
 
