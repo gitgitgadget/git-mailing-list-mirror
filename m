@@ -2,87 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD191F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 01:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFE951F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 01:34:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729296AbfHABOv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jul 2019 21:14:51 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:35570 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729274AbfHABOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jul 2019 21:14:51 -0400
-Received: by mail-pg1-f194.google.com with SMTP id s1so26706157pgr.2
-        for <git@vger.kernel.org>; Wed, 31 Jul 2019 18:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lUFc6IHR5wG1OpKJQUIv4/wg1m89+bmxvrybLblnCjE=;
-        b=sJxyvGa+Mjw5P75pcLnDIfQYHt8fSiOhMTr0XOtjpsX0C3DjCpkgRsJ2wYOWFSN3Hk
-         ZJLtlOJZHIVxJ+wSxWY+9AQ/AkxHf/3fr9MFXgScKV8BD8VR+B2MdCjrEQU17Xsw6xn1
-         JAjVppqK7nSSeOkGPRdH70xfYuKMFVzOejTpQm1pFMxbaamNXzEa4evPpemMhq5P5Qmg
-         3ABpQRGxuqNhdVYocNgiWc7ec9++3vu8zqMEYiaIMfsPVQewZJ3iWy7kahrFFR0aO5jL
-         IzFWOyGp1piV4mPdktJqjg9KihPa+r0FISH/c1owRe0kgs5hOU+15RC7My/j663L6CRu
-         5gvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lUFc6IHR5wG1OpKJQUIv4/wg1m89+bmxvrybLblnCjE=;
-        b=UTKqT2qUps6ga7wcw470FL28MstyuQ+rLkSK3udo/eRNfYI8rjMY3ZAO21ZIuFRtxA
-         Xnl9yJtXvGXsTJpomd50yp7Ha9E05s1rUdatn59GX5si3orTfI/V1QyCOpTqeM50j20N
-         UQpCcqHLTmxefgrcM35iXQe6pEQfEEWa8hJVPfzLo0B1rEUI+fgXYNZFQxfpMOARi6FQ
-         CNSLJyrmNtXd0WGNi01Ap7K+IFBPrE7HPComCWhzN8YI2OqieekkNcULOMdKdlkzBWMC
-         91v91AAQUx7Pz2AtDqA2nhupZsYmyuDQSoORKhaZPglcJwKppl+dp9/ssCZn5SQylWZs
-         O+eg==
-X-Gm-Message-State: APjAAAU8yv3lCdC2xKCuj6WagVGVu7iql12eFTTPGfO0JIFXMRhm27wi
-        QDQtC3dxlka/Pthp2oJl3pY=
-X-Google-Smtp-Source: APXvYqwvdbAcDi5Hlagqdp5G+d1kuQgK6I/wb23rsAYrZdejLo7rgG9S28xXFv94XC2vNCmSfpWC2w==
-X-Received: by 2002:a62:63c7:: with SMTP id x190mr48501782pfb.181.1564622090673;
-        Wed, 31 Jul 2019 18:14:50 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id o128sm75419409pfb.42.2019.07.31.18.14.49
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 31 Jul 2019 18:14:50 -0700 (PDT)
-Date:   Wed, 31 Jul 2019 18:14:48 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com,
-        Ariadne Conill <ariadne@dereferenced.org>
-Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
-Message-ID: <20190801011448.GB176307@google.com>
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
- <20190731231848.GC1933@sigill.intra.peff.net>
- <20190801002125.GA176307@google.com>
- <20190801010022.GA6553@sigill.intra.peff.net>
+        id S1729012AbfHABer (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jul 2019 21:34:47 -0400
+Received: from forward500j.mail.yandex.net ([5.45.198.250]:35410 "EHLO
+        forward500j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728582AbfHABer (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 31 Jul 2019 21:34:47 -0400
+Received: from mxback6q.mail.yandex.net (mxback6q.mail.yandex.net [IPv6:2a02:6b8:c0e:42:0:640:9de5:975f])
+        by forward500j.mail.yandex.net (Yandex) with ESMTP id 6F73C11C1B5D;
+        Thu,  1 Aug 2019 04:34:44 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback6q.mail.yandex.net (nwsmtp/Yandex) with ESMTP id sKyc908uYu-YhRmuvgr;
+        Thu, 01 Aug 2019 04:34:43 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1564623283;
+        bh=zauIwyRMgiX5qBgdGcM7tbGukWOmnzIlpBdtMBw2W90=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=F5+lGZv9ljqkubmWhZp1Sta8VAfdfkITdoGjzNwJrXOx6sduYlYKDoRBItrachoQM
+         /C7HFaxp2ZHGHpWsnbS1ASSoqhl4dfMuC20/1irDlxKtmz2PJ5Tp2hAkqMqmxLyDDS
+         /HCr9oYvah2khSpHwoXcUKqMUAzcILeB5jYbbq4c=
+Authentication-Results: mxback6q.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by vla1-822b1b47a947.qloud-c.yandex.net with HTTP;
+        Thu, 01 Aug 2019 04:34:43 +0300
+From:   Andrey <ahippo@yandex.ru>
+Envelope-From: ahippo@yandex.com
+To:     Philip McGraw <philip.mcgraw@bentley.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "luke@diamand.org" <luke@diamand.org>
+In-Reply-To: <BL0PR1901MB209790A0A8F5F9C8EFB8B3F0FFDF0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+References: <BL0PR1901MB209738ADDF9D931253E8C317FFDC0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+         <1955471564537683@vla1-53bffb0b04ed.qloud-c.yandex.net>
+         <BL0PR1901MB2097EA8851C2743D46210D38FFDF0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+         <2835251564582156@myt6-4218ece6190d.qloud-c.yandex.net> <BL0PR1901MB209790A0A8F5F9C8EFB8B3F0FFDF0@BL0PR1901MB2097.namprd19.prod.outlook.com>
+Subject: Re: [PATCH] git-p4: close temporary file before removing
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190801010022.GA6553@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Wed, 31 Jul 2019 21:34:43 -0400
+Message-Id: <2717551564623283@vla1-822b1b47a947.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
 
-> This seems OK to me, though I kind of wonder if anybody really wants
-> "auto".
 
-Sure.  It's just the usual way of handling the lack of support for an
-"unset" directive in git's config syntax (for example, if a script
-author wants to test the default behavior).
+31.07.2019, 17:52, "Philip McGraw" <philip.mcgraw@bentley.com>:
+> 2019.07.31 10:09 Andrey <ahippo@yandex.ru>
+>> 31.07.2019, 09:53, "Philip McGraw" <philip.mcgraw@bentley.com>:
+>>>>   30.07.2019, 13:37, "Philip McGraw" <philip.mcgraw@bentley.com>:
+>>>>   > python os.remove() throws exceptions on Windows platform when attempting
+>>>>   > to remove file while it is still open. Need to grab filename while file open,
+>>>>   > close file handle, then remove by name. Apparently other platforms are more
+>>>>   > permissive of removing files while busy.
+>>>>   > reference:
+>>>>   > ---
+>>>>   >  git-p4.py | 4 +++-
+>>>>   >  1 file changed, 3 insertions(+), 1 deletion(-)
+>>>>   >
+>>>>   > diff --git a/git-p4.py b/git-p4.py
+>>>>   > index c71a6832e2..6b9d2a8317 100755
+>>>>   > --- a/git-p4.py
+>>>>   > +++ b/git-p4.py
+>>>>   > @@ -1161,12 +1161,14 @@ def exceedsLargeFileThreshold(self, relPath, contents):
+>>>>   >                  return False
+>>>>   >              contentTempFile = self.generateTempFile(contents)
+>>>>   >              compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
+>>>>   > + compressedContentFileName = compressedContentFile.name
+>>>>   >              zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
+>>>>   >              zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+>>>>   >              zf.close()
+>>>>   >              compressedContentsSize = zf.infolist()[0].compress_size
+>>>>   >              os.remove(contentTempFile)
+>>>>   > - os.remove(compressedContentFile.name)
+>>>>   > + compressedContentFile.close()
+>>>>   > + os.remove(compressedContentFileName)
+>>>>
+>>>>   I'm not sure why NamedTemporaryFile() is called with delete=False above,
+>>>>   but it appears to me that it can have delete=True instead,
+>>>>   so that there is no need to call os.remove() explicitly
+>>>>   and thus worry about remove vs close ordering at all.
+>>>>
+>>>>   >              if compressedContentsSize > gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>>>>   >                  return True
+>>>>   >          return False
+>>>>   > --
+>>>>   > 2.21.0.windows.1
+>>>>
+>>>>   Thank you,
+>>>>   Andrey.
+>>>
+>>>  Thanks Andrey; simpler is certainly better! I will test and re-submit v2 of patch with that approach.
+>>
+>> Thank you, that would be great!
+>>
+>> --
+>> Andrey.
+>
+> Unfortunately it wasn't as simple it seemed: upon testing with only changing delete=True,
+> found that the problem was not solved. Upon further debugging, recoded/refactored slightly adding
+> allocateTempFileName() locally scoped function to try to clarify how the NamedTemporaryFile()
+> was actually being used.
+>
+> We can't depend on the delete-on-close because the NamedTemporaryFile() is merely allocating
+> a temporary name for real use by the zipfile open-for-write which fails (on Windows) if file
+> was not explicitly closed first.
 
-Thanks,
-Jonathan
+Oh, sorry for misguiding you!
+I didn't think of this aspect.
+
+> Hopefully the new patch (https://github.com/gitgitgadget/git/pull/301) will make this more clear.
+
+The new changeset looks good to me.
+(I'll post a reply in that thread too)
+
+> Open to other suggestions if still not clear.
+
+Just as a thought, ZipFile() can take a file-like object instead of a file name,
+so can be passed the NamedTemporaryFile() object directly instead of its file name.
+This should hopefully avoid double-open issue on Windows.
+
+However, I'm good with your allocateTempFileName() changeset,
+so it's up to you to give it a try or not.
+
+> Thanks again,
+> Philip
+
+Thank you,
+Andrey.
+
