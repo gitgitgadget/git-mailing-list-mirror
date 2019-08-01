@@ -2,138 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5286E1F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 17:09:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BCE01F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 17:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729881AbfHARJ5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 13:09:57 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38807 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbfHARJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 13:09:57 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y15so34442008pfn.5
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 10:09:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3hPsPItL8UlhGODMtdmrHFn4vDcj2yVnpE055Q5D+uo=;
-        b=RcnivDZNNRi1oo9SRKYHueuVfjefjyHaRht6x2YNwjkyCocCWILd/ynHzMHff4m9p3
-         hxIvES4h++H/E4WV3edgTfJPvf4srFOF1ninHHttj7R1lLnw0o8oNrzmp9PGCh2GCjIz
-         ixRo8IFuJ09QkkbjJX5rMZN1DPIv7q/a0d3cMdgUREeYJR8daymkxEW3cuH+TdCVl+W1
-         JddTQNhBdGppR1Ruc9HhPRIeZ54uQgtkFfqT4x6wEHxdrMGAIgQDZveU6kFJHPnFR4tE
-         f1z6THa+mTt67SNJYEARw58WfPMUOjXFVS0MFgCjMiOgGuHNpz2dOKdAn2x307jSW+kb
-         06oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3hPsPItL8UlhGODMtdmrHFn4vDcj2yVnpE055Q5D+uo=;
-        b=P8wY/dYYBh0zBhwMvxQAtuXlC0weI1bDKzCkCVmghh49Rjm2LFrHhgZ4zD9H/yXysB
-         vJCbKflupg0sju5tEQ7ynK93O4gbXzKWbZccQVeA1NCvzkDZaWcx+HTU2hAOKttPo/8X
-         cclbjXFbh/R+jeWHVvdK3d3B4nSS1ryUAIcBXlnPDDLIRqRbY8iEk/qdvw8tEI0AGpkJ
-         Xs/P+C670gGx0Z9uw4Ml8kMhBQNYkf660MuwKjV2Dnr4xwISiEqJxjU7kiO42Wi0Ugci
-         5l8H+Ddf5nHpUsFamc4yRTP2Uh2bD/PuD0WSIBeRjBFRcx7j6k2aeMTSkWuVmEKM1KWW
-         IsLg==
-X-Gm-Message-State: APjAAAVTjF9ficoci6V0jFNbAspJCb4xRoNO5Mcy9WGgVpM9Co90bzYp
-        LHixWNFOlmyr+omDNH13sAEwV/f2JhQ=
-X-Google-Smtp-Source: APXvYqwiPFjEp1APy6YMQ3eXxKnH+LMkq4vfuMBpWWt6wcTayJwyDVP8kvzMlKJn98CZxFcfxP/+qQ==
-X-Received: by 2002:a63:593:: with SMTP id 141mr117560006pgf.78.1564679395990;
-        Thu, 01 Aug 2019 10:09:55 -0700 (PDT)
-Received: from localhost.localdomain ([205.209.24.227])
-        by smtp.gmail.com with ESMTPSA id a1sm22802806pgh.61.2019.08.01.10.09.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Aug 2019 10:09:55 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, l.s.r@web.de, gitster@pobox.com
-Subject: [PATCH v2] grep: avoid leak of chartables in PCRE2
-Date:   Thu,  1 Aug 2019 10:09:46 -0700
-Message-Id: <20190801170946.81221-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190727202759.22310-1-carenas@gmail.com>
-References: <20190727202759.22310-1-carenas@gmail.com>
+        id S1728916AbfHARYU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 13:24:20 -0400
+Received: from siwi.pair.com ([209.68.5.199]:64810 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726017AbfHARYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 13:24:20 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 467893F40DA;
+        Thu,  1 Aug 2019 13:24:19 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:9bc:1dec:170a:44ce] (unknown [IPv6:2001:4898:a800:1010:baf1:1dec:170a:44ce])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id E598B3F40D9;
+        Thu,  1 Aug 2019 13:24:18 -0400 (EDT)
+Subject: Re: [PATCH v2 1/1] config: work around bug with includeif:onbranch
+ and early config
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.300.git.gitgitgadget@gmail.com>
+ <pull.300.v2.git.gitgitgadget@gmail.com>
+ <ea1a746113b85bde5319c410f68fe3dc75f8a328.1564603600.git.gitgitgadget@gmail.com>
+ <20190731220204.GA1933@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1908010004130.21907@tvgsbejvaqbjf.bet>
+ <20190731231257.GB1933@sigill.intra.peff.net>
+ <20190801004928.GA6351@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <7f4257d3-5ae0-3a83-84f1-bee83682fa36@jeffhostetler.com>
+Date:   Thu, 1 Aug 2019 13:24:17 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190801004928.GA6351@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-94da9193a6 ("grep: add support for PCRE v2", 2017-06-01) introduced
-a small memory leak visible with valgrind in t7813.
 
-Complete the creation of a PCRE2 specific variable that was missing from
-the original change and free the generated table just like it is done
-for PCRE1.
 
-The table cleanup use free as there is no global context defined when
-it was created (pcre2_maketables is passed a NULL pointer) but if that
-gets ever changed will need to be updated in tandem.
+On 7/31/2019 8:49 PM, Jeff King wrote:
+> On Wed, Jul 31, 2019 at 07:12:57PM -0400, Jeff King wrote:
+> 
+>> Hrm. But common-main calls initialize_the_repository(), which points it
+>> at &the_repo. And I can't find any other assignments. So how does it
+>> become NULL? And is every caller of have_git_dir() at risk of
+>> segfaulting?
+>>
+>> Ah, I see. I think it is that trace2 reads the configuration very early.
+>> I think we ought to do this:
+>>
+>> diff --git a/common-main.c b/common-main.c
+>> index 582a7b1886..89fd415e55 100644
+>> --- a/common-main.c
+>> +++ b/common-main.c
+>> @@ -39,14 +39,14 @@ int main(int argc, const char **argv)
+>>   
+>>   	git_resolve_executable_dir(argv[0]);
+>>   
+>> +	initialize_the_repository();
+>> +
+>>   	trace2_initialize();
+>>   	trace2_cmd_start(argv);
+>>   	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
+>>   
+>>   	git_setup_gettext();
+>>   
+>> -	initialize_the_repository();
+>> -
+>>   	attr_start();
+>>   
+>>   	result = cmd_main(argc, argv);
+> 
+> By the way, I wondered why trace2's existing config reading did not
+> cause us to segfault because of this. It is because it invented the
+> "very early config" function which always ignores some config sources
+> (working around this problem, but also making it weirdly unlike most
+> other config).
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
-V2:
-* better document why free is used as suggested by René
-* avoid reusing PCRE1 variable for easy of maintenance (per Ævar)
+Yes, I added the "very early config" to try to work around some of
+the chicken-n-egg problems.  I can't say that I was completely happy
+with having to do that.  I haven't had time to play with your patch
+suggestion here, but I think it would be fine to do if it will help
+with the original problem.
 
- grep.c | 7 ++++---
- grep.h | 1 +
- 2 files changed, 5 insertions(+), 3 deletions(-)
+In [1] I added code to just start the clock in isolation (rather than
+being part of the trace2_initialize() -- which does all the config
+loading and subsystem initialization).  So it is OK to let the
+trace2_initialize() run a little later.  (Part of the reason for that
+split was to allow git_resolve_executable_dir() to run first, since
+that data was needed to find the location of the system config relative
+to the exe path (sigh).)
 
-diff --git a/grep.c b/grep.c
-index f7c3a5803e..fbd3f3757c 100644
---- a/grep.c
-+++ b/grep.c
-@@ -488,7 +488,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 	PCRE2_UCHAR errbuf[256];
- 	PCRE2_SIZE erroffset;
- 	int options = PCRE2_MULTILINE;
--	const uint8_t *character_tables = NULL;
- 	int jitret;
- 	int patinforet;
- 	size_t jitsizearg;
-@@ -499,9 +498,10 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 
- 	if (opt->ignore_case) {
- 		if (has_non_ascii(p->pattern)) {
--			character_tables = pcre2_maketables(NULL);
-+			p->pcre2_tables = pcre2_maketables(NULL);
- 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
--			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
-+			pcre2_set_character_tables(p->pcre2_compile_context,
-+							p->pcre2_tables);
- 		}
- 		options |= PCRE2_CASELESS;
- 	}
-@@ -605,6 +605,7 @@ static void free_pcre2_pattern(struct grep_pat *p)
- 	pcre2_match_data_free(p->pcre2_match_data);
- 	pcre2_jit_stack_free(p->pcre2_jit_stack);
- 	pcre2_match_context_free(p->pcre2_match_context);
-+	free((void *)p->pcre2_tables);
- }
- #else /* !USE_LIBPCRE2 */
- static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
-diff --git a/grep.h b/grep.h
-index 1875880f37..26d21a3433 100644
---- a/grep.h
-+++ b/grep.h
-@@ -96,6 +96,7 @@ struct grep_pat {
- 	pcre2_compile_context *pcre2_compile_context;
- 	pcre2_match_context *pcre2_match_context;
- 	pcre2_jit_stack *pcre2_jit_stack;
-+	const uint8_t *pcre2_tables;
- 	uint32_t pcre2_jit_on;
- 	kwset_t kws;
- 	unsigned fixed:1;
--- 
-2.22.0
+[1] a089724958a trace2: refactor setting process starting time
+
+
+So, as you suggested in your previous response, something like
+this would/should be fine.
+
+$ git diff
+diff --git a/common-main.c b/common-main.c
+index 582a7b1886..71e21dd20a 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -39,16 +39,16 @@ int main(int argc, const char **argv)
+
+         git_resolve_executable_dir(argv[0]);
+
+-       trace2_initialize();
+-       trace2_cmd_start(argv);
+-       trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
+-
+         git_setup_gettext();
+
+         initialize_the_repository();
+
+         attr_start();
+
++       trace2_initialize();
++       trace2_cmd_start(argv);
++       trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
++
+         result = cmd_main(argc, argv);
+
+         trace2_cmd_exit(result);
 
