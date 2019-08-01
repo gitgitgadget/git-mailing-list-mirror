@@ -2,121 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9599B1F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 21:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB9BA1F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 21:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389175AbfHAVeo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 17:34:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59278 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728248AbfHAVeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 17:34:44 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD35C1662AA;
-        Thu,  1 Aug 2019 17:34:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vQtOwlR4SQ6FgomhUf10EFTDpoQ=; b=IF8LEa
-        +ts8Qai2EYqGPq5PpUMjCqQg2elUeFdkm3HTmxJyjFL6fYuowZUBhpr/x3gMOCfk
-        Z4TswzZeSlrl5uBsZfOH0x7GihuRygHwwYPbxcA9KW8CUJawpNdIsXlERJTgCBuD
-        KqxiNHwMUHTvBfq/oPb1ruu7OPBBGoxdY2qiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tZtGg9xtunZ0xj+jEkUrNF/xj802tRgt
-        60/hPEhMQjnaCEjJAQ4dQpRGD3HbtHUB6Ee3SY8j54zBKuYryxlK8w4KqzaU2XMn
-        ezWbgMKyoBbY3+YbH9IeunBwF7qxyDlASgZA5NvYCLV3DNmK9+vJMloFkxDQqjk6
-        zOI9rddnMwQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C54001662A8;
-        Thu,  1 Aug 2019 17:34:38 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D9C71662A7;
-        Thu,  1 Aug 2019 17:34:38 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 2/3] trace2: trim whitespace in start message in perf target format
-References: <pull.298.git.gitgitgadget@gmail.com>
-        <834ee95cd2fe919c7a5a2d3cc3d647cfdeebe9e6.1564603467.git.gitgitgadget@gmail.com>
-Date:   Thu, 01 Aug 2019 14:34:37 -0700
-In-Reply-To: <834ee95cd2fe919c7a5a2d3cc3d647cfdeebe9e6.1564603467.git.gitgitgadget@gmail.com>
-        (Jeff Hostetler via GitGitGadget's message of "Wed, 31 Jul 2019
-        13:04:29 -0700 (PDT)")
-Message-ID: <xmqqef24muxe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2389214AbfHAVgl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 17:36:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59458 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729085AbfHAVgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 17:36:40 -0400
+Received: (qmail 32533 invoked by uid 109); 1 Aug 2019 21:36:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Aug 2019 21:36:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31562 invoked by uid 111); 1 Aug 2019 21:38:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Aug 2019 17:38:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 1 Aug 2019 17:36:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com,
+        Ariadne Conill <ariadne@dereferenced.org>
+Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
+Message-ID: <20190801213638.GA30522@sigill.intra.peff.net>
+References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
+ <20190731231848.GC1933@sigill.intra.peff.net>
+ <20190801002125.GA176307@google.com>
+ <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29E52B68-B4A4-11E9-9D63-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Aug 01, 2019 at 08:45:54AM -0700, Junio C Hamano wrote:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> Trim leading/trailing whitespace from the command line
-> printed in the "start" message in the perf target format.
->
-> We use `sq_quote_argv_pretty()` to format the message
-> and it adds a leading space to the output.  Trim that.
+> While I think "revert to hardcoded default" may be a good idea, I do
+> not think the hardcoded default you implemented that changes the
+> behaviour based on the output destination makes much sense.  If I
+> want to eradicate junkio@cox.net from my paged/interactive output, I
+> want to eradicate it also in the output piped to the script I use
+> for authorship stats.  
+> 
+> I suspect that you may have misread the "is interactive" bit in the
+> original; that was used only to decide if we are going to warn.
 
-strbuf_trim() not just drops a single leading space, but removes
-consecutive spaces from both ends.  But the first char after the SP
-comes from the first arg, and it can never be a whitespace (as a
-payload that begins with a whitespace will be quoted, so it will be
-a single quote), and the last char in the buffer would also be
-either a closing single quote (if the last argument ends with a
-whitespace) or a non whitespace "safe" character, so it is safe to
-use strbuf_trim() here.
+Yeah, I wondered about the same misreading when I read the response in:
 
-I wonder if we want to lose the prepending of SP from
-sq_quote_argv_pretty(), though:
+  https://public-inbox.org/git/20190801011448.GB176307@google.com/
 
- * run-command.c::trace_run_command() does rely on having SP there,
-   so the caller needs adjusting if we did so.
+> Anyway, how about this much simplified version?
 
- * trace.c::trace_argv_vprintf_fl() also needs SP there after the
-   caller supplied format.
+Yes, this is what I was thinking of in my earlier responses, but...
 
- * trace.c::print_command_performance_atexit() expects command_line
-   begins with the extra SP left by the sq_quote_argv_pretty()
-   called by the trace_command_performance(); the format string
-   given to trace_performance_leave() there needs adjusting.
-
-
-By the way, use of sq_quote_argv_pretty() in builtin/rebase.c on
-opts->git_am_opts.argv done in run_specific_rebase() is dubious.
-The argv array is made into a single string that safely uses sq,
-appropriate to feed a shell.  But that string is passed as the
-"value" parameter to add_var() helper that expects to receive a raw
-value (hence it calls sq_quote_buf() on the value), resulting in a
-string that is doubly quoted.  I am not sure if that was intended.
-
-In any case, the patch itself obviously look correct.
-
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  trace2/tr2_tgt_perf.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-> index 4a9d99218b..ed4e708f28 100644
-> --- a/trace2/tr2_tgt_perf.c
-> +++ b/trace2/tr2_tgt_perf.c
-> @@ -185,6 +185,7 @@ static void fn_start_fl(const char *file, int line,
->  	struct strbuf buf_payload = STRBUF_INIT;
+> @@ -214,12 +204,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+>  	memset(&w, 0, sizeof(w));
+>  	userformat_find_requirements(NULL, &w);
 >  
->  	sq_quote_argv_pretty(&buf_payload, argv);
-> +	strbuf_trim(&buf_payload);
->  
->  	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
->  			 NULL, NULL, &buf_payload);
+> -	if (mailmap < 0) {
+> -		if (session_is_interactive() && !rev->pretty_given)
+> -			warning("%s\n", _(warn_unspecified_mailmap_msg));
+> -
+> +	if (mailmap < 0)
+>  		mailmap = 0;
+> -	}
+
+This should be "mailmap = 1" to match the commit message, no? (Which
+also implies we may want a new test).
+
+I'd also be OK with leaving it at "0" for now, making a note of the
+upcoming change in the release notes, and flipping it _next_ time. But
+IMHO we don't need to be that conservative (and I share your pessimism
+that enough people actually read the release notes to merit that kind of
+advance notice).
+
+-Peff
