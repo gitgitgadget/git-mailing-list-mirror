@@ -2,83 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF2481F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 19:29:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 258D81F731
+	for <e@80x24.org>; Thu,  1 Aug 2019 19:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388680AbfHAT3L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 15:29:11 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41353 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388609AbfHAT3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 15:29:11 -0400
-Received: by mail-pl1-f193.google.com with SMTP id m9so32514268pls.8
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 12:29:11 -0700 (PDT)
+        id S2388765AbfHATt7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 15:49:59 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:46652 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388609AbfHATt7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 15:49:59 -0400
+Received: by mail-ed1-f52.google.com with SMTP id d4so70323839edr.13
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 12:49:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=A0GLYYnP4HhuqVZQmYM+WQe/PFjb2oo7FH1bOTAzaqE=;
-        b=qDaOHR/ahQrRlesz9Lb4LPg8pgdIxOJz+Bd/x66SKmd/tPpC2aUYJm/W4uCpz9lyHc
-         Xh0a3pigrCg/4YH/fWDpsA8uB/WPowId2Z6sL8I+pC3/ezj4s6Fqh0nEVblYdt5yaSBz
-         2b8PThTCN0oS9xJWKHryPD5j3x9t4vWCt5vjU+EZLAVWRi2Fl8Rry5RgmqeVvh2V5Ex0
-         X2tjHT5lyYcXDO7UGk5bCHK0J9riXxU4VCvsCneY3xNlfSHwdrkq+pjIY3QCRr6PSobs
-         cnme0gfOEPSNB0i5FYH7zT9zxAfVI+xu8DKk9GXdunslNESkjo3lRD6tVkvf2RI2+Kzu
-         sPRQ==
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=fRJijRmXkPQgi6JtM63PDXdLLpMMG+DT7qi07+Q9wUw=;
+        b=uhfXtlBtqVJcOTI89lCVW2c52JL0fCepytpFiNh2nL7W0P1eujZI+ox0a03mIiUSau
+         w6+Iw4VjinzPbYBcpj0/YM//kkKGqWuIAo8EFNYSHlk4wm2DDe4VUcDXkzT3CRLURf1p
+         nbjAALuI14r3BEGIknL/bHXto467aEsdAazGyxpYfiarVG7IpjBuY5IaNGh/4g7wtiyk
+         Rq1vT5wiTpHdU74Rqdv+PrM/Nkv4zg/zxKHTu4jZcStJ8T+aaVyEIIMQjL36sTWE8yrs
+         mcLFk0Q1hTlpL4rqFek+nY/b58U5yGoG101aZesMMVR+FIU4nM4KgxbDoO1v/936uoQr
+         vDpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=A0GLYYnP4HhuqVZQmYM+WQe/PFjb2oo7FH1bOTAzaqE=;
-        b=eTqxxiEXj0htZ7+O7Dvyyekm7xF+r/cUqhiYDKnHCTQoHSVZwHV7xypFH+H59xL6Aa
-         hXJdLbi1KgR461GqcEolPpQrsFmlZb9kF462RO2+Zplrox3/Xb/SJwq/Fm77f0zi0j4K
-         Sp0599foK5UUNynEs1GggO9WjNQsGjsvRnvKTzS2lCAax180unLqF9DaFtJj/YH8uszz
-         g18RXJWh1yUZE4dwz7cT3JAcUTrwVAeqx1AQ9azvAoFcFKUMif83dC/FUfO6951rf/jX
-         uawO3rjNZXKXmALgLpraNJdWDqB4J73EtAMMmNDGRb7OlkLaePSWUUz1BEYMHMNGpVLf
-         RpIg==
-X-Gm-Message-State: APjAAAUOr+9DLmG8fXhFAOqcxjlCPDOXeZ78oMkl6L3UEg2o6vSyDC3P
-        DJqz63liYHvWxSR3q2OchcU6UBGb2vDCXZiXLTA=
-X-Google-Smtp-Source: APXvYqynpBvII99FNxh2NcsCO+koeo5vvK4t0GLzBAoSszeSW1tg4TVz8mq9DbzZGR55LKqpq3VAzkAvl2k7Q+m1SDA=
-X-Received: by 2002:a17:902:758d:: with SMTP id j13mr126132213pll.197.1564687750687;
- Thu, 01 Aug 2019 12:29:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=fRJijRmXkPQgi6JtM63PDXdLLpMMG+DT7qi07+Q9wUw=;
+        b=HNh0D8G8vJR8x2qXtka2WxEnLmYyy77qty3+JwCRGz30+odq3Bckuy+04fgRrarFV6
+         NgypfHGB2hY5B/PvN59Wszg6O97+mB/jtfjc2nGm3Bh0E8V+FT3o9dP/+QryY1SAlaHL
+         RQtxQxUWTaw6pJiXQ+rcPc6+Ezb32Nh3sYeF6nApPqKx8EcCHp0LKvhzS9QV/NSBRBja
+         PQep9HsqnjobYrGaorfn0v8EdqX989wm7twhpu52QxZJuwUPSWfugH972Sz8rXclf8/w
+         B7FEKyHbBTb8iiYv9KVh6+MqbMYWZjAP6CmVMasS1xsvd/pmYjK3yAPpWWeELLSdPg0g
+         SgTA==
+X-Gm-Message-State: APjAAAWuL5CkjgpvVdrLuInWpi+Tr1Chbf4LEHUG/dRTfhqe1KyYgmhj
+        hEjLu8unA2z4XdrGYvk4jhAdQoXS8Xiivwno2YmACsVj/3M=
+X-Google-Smtp-Source: APXvYqz3pk6sbnKqqr0mk9QNhR6H8G+x3QNS31ZqfkCMf9VfPbMF9xCpzV6TMKblozmD43cpsgwWj3zw5p4lgyxHkAQ=
+X-Received: by 2002:a17:907:2114:: with SMTP id qn20mr101927483ejb.138.1564688996900;
+ Thu, 01 Aug 2019 12:49:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com> <20190801141221.3626-1-martin.agren@gmail.com>
- <xmqq8sscop4f.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8sscop4f.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 1 Aug 2019 21:28:59 +0200
-Message-ID: <CAN0heSrrrefqh29PQAE0P88YkgbujnY0jPBiHfDJF4uFGVKtGQ@mail.gmail.com>
-Subject: Re: [PATCH] RelNotes/2.23.0: fix a few typos and other minor issues
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Thu, 1 Aug 2019 21:49:30 +0200
+Message-ID: <CABUeae8EBzPSM1KrZTMiGj=6F3iyxeXXbqUNMf2p_LfPkqcfnA@mail.gmail.com>
+Subject: cherry-pick merge commit with log message populated
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 1 Aug 2019 at 17:57, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
-> > Fix the spelling of the new "--no-show-forced-updates" option that "git
-> > fetch/pull" learned. Similarly, spell "--function-context" correctly an=
-d
-> > fix a few typos, grammos and minor mistakes.
-> >
-> > One of these is also in 2.22.1.txt, so fix it there too.
->
-> Thanks, but it would have been better for this to be in two
-> patches.  I'll split them up.
+Hi,
 
-Oh, right, I suppose you'd *much* prefer a patch that applies on maint
-for the 2.22.1-fix. It didn't occur to me. Sorry about that. Thanks for
-adjusting on your end.
+When cherry-picking a merge with `cherry-pick -x -m 1 <SHA>`,
+is it possible to populate the log message with (short) log of all
+commits that have been merged by the merge commit <SHA>?
 
-Martin
+The only workaround to copy the log messages along with
+cherry-picked changes is to always merge copying all log
+messages of intermediate commits into merge commit message
+using `git merge --log feature1`.
+
+Is there any other way, without remembering to `git merge` with `--log`?
+
+Best regards,
+-- 
+Mateusz Loskot, http://mateusz.loskot.net
