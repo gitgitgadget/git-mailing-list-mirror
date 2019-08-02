@@ -2,100 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98ECC1F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 19:16:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAB901F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 19:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392189AbfHBTQN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 15:16:13 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51251 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392182AbfHBTQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 15:16:13 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 207so68963578wma.1
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 12:16:11 -0700 (PDT)
+        id S2392200AbfHBTVk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 15:21:40 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:41014 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392153AbfHBTVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 15:21:40 -0400
+Received: by mail-qk1-f195.google.com with SMTP id t187so2981006qke.8
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 12:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=i1dHPdOvpgJTQhDilN8ZU4jxmuoH/bPUI/CCNb0wdZI=;
-        b=ljRxuamx7eBSH4Jpwh4G2SZMZgG9ScdgR7OS42LiNEBKiahUBUwahkQY8fEFLXLwUT
-         zq6XIQmeKxAkaIp1F7/anrf+Ovofv926StcIyU+DNDek2w1C+KgtT1MjPw15AEzxMHXN
-         u/sIr969gDIHVrO+GGzZsmv362jSBGFLyPze09fh+le7Bdru5Q31t5lowa5J1cNtFWld
-         j7/it5jpOtjm4V7oXRL0GbyGEx0rK8nKEdKksmpBFitaP44UKiv2OIFKOhGNOoEEU39A
-         yHxonGGg6EwbjlTkk7x5Wuuld81KsYzOjfXO9Eyf4eIPCYDMylyFtt6Ch9z9PuFJIOO/
-         mzQw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cV5xBYDwj0jibG+OHnvdXbkYhPTQro+No3cY3QzUnT4=;
+        b=ON0SMfafmkscht54ejJ3wq00JgOtEj2NKm+9xNg3x8dWE9VUnb15c0MbjsAdC0EJUN
+         V/djmArRNpB47kLoTiGQFjeJb2hx1M8MNUXBaSS2olARV5SMEzjns5vmbxSYlpooVRLs
+         8TeYDzsZHNhWGV+tlL4tPB9Uq3gAme4u6/IsC1dmnWLTaHmothxCsEyZzg7V75bXYZaG
+         2gHbsa96wPyneIZNY+75atffaXGVlFk3qVvDql1uAlncY01GIsppV40+r9atf2JfSJp6
+         Xp2X3zjkL4wPHDgrxzA4LTBlEr/FtKoRjv+TYiTCTXeSJZlxOUS748wyDnu7m3pvtZas
+         06wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=i1dHPdOvpgJTQhDilN8ZU4jxmuoH/bPUI/CCNb0wdZI=;
-        b=BMAvKkvWqGywks5EVHAyCD0iLNOjQ39nmf3frToSIVLPGdPvQOiTN8QwqKBkJ2SrD8
-         NLgc0Z6199ttOmS5vPcbPKJu6Y6DN0hcpEJ05378r7n/RSMmnaTnpsJlb6Q9DGyTJuf9
-         foMLpz6GHia9MIAmNx/XfpmtfkDWFRG9Tt+zvLdApjtfWh5WENQR2tSbmqMB4ByrUiaU
-         YiN4MljVtZM98RygPYxrcTWUFx3XtvunWkvy84dSZINe0IZf2s5TblmM3gwQk1puxrlZ
-         I+j0Zc4ne9GHg26XntuYZ1qbu+xbKi9KUDEoZ7+gihlHXd1Y6StaIY582rWydF0oa+s1
-         vzjg==
-X-Gm-Message-State: APjAAAWcOUWOfdrPTYXBwMpJXg89WVVAIx0tBYABhHBOpgsxAyBmLa8i
-        q4WtDiRTrsV5Aj3SpPHCDjg=
-X-Google-Smtp-Source: APXvYqwYJ/9eN+ZYoj2FQt2v3lJpN4fJRZYt5ImPX8JJGeyARKjIUgy9tok0g9LU+t/PQi4J5WhzTQ==
-X-Received: by 2002:a05:600c:2503:: with SMTP id d3mr5750489wma.41.1564773371083;
-        Fri, 02 Aug 2019 12:16:11 -0700 (PDT)
-Received: from szeder.dev (x4d0c4277.dyn.telefonica.de. [77.12.66.119])
-        by smtp.gmail.com with ESMTPSA id 5sm63394632wmg.42.2019.08.02.12.16.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Aug 2019 12:16:10 -0700 (PDT)
-Date:   Fri, 2 Aug 2019 21:16:07 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        avarab@gmail.com, peff@peff.net, jnareb@gmail.com
-Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
-Message-ID: <20190802191607.GW20404@szeder.dev>
-References: <cover.1560295286.git.steadmon@google.com>
- <cover.1564009259.git.steadmon@google.com>
- <20190725234229.GM20404@szeder.dev>
- <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet>
- <20190726220348.GF43313@google.com>
- <20190801180829.GP43313@google.com>
- <20190802015247.GA54514@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cV5xBYDwj0jibG+OHnvdXbkYhPTQro+No3cY3QzUnT4=;
+        b=C+OJNkuREN3SY0leE01910YPdmb5VAUiTpNymisBFeVuC/4n7yFVhEBpXp/oe/Nb0T
+         2rPUjDmwSsVnMso+t+6RRU2w/qy4y+4O/g/Im7SE9sIXjHYX44UHTvzUFnDlcWWw7LyD
+         Xt30XytJnzYCbwGwL3vX7onf/2Onh4jQuU6EzuO4F/pLMdxu0nAqMy0YaTo0ebcu4zcd
+         wgDi7vysWByTLzzH84F2WO36dQ6bx/iESDaB4zoTsTCylWNS3wvQAc5/4ej/rIgUlNII
+         Yod1/fPUBwoUl9pY/lD12BarK/sSaJ+uxSrDA9fMzO1e7nly/mP6K9VpuckKKfCLHRXk
+         lqzw==
+X-Gm-Message-State: APjAAAXL5hBOQ+mW/youIdyT42oMNM6tAjdu+U/FqBfrT/2AuaozvhVt
+        2bm2pFu/d14P3ppK9ZV8mcMJFaUSTct4RTTGWYY=
+X-Google-Smtp-Source: APXvYqy90S1xNandJVxCt7o0rWSLOxKbHZMzycTNaBqZmcPBr9sK6E8O+BAYOnc6fsEHC5xgMyCOJUHQInBvZ5LM3AM=
+X-Received: by 2002:a05:620a:1116:: with SMTP id o22mr93609947qkk.82.1564773699558;
+ Fri, 02 Aug 2019 12:21:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190802015247.GA54514@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAA01Csp=g08N4+S1HKAjV2a12VJNSJU0UYdAU6LW1jGWLD9SLQ@mail.gmail.com>
+ <05c77291-48d1-a592-6296-d8a8bdb16b02@gmail.com>
+In-Reply-To: <05c77291-48d1-a592-6296-d8a8bdb16b02@gmail.com>
+From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Date:   Fri, 2 Aug 2019 21:21:28 +0200
+Message-ID: <CAA01CspHCKA3itmTxFO1NeNB6DpdFx3CTbXKtO=TvtznLn_zAg@mail.gmail.com>
+Subject: Re: git-log on a file, and merges
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 01, 2019 at 06:52:47PM -0700, Jonathan Nieder wrote:
-> What do you think of making the validation disabled by default and
-> using a parameter (see "Running tests with special setups" in
-> t/README) to turn it on?  That way, it should be okay for it to take
-> 10 minutes because this would only affect such specialized workers as
-> choose to set that parameter, instead of all of them.
+On Fri, Aug 2, 2019 at 4:22 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 8/2/2019 5:38 AM, Piotr Krukowiecki wrote:
+> > Hi,
+> >
+> > I have merged a branch into master.
+> >
+> > When on master I do "git log -- some/file", it does not show commits
+> > from merged branch (which I know they changed the file).
+> > I have to add "--full-history" to see the commits.
+> > When I run "git log" (without "-- some/file") I can see the commits
+> > without using "--full-history".
+> >
+> > This seems not logical, and contrary to user expectations. Harmful even ;)
+> >
+> > Am I missing something?
+>
+> Hi Piotr,
+>
+> You are falling victim to an issue related to file history simplification [1]
+> and a (probably) bad merge. You can read more about how this can happen at [2].
+>
+> When git log reaches a merge commit and one of the parents matches that path
+> exactly, only that parent is walked. The other is ignored. In some sense, the
+> other commit did not contribute changes to that file (because we only took
+> changes from the other parent). This makes the history look good and enables
+> some performance boosts.
+>
+> Basically, someone must have gotten a merge conflict and used "-S ours" to
+> wipe away the changes from the other branch on that file. You can find that
+> merge by running
+>
+>         git log --full-history --simplify-merges -- some/file
+>
+> You will see the merge commit that un-did the change somewhere above the
+> commit you are expecting to see in the history.
+>
+> Thanks,
+> -Stolee
+>
+>
+> [1] https://git-scm.com/docs/git-log#_history_simplification
+> [2] https://docs.microsoft.com/en-us/azure/devops/repos/git/git-log-history-simplification?view=azure-devops
 
-That's kind of what the third patch in this series already does, as it
-performs this schema validation only in the 'linux-gcc' build job.
+Thanks for explaining.
 
-> Gábor, if we introduce such a parameter, do you think it would make
-> sense for us to set up a worker that passes it?
+There was no "bad" merge. The file was modified only on the branch
+(and previously in common history).
 
-That would be even worse than the current approach of the third patch,
-because the additional worker would have to install dependencies,
-build Git and run the test suite, in addition to the enormous overhead
-of redundantly validating the trace output of every git command
-executed during 'make test'.  So instead of adding "only" 10 minutes
-to every build, it would add over 20.
+There were two commits to this file on the branch, older one did some
+changes, later one reverted the changes (among other things).
 
+So my understanding is that git looked at the merge commit, saw that
+this file was the same as it was before the merge, and assumed that
+there were no commits which modified this file in the branches being
+merged, so it didn't bother looking at the branch history.
+
+At this moment I'm not sure myself if I consider this a bug or not.
+Maybe if I look at merge commits as a special entity - not a diverging
+history, but rather a single commit which introduces some changes -
+then maybe I could accept it.
+But on the other hand I feel this generates wrong results. Falsifies
+history. If I was asking about "diff", I would understand if it showed
+nothing, as there was no difference. But I'm asking for "log".
+Especially that I remembered/checked that there were some changes to
+this file, and wanted to see them.
+
+
+Anyway, is there a way to disable this behavior (enable
+"--full-history"?) by default?
+I suspect that this behavior will bite me in future, and I guess the
+"performance gains" are not big enough to validate it...
+
+
+
+-- 
+Piotr Krukowiecki
