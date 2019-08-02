@@ -2,88 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32C161F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 20:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91A111F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 20:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436897AbfHBUNS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 16:13:18 -0400
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:48301 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406942AbfHBUNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 16:13:17 -0400
-X-Originating-IP: 1.186.12.38
-Received: from localhost.localdomain (unknown [1.186.12.38])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 4473DFF80A;
-        Fri,  2 Aug 2019 20:13:13 +0000 (UTC)
-Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+        id S1728669AbfHBUgy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 16:36:54 -0400
+Received: from mout.web.de ([212.227.15.3]:58415 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726049AbfHBUgy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 16:36:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1564778207;
+        bh=S86mqXVDJTODT55kpSde/dm8Q7j1e6Ax/uPQM5oUnH4=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Xu15tX/s1NUKUQ+15vuqAsc8I9dkbMMlNdgTanmpy1bXWMI+VPpsS3mG8xmKu5yXx
+         NuC9sT8t4FaZHRtZh86q63REMdD0sDpMmfNHTT9fdyEACbVf6GKoIi5UJFe6c7leXh
+         B3vsOlRtWav1DGbh9LFh50go2GLfb4jGgWaz6PE0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx77p-1iQrV01MF7-016jvM; Fri, 02
+ Aug 2019 22:36:47 +0200
+Subject: Re: Simplify-by-decoration with decorate-refs-exclude
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Mark Levedahl <mlevedahl@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-References: <20190728151726.9188-1-me@yadavpratyush.com>
- <20190728213634.GB162590@genre.crustytoothpaste.net>
- <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com>
- <20190728224943.GC162590@genre.crustytoothpaste.net>
- <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
- <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet>
- <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com>
- <xmqqftmjldjx.fsf@gitster-ct.c.googlers.com>
-From:   Pratyush Yadav <me@yadavpratyush.com>
-Message-ID: <a143dcfd-8067-34f7-97f3-c4482dca5819@yadavpratyush.com>
-Date:   Sat, 3 Aug 2019 01:43:11 +0530
+Cc:     =?UTF-8?Q?=c3=89tienne_SERVAIS?= <etienne.servais@voucoux.fr>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>
+References: <D941A96E-E5A8-4C86-A200-0BECA30216D1@voucoux.fr>
+ <37283d4e-3f79-a6b1-425a-f90704fbcce2@web.de>
+ <xmqq36ijl6qu.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5de287e9-a8e8-780a-7d39-2229b61914ca@web.de>
+Date:   Fri, 2 Aug 2019 22:36:33 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqftmjldjx.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqq36ijl6qu.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:M3meMP3XS6hZ0Rxmm5aIaUcTL1mzc1SxndN7OvLkw1g6OldIoc1
+ voDUC9fKePokLIlVBEBQOAFiox5FvwjvAEvBIPtWXvwV5R4JakRCEP675O8agBKxoav40KN
+ ah2AnAynVClYVn3IGih5/tLhrAUju4uX604LdE94JmHbN5iOxT51pv0dnCujDJUHxmNdEkN
+ kg4pk3xa3Sd4fyk1fMwQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k3qO652wXa4=:6+7e/w/W0QZCQBXhlOvykO
+ H2Tp9yi2hoQLIQSAEvpyeXMCa+8kgj0Iw2IN8ueNZU6kkpX33lNGBuXIhsVPETIcPpAEcTI8L
+ PDbP3+Xx3sBlheOKvjhOKoulVcwyruz8U0QiXg0XrFL0fkH3vt0BSoUktRaZbLFAuwprXfIgo
+ gLbzcCdiFOMNswir3ttBeKsBLs3E8vOrn5PKhXgAABWtAf9hdV5awlkne6A3rFM/R63LC3lzE
+ C/nN4k0u+3Cpex8ktC/o1UkYxi0FZBY2yqVHnXFaUeEplncxBeuUM6NwtWTeSASz2GsZC5S29
+ MFB08voB5B2NXrNNN9zZMprDazqDprDgOU3DJ1Ie+pp3yOc9ljtWMgIf9TCu50CnB5W5/no1t
+ F1emWAlYTNC0U7urGKKnSdzRuKzDlX5wfIfMF05w34aPYoVYRjnS0Cy5IZ3OF7Gyc5qxoFsAI
+ MpqQ0GTyJpr7Sb3QZFS+LiTgKX14jcb1US4R/CNbmdFG2qDzqqFs3YjvYH1MdB7YJcHiGUvdk
+ +0V4YQInF52WnBTCz5WqvoRgd9PckR0BQKa9OEyibBgdRIWbRuJKv8bqLfQFj/yqrSpfevez3
+ NL5bwijd8gGPy+guPTJV6cWpf1V07Ph0jc5RUoUfsAnVKmcZ69Tk1tUCd8kGLxAvT++wC3BCU
+ Q692c95J0vsdRra4jHJgyaMb50eCH66EmRSb89zSc5xphGe7z3ygOkHNXRrcQvVA4T4rlxLEz
+ +MwuADZRHd/YG6TxqhMB7HW9nKOnLwEDIrlOuo3CqMZYUYwHsk9/SEr5Trk6or+H903M0thzm
+ b5QJL2gXGMotsIt0C5GrT9PNwYTsy1Jo73ismqq9jU+Ykd91xVMrZcTedloMT4N5G66Rich2v
+ VUh0PMBKYzQFXgXmbQYWSkKgUuQ+gV5VDQplA4loNehCycsbOSp5YK2XovYbRX+k0yD4el15V
+ uXMcDN4Nk6mD+XHqa5mBfLiuC8Zat4mIIxgMeFYrwk3Eu3uQ0Md4RUxRXDGAwd/oZOTyTtrnn
+ l2YkWw3MNXX08bLcM0il7hSd8U5VqZppxJ8wUbl4Y//QsuOXB4+xxK2pUkG4c8wSiWmIAUuk5
+ cz/aW4Iimgzmu3+utAbeXc9x3kwGzo+EKzox0SpJ8a1WdWl2nFsYWPbc2CaT4mDNMoUjbJhW3
+ 924QY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/2/19 10:17 PM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> 
->> +Junio
-> 
-> I do not have a strong opinion on this one---a Meh by default means
-> a moderately strong preference for status-quo.
-> 
->> All right, the patch in its current state can't fly. So what is the
->> correct way to do this? I see the following options:
->>
->> 1. Add this as an option that is disabled by default, but people who
->> don't mind it can enable it. This is the easiest to implement. But I
->> leave it to you and Junio (and anyone else who wants to pitch in :))
->> to decide if it is a good idea.
-> 
-> I think this is a good first step.  As I said already, I am not
-> convinced that "focus in" is a good heuristics for triggering auto
-> rescan, and I suspect that you or others may come up with and
-> replace it with a better heuristic over time.  During that
-> experiment, it would be better to allow interested others to opt
-> into the feature to help, while not disturbing ordinary users who
-> are OK with the current behaviour.
-> 
+Am 02.08.19 um 21:14 schrieb Junio C Hamano:
+> I can see how this would help, but it somehow feels a bit brittle
+> to rely on where the decorations get loaded.
 
-All right. I'll look a bit more to see if I can figure something better. 
-I suggested using filesystem watches. I'll wait a bit to hear from 
-Johannes on what he thinks about it. He doesn't like the idea of using 
-Watchman apparently.
+Right.
 
-Otherwise, I'll send in an updated patch with this feature as opt-in.
+> I wonder if it would help to move the ability to handle decoration
+> filter down from the log layer to revisions.c API layer.
+>
+> It looks to me that this caller of setup_revisions() can prepare
+> decoration_filter before it calls setup_revisions(); we can let the
+> revisions.c layer call load_ref_decorations() in setup_revisions()
+> if that is the case, no?
 
--- 
-Regards,
-Pratyush Yadav
+Having cmd_log_init_finish() call load_ref_decorations() before
+setup_revisions() would indeed solve the issue as well.  But we need
+to call the latter to check if --pretty=3Draw was given and avoid loading
+decorations in that case, don't we?
+
+> Other two callers of load_ref_decorations() are deep inside pretty.c
+> but I wonder in the longer term if we would want to turn them into
+> an "a lot higher level should have already loaded decorations"
+> assert.
+
+This would require that higher level to parse the user format to check
+if %d or %D is present before formatting the first item.  Hmm.
+
+Ren=C3=A9
