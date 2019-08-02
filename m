@@ -2,100 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 576561F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 19:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A03B01F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 19:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405999AbfHBTiz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 15:38:55 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41444 "EHLO
+        id S2406435AbfHBTnl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 15:43:41 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46502 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403792AbfHBTiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 15:38:55 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c2so75072318wrm.8
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 12:38:53 -0700 (PDT)
+        with ESMTP id S2405999AbfHBTnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 15:43:41 -0400
+Received: by mail-wr1-f68.google.com with SMTP id z1so78292211wru.13
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 12:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=H4E3t8GmgqLvuS7GGBNt272CUX05od3SC77c3vpMdp8=;
-        b=SNT4KDJhNy4IAxnzIfDrK3Tiduq/W87abhJINn28jNubYJhBal/1blW5jYzEacbdrO
-         5+VBE9kLnx58H882iW/w/njw2vcNTjVX9kewfYnYibjwGZThww8FcOdbXjKSqjQvB4eo
-         ei64b3sn3FJoZK6tFKupRT4K+ziD+hCw4E0RYECaqodHsFZyAJyxJIxV29DhQuZ7DuDQ
-         OEAQXENEvY++gHcXXaSnFRTOh9pPgAUFjkyXfVlwGZKOSO/MOVnBzp2Odnb2yF+u6inR
-         DkKoSgm/Evq+KShA/keWmXFZRfGxXcr1SJIM9Qof+j3tWw7tY9aA/iRlNHW4pUhepYGf
-         6PIQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=c85TBnjIM0p27lt9FQJ1NeFqKN+HP09Gd+GNLxegOdI=;
+        b=BgP3mhNn4eYWg0WSEYTW2w5RiqbWGVeigOyeuxpJxLxFzs8/00O5lqxRjUKoEfQJRl
+         TnAodNAvxD0Idmxb+wIS0OKPtj5uVgaQSmocNKB72nHcyrU6SIOIYItIJd+HEOGcJoS+
+         /LWR45pLpoaXNkd9gEFAPN0Ruc8gfaj+mlScVZghaAs37NAzmlcP03Kqa1mtkzc53CfY
+         W7kFTuTQgJXCQRTVUFbST5TyPUliKltVb2RZiZxndGWKvrUzrsZih5Qrz/5poSUhqiyl
+         Aeif0ugxF3jGubFMyumhTOgmnCkr9ew5lW9q+DyuhcYSNu7djShxHsx9LqH+odC3cbDQ
+         5nFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=H4E3t8GmgqLvuS7GGBNt272CUX05od3SC77c3vpMdp8=;
-        b=JkrmN2d2yrBKPPEHy+4jP6Jjpgwr+VqQddi45kMYUGAzb+tmD58M/IMb2ySTF8+MMI
-         7RXagt45VffSCcUQ7VdaggvNp+3CNjcYdDdWoZ//UisZtM2eRlie6muGK3oGJJxekLZt
-         uxAQFr5Htrqo8ESyIlAyH0FXUhFam2pDnvdnAD9hcgg+Y+gWhoehcDW498geXJq9OgHD
-         zslgajyavu17wY2kaBZIhzKZ8JmsuQdHb0XSWgMP8vMK7O3wTNu8BLAIM9DuOwLNxqsV
-         A10gzyrcC503fIABWkqX16i1rapI9wHsvycr0l/ATCXVuDZ1zR/aabz2lpGhh8LMjNJv
-         DoSg==
-X-Gm-Message-State: APjAAAVCOLM7tUOrauzd42e7NDbsQ3c4xv4hyO3iv0fIAtPZX8z+qKgt
-        3UsEmYBcPg2Mmsi4j3uY310=
-X-Google-Smtp-Source: APXvYqzb0B7pozSWsEiUrCyZaIsIOEj1bs0xOG8HnH4CScIijr9kBSYFvXe/5Mbv0I5ad4IwX7AWPw==
-X-Received: by 2002:adf:de10:: with SMTP id b16mr112579271wrm.296.1564774733149;
-        Fri, 02 Aug 2019 12:38:53 -0700 (PDT)
-Received: from szeder.dev (x4d0c4277.dyn.telefonica.de. [77.12.66.119])
-        by smtp.gmail.com with ESMTPSA id p63sm26916662wmp.45.2019.08.02.12.38.51
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=c85TBnjIM0p27lt9FQJ1NeFqKN+HP09Gd+GNLxegOdI=;
+        b=LRMumzdHD6dQHELiSzjFY+tAL6YmHz+NL7gsUUiSERTKI6ATEt/hR7Mh603GY+KEhT
+         QB1jgmRVRMjW7s0nsp4f+JI4aHZfXM94I7dyKAOr5iRAsmrX9jYKmmjHEpi8CgIxl10X
+         Aus3+QmhEO7y1BEunDHftUWJ2nY8MVU7uC6LJODgtlG34y826dGJ7Z/+JEkXm1GRpkrE
+         Rbro3YJTzVO6mQhDmVugDiNeqB8otoouY6IZFlDR3YwGnpyQE0bK6ZC+QXIhjL+OdZDx
+         mH8SOnYiheXHZNWdnv0sX8JUKNewQ1moavaOymxuHHgmCxDMG6gdMR0GkMELnOxslVrI
+         oDyw==
+X-Gm-Message-State: APjAAAUMQmOrpMKs3mHTk/KRLTm9u+1RQTcVfa7C8vyqNyAmpu+nm1SS
+        UebTHw6bt3d9CS7UoHplk2JtuxKk
+X-Google-Smtp-Source: APXvYqzAjYnFG5N4j/Kscs61mZXaqH3XSBl6Xb/83aHfboMvW20VxQ+q4jL95h3XVBvCfr2SlsF70g==
+X-Received: by 2002:adf:dfc4:: with SMTP id q4mr145026739wrn.54.1564775018603;
+        Fri, 02 Aug 2019 12:43:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5sm54186995wmf.48.2019.08.02.12.43.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Aug 2019 12:38:52 -0700 (PDT)
-Date:   Fri, 2 Aug 2019 21:38:49 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
-        peff@peff.net, jnareb@gmail.com
-Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
-Message-ID: <20190802193849.GX20404@szeder.dev>
-References: <cover.1560295286.git.steadmon@google.com>
- <cover.1564009259.git.steadmon@google.com>
- <20190725234229.GM20404@szeder.dev>
- <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet>
- <20190726220348.GF43313@google.com>
- <20190801180829.GP43313@google.com>
- <20190802015247.GA54514@google.com>
- <nycvar.QRO.7.76.6.1908021347580.46@tvgsbejvaqbjf.bet>
- <20190802165913.GA109863@google.com>
+        Fri, 02 Aug 2019 12:43:37 -0700 (PDT)
+Date:   Fri, 02 Aug 2019 12:43:37 -0700 (PDT)
+X-Google-Original-Date: Fri, 02 Aug 2019 19:43:35 GMT
+Message-Id: <pull.303.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.303.git.gitgitgadget@gmail.com>
+References: <pull.303.git.gitgitgadget@gmail.com>
+From:   "Philip McGraw via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] git-p4: auto-delete named temporary file
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190802165913.GA109863@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 02, 2019 at 09:59:13AM -0700, Jonathan Nieder wrote:
-> The exhaustive approach really helps.  Arguing against it kind of
-> feels like saying "leak checkers are great, but why run one on the
-> full test suite instead of a dedicated tool that exercises the code
-> paths where you expect to find leaks?"
+Take new approach using the NamedTemporaryFile() file-like object as input
+to the ZipFile() which auto-deletes after implicit close leaving with scope.
 
-Not at all.  We don't run any leak checker on the full test suite as
-part of each and every CI build, do we?  And just like no one is
-arguing against you running a leak checker on the full test suite, no
-one is arguing against you running a JSON schema validation on the
-full test suite, either.
+Original code produced double-open problems on Windows platform from using
+already open NamedTemporaryFile() generated filename instead of object.
 
-> In the short term, we can run tests internally to check that Git keeps
-> following the schema.  Let's not block patches 1 and 2 by this ---
+Thanks to Andrey for patiently suggesting several iterations on this change
+for avoiding exceptions!
 
-To my understanding patch 2 is only a proof of concept: it starts
-using a programming language that has not been used before in this
-project, to implement functionality that is readily available in
-several existing tools, without even arguing (let alone convincingly
-arguing) in the commit message why this approach is a good idea.
+Also print error details after resulting IOError to make debugging cause of
+exception less mysterious when it has nothing to do with "git version recent
+enough."
 
+Signed-off-by: Philip.McGraw Philip.McGraw@bentley.com
+[Philip.McGraw@bentley.com]
+
+Philip.McGraw (1):
+  git-p4: auto-delete named temporary file
+
+ git-p4.py | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+
+base-commit: 1feeaaf26bff51996f9f96c6dc41ca0f95ab5fc4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-303%2Fphilip-mcgraw%2Fgit-p4-auto-delete-named-temporary-file-v3-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-303/philip-mcgraw/git-p4-auto-delete-named-temporary-file-v3-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/303
+
+Range-diff vs v1:
+
+ 1:  1b270ef9a6 ! 1:  7e59b5cec2 git-p4: auto-delete named temporary file
+     @@ -2,13 +2,17 @@
+      
+          git-p4: auto-delete named temporary file
+      
+     +    Avoid double-open exceptions on Windows platform when
+     +    calculating for lfs compressed size threshold
+     +    (git-p4.largeFileCompressedThreshold) comparisons.
+     +
+          Take new approach using the NamedTemporaryFile()
+          file-like object as input to the ZipFile() which
+          auto-deletes after implicit close leaving with scope.
+      
+     -    Original code produced double-open problems on Windows
+     -    platform from using already open NamedTemporaryFile()
+     -    generated filename instead of object.
+     +    Original code had double-open exception on Windows
+     +    platform because file still open from NamedTemporaryFile()
+     +    using generated filename instead of object.
+      
+          Thanks to Andrey for patiently suggesting several
+          iterations on this change for avoiding exceptions!
+     @@ -18,6 +22,7 @@
+          nothing to do with "git version recent enough."
+      
+          Signed-off-by: Philip.McGraw <Philip.McGraw@bentley.com>
+     +    Reviewed-by: Andrey Mazo <ahippo@yandex.com>
+      
+       diff --git a/git-p4.py b/git-p4.py
+       --- a/git-p4.py
+
+-- 
+gitgitgadget
