@@ -7,100 +7,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB40E1F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 16:42:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73E651F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 16:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733030AbfHBQmq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 12:42:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63461 "EHLO
+        id S2388324AbfHBQre (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 12:47:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55009 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729353AbfHBQmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 12:42:46 -0400
+        with ESMTP id S2388211AbfHBQre (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 12:47:34 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 708D616D02A;
-        Fri,  2 Aug 2019 12:42:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13EBF16D133;
+        Fri,  2 Aug 2019 12:47:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jQHGihFQmW8Rgzq5zAtLEQ05lqw=; b=G/rTyR
-        mOuyZJShlQCDNmHA/ZAmZf0RZt9FIGqtnwmm2BsQChQI/QGgRHn9fjtRD+tU/sWe
-        sgJcFoiLm8hd4Rykn3HSPM5+C6GN8/LtYjwlFRJOSTnpXfsFlUc0RxxXVpaOIJXP
-        Q3hEudMr0JukijyV853QZxpOGW53E9OXWT9Sc=
+        :content-type; s=sasl; bh=v73RapPkJZlutsdWBbpH7Qbiur8=; b=BAqhE3
+        okHK7A+yUbdH8RMYeJrrdRvdBraOt4klCwBgH8IBPFgqMykQ0OlLzeWLpTlXy3FN
+        OVFwQuJwOjQ3UC3fuw4ZaBxnWf3zMjjzXpZifuIQSmk2d9ZQXZZr3CFjYV0Itabt
+        oLlJN10mK74DJ9Fg09nI5krL2fovmYGxqIvB0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uJu7srJN5KQD/zyjcoYpjb8sgR5OHFjt
-        K+MBu4Io3wJd6sk1KOR/2cf8qv3yLItFn+2cVwvlK/AOEzQZKel1vxApMjqysjuE
-        a3Lm+ecsZL2VH2XbDziWgYIrj5ghyl2O8c8GK3KVwGwmspCKeyTk8kOavPByEHZ5
-        I+OiBiKdB7w=
+        :content-type; q=dns; s=sasl; b=HcF+X4xPN7/bvKH+FUltfChHo2Pg4v9I
+        7rUtF+i7OU1ulctSfimSSGS8cXNcbuPnBd8bOYsh8TjU794RaL9Quo97viOAjiVh
+        Vk7ohz/PTJoLb7J7nukfa94Hh7G26I3M6kGXnKri/OqzFnnCckwVB9rClpw0fTuy
+        TrtB5tpYhuw=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6894A16D029;
-        Fri,  2 Aug 2019 12:42:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09DFE16D132;
+        Fri,  2 Aug 2019 12:47:32 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA6CC16D028;
-        Fri,  2 Aug 2019 12:42:40 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A2F016D130;
+        Fri,  2 Aug 2019 12:47:31 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: js/visual-studio, was Re: What's cooking in git.git (Aug 2019, #01; Thu, 1)
-References: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1908021405450.46@tvgsbejvaqbjf.bet>
-Date:   Fri, 02 Aug 2019 09:42:39 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1908021405450.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 2 Aug 2019 14:06:35 +0200 (CEST)")
-Message-ID: <xmqqk1bvlds0.fsf@gitster-ct.c.googlers.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Mark Levedahl <mlevedahl@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+References: <20190728151726.9188-1-me@yadavpratyush.com>
+        <20190728213634.GB162590@genre.crustytoothpaste.net>
+        <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com>
+        <20190728224943.GC162590@genre.crustytoothpaste.net>
+        <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
+        <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com>
+        <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet>
+        <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com>
+Date:   Fri, 02 Aug 2019 09:47:30 -0700
+In-Reply-To: <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com>
+        (Pratyush Yadav's message of "Fri, 2 Aug 2019 03:22:09 +0530")
+Message-ID: <xmqqftmjldjx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8B12195A-B544-11E9-B6B9-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 385D3234-B545-11E9-8C2A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-> Hi Junio,
+> +Junio
+
+I do not have a strong opinion on this one---a Meh by default means
+a moderately strong preference for status-quo.
+
+> All right, the patch in its current state can't fly. So what is the
+> correct way to do this? I see the following options:
 >
-> On Thu, 1 Aug 2019, Junio C Hamano wrote:
->
->> * js/visual-studio (2019-07-29) 23 commits
->>  - git: avoid calling aliased builtins via their dashed form
->>  - bin-wrappers: append `.exe` to target paths if necessary
->>  - .gitignore: ignore Visual Studio's temporary/generated files
->>  - .gitignore: touch up the entries regarding Visual Studio
->>  - vcxproj: also link-or-copy builtins
->>  - msvc: add a Makefile target to pre-generate the Visual Studio solution
->>  - contrib/buildsystems: add a backend for modern Visual Studio versions
->>  - contrib/buildsystems: handle options starting with a slash
->>  - contrib/buildsystems: also handle -lexpat
->>  - contrib/buildsystems: handle libiconv, too
->>  - contrib/buildsystems: handle the curl library option
->>  - contrib/buildsystems: error out on unknown option
->>  - contrib/buildsystems: optionally capture the dry-run in a file
->>  - contrib/buildsystems: redirect errors of the dry run into a log file
->>  - contrib/buildsystems: ignore gettext stuff
->>  - contrib/buildsystems: handle quoted spaces in filenames
->>  - contrib/buildsystems: fix misleading error message
->>  - contrib/buildsystems: ignore irrelevant files in Generators/
->>  - contrib/buildsystems: ignore invalidcontinue.obj
->>  - Vcproj.pm: urlencode '<' and '>' when generating VC projects
->>  - Vcproj.pm: do not configure VCWebServiceProxyGeneratorTool
->>  - Vcproj.pm: list git.exe first to be startup project
->>  - Vcproj.pm: auto-generate GUIDs
->>
->>  Support building Git with Visual Studio
->>
->>  The bits about .git/branches/* have been dropped from the series.
->>  We may want to drop the support for it, but until that happens, the
->>  tests should rely on the existence of the support to pass.
->
-> As of v2, the tests rely on that existence again.
+> 1. Add this as an option that is disabled by default, but people who
+> don't mind it can enable it. This is the easiest to implement. But I
+> leave it to you and Junio (and anyone else who wants to pitch in :))
+> to decide if it is a good idea.
 
-Yup.  I think they are now in good shape to be among the first to
-graduate post release.  Building the warning facility necessary to
-start dropping the $GIT_DIR/branches/ support would be too late for
-this cycle, but now this topic is independent from that, so it may
-even be worth considering to have it in the upcoming release.
-
-
+I think this is a good first step.  As I said already, I am not
+convinced that "focus in" is a good heuristics for triggering auto
+rescan, and I suspect that you or others may come up with and
+replace it with a better heuristic over time.  During that
+experiment, it would be better to allow interested others to opt
+into the feature to help, while not disturbing ordinary users who
+are OK with the current behaviour.
