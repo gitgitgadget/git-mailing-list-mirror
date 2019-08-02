@@ -2,80 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A33211F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 10:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C3FF1F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 10:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405208AbfHBJoP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 05:44:15 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41151 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391632AbfHBJnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 05:43:13 -0400
-Received: by mail-pf1-f193.google.com with SMTP id m30so35768100pff.8
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 02:43:13 -0700 (PDT)
+        id S2389189AbfHBKKE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 06:10:04 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51690 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728855AbfHBKKE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 06:10:04 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 207so67392370wma.1
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 03:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AABoQpZ1uluEAYbjcX9/x7SZFP9bElR+nLUXqC9p40o=;
-        b=VpWQh1Bqd1x1RAoGMbrk0PxAZ/BjVeg/pRKjb0hb8k4OCZr+4U7zEriEi4FOU8aVgX
-         OQuuy+VXbEFndxGqLqxZIgQosXVvuHw5TuJvQaA8c+vt1W8eJ5Pyu66LUCL2+kqHW825
-         H5CQkPpYeLTX7R9EmRtgBBRPSR7KC8fmD47LvFUg3a/IFYp5XJ13M3p15ewSpSSBm5+F
-         UDMYne57v3TUICeH5WFVJB1l/TJT0psVszTJFfzt5FHIaiQBcPLbdoopzX2Wqr616rlx
-         tEKeguqEYYwYXn2eptlWiWcMorUZejyQWcw4InfD0e+SmpN1pec6r44h/jtXG1Vq8pjT
-         zwPQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=jpM1Yvhg6rFFUZL8FUfRVjSabPfIz3iDN+8KWPQm+EU=;
+        b=pTURokvV5OnysNUEtM9CNPmKVjKPZbDgC+3Ko/4mmpA2Kjd4SXMWR78d50q360HTJM
+         oxJ6u8hg+4jyExPevNMDvttnE9nCpHKFfh8XojhZH9PGaTYt6PD2LO1ddNFHyxKYxCIJ
+         yjW1t0KJ9xofnOIFzemdkb71sE1kQvPHzXFHt+syrle2bwzd9dax9tkeA3aMIzuROC4O
+         a0t9+mUrwl8SB67ccqrfIaeB+axKfKfvnR0uV60mh9kBNQe3mbIkLIW3G/HX/fnm/rsT
+         7hmZD0daFHpz8U+PnnI3kz43EnZTFJvK2/6j82xuyNftbnpUk+IS7G4OUvW6Wx9kYLjl
+         fxOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AABoQpZ1uluEAYbjcX9/x7SZFP9bElR+nLUXqC9p40o=;
-        b=Pi8VD7u1VvJpZl8awEX+8b1NllclfPhwfWWlVp99cdtFm2DUQNjX2ZRD+M4BrOu+G0
-         WAF9tpf2S8B2uSsEA6/+F6NQ8YYIlWbzSOciAmjR5tGdDcuvINjWBg8AzmB+PqWgzoIw
-         l9seB80ThHvyLx9SEBRML9Moxtl03KF8twtgyMLVdO0lDg56WJQQLQSJjFrItcrbv5m5
-         bNgxf61fdJfrusv8gkdxh2Es8fFau7kvEaDPYnspeSnldMCv9nOGa9j4j7VXPZVuEcU1
-         EXAW1XbR7Tx+oW+m0XHWemJ3KDnR84cwoT5eREv3ZpNK1+FP5IBZWxSIZOIRFnr27EcK
-         oTbQ==
-X-Gm-Message-State: APjAAAVOJ2P3zhy3GV6jr9pIaqzvGdeXGRfVBNpejLknHkHOUV80grbe
-        FFeV5aEM2t/eE4ttfG96pGvkvdWBpY1sF8Ls1Io=
-X-Google-Smtp-Source: APXvYqxRNorlWpWpZvx+3TeNOuuo5COpn2ABeNibEizxK9qXpFp54unaJtmA66fEg/LdtNbExAbc1n5jT3MIukmtILQ=
-X-Received: by 2002:a17:90a:cb18:: with SMTP id z24mr3421608pjt.108.1564738992799;
- Fri, 02 Aug 2019 02:43:12 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=jpM1Yvhg6rFFUZL8FUfRVjSabPfIz3iDN+8KWPQm+EU=;
+        b=Ws6Ox4Fa4BjMhm4kAVGCS8MtcGGriv2IJ2dFvVPSVosgaOhXNG2hFKYdXLqw92gtnq
+         rpj8Qi2hcsjuJ5DSuIKQ90jT+GXAfG+gEe2gWkMFcsQwntYiNN6V806N+5Ljwz7ODdxt
+         BLMX4OWIKkkw77xS4JNzYJFwvN/RNZWn2fgGnXFyPgzhmD5a1j9i+NsUG/l9757iFpUf
+         od/0gY9QWdBPlXaIxGAqnVZCamm0SRuVPkUXMRsO4Gb7vsRmQjNITbMHqEfHWDhjr+FY
+         b9YUZOC3vcqhOmNaeP+vODNZI/FKoRoBsdQQtp/XrUwexMQom3A3b2UpkY7r1/+/D8mv
+         EnmA==
+X-Gm-Message-State: APjAAAVg43OHZbs6hOu5TvV44OyvWr+3Wzmjk2I4cwOby5J5fQvBP1ns
+        UxGsYp4msbHfjEg0x0IxtOQ=
+X-Google-Smtp-Source: APXvYqxhAvhajpzwtcDTjYRSjmTt/z93FCWqGuEGm6pH54dlhInXpZJLznNGlnE23nHxcJlUzAPg0Q==
+X-Received: by 2002:a1c:e715:: with SMTP id e21mr3983024wmh.16.1564740601746;
+        Fri, 02 Aug 2019 03:10:01 -0700 (PDT)
+Received: from szeder.dev (x4d0c4277.dyn.telefonica.de. [77.12.66.119])
+        by smtp.gmail.com with ESMTPSA id 2sm106829807wrn.29.2019.08.02.03.09.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Aug 2019 03:10:00 -0700 (PDT)
+Date:   Fri, 2 Aug 2019 12:09:56 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] tests: warn against appending non-httpd-specific
+ tests at the end
+Message-ID: <20190802100956.GV20404@szeder.dev>
+References: <20190730214000.GT20404@szeder.dev>
+ <20190801155309.15276-1-szeder.dev@gmail.com>
+ <20190801155309.15276-4-szeder.dev@gmail.com>
+ <20190801174126.GU20404@szeder.dev>
+ <xmqqzhksn3zx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <cover.1563490164.git.steadmon@google.com> <cover.1564695892.git.steadmon@google.com>
- <f0476b2b1e1e1f1d528b94523e86f210ccbd7dab.1564695893.git.steadmon@google.com>
-In-Reply-To: <f0476b2b1e1e1f1d528b94523e86f210ccbd7dab.1564695893.git.steadmon@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 2 Aug 2019 11:43:00 +0200
-Message-ID: <CAN0heSpyS6T-T8ueZc6L_zrgLrutf6P_pNYe=KJ+SpF+ycgfmA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] t7503: verify proper hook execution
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhksn3zx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2 Aug 2019 at 00:20, Josh Steadmon <steadmon@google.com> wrote:
->
-> t7503 did not verify that the expected hooks actually ran during
-> testing. Fix that by making the hook scripts write their $0 into a file
-> so that we can compare actual execution vs. expected execution.
+On Thu, Aug 01, 2019 at 11:18:42AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > On Thu, Aug 01, 2019 at 05:53:09PM +0200, SZEDER Gábor wrote:
+> >> Subject: Re: [PATCH 3/3] tests: warn against appending non-httpd-specific
+> >>  tests at the end
+> >
+> > This subject line kind of sucks, doesn't it?!
+> >
+> > Alas I had a bit of a hard time coming up with something better.  So
+> > far the best (well, least bad) I could think of is:
+> >
+> >   t: warn against adding non-httpd-specific tests after sourcing 'lib-httpd'
+> 
+> That reads well.
 
-It could be argued that this test is perfectly fine as long as there is
-just one hook to choose from, and as long as we're fine with failing
-tests being a bit non-obvious to debug.  Since we'll soon have two hooks
-to choose from in this test, we really want to make sure that we're
-executing the right one, not just "at least one". (No need to reroll,
-this is just me thinking out loud.)
+Ok.  Should I resend, or will you amend? (I see that 'pu' contains the
+old subject line).
 
+> Thanks.  It must have been tedious to make sure moving tests around
+> won't break them due to some (hidden) inter-dependency among them.
+> Very much appreciated.
 
-Martin
+Luckily, all the moved non-httpd tests and all the httpd tests in
+'t5510' and 't5703' work in their own directories, meaning that they
+neither influence other tests nor are influenced by other tests, with
+the exception of that $LOCAL_PRISTINE directory that I noted in the
+commit message of patch 2.
+
+I did actually diff-ed the output of the involved tests before and
+after these patches, and they were essentially identical (the only
+differences were that extra 'rm -rf', a couple of different
+timestamps, different commit oids shown by 'git commit' or 'git
+fetch', and the occasional races between the trace output and actual
+command output).
+
