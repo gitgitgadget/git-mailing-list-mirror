@@ -7,71 +7,88 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBC7E1F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 21:06:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5B411F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 21:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732632AbfHBVGN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 17:06:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59490 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbfHBVGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 17:06:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E51016ED0D;
-        Fri,  2 Aug 2019 17:06:10 -0400 (EDT)
+        id S1729531AbfHBVUj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 17:20:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63646 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbfHBVUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 17:20:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4596740F5;
+        Fri,  2 Aug 2019 17:20:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0mkUJ5d6iqhoqbjkNXHAQY736d0=; b=V3Mz+T
-        L8E8v/WA4gpYjuGoPIpd3Ol4ephDkpUPcXVymXdYMwPEBeY3IjtXc6U7xFdD0xOE
-        MA3Uf6s50Ev0FhiGOOLNhuIRsqEvvVfK9e9OzlZlMwDy2d3Hi2G2n44leSqlptTx
-        m5TZ/G70vtcbXtjMsrZm4NuGLfdkiNSLIrAFk=
+        :content-type:content-transfer-encoding; s=sasl; bh=+rzwPunvdMp1
+        4GbAhUbaQRBpYco=; b=V35+IQmnmPGKG94kadmgRLHaLi5RoHRTRi1wHfpXSd2h
+        E50n+xy9ABuHtFsd1va5kYNbmj8h8pcKiik9CnlVK8BrdIwFRgWXnitExEXQZEXS
+        wZyLwjZjiXWlZMJYtvRKZJvPUA9ke6w+e9skULW6/hBKFD99DsIqF1fqLEca/YI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VszgEkdUELteBfwoOzRT7HDn1Jwpt9pw
-        w16449Hc9KMaaXpG7bZ1RkuV4G+Ur/SmCPZua621UbcwxPZQOfTUW+8DZl75KCzh
-        p0B+0jHn1bJhYD42IeKVYWWC1sM1wy/liP2SbVFnpSk7ZAM9zKKFJEO4/pwY5KtD
-        ypbqWFutvHE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95C2B16ED0C;
-        Fri,  2 Aug 2019 17:06:10 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=b5ODMc
+        VigoCrG9doGsu9AadZVWIKfZjuNqnDL/YFI1KM9MKUOo9xuMW9rO6u+A+i+ppJY8
+        0OYdbLEcnnETDO7EMi4md2+n8B7ltEH9Q85ElmBkZEOWctkatoxgVAxvxpx4lAuq
+        vcU8Vegtx/dn2EBx56zQAyTn61mqaNgtTtCn4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC685740F4;
+        Fri,  2 Aug 2019 17:20:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 03C1816ED0B;
-        Fri,  2 Aug 2019 17:06:09 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EB56F740F3;
+        Fri,  2 Aug 2019 17:20:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 00/11] git add -i: add a rudimentary version in C (supporting only status and help  so far)
-References: <pull.170.v2.git.gitgitgadget@gmail.com>
-        <pull.170.v3.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1907162037430.47@tvgsbejvaqbjf.bet>
-Date:   Fri, 02 Aug 2019 14:06:08 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1907162037430.47@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 16 Jul 2019 20:38:20 +0200 (CEST)")
-Message-ID: <xmqqlfwbjn0f.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?Q?=C3=89tienne?= SERVAIS <etienne.servais@voucoux.fr>,
+        git@vger.kernel.org,
+        Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Subject: Re: Simplify-by-decoration with decorate-refs-exclude
+References: <D941A96E-E5A8-4C86-A200-0BECA30216D1@voucoux.fr>
+        <37283d4e-3f79-a6b1-425a-f90704fbcce2@web.de>
+        <xmqq36ijl6qu.fsf@gitster-ct.c.googlers.com>
+        <5de287e9-a8e8-780a-7d39-2229b61914ca@web.de>
+Date:   Fri, 02 Aug 2019 14:20:31 -0700
+In-Reply-To: <5de287e9-a8e8-780a-7d39-2229b61914ca@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 2 Aug 2019 22:36:33 +0200")
+Message-ID: <xmqqh86zjmcg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A28E880-B569-11E9-AE89-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5D1CAE12-B56B-11E9-AC74-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
->> As I am a heavy user of git add -p myself and use a patched version for
->> weeks already (it is so nice to not suffer over one second startup until the
->> MSYS2 Perl finally shows me anything, instead it feels instantaneous), I
->> integrated these patch series into Git for Windows' master already, as an
->> opt-in feature guarded by the config variable add.interactive.useBuiltin
->> (and Git for Windows' installer is prepared to detect this version and offer
->> the option in the graphical user interface).
+> Having cmd_log_init_finish() call load_ref_decorations() before
+> setup_revisions() would indeed solve the issue as well.  But we need
+> to call the latter to check if --pretty=3Draw was given and avoid loadi=
+ng
+> decorations in that case, don't we?
 
-I've sent comments on a few patches in the series; overall it was a
-pleasant read.
+I was thinking about giving an instance of the decoration_filter to
+either rev_info or setup_revision_opt, and moving the call to
+load_ref_decorations() and the decision to make that call from
+cmd_log_init_finish() to setup_revisions().
 
-Thanks.
+>> Other two callers of load_ref_decorations() are deep inside pretty.c
+>> but I wonder in the longer term if we would want to turn them into
+>> an "a lot higher level should have already loaded decorations"
+>> assert.
+>
+> This would require that higher level to parse the user format to check
+> if %d or %D is present before formatting the first item.  Hmm.
+
+Yes.  Don't we pre-scan what kind of formatting primitives are used
+in the end-user supplied string already to optimize loading of notes
+and source information?
+
