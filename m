@@ -2,93 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A03741F731
-	for <e@80x24.org>; Thu,  1 Aug 2019 22:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA52A1F939
+	for <e@80x24.org>; Fri,  2 Aug 2019 00:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388192AbfHAW5t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Aug 2019 18:57:49 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33480 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732085AbfHAW5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Aug 2019 18:57:48 -0400
-Received: by mail-pf1-f194.google.com with SMTP id g2so34909641pfq.0
-        for <git@vger.kernel.org>; Thu, 01 Aug 2019 15:57:48 -0700 (PDT)
+        id S2390581AbfHBAyR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Aug 2019 20:54:17 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:40166 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388445AbfHBAyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Aug 2019 20:54:17 -0400
+Received: by mail-ua1-f67.google.com with SMTP id s4so29053103uad.7
+        for <git@vger.kernel.org>; Thu, 01 Aug 2019 17:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jTb6se97cWxtOFYxdEUL4iquB3wNdOwkVDsaVjNnWdo=;
-        b=jBE+0B2oJgNQLuBZN1V3oH122IcOz3Iz8ICw2N0F9VGuSyRWdG9YONKAC0QX5vsaQS
-         aDEfdvmtZ86Pf7m5RmhFZZlt1pN4KLhtW1eLe+aoij5TcAi1FxUBwyeuA+35/Bhh9GPq
-         kPt6B1NbPn3YeGp4FfR6yr+yvIWDqq8BLsOHabzR21QFGvudCiUTh+mPe6BGBGb70SsA
-         S9p4b3w+3NyqQT/3qb6HvAPACL2QuSdHtdx8NOFb2dx0JE7M/pg9ViJkL4CmmEWG+hfe
-         v3YpTOeUlRtX4UIUGwMIVsmJKvYJsaX7OkFX0m8kncLWvl/j+uRL1fFUuMk6B17M8oqK
-         Mpsw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=tvWIS7MkRemheNUz7xBh4zWkuSK2qo81CL+KnLnfSQY=;
+        b=RoZdb7Z7RRURwG0wwCv+FSy38y8603AhM9rOWbnR3w7zHxQn80bj45u+YikjpK3I6Y
+         QUPEKfCiXFzYbaLDO3EZIw5WMsFPCWNqGpLTTUuPVEh4sioVXJTYcn2ucVz9ZBnWmyWU
+         z9K4reW5yffd7sR8bd3DszvoPxa12xxM0CeBj/2hW7WZ/r2sp0szq0pIQOXc1JS/8gxy
+         tis6keBevwvmkZ/4cDJ5ds1hUYO/HndStt0m26AP3t0Ggj66fk08tiIMljV021dq0w7D
+         E58oRFA/RWLcv5cbW2J/Dhm/nf7MsTIljX0gFc/FvJb1cNvUtLnuo881ySmvm2+N+z3T
+         clZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=jTb6se97cWxtOFYxdEUL4iquB3wNdOwkVDsaVjNnWdo=;
-        b=TxOBg3WbmWwYZWSjkcNJoIt0elzVCSO+PoezahBA+ebPWSfLPmfYzsWX+spwPwzech
-         3y9dNlMGXRQ7pOTq7MiQvmoLsfaCAtdNZoIeg4KwJHl95DgZpnWxZfCogoyfRvUqgIkb
-         +Zd3GSLeyvaKmKO1UxbZD6Yex6wQK3bUFGcNe7G6rqeI6bl1YFfMz7RRMtqz06IWCJpK
-         l6xvQsYl1zvbDkgXsJ0uFwl2uy5/88/QR3TY3ujoGpCZBc42AbVJOJTL+qi4OuC7xc4A
-         pTuDUp1PrOAyORH4OnFbbxickLSANoXJmlOFNVjcpVqzkz2EfUHO/FvvAP9UefZ4ijWB
-         aFQw==
-X-Gm-Message-State: APjAAAUa26MekTd1lO3ehGCpwMEYNXOAPbuteGwaZfIRCQMeMuiPuMK0
-        2et/9t6o4gskuJ/E+eDcsazKzA==
-X-Google-Smtp-Source: APXvYqyrwcmGJ/sD9jM75GlfzTfKjT3ZT+/Apf+0v/L42nTDJlCHY5kPPuuVjvZlIVTy5OJNKmqROg==
-X-Received: by 2002:a17:90a:6546:: with SMTP id f6mr1147103pjs.11.1564700267536;
-        Thu, 01 Aug 2019 15:57:47 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
-        by smtp.gmail.com with ESMTPSA id o95sm5536788pjb.4.2019.08.01.15.57.46
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 01 Aug 2019 15:57:46 -0700 (PDT)
-Date:   Thu, 1 Aug 2019 15:57:41 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] trace2: clean up formatting in perf target format
-Message-ID: <20190801225741.GQ43313@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.298.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=tvWIS7MkRemheNUz7xBh4zWkuSK2qo81CL+KnLnfSQY=;
+        b=B5QB7G+Srz/+4bKJbWIBLLYWCh9zKhRO0/GmW/VsM/SfqnSVPoGIQL6OD52oC0fVAc
+         hdX+r4FY9cYVLqeAB3vBVMj2frYaluhpQw+kEH/gX2LsAo+RXip3yiWmbJuLLoCywG8y
+         kOazoxa31qpaBz673x6Wh9C6xCh3DNGtzlHAvBykZaIdeyMdBnx4I0g8ZtgsYzl1v1hJ
+         eUFW867t9uOZ7tzJ6f0Qvx/KyJ0tVGWQzhB1gGNNBcAP3MbeYaMJYzGjx5iEsCjFUSCF
+         RqS1IMVNNgNocKX6eKgYJP2HwCeqGSQ3inQcz21ou84YED2hGTVgm7kDO5KpnepAjxJZ
+         AePQ==
+X-Gm-Message-State: APjAAAUBoIo+zmEAK3DI4rEPEt1HneXJJRGJGoKLaLjm6C+9XgJkXccR
+        /vjjdBIpZUfj5D+emnSq0K+GModxgcB2ap+ub+2YdP8v
+X-Google-Smtp-Source: APXvYqyzQtDzBr7M6bqxaypR8ZlVbJ/XVEwC5yNusfK4khfIQT+wlYWNHRQC8we5p+IB7eG26omPTYc0eFaCn5cIyxQ=
+X-Received: by 2002:ab0:168a:: with SMTP id e10mr36190394uaf.87.1564707256000;
+ Thu, 01 Aug 2019 17:54:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.298.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <0102015f985d387e-f50183c4-4b49-4a9f-b365-2a86ba24bbed-000000@eu-west-1.amazonses.com>
+ <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102016bb065bf5e-005b0752-2594-45d5-a01a-12d0c5e24b70-000000@eu-west-1.amazonses.com>
+From:   Max Rothman <max.r.rothman@gmail.com>
+Date:   Thu, 1 Aug 2019 20:54:05 -0400
+Message-ID: <CAFA_24J8Ry5LhRX5O82eJDtrqjEodDFTEniZNw06fKEWvwvYMA@mail.gmail.com>
+Subject: Re: [PATCH] completion: add missing completions for log, diff, show
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.07.31 13:04, Jeff Hostetler via GitGitGadget wrote:
-> This patch series contains a few column alignment and whitespace fixes for
-> perf target format. This should make it a little easier to read.
-> 
-> Jeff Hostetler (3):
->   trace2: cleanup column alignment in perf target format
->   trace2: trim whitespace in start message in perf target format
->   trace2: trim whitespace in region messages in perf target format
-> 
->  trace2/tr2_tgt_perf.c | 42 ++++++++++++++++++++++++++++++++----------
->  1 file changed, 32 insertions(+), 10 deletions(-)
-> 
-> 
-> base-commit: 026dd738a6e5f1e42ef0f390feacb5ed6acc4ee8
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-298%2Fjeffhostetler%2Fupstream-2230-cleanup-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-298/jeffhostetler/upstream-2230-cleanup-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/298
-> -- 
-> gitgitgadget
+Ping :)
 
-The series looks good to me.
+
+On Thu, Aug 1, 2019 at 8:50 PM Max Rothman <max.r.rothman@gmail.com> wrote:
+>
+> The bash completion script knows some options to "git log" and
+> "git show" only in the positive form, (e.g. "--abbrev-commit"), but not
+> in their negative form (e.g. "--no-abbrev-commit"). Add them.
+>
+> Also, the bash completion script is missing some other options to
+> "git diff", and "git show" (and thus, all other commands that take
+> "git diff"'s options). Add them. Of note, since "--indent-heuristic" is
+> no longer experimental, add that too.
+>
+> Signed-off-by: Max Rothman <max.r.rothman@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 9f71bcde967bc..b6d18710135ec 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1474,6 +1474,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+>                         --dirstat-by-file= --cumulative
+>                         --diff-algorithm=
+>                         --submodule --submodule= --ignore-submodules
+> +                       --indent-heuristic --no-indent-heuristic
+> +                       --textconv --no-textconv
+>  "
+>
+>  _git_diff ()
+> @@ -1782,6 +1784,10 @@ _git_log ()
+>                 __gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
+>                 return
+>                 ;;
+> +       --no-walk=*)
+> +               __gitcomp "sorted unsorted" "" "${cur##--no-walk=}"
+> +               return
+> +               ;;
+>         --*)
+>                 __gitcomp "
+>                         $__git_log_common_options
+> @@ -1789,16 +1795,19 @@ _git_log ()
+>                         $__git_log_gitk_options
+>                         --root --topo-order --date-order --reverse
+>                         --follow --full-diff
+> -                       --abbrev-commit --abbrev=
+> +                       --abbrev-commit --no-abbrev-commit --abbrev=
+>                         --relative-date --date=
+>                         --pretty= --format= --oneline
+>                         --show-signature
+>                         --cherry-mark
+>                         --cherry-pick
+>                         --graph
+> -                       --decorate --decorate=
+> +                       --decorate --decorate= --no-decorate
+>                         --walk-reflogs
+> +                       --no-walk --no-walk= --do-walk
+>                         --parents --children
+> +                       --expand-tabs --expand-tabs= --no-expand-tabs
+> +                       --patch
+>                         $merge
+>                         $__git_diff_common_options
+>                         --pickaxe-all --pickaxe-regex
+> @@ -2525,8 +2534,9 @@ _git_show ()
+>                 return
+>                 ;;
+>         --*)
+> -               __gitcomp "--pretty= --format= --abbrev-commit --oneline
+> -                       --show-signature
+> +               __gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
+> +                       --oneline --show-signature --patch
+> +                       --expand-tabs --expand-tabs= --no-expand-tabs
+>                         $__git_diff_common_options
+>                         "
+>                 return
+>
+> --
+> https://github.com/git/git/pull/426
+>
