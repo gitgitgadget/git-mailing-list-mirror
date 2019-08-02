@@ -8,94 +8,179 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F14921F732
-	for <e@80x24.org>; Fri,  2 Aug 2019 12:12:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4197B1F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 12:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389220AbfHBMM5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 08:12:57 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53761 "EHLO mout.gmx.net"
+        id S1731445AbfHBMjr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 08:39:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57721 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387770AbfHBMM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 08:12:56 -0400
+        id S1726225AbfHBMjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 08:39:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564747969;
-        bh=8yGeFu18GtlMaqMBbJz/7Fjjr/LBoXjRQQJrGxIr+SE=;
+        s=badeba3b8450; t=1564749572;
+        bh=cEp6oL4nMPmyG8WehgkptPS6muVS/LXuzGeCPBfn87I=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DHqtcwZsUJA6z94VsVJPB8qRM/gu3fKIMwbcZSzttT8bM9Yj6rvSq0XGRQlAzQvxl
-         y2rfP5NsQcSWOQ6AlrYWGDbnvLGWE1Df+1lsuvsNIiAg/dkXYNNDjtDc4K9x+mCrth
-         OKjBfb/6Q1lpfyShp0OIjR+sSkn5GwaFhqoGtozQ=
+        b=jOiChkLUf0882cUlvsmpvNYoakrOGCZ87h0cFy+T+bMzWNcaHPI3PoYPZfm3Xync5
+         9tgM6qrMMtuSGyXJy0OrTUvRBOVRHSQeFqFW0TvYANSNV3cewqRsboIEin8qK1NfRl
+         cBQiAyYG9ACd5Ze7pkRHTngJUTPQU41oJLZ8rgI8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOBOi-1hwqLl2XJ6-005clr; Fri, 02
- Aug 2019 14:12:49 +0200
-Date:   Fri, 2 Aug 2019 14:12:34 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiJZO-1iWj100mJy-00fQeD; Fri, 02
+ Aug 2019 14:39:32 +0200
+Date:   Fri, 2 Aug 2019 14:39:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: js/early-config-with-onbranch, was Re: What's cooking in git.git
- (Aug 2019, #01; Thu, 1)
-In-Reply-To: <20190801214247.GB30522@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1908021410540.46@tvgsbejvaqbjf.bet>
-References: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com> <20190801214247.GB30522@sigill.intra.peff.net>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Mark Levedahl <mlevedahl@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
+In-Reply-To: <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1908021414530.46@tvgsbejvaqbjf.bet>
+References: <20190728151726.9188-1-me@yadavpratyush.com> <20190728213634.GB162590@genre.crustytoothpaste.net> <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com> <20190728224943.GC162590@genre.crustytoothpaste.net> <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
+ <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com> <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet> <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:StEEdCNRhi8HwLygxwKG5Bi7xBhM9Ryxtd/Lb+BEDzBvJH0Vyl5
- rE/1C2eBIfCJo/ACSqfAJFqL5v5r1xLEavAObTVSrV1rXl/KmzOHohpdpTmCPCqW9OWCgGT
- jXrz3jUxsziaxLuyrRIW/qwVOt32LwVopH2MCHMaFVfcZ0W3NWiEfg8DoJtnQhzOCROov7S
- MuK2OgFLZv9yvicfStiCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qLAuR39cymI=:EjfCMu1eARgVXQJUXlS71F
- h1VtoeNBI4k1reQM3/2xJ87sfnMvfdd7qbeykq8Yct8MnrhNqYWEuY5bIF3Iq+B5ItDaPUtLq
- DTL2qMpeCloxEskp5OsiIO+pWTbv47wVhRBDi3F+PGsZr4KatE7NWtkiuwsvd7UzEDdARU7YQ
- 5Utk6e7t3b+emLMzr3aYSLPm7H5rQy1l4mpM3jSdQwbMXSJYQpjy/zv9CRjtrRStGYh49ilea
- u7v+XzEhGBlMEAm8ivCgQE/SuErV7jizw/2ivF+OG5n15E5QvWtQo9Mo9cK847TW3E0Jj7RkM
- U69OPmrEt+O3PRkQL7a1kt5jDXta/Z+gHFugVuTB82fpo8gylCrrsjSWrwx8RJDQ9VC6OI/zH
- xqO9JfjZg31CN+RZslQB2YZ1k2Bi8HdoNyNnDa9O88tySGdol/p8wE7ebT4Go9nPDx/lVoZK3
- vG4+2F9hx54+NpXnlZjWIiGs7CGb8kt8itnVD1RX89Xxh7g8uzyUWrvQfC+ySrvJM4nh45KhR
- 8XBFxXPOA6+4MXN7qV3iimtX/nBnPhO3Jo4XLT2XhGHnZL5iJXFCxWBreQY5ykv14MLxYz0pZ
- mQGn5wYndG5wNgYN/F54gphnrKdQPp/unk//a6AvtrbUuxAi2Wzi85fCNPZPTgUpRAMyV7hlU
- q4cJS0R5SPQTvQohOaZ7RqidKQO4Bl/VLzgz49DmrXw68MShbtWFw/lhUs5JKKPvDd4Y171gs
- VTm95dHCBcbI+i7DUX2Qg/PWUrZF5DdDcCIwkmryde+sNrsJASa+/p5exHwjwdPWmasMTpnWC
- I+Oj14y2VNmyYtfYwxJCiix/RSwXodPZYGNTPUROPJotDfDqZh6ZCehB3IQad8zn5E6VtSwUJ
- wU4+AD9Xb6hMpUqz+YJi5M73B6ITLeVUd6gRJHkWFla2IxH25I1fFKIfwvaK7j6qsw3fc9WXy
- q4B2+A27rSE3OMu/J2e8HcT4PrKxpk/sxp5ypCMr0bKvSdxXF41sV7HlMAXKo0CCM2QC2MO9o
- fRvl8GiCa/PjxHFsoygldU/njGZlCVLoaNY2Idl7r/4eZD8qzz0Qdzzc8HrIouxe6Ca7EehvA
- qvWe75yCwL+M5FQIhgkUbCINsiyhJOtbAJ5tjrEu3YcoSssFDpdnyOM0lTYIoD9dbHaIKqION
- C+QSQ=
+X-Provags-ID: V03:K1:jtfGCY5ftHc+xps08Oioat3uIkbWwjhZe9oP8Q5JDIELpfujV+4
+ 4BjTQoA2DMdvjO/5r5ZsiiRdpivzmZEcsQJgqKr9o/bpDmwHnsHJ+W83+XW+DT5TGX0q1j7
+ HFz6xuO2wf4Og5VK5i957lWjPEHtTgbF1goq67aNJjHo12zZSc0jMw8cLwyBN7A9m1F9VTd
+ RfCUxZJ7Fl+aAxM6ah5zw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SNVr2aKDvcs=:aIYKezVWPaDkMf/qeyV1pN
+ +zL3ZTkF1Q6mi2SZwQsfw9n7OhIeyYQ02sgkhhOlxwRWo8/G0A5gtu3ZwRcNla2mRIB9HacGY
+ 3fKs+BJ3+6WDHBMSJFa7atWeBRKn95itGR2bM4vnRjEG0YIEa9lVUQxb0uUJEQzUWSwjhiDnj
+ ULxoJ+eQz6Xx1NmcIsWZJzoXvrZvfZu7hDJknTpzM1sgsPg2FDvhI+4nkNYQFR3jMEpcmJ9se
+ 46feZ4DiU3AhDaBHuQvUYMBPQLSgnM9kM3E0xHG0AWZ4ZBy3wDyVUJYfogPNY+tOFRXtlC5Nx
+ xz1BMhaplqa35PtfbCiZufthuEePpLo+1kFts1ro3PX2CZchx7fdBj87zJZqQWj0gO1xD0iY/
+ Idh7ICAp+Uiw+lSZcQEJw7e45jH/GI8IF9Rd4fYcgEivD19oiuuJpmBCzdnFefdOaKEyGuYhE
+ j9YLNzQjtdENiSOXg7ylU1oo9Y+dNdkZG7z2TW9k81F6t++gw2JNGCzefPzFbuSct57ktFstx
+ WcGyhVTlxHqCVVWwbX7oEZxgICQRMa6xZQQ+P0t22O8mwe+WSXZEpSYpQkjOC4LW5xAq+ajdt
+ 3BqYnnXxH3jvK/TnsKBVU0PrEv2DwAGlolM9hMU4NyEeH64W7mOmC3wDP/wDUt1tKZac4jZhH
+ gKWflARDnLgvTB8L2S3rPrc0VA0+73SMXZbIRDSQKqKyX7VH+t782OhibEJU5uJD9oytrJ6Hk
+ h/jRqucdDO3U2a2gc5WKjdERNirKHxG9HAX2Nn1OfWVTCQ//38Hc+PBhqmq0yGsS7GZvc2ABb
+ QLpJ12sV0OQCphB8APBN3gpbKt7u98JZm4XN63LjvrL0vop9nxtl0E5YmUBWggB4iuFBjIXak
+ Gg4GODlArrODpSSD4gCwbfWlSGj+5XVRJ5P+iPexTRdRZZKqhuOGNByHAR3lQ2gzWr/Q3sxuM
+ 9RVTJcCq2z3UBgaW1tdewA17BfB97jXVoBeMR3iSdfuEfh5eSOL5c5pJYX0LZpfdYTlV2pyO+
+ /QiU/k30OtjmODSCA2wES4zthka5EX/6khxfNVYrHrZ2YsGe5YwJYvTiSEFp6P9bkvarB5shF
+ vupE5xR1NgXbDEXTpPayA+DY9Ft5omvKL43JPG5dzFiVTKPovzABjy6RabVO4x9mDkOtt5rE6
+ 27Pvo=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi,
 
-On Thu, 1 Aug 2019, Jeff King wrote:
+On Fri, 2 Aug 2019, Pratyush Yadav wrote:
 
-> On Thu, Aug 01, 2019 at 01:05:12PM -0700, Junio C Hamano wrote:
->
-> > * js/early-config-with-onbranch (2019-07-31) 1 commit
-> >   (merged to 'next' on 2019-08-01 at 26b713c824)
-> >  + config: work around bug with includeif:onbranch and early config
+> On 8/1/19 1:12 AM, Johannes Schindelin wrote:
 > >
-> >  The recently added [includeif "onbranch:branch"] feature does not
-> >  work well with an early config mechanism, as it attempts to find
-> >  out what branch we are on before we even haven't located the git
-> >  repository.  The inclusion during early config scan is ignored to
-> >  work around this issue.
+> > I would be _extremely_ cautious to base an argument on one
+> > particular setup, using on particular hardware with one particular
+> > OS and one particular repository.
 > >
-> >  Will merge to 'master'.
 >
-> I had some open comments here on how the "do we have a repo" check is
-> done, but I think what is committed here is functionally equivalent. I
-> can pursue the NULL the_repository cleanups separately.
+> Agreed. That's why I asked for benchmarks from other people.
+> Unfortunately, no one replied.
 
-Right, I read that as "maybe later" comments, as that project is so
-different from trying to fix the `onbranch` feature with regards to the
-early config machinery.
+What stops _you_ from performing more tests yourself? There are tons of
+real-world repositories out there, we even talk about options for large
+repositories to test with in Git for Windows' Contributing Guidelines:
+https://github.com/git-for-windows/git/blob/master/CONTRIBUTING.md#perform=
+ance-tests
 
-Or did I misread and you want me to do anything about it before v2.23.0?
+> I am worried about exactly this problem that other users will have
+> performance problems. I usually reserve judgment till I see some
+> actual benchmarks, but since in this case we aren't getting any, it is
+> probably better to err on the side of caution.
+
+Well, you proposed it without testing it first e.g. on Kotlin or even
+Linux.  Personally, I would have chosen Chromium, as it is a pretty big
+one.
+
+Maybe you want to do that now.
+
+> > When it comes to repositories that are worked on actively, git.git is
+> > not actually a representative example, it is way smaller than what use=
+rs
+> > deal with.
+>
+> Out of curiosity, what would you consider large enough? The Linux kernel
+> (855,753 commits as of writing this)?
+
+As your patch is about refreshing the Git GUI, the number of Git commits
+is irrelevant. The number of worktree files is relevant.
+
+Unfortunately, you cannot search for this dimension on GitHub, but you
+can search for "repository size", which is at least loosely correlated:
+
+https://github.com/search?utf8=3D%E2%9C%93&q=3Dsize%3A%3E5000000&type=3DRe=
+positories&ref=3Dadvsearch&l=3D&l=3D
+
+Personally, I would probably have chosen either of these, for testing:
+
+* https://github.com/chromium/chromium
+* https://github.com/WebKit/webkit
+* https://github.com/raspberrypi/firmware
+* https://github.com/MicrosoftDocs/azure-docs
+* https://github.com/facebookresearch/FAIR-Play
+
+> > At this point, I am gently inclined against the presented approach, in
+> > particular given that even context menus reportedly trigger the re-sca=
+n
+> > (which I suspect might actually be a Linux-only issue, as context menu=
+s
+> > are top-level windows on X11, at least if I remember correctly, and I
+> > also seem to remember that they are dependent windows on Aqua and Win3=
+2,
+> > just to add yet another argument against overfitting considerations on=
+to
+> > a single, specific setup).
+>
+> All right, the patch in its current state can't fly. So what is the corr=
+ect
+> way to do this? I see the following options:
+>
+> 1. Add this as an option that is disabled by default, but people who don=
+'t
+> mind it can enable it. This is the easiest to implement. But I leave it =
+to you
+> and Junio (and anyone else who wants to pitch in :)) to decide if it is =
+a good
+> idea.
+
+That would probably be much easier to get accepted.
+
+> 2. Watch all files for changes. Atom does this for their git gui [0]. We=
+ can
+> probably use watchman [1] for this, but this adds another external depen=
+dency.
+
+I am currently looking at watchman, and it seems that it has its own
+performance issues in big repositories (for which it is actually most
+relevant). Besides, Windows support is kinda flaky, so I would rule this
+out (Git is supported on many more platforms than watchman supports).
+
+Besides, what your patch wants to do is not to know when things have
+changed. Your patch wants to refresh the UI at opportune moments, and it
+is unclear how watchman could help decide when to refresh.
+
+> 3. Leave this feature out. I of course don't like this option very much,=
+ and
+> will probably have to run a fork, but if it is better for the project, i=
+t is
+> better for the project.
+
+That would indeed be the safest.
+
+I wonder, however, whether you can think of a better method to figure
+out when to auto-refresh. Focus seems to be a low-hanging fruit, but as
+you noticed it is not very accurate. Maybe if you combine it with a
+timeout? Or maybe you can detect idle time in Tcl/Tk?
 
 Ciao,
-Dscho
+Johannes
