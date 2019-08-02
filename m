@@ -2,131 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D215B1F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 09:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE8A71F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 09:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391454AbfHBJu7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 05:50:59 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39602 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405395AbfHBJpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 05:45:17 -0400
-Received: by mail-pl1-f193.google.com with SMTP id b7so33481704pls.6
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 02:45:17 -0700 (PDT)
+        id S2406868AbfHBJ5R (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 05:57:17 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:43575 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406847AbfHBJ5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 05:57:13 -0400
+Received: by mail-lf1-f66.google.com with SMTP id c19so52507891lfm.10
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 02:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=43VZVwfwEq8Vk5BVGDca+vx87efoaqtHqs5fwHDoPrI=;
-        b=PSa44qeC9tznpHjKdAoz/OqxMUZIZtlaEG31K8IOHq+2N9cMhpqUicRq7xqQ99APJX
-         DFpCK2EdQEx3fI2AaaYu5L8XK7MoU7KanuJjY0YckkOnIViZKO2eESj103VGKgp9NXQD
-         eqI5KKDXWcVUJJtI8K8jBC5F7b4ovp0YAIX0e3LzFsiCbZq+NMAXkPx4OaBeJ7NanvbB
-         9Z/iaic1ZexrANM7LnrDTjKsuQnca4Sn8lQdaQcfffMYh3+8LaHC3A6TAfTjdRJfHRaP
-         AkffEFj+4K/wtcL2LBYPkORzXB+7mjKsh2Ms2/swIpMTl1g9XnQP81B6aMQ1p/k44U50
-         YXpA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LxqrBD3ATV7jpOgMssqqtb+iQQS6lFr2D04nniwENNc=;
+        b=WkRVq2Edb5f8l0IxvX7t9ZWKkMSrOh5uFgwpktGyEPmv9cQfD3GiYjbaFvmwHgJx1P
+         6DxqYFGUyGo/K4YuYfi01qm0JrWZ3C7gAAj07cfONOa9eD6Nke8qFmhfemT4z5D1//pP
+         8opgH1EanGfB3hJNuG3urKzG7wXt+WjYabdooPemts1XZhPMiNZgwOchlJRjFth6EQAI
+         wWGL0CDCkcOkgF+/eNa5adGwbrQBVKCU+vzxAOBo13pIRwEKwJmyYY9oxCUnAHyAVN8/
+         t+GhVUEVctRQC+8ueNDZOMrcyeqTWXNe3dZhHXznLUQUCkbd3KuT1fXIhh79G5p3Txb4
+         M3pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=43VZVwfwEq8Vk5BVGDca+vx87efoaqtHqs5fwHDoPrI=;
-        b=ZiRrQ/3oB651HvZ03smENaGIslncyjcsI12Pt21un6uhzpO6xferVdMpr3n+D4+mgg
-         XVS5wH2i6z+JyAkCLtGt4AYl5NvT5Hkux4peZIuMxXkqcdzwJQ66rotFVkjXBilLix4T
-         1oBRUjsmP8BH+kQDfgvD34bQXppX3+i4yzcUCyXFwg/Aez7vuHEXwNe/RfQROqr7yEgN
-         Zcdye58HovNglYk3TnhCzC8aYqzqjSiij6QGewt+vZwtVZhkXc8DIevYepGgEZaTr5Sg
-         DuoaXVMnDifKNzLXQhOvjiPxK3DGF34AfcqAb6g+pzySkRQnzP8R0pKN3t6ogaoYB1di
-         IrvA==
-X-Gm-Message-State: APjAAAVX0XsMxJCay6o9SaDJzd7u222sZ8U31ZG8+supGHg4PDg96sx/
-        mMcJ+g4GuTWidJO9jRs6mkvIXukMUiH3NHuo60W4mw==
-X-Google-Smtp-Source: APXvYqxps2hnvi5ZA88DobYjlwYqYLwtjkegwlB12IgsU0ls81NI65lBQZJ3Xfg6fQClSmmevLrk+NVGMR/9wtfXoj0=
-X-Received: by 2002:a17:902:8509:: with SMTP id bj9mr131775806plb.79.1564739117019;
- Fri, 02 Aug 2019 02:45:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1563490164.git.steadmon@google.com> <cover.1564695892.git.steadmon@google.com>
- <61b989ff16eadfd0508e10f71c9b318eb15ce2a7.1564695893.git.steadmon@google.com>
-In-Reply-To: <61b989ff16eadfd0508e10f71c9b318eb15ce2a7.1564695893.git.steadmon@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 2 Aug 2019 11:45:05 +0200
-Message-ID: <CAN0heSo30-ng223sJTvz5_Go+-Yu=h=qvFg0KOhguLsFVE7b2Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] git-merge: honor pre-merge-commit hook
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LxqrBD3ATV7jpOgMssqqtb+iQQS6lFr2D04nniwENNc=;
+        b=HCksoTLcGcdyEBYfSLFSVBobLnG0Ibv8eEnnCjySl0PI4lxye9LL0xLX7evGMPUfaq
+         felrXH6RjuizI3DB1DCJM4Ji7V8HvnRD/430w8gd/lZSyr0CKqZTsxPryHgIhkw/iUNO
+         gFUG4o+9lBP/iZv0LdM4B7fZouux3J1qSJCFy8SM2szeAs45A/TObbZY2IZVnDcS/z9W
+         0jSGm9G+Ee94b4TtyxtyCTM9TSWT7I+7A7Uod8urvhuw+XXC8h7uDYw3xOuGlV9WzJkA
+         D7pl6NJV69x0/uJh+iI2DEqFYWhrny9+pOoes/6leE3fOhOzNNqIphruIGR/CJgWLhlm
+         O7dg==
+X-Gm-Message-State: APjAAAVk0TE1L973y/WSaTU8xeIi2X9kQIdEuhHhmGmWkpSvJOvLlk+E
+        RV9XnDd5YnXl9MOshY1eIYE=
+X-Google-Smtp-Source: APXvYqyxJCMIuCkEahglD1f9B6vbq455cfgJcE4x4vUJDj6yIgmyXvZhw+VZS/6XBdlpWmKj9ssppg==
+X-Received: by 2002:a19:490d:: with SMTP id w13mr62574632lfa.58.1564739831516;
+        Fri, 02 Aug 2019 02:57:11 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id y12sm14237344lfy.36.2019.08.02.02.57.09
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 02 Aug 2019 02:57:10 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Josh Steadmon <steadmon@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Michael J Gruber <git@grubix.eu>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 0/4] pre-merge-commit hook
+Date:   Fri,  2 Aug 2019 11:56:34 +0200
+Message-Id: <cover.1564737003.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc0.30.g51cf315870
+In-Reply-To: <cover.1564695892.git.steadmon@google.com>
+References: <cover.1564695892.git.steadmon@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+[Dropped cc-list the first time around. Apologies to those who receive
+this twice...]
+
 On Fri, 2 Aug 2019 at 00:20, Josh Steadmon <steadmon@google.com> wrote:
-
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 82cd573776..7c4c994858 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -103,6 +103,13 @@ The default 'pre-commit' hook, when enabled--and with the
->  `hooks.allownonascii` config option unset or set to false--prevents
->  the use of non-ASCII filenames.
 >
-> +pre-merge-commit
-> +~~~~~~~~~~~~~~~~
-> +
-> +This hook is invoked by 'git merge' when doing an automatic merge
-> +commit; it is equivalent to 'pre-commit' for a non-automatic commit
-> +for a merge.
-> +
+> This series adds a new pre-merge-commit hook, similar in usage to
+> pre-commit. It also improves hook testing in t7503, by verifying that
+> the correct hooks are run or bypassed as expected.
 
-I'm not sure everyone understands what an "automatic merge commit" is.
-(Is it an automatic "merge commit", or an "automatic merge" commit? Or
-sort of both?) And I'm not sure exactly what to infer from the
-"equivalence". I happen to know that the statement about the default
-hook can only be half-carried over. And I'm not sure what to infer from
-"All the git commit hooks are invoked with the environment variable
-...".
+I really like those test improvements. Now it should be harder to mess
+up a future refactoring and run the wrong hook. These hooks are "very
+related" so I think this is important.
 
-Is the below suggestion 1) correct, 2) readable?
+I've messed with the test a bit and offer these potential improvements
+for your consideration. I was lazy and just built this on top of your
+series -- if you agree to some or all of these, you'll probably need to
+squash them into a few individual patches.
 
-  This hook is invoked by linkgit:git-merge[1], and can be bypassed
-  with the `--no-verify` option.  It takes no parameters, and is
-  invoked after the merge has been carried out successfully and before
-  obtaining the proposed commit log message to
-  make a commit.  Exiting with a non-zero status from this script
-  causes the `git merge` command to abort before creating a commit.
-
-  The default 'pre-merge-commit' hook, when enabled, runs the
-  'pre-commit' hook, if the latter is enabled.
-
-  This hook is invoked with the environment variable
-  `GIT_EDITOR=:` if the command will not bring up an editor
-  to modify the commit message.
-
-  If the merge cannot be carried out automatically, the conflicts
-  need to be resolved and the result committed separately (see
-  linkgit:git-merge[1]). At that point, this hook will not be executed,
-  but the 'pre-commit' hook will, if it is enabled.
-
-(If you use this or something like it, notice how this already mentions
-`--no-verify`...)
-
-> +test_expect_success 'root commit' '
-> +       echo "root" > file &&
-> +       git add file &&
-> +       git commit -m "zeroth" &&
-> +       git checkout -b side &&
-> +       echo "foo" > foo &&
-> +       git add foo &&
-> +       git commit -m "make it non-ff" &&
-> +       git checkout master
-> +'
-
-You got rid of loads of "> file" in patch 1/4, so it seems unfortunate
-to introduce a few here. ;-)
-
+The first four are perhaps more or less a matter of opinion, although I
+do think that patch 2/5 is based on an opinion shared by others. ;-)
+Patch 5/5 or something like it seems pretty important to me to make
+sure that of these two "similar"/"related" hooks with some
+"backwards-compatibility-and-code-copying-history" around them, we'd
+better pick the right one when they're both available.
+ 
+Feel free to pick and squash as you see fit. (I don't think it makes
+sense to have these go in as-are. They really are meant for squashing.)
 
 Martin
+
+Martin Ågren (5):
+  t7503: use "&&" in "test_when_finished" rather than ";"
+  t7503: avoid touch when mtime doesn't matter
+  t7503: simplify file-juggling
+  t7503: don't create "actual_hooks" for later appending
+  t7503: test failing merge with both hooks available
+
+ ...3-pre-commit-and-pre-merge-commit-hooks.sh | 84 +++++++++++--------
+ 1 file changed, 50 insertions(+), 34 deletions(-)
+
+-- 
+2.23.0.rc0.30.g51cf315870
+
