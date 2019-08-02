@@ -2,292 +2,488 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFD231F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 22:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED9A1F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 22:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391127AbfHBWCp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 18:02:45 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:46691 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731199AbfHBWCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 18:02:44 -0400
-Received: by mail-pg1-f202.google.com with SMTP id u1so48281763pgr.13
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 15:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=2nvzli2+AG8nV+i2/VSeU8WLCss/Hv1HK0yt91njdow=;
-        b=ckI2oSwloyvrBeRbLZ7Xd2CBQtlTCSjsGwuLUDIswbPbJlQhBVohTbtbrziuDGG9q6
-         iwesImQXdJghXDslO+cYaIAbvh23GFT3rGdBzxfmWXai7LE0/tSHGCg6LO5v1/PmULyf
-         Nzl1Gp+8nQLJTKwp/zgBDHxW16QVEV1LOM71f6TWmBnh2kx9kNy/5st6/aEROj0B7Fok
-         6T772WjRtE/jCJ2VSmt22kVMVVikk1+wNNQa+xXhugSun5uNUOeXWSk4BDeGY7FoS2cY
-         vzDzyzRrQmEdcOEEDIBtmaDeFuXLESLDfgT5FghjmvoppEsBpPF8i/Zl5E87oRBZFc9R
-         Myxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=2nvzli2+AG8nV+i2/VSeU8WLCss/Hv1HK0yt91njdow=;
-        b=H7ytVAaB0RSWn1hfBez5DIOM86thYtKEBCU1onHoQZV7vyO3urJQNsvsnf4bssM39q
-         d0fGgeBoyOBE6vvOOneOxaQKl3v+FvgHZGwghe1Saj69xvMaXDQDvfkIM3P1gHMYuhA2
-         /V+Gt7EpR1wK6nQpMK4hPZVan5lKT0lA0nG0S58lajlXdM6wQcxYUE6fgVRgZdUUvWv6
-         APi+RJnoo6tQxgV0wCXQQ9oadtl16sEaznXbTGDIGrOB34MRzipThU7HKxvi2R0fQjlu
-         P275gE55ZcGu9O4+D3KcAON2ABT9iC62Unxn2deLz3EMjDuIlQCjiJ89Cr1Xo8w5opiV
-         eOWA==
-X-Gm-Message-State: APjAAAUCW7586I8b1U6RGCqgpJydgXgvNQ9/NUiRoQPjI/m3Iu1tzYwK
-        yb513U9qDY4H2EJzcdZUZRoTJ0S2NS3OZlOtYsiP9bCKPAEKxVHC9T9m/8YPMEgwZHFhJp/4mGJ
-        yvSnwdXKRTimEfo58xd5peb+BQUNgNVL8AgnVdfy3Zd4g3Sib/e2ILCQybaa531g=
-X-Google-Smtp-Source: APXvYqxmLYD71m2rDr8E60wTLpER5vQ6wKhAWFthpynDDySUHEqs03iR7I4Hk2qEKDIPZuO8J3mOFRBeFM+Ycg==
-X-Received: by 2002:a63:6c46:: with SMTP id h67mr118481393pgc.248.1564783363139;
- Fri, 02 Aug 2019 15:02:43 -0700 (PDT)
-Date:   Fri,  2 Aug 2019 15:02:35 -0700
-In-Reply-To: <cover.1564771000.git.steadmon@google.com>
-Message-Id: <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
- <cover.1564771000.git.steadmon@google.com>
-X-Mailer: git-send-email 2.22.0.770.g0f2c4a37fd-goog
-Subject: [RFC PATCH v2 2/2] trace2: don't overload target directories
-From:   Josh Steadmon <steadmon@google.com>
+        id S2437196AbfHBWG1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 18:06:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50448 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731834AbfHBWG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 18:06:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C35B8814C0;
+        Fri,  2 Aug 2019 18:06:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=D
+        QfYJC70k20ee6Q4uJh++ejtSYY=; b=G66Bena5oLgaLBruaiQFTv14VXUctf52Z
+        mn+zav1DoS6eLa+W9cJwGbWnRfAynkdMH++YH+Koa5XKB7KBZMzyh4MId/pQSOCq
+        C/94Y+Z5EdYP247Bc7hfKcBpl5Xg4J6Zys8a4PV42t2cDJZ6QzEpgpuOI412uJTg
+        1vdNLZC+U8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB58D814BF;
+        Fri,  2 Aug 2019 18:06:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 040B8814BC;
+        Fri,  2 Aug 2019 18:06:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <jch@google.com>
 To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: What's cooking in git.git (Aug 2019, #02; Fri, 2)
+X-master-at: 7c20df84bd21ec0215358381844274fa10515017
+X-next-at: deed80330f2f849fecaf1d22eaf715b93ef96954
+Date:   Fri, 02 Aug 2019 15:06:13 -0700
+Message-ID: <xmqq1ry3jk8a.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF809F2C-B571-11E9-BBC3-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-trace2 can write files into a target directory. With heavy usage, this
-directory can fill up with files, causing difficulty for
-trace-processing systems.
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-This patch adds a config option (trace2.maxFiles) to set a maximum
-number of files that trace2 will write to a target directory. The
-following behavior is enabled when the maxFiles is set to a positive
-integer:
-  When trace2 would write a file to a target directory, first check
-  whether or not the directory is overloaded. A directory is overloaded
-  if there is a sentinel file declaring an overload, or if the number of
-  files exceeds trace2.maxFiles. If the latter, create a sentinel file
-  to speed up later overload checks.
+The first release candidate for 2.23 has been tagged.  "git log"
+will by default honor the ".mailmap" file like "git shortlog" does,
+which is a backward-incompatible change that is shipped without big
+fanfare.
 
-The assumption is that a separate trace-processing system is dealing
-with the generated traces; once it processes and removes the sentinel
-file, it should be safe to generate new trace files again.
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-The default value for trace2.maxFiles is zero, which disables the
-overload check.
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-The config can also be overridden with a new environment variable:
-GIT_TRACE2_MAX_FILES.
+--------------------------------------------------
+[Graduated to "master"]
 
-Potential future work:
-* Write a message into the sentinel file (should match the requested
-  trace2 output format).
-* Add a performance test to make sure that contention between multiple
-  processes all writing to the same target directory does not become an
-  issue.
+* jc/log-mailmap-flip-defaults (2019-08-02) 2 commits
+ - log: really flip the --mailmap default
+  (merged to 'next' on 2019-08-01 at 80cddd7895)
+ + log: flip the --mailmap default unconditionally
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Documentation/config/trace2.txt |  6 +++
- t/t0210-trace2-normal.sh        | 19 ++++++++
- trace2/tr2_dst.c                | 86 +++++++++++++++++++++++++++++++++
- trace2/tr2_sysenv.c             |  3 ++
- trace2/tr2_sysenv.h             |  2 +
- 5 files changed, 116 insertions(+)
+ Hotfix for making "git log" use the mailmap by default.
 
-diff --git a/Documentation/config/trace2.txt b/Documentation/config/trace2.txt
-index 2edbfb02fe..4ce0b9a6d1 100644
---- a/Documentation/config/trace2.txt
-+++ b/Documentation/config/trace2.txt
-@@ -54,3 +54,9 @@ trace2.destinationDebug::
- 	By default, these errors are suppressed and tracing is
- 	silently disabled.  May be overridden by the
- 	`GIT_TRACE2_DST_DEBUG` environment variable.
-+
-+trace2.maxFiles::
-+	Integer.  When writing trace files to a target directory, do not
-+	write additional traces if we would exceed this many files. Instead,
-+	write a sentinel file that will block further tracing to this
-+	directory. Defaults to 0, which disables this check.
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index ce7574edb1..59b9560109 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -186,4 +186,23 @@ test_expect_success 'using global config with include' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "don't overload target directory" '
-+	mkdir trace_target_dir &&
-+	test_when_finished "rm -r trace_target_dir" &&
-+	(
-+		GIT_TRACE2_MAX_FILES=5 &&
-+		export GIT_TRACE2_MAX_FILES &&
-+		cd trace_target_dir &&
-+		test_seq $GIT_TRACE2_MAX_FILES >../expected_filenames.txt &&
-+		xargs touch <../expected_filenames.txt &&
-+		cd .. &&
-+		ls trace_target_dir >first_ls_output.txt &&
-+		test_cmp expected_filenames.txt first_ls_output.txt &&
-+		GIT_TRACE2="$(pwd)/trace_target_dir" test-tool trace2 001return 0
-+	) &&
-+	echo git-trace2-overload >>expected_filenames.txt &&
-+	ls trace_target_dir >second_ls_output.txt &&
-+	test_cmp expected_filenames.txt second_ls_output.txt
-+'
-+
- test_done
-diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
-index 5dda0ca1cd..40ec03c2d7 100644
---- a/trace2/tr2_dst.c
-+++ b/trace2/tr2_dst.c
-@@ -1,3 +1,5 @@
-+#include <dirent.h>
-+
- #include "cache.h"
- #include "trace2/tr2_dst.h"
- #include "trace2/tr2_sid.h"
-@@ -8,6 +10,19 @@
-  */
- #define MAX_AUTO_ATTEMPTS 10
- 
-+/*
-+ * Sentinel file used to detect when we're overloading a directory with too many
-+ * trace files.
-+ */
-+#define OVERLOAD_SENTINEL_NAME "git-trace2-overload"
-+
-+/*
-+ * When set to zero, disables directory overload checking. Otherwise, controls
-+ * how many files we can write to a directory before entering overload mode.
-+ * This can be overridden via the TR2_SYSENV_MAX_FILES setting.
-+ */
-+static int tr2env_max_files = 0;
-+
- static int tr2_dst_want_warning(void)
- {
- 	static int tr2env_dst_debug = -1;
-@@ -32,6 +47,67 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
- 	dst->need_close = 0;
- }
- 
-+/*
-+ * Check to make sure we're not overloading the target directory with too many
-+ * files. First get the threshold (if present) from the config or envvar. If
-+ * it's zero or unset, disable this check.  Next check for the presence of a
-+ * sentinel file, then check file count. If we are overloaded, create the
-+ * sentinel file if it doesn't already exist.
-+ *
-+ * We expect that some trace processing system is gradually collecting files
-+ * from the target directory; after it removes the sentinel file we'll start
-+ * writing traces again.
-+ */
-+static int tr2_dst_overloaded(const char *tgt_prefix)
-+{
-+	int file_count = 0, max_files = 0, ret = 0;
-+	const char *max_files_var;
-+	DIR *dirp;
-+	struct strbuf path = STRBUF_INIT, sentinel_path = STRBUF_INIT;
-+	struct stat statbuf;
-+
-+	strbuf_addstr(&path, tgt_prefix);
-+	if (!is_dir_sep(path.buf[path.len - 1])) {
-+		strbuf_addch(&path, '/');
-+	}
-+
-+	/* Get the config or envvar and decide if we should continue this check */
-+	max_files_var = tr2_sysenv_get(TR2_SYSENV_MAX_FILES);
-+	if (max_files_var && *max_files_var && ((max_files = atoi(max_files_var)) >= 0))
-+		tr2env_max_files = max_files;
-+
-+	if (!tr2env_max_files) {
-+		ret = 0;
-+		goto cleanup;
-+	}
-+
-+	/* check sentinel */
-+	strbuf_addstr(&sentinel_path, path.buf);
-+	strbuf_addstr(&sentinel_path, OVERLOAD_SENTINEL_NAME);
-+	if (!stat(sentinel_path.buf, &statbuf)) {
-+		ret = 1;
-+		goto cleanup;
-+	}
-+
-+	/* check file count */
-+	dirp = opendir(path.buf);
-+	while (file_count < tr2env_max_files && dirp && readdir(dirp))
-+		file_count++;
-+	if (dirp)
-+		closedir(dirp);
-+
-+	if (file_count >= tr2env_max_files) {
-+		creat(sentinel_path.buf, S_IRUSR | S_IWUSR);
-+		ret = 1;
-+		goto cleanup;
-+	}
-+
-+cleanup:
-+	strbuf_release(&path);
-+	strbuf_release(&sentinel_path);
-+	return ret;
-+}
-+
- static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
- {
- 	int fd;
-@@ -50,6 +126,16 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
- 	strbuf_addstr(&path, sid);
- 	base_path_len = path.len;
- 
-+	if (tr2_dst_overloaded(tgt_prefix)) {
-+		strbuf_release(&path);
-+		if (tr2_dst_want_warning())
-+			warning("trace2: not opening %s trace file due to too "
-+				"many files in target directory %s",
-+				tr2_sysenv_display_name(dst->sysenv_var),
-+				tgt_prefix);
-+		return 0;
-+	}
-+
- 	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
- 		if (attempt_count > 0) {
- 			strbuf_setlen(&path, base_path_len);
-diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
-index 5958cfc424..3c3792eca2 100644
---- a/trace2/tr2_sysenv.c
-+++ b/trace2/tr2_sysenv.c
-@@ -49,6 +49,9 @@ static struct tr2_sysenv_entry tr2_sysenv_settings[] = {
- 				       "trace2.perftarget" },
- 	[TR2_SYSENV_PERF_BRIEF]    = { "GIT_TRACE2_PERF_BRIEF",
- 				       "trace2.perfbrief" },
-+
-+	[TR2_SYSENV_MAX_FILES]     = { "GIT_TRACE2_MAX_FILES",
-+				       "trace2.maxfiles" },
- };
- /* clang-format on */
- 
-diff --git a/trace2/tr2_sysenv.h b/trace2/tr2_sysenv.h
-index 8dd82a7a56..d4364a7b85 100644
---- a/trace2/tr2_sysenv.h
-+++ b/trace2/tr2_sysenv.h
-@@ -24,6 +24,8 @@ enum tr2_sysenv_variable {
- 	TR2_SYSENV_PERF,
- 	TR2_SYSENV_PERF_BRIEF,
- 
-+	TR2_SYSENV_MAX_FILES,
-+
- 	TR2_SYSENV_MUST_BE_LAST
- };
- 
--- 
-2.22.0.770.g0f2c4a37fd-goog
 
+* js/early-config-with-onbranch (2019-07-31) 1 commit
+  (merged to 'next' on 2019-08-01 at 26b713c824)
+ + config: work around bug with includeif:onbranch and early config
+
+ The recently added [includeif "onbranch:branch"] feature does not
+ work well with an early config mechanism, as it attempts to find
+ out what branch we are on before we even haven't located the git
+ repository.  The inclusion during early config scan is ignored to
+ work around this issue.
+
+
+* js/visual-studio (2019-07-29) 23 commits
+ + git: avoid calling aliased builtins via their dashed form
+ + bin-wrappers: append `.exe` to target paths if necessary
+ + .gitignore: ignore Visual Studio's temporary/generated files
+ + .gitignore: touch up the entries regarding Visual Studio
+ + vcxproj: also link-or-copy builtins
+ + msvc: add a Makefile target to pre-generate the Visual Studio solution
+ + contrib/buildsystems: add a backend for modern Visual Studio versions
+ + contrib/buildsystems: handle options starting with a slash
+ + contrib/buildsystems: also handle -lexpat
+ + contrib/buildsystems: handle libiconv, too
+ + contrib/buildsystems: handle the curl library option
+ + contrib/buildsystems: error out on unknown option
+ + contrib/buildsystems: optionally capture the dry-run in a file
+ + contrib/buildsystems: redirect errors of the dry run into a log file
+ + contrib/buildsystems: ignore gettext stuff
+ + contrib/buildsystems: handle quoted spaces in filenames
+ + contrib/buildsystems: fix misleading error message
+ + contrib/buildsystems: ignore irrelevant files in Generators/
+ + contrib/buildsystems: ignore invalidcontinue.obj
+ + Vcproj.pm: urlencode '<' and '>' when generating VC projects
+ + Vcproj.pm: do not configure VCWebServiceProxyGeneratorTool
+ + Vcproj.pm: list git.exe first to be startup project
+ + Vcproj.pm: auto-generate GUIDs
+
+ Support building Git with Visual Studio
+
+ The bits about .git/branches/* have been dropped from the series.
+ We may want to drop the support for it, but until that happens, the
+ tests should rely on the existence of the support to pass.
+
+
+* sg/fsck-config-in-doc (2019-07-29) 1 commit
+ + Documentation/git-fsck.txt: include fsck.* config variables
+
+ Doc update.
+
+--------------------------------------------------
+[New Topics]
+
+* cb/pcre2-chartables-leakfix (2019-08-02) 1 commit
+ - grep: avoid leak of chartables in PCRE2
+
+
+* jh/trace2-pretty-output (2019-08-01) 3 commits
+ - trace2: trim whitespace in region messages in perf target format
+ - trace2: trim whitespace in start message in perf target format
+ - trace2: cleanup column alignment in perf target format
+
+
+* sc/pack-refs-deletion-racefix (2019-08-02) 1 commit
+ - pack-refs: always refresh after taking the lock file
+
+
+* vn/restore-empty-ita-corner-case-fix (2019-08-02) 2 commits
+ - restore: add test for deleted ita files
+ - checkout.c: unstage empty deleted ita files
+
+--------------------------------------------------
+[Stalled]
+
+* jn/unknown-index-extensions (2018-11-21) 2 commits
+ - index: offer advice for unknown index extensions
+ - index: do not warn about unrecognized extensions
+
+ A bit too alarming warning given when unknown index extensions
+ exist is getting revamped.
+
+ Expecting a reroll.
+
+
+* jc/format-patch-delay-message-id (2019-04-05) 1 commit
+ - format-patch: move message-id and related headers to the end
+
+ The location "git format-patch --thread" adds the Message-Id:
+ header in the series of header fields has been moved down, which
+ may help working around a suspected bug in GMail MSA, reported at
+ <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
+
+ Waiting for feedback to see if it truly helps.
+ Needs tests.
+
+
+* jt/fetch-cdn-offload (2019-03-12) 9 commits
+ - SQUASH???
+ - upload-pack: send part of packfile response as uri
+ - fetch-pack: support more than one pack lockfile
+ - upload-pack: refactor reading of pack-objects out
+ - Documentation: add Packfile URIs design doc
+ - Documentation: order protocol v2 sections
+ - http-fetch: support fetching packfiles by URL
+ - http: improve documentation of http_pack_request
+ - http: use --stdin when getting dumb HTTP pack
+
+ WIP for allowing a response to "git fetch" to instruct the bulk of
+ the pack contents to be instead taken from elsewhere (aka CDN).
+
+
+* js/protocol-advertise-multi (2018-12-28) 1 commit
+ - protocol: advertise multiple supported versions
+
+ The transport layer has been updated so that the protocol version
+ used can be negotiated between the parties, by the initiator
+ listing the protocol versions it is willing to talk, and the other
+ side choosing from one of them.
+
+ Expecting a reroll.
+ cf. <CANq=j3u-zdb_FvNJGPCmygNMScseav63GhVvBX3NcVS4f7TejA@mail.gmail.com>
+
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+
+* dl/remote-save-to-push (2018-12-11) 1 commit
+ - remote: add --save-to-push option to git remote set-url
+
+ "git remote set-url" learned a new option that moves existing value
+ of the URL field to pushURL field of the remote before replacing
+ the URL field with a new value.
+
+ Anybody who wants to champion this topic?
+ I am personally not yet quite convinced if this is worth pursuing.
+
+--------------------------------------------------
+[Cooking]
+
+* ds/feature-macros (2019-07-30) 5 commits
+ - repo-settings: create feature.experimental setting
+ - repo-settings: create feature.manyFiles setting
+ - repo-settings: parse core.untrackedCache
+ - repo-settings: add feature.manyCommits setting
+ - repo-settings: consolidate some config settings
+
+
+* mt/grep-submodules-working-tree (2019-07-30) 1 commit
+  (merged to 'next' on 2019-08-02 at e1a46a195f)
+ + grep: fix worktree case in submodules
+
+ "git grep --recurse-submodules" that looks at the working tree
+ files looked at the contents in the index in submodules, instead of
+ files in the working tree.
+
+ Will cook in 'next'.
+
+
+* jk/tree-walk-overflow (2019-08-01) 6 commits
+  (merged to 'next' on 2019-08-02 at 116467c77a)
+ + tree-walk: harden make_traverse_path() length computations
+ + tree-walk: add a strbuf wrapper for make_traverse_path()
+ + tree-walk: accept a raw length for traverse_path_len()
+ + tree-walk: use size_t consistently
+ + tree-walk: drop oid from traverse_info
+ + setup_traverse_info(): stop copying oid
+
+ Codepaths to walk tree objects have been audited for integer
+ overflows and hardened.
+
+ Will cook in 'next'.
+
+
+* sg/t5510-test-i18ngrep-fix (2019-07-31) 1 commit
+  (merged to 'next' on 2019-08-02 at 678564fda2)
+ + t5510-fetch: fix negated 'test_i18ngrep' invocation
+ (this branch is used by sg/do-not-skip-non-httpd-tests.)
+
+ Test fix.
+
+ Will cook in 'next'.
+
+
+* sg/do-not-skip-non-httpd-tests (2019-08-02) 3 commits
+  (merged to 'next' on 2019-08-02 at e700df0693)
+ + t: warn against adding non-httpd-specific tests after sourcing 'lib-httpd'
+ + t5703: run all non-httpd-specific tests before sourcing 'lib-httpd.sh'
+ + t5510-fetch: run non-httpd-specific test before sourcing 'lib-httpd.sh'
+ (this branch uses sg/t5510-test-i18ngrep-fix.)
+
+ Test fix.
+
+ Will cook in 'next'.
+
+
+* vn/reset-deleted-ita (2019-07-26) 1 commit
+ - reset: unstage empty deleted ita files
+
+ "git reset HEAD [<pathspec>]" did not reset an empty file that was
+ added with the intent-to-add bit.
+
+ Expecting a reroll.
+
+
+* ra/rebase-i-more-options (2019-07-23) 4 commits
+ - SQUASH???
+ - rebase -i: support --committer-date-is-author-date
+ - sequencer: add NULL checks under read_author_script
+ - rebase -i: add --ignore-whitespace flag
+
+ "git rebase -i" learned a few options that are known by "git
+ rebase" proper.
+
+ Needs a bit of fixups, at least.
+
+
+* js/rebase-r-strategy (2019-07-31) 16 commits
+ - rebase -r: do not (re-)generate root commits with `--root` *and* `--onto`
+ - t3418: test `rebase -r` with merge strategies
+ - t/lib-rebase: prepare for testing `git rebase --rebase-merges`
+ - rebase -r: support merge strategies other than `recursive`
+ - t3427: fix another incorrect assumption
+ - t3427: accommodate for the `rebase --merge` backend having been replaced
+ - t3427: fix erroneous assumption
+ - t3427: condense the unnecessarily repetitive test cases into three
+ - t3427: move the `filter-branch` invocation into the `setup` case
+ - t3427: simplify the `setup` test case significantly
+ - t3427: add a clarifying comment
+ - rebase: fold git-rebase--common into the -p backend
+ - sequencer: the `am` and `rebase--interactive` scripts are gone
+ - .gitignore: there is no longer a built-in `git-rebase--interactive`
+ - t3400: stop referring to the scripted rebase
+ - Drop unused git-rebase--am.sh
+
+ "git rebase --rebase-merges" learned to drive different merge
+ strategies and pass strategy specific options to them.
+
+
+* js/trace2-json-schema (2019-07-25) 3 commits
+ . ci: run trace2 schema validation in the CI suite
+ . trace2: add a schema validator for trace2 events
+ . trace2: add a JSON schema for trace2 events
+
+ The JSON output produced by "trace2" subsystem now has JSON schema
+ defined on it, to allow us validate the output and catch deviation.
+
+ The CI integration may be a bit too heavy-handed.
+
+
+* js/builtin-add-i (2019-07-18) 11 commits
+ - built-in add -i: implement the `help` command
+ - built-in add -i: use color in the main loop
+ - built-in add -i: support `?` (prompt help)
+ - built-in add -i: show unique prefixes of the commands
+ - Add a function to determine unique prefixes for a list of strings
+ - built-in add -i: implement the main loop
+ - built-in add -i: color the header in the `status` command
+ - built-in add -i: refresh the index before running `status`
+ - built-in add -i: implement the `status` command
+ - diff: export diffstat interface
+ - Start to implement a built-in version of `git add --interactive`
+
+ The beginning of rewriting "git add -i" in C.
+
+
+* es/walken-tutorial (2019-07-02) 1 commit
+ - documentation: add tutorial for revision walking
+
+ Yet another revision walker tutorial.
+
+
+* ab/no-kwset (2019-07-01) 10 commits
+  (merged to 'next' on 2019-07-15 at ed0479ce3d)
+ + grep: use PCRE v2 for optimized fixed-string search
+ + grep: remove the kwset optimization
+ + grep: drop support for \0 in --fixed-strings <pattern>
+ + grep: make the behavior for NUL-byte in patterns sane
+ + grep tests: move binary pattern tests into their own file
+ + grep tests: move "grep binary" alongside the rest
+ + grep: inline the return value of a function call used only once
+ + t4210: skip more command-line encoding tests on MinGW
+ + grep: don't use PCRE2?_UTF8 with "log --encoding=<non-utf8>"
+ + log tests: test regex backends in "--encode=<enc>" tests
+ (this branch is used by ab/pcre-jit-fixes.)
+
+ Retire use of kwset library, which is an optimization for looking
+ for fixed strings, with use of pcre2 JIT.
+
+ Kicked out of 'next' to give the topic a chance to get rebooted.
+
+
+* ab/pcre-jit-fixes (2019-07-26) 7 commits
+ - grep: do not enter PCRE2_UTF mode on fixed matching
+ - grep: stess test PCRE v2 on invalid UTF-8 data
+ - grep: create a "is_fixed" member in "grep_pat"
+ - grep: consistently use "p->fixed" in compile_regexp()
+ - grep: stop using a custom JIT stack with PCRE v1
+ - grep: stop "using" a custom JIT stack with PCRE v2
+ - grep: remove overly paranoid BUG(...) code
+ (this branch uses ab/no-kwset.)
+
+ A few simplification and bugfixes to PCRE interface.
+
+
+* md/list-objects-filter-combo (2019-06-28) 10 commits
+ - list-objects-filter-options: make parser void
+ - list-objects-filter-options: clean up use of ALLOC_GROW
+ - list-objects-filter-options: allow mult. --filter
+ - strbuf: give URL-encoding API a char predicate fn
+ - list-objects-filter-options: make filter_spec a string_list
+ - list-objects-filter-options: move error check up
+ - list-objects-filter: implement composite filters
+ - list-objects-filter-options: always supply *errbuf
+ - list-objects-filter: put omits set in filter struct
+ - list-objects-filter: encapsulate filter components
+
+ The list-objects-filter API (used to create a sparse/lazy clone)
+ learned to take a combined filter specification.
+
+ Will merge to 'next'.
+
+
+* cc/multi-promisor (2019-06-25) 15 commits
+ - Move core_partial_clone_filter_default to promisor-remote.c
+ - Move repository_format_partial_clone to promisor-remote.c
+ - Remove fetch-object.{c,h} in favor of promisor-remote.{c,h}
+ - remote: add promisor and partial clone config to the doc
+ - partial-clone: add multiple remotes in the doc
+ - t0410: test fetching from many promisor remotes
+ - builtin/fetch: remove unique promisor remote limitation
+ - promisor-remote: parse remote.*.partialclonefilter
+ - Use promisor_remote_get_direct() and has_promisor_remote()
+ - promisor-remote: use repository_format_partial_clone
+ - promisor-remote: add promisor_remote_reinit()
+ - promisor-remote: implement promisor_remote_get_direct()
+ - Add initial support for many promisor remotes
+ - fetch-object: make functions return an error code
+ - t0410: remove pipes after git commands
+
+ Teach the lazy clone machinery that there can be more than one
+ promisor remote and consult them in order when downloading missing
+ objects on demand.
+
+ Will merge to 'next'.
+
+
+* jc/format-patch-noclobber (2019-02-22) 1 commit
+ - format-patch: --no-clobber refrains from overwriting output files
+
+ "git format-patch" used to overwrite an existing patch/cover-letter
+ file.  A new "--no-clobber" option stops it.
+
+ Will discard.
+
+
+* dl/rebase-i-keep-base (2019-04-25) 6 commits
+ - rebase: teach rebase --keep-base
+ - rebase: fast-forward --fork-point in more cases
+ - rebase: fast-forward --onto in more cases
+ - rebase: refactor can_fast_forward into goto tower
+ - t3432: test rebase fast-forward behavior
+ - t3431: add rebase --fork-point tests
+
+ "git rebase --keep-base <upstream>" tries to find the original base
+ of the topic being rebased and rebase on top of that same base,
+ which is useful when running the "git rebase -i" (and its limited
+ variant "git rebase -x").
+
+ The command also has learned to fast-forward in more cases where it
+ can instead of replaying to recreate identical commits.
+
+ On hold.
+ cf. <20190508001252.15752-1-avarab@gmail.com>
+ cf. <20190719210156.GA9688@archbookpro.localdomain>
+
+--------------------------------------------------
+[Discarded]
+
+* nd/index-dump-in-json (2019-06-26) 11 commits
+ . SQUASH???
+ . t3008: use the new SINGLE_CPU prereq
+ . read-cache.c: dump "IEOT" extension as json
+ . read-cache.c: dump "EOIE" extension as json
+ . resolve-undo.c: dump "REUC" extension as json
+ . fsmonitor.c: dump "FSMN" extension as json
+ . split-index.c: dump "link" extension as json
+ . dir.c: dump "UNTR" extension as json
+ . cache-tree.c: dump "TREE" extension as json
+ . read-cache.c: dump common extension info in json
+ . ls-files: add --json to dump the index
+
+ "ls-files" learned "--debug-json" option to dump the contents and
+ the extensions of the index file.
+
+ Retracted at least for now.
+ cf. <CACsJy8A8fJZq6k2i_e0EpkxN8SZ4+8h1FA0eV6e9xFLaMDcsPg@mail.gmail.com>
+
+
+* ds/early-access (2019-07-01) 3 commits
+ . repo-settings: pack.useSparse=true
+ . repo-settings: use index.version=4 by default
+ . repo-settings: create core.featureAdoptionRate setting
+
+ A mechanism to enable newish configuration settings in bulk has
+ been invented.
+
+ ds/feature-macros has replaced this topic.
