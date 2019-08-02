@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE8A71F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 09:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0600C1F732
+	for <e@80x24.org>; Fri,  2 Aug 2019 09:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406868AbfHBJ5R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 05:57:17 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:43575 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406847AbfHBJ5N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 05:57:13 -0400
-Received: by mail-lf1-f66.google.com with SMTP id c19so52507891lfm.10
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 02:57:12 -0700 (PDT)
+        id S2406890AbfHBJ5X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 05:57:23 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:37104 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406883AbfHBJ5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 05:57:23 -0400
+Received: by mail-lj1-f196.google.com with SMTP id z28so18043662ljn.4
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 02:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LxqrBD3ATV7jpOgMssqqtb+iQQS6lFr2D04nniwENNc=;
-        b=WkRVq2Edb5f8l0IxvX7t9ZWKkMSrOh5uFgwpktGyEPmv9cQfD3GiYjbaFvmwHgJx1P
-         6DxqYFGUyGo/K4YuYfi01qm0JrWZ3C7gAAj07cfONOa9eD6Nke8qFmhfemT4z5D1//pP
-         8opgH1EanGfB3hJNuG3urKzG7wXt+WjYabdooPemts1XZhPMiNZgwOchlJRjFth6EQAI
-         wWGL0CDCkcOkgF+/eNa5adGwbrQBVKCU+vzxAOBo13pIRwEKwJmyYY9oxCUnAHyAVN8/
-         t+GhVUEVctRQC+8ueNDZOMrcyeqTWXNe3dZhHXznLUQUCkbd3KuT1fXIhh79G5p3Txb4
-         M3pw==
+        bh=1zXtyV/4V4fQyVHLz8p1CSwfozW6e0zPbl0nRfqsWDQ=;
+        b=itE0QSjUqafXwuc7LiL3wksg/8KlTeILxvpNvE2m472ROG8M2XBgUuQaXvp0PqQZTA
+         m93/eM4ciL7pFG13VoQd3K28zd9ZclOVbA1oj4C+O+B0yvtKLgfM5tCF5kAQQtdFAQfM
+         7jEPCIY4A5F1so7jfTYPVDgEAZ+VE4I9sxz2ukDNyHV+a53Nyww/7wb4Hoe2ITruCyhA
+         SEhJ/yvq6ceoC8moEtGjiMl1BWFhSjcnrROmHFe//3Se/58WFSmRQivu0YdavY73wh2k
+         XGIgZmMQR3Nabh/OhE5h+4phetiGXTMhh1nDl/RR4pzbwUBpss6bD4mrDJbLAtW5ju6X
+         MC7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LxqrBD3ATV7jpOgMssqqtb+iQQS6lFr2D04nniwENNc=;
-        b=HCksoTLcGcdyEBYfSLFSVBobLnG0Ibv8eEnnCjySl0PI4lxye9LL0xLX7evGMPUfaq
-         felrXH6RjuizI3DB1DCJM4Ji7V8HvnRD/430w8gd/lZSyr0CKqZTsxPryHgIhkw/iUNO
-         gFUG4o+9lBP/iZv0LdM4B7fZouux3J1qSJCFy8SM2szeAs45A/TObbZY2IZVnDcS/z9W
-         0jSGm9G+Ee94b4TtyxtyCTM9TSWT7I+7A7Uod8urvhuw+XXC8h7uDYw3xOuGlV9WzJkA
-         D7pl6NJV69x0/uJh+iI2DEqFYWhrny9+pOoes/6leE3fOhOzNNqIphruIGR/CJgWLhlm
-         O7dg==
-X-Gm-Message-State: APjAAAVk0TE1L973y/WSaTU8xeIi2X9kQIdEuhHhmGmWkpSvJOvLlk+E
-        RV9XnDd5YnXl9MOshY1eIYE=
-X-Google-Smtp-Source: APXvYqyxJCMIuCkEahglD1f9B6vbq455cfgJcE4x4vUJDj6yIgmyXvZhw+VZS/6XBdlpWmKj9ssppg==
-X-Received: by 2002:a19:490d:: with SMTP id w13mr62574632lfa.58.1564739831516;
-        Fri, 02 Aug 2019 02:57:11 -0700 (PDT)
+        bh=1zXtyV/4V4fQyVHLz8p1CSwfozW6e0zPbl0nRfqsWDQ=;
+        b=Fk/cbqiWG5DZCnaExj7YHZzhSeXZJs5l2/bmKCtJ5IpLqNIEyKQF8GPT7FnMNlpaAe
+         TRNI+cy8ekGvt9wjsPHnYUFkQ/pBUbeer52cGdjh5OIuMtuZnNEFtl8BTZEZnUfL52kn
+         c6AgF/Ui0W96UYXennOr74/zPIPGfWF77lSwJRSGglHHRLu6QSBisS8fYgJR1IpI89Yv
+         fG7UVg40/2FGPXh7xQEAiCKVqyVCuiE3Jaclw9LnFgx58KlgaVoxPOt2uYnBoQi05k4x
+         a2Gq9nBOSAZizlgc41uRZG2qjVjJBgb9eONfToynQDkB9aWp0aMTTeELyWSZynVym4wS
+         rSIQ==
+X-Gm-Message-State: APjAAAVJ851GqHkJhjkjOSnboJ3Ya3nlzUAM7JKnQJ4aM8N6lcZpI64w
+        6m8G50V6uP492wAOTqqBMgY=
+X-Google-Smtp-Source: APXvYqyeygUf17BEGLaC2i64A5hMw6tiOwT1NA4ScY1szgEVXKnzvDVxJhE/UZaiaxWd1K6oYIIOeA==
+X-Received: by 2002:a2e:9643:: with SMTP id z3mr72069614ljh.43.1564739840843;
+        Fri, 02 Aug 2019 02:57:20 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id y12sm14237344lfy.36.2019.08.02.02.57.09
+        by smtp.gmail.com with ESMTPSA id y12sm14237344lfy.36.2019.08.02.02.57.19
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 02 Aug 2019 02:57:10 -0700 (PDT)
+        Fri, 02 Aug 2019 02:57:20 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Josh Steadmon <steadmon@google.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH v3 0/4] pre-merge-commit hook
-Date:   Fri,  2 Aug 2019 11:56:34 +0200
-Message-Id: <cover.1564737003.git.martin.agren@gmail.com>
+Subject: [PATCH 1/5] t7503: use "&&" in "test_when_finished" rather than ";"
+Date:   Fri,  2 Aug 2019 11:56:35 +0200
+Message-Id: <d697767c1814ae77306d520c88f06ded19542ba4.1564737003.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc0.30.g51cf315870
-In-Reply-To: <cover.1564695892.git.steadmon@google.com>
-References: <cover.1564695892.git.steadmon@google.com>
+In-Reply-To: <cover.1564737003.git.martin.agren@gmail.com>
+References: <cover.1564695892.git.steadmon@google.com> <cover.1564737003.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,46 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Dropped cc-list the first time around. Apologies to those who receive
-this twice...]
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ t/t7503-pre-commit-and-pre-merge-commit-hooks.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On Fri, 2 Aug 2019 at 00:20, Josh Steadmon <steadmon@google.com> wrote:
->
-> This series adds a new pre-merge-commit hook, similar in usage to
-> pre-commit. It also improves hook testing in t7503, by verifying that
-> the correct hooks are run or bypassed as expected.
-
-I really like those test improvements. Now it should be harder to mess
-up a future refactoring and run the wrong hook. These hooks are "very
-related" so I think this is important.
-
-I've messed with the test a bit and offer these potential improvements
-for your consideration. I was lazy and just built this on top of your
-series -- if you agree to some or all of these, you'll probably need to
-squash them into a few individual patches.
-
-The first four are perhaps more or less a matter of opinion, although I
-do think that patch 2/5 is based on an opinion shared by others. ;-)
-Patch 5/5 or something like it seems pretty important to me to make
-sure that of these two "similar"/"related" hooks with some
-"backwards-compatibility-and-code-copying-history" around them, we'd
-better pick the right one when they're both available.
+diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+index 86a375ab3e..5cc6c98375 100755
+--- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
++++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+@@ -162,7 +162,7 @@ test_expect_success '--no-verify with failing hook (merge)' '
+ '
  
-Feel free to pick and squash as you see fit. (I don't think it makes
-sense to have these go in as-are. They really are meant for squashing.)
-
-Martin
-
-Martin Ågren (5):
-  t7503: use "&&" in "test_when_finished" rather than ";"
-  t7503: avoid touch when mtime doesn't matter
-  t7503: simplify file-juggling
-  t7503: don't create "actual_hooks" for later appending
-  t7503: test failing merge with both hooks available
-
- ...3-pre-commit-and-pre-merge-commit-hooks.sh | 84 +++++++++++--------
- 1 file changed, 50 insertions(+), 34 deletions(-)
-
+ test_expect_success POSIXPERM 'with non-executable hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks; chmod +x \"$HOOKDIR/fail.sample\"" &&
++	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks && chmod +x \"$HOOKDIR/fail.sample\"" &&
+ 	ln -s "fail.sample" "$PRECOMMIT" &&
+ 	chmod -x "$HOOKDIR/fail.sample" &&
+ 	touch expected_hooks actual_hooks &&
+@@ -173,7 +173,7 @@ test_expect_success POSIXPERM 'with non-executable hook' '
+ '
+ 
+ test_expect_success POSIXPERM '--no-verify with non-executable hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks; chmod +x \"$HOOKDIR/fail.sample\"" &&
++	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks && chmod +x \"$HOOKDIR/fail.sample\"" &&
+ 	ln -s "fail.sample" "$PRECOMMIT" &&
+ 	chmod -x "$HOOKDIR/fail.sample" &&
+ 	touch expected_hooks actual_hooks &&
 -- 
 2.23.0.rc0.30.g51cf315870
 
