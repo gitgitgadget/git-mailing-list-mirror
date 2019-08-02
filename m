@@ -2,77 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BC361F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 22:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CF721F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 22:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731798AbfHBWQg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 18:16:36 -0400
-Received: from mail-lf1-f54.google.com ([209.85.167.54]:33131 "EHLO
-        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727884AbfHBWQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 18:16:36 -0400
-Received: by mail-lf1-f54.google.com with SMTP id x3so54067877lfc.0
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 15:16:35 -0700 (PDT)
+        id S1732085AbfHBWTD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 18:19:03 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40376 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfHBWTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 18:19:03 -0400
+Received: by mail-pf1-f193.google.com with SMTP id p184so36686447pfp.7
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 15:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Fs9sxHDuXnaWg9tWQvUL/ByYwxpM9XJ3LbSw3K247UY=;
-        b=N88zBuIGj0tjZwKVX/jzD6LrwpNy6VUOOD1REhapuicsc+RCf4ezoMmI4S8wNo1/CH
-         Uk4lY+wW2c6JV16raqY/95HbkkC4ZoBAuaGVEcDuPiVKyiMq9cF4u0e2y5A26k0KQ5Ow
-         n1PHd+jN9paW/XdbRTnqowJy/EkBZVd+xlkOW48E/Qn11d8p9jPV1oh1bJNAf6mQ48eU
-         CP+swE56tPxodOsF4s2euEwBQz0GZLNJ2yVZH22MXKli7pl8VRfoNhWxAZeOi4fyNi0H
-         uJxNHroEf75aYL03md2NE5PdT8MnX6nOmonFUb8l/+YDXxg01v+GCZfOy4vEBn3lA6yR
-         mb1Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8/OBnVJjXZfQa1SIxruCSfZPhnHs6H6fOSrkeEH9czY=;
+        b=VB2P6+Mlg6bkTLEUfta/OL8bMOmUf1T/I/E0VK72RhR40r9nBlHBcxl429CNC4BLJU
+         a5YU6iywRC2gXRScU7strIXBfQNmKgl9XQrN0VZHJydS/Hguwkg5AkgmSH2SQDARt+/n
+         MZy4IuGm9pdWbO2r1/Yfc64ZnuvRrnuM/0BxRkD5Q05ZEKfzGDDMe8791seqwx0dWb1Z
+         2Ue/BSBtixX1eg01q/pTX6ntLZR1QiQQTefJmTXfGntFBdXOZ5gwBe78pNxZO0nGE5nm
+         2ECyiEh4+j5KvKG2PMmHlkD3Mgm1JIjdQDlqk1cmifqkqjztJf0P0G+JcDEzY+2u19q4
+         S7qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Fs9sxHDuXnaWg9tWQvUL/ByYwxpM9XJ3LbSw3K247UY=;
-        b=n5iWBdCNuzV22FI+sQI6LUCyiV8YS7BfOHirmmGC6bzU8RmeYEiOdy29goPfHjqdtA
-         I9iAFh6DZJ/yRTTsm80Ev5Sw2upfVztsFjAAeejUg/+NVR3CVEYGdGX5wQcPFY4jIZEg
-         sJMoZVzDGn899tUTaLamhmYgwSVFmtSR9QbJN7DtoSpT5dGEwXcomIm/exKM9NKt0aO7
-         H5aFt4hZTSQGduSImxGaevnqmty5cAJ3UzDCTYgF2MzP37YtJAd+FdvsR0s2q6kr3XhU
-         l6+8x5iCPkwjgpThoOTNeNIRlxjraONWwEBgklVMhBHg9bDqxyN6FjFJoa0Xr21gDjIR
-         BmgQ==
-X-Gm-Message-State: APjAAAVMgRq4kBK2xB2lWPf7BjSwjHutagf1eDbM+CS6Tea+6Gl6xGSI
-        Nv/KdERkszeMcVvWcorJv9CaRIoLToL0EAhELfcIS45yZZs=
-X-Google-Smtp-Source: APXvYqy9mY6UZmh9NnB5DrJOSkcqZ+Vyu7Y1T1hXx0oBfLFnlYw+snm2aYvwqLB2mGrDBBDs6K/yOgbvDBJCbPceRyk=
-X-Received: by 2002:a19:6a01:: with SMTP id u1mr65402189lfu.141.1564784194210;
- Fri, 02 Aug 2019 15:16:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=8/OBnVJjXZfQa1SIxruCSfZPhnHs6H6fOSrkeEH9czY=;
+        b=OK+G5s7U5G7xnGlejmPOmFIq3qQ1oK5oq3Zr30ZZ8NkMm/QrKSikGdmvGsBV74St2X
+         KyO8hTjaiRHhU1/xDbG7HUpCyJFMnO/NIphO4MzEmJywyM8M5QaUuSFEGL+/9sn10/L1
+         FVXocimqif62Io423VcaXqbTE2CoMUQ/Aj0iH5dnteLse3KSYvmqJAa5wN6uSpGl4Jh6
+         pZXc3AuTeUkYdDnUfhYsYv00KhDhe9ailC8v2mMVE5SnR9pnu8pBmWhi2SAbbbdjZlaT
+         sneLrI09C9hbzY0D+Azbq5EF5CEICHaSQSFaOWSlQMYhRftwM9bpYXlZvU9754oIOfGa
+         dsUQ==
+X-Gm-Message-State: APjAAAXb9jUX4OHRTLq/QL4JPKfMHlri+zqH1i0JR31MDLft7z6oL6ue
+        8LP4mGcwGb4LEuXWNzOLCJfTmw==
+X-Google-Smtp-Source: APXvYqzYi83/RunDXC28JePU+UVrAIhgBXwi6Tej5SC0UX7Vn4dgHc6uLmZtHo5zXKDLnJSRmL56Vg==
+X-Received: by 2002:a63:5162:: with SMTP id r34mr8822327pgl.229.1564784342086;
+        Fri, 02 Aug 2019 15:19:02 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
+        by smtp.gmail.com with ESMTPSA id p19sm86368627pfn.99.2019.08.02.15.19.00
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 02 Aug 2019 15:19:01 -0700 (PDT)
+Date:   Fri, 2 Aug 2019 15:18:55 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH v3 0/4] pre-merge-commit hook
+Message-ID: <20190802221855.GR43313@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>
+References: <cover.1564695892.git.steadmon@google.com>
+ <cover.1564737003.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-From:   Alexander Mills <alexander.d.mills@gmail.com>
-Date:   Fri, 2 Aug 2019 15:16:23 -0700
-Message-ID: <CA+KyZp6h=wPKR7mVHWsFikTbA6WWwk-KcoLi7iTNC28wAiKEKg@mail.gmail.com>
-Subject: help with git log --numstat
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1564737003.git.martin.agren@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all:
+On 2019.08.02 11:56, Martin Ågren wrote:
+> [Dropped cc-list the first time around. Apologies to those who receive
+> this twice...]
+> 
+> On Fri, 2 Aug 2019 at 00:20, Josh Steadmon <steadmon@google.com> wrote:
+> >
+> > This series adds a new pre-merge-commit hook, similar in usage to
+> > pre-commit. It also improves hook testing in t7503, by verifying that
+> > the correct hooks are run or bypassed as expected.
+> 
+> I really like those test improvements. Now it should be harder to mess
+> up a future refactoring and run the wrong hook. These hooks are "very
+> related" so I think this is important.
+> 
+> I've messed with the test a bit and offer these potential improvements
+> for your consideration. I was lazy and just built this on top of your
+> series -- if you agree to some or all of these, you'll probably need to
+> squash them into a few individual patches.
+> 
+> The first four are perhaps more or less a matter of opinion, although I
+> do think that patch 2/5 is based on an opinion shared by others. ;-)
+> Patch 5/5 or something like it seems pretty important to me to make
+> sure that of these two "similar"/"related" hooks with some
+> "backwards-compatibility-and-code-copying-history" around them, we'd
+> better pick the right one when they're both available.
+>  
+> Feel free to pick and squash as you see fit. (I don't think it makes
+> sense to have these go in as-are. They really are meant for squashing.)
+> 
+> Martin
+> 
+> Martin Ågren (5):
+>   t7503: use "&&" in "test_when_finished" rather than ";"
+>   t7503: avoid touch when mtime doesn't matter
+>   t7503: simplify file-juggling
+>   t7503: don't create "actual_hooks" for later appending
+>   t7503: test failing merge with both hooks available
+> 
+>  ...3-pre-commit-and-pre-merge-commit-hooks.sh | 84 +++++++++++--------
+>  1 file changed, 50 insertions(+), 34 deletions(-)
+> 
+> -- 
+> 2.23.0.rc0.30.g51cf315870
 
-Another question that came up for me recently.  Using:
-
- git log --numstat
-
-I am seeing multiple emails attached to a single commit as described here:
-https://stackoverflow.com/questions/57333971/git-log-numstat-has-weird-data
-
-does anyone know what that means?
-
--alex
-
-
--- 
-Alexander D. Mills
-New cell phone # (415)730-1805
-alexander.d.mills@gmail.com
-
-www.linkedin.com/pub/alexander-mills/b/7a5/418/
+These all look good to me, thank you for the suggestions! I'll include
+them in V4.
