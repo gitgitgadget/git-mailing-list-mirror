@@ -8,135 +8,104 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75AFE1F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 11:56:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F9841F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 12:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392456AbfHBL4e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 07:56:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40409 "EHLO mout.gmx.net"
+        id S1730680AbfHBMG4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 08:06:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:38309 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731531AbfHBL4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 07:56:34 -0400
+        id S1729574AbfHBMG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 08:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564746977;
-        bh=/+EiKNTFCx1fCxlBvga3hLxm/pc+xlf9zYx7INaHVtw=;
+        s=badeba3b8450; t=1564747609;
+        bh=xS+kvmhyYRjdkxxBA+MZeqAlL5o403ndmbDEm7SYuXk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hr/rljTR4PsR/m4ZZnJNbgfrS8ege+AQcXD9ujDl0J7vwixe8CmoDwOWrW8Lv1WSm
-         8HIXSRKpGn3+dtSrvWS9hyDxqpVMZ7OCgi17Bj+CjvZQWz/MRVF6LjyAnHa5IRZWb6
-         5aDnL1J9zlUM3oQon7p7dlsbBh4fFGQB7cL4ofcI=
+        b=CbqH/SaarWpibubYqWuKajAVIZS3/tZI7TTwvEujAh9n2ddkqsFSqbIhWgMrpRyXy
+         AxBykmwAIjT61FkLUjVIJFmh5PYD1j7V3sOQW8jmD+pBzMUV8lBwq+X4BYFLWLYlOw
+         YaZWE6yyXjf3mVVmgy6vJcRQy/pyah3J7AtHGx1c=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MoO24-1iiF7h0ZLM-00okvO; Fri, 02
- Aug 2019 13:56:17 +0200
-Date:   Fri, 2 Aug 2019 13:56:02 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MC4VE-1i2Hm51cy8-008t22; Fri, 02
+ Aug 2019 14:06:49 +0200
+Date:   Fri, 2 Aug 2019 14:06:35 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Josh Steadmon <steadmon@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
-        avarab@gmail.com, peff@peff.net, jnareb@gmail.com
-Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
-In-Reply-To: <20190802015247.GA54514@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1908021347580.46@tvgsbejvaqbjf.bet>
-References: <cover.1560295286.git.steadmon@google.com> <cover.1564009259.git.steadmon@google.com> <20190725234229.GM20404@szeder.dev> <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet> <20190726220348.GF43313@google.com> <20190801180829.GP43313@google.com>
- <20190802015247.GA54514@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/visual-studio, was Re: What's cooking in git.git (Aug 2019, #01;
+ Thu, 1)
+In-Reply-To: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1908021405450.46@tvgsbejvaqbjf.bet>
+References: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-109896202-1564746978=:46"
-X-Provags-ID: V03:K1:/FnlsRkicbHcDWr/4VhlyPiSwNxh78uoI3CESlnDSFp9bUmGGer
- xVtjpoC6gcCWWkO9DBoyVbhs2tuOPatOGgwcNIIPFL5Kyl/lnz40qJ9FsDrOPSk1VPfCLVm
- Rtw+/yN37Ry6+mu3WSTaAQg7X0yLH+quwcJxecLBpcTSYcLKEDvJZBLt+ep09LcJRYpsf7X
- C+VfcbV8eKd/p94eWXwHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1laejNkrZ2w=:VvMtr4Y8WU3IqENlSUd1lE
- MEIO3yD3yEldIZdtpae4S/YLn5tzDXMLDbZjbwlxqXzsoVnYs63BJ1Yr5VQBUliIFUddPzLex
- aEwb1ch/p0psro0cmHQ3AwRZOXwtHUiO6layFhpWopB/WF1gRumlE7YVedTPfgmOA9lDdYdKU
- 1Eog/DIcz74tLOfuCt3DPEfNnmP7uA1LLzgUYY1JJFdj4r5fSMXh15NpsXAYRLqPweO0mNidp
- 8RTpNmty23pGj+5YHPmzDQr/KXY/OrLKTWmqLcijMSqqbtmE0gbupU9TDhE0NnoOuamBMmQ2y
- VdxjiZHdQ5E9iroxQT8L43rp8azfZIbkbQfThWXYFKCOnwNPGrfbxENKIT1PnhJI19niDp6du
- HCDRm/dJkWe6XYd2IBrZt7sQHYE+dM6WutKmwGZXUTZcNf8acfxZ7QhO/xn12gaiJCItLzFA6
- u1SUM4UxPKtv9mEHN8zYPAuMnPwkXBiaZ20O791wI5ktPZyzRIwxfwzu6+lVi5pnW1ANlx29i
- GhdOWjKPGyJ41oLwdfTlL1gQPnyqK7Mx/zvVUbfrdyolCVHm/5wDiXiO5evX0ftC/Kkyz1/CW
- ji1EQA9Q8ApJAfEl4LBuZfi54pGqXhaCI8z9JMvqMU/dOi/6iYLblaBtqTy997ZlrvB4hGxAW
- UZ7xKeEfc+StcocEo7UtXI1GyDgQ6I3e4NigfChU8UJ5iUebxE27GRm42/oRUimxw4dKJzsYE
- i/YlWvFXmgJjcgX1RBN0tBvt/RSXFpOQgbKS/rcLO2Aa4iX+HcgN0sHh+xBiwf0+MaqRZ0d2x
- GUEUug80KDBXDsVxQ70iBVeCLnwOeBqB7t3HMofp3vEV4aSdT8RS2dli3Nr2xVrZFxjU82vbc
- HzN6hZf5ERVIqcrYV1/qtcV37KE9FVV3tdlV+x4G2DYxr0Z7M1zquqkzOuS6amjjbXQpHJyse
- KOaGduDuVdz9z27xb9Cm0DFJyVse6iG7knBUYwhotCW9/tyXLVutAzRtoyMGV5UO5J1H8NyrZ
- XrD+S9KXkADgc3GlVRmNfpfLYMDkKSEqK2fIzvsM2oEK9LEKswss6MghvG/vIwVVUYzAjtC8Q
- +U8w0AuKD13p6UltkzYeUv0qpqshkMBGoyKacfbKPqb7E168/C9+MNQuhGkuykaim4+J193U8
- oSmY4=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nmHt5xyx4R6ds83ZCGJaZyWCC1xbU0/nahkzH7TAABf/xXGOKdb
+ SSceCw+zLNHcIaUDvBV2OlwSL/ASrQckoKijHukKFLOsLIRYomxrAYy++i1XNBNX96a9IgM
+ s8iOOQSWf38JmUN11v/rDzuehcvogF+MWN1l4QVz0Ule6e/v2M3zPvqHVrD/4kSXuUVFBCM
+ jdz0oyeCUQNq09HxLXWVg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VZ6aHsnrhlE=:hcbKtPQXD6kL2TDID+VcoB
+ gN/KhfjkkmY8WwBTVEoCpWWNRP//WqF/vWFKJKAqQRcNwrgwHk44FafZQB31QWDosQL0IOQTM
+ b9tdlL3XF4zDYCSIjEl15D7a09gODBh/aFiiqSMG6FOpmr08ltOj6GPPJ+hj0kmR9WyUpcN26
+ kik6wJiLOKYbAmvZm33NKOkFMq24PwQNjTFwc5mPU6gSyHRO87Q64Z1nXxZWX/G2CYhrQQSPt
+ PsORsQ/gHFrzEFcFgriUTrIq6h71/XTRNMVyfHc0oB1rFf0Bh/zsygJSMW1UpxaULMZ7N1111
+ 5LE0y8KJbb61qzYvPJ4z4POYc7DkjR1cTBDoUg2q3LePRbZoQQvjarvBODY2aLZ8dtpB8mLVD
+ ZorfVkrHWz3XUeaH1dFihlnHpb681qo55rF29HRA3F1dvVAgXwBK5frUn24Oj1q2YYMePwHmH
+ YPIvgIjFh47acdwEq2tGeW/yKXU0cieUpjy8rZwFgoIY2f5VeAR6dBW46EXuw2c/A7DEh1cb/
+ gWx4M1BYofdGzMWeGjcuk4nE2lsAGVBr+tI7Ppbhr63WUEvVNwgKe7v3L6r+0/MzRF7gGcmEC
+ RjQMiZhSELXeAG+sWPPtFqCBJx128ZiDGKqTFihhwHj0nhZK3qCZ+FOpbhXwbPE0HdrSV3G0S
+ 4manvEziqCYViKOeo5tjF61U30s3CZdjBL8EePE3tvBxU3N159hEj/1J1NAEZZ+c7HqZXWHZ0
+ KNjzO0d7ix+SIsZmAqZs9K/FZ/ioziZi7max3zrqmg2zmJH7934nprklRsY5tRLzbeD9bjldo
+ RmDD+B8bngWd7sykFb990xjULgBFC7x3XzXgTky+eX73IKu0UzPKyEGNoTJf46+6m58+1Frs5
+ cUIk4QBJzr+stH2A8oEFK0Hh4Vf3iMiqKA/9s+1M7zxvtd6XzZUY7T4eZnOuBY5P92Cz1+QcX
+ VsldAx1d4fcBTvzjsuN890W9C72BCHk92IDBvMUEKoIpi0Wy38FpGbZoN9GIcmOwPyhA55SPH
+ kMN5SeOgnItFNM+HeGBt+OvZRSMoM1oAlJs3hzM1CPQiZb0LSJSBN2gEIkHKOiFrl+QPfNHLh
+ y17yd4NGZQQonXSnHREVcjR2RLFnD/Q0BEfrBHTN3mMhtu6Rj49MR+QY4aenW9jvI5tDwkwy9
+ XyR3U=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-109896202-1564746978=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 1 Aug 2019, Junio C Hamano wrote:
 
-Hi Jonathan & Josh,
-
-On Thu, 1 Aug 2019, Jonathan Nieder wrote:
-
-> Josh Steadmon wrote:
-> > On 2019.07.26 15:03, Josh Steadmon wrote:
+> * js/visual-studio (2019-07-29) 23 commits
+>  - git: avoid calling aliased builtins via their dashed form
+>  - bin-wrappers: append `.exe` to target paths if necessary
+>  - .gitignore: ignore Visual Studio's temporary/generated files
+>  - .gitignore: touch up the entries regarding Visual Studio
+>  - vcxproj: also link-or-copy builtins
+>  - msvc: add a Makefile target to pre-generate the Visual Studio solutio=
+n
+>  - contrib/buildsystems: add a backend for modern Visual Studio versions
+>  - contrib/buildsystems: handle options starting with a slash
+>  - contrib/buildsystems: also handle -lexpat
+>  - contrib/buildsystems: handle libiconv, too
+>  - contrib/buildsystems: handle the curl library option
+>  - contrib/buildsystems: error out on unknown option
+>  - contrib/buildsystems: optionally capture the dry-run in a file
+>  - contrib/buildsystems: redirect errors of the dry run into a log file
+>  - contrib/buildsystems: ignore gettext stuff
+>  - contrib/buildsystems: handle quoted spaces in filenames
+>  - contrib/buildsystems: fix misleading error message
+>  - contrib/buildsystems: ignore irrelevant files in Generators/
+>  - contrib/buildsystems: ignore invalidcontinue.obj
+>  - Vcproj.pm: urlencode '<' and '>' when generating VC projects
+>  - Vcproj.pm: do not configure VCWebServiceProxyGeneratorTool
+>  - Vcproj.pm: list git.exe first to be startup project
+>  - Vcproj.pm: auto-generate GUIDs
 >
-> >> [ajv-cli] can validate the full 1.7M line trace output in just over a
-> >> minute. Moreover, it has helpful output when validation fails. So I
-> >> would be happy to re-implement this using ajv-cli.
-> >
-> > Unfortunately, ajv on Travis is much slower than on my work machine. I=
-t
-> > still takes over 10 minutes to complete, and is killed by Travis since
-> > it doesn't provide any progress indicator while it's running.
+>  Support building Git with Visual Studio
 >
-> Alas.
->
-> What do you think of making the validation disabled by default and
-> using a parameter (see "Running tests with special setups" in
-> t/README) to turn it on?  That way, it should be okay for it to take
-> 10 minutes because this would only affect such specialized workers as
-> choose to set that parameter, instead of all of them.
->
-> G=C3=A1bor, if we introduce such a parameter, do you think it would make
-> sense for us to set up a worker that passes it?
+>  The bits about .git/branches/* have been dropped from the series.
+>  We may want to drop the support for it, but until that happens, the
+>  tests should rely on the existence of the support to pass.
 
-Oh my.
+As of v2, the tests rely on that existence again.
 
-What do we want? To validate the JSON output. Do we want to validate it
-in a smart way? Yes!
-
-So how about adding a separate test script that activates Trace2, then
-runs a _few_ selected, very specific commands, starting with a set that
-Josh thinks representative, validate the generated JSON, and then only
-add new invocations if we *ever* see violations of the schema, to verify
-that we don't regress on that front again?
-
-Such a script can't take more than a couple of seconds to run, I am
-sure. And it would totally strike a sensible balance between benefit and
-time spent.
-
-Generating JSON output that respects the given schema is *such* a niche
-problem that I am really against punishing every person who wants to run
-the test suite by having to sit through 10 minutes, at the same time I
-do not want this feature to be totally untested by default, either.
-
-We do _not_ have to validate the 10,001st instance of a `git commit`'s
-corresponding JSON. The 10k invocations before that validated fine,
-there is little doubt that this one, as well as the following 59,724
-invocations won't violate the schema, either.
-
-It's not hard to test smartly. Use a really small, representative sample.
-
-I am usually against trying to be too smart, but in this case using a
-really small sample (my gut feeling says: at most a dozen) is Just Smart
-Enough.
-
-Ciao,
-Johannes
-
---8323328-109896202-1564746978=:46--
+Thanks,
+Dscho
