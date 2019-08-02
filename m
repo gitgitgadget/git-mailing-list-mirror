@@ -7,68 +7,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06511F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 18:35:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9079A1F731
+	for <e@80x24.org>; Fri,  2 Aug 2019 18:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405915AbfHBSfb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 14:35:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60700 "HELO cloud.peff.net"
+        id S2406825AbfHBSim (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Aug 2019 14:38:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60722 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2405370AbfHBSfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 14:35:30 -0400
-Received: (qmail 10769 invoked by uid 109); 2 Aug 2019 18:35:31 -0000
+        id S2405915AbfHBSim (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Aug 2019 14:38:42 -0400
+Received: (qmail 10793 invoked by uid 109); 2 Aug 2019 18:38:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Aug 2019 18:35:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Aug 2019 18:38:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9103 invoked by uid 111); 2 Aug 2019 18:37:29 -0000
+Received: (qmail 9194 invoked by uid 111); 2 Aug 2019 18:40:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Aug 2019 14:37:29 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Aug 2019 14:40:40 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 2 Aug 2019 14:35:29 -0400
+Date:   Fri, 2 Aug 2019 14:38:41 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com,
-        Ariadne Conill <ariadne@dereferenced.org>
-Subject: Re: Git for Windows v2.23.0-rc0, was Re: [ANNOUNCE] Git v2.23.0-rc0
-Message-ID: <20190802183529.GA26918@sigill.intra.peff.net>
-References: <xmqqh874tssp.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1907311440130.21907@tvgsbejvaqbjf.bet>
- <20190731231848.GC1933@sigill.intra.peff.net>
- <20190801002125.GA176307@google.com>
- <xmqqlfwcopn1.fsf@gitster-ct.c.googlers.com>
- <20190802022709.GB54514@google.com>
- <xmqqblx7ld98.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: js/early-config-with-onbranch, was Re: What's cooking in git.git
+ (Aug 2019, #01; Thu, 1)
+Message-ID: <20190802183840.GB26918@sigill.intra.peff.net>
+References: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com>
+ <20190801214247.GB30522@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1908021410540.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqblx7ld98.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1908021410540.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 02, 2019 at 09:53:55AM -0700, Junio C Hamano wrote:
+On Fri, Aug 02, 2019 at 02:12:34PM +0200, Johannes Schindelin wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > We'll also want to update the docs.  And as Todd suggests, we should
-> > cover how to disable mailmap in tests.
+> > > * js/early-config-with-onbranch (2019-07-31) 1 commit
+> > >   (merged to 'next' on 2019-08-01 at 26b713c824)
+> > >  + config: work around bug with includeif:onbranch and early config
+> > >
+> > >  The recently added [includeif "onbranch:branch"] feature does not
+> > >  work well with an early config mechanism, as it attempts to find
+> > >  out what branch we are on before we even haven't located the git
+> > >  repository.  The inclusion during early config scan is ignored to
+> > >  work around this issue.
+> > >
+> > >  Will merge to 'master'.
 > >
-> > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> > ---
+> > I had some open comments here on how the "do we have a repo" check is
+> > done, but I think what is committed here is functionally equivalent. I
+> > can pursue the NULL the_repository cleanups separately.
 > 
-> I avoided the "don't bother initializing use_mailmap_config to
-> unknown" simplification, but I guess the change is clear enough.
+> Right, I read that as "maybe later" comments, as that project is so
+> different from trying to fix the `onbranch` feature with regards to the
+> early config machinery.
+> 
+> Or did I misread and you want me to do anything about it before v2.23.0?
 
-Yeah, I didn't even look to see if there were further simplifications
-possible, but seeing Jonathan's patch, it looks like an obvious
-improvement. And a quick grep shows that there are no other sites that
-should be affected by losing the "-1" semantics, so I think it's a good
-idea.
+I think when I wrote my original replies in the thread that I wasn't
+sure _what_ I wanted. :) I had originally hoped to convince you to
+switch to have_git_dir() now, but I do agree after investigating that it
+would require an extra patch to common-main.
 
-And of course the doc and test improvements are very welcome. :)
+Mostly I was just trying to clarify here that my comments were not
+blockers for merging this; I couldn't find any case where your patch
+as-is would behave incorrectly.
 
 -Peff
