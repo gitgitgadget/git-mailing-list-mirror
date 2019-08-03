@@ -8,164 +8,166 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B90E1F731
-	for <e@80x24.org>; Sat,  3 Aug 2019 08:01:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 604961F731
+	for <e@80x24.org>; Sat,  3 Aug 2019 08:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387532AbfHCIBd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 04:01:33 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50310 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387429AbfHCIBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Aug 2019 04:01:33 -0400
-Received: by mail-wm1-f66.google.com with SMTP id v15so70087352wml.0
-        for <git@vger.kernel.org>; Sat, 03 Aug 2019 01:01:31 -0700 (PDT)
+        id S2387692AbfHCIbm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 04:31:42 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:42358 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387688AbfHCIbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 04:31:42 -0400
+Received: by mail-qt1-f175.google.com with SMTP id h18so76402579qtm.9
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 01:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+jEOTdfeVbRH31Y0MtM8/9Hhp7R2alDP7PMQssGzE0Q=;
-        b=HypHo3Z/Qka3RD0cUhFem4OfUOkghC0s4cmdzZ3GV8pxqWa8T/1FTCcIRubkipm6fO
-         47+u0UUf1l1NB7jbXim/qktjrBAZozkFnh0xqED9AL5v2XJNG1hB/Zp2q8iQmF+ShaTW
-         L3wiThVII3TCBlrUma3HqMXuowsGBcpf2JKpZQGSUBYcsEpdJmgI6OdBLpk+K/QMSZ4C
-         srTkvApzpGtXJ3p8h8eC4XjVz5CgLieh7FC0FlfftQB0zjWV4Zm8u9sr/vwPWe2ZUbme
-         wSbE5YTuA4YtEv1wk7G/BHFzY6hpkJ3VQ6aA1ua0hrUiMkv2AI30azmvsR48Cgm+KMM1
-         VqPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BVPAlLpzPXgoEZip8dn/qmYnUPckj2Yr6eSnnllDwkA=;
+        b=OELdFlLTILDs2/RqsBDsauBCyzEd6cGvetO8LUxvs/1ePbpiQNeV30fvXfG0AZzrQT
+         sjPpV2r9yGbjuD7cidFapgoSy2/s4odTRt56jlqEnbBjsLsYplxmPkeW43s2fAaUMr3U
+         VWuRn+FNM6Us1YNoGCujvmKRRD7Fi6t8HpjxdnNwIR0TMub8XQRFziiKUxodwams8E/5
+         e9mPvw12YcoADQZX5VHB68+Z91BwLSugK7WGIDaDIx2V7mM30X38bvhfaKuhBLCB0GRd
+         xdbiH31LxAZ7cO73dktVhNoYMRVl7i2s8HuWJl+3aNpmiidOjikctrNZTf2KoVs/ymz8
+         Qgiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+jEOTdfeVbRH31Y0MtM8/9Hhp7R2alDP7PMQssGzE0Q=;
-        b=cQMce8GSg6rujVeLivO2/GSQgzFzsai8W98tXQe0f16rJBOB2HGq2iDtEPrEMNIIUD
-         tgiZD4YkS4Wg5R92uZEeziQEtd9CdgkK9pwNgP+7SIdGrrIbXF+Tp7OaDo+GFR4kjpyw
-         u8wvW0nMv71UciRJAseIA8/SCdTod+QWqMho35Nj5qgnSGpp5TnKb0uWQYiNTwAqFQsV
-         TimAxdafwOR4bguiM5FR6CB2ic5kzzZRkfT3pz2fh37nd1ad/QxihMiuXc5DB4HnjqN9
-         9camYieykcZ/3pswco2ROOzBpitkLYw9w25aaIkxWr9sIUAL9lOpJ6oOB37VIieOWHdj
-         5XNQ==
-X-Gm-Message-State: APjAAAVKvribUiinOQ542QBnRKxVpr3ohzA8Cvd1b5CS12OT/czYcBZf
-        hzi3YKDDMhO4aEXRe0P7crLdJmnX
-X-Google-Smtp-Source: APXvYqyukAH7Vm5xcdLDeKg9VpzGLP+sjA2dLnaA5R6XkPT0d9b47UGJ0ktuEJD5jL1ddmmXQ+VYwQ==
-X-Received: by 2002:a1c:a101:: with SMTP id k1mr8497403wme.98.1564819290908;
-        Sat, 03 Aug 2019 01:01:30 -0700 (PDT)
-Received: from localhost.localdomain (x4db55264.dyn.telefonica.de. [77.181.82.100])
-        by smtp.gmail.com with ESMTPSA id k17sm101439376wrq.83.2019.08.03.01.01.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 03 Aug 2019 01:01:30 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] test-lib-functions: show the test name at the start of verbose output
-Date:   Sat,  3 Aug 2019 10:01:26 +0200
-Message-Id: <20190803080126.29488-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc1.309.g896d8c5f5f
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BVPAlLpzPXgoEZip8dn/qmYnUPckj2Yr6eSnnllDwkA=;
+        b=FJPYBgs0ucqOax3I08g5xArAz1+yDgCdb25X/U5cXlCRZBmYEjupj16bWbiTeXNHZK
+         c0hsqNrWh9rlvBanK8jVHxqysSomXADIu56ifjn2Jj7/TT+rHaZSXJC8k034cF/baEep
+         6dHXBe4dUXRWrBPxsohNiezYhwOxl97m+aJaLMiU24+/xEUlJswu/VBz3pE0TfEKEuG/
+         G3OYoRHydagl472QyijcfbGxZTzgFAbWJOkgsKc30JFq5Ki338xEhAHVYB3qplDuF+6S
+         NsePm/fBkf/8r9WdZz96RCqUCgin2RjdHT/rn9FVoHknPPn0bDTiL/UdueDYgJzLzHOF
+         ix9A==
+X-Gm-Message-State: APjAAAUtgKsTnHx5jprA6DhaBroskIJ7abzZu2OJzONPu4AC0RcCGigI
+        6grLQSAOY5eT9/QlS4sja+z8oeq/a0FpkKfj/24=
+X-Google-Smtp-Source: APXvYqxrTrTKZA2YKqRFKN45vSEHXofUXPuUNQYeoVZ1LlC33F31yE85xo4h5GCiasiKx5QkOEWlk0IQBhb7W4IxHZo=
+X-Received: by 2002:ad4:490c:: with SMTP id bh12mr3536975qvb.59.1564821101183;
+ Sat, 03 Aug 2019 01:31:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAA01Csp=g08N4+S1HKAjV2a12VJNSJU0UYdAU6LW1jGWLD9SLQ@mail.gmail.com>
+ <05c77291-48d1-a592-6296-d8a8bdb16b02@gmail.com> <CAA01CspHCKA3itmTxFO1NeNB6DpdFx3CTbXKtO=TvtznLn_zAg@mail.gmail.com>
+ <xmqqtvazjrcj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvazjrcj.fsf@gitster-ct.c.googlers.com>
+From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Date:   Sat, 3 Aug 2019 10:31:28 +0200
+Message-ID: <CAA01CspYgcBwGsJhD3n1u7kDUy+wtjoY7bimqg7C2P3DojhfhQ@mail.gmail.com>
+Subject: Re: git-log on a file, and merges
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The verbose output of every test looks something like this:
+On Fri, Aug 2, 2019 at 9:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+> > At this moment I'm not sure myself if I consider this a bug or not.
+>
+> This definitely is not a bug but is a designed and intended
+> behaviour.
 
-  expecting success:
-          echo content >file &&
-          git add file &&
-          git commit -m "add file"
+(generally speaking)
+By "bug" I mean wrong behaviour. Designs can be buggy too.
 
-  [master (root-commit) d1fbfbd] add file
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 file
-  ok 1 - commit works
 
-i.e. first an "expecting success" (or "checking known breakage") line
-followed by the commands to be executed, then the output of those
-comamnds, and finally an "ok"/"not ok" line containing the test name.
-Note that the test's name is only shown at the very end.
+> Think of running "git log" without "--full-history" that is limited
+> with a pathspec as a tool to ask Git to show _one_ way (preferrably
+> the simplest one) to explain how the current contents in paths that
+> match the pathspec came to be.  The "just explain to me one way" is
+> not about machine performance but reducing the clutter in the output
+> to help human reader(s) reading an otherwise complex history.
 
-With '-x' tracing enabled and/or in longer tests the verbose output
-might be several screenfulls long, making it harder than necessary to
-find where the output of the test with a given name starts (especially
-when the outputs to different file descriptors are racing, and the
-"expecting success"/command block arrives earlier than the "ok" line
-of the previous test).
+From this point of view, the current behavior is good.
 
-Print the test name at the start of the test's verbose output, i.e. at
-the end of the "expecting success" and "checking known breakage"
-lines, to make the start of a particular test a bit easier to
-recognize.
+Although it's inconsistent. It works only for merges. If I'm on one
+branch and change a file and then revert the change, "git log -- file"
+will still show the commits. From your explanation, I'd expect those
+commits to be skipped, since they are "no-op".
 
-So the dummy test above would start like this:
 
-  expecting success of 'commit works':
-          echo content >file &&
-  [...]
+Also, I did read git-log docs before posting here, but still could not
+find clear explanation for this behavior. Is it possible to improve
+docs?
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+For example:
 
-I remember being annoyed by this every once in a while for years, and
-https://public-inbox.org/git/20190802100956.GV20404@szeder.dev/
-reminded me again to finally do something about it.
+    [--] <path>=E2=80=A6
+    Show only commits that are enough to explain how the files that
+match the specified paths came to be. See History Simplification below
+for details and other simplification modes.
 
- t/t0000-basic.sh        | 8 ++++----
- t/test-lib-functions.sh | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+For me, the commits which modify the file are relevant to "how the
+file come to be". They show what was tried and that finally the
+original solution was choosen as the best. So not showing them is not
+"enough to explain".
+Also "History Simplification" is not very clear.
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index e89438e619..6bd21aacab 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -285,14 +285,14 @@ test_expect_success C_LOCALE_OUTPUT 'test --verbose' '
- 	mv test-verbose/out test-verbose/out+ &&
- 	grep -v "^Initialized empty" test-verbose/out+ >test-verbose/out &&
- 	check_sub_test_lib_test test-verbose <<-\EOF
--	> expecting success: true
-+	> expecting success of '\''passing test'\'': true
- 	> ok 1 - passing test
- 	> Z
--	> expecting success: echo foo
-+	> expecting success of '\''test with output'\'': echo foo
- 	> foo
- 	> ok 2 - test with output
- 	> Z
--	> expecting success: false
-+	> expecting success of '\''failing test'\'': false
- 	> not ok 3 - failing test
- 	> #	false
- 	> Z
-@@ -313,7 +313,7 @@ test_expect_success 'test --verbose-only' '
- 	check_sub_test_lib_test test-verbose-only-2 <<-\EOF
- 	> ok 1 - passing test
- 	> Z
--	> expecting success: echo foo
-+	> expecting success of '\''test with output'\'': echo foo
- 	> foo
- 	> ok 2 - test with output
- 	> Z
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index d4f199391f..165e1e51c7 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -580,7 +580,7 @@ test_expect_failure () {
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
--		say >&3 "checking known breakage: $2"
-+		say >&3 "checking known breakage of '$1': $2"
- 		if test_run_ "$2" expecting_failure
- 		then
- 			test_known_broken_ok_ "$1"
-@@ -600,7 +600,7 @@ test_expect_success () {
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
--		say >&3 "expecting success: $2"
-+		say >&3 "expecting success of '$1': $2"
- 		if test_run_ "$2"
- 		then
- 			test_ok_ "$1"
--- 
-2.23.0.rc1.309.g896d8c5f5f
+So maybe something like this? (just a rfc)
 
+
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index b406bc4c48..bfb3d68b8b 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -91,9 +91,10 @@ include::line-range-format.txt[]
+        section of linkgit:gitrevisions[7].
+
+ [--] <path>...::
+        Show only commits that are enough to explain how the files
+-       that match the specified paths came to be.  See 'History
++       that match the specified paths came to be. Some commits may be
++       not shown even if they modify the specified paths. See 'History
+        Simplification' below for details and other simplification
+        modes.
+ +
+ Paths may need to be prefixed with `--` to separate them from
+diff --git a/Documentation/rev-list-options.txt
+b/Documentation/rev-list-options.txt
+index bb1251c036..d2de33b219 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -317,13 +317,15 @@ endif::git-rev-list[]
+ History Simplification
+ ~~~~~~~~~~~~~~~~~~~~~~
+
+ Sometimes you are only interested in parts of the history, for example the
+-commits modifying a particular <path>. But there are two parts of
+-'History Simplification', one part is selecting the commits and the other
+-is how to do it, as there are various strategies to simplify the history.
++commits modifying a particular <path>. This is a two-step process:
+
+-The following options select the commits to be shown:
++* initialial list of commits is selected
++
++* the list is simplified - some commits may be not shown
++
++The following options select the initial list of commits:
+
+ <paths>::
+        Commits modifying the given <paths> are selected.
+
+@@ -337,9 +339,11 @@ The following options affect the way the
+simplification is performed:
+ Default mode::
+        Simplifies the history to the simplest history explaining the
+        final state of the tree. Simplest because it prunes some side
+        branches if the end result is the same (i.e. merging branches
+-       with the same content)
++       with the same content). This may happen for example when there
++       were commits which changed files, but then those changes were
++       reverted. Such commits will not be shown.
+
+ --full-history::
+        Same as the default mode, but does not prune some history.
+
+
+--=20
+Piotr Krukowiecki
