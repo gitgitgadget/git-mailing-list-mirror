@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E0151F732
+	by dcvr.yhbt.net (Postfix) with ESMTP id B32601F732
 	for <e@80x24.org>; Sat,  3 Aug 2019 23:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729301AbfHCXwN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 19:52:13 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44832 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729291AbfHCXwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Aug 2019 19:52:13 -0400
-Received: by mail-wr1-f65.google.com with SMTP id p17so80803491wrf.11
-        for <git@vger.kernel.org>; Sat, 03 Aug 2019 16:52:11 -0700 (PDT)
+        id S1729305AbfHCXwO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 19:52:14 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:40966 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729296AbfHCXwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 19:52:14 -0400
+Received: by mail-wr1-f44.google.com with SMTP id c2so77593889wrm.8
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 16:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gg+zgjiajEZ8zkcXgY9lYVZsk1/id0fz4eQnMZ13omg=;
-        b=O9YjFukJM2JBYJl0ppg8ORuhH6fTl9F3JcZ6kIpTvwBrGq+gImSVqsKaMO4bgfvl1W
-         xV/LFkw3Oqmc8ikM5l9x23SmADZd0ujIUf+nzFJIIlCwBBeBP02A1xI7byKxY8bsCgrh
-         jh4YxbupzdOX1T3apJzPG1jeQUPWL6lBz/dpQ8R1fEgaSY9+qTHA5jloMU6dGEcuquqT
-         d6yjV536mOOcebcD6YDqqLEz4We8vxZx67Gz9xvVzrjp/xkcED3Fsxq+4BTGe0HVMZF2
-         6Fi9sus0vtevNuPswiefoJP5GD0drKFP21q3iTIEzcZZT+zXjpFtl9IoU/hT71KfmA1e
-         FS2Q==
+        bh=oLHoOjhyHR5nFgKHVvG9aKxuhtHWHsLyf5G0Hu5vux8=;
+        b=JBOnIHaZ4J3IDaoqjF6RAC+e/ug1Hlq4dgkVVNhmZ5QgGMm7mGYIEfP/Rm10J/WOnw
+         ZwOjkLBstZ6mzWcrhOkqHxYgjwjYOJo/IWWSHIssSCN07659wydodG7woqGYv4UIc9e+
+         YPwO9jYHeIAecsTJQTv3svpcFn+FrgpKKO1qPtliEIaOJgdymhh2ILX1OPMUf8nQ4Rqn
+         ujjPgHbOTwwgJuu1pgAQISKNq5llrGOyhvkDbqv5Sh45dBmNDzm+rxVgqTQVDcGtOfZq
+         SMVG2ZAbK2N1OgvPkrdSa4fzRo5L5SMPZRxOu/Db7jZlk8SA5djECukeYjeVxxGX40/o
+         yKIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gg+zgjiajEZ8zkcXgY9lYVZsk1/id0fz4eQnMZ13omg=;
-        b=Y0nneXuBxL8CPJYo8DlYv7rTgrlKKzHCt/yW4tRUOW4dfpyd9WioT/iMxKZUmvfxy/
-         YmgmZU2I9JWtirAh8TRf83mFBubn/vUgZyOWDTJUO9xutUE/6tSBhm0d4ZwmoySj8aPL
-         4HLghZGDwnUmb8D8VO3DgfXcZkn2FDU8IyTP3xmPmDGHGTc5vmkgcHiOqXhT9sP+XCXE
-         ecQcsJvkysNMfinI0lLepa6M70sglvewWrqL3Lk/peyAAl1KR32m/n3JITSST1MInWXf
-         /vg6PPRvYwdSVcp/BwDems4sfgobPG3PEQNHiMtqUY8vO9S/7nFOLyhv10e8tQjkAWVV
-         1NvQ==
-X-Gm-Message-State: APjAAAUiE9/gFrbtWOn8qk50tfVoTcScXfCA5mHBw1Sq/52RVJttZekT
-        Ob9uB4czf5XOg87W7bptMz4fNyM3
-X-Google-Smtp-Source: APXvYqzx6xlLPJ4actseF7XiZUEPOOmnQvipuf0jzOVDTLWel52jLdL92m3JtPJvRiZ9YHRaKChE9A==
-X-Received: by 2002:a5d:5692:: with SMTP id f18mr107731527wrv.104.1564876330826;
-        Sat, 03 Aug 2019 16:52:10 -0700 (PDT)
+        bh=oLHoOjhyHR5nFgKHVvG9aKxuhtHWHsLyf5G0Hu5vux8=;
+        b=LSPd7Z41JvuAIyNG4vQiNsMTfoyM3pJqrf7jukG2p++CMGYrSzC3kT+preuRJYYG3M
+         FPloZ+8s6bMdNavuasU4Zs0olHnVuOq776bTujaohe6L1reiISzuFoHKH6U6/77vO3Zl
+         93nfIK+SK/34AaFPVtJkgJAIoWQ7DuTskzwdyqUZnPsDciSVrjy9EpZDsS7Q8175pKPa
+         mTj7wNYJlb+jdx5euQVqmnUyM/66nk6ONgjR6sVWksr4/GX1MeZ15FO0mS3HRFsYamSO
+         IicQ9TgwuLsOTbZWBBr+bdjqj2y7PSYEjbAG8TxxMAWfDLMM7qrI3C6Rg2oZpHmTKPK2
+         jtZQ==
+X-Gm-Message-State: APjAAAU/KTj61jZrX8SzhNbHFcOCK75uiCK+CHcmOSfbLQARLul2tjIQ
+        LUOO9xxsINO2aPJQR2xtxHsct84K
+X-Google-Smtp-Source: APXvYqxhwqChtWvD23+0RawrElujArjI+xiwBdM4CJs2b0AroU/i4WfpPtha0LeUp3qX4rR/5i3Kgg==
+X-Received: by 2002:adf:f84f:: with SMTP id d15mr151422643wrq.53.1564876332392;
+        Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w25sm73013495wmk.18.2019.08.03.16.52.10
+        by smtp.gmail.com with ESMTPSA id v65sm92640688wme.31.2019.08.03.16.52.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Aug 2019 16:52:10 -0700 (PDT)
-Date:   Sat, 03 Aug 2019 16:52:10 -0700 (PDT)
-X-Google-Original-Date: Sat, 03 Aug 2019 23:52:03 GMT
-Message-Id: <301a796de9e853f9b0e398bc0d0c54a737a2f2c0.1564876327.git.gitgitgadget@gmail.com>
+        Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
+Date:   Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
+X-Google-Original-Date: Sat, 03 Aug 2019 23:52:05 GMT
+Message-Id: <d25bcb43e1d8fe68717c6df57063427ab5a142f4.1564876327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.305.git.gitgitgadget@gmail.com>
 References: <pull.305.git.gitgitgadget@gmail.com>
 From:   "lufia via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/6] Fix C syntactic errors for the Plan 9 C compiler
+Subject: [PATCH 4/6] Port generate-cmdline.sh to rc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,146 +72,118 @@ From: lufia <lufia@lufia.org>
 
 Signed-off-by: lufia <lufia@lufia.org>
 ---
- compat/plan9/openssl/crypto.h |  5 +++++
- compat/regex/regex_internal.h |  3 +++
- config.c                      |  3 ++-
- git-compat-util.h             |  9 ++++++++-
- parse-options.h               | 18 +++++++++---------
- remove-bitfields.rc           | 14 ++++++++++++++
- 6 files changed, 41 insertions(+), 11 deletions(-)
- create mode 100644 compat/plan9/openssl/crypto.h
- create mode 100644 remove-bitfields.rc
+ generate-cmdlist.rc | 102 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+ create mode 100755 generate-cmdlist.rc
 
-diff --git a/compat/plan9/openssl/crypto.h b/compat/plan9/openssl/crypto.h
-new file mode 100644
-index 0000000000..9d1ef43422
+diff --git a/generate-cmdlist.rc b/generate-cmdlist.rc
+new file mode 100755
+index 0000000000..18699ea9c4
 --- /dev/null
-+++ b/compat/plan9/openssl/crypto.h
-@@ -0,0 +1,5 @@
-+#ifndef __attribute__
-+#define __attribute__(x)
-+#endif
-+
-+#include_next <openssl/crypto.h>
-diff --git a/compat/regex/regex_internal.h b/compat/regex/regex_internal.h
-index 3ee8aae59d..7313c747a6 100644
---- a/compat/regex/regex_internal.h
-+++ b/compat/regex/regex_internal.h
-@@ -26,6 +26,9 @@
- #include <stdlib.h>
- #include <string.h>
- 
-+#ifdef NEEDS_SYS_PARAM_H
-+#include <sys/param.h>
-+#endif
- #if defined HAVE_LANGINFO_H || defined HAVE_LANGINFO_CODESET || defined _LIBC
- # include <langinfo.h>
- #endif
-diff --git a/config.c b/config.c
-index f67cef5cf8..993f9f57be 100644
---- a/config.c
-+++ b/config.c
-@@ -2461,7 +2461,8 @@ static int store_aux_event(enum config_event_t type,
- 			return error(_("invalid section name '%s'"), cf->var.buf);
- 
- 		if (cf->subsection_case_sensitive)
--			cmpfn = strncasecmp;
-+			/* Plan 9's strncasecmp is typed (char*, char*, int) */
-+			cmpfn = (int (*)(const char*, const char*, size_t))strncasecmp;
- 		else
- 			cmpfn = strncmp;
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f8fdd79591..1aa7877af4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -164,7 +164,11 @@
- #define GIT_WINDOWS_NATIVE
- #endif
- 
-+#include <sys/types.h>
- #include <unistd.h>
-+#ifdef __PLAN9__
-+#include <libv.h>
-+#endif
- #include <stdio.h>
- #include <sys/stat.h>
- #include <fcntl.h>
-@@ -180,7 +184,6 @@
- #ifdef NEEDS_SYS_PARAM_H
- #include <sys/param.h>
- #endif
--#include <sys/types.h>
- #include <dirent.h>
- #include <sys/time.h>
- #include <time.h>
-@@ -282,6 +285,10 @@ char *gitbasename(char *);
- char *gitdirname(char *);
- #endif
- 
-+#ifdef __PLAN9__
-+#include <machine/endian.h>
-+#endif
-+
- #ifndef NO_ICONV
- #include <iconv.h>
- #endif
-diff --git a/parse-options.h b/parse-options.h
-index a4bd40bb6a..38a33a087e 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -46,6 +46,15 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_COMP_ARG = 1024
- };
- 
-+enum parse_opt_result {
-+	PARSE_OPT_COMPLETE = -3,
-+	PARSE_OPT_HELP = -2,
-+	PARSE_OPT_ERROR = -1,	/* must be the same as error() */
-+	PARSE_OPT_DONE = 0,	/* fixed so that "return 0" works */
-+	PARSE_OPT_NON_OPTION,
-+	PARSE_OPT_UNKNOWN
-+};
-+
- struct option;
- typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
- 
-@@ -241,15 +250,6 @@ const char *optname(const struct option *opt, int flags);
- 
- /*----- incremental advanced APIs -----*/
- 
--enum parse_opt_result {
--	PARSE_OPT_COMPLETE = -3,
--	PARSE_OPT_HELP = -2,
--	PARSE_OPT_ERROR = -1,	/* must be the same as error() */
--	PARSE_OPT_DONE = 0,	/* fixed so that "return 0" works */
--	PARSE_OPT_NON_OPTION,
--	PARSE_OPT_UNKNOWN
--};
--
- /*
-  * It's okay for the caller to consume argv/argc in the usual way.
-  * Other fields of that structure are private to parse-options and should not
-diff --git a/remove-bitfields.rc b/remove-bitfields.rc
-new file mode 100644
-index 0000000000..897f98da10
---- /dev/null
-+++ b/remove-bitfields.rc
-@@ -0,0 +1,14 @@
++++ b/generate-cmdlist.rc
+@@ -0,0 +1,102 @@
 +#!/bin/rc
-+# Plan 9 C compiler rejects initialization a structure including bit field.
-+# usage: remove-bitfields.rc [dir ...]
 +
-+fn sigexit sighup sigint sigquit sigterm {
-+	rm -f /tmp/remove-bitfields.$pid
-+	exit
++rfork e
++
++fn die {
++	echo $* >[1=2]
++	exit die
 +}
 +
-+files=`{du -a $* | awk '/\.[ch]$/ { print $2 }'}
-+for(i in $files){
-+	sed '/(^[ 	]*\*|\?)/!s/([a-z]+[a-z0-9]*) *: *[0-9]+([,;])/\1\2/g' $i >/tmp/remove-bitfields.$pid
-+	cp /tmp/remove-bitfields.$pid $i
++fn command_list {
++	grep -v '^#' $1
 +}
++
++fn get_categories {
++	tr ' ' '\x0a'|
++	grep -v '^$' |
++	sort |
++	uniq
++}
++
++fn category_list {
++	command_list $1 |
++	awk '{ print substr($0, 40) }' |
++	get_categories
++}
++
++fn get_synopsis {
++	sed -n '
++		/^NAME/,/'$1'/h
++		${
++			x
++			s/.*'$1' - (.*)/N_\("\1"\)/
++			p
++		}' Documentation/$1.txt
++}
++
++fn define_categories {
++	echo
++	echo '/* Command categories */'
++	bit=0
++	category_list $1 |
++	while(cat=`{read}){
++		echo '#define CAT_'$"cat' (1UL << '$bit')'
++		bit=`{hoc -e $bit' + 1'}
++	}
++	test $bit -gt 32 && die 'Urgh.. too many categories?'
++}
++
++fn define_category_names {
++	echo
++	echo '/* Category names */'
++	echo 'static const char *category_names[] = {'
++	bit=0
++	category_list $1 |
++	while(cat=`{read}){
++		echo '	"'$"cat'", /* (1UL << '$bit') */'
++		bit=`{hoc -e $bit' + 1'}
++	}
++	echo '	NULL,'
++	echo '};'
++}
++
++fn print_command_list {
++	echo 'static struct cmdname_help command_list[] = {'
++
++	command_list $1 |
++	while(a=`{read}){
++		s=`{get_synopsis $a(1)}
++		q=`{seq 2 $#a}
++		echo -n '	{ "'^$a(1)^'", '$"s', 0'
++		for(cat in `{echo $a($q) | get_categories})
++			echo -n ' | CAT_'^$cat
++		echo ' },'
++	}
++	echo '};'
++}
++
++fn print_config_list {
++	echo 'static const char *config_name_list[] = {'
++	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
++	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
++	sort |
++	while(line=`{read})
++		echo '	"'$"line'",'
++	echo '	NULL'
++	echo '};'
++}
++
++echo '/* Automatically generated by generate-cmdlist.sh */
++struct cmdname_help {
++	const char *name;
++	const char *help;
++	uint32_t category;
++};
++'
++define_categories $1
++echo
++define_category_names $1
++echo
++print_command_list $1
++echo
++print_config_list
 -- 
 gitgitgadget
 
