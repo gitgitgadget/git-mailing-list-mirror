@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5421A1F732
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69ADE1F732
 	for <e@80x24.org>; Sat,  3 Aug 2019 23:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729316AbfHCXwP (ORCPT <rfc822;e@80x24.org>);
+        id S1729313AbfHCXwP (ORCPT <rfc822;e@80x24.org>);
         Sat, 3 Aug 2019 19:52:15 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:39443 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729159AbfHCXwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Aug 2019 19:52:13 -0400
-Received: by mail-wr1-f45.google.com with SMTP id x4so27639368wrt.6
-        for <git@vger.kernel.org>; Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35587 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729303AbfHCXwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 19:52:15 -0400
+Received: by mail-wm1-f68.google.com with SMTP id l2so69725858wmg.0
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 16:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ScuOaEaAnvZI50Ln+G80AcumRGAO9EqCNmbRV8mrfaQ=;
-        b=Q5PiuhiVfSP4GOOPcviJAsqVFQkEcY/lpmUbUJqgFsh6RIYUlC9AvuupLJY5Jxo5Na
-         AW6TlakI+WV2tFo7n7V4tyapnZbKJOAD85WFcvcsm02/XbKIUgw+S1Giz2f4r6Qghtzr
-         o4x/76tS1uw6MW8E48FMkFKdb5hs+o2GHvi65SPy9eMcw+YIzNUX0rukbYwrLMP2Iecd
-         /UcpnH+DTmIFMynyOeFou2IE5F1e/l0cKEw4lVte3l7n6V1CJ3rwvshuTpEHIUnZXGPQ
-         ZKEXCGD3Oj6g4//ZMvVaYVA4q9sJps4KyooTcD+x+lpilJj26iM4bsTglWBjzov4LPdP
-         ihUg==
+        bh=Qgyora3fN7K3/Lih3XGWnPzhHGMPxHorqSm9m/t2/ek=;
+        b=U6sACJVZ6ALj9ShIMXNkxpM4WIyKBWoy0DRYognixxdc0v+N/yw3MBpMkPQiaP5kco
+         NU8Pp+43EpdDUPqcQqWMT3+x/D2EKw3dMqel9N5mHzviV6S5IB+XiCD2Nsu9ALlf7mgQ
+         RX/0EcPxCSKb3oveGhzmtpKld9g4TzELgPr3PM9B8+fouYGQvW+P2mk7wBC6dzDySwnD
+         6SN8o1zW8gkEfAHS7ieHeJUjSQ0HDXJ/QlQ7rzFMxwANN9Js25n6ohvDRTJmNLgygFOS
+         AMy85ftjax4KqRKy3ZssB46KYnvcyuO+fZxTxXjk8eBYB/Saub6n+nJLLOAdUcgt6rh4
+         wg0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ScuOaEaAnvZI50Ln+G80AcumRGAO9EqCNmbRV8mrfaQ=;
-        b=gLjgcnvh4u9g0a80saQxvbBlMp1yph3HUVsCtdgNF68YbwmDxkcCL9QxbEnOhcXmFL
-         tFzcJbpU6hEzhfOYNLKtCd3asibyQvSViEeBfEa3aeySF+Tm3cP1IrJIiBIC8Jz0TQ7h
-         6vpj9HufspMiaqncvyVLzaGrY77YndptjAQrePgWHdoEOKbvpJ2mAgUJX6n6vXwnbe4t
-         gtTRHXwl+i+f8vPr6Xc6T44fvV0BD0BqipNnL4/gS44Xr6iOAW3WYNqWtTPVAz9Qm3Wg
-         /Nh9vV7T6Ergk6LQEbng60sWRN8dciAZdkDH7sjogvAjDlUlcldP+z9ZChtuU9UxJeSB
-         YmHw==
-X-Gm-Message-State: APjAAAWu49xkTc2cdePn6lQcoAn9ytSfcUxzEN0NlByDVp2kYfJAdpGw
-        w7+84Tr+UP7LUhq7tXTaMv44upp+
-X-Google-Smtp-Source: APXvYqyzW67FohdIdTd6P7zNDKnKD5ZY5mlMAbhoSZMTinF34p+DeTu+7E/sRKYbqghAetnSpcP+0A==
-X-Received: by 2002:adf:ef08:: with SMTP id e8mr20589642wro.209.1564876331524;
-        Sat, 03 Aug 2019 16:52:11 -0700 (PDT)
+        bh=Qgyora3fN7K3/Lih3XGWnPzhHGMPxHorqSm9m/t2/ek=;
+        b=feXu/XTVF0Rn5pZV3og0eJguvWIVYIayEXDQa9u5X5kR1t+9ojmTC1KIi1DIj5pN/x
+         Cbdo/L7XonFF0rGn/JE/Bwk0zL8E04/F9ZZZX6r6o/HhgyGRrE4F1SGmxnqRinuNsD2a
+         Bgk8Ld4brWAQUoLeBBzcA3NnGjwUg5UBE/WSveN1iSEirk50PgiUdNa2dztNzI1KKrqq
+         Sx9uXyV3YkF3r5duTYbtfVCh36qGJlrCKCQVOrB0ufaG4gTIafiCzx4b8Yi/QExF38XW
+         sW5L7PaJKp+fFeLLWO02F25sOy405ogiwqrZmkY00l5W59s2Z5P0jb+vZYH4Mpzv25wc
+         HFTw==
+X-Gm-Message-State: APjAAAUCPf5iysX2t3St2Ic81kqJZ5hIcRCNXB6gRTOyiwM82CqhQACY
+        6hcdJokutElQxy2R/KbwSNsaQC1B
+X-Google-Smtp-Source: APXvYqxNo3CeF0LsYQ5z2fgz9IBZTF2MKu+Nv8icZlUlFc1Ce9mKC+hQf2PMmVo8SCQZAQZoFstBIg==
+X-Received: by 2002:a1c:a997:: with SMTP id s145mr10252686wme.106.1564876333138;
+        Sat, 03 Aug 2019 16:52:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c3sm83408396wrx.19.2019.08.03.16.52.11
+        by smtp.gmail.com with ESMTPSA id o7sm64546148wmc.36.2019.08.03.16.52.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Aug 2019 16:52:11 -0700 (PDT)
-Date:   Sat, 03 Aug 2019 16:52:11 -0700 (PDT)
-X-Google-Original-Date: Sat, 03 Aug 2019 23:52:04 GMT
-Message-Id: <df67a7e1d307d6a7a91ae1bba085959154006ed1.1564876327.git.gitgitgadget@gmail.com>
+        Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
+Date:   Sat, 03 Aug 2019 16:52:12 -0700 (PDT)
+X-Google-Original-Date: Sat, 03 Aug 2019 23:52:06 GMT
+Message-Id: <d00bbdce0d5104f1793b7fa0dce14f678e9fb331.1564876327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.305.git.gitgitgadget@gmail.com>
 References: <pull.305.git.gitgitgadget@gmail.com>
 From:   "lufia via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/6] GIT-VERSION-GEN: Use sed instead of expr
+Subject: [PATCH 5/6] Add plan9/wrap.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,26 +70,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: lufia <lufia@lufia.org>
 
-Plan 9 don't have expr(1).
+Plan 9 has bind(1) instead of ln(1), but bind isn't persisted to the disk.
+However it isn't efficient to copy git to git- subcommands such as git-add.
+Therefore Plan 9 needs wrap.c to switch behavior by executable name.
 
 Signed-off-by: lufia <lufia@lufia.org>
 ---
- GIT-VERSION-GEN | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plan9/wrap.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+ create mode 100644 plan9/wrap.c
 
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index a0766f64ed..754d4486f5 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -26,7 +26,7 @@ else
- 	VN="$DEF_VER"
- fi
- 
--VN=$(expr "$VN" : v*'\(.*\)')
-+VN=$(echo "$VN" | sed 's/^v*//')
- 
- if test -r $GVF
- then
+diff --git a/plan9/wrap.c b/plan9/wrap.c
+new file mode 100644
+index 0000000000..589d13bf5d
+--- /dev/null
++++ b/plan9/wrap.c
+@@ -0,0 +1,16 @@
++#include <stdio.h>
++#include <errno.h>
++#include <string.h>
++#define _POSIX_SOURCE
++#include <unistd.h>
++
++int
++main(int argc, char *argv[])
++{
++	USED(argc);
++	if(execv("/bin/git", argv) < 0){
++		fprintf(stderr, "%s: %s\n", argv[0], strerror(errno));
++		return 1;
++	}
++	return 0; /* can't happen */
++}
 -- 
 gitgitgadget
 
