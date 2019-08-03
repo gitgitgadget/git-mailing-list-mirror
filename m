@@ -2,112 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6F131F731
-	for <e@80x24.org>; Fri,  2 Aug 2019 23:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5051B1F731
+	for <e@80x24.org>; Sat,  3 Aug 2019 05:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389568AbfHBX0E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Aug 2019 19:26:04 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40459 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389345AbfHBX0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Aug 2019 19:26:02 -0400
-Received: by mail-pg1-f196.google.com with SMTP id w10so36779859pgj.7
-        for <git@vger.kernel.org>; Fri, 02 Aug 2019 16:26:02 -0700 (PDT)
+        id S1726377AbfHCFdx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 01:33:53 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38738 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726350AbfHCFdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 01:33:53 -0400
+Received: by mail-wm1-f65.google.com with SMTP id s15so46852571wmj.3
+        for <git@vger.kernel.org>; Fri, 02 Aug 2019 22:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9ooLMIw1lN0J2ltUP3ylwsKK4Cvyo16SX2G4NTiM0dI=;
-        b=PfJFhpg75tz86SnGKte59t4cjHWkOjVIzgGRAnq6moQdS32qjvgiDeFI7U5zWRaElK
-         ByloqtPeuXmRCewoUATTeSjh8XychIpqB5Ogs0Nah4at1sXJTOossgu17tpJ0u0D+9im
-         dK1nPSsVoXLQ69mBdMFHRWlbMH1V3fA985zm5RofGu2KguM7MHnzAbnDgHhOMDuqbg4o
-         c0Jytk0dYoV4tGWmO7ITjY0ZjGp5lqjxuEnqNaxJNqq3DBgEBo2oLYLOqqQJnL5JF7Na
-         I9eF0/eDL1xYBx47RjKFgY/Js6SCS5INdkpwBU/iV26tWjwoUpT3+EUV9Eq3aYvaHMSn
-         XsPg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=bUAknI2IvsmR5pgtY97xH6bZYF2rdMToG/EFaYYOlqc=;
+        b=ZWHYtPkHs/v3s3bttOmLhpYHenmdOmFMsti6feXXz2KqonuYEIto71KOEeFL60T4/W
+         IgMnf9xHYx1scGC4zx0FeGSwfv58+sErd8QNbsVlH79qORAgCzAYY0UsuXjsKZEA2Qps
+         vuQnnN1ALFfsm+jTjEgU9i+1jofHDO4q7DCtL2b9UajkJ6KZzp5fQ+UKoJjqZUrnLxKB
+         i2cez9Y0AlGQckS/HkZfPuFWoCqMP54wcO5dSAR1QKbSJDExHDjC5dxx4dGeG16JJqEH
+         IEPurxf2hW5gAwmA1o8ZxXhWU/HKI5+Ci9BgO415oaRU1NNoAb5egms7rnMFBXo9d7Rg
+         ZRpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9ooLMIw1lN0J2ltUP3ylwsKK4Cvyo16SX2G4NTiM0dI=;
-        b=X1s3gf6rydQSx03N63De+vVy3qcOJoPz1Fy8aST8MkQphNrXFnGR3lFo48MhbSBtyr
-         V9ZrtwPdhO6J59qLY2shZ+Rfy4DoenjiafXhhuUMwzfDGf6bQVKpWPrrbV/ZX0WIY2BP
-         iR5MPEniprCxhtLtszCWPEQfdZkoY5cXjlvJCotvKHXbQVm1zfn3Fk0R11ijx6uWYyQA
-         90ULE+0X4hDSqHWNM6qNaTBu6EQH+vTQVZ1DghyyZ/1uLsI5kLWyvuTwjajPHRC8ptvz
-         pnxiSbl1Lp1guKelGyVZ3I7acpyo6SlD5m8/2JPkVWFB3Bx6eYCfi+2aMcV0A/hAk5Hn
-         0TNA==
-X-Gm-Message-State: APjAAAX3nA1I/Gaql6GMceIvEtaRiKwPGDzkw/0xlzkclz8hJ+ErpNaV
-        mxU97MbcB3yelC74xcSI6iQ=
-X-Google-Smtp-Source: APXvYqzclc1B0kVU+WWtBiTOW42qTQ2iQQ+h4MTtiHaKeH/rsBGZJlRRDrF2eFHeUjbrppltVzu12A==
-X-Received: by 2002:a17:90a:8a84:: with SMTP id x4mr6469959pjn.105.1564788361811;
-        Fri, 02 Aug 2019 16:26:01 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id t8sm7736150pji.24.2019.08.02.16.26.00
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 02 Aug 2019 16:26:01 -0700 (PDT)
-Date:   Fri, 2 Aug 2019 16:25:59 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, git@jeffhostetler.com, avarab@gmail.com,
-        peff@peff.net, jnareb@gmail.com
-Subject: Re: [PATCH v3 0/3] Add a JSON Schema for trace2 events
-Message-ID: <20190802232559.GC109863@google.com>
-References: <cover.1560295286.git.steadmon@google.com>
- <cover.1564009259.git.steadmon@google.com>
- <20190725234229.GM20404@szeder.dev>
- <nycvar.QRO.7.76.6.1907261333390.21907@tvgsbejvaqbjf.bet>
- <20190726220348.GF43313@google.com>
- <20190801180829.GP43313@google.com>
- <20190802015247.GA54514@google.com>
- <nycvar.QRO.7.76.6.1908021347580.46@tvgsbejvaqbjf.bet>
- <20190802165913.GA109863@google.com>
- <20190802193849.GX20404@szeder.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bUAknI2IvsmR5pgtY97xH6bZYF2rdMToG/EFaYYOlqc=;
+        b=prSltlth8F3ugl1vBQydIYD+XsJOPlnxlBJOydjLldnRtfNJL9LMwbOClhjSz7lr28
+         hhJcFQo+vqmg26SHo19dlkyaLGtehq85FJNhdx0BBKIbIm+10A4aVapRov5ubrpnw1nu
+         BeUNvlFeEgTrWufWFwV3Q/RtDnG0hzO0VYW7DrSTqDtNZpphnoT9UV3WvRP4DiuxhnNT
+         bABFAOInKBudgwfjPVRBOrX/GulUY+dmUvAlBH+3GySt4AZwR8/I7i+yeAjl2aPhCdhp
+         YlU5JflNUcIrK8WoNVhHjKuW9zOzPSuJ38Gyrks/iVQhmJh8+Nt8DmKgbfCy5/sk2hsb
+         UjdA==
+X-Gm-Message-State: APjAAAWoSmjeahNSHGVe4iZGYI2sSnS0BAmWi7EKOYB/WMtUZ/ZwJPCc
+        QB5GL4AynltxkSosl4NpfydZ5DeZ
+X-Google-Smtp-Source: APXvYqzlT4UNcFh/iIepRNYy6g42C9AiQgEGFtaXgqk/4GzLKdQqD0/hpCRjSECC/VV2fDYs2OgIoA==
+X-Received: by 2002:a1c:720e:: with SMTP id n14mr7479073wmc.53.1564810431197;
+        Fri, 02 Aug 2019 22:33:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d16sm70654790wrv.55.2019.08.02.22.33.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Aug 2019 22:33:50 -0700 (PDT)
+Date:   Fri, 02 Aug 2019 22:33:50 -0700 (PDT)
+X-Google-Original-Date: Sat, 03 Aug 2019 05:33:48 GMT
+Message-Id: <pull.304.git.gitgitgadget@gmail.com>
+From:   "Mark Rushakoff via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Fix two documentation typos
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190802193849.GX20404@szeder.dev>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor wrote:
-> On Fri, Aug 02, 2019 at 09:59:13AM -0700, Jonathan Nieder wrote:
+I noticed a couple typos while reading through some manpages. 
 
->> In the short term, we can run tests internally to check that Git keeps
->> following the schema.  Let's not block patches 1 and 2 by this ---
->
-> To my understanding patch 2 is only a proof of concept: it starts
-> using a programming language that has not been used before in this
-> project, to implement functionality that is readily available in
-> several existing tools, without even arguing (let alone convincingly
-> arguing) in the commit message why this approach is a good idea.
+First was "...if it is does not..." which just contained an extraneous "is".
 
-Well, Golang has been used in contrib/ before. ;-)
+Then I noticed a "can not" and updated that and other occurrences in
+Documentation to cannot. The glossary sentence with "can not" was
+"Consequently, an object can not be changed." To me, that reads like "it is
+permissible to not change an object, but it is possible that an object may
+be changed." Switching to "cannot" makes a stronger assertion that it is
+impossible to change an object.
 
-If I understand [1] and [2] correctly, we haven't found an existing
-standalone tool that is able to efficiently validate a high volume of
-traces.  But for the purpose of sanity-checking that running a few
-typical commands generates a trace that fits the schema, it's not
-important that the validator be super fast.  So we can use a tool like
-jq, picking one using the criteria that it
+There are also two error messages, "can not move directory into itself" and
+"Can not do reflog for '%s': %s\n", which I chose to not modify in this
+patch. I am happy to s/an not/annot/ those as a separate change if it is
+acceptable to change the wording on an error message like that.
 
-- allows performing the validation without too much fuss
-- is likely to already be present on some developers' machines
+Mark Rushakoff (1):
+  doc: typo: s/can not/cannot/ and s/is does/does/
 
-Thanks,
-Jonathan
+ Documentation/config/transfer.txt             | 2 +-
+ Documentation/git-cvsserver.txt               | 2 +-
+ Documentation/git-fetch.txt                   | 4 ++--
+ Documentation/git-pull.txt                    | 2 +-
+ Documentation/glossary-content.txt            | 2 +-
+ Documentation/technical/api-ref-iteration.txt | 2 +-
+ 6 files changed, 7 insertions(+), 7 deletions(-)
 
-[1] https://public-inbox.org/git/20190726220348.GF43313@google.com/
-[2] https://public-inbox.org/git/cover.1564009259.git.steadmon@google.com/
+
+base-commit: 7c20df84bd21ec0215358381844274fa10515017
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-304%2Fmark-rushakoff%2Fdocs-typofix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-304/mark-rushakoff/docs-typofix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/304
+-- 
+gitgitgadget
