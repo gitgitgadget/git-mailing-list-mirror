@@ -2,111 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851E71F731
-	for <e@80x24.org>; Sat,  3 Aug 2019 23:45:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 821CF1F732
+	for <e@80x24.org>; Sat,  3 Aug 2019 23:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729288AbfHCXpX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 19:45:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33282 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729159AbfHCXpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Aug 2019 19:45:23 -0400
-Received: (qmail 23525 invoked by uid 109); 3 Aug 2019 23:45:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 03 Aug 2019 23:45:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15732 invoked by uid 111); 3 Aug 2019 23:47:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 03 Aug 2019 19:47:28 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 3 Aug 2019 19:45:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v2] l10n: reformat some localized strings for v2.23.0
-Message-ID: <20190803234522.GA5417@sigill.intra.peff.net>
-References: <20190730033512.7226-1-worldhello.net@gmail.com>
- <20190803195907.3124-1-jn.avila@free.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S1729294AbfHCXwM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 19:52:12 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35581 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729159AbfHCXwM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 19:52:12 -0400
+Received: by mail-wm1-f66.google.com with SMTP id l2so69725796wmg.0
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 16:52:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Qe//y22+5m9jIt2OrZZOav+OagvivZaRyDCjQwL3TzE=;
+        b=VRnMIvFLC8yABDddGyXOTlI5WiWyCzPKqwWvfTIaZEniEFNxCRAwo5fSP9S9LPMGSg
+         60FT9lpZPgRRU+UXDhQXWGzVtrQ8Nn4yYPBwd2+tv8PhE9NiDeNdmvni3fnnAobl7Woi
+         CMbdxNQdvrUx3NJ97o2GMc9KQNmR0S//OBxO9ZtZJSN7aznF91kqy4rpcIoyhgGemocc
+         Zl6HmL8LimrrCFOU/RrnJwuSRJqCB1k9h7F9gay036WH2KuNrhHx86+ElUbKcr9f0okf
+         r9A7BEOD9tT5x6PPH9dDDIiSdFtXGX0pu3A7MPYdC1+QwlLeXLlsL1vjgE8BYj2PnbbY
+         cEnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Qe//y22+5m9jIt2OrZZOav+OagvivZaRyDCjQwL3TzE=;
+        b=CMRnluX+HvOfEqWnwy09pyThGTRvNzEwUD3APthCo5sTaZmj8LUilTExS88bOYmemw
+         ojptvkPGWq7hP1sDzt0rz2DDt4J5V+g4VRjoHW0DhUmP2QtnWF7vSYWmyMVYvzXrDdK0
+         IQDlLCRTPhRCuOQtxrGCSj1HtIvZKo5EVZQeaJR8bDx9uqn4snhOCxmepl8a+Mpd9F+b
+         Q4rZW0Om072dOXJ2t5t+v7uvNz0uF0tP4eEpFlXxGuqeqpt/moL0gfI5u2ZaYLctDAmE
+         TICC5Feorl/o2gOsbXFhwHhabNN7xwGUsr8YFvnBQUXKvyiS4TCKm2JidhFbkDBuHl3c
+         P2vQ==
+X-Gm-Message-State: APjAAAWynqy5/nC24HflItQ3+TQpV9kYykQm+jt0o2RnesWAMc1fpIdM
+        8XcgYrkuxCQ/yJcSmpjZxfGVUjeC
+X-Google-Smtp-Source: APXvYqwQB/Nn3kBlxXORVHZxjcyFuhirCrJXx3lmMBaITSti0lwqIf7xmuAnYsbd3Rwq91vx/18KEg==
+X-Received: by 2002:a1c:228b:: with SMTP id i133mr10653944wmi.140.1564876329420;
+        Sat, 03 Aug 2019 16:52:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u1sm75589355wml.14.2019.08.03.16.52.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Aug 2019 16:52:08 -0700 (PDT)
+Date:   Sat, 03 Aug 2019 16:52:08 -0700 (PDT)
+X-Google-Original-Date: Sat, 03 Aug 2019 23:52:01 GMT
+Message-Id: <pull.305.git.gitgitgadget@gmail.com>
+From:   "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/6] Port git to Plan 9
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190803195907.3124-1-jn.avila@free.fr>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 03, 2019 at 09:59:07PM +0200, Jean-Noël Avila wrote:
+I ported git, and git subcommands only written in C to Plan 9. This pull
+request contains patches for existing codes, and new files to build git in
+Plan 9.
 
-> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-> ---
->  builtin/checkout.c |  2 +-
->  builtin/fetch.c    | 15 +++++++++++----
->  2 files changed, 12 insertions(+), 5 deletions(-)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 91f8509f85..08e19ed1ed 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1769,7 +1769,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
->  	struct option *options;
->  	struct option restore_options[] = {
->  		OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>",
-> -			   N_("where the checkout from")),
-> +			   N_("where the checkout is from")),
+All build options such as NO_PERL are not supported yet, and also some git
+subcommands written not in C is not available yet. But git can synchronize
+to remote repository with git pull and git push via HTTPS.
 
-I think your original "where to checkout from" is better.
+This pull request don't contain a part of Git toolchain for example
+git-credential-store, etc. So I'm going to port other parts of Git toolchain
+too in the future.
 
-As a native speaker, "where the checkout is from" implies that checkout
-is a noun that is being described. But I think we want checkout to be a
-verb (because we are talking about the operation), and the option tells
-Git how to do that operation.
+Whole installing process is published at 
+https://medium.com/@lufia/14fee2ad7493
 
-(I agree the original "where the checkout from" is nonsense).
+lufia (6):
+  Change HOME, PATH, and .gitconfig paths to be customizable
+  Fix C syntactic errors for the Plan 9 C compiler
+  GIT-VERSION-GEN: Use sed instead of expr
+  Port generate-cmdline.sh to rc
+  Add plan9/wrap.c
+  Add mkfile to build git and subcommands for Plan 9
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 53ce99d2bb..0e8760e5d4 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -850,6 +850,15 @@ static int iterate_ref_map(void *cb_data, struct object_id *oid)
->  	return 0;
->  }
->  
-> +static char warn_show_forced_updates[] =
-> +N_("Fetch normally indicates which branches had a forced update, but that\n"
-> +   "check has been disabled. To re-enable, use '--show-forced-updates' flag\n"
-> +   "or run 'git config fetch.showForcedUpdates true'.");
+ GIT-VERSION-GEN               |   2 +-
+ Makefile                      |  26 ++++-
+ builtin/config.c              |   2 +-
+ compat/plan9/openssl/crypto.h |   5 +
+ compat/regex/regex_internal.h |   3 +
+ config.c                      |   5 +-
+ credential-cache.c            |   2 +-
+ credential-store.c            |   2 +-
+ exec-cmd.c                    |   4 +-
+ generate-cmdlist.rc           | 102 ++++++++++++++++++
+ git-compat-util.h             |  17 ++-
+ help.c                        |   2 +-
+ mkfile                        | 195 ++++++++++++++++++++++++++++++++++
+ parse-options.h               |  18 ++--
+ path.c                        |   6 +-
+ plan9/wrap.c                  |  16 +++
+ remove-bitfields.rc           |  14 +++
+ run-command.c                 |   4 +-
+ sequencer.c                   |   2 +-
+ shell.c                       |   2 +-
+ 20 files changed, 402 insertions(+), 27 deletions(-)
+ create mode 100644 compat/plan9/openssl/crypto.h
+ create mode 100755 generate-cmdlist.rc
+ create mode 100644 mkfile
+ create mode 100644 plan9/wrap.c
+ create mode 100644 remove-bitfields.rc
 
-This one isn't a typo fix, right? It's just putting the two warning()
-calls into a single message. I can see how this would be useful for
-translators, but note that the output will be different. The original
-would be something like:
 
-  warning: Fetch normally indicates...
-  warning: To re-enable...
-
-where now we'd get:
-
-  warning: Fetch normally indicates...
-  check has been disabled...
-  or run 'git config...
-
-which might be a bit harder to read because the wrapped lines lose the
-prefix. For advise() we nicely pick out the newlines and prefix each
-line individually, but warning(), error(), etc, don't do that. Maybe
-they should.
-
-That's too big for this late in the -rc cycle, I think. In the meantime,
-I'm not sure which (the original or your patch) is the least-bad
-solution. :)
-
-This change (if I am right that there's no actual typo fix) should
-perhaps be in a separate patch from the earlier hunk, though.
-
--Peff
+base-commit: f36d08d72e7f68f880f8c1d7646cb3809c820485
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-305%2Flufia%2Fplan9-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-305/lufia/plan9-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/305
+-- 
+gitgitgadget
