@@ -2,128 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A40711F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 00:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 131541F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 01:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729425AbfHDAiZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 20:38:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57282 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729420AbfHDAiZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 3 Aug 2019 20:38:25 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:49db:b3cb:1703:1c9a])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C08B86047B;
-        Sun,  4 Aug 2019 00:38:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1564879102;
-        bh=99Ps9nKjJlOcn2pQjA2aGPM11jIVwQjh3ONQqdtAQfw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=NRMp1A5W5eFidMFOl/edbzB9qfB4E1NEYfOpWZUHdqaWisib9EohNR+2FiwA6D32D
-         LMPmO/o5EVj/2t3jI4GD4S2cBSjokviUHydnD7drVaBVrSzHAZ3JAR0YCUd4R1+6DA
-         L7bJ4+8Tsgw6nWTr+8NOnTm/TNjK1Rb+oXdPwaE6G+i0MtzqOpL8YYmkuEJVEtip/z
-         keG4pEzMCPdN06owaysQ+HWKfC9krH7kM6R9jobESVL7zg0T15hiSYdnGvuc6PQYsi
-         F/Tq2uL+pU0Ows1zetz5XtD6DAzJAeeczlWtLTtOvOdlpgMOB8EH+S5EDN7NR8pwIo
-         wVgcAMfmWBwrY0s1oWshGuqucWVvS20HyrREzqgxa+tyY35TDmTkzSqCKuciE9GfoC
-         KJN6Tl0BtfkMkN4RKUnJMaUIJL7OZ61a/Bc65iqp+7UOZZ46dfH2mfTPLjmB8hK2Zz
-         2whiheyZFT1DSkyVbs6JUh9CasQT3Dh1QUnWhLxLxHw/9qOXT0q
-Date:   Sun, 4 Aug 2019 00:38:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Port git to Plan 9
-Message-ID: <20190804003816.GE118825@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.305.git.gitgitgadget@gmail.com>
+        id S1727679AbfHDB0Q (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 21:26:16 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:37066 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfHDB0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 21:26:16 -0400
+Received: by mail-io1-f68.google.com with SMTP id q22so40534881iog.4
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 18:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lufia-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=x2CIO9ql1dOBp3wEo+AV92WQ/x1OdRy7n5UQttieyVI=;
+        b=BdEyKcw5FMhuwhgSyHqgOq/Ij6LQKzoCFuJtNBpukDezbRrjw202zATAZrCTizKGpZ
+         83v1MEDUlD9lVpt6Ct51YgWBTfj321lwYhf9vjRciczdSjo/rVkf/tAX+hz4N5yNtAjI
+         OS+T17T4hHQurUCMghKrXmU1sr0u5Qf/MEOQWKukEnGEe9R1/v6g5lBhEvfSgyg9eqWy
+         uIteJ34kiyYZBUrj/pyW3XxJ2/DJEiqhxJwpDybVoh5wYvsYFf46qF4N/ecHcgYAzXK1
+         BoJOp1uydJS5v85/p6fTGgz1kWagv1Q39M7MZ6anLmfx0Y2i04RJHM2zEHpqPtgXY5m/
+         uX1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=x2CIO9ql1dOBp3wEo+AV92WQ/x1OdRy7n5UQttieyVI=;
+        b=MTX1XdWjyLKhLALPVwaKzq1jmbBOu9JfxD/2fCf8JCHISFyTqVxMf5NrGW5FvKHfjA
+         7kBuiC02Of8jSHVoeZo2+CSEDPntBT4duUbd1Wy1arRuYSDBFQ+10i9xb3bhuQOkPJy+
+         ya9SnQrXbimVJCgXwqX/FqziluxSr7NAao4bsrNqegD65K26v++tEC2WgOg8uhBoxbC1
+         RsgDBpwpZKyOoCMXNvDMWTYimqg4X8MZVpJ/FKvalZYssdH5WxMBKkGAlLN4owLGNC1m
+         KH0U13FMzkLW5enBI+snR9zlTHWAWFJD+NWni3mKbeZOd5VbEUWRqNWPnTIxIpBKGE2D
+         xYgg==
+X-Gm-Message-State: APjAAAVb2ZYZRJXxxdbInMWcLW+ZEEU1brz0LEqhIwjvBhtBKziZinA/
+        mNom4A0fu4ZeNMpVo0dCFyOEesUXHPfIV/5vQPw=
+X-Google-Smtp-Source: APXvYqzUR8SyJCx2LFH3BmAA15aGiYdUAM6Mowu4a6Cg73URPZW01Dt1WA7IlgJyJC/1TGfJh3mtmfjzeitG+6QcR9Q=
+X-Received: by 2002:a05:6638:281:: with SMTP id c1mr7302737jaq.43.1564881975087;
+ Sat, 03 Aug 2019 18:26:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cVp8NMj01v+Em8Se"
-Content-Disposition: inline
-In-Reply-To: <pull.305.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.305.git.gitgitgadget@gmail.com> <d00bbdce0d5104f1793b7fa0dce14f678e9fb331.1564876327.git.gitgitgadget@gmail.com>
+ <20190804000310.GD118825@genre.crustytoothpaste.net>
+In-Reply-To: <20190804000310.GD118825@genre.crustytoothpaste.net>
+From:   Kyohei Kadota <lufia@lufia.org>
+Date:   Sun, 4 Aug 2019 10:26:04 +0900
+Message-ID: <CAFMepck4QDxBqBZ_jbwshrMC7W++a_BG4RzC_ct1-2sb2ReeyQ@mail.gmail.com>
+Subject: Re: [PATCH 5/6] Add plan9/wrap.c
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        lufia via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        lufia <lufia@lufia.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+2019-08-04(Sun) 9:03 brian m. carlson <sandals@crustytoothpaste.net>:
+>
+> On 2019-08-03 at 23:52:12, lufia via GitGitGadget wrote:
+> > From: lufia <lufia@lufia.org>
+> >
+> > Plan 9 has bind(1) instead of ln(1), but bind isn't persisted to the disk.
+> > However it isn't efficient to copy git to git- subcommands such as git-add.
+> > Therefore Plan 9 needs wrap.c to switch behavior by executable name.
+>
+> Does Plan 9 have symbolic links? The INSTALL_SYMLINKS option uses
+> symlinks instead, which should avoid the need for hard links.
+> --
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
 
---cVp8NMj01v+Em8Se
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2019-08-03 at 23:52:08, KADOTA, Kyohei via GitGitGadget wrote:
-> I ported git, and git subcommands only written in C to Plan 9. This pull
-> request contains patches for existing codes, and new files to build git in
-> Plan 9.
->=20
-> All build options such as NO_PERL are not supported yet, and also some git
-> subcommands written not in C is not available yet. But git can synchronize
-> to remote repository with git pull and git push via HTTPS.
->=20
-> This pull request don't contain a part of Git toolchain for example
-> git-credential-store, etc. So I'm going to port other parts of Git toolch=
-ain
-> too in the future.
-
-This series seems to build a whole new build system that uses Plan 9
-tools. Typically the way ports to non-POSIX platforms (such as Windows)
-have been handled is that the Unix tools, including GNU make, have been
-ported to those platforms, and the POSIX (or POSIX-ish) environment used
-there.
-
-I'm concerned that by introducing a whole bunch of new, Plan 9-specific
-build code, we're going to have it fall behind with features or bug
-fixes, because none of the main developers test on Plan 9, and most
-contributors will not have the Plan 9 skills or systems to maintain the
-code.
-
-In addition, the editor used by git commit and other commands invokes
-"sh", but you've set this to "rc". That's completely different from the
-way that all other environments work, and it means that Git on Plan 9
-operates in a totally different, incompatible way there. We also use a
-POSIX shell for the testsuite, and we rely on it quite heavily. rc is
-not going to cut it there.
-
-Plan 9 has a POSIX environment, and I think it might be a better idea to
-require that as a condition for building and running Git. It will likely
-be a lot easier, at least.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---cVp8NMj01v+Em8Se
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1GKPgACgkQv1NdgR9S
-9oubCw//Yx45/jOjzOlY1d7uPf1xhLoAm6gEcYD23X799GewNWKYJfAvWOJUX/4Q
-8aWWgvcqyI+haQxNb9LTeeJIVnBTaW9NfjoLMFP1Cc7tDMMAyg2vOukaWjq517G9
-6iM66aq3ZbeeZhXG078JPj83/1qs9Rs4uVRiPXgjN1WTk3cPE1fREFOmNEh23ldA
-dUE2ij57uVfb6t1NNiCMUEqofTnSODsC7alZdUhlc4I8dp8pnK1o4JOitnQFGOD3
-LlYNzsO0Gt9/+NosWWE7m70l6GkbYPIw6RYgpBn4Ehmf+6ut2fqsb3JcgsiS54F6
-NCLwUK3g1PZeQypcm9vnNMZ78bljsl1oqAEfOeeXSsx6L9lCASWAqgUylsftw7RS
-0h9V2co75ro5choSSezMod0TV+zIB0qKv4S7SswYXLmMp3X+VDySc/iC7Dn33/bq
-Vqhh7oTKt+C+7p57chKFoovdKKFnP0k2o66VUv55UDZEosO8iKgL7CcRdDPkNOST
-xSw3trAOQBRFWlbwKOiUx0cslA2rq1CSyYEFeBNNd3cBELnZ9ah+Wtqsy3wqtQwT
-atbkIY9nJkgieqa2ggQKLMBzkKj5ovaXH6HAwCc0/HWOAj6D5mIZ5Tml71Ldwdum
-ZV6aV1BidhX89SOZXls8RcSNEgCqEUG1k5m6OL3y8QJpoUQDYz4=
-=/4Uy
------END PGP SIGNATURE-----
-
---cVp8NMj01v+Em8Se--
+No, Plan 9 don't have a feature to create symbolic link.
+I think Plan 9 will not be going to have hard- and symbolic- links.
+http://doc.cat-v.org/plan_9/4th_edition/papers/lexnames
