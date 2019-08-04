@@ -2,105 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08A841F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 00:04:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC08B1F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 00:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729254AbfHDADS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 20:03:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57276 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725385AbfHDADR (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 3 Aug 2019 20:03:17 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:49db:b3cb:1703:1c9a])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 31B7C6047B;
-        Sun,  4 Aug 2019 00:03:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1564876995;
-        bh=UGEGDnNOjNHzzJgs0GQUZYBhUSvNFSilwFrBZV/vQvQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=r1JhYV8PFB0uFAQRRiMstITatRnM395IFXFDzmbhPNV1LenBKpNer2jGozKjljziv
-         EBHsmMsdD38nKKzbRiQ07Dp5/9KrL/19QP/9cw7iMPdAL63kJ5tZOAZNrcUwxyKmwh
-         6uwsKG6FWkbIipojiM1STOheNwe8+mylKFg6OyI8sHur7bY2lCE+PXDFQSp6OfFwwK
-         mzfTQ6c9Z69q9CegZnSMRPuP8iC3AwMbR1XySfpnR7pc/7uZ0AtGA7wdjXKjVKXB+R
-         clNEsNi7AUzabNtnx5JDwD0KW7US/Nevjunz1dbIuWn8S/7gqAJ/d8OmY+yP0pkz3l
-         C+rrrz2FteY3qtqmy3Q73XyqnZhkT9i+Uc3ltSk7LZhUChcIYiORfDSipwPS1Eq5EH
-         tscKloOZ+NlcYlTMgynJd1sSwd+6TpcFXtNyIWi++kAQ/wLqkriKe8UcNH5S4kHOlL
-         9LHCatWbRwYhQPsU3hvTFKqRQagb/L9KAM2VVDzIqAkuiJdChcS
-Date:   Sun, 4 Aug 2019 00:03:10 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     lufia via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        lufia <lufia@lufia.org>
-Subject: Re: [PATCH 5/6] Add plan9/wrap.c
-Message-ID: <20190804000310.GD118825@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        lufia via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        lufia <lufia@lufia.org>
-References: <pull.305.git.gitgitgadget@gmail.com>
- <d00bbdce0d5104f1793b7fa0dce14f678e9fb331.1564876327.git.gitgitgadget@gmail.com>
+        id S1729354AbfHDAZ6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 20:25:58 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36565 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729299AbfHDAZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Aug 2019 20:25:58 -0400
+Received: by mail-io1-f66.google.com with SMTP id o9so56615380iom.3
+        for <git@vger.kernel.org>; Sat, 03 Aug 2019 17:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uEsmPKavrZKTXvJ9aa8RvJ6lq9keZxxMCO9kV26MBI4=;
+        b=KbbujYUlSPT18xH6fe9xW3V1WUysCL01xJqbwuyKEzfbrSSe6zNThicQk8kLEd9U0v
+         bVYE24MYb1sF6SzPouIKh/f7mhzJJQ2R7Zosm5ikhRkLGfQSAFIkFg+WHUH/7IY5Kuj4
+         XD/xI7ddHFYhUhQ4Kzpa0t1xMNvgvuidIDSeDbZj4d79ci5Th1XQJeGg+yQ2G1f2bwOF
+         UVGAkD0gex35rB20JUdzDbMv5sg5WdfR8r4xUj1dQM7F4ZggK2UStRpUR2hU/vwu4Hoo
+         5pP8yDJV2yqL5lL8TTeDyl9M2OpdgAIURA0/H/jDB4lz4Tv4NAipSAkblzGHnQh4EzwE
+         FJDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uEsmPKavrZKTXvJ9aa8RvJ6lq9keZxxMCO9kV26MBI4=;
+        b=khkzB3M5zPy3PpL/VtFQs3zEa1WvYnJPWimS2qpEYYlPjMmuizMfsL86tqnzg2fdZm
+         2ijfZxlIqVL8xYpg8p7/oXYInHwArwhqslKpLuqjlReFBy44bVmLRE2eqjxDDF9pT5c0
+         SB5uLTjiKm+5kYV1+Poee7NzL4V1+J8uuqwWCv2UUSDHxzMjg5ur+4xRxaSYebATAaB9
+         iqI/b4Ep/SgqI82jmHkrNU7u1ptAaQklSEVDg7VU2u1bTgmNdqKbvKP1SSxfX07KajY5
+         Vims7bPilHdOQqnZn6ibL7lUfwXkeJ+fMJZKSS5To083QKtNXcyI1VVISHEBpPN9YDz1
+         g/gw==
+X-Gm-Message-State: APjAAAUXPgZDCdcb+qGPeuYQyWl8ODDCUcDRJZVWKBsqtDDPGqpDkCGj
+        onTmzp4bOM9UDxQ8tpjjyffSO/bvzhalqyaVr+I=
+X-Google-Smtp-Source: APXvYqyoqGNVwV6KYHzhc9WRm23Rt6D3HQlHW/Om80GJhZGMsar5Jo1XmxZVNIZXmnAWIxPr8qPAL8V1QUYR8i5UmXs=
+X-Received: by 2002:a5d:890d:: with SMTP id b13mr16658291ion.124.1564878357327;
+ Sat, 03 Aug 2019 17:25:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SdvjNjn6lL3tIsv0"
-Content-Disposition: inline
-In-Reply-To: <d00bbdce0d5104f1793b7fa0dce14f678e9fb331.1564876327.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190728235427.41425-1-carenas@gmail.com> <20190729105955.44390-1-carenas@gmail.com>
+ <nycvar.QRO.7.76.6.1907311426290.21907@tvgsbejvaqbjf.bet> <87o91a5k0d.fsf@evledraar.gmail.com>
+In-Reply-To: <87o91a5k0d.fsf@evledraar.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 3 Aug 2019 17:25:45 -0700
+Message-ID: <CAPUEsphQVjptjZVh2mmXWdDj4rEohgtWw5UWUmN_qKc0XC9psg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] grep: allow for run time disabling of JIT in PCRE
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        gitster@pobox.com, dev+git@drbeat.li
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jul 31, 2019 at 7:57 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> What hasn't been supported is all of that saying "yes, I support JIT"
+> and the feature then fail whaling. I had not encountered that before.
+>
+> So far that seems like because Carlo just built a completely broken PCRE
+> v2 package, so I don't know if that's worth supporting on our
+> side. I.e. this isn't something I think could plausibly happen in the
+> wild.
 
---SdvjNjn6lL3tIsv0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+since you are in Debian please follow the instructions here:
 
-On 2019-08-03 at 23:52:12, lufia via GitGitGadget wrote:
-> From: lufia <lufia@lufia.org>
->=20
-> Plan 9 has bind(1) instead of ln(1), but bind isn't persisted to the disk.
-> However it isn't efficient to copy git to git- subcommands such as git-ad=
-d.
-> Therefore Plan 9 needs wrap.c to switch behavior by executable name.
+  https://wiki.debian.org/SELinux/Setup
 
-Does Plan 9 have symbolic links? The INSTALL_SYMLINKS option uses
-symlinks instead, which should avoid the need for hard links.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+no need to rebuild git or pcre (but to enable selinux will need to
+reboot twice), then type as root the following:
 
---SdvjNjn6lL3tIsv0
-Content-Type: application/pgp-signature; name="signature.asc"
+  # set enforce 1
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1GIL0ACgkQv1NdgR9S
-9ouWMA/5AQ+7/o7VuHiP4tJOxf61/4nCn/viYplEx8XG+BhFSMOhCTimDseE5TUX
-sbU9Muvu/h0joxPeqLYTYV9ia5ZODyEYA1E3ZMwwh4O59mOzFfkwK6ELuf59bexl
-6a+4M571cj7pi1/sqFI2zrZuffDZHfLeSNneXZOYhXskfWvcNGapIvh1DylYXkX3
-J/7MKheDl1Z3pqQa7T0rXZGVDpNdkTFgfGU3/zeDEJ6TxXIwPn9yiF3MfSIySqW9
-voUqWIl7xPdWHDphu1z8DXXEtrVM2goSpBZuFdWr31QSmaInEMPhy2Ot3OjHXiaG
-ml6t0lJArj1BQlYH81fkg7YNonewmU1NVmMoeBZoLl20bFVSyouCsEMxRdubyQgr
-SanRmk92sW9uWPXqSIWj0mkLK1mLWvuriRMK4SDv5rUfpBQCwBE1OLDxQaz07YpM
-7Dzv0sZ2OVFf14eAgYIsCKRvLHGQYgRmxW+/vvRt2btYOzTKg6GgSGW7GllAC4cw
-NIDdUqohvj+ToGh+lLfnQGcw7FgpFm+1SS6hhC5NBtHKQzCHB6GwimwvjnBw8J6X
-P/geTr0fMTQSbFXGUly9rCiIKdYcI+uWo5XZHzo7uSeceLyS4KO1EFJAHds1ZD+k
-8ECfracFu9qXHxXfnO7E+Oi71CayyD7ubaFSb5DQFdE5tF5ljlI=
-=hr2p
------END PGP SIGNATURE-----
-
---SdvjNjn6lL3tIsv0--
+Carlo
