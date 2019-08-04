@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7159D1F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 19:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 279E51F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 19:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726526AbfHDS4d (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Aug 2019 14:56:33 -0400
-Received: from mout.gmx.net ([212.227.15.18]:47875 "EHLO mout.gmx.net"
+        id S1726532AbfHDTKm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Aug 2019 15:10:42 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37895 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726392AbfHDS4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Aug 2019 14:56:33 -0400
+        id S1726392AbfHDTKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Aug 2019 15:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1564944977;
-        bh=Qy6GF67t3T7OtF9AORVl1HtmU29MEb+2o5Ifq2MojC8=;
+        s=badeba3b8450; t=1564945826;
+        bh=t4ZptpMXID9+WTRL0GZ5zMftTZV5d97rkQcYAnF2Gek=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bLM9pItXGGU6PNdd1Ht75E1Wv+fNOMLzE7C53BZ+vX0Rf/wPUmPBWw/KI/VmK4L9y
-         u8rEpQbN8zjI3slw/Dhntd2DkaMRyxEyqcVBWvUNk8/RTndwDnXUcu95BjeS01tihv
-         9OT/XZQkF6X1O55Xra6wT7VJAJzS7fesmL8m6HKQ=
+        b=KPHXHepglR5POq2HZqxgrTHL+XoTFvtU4BInqJ51qftQgzpijao1z0uD++Ss9idIe
+         6RFA5G4anCjiBlZ5/aQEOzGwiYI18IQJKrMn+wHhFWJizxnPipyMs0QwKVfanM2yrV
+         QVgqywgoGlMN9271nfVp1uLwbVKDKHi55s9JrPPc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDysg-1i21Bt0bVE-009zF1; Sun, 04
- Aug 2019 20:56:17 +0200
-Date:   Sun, 4 Aug 2019 20:56:03 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LikE1-1iUUvv2dbB-00cwC4; Sun, 04
+ Aug 2019 21:10:26 +0200
+Date:   Sun, 4 Aug 2019 21:10:13 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Pratyush Yadav <me@yadavpratyush.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Mark Levedahl <mlevedahl@gmail.com>,
+cc:     Mark Levedahl <mlevedahl@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-gui: Perform rescan on window focus-in
-In-Reply-To: <a143dcfd-8067-34f7-97f3-c4482dca5819@yadavpratyush.com>
-Message-ID: <nycvar.QRO.7.76.6.1908042048100.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <1489be05-ab18-a3e5-dd38-3d5729ebe67a@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1908042058340.46@tvgsbejvaqbjf.bet>
 References: <20190728151726.9188-1-me@yadavpratyush.com> <20190728213634.GB162590@genre.crustytoothpaste.net> <e3f296a6-f33b-7b52-c4cb-9acf65145e64@yadavpratyush.com> <20190728224943.GC162590@genre.crustytoothpaste.net> <724fb243-c660-ae04-1b2f-caf34794b799@gmail.com>
- <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com> <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet> <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com> <xmqqftmjldjx.fsf@gitster-ct.c.googlers.com>
- <a143dcfd-8067-34f7-97f3-c4482dca5819@yadavpratyush.com>
+ <005d7946-3fbf-9c06-21fb-51f10d06f33e@yadavpratyush.com> <nycvar.QRO.7.76.6.1907312132190.21907@tvgsbejvaqbjf.bet> <cc5dddc7-e33e-2a2c-3205-6dd14edd0abd@yadavpratyush.com> <nycvar.QRO.7.76.6.1908021414530.46@tvgsbejvaqbjf.bet> <a68f09be-949f-b16b-a585-9ca2a1991a4f@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1908032225510.46@tvgsbejvaqbjf.bet> <1489be05-ab18-a3e5-dd38-3d5729ebe67a@yadavpratyush.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ePBBXo7YaL9FKu4H9m1oFThGR47k19/zXKe0ke1xO1XBfkcRHIG
- 2M2Add0pc+ki2d0fo8KmlQZKVvfh/mYLyYVlsQ6lKQYQpuy3sAVN6d9nbgkyfTnBG1Kq3iw
- S0v6wo6q6eJF2iyfST0pSxu6o4pPb+H47dqy6G0pWhlmG1F0WCt90HGoDhW7ksvi4wkR9U7
- sjMhMSGooqZXK6/gF8v3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a+ztcxMoOCM=:nzSU4yeg7jtucU3IjxDhwH
- gtT/tUrZ+b5GZ8CS6RdahKDXg8RdL8VBA1EPjtXsnm/GXbwRaR80HnpZR702ZplpOn5SNMDEa
- sJao8uJw5RRdJaAr+tnGIfyShdrJA09N2S8l/ToWZup+fOzpurLdwR0tUU8xS3aibLWLztnPj
- qheeJ+qCIyHb7Gp9DGLLX2aM/xRGW9sWh8i3h5IyKhHMbH3pEyv5r9JyqEempZCQxyFs75AnD
- nQOiYTJRmw9z9bnAeRLbHV3fUcFFi0dtBkq15G/XMxgy3ovv1xjG8bBzHR0x4AUwTxqR8XYXZ
- KEgycVwjaR5SJI1BbhlFehI4RRUCCUvSbXQDDsC4VCYBfkjmFIUdjIodlWJtSxKb3O62nn6yV
- aXIh2OOAa8Aa08PSw/REqesyQUilNyEXKeDn9ihBkg+PfbkoFwlFJ/DbHeAVJpOvTkg1eGdjG
- 79ZDbCSDSXXysv/8OGXL4YHF75Ld7URLWo3f3Bt+5e5RLc78O/xH54FOVGuCcS8zeyaxL/wZ6
- XVOSf3V1LioR6HYWGLR6cTRmhexbNFgWV9mvoZnV9essC82dt8Qom+N4lX1YuWOdyfDe/tawA
- EJ7YIWkJQxM1bDPm9JnnGp4iShwC1xHdDS91SnQBp2CmcQ09LAfSzGgfUoeBKJbc59fWGZfPj
- 2m6x/gn3kfq6FA4P3uW31mzhNpCmQ/UkT6ajOA0JFii3QvqinnDmEFRmCKKnKfxfTBMrXSFws
- fj7PygzAXSKLnl8KhpPaFpfLJYYwY1Tt/trXbEueXRA1w3buRkXrOy1GA/w+glmH+sIWTbSKG
- g5yDyUq565iuXFNendd53ZW4Xg4pVEaKsVB5WBIr2Ec4uqfvHMcfDdcy6LXXURAUp1+aUvh54
- sLEm0cXgVH0OOqmKJ3MKdU+EPRdFDUugDY/iL72XpftzgOp43Gt8iiD7qKKD8PnCg/ZNNM8e7
- 36HHwUL4cw+K501LcH29G/AIHezh7C4d9mQXlhdJTI+nWn9ibbfggEf/hKYhBrm1kHIDOH3XC
- WXPpdt2etWMurTjdrgYwhPBGcUA6M9OjUaIg+bJOUnPdJpcFXMPj5LSDRCngW+Wist2XxJp+E
- xw+0hPEfMNhclVYtVsFB3OPQGCk76XwCyq82wfTIdwRWZF6fSeZoZtcaxxv2VSI3EZWrFUFmh
- V8t/E=
+X-Provags-ID: V03:K1:fXXjvBbLNOlq+/b+mRCe2LXYVSGKLe6ndeDnXhS2l1DanuJpSvh
+ 4CyeHXU2a5uL0mh85c+n4lgqZnPZd02CqadIGEyUVMDNfpPE/x7uUD/FN1Hu3X63qD4SJG6
+ tWVJsQ0PfT6HUGM+ScTCHqLygu0PHu+bCVs31dEJ63vNxHslPwiZaBBwJLTRP62ua8w9awu
+ uYoP8A3S0gMxmatbQByxA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eDZL/l9Ry/o=:KRRQ6eLadwO2NkrRMFLBki
+ JitmUlcQzYHTbCYQRcEOugRyFRqOLujV/AX+jGiMVpxY10vIwC4t1UfsXOGCJg6P76R/Y2/Qe
+ EpT0dhWIlWLzeyrm0xqLvT9Ulcc8ezAcqBgm61SiJfGRQyL0iCExK4fwHICENxvpydD0HlSo8
+ JTR5fr9bUmA0VQBnGPwcDVRpuRlZAQSmlPn8JkWYF2dRNrWRNVfRtqfZl+4WNMXF7Z/mfJd2K
+ X+ictta/M9xetfBlPkFgw30Pzl07D//L0YE3WHKeQBWbAISUONrkKY7vL9YVRAOIGy0t6qNJJ
+ rJZG9T+7iIizutThoFwDIQqsPT5BJFYNSQuID263RedoDJeFhOtPGM0bU1VjD/4yLrjdGz43c
+ HzO9ZsQufDPD/RRY0VCyUdQx0N8CbITr9APysms4JrLjk7zkEQsE6TYBYwVv/Es3jXNf8SsIx
+ VLuUc434/BZ5eSFfmRM2/OYmAR7qs23/x0BCmmmfd9d+oAIbK75yDGIcBpvkN2LPBWjMKDQpG
+ bkw6pRzD9WIQusoltwV1WVx0etwsNej9TKVrh38giJSNZFO+UPEF2g5rlmDJLNoE2P8ljC59Z
+ hYsAApPP6JC7xxZUe5idvTvSQPhnKunr2pEsZOrN6oAWPY6tBSQfPxcRtgm6MmhFN0xhhTkAt
+ ieCABcbOS3OanlLovX5JWBv0giw/r3vh25oTvVLcOfgw0Fj8K5xaG7AdK3MtcgMaVGviWkULv
+ GlJRXMTyqSM+B7SamJlS4kn2GCY8oCBeyz1V2+EHesFuYYWkiF6h5SksRmWgUgmeDXGaVbfIF
+ Uf2hH7wzGGdoig5mMGKXjxNeWzSPvV7cYhs6Z/OW86wQiUF+ctrI8vOSLy+KjMPNrnmuSEhQG
+ cYeBn3m1TlK/DDOv0EwEiZeasgAhCrg91gQ00+MlwiAD5pHthgUyFc7sZGNrNn24pb6i+MnvZ
+ Xg70wHAsP+KGXS0aLoOUzO3eRbNA3ZQdIpEr41H1Z60JheUgsQNdf3A4Z0iHpPwihHOhIco11
+ xj81Vr/BEmi4ZU+cr3xVzYriXMpvRxNxI3ogNVuFQ8SH8Ckq8//SWQ4GqYQDoFtB4+d83lh3/
+ E+tGDT1Wt4uTHfIEqiJ0U6rRtsFHjeKO0nA1ijV3g1n1H2tJgkSTlEcOtK2iQZe1SmQtMkgTY
+ siAiU=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -76,61 +76,148 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-On Sat, 3 Aug 2019, Pratyush Yadav wrote:
+On Sun, 4 Aug 2019, Pratyush Yadav wrote:
 
-> On 8/2/19 10:17 PM, Junio C Hamano wrote:
-> > Pratyush Yadav <me@yadavpratyush.com> writes:
+> On 8/4/19 2:04 AM, Johannes Schindelin wrote:
 > >
-> > > All right, the patch in its current state can't fly. So what is
-> > > the correct way to do this? I see the following options:
+> > On Sat, 3 Aug 2019, Pratyush Yadav wrote:
+> >
+> > > On 8/2/19 6:09 PM, Johannes Schindelin wrote:
+> > > >
+> > > > On Fri, 2 Aug 2019, Pratyush Yadav wrote:
+> > > >
+> > > > > On 8/1/19 1:12 AM, Johannes Schindelin wrote:
+> > > > > >
+> > > > > > I would be _extremely_ cautious to base an argument on one
+> > > > > > particular setup, using on particular hardware with one
+> > > > > > particular OS and one particular repository.
+> > > > > >
+> > > > >
+> > > > > Agreed. That's why I asked for benchmarks from other people.
+> > > > > Unfortunately, no one replied.
+> > > >
+> > > > What stops _you_ from performing more tests yourself? There are
+> > > > tons of real-world repositories out there, we even talk about
+> > > > options for large repositories to test with in Git for Windows'
+> > > > Contributing Guidelines:
+> > > > https://github.com/git-for-windows/git/blob/master/CONTRIBUTING.md=
+#performance-tests
 > > >
-> > > 1. Add this as an option that is disabled by default, but people
-> > > who don't mind it can enable it. This is the easiest to implement.
-> > > But I leave it to you and Junio (and anyone else who wants to
-> > > pitch in :)) to decide if it is a good idea.
+> > > I thought the point was to not base all data off a single setup?
 > >
-> > I think this is a good first step.  As I said already, I am not
-> > convinced that "focus in" is a good heuristics for triggering auto
-> > rescan, and I suspect that you or others may come up with and
-> > replace it with a better heuristic over time.  During that
-> > experiment, it would be better to allow interested others to opt
-> > into the feature to help, while not disturbing ordinary users who
-> > are OK with the current behaviour.
+> > You misunderstood what I was saying: a single setup is bad, and you
+> > can make it moderately better by testing _at least_ with a
+> > moderately-sized repository [*1*] in addition to git.git.
+> >
+> > So yes, it would still not be enough to test with, say, the git.git
+> > _and_ the Chromium repository _only_ on your setup, but if not even
+> > you can be bothered to test with more than one small repository, how
+> > can you possibly expect anybody else to add more testing?
+>
+> All right, I'll see what repos I can test.
+>
+> But my internet is pretty slow and unstable, so my clone of the
+> Chromium repo failed mid-way multiple times. I assume we need to test
+> on a large index, so is it all right if I use
+> t/perf/repos/many-files.sh to artificially generate a large repo?
+
+Why do you ask me for permission to just try this? I feel very
+uncomfortable being put in such a position: I am not your manager or
+gate-keeper or anything.
+
+> > > [...]
+> > > > I wonder, however, whether you can think of a better method to
+> > > > figure out when to auto-refresh. Focus seems to be a low-hanging
+> > > > fruit, but as you noticed it is not very accurate. Maybe if you
+> > > > combine it with a timeout? Or maybe you can detect idle time in
+> > > > Tcl/Tk?
+> > >
+> > > Hm, I don't see a better alternative than file system watches.
+> > > Timeouts are a heuristic that can potentially be problematic.
+> >
+> > Let me stress the fact that I suggested a timeout _in addition_ to the
+> > focus event?
+>
+> Oh, my bad. I thought you suggested using timeouts exclusively.
+>
+> But I'm not sure I understand what you mean by "using timeouts in additi=
+on to
+> the focus event". My guess is that you mean we should activate a
+> refresh-on-focus-in only after git-gui has been out of focus for a certa=
+in
+> amount of time. Is my guess correct?
+
+I am _not_ telling you what strategy you should use. You really need to
+come up with hypotheses about what tell-tales for committable outside
+changes could be easy to detect. This is your patch, and your project.
+
+My suggestion about a time-out was to think a bit further than just mere
+Tk-provided events to detect whether the user might have changed
+anything outside of Git GUI that might make an automatic refresh
+convenient for the user.
+
+I do _not_ want to engage in this project, it is not my pet peeve.
+
+> > Yes, using a timeout on its own is stupidly problematic. That's why I
+> > did not suggest that.
+> >
+> > > If you do a refresh too frequently, you hog up the user's resources
+> > > for little benefit.
+> >
+> > Indeed. You want to find a heuristic that catches most of the cases
+> > where files were changed, while at the same time not even _trying_ to
+> > refresh automatically when probably nothing changed.
+>
+> Like I said before, the best way of doing that that I can see is file sy=
+stem
+> watches.
+
+That's not a heuristic.
+
+A file system monitor is doing a lot of work in this case, for dubitable
+benefit.
+
+Take for example git.git: Let's say that I run a specific test. It
+creates a directory under `t/`: the filesystem monitor triggers. It
+creates a repository in that directory: the filesystem monitor triggers
+_multiple times_. The test then performs all kinds of I/O, eventually
+removing the directory when all tests passed.
+
+Note that none of these filesystem changes correspond to anything that
+would update _anything in Git GUI during a refresh.
+
+Of course, this is something I did not mention before because I took it
+for granted that you would always try to weigh the benefits of your
+approach to the worst possible unintended consequences.
+
+> But maybe we can get reasonable performance with a combination of
+> timeouts and focus events.
+
+Please note that I would not be surprised if this heuristic _also_
+resulted in a lot of bad, unintended consequences. That's for you to
+find out.
+
+> > Footnote *1*: I don't expect you to test with the largest repositories=
+,
+> > as you are unlikely to have access to anything approaching the size of
+> > the largest Git repository on the planet:
+> > https://devblogs.microsoft.com/bharry/the-largest-git-repo-on-the-plan=
+et/
 > >
 >
-> All right. I'll look a bit more to see if I can figure something
-> better. I suggested using filesystem watches. I'll wait a bit to hear
-> from Johannes on what he thinks about it. He doesn't like the idea of
-> using Watchman apparently.
+> Ah yes, I read about it a while back on Reddit. Having a huge monolithic=
+ repo
+> sounds backwards to me. Using submodules sounds like a better idea, but =
+who am
+> I to judge. They probably have their reasons that I'm not aware of.
 
-It's not that I don't like the idea of watchman. What I don't like is
-the very limited number of scenarios where you can use watchman. It
-essentially boils down to... macOS.
+This statement just sounds to me as if you never have used submodules in
+any serious way. My experience is that software developers who tried to
+use submodules offer opinions that read very differently from that
+paragraph.
 
-=46rom what I can tell, watchman really works best on macOS, it might work
-well on Linux, and it is in an "eternal beta" on Windows because none of
-the active developers have access to (or need for support on) Windows.
-
-Also, using a filesystem monitor is quite a lot of overkill here, you
-only want to refresh the index smartly and pro-actively. Now you pile
-more and more complexity on top of the original patch, for little
-obvious benefit (and for added difficulties setting this up, because you
-can now no longer make this a default, as you have no idea whether
-watchman is installed or not, whether it works as intended or not if it
-is installed, and whether users will start to hate you for forcing this
-down their throats).
-
-I want you to take a step back, consider what problem you originally
-tried to solve, and then come up with the simplest solution you can
-possibly come up with. If your solution is not simple, reject it.
-
-I _could_ imagine, for example, that a focus-out event, followed by a
-configurable timeout (say, with the default being something like 10
-seconds, which seems to me like a sensible minimum number of seconds to
-change anything commit-worthy), could be used by a focus-in event to
-trigger a refresh (with a message in the status bar what is happening
-and why), and that that would strike a sensible balance between benefit
-and complexity.
+Strong opinions usually do not survive contact with open-minded exposure
+to reality.
 
 Ciao,
 Johannes
