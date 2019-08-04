@@ -2,83 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 569E31F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 14:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 235D51F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 16:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726332AbfHDOjb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Aug 2019 10:39:31 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:42413 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbfHDOjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Aug 2019 10:39:31 -0400
-X-Originating-IP: 1.186.12.38
-Received: from localhost.localdomain (unknown [1.186.12.38])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 1B049C0003;
-        Sun,  4 Aug 2019 14:39:27 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
+        id S1726481AbfHDQNo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Aug 2019 12:13:44 -0400
+Received: from mail-pg1-f169.google.com ([209.85.215.169]:46471 "EHLO
+        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbfHDQNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Aug 2019 12:13:44 -0400
+Received: by mail-pg1-f169.google.com with SMTP id w3so1208241pgt.13
+        for <git@vger.kernel.org>; Sun, 04 Aug 2019 09:13:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:subject:to:message-id:mime-version;
+        bh=3j/9V9Eg1plAFYvxbf9RMdDGjG5SzBUPGz0CvP/VKnU=;
+        b=XAJ27f6uvn/IRb7EtmfTToYjPFhmYpNjSfXcCaKyUJx/aA1yRlK+9en8pUg1yoS/dY
+         WGCylcna38MkgrsSS9SdS6oaBUcrCKm/03JmZrdLsS4MCZMKIM0jR4r4w2ArMYah3r7N
+         aCOj1efBGtCqOCReh4NZ+QHuseJjAI1EtAWFf0oUpuOUGm48zb5KC6ZIuI+PYxWH0CPG
+         ScHc0mxcK9HyRrSP91MbQT6gYkV6q2353VcPM305GI6hDW8cL6a/PjE93Fdga7W0VJmD
+         odWQmcRukH3wocE0cq3Jl0InPqv7btqtm41qqwHKJOFkz0ORopPU0RyCAg+OhC/Kc/aw
+         +OzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:subject:to:message-id:mime-version;
+        bh=3j/9V9Eg1plAFYvxbf9RMdDGjG5SzBUPGz0CvP/VKnU=;
+        b=rpVxkS9lfKwX/Vwy6FdbSdMXvWHdVifGa97P41we6uruk19nyzm/E/yg17II8N+ccM
+         GGfl+MFpeM92ovk6Yr3ODzua0ooBRmpHpgtKZjH9xMs76NGERTQJtQQsmYblZGKIYmnP
+         GCW7URemKTkLmDhl283ZyxlBrbUeYDVH68jQPfvF5NjkSNrVm67SYTiBaQyvHzH/tyUY
+         u4zpgiXh/JQY2SnRfQb9i7hBmOJuSAsfK28RJVNfEF+LZxnvmYM4fY1RurLxV5PUxA+9
+         y6Jc1BeeOPHphAJl9m46glEuqrgC+s5cmfX/97HSeHS9SUgovNrj3bi2owhncGTl04b0
+         hMpA==
+X-Gm-Message-State: APjAAAWehSoTLg37/s6segyN2F5JCDUAOVr4ZEu4jb6Eww54/sh3xkyw
+        OXvF6gp2ghbWVaZQX8XE5hfNo0VJQbs=
+X-Google-Smtp-Source: APXvYqwIUDKXHJDTIz07srVYdLbOjv1RDZjzhg9feMoU7XuVvKn6WylLh0LuDYWCmO4OHZiXLyhZ7w==
+X-Received: by 2002:a63:f048:: with SMTP id s8mr103546849pgj.26.1564935223019;
+        Sun, 04 Aug 2019 09:13:43 -0700 (PDT)
+Received: from [192.168.1.34] (c-24-130-165-243.hsd1.ca.comcast.net. [24.130.165.243])
+        by smtp.gmail.com with ESMTPSA id f19sm118344299pfk.180.2019.08.04.09.13.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 04 Aug 2019 09:13:42 -0700 (PDT)
+Date:   Sun, 04 Aug 2019 10:13:36 -0700
+From:   johnywhy@gmail.com
+Subject: Default Clone Dir?
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Subject: [PATCH] git-gui: Call do_quit before destroying the main window
-Date:   Sun,  4 Aug 2019 20:09:19 +0530
-Message-Id: <20190804143919.10732-1-me@yadavpratyush.com>
-X-Mailer: git-send-email 2.21.0
+Message-Id: <1564938816.2622.1@gmail.com>
+X-Mailer: geary/3.32.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the toplevel window for the window being destroyed is the main window
-(aka "."), then simply destroying it means the cleanup tasks are not
-executed like saving the commit message buffer, saving window state,
-etc. All this is handled by do_quit so, call it instead of directly
-destroying the main window. For other toplevel windows, the old behavior
-remains.
+hi,
+Is there a way to set default clone destination directory on linux?
+Currently, seems to clone to the active dir.
+-thx!
 
-Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
----
- git-gui/git-gui.sh | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 6de74ce639..6ec562d5da 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3030,8 +3030,23 @@ unset doc_path doc_url
- wm protocol . WM_DELETE_WINDOW do_quit
- bind all <$M1B-Key-q> do_quit
- bind all <$M1B-Key-Q> do_quit
--bind all <$M1B-Key-w> {destroy [winfo toplevel %W]}
--bind all <$M1B-Key-W> {destroy [winfo toplevel %W]}
-+
-+set m1b_w_script {
-+	set toplvl_win [winfo toplevel %W]
-+
-+	# If we are destroying the main window, we should call do_quit to take
-+	# care of cleanup before exiting the program.
-+	if {$toplvl_win eq "."} {
-+		do_quit
-+	} else {
-+		destroy $toplvl_win
-+	}
-+}
-+
-+bind all <$M1B-Key-w> $m1b_w_script
-+bind all <$M1B-Key-W> $m1b_w_script
-+
-+unset m1b_w_script
- 
- set subcommand_args {}
- proc usage {} {
--- 
-2.21.0
 
