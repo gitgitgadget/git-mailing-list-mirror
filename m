@@ -2,86 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC08B1F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 00:25:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A40711F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 00:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729354AbfHDAZ6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Aug 2019 20:25:58 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:36565 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729299AbfHDAZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Aug 2019 20:25:58 -0400
-Received: by mail-io1-f66.google.com with SMTP id o9so56615380iom.3
-        for <git@vger.kernel.org>; Sat, 03 Aug 2019 17:25:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uEsmPKavrZKTXvJ9aa8RvJ6lq9keZxxMCO9kV26MBI4=;
-        b=KbbujYUlSPT18xH6fe9xW3V1WUysCL01xJqbwuyKEzfbrSSe6zNThicQk8kLEd9U0v
-         bVYE24MYb1sF6SzPouIKh/f7mhzJJQ2R7Zosm5ikhRkLGfQSAFIkFg+WHUH/7IY5Kuj4
-         XD/xI7ddHFYhUhQ4Kzpa0t1xMNvgvuidIDSeDbZj4d79ci5Th1XQJeGg+yQ2G1f2bwOF
-         UVGAkD0gex35rB20JUdzDbMv5sg5WdfR8r4xUj1dQM7F4ZggK2UStRpUR2hU/vwu4Hoo
-         5pP8yDJV2yqL5lL8TTeDyl9M2OpdgAIURA0/H/jDB4lz4Tv4NAipSAkblzGHnQh4EzwE
-         FJDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uEsmPKavrZKTXvJ9aa8RvJ6lq9keZxxMCO9kV26MBI4=;
-        b=khkzB3M5zPy3PpL/VtFQs3zEa1WvYnJPWimS2qpEYYlPjMmuizMfsL86tqnzg2fdZm
-         2ijfZxlIqVL8xYpg8p7/oXYInHwArwhqslKpLuqjlReFBy44bVmLRE2eqjxDDF9pT5c0
-         SB5uLTjiKm+5kYV1+Poee7NzL4V1+J8uuqwWCv2UUSDHxzMjg5ur+4xRxaSYebATAaB9
-         iqI/b4Ep/SgqI82jmHkrNU7u1ptAaQklSEVDg7VU2u1bTgmNdqKbvKP1SSxfX07KajY5
-         Vims7bPilHdOQqnZn6ibL7lUfwXkeJ+fMJZKSS5To083QKtNXcyI1VVISHEBpPN9YDz1
-         g/gw==
-X-Gm-Message-State: APjAAAUXPgZDCdcb+qGPeuYQyWl8ODDCUcDRJZVWKBsqtDDPGqpDkCGj
-        onTmzp4bOM9UDxQ8tpjjyffSO/bvzhalqyaVr+I=
-X-Google-Smtp-Source: APXvYqyoqGNVwV6KYHzhc9WRm23Rt6D3HQlHW/Om80GJhZGMsar5Jo1XmxZVNIZXmnAWIxPr8qPAL8V1QUYR8i5UmXs=
-X-Received: by 2002:a5d:890d:: with SMTP id b13mr16658291ion.124.1564878357327;
- Sat, 03 Aug 2019 17:25:57 -0700 (PDT)
+        id S1729425AbfHDAiZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Aug 2019 20:38:25 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57282 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729420AbfHDAiZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 3 Aug 2019 20:38:25 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:49db:b3cb:1703:1c9a])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C08B86047B;
+        Sun,  4 Aug 2019 00:38:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1564879102;
+        bh=99Ps9nKjJlOcn2pQjA2aGPM11jIVwQjh3ONQqdtAQfw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=NRMp1A5W5eFidMFOl/edbzB9qfB4E1NEYfOpWZUHdqaWisib9EohNR+2FiwA6D32D
+         LMPmO/o5EVj/2t3jI4GD4S2cBSjokviUHydnD7drVaBVrSzHAZ3JAR0YCUd4R1+6DA
+         L7bJ4+8Tsgw6nWTr+8NOnTm/TNjK1Rb+oXdPwaE6G+i0MtzqOpL8YYmkuEJVEtip/z
+         keG4pEzMCPdN06owaysQ+HWKfC9krH7kM6R9jobESVL7zg0T15hiSYdnGvuc6PQYsi
+         F/Tq2uL+pU0Ows1zetz5XtD6DAzJAeeczlWtLTtOvOdlpgMOB8EH+S5EDN7NR8pwIo
+         wVgcAMfmWBwrY0s1oWshGuqucWVvS20HyrREzqgxa+tyY35TDmTkzSqCKuciE9GfoC
+         KJN6Tl0BtfkMkN4RKUnJMaUIJL7OZ61a/Bc65iqp+7UOZZ46dfH2mfTPLjmB8hK2Zz
+         2whiheyZFT1DSkyVbs6JUh9CasQT3Dh1QUnWhLxLxHw/9qOXT0q
+Date:   Sun, 4 Aug 2019 00:38:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Port git to Plan 9
+Message-ID: <20190804003816.GE118825@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.305.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20190728235427.41425-1-carenas@gmail.com> <20190729105955.44390-1-carenas@gmail.com>
- <nycvar.QRO.7.76.6.1907311426290.21907@tvgsbejvaqbjf.bet> <87o91a5k0d.fsf@evledraar.gmail.com>
-In-Reply-To: <87o91a5k0d.fsf@evledraar.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 3 Aug 2019 17:25:45 -0700
-Message-ID: <CAPUEsphQVjptjZVh2mmXWdDj4rEohgtWw5UWUmN_qKc0XC9psg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] grep: allow for run time disabling of JIT in PCRE
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        gitster@pobox.com, dev+git@drbeat.li
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cVp8NMj01v+Em8Se"
+Content-Disposition: inline
+In-Reply-To: <pull.305.git.gitgitgadget@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 31, 2019 at 7:57 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> What hasn't been supported is all of that saying "yes, I support JIT"
-> and the feature then fail whaling. I had not encountered that before.
->
-> So far that seems like because Carlo just built a completely broken PCRE
-> v2 package, so I don't know if that's worth supporting on our
-> side. I.e. this isn't something I think could plausibly happen in the
-> wild.
 
-since you are in Debian please follow the instructions here:
+--cVp8NMj01v+Em8Se
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  https://wiki.debian.org/SELinux/Setup
+On 2019-08-03 at 23:52:08, KADOTA, Kyohei via GitGitGadget wrote:
+> I ported git, and git subcommands only written in C to Plan 9. This pull
+> request contains patches for existing codes, and new files to build git in
+> Plan 9.
+>=20
+> All build options such as NO_PERL are not supported yet, and also some git
+> subcommands written not in C is not available yet. But git can synchronize
+> to remote repository with git pull and git push via HTTPS.
+>=20
+> This pull request don't contain a part of Git toolchain for example
+> git-credential-store, etc. So I'm going to port other parts of Git toolch=
+ain
+> too in the future.
 
-no need to rebuild git or pcre (but to enable selinux will need to
-reboot twice), then type as root the following:
+This series seems to build a whole new build system that uses Plan 9
+tools. Typically the way ports to non-POSIX platforms (such as Windows)
+have been handled is that the Unix tools, including GNU make, have been
+ported to those platforms, and the POSIX (or POSIX-ish) environment used
+there.
 
-  # set enforce 1
+I'm concerned that by introducing a whole bunch of new, Plan 9-specific
+build code, we're going to have it fall behind with features or bug
+fixes, because none of the main developers test on Plan 9, and most
+contributors will not have the Plan 9 skills or systems to maintain the
+code.
 
-Carlo
+In addition, the editor used by git commit and other commands invokes
+"sh", but you've set this to "rc". That's completely different from the
+way that all other environments work, and it means that Git on Plan 9
+operates in a totally different, incompatible way there. We also use a
+POSIX shell for the testsuite, and we rely on it quite heavily. rc is
+not going to cut it there.
+
+Plan 9 has a POSIX environment, and I think it might be a better idea to
+require that as a condition for building and running Git. It will likely
+be a lot easier, at least.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--cVp8NMj01v+Em8Se
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1GKPgACgkQv1NdgR9S
+9oubCw//Yx45/jOjzOlY1d7uPf1xhLoAm6gEcYD23X799GewNWKYJfAvWOJUX/4Q
+8aWWgvcqyI+haQxNb9LTeeJIVnBTaW9NfjoLMFP1Cc7tDMMAyg2vOukaWjq517G9
+6iM66aq3ZbeeZhXG078JPj83/1qs9Rs4uVRiPXgjN1WTk3cPE1fREFOmNEh23ldA
+dUE2ij57uVfb6t1NNiCMUEqofTnSODsC7alZdUhlc4I8dp8pnK1o4JOitnQFGOD3
+LlYNzsO0Gt9/+NosWWE7m70l6GkbYPIw6RYgpBn4Ehmf+6ut2fqsb3JcgsiS54F6
+NCLwUK3g1PZeQypcm9vnNMZ78bljsl1oqAEfOeeXSsx6L9lCASWAqgUylsftw7RS
+0h9V2co75ro5choSSezMod0TV+zIB0qKv4S7SswYXLmMp3X+VDySc/iC7Dn33/bq
+Vqhh7oTKt+C+7p57chKFoovdKKFnP0k2o66VUv55UDZEosO8iKgL7CcRdDPkNOST
+xSw3trAOQBRFWlbwKOiUx0cslA2rq1CSyYEFeBNNd3cBELnZ9ah+Wtqsy3wqtQwT
+atbkIY9nJkgieqa2ggQKLMBzkKj5ovaXH6HAwCc0/HWOAj6D5mIZ5Tml71Ldwdum
+ZV6aV1BidhX89SOZXls8RcSNEgCqEUG1k5m6OL3y8QJpoUQDYz4=
+=/4Uy
+-----END PGP SIGNATURE-----
+
+--cVp8NMj01v+Em8Se--
