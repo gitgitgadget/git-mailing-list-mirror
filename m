@@ -2,106 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D771D1F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 20:22:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A2361F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 21:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbfHDUWh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Aug 2019 16:22:37 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:37358 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726346AbfHDUWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Aug 2019 16:22:36 -0400
-Received: by mail-pg1-f193.google.com with SMTP id d1so5745579pgp.4
-        for <git@vger.kernel.org>; Sun, 04 Aug 2019 13:22:36 -0700 (PDT)
+        id S1726709AbfHDVPe (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Aug 2019 17:15:34 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37007 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726561AbfHDVPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Aug 2019 17:15:34 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 19so38523302pfa.4
+        for <git@vger.kernel.org>; Sun, 04 Aug 2019 14:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fV43OGnSW75buhef5Zb7N5kIG+kriotREtBLnwhsydc=;
-        b=k+oCnwMucsQqrLDRepOAEVaSileLVLBYQBaHXH94oKDypwtpIOWZzNjSvObKUtmqnw
-         Hq0379yEE7bd5vII6Sf8Dwq662v1CmwqeYcFyo3hQ7afQ7EBt6J/hfjVlV8hpdzuKuci
-         4PRiF12wbywS9VcwlyPLUaXVgjAJsR3vApf6+oYGx/eQD9hDIp8NEWA8WVNP258uOxXF
-         LiCfdG1vqPyhFdY2j1l1oMiqyvyIt2ZrlpQyjsRTwSvrIDYUvDi4WfhxuaRWp/AjnuT8
-         GO75bbcSylOXXMhiIXyebrBRy0QIHgrKkMz3Yu6BGnSPRQ7SIktw4CoztCn2aqepQe3y
-         Dvdw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nsvLJkhzZourv4Yrn2BjUScX9fxqb8K5aONPUNUQhlw=;
+        b=VNW5/uD+jTv33KBMJRji0LMqWTrT2dd3Td1PXiSEqfDsJyo/nPc6AGWecp/4Zami2p
+         nL1VJ1h7yr6TdNvNjk8Sd0zUtmvDptf/eTXKGQ/KUisY3Io2ZD/++E/Y60fXo/WW3m4b
+         Y+4eixJ/oobB3lieD2F19WRjIwdvAa3AbCtciC+RsGFJboeORA1CldAwBS+7V3L8Igvc
+         1yCRbqdFPgWn/HxUrFm5y1yDd1HRFk2Gy26QHMR/UYU2CMTJYrM5tKnfweoq8aeVhN/c
+         MAF7hgYeiPg1SeMLHWuBUfErGGx2swhxU6UC1SQE6iQkd+eNsCfh8xV4gUZohd1OSTit
+         5I2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fV43OGnSW75buhef5Zb7N5kIG+kriotREtBLnwhsydc=;
-        b=bw3MPPzLUX+1PmqzWLglJgj2EZ63X5A3K1DfPJoXG+6YqzUDlsnsR4Fm0POpRr8ANS
-         zIatxgKeVuK8pCQkKVA09lV5SBBRdBDqNSNjYDU8qj3lQcIP+dt0wijtm6nsDad25VSJ
-         87qit5/uG6b8CFoZW0W8m3vuQ8ICMOEhXgKbfApAObVv6Kw4HGpKVsXo/bTLSIxiH/rP
-         93kAciLX1Nzm25TeL8B1MLX2oNwFX4AYNnrgiT5PIpatvbzqzitzyKoc/El4W++gFRCM
-         i2aWiE24rcxww+HdENIq2KrguT9SkperKErWv+3lx4QcU4k5dRp3mcFcRmrOEJYDtYHc
-         Ydiw==
-X-Gm-Message-State: APjAAAWyO7mnrzbsR83vRNXughF0ItP8ce0Wf5fQfwo9VHCOSVJtS+ff
-        5HwodvdqI0otETIRLuRIx3s=
-X-Google-Smtp-Source: APXvYqwmgUH7ZXcEfAfy9yOfRjGxUFXJykSP/5B8w3U5Wq475BWWGc0FSrjf0RHDJ7u20F1/DY2KGw==
-X-Received: by 2002:a17:90b:8cd:: with SMTP id ds13mr14035127pjb.141.1564950156025;
-        Sun, 04 Aug 2019 13:22:36 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id h26sm86282575pfq.64.2019.08.04.13.22.35
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 04 Aug 2019 13:22:35 -0700 (PDT)
-Date:   Sun, 4 Aug 2019 13:22:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Kyohei Kadota <lufia@lufia.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "KADOTA, Kyohei via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Port git to Plan 9
-Message-ID: <20190804202233.GB258325@google.com>
-References: <pull.305.git.gitgitgadget@gmail.com>
- <20190804003816.GE118825@genre.crustytoothpaste.net>
- <CAFMepcm6QVH+5H6on2hoWiMXd=Zoyi5MYP1GAt0WwixZN9oE_Q@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nsvLJkhzZourv4Yrn2BjUScX9fxqb8K5aONPUNUQhlw=;
+        b=YmTgU75F1uxfCTF0UrysXuOQEn6TfI2T9MeVDIViz4m9urfo+XcsF4DM5M+mK3u/S6
+         QtXeaC9DROq6cqA7a9i2r2o1RR91JIhdiyrucO+4VEXOcnU5Xy+PYfnBsb/OHJpx5w8i
+         AC16Zs4V04SwGNc6dlenHyYe8Ef9K4zHZnzYQkdedCwfJWZuJHYyUHqXv3I1JWTMYE3O
+         gY4KlIICeNVesDBZTTvriKOyL4B6CNApyISuyvwNfb0j1xs3blLVo7KnyftbfqPLJPg7
+         bDDowMrIRfCXIeP5G7A+gDctQD1HKDZu4t0/Fq+bMQpttVZnrco+E/aik+VQL4o/DfBu
+         hdgQ==
+X-Gm-Message-State: APjAAAX51kvstiaw5fR2BxgpV0sXfX2vVphGiPoT8xytFDaV5bcUH7sf
+        l7JpgkuPI1vveYUTOchUvEXLsASdbhPdHg==
+X-Google-Smtp-Source: APXvYqyd/BigPK1RW/v4WWPcuO2Nrcn3wCga1lF59VmqwWm5UNBcUqEerskbkdaMHDIzl8SxkP9XoA==
+X-Received: by 2002:a17:90a:1c1:: with SMTP id 1mr15012511pjd.72.1564953333091;
+        Sun, 04 Aug 2019 14:15:33 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id o130sm139031138pfg.171.2019.08.04.14.15.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 04 Aug 2019 14:15:32 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     frekui@gmail.com, michael.osipov@siemens.com,
+        ibrahim.vanak@hpe.com, matheus.bernardino@usp.br,
+        vleschuk@accesssoftek.com
+Subject: [RFC PATCH 0/2] grep: make threading smarter
+Date:   Sun,  4 Aug 2019 14:15:07 -0700
+Message-Id: <20190804211509.39229-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFMepcm6QVH+5H6on2hoWiMXd=Zoyi5MYP1GAt0WwixZN9oE_Q@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+833e3df171 (pack-objects: Add runtime detection of online CPU's, 2008-02-22)
+added the capability to check the number of online CPUs at runtime to do
+better threading, so use that as well with grep.
 
-Kyohei Kadota wrote:
+Testing with a large (more than 4) number of cores and no grep.threads
+configuration in real hardware encouraged, to confirm that no other
+bottleneck is preventing the additional threads to improve performance.
 
-> I think it is possible to replace rc with ape/sh, ape/sh is POSIX
-> shell in Plan 9.
->
-> However Plan 9 don't have recent versions of Unix tools,
-> such as gcc, g++, autotools, gmake or perl,
-> so it is VERY hard to use Makefile instead of mkfile.
+If platform specific testing shows degradation (specially with HP-UX),
+make sure that the right number of CPUs is reported by :
 
-The default Git build doesn't use autotools.  See INSTALL for more
-details.
+  $ ./t/helper/test-tool online-cpus
+  4
 
-What version of gmake is available for Plan 9?  I wouldn't expect
-Git's build system to be super demanding as far as recent "make"
-features go.
+There are additional cleanups possible in the grep code but had left it
+out of this RFC to avoid confusion and make the change in patch 2 as
+straight forward as possible.
 
-So I wonder whether it would make sense to do something like the
-following:
+There is also a chance that the online_cpus() function will be updated
+as it predates POSIX and might be associated with one known performance
+issue in HP-UX[1]
 
-- add entries to config.mak.uname to set the compiler e.g. to 6c
-  when appropriate
+Lastly the performance numbers point to deficiencies in kwset and the
+compat/regex code that will need to be addressed independently.
 
-- make appropriate compatibility fixes in git-compat-util.h
+Carlo Marcelo Arenas Belón (2):
+  p7810: add more grep performance relevant cases
+  grep: make default number of threads reflect runtime
 
-- add any necessary helpers to the compat/ directory
+ Documentation/git-grep.txt |  2 +-
+ builtin/grep.c             |  3 +--
+ t/perf/p7810-grep.sh       | 25 +++++++++++++++++++++++--
+ 3 files changed, 25 insertions(+), 5 deletions(-)
 
-- use gmake to build
-
-Would that work?
-
-Thanks,
-Jonathan
+[1] https://public-inbox.org/git/TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM/
+-- 
+2.23.0.rc1
