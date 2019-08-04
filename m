@@ -2,124 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 392C11F732
-	for <e@80x24.org>; Sun,  4 Aug 2019 07:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E54FC1F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 11:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725932AbfHDHn3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Aug 2019 03:43:29 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39012 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbfHDHn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Aug 2019 03:43:29 -0400
-Received: by mail-io1-f66.google.com with SMTP id f4so161249241ioh.6
-        for <git@vger.kernel.org>; Sun, 04 Aug 2019 00:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=m1L44YB6V78kLfBDieBdYHW3V3kLFAgGm5uIlWcXXqc=;
-        b=e33gYbG26vY8Og0IxWe73JurQJjcSleWC1GsEmhBrArcFSovSKe8/Jk7jGNmrCAzsG
-         99LfCpun+PJgddh201wI5sUH9IEAI+3nfud/ZAK2GHcpMdWCgBDrQOTjJ4u3/xZB5Pzi
-         Ji+1DdLfM5OwZxM8EqGrddUD9ZnAHvoI7xk2aI8ZCvj8I+D716bBXqwt2ogOmdI6ifC/
-         HgpKrfgRlHO1avpKZWwFRO+U7VAHgtB+ZqmDbw0gLYTbQUkglQc0klMOoro3VKFwqgiR
-         JDD070Cx/i9tKTq3+nY/r2V0EDamgg97aeaYtj4T+j+zXJa4zsd0ipW37Y2pgv/OLa6O
-         bDrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=m1L44YB6V78kLfBDieBdYHW3V3kLFAgGm5uIlWcXXqc=;
-        b=V1lGvUydtzi7qMYLNxhlKK2XEabV0Y6IMMZnl2oPz13in8RkYEXvZSFbiiH3eoxNoP
-         c4zTP4XIJZITlSjaieJxq58HlJoM5Njs64Wkq5gCtYuLAdeCbE6ag423XEWMqOskzIJ+
-         sVCZ4Xw/QIGkXTA9uPrxanzZIIavyeXvz7yTCZgaSIgX0zgp5VXjRCPulDAAcxK1lVUi
-         v2Dlg7B//3g6XpSLv7EDZcbRFgdFxKfrqaghBj5EitusVyY0h8GFRlgc9ZonD3JoRjI/
-         1uVsAk6nPoSfmUqR4TisSrq7+QYTTEJrtSYwmTkqE1BySNaoNxg/Sb2nQ3h/m7lQf9mN
-         NxGw==
-X-Gm-Message-State: APjAAAUEmmX7V5TgZFjiqrcVf/5KRIfxUls3Hcjsc/DYDWY5459GVcT0
-        X4DJACQzL7uhGrhOv6q/kTrSk1khiidrYETnMT8xoVSGIOs=
-X-Google-Smtp-Source: APXvYqyeNTSP+F0VsgUUo6dP+PGECvZFz2YNShZRc9ZsIuaVOKQsrFMcS6pAp4WO4IPld5YkTjWJoIe8ZxX8YSeucoM=
-X-Received: by 2002:a5e:cb43:: with SMTP id h3mr6432373iok.252.1564904608362;
- Sun, 04 Aug 2019 00:43:28 -0700 (PDT)
+        id S1726017AbfHDLB4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 4 Aug 2019 07:01:56 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:58622 "EHLO smtp2-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725930AbfHDLB4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Aug 2019 07:01:56 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 4A3A42003BE;
+        Sun,  4 Aug 2019 13:01:52 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v2] l10n: reformat some localized strings for v2.23.0
+Date:   Sun, 04 Aug 2019 13:01:51 +0200
+Message-ID: <5200616.dDItsc6b64@cayenne>
+In-Reply-To: <20190803234522.GA5417@sigill.intra.peff.net>
+References: <20190730033512.7226-1-worldhello.net@gmail.com> <20190803195907.3124-1-jn.avila@free.fr> <20190803234522.GA5417@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <20190729105955.44390-1-carenas@gmail.com> <20190804031409.32764-1-carenas@gmail.com>
-In-Reply-To: <20190804031409.32764-1-carenas@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sun, 4 Aug 2019 00:43:17 -0700
-Message-ID: <CAPUEspjOtzFxDLrQzLLU7+Q6Z6V8P0=qNrH2NrOzL7Q884krrQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v3] grep: treat PCRE2 jit compilation memory error as
- non fatal
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, gitster@pobox.com,
-        l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PROs:
-* it works (only for PCRE2) and tested in OpenBSD, NetBSD, macOS, Linux (De=
-bian)
-* it applies everywhere (even pu) without conflicts
-* it doesn't introduce any regressions in tests (tested in Debian with
-SElinux in enforcing mode)
-* it is simple
+On Sunday, 4 August 2019 01:45:22 CEST Jeff King wrote:
+> On Sat, Aug 03, 2019 at 09:59:07PM +0200, Jean-Noël Avila wrote:
+> 
 
-CONs:
-* HardenedBSD still segfaults (bugfix proposed[1] to sljit/pcre)
-* warning is noisy (at least once per thread) and might be even
-ineffective as it goes to stderr while stdout with most the output
-goes to a pager
-* too conservative (pcre2grep shows all errors from pcre2_jit_compile
-should be ignored)
-* no tests
+> > -			   N_("where the checkout from")),
+> > +			   N_("where the checkout is from")),
+> 
+> I think your original "where to checkout from" is better.
+> 
+> As a native speaker, "where the checkout is from" implies that checkout
+> is a noun that is being described. But I think we want checkout to be a
+> verb (because we are talking about the operation), and the option tells
+> Git how to do that operation.
+> 
+> (I agree the original "where the checkout from" is nonsense).
+> 
 
-Known Issues:
-* code is ugly (it even triggers a warning if you have the right compiler)
-* code is suspiciously similar to one[2] that was rejected, but
-hopefully commit message is better
-* code is incomplete (PCRE1 has too many conflicting changes in flight
-to attempt a similar fix)
-* there are obvious blind spots in the tests that need fixing, and a
-lot more testing in other platforms/architectures
-* git still will sometimes die because the non fast path has UTF-8 issues
 
-I still think the pcre.jit flag knob might be useful to workaround
-some of the issues detailed in CONs but probably with a different
-definition:
-unset -> fallback (try JIT but use interpreter if that didn't work)
-false -> don't even try to use JIT
-true -> print warning and maybe even die (if we really think that is useful=
-)
+Oh. OK.
 
-some performance numbers below for the perl tests
+> > diff --git a/builtin/fetch.c b/builtin/fetch.c
+> > index 53ce99d2bb..0e8760e5d4 100644
+> > --- a/builtin/fetch.c
+> > +++ b/builtin/fetch.c
+> > @@ -850,6 +850,15 @@ static int iterate_ref_map(void *cb_data, struct object_id *oid)
+> >  	return 0;
+> >  }
+> >  
+> > +static char warn_show_forced_updates[] =
+> > +N_("Fetch normally indicates which branches had a forced update, but that\n"
+> > +   "check has been disabled. To re-enable, use '--show-forced-updates' flag\n"
+> > +   "or run 'git config fetch.showForcedUpdates true'.");
+> 
+> This one isn't a typo fix, right? It's just putting the two warning()
+> calls into a single message. I can see how this would be useful for
+> translators, but note that the output will be different. The original
+> would be something like:
+> 
+>   warning: Fetch normally indicates...
+>   warning: To re-enable...
+> 
+> where now we'd get:
+> 
+>   warning: Fetch normally indicates...
+>   check has been disabled...
+>   or run 'git config...
+> 
+> which might be a bit harder to read because the wrapped lines lose the
+> prefix. For advise() we nicely pick out the newlines and prefix each
+> line individually, but warning(), error(), etc, don't do that. Maybe
+> they should.
+> 
+> That's too big for this late in the -rc cycle, I think. In the meantime,
+> I'm not sure which (the original or your patch) is the least-bad
+> solution. :)
+> 
+> This change (if I am right that there's no actual typo fix) should
+> perhaps be in a separate patch from the earlier hunk, though.
+> 
+> -Peff
+> 
 
-with JIT enabled (in non enforcing SELinux)
+This one is not about typos.
 
-Test                                            this tree
----------------------------------------------------------------
-7820.3: perl grep 'how.to'                      0.56(0.29+0.60)
-7820.7: perl grep '^how to'                     0.49(0.29+0.54)
-7820.11: perl grep '[how] to'                   0.54(0.39+0.51)
-7820.15: perl grep '(e.t[^ ]*|v.ry) rare'       0.60(0.45+0.58)
-7820.19: perl grep 'm(=C3=BA|u)lt.b(=C3=A6|y)te'          0.58(0.30+0.61)
+My original fix was more concerning the second sequence, where the sentence is broken in the middle, simply for better rendering but this does not make sense either, because the lines are too long anyway.
 
-with "fallback to interpreter" (in enforcing SELinux)
+I guess that in most languages, a sentence can be broken into two propositions by a coordinating conjunction, but it may not match the English structure.
 
-Test                                            this tree
----------------------------------------------------------------
-7820.3: perl grep 'how.to'                      0.64(0.59+0.56)
-7820.7: perl grep '^how to'                     1.83(2.91+0.56)
-7820.11: perl grep '[how] to'                   2.07(3.33+0.61)
-7820.15: perl grep '(e.t[^ ]*|v.ry) rare'       2.89(4.91+0.66)
-7820.19: perl grep 'm(=C3=BA|u)lt.b(=C3=A6|y)te'          0.78(0.86+0.55)
+Is it so important that the lines of warning all start with a "warning:" prefix?
 
-[1] https://github.com/zherczeg/sljit/pull/2
-[2] https://public-inbox.org/git/20181209230024.43444-3-carenas@gmail.com/
+JN
+
+
