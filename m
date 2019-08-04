@@ -2,69 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235D51F731
-	for <e@80x24.org>; Sun,  4 Aug 2019 16:13:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9F8B1F731
+	for <e@80x24.org>; Sun,  4 Aug 2019 17:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbfHDQNo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Aug 2019 12:13:44 -0400
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:46471 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbfHDQNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Aug 2019 12:13:44 -0400
-Received: by mail-pg1-f169.google.com with SMTP id w3so1208241pgt.13
-        for <git@vger.kernel.org>; Sun, 04 Aug 2019 09:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:subject:to:message-id:mime-version;
-        bh=3j/9V9Eg1plAFYvxbf9RMdDGjG5SzBUPGz0CvP/VKnU=;
-        b=XAJ27f6uvn/IRb7EtmfTToYjPFhmYpNjSfXcCaKyUJx/aA1yRlK+9en8pUg1yoS/dY
-         WGCylcna38MkgrsSS9SdS6oaBUcrCKm/03JmZrdLsS4MCZMKIM0jR4r4w2ArMYah3r7N
-         aCOj1efBGtCqOCReh4NZ+QHuseJjAI1EtAWFf0oUpuOUGm48zb5KC6ZIuI+PYxWH0CPG
-         ScHc0mxcK9HyRrSP91MbQT6gYkV6q2353VcPM305GI6hDW8cL6a/PjE93Fdga7W0VJmD
-         odWQmcRukH3wocE0cq3Jl0InPqv7btqtm41qqwHKJOFkz0ORopPU0RyCAg+OhC/Kc/aw
-         +OzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:subject:to:message-id:mime-version;
-        bh=3j/9V9Eg1plAFYvxbf9RMdDGjG5SzBUPGz0CvP/VKnU=;
-        b=rpVxkS9lfKwX/Vwy6FdbSdMXvWHdVifGa97P41we6uruk19nyzm/E/yg17II8N+ccM
-         GGfl+MFpeM92ovk6Yr3ODzua0ooBRmpHpgtKZjH9xMs76NGERTQJtQQsmYblZGKIYmnP
-         GCW7URemKTkLmDhl283ZyxlBrbUeYDVH68jQPfvF5NjkSNrVm67SYTiBaQyvHzH/tyUY
-         u4zpgiXh/JQY2SnRfQb9i7hBmOJuSAsfK28RJVNfEF+LZxnvmYM4fY1RurLxV5PUxA+9
-         y6Jc1BeeOPHphAJl9m46glEuqrgC+s5cmfX/97HSeHS9SUgovNrj3bi2owhncGTl04b0
-         hMpA==
-X-Gm-Message-State: APjAAAWehSoTLg37/s6segyN2F5JCDUAOVr4ZEu4jb6Eww54/sh3xkyw
-        OXvF6gp2ghbWVaZQX8XE5hfNo0VJQbs=
-X-Google-Smtp-Source: APXvYqwIUDKXHJDTIz07srVYdLbOjv1RDZjzhg9feMoU7XuVvKn6WylLh0LuDYWCmO4OHZiXLyhZ7w==
-X-Received: by 2002:a63:f048:: with SMTP id s8mr103546849pgj.26.1564935223019;
-        Sun, 04 Aug 2019 09:13:43 -0700 (PDT)
-Received: from [192.168.1.34] (c-24-130-165-243.hsd1.ca.comcast.net. [24.130.165.243])
-        by smtp.gmail.com with ESMTPSA id f19sm118344299pfk.180.2019.08.04.09.13.42
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 04 Aug 2019 09:13:42 -0700 (PDT)
-Date:   Sun, 04 Aug 2019 10:13:36 -0700
-From:   johnywhy@gmail.com
-Subject: Default Clone Dir?
-To:     git@vger.kernel.org
-Message-Id: <1564938816.2622.1@gmail.com>
-X-Mailer: geary/3.32.2
+        id S1726369AbfHDRUQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Aug 2019 13:20:16 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57294 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726332AbfHDRUP (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 4 Aug 2019 13:20:15 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:49db:b3cb:1703:1c9a])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6E1CF6047B;
+        Sun,  4 Aug 2019 17:20:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1564939213;
+        bh=vJKVDkE/7M6B5vDBDy61sDbWkOMwvLKQq7BVdWAZgMY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=o6MTB+tAOK43ezpdpg6/Mqx5QTXtxu67HFmtXWZctMJ5JS4vvTrngpF7ZRO6fVvb4
+         I8XTnWiGOBYNY/6xdCl9sIBCxk26jyel1OXGFUTkA3tmMzSmcTEJo0QpoBpcr4h7EI
+         PH3+WkMXbxXBfRHtvO4+thoevQshZmeKCzp/ecHJJuasUeuN6gBpUlGuqKbPFnuz0Q
+         hx1qrTtBznn5slJvhggLbB7ut7JpSVYm64JnWwmd8Gd2K70nt5o5f4mlt8NwmtwRJE
+         cJgNWkotKQv9eIurT3HN3o4goZn0ugqbO6GNX2+e2Q23Ghs5f9TszLD2h808n3wtpY
+         +nDDKYfFZefo9fdHTvX0JQMM/yYPZLEHeC2TQgPY0+q+IprIs5qSfH6+O6l/27arJb
+         Iz+/X2Q/H+j0EsbiugVE1UtCV+pmVam3hJi4DAvDNC+zLeRjN9ZdwimpK2ScUAlCmP
+         udINLvBvrddQmGp/oJJBkodCaJ5wJjBVsipaUzt9NdDKxMwseQm
+Date:   Sun, 4 Aug 2019 17:20:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     johnywhy@gmail.com
+Cc:     git@vger.kernel.org
+Subject: Re: Default Clone Dir?
+Message-ID: <20190804172008.GG118825@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        johnywhy@gmail.com, git@vger.kernel.org
+References: <1564938816.2622.1@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="mGCtrYeZ202LI9ZG"
+Content-Disposition: inline
+In-Reply-To: <1564938816.2622.1@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hi,
-Is there a way to set default clone destination directory on linux?
-Currently, seems to clone to the active dir.
--thx!
 
+--mGCtrYeZ202LI9ZG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2019-08-04 at 17:13:36, johnywhy@gmail.com wrote:
+> hi,
+> Is there a way to set default clone destination directory on linux?
+> Currently, seems to clone to the active dir.
+
+It sounds like you want to always clone repositories to a single
+directory. git clone doesn't have a configuration setting to do that,
+but you can specify the directory you want to clone. For example:
+
+  git clone https://github.com/git/git.git
+
+would create a directory "git" under the current directory, but you
+could also write the following:
+
+  git clone https://github.com/git/git.git ~/checkouts/git
+
+to create the repository in ~/checkouts/git. You can also do this:
+
+  git -C ~/checkouts clone https://github.com/git/git.git
+
+which will change to ~/checkouts and then perform the clone there. "-C"
+says to change directory to the given location before running the
+command; it must be specified before the "clone" command.
+
+If you want to automate this, you can create an alias:
+
+  git config --global alias.myclone '!f () { git -C ~/checkouts clone "$@";=
+ };f'
+  git myclone https://github.com/git/git.git
+
+and then your alias will always clone to that directory.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--mGCtrYeZ202LI9ZG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1HE8gACgkQv1NdgR9S
+9ovs/hAAuJ80HpLEptYFJ6aTC6YAIZWEQyTZCTcMjIahJRoUSWWFwTxerStpLWWw
+QwyQy9yXNCgzAnse+8MNNA+/mtIxU1aBPxEq7qT89KmFZewsiFXsUkJX87PtmDnA
+rSRz2VkKPFLYv330/zdVciZ6CkLond9QVuKvVJ0tp4b+W3Qu2uAWjq80JOuV2Qht
+9AkREnguwtmjp8LqTITlItgF4DGZaUgjqOsmsTbzriHo0R79RNw3MmtSa9wpFDuJ
+Xu/0nMWdlm7AK1uvhWaCV/Pf7TKURDPLc8ms6hL5s1efnDC6Wy37xG7mfUamHOJW
+4+BPfFyGk380P25JeglZ1GYkJNP1buI2OK+TCPU9LRYZ6RmFcmNMymQFeOuchSHF
+ytqVGWnwMZmluFzpFcej9kwFt9pxS9+lorOQK+LwS5KXHZOKdYnMd8X1C+tnfLVB
+QiEk3GZ7iGSeIQ4kPY3JCCebIW5JeaS1VtPcWXi3856qGdx1NS4Ql8s8a7f3k5HS
+Mc9byWTLpttjvj2IPxfoZZOWX0Hm2kliTXHqg8TIfpbXS2RI+6gZHs1e+W5FU/q7
+Y67ycOIvVBxhVzFft3Nt6X0XDSFwjCqug1cpERoRcLFQBO2zUc4+DOkrKQqA91Wh
+2BsJZaIcxe7JcAtifdarTgECWPpDWiPMuLAygdkLTNCPlhXlNjM=
+=TKHE
+-----END PGP SIGNATURE-----
+
+--mGCtrYeZ202LI9ZG--
