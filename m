@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A204A1F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 08:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 685361F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 08:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727800AbfHEICz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 04:02:55 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38824 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726659AbfHEICy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 04:02:54 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g17so83381986wrr.5
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 01:02:53 -0700 (PDT)
+        id S1727802AbfHEIC5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 04:02:57 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:32981 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727798AbfHEIC4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 04:02:56 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n9so83503557wru.0
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 01:02:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G3/sUp5KwJIqExdm0cmEMLVPzfoPml6hpvWqPKiiQpQ=;
-        b=jzaNKeaMZloMxzVgifE03o1jluK2uKmvCvhw1MxQYAK4bxokePcvUfib7RSSRosHXr
-         mTS4gVgWWScgjEPxBY8YV2hfSSVGvIdW3shMvN6DjnEDhAkrQNT4XXPtyYRkg+khNevl
-         R5It1EjrVlnSDBM+/6bSsevsJ3VCggeToTMJs7Sqag6lXsFD8hYIn8H/vIIV05EsGBZa
-         Onu8An78SEKj3DL+fEgcZXrcNZT5edwzVMeCxft9dAKJv3aTneozPPK7fROmavo4CQw8
-         R4R8zFUcM43jad2JWQrUSDNjjsaNVlFymz9OB7ZkWa1RyYSaGTcNNK+T0Lo5E7V7UjwZ
-         T66Q==
+        bh=cybeV+wWQq1wmuDRiQPJusqEeu/cR0dlOT0ya2Ji4e0=;
+        b=C9m/G+nOa+FjkiTW/1056TO5eEKMhdCUjTq/0hboaw3lgVwoUc/FkX7B714/DFoo2d
+         OKjv/jcya75LMQ7HLWl1wzbIrTpmXzKC1oJwOHtcH0nUPtqMKQUjckkhyaS21ZLycUVc
+         /QooXZNaXaJVjSgT1XqOtaOB2P07d6ZRkzEV3kH2K8RihLWywpUu36YUnC9VOMZxjQR8
+         3GFLWT/v8hv+L8n6CVTWVx/fa9VsXgonveXaksB5cF0GoCw1XTbyhJ5w/Pz+93RSAAN7
+         /JzK6DS8WbMPCP1yCA9Cv0jy82QOjZEXVQTrR2JNby70pcOvG9Y2bQY2LLKrj3/35LmP
+         CrkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G3/sUp5KwJIqExdm0cmEMLVPzfoPml6hpvWqPKiiQpQ=;
-        b=Jq4wdxtbLVqfaqLiileXC35DSGwEEH/WN/0JBNNzZObQX/5UhzPibXPQgzp/AU2Vqi
-         U3PTRmwy6CtDF2UBih/3qWdflaXDZKoOy8jku/8TZ447XnEZRKKMd2PSG6yORKYYexSD
-         NUFLtmWbeC2u4PSTQTIo0zG8aFw+Rl8KZRZxQsWEZlPYjj1NCx8OYGgK5QBVG+Va/asQ
-         GnEkBU38vvwank24bZdBHd+ge9neffI9r1MbfhcAC/trYERrgSL/vECqR3xOxACE9D0w
-         tREikvyj2UwcB0IhCytf64/U06A0sIAXdLfohDH1OP1vF5DhOFrNbxHiVBXB31B9s5WG
-         P/kA==
-X-Gm-Message-State: APjAAAVgunIIynYEp7oXsue6KbnLtdVw4bI2iTXuUyvYYeB+lL/wmZ0f
-        Edhoruz8H9CfooTVfXDw6/7Xae3grkE=
-X-Google-Smtp-Source: APXvYqwYBWimrwMrkLc3T9TrPY/m9iMplxiIYcUruGDTn5mrfRkK7HcDgcQIGVXDua9hK3MmBqoE5Q==
-X-Received: by 2002:a5d:62cc:: with SMTP id o12mr24400628wrv.63.1564992172913;
-        Mon, 05 Aug 2019 01:02:52 -0700 (PDT)
+        bh=cybeV+wWQq1wmuDRiQPJusqEeu/cR0dlOT0ya2Ji4e0=;
+        b=Oh1QevMPLA42GgQa20bYZp1pP8jMND6MgzNbmFyGF4X0QGehpPmkFY8kdPtxx7e4/c
+         5RQ0H/l7WZg/rKY/3BZWHQXsSHsGNXm5ftd6vJrUZ3pHy54x+N2BA//424KrsKUyTihj
+         WoURw3ndOLivUwD65JpCb8BbSQNz+4V54QrQKizxT2VFPlr0BUykAiqzuFj7laUDXs0J
+         5y1C84T2FNlCLZAjJVU4wALtnMlsSMGERx00lnVXFkv06iPMowEB5X5f5eHFC0pVBzGJ
+         oSWV+2jeX5FEOnRVV/eUS98jMVmokCJHl0sAHKOAMYr7nysOha5H9nHFfAGykkyamCND
+         BNMA==
+X-Gm-Message-State: APjAAAUEGWSp/1mZ1Q03SS6gdhVlAXXe6wXwQEPA4aCO66ypMoeF75zF
+        GKIlhf5MUUN+fZ8ICiCUiZQ=
+X-Google-Smtp-Source: APXvYqxDeq3IKH7ZW1h5X7HxC7wq1davL5v1WmeGF+/EqekUJDYIAPKrpfXy3z521AcSzJfk5MQjng==
+X-Received: by 2002:adf:f544:: with SMTP id j4mr56640863wrp.150.1564992174111;
+        Mon, 05 Aug 2019 01:02:54 -0700 (PDT)
 Received: from localhost.localdomain (x4db4a28a.dyn.telefonica.de. [77.180.162.138])
         by smtp.gmail.com with ESMTPSA id v124sm89514573wmf.23.2019.08.05.01.02.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 05 Aug 2019 01:02:52 -0700 (PDT)
+        Mon, 05 Aug 2019 01:02:53 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 2/3] commit-graph: turn a group of write-related macro flags into an enum
-Date:   Mon,  5 Aug 2019 10:02:39 +0200
-Message-Id: <20190805080240.30892-3-szeder.dev@gmail.com>
+Subject: [PATCH 3/3] commit-graph: error out on invalid commit oids in 'write --stdin-commits'
+Date:   Mon,  5 Aug 2019 10:02:40 +0200
+Message-Id: <20190805080240.30892-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc1.309.g896d8c5f5f
 In-Reply-To: <20190805080240.30892-1-szeder.dev@gmail.com>
 References: <20190805080240.30892-1-szeder.dev@gmail.com>
@@ -68,123 +68,182 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While 'git commit-graph write --stdin-commits' expects commit object
+ids as input, it accepts and silently skips over any invalid commit
+object ids, and still exits with success:
+
+  # nonsense
+  $ echo not-a-commit-oid | git commit-graph write --stdin-commits
+  $ echo $?
+  0
+  # sometimes I forgot that refs are not good...
+  $ echo HEAD | git commit-graph write --stdin-commits
+  $ echo $?
+  0
+  # valid tree OID, but not a commit OID
+  $ git rev-parse HEAD^{tree} | git commit-graph write --stdin-commits
+  $ echo $?
+  0
+  $ ls -l .git/objects/info/commit-graph
+  ls: cannot access '.git/objects/info/commit-graph': No such file or directory
+
+Check that all input records are indeed valid commit object ids and
+return with error otherwise, the same way '--stdin-packs' handles
+invalid input; see e103f7276f (commit-graph: return with errors during
+write, 2019-06-12).
+
+Note that it should only return with error when encountering an
+invalid commit object id coming from standard input.  However,
+'--reachable' uses the same code path to process object ids pointed to
+by all refs, and that includes tag object ids as well, which should
+still be skipped over.  Therefore add a new flag to 'enum
+commit_graph_write_flags' and a corresponding field to 'struct
+write_commit_graph_context', so we can differentiate between those two
+cases.
+
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/commit-graph.c |  6 +++---
- builtin/gc.c           |  2 +-
- commit-graph.c         | 11 ++++++-----
- commit-graph.h         | 13 ++++++++-----
- 4 files changed, 18 insertions(+), 14 deletions(-)
+ builtin/commit-graph.c  |  4 +++-
+ commit-graph.c          | 29 +++++++++++++++++------------
+ commit-graph.h          |  4 +++-
+ t/t5318-commit-graph.sh | 11 ++++++++++-
+ 4 files changed, 33 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 38027b83d9..64eccde314 100644
+index 64eccde314..57863619b7 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -154,7 +154,7 @@ static int graph_write(int argc, const char **argv)
- 	struct string_list *commit_hex = NULL;
- 	struct string_list lines;
- 	int result = 0;
--	unsigned int flags = COMMIT_GRAPH_PROGRESS;
-+	enum commit_graph_write_flags flags = COMMIT_GRAPH_WRITE_PROGRESS;
+@@ -213,8 +213,10 @@ static int graph_write(int argc, const char **argv)
  
- 	static struct option builtin_commit_graph_write_options[] = {
- 		OPT_STRING(0, "object-dir", &opts.obj_dir,
-@@ -192,9 +192,9 @@ static int graph_write(int argc, const char **argv)
- 	if (!opts.obj_dir)
- 		opts.obj_dir = get_object_directory();
- 	if (opts.append)
--		flags |= COMMIT_GRAPH_APPEND;
-+		flags |= COMMIT_GRAPH_WRITE_APPEND;
- 	if (opts.split)
--		flags |= COMMIT_GRAPH_SPLIT;
-+		flags |= COMMIT_GRAPH_WRITE_SPLIT;
+ 		if (opts.stdin_packs)
+ 			pack_indexes = &lines;
+-		if (opts.stdin_commits)
++		if (opts.stdin_commits) {
+ 			commit_hex = &lines;
++			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
++		}
  
- 	read_replace_refs = 0;
- 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c18efadda5..305fb0f45a 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -687,7 +687,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 
- 	if (gc_write_commit_graph &&
- 	    write_commit_graph_reachable(get_object_directory(),
--					 !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0,
-+					 !quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
- 					 NULL))
- 		return 1;
- 
+ 		UNLEAK(buf);
+ 	}
 diff --git a/commit-graph.c b/commit-graph.c
-index b3c4de79b6..04324a4648 100644
+index 04324a4648..821900675b 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1133,7 +1133,8 @@ static int add_ref_to_list(const char *refname,
+@@ -782,7 +782,8 @@ struct write_commit_graph_context {
+ 
+ 	unsigned append:1,
+ 		 report_progress:1,
+-		 split:1;
++		 split:1,
++		 check_oids:1;
+ 
+ 	const struct split_commit_graph_opts *split_opts;
+ };
+@@ -1193,8 +1194,8 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
  	return 0;
  }
  
--int write_commit_graph_reachable(const char *obj_dir, unsigned int flags,
-+int write_commit_graph_reachable(const char *obj_dir,
-+				 enum commit_graph_write_flags flags,
- 				 const struct split_commit_graph_opts *split_opts)
+-static void fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
+-				      struct string_list *commit_hex)
++static int fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
++				     struct string_list *commit_hex)
  {
- 	struct string_list list = STRING_LIST_INIT_DUP;
-@@ -1750,7 +1751,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- int write_commit_graph(const char *obj_dir,
- 		       struct string_list *pack_indexes,
- 		       struct string_list *commit_hex,
--		       unsigned int flags,
-+		       enum commit_graph_write_flags flags,
- 		       const struct split_commit_graph_opts *split_opts)
- {
- 	struct write_commit_graph_context *ctx;
-@@ -1771,9 +1772,9 @@ int write_commit_graph(const char *obj_dir,
- 	if (len && ctx->obj_dir[len - 1] == '/')
- 		ctx->obj_dir[len - 1] = 0;
+ 	uint32_t i;
+ 	struct strbuf progress_title = STRBUF_INIT;
+@@ -1215,20 +1216,21 @@ static void fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
+ 		struct commit *result;
  
--	ctx->append = flags & COMMIT_GRAPH_APPEND ? 1 : 0;
--	ctx->report_progress = flags & COMMIT_GRAPH_PROGRESS ? 1 : 0;
--	ctx->split = flags & COMMIT_GRAPH_SPLIT ? 1 : 0;
-+	ctx->append = flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0;
-+	ctx->report_progress = flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0;
-+	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+ 		display_progress(ctx->progress, i + 1);
+-		if (commit_hex->items[i].string &&
+-		    parse_oid_hex(commit_hex->items[i].string, &oid, &end))
+-			continue;
+-
+-		result = lookup_commit_reference_gently(ctx->r, &oid, 1);
+-
+-		if (result) {
++		if (!parse_oid_hex(commit_hex->items[i].string, &oid, &end) &&
++		    (result = lookup_commit_reference_gently(ctx->r, &oid, 1))) {
+ 			ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
+ 			oidcpy(&ctx->oids.list[ctx->oids.nr], &(result->object.oid));
+ 			ctx->oids.nr++;
++		} else if (ctx->check_oids) {
++			error(_("invalid commit object id: %s"),
++			    commit_hex->items[i].string);
++			return -1;
+ 		}
+ 	}
+ 	stop_progress(&ctx->progress);
+ 	strbuf_release(&progress_title);
++
++	return 0;
+ }
+ 
+ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+@@ -1775,6 +1777,7 @@ int write_commit_graph(const char *obj_dir,
+ 	ctx->append = flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0;
+ 	ctx->report_progress = flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0;
+ 	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
++	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
  	ctx->split_opts = split_opts;
  
  	if (ctx->split) {
+@@ -1829,8 +1832,10 @@ int write_commit_graph(const char *obj_dir,
+ 			goto cleanup;
+ 	}
+ 
+-	if (commit_hex)
+-		fill_oids_from_commit_hex(ctx, commit_hex);
++	if (commit_hex) {
++		if ((res = fill_oids_from_commit_hex(ctx, commit_hex)))
++			goto cleanup;
++	}
+ 
+ 	if (!pack_indexes && !commit_hex)
+ 		fill_oids_from_all_packs(ctx);
 diff --git a/commit-graph.h b/commit-graph.h
-index df9a3b20e4..ae4db87fb5 100644
+index ae4db87fb5..486e64e591 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -71,9 +71,11 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
-  */
- int generation_numbers_enabled(struct repository *r);
- 
--#define COMMIT_GRAPH_APPEND     (1 << 0)
--#define COMMIT_GRAPH_PROGRESS   (1 << 1)
--#define COMMIT_GRAPH_SPLIT      (1 << 2)
-+enum commit_graph_write_flags {
-+	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
-+	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
-+	COMMIT_GRAPH_WRITE_SPLIT      = (1 << 2)
-+};
+@@ -74,7 +74,9 @@ int generation_numbers_enabled(struct repository *r);
+ enum commit_graph_write_flags {
+ 	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
+ 	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
+-	COMMIT_GRAPH_WRITE_SPLIT      = (1 << 2)
++	COMMIT_GRAPH_WRITE_SPLIT      = (1 << 2),
++	/* Make sure that each OID in the input is a valid commit OID. */
++	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3)
+ };
  
  struct split_commit_graph_opts {
- 	int size_multiple;
-@@ -87,12 +89,13 @@ struct split_commit_graph_opts {
-  * is not compatible with the commit-graph feature, then the
-  * methods will return 0 without writing a commit-graph.
-  */
--int write_commit_graph_reachable(const char *obj_dir, unsigned int flags,
-+int write_commit_graph_reachable(const char *obj_dir,
-+				 enum commit_graph_write_flags flags,
- 				 const struct split_commit_graph_opts *split_opts);
- int write_commit_graph(const char *obj_dir,
- 		       struct string_list *pack_indexes,
- 		       struct string_list *commit_hex,
--		       unsigned int flags,
-+		       enum commit_graph_write_flags flags,
- 		       const struct split_commit_graph_opts *split_opts);
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 4391007f4c..ab3eccf0fa 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -23,7 +23,7 @@ test_expect_success 'write graph with no packs' '
+ 	test_path_is_missing info/commit-graph
+ '
  
- #define COMMIT_GRAPH_VERIFY_SHALLOW	(1 << 0)
+-test_expect_success 'close with correct error on bad input' '
++test_expect_success 'exit with correct error on bad input to --stdin-packs' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	echo doesnotexist >in &&
+ 	test_expect_code 1 git commit-graph write --stdin-packs <in 2>stderr &&
+@@ -40,6 +40,15 @@ test_expect_success 'create commits and repack' '
+ 	git repack
+ '
+ 
++test_expect_success 'exit with correct error on bad input to --stdin-commits' '
++	cd "$TRASH_DIRECTORY/full" &&
++	echo HEAD | test_expect_code 1 git commit-graph write --stdin-commits 2>stderr &&
++	test_i18ngrep "invalid commit object id" stderr &&
++	# valid tree OID, but not a commit OID
++	git rev-parse HEAD^{tree} | test_expect_code 1 git commit-graph write --stdin-commits 2>stderr &&
++	test_i18ngrep "invalid commit object id" stderr
++'
++
+ graph_git_two_modes() {
+ 	git -c core.commitGraph=true $1 >output
+ 	git -c core.commitGraph=false $1 >expect
 -- 
 2.23.0.rc1.309.g896d8c5f5f
 
