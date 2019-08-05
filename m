@@ -8,56 +8,58 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5729B1F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 08:02:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C70A1F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 08:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbfHEICw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 04:02:52 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45374 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726423AbfHEICw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 04:02:52 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f9so4464647wre.12
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 01:02:51 -0700 (PDT)
+        id S1727732AbfHEICx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 04:02:53 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39276 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726659AbfHEICx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 04:02:53 -0400
+Received: by mail-wm1-f65.google.com with SMTP id u25so61667883wmc.4
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 01:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZZGtDr6YW9hf8SQRZ5OhxU6T1q9xlUWYVxXn2v+DuAY=;
-        b=nrSfMc94lzisPNqumzd9HKSsQtI3OEVx/Mzxykw3ofwOu+U6S+QcxkYjyltVVrf/yA
-         aB5Zb67Qk3emCIJpAwXcQ6bF2+5nK20uaEvXgojwJPuXB9vmtq4T4f3IXQEVDiB7Oyq3
-         ug7ioCpXu+qju0/O6JoByq2Jaelt912ih500Iufoqf8Gpbfnu0uI+2c6MfhJXrn7fRxn
-         HAxbMqdWiIF6TlCOJRQEiwJKoJ1VKvHTQRQNaZOCY0U0Mr+EZ9GSQZL+u2S+vQLXcfTl
-         Lniec+Bs0fGPtCnC1ckzbxOApUyqSI1KdmvZ9XiK1IQwoiWpauQxiENDiFoDPXApyvyj
-         K0uw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HpERa9+AyMfRwv23vvkwLNJzuyy57v+PKzUXGJV9nTc=;
+        b=DJF9I4y2nalS53cid8+Atcv/FVfiHQyXicyC4s9W/C5+BCFJNduKTsMgnDhgjCwkiM
+         Rm9Lz829NvOzgOopLH2ehgkyGQcoFJ8N03ScxnFbXJYB9qWBHgYvHhpFxZZokmCsQiuR
+         MSFCLdyYZ5bX4ARvAqZUp/FybZ40Qh2B3Svojl+HZY1tr5rE0NNvRmlZeGtbbwlGOCgZ
+         RAggTnUMNXhBGVBc0VTxALXLAVavBQBJ0DyNBtcF2ZXf5t5QNKTF8iDOySK8rE2KCqPo
+         dkdWYFqsff5quyHuWk1O/tqMBu3Y/iyhKEw4Oih/1vyOH8UrxUKX1HHMExpf9I/0W+Vv
+         ij4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZZGtDr6YW9hf8SQRZ5OhxU6T1q9xlUWYVxXn2v+DuAY=;
-        b=o5ft+04+5bvhxO0fcBIGCXe19mxhJ/FA3v4wY+oRTSVItCVMbLmANd+0PVaGdeb9Zs
-         MdioF+fJhuId5dHKafxGeGDO5UEd/vtn9mCxN2oAbOJWcjefMyPl/+9qpziXTlLcj+kK
-         uTMeFWdRPvXKk0DXFdKnn9V27uU1o6EAH1/y1A8AD1yJdpkcPMkn6LR5WLKl5548kmKu
-         hyIKQVlk0KVZrgsils2X3YptBCV+pCVB9HbXhPYp5RjZbMxVERJmaHmMXcD/sousv8sJ
-         6qK8dQlZg5KaQEFhNbD9WwVgBnxlkuZmwoL1oTrvY1iCIUcXoTsE+4C6Pd/lT1PmVUa2
-         d5jQ==
-X-Gm-Message-State: APjAAAWWsBdXGVdb0wRkffCZl7rpwsKCsWcVBGMDlqdogvYQyA5VVp+p
-        oY5FlLOlCeCqpOtTQFK/dqUntSP5srE=
-X-Google-Smtp-Source: APXvYqzaeaSiOi27nLPVYK2pOeydaBasNirYPhSlDPwHWpAtzoJiN12MJsK+jVDCogM+d6LssOGANA==
-X-Received: by 2002:a5d:55c2:: with SMTP id i2mr20203736wrw.96.1564992170821;
-        Mon, 05 Aug 2019 01:02:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HpERa9+AyMfRwv23vvkwLNJzuyy57v+PKzUXGJV9nTc=;
+        b=KPu71lC1mLpy6wTWh7kvEnxUJ0B8VslmcbtoGQRcwbR3ilhzTCgNKmc4zCDdl0rpPn
+         86TY7dujNuvrjIku+2TMbjdbTRiSGNXp0gX6mlG9ZvZb/dgWHQ6zEqBeFoSU0XJL4/Rk
+         0yujGKzEFlnsL2O1s8rH3qBRmOmjfXQXySbOyNvzeAmoCL6wGT76sTl9i6gb+Zq+TX4l
+         1lUttqoXo372Ur6ZgEbZ31/xHcC9AxmiswlnGX2j7UEjpFrVNzLRzIZ3l/Kv2kjUzK4N
+         /itnucYO5NSN7itpkQNjCXMyrAHYGkxgmSXADpF6eKqHR5PD7armNTrE6YaCLvW55bJR
+         4P0w==
+X-Gm-Message-State: APjAAAVEOJzMdZRbFsH+u7niiJOpEY665toKU7P4zPiqtypD2fwf3+CP
+        PnzRE77YeH8llFjaGEO1BVE=
+X-Google-Smtp-Source: APXvYqx1V6Z0zaLOtr7UBFbgrSaws4/wsxPb7FBUv9wwfr8NtyDwB9byzNhWMseJ2Ud4LxCaf+uH1w==
+X-Received: by 2002:a7b:c74a:: with SMTP id w10mr16407944wmk.99.1564992171907;
+        Mon, 05 Aug 2019 01:02:51 -0700 (PDT)
 Received: from localhost.localdomain (x4db4a28a.dyn.telefonica.de. [77.180.162.138])
-        by smtp.gmail.com with ESMTPSA id v124sm89514573wmf.23.2019.08.05.01.02.49
+        by smtp.gmail.com with ESMTPSA id v124sm89514573wmf.23.2019.08.05.01.02.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 05 Aug 2019 01:02:50 -0700 (PDT)
+        Mon, 05 Aug 2019 01:02:51 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/3] commit-graph: error out on invalid commit oids in 'write --stdin-commits'
-Date:   Mon,  5 Aug 2019 10:02:37 +0200
-Message-Id: <20190805080240.30892-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/3] t5318-commit-graph: use 'test_expect_code'
+Date:   Mon,  5 Aug 2019 10:02:38 +0200
+Message-Id: <20190805080240.30892-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc1.309.g896d8c5f5f
+In-Reply-To: <20190805080240.30892-1-szeder.dev@gmail.com>
+References: <20190805080240.30892-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,32 +68,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While 'git commit-graph write --stdin-commits' expects commit object
-ids as input, it accepts and silently skips over any invalid commit
-object ids, and still exits with success:
+In 't5318-commit-graph.sh' the test 'close with correct error on bad
+input' manually verifies the exit code of a 'git commit-graph write'
+command.
 
-  $ echo not-a-commit-oid | git commit-graph write --stdin-commits
-  $ echo $?
-  $ ls -l .git/objects/info/commit-graph
-  ls: cannot access '.git/objects/info/commit-graph': No such file or directory
+Use 'test_expect_code' instead.
 
-The last patch in this series fixes this issue, with a bit of
-preparatory refactoring in the second and a while-at-it cleanup in the
-first patches.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t5318-commit-graph.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-SZEDER Gábor (3):
-  t5318-commit-graph: use 'test_expect_code'
-  commit-graph: turn a group of write-related macro flags into an enum
-  commit-graph: error out on invalid commit oids in 'write
-    --stdin-commits'
-
- builtin/commit-graph.c  | 10 ++++++----
- builtin/gc.c            |  2 +-
- commit-graph.c          | 40 +++++++++++++++++++++++-----------------
- commit-graph.h          | 15 ++++++++++-----
- t/t5318-commit-graph.sh | 14 +++++++++++---
- 5 files changed, 51 insertions(+), 30 deletions(-)
-
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 22cb9d6643..4391007f4c 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -26,8 +26,7 @@ test_expect_success 'write graph with no packs' '
+ test_expect_success 'close with correct error on bad input' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	echo doesnotexist >in &&
+-	{ git commit-graph write --stdin-packs <in 2>stderr; ret=$?; } &&
+-	test "$ret" = 1 &&
++	test_expect_code 1 git commit-graph write --stdin-packs <in 2>stderr &&
+ 	test_i18ngrep "error adding pack" stderr
+ '
+ 
 -- 
 2.23.0.rc1.309.g896d8c5f5f
 
