@@ -2,171 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D95D61F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 13:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E75BA1F93C
+	for <e@80x24.org>; Mon,  5 Aug 2019 15:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728995AbfHEN5X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 09:57:23 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:36581 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728871AbfHEN5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 09:57:22 -0400
-Received: by mail-qk1-f195.google.com with SMTP id g18so60112220qkl.3
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 06:57:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/4wL0Cc201P753zdE7HEdABxgWNgccpBfWCMFbF++zM=;
-        b=m1Er5IwLK1WtSVSl7HK1KeDnu4hn2uDL1ab5W/E+l3rm3gPnX7I+A0n4jl2yx2QxPl
-         +tt4vXPOwoz/1H96NvUHUFVyEbCbdF+0N93zY9Qt+j6oQrM+yM/6VnSDCFeU6TiOje7h
-         XQoTTUxzXY3qa9WcDXEzOjvkoSh8ucGVYpLq9za/MyMgk0VLMbQu4ohMAh3Hhb8sOL/F
-         CaaaV+cwFy09MkwxdvFrtKncFTSwYbkk1MH7MRWRhdYFlkP+eFkz+0V7c2AXyemS4UAU
-         VR3gSii9B8jXphF/JOM9LPtBafI79FtpPbT2kRGFYCEsaxdZHfOFOaHRK+qhk3I8zPUH
-         xxFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/4wL0Cc201P753zdE7HEdABxgWNgccpBfWCMFbF++zM=;
-        b=Ebkz83XXGZeLeMUISnsVRXep0M/4l7Ekz6XA3N+dwqJms0oRff+dT86FCvAmDVxVoh
-         L37+9O4sDTOO/ljnl7dbA0qz6B05lQTew0SWudmEmWA3263fESTKfNulxhvK2sYTvQ08
-         Wctvg8nR0o+LyxpQQ003Pt1w5dKuDmSjAMowGSocSgSLtlF3HEkNzyLlwvIyuWcAxAxq
-         r1e0lfaER0FGEoE5Jgzvr6H2SCHpzhVhZrvHfn3/K533kKF191XSwM7WV3TI3pU1iD+l
-         aGD3KZr3w1PSYnZMPbV/4oa27YbuiyQZ1aIGu/iEOMAGsW0vDJ4lgVoPLXY6jtXi1UYr
-         XBMw==
-X-Gm-Message-State: APjAAAX/jyueSXrlYrLf+shAR3U+Dzco3Ad3J/aJbjQh4C1uoFlXruwG
-        Dhhrtr8BSyFuTT7/5WbPO5z2ORLYrfE=
-X-Google-Smtp-Source: APXvYqyM749R10lGqVYJRaJUi+FVz4keCR8YRZ8rpNqAH393gvtwwg4YutDNE0DjFA3E3uZX3JGBrw==
-X-Received: by 2002:a37:e30b:: with SMTP id y11mr106364787qki.100.1565013441272;
-        Mon, 05 Aug 2019 06:57:21 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:80c4:823c:202:ca1a? ([2001:4898:a800:1012:31f8:823c:202:ca1a])
-        by smtp.gmail.com with ESMTPSA id c5sm50883478qta.5.2019.08.05.06.57.19
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Aug 2019 06:57:20 -0700 (PDT)
-Subject: Re: [PATCH 3/3] commit-graph: error out on invalid commit oids in
- 'write --stdin-commits'
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-References: <20190805080240.30892-1-szeder.dev@gmail.com>
- <20190805080240.30892-4-szeder.dev@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ecdd6c01-5ee2-6869-4eb3-1eb45f4c335c@gmail.com>
-Date:   Mon, 5 Aug 2019 09:57:19 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1729023AbfHEPeP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 11:34:15 -0400
+Received: from siwi.pair.com ([209.68.5.199]:45772 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728904AbfHEPeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 11:34:14 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D43B13F4088;
+        Mon,  5 Aug 2019 11:34:12 -0400 (EDT)
+Received: from [IPv6:2600:1700:840:e760:7d97:91ff:d255:c7c7] (unknown [IPv6:2600:1700:840:e760:7d97:91ff:d255:c7c7])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id AAC6C3F4047;
+        Mon,  5 Aug 2019 11:34:12 -0400 (EDT)
+Subject: Re: [RFC PATCH v2 2/2] trace2: don't overload target directories
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Cc:     stolee@gmail.com
+References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
+ <cover.1564771000.git.steadmon@google.com>
+ <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <b1009a3e-92c6-248c-8d15-f4bb5cc71a11@jeffhostetler.com>
+Date:   Mon, 5 Aug 2019 11:34:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-In-Reply-To: <20190805080240.30892-4-szeder.dev@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/5/2019 4:02 AM, SZEDER Gábor wrote:
-> While 'git commit-graph write --stdin-commits' expects commit object
-> ids as input, it accepts and silently skips over any invalid commit
-> object ids, and still exits with success:
+
+
+On 8/2/2019 6:02 PM, Josh Steadmon wrote:
+> trace2 can write files into a target directory. With heavy usage, this
+> directory can fill up with files, causing difficulty for
+> trace-processing systems.
 > 
->   # nonsense
->   $ echo not-a-commit-oid | git commit-graph write --stdin-commits
->   $ echo $?
->   0
->   # sometimes I forgot that refs are not good...
->   $ echo HEAD | git commit-graph write --stdin-commits
->   $ echo $?
->   0
->   # valid tree OID, but not a commit OID
->   $ git rev-parse HEAD^{tree} | git commit-graph write --stdin-commits
->   $ echo $?
->   0
->   $ ls -l .git/objects/info/commit-graph
->   ls: cannot access '.git/objects/info/commit-graph': No such file or directory
+> This patch adds a config option (trace2.maxFiles) to set a maximum
+> number of files that trace2 will write to a target directory. The
+> following behavior is enabled when the maxFiles is set to a positive
+> integer:
+>    When trace2 would write a file to a target directory, first check
+>    whether or not the directory is overloaded. A directory is overloaded
+>    if there is a sentinel file declaring an overload, or if the number of
+>    files exceeds trace2.maxFiles. If the latter, create a sentinel file
+>    to speed up later overload checks.
 > 
-> Check that all input records are indeed valid commit object ids and
-> return with error otherwise, the same way '--stdin-packs' handles
-> invalid input; see e103f7276f (commit-graph: return with errors during
-> write, 2019-06-12).
+> The assumption is that a separate trace-processing system is dealing
+> with the generated traces; once it processes and removes the sentinel
+> file, it should be safe to generate new trace files again.
+> 
+> The default value for trace2.maxFiles is zero, which disables the
+> overload check.
+> 
+> The config can also be overridden with a new environment variable:
+> GIT_TRACE2_MAX_FILES.
+> 
+> Potential future work:
+> * Write a message into the sentinel file (should match the requested
+>    trace2 output format).
+> * Add a performance test to make sure that contention between multiple
+>    processes all writing to the same target directory does not become an
+>    issue.
 
-Consistency is good. We should definitely make these modes match.
 
-> Note that it should only return with error when encountering an
-> invalid commit object id coming from standard input.  However,
-> '--reachable' uses the same code path to process object ids pointed to
-> by all refs, and that includes tag object ids as well, which should
-> still be skipped over.  Therefore add a new flag to 'enum
-> commit_graph_write_flags' and a corresponding field to 'struct
-> write_commit_graph_context', so we can differentiate between those two
-> cases.
+This looks much nicer than the V1 version.  Having it be a
+real feature rather than a test feature helps.
 
-Thank you for the care here.
+I don't see anything wrong with this.  I do worry about the
+overhead a bit.  If you really have that many files in the
+target directory, having every command count them at startup
+might be an issue.
 
-[snip]
-> @@ -1215,20 +1216,21 @@ static void fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
->  		struct commit *result;
->  
->  		display_progress(ctx->progress, i + 1);
-> -		if (commit_hex->items[i].string &&
-> -		    parse_oid_hex(commit_hex->items[i].string, &oid, &end))
-> -			continue;
-> -
-> -		result = lookup_commit_reference_gently(ctx->r, &oid, 1);
-> -
-> -		if (result) {
-> +		if (!parse_oid_hex(commit_hex->items[i].string, &oid, &end) &&
-> +		    (result = lookup_commit_reference_gently(ctx->r, &oid, 1))) {
->  			ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
->  			oidcpy(&ctx->oids.list[ctx->oids.nr], &(result->object.oid));
->  			ctx->oids.nr++;
-> +		} else if (ctx->check_oids) {
-> +			error(_("invalid commit object id: %s"),
-> +			    commit_hex->items[i].string);
-> +			return -1;
->  		}
->  	}
->  	stop_progress(&ctx->progress);
->  	strbuf_release(&progress_title);
-> +
-> +	return 0;
->  }
+As an alternative, you might consider doing something like
+this:
 
-This is the critical bit. I notice that you are not checking commit_hex->items[i].string
-for NULL, but it should never be NULL here anyway.
+[] have an option to make the target directory path expand to
+    something like "<path>/yyyymmdd/" and create the per-process
+    files as "<path>/yyyymmdd/<sid>".
 
-> @@ -1775,6 +1777,7 @@ int write_commit_graph(const char *obj_dir,
->  	ctx->append = flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0;
->  	ctx->report_progress = flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0;
->  	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
-> +	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
->  	ctx->split_opts = split_opts;
+If there are 0, 1 or 2 directories, logging is enabled.
+We assume that the post-processor is keeping up and all is well.
+We need to allow 2 so that we continue to log around midnight.
 
-Using the enum for the function and the bitfield for internal logic matches the
-existing pattern. Thanks.
+If there are 3 or more directories, logging is disabled.
+The post-processor is more than 24 hours behind for whatever
+reason.  We assume here that the post-processor will process
+and delete the oldest-named directory, so it is a valid measure
+of the backlog.
 
-> @@ -1829,8 +1832,10 @@ int write_commit_graph(const char *obj_dir,
->  			goto cleanup;
->  	}
->  
-> -	if (commit_hex)
-> -		fill_oids_from_commit_hex(ctx, commit_hex);
-> +	if (commit_hex) {
-> +		if ((res = fill_oids_from_commit_hex(ctx, commit_hex)))
-> +			goto cleanup;
-> +	}
+I suggest "yyyymmdd" here for simplicity in this discussion
+as daily log rotation is common.  If that's still overloading,
+you could make it a longer prefix of the <sid>.  And include
+the hour, for example.
 
-And this links the low-level error to a return code.
+I suggest 3 as the cutoff lower bound, because we need to allow
+2 for midnight rotation.  But you may want to increase it to
+allow for someone to be offline for a long weekend, for example.
 
-Thanks for this! The changes here look good and justify the two cleanup
-patches.
+Anyway, this is just a suggestion.  It would give you the
+throttling, but without the need for every command to count
+the contents of the target directory.
 
--Stolee
+And it would still allow your post-processor to operate in
+near real-time on the contents of the current day's target
+directory or to hang back if that causes too much contention.
+
+Feel free to ignore this :-)
+
+Jeff
+
