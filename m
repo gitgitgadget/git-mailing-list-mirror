@@ -7,75 +7,102 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09F991F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 18:40:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C701F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 18:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730065AbfHESkk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 14:40:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55869 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728831AbfHESkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 14:40:40 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BF6D174CF2;
-        Mon,  5 Aug 2019 14:40:38 -0400 (EDT)
+        id S1730034AbfHESty (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 14:49:54 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51999 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727830AbfHESty (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 14:49:54 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8180C7AD69;
+        Mon,  5 Aug 2019 14:49:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lnUnqWbNlsrQUtIZVBCfObUK7V8=; b=MdlJrf
-        AANDTGUUpbitacRIUkCf7GrgbUrdKLNrOHWkDgZoSsGulxtGZT2/K3XRjr2kPe32
-        aHekhbTi4hlTIV2HQprqvn/dZ0mpNhrdrqKVTXSXoi9PvHzd1IMtjpTsTGrpAzhX
-        dSYoaIDhLeAKwpp+W/Zus7QypD7njSNr9tgys=
+        :content-type; s=sasl; bh=+kutCUI8kLrx/WYSB1+hLuggAas=; b=AM/lCC
+        qXyeBKbrb13V0nBshIahz3jugIRdoqZ61MNRNHA0Kt5qHinU0SfygkIKWq1fNv0H
+        P86Vc6BTy4pyASE/lu88VjOxQZLj9YYmhWvzo5n44+4E7VCQx1KteHu+l80L0uJU
+        3U1EJ/TfS3VFA3OpSezpEMa4Xo579a8mYljig=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d8NuWt5tGPyl27WbhLPTI7olKpn/smgA
-        zCzTA+q0/rzzCnMtinpZScpQqooqJwkQnofQ6V3XninonXq1wd3yVuerbtdVdX4v
-        NXRV178X5M0YMgcLAGyX88n+7PxI1QKKYLrz5WOOmwRfDRN2eozAN5uVppaDNCXa
-        S6rVewzIB0Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F929174CF1;
-        Mon,  5 Aug 2019 14:40:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=DA2hXmlZldeLtaAwPv1lv1/UkgbqqaDV
+        EMUg6aS5nNmEnll+ZIpeH1b8RYXTf7YjC8OpgRDZdLeAD3HUVSPqzXTc14B71x1E
+        iDYB5xfNbL+40ovdlwosxU6U7DjmCYKx+tdP/pqX/KnKsESoROvTERLK0um2cugr
+        Z77lJFC1kYs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7A1667AD68;
+        Mon,  5 Aug 2019 14:49:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A6050174CF0;
-        Mon,  5 Aug 2019 14:40:36 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 994877AD66;
+        Mon,  5 Aug 2019 14:49:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: js/visual-studio, was Re: What's cooking in git.git (Aug 2019, #01; Thu, 1)
-References: <xmqqv9vgmz2f.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1908021405450.46@tvgsbejvaqbjf.bet>
-        <xmqqk1bvlds0.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1908032217420.46@tvgsbejvaqbjf.bet>
-Date:   Mon, 05 Aug 2019 11:40:35 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1908032217420.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sat, 3 Aug 2019 22:22:24 +0200 (CEST)")
-Message-ID: <xmqqzhknmp5o.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v2] l10n: reformat some localized strings for v2.23.0
+References: <20190730033512.7226-1-worldhello.net@gmail.com>
+        <20190803195907.3124-1-jn.avila@free.fr>
+        <20190803234522.GA5417@sigill.intra.peff.net>
+Date:   Mon, 05 Aug 2019 11:49:46 -0700
+In-Reply-To: <20190803234522.GA5417@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 3 Aug 2019 19:45:22 -0400")
+Message-ID: <xmqqv9vbmoqd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 83EDC7F0-B7B0-11E9-AE28-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CCE91FDA-B7B1-11E9-8C3B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> Yup.  I think they are now in good shape to be among the first to
->> graduate post release.  Building the warning facility necessary to
->> start dropping the $GIT_DIR/branches/ support would be too late for
->> this cycle, but now this topic is independent from that, so it may
->> even be worth considering to have it in the upcoming release.
+>>  		OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>",
+>> -			   N_("where the checkout from")),
+>> +			   N_("where the checkout is from")),
 >
-> I see that you made up your mind and graduated the branch to `master`
-> already. Very happy about that, and of course I hope that this was
-> intentional ;-)
+> I think your original "where to checkout from" is better.
 
-Yup.  Thanks, as usual, for all the help.  I didn't see anything
-remotely problematic in the latest round of the series (except for
-possibly the "resurrect '#if 0'ed out block of code in git.c" piece
-but that one is a simple enough change in a reasonably dormant
-codepath that is easy to revert if/when unforeseen issues are found
-by people with different/unanticipated use patterns).
+Would we even want to do s/where/which tree-ish/?
 
+> translators, but note that the output will be different. The original
+> would be something like:
+>
+>   warning: Fetch normally indicates...
+>   warning: To re-enable...
+>
+> where now we'd get:
+>
+>   warning: Fetch normally indicates...
+>   check has been disabled...
+>   or run 'git config...
+>
+> which might be a bit harder to read because the wrapped lines lose the
+> prefix. For advise() we nicely pick out the newlines and prefix each
+> line individually, but warning(), error(), etc, don't do that. Maybe
+> they should.
+
+Yeah, I'd be surprised that nobody thought of doing that, so perhaps
+somebody tried and failed with a possible fallout.  I do not offhand
+see any downside of teaching them to do the prefixing.
+
+For existing multi-line warnings that uses a single call to
+warning(), I think the preparer of the message manually indents the
+second and subsequent line by a run of SPs to match the screen width
+of "warning:" prefix (and expect translators to do the same with
+their language), and we need to get rid of that kind of "hack" when
+we insert a middle layer between *_builtin() and vreportf() to do
+the line chomping to produce output similar to advise() code.
+
+> That's too big for this late in the -rc cycle, I think.
+
+Agreed.
+Thanks.
