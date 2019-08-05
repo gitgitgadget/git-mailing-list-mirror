@@ -8,94 +8,156 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FF061F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 18:09:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 099E21F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 18:18:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728831AbfHESJI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 14:09:08 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:45641 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727830AbfHESJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 14:09:07 -0400
-Received: by mail-pg1-f195.google.com with SMTP id o13so40122132pgp.12
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 11:09:07 -0700 (PDT)
+        id S1728759AbfHESSD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 14:18:03 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:40670 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726559AbfHESSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 14:18:02 -0400
+Received: by mail-pf1-f196.google.com with SMTP id p184so40046790pfp.7
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 11:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=gkCugHqekOsOdarbIQns1X46kyClMUElD0yospFENQg=;
-        b=E1lZtQ0IgEChjPiJrU6BCA7UxVuHdEw3Y7rhWC5VRQj+xPJvyStYeXhK2+rrI1KYjB
-         zInm7SRAK3+vU/7lwb+RNYiTHbbkaeV8ubMI1OTf5KQHQEUhfXS4tDWWR1PH4SukcHE5
-         RnkIW3KQ2l8INaGMBArbgf1/wRtUnbqpGfnsRbVaY0krb7D3MIU3yM0OFVNyVyVTQco1
-         RbYPROX07voGM3RTTGEO/XRTWfSRV9OtjAPf2j6V2Wl9F85t4jpyGxAwO15nPWCNMgc/
-         9hasH4qxqNEWUyCHzWRJGYc9upWxNgzb4fpkzVxgkSc+weNuxWIp+w+z69g9yCEWaFdW
-         zYNQ==
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UvZpN2VLpMoArJD+/W6APcEGsLJY3lmNstKt//WOzVI=;
+        b=LhqSIzoFifgbNtphgAONPLNtlreiD7lpiuJp1ekoGW+QyC52oXwOp+TirtL7WZwmka
+         qUFWgLH2xcYVSIBTmsJFF/spOSB7NOGS0BIPk1qzHSxR6hkuLBdXyg+Tjvi5dSCKjD4H
+         jZC1oJgh+iwqWA5kpr6yAqnxJ5Kjk11nQd4LZ1kkffg0oroWLuIbRQQj5UWA/7HSPBn5
+         E87Z2dti/mz5OjhRRYaMseHcPFlBZ5uHHAxKlL8eAO1Jh+BHvY9MyC52o2/2nroSgXlM
+         j6zI0hybX6nizI96hZHqpZX6rpeb5hQHbg7gQjf/CwwtKA2Nd36wU3HbidUCPiulqcUk
+         76hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=gkCugHqekOsOdarbIQns1X46kyClMUElD0yospFENQg=;
-        b=kuKbGjNhkrL08aRck57ADTPbhApujzP9mzZSO+t8LdY3LB44prkQV5daWWhwIcNsi/
-         rP930BjoVB+BvOa9ltdapG6oI5W2c+L6az66VK29InMmXFo01S4rwAl23anrYvOP0rVH
-         qsibUZioPbJaO1hzNl+EBmvvNfOQN+w6EDTS6EG1yF/JjW2BxHSpjLnsVWlVhnyoI1WG
-         PxTzps2a6EgEL+UrQIkcFHPEmwQm4purx3Egy3Eajwn4M988YKGjg9ja4nXKPOwn2reN
-         cmo+u0fLqdSZh5I9F/uiOg7WO1chOiPLeBgIGbR7mNZulgy+yFZQWBz3wlPF0Rm6yjr3
-         kALQ==
-X-Gm-Message-State: APjAAAV8KXeWvFNA64D4rUqgIWP1EXPR2mSbMzf/bYyrHXw3PxFVG1x2
-        cV56TYBJT3DRlfSoOhFNhfQPe9X0Y0Z2fg==
-X-Google-Smtp-Source: APXvYqxLhCZZ+6jJfnpq5G9NofXJz3AfHBmBRa/TY3fADNXQcPLQEj6EjQKRpyPrFL4/P1uiWpZR7A==
-X-Received: by 2002:a17:90a:80c4:: with SMTP id k4mr19736072pjw.74.1565028546789;
-        Mon, 05 Aug 2019 11:09:06 -0700 (PDT)
+         :in-reply-to:user-agent;
+        bh=UvZpN2VLpMoArJD+/W6APcEGsLJY3lmNstKt//WOzVI=;
+        b=CKHtlrnvTcLyEoPjElaCaQg+gnGakzcpt9EiLjEO97EZTSt1lrZqPV3Rxvhkm+8W6z
+         LxNRIj9XSBWEUfvq5JMuUXH1/qkU244PnAxY2gAjj8NKCLMwIYQwEslV2Z+K1N0f275U
+         YP70EJFngtQ0wkckNi1P7b9q3huogS6+VcrM6wpcz9y33vHBNJwYwgzGJ802k6swbSJe
+         OV63SuwZP30fn/L2nEMedMEFjwdUjFGKlPh2r/xrs09vXMOIiB2dRwWf+gV31pfYN7PG
+         FK8L6H7ZUsCGTd/n9vEQk5yyhtLounWz2t8O83lL5W41aDPM07Q4Kc1z4kKQKGu5Ycy3
+         Worw==
+X-Gm-Message-State: APjAAAU9/Ndgf9ABsTOKCh2kyCSkynT4u9xoP7JE9ZxQIdEDvGy6dNk4
+        jmvwhyoWWSRwR5l+0zw4Ct/XQ7nNitHLnA==
+X-Google-Smtp-Source: APXvYqxM2MWqR8Dr9tg/l84aPGg1buI9Qx/8N3gQGBwI7FHfqEEdYxa0LUqChy7c2la0NUCn3vX8eA==
+X-Received: by 2002:a63:7358:: with SMTP id d24mr137264864pgn.224.1565029081076;
+        Mon, 05 Aug 2019 11:18:01 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:4264:e2f7:27a:8bb2])
-        by smtp.gmail.com with ESMTPSA id i3sm91703467pfo.138.2019.08.05.11.09.05
+        by smtp.gmail.com with ESMTPSA id k70sm17070685pje.14.2019.08.05.11.18.00
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 05 Aug 2019 11:09:05 -0700 (PDT)
-Date:   Mon, 5 Aug 2019 11:09:00 -0700
+        Mon, 05 Aug 2019 11:18:00 -0700 (PDT)
+Date:   Mon, 5 Aug 2019 11:17:55 -0700
 From:   Josh Steadmon <steadmon@google.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
 Subject: Re: [RFC PATCH v2 2/2] trace2: don't overload target directories
-Message-ID: <20190805180900.GT43313@google.com>
+Message-ID: <20190805181755.GU43313@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
+        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        stolee@gmail.com
 References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
  <cover.1564771000.git.steadmon@google.com>
  <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
- <20190805180135.GD20404@szeder.dev>
+ <b1009a3e-92c6-248c-8d15-f4bb5cc71a11@jeffhostetler.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190805180135.GD20404@szeder.dev>
+In-Reply-To: <b1009a3e-92c6-248c-8d15-f4bb5cc71a11@jeffhostetler.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.08.05 20:01, SZEDER Gábor wrote:
-> On Fri, Aug 02, 2019 at 03:02:35PM -0700, Josh Steadmon wrote:
-> > +test_expect_success "don't overload target directory" '
-> > +	mkdir trace_target_dir &&
-> > +	test_when_finished "rm -r trace_target_dir" &&
-> > +	(
-> > +		GIT_TRACE2_MAX_FILES=5 &&
-> > +		export GIT_TRACE2_MAX_FILES &&
-> > +		cd trace_target_dir &&
-> > +		test_seq $GIT_TRACE2_MAX_FILES >../expected_filenames.txt &&
-> > +		xargs touch <../expected_filenames.txt &&
-> > +		cd .. &&
-> > +		ls trace_target_dir >first_ls_output.txt &&
-> > +		test_cmp expected_filenames.txt first_ls_output.txt &&
+On 2019.08.05 11:34, Jeff Hostetler wrote:
 > 
-> Nit: what's the purpose of this 'ls' and 'test_cmp'?
 > 
-> It looks like they check that xargs created all the files it was told
-> to create.  I think that this falls into the category "We are not in
-> the business of verifying that the world given to us sanely works."
-> and is unnecessary.
+> On 8/2/2019 6:02 PM, Josh Steadmon wrote:
+> > trace2 can write files into a target directory. With heavy usage, this
+> > directory can fill up with files, causing difficulty for
+> > trace-processing systems.
+> > 
+> > This patch adds a config option (trace2.maxFiles) to set a maximum
+> > number of files that trace2 will write to a target directory. The
+> > following behavior is enabled when the maxFiles is set to a positive
+> > integer:
+> >    When trace2 would write a file to a target directory, first check
+> >    whether or not the directory is overloaded. A directory is overloaded
+> >    if there is a sentinel file declaring an overload, or if the number of
+> >    files exceeds trace2.maxFiles. If the latter, create a sentinel file
+> >    to speed up later overload checks.
+> > 
+> > The assumption is that a separate trace-processing system is dealing
+> > with the generated traces; once it processes and removes the sentinel
+> > file, it should be safe to generate new trace files again.
+> > 
+> > The default value for trace2.maxFiles is zero, which disables the
+> > overload check.
+> > 
+> > The config can also be overridden with a new environment variable:
+> > GIT_TRACE2_MAX_FILES.
+> > 
+> > Potential future work:
+> > * Write a message into the sentinel file (should match the requested
+> >    trace2 output format).
+> > * Add a performance test to make sure that contention between multiple
+> >    processes all writing to the same target directory does not become an
+> >    issue.
+> 
+> 
+> This looks much nicer than the V1 version.  Having it be a
+> real feature rather than a test feature helps.
+> 
+> I don't see anything wrong with this.  I do worry about the
+> overhead a bit.  If you really have that many files in the
+> target directory, having every command count them at startup
+> might be an issue.
+> 
+> As an alternative, you might consider doing something like
+> this:
+> 
+> [] have an option to make the target directory path expand to
+>    something like "<path>/yyyymmdd/" and create the per-process
+>    files as "<path>/yyyymmdd/<sid>".
+> 
+> If there are 0, 1 or 2 directories, logging is enabled.
+> We assume that the post-processor is keeping up and all is well.
+> We need to allow 2 so that we continue to log around midnight.
+> 
+> If there are 3 or more directories, logging is disabled.
+> The post-processor is more than 24 hours behind for whatever
+> reason.  We assume here that the post-processor will process
+> and delete the oldest-named directory, so it is a valid measure
+> of the backlog.
+> 
+> I suggest "yyyymmdd" here for simplicity in this discussion
+> as daily log rotation is common.  If that's still overloading,
+> you could make it a longer prefix of the <sid>.  And include
+> the hour, for example.
+> 
+> I suggest 3 as the cutoff lower bound, because we need to allow
+> 2 for midnight rotation.  But you may want to increase it to
+> allow for someone to be offline for a long weekend, for example.
+> 
+> Anyway, this is just a suggestion.  It would give you the
+> throttling, but without the need for every command to count
+> the contents of the target directory.
+> 
+> And it would still allow your post-processor to operate in
+> near real-time on the contents of the current day's target
+> directory or to hang back if that causes too much contention.
+> 
+> Feel free to ignore this :-)
+> 
+> Jeff
 
-Understood. Will remove in V3.
+This does sound reasonable. I'll talk with our collection team and see
+if this would work without requiring any changes on their side. If not,
+I'll probably take a stab at this when I'm back from vacation.
+
+Thanks!
