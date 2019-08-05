@@ -2,127 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E75BA1F93C
-	for <e@80x24.org>; Mon,  5 Aug 2019 15:34:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 712D91F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 16:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729023AbfHEPeP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 11:34:15 -0400
-Received: from siwi.pair.com ([209.68.5.199]:45772 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728904AbfHEPeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 11:34:14 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id D43B13F4088;
-        Mon,  5 Aug 2019 11:34:12 -0400 (EDT)
-Received: from [IPv6:2600:1700:840:e760:7d97:91ff:d255:c7c7] (unknown [IPv6:2600:1700:840:e760:7d97:91ff:d255:c7c7])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AAC6C3F4047;
-        Mon,  5 Aug 2019 11:34:12 -0400 (EDT)
-Subject: Re: [RFC PATCH v2 2/2] trace2: don't overload target directories
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Cc:     stolee@gmail.com
-References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
- <cover.1564771000.git.steadmon@google.com>
- <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <b1009a3e-92c6-248c-8d15-f4bb5cc71a11@jeffhostetler.com>
-Date:   Mon, 5 Aug 2019 11:34:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+        id S1728760AbfHEQTg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 12:19:36 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45982 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726691AbfHEQTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 12:19:36 -0400
+Received: by mail-io1-f65.google.com with SMTP id g20so168524159ioc.12
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 09:19:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b4NoUy5ckN+8KNF2OZ8NJ8VJQnTeeJ48yBN9fWHJOEE=;
+        b=uQi39vd//CCqzUmJJ4PAi65fFoHdTUm0m9WVGrLlwVOB51esZ2OR38mSb8U5OL9Te0
+         fr0FVRhHzMagkLM+9OiwYevzC7wKytQ+jZratKeOS5EurNiDhgP6jJrmIK5y2kPeqlAq
+         OyAis+5eD3Do9JfhsTwOtZ95lykk1v6SPKJyLkl3a346898g1b/Iprb0fltnLRWQVgev
+         ZF4oFJVoTiIZ20dfHzEwZ6z3dbTc/DY9iYWX7ZWJdhpX4Ex6Uqr6i5N9zZqeG1x7Uzl5
+         60JQRqscSmTdd14R1YAVwQoFlDBIWnloz5E5BakwnA+gOQVvRlIDq8oV18ct7UXkLze3
+         pdqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b4NoUy5ckN+8KNF2OZ8NJ8VJQnTeeJ48yBN9fWHJOEE=;
+        b=DpLWh26/3i46K7f24WnCuXnTr/q5FLDB8ZjvCd6yONj4CZjYuFbwUAL5Q7KEAloC67
+         Yt+aWNSPP5Kd7hRaEtRirVSEr/i6sSAx3shQmBRgm30JCovHE507Xoq2Cn96OQsPwXSZ
+         8+DDyRqdZMq82esQiTG3gRkT8MAy8t5uH+TocAzPEP78Ejs5nywITeXa1Qmh1KPsHSl+
+         8Bg7Wq3N9QnOXNrbW4M2puq74xIA+HuRnhYrafjs4iIk6+zrd0vfW7KElXv89evybgyf
+         fgThfIilGGN9dA2b7A9GcMpA1gvDJfEMJW4nSHJcwaEzNCcZecOM8m/VkrLxHrZ3KGUw
+         5T7A==
+X-Gm-Message-State: APjAAAUef7VizuOeaFZUCRWtAsI1v5QuUGgQfDKq5sjJJ/VUJp0f1N3h
+        G8iEfBn/otXZt3eOTWEs9I/QRVlOahKNHlfAMSI=
+X-Google-Smtp-Source: APXvYqyF0WiUaV57oBXN1TN4G7i6aeWZyEbaJbs4EfsR7zcp4cUWHedLKnfNMcIE0sPXxMoMLsvbPjvGYu17v9f/kbY=
+X-Received: by 2002:a5e:cb43:: with SMTP id h3mr12659929iok.252.1565021975249;
+ Mon, 05 Aug 2019 09:19:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.306.git.gitgitgadget@gmail.com> <3397e6797f872aedd18c6d795f4976e1c579514b.1565005867.git.gitgitgadget@gmail.com>
+In-Reply-To: <3397e6797f872aedd18c6d795f4976e1c579514b.1565005867.git.gitgitgadget@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 5 Aug 2019 09:19:24 -0700
+Message-ID: <CAPUEspgH1v1zo7smzQWCV4rX9pKVKLV84gDSfCPdT7LffQxUWw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] pcre2: allow overriding the system allocator
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 5, 2019 at 4:51 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Since 7d3bf769994 (grep: avoid leak of chartables in PCRE2, 2019-08-01),
+> we try to release the UTF-8 tables obtained via `pcre2_maketables()`. To
+> do that, we use the function `free()`. That is all fine and dandy as
+> long as that refers to the system allocator.
 
+Sorry; I should have thought of this, but assumed was safe since it
+would be broken
+the same way with PCRE1.
 
-On 8/2/2019 6:02 PM, Josh Steadmon wrote:
-> trace2 can write files into a target directory. With heavy usage, this
-> directory can fill up with files, causing difficulty for
-> trace-processing systems.
-> 
-> This patch adds a config option (trace2.maxFiles) to set a maximum
-> number of files that trace2 will write to a target directory. The
-> following behavior is enabled when the maxFiles is set to a positive
-> integer:
->    When trace2 would write a file to a target directory, first check
->    whether or not the directory is overloaded. A directory is overloaded
->    if there is a sentinel file declaring an overload, or if the number of
->    files exceeds trace2.maxFiles. If the latter, create a sentinel file
->    to speed up later overload checks.
-> 
-> The assumption is that a separate trace-processing system is dealing
-> with the generated traces; once it processes and removes the sentinel
-> file, it should be safe to generate new trace files again.
-> 
-> The default value for trace2.maxFiles is zero, which disables the
-> overload check.
-> 
-> The config can also be overridden with a new environment variable:
-> GIT_TRACE2_MAX_FILES.
-> 
-> Potential future work:
-> * Write a message into the sentinel file (should match the requested
->    trace2 output format).
-> * Add a performance test to make sure that contention between multiple
->    processes all writing to the same target directory does not become an
->    issue.
+Presume git in windows only builds against PCRE2?
 
+LGTM except from the suggestion below that might make the code more "standard"
+and probably be a good base for a similar PCRE1 fix
+>
+> +static pcre2_general_context *get_pcre2_context(void)
+> +{
+> +       static pcre2_general_context *context;
+> +
+> +       if (!context)
+> +               context = pcre2_general_context_create(pcre2_malloc,
+> +                                                      pcre2_free, NULL);
+> +
+> +       return context;
+> +}
 
-This looks much nicer than the V1 version.  Having it be a
-real feature rather than a test feature helps.
+instead of using a static variable inside this helper function it
+might be better to use
+one extra field inside the (struct grep_pat *p), where all other
+variables are kept
 
-I don't see anything wrong with this.  I do worry about the
-overhead a bit.  If you really have that many files in the
-target directory, having every command count them at startup
-might be an issue.
+Additionally to being more consistent will avoid creating the global
+context for the
+most common case (when the locale is either C/POSIX or UTF-8) and therefore
+have a smaller impact on performance.
 
-As an alternative, you might consider doing something like
-this:
-
-[] have an option to make the target directory path expand to
-    something like "<path>/yyyymmdd/" and create the per-process
-    files as "<path>/yyyymmdd/<sid>".
-
-If there are 0, 1 or 2 directories, logging is enabled.
-We assume that the post-processor is keeping up and all is well.
-We need to allow 2 so that we continue to log around midnight.
-
-If there are 3 or more directories, logging is disabled.
-The post-processor is more than 24 hours behind for whatever
-reason.  We assume here that the post-processor will process
-and delete the oldest-named directory, so it is a valid measure
-of the backlog.
-
-I suggest "yyyymmdd" here for simplicity in this discussion
-as daily log rotation is common.  If that's still overloading,
-you could make it a longer prefix of the <sid>.  And include
-the hour, for example.
-
-I suggest 3 as the cutoff lower bound, because we need to allow
-2 for midnight rotation.  But you may want to increase it to
-allow for someone to be offline for a long weekend, for example.
-
-Anyway, this is just a suggestion.  It would give you the
-throttling, but without the need for every command to count
-the contents of the target directory.
-
-And it would still allow your post-processor to operate in
-near real-time on the contents of the current day's target
-directory or to hang back if that causes too much contention.
-
-Feel free to ignore this :-)
-
-Jeff
-
+Carlo
