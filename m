@@ -8,121 +8,93 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C55CE1F731
-	for <e@80x24.org>; Mon,  5 Aug 2019 17:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC98C1F731
+	for <e@80x24.org>; Mon,  5 Aug 2019 18:01:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730011AbfHER5L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 13:57:11 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36806 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728759AbfHER5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 13:57:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n4so85367454wrs.3
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 10:57:08 -0700 (PDT)
+        id S1730310AbfHESBs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 14:01:48 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32945 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730312AbfHESBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 14:01:39 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n9so85423318wru.0
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 11:01:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=PnAVlUdN2HrA2O4oxm3y5VJuRn2RaE8vfsQj0RYwdkU=;
-        b=nPbeVhGUZMRUufzZEvv8xJQCPs6JArq9LoOo/9uhKU/AwqkGOQuD8v5cmVnLxL8hmH
-         NxW+cHTQ+Na08qTveJbF5TKRofI+utPU2yAnR9NJOVnlKXsIQsQvYtDL9umZA0d3wq2Z
-         ezxtPGZf7agvC0aiLXYFex5T0IbZXrgG6ciJjFBWYFOW+kbn4QmaBFatdgIJ9B7NiJ8K
-         JFXYaYnSW33yVK1+5bTFLJErK0tI9gl63oFMglyvEbxH1K/XddJ2j7eAMC9FNwl9emuK
-         cDLTlbSsJXtHB1laxSSYNc0QKR74GzvC8bobZkHnMDVzTrMjeJGx9AykXasRGOWST7iv
-         TRJw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=3mDgvv19Pjii0hkVqGjAHj9m2dmOLS10IHxekCbp94Q=;
+        b=qOLLWr7DZfJurNorVS/sBaMnOJ0nMvxa+HHRBmgR1/K0zMoywWEnFZiPILqDIlOJXa
+         ug0ha5TYzW9hyMwnIM3RRYNTePkaT9GE9yO8R1/mBZq8ZoozrNO1ILcmYo8w8lCu14kB
+         NitZZkox3FaFHIMHnrQtn9geDRX9kam8l/bH6OSwO8+bJvo4pmqazVRtx/m6WEN4LUBf
+         HaXyONTP3lf4+HmXRb3lXo+MTgPZcic/eHwqsMIkskgH2aEakYZXBq2v8h60uIjpVp1B
+         3EMilAww2b/+1ULmOQPNboWhiyW3XB1mr1kqiGUO0Zau+B2jxo4qMoz4BI5HBfTi0XST
+         Qv6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=PnAVlUdN2HrA2O4oxm3y5VJuRn2RaE8vfsQj0RYwdkU=;
-        b=GIakXCV0xi+fjShozPBVuN03vw/foXJsGn9D6BjyGgEPhIQyvRf5CDHWYmqOyGMTXj
-         /0HmLOeueMaGMJMEhJ6/5sr3S/I+v8ywPbLwUJFmWqWr5+FowWXoXtM9WZVVmUtBdBAq
-         MOqPNODZevf/WlFK5g0md23GE1fOJVOwHXC4RtXed8eVEwPGHiwrpCxuedWysTxSmhAK
-         F9v77CTAlhr1pXedBeQHT5oPrjCE61wq7apj5JyJN2UiFP8WayoeIKsjz7G9UV5h/kwu
-         OY9cyQjcprMEnma98cPo9Up3vhqBpz6OVR0Wa8RBSRdPNvcBqvcfeK179luVurwlZleF
-         ZyBg==
-X-Gm-Message-State: APjAAAXsGhfyB5o56HjdbpffZ++h/uIyqDMBYwnolm4PBKWZmpxcGLa4
-        rxCNTLDbbZnhWWNopGmy6ita1Dzk
-X-Google-Smtp-Source: APXvYqzy2339FfIdWvw6wBOL0oBrsIBwwMti7++CoNdtYa5TbiGqBfp6UitFTD1wcfwR/UIlxKlf8Q==
-X-Received: by 2002:adf:dbcb:: with SMTP id e11mr15903716wrj.272.1565027827844;
-        Mon, 05 Aug 2019 10:57:07 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3mDgvv19Pjii0hkVqGjAHj9m2dmOLS10IHxekCbp94Q=;
+        b=ELDqmuE7v143vhNTXwB/7BPQao4fp5/ulKrTotGBb3xXTH+7HPA/y7p9sva9jj8u5d
+         2rSMm+T9jJtolzhCTx0DEqrggkl4VeeRBlWwEDVthZSBWVc/Ec7hwjFHynq1U/5JmbFQ
+         gR1lTz8mrIOOw+Cqqt2KwQtQ5aYNiW9NMFxWECuIJX+EeWV1W/izyUbX4cD9aOg9Ryp4
+         21DXUc2qYOEUhGFxEnTQ+WA+wQCTrcA/lfr+CZQU1mNxwFD8wsjFBizGP0YGoMOSNAD9
+         spgVSnTLDg1R/LAjR+aZ2/D+6nosN2yAMI+IRCWKeUSW2Af1QQnHmNa7QsuUvnaztzpk
+         TkDw==
+X-Gm-Message-State: APjAAAVo3BvwFircWiBTstFV4jOF7sm6/0uX/MDbSE43DKMJ6CPAXeOC
+        t8pjfZHl2RCsWoS7s4Cmog4=
+X-Google-Smtp-Source: APXvYqzttov8jvo2c2CswCMzqIIKFdLMSmT6hB3XHbEfsL83rt8FjAWGrfEJ1WsiuBmndzdGa+nrQQ==
+X-Received: by 2002:adf:efc8:: with SMTP id i8mr107911287wrp.220.1565028098337;
+        Mon, 05 Aug 2019 11:01:38 -0700 (PDT)
 Received: from szeder.dev (x4db4a28a.dyn.telefonica.de. [77.180.162.138])
-        by smtp.gmail.com with ESMTPSA id v23sm75896718wmj.32.2019.08.05.10.57.06
+        by smtp.gmail.com with ESMTPSA id n5sm63445003wmi.21.2019.08.05.11.01.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Aug 2019 10:57:06 -0700 (PDT)
-Date:   Mon, 5 Aug 2019 19:57:04 +0200
+        Mon, 05 Aug 2019 11:01:37 -0700 (PDT)
+Date:   Mon, 5 Aug 2019 20:01:36 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] commit-graph: error out on invalid commit oids in
- 'write --stdin-commits'
-Message-ID: <20190805175704.GC20404@szeder.dev>
-References: <20190805080240.30892-1-szeder.dev@gmail.com>
- <20190805080240.30892-4-szeder.dev@gmail.com>
- <ecdd6c01-5ee2-6869-4eb3-1eb45f4c335c@gmail.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, git@jeffhostetler.com
+Subject: Re: [RFC PATCH v2 2/2] trace2: don't overload target directories
+Message-ID: <20190805180135.GD20404@szeder.dev>
+References: <99e4a0fe409a236d210d95e54cd03fce61daa291.1564438745.git.steadmon@google.com>
+ <cover.1564771000.git.steadmon@google.com>
+ <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ecdd6c01-5ee2-6869-4eb3-1eb45f4c335c@gmail.com>
+In-Reply-To: <a779e272df958702c0df06ab58f1f6d6f8086a30.1564771000.git.steadmon@google.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 05, 2019 at 09:57:19AM -0400, Derrick Stolee wrote:
-> On 8/5/2019 4:02 AM, SZEDER Gábor wrote:
-> > While 'git commit-graph write --stdin-commits' expects commit object
-> > ids as input, it accepts and silently skips over any invalid commit
-> > object ids, and still exits with success:
-> > 
-> >   # nonsense
-> >   $ echo not-a-commit-oid | git commit-graph write --stdin-commits
-> >   $ echo $?
-> >   0
-> >   # sometimes I forgot that refs are not good...
-> >   $ echo HEAD | git commit-graph write --stdin-commits
-> >   $ echo $?
-> >   0
-> >   # valid tree OID, but not a commit OID
-> >   $ git rev-parse HEAD^{tree} | git commit-graph write --stdin-commits
-> >   $ echo $?
-> >   0
-> >   $ ls -l .git/objects/info/commit-graph
-> >   ls: cannot access '.git/objects/info/commit-graph': No such file or directory
-> > 
-> > Check that all input records are indeed valid commit object ids and
-> > return with error otherwise, the same way '--stdin-packs' handles
-> > invalid input; see e103f7276f (commit-graph: return with errors during
-> > write, 2019-06-12).
-> 
-> Consistency is good. We should definitely make these modes match.
+On Fri, Aug 02, 2019 at 03:02:35PM -0700, Josh Steadmon wrote:
+> +test_expect_success "don't overload target directory" '
+> +	mkdir trace_target_dir &&
+> +	test_when_finished "rm -r trace_target_dir" &&
+> +	(
+> +		GIT_TRACE2_MAX_FILES=5 &&
+> +		export GIT_TRACE2_MAX_FILES &&
+> +		cd trace_target_dir &&
+> +		test_seq $GIT_TRACE2_MAX_FILES >../expected_filenames.txt &&
+> +		xargs touch <../expected_filenames.txt &&
+> +		cd .. &&
+> +		ls trace_target_dir >first_ls_output.txt &&
+> +		test_cmp expected_filenames.txt first_ls_output.txt &&
 
-I was also wondering whether it would be worth accepting refs as well,
-either as DWIMery or only when a '--revs' option is given (similar to
-'git pack-objects --revs').  Dunno, I'm a bit hesitant about always
-accepting refs as a DWIMery, this is plumbing after all.  And I don't
-really care whether I correct my bogus command by replacing 'echo'
-with 'git rev-parse' or by adding a '--revs' argument; the important
-thing is that the command should tell me that I gave it junk.  And
-that would be a new feature, while this patch is a bugfix IMO.
+Nit: what's the purpose of this 'ls' and 'test_cmp'?
 
-> > Note that it should only return with error when encountering an
-> > invalid commit object id coming from standard input.  However,
-> > '--reachable' uses the same code path to process object ids pointed to
-> > by all refs, and that includes tag object ids as well, which should
-> > still be skipped over.  Therefore add a new flag to 'enum
-> > commit_graph_write_flags' and a corresponding field to 'struct
-> > write_commit_graph_context', so we can differentiate between those two
-> > cases.
-> 
-> Thank you for the care here.
+It looks like they check that xargs created all the files it was told
+to create.  I think that this falls into the category "We are not in
+the business of verifying that the world given to us sanely works."
+and is unnecessary.
 
-Well, to be honest, I wasn't careful... :)  but running the test suite
-with GIT_TEST_COMMIT_GRAPH=1 resulted in about a dozen failed test
-scripts that traced back to this.
-
+> +		GIT_TRACE2="$(pwd)/trace_target_dir" test-tool trace2 001return 0
+> +	) &&
+> +	echo git-trace2-overload >>expected_filenames.txt &&
+> +	ls trace_target_dir >second_ls_output.txt &&
+> +	test_cmp expected_filenames.txt second_ls_output.txt
+> +'
+> +
+>  test_done
