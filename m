@@ -8,146 +8,133 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA2B1F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 23:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEB871F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 23:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726238AbfHFXK5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 19:10:57 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34471 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbfHFXK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 19:10:57 -0400
-Received: by mail-pl1-f195.google.com with SMTP id i2so38488376plt.1
-        for <git@vger.kernel.org>; Tue, 06 Aug 2019 16:10:56 -0700 (PDT)
+        id S1726419AbfHFXNe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 19:13:34 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38367 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726334AbfHFXNe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 19:13:34 -0400
+Received: by mail-pl1-f193.google.com with SMTP id az7so38437321plb.5
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 16:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=3DYXS+aziMjgIoUjxKfhf4vygWdMswLcpciPfAT2bBM=;
-        b=RwgdEDJKKy+ctY1F5FSgsl8JslRjwWgJVS3r2NHGyB0rlrUo+5Hwq/IDsdjuSqx02y
-         PvvF7e+ckkoFvRm1M6IqJwa8fRmJ9POTJOLrJV9w+yXVZfHUt1+Jyu4/MaUJPo6uJ+d1
-         DDHTZ2fx2sE9ABthO9JkYcnBVO5ldh94ggnLXI4ZIXSB2KNsDnLVcJIobWt/rlUok7ZE
-         afqPaEeED5m41AaegsVLjoQlwENcjXkDc9qg47j4Ew4YI4HdaACEWEEnZ+6enHC68KRF
-         /EOl51TVtp997j8sjrw8gQDnPMbS9eYm3mgLY2dufnlG9E6zL0mSvBK4f9duwwFGqhZY
-         N7nw==
+        bh=VLmzMO5RMK8iJAYaUFHdZtqYJQNTwCTwaaJoBgFVQrs=;
+        b=TD92VfPHw9JCN/LQwq5wRNqYnYhjYTnlwJjeN2kfxNo1mYguEFMcYfVRaMY9WYaT4o
+         lNmZOf2pQ0MGyPlfq3SVdi+gQ0QDl17rIKydYWPr7fgNlFfU/12MwNEQYC2KDgDfjZo7
+         icfdUfgUoRoaIhZj8a99oYLT6wlWnykNNbJwJO2en5Da7KJ3SxZ3U/6NBddIGU6j1DvY
+         GoLtvGcHA0cBe2uL3D4O6b4lFOv7dUmqQzJ2/WOakj3/Vr7CRSNEJG+zMk/YJarKTlx8
+         njqI47TOYU4NuQ0gL/1gqx5L8fZFDP5TZhhkhz2Wrcyv7ck0uh7vSJ278/SfUTseZqAi
+         C5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3DYXS+aziMjgIoUjxKfhf4vygWdMswLcpciPfAT2bBM=;
-        b=uHnX0O6R7t8OIaRZWuzLvMbKP1AZscw9u6QNTlA5akC4pWgfnD4PnC/ZePF1aTbrkc
-         IRi72m9z3zFuf5DwwT1UXOS7XU5YDVmAG5ITYtt2BQlD9PEt6bTggRSchsnbsPa106cy
-         AvLqr0wyHtaFaOuH6pb7QX1qIdLywP9xPEoPEhyzbskokhw/Q5FiWzvCf85z8dsDRnJA
-         fMzKt7wIEFfjk6MuQN+b6ohwQFbub2Z3Y21PgYeG5nPnD3TIXSiQqd/eaQj7hR63t+R5
-         aQRuMjG/4L8ZcnKookP/ldEeKpACK7Lditd9dX+4OKjwSZeZalHppKhfFdQEPdyuEC8j
-         IkvA==
-X-Gm-Message-State: APjAAAU1cSS4CvQCYj9Gf5P1RxAuLD1tkYWRMaDoYzuYIhaWAZ8txKtD
-        qbhWRdjfACbwe+B5F9htYtDZAQ==
-X-Google-Smtp-Source: APXvYqzSDyFvoHcAz0e2cL9LETAQgRfDV4QrXZorMIN8IOu0EDClY4+WpSrxTQRL12+Rav8cN08mXg==
-X-Received: by 2002:a17:902:e30f:: with SMTP id cg15mr5507100plb.46.1565133055803;
-        Tue, 06 Aug 2019 16:10:55 -0700 (PDT)
+        bh=VLmzMO5RMK8iJAYaUFHdZtqYJQNTwCTwaaJoBgFVQrs=;
+        b=Tzp4DK5NL+YWQjhjYhcASSiqWR5K/jOnesn3dR4dRX1R4LIzx6bWK+Wf6GRmbTJhr8
+         WZTEVY7EaPjkviXnlopVrCTQL+uC0zFsgQzJfieHc6y66l1/+gF0yhMVJQThDUu0ImIM
+         LHRuUPnWRNw8eXcopfuorgIbGIGd3YB+TmfhUXbMMb3fgMLdxGtnS+gcm4rN48KLxx0w
+         So955NEX3r4KFiHvhyaIy7pGzJUqBfA0ccDP3WhMkZVSggfD2u/QMes/hOSbvfa9dnv6
+         hyoEcHIdEWiCyvl0zhhfASZ9ojksx2jTPQZU96HadJgFqbsy66ntSLEuGE8SS8gg6qtr
+         6jrg==
+X-Gm-Message-State: APjAAAUz92SSypn+vOAeUc/fedqiK51/jUQ/cR+nSmMmWvBlLQvpXPcS
+        Fi+CACVbtKlxDY6Pshs7w3UJCgkZl98pdA==
+X-Google-Smtp-Source: APXvYqwu2P16q9GyICCmp8uLAHX5Z6tU3siZybA+uh++tvcAeTin/VcWpjnqlBZvTNiplIsrEgGluQ==
+X-Received: by 2002:a17:902:b905:: with SMTP id bf5mr5016657plb.342.1565133213616;
+        Tue, 06 Aug 2019 16:13:33 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id n28sm2272220pgd.64.2019.08.06.16.10.54
+        by smtp.gmail.com with ESMTPSA id n98sm20712625pjc.26.2019.08.06.16.13.32
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 06 Aug 2019 16:10:54 -0700 (PDT)
-Date:   Tue, 6 Aug 2019 16:10:50 -0700
+        Tue, 06 Aug 2019 16:13:32 -0700 (PDT)
+Date:   Tue, 6 Aug 2019 16:13:28 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v3] documentation: add tutorial for revision walking
-Message-ID: <20190806231050.GA130824@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v3 00/13] example implementation of revwalk tutorial
+Message-ID: <20190806231328.GB130824@google.com>
 References: <20190701201934.30321-1-emilyshaffer@google.com>
- <20190724233253.208318-1-jonathantanmy@google.com>
+ <20190701202014.34480-1-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.1907251122260.21907@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190724233253.208318-1-jonathantanmy@google.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1907251122260.21907@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 24, 2019 at 04:32:53PM -0700, Jonathan Tan wrote:
-> Thanks - I think this is a useful guide to what can be a complicated
-> topic. It looks good overall; I just have some minor comments below.
+On Thu, Jul 25, 2019 at 11:25:02AM +0200, Johannes Schindelin wrote:
+> Hi Emily,
 > 
-> > diff --git a/Documentation/Makefile b/Documentation/Makefile
-> > index 76f2ecfc1b..91e5da67c4 100644
-> > --- a/Documentation/Makefile
-> > +++ b/Documentation/Makefile
-> > @@ -78,6 +78,7 @@ SP_ARTICLES += $(API_DOCS)
-> >  
-> >  TECH_DOCS += MyFirstContribution
-> >  TECH_DOCS += SubmittingPatches
-> > +TECH_DOCS += MyFirstRevWalk
+> On Mon, 1 Jul 2019, Emily Shaffer wrote:
 > 
-> Any reason why this is not in alphabetical order?
+> > Since v2, mostly reworded comments, plus fixed the issues mentioned in
+> > the tutorial itself. Thanks Eric for the review.
+> >
+> > Emily Shaffer (13):
+> >   walken: add infrastructure for revwalk demo
+> >   walken: add usage to enable -h
+> >   walken: add placeholder to initialize defaults
+> >   walken: add handler to git_config
+> >   walken: configure rev_info and prepare for walk
+> >   walken: perform our basic revision walk
+> >   walken: filter for authors from gmail address
+> >   walken: demonstrate various topographical sorts
+> >   walken: demonstrate reversing a revision walk list
+> >   walken: add unfiltered object walk from HEAD
+> >   walken: add filtered object walk
+> >   walken: count omitted objects
+> >   walken: reverse the object walk order
+> >
+> >  Makefile         |   1 +
+> >  builtin.h        |   1 +
+> >  builtin/walken.c | 297 +++++++++++++++++++++++++++++++++++++++++++++++
+> 
+> Since this is not really intended to be an end user-facing command, I
+> think it should not become a built-in, to be carried into every Git
+> user's setup.
 
-No reason, will fix.
-
-> 
-> > +Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
-> > +
-> > +----
-> > +extern int cmd_walken(int argc, const char **argv, const char *prefix);
-> > +----
-> 
-> builtin.h no longer has "extern", so we can delete it.
-
-Done.
-
-> 
-> > +Add it to the `Makefile` near the line for `builtin\worktree.o`:
-> > +
-> > +----
-> > +BUILTIN_OBJS += builtin/walken.o
-> > +----
-> 
-> In the first line, change the backslash to a slash. (The line in
-> Makefile for "builtin/worktree.o" uses a forward slash as expected.)
-
-Done, not sure how this got in there. Thanks!
+It's not intended to be checked into Git source as-is.
 
 > 
-> > +NOTE: For a more exhaustive overview of the new command process, take a look at
-> > +`Documentation/MyFirstContribution.txt`.
-> > +
-> > +NOTE: A reference implementation can be found at TODO LINK.
-> 
-> I think you have a reference implementation at
-> https://github.com/nasamuffin/git/tree/revwalk?
+> Instead, I would recommend to implement this as a test helper.
 
-Yep, although it's not very fresh. I was hoping to wait for a way for us
-to check in the reference implementation to Git source, although that
-can wait and the off-project branch is maybe OK for now.
+I'm not sure I follow how you imagine this looking, but the drawback I
+see of implementing this in a different way than you would typically do
+when writing a real feature for the project is that it becomes less
+useful as a reference for new contributors.
 
 > 
-> > +We'll start by enabling all types of objects in the `struct rev_info`. Unless
-> > +you cloned or fetched your repository earlier with a filter,
-> > +`exclude_promisor_objects` is unlikely to make a difference, but we'll turn it
-> > +on just to make sure our lives are simple. We'll also turn on
-> > +`tree_blobs_in_commit_order`, which means that we will walk a commit's tree and
-> > +everything it points to immediately after we find each commit, as opposed to
-> > +waiting for the end and walking through all trees after the commit history has
-> > +been discovered. With the appropriate settings configured, we are ready to call
-> > +`prepare_revision_walk()`.
-> > +
-> > +----
-> > +static void walken_object_walk(struct rev_info *rev)
-> > +{
-> > +	rev->tree_objects = 1;
-> > +	rev->blob_objects = 1;
-> > +	rev->tag_objects = 1;
-> > +	rev->tree_blobs_in_commit_order = 1;
-> > +	rev->exclude_promisor_objects = 1;
+> This would have the following advantages:
 > 
-> Optional: I think we should not bother with exclude_promisor_objects. If
-> the user really cloned with a filter, then every object would be a
-> promisor object and the revision walk should output nothing, which is
-> very confusing.
+> - it won't clutter the end user installations,
+> 
+> - it will still be compile-tested with every build (guaranteeing that
+>   the tutorial won't become stale over time as so many other tutorials),
 
-Sure, that makes sense. Ok, I removed it.
+This part of your suggestion appeals to me; so I'm really curious how
+you would do it. Do you have something else written in the way you're
+suggesting in mind?
 
-
-Thanks for looking - and for the patience with the latency on the reply.
+> 
+> - it really opens the door very wide to follow up with another tutorial
+>   to guide new contributors to write stellar regression tests.
+> 
+> Thanks,
+> Dscho
+> 
+> >  git.c            |   1 +
+> >  4 files changed, 300 insertions(+)
+> >  create mode 100644 builtin/walken.c
+> >
+> > --
+> > 2.22.0.410.gd8fdbe21b5-goog
+> >
+> >
+> >
