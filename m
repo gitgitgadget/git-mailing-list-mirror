@@ -2,120 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 124141F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 04:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C091F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 04:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbfHFETN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 00:19:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34946 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725853AbfHFETN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 00:19:13 -0400
-Received: (qmail 12191 invoked by uid 109); 6 Aug 2019 04:19:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Aug 2019 04:19:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31502 invoked by uid 111); 6 Aug 2019 04:21:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Aug 2019 00:21:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Aug 2019 00:19:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Lukas Gross <lukasgross@u.northwestern.edu>, git@vger.kernel.org
-Subject: Re: amend warnings with no changes staged
-Message-ID: <20190806041911.GA9243@sigill.intra.peff.net>
-References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
- <20190806013030.GA61803@google.com>
- <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
- <20190806021618.GC61803@google.com>
+        id S1731511AbfHFEwk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 00:52:40 -0400
+Received: from mail-lf1-f41.google.com ([209.85.167.41]:42876 "EHLO
+        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725798AbfHFEwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 00:52:40 -0400
+Received: by mail-lf1-f41.google.com with SMTP id s19so59882474lfb.9
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 21:52:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+l5sFDOOlxsNTZODUD8gyUJb74oS/kvma1IsctA0KBQ=;
+        b=A62sphZIIq6Z8cgQtNmprpfFkfTY9OrUY1mHJskYyJwUc3VH3snUigOk7j0qmZ8AUS
+         PcHmKWeTX+eTJJH+YsoUus5VFUqGUEevLRn9O1ekOkfRZ/rDE14iGIRS9XGB82hqTD4C
+         vxxMH+3hXRDH3sJ6jLbI/sqQnnpBXAnizkMCBqVlVUYmci97tHR7hpU77Q3CfpYvjI1Q
+         c7qep5fXFb1bX7O77iN7nQmd5pOpd4ne6LpSAy1vrGXKTf7UfcBvEYgZ7njX840ixpDI
+         P0pwOQOwqdFVnSWXc3KRJhuiPhF3xB4jOryesI2/74ioVxlDBzwABkl/aJcMTLTCUn5g
+         Etpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+l5sFDOOlxsNTZODUD8gyUJb74oS/kvma1IsctA0KBQ=;
+        b=Q/jNGiu/JoViLGMbWZNiO1DjOWH75nzsPTxirMPxsg1wku+9eTvcuczWf0N0gUB681
+         VISnsNK+MBIW0b88JgvKKkw2HbKnS3SunmstkMtQ4mupZXyrB/5syLn35EvkMw8B862H
+         rexn3nFYJFg7vHHdFqZUyg2pvJSveQXQNxH5CfZGvggTcX5Kcl2U2uyNwJqC1Myz85Ig
+         KkekS47XO0H2K2plGyUYa9NWeoqCpQoCZkJs1qsB7Kgyyf1YkttXAV2vbbGqVFHnZ1sO
+         VlEpMfM6kZDUwVHEc5esB5xQh9ncFFrDADI+NEyUWBobRRFuh2HnLaWnawL7c7KZDeuH
+         bi4g==
+X-Gm-Message-State: APjAAAUxg/9/VIm4SW46ChqHKUsK4MN9JikkOaTx80DF3iOGDXNqz7Wh
+        QbGjzxh61mkGiZbBwlFLItUpbNvm5sOD4Qjt/J27Rr/p
+X-Google-Smtp-Source: APXvYqxxZxVNZcmaPPLfuMOU0ObubOTwscNWCbQ+j5SXI6UQ1NhiMqC99TFGNRtgetg12WPhAL+TiMwNTIAmxGsGUtQ=
+X-Received: by 2002:a19:c20b:: with SMTP id l11mr920359lfc.106.1565067158268;
+ Mon, 05 Aug 2019 21:52:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190806021618.GC61803@google.com>
+References: <20190806014935.GA26909@google.com>
+In-Reply-To: <20190806014935.GA26909@google.com>
+From:   Andrew Ardill <andrew.ardill@gmail.com>
+Date:   Tue, 6 Aug 2019 14:52:02 +1000
+Message-ID: <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
+Subject: Re: RFC - Git Developer Blog
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 05, 2019 at 07:16:18PM -0700, Jonathan Nieder wrote:
+On Tue, 6 Aug 2019 at 11:51, Emily Shaffer <emilyshaffer@google.com> wrote:
 
-> Lukas Gross wrote:
-> 
-> > I had intended to stage commits but forgot to do so. Git responded
-> > with a normal commit creation message, so I pushed to the remote to
-> > begin a CI build. When the build failed for the same reason, I
-> > realized I had forgotten to stage the changes. An additional line in
-> > the response to the effect of “Warning: did you mean to amend with no
-> > changes?” would be very helpful to shorten this feedback loop.
-> 
-> On second thought:
-> 
-> 	$ git commit --amend --no-edit
-> 	[detached HEAD 33a3db8805] Git 2.23-rc1
-> 	 Author: Junio C Hamano <gitster@pobox.com>
-> 	 Date: Fri Aug 2 13:12:24 2019 -0700
-> 	 2 files changed, 2 insertions(+), 1 deletion(-)
-> 	$
-> 
-> Some non-judgemental descriptive output like
-> 
-> 	$ git commit --amend --no-edit
-> 	No changes.
-> 	$
-> 
-> would address this case, without bothering people who are doing it
-> intentionally.  So I think there's room for a simple improvement here.
-> 
-> Care to take a stab at it?  builtin/commit.c would be the place to
-> start.
+> Are folks interested in writing and reviewing this kind of content?
 
-I'm not clear on the situation from your second change. There are two
-sets of changes to talk about here: the changes between the new commit
-and its parent, and the changes between the original commit and the
-amended version.
+The idea sounds great, and I would be happy to review content - even
+if it's only for readability and spelling!
 
-The output in your first example is showing the differences to the
-parent. Do you mean in the second example that there are no changes to
-the parent, and thus we say "No changes"? If not, then what happened to
-that output? :)
+In terms of collaborating, I've found the processes over at Git Rev
+News[0] straightforward and sensible, if you're looking for ideas.
 
-And if so, then I don't think it is solving Lukas's problem. I imagine
-the issue to be (because I have done this myself many times):
+Regards,
 
-  git commit -m 'buggy commit'
-  echo fix >>file.c
-  git commit --amend ;# oops, should have been "-a"
-  git push
+Andrew Ardill
 
-But perhaps that gets to the heart of the matter. Could we perhaps be
-providing a more detailed summary of what happened for an --amend? I.e.,
-to summarize _both_ sets of changes (and if one set is empty, say so)?
-
-I'm not quite sure how to make that readable. Something like:
-
-  $ git commit --amend
-  [master 5787bce] some commit subject
-   Date: Tue Aug 6 00:03:28 2019 -0400
-  Changes introduced by this commit (diff HEAD^):
-   1 file changed, 1 insertion(+)
-   create mode 100644 added-by-broken-commit
-  Changes from the amend commit (diff HEAD@{1}):
-   1 file changed, 1 insertion(+)
-   create mode 100644 added-during-amend
-
-is pretty ugly. And anyway, because it's just the diffstat total, it's
-hard to see whether it contains your changes or not (i.e., would you
-notice if you forgot to stage 3 lines from some random file). OTOH, if
-the common case we care about is just "you didn't stage anything as part
-of the amend", then it would be enough to let you know (without making a
-judgement about whether it's an error, since it may well be that you
-were simply rewording the commit message).
-
--Peff
+[0] https://git.github.io/rev_news/rev_news/
