@@ -7,78 +7,103 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682FE1F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 03:33:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA041F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 03:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730055AbfHFDdz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 23:33:55 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63548 "EHLO
+        id S1730097AbfHFDxH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 23:53:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52115 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728892AbfHFDdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 23:33:55 -0400
+        with ESMTP id S1728892AbfHFDxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 23:53:07 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 510EB8F48A;
-        Mon,  5 Aug 2019 23:33:53 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BE1198F5C2;
+        Mon,  5 Aug 2019 23:53:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zjV08XggR5YbC2CyAUUvqrCqdPI=; b=Qa6qn9
-        JMHvzxqe/xVuOtmJoQdi10JLbKYEBJYFMrQ4qrB7WKmTi7Lr+B3ocfViYKb19Aj+
-        aT0FrOQA4LmvejVOmeTOhKlRUyEXSd9EDfPCb1JUzIBZ4Z6xBtOo7XdmRYOWYPBs
-        3uEwCX2OM+dT2xPIrOY59k6QhDq0G5V3KXHmM=
+        :content-type; s=sasl; bh=AliTlr8lHKQZP2Nv8Sf3usOZnrc=; b=NPZuig
+        B18PYfhm7WswYjeljoc22DNyVh8/vbwoM0sOuaOywzo6T/VQlXsSX9m08U53YEsq
+        ByDV0jGmFrSnPYNNVVF1SW8T4bq+pcXqL7zm/4+qZgd2yv4/yGiwWhQ8DLZ5nRqe
+        HQolBRyKOaKyqZQcEpViEKE04N9Yjnr9Un4wo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yH9p1yDMdsAKaycobbnXQoBKcGURvlKd
-        H2PjtEJ8HH13xvg89GIKUONy5noB/1kQAyCQ1ebgStCYuCql2M9dJVDDut1Zyz5g
-        tSLVXQqe3SgPLChUyfYqAsnw0ghkr01h+HteWl1taggxrPrtjc1H1ZrLDPzSbcqi
-        HgSa6gKPnhY=
+        :content-type; q=dns; s=sasl; b=IzL8cjh1fRezsgOHvnIqu4a73twatje6
+        azN2B5AOI40OXDP0b9Q0tqC4akK2npQlKs1gMTNbSRdwEhv+5YVX4eQufLOTB3j8
+        0vuV79cYm/ZcEe0TnYPNg7mjuEB2e2Bejk5is3UrK0UHwTqBFQr5gxv3MmzPALlq
+        NL4l4X50sm8=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 498828F489;
-        Mon,  5 Aug 2019 23:33:53 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B70DC8F5C1;
+        Mon,  5 Aug 2019 23:53:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A9C08F488;
-        Mon,  5 Aug 2019 23:33:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C33998F5C0;
+        Mon,  5 Aug 2019 23:53:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: RFC - Git Developer Blog
-References: <20190806014935.GA26909@google.com>
-Date:   Mon, 05 Aug 2019 20:33:47 -0700
-In-Reply-To: <20190806014935.GA26909@google.com> (Emily Shaffer's message of
-        "Mon, 5 Aug 2019 18:49:35 -0700")
-Message-ID: <xmqqlfw7klwk.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Lukas Gross <lukasgross@u.northwestern.edu>, git@vger.kernel.org
+Subject: Re: amend warnings with no changes staged
+References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
+        <20190806013030.GA61803@google.com>
+        <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
+        <20190806021618.GC61803@google.com>
+        <xmqqtvavko1h.fsf@gitster-ct.c.googlers.com>
+        <20190806030026.GA8864@google.com>
+        <xmqqpnljkm3d.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 05 Aug 2019 20:53:00 -0700
+In-Reply-To: <xmqqpnljkm3d.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 05 Aug 2019 20:29:42 -0700")
+Message-ID: <xmqqh86vkl0j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 00EFC538-B7FB-11E9-A681-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B08D0E0E-B7FD-11E9-ABE2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In backchannels recently there has been some discussion about the idea
-> of a Git-project-blessed blog written by Git contributors, generally
-> covering usability tips or overviews of the internals of Git which the
-> general public tend to find confusing.
-> ...
-> The idea is that we could cover high level topics stringing together
-> multiple components or giving power user advice, which we can't really
-> do with the manpages.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Thoughts?
+>>>> Some non-judgemental descriptive output like
+>>>>
+>>>> 	$ git commit --amend --no-edit
+>>>> 	No changes.
+>>>> 	$
+>>>>
+>>>> would address this case, without bothering people who are doing it
+>>>> intentionally.  So I think there's room for a simple improvement here.
+>>>
+>>> I do that to refresh the committer timestamp.
+>>
+>> I do, too.  The proposal is, paraphrasing,
+>>
+>> 	$ git commit --amend --no-edit
+>> 	Ah, I see that you want me to refresh the committer timestamp.
+>> 	Done, as requested.
+>> 	$
+>
+> Ah, OK then.  I somehow misread "No changes." as an error message.
 
-Interesting.
+Well, on second thought, I think "fatal: no changes" that exits with
+non-zero, with "--force" as an escape hatch for those who want to
+refresh the committer timestamp, would probably be more in line with
+the expectation Lukas had when this thread was started, and I further
+suspect that it might be a bit more end-user friendly.
 
-I recall that I used to do the "Fun with ..." series back when I was
-more into use-case-exploration mode; writing those articles was fun,
-but it took a lot of time and quite an effort, so I stopped after
-writing enough.  
+It is a backward incompatible behaviour, but I suspect that if I
+were inventing "commit --amend" today, unlike 8588452c ("git-commit
+--amend: allow empty commit.", 2006-03-04), I probably would design
+it that way.  After all, failing and stopping is always a safer
+option than going ahead with or without a report.
 
-Making it a group effort may help by allowing writers and reviewers
-to encourage each other.
+I am not sure which one between "go ahead anyway but report" and
+"fail by default but allow forcing" I would prefer more.  At least
+not yet.  But I won't rule the latter out at this point.
+
+Thanks.
