@@ -7,100 +7,76 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AA5B1F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 17:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23BD11F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 17:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387480AbfHFRdv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 13:33:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35760 "HELO cloud.peff.net"
+        id S2387414AbfHFRiS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 13:38:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35776 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2387421AbfHFRdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 13:33:51 -0400
-Received: (qmail 20331 invoked by uid 109); 6 Aug 2019 17:33:51 -0000
+        id S1731830AbfHFRiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 13:38:18 -0400
+Received: (qmail 20365 invoked by uid 109); 6 Aug 2019 17:38:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Aug 2019 17:33:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Aug 2019 17:38:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4397 invoked by uid 111); 6 Aug 2019 17:36:11 -0000
+Received: (qmail 4448 invoked by uid 111); 6 Aug 2019 17:40:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Aug 2019 13:36:11 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Aug 2019 13:40:38 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Aug 2019 13:33:50 -0400
+Date:   Tue, 6 Aug 2019 13:38:17 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH 0/3] --end-of-options marker
-Message-ID: <20190806173349.GA4961@sigill.intra.peff.net>
+Message-ID: <20190806173817.GB4961@sigill.intra.peff.net>
 References: <20190806143829.GA515@sigill.intra.peff.net>
  <xmqqa7cml0s9.fsf@gitster-ct.c.googlers.com>
+ <000f01d54c75$1a8fe460$4fafad20$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa7cml0s9.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <000f01d54c75$1a8fe460$4fafad20$@nexbridge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 09:24:38AM -0700, Junio C Hamano wrote:
+On Tue, Aug 06, 2019 at 12:36:26PM -0400, Randall S. Becker wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > > This series provides an alternative to "--" to stop option parsing
+> > > without indicating that further arguments are pathspecs.
 > 
-> > It's hard for scripted uses of rev-list, etc, to avoid option injection
-> > from untrusted arguments, because revision arguments must come before
-> > any "--" separator. I.e.:
-> >
-> >   git rev-list "$revision" -- "$path"
-> >
-> > might mistake "$revision" for an option (with rev-list, that would make
-> > it an error, but something like git-log would default to HEAD).
+> Would this offer the opportunity to, in the long term, supply options to
+> external diff engines, for example?
 > 
-> Just to make sure I understand what I just read, let me paraphrase.
-> We would want to accept
+> Something like git diff --end-of-options --diff-opt1 --diff-opt2 -- a b
+
+I'd expect that to interpret "--diff-opt1" and "--diff-opt2" as
+non-option arguments, which in the context of git-diff means endpoints
+of the diff.
+
+So no, I don't think you can use it like you're asking here.
+
+> I'm just noodling here, wondering why otherwise
 > 
-> 	git rev-list --max-parents=4 \
-> 		--end-of-options \
-> 		--count -- docs/
+> git rev-list --max-parents=4  -- --count docs/
 > 
-> so that '--count' would go thru the usual "as we have -- later, it
-> must be a rev and we do not even disambiguate.  What does get_sha1()
-> say it is?" and "docs/" would be taken as a pathspec.
+> does not work. I thought -- was pretty specific in terms of turning off
+> interpretation. So is it not a defect that --count is being interpreted?
 
-Yes, that's how I'd expect that to be parsed.
+The command-line above means that "--count" is interpreted
+(unambiguously) as a path. The problem is that if you want it to be
+interpreted as a starting point for traversal, then it must come
+_before_ the "--".
 
-> "git rev-list --max-parents=4 --count -- docs/" would have treated
-> "--count" as an option and would error out due to lack of any
-> starting revision.
+> I have a fear for all my sub-teams who script with the assumption that --
+> has a specific meaning of stopping interpretation.
 
-Right. Though some options may have an impact even before rev-list would
-complain. For instance --output=foo (which is actually a diff option,
-but revision.c handles both) opens and truncates "foo" before rev-list
-realizes it doesn't have enough options.
-
-> On the other hand, "git log --count -- docs/" would take "--count"
-> as an option, but does not complain about lack of any revs.  It just
-> starts digging from HEAD and ends up ignoring the "--count" branch
-
-Correct.
-
-> (or is this feature meant to support tags?  As far as I recall, we
-> do not allow branch names that begin with a dash).
-
-We do forbid them via "git branch", but they are not forbidden by
-check-ref-format. So:
-
-  git update-ref refs/heads/-foo $oid
-
-works fine, and receive-pack is happy to accept it as a push.  I think
-it might be reasonable to forbid that, but we'd have to accept potential
-fallouts.
-
-That said, for the purposes of option injection, it actually doesn't
-matter whether the ref exists or not (or if it's even an allowed name).
-The problem is that the caller is feeding what it _thinks_ will be
-interpreted as a rev name, but it isn't. So yes, most of the time
-treating "--count" as a rev is nonsense and will fail. But the important
-thing is not so much that we do the right thing when you have a branch
-(or tag) with a funny name, but that we _don't_ do something dangerous
-or unexpected.
+Nothing about "--" is changed by my series; it will still stop option
+interpretation in rev-list and in other commands. But as before,
+rev-list (and other Git commands that use the revision.c parser) use it
+to separate revisions and pathspecs.  That's unlike how most other
+programs use "--", but that ship sailed for Git in 2005.
 
 -Peff
