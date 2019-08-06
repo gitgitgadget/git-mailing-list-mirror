@@ -2,84 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3091F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 18:15:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 440BA1F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 18:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732615AbfHFSPE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 14:15:04 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34686 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726373AbfHFSPE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 14:15:04 -0400
-Received: by mail-wm1-f65.google.com with SMTP id w9so9483916wmd.1
-        for <git@vger.kernel.org>; Tue, 06 Aug 2019 11:15:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jb5Sb/sWob5GBCsrohXTg+yO001LTK7GcmKJVEx6V6Y=;
-        b=s9969cX2gHpBj+kcufXfn/SzIOcbMFSDUZ4uGgyyZ5iqtdDsndf0i1RGDm2lgcjypM
-         +Rc/rbPaffP5getC1uR+2emZqF5fnf6fOMiNm0jVil/cC6jNVFOYAgMyrabq0Aboakvh
-         QDy5oIktt2gIiwH51BUUog6S3Ii9jn/k6FiFqHxZ764Tb75YQiubStovBVxczNm+BMrF
-         QhrjUJN3twuTFhUEWtcw1DVF42Uv/iB+7r6GJVfybHu3LSPZghOvvE7xhPM7wKmz+fMY
-         E+PtwC//Zrtyf92w1fHo+eyXWDOTO2+r4WMp/8L0MZ7o6pjb0LL1hjtdV2orx+ZvZE9M
-         olog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jb5Sb/sWob5GBCsrohXTg+yO001LTK7GcmKJVEx6V6Y=;
-        b=aGbapf1VEy5W+TH9QPvgXkmNcwEgk9Lktd6CF1vq2B9UVr5RPDnegOoP6+Nk5pCThX
-         ehzxmUAuwwSaw0w1tMAoIqzCBMT3Rg0kpM7X5l2gjNOLBdGPrzyIFoDK7u8QjtCdaEoe
-         ELLM7aWGulfLpZlFO6pNCFyQkCTnDmqpokCnhbzA+7qCrMm6Em29zgRKGZ/X7g0syBCU
-         +5GCfMVHnGDAVyFD1QEV20hDD7qhh7Cej6JL8Y1EtfYFgyfmHN7NGJUO1QrXKwli0Pg0
-         j7YdS3sYBEBGo/NgToh2+doB9OKQpR24iduAK5l9udZvOao60Vmy6QZHXMDMwskPwB86
-         5czA==
-X-Gm-Message-State: APjAAAUzlQHX+mlYsnITces/tfmlVsxuLREMAm4pdDNRaIuqn2kBV2AX
-        bctFI5Y5Oc9e1//aP1Iem+A=
-X-Google-Smtp-Source: APXvYqw69p8Qx6WONtoX35dil2GIlW0zWq324OmA0q24CHaJ2FVkddXR/BDAxMopQROkh3ngeZnfuQ==
-X-Received: by 2002:a05:600c:2111:: with SMTP id u17mr6228669wml.64.1565115302205;
-        Tue, 06 Aug 2019 11:15:02 -0700 (PDT)
-Received: from szeder.dev (x4dbe4c2a.dyn.telefonica.de. [77.190.76.42])
-        by smtp.gmail.com with ESMTPSA id t140sm18217401wmt.0.2019.08.06.11.15.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Aug 2019 11:15:01 -0700 (PDT)
-Date:   Tue, 6 Aug 2019 20:14:59 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] --end-of-options marker
-Message-ID: <20190806181459.GG20404@szeder.dev>
-References: <20190806143829.GA515@sigill.intra.peff.net>
- <xmqqa7cml0s9.fsf@gitster-ct.c.googlers.com>
- <000f01d54c75$1a8fe460$4fafad20$@nexbridge.com>
- <20190806173817.GB4961@sigill.intra.peff.net>
+        id S1729131AbfHFSWw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 14:22:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61832 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727549AbfHFSWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 14:22:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3AABA6D74F;
+        Tue,  6 Aug 2019 14:22:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UPUcp3ZtJUDQPyY5U9WUyDvwbVU=; b=d/MvgZ
+        u4RX4aSMkaPm/geggBxugmismvHDSV4K6uNN0J71qqkRJMaTsxxVzwXHVjaZqgTV
+        IQ1kNwOQLmKUG06l7r5l5c0+vAkFXmwdXDQtqoKM8dcL9D62ik1f0qO+wqvwz0JF
+        U9aGu19pj8gMdBefgZNnLaZtdSzPo2IoF8RQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XzvBaW/+6f+djzAjEKXjz+j7I7thAShD
+        1KB/ghQA5aakbfUQrB3aHZg+EWjEzeR1ImqNZh3bIOv5SsNHzTlz16vD4XWx6SHu
+        tJ1ByoVx98owuzAo5pbj4YPubpJ5G3i9s50OjPN9RSTAB5/YC4ZQ6OAphDx6qTMr
+        sTvBnz69xWw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 31A426D74E;
+        Tue,  6 Aug 2019 14:22:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 551E16D74D;
+        Tue,  6 Aug 2019 14:22:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
+References: <20190804143919.10732-1-me@yadavpratyush.com>
+        <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
+Date:   Tue, 06 Aug 2019 11:22:42 -0700
+In-Reply-To: <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
+        (Pratyush Yadav's message of "Tue, 6 Aug 2019 21:22:38 +0530")
+Message-ID: <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190806173817.GB4961@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2F2D1924-B877-11E9-ACA4-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 01:38:17PM -0400, Jeff King wrote:
-> Nothing about "--" is changed by my series; it will still stop option
-> interpretation in rev-list and in other commands. But as before,
-> rev-list (and other Git commands that use the revision.c parser) use it
-> to separate revisions and pathspecs.  That's unlike how most other
-> programs use "--", but that ship sailed for Git in 2005.
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-I'd like to draw attention to the oddball 'git filter-branch' command,
-which uses '--' as a separator between 'filter-branch' and 'rev-list'
-options.  Will it still work with this new option?  I think it will,
-but not sure.
+> If there are no comments/objections with this patch, can it be merged
+> please?
 
+It usually works the other way around (no comments by default means
+no interests), but sadly, a larger problem with this area is that
+there currently is nobody who is actively working on maintaining the
+'git-gui' project, which is a separate project that our tree merely
+pulls from time to time.  So we need to find a volunteer to run that
+project, send the patch in that direction and get it merged, and
+then finally we can pull from them X-<.
+
+
+
+
+>
+> On 8/4/19 8:09 PM, Pratyush Yadav wrote:
+>> If the toplevel window for the window being destroyed is the main window
+>> (aka "."), then simply destroying it means the cleanup tasks are not
+>> executed like saving the commit message buffer, saving window state,
+>> etc. All this is handled by do_quit so, call it instead of directly
+>> destroying the main window. For other toplevel windows, the old behavior
+>> remains.
+>>
+>> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+>> ---
+>>   git-gui/git-gui.sh | 19 +++++++++++++++++--
+>>   1 file changed, 17 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+>> index 6de74ce639..6ec562d5da 100755
+>> --- a/git-gui/git-gui.sh
+>> +++ b/git-gui/git-gui.sh
+>> @@ -3030,8 +3030,23 @@ unset doc_path doc_url
+>>   wm protocol . WM_DELETE_WINDOW do_quit
+>>   bind all <$M1B-Key-q> do_quit
+>>   bind all <$M1B-Key-Q> do_quit
+>> -bind all <$M1B-Key-w> {destroy [winfo toplevel %W]}
+>> -bind all <$M1B-Key-W> {destroy [winfo toplevel %W]}
+>> +
+>> +set m1b_w_script {
+>> +	set toplvl_win [winfo toplevel %W]
+>> +
+>> +	# If we are destroying the main window, we should call do_quit to take
+>> +	# care of cleanup before exiting the program.
+>> +	if {$toplvl_win eq "."} {
+>> +		do_quit
+>> +	} else {
+>> +		destroy $toplvl_win
+>> +	}
+>> +}
+>> +
+>> +bind all <$M1B-Key-w> $m1b_w_script
+>> +bind all <$M1B-Key-W> $m1b_w_script
+>> +
+>> +unset m1b_w_script
+>>     set subcommand_args {}
+>>   proc usage {} {
+>>
