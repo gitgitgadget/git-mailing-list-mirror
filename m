@@ -2,110 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59FBA1F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 22:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA2B1F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 23:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726238AbfHFW7A (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 18:59:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57312 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725974AbfHFW67 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Aug 2019 18:58:59 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC49C6047B;
-        Tue,  6 Aug 2019 22:58:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1565132338;
-        bh=L2JIYHIrZlOSTy1K6Dyf3xrNG819WDgJD8f+tcmAAFA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Hqn+6yaI/mjC4s1H2Wy4iPUAF441qdTIPS/ztPe4xmApZ85koD8ApbuLD6JsD1fxG
-         IiqoyKkTj4vNR1KacbRiB/pTiOm0T3+N77eCoWkh2hKzBCT6GrwL4jIKWlIxpICHmH
-         lXU614y2+F47Viy4IMjv1kD4PnEXA+PZjnAcC6lEPRLvBxSmkwTAv2QdEZO0Ku1vMs
-         h6yR18aorNYcR5HhrVrBvCskJ3Ud/V4ey+XsBMWxHX2sAQ4GRaNsRWaPZmD/TBt7YD
-         Rl++xuqjO/+65K1hFhPdEo0Sze7g8s4P5aR675vubUrzIxWsujUOCgoc0ukrjQvvuA
-         N9QwqDDtxjvJUJ5uNzaQrI6lfGwB1EoXfaHEHYGUrEUDyFN5DeG8tcZ/M0RLaS/CWQ
-         dW0TWBuZ3RRBxpBaWoVEargkfA6BhmOMbZ1SeexQOwhdMMHE0tM0LzFfyXq9HeGWig
-         y4aC21ScID73MbcbdJmI97+17UqpF40LrvmVCEJxWlZBFVs68/F
-Date:   Tue, 6 Aug 2019 22:58:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] --end-of-options marker
-Message-ID: <20190806225853.GH118825@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20190806143829.GA515@sigill.intra.peff.net>
+        id S1726238AbfHFXK5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 19:10:57 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34471 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfHFXK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 19:10:57 -0400
+Received: by mail-pl1-f195.google.com with SMTP id i2so38488376plt.1
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 16:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3DYXS+aziMjgIoUjxKfhf4vygWdMswLcpciPfAT2bBM=;
+        b=RwgdEDJKKy+ctY1F5FSgsl8JslRjwWgJVS3r2NHGyB0rlrUo+5Hwq/IDsdjuSqx02y
+         PvvF7e+ckkoFvRm1M6IqJwa8fRmJ9POTJOLrJV9w+yXVZfHUt1+Jyu4/MaUJPo6uJ+d1
+         DDHTZ2fx2sE9ABthO9JkYcnBVO5ldh94ggnLXI4ZIXSB2KNsDnLVcJIobWt/rlUok7ZE
+         afqPaEeED5m41AaegsVLjoQlwENcjXkDc9qg47j4Ew4YI4HdaACEWEEnZ+6enHC68KRF
+         /EOl51TVtp997j8sjrw8gQDnPMbS9eYm3mgLY2dufnlG9E6zL0mSvBK4f9duwwFGqhZY
+         N7nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3DYXS+aziMjgIoUjxKfhf4vygWdMswLcpciPfAT2bBM=;
+        b=uHnX0O6R7t8OIaRZWuzLvMbKP1AZscw9u6QNTlA5akC4pWgfnD4PnC/ZePF1aTbrkc
+         IRi72m9z3zFuf5DwwT1UXOS7XU5YDVmAG5ITYtt2BQlD9PEt6bTggRSchsnbsPa106cy
+         AvLqr0wyHtaFaOuH6pb7QX1qIdLywP9xPEoPEhyzbskokhw/Q5FiWzvCf85z8dsDRnJA
+         fMzKt7wIEFfjk6MuQN+b6ohwQFbub2Z3Y21PgYeG5nPnD3TIXSiQqd/eaQj7hR63t+R5
+         aQRuMjG/4L8ZcnKookP/ldEeKpACK7Lditd9dX+4OKjwSZeZalHppKhfFdQEPdyuEC8j
+         IkvA==
+X-Gm-Message-State: APjAAAU1cSS4CvQCYj9Gf5P1RxAuLD1tkYWRMaDoYzuYIhaWAZ8txKtD
+        qbhWRdjfACbwe+B5F9htYtDZAQ==
+X-Google-Smtp-Source: APXvYqzSDyFvoHcAz0e2cL9LETAQgRfDV4QrXZorMIN8IOu0EDClY4+WpSrxTQRL12+Rav8cN08mXg==
+X-Received: by 2002:a17:902:e30f:: with SMTP id cg15mr5507100plb.46.1565133055803;
+        Tue, 06 Aug 2019 16:10:55 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id n28sm2272220pgd.64.2019.08.06.16.10.54
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 06 Aug 2019 16:10:54 -0700 (PDT)
+Date:   Tue, 6 Aug 2019 16:10:50 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v3] documentation: add tutorial for revision walking
+Message-ID: <20190806231050.GA130824@google.com>
+References: <20190701201934.30321-1-emilyshaffer@google.com>
+ <20190724233253.208318-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TnYVF1hk1c8rpHiF"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190806143829.GA515@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
+In-Reply-To: <20190724233253.208318-1-jonathantanmy@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jul 24, 2019 at 04:32:53PM -0700, Jonathan Tan wrote:
+> Thanks - I think this is a useful guide to what can be a complicated
+> topic. It looks good overall; I just have some minor comments below.
+> 
+> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> > index 76f2ecfc1b..91e5da67c4 100644
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -78,6 +78,7 @@ SP_ARTICLES += $(API_DOCS)
+> >  
+> >  TECH_DOCS += MyFirstContribution
+> >  TECH_DOCS += SubmittingPatches
+> > +TECH_DOCS += MyFirstRevWalk
+> 
+> Any reason why this is not in alphabetical order?
 
---TnYVF1hk1c8rpHiF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No reason, will fix.
 
-On 2019-08-06 at 14:38:30, Jeff King wrote:
-> It's hard for scripted uses of rev-list, etc, to avoid option injection
-> from untrusted arguments, because revision arguments must come before
-> any "--" separator. I.e.:
->=20
->   git rev-list "$revision" -- "$path"
->=20
-> might mistake "$revision" for an option (with rev-list, that would make
-> it an error, but something like git-log would default to HEAD).
->=20
-> This series provides an alternative to "--" to stop option parsing
-> without indicating that further arguments are pathspecs.
+> 
+> > +Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
+> > +
+> > +----
+> > +extern int cmd_walken(int argc, const char **argv, const char *prefix);
+> > +----
+> 
+> builtin.h no longer has "extern", so we can delete it.
 
-Sorry, I hadn't had a chance to look at this series in depth, but I was
-wondering: could we not just accept two separate "--" arguments, and if
-there are two of them, interpret the first with the traditional meaning
-and the second with the Git-specific meaning? That would be much more
-intuitive for folks, although I suspect it would take a little more work
-in the options parser.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Done.
 
---TnYVF1hk1c8rpHiF
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> > +Add it to the `Makefile` near the line for `builtin\worktree.o`:
+> > +
+> > +----
+> > +BUILTIN_OBJS += builtin/walken.o
+> > +----
+> 
+> In the first line, change the backslash to a slash. (The line in
+> Makefile for "builtin/worktree.o" uses a forward slash as expected.)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Done, not sure how this got in there. Thanks!
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1KBi0ACgkQv1NdgR9S
-9ouTjA/8CBDSftUyUs2RcOBZXHdaPDtAeF3X39lxwFGrl0IheFVFr8nAHbBPFYMA
-YeLspEWQI2dkpCyCSF8/qC5IkcZg2I0RwougaNRLzNHDgxfe30gza3IWBkrhz30S
-DWcvRSkTIiC805IeB4PzaniRS6XGg7anX9Jsj6QuVZgTO6g5PjKZfspyXQ9hxMgm
-kEld2eeMR5bRZD0LESpmHiZiK5lZbNHc3IJAaYRpQOHRnkiOHv3bKFHo8z5rWIbC
-r12fgDslvEpLR4YYjR0a04D8xj7A1eSYI4toPpnVf4jC7A0Mi5O6W9aiRwVI1MDj
-3sjhZfeonGU5fAijpCdgm5luH4XEvX/KiFT0zdi6KGFtZfs/Kz1G4AycxCf3TdCc
-UZ7pDvQtzcUKWv+KFPL8bJ8aHdIzADuvW5w4WT1qaAaFk7zOmCjsKvwnV1nbaZgw
-Ny4rZ7YaF6wlmi1CIGFPII8gtqI5hnCJkA6h3Wk637fdIYX1ZUHVSmx7AYBsXzuS
-sPdFFHDDTdDG/i5A+KXKHBXaP2EdJg+qwW6TBN3E1W2GA27WKotJ8QOiKgTVHF3T
-9Qz18dsi4nqCuFKpiG+kIuSQ9EZWFAMFe5/mHqjkE3r3RLY5LSS4yQynqfNC/KW4
-huUQVIuaUSrM4XuU5oh26/c3dR/5m/Dp1KDnxzUwZsgErLJ+saM=
-=OdnV
------END PGP SIGNATURE-----
+> 
+> > +NOTE: For a more exhaustive overview of the new command process, take a look at
+> > +`Documentation/MyFirstContribution.txt`.
+> > +
+> > +NOTE: A reference implementation can be found at TODO LINK.
+> 
+> I think you have a reference implementation at
+> https://github.com/nasamuffin/git/tree/revwalk?
 
---TnYVF1hk1c8rpHiF--
+Yep, although it's not very fresh. I was hoping to wait for a way for us
+to check in the reference implementation to Git source, although that
+can wait and the off-project branch is maybe OK for now.
+
+> 
+> > +We'll start by enabling all types of objects in the `struct rev_info`. Unless
+> > +you cloned or fetched your repository earlier with a filter,
+> > +`exclude_promisor_objects` is unlikely to make a difference, but we'll turn it
+> > +on just to make sure our lives are simple. We'll also turn on
+> > +`tree_blobs_in_commit_order`, which means that we will walk a commit's tree and
+> > +everything it points to immediately after we find each commit, as opposed to
+> > +waiting for the end and walking through all trees after the commit history has
+> > +been discovered. With the appropriate settings configured, we are ready to call
+> > +`prepare_revision_walk()`.
+> > +
+> > +----
+> > +static void walken_object_walk(struct rev_info *rev)
+> > +{
+> > +	rev->tree_objects = 1;
+> > +	rev->blob_objects = 1;
+> > +	rev->tag_objects = 1;
+> > +	rev->tree_blobs_in_commit_order = 1;
+> > +	rev->exclude_promisor_objects = 1;
+> 
+> Optional: I think we should not bother with exclude_promisor_objects. If
+> the user really cloned with a filter, then every object would be a
+> promisor object and the revision walk should output nothing, which is
+> very confusing.
+
+Sure, that makes sense. Ok, I removed it.
+
+
+Thanks for looking - and for the patience with the latency on the reply.
