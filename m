@@ -8,146 +8,133 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44311F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 21:00:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13E581F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 21:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726018AbfHFVAW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 17:00:22 -0400
-Received: from mail-pf1-f179.google.com ([209.85.210.179]:36127 "EHLO
-        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbfHFVAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 17:00:21 -0400
-Received: by mail-pf1-f179.google.com with SMTP id r7so42169118pfl.3
-        for <git@vger.kernel.org>; Tue, 06 Aug 2019 14:00:21 -0700 (PDT)
+        id S1726068AbfHFVHM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 17:07:12 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34615 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726016AbfHFVHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 17:07:12 -0400
+Received: by mail-pg1-f196.google.com with SMTP id n9so36011902pgc.1
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 14:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DW0HzSJR/Pq2tt9V6wQMZUr93JebXgvSvbB4hVlFKYU=;
-        b=EgFKTBgQN5vXhoaAFwlCTF8Z9uY8ts5/ejhBSUpmDtkX75ApMrT+LSW9k9Ng7/agu+
-         azxOFktSGpMvnyZtBbTf6gv9qfEcVP2ehPIqrRhOshYnFaFo7Nb4Osn23ta4KO0xjhi0
-         I+1e/E/iqxAsZM2fBeo0XeFqfqpzk2HIWhWFVH07CW9LI1dph0T40CWZaD8sKvdfhok9
-         9gEq6x6lVlFepTJeBKQa/BNk+JGXt8F6fF6mae2nYGIuldiSkJw4B1gsFgQ4m5hFIGT3
-         cynp4KHAto/bhUfj4Bm4ntkyyYsW5o71p7LkyeK+l3xDhCXNUVhxedVOZ2HlrYyzzJUT
-         3s4g==
+        bh=gZxNSAdkfUq+mMUVC2wRqywpj9JXQi6J3/PvDAaLPsY=;
+        b=cyRvgwD8dy9VwlTcJ8659HyETAOm5ozCAxPz3la3ee5337pUqpYsb3woZQENgcC400
+         6jRnYvtC4gFHDqf9mMhG5baKZTgvxojCIcYN/GBOEKTAop8AoQqHa78Khuv4G9Kv8Urj
+         tKYa6pxoJdyN9taWq7pQgNF+VK/UOFEbEE54h7W1hYGeWZBSHL2Q9unkQxKE8tI1LhMy
+         XWjTv5YwHF3rtVobdQqG5SG/Q64aSxVbnsBd7cHqayyeGTVjq4tyytDgp+gaEpn5Bgek
+         QHXy4Yu8WCeQjbkDke9TssYV9CVYCQfkXCrLShvAit56jAYMvGLPOUGXhfImlnf0iBvI
+         d56w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DW0HzSJR/Pq2tt9V6wQMZUr93JebXgvSvbB4hVlFKYU=;
-        b=hXxDrsebW6sEeroM2ccmPHI045fwwP6BKDx4uHxBnrIaHqI6Fptacgp9fz6s/dbief
-         SyUFBZ7qwcXbxfR6cGc9fmZWt1R9ztUB7O9aSVc7+GSqfxtLk6CpMrCdMf0yeYsWZSRi
-         hVYjv49K9XsAnwvCbEAhtGgK0fSMet88CEd9RNVnLAmi7s3TjlqT6YdxtNbXxhlBGjbh
-         z2kKlmtVQ1ZSAXjAbQH01ZsrPTgh8mFoXeDAeLaw7ZBPCYYTskObSLr1M7JT8tCbnm2l
-         glikWE3uB3xevLJmEGyqLN6Gv7jPH5wK5mbmykJ9qcHeZFpB40isQJIrRVktg+p4KLf2
-         2gYA==
-X-Gm-Message-State: APjAAAWNeJOuW/4/Q8dqSo6d+Dn9HI1pF1RMu7dMEsYmnzDKmELZquiW
-        hyf4ZLDMoOUNgR4PuSTaMCjfrw==
-X-Google-Smtp-Source: APXvYqzWsom63m/tBFEoSez0Q4dmiBVpGVz8VwIK5C6aLj2eCL6oraQqy8niL/6AIkEhtNJt3hEYmg==
-X-Received: by 2002:a62:be0c:: with SMTP id l12mr5727229pff.224.1565125220341;
-        Tue, 06 Aug 2019 14:00:20 -0700 (PDT)
+        bh=gZxNSAdkfUq+mMUVC2wRqywpj9JXQi6J3/PvDAaLPsY=;
+        b=qwSKI5l5PsmfhG3nBm/2tkMtVlIp2I9VeP8ATEtxb/bKGjgpJHJGssk86L8183WjVX
+         omKjN3413PJJk/di4Ox/8lq+4dpByI8NC0dwTeUTZkZjca4yHbnYDDnhih2ens4+Z2XV
+         f9XW8k50fYFpepmpYxJjvDDcUCpQyaJALgysycXPPVXK+dlitJeMmN/h9+LzdmwjUsCW
+         lRgKJKQqvu4tEChkFzHag1i2Haq2F7IT+/DbWNz+QuUGjtryd4FydbU9VagGGmQw7HER
+         itTebz2ShZc9asYKFnwgmPYOpoHIKjQkBAQs/0sbayV+U8+dQL7fTnfRWqyBS5qyp8bV
+         Tu1Q==
+X-Gm-Message-State: APjAAAXK4wYA5MNsNYdWR8vJJXOsFv720d6RVuR/2vTUZHKVhDQg5LEn
+        oyYEUmCCU4UullkCVUYS2tbbgw==
+X-Google-Smtp-Source: APXvYqxQ+ld46n7TZWjVw6lJGTbyx4IwkqJxiCJvOqq4zH6nBXeMaywpYPx5mfjEdOxeJGFXwS0Svg==
+X-Received: by 2002:a65:60cd:: with SMTP id r13mr4859006pgv.315.1565125630675;
+        Tue, 06 Aug 2019 14:07:10 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id d15sm45606846pjc.8.2019.08.06.14.00.19
+        by smtp.gmail.com with ESMTPSA id z63sm62819933pfb.98.2019.08.06.14.07.09
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 06 Aug 2019 14:00:19 -0700 (PDT)
-Date:   Tue, 6 Aug 2019 14:00:15 -0700
+        Tue, 06 Aug 2019 14:07:10 -0700 (PDT)
+Date:   Tue, 6 Aug 2019 14:07:05 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Andrew Ardill <andrew.ardill@gmail.com>, git <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>
 Subject: Re: RFC - Git Developer Blog
-Message-ID: <20190806210015.GB196191@google.com>
+Message-ID: <20190806210705.GC196191@google.com>
 References: <20190806014935.GA26909@google.com>
- <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
- <e97608ed-1900-e2c0-c20d-e73586c1fdd5@gmail.com>
+ <xmqqlfw7klwk.fsf@gitster-ct.c.googlers.com>
+ <CAP8UFD1XNGWf8=_LvrEsFswZdw5pydk2VyVWxWvwALfhVbBOsg@mail.gmail.com>
+ <20190806132730.GC18442@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e97608ed-1900-e2c0-c20d-e73586c1fdd5@gmail.com>
+In-Reply-To: <20190806132730.GC18442@sigill.intra.peff.net>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 08:19:15AM -0400, Derrick Stolee wrote:
-> On 8/6/2019 12:52 AM, Andrew Ardill wrote:
-> > On Tue, 6 Aug 2019 at 11:51, Emily Shaffer <emilyshaffer@google.com> wrote:
+On Tue, Aug 06, 2019 at 09:27:30AM -0400, Jeff King wrote:
+> On Tue, Aug 06, 2019 at 06:59:21AM +0200, Christian Couder wrote:
+> 
+> > When Git Rev News was started I thought that there could be such a
+> > group effort to encourage each other to publish articles in it, but I
+> > must say that outside the group of editors (currently Jakub, Markus,
+> > Gabriel and me) it hasn't happened much.
 > > 
-> >> Are folks interested in writing and reviewing this kind of content?
-> 
-> I am interested in writing and reviewing! Here are some topics I am
-> interested in writing:
-> 
-> * Updates to the commit-graph feature
-> * What is a multi-pack-index and what is it for?
-> * Git at Scale: What makes a repo big, and how to avoid it?
-> * Advanced Git config settings
-> 
-> Here are some topics I'd be interested in seeing in the wild
-> (and was considering writing them myself if I didn't see them elsewhere):
-> 
-> * Partial clone: what, why, and how?
-> * Life cycle of a patch series
-> * Crafting perfect patches with interactive add and rebase
-Oh, I'd love to write one on interactive add and rebase. Maybe it's
-weird to have a favorite Git feature, but mine's add -p :)
-
-Since we're volunteering, my todo list for my personal blog also
-contains:
-
- - How to use bisect
- - How to use Git pathspecs
-
-I also have a couple pre-existing personal blog posts on
-nasamuffin.github.io:
-
- - How to use git format-patch and git send-email for mailing list based
-   reviews
- - Overview of Git object types
-
-> 
-> It would also be helpful to have a post for every major release
-> highlighting new features and giving users examples of how to use them.
-> Taylor has been writing these on the GitHub blog [1], but maybe he
-> would be interested in writing them for this new venue?
-> 
-> [1] https://github.blog/2019-06-07-highlights-from-git-2-22/
-> 
-> > The idea sounds great, and I would be happy to review content - even
-> > if it's only for readability and spelling!
+> > Each month though there are a small number of people helping on
+> > smaller things like short news, typos, releases, etc. And people who
+> > are interviewed are doing a great job when they accept to be
+> > interviewed.
 > > 
-> > In terms of collaborating, I've found the processes over at Git Rev
-> > News[0] straightforward and sensible, if you're looking for ideas.
+> > Maybe it's also not clear that we could accept other kind of articles
+> > than just articles focused on what happens on the mailing list. I
+> > think we have generally tried to highlight articles by Git developers
+> > that were published on their blogs or their company's blog though.
+
+Wow, I definitely didn't realize that was an option - I have a couple of
+Git-centric personal blog posts I probably would have sent along. Oops.
+
 > 
-> I agree that the review process there is helpful, and users contributing
-> edits via PRs to a feature branch works quite well. I would also suggest
-> writing a "request for review" on the mailing list before merging any
-> pull requests.
+> I think the audience may be a bit different for Rev News versus a blog.
+> I'd expect the blog to be written for people who use Git, and want to
+> learn how to use new features, or maybe broaden their understanding of
+> it. Rev News seems a lot more technical to me, and mostly of interest to
+> people who are part of the development community.
+
+I wonder, though, whether it helps enforce the ephemeral nature of blog
+posts like this: "Here is an interesting topic, which is valid as of
+2.whatever, and we probably aren't going to come back and update this at
+3.0 release."  (At least, that's the kind of maintenance I'd prefer to
+do for this kind of blog. :) )
+
 > 
-> One goal I think would be important is that this blog is that the posts
-> come with some amount of blessing from "the Git Dev Community". That is,
-> they should be service-agnostic and focused on helping _all_ Git users.
+> Which isn't to say those two things can't co-exist on a site[1] or a
+> blog. But I think there needs to be some way for people to subscribe to
+> one but not the other. Because I suspect that too many posts about the
+> development process would drive away users who would be interested in
+> the less-technical posts.
 
-By this do you mean "not about how to use Git with Github", or "not
-about how to use Git for Windows"? I initially read it as the latter but
-I think you mean the former, right?
+That's a good point, and one I wouldn't have considered since I don't
+use RSS to subscribe to things anymore :) It seems reasonable, to me, to
+roll up all this stuff under git-scm domain - because it wasn't clear to
+me that git-scm existed primarily to host Pro Git. I thought it was "the
+official Git website" until only very recently. Perhaps I didn't read
+well enough. :)
 
-I believe there's a lot of value in the former - lately it seems to me
-like the lines are really blurred between which parts are Git and which
-parts are Github. It'd be nice to clear up some of that confusion and
-writing pieces concerning "vanilla Git".
+There does seem like a reasonable case to have a separation between Pro
+Git, Rev News, and this blog thing.
 
-> That said, I also suggest that the authors can list their professional
-> affiliation as some minimum amount of credit to their employers. Something
-> as simple as "Author: Derrick Stolee, Microsoft" would go a long way to
-> justifying the work it takes to write these on the community blog and not
-> a company-owned blog.
-
-Yes, I agree - this seems to have a double win of lending credibility to
-the author and giving good optics for the company. Plus, as mentioned
-before, crossposting seems like a good fit here.
-
->  
-> Thanks,
-> -Stolee
+> 
+> -Peff
+> 
+> [1] By the way, Rev News lives over at git.github.io, but there's no
+>     reason it couldn't be integrated (from the user's perspective) with
+>     the git-scm.org site.
+> 
+>     I wouldn't want it in the same repo for technical reasons, but it
+>     could be revnews.git-scm.com or similar (and possibly styled in a
+>     similar way).
+> 
+>     If you're happy with it separate, I have no objections. I just
+>     wanted to make it clear it's an option.
