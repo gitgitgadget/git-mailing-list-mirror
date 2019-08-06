@@ -2,94 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F0191F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 15:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AAAB1F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 15:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730028AbfHFPwo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 11:52:44 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:55367 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729161AbfHFPwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 11:52:43 -0400
-X-Originating-IP: 157.45.201.163
-Received: from localhost.localdomain (unknown [157.45.201.163])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id E2F1860007;
-        Tue,  6 Aug 2019 15:52:40 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190804143919.10732-1-me@yadavpratyush.com>
-Message-ID: <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
-Date:   Tue, 6 Aug 2019 21:22:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2387460AbfHFPyt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 11:54:49 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:40788 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732676AbfHFPys (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 11:54:48 -0400
+Received: by mail-ed1-f54.google.com with SMTP id k8so82714018eds.7
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 08:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=+VJY0MgiXBSWZAzLrX7QZUP+VC7pEARLgP8+MkHcVNc=;
+        b=EkKtzkr0PLFOWCfn4YAqBxOkPw8EfG+rHZtoIpR465Bpta5lyN610RjSpIyvdz9XXd
+         r/7ax2/u1hepkChEnkSKtlnChGr10fVNdSa0R09ZCt4FZoc/tr0P9i1PpEz92QpCg6NX
+         Q41ECOvygpwOJNg0ddDkdxj7mkohtrh+VUpB89s1zaMZCTfFRlq+EPGnVHbeEBLlwQgN
+         qj3zxxx3K7/BCyoXHihQvCzu5QdPhUIC+s7nqibizA7kL/je72QTG/nmYbnrKjnMpKAl
+         qin2QWtA2y68VmZNWSFwr3kRQ+1sqyvRY1F2QvZF2SvWQIdtCqlVFrVwQ1RMv84iJyfC
+         0HDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=+VJY0MgiXBSWZAzLrX7QZUP+VC7pEARLgP8+MkHcVNc=;
+        b=Ng1PJC0Lg4srVfBQf11bSsK9gKOSomlZQsoblFFflA8/u+Q0v8ksm8iY+iKFQZG8EY
+         cwhm7JhSqKHvg4Aq2E/70GuM1PdevASbaKNgP2fu1Wz6q194GHsdj1JoZKP1BkvNoXIc
+         qdTj/wPwBZwJ/LVV/qDoT23B3u6fs99P8HujweKJatUzd4VYSCn3kWT3MqpjK7uyXbOO
+         camh1Nmzco05jtKluRnbCp6VlwjmoITJIUrtPNBSLa+OVlb2j5UACU5DOykOwMXdZPdu
+         C3polGCmSlZfbWrRvGR4ZlpMdms9Iyi20ko9abhW4uYV4Pb5j/fjfRYWmVtSCFIVqRNu
+         ICWg==
+X-Gm-Message-State: APjAAAXTDTSBieHh4OeaspTApL6X8phPtXAluDADB8U1C+pqmYPfc8S4
+        +747WN1En9qf0CExKh6yeL0Luso2nfCOOoBGQxUTLSpTFr77/w==
+X-Google-Smtp-Source: APXvYqzPOHBfVg97hctGd5X4ge9dRIKS46NOLTp9CU76bGUyOQuNqGd2U6aJTrS7AM3jnGxwj17M0jgSJY23ke/I9G4=
+X-Received: by 2002:a17:906:31c9:: with SMTP id f9mr3945983ejf.168.1565106886671;
+ Tue, 06 Aug 2019 08:54:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190804143919.10732-1-me@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CADqa0D5wVWk2wa-raeVmCEhCqYznpba4TeUW_7UQOA0huR-RAg@mail.gmail.com>
+In-Reply-To: <CADqa0D5wVWk2wa-raeVmCEhCqYznpba4TeUW_7UQOA0huR-RAg@mail.gmail.com>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Tue, 6 Aug 2019 17:54:20 +0200
+Message-ID: <CABUeae9JhQ+JcNzYRMr40T2FTCJChYEz_riUr6Q1O5YO0uEDng@mail.gmail.com>
+Subject: Re: Suggestion: git clone should warn if repository has submodules
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If there are no comments/objections with this patch, can it be merged 
-please?
+On Tue, 6 Aug 2019 at 16:04, Jason Sewall <jasonsewall@gmail.com> wrote:
+>
+> Submodules are great, and I used them at work. The problem is, people
+> wind up cloning my repos without --recursive and then nothing works
+> for them, because  the submodules weren't populated and those
+> ultimately are needed to build my code.
 
-On 8/4/19 8:09 PM, Pratyush Yadav wrote:
-> If the toplevel window for the window being destroyed is the main window
-> (aka "."), then simply destroying it means the cleanup tasks are not
-> executed like saving the commit message buffer, saving window state,
-> etc. All this is handled by do_quit so, call it instead of directly
-> destroying the main window. For other toplevel windows, the old behavior
-> remains.
-> 
-> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> ---
->   git-gui/git-gui.sh | 19 +++++++++++++++++--
->   1 file changed, 17 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-> index 6de74ce639..6ec562d5da 100755
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -3030,8 +3030,23 @@ unset doc_path doc_url
->   wm protocol . WM_DELETE_WINDOW do_quit
->   bind all <$M1B-Key-q> do_quit
->   bind all <$M1B-Key-Q> do_quit
-> -bind all <$M1B-Key-w> {destroy [winfo toplevel %W]}
-> -bind all <$M1B-Key-W> {destroy [winfo toplevel %W]}
-> +
-> +set m1b_w_script {
-> +	set toplvl_win [winfo toplevel %W]
-> +
-> +	# If we are destroying the main window, we should call do_quit to take
-> +	# care of cleanup before exiting the program.
-> +	if {$toplvl_win eq "."} {
-> +		do_quit
-> +	} else {
-> +		destroy $toplvl_win
-> +	}
-> +}
-> +
-> +bind all <$M1B-Key-w> $m1b_w_script
-> +bind all <$M1B-Key-W> $m1b_w_script
-> +
-> +unset m1b_w_script
->   
->   set subcommand_args {}
->   proc usage {} {
-> 
+What you need is a simple document for your team that outlines the common
+Git workflow or README.md in root directory of your repositories with
+fat heading:
+
+## Clone
+
+```
+git clone --recursive ...
+```
 
 
+A team in another company may require non-recursive clones by default
+and warnings from git may be quite annoying. Given the fact there is not
+one but may valid "my way"-s available, acceptable and supported by Git,
+I think, babysitting behaviour is not quite aligned with its philosophy, is it?
+
+Best regards,
 -- 
-Regards,
-Pratyush Yadav
+Mateusz Loskot, http://mateusz.loskot.net
