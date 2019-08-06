@@ -8,119 +8,117 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86B461F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 12:03:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20F3C1F732
+	for <e@80x24.org>; Tue,  6 Aug 2019 12:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727259AbfHFMDK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 08:03:10 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:41925 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726092AbfHFMDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 08:03:10 -0400
-Received: by mail-yw1-f68.google.com with SMTP id i138so30718177ywg.8
-        for <git@vger.kernel.org>; Tue, 06 Aug 2019 05:03:10 -0700 (PDT)
+        id S1726713AbfHFMTT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 08:19:19 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:37616 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfHFMTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 08:19:19 -0400
+Received: by mail-yw1-f67.google.com with SMTP id u141so30732597ywe.4
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 05:19:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9GtSQcPJyUXVsYJB7iHfRET8XueBIDosx5lI66D5dsQ=;
-        b=GSJqAFAkCEVoFXFOiW7i6WnGcu+RcUBm6Ofrvb183JKtPST9lbfwWYPkBU2OelsYzD
-         01q1LOeb3L0y8u431MalvfydqSq0wjIIHXtTofOVxiKA9klAGQgE/yL7ADbkRQg+SbKW
-         nM+Rft2LqQowInUnnN4dBqJ3UPStAuOz7Fr2eMQ/YfjNWyUIUvH/8IF0AF3A0RAzgWCf
-         xI50Mr4sQISPJoUqvP+eZ2Qv5nSWg1qd+DwQvWqAlhQoHQCEUaADbUAcGOl9TQSsOekM
-         ZxVH2uD0WOQIMWEahoYeWB7QtXxBkSOnsuACQiQWks92C1+a1rI1TziHsjaLApM88FDP
-         mXhw==
+        bh=DNv6VnU2XLaNMct9teB+YcJuJEpw88muEdMVxMQCb6o=;
+        b=ScOfN//KIXpMVVebAgSa6mDhveq8Pw6iWkPY36nKZBhuWZVoMtvqZqihFEijZsVnY+
+         UiEDhy8brab03uB3C3XQ3nSaDHIWznW3Kgk8dy8sV4B/HSjG42GkwVO4D+socsDPqxMT
+         mwH3jI8xRvqRyxqvtjQA7T9e6BhqY+vVKxiN+z0CaVqxvseyxmDsAD3sZPcL8AL+HGwr
+         VWG5Iy4vPG1r5OSlsKJ5aWZYSE892sjV7nyGwylJuV0G5ic9HQdEddvp2WZULB4npiw8
+         wUcRjxMbaaXV32SDkf1mp+jbhh3JXpiXEfGIblmIhkOq1HwTirerw8nfMV1IaTc+b5e5
+         wTwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=9GtSQcPJyUXVsYJB7iHfRET8XueBIDosx5lI66D5dsQ=;
-        b=PAXygJHjnfwxFx8P2mtemhTrgOulvOYDDMfSCitYxu8++AAMXNOxpAvmUJxSUip5H4
-         0a2iMcrL/+HiR8vizaX2Mvv6itUfxWcGC0NT9Re4uUgTLHGjOswHRzV8OLdzzEyI29Rd
-         8f1+Pfefbpx6RCoaT0HtwutRId4gbPDdOzD6KdcIpv86UWc2mKgTxmQ0wAbNlINaIfjI
-         aWlTQMGSiiKX7yi6+fYpc6AtyBeKn9PF4q/4n8rYYVrq26oOzT2lextXgjcTqo8ciNTc
-         tAf/hJXoMB8VFXoSkQ7lJYiJaPWbcFSmNDnJEkRfSyRJYd+oe2e5Bb1FnA4fHRyNQN8v
-         A9kg==
-X-Gm-Message-State: APjAAAXWfpZ9nQlLHZFtSAD/iemdLI3ifihOf6A+QJcWNta7KN4SeVhP
-        Ymdupsz3/soGwwEom0rs/5o=
-X-Google-Smtp-Source: APXvYqz5CpDwkObS1R2IwGO8VmYfnre8DE1hgywj0wYu/Bhy4eJCqrnVnXSkttlnuMZG8f6eLn6KxA==
-X-Received: by 2002:a81:50c:: with SMTP id 12mr2130734ywf.380.1565092989642;
-        Tue, 06 Aug 2019 05:03:09 -0700 (PDT)
+        bh=DNv6VnU2XLaNMct9teB+YcJuJEpw88muEdMVxMQCb6o=;
+        b=opVmro1oLoiNIub5fy580TtC/xLypbqFuFgEcLYMy+rgX7j6XHKw/BBTw5LYzhUu4X
+         hGQpZmk8QS9Ch89PqRwaobH6tWgq11v7t3lU4osi1C7nZOwY6JcKsWwUfy8GFaQb/9Ns
+         7LPjpJabDOgRa6czTIM7AtGedlsVmaCMzxhupMiml+M0PocSIfu3cgu9YVD6Aed/iBe/
+         adGtT8Q1yP3o4KoV0kI1Cry1CpLQxxhwj6fGREM3hHGaVABaUDiPOJCXCN61UrOugoAp
+         tdJaIPur8ZykN4GOz/VXx381Qu/tUVqHJa+ZGTAXJl6eKvTcIh9lbzSA7XxQBQ5XowFu
+         e4Qw==
+X-Gm-Message-State: APjAAAW03OSaAgqjIa1mLRjGp98SuxGdkL6KKB9Q/hLqcdyPQPRTONT8
+        /PeQ7/D01K/XgeEL6g7JlXY=
+X-Google-Smtp-Source: APXvYqy3SXSzphFD9sdh78GDgb2Xh84rdxsNXqtAMD5tMdahjbAZSYQo1EWEJc69GsiSr9Crx0mnaw==
+X-Received: by 2002:a0d:d043:: with SMTP id s64mr2071743ywd.346.1565093958115;
+        Tue, 06 Aug 2019 05:19:18 -0700 (PDT)
 Received: from [192.168.1.12] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id 84sm20002488ywp.45.2019.08.06.05.03.07
+        by smtp.gmail.com with ESMTPSA id r10sm19772484ywh.8.2019.08.06.05.19.16
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Aug 2019 05:03:08 -0700 (PDT)
-Subject: Re: [PATCH 1/1] commit-graph: fix bug around octopus merges
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.308.git.gitgitgadget@gmail.com>
- <6e913ac2b6ddc080c7796e93f019243bbdce1dff.1565023420.git.gitgitgadget@gmail.com>
- <20190806092159.GE20404@szeder.dev>
+        Tue, 06 Aug 2019 05:19:17 -0700 (PDT)
+Subject: Re: RFC - Git Developer Blog
+To:     Andrew Ardill <andrew.ardill@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+References: <20190806014935.GA26909@google.com>
+ <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ec14865f-98cb-5e1a-b580-8b6fddaa6217@gmail.com>
-Date:   Tue, 6 Aug 2019 08:03:07 -0400
+Message-ID: <e97608ed-1900-e2c0-c20d-e73586c1fdd5@gmail.com>
+Date:   Tue, 6 Aug 2019 08:19:15 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
  Thunderbird/69.0
 MIME-Version: 1.0
-In-Reply-To: <20190806092159.GE20404@szeder.dev>
+In-Reply-To: <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/6/2019 5:21 AM, SZEDER Gábor wrote:
-> On Mon, Aug 05, 2019 at 09:43:41AM -0700, Derrick Stolee via GitGitGadget wrote:
+On 8/6/2019 12:52 AM, Andrew Ardill wrote:
+> On Tue, 6 Aug 2019 at 11:51, Emily Shaffer <emilyshaffer@google.com> wrote:
 > 
->> In such a case, the reading
->> process outputs the following message to stderr:
->>
->> 	warning: commit-graph chain does not match
->>
->> These warnings are output in the test suite, but ignored. By
->> checking the stderr of `git commit-graph verify` to include
->> the expected progress output, it will now catch this error.
-> 
-> There should be a better way to check this than relying on the number
-> of progress lines, e.g. 'git commit-graph verify' could print
-> something specific, like "Verified 3 commit-graph files, all OK", to
-> its standard output, and the test should check only that.  Or check
-> only that there is no warning on standard error.
-> 
-> On one hand, see the recent commits 077b979891 (t3404: make the
-> 'rebase.missingCommitsCheck=ignore' test more focused, 2019-06-24) and
-> bb431c3dad (t3420: remove progress lines before comparing output,
-> 2019-07-04), where we started to exclude the progress output from
-> verification in tests like this that are not specifically about
-> progress output.
-> 
-> On the other hand, one of my fun side-projects is to run some
-> semi-automated and souped-up CI builds of currently cooking topics,
-> which include a custom GETTEXT_POISON mode [1], where the poisoned
-> translated progress output in this new test looks like this [2]:
-> 
->   V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.: 100% (1/1),  d.o.n.e..
->   V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.: 100% (5/5),  d.o.n.e..
->   V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.:
->     100% (12/12),  d.o.n.e..
-> 
-> So this makes the progress lines almost twice as long, and as the last
-> commit-graph file contains double-digit commits, the length of the
-> progress line just happens to exceed the width of a 80 character
-> terminal, and gets line wrapped.  This throws off the line count
-> check, as there are now 4 lines on standard error instead of the
-> expected 3.
+>> Are folks interested in writing and reviewing this kind of content?
 
-Thanks for pointing out that the poison runs can change the number of lines.
-My intention was to ensure "we got the amount of output we expected" but it
-is enough to only use test_i18ngrep to check that no warnings occurred.
+I am interested in writing and reviewing! Here are some topics I am
+interested in writing:
 
+* Updates to the commit-graph feature
+* What is a multi-pack-index and what is it for?
+* Git at Scale: What makes a repo big, and how to avoid it?
+* Advanced Git config settings
+
+Here are some topics I'd be interested in seeing in the wild
+(and was considering writing them myself if I didn't see them elsewhere):
+
+* Partial clone: what, why, and how?
+* Life cycle of a patch series
+* Crafting perfect patches with interactive add and rebase
+
+It would also be helpful to have a post for every major release
+highlighting new features and giving users examples of how to use them.
+Taylor has been writing these on the GitHub blog [1], but maybe he
+would be interested in writing them for this new venue?
+
+[1] https://github.blog/2019-06-07-highlights-from-git-2-22/
+
+> The idea sounds great, and I would be happy to review content - even
+> if it's only for readability and spelling!
+> 
+> In terms of collaborating, I've found the processes over at Git Rev
+> News[0] straightforward and sensible, if you're looking for ideas.
+
+I agree that the review process there is helpful, and users contributing
+edits via PRs to a feature branch works quite well. I would also suggest
+writing a "request for review" on the mailing list before merging any
+pull requests.
+
+One goal I think would be important is that this blog is that the posts
+come with some amount of blessing from "the Git Dev Community". That is,
+they should be service-agnostic and focused on helping _all_ Git users.
+
+That said, I also suggest that the authors can list their professional
+affiliation as some minimum amount of credit to their employers. Something
+as simple as "Author: Derrick Stolee, Microsoft" would go a long way to
+justifying the work it takes to write these on the community blog and not
+a company-owned blog.
+ 
 Thanks,
 -Stolee
