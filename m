@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D66331F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 01:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E95841F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 01:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731260AbfHFBhr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Aug 2019 21:37:47 -0400
-Received: from mail-oi1-f180.google.com ([209.85.167.180]:43962 "EHLO
-        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728870AbfHFBhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Aug 2019 21:37:47 -0400
-Received: by mail-oi1-f180.google.com with SMTP id w79so64251173oif.10
-        for <git@vger.kernel.org>; Mon, 05 Aug 2019 18:37:47 -0700 (PDT)
+        id S1731119AbfHFBtm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Aug 2019 21:49:42 -0400
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:33252 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729921AbfHFBtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Aug 2019 21:49:41 -0400
+Received: by mail-pf1-f170.google.com with SMTP id g2so40576407pfq.0
+        for <git@vger.kernel.org>; Mon, 05 Aug 2019 18:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=u-northwestern-edu.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=YEY+TEyhUOeXQEhcznOg+XM4Fcfjv3QLZHqbpLfxiro=;
-        b=ELOD0TomLnqavDWhHfgCNLNIXVYIUr5vlUvLX5IP69YXU0DEzOnMHY5cfMtBuDw6GN
-         uAbCBxkEt7jynOC43+IEOC9SsUO6tcw32giR4Z5nb2MHt8meGNWHLj27FxvmJtWp2k/d
-         dh2pKndv2E3qR6qBpnWLfWoqsVGlr8Bzc0dKCXP3jKRRrGb48gvlPByOz/ia0feRaI3c
-         9OJY/gEUMXlrrqWKfvpUxhRlgzjh83Lgr4xDsZ+ubDbae01q4yLXdpYQw63w8LB5wREF
-         rue+HsdfdMILNE37pyDgUd96iY3LvtBIfG9B64aXmg0L9dz4PnMRByfyvm5rugtgNikt
-         kuhw==
+        d=google.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=FGQubuERHSyW/8agm4GcZYoT9AUxtj+NZJzAQYGPxp0=;
+        b=I230W/OnlAE6sWMjExphNVZiPQKJkFvuiL19aKXsEcdiSTsfwmTnFOWsTQ8Bbjb42G
+         +FD69spvB/9BAYk6VSYtDmZTdcugnWmm4oGDEXdLLsYthOfKcJV1AoOXJRu9KGVr8aNy
+         q/jHeqQ+R7JfBR3PSKBCNvSBZhHaGpxno5fRgu/FdPbJk8UQkd1Ese1pukWugcf5Dci9
+         NiqnXv8ak5IBo6ylrK8WmYhEH2smfJukXHN+sy690OoHN76kLqKGt+l6oPWnmGituTyy
+         zeoveyqcSGm3w3z4b5u4p61Rvc4WP1WbFinvUnLtLgXK2d1foJiP5jLs5iZdeGg++9sp
+         eEug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=YEY+TEyhUOeXQEhcznOg+XM4Fcfjv3QLZHqbpLfxiro=;
-        b=eQQUh4UT2UdnhUZ0gYakw8RIZrafXpIbzSipPigJQ2GLoQwDk3CVatpv5gHE2jL57v
-         D/qP/Bmx7NsOT5NLGj9+ZyktLfZxE6Chj/HTO0TV0MnO0+O5g8TTh1eAdhWM0aR/C3Ce
-         j1rZ+9NxCgZLw7eKOkwrvsmj8znumW62FFRg3sF029OcVKvghGWEWlvZDugxZppbENWf
-         niDxEpompNp7CYtYETQJQAJIJUUNYz2qveP+e5iLGVhc7YThcae1EKQ3nrSYID9AAuzo
-         hj0RTLVGQ51BhURumEsWrhYVR64JWmln2iq42OT6wzCIsRIM9FtghcZPmgq8oYYkUdkR
-         btBw==
-X-Gm-Message-State: APjAAAX4ifT+9rXoRB+r0CHreIOLLvn2pdDShPpooHyR5RhMrNehPMJ0
-        9Is6FwUkbP0UHqLwMWI7RYiwT0S+K9lYoHcFO/BdM6uyLRI=
-X-Google-Smtp-Source: APXvYqxaKKu+axIKqhVyxa0WXPwIGCBm5VGBofexCQJPX18Ptky5EeIyzcryt9v/76dWICoAgDQPwBbWADfbDma+qEU=
-X-Received: by 2002:aca:90d:: with SMTP id 13mr24382oij.126.1565055466670;
- Mon, 05 Aug 2019 18:37:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=FGQubuERHSyW/8agm4GcZYoT9AUxtj+NZJzAQYGPxp0=;
+        b=RXXWUUOC+8C0R6jZwzn60lWjMbE9tUbByPxz6604f9UO8M+6BwcmhA8+76JjwfegnG
+         z8RoopqpXSQdX9KFX+twXnYodWBdCJVNoqJT+eFcJ0vmKh2jkETHEcZJ/Oj6ZVjfoTnI
+         ufkdKZdTPR9MyqJXTqnp6ryBSBb/Ql0XKDxcZ0VAaHMgamJoOQwinyK068xb3SaGAP5d
+         /trRmLvGXkcsdUoybDMsDz0hfqHdTqWg9GAa6WCUG6wyyv6mW2j6jdQ8xhbuOQMURWgT
+         dM3sDuG5oPbLQJe2PxvATowYdjrj+6NvCshtK/iDFb5vnYouPTaUzYKVEtlCCzrevj6y
+         EKRQ==
+X-Gm-Message-State: APjAAAW99JwFFv5/Ylk2LPUlu65nTk1larbP73xEmSZmhABoN1XakmOc
+        UlSt92UnBr2lwiBiXK2/rD4gLDrHS8f/pQ==
+X-Google-Smtp-Source: APXvYqz90gUM4bQKCQA8rG+/QRqTHz4+xHXdOcriKdIpfZZrSOyyCjfNF3hrjM2uLtIYGv0SUbncyQ==
+X-Received: by 2002:a17:90a:2008:: with SMTP id n8mr633710pjc.4.1565056180247;
+        Mon, 05 Aug 2019 18:49:40 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id j12sm76950338pff.4.2019.08.05.18.49.39
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 05 Aug 2019 18:49:39 -0700 (PDT)
+Date:   Mon, 5 Aug 2019 18:49:35 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Subject: RFC - Git Developer Blog
+Message-ID: <20190806014935.GA26909@google.com>
 MIME-Version: 1.0
-Reply-To: lukasgross@u.northwestern.edu
-Received: by 2002:a4a:c543:0:0:0:0:0 with HTTP; Mon, 5 Aug 2019 18:37:45 -0700 (PDT)
-In-Reply-To: <20190806013030.GA61803@google.com>
-References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
- <20190806013030.GA61803@google.com>
-From:   Lukas Gross <lukasgross@u.northwestern.edu>
-Date:   Mon, 5 Aug 2019 18:37:45 -0700
-Message-ID: <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
-Subject: Re: amend warnings with no changes staged
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi all,
 
-I had intended to stage commits but forgot to do so. Git responded
-with a normal commit creation message, so I pushed to the remote to
-begin a CI build. When the build failed for the same reason, I
-realized I had forgotten to stage the changes. An additional line in
-the response to the effect of =E2=80=9CWarning: did you mean to amend with =
-no
-changes?=E2=80=9D would be very helpful to shorten this feedback loop.
+In backchannels recently there has been some discussion about the idea
+of a Git-project-blessed blog written by Git contributors, generally
+covering usability tips or overviews of the internals of Git which the
+general public tend to find confusing.
 
-Lukas
+Ideally, we could use a channel like this to make Git better understood
+in the rest of the world, in a less formal setting than the man pages or
+gittutorial. I think it would be valuable to have resources which have
+been reviewed and endorsed by the Git contributor community, in addition
+to individual company blogs. (It might even make sense for contributors
+who would normally post this kind of thing to their company blog to
+cross-post the content in both places.)
 
-On 8/5/19, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Lukas Gross wrote:
->
->> I have occasionally used git commit --amend without staging any
->> changes or modifying the commit message (--no-edit). Since this is
->> often done unintentionally, could amend warn when it is being used in
->> this way?
->
-> Can you say more about the context?  What were you trying to do when
-> you performed this operation?  What happened instead?
->
-> Thanks,
-> Jonathan
->
+Are folks interested in writing and reviewing this kind of content? Any
+ideas for where we may be able to host (maybe git-scm)? It could make
+sense to review contributions like this on the mailing list, so that we
+get the attention of those who wrote the features that are being covered
+in the blog posts - are we okay with the additional traffic?
 
+Some example topics, from the top of my head:
 
---=20
-*Lukas Gross*
-B.S. Computer Science | McCormick School of Engineering
-Northwestern University | Class of 2020
-(224) 522-9067
+ - Using `git worktree` Effectively
+ - Overview of the Git Object Store
+ - Finding Regressions with `git bisect`
+ - Life of a Git Remote Request
+
+The idea is that we could cover high level topics stringing together
+multiple components or giving power user advice, which we can't really
+do with the manpages.
+
+Thoughts?
+
+ - Emily
