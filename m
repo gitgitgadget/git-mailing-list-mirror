@@ -2,125 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F4751F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 19:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDB931F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 19:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726295AbfHFTE6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 15:04:58 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:36707 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725881AbfHFTE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 15:04:58 -0400
-X-Originating-IP: 157.45.34.62
-Received: from localhost.localdomain (unknown [157.45.34.62])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 0759AE0008;
-        Tue,  6 Aug 2019 19:04:54 +0000 (UTC)
-Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190804143919.10732-1-me@yadavpratyush.com>
- <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
- <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
-From:   Pratyush Yadav <me@yadavpratyush.com>
-Message-ID: <549ad583-5ca1-7096-f4ce-10e8a836f7f9@yadavpratyush.com>
-Date:   Wed, 7 Aug 2019 00:34:51 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726331AbfHFTMB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 15:12:01 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53489 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbfHFTMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 15:12:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CB3F384201;
+        Tue,  6 Aug 2019 15:11:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uVqYsJ0w9IVtiVlJL5VUN9nfMXY=; b=AYUr11
+        MF7KZRvqskOyPlNbX71bdBHmIiHh49CsPnvBsDYwZoyntBEt+hdhAABySlli+bWK
+        gTEe8aBz2o2PUO8CcGJWstAGRo48NRMnVZNcNragasilS4OAuu83u5ntWPYyHwTN
+        641tpgntukytcySfuhE69Hb2UnRgVYmGhsf4M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KXR21Qt5h62wMTjkkfmf1jrLCDX0zIIK
+        29+Gc50NR7sq0mnZ7gCbKYO33Q1c+Y6Sw25E7G/qLXDPeEa9Naxl40wq5uWGoHXb
+        A8uPt2mtZ5EeDSQDsp2oCQBKFnYTZG4k/K4cGdBJpAfCNm02JgFlFV2MY0NcyyUu
+        n1PNFNeXuqQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C35B7841FF;
+        Tue,  6 Aug 2019 15:11:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EFEE7841FE;
+        Tue,  6 Aug 2019 15:11:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Lukas Gross <lukasgross@u.northwestern.edu>,
+        git@vger.kernel.org
+Subject: Re: amend warnings with no changes staged
+References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
+        <20190806013030.GA61803@google.com>
+        <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
+        <20190806021618.GC61803@google.com>
+        <20190806041911.GA9243@sigill.intra.peff.net>
+Date:   Tue, 06 Aug 2019 12:11:53 -0700
+In-Reply-To: <20190806041911.GA9243@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 6 Aug 2019 00:19:11 -0400")
+Message-ID: <xmqqblx2jeh2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0E7CFC9C-B87E-11E9-88AD-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/6/19 11:52 PM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> 
->> If there are no comments/objections with this patch, can it be merged
->> please?
-> 
-> It usually works the other way around (no comments by default means
-> no interests), but sadly, a larger problem with this area is that
-> there currently is nobody who is actively working on maintaining the
-> 'git-gui' project, which is a separate project that our tree merely
-> pulls from time to time.  So we need to find a volunteer to run that
-> project, send the patch in that direction and get it merged, and
-> then finally we can pull from them X-<.
+Jeff King <peff@peff.net> writes:
 
-I'm not too optimistic on finding someone to run this project. I asked 
-on the list who the maintainer is [0], and no one came up. The repo at 
-[1] also seems abandoned.
+>   git commit -m 'buggy commit'
+>   echo fix >>file.c
+>   git commit --amend ;# oops, should have been "-a"
+>   git push
+>
+> But perhaps that gets to the heart of the matter. Could we perhaps be
+> providing a more detailed summary of what happened for an --amend? I.e.,
+> to summarize _both_ sets of changes (and if one set is empty, say so)?
+> ...
+> judgement about whether it's an error, since it may well be that you
+> were simply rewording the commit message).
 
-So if I fork the project, will you pull from my fork? If yes, what 
-exactly would I have to do? Make a set of changes and then ask on the 
-list for you to pull from my fork?
+Perhaps "git range-diff HEAD@{1}...HEAD" being an empty is a sign
+that either the user intentionally or accidentally did not do
+anything other than "touch"ing the commit.
 
-I am a relatively inexperienced programmer, and it feels like a kinda 
-big responsibility that I'm not sure I am ready for. But maybe you can 
-look at the changes from a high level POV before pulling, so there is 
-someone sanity checking my changes.
-
-[0] 
-https://public-inbox.org/git/35506bd2-aae9-6608-ed4d-a408e0c831b8@yadavpratyush.com/
-[1] https://repo.or.cz/w/git-gui.git/
-
-> 
->>
->> On 8/4/19 8:09 PM, Pratyush Yadav wrote:
->>> If the toplevel window for the window being destroyed is the main window
->>> (aka "."), then simply destroying it means the cleanup tasks are not
->>> executed like saving the commit message buffer, saving window state,
->>> etc. All this is handled by do_quit so, call it instead of directly
->>> destroying the main window. For other toplevel windows, the old behavior
->>> remains.
->>>
->>> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
->>> ---
->>>    git-gui/git-gui.sh | 19 +++++++++++++++++--
->>>    1 file changed, 17 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
->>> index 6de74ce639..6ec562d5da 100755
->>> --- a/git-gui/git-gui.sh
->>> +++ b/git-gui/git-gui.sh
->>> @@ -3030,8 +3030,23 @@ unset doc_path doc_url
->>>    wm protocol . WM_DELETE_WINDOW do_quit
->>>    bind all <$M1B-Key-q> do_quit
->>>    bind all <$M1B-Key-Q> do_quit
->>> -bind all <$M1B-Key-w> {destroy [winfo toplevel %W]}
->>> -bind all <$M1B-Key-W> {destroy [winfo toplevel %W]}
->>> +
->>> +set m1b_w_script {
->>> +	set toplvl_win [winfo toplevel %W]
->>> +
->>> +	# If we are destroying the main window, we should call do_quit to take
->>> +	# care of cleanup before exiting the program.
->>> +	if {$toplvl_win eq "."} {
->>> +		do_quit
->>> +	} else {
->>> +		destroy $toplvl_win
->>> +	}
->>> +}
->>> +
->>> +bind all <$M1B-Key-w> $m1b_w_script
->>> +bind all <$M1B-Key-W> $m1b_w_script
->>> +
->>> +unset m1b_w_script
->>>      set subcommand_args {}
->>>    proc usage {} {
->>>
-
-
--- 
-Regards,
-Pratyush Yadav
+"git commit --amend --[no-]range-diff" that shows what you changed
+with the amending may be an interesting possibility; I am not yet
+ready to seriously encourage anybody to explore it, though, because
+"git diff HEAD@{1}" is much easier to see what code got changed, but
+one (and probably only) downside is that it does not cover the
+change in the log message.
