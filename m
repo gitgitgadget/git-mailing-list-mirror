@@ -2,96 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52291F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 17:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8411F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 17:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732195AbfHFRUD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 13:20:03 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:17371 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726713AbfHFRUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 13:20:03 -0400
-Received: from localhost.localdomain (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 4358C2003C8;
-        Tue,  6 Aug 2019 19:19:57 +0200 (CEST)
-From:   =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] l10n: reformat some localized strings for v2.23.0
-Date:   Tue,  6 Aug 2019 19:19:52 +0200
-Message-Id: <20190806171952.15588-1-jn.avila@free.fr>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190730033512.7226-1-worldhello.net@gmail.com>
-References: <20190730033512.7226-1-worldhello.net@gmail.com>
+        id S1733234AbfHFR0G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 13:26:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60665 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729898AbfHFR0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 13:26:06 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5CF2166FA5;
+        Tue,  6 Aug 2019 13:26:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZVYGMU36OTqZMi5Iolkj5zPR0m0=; b=n8raIX
+        +EIY+yHQcmu2qq/YgXGiA54qCTN3AXBt/g4OCfdwLug/AsyeHThrzxB8zzmsuJN3
+        SBYNQVZgvS3r07AN7m+HXQbhE6H56XcxvBiXFM98pnh+eozXp1gc9flLGtglfV6e
+        Wq7JOFHAHOeEdYa94jstO2Vl3TvIJFIoUr5HQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=igDl3tc3pD7JBF37QmwDYD2qhBZGgC0v
+        Z2IhkmNdNa+ADR3T3Sd2276XPoSsY6957vPhS9mj7v6iJRpUhhPbQsN20wbbKUvI
+        0OernRXmHLO71ETJPP1jbrPb2SxZf7zt/MliExalzTpCh+wOWX6tfUQpajUoP3ZH
+        DdjDA5gDc60=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE050166FA4;
+        Tue,  6 Aug 2019 13:26:03 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13506166FA3;
+        Tue,  6 Aug 2019 13:26:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH 1/1] merge-recursive: avoid directory rename detection in recursive case
+References: <20190726220928.GG113966@google.com>
+        <20190805223350.27504-1-newren@gmail.com>
+Date:   Tue, 06 Aug 2019 10:26:02 -0700
+In-Reply-To: <20190805223350.27504-1-newren@gmail.com> (Elijah Newren's
+        message of "Mon, 5 Aug 2019 15:33:50 -0700")
+Message-ID: <xmqqwofqjjdh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 43DD05A8-B86F-11E9-842A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- builtin/checkout.c |  2 +-
- builtin/fetch.c    | 15 +++++++++++----
- 2 files changed, 12 insertions(+), 5 deletions(-)
+Elijah Newren <newren@gmail.com> writes:
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 91f8509f85..6123f732a2 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1769,7 +1769,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
- 	struct option *options;
- 	struct option restore_options[] = {
- 		OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>",
--			   N_("where the checkout from")),
-+			   N_("which tree-ish to checkout from")),
- 		OPT_BOOL('S', "staged", &opts.checkout_index,
- 			   N_("restore the index")),
- 		OPT_BOOL('W', "worktree", &opts.checkout_worktree,
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 53ce99d2bb..c8bf4c651b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -850,6 +850,15 @@ static int iterate_ref_map(void *cb_data, struct object_id *oid)
- 	return 0;
- }
- 
-+static char warn_show_forced_updates[] =
-+N_("Fetch normally indicates which branches had a forced update,\n"
-+   "but that check has been disabled. To re-enable, use '--show-forced-updates'\n"
-+   "flag or run 'git config fetch.showForcedUpdates true'.");
-+static char warn_time_show_forced_updates[] =
-+N_("It took %.2f seconds to check forced updates. You can use\n"
-+   "'--no-show-forced-updates' or run 'git config fetch.showForcedUpdates false'\n"
-+   " to avoid this check.\n");
-+
- static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			      int connectivity_checked, struct ref *ref_map)
- {
-@@ -1005,12 +1014,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 
- 	if (advice_fetch_show_forced_updates) {
- 		if (!fetch_show_forced_updates) {
--			warning(_("Fetch normally indicates which branches had a forced update, but that check has been disabled."));
--			warning(_("To re-enable, use '--show-forced-updates' flag or run 'git config fetch.showForcedUpdates true'."));
-+                  warning(_(warn_show_forced_updates));
- 		} else if (forced_updates_ms > FORCED_UPDATES_DELAY_WARNING_IN_MS) {
--			warning(_("It took %.2f seconds to check forced updates. You can use '--no-show-forced-updates'\n"),
-+			warning(_(warn_time_show_forced_updates),
- 				forced_updates_ms / 1000.0);
--			warning(_("or run 'git config fetch.showForcedUpdates false' to avoid this check.\n"));
- 		}
- 	}
- 
--- 
-2.22.0
+> I know this bug doesn't satisfy the normal criteria for making it into
+> 2.23 (it's a bug that was present in 2.22 rather than a regression in
+> 2.23), but given that it's a BUG() condition, I was hoping it is
+> important and safe enough to include anyway.
+
+For maintenance and upcoming release, a safer "fix" to do might be
+to also (in addition to this patch) flip the default to no to revert
+to the stable state before "directory renames" was introduced, while
+still allowing those who want to help can explore the right fix to
+this codepath.
+
+> (This fix does merge down cleanly to master, next, and pu.)
+>
+>  merge-recursive.c                   |   3 +-
+>  t/t6043-merge-rename-directories.sh | 111 ++++++++++++++++++++++++++++
+>  2 files changed, 113 insertions(+), 1 deletion(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d2e380b7ed..c7691d9b54 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -2856,7 +2856,8 @@ static int detect_and_process_renames(struct merge_options *opt,
+>  	head_pairs = get_diffpairs(opt, common, head);
+>  	merge_pairs = get_diffpairs(opt, common, merge);
+>  
+> -	if (opt->detect_directory_renames) {
+> +	if ((opt->detect_directory_renames == 2) ||
+> +	    (opt->detect_directory_renames == 1 && !opt->call_depth)) {
+
 
