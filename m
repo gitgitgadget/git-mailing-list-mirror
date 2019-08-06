@@ -2,200 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA57F1F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 08:50:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA641F731
+	for <e@80x24.org>; Tue,  6 Aug 2019 09:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732379AbfHFIuV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 04:50:21 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42582 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732375AbfHFIuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 04:50:18 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q10so41117695pff.9
-        for <git@vger.kernel.org>; Tue, 06 Aug 2019 01:50:18 -0700 (PDT)
+        id S1732418AbfHFJWG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 05:22:06 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39510 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730068AbfHFJWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 05:22:06 -0400
+Received: by mail-wm1-f65.google.com with SMTP id u25so65341093wmc.4
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 02:22:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AX+oD6CSNXB2/rV4itcTdb6S0R0+X1YRzRRXVlINCak=;
-        b=cD5u7u/Sgq0LTuRSFhHi857jj2zyzYIKPLNNZ053xiKOl7U2W62S4uAFMngwkpxvIb
-         0dWIQUAulp0OIvFDNh6+cYTITnlGX7rYqUHsYI648qhybOWiTQHcCZfQ592yAR8PPoCi
-         QQ99sgWl8lzRXN7UXTlBnomyMpVgSnUck0md+l1gBaoR3mU6PD44X1EqDcfZRTv6gtuK
-         Ov0Hib6f2aj0dk5wb4+G/FBU5A6Od4EFg7H47SnVHrgmJ1k59rdUexCMBYSIw4m6ELb/
-         mL7aAJR+xpUW5egiMlxeSp6LJ+/l5NWnmeny8VqJzIg+WiRmRZBWY+kOJlPzOS2FEkhc
-         +JWQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7vxElpLHclCKeHNV6hxrdZxwP/JLQKR1FkUyx9Nrc1s=;
+        b=s+B93cFGC46mEDkfmyqyRHLEUXjYS5sVSvBRUHuhUr2GNQG7XPqPpyyS+EQDdWD5Do
+         10pWSVri0Df9n+o3pWSs7OkRtKWZRCuAW3xrSPzCiE+8iFxp4nTI3LDjTQR25y/G6o+C
+         1Gd0He3FPM+xq3i+rpP0zDL4/cEcFilDrp4CFxPNLPTJnrJKGjOpUbqvyZRNAiqzNxOM
+         s+Hp1558K76dDw+TjYWuWSLMH7K8wZxqQ8DVpuubDHDy3a6MW0swgDWEGk25JV+1iwFO
+         P6CayUogO7HOaf4PxbV52Gh8qTCBS99WhZy4n/bF6Z4GVj9qLJVEHhJ77xCKT/6BWDDX
+         4oQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AX+oD6CSNXB2/rV4itcTdb6S0R0+X1YRzRRXVlINCak=;
-        b=LgzfQA2u1AQXmdH48PhymYBq7aHXzioabw9gOl/p9DPAyUa7ioX8i3b/J32YIDIr7k
-         Ge7C4TAOm7bD9nNbvlq9DYB7h7tKNHZaZoSEatrLs2Spsd8z0ybNWWBJ9wJmV55iJyfP
-         fU+VgQSZqXUHbwEWvohf0xSEBI1gu4aaKpopGVrIVsJd1INFFlB+Wj/r2LV4a7bQRYwx
-         ldnESAJ4cyGF7TaqQom89pQZkZeYUpGznDGoV2uNluFZv8qaAJ6c+qagv+OX6zaFWS75
-         ragZpr9c3eRvq0hItQEDO0I+h2c3K2kdu8mrmK6Pmon+pvRDeDSAEeYgNvPocAiX7pbZ
-         y1Mw==
-X-Gm-Message-State: APjAAAU3TaXYuJAdy8cPRiDFIfI0wzz1MlsD1a4GucRet3nyIH2l6tiO
-        rqPdLbK5PveUflDgGrdzmtUcQ/kbFuM=
-X-Google-Smtp-Source: APXvYqyBOWxjIcsASxZ3qzWaJZbKtT4xK9377duJBpWsKTMAaMifm1jWSo0WZ14bEDD3Pf1SmA4NGA==
-X-Received: by 2002:a62:82c1:: with SMTP id w184mr2600988pfd.8.1565081417603;
-        Tue, 06 Aug 2019 01:50:17 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id j5sm75743830pgp.59.2019.08.06.01.50.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Aug 2019 01:50:16 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
-Subject: [PATCH 2/3] grep: make PCRE2 aware of custom allocator
-Date:   Tue,  6 Aug 2019 01:50:13 -0700
-Message-Id: <20190806085014.47776-3-carenas@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc1
-In-Reply-To: <20190806085014.47776-1-carenas@gmail.com>
-References: <xmqq36ifmg7v.fsf@gitster-ct.c.googlers.com>
- <20190806085014.47776-1-carenas@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7vxElpLHclCKeHNV6hxrdZxwP/JLQKR1FkUyx9Nrc1s=;
+        b=U+ZtDD30mXAfuMIn1mmhDtnc3bvEEEb7m0s1/ZRsfF5ER2re7+G1qgC58kqumpBsLp
+         tgGtmn9B9o5TxJjl/gR0FAMtJrIWwNcQYY8CgwnMfowpJu32oW6BgPFBz1xkar7BPiGq
+         Etz8gxKb3jTKMAIpadjYHXocCpEKSwzzUjH8hocsmnYnX2/QA7b/D7gKxOUHnjVmtSts
+         xGeXxjKzD7trcj8SuasyJsSFLZPW85Iynx935cLMZxuok2TgUXjCccW5rYSQRjEupfpq
+         vwknC/mqSp5d1wMKoSJZJG6HKg05YX7N7bApMkbD6aZCN6JOUIHms8GToxzbk4J82J2r
+         L76A==
+X-Gm-Message-State: APjAAAW9K2VRPREBLrfcufQGF/A2d3kYEaXt4sI9zZX3n5ZjAzE2t8Ce
+        IaJQ5gLzwL6NBmwixH/9+AM=
+X-Google-Smtp-Source: APXvYqwESuG5fX2iDXnD9sjua17TFSJqyOo6HhvMgBxaxa/2PutttCBl4NtA61ERC1JjRZXqqVkFmg==
+X-Received: by 2002:a7b:cae9:: with SMTP id t9mr3602543wml.126.1565083323677;
+        Tue, 06 Aug 2019 02:22:03 -0700 (PDT)
+Received: from szeder.dev (x4dbe4c2a.dyn.telefonica.de. [77.190.76.42])
+        by smtp.gmail.com with ESMTPSA id i6sm86995021wrv.47.2019.08.06.02.22.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Aug 2019 02:22:02 -0700 (PDT)
+Date:   Tue, 6 Aug 2019 11:21:59 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] commit-graph: fix bug around octopus merges
+Message-ID: <20190806092159.GE20404@szeder.dev>
+References: <pull.308.git.gitgitgadget@gmail.com>
+ <6e913ac2b6ddc080c7796e93f019243bbdce1dff.1565023420.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6e913ac2b6ddc080c7796e93f019243bbdce1dff.1565023420.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most of the code stolen from[1] to easy on comparison and including
-the deficiency of setting the global context even for patterns that
-won't need it.
+On Mon, Aug 05, 2019 at 09:43:41AM -0700, Derrick Stolee via GitGitGadget wrote:
 
-Ideally, the call from grep_init could be moved to a place where it
-could be set without needing a lock and at least with this approach
-we have a place to clear it (which is obviously missing more callers,
-but at least shows how it will look for the grep subcommand)
+> In such a case, the reading
+> process outputs the following message to stderr:
+> 
+> 	warning: commit-graph chain does not match
+> 
+> These warnings are output in the test suite, but ignored. By
+> checking the stderr of `git commit-graph verify` to include
+> the expected progress output, it will now catch this error.
 
-I had also dropped most other users of the global context in a failed
-attempt to make the change smaller, but also to keep the current
-behaviour so that we could see the effect of enabling NED for PCRE2
-more clearly.
+There should be a better way to check this than relying on the number
+of progress lines, e.g. 'git commit-graph verify' could print
+something specific, like "Verified 3 commit-graph files, all OK", to
+its standard output, and the test should check only that.  Or check
+only that there is no warning on standard error.
 
-Sadly, that will likely require a Windows box, as NED (at least our
-version) is horribly broken in macOS (maybe it wasn't 64 bit clean)
-and in Linux builds, but I can't reproduce your crasher and it is
-most likely slower than the system malloc.
+On one hand, see the recent commits 077b979891 (t3404: make the
+'rebase.missingCommitsCheck=ignore' test more focused, 2019-06-24) and
+bb431c3dad (t3420: remove progress lines before comparing output,
+2019-07-04), where we started to exclude the progress output from
+verification in tests like this that are not specifically about
+progress output.
 
-[1] https://public-inbox.org/git/pull.306.git.gitgitgadget@gmail.com/
+On the other hand, one of my fun side-projects is to run some
+semi-automated and souped-up CI builds of currently cooking topics,
+which include a custom GETTEXT_POISON mode [1], where the poisoned
+translated progress output in this new test looks like this [2]:
 
-Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/grep.c |  1 +
- grep.c         | 31 +++++++++++++++++++++++++++++--
- grep.h         |  1 +
- 3 files changed, 31 insertions(+), 2 deletions(-)
+  V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.: 100% (1/1),  d.o.n.e..
+  V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.: 100% (5/5),  d.o.n.e..
+  V.e.r.i.f.y.i.n.g. .c.o.m.m.i.t.s. .i.n. .c.o.m.m.i.t. .g.r.a.p.h.:
+    100% (12/12),  d.o.n.e..
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 560051784e..e49c20df60 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1145,5 +1145,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		run_pager(&opt, prefix);
- 	clear_pathspec(&pathspec);
- 	free_grep_patterns(&opt);
-+	grep_destroy();
- 	return !hit;
- }
-diff --git a/grep.c b/grep.c
-index 0154998695..e748a6d68c 100644
---- a/grep.c
-+++ b/grep.c
-@@ -16,6 +16,20 @@ static int grep_source_is_binary(struct grep_source *gs,
- 
- static struct grep_opt grep_defaults;
- 
-+#ifdef USE_LIBPCRE2
-+static pcre2_general_context *pcre2_global_context;
-+
-+static void *pcre2_malloc(PCRE2_SIZE size, void *memory_data)
-+{
-+	return malloc(size);
-+}
-+
-+static void pcre2_free(void *pointer, void *memory_data)
-+{
-+	return free(pointer);
-+}
-+#endif
-+
- static const char *color_grep_slots[] = {
- 	[GREP_COLOR_CONTEXT]	    = "context",
- 	[GREP_COLOR_FILENAME]	    = "filename",
-@@ -153,6 +167,7 @@ int grep_config(const char *var, const char *value, void *cb)
-  *
-  * If using PCRE make sure that the library is configured
-  * to use the right allocator (ex: NED)
-+ * if any object is created it should be cleaned up in grep_destroy()
-  */
- void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
- {
-@@ -164,6 +179,10 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
- 	pcre_malloc = malloc;
- 	pcre_free = free;
- #endif
-+#ifdef USE_LIBPCRE2
-+	pcre2_global_context = pcre2_general_context_create(pcre2_malloc,
-+							pcre2_free, NULL);
-+#endif
- #endif
- 
- 	memset(opt, 0, sizeof(*opt));
-@@ -188,6 +207,13 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
- 		color_set(opt->colors[i], def->colors[i]);
- }
- 
-+void grep_destroy(void)
-+{
-+#ifdef USE_LIBPCRE2
-+	pcre2_general_context_free(pcre2_global_context);
-+#endif
-+}
-+
- static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
- {
- 	/*
-@@ -509,7 +535,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 
- 	if (opt->ignore_case) {
- 		if (has_non_ascii(p->pattern)) {
--			character_tables = pcre2_maketables(NULL);
-+			character_tables = pcre2_maketables(pcre2_global_context);
- 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
- 			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
- 		}
-@@ -560,7 +586,8 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 			return;
- 		}
- 
--		p->pcre2_jit_stack = pcre2_jit_stack_create(1, 1024 * 1024, NULL);
-+		p->pcre2_jit_stack = pcre2_jit_stack_create(1, 1024 * 1024,
-+					pcre2_global_context);
- 		if (!p->pcre2_jit_stack)
- 			die("Couldn't allocate PCRE2 JIT stack");
- 		p->pcre2_match_context = pcre2_match_context_create(NULL);
-diff --git a/grep.h b/grep.h
-index 1875880f37..526c2db9ef 100644
---- a/grep.h
-+++ b/grep.h
-@@ -189,6 +189,7 @@ struct grep_opt {
- void init_grep_defaults(struct repository *);
- int grep_config(const char *var, const char *value, void *);
- void grep_init(struct grep_opt *, struct repository *repo, const char *prefix);
-+void grep_destroy(void);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
--- 
-2.23.0.rc1
+So this makes the progress lines almost twice as long, and as the last
+commit-graph file contains double-digit commits, the length of the
+progress line just happens to exceed the width of a 80 character
+terminal, and gets line wrapped.  This throws off the line count
+check, as there are now 4 lines on standard error instead of the
+expected 3.
 
+
+[1] https://public-inbox.org/git/20181022202241.18629-1-szeder.dev@gmail.com/
+[2] https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/568120252#L4120
+    Note that the highlighted line is in the 'after failure' fold, and
+    your browser might unhelpfully fold it up before you could take a
+    good look.
+
+
+> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+> index 03f45a1ed9..99f4ef4c19 100755
+> --- a/t/t5324-split-commit-graph.sh
+> +++ b/t/t5324-split-commit-graph.sh
+> @@ -319,7 +319,9 @@ test_expect_success 'add octopus merge' '
+>  	git merge commits/3 commits/4 &&
+>  	git branch merge/octopus &&
+>  	git commit-graph write --reachable --split &&
+> -	git commit-graph verify &&
+> +	git commit-graph verify 2>err &&
+> +	test_line_count = 3 err &&
+> +	test_i18ngrep ! warning err &&
+>  	test_line_count = 3 $graphdir/commit-graph-chain
+>  '
+>  
+> -- 
+> gitgitgadget
