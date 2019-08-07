@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0331F731
-	for <e@80x24.org>; Tue,  6 Aug 2019 23:43:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6F071F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 01:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726663AbfHFXnV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Aug 2019 19:43:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36296 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726133AbfHFXnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Aug 2019 19:43:21 -0400
-Received: (qmail 23275 invoked by uid 109); 6 Aug 2019 23:43:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 06 Aug 2019 23:43:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7380 invoked by uid 111); 6 Aug 2019 23:45:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Aug 2019 19:45:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Aug 2019 19:43:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1727543AbfHGBIU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Aug 2019 21:08:20 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38171 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727532AbfHGBIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Aug 2019 21:08:20 -0400
+Received: by mail-pg1-f193.google.com with SMTP id z14so5280742pga.5
+        for <git@vger.kernel.org>; Tue, 06 Aug 2019 18:08:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ku2XohjEiCPcNDrPmPIQbI8oi5MM+Y6E28yhAw7EIB4=;
+        b=dKsZU9H2rPqLVF0XX8BR8OQyMc7I+/i5JVQiSX51EXPogof5K9MI/dhU1P3zXyGxTZ
+         Smn8vA17pp/W+aXPovFXYvOxauQd3Z+L2sDwpLELlSPoPbUqau4pC4XHhV18cZ6tGRs6
+         MrObs9ZUeRYvd8qaHM0VelBGOnc+zyT4ktxgrmUFg4pSbph4zr/SCXyrkGE86B/T5k2I
+         GUgVeDxCroHNuc74K9Med7zN4UqqMyLFeGOwDKf//CeJXJkCDem5wgNmIUZMBRCIh7oN
+         p87cEpdWblUG+oJBelbD3OXGDCSoPmY140AIqHTlQ1YlYpliH7ZvFr5yCp1azqPlREv7
+         yTlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ku2XohjEiCPcNDrPmPIQbI8oi5MM+Y6E28yhAw7EIB4=;
+        b=Lq/ClDQO/xSfIv+9VH1vsY8gQXboM0HgspWh02ImxTfpnGtkxzbZp3roMTfYDkDOD7
+         dDrAd9XO2T9NvZXStRdGEGC5XM/QIWl4wq2uSHGfQzc0u8o5gqJCsOQs71B/WWA/nk0Y
+         mLBlCG6rK8vtBdjwPjlZqKWMnX//GS1fDi6Hj2+wc602D6HjN58+J15Me19ZznxifVmV
+         gLcFc2Az5tFmi0Ct6w/vZextGTWbccyMEW4Yjce4Bt88/pIWeNUwLmTuteFWUNvR7yuW
+         Dej8FGXvRQcstxVofjtaqh7AVvmH3p4BxBE0ZChDzbM/uEOdXv2VhjlzVumcI3FFiXdq
+         iouw==
+X-Gm-Message-State: APjAAAW5BC2V8biRXXHL/hYechruGasUUb4X9tds46JVopxx7w7+vHQa
+        WNM2q9cmPualJvW0jSqujfY=
+X-Google-Smtp-Source: APXvYqy9gfAn9qpRqgbmZHP+bAxRdATwvBmMOUG9XGPYn9LJEOzGWiM8eRKm1X8mo0mM6KgXIl4gSA==
+X-Received: by 2002:a63:4a0d:: with SMTP id x13mr5339084pga.75.1565140099382;
+        Tue, 06 Aug 2019 18:08:19 -0700 (PDT)
+Received: from ar135.iitr.local ([103.37.200.217])
+        by smtp.gmail.com with ESMTPSA id p65sm88292420pfp.58.2019.08.06.18.08.16
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 06 Aug 2019 18:08:18 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] --end-of-options marker
-Message-ID: <20190806234319.GA19178@sigill.intra.peff.net>
-References: <20190806143829.GA515@sigill.intra.peff.net>
- <20190806225853.GH118825@genre.crustytoothpaste.net>
+Subject: Re: What's cooking in git.git (Aug 2019, #03; Tue, 6)
+Date:   Wed,  7 Aug 2019 06:35:16 +0530
+Message-Id: <20190807010516.9667-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <xmqqv9vahs6p.fsf@gitster-ct.c.googlers.com>
+References: <xmqqv9vahs6p.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190806225853.GH118825@genre.crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 10:58:53PM +0000, brian m. carlson wrote:
+Hi Junio
 
-> On 2019-08-06 at 14:38:30, Jeff King wrote:
-> > It's hard for scripted uses of rev-list, etc, to avoid option injection
-> > from untrusted arguments, because revision arguments must come before
-> > any "--" separator. I.e.:
-> > 
-> >   git rev-list "$revision" -- "$path"
-> > 
-> > might mistake "$revision" for an option (with rev-list, that would make
-> > it an error, but something like git-log would default to HEAD).
-> > 
-> > This series provides an alternative to "--" to stop option parsing
-> > without indicating that further arguments are pathspecs.
+On Tue, 06 Aug 2019 14:58:38 -0700 Junio C Hamano <gitster@pobox.com> wrote:
+>
+> [...]
+> * ra/rebase-i-more-options (2019-07-23) 4 commits
+>  - SQUASH???
+>  - rebase -i: support --committer-date-is-author-date
+>  - sequencer: add NULL checks under read_author_script
+>  - rebase -i: add --ignore-whitespace flag
 > 
-> Sorry, I hadn't had a chance to look at this series in depth, but I was
-> wondering: could we not just accept two separate "--" arguments, and if
-> there are two of them, interpret the first with the traditional meaning
-> and the second with the Git-specific meaning? That would be much more
-> intuitive for folks, although I suspect it would take a little more work
-> in the options parser.
+>  "git rebase -i" learned a few options that are known by "git
+>  rebase" proper.
+> 
+>  Needs a bit of fixups, at least.
+> [...]
 
-That also crossed my mind, but I think it opens up some complicated
-corner cases.  For instance, if I'm parsing left-to-right and see "--",
-how do I know which separator it is meant to be? I think the only rule
-that makes sense is that you must have two "--", like:
+This patch series was re-sent as a new topic, available here[1].
+Please, review and re-queue it.
 
-  git rev-list [options] -- [revs] -- [paths]
+Thanks
+Rohit
 
-but that means parsing the whole thing before we can interpret any of
-it. What kinds of tricks can an attacker play by putting "--" in the
-revs or paths areas? E.g., what does this mean:
+[1]: https://public-inbox.org/git/20190806173638.17510-1-rohit.ashiwal265@gmail.com/
 
-  # expanded from "git rev-list -- $revs -- $paths"
-  git rev-list -- --foo -- -- --bar --
-
-I think if we at least choose the left-most "--" as the official
-end-of-options then they can't inject an option (they can only inject a
-rev as a path). I guess that's the same as with --end-of-options. But it
-somehow feels less clear to me than a separate marker.
-
-It also doesn't allow this:
-
-  # allow paths and revs, with optional separator, but no more options
-  git rev-list --end-of-options "$@"
-
-though I'm not sure whether anybody cares.
-
--Peff
