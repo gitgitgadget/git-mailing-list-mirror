@@ -2,129 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF85A1F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 09:53:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 677BC1F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 10:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729179AbfHGJxZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 05:53:25 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36510 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728202AbfHGJxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 05:53:25 -0400
-Received: by mail-pl1-f195.google.com with SMTP id k8so40012335plt.3
-        for <git@vger.kernel.org>; Wed, 07 Aug 2019 02:53:25 -0700 (PDT)
+        id S1729284AbfHGKSj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 06:18:39 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:44707 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726685AbfHGKSi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 06:18:38 -0400
+Received: by mail-ot1-f67.google.com with SMTP id b7so51939536otl.11
+        for <git@vger.kernel.org>; Wed, 07 Aug 2019 03:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=w6CZhifYJ4BSyuCE5YfGskbQDZ2dfgRPvHYZYLB2BPY=;
-        b=g1jAkA/KFI/7ZKQXCVFgFHnfaXDmj4NydYPnfE5ZComGsF6ilUrUIsxrw2em0/w0ae
-         lNc6c9zcuLTsUD8BR82JgTBJHlnvkkBWo51GBsZEP9NRjAZuNYgqTatqW7woNT9w06dl
-         b6vOunwHMX9YLeyV6Nh7asJCc4nGTtu87dsS4SK0BejyfssKesS8g4kn3Xws4q5ccPsJ
-         BptclEjzi1TDhjM71a7MhWw7uNC0lZqEpXigEgd1ENJ/FXgEnqHO57Z5n1oouFJiChDn
-         pfky/6HMyua7gNwpjuHBlbGZD2ONh+cVjZ85bqnxaTGxNg9ghUXWxiM88pXLzkpmCtTm
-         AnDQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HDLXCyhs8wTAEU1UYv9CyuSUuk2wABNcxI603nGQUPM=;
+        b=GA3apxV0rowncX+NTgtMqVXFCQLIMvBdIo4buATY1NE8QLWRc4DVIBANUiO6nXItsE
+         cDZzlnWM0+2hR5K4/wXPvuKAYOpnKS2t/fRfxpfEiiRRGFxV00l7gWcSRySnmxbbogGv
+         jbLD3bzb9lPo1rh9ACV3w/An9080AMivIpj+dbbCV2znh0Hr4C2qlNunZd1RAzWXKXhE
+         5/6ONPIBGFgYQkrN8PQ9ad4IC8v3TX1d9oa7iLL2XKmu2lP5eKGub09ZHKhkMsqZJmy3
+         cRWuTOIa9Yns6hrLuDtsYozAmGq94qiH+wOdHqOXv+7KdjAy2TsDXHUCAblOJ6+2f6/0
+         Oo7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=w6CZhifYJ4BSyuCE5YfGskbQDZ2dfgRPvHYZYLB2BPY=;
-        b=XELtegXbs3GPodYFr5d2R1YJ8Hel/Hb4LYzKy3kV4wQEtO3+RU1NHpmDR9Dn7413Ez
-         kwmwm6QDEuhegEwOxnfJyhEkc6hY15MEykG40T+9GZZpu2YwNp88kXlUgr1PXxieS9zF
-         EQrAwiOgkseViB8gUjPIHfDuaI12+vpPUc+IcrT7qQr4me8l5M6YYVci7W3x2RKThv/b
-         xTI8LkTWci3240Tvq4OOk5F8tXfCLs+hBD4DsIbrehqJES2TeXzttk7xQFLM9JjY9k7N
-         ZRV+S4EUVVwp/BncnJ5dH24LLeqmc/JV7efDsl1pReQqB2bGpB5Xva0OJcDo1vOWecYU
-         N40w==
-X-Gm-Message-State: APjAAAVakkVXMMJK7HnFW3AFzvcOAf45K5HYma3mlPk3Ew7SELaTXVfw
-        TzuzORIX/XlXocKL1GP1Ntjd9N/kT2Q=
-X-Google-Smtp-Source: APXvYqz7Rmw2RSDoIU0Jqs3N1xOJlA1E+PsVLdzT7BK8ZA5B/gPfgxgDTUQaab+U0W3t1/aaBM5HFg==
-X-Received: by 2002:a17:902:b944:: with SMTP id h4mr7281755pls.179.1565171604661;
-        Wed, 07 Aug 2019 02:53:24 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id x128sm134047524pfd.17.2019.08.07.02.53.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Aug 2019 02:53:24 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HDLXCyhs8wTAEU1UYv9CyuSUuk2wABNcxI603nGQUPM=;
+        b=U6tX7ADNm2XzGXBFWBP2DyzFigkfRGsXDAATCzHI2UcOUmSbLLuz29t01YINdVpQZZ
+         wPQD6m1rf+S+Pct3z6UbfSF9q9rr8OHfSLwuXmHKZ6Uu6ApHcIsK3zyTtpIxslS7TMT3
+         ifEf8mKk0VQywWVL4XW1q2HFxAeVc3J+E2HpjvBCBTHftFrKIqYRjNUi7AokMHyrVO6H
+         IehlQdtja2VDuwmzRyPg1IIGsOQzM6zf/g0aMP7o0zkdwsVjKUQsPP3Vh1Nv/tPsu7e4
+         rII0rwFUvHseJyvRTCJ95xCRSQVGfZq0Q3hh0ZKy9YgSt200UPrh06Q2qfvyHpg2Q3eb
+         XPyQ==
+X-Gm-Message-State: APjAAAVkOFICEplmgHS9VJ1U3ujfstp7PKpRKyHK2S5Sq37YxwqVqjj5
+        lyX5Sr/uwpiksKwypMveWZtQVQ5DBKXLKh5VsO0PQW/f
+X-Google-Smtp-Source: APXvYqwy97zP9Ee/Beys5izlT76lCIVMFldQ9ayJS74PW296ztOWHBdatCjQVDOJ+ZjfLFp/CF+nj9Lcav+9E84giOo=
+X-Received: by 2002:a5d:968b:: with SMTP id m11mr2620201ion.16.1565173117689;
+ Wed, 07 Aug 2019 03:18:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190807095322.8988-1-carenas@gmail.com>
+In-Reply-To: <20190807095322.8988-1-carenas@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 7 Aug 2019 03:18:26 -0700
+Message-ID: <CAPUEspgoPizN5mnBJjeUVdmTtsJ4NCrd-gMWcqaghoBqG7Sp+A@mail.gmail.com>
+Subject: Re: [PATCH] cc5e1bf992 (gettext: avoid initialization if the locale
+ dir is not present, 2018-04-21) changed the way the gettext initialization is
+ done skipping most of it for performance reasons if the locale directories
+ wouldn't exist.
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com
-Subject: [PATCH] cc5e1bf992 (gettext: avoid initialization if the locale dir is not present, 2018-04-21) changed the way the gettext initialization is done skipping most of it for performance reasons if the locale directories wouldn't exist.
-Date:   Wed,  7 Aug 2019 02:53:22 -0700
-Message-Id: <20190807095322.8988-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-in environments where the build running wasn't installed and wasn't
-using NO_GETTEXT the initialization of charset will be skipped, breaking
-is_utf_locale()
+Subject was meant to be "gettext: fix is_utf8_locale() when not using
+NO_GETTEXT" and affects mainly PCRE by using UTF-8 flag even when the
+locale was ISO.
 
-Split the init function on two, so the initialization of charset could
-be done before a decision to abort was made and therefore keeping most
-of the performance improvement.
+somehow it doesn't break any tests though, but PCRE strongly advices
+against doing both UTF and chartables and we might end up doing that
+more often, because of this.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- gettext.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+Carlo
 
-diff --git a/gettext.c b/gettext.c
-index d4021d690c..3ecf456f74 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -69,7 +69,14 @@ static int test_vsnprintf(const char *fmt, ...)
- 	return ret;
- }
- 
--static void init_gettext_charset(const char *domain)
-+static void init_gettext_charset(void)
-+{
-+	const char *current = setlocale(LC_CTYPE, "");
-+	charset = locale_charset();
-+	setlocale(LC_CTYPE, current);
-+}
-+
-+static void bind_gettext_charset(const char *domain)
- {
- 	/*
- 	   This trick arranges for messages to be emitted in the user's
-@@ -150,7 +157,7 @@ static void init_gettext_charset(const char *domain)
- 	   2. E.g. "Content-Type: text/plain; charset=UTF-8\n" in po/is.po
- 	*/
- 	setlocale(LC_CTYPE, "");
--	charset = locale_charset();
-+	/* charset was already initialized in init_gettext_charset() */
- 	bind_textdomain_codeset(domain, charset);
- 	/* the string is taken from v0.99.6~1 */
- 	if (test_vsnprintf("%.*s", 13, "David_K\345gedal") < 0)
-@@ -166,6 +173,7 @@ void git_setup_gettext(void)
- 		podir = p = system_path(GIT_LOCALE_PATH);
- 
- 	use_gettext_poison(); /* getenv() reentrancy paranoia */
-+	init_gettext_charset();
- 
- 	if (!is_directory(podir)) {
- 		free(p);
-@@ -175,7 +183,7 @@ void git_setup_gettext(void)
- 	bindtextdomain("git", podir);
- 	setlocale(LC_MESSAGES, "");
- 	setlocale(LC_TIME, "");
--	init_gettext_charset("git");
-+	bind_gettext_charset("git");
- 	textdomain("git");
- 
- 	free(p);
--- 
-2.23.0.rc1
-
+PS. apologize for the badly formatted patch, don't think this needs to
+be fixed in maint, eventhough the patch is based on it with the most
+likely to be affected being developers (or automated tests)
