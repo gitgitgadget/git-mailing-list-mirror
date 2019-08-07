@@ -2,94 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4631F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 17:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 548601F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 17:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389024AbfHGRlr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 13:41:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51285 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387777AbfHGRlr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 13:41:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BB5277816;
-        Wed,  7 Aug 2019 13:41:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1vKFqrAgARIBVnR19UPgREzJS3o=; b=UVN3fW
-        R44sXKO3moHQ7MeOm9KKeE6cnJ1zmAVRcFWIwwMQR/0zTQ5BBHBvMVGn+t31WTt7
-        LC7U3xs08vICDnExjKBJ2nZyyIqNyJ9n3OPZ+vf+DhblV67itoJp+azgB16cVTp+
-        t/35bKfLvGOxGu411EJGQWIZpm6hPxytnm464=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xevJutb68njePEukEoJlWwXm2BYb4zNP
-        73VY7EqtMIxKAFwSQhSFRfUy2vWouKbLvTJpWz5r4XphuJQ9uH5Ygmelj0lrebm0
-        zu+rcoQOpRnChZTcuuhf1Uqo+0Gm/xJGJjhjErKFtvMCIuWiKyli3sTmC6rl+5ua
-        ZUpWVokDLus=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92B7C77812;
-        Wed,  7 Aug 2019 13:41:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B602777811;
-        Wed,  7 Aug 2019 13:41:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
-References: <20190804143919.10732-1-me@yadavpratyush.com>
-        <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
-        <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
-        <549ad583-5ca1-7096-f4ce-10e8a836f7f9@yadavpratyush.com>
-        <xmqqmuglim9e.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 07 Aug 2019 10:41:40 -0700
-In-Reply-To: <xmqqmuglim9e.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 06 Aug 2019 22:21:17 -0700")
-Message-ID: <xmqqa7ckj2jv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2388395AbfHGRpA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 13:45:00 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:39111 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729278AbfHGRpA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 13:45:00 -0400
+Received: by mail-qt1-f194.google.com with SMTP id l9so89155886qtu.6
+        for <git@vger.kernel.org>; Wed, 07 Aug 2019 10:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rcyIM6XZ4z3CgpT45DTOahpz62uM0tTz17SH8RH89gg=;
+        b=DmcVyn199O+hjplrDwcwYuZcM2gBlWBRf0z7quKrFp17LH4oBVyV6F/DUOkvltZuXS
+         UhIeUzmdDFpcbCJdT4iEXM07siFgqd7URqxTkMYBeJST90z4JnINTui9fQF5uwYeKvwG
+         PzlyZtLg5G0LYrO/1UG4RWEjL+FnNb2Dw5duXHua8JcWfRo+OhUhiLc4t8eCafEqECgC
+         W6XwRS45dxt7BG6jafEPaLARWOr7VWQiR5NNXDnCzUmO/xs96NsVWxb/IFAWnaU+SqWK
+         VjmV7BC+hxN5Q23oGgp6PeFiF8UE8wtAspA0Q78brifTe9zuO87DfODMrRLV/6yzpXt4
+         V+Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rcyIM6XZ4z3CgpT45DTOahpz62uM0tTz17SH8RH89gg=;
+        b=C1rYceu8axt+6pkxmXhVR/tjncUEVWnkJzfCppSeHY9ZRhLjNLTxFBNmiReQqQU03+
+         I022WVYsXv9d8CROKa9jHE1xHdBlzYH25gz5OMrdnqxYOHeS3xI9O6g3DjNITOMU9bGA
+         T4Ub9R9fU/DwsqamU3jRkSZ31zCL2sOMlsq9tmoAmqv2m6vFQFu+MZ079T0Y5KA2Vpzy
+         xUGlluFAvQ6fR1kuxMPOnJaN8r1N1lVITbgvnZJVIim3vIYukQ2I2LLCeQgav6NwGYp/
+         KX2Pc0iI+2wQlJAuqNboXbCRl4Ox4BAYbmU1PrTKVG22rBHWegQdTJm6rbIW6xGVo4uM
+         IFkw==
+X-Gm-Message-State: APjAAAVnyl4c5MMABB1x8p0ddVYDQrimRhCMPvfGW73mm+hGtTtHizHj
+        jxfS035/poE6b1RyAaPi4dUVwctBhfi2+FXO
+X-Google-Smtp-Source: APXvYqzQE/+LnXeyU0qBQS+KmuBPTiEtLnN0Z4NJfakdROtlDebQC5dwYLOuF4ldLSTfd1ilyxuSJA==
+X-Received: by 2002:a0c:d4eb:: with SMTP id y40mr9159961qvh.30.1565199899119;
+        Wed, 07 Aug 2019 10:44:59 -0700 (PDT)
+Received: from localhost ([173.225.52.219])
+        by smtp.gmail.com with ESMTPSA id u4sm39583429qkb.16.2019.08.07.10.44.58
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 07 Aug 2019 10:44:58 -0700 (PDT)
+Date:   Wed, 7 Aug 2019 13:44:57 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+        Andrew Ardill <andrew.ardill@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        git <git@vger.kernel.org>
+Subject: Re: RFC - Git Developer Blog
+Message-ID: <20190807174457.GA62589@syl.local>
+References: <20190806014935.GA26909@google.com>
+ <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
+ <e97608ed-1900-e2c0-c20d-e73586c1fdd5@gmail.com>
+ <20190807170735.GA61464@syl.local>
+ <xmqqef1wj3r4.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9E5C8EBA-B93A-11E9-BE5B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqef1wj3r4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Pratyush Yadav <me@yadavpratyush.com> writes:
+On Wed, Aug 07, 2019 at 10:15:43AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
->> I'm not too optimistic on finding someone to run this project. I asked
->> on the list who the maintainer is [0], and no one came up. The repo at
->> [1] also seems abandoned.
+> >> It would also be helpful to have a post for every major release
+> >> highlighting new features and giving users examples of how to use them.
+> >> Taylor has been writing these on the GitHub blog [1], but maybe he
+> >> would be interested in writing them for this new venue?
+> >>
+> >> [1] https://github.blog/2019-06-07-highlights-from-git-2-22/
+> >
+> > Yes, I generally try and publish a blog post once-per-release, and
+> > generally with the following two goals in mind:
+> >
+> >   - talk about and publicize some of the new features in the latest
+> >     release (or releases, if I've missed a blog post or two)
+> >
+> >   - share some interesting tidbits about existing features.
+> >
+> > I think it would be good to have these blog posts in both places, should
+> > this proposal materialize. I would have to ask about whether or not
+> > GitHub would be comfortable about cross-posting to a new venue, and I'd
+> > be happy to raise the question when it comes up.
 >
-> In the meantime until somebody steps up, I might run my own copy.
->
-> I need to allocate a block of time to see how stale Pat's tree is
-> (e.g. its mainline may have more commits than what we have pulled,
-> in which case we need to be extra careful---these old commits may be
-> something Pat found dubious and decided to wait before telling me to
-> pull, and we would be better off ignoring them) before I can say
-> anything definite, but I am hoping that there won't be too many
-> patches flowing to the git-gui project; anything high volume and/or
-> tricky tcl/tk would be beyond my capacity as an interim maintainer
-> to maintain the quality of the codebase of it.
+> Yeah, I find these blog postings at GitHub quite helpful.  Thanks
+> for writing them.
 
-Well it turns out that the clone I used a few years ago was still
-usable X-<, so I made https://github.com/gitster/git-gui/ a
-tentative and experimental home to pull from.  I munged the patch to
-apply to the git-gui tree, create a topic there, pulled it via subtree
-strategy to create a topic 'py/git-gui-do-quit' here, and queued the
-result on 'pu'.
+Thanks for maintaining the release notes. I often start there to figure
+out what to write about, and having them so well organized makes my job
+a lot easier.
+
+> I wonder if a semi-automated republication (ala "Planet"), instead
+> of cross-posting, is an option that is easier to manage, though.
+
+Probably. I don't know how Planet works, but if it can accept an RSS
+feed (and doesn't require too much on GitHub's end), it's probably
+sensible.
 
 
+Thanks,
+Taylor
