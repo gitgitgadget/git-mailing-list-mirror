@@ -7,89 +7,89 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0D1B1F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 17:15:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4631F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 17:41:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730198AbfHGRPu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 13:15:50 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63093 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729938AbfHGRPu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 13:15:50 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8A25E8C61A;
-        Wed,  7 Aug 2019 13:15:48 -0400 (EDT)
+        id S2389024AbfHGRlr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 13:41:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51285 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387777AbfHGRlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 13:41:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BB5277816;
+        Wed,  7 Aug 2019 13:41:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VNBdTlpGV7FWox6SP6V9gJqBQ8I=; b=o2Ktsg
-        LuchAe+OqgT3mV7T73KCtSPvIh0fX7fl83MaPu1ej7twYMd7Jh5+AqOazkgv6sYM
-        ikhUcaOAF43v3mdYT5cSnagcqzFgvRGQ7Xzqp02U3IuObjuCMMgY69lP+4E9fLmA
-        AbShVUlruWeoxI/TfXhtqPSNN535svE1Mv/Es=
+        :content-type; s=sasl; bh=1vKFqrAgARIBVnR19UPgREzJS3o=; b=UVN3fW
+        R44sXKO3moHQ7MeOm9KKeE6cnJ1zmAVRcFWIwwMQR/0zTQ5BBHBvMVGn+t31WTt7
+        LC7U3xs08vICDnExjKBJ2nZyyIqNyJ9n3OPZ+vf+DhblV67itoJp+azgB16cVTp+
+        t/35bKfLvGOxGu411EJGQWIZpm6hPxytnm464=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tSzjWhP6MND2rLZVHivhexgStOO/AGLX
-        b6YpifVwnJrZuICoh26rJ/cYijjE3Bea4PhkxW73qZvZBTFCUbmytpitCx78LikZ
-        9VTPu5HjKd9KnDyS8f4M46h3GecIcIrnaUmbCtgjPHGtr2VCumiMrNeqLvG7pH8C
-        Obuw/+eMVtU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82BFE8C619;
-        Wed,  7 Aug 2019 13:15:48 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=xevJutb68njePEukEoJlWwXm2BYb4zNP
+        73VY7EqtMIxKAFwSQhSFRfUy2vWouKbLvTJpWz5r4XphuJQ9uH5Ygmelj0lrebm0
+        zu+rcoQOpRnChZTcuuhf1Uqo+0Gm/xJGJjhjErKFtvMCIuWiKyli3sTmC6rl+5ua
+        ZUpWVokDLus=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92B7C77812;
+        Wed,  7 Aug 2019 13:41:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5A2B8C60A;
-        Wed,  7 Aug 2019 13:15:45 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B602777811;
+        Wed,  7 Aug 2019 13:41:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Andrew Ardill <andrew.ardill@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        git <git@vger.kernel.org>
-Subject: Re: RFC - Git Developer Blog
-References: <20190806014935.GA26909@google.com>
-        <CAH5451=Qa5BGnoRdvtcmT6mXXK+i8iD7WAkKFfNU4b6J-0bX9g@mail.gmail.com>
-        <e97608ed-1900-e2c0-c20d-e73586c1fdd5@gmail.com>
-        <20190807170735.GA61464@syl.local>
-Date:   Wed, 07 Aug 2019 10:15:43 -0700
-In-Reply-To: <20190807170735.GA61464@syl.local> (Taylor Blau's message of
-        "Wed, 7 Aug 2019 13:07:35 -0400")
-Message-ID: <xmqqef1wj3r4.fsf@gitster-ct.c.googlers.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
+References: <20190804143919.10732-1-me@yadavpratyush.com>
+        <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
+        <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
+        <549ad583-5ca1-7096-f4ce-10e8a836f7f9@yadavpratyush.com>
+        <xmqqmuglim9e.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 07 Aug 2019 10:41:40 -0700
+In-Reply-To: <xmqqmuglim9e.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 06 Aug 2019 22:21:17 -0700")
+Message-ID: <xmqqa7ckj2jv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FE479012-B936-11E9-8B37-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 9E5C8EBA-B93A-11E9-BE5B-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> It would also be helpful to have a post for every major release
->> highlighting new features and giving users examples of how to use them.
->> Taylor has been writing these on the GitHub blog [1], but maybe he
->> would be interested in writing them for this new venue?
->>
->> [1] https://github.blog/2019-06-07-highlights-from-git-2-22/
+> Pratyush Yadav <me@yadavpratyush.com> writes:
 >
-> Yes, I generally try and publish a blog post once-per-release, and
-> generally with the following two goals in mind:
+>> I'm not too optimistic on finding someone to run this project. I asked
+>> on the list who the maintainer is [0], and no one came up. The repo at
+>> [1] also seems abandoned.
 >
->   - talk about and publicize some of the new features in the latest
->     release (or releases, if I've missed a blog post or two)
+> In the meantime until somebody steps up, I might run my own copy.
 >
->   - share some interesting tidbits about existing features.
->
-> I think it would be good to have these blog posts in both places, should
-> this proposal materialize. I would have to ask about whether or not
-> GitHub would be comfortable about cross-posting to a new venue, and I'd
-> be happy to raise the question when it comes up.
+> I need to allocate a block of time to see how stale Pat's tree is
+> (e.g. its mainline may have more commits than what we have pulled,
+> in which case we need to be extra careful---these old commits may be
+> something Pat found dubious and decided to wait before telling me to
+> pull, and we would be better off ignoring them) before I can say
+> anything definite, but I am hoping that there won't be too many
+> patches flowing to the git-gui project; anything high volume and/or
+> tricky tcl/tk would be beyond my capacity as an interim maintainer
+> to maintain the quality of the codebase of it.
 
-Yeah, I find these blog postings at GitHub quite helpful.  Thanks
-for writing them.
+Well it turns out that the clone I used a few years ago was still
+usable X-<, so I made https://github.com/gitster/git-gui/ a
+tentative and experimental home to pull from.  I munged the patch to
+apply to the git-gui tree, create a topic there, pulled it via subtree
+strategy to create a topic 'py/git-gui-do-quit' here, and queued the
+result on 'pu'.
 
-I wonder if a semi-automated republication (ala "Planet"), instead
-of cross-posting, is an option that is easier to manage, though.
+
