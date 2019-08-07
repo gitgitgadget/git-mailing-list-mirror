@@ -8,304 +8,143 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD7A51F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 18:57:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3D411F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 18:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389418AbfHGS5X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 14:57:23 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:55766 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388849AbfHGS5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 14:57:23 -0400
-Received: by mail-pl1-f202.google.com with SMTP id q11so53521586pll.22
-        for <git@vger.kernel.org>; Wed, 07 Aug 2019 11:57:22 -0700 (PDT)
+        id S2389421AbfHGS5Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 14:57:25 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:49618 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388849AbfHGS5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 14:57:25 -0400
+Received: by mail-pl1-f201.google.com with SMTP id 65so53554137plf.16
+        for <git@vger.kernel.org>; Wed, 07 Aug 2019 11:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=lN9RkxOCTtc5ATClqGAicVx9SDPArACCO6+GUf6DGxA=;
-        b=YV7U9x/WVJ1hgpQi6CPPnaLQqfQW2Sya82xHT0IdotRyO1oKMeeKiaGUMLsRsaWas0
-         zzzRhuGOr3+3AqFDmLCwzlTI5+yajP5WbEG7e7fY+/auL/nuZTYOJa5mI6GsKLKz0gt5
-         zGli+N/jZ8oPtJGOc8wnd8JcDL28jXzshu9Md3ZwgLrwvtaqEVC5fGaz1a8cGkfIP0Lc
-         j4vmr+mEO8yPdpQN/7EUCq4uRJRxXmsp2yjNl+4t4HIfnSZLATgqsBPpaxlQey2GfZjh
-         dEgsZ7dQq/tu+fWtmOK2YlDczOKXGHdd4w5pG+6BXlQbsTDU2PU5nQpO4N23xaPEa2j6
-         apaA==
+         :cc;
+        bh=8pWHU0VX2sxqhaQaw0+jKNS+pFgW2uare0LdAauOU/Y=;
+        b=tSnRN223xCN8QX5DUe+uD6rWc+47qe5StnGJAwFpLufG4mKGbBXoTiUe4ed698tyrd
+         vVy8o2hprTlJWNG2bc4vFb2kC5keM9/JhA0iLMVlBz5GrE87v4XgQS19PYluF1ngk053
+         X/YkIb7obOm+SGBOgABMt7nwkFDrOSOm8lHPaZtx/LHiSgii3+clEGPo+i+sMgBjEkjD
+         vs4Z3bOjrEyxGJHZQhvhjIDN3XduBv6v2vs6mjsBxDM6/eAd5Hm5+vGIXZl7M1jgiWUl
+         6QCxjuNn0M1qQpkMPwvmb+9a3Xn3UxGybzpXfEbuMb3klT2PvW5pH8MLPOdUtw4yYYsH
+         tRzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=lN9RkxOCTtc5ATClqGAicVx9SDPArACCO6+GUf6DGxA=;
-        b=ZD6KjzkvYh/G8A6POiGaJf1L2NG6Oez2uU2eHg5AkbzrrOxQfgbTfVaYSWZkDBJ6TI
-         ef78dkZ9pbLaexCr3ey5OSh6jcfPubSEX6NWBkA6rBg2UPvPuJsifv8/OWYU7m9qBUV1
-         ExuA5x0tRqOtd4qdkmGLMFnMJZGoCu5Gy8SFgvyrgiZPeswppSIWSZPplZo8nbsZQ69r
-         eQLd19GAgBX218eSjJBMCbfDbUP9/spd0E4+UgIkK6SozxBZt1mcFOO+3uaYC833ExaX
-         bhyfEpWH3gr0HwDX4JFCMWxHQBaxjPCgPemCcj0/+5OdmMGu27mWOUciD90scB2P+AC1
-         Vllg==
-X-Gm-Message-State: APjAAAWjT+FaWwxBAKarAEczicPScrsGfBE1O8gVbk8oMnhWE64VYiYd
-        jnx2tk5ub0xvldKkzftt00Z6aqjsqxUwx8NZXKpNy1/bqMNTZBBD23L4POoKB517fEBW4E58xk3
-        QB/qjwzfB58CbH6Es14xNpNbq5A5Tu7zJ90oFd7N0bYX0KSqjUCZE58FEXsMsJK8=
-X-Google-Smtp-Source: APXvYqzNK4KIbW16uY273iqFdbDVnAxeliCrVT8zyd0X3bCW3bT0Sa1qgaiOBuIL/jFmFs5vHWTG8ahsUj9wMA==
-X-Received: by 2002:a63:194f:: with SMTP id 15mr9168917pgz.382.1565204242161;
- Wed, 07 Aug 2019 11:57:22 -0700 (PDT)
-Date:   Wed,  7 Aug 2019 11:57:05 -0700
+         :references:subject:from:to:cc;
+        bh=8pWHU0VX2sxqhaQaw0+jKNS+pFgW2uare0LdAauOU/Y=;
+        b=N+5ZvvUuAMas6B22QFNpLLveSOeiZxqroQAi6jZb2Jk9kH7LRSVxPgL1m786v62B70
+         qMsbdxycO6n23RIMGFuxIQZ7WY8JCi9koMosrAdtdMcvmYKjtK7W9OWyHf6LHgF4DuC5
+         PqkPSL0BYA81nEHJirEVqa2GEaQ2ZSBEkQ9xcsBrczIdQ0FnCrATtGo24A2/3ua1AX19
+         pUOQEFpNsVQd+Ov5vNfyBN7xQEJ3QtU26YDYu/AslGKmwN7++quvFGlFDhC1DLB4xC0E
+         wupyVYyOGVgVF8qRxXxK9TGHtZSAhItPVOfQJAL75b/zLHdJdx4gNNSZKsgz+dy7ceZN
+         BFYQ==
+X-Gm-Message-State: APjAAAVVWKg7EvgK2eol7CUzVpFyKR4txmVzV+2ELSQjwYel+9Jskvgx
+        PCekUZ/dFLGL4WH2Wmx0laNSvqyggwZKlEwPzjrQKTqgT5qpLCZzZA6OAii62pbE8OAIYbtjZj5
+        Py1Cs0Ka5D2jQ8m2fAHYi7j4KzYUqgUQNvWog/FJlwF9yHCLhAjefmVsgpsxkueQ=
+X-Google-Smtp-Source: APXvYqxNu9GK6yMK9zYgmBE+RTc3ZN0CvwhhkIycwLrsVloEtBrwWTl0Z2q/2NKvyGpZSegncEl8I+lS++yxAw==
+X-Received: by 2002:a63:29c4:: with SMTP id p187mr9157667pgp.330.1565204244671;
+ Wed, 07 Aug 2019 11:57:24 -0700 (PDT)
+Date:   Wed,  7 Aug 2019 11:57:06 -0700
 In-Reply-To: <cover.1565203880.git.steadmon@google.com>
-Message-Id: <60bbbbf9e0cf118945ace358cd85a8631ff7f26a.1565203880.git.steadmon@google.com>
+Message-Id: <02a97eb369e7f99c426a4d8fd5efd2c9d1af1e5f.1565203880.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1565044345.git.steadmon@google.com> <cover.1565203880.git.steadmon@google.com>
 X-Mailer: git-send-email 2.22.0.770.g0f2c4a37fd-goog
-Subject: [PATCH v5 1/4] t7503: verify proper hook execution
+Subject: [PATCH v5 2/4] merge: do no-verify like commit
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@grubix.eu, martin.agren@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t7503 did not verify that the expected hooks actually ran during
-testing. Fix that by making the hook scripts write their $0 into a file
-so that we can compare actual execution vs. expected execution.
+From: Michael J Gruber <git@grubix.eu>
 
-While we're at it, do some test style cleanups, such as using
-write_script() and doing setup inside a test_expect_success block.
+f8b863598c ("builtin/merge: honor commit-msg hook for merges", 2017-09-07)
+introduced the no-verify flag to merge for bypassing the commit-msg
+hook, though in a different way from the implementation in commit.c.
 
-Improved-by: Martin =C3=85gren <martin.agren@gmail.com>
-Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+Change the implementation in merge.c to be the same as in commit.c so
+that both do the same in the same way. This also changes the output of
+"git merge --help" to be more clear that the hook return code is
+respected by default.
+
+[js: * reworded commit message
+     * squashed documentation changes from original series' patch 3/4
+]
+
+Signed-off-by: Michael J Gruber <git@grubix.eu>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/t7503-pre-commit-hook.sh | 157 +++++++++++++++++++++----------------
- 1 file changed, 89 insertions(+), 68 deletions(-)
+ Documentation/git-merge.txt     | 2 +-
+ Documentation/merge-options.txt | 4 ++++
+ builtin/merge.c                 | 6 +++---
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
-index 984889b39d..6aa83204c2 100755
---- a/t/t7503-pre-commit-hook.sh
-+++ b/t/t7503-pre-commit-hook.sh
-@@ -4,124 +4,144 @@ test_description=3D'pre-commit hook'
-=20
- . ./test-lib.sh
-=20
--test_expect_success 'with no hook' '
-+HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
-+PRECOMMIT=3D"$HOOKDIR/pre-commit"
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 01fd52dc70..092529c619 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
++	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+ 'git merge' (--continue | --abort | --quit)
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 79a00d2a4a..d6a9f4b96f 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -105,6 +105,10 @@ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
+ 
++--no-verify::
++	This option bypasses the pre-merge and commit-msg hooks.
++	See also linkgit:githooks[5].
 +
-+# Prepare sample scripts that write their $0 to actual_hooks
-+test_expect_success 'sample script setup' '
-+	mkdir -p "$HOOKDIR" &&
-+	write_script "$HOOKDIR/success.sample" <<-\EOF &&
-+	echo $0 >>actual_hooks
-+	exit 0
-+	EOF
-+	write_script "$HOOKDIR/fail.sample" <<-\EOF &&
-+	echo $0 >>actual_hooks
-+	exit 1
-+	EOF
-+	write_script "$HOOKDIR/non-exec.sample" <<-\EOF &&
-+	echo $0 >>actual_hooks
-+	exit 1
-+	EOF
-+	chmod -x "$HOOKDIR/non-exec.sample" &&
-+	write_script "$HOOKDIR/require-prefix.sample" <<-\EOF &&
-+	echo $0 >>actual_hooks
-+	test $GIT_PREFIX =3D "success/"
-+	EOF
-+	write_script "$HOOKDIR/check-author.sample" <<-\EOF
-+	echo $0 >>actual_hooks
-+	test "$GIT_AUTHOR_NAME" =3D "New Author" &&
-+	test "$GIT_AUTHOR_EMAIL" =3D "newauthor@example.com"
-+	EOF
-+'
-=20
--	echo "foo" > file &&
-+test_expect_success 'with no hook' '
-+	test_when_finished "rm -f actual_hooks" &&
-+	echo "foo" >file &&
- 	git add file &&
--	git commit -m "first"
--
-+	git commit -m "first" &&
-+	test_path_is_missing actual_hooks
- '
-=20
- test_expect_success '--no-verify with no hook' '
--
--	echo "bar" > file &&
-+	test_when_finished "rm -f actual_hooks" &&
-+	echo "bar" >file &&
- 	git add file &&
--	git commit --no-verify -m "bar"
--
-+	git commit --no-verify -m "bar" &&
-+	test_path_is_missing actual_hooks
- '
-=20
--# now install hook that always succeeds
--HOOKDIR=3D"$(git rev-parse --git-dir)/hooks"
--HOOK=3D"$HOOKDIR/pre-commit"
--mkdir -p "$HOOKDIR"
--cat > "$HOOK" <<EOF
--#!/bin/sh
--exit 0
--EOF
--chmod +x "$HOOK"
--
- test_expect_success 'with succeeding hook' '
--
--	echo "more" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
-+	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
-+	echo "$PRECOMMIT" >expected_hooks &&
-+	echo "more" >>file &&
- 	git add file &&
--	git commit -m "more"
--
-+	git commit -m "more" &&
-+	test_cmp expected_hooks actual_hooks
- '
-=20
- test_expect_success '--no-verify with succeeding hook' '
--
--	echo "even more" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
-+	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
-+	echo "even more" >>file &&
- 	git add file &&
--	git commit --no-verify -m "even more"
--
-+	git commit --no-verify -m "even more" &&
-+	test_path_is_missing actual_hooks
- '
-=20
--# now a hook that fails
--cat > "$HOOK" <<EOF
--#!/bin/sh
--exit 1
--EOF
--
- test_expect_success 'with failing hook' '
--
--	echo "another" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
-+	cp "$HOOKDIR/fail.sample" "$PRECOMMIT" &&
-+	echo "$PRECOMMIT" >expected_hooks &&
-+	echo "another" >>file &&
- 	git add file &&
--	test_must_fail git commit -m "another"
--
-+	test_must_fail git commit -m "another" &&
-+	test_cmp expected_hooks actual_hooks
- '
-=20
- test_expect_success '--no-verify with failing hook' '
--
--	echo "stuff" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
-+	cp "$HOOKDIR/fail.sample" "$PRECOMMIT" &&
-+	echo "stuff" >>file &&
- 	git add file &&
--	git commit --no-verify -m "stuff"
--
-+	git commit --no-verify -m "stuff" &&
-+	test_path_is_missing actual_hooks
- '
-=20
--chmod -x "$HOOK"
- test_expect_success POSIXPERM 'with non-executable hook' '
--
--	echo "content" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
-+	cp "$HOOKDIR/non-exec.sample" "$PRECOMMIT" &&
-+	echo "content" >>file &&
- 	git add file &&
--	git commit -m "content"
--
-+	git commit -m "content" &&
-+	test_path_is_missing actual_hooks
- '
-=20
- test_expect_success POSIXPERM '--no-verify with non-executable hook' '
--
--	echo "more content" >> file &&
-+	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
-+	cp "$HOOKDIR/non-exec.sample" "$PRECOMMIT" &&
-+	echo "more content" >>file &&
- 	git add file &&
--	git commit --no-verify -m "more content"
--
-+	git commit --no-verify -m "more content" &&
-+	test_path_is_missing actual_hooks
- '
--chmod +x "$HOOK"
--
--# a hook that checks $GIT_PREFIX and succeeds inside the
--# success/ subdirectory only
--cat > "$HOOK" <<EOF
--#!/bin/sh
--test \$GIT_PREFIX =3D success/
--EOF
-=20
- test_expect_success 'with hook requiring GIT_PREFIX' '
--
--	echo "more content" >> file &&
-+	test_when_finished "rm -rf \"$PRECOMMIT\" expected_hooks actual_hooks suc=
-cess" &&
-+	cp "$HOOKDIR/require-prefix.sample" "$PRECOMMIT" &&
-+	echo "$PRECOMMIT" >expected_hooks &&
-+	echo "more content" >>file &&
- 	git add file &&
- 	mkdir success &&
- 	(
- 		cd success &&
- 		git commit -m "hook requires GIT_PREFIX =3D success/"
- 	) &&
--	rmdir success
-+	test_cmp expected_hooks actual_hooks
- '
-=20
- test_expect_success 'with failing hook requiring GIT_PREFIX' '
--
--	echo "more content" >> file &&
-+	test_when_finished "rm -rf \"$PRECOMMIT\" expected_hooks actual_hooks fai=
-l" &&
-+	cp "$HOOKDIR/require-prefix.sample" "$PRECOMMIT" &&
-+	echo "$PRECOMMIT" >expected_hooks &&
-+	echo "more content" >>file &&
- 	git add file &&
- 	mkdir fail &&
- 	(
- 		cd fail &&
- 		test_must_fail git commit -m "hook must fail"
- 	) &&
--	rmdir fail &&
--	git checkout -- file
-+	git checkout -- file &&
-+	test_cmp expected_hooks actual_hooks
- '
-=20
- test_expect_success 'check the author in hook' '
--	write_script "$HOOK" <<-\EOF &&
--	test "$GIT_AUTHOR_NAME" =3D "New Author" &&
--	test "$GIT_AUTHOR_EMAIL" =3D "newauthor@example.com"
-+	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
-+	cp "$HOOKDIR/check-author.sample" "$PRECOMMIT" &&
-+	cat >expected_hooks <<-EOF &&
-+	$PRECOMMIT
-+	$PRECOMMIT
-+	$PRECOMMIT
- 	EOF
- 	test_must_fail git commit --allow-empty -m "by a.u.thor" &&
- 	(
-@@ -133,7 +153,8 @@ test_expect_success 'check the author in hook' '
- 	) &&
- 	git commit --author=3D"New Author <newauthor@example.com>" \
- 		--allow-empty -m "by new.author via command line" &&
--	git show -s
-+	git show -s &&
-+	test_cmp expected_hooks actual_hooks
- '
-=20
- test_done
---=20
+ -s <strategy>::
+ --strategy=<strategy>::
+ 	Use the given merge strategy; can be supplied more than
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e2ccbc44e2..4425a7a12e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -81,7 +81,7 @@ static int show_progress = -1;
+ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
+-static int verify_msg = 1;
++static int no_verify;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -287,7 +287,7 @@ static struct option builtin_merge_options[] = {
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+-	OPT_BOOL(0, "verify", &verify_msg, N_("verify commit-msg hook")),
++	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass commit-msg hook")),
+ 	OPT_END()
+ };
+ 
+@@ -842,7 +842,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 			abort_commit(remoteheads, NULL);
+ 	}
+ 
+-	if (verify_msg && run_commit_hook(0 < option_edit, get_index_file(),
++	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
+ 					  "commit-msg",
+ 					  git_path_merge_msg(the_repository), NULL))
+ 		abort_commit(remoteheads, NULL);
+-- 
 2.22.0.770.g0f2c4a37fd-goog
 
