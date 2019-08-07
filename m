@@ -8,27 +8,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23FAA1F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 13:03:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8081F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 13:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388038AbfHGNDG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 09:03:06 -0400
-Received: from mout.web.de ([212.227.15.14]:51627 "EHLO mout.web.de"
+        id S1729929AbfHGNI5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 09:08:57 -0400
+Received: from mout.web.de ([212.227.15.4]:47239 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387799AbfHGNDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 09:03:05 -0400
+        id S1726873AbfHGNI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 09:08:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1565182978;
-        bh=XUHnNQjKHvPHnmFq4Gk5ndAakkQGJPchxYe8PBHSFj4=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=nqIpAde1kQhIp06BPUesdXlo7IlergBCXYjpmIJOk5HLCxorNU9K5ai9cgX7+F6rp
-         sticUyc08GZBy85W8seF3OeZuGzthNZkjt4D9V4+8PY4i+Gw0ICu4CdfXips26msiK
-         rjnexyQ3N1RPX8ptNrW6RK2SW5h2kdSmzzyesXb4=
+        s=dbaedf251592; t=1565183332;
+        bh=g5/5IL/iYKgE/6OQ1UDjJ+uDAgkBdlV7PcveBhOiCpk=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=bmiNmWJioG9UWGPJMNRylc7AtQEqCkD25MBxKJR8CxO2Ak1pn7gemhiM6jeDvjA8B
+         GnF0nbJNSaNDeDHTUaD05Mjf62F3NHbIW2FASEL7o+H0tizYf1+aF6oMrQ6NFafh9N
+         NYSyCzWkUbSid1s+TtNIVC8Wjl5LlCNtjvPEZFpM=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfkOq-1hjBzy24YO-00NAAt; Wed, 07
- Aug 2019 15:02:58 +0200
-Subject: Re: [RFC PATCH v3 2/3] grep: make PCRE2 aware of custom allocator
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MWRoI-1hoAvZ3uiA-00Xda4; Wed, 07
+ Aug 2019 15:08:52 +0200
+Subject: [PATCH 1/2] nedmalloc: do assignments only after the declaration
+ section
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Carlo Arenas <carenas@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
         avarab@gmail.com, michal.kiedrowicz@gmail.com
@@ -37,65 +39,74 @@ References: <20190806085014.47776-1-carenas@gmail.com>
  <20190806163658.66932-3-carenas@gmail.com>
  <ab8a378c-0a60-9554-b2dd-ecb3d05229cb@web.de>
  <CAPUEspip98Mq8FrKTOkEikZhaLPprZXf=E2x3d0b7=c7e5+Gyw@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c7f08e19-88a7-ca7f-90b9-54465e621d49@web.de>
-Date:   Wed, 7 Aug 2019 15:02:57 +0200
+ <c7f08e19-88a7-ca7f-90b9-54465e621d49@web.de>
+Message-ID: <5077f91b-958b-bf00-565f-7b96aa05a614@web.de>
+Date:   Wed, 7 Aug 2019 15:08:51 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAPUEspip98Mq8FrKTOkEikZhaLPprZXf=E2x3d0b7=c7e5+Gyw@mail.gmail.com>
+In-Reply-To: <c7f08e19-88a7-ca7f-90b9-54465e621d49@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1uJ6/vap3xashHIUpzw1L9ezUOpXC9FMSMirRCzu7gzR3ft2TPj
- dogrVmvUznMPISmDiQkVOWRFuJuMJgVtwHmQMppZHqi3prSPb0RWdqpyuSp4pzRnFt/LGaF
- 84JmU1ZeEHcibhmZrJuC6qu8zjUnXxNKlph140ahV3CtuLnwN4oQEP72bpM1xaKJ1bjNrA2
- pspf02XpyQp88shqnFyKg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WsnuS90CSqU=:8vVjiKRR4l2nasmqVXB/4r
- /bhWpeGWRiHrB3ub58j3LlOv4lkXkzjugc3GNSIhZm6nhoSYxj5mwCIthuz5KA4s3i5A+NlEg
- piSYsMPp6eRd4qkjqKNiEnwUShLUPjmIsNk7dPN1uIUAWtf19BUV0RmckO7qTlMr8DTvMhUja
- 0hX636O4hkKgyQ5jjaiHm8e0fL9s8151KQptkys4/9b5BE6/Gpy7CFQsIJrCQEQTJGYBe2eeA
- qHDHMd7/C2a5Gl18iA9LlpE+GgcwSJr9LDyvE+A2gWbl3H+5Ougmst0JaYkAdij2caAMX2L34
- X5epGc93sJdWXUkugjM5G1UF+AYzn1LW7pBY8uCrqbYbwvR8VIPjhFNGeMR7hqOhxUt+HNou8
- BtXH4MAqMzaKVG2C5DQCH7iOs7I+2P7VE/Arca2NORdPT4gXeS742fhqVTbSTq+6byl1JZyyF
- sVDiWdmHGhLJj5zRpYyRBLbqvEZ2q+6ymoy7b60rjX1x01I6HT+hSbk0EZk8X9Zp5EJ4MK/Nk
- OTFwk1swMJSsx2ylzwZk9yX6DAH44coP3rGVpk/cHraCrS4OUcvPpPeO5hxmSS4xv41r+4Miv
- VY9I+zDUmoQFtAsTl992WGRrbAcIbuf8XYQQlxWaRAG3lFiNWWvA5KRurzfnaz46RbtIF2me7
- i1Br3lovYlL+5bC0ea+AJuKBKWKBfTYkHS+6pNuAOgVKTvFTZ5z2ShBofNwiRXyVqJBgA0mKx
- AQXsy7pkgxtODM86wsOSvjLI8KPilfr0dJ7hengyKELTJjdm6QDNeAWCV0+Yn762dIoHKmbKa
- 8YabRl3bk+DziEi+1MxMei0dqlCKsh8EHdjmzjfxa+V0UNvGocnQI8b/qbbKUO5MySD1KMuoV
- Qt+sAhuuSmFaBQ2pOP7M3Z5s1zX0T0Of2uvmOx/mBZKfIucXb93oxXhWWqRp89bBLdamJ+K5y
- oTaDGPsor574naXfuKJ7PIBt/PWRqXuGvkD8uBc6wmobHjsKdt4+cktvcSEOOioJrzxsS2gxW
- MCyEh0MzGwd7unG+zDcbT0ei6bFGke5CvA2e0v6omg9PbVtdK3sVA2H81lFBaCD/A2hp2b7lW
- Dx/j/hB+BMcPreQaB9hAdFHhFfbHXHQ9uWHqkmsldvad7JVMAha3Mj4HmV9l3iHhmriD4R86Y
- MHTm0=
+X-Provags-ID: V03:K1:ddmMI2gY/MAQIMf0ULsxOpNyz5lV/CB/id6drpYm/1eq+3KArCs
+ ckO9rDhR2ppBU1kz5e6dD5XdIPqsB+LrHDRbWo6A/7DuM5U7EjUELXICPH0CaO5MebxKMtd
+ Jzc3KYSCaY2hnPKFIsazsIgTubeeOUgEYZtNFis5O5h5pjKWlvl8FmDvC44jZ60OiKL+wlq
+ 2m5YeSMqKRYb1nNrcjBXw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nFcXAqOtkJA=:D5xtYVPtAGNbiqrLr+hjo3
+ a8Kr/NDbwFu1SmZE8Tj+cdhAxW8DBJss4u1wjFhLlQV4f86q8Z78lkHG8pPc+FO0k4Ie/6hpj
+ AEghR+bFu6XPH624DFB/uEPBL+h61DMViMnZQz9gv2ok8CvSW9GtUFAPPAzT3mt+chnMtag4Z
+ TfbePuw5X8YAYNThbdA+zROb+eYdnnqK/oCMsiXWeX0N0zTNryXyABx0zjO9ZE0pnZFOsUdWG
+ lIdULjgCw5PS8QTrhDFdntXLP6/CUWnBcCHbV59VL+PbAnRXjV6hCxSRVE0p/keYMYV0IEtAA
+ N2nles/rmf4qZAoVmQY8kMmx8QwuOo8qhH89auw3LNK4Kqzvcb2CFjhfsyLH3taqHkjHeMyco
+ slpQi2xN8C5GmH8M+khnu8VtyBjp8hi3aJlnljFQ8v9RxaosrsszSzHyWsP3MKdbkNUkvNsUB
+ ptmbvbhcfYn2hQUEU9PbkzEihLw4qF/qpWppbsbFnr8FK8eryTJBrbOCQsAOwAWOySsZ9W21n
+ kzGNYnM1YOhmk6VM2EITratmFxDB7pGpLsrzvvvuzmqIFQ+aNJwnD4ugSKh/5ZWviGAKoQMma
+ BJyxhMV/itflXGyodE/+FPHhxHfd4qGz1xwC9SO5ilSTY+dP/EQzf173icwKwu6heCFN0Nsgv
+ Jf8u/9WAQIffxA5IHe8VFEP5vU7VewdHrdF8Aix9btYB2ITU16o2Ztp6k+CdQhvewYAiy6cb9
+ UuoqrRtVEEBW/hSAzTSH7RadPugT4quxUfXrh0PGX6RHWiHwDARO4K9PRNnsZ1yXzn0PlW/7T
+ MW4GWvvJjaIgcKVJq6OjyaI0Cc3DvZiupKeSqVGvdUp6dlvyltXf1bq6vNnU+hNuMnJqErg8d
+ qiy5fKAP9ARKAvKCoSM4zNfUvRPBio6EjYqc1pgrRzCXWEAq476ZgNDD+EAVEQSjvnu8DpGE1
+ 2RQcA3CbmaqyJvkPOQo4jBWuXPL2U/QZ1RK4LUba1MIpdJnHEhbUqmscPEmFfZMXjKtig6EyU
+ 3D0qz3Us1O4KvLTBq1oDC6HjTQQgY/QzhdCimDwqTU536OlWd+mBsRyefOON8jnC/2+64PWlV
+ 38LZzE3e9EldW+o/DfrfB11aFC4wXJ0WpIfmiRmwTnTpY3yYrFN+1G0jj26uAbA8Mf7JSrpM0
+ 3vvt4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.08.19 um 11:49 schrieb Carlo Arenas:
-> was hoping will perform better but it seems that testing can be done
-> only in windows
+Avoid the following compiler warning:
 
-nedmalloc works on other platforms as well.  On Debian Testing with GCC
-9.1.0 I need two changes to suppress some compiler warnings, though.
-Will post them as replies.
+In file included from compat/nedmalloc/nedmalloc.c:63:
+compat/nedmalloc/malloc.c.h: In function =E2=80=98pthread_release_lock=E2=
+=80=99:
+compat/nedmalloc/malloc.c.h:1759:5: error: ISO C90 forbids mixed declarati=
+ons and code [-Werror=3Ddeclaration-after-statement]
+ 1759 |     volatile unsigned int* lp =3D &sl->l;
+      |     ^~~~~~~~
 
-"make USE_NED_ALLOCATOR=3D1 test" then reports these failures:
+Signed_off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ compat/nedmalloc/malloc.c.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-t7816-grep-binary-pattern.sh                     (Wstat: 256 Tests: 145 Fa=
-iled: 5)
-  Failed tests:  48, 54, 57, 60, 63
-  Non-zero exit status: 1
-
-And the first one when running that test with --verbose and --immediate
-is showing:
-
-BUG: grep.c:510: pcre2_global_context uninitialized
-Aborted
-not ok 48 - LC_ALL=3D'C' git grep -P -f f -i '[=C3=A6]<NUL>=C3=B0' a
-#
-#				printf '[=C3=A6]Q=C3=B0' | q_to_nul >f &&
-#				LC_ALL=3D'C' git grep -P -f f -i a
-#
+diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+index b833ff9225..88c131ca93 100644
+=2D-- a/compat/nedmalloc/malloc.c.h
++++ b/compat/nedmalloc/malloc.c.h
+@@ -1755,10 +1755,10 @@ static FORCEINLINE void pthread_release_lock (MLOC=
+K_T *sl) {
+   assert(sl->l !=3D 0);
+   assert(sl->threadid =3D=3D CURRENT_THREAD);
+   if (--sl->c =3D=3D 0) {
+-    sl->threadid =3D 0;
+     volatile unsigned int* lp =3D &sl->l;
+     int prev =3D 0;
+     int ret;
++    sl->threadid =3D 0;
+     __asm__ __volatile__ ("lock; xchgl %0, %1"
+ 			  : "=3Dr" (ret)
+ 			  : "m" (*(lp)), "0"(prev)
+=2D-
+2.22.0
