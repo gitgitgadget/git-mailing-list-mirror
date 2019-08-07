@@ -2,104 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02C61F731
-	for <e@80x24.org>; Wed,  7 Aug 2019 19:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C393E1F731
+	for <e@80x24.org>; Wed,  7 Aug 2019 19:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730407AbfHGTZN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Aug 2019 15:25:13 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51602 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729714AbfHGTZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Aug 2019 15:25:12 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B77468D7BB;
-        Wed,  7 Aug 2019 15:25:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=QxB6e/6F1GxJ
-        lmK/BfSEpBzggR4=; b=GEaB+iXi5c314aJdorHan9h7K8tIA7bmeuAW0JRS9D1k
-        K8F8fUCOhSWB63C8eZ59LGEYNfJUyoxxRz8uoptoX4pyvdwgJA8Hvy80jeOfv73E
-        oj5PW+cZAcVjQi2wnDz7lSATq0kYNHtk56bOk7Xn28pG0OnxxMarBvj4IcaKM84=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JQXOfg
-        +ep684khMEr8Hbbk9ACRfqyTu2LkHI7KRBomWR49CqLq5YgjCnw6ot6XPnOrQ5Zb
-        7i2OnXRfqLI2QMNYWsPVlxWk4q+9oT5YZfKrvAoQuZ9Y2mARnSljif8/6LfaBcWV
-        O+sknQUb+yuC9tUGTnJRReI99YhcTEKxIwXiA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AFE998D7B9;
-        Wed,  7 Aug 2019 15:25:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B562A8D7B8;
-        Wed,  7 Aug 2019 15:25:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] commit-graph: release strbufs after use
-References: <c3be25bf-6487-52ce-217d-d6ee93b3a16f@web.de>
-        <a2f30b81-ba93-579c-98ec-07f5df1043d7@gmail.com>
-Date:   Wed, 07 Aug 2019 12:25:04 -0700
-In-Reply-To: <a2f30b81-ba93-579c-98ec-07f5df1043d7@gmail.com> (Derrick
-        Stolee's message of "Wed, 7 Aug 2019 09:16:24 -0400")
-Message-ID: <xmqqsgqchj73.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2388822AbfHGTlz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Aug 2019 15:41:55 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35505 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388369AbfHGTlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Aug 2019 15:41:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1565206907;
+        bh=mIDryV7C6QrbZX5si6Ed8ZPVmJTOzdHDGtX14DHcj0M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CvPM0eVU0Vj4VI/kdiXvpJUxoR8rvSzBROKJoGse/bybTU5jYLPXaHKPiFSTuQJ/w
+         PYcr4OsOYZ/ztDoILlyDUP8IKn2Vjxa09Cw0kwyzKVmBx9XIdAZ4DxjORq4KlZs88H
+         K0nKBCUT7wy3Yj2Z6TjaK1LEcJ1Z+TBtvO1ZnPPY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from MININT-QA14EDB ([188.174.40.47]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIdP-1iIzAW0QhP-012sfx; Wed, 07
+ Aug 2019 21:41:47 +0200
+Date:   Wed, 7 Aug 2019 21:41:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+cc:     Junio <gitster@pobox.com>, GIT Mailing List <git@vger.kernel.org>,
+        Thomas <t.gummerer@gmail.com>, Elijah <newren@gmail.com>,
+        Phillip <phillip.wood123@gmail.com>,
+        Martin <martin.agren@gmail.com>
+Subject: Re: [GSoC][PATCHl 5/6] rebase -i: support --ignore-date
+In-Reply-To: <20190806173638.17510-6-rohit.ashiwal265@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1908072139190.46@tvgsbejvaqbjf.bet>
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com> <20190806173638.17510-6-rohit.ashiwal265@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 103AB08A-B949-11E9-B2C5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7ytjimCHWqjx6kRwGDqPlDA/kJWX/z7SMflAbmSmys9FtSRjLRL
+ TxU1Swp2w3W16nDFxkumrY4vDM2e0LGTH8R4cdhsZuhFmos6xEHrkYBfULVLfc5c4WTmh7a
+ Zye+VusxBNnvp13bYeuSufXQ4ajfZynIHq06qHgZuJ6PQd/iBCxx7ZhJC46Sa9C+ysJnAyX
+ y03tLboWfM37g8zPnTt/w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xLRR8XWDHEg=:2cLegLvGaaml1Lu9+P9rJs
+ zWsziBiQRdfn20lnp/FGpJKFPHzoj7X8qcOtXks917wfgdEOF21ZwPpNM13nuiAOalQyr8GBx
+ HjUEfX8FannlDzIqTTK+7H4+M2qUZ0z9ZoPZW7VqpQJOG9CpCSgYQqTr5LcVUvb3ltBbk6ksn
+ 7gW4bp1cCzJSycKHAnoWraqFHfPegs5vJEoQEC/Sa5LDdrhBpzhijhOxqEw+WZU7Gj7DJ/gYA
+ wB52y9bUFKwrmz2SsSKjY/ToLXWvRKNa0zGTw8XVNZT8NgJIkv6QJ+Xf2tNGqoNN/DkvbemCv
+ PmAiBpbU8KDQfGYWWYS7/Nuhq5biE8HoL0chgYug4ULjflZOulYvlTEIvNoGgqvWc6xIGEdt3
+ KJUwmGLh4ka6NNesH+XfJc28dOWmwAOckkA8IPGnIh7kntSvc99gBFdzma4S4tWr1GvI2cclw
+ b895H8o+V7bUEnLCLZNsb9sb8kfssqkzpx2ixlITiXH7JDTZ6EEPRgUFaBItCvHWhqbXj11to
+ ZJPPyFUUT/J4K5TvMzdlZCujjJPAI0EXHwqzvUYg0sLzQfQ1O89sAuwzWgpWSV7MWiSLOeHP1
+ TUicJOndWG4HiYdHyTLvXMP3/PiwmHj5mca9+7rgwONgI8EfH5TKZ2wAGfO2nMbA2KsxS8iNJ
+ I9nEMDBkbRp3Eb/c8kutfcC+ikM0vwSH1JbHfs72r8vev7Uez026/a1jYkmozq//ppXvQue9a
+ gtzlHtkV3YTI/4MjtKYT2OCIqa3I/bDQxG//bvJx7bjv1+eH/Lijwny6ThAAP4oaTb0Ow8pQ4
+ de+1DoWlSfBlmlEMIssG8C7dRZfdfZwSYoIw0HWJye0b44bxiBLqDvMOyHEnQVnHBdmRQiVHb
+ UvHNg9NhWiNVoacN+j0ZQgsFb1mJZnKP1+X0L8+li8L3dN33gMEVHWq7yWXU/HoMarsdRHH2T
+ XdnNW9VHchA9pT8xNWdTkpnF3+EWQ1CbnHB3kEebIoYaU45RRnx2gpA1UiFZeKCMdEhau5Vvw
+ pw7sLRyM1GdIsKLaYzxuAFHca5kd71qdbs4iRuzA1ovdu+lwOO0tMT/lWnCj+OtFBjewCLmQs
+ A/q3UVXxzXnymrwbB1wxG2jLCFnqPTQnbh3zMJxfyVmFocI0dXCoFG25XGuO8OTAxJvbfK4WH
+ GRHTc=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi Rohit,
 
-> On 8/7/2019 7:15 AM, Ren=C3=A9 Scharfe wrote:
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->> Patch generated with --function-context for easier review.  That makes
->> it look a lot bigger than it actually is, though.
->
-> Thanks for the --function-context. It really does clarify what's going =
-on,
-> especially in the case with the "out:" label.
+On Tue, 6 Aug 2019, Rohit Ashiwal wrote:
 
-Yes in general, but it can cut both ways ;-)
+> @@ -1046,6 +1066,8 @@ static int run_git_commit(struct repository *r,
+>  		argv_array_push(&cmd.args, "--amend");
+>  	if (opts->gpg_sign)
+>  		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+> +	if (opts->ignore_date)
+> +		argv_array_pushf(&cmd.args, "--date=3D%ld", time(NULL));
+>  	if (defmsg)
+>  		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+>  	else if (!(flags & EDIT_MSG))
 
->> The plugged leaks were added after v2.22.0 (2019-06-07) by the followi=
-ng
->> commits:
->>=20
->> 5c84b3396c 2019-06-18 commit-graph: load commit-graph chains
->> ef5b83f2cf 2019-06-12 commit-graph: extract fill_oids_from_packs()
->> 8d84097f96 2019-06-18 commit-graph: expire commit-graph files
->
-> Your changes look good to me.
+I need this patch to make the code _at least_ compile on Windows again
+(I don't know whether it breaks the test suite yet):
 
-Thanks.
+=2D- snipsnap --
+Subject: [PATCH] fixup! rebase -i: support --ignore-date
 
->
->> -	strbuf_reset(&progress_title);
->> +	strbuf_release(&progress_title);
->
-> This line confused me as I'm sure I adapted it from another place in co=
-de,
-> and sure enough in the old code, progress_title was re-used between mul=
-tiple
-> stages. That's why it was a 'reset' when it should have been a 'release=
-'.
->
-> Thanks!
-> -Stolee
+It is a mistake to believe that the return value of `time()` is always
+an `unsigned long`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ sequencer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 539c0ef601b..a4c932d3407 100644
+=2D-- a/sequencer.c
++++ b/sequencer.c
+@@ -1070,7 +1070,8 @@ static int run_git_commit(struct repository *r,
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+ 	if (opts->ignore_date)
+-		argv_array_pushf(&cmd.args, "--date=3D%ld", time(NULL));
++		argv_array_pushf(&cmd.args, "--date=3D%"PRIuMAX,
++				 (uintmax_t)time(NULL));
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+ 	else if (!(flags & EDIT_MSG))
+@@ -3642,7 +3643,8 @@ static int do_merge(struct repository *r,
+ 			argv_array_push(&cmd.args, opts->gpg_sign);
+ 		if (opts->ignore_date)
+ 			argv_array_pushf(&cmd.args,
+-					 "GIT_AUTHOR_DATE=3D%ld", time(NULL));
++					 "GIT_AUTHOR_DATE=3D%"PRIuMAX,
++					 (uintmax_t)time(NULL));
+
+ 		/* Add the tips to be merged */
+ 		for (j =3D to_merge; j; j =3D j->next)
+=2D-
+2.22.0.windows.1.6.g271c090e89
+
