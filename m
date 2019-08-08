@@ -2,74 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52D4B1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 22:09:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF1C51F732
+	for <e@80x24.org>; Thu,  8 Aug 2019 22:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404517AbfHHWJD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 18:09:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57001 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404029AbfHHWJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 18:09:02 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A058156A64;
-        Thu,  8 Aug 2019 18:09:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7z2zP36QImg7
-        emOUeMz1ftsPVWY=; b=Oin4IoaLc+QiPdaTFTeKwvq9sOaOoOwG8jifEC4Hb/Hw
-        M+J3CNE4AB5TMT34UwwVQci5CnFPySYfDmJpDM4jafuAJL9Zn6mPC61n+zsLcpPn
-        JRX/UCatcWtUvxLA6VAzfT0IqbJJ8NJhBi3RnEe3Ip3gW5kWkQ9R2tQaR5lCRGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PQT2Sh
-        An9BXpbCuVJEhPnzUvhSzdy91BthOfAyZLhhrLTJEw3I5qaxqQEnEFyX0nlfgt+o
-        Q/yeb5E/mzN1I4N+i0JY/I2qG8S+U1MTTgq1X4dR9K9aL3edCHWhr6h5iXjAbelB
-        h8DVZYvnQX1Y2W6rfd268uQL0LkCibJQD9qX8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70EF4156A63;
-        Thu,  8 Aug 2019 18:09:02 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4BD6156A62;
-        Thu,  8 Aug 2019 18:09:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] tests: show the test name and number at the start of verbose output
-References: <20190803080126.29488-1-szeder.dev@gmail.com>
-        <20190805210447.7169-1-szeder.dev@gmail.com>
-        <nycvar.QRO.7.76.6.1908082211550.46@tvgsbejvaqbjf.bet>
-Date:   Thu, 08 Aug 2019 15:09:00 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1908082211550.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 8 Aug 2019 22:12:23 +0200 (CEST)")
-Message-ID: <xmqqk1bne2df.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2390491AbfHHWRz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 18:17:55 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:41168 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390340AbfHHWRz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 18:17:55 -0400
+Received: by mail-ot1-f49.google.com with SMTP id o101so125057681ota.8
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 15:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=influxdata-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=7zmkAQo3zTdZ0dBCXkwIDiqrQ/OVpVh0TEb/uYwyw1g=;
+        b=owglcZH44VCAz0KlPKtuR1FBc5b2qSFLFDRsK82wm9qbhIIK5P7MlKmnNRbJdlsGuC
+         gG8/nrEA7GCNffZ92VOKQ8dZbXLIbIHeUULu7V6ZinFUCOTwScSmL1LP8fpGxeTzvNo1
+         kTj/JZGK54s7r74aXZH4DEMy0Jy1+/zGGfv/yhniyS9dQEMLtP6CGcz2EvOXOhhRFrgO
+         QcEh4FH4RWBNxYUANqT/m33INbhaYHthGIvFrhJDGhOauudQv7S8cvb2VbTtaxWlJIHi
+         u3lA1Fe+i71Dt3tP3GebfIy4sUSkKD07+HkQbXl5fZaC0eWu1qd6rVdeJrxHV7xiEIDP
+         b+7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=7zmkAQo3zTdZ0dBCXkwIDiqrQ/OVpVh0TEb/uYwyw1g=;
+        b=qsadXnFCBZD+1wdO2/H3rQasjCcMDl//pSbHPTQ3vzPeoBARTy/I7MJjTzTx+m2Ari
+         TQFnQQeKQG0XZaEmLkznZPXLgNhVLK84LUduJYq5wvKl6082RToCmrG/Qmg5zbm3TfTc
+         mLXdep1SgzIW6U8wxbXvbpIzsYGgVG2RYRKsHqK+n0PX/iS+ip+UlNJibgpDPkRhtubd
+         e/H3V34gQsreq16dIEV08TJHmGLI4vDcO+n9X8AwM96Z+/3AUE/Ne5IO29vZvJZwokxx
+         6iSJQfIK2C/Tuxk1P0mmsg5uGxn1qXkR81SXjOk0VhI8yVPRiXXHKJxvXrHgfkZmNaSZ
+         vwqA==
+X-Gm-Message-State: APjAAAX9SQOXbmnZ6OcDUSuOmUiN/mki9XkcJWdgPjRy9F2wIQIOKZ1P
+        42esW9tAzn66qtGsRqBmx/qJ7UFSgDtlj2YFwEYy/LnU2DU=
+X-Google-Smtp-Source: APXvYqzufrqxZ1Sv17/ke+bVg7Fa80s47kxZ4qb8sArzk+K0RM/0UzVRHGgmVwgo7O35aiECt9inRjDzrdRodZ84PjY=
+X-Received: by 2002:a6b:bc42:: with SMTP id m63mr17036804iof.189.1565302674357;
+ Thu, 08 Aug 2019 15:17:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 20D6871C-BA29-11E9-B235-46F8B7964D18-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CALxJwdP70PpcJKFC3FRm5t58yjxz438WwYisuFwQsJ2oaXV_9A@mail.gmail.com>
+In-Reply-To: <CALxJwdP70PpcJKFC3FRm5t58yjxz438WwYisuFwQsJ2oaXV_9A@mail.gmail.com>
+From:   Mark Rushakoff <mark@influxdata.com>
+Date:   Thu, 8 Aug 2019 15:17:43 -0700
+Message-ID: <CALxJwdM0ifKoQDMXJuuWyeXdR9-oxVpOyODBO0TXcz=d+0vq2Q@mail.gmail.com>
+Subject: Re: Possible to unshallow or deepen based on local objects?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Mon, 5 Aug 2019, SZEDER G=C3=A1bor wrote:
+On Fri, Jul 26, 2019 at 11:43 AM Mark Rushakoff <mark@influxdata.com> wrote:
 >
->> Include the test script number, test number, and the test name at the
->> start of the verbose output of each test, to help navigating the
->> tests' logs.
->> ...
+> I am building some CI tooling, and I am working with a large-ish repository, so
+> I am trying to start with a shallow clone of the repository and deepen it on
+> demand. I am finding it very difficult to correctly switch between fetch
+> --depth and fetch --deepen.
 >
-> Looks good to me!
+> I am looking for a way to "recover" from a fetch --depth call that made my
+> history shallower than before. Ultimately, I may take a different approach to
+> just work around this altogether, but I thought I'd ask here first.
+>
+> In particular, if there is history like this:
+>
+> A --- B --- C --- D --- E --- F
+>        \                 \
+>          ---------------- G
+> And my shallow history includes D..F, then I believe I am limited in my options
+> for fetching G:
+>
+> - If I do a plain fetch of G, or if I use --deepen, then I pull in A and all of
+>   its history, which I don't strictly need or want yet.
+> - If I know G's parent is B, and I fetch --depth=1, then (I think) I will see
+>   B, E, F, and G, effectively losing sight of D
+>
+> As a more contrived example, suppose I have a shallow clone of a repository:
+>
+> bash-3.2$ git clone --depth=4 -q git@github.com:git/git.git
+> bash-3.2$ cd git
+> bash-3.2$ git log --format='%h %d'
+> 3034dab  (HEAD -> master, origin/master, origin/HEAD)
+> 98e06de
+> 352253a
+> 4098130  (grafted)
+> 7b974e3
+> df63c2e
+> 75ce486  (grafted)
+> 70b39fb  (grafted)
+> afc3bf6  (grafted)
+> bash-3.2$ cat .git/shallow
+> 409813088ad55ae4a60f55412f6b5ba6a89d89e7
+> 70b39fbede78313656e8a6bd9b38b238ab10db2f
+> 75ce48674889df6a2bb493fb5d6bef0ef60ca7ae
+> afc3bf6eb13d9fc489b569164819cff44db8ac17
+>
+> And then suppose I fetch with depth smaller than before:
+>
+> bash-3.2$ git fetch --depth=1 -q
+> bash-3.2$ git log --format='%h %d'
+> 3034dab  (grafted, HEAD -> master, origin/master, origin/HEAD)
+> bash-3.2$ cat .git/shallow
+> 3034dab9ed6b11970a53099a7b3ca981f1461365
+> 409813088ad55ae4a60f55412f6b5ba6a89d89e7
+> 70b39fbede78313656e8a6bd9b38b238ab10db2f
+> 75ce48674889df6a2bb493fb5d6bef0ef60ca7ae
+> afc3bf6eb13d9fc489b569164819cff44db8ac17
+>
+> I can still see the commits I had before the --depth=1 fetch:
+>
+> bash-3.2$ git log -1 --format=oneline 75ce486
+> 75ce48674889df6a2bb493fb5d6bef0ef60ca7ae (grafted) Merge branch
+> 'di/readme-markup-fix'
+>
+> Short of looking through .git/shallow and removing each entry whose parents I
+> can resolve, is there a built-in command to "unshallow based on local objects"?
+> I have tried many web search terms, I have looked through the docs for many
+> low-level git commands, I have tried variations of "git fetch .", and I am
+> stumped.
 
-Thanks, both.
+I've run into another flavor of this problem now.
+
+I have a shallow clone of a repository. Then sometime later, I obtain a bundle
+containing full history.
+
+I thought I could use git fetch --unshallow /path/to/repo.bundle
+mybranch:mybranch, but I've found that git does not support shallow fetches
+from a bundle and that unshallow is actually an alias for --depth=2147483647 in
+4dcb167fc3 (fetch: add --unshallow for turning shallow repo into complete one,
+2013-01-11).
+
+If I do a plain fetch from the bundle, I can manually modify .git/shallow to
+"unshallow" my repository like the previous email in this thread. But what I
+think I still want here is a way to tell git "here are all the objects I have;
+update the shallow boundaries accordingly."
