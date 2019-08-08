@@ -2,123 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5207D1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 19:12:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03F561F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405023AbfHHTMl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 15:12:41 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:38127 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404713AbfHHTMi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 15:12:38 -0400
-Received: by mail-qk1-f195.google.com with SMTP id u190so6085281qkh.5
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 12:12:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fxGf4poNKczUS34aYXadOMzULCOC00vsTXLRsADoy/I=;
-        b=MczoAqMXZG7C5qr9WDRf1eEVzmxTEJmuusZ6wph0kdjDXAuV5Bt0ia0gD4Xh0bYdkG
-         sXEY0v4e6aogxEjYRU3m4zN5HT95DwL8pLf1eFp0/0YWXiV5kmAftktwum4VlGyIKi4u
-         PBC3iTjK0lbbJ4pEXKCpsOGAX5Ww7HGi9SPoxbpGIvL+HUTdklhRPQISgBla+yxXqwqb
-         s8VmacgipJQil9hIf34bFVLjybQ9J5R7xHVbnEctx8YKNW62CHobrU+4bgcIziEm+0Hf
-         AgrNkzpl/78pIanpW6sFmR1h7iK2k7nGN4SnHX+SvcJZj0xscpdponqqAfKS5ojM3C02
-         8mXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fxGf4poNKczUS34aYXadOMzULCOC00vsTXLRsADoy/I=;
-        b=aHebwPEpLvVdO9tWf7u6utVEsoNkKOlRzJz8sNApgJo2xuabeetZHfV6vAADLfLpJk
-         6qWhuNVTzx0+4blD2CGXpQSXLxR6GYTVtzQtYkYE/bpeOa0pQSD/bApzdiFUh5CX+hMc
-         SXvfMrp9f2cRSDz//RbXBn+ZMU59/tCHoI/J/Hzk70DZzW5GjYg44l6kFCGSgM/wlMne
-         quIDfrYy905lmg6QX0IVNOugjjkpzS9Boqwa2U3YLZ5nPSKpU7LcaNviwz8Nm9EWBfmZ
-         svRel/kte1hTjcPZ7obtY/Vp5mTzQWyReOfPQ4Vuh3n4nauhAOq+wIIo3KJOoYM0HY3w
-         g/Bw==
-X-Gm-Message-State: APjAAAVurleQQxt1wDrPvmcxngBlrSsDBwQ4D6hSfmatMz3C1sU1k+OD
-        LVfAz50e5bDYkDboy6O5KQE=
-X-Google-Smtp-Source: APXvYqx4/M79wiy3ruFFsPAmC8z9TUiAtecrzxCPRl3AH6NfkJXOxPWOEpzPVJcmf5RTdLgT0O+Kvg==
-X-Received: by 2002:a37:f50f:: with SMTP id l15mr15364692qkk.326.1565291557433;
-        Thu, 08 Aug 2019 12:12:37 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7487:521b:1543:4364? ([2001:4898:a800:1012:25bb:521b:1543:4364])
-        by smtp.gmail.com with ESMTPSA id b34sm2620698qtb.49.2019.08.08.12.12.36
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 12:12:36 -0700 (PDT)
-Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        carenas@gmail.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
- <pull.292.v3.git.gitgitgadget@gmail.com>
- <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
- <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
- <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
-Date:   Thu, 8 Aug 2019 15:12:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S2404421AbfHHTTW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:19:22 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44215 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2403928AbfHHTTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:19:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1565291959;
+        bh=TO9CNpU/piB9JiAktYuAaNx8HXQ30QVNXWPsT6oPPUM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=lMnBT2V2td8DimjgiBZMiNCq7Hc3UKOGlo+MCHmv6WwzzoHhrLxsYpHTnYNSwWuKz
+         jR2R4hiJuI4n/AQ+CX+7aaGLu3j1fQOZQhF3rngLRX82A08kDkQwOr2pNMARTiOS4B
+         O/Q2/k4ewto+R/47bJ9lIS7zCYL62S+Qm4/gkhok=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lz4KW-1iQcSM47Wq-014FCv; Thu, 08
+ Aug 2019 21:19:19 +0200
+Date:   Thu, 8 Aug 2019 21:19:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v3 00/13] example implementation of revwalk
+ tutorial
+In-Reply-To: <20190806231328.GB130824@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1908082118130.46@tvgsbejvaqbjf.bet>
+References: <20190701201934.30321-1-emilyshaffer@google.com> <20190701202014.34480-1-emilyshaffer@google.com> <nycvar.QRO.7.76.6.1907251122260.21907@tvgsbejvaqbjf.bet> <20190806231328.GB130824@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BKAD/mnvILSLIyQiOmpa1NEWzMgKVyJwyrWPy1k6Dv8YAQk7wwY
+ UPXWIofgCZ0FzF+SELHzvAKq+OWNXTPB52ZjHJcH2GWKgAalxNAbS+iN4QVB2HkOFcNifFz
+ Qi0MSE6B10LAjHVCgYDEMU26v6D8PdrjVg7zDrArrQELKWMX6RnJb0FuCfuiUF071Rpeclb
+ NtO8cKu7g6C7CZRcOrXbA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mXyZg6rNpww=:AJWK2G8n8SS93//i6ZkN7P
+ prevl4gwY1o7yd/qjs/00prbsdbtA0/eXbAy2ZrvHv/ZEQyKGG7OmHXkv3gtWrtf5lxyaLbFz
+ fyoFaBiAZsGSXaQXmuhbE4Qr1QNOrw8s/gn/mUxORooswypwUAIgpq0xRAlSoj8ifD6lVBsGF
+ sVJ3lC7+SMKqHETcubIkmqxqtzK9bPsVK1Ygu3gNQrrWEgdBMZusRkIoNXErbVZZejPiIR2Va
+ +oPFPbmDpL0uSTrTVUTTG/xBU9In2uQ1ivqWYVgQcoYZ/k34y6E7u0HHExqEZJzHwRgj2+OnF
+ LBGC1hlCoJ8E3r5UlRTWKoTjMxRdSlWZfH/dsmzTOEWvOIQyPVukl1juHkoIU+Ywc0JgoJ1dm
+ 3rAWhldVREpRiZ7o4Ijk/ZNmuMC5EWbUfNcOCvsZDZbscEMHMct0VIB+GbW3tvd31Iw49CKy2
+ pb3Q3yHBQgk2Ahpi1JSMGJEXSvlEComhJHbPZ2hz3ix+a1Y/zjAfWqX4Ctt3cozYgk0PnvI3V
+ eDAG43oRl3VeOhe3dsSmxW3SMhiWiwF9SiaYuz0Kkui9fwiIe5Z1THpXWZv9Vw4EhBCIbDX6N
+ vDe4uSEaY+h0E2rEAdPHAoeSBJz+0+lMFnDDTsU4APNyd4KusisKoiaCigEfDt2Jk29LYTrfR
+ SxFe/XlXuVtwsbLV9yyqaFeVOo6mizp2KFDrpMw8SDKrcwGLyjcuVu2oZLdPCvUtpRby1gtmg
+ iIimErkTO4LBfIlZDWkHpoVlqOqrGbJ1tQRC9IvrXUxG+GgiSR7eHYWaI/je2i+VpHYWTsaph
+ gP+EafGpGA64EZz0HQf5nsQnD5BByZAzvXt75PNImHEYM3CYWXQdpPaOu/Zk8mya67g/CXPIA
+ R8mUNAy8cfr3r6tB0wzwMfA0+m892h2Gt/QtHolK/iUYq3Sbl6PF7hygNvBI94by2rBEDuj5O
+ XmBm2KkgSADO7hO5cKeJxqxP5tfe221MpbLbbJU7jwcfme2m47vWf2uAQGdswmXGQCQHmec/B
+ 8WhlEPUXXZwLlvwqgJJ+afMwVxi/kXTNVxU2DMSJlC4gvCtr+gXwM5mQdhCc6Yzxbw4hQ2umS
+ IkND0Tqj5lgojz4WpsdepAnJG/lkeHE4t5oMvGRWeN+7BnIbd1qyGkVHemWVYC4gK6JbLo0T2
+ /R+2I=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/8/2019 2:59 PM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->>> --- a/Documentation/config/merge.txt
->>> +++ b/Documentation/config/merge.txt
->>> @@ -54,7 +54,8 @@ merge.directoryRenames::
->>>         moved into the new directory.  If set to "conflict", a conflict
->>>         will be reported for such paths.  If merge.renames is false,
->>>         merge.directoryRenames is ignored and treated as false.  Defaults
->>> -       to "conflict".
->>> +       to "conflict" unless `feature.experimental` is enabled and the
->>> +       default is "true".
->>
->> I have a hard time parsing that changed sentence.  Perhaps something like:
->>    ...unless `feature.experimental` is enabled in which case the
->> default is "true".
->> ?
-> 
-> That reads better.
-> 
-> But I am not sure about the wisdom of controlling between conflict
-> and true with this feature macro in the first place.
-> 
-> Between "conflict" and "true", the former forces the end user to
-> verify (or allows the end user to veto) the auto resolution by the
-> heuristics and is always a safer if more cumbersome option.  It's
-> not like blindly trusting the directory rename heuristics is the
-> bright future for all users, is it?
-> 
-> I would not set rerere.autoUpdate to true when feature.experimental
-> is set; for exactly the same reason, I do not find it reasonable to
-> set this to true with feature.experimental macro.
+Hi Emily,
 
-OK. I can remove it from the feature.experimental variable.
+On Tue, 6 Aug 2019, Emily Shaffer wrote:
 
-Shall I keep the enum logic and the use of repo-settings.c? I can split
-them out into a separate patch.
+> On Thu, Jul 25, 2019 at 11:25:02AM +0200, Johannes Schindelin wrote:
+> >
+> > On Mon, 1 Jul 2019, Emily Shaffer wrote:
+> >
+> > > Since v2, mostly reworded comments, plus fixed the issues mentioned =
+in
+> > > the tutorial itself. Thanks Eric for the review.
+> > >
+> > > Emily Shaffer (13):
+> > >   walken: add infrastructure for revwalk demo
+> > >   walken: add usage to enable -h
+> > >   walken: add placeholder to initialize defaults
+> > >   walken: add handler to git_config
+> > >   walken: configure rev_info and prepare for walk
+> > >   walken: perform our basic revision walk
+> > >   walken: filter for authors from gmail address
+> > >   walken: demonstrate various topographical sorts
+> > >   walken: demonstrate reversing a revision walk list
+> > >   walken: add unfiltered object walk from HEAD
+> > >   walken: add filtered object walk
+> > >   walken: count omitted objects
+> > >   walken: reverse the object walk order
+> > >
+> > >  Makefile         |   1 +
+> > >  builtin.h        |   1 +
+> > >  builtin/walken.c | 297 ++++++++++++++++++++++++++++++++++++++++++++=
++++
+> >
+> > Since this is not really intended to be an end user-facing command, I
+> > think it should not become a built-in, to be carried into every Git
+> > user's setup.
+>
+> It's not intended to be checked into Git source as-is.
 
--Stolee
+Then it runs the very real danger of becoming stale: we do _not_
+guarantee a stable API, not even an internal one.
 
+> > Instead, I would recommend to implement this as a test helper.
+>
+> I'm not sure I follow how you imagine this looking, but the drawback I
+> see of implementing this in a different way than you would typically do
+> when writing a real feature for the project is that it becomes less
+> useful as a reference for new contributors.
+
+To the contrary. Some code in `t/helper/` is intended to test
+functionality in a way that is copy-editable.
+
+Your use case strikes me a perfect example for such a test helper:
+
+- It guarantees that the example is valid,
+- It demonstrates how to use the API,
+- In case the API changes, the changes to the helper will inform
+  contributors how to change their copy-edited versions
+
+> > This would have the following advantages:
+> >
+> > - it won't clutter the end user installations,
+> >
+> > - it will still be compile-tested with every build (guaranteeing that
+> >   the tutorial won't become stale over time as so many other tutorials=
+),
+>
+> This part of your suggestion appeals to me; so I'm really curious how
+> you would do it. Do you have something else written in the way you're
+> suggesting in mind?
+
+I looked at `t/helper/test-hashmap.c` and it looks _almost_ like a
+perfect example for what I have in mind: it uses a given API,
+demonstrates how to use it properly, and is copy-editable.
+
+Ciao,
+Dscho
