@@ -8,93 +8,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AFF81F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 18:15:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFEA01F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 18:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733200AbfHHSPh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 14:15:37 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:35932 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732634AbfHHSPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 14:15:37 -0400
-Received: by mail-vs1-f67.google.com with SMTP id y16so63626637vsc.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 11:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pzjzTC6/0eN41PC2StSskOlFemrKdpPxgvfMPJuOYF8=;
-        b=CwqU4IV9YQrJ6d/Qs1PnasTWDOW1oN2iZXYWqHEUS1iSPRVJ77TqRqXO4H68ADsAbq
-         PC5fwItTILZL5gW17h8sQ+Q2r9S3qskDlWDCMTmTsJoQtNM8pJR1DIt/Q96jTOgwAgVl
-         QkfHkBTuaje5Frxff3iLh6aQikRdpJsXJyRIxPIenL7pxyf30qrjcmFhqYJhlYHqkNCL
-         Jsn58YAfWgS4luvJQL7h2laTYHxFdBPsVT/Hs/iZwH1IX1NTo7h6KmeehX1BfEoCL8im
-         hS8jNikQG1PsAclTsDzCN5t0xFocV6bMdf+Sii2XIpfb4qhbMQyzZBXGlZ262hiuBaFU
-         dYjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pzjzTC6/0eN41PC2StSskOlFemrKdpPxgvfMPJuOYF8=;
-        b=QK0KkL+I9oHUvEbmMZ+gfU8BlIaHzMzhKevrupqFDTAtfTykuOZ7fGL1I2+SYtKGJr
-         t8b11TNCggID4JmWUtAlfZJlI4A+btWFguBRKVG+zYirKk4iUqN8eS8FCJYG6jlAg1NX
-         1VMF/WM6n/ZR9/bttdZffHn8x7dqoSOW6wvnGmr6KRDUboiUDoviQ/dF7S4+17TZo08O
-         6la0XJNbZ4v4zQSckhIW7Vbi+9ff3swRB2/Q0pgbupk72aDpiqKvxpC8bI0UOHLaDxGN
-         rM4GvnhQpYuH8wJx9rXVJ9Szpwiv11x60MSgNspUkVMZDaMUYyi+3WMLiSvZcNIRx7tJ
-         abtw==
-X-Gm-Message-State: APjAAAU67TytUqHDHz3MYw1Yfe1Ah6pJPRi3mzXaZNcwKBQ0FP7TRmRx
-        JiM1/IMJvlT4on8AvergxZOGj1Z48JgPxsL/AKQ=
-X-Google-Smtp-Source: APXvYqwCfljSB8swRwJaateR8qtZLjhZ0D3Qm+9/5uw1W3IhdtwIRR4b/fk5iLAm3l45FexQreEwObYz5i299KbaoyQ=
-X-Received: by 2002:a67:f5d0:: with SMTP id t16mr11159774vso.175.1565288135961;
- Thu, 08 Aug 2019 11:15:35 -0700 (PDT)
+        id S1732446AbfHHSXF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 14:23:05 -0400
+Received: from resqmta-ch2-07v.sys.comcast.net ([69.252.207.39]:41724 "EHLO
+        resqmta-ch2-07v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727649AbfHHSXF (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 8 Aug 2019 14:23:05 -0400
+Received: from resomta-ch2-12v.sys.comcast.net ([69.252.207.108])
+        by resqmta-ch2-07v.sys.comcast.net with ESMTP
+        id vjhGhrsjl544Svn44hf48N; Thu, 08 Aug 2019 18:23:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1565288584;
+        bh=SIaQdXFIIekq2P8ChEkAifNeaisQEInXrQzFaKXZjus=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=ygPcEjOLPInIWfbXrtpfavvfSS4SA1LQ8AyWA4MBrH6RuCrOGef2lZs/pLgBDPHbc
+         HzvJGWqjGueTp4QigI3s2uCa+LOMvRsliDwsjEYh9CSYthknHhV3MKRUJWrJkrqkPg
+         n8/5mIyYDVy0T/TaE/La3p9mn//oF4i0gmYrB3Lxvc3X6Bj1nNdFO0Rg210RkKR884
+         03RxcR8xxT1y6iwzgZeiKey2c1airsaqVaLSp4ByGqNXrDRUhnB9lXafuRLOG0rCzZ
+         kYawBqZwzWMUrBgqIZeO7kT6UXn19Chx4Ba57ZiZCWM0EEsqP1PGtL8Bzgb04phTZd
+         XZEUQvQP1qzSw==
+Received: from comcast.net ([IPv6:2620:15c:2ce:200:a9c1:5c2c:5c87:36b6])
+        by resomta-ch2-12v.sys.comcast.net with ESMTPSA
+        id vn3ih8oc3vbxRvn3shwl5H; Thu, 08 Aug 2019 18:23:02 +0000
+X-Xfinity-VMeta: sc=0;st=legit
+Date:   Thu, 8 Aug 2019 11:22:42 -0700
+From:   Matthew DeVore <matvore@comcast.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: What's cooking in git.git (Aug 2019, #03; Tue, 6)
+Message-ID: <20190808182242.GA96790@comcast.net>
+References: <xmqqv9vahs6p.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190808035935.30023-1-phil.hord@gmail.com>
-In-Reply-To: <20190808035935.30023-1-phil.hord@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 8 Aug 2019 11:15:24 -0700
-Message-ID: <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
-Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv9vahs6p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 7, 2019 at 9:11 PM Phil Hord <phil.hord@gmail.com> wrote:
->
-> From: Phil Hord <phil.hord@gmail.com>
->
-> 'git tag -d' accepts one or more tag refs to delete, but each deletion
-> is done by calling `delete_ref` on each argv. This is painfully slow
-> when removing from packed refs. Use delete_refs instead so all the
-> removals can be done inside a single transaction with a single write.
+On Tue, Aug 06, 2019 at 02:58:38PM -0700, Junio C Hamano wrote:
+> 
+> * md/list-objects-filter-combo (2019-06-28) 10 commits
+>  - list-objects-filter-options: make parser void
+>  - list-objects-filter-options: clean up use of ALLOC_GROW
+>  - list-objects-filter-options: allow mult. --filter
+>  - strbuf: give URL-encoding API a char predicate fn
+>  - list-objects-filter-options: make filter_spec a string_list
+>  - list-objects-filter-options: move error check up
+>  - list-objects-filter: implement composite filters
+>  - list-objects-filter-options: always supply *errbuf
+>  - list-objects-filter: put omits set in filter struct
+>  - list-objects-filter: encapsulate filter components
+> 
+>  The list-objects-filter API (used to create a sparse/lazy clone)
+>  learned to take a combined filter specification.
+> 
+>  Will merge to 'next'.
+> 
 
-Nice, thanks for working on this.
+This has been the status for a while, and I don't see it on "next."
 
-> I have a repo with 24,000 tags, most of which are not useful to any
-> developers. Having this many refs slows down many operations that
-> would otherwise be very fast. Removing these tags when they've been
-> accidentally fetched again takes about 30 minutes using delete_ref.
-
-I also get really slow times on a repo with ~20,000 tags (though order
-~3 minutes rather than ~30, probably due to having an SSD on this
-machine) -- but ONLY IF the refs are packed first (git pack-refs
---all).  If the refs are loose, it's relatively quick to delete a
-dozen thousand or so tags (order of a few seconds).  It might be worth
-mentioning in the commit message that this only makes a significant
-difference in the case where the refs are packed.
-
->     git tag -l feature/* | xargs git tag -d
->
-> Removing the same tags using delete_refs takes less than 5 seconds.
-
-It appears this same bug also affects `git branch -d` when deleting
-lots of branches (or remote tracking branches) and they are all
-packed; could you apply the same fix there?
-
-In constrast, it appears that `git update-ref --stdin` is fast
-regardless of whether the refs are packed, e.g.
-   git tag -l feature/* | sed -e 's%^%delete refs/tags/%' | git
-update-ref --stdin
-finishes quickly (order of a few seconds).
+I notice Johannes wanted a fix for incorrect strbuf usage to fix a linter check
+- (just saw his earlier message now) is that the cause of the delay?
