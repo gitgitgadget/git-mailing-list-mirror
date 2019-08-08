@@ -2,117 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEB5D1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 19:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 975B21F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404353AbfHHTT2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 15:19:28 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:40679 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403928AbfHHTT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 15:19:27 -0400
-Received: by mail-ua1-f66.google.com with SMTP id s4so36835042uad.7
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 12:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3cZA4NnlhSDlDZSixp1gQKDYFhkDymTmMpmoLz0X76k=;
-        b=R1xEf8vMAcpMfRKcnJsqnNzHGzrvNR5M42qsfvRiUGHFmOWrZOPtHkPLhxDEy7uaez
-         Y3o+puHTw0DwyzopKL1nrZjYAja+sFVqcHITc4nN7+uz6vwmYhu7FHXZMuXtUntyDgBK
-         e05TDFJquwJVfUTeTLde4T95RrCSjyTu9PkJnvwPrBLIk2TNqr7gL3fVQBHhmcw2XJ7G
-         RYvQb+LkHslhj+npushNdNwUnDEs/30HpJaWRGToJdwJkR3oLWwOeC+GnTArxojtqFS7
-         mCNU6WsJjy+u/2Yr5Pl/oDGEh1NNF0j/JlSXAc+C8NH6Sp0lIOgIOxNpy0IdVeza00sW
-         Zvlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3cZA4NnlhSDlDZSixp1gQKDYFhkDymTmMpmoLz0X76k=;
-        b=IJ91hzrOG6BNgg2Z51hgXRVAiLrWU35Gw/Nswsw+BoMZcqpXIZo7eAa+Z5cDEZ89mm
-         CMrZrPgaK9DGAKqinjnUX8dqdRMrbVcWnRLKWVbpFfmD0XXrGldwGFiMy3IRgToK9hqK
-         qgSfYFXhBZg9XdmIptkMt/UiO56tEAFS1P8T1QtXRMsfgk1MFojDMJJigTJ5qQQ7KTis
-         WxVKOnEwiUsz5KY1gtXOu/DsHwOwZmK/+PuJTrhksrGvjEgWg2Q/KHzxQm9sxphS0oXm
-         Mozr6e9x7v2PEuuNLiVQt2Ylw0bg/1Wn3EPaPUx4EHXNhsSCE35bnPToDMtjUz1C+YH+
-         KAFQ==
-X-Gm-Message-State: APjAAAUo/+aD8HjkMZ7P3UMFq3d/8fUZgC1Bjj5fRCAW/fCBqx6dlgaz
-        6hXCJMmAZ+V/2v07JnU2NlncyF7MuD55llvx73c=
-X-Google-Smtp-Source: APXvYqzcipR39c0qXduv3EiFIhj2vWrBPP5um/CKtZdtj9tYR26kxmn+j+F2Jx3k3K9DgZHzw+mbaNi+PflOgtkkm9I=
-X-Received: by 2002:ab0:168a:: with SMTP id e10mr10954735uaf.87.1565291966769;
- Thu, 08 Aug 2019 12:19:26 -0700 (PDT)
+        id S2390305AbfHHTjT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:39:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52003 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389995AbfHHTjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:39:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 633B116C41F;
+        Thu,  8 Aug 2019 15:39:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8IREEMtiivEnAag55p0rcKQ1SZY=; b=SiX9em
+        V3wVgFmJtTiLxtfC2w4urzv6uEAoiNPv20KI8f0uDm1Q0mQJVy+gmSR2ilhjbTiL
+        ugJqq2rRLDDTQGNIglCak3ZVBF3/Dphkr2W+HZYZ/cM8Bz1CBPFc+HZFGQzEcOLd
+        Az2Tdopzrh638qzbQE9qcYR44DmmE0rW7k3ok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pqdGyc95/kTdaHOnN3OA+X7BjS4YJQEN
+        jGbgitzQuXf2D1qQIdFeHR0oG2bBcy9Gtew4iYhThEXNxVuiM3fb12vUFee1szfZ
+        kgZPcDlu13Q9LTpoWkC/RophhGiXWQIgBXjsl7C73fG1F+Ppd0XGX2rXz4jsV1v9
+        Zi+MuwcxuMw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A85D16C41E;
+        Thu,  8 Aug 2019 15:39:12 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BADA816C41D;
+        Thu,  8 Aug 2019 15:39:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
+References: <20190808035935.30023-1-phil.hord@gmail.com>
+Date:   Thu, 08 Aug 2019 12:39:10 -0700
+In-Reply-To: <20190808035935.30023-1-phil.hord@gmail.com> (Phil Hord's message
+        of "Wed, 7 Aug 2019 20:59:35 -0700")
+Message-ID: <xmqq4l2rfnvl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.292.v2.git.gitgitgadget@gmail.com> <pull.292.v3.git.gitgitgadget@gmail.com>
- <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
- <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com> <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 8 Aug 2019 12:19:14 -0700
-Message-ID: <CABPp-BH2EHGEmOj3kpeTMV2PpKkRBpPn3FuBfNDHKA8=BkKxFQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        carenas@gmail.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 325153EC-BA14-11E9-93B9-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 8, 2019 at 12:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> --- a/Documentation/config/merge.txt
-> >> +++ b/Documentation/config/merge.txt
-> >> @@ -54,7 +54,8 @@ merge.directoryRenames::
-> >>         moved into the new directory.  If set to "conflict", a conflict
-> >>         will be reported for such paths.  If merge.renames is false,
-> >>         merge.directoryRenames is ignored and treated as false.  Defaults
-> >> -       to "conflict".
-> >> +       to "conflict" unless `feature.experimental` is enabled and the
-> >> +       default is "true".
-> >
-> > I have a hard time parsing that changed sentence.  Perhaps something like:
-> >    ...unless `feature.experimental` is enabled in which case the
-> > default is "true".
-> > ?
->
-> That reads better.
+Phil Hord <phil.hord@gmail.com> writes:
 
-:-)
-
-> But I am not sure about the wisdom of controlling between conflict
-> and true with this feature macro in the first place.
+> From: Phil Hord <phil.hord@gmail.com>
 >
-> Between "conflict" and "true", the former forces the end user to
-> verify (or allows the end user to veto) the auto resolution by the
-> heuristics and is always a safer if more cumbersome option.  It's
-> not like blindly trusting the directory rename heuristics is the
-> bright future for all users, is it?
+> 'git tag -d' accepts one or more tag refs to delete, but each deletion
+> is done by calling `delete_ref` on each argv. This is painfully slow
+> when removing from packed refs. Use delete_refs instead so all the
+> removals can be done inside a single transaction with a single write.
+>
+> I have a repo with 24,000 tags, most of which are not useful to any
+> developers. Having this many refs slows down many operations that
+> would otherwise be very fast. Removing these tags when they've been
+> accidentally fetched again takes about 30 minutes using delete_ref.
+>
+>     git tag -l feature/* | xargs git tag -d
+>
+> Removing the same tags using delete_refs takes less than 5 seconds.
 
-I'm afraid I don't quite know what the intended usecase for
-feature.experimental is, and I'm unfamiliar with both pack.useSparse
-and fetch.negotiationAlgorithm for comparison.  If the intended
-usecase is stuff that is expected to become the future for all users,
-then I agree with you; "conflict" is the right default for both now
-and in the future so feature.experimental should not change it.
-However, Stollee's commit message started with "The
-'feature.experimental' setting includes config options that are not
-committed to become defaults".
+Makes sense.  As mentioned elsewhere in the thread already,
+a batched update-ref would open the packed-refs ony once because
+everything is done in a single transaction, so presumably a pipeline
+like this
 
-If these are settings that are "intended" but not "committed" to
-become defaults, then yes, you're absolutely right.  (And in such a
-case, it might be nice to add that distinction to the commit message.)
- If there is some other purpose, it depends on what that purpose is.
+	git tag -l feature/* | 
+	sed -e 's|^|delete refs/tags/|' |
+	git update-ref --stdin
+
+may work well, and "git tag -d" that gets these refs on the command
+line should be capable of doing the same.
+
+> -static int delete_tag(const char *name, const char *ref,
+> -		      const struct object_id *oid, const void *cb_data)
+> +struct tag_args {
+> +	char *oid_abbrev;
+> +	char *refname;
+> +};
+> +
+> +static int make_string_list(const char *name, const char *ref,
+> +			    const struct object_id *oid, void *cb_data)
+
+Please think about a few more minutes before naming a function like
+this, and make it a habit for your future patches.
+
+We can see that the callback is used to insert more strings into a
+string list, but the type (i.e. string_list) used to represent the
+set is not all that important.  What is more important is why you
+are building that set for, and saying what is in the set (as opposed
+to saying that the container happens to be a string_list) would be a
+good first step.
+
+I presume that you are enumerating the tags to be deleted, together
+with the data necessary for you to report the deletion of the tags?
+
+>  {
+> -	if (delete_ref(NULL, ref, oid, 0))
+> -		return 1;
+> -	printf(_("Deleted tag '%s' (was %s)\n"), name,
+> -	       find_unique_abbrev(oid, DEFAULT_ABBREV));
+> +	struct string_list *ref_list = cb_data;
+> +	struct tag_args *info = xmalloc(sizeof(struct tag_args));
+> +
+> +	string_list_append(ref_list, ref);
+> +
+> +	info->oid_abbrev = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+> +	info->refname = xstrdup(name);
+> +	ref_list->items[ref_list->nr - 1].util = info;
+>  	return 0;
+>  }
+>  
+> +static int delete_tags(const char **argv)
+> +{
+> +	int result;
+> +	struct string_list ref_list = STRING_LIST_INIT_DUP;
+> +	struct string_list_item *ref_list_item;
+> +
+> +	result = for_each_tag_name(argv, make_string_list, (void *) &ref_list);
+> +	if (!result)
+> +		result = delete_refs(NULL, &ref_list, REF_NO_DEREF);
+> +
+> +	for_each_string_list_item(ref_list_item, &ref_list) {
+> +		struct tag_args * info = ref_list_item->util;
+> +		if (!result)
+> +			printf(_("Deleted tag '%s' (was %s)\n"), info->refname,
+> +				info->oid_abbrev);
+> +		free(info->oid_abbrev);
+> +		free(info->refname);
+> +		free(info);
+
+It is not performance critical, but info->refname is computable from
+ref_list_item->string, isn't it?  I am just wondering if we can do
+this without having to allocate the .util field for each of 20,000
+tags.  We still need to remember oid (or oid_abbrev, but if I were
+writing this, I'd record the full oid in .util and make the code
+that prints call find_unique_abbrev() on it), so I guess we cannot
+really leave .util NULL.
+
+> +	}
+> +	string_list_clear(&ref_list, 0);
+> +	return result;
+
+We used to return the returned value from for_each_tag_name() that
+repeatedly called delete_tag().  
+
+Now we return value from delete_refs().  Are our caller(s) OK with
+the values that may come back from that function?  Can delete_refs()
+return a value that is not appropriate to be returned from
+cmd_tag(), for example a negative value?
+
+> +}
+> +
+>  static int verify_tag(const char *name, const char *ref,
+> -		      const struct object_id *oid, const void *cb_data)
+> +		      const struct object_id *oid, void *cb_data)
+>  {
+>  	int flags;
+>  	const struct ref_format *format = cb_data;
+> @@ -511,7 +543,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  	if (filter.merge_commit)
+>  		die(_("--merged and --no-merged options are only allowed in list mode"));
+>  	if (cmdmode == 'd')
+> -		return for_each_tag_name(argv, delete_tag, NULL);
+> +		return delete_tags(argv);
+
+Thanks.
