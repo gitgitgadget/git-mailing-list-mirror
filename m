@@ -8,124 +8,200 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630A31F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 23:43:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B2DA1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 23:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404428AbfHHXna (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 19:43:30 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:39160 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404001AbfHHXna (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 19:43:30 -0400
-Received: by mail-lj1-f194.google.com with SMTP id v18so90399901ljh.6
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 16:43:29 -0700 (PDT)
+        id S2404870AbfHHX6r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 19:58:47 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37009 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403901AbfHHX6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 19:58:46 -0400
+Received: by mail-lj1-f195.google.com with SMTP id z28so36271480ljn.4
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 16:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aJqK+k1ImyQhjXUgtUGOV/TnuxIBx5L9p4kZeGC1RrY=;
-        b=MuAX8Hiax4Z/XNcJLeV/MgYHPlusMBJnsTX3PVVg9aLu7Y15f1uSATUWwfj2xaCD6M
-         WmtvB3dBmpheOJWLmZfQ+8Jt2qeOAHwcC/oJSs7hy4Ed+NF2bPbt25nqrB49zfLPrH9s
-         ZplNWLsYkhAztxUuSb98kN30GEOP+ir4hyV5QCSZyi9LVmOxcZLIdWHUmLXoNu55NvT+
-         PF8zawu5jaHNvSj7kmGgbeqqhHTvskxvBVlP9VbPYB5jz5L6KpgCibdanH50sMQ31idR
-         uQJ8txkemRGoPWpvl0QuRG4byiQ7+yBdHNpf/nSSK8TyS6fBdRyZSHym3l/UySGQ/ZH7
-         GX7A==
+        bh=8fgG6JheHa2Pq4gbVIgtIebq5I8X2/Lm6zawPvL182w=;
+        b=pMDQrrltVcSmUR86CMGwnJjFWyXtsgI6EC4gliQpV/TvL4RqEa9myejzT8Sin4O7VJ
+         cvVx4oUd9b3fQgNAwmSDJggRq3QIlxkIYA8Gwx4UPTikwC085C2PdbgdCN8qAuMwmlf5
+         riH9vADz/s4kWnEjLXoUg+e3JdUKrbTX6AvcavrNg2NXdaBVqot7ueCGAuBzfZM/5Hyi
+         lSHkih86qrTCKcihgR8uVPkEBWMLQB50UnZeFrhbRMqyqph3MY5j2+4UsaQoFaJaI1wv
+         mi1L+SBbR6xy1TMJcYcuABhbHi7skU7ucHQh27bzitb92JP/b0drGu8hTA0WsY+gHhIk
+         wwsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aJqK+k1ImyQhjXUgtUGOV/TnuxIBx5L9p4kZeGC1RrY=;
-        b=HO7GkdTyXEa4/l1kOKE2HL0aVzaK3aQm/yxeVrXJw8jvac7HxXSsDd+BO4ZwfXFKQt
-         CgOpnFm3TjMT4/Gw9QSwDgzpXNcG+IGs5G+Q52cAF/pjIFU+AKaUYSa/O+hBeGbOu350
-         i70wI4UiPWJMeMQ81YuyN4BrhPWcBufCCx7NhLOE1ODNe6oHKiX7hmv5dKa4jJQKDwud
-         bxIJvVCOBNOqGhkdz3j1ENFfxOJeB+9LX6Itt8CJ/Q85Lcd//RID0HGWiSw/pRZJQo7M
-         Ej7Fk7GK8FNS5Gw5ef6v/hnc0YNrg2cjmUPm7i0/Z7xaZaaQxFYHuOT7f55sH7yY12zn
-         6cpQ==
-X-Gm-Message-State: APjAAAUTb/FXpV0wQhIMXmF95/ovDmX5sqtAA27M1Hp8gdEWe3Ud/1Ny
-        K/j2MGIBahH5BlvlHmv61TWTMAK6QKeoRnjEB3c=
-X-Google-Smtp-Source: APXvYqzndo+sAu/e6q+EaNk7KBn8PI+Zj7UFaepwckzLpMujuc4tvFmQKgPb38wOWJbyQ5XwmgB2vY9dKXWx198dSoM=
-X-Received: by 2002:a2e:85da:: with SMTP id h26mr9877401ljj.48.1565307808419;
- Thu, 08 Aug 2019 16:43:28 -0700 (PDT)
+        bh=8fgG6JheHa2Pq4gbVIgtIebq5I8X2/Lm6zawPvL182w=;
+        b=JdOA5XobgEb5fcSkC6w7QyhOdkyHRbbcK88gu5OHLKGVjRQ00GGOTGpm6Oteca3SW6
+         Aozi9SaIh2SpOl2gx80TIt++f1tv/wuO55Wdd9iyZ307yiluAA8YDsUpZcFyuQ6ppAiE
+         vsONyNGdW5UJt/Ntm9xlTcYt6J5j7IiE5I4zq+ualpsDI6BxIjCN182irMkpwNFhqL8c
+         TjUXWmLbsq2OtsEtEg2af4+v6ADTqTyWYQRtuYw8P187igUqg+p7qCMqBnR62vNVgPub
+         mlLUPy29/WHOabLT8QSY/QoyXbMk9cb3CSs7TSLyGh9jkZ1fHxbHVnMV6Mz35HpaMrou
+         35Gw==
+X-Gm-Message-State: APjAAAVyQdwZ7gecXqtGsgpknbsPEy1/PRWXpoZfb2Fo0+DCbgw5GN3i
+        A8XFSDe8K156vX+/ytJEPOdZIR9amqd7HvOyeeQ=
+X-Google-Smtp-Source: APXvYqx2PcUiCcX/GDKQPhAvCVQJr328WNzWGR8QPMxyxuhSIOYBZi8PzXqm3jtl/NE2ndc0SNYy+7Kq4IgwQEgD8oo=
+X-Received: by 2002:a2e:85da:: with SMTP id h26mr9904403ljj.48.1565308724145;
+ Thu, 08 Aug 2019 16:58:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190808035935.30023-1-phil.hord@gmail.com> <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
-In-Reply-To: <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
+References: <20190808035935.30023-1-phil.hord@gmail.com> <xmqq4l2rfnvl.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l2rfnvl.fsf@gitster-ct.c.googlers.com>
 From:   Phil Hord <phil.hord@gmail.com>
-Date:   Thu, 8 Aug 2019 16:43:16 -0700
-Message-ID: <CABURp0p5xbsq+8UsFerMAY8EG-ndXgd19EUsHOgQG-dnDnTAgg@mail.gmail.com>
+Date:   Thu, 8 Aug 2019 16:58:30 -0700
+Message-ID: <CABURp0qHmuNQD4qxL8A5fCJaRsNZfZ51d3e2N3nD-x0jCMhnBw@mail.gmail.com>
 Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 8, 2019 at 11:15 AM Elijah Newren <newren@gmail.com> wrote:
+On Thu, Aug 8, 2019 at 12:39 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Wed, Aug 7, 2019 at 9:11 PM Phil Hord <phil.hord@gmail.com> wrote:
-> >
+> Phil Hord <phil.hord@gmail.com> writes:
+>
 > > From: Phil Hord <phil.hord@gmail.com>
 > >
 > > 'git tag -d' accepts one or more tag refs to delete, but each deletion
 > > is done by calling `delete_ref` on each argv. This is painfully slow
 > > when removing from packed refs. Use delete_refs instead so all the
 > > removals can be done inside a single transaction with a single write.
->
-> Nice, thanks for working on this.
->
+> >
 > > I have a repo with 24,000 tags, most of which are not useful to any
 > > developers. Having this many refs slows down many operations that
 > > would otherwise be very fast. Removing these tags when they've been
 > > accidentally fetched again takes about 30 minutes using delete_ref.
->
-> I also get really slow times on a repo with ~20,000 tags (though order
-> ~3 minutes rather than ~30, probably due to having an SSD on this
-> machine) -- but ONLY IF the refs are packed first (git pack-refs
-> --all).  If the refs are loose, it's relatively quick to delete a
-> dozen thousand or so tags (order of a few seconds).  It might be worth
-> mentioning in the commit message that this only makes a significant
-> difference in the case where the refs are packed.
-
-I'm also using an SSD but I still see about 10 tags per second being
-deleted with the current code (and packed-refs).  I see that I'm
-CPU-bound, so I guess most of the time is spent searching through
-.git/packed-refs.  Probably it will run faster as it progresses. I
-guess the 18,000 branches in my repo keep me on the wrong end of O(N).
-
-My VM is on an all-flash storage array, but I can't say much about its
-write throughput since it's one VM among many.
-
-Previously I thought I saw a significant speedup between v2.7.4 (on my
-development vm) and v2.22.0 (on my laptop). But this week I saw it was
-slow again on my laptop.  I looked for the regression but didn't find
-anyone touching that code. Then I wrote this patch.
-
-But it should have occurred to me while I was in the code that there
-is a different path for unpacked refs which could explain my previous
-speeds.  I didn't think I had any unpacked refs, though, since every
-time I look in .git/refs for what I want, I find it relatively empty.
-I see 'git pack-refs --help' says that new refs should show up loose,
-but I can't say that has happened for me.  Maybe a new clone uses
-packed-refs for *everything* and only newly fetched things are loose.
-Is that it?  I guess since I seldom fetch tags after the first clone,
-it makes sense they would all be packed.
-
+> >
 > >     git tag -l feature/* | xargs git tag -d
 > >
 > > Removing the same tags using delete_refs takes less than 5 seconds.
 >
-> It appears this same bug also affects `git branch -d` when deleting
-> lots of branches (or remote tracking branches) and they are all
-> packed; could you apply the same fix there?
+> Makes sense.  As mentioned elsewhere in the thread already,
+> a batched update-ref would open the packed-refs ony once because
+> everything is done in a single transaction, so presumably a pipeline
+> like this
+>
+>         git tag -l feature/* |
+>         sed -e 's|^|delete refs/tags/|' |
+>         git update-ref --stdin
+>
+> may work well, and "git tag -d" that gets these refs on the command
+> line should be capable of doing the same.
+>
+> > -static int delete_tag(const char *name, const char *ref,
+> > -                   const struct object_id *oid, const void *cb_data)
+> > +struct tag_args {
+> > +     char *oid_abbrev;
+> > +     char *refname;
+> > +};
+> > +
+> > +static int make_string_list(const char *name, const char *ref,
+> > +                         const struct object_id *oid, void *cb_data)
+>
+> Please think about a few more minutes before naming a function like
+> this, and make it a habit for your future patches.
+>
+> We can see that the callback is used to insert more strings into a
+> string list, but the type (i.e. string_list) used to represent the
+> set is not all that important.  What is more important is why you
+> are building that set for, and saying what is in the set (as opposed
+> to saying that the container happens to be a string_list) would be a
+> good first step.
+>
+> I presume that you are enumerating the tags to be deleted, together
+> with the data necessary for you to report the deletion of the tags?
 
-Will do.
+Hm.  collect_tags?  collect_tags_to_delete?
 
-> In constrast, it appears that `git update-ref --stdin` is fast
-> regardless of whether the refs are packed, e.g.
->    git tag -l feature/* | sed -e 's%^%delete refs/tags/%' | git
-> update-ref --stdin
-> finishes quickly (order of a few seconds).
+It's true I didn't put enought thought into that.  I was experimenting
+a bit here and was surprised how little code I ended up needing.
 
-Nice!  That trick is going in my wiki for devs to use on their VMs.
-Thanks for that.
+> >  {
+> > -     if (delete_ref(NULL, ref, oid, 0))
+> > -             return 1;
+> > -     printf(_("Deleted tag '%s' (was %s)\n"), name,
+> > -            find_unique_abbrev(oid, DEFAULT_ABBREV));
+> > +     struct string_list *ref_list = cb_data;
+> > +     struct tag_args *info = xmalloc(sizeof(struct tag_args));
+> > +
+> > +     string_list_append(ref_list, ref);
+> > +
+> > +     info->oid_abbrev = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+> > +     info->refname = xstrdup(name);
+> > +     ref_list->items[ref_list->nr - 1].util = info;
+> >       return 0;
+> >  }
+> >
+> > +static int delete_tags(const char **argv)
+> > +{
+> > +     int result;
+> > +     struct string_list ref_list = STRING_LIST_INIT_DUP;
+> > +     struct string_list_item *ref_list_item;
+> > +
+> > +     result = for_each_tag_name(argv, make_string_list, (void *) &ref_list);
+> > +     if (!result)
+> > +             result = delete_refs(NULL, &ref_list, REF_NO_DEREF);
+> > +
+> > +     for_each_string_list_item(ref_list_item, &ref_list) {
+> > +             struct tag_args * info = ref_list_item->util;
+> > +             if (!result)
+> > +                     printf(_("Deleted tag '%s' (was %s)\n"), info->refname,
+> > +                             info->oid_abbrev);
+> > +             free(info->oid_abbrev);
+> > +             free(info->refname);
+> > +             free(info);
+>
+> It is not performance critical, but info->refname is computable from
+> ref_list_item->string, isn't it?
+
+Oh, I guess it is.  It's a fixed offset into the string, after all.
+Thanks.  I did look for a way to avoid the struct noise. Just not
+well.
+
+> I am just wondering if we can do
+> this without having to allocate the .util field for each of 20,000
+> tags.  We still need to remember oid (or oid_abbrev, but if I were
+> writing this, I'd record the full oid in .util and make the code
+> that prints call find_unique_abbrev() on it), so I guess we cannot
+> really leave .util NULL.
+
+My original patch did this (.util = oid).  But then I needed a name.
+I'll go back to keeping the oid.  Much cleaner.
+
+>
+> > +     }
+> > +     string_list_clear(&ref_list, 0);
+> > +     return result;
+>
+> We used to return the returned value from for_each_tag_name() that
+> repeatedly called delete_tag().
+>
+> Now we return value from delete_refs().  Are our caller(s) OK with
+> the values that may come back from that function?  Can delete_refs()
+> return a value that is not appropriate to be returned from
+> cmd_tag(), for example a negative value?
+
+Yes it does.  Will fix.
+
+>
+> > +}
+> > +
+> >  static int verify_tag(const char *name, const char *ref,
+> > -                   const struct object_id *oid, const void *cb_data)
+> > +                   const struct object_id *oid, void *cb_data)
+> >  {
+> >       int flags;
+> >       const struct ref_format *format = cb_data;
+> > @@ -511,7 +543,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+> >       if (filter.merge_commit)
+> >               die(_("--merged and --no-merged options are only allowed in list mode"));
+> >       if (cmdmode == 'd')
+> > -             return for_each_tag_name(argv, delete_tag, NULL);
+> > +             return delete_tags(argv);
+>
+> Thanks.
