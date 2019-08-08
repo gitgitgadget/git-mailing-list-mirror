@@ -2,318 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58D161F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 16:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C4701F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 16:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390227AbfHHQoo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 12:44:44 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33119 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728289AbfHHQon (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 12:44:43 -0400
-Received: by mail-wm1-f65.google.com with SMTP id p77so4372030wme.0
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 09:44:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ObJfRokD+eXGWjqsY995rJw+PzoXoD3y5Nl6sLxpHCo=;
-        b=EVt9MI3GzizvFy5HvvUl62iJsbVW2P3slMXcea25oACgF6EpFsTSli+yvGCeJ18xfF
-         cUd8xWuwMWGqFpPYUBOA8jTGckQlwhhNsUUbmuQ+KvJUVSBfY+6Zj0tuVR2lxQ58tmPs
-         E4ych/N7IH9X+NTtcrBW+XIPSo7iTKjXDRah66M79o/pEszWoiLglWWWT3VpB1terW8o
-         pzMyS5AgQMWYhMX9Tu3i50jis+3YYycEHykf8iArgI3v3o5z7sR7ATDtjjouAkGMQ8MN
-         uToSi5aLuZvijlIqT5fpDjvR4VoXHdRr6p8Fz48ACpSt95i7qulrzzFY4WQw3Y2bxN4B
-         j+zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ObJfRokD+eXGWjqsY995rJw+PzoXoD3y5Nl6sLxpHCo=;
-        b=U8TIadUINbKzKrvUmPNaJq5h7bGnkero0Hl03PAUcUK6NL+yNI7C5EOlBps2ucY9/G
-         mqLO0LvXdRZOvyc9DYubR1KhdEGHN3Vl9u8nMAXD++0SGARtbqeqEVE53f38scgJINDw
-         dtWKPEyenfBcVSJB9bNjd1LHjJpxLyHhyc8N0puZ6rtXybOoh9xytx4n5GJplihKK9vt
-         KIXEfNKZDRP7TSOaABhdi7KSzxzdCd45Oyy2CfQsEXGaYDfK+dw5D9cIg2sfT5a+FErl
-         rBEbE4WzjBCujDa6iB7XZ09QQv8aScoaztDXZ4A4QubQZgQasC10xo2fBE+y0jI9kpuF
-         vZvQ==
-X-Gm-Message-State: APjAAAW3ytD462bEn9W6QIqlepRa37/OG2+0hv/zNOGAds4WBpyminr7
-        YML41lhaHFVtqP2Nv0hq914=
-X-Google-Smtp-Source: APXvYqzyXQHQG7xExlE6dtU6+8QSBVzNfOKYjftg5BjcslyTCxVUhKthQZVTy+7BlhP7fapLEXx40A==
-X-Received: by 2002:a1c:4087:: with SMTP id n129mr5301847wma.3.1565282680404;
-        Thu, 08 Aug 2019 09:44:40 -0700 (PDT)
-Received: from [192.168.1.18] (host-78-148-43-8.as13285.net. [78.148.43.8])
-        by smtp.gmail.com with ESMTPSA id g7sm5236913wmg.8.2019.08.08.09.44.39
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 09:44:39 -0700 (PDT)
-Subject: Re: [GSoC][PATCHl 1/6] rebase -i: add --ignore-whitespace flag
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Junio <gitster@pobox.com>, GIT Mailing List <git@vger.kernel.org>
-Cc:     Thomas <t.gummerer@gmail.com>, Elijah <newren@gmail.com>,
-        Dscho <Johannes.Schindelin@gmx.de>,
-        Martin <martin.agren@gmail.com>
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
- <20190806173638.17510-2-rohit.ashiwal265@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <bdd867f3-62d6-eec2-9562-5dbe203f49b5@gmail.com>
-Date:   Thu, 8 Aug 2019 17:44:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2390162AbfHHQo6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 12:44:58 -0400
+Received: from mail-eopbgr130109.outbound.protection.outlook.com ([40.107.13.109]:31374
+        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728289AbfHHQo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 12:44:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ghaOijopnLCSlzGIam0rNS0TeXJ7TvHFkELst3c5i059FZ7dtyjb5f/S2OMZJ6LmfYfea2Pzy82QisOHk28rJVTot968JgUcUrmU4KMt+kMknPLnRwwgqJNr8+TGDRKl7b8uLaqDaKEess3HO+VRhT7IvgtCjLBQLJKMbYXoDl7X0REGq82D4MnDNCcHanwS6W2nv/TJ8Eh+jUtpbUIiJVxHKwp0ttS02B/OaD2/x5AbGG8poqzzYaIcTePXZnPG1/tEhUnKAPN10t4T/PJWUd++tbBFnZh3D1rN+LagEIwfshoyzFswISq4KOgvOX4sye68D7duPQ6EdEaOHHOZBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k8T/c2HC4rHbOvRbaL0E7aylqO1BAhnd4ipuMQ1NjJw=;
+ b=FNWzQoOrhb077hTX3jQicgoJLchcYLRi9KGnm6AuUHeWwVqS2nRdah3A8BQLWuKZXt/4P+2rr7UaSXjEVF0MRRNgFMaKLhgV5kwzop0ldfkXXBs+LZsmxRTiXk6EWnr8i+tKYh4Ypf0+iR06hbFDEG9kyiR25VswtlaCZfNe0TFWOgVg9nGO7QVD/qnmlDfPq4pv1/UCVWCz6eN1SPjkmOcKLvDisttTlUAruGUwzBVFbyqaYbicDex8G1PtR3ysOXtRKQpCvBYxTOmsR1TbCP80p1Zjka46SpzNq5KwniqFYPMgt33UUiBWhoZGorH84LPUIMWXLk32Lk3rPPRHFw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=k8T/c2HC4rHbOvRbaL0E7aylqO1BAhnd4ipuMQ1NjJw=;
+ b=MoLmgQxeCyp/pR+rljqubJn9pYsRYqUYCWPILs6wScym6VlnjHsIKXg3xFL6oTKjUIAsh2eg7y+VSlkX0X41bUUQC2f0m/h8ltx8tHGZkfC8HNTUul6qgNfbR/dm+0+s8iDHhkrj/7J7WBRbTqGcNWRlQlas7SnAuBs/1YMHTuc=
+Received: from DB7PR83MB0268.EURPRD83.prod.outlook.com (20.176.229.151) by
+ DB7PR83MB0266.EURPRD83.prod.outlook.com (20.176.229.149) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.6; Thu, 8 Aug 2019 16:44:52 +0000
+Received: from DB7PR83MB0268.EURPRD83.prod.outlook.com
+ ([fe80::59bd:6fb0:f5b5:8660]) by DB7PR83MB0268.EURPRD83.prod.outlook.com
+ ([fe80::59bd:6fb0:f5b5:8660%11]) with mapi id 15.20.2178.006; Thu, 8 Aug 2019
+ 16:44:52 +0000
+From:   Christopher Ertl <Christopher.Ertl@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Windows absolute drive path detection incomplete
+Thread-Topic: Windows absolute drive path detection incomplete
+Thread-Index: AdVOCE3sFLO7Bl4STuW8/kok91nF0A==
+Date:   Thu, 8 Aug 2019 16:44:52 +0000
+Message-ID: <DB7PR83MB0268816EF2F435EF791272C197D70@DB7PR83MB0268.EURPRD83.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=chertl@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-08-08T16:44:50.9068155Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=87963833-ca20-4a33-b25b-6084a27ea766;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Christopher.Ertl@microsoft.com; 
+x-originating-ip: [2a01:110:8012:1010:c81d:3559:42d3:548a]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0a1c997d-0ac3-438a-e042-08d71c1fbc2a
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:DB7PR83MB0266;
+x-ms-traffictypediagnostic: DB7PR83MB0266:
+x-microsoft-antispam-prvs: <DB7PR83MB0266FBFE63C7CDF12BE863F997D70@DB7PR83MB0266.EURPRD83.prod.outlook.com>
+x-o365-sonar-daas-pilot: True
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 012349AD1C
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(136003)(39860400002)(396003)(346002)(366004)(376002)(189003)(199004)(14454004)(102836004)(74316002)(66446008)(6506007)(81156014)(66476007)(186003)(5660300002)(305945005)(52536014)(10090500001)(33656002)(8676002)(2906002)(7736002)(8990500004)(1730700003)(478600001)(66556008)(966005)(6916009)(64756008)(81166006)(71200400001)(6116002)(25786009)(71190400001)(10290500003)(9686003)(66946007)(22452003)(316002)(6306002)(14444005)(8936002)(53936002)(2351001)(256004)(6436002)(476003)(7696005)(55016002)(5640700003)(76116006)(86362001)(2501003)(99286004)(486006)(46003)(21314003);DIR:OUT;SFP:1102;SCL:1;SRVR:DB7PR83MB0266;H:DB7PR83MB0268.EURPRD83.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: S/VL8K1X3mlXihDbS7prFuCgmOWFPPHW7Qsnr2b8HLeOKLP9LV4p7OJ69k2Wxqm4qGbYoR0YbbYebdP3QfdxBEPC30l2ROUA7iHyRoUcpinVPmqaVqGGZvw13JdscmAOANrFYss7SOamLH4bd3nDUEHVB3bwpQlh/Xg1Vk9OFqmHrniZs0beHt98POqW0HmU6PGGK0DllYbE2U7Wes1B1+hzaq3q3KgW3ZUnn067Z2NWRuM0J+f8FLQuXNOWAOTEmsxwbiGHeLQrEUWY8Pl5nHY404blIh9YypeKoC1p9BsCI+xiIMothSWXwOjFLPZEwteKOYM3mM9rHchf1zzCG04jdhSaMW1kfu/Of8dhZdB+7DofNsIsBepYXkuIs+tgM3GbCORA/eNPyZ/orRzaktdsvVr7Pm79A7GR12Nq7Os=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-In-Reply-To: <20190806173638.17510-2-rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-HK
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a1c997d-0ac3-438a-e042-08d71c1fbc2a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Aug 2019 16:44:52.0625
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: apbKs4phQceejNUzCoAHPZzpZiJ+9BBxlOm3rjQotrATP78nkLTCIWEaiPsdQyjwMfs+W4pYqQJ/zyuuc4iU5g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR83MB0266
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit
+Hi,
 
-On 06/08/2019 18:36, Rohit Ashiwal wrote:
-> There are two backends available for rebasing, viz, the am and the
-> interactive. Naturally, there shall be some features that are
-> implemented in one but not in the other. One such flag is
-> --ignore-whitespace which indicates merge mechanism to treat lines
-> with only whitespace changes as unchanged. Wire the interactive
-> rebase to also understand the --ignore-whitespace flag by
-> translating it to -Xignore-space-change.
-> 
-> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-> ---
->   Documentation/git-rebase.txt            | 10 +++-
->   builtin/rebase.c                        | 26 ++++++++--
->   t/t3422-rebase-incompatible-options.sh  |  1 -
->   t/t3433-rebase-options-compatibility.sh | 65 +++++++++++++++++++++++++
->   4 files changed, 95 insertions(+), 7 deletions(-)
->   create mode 100755 t/t3433-rebase-options-compatibility.sh
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 5e4e927647..85404fea52 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -371,8 +371,13 @@ If either <upstream> or --root is given on the command line, then the
->   default is `--no-fork-point`, otherwise the default is `--fork-point`.
->   
->   --ignore-whitespace::
-> +	This flag is either passed to the 'git apply' program
-> +	(see linkgit:git-apply[1]), or to 'git merge' program
-> +	(see linkgit:git-merge[1]) as `-Xignore-space-change`,
-> +	depending on which backend is selected by other options.
+I'd like to report a problem with path validation for Windows, and propose =
+a fix.
 
-I think it would be better to document the effect of this option rather 
-than the implementation detail. It is confusing at the moment as it 
-talks about 'git merge' but we don't allow this option with merges.
+Function `verify_path` first calls `has_dos_drive_prefix` in order to preve=
+nt absolute drive paths like "C:\xxx". The logic for that is implemented as=
+ follows:
 
-> +
->   --whitespace=<option>::
-> -	These flag are passed to the 'git apply' program
-> +	This flag is passed to the 'git apply' program
->   	(see linkgit:git-apply[1]) that applies the patch.
->   +
->   See also INCOMPATIBLE OPTIONS below.
-> @@ -520,7 +525,6 @@ The following options:
->    * --committer-date-is-author-date
->    * --ignore-date
->    * --whitespace
-> - * --ignore-whitespace
->    * -C
->   
->   are incompatible with the following options:
-> @@ -543,6 +547,8 @@ In addition, the following pairs of options are incompatible:
->    * --preserve-merges and --interactive
->    * --preserve-merges and --signoff
->    * --preserve-merges and --rebase-merges
-> + * --preserve-merges and --ignore-whitespace
-> + * --rebase-merges and --ignore-whitespace
->    * --rebase-merges and --strategy
->    * --rebase-merges and --strategy-option
->   
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index db6ca9bd7d..3c195ddc73 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -79,6 +79,7 @@ struct rebase_options {
->   	int allow_rerere_autoupdate;
->   	int keep_empty;
->   	int autosquash;
-> +	int ignore_whitespace;
->   	char *gpg_sign_opt;
->   	int autostash;
->   	char *cmd;
-> @@ -97,7 +98,7 @@ struct rebase_options {
->   		.git_format_patch_opt = STRBUF_INIT	\
->   	}
->   
-> -static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-> +static struct replay_opts get_replay_opts(struct rebase_options *opts)
->   {
->   	struct replay_opts replay = REPLAY_OPTS_INIT;
->   
-> @@ -114,6 +115,17 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+#define has_dos_drive_prefix(path) \
+	(isalpha(*(path)) && (path)[1] =3D=3D ':' ? 2 : 0)
 
-It's a shame this changes the rebase_options that are passed in, this 
-function should ideally not modify what is passed in.
 
->   	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
->   	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
->   	replay.strategy = opts->strategy;
-> +
-> +	if (opts->ignore_whitespace) {
-> +		struct strbuf buf = STRBUF_INIT;
-> +
-> +		if (opts->strategy_opts)
-> +			strbuf_addstr(&buf, opts->strategy_opts);
-> +
-> +		strbuf_addstr(&buf, " --ignore-space-change");
-> +		free(opts->strategy_opts);
-> +		opts->strategy_opts = strbuf_detach(&buf, NULL);
-> +	}
+The problem is that Windows will still interpret a path like this as an abs=
+olute drive path even if the first character isn't alpha, and so it should =
+still be rejected.
 
-Instead of modifying opts->strategy_opts perhaps we could just use a 
-temporary variable
+In fact, it's actually possible to create drives like that which bypass thi=
+s filter on Windows (as Administrator), even if it's not an officially supp=
+orted feature:
 
-Best Wishes
+>subst 1: C:\Users\x\Desktop
 
-Phillip
+>dir 1:
+...
 
->   	if (opts->strategy_opts)
->   		parse_strategy_opts(&replay, opts->strategy_opts);
->   
-> @@ -511,6 +523,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->   	argc = parse_options(argc, argv, NULL, options,
->   			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
->   
-> +	opts.strategy_opts = xstrdup_or_null(opts.strategy_opts);
-> +
->   	if (!is_null_oid(&squash_onto))
->   		opts.squash_onto = &squash_onto;
->   
-> @@ -954,6 +968,8 @@ static int run_am(struct rebase_options *opts)
->   	am.git_cmd = 1;
->   	argv_array_push(&am.args, "am");
->   
-> +	if (opts->ignore_whitespace)
-> +		argv_array_push(&am.args, "--ignore-whitespace");
->   	if (opts->action && !strcmp("continue", opts->action)) {
->   		argv_array_push(&am.args, "--resolved");
->   		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
-> @@ -1401,9 +1417,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
->   		OPT_BOOL(0, "signoff", &options.signoff,
->   			 N_("add a Signed-off-by: line to each commit")),
-> -		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
-> -				  NULL, N_("passed to 'git am'"),
-> -				  PARSE_OPT_NOARG),
->   		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
->   				  &options.git_am_opts, NULL,
->   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
-> @@ -1411,6 +1424,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
->   		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
->   				  N_("passed to 'git apply'"), 0),
-> +		OPT_BOOL(0, "ignore-whitespace", &options.ignore_whitespace,
-> +			 N_("ignore changes in whitespace")),
->   		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
->   				  N_("action"), N_("passed to 'git apply'"), 0),
->   		OPT_BIT('f', "force-rebase", &options.flags,
-> @@ -1821,6 +1836,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	}
->   
->   	if (options.rebase_merges) {
-> +		if (options.ignore_whitespace)
-> +			die(_("cannot combine '--rebase-merges' with "
-> +			      "'--ignore-whitespace'"));
->   		if (strategy_options.nr)
->   			die(_("cannot combine '--rebase-merges' with "
->   			      "'--strategy-option'"));
-> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-> index a5868ea152..4342f79eea 100755
-> --- a/t/t3422-rebase-incompatible-options.sh
-> +++ b/t/t3422-rebase-incompatible-options.sh
-> @@ -61,7 +61,6 @@ test_rebase_am_only () {
->   }
->   
->   test_rebase_am_only --whitespace=fix
-> -test_rebase_am_only --ignore-whitespace
->   test_rebase_am_only --committer-date-is-author-date
->   test_rebase_am_only -C4
->   
-> diff --git a/t/t3433-rebase-options-compatibility.sh b/t/t3433-rebase-options-compatibility.sh
-> new file mode 100755
-> index 0000000000..e617d3150e
-> --- /dev/null
-> +++ b/t/t3433-rebase-options-compatibility.sh
-> @@ -0,0 +1,65 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2019 Rohit Ashiwal
-> +#
-> +
-> +test_description='tests to ensure compatibility between am and interactive backends'
-> +
-> +. ./test-lib.sh
-> +
-> +# This is a special case in which both am and interactive backends
-> +# provide the same output. It was done intentionally because
-> +# both the backends fall short of optimal behaviour.
-> +test_expect_success 'setup' '
-> +	git checkout -b topic &&
-> +	q_to_tab >file <<-EOF &&
-> +	line 1
-> +	Qline 2
-> +	line 3
-> +	EOF
-> +	git add file &&
-> +	git commit -m "add file" &&
-> +	cat >file <<-EOF &&
-> +	line 1
-> +	new line 2
-> +	line 3
-> +	EOF
-> +	git commit -am "update file" &&
-> +	git tag side &&
-> +
-> +	git checkout --orphan master &&
-> +	cat >file <<-EOF &&
-> +	line 1
-> +	        line 2
-> +	line 3
-> +	EOF
-> +	git add file &&
-> +	git commit -m "add file" &&
-> +	git tag main
-> +'
-> +
-> +test_expect_success '--ignore-whitespace works with am backend' '
-> +	cat >expect <<-EOF &&
-> +	line 1
-> +	new line 2
-> +	line 3
-> +	EOF
-> +	test_must_fail git rebase main side &&
-> +	git rebase --abort &&
-> +	git rebase --ignore-whitespace main side &&
-> +	test_cmp expect file
-> +'
-> +
-> +test_expect_success '--ignore-whitespace works with interactive backend' '
-> +	cat >expect <<-EOF &&
-> +	line 1
-> +	new line 2
-> +	line 3
-> +	EOF
-> +	test_must_fail git rebase --merge main side &&
-> +	git rebase --abort &&
-> +	git rebase --merge --ignore-whitespace main side &&
-> +	test_cmp expect file
-> +'
-> +
-> +test_done
-> 
+ Directory of 1:\
+
+08/06/2019  06:19 PM    <DIR>          .
+08/06/2019  06:19 PM    <DIR>          ..
+...
+
+
+With a drive like this present, a malicious server can write to wherever th=
+at drive points when you perform a git clone (to test this, just create a g=
+it repository containing :1/file):
+
+>git clone http://x/pathtest
+Cloning into 'pathtest'...
+
+
+>dir pathtest
+...
+ Directory of pathtest
+
+08/08/2019  04:49 PM    <DIR>          .
+08/08/2019  04:49 PM    <DIR>          ..
+               0 File(s)              0 bytes
+
+
+>dir C:\Users\x\Desktop
+...
+ Directory of C:\Users\x\Desktop
+
+08/08/2019  04:49 PM                 9 file
+
+
+If the drive doesn't exist, the clone will fail anyway:
+
+>dir 1:
+The system cannot find the path specified.
+
+>git clone http://x/pathtest
+Cloning into 'pathtest'...
+fatal: cannot create directory at '1:': No such file or directory
+warning: Clone succeeded, but checkout failed.
+You can inspect what was checked out with 'git status'
+and retry the checkout with 'git checkout -f HEAD'
+
+
+So I'm proposing to remove the check for the drive letter being alpha in `h=
+as_dos_drive_prefix` macro:
+
+#define has_dos_drive_prefix(path) \
+	( (path)[1] =3D=3D ':' ? 2 : 0)
+
+
+As well as being a security patch for RCE under very unlikely circumstance,=
+ this patch is also a micro performance boost!
+
+Thanks,
+
+Christopher Ertl | MSRC Vulnerabilities & Mitigations | Microsoft Limited=
+=A0
+Microsoft Limited (company number 01624297) is a company registered in Engl=
+and and Wales whose registered office is at Microsoft Campus, Thames Valley=
+ Park, Reading. RG6 1WG
+
