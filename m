@@ -2,87 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DECF41F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 23:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 630A31F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 23:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390328AbfHHXI0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 19:08:26 -0400
-Received: from rdnemail.bankofamerica.com ([171.161.147.155]:30879 "EHLO
-        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1732375AbfHHXI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 19:08:26 -0400
-Received: from txdmzmailmx05.bankofamerica.com ([171.180.168.230])
-        by lrdna0myxepmx02.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x78N8Phx025326;
-        Thu, 8 Aug 2019 23:08:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
-        s=corp1903; t=1565305705;
-        bh=LzolXqIgQ/uAT0BqQXwoe6gi78k5L9cjY7GFM2Ok2kk=;
-        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
-         Content-type:Content-transfer-encoding:References;
-        b=c6qso/xI2o3FZKkkICJodcFHOQBSon2GKshjvYh4XYNLlgoZgwl2BE6vLjlqE4Zf0
-         FCS7qBVTqxq0ySymca+b6HZls5i7qngy0AmvXMxKzMQy4l7OvS6Dy1dWKyz+c0fEFk
-         9/3A1t45eD3BwBO4W4VjDU2BoWsOklWC4DMVckTs=
-Received: from lrdna0n4xepmx12.bankofamerica.com (lrdna0n4xepmx12.bankofamerica.com [171.206.154.16])
-        by txdmzmailmx05.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x78N8Frv025324;
-        Thu, 8 Aug 2019 23:08:25 GMT
-Date:   Thu, 08 Aug 2019 23:08:14 +0000
-From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Subject: RE: suggestion for improved docs on autocrlf
-In-reply-to: <3269668c03a8482d8d854ec19dd43907@bofa.com>
-X-Originating-IP: [30.245.13.45]
-To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
-Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Message-id: <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
-MIME-version: 1.0
-Content-type: text/plain; CHARSET=US-ASCII
-Content-language: en-US
-Content-transfer-encoding: 7BIT
-X-MS-Has-Attach: 
-Accept-Language: en-US
-Thread-topic: suggestion for improved docs on autocrlf
-Thread-index: AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsA==
-X-MS-TNEF-Correlator: 
-References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com> <20190808205631.e2647kxq74thotjb@tb-raspi4>
- <3269668c03a8482d8d854ec19dd43907@bofa.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-08_09:,,
- signatures=0
+        id S2404428AbfHHXna (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 19:43:30 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:39160 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404001AbfHHXna (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 19:43:30 -0400
+Received: by mail-lj1-f194.google.com with SMTP id v18so90399901ljh.6
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 16:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aJqK+k1ImyQhjXUgtUGOV/TnuxIBx5L9p4kZeGC1RrY=;
+        b=MuAX8Hiax4Z/XNcJLeV/MgYHPlusMBJnsTX3PVVg9aLu7Y15f1uSATUWwfj2xaCD6M
+         WmtvB3dBmpheOJWLmZfQ+8Jt2qeOAHwcC/oJSs7hy4Ed+NF2bPbt25nqrB49zfLPrH9s
+         ZplNWLsYkhAztxUuSb98kN30GEOP+ir4hyV5QCSZyi9LVmOxcZLIdWHUmLXoNu55NvT+
+         PF8zawu5jaHNvSj7kmGgbeqqhHTvskxvBVlP9VbPYB5jz5L6KpgCibdanH50sMQ31idR
+         uQJ8txkemRGoPWpvl0QuRG4byiQ7+yBdHNpf/nSSK8TyS6fBdRyZSHym3l/UySGQ/ZH7
+         GX7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aJqK+k1ImyQhjXUgtUGOV/TnuxIBx5L9p4kZeGC1RrY=;
+        b=HO7GkdTyXEa4/l1kOKE2HL0aVzaK3aQm/yxeVrXJw8jvac7HxXSsDd+BO4ZwfXFKQt
+         CgOpnFm3TjMT4/Gw9QSwDgzpXNcG+IGs5G+Q52cAF/pjIFU+AKaUYSa/O+hBeGbOu350
+         i70wI4UiPWJMeMQ81YuyN4BrhPWcBufCCx7NhLOE1ODNe6oHKiX7hmv5dKa4jJQKDwud
+         bxIJvVCOBNOqGhkdz3j1ENFfxOJeB+9LX6Itt8CJ/Q85Lcd//RID0HGWiSw/pRZJQo7M
+         Ej7Fk7GK8FNS5Gw5ef6v/hnc0YNrg2cjmUPm7i0/Z7xaZaaQxFYHuOT7f55sH7yY12zn
+         6cpQ==
+X-Gm-Message-State: APjAAAUTb/FXpV0wQhIMXmF95/ovDmX5sqtAA27M1Hp8gdEWe3Ud/1Ny
+        K/j2MGIBahH5BlvlHmv61TWTMAK6QKeoRnjEB3c=
+X-Google-Smtp-Source: APXvYqzndo+sAu/e6q+EaNk7KBn8PI+Zj7UFaepwckzLpMujuc4tvFmQKgPb38wOWJbyQ5XwmgB2vY9dKXWx198dSoM=
+X-Received: by 2002:a2e:85da:: with SMTP id h26mr9877401ljj.48.1565307808419;
+ Thu, 08 Aug 2019 16:43:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190808035935.30023-1-phil.hord@gmail.com> <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
+In-Reply-To: <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Thu, 8 Aug 2019 16:43:16 -0700
+Message-ID: <CABURp0p5xbsq+8UsFerMAY8EG-ndXgd19EUsHOgQG-dnDnTAgg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Okay, my attempt at better wording for the docs is not going well, because it turns I that I still don't understand the behavior here!
-I thought that "input" means that CRLF will become LF on "git add" but that seems to be true only sometimes.
-For instance, consider the following 11-line shell script:
+On Thu, Aug 8, 2019 at 11:15 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Wed, Aug 7, 2019 at 9:11 PM Phil Hord <phil.hord@gmail.com> wrote:
+> >
+> > From: Phil Hord <phil.hord@gmail.com>
+> >
+> > 'git tag -d' accepts one or more tag refs to delete, but each deletion
+> > is done by calling `delete_ref` on each argv. This is painfully slow
+> > when removing from packed refs. Use delete_refs instead so all the
+> > removals can be done inside a single transaction with a single write.
+>
+> Nice, thanks for working on this.
+>
+> > I have a repo with 24,000 tags, most of which are not useful to any
+> > developers. Having this many refs slows down many operations that
+> > would otherwise be very fast. Removing these tags when they've been
+> > accidentally fetched again takes about 30 minutes using delete_ref.
+>
+> I also get really slow times on a repo with ~20,000 tags (though order
+> ~3 minutes rather than ~30, probably due to having an SSD on this
+> machine) -- but ONLY IF the refs are packed first (git pack-refs
+> --all).  If the refs are loose, it's relatively quick to delete a
+> dozen thousand or so tags (order of a few seconds).  It might be worth
+> mentioning in the commit message that this only makes a significant
+> difference in the case where the refs are packed.
 
-mkdir empty
-cd empty
-git init
-git config core.autocrlf false
-echo -e '1\r\n2' > test.txt
-git add .
-git commit -m test
-git config core.autocrlf input
-cp test.txt t2.txt
-echo 'a\r\nb' > test.txt
-git add .
+I'm also using an SSD but I still see about 10 tags per second being
+deleted with the current code (and packed-refs).  I see that I'm
+CPU-bound, so I guess most of the time is spent searching through
+.git/packed-refs.  Probably it will run faster as it progresses. I
+guess the 18,000 branches in my repo keep me on the wrong end of O(N).
 
-The output from the last git add is:
+My VM is on an all-flash storage array, but I can't say much about its
+write throughput since it's one VM among many.
 
-warning: CRLF will be replaced by LF in t2.txt.
-The file will have its original line endings in your working directory.
+Previously I thought I saw a significant speedup between v2.7.4 (on my
+development vm) and v2.22.0 (on my laptop). But this week I saw it was
+slow again on my laptop.  I looked for the regression but didn't find
+anyone touching that code. Then I wrote this patch.
 
-Which is a very good warning indeed, but why does it only apply to the new file t2.txt?
-Why does the existing file test.txt retain its CRLF line endings.
+But it should have occurred to me while I was in the code that there
+is a different path for unpacked refs which could explain my previous
+speeds.  I didn't think I had any unpacked refs, though, since every
+time I look in .git/refs for what I want, I find it relatively empty.
+I see 'git pack-refs --help' says that new refs should show up loose,
+but I can't say that has happened for me.  Maybe a new clone uses
+packed-refs for *everything* and only newly fetched things are loose.
+Is that it?  I guess since I seldom fetch tags after the first clone,
+it makes sense they would all be packed.
 
-I am so confused.
+> >     git tag -l feature/* | xargs git tag -d
+> >
+> > Removing the same tags using delete_refs takes less than 5 seconds.
+>
+> It appears this same bug also affects `git branch -d` when deleting
+> lots of branches (or remote tracking branches) and they are all
+> packed; could you apply the same fix there?
 
-Any pointers?
+Will do.
 
-----------------------------------------------------------------------
-This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
+> In constrast, it appears that `git update-ref --stdin` is fast
+> regardless of whether the refs are packed, e.g.
+>    git tag -l feature/* | sed -e 's%^%delete refs/tags/%' | git
+> update-ref --stdin
+> finishes quickly (order of a few seconds).
+
+Nice!  That trick is going in my wiki for devs to use on their VMs.
+Thanks for that.
