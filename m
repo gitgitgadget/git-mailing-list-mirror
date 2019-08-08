@@ -2,164 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 137401F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 12:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B841E1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 12:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387555AbfHHMiZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 08:38:25 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:35445 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728120AbfHHMiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 08:38:24 -0400
-Received: by mail-ot1-f68.google.com with SMTP id j19so41232922otq.2
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 05:38:23 -0700 (PDT)
+        id S1732544AbfHHMrc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 08:47:32 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39851 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727522AbfHHMrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 08:47:32 -0400
+Received: by mail-pg1-f193.google.com with SMTP id u17so44022635pgi.6
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 05:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QLHOpFyQvNTXcyj9pDYnR0nx8BiE0gltvl46OaZNs1Q=;
-        b=E85f42z59UlGsxdEXWnxhcndhmxqTaCZiTHE636aNYdWLFU49dNt7+kViwkuB7xzjH
-         qLz6y4Q8fVHHX1oCQYkkoungWgjH6OJXnyeaRXTxP4CCEDACLpu5ZETOkOMbmJKxSyH4
-         RrTkY6v+YcvwPqdtv0mdxwSTeMzpUIjVZaY9xfrbX+FYlIH70jxrO6hCHkGVIa4dA1TM
-         KcnrcvNek5FAZtLHI2g2sTlqieyCgwoM0nAzT0mC/rtp/HFCtCGv8cfXP9F4IxmWTGJr
-         sPHg+fgjxrN6DBW75MN3ZEJTl1ji3CyVNtsL8r2oVPAYRRvjCABfs4rwfGnUniU0W3kS
-         DVrw==
+         :cc;
+        bh=LoYFl7Zvph5/otjwK+0krCeU2ed6IOEmpExPG6ZBvQQ=;
+        b=UC5MGlXVGglcCouark7r/hLOEoAUvGVCcQWET3fXj17EAdIXNxxixIMdRWkZWQR8p5
+         nIgxbUYxT0/9zOMzz+P5Bug7n3urbAnPlvcGS3WtGnIUiwrPwXr9y5BWQWD7owSRlADT
+         eAE3YRzaP1YY7lDtIyEhuNyYoqnZ3KOAvf/E3oUYPr+/oPwpWo+swD6h/JNWSl3R6Pnx
+         h1QL9AuzuxBb9MW6OJhs07CvgPvGzqygSxRbA/MReEdHxgLetDr1TyJr/h3gnzThiC13
+         IvX2GPue7IxYGvSm7EbdlKAIe2sZiExOFB5PcHy8yiG2XBGmoX+E8eTKyaYE575xAgNH
+         PbmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QLHOpFyQvNTXcyj9pDYnR0nx8BiE0gltvl46OaZNs1Q=;
-        b=rckXiA/nNNbhkyRjduKHM+OooaxzVytNlMMdpz1LFy9O3rnKXTaVUVGfJcXhgrXV21
-         BvEf7gySnmuyiJ55MmTnFNduEM7yjFrpcHDN0EZZM+2FDRAyf711uJ9oMvLs6xcCXZN8
-         0gspVzcMJrStqL52QLm2g4T6ldnFq+frsXJvuXoaIvjwk2tKgd5NMQkk+zNs1EFGw2cF
-         CUf+JBsYraoyw0fnqs7H4jSwtKC01OIJqr4RGW8Z3klZMcrHLb1p47nFtLhZoYYP+9mE
-         kXP+mm59AKcacfFOrc0t9H/tqfHCAzJQY1vCDGK0Ou3kSaDIcvO24KA5mRQ9zXuyqeP1
-         n8pw==
-X-Gm-Message-State: APjAAAX8HyY/F1XLgftJDDXdsUOQ8MSTHs6n4U12WiyykrQ9nqG7yd2j
-        XltOfsCMxOYT53NJgsg2xmWzwmag1bHiWowuxqc=
-X-Google-Smtp-Source: APXvYqyNmHDAFJmHwjpnnAIOYd6WWY57WOozxE+E4ljYHhNSJpXrZFnfOaIrsIBsKVIDuBA+uzgRLF4xmpPmw3NRbhE=
-X-Received: by 2002:a6b:c38b:: with SMTP id t133mr14975098iof.162.1565267903106;
- Thu, 08 Aug 2019 05:38:23 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=LoYFl7Zvph5/otjwK+0krCeU2ed6IOEmpExPG6ZBvQQ=;
+        b=qmMGYlzvxJcqXIIZXacw88h5jOBqgAkohjMWX2cv5H1gOzF8lz2tbwzZmnFH3HAzXl
+         KzLFgTpI2yLyCyrqJgLYc55HXmiVSstmJJnG1EBkg3OuvbEjofu7r5MgccgCYVeiPVy6
+         nKwY5Td5kVdnGV2zfDJ1fMtlbee4yNBBxZphTOToMayJEWsval2/x6a0Kp+JZJatrQaU
+         FFwW1xMzcXPwZn2jMnbwnpFUIKaoRKhv5CahM66100z+ina1m1X8fTXZGEMBjpIFjux4
+         +g75ZflAvZzmXq9Ouu3Whll3F/5rnKR74oIGJgTrAeskbHIMu+EF1ywmndtX/gKYc9Ai
+         4rIQ==
+X-Gm-Message-State: APjAAAVdkTPr7+4oz1Ak4vgCfuJf9+oibR1HJ0gDLs8z933JxOZh8iXq
+        Pab4wNcYXv0fp39x6OncCKicfv6hZerBvcnq/DE=
+X-Google-Smtp-Source: APXvYqxJHHabMGqOchvd5waHhMyh8vO0uYW7af09y5OmQ0QjIGMbQsTyQ+rraGaGfAgDEQPPJx8zQoxoicKh9YP1J0c=
+X-Received: by 2002:a63:d741:: with SMTP id w1mr12257224pgi.155.1565268451510;
+ Thu, 08 Aug 2019 05:47:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190806085014.47776-1-carenas@gmail.com> <20190806163658.66932-1-carenas@gmail.com>
- <20190806163658.66932-3-carenas@gmail.com> <ab8a378c-0a60-9554-b2dd-ecb3d05229cb@web.de>
- <CAPUEspip98Mq8FrKTOkEikZhaLPprZXf=E2x3d0b7=c7e5+Gyw@mail.gmail.com>
- <c7f08e19-88a7-ca7f-90b9-54465e621d49@web.de> <CAPUEspj4CrEk6u4+8a5UBisxWsXcwOrOPQ5s9TktA6dZx5s+uQ@mail.gmail.com>
- <f6056e0c-fe7f-30b3-c2d7-bba2b44d6888@web.de>
-In-Reply-To: <f6056e0c-fe7f-30b3-c2d7-bba2b44d6888@web.de>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 8 Aug 2019 05:38:11 -0700
-Message-ID: <CAPUEspi2vu=7uLU19c-wcW+ji63gyeO7poAwS5_7ZhTiBWSxjg@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 2/3] grep: make PCRE2 aware of custom allocator
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        avarab@gmail.com, michal.kiedrowicz@gmail.com
+References: <20190808035935.30023-1-phil.hord@gmail.com>
+In-Reply-To: <20190808035935.30023-1-phil.hord@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 8 Aug 2019 14:47:20 +0200
+Message-ID: <CAN0heSptKHL8mrU9DTXT9T7HDN56a3+DAGczxkEtbGxp9sB8hg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 8, 2019 at 12:07 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+On Thu, 8 Aug 2019 at 06:09, Phil Hord <phil.hord@gmail.com> wrote:
+> I have a repo with 24,000 tags, most of which are not useful to any
+> developers. Having this many refs slows down many operations that
+> would otherwise be very fast. Removing these tags when they've been
+> accidentally fetched again takes about 30 minutes using delete_ref.
 >
-> Am 08.08.19 um 04:35 schrieb Carlo Arenas:
-> > On Wed, Aug 7, 2019 at 6:03 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> >>
-> >> Am 07.08.19 um 11:49 schrieb Carlo Arenas:
-> >>> was hoping will perform better but it seems that testing can be done
-> >>> only in windows
-> >>
-> >> nedmalloc works on other platforms as well.
-> >
-> > I meant[1] it works reliably enough to be useful for performance testin=
-g.
+>     git tag -l feature/* | xargs git tag -d
 >
-> You mentioned being concerned about performance several times and I
-> wondered why each time.  I'd expect no measurable difference between
-> using a custom global context and the internal one of PCRE2 -- setting
-> two function pointers surely can't take very long, can it?  But
-> measuring is better than guessing, of course.
+> Removing the same tags using delete_refs takes less than 5 seconds.
 
-setting the allocator is not a concern, but using it; it requires an
-extra indirect function call which is usually not very friendly to
-caches in our speculative execution CPU world.  our implementation
-also adds the wrapper call overhead, but in this case it is just the
-"cost of doing business" with PCRE2.
+This looks worthwhile pursuing...
 
-compilers had gotten a lot better since (mainly because of C++ and the
-need for it with virtual methods) but I would rather measure.
+> -static int delete_tag(const char *name, const char *ref,
+> -                     const struct object_id *oid, const void *cb_data)
+> +struct tag_args {
+> +       char *oid_abbrev;
+> +       char *refname;
+> +};
+> +
+> +static int make_string_list(const char *name, const char *ref,
+> +                           const struct object_id *oid, void *cb_data)
+>  {
+> -       if (delete_ref(NULL, ref, oid, 0))
+> -               return 1;
 
-> > goes without saying that the fact that I am using a virtualbox with 2
-> > CPUs running Debian 10 on top of macOS (a macbook pro with 4 cores)
-> > and the test uses by default 8 threads, doesn't help,
+This provides `oid` for verifying that the tag actually points at that
+particular oid before deleting. As far as I can tell, `oid` is no longer
+used like that in the post-image. I'm not sure it matters, since we just
+looked it up, but that might be worth mentioning, perhaps.
+
+> -       printf(_("Deleted tag '%s' (was %s)\n"), name,
+> -              find_unique_abbrev(oid, DEFAULT_ABBREV));
+> +       struct string_list *ref_list = cb_data;
+> +       struct tag_args *info = xmalloc(sizeof(struct tag_args));
+> +
+> +       string_list_append(ref_list, ref);
+> +
+> +       info->oid_abbrev = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+> +       info->refname = xstrdup(name);
+> +       ref_list->items[ref_list->nr - 1].util = info;
+>         return 0;
+>  }
 >
-> nedmalloc is supposed to run on macOS as well.
+> +static int delete_tags(const char **argv)
+> +{
+> +       int result;
+> +       struct string_list ref_list = STRING_LIST_INIT_DUP;
+> +       struct string_list_item *ref_list_item;
+> +
+> +       result = for_each_tag_name(argv, make_string_list, (void *) &ref_list);
 
-the last version has some "fix miscompilations in macOS" fixes that
-might be relevant, and the version we have in tree says it works in
-the 32-bit version which latest macOS versions are working hard to
-deprecate (can't even build for it anymore), eitherway trying to run
-with a nedmalloc enabled git in macOS is not fun.
+If any tag is non-existing (or some other error happens here), we don't
+continue to the actual deleting. That breaks t7004 which has a test for
+removing an existing and a non-existing tag -- it wants the existing one
+to be removed and the non-existing one not to interfere.
 
-> > with the only relevant line (for my code) being 7820.19 where it would
-> > seem it performs almost the same (eventhough just adding NED made it
-> > initially worst)
-> >
-> > note though that the fact there are 20% swings in parts of the code
-> > that hasn't changed
-> > or that where explicitly #ifdef out of my code changes doesn't give me
-> > much confidence, but since the windows guys seem to be using NED by
-> > default, I am hoping it works better there.
->
-> These measurement results are quite noisy, so I wouldn't trust them too
-> much.  nedmalloc being slower than the one from a recent glibc version
-> is not very surprising given this statement from its home page,
-> https://www.nedprod.com/programs/portable/nedmalloc/:
->
->    "Windows 7, Linux 3.x, FreeBSD 8, Mac OS X 10.6 all contain
->     state-of-the-art allocators and no third party allocator is
->     likely to significantly improve on them in real world results"
->
-> In particular I don't think that these results justify coupling the use
-> of nedmalloc to the choice of using a custom global context for PCRE2.
+> +       if (!result)
+> +               result = delete_refs(NULL, &ref_list, REF_NO_DEREF);
 
-neither did I either, the only reason I am holding on fully enabling
-NED with PCRE2 in my series is just because I wan't to make sure we
-have identified the bug correctly and we are fixing it (specially
-since I can't reproduce it, and therefore neither debug it)
+So this should perhaps be something more like an unconditional
 
-sorry for not making that clear enough, and as I said before, if we
-keep seeing segfaults even after v4 then we will have to do that or I
-might need to do a quick run to the nearest microsoft store hoping for
-a distracted rep, instead.
+        result |= delete_refs(...);
 
-> I'd expect:
-> - Without USE_NED_ALLOCATOR: xmalloc() should be used for all
->   allocations, including for PCRE2.  Some special exceptions use
->   malloc(3) directly, but for most uses we want the consistent
->   out-of-memory handling that xmalloc() brings.
+That makes the test suite happy, but perhaps only short-term ... See
+below...
 
-that is already in v4 and would expect to carry it forward.  this is
-also what I had in mind when I said we will need some fixes on top of
-Dscho version if we give up with these.
+> +       for_each_string_list_item(ref_list_item, &ref_list) {
+> +               struct tag_args * info = ref_list_item->util;
+> +               if (!result)
+> +                       printf(_("Deleted tag '%s' (was %s)\n"), info->refname,
+> +                               info->oid_abbrev);
 
-> - With USE_NED_ALLOCATOR: malloc() and xmalloc() use nedmalloc
->   behind the scenes and free() is similarly overridden, so all
->   allocations are affected.
-> - If USE_NED_ALLOCATOR performs worse than the system allocator on
->   some system then it's the problem of those that turn on that flag.
->
-> Makes sense?
+Change this conditional here, too, methinks. You'd need to separate
+errors from looking up tags from errors about deleting refs, so having a
+single "result" is probably not sufficient.
 
-completely, but note also that Dscho version would make the
-performance impacts of using a custom allocator (if any) affect
-everyone using PCRE2.
+Probably worth inspecting the output of that `git tag -d` a bit in
+t7004, to make sure we just claim to delete one tag, and have errors.
 
-Carlo
+Your patch reshuffles the error and success messages (for certain
+usages). I think that's ok, but might be worth mentioning.
+
+I'm not too familiar with the refs API, so take this with a grain of
+salt...
+
+> +               free(info->oid_abbrev);
+> +               free(info->refname);
+> +               free(info);
+> +       }
+> +       string_list_clear(&ref_list, 0);
+> +       return result;
+> +}
+
+Martin
