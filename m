@@ -2,236 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58D971F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 13:57:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 440151F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 14:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733116AbfHHN5Z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 09:57:25 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52577 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732524AbfHHN5Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 09:57:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1565272639;
-        bh=Pmal/sAFfdz6+FIB7P6IjCeojNV0swznaqJk+mP8V+w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OUEJu9O68EyeYZQgiLxhhoxfkgIUSHw1Qp281Y6mSyGJLDCJms3xa+T/JX29jx9mQ
-         KjloN1pOFxbSBzKLviqj9Te0GXb331tPMuY5N2W2XBaksquJSfsuFEXvRRQxULI8yj
-         3e5dwbyvVI8OT13I0oKMFcx2duD27IlYMr9OBG+4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB ([46.183.103.17]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6jIK-1iGqnS1M28-00wVLd; Thu, 08
- Aug 2019 15:57:19 +0200
-Date:   Thu, 8 Aug 2019 15:56:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] grep: make PCRE2 aware of custom allocator
-In-Reply-To: <20190806085014.47776-3-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1908081556020.46@tvgsbejvaqbjf.bet>
-References: <xmqq36ifmg7v.fsf@gitster-ct.c.googlers.com> <20190806085014.47776-1-carenas@gmail.com> <20190806085014.47776-3-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2390031AbfHHOTC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 10:19:02 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34896 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733035AbfHHOTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 10:19:01 -0400
+Received: by mail-wm1-f66.google.com with SMTP id l2so2629318wmg.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 07:19:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mMLAYOINYdxl5pm247RTLgrP3gxVkmoUAR8gJCki3Ck=;
+        b=i2NOcWBnTlymvyTlxLnlWGrY57tPI5vD30017aUXxAT8G9TiFzi7FOgLDPa8zgWfcI
+         vGqsdaNrwg6O/ZeBrWk87U2UwTv8btVHSTBU1dAbOWsZwZ9CwO+w5RlNYQTzHtfzbP0M
+         CqtgTR9K0HZAT8100OP1E1lt7MMaZel/ITR00NrU/6f0mglJdIDk5Bal2gP00kv71RiM
+         NbIr8VzonvgcByvioHhKzPBqJHQrf9LiK7GfbnpZwS9hYekqDiy1jpeXKGFWTjasv7Q5
+         zkQ9AjjjYVyC2eVrY9jAzznIvnBQR8MHgIPg4LSzf1i10QcUboZMUV+cXYYGU23Tqmvf
+         GitQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=mMLAYOINYdxl5pm247RTLgrP3gxVkmoUAR8gJCki3Ck=;
+        b=ZDG3k4a+6V/yDdayd69XB3oEvfRxvefLofu4OMq2quSf/u1WLWR5OigtjHO2BF3Ix6
+         RqZNE+eyPnZd8gl+Eobch1KV+lESNncUUu4nqMXSibuv6gyCi7lIuos5mV4E2Go7wOzn
+         YacAPqLFDullVQizLk1bhhlTCU9xcwkKqJk+p7ZzDk/LAb5AQXodlvRbVfW4nFljA2RU
+         r7x9P+SeUEiTsg0PmM1hhMiiYK5MPcszSRmGpnDBdw5OiPdRiXKHSRA5/YS0zmPqy4Cq
+         TGATnsUuE9diniGwxs+lplbE4Y0+mljrtA8Lfhac3tR/bmutA3FE4elI9yEqCQoi23Tm
+         HXuQ==
+X-Gm-Message-State: APjAAAW2NFPGdLZxLzbmueJ0L5xPaqdhHj2zGTHbrM5sfigv9i/Rjb8N
+        pJDJ+FWqjmUW4QCGUAp1QnpbTM4t
+X-Google-Smtp-Source: APXvYqwPhiHCKT7gEx8gWfHrejTR+MfX8iKSLFSHHZmS0ySETkNoqwnl6XLVU7qkKj5wbeOuoC/n/w==
+X-Received: by 2002:a7b:c195:: with SMTP id y21mr4607854wmi.16.1565273939584;
+        Thu, 08 Aug 2019 07:18:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o7sm2415893wmc.36.2019.08.08.07.18.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2019 07:18:58 -0700 (PDT)
+Date:   Thu, 08 Aug 2019 07:18:58 -0700 (PDT)
+X-Google-Original-Date: Thu, 08 Aug 2019 14:18:51 GMT
+Message-Id: <pull.298.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.298.git.gitgitgadget@gmail.com>
+References: <pull.298.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/7] trace2: clean up formatting in perf target format
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1978650622-1565272639=:46"
-X-Provags-ID: V03:K1:RkOK2IUijYY+f2CB5pt58rnTuzhHPMXTmhvYMWvraBIsyJXKttA
- 1ABMTLzjlcrBjGK6p/LNMtpiFB2h/DXGqQHuqGxjplOmqesXvnj1w32Nlv0Xg0uUStVaqi5
- oW+mRYl0uEp+Uj7bTIxaEswqPalNxs5qUUZbq1a2w8vC7M4x62Ylug4jgkxrPNH4pVQmU+D
- lh/XDVBmW03ml7LIveSIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/eRkCpF+CrI=:4KIXgOl49RkU6obACH69fu
- UHRKdPufidUNL2GVN/1kc2qr42WQXF9w3OPoo80oZwbMIeZPwHPUu0bLiO6uJpinFL+nxCI0Q
- YLknKfyVJNRhTBmz0WZmVoGnYRanYENBoN9O6lf/tbEB9DVt89tNV632FNEv/z7i2fb4lGgFK
- O0TehoC7xGTK9zQIlTtgxHACi2tCBVWmAzag/3FxW1DdO7P+UtM7R4OUMsUJgYj6teiYELmks
- VFsZOl+OtUiiPL6+a770fN3bp/oDdtEosKWH4UDfOa96owdDZ6elQzG4YBNm75dx1jvIMrALy
- 3gZY/r2YYKsH4Dc1hKXmH3WvzNrLBP62ekYNXqjo5VS+10dk6blMVlV1nbsbkyYudBpdShofg
- lQjtvXE+6hhXeLorMupDsXVgV1GfXPupPJQjRn14IKLkAwNY9oaGlnOmOq1jtgqvrYA+7Rqqg
- s/xT6k4Ft9dpAQL/COGzBlmkrQStSG+P/OCi0KWt2YIbuBWMj/MWh1cbSMPeH2Ve8n9VhDW+7
- dIAbfRmx2ajCqa2vfCohIXt94aHnKF4ylCm3KhvJkDxqUgUGiZss1Y3/EEB/TSuwPSRilpKXi
- Gf6fzoh/CsE+e/R9uLoS4y2ecNCnPEnyA1RC3/w3zw6JAupZ+g+bs4iICJh18wgpS+UpH0YmM
- x8wq10uzt9fsg+QV+uCRuNKqYidMD8W+AeWCKIbXMtzarP3SPVf24hXWJPZ6OA5qSTToJqg/a
- Z2qIL3nJhv1QC+UqOB2CgUYM1702FxcR6u1TF+YfS3IPzS1BzDXW+QB/b6yqetiKpQDZXxkdA
- 9H7nRoX9i+/9i7JKEC6ANUxYv9H/yrFkF6H0Ub0CrASixCu8A0b07YRPOwCnyW4ZPzyZw4PG0
- jZcjvckPjdP5bG7s0BVqVMSygqg+kggE/dhUbyvcUe4rtx61Ew+yqfNxYOrNiWU6fJi6NDUgx
- zwvJ4gRCLKm+HQauUJ+M9+qOOSUsrvzT+q2hNkAXHemUxTLIAMlDI5pvPfXblRcs6NnDrx0AC
- w1DToCKBHmYK+bsZsKvjPGZ7gVu2VLCCxANDqMhumTQsDTPd5ZhicnWvRPUQf3v9PBm3SXeyz
- 4EQvHa7ymkP2U712DADKwERX9M+ZOV0sXC4bRC8GHE8JxrSdo6PSt8JSTiLAo8244Z1ocqW8a
- E1y5g=
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+V2 of this patch series cleans up some whitespace and column alignment
+issues in the trace2 perf and normal formats. It also removes some dead
+code.
 
---8323328-1978650622-1565272639=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Jeff Hostetler (7):
+  trace2: cleanup column alignment in perf target format
+  trace2: trim whitespace in region messages in perf target format
+  trace2: remove dead code in maybe_add_string_va()
+  trace2: trim trailing whitespace in normal format error message
+  quote: add sq_quote_argv_pretty_ltrim
+  trace2: cleanup whitespace in normal format
+  trace2: cleanup whitespace in perf format
 
-Hi Carlo,
+ quote.c                 | 11 +++++
+ quote.h                 |  1 +
+ t/t0211-trace2-perf.sh  |  4 +-
+ trace2/tr2_tgt_event.c  |  5 ---
+ trace2/tr2_tgt_normal.c | 33 +++++++--------
+ trace2/tr2_tgt_perf.c   | 89 +++++++++++++++++++++++++++--------------
+ 6 files changed, 90 insertions(+), 53 deletions(-)
 
-On Tue, 6 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-> Most of the code stolen from[1] to easy on comparison and including
-> the deficiency of setting the global context even for patterns that
-> won't need it.
->
-> Ideally, the call from grep_init could be moved to a place where it
-> could be set without needing a lock and at least with this approach
-> we have a place to clear it (which is obviously missing more callers,
-> but at least shows how it will look for the grep subcommand)
->
-> I had also dropped most other users of the global context in a failed
-> attempt to make the change smaller, but also to keep the current
-> behaviour so that we could see the effect of enabling NED for PCRE2
-> more clearly.
->
-> Sadly, that will likely require a Windows box, as NED (at least our
-> version) is horribly broken in macOS (maybe it wasn't 64 bit clean)
-> and in Linux builds, but I can't reproduce your crasher and it is
-> most likely slower than the system malloc.
->
-> [1] https://public-inbox.org/git/pull.306.git.gitgitgadget@gmail.com/
->
-> Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+base-commit: 026dd738a6e5f1e42ef0f390feacb5ed6acc4ee8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-298%2Fjeffhostetler%2Fupstream-2230-cleanup-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-298/jeffhostetler/upstream-2230-cleanup-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/298
 
-Actually not so much suggested by me, as your patch still causes
-crashes (mine didn't):
+Range-diff vs v1:
 
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D13935&view=
-=3Dms.vss-test-web.build-test-results-tab
+ 1:  38b53da31f = 1:  38b53da31f trace2: cleanup column alignment in perf target format
+ 2:  834ee95cd2 < -:  ---------- trace2: trim whitespace in start message in perf target format
+ 3:  d2f7cf3908 < -:  ---------- trace2: trim whitespace in region messages in perf target format
+ -:  ---------- > 2:  db35099712 trace2: trim whitespace in region messages in perf target format
+ -:  ---------- > 3:  09dff12a7d trace2: remove dead code in maybe_add_string_va()
+ -:  ---------- > 4:  d5b5a70c1b trace2: trim trailing whitespace in normal format error message
+ -:  ---------- > 5:  5059776248 quote: add sq_quote_argv_pretty_ltrim
+ -:  ---------- > 6:  bb64bb2513 trace2: cleanup whitespace in normal format
+ -:  ---------- > 7:  a6e5e7c70b trace2: cleanup whitespace in perf format
 
-Ciao,
-Dscho
-
-> ---
->  builtin/grep.c |  1 +
->  grep.c         | 31 +++++++++++++++++++++++++++++--
->  grep.h         |  1 +
->  3 files changed, 31 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 560051784e..e49c20df60 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -1145,5 +1145,6 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
->  		run_pager(&opt, prefix);
->  	clear_pathspec(&pathspec);
->  	free_grep_patterns(&opt);
-> +	grep_destroy();
->  	return !hit;
->  }
-> diff --git a/grep.c b/grep.c
-> index 0154998695..e748a6d68c 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -16,6 +16,20 @@ static int grep_source_is_binary(struct grep_source *=
-gs,
->
->  static struct grep_opt grep_defaults;
->
-> +#ifdef USE_LIBPCRE2
-> +static pcre2_general_context *pcre2_global_context;
-> +
-> +static void *pcre2_malloc(PCRE2_SIZE size, void *memory_data)
-> +{
-> +	return malloc(size);
-> +}
-> +
-> +static void pcre2_free(void *pointer, void *memory_data)
-> +{
-> +	return free(pointer);
-> +}
-> +#endif
-> +
->  static const char *color_grep_slots[] =3D {
->  	[GREP_COLOR_CONTEXT]	    =3D "context",
->  	[GREP_COLOR_FILENAME]	    =3D "filename",
-> @@ -153,6 +167,7 @@ int grep_config(const char *var, const char *value, =
-void *cb)
->   *
->   * If using PCRE make sure that the library is configured
->   * to use the right allocator (ex: NED)
-> + * if any object is created it should be cleaned up in grep_destroy()
->   */
->  void grep_init(struct grep_opt *opt, struct repository *repo, const cha=
-r *prefix)
->  {
-> @@ -164,6 +179,10 @@ void grep_init(struct grep_opt *opt, struct reposit=
-ory *repo, const char *prefix
->  	pcre_malloc =3D malloc;
->  	pcre_free =3D free;
->  #endif
-> +#ifdef USE_LIBPCRE2
-> +	pcre2_global_context =3D pcre2_general_context_create(pcre2_malloc,
-> +							pcre2_free, NULL);
-> +#endif
->  #endif
->
->  	memset(opt, 0, sizeof(*opt));
-> @@ -188,6 +207,13 @@ void grep_init(struct grep_opt *opt, struct reposit=
-ory *repo, const char *prefix
->  		color_set(opt->colors[i], def->colors[i]);
->  }
->
-> +void grep_destroy(void)
-> +{
-> +#ifdef USE_LIBPCRE2
-> +	pcre2_general_context_free(pcre2_global_context);
-> +#endif
-> +}
-> +
->  static void grep_set_pattern_type_option(enum grep_pattern_type pattern=
-_type, struct grep_opt *opt)
->  {
->  	/*
-> @@ -509,7 +535,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->
->  	if (opt->ignore_case) {
->  		if (has_non_ascii(p->pattern)) {
-> -			character_tables =3D pcre2_maketables(NULL);
-> +			character_tables =3D pcre2_maketables(pcre2_global_context);
->  			p->pcre2_compile_context =3D pcre2_compile_context_create(NULL);
->  			pcre2_set_character_tables(p->pcre2_compile_context, character_table=
-s);
->  		}
-> @@ -560,7 +586,8 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  			return;
->  		}
->
-> -		p->pcre2_jit_stack =3D pcre2_jit_stack_create(1, 1024 * 1024, NULL);
-> +		p->pcre2_jit_stack =3D pcre2_jit_stack_create(1, 1024 * 1024,
-> +					pcre2_global_context);
->  		if (!p->pcre2_jit_stack)
->  			die("Couldn't allocate PCRE2 JIT stack");
->  		p->pcre2_match_context =3D pcre2_match_context_create(NULL);
-> diff --git a/grep.h b/grep.h
-> index 1875880f37..526c2db9ef 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -189,6 +189,7 @@ struct grep_opt {
->  void init_grep_defaults(struct repository *);
->  int grep_config(const char *var, const char *value, void *);
->  void grep_init(struct grep_opt *, struct repository *repo, const char *=
-prefix);
-> +void grep_destroy(void);
->  void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *=
-opt);
->
->  void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patl=
-en, const char *origin, int no, enum grep_pat_token t);
-> --
-> 2.23.0.rc1
->
->
-
---8323328-1978650622-1565272639=:46--
+-- 
+gitgitgadget
