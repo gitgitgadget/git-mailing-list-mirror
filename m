@@ -2,101 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5918B1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 21:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7091F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 21:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390445AbfHHVaJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 17:30:09 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41971 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390411AbfHHVaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 17:30:08 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c2so93073990wrm.8
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 14:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=goCsHvy862ASuc01FWR0SaB195syqrJX8TSXMx4vDuA=;
-        b=OT7SGlXpeyw3xpiVP7o9yvYH2U3WR5Y1QCKjs+UvNp+XPd4QPMBO92ik7vNmM/2RJ6
-         uphQD+/+Q+3/AUkWrSQWRpqYnY0ItZ8VF9NYfBS5r7phv3onjm4nUvoSWHr0+gYLaDBX
-         jKooREUwLZTZxlSCmfwUBxb9wxsDLDpb0EbYVXZZsZZ2gOtWdsDz4YVL4Qq64SzWsbqW
-         GTJs6JtvFUZ0IEZXEG9k03DyPf8ng6qNogLG1HVul5eTRrXNYzjGvWeG4i/DyTv0vMN0
-         6Z4vLFi4/+bEWzdSzjaMiczF3yag4VJ+pBUgHhhjVC7tHfwRnX2ol2Yv6CqTi4nRyr0g
-         r7HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=goCsHvy862ASuc01FWR0SaB195syqrJX8TSXMx4vDuA=;
-        b=i4s9JMHJT2AkIFKizP5rp8dkaQrhP9hzpPntv1b2tQkVQ1N7jvYbPG1RWTutOP00QC
-         xFGRMpVxjMQp8s9+fqeaETBJ47dx6+tWWfNOrzIlIr4dWXWciK/g98fTFgxRpVbm9eb4
-         5mMK+7bfnBnd07hrTyUrGQ9KFBmu3IyMrAB2jT9ho5kQWQZeXFp4bN2VM+EMU5On/Hp/
-         UEVTYbcMNIQ7J5H/53CJCFcTXaMwg8q/ansIQO5kBdBYGMPnQvpls/AY7YACk19TGgrj
-         CuU3EUpQsudgf5SAqyvj6Vt/zXG5vPLjjBn9ULjnwhmVMWLsbAsK7fJEFS0kZnGkHvq9
-         XORw==
-X-Gm-Message-State: APjAAAWwDcDbLUh88f5h9JpifWc33zzPD+EkPDDCmbvg2HN5zvenGNdy
-        SbFwETNdKqSUWZBYN5blTv8=
-X-Google-Smtp-Source: APXvYqzz6HwHexyECJtYY04wVvKU8SkGGEcbrXjov8cVbzkHDaf3Zab6PXR4uus14mpDCuQyeAlJsQ==
-X-Received: by 2002:adf:f088:: with SMTP id n8mr19600073wro.58.1565299805399;
-        Thu, 08 Aug 2019 14:30:05 -0700 (PDT)
-Received: from szeder.dev (x4db35692.dyn.telefonica.de. [77.179.86.146])
-        by smtp.gmail.com with ESMTPSA id t185sm3166987wma.11.2019.08.08.14.30.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 14:30:04 -0700 (PDT)
-Date:   Thu, 8 Aug 2019 23:30:02 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     jim.cromie@gmail.com
-Cc:     git@vger.kernel.org
+        id S1732708AbfHHVqk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 17:46:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65387 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725535AbfHHVqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 17:46:40 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BEBD15687E;
+        Thu,  8 Aug 2019 17:46:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=S9SjKaBNjSrHEe9XmCWXF5Y82us=; b=mIQ0XE
+        FGxk4/q4iu0FzMh0IgUQvrkKZSJ88+ItZcS/WSlMogfp1Y0DF8q51bXOBJWalabC
+        ChO52Hon2WGnfUYs4Zl1FpdeU8ZTHFtJ1TdcQ69iU68kG+OWEL04KcHPzL23ThgN
+        1WWHsgML2T8kq8LSDg+8/CfKyIP5/QgKKQTq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tzID+NanuHqr6DJoR6s5lhOvhmyerrdf
+        Hx3C0KIsIsVw2X/oCTB/tVP/OmriwYrd1M9JR1MuIdbkcRH+1Vjcf3AEHYKnRPIJ
+        RenoW7jme/jgV4G8S+y1lGKsTNHYNIGHCA16bHq9HL90ozxe8sHIwN4WxHISyfaA
+        3rjgkIkzDU0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 53A6215687D;
+        Thu,  8 Aug 2019 17:46:39 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD73F15687C;
+        Thu,  8 Aug 2019 17:46:38 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Bryan Turner <bturner@atlassian.com>, jim.cromie@gmail.com,
+        Git Users <git@vger.kernel.org>
 Subject: Re: $> git branch splat response considered harmful
-Message-ID: <20190808213002.GI20404@szeder.dev>
 References: <CAJfuBxx5R28cjUj1v+mB4J+uUpbTMWnYowrCc=iOAbOcqWX-_w@mail.gmail.com>
+        <CAGyf7-FUsfKpr+HzOpS9TqE+x7GTnsVKki94gXzMVRwnnweC9g@mail.gmail.com>
+        <CAJoAoZ=K0LhCmnEUk1rsan2J5APzcye7+RryjBG+mKgjGf6qzA@mail.gmail.com>
+Date:   Thu, 08 Aug 2019 14:46:37 -0700
+In-Reply-To: <CAJoAoZ=K0LhCmnEUk1rsan2J5APzcye7+RryjBG+mKgjGf6qzA@mail.gmail.com>
+        (Emily Shaffer's message of "Thu, 8 Aug 2019 14:28:05 -0700")
+Message-ID: <xmqqo90ze3eq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJfuBxx5R28cjUj1v+mB4J+uUpbTMWnYowrCc=iOAbOcqWX-_w@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 004A709C-BA26-11E9-88D2-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 08, 2019 at 03:08:06PM -0600, jim.cromie@gmail.com wrote:
-> fwiw,
-> 
-> jimc@frodo:~/prj-1/capnproto.git$ git branch -l
-> * master
-> 
-> I find the splat in the response unhelpful
-> when wrapped in shell for loop, the splat expands into everything in
-> current directory
-> 
-> jimc@frodo:~/prj-1/capnproto.git$ for b in `git branch -l`; do echo $b; done
-> appveyor.yml
-> c++
-> CMakeLists.txt
-> CONTRIBUTORS
-> ...
-> 
-> it would be nice if some flag combo would suppress that splat.
-> save me from fugly brittle sh $IFS fiddlery and incomplete workarounds
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-'git branch' is not intended for scripting, try 'git for-each-ref'
-instead.  The equivalent command should be:
+> More generally, I think you should take a look at `git help git` and
+> check out the difference between "porcelain" and "plumbing" commands.
+> The former, of which `git branch` is one, are intended for interactive
+> use and not really meant for scripting or piping. You can usually come
+> up with an equivalent from the plumbing commands, which Bryan has
+> suggested for you with `git for-each-ref`.  Git project tries very
+> hard to maintain output format of the plumbing commands so as to not
+> break folks' scripts, but such promises aren't usually made for
+> porcelain commands.
 
-  git for-each-ref --format='%(refname:strip=2)' refs/heads/
+Thanks for a detailed response.
 
-> also, I found no mention of the splat in the man page.
+Git project promises that output format of the Porcelain commands is
+subject to change, in order to support human eyeballs better.
 
-It's in the first sentence of the description :)
+Unless documented otherwise (e.g. "git status --porcelain"), it is
+unwise to try parsing porcelain output---your script may break any
+time and you get to keep both halves.
 
-  If --list is given, or if there are no non-option arguments, existing
-  branches are listed; the current branch will be highlighted in green
-  and marked with an asterisk.
+That is not the same as saying "do not script using Porcelain".
+Sending the output directly to the end user (e.g. compute the
+revision range in your script that finally calls "git log" using
+that computed revision range) is perfectly fine.
 
+Thanks.
