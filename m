@@ -2,115 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70ABC1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 12:53:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9343E1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 12:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732354AbfHHMxq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 08:53:46 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:46906 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727649AbfHHMxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 08:53:46 -0400
-Received: by mail-lf1-f67.google.com with SMTP id z15so62492125lfh.13
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 05:53:44 -0700 (PDT)
+        id S1732621AbfHHM6L (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 08:58:11 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:53164 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728327AbfHHM6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 08:58:11 -0400
+Received: by mail-wm1-f67.google.com with SMTP id s3so2330353wms.2
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 05:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lE+Rna5pm4KnNYq6lgsLMPmy9FQO5dWbaneMde7iBQ0=;
-        b=ogSNmJUeNVDUj9zzMtUAl+TkjT2IRf3hkXOMykUiug3Gwnrx0epIaXbecTfjFHxYlU
-         RI1Pa0r1pkSFfVfK4IQqFeeqWDhkHFUT1QpacqtkTGOMTTUrfDaul+auekYFntS+cXHa
-         B3UWvxYkyi82V21CMoFtv2yCekTfn1IS3OTaf15MMHazDj1H3tnvdykM8BO+SPfM/sj5
-         C2BGrORPtvA82i9GRwvDW0mEfSFiqTuJE/LkG97iu1Z7l6f9Wgle6l3Wu9tYaw0XGaK5
-         PiXY2+vpaT0ripwxe2XlVRAJDRl+IW76zdW3ECI6IoLKP7cTODqu0aWsB1eJ+B9sM4Dz
-         kr8A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ds8sdOm2lVVGZBxzeTH/LB7Gr6ExKULHxcPXZRMTVAQ=;
+        b=OluX5+p6dzFSO/fRZcO2Q/i6PHx+poZ3liRf3WF/+OTNX+D2cRUR13kC7emMF9x5y+
+         Q8bjt3FfkLNlARjcMLThtxfSZhME88lfMZ1oPvFLcvJwx4K0bRJqkn9pnZHuGdE1oA6v
+         gPWewTyApuVLjg/7J/QP32JniHJ7b2gv79/3tl8dWqvt+G6EkmEMybrHoOFDpFKl8+D4
+         +3ylBj+7r6KWhvY+ury4/XEhGbnRiirSTnfSqblkP+lVpBbYRfKiwNu4bFzlHeHkc1US
+         xPcf2ZxVZ0c+nnAZaZHIsVLqY8a7iaX2Zf0s+QZFxHA+whUlbe3zihjPzo7HxZkTkiFp
+         6MzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lE+Rna5pm4KnNYq6lgsLMPmy9FQO5dWbaneMde7iBQ0=;
-        b=o18fAgQZ++kzAQeVbX38XJTYCL1/h3H3he5a8413i5t2xZKFdHw1Fyr7qIk+iJ/Hh5
-         FeHf8gFnM/lhfB9H/nxMkJ3dSJdmEykhr6wXqwSSFT++6MmI+nLtJ8sbwsSPMA+0sLNA
-         VT7tmB24h3T72c0lbeSc/xwt6nRBlHLC+QdLl7ooukGbnwMLZsAb5WLZgBZsDMjDz5a7
-         UzIF4pduRa5SWa+dTnNhl0tF/40+3LDgNNqp7AFqCezW5drFmgJQJvdp/2fzxSQmkxlG
-         EXje7iG1rZMWDNAttcTygb6dkS9Hu/nuQuXCuRLVWOHK5hiHf8dMIdf3sYW7gcqdwJs+
-         Kfww==
-X-Gm-Message-State: APjAAAXuKaBpLIvnMGL6+aRbXZhgANzdCg27nSRUOV6AhLgMlWqG7o6t
-        TzJsbBn/HRB1lvDX5LS2l85wOwrA
-X-Google-Smtp-Source: APXvYqwJQHCj+yxEwoqv2Arh4L24IbMpyfcipjymElCf+ciilAUF+MZqC51UlingRL7kZRWa6S/WGA==
-X-Received: by 2002:a05:6512:70:: with SMTP id i16mr9140110lfo.26.1565268823840;
-        Thu, 08 Aug 2019 05:53:43 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id b192sm16831509lfg.75.2019.08.08.05.53.42
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 08 Aug 2019 05:53:42 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH] t7004: check existence of correct tag
-Date:   Thu,  8 Aug 2019 14:53:30 +0200
-Message-Id: <20190808125330.3104954-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc0.30.g51cf315870
-In-Reply-To: <CAN0heSptKHL8mrU9DTXT9T7HDN56a3+DAGczxkEtbGxp9sB8hg@mail.gmail.com>
-References: <CAN0heSptKHL8mrU9DTXT9T7HDN56a3+DAGczxkEtbGxp9sB8hg@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ds8sdOm2lVVGZBxzeTH/LB7Gr6ExKULHxcPXZRMTVAQ=;
+        b=XAYHprX0oAA0951s78Rq/lDDlbsR69GC+GPEKJ7iy8n6L/Jpy8kwt2Lgu4p7VsO8wD
+         ftwKBzobQDV4cJA6KotI5EbC/s7UKTPqYqUpbvzBDH3Gu+fMmLhnxcERCPDRM4WOMAKA
+         f5lwNMehLtu1D/w3yT/8hir5uepJgXCHVu+yMvA7/qHDeVs1GeUOkZFLu4FGL48P0/rU
+         VWWBL7OzV0Nokztv+6gc3tOGY7HZdyuiOgCqVMiqI2nWaL4TObBsctPYXhsIm2Un7z3X
+         lCyn2/sLNwM9Ojrvat5Lj70CdgcdckUGXRWbq2xcoBCxMSSptedXsw4d9Tqbxc9utczx
+         IJew==
+X-Gm-Message-State: APjAAAW0ij5HhybboCFlGR6Oym42HMhinIPaQWcfkix40G61MZUoyswh
+        2/9jsVqwEj9V0+ZPugnKW1O4XqN7
+X-Google-Smtp-Source: APXvYqyNIoBMrdSM0ax3iI2nrzAievNgQdto0rwoM3DzXg+gnr7lcztpdpuz5tXDgETPWRjE+AmsXQ==
+X-Received: by 2002:a1c:3:: with SMTP id 3mr4441619wma.6.1565269088996;
+        Thu, 08 Aug 2019 05:58:08 -0700 (PDT)
+Received: from szeder.dev (x4db35692.dyn.telefonica.de. [77.179.86.146])
+        by smtp.gmail.com with ESMTPSA id f10sm82843058wrs.22.2019.08.08.05.58.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2019 05:58:08 -0700 (PDT)
+Date:   Thu, 8 Aug 2019 14:58:05 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH bc/hash-independent-tests-part-4] t: decrease nesting in
+ test_oid_to_path
+Message-ID: <20190808125805.GH20404@szeder.dev>
+References: <20190628225928.622372-1-sandals@crustytoothpaste.net>
+ <20190628225928.622372-2-sandals@crustytoothpaste.net>
+ <20190808065614.GA209195@google.com>
+ <20190808093732.GA12257@sigill.intra.peff.net>
+ <20190808113538.GK118825@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190808113538.GK118825@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We try to delete the non-existing tag "anothertag", but for the
-verifications, we check that the tag "myhead" doesn't exist. "myhead"
-isn't used in this test except for this checking. Comparing to the test
-two tests earlier, it looks like a copy-paste mistake.
+On Thu, Aug 08, 2019 at 11:35:38AM +0000, brian m. carlson wrote:
+> On 2019-08-08 at 09:37:33, Jeff King wrote:
+> > On Wed, Aug 07, 2019 at 11:56:14PM -0700, Jonathan Nieder wrote:
+> > -- >8 --
+> > Subject: [PATCH] t0000: reword comments for "local" test
+> > 
+> > Commit 01d3a526ad (t0000: check whether the shell supports the "local"
+> > keyword, 2017-10-26) added a test to gather data on whether people run
+> > the test suite with shells that don't support "local".
+> > 
+> > After almost two years, nobody has complained, and several other uses
+> > have cropped up in test-lib-functions.sh. Let's declare it acceptable to
+> > use.
+> 
+> I'm also in favor of this patch. To my knowledge, the only FLOSS
+> POSIX-compliant shell that doesn't support "local" is AT&T ksh, so there
+> are a lot of alternatives that folks have (bash, dash, posh, zsh, mksh,
+> pdksh, busybox sh, etc.) in case they have a less capable shell.
 
-Perhaps it's overkill to check that `git tag -d` didn't decide to
-*create* a tag. But since we're trying to be this careful, let's
-actually check the correct tag. While we're doing this, let's use a more
-descriptive tag name instead -- "nonexistingtag" should be obvious.
+From these shells:
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
+  - dash and Bash work; no surprise there, being the default shells in
+    some of the most popular Linux distros and GfW.
 
- > Probably worth inspecting the output of that `git tag -d` a bit in
- > t7004, to make sure we just claim to delete one tag, and have errors.
+  - mksh works as well (just don't hit ctrl-C while running a test
+    involving a daemon with '--verbose-log').
 
- Here's something I noticed while looking into this test. If you do
- expand on this test, feel free to pick this up, either as a preparatory
- patch or squash it into your "expand test" patch (if you do one). If
- you don't pick this up at all, I'll pursue it separately, later.
+  - Zsh seems to be fundamentally incapable to run our test
+    framework.
 
- Martin
+  - BusyBox sh is fine for the most part, but there are a few test
+    failures, where we rely on some options or capabilities of various
+    system commands that are not supported by the corresponding
+    BusyBox builtins.
 
- t/t7004-tag.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+  - posh can successfully run a lot of test scripts, but there are a
+    lot of failures as well, it skips a few test scripts that it
+    shouldn't (claiming that Perl and Bash are not available?!), and
+    t0000 aborts with a 'bug in test framework' error.  What's most
+    worrying is that it reported a few "known breakage fixed" cases as
+    well.
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 80eb13d94e..e4cf605907 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -227,10 +227,10 @@ test_expect_success \
- test_expect_success \
- 	'trying to delete two tags, existing and not, should fail in the 2nd' '
- 	tag_exists mytag &&
--	! tag_exists myhead &&
--	test_must_fail git tag -d mytag anothertag &&
-+	! tag_exists nonexistingtag &&
-+	test_must_fail git tag -d mytag nonexistingtag &&
- 	! tag_exists mytag &&
--	! tag_exists myhead
-+	! tag_exists nonexistingtag
- '
- 
- test_expect_success 'trying to delete an already deleted tag should fail' \
--- 
-2.23.0.rc0.30.g51cf315870
+  - pdksh seems to be unavailable in my Linux distro, but since its
+    name contains the "ksh" substring I'm sceptical.
+
+So there are not that many alternatives.
+
+Having said that, I'm in favor of using 'local'.
 
