@@ -7,132 +7,94 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 707901F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 19:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4488A1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390280AbfHHTAH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 15:00:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51685 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732375AbfHHTAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 15:00:07 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3649E824B0;
-        Thu,  8 Aug 2019 15:00:02 -0400 (EDT)
+        id S2390275AbfHHTDx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:03:53 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57798 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390203AbfHHTDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:03:53 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1EEC66F634;
+        Thu,  8 Aug 2019 15:03:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KYH3/8P++CD20I1NPye8zJruuTo=; b=PjeR7o
-        h84KGUUq6c+J9Rn90CwpOd+XsXXjcLi/IEK4U6fjs62GCyjZ9DgJ75w+0VMShNrL
-        BKKG+Vp5Sc6QRY0xxEDdJXjPOV+sKRlpBr2DMCyysAbvnvjIEtPysvqoKWMtzVVG
-        13WuQIWBoaTv2KJmqAzNrBTqDLEyEp9393+z8=
+        :content-type; s=sasl; bh=KpLOUdMDLM3q239onf3Gb9YGQaI=; b=eUNRlt
+        +gRwmG3FmNVLdqsWrOx/OFO3qNfwxNNC+KXY2E+p+HqhPpakkuWND5lvxr3c9Y0g
+        /VixW88P1D5yYOg3soiy9Aub3fILLqUH/0qbRlolckVtO1T9NFirab4Ts/W0udTL
+        v8YpBcUucnZY4WSo2mT6zJ7bCwAzHBLrY6Zks=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=b+tqljIVDNsRV/e8RZlHOWnr1xC4y1Te
-        5idhUOgUovadTkKY+Fy+8NKzooMN+ZDVZGPqmrCJOZ0Y47wv7hvP/ZhV35NuQmmX
-        CkIDimAMgZCiBA4/QiWMOKDuyN15ZtO70TnwYlp7flojBQy2KcEt88Kq902VcptT
-        R3uZCYPQq24=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E5AF824AF;
-        Thu,  8 Aug 2019 15:00:02 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Z8foFF+K/MQ9v+U070v/IbSKfmyERjml
+        5AqJGYUSKTwkzAdo1F/ethwJ6FZ8u+QYPYh0Ur/6RhTZVWJNr5pT9V7uxIwk6DIZ
+        yAohX33lgFNkNaP6ULD7phnRvHqwH2JQqTzFpZeYkBPFU0tMGrF6YWfjAmbuBUqq
+        OxrK6ASjXU0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 156396F633;
+        Thu,  8 Aug 2019 15:03:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 391498249F;
-        Thu,  8 Aug 2019 14:59:59 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 113DF6F632;
+        Thu,  8 Aug 2019 15:03:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        carenas@gmail.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= 
-        <avarab@gmail.com>, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
-        <pull.292.v3.git.gitgitgadget@gmail.com>
-        <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
-        <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
-Date:   Thu, 08 Aug 2019 11:59:56 -0700
-In-Reply-To: <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 8 Aug 2019 11:34:29 -0700")
-Message-ID: <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: What's cooking in git.git (Aug 2019, #03; Tue, 6)
+References: <xmqqv9vahs6p.fsf@gitster-ct.c.googlers.com>
+        <20190808182242.GA96790@comcast.net>
+Date:   Thu, 08 Aug 2019 12:03:45 -0700
+In-Reply-To: <20190808182242.GA96790@comcast.net> (Matthew DeVore's message of
+        "Thu, 8 Aug 2019 11:22:42 -0700")
+Message-ID: <xmqq8ss3fpim.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B819B9CA-BA0E-11E9-A312-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 407F5C98-BA0F-11E9-84CF-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Matthew DeVore <matvore@comcast.net> writes:
 
->> --- a/Documentation/config/merge.txt
->> +++ b/Documentation/config/merge.txt
->> @@ -54,7 +54,8 @@ merge.directoryRenames::
->>         moved into the new directory.  If set to "conflict", a conflict
->>         will be reported for such paths.  If merge.renames is false,
->>         merge.directoryRenames is ignored and treated as false.  Defaults
->> -       to "conflict".
->> +       to "conflict" unless `feature.experimental` is enabled and the
->> +       default is "true".
+> On Tue, Aug 06, 2019 at 02:58:38PM -0700, Junio C Hamano wrote:
+>> 
+>> * md/list-objects-filter-combo (2019-06-28) 10 commits
+>>  - list-objects-filter-options: make parser void
+>>  - list-objects-filter-options: clean up use of ALLOC_GROW
+>>  - list-objects-filter-options: allow mult. --filter
+>>  - strbuf: give URL-encoding API a char predicate fn
+>>  - list-objects-filter-options: make filter_spec a string_list
+>>  - list-objects-filter-options: move error check up
+>>  - list-objects-filter: implement composite filters
+>>  - list-objects-filter-options: always supply *errbuf
+>>  - list-objects-filter: put omits set in filter struct
+>>  - list-objects-filter: encapsulate filter components
+>> 
+>>  The list-objects-filter API (used to create a sparse/lazy clone)
+>>  learned to take a combined filter specification.
+>> 
+>>  Will merge to 'next'.
+>> 
 >
-> I have a hard time parsing that changed sentence.  Perhaps something like:
->    ...unless `feature.experimental` is enabled in which case the
-> default is "true".
-> ?
+> This has been the status for a while, and I don't see it on "next."
 
-That reads better.
+I doubt it will be during -rc freeze period, before the final week
+of the upcoming release.  
 
-But I am not sure about the wisdom of controlling between conflict
-and true with this feature macro in the first place.
+> I notice Johannes wanted a fix for incorrect strbuf usage to fix a linter check
+> - (just saw his earlier message now) is that the cause of the delay?
 
-Between "conflict" and "true", the former forces the end user to
-verify (or allows the end user to veto) the auto resolution by the
-heuristics and is always a safer if more cumbersome option.  It's
-not like blindly trusting the directory rename heuristics is the
-bright future for all users, is it?
+That may be some of it.  When we approach -rc (that was a few weeks
+ago), any large change not ready for 'next' would get backburnered
+to allow higher priority "oops, that one is already in or just about
+to go in 'master', but it needs this fixup before the final" topics
+to graduate sooner.
 
-I would not set rerere.autoUpdate to true when feature.experimental
-is set; for exactly the same reason, I do not find it reasonable to
-set this to true with feature.experimental macro.
-
-> ...
->> diff --git a/repo-settings.c b/repo-settings.c
->> index af93696343..e0673938c0 100644
->> --- a/repo-settings.c
->> +++ b/repo-settings.c
->> @@ -34,6 +34,18 @@ void prepare_repo_settings(struct repository *r)
->>                 free(strval);
->>         }
->>
->> +       if (!repo_config_get_maybe_bool(r, "merge.directoryrenames", &value))
->> +               r->settings.merge_directory_renames = value ? MERGE_DIRECTORY_RENAMES_TRUE : 0;
->
-> Shouldn't that be "MERGE_DIRECTORY_RENAMES_NONE" instead of "0"?
->
->> diff --git a/repository.h b/repository.h
->> index e7a72e2341..b8e52dd48f 100644
->> --- a/repository.h
->> +++ b/repository.h
->> @@ -19,6 +19,20 @@ enum untracked_cache_setting {
->>         UNTRACKED_CACHE_WRITE = 2
->>  };
->>
->> +enum merge_directory_renames_setting {
->> +       MERGE_DIRECTORY_RENAMES_UNSET = -1,
->> +       MERGE_DIRECTORY_RENAMES_NONE = 0,
->> +       MERGE_DIRECTORY_RENAMES_CONFLICT = 1,
->> +       MERGE_DIRECTORY_RENAMES_TRUE = 2,
->> +};
->
-> Thanks for adding these; makes things much nicer.  :-)
->
->
-> Cheers,
-> Elijah
+Thanks.
