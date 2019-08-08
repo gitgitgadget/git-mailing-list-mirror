@@ -2,182 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 975B21F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 19:39:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63C811F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390305AbfHHTjT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 15:39:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52003 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389995AbfHHTjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 15:39:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 633B116C41F;
-        Thu,  8 Aug 2019 15:39:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8IREEMtiivEnAag55p0rcKQ1SZY=; b=SiX9em
-        V3wVgFmJtTiLxtfC2w4urzv6uEAoiNPv20KI8f0uDm1Q0mQJVy+gmSR2ilhjbTiL
-        ugJqq2rRLDDTQGNIglCak3ZVBF3/Dphkr2W+HZYZ/cM8Bz1CBPFc+HZFGQzEcOLd
-        Az2Tdopzrh638qzbQE9qcYR44DmmE0rW7k3ok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pqdGyc95/kTdaHOnN3OA+X7BjS4YJQEN
-        jGbgitzQuXf2D1qQIdFeHR0oG2bBcy9Gtew4iYhThEXNxVuiM3fb12vUFee1szfZ
-        kgZPcDlu13Q9LTpoWkC/RophhGiXWQIgBXjsl7C73fG1F+Ppd0XGX2rXz4jsV1v9
-        Zi+MuwcxuMw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A85D16C41E;
-        Thu,  8 Aug 2019 15:39:12 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BADA816C41D;
-        Thu,  8 Aug 2019 15:39:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
-References: <20190808035935.30023-1-phil.hord@gmail.com>
-Date:   Thu, 08 Aug 2019 12:39:10 -0700
-In-Reply-To: <20190808035935.30023-1-phil.hord@gmail.com> (Phil Hord's message
-        of "Wed, 7 Aug 2019 20:59:35 -0700")
-Message-ID: <xmqq4l2rfnvl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2390253AbfHHTss (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:48:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:46443 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731038AbfHHTss (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:48:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1565293712;
+        bh=qB0ipPDZH3vOEwRNB8RgbGWLluuoCGtnOKL+ITCZOfw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=k3Lw9bE4MAuntg1sJXRK3nix5iPnCOU95yIcTXr2HhPOeW9gqIpnpM+Lm4C9q/eNg
+         GmPsel8iytC5qazhy3tbJR6fMKpJq3wGBhR71w2o9+zb2dTKIWpysj8BxD/huy0DzJ
+         TW3Z0YJnJ8yNhOrO+jKhRWWqDJeUuCX2lCxTCne8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOzOw-1hfDLw2Z3c-00PLOO; Thu, 08
+ Aug 2019 21:48:32 +0200
+Date:   Thu, 8 Aug 2019 21:48:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] config: stop checking whether the_repository is
+ NULL
+In-Reply-To: <20190806124954.GA13649@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1908082147190.46@tvgsbejvaqbjf.bet>
+References: <20190806122601.GA21475@sigill.intra.peff.net> <20190806122758.GC13513@sigill.intra.peff.net> <20190806124954.GA13649@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 325153EC-BA14-11E9-93B9-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ItK8r3xwTSAx0ZV6nROjAE/GpXyTBNaVJZvHAzZwh4wE9VEQH/h
+ mdZ01RLocdgUdtqaZElYk1lqvfT5vcMIm5B4gwjrM5Pgm65+IWf6Y+UlHfg4LYIAq791y0c
+ OVR3sSXCPfJ25Vp2GowqwbjvFq4xGp/gl829DA9Ptm7NQ3VamzBOBLwEIwDxldD5jhJ17zf
+ X2uXxJND4O0X0wsTiKUEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4NddPWNwYWY=:Yby79c3oySxGdlMNUIFSUo
+ M4wMOYg3fGNAbO7DZAONTniM3f2AWN+mcxbP337udc69POrwwvO0DYBYJ4lX+GDg66F4aCipw
+ Z/7QZIK63r98E+ts42kKxvBuaOlywoe5tihPpsK7HDo76mRURi+y+Yci4DwEGDXLWWuKcNKVl
+ g1qztxE7eb/yszilxhHE/Ac+Wtp4iyUcjaT/49kk3GsI5c71hbhRT4gmXj7B0R9pBwa/jCvi8
+ 1d10S5vRh+DTj2UUJpAPvyjuXsaW3vG611qIB7cMD7f41cC9RNbwj4NybMjSth5oCF6BujY/2
+ MKPw3arKtQNW1Nt/tN6tGv7WPsAN+S30Ss5V33Vw7SXWGbncxwz8wLNtNtcO1erYNiH5PzuPd
+ 17E9Q83RZ6kfZgE8aLc9syrben27KQMpQYvX+AktAU1L1b0T4+gJeUef0fxwGw5WQqagV9GuG
+ Wktsr8MMOhvNrFX8fiAtz4FXxgu+1zgJbtIxf6ZROPgBzdG71O2mvWTCzCA8nSojCZo0/c9KM
+ RQb6YOkFZlQpqJQKVLSc++SOmhZ+RCPJMFukJckHgonvR9S2o2EYC7UI0rk5pR5DJWKhFQ4sG
+ fLvE8PlMIQz0t1Y3JxBgtKFQ8VcLaT88QPs/mJzJZlZo5ns4x4Qj46FdNpGZYVHb5/BRF2rgW
+ LbaX7k/u/fcugx9uoTXskpRKBbcRkV6S9fq17Ln/dHY815cpnU774g+YhgmanSq7knF4O3Qkq
+ 0/inmMG9fe9PJr4n41iOHaEvH4q08Bvcbf4Q1IwAirzGRrmsiSnetNHTCA2LtLG+/nrn21QHQ
+ Lba9X4Fdzzs34zOSakmZPsGF2mMl38+Jo59dBndINH7Hwa0wD3qELfcKRqx096fjfqrLOXzL8
+ ezKiXblI6AgMDC2DGpleIZcyyyqjcvweuyyMVCaYPihvPuXTYBotM9nLyopk7TI6S0EW57sbK
+ fpBURmZuC3/RSp2cHo9TUNgFbHkCBghhvnCgtJZffwo9FJdN5NC/Ky5+NwD7gzeSLwdF3kE4w
+ WoOdgTqG2pC64Oxn4bcWwnsMXTunKtEHiUk2LeCuUeiLMuSmJPC+/P8IoFmgErJgZIlQ83i1q
+ AlJwP+1pJqLygWCDK+vunx+PhN6V/GYj7YVk96GXrITdL3HMWgdTZpBtcocFt+adlt0Vwkcid
+ TmB3U=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phil Hord <phil.hord@gmail.com> writes:
+Hi Peff,
 
-> From: Phil Hord <phil.hord@gmail.com>
+ACK on the three patches, and I think your outline is valid (post
+v2.23.0, possibly an Outreachy project?).
+
+Thanks,
+Dscho
+
+P.S.: Sorry for top-posting, but I felt that I did not even respond to
+anything you said, concretely, so...
+
+On Tue, 6 Aug 2019, Jeff King wrote:
+
+> On Tue, Aug 06, 2019 at 08:27:58AM -0400, Jeff King wrote:
 >
-> 'git tag -d' accepts one or more tag refs to delete, but each deletion
-> is done by calling `delete_ref` on each argv. This is painfully slow
-> when removing from packed refs. Use delete_refs instead so all the
-> removals can be done inside a single transaction with a single write.
+> > diff --git a/config.c b/config.c
+> > index 3900e4947b..cc637363bb 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -275,7 +275,7 @@ static int include_by_branch(const char *cond, siz=
+e_t cond_len)
+> >  	int flags;
+> >  	int ret;
+> >  	struct strbuf pattern =3D STRBUF_INIT;
+> > -	const char *refname =3D !the_repository || !the_repository->gitdir ?
+> > +	const char *refname =3D !the_repository->gitdir ?
+> >  		NULL : resolve_ref_unsafe("HEAD", 0, NULL, &flags);
 >
-> I have a repo with 24,000 tags, most of which are not useful to any
-> developers. Having this many refs slows down many operations that
-> would otherwise be very fast. Removing these tags when they've been
-> accidentally fetched again takes about 30 minutes using delete_ref.
+> I stopped here, even though I argued earlier that this probably ought to
+> be have_git_dir() to match the rest of the config code. What I found
+> when I started poking at it is that there are a few odd cases still in
+> the startup code, and that IMHO the final form we want to end up with
+> actually matches what's written here (but I'm not quite ready to sink
+> the time into taking us there just yet). Read on for the gory details.
 >
->     git tag -l feature/* | xargs git tag -d
+> The most immediate issue I saw was that the_repository->gitdir doesn't
+> actually tell you whether or not we have a repository! I.e., that entry
+> may be non-NULL even though startup_info->have_repository is 0.
 >
-> Removing the same tags using delete_refs takes less than 5 seconds.
-
-Makes sense.  As mentioned elsewhere in the thread already,
-a batched update-ref would open the packed-refs ony once because
-everything is done in a single transaction, so presumably a pipeline
-like this
-
-	git tag -l feature/* | 
-	sed -e 's|^|delete refs/tags/|' |
-	git update-ref --stdin
-
-may work well, and "git tag -d" that gets these refs on the command
-line should be capable of doing the same.
-
-> -static int delete_tag(const char *name, const char *ref,
-> -		      const struct object_id *oid, const void *cb_data)
-> +struct tag_args {
-> +	char *oid_abbrev;
-> +	char *refname;
-> +};
+> So these two tests fail:
+>
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index d20b4d150d..7ec91c4c1c 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -348,6 +348,18 @@ test_expect_success 'conditional include, onbranch,=
+ implicit /** for /' '
+>  	test_cmp expect actual
+>  '
+>
+> +test_expect_success 'onbranch include not fooled by fake GIT_DIR' '
+> +	mkdir not-a-git-dir &&
+> +	echo "ref: refs/heads/master" >not-a-git-dir/HEAD &&
+> +	git config --file=3Dinner the.value inner &&
+> +	git config --file=3Douter the.value outer &&
+> +	git config --file=3Douter includeIf.onbranch:master.path inner &&
+> +	GIT_DIR=3Dnot-a-git-dir \
+> +		git config --file=3Douter --includes the.value >actual &&
+> +	echo outer >expect &&
+> +	test_cmp expect actual
+> +'
 > +
-> +static int make_string_list(const char *name, const char *ref,
-> +			    const struct object_id *oid, void *cb_data)
-
-Please think about a few more minutes before naming a function like
-this, and make it a habit for your future patches.
-
-We can see that the callback is used to insert more strings into a
-string list, but the type (i.e. string_list) used to represent the
-set is not all that important.  What is more important is why you
-are building that set for, and saying what is in the set (as opposed
-to saying that the container happens to be a string_list) would be a
-good first step.
-
-I presume that you are enumerating the tags to be deleted, together
-with the data necessary for you to report the deletion of the tags?
-
->  {
-> -	if (delete_ref(NULL, ref, oid, 0))
-> -		return 1;
-> -	printf(_("Deleted tag '%s' (was %s)\n"), name,
-> -	       find_unique_abbrev(oid, DEFAULT_ABBREV));
-> +	struct string_list *ref_list = cb_data;
-> +	struct tag_args *info = xmalloc(sizeof(struct tag_args));
+>  test_expect_success 'include cycles are detected' '
+>  	git init --bare cycle &&
+>  	git -C cycle config include.path cycle &&
+> diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
+> index 3a0de0ddaa..91af2c2f89 100755
+> --- a/t/t1309-early-config.sh
+> +++ b/t/t1309-early-config.sh
+> @@ -99,4 +99,12 @@ test_expect_success 'onbranch config outside of git r=
+epo' '
+>  	nongit git help
+>  '
+>
+> +test_expect_success 'early config is not fooled by bogus GIT_DIR' '
+> +	mkdir not-a-git-dir &&
+> +	git config --file=3Dnot-a-git-dir/config \
+> +		alias.should-not-run \
+> +		"!echo should-not-run" &&
+> +	test_must_fail env GIT_DIR=3D"not-a-git-dir" git should-not-run
+> +'
 > +
-> +	string_list_append(ref_list, ref);
-> +
-> +	info->oid_abbrev = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
-> +	info->refname = xstrdup(name);
-> +	ref_list->items[ref_list->nr - 1].util = info;
->  	return 0;
->  }
->  
-> +static int delete_tags(const char **argv)
-> +{
-> +	int result;
-> +	struct string_list ref_list = STRING_LIST_INIT_DUP;
-> +	struct string_list_item *ref_list_item;
-> +
-> +	result = for_each_tag_name(argv, make_string_list, (void *) &ref_list);
-> +	if (!result)
-> +		result = delete_refs(NULL, &ref_list, REF_NO_DEREF);
-> +
-> +	for_each_string_list_item(ref_list_item, &ref_list) {
-> +		struct tag_args * info = ref_list_item->util;
-> +		if (!result)
-> +			printf(_("Deleted tag '%s' (was %s)\n"), info->refname,
-> +				info->oid_abbrev);
-> +		free(info->oid_abbrev);
-> +		free(info->refname);
-> +		free(info);
-
-It is not performance critical, but info->refname is computable from
-ref_list_item->string, isn't it?  I am just wondering if we can do
-this without having to allocate the .util field for each of 20,000
-tags.  We still need to remember oid (or oid_abbrev, but if I were
-writing this, I'd record the full oid in .util and make the code
-that prints call find_unique_abbrev() on it), so I guess we cannot
-really leave .util NULL.
-
-> +	}
-> +	string_list_clear(&ref_list, 0);
-> +	return result;
-
-We used to return the returned value from for_each_tag_name() that
-repeatedly called delete_tag().  
-
-Now we return value from delete_refs().  Are our caller(s) OK with
-the values that may come back from that function?  Can delete_refs()
-return a value that is not appropriate to be returned from
-cmd_tag(), for example a negative value?
-
-> +}
-> +
->  static int verify_tag(const char *name, const char *ref,
-> -		      const struct object_id *oid, const void *cb_data)
-> +		      const struct object_id *oid, void *cb_data)
->  {
+>  test_done
+>
+> As you can see from that case, it's a curiosity that we still set the
+> internal gitdir variable from $GIT_DIR, even if we found that it's not a
+> valid repo.
+>
+> The onbranch case is fooled by our direct check of gitdir, but likewise
+> have_git_dir() allows either have_repository or a non-NULL gitdir (as I
+> mentioned earlier, I think this is vestigial at this point).
+>
+> So doing this fixes the onbranch case:
+>
+> diff --git a/config.c b/config.c
+> index cc637363bb..134637f3ad 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -275,7 +275,7 @@ static int include_by_branch(const char *cond, size_=
+t cond_len)
 >  	int flags;
->  	const struct ref_format *format = cb_data;
-> @@ -511,7 +543,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  	if (filter.merge_commit)
->  		die(_("--merged and --no-merged options are only allowed in list mode"));
->  	if (cmdmode == 'd')
-> -		return for_each_tag_name(argv, delete_tag, NULL);
-> +		return delete_tags(argv);
-
-Thanks.
+>  	int ret;
+>  	struct strbuf pattern =3D STRBUF_INIT;
+> -	const char *refname =3D !the_repository->gitdir ?
+> +	const char *refname =3D !have_git_dir() ?
+>  		NULL : resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+>  	const char *shortname;
+>
+> diff --git a/environment.c b/environment.c
+> index 89af47cb85..08bdf79d6b 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -203,8 +203,7 @@ int is_bare_repository(void)
+>
+>  int have_git_dir(void)
+>  {
+> -	return startup_info->have_repository
+> -		|| the_repository->gitdir;
+> +	return startup_info->have_repository;
+>  }
+>
+>  const char *get_git_dir(void)
+>
+>
+> but curiously it _doesn't_ fix the alias one, because after seeing that
+> we have no configured git dir, we then fall back to discover_git_dir(),
+> which happily reports back the same bogus $GIT_DIR.
+>
+> So I think there'd be some more cleanup required there. But the general
+> direction is that in the near future we probably ought to be checking
+> startup_info->have_repository and not the_repository->gitdir.
+>
+> But I think in the long-term, we probably ought to be getting rid of
+> startup_info->have_repository itself. It's really just hiding a subtle
+> dependency on whether the_repository is valid, and we're better off
+> actually seeing all the spots that depend on the_repository (and
+> eventually converting them to take a "struct repository" as
+> appropriate).
+>
+> Where we want to end up is (I think):
+>
+>   - stop setting the_repository->gitdir when we know that there's no
+>     repo (and possibly clear $GIT_DIR as well to avoid confusion). That
+>     should make it a robust way to check whether a "struct repository"
+>     is valid.
+>
+>     This is the step I've stalled on, because I'm a bit worried that
+>     there's some subtle case that depends on it working this way.
+>
+>   - drop startup_info->have_repository entirely. At that point it would
+>     be redundant with checking the_repository->gitdir.
+>
+>     If you do this without the first step, t4201 will notice and fail
+>     (because it expects GIT_DIR=3Dnot-a-repo to notice that there is no
+>     repo).
+>
+>   - optionally, drop have_git_dir() in favor of just checking
+>     the_repository->gitdir. This loses a layer of abstraction, but I
+>     think it makes it much more clear where we'd depending on
+>     the_repository.
+>
+> And so in the end, the current state of include_by_branch() is what we
+> want, and all the other call sites should change to match it. Whether it
+> should be changed in the interim (until we fix the discrepancy between
+> gitdir/have_repository), I don't feel strongly about. There are
+> user-visible cases that I believe we get wrong today, but as you can see
+> from the tests above, they're pretty ridiculous and unlikely in
+> practice.
+>
+> -Peff
+>
