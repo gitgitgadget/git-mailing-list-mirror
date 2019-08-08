@@ -7,114 +7,82 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B98131F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 09:37:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69EFD1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 09:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732587AbfHHJhe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 05:37:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37542 "HELO cloud.peff.net"
+        id S2389782AbfHHJqJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 05:46:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37560 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732286AbfHHJhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 05:37:34 -0400
-Received: (qmail 11096 invoked by uid 109); 8 Aug 2019 09:37:33 -0000
+        id S2389774AbfHHJqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 05:46:09 -0400
+Received: (qmail 11198 invoked by uid 109); 8 Aug 2019 09:46:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Aug 2019 09:37:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Aug 2019 09:46:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18727 invoked by uid 111); 8 Aug 2019 09:40:03 -0000
+Received: (qmail 18757 invoked by uid 111); 8 Aug 2019 09:48:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 05:40:03 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 05:48:38 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Aug 2019 05:37:33 -0400
+Date:   Thu, 8 Aug 2019 05:46:08 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH bc/hash-independent-tests-part-4] t: decrease nesting in
- test_oid_to_path
-Message-ID: <20190808093732.GA12257@sigill.intra.peff.net>
-References: <20190628225928.622372-1-sandals@crustytoothpaste.net>
- <20190628225928.622372-2-sandals@crustytoothpaste.net>
- <20190808065614.GA209195@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Lukas Gross <lukasgross@u.northwestern.edu>,
+        git@vger.kernel.org
+Subject: Re: amend warnings with no changes staged
+Message-ID: <20190808094607.GB12257@sigill.intra.peff.net>
+References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
+ <20190806013030.GA61803@google.com>
+ <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
+ <20190806021618.GC61803@google.com>
+ <20190806041911.GA9243@sigill.intra.peff.net>
+ <xmqqblx2jeh2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190808065614.GA209195@google.com>
+In-Reply-To: <xmqqblx2jeh2.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 07, 2019 at 11:56:14PM -0700, Jonathan Nieder wrote:
+On Tue, Aug 06, 2019 at 12:11:53PM -0700, Junio C Hamano wrote:
 
-> But a dash bug[*] causes it to instead expand to
+> Jeff King <peff@peff.net> writes:
 > 
-> 	/3456789...
+> >   git commit -m 'buggy commit'
+> >   echo fix >>file.c
+> >   git commit --amend ;# oops, should have been "-a"
+> >   git push
+> >
+> > But perhaps that gets to the heart of the matter. Could we perhaps be
+> > providing a more detailed summary of what happened for an --amend? I.e.,
+> > to summarize _both_ sets of changes (and if one set is empty, say so)?
+> > ...
+> > judgement about whether it's an error, since it may well be that you
+> > were simply rewording the commit message).
 > 
-> The stream of symbols that makes up this function is hard for humans
-> to follow, too.  The complexity mostly comes from the repeated use of
-> the expression ${1#??} for the basename of the loose object.
+> Perhaps "git range-diff HEAD@{1}...HEAD" being an empty is a sign
+> that either the user intentionally or accidentally did not do
+> anything other than "touch"ing the commit.
+> 
+> "git commit --amend --[no-]range-diff" that shows what you changed
+> with the amending may be an interesting possibility; I am not yet
+> ready to seriously encourage anybody to explore it, though, because
+> "git diff HEAD@{1}" is much easier to see what code got changed, but
+> one (and probably only) downside is that it does not cover the
+> change in the log message.
 
-Yeah, both seem like good reasons to change this (and the patch looks
-good to me).
+I hadn't even thought of range-diff.
 
-> Use a variable instead --- nowadays, the dialect of shell used by Git
-> permits local variables, so this is cheap.
+Showing the commit message diff would be a big improvement. A range-diff
+would also show an update to the author (e.g., if you used --reset-author).
 
-I don't recall whether we ever made a conscious decision about that.
-Commit 01d3a526ad (t0000: check whether the shell supports the "local"
-keyword, 2017-10-26) put in a test balloon about 2 years ago. Since then
-several other uses have crept in to test-lib-function.sh.
+We don't really need the full power of range diff, though. After all, we
+know there are exactly two patches to compare, so we don't care about it
+trying to figure out which ones correlate (and it might even be a bad
+thing for it to decide that two entries don't match). So I think we'd
+probably want our own custom thing.
 
-But I think we can probably call the experiment a success at this point.
-Maybe we'd want to do this, as well:
-
--- >8 --
-Subject: [PATCH] t0000: reword comments for "local" test
-
-Commit 01d3a526ad (t0000: check whether the shell supports the "local"
-keyword, 2017-10-26) added a test to gather data on whether people run
-the test suite with shells that don't support "local".
-
-After almost two years, nobody has complained, and several other uses
-have cropped up in test-lib-functions.sh. Let's declare it acceptable to
-use.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t0000-basic.sh | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index e89438e619..9ca0818cbe 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -25,16 +25,14 @@ try_local_x () {
- 	echo "$x"
- }
- 
--# This test is an experiment to check whether any Git users are using
--# Shells that don't support the "local" keyword. "local" is not
-+# Check whether the shell supports the "local" keyword. "local" is not
- # POSIX-standard, but it is very widely supported by POSIX-compliant
--# shells, and if it doesn't cause problems for people, we would like
--# to be able to use it in Git code.
-+# shells, and we rely on it within Git's test framework.
- #
--# For now, this is the only test that requires "local". If your shell
--# fails this test, you can ignore the failure, but please report the
--# problem to the Git mailing list <git@vger.kernel.org>, as it might
--# convince us to continue avoiding the use of "local".
-+# If your shell fails this test, the results of other tests may be
-+# unreliable. You may wish to report the problem to the Git mailing
-+# list <git@vger.kernel.org>, as it could cause us to reconsider
-+# relying on "local".
- test_expect_success 'verify that the running shell supports "local"' '
- 	x="notlocal" &&
- 	echo "local" >expected1 &&
--- 
-2.23.0.rc1.440.g8f3b7ca639
-
+-Peff
