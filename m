@@ -2,153 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851BB1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 20:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAF551F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 20:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390191AbfHHUt4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 16:49:56 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:37694 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730768AbfHHUt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 16:49:56 -0400
-Received: by mail-qk1-f196.google.com with SMTP id d15so69953244qkl.4
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 13:49:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=g/wGYpEvrtHvnNrZD0Tk4Gup2AJS7mtbt54K/ljUp6Q=;
-        b=nR+BrZXWXD4pCaVWgeRDjkU/Zrlk2hGH1ic9+0mH+W6qJ+wODuRw1KTMIxvitDTr1C
-         jtQ+P129dYj+keyhJlfU9nQ+7OVtzdmfQlnkbYg146epCWZ4HZXG6Aenff86pmiLl2sY
-         /Cw34a3IbkIfLRGAV2EyJICvzz5qGxEmoJSH77FDFO/jco+i9+t4vM067XCTyADXRaKu
-         64+Ze9Ckpt+xi5zeDqWJ0oDgfls+Wwfi8XWeLn6YiTLQjvoqFJoCqMD+fbJC5pANh4kV
-         eEllpPyH2W4LOCbN6r9eXpjLWQ41OCZ8T9u90cgM6cHa6lAl8ErnNHNRWlQDqUFrBki8
-         cLlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=g/wGYpEvrtHvnNrZD0Tk4Gup2AJS7mtbt54K/ljUp6Q=;
-        b=X8+bJ7haFxyp7NFOecTG0OFqIuUetRIo8IXKAT13TMOBUu03r7M6vOLmwF3bI1ExpW
-         d3ThekbSzpo/9a9MWG9KO62esM0IsEaJF3DMNkZe60qNvYP7O1mehKazQ+mKlhVRtppo
-         AYX/Urlf+L5R0slCu1OPplX5y75wS5q/X/Py3q6FIStIVcBMGAWzqMFquLHrFVBegRsO
-         4nQhqIkv5/RB7vHPUBpmgl1jUWEVLU7xqNBlJOdjHL/WTxXPhbXFtPvpOWkY9AK5jSlo
-         BSE09nJDOv7xJhrn/48QJG5dUzK63MkYZBo894GLshrudpUXEzeK5IdzSvll46LjICAr
-         n8AA==
-X-Gm-Message-State: APjAAAV9bFSh1qy06N8Ob8+S2DAlJ5/hp0z3Qx9R17+TJPW8zC7++LrE
-        H3EvGyYPReF3IZrY9Q05bSA=
-X-Google-Smtp-Source: APXvYqzfgZzG3me5/NbSLszPqlvmVJMTb71xrZPBYKmMDKTuKf6XkPcLAbTUjl1nhVvPZ6DiFLDikg==
-X-Received: by 2002:a37:270a:: with SMTP id n10mr15285620qkn.434.1565297395262;
-        Thu, 08 Aug 2019 13:49:55 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7487:521b:1543:4364? ([2001:4898:a800:1012:25bb:521b:1543:4364])
-        by smtp.gmail.com with ESMTPSA id 131sm42862163qkn.7.2019.08.08.13.49.54
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 13:49:54 -0700 (PDT)
-Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        carenas@gmail.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.292.v2.git.gitgitgadget@gmail.com>
- <pull.292.v3.git.gitgitgadget@gmail.com>
- <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
- <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
- <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
- <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
- <CABPp-BGo5spDbk34YwAPGqT1Xgsr1dHm6OhxY1xKFQxQaotBig@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1a2bf8e1-5cc1-c626-9dfc-dd6dc58fa0ad@gmail.com>
-Date:   Thu, 8 Aug 2019 16:49:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S2390230AbfHHU4i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 16:56:38 -0400
+Received: from mout.web.de ([212.227.17.11]:55129 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725785AbfHHU4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 16:56:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1565297792;
+        bh=+dU8Fb/VxaRa5tnojeZjCwD1DO4yoeVD2NLHO0QkYq0=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=UsEMfonMYXScKiF076KdxDdFLwW/1dK+hhVoz60yPuSVyooAyIwkX3lIFq0OqNVtB
+         2hzsh6qZau+dXYSwa+YjuhlZK+COKTHXBLHp4/hIvdeGoDvwhhttJ2JhCSeLbQmgYH
+         k8W4LsThpXdNrXlEg5IkJIekpdHHLzEFO6ayIDDU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRCnT-1hkeHH3Fst-00UYYw; Thu, 08
+ Aug 2019 22:56:32 +0200
+Date:   Thu, 8 Aug 2019 22:56:31 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
+Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: Re: suggestion for improved docs on autocrlf
+Message-ID: <20190808205631.e2647kxq74thotjb@tb-raspi4>
+References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGo5spDbk34YwAPGqT1Xgsr1dHm6OhxY1xKFQxQaotBig@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:MDYz3Sro4B9EowovX9X0Syj7QtNsSWSiOvbx3ofkA6QAdLZh+iG
+ uEYhv+X7nvFe8KGxR/3fRyKVoqUJYoEBeeUvF6dvcCNNhzdvW9EYeJ42jcteKX2RpgNrQu2
+ TipLs0BXo+ssppth6cN83mGeWu49WZP/R8czSUvyD4PQFyDP4W49AN5EGASorWb93geVAQq
+ MIpNGzPsqYSngJ+RgwIOg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4Fx9ZsvHNKc=:a/Gh4qWJvHNmtVd1oUF+I0
+ YYfx9s8DdX30+9un77c4Nz3zZ9CDOeLj7SeYWcnfRXzg7SpwXu6f5QGsE7/lC/aqUCEirNSPf
+ a3TH0Q5RFbvywKuSJ/tbXDs1XMwNPH6kI37zi8SfGHSe8gd0SD+Wz7RsegwC3hL/JXOkNjpIG
+ tYK3k8R6vAzjSQufhZ7B9FKg4DhGmnA4YvGLppGt80w+sJ4GxOVNMC3ZtjkMRFmmr926shvrl
+ BO9UthpxNlRTdTEHUZY7ahSZb8hnSAHCI8ibFNkK+xULleT42WxbHu9b0apf/8gir78SaVcHb
+ Wuj8rxn9NxWmCLHNDAPAmoBbLakGUzFclAWnOsFOsQlkYMVVkRhIwscTVDRFcNkej4uCOQy32
+ M3vHlcrJdVjWNYF93X5CNDrVhG5uEfySAyL8Eriq7G46Lxl44QwPYNMCfQjBK+KR8tRImD6ze
+ Z0WC+LZkpppxuAXSiRcuamv/1wjw3Z0RHThyy+QpwP0lESzmjaxC0DcRr6LRYHrvyw4Yf53t3
+ Tu4IhoafAmaG5L09H1BI0PyhzrhMTRYubXhHL50jgdEVd7arTWc2Lfg5yRsAMNXEkJxKburOF
+ GoCL6ukXOMONmAlDKSYLjOQe+NiGWxl5L1yLU+j17udtXGRHvklsR4JRU7vERPYpsnhDEt075
+ SK1fQjmrgOOvrBMWDxO26YS6jD3Jo8udiJBbA/eA1Vtdw2YpxQBd6fFc7AcbcyOVSij1hBcmG
+ 594HeXnJPCk+B4F6/Jfjn8bb60hQ8KXXJRwq4DmRg5EMfe7qubEuG89qd3+JPgT6PM7Mh/5f7
+ xakklGwy4xiv1+WnNolCCj7eBA/WK9O+2sSeuqZ110aTufm7W7HrONKnlWWcESz5jbRM09ijS
+ /90uZaICCFsyVUYFDUnM/XhvERBP3FLZXz+N7H4lf7USXXESPfNvbXT6Y6VK6FNIkqDmFHhew
+ 7aOd+ibRPzjBnJ+YNUmK/dYqLlXNh2/XMisCk9rkgTUS8eCzP4BA9ll5UmC4rnnBV0Iy7pdYh
+ PUMAvemgWiv80ZDzpiHFbnzO59RzRCp5VdjGemOlF8afFjYTkzJVmGs4jquIfV+mN2u90sR+e
+ ABr66243rJhvkhHODKi494dz5NIXWsToNz6yAvuxVIgW4ohVYJ9kxAjAQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/8/2019 4:31 PM, Elijah Newren wrote:
-> On Thu, Aug 8, 2019 at 12:12 PM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 8/8/2019 2:59 PM, Junio C Hamano wrote:
->>> Elijah Newren <newren@gmail.com> writes:
->>>
->>>>> --- a/Documentation/config/merge.txt
->>>>> +++ b/Documentation/config/merge.txt
->>>>> @@ -54,7 +54,8 @@ merge.directoryRenames::
->>>>>         moved into the new directory.  If set to "conflict", a conflict
->>>>>         will be reported for such paths.  If merge.renames is false,
->>>>>         merge.directoryRenames is ignored and treated as false.  Defaults
->>>>> -       to "conflict".
->>>>> +       to "conflict" unless `feature.experimental` is enabled and the
->>>>> +       default is "true".
->>>>
->>>> I have a hard time parsing that changed sentence.  Perhaps something like:
->>>>    ...unless `feature.experimental` is enabled in which case the
->>>> default is "true".
->>>> ?
->>>
->>> That reads better.
->>>
->>> But I am not sure about the wisdom of controlling between conflict
->>> and true with this feature macro in the first place.
->>>
->>> Between "conflict" and "true", the former forces the end user to
->>> verify (or allows the end user to veto) the auto resolution by the
->>> heuristics and is always a safer if more cumbersome option.  It's
->>> not like blindly trusting the directory rename heuristics is the
->>> bright future for all users, is it?
->>>
->>> I would not set rerere.autoUpdate to true when feature.experimental
->>> is set; for exactly the same reason, I do not find it reasonable to
->>> set this to true with feature.experimental macro.
->>
->> OK. I can remove it from the feature.experimental variable.
->>
->> Shall I keep the enum logic and the use of repo-settings.c? I can split
->> them out into a separate patch.
-> 
-> Good question.  In part, I was looking at this ds/feature-macros
-> series because my cleanup-merge-api series[1] has some minor conflicts
-> with it.  I'm a little unsure what route I should take with my series
-> now.  Some choices:
->   * keep this logic in your series in a separate patch, and have me
-> rebase my series on yours.
->   * drop this logic from your series since it may not be needed
-> anymore, making our two series independent again.
->   * move this logic into a separate patch of yours but making that
-> patch part of my series instead; that'd be easy with the enum logic,
-> but the repo-settings.c stuff appears to depend on your other
-> patches...
-> 
-> Thoughts or preferences?
+On Wed, Aug 07, 2019 at 01:08:22PM +0000, Yagnatinsky, Mark wrote:
+> I hope this is the right mailing list, hope someone will redirect me if not...
 
-I've done the work in my GGG PR [1] to split the commit into two,
-with the merge.directoryRenames on top. I created a tag [2] at that
-commit and I'll send my v4 without changes to merge.directoryRenames.
+Yes, you are at the right place, wellcome to the Git community.
 
-I'll let you decide if you like placing the config in repo-settings
-or not (or want to adapt the enum logic in a different place).
+> The git documentation (git help config) for core.autocrlf doesn't mention that false is a valid option; it only mentions true and input.
 
-Thanks,
--Stolee
+This is somewhat common to all config settings:
+WHen a new feature is introduced, Git treats "config not defined" as false.
+This allows later Git versions to behave like older versions,
+when the config is not set.
+In that sense "not set" means the same as "false", and is the opposite to "true".
+(At least for core.autocrlf).
 
-[1] https://github.com/gitgitgadget/git/pull/292
-[2] https://github.com/derrickstolee/git/releases/tag/merge.directoryRenames
+Later the third value "input" was introduced.
+
+> Further, the docs for "input" are misleading, in that they lead the reader to assume it behaves like "false".
+>
+We can agree on that.
+
+> Would probably be nice if this were fixed :)
+
+Yes, do I read this as "I will send a patch" ?
+That would be nice.
+
+> Mark.
