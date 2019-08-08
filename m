@@ -7,94 +7,154 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85121F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 17:22:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FF461F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 18:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404264AbfHHRWU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 13:22:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62228 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728289AbfHHRWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 13:22:20 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4BB9916B492;
-        Thu,  8 Aug 2019 13:22:18 -0400 (EDT)
+        id S1733085AbfHHSGD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 14:06:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56886 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728825AbfHHSGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 14:06:02 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BFCB46EDD3;
+        Thu,  8 Aug 2019 14:06:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JmOrnC5G1VFZz40YDQjYqXvHLn8=; b=LLHl7v
-        +a4ZpWpt4gw2SPPjba+iz/H8OVVuAU1Djit8PjAyBUbrhHc4sGEQyWMDfAXk9wIM
-        6LrBrQ+8WY6/7g+YYsFnrKcXPvrxzGpaK3Z43brtjOvP5sfzEN78hegnTRGbZ+Dq
-        g9sJLCkTDVBGU6nOtdWt9rVCSQq2Z4ZOtJO+c=
+        :content-type; s=sasl; bh=1Qk1DgtOUVMAePNPMM/8l+iE0WY=; b=ttFfVd
+        lJ6BTgwR0lHWyqkApf3quDa5jxAyNuL8R01YwMcgvEgDbQO2vMtk4zQgUEAeyDak
+        LGCOE7Enj9NTjWJav8PZPT8f07lpDa39RsTNDC7PXzmMvf0KDcdOOBw2Sn2fwGy0
+        CcWNvn8UUEePjNPwlmqAPtAL7ZyR41R0JykuE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NHcrcgXPSozqBT+hZ3mkf2ejuV34UQSB
-        aE36My48/YUzpNe8WKlmV4+yj0N9DU75JhOeW6AQ9zvF8Mr8amcKTXYZu7Qe8oDL
-        VI3wok42l2n/WEO7cDAMQg/G326tP1UOcidq1LdTb9U1ROpQ24/MskAC9jAME+04
-        Mnk2/q2bbLo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 437EE16B490;
-        Thu,  8 Aug 2019 13:22:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=xoRLMX+9O/Tlk8YtGYIAIQ7RBmdYicXA
+        Pkq8u4nD8iuisZ1xiE2mzgeGC4SyMbHv7wp1FiJV0P9dDcjOlCIo6D9QnvCSeG5T
+        nmbZ+5XwsuiVssLMwtlwRlLQKMp7qHummqM31hHhLDyoBTIaAS2IvlRKgmm/oSt9
+        cAJAhi70kSA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B7B236EDD2;
+        Thu,  8 Aug 2019 14:06:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7E73F16B48F;
-        Thu,  8 Aug 2019 13:22:17 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C44086EDCC;
+        Thu,  8 Aug 2019 14:05:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH bc/hash-independent-tests-part-4] t: decrease nesting in test_oid_to_path
-References: <20190628225928.622372-1-sandals@crustytoothpaste.net>
-        <20190628225928.622372-2-sandals@crustytoothpaste.net>
-        <20190808065614.GA209195@google.com>
-        <20190808093732.GA12257@sigill.intra.peff.net>
-Date:   Thu, 08 Aug 2019 10:22:16 -0700
-In-Reply-To: <20190808093732.GA12257@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 8 Aug 2019 05:37:33 -0400")
-Message-ID: <xmqqo90zfu7r.fsf@gitster-ct.c.googlers.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 5/7] quote: add sq_quote_argv_pretty_ltrim
+References: <pull.298.git.gitgitgadget@gmail.com>
+        <pull.298.v2.git.gitgitgadget@gmail.com>
+        <5059776248b6686faaff37c97aa63d0212579cd8.1565273938.git.gitgitgadget@gmail.com>
+Date:   Thu, 08 Aug 2019 11:05:55 -0700
+In-Reply-To: <5059776248b6686faaff37c97aa63d0212579cd8.1565273938.git.gitgitgadget@gmail.com>
+        (Jeff Hostetler via GitGitGadget's message of "Thu, 08 Aug 2019
+        07:19:02 -0700 (PDT)")
+Message-ID: <xmqqh86rfs70.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 123F2B1E-BA01-11E9-810C-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2C0E731E-BA07-11E9-85F6-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Aug 07, 2019 at 11:56:14PM -0700, Jonathan Nieder wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
->> But a dash bug[*] causes it to instead expand to
->> 
->> 	/3456789...
->> 
->> The stream of symbols that makes up this function is hard for humans
->> to follow, too.  The complexity mostly comes from the repeated use of
->> the expression ${1#??} for the basename of the loose object.
+> Create version of sq_quote_argv_pretty() that does not
+> insert a leading space before argv[0].
 >
-> Yeah, both seem like good reasons to change this (and the patch looks
-> good to me).
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  quote.c | 11 +++++++++++
+>  quote.h |  1 +
+>  2 files changed, 12 insertions(+)
 
-Good spottig.  Thanks.
+I am OK with the basic idea, but I am somewhat unhappy about this
+particular patch for two reasons:
 
-> +# Check whether the shell supports the "local" keyword. "local" is not
-> +# POSIX-standard, but it is very widely supported by POSIX-compliant
-> +# shells, and we rely on it within Git's test framework.
-> +#
-> +# If your shell fails this test, the results of other tests may be
-> +# unreliable. You may wish to report the problem to the Git mailing
-> +# list <git@vger.kernel.org>, as it could cause us to reconsider
-> +# relying on "local".
->  test_expect_success 'verify that the running shell supports "local"' '
->  	x="notlocal" &&
->  	echo "local" >expected1 &&
+ - If we were to keep this as a part of proper API in the longer
+   term, the current sq_quote_argv_pretty() should be rewritten to
+   use this to avoid repetition (e.g. as long as !!*argv, add a SP
+   and then call this new thing);
 
-Updated text reads well.  Leaving the test in is still a very good
-idea.
+ - something_ltrim() sounds as if you munge what is passed to you
+   and chop off the left end, but that is not what this does.
 
-Thanks.
+Now, what is the right name for this new thing?  What does it do?
+
+It looks to me that it appends each element of argv[], quoting it as
+needed, and with SP in between.  So the right name for the family of
+these functions should be around "append", which is the primary thing
+they do, with "quoted" somewhere.
+
+Having made the primary purpose of the helper clearer leads me to
+wonder if "do not add SP before the first element, i.e. argv[0]", is
+really what we want.  If we always clear the *dst strbuf before
+starting to serialize argv[] into it, then the behaviour would make
+sense, but we do not---we are "appending".
+
+As long as we are appending, would we be better off doing something
+sillily magical like this instead, I have to wonder?
+
+	void sq_append_strings_quoted(struct strbuf *buf, const char **av)
+	{
+		int i;
+
+		for (i = 0; av[i]; i++) {
+			if (buf->len)
+				strbuf_addch(buf, ' ');
+			sq_quote_buf_pretty(buf, argv[0]);
+		}
+	}
+
+That is, "if we are appending to an existing string, have SP to
+separate the first element from that existing string; treat the
+remaining elements the same way (if the buffer is empty, there is no
+point adding SP at the beginning)".
+
+I may have found a long-standing bug in sq_quote_buf_pretty(), by
+the way.  What does it produce when *src is an empty string of
+length 0?  It does not add anything to dst, but shouldn't we be
+adding two single-quotes (i.e. an empty string inside sq pair)?
+
+> diff --git a/quote.c b/quote.c
+> index 7f2aa6faa4..7cad8798ac 100644
+> --- a/quote.c
+> +++ b/quote.c
+> @@ -94,6 +94,17 @@ void sq_quote_argv_pretty(struct strbuf *dst, const char **argv)
+>  	}
+>  }
+>  
+> +void sq_quote_argv_pretty_ltrim(struct strbuf *dst, const char **argv)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; argv[i]; i++) {
+> +		if (i > 0)
+> +			strbuf_addch(dst, ' ');
+> +		sq_quote_buf_pretty(dst, argv[i]);
+> +	}
+> +}
+> +
+>  static char *sq_dequote_step(char *arg, char **next)
+>  {
+>  	char *dst = arg;
+> diff --git a/quote.h b/quote.h
+> index fb08dc085c..3b3d041a61 100644
+> --- a/quote.h
+> +++ b/quote.h
+> @@ -40,6 +40,7 @@ void sq_quotef(struct strbuf *, const char *fmt, ...);
+>   */
+>  void sq_quote_buf_pretty(struct strbuf *, const char *src);
+>  void sq_quote_argv_pretty(struct strbuf *, const char **argv);
+> +void sq_quote_argv_pretty_ltrim(struct strbuf *, const char **argv);
+>  
+>  /* This unwraps what sq_quote() produces in place, but returns
+>   * NULL if the input does not look like what sq_quote would have
