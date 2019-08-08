@@ -2,106 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 610C81F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 20:21:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160421F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 20:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404708AbfHHUVV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 16:21:21 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58069 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404467AbfHHUVV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 16:21:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1565295676;
-        bh=jhfnTcBcqKWAhRHtVJrOmC2dozQipWFVC+aOJCBnp18=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hV5wqDxO//Ve6ZPC/7RSAjsLMst7aQzRi3edRS8T5Y66cYtvXydSnpM/22Tkayvh8
-         QD6LJ2oaggf6Sx8nZLDElzuJv/6v1GHDKSzG0iLIIbx4GYFO5QBFT68dDr9tFf6IiG
-         G0oW1Wn7L+jjuFNR9z8OUuSyaDZwxoHfI52+HMDM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5fIW-1hyb7m28T4-007Frp; Thu, 08
- Aug 2019 22:21:16 +0200
-Date:   Thu, 8 Aug 2019 22:21:16 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
-        avarab@gmail.com, michal.kiedrowicz@gmail.com
-Subject: Re: [RFC PATCH v3 0/3] grep: no leaks or crashes (windows testing
- needed)
-In-Reply-To: <20190806163658.66932-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1908082219160.46@tvgsbejvaqbjf.bet>
-References: <20190806085014.47776-1-carenas@gmail.com> <20190806163658.66932-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2404545AbfHHUb4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 16:31:56 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:46835 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404270AbfHHUb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 16:31:56 -0400
+Received: by mail-ua1-f67.google.com with SMTP id o19so36925158uap.13
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 13:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p8R9bKyCWHiK+qbjSd0faudl1WhfDbCqt3P8fpKdIU4=;
+        b=iQlymHOnMv67OiNdEsDypijzJBIkbxOmCcd55ipXPkN0ACPjiUe/W23rpYIUCaAlpk
+         GawRZA574m1wF+9XCrbZ8uAwk++1zfE0i6jjITqFOGqhoqhD9o46/4gCtPaezVZrsnOv
+         b/Q1Sgbi6fACG6akV00LX9nsisN7JxsfDVSxjoGiwVLZwyFH+iMIerFGQ2ErPtUnCqR0
+         I1+leZnQlNvRMmCkAf9zxUyvV0ZbLFdwa0NTyPnxUKfqaJl0m0XJrOzRxnRfBhD2WD81
+         FhDzlu+/1EIqPOw4WcfNPBEZpnsPRXFeo2oBfCeZNPfRnIo3duz4VIcLyf21xHiPHiVM
+         V7hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p8R9bKyCWHiK+qbjSd0faudl1WhfDbCqt3P8fpKdIU4=;
+        b=EBlpYsmfXFmv5OBJjLEEYgEQ7eZ75G8HQzrL5sXm0MFiu5ZHZrON2oASCB22m/th/p
+         D8PIWhdRt77ipldfyWd6a9teXv4HuNi83pci5bajb3GAn+vtoAgqjwiR6jvfAkyg3rFq
+         0xqus55W3d/FJuiNDBfLwZkdniPFht+YonpHDgqXHFPxU7xFYvokxAuAjPY8sShMW6RN
+         yuXXtwgfLXSU6tQgUD8FXCWVLX25IJhmJFrkKZoTrmyUFYa2fDraozv7JwoQYGEPqU+K
+         j+pFIT8xTwSRYElkqdgcfkZJFtXKJg93vej5PKatVQdTovB3AhxTqASNyR/y8Y8eYCFl
+         Gd2A==
+X-Gm-Message-State: APjAAAUy7GvfEsMy0Q0d3D8J4gVpXsH16vWLapB0agDgQrjVYQOO71T8
+        i1nlrBEWh2AZH8/ZC/8YZydRQsWLehD2un/elr8=
+X-Google-Smtp-Source: APXvYqy/KCTHxWt/ZDrHpIgDO9QG+hj49VgY1galpvv9sRTjqRriahhUbYMVxU/nA7a8I2bWdu1978kiYaOuNYb89tM=
+X-Received: by 2002:ab0:6911:: with SMTP id b17mr11021503uas.18.1565296314960;
+ Thu, 08 Aug 2019 13:31:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1467302872-1565295677=:46"
-X-Provags-ID: V03:K1:sdYRKYTffRz6X4KmTeBAXfljNjvlFrgcnlLTpsAEW773AoNwIlO
- h7fsUJmZgfeRUOftX1uou41bHFLfA033JEZ2jC5Kwkk9h2pNr7U9fuUjJ1NRRtFZMGB+fzB
- f7dH3ZUr3advGhahNLjDm1SrCt0qKgbVbvaXL+ogj4P8wqGC3VUVioUgQx6IY4laIcYlVwC
- HFCwa28/JBh+UEl8hiJaA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:62CNRKdyvA8=:Cr1ptyD+9JjumpZabQtIC1
- lpvWiMTROyYNrr2zYsx1hSWMvkz5NXFBRsy5XXU888fLXUluPmyAA5ee8tYpBrq79KY7hshvU
- ZFWEtVxhRQqgTZVcXeao2iviAp5PGceMdJWRTVWuEBrOXzlbQnrbxJpPW3UK/EEr5OWW74I4F
- 4xu3Ieh5xVgD/StKyyYUDuUnHod7Swr6+4orE/Oa+jPm7OTPPc249wu9qHWDI386XhYQDewPn
- b2nlkxw21e/XSuNAkpps+l/CiEVSKJ+OAlcXq/HZmAmm32uRwMz4/kmzxw7vz+c8Mhpoznqw4
- f3YCAhJQbeztb6ln6xs50d4zO6EFCiWDamW01GwZE3mIW0zZ6KTKz1jcudQvnZos9F2dBflOF
- u4g1FYRIJCE9Pe1JqZVagNa6MYEgYehVS4NcC+sxeVHPvhECaRo2oGQSyNyiaoZnhP6rK/gwK
- X2kJPbjxNPliE8S3xMIV0IRyAcCdga+hoXwyQCh4hKK+7iM91fMu5YvhibLD5es7vRmsdGqvn
- hPSCGwNNfRZbjI0CZJ9YMAygtmDFPd2HWlvz2ZAp9/5qDBd5fO8BhWiaFT1/8k8Bjova6i2z5
- Lyrx0b6HeHU3cUec1c+5OBxDbIwW8lOJvXFCu1W9Psnb+JCyBSqtqJe+aZoFsshviBBJ2MZrd
- HQZLN3IGsrAdq9HVrCaYS25mOf3DYN9oz1m/sxeFtHE5abwOYosMqTipvhdaK8q90q/3r/3Eh
- dFXzM+OCaC0VzDGphFXsfYKRlBWrr+4hx2M+p20lypLUlyjfwxI+8hx5Z6k221Obp5An12piJ
- gD+Mru+pwf5gD5cLATPWgp1zhce9GBZzmnaK9mneXitgpv4+npapBwXa+bCVDbtuRl3t5ZRWX
- lJQ4gsXpt/WAVMG68pfT2EAxyxstuzOmISDHp4RVb1Y9MhJ/v9T1vq0Y9+TU+V3AzG1iBpm+J
- UKyZZB3bn3dV0ZQRI6kvO/3/8zus4a4PDXLnd+XCQfEg1TskRy+U1VEg553bNkjfZl2NYhL0A
- mqxz4zkJLR6Zvlp/lsHZ+gefqQB9myERDBiN4mivKREQkYBDJrhEZ0o2YtZet5BJ4Kzwir7pu
- B20EbQaVRduZZKK6HZ+W+wd5EpsfQ0E8wRuzgBHhIwSyLhCtgt4qbe9uLEQmEluhIZgijsZ1r
- GQKfU=
+References: <pull.292.v2.git.gitgitgadget@gmail.com> <pull.292.v3.git.gitgitgadget@gmail.com>
+ <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
+ <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
+ <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com> <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
+In-Reply-To: <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 8 Aug 2019 13:31:43 -0700
+Message-ID: <CABPp-BGo5spDbk34YwAPGqT1Xgsr1dHm6OhxY1xKFQxQaotBig@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        carenas@gmail.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Aug 8, 2019 at 12:12 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 8/8/2019 2:59 PM, Junio C Hamano wrote:
+> > Elijah Newren <newren@gmail.com> writes:
+> >
+> >>> --- a/Documentation/config/merge.txt
+> >>> +++ b/Documentation/config/merge.txt
+> >>> @@ -54,7 +54,8 @@ merge.directoryRenames::
+> >>>         moved into the new directory.  If set to "conflict", a conflict
+> >>>         will be reported for such paths.  If merge.renames is false,
+> >>>         merge.directoryRenames is ignored and treated as false.  Defaults
+> >>> -       to "conflict".
+> >>> +       to "conflict" unless `feature.experimental` is enabled and the
+> >>> +       default is "true".
+> >>
+> >> I have a hard time parsing that changed sentence.  Perhaps something like:
+> >>    ...unless `feature.experimental` is enabled in which case the
+> >> default is "true".
+> >> ?
+> >
+> > That reads better.
+> >
+> > But I am not sure about the wisdom of controlling between conflict
+> > and true with this feature macro in the first place.
+> >
+> > Between "conflict" and "true", the former forces the end user to
+> > verify (or allows the end user to veto) the auto resolution by the
+> > heuristics and is always a safer if more cumbersome option.  It's
+> > not like blindly trusting the directory rename heuristics is the
+> > bright future for all users, is it?
+> >
+> > I would not set rerere.autoUpdate to true when feature.experimental
+> > is set; for exactly the same reason, I do not find it reasonable to
+> > set this to true with feature.experimental macro.
+>
+> OK. I can remove it from the feature.experimental variable.
+>
+> Shall I keep the enum logic and the use of repo-settings.c? I can split
+> them out into a separate patch.
 
---8323328-1467302872-1565295677=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Good question.  In part, I was looking at this ds/feature-macros
+series because my cleanup-merge-api series[1] has some minor conflicts
+with it.  I'm a little unsure what route I should take with my series
+now.  Some choices:
+  * keep this logic in your series in a separate patch, and have me
+rebase my series on yours.
+  * drop this logic from your series since it may not be needed
+anymore, making our two series independent again.
+  * move this logic into a separate patch of yours but making that
+patch part of my series instead; that'd be easy with the enum logic,
+but the repo-settings.c stuff appears to depend on your other
+patches...
 
-Hi Carlo,
+Thoughts or preferences?
 
-On Tue, 6 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-
-> Eitherway, since I am unable to replicate the original bug or take
-> performance numbers in a representative environment without Windows
-> this is only published as an RFC, eventhough it has been tested and
-> considered mostly complete.
-
-Well, this is disappointing.
-
-I worked several weeks on getting Azure Pipelines support in shape, so
-that you can now open PRs against:
-
-- https://github.com/git/git
-
-- https://github.com/gitgitgadget/git
-
-- https://github.com/git-for-windows/git
-
-to get Windows/macOS/Linux testing for free.
-
-So I guess you'd like fries with that, extra large ones, with extra
-pepperoni seasoning?
-
-Ciao,
-Dscho
-
---8323328-1467302872-1565295677=:46--
+[1] https://public-inbox.org/git/20190726155258.28561-1-newren@gmail.com/
