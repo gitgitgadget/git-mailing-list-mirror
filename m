@@ -2,63 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160421F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 20:31:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 591061F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 20:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404545AbfHHUb4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 16:31:56 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:46835 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404270AbfHHUb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 16:31:56 -0400
-Received: by mail-ua1-f67.google.com with SMTP id o19so36925158uap.13
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 13:31:55 -0700 (PDT)
+        id S2390340AbfHHUqb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 16:46:31 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:40714 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729780AbfHHUqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 16:46:31 -0400
+Received: by mail-qk1-f193.google.com with SMTP id s145so69994800qke.7
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 13:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p8R9bKyCWHiK+qbjSd0faudl1WhfDbCqt3P8fpKdIU4=;
-        b=iQlymHOnMv67OiNdEsDypijzJBIkbxOmCcd55ipXPkN0ACPjiUe/W23rpYIUCaAlpk
-         GawRZA574m1wF+9XCrbZ8uAwk++1zfE0i6jjITqFOGqhoqhD9o46/4gCtPaezVZrsnOv
-         b/Q1Sgbi6fACG6akV00LX9nsisN7JxsfDVSxjoGiwVLZwyFH+iMIerFGQ2ErPtUnCqR0
-         I1+leZnQlNvRMmCkAf9zxUyvV0ZbLFdwa0NTyPnxUKfqaJl0m0XJrOzRxnRfBhD2WD81
-         FhDzlu+/1EIqPOw4WcfNPBEZpnsPRXFeo2oBfCeZNPfRnIo3duz4VIcLyf21xHiPHiVM
-         V7hA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kly4NLBWcCAjh4nOMFuRxvtrSo++ghHO7cVfKNH9Z6c=;
+        b=VvRyD6PXyiHv4hTTtrZsnS7qy3uSvkbw6OzIAZ2P8BvFzkJ0+lj02yTHpQ3U3lIPul
+         N7RY0ff5qeAY+MOk2zaJNoGosRbS74wFpuVQPDtsQZvICgukbNi48pPgUueVtT1G5nt9
+         mXd7ufxyjq/2rolH/YCC+Rx6sRVU/EOf+L/WaHlL+Ipgp4DtgzVEpyiV6GCC+TWI1419
+         d41XMgRYSL+Bg2gZwr5H/ku6kI3XkXuubquq2xSqLKyiLkS5mHbEj5POI+nb66/nSlXz
+         N4uLTzJWEui6OqiAaVnp8/XxTuv9lU2eU4tdgruj/zJ6XWXIKKOLlxcxCuG72kZmggX5
+         iLDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p8R9bKyCWHiK+qbjSd0faudl1WhfDbCqt3P8fpKdIU4=;
-        b=EBlpYsmfXFmv5OBJjLEEYgEQ7eZ75G8HQzrL5sXm0MFiu5ZHZrON2oASCB22m/th/p
-         D8PIWhdRt77ipldfyWd6a9teXv4HuNi83pci5bajb3GAn+vtoAgqjwiR6jvfAkyg3rFq
-         0xqus55W3d/FJuiNDBfLwZkdniPFht+YonpHDgqXHFPxU7xFYvokxAuAjPY8sShMW6RN
-         yuXXtwgfLXSU6tQgUD8FXCWVLX25IJhmJFrkKZoTrmyUFYa2fDraozv7JwoQYGEPqU+K
-         j+pFIT8xTwSRYElkqdgcfkZJFtXKJg93vej5PKatVQdTovB3AhxTqASNyR/y8Y8eYCFl
-         Gd2A==
-X-Gm-Message-State: APjAAAUy7GvfEsMy0Q0d3D8J4gVpXsH16vWLapB0agDgQrjVYQOO71T8
-        i1nlrBEWh2AZH8/ZC/8YZydRQsWLehD2un/elr8=
-X-Google-Smtp-Source: APXvYqy/KCTHxWt/ZDrHpIgDO9QG+hj49VgY1galpvv9sRTjqRriahhUbYMVxU/nA7a8I2bWdu1978kiYaOuNYb89tM=
-X-Received: by 2002:ab0:6911:: with SMTP id b17mr11021503uas.18.1565296314960;
- Thu, 08 Aug 2019 13:31:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.292.v2.git.gitgitgadget@gmail.com> <pull.292.v3.git.gitgitgadget@gmail.com>
- <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
- <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
- <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com> <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
-In-Reply-To: <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 8 Aug 2019 13:31:43 -0700
-Message-ID: <CABPp-BGo5spDbk34YwAPGqT1Xgsr1dHm6OhxY1xKFQxQaotBig@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kly4NLBWcCAjh4nOMFuRxvtrSo++ghHO7cVfKNH9Z6c=;
+        b=L5/ysoxbjxAFTgT2+NXRIPtuvZMiWJX3s24sJgl/NQwmjibiV1mUejt9V17+KhjX47
+         gC6HNtsUKQgq9GMWqncjwiw/hf7zeQPrJRvQV8Hg1GPtgM7N5FXFkpuM04pkmgvCo38I
+         Ahc1wh4kCfKaIE0dlyn4/txgf/DYE3NHGhzF/VLP9s88AjNwR++35t2hYiZeo0TbiSi/
+         Td9gFoyiys50q4F3y68TGUa9Gekt0eSMN1x3dZzbSGz+dhF9zsGRe92JUABrRfo+yKoy
+         awc+wEvHUm0cSUyVI/j7l/cx6JRqYZim6z2spZRc1pDgfwtk/vPuHgIOyEQ5SmhL+ITw
+         Yamw==
+X-Gm-Message-State: APjAAAWZd3TMF2VipwvksNWW/R9Y6IeQ9Yv2/shUacUtt84uL0f09JVv
+        qWWH8cqyoEg+ncnLR5J4v1o=
+X-Google-Smtp-Source: APXvYqyyPRb4id4VD8GXwWPyENDgdiHa61qYdChSWMBKbxmF0XJNykCQy4VZQG5BavpNDgtRdUucXw==
+X-Received: by 2002:ae9:ea09:: with SMTP id f9mr15497256qkg.379.1565297190678;
+        Thu, 08 Aug 2019 13:46:30 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:7487:521b:1543:4364? ([2001:4898:a800:1010:25bd:521b:1543:4364])
+        by smtp.gmail.com with ESMTPSA id j50sm3009088qtj.30.2019.08.08.13.46.29
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2019 13:46:30 -0700 (PDT)
 Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
@@ -66,65 +62,49 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         carenas@gmail.com,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <pull.292.v2.git.gitgitgadget@gmail.com>
+ <pull.292.v3.git.gitgitgadget@gmail.com>
+ <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
+ <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
+ <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BH2EHGEmOj3kpeTMV2PpKkRBpPn3FuBfNDHKA8=BkKxFQ@mail.gmail.com>
+ <xmqqv9v7e7zf.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c2e8d473-b7fd-eed1-d73f-a9fcd9f73447@gmail.com>
+Date:   Thu, 8 Aug 2019 16:46:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqv9v7e7zf.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 8, 2019 at 12:12 PM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 8/8/2019 2:59 PM, Junio C Hamano wrote:
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> >>> --- a/Documentation/config/merge.txt
-> >>> +++ b/Documentation/config/merge.txt
-> >>> @@ -54,7 +54,8 @@ merge.directoryRenames::
-> >>>         moved into the new directory.  If set to "conflict", a conflict
-> >>>         will be reported for such paths.  If merge.renames is false,
-> >>>         merge.directoryRenames is ignored and treated as false.  Defaults
-> >>> -       to "conflict".
-> >>> +       to "conflict" unless `feature.experimental` is enabled and the
-> >>> +       default is "true".
-> >>
-> >> I have a hard time parsing that changed sentence.  Perhaps something like:
-> >>    ...unless `feature.experimental` is enabled in which case the
-> >> default is "true".
-> >> ?
-> >
-> > That reads better.
-> >
-> > But I am not sure about the wisdom of controlling between conflict
-> > and true with this feature macro in the first place.
-> >
-> > Between "conflict" and "true", the former forces the end user to
-> > verify (or allows the end user to veto) the auto resolution by the
-> > heuristics and is always a safer if more cumbersome option.  It's
-> > not like blindly trusting the directory rename heuristics is the
-> > bright future for all users, is it?
-> >
-> > I would not set rerere.autoUpdate to true when feature.experimental
-> > is set; for exactly the same reason, I do not find it reasonable to
-> > set this to true with feature.experimental macro.
->
-> OK. I can remove it from the feature.experimental variable.
->
-> Shall I keep the enum logic and the use of repo-settings.c? I can split
-> them out into a separate patch.
+On 8/8/2019 4:07 PM, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+>> However, Stollee's commit message started with "The
+>> 'feature.experimental' setting includes config options that are not
+>> committed to become defaults".
+>>
+>> If these are settings that are "intended" but not "committed" to
+>> become defaults, then yes, you're absolutely right.  (And in such a
+>> case, it might be nice to add that distinction to the commit message.)
+> 
+> My understanding is that the only purpose of feature.experimental
+> is: "we want to change the default of X this way, but we do not know
+> if we missed an important use case that would be harmed by such a
+> change, so let's see if those who volunteered to be guinea pigs by
+> setting feature.experimental to true find glitches in our thinking
+> that led us to think the change of the default is a good idea".
 
-Good question.  In part, I was looking at this ds/feature-macros
-series because my cleanup-merge-api series[1] has some minor conflicts
-with it.  I'm a little unsure what route I should take with my series
-now.  Some choices:
-  * keep this logic in your series in a separate patch, and have me
-rebase my series on yours.
-  * drop this logic from your series since it may not be needed
-anymore, making our two series independent again.
-  * move this logic into a separate patch of yours but making that
-patch part of my series instead; that'd be easy with the enum logic,
-but the repo-settings.c stuff appears to depend on your other
-patches...
+This is the basic idea. "Here are some new features that we think
+are good, please opt-in to test them out and find corner cases."
 
-Thoughts or preferences?
+Thanks,
+-Stolee
 
-[1] https://public-inbox.org/git/20190726155258.28561-1-newren@gmail.com/
