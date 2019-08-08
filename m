@@ -2,44 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D71B1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 19:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5207D1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390305AbfHHTE1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 15:04:27 -0400
-Received: from siwi.pair.com ([209.68.5.199]:46226 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390203AbfHHTE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 15:04:27 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 936483F40B4;
-        Thu,  8 Aug 2019 15:04:25 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:9d4f:d974:4879:2e91] (unknown [IPv6:2001:4898:a800:1012:4e83:d974:4879:2e91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 49B863F4090;
-        Thu,  8 Aug 2019 15:04:25 -0400 (EDT)
-Subject: Re: [PATCH v2 5/7] quote: add sq_quote_argv_pretty_ltrim
+        id S2405023AbfHHTMl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:12:41 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:38127 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404713AbfHHTMi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:12:38 -0400
+Received: by mail-qk1-f195.google.com with SMTP id u190so6085281qkh.5
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 12:12:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fxGf4poNKczUS34aYXadOMzULCOC00vsTXLRsADoy/I=;
+        b=MczoAqMXZG7C5qr9WDRf1eEVzmxTEJmuusZ6wph0kdjDXAuV5Bt0ia0gD4Xh0bYdkG
+         sXEY0v4e6aogxEjYRU3m4zN5HT95DwL8pLf1eFp0/0YWXiV5kmAftktwum4VlGyIKi4u
+         PBC3iTjK0lbbJ4pEXKCpsOGAX5Ww7HGi9SPoxbpGIvL+HUTdklhRPQISgBla+yxXqwqb
+         s8VmacgipJQil9hIf34bFVLjybQ9J5R7xHVbnEctx8YKNW62CHobrU+4bgcIziEm+0Hf
+         AgrNkzpl/78pIanpW6sFmR1h7iK2k7nGN4SnHX+SvcJZj0xscpdponqqAfKS5ojM3C02
+         8mXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fxGf4poNKczUS34aYXadOMzULCOC00vsTXLRsADoy/I=;
+        b=aHebwPEpLvVdO9tWf7u6utVEsoNkKOlRzJz8sNApgJo2xuabeetZHfV6vAADLfLpJk
+         6qWhuNVTzx0+4blD2CGXpQSXLxR6GYTVtzQtYkYE/bpeOa0pQSD/bApzdiFUh5CX+hMc
+         SXvfMrp9f2cRSDz//RbXBn+ZMU59/tCHoI/J/Hzk70DZzW5GjYg44l6kFCGSgM/wlMne
+         quIDfrYy905lmg6QX0IVNOugjjkpzS9Boqwa2U3YLZ5nPSKpU7LcaNviwz8Nm9EWBfmZ
+         svRel/kte1hTjcPZ7obtY/Vp5mTzQWyReOfPQ4Vuh3n4nauhAOq+wIIo3KJOoYM0HY3w
+         g/Bw==
+X-Gm-Message-State: APjAAAVurleQQxt1wDrPvmcxngBlrSsDBwQ4D6hSfmatMz3C1sU1k+OD
+        LVfAz50e5bDYkDboy6O5KQE=
+X-Google-Smtp-Source: APXvYqx4/M79wiy3ruFFsPAmC8z9TUiAtecrzxCPRl3AH6NfkJXOxPWOEpzPVJcmf5RTdLgT0O+Kvg==
+X-Received: by 2002:a37:f50f:: with SMTP id l15mr15364692qkk.326.1565291557433;
+        Thu, 08 Aug 2019 12:12:37 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:7487:521b:1543:4364? ([2001:4898:a800:1012:25bb:521b:1543:4364])
+        by smtp.gmail.com with ESMTPSA id b34sm2620698qtb.49.2019.08.08.12.12.36
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Aug 2019 12:12:36 -0700 (PDT)
+Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
 To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.298.git.gitgitgadget@gmail.com>
- <pull.298.v2.git.gitgitgadget@gmail.com>
- <5059776248b6686faaff37c97aa63d0212579cd8.1565273938.git.gitgitgadget@gmail.com>
- <xmqqh86rfs70.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7dbee619-2495-6426-b02b-49fd59e4f028@jeffhostetler.com>
-Date:   Thu, 8 Aug 2019 15:04:24 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        carenas@gmail.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.292.v2.git.gitgitgadget@gmail.com>
+ <pull.292.v3.git.gitgitgadget@gmail.com>
+ <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
+ <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
+ <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4fe2cb63-2d6c-d8d5-5531-9ea6d624a85a@gmail.com>
+Date:   Thu, 8 Aug 2019 15:12:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqh86rfs70.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -47,133 +82,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 8/8/2019 2:05 PM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 8/8/2019 2:59 PM, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
 > 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>> --- a/Documentation/config/merge.txt
+>>> +++ b/Documentation/config/merge.txt
+>>> @@ -54,7 +54,8 @@ merge.directoryRenames::
+>>>         moved into the new directory.  If set to "conflict", a conflict
+>>>         will be reported for such paths.  If merge.renames is false,
+>>>         merge.directoryRenames is ignored and treated as false.  Defaults
+>>> -       to "conflict".
+>>> +       to "conflict" unless `feature.experimental` is enabled and the
+>>> +       default is "true".
 >>
->> Create version of sq_quote_argv_pretty() that does not
->> insert a leading space before argv[0].
->>
->> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
->> ---
->>   quote.c | 11 +++++++++++
->>   quote.h |  1 +
->>   2 files changed, 12 insertions(+)
+>> I have a hard time parsing that changed sentence.  Perhaps something like:
+>>    ...unless `feature.experimental` is enabled in which case the
+>> default is "true".
+>> ?
 > 
-> I am OK with the basic idea, but I am somewhat unhappy about this
-> particular patch for two reasons:
+> That reads better.
 > 
->   - If we were to keep this as a part of proper API in the longer
->     term, the current sq_quote_argv_pretty() should be rewritten to
->     use this to avoid repetition (e.g. as long as !!*argv, add a SP
->     and then call this new thing);
+> But I am not sure about the wisdom of controlling between conflict
+> and true with this feature macro in the first place.
 > 
->   - something_ltrim() sounds as if you munge what is passed to you
->     and chop off the left end, but that is not what this does.
+> Between "conflict" and "true", the former forces the end user to
+> verify (or allows the end user to veto) the auto resolution by the
+> heuristics and is always a safer if more cumbersome option.  It's
+> not like blindly trusting the directory rename heuristics is the
+> bright future for all users, is it?
 > 
-> Now, what is the right name for this new thing?  What does it do?
+> I would not set rerere.autoUpdate to true when feature.experimental
+> is set; for exactly the same reason, I do not find it reasonable to
+> set this to true with feature.experimental macro.
 
-I struggled with the proper name for this.
-And even thought about adding a 3rd arg to the current function to
-indicate whether to have the leading SP before argv[0], but wasn't
-sure if that was too disruptive.
+OK. I can remove it from the feature.experimental variable.
 
-> 
-> It looks to me that it appends each element of argv[], quoting it as
-> needed, and with SP in between.  So the right name for the family of
-> these functions should be around "append", which is the primary thing
-> they do, with "quoted" somewhere.
-> 
-> Having made the primary purpose of the helper clearer leads me to
-> wonder if "do not add SP before the first element, i.e. argv[0]", is
-> really what we want.  If we always clear the *dst strbuf before
-> starting to serialize argv[] into it, then the behaviour would make
-> sense, but we do not---we are "appending".
-> 
-> As long as we are appending, would we be better off doing something
-> sillily magical like this instead, I have to wonder?
-> 
-> 	void sq_append_strings_quoted(struct strbuf *buf, const char **av)
-> 	{
-> 		int i;
-> 
-> 		for (i = 0; av[i]; i++) {
-> 			if (buf->len)
-> 				strbuf_addch(buf, ' ');
-> 			sq_quote_buf_pretty(buf, argv[0]);
-> 		}
-> 	}
-> 
-> That is, "if we are appending to an existing string, have SP to
-> separate the first element from that existing string; treat the
-> remaining elements the same way (if the buffer is empty, there is no
-> point adding SP at the beginning)".
+Shall I keep the enum logic and the use of repo-settings.c? I can split
+them out into a separate patch.
 
-I don't think that would do what we want.  We don't know what the
-caller's expectations are.  In my uses in commits 6/7 and 7/7 I
-already added the leading chars I wanted in the strbuf before calling
-sq_quote_argv_pretty_ltrim() and assumed the output would be a true
-append.  For example:
+-Stolee
 
-+	strbuf_addf(&buf_payload, "alias:%s argv:[", alias);
-+	sq_quote_argv_pretty_ltrim(&buf_payload, argv);
-+	strbuf_addch(&buf_payload, ']');
-
-I like your suggestion of putting my new function in the _append_
-category.  I think I'll add the 3rd arg to this and then it will
-be completely specified and I can get rid of the _ltrim suffix.
-
-I'll re-roll this.
-
-> 
-> I may have found a long-standing bug in sq_quote_buf_pretty(), by
-> the way.  What does it produce when *src is an empty string of
-> length 0?  It does not add anything to dst, but shouldn't we be
-> adding two single-quotes (i.e. an empty string inside sq pair)?
-
-I would think so.  I did a quick grep and most of the calls looked
-guarded, so I don't think this is urgent.  I'll address this in a
-separate commit shortly.
-
-Thanks
-Jeff
-
-
-> 
->> diff --git a/quote.c b/quote.c
->> index 7f2aa6faa4..7cad8798ac 100644
->> --- a/quote.c
->> +++ b/quote.c
->> @@ -94,6 +94,17 @@ void sq_quote_argv_pretty(struct strbuf *dst, const char **argv)
->>   	}
->>   }
->>   
->> +void sq_quote_argv_pretty_ltrim(struct strbuf *dst, const char **argv)
->> +{
->> +	int i;
->> +
->> +	for (i = 0; argv[i]; i++) {
->> +		if (i > 0)
->> +			strbuf_addch(dst, ' ');
->> +		sq_quote_buf_pretty(dst, argv[i]);
->> +	}
->> +}
->> +
->>   static char *sq_dequote_step(char *arg, char **next)
->>   {
->>   	char *dst = arg;
->> diff --git a/quote.h b/quote.h
->> index fb08dc085c..3b3d041a61 100644
->> --- a/quote.h
->> +++ b/quote.h
->> @@ -40,6 +40,7 @@ void sq_quotef(struct strbuf *, const char *fmt, ...);
->>    */
->>   void sq_quote_buf_pretty(struct strbuf *, const char *src);
->>   void sq_quote_argv_pretty(struct strbuf *, const char **argv);
->> +void sq_quote_argv_pretty_ltrim(struct strbuf *, const char **argv);
->>   
->>   /* This unwraps what sq_quote() produces in place, but returns
->>    * NULL if the input does not look like what sq_quote would have
