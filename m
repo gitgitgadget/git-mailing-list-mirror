@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 354271F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 14:19:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07D0A1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 14:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403866AbfHHOTI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 10:19:08 -0400
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:46305 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733035AbfHHOTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 10:19:06 -0400
-Received: by mail-wr1-f52.google.com with SMTP id z1so95121618wru.13
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 07:19:05 -0700 (PDT)
+        id S2403855AbfHHOTH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 10:19:07 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35147 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403816AbfHHOTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 10:19:05 -0400
+Received: by mail-wr1-f65.google.com with SMTP id k2so9265200wrq.2
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 07:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jEr/cyiBkX9RelGgbKLwfxcdHoBpt/cBoxbWPZaXjSU=;
-        b=U2psGgldsU0xJ7I0c1RvJAyil12pBp6ZwYghIddD3UUY1lx7t1ZHdAKGafXkd7gKQv
-         8TvA/nET9YKSN8jW5n2zPWOxvbkj0TE5n/OI/tr/yRW2ZBquK02rq8d/+fQbW3Psuvjp
-         OEJNFogdHvt6pPjq4f+WT1BxaUpH6UdBphfstFlh8okTytCdzQaWi3SfVGnWXE/wLCPK
-         WeZ19z+cea4UpPdMMZVtntO6/LY+0T9WCSMZ2LKraK5YxfTnHR3jvTiBmQmy53LijDSn
-         YUGG7ohKwvUKcdm/DCC0Ssp7cGmvFIRexrYQnYoULhH/GvhT6JWOqe6ie96gJOQO0teh
-         yEVA==
+        bh=DFKO2Y6RdYqqFC92luOo3NuQfAXk9PB9nYMaKON8O0M=;
+        b=MVj71Ba7jiaYLwWL8b/i3H/fjfK5aj2ARGxyi1HphMhD18Z7UUAWBYAf0Bg//2eMx2
+         b1gob+z7/KmwhfVy1AhVI5f1pPgwVMM61ZHwV1zFPl2sEJu+x/3Bfvgr15aZwAJiwmAG
+         X3PJjUBb5LKrk3JwZYVJf4dyNXDbotmrt2lNdwZP0QBy9UIvB2MmY85/gdurGR9nBlLc
+         jlxEgiqynUv3RZTBEx+jWG5ur3K3o+aMfYP107tyrCPQRj5YY9jafs7HpEgzBAf9Yynx
+         /IHHobvRcxKCGHai4IZokRbq7shhFB0a5Uh+MFa+MbSo70cyrsYzSYZX9UV/XYtkW2ue
+         BJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jEr/cyiBkX9RelGgbKLwfxcdHoBpt/cBoxbWPZaXjSU=;
-        b=LNfzkZO+6tZBJVuAvqEnI18sZHz/yQS3AEI999OrSShd/tU6OH5yeURdvU0ieoR4+y
-         TFtVpuGZJ65FVtXx7ZkwCzUSvug7azSPoTHZOREaatZ6JCLQlkaGyQgU6G6DbrWpRyNM
-         5akyesUqD8QzTqNoVhDlWlFWgHuip8tOD/obmr397isoDxcpp0jMesuL6pjGU4Fjq1qK
-         Ck36PLkulyYd+xuk85rjw1bA/2ym0YXoDSp9V8v/jbuCqOAaRpzFQb56OjkOtb+uCbzF
-         5AKHCSTTvgHeHh+nCneE1Rjj5epGZdQuKFuO4gy2rNINTDBIEy7HquaRBvgimEHK1wUO
-         eOpg==
-X-Gm-Message-State: APjAAAXtxfPYuwt07HRb7ZMT0Fkmw/Y9k2g3FXRwUVKwAs0wIRQtxT1n
-        ii+n4QpDUv+XRvN12T/lD0VhhJU+
-X-Google-Smtp-Source: APXvYqwpO7fOKsNjIqxYL0IwJETaJ9cRHgUrlntj01yRV4+fHg2++XRd5bFNr0tPaOX3qwbdQxkPSw==
-X-Received: by 2002:adf:f204:: with SMTP id p4mr18127290wro.317.1565273944876;
-        Thu, 08 Aug 2019 07:19:04 -0700 (PDT)
+        bh=DFKO2Y6RdYqqFC92luOo3NuQfAXk9PB9nYMaKON8O0M=;
+        b=m29dGsXlUafnbT4BirVDOJQZjveAXZKbFSR4K7cwGoGs0r+3KxQv7AxoddI/U7pMdu
+         O2CRC+q5aX9cI7lFNDmUrSMsXKeuoF1+2N+CbqRSPjVAJ9caiu0gG1vMCauy3y+01bDp
+         ZCbuTfS9ymSNVBiWXpnJFr1iJEQNAvm6eedSzVHFBhCVZiWT0GC57oWzBubXCIPdSPik
+         J/1GTIpr3MJ8QZkOOEtYOOW648BFGODhNRSxqhgJpFHa6SS2kcP5JXZQrs8SMUz5AbJw
+         mdA5WXE4FesC0dTKhBLjY0pZH/nlGs7q+Y7hp5MBhIHFNu0+4Azo8lF5eLeLGbGpQPVX
+         BhUQ==
+X-Gm-Message-State: APjAAAXcugbpfEPCXNQdr7SfeR6tAy9/mAol6GJc4M64g4+Iuf7UN6vV
+        EkG1YW/bnP77A8LuC2ZQowYbDDJp
+X-Google-Smtp-Source: APXvYqzm3GrdJesA5Gs6TO886SJxeoP6h2kU1WmxC2YVqOJBSdoa4Ale/7qOD/HUw3YZ6hTXPbXqSw==
+X-Received: by 2002:a5d:4e90:: with SMTP id e16mr17236927wru.339.1565273942694;
+        Thu, 08 Aug 2019 07:19:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y12sm70233505wru.30.2019.08.08.07.19.04
+        by smtp.gmail.com with ESMTPSA id l2sm2273125wmj.4.2019.08.08.07.19.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 07:19:04 -0700 (PDT)
-Date:   Thu, 08 Aug 2019 07:19:04 -0700 (PDT)
-X-Google-Original-Date: Thu, 08 Aug 2019 14:18:58 GMT
-Message-Id: <a6e5e7c70b1053fb6c232d01bf00db96585334aa.1565273938.git.gitgitgadget@gmail.com>
+        Thu, 08 Aug 2019 07:19:02 -0700 (PDT)
+Date:   Thu, 08 Aug 2019 07:19:02 -0700 (PDT)
+X-Google-Original-Date: Thu, 08 Aug 2019 14:18:55 GMT
+Message-Id: <d5b5a70c1b0012e1fca29cdcbefa9df2155bb34b.1565273938.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.298.v2.git.gitgitgadget@gmail.com>
 References: <pull.298.git.gitgitgadget@gmail.com>
         <pull.298.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 7/7] trace2: cleanup whitespace in perf format
+Subject: [PATCH v2 4/7] trace2: trim trailing whitespace in normal format
+ error message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,95 +73,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Make use of new sq_quote_argv_pretty_ltrim() to normalize
-how we handle leading whitespace in perf format messages.
+Avoid creating unnecessary trailing whitespace in normal
+target format error messages when the message is omitted.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t0211-trace2-perf.sh |  4 ++--
- trace2/tr2_tgt_perf.c  | 31 ++++++++++++++++++++-----------
- 2 files changed, 22 insertions(+), 13 deletions(-)
+ trace2/tr2_tgt_normal.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
-index 2c3ad6e8c1..6ee8ee3b67 100755
---- a/t/t0211-trace2-perf.sh
-+++ b/t/t0211-trace2-perf.sh
-@@ -130,11 +130,11 @@ test_expect_success 'perf stream, child processes' '
- 		d0|main|version|||||$V
- 		d0|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 004child test-tool trace2 001return 0
- 		d0|main|cmd_name|||||trace2 (trace2)
--		d0|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 004child test-tool trace2 001return 0
-+		d0|main|child_start||_T_ABS_|||[ch0] class:? argv:[test-tool trace2 004child test-tool trace2 001return 0]
- 		d1|main|version|||||$V
- 		d1|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 001return 0
- 		d1|main|cmd_name|||||trace2 (trace2/trace2)
--		d1|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 001return 0
-+		d1|main|child_start||_T_ABS_|||[ch0] class:? argv:[test-tool trace2 001return 0]
- 		d2|main|version|||||$V
- 		d2|main|start||_T_ABS_|||_EXE_ trace2 001return 0
- 		d2|main|cmd_name|||||trace2 (trace2/trace2/trace2)
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index 8e52395de2..59c03a5ed4 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -184,7 +184,7 @@ static void fn_start_fl(const char *file, int line,
- 	const char *event_name = "start";
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 47a1882557..213724d5cb 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -142,8 +142,11 @@ static void fn_error_va_fl(const char *file, int line, const char *fmt,
+ {
  	struct strbuf buf_payload = STRBUF_INIT;
  
--	sq_quote_argv_pretty(&buf_payload, argv);
-+	sq_quote_argv_pretty_ltrim(&buf_payload, argv);
- 
- 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
- 			 NULL, NULL, &buf_payload);
-@@ -299,8 +299,9 @@ static void fn_alias_fl(const char *file, int line, const char *alias,
- 	const char *event_name = "alias";
- 	struct strbuf buf_payload = STRBUF_INIT;
- 
--	strbuf_addf(&buf_payload, "alias:%s argv:", alias);
--	sq_quote_argv_pretty(&buf_payload, argv);
-+	strbuf_addf(&buf_payload, "alias:%s argv:[", alias);
-+	sq_quote_argv_pretty_ltrim(&buf_payload, argv);
-+	strbuf_addch(&buf_payload, ']');
- 
- 	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
- 			 &buf_payload);
-@@ -329,10 +330,14 @@ static void fn_child_start_fl(const char *file, int line,
- 		sq_quote_buf_pretty(&buf_payload, cmd->dir);
- 	}
- 
--	strbuf_addstr(&buf_payload, " argv:");
--	if (cmd->git_cmd)
--		strbuf_addstr(&buf_payload, " git");
--	sq_quote_argv_pretty(&buf_payload, cmd->argv);
-+	strbuf_addstr(&buf_payload, " argv:[");
-+	if (cmd->git_cmd) {
-+		strbuf_addstr(&buf_payload, "git");
-+		if (cmd->argv[0])
-+			strbuf_addch(&buf_payload, ' ');
+-	strbuf_addstr(&buf_payload, "error ");
+-	maybe_append_string_va(&buf_payload, fmt, ap);
++	strbuf_addstr(&buf_payload, "error");
++	if (fmt && *fmt) {
++		strbuf_addch(&buf_payload, ' ');
++		maybe_append_string_va(&buf_payload, fmt, ap);
 +	}
-+	sq_quote_argv_pretty_ltrim(&buf_payload, cmd->argv);
-+	strbuf_addch(&buf_payload, ']');
- 
- 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
- 			 NULL, NULL, &buf_payload);
-@@ -383,10 +388,14 @@ static void fn_exec_fl(const char *file, int line, uint64_t us_elapsed_absolute,
- 	struct strbuf buf_payload = STRBUF_INIT;
- 
- 	strbuf_addf(&buf_payload, "id:%d ", exec_id);
--	strbuf_addstr(&buf_payload, "argv:");
--	if (exe)
--		strbuf_addf(&buf_payload, " %s", exe);
--	sq_quote_argv_pretty(&buf_payload, argv);
-+	strbuf_addstr(&buf_payload, "argv:[");
-+	if (exe) {
-+		strbuf_addstr(&buf_payload, exe);
-+		if (argv[0])
-+			strbuf_addch(&buf_payload, ' ');
-+	}
-+	sq_quote_argv_pretty_ltrim(&buf_payload, argv);
-+	strbuf_addch(&buf_payload, ']');
- 
- 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
- 			 NULL, NULL, &buf_payload);
+ 	normal_io_write_fl(file, line, &buf_payload);
+ 	strbuf_release(&buf_payload);
+ }
 -- 
 gitgitgadget
+
