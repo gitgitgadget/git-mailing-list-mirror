@@ -7,82 +7,90 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69EFD1F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 09:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED65A1F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 10:03:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389782AbfHHJqJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 05:46:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37560 "HELO cloud.peff.net"
+        id S2389868AbfHHKDT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 06:03:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37578 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2389774AbfHHJqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 05:46:09 -0400
-Received: (qmail 11198 invoked by uid 109); 8 Aug 2019 09:46:08 -0000
+        id S2389786AbfHHKDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 06:03:19 -0400
+Received: (qmail 11379 invoked by uid 109); 8 Aug 2019 10:03:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Aug 2019 09:46:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Aug 2019 10:03:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18757 invoked by uid 111); 8 Aug 2019 09:48:38 -0000
+Received: (qmail 18809 invoked by uid 111); 8 Aug 2019 10:05:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 05:48:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 06:05:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Aug 2019 05:46:08 -0400
+Date:   Thu, 8 Aug 2019 06:03:18 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Lukas Gross <lukasgross@u.northwestern.edu>,
-        git@vger.kernel.org
-Subject: Re: amend warnings with no changes staged
-Message-ID: <20190808094607.GB12257@sigill.intra.peff.net>
-References: <CAOY1tUUmkRBEDkF3GiP45WSi50uUGBaamx9-PGej0Z-yt0ioPg@mail.gmail.com>
- <20190806013030.GA61803@google.com>
- <CAOY1tUVpeUftgHNuZg-2fMD9D+Qz08hfvRvQDe1f8+MV2xYv2w@mail.gmail.com>
- <20190806021618.GC61803@google.com>
- <20190806041911.GA9243@sigill.intra.peff.net>
- <xmqqblx2jeh2.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] --end-of-options marker
+Message-ID: <20190808100318.GC12257@sigill.intra.peff.net>
+References: <20190806143829.GA515@sigill.intra.peff.net>
+ <xmqqa7cml0s9.fsf@gitster-ct.c.googlers.com>
+ <000f01d54c75$1a8fe460$4fafad20$@nexbridge.com>
+ <20190806173817.GB4961@sigill.intra.peff.net>
+ <20190806181459.GG20404@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqblx2jeh2.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190806181459.GG20404@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 12:11:53PM -0700, Junio C Hamano wrote:
+On Tue, Aug 06, 2019 at 08:14:59PM +0200, SZEDER Gábor wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Tue, Aug 06, 2019 at 01:38:17PM -0400, Jeff King wrote:
+> > Nothing about "--" is changed by my series; it will still stop option
+> > interpretation in rev-list and in other commands. But as before,
+> > rev-list (and other Git commands that use the revision.c parser) use it
+> > to separate revisions and pathspecs.  That's unlike how most other
+> > programs use "--", but that ship sailed for Git in 2005.
 > 
-> >   git commit -m 'buggy commit'
-> >   echo fix >>file.c
-> >   git commit --amend ;# oops, should have been "-a"
-> >   git push
-> >
-> > But perhaps that gets to the heart of the matter. Could we perhaps be
-> > providing a more detailed summary of what happened for an --amend? I.e.,
-> > to summarize _both_ sets of changes (and if one set is empty, say so)?
-> > ...
-> > judgement about whether it's an error, since it may well be that you
-> > were simply rewording the commit message).
-> 
-> Perhaps "git range-diff HEAD@{1}...HEAD" being an empty is a sign
-> that either the user intentionally or accidentally did not do
-> anything other than "touch"ing the commit.
-> 
-> "git commit --amend --[no-]range-diff" that shows what you changed
-> with the amending may be an interesting possibility; I am not yet
-> ready to seriously encourage anybody to explore it, though, because
-> "git diff HEAD@{1}" is much easier to see what code got changed, but
-> one (and probably only) downside is that it does not cover the
-> change in the log message.
+> I'd like to draw attention to the oddball 'git filter-branch' command,
+> which uses '--' as a separator between 'filter-branch' and 'rev-list'
+> options.  Will it still work with this new option?  I think it will,
+> but not sure.
 
-I hadn't even thought of range-diff.
+Good question.
 
-Showing the commit message diff would be a big improvement. A range-diff
-would also show an update to the author (e.g., if you used --reset-author).
+Certainly "--" will work as it did before, since the code here only
+changes behavior when it sees --end-of-options.
 
-We don't really need the full power of range diff, though. After all, we
-know there are exactly two patches to compare, so we don't care about it
-trying to figure out which ones correlate (and it might even be a bad
-thing for it to decide that two entries don't match). So I think we'd
-probably want our own custom thing.
+filter-branch doesn't use any of our parseopt infrastructure itself, so
+it won't understand the new option itself. I.e., this won't work[1]:
+
+  git filter-branch --end-of-options -this-is-a-branch-name
+
+But since it passes rev-list options as-is, this does successfully pass
+the name to rev-list:
+
+  git filter-branch -- --end-of-options -this-is-a-branch-name
+
+However, filter-branch itself seems to do some magic of its own with the
+rev-list options, and will try to filter HEAD in that case. So I think
+it needs further work to cover all cases correctly.
 
 -Peff
+
+[1] I think the first one there would work if filter-branch actually
+    used "rev-parse --parseopt". E.g.:
+
+      git rev-parse --parseopt -- --foo --end-of-options --bar <<-\EOF
+      cmd
+      --
+      foo    an option
+      bar    another option
+      EOF
+
+    yields:
+
+      set -- --foo -- '--bar'
