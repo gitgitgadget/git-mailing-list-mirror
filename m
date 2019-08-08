@@ -2,81 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27F301F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 11:00:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4A31F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 11:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389565AbfHHLAZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 07:00:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37612 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726721AbfHHLAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 07:00:25 -0400
-Received: (qmail 11973 invoked by uid 109); 8 Aug 2019 11:00:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Aug 2019 11:00:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19239 invoked by uid 111); 8 Aug 2019 11:02:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 07:02:54 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Aug 2019 07:00:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] merge-recursive: avoid directory rename detection in
- recursive case
-Message-ID: <20190808110023.GB14189@sigill.intra.peff.net>
-References: <20190726220928.GG113966@google.com>
- <20190805223350.27504-1-newren@gmail.com>
- <20190806202829.GB26909@google.com>
- <CABPp-BFZig73jXKkKNaz=YpT4enB3_ARQ1KTz_ttPYobkY6Bhg@mail.gmail.com>
+        id S1729203AbfHHLZy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 07:25:54 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57338 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728289AbfHHLZy (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 8 Aug 2019 07:25:54 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c831:5a62:6d5c:8da3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 11F2C6081D;
+        Thu,  8 Aug 2019 11:25:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1565263552;
+        bh=p/aNSYN4YmlC2m01NZJWSHN9c7CN4aB9FeVZTf6fRtM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=EeSK1vzYQdMXaRBP6iGa/yWAyMED/pD2cl+uDi9J5gD2A/U1zAl9spHPYUq1ZWq46
+         sXeOf6nnef5MBlAsVQWkASYkmSvYBaq1K/dsE6hjNtI/3R5JymAULC8Qa1YuNTc9RX
+         EnsWCYyDtxSNtYQLov+5z1oNnLwEVIRpqnov0nhJ7efhRM7+1nMCJQlBqLib+9fSTS
+         WeJoB5G0iV5JPw7pqgFq0Bvm7Z0YyItFI+lvE3UtLCBYyjmRflTeqDUL3o7j3q4wRp
+         9Xd3ruJzFcBIDlDpc6efa7lhbazkS0KFo9vjvhYErXv9TcAkRa2MqrCQ3p/irK4SQ4
+         Xgem4yGFlNStnWpC9nii49XdOe5Ke8DDhHrH3gkbQczp7gmyBnCE7aMTXxIKwkJt2i
+         9XStpvcKHHoaK3ITXQs0MzC6M7cKTMP4qxdrBl+qel3h8SL67H0BEWJxYQ8Kux24Gj
+         wfbuC2D/y5HkcydfGYLeq1fz2w3/oMT0gJnT3b0PbSghF+aGmTX
+Date:   Thu, 8 Aug 2019 11:25:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH bc/hash-independent-tests-part-4] t: decrease nesting in
+ test_oid_to_path
+Message-ID: <20190808112545.GJ118825@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190628225928.622372-1-sandals@crustytoothpaste.net>
+ <20190628225928.622372-2-sandals@crustytoothpaste.net>
+ <20190808065614.GA209195@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6yHiY5vv/BiPjcMt"
 Content-Disposition: inline
-In-Reply-To: <CABPp-BFZig73jXKkKNaz=YpT4enB3_ARQ1KTz_ttPYobkY6Bhg@mail.gmail.com>
+In-Reply-To: <20190808065614.GA209195@google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 06, 2019 at 02:16:25PM -0700, Elijah Newren wrote:
 
-> > > +             test_i18ngrep ! CONFLICT out &&
-> > > +             test_i18ngrep ! BUG: err &&
-> >
-> > The BUG is gone. But should it not use i18ngrep? BUG() isn't localized.
-> 
-> Technically, yes, you're right. However, this line's purpose isn't
-> correctness of the test but documentation for the person reading the
-> testcase about what it's real original purpose was; my real test was
-> the "test_must_be_empty err" check I have below it, but I added this
-> line just to document the intent better.  I kind of like the
-> "CONFLICT" and "BUG" lines looking similar just so the reader of the
-> testcase doesn't have to try to reason through why they are different,
-> although I guess it does present the problem that more careful readers
-> like yourself might do a double take.
+--6yHiY5vv/BiPjcMt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think it would be better to drop the grep for BUG entirely.
+On 2019-08-08 at 06:56:14, Jonathan Nieder wrote:
+> t1410.3 ("corrupt and checks") fails when run using dash versions
+> before 0.5.8, with a cryptic message:
+>=20
+> 	mv: cannot stat '.git/objects//e84adb2704cbd49549e52169b4043871e13432': =
+No such file or directory
+>=20
+> The function generating that path:
+>=20
+> 	test_oid_to_path () {
+> 		echo "${1%${1#??}}/${1#??}"
+> 	}
+>=20
+> which is supposed to produce a result like
+>=20
+> 	12/3456789....
+>=20
+> But a dash bug[*] causes it to instead expand to
+>=20
+> 	/3456789...
+>=20
+> The stream of symbols that makes up this function is hard for humans
+> to follow, too.  The complexity mostly comes from the repeated use of
+> the expression ${1#??} for the basename of the loose object.  Use a
+> variable instead --- nowadays, the dialect of shell used by Git
+> permits local variables, so this is cheap.
+>=20
+> An alternative way to work around [*] is to remove the double-quotes
+> around test_oid_to_path's return value.  That makes the expression
+> easier for dash to read, but harder for humans.  Let's prefer the
+> rephrasing that's helpful for humans, too.
+>=20
+> Noticed by building on Ubuntu trusty, which uses dash 0.5.7.
 
-Not BUG()-ing should be something we implicitly assume for all commands,
-and checking the exit code already covers that[1]. I don't think we
-should be cluttering up every test, even ones that are in response to a
-BUG(), with redundant checks. If you really want to document it further,
-a comment can do that without incurring extra run-time overhead. But I
-think in this case that your existing comments and commit message cover
-it quite well.
+This seems like a sane, well-reasoned fix. I don't know if we care about
+building on Ubuntu trusty (since it is EOL), but if we do, then we
+should definitely take this patch.
 
--Peff
+I agree it makes things easier to follow as well, which is also nice,
+and it preserves the shell-only nature that's so desirable on Windows.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-[1] There are cases where there's a crash in a sub-process, but in that
-    case the failure should be surfaced in the way the test is written.
-    It is here, and I'd argue that any case where it isn't probably
-    ought to be rewritten (because you're missing not just BUG()s, but
-    probably die()).
+--6yHiY5vv/BiPjcMt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1MBrkACgkQv1NdgR9S
+9osG4w//XNKayIZJdN34dhJkxwp3mMKg3nHRpZPdkix+BA2EbVbcGjNrYblGfiWP
+H59/EruTPXm4ou5XDzr779zK0uLv7Fk/s0yGFNYzJKODcvK1Gryb0V5sO/2Buhts
+Tt8UH97pkbDmp7YkZMDIWjNyNv/w4uibfzw4ZtsnF3FGYr2VAe8RpPDUSmpOBngb
+nmZYrM0uJzuEmZgSDLZPLloxu8W3XE32mmBonMdYKxSBBoVmtUXkMFMI8KUf7Eey
+z2VuC0EStcLNY2oBQKLH0wTTWF42VnMOOcDEuxao5rvivleSC/+7JjxkSCsVcKaS
+8/neDYzwXB6YyrBMn7/Piu2SEXs1jp9VKxoeb8qy1SH7Y4juTZ8Etw2tfR8O4Am9
+q0rU4gblIPcjcPSAIXu4HZ/rhwy+Fm1g8MtlympZQ6SvA/u+5vqATYE30xjMUodV
+rnwwnTRkTJkx6Bci3WBHJyKA6XDp64F1nPa774fcc0C7YlQ3A6bQZGbsnMHANrQn
+1JPp9LwI4T6Y+wqBbPq2bfWpR3NfU2JZGhSkmFZ6nq4+WyjAYihpPEUY5PHQspJ8
+tQa4e9WtL5B1P0VBuvvRvt1RE0PoRQU452zf/nP60bkcaXduaSbwopgU9zEVRtfY
+dy6gSHNRFIYFbqquvvxEm3AUGXCbNbzdlylAHrs3nntKtnS5Cq4=
+=CIcN
+-----END PGP SIGNATURE-----
+
+--6yHiY5vv/BiPjcMt--
