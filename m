@@ -2,91 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5C011F731
-	for <e@80x24.org>; Thu,  8 Aug 2019 18:48:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 707901F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 19:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390209AbfHHSss (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 14:48:48 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:36329 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733248AbfHHSss (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 14:48:48 -0400
-Received: by mail-qk1-f195.google.com with SMTP id g18so69669733qkl.3
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 11:48:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WI1DWFbud7a0sFAB88Dq9C7ibknrYGnqE04MtRIm9bU=;
-        b=us5wvttgnOWGXW+ei3L2GTMX6gI/P8DJhWsUHq0Ip/E5/Pfktq2nULNy4DG8BO0OH+
-         Uemt+B+ERJbtqQmx0ZJamdEh9Ao+jNPvWiEFaZuUIQPlahWwhdiNxIVWAyu2f4Phwdf3
-         gFv90ADoUJwBL08vNZD/hN9tc0Ip3kw3bBn6GqQY3ZuNqAO3T8aeQ9XBlECgBrY7M7lr
-         6GGVRw+Ip5gKGXlh7k4Msj2QkPiYPjR8VViTUmkM18veCJm6zAY/TT5C+3Ay0R3GC8Je
-         lrt9+rpGPL8H1ghhwTiGrTjnFnmMamT72zgl22gGWLgttUvZ1C4/dHBh755dkWz3wLFN
-         Q16w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WI1DWFbud7a0sFAB88Dq9C7ibknrYGnqE04MtRIm9bU=;
-        b=L1mdYRWGDiCOIy01ST5dxnvsFNEahNIx9Mrxh6dh1CZPsCA7uWEMOwxofzZ959t9pw
-         YFm+x8VbIHUANqhNrPA0DFjHBtjcPARuMoi57C546D+eoIJIi7sGMJSYOp00DV8FylXz
-         rCb+1Sz7PVgbe5j0CaQ1C7yMULJYA/CAcG0HMTa7UCQHbIqqNaACVyoj0stZlo9PrMEo
-         VXwrhAVhknKIV64HVGOL90fcG3jRu+x9na1dtgTdd1z09J6GeL75o+IhOmzx+Mo3cDGd
-         4Yzvh1hYXKL9JWgu23SOYBFVmWHu28cuWY7zVss2gkyRTS7T9IqOlt347AmQwpj7At15
-         wLHg==
-X-Gm-Message-State: APjAAAVfq1pBb2x01rTQiTS/yfWQSqmnFaOOgjdfCPz/oQWiFGO/mgE9
-        wqJ6SyzNPiC6lYlCC9TENIQ=
-X-Google-Smtp-Source: APXvYqz1fRMH0zwh9dn+F1tXeER7Vl2fO/cW5ViruXIIQ6xo5YiUiheMOO7Gv0+L/qnXeV2QC2b7SQ==
-X-Received: by 2002:a37:4781:: with SMTP id u123mr13514984qka.263.1565290127671;
-        Thu, 08 Aug 2019 11:48:47 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7487:521b:1543:4364? ([2001:4898:a800:1012:25bb:521b:1543:4364])
-        by smtp.gmail.com with ESMTPSA id q42sm2451466qtc.52.2019.08.08.11.48.46
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Aug 2019 11:48:47 -0700 (PDT)
-Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S2390280AbfHHTAH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 15:00:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51685 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732375AbfHHTAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 15:00:07 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3649E824B0;
+        Thu,  8 Aug 2019 15:00:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KYH3/8P++CD20I1NPye8zJruuTo=; b=PjeR7o
+        h84KGUUq6c+J9Rn90CwpOd+XsXXjcLi/IEK4U6fjs62GCyjZ9DgJ75w+0VMShNrL
+        BKKG+Vp5Sc6QRY0xxEDdJXjPOV+sKRlpBr2DMCyysAbvnvjIEtPysvqoKWMtzVVG
+        13WuQIWBoaTv2KJmqAzNrBTqDLEyEp9393+z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=b+tqljIVDNsRV/e8RZlHOWnr1xC4y1Te
+        5idhUOgUovadTkKY+Fy+8NKzooMN+ZDVZGPqmrCJOZ0Y47wv7hvP/ZhV35NuQmmX
+        CkIDimAMgZCiBA4/QiWMOKDuyN15ZtO70TnwYlp7flojBQy2KcEt88Kq902VcptT
+        R3uZCYPQq24=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E5AF824AF;
+        Thu,  8 Aug 2019 15:00:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 391498249F;
+        Thu,  8 Aug 2019 14:59:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
         carenas@gmail.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= 
+        <avarab@gmail.com>, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 5/5] repo-settings: create feature.experimental setting
 References: <pull.292.v2.git.gitgitgadget@gmail.com>
- <pull.292.v3.git.gitgitgadget@gmail.com>
- <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
- <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c9598b37-9941-15eb-c599-b7f0e921a1b2@gmail.com>
-Date:   Thu, 8 Aug 2019 14:48:46 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
-MIME-Version: 1.0
+        <pull.292.v3.git.gitgitgadget@gmail.com>
+        <2e153fac22dc5c27fc85efc802785edc0c9d78ad.1564515324.git.gitgitgadget@gmail.com>
+        <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
+Date:   Thu, 08 Aug 2019 11:59:56 -0700
 In-Reply-To: <CABPp-BGppXSt9i4SXTizgPXap-YgHBwHTVrvwDpg98zvpYRwcQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        (Elijah Newren's message of "Thu, 8 Aug 2019 11:34:29 -0700")
+Message-ID: <xmqqd0hffpoz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B819B9CA-BA0E-11E9-A312-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/8/2019 2:34 PM, Elijah Newren wrote:
-> Sorry for the late reply...
-> 
-> On Tue, Jul 30, 2019 at 3:49 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
+Elijah Newren <newren@gmail.com> writes:
+
 >> --- a/Documentation/config/merge.txt
 >> +++ b/Documentation/config/merge.txt
 >> @@ -54,7 +54,8 @@ merge.directoryRenames::
@@ -96,12 +81,27 @@ On 8/8/2019 2:34 PM, Elijah Newren wrote:
 >> -       to "conflict".
 >> +       to "conflict" unless `feature.experimental` is enabled and the
 >> +       default is "true".
-> 
+>
 > I have a hard time parsing that changed sentence.  Perhaps something like:
 >    ...unless `feature.experimental` is enabled in which case the
 > default is "true".
 > ?
-> 
+
+That reads better.
+
+But I am not sure about the wisdom of controlling between conflict
+and true with this feature macro in the first place.
+
+Between "conflict" and "true", the former forces the end user to
+verify (or allows the end user to veto) the auto resolution by the
+heuristics and is always a safer if more cumbersome option.  It's
+not like blindly trusting the directory rename heuristics is the
+bright future for all users, is it?
+
+I would not set rerere.autoUpdate to true when feature.experimental
+is set; for exactly the same reason, I do not find it reasonable to
+set this to true with feature.experimental macro.
+
 > ...
 >> diff --git a/repo-settings.c b/repo-settings.c
 >> index af93696343..e0673938c0 100644
@@ -113,9 +113,9 @@ On 8/8/2019 2:34 PM, Elijah Newren wrote:
 >>
 >> +       if (!repo_config_get_maybe_bool(r, "merge.directoryrenames", &value))
 >> +               r->settings.merge_directory_renames = value ? MERGE_DIRECTORY_RENAMES_TRUE : 0;
-> 
+>
 > Shouldn't that be "MERGE_DIRECTORY_RENAMES_NONE" instead of "0"?
-> 
+>
 >> diff --git a/repository.h b/repository.h
 >> index e7a72e2341..b8e52dd48f 100644
 >> --- a/repository.h
@@ -130,9 +130,9 @@ On 8/8/2019 2:34 PM, Elijah Newren wrote:
 >> +       MERGE_DIRECTORY_RENAMES_CONFLICT = 1,
 >> +       MERGE_DIRECTORY_RENAMES_TRUE = 2,
 >> +};
-> 
+>
 > Thanks for adding these; makes things much nicer.  :-)
-
-Thanks for the feedback! It's just in time for me to send a v4.
-
--Stolee
+>
+>
+> Cheers,
+> Elijah
