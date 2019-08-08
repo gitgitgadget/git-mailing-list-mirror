@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054721F732
-	for <e@80x24.org>; Thu,  8 Aug 2019 20:18:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610C81F731
+	for <e@80x24.org>; Thu,  8 Aug 2019 20:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404575AbfHHUSN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 16:18:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33985 "EHLO mout.gmx.net"
+        id S2404708AbfHHUVV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 16:21:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58069 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404324AbfHHUSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 16:18:12 -0400
+        id S2404467AbfHHUVV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 16:21:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1565295486;
-        bh=CpgeFO8rF3ti2Lip4630QIjQLRpTwSCBNg/4zPiNRdQ=;
+        s=badeba3b8450; t=1565295676;
+        bh=jhfnTcBcqKWAhRHtVJrOmC2dozQipWFVC+aOJCBnp18=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=E+zg6SMsEW4cmSRZLjB7TrVAfvyVt7YCihPgo4IxiI8pmjGUYh6a2PCcre02cziJ7
-         26U+t5VxIjpQbur6s8tzJqVDNdfIzTQGxiahuVnUNpN7ge8Aar6y9XYw8iWS78W2zj
-         haYG2Ihv097gldoiiCHgNS3qNPVJOeIgDKE2onis=
+        b=hV5wqDxO//Ve6ZPC/7RSAjsLMst7aQzRi3edRS8T5Y66cYtvXydSnpM/22Tkayvh8
+         QD6LJ2oaggf6Sx8nZLDElzuJv/6v1GHDKSzG0iLIIbx4GYFO5QBFT68dDr9tFf6IiG
+         G0oW1Wn7L+jjuFNR9z8OUuSyaDZwxoHfI52+HMDM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWCKz-1hpcd23O4v-00XOuP; Thu, 08
- Aug 2019 22:18:05 +0200
-Date:   Thu, 8 Aug 2019 22:18:05 +0200 (CEST)
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5fIW-1hyb7m28T4-007Frp; Thu, 08
+ Aug 2019 22:21:16 +0200
+Date:   Thu, 8 Aug 2019 22:21:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, avarab@gmail.com, michal.kiedrowicz@gmail.com
-Subject: Re: [RFC PATCH v3 2/3] grep: make PCRE2 aware of custom allocator
-In-Reply-To: <7f42007f-911b-c570-17f6-1c6af0429586@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1908082213400.46@tvgsbejvaqbjf.bet>
-References: <20190806085014.47776-1-carenas@gmail.com> <20190806163658.66932-1-carenas@gmail.com> <20190806163658.66932-3-carenas@gmail.com> <ab8a378c-0a60-9554-b2dd-ecb3d05229cb@web.de> <CAPUEspip98Mq8FrKTOkEikZhaLPprZXf=E2x3d0b7=c7e5+Gyw@mail.gmail.com>
- <c7f08e19-88a7-ca7f-90b9-54465e621d49@web.de> <CAPUEspj4CrEk6u4+8a5UBisxWsXcwOrOPQ5s9TktA6dZx5s+uQ@mail.gmail.com> <f6056e0c-fe7f-30b3-c2d7-bba2b44d6888@web.de> <CAPUEspi2vu=7uLU19c-wcW+ji63gyeO7poAwS5_7ZhTiBWSxjg@mail.gmail.com>
- <7f42007f-911b-c570-17f6-1c6af0429586@web.de>
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+        avarab@gmail.com, michal.kiedrowicz@gmail.com
+Subject: Re: [RFC PATCH v3 0/3] grep: no leaks or crashes (windows testing
+ needed)
+In-Reply-To: <20190806163658.66932-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1908082219160.46@tvgsbejvaqbjf.bet>
+References: <20190806085014.47776-1-carenas@gmail.com> <20190806163658.66932-1-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1859688066-1565295487=:46"
-X-Provags-ID: V03:K1:fc2JOt7cwsjEZ1ddfZhAgA+ZkW4YDfvKXE95L0fElZyDrx+Ngp+
- LxSpEn34DK+IwLk7rqSF/6H2ZzyhrYmS02MUnSLb7jkb3aMV3xtVGo/tQnu/KFz2c/QSod0
- TCm8CG2PTv6DxLdZ0S/RY5kmyhYdGqTKoFgB4JuboJmUY2MkrhP8Wf7+AaAhP5pJY1FhF7N
- SbIvfFl6NdE6cCxofBMeg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Le7P9ORiiI8=:gq9GqZytcbGcwi7XHRM6Rc
- YgGztwhgAnkv/NvBkuX08J0qrNsOXApgQlyWnr/rbxR0NmpiO5/aJduj0MGmmqfRdKD8i9RwV
- ogCnwrBFUwfLL5/IINl53owZtdOmGUohQ0fhYC1JFmwh4eEWqqFYyDJJn1E1XQIU8g3gto9TY
- M91i9/k/tIEQGYJmsa/DGkifnxUXp85KpYpbsGJRyIj6tgjPK3PBZe8VjHcZtIwQxALSpKOvZ
- 8XGvqvZs6XX2Q53KJcuhvgsHRyJ41vTQ4EXC5N/jRh2ctF3s8YfYZydDfiyQwyp8DND5R83JH
- c78Gz/lMLyQw7wxv413jF46capXBhW7b1GH/6DJrc0ItMTbgtLY0T5LFaxmuylgSNU/eCPPH0
- a60dCl7XczamcP1u6d86m/VePRtH7Ai8Ub4Jm+g2z4NEiCUOFAgSWobtq5wOAeNANrEaFD8Bo
- 3NFAQfRhH8J80LYiLUpboBVG0BQyTzOvCPUzKn5cew4nTWi3LVqcKzJ/wXTU3+cLad0g41xO3
- OhKEsklKNtgKsvb4ZsNJdqHgzAKh02MakqQo461wHjlUVhLRALEnKqSpm0aH9pLW9+9CJmH+K
- DO6/+RljYEmLNk3TObVqMjDCMEwcpWYKk/aHpBO2HY1HTQc/xY0WpepcQmf8UPWu70MGdR1/y
- ATFS9NJ3D0sXgRkVyL8J2oWKyLPVozX7sgdRsCuHiyDRcsEUYRJ3YrIG44CWQQD2XQq/kb3XJ
- WmsEccN59IaL0vRIzSmzra38R4e+v4DU4b7QUwxRMvB0JzDvUUjWGxadDjEuixw7jkLNcly4s
- Tg/UtIIoaMk7h+s+EFfWIyl1uRuC37HEHXy0SnG9FJ1B+Y9jV9XCNtbmLaY7kQeINzV+mTDM1
- X7YYpZWAnsYQLz9STYXewvuOENmGIV8Vz5YOiVVGJ25s2QuNUl4bpYyS8HIVKSdDUOuQVuvYu
- bAb3fTJZ604rLJrkZsfY5MSP3fAGXOLMVx2QU/NPX9/U9gNMTdQMZ8EIXUIBoK36ewLSmFtxR
- kuu7XOsKZPUUnzI8ur+GI7XynHYMpNCgxCU8yVMBT33iU82DtuzF2hZVl3xSuKPcGYwZ6nSEy
- dbhobAbZKgxE8822K2q5rusgcZ1B2cQV8dFglsgNz41DX6gm+UktdbPZDnHlkiYhyXT5u+JY9
- FUxV4=
+Content-Type: multipart/mixed; boundary="8323328-1467302872-1565295677=:46"
+X-Provags-ID: V03:K1:sdYRKYTffRz6X4KmTeBAXfljNjvlFrgcnlLTpsAEW773AoNwIlO
+ h7fsUJmZgfeRUOftX1uou41bHFLfA033JEZ2jC5Kwkk9h2pNr7U9fuUjJ1NRRtFZMGB+fzB
+ f7dH3ZUr3advGhahNLjDm1SrCt0qKgbVbvaXL+ogj4P8wqGC3VUVioUgQx6IY4laIcYlVwC
+ HFCwa28/JBh+UEl8hiJaA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:62CNRKdyvA8=:Cr1ptyD+9JjumpZabQtIC1
+ lpvWiMTROyYNrr2zYsx1hSWMvkz5NXFBRsy5XXU888fLXUluPmyAA5ee8tYpBrq79KY7hshvU
+ ZFWEtVxhRQqgTZVcXeao2iviAp5PGceMdJWRTVWuEBrOXzlbQnrbxJpPW3UK/EEr5OWW74I4F
+ 4xu3Ieh5xVgD/StKyyYUDuUnHod7Swr6+4orE/Oa+jPm7OTPPc249wu9qHWDI386XhYQDewPn
+ b2nlkxw21e/XSuNAkpps+l/CiEVSKJ+OAlcXq/HZmAmm32uRwMz4/kmzxw7vz+c8Mhpoznqw4
+ f3YCAhJQbeztb6ln6xs50d4zO6EFCiWDamW01GwZE3mIW0zZ6KTKz1jcudQvnZos9F2dBflOF
+ u4g1FYRIJCE9Pe1JqZVagNa6MYEgYehVS4NcC+sxeVHPvhECaRo2oGQSyNyiaoZnhP6rK/gwK
+ X2kJPbjxNPliE8S3xMIV0IRyAcCdga+hoXwyQCh4hKK+7iM91fMu5YvhibLD5es7vRmsdGqvn
+ hPSCGwNNfRZbjI0CZJ9YMAygtmDFPd2HWlvz2ZAp9/5qDBd5fO8BhWiaFT1/8k8Bjova6i2z5
+ Lyrx0b6HeHU3cUec1c+5OBxDbIwW8lOJvXFCu1W9Psnb+JCyBSqtqJe+aZoFsshviBBJ2MZrd
+ HQZLN3IGsrAdq9HVrCaYS25mOf3DYN9oz1m/sxeFtHE5abwOYosMqTipvhdaK8q90q/3r/3Eh
+ dFXzM+OCaC0VzDGphFXsfYKRlBWrr+4hx2M+p20lypLUlyjfwxI+8hx5Z6k221Obp5An12piJ
+ gD+Mru+pwf5gD5cLATPWgp1zhce9GBZzmnaK9mneXitgpv4+npapBwXa+bCVDbtuRl3t5ZRWX
+ lJQ4gsXpt/WAVMG68pfT2EAxyxstuzOmISDHp4RVb1Y9MhJ/v9T1vq0Y9+TU+V3AzG1iBpm+J
+ UKyZZB3bn3dV0ZQRI6kvO/3/8zus4a4PDXLnd+XCQfEg1TskRy+U1VEg553bNkjfZl2NYhL0A
+ mqxz4zkJLR6Zvlp/lsHZ+gefqQB9myERDBiN4mivKREQkYBDJrhEZ0o2YtZet5BJ4Kzwir7pu
+ B20EbQaVRduZZKK6HZ+W+wd5EpsfQ0E8wRuzgBHhIwSyLhCtgt4qbe9uLEQmEluhIZgijsZ1r
+ GQKfU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,45 +72,36 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1859688066-1565295487=:46
+--8323328-1467302872-1565295677=:46
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Ren=C3=A9,
+Hi Carlo,
 
-On Thu, 8 Aug 2019, Ren=C3=A9 Scharfe wrote:
+On Tue, 6 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-> Importing the latest version of nedmalloc might make sense in general.
-> The last commit in git://github.com/ned14/nedmalloc.git was done five
-> years ago; is it finished?  A diffstat with -b looks like this:
->
->  malloc.c.h  | 1193 ++++++++++++++++++++++++++++-------------
->  nedmalloc.c | 1720 ++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+-------
->  nedmalloc.h | 1580 ++++++++++++++++++++++++++++++++++++++++++++++++++++=
-=2D--
->  3 files changed, 3840 insertions(+), 653 deletions(-)
->
-> Any nedmalloc fans interested in bringing the goodies hidden in there
-> to Git (presumably while retaining our local fixes)?
+> Eitherway, since I am unable to replicate the original bug or take
+> performance numbers in a representative environment without Windows
+> this is only published as an RFC, eventhough it has been tested and
+> considered mostly complete.
 
-I had looked into this already over two years ago, and had to stop after
-investigating a performance regression for two weeks and not getting
-anywhere.
+Well, this is disappointing.
 
-Also, nedmalloc fell unmaintained, so I don't necessarily think that it
-would be a good idea to  spend a lot of time on it.
+I worked several weeks on getting Azure Pipelines support in shape, so
+that you can now open PRs against:
 
-In the meantime, there is a much more viable contender: mi-malloc.
-Preliminary tests suggest that its performance on Windows is at least as
-good as nedmalloc's, and Windows was the use case for which we
-integrated nedmalloc into Git's compat/ in the first place.
+- https://github.com/git/git
 
-I have tentative patches to integrate it into Git for Windows, and
-basically got side-tracked with other things. Expect to see something
-regarding mi-malloc from me in September.
+- https://github.com/gitgitgadget/git
+
+- https://github.com/git-for-windows/git
+
+to get Windows/macOS/Linux testing for free.
+
+So I guess you'd like fries with that, extra large ones, with extra
+pepperoni seasoning?
 
 Ciao,
 Dscho
 
---8323328-1859688066-1565295487=:46--
+--8323328-1467302872-1565295677=:46--
