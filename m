@@ -3,89 +3,188 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD6D1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 06:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 801141F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 10:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405601AbfHIGwZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 02:52:25 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:42334 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728823AbfHIGwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 02:52:25 -0400
-Received: by mail-ot1-f66.google.com with SMTP id l15so128820729otn.9
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 23:52:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dSv8U8tbU8t9nINWibH6sFXg7Gdb6X78QXtLim9+axI=;
-        b=CioKa90QorZhJYFZG+pHb87YZ88wuE1zkGQu0DadBZloR6GhGd3VuzgkvC03qwiLjR
-         tNhbALxDb67xGGl0upqnTNjnFxiS+oSe3SDl51LqzsYKQtHYxmT8OCKrrVMjTvKZFVCy
-         ADpCcrg7SPehSesdel/b7Skv1ylZBmJcHiJx8Ga/q8Eb3+IVZIVvMW8VKKkIHaGvmyoL
-         h9CgvQqjiar4h2W9liiUAFWOnT7hvOtqB/J3+ub2EVDiX0eadjAxI/0nADp/k0/ILoFO
-         toJaHPr4+UxHgP1KH8ZvRDaR0/AJblTgswm4b5AFam1im0vLxKwwH3l4Lk8T5aEjUWQ5
-         jJHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dSv8U8tbU8t9nINWibH6sFXg7Gdb6X78QXtLim9+axI=;
-        b=dS5FsDksSkNGACPfqGOshhJqE/HQmQtR8rkdDmK3K48X4Oow90dNxU/McySUmdNfBl
-         JDZo5ByzGBdXXbz9QXS06EPBbgL5UpsuS1YBI2HwuWO283t3RExS8L5GQapaC0echLYo
-         FCs1TERQtPw5l9hnVS5RFh2ACJ0fbrOQFJg5NKdADOG3UpcYXNBHb83/0pbABo4KrB5q
-         Ixm3/aGJWh2MYCoyUE+Td5LSJ1vBTo0oDfRdzmGUybxrIeTqms3sJ1RBRsuHXmz3szLM
-         iG9bU3xbNc/WvBtQGG3643k0L+V4wzk1pI/xVlYU5oi/qezGL0/MjIj+qkuIPHTyWfnw
-         JtgA==
-X-Gm-Message-State: APjAAAXy7fEljtaIx6akWBfl0ZBVGfXKkAxSqfKTH2/NgOsAC4sefMVg
-        FhKfhNHBLQ35cQjJEkCI3EydYNohipj/O0v5h9E=
-X-Google-Smtp-Source: APXvYqy1fe/fmygTT5dNyaMnDSmlkXR2yROgBLRDV1QZBR1ws18dSumHKNEiiZL7YRy/57kf6LFMKu4+eOOXk2xPOC4=
-X-Received: by 2002:a6b:c38b:: with SMTP id t133mr19273421iof.162.1565333543966;
- Thu, 08 Aug 2019 23:52:23 -0700 (PDT)
+        id S2406218AbfHIKCb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 06:02:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57392 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2405690AbfHIKCb (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Aug 2019 06:02:31 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c831:5a62:6d5c:8da3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E08EB60737;
+        Fri,  9 Aug 2019 10:02:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1565344949;
+        bh=r28ztbtYpWQhS9umvNslfUmPSliqBIPL0UGvkfop06Y=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hrHh2PIwFGMnpJ39PYObIFcTUi5dXaqRajBp7U5ivK3Jj3a7gOlflzUcykbjy0hkB
+         HHPCJEkGU3fYY1Yl0YHKbyqwPxhrI1pfJz73OxjBUgUJIcSRk9kFBLDumq2zOHZ1w6
+         q1RnISwJPwnaEjnbyWJe3dDr87m0g5/rEyTnmL3dUBTlI0Vy5my1I/o6rmUl4adAWt
+         q51D7AEON4tigE9eB0Sd4Oxr3x7iKKktFMSr5MAI+NvuewoHadVZc0Hqq/x4UyExAk
+         bkP5du+7vfmaNP+cVD7oNdQ7KO6ZfeOWM03m6A2eX4jsqp0sK0r4XmoDVW5xfCjD40
+         LfA0GhhT2N3sRQBC0C5Fg1IYUHDJhEur6F/cS+YMEey5cqKRAEmItUJ+ZAz/s0XfM4
+         76m5LXgS+eQS3K+NIfg/oV5KHuMGtfA8JRYIbe1Gx8cZYYFzSECIz2lXFwU42JkLDw
+         yobimrI0AVMCKR19XVSQDQYByhv9CluEmdFUVCTGxpSd+a+JDGT
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] apply: reload .gitattributes after patching it
+Date:   Fri,  9 Aug 2019 10:02:17 +0000
+Message-Id: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
 MIME-Version: 1.0
-References: <20190806085014.47776-1-carenas@gmail.com> <20190806163658.66932-1-carenas@gmail.com>
- <nycvar.QRO.7.76.6.1908082219160.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1908082219160.46@tvgsbejvaqbjf.bet>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 8 Aug 2019 23:52:12 -0700
-Message-ID: <CAPUEspibDcNfGk4=6Mvi2BHATGSxRPPph3F=3pLm_bLMBkBTNQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 0/3] grep: no leaks or crashes (windows testing needed)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
-        avarab@gmail.com, michal.kiedrowicz@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 8, 2019 at 1:21 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 6 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> > Eitherway, since I am unable to replicate the original bug or take
-> > performance numbers in a representative environment without Windows
-> > this is only published as an RFC, eventhough it has been tested and
-> > considered mostly complete.
->
-> Well, this is disappointing.
+When applying multiple patches with git am, or when rebasing using the
+am backend, it's possible that one of our patches has updated a
+gitattributes file. Currently, we cache this information, so if a
+file in a subsequent patch has attributes applied, the file will be
+written out with the attributes in place as of the time we started the
+rebase or am operation, not with the attributes applied by the previous
+patch. This problem does not occur when using the -m or -i flags to
+rebase.
 
-Apologies
+To ensure we write the correct data into the working tree, expire the
+cache after each patch that touches a path ending in ".gitattributes".
 
-> I worked several weeks on getting Azure Pipelines support in shape, so
-> that you can now open PRs against:
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ apply.c           | 11 +++++++++++
+ convert.c         |  9 ++++++++-
+ convert.h         |  6 ++++++
+ t/t3400-rebase.sh | 23 +++++++++++++++++++++++
+ 4 files changed, 48 insertions(+), 1 deletion(-)
 
-Thanks, I owe you a drink
-
-  https://dev.azure.com/git/git/_build/results?buildId=3D862
-
-Carlo
-
-PS. I might had broken something here as I can't see the test results
-that failed
-https://dev.azure.com/git/git/_build/results?buildId=3D857&view=3Dms.vss-te=
-st-web.build-test-results-tab
+diff --git a/apply.c b/apply.c
+index cde95369bb..b959b88b8e 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4643,6 +4643,7 @@ static int apply_patch(struct apply_state *state,
+ 	struct patch *list = NULL, **listp = &list;
+ 	int skipped_patch = 0;
+ 	int res = 0;
++	int flush_attributes = 0;
+ 
+ 	state->patch_input_file = filename;
+ 	if (read_patch_file(&buf, fd) < 0)
+@@ -4670,6 +4671,14 @@ static int apply_patch(struct apply_state *state,
+ 			patch_stats(state, patch);
+ 			*listp = patch;
+ 			listp = &patch->next;
++
++			if (!flush_attributes && patch->new_name) {
++				char *dummy = strip_path_suffix(patch->new_name, GITATTRIBUTES_FILE);
++				/* The patch applied to a .gitattributes file. */
++				if (dummy)
++					flush_attributes = 1;
++				free(dummy);
++			}
+ 		}
+ 		else {
+ 			if (state->apply_verbosity > verbosity_normal)
+@@ -4746,6 +4755,8 @@ static int apply_patch(struct apply_state *state,
+ 	if (state->summary && state->apply_verbosity > verbosity_silent)
+ 		summary_patch_list(list);
+ 
++	if (flush_attributes)
++		reset_parsed_attributes();
+ end:
+ 	free_patch_list(list);
+ 	strbuf_release(&buf);
+diff --git a/convert.c b/convert.c
+index 94ff837649..030e9b81b9 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1293,10 +1293,11 @@ struct conv_attrs {
+ 	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+ };
+ 
++static struct attr_check *check;
++
+ static void convert_attrs(const struct index_state *istate,
+ 			  struct conv_attrs *ca, const char *path)
+ {
+-	static struct attr_check *check;
+ 	struct attr_check_item *ccheck = NULL;
+ 
+ 	if (!check) {
+@@ -1339,6 +1340,12 @@ static void convert_attrs(const struct index_state *istate,
+ 		ca->crlf_action = CRLF_AUTO_INPUT;
+ }
+ 
++void reset_parsed_attributes(void)
++{
++	attr_check_free(check);
++	check = NULL;
++}
++
+ int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
+ {
+ 	struct conv_attrs ca;
+diff --git a/convert.h b/convert.h
+index 831559f10d..3710969d43 100644
+--- a/convert.h
++++ b/convert.h
+@@ -94,6 +94,12 @@ void convert_to_git_filter_fd(const struct index_state *istate,
+ int would_convert_to_git_filter_fd(const struct index_state *istate,
+ 				   const char *path);
+ 
++/*
++ * Reset the internal list of attributes used by convert_to_git and
++ * convert_to_working_tree.
++ */
++void reset_parsed_attributes(void);
++
+ /*****************************************************************
+  *
+  * Streaming conversion support
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 80b23fd326..062dc41df7 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -301,6 +301,29 @@ test_expect_success 'rebase --am and --show-current-patch' '
+ 	)
+ '
+ 
++test_expect_success 'rebase --am and .gitattributes' '
++	test_create_repo attributes &&
++	(
++		cd attributes &&
++		test_commit init &&
++		test_config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
++		test_config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
++
++		test_commit second &&
++		git checkout -b test HEAD^ &&
++
++		echo "*.txt filter=test" >.gitattributes &&
++		git add .gitattributes &&
++		test_commit third &&
++
++		echo "This text is smudged." >a.txt &&
++		git add a.txt &&
++		test_commit fourth &&
++		git rebase master &&
++		grep "smudged" a.txt
++	)
++'
++
+ test_expect_success 'rebase--merge.sh and --show-current-patch' '
+ 	test_create_repo conflict-merge &&
+ 	(
