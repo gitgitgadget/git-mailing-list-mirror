@@ -2,130 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87F5F1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 22:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D16311F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 22:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726140AbfHIWI5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 18:08:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57420 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726053AbfHIWI5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Aug 2019 18:08:57 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c831:5a62:6d5c:8da3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F245E60479;
-        Fri,  9 Aug 2019 22:08:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1565388535;
-        bh=VpHhs9H3yH7FAe3sIdjwKwMl73JK2SyZ7yLndHuLTzs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=xValA5Bku31jzJZnwmsUXWdb2W72AcvPIF40dPjoH1paqdN9RBMKiehKIV+ap/pha
-         G0Z8WXVID7cj7Ma+HLwJyTTtrYdHCIq86il9yvLX4URKp5/zAJZ2Doer4NIO5sRBrS
-         ZB2LBnxLyRIe1LfyngFHQ+JObrD1CckIrp23a6f1V/QQR772fVH0eJNzVVdd2krhin
-         2ieA824mQ/dRJDj3qMCx7KoMHiGaNhIqpmeDbDNinehkNhF0FH2DSgQCEXOIX5F8jD
-         QOhGWS7b7EAOIR729cA36R0EEUNT+zzinD+P4ypXptEdJeQKJKWD0xwWIANTAs2VbM
-         LuouHVL0TKCeBx7w2nlegLEdDi3xkAJIamEP9Jxo0j4Xv5/6RCcN8mcJcaLwZB3D4p
-         CAUKlhBBL7G/cUjVhZ5W+fvmxY8OpQsUmT6AtcD7+OEsLRhBCXOERanCQ4dW72AcPX
-         QSnUzw+NbsdKJVwf68O/7IAYyZDv28n6v00YjUR5UK45kiUdTPu
-Date:   Fri, 9 Aug 2019 22:08:48 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] apply: reload .gitattributes after patching it
-Message-ID: <20190809220848.GO118825@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
- <20190809111452.GA93559@syl.local>
- <20190809112552.GM118825@genre.crustytoothpaste.net>
- <20190809113613.GA3957@sigill.intra.peff.net>
- <20190809124318.GJ20404@szeder.dev>
- <20190809135148.GA7495@sigill.intra.peff.net>
+        id S1726140AbfHIWQn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 18:16:43 -0400
+Received: from mail-eopbgr710134.outbound.protection.outlook.com ([40.107.71.134]:6212
+        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726078AbfHIWQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Aug 2019 18:16:43 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PPPi1FjENop/aMXA1/9H/zSUYu5DVUJkzaN5ejFGiN7zIX0MLflSqIokN/3p+fj/zZUWAMv2x/eqCyuYgon39h2bnGWf6S/sIroJH/Pe7EpAhFjuVJLjrxSYOjPJpo6iCX9MUHpPULe4EXAQ5RqemzuWit/x+Xjc0jLWevDOseB8utG0nqLG0FjsAmtBwd4At4q7oMca+GTx7Sug7uJY1w1BAtY04tegkPg8sgHrmo5xVWhYTuQcBz3EHYxE1UC/IdbxBLfSikmbg8HnSLQYKt2LOrNfwgGHIsOJFAr1cLA62I7gjkok4//pQwKvdJDwuOLaRVkzgnVHwKj0PysoZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IpnhOxm340nwz+6Q/6bcLqJyKTQ6ChCvaVUl9cQMOk8=;
+ b=VoA9oju0ujLjUgeK5BZ8PHJZ8y6lNeBuQlMyZDIJAAAv+iVPW3PTJTaRKIZMMGsHPmamudOTpWhxkBGufRivhQqccGwad5Yelx2X8QwdBvX17ozmYHnDgIcP5iEcWQE45NrJGSPcwLJSfbIvZxjwnz7O0vz9RPCNlZd7ERN6QcOfBO8nnyTwTyblkuDwirX6uxdHjhECJiU40QUK9a+6rIKADKO1jwOxLe1+oyBBx3yrOfY16kJNQqv9XrgXBM6LMl7XReDA4fVwUR+ULDKlYGiGe/AQD5YDWim8YDPGakRd4GQyWKtE2Nl+Rco9y1eId6ZUf/Dql+IKzaDuWxQAlA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IpnhOxm340nwz+6Q/6bcLqJyKTQ6ChCvaVUl9cQMOk8=;
+ b=HD1YE/XVlk9hw+UkOsGdqExIRNGPwTMrfjz3fwm6cs+tLjZbsh9nx7flp0noAo/a0zI/+yvg/IyZ6i9Gn2ZXSbZpd2RmvL/cBLK+PZ4xGy1aFwi2PBUx4TcwgCUR84WEr5cmozWqVC/UGq6rLVfd9htrzMVYD4aWbZ4zzFXOKNc=
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com (20.179.72.203) by
+ BN8PR21MB1138.namprd21.prod.outlook.com (20.179.72.97) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.8; Fri, 9 Aug 2019 22:16:41 +0000
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::b896:fe09:31ae:e9a4]) by BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::b896:fe09:31ae:e9a4%9]) with mapi id 15.20.2157.001; Fri, 9 Aug 2019
+ 22:16:41 +0000
+From:   Cliff Schomburg <clisc@microsoft.com>
+To:     "gitster@pobox.com" <gitster@pobox.com>
+CC:     =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: "git log" does not display refs info when executed via C# Process
+ class on Windows
+Thread-Topic: "git log" does not display refs info when executed via C#
+ Process class on Windows
+Thread-Index: AdVO6XCnSWdcLXyxQQWtA59IuPRg6AAAkKqAAAOOazAAAJ5efgAA6vuw
+Date:   Fri, 9 Aug 2019 22:16:40 +0000
+Message-ID: <BN8PR21MB11560DB6FA18D85672CFE8FEB7D60@BN8PR21MB1156.namprd21.prod.outlook.com>
+References: <BN8PR21MB11569DAA8A677BF00113F683B7D60@BN8PR21MB1156.namprd21.prod.outlook.com>
+        <20190809195031.GK20404@szeder.dev>
+        <BN8PR21MB11566C135B1326AF1B45E4D8B7D60@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <xmqqblwyc8l8.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqblwyc8l8.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=clisc@microsoft.com; 
+x-originating-ip: [24.182.67.250]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 26fdca17-7656-4e04-dcb2-08d71d174131
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600158)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:BN8PR21MB1138;
+x-ms-traffictypediagnostic: BN8PR21MB1138:
+x-ld-processed: 72f988bf-86f1-41af-91ab-2d7cd011db47,ExtAddr
+x-microsoft-antispam-prvs: <BN8PR21MB113857A39175E7560996A9CFB7D60@BN8PR21MB1138.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 01244308DF
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(136003)(39860400002)(376002)(366004)(346002)(396003)(13464003)(189003)(199004)(316002)(76116006)(66946007)(4744005)(102836004)(22452003)(66446008)(66556008)(66476007)(53546011)(2501003)(54906003)(64756008)(6506007)(9686003)(8676002)(99286004)(26005)(55016002)(10290500003)(186003)(81166006)(81156014)(1730700003)(229853002)(10090500001)(52536014)(66066001)(478600001)(7696005)(76176011)(66574012)(71190400001)(33656002)(71200400001)(2351001)(8936002)(6246003)(5660300002)(86362001)(25786009)(6916009)(53936002)(486006)(6436002)(476003)(11346002)(8990500004)(305945005)(446003)(7736002)(14454004)(256004)(6116002)(4326008)(3846002)(74316002)(2906002)(5640700003);DIR:OUT;SFP:1102;SCL:1;SRVR:BN8PR21MB1138;H:BN8PR21MB1156.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: Umimq4rk5sTTlcjcmJInPQSYaoYN10NKekeF0nlgJ+fGOjK6GsAZUQlxo633DsnqYQ2IZOVvHMArsSYxzxRbJ3s0LiZ2webu2wALpxvW1bPVy9EJV25RQFczyhlzl2Y94FUFgqUjOIN/oQAXMy8z7aXoHlMuULPzb+tUxQjq2wpvoXeJiMKOgNzPjQK+aYnTCNFKl/8Byo5IcOnxKQNc8H0fd9KRwCv7MCsdvz+lkUTUnDs7htBdHUeZdNqkGK+QmOViStUAXJwyRzw0S6yPDdiGi3K9cAV4N7uf7VK4r+HQKCjHsOuNvyS9+WnYJNICZs4TfjvsZsxPfENM3I2o6vpgHVF4+taPykD5WQzX/jagCFhgBJp9TuNtbVyThBJbl/vHpGBHjzbPKWYCimJA/fvRSeyIIlVXB0wNlDyWQ2Q=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Cbvl/UgeRTPlujdB"
-Content-Disposition: inline
-In-Reply-To: <20190809135148.GA7495@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26fdca17-7656-4e04-dcb2-08d71d174131
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Aug 2019 22:16:40.9725
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1s3kDNlJG+mmLiBPKMhmVACl83JktmX2rHgEe8qx2a+HFQhFVpt3gLCyIiL53OJ4BdT4qUwPoxN4UY5A2Vax2Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR21MB1138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks, I will try that as well.  Strange it works on command line but not =
+STDOUT though.
 
---Cbvl/UgeRTPlujdB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----Original Message-----
+From: Junio C Hamano <gitster@pobox.com>=20
+Sent: Friday, August 9, 2019 5:50 PM
+To: Cliff Schomburg <clisc@microsoft.com>
+Cc: SZEDER G=E1bor <szeder.dev@gmail.com>; git@vger.kernel.org
+Subject: Re: "git log" does not display refs info when executed via C# Proc=
+ess class on Windows
 
-On 2019-08-09 at 13:51:49, Jeff King wrote:
-> On Fri, Aug 09, 2019 at 02:43:18PM +0200, SZEDER G=C3=A1bor wrote:
-> > But there is an other subtlety here: when I read the commit message
-> > saying "patch that touches a path ending in ".gitattributes"." and saw
-> > the new call to strip_path_suffix(), I immediately thought what would
-> > happen with a file called 'foo.gitattributes'.  Only when I looked
-> > into strip_path_suffix() became it clear that it only removes full
-> > path components, so such a filename won't cause any trouble (though
-> > perhaps the worst thing that could happen is that we unnecessarily
-> > flush the attributes cache).
->=20
-> Right. I think the term we want here is really "basename". So in fact:
->=20
->   if (!strcmp(basename(patch->new_name), GITATTRIBUTES_FILE))
->=20
-> would do what we want, except for the annoying caveat that basename() is
-> allowed to modify its parameter (to remove trailing directory
-> separators, but we know we wouldn't have them here).
+Cliff Schomburg <clisc@microsoft.com> writes:
 
-I think this is exactly the function I'm looking for. I'm a little
-uncomfortable relying on the fact that typical implementations don't
-modify the string when there's no trailing slash, though.
+> Strangely, when I run this command:
+>
+> Git log origin/master --pretty=3Doneline --decorate -1
+>
+> I get the format I want from STDOUT.  However, when I try to filter it to=
+ show only the tag refs:
+>
+> Git log origin/master --pretty=3Doneline --decorate=20
+> --decorate-refs=3D^tag* -1
+>
+> No refs are returned to standard output again.  Only on the command line.
+>
+> Does --decorate-refs not return to STDOUT?
 
-I think I'm going to end up refactoring out the strip_path_suffix
-function into a has_path_suffix and use that. That will avoid the
-allocation and it doesn't rely on the generosity of OS implementers.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+If you are asking for tags, which does not begin with a caret "^", perhaps =
+drop "^" from the pattern?
 
---Cbvl/UgeRTPlujdB
-Content-Type: application/pgp-signature; name="signature.asc"
+The pattern is supposed to be wildmatch pattern, so it is already left anch=
+ored, e.g. --decorate-refs=3Dag* won't find any tag.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1N7vAACgkQv1NdgR9S
-9ovZWBAAm33M4bgmqZQuhzfEu4UcH508d5r9wxiZ6saAu7oAwCgLNM03Yjd2HZtH
-VfDIXXvpgnq7M1Olu62KgyE4mzndeY7xRACIxDjB3IrszUI/Zgg6IoXU3UfAqRi0
-yDCojJdm8XJJ/AvkA98Pk6EYuE8fg5W+zJJy281dG/tpk26RJ0Ptag4KtG7WZk77
-jqAvZw0Kg/xaxJeQAfYAR1+mSsBozm3jRQZVMNVBqvncu21gVctqJco0Ojw1ComK
-YyRDxMf56lGIWFmB6u4N61qGgxe3/oR3TTo6Bq656K8hVmhgBaD+3to+qUI/D+Sk
-rKr8uukvnGTdwmoOQGjBb1rLfGAEZodE1WWoku++3bXk6srs4d+zW3cRt4QOis1p
-JuE7etD37csDxTJit/6OVOWoFedio3E3ln7f0Y0mlno3IgkbjjjBels/caStVFs/
-DZq00AJnYg+L074UXXRaZnm+0RuDModgfBmfQuKgIfS54Z8WT5/nAyQDnQ5j5Jpl
-MeGY605WInUizonTrxRB554EcnSg680eYEG+Tae6Oco2DxHbxS4EHWmkeONHhzYZ
-0sFGZdSNkqkf24yqf2rFp828d1yUBbolkH+dEzOtezcTtumCEvc9a547KoXwsrzi
-YAp+RLc/MSVkWxJAubtKoDDajT/ScDJbtNK7Wk5xTyBCTKIbW2g=
-=4gPH
------END PGP SIGNATURE-----
-
---Cbvl/UgeRTPlujdB--
