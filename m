@@ -2,224 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4091F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 17:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E09471F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 17:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405964AbfHIRN3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 13:13:29 -0400
-Received: from siwi.pair.com ([209.68.5.199]:43490 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726216AbfHIRN3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 13:13:29 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 235493F40E6;
-        Fri,  9 Aug 2019 13:13:27 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:41b9:ba9c:6c99:96cc] (unknown [IPv6:2001:4898:a800:1012:f2ec:ba9c:6c99:96cc])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C29093F40D3;
-        Fri,  9 Aug 2019 13:13:26 -0400 (EDT)
-Subject: Re: [PATCH v2 5/7] quote: add sq_quote_argv_pretty_ltrim
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.298.git.gitgitgadget@gmail.com>
- <pull.298.v2.git.gitgitgadget@gmail.com>
- <5059776248b6686faaff37c97aa63d0212579cd8.1565273938.git.gitgitgadget@gmail.com>
- <xmqqh86rfs70.fsf@gitster-ct.c.googlers.com>
- <7dbee619-2495-6426-b02b-49fd59e4f028@jeffhostetler.com>
- <60c7b26c-e598-182b-421e-bdf5c0a8ac9f@web.de>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5651286b-cd28-68ba-4743-98d546dfa3b0@jeffhostetler.com>
-Date:   Fri, 9 Aug 2019 13:13:25 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2407372AbfHIRje (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 13:39:34 -0400
+Received: from mail-lj1-f171.google.com ([209.85.208.171]:38288 "EHLO
+        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406652AbfHIRje (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Aug 2019 13:39:34 -0400
+Received: by mail-lj1-f171.google.com with SMTP id r9so92793910ljg.5
+        for <git@vger.kernel.org>; Fri, 09 Aug 2019 10:39:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lKqC8UmBE0bA/R0p7ECU2Lo6s1P9FlbL4vyaNhfUyDw=;
+        b=ZGwEqu1wsjyq9xEZNSmwKqAvnEvQ5bOjMPRZnivKCz2Q15XNR9wS1/kJ3iDfPxviWJ
+         Vw7PY5yVwG4WIkgUlPIsc8H7C+VPRHQoSE7KnJBj9llsdkwE/AoRm32APNRedmLmdMLK
+         v3Qp3cYfFlNj+5McpvqPDuQPzEvXlfPOBPF6MIf39Zh/366uakfhpAjp6drkYYzLHEgw
+         qf6t4oOpB14BQROFAXjPqCedvqLBxxVGqWwCIF63MQHAW+ryLm/WH9wOUo7sqHOFokbh
+         NNKVX64VnhuslemRvNqDHYX6YilIo7BfXHriTJxNY6w1yuftibBRUG6aUb2T4KfN1cdT
+         DGMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lKqC8UmBE0bA/R0p7ECU2Lo6s1P9FlbL4vyaNhfUyDw=;
+        b=RFXqD56+3HsFNa3/PUWe40tf5IqWD9fCDG3NvM5y3OA+ITLxGSEsl4Yq7lOO643AlH
+         jt4XKYMtzDbnNj+wcK80SykhihT1b0a/XsOJr+0ymypKWKUSZ5mP9Veis1QJ5Z3g+ptJ
+         vURU308J7Iw8sjxZkny35eEnogUSE3dXJka16G+cgC8qWWhY/UA5zWC1U95P2rIFPpFl
+         ZShpdEnJGZNfVfN2EYWHi072GJeeuuusMv0wipAoW8LqX7YkKqn9YDOD8E8Vf6kRBt9k
+         YHSDoFgillburNXPYw2iQU25Ek+lQF0Wv2T4Oh/wC6LC+RYNRGrDCvhmBAVlnnUMvENj
+         KDJQ==
+X-Gm-Message-State: APjAAAWis/UboRvlKKGGB3t2PaVq+WZmNU3DbGsp4xedV4UW8F+CDuUU
+        IoVT9s7jV6wj550fSeuUldVt1QBBfQxLOymTJWI=
+X-Google-Smtp-Source: APXvYqxEpA7RZdJUoHtgBIzUsAJW8XNnPcML3kKlS+pO6j9pe0/wlfYoxhJLuN+GDx6pGYHYG9o2YzOFX7hJKmgH9Mg=
+X-Received: by 2002:a2e:b047:: with SMTP id d7mr12243841ljl.8.1565372372084;
+ Fri, 09 Aug 2019 10:39:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <60c7b26c-e598-182b-421e-bdf5c0a8ac9f@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com> <20190809001315.GA87896@syl.lan>
+ <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org> <20190809020732.GA89008@syl.lan>
+ <CABURp0oFNWfWEwnkjV1+Tag91HTRBCaJjyvc8CXtPGu78DhtSw@mail.gmail.com> <20190809114148.GB3957@sigill.intra.peff.net>
+In-Reply-To: <20190809114148.GB3957@sigill.intra.peff.net>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Fri, 9 Aug 2019 10:39:10 -0700
+Message-ID: <CABURp0q-gfXWiembsHYZb9bxhKrd6=zJA2bfQek0JDxeEP1HGA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Ariadne Conill <ariadne@dereferenced.org>,
+        Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Aug 9, 2019 at 4:41 AM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Aug 08, 2019 at 08:07:36PM -0700, Phil Hord wrote:
+>
+> > The long form you give there is to be used in case the old email
+> > address is not a unique key. See 'git help shortlog'.
+> >
+> > The problem we have at work is that one woman's old email address
+> > includes her deadname, like <firstname.lastname@company.com>.  I will
+> > leave it up to her whether she chooses to be listed explicitly in the
+> > mailmap.  I have wondered if we should permit hashed email addresses
+> > to be used for this specific case, but this also has its drawbacks.
+>
+> Since the set of hash inputs is finite and small (i.e., the set of all
+> emails in the repository), it would be trivial to generate the plaintext
+> mapping from even a cryptographically strong hashed mapping.
+>
+> Which isn't to say it's _totally_ worthless, since that adds an extra
+> step, but it really is just obfuscating the data.
 
-
-On 8/8/2019 6:49 PM, René Scharfe wrote:
-> Am 08.08.19 um 21:04 schrieb Jeff Hostetler:
->> On 8/8/2019 2:05 PM, Junio C Hamano wrote:
->>> Having made the primary purpose of the helper clearer leads me to
->>> wonder if "do not add SP before the first element, i.e. argv[0]", is
->>> really what we want.  If we always clear the *dst strbuf before
->>> starting to serialize argv[] into it, then the behaviour would make
->>> sense, but we do not---we are "appending".
->>>
->>> As long as we are appending, would we be better off doing something
->>> sillily magical like this instead, I have to wonder?
->>>
->>>      void sq_append_strings_quoted(struct strbuf *buf, const char **av)
->>>      {
->>>          int i;
->>>
->>>          for (i = 0; av[i]; i++) {
->>>              if (buf->len)
->>>                  strbuf_addch(buf, ' ');
->>>              sq_quote_buf_pretty(buf, argv[0]);
->>>          }
->>>      }
->>>
->>> That is, "if we are appending to an existing string, have SP to
->>> separate the first element from that existing string; treat the
->>> remaining elements the same way (if the buffer is empty, there is no
->>> point adding SP at the beginning)".
->>
->> I don't think that would do what we want.  We don't know what the
->> caller's expectations are.  In my uses in commits 6/7 and 7/7 I
->> already added the leading chars I wanted in the strbuf before calling
->> sq_quote_argv_pretty_ltrim() and assumed the output would be a true
->> append.  For example:
->>
->> +    strbuf_addf(&buf_payload, "alias:%s argv:[", alias);
->> +    sq_quote_argv_pretty_ltrim(&buf_payload, argv);
->> +    strbuf_addch(&buf_payload, ']');
->>
->> I like your suggestion of putting my new function in the _append_
->> category.  I think I'll add the 3rd arg to this and then it will
->> be completely specified and I can get rid of the _ltrim suffix.
-> 
-> Two observations:
-> 
-> If callers want to add something before a joined delimited list, they
-> already can with a strbuf_add* call.  No need to add that feature to
-> a function that joins lists.
-> 
-> And repetitions of repetitions (loops) are boring.
-> 
-> Apologies in advance for any coffee stains on your monitor, but
-> here's how I would start, probably followed by attempts to inline the
-> functions that become trivial wrappers:
-
-
-Um, yeah, I must say that I didn't expect the conversation to turn to
-map-style functions and a change in design styles.  I think it would be
-better to have that conversation in a different patch series and not mix
-it with my trace2 janitoring.
-
-I'm going to push a V3 that does just the minimum to have a sq_ function
-that joins the args with a space delimiter (and without the leading
-space) and re-write the existing function to call it after adding the
-legacy leading space.  This will let existing callers continue to work
-as is.  And they can be converted if/when anyone wants to dig into them.
-
-
-> 
-> ---
->   quote.c  | 18 ++++--------------
->   strbuf.c | 20 +++++++++++++-------
->   strbuf.h |  8 ++++++++
->   3 files changed, 25 insertions(+), 21 deletions(-)
-> 
-> diff --git a/quote.c b/quote.c
-> index 7f2aa6faa4..f422188852 100644
-> --- a/quote.c
-> +++ b/quote.c
-> @@ -74,24 +74,14 @@ void sq_quotef(struct strbuf *dst, const char *fmt, ...)
-> 
->   void sq_quote_argv(struct strbuf *dst, const char **argv)
->   {
-> -	int i;
-> -
-> -	/* Copy into destination buffer. */
-> -	strbuf_grow(dst, 255);
-> -	for (i = 0; argv[i]; ++i) {
-> -		strbuf_addch(dst, ' ');
-> -		sq_quote_buf(dst, argv[i]);
-> -	}
-> +	strbuf_addch(dst, ' ');
-> +	strbuf_map_join_argv(dst, argv, sq_quote_buf, " ");
->   }
-> 
->   void sq_quote_argv_pretty(struct strbuf *dst, const char **argv)
->   {
-> -	int i;
-> -
-> -	for (i = 0; argv[i]; i++) {
-> -		strbuf_addch(dst, ' ');
-> -		sq_quote_buf_pretty(dst, argv[i]);
-> -	}
-> +	strbuf_addch(dst, ' ');
-
-If I'm reading this correctly, this has slightly different behavior
-than the original version.  Perhaps:
-
-	if (argv[0])
-		strbuf_addch(dst, ' ');
-
-> +	strbuf_map_join_argv(dst, argv, sq_quote_buf_pretty, " ");
->   }
-> 
->   static char *sq_dequote_step(char *arg, char **next)
-> diff --git a/strbuf.c b/strbuf.c
-> index d30f916858..d337853b53 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -304,17 +304,23 @@ void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
->   	strbuf_setlen(sb, sb->len + sb2->len);
->   }
-> 
-> +void strbuf_map_join_argv(struct strbuf *sb, const char **argv,
-> +			  void (*fn)(struct strbuf *, const char *),
-> +			  const char *separator)
-> +{
-> +	while (*argv) {
-> +		fn(sb, *argv++);
-> +		if (*argv)
-> +			strbuf_addstr(sb, separator);
-> +	}
-> +}
-> +
->   const char *strbuf_join_argv(struct strbuf *buf,
->   			     int argc, const char **argv, char delim)
->   {
-> -	if (!argc)
-> -		return buf->buf;
-> +	char separator[] = { delim, '\0' };
-> 
-> -	strbuf_addstr(buf, *argv);
-> -	while (--argc) {
-> -		strbuf_addch(buf, delim);
-> -		strbuf_addstr(buf, *(++argv));
-> -	}
-> +	strbuf_map_join_argv(buf, argv, strbuf_addstr, separator);
-> 
->   	return buf->buf;
->   }
-> diff --git a/strbuf.h b/strbuf.h
-> index f62278a0be..7adeff94a7 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -297,6 +297,14 @@ static inline void strbuf_addstr(struct strbuf *sb, const char *s)
->    */
->   void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2);
-> 
-> +/**
-> + * Apply `fn` to `sb` and each element of the NULL-terminated array
-> + * `argv`. Add `separator` between these invocations.
-> + */
-> +void strbuf_map_join_argv(struct strbuf *sb, const char **argv,
-> +			  void (*fn)(struct strbuf *, const char *),
-> +			  const char *separator);
-> +
->   /**
->    * Join the arguments into a buffer. `delim` is put between every
->    * two arguments.
-> --
-> 2.22.0
-> 
+Yes, obfuscation is all I expect. Someone who needs deeper scrubbing
+will need to rewrite their history instead.
