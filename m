@@ -2,88 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E09471F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 17:39:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0041F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 17:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407372AbfHIRje (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 13:39:34 -0400
-Received: from mail-lj1-f171.google.com ([209.85.208.171]:38288 "EHLO
-        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406652AbfHIRje (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 13:39:34 -0400
-Received: by mail-lj1-f171.google.com with SMTP id r9so92793910ljg.5
-        for <git@vger.kernel.org>; Fri, 09 Aug 2019 10:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lKqC8UmBE0bA/R0p7ECU2Lo6s1P9FlbL4vyaNhfUyDw=;
-        b=ZGwEqu1wsjyq9xEZNSmwKqAvnEvQ5bOjMPRZnivKCz2Q15XNR9wS1/kJ3iDfPxviWJ
-         Vw7PY5yVwG4WIkgUlPIsc8H7C+VPRHQoSE7KnJBj9llsdkwE/AoRm32APNRedmLmdMLK
-         v3Qp3cYfFlNj+5McpvqPDuQPzEvXlfPOBPF6MIf39Zh/366uakfhpAjp6drkYYzLHEgw
-         qf6t4oOpB14BQROFAXjPqCedvqLBxxVGqWwCIF63MQHAW+ryLm/WH9wOUo7sqHOFokbh
-         NNKVX64VnhuslemRvNqDHYX6YilIo7BfXHriTJxNY6w1yuftibBRUG6aUb2T4KfN1cdT
-         DGMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lKqC8UmBE0bA/R0p7ECU2Lo6s1P9FlbL4vyaNhfUyDw=;
-        b=RFXqD56+3HsFNa3/PUWe40tf5IqWD9fCDG3NvM5y3OA+ITLxGSEsl4Yq7lOO643AlH
-         jt4XKYMtzDbnNj+wcK80SykhihT1b0a/XsOJr+0ymypKWKUSZ5mP9Veis1QJ5Z3g+ptJ
-         vURU308J7Iw8sjxZkny35eEnogUSE3dXJka16G+cgC8qWWhY/UA5zWC1U95P2rIFPpFl
-         ZShpdEnJGZNfVfN2EYWHi072GJeeuuusMv0wipAoW8LqX7YkKqn9YDOD8E8Vf6kRBt9k
-         YHSDoFgillburNXPYw2iQU25Ek+lQF0Wv2T4Oh/wC6LC+RYNRGrDCvhmBAVlnnUMvENj
-         KDJQ==
-X-Gm-Message-State: APjAAAWis/UboRvlKKGGB3t2PaVq+WZmNU3DbGsp4xedV4UW8F+CDuUU
-        IoVT9s7jV6wj550fSeuUldVt1QBBfQxLOymTJWI=
-X-Google-Smtp-Source: APXvYqxEpA7RZdJUoHtgBIzUsAJW8XNnPcML3kKlS+pO6j9pe0/wlfYoxhJLuN+GDx6pGYHYG9o2YzOFX7hJKmgH9Mg=
-X-Received: by 2002:a2e:b047:: with SMTP id d7mr12243841ljl.8.1565372372084;
- Fri, 09 Aug 2019 10:39:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com> <20190809001315.GA87896@syl.lan>
- <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org> <20190809020732.GA89008@syl.lan>
- <CABURp0oFNWfWEwnkjV1+Tag91HTRBCaJjyvc8CXtPGu78DhtSw@mail.gmail.com> <20190809114148.GB3957@sigill.intra.peff.net>
-In-Reply-To: <20190809114148.GB3957@sigill.intra.peff.net>
-From:   Phil Hord <phil.hord@gmail.com>
-Date:   Fri, 9 Aug 2019 10:39:10 -0700
-Message-ID: <CABURp0q-gfXWiembsHYZb9bxhKrd6=zJA2bfQek0JDxeEP1HGA@mail.gmail.com>
+        id S2407566AbfHIRon (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 13:44:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61429 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407544AbfHIRon (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Aug 2019 13:44:43 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1B2B1740AB;
+        Fri,  9 Aug 2019 13:44:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f1Zg7DhETBPdUfzqRXwhbvutCdI=; b=uPVYky
+        hIn1j1L2sjId1oBAf8eTdFCszf49l+gE58PaDFkhrfw9mCmZnCdVQKvEcEhc1YtR
+        I+/1uzXp9Lhr0urh5bqBmAFHFVM/jb0EEvyqvstd1DHu280d5ugNo95+hlwxdQFV
+        eGBHcaFaJT8bWDXnRL+Wz7of5e+AfjMvPfKIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ubZDM3mH/6Bu+3aRT0+mwYNCc5wXr3lZ
+        J3Viy+7ZVvBtl4F/vJRKnrkDza1ko18w222EjtpuEMGE5acspYev5O9j86UGmGxa
+        lSLrbX7b70vGjGYvRs0ixp2JgzhofrJBTy+WE5s9EVk5THdYetS6Kgo5evigzqTX
+        e+QERMivfuw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E8A411740AA;
+        Fri,  9 Aug 2019 13:44:40 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D4631740A9;
+        Fri,  9 Aug 2019 13:44:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "'Christian Couder'" <christian.couder@gmail.com>,
+        <git@vger.kernel.org>
 Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Ariadne Conill <ariadne@dereferenced.org>,
-        Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
+        <20190809001315.GA87896@syl.lan>
+        <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org>
+        <001e01d54ebb$9a1ab4b0$ce501e10$@nexbridge.com>
+Date:   Fri, 09 Aug 2019 10:44:39 -0700
+In-Reply-To: <001e01d54ebb$9a1ab4b0$ce501e10$@nexbridge.com> (Randall
+        S. Becker's message of "Fri, 9 Aug 2019 10:06:06 -0400")
+Message-ID: <xmqq7e7mdyig.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5D0755FA-BACD-11E9-9DF9-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 9, 2019 at 4:41 AM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Aug 08, 2019 at 08:07:36PM -0700, Phil Hord wrote:
->
-> > The long form you give there is to be used in case the old email
-> > address is not a unique key. See 'git help shortlog'.
-> >
-> > The problem we have at work is that one woman's old email address
-> > includes her deadname, like <firstname.lastname@company.com>.  I will
-> > leave it up to her whether she chooses to be listed explicitly in the
-> > mailmap.  I have wondered if we should permit hashed email addresses
-> > to be used for this specific case, but this also has its drawbacks.
->
-> Since the set of hash inputs is finite and small (i.e., the set of all
-> emails in the repository), it would be trivial to generate the plaintext
-> mapping from even a cryptographically strong hashed mapping.
->
-> Which isn't to say it's _totally_ worthless, since that adds an extra
-> step, but it really is just obfuscating the data.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-Yes, obfuscation is all I expect. Someone who needs deeper scrubbing
-will need to rewrite their history instead.
+> On 01 Aug 2019 13:05:12, Junio wrote:
+>> >> *snip*
+>
+> I think this got missed in the shuffle, but I am getting questions
+> about the topic from my own team that I cannot answer.
+>
+> I noticed that the switch and restore commands are now available
+> in 2.23.0 but are not discussed in recent What's Cooking or Git
+> Rev (or I blithely missed them). The question from my team is what
+> are the plans for deprecating checkout. They have loads of scripts
+> and want to plan for moving over.
+
+The two new commands were done in response to a common "checkout
+does two different things, either checkout a branch in order to
+start working on it, or checkout paths into the current workspace to
+work on them" complaint.  Those who are used to and are OK with the
+"git" command that changes behaviour based on the rest of args (i.e.
+"checkout <branchname>" and "checkout [<tree-ish>] <pathspec>" are
+the ways to obtain these two behaviours) can safely keep using the
+command they are familiar with.
+
+I do not think there currently is any plan to deprecate checkout.
