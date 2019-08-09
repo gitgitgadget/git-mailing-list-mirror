@@ -8,46 +8,46 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E041F731
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7CE81F731
 	for <e@80x24.org>; Fri,  9 Aug 2019 03:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729503AbfHIDCU (ORCPT <rfc822;e@80x24.org>);
+        id S2403873AbfHIDCU (ORCPT <rfc822;e@80x24.org>);
         Thu, 8 Aug 2019 23:02:20 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41805 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729307AbfHIDCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 23:02:19 -0400
-Received: by mail-pl1-f193.google.com with SMTP id m9so44209218pls.8
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39753 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729476AbfHIDCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 23:02:20 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u17so45098190pgi.6
         for <git@vger.kernel.org>; Thu, 08 Aug 2019 20:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5JQwDQPPcUTuXiO+twlE2opiZy8hSok0Ch/7ke2Sb6I=;
-        b=RNUepgr4WnMT7LQ9yQbiruzTMJyC9NmKY4zYM3yrU3YRYejs19+lASqhZ8hnLE6rU/
-         oFyNvnaeATQrNxUsHcVR2fonkr+fPPnOJ2iGSsp9AekgG3eYcsYTWkEbXCK6oj6CBi7Z
-         6uiIU2COkvIHYXyG6DDzoeOr3s06YBI+lqFSy+Znarq6UvHO4PO4rNHJ9jf1vJjQxsQm
-         l7AUtOftkTq7QvQgtJcqy1JC+0/HEGBTHs+t3p0eQPSkxKx50izkgKlcDuWhgNdoRxbC
-         LASNJ66PISAe8cGY9NRyWib8Ot0xe9f1C9VY2+GryU8g7kjuySR7eDOsG92ShIkKAxOH
-         2mWg==
+        bh=G2d9hzHtsNy+lwihRcEFRhNq/3DTOD3fwiPkRvW/vqc=;
+        b=FlRLPBtchjwxNhGA/wohbt70/APRxYc2Ea6igGtRw+0PLNBODpz6Z1ErgI3Aq1uTsf
+         EGtAWVZ/ON8HtTMJeUxdjzSKZioitf3SIWdJP6KtYzmPDitBjEs5H6lkqZLOtHdya7J/
+         6HkLzYXcmofx2v6TUb4fvWFe2ofRaPufPhoI5rVgU4/0fBrplVPCSp8tIbab5Y5QAANY
+         5Nn1ahYOppVWxPFurwlSBjsv+HELluqumPBirje5W/wCM7JpFdg+tzOjQJnb/ZA2NSdt
+         aQCBUhxlkH/kAa87qhGeYP7pahyrdOUZwXpr2bjNGoXfW4UfKrJNx8kpQ8DvsLcp12na
+         rofA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5JQwDQPPcUTuXiO+twlE2opiZy8hSok0Ch/7ke2Sb6I=;
-        b=I/rGtvSXHeR9NN9FKtntHdwrjLosn/SZ9M6D8Lr0F9xi0uZkV5brbErde9jatbTF+1
-         BohTo42UU7wNCiMqxoDLuJIEp5L0Di1o7dxkjpUZQJmLhGKRQyi/Vl7kPApdfVzy+cPx
-         MUVfZfLxpXWMNf98Y/aQWV0GYNcbYdQMcH8u309hLUCPWme+etQw8vgtclL7qEK/gbSs
-         zRgIex6oDE9jaEeGKJzFhwBCJFHl3dzy4sACqrGhlP/T3Kr5N9i5y5bvIRtUKqarJPQF
-         Ugzgk7GIfDxuQh25BpabOnwfYqy14L2XYo83k2uNg6vsVsURLoUE3ffq+yjcJ+ZytKvP
-         nuSQ==
-X-Gm-Message-State: APjAAAXhVJ5Zbji4bWHRqX1h0+ER1ZN7FW4QkYxElX/KISxdSvYgulp4
-        V6tg4PhamB9T2MYplWh4Dcg20g2SKtk=
-X-Google-Smtp-Source: APXvYqxvg2kb2Q9yhfT5yNE62jNLq9BiHQAv/S07H6a/19E2fa7oL3JeX1KRZztMmz90zoRIZZFOxA==
-X-Received: by 2002:a17:902:e58b:: with SMTP id cl11mr16406371plb.24.1565319738504;
-        Thu, 08 Aug 2019 20:02:18 -0700 (PDT)
+        bh=G2d9hzHtsNy+lwihRcEFRhNq/3DTOD3fwiPkRvW/vqc=;
+        b=KUTAUXyHSX5pWLXMC02F7HPqSVPlCzzSsRvPJDVxbUNlbziag1rwp8oehk4wO27+Zk
+         4H9cJcv9NuPH8bZ7Tu37vARSfxgXqUhGAzAoB6YW+qIyvdg0GwRz+nby6UYAEy6ApvSi
+         vOvo2llkmgipmuNQFE2CJuTr793ezDjOTC6F+gcEI2H6FNy58jot/YpzGpkcJiwgKF1p
+         vjbH0RfL16MzKCGQBP9fEhlNTKdhpCi4R9rC3qC9q05ptSti9fdwiiihKELKzfLt62JW
+         53INRCVoQjC19fwDa8WtB1YblyQsj5UYJcd3IWh3O57xlt2+CuFbUZ+qke3YVFoxA1IB
+         xL5g==
+X-Gm-Message-State: APjAAAVPqRvHXrx4yCujT1Trin0NrbC/Y0rdI7L7MiV1Mmxz8PSZdaed
+        U8IBzjEug2OK40asX8bda5xRq2IAvtw=
+X-Google-Smtp-Source: APXvYqyfDHGqlxSVXutcEXs9LCJ2LcGCLAiuM7OtQAsyFKqKDLEhdID2buOKwupLzfkpwjTWqs5+QQ==
+X-Received: by 2002:a17:90a:f491:: with SMTP id bx17mr7349174pjb.118.1565319739224;
+        Thu, 08 Aug 2019 20:02:19 -0700 (PDT)
 Received: from localhost.localdomain ([205.209.24.227])
-        by smtp.gmail.com with ESMTPSA id h1sm124965938pfo.152.2019.08.08.20.02.17
+        by smtp.gmail.com with ESMTPSA id h1sm124965938pfo.152.2019.08.08.20.02.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 08 Aug 2019 20:02:18 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
@@ -55,12 +55,13 @@ From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?=
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, gitster@pobox.com, johannes.schindelin@gmx.de,
         l.s.r@web.de, michal.kiedrowicz@gmail.com
-Subject: [RFC PATCH v5 0/3] grep: almost no more leaks, hopefully no crashes
-Date:   Thu,  8 Aug 2019 20:02:07 -0700
-Message-Id: <20190809030210.18353-1-carenas@gmail.com>
+Subject: [RFC PATCH v5 1/3] grep: make PCRE1 aware of custom allocator
+Date:   Thu,  8 Aug 2019 20:02:08 -0700
+Message-Id: <20190809030210.18353-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc1
-In-Reply-To: <20190807213945.10464-1-carenas@gmail.com>
+In-Reply-To: <20190809030210.18353-1-carenas@gmail.com>
 References: <20190807213945.10464-1-carenas@gmail.com>
+ <20190809030210.18353-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,64 +70,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is a candidate reroll for cb/pcre2-chartables-leakfix, that
-hopefully addresses the root cause of the problem reported by Dscho in
-Windows, where the PCRE2 library wasn't aware of the custom allocator and
-was returning a pointer created with the system malloc but passing it to
-NED's free, resulting in a segfault.
+63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09) didn't include a way
+to override the system alocator, and so it is incompatible with
+USE_NED_ALLOCATOR as reported by Dscho[1] (in similar code from PCRE2)
 
-The most likely reason why it was triggered by the original leak fix is
-the layering violation reported by René and that is likely exclusive to PCRE2
-(hence why it hasn't been reported with PCRE1). Additional work might be
-available in a future release of PCRE2 to address that as detailed in an
-upstream bug[1] report.
+Make the minimum change possible to ensure this combination is supported
+by extending grep_init to set the PCRE1 specific functions to the NED
+versions (using the aliased names though) and therefore making sure all
+alocations are done inside PCRE1 with the same allocator than the rest
+of git.
 
-Changes since v4 (only in patch 2):
+This change might have performance impact (hopefully for the best) and
+so will be good idea to test it in a platform where NED might have a
+positive impact (ex: Windows 7)
 
-* git log change reverted, still not sure where it will fit better and worst
-  case will leak a few bytes when -P is used.
-  since the users of this API are doing it indirectly it might be problematic
-  long term though, but luckily since it is most of the tine a NOOP and can
-  be called multiple times might be ok to do it unconditionally
-* slightly better looking code
+[1] https://public-inbox.org/git/pull.306.git.gitgitgadget@gmail.com
 
-Changes since v3 (mostly in patch 2):
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile |  2 +-
+ grep.c   | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-* git log also calls the "destructor" for grep API
-* no more "bug" being triggered by make test, sorry René
-* hopefully no more crashes in windows (I was expecting at most a BUG)
-
-Future work (other than the needed refactoring explained in the
-second patch) and adjacent bugs, includes:
-
-* tracking more possible users of the grep API that might need to call
-  grep_destroy()
-* completely moving PCRE2 to use NED (as is done with PCRE1 and was
-  proposed on the original patch[2] this is based on
-* build on top of the new API so that other work could be shared
-  (for example the chartables that started this whole mess)
-
-or (hopefully not)
-
-* ignore the original leak (maybe with an UNLEAK) as René suggested [3]
-* discard this work and just use Dscho's fix (with some improvements,
-  like using xmalloc)
-
-[1] https://bugs.exim.org/show_bug.cgi?id=2429
-[2] https://public-inbox.org/git/3397e6797f872aedd18c6d795f4976e1c579514b.1565005867.git.gitgitgadget@gmail.com/
-[3] https://public-inbox.org/git/7ec60d57-9940-35f2-f7b5-c87d4dc7cdd5@web.de/
-
-Carlo Marcelo Arenas Belón (3):
-  grep: make PCRE1 aware of custom allocator
-  grep: make PCRE2 aware of custom allocator
-  grep: avoid leak of chartables in PCRE2
-
- Makefile       |  2 +-
- builtin/grep.c |  1 +
- grep.c         | 71 +++++++++++++++++++++++++++++++++++++++++++++++---
- grep.h         |  2 ++
- 4 files changed, 72 insertions(+), 4 deletions(-)
-
-base-commit: 51cf315870bbb7254ddf06c84fe03b41bc48eebd
+diff --git a/Makefile b/Makefile
+index bd246f2989..4b384f3759 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1764,7 +1764,7 @@ ifdef NATIVE_CRLF
+ endif
+ 
+ ifdef USE_NED_ALLOCATOR
+-	COMPAT_CFLAGS += -Icompat/nedmalloc
++	COMPAT_CFLAGS += -DUSE_NED_ALLOCATOR -Icompat/nedmalloc
+ 	COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
+ 	OVERRIDE_STRDUP = YesPlease
+ endif
+diff --git a/grep.c b/grep.c
+index cd952ef5d3..0154998695 100644
+--- a/grep.c
++++ b/grep.c
+@@ -150,12 +150,22 @@ int grep_config(const char *var, const char *value, void *cb)
+  * Initialize one instance of grep_opt and copy the
+  * default values from the template we read the configuration
+  * information in an earlier call to git_config(grep_config).
++ *
++ * If using PCRE make sure that the library is configured
++ * to use the right allocator (ex: NED)
+  */
+ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
+ {
+ 	struct grep_opt *def = &grep_defaults;
+ 	int i;
+ 
++#ifdef USE_NED_ALLOCATOR
++#ifdef USE_LIBPCRE1
++	pcre_malloc = malloc;
++	pcre_free = free;
++#endif
++#endif
++
+ 	memset(opt, 0, sizeof(*opt));
+ 	opt->repo = repo;
+ 	opt->prefix = prefix;
 -- 
 2.23.0.rc1
+
