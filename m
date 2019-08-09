@@ -2,113 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4C51F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 03:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B15731F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 03:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733140AbfHIDFd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 23:05:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38668 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729490AbfHIDFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 23:05:33 -0400
-Received: (qmail 6731 invoked by uid 109); 9 Aug 2019 03:05:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 09 Aug 2019 03:05:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26529 invoked by uid 111); 9 Aug 2019 03:08:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Aug 2019 23:08:06 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Aug 2019 23:05:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] delete multiple tags in a single transaction
-Message-ID: <20190809030531.GA14576@sigill.intra.peff.net>
-References: <20190808035935.30023-1-phil.hord@gmail.com>
- <CABPp-BFH++aJinkzg+qsZDRN6R5-E8LPCG_u+udZLW6o0MGBug@mail.gmail.com>
- <CABURp0p5xbsq+8UsFerMAY8EG-ndXgd19EUsHOgQG-dnDnTAgg@mail.gmail.com>
+        id S1729476AbfHIDHw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 23:07:52 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33736 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729307AbfHIDHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 23:07:52 -0400
+Received: by mail-lj1-f194.google.com with SMTP id z17so2323192ljz.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 20:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xkw7Lj7r6ovvCmT4lJ/Z9TNVx+1/vr4Ipoyyndje6zk=;
+        b=i3TOFAzmQmbq95kTB/waW0nq5b28Wc9aR7tpzI3P300x5ObpDcckhYn/lwgGDaKwE7
+         Us1udgPOIzoTOQE0H/sx1LwnnSJcaK8gJbyaAJbxqXvRHCL34Kii1IpmoGlf3gkQXu+I
+         /gwuMBgXOy1BhAM4bn/NlsCWMxLz1YdGQ7j/3YwmgGJI8zuaHwullqXXQlJhIyolp/Qb
+         THtb6PcQBYtBD6/ARjnA0tZAochJ65w6eA79ByrILG5iE0vhmPtwJOonvl0U8Ao9RsUz
+         X8PIx/qhp7Zgv0wIjr0TUK0GUw7Ko++w2dwVWkNB2WaC3AlKcRhIC/mHXc0cpqxhPxW2
+         cR4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xkw7Lj7r6ovvCmT4lJ/Z9TNVx+1/vr4Ipoyyndje6zk=;
+        b=TAcqRhaLea6/UAb4xglU+84SOxaCaNjKqlIoo5oaF7BAjB2jjGdxieRWrUfZ0LCOHj
+         cCX5yGdpLaObGk2Zp1+k7K6QhUhjERw4benJnk8E2SuZSB7b6TBCcgjMqytu5QR6p43S
+         EILpoyhj9m4knq8Svha+jNJPgMXKLqFx5vSrwCMd1ifMbZjV6pKKTUJxKblbLw0XJ6+F
+         h6teW8GvnMe1SXTjLN8zilm8fxlESgD/M5Iywsqfv540s+NXegYNYmI3n3HXXRFDW8bJ
+         oorppGYUG9IhdZRNH7++D6wQ4Wf+jeJ0Eeh8xzo+hfghJ/TFaYDqOpQaul+Cn9ixSVVR
+         C+cg==
+X-Gm-Message-State: APjAAAVVcjBMK2ElnQlkQqAVnnKv6Rx6PIsJVUB+b16+7AgGfXFXdbtz
+        zcqmef0GWDuawha5HGqN+vrA6c/seNcAGVM2NGQ=
+X-Google-Smtp-Source: APXvYqwUDilXP9n2B8H9vFOEZngfK4oibMY62Haj+y6q9s7nMjrBRojiu57icmwnT0dISJoL9HGKwQZRDW2qEVauKR8=
+X-Received: by 2002:a2e:b047:: with SMTP id d7mr10187233ljl.8.1565320070427;
+ Thu, 08 Aug 2019 20:07:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABURp0p5xbsq+8UsFerMAY8EG-ndXgd19EUsHOgQG-dnDnTAgg@mail.gmail.com>
+References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com> <20190809001315.GA87896@syl.lan>
+ <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org> <20190809020732.GA89008@syl.lan>
+In-Reply-To: <20190809020732.GA89008@syl.lan>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Thu, 8 Aug 2019 20:07:36 -0700
+Message-ID: <CABURp0oFNWfWEwnkjV1+Tag91HTRBCaJjyvc8CXtPGu78DhtSw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Ariadne Conill <ariadne@dereferenced.org>,
+        Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 08, 2019 at 04:43:16PM -0700, Phil Hord wrote:
+The issue of deadnaming aside, turning on log.mailmap by default is
+the sensible thing to do given that other Git features already honor
+it that way.  Having it ignored-by-default (but only sometimes) just
+adds confusion when a mailmap is available.
 
-> > I also get really slow times on a repo with ~20,000 tags (though order
-> > ~3 minutes rather than ~30, probably due to having an SSD on this
-> > machine) -- but ONLY IF the refs are packed first (git pack-refs
-> > --all).  If the refs are loose, it's relatively quick to delete a
-> > dozen thousand or so tags (order of a few seconds).  It might be worth
-> > mentioning in the commit message that this only makes a significant
-> > difference in the case where the refs are packed.
-> 
-> I'm also using an SSD but I still see about 10 tags per second being
-> deleted with the current code (and packed-refs).  I see that I'm
-> CPU-bound, so I guess most of the time is spent searching through
-> .git/packed-refs.  Probably it will run faster as it progresses. I
-> guess the 18,000 branches in my repo keep me on the wrong end of O(N).
+> > >  - The '.mailmap' provides a list of transgender individuals, along
+> > >    with their deadname, which can be used to harass them.
+> >
+> > This is potentially a problem but it's not as bad as you depict.  A
+> > mailmap rule can match against e-mail only, which is precisely what I
+> > have done in my projects.
+>
+> Ah, I may be severely mistaken -- my memory was that '.mailmap'
+> rewriting could be used to rewrite both name and email, not merely
+> email. I thought that records could take:
+>
+>   A U Thor <author@xample.com> -> B C Xyzz <newname@example.com>
+>
+> instead of canonicalizing by email alone. If this is the case, then I
+> completely agree and share the opinion that this is not as bad as I
+> originally depicted.
 
-Right, deleting individually from packed-refs is inherently quadratic,
-because each deletion has to rewrite the entire file. So if you delete
-all (or the majority of them), that's O(n^2) individual entry writes.
+The long form you give there is to be used in case the old email
+address is not a unique key. See 'git help shortlog'.
 
-The loose case is just touching the filesystem for each entry (and the
-refs code is smart enough not to bother rewriting packed-refs if the
-entry isn't present there). That _can_ be slow if you have a lot of
-entries in the same directory (because some filesystems are particularly
-bad at this).
+The problem we have at work is that one woman's old email address
+includes her deadname, like <firstname.lastname@company.com>.  I will
+leave it up to her whether she chooses to be listed explicitly in the
+mailmap.  I have wondered if we should permit hashed email addresses
+to be used for this specific case, but this also has its drawbacks.
 
-So the actual backing storage speed isn't really that important. All the
-time goes to copying the same packed-refs entries over and over, whether
-they hit the disk or not.
-
-Your solution (using a single transaction) is definitely the right one
-(and probably should apply to "branch -d", too). That's what we did long
-ago for update-ref, and I think nobody ever really noticed for the
-porcelain commands because they don't tend to be used for such bulk
-changes.
-
-> But it should have occurred to me while I was in the code that there
-> is a different path for unpacked refs which could explain my previous
-> speeds.  I didn't think I had any unpacked refs, though, since every
-> time I look in .git/refs for what I want, I find it relatively empty.
-> I see 'git pack-refs --help' says that new refs should show up loose,
-> but I can't say that has happened for me.  Maybe a new clone uses
-> packed-refs for *everything* and only newly fetched things are loose.
-> Is that it?  I guess since I seldom fetch tags after the first clone,
-> it makes sense they would all be packed.
-
-Right, a fresh clone always writes all of its entries as packed refs.
-It used to be done by hand, but it happens in a special "initial
-transaction" method these days, since 58f233ce1e
-(initial_ref_transaction_commit(): function for initial ref creation,
-2015-06-22).
-
-> > In constrast, it appears that `git update-ref --stdin` is fast
-> > regardless of whether the refs are packed, e.g.
-> >    git tag -l feature/* | sed -e 's%^%delete refs/tags/%' | git
-> > update-ref --stdin
-> > finishes quickly (order of a few seconds).
-> 
-> Nice!  That trick is going in my wiki for devs to use on their VMs.
-> Thanks for that.
-
-Please do encourage people to use for-each-ref instead of the "tag -l"
-porcelain, as the latter is subject to change. My usual bulk deletion
-command is:
-
-  git for-each-ref --format='delete %(refname)' refs/tags/feature/ |
-  git update-ref --stdin
-
--Peff
+Phil
