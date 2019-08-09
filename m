@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AB6D1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 15:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55CCD1F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 15:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407242AbfHIPBA (ORCPT <rfc822;e@80x24.org>);
+        id S2436534AbfHIPBB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 11:01:01 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:39085 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407255AbfHIPBA (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 9 Aug 2019 11:01:00 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38597 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407234AbfHIPA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 11:00:59 -0400
-Received: by mail-wm1-f65.google.com with SMTP id m125so1852041wmm.3
-        for <git@vger.kernel.org>; Fri, 09 Aug 2019 08:00:57 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id u25so5888611wmc.4
+        for <git@vger.kernel.org>; Fri, 09 Aug 2019 08:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=chDA17aNMicsr7d9kGny5j2QgX/uBNNYj8M9vxjiQNA=;
-        b=Tr82Td1CKEBWfrMwhTveUtpLqcU2r9JjH9W7mdXvcyO16d5jwk7ACy8NxxnXjvYB/1
-         7Lm2zHMCTC+5fsL/Zd7fAFcNDl45UeJnhzfTAkCfnDdq0OXGKxeLX/eVki1+uQaI5D48
-         V1/SSs93PZK+LNcXHovF4KNBPZjnieeh1xiK+BE4HqlB3QFRHutRp4A19n+uLZf0yLiB
-         Fr8wSNiLAg9X1uqtlgj+OF8xnHjXzN/eDGM0F9q1m1FVgZ0B8DJdlrJzdH06p1nVghk7
-         c2+frDdDXVYG/E47cnTALTYiSc/95UuHhDpjyb5uJaF8bt6AGp4+cmb+mjvmCa7WRWEV
-         huWA==
+        bh=J6NILpO33/UmLgaRCTFlWuCuXaFkp1sEBo7HujJ+nU4=;
+        b=IPjQYrvxO/L1T7qtLebDT9DgSlys2LJHrIaSVgmTrsiJH3AJJYQCPkxRLXjddKRFvB
+         fw50lR7mVJH41lsKnO//fSvnLOdfVng1ASV3aE7vqWbhvh9gU/udwV0Hq99OLaKrhnEG
+         7wWXR//U7XnSJW31c7nDmsF1NG8ImiOiMEpt2eJ7XQBDBw6cU1sl03yWAkg/cfQ0dgv/
+         rD+ax6bCrf7Z/f04u4vUp+eIPI7pYQ+U/eo4fLyLq829REDFXqo72An+pcf9fmmdec37
+         RaCuM6Sl0FAdkxkNBE4qsAArCPN1rpb30uH0KIYuqir1uJ9ZQ1RQC7+ezk+sE1yN4FnG
+         4j8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=chDA17aNMicsr7d9kGny5j2QgX/uBNNYj8M9vxjiQNA=;
-        b=Ic8twu+sCVVBQT8FQAmQTBoUHxDszhpINKoO8Y1RdOV8dTVHnaRBXrNLWlsWDx47M0
-         SdmeWkkJ/SNVKqsbTE9EJU5ilXufjrYpVmJYJAyWoOdBtYsR0LWs0QP71FNC+5pIXcjG
-         Pd8Lj8ZoDN9yCRi2uYpHqu6wDMlK8Y0YubYLdFvddnt3Kt9CM40P/NubboZM7o0cmuvy
-         hdz6u99cINscKcMhjIwV/a+lj+it3iSVY8F4B272FA6rpAy3MgYCiYSaddK2Y7eJlPvw
-         nt2ldJrXCNtWnrPLFcSf6S4NSQhhm7JD+sdDq0OtmZlsTiP8JX6SoDE8qxCXzpfFRbs5
-         UjkQ==
-X-Gm-Message-State: APjAAAW+1eLFBeSdXwpOERMp9ZCcaOLn1t34ew+OAdRv5Hf3UPSGoEI7
-        JgS71r3oMVs8cid8sKw7MwjygTGX
-X-Google-Smtp-Source: APXvYqwLG/XjLyKYelbKWzgZ56kFXQwzhu9ByKJqqleKbimf8GJd5TlkJ/qLdHrStuYoOXHJxhWsEg==
-X-Received: by 2002:a1c:b68a:: with SMTP id g132mr11855377wmf.66.1565362856983;
-        Fri, 09 Aug 2019 08:00:56 -0700 (PDT)
+        bh=J6NILpO33/UmLgaRCTFlWuCuXaFkp1sEBo7HujJ+nU4=;
+        b=RGXPZTLFhwpWlftxUMeiNH6uqKJWnVtS48hR3U9yiq0SN7JKFDWgVMWOFb4PeW6wni
+         hVlq6fhL9zWTcoBXw/cPJOhGd4Ku578XMYDEQFC3/ocsA+VcOm7NCci52hu8zdcdtVjv
+         HLs0EqhaTI2tNRq1ya5mGN741YGDzAN5w81moR/qZs18HT46kmD5zBc2Zo6qdBBgbnTh
+         eS0ZRWfbz9zTqgfBJ5iux1HuzGZMXgA+uFasDKutXGwty4akM/pj1tpXnzwTW6aJibRA
+         vy6cr1+Jj1NiBQIKOHrqkb2ScDJEEQ+QiFmL8hVz22RI3h6SCGeA/5AH2xbg100szd/M
+         wVbg==
+X-Gm-Message-State: APjAAAW5yj/ABsuHRSv2to6Nnqk29FS/jAqmM2UZ5dVqwC7g1OgTongI
+        kJTfUQG69kZJbVPnAm3eKXLwI3wI
+X-Google-Smtp-Source: APXvYqyv1mDlvsvhPVC7L+EtpYJgnDAOSwcS07IjCoQ46qlz24waIlJqXRA0WSl5/Zfq62blPNfl4w==
+X-Received: by 2002:a7b:c745:: with SMTP id w5mr11235493wmk.21.1565362857691;
+        Fri, 09 Aug 2019 08:00:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 91sm197963446wrp.3.2019.08.09.08.00.56
+        by smtp.gmail.com with ESMTPSA id t63sm5645965wmt.6.2019.08.09.08.00.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Aug 2019 08:00:56 -0700 (PDT)
-Date:   Fri, 09 Aug 2019 08:00:56 -0700 (PDT)
-X-Google-Original-Date: Fri, 09 Aug 2019 15:00:50 GMT
-Message-Id: <d02a0608d7ba7902da3b7622ee2c4619eba6896c.1565362851.git.gitgitgadget@gmail.com>
+        Fri, 09 Aug 2019 08:00:57 -0700 (PDT)
+Date:   Fri, 09 Aug 2019 08:00:57 -0700 (PDT)
+X-Google-Original-Date: Fri, 09 Aug 2019 15:00:51 GMT
+Message-Id: <9ab73939855f78563b1554282920aa11ff958f4e.1565362851.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.298.v3.git.gitgitgadget@gmail.com>
 References: <pull.298.v2.git.gitgitgadget@gmail.com>
         <pull.298.v3.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 6/7] trace2: cleanup whitespace in normal format
+Subject: [PATCH v3 7/7] trace2: cleanup whitespace in perf format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,80 +73,94 @@ X-Mailing-List: git@vger.kernel.org
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Make use of new sq_append_quote_argv_pretty() to normalize
-how we handle leading whitespace in normal format messages.
+how we handle leading whitespace in perf format messages.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- trace2/tr2_tgt_normal.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ t/t0211-trace2-perf.sh |  4 ++--
+ trace2/tr2_tgt_perf.c  | 31 ++++++++++++++++++++-----------
+ 2 files changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index 213724d5cb..438ed05a40 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -87,7 +87,7 @@ static void fn_start_fl(const char *file, int line,
+diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
+index 2c3ad6e8c1..6ee8ee3b67 100755
+--- a/t/t0211-trace2-perf.sh
++++ b/t/t0211-trace2-perf.sh
+@@ -130,11 +130,11 @@ test_expect_success 'perf stream, child processes' '
+ 		d0|main|version|||||$V
+ 		d0|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 004child test-tool trace2 001return 0
+ 		d0|main|cmd_name|||||trace2 (trace2)
+-		d0|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 004child test-tool trace2 001return 0
++		d0|main|child_start||_T_ABS_|||[ch0] class:? argv:[test-tool trace2 004child test-tool trace2 001return 0]
+ 		d1|main|version|||||$V
+ 		d1|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 001return 0
+ 		d1|main|cmd_name|||||trace2 (trace2/trace2)
+-		d1|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 001return 0
++		d1|main|child_start||_T_ABS_|||[ch0] class:? argv:[test-tool trace2 001return 0]
+ 		d2|main|version|||||$V
+ 		d2|main|start||_T_ABS_|||_EXE_ trace2 001return 0
+ 		d2|main|cmd_name|||||trace2 (trace2/trace2/trace2)
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index 8e52395de2..fd979db4ad 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -184,7 +184,7 @@ static void fn_start_fl(const char *file, int line,
+ 	const char *event_name = "start";
  	struct strbuf buf_payload = STRBUF_INIT;
  
- 	strbuf_addstr(&buf_payload, "start ");
 -	sq_quote_argv_pretty(&buf_payload, argv);
 +	sq_append_quote_argv_pretty(&buf_payload, argv);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
-@@ -186,8 +186,8 @@ static void fn_alias_fl(const char *file, int line, const char *alias,
- {
+ 
+ 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
+ 			 NULL, NULL, &buf_payload);
+@@ -299,8 +299,9 @@ static void fn_alias_fl(const char *file, int line, const char *alias,
+ 	const char *event_name = "alias";
  	struct strbuf buf_payload = STRBUF_INIT;
  
--	strbuf_addf(&buf_payload, "alias %s ->", alias);
+-	strbuf_addf(&buf_payload, "alias:%s argv:", alias);
 -	sq_quote_argv_pretty(&buf_payload, argv);
-+	strbuf_addf(&buf_payload, "alias %s -> ", alias);
++	strbuf_addf(&buf_payload, "alias:%s argv:[", alias);
 +	sq_append_quote_argv_pretty(&buf_payload, argv);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
-@@ -198,12 +198,12 @@ static void fn_child_start_fl(const char *file, int line,
- {
- 	struct strbuf buf_payload = STRBUF_INIT;
++	strbuf_addch(&buf_payload, ']');
  
--	strbuf_addf(&buf_payload, "child_start[%d] ", cmd->trace2_child_id);
-+	strbuf_addf(&buf_payload, "child_start[%d]", cmd->trace2_child_id);
- 
- 	if (cmd->dir) {
--		strbuf_addstr(&buf_payload, " cd");
-+		strbuf_addstr(&buf_payload, " cd ");
+ 	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
+ 			 &buf_payload);
+@@ -329,10 +330,14 @@ static void fn_child_start_fl(const char *file, int line,
  		sq_quote_buf_pretty(&buf_payload, cmd->dir);
--		strbuf_addstr(&buf_payload, "; ");
-+		strbuf_addstr(&buf_payload, ";");
  	}
  
- 	/*
-@@ -211,9 +211,10 @@ static void fn_child_start_fl(const char *file, int line,
- 	 * See trace_add_env() in run-command.c as used by original trace.c
- 	 */
- 
-+	strbuf_addch(&buf_payload, ' ');
- 	if (cmd->git_cmd)
--		strbuf_addstr(&buf_payload, "git");
+-	strbuf_addstr(&buf_payload, " argv:");
+-	if (cmd->git_cmd)
+-		strbuf_addstr(&buf_payload, " git");
 -	sq_quote_argv_pretty(&buf_payload, cmd->argv);
-+		strbuf_addstr(&buf_payload, "git ");
++	strbuf_addstr(&buf_payload, " argv:[");
++	if (cmd->git_cmd) {
++		strbuf_addstr(&buf_payload, "git");
++		if (cmd->argv[0])
++			strbuf_addch(&buf_payload, ' ');
++	}
 +	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
++	strbuf_addch(&buf_payload, ']');
  
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
-@@ -238,9 +239,11 @@ static void fn_exec_fl(const char *file, int line, uint64_t us_elapsed_absolute,
+ 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
+ 			 NULL, NULL, &buf_payload);
+@@ -383,10 +388,14 @@ static void fn_exec_fl(const char *file, int line, uint64_t us_elapsed_absolute,
  	struct strbuf buf_payload = STRBUF_INIT;
  
- 	strbuf_addf(&buf_payload, "exec[%d] ", exec_id);
+ 	strbuf_addf(&buf_payload, "id:%d ", exec_id);
+-	strbuf_addstr(&buf_payload, "argv:");
 -	if (exe)
-+	if (exe) {
- 		strbuf_addstr(&buf_payload, exe);
+-		strbuf_addf(&buf_payload, " %s", exe);
 -	sq_quote_argv_pretty(&buf_payload, argv);
-+		strbuf_addch(&buf_payload, ' ');
++	strbuf_addstr(&buf_payload, "argv:[");
++	if (exe) {
++		strbuf_addstr(&buf_payload, exe);
++		if (argv[0])
++			strbuf_addch(&buf_payload, ' ');
 +	}
 +	sq_append_quote_argv_pretty(&buf_payload, argv);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
++	strbuf_addch(&buf_payload, ']');
+ 
+ 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
+ 			 NULL, NULL, &buf_payload);
 -- 
 gitgitgadget
-
