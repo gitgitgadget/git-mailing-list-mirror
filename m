@@ -2,228 +2,296 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F39B1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 03:02:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66AD41F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 03:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404791AbfHIDCW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 23:02:22 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43015 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729476AbfHIDCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 23:02:21 -0400
-Received: by mail-pl1-f193.google.com with SMTP id 4so37363913pld.10
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 20:02:20 -0700 (PDT)
+        id S2405132AbfHIDEb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 23:04:31 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:33134 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733140AbfHIDEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Aug 2019 23:04:31 -0400
+Received: by mail-ot1-f67.google.com with SMTP id q20so127090784otl.0
+        for <git@vger.kernel.org>; Thu, 08 Aug 2019 20:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lz7TAmnW4tk5QEZqhP5bqZumTK32LogdZLc0g0fjFo0=;
-        b=NNN41WrEOuV+1eUa28yYY3UBve2utHMf2xkx3U4JTBV+R/NNnezcijPDpR4iCaiWW7
-         u08Tvd9gFBziKP/KB/xjP0I1hGdm8I9gXdmte6uRB9IfNya2jZEjr2/IwClQjwyaahSL
-         Ky6LRmMiPyaSSHqFD8e3GCk6KPwtifbcQ+z7HwIO6Ng7V9gKSJQ717Ztd9VtnttcTzYa
-         Fq7B/A50nnUpWcVqMQ5Fe87rgbEV5AaiqTe7oU8eTitDUVzo0cZ5x1s26yjHfZU5BBuS
-         uoez0XkUiHPrbk0++vvbk5R+hiSKkmvtdgj/afZVaW5zfKMwHaXViagMgcP00FofhhcC
-         bjag==
+        d=dereferenced-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G8pHn3DVWa2I+eLlREvIDWDc1RQjzd4YN3CP1FTOzHA=;
+        b=xxZV+nT50POvtpkglvpPH1gpkhtwN3b4gK+qzC08ZcKCZY9GXMorGzrhcLs3eYaQJp
+         inoni9fQairwxuq3/wsTVM+7dF5gHMUkjvg84HDleSVkCgQ7+eioFsFifDpJCoDRsixs
+         keaIEffvOebSwZzsJ4ZXLJ0XUHglJdB2xtWvjWL7ntxXT15DDFpXIrMF6xHFYkzvOER9
+         ocToh7XMFmdKwADWk8qKJsug1PnyC5AIJD8MTfYjuaDpNu4Q3xKFYQI9b5rheJUXWaG+
+         Vy4+zlytuamQDN66n9w0KsTfmFG/4jPpBUJlM2z4qATH3xLXY9YoxP90eHFzLcQNynGI
+         LhBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lz7TAmnW4tk5QEZqhP5bqZumTK32LogdZLc0g0fjFo0=;
-        b=BkP83GuoSct11CE27Lc3qXoD0eiYutjczBakaxYHhUE9SJzze8jzCw+DqVYu1yC0go
-         0SIsWCWuSmsGZ0eEkL2PVmAP++SC4ovwXLslV9wwWZiIIHOdKfELCviGBhFivoFLOzy5
-         vGbgVRoEDCB0I6RVIyd9BEZI7V4oYJpo8c3kqxRi8Ia04xr7abSufbSQ/kfAHJgsE29/
-         wO9v4SFFGg7NTsmyngB7w3L1GdkGZZfK9U+XPgTClO17gtdMllBcbK4eS6EYvlIcu14f
-         9LAIxiB7WT/yauLqDBwB9NK4EZdXL8WkMDj3LuBr6i5B9tU0EIWFrBkTpwLSGUHf7kvh
-         jM8Q==
-X-Gm-Message-State: APjAAAXlKIOnhjvSy5NfcxrZqcUNmc2vNd0/IZcBAaBzQlMYvoxHYUIh
-        IuHFaio9yi1v684rEzhn1P85vr+Qs2E=
-X-Google-Smtp-Source: APXvYqx5TAsAN1UMcdjnl4xr/tXIaXGYfFRsTR8A5q/9GA/O1ct4VojdAgD6/c6MOSYs4ZbYwhPgUg==
-X-Received: by 2002:a17:902:9a07:: with SMTP id v7mr17037944plp.245.1565319740184;
-        Thu, 08 Aug 2019 20:02:20 -0700 (PDT)
-Received: from localhost.localdomain ([205.209.24.227])
-        by smtp.gmail.com with ESMTPSA id h1sm124965938pfo.152.2019.08.08.20.02.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Aug 2019 20:02:19 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, johannes.schindelin@gmx.de,
-        l.s.r@web.de, michal.kiedrowicz@gmail.com
-Subject: [RFC PATCH v5 2/3] grep: make PCRE2 aware of custom allocator
-Date:   Thu,  8 Aug 2019 20:02:09 -0700
-Message-Id: <20190809030210.18353-3-carenas@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc1
-In-Reply-To: <20190809030210.18353-1-carenas@gmail.com>
-References: <20190807213945.10464-1-carenas@gmail.com>
- <20190809030210.18353-1-carenas@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G8pHn3DVWa2I+eLlREvIDWDc1RQjzd4YN3CP1FTOzHA=;
+        b=MZ6lUvdH8pG3LsjTxrDjxdZsI3mPjRh21I8fuE+9TbhVtjFeDbD0Q5zpe1ZQhd/LVQ
+         TEJ/bLyAq2187HNvdHZn3svZmvQSA9Zt6nzkK556X+usBBFNoaK5NQqbrZuPAkwY1GnS
+         aBnInbastBSnpR61xfasOesDYC9xzJnnCZ4268EP5kTXYOuABPW2zWohad+4ICVmBP14
+         rGbHfJtDlAMDdarq3R/CXqUlsRYfFOqI7wY86MMtsr93ibEfg0kiY11Z6FTv33+OGGDe
+         2KVRXwjMJHfm2C59PbGqe1jQrk9eNS8vg0uzw/3rhG5Fg8l2XS0uMfBjUpc5jc6Wh3ae
+         L2IQ==
+X-Gm-Message-State: APjAAAXww8w6e0tnzJfwDj3Jrr1l9GoQAYkU7Xg9oxFhncSC3lSdbiSh
+        7UD+lTw7wU9L4Nw0RJeXgwK9AGOiGHXnA9UmGIBqcA==
+X-Google-Smtp-Source: APXvYqy+KO6DLa4a9GYkdIaAt46SqAIFQ7GeNGlWEvfhP7tMMKpGenAkNkb1pOsi17sAfYPyWW08P6ZN9EEsS9GGfaU=
+X-Received: by 2002:a5d:968b:: with SMTP id m11mr12960367ion.16.1565319869525;
+ Thu, 08 Aug 2019 20:04:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com> <20190809001315.GA87896@syl.lan>
+ <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org> <20190809020732.GA89008@syl.lan>
+In-Reply-To: <20190809020732.GA89008@syl.lan>
+From:   Ariadne Conill <ariadne@dereferenced.org>
+Date:   Thu, 8 Aug 2019 22:04:18 -0500
+Message-ID: <CAAOiGNyW9EpPgaMH1wEFG8gNNtypo2FaqOoOCe55i1TyT4L36A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phil Hord <phil.hord@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-94da9193a6 (grep: add support for PCRE v2, 2017-06-01) didn't include
-a way to override the system allocator, and so it is incompatible with
-USE_NED_ALLOCATOR.  The problem was made visible when an attempt to
-avoid a leak in a data structure that is created by the library was
-passed to NED's free for disposal triggering a segfault in Windows.
+Hello,
 
-PCRE2 requires the use of a general context to override the allocator
-and therefore, there is a lot more code needed than in PCRE1, including
-a couple of wrapper functions.
+On Thu, Aug 8, 2019 at 9:07 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Ariadne,
+>
+> Thank you for replying. I'm replying myself to the quoted hunks below,
+> and I very much appreciate your input. I would like to note that I
+> myself did not come up with these concerns alone, they were merely
+> suggested to me by a coworker, and I found them concerning.
+>
+> I am not myself transgender, instead I am simply raising an issue that I
+> found myself concerning.
 
-Extend the grep API with a "destructor" that could be called to cleanup
-any objects that were created and used globally.
+Sure, there are concerns with the use of .mailmap being the primary
+source of truth for identities in a git repository.  However, this is
+the present design.  I'm not against improving the design, but see no
+reason to block changes that *improve quality of life* for people who
+are both transgender (or simply have changed their name for whatever
+reason) and those who collaborate with said people.  I also believe
+that this is an *intended* use of the design, since mailmap allows
+rewriting names.  If it is not intended, then why does mailmap support
+rewriting names?
 
-Update builtin/grep to use that new API, but any other future
-users should make sure to have matching grep_init/grep_destroy calls
-if they are using the pattern matching functionality (currently only
-relevant when using both NED and PCRE2)
+This isn't an either/or thing.  This is more along the lines of --
+lets improve what we have now -- and deal with making a more robust
+mailmap replacement down the line, because that is going to require
+more careful consideration.
 
-Move the logic to decide if a general context will be needed to an
-earlier phase so it will only be done once per pattern (instead of
-at least once per worker thread) avoiding then the need for locking.
+> On Thu, Aug 08, 2019 at 09:34:15PM -0400, Ariadne Conill wrote:
+> > Hello,
+> >
+> > On August 8, 2019 8:13:15 PM EDT, Taylor Blau <me@ttaylorr.com> wrote:
+> > >Hi Junio,
+> > >
+> > >On Thu, Jul 25, 2019 at 05:19:23PM -0700, Junio C Hamano wrote:
+> > >> Here are the topics that have been cooking.  Commits prefixed with
+> > >> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> > >> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> > >> the integration branches, but I am still holding onto them.
+> > >>
+> > >> The seventh batch is in; I've merged fix-up topics that has been in
+> > >> 'master' for some time (i.e. up to the third batch of this cycle)
+> > >> down to 'maint'.
+> > >>
+> > >> You can find the changes described here in the integration branches
+> > >> of the repositories listed at
+> > >>
+> > >>     http://git-blame.blogspot.com/p/git-public-repositories.html
+> > >>
+> > >> --------------------------------------------------
+> > >> [Graduated to "master"]
+> > >>
+> > >> *snip*
+> > >>
+> > >> * ac/log-use-mailmap-by-default-transition (2019-07-15) 3 commits
+> > >>   (merged to 'next' on 2019-07-19 at e5669de950)
+> > >>  + tests: defang pager tests by explicitly disabling the log.mailmap
+> > >warning
+> > >>  + documentation: mention --no-use-mailmap and log.mailmap false
+> > >setting
+> > >>  + log: add warning for unspecified log.mailmap setting
+> > >>
+> > >>  The "git log" command learns to issue a warning when log.mailmap
+> > >>  configuration is not set and --[no-]mailmap option is not used, to
+> > >>  prepare users for future versions of Git that uses the mailmap by
+> > >>  default.
+> > >
+> > >Sorry for jumping into this discussion quite late. I was discussing
+> > >this
+> > >change with a colleague of mine who pointed out an issue with the
+> > >eventual new defaults. I'd like to re-raise the issues they shared with
+> > >me on the list for discussion, and if agreement is reached, I will send
+> > >a series that reverts these changes.
+> > >
+> > >If a transgender person uses '.mailmap' to rewrite their deadname to
+> > >their legal name (as was the original motivation in [1]), there are two
+> > >potential issues:
+> >
+> > What does myself being transgender have to do with anything?  Please
+> > explain.
+> >
+> > My motivation was to allow anyone to document their name change.
+> > People other than transgender individuals do change their names.
+>
+> I think that the '.mailmap' is a good solution for other identity
+> changes, like when someone leaves a company, acquires an email address,
+> and wishes to take their contributions with them.
 
-This change does the minimum change required to hopefully solve the
-crash, with the rest of the users of it added later.
+Then maybe .mailmap should be scoped to rewriting e-mail addresses only.
 
-Helped-by: René Scharfe <l.s.r@web.de>
-Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- builtin/grep.c |  1 +
- grep.c         | 56 +++++++++++++++++++++++++++++++++++++++++++++++++-
- grep.h         |  1 +
- 3 files changed, 57 insertions(+), 1 deletion(-)
+> I don't think that being transgender changes one's usage of '.mailmap'.
+> I do, however, share the concern with my coworker that these patches are
+> being used to assist in deadname rewriting. It was my impression that
+> these patches are a response to the thread [1] that I linked in my last
+> email, and thus that eventually turning on '.mailmap'-rewriting by
+> default was the solution given to Phil Hord.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 560051784e..e49c20df60 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1145,5 +1145,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		run_pager(&opt, prefix);
- 	clear_pathspec(&pathspec);
- 	free_grep_patterns(&opt);
-+	grep_destroy();
- 	return !hit;
- }
-diff --git a/grep.c b/grep.c
-index 0154998695..8e0b838db0 100644
---- a/grep.c
-+++ b/grep.c
-@@ -16,6 +16,44 @@ static int grep_source_is_binary(struct grep_source *gs,
- 
- static struct grep_opt grep_defaults;
- 
-+#ifdef USE_LIBPCRE2
-+static pcre2_general_context *pcre2_global_context;
-+
-+#ifdef USE_NED_ALLOCATOR
-+static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_data)
-+{
-+	return xmalloc(size); /* will use nedalloc underneath */
-+}
-+
-+static void pcre2_free(void *pointer, MAYBE_UNUSED void *memory_data)
-+{
-+	return free(pointer);
-+}
-+
-+/*
-+ * BUG: this is technically not needed if we will do UTF matching
-+ *      but UTF locale detection is currently broken
-+ * TODO: has_non_ascii() doesn't support NUL in pattern
-+ */
-+void setup_pcre2_as_needed(struct grep_opt *opt, const char *pat)
-+{
-+	if (!pcre2_global_context && opt->ignore_case &&
-+		has_non_ascii(pat))
-+		pcre2_global_context = pcre2_general_context_create(
-+					pcre2_malloc, pcre2_free, NULL);
-+}
-+
-+static void cleanup_pcre2_as_needed(void)
-+{
-+	pcre2_general_context_free(pcre2_global_context);
-+}
-+
-+#else
-+#define setup_pcre2_as_needed(opt, pat)
-+#define cleanup_pcre2_as_needed()
-+#endif
-+#endif
-+
- static const char *color_grep_slots[] = {
- 	[GREP_COLOR_CONTEXT]	    = "context",
- 	[GREP_COLOR_FILENAME]	    = "filename",
-@@ -153,6 +191,7 @@ int grep_config(const char *var, const char *value, void *cb)
-  *
-  * If using PCRE make sure that the library is configured
-  * to use the right allocator (ex: NED)
-+ * if any object is created it should be cleaned up in grep_destroy()
-  */
- void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
- {
-@@ -188,6 +227,11 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
- 		color_set(opt->colors[i], def->colors[i]);
- }
- 
-+void grep_destroy(void)
-+{
-+	cleanup_pcre2_as_needed();
-+}
-+
- static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
- {
- 	/*
-@@ -326,6 +370,7 @@ void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen,
- 		     const char *origin, int no, enum grep_pat_token t)
- {
- 	struct grep_pat *p = create_grep_pat(pat, patlen, origin, no, t, 0);
-+	setup_pcre2_as_needed(opt, pat);
- 	do_append_grep_pat(&opt->pattern_tail, p);
- }
- 
-@@ -507,9 +552,18 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 
- 	p->pcre2_compile_context = NULL;
- 
-+	/*
-+	 * pcre2_global_context is initialized in append_grep_pat()
-+	 * with logic from setup_pcre2_as_needed() that mimics what
-+	 * is used here and with the BUG() to protect from mismatches
-+	 */
- 	if (opt->ignore_case) {
- 		if (has_non_ascii(p->pattern)) {
--			character_tables = pcre2_maketables(NULL);
-+#ifdef USE_NED_ALLOCATOR
-+			if (!pcre2_global_context)
-+				BUG("pcre2_global_context uninitialized");
-+#endif
-+			character_tables = pcre2_maketables(pcre2_global_context);
- 			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
- 			pcre2_set_character_tables(p->pcre2_compile_context, character_tables);
- 		}
-diff --git a/grep.h b/grep.h
-index 1875880f37..526c2db9ef 100644
---- a/grep.h
-+++ b/grep.h
-@@ -189,6 +189,7 @@ struct grep_opt {
- void init_grep_defaults(struct repository *);
- int grep_config(const char *var, const char *value, void *);
- void grep_init(struct grep_opt *, struct repository *repo, const char *prefix);
-+void grep_destroy(void);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
--- 
-2.23.0.rc1
+Yes, they *are* being used to assist in deadname rewriting, because
+that is the mechanism that already exists in the code to facilitate
+it.
 
+In what case would you *not* want to know the current name of the
+person who authored a contribution?  There are legal situations
+involving auditing the copyright status of contributions where
+*current* identity information for the author is desirable over what
+was there historically, because you need to contact the author and
+find out his or her wishes involving the code.  Situations like
+relicensing, for example.
+
+> > Perhaps the fact that I am transgender means I am more attuned to the
+> > risks involved in using .mailmap in this way.
+>
+> I'll certainly defer to your opinion on how this feature affects
+> transgender users over mine, and very much appreciate your perspective
+> and insight.
+>
+> > >  - The '.mailmap' provides a list of transgender individuals, along
+> > >    with their deadname, which can be used to harass them.
+> >
+> > This is potentially a problem but it's not as bad as you depict.  A
+> > mailmap rule can match against e-mail only, which is precisely what I
+> > have done in my projects.
+>
+> Ah, I may be severely mistaken -- my memory was that '.mailmap'
+> rewriting could be used to rewrite both name and email, not merely
+> email. I thought that records could take:
+>
+>   A U Thor <author@xample.com> -> B C Xyzz <newname@example.com>
+>
+> instead of canonicalizing by email alone. If this is the case, then I
+> completely agree and share the opinion that this is not as bad as I
+> originally depicted.
+
+Yes, you can write mailmap entries with just the email like I have
+done in pkgconf for example[1].
+
+> > And to be clear, anybody who is out there doxing transgender people
+> > are going to be using sources that are more reliable than a mailmap
+> > file.
+>
+> Indeed. I think the '.mailmap' file doesn't contain much information if
+> it doesn't remap author names, and certainly individuals can choose not
+> to use it.
+>
+> > >  - If they are not in control of the '.mailmap', and 'log.mailmap' is
+> > >    not specifiable (and instead defaults to 'true'), then a malicious
+> > >    maintainer or contributor can submit a change that rewrites their
+> > >    real name to their deadname, and harasses them further.
+> >
+> > The log.mailmap setting remains specifiable in these changes.  Sure, a
+> > maintainer can abuse mailmap, but they could already do so.  This
+> > commit changes absolutely nothing in that regard.
+>
+> I think that I might be mistaken about the intentions of your patch
+> series. Do you hope to eventually remove 'log.mailmap', instead having
+> all clients automatically obey the '.mailmap'? If so, I think that this
+> does change the behavior, at least down the road. If a maintainer wishes
+> to abuse mailmap, today no one has to see it, because they have the
+> option to turn off mailmap rewriting. If this setting doesn't exist, it
+> gives more power to maintainers and contributors with write-level
+> access to force mailmap rewriting to take place.
+
+I have no interest in removing the log.mailmap setting, but I would
+like to see the setting behave consistently across all applets.  In
+other words, "git shortlog", "git log" and "git blame" should have the
+same behaviour given log.mailmap being set a certain way.  They
+presently don't have consistent behaviour (shortlog and blame always
+use mailmap), and I found that surprising.  This allows people to look
+at the raw data if they have explicit interest in it, by setting
+log.mailmap to false, and ensuring that people get reasonable
+behaviour by default (log.mailmap is default to true).
+
+I also want to explicitly state that I believe wholeheartedly that
+people will fork projects with a hostile maintainer who renames people
+in the mailmap file to derogatory names, so I think that is a
+non-issue.  Somebody who is trolling by using mailmap files to rewrite
+contributor names is indicative that a project shouldn't be taken
+seriously.
+
+> > The commit does make `git shortlog` and `git log` consistent which is what most people expect.
+> >
+> > >This issue was not raised in the original discussion, but it's clear
+> > >that this has the potential be used for bad, not good.
+> >
+> > Every tool has the potential to be abused.  I would not have submitted
+> > this merge request if I thought that the benefits outweighed the
+> > trolling possibilities.
+>
+> Yes, I agree that tools can be abused, and I do not question your
+> judgement in submitting this patch whatsoever. Again, I was merely
+> pointing out that there does seem to be a greater potential for this
+> tool to be misused, but only if I am understanding it correctly.
+
+Based on your misunderstanding of the mailmap feature, I believe
+you're not understanding the patches correctly.
+
+> > >Given that the release is so close, I propose we revert this change
+> > >before v2.23.0 is tagged. After that, we ought to discuss ways for
+> > >folks
+> > >to change how their name is displayed in porcelain commands, and
+> > >thoroughly consider whether or not a new plan is exploitable.
+> > >
+> > >If you think this is a good course of action, I will send a series to
+> > >revert the changes that were queued here.
+> >
+> > I do not think this is a good course of action and I think your
+> > justification is extremely flimsy.
+> >
+> > While I would like to see the ability to commit a special commit that
+> > documents a name change, this does not change the fact that such
+> > commits will be mined in the same way.
+> >
+> > While I am glad that you are concerned about this from a trolling and
+> > harassment issue, I propose that you should allow individuals to make
+> > their own assessments on what they should do regarding documenting
+> > their changes using the mailmap file.
+>
+> I'm happy to defer to the judgement of others, here; again I merely
+> wanted to raise a concern and share a proposed course of action in
+> response to it. If others do not buy into the justification, or if I
+> have misunderstood the feature, then we ought to let the release proceed
+> as normal.
+
+As previously stated, I think that your justification is flimsy, but I
+think that's simply due to a misunderstanding of how mailmap works,
+and to what level of consistency mailmap is respected.  Hopefully this
+explanation is useful.
+
+[1]: https://git.sr.ht/~kaniini/pkgconf/tree/master/.mailmap
+
+Ariadne
