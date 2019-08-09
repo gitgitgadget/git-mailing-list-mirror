@@ -2,85 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4F01F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 18:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 986E61F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 19:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726605AbfHIS7B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 14:59:01 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:12522 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726358AbfHIS7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 14:59:01 -0400
-X-Greylist: delayed 3464 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Aug 2019 14:58:59 EDT
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1hw9CU-0008Jg-6v; Fri, 09 Aug 2019 19:01:14 +0100
-Subject: Re: $> git branch splat response considered harmful
-To:     Emily Shaffer <emilyshaffer@google.com>,
-        Bryan Turner <bturner@atlassian.com>
-Cc:     jim.cromie@gmail.com, Git Users <git@vger.kernel.org>
-References: <CAJfuBxx5R28cjUj1v+mB4J+uUpbTMWnYowrCc=iOAbOcqWX-_w@mail.gmail.com>
- <CAGyf7-FUsfKpr+HzOpS9TqE+x7GTnsVKki94gXzMVRwnnweC9g@mail.gmail.com>
- <CAJoAoZ=K0LhCmnEUk1rsan2J5APzcye7+RryjBG+mKgjGf6qzA@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <5f533351-3d77-3859-fe27-b3d96b0b8b30@iee.email>
-Date:   Fri, 9 Aug 2019 19:01:13 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2406558AbfHITGn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 15:06:43 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:44464 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726358AbfHITGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Aug 2019 15:06:43 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x79J6ZMA082849
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 9 Aug 2019 15:06:35 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Christian Couder'" <christian.couder@gmail.com>,
+        <git@vger.kernel.org>
+References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>        <20190809001315.GA87896@syl.lan>        <3C7105E5-5DE1-42DC-A9A4-65C061FD6139@dereferenced.org>        <001e01d54ebb$9a1ab4b0$ce501e10$@nexbridge.com> <xmqq7e7mdyig.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7e7mdyig.fsf@gitster-ct.c.googlers.com>
+Subject: RE: What's cooking in git.git (Jul 2019, #06; Thu, 25)
+Date:   Fri, 9 Aug 2019 15:06:29 -0400
+Message-ID: <003a01d54ee5$902a3460$b07e9d20$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <CAJoAoZ=K0LhCmnEUk1rsan2J5APzcye7+RryjBG+mKgjGf6qzA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain;
+        charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQI4e27fuor1V6G+VVNTu5eJdxwFnwIJ14M8AThYM+cBjxQPvwFPDaSnpfvRjoA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/08/2019 22:28, Emily Shaffer wrote:
-> On Thu, Aug 8, 2019 at 2:20 PM Bryan Turner <bturner@atlassian.com> wrote:
->> On Thu, Aug 8, 2019 at 2:08 PM <jim.cromie@gmail.com> wrote:
->>> fwiw,
->>>
->>> jimc@frodo:~/prj-1/capnproto.git$ git branch -l
->>> * master
->>>
->>> I find the splat in the response unhelpful
->>> when wrapped in shell for loop, the splat expands into everything in
->>> current directory
->>>
->>> jimc@frodo:~/prj-1/capnproto.git$ for b in `git branch -l`; do echo $b; done
->>> appveyor.yml
->>> c++
->>> CMakeLists.txt
->>> CONTRIBUTORS
->>> ...
->>>
->>> it would be nice if some flag combo would suppress that splat.
->>> save me from fugly brittle sh $IFS fiddlery and incomplete workarounds
->> Have you tried "git for-each-ref --format="%(refname:short)"
->> refs/heads/"? That's going to provide short names for branches without
->> any indicator for the default branch, and without any special
->> ordering.
-> More generally, I think you should take a look at `git help git` and
-> check out the difference between "porcelain" and "plumbing" commands.
-> The former, of which `git branch` is one, are intended for interactive
-> use and not really meant for scripting or piping. You can usually come
-> up with an equivalent from the plumbing commands, which Bryan has
-> suggested for you with `git for-each-ref`.  Git project tries very
-> hard to maintain output format of the plumbing commands so as to not
-> break folks' scripts, but such promises aren't usually made for
-> porcelain commands.
->
-I think this (the broad Q&A) also suggests that the porcelain command 
-documentation could be more helpful for pointing to the appropriate 
-plumbing commands for these scripting issues (and it could reduce list 
-noise..).
---
-Philip
+On August 9, 2019 1:45 PM, Junio C Hamano wrote:
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> 
+> > On 01 Aug 2019 13:05:12, Junio wrote:
+> >> >> *snip*
+> >
+> > I think this got missed in the shuffle, but I am getting questions
+> > about the topic from my own team that I cannot answer.
+> >
+> > I noticed that the switch and restore commands are now available in
+> > 2.23.0 but are not discussed in recent What's Cooking or Git Rev (or I
+> > blithely missed them). The question from my team is what are the plans
+> > for deprecating checkout. They have loads of scripts and want to plan
+> > for moving over.
+> 
+> The two new commands were done in response to a common "checkout
+> does two different things, either checkout a branch in order to start
+working
+> on it, or checkout paths into the current workspace to work on them"
+> complaint.  Those who are used to and are OK with the "git" command that
+> changes behaviour based on the rest of args (i.e.
+> "checkout <branchname>" and "checkout [<tree-ish>] <pathspec>" are the
+> ways to obtain these two behaviours) can safely keep using the command
+> they are familiar with.
+> 
+> I do not think there currently is any plan to deprecate checkout.
+
+Thanks.
+
