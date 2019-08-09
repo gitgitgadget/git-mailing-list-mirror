@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46FFE1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 19:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F28A11F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 20:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725985AbfHITuh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Aug 2019 15:50:37 -0400
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:52883 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725860AbfHITuh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Aug 2019 15:50:37 -0400
-Received: by mail-wm1-f53.google.com with SMTP id s3so6786488wms.2
-        for <git@vger.kernel.org>; Fri, 09 Aug 2019 12:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Lv4LqnUCrrVKCHx2aBsWvYUJ6JiC9Ws/sVtUF9qHRcA=;
-        b=SLyFydIAg4lByeuzl4CBll8IhBMZo0UwlhOXF3diTLYfXEz+ifHzrKRBG19qB73j59
-         X7VAmasggsru5Q+2OsIoNVyCiqc5sA7L7MeY2wGXwLO8Ti9gt6LxmZ4CqAtjfPaO+GHp
-         5R2yr7u/nyCK42uejZ3Y15kt9ejlcvmZagxwnR5BAfWL+LbSP4n0FqB2IaS1V6zCkoRR
-         q0l+9KvjWCSKfSpXlY6fhWEDsI8x9AlQpdgUdfZs/SyR7PvEFf2DYdjx59QAuxZHEnZG
-         XtKWJw5s41RURCy0pJN53UeJ3GjtiKrL1AsYIaUaqtVdpXktUQv09gWCWfcka/WDb4zy
-         2l9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Lv4LqnUCrrVKCHx2aBsWvYUJ6JiC9Ws/sVtUF9qHRcA=;
-        b=F+zxSdwLb0/2K25Oru3XVc20EUhLTlADbkI122e9AS+HfKxpGXhe8/TQyo3Sk73xEM
-         Huh5grmwByIDJFRifzCV0DExUibKIQi8JksXOBCdyMjpH9siRCNlJLQGF8M5+gEdvB9o
-         K+yrhtsAReCU7+mRT/ODVSBagNQLvNBBSlP3Q7DpRVOLidHBJ7IQCUjfKAcipKO7vfJm
-         yKr3LpUjDX6ZB4I/Aevy/lFXUtsGOAwEMonVT/QuJmjcLOYQMUDkOItgtj/CDiPOxbTL
-         Q193yDirJvaZgdaxswGVNtUmScHWXcYJzZA6TRvg/Svz1XybKgqiJrrtP8JhhHkuQ0Dw
-         eJlQ==
-X-Gm-Message-State: APjAAAXi1/5cKsz5z5VCKLXDWkcZV8mZ+rtxHKm5OXM79lMvBLSv9l4f
-        hC4xDjPH/UP0S7M3qo5Xmqo041q0
-X-Google-Smtp-Source: APXvYqw2OiXssnqGNyjSjQRGsSac8qTDFj0pH03JuzitOUDroje3n0HvO0ls8l1gEQfcJyGCx/UvdQ==
-X-Received: by 2002:a1c:cc0d:: with SMTP id h13mr12325237wmb.119.1565380235064;
-        Fri, 09 Aug 2019 12:50:35 -0700 (PDT)
-Received: from szeder.dev (x4db31839.dyn.telefonica.de. [77.179.24.57])
-        by smtp.gmail.com with ESMTPSA id h14sm97096190wrs.66.2019.08.09.12.50.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Aug 2019 12:50:34 -0700 (PDT)
-Date:   Fri, 9 Aug 2019 21:50:31 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Cliff Schomburg <clisc@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "git log" does not display refs info when executed via C#
- Process class on Windows
-Message-ID: <20190809195031.GK20404@szeder.dev>
-References: <BN8PR21MB11569DAA8A677BF00113F683B7D60@BN8PR21MB1156.namprd21.prod.outlook.com>
+        id S1726428AbfHIUDS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Aug 2019 16:03:18 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51843 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbfHIUDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Aug 2019 16:03:18 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37DD98C3ED;
+        Fri,  9 Aug 2019 16:03:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ghuGp657qOcXEgOUUsEcj9PI+c4=; b=GcRE8H
+        IJevMSojhdHfQlIzUNHtsXsBRcAD/ObuJNyTmKig69AZ6HPzmFxZp8d2bNDo5lAq
+        VB2fnnkyWcxinYx/FGnZxkBRnwimDh/9EWLeVDjsFlnivRey5LneN3fa58ZZZFHU
+        5990Fs/W/V1Y0NaeGk0nWV0sezQBjPftlNALs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=skLMOOdwryz194x6X2j9E3HtRDq+u2kj
+        bcKIc7abYKhoyU0uMiohZkWR82VAS5ZtHOasF5Ym77w1Y3PjX1Mt9pagAReXhZWv
+        CBa7KzzI38/bCJFFtsE/zGWyAtKKMASPOAHC8b5WqHPLLHT8/61nPy89rySDRC+u
+        HN/iX2QqVS4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2FD358C3EB;
+        Fri,  9 Aug 2019 16:03:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3C2488C3EA;
+        Fri,  9 Aug 2019 16:03:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-gui: Call do_quit before destroying the main window
+References: <20190804143919.10732-1-me@yadavpratyush.com>
+        <b7cbe50d-879f-68b9-30b2-181c3058297f@yadavpratyush.com>
+        <xmqqftmejgr1.fsf@gitster-ct.c.googlers.com>
+        <549ad583-5ca1-7096-f4ce-10e8a836f7f9@yadavpratyush.com>
+        <xmqq5zn8j25p.fsf@gitster-ct.c.googlers.com>
+        <9a425bf6-1138-48db-3506-6bee1eff21ee@yadavpratyush.com>
+        <xmqqa7ckhcc4.fsf@gitster-ct.c.googlers.com>
+        <7a515181-d73f-f21c-a564-db5602d91e93@yadavpratyush.com>
+Date:   Fri, 09 Aug 2019 13:03:12 -0700
+In-Reply-To: <7a515181-d73f-f21c-a564-db5602d91e93@yadavpratyush.com>
+        (Pratyush Yadav's message of "Fri, 9 Aug 2019 20:12:33 +0530")
+Message-ID: <xmqqftmacdj3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <BN8PR21MB11569DAA8A677BF00113F683B7D60@BN8PR21MB1156.namprd21.prod.outlook.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B91CB3D6-BAE0-11E9-A72C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 09, 2019 at 07:36:19PM +0000, Cliff Schomburg wrote:
-> I have an open Git for Windows issue here:
-> https://github.com/git-for-windows/git/issues/2285
-> 
-> "git log" works as expected from the command prompt.  But when I execute it via C# Process class and read from Standard Output, the refs are missing.
-> 
-> Is anyone familiar with this issue?  Any idea why the output to CMD and STDOUT would be different?
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-Decorations, like color and refs pointing to a commit, are for humans,
-and humans read the terminal.  If the command's output doesn't go to a
-terminal, then no such decorations are shown by default.
+>> If you meant to volunteer to act as a git-gui maintainer, that would
+>> be wonderful.  Then I do not have to play an interim maintainer.
+>
+> Yes, I do mean to volunteer to act as a git-gui maintainer.
+>
+> Is there something I should know other than
+> Documentation/howto/maintain-git.txt?
 
-Try invoking 'git log --decorate'; or, better yet, use your custom
-'--format=', especially if you intend to parse the output, 
+Well, I do not think that document has anything useful for being a
+maintainer for git-gui in it.
 
+The Git community members needs to be able to trust that the new
+Git-gui maintainer would make a sensible decision when picking up
+(or asking to improve) a patch from the list to collect and forward
+to me.  We somehow need to make sure that happens.
+
+It also is nice if we can get the handing over the maintainership
+endorsed by the current Git-gui maintainer.
+
+Compared to that, the procedural issues (how the patches are
+reviewed, when and how they are forwarded to me, etc.) are much less
+important.
