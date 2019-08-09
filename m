@@ -2,134 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C96F1F731
-	for <e@80x24.org>; Fri,  9 Aug 2019 00:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 297211F731
+	for <e@80x24.org>; Fri,  9 Aug 2019 00:22:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404579AbfHIANS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Aug 2019 20:13:18 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:45279 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbfHIANS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Aug 2019 20:13:18 -0400
-Received: by mail-qk1-f194.google.com with SMTP id s22so70442633qkj.12
-        for <git@vger.kernel.org>; Thu, 08 Aug 2019 17:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=B025ZQ3ZdC50po3x7er2i9Z38PjD62ukYELwiweWYPg=;
-        b=BPd8MZMQOiA2o5/fexQNsnd4sOT7YVaAKZi3VLzB0/lG9BsI1Z3C+7kA3D4YS7OGVy
-         BEVZNEA6PVK7G+tzYPN+K046yoH9pJ1giVYU4KISy94CGeHH7SHBS7OL0uXrAfXP6K6x
-         nzcqEwl+AP4pOfJ20uHEP6GLn2q0YUNnROcag926mWcQu3oIU0kxEEyDbcojRWDNCLSq
-         GZ8fqSGf2bkutEwtfY9kBaMYoqHbkv3W0vnUqrVGUGswDhYujFGY/tQX0Be2DvOsAU1Q
-         QRXkjm6xMCCOJkoIl5tQIiItLmU+zLGhR4E23HnPavL6xplgZ/RTri9JKDEcEb79VK9p
-         TOwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=B025ZQ3ZdC50po3x7er2i9Z38PjD62ukYELwiweWYPg=;
-        b=jTKKv54iGVlP4mWib2Kw4igD5LdZjkBXVmuasb6bvl5EvyVB4Y/vQkvn2QBmyKq2gf
-         oDCaSLMhKImAFeBAU7WDbeuhpMMUzc1TMKB8/TFEZjAvVDbCzAVunzGOS7laGCoK/CTH
-         7T2/a3gnvrb2FQ7qNTs1dSYjR8KdQJVOK5gejeZOCfrE4bP+2zpowSzosiPc4ziw9AaQ
-         iE9kCjjBlDJ/vXxPUmhhQmLjQ0521v8WUGmVRFo1oEW5AMvTFTGNSma0fEy5WPIoMuoQ
-         IY5rtDdVTKqpNggOQxLlBhSA9yyR4yMBW/VsMEajl1M7GtV37KpfX7yyDIoXYpAHu/Ie
-         v+2w==
-X-Gm-Message-State: APjAAAWQMElm+eogpDsNd81PfuDWDo+uhQ3q8LT6SopO02+9rQLeY5kO
-        MHJeLRrPcxfPmGajm2sDDqo0lAVA7H0qCQ==
-X-Google-Smtp-Source: APXvYqzBMBtpQaa3+GNqb23XR8X0kLq67DUC33W0DuEccoWVJlmNJi0NshE6V1060Rim0eGKCHct6Q==
-X-Received: by 2002:a05:620a:1506:: with SMTP id i6mr16009846qkk.346.1565309597170;
-        Thu, 08 Aug 2019 17:13:17 -0700 (PDT)
-Received: from localhost ([2605:9480:205:fffe:d944:a1aa:a878:ce5c])
-        by smtp.gmail.com with ESMTPSA id t9sm3166654qtr.29.2019.08.08.17.13.16
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 08 Aug 2019 17:13:16 -0700 (PDT)
-Date:   Thu, 8 Aug 2019 20:13:15 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ariadne Conill <ariadne@dereferenced.org>
-Cc:     git@vger.kernel.org, Phil Hord <phil.hord@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2019, #06; Thu, 25)
-Message-ID: <20190809001315.GA87896@syl.lan>
-References: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
+        id S2404775AbfHIAWz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Aug 2019 20:22:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57364 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732796AbfHIAWy (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 8 Aug 2019 20:22:54 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c831:5a62:6d5c:8da3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9A60F6047B;
+        Fri,  9 Aug 2019 00:22:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1565310171;
+        bh=CVCGLhcjprBRualWrHuN9e+nnk7wVRWZ04FQBVeQxZ0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=R1RyhjaTccjgoIF/5j1iUkaiqSNIuXMzAnp0WCWG20JZvL/0A5CQsZmL2+yW92ArR
+         QQ+0xcmOiSs7vq+D+EkjvwJkvfZMgZaJT0+ezf4Rhr1UCcZc6Zq61Xb9Ap01Wrh8lL
+         XVRLWLY4kz7UgKXj8VgPUEEFVVrv04d6bZaZamr4F6cKRbJbPyy/xZEupRcp7Hcsit
+         jFIlDHzm8M+TMBvROY+mHplu4+34jW8Cn72O4xoh+VLoPbNJengWOomPC80zHqrnGg
+         pGF6CC/djTjxC8SLjexqJDmQR+zncx+SG/dTAl4WFDXmobzsnFgGOw7ZBGXMWjHZyh
+         PhHYPJH1biJJnhQDhwdyq4EHxTQTFlBzItJ7E9yYqTjEsjmmd1p9ol26jtNdVHXjfm
+         s8eRBLiFbkO15RiJn9JBHEQLMQLVy6/vbM3J6IuEAKWw5M42OnFTA+uypE2U2apl29
+         1j/NeSB7SemWINaEyGcamQx7D29WWoyCE5yYFQ3l0eM+JnXa8Am
+Date:   Fri, 9 Aug 2019 00:22:46 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Christopher Ertl <Christopher.Ertl@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Windows absolute drive path detection incomplete
+Message-ID: <20190809002246.GL118825@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Christopher Ertl <Christopher.Ertl@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <DB7PR83MB0268816EF2F435EF791272C197D70@DB7PR83MB0268.EURPRD83.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AwNVUpjOmSj7UnwZ"
 Content-Disposition: inline
-In-Reply-To: <xmqq36itprzo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <DB7PR83MB0268816EF2F435EF791272C197D70@DB7PR83MB0268.EURPRD83.prod.outlook.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Thu, Jul 25, 2019 at 05:19:23PM -0700, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
->
-> The seventh batch is in; I've merged fix-up topics that has been in
-> 'master' for some time (i.e. up to the third batch of this cycle)
-> down to 'maint'.
->
-> You can find the changes described here in the integration branches
-> of the repositories listed at
->
->     http://git-blame.blogspot.com/p/git-public-repositories.html
->
-> --------------------------------------------------
-> [Graduated to "master"]
->
-> *snip*
->
-> * ac/log-use-mailmap-by-default-transition (2019-07-15) 3 commits
->   (merged to 'next' on 2019-07-19 at e5669de950)
->  + tests: defang pager tests by explicitly disabling the log.mailmap warning
->  + documentation: mention --no-use-mailmap and log.mailmap false setting
->  + log: add warning for unspecified log.mailmap setting
->
->  The "git log" command learns to issue a warning when log.mailmap
->  configuration is not set and --[no-]mailmap option is not used, to
->  prepare users for future versions of Git that uses the mailmap by
->  default.
+--AwNVUpjOmSj7UnwZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry for jumping into this discussion quite late. I was discussing this
-change with a colleague of mine who pointed out an issue with the
-eventual new defaults. I'd like to re-raise the issues they shared with
-me on the list for discussion, and if agreement is reached, I will send
-a series that reverts these changes.
+On 2019-08-08 at 16:44:52, Christopher Ertl wrote:
+> So I'm proposing to remove the check for the drive letter being alpha in =
+`has_dos_drive_prefix` macro:
+>=20
+> #define has_dos_drive_prefix(path) \
+> 	( (path)[1] =3D=3D ':' ? 2 : 0)
 
-If a transgender person uses '.mailmap' to rewrite their deadname to
-their legal name (as was the original motivation in [1]), there are two
-potential issues:
+Is the drive character required to be ASCII? If it can be non-ASCII
+Unicode, then this doesn't work, because the drive character will be
+encoded in UTF-8 and will be longer than one character.
 
-  - The '.mailmap' provides a list of transgender individuals, along
-    with their deadname, which can be used to harass them.
+An ABNF grammar of valid Windows path names would be helpful here.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-  - If they are not in control of the '.mailmap', and 'log.mailmap' is
-    not specifiable (and instead defaults to 'true'), then a malicious
-    maintainer or contributor can submit a change that rewrites their
-    real name to their deadname, and harasses them further.
+--AwNVUpjOmSj7UnwZ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This issue was not raised in the original discussion, but it's clear
-that this has the potential be used for bad, not good.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
 
-Given that the release is so close, I propose we revert this change
-before v2.23.0 is tagged. After that, we ought to discuss ways for folks
-to change how their name is displayed in porcelain commands, and
-thoroughly consider whether or not a new plan is exploitable.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1MvNYACgkQv1NdgR9S
+9ouF6w//Z9LWbCNzrDIm3Zj4K/H25Rf0JtEozTEn+O3Qkt8deGZsHu0rUbmxfFN1
+Wwo3rhFeop9Y1UtDNXWz88gpj9t7J4Va/qPT3m3OYfYwFh631jDyzfNBPfEJ0U1+
+9I00OjfAhXXTy+zU+CJtbUFh7WqqAz7vLtXvIbEMvDW9ZwozYDuZEG7PcQlriB0c
+Kfnd/LbojIvSiEDxD/IKIVXrib53XvzLJFH3eNnpiKMt4QVqcyI9i0ZnjyyM8A7k
+mg+N+KsvcxlhKqpS0VeDGuAmCAIGzIFIpiIpav6jhEUSe7S4ppw1zZHDOzL5o620
+cHIrf9nXD/VUszTHJ7vbPvvM5xlheYFyYCRV7tiTRPNzeHwaI+dGFr+DiyZCjmmj
+PYAxxsiGfQHJJ60JgYdB+7I1BaKJXIC1/XvKYCKspSjGkjAO6Bb1s540MaZNNxhe
+IQmqNMM15wpDzZN+mbH8GgbfvgFHXGEDvUVKGZjgYQ8gW3r6ZrQX0DSNhueoqEMQ
+dkUWiTTKqN1944q5fHYDQO4tcXYaL/VCNiAJuXMmvS7F7FoQarlecUii6KH0M0Ex
+eh8LD0n1x6Od7SKj3U1/aTjIh+oDYvOcOzjIc+QTWcpmyRE5vIlEc1Y1ZCtRyTrJ
+Msgz2ocIvW93h/FVEBxnfbd+xHnKsnOWo8WQ8H6qZd8bUJw9RPM=
+=ELVV
+-----END PGP SIGNATURE-----
 
-If you think this is a good course of action, I will send a series to
-revert the changes that were queued here.
-
-Thanks,
-Taylor
-
-[1]: https://public-inbox.org/git/CABURp0poUjSBTTFUXP8dAmJ=37qvpe64=o+t_+mHOiK9Cv+=kg@mail.gmail.com/
+--AwNVUpjOmSj7UnwZ--
