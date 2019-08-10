@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9203B1F731
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6ED71F731
 	for <e@80x24.org>; Sat, 10 Aug 2019 20:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726406AbfHJU17 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Aug 2019 16:27:59 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:38026 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbfHJU16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Aug 2019 16:27:58 -0400
-Received: by mail-qk1-f196.google.com with SMTP id u190so10664454qkh.5
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 13:27:58 -0700 (PDT)
+        id S1726464AbfHJU2D (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Aug 2019 16:28:03 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:46725 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725863AbfHJU2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Aug 2019 16:28:03 -0400
+Received: by mail-qt1-f196.google.com with SMTP id j15so5646230qtl.13
+        for <git@vger.kernel.org>; Sat, 10 Aug 2019 13:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tNmCBAGkWtu3W2MOdb6EhCFlaFqoCcepeubQxKBrXtM=;
-        b=dcq92GDpKYYeQAsdz2PTt6ojSOIdRz3wqqIKi1ZPvNPzuGs9VGNrG7A5ezSjjXIclJ
-         tFgfyxQhWEqx+zZ+dmZHPgIMoYa33BhRnKViYzumU76FG9LB07cyYlbVQa4XnurWp7Eu
-         SnA6Pzv6aTBP3mxENC4n1qjk17EdbcOpvQOz1y3+u/GHc1ahiqqoL7MTu+LHjclfktBV
-         xvYnlxOBKF1iAC6dzjH4OQPqMXTq14DI+e0EtxPHrDaZgXjT6W88NVIofTXg4/HC0qHl
-         jj1ZZghx6CxtrZespVbkst5l3LOwefnyHhKvRbaW87/hApFVQRVY0Vl5Xc5cVD0Mvij1
-         dVOg==
+        bh=WLQblxTsIs6isPvJ42iTZ/nKzLW0BcZi1MiNG6b1XWE=;
+        b=R7Bqbbfs8CpQ91DAgqMKeAcrUb6d5smHz6OChrTfNsFahnSDQlK5zlEwNTr17VcLXC
+         smpJ8RbmM7AjBzUJXDUF3S57l9tFwqwqSBb7qUE15k+A/CBqOdOLMcS1qUwpj+KPi76w
+         lpjyzYV/3y3H8h1mE7ldMWeNmPSgUCqGQw6voJPjMugtePDd4O/wG/ZgyOi2oWb7Vutb
+         t2aKhKM+ImI0YzRFvO2kWnoltAbFpWv75kqm5Ozp2tnUNw8tJhyl4TyEb7QakCGj2V7B
+         EdMvFGevkkdDJjmg8irVLGmyvdTPQyJG0bWyA+i1qcCwRspV5gH3mX/L4/x+FfquffgN
+         /49A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tNmCBAGkWtu3W2MOdb6EhCFlaFqoCcepeubQxKBrXtM=;
-        b=RGFiS4b3+GWmXD0RNMa806DIorYAXhAMgkw+q58G8W/zcpPegavZh+m5N5uz/cruVY
-         YShQGWPbdcxVwzTI6MMqkIQvgHzA2/ZVJhKN62Qk1fwqLhYo39R/YNKJDZwpo6t01gd6
-         90kXjIEmwlas8ueXY24iel6I9+WHSX5sa8B6ah/Bl8N4yNtGPhUDQk7NEw5CcI8ABCPj
-         4NEL+sJwIQhp2ucU3oJrw1TG9X/FGevI3JrpYgu2jxtk7K9FoMZ6CJAdB5I07EAFcyjx
-         zsu4ltqTAs72WO2HEO7E4U1q1rcqa7zxcUgR2ZBymVM3szmq1qZDCF8eHdpBH0K/nADb
-         Civw==
-X-Gm-Message-State: APjAAAXTld8vNq8inPTla/sjsJY8zDlEKTt738cAxqdKYP2kz/Vchnt5
-        q+n0sEBQqhYtrHIssg5M3E6KVKYZpDk=
-X-Google-Smtp-Source: APXvYqwahuu5tEJoCG26jOOX1zd6iD3WLJHiruygWapB8FiGMiWiK4quzcVltp+zzk0AJS7atOENLw==
-X-Received: by 2002:a37:aa88:: with SMTP id t130mr24861590qke.12.1565468877814;
-        Sat, 10 Aug 2019 13:27:57 -0700 (PDT)
+        bh=WLQblxTsIs6isPvJ42iTZ/nKzLW0BcZi1MiNG6b1XWE=;
+        b=umS8ksQM3CO83ZWBR4GMJpF+atE6yC3oyqMGXxhzDEbdE/tF8QV4WzUpiLf6yrq2Hh
+         VRqVstBmi612Qjnl/dh36HrQZr86NPFv1cs/Qb7VmufTb4qIoGeOLsE4HYYOkRpLjkwi
+         BBww51SJfc6HyenZr+ymuOdcNFMtvhBfo2NJckMeGbTJ3CUUZoJm5RrHd5lkYFHj0gfC
+         szmCYuJ6s2YKzHu2atIwUrqUsgRNpQ4BZKzEyUtl9BZFfT+Uz7X+UuScz+x/H7tZ4oV/
+         RLFYajJtG5Y0EmhimW8YAK5yiN4DJJFI48xVeGaoGH4PqeHQqU7J7jWJXRG7chJsH/eF
+         XsKA==
+X-Gm-Message-State: APjAAAWJNvOs4EcU/jGxySWMoi2Efuac1BbANWfN0C1wLgXBxygAku5X
+        TwAjvdyBFSdjLJigH5DLIqzH6Nkzw4k=
+X-Google-Smtp-Source: APXvYqx+mafa60YuCY+TaU9bG16CIy/VgKaGzpd7ZvLxlNpV3igPP114DTSu1tHyWevvXffATwXHug==
+X-Received: by 2002:a0c:ac98:: with SMTP id m24mr24489109qvc.9.1565468881643;
+        Sat, 10 Aug 2019 13:28:01 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id u1sm54384295qth.21.2019.08.10.13.27.55
+        by smtp.gmail.com with ESMTPSA id u1sm54384295qth.21.2019.08.10.13.27.59
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 10 Aug 2019 13:27:57 -0700 (PDT)
+        Sat, 10 Aug 2019 13:28:01 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Olga Telezhnaya <olyatelezhnaya@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [GSoC][PATCH 2/4] grep: allow locks to be enabled individually
-Date:   Sat, 10 Aug 2019 17:27:28 -0300
-Message-Id: <235de7de2874bd089b106be75121e1616308ed55.1565468806.git.matheus.bernardino@usp.br>
+        <pclouds@gmail.com>, Brandon Williams <bwilliams.eng@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC][PATCH 3/4] grep: disable grep_read_mutex when possible
+Date:   Sat, 10 Aug 2019 17:27:29 -0300
+Message-Id: <d2e3f4eac24d26210f8962ebd82fd24a99c91fdf.1565468806.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <cover.1565468806.git.matheus.bernardino@usp.br>
 References: <cover.1565468806.git.matheus.bernardino@usp.br>
@@ -70,89 +70,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-grep has some internal locks to protect thread-unsafe operations
-when running with threads. The usage of these locks can be toggled
-through the variable 'grep_use_locks'. However, it's not currently
-possible to enable each lock individually. And since object reading has
-its own locks now, it is desirable to disable the respective grep lock
-(and only that) in cases where we can do so. To do that, transform
-'grep_use_locks' from a binary variable to a bitmask, which controls
-each lock individually.
-
-The actual disabling of grep_read_lock, when possible, will be done in
-the following patch.
+git-grep uses 'grep_read_mutex' to protect some object reading
+operations. But these have their own internal lock now, which ensure a
+better performance (with more parallel regions). So, disable the former
+when it's possible to use the latter, with enable_obj_read_lock().
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c | 2 +-
- grep.c         | 4 ++--
- grep.h         | 8 ++++++--
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ builtin/grep.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 560051784e..a871bad8ad 100644
+index a871bad8ad..fa51392222 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -205,7 +205,7 @@ static void start_threads(struct grep_opt *opt)
+@@ -205,7 +205,17 @@ static void start_threads(struct grep_opt *opt)
  	pthread_cond_init(&cond_add, NULL);
  	pthread_cond_init(&cond_write, NULL);
  	pthread_cond_init(&cond_result, NULL);
--	grep_use_locks = 1;
-+	grep_use_locks = GREP_USE_ALL_LOCKS;
+-	grep_use_locks = GREP_USE_ALL_LOCKS;
++	if (recurse_submodules || opt->allow_textconv) {
++		/*
++		 * textconv and submodules' operations are not thread-safe yet
++		 * so we must use grep_read_lock when grepping multithreaded
++		 * with these options.
++		 */
++		grep_use_locks = GREP_USE_ALL_LOCKS;
++	} else {
++		grep_use_locks = GREP_USE_ATTR_LOCK;
++		enable_obj_read_lock();
++	}
  
  	for (i = 0; i < ARRAY_SIZE(todo); i++) {
  		strbuf_init(&todo[i].out, 0);
-diff --git a/grep.c b/grep.c
-index cd952ef5d3..3aca0db435 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1523,13 +1523,13 @@ pthread_mutex_t grep_attr_mutex;
- 
- static inline void grep_attr_lock(void)
- {
--	if (grep_use_locks)
-+	if (grep_use_locks & GREP_USE_ATTR_LOCK)
- 		pthread_mutex_lock(&grep_attr_mutex);
+@@ -227,7 +237,7 @@ static void start_threads(struct grep_opt *opt)
+ 	}
  }
  
- static inline void grep_attr_unlock(void)
+-static int wait_all(void)
++static int wait_all(struct grep_opt *opt)
  {
--	if (grep_use_locks)
-+	if (grep_use_locks & GREP_USE_ATTR_LOCK)
- 		pthread_mutex_unlock(&grep_attr_mutex);
+ 	int hit = 0;
+ 	int i;
+@@ -263,6 +273,9 @@ static int wait_all(void)
+ 	pthread_cond_destroy(&cond_write);
+ 	pthread_cond_destroy(&cond_result);
+ 	grep_use_locks = 0;
++	if (!recurse_submodules && !opt->allow_textconv) {
++		disable_obj_read_lock();
++	}
+ 
+ 	return hit;
  }
+@@ -1140,7 +1153,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	}
  
-diff --git a/grep.h b/grep.h
-index 1875880f37..02bffacfa2 100644
---- a/grep.h
-+++ b/grep.h
-@@ -229,6 +229,10 @@ int grep_source(struct grep_opt *opt, struct grep_source *gs);
- struct grep_opt *grep_opt_dup(const struct grep_opt *opt);
- int grep_threads_ok(const struct grep_opt *opt);
- 
-+#define GREP_USE_READ_LOCK (1 << 0)
-+#define GREP_USE_ATTR_LOCK (1 << 1)
-+#define GREP_USE_ALL_LOCKS (~0)
-+
- /*
-  * Mutex used around access to the attributes machinery if
-  * opt->use_threads.  Must be initialized/destroyed by callers!
-@@ -239,13 +243,13 @@ extern pthread_mutex_t grep_read_mutex;
- 
- static inline void grep_read_lock(void)
- {
--	if (grep_use_locks)
-+	if (grep_use_locks & GREP_USE_READ_LOCK)
- 		pthread_mutex_lock(&grep_read_mutex);
- }
- 
- static inline void grep_read_unlock(void)
- {
--	if (grep_use_locks)
-+	if (grep_use_locks & GREP_USE_READ_LOCK)
- 		pthread_mutex_unlock(&grep_read_mutex);
- }
- 
+ 	if (num_threads > 1)
+-		hit |= wait_all();
++		hit |= wait_all(&opt);
+ 	if (hit && show_in_pager)
+ 		run_pager(&opt, prefix);
+ 	clear_pathspec(&pathspec);
 -- 
 2.22.0
 
