@@ -2,155 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF88F1F731
-	for <e@80x24.org>; Sat, 10 Aug 2019 20:28:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27FFA1F731
+	for <e@80x24.org>; Sat, 10 Aug 2019 21:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726465AbfHJU2I (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Aug 2019 16:28:08 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:35409 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbfHJU2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Aug 2019 16:28:08 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d23so99286395qto.2
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 13:28:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=r7BVam1vzjvKeDq7MRpzhR+6JLEl5IbPg6CHrc5oOZs=;
-        b=qmmnQoD4UsiMxo94kZvsiwGKqxbt37dc8V+9D7azetLcm/IuhDWwhDjUx8GWI75u9f
-         aWXv8Er7qTUOzWbmnsxo9pB2WvqjFL5uP+b6o/QkxdbFl2T0/jibtfZhsFR2H9lz/Ykd
-         H7bmeW7pSt/+udRDEt0ADf4gQPWB0Nrdt0I7ysGeMzPEeO4iL3r5n8YF1pESTViY1c/i
-         Cz2gRHsjjceqhXMSGucB2/IEs7F6AhLssdIP7Dj+jBIZl9/39jbt4DckyL1DS/BmTPyq
-         TOCLQK5bu0GMwpVb3pPviYtF+ATKGbYTSXMRpGO8nSFXu1DIKHhSYf7gRjohFfxuzJzx
-         GLYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r7BVam1vzjvKeDq7MRpzhR+6JLEl5IbPg6CHrc5oOZs=;
-        b=cTjn2LEeaXc7RSUWa6dXofgEXKzaGPeOba1R8McitOlqQNXiP03TLMkhe4lNzd21dI
-         M6FMG4PkrTPo5mW5FIwyrjgGQNJZGayT7azuh5G8uFTdup7cj3Xt0NnUU+7q37w0gJqT
-         E0gUB71SgTeRpkfOBcbPYGDI5dpjsboxU3BlQa77FaxMBfckK/aRQf1X1+ufp15Ytepw
-         p1AhbkCgj0VOIiuaSZ4BHW8/x54wA3fYMuBgjOohU/9a0EstXmU+wyLubj3/gRAbO9f+
-         I3WbFf9ZAfnUQrO3ISYtEZAotVvFwbCH7m0IiEQsW6VzYbHhDR8/Sw2YPuLcP+dZBB7J
-         ytzg==
-X-Gm-Message-State: APjAAAW9eKfRu5owoGcBcI4LU4M0A8bMlxKXw5GtSBSAk7fPYjUz69j+
-        y2efK7Q7O+3vqLvLgfXyX/lK2Cp8ZwU=
-X-Google-Smtp-Source: APXvYqzeTiQLR+MpUY1W+QfQXQeqydEQ6tnXJ496Z92dRqzs0q6siDVgjiDsz+97xThQzsTkkcGQwg==
-X-Received: by 2002:ac8:60a:: with SMTP id d10mr23593025qth.31.1565468887210;
-        Sat, 10 Aug 2019 13:28:07 -0700 (PDT)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id u1sm54384295qth.21.2019.08.10.13.28.04
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 10 Aug 2019 13:28:06 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Manav Rathi <mnvrth@gmail.com>
-Subject: [GSoC][PATCH 4/4] grep: re-enable threads in some non-worktree cases
-Date:   Sat, 10 Aug 2019 17:27:30 -0300
-Message-Id: <8c26abe9156e069ad4d19e9f0ce131cd1453f030.1565468806.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <cover.1565468806.git.matheus.bernardino@usp.br>
-References: <cover.1565468806.git.matheus.bernardino@usp.br>
+        id S1726365AbfHJVQQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Aug 2019 17:16:16 -0400
+Received: from mout.web.de ([212.227.17.12]:33931 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725863AbfHJVQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Aug 2019 17:16:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1565471768;
+        bh=a3AWb+okiUrAAywzZUxNewNcylBeiju/5OY/hsaLUhM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=YxZjudXNEdpFTnYnBF+zA6xFANozqagK9uIEckCoV4mA8j9PtzTxj3jcIOpjQCFvC
+         S6h50ahuWwjBuN6MlKpM7wpijYgQRnAeSfiBb2R6e9YIlbeaOpBD89Kkd4X1z/aKGM
+         3pXKlHJ42ZJhyB0MZYEYdw7bADzH0+IH9y7lyMQM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbQGO-1hdvP93T3k-00IkH5; Sat, 10
+ Aug 2019 23:16:07 +0200
+Subject: Re: [RFC PATCH v5 0/3] grep: almost no more leaks, hopefully no
+ crashes
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
+        michal.kiedrowicz@gmail.com
+References: <20190807213945.10464-1-carenas@gmail.com>
+ <20190809030210.18353-1-carenas@gmail.com>
+ <CAPUEspiK7MTZPMktbU=_C_GPOH9vQiBmVUZp7GuR97RZS3onRQ@mail.gmail.com>
+ <d239326e-11c3-5875-13a8-f4123baea6eb@web.de>
+ <nycvar.QRO.7.76.6.1908092325480.46@tvgsbejvaqbjf.bet>
+ <CAPUEspjVMbjdgBrW3qS3jwbd2ZfqMinfgGiasEZGwyZB-1c+QA@mail.gmail.com>
+ <d8e55007-27bd-fcac-c918-bb712ec1bb8b@web.de>
+ <CAPUEsph+hjU2UstL=YW-2qKC3pGJrOwaw+VCiHH74HZ2=oupig@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e127a2d0-7ce4-71af-3d91-8b5515af2dc8@web.de>
+Date:   Sat, 10 Aug 2019 23:16:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPUEsph+hjU2UstL=YW-2qKC3pGJrOwaw+VCiHH74HZ2=oupig@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:5QV7DqXrFwkBQRUHLkNmeK+c/j2+ptSlNsE3/B1ckWXOea/uBAC
+ Yx2EDtFmzCl01m0z94EeEtoDzxjxdhCjMYwQifqvxISHNGpJ6LXX4h2iRSAOt5yZ2vEM1LY
+ TgE6Daj/fGDi3+eEhBbuDXBFz07XeI2HDqFjCHOHqaMQjWkv96qGxmQap2HzmC78nrDBI4/
+ jp7Nx1r+bqED8roS5OzUA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jsyTzQmIjG4=:hlkOhWT71zXu7LPSHcHjhS
+ Y0nSf4khaP+5uLxFGYM5UY9rh9m7/I7chok0kZFs6YdY4JQmQRYH/Pph2asD33ne3NK1Hil0d
+ +OWzrOPqou5lLCEy1fFny/BtyJZf4BTXz8uBksGvzp0CJ4SVa9Iz+ZKtYGH2118qi66ujz5eQ
+ erM0fu3gWuoXqFGT2eowv4fJ8BVZ3qnTLQk+us4H5AOtbBn5gk7sAeE6W/xqMtMvjjDC23apa
+ Cmid1CUwk0AVhPTJ5Wel7N4fV9IGuvNWk8/r9xhLRJouW+LH47ejAY4oDaFMw4Dc/NIunJ6HT
+ oIQubjVN3kJH/sWyfk4aQsicZbcsbkrHrsMopusam8HsH3nuMSrx6Llxp9f6wmx4em1K8yT9n
+ ZhGJ+oKfiM/88zeBu/pXI2AsKcqbHmvZCfnEBuSe2R5M3jbosY0ccwRSi/eJPEwfAPjgCLRa4
+ FPYGYPCSLuxmIpPqvEqCctRFa9dOUC1Hy7LlLjy1mkiAV2xQlAgNPch1kGI/S3vygYIXBlySc
+ 4xj7KG6IS9TrwI9XCP02q8IwJlPl9W8kXAggqC2giypuO6Xcrap8bKhm0d+NtW2JAD0ePHDZP
+ f8udDKOn8KVpWVLQZyXUGdf3qVaWAg0Jfm9tyuL4YMMGTrbpoViGpxasjiBthn858DSXlVA4a
+ qYimdud09Tpw0FRTdrcYVtNYzMMITaTuqkYfu4fgi5Lw+/nOipcJZdurl2h5pdgOLigv5k/Mf
+ EzDzfiULGiFGaU7oxf13utFNWLZX5fXWgW2MeeleuXq2y3k8IwUcCPjqy10Ig/fYeYfcgbF7P
+ fY9Kcx9e1F+IKedEbUWN0Fqji6Jb+4Szt3cOLZ2N2QDpuSOIb7D9teL59dzUXLBc25tAONrHu
+ WtO3rvBSoDPaOqpUxdSGWwFVYHGnrcrS4w75s5uAX+hTXVTlaJ6+K0whfLXWAjonF2eXQa3j3
+ KHOTrPu7OpXUzVrOD2zCSMhgNy0uKQMBWqWQ1g6o8mmyW3Iw8NrB5kduUYhPz8Q0FvrS8bZXk
+ yVb+Ne0hzeivnGA8EpEw34sYK5UUXRPNE9pZqvZEekCKdo1BApWIe3odnavhGOLdknn4xl4EU
+ SIl0B4koVhHmPmTL1wacw5YacFH5rDArJzOkpD75m/Jly/d9+jqY2+NH+57wFghetCWJTj7WO
+ se0CQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They were disabled at 53b8d93 ("grep: disable threading in non-worktree
-case", 12-12-2011), due to observable performance drops. But now that
-zlib inflation can be performed in parallel, for some of git-grep's
-options, we can regain the speedup.
+Am 10.08.19 um 14:40 schrieb Carlo Arenas:
+> On Sat, Aug 10, 2019 at 12:57 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>> I don't understand why my performance is lower by factor 2.5 than yours
+>> for all perl regex tests except 7820.15 (your 7820.4), where my system
+>> is two times faster.  Debian Testing, GCC 9.1.0, i5-9600K, 16GB RAM.
+>
+> interesting; did you also see at most 100% of one CPU being used?
 
-Grepping 'abcd[02]' ("Regex 1") and '(static|extern) (int|double) \*'
-("Regex 2") at chromium's repository[1] I got:
+For 7820.15 yes -- 100% of a single core, the rest idling.  The other
+tests had only brief sequential phases, if at all, and used all cores.
 
- Threads |   Regex 1  |  Regex 2
----------|------------|-----------
-    1    |  17.3557s  | 20.8410s
-    2    |   9.7170s  | 11.2415s
-    8    |   6.1723s  |  6.9378s
-
-These are all means of 30 executions after 2 warmup runs. All tests were
-executed on an i7-7700HQ with 16GB of RAM and SSD. But to make sure the
-optimization also performs well on HDD, the tests were repeated on an
-AMD Turion 64 X2 TL-62 (dual-core) with 4GB of RAM and HDD (SATA-150,
-5400 rpm):
-
- Threads |   Regex 1  |  Regex 2
----------|------------|-----------
-    1    |  40.3347s  |  47.6173s
-    2    |  27.6547s  |  35.1797s
-
-Unfortunately, textconv and submodules' operations remain thread-unsafe,
-needing locks to be safely executed when threaded. Because of that, it's
-not currently worthy to grep in parallel with them. So, when --textconv
-or --recurse-submodules are given for a non-worktree case, threads are
-kept disabled. In order to clarify this behavior, let's also add a
-"NOTES" section to Documentation/git-grep.txt explaining the thread
-usage details.
-
-[1]: chromium’s repo at commit 03ae96f (“Add filters testing at DSF=2”,
-     04-06-2019), after a 'git gc' execution.
-
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- Documentation/git-grep.txt | 12 ++++++++++++
- builtin/grep.c             |  3 ++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 2d27969057..9686875fbc 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -330,6 +330,18 @@ EXAMPLES
- `git grep solution -- :^Documentation`::
- 	Looks for `solution`, excluding files in `Documentation`.
- 
-+NOTES
-+-----
-+
-+The --threads option (and grep.threads configuration) will be ignored when
-+--open-files-in-pager is used, forcing a single-threaded execution.
-+
-+When grepping the index file (with --cached or giving tree objects), the
-+following options will also suppress thread creation:
-+
-+	--recurse_submodules
-+	--textconv
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/grep.c b/builtin/grep.c
-index fa51392222..e5a9da471a 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1073,7 +1073,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	pathspec.recursive = 1;
- 	pathspec.recurse_submodules = !!recurse_submodules;
- 
--	if (list.nr || cached || show_in_pager) {
-+	if (show_in_pager ||
-+	   ((list.nr || cached) && (recurse_submodules || opt.allow_textconv))) {
- 		if (num_threads > 1)
- 			warning(_("invalid option combination, ignoring --threads"));
- 		num_threads = 1;
--- 
-2.22.0
+Ren=C3=A9
 
