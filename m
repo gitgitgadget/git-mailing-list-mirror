@@ -2,116 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,SUBJ_ALL_CAPS shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 920191F731
-	for <e@80x24.org>; Sat, 10 Aug 2019 12:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CEE91F731
+	for <e@80x24.org>; Sat, 10 Aug 2019 13:57:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726295AbfHJMlA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Aug 2019 08:41:00 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:38717 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725927AbfHJMlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Aug 2019 08:41:00 -0400
-Received: by mail-ot1-f66.google.com with SMTP id d17so143219215oth.5
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 05:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9y5V7DibcjlpvnXQucqumrumg13tgGv/8QDpJk4ctOo=;
-        b=mxgpshkKEswebpgahKfNG9/K96ljJxRurMphHZOoPWKQqImrsw7CQKfB/pVMuQ+Ub/
-         WYrJF1DCVes1hjWaM2E4EuSnrgO8KRIVycwgM3eKauSvFFWKsiB30exlx1OoFP4cVANY
-         BoJ8bCQIEhV1SU9IhsL6bbItv6qy81ntdj8aUu3Zi+DTdOm68mAgXN5rFLSC0ObWnWu0
-         d+G02mSCC/AUCQWvhlcNQq0P88szFByzyME+ZbRzZw1NiWyZgcP1K1IDQT9QDhX7RMxS
-         ATJ57HiL3CTdM9gCLTJR9b4IqccSsGsSlmHPeQLvrQwhaf6SB+a35zQXZt+CK/yn4X9m
-         ovkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9y5V7DibcjlpvnXQucqumrumg13tgGv/8QDpJk4ctOo=;
-        b=K/nAHq0Ae8BvvqeBz8eYOW4sObwnyf+1pfIyiFGxJG5T/4Bc63Ulee1y9cVrbNtTWE
-         afW7ZKHLkTsCeioRr1MUUH1nZVmgI7kaBfi95m+pPvK6bYZHNRgjnif6pJqiSpjuzd8C
-         2XVZxtIc9eifySEKYyg90JPQvTM/iCdPQUp6CwrJ2Jatl5Fm+A7W5ZZM2VgL8Ai5FryT
-         zt+7fRK+I7s71wvYTFvhONEbOhQIDfY84g08aosXIpUrX6tIOQV+3iLf3BXD90w0ilJW
-         pfdnIa9y7F4EBCh74OsuYwIxeM8701GbKOscn3CY+5+DVaQRoacYc3Flpbb17Be+KyD6
-         0dUw==
-X-Gm-Message-State: APjAAAVWSb9lZ32Vn3yerL2PjECqK0aSVTEn9H8UemQ4ScItl8suCIcz
-        aFgu9phfMFQl4C94jmvoJxmivytmHe3rJ9zwesM=
-X-Google-Smtp-Source: APXvYqweundVn6wyvtEm8Y18CMEY654IpsUC83oMfVlJHsGxb9hLsJRj25hTWGxN0V/x3n3/DwN+ZKFkXzjDTVc7nZs=
-X-Received: by 2002:a6b:b804:: with SMTP id i4mr14382307iof.205.1565440858910;
- Sat, 10 Aug 2019 05:40:58 -0700 (PDT)
+        id S1726135AbfHJN5w (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Aug 2019 09:57:52 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60713 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726112AbfHJN5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Aug 2019 09:57:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1565445466;
+        bh=2DIYfLU0S8F1AiJEY47TW4rqyFaopICCFli8J3ZzFh4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QFCM/505Rr4M6vAllUW8DGEF1o/YM/IeNw5juKxyQDv1dP6eQ6iUnDPr9XRo3ewrS
+         gQQjkg2jOZveODupbXDBvsM8wOuhrLIEg1QTvB8kUsnshEXb0tdC/FGuViVSAyFD67
+         /iTmjcTHEyn86tdGA1CcV6W9MbPF4Fg6q5B8+vt4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIdP-1iKC253EiZ-012siE; Sat, 10
+ Aug 2019 15:57:46 +0200
+Date:   Sat, 10 Aug 2019 15:57:47 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        l.s.r@web.de, michal.kiedrowicz@gmail.com
+Subject: Re: [PATCH] SQUASH
+In-Reply-To: <20190810030315.7519-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1908101556530.46@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1908092325480.46@tvgsbejvaqbjf.bet> <20190810030315.7519-1-carenas@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190807213945.10464-1-carenas@gmail.com> <20190809030210.18353-1-carenas@gmail.com>
- <CAPUEspiK7MTZPMktbU=_C_GPOH9vQiBmVUZp7GuR97RZS3onRQ@mail.gmail.com>
- <d239326e-11c3-5875-13a8-f4123baea6eb@web.de> <nycvar.QRO.7.76.6.1908092325480.46@tvgsbejvaqbjf.bet>
- <CAPUEspjVMbjdgBrW3qS3jwbd2ZfqMinfgGiasEZGwyZB-1c+QA@mail.gmail.com> <d8e55007-27bd-fcac-c918-bb712ec1bb8b@web.de>
-In-Reply-To: <d8e55007-27bd-fcac-c918-bb712ec1bb8b@web.de>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 10 Aug 2019 05:40:46 -0700
-Message-ID: <CAPUEsph+hjU2UstL=YW-2qKC3pGJrOwaw+VCiHH74HZ2=oupig@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 0/3] grep: almost no more leaks, hopefully no crashes
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
-        michal.kiedrowicz@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1402099990-1565445468=:46"
+X-Provags-ID: V03:K1:Dk1vOwL8C2KHxu0xA54z0VVP6h9zt4pi1kklhF1lg2wH8toQdH0
+ t1ispjIwXM901hP+TNuzdYW6SHeJywg7+E6NyzVwt/HACPcBG7jyIDRnW4rWYpT61kOnq4w
+ ZCHfj8hZrJaEQGII2Hfka1mtXWQtmUaKmmWMewOQej1nfg9Ak32exDn0KDpSWnq4zY7uFdl
+ mp94Waonsb0zXHRm3P4Ig==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KuD0ZMfRsCg=:9Ex9KyENBzJ6uQZtW2tV4p
+ UWS3Mz8SwTiNasGfGoC/hRR3YWE9glcYJLcg8I4WQjePEps0fyZH1uLY6iBlBNHd/wdlGEFK0
+ wTXm6kqW4PtEXY8jrIxwJuPGsifjoCdnOO5k9oat8wrrKdjBytp5BGZ9Q8UozpPv2pdyLNcOs
+ Io3exlIULNnlxYMwZ0hbG2CDlB1W14MnFhPAlnxh2cgRjiTgkd0T5xj9vYXXGtrfCwUfKVoP+
+ iiKvEvXXPRFftehCtRZSarRgW1TsSpFe65wUNsrE/gtRcoEt9HYbHwPw+hv41jSAn3BxOlIJM
+ O61W6mu4iUt2W3FsH8l3e2DUBxHrSDP6Zn8Cmx0d0IZnL6yQNwCiQD35VzNLZJ1jnc8YmHlsf
+ j8NK2CVwfDWmyzLkocJ4EA7jMCLvOShEOLSm5Z/uC0KbiCdmDwRQh7BBsRCW0Ts2hK8NHhaEW
+ 7bO90WRM+maZ3t17RnOrq9Md+SYP7BLWHwmi+1/kwsEEA0PMDYXwzTf13tTOqSE3V5fWgHYZ8
+ e6LNTVC/ILpvAJVLGXuCCTKGj03id3RGBEEA4Tr4qkmCm5N7eK0flJXHw64nsCxRiqr8yPwOi
+ 1E1QgiEQl4uI9a/i0nQZVYD8tGLygpEp8hsTr9T6uWJZvjioWnCtglQuC4iW4OQjyEGUji+6E
+ 8IsDpESPBF5Fon4q1jSlWbdLh1AderPLZa9/OptNjgnJMMPyliIWWEv2PDoCbSBf5VRMWxez8
+ EtbSQo7E2Z9mJ0h1PnLKAXOWdHoxH3wYHE5yGzlR2SCJ0uVdRE037sVmsJIZL+H53JvVI3wD1
+ 6EUvfHqQjbNuObutwVJ0B4UGXEJglNVkqdAkp81wj2fl18p5zdZ2HB9ZdazbqawWmOEZTLx8o
+ ZCgTiqGk/jp5cWdUWhiJ0T0dUq3HiUiDRS3dWx7WqNc+GmyuGLP2IcDXauAmKtlFpuP1O18Is
+ G39znibyOyOdYpeuEnMWpdZGjOgu06ox8dxP9ygTB/wolelYbzYlpp4NL75TC0/KC7+yz+AJ8
+ grMonjaxjMMZA390MV6Xr+kEixBD5R9/Kuz+zLSEM0aRzkyJxRmMicx3yOmL9QS8kSLmJ3Eik
+ zD5+qmJX1dusVx21RoysLxonvSDHTnSxkLr2WAeyqKJYj5zFKs7AYzVnsEc8Py1OzfR1Jsbq/
+ 5L3eA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 10, 2019 at 12:57 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1402099990-1565445468=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Carlo,
+
+On Fri, 9 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> diff --git a/grep.c b/grep.c
+> index 8255ec956e..233072ed80 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -482,6 +482,7 @@ static void free_pcre1_regexp(struct grep_pat *p)
+>  #endif /* !USE_LIBPCRE1 */
 >
-> Am 10.08.19 um 05:05 schrieb Carlo Arenas:
-> > in macOS (obviously testing without NED) the following is the output
-> > of (a hacked version) of p7801 for maint (against chromium's
-> > repository), with Ren=C3=A9's patch on top
+>  #ifdef USE_LIBPCRE2
+> +#ifdef USE_NED_ALLOCATOR
+
+I really, really, really, really, _really_ don't want this to be a
+compile-time thing. Really. No, really. I mean it.
+
+Ciao,
+Dscho
+
+>  static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_da=
+ta)
+>  {
+>  	return xmalloc(size);
+> @@ -491,6 +492,7 @@ static void pcre2_free(void *pointer, MAYBE_UNUSED v=
+oid *memory_data)
+>  {
+>  	free(pointer);
+>  }
+> +#endif
 >
-> Do you mean p7820?  And what did you change?  Looking at the results you
-> removed basic and extended from the list of regex engines, right?
+>  static void compile_pcre2_pattern(struct grep_pat *p, const struct grep=
+_opt *opt)
+>  {
+> @@ -505,7 +507,9 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>
+>  	assert(opt->pcre2);
+>
+> +#ifdef USE_NED_ALLOCATOR
+>  	p->pcre2_general_context =3D pcre2_general_context_create(pcre2_malloc=
+, pcre2_free, NULL);
+> +#endif
+>  	p->pcre2_compile_context =3D pcre2_compile_context_create(p->pcre2_gen=
+eral_context);
+>
+>  	if (opt->ignore_case) {
+> --
+> 2.23.0.rc2
+>
+>
 
-correct, that was a weird typo there; apologize for the confusion.
-you were correct about my changes; ironically, I didn't spell those
-changes out to avoid confusion.
-
-> Ugh, cloning https://chromium.googlesource.com/chromium/src.git sends
-> more than 16GB across the wire.  Is that even the right repository?
-
-noticed it was mentioned before by people[1] doing performance testing
-on grep specifically and
-thought it was better than try to come with another one, the linux
-kernel wouldn't work in macOS
-because it breaks "run" as it fails to checkout in a case insensitive
-filesystem.
-
-> Not
-> sure if my machine can keep the relevant parts cached while grepping --
-> I/O times could drown out any difference due to context allocation and
-> memory allocator choice.  Let's see...
-
-;), try setting /proc/sys/vm/swappiness to 0 or get more RAM
-
-> I don't understand why my performance is lower by factor 2.5 than yours
-> for all perl regex tests except 7820.15 (your 7820.4), where my system
-> is two times faster.  Debian Testing, GCC 9.1.0, i5-9600K, 16GB RAM.
-
-interesting; did you also see at most 100% of one CPU being used?
-yours seem to be faster than mine so this might be representative of
-single threaded performance.
-
-> Anyway, nedmalloc is slower across the board, but the impact of my
-> patch is in the noise.  Right?
-
-yes, and there is a lot of noise.
-
-Carlo
-
-[1] https://public-inbox.org/git/e72330c6747218545cce1b6b1edfd1e448141a8f.1=
-563570204.git.matheus.bernardino@usp.br/
+--8323328-1402099990-1565445468=:46--
