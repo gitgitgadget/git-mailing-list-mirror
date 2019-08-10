@@ -2,122 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,SUBJ_ALL_CAPS shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4D041F731
-	for <e@80x24.org>; Sat, 10 Aug 2019 16:34:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4111F731
+	for <e@80x24.org>; Sat, 10 Aug 2019 19:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726116AbfHJQdw convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 10 Aug 2019 12:33:52 -0400
-Received: from mx0a-002e3701.pphosted.com ([148.163.147.86]:10684 "EHLO
-        mx0a-002e3701.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726048AbfHJQdw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 10 Aug 2019 12:33:52 -0400
-Received: from pps.filterd (m0134421.ppops.net [127.0.0.1])
-        by mx0b-002e3701.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x7AGWNEM005784
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 16:33:51 GMT
-Received: from g2t2352.austin.hpe.com (g2t2352.austin.hpe.com [15.233.44.25])
-        by mx0b-002e3701.pphosted.com with ESMTP id 2u9m48u0fx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 16:33:51 +0000
-Received: from G4W10205.americas.hpqcorp.net (g4w10205.houston.hpecorp.net [16.207.82.15])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by g2t2352.austin.hpe.com (Postfix) with ESMTPS id 8791362
-        for <git@vger.kernel.org>; Sat, 10 Aug 2019 16:33:50 +0000 (UTC)
-Received: from G9W9209.americas.hpqcorp.net (2002:10dc:429c::10dc:429c) by
- G4W10205.americas.hpqcorp.net (2002:10cf:520f::10cf:520f) with Microsoft SMTP
- Server (TLS) id 15.0.1367.3; Sat, 10 Aug 2019 16:33:50 +0000
-Received: from NAM04-SN1-obe.outbound.protection.outlook.com (15.241.52.13) by
- G9W9209.americas.hpqcorp.net (16.220.66.156) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3 via Frontend Transport; Sat, 10 Aug 2019 16:33:50 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UX7sjfkr7P7EAdAWYNViJEJQoSQeEQQfy6hKsweW64EgipQjAgSD6qauZoiCboTETTIdWngpTFnsqybjVQJQI2OINx4pZ7CRxXCw4lA9o8LyKvEEz++Y59kQp21NDKuYd350A5GvJ0PICFWdEWInE4gdTack72LT1Cz5ec/QZ1vqE6Rk3GfFq2b2gdFTlZ0hppoJQCEM84x5jJ1GQQfIb7x2CpVh0URtuDbb03I91pgiM+T2TvPpDDcfkv9flQP7asa8SxFVGe0QkIe97kL2yKxTWPlL2G4xUWG6CHvqLtImayWAvCgL2UGtOt2cF3KGmCH7FTV2dLjOOrNeMNbFIg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GGOM2lMoRKKYjvorsgH9IXBPG658BRICWsiPdTO8slU=;
- b=kT3uhC1QkWgzojLK2sWdCsS2/cFpOvHZYpGc6S+KVd9tfVv424mYO+ylHSBw+70EYAbJMK5r7ylR5fJYqm7XSow4nu90fUeZ74mZepexOM/Etw1HEPW3UqiAafA7zjXbmLgFu9H+tFR/cgpuS8aWgG+0kBYsdgq05WOxf0+CLEiH3vdEX9taWzQ41EU8JVMYKDG5JBszz91sXWGkG1DC8aicPowygWhdJRBfti5zl+XmIXBIosBDffQUctJkRhzljd4UL09w/DvHw5d2PMluemMijEFpPxNXeCWT7WX93ZBvyg+d0oPzjIE7O/grNZ7ZKoNPJFvFdKJLJDrR0TzdeQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM (10.169.47.13) by
- TU4PR8401MB0719.NAMPRD84.PROD.OUTLOOK.COM (10.169.44.138) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.20; Sat, 10 Aug 2019 16:33:49 +0000
-Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::4024:f7f1:9dc1:d80d]) by TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::4024:f7f1:9dc1:d80d%3]) with mapi id 15.20.2157.022; Sat, 10 Aug 2019
- 16:33:49 +0000
-From:   "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git-svn help for non-standard tags/branches !!
-Thread-Topic: git-svn help for non-standard tags/branches !!
-Thread-Index: AdVPmGscU9JlqtSTSiScmOEE2jDdjgAAOYfw
-Date:   Sat, 10 Aug 2019 16:33:48 +0000
-Message-ID: <TU4PR8401MB1216C124AC71846834527C5BE1D10@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
-References: <TU4PR8401MB12164299DDBEA3A7EBD7D040E1D10@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
-In-Reply-To: <TU4PR8401MB12164299DDBEA3A7EBD7D040E1D10@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [122.172.56.175]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0e9fdd40-0adf-4000-83d8-08d71db085a7
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:TU4PR8401MB0719;
-x-ms-traffictypediagnostic: TU4PR8401MB0719:
-x-microsoft-antispam-prvs: <TU4PR8401MB07196384FAB3CE4DCBC001E6E1D10@TU4PR8401MB0719.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 012570D5A0
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(136003)(39860400002)(376002)(346002)(199004)(189003)(8676002)(55016002)(8936002)(5640700003)(6436002)(66066001)(53936002)(81166006)(81156014)(1730700003)(6116002)(3846002)(99286004)(2940100002)(476003)(76116006)(486006)(186003)(446003)(11346002)(6916009)(86362001)(66446008)(64756008)(66556008)(66476007)(66946007)(256004)(102836004)(25786009)(478600001)(316002)(6506007)(7736002)(71200400001)(9686003)(305945005)(71190400001)(2906002)(2501003)(76176011)(52536014)(14454004)(7696005)(26005)(5660300002)(33656002)(74316002)(2351001)(4744005);DIR:OUT;SFP:1102;SCL:1;SRVR:TU4PR8401MB0719;H:TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: hpe.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: OwqC7rIj/qisO5GjAHXTQxOJf9y85fQ2XglJbaedPhH5C5SoFn2VOXmp4UZ+VGmMY8jqJqDQoi++shQYG5OO2pPnECSmfI9CyfPO4vVrdvHRBZYmm5IP6StEf6ttQgHyi0r95J66ajHu8oaErk2n8FRR/ALcf+CjSJrypo9v99EBClno5zXM3++amd55pqtqaltFxPMGOseA5UgvcXwXJBvRdO6rJh+2bYjwlL5SPXOHnm64lAFBSp5ZH1urmmlGuJjh4jW7CzDPgWHVG94Uc5hgaqBEFBaPw//23F7skbJQ4fNcxkAX0QGHK1XVQtRD1Sz8RA0YzHrBrO6Pw0a1MBRWcmdzz8dBPa9I9f9lIzrfKvLD26d51uiHGgpDuzEgqW4KY9gSV6a9K4A6Yzw3N9DDvR7m6/vuyRucT+C2oVI=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1726363AbfHJTsF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Aug 2019 15:48:05 -0400
+Received: from mout.web.de ([212.227.17.11]:54575 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725788AbfHJTsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Aug 2019 15:48:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1565466477;
+        bh=nlPq19Pmd3d3m455LOtqlBiZ2T4kG+p0tJFRJ0S/jrA=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=CsUHciRaQERc3AM+BrFU5clbGqTqRsiLktX7mPhZ8rYyeh4IbXhsV8GLy4vbhIu3G
+         0q9Z5wC6bgkaFrCpos+Yd7hxbv52QPQ8I7KFQePy22oUJqfCtikiCWkEvSXScsbxC8
+         siED8yJQULe+4pgGZ0WvzXporhheGOy04pAhWvXQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LiUG8-1iSYlt1GQ8-00chsu; Sat, 10
+ Aug 2019 21:47:57 +0200
+Subject: Re: [PATCH] SQUASH
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     johannes.schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        gitster@pobox.com, michal.kiedrowicz@gmail.com
+References: <nycvar.QRO.7.76.6.1908092325480.46@tvgsbejvaqbjf.bet>
+ <20190810030315.7519-1-carenas@gmail.com>
+ <f78b57a6-9ede-c87c-fc42-292851d79fad@web.de>
+ <CAPUEspjtZhhynEmJu_weROaao=1zL+De1h50R-grG36ok+EAyw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <501f946a-1f18-7c6a-2d15-8ff6375c4192@web.de>
+Date:   Sat, 10 Aug 2019 21:47:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0e9fdd40-0adf-4000-83d8-08d71db085a7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Aug 2019 16:33:48.8842
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CyROPoJVJuXrjjNUM//zoGqfezkli8LRk7PXK6ehIk7B+tY0RyF/HUXB+ERcGpNwG1H3tAoxViHcLoNmCLC/ZA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TU4PR8401MB0719
-X-OriginatorOrg: hpe.com
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-10_05:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=769 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908100184
+In-Reply-To: <CAPUEspjtZhhynEmJu_weROaao=1zL+De1h50R-grG36ok+EAyw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:g8Ajqsy3PNXjVCEHzBxCIDVMrU9q20w0W7SmgWLNwLR0PxSp+Hw
+ LrWHyc8GznInDd30Ksl6WTxB46VEDeECVtAOCg/fjlh8OSGvSfkEYmQ1kMO3p+9sNT2eN1T
+ e/cHRPZGOWFDpc1+xUulcul7sq1UoNH3evOFtijiohwfQgqv/69ut5F0vsmLnpZsd9FKmx4
+ Yx+Ll9vA6PNLQIGRygjHw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:B/LRvldm+80=:DYvWjkB/5GrSONPhB+gVQe
+ QHUWnn5W0kjTckVD4F3zq7d6r+9TNHX4V7i/D6mZOJWfygfYkR9G6qS2zQ+GTRzrvlKAb7MTv
+ Lne+IeXFOgyul/ccVX8DWKbZBiW1inN6PHBm4BG2XohqKZMzvRgcWGIVd2qXlKFYrx37JjA1J
+ +BfibhZI98rOvlx0PYxeZYC1iV++NOdfUKkVDh4aVjY8bTYClkJET7OGQoc3lzWjIwU0vbilT
+ SBhHZupnGm1e9c7RlYvj6RF5IHZqnf9u1bgymYX/uFxZdSpYLNeDQN7gI1HdGNEeh828OEIbz
+ E67QVGgg7V6zN9713yM/LUVj3s4sKKzVKTRIHaFmzHRQ23FnuuBgNbAkxHdBZUzQFIIvBVyym
+ Lauv63WIr76pv95XiUt3GjJ6iELTc1BEIreQAMafvuLSpVVf/CUwJzUhNntUuEaiRcc4XUg4x
+ rkLuczKC1b8r59qkTNBKcUHFw1AvRIbSbxQK1xSmP36r3cD8RY+kZ5Yla+LBf3ZL9G7ll1OYD
+ 6S56ePpNaublxAqJCqxhptnwselZK8SG9pITZKuAdJufPJg82MxPgI7YuoWr/NSmNVAI1ziCY
+ e373/Ds7U5GUtvw7io8X+JJfUxdbFqFWOmlDLs2KR72YF9uWAIzF2hgRWymVATUb+HEiIt4bv
+ dQngb5PF/UiYPKB550RhmXQnODXqOFooai+9W4c++5Of9gPDkaRq76sbDV6E0a9TN7rRsdvqk
+ CRI0BO1JplgZW6XXReWl1bshbjW7TVnD/sQVBk59BBZFNQ+tvMoB1NIHaOXc1Aca/tAaPvhGv
+ wB3qTfa3178CYtW6/ZpDlAd4n//cSdMFJi7SkDDKVFi1JaQUU1XUHB+6tsBlcxJ6/woFHZOC1
+ ZiovLOmZCZz0G10+nxgI7+N5BPmBrQvo877lfTL/9i7lzNQlkOrBh8xj5AkSymrmq4aqvtk5/
+ wTM85m9IjOSlHkgC1SgCVW1yxhDhu+DxMQLOvZoNOjANoD6d4DuvOlc+eI3xQo9sgXeQ+56+p
+ jP2hfo1PySja05xmCbAumrAfUR1z1bOWSIhQIheNSNjcoQsrCbmY2x5frdXp311LmEi9MPHIk
+ Ir9y6hHNnUBq21HoaS+LSh70GS6EzM0M242VeKy6P64GUA7vzEVzRwKQIrObzlgiWFc0chNGs
+ pJS20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Am 10.08.19 um 10:42 schrieb Carlo Arenas:
+> On Sat, Aug 10, 2019 at 12:57 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>>
+>> Am 10.08.19 um 05:03 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
+>>> Make using a general context (that is only needed with NED) to depend
+>>> on NED being selected at compile time.
+>>
+>> A custom general context is needed to convince PCRE2 to use xmalloc()
+>> instead of mallo().  That is independent of the choice of allocator.
+>> So this change would be a step backwards?
+>
+> My bad, you are correct.
+>
+> Do you mind then if I "adopt" your patch and submit a reroll with it,
+> will also add an "equivalent" one to fix PCRE1 as well then, and we
+> will tackle any performance deficiencies or other issues in a future
+> series.
 
-I have been using git-svn tool for SVN to GIT migration. I see issues in migration of branches/tags located in SVN at different level of hierarchy. To some extent I can define the layout in config file but it's difficult in few cases. like https:<svn_repo_url>/svnrepo
+I don't mind, sounds good.
 
-a/b/branches/<actual_branches>
-a/b/c/branches/<actual_branches>
-a/b/c//d/e/branches/<actual_branches>
-
-a/b/c/d/tags/<tags>
-a/tags/<tags>
-
-How to manage this ? Is there any wildcard or regular expression support that be used in config file.
-
-Thanks
-Ibrahim
-
+Ren=C3=A9
