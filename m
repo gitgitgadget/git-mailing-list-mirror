@@ -3,187 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F881F45A
-	for <e@80x24.org>; Sun, 11 Aug 2019 17:48:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 629FB1F45A
+	for <e@80x24.org>; Sun, 11 Aug 2019 19:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbfHKRsO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Aug 2019 13:48:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57464 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726014AbfHKRsO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Aug 2019 13:48:14 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e9dc:6bd6:18c8:c98f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 529A260821;
-        Sun, 11 Aug 2019 17:48:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1565545691;
-        bh=gGu6v6eNS4vhrghqEcYFQnM0C/e0lCtMYaXmf2NN7ws=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=PykWM/dhSsbpiGzLbVT5NItzrnpZIRpropyy1miHtoXRuKxHrr0WoOzRARdU/Mdbh
-         XYwtduwIaIwW1A/jii2DDU19/nn0/v0w3Haga4wV7wkAJTI5VXJxfrKbOe5gh+44vN
-         vci8mbDH86FWSw9vzvzgCSYtJQVkkotruRJWrwxZItZqcHXiS9i6zab16wOh1ACVOR
-         40Jpy6j3mlNtVbYNK0vkh/S72hkgJmctzOzeSU3FctSTx/iB6EHkqj/0hValiRQ8G8
-         gMsg6q9rqAA9ftbPSRcGnT5J7KS6Nfs8xanvqTvbBrn29Nr/lkeYKcnpB39dLDTT2Z
-         yw3aok8Uzi/+y2GpCULkjZpvdtY+9gyA1o1rIK4mRuyu5dZb6606IOkuBAMJGGpewn
-         1gZs7bcylMw9DUgSq/cbMGh6r3dtWMurCFbywu28AdL7qQrU/OYzbvZzy8bpQr+gAN
-         hFlz4HQ8TB5t1mmuL6luSWLu8FKDvlNAO6IhD3f3hItw0JNhVhC
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] apply: reload .gitattributes after patching it
-Date:   Sun, 11 Aug 2019 17:47:48 +0000
-Message-Id: <20190811174748.33552-3-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
-In-Reply-To: <20190811174748.33552-1-sandals@crustytoothpaste.net>
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
- <20190811174748.33552-1-sandals@crustytoothpaste.net>
+        id S1726137AbfHKTJI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Aug 2019 15:09:08 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:44172 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbfHKTJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Aug 2019 15:09:08 -0400
+Received: by mail-ot1-f68.google.com with SMTP id b7so101317385otl.11
+        for <git@vger.kernel.org>; Sun, 11 Aug 2019 12:09:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LtmLxEZG8UYKy7d9UwKMkKnYey4h7TTiNvWSUW9S9O4=;
+        b=pG0Jg/XgApIS9i9yHYG/+ld7N0vNVDq04DxT6nkB8VgIV0xvEYxJebz99GSVSn1CGM
+         99bKQ1G7nYxXUk3tlugw6D67a3THl+DDyBB8UWnoYEixwXq22KjAvaoTSl8WVL0VBozL
+         HebZWDrIj+N/QUwKXNBJW5iLEE4juXLggyir40IDpTNjEIQd0vbB7PEqhEKq19VTlBVC
+         GOhBSiBhNTEqly/bODtxRrE95jFjVJFeZOelnBSZs4jRO8GcrxfuLcnsuAHbM66UlUc9
+         y7qpHP6Abn464d+wkWS2XvCAmuELr91uELNG44cQfbphxuKRTGXP/09r1Y+plkvkd3qj
+         /D3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LtmLxEZG8UYKy7d9UwKMkKnYey4h7TTiNvWSUW9S9O4=;
+        b=PHC2UFnNLXxUQ63cdF95lexPLqatwYYtBpYkM8YeyfzcOXpMRP9uUKZwl05uD5Czvu
+         DyVr3bXRAaQUxMWepdsCpIjPHu2eQtwW/oD0zhm/MkU1jsaBy3MKIOyzdiPh1giyW14x
+         7g4MAU9nt0i6qiI/T0QK0yjOuU+m9wvUEGGaBNjNMsxZsPJPu/No8Eop0bOOenFm8ZYl
+         3yxuDAc3KFYc4vW59CCjXDeZE92PeUce3s1EpS3wCnxts4oSPKrIWnaywQHe0HU/WmXq
+         FbObjHwv6k/iQYXjNsh1Ek0mHHD3En37ZEKio0lU0BZrv2TKgs8x+oGgBCCO+cHdyJp+
+         egig==
+X-Gm-Message-State: APjAAAXMqZjwZOQmk2/5i57KJM0iCN8MoUxZpLBN3GMIBMohvCParPMj
+        ME0RTCRXpj0NoTyeObZ94EZw815TsBgD2Gq3TPs=
+X-Google-Smtp-Source: APXvYqyaXG/YnHYW06KYRpSFA2HpO8iVDWxQih+KtV88TWl594XCocUvmSg0FLqZ1CkkWHMggekQ0uDkkH4gh9ZXaHc=
+X-Received: by 2002:a02:662f:: with SMTP id k47mr34142779jac.4.1565550546991;
+ Sun, 11 Aug 2019 12:09:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190810220251.3684-1-carenas@gmail.com> <nycvar.QRO.7.76.6.1908111317540.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1908111317540.46@tvgsbejvaqbjf.bet>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sun, 11 Aug 2019 12:08:53 -0700
+Message-ID: <CAPUEspg62pRNH6=_VvWDxQ4YujHUJAoTTampc0L4t68QMj30xg@mail.gmail.com>
+Subject: Re: [RFC PATCH] http: use xmalloc with cURL
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, l.s.r@web.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When applying multiple patches with git am, or when rebasing using the
-am backend, it's possible that one of our patches has updated a
-gitattributes file. Currently, we cache this information, so if a
-file in a subsequent patch has attributes applied, the file will be
-written out with the attributes in place as of the time we started the
-rebase or am operation, not with the attributes applied by the previous
-patch. This problem does not occur when using the -m or -i flags to
-rebase.
+On Sun, Aug 11, 2019 at 4:20 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 10 Aug 2019, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> > cURL is very strict about its allocator being thread safe and so that m=
+ight
+> > be an issue to look for.
+>
+> Looks good to me.
 
-To ensure we write the correct data into the working tree, expire the
-cache after each patch that touches a path ending in ".gitattributes".
+it is not ready yet for using though, at minimum I have to fix the #ifdef
+so there is no risky of breaking someone's build because they happen
+to still be using and old enough cURL (ex: 7.10)
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- apply.c           |  7 +++++++
- convert.c         |  9 ++++++++-
- convert.h         |  6 ++++++
- t/t3400-rebase.sh | 23 +++++++++++++++++++++++
- 4 files changed, 44 insertions(+), 1 deletion(-)
+there is also the risk that xmalloc might not be sufficiently thread
+safe (ex: when it triggers unuse_one_window() through the use of a
+try_to_free_routine in packfile.c but we could mitigate the risk for
+now by doing it only first #ifdef NED (I promise to take it out before
+it even gets to next, assuming Junio would trust me enough after the
+last blow up to even get it into pu)
 
-diff --git a/apply.c b/apply.c
-index cde95369bb..201ee12e21 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4643,6 +4643,7 @@ static int apply_patch(struct apply_state *state,
- 	struct patch *list = NULL, **listp = &list;
- 	int skipped_patch = 0;
- 	int res = 0;
-+	int flush_attributes = 0;
- 
- 	state->patch_input_file = filename;
- 	if (read_patch_file(&buf, fd) < 0)
-@@ -4670,6 +4671,10 @@ static int apply_patch(struct apply_state *state,
- 			patch_stats(state, patch);
- 			*listp = patch;
- 			listp = &patch->next;
-+
-+			if (!flush_attributes && patch->new_name &&
-+			    has_path_suffix(patch->new_name, GITATTRIBUTES_FILE))
-+				flush_attributes = 1;
- 		}
- 		else {
- 			if (state->apply_verbosity > verbosity_normal)
-@@ -4746,6 +4751,8 @@ static int apply_patch(struct apply_state *state,
- 	if (state->summary && state->apply_verbosity > verbosity_silent)
- 		summary_patch_list(list);
- 
-+	if (flush_attributes)
-+		reset_parsed_attributes();
- end:
- 	free_patch_list(list);
- 	strbuf_release(&buf);
-diff --git a/convert.c b/convert.c
-index 94ff837649..030e9b81b9 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1293,10 +1293,11 @@ struct conv_attrs {
- 	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
- };
- 
-+static struct attr_check *check;
-+
- static void convert_attrs(const struct index_state *istate,
- 			  struct conv_attrs *ca, const char *path)
- {
--	static struct attr_check *check;
- 	struct attr_check_item *ccheck = NULL;
- 
- 	if (!check) {
-@@ -1339,6 +1340,12 @@ static void convert_attrs(const struct index_state *istate,
- 		ca->crlf_action = CRLF_AUTO_INPUT;
- }
- 
-+void reset_parsed_attributes(void)
-+{
-+	attr_check_free(check);
-+	check = NULL;
-+}
-+
- int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
- {
- 	struct conv_attrs ca;
-diff --git a/convert.h b/convert.h
-index 831559f10d..3710969d43 100644
---- a/convert.h
-+++ b/convert.h
-@@ -94,6 +94,12 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- int would_convert_to_git_filter_fd(const struct index_state *istate,
- 				   const char *path);
- 
-+/*
-+ * Reset the internal list of attributes used by convert_to_git and
-+ * convert_to_working_tree.
-+ */
-+void reset_parsed_attributes(void);
-+
- /*****************************************************************
-  *
-  * Streaming conversion support
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 80b23fd326..062dc41df7 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -301,6 +301,29 @@ test_expect_success 'rebase --am and --show-current-patch' '
- 	)
- '
- 
-+test_expect_success 'rebase --am and .gitattributes' '
-+	test_create_repo attributes &&
-+	(
-+		cd attributes &&
-+		test_commit init &&
-+		test_config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
-+		test_config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
-+
-+		test_commit second &&
-+		git checkout -b test HEAD^ &&
-+
-+		echo "*.txt filter=test" >.gitattributes &&
-+		git add .gitattributes &&
-+		test_commit third &&
-+
-+		echo "This text is smudged." >a.txt &&
-+		git add a.txt &&
-+		test_commit fourth &&
-+		git rebase master &&
-+		grep "smudged" a.txt
-+	)
-+'
-+
- test_expect_success 'rebase--merge.sh and --show-current-patch' '
- 	test_create_repo conflict-merge &&
- 	(
+alternatively, getting some feedback from people that know that code
+better like Shawn, since I have to admit I haven't read it enough to
+be fully confident it is safe (although I believe it was enough, or I
+wouldn't had sent it for feedback otherwise)
+
+> Please note that this did not cause problems in Git for Windows.
+> Probably because we leave it to cURL to deallocate whatever it
+> allocated.
+
+unlike PCRE2 there is no layering violation to trigger
+
+> Still, it is a good idea to ask libcurl to use the same allocator as Git.
+
+and it should have a positive performance impact, which should be nice
+to look for.
+
+Carlo
