@@ -2,139 +2,399 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31CBF1F731
-	for <e@80x24.org>; Sun, 11 Aug 2019 12:10:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37D371F731
+	for <e@80x24.org>; Sun, 11 Aug 2019 13:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726186AbfHKMKL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Aug 2019 08:10:11 -0400
-Received: from mout.web.de ([212.227.17.11]:60335 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726014AbfHKMKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Aug 2019 08:10:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1565525405;
-        bh=UBTDGh7J6Z12ogU1zbLuatJlB6+l4cgg/V2Byz5Sjeo=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=KXccP6NrMKymLU5+iNHRB9XjTgHvAYhl1EdSTNFjrdswluppYsHjzuIrIhz2fVVPB
-         RZAuqDDytJCSHDhxoFSD7utiEE6DbUc8UXSUbWMkbixNcLHJyYtZ11X3kr0wZrk4DS
-         tXwmFkBlw7aC1Zix1mM0EaQD/P9Ves9haOI0i1tw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MDgDS-1i55jn22He-00H7ZK; Sun, 11
- Aug 2019 14:10:05 +0200
-Date:   Sun, 11 Aug 2019 14:10:04 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: suggestion for improved docs on autocrlf
-Message-ID: <20190811121004.guygurnopwwggvsp@tb-raspi4>
-References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com>
- <20190808205631.e2647kxq74thotjb@tb-raspi4>
- <3269668c03a8482d8d854ec19dd43907@bofa.com>
- <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
- <20190809033406.5t5ag3qmh36ideec@tb-raspi4>
- <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
+        id S1726487AbfHKNrv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Aug 2019 09:47:51 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33288 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726424AbfHKNrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Aug 2019 09:47:51 -0400
+Received: by mail-wr1-f65.google.com with SMTP id n9so102438395wru.0
+        for <git@vger.kernel.org>; Sun, 11 Aug 2019 06:47:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=dFZ+PHh0Q9X0fqET6/FsoUHTsiKD2OAel9HxOQGS9sw=;
+        b=ZPipqWIKDe5VFvDd+pA/65grwfdun16/vyRE/ILQRdO+FduLcjJEMvWsClbcPn7D0l
+         nxTl2tRBidp1koBpBp1f6NDNaj7HEklgVBydQloRZl//nr729h+mCjtZx+aKoYbaIQRy
+         lENH2Q87+4bg/HfvWKV79xk3PqYxuf7OA8b6Oo25vPlR0dKuRz/ZfPUHX6NbD6sqp0Bg
+         99nKOpATTBtCwNxBK56DK2M/fWkZPoowbyXz35VdqlBvdQ7Xf+b8mfvWIDSStfdk23HC
+         sNb6fPXHoxO3YXs9k81EqM/cd6WNYXHIij3csM50I7exb98aLdCDXBHotS58In7yaHIJ
+         1vXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dFZ+PHh0Q9X0fqET6/FsoUHTsiKD2OAel9HxOQGS9sw=;
+        b=XHJzI4frf4S9Y7Y4bHExMH0OeW1SJ1buxU5bzBbkBfFEui5H6i8HpqhQVd/UCSmeKB
+         P04Axzi5zBFWKn47ZurHaOZF6muPfvdxd7BrnwJpt/gQNjGp2gr8irMGxumgH/ysmoEH
+         ghHHDk/GuFzG9tN2tIdgECWPcUEK/hgAZPtUaRLeVfcqAzTF9hYQqRsrwxpbFBb+l5Bn
+         WF5oU+dZhtQDoZPoA5blDSYm+SYsiKqzAdZYX3xoLeiAEz/Oq16CxNK04MjCUQtXtZye
+         IpvkK1JETZehsE8dnjaU9yvZ/MOguuNYBJ14ZVHBQoHgTgdi5BafYO4TRXCq2LCIIHSv
+         cUHw==
+X-Gm-Message-State: APjAAAXiujGV7QK/U/WJhuNn9Glw/G9N6EBtCNnqiuuDJwoAOthGlTIo
+        5DpdY17f1a79SCUj91J4y/zcMdIm
+X-Google-Smtp-Source: APXvYqzHIh8lyWXnpr/Un1KmoriT7KdtwVyjI0jL0wF4fMBcR5vLmnuSvS0Jlso0T1FQ114CdZWECA==
+X-Received: by 2002:adf:dfc5:: with SMTP id q5mr37276681wrn.142.1565531267708;
+        Sun, 11 Aug 2019 06:47:47 -0700 (PDT)
+Received: from [192.168.1.18] (host-78-148-43-8.as13285.net. [78.148.43.8])
+        by smtp.gmail.com with ESMTPSA id o7sm11058728wmc.36.2019.08.11.06.47.46
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sun, 11 Aug 2019 06:47:47 -0700 (PDT)
+Subject: Re: Incorrect behavior from git checkout --patch
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Dave Kaminski <davekaminski@gmail.com>, git@vger.kernel.org
+References: <CA+zjYZsojm0QgHBC3GFb2NeZR1aK3Uh7vO4ojBzsMKVvP6X+Tg@mail.gmail.com>
+ <a243aa2f-b237-db8e-0cac-cb3f776fdbd2@gmail.com>
+Message-ID: <caebef3e-b8ef-176d-ae70-ae3d5864f32c@gmail.com>
+Date:   Sun, 11 Aug 2019 14:47:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:aZfDRvCDk32B2vSjUQF+vCCCG4kdG0duupfd7xtr/6A9rBJlXeN
- kAzB12ElS1Lqsf2pmncRlar6F370yvQcM9w8sY0VqXM01VeA3w6rzMhIL3WKzJuI0MW4IOK
- OCfDvwvE1Z+vMGsXFLqc2/gtPUy7bUl+tZLP1HzGcmEQ8oIl30QXZOZnfKzoMwWocIlE09U
- 7Zj1kR76w2z/tYvqHzNFQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x+4tmuSsQyo=:J2bTru+2LvDQlcfBx9yBPW
- xhFlHa6YfVXt/l2Gw9QOYvpcJjbVjEq14x9qy8AO2G3LqZ/vjYvcMyNUoNYBNHptjWTc9WS3e
- rAk19BV4velCm+P7N2RH6/rRoRLywUPfq2shWU407x9Fu0IeAqgs8ZhjuUys6XfIf7dSiVioR
- uqVrdVmCHFRZ2MCPLH66+/OG8mNL3XCPUEd2fSxAlJ4bGi8+6Pn1rnu4WtR6BXvZ9dbsvD7g0
- bROaFxdWNLFh/aHnA08YPodyHT5fwrEfDX5Lo218a8maFxWZBkn0BfWEKwkY/pHDW9OJBuybo
- KjwqiGVHpQ1u8lthSLE63VcXZckUWYvMLll1PTfoV6jdDPajpaKPUp0yHvOFjDqqloEOc8RMK
- A6x7KS75/Lot0ovYL5sascdcZcCHmn/yU3ljJS7ctQ94D50nBesWqWaq68V07EBNughZJ1LdE
- UtmRYtnekOcxpvBWh6wBLtYTZMcqR7e66yiysGiKEd6NyoT3FGxcBzHE3F72A7d43BGAHXDPh
- hn/4JfNm+PYakvkWrrcDtOf14WgEDn7svcdMLVKsOG2EBAetRUgGsZ9UM+WGefa7OU2Tc4wH+
- u9LfvR6RPJ+PyDCz3Xz1EkpOTh8Oj06RLzVmX3npVYLhPgMMrFBc2SksemITFYoslbJJFbrt1
- lrTfmxx+QY6tx5PQnwL5s6eUcPUUe+HAeMfFCC5DZa9XtYl1tUmVp3C0wRmQ98yFSjwA5KQNg
- yWhuJtxXSmw9h3n8UYYduUM4cYHjgxfdG/r3ICUzrk2msF39bSOKkkM5dzOJbYRbak7TGT+kZ
- GVVP2knghWRwj7SbU0W9WqfBIjd8ls13bpQWRI1NqwPVL+jdn3NI74H1xWRLzY31c0oKufmPF
- z3n0Q5Dyz5DiAKSrbmS6lwhaJzimyOjCHIbRIgzkoANGk3cADtayiNJAG4TBObFVY4wVhygDE
- pX0ofgJL8KyJJ/sbNVAPZL0FM7xyE98BwaX13PCDcDW7buolW8jcjZ5huvHYAJ3T3XQdcqsTC
- s1h6TC8T81EVAMP3rZkxNGClKvpQ/y2uOv10RnJYl5n5YL4YC05g1DWtGE16d4r709luuChAw
- 57Ys5cRC02lGKyfeuISPTIo2W6RXLhK1tNE9+nGRiw9oscI0fs0ld8S3w==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a243aa2f-b237-db8e-0cac-cb3f776fdbd2@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-HK
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 09, 2019 at 03:34:05PM +0000, Yagnatinsky, Mark wrote:
-> After correcting spelling of renormalize, the end result of the script y=
-ou gave is that line endings in working directory are CRLF,
-> and in the repo are LF.
-> Is that expected?
+Hi Dave
 
-Yes. "git add" does typically not touch the files on disk at all.
+On 11/08/2019 10:54, Phillip Wood wrote:
+> Hi Dave
+> 
+> Thanks for the bug report. I've tried to reproduce it on the latest 
+> master, version 2.22.0 and 2.20.1 and am unable to do so.
 
-> Surprising?
+Doh, I was doing 'git checkout -p HEAD', when I checkout from the index 
+I can reproduce the bug and it is fixed by the patch I linked to earlier 
+which will be in git 2.23.0. That will be released soon (we're at 
+2.23.0.rc2 at the moment)
 
-May be.
-Typically the CRLF is done in the .gitattributes file,
-which is commited and pushed/pulled between the different
-machines.
-In opposite, core.autocrlf is just local, and different contributors
-may use different settings, leading to all kind of CRLF frustrations.
+Thanks again for taking the time to report the bug
 
-Having said that, the .gitattributes file is established early in the
-lifetime of a project (=3Drepo).
-I typically set up the .gitattributes file as the first commit,
-before adding any other files.
+Best Wishes
 
-If, however, the .gitattributes file is added to a repo later
-(better late than never), and the developer messes it up for some
-reasons, then the original files are still in the working tree on
-disk.
+Phillip
 
-Correcttions can be made after looking at 'git ls-files --eol' or
-other diagnostics.
 
->Not sure what you were trying to test there.
-There ? I probably lost the script.
-
->I also fixed my script to use printf, new version is:
-> (using copy/paste this time, instead typing from memory like last time; =
-learned my lesson).
->
-> mkdir empty
-> cd empty
-> git init
-> git config core.autocrlf false
-> printf '1\r\n2' > test.txt
-> git add .
-> git commit -m test
-> git config core.autocrlf input
-> cp test.txt t2.txt
-> printf 'a\r\nb' > test.txt
-> git add .
->
-> Thank you for ls-files, I've been resorting to deleting from working dir=
-ectory and then doing a checkout.
-> And also thank you for the gem of "od -c"!
-> The output of ls-files after running my script is:
->
-> i/lf    w/crlf  attr/                   t2.txt
-> i/crlf  w/crlf  attr/                   test.txt
->
-> So I'm still confused.  Why didn't test.txt lose its CRs while t2.txt di=
-d?
-
-This is because the "auto" feature does not change the line endings, when =
-a
-file had been commited with CRLF. They may be there on purpose, or not.
-Git can not make this decision - the user can.
-
-This is why we have 'git add --renormalize".
+> I thought it 
+> might be related to a bug I recently fixed[1] but it does not appear to 
+> be. I've appended the files I used below just in case I made a mistake 
+> translating your patches to files that can be used with git checkout.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+> [1] 
+> https://github.com/git/git/commit/1b074e15d0f976be2bc14f9528874a841c055213#diff-588be9a03d1f7e33db12f186aad5fde9 
+> 
+> 
+> pre-image
+> 
+> block_one {
+> line 1
+> line 2
+> line 3
+> 2 4 6 8
+> line 4
+> line 5
+> line 6
+> 2 4 6 8
+> line 7
+> line 8
+> line 9
+> 2 4 6 8
+> line 10
+> line 11
+> line 12
+> }
+> 
+> block_two {
+> line 1
+> line 2
+> line 3
+> 2 5 6 9
+> line 4
+> line 5
+> line 6
+> 2 5 6 9
+> line 7
+> line 8
+> line 9
+> 2 5 6 9
+> line 10
+> line 11
+> line 12
+> }
+> 
+> post-image
+> 
+> block_one {
+> line 1
+> line 1.5
+> line 2
+> line 2.5
+> line 3
+> 2 4 6 8
+> line 4
+> line 4.5
+> line 5
+> line 5.5
+> line 6
+> 2 4 6 8
+> line 7
+> line 7.5
+> line 8
+> line 8.5
+> line 9
+> 2 4 6 8
+> line 10
+> line 10.5
+> line 11
+> line 11.5
+> line 12
+> }
+> 
+> block_two {
+> line 1
+> line 1.5
+> line 2
+> line 2.5
+> line 3
+> 2 5 6 9
+> line 4
+> line 4.5
+> line 5
+> line 5.5
+> line 6
+> 2 5 6 9
+> line 7
+> line 7.5
+> line 8
+> line 8.5
+> line 9
+> 2 5 6 9
+> line 10
+> line 10.5
+> line 11
+> line 11.5
+> line 12
+> }
+> 
+> 
+> 
+> On 10/08/2019 21:12, Dave Kaminski wrote:
+>> I am observing git checkout --patch making changes to the wrong lines 
+>> of a file.
+>>
+>> This is with a clean install of git version 2.20.1 on a debian docker
+>> container (image tag 10.0 which is also "latest" as of this writing).
+>>
+>> With a diff that looks like the following:
+>>
+>> diff --git a/file.txt b/file.txt
+>> index 868aa22..ea4d786 100644
+>> --- a/file.txt
+>> +++ b/file.txt
+>> @@ -1,35 +1,51 @@
+>>   block_one {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>>   2 4 6 8
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>>   2 4 6 8
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>>   2 4 6 8
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>>   block_two {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>> -2 5 6 9
+>> +2 4 6 8
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>> -2 5 6 9
+>> +2 4 6 8
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>> -2 5 6 9
+>> +2 4 6 8
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>> doing a `git checkout --patch -- ./file.txt`, splitting the diff into
+>> hunks, and discarding all of the hunks that begin with numbers, e.g.
+>>
+>> @@ -22,3 +32,3 @@
+>>   line 3
+>> -2 5 6 9
+>> +2 4 6 8
+>>   line 4
+>>
+>> the expected state of the file in the working directory is this:
+>>
+>> diff --git a/file.txt b/file.txt
+>> index 868aa22..9ab67a1 100644
+>> --- a/file.txt
+>> +++ b/file.txt
+>> @@ -1,35 +1,51 @@
+>>   block_one {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>>   2 4 6 8
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>>   2 4 6 8
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>>   2 4 6 8
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>>   block_two {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>>   2 5 6 9
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>>   2 5 6 9
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>>   2 5 6 9
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>> but instead the actual state of the file is this:
+>>
+>> diff --git a/file.txt b/file.txt
+>> index 868aa22..76fe65d 100644
+>> --- a/file.txt
+>> +++ b/file.txt
+>> @@ -1,35 +1,51 @@
+>>   block_one {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>>   2 4 6 8
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>>   2 4 6 8
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>> -2 4 6 8
+>> +2 5 6 9
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>>   block_two {
+>>   line 1
+>> +line 1.5
+>>   line 2
+>> +line 2.5
+>>   line 3
+>>   2 5 6 9
+>>   line 4
+>> +line 4.5
+>>   line 5
+>> +line 5.5
+>>   line 6
+>>   2 5 6 9
+>>   line 7
+>> +line 7.5
+>>   line 8
+>> +line 8.5
+>>   line 9
+>> -2 5 6 9
+>> +2 4 6 8
+>>   line 10
+>> +line 10.5
+>>   line 11
+>> +line 11.5
+>>   line 12
+>>   }
+>>
+>> See the changes between "line 9" and "line 10" in both blocks that are
+>> not correct.
+>>
