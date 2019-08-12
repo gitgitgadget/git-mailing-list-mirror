@@ -2,78 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD461F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 18:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6448F1F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 18:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbfHLSAe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 14:00:34 -0400
-Received: from rchemail.bankofamerica.com ([171.159.227.167]:44638 "EHLO
-        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726909AbfHLSAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 14:00:32 -0400
-Received: from vadmzmailmx05.bankofamerica.com ([171.182.203.230])
-        by lrcha0n0xepmx04.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CI0U9K025402;
-        Mon, 12 Aug 2019 18:00:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
-        s=corp1903; t=1565632831;
-        bh=Qi0Qo4htIf7Z8Suh4zjkjY0BaWUvaq1BJh01bWXZYaM=;
-        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
-         Content-type:Content-transfer-encoding:References;
-        b=0jSXlsKpimXid3Rzy7StnAEe4QbVu6aYaA2dfje0wd9mr0zJChQ9vrVcIx3bNZmxy
-         RwEk7UfTCtPXORzc+IZy5ExsYILyqgDJXkEOjf2o3Z6L902fBCuZK5p3hniMGM58Sb
-         uYMoDVt0GEhf8Y3H3P2P0uwhCRzO5txoBj+EPf7c=
-Received: from lrcha0n5xepmx12.bankofamerica.com (lrcha0n5xepmx12.bankofamerica.com [171.205.12.15])
-        by vadmzmailmx05.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CI0IHg006445;
-        Mon, 12 Aug 2019 18:00:30 GMT
-Date:   Mon, 12 Aug 2019 18:00:08 +0000
-From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Subject: RE: suggestion for improved docs on autocrlf
-In-reply-to: <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
-X-Originating-IP: [30.245.13.45]
-To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
-Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Message-id: <aae529ce1b084b7bbcca3977e6909417@bofa.com>
-MIME-version: 1.0
-Content-type: text/plain; CHARSET=US-ASCII
-Content-language: en-US
-Content-transfer-encoding: 7BIT
-X-MS-Has-Attach: 
-Accept-Language: en-US
-Thread-topic: suggestion for improved docs on autocrlf
-Thread-index:  AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQgANNx4CAADsrQA==
-X-MS-TNEF-Correlator: 
-References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com> <20190808205631.e2647kxq74thotjb@tb-raspi4>
- <3269668c03a8482d8d854ec19dd43907@bofa.com> <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
- <20190809033406.5t5ag3qmh36ideec@tb-raspi4> <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
- <20190811121004.guygurnopwwggvsp@tb-raspi4> <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com>
- <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-12_06:,,
- signatures=0
+        id S1726458AbfHLSRI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 14:17:08 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53619 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbfHLSRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 14:17:08 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6BE0A7E6A9;
+        Mon, 12 Aug 2019 14:17:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=p178IC8BV69Z
+        eSVJoFFXfQiM+eo=; b=TjOSAZ9HsBjY8uKLEMaahgJkiff8zi0OslvsPOnh2dL/
+        DBpmSlnXmPJJC76sbcPY9quB0CRG3EF/D1NkH3sZmhagwpnyEgBY57XizicNyOBK
+        9PkDs7I4sBlTAYS+k7qqaYz11eZ7KQ3H57DSjYgHK2sMzDHthkETUV8A26TSk+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RRFX5V
+        EWXi9T35oIM9Y96vm6rbY7Rec8sCLkj4dptJzXhtopoz7eb3AIyRN0nApxn0n806
+        NqQy8gJxvTkNeaiDi5BSnntOiZzDKUWXhX1EdJUU7GwwWdBytiaKM+RypCjCTFAL
+        wAwdKfo2xFyMT18UukkK51bvCDD9e9F5AV0mk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 657D37E6A8;
+        Mon, 12 Aug 2019 14:17:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 944AA7E6A6;
+        Mon, 12 Aug 2019 14:17:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: minor interactive rebase regression: HEAD points to wrong commit while rewording
+References: <20190812175046.GM20404@szeder.dev>
+Date:   Mon, 12 Aug 2019 11:17:01 -0700
+In-Reply-To: <20190812175046.GM20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Mon, 12 Aug 2019 19:50:46 +0200")
+Message-ID: <xmqqsgq69rky.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 628F2A40-BD2D-11E9-A1C3-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Okay, I feel like I'm on the verge of understanding, but it keeps eluding me,
-because you keep answering the question I actually asked, rather than the
-one I should have asked... let me try again, and bear with me if it seems like I'm
-repeating the same question over and over, because I don't understand which
-"irrelevant" differences matter and which don't.
-(You've been amazingly patient so far actually.  Thank you for that.)
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-(Incidentally, you've successfully convinced me that attributes are a far better
-way to deal with this.  I still feel that the behavior should be documented though.)
+> ...
+> So far so good.
+> Save the updated commit message, and after the editor opens up the
+> third commit's log message, check again where HEAD is pointing to now:
+>
+>   ~/tmp/reword (master +|REBASE-i 2/3)$ head -n1 .git/COMMIT_EDITMSG=20
+>   third
+>   ~/tmp/reword (master +|REBASE-i 2/3)$ git log --oneline -1
+>   c3db735 (HEAD) second - updated
+>
+> As you can see, HEAD still points to the (now rewritten) second
+> commit.
+>
+> It's only HEAD,...
 
-Setup: Suppose there exists a repo where sample.txt has CRLF line endings.
-Meanwhile, my git config has autocrlf as "input".  Now, I clone the repo.
-I edit sample.txt, and then commit.  Assuming the repo has no .gitattributes,
-is it possible to predict what line endings sample.txt will end up with in my repo?
-Or does it depend on more information than what I've just written?
+Yuck.
 
-----------------------------------------------------------------------
-This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
+That would still be annoying to some people and outright buggy to
+others, if their workflow relies on HEAD (e.g. compare with HEAD
+while reviewing the log messsage) and then now they instead need to
+adjust (e.g. compare with the index instead).  Perhaps you are one
+of them (apparently I am not, as I did not notice the behaviour
+change until you pointed it out here).
+
