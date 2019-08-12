@@ -2,63 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A9FF1F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 17:17:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF8741F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 17:46:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726899AbfHLRRz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 13:17:55 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34947 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbfHLRRy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 13:17:54 -0400
-Received: by mail-pg1-f196.google.com with SMTP id n4so8083906pgv.2
-        for <git@vger.kernel.org>; Mon, 12 Aug 2019 10:17:54 -0700 (PDT)
+        id S1726889AbfHLRqi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 13:46:38 -0400
+Received: from mail-pl1-f179.google.com ([209.85.214.179]:36144 "EHLO
+        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726144AbfHLRqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 13:46:38 -0400
+Received: by mail-pl1-f179.google.com with SMTP id g4so1675591plo.3
+        for <git@vger.kernel.org>; Mon, 12 Aug 2019 10:46:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DYVpc2q69XG5nuwkx3RXGrX049kaOSGubqIrFj23yQc=;
-        b=h0tJT5gF5JjQXhEUQlUvFBkFMOVq+tXW3qIl+ZNbDpwmQgHDagVnZUEvY0hVORydDv
-         qPtj88vzOPfWo7LU3fmAcOWBCkIFMulze18L8Xa3Qpk0jhJYYhENjdBGMFs4fiqSMeET
-         z+iU6S3OuKmPh7Jn5bSkHkZ3Wkqvr6DuIPeeHK+A/np2/Bf3FrrajNeFxY9CgWP/uQa8
-         E1qbkq8LvhPLqppbcBF4RJMfhrLSiV11+UpQyoMrA2hFc33oXjRjGmlrwheaALmuph6Z
-         Da7umasPBxW5EIL2uBIyAuJsEZwg2laCtdad3odn1JjN+9XtiYACudm53JS6w+Aau3fD
-         Buzw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DSvySmkbHthSR1K8NbELU0eyO/eguO4q1reLxwhIO34=;
+        b=VSwG4ctuwZ3kJ3ITq0+Z+/mEBWcN4hG1PDhgylFQ8agNiGCv/vnG7RPfAHNAk3v9Hu
+         +aD8IaBPlLT2AsAgtpGm+9FKMheUcvkyv1VL2HwW2SDmZUo3uEnIy5/Hgcaf2uQb1qg9
+         L5QnVVn7wM6lueaACJo/ZCFGWyeQwPOH6hQvJBrloCJoXfHgGeQ4L7KsjBPyttjC5gTu
+         5P52ocvlppb5jMAbO/oMb2Mux54jbWGXhEEzLPVxNkeVKILOmuMcpdZVvAKZcV93MPwc
+         Dm1bTaW4lqNTr9StzSvPN4+yisUqVJnSxQyJGn6+xi8zSD8tDQBYilwjD1GAVKY3uGS6
+         6JCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DYVpc2q69XG5nuwkx3RXGrX049kaOSGubqIrFj23yQc=;
-        b=GRMBWUZoQvExvQ6VX8VyzWk9/U7Zwp5kjtV0H+UD32l4GqyhVy1UDDVOci2VUbzbrQ
-         BEs9iX03FWQ7eDeSGVfhz7E/UKBLazQsA5YAPH/UAMPeHhzegR7fArw1vUvT9avhtuRu
-         q7bWSGk/ptzVlINB8YhB2zRvEnCMIZE/ov76wi7HC900hzgX5ZZgHj2x5slYNGT4THF4
-         CsDyoEILbcgGSZ4yZZDBHlf9lTvpr73+B1YD7/dakRw+xrqiIzlVpYFz4OFWk9Ei6jB7
-         TiDYyn0/9R+jha7ALWDKUdVNOOvZ2/JFx0sKN4ILhCcPHibg7HzgdXD/KBljOX56srhy
-         jE9A==
-X-Gm-Message-State: APjAAAV70o2Shl0xFaPsLp+KvOjuj7Loi4teMCNjz0lWTRarSlEY463g
-        LUYXT1xdP4ilUgrUynkaeHqODKNy
-X-Google-Smtp-Source: APXvYqxMrVDEbReR4jvrBaoUr4skAiCShoNNWLR/kvmFARpGuElCxaZj0KA9o3Pe3nskhqv5QOTmkg==
-X-Received: by 2002:a62:f245:: with SMTP id y5mr3035606pfl.156.1565630273706;
-        Mon, 12 Aug 2019 10:17:53 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id r12sm89134361pgb.73.2019.08.12.10.17.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Aug 2019 10:17:52 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Joachim Klein <joachim.klein@automata.tools>
-Subject: [PATCH] git-fast-import.txt: clarify that multiple merge commits are allowed
-Date:   Mon, 12 Aug 2019 10:17:47 -0700
-Message-Id: <20190812171747.30838-1-newren@gmail.com>
-X-Mailer: git-send-email 2.22.0.661.gd1c9dd82fc.dirty
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DSvySmkbHthSR1K8NbELU0eyO/eguO4q1reLxwhIO34=;
+        b=VZLJ1Zv6ylrgHleveJXDVo1UPrhN/Laof5gR/jLUZSIhQoZxFn/YOXkOFHuEyKyvTT
+         jhNIsjPz8uZLqQLBy4QKmZJaP7M4U5TCPlxJ0NVWSTD6bKGhASBE8YQuhuDDj3Xteg00
+         FVKI1poUz4EnXJ4BPeNPPe333v/ZqzJ0/5CXPrBksza6Jws/5a4IEqR0uPntZJy42xS/
+         kkICnwCF978VnI3lqMqquqWQQu1po48t7gY4QVaEzxVwgJPg2m0D0qhvhLbnA1+N3rqY
+         rgEWwvLoFuROWki7JhJ5Y/+prGjep75rcpuCsAiJ1R2z+hZt+0qCiG1pDC8VDsyLxpuH
+         c3WA==
+X-Gm-Message-State: APjAAAW6fID409OA5KEnnYLRVHh64Lk+WeNaYktNIJXGW5tkbY/fBtjy
+        /I2x9TNtRRXoAGYVHtvkXyM=
+X-Google-Smtp-Source: APXvYqzo6qGdApN5ae10nnlVIIksgPMc/z90J67fD5iWxJiz1EdeMPlFzgpU3864ziLiMoP5JyHo2w==
+X-Received: by 2002:a17:902:a409:: with SMTP id p9mr34267382plq.218.1565631997069;
+        Mon, 12 Aug 2019 10:46:37 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.227])
+        by smtp.gmail.com with ESMTPSA id n128sm62225581pfn.46.2019.08.12.10.46.33
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 12 Aug 2019 10:46:36 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     phillip.wood123@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        martin.agren@gmail.com, newren@gmail.com,
+        rohit.ashiwal265@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCHl 1/6] rebase -i: add --ignore-whitespace flag
+Date:   Mon, 12 Aug 2019 23:13:29 +0530
+Message-Id: <20190812174329.13995-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <bdd867f3-62d6-eec2-9562-5dbe203f49b5@gmail.com>
+References: <bdd867f3-62d6-eec2-9562-5dbe203f49b5@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -66,32 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The grammar for commits used a '?' rather than a '*' on the `merge`
-directive line, despite the fact that the code allows multiple `merge`
-directives in order to support n-way merges.  In fact, elsewhere in
-git-fast-import.txt there is an explicit declaration that "an unlimited
-number of `merge` commands per commit are permitted by fast-import".
-Fix the grammar to match the intent and implementation.
+Hi Phillip
 
-Reported-by: Joachim Klein <joachim.klein@automata.tools>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-fast-import.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, 8 Aug 2019 17:44:38 +0100 Phillip Wood <phillip.wood123@gmail.com> wrote:
+> 
+> [...]
+> >   --ignore-whitespace::
+> > +	This flag is either passed to the 'git apply' program
+> > +	(see linkgit:git-apply[1]), or to 'git merge' program
+> > +	(see linkgit:git-merge[1]) as `-Xignore-space-change`,
+> > +	depending on which backend is selected by other options.
+> 
+> I think it would be better to document the effect of this option rather
+> than the implementation detail. It is confusing at the moment as it
+> talks about 'git merge' but we don't allow this option with merges.
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index d65cdb3d08..28b447a3e6 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -390,7 +390,7 @@ change to the project.
- 	'committer' (SP <name>)? SP LT <email> GT SP <when> LF
- 	data
- 	('from' SP <commit-ish> LF)?
--	('merge' SP <commit-ish> LF)?
-+	('merge' SP <commit-ish> LF)*
- 	(filemodify | filedelete | filecopy | filerename | filedeleteall | notemodify)*
- 	LF?
- ....
--- 
-2.22.0.661.gd1c9dd82fc.dirty
+Oh, it is just to indicate the user where to look for the definitions
+as currently the behaviour of both the backends is not exactly the
+same neither do they work optimally. Hope in future when they are in
+harmony, then we can happily change it to match the then behaviour.
+
+> [...]
+
+Thanks
+Rohit
 
