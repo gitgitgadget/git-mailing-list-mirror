@@ -7,87 +7,72 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9042E1F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 16:08:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C32FB1F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 16:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfHLQIg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 12:08:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40786 "HELO cloud.peff.net"
+        id S1726354AbfHLQNx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 12:13:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40794 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725843AbfHLQIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 12:08:36 -0400
-Received: (qmail 26071 invoked by uid 109); 12 Aug 2019 16:08:36 -0000
+        id S1725648AbfHLQNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 12:13:53 -0400
+Received: (qmail 26101 invoked by uid 109); 12 Aug 2019 16:13:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Aug 2019 16:08:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Aug 2019 16:13:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23845 invoked by uid 111); 12 Aug 2019 16:11:29 -0000
+Received: (qmail 23872 invoked by uid 111); 12 Aug 2019 16:16:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Aug 2019 12:11:29 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Aug 2019 12:16:46 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 12 Aug 2019 12:08:35 -0400
+Date:   Mon, 12 Aug 2019 12:13:52 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Feature-request: git-bundle --quiet
-Message-ID: <20190812160834.GA25388@sigill.intra.peff.net>
-References: <robbat2-20190806T191156-796782357Z@orbis-terrarum.net>
- <20190808104212.GA14189@sigill.intra.peff.net>
- <CADMWQoP3tH7-e+3FCYkB7b7nf8v-HBQ1toDoje8G_hvD_LaDZw@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t/perf: rename duplicate-numbered test script
+Message-ID: <20190812161352.GB25388@sigill.intra.peff.net>
+References: <20190812155803.GA25161@sigill.intra.peff.net>
+ <xmqqftm6bca3.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CADMWQoP3tH7-e+3FCYkB7b7nf8v-HBQ1toDoje8G_hvD_LaDZw@mail.gmail.com>
+In-Reply-To: <xmqqftm6bca3.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 12, 2019 at 12:15:19PM +0200, Jacob Vosmaer wrote:
+On Mon, Aug 12, 2019 at 09:04:36AM -0700, Junio C Hamano wrote:
 
-> This is a tangent, but relevant: how do we feel about the fact that
-> 'git bundle create' does not perform CRC32 checks when copying data
-> out of an existing packfile?
+> >  t/perf/{p5600-clone-reference.sh => p5601-clone-reference.sh} | 0
+> >  1 file changed, 0 insertions(+), 0 deletions(-)
+> >  rename t/perf/{p5600-clone-reference.sh => p5601-clone-reference.sh} (100%)
+> >
+> > diff --git a/t/perf/p5600-clone-reference.sh b/t/perf/p5601-clone-reference.sh
+> > similarity index 100%
+> > rename from t/perf/p5600-clone-reference.sh
+> > rename to t/perf/p5601-clone-reference.sh
 > 
-> See https://github.com/git/git/blob/v2.22.0/builtin/pack-objects.c#L2614-L2622 .
-> 
-> I understand the rationale of "skip CRC32 when serving a fetch",
-> although I have no clue how much we gain from skipping it. But "pack
-> to stdout means fetch" isn't quite accurate, as it includes bundles.
+> By the way, do we feel differently (e.g. more risky) when we see
+> 100% rename without the "index old-oid..new-oid mode" lines and when
+> we see 99% rename with one, with a one-line change?
 
-I don't recall it being discussed in the past. I think you could argue
-either way:
+I saw that earlier message from Linus, too. :)
 
-  - a bundle is just another form of object transfer, like a fetch, and
-    so we don't need to be careful about bitrot. The receiver would
-    notice it when it indexes the pack (as opposed to an on-disk repack,
-    where we'll immediately delete the old copy, and really want to make
-    sure we haven't just lost data).
+For a change like this, I don't think it matters either way. Whatever is
+the content of that file, my intent is to move it to a new location. So
+if you did have changes, moving them along with it would be the right
+thing.
 
-  - because a bundle isn't interactive like a regular fetch, any bit
-    errors may not be seen until much later when somebody reads the. At
-    that point it may not be possible to go back to the original repo
-    (in the extreme case of using a bundle as a backup, it may have been
-    deleted entirely!).
+That said, I'm not at all opposed to having more data in the patch. Even
+if the "apply" side doesn't do anything useful with the "index" line in
+such a case, it's possible it could help with tracking down a mis-merge
+or other confusion after the fact.
 
-Depending on the cost of those checks (and I really doubt they are all
-_that_ expensive), it might make sense for bundles to err on the
-conservative side and do them. And if they are expensive, it should
-perhaps be made an option for people who know they are planning to store
-the bundle for a long time without reading it[1].
-
-I agree that linking "skip CRC32" to "pack to stdout" is a bit hacky. It
-should be easy to add a new --check-crc32 option which defaults to
-"!pack_to_stdout" if not specified.
+What I don't think we would want, though, is for a change on your side
+to reject a patch like mine (a sort of "RENAME/MODIFY" conflict, I
+guess, where "am" says "I can't move 1234abcd to this new filename,
+because that's not what I have at that path"). Our merges are already
+happy to port changes around when there's a rename on another branch,
+and this case is no different.
 
 -Peff
-
-[1] Of course bitrot in the original packfile is just one place this can
-    go wrong. Depending how paranoid you want to be, it might be worth
-    reading back the result before considering it a valid backup. That
-    would catch some software bugs, as well as any bit corruption on the
-    writing side. Doing a full index-pack is the most robust way there,
-    but it's quite expensive. Just checking the SHA1 of the packfile
-    itself would give pretty good protection against write errors,
-    though you'd definitely want to couple it with CRC32 checks on the
-    source (since Git would otherwise include the bad bits in its SHA1
-    checksum).
