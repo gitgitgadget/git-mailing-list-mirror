@@ -2,80 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 515E41F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 13:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E82EF1F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 13:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727125AbfHLNsN convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 12 Aug 2019 09:48:13 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:42676 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbfHLNsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 09:48:13 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7CDmAFi047174
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 12 Aug 2019 09:48:11 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Gregory Szorc'" <gregory.szorc@gmail.com>, <git@vger.kernel.org>
-References: <qimq0i$49gn$1@blaine.gmane.org>
-In-Reply-To: <qimq0i$49gn$1@blaine.gmane.org>
-Subject: RE: Non-robust lock files in containers can lead to repo corruption
-Date:   Mon, 12 Aug 2019 09:48:04 -0400
-Message-ID: <003901d55114$9428df40$bc7a9dc0$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHeDVg5r33thhiqTgwgNYjD6Rz7HKbmDPdw
-Content-Language: en-ca
+        id S1726598AbfHLN6z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 09:58:55 -0400
+Received: from ltwemail.bankofamerica.com ([171.161.41.178]:31420 "EHLO
+        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726515AbfHLN6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 09:58:55 -0400
+X-Greylist: delayed 690 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Aug 2019 09:58:54 EDT
+Received: from lltwa05mxepmx03.bankofamerica.com ([171.180.36.246])
+        by lltwa05hxepmx02.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CDlNSi031251;
+        Mon, 12 Aug 2019 13:47:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
+        s=corp1903; t=1565617643;
+        bh=qldulWVcXeICZSHh5+lw9giy+zbYNOj/dqwuEHyNnjc=;
+        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
+         Content-type:Content-transfer-encoding:References;
+        b=FJ5lcxDJf4UWrqqWfH1NWQMozNDZ0aMz9Uk7SIjufkBVC7xDovnV6o0zmlCLWs2Gt
+         JzfNs8/4EKQexCaaTk8zB8FTqJ1N8MsUJfypAPrUM/wI4Yop+EXToCDGKZ/NFGEbh1
+         lOxCEv2zt00ehnqAgTTGrdrsbSLGt4gN/Moknmeg=
+Received: from lltwa05bxepmx12.bankofamerica.com (lltwa05bxepmx12.bankofamerica.com [171.206.12.27])
+        by lltwa05mxepmx03.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CDlFMC002745;
+        Mon, 12 Aug 2019 13:47:22 GMT
+Date:   Mon, 12 Aug 2019 13:47:18 +0000
+From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
+Subject: RE: suggestion for improved docs on autocrlf
+In-reply-to: <20190811121004.guygurnopwwggvsp@tb-raspi4>
+X-Originating-IP: [30.245.13.45]
+To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
+Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Message-id: <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com>
+MIME-version: 1.0
+Content-type: text/plain; CHARSET=US-ASCII
+Content-language: en-US
+Content-transfer-encoding: 7BIT
+X-MS-Has-Attach: 
+Accept-Language: en-US
+Thread-topic: suggestion for improved docs on autocrlf
+Thread-index:  AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQ
+X-MS-TNEF-Correlator: 
+References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com> <20190808205631.e2647kxq74thotjb@tb-raspi4>
+ <3269668c03a8482d8d854ec19dd43907@bofa.com> <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
+ <20190809033406.5t5ag3qmh36ideec@tb-raspi4> <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
+ <20190811121004.guygurnopwwggvsp@tb-raspi4>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-12_06:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 10, 2019 12:06 PM, Gregory Szorc wrote:
-> I tracked down a source of Git corrupting repositories to lock file design not
-> being robust when containers / PID namespaces are present.
-> 
-> In my case, the corruption stemmed from premature release of the `git gc`
-> lock in the gc.pid file. But since the lock file code for that file is in gc.c, there
-> could be other lock files in Git affected by the same design limitation as well.
-> 
-> The lock design of gc.pid stores the current hostname and PID of the locking
-> process in the file. If another process comes along and its hostname matches
-> the stored hostname, it checks to see if the listed PID exists. If the PID is
-> missing, it assumes the lock is stale and releases the lock.
-> 
-> A limitation with this approach is it isn't robust in the presence of containers
-> / PID namespaces. In containers, it is common for the hostname to match
-> the container host's hostname. Or the hostname will be static string. In
-> Kubernetes, all containers within a pod share the same hostname. Containers
-> (almost always) run in separate PID namespaces, so PIDs from outside the
-> container aren't visible to the container itself.
-> This means that if e.g. 2 `git gc` processes are running with the same
-> hostname in separate containers / PID namespaces, Git could prematurely
-> release the lock file because it thinks the "other" PID is dead and repo
-> corruption could ensue due to the 2 `git gc` processes racing with each other.
-> 
-> The on-disk format of lock files obviously needs to be backwards compatible
-> with older clients. One backwards compatible solution is to append
-> something to the hostname to disambiguate containers / PID namespaces.
-> Mercurial appends the current PID namespace identifier to the hostname [1]
-> and my experience is that this is sufficient to mitigate the issue. It is possible
-> more robust solutions are achievable.
+Wait a second... suppose a file is committed with CRLF line endings.
+You're saying that even if I have autocrlf set to "input" or "auto", the file will never get "converted" to LF format unless I explicitly renormalize?
+That sounds like a fairly sensible behavior, but it's not what I've observed in the past at all!
+There have been plenty of times when I had "autocrlf" set to input which resulted in me changing line endings on commit I had no intention of changing!
+Indeed, the whole reason I was looking at the git docs recently is that this happened again and I was trying to make it stop happening!
+Or is that not what you meant?
 
-While I like the idea personally, many platforms, including NonStop (TNS/E),  do not support pid namespaces. In particular setns(2) may not be implemented. Please make sure that any changes detect this condition properly and omit the use of namespaces.
-
-Regards,
-Randall
-
-
+----------------------------------------------------------------------
+This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
