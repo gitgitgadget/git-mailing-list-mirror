@@ -2,69 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NUMERIC_HTTP_ADDR,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,WEIRD_PORT shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E82EF1F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 13:58:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB1A1F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 15:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbfHLN6z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 09:58:55 -0400
-Received: from ltwemail.bankofamerica.com ([171.161.41.178]:31420 "EHLO
-        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726515AbfHLN6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 09:58:55 -0400
-X-Greylist: delayed 690 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Aug 2019 09:58:54 EDT
-Received: from lltwa05mxepmx03.bankofamerica.com ([171.180.36.246])
-        by lltwa05hxepmx02.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CDlNSi031251;
-        Mon, 12 Aug 2019 13:47:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
-        s=corp1903; t=1565617643;
-        bh=qldulWVcXeICZSHh5+lw9giy+zbYNOj/dqwuEHyNnjc=;
-        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
-         Content-type:Content-transfer-encoding:References;
-        b=FJ5lcxDJf4UWrqqWfH1NWQMozNDZ0aMz9Uk7SIjufkBVC7xDovnV6o0zmlCLWs2Gt
-         JzfNs8/4EKQexCaaTk8zB8FTqJ1N8MsUJfypAPrUM/wI4Yop+EXToCDGKZ/NFGEbh1
-         lOxCEv2zt00ehnqAgTTGrdrsbSLGt4gN/Moknmeg=
-Received: from lltwa05bxepmx12.bankofamerica.com (lltwa05bxepmx12.bankofamerica.com [171.206.12.27])
-        by lltwa05mxepmx03.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7CDlFMC002745;
-        Mon, 12 Aug 2019 13:47:22 GMT
-Date:   Mon, 12 Aug 2019 13:47:18 +0000
-From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Subject: RE: suggestion for improved docs on autocrlf
-In-reply-to: <20190811121004.guygurnopwwggvsp@tb-raspi4>
-X-Originating-IP: [30.245.13.45]
-To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
-Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Message-id: <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com>
-MIME-version: 1.0
-Content-type: text/plain; CHARSET=US-ASCII
-Content-language: en-US
-Content-transfer-encoding: 7BIT
-X-MS-Has-Attach: 
-Accept-Language: en-US
-Thread-topic: suggestion for improved docs on autocrlf
-Thread-index:  AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQ
-X-MS-TNEF-Correlator: 
-References: <9c79d35e48df4d28baf995ad3f5b0153@bofa.com> <20190808205631.e2647kxq74thotjb@tb-raspi4>
- <3269668c03a8482d8d854ec19dd43907@bofa.com> <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
- <20190809033406.5t5ag3qmh36ideec@tb-raspi4> <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
- <20190811121004.guygurnopwwggvsp@tb-raspi4>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-12_06:,,
- signatures=0
+        id S1726954AbfHLPJY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 11:09:24 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:40395 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726791AbfHLPJY (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Aug 2019 11:09:24 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4BDFD22025
+        for <git@vger.kernel.org>; Mon, 12 Aug 2019 11:09:23 -0400 (EDT)
+Received: from imap29 ([10.202.2.79])
+  by compute2.internal (MEProxy); Mon, 12 Aug 2019 11:09:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailc.net; h=
+        mime-version:message-id:date:from:to:subject:content-type; s=
+        fm1; bh=w+kMyUTi7ZXXRAumTzigk5PY4Gi/FW+7J2+cVR8iL4g=; b=kmO0WhkN
+        pQvUDswSi3xWlqhl99yiDXqLdcVVKoZDbvnD0r6qNmugnXrl5dJE93k19kXf+jRs
+        QEn+ro7W85HsRmwu+fVgz9uRSSZaB5JzcnQFyi1TNFEqzWlUKVPCNSF8oPU8Ih7n
+        i22YW6gfMQ8Uy0MW5szGJ0LbVa+v9sy6LeqPGnbgxTQJ9ZplOuGHM1dkZHsVRcL3
+        w5DlSQ5OCwaUeayVvo5g066Rz1L65kd5To88AxthAmVxTuO0JDtaPKrcBZIH4zNE
+        Q9vJ+d59J8t8xWLSKlywT0Bycz7yKideaWUr/eSSh+tRyBysZF3KUq+hUFjow+IH
+        ylQfnDfBaxpi/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=w+kMyUTi7ZXXRAumTzigk5PY4Gi/F
+        W+7J2+cVR8iL4g=; b=mXIhvptiO3NIxYBizaLcAonW6wZZ7S1hcUEw/YcUVWWNV
+        YT2PEuMkJgog5OkXuWcjG6qJninCEMpGpZpCLB7G5bpuQdRKdzq24cW1LyAbKzBN
+        oBlD7q3jJPZV3V9UbBiirs9X2LVRig21Muq8/UtnKAN/OpFmEeZPv5O+iFnx7BdV
+        XSDfQ3MW8duQqgC8IN6/SptBMuastuUdX6BWdnPehGI/hz3/ZmaANHXHtyuq7LWp
+        BM0vxua1s0wSoPLyMJvAEFb9IRy+gBxnhsspYI87+6RnMYO3ueKu1xM9uUnC6XH/
+        a1+UWEPdc6v/8LyaC+UKfVN2D3bSpgFNNg5Y1w5sQ==
+X-ME-Sender: <xms:IoFRXb_gHO_yuvI14KCwWocYnSKwSKY5hWhwX1WaOk-tj8T77m-cYA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddruddvgedgkeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+    erredtnecuhfhrohhmpehkohhotghrsehmrghilhgtrdhnvghtnecuffhomhgrihhnpehn
+    ghhinhigrdhorhhgpdhrvggrughthhgvughotghsrdhiohdpuddvjedrtddrtddrudenuc
+    frrghrrghmpehmrghilhhfrhhomhepkhhoohgtrhesmhgrihhltgdrnhgvthenucevlhhu
+    shhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:I4FRXdrUnaUt6whjcetrAhyqloyVNH4Zdzgjsx9-Ar2J7FFQyfEX4w>
+    <xmx:I4FRXSuIrJ0D0S9dPoXeb8GFaxxrfpBce3qJTY21ofD2RoIRBxORYw>
+    <xmx:I4FRXYTAjOmJ_Xo4ftmW97gGQRZ_BhXIXuxz-H0W4us8u8eh3ny6uA>
+    <xmx:I4FRXaclaSdNDGEsx5vz0SURd1lb4F4Ua3k5hOsDkna58NPoZoLSng>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id C6E509C009E; Mon, 12 Aug 2019 11:09:22 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-809-g8e5c451-fmstable-20190809v1
+Mime-Version: 1.0
+Message-Id: <88cc039d-2bf8-4c1d-90c4-486ff661c1e9@www.fastmail.com>
+Date:   Mon, 12 Aug 2019 08:09:22 -0700
+From:   koocr@mailc.net
+To:     git@vger.kernel.org
+Subject: How to get gitweb setup with nginx + uwsgi?
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wait a second... suppose a file is committed with CRLF line endings.
-You're saying that even if I have autocrlf set to "input" or "auto", the file will never get "converted" to LF format unless I explicitly renormalize?
-That sounds like a fairly sensible behavior, but it's not what I've observed in the past at all!
-There have been plenty of times when I had "autocrlf" set to input which resulted in me changing line endings on commit I had no intention of changing!
-Indeed, the whole reason I was looking at the git docs recently is that this happened again and I was trying to make it stop happening!
-Or is that not what you meant?
+Hi all.
 
-----------------------------------------------------------------------
-This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
+I'm setting up a local Git server, with Gitweb + Gitolite.
+
+The gitolite wrapper is installed & working.  Now I'm working on the Gitweb frontend.
+
+I run Nginx as my webserver.  Usually with PHP, using fpm.
+
+Gitweb's gitweb.cgi looks like it needs perl CGI.
+
+For perl cgi I'm trying to get it working with UWSGI,
+
+	https://uwsgi-docs.readthedocs.io/en/latest/Nginx.html
+	https://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#example
+
+I installed
+
+	git --version
+		git version 2.22.0
+	ls -al /usr/share/gitweb/gitweb.cgi
+		-rwxr-xr-x 1 root root 247K Jul 24 05:27 /usr/share/gitweb/gitweb.cgi
+	grep "\$version =" /usr/share/gitweb/gitweb.cgi
+		our $version = "2.22.0";
+	nginx -v
+		nginx version: nginx/1.17.1 
+	uwsgi --version
+		2.0.18
+
+I set up the nginx vhost
+
+	server { 
+	    listen 127.0.0.1:60080 http2;
+	    root /usr/share/gitweb;
+	    index  gitweb.cgi;
+
+	    location / {
+	        try_files $uri $uri/ @gitweb;
+	    }
+	    location @gitweb {
+	        root /usr/share/gitweb;
+	        include uwsgi_params;
+	        gzip off;
+	        uwsgi_param UWSGI_SCRIPT gitweb;
+	        uwsgi_param GITWEB_CONFIG /etc/gitweb/gitweb.conf;
+	        uwsgi_pass unix:/run/uwsgi/uwsgi.sock;
+	        uwsgi_modifier1 5;
+	    }
+	}
+
+and the uwsgi server
+
+	/etc/uwsgi/uwsgi.ini
+		[uwsgi]
+		strict = 1
+
+		master = true
+		processes = 2
+
+		binary-path = /usr/sbin/uwsgi
+		plugin-dir = /usr/lib64/uwsgi
+		logto = /var/log/uwsgi/uwsgi.log
+
+		uid = wwwrun
+		gid = www
+		umask = 022
+
+		uwsgi-socket = /run/uwsgi/uwsgi.sock
+		chmod-socket = 660
+		chown-socket = wwwrun:www
+
+		plugins = http,psgi
+		chdir = /usr/share/gitweb
+		psgi = gitweb.cgi
+
+
+nginx & uwsgi services are both running
+
+	ps aux | egrep "nginx|uwsgi"
+		wwwrun   17463  0.0  0.1  89468 23704 ?        Ss   07:03   0:00 /usr/sbin/uwsgi --autoload --ini /etc/uwsgi/uwsgi.ini
+		wwwrun   17465  0.0  0.1  97664 17184 ?        Sl   07:03   0:00 /usr/sbin/uwsgi --autoload --ini /etc/uwsgi/uwsgi.ini
+		wwwrun   17468  0.0  0.1  97664 17184 ?        Sl   07:03   0:00 /usr/sbin/uwsgi --autoload --ini /etc/uwsgi/uwsgi.ini
+		root     18006  0.0  0.0 211264  4276 ?        Ss   07:10   0:00 nginx: master process /opt/nginx/sbin/nginx -c /etc/nginx/nginx.conf -g pid /run/nginx.pid;
+		wwwrun   18007  0.0  0.0 211416  5492 ?        S    07:10   0:00 nginx: worker process
+		wwwrun   18008  0.0  0.0 212068 10300 ?        S    07:10   0:00 nginx: worker process
+		wwwrun   18009  0.0  0.0 211416  5492 ?        S    07:10   0:00 nginx: worker process
+		wwwrun   18011  0.0  0.0 211416  5492 ?        S    07:10   0:00 nginx: worker process
+		wwwrun   18012  0.0  0.0 211452  5052 ?        S    07:10   0:00 nginx: cache manager process
+
+	ls -al /run/uwsgi/uwsgi.sock
+		srw-rw---- 1 wwwrun www  0 Aug 12 07:03 /run/uwsgi/uwsgi.sock=
+
+when I go to the site
+
+	http://127.0.0.1:60080/
+
+I just get the script listing in the browser
+
+	#!/usr/bin/perl
+	 
+	# gitweb - simple web interface to track changes in git repositories
+	#
+	# (C) 2005-2006, Kay Sievers <kay.sievers@vrfy.org>
+	# (C) 2005, Christian Gierke
+	#
+	# This program is licensed under the GPLv2
+	 
+	use 5.008;
+	use strict;
+	use warnings;
+	...
+
+no errors anywhere, just the script display.
+
+I'm missing something basic since it's not running the script. :-/
+
+Anyone have any experience with gitweb + uwsgi on nginx?  Or know a good working example?
+
+Thanks!
+
+
