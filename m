@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90F371F45D
-	for <e@80x24.org>; Mon, 12 Aug 2019 21:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F1BB1F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 21:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbfHLVfo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 17:35:44 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:34330 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbfHLVfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 17:35:44 -0400
-Received: by mail-pf1-f193.google.com with SMTP id b13so50355966pfo.1
-        for <git@vger.kernel.org>; Mon, 12 Aug 2019 14:35:43 -0700 (PDT)
+        id S1726806AbfHLVfr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 17:35:47 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38684 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727037AbfHLVfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 17:35:46 -0400
+Received: by mail-pg1-f196.google.com with SMTP id z14so12902160pga.5
+        for <git@vger.kernel.org>; Mon, 12 Aug 2019 14:35:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding:cc:from:to;
-        bh=Hwy3/5BzW5uxAy7srHmx22uS7SbvjvEUbmgy6cfbiiY=;
-        b=uNRfLlOgK9/1LsnxqYmgfQGT7sW+EqawDr1TvoSiVRYkrP6gDgyw9u8a3hj6nIKmK6
-         JjlHSE0ODpzMtyNHJ3LDzAl/dRcMOAVsFkuqNHRO8RvtnHxEJzSwLTcMpiVEHhnPJecQ
-         nKyBI3K/sg6phGkiooKJ8GpiSDIsKkg3/Q4D8IL38tUmtA5rJNBhPi+Hc5y+RXdf3axr
-         b31eypqlOon5T9P1FIuQIzjoTV+alpJNCi+lYU2Sns52kSap35EOa9havQEEVg9POPqv
-         Aj6IPMGXoNbUi6kOpsiVvqSLPI6XOaexrB37K+X3pBXmhm4PDJ3bcO1yeRepthHfuTsq
-         Bg1Q==
-X-Gm-Message-State: APjAAAWRulyaS5zULc15J508s1GU0q+5A6h0fR4FWr2MZzMDHBo5CJH1
-        IaAY+lU9S0gbMaJkFfJ2eQoFWQ==
-X-Google-Smtp-Source: APXvYqx+TEKmItKUiWgU0AdRhS5JqKV1HLAGrMPOhr+s7iAQ6NPR4AvNM0YAZRp+zikHnvCxz8tC+A==
-X-Received: by 2002:a17:90a:35e3:: with SMTP id r90mr1251613pjb.34.1565645742851;
-        Mon, 12 Aug 2019 14:35:42 -0700 (PDT)
+        bh=YY96A52tihJFS6J0AenEACSrUCVrg3kxBvzolC3vf40=;
+        b=rTU0G61e+TZDdTbFi8q804oO2w6q+nz2tP7BHOoU3cmdS4rNRpWEcDJa00CsLcAnTi
+         G0487alp/gatT12jcpUp8esK9G2uwUHJaWYGWs0puMOYAkVLZDfftQvA+fiJ4qkcN/36
+         5YWRU+Cqp0mvgvyjdvWjhOX3GQi42ejy1I2h3b/MfyZ39QOj3LF3YzOP4VpitBtesqbk
+         c9OroldAASRzOmUxB24lrgxX/MXTk6b2KcY7DVuJN3lCD3saUWlTHnxOWSNvNN0QU4Ab
+         U7wyvo5fijp0hGCHOtXm4tFT+vsUQxA527o4scflZe815lRCs7ZVzetMEV1S/HES4Zkz
+         JsqA==
+X-Gm-Message-State: APjAAAX61K8AMkGlzBH3yB6kUy9abOJikS+v8BwFH/Eif97SNbA04MNT
+        55Mm9bdy1GHtFFiu9nuPMmBNWw==
+X-Google-Smtp-Source: APXvYqzv+P+Td1ArzqfoVe3POp02XfndSSKSJ3IsdKMZyMO/mccFvAwjKdpUYJWhF/Tct+5QYkWbKQ==
+X-Received: by 2002:aa7:8007:: with SMTP id j7mr37282311pfi.154.1565645745605;
+        Mon, 12 Aug 2019 14:35:45 -0700 (PDT)
 Received: from localhost ([12.206.222.5])
-        by smtp.gmail.com with ESMTPSA id g18sm156041453pgm.9.2019.08.12.14.35.42
+        by smtp.gmail.com with ESMTPSA id v63sm112254216pfv.174.2019.08.12.14.35.44
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 12 Aug 2019 14:35:42 -0700 (PDT)
-Subject: [PATCH v2 1/5] fetch: Rename max_children to max_children_for_submodules
-Date:   Mon, 12 Aug 2019 14:34:44 -0700
-Message-Id: <20190812213448.2649-2-palmer@sifive.com>
+        Mon, 12 Aug 2019 14:35:44 -0700 (PDT)
+Subject: [PATCH v2 3/5] fetch: Add the fetch.jobs config key
+Date:   Mon, 12 Aug 2019 14:34:46 -0700
+Message-Id: <20190812213448.2649-4-palmer@sifive.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190812213448.2649-1-palmer@sifive.com>
 References: <20190812213448.2649-1-palmer@sifive.com>
@@ -57,65 +57,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This does not change any functionality, but instead just prepares for
-the upcoming "--fetch-jobs=<n>" support.  Essentially the "max_children"
-variable is ambiguously named, which would complicate the diff in
-squashed into the "--fetch-jobs=<n>" patch.
+This allows users to default to parallel fetches, so they don't have to
+pass --fetch-jobs=N on the command line every time.  The implementation
+matches submodule.fetchjobs by die()ing on invalid job counts.
+
+I couldn't find any documentation for submodule.fetchjobs, so I didn't
+write any for this one.  I've tested this in my config and in
+conjunction with the command-line argument.
 
 Signed-off-by: Palmer Dabbelt <palmer@sifive.com>
 ---
- builtin/fetch.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ builtin/fetch.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 717dd14e8961..8aa6a0caf1ab 100644
+index fa12ad44e7d9..4c5f2ea3a931 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -54,7 +54,7 @@ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosit
- static int progress = -1;
- static int enable_auto_gc = 1;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
--static int max_children = 1;
-+static int max_children_for_submodules = 1;
- static enum transport_family family;
- static const char *depth;
- static const char *deepen_since;
-@@ -96,7 +96,7 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 	}
- 
- 	if (!strcmp(k, "submodule.fetchjobs")) {
--		max_children = parse_submodule_fetchjobs(k, v);
-+		max_children_for_submodules = parse_submodule_fetchjobs(k, v);
+@@ -104,6 +104,13 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
  		return 0;
- 	} else if (!strcmp(k, "fetch.recursesubmodules")) {
- 		recurse_submodules = parse_fetch_recurse_submodules_arg(k, v);
-@@ -134,7 +134,7 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
--	OPT_INTEGER('j', "jobs", &max_children,
-+	OPT_INTEGER('j', "jobs", &max_children_for_submodules,
- 		    N_("number of submodules fetched in parallel")),
- 	OPT_BOOL('p', "prune", &prune,
- 		 N_("prune remote-tracking branches no longer on remote")),
-@@ -1633,7 +1633,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++)
- 		strbuf_addf(&default_rla, " %s", argv[i]);
- 
--	fetch_config_from_gitmodules(&max_children, &recurse_submodules);
-+	fetch_config_from_gitmodules(&max_children_for_submodules,
-+				     &recurse_submodules);
- 	git_config(git_fetch_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix,
-@@ -1716,7 +1717,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 						    recurse_submodules,
- 						    recurse_submodules_default,
- 						    verbosity < 0,
--						    max_children);
-+						    max_children_for_submodules);
- 		argv_array_clear(&options);
  	}
+ 
++	if (!strcmp(k, "fetch.jobs")) {
++		max_children_for_fetch = git_config_int(k, v);
++		if (max_children_for_fetch < 0)
++			die(_("negative values not allowed for fetch.jobs"));
++		return 0;
++	}
++
+ 	return git_default_config(k, v, cb);
+ }
  
 -- 
 2.21.0
