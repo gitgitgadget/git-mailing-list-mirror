@@ -2,429 +2,474 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90EE11F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 19:40:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 468091F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 19:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726937AbfHLTky (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 15:40:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53688 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726549AbfHLTkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 15:40:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA392151D07;
-        Mon, 12 Aug 2019 15:40:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=F0UDguthFxvEQnySEiweAi291
-        Y4=; b=T6PjYgc8Yhv2YxpDWKs8IsqTu1pelMe+vpgesq2etRB087nivHLhczNF7
-        iuNHKPBZ8fd9W1Q2DEz4F/Eg3d+ORvFDmAlUi0vkgUxpZgCY/SHH6VFpWdEUg/bT
-        ahzJGdgcKazMrjS3Rl3fZKPaP/R/fTQCOEb6T3ipFvbWUEPMBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=bhocW4za5TLKLNszUAe
-        o7v7m0vW1HUkueRxIC7ID2ig3xjWxyJds9MRtCd2m+qmejCik9/9lxQdZnXSpzK8
-        2KVbmpLxuGhYFvn1XumudM7ZPq+dpOeytvr9EuLDWzq9MinhWtX+Hy/cSRuiuOLB
-        gEbZPpb4xsRGUvGWdjcGizg0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D02A1151D04;
-        Mon, 12 Aug 2019 15:40:42 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34EB3151D03;
-        Mon, 12 Aug 2019 15:40:42 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.22.1
-X-Gnus-Delayed: Mon, 12 Aug 2019 11:51:33 -0700
-Date:   Mon, 12 Aug 2019 12:40:41 -0700
-Message-ID: <xmqqh86m9npi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727070AbfHLTqL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 15:46:11 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43780 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726200AbfHLTqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 15:46:11 -0400
+Received: by mail-pg1-f196.google.com with SMTP id r26so14058784pgl.10
+        for <git@vger.kernel.org>; Mon, 12 Aug 2019 12:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3vX2IPw4laS4eTLIdldBLluQZgVDQ1kAJ3qq+i+inYQ=;
+        b=c/o5WmtApIrdcxg73YYSfYk14rObhhdrfRjNvIPupowvN8uM9qium02Bze9m1vXsWZ
+         Wsj/lL1JpeaJRD8za6ZwJCt1pgMkNWcuhaghL3CjC0xcZQzERTeew8ctq1+qibML+mYt
+         Pnlad8bSzXSQ2tOBqwoAqnUkwXzbHbEbpF+m5nRXzzc7B0dVdsXcOhL2iH7yAGo7Y0Yw
+         bVtva/bJRHtNgVVgX3QAUmlObdHJ9ichI4dOtbBkZ2wyaaFRZe/tcpwvdUDn7GAW19vl
+         C3thAo/K3xFothkMAZHiAfy7t9fPiwapGFsG3ALF/RjbhtXOV8cy9yPWxDkz/D/NzpqZ
+         qSVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3vX2IPw4laS4eTLIdldBLluQZgVDQ1kAJ3qq+i+inYQ=;
+        b=LMEq5w3OpVMd+Aen4Ok97zZjZh9XLehX45W+0TVMTtY/d28ScIXIDJy4qbB0ck6rF/
+         o0J7Whu2AqMeCc8QxklxjQ10M/1yl3j1tFkfogHiqUXRs0Sd8bRasww//HV2IRllOcS6
+         ffPpHV9IJMv7WfrC5wZ6aPFyUypi94n2UVInI0ah9rNWGPPm91lpu7jXbQUiWlcFql/6
+         xt0Yh56qs4c4CMacw9BWdykeJ/JYCQckI5cNIuZaw9QCa1Ed2UaBYnSMCNSSwm2sKIgG
+         Xz6bXriYiSpRPuqPtCja72pFpc2Z/Ua+qnqCzLdhPhFSgqF6EVQVXnoJJtWu0FU9UCx/
+         pucA==
+X-Gm-Message-State: APjAAAUpycYlg5dDhgp3GWk0LmQzNetT1lO2DrmuKipGtM4gIOZ9GIzh
+        8Qpv18y8sqleBcMv+Y74rbw=
+X-Google-Smtp-Source: APXvYqw7vPh5O10leZXC8v30aNefOK4IMQJHygOLBOjoHq/awfTJUtFowfe0wDMVjgLYDQ4MHEE3KA==
+X-Received: by 2002:a17:90a:b016:: with SMTP id x22mr883607pjq.116.1565639169363;
+        Mon, 12 Aug 2019 12:46:09 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.228])
+        by smtp.gmail.com with ESMTPSA id j187sm13275947pfg.178.2019.08.12.12.46.06
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 12 Aug 2019 12:46:08 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     rohit.ashiwal265@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        martin.agren@gmail.com, newren@gmail.com,
+        phillip.wood123@gmail.com, t.gummerer@gmail.com
+Subject: [GSoC][PATCH v2 0/6] rebase -i: support more options
+Date:   Tue, 13 Aug 2019 01:12:54 +0530
+Message-Id: <20190812194301.5655-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 11E1F7A6-BD39-11E9-B782-46F8B7964D18-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A maintenance release Git v2.22.1 is now available at the usual
-places.  This backports many of the fixes that appeared already
-on the 'master' front in preparation for the upcoming v2.23 release
-of Git.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.22.1'
-tag and the 'maint' branch that the tag points at:
-
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
-
-----------------------------------------------------------------
-
-Git 2.22.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Fixes since v2.22
------------------
-
- * A relative pathname given to "git init --template=3D<path> <repo>"
-   ought to be relative to the directory "git init" gets invoked in,
-   but it instead was made relative to the repository, which has been
-   corrected.
-
- * "git worktree add" used to fail when another worktree connected to
-   the same repository was corrupt, which has been corrected.
-
- * The ownership rule for the file descriptor to fast-import remote
-   backend was mixed up, leading to unrelated file descriptor getting
-   closed, which has been fixed.
-
- * "git update-server-info" used to leave stale packfiles in its
-   output, which has been corrected.
-
- * The server side support for "git fetch" used to show incorrect
-   value for the HEAD symbolic ref when the namespace feature is in
-   use, which has been corrected.
-
- * "git am -i --resolved" segfaulted after trying to see a commit as
-   if it were a tree, which has been corrected.
-
- * "git bundle verify" needs to see if prerequisite objects exist in
-   the receiving repository, but the command did not check if we are
-   in a repository upfront, which has been corrected.
-
- * "git merge --squash" is designed to update the working tree and the
-   index without creating the commit, and this cannot be countermanded
-   by adding the "--commit" option; the command now refuses to work
-   when both options are given.
-
- * The data collected by fsmonitor was not properly written back to
-   the on-disk index file, breaking t7519 tests occasionally, which
-   has been corrected.
-
- * Update to Unicode 12.1 width table.
-
- * The command line to invoke a "git cat-file" command from inside
-   "git p4" was not properly quoted to protect a caret and running a
-   broken command on Windows, which has been corrected.
-
- * "git request-pull" learned to warn when the ref we ask them to pull
-   from in the local repository and in the published repository are
-   different.
-
- * When creating a partial clone, the object filtering criteria is
-   recorded for the origin of the clone, but this incorrectly used a
-   hardcoded name "origin" to name that remote; it has been corrected
-   to honor the "--origin <name>" option.
-
- * "git fetch" into a lazy clone forgot to fetch base objects that are
-   necessary to complete delta in a thin packfile, which has been
-   corrected.
-
- * The filter_data used in the list-objects-filter (which manages a
-   lazily sparse clone repository) did not use the dynamic array API
-   correctly---'nr' is supposed to point at one past the last element
-   of the array in use.  This has been corrected.
-
- * The description about slashes in gitignore patterns (used to
-   indicate things like "anchored to this level only" and "only
-   matches directories") has been revamped.
-
- * The URL decoding code has been updated to avoid going past the end
-   of the string while parsing %-<hex>-<hex> sequence.
-
- * The list of for-each like macros used by clang-format has been
-   updated.
-
- * "git push --atomic" that goes over the transport-helper (namely,
-   the smart http transport) failed to prevent refs to be pushed when
-   it can locally tell that one of the ref update will fail without
-   having to consult the other end, which has been corrected.
-
- * "git clean" silently skipped a path when it cannot lstat() it; now
-   it gives a warning.
-
- * A codepath that reads from GPG for signed object verification read
-   past the end of allocated buffer, which has been fixed.
-
- * "git rm" to resolve a conflicted path leaked an internal message
-   "needs merge" before actually removing the path, which was
-   confusing.  This has been corrected.
-
- * The "git clone" documentation refers to command line options in its
-   description in the short form; they have been replaced with long
-   forms to make them more recognisable.
-
- * The configuration variable rebase.rescheduleFailedExec should be
-   effective only while running an interactive rebase and should not
-   affect anything when running a non-interactive one, which was not
-   the case.  This has been corrected.
-
- * "git submodule foreach" did not protect command line options passed
-   to the command to be run in each submodule correctly, when the
-   "--recursive" option was in use.
-
- * Use "Erase in Line" CSI sequence that is already used in the editor
-   support to clear cruft in the progress output.
-
- * The codepath to compute delta islands used to spew progress output
-   without giving the callers any way to squelch it, which has been
-   fixed.
-
- * The code to parse scaled numbers out of configuration files has
-   been made more robust and also easier to follow.
-
- * An incorrect list of options was cached after command line
-   completion failed (e.g. trying to complete a command that requires
-   a repository outside one), which has been corrected.
-
- * "git rebase --abort" used to leave refs/rewritten/ when concluding
-   "git rebase -r", which has been corrected.
-
- * "git stash show 23" used to work, but no more after getting
-   rewritten in C; this regression has been corrected.
-
- * "git interpret-trailers" always treated '#' as the comment
-   character, regardless of core.commentChar setting, which has been
-   corrected.
-
- * Code clean-up to avoid signed integer overlaps during binary search.
-
- * "git checkout -p" needs to selectively apply a patch in reverse,
-   which did not work well.
-
- * The commit-graph file is now part of the "files that the runtime
-   may keep open file descriptors on, all of which would need to be
-   closed when done with the object store", and the file descriptor to
-   an existing commit-graph file now is closed before "gc" finalizes a
-   new instance to replace it.
-
- * Code restructuring during 2.20 period broke fetching tags via
-   "import" based transports.
-
- * We have been trying out a few language features outside c89; the
-   coding guidelines document did not talk about them and instead had
-   a blanket ban against them.
-
- * The internal diff machinery can be made to read out of bounds while
-   looking for --funcion-context line in a corner case, which has been
-   corrected.
-
-Also contains various documentation updates, code clean-ups and minor fix=
-ups.
-
-----------------------------------------------------------------
-
-Changes since v2.22.0 are as follows:
-
-Beat Bolli (1):
-      unicode: update the width tables to Unicode 12.1
-
-Carlo Marcelo Arenas Bel=C3=B3n (5):
-      fsmonitor: avoid signed integer overflow / infinite loop
-      wrapper: avoid undefined behaviour in macOS
-      xdiff: drop system includes in xutils.c
-      xdiff: remove duplicate headers from xhistogram.c
-      xdiff: remove duplicate headers from xpatience.c
-
-Chris Mayo (1):
-      send-email: update documentation of required Perl modules
-
-Denton Liu (2):
-      config/alias.txt: change " and ' to `
-      config/alias.txt: document alias accepting non-command first word
-
-Derrick Stolee (15):
-      commit-graph: fix the_repository reference
-      sha1-file: split OBJECT_INFO_FOR_PREFETCH
-      commit-graph: return with errors during write
-      commit-graph: collapse parameters into flags
-      commit-graph: remove Future Work section
-      commit-graph: create write_commit_graph_context
-      commit-graph: extract fill_oids_from_packs()
-      commit-graph: extract fill_oids_from_commit_hex()
-      commit-graph: extract fill_oids_from_all_packs()
-      commit-graph: extract count_distinct_commits()
-      commit-graph: extract copy_oids_to_commits()
-      commit-graph: extract write_commit_graph_file()
-      commit-graph: use raw_object_store when closing
-      packfile: close commit-graph in close_all_packs
-      packfile: rename close_all_packs to close_object_store
-
-Doug Ilijev (1):
-      README: fix rendering of text in angle brackets
-
-Dr. Adam Nielsen (1):
-      gitignore.txt: make slash-rules more readable
-
-Emily Shaffer (3):
-      grep: fail if call could output and name is null
-      doc: hint about GIT_DEBUGGER in CodingGuidelines
-      transport-helper: enforce atomic in push_refs_with_push
-
-Eric Wong (1):
-      server-info: do not list unlinked packs
-
-Felipe Contreras (5):
-      t5801 (remote-helpers): cleanup refspec stuff
-      t5801 (remote-helpers): add test to fetch tags
-      fetch: trivial cleanup
-      fetch: make the code more understandable
-      fetch: fix regression with transport helpers
-
-Jakub Wilk (1):
-      doc: don't use git.kernel.org as example gitweb URL
-
-Jeff King (10):
-      upload-pack: strip namespace from symref data
-      am: simplify prompt response handling
-      am: read interactive input from stdin
-      am: drop tty requirement for --interactive
-      am: fix --interactive HEAD tree resolution
-      interpret-trailers: load default config
-      verify-tag: drop signal.h include
-      wt-status.h: drop stdio.h include
-      delta-islands: respect progress flag
-      xdiff: clamp function context indices in post-image
-
-Johannes Schindelin (14):
-      bisect--helper: verify HEAD could be parsed before continuing
-      fill_stat_cache_info(): prepare for an fsmonitor fix
-      mark_fsmonitor_valid(): mark the index as changed if needed
-      bundle verify: error out if called without an object database
-      poll (mingw): allow compiling with GCC 8 and DEVELOPER=3D1
-      kwset: allow building with GCC 8
-      winansi: simplify loading the GetCurrentConsoleFontEx() function
-      config: avoid calling `labs()` on too-large data type
-      t3404: fix a typo
-      t0001: fix on case-insensitive filesystems
-      rebase --am: ignore rebase.rescheduleFailedExec
-      diff: munmap() file contents before running external diff
-      mingw: support spawning programs containing spaces in their names
-      clean: show an error message when the path is too long
-
-Jonathan Tan (5):
-      t5616: refactor packfile replacement
-      index-pack: prefetch missing REF_DELTA bases
-      t5616: use correct flag to check object is missing
-      t5616: cover case of client having delta base
-      t5551: test usage of chunked encoding explicitly
-
-Josh Steadmon (1):
-      trace2: correct trace2 field name documentation
-
-Junio C Hamano (6):
-      transport-helper: avoid var decl in for () loop control
-      rm: resolving by removal is not a warning-worthy event
-      CodingGuidelines: spell out post-C89 rules
-      Flush fixes up to the third batch post 2.22.0
-      Merge fixes made on the 'master' front
-      Git 2.22.1
-
-Martin =C3=85gren (1):
-      RelNotes/2.21.1: typofix
-
-Matthew DeVore (3):
-      list-objects-filter: correct usage of ALLOC_GROW
-      url: do not read past end of buffer
-      url: do not allow %00 to represent NUL in URLs
-
-Miguel Ojeda (1):
-      clang-format: use git grep to generate the ForEachMacros list
-
-Mike Hommey (2):
-      dup() the input fd for fast-import used for remote helpers
-      Use xmmap_gently instead of xmmap in use_pack
-
-Mike Mueller (1):
-      p4 unshelve: fix "Not a valid object name HEAD0" on Windows
-
-Morian Sonnet (1):
-      submodule foreach: fix recursion of options
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-      init: make --template path relative to $CWD
-      worktree add: be tolerant of corrupt worktrees
-      completion: do not cache if --git-completion-helper fails
-
-Paolo Bonzini (2):
-      request-pull: quote regex metacharacters in local ref
-      request-pull: warn if the remote object is not the same as the loca=
-l one
-
-Philip Oakley (2):
-      doc branch: provide examples for listing remote tracking branches
-      .mailmap: update email address of Philip Oakley
-
-Phillip Wood (5):
-      rebase: fix a memory leak
-      rebase: warn if state directory cannot be removed
-      sequencer: return errors from sequencer_remove_state()
-      rebase --abort/--quit: cleanup refs/rewritten
-      add -p: fix checkout -p with pathological context
-
-Quentin Nerden (2):
-      docs: git-clone: refer to long form of options
-      docs: git-clone: list short form of options first
-
-Ren=C3=A9 Scharfe (6):
-      cleanup: fix possible overflow errors in binary search, part 2
-      coccinelle: use COPY_ARRAY for copying arrays
-      use COPY_ARRAY for copying arrays
-      config: use unsigned_mult_overflows to check for overflows
-      config: don't multiply in parse_unit_factor()
-      config: simplify parsing of unit factors
-
-Robert Morgan (1):
-      gpg(docs): use correct --verify syntax
-
-SZEDER G=C3=A1bor (11):
-      t3404: modernize here doc style
-      t3404: make the 'rebase.missingCommitsCheck=3Dignore' test more foc=
-used
-      pager: add a helper function to clear the last line in the terminal
-      t5551: use 'test_i18ngrep' to check translated output
-      rebase: fix garbled progress display with '-x'
-      progress: use term_clear_line()
-      Document that 'git -C ""' works and doesn't change directory
-      ci: don't update Homebrew
-      ci: disable Homebrew's auto cleanup
-      ci/lib.sh: update a comment about installed P4 and Git-LFS versions
-      Documentation/git-fsck.txt: include fsck.* config variables
-
-Simon Williams (1):
-      git-p4: allow unshelving of branched files
-
-Steven Roberts (1):
-      gpg-interface: do not scan past the end of buffer
-
-Thomas Gummerer (1):
-      stash: fix show referencing stash index
-
-Varun Naik (1):
-      read-cache.c: do not die if mmap fails
-
-Vishal Verma (1):
-      merge: refuse --commit with --squash
-
-Xin Li (1):
-      clone: respect user supplied origin name when setting up partial cl=
-one
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
-      hash-object doc: stop mentioning git-cvsimport
+I've tried to work on all the suggestion in this revision.
+
+Based on: 2e27de94d485a6da0c8e264c165e55100f1a13a8 (tag: v2.23.0-rc2)
+
+Rohit Ashiwal (6):
+  rebase -i: add --ignore-whitespace flag
+  sequencer: add NULL checks under read_author_script
+  rebase -i: support --committer-date-is-author-date
+  sequencer: rename amend_author to author_to_rename
+  rebase -i: support --ignore-date
+  rebase: add --author-date-is-committer-date
+
+ Documentation/git-rebase.txt            |  23 +++--
+ builtin/rebase.c                        |  66 +++++++++---
+ sequencer.c                             | 132 ++++++++++++++++++++++--
+ sequencer.h                             |   2 +
+ t/t3422-rebase-incompatible-options.sh  |   2 -
+ t/t3433-rebase-options-compatibility.sh | 100 ++++++++++++++++++
+ 6 files changed, 295 insertions(+), 30 deletions(-)
+ create mode 100755 t/t3433-rebase-options-compatibility.sh
+
+Range-diff:
+1:  e213112385 ! 1:  4cd0aa3084 rebase -i: add --ignore-whitespace flag
+    @@ -60,32 +60,35 @@
+      	int autostash;
+      	char *cmd;
+     @@
+    - 		.git_format_patch_opt = STRBUF_INIT	\
+    - 	}
+      
+    --static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+    -+static struct replay_opts get_replay_opts(struct rebase_options *opts)
+    + static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+      {
+    ++	char *strategy_opts = opts->strategy_opts;
+      	struct replay_opts replay = REPLAY_OPTS_INIT;
+      
+    + 	replay.action = REPLAY_INTERACTIVE_REBASE;
+     @@
+      	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+      	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+      	replay.strategy = opts->strategy;
+    +-	if (opts->strategy_opts)
+    +-		parse_strategy_opts(&replay, opts->strategy_opts);
+     +
+     +	if (opts->ignore_whitespace) {
+     +		struct strbuf buf = STRBUF_INIT;
+     +
+    -+		if (opts->strategy_opts)
+    -+			strbuf_addstr(&buf, opts->strategy_opts);
+    ++		if (strategy_opts)
+    ++			strbuf_addstr(&buf, strategy_opts);
+     +
+     +		strbuf_addstr(&buf, " --ignore-space-change");
+    -+		free(opts->strategy_opts);
+    -+		opts->strategy_opts = strbuf_detach(&buf, NULL);
+    ++		free(strategy_opts);
+    ++		strategy_opts = strbuf_detach(&buf, NULL);
+     +	}
+    - 	if (opts->strategy_opts)
+    - 		parse_strategy_opts(&replay, opts->strategy_opts);
+    ++	if (strategy_opts)
+    ++		parse_strategy_opts(&replay, strategy_opts);
+      
+    + 	return replay;
+    + }
+     @@
+      	argc = parse_options(argc, argv, prefix, options,
+      			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+    @@ -165,14 +168,14 @@
+     +# both the backends fall short of optimal behaviour.
+     +test_expect_success 'setup' '
+     +	git checkout -b topic &&
+    -+	q_to_tab >file <<-EOF &&
+    ++	q_to_tab >file <<-\EOF &&
+     +	line 1
+     +	Qline 2
+     +	line 3
+     +	EOF
+     +	git add file &&
+     +	git commit -m "add file" &&
+    -+	cat >file <<-EOF &&
+    ++	cat >file <<-\EOF &&
+     +	line 1
+     +	new line 2
+     +	line 3
+    @@ -181,10 +184,10 @@
+     +	git tag side &&
+     +
+     +	git checkout --orphan master &&
+    -+	cat >file <<-EOF &&
+    -+	line 1
+    -+	        line 2
+    -+	line 3
+    ++	sed -e "s/^|//" >file <<-\EOF &&
+    ++	|line 1
+    ++	|        line 2
+    ++	|line 3
+     +	EOF
+     +	git add file &&
+     +	git commit -m "add file" &&
+    @@ -192,7 +195,7 @@
+     +'
+     +
+     +test_expect_success '--ignore-whitespace works with am backend' '
+    -+	cat >expect <<-EOF &&
+    ++	cat >expect <<-\EOF &&
+     +	line 1
+     +	new line 2
+     +	line 3
+    @@ -204,7 +207,7 @@
+     +'
+     +
+     +test_expect_success '--ignore-whitespace works with interactive backend' '
+    -+	cat >expect <<-EOF &&
+    ++	cat >expect <<-\EOF &&
+     +	line 1
+     +	new line 2
+     +	line 3
+2:  df13514788 = 2:  e2c0304587 sequencer: add NULL checks under read_author_script
+3:  5735ec9ca2 ! 3:  6aed57ae2e rebase -i: support --committer-date-is-author-date
+    @@ -140,31 +140,28 @@
+      static const char *read_author_ident(struct strbuf *buf)
+      {
+     @@
+    - 	return buf->buf;
+    - }
+    + {
+    + 	struct child_process cmd = CHILD_PROCESS_INIT;
+      
+    -+static int setenv_committer_date_to_author_date(void)
+    -+{
+    -+	int res = 1;
+    -+	char *date = read_author_date_or_null();
+    ++	if (opts->committer_date_is_author_date) {
+    ++		size_t len;
+    ++		int res = -1;
+    ++		struct strbuf datebuf = STRBUF_INIT;
+    ++		char *date = read_author_date_or_null();
+     +
+    -+	if (date)
+    -+		res = setenv("GIT_COMMITTER_DATE", date, 1);
+    ++		strbuf_addf(&datebuf, "@%s", date);
+    ++		free(date);
+     +
+    -+	free(date);
+    -+	return res;
+    -+}
+    ++		date = strbuf_detach(&datebuf, &len);
+     +
+    - static const char staged_changes_advice[] =
+    - N_("you have staged changes in your working tree\n"
+    - "If these changes are meant to be squashed into the previous commit, run:\n"
+    -@@
+    - {
+    - 	struct child_process cmd = CHILD_PROCESS_INIT;
+    - 
+    -+	if (opts->committer_date_is_author_date &&
+    -+	    setenv_committer_date_to_author_date())
+    -+		return 1;
+    ++		if (len > 1)
+    ++			res = setenv("GIT_COMMITTER_DATE", date, 1);
+    ++
+    ++		free(date);
+    ++
+    ++		if (res)
+    ++			return -1;
+    ++	}
+      	if ((flags & CREATE_ROOT_COMMIT) && !(flags & AMEND_MSG)) {
+      		struct strbuf msg = STRBUF_INIT, script = STRBUF_INIT;
+      		const char *author = NULL;
+    @@ -173,30 +170,31 @@
+      	if (parse_head(r, &current_head))
+      		return -1;
+     -
+    -+	if (!(flags & AMEND_MSG) && opts->committer_date_is_author_date &&
+    -+	    setenv_committer_date_to_author_date())
+    -+		return -1;
+      	if (flags & AMEND_MSG) {
+      		const char *exclude_gpgsig[] = { "gpgsig", NULL };
+      		const char *out_enc = get_commit_output_encoding();
+     @@
+    - 			res = error(_("unable to parse commit author"));
+    - 			goto out;
+    - 		}
+    -+		if (opts->committer_date_is_author_date) {
+    -+			char *date;
+    -+			int len = strlen(author);
+    -+			char *idx = memchr(author, '>', len);
+    + 		commit_list_insert(current_head, &parents);
+    + 	}
+    + 
+    ++	if (opts->committer_date_is_author_date) {
+    ++		int len = strlen(author);
+    ++		struct ident_split ident;
+    ++		struct strbuf date = STRBUF_INIT;
+     +
+    -+			++idx;
+    -+			date = malloc(author + len - idx);
+    -+			memcpy(date, idx, author + len - idx);
+    -+			setenv("GIT_COMMITTER_DATE", date, 1);
+    -+			free(date);
+    -+		}
+    - 		parents = copy_commit_list(current_head->parents);
+    - 		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
+    - 	} else if (current_head) {
+    ++		split_ident_line(&ident, author, len);
+    ++
+    ++		if (!ident.date_begin)
+    ++			return error(_("corrupted author without date information"));
+    ++
+    ++		strbuf_addf(&date, "@%s",ident.date_begin);
+    ++		setenv("GIT_COMMITTER_DATE", date.buf, 1);
+    ++		strbuf_release(&date);
+    ++	}
+    ++
+    + 	if (write_index_as_tree(&tree, r->index, r->index_file, 0, NULL)) {
+    + 		res = error(_("git write-tree failed to write a tree"));
+    + 		goto out;
+     @@
+      			opts->signoff = 1;
+      		}
+    @@ -271,18 +269,18 @@
+      '
+      
+     +test_expect_success '--committer-date-is-author-date works with am backend' '
+    -+	git rebase -f HEAD^ &&
+    ++	git commit --amend &&
+     +	git rebase --committer-date-is-author-date HEAD^ &&
+    -+	git show HEAD --pretty="format:%at" >authortime &&
+    -+	git show HEAD --pretty="format:%ct" >committertime &&
+    ++	git show HEAD --pretty="format:%ai" >authortime &&
+    ++	git show HEAD --pretty="format:%ci" >committertime &&
+     +	test_cmp authortime committertime
+     +'
+     +
+     +test_expect_success '--committer-date-is-author-date works with interactive backend' '
+    -+	git rebase -f HEAD^ &&
+    ++	git commit --amend &&
+     +	git rebase -i --committer-date-is-author-date HEAD^ &&
+    -+	git show HEAD --pretty="format:%at" >authortime &&
+    -+	git show HEAD --pretty="format:%ct" >committertime &&
+    ++	git show HEAD --pretty="format:%ai" >authortime &&
+    ++	git show HEAD --pretty="format:%ci" >committertime &&
+     +	test_cmp authortime committertime
+     +'
+     +
+4:  cdcd66347b ! 4:  36a0c017c2 sequencer: rename amend_author to author_to_rename
+    @@ -3,8 +3,9 @@
+         sequencer: rename amend_author to author_to_rename
+     
+         The purpose of amend_author was to free() the malloc()'d string
+    -    obtained from get_author(). But the name does not actually convey
+    -    this purpose. Rename it to something meaningful.
+    +    obtained from get_author() while amending a commit. But we can
+    +    also use the variable to free() the author at our convenience.
+    +    Rename it to convey this meaning.
+     
+         Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+     
+5:  2f45a4e0b9 ! 5:  3a4ffeb995 rebase -i: support --ignore-date
+    @@ -17,7 +17,7 @@
+      --ignore-date::
+     -	This flag is passed to 'git am' to change the author date
+     -	of the rebased commits (see linkgit:git-am[1]).
+    -+	Lie about the author date by re-setting it to the value
+    ++	Instead of using the given author date, re-set it to the value
+     +	same as committer (current) date. This implies --force-rebase.
+      +
+      See also INCOMPATIBLE OPTIONS below.
+    @@ -63,6 +63,8 @@
+      			  "--rebase-merges"));
+      
+     -	if (opts.committer_date_is_author_date)
+    ++	if (opts.ignore_date)
+    ++		opts.committer_date_is_author_date = 0;
+     +	if (opts.committer_date_is_author_date ||
+     +	    opts.ignore_date)
+      		opts.flags |= REBASE_FORCE;
+    @@ -93,6 +95,8 @@
+      	}
+      
+     -	if (options.committer_date_is_author_date)
+    ++	if (options.ignore_date)
+    ++		options.committer_date_is_author_date = 0;
+     +	if (options.committer_date_is_author_date ||
+     +	    options.ignore_date)
+      		options.flags |= REBASE_FORCE;
+    @@ -118,33 +122,38 @@
+      static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
+      static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+     @@
+    - 	return res;
+    + 	return buf->buf;
+      }
+      
+     +static void ignore_author_date(const char **author)
+     +{
+    ++	int len = strlen(*author);
+    ++	struct ident_split ident;
+     +	struct strbuf new_author = STRBUF_INIT;
+    -+	char *idx = memchr(*author, '>', strlen(*author));
+     +
+    -+	strbuf_add(&new_author, *author, idx - *author);
+    -+	strbuf_addstr(&new_author, "> ");
+    ++	split_ident_line(&ident, *author, len);
+    ++	len = ident.mail_end - ident.name_begin + 1;
+    ++
+    ++	strbuf_addf(&new_author, "%.*s", len, *author);
+     +	datestamp(&new_author);
+     +	*author = strbuf_detach(&new_author, NULL);
+     +}
+    ++
+    ++static void push_dates(struct child_process *child)
+    ++{
+    ++	time_t now = time(NULL);
+    ++	struct strbuf date = STRBUF_INIT;
+    ++
+    ++	strbuf_addf(&date, "@%"PRIuMAX, (uintmax_t)now);
+    ++	argv_array_pushf(&child->args, "--date=%s", date.buf);
+    ++	argv_array_pushf(&child->env_array, "GIT_COMMITTER_DATE=%s", date.buf);
+    ++	strbuf_release(&date);
+    ++}
+     +
+      static const char staged_changes_advice[] =
+      N_("you have staged changes in your working tree\n"
+      "If these changes are meant to be squashed into the previous commit, run:\n"
+     @@
+    - {
+    - 	struct child_process cmd = CHILD_PROCESS_INIT;
+    - 
+    --	if (opts->committer_date_is_author_date &&
+    -+	if (opts->committer_date_is_author_date && !opts->ignore_date &&
+    - 	    setenv_committer_date_to_author_date())
+    - 		return 1;
+    - 	if ((flags & CREATE_ROOT_COMMIT) && !(flags & AMEND_MSG)) {
+    -@@
+      
+      		if (res <= 0)
+      			res = error_errno(_("could not read '%s'"), defmsg);
+    @@ -153,8 +162,8 @@
+     +			if (opts->ignore_date) {
+     +				if (!author)
+     +					BUG("ignore-date can only be used with "
+    -+					    "rebase -i, which must set the "
+    -+					    "author before committing the tree");
+    ++					    "rebase, which must set the author "
+    ++					    "before committing the tree");
+     +				ignore_author_date(&author);
+     +			}
+      			res = commit_tree(msg.buf, msg.len, cache_tree_oid,
+    @@ -169,29 +178,11 @@
+      	if (opts->gpg_sign)
+      		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+     +	if (opts->ignore_date)
+    -+		argv_array_pushf(&cmd.args, "--date=%ld", time(NULL));
+    ++		push_dates(&cmd);
+      	if (defmsg)
+      		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+      	else if (!(flags & EDIT_MSG))
+     @@
+    - 	if (parse_head(r, &current_head))
+    - 		return -1;
+    - 	if (!(flags & AMEND_MSG) && opts->committer_date_is_author_date &&
+    --	    setenv_committer_date_to_author_date())
+    -+	    !opts->ignore_date && setenv_committer_date_to_author_date())
+    - 		return -1;
+    - 	if (flags & AMEND_MSG) {
+    - 		const char *exclude_gpgsig[] = { "gpgsig", NULL };
+    -@@
+    - 			res = error(_("unable to parse commit author"));
+    - 			goto out;
+    - 		}
+    --		if (opts->committer_date_is_author_date) {
+    -+		if (opts->committer_date_is_author_date && !opts->ignore_date) {
+    - 			char *date;
+    - 			int len = strlen(author);
+    - 			char *idx = memchr(author, '>', len);
+    -@@
+      
+      	reset_ident_date();
+      
+    @@ -229,8 +220,7 @@
+      		if (opts->gpg_sign)
+      			argv_array_push(&cmd.args, opts->gpg_sign);
+     +		if (opts->ignore_date)
+    -+			argv_array_pushf(&cmd.args,
+    -+					 "GIT_AUTHOR_DATE=%ld", time(NULL));
+    ++			push_dates(&cmd);
+      
+      		/* Add the tips to be merged */
+      		for (j = to_merge; j; j = j->next)
+6:  8fa3da175c ! 6:  cb81e6c4e5 rebase: add --author-date-is-committer-date
+    @@ -17,7 +17,7 @@
+      
+      --ignore-date::
+     +--author-date-is-committer-date::
+    - 	Lie about the author date by re-setting it to the value
+    + 	Instead of using the given author date, re-set it to the value
+      	same as committer (current) date. This implies --force-rebase.
+      +
+     
+-- 
+2.21.0
 
