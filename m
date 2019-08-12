@@ -2,81 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,SUBJ_ALL_CAPS shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C657E1F45A
-	for <e@80x24.org>; Mon, 12 Aug 2019 07:35:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA5431F45A
+	for <e@80x24.org>; Mon, 12 Aug 2019 10:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbfHLHfo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Aug 2019 03:35:44 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:41092 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726304AbfHLHfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Aug 2019 03:35:44 -0400
-Received: by mail-ot1-f68.google.com with SMTP id o101so2611547ota.8
-        for <git@vger.kernel.org>; Mon, 12 Aug 2019 00:35:44 -0700 (PDT)
+        id S1727721AbfHLKPb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Aug 2019 06:15:31 -0400
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:43658 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727323AbfHLKPb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Aug 2019 06:15:31 -0400
+Received: by mail-ot1-f50.google.com with SMTP id e12so12499456otp.10
+        for <git@vger.kernel.org>; Mon, 12 Aug 2019 03:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yxvyeXGZZEO3gkAa7hoWTew6QctDppkMpPDq3Td1awU=;
-        b=MHnlbEAtnESMgJnxPhUHBYvTonQjKwrSNnPSWSf2q4tBl5YLPqN2pKWYzc5envYLak
-         8+IkGJMQG66cTFfcWvaZbaO6hLuEjgsJCmaYxClYMB/r7lrwFgfs1dqO398dudb098zZ
-         3SAmD8BAaHS8C7GpkSAttEoi86AJrPNvi6FyqGzCi2Qow7FdVacbuSSb2jgyDmU70zlh
-         2F6jHP4pNQ6uGkaBc1h1Nn2Nxi79BsBLgcotyzgPaEyGOGse//2YpJ80UYfFj3HwOBMa
-         PVOA5EDOZaQ73XoQf/yuOuFd7IFAoYcrfgfpISc8+ykrBxv6Uo3z7IaPalnLBGgx8rDe
-         DiUQ==
+        d=gitlab.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=8eCALiZYpWTcht3CFJKy7q4ykjGgP6Eg2ZgwkOovZGE=;
+        b=c5yQ37YCbgmAhlOQcQgrExbI1KP/oe4jtdimwNeWoOlcTG0lqdNF6NpncYHOvCV1Up
+         WZOqHzM/39JhBeGNu6Ylr1D5Gip8R1bcGje57SWVqEf91LtAO5t24d5AgvsSSv/78dPp
+         C1MdRY//Bn449NAuZWjPfdZ+X1Xk0b5TeKfGA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yxvyeXGZZEO3gkAa7hoWTew6QctDppkMpPDq3Td1awU=;
-        b=Aypk0HISW2qouaSUJE0idOTEEtDhy9rbu+OTsPipd1qhDGRqCWje1Ky/4LDYuFb2+f
-         rCfQL2NQesV8sVXa8joAzC23oI/Ur0qk6TFTcafNk6DiRuDyJbTC8TNnk7Y3OostrxE5
-         xd3tJPiQFPKpK4zA2/kHJChk2Y+XuQkKUKh9VxNoEb98I665Xr/bbEdYTinlHy41HmOG
-         RQOkOW7qOV8snWhnx6UJX+m2SW0XmIHELZN1n/QG+BWiSTKzFaKnkrrWBibvbp3eWqdn
-         wYuNduZB4oj2Tt11/Iuwno5WORryqsEmLo8WIhUjOgZ+BgrbUDjX2VhZERhmeDPp0K2Q
-         qA+w==
-X-Gm-Message-State: APjAAAVXJy7Wpb5TkOxLMCTJTf+iCBYNqiPn7aJpHJaHPTCLYDgCP8FS
-        ZC/ODBr2Ytuo72aqCC1BniBHeuC1nBEZ46jKcHU=
-X-Google-Smtp-Source: APXvYqzmcZIOlVAYpsv/zlGY2RZvIQRjLPHsNsrrIzw6xr4HJ3Xnz7OWq7EiYjj/Uwk5tb0eXeAjmUaRiYcUM5YyMYU=
-X-Received: by 2002:a5e:da48:: with SMTP id o8mr21623036iop.252.1565595343693;
- Mon, 12 Aug 2019 00:35:43 -0700 (PDT)
+         :message-id:subject:to;
+        bh=8eCALiZYpWTcht3CFJKy7q4ykjGgP6Eg2ZgwkOovZGE=;
+        b=DT8WY0XT0q+u0R31pBlXdsLH5WDrfJGH7mDKXTv9qHW4ZSmwUF4eNNBfLUloWteveR
+         wxS3zW97MBPui9YqImm1/Y1wjjZSwT2sbK94ZNoyL2CiAmarJZJm5C8qJnXPEL093Ksl
+         +1vIHzLnP0/180CcbWe5bxhd9yPEGzuRmu8heVqJFDKGqyEd67WPhzfOvExsl24H5z0w
+         1rkZ8pS84bNsWFFDLROCExMtX+ebWu10b9HwGXF43obLm+OhTlNKwpmHz592/u5M1vXI
+         D500M9gjBRPsQT9t1H5xitWJxLQd5y1/3na7OoFsPgw9BXjroZ33U2dn/qc8FNb8baya
+         Ewxw==
+X-Gm-Message-State: APjAAAVfPr9KBelqHhw0/YqPX3eOGwu7E9XTRQz2ELGrijIK5pZvACbt
+        dpTNMiY2r/wx462vDdkxvj7sQGD0WIMsgMcpb0loR3uzVh77ug==
+X-Google-Smtp-Source: APXvYqybUgBKAFbPf+oehsO+5ro8urauS8a+6EmlOWQdkGZpkZdRCgiszjo7OFdFlUtDTHB5JvM37u+DDv89tJVxkMg=
+X-Received: by 2002:a6b:c581:: with SMTP id v123mr13626771iof.158.1565604930137;
+ Mon, 12 Aug 2019 03:15:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <nycvar.QRO.7.76.6.1908092325480.46@tvgsbejvaqbjf.bet>
- <20190810030315.7519-1-carenas@gmail.com> <f78b57a6-9ede-c87c-fc42-292851d79fad@web.de>
- <CAPUEspjtZhhynEmJu_weROaao=1zL+De1h50R-grG36ok+EAyw@mail.gmail.com> <501f946a-1f18-7c6a-2d15-8ff6375c4192@web.de>
-In-Reply-To: <501f946a-1f18-7c6a-2d15-8ff6375c4192@web.de>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 12 Aug 2019 00:35:32 -0700
-Message-ID: <CAPUEspiuuCWgjuHZ7DLyH+0hXt7MqeP++xyZuB+Zd5t-H_d69Q@mail.gmail.com>
-Subject: Re: [PATCH] SQUASH
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     johannes.schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, michal.kiedrowicz@gmail.com
+References: <robbat2-20190806T191156-796782357Z@orbis-terrarum.net> <20190808104212.GA14189@sigill.intra.peff.net>
+In-Reply-To: <20190808104212.GA14189@sigill.intra.peff.net>
+From:   Jacob Vosmaer <jacob@gitlab.com>
+Date:   Mon, 12 Aug 2019 12:15:19 +0200
+Message-ID: <CADMWQoP3tH7-e+3FCYkB7b7nf8v-HBQ1toDoje8G_hvD_LaDZw@mail.gmail.com>
+Subject: Re: Feature-request: git-bundle --quiet
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 10, 2019 at 12:48 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> > On Sat, Aug 10, 2019 at 12:57 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
-> >
-> > Do you mind then if I "adopt" your patch and submit a reroll with it,
+This is a tangent, but relevant: how do we feel about the fact that
+'git bundle create' does not perform CRC32 checks when copying data
+out of an existing packfile?
+
+See https://github.com/git/git/blob/v2.22.0/builtin/pack-objects.c#L2614-L2622 .
+
+I understand the rationale of "skip CRC32 when serving a fetch",
+although I have no clue how much we gain from skipping it. But "pack
+to stdout means fetch" isn't quite accurate, as it includes bundles.
+
+Best regards,
+
+Jacob Vosmaer
+GitLab, Inc.
+
+Best regards,
+
+Jacob Vosmaer
+GitLab, Inc.
+
+
+On Thu, Aug 8, 2019 at 12:42 PM Jeff King <peff@peff.net> wrote:
 >
-> I don't mind, sounds good.
-
-I had to squash another fix that was reported[1] before but wasn't picked u=
-p
-and that ironically might explain the last segfaults from my old V4
-
-Carlo
-
-[1] https://public-inbox.org/git/20190721194052.15440-1-carenas@gmail.com/
+> On Tue, Aug 06, 2019 at 07:19:11PM +0000, Robin H. Johnson wrote:
+>
+> > I started trying to make a stab at implementing this, but the code
+> > wasn't standing out for it. Hopefully somebody else has poked at it
+> > before:
+> >
+> > I'd like to have a --quiet option for git-bundle, such that only errors
+> > are sent to stderr, and not the packing progress.
+>
+> This seems like a reasonable thing to want.
+>
+> It looks like you'd have to teach cmd_bundle() to use parse_options(),
+> parse a quiet flag, and then pas that down to create_bundle(). Then it
+> would pass it along to write_pack_data(), which would decide whether to
+> pass "-q".
+>
+> That would allow:
+>
+>   git bundle --quiet create foo.bundle ...
+>
+> -Peff
