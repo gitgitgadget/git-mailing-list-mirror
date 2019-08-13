@@ -2,95 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D37CD1F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 12:33:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85D561F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 12:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727665AbfHMMdN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 08:33:13 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:41435 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727311AbfHMMdN (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Aug 2019 08:33:13 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.west.internal (Postfix) with ESMTP id 440773B5;
-        Tue, 13 Aug 2019 08:33:12 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
-  by compute2.internal (MEProxy); Tue, 13 Aug 2019 08:33:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-        mime-version:message-id:in-reply-to:references:date:from:to:cc
-        :subject:content-type; s=fm3; bh=zt3zS/AOAgS6KeB0Z5bCjPRI9HrwnLd
-        1psa598YvDIg=; b=iSmHu5EvSiIZkM+iD8/3c7NYT/OtbiJdgFgyqU9RWHjIDB5
-        VMraNUYBPRYrLOTlvbr9DDyqSP0KaaN+jriR+733FnsbeJrregbsqijHWf/lYJtj
-        OVDiMJxK8A+vZxFR9m9XK9EOUKXLEP4tJnAKQgeqTLnXCkbHfPgGAlBQNLCldnsr
-        WvL/n0Oo7UyDQ7Jj+Qvflk1PINDfrb0O2p2Tzxnvw0f4F2d+XKSNJZF4XB0KeOdR
-        wGdbqYXWJtTO4TnOTN50mHoigvkgaiOjEu++xMX8Gd2o2dvDDTqy4jYcmFaqnTfi
-        evitLTQfHOuyuEgqvCewNywRS4y9DN/2eWHULBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=zt3zS/
-        AOAgS6KeB0Z5bCjPRI9HrwnLd1psa598YvDIg=; b=pRhe2ewAL/2hw9JOXe/P44
-        wRd+P0NlQxWvGzX27kL4VZVasGcxgqn5hifOyF1LAFr+napgIgXXheYzD23LaoVi
-        GWRgHKh205EwqORJYkeF07tBXFHmTAJPSSjqP65rQpfW4Qqcds/7anwEhpXkYkVn
-        lxIn6mfiZQjNcSxsV8DtugoOHxPj7s0M0jkA/4hs4zys51RNCiBjpms0jOL2hunG
-        nqL+6Rov2yWJKC44LuQ1yZb9to+RpgaypCHlFD6hcMWfjbUQnIs+OhC9wDtIFjir
-        0bQdn8BnCPaL0kuF4Ps5GJgmsKnjyM8AmSLTICIP/dPBWmbsDhQMkeYAL/ne03ZA
-        ==
-X-ME-Sender: <xms:B65SXR-10lKeW3MB--aM9HXk993mF2Ha_4NGTXXezxT2rccYBOJlvQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddruddviedggeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
-    ertderredtnecuhfhrohhmpehnrghnrgihrgcuoegvughhohesfhgrshhtmhgrihhlrdgt
-    ohhmqeenucfrrghrrghmpehmrghilhhfrhhomhepvgguhhhosehfrghsthhmrghilhdrtg
-    homhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:B65SXRYLn1eUo9wyLgFk-jPI7UFI9HgoOuykMykQvul-yORccez8xw>
-    <xmx:B65SXaphYYNEcy0Exqk8ETmTDHFrzwY5CHFWv0Be0KO_qyJw2C--Yg>
-    <xmx:B65SXRmwUdKkSj6CcxunpqmP52gVfMeapNNU5bsg6JiVt9mxkq9RuA>
-    <xmx:B65SXYA1mHDahVp8PIL30wQwk4U_glGujnx2DGTs4kWo1evvFMmJiA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 7000EE00A2; Tue, 13 Aug 2019 08:33:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-868-g07f9431-fmstable-20190813v2
-Mime-Version: 1.0
-Message-Id: <11796f65-42ec-4a0b-b1b1-a693f8eb3cf9@www.fastmail.com>
-In-Reply-To: <20190813121733.GA10787@sigill.intra.peff.net>
-References: <35477812-7889-4f32-85ac-d3da4e7ff902@www.fastmail.com>
- <20190813121733.GA10787@sigill.intra.peff.net>
-Date:   Tue, 13 Aug 2019 21:33:08 +0900
-From:   nanaya <edho@fastmail.com>
-To:     "Jeff King" <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: git grep -F (fixed string) requires matching parenthesis?
-Content-Type: text/plain
+        id S1728477AbfHMMp5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 08:45:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57514 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728406AbfHMMp5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Aug 2019 08:45:57 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:81dd:eb9b:e758:604b])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 88ABF60737;
+        Tue, 13 Aug 2019 12:45:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1565700354;
+        bh=4BJmUlH4QpJycCuQyRLw9IQx+dnp07/Vxk6KkzrU+BI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=j+/v8TocahR7Wlwe0sEeO0BQdGWgoQwYYanai1h3Gd+lonn2QYT6kE9s4TN651/Ei
+         CTfrt5gHt2Xx8gAQDX1X/JhNg3tixH/FP8cdgMYp0H/IW/sD+QMmwVf8aYTjA7NGWb
+         QEVqEZw0sA55jWjK1CHNqs4jLT3WzO77O4bf5fywNzLlQGmAmmG95kcNsG+EpJh+He
+         wIpsTiphS4Szrni3ypakyCHEuN85WapSKZ1AmdoZ5SbiZeepglVlb2xfJ3UmZdXUiv
+         sAUv8UEylN/8KlNqIVmlyHKyx98VMcWFIhO99Qlx7hSTkM6TD592hCdnuG3CxLV32i
+         RdUptrVL1kHsEIVS4x5JBD75HDbPRPbDFLNRpEhuaYeCV2bSMUlAzrYYKyGZJplXHr
+         fo5QhbMkwJKxkkelZNcpjfcptr1XR4LbLjK5V9FbHIDsBXJ0PAFE+6cwEaersvTYyj
+         u6Db6NZvV2KVURrtgqWse8Ski/2kjkpzIIKUnv/99/0lyNG1ewY
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/2] Honor .gitattributes with rebase --am
+Date:   Tue, 13 Aug 2019 02:43:05 +0000
+Message-Id: <20190813024307.705016-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
+In-Reply-To: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series makes rebase --am honor the .gitattributes file for
+subsequent patches when a patch changes it.
 
+Changes from v2:
+* Rename has_path_suffix to ends_with_path_components.
 
-On Tue, Aug 13, 2019, at 21:17, Jeff King wrote:
-> But I think it's actually happening at a level above that. git-grep
-> supports multiple patterns, which can be joined with --and, --or, --not,
-> etc. And they can be grouped with parentheses.
-> 
-> What you're seeing is the argument parser thinking your '(' is part of
-> the construction of a boolean match formula, and complaining about the
-> lack of closing ')'. You can use "-e" to make it clear that it's a
-> pattern (just as you'd need to for a pattern that starts with "-"):
-> 
->   git grep -F -e '('
-> 
-> So I think everything is working as designed, though I admit the
-> implication was slightly surprising to me (and note that it only happens
-> with that _specific_ pattern; something like "(foo" would not be matched
-> by the option parser).
-> 
+Changes from v1:
+* Add has_path_suffix in a separate commit.
 
-Thanks. That was confusing (and the error message didn't help). I've always assumed the grep is similar to posix grep so it was weird the same syntax work for fgrep but not git-grep -F.
+brian m. carlson (2):
+  path: add a function to check for path suffix
+  apply: reload .gitattributes after patching it
+
+ apply.c           |  7 +++++++
+ convert.c         |  9 ++++++++-
+ convert.h         |  6 ++++++
+ path.c            | 39 ++++++++++++++++++++++++++++++---------
+ path.h            |  3 +++
+ t/t3400-rebase.sh | 23 +++++++++++++++++++++++
+ 6 files changed, 77 insertions(+), 10 deletions(-)
+
+Range-diff against v2:
+1:  125fda966c ! 1:  14c853420b path: add a function to check for path suffix
+    @@ Commit message
+         have one to check for a path suffix. For a plain filename, we can use
+         basename, but that requires an allocation, since POSIX allows it to
+         modify its argument. Refactor strip_path_suffix into a helper function
+    -    and a new function, has_path_suffix to meet this need.
+    +    and a new function, ends_with_path_components, to meet this need.
+     
+         Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+     
+    @@ path.c: static inline int chomp_trailing_dir_sep(const char *path, int len)
+     +}
+     +
+     +/*
+    -+ * Returns true if the path ends with suffix, considering only complete path
+    -+ * components and false otherwise.
+    ++ * Returns true if the path ends with components, considering only complete path
+    ++ * components, and false otherwise.
+     + */
+    -+int has_path_suffix(const char *path, const char *suffix)
+    ++int ends_with_path_components(const char *path, const char *components)
+     +{
+    -+	return stripped_path_suffix_offset(path, suffix) != -1;
+    ++	return stripped_path_suffix_offset(path, components) != -1;
+     +}
+     +
+      /*
+    @@ path.h: const char *git_path_merge_head(struct repository *r);
+      const char *git_path_shallow(struct repository *r);
+      
+     +
+    -+int has_path_suffix(const char *path, const char *suffix);
+    ++int ends_with_path_components(const char *path, const char *components);
+     +
+      #endif /* PATH_H */
+2:  f54af7e595 ! 2:  5f4402b38d apply: reload .gitattributes after patching it
+    @@ apply.c: static int apply_patch(struct apply_state *state,
+      			listp = &patch->next;
+     +
+     +			if (!flush_attributes && patch->new_name &&
+    -+			    has_path_suffix(patch->new_name, GITATTRIBUTES_FILE))
+    ++			    ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE))
+     +				flush_attributes = 1;
+      		}
+      		else {
