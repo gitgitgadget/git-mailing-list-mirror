@@ -2,82 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC5501F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 18:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB5E91F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 19:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726231AbfHMSwx convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 13 Aug 2019 14:52:53 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34240 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbfHMSwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 14:52:53 -0400
-Received: by mail-wm1-f65.google.com with SMTP id e8so1671709wme.1
-        for <git@vger.kernel.org>; Tue, 13 Aug 2019 11:52:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gXds0uVLlXeJYc5bRR1M4tCRxEJbEj4Tzvo+9HE6bPc=;
-        b=EmfVaQMQjECCtsuenRS+LVhn+MEIQ2J1cXU0IF3tdnUzcuBSSakIuNL5HpAHpeJswF
-         N2eK8XhSebbjZ/6dtM8a3Fbdkkg4tOv1q4s8hrAGxkj/QPrT8RfVXM7gAupWHpNKMrqY
-         57a7aExJSL6OAL+cQXHShJGVCWIcJSxQH7jvz6nrlvWH+VL2dQHPMlxLJD/HLWqYPOxi
-         roW1yaUmRjqkuILZC8EfdOmexw2/hDlN+hZVXOqbd/WiJ90/+DjO9x2jarGZa1ApS2pE
-         BEi8abw3BJHWun1YuC7dj3jN0VyOH9WcjI28xFb9c1sWU2TO42MsEDJ5hjeGrYaaQdVJ
-         2ohw==
-X-Gm-Message-State: APjAAAVXxfANPlf6w/uFNIwVfrIwAzlfrASbYtQNj4BkW3RTPpJ4BbE3
-        ohmZh/MQzK7J8RvLzLaSC2ohU2dQ7cDI+dq9O/A=
-X-Google-Smtp-Source: APXvYqzkpb0+DeGdrD3gY+X5tpXU3WQ/Fq1mHV4YBum40rw76vx7gxZP6OPHX6vRn/cSVBu9TvGoKYd1/018ll9nQAs=
-X-Received: by 2002:a1c:4b15:: with SMTP id y21mr256793wma.53.1565722371491;
- Tue, 13 Aug 2019 11:52:51 -0700 (PDT)
+        id S1726298AbfHMTNT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 15:13:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52184 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726007AbfHMTNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 15:13:18 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BBCFE8862A;
+        Tue, 13 Aug 2019 15:13:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=k0ppOUn819H8NEoneKBT6RUxn4Q=; b=cxH4kD
+        ljl8Ly+cFBvmdL8fQ/e1J6kplM/uf81k0v1TMWNbAnwr/ByVbcGT1/SIq6c/jR1F
+        AGqi4sf6paE8Q/WRqrykxClEqYcAOfGaOlU20Hgrg8IFwTH+GzoTvPBDQZsIA5Rt
+        4ArMTinR4bDPD82oZvFwzZ3eqhMG8iPe451UI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E3DdB0Cw6XtoY71IYYOdMtkbhpfqcwJc
+        gH3h4D7LvVjt10MU+ECxatl//e4fmxFI2gY/Oh6yMhc3EziiB4GJ2jvBDkJmA0Ip
+        BGQKTkArz/RNfubHT4ciHkFZIY6Xs9p1ohB+bO54dLi0GmrW+i4/ttCG5YFsnj5I
+        01kEHTQ4Xp8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B415988629;
+        Tue, 13 Aug 2019 15:13:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AAF6688628;
+        Tue, 13 Aug 2019 15:13:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Gregory Szorc <gregory.szorc@gmail.com>, git@vger.kernel.org
+Subject: Re: Non-robust lock files in containers can lead to repo corruption
+References: <qimq0i$49gn$1@blaine.gmane.org>
+        <20190812163812.GB26231@sigill.intra.peff.net>
+Date:   Tue, 13 Aug 2019 12:13:11 -0700
+In-Reply-To: <20190812163812.GB26231@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 12 Aug 2019 12:38:13 -0400")
+Message-ID: <xmqq36i498vs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190813180244.28641-1-szeder.dev@gmail.com>
-In-Reply-To: <20190813180244.28641-1-szeder.dev@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 13 Aug 2019 14:52:39 -0400
-Message-ID: <CAPig+cSDxBFhnJSmH+WzNZBjY4O0OczazZ7EOqn1P=zgL+ec4g@mail.gmail.com>
-Subject: Re: [PATCH] worktree remove: clarify error message on dirty worktree
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 65B4223A-BDFE-11E9-B9FA-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 2:04 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> To avoid data loss, 'git worktree remove' refuses to delete a worktree
-> if it's dirty or contains untracked files.  However, the error message
-> only mentions that the worktree "is dirty", even if the worktree in
-> question is in fact clean, but contains untracked files:
-> [...]
-> Clarify this error message to say that the worktree "contains modified
-> or untracked files".
+Jeff King <peff@peff.net> writes:
+
+> I don't think there are. Most of Git's locks are predicated purely on
+> the existence of the lockfile (with the intent that they'd work over
+> systems like NFS). The gc lock is a weird one-off.
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -880,7 +880,7 @@ static void check_clean_worktree(struct worktree *wt,
->         ret = xread(cp.out, buf, sizeof(buf));
->         if (ret)
-> -               die(_("'%s' is dirty, use --force to delete it"),
-> +               die(_("'%s' contains modified or untracked files, use --force to delete it"),
->                     original_path);
+> And while it's not great for multiple gc's to run at the same time
+> (because it wastes CPU), two of them running at the same time shouldn't
+> cause a corruption. If you have a reproducible demonstration where that
+> happens, I'd be very interested to see it.
 
-Makes sense. This is a different type of "dirtiness" than, say, "git
-rebase --interactive" which cares about unstaged changes but generally
-doesn't mind untracked files. So, it deserves an error message which
-mentions untracked files explicitly.
+Good point.
 
-We could actually parse the output of "git status --porcelain" (which
-is invoked just above this spot) and provide a more specific error
-message ("...contains modified files" or "...contains untracked
-files") but that's probably not worth the effort.
+And come to think of it, gc "lock" does not have to be a lock to
+begin with.  It is not "I am forbidding all of you guys from doing
+gc, because that would break the result of gc _I_ am doing right
+now", which is what we traditionally call "lock".  It is merely a
+"We need to do this every once in a while and I am doing it now.  I
+let others know that I am already doing so, so they do not have to
+start the same thing right now" advisory.
 
-Anyhow, for what it's worth:
-Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+And the code (i.e. lock_repo_for_gc()) allows the current process to
+run when
+
+ - "--force" option is given, or
+ - the lockfile cannot be open()ed, or
+ - the lockfile cannot be fstat()ed, or
+ - the lockfile is older than 12 hours, or
+ - the lockfile has malformed contents, or
+ - the lockfile was taken on a host with the same name from ours,
+   and a process with the same pid as recorded is not running.
+
+Following the """12 hour limit is very generous as gc should never
+take that long. On the other hand we don't really need a strict
+limit here, running gc --auto one day late is not a big
+problem. --force can be used in manual gc after the user verifies
+that no gc is running.""" reasoning, I suspect that it shouldn't be
+too bad even if we dropped the last condition (i.e. "is the process
+still running?")  from the set of these conditions.
