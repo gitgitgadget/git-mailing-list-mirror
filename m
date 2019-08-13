@@ -2,80 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E991C1F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 15:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C6871F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 15:44:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730104AbfHMPmk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 11:42:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41970 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727697AbfHMPmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 11:42:40 -0400
-Received: (qmail 4458 invoked by uid 109); 13 Aug 2019 15:42:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 13 Aug 2019 15:42:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1393 invoked by uid 111); 13 Aug 2019 15:45:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Aug 2019 11:45:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 13 Aug 2019 11:42:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to reset selected lines?
-Message-ID: <20190813154239.GA22514@sigill.intra.peff.net>
-References: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
+        id S1727854AbfHMPoY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 11:44:24 -0400
+Received: from ltwemail.bankofamerica.com ([171.161.41.178]:40317 "EHLO
+        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727036AbfHMPoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 11:44:24 -0400
+Received: from lltwa05lxepmx01.bankofamerica.com ([171.180.36.243])
+        by lltwa05ixepmx04.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7DFiKPY029496;
+        Tue, 13 Aug 2019 15:44:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
+        s=corp1903; t=1565711060;
+        bh=LizuYNSbTgBJn0NZnLy4yntxLjHB/QpLJfeuih9qv9M=;
+        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
+         Content-type:Content-transfer-encoding:References;
+        b=XMi4oPFzJn9mqEaUbWqxJBowGB0bO49EntkWWDjHOoU0G2MLBVUzXYoREmuZr1xDs
+         XQq47btj9oh9KLXfPjYVLK1GGrVUhQjGIRv+W5rlGN9McDQCqSM39znMlo5xsjD324
+         /zhFAE/yd4KT1Hg+PWvDlJUsZcc9LO/ZSNnJAmuU=
+Received: from lltwa05bxepmx12.bankofamerica.com (lltwa05bxepmx12.bankofamerica.com [171.206.12.27])
+        by lltwa05lxepmx01.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7DFiGUj009063;
+        Tue, 13 Aug 2019 15:44:19 GMT
+Date:   Tue, 13 Aug 2019 15:44:16 +0000
+From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
+Subject: RE: suggestion for improved docs on autocrlf
+In-reply-to: <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4>
+X-Originating-IP: [30.245.13.45]
+To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+Message-id: <d4a0500d5f5e4706aef481a33096465a@bofa.com>
+MIME-version: 1.0
+Content-type: text/plain; CHARSET=US-ASCII
+Content-language: en-US
+Content-transfer-encoding: 7BIT
+X-MS-Has-Attach: 
+Accept-Language: en-US
+Thread-topic: suggestion for improved docs on autocrlf
+Thread-index: AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQgANNx4CAADsrQP//18WAABMUKAD//38MoP/+sX+A//2l2mA=
+X-MS-TNEF-Correlator: 
+References: <577a66e0c26545aaa4795de3c5189c9d@bofa.com> <20190809033406.5t5ag3qmh36ideec@tb-raspi4>
+ <0c1b48c9fad641689ead69fdd9f72d63@bofa.com> <20190811121004.guygurnopwwggvsp@tb-raspi4>
+ <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com> <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
+ <aae529ce1b084b7bbcca3977e6909417@bofa.com> <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
+ <20190813032452.qg2ufgljm4bjeznr@tb-raspi4> <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
+ <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-13_05:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 07:48:16PM +0530, Pratyush Yadav wrote:
+> Would you like to elobarate which IDE that is?
+IntelliJ from JetBrains.  I'm planning on emailing them to at least mention this somewhere in their own docs, because I think it's not there.
 
-> To put things into context of why I am asking this, git-gui has a 
-> feature where you can select parts of a displayed diff, and can 
-> stage/unstage those parts. That feature is implemented in git-gui by 
-> just generating a diff from the selected lines, and then applying it. 
-> Check git-gui/lib/diff.tcl:643 for the implementation.
-> 
-> Now, I want to add a similar feature, but one that discards/resets the 
-> selected lines. And I'd like to avoid the hack that git-gui's 
-> apply_range_or_line is. So, is there a cleaner way to do this that does 
-> not involve generating a diff and then applying it?
+Will attempt revised wording soon-ish, but not promising today.
 
-To answer your second question first:
-
-Git's index and trees only understand whole files, so at some point you
-must generate the final file content. A diff is an easy way to represent
-the changes, apply them to the existing state, and then get that final
-content. But it doesn't _have_ to be. You could make some modifications
-to what is in the working tree and then say "OK, now stage this.".
-
-BUT. That is probably not what the user wants, if the content in the
-index actually has some modifications that are not in the working tree
-(i.e., you wouldn't want to overwrite them). Hence we tend to work with
-diffs, saying "make these changes to what is already in the index, and
-if they conflict, then bail".
-
-So "git add -p", for example, also works by creating diffs, modifying
-them, and feeding the result to "apply". You can see the implementation
-in git-add--interactive.perl, where it literally calls diff and apply
-commands.
-
-And that leads us to the answer to the first question. That script
-implements "add -p", but also "checkout -p" (which is what you want),
-"reset -p", "stash -p", etc. They differ only in what we diff and how we
-apply the result; the main engine of slicing and dicing the diff through
-user interaction is the same. See the %patch_modes hash for the list.
-
--Peff
+----------------------------------------------------------------------
+This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
