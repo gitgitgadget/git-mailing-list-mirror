@@ -7,80 +7,73 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16C661F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 16:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B76B1F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 16:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727441AbfHMQkm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 12:40:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62118 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726808AbfHMQkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 12:40:41 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB9F471698;
-        Tue, 13 Aug 2019 12:40:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1727581AbfHMQlD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 12:41:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59302 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbfHMQlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 12:41:03 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D272115A1F3;
+        Tue, 13 Aug 2019 12:41:00 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MVBLJBruFA/N
-        XbbC6Lj3COfwDDo=; b=qjENfI/snKrjUogmrfm1swgwG7BduTSxy5KQ29yAw6yc
-        uKw1BABwblcOXLodXhQMWCBOtLxLWI7MNCRi+5aqJ/YfNRgE36eebW7gzG+uPiRW
-        kr9yt5hcwHVmu5DpNUulhQ3xYMV1KvU1jo4cmOQSIUhchqO/DqghBKi3ZtMm0CA=
+        :content-type; s=sasl; bh=MaZzx88xqk3/0jEQyLzJhO04pVQ=; b=B+yWLo
+        9HRyI0KKwX4VkZRIa0mq3E088hohxN2sBQL3QB7N8C2SFH19KTq0Al5xlFfuUHOG
+        Ghf5a6Edwh1cp8+01wTxy7VxEKLndbNg6L8teFIyk1B1zi3AqDt0G3p+sZNpT+rN
+        H9jAlMk4riiIvr0agqk6EyQ0+qqKvtW6ziti8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MJo8QI
-        UdtPk9A438qTCxLHxScYMSfjq55lkjSN/M6nA8BW+f6s58wrgd3SRcH0bK3k82F3
-        TE5qlPCYTVh7HQkCCSrYjbl0KlWSnL/dk0F3LbZhs3J1MPEdQiLA/HSDbFvVW4qj
-        j81Vjm3ESgVUj+IYid5Ld6vvP5/wQI1cv4oJ0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3A4C71697;
-        Tue, 13 Aug 2019 12:40:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=phFWmZIDGlHiiK75WFDC5QLfkbsEBX9/
+        xq1rHCImaH4648ZJ1rQrs3N0NMtPpcQvZ447OpZcPQ7BD5HqDsLSdezGNY3H4Czj
+        gpqFbo4lA5nKKj09nS/YK5nibY3sKeL0HNWvUP/zwLlAcVAnhleo3EExXrgZbsmG
+        LKHbmcY4wGw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B563615A1F2;
+        Tue, 13 Aug 2019 12:41:00 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E5CA771696;
-        Tue, 13 Aug 2019 12:40:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB4A915A1F1;
+        Tue, 13 Aug 2019 12:40:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     "Yagnatinsky\, Mark" <mark.yagnatinsky@bofa.com>,
-        "'git\@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: suggestion for improved docs on autocrlf
-References: <577a66e0c26545aaa4795de3c5189c9d@bofa.com>
-        <20190809033406.5t5ag3qmh36ideec@tb-raspi4>
-        <0c1b48c9fad641689ead69fdd9f72d63@bofa.com>
-        <20190811121004.guygurnopwwggvsp@tb-raspi4>
-        <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com>
-        <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
-        <aae529ce1b084b7bbcca3977e6909417@bofa.com>
-        <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
-        <20190813032452.qg2ufgljm4bjeznr@tb-raspi4>
-        <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
-        <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4>
-Date:   Tue, 13 Aug 2019 09:40:34 -0700
-In-Reply-To: <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 13 Aug 2019 17:40:33
- +0200")
-Message-ID: <xmqq8srx9fy5.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] path: add a function to check for path suffix
+References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+        <20190811174748.33552-1-sandals@crustytoothpaste.net>
+        <20190811174748.33552-2-sandals@crustytoothpaste.net>
+        <xmqq1rxrcjfp.fsf@gitster-ct.c.googlers.com>
+        <20190812011054.GA9180@genre.crustytoothpaste.net>
+        <xmqq7e7iba7j.fsf@gitster-ct.c.googlers.com>
+        <20190812224021.GA229582@genre.crustytoothpaste.net>
+Date:   Tue, 13 Aug 2019 09:40:58 -0700
+In-Reply-To: <20190812224021.GA229582@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 12 Aug 2019 22:40:21 +0000")
+Message-ID: <xmqq4l2l9fxh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 13D929AC-BDE9-11E9-BB81-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2192B90A-BDE9-11E9-945A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> Sigh.  Okay, great, life makes sense again.  I want to yell at my
->> IDE now.
->>
->> I now feel brave enough to attempt to come up with better wording
->> for autocrlf docs, if you think that's worth trying.
+> Well, I split it out from a function that handles multiple path
+> components, mostly so that I could leverage existing work (and not have
+> to worry about getting it wrong). It wasn't explicitly intended that it
+> support multiple components, since I don't require that for my
+> implementation, but I could see future users taking advantage of that.
 >
-> That would be good, I am happy to review patches.
+> I think "ends_with_path_components" might be the way forward, unless
+> you think something else would be better.
 
-Good.  Thanks for a good discussion.
+Good; thanks.
