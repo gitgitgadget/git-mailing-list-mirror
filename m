@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCCD81F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 12:27:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 872F51F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 12:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727805AbfHMM1M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 08:27:12 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:42891 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727441AbfHMM1L (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727936AbfHMM1O (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 08:27:14 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:56294 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726927AbfHMM1L (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Aug 2019 08:27:11 -0400
-Received: by mail-wr1-f42.google.com with SMTP id b16so10862399wrq.9
+Received: by mail-wm1-f66.google.com with SMTP id f72so1320431wmf.5
         for <git@vger.kernel.org>; Tue, 13 Aug 2019 05:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Rpg6miNQgY/QZ2BwmfrL7B5ff9+w0baFgPS1fYfNOqU=;
-        b=EzqAndQdl7RwVN/jidX5/c3sZaLTblx4fGu7G/+7DRuK3KJcKTg0mt/UKl/5UqW8O9
-         arfwxcAk/MtQfgUpytMAZ6fTAZPe0HJugyEEmVMERqPiwcI0Fq/g/WIe5R9rA5QhtgEH
-         P+7Krbc7m+IYId9aDbOMJ65JN0c/giALc7yr3W544Cx9ytBUl+dAO/zFKc/FCQthms3f
-         Z2TSDIkqzJsno6U/lQ7FpZbTkPDn2rtPzO+vjY1wzzQVdZu5fckjTKiUIfN2rQmUidKW
-         D7vhLSgg78hUj8pUzglqOn3m0yz13GclZPXS2ZZursjT0JUqDsw8dAHRYCBUaV8UU805
-         bA/A==
+        bh=qEEc/uPwXOZ/C7M3KgAp6PY7nx3k9Bx5aSlvMLcRh8o=;
+        b=Junvw+256qA7JtaiPNLz8qmIYV9BdIa93YdrCqJL+9oCuSHKNbRdPON/oKff9698qk
+         rEj3KBkTnfJG1M5XhLv/HrUJ6N447LH2mp6IMD8m+q146nXGVybr6P8WqmMHnCXFqSMU
+         NxSijySb1+LWoQnaHplQXWN7fE9aClXIThJNk5qtgViQ58xUyZRuzSIQROMl6nLqkgBn
+         7NgoYLHpK6OZVgoVBfa/kJXo4QMMo6T+gc2kpLI9U/JB6hp49jz2TXCpUNDemnvfWOi3
+         Hdc40SJoq6nmmO52z9RR0Ve49V3Bf3Fm51dk+au4FpBnkdsWGPm7WhY2iePnZomC0Ne2
+         gKMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Rpg6miNQgY/QZ2BwmfrL7B5ff9+w0baFgPS1fYfNOqU=;
-        b=X591g2YUrpsBF3ensaa1VIw3yorIz0q1na35OPERB/oGthQijCTvvlPrdpg5pUMxMQ
-         BIA52eR50toV/M0Y7s5LoI11NOzB0kxMTNpJjCfwvbHX2kRNOXHdh8EqMxcAU10Ptbi0
-         49n3MaYREngORgbl8zO0H6PFsvSv8WWZPGeYEOjD0V64frYh+Aac9X5IQIBouJO32bos
-         oI5fnNKWMOtM/0k0lbmBks7xdGrQ3Bho8c0Jwc3PkVlKHARFfZWa1/5uuMozSrp7E4/z
-         YAtVS4CkL/1nK5oNtr/yhVTdfidhXacmZnCPLTNqJKatC2V7zMhe7ztCvV8UghMAnPy6
-         jgYQ==
-X-Gm-Message-State: APjAAAUwB0hVaOkbELYP7L9g4W4k0kZR/osPISvLTG+tWCSqu0MQRfO+
-        FwqZPol/8q3B8plLA+KaRMY=
-X-Google-Smtp-Source: APXvYqw3S0fSB0VfaD3cwAJl3h263j6UkGvzfJujNONYtOp21U4dw25em64qJSsHeYcVKgec5jEtlg==
-X-Received: by 2002:a5d:460e:: with SMTP id t14mr23402220wrq.171.1565699227407;
-        Tue, 13 Aug 2019 05:27:07 -0700 (PDT)
+        bh=qEEc/uPwXOZ/C7M3KgAp6PY7nx3k9Bx5aSlvMLcRh8o=;
+        b=WDfCN09kLpDetOp1av8jwnirF/kqIGNEAUPHlHz8OwKzz9FVXgMRl/3UvJiMv+ZCFD
+         MpDVmSSbBScV064wFDf+ZeQpv3hJMHMUqB7sCeQ/R8sLXg9NPddcd8ocp+FvGCA3i8js
+         pWeakFUyus3VWG3LyD3WSNm9m7RBFCGARwyuv6LLOWxXep8WjlVeIYvtS1e4f0cS+5eT
+         6fR3HJLuqOFemRo+mvr7YRlrxSZSu5+62eDZtExE5yEemQoyvl7SPe79SICdMqhhdmi+
+         laPO2tEb0YqZDP0f+rKmdenlf7IM/CdXBzg9I8NTADjrLgmb/PSzyqaEbnkdOdCfPWEQ
+         wHEA==
+X-Gm-Message-State: APjAAAVQj2yYDB6IYd6xMoTNs47LGNbtamnptdf9mdL+HBY6/pCKw0Gc
+        XUhr8iNIAazurGP5kafKDBXTGBuV
+X-Google-Smtp-Source: APXvYqwUJSBnFlVhKHyNbDXpBD5gv+wuUsmOGuep7P4BOLw8NafVcUAD2GL1vneyy8LujoiQFiHb4w==
+X-Received: by 2002:a1c:1bd7:: with SMTP id b206mr2797481wmb.85.1565699229534;
+        Tue, 13 Aug 2019 05:27:09 -0700 (PDT)
 Received: from localhost.localdomain (x4db44abf.dyn.telefonica.de. [77.180.74.191])
-        by smtp.gmail.com with ESMTPSA id r5sm1978069wmh.35.2019.08.13.05.27.06
+        by smtp.gmail.com with ESMTPSA id r5sm1978069wmh.35.2019.08.13.05.27.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Aug 2019 05:27:06 -0700 (PDT)
+        Tue, 13 Aug 2019 05:27:08 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 03/11] completion: add tests for 'git config' completion
-Date:   Tue, 13 Aug 2019 14:26:44 +0200
-Message-Id: <20190813122652.16468-4-szeder.dev@gmail.com>
+Subject: [PATCH 05/11] completion: use 'sort -u' to deduplicate config variable names
+Date:   Tue, 13 Aug 2019 14:26:46 +0200
+Message-Id: <20190813122652.16468-6-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.350.gf4fdc32db7
 In-Reply-To: <20190813122652.16468-1-szeder.dev@gmail.com>
 References: <20190813122652.16468-1-szeder.dev@gmail.com>
@@ -68,61 +68,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The next patches will change/refactor the way we complete
-configuration variable names and values, so add a few tests to cover
-the basics, namely the completion of matching configuration sections,
-full variable names, and their values.
-
-Note that the test checking the completion of configuration sections
-is currently failing, though it's not a sign of an actual bug.  If a
-section contains multiple variables, then that section is currently
-repeated as many times as the number of variables in there.  This is
-not a correctness issue in practice, because Bash's completion
-facilities remove all repetitions anyway.  Consequently, we could list
-all those repeated sections in the expected output of this test as
-well, but then it would have to be updated whenever a new
-configuration variable is added to those sections.  Instead, list each
-matching configuration section only once, mark the test as failing for
-now, and the next patch will update the completion script to avoid
-those repetitions.
+The completion script runs the classic '| sort | uniq' pipeline to
+deduplicate the output of 'git help --config-for-completion'.  'sort
+-u' does the same, but uses one less external process and pipeline
+stage.  Not a bit win, as it's only run once as the list of supported
+configuration variables is initialized, but at least it sets a better
+example for others to follow.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t9902-completion.sh | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 75512c3403..e15be1164d 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1698,6 +1698,27 @@ do
- 	'
- done
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index f89324d84f..b51cb31ea1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2225,7 +2225,7 @@ __git_config_vars=
+ __git_compute_config_vars ()
+ {
+ 	test -n "$__git_config_vars" ||
+-	__git_config_vars="$(git help --config-for-completion | sort | uniq)"
++	__git_config_vars="$(git help --config-for-completion | sort -u)"
+ }
  
-+test_expect_failure 'git config - section' '
-+	test_completion "git config br" <<-\EOF
-+	branch.Z
-+	browser.Z
-+	EOF
-+'
-+
-+test_expect_success 'git config - variable name' '
-+	test_completion "git config log.d" <<-\EOF
-+	log.date Z
-+	log.decorate Z
-+	EOF
-+'
-+
-+test_expect_success 'git config - value' '
-+	test_completion "git config color.pager " <<-\EOF
-+	false Z
-+	true Z
-+	EOF
-+'
-+
- test_expect_success 'sourcing the completion script clears cached commands' '
- 	__git_compute_all_commands &&
- 	verbose test -n "$__git_all_commands" &&
+ _git_config ()
 -- 
 2.23.0.rc2.350.gf4fdc32db7
 
