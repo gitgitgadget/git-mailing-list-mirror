@@ -7,80 +7,120 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67A271F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 16:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDBC1F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 17:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbfHMQmi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 12:42:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60353 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726808AbfHMQmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 12:42:38 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3582E716D3;
-        Tue, 13 Aug 2019 12:42:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726477AbfHMRG5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 13:06:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53888 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726007AbfHMRG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 13:06:56 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5CEC17008F;
+        Tue, 13 Aug 2019 13:06:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nkQ/PULYuPwI
-        nY/eCigM1y1aDZg=; b=AGsy6Y/KuMsUKfX8oYQhJqdFLCcvW0/Zu0mdwMJgqdoo
-        Evgsq6GyAzz4Q1U8/fxPyJLtnP3+ukvLEYBFV/Hjn3Jbpw3j1+30WrqenAkUmdUf
-        EqZThPXQ2OCgIVBkFAWQ3BxrHTuPKVDyaTi4DK/+b5T/4cLpNcD6nUirbCFDvZg=
+        :content-type; s=sasl; bh=LOcVisGD40dqLB4+4f3W2ZfuQo4=; b=OaxpOC
+        oIxrPXXRKU4QQjFRNmB2jSXtNLD7qhVkJE99bkCXDD4UoLByVcFFciW3gksT2DSR
+        5xxAFaRdMf1un1qjzqTrdqUik/IXlWFVkvrFOuQrDTzkZOBVexGVjb6aJIfbED+n
+        ceIoP+tmFX0bIN3TrA6e6KWigyAXCDJE5CXQw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dfHXnD
-        GWVNhpqbclSm64/UiaAJZBb5Xn722VpRPf3gpSf7VQrgEi+50VrQEmNuvJOhHXfm
-        AYdGRq6DgUCHTChlYWo45H2j4FvnzVW2vaoTx9ocqHSeF58XadzcbPP5siY8BVPe
-        /51f+LCBHXFsLLIboTiunmpNTkX2L18tiFy0Y=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D7BF716D2;
-        Tue, 13 Aug 2019 12:42:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=H4xuCnHP1WTMN35Z/3KP03cEWZMj+L8C
+        gWWo02CVAsEedcOY/gnd8I6PMIB0sDkz6S4Ji8NySt19AulY/ZKZdS8/sWbSt28v
+        +UdT8KgiK825yWT7YcErBzLMog9AsDp8KyHrR6noL3xncYNKkib4XbPbG8efM2vL
+        wjpyKuwu89w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE01417008D;
+        Tue, 13 Aug 2019 13:06:54 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5CE85716D1;
-        Tue, 13 Aug 2019 12:42:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1AC1F17008C;
+        Tue, 13 Aug 2019 13:06:54 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] path: add a function to check for path suffix
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
-        <20190811174748.33552-1-sandals@crustytoothpaste.net>
-        <20190811174748.33552-2-sandals@crustytoothpaste.net>
-        <xmqq1rxrcjfp.fsf@gitster-ct.c.googlers.com>
-        <20190812011054.GA9180@genre.crustytoothpaste.net>
-        <xmqq7e7iba7j.fsf@gitster-ct.c.googlers.com>
-        <20190813063618.GO20404@szeder.dev>
-Date:   Tue, 13 Aug 2019 09:42:31 -0700
-In-Reply-To: <20190813063618.GO20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Tue, 13 Aug 2019 08:36:18 +0200")
-Message-ID: <xmqqzhkd81ag.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 3/6] rebase -i: support --committer-date-is-author-date
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190812194301.5655-1-rohit.ashiwal265@gmail.com>
+        <20190812194301.5655-4-rohit.ashiwal265@gmail.com>
+        <7274e753-f75c-ad9a-9c2c-7ba8abc32971@gmail.com>
+Date:   Tue, 13 Aug 2019 10:06:53 -0700
+In-Reply-To: <7274e753-f75c-ad9a-9c2c-7ba8abc32971@gmail.com> (Phillip Wood's
+        message of "Tue, 13 Aug 2019 11:38:57 +0100")
+Message-ID: <xmqqsgq5805u.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5940AA24-BDE9-11E9-8DEF-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: BFEA7446-BDEC-11E9-99AF-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> ...  And that function must be able to handle multiple path
-> components, becase there is this callsite:
+>>   +	if (opts->committer_date_is_author_date) {
+>> +		size_t len;
+>> +		int res = -1;
+>> +		struct strbuf datebuf = STRBUF_INIT;
+>> +		char *date = read_author_date_or_null();
 >
->   exec-cmd.c:         !(prefix =3D strip_path_suffix(executable_dirname=
-, GIT_EXEC_PATH)) &&
+> You must always check the return value of functions that might return
+> NULL. In this case we should return an error as you do in try_to
+> _commit() later
 >
-> and the build sets '-DGIT_EXEC_PATH=3D"libexec/git-core"' by default.
+>> +
+>> +		strbuf_addf(&datebuf, "@%s", date);
+>
+> GNU printf() will add something like '(null)' to the buffer if you
+> pass a NULL pointer so I don't think we can be sure that this will not
+> increase the length of the buffer if date is NULL.
 
-OK, that answers my earlier question.  We do want to support such a
-caller with one or more components at the end.
+And an implementation that is not as lenient may outright segfault.
 
-Thanks.
+>>   +	if (opts->committer_date_is_author_date) {
+>> +		int len = strlen(author);
+>> +		struct ident_split ident;
+>> +		struct strbuf date = STRBUF_INIT;
+>> +
+>> +		split_ident_line(&ident, author, len);
+>> +
+>> +		if (!ident.date_begin)
+>> +			return error(_("corrupted author without date information"));
+>
+> We return an error if we cannot get the date - this is exactly what we
+> should be doing above. It is also great to see a single version of
+> this being used whether or not we are amending.
+>
+>> +
+>> +		strbuf_addf(&date, "@%s",ident.date_begin);
+>
+> I think we should use %s.* and ident.date_end to be sure we getting
+> what we want. Your version is OK if the author is formatted correctly
+> but I'm uneasy about relying on that when we can get the verified end
+> from ident.
+
+If the author line is not formatted correctly, split_ident_line()
+would notice and return NULL in these fields, I think (in other
+words, my take on the call to split_ident_line() above is not
+necessarily done in order to "split", but primarily to validate that
+the line is formatted correctly---and find the beginning of the
+timestamp field).
+
+But your "pay attention to date_end" raises an interesting point.
+
+The string that follows ident.date_begin would be a large integer
+(i.e. number of seconds since epoch), a SP, a positive or negative
+sign (i.e. east or west of GMT), 4 digits (i.e. timezone offset), so
+if you want to leave something like "@1544328981" in the buffer, you
+need to stop at .date_end to omit the timezone information.
+
+On the other hand, if you do want the timezone information as well
+(which I think is the case for this codepath), you should not stop
+at there and have something like "@1544328981 +0900", the code as
+written would give better result.
