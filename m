@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39DFD1F45A
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B76D1F45A
 	for <e@80x24.org>; Tue, 13 Aug 2019 18:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbfHMShs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 14:37:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37717 "EHLO
+        id S1728469AbfHMSht (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 14:37:49 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37720 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727715AbfHMShr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 14:37:47 -0400
-Received: by mail-wr1-f65.google.com with SMTP id z11so6753893wrt.4
-        for <git@vger.kernel.org>; Tue, 13 Aug 2019 11:37:45 -0700 (PDT)
+        with ESMTP id S1728430AbfHMShs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 14:37:48 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z11so6753989wrt.4
+        for <git@vger.kernel.org>; Tue, 13 Aug 2019 11:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wGUPtn7O4cX2W3mFKqmn71UJtI4pKm7jAenzK2Fi2L8=;
-        b=gjvKc9nZfZ/792NQxpqGnLiJqQD611uD+ORTyxYhUkCBTir8k9p+eonvuK1s02v5yO
-         gafGCa9kBPZiyQ1zoO3Q50cBiW84DzgckVoa8y6AkWnyMAhLNylEdnXjFlZnglJPSHnB
-         Glf+i9lxO5voPI0WVB6olhZmvjTAUw1wGLQxm+IUiqc+0htu9nx2KKAFwP530cBQyosb
-         4RzgGw4qnm5R3wjNeVG9FoGfM9K+lyTl1unjKlnAFWy5gJ6qB4Etd+Su0VkMuFQrJDhU
-         SWmiUW6Ku4ZQJNAX/esj2PszE9sOh2lGed6Z66Sl71NTNUjqLerePZ3j6dZCqjKxo+j/
-         1RSw==
+        bh=QeuzYHSGpnBo+Fj/lZBkb3AnNGXJv/NfFEjJb6c9ROA=;
+        b=QU3iEAezVMbCycLV0058A/095owzw7mk96KQKS36nQqLMeiq2LQK4kVAQHTj7VbE7I
+         WqxxKBytVpZN9ATg/BKfuLST3fTGwO/nPw9dPay5mQiu3l7INHMvrpBo0JaByiylOf/B
+         vgayLZm4XeHfljQdBDuxmdnVRc4v2VE34m1k5yIK/SVUTI4QRHbFJz6P+CheWFpKeyUq
+         PmK7lGAWSYnZjSyZZARpGoogGT4byVkObLq+O3nAhaPDIaW0QnwAWAtXQuDydCudLskl
+         /fUvztbXDRQY5YhNZapNOnxJs14BN9K4JsaqBblOHa0/DQcWALVO5rJ1XQ/U4U+Tnkx4
+         6HBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wGUPtn7O4cX2W3mFKqmn71UJtI4pKm7jAenzK2Fi2L8=;
-        b=GZHLLeRyaZaZEWgcMR7qMzMTfbFyXg4yOS0JOkjxcWmrez9pDffL+kPzejs13yqt2B
-         N9mbKLs4WxycDg0B20SIgTQIdAZOpDqRqW9RhDKeD1jW1q8hr46BzB11iD82wYPZGGv+
-         /U3cVOqA0eLj7lVW4O+1vmjdCEQ938PuFoUqECvmOzXg1nEWNwqhO7HAuZ0IFxDMHyXq
-         Xr1VyxMwsN5nQmoVh96T55EkyVfA7B2qH5csPXti+vxViMU41/9lIM9aEAMBTB8frIA6
-         ZL6MefUMZAxfvKrq5+YAWpWYjfCF2NmFZ5Nuuzmitp5xrUkSzurx9FOxW3zGJg8aEQ1t
-         RVSg==
-X-Gm-Message-State: APjAAAUS9LNJlz2ErJoY+vVSVwAl+lUI+6ILAJ273tdt6eha5rY5L1Le
-        ZfnczJUN7vsbYJ6ZQPD3RkOFuGbD
-X-Google-Smtp-Source: APXvYqyluBXmqwGee6mcuWOpghFkcjpiGRpP01qkIypbTZywTFwX4/cLvmq0hBPXH8VB/yySRtxF0Q==
-X-Received: by 2002:a5d:4101:: with SMTP id l1mr50597797wrp.202.1565721464634;
-        Tue, 13 Aug 2019 11:37:44 -0700 (PDT)
+        bh=QeuzYHSGpnBo+Fj/lZBkb3AnNGXJv/NfFEjJb6c9ROA=;
+        b=Kk5ZudgmfqJIyybZ1+BKh7QRMkGZangW5e4yuuOUY9mdg9AgEzMyLH2qt6qwhUDNbh
+         295HxszPQzErBh4ckvzloQcA+B0AVY+Za5jy7tScnBZMsfw1Puogv8VEQZ/77XBY7ub9
+         cWkiKIjkyY4TfDMIRaY0CdgqNfjsOoG9vB2Ht+wBycarKryNl5DNVQsaUFKIe5+Y49JK
+         8NKiJ5leVTLQ2plsuei5X+SL3FlltUJrIppsRhSLsfXrv2CS8oVh8pRsgy5vqJhGgOSq
+         61wpzil5pAc8IT/0ZNzE09otqfa2vskyPAQhTPW3t0tx1i8Q6qgrsMEXEPJc1RuB2Li3
+         DmjQ==
+X-Gm-Message-State: APjAAAXdtxA6ofGmglp79xW28pLURVwX+I7XBHyAQjowNoHXRXRLeA6B
+        tXtraMVF9Hfffs2pnHTHSB4nZlsX
+X-Google-Smtp-Source: APXvYqxC17mBNob/vhYCp307L7CVSlLrPUBUOu8c1OsE/6ZTuFJC3cQvntZNFgQLsj/oDwVJ5Gk5/Q==
+X-Received: by 2002:adf:ee4f:: with SMTP id w15mr46556296wro.337.1565721466933;
+        Tue, 13 Aug 2019 11:37:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o9sm15237387wrm.88.2019.08.13.11.37.43
+        by smtp.gmail.com with ESMTPSA id q18sm136480263wrw.36.2019.08.13.11.37.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Aug 2019 11:37:43 -0700 (PDT)
-Date:   Tue, 13 Aug 2019 11:37:43 -0700 (PDT)
-X-Google-Original-Date: Tue, 13 Aug 2019 18:37:36 GMT
-Message-Id: <1a0b30b88a5f4eff45541e5eeffd65bbfc2cee31.1565721461.git.gitgitgadget@gmail.com>
+        Tue, 13 Aug 2019 11:37:46 -0700 (PDT)
+Date:   Tue, 13 Aug 2019 11:37:46 -0700 (PDT)
+X-Google-Original-Date: Tue, 13 Aug 2019 18:37:39 GMT
+Message-Id: <ec0abffd8b8d929599fbacde18a7e98f49a4c63b.1565721461.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.292.v4.git.gitgitgadget@gmail.com>
 References: <pull.292.v3.git.gitgitgadget@gmail.com>
         <pull.292.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 1/6] repo-settings: consolidate some config settings
+Subject: [PATCH v4 4/6] repo-settings: parse core.untrackedCache
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,233 +74,199 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-There are a few important config settings that are not loaded
-during git_default_config. These are instead loaded on-demand.
+The core.untrackedCache config setting is slightly complicated,
+so clarify its use and centralize its parsing into the repo
+settings.
 
-Centralize these config options to a single scan, and store
-all of the values in a repo_settings struct. The values for
-each setting are initialized as negative to indicate "unset".
+The default value is "keep" (returned as -1), which persists the
+untracked cache if it exists.
 
-This centralization will be particularly important in a later
-change to introduce "meta" config settings that change the
-defaults for these config settings.
+If the value is set as "false" (returned as 0), then remove the
+untracked cache if it exists.
+
+If the value is set as "true" (returned as 1), then write the
+untracked cache and persist it.
+
+Instead of relying on magic values of -1, 0, and 1, split these
+options into an enum. This allows the use of "-1" as a
+default value. After parsing the config options, if the value is
+unset we can initialize it to UNTRACKED_CACHE_KEEP.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile               |  1 +
- builtin/gc.c           | 12 +++++-------
- builtin/pack-objects.c |  8 ++++----
- commit-graph.c         |  6 +++---
- read-cache.c           | 11 ++++++-----
- repo-settings.c        | 25 +++++++++++++++++++++++++
- repository.h           | 14 ++++++++++++++
- 7 files changed, 58 insertions(+), 19 deletions(-)
- create mode 100644 repo-settings.c
+ builtin/update-index.c |  6 ++++--
+ config.c               | 24 ------------------------
+ read-cache.c           | 19 +++++++++----------
+ repo-settings.c        | 19 +++++++++++++++++++
+ repository.h           |  8 ++++++++
+ 5 files changed, 40 insertions(+), 36 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 11ccea4071..032fe9b5f9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -964,6 +964,7 @@ LIB_OBJS += refspec.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace-object.o
-+LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
- LIB_OBJS += resolve-undo.o
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c18efadda5..4b8fbb9965 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -41,7 +41,6 @@ static int aggressive_depth = 50;
- static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 50;
--static int gc_write_commit_graph;
- static int detach_auto = 1;
- static timestamp_t gc_log_expire_time;
- static const char *gc_log_expire = "1.day.ago";
-@@ -148,7 +147,6 @@ static void gc_config(void)
- 	git_config_get_int("gc.aggressivedepth", &aggressive_depth);
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
- 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
--	git_config_get_bool("gc.writecommitgraph", &gc_write_commit_graph);
- 	git_config_get_bool("gc.autodetach", &detach_auto);
- 	git_config_get_expiry("gc.pruneexpire", &prune_expire);
- 	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
-@@ -685,11 +683,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		clean_pack_garbage();
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index dff2f4b837..49302d98c5 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -966,6 +966,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	struct parse_opt_ctx_t ctx;
+ 	strbuf_getline_fn getline_fn;
+ 	int parseopt_state = PARSE_OPT_UNKNOWN;
++	struct repository *r = the_repository;
+ 	struct option options[] = {
+ 		OPT_BIT('q', NULL, &refresh_args.flags,
+ 			N_("continue refresh even when index needs update"),
+@@ -1180,11 +1181,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		remove_split_index(&the_index);
  	}
- 
--	if (gc_write_commit_graph &&
--	    write_commit_graph_reachable(get_object_directory(),
--					 !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0,
--					 NULL))
--		return 1;
-+	prepare_repo_settings(the_repository);
-+	if (the_repository->settings.gc_write_commit_graph == 1)
-+		write_commit_graph_reachable(get_object_directory(),
-+					     !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0,
-+					     NULL);
- 
- 	if (auto_gc && too_many_loose_objects())
- 		warning(_("There are too many unreachable loose objects; "
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 267c562b1f..f9f7181f3f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2709,10 +2709,6 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		use_bitmap_index_default = git_config_bool(k, v);
- 		return 0;
- 	}
--	if (!strcmp(k, "pack.usesparse")) {
--		sparse = git_config_bool(k, v);
--		return 0;
--	}
- 	if (!strcmp(k, "pack.threads")) {
- 		delta_search_threads = git_config_int(k, v);
- 		if (delta_search_threads < 0)
-@@ -3332,6 +3328,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	read_replace_refs = 0;
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", 0);
-+	prepare_repo_settings(the_repository);
-+	if (!sparse && the_repository->settings.pack_use_sparse != -1)
-+		sparse = the_repository->settings.pack_use_sparse;
-+
- 	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
- 
-diff --git a/commit-graph.c b/commit-graph.c
-index b3c4de79b6..7854e491b2 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -466,7 +466,6 @@ static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
- static int prepare_commit_graph(struct repository *r)
- {
- 	struct object_directory *odb;
--	int config_value;
- 
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
- 		die("dying as requested by the '%s' variable on commit-graph load!",
-@@ -476,9 +475,10 @@ static int prepare_commit_graph(struct repository *r)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
  
 +	prepare_repo_settings(r);
-+
- 	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
--	    (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
--	    !config_value))
-+	    r->settings.core_commit_graph != 1)
- 		/*
- 		 * This repository is not configured to use commit graphs, so
- 		 * do not load one. (But report commit_graph_attempted anyway
+ 	switch (untracked_cache) {
+ 	case UC_UNSPECIFIED:
+ 		break;
+ 	case UC_DISABLE:
+-		if (git_config_get_untracked_cache() == 1)
++		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
+ 			warning(_("core.untrackedCache is set to true; "
+ 				  "remove or change it, if you really want to "
+ 				  "disable the untracked cache"));
+@@ -1196,7 +1198,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		return !test_if_untracked_cache_is_supported();
+ 	case UC_ENABLE:
+ 	case UC_FORCE:
+-		if (git_config_get_untracked_cache() == 0)
++		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
+ 			warning(_("core.untrackedCache is set to false; "
+ 				  "remove or change it, if you really want to "
+ 				  "enable the untracked cache"));
+diff --git a/config.c b/config.c
+index faa57e436c..3241dbc54d 100644
+--- a/config.c
++++ b/config.c
+@@ -2277,30 +2277,6 @@ int git_config_get_expiry_in_days(const char *key, timestamp_t *expiry, timestam
+ 	return -1; /* thing exists but cannot be parsed */
+ }
+ 
+-int git_config_get_untracked_cache(void)
+-{
+-	int val = -1;
+-	const char *v;
+-
+-	/* Hack for test programs like test-dump-untracked-cache */
+-	if (ignore_untracked_cache_config)
+-		return -1;
+-
+-	if (!git_config_get_maybe_bool("core.untrackedcache", &val))
+-		return val;
+-
+-	if (!git_config_get_value("core.untrackedcache", &v)) {
+-		if (!strcasecmp(v, "keep"))
+-			return -1;
+-
+-		error(_("unknown core.untrackedCache value '%s'; "
+-			"using 'keep' default value"), v);
+-		return -1;
+-	}
+-
+-	return -1; /* default value */
+-}
+-
+ int git_config_get_split_index(void)
+ {
+ 	int val;
 diff --git a/read-cache.c b/read-cache.c
-index c701f7f8b8..59dbebc15d 100644
+index 59dbebc15d..7a07286164 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1599,16 +1599,17 @@ struct cache_entry *refresh_cache_entry(struct index_state *istate,
+@@ -1845,18 +1845,17 @@ static void check_ce_order(struct index_state *istate)
  
- #define INDEX_FORMAT_DEFAULT 3
- 
--static unsigned int get_index_format_default(void)
-+static unsigned int get_index_format_default(struct repository *r)
+ static void tweak_untracked_cache(struct index_state *istate)
  {
- 	char *envversion = getenv("GIT_INDEX_VERSION");
- 	char *endp;
--	int value;
- 	unsigned int version = INDEX_FORMAT_DEFAULT;
- 
- 	if (!envversion) {
--		if (!git_config_get_int("index.version", &value))
--			version = value;
-+		prepare_repo_settings(r);
+-	switch (git_config_get_untracked_cache()) {
+-	case -1: /* keep: do nothing */
+-		break;
+-	case 0: /* false */
++	struct repository *r = the_repository;
 +
-+		if (r->settings.index_version >= 0)
-+			version = r->settings.index_version;
- 		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
- 			warning(_("index.version set, but the value is invalid.\n"
- 				  "Using version %i"), INDEX_FORMAT_DEFAULT);
-@@ -2765,7 +2766,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	}
- 
- 	if (!istate->version) {
--		istate->version = get_index_format_default();
-+		istate->version = get_index_format_default(the_repository);
- 		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
- 			init_split_index(istate);
- 	}
-diff --git a/repo-settings.c b/repo-settings.c
-new file mode 100644
-index 0000000000..309577f6bc
---- /dev/null
-+++ b/repo-settings.c
-@@ -0,0 +1,25 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "repository.h"
++	prepare_repo_settings(r);
 +
-+void prepare_repo_settings(struct repository *r)
-+{
-+	int value;
-+
-+	if (r->settings.initialized)
++	if (r->settings.core_untracked_cache  == UNTRACKED_CACHE_REMOVE) {
+ 		remove_untracked_cache(istate);
+-		break;
+-	case 1: /* true */
+-		add_untracked_cache(istate);
+-		break;
+-	default: /* unknown value: do nothing */
+-		break;
 +		return;
+ 	}
 +
-+	/* Defaults */
-+	memset(&r->settings, -1, sizeof(r->settings));
++	if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
++		add_untracked_cache(istate);
+ }
+ 
+ static void tweak_split_index(struct index_state *istate)
+diff --git a/repo-settings.c b/repo-settings.c
+index d00b675687..abbc6566f8 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -7,6 +7,7 @@
+ void prepare_repo_settings(struct repository *r)
+ {
+ 	int value;
++	char *strval;
+ 
+ 	if (r->settings.initialized)
+ 		return;
+@@ -23,7 +24,25 @@ void prepare_repo_settings(struct repository *r)
+ 
+ 	if (!repo_config_get_bool(r, "index.version", &value))
+ 		r->settings.index_version = value;
++	if (!repo_config_get_maybe_bool(r, "core.untrackedcache", &value)) {
++		if (value == 0)
++			r->settings.core_untracked_cache = UNTRACKED_CACHE_REMOVE;
++		else
++			r->settings.core_untracked_cache = UNTRACKED_CACHE_WRITE;
++	} else if (!repo_config_get_string(r, "core.untrackedcache", &strval)) {
++		if (!strcasecmp(strval, "keep"))
++			r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
 +
-+	if (!repo_config_get_bool(r, "core.commitgraph", &value))
-+		r->settings.core_commit_graph = value;
-+	if (!repo_config_get_bool(r, "gc.writecommitgraph", &value))
-+		r->settings.gc_write_commit_graph = value;
++		free(strval);
++	}
 +
-+	if (!repo_config_get_bool(r, "index.version", &value))
-+		r->settings.index_version = value;
+ 
+ 	if (!repo_config_get_bool(r, "pack.usesparse", &value))
+ 		r->settings.pack_use_sparse = value;
 +
-+	if (!repo_config_get_bool(r, "pack.usesparse", &value))
-+		r->settings.pack_use_sparse = value;
-+}
++	/* Hack for test programs like test-dump-untracked-cache */
++	if (ignore_untracked_cache_config)
++		r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
++	else
++		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
+ }
 diff --git a/repository.h b/repository.h
-index 4fb6a5885f..cc285ad327 100644
+index cc285ad327..cf7ff0778c 100644
 --- a/repository.h
 +++ b/repository.h
-@@ -11,6 +11,17 @@ struct pathspec;
+@@ -11,6 +11,13 @@ struct pathspec;
  struct raw_object_store;
  struct submodule_cache;
  
-+struct repo_settings {
-+	int initialized;
-+
-+	int core_commit_graph;
-+	int gc_write_commit_graph;
-+
-+	int index_version;
-+
-+	int pack_use_sparse;
++enum untracked_cache_setting {
++	UNTRACKED_CACHE_UNSET = -1,
++	UNTRACKED_CACHE_REMOVE = 0,
++	UNTRACKED_CACHE_KEEP = 1,
++	UNTRACKED_CACHE_WRITE = 2
 +};
 +
- struct repository {
- 	/* Environment */
- 	/*
-@@ -72,6 +83,8 @@ struct repository {
- 	 */
- 	char *submodule_prefix;
+ struct repo_settings {
+ 	int initialized;
  
-+	struct repo_settings settings;
-+
- 	/* Subsystems */
- 	/*
- 	 * Repository's config which contains key-value pairs from the usual
-@@ -157,5 +170,6 @@ int repo_read_index_unmerged(struct repository *);
-  */
- void repo_update_index_if_able(struct repository *, struct lock_file *);
+@@ -18,6 +25,7 @@ struct repo_settings {
+ 	int gc_write_commit_graph;
  
-+void prepare_repo_settings(struct repository *r);
+ 	int index_version;
++	enum untracked_cache_setting core_untracked_cache;
  
- #endif /* REPOSITORY_H */
+ 	int pack_use_sparse;
+ };
 -- 
 gitgitgadget
 
