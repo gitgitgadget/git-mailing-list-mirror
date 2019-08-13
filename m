@@ -2,60 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E86A31F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 22:07:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 291531F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 22:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727002AbfHMWH3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 18:07:29 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:30987 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726689AbfHMWH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 18:07:29 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 467Rf66M72z5tlB;
-        Wed, 14 Aug 2019 00:07:26 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6F3DB143;
-        Wed, 14 Aug 2019 00:07:26 +0200 (CEST)
-Subject: Re: How to reset selected lines?
-To:     Pratyush Yadav <me@yadavpratyush.com>
-References: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
-From:   Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <1f31dd2c-3023-2d13-3466-bffabab703cc@kdbg.org>
-Date:   Wed, 14 Aug 2019 00:07:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727411AbfHMWiD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 18:38:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51595 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727399AbfHMWiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 18:38:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29A38743B4;
+        Tue, 13 Aug 2019 18:38:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2tBYDINs90Pz9Jz/b3nZBCetv6E=; b=b7Ig2a
+        l8olHQW8CPzSS3ez6zaL1mtoUSKG+0HH1qvCge7nsdfilILYrcNnmVelt1rDB2mo
+        BQ9kjiXiaohO90E2MINWzJ4TJ6vAuaAqWWm/5F10V4A0j/JjwiTcJyCrQsVLfSKW
+        FBPcnDuoU41U5MdzQZYbJNmID6G4kFN/afQ6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VwvBPiONZgDtJyZz5w/YF08ryG/Zb9cN
+        B4jw4ZRJnxK+6QKrGqaDNF7Z/4aBUa82CQqTIUhpvltEeOfx7DwGp47I5l1r6aY/
+        YcDLuV6uJjyrernlUNfYvknB9IhFvas4Oj5vuFqa/dNXjeqBTmoUKa4Z8yYoRayH
+        wBbuiowkJQo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 22B06743B0;
+        Tue, 13 Aug 2019 18:38:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4F02A743AD;
+        Tue, 13 Aug 2019 18:37:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/2] apply: reload .gitattributes after patching it
+References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+        <20190813024307.705016-1-sandals@crustytoothpaste.net>
+        <20190813024307.705016-3-sandals@crustytoothpaste.net>
+Date:   Tue, 13 Aug 2019 15:37:56 -0700
+In-Reply-To: <20190813024307.705016-3-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 13 Aug 2019 02:43:07 +0000")
+Message-ID: <xmqq36i47ku3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FFE8F5D0-BE1A-11E9-8A0E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.08.19 um 16:18 schrieb Pratyush Yadav:
-> Now, I want to add a similar feature, but one that discards/resets the 
-> selected lines. And I'd like to avoid the hack that git-gui's 
-> apply_range_or_line is. So, is there a cleaner way to do this that does 
-> not involve generating a diff and then applying it?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Don't waste your time. I'm using this feature since years. It's
-available in these three commits:
+> +test_expect_success 'rebase --am and .gitattributes' '
+> +	test_create_repo attributes &&
+> +	(
+> +		cd attributes &&
+> +		test_commit init &&
+> +		test_config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
+> +		test_config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
 
-https://github.com/j6t/git/commit/55276690b2bc6a
-https://github.com/j6t/git/commit/f12b294b68b595
-https://github.com/j6t/git/commit/00860615691604
+These eventually invokes test-when-finished for cleaning things up,
+that cannot be called inside a subshell.  The "attributes" test
+repository is a throw-away reopsitory, so we should be able to just
+use "git config" to set the variables locally in it, no?
 
-Thanks go to Bert Wesarg. The patches are also available in this thread:
-
-https://public-inbox.org/git/cccd6193cf3bfe170e14270204d735a842bb8563.1326116492.git.bert.wesarg@googlemail.com/#t
-
--- Hannes
+> +		test_commit second &&
+> +		git checkout -b test HEAD^ &&
+> +
+> +		echo "*.txt filter=test" >.gitattributes &&
+> +		git add .gitattributes &&
+> +		test_commit third &&
+> +
+> +		echo "This text is smudged." >a.txt &&
+> +		git add a.txt &&
+> +		test_commit fourth &&
+> +		git rebase master &&
+> +		grep "smudged" a.txt
+> +	)
+> +'
+> +
+>  test_expect_success 'rebase--merge.sh and --show-current-patch' '
+>  	test_create_repo conflict-merge &&
+>  	(
