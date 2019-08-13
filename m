@@ -8,42 +8,42 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF19F1F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 12:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54EB41F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 12:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728657AbfHMMp6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 08:45:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57524 "EHLO
+        id S1728744AbfHMMqA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 08:46:00 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57534 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728425AbfHMMp5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Aug 2019 08:45:57 -0400
+        by vger.kernel.org with ESMTP id S1728425AbfHMMqA (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Aug 2019 08:46:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:81dd:eb9b:e758:604b])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CB28F6081D;
-        Tue, 13 Aug 2019 12:45:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B8B5B60821;
+        Tue, 13 Aug 2019 12:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1565700356;
-        bh=jrWBhDkJ1D78B//37wU5SAN2JFspob4KOc83NhDNEb4=;
+        s=default; t=1565700357;
+        bh=SeoAa6FMMYs7klq4RtAm8p8yOrT4NGrR3Ia02vELhec=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=haq+08CUn/GbIEMr4OSc+eUGmILL84CGY6qqHjycFg5iuwDB8ZiCiHckz/l3ycrih
-         LJixCDKdWoUCJF5LltF39wASZ1vBg1gdS8IQznJOs8Ks/rYt3qfrWXlRqGdEBRavmf
-         7BvnQ83TEIuadcjXTJZ1yuQ8dhok9shwaDe4nlYMYaWAFHMvKB3VvkGsBkiVRbGGVt
-         D2t1xeWQ76da5r5k/Svuh/j4MkRm+W8g/OkHBZ4KbKS6QWkGI7bDGlmFuEQsVpY8dp
-         x90/02nnAdquA00Cw3cVq/5MV+FD22vhbvLdA6lBzACRE1Pg42UhmyvllyOm/CfizV
-         vkFAW8UHWuBKDLP5CkRXDRZzbw7cHo05yKTEmBGka6QuIySYfzTN7V1Efr6eqUIg1D
-         2gLy5xhK+dRf6n+FNrwnHbqUVxoq9u+0ffjQp9B5i6JXOExZshiGSUcaNInYPWgd81
-         6sHGM3QII94BZiYSzqiNAA3Zjtj4i4PxnnFdCbK+Q7QBjcptvWy
+        b=sgkVwVYwuF4AcuDkA8LpMg/fxj3Skgj2qSVVJXf8M50VAeiu38/br9cDuCsSAZbWp
+         N8fnMxYYXifoadgNAGt4Gl/qOalIEFe73Sf33uqIGG/NlyYAxqxxUfGXITAqSXdVm5
+         grKslTpUMbpB7TopajHgazjontjVH4qjnpoiGAJtAa2hsbHUoWhtkGVelJTBO6vcus
+         XHZqKn6lX0/xZl8arUJNO4kHDjDBdNVZkUWh5bkIa8MRSVHioEVn2dRlzntFXewbzh
+         U1e7herRzgrADXAtcTzY02BYXs1rspRbTm9j2OeLc8vnJMjg3xlI05SdSjKCEv20zl
+         ChS6fB8qlWoYZJ5n3OmMPbbO00lHsFLnFxeR6CowyBpgF8IJQI8IsEViTRYiEEgGDO
+         Z9n1QK/JiFmDnc/g4rWjchOFA6XATMQs8ggcy8lI4wreUNr1T7SbHgrM6HZ0a0qY+q
+         hMfyZKYpOygCxdA1c+CMcOXnMo1QQnc3f449lRgpumnVk0wYi4r
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 1/2] path: add a function to check for path suffix
-Date:   Tue, 13 Aug 2019 02:43:06 +0000
-Message-Id: <20190813024307.705016-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 2/2] apply: reload .gitattributes after patching it
+Date:   Tue, 13 Aug 2019 02:43:07 +0000
+Message-Id: <20190813024307.705016-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
 In-Reply-To: <20190813024307.705016-1-sandals@crustytoothpaste.net>
 References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
@@ -55,93 +55,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a function to strip the path suffix from a commit, but we don't
-have one to check for a path suffix. For a plain filename, we can use
-basename, but that requires an allocation, since POSIX allows it to
-modify its argument. Refactor strip_path_suffix into a helper function
-and a new function, ends_with_path_components, to meet this need.
+When applying multiple patches with git am, or when rebasing using the
+am backend, it's possible that one of our patches has updated a
+gitattributes file. Currently, we cache this information, so if a
+file in a subsequent patch has attributes applied, the file will be
+written out with the attributes in place as of the time we started the
+rebase or am operation, not with the attributes applied by the previous
+patch. This problem does not occur when using the -m or -i flags to
+rebase.
+
+To ensure we write the correct data into the working tree, expire the
+cache after each patch that touches a path ending in ".gitattributes".
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- path.c | 39 ++++++++++++++++++++++++++++++---------
- path.h |  3 +++
- 2 files changed, 33 insertions(+), 9 deletions(-)
+ apply.c           |  7 +++++++
+ convert.c         |  9 ++++++++-
+ convert.h         |  6 ++++++
+ t/t3400-rebase.sh | 23 +++++++++++++++++++++++
+ 4 files changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/path.c b/path.c
-index 25e97b8c3f..e3da1f3c4e 100644
---- a/path.c
-+++ b/path.c
-@@ -1221,31 +1221,52 @@ static inline int chomp_trailing_dir_sep(const char *path, int len)
- }
+diff --git a/apply.c b/apply.c
+index cde95369bb..e5373452ab 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4643,6 +4643,7 @@ static int apply_patch(struct apply_state *state,
+ 	struct patch *list = NULL, **listp = &list;
+ 	int skipped_patch = 0;
+ 	int res = 0;
++	int flush_attributes = 0;
  
- /*
-- * If path ends with suffix (complete path components), returns the
-- * part before suffix (sans trailing directory separators).
-- * Otherwise returns NULL.
-+ * If path ends with suffix (complete path components), returns the offset of
-+ * the last character in the path before the suffix (sans trailing directory
-+ * separators), and -1 otherwise.
-  */
--char *strip_path_suffix(const char *path, const char *suffix)
-+static ssize_t stripped_path_suffix_offset(const char *path, const char *suffix)
- {
- 	int path_len = strlen(path), suffix_len = strlen(suffix);
- 
- 	while (suffix_len) {
- 		if (!path_len)
--			return NULL;
-+			return -1;
- 
- 		if (is_dir_sep(path[path_len - 1])) {
- 			if (!is_dir_sep(suffix[suffix_len - 1]))
--				return NULL;
-+				return -1;
- 			path_len = chomp_trailing_dir_sep(path, path_len);
- 			suffix_len = chomp_trailing_dir_sep(suffix, suffix_len);
+ 	state->patch_input_file = filename;
+ 	if (read_patch_file(&buf, fd) < 0)
+@@ -4670,6 +4671,10 @@ static int apply_patch(struct apply_state *state,
+ 			patch_stats(state, patch);
+ 			*listp = patch;
+ 			listp = &patch->next;
++
++			if (!flush_attributes && patch->new_name &&
++			    ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE))
++				flush_attributes = 1;
  		}
- 		else if (path[--path_len] != suffix[--suffix_len])
--			return NULL;
-+			return -1;
- 	}
+ 		else {
+ 			if (state->apply_verbosity > verbosity_normal)
+@@ -4746,6 +4751,8 @@ static int apply_patch(struct apply_state *state,
+ 	if (state->summary && state->apply_verbosity > verbosity_silent)
+ 		summary_patch_list(list);
  
- 	if (path_len && !is_dir_sep(path[path_len - 1]))
--		return NULL;
--	return xstrndup(path, chomp_trailing_dir_sep(path, path_len));
-+		return -1;
-+	return chomp_trailing_dir_sep(path, path_len);
-+}
++	if (flush_attributes)
++		reset_parsed_attributes();
+ end:
+ 	free_patch_list(list);
+ 	strbuf_release(&buf);
+diff --git a/convert.c b/convert.c
+index 94ff837649..030e9b81b9 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1293,10 +1293,11 @@ struct conv_attrs {
+ 	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+ };
+ 
++static struct attr_check *check;
 +
-+/*
-+ * Returns true if the path ends with components, considering only complete path
-+ * components, and false otherwise.
-+ */
-+int ends_with_path_components(const char *path, const char *components)
-+{
-+	return stripped_path_suffix_offset(path, components) != -1;
-+}
-+
-+/*
-+ * If path ends with suffix (complete path components), returns the
-+ * part before suffix (sans trailing directory separators).
-+ * Otherwise returns NULL.
-+ */
-+char *strip_path_suffix(const char *path, const char *suffix)
-+{
-+	ssize_t offset = stripped_path_suffix_offset(path, suffix);
-+
-+	return offset == -1 ? NULL : xstrndup(path, offset);
+ static void convert_attrs(const struct index_state *istate,
+ 			  struct conv_attrs *ca, const char *path)
+ {
+-	static struct attr_check *check;
+ 	struct attr_check_item *ccheck = NULL;
+ 
+ 	if (!check) {
+@@ -1339,6 +1340,12 @@ static void convert_attrs(const struct index_state *istate,
+ 		ca->crlf_action = CRLF_AUTO_INPUT;
  }
  
- int daemon_avoid_alias(const char *p)
-diff --git a/path.h b/path.h
-index 2ba6ca58c8..14d6dcad16 100644
---- a/path.h
-+++ b/path.h
-@@ -193,4 +193,7 @@ const char *git_path_merge_head(struct repository *r);
- const char *git_path_fetch_head(struct repository *r);
- const char *git_path_shallow(struct repository *r);
++void reset_parsed_attributes(void)
++{
++	attr_check_free(check);
++	check = NULL;
++}
++
+ int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
+ {
+ 	struct conv_attrs ca;
+diff --git a/convert.h b/convert.h
+index 831559f10d..3710969d43 100644
+--- a/convert.h
++++ b/convert.h
+@@ -94,6 +94,12 @@ void convert_to_git_filter_fd(const struct index_state *istate,
+ int would_convert_to_git_filter_fd(const struct index_state *istate,
+ 				   const char *path);
  
++/*
++ * Reset the internal list of attributes used by convert_to_git and
++ * convert_to_working_tree.
++ */
++void reset_parsed_attributes(void);
 +
-+int ends_with_path_components(const char *path, const char *components);
+ /*****************************************************************
+  *
+  * Streaming conversion support
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 80b23fd326..062dc41df7 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -301,6 +301,29 @@ test_expect_success 'rebase --am and --show-current-patch' '
+ 	)
+ '
+ 
++test_expect_success 'rebase --am and .gitattributes' '
++	test_create_repo attributes &&
++	(
++		cd attributes &&
++		test_commit init &&
++		test_config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
++		test_config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
 +
- #endif /* PATH_H */
++		test_commit second &&
++		git checkout -b test HEAD^ &&
++
++		echo "*.txt filter=test" >.gitattributes &&
++		git add .gitattributes &&
++		test_commit third &&
++
++		echo "This text is smudged." >a.txt &&
++		git add a.txt &&
++		test_commit fourth &&
++		git rebase master &&
++		grep "smudged" a.txt
++	)
++'
++
+ test_expect_success 'rebase--merge.sh and --show-current-patch' '
+ 	test_create_repo conflict-merge &&
+ 	(
