@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 872F51F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 12:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 556911F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 12:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbfHMM1O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 08:27:14 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:56294 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726927AbfHMM1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 08:27:11 -0400
-Received: by mail-wm1-f66.google.com with SMTP id f72so1320431wmf.5
-        for <git@vger.kernel.org>; Tue, 13 Aug 2019 05:27:10 -0700 (PDT)
+        id S1727962AbfHMM1Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 08:27:16 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36250 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727441AbfHMM1N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 08:27:13 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r3so13836329wrt.3
+        for <git@vger.kernel.org>; Tue, 13 Aug 2019 05:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qEEc/uPwXOZ/C7M3KgAp6PY7nx3k9Bx5aSlvMLcRh8o=;
-        b=Junvw+256qA7JtaiPNLz8qmIYV9BdIa93YdrCqJL+9oCuSHKNbRdPON/oKff9698qk
-         rEj3KBkTnfJG1M5XhLv/HrUJ6N447LH2mp6IMD8m+q146nXGVybr6P8WqmMHnCXFqSMU
-         NxSijySb1+LWoQnaHplQXWN7fE9aClXIThJNk5qtgViQ58xUyZRuzSIQROMl6nLqkgBn
-         7NgoYLHpK6OZVgoVBfa/kJXo4QMMo6T+gc2kpLI9U/JB6hp49jz2TXCpUNDemnvfWOi3
-         Hdc40SJoq6nmmO52z9RR0Ve49V3Bf3Fm51dk+au4FpBnkdsWGPm7WhY2iePnZomC0Ne2
-         gKMw==
+        bh=Q5GAZQfyOKiZ5snJgFv3wwkBIVmAMGvSCBoSJ4Dpkxk=;
+        b=eBMrgbIXp/qLS+bphcNlSmtQlV6ARvDsHct4smkMwXHXRPVQb1GsrLlQoOlJzF14XS
+         dg1EJTW0+ou9baokRjaiTLABkY5XCNwmAWAWddM0vkuun4NY6aTEgvwj1+PwKB3nfXhj
+         Kb7AvpgjMDb3itgi96IaRTFJxT82PJwXqAdnES8H/xBlKCErnW5GgAQp11T2NlHcnJWi
+         OSvmqnsT9a+Sare/tx56wnbfSDYBz+wm4jmFp1af2LDmRhlgJEOciaePuMzhCTGGAlcs
+         8hCrQeYLSENox+kCIzz8K2cHLW87zx+kWap/iSXDMqimrXiIFIZAVrLuoFTiwYGggQV3
+         +0Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qEEc/uPwXOZ/C7M3KgAp6PY7nx3k9Bx5aSlvMLcRh8o=;
-        b=WDfCN09kLpDetOp1av8jwnirF/kqIGNEAUPHlHz8OwKzz9FVXgMRl/3UvJiMv+ZCFD
-         MpDVmSSbBScV064wFDf+ZeQpv3hJMHMUqB7sCeQ/R8sLXg9NPddcd8ocp+FvGCA3i8js
-         pWeakFUyus3VWG3LyD3WSNm9m7RBFCGARwyuv6LLOWxXep8WjlVeIYvtS1e4f0cS+5eT
-         6fR3HJLuqOFemRo+mvr7YRlrxSZSu5+62eDZtExE5yEemQoyvl7SPe79SICdMqhhdmi+
-         laPO2tEb0YqZDP0f+rKmdenlf7IM/CdXBzg9I8NTADjrLgmb/PSzyqaEbnkdOdCfPWEQ
-         wHEA==
-X-Gm-Message-State: APjAAAVQj2yYDB6IYd6xMoTNs47LGNbtamnptdf9mdL+HBY6/pCKw0Gc
-        XUhr8iNIAazurGP5kafKDBXTGBuV
-X-Google-Smtp-Source: APXvYqwUJSBnFlVhKHyNbDXpBD5gv+wuUsmOGuep7P4BOLw8NafVcUAD2GL1vneyy8LujoiQFiHb4w==
-X-Received: by 2002:a1c:1bd7:: with SMTP id b206mr2797481wmb.85.1565699229534;
-        Tue, 13 Aug 2019 05:27:09 -0700 (PDT)
+        bh=Q5GAZQfyOKiZ5snJgFv3wwkBIVmAMGvSCBoSJ4Dpkxk=;
+        b=McY+ndVFx/IXh4tMN7sRk+H5pJLj4uvUAdQR4MMBcjH97yEo7S7ry94rKz9GTy2oid
+         LpaSwIz8TO/ej8z2rbta8cNqgdvycrvfdQdGQbKmO6seWhQemoPLpjzny1lL1gLZJeRW
+         RPCfbNvd28/xMhj/ps0dgXCMmQSoPiMA/2UkFwE8RICVKZjcvjGO2LtkfQz3I4GeP081
+         GQvdkC8Y4xbIIlZ4UMgVC+pHYURcl5PAkQ6XoRs2mdQ5KH9pHkJ5Tye8XdccD1NFbv92
+         CbhWWShrmBRLHC35Bv2FFAyq2PWfcjC1PDmmaR9Cb84+gDGlp+fCnUm9jn6Ph8MjHbzC
+         N5Pg==
+X-Gm-Message-State: APjAAAUH1f5fi8kI5Hz3E3DQIWXRllhjKF3WfPew6YKvLz/aZMlX3M78
+        sSb3tL8ffQaQW/j3vskBZOWUbK5s
+X-Google-Smtp-Source: APXvYqx4Hlk4Qag6boeUjiYBMFpFCADZ+RdvIDdD8CQAIgZ8EVFcKYN9hxspi6JmOdX2uJkvNRFRoQ==
+X-Received: by 2002:adf:ca0f:: with SMTP id o15mr46165022wrh.135.1565699231724;
+        Tue, 13 Aug 2019 05:27:11 -0700 (PDT)
 Received: from localhost.localdomain (x4db44abf.dyn.telefonica.de. [77.180.74.191])
-        by smtp.gmail.com with ESMTPSA id r5sm1978069wmh.35.2019.08.13.05.27.08
+        by smtp.gmail.com with ESMTPSA id r5sm1978069wmh.35.2019.08.13.05.27.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Aug 2019 05:27:08 -0700 (PDT)
+        Tue, 13 Aug 2019 05:27:11 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 05/11] completion: use 'sort -u' to deduplicate config variable names
-Date:   Tue, 13 Aug 2019 14:26:46 +0200
-Message-Id: <20190813122652.16468-6-szeder.dev@gmail.com>
+Subject: [PATCH 07/11] completion: split _git_config()
+Date:   Tue, 13 Aug 2019 14:26:48 +0200
+Message-Id: <20190813122652.16468-8-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.350.gf4fdc32db7
 In-Reply-To: <20190813122652.16468-1-szeder.dev@gmail.com>
 References: <20190813122652.16468-1-szeder.dev@gmail.com>
@@ -68,31 +68,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The completion script runs the classic '| sort | uniq' pipeline to
-deduplicate the output of 'git help --config-for-completion'.  'sort
--u' does the same, but uses one less external process and pipeline
-stage.  Not a bit win, as it's only run once as the list of supported
-configuration variables is initialized, but at least it sets a better
-example for others to follow.
+_git_config() contains two enormous case statements, one to complete
+configuration sections and variable names, and the other to complete
+their values.
+
+Split these out into two separate helper functions, so in the next
+patches we can use them to implement completion for 'git -c <TAB>'.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 39 ++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f89324d84f..b51cb31ea1 100644
+index fc437bf3eb..3e9c5b6b71 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2225,7 +2225,7 @@ __git_config_vars=
- __git_compute_config_vars ()
- {
- 	test -n "$__git_config_vars" ||
--	__git_config_vars="$(git help --config-for-completion | sort | uniq)"
-+	__git_config_vars="$(git help --config-for-completion | sort -u)"
+@@ -2228,7 +2228,8 @@ __git_compute_config_vars ()
+ 	__git_config_vars="$(git help --config-for-completion | sort -u)"
  }
  
- _git_config ()
+-_git_config ()
++# Completes possible values of various configuration variables.
++__git_complete_config_variable_value ()
+ {
+ 	local varname
+ 
+@@ -2320,19 +2321,16 @@ _git_config ()
+ 		__gitcomp "7bit 8bit quoted-printable base64"
+ 		return
+ 		;;
+-	--get|--get-all|--unset|--unset-all)
+-		__gitcomp_nl "$(__git_config_get_set_variables)"
+-		return
+-		;;
+ 	*.*)
+ 		return
+ 		;;
+ 	esac
++}
++
++# Completes configuration sections, subsections, variable names.
++__git_complete_config_variable_name ()
++{
+ 	case "$cur" in
+-	--*)
+-		__gitcomp_builtin config
+-		return
+-		;;
+ 	branch.*.*)
+ 		local pfx="${cur%.*}." cur_="${cur##*.}"
+ 		__gitcomp "remote pushRemote merge mergeOptions rebase" "$pfx" "$cur_"
+@@ -2407,6 +2405,29 @@ _git_config ()
+ 						print s "."
+ 				}
+ 				')"
++		;;
++	esac
++}
++
++_git_config ()
++{
++	case "$prev" in
++	--get|--get-all|--unset|--unset-all)
++		__gitcomp_nl "$(__git_config_get_set_variables)"
++		return
++		;;
++	*.*)
++		__git_complete_config_variable_value
++		return
++		;;
++	esac
++	case "$cur" in
++	--*)
++		__gitcomp_builtin config
++		;;
++	*)
++		__git_complete_config_variable_name
++		;;
+ 	esac
+ }
+ 
 -- 
 2.23.0.rc2.350.gf4fdc32db7
 
