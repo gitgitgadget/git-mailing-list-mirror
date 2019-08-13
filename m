@@ -2,173 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E440C1F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 20:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5A781F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 20:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726783AbfHMUQj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 16:16:39 -0400
-Received: from mout.gmx.net ([212.227.17.22]:43691 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725944AbfHMUQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 16:16:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1565727374;
-        bh=5Q19hGiP6MRD4vOH1C0tRZyugbrxQ55/e3F34Bld+XE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Agj6fG/ZeP8hRzxRdVpZxK8hZ2gb8RweCHS57Ngl36itqfdNIA5WSrfh5d/c3RhXW
-         B/8bj+XSfDugufpOQC6GQspD5PPRmcWS+uRDSqNZipQD4uIFEk5kTLEuUNlzenDbUz
-         vKUxqNGYwh3LKAbGDEDW67C5wcun8cWVxSUalxp0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.2.63] ([77.165.132.136]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1i2KK234oZ-00F9U9; Tue, 13
- Aug 2019 22:16:14 +0200
-Date:   Tue, 13 Aug 2019 22:16:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Palmer Dabbelt <palmer@sifive.com>
-cc:     git@vger.kernel.org, peff@peff.net, e@80x24.org,
-        chriscool@tuxfamily.org, gitster@pobox.com,
-        jonathantanmy@google.com, tboegi@web.de, bwilliams.eng@gmail.com,
-        jeffhost@microsoft.com
-Subject: Re: [PATCH v2 5/5] fetch: Make --jobs control submodules and
- remotes
-In-Reply-To: <20190812213448.2649-6-palmer@sifive.com>
-Message-ID: <nycvar.QRO.7.76.6.1908132212420.656@tvgsbejvaqbjf.bet>
-References: <20190812213448.2649-1-palmer@sifive.com> <20190812213448.2649-6-palmer@sifive.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726402AbfHMUdA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 16:33:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59109 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbfHMUdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 16:33:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70394171689;
+        Tue, 13 Aug 2019 16:32:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=fe3nEkTQGQAH
+        wT3x7QNjDwRp7UA=; b=Z2d4ANadeEd7B21TBnUKo18p9Gg35DBsZI5t9TKxPk3A
+        NzWirHshzVRDWsAS/stSa5QUKZGTwapGz98R3KlR9zwdgHp4biv3b7nkkjamUtk7
+        TJFptpNqcpjyZ+vM8dMw+jRMV6AN1q1ReXKZvS1CHb1AOAGnorfw62ADB9xPsx4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=C3LE/J
+        RU3XqE1EpGqY3YPS9RI9KbAqQknTyiqRL9HcwPSQwpLRihbILKQ6TL0K/Grx4hT/
+        cXzwCpXFO0r1M805kVJK2LvlqMATy1Gq6p+EFjuqMiNqdxzb/4dk4PWAAB62wmjm
+        U7h8VkCG2G+GymS2WlMA0ocB58zGTdnDfoOcY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 664D7171688;
+        Tue, 13 Aug 2019 16:32:58 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8BB1171687;
+        Tue, 13 Aug 2019 16:32:57 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Varun Naik <vcnaik94@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [RFC PATCH] unpack-trees.c: handle empty deleted ita files
+References: <20190813160353.50018-1-vcnaik94@gmail.com>
+        <b7f4b745-8942-6d90-dbc5-7f79f2cc323e@web.de>
+Date:   Tue, 13 Aug 2019 13:32:56 -0700
+In-Reply-To: <b7f4b745-8942-6d90-dbc5-7f79f2cc323e@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 13 Aug 2019 20:08:06 +0200")
+Message-ID: <xmqqr25o7qmf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OSr42gW1oX1t6aL4IIWni1urPsj9E1vA8xHiALKXFv0g2wVi/XT
- nMAVCXjJr7q94uDyab4AbFcYHiOEoRzEVZwGGP96SXBX7bCelYPPlZsbP4PLHhnBBSDFUKa
- KTieBFz6d6y+M5E/UdMU6ttkcfd4+7jFyazuCtD2dA7rPDPH2rmhFKxFHuibzhno3t7udlo
- 90PxJoeVIdrgwlXTsVFCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:t5NKzm8VDlg=:hNdgWkerFd5vuEjYuPwDI3
- +spCy/kUVA3m8LK4umIeVDRKBDn554wmejjfnwaAapK0uRLvzMMQi+JCfiF/deSjRHb6hkhFF
- 0WqP8UwizU1uz50Sw6pXOfv6whvyYsQwqgptA+fZUtS3yJiE4cY93tV8NYKDrEmaSY2AN9ZCJ
- 1L206eawSg5ViMiG0CDjGvq3kJ3hBLtHluSaIItNwbR3Z4ahB6ZGfPfDafEcBgpmEPatJSrFg
- inVYV70bfuKsw7JKPDXDuX8+2XRDwbSuCxtPkdtdoD341wRsLWdT6tw+Q094XyeZbmFvn/IL+
- 1KlmX28vbPZFGqUqhgr3Ea/pRSRBmcuhS6A8tyYh5h3B71prJWWamKLFvLVm2SIvBvt4Ic2J7
- Ym/wVN9hImkPZv1BYspnOnIAEwbG65g7LMBvuYwarjSlikQywBFLL0WEvB9Qj0hqwpO0CFvUP
- hZhTz0UX4AcpJiOkJLhvo3tck4sBUutdZiwYM19s2u6CbIuDBvax+YgKIrX8iapNwKfi3WZWd
- u3itQTtlE+T7pTAkK3/sGZXbRnyZkzsas6jrKqjaAT/V0GaQ1XFAEfhpbjxTleO/zOSvvshRk
- N14l3K89+gWYjfTPYJgU0lcKipKnl97wLydNPywcdvoNixDbDeGz2jaUPYPEPCjHCqMnkk3Pj
- nMGtZcgLAw6V80rbib0JHewN3QJA51KZe8WwH5bftTQ07LROC0be0ZaxQyFs616FsieRz03O6
- 1/g6uDb5oapRTw01JPnsZvOft2zemqwUkZ+4npOmu+4eq/jzurTY8nRJVxRqKoClgrXkkSpqe
- Nb32l+5HvceoSTyuwKtzKM+0Wzzo4Ws6CCnrK4ftxI43NsnXpdHXF2z9oRvP8dBUasRNsuWYg
- +Uaq3OhV3jRG9/TwfjMqdHAjIgpq55XILAeQD/TCN8EmNKXIq3txcG+Aep4ITVxFTtnkLxg8+
- hjCL6fcs3XygMH5AxGAZHCeDmMbTf3IaVWBK1LblMqKXb5RPGwxnLi0j2hkCTkgj51PUnud9S
- F2xOvrvhmIclINLD7RYx3AaV8KNJctgRd4F8Zmm9L+1JbpbiuEBZWBh/zlj3KPHfvL4DAX8Ga
- m6SL48dPCTquODyCVvVpdsggVVVXxaipZTsdDaVZmni4lOrFskEXZZ27aekYDQj3lfing97TZ
- 8XO3U=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8939BC3C-BE09-11E9-A7A8-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
+> Am 13.08.19 um 18:03 schrieb Varun Naik:
+>> It is possible to delete a committed file from the index and then add =
+it
+>> as intent-to-add. Several variations of "reset" and "checkout" should
+>> resurrect the file in the index from HEAD. "merge", "cherry-pick", and
+>> "revert" should all fail with an error message. This patch provides th=
+e
+>> desired behavior even when the file is empty in HEAD.
+>>
+>> The affected commands all compare two cache entries by calling
+>> unpack-trees.c:same(). A cache entry for an ita file and a cache entry
+>> for an empty file have the same oid. So, the cache entry for an empty
+>> deleted ita file was previously considered the "same" as the cache ent=
+ry
+>> for an empty file. This fix adds a comparison of the intent-to-add bit=
+s
+>> so that the two cache entries are no longer considered the "same".
+>>
+>> Signed-off-by: Varun Naik <vcnaik94@gmail.com>
+>> ---
+>> I am marking this patch as RFC because it is changing code deep in
+>> unpack-trees.c, and I'm sure it will generate some controversy :)
+>
+> Lacking experience with intent-to-add I don't see why this would be
+> controversial.
 
-On Mon, 12 Aug 2019, Palmer Dabbelt wrote:
+The "same()" function here is used to compare two cache entries
+(either came from the in-core index, or fabricated out of one of the
+tree objects as a potential merge result to replace the one in the
+index), and is expected to tell if they are the same or the
+different, which is used for example in a logic like "if the one in
+the index and the one came from HEAD are not the same, then it is
+not safe to continue the merge", "if the one came from HEAD and the
+one from the other branch are the same, just keep the one from the
+index (which may or may not be the same as HEAD)".
 
-> The existing --jobs argument was defined to control the number of jobs
-> used for submodule fetching, but it makes more sense to have this
-> argument control the number of jobs to be used when fetching from
-> multiple remotes as well.
->
-> This patch simply changes the --jobs argument parsing code to set both
-> max_children_for_{submodules,fetch}, as well as noting this new behavior
-> in the documentation.
->
-> Signed-off-by: Palmer Dabbelt <palmer@sifive.com>
-> ---
+The original code considered that two entries with the same mode and
+the same "contents" are the same.  As nobody sane tracks an empty
+file for an extended span of history, that meant that most of the
+time, intent-to-add entries, which has the normal mode bits for the
+blobs (with or without the executable bit) and object name for a
+zero length blob, would have been judged "different".
 
-I very much miss in this description a reflection of my analysis in
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1907191507420.47@tvgsbejvaq=
-bjf.bet/
+This change extends the logic to the case in which the contents
+recorded in the tree-ishes is also a zero length blob.  We used to
+say the I-T-A entry was the same as the recorded blob, but whether
+the recorded one in the tree-ish is 0-length or 1-byte blob, this
+patch does not want it to be declared the "same" as any I-T-A entry.
 
-Given that analysis, combined with the fact that the `--jobs` option
-tries to control both the `--multiple` and `--recursive-submodules` code
-paths in the end, anyway, I do doubt that it makes sense to even
-introduce the `--fetch-jobs` and the `--submodule-fetch-jobs` options;
-They are probably only confusing and do not add much benefit to the end
-user.
+So in that sense, it makes the behaviour for I-T-A entries
+consistent.  But it is a separate matter if the consistency is good;
+we do not want our code to be consistently wrong ;-)
 
-Ciao,
-Johannes
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 50189909b8..9b7e6b01c4 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -1661,6 +1661,7 @@ static int same(const struct cache_entry *a, con=
+st struct cache_entry *b)
+>>  	if ((a->ce_flags | b->ce_flags) & CE_CONFLICTED)
+>>  		return 0;
+>>  	return a->ce_mode =3D=3D b->ce_mode &&
+>> +	       !ce_intent_to_add(a) =3D=3D !ce_intent_to_add(b) &&
+>
+> Why the bangs?  This would work just as well and be slightly easier to
+> read without negating both sides, wouldn't it?
 
->  Documentation/fetch-options.txt |  4 ++++
->  builtin/fetch.c                 | 21 ++++++++++++++++++---
->  2 files changed, 22 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-optio=
-ns.txt
-> index 5836024f1934..0915fd4ed6d5 100644
-> --- a/Documentation/fetch-options.txt
-> +++ b/Documentation/fetch-options.txt
-> @@ -160,6 +160,10 @@ ifndef::git-pull[]
->
->  -j::
->  --jobs=3D<n>::
-> +	Number of parallel children to be used for all forms of fetching.
-> +	This is the same as passing `--submodule-fetch-jobs=3D<n>` and
-> +	`--fetch-jobs=3D<n>`.
-> +
->  --submodule-fetch-jobs=3D<n>::
->  	Number of parallel children to be used for fetching submodules.
->  	Each will fetch from different submodules, such that fetching many
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 67d001f3f78b..41498e9efb3b 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -114,6 +114,20 @@ static int git_fetch_config(const char *k, const ch=
-ar *v, void *cb)
->  	return git_default_config(k, v, cb);
->  }
->
-> +static int parse_jobs_arg(const struct option *opt, const char *arg, in=
-t unset)
-> +{
-> +	int jobs;
-> +
-> +	jobs =3D atoi(arg);
-> +	if (jobs < 1)
-> +		die(_("There must be a positive number of jobs"));
-> +
-> +	max_children_for_submodules =3D jobs;
-> +	max_children_for_fetch =3D jobs;
-> +
-> +	return 0;
-> +}
-> +
->  static int parse_refmap_arg(const struct option *opt, const char *arg, =
-int unset)
->  {
->  	BUG_ON_OPT_NEG(unset);
-> @@ -142,12 +156,13 @@ static struct option builtin_fetch_options[] =3D {
->  		    N_("fetch all tags and associated objects"), TAGS_SET),
->  	OPT_SET_INT('n', NULL, &tags,
->  		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
-> -	OPT_INTEGER('j', "jobs", &max_children_for_submodules,
-> +	{ OPTION_CALLBACK, 'j', "jobs", NULL, N_("jobs"),
-> +		    N_("number of parallel tasks to run while fetching"),
-> +		    PARSE_OPT_OPTARG, &parse_jobs_arg },
-> +	OPT_INTEGER(0, "submodule-fetch-jobs", &max_children_for_submodules,
->  		    N_("number of submodules fetched in parallel")),
->  	OPT_INTEGER(0, "fetch-jobs", &max_children_for_fetch,
->  		    N_("number of remotes fetched in parallel")),
-> -	OPT_INTEGER(0, "submodule-fetch-jobs", &max_children_for_submodules,
-> -		    N_("number of submodules fetched in parallel")),
->  	OPT_BOOL('p', "prune", &prune,
->  		 N_("prune remote-tracking branches no longer on remote")),
->  	OPT_BOOL('P', "prune-tags", &prune_tags,
-> --
-> 2.21.0
->
->
+Looking at the implementation of that macro, I agree.  If it were
+"returns non-zero for true, zero for false, we do not guarantee that
+we return the same non-zero value for true all the time", then these
+bangs do make sense, but that is not the case here.
+
+But more importantly, can both sides of the comparison be I-T-A
+entries?
+
+I offhand do not think such a situation can arise (a cache entry
+with I-T-A bit on can only come from the in-core index, IIUC, and
+never from a tree-ish in this codepath), but if we encouter such a
+case, I would imagine that we do not want to treat an I-T-A entry to
+be the same with anything else, including another I-T-A entry.
+
+So perhaps=20
+
++	!ce_intent_to_add(a) && !ce_intent_to_add(b) &&
+
+i.e. "a cache entry is eligible to be same with something else only
+when its I-T-A bit is unset".
+
+I dunno.
+
+>>  	       oideq(&a->oid, &b->oid);
+>>  }
+>>
+>>
