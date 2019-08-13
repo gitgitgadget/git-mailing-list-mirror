@@ -2,55 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FF5F1F45A
-	for <e@80x24.org>; Tue, 13 Aug 2019 14:18:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FFD91F45A
+	for <e@80x24.org>; Tue, 13 Aug 2019 14:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729507AbfHMOSV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Aug 2019 10:18:21 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:43665 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729264AbfHMOSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Aug 2019 10:18:20 -0400
-Received: from localhost (unknown [157.49.214.110])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 8531010000C
-        for <git@vger.kernel.org>; Tue, 13 Aug 2019 14:18:18 +0000 (UTC)
-Date:   Tue, 13 Aug 2019 19:48:16 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     git@vger.kernel.org
-Subject: How to reset selected lines?
-Message-ID: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
+        id S1729688AbfHMOom (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Aug 2019 10:44:42 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:35878 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728681AbfHMOom (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Aug 2019 10:44:42 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id B45AA1F45A;
+        Tue, 13 Aug 2019 14:44:41 +0000 (UTC)
+Date:   Tue, 13 Aug 2019 14:44:41 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Palmer Dabbelt <palmer@sifive.com>
+Cc:     git@vger.kernel.org, peff@peff.net, chriscool@tuxfamily.org,
+        gitster@pobox.com, jonathantanmy@google.com, tboegi@web.de,
+        bwilliams.eng@gmail.com, jeffhost@microsoft.com
+Subject: Re: [PATCH v2 2/5] fetch: Add the "--fetch-jobs" option
+Message-ID: <20190813144441.qw5i3zbrvebz5o7z@dcvr>
+References: <20190812213448.2649-1-palmer@sifive.com>
+ <20190812213448.2649-3-palmer@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20190812213448.2649-3-palmer@sifive.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Palmer Dabbelt <palmer@sifive.com> wrote:
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 8aa6a0caf1ab..fa12ad44e7d9 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
 
-To put things into context of why I am asking this, git-gui has a 
-feature where you can select parts of a displayed diff, and can 
-stage/unstage those parts. That feature is implemented in git-gui by 
-just generating a diff from the selected lines, and then applying it. 
-Check git-gui/lib/diff.tcl:643 for the implementation.
+<snip>
 
-Now, I want to add a similar feature, but one that discards/resets the 
-selected lines. And I'd like to avoid the hack that git-gui's 
-apply_range_or_line is. So, is there a cleaner way to do this that does 
-not involve generating a diff and then applying it?
+> +static int next_remote_to_fetch(struct child_process *cp,
+> +				struct strbuf *out,
+> +				void *state_uncast,
+> +				void **task_state_out)
+> +{
+> +	int i;
+> +	struct fetch_remote *state = state_uncast;
+> +	struct fetch_remote_task *task_state = NULL;
+> +	const char *remote_name;
+> +
+> +	if (state->next_remote_index >= state->all_remotes->nr)
+> +		return 0;
+> +
+> +	remote_name = state->all_remotes->items[state->next_remote_index].string;
+> +	state->next_remote_index++;
+> +
+> +	/*
+> +	 * Finds somewhere to store the state for a task.  This is guarnteed to
+> +	 * succeed because there are always enough tasks allocated to cover the
+> +	 * number that have been requested to run in parallel.  Rather than
+> +	 * bothering with some sort of free list, this just brute force
+> +	 * searches for a free task.  The assumption is that there aren't that
+> +	 * many tasks to look through.
+> +	 */
+> +	for (i = 0; i < state->task_count; ++i) {
+> +		if (!state->all_tasks[i].in_use) {
+> +			task_state = state->all_tasks + i;
+> +			break;
+> +		}
+> +	}
 
-Also, if there is a better way of staging and unstaging selected lines 
-as well, do let me know, and I will try to fix git-gui's hacky way of 
-doing it.
+Fwiw, I added list.h, the linked-list derived from the Linux
+kernel to simplify usage of free lists, queues, etc...
 
--- 
-Regards,
-Pratyush Yadav
+I think it could improve readability, too; but I'm not really
+a C programmer and prefer high-level scripting languages.
