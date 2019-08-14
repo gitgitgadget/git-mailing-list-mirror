@@ -2,123 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A6831F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 19:18:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A71DD1F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 19:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727975AbfHNTSv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 15:18:51 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56034 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727558AbfHNTSv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 15:18:51 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E59D969727;
-        Wed, 14 Aug 2019 15:18:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=20Y/IVR+ukioOUIZrfqbq5hAvFA=; b=P3DLFM
-        xrMQ5Gx8GNYr70r5l9IDOeOMd4n1oRzm5A5d0QPP+7U0RwwfhSFfgN1h9hPpIlgi
-        k8xwCKY0s2wnhBRU2ACU5kgelf9y7RbaEeO25KsMVCpB+HUpo2wzFM7Nt7DDKbzi
-        22Pqb0tvM7xNxZ46DkUggvBcfqW552l9nSfrw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DerBc5Kdaj3csO0eVq6ctl0ciSdKZrge
-        M0C2Gjwl5BgPFLTiA88PxOQA49WKvG8Bq8sT2PdOsPV5BG7R0q8ck/Xh3LipfUHA
-        HFkLDGxlRtYkY4/2a6HeN1iB0w36cl5oQEwHf1agCUV+vm9aQ+f2hdSksiae+E+f
-        rNrgG6uhjhY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE5B669726;
-        Wed, 14 Aug 2019 15:18:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD9DF69725;
-        Wed, 14 Aug 2019 15:18:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v4] documentation: add tutorial for revision walking
-References: <20190806231952.39155-1-emilyshaffer@google.com>
-        <xmqqwofohjgv.fsf@gitster-ct.c.googlers.com>
-        <20190814183328.GA40797@google.com>
-Date:   Wed, 14 Aug 2019 12:18:39 -0700
-In-Reply-To: <20190814183328.GA40797@google.com> (Emily Shaffer's message of
-        "Wed, 14 Aug 2019 11:33:28 -0700")
-Message-ID: <xmqqd0h75ze8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728482AbfHNTbL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 15:31:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43710 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726951AbfHNTbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 15:31:11 -0400
+Received: (qmail 20790 invoked by uid 109); 14 Aug 2019 19:31:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 19:31:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19338 invoked by uid 111); 14 Aug 2019 19:32:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 15:32:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 14 Aug 2019 15:31:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Paolo Pettinato (ppettina)" <ppettina@cisco.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
+Message-ID: <20190814193110.GA31218@sigill.intra.peff.net>
+References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+ <20190814153607.GB12093@sigill.intra.peff.net>
+ <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53AAA06C-BEC8-11E9-97C8-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Wed, Aug 14, 2019 at 09:40:40AM -0700, Junio C Hamano wrote:
 
->> > I think the tutorial itself is pretty much ready...
->> 
->> A few comments after skimming this round; none of them may be a show
->> stopper, but others may have different opinions.
->>  ...
-> Hmmm. It sounds like you're saying:
->
-> - This object covers walking objects, which is surprising since it's
->   titled about "revision walks". Revision walks are more about commits
->   ("git log").
+> > but it feels odd to me. Even if the submodule is not currently checked
+> > out, we'd presumably still want to do the recursive fetch as long as we
+> > have a repo under $GIT_DIR/modules?
+> 
+> ... which means that we are not interested in "is it populated?" but
+> in "have we done 'git submodule init' to show interest in it?".  But
+> since we are walking the in-core index and picking only the gitlink
+> entries in it in the early part of this loop, we know ce cannot be
+> anything but a submodule at this point, so we will not be in the "we
+> are interesteed in the submodule, but the current HEAD and index is
+> at a commit that does not have it, hence $GIT_DIR/modules/ is the
+> only place that knows about it" situation.  If we are interested in
+> it enough to have a repository stashed under $GIT_DIR/modules/, we
+> should have a submodule there, shouldn't we?
 
-Yes, the document does not duplicate what existing docs on "revision
-walk" API would cover, which is a very good thing, as it is (or at
-least "feels to be") primarly about walking objects.
+Yeah, as I was writing the above I too was wondering whether this was a
+case that could even happen. So it may be that the two ways of asking
+the question end up the same in practice.
 
-> - Using grep on objects doesn't make any sense.
+> What I do not quite get is that repo_submodule_init(), which is
+> called by get_submodule_repo_for(), looks into $GIT_DIR/modules/,
+> according to the in-code comment of that function.  So "we cannot
+> get the repo for it, which is an error condition, but we will
+> complain only for non-empty directory" logic feels iffy.
 
-The grep filter works on commit's log messages, and does not even
-look at other types of objects, so while that point is true, what I
-was driving at was that skipping commits using grep filter would
-mean showing trees and blobs related only to the chosen commits, and
-while it can be explained as such (i.e. "trees and blobs contained
-only in commits without these strings are excluded"), the practical
-usefulness of such a "feature" is dubious (here I am imagining the
-primary practical use of "object walk" is to feed pack-objects).
+Right. This whole non-empty directory thing _feels_ like a hack that was
+added to paper over the fact that get_submodule_repo_for() does not
+distinguish between "nope, this module is not active" and "an error
+occurred".
 
-> - Other filters (like pathspecs) which do make sense for object walks
->   aren't covered.
+Given that any real errors there would come from
+read_and_verify_repository_format(), which generates its own error
+messages, I wonder if we should simply quietly ignore any entries for
+which get_submodule_repo_for() returns NULL. I suppose that would impact
+our exit code, though (i.e., a real broken submodule would not cause the
+outer fetch to exit with a non-zero code).
 
-Yup.  For example, "trees and blobs that appear only outside of this
-directory hierarchy are excluded" would be useful to enumerate
-objects necessary for a narrow commits (again, to feed pack-objects).
+Probably that could be dealt with by having get_submodule_repo_for()
+return a tristate enum: a working struct, an error, or ENOENT. Actually,
+I guess we could set errno. ;)
 
-> - Apply the grep filter to the commit walk, and apply a more interesting
->   object filter to the object walk.
->
-> Or,
->
-> - Choose a different kind of filter which is interesting when applied to
->   commits alone _and_ all objects.
->
-> In the interest of covering more ground with this kind of tutorial, I'd
-> lean more towards the former.
+It's not clear to me, though, that the rest of the functions are
+distinguishing between "broken repo at submodule path" and "no such
+submodule". For instance, get_submodule_repo_for() itself will happily
+hit a fallback path if repo_submodule_init() returns an error. That
+would really only want to trigger on this ENOENT-equivalent case.
 
-Sorry, I do not have enough imagination to cheer for either of these
-two options---these may be "interesting" in the same way as "trees
-and blobs contained only in commits without these strings are
-excluded" enumeration, but I fail to see practical usefulness
-(i.e. the reason why a user may be tempted to learn how to achieve
-it).
+> Stepping back even a bit more, "an empty directory is normal" makes
+> some sense.  If the user or the build system created a non-directory
+> at a path where a populated submodule would sit, that would not be
+> good.  If the user or the build system created a random file in the
+> unpopulated empty directory, in which the working tree files of the
+> submodule would be created once the submodule getspopulated, that
+> would be equally bad, wouldn't it?  Why is the user mucking with
+> that directory in the first place, and isn't the flagging of the
+> situation as an error, done with 26f80ccf ("submodule: migrate
+> get_next_submodule to use repository structs", 2018-11-28), a
+> bugfix?  If not, why not?
 
-In any case, that was my personal take and not a strong request to
-change anything, as I said upfront.  The document just gave me an
-impression that it was teaching coding exercise that may be
-interesting but of dubious utility.
+I agree that the user putting things in that directory is kind of weird.
+It just seems odd that fetch, which doesn't at all care about the
+working tree, would be the thing to complain about it.
 
+-Peff
