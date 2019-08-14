@@ -2,473 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5481F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 14:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A44B1F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 14:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728104AbfHNOGj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 10:06:39 -0400
-Received: from mut-mta1-se01b-zose1-fr.yulpa.io ([185.49.22.247]:33057 "EHLO
-        mut-mta1-se01b-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726865AbfHNOGi (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Aug 2019 10:06:38 -0400
-X-Greylist: delayed 1163 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Aug 2019 10:06:36 EDT
-Received: from mut-zose1-mta-hub-out01-fr.yulpa.io ([185.49.20.54] helo=mut-zose1-mta-hub-outmua01b-fr.yulpa.io)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1hxtcD-000HxR-CU; Wed, 14 Aug 2019 15:47:10 +0200
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id 133F510209E;
-        Wed, 14 Aug 2019 15:47:00 +0200 (CEST)
-Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 60Nw_XwXYuyn; Wed, 14 Aug 2019 15:46:59 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id 09D641020A2;
-        Wed, 14 Aug 2019 15:46:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
-Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id q11ARwGLGfDI; Wed, 14 Aug 2019 15:46:58 +0200 (CEST)
-Received: from moylip.lip.ens-lyon.fr (dhcp-13-233.lip.ens-lyon.fr [140.77.13.233])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTPSA id BFD5B10209E;
-        Wed, 14 Aug 2019 15:46:58 +0200 (CEST)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     git@vger.kernel.org, matthieu.moy@univ-lyon1.fr
-Cc:     corentin.bompard@etu.univ-lyon1.fr, gitster@pobox.com,
-        nathan.berbezier@etu.univ-lyon1.fr,
-        pablo.chabanne@etu.univ-lyon1.fr,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH] pull, fetch: add --set-upstream option
-Date:   Wed, 14 Aug 2019 15:46:29 +0200
-Message-Id: <20190814134629.21096-1-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.20.1.98.gecbdaf0
-In-Reply-To: <86zhoil3yw.fsf@univ-lyon1.fr>
-References: <86zhoil3yw.fsf@univ-lyon1.fr>
+        id S1727983AbfHNOwV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 10:52:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43294 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726522AbfHNOwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 10:52:21 -0400
+Received: (qmail 16867 invoked by uid 109); 14 Aug 2019 14:52:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 14:52:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16733 invoked by uid 111); 14 Aug 2019 14:53:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 10:53:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 14 Aug 2019 10:52:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org
+Subject: Re: How to reset selected lines?
+Message-ID: <20190814145219.GA12093@sigill.intra.peff.net>
+References: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
+ <20190813154239.GA22514@sigill.intra.peff.net>
+ <20190814114844.gvb5znje7cpzehkd@localhost.localdomain>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: 185.49.20.54
-X-yulPa-Domain: mut-zose1.yulpa.io
-X-yulPa-Username: 185.49.20.54
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.54@mut-zose1.yulpa.io
-X-yulPa-Outgoing-Class: ham
-X-yulPa-Outgoing-Evidence: Combined (0.03)
-X-Recommended-Action: accept
-X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0YiRRkpbHZ8F3zevhEShTfypSDasLI4SayDByyq9LIhVskKGEDIgHR3h
- xP1DzksMdUTNWdUk1Ol2OGx3IfrIJKyP9eGNFz9TW9u+Jt8z2T3K/ul8EzZFK7PjxbL6TZ5y/ABn
- Bx2qQbdL1/YP7F9FT18R74xqT0ZUtArmRSbxpjsFVbNiDoRVAi1uIJx5hODtLHI7vtBXWEq8QtPk
- gbiwp8pIJb9212px10C3TdL9EtOWlm0qUmsuKi3RJj9knUTJti3CueNfqMJBYzPoh8qXShBU6C1I
- zYUzQVV3UCXOcMrgj0EZBWlS7yxT2d6NX4GqC9q9Uvxs027xYD32j0KG+ezAnai31M7dF8usmm8O
- 3+jwr2tZ699xXLsZngP2qXvj1uKVse1sVhWabI0/+PN3sIJkYWvWNZaZ0U+2WAj4Iohtz9+0obOQ
- /4Au5swlnGadp6CRlU8C1WnyUnLVFToIQvrIrxLCZp9Sd4tds0J6Y5wJwEr229KB/6clHODM7k6D
- iKYNZ1uK2CRFUd80lC+BinR7adGiiPHrMlYIVkH60xZhKEyo7eGOk4CYU1DDb9mhHHyNorheeibm
- 3WriJmfuZ98L+ZOSbzjImTn25GTijHwfVObthVmcSa2zH/eZl+9MwJT7qmWzK4Bx1WIeFtGbNIt7
- vMDcwLqLGB+xDtP7BtE8Hz0bzpJl/jutim/hvpmAa6SoOE974E0u5C4r82NtIfvEaZWzla67okw5
- +LTnA9hhPBHH57cLkN8Bd0wm8jqRC7iK9ree+gUyHwXcNW6nr8Boh9VoIekQHpwUfpYnEThmEGxS
- Fp15maAKnluaxCcVQS6OEx1CThXglRZxaMInFD8Ha75EisdYjOMhqKG3F3DDxOtvpADbLjUx/vmK
- /Pr5BbCophMACiHsRlf8t4qYyg2yFAyQLbDKYkHQign4W6SCvRKnzt0jxNZYu4WrfbbZmjFtbEyn
- 2P4u4n4ZEouAXty96lTl15RD5tA1v8q+kirKCHQC9gWc/ZNdDYukLAlaS1e8hBdgHPFOkNt6qfss
- cGTMTC+0l1afwktr10M2BZ01y7etE50//vdIE+/r79PaJyPbaAeFrOWFYLyGyjW8koxgJYzB1qHm
- ab5b47wBJGXTmx3sX1QMTGj9cMllOHwI+G+1+ao5IFxjNz+fNkr2BedL0iD8CBN6Nyboe0elXlPy
- 26NJ4nFxT6fDKMo/x2MtXquDnONeMVij5A2eZiW1A6cHoD+Lq/Kh4BKeITbvYbQd9KHbyJYnqURN
- xchfgcTIikVcTYiIgVJZ+JgMHCV2GtAxL7hrJSk60SF3F6RYOYr2
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190814114844.gvb5znje7cpzehkd@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+On Wed, Aug 14, 2019 at 05:18:44PM +0530, Pratyush Yadav wrote:
 
-Add the --set-upstream option to git pull/fetch
-which lets the user set the upstream configuration
-(branch.<current-branch-name>.merge and
-branch.<current-branch-name>.remote) for the current branch.
+> > So "git add -p", for example, also works by creating diffs, modifying
+> > them, and feeding the result to "apply". You can see the implementation
+> > in git-add--interactive.perl, where it literally calls diff and apply
+> > commands.
+> > 
+> > And that leads us to the answer to the first question. That script
+> > implements "add -p", but also "checkout -p" (which is what you want),
+> > "reset -p", "stash -p", etc. They differ only in what we diff and how we
+> > apply the result; the main engine of slicing and dicing the diff through
+> > user interaction is the same. See the %patch_modes hash for the list.
+> 
+> Ah, so that means I do have to dive into generating diffs. Too bad, I 
+> was hoping for a cleaner (read: easier) way.
+> 
+> On that note, I don't suppose there is a way to use 
+> git-add--interactive's diff engine from a script, is there?  That'd 
+> allow me to not write potentially buggy code and solve problems someone 
+> already solved.
 
-A typical use-case is:
+The actual diffing is all done by lower-level commands. So I'm not sure
+there's much "engine" to reuse from the script. It takes care of asking
+the user about which lines to look at, how to split the diff, etc, but
+that's the part you'd want a totally different interface for.
 
-    git clone http://example.com/my-public-fork
-    git remote add main http://example.com/project-main-repo
-    git pull --set-upstream main master
+The one thing you _might_ want to pick up is the line recounting bits.
+We used to just call "apply --recount", but I think there were some
+corner cases that it couldn't handle well. The details are in 2b8ea7f3c7
+(add -p: calculate offset delta for edited patches, 2018-03-05) and
+3a8522f41f (add -p: don't rely on apply's '--recount' option,
+2018-03-05), and probably some mailing list around those.
 
-or, instead of the last line:
+You could probably start with just not handling those corner cases,
+though (either relying on "apply --recount", or just using whatever
+git-gui already does now for staging).
 
-    git fetch --set-upstream main master
-    git merge # or git rebase
-
-This functionality is analog to push --set-upstream.
-
-Signed-off-by: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
-Signed-off-by: Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>
-Signed-off-by: Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
-Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
----
-This is a followup on
-https://public-inbox.org/git/86zhoil3yw.fsf@univ-lyon1.fr/. It's
-initially a student project, but students didn't get time to complete
-it. Still, I think the feature is interesting, and I finally get time
-to fix the remarks made up to now. This now looks good to me, but
-obviously needs other pairs of eyes.
-
-Thanks,
-
- Documentation/fetch-options.txt |   7 ++
- builtin/fetch.c                 |  48 ++++++++-
- builtin/pull.c                  |   6 ++
- t/t5553-set-upstream.sh         | 178 ++++++++++++++++++++++++++++++++
- 4 files changed, 238 insertions(+), 1 deletion(-)
- create mode 100755 t/t5553-set-upstream.sh
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-option=
-s.txt
-index 3c9b4f9e09..99df1f3d4e 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -169,6 +169,13 @@ ifndef::git-pull[]
- 	Disable recursive fetching of submodules (this has the same effect as
- 	using the `--recurse-submodules=3Dno` option).
-=20
-+--set-upstream::
-+	If the remote is fetched successfully, pull and add upstream
-+	(tracking) reference, used by argument-less
-+	linkgit:git-pull[1] and other commands. For more information,
-+	see `branch.<name>.merge` and `branch.<name>.remote` in
-+	linkgit:git-config[1].
-+
- --submodule-prefix=3D<path>::
- 	Prepend <path> to paths printed in informative messages
- 	such as "Fetching submodule foo".  This option is used
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 717dd14e89..5557ae1c04 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -23,6 +23,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "commit-reach.h"
-+#include "branch.h"
-=20
- #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
-=20
-@@ -50,7 +51,7 @@ static int fetch_prune_tags_config =3D -1; /* unspecifi=
-ed */
- static int prune_tags =3D -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
-=20
--static int all, append, dry_run, force, keep, multiple, update_head_ok, =
-verbosity, deepen_relative;
-+static int all, append, dry_run, force, keep, multiple, update_head_ok, =
-verbosity, deepen_relative, set_upstream;
- static int progress =3D -1;
- static int enable_auto_gc =3D 1;
- static int tags =3D TAGS_DEFAULT, unshallow, update_shallow, deepen;
-@@ -123,6 +124,8 @@ static struct option builtin_fetch_options[] =3D {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "all", &all,
- 		 N_("fetch from all remotes")),
-+	OPT_BOOL(0, "set-upstream", &set_upstream,
-+		 N_("set upstream for git pull/fetch")),
- 	OPT_BOOL('a', "append", &append,
- 		 N_("append to .git/FETCH_HEAD instead of overwriting")),
- 	OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
-@@ -1367,6 +1370,49 @@ static int do_fetch(struct transport *transport,
- 		retcode =3D 1;
- 		goto cleanup;
- 	}
-+
-+	if (set_upstream) {
-+		struct branch *branch =3D branch_get("HEAD");
-+		struct ref *rm;
-+		struct ref *source_ref =3D NULL;
-+
-+		/*
-+		 * We're setting the upstream configuration for the current branch. Th=
-e
-+		 * relevent upstream is the fetched branch that is meant to be merged =
-with
-+		 * the current one, i.e. the one fetched to FETCH_HEAD.
-+		 *
-+		 * When there are several such branches, consider the request ambiguou=
-s and
-+		 * err on the safe side by doing nothing and just emit a warning.
-+		 */
-+		for (rm =3D ref_map; rm; rm =3D rm->next) {
-+			if (!rm->peer_ref) {
-+				if (source_ref) {
-+					warning(_("multiple branch detected, incompatible with --set-upstre=
-am"));
-+					goto skip;
-+				} else {
-+					source_ref =3D rm;
-+				}
-+			}
-+		}
-+		if (source_ref) {
-+			if (!strcmp(source_ref->name, "HEAD") ||=20
-+				starts_with(source_ref->name, "refs/heads/")) {
-+				install_branch_config(0, branch->name,
-+							 transport->remote->name,
-+							 source_ref->name);
-+			} else if (starts_with(source_ref->name, "refs/remotes/")) {
-+				warning(_("not setting upstream for a remote remote-tracking branch"=
-));
-+			} else if (starts_with(source_ref->name, "refs/tags/")) {
-+				warning(_("not setting upstream for a remote tag"));
-+			} else {
-+				warning(_("unknown branch type"));
-+			}
-+		} else {
-+			warning(_("no source branch found.\n"
-+				"you need to specify exactly one branch with the --set-upstream opti=
-on."));
-+		}
-+	}
-+ skip:
- 	free_refs(ref_map);
-=20
- 	/* if neither --no-tags nor --tags was specified, do automated tag
-diff --git a/builtin/pull.c b/builtin/pull.c
-index f1eaf6e6ed..d25ff13a60 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -129,6 +129,7 @@ static char *opt_refmap;
- static char *opt_ipv4;
- static char *opt_ipv6;
- static int opt_show_forced_updates =3D -1;
-+static char *set_upstream;
-=20
- static struct option pull_options[] =3D {
- 	/* Shared options */
-@@ -243,6 +244,9 @@ static struct option pull_options[] =3D {
- 		PARSE_OPT_NOARG),
- 	OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
- 		 N_("check for forced-updates on all updated branches")),
-+	OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
-+		N_("set upstream for git pull/fetch"),
-+		PARSE_OPT_NOARG),
-=20
- 	OPT_END()
- };
-@@ -556,6 +560,8 @@ static int run_fetch(const char *repo, const char **r=
-efspecs)
- 		argv_array_push(&args, "--show-forced-updates");
- 	else if (opt_show_forced_updates =3D=3D 0)
- 		argv_array_push(&args, "--no-show-forced-updates");
-+	if (set_upstream)
-+		argv_array_push(&args, set_upstream);
-=20
- 	if (repo) {
- 		argv_array_push(&args, repo);
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-new file mode 100755
-index 0000000000..bd1a94f494
---- /dev/null
-+++ b/t/t5553-set-upstream.sh
-@@ -0,0 +1,178 @@
-+#!/bin/sh
-+
-+test_description=3D'"git fetch/pull --set-upstream" basic tests.'
-+. ./test-lib.sh
-+
-+check_config () {
-+	printf "%s\n" "$2" "$3" >"expect.$1" &&
-+	{
-+		git config "branch.$1.remote" && git config "branch.$1.merge"
-+	} >"actual.$1" &&
-+	test_cmp "expect.$1" "actual.$1"
-+}
-+
-+check_config_missing () {
-+	test_expect_code 1 git config "branch.$1.remote" &&
-+	test_expect_code 1 git config "branch.$1.merge"
-+}
-+
-+clear_config () {
-+	for branch in "$@"; do
-+		test_might_fail git config --unset-all "branch.$branch.remote"
-+		test_might_fail git config --unset-all "branch.$branch.merge"
-+	done
-+}
-+
-+ensure_fresh_upstream () {
-+	rm -rf parent && git init --bare parent
-+}
-+
-+test_expect_success 'setup bare parent fetch' '
-+	ensure_fresh_upstream &&
-+	git remote add upstream parent
-+'
-+
-+test_expect_success 'setup commit on master and other fetch' '
-+	test_commit one &&
-+	git push upstream master &&
-+	git checkout -b other &&
-+	test_commit two &&
-+	git push upstream other
-+'
-+
-+#tests for fetch --set-upstream
-+
-+test_expect_success 'fetch --set-upstream does not set upstream w/o bran=
-ch' '
-+	clear_config master other &&
-+	git checkout master &&
-+	git fetch --set-upstream upstream &&
-+	check_config_missing master &&
-+	check_config_missing other
-+'
-+
-+test_expect_success 'fetch --set-upstream upstream master sets branch ma=
-ster but not other' '
-+	clear_config master other &&
-+	git fetch --set-upstream upstream master &&
-+	check_config master upstream refs/heads/master &&
-+	check_config_missing other
-+'
-+
-+test_expect_success 'fetch --set-upstream upstream other sets branch oth=
-er' '
-+	clear_config master other &&
-+	git fetch --set-upstream upstream other &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_missing other
-+'
-+
-+test_expect_success 'fetch --set-upstream master:other does not set the =
-branch other2' '
-+	clear_config other2 &&
-+	git fetch --set-upstream upstream master:other2 &&
-+	check_config_missing other2
-+'
-+
-+test_expect_success 'fetch --set-upstream http://nosuchdomain.example.co=
-m fails with invalid url' '
-+	# master explicitly not cleared, we check that it is not touched from p=
-revious value
-+	clear_config other other2 &&
-+	test_must_fail git fetch --set-upstream http://nosuchdomain.example.com=
- &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_missing other &&
-+	check_config_missing other2
-+'
-+
-+test_expect_success 'fetch --set-upstream with valid URL sets upstream t=
-o URL' '
-+	clear_config other other2 &&
-+	url=3D"file://'"$PWD"'" &&
-+	git fetch --set-upstream "$url" &&
-+	check_config master "$url" HEAD &&
-+	check_config_missing other &&
-+	check_config_missing other2
-+'
-+
-+#tests for pull --set-upstream
-+
-+test_expect_success 'setup bare parent pull' '
-+	git remote rm upstream &&
-+	ensure_fresh_upstream &&
-+	git remote add upstream parent
-+'
-+
-+test_expect_success 'setup commit on master and other pull' '
-+	test_commit three &&
-+	git push --tags upstream master &&
-+	test_commit four &&
-+	git push upstream other
-+'
-+
-+test_expect_success 'pull --set-upstream upstream master sets branch mas=
-ter but not other' '
-+	clear_config master other &&
-+	git pull --set-upstream upstream master &&
-+	check_config master upstream refs/heads/master &&
-+	check_config_missing other
-+'
-+
-+test_expect_success 'pull --set-upstream master:other2 does not set the =
-branch other2' '
-+	clear_config other2 &&
-+	git pull --set-upstream upstream master:other2 &&
-+	check_config_missing other2
-+'
-+
-+test_expect_success 'pull --set-upstream upstream other sets branch mast=
-er' '
-+	clear_config master other &&
-+	git pull --set-upstream upstream other &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_missing other
-+'
-+
-+test_expect_success 'pull --set-upstream upstream tag does not set the t=
-ag' '
-+	clear_config three &&
-+	git pull --tags --set-upstream upstream three &&
-+	check_config_missing three
-+'
-+
-+test_expect_success 'pull --set-upstream http://nosuchdomain.example.com=
- fails with invalid url' '
-+	# master explicitly not cleared, we check that it is not touched from p=
-revious value
-+	clear_config other other2 three &&
-+	test_must_fail git pull --set-upstream http://nosuchdomain.example.com =
-&&
-+	check_config master upstream refs/heads/other &&
-+	check_config_missing other &&
-+	check_config_missing other2 &&
-+	check_config_missing three
-+'
-+
-+test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD'=
- '
-+	clear_config master other &&
-+	git pull --set-upstream upstream HEAD &&
-+	check_config master upstream HEAD &&
-+	git checkout other &&
-+	git pull --set-upstream upstream HEAD &&
-+	check_config other upstream HEAD
-+'
-+
-+test_expect_success 'pull --set-upstream upstream with more than one bra=
-nch does nothing' '
-+	clear_config master three &&
-+	git pull --set-upstream upstream master three &&
-+	check_config_missing master &&
-+	check_config_missing three
-+'
-+
-+test_expect_success 'pull --set-upstream with valid URL sets upstream to=
- URL' '
-+	clear_config master other other2 &&
-+	git checkout master &&
-+	url=3D"file://'"$PWD"'" &&
-+	git pull --set-upstream "$url" &&
-+	check_config master "$url" HEAD &&
-+	check_config_missing other &&
-+	check_config_missing other2
-+'
-+
-+test_expect_success 'pull --set-upstream with valid URL and branch sets =
-branch' '
-+	clear_config master other other2 &&
-+	git checkout master &&
-+	url=3D"file://'"$PWD"'" &&
-+	git pull --set-upstream "$url" master &&
-+	check_config master "$url" refs/heads/master &&
-+	check_config_missing other &&
-+	check_config_missing other2
-+'
-+
-+test_done
---=20
-2.20.1.98.gecbdaf0
-
+-Peff
