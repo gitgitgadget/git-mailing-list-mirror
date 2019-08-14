@@ -7,76 +7,136 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A44B1F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 14:52:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0DA71F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 15:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727983AbfHNOwV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 10:52:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43294 "HELO cloud.peff.net"
+        id S1727110AbfHNPgJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 11:36:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43334 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726522AbfHNOwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 10:52:21 -0400
-Received: (qmail 16867 invoked by uid 109); 14 Aug 2019 14:52:21 -0000
+        id S1726166AbfHNPgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 11:36:08 -0400
+Received: (qmail 17141 invoked by uid 109); 14 Aug 2019 15:36:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 14:52:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 15:36:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16733 invoked by uid 111); 14 Aug 2019 14:53:30 -0000
+Received: (qmail 17273 invoked by uid 111); 14 Aug 2019 15:37:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 10:53:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 11:37:17 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Aug 2019 10:52:20 -0400
+Date:   Wed, 14 Aug 2019 11:36:07 -0400
 From:   Jeff King <peff@peff.net>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to reset selected lines?
-Message-ID: <20190814145219.GA12093@sigill.intra.peff.net>
-References: <20190813141816.yoer6pfjdnlgtj76@localhost.localdomain>
- <20190813154239.GA22514@sigill.intra.peff.net>
- <20190814114844.gvb5znje7cpzehkd@localhost.localdomain>
+To:     "Paolo Pettinato (ppettina)" <ppettina@cisco.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
+Message-ID: <20190814153607.GB12093@sigill.intra.peff.net>
+References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190814114844.gvb5znje7cpzehkd@localhost.localdomain>
+In-Reply-To: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 05:18:44PM +0530, Pratyush Yadav wrote:
+On Wed, Aug 14, 2019 at 09:57:50AM +0000, Paolo Pettinato (ppettina) wrote:
 
-> > So "git add -p", for example, also works by creating diffs, modifying
-> > them, and feeding the result to "apply". You can see the implementation
-> > in git-add--interactive.perl, where it literally calls diff and apply
-> > commands.
-> > 
-> > And that leads us to the answer to the first question. That script
-> > implements "add -p", but also "checkout -p" (which is what you want),
-> > "reset -p", "stash -p", etc. They differ only in what we diff and how we
-> > apply the result; the main engine of slicing and dicing the diff through
-> > user interaction is the same. See the %patch_modes hash for the list.
+> The issue happens when fetching an updated ref from a remote, and that 
+> ref updates a submodule which is not checked out but whose folder is dirty.
 > 
-> Ah, so that means I do have to dive into generating diffs. Too bad, I 
-> was hoping for a cleaner (read: easier) way.
+> Steps to reproduce (on *nix) with repositories on GitHub:
+> [...]
+> # Repo now contains a folder named "sm" which is bound to contain a 
+> submodule checkout. But the submodule is not checked out yet.
+> # Dirty that folder:
+> $ touch sm/test
 > 
-> On that note, I don't suppose there is a way to use 
-> git-add--interactive's diff engine from a script, is there?  That'd 
-> allow me to not write potentially buggy code and solve problems someone 
-> already solved.
+> # Fetching another branch will fail
+> $ git fetch origin branch_1
 
-The actual diffing is all done by lower-level commands. So I'm not sure
-there's much "engine" to reuse from the script. It takes care of asking
-the user about which lines to look at, how to split the diff, etc, but
-that's the part you'd want a totally different interface for.
+Thanks, I was able to reproduce here. Since this worked in v2.18.1, it
+was an easy candidate for bisecting.  The resulting commit is 26f80ccfc1
+(submodule: migrate get_next_submodule to use repository structs,
+2018-11-28).
 
-The one thing you _might_ want to pick up is the line recounting bits.
-We used to just call "apply --recount", but I think there were some
-corner cases that it couldn't handle well. The details are in 2b8ea7f3c7
-(add -p: calculate offset delta for edited patches, 2018-03-05) and
-3a8522f41f (add -p: don't rely on apply's '--recount' option,
-2018-03-05), and probably some mailing list around those.
+It looks like your case falls afoul of this logic added by that commit
+in get_next_submodule():
 
-You could probably start with just not handling those corner cases,
-though (either relying on "apply --recount", or just using whatever
-git-gui already does now for staging).
+  repo = get_submodule_repo_for(spf->r, submodule);
+  if (repo) {
+          ...
+  } else {
+          /*
+	   * An empty directory is normal,
+	   * the submodule is not initialized
+	   */
+	  if (S_ISGITLINK(ce->ce_mode) &&
+	      !is_empty_dir(ce->name)) {
+		  spf->result = 1;
+		  strbuf_addf(err,
+			      _("Could not access submodule '%s'"),
+			      ce->name);
+	  }
+  }
+
+Because you created a file in the uninitialized submodule directory, it
+fools the is_empty_dir() check. It seems like there should be a more
+robust way to check whether the submodule is initialized. Maybe:
+
+diff --git a/submodule.c b/submodule.c
+index 77ace5e784..748ebe5909 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1294,6 +1294,9 @@ static int get_next_submodule(struct child_process *cp,
+ 		if (!S_ISGITLINK(ce->ce_mode))
+ 			continue;
+ 
++		if (!is_submodule_active(spf->r, ce->name))
++			continue;
++
+ 		submodule = submodule_from_path(spf->r, &null_oid, ce->name);
+ 		if (!submodule) {
+ 			const char *name = default_name_or_path(ce->name);
+
+but that seems to fail t5526's "on-demand works without .gitmodules
+entry" test.
+
+I think is_submodule_populated_gently() more exactly matches what the
+current code is trying to do, like so:
+
+diff --git a/submodule.c b/submodule.c
+index 77ace5e784..4b26faee5d 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1347,8 +1347,7 @@ static int get_next_submodule(struct child_process *cp,
+ 			 * An empty directory is normal,
+ 			 * the submodule is not initialized
+ 			 */
+-			if (S_ISGITLINK(ce->ce_mode) &&
+-			    !is_empty_dir(ce->name)) {
++			if (is_submodule_populated_gently(ce->name, NULL)) {
+ 				spf->result = 1;
+ 				strbuf_addf(err,
+ 					    _("Could not access submodule '%s'"),
+
+but it feels odd to me. Even if the submodule is not currently checked
+out, we'd presumably still want to do the recursive fetch as long as we
+have a repo under $GIT_DIR/modules? And anyway, it fails another test in
+t5526 ("fetching submodule into a broken repository").
+
+Maybe somebody with more submodule expertise can jump in.
+
+> # Re-issuing the command succeeds
+> $ git fetch origin branch_1
+> [...]
+> I'd expect the command not to fail, or to fail consistently.
+
+I think that part is expected. After receiving new objects, `fetch`
+tries to see if it found out about any new submodules that might need to
+be recursively fetched. In your first command, we actually received the
+new objects (but then erroneously complained because the submodule was
+not initialized). In the second, we already had those objects and didn't
+need to do that check.
 
 -Peff
