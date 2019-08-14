@@ -7,91 +7,66 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16EAD1F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 15:59:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 749D81F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 16:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726585AbfHNP7z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 11:59:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43364 "HELO cloud.peff.net"
+        id S1726525AbfHNQBc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 12:01:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43374 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726126AbfHNP7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 11:59:54 -0400
-Received: (qmail 17264 invoked by uid 109); 14 Aug 2019 15:59:54 -0000
+        id S1726047AbfHNQBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 12:01:32 -0400
+Received: (qmail 17301 invoked by uid 109); 14 Aug 2019 16:01:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 15:59:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 16:01:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17420 invoked by uid 111); 14 Aug 2019 16:01:03 -0000
+Received: (qmail 17439 invoked by uid 111); 14 Aug 2019 16:02:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 12:01:03 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 12:02:41 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Aug 2019 11:59:53 -0400
+Date:   Wed, 14 Aug 2019 12:01:31 -0400
 From:   Jeff King <peff@peff.net>
-To:     "Paolo Pettinato (ppettina)" <ppettina@cisco.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] get_next_submodule(): format error string as an error
-Message-ID: <20190814155953.GC12093@sigill.intra.peff.net>
-References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        l.s.r@web.de
+Subject: Re: [RFC PATCH] http: use xmalloc with cURL
+Message-ID: <20190814160130.GD12093@sigill.intra.peff.net>
+References: <20190810220251.3684-1-carenas@gmail.com>
+ <nycvar.QRO.7.76.6.1908111317540.46@tvgsbejvaqbjf.bet>
+ <CAPUEspg62pRNH6=_VvWDxQ4YujHUJAoTTampc0L4t68QMj30xg@mail.gmail.com>
+ <20190812195537.GA14223@sigill.intra.peff.net>
+ <xmqqd0ha9ml4.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1908132200110.656@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1908132200110.656@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 09:57:50AM +0000, Paolo Pettinato (ppettina) wrote:
+On Tue, Aug 13, 2019 at 10:00:44PM +0200, Johannes Schindelin wrote:
 
-> Could not access submodule 'sm' # fails, plus no newline here :P!
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > I think it might be worth just eliminating the whole idea.
+> >
+> > I kinda like the simplification ;-) An even thinner wrapper that
+> > calls malloc() and dies if it gets NULL, without any "try-to-free"
+> > logic.
+> 
+> This is one of those instances where I wish we would have some reliable
+> data rather than having to guess whether it is a good idea or not.
 
-This part seems easy enough to fix.
+I wish we did, too. If you have an idea how to collect such data, I'm
+all ears.
 
--- >8 --
-Subject: get_next_submodule(): format error string as an error
+In the absence of that, I've made an argument that it's probably the
+right thing to do, and we can see if cooking it over a release cycle
+introduces any complaints. That's far from perfect (in particular, I
+wouldn't be surprised if very few 32-bit users test non-releases), but I
+don't have other ideas.
 
-The run_processes_parallel() interface passes its callback functions an
-"err" strbuf in which they can accumulate errors. However, this differs
-from our usual "err" strbufs in that the result is not simply passed to
-error(), like:
-
-  if (frob_repo(&err) < 0)
-	error("frobnication failed: %s", err.buf);
-
-Instead, we append the error buffer as-is to a buffer collecting the
-sub-process stderr, adding neither a prefix nor a trailing newline. This
-gives callbacks more flexibility (e.g., get_next_submodule() adds its
-own "Fetching submodule foo" informational lines), but it means they're
-also responsible for formatting any errors themselves.
-
-We forgot to do so in the single error message in get_next_submodule(),
-meaning that it was output without a trailing newline. While we're
-fixing that, let's also give it the usual "error:" prefix and downcase
-the start of the message. We can't use error() here, because it always
-outputs directly to stderr.
-
-Looking at other users of run_processes_parallel(), there are a few
-similar messages in update_clone_task_finished(). But those sites do
-correctly add a newline (they don't use an "error" prefix, but it
-doesn't make as much sense there).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- submodule.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/submodule.c b/submodule.c
-index 0f199c5137..a5ba57ac36 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1478,7 +1478,7 @@ static int get_next_submodule(struct child_process *cp,
- 			    !is_empty_dir(ce->name)) {
- 				spf->result = 1;
- 				strbuf_addf(err,
--					    _("Could not access submodule '%s'"),
-+					    _("error: could not access submodule '%s'\n"),
- 					    ce->name);
- 			}
- 		}
--- 
-2.23.0.rc2.479.gbd16c8906f
-
+-Peff
