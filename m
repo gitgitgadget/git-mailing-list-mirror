@@ -2,117 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA5031F45C
-	for <e@80x24.org>; Wed, 14 Aug 2019 08:32:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8B351F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 08:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbfHNIcv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 04:32:51 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39560 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfHNIcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 04:32:51 -0400
-Received: by mail-wr1-f65.google.com with SMTP id t16so20140376wra.6
-        for <git@vger.kernel.org>; Wed, 14 Aug 2019 01:32:49 -0700 (PDT)
+        id S1725955AbfHNIsh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 04:48:37 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:42278 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbfHNIsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 04:48:37 -0400
+Received: by mail-ot1-f65.google.com with SMTP id j7so35806544ota.9
+        for <git@vger.kernel.org>; Wed, 14 Aug 2019 01:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Zy7kIjV1K+V6tzEdnM2gbbwKMO0mvi/OOmvsCYBz8k4=;
-        b=gSCgs09tHL53xDgx68l9rPuyi3XLOCG4hz2LekYBD2UrfjwqWxnNDg3AizbearA+NG
-         MjHOrWOI2TBbDtXyO11UmTwjFumyH78m7pO8fFdtpDaBFl20JTYcW2e+HWjhOcoyfQMx
-         Omid7EeFt6rjO8QzZ9xSGtJ0/BV9VdOcXy+NDdj4dkYRaaFqNEzQTLSWmB9e4nSnfd7L
-         VQcbw5qAjOOaTd8BG7mYNrBNMW2YbaE4TBwviEU/h58mpgqPupIlAw2izul+uV8IHtTr
-         /+AmFQ5hKWbPKY2c2WQX049jtUxevsrR8WwbFD2+ATKGe1iJBJUeNMtTs1YMIv8kTTaA
-         aysw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=J8Y1cTxoYw9HJHSDpH6GeeQM7nAVIOat85lmjOyji78=;
+        b=JMJjnto/h4vxov6l8bFYheFlaIrTTf/P7hLycjxHBQocFZL1ebDQ9aTnpcZj4blmDv
+         qo9VHjyLxVHQXlVofnQA/ZykLQQljWWJGVFMVvTixaKdL7GsQNxpXst5XWNFv910DLNB
+         Pp8KNyPNgjmteZtCgjxXpCM/xxkTS+CMm8HncF6/BoVBtMyVQWAWfvLlBBZ8hQDWHJxU
+         N7mAZRWD6izKgL974GwOEHhrWDvdAc6mxs8Z8M5SojrUvSWBN23pmi5yTas15zA8WDlr
+         Mdts8sVk5qCtVhHjmFeuU7/rmBqC90HaK1iZxsLMWhvVfq78zS2CJU7GtzU8FM7+e4LQ
+         1x4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Zy7kIjV1K+V6tzEdnM2gbbwKMO0mvi/OOmvsCYBz8k4=;
-        b=AnLMvZDKagDP/xniyoMqbJaicwVELCdbPfcO3o//i6LH+ytucozYPOFXGLEtmkJEuy
-         TRgGJukrCNlS0/o+Gju19ojl2CIyRKum26eobAYTpHs+nI92UYHFLsDIGLk+KPeXWrW9
-         1Kaa6iaeIdFpCWMVZPV0KmmQ0uINI0ETYodyYL0GuOCyGhBqE/U+yD2oiA1Be6RXCxGt
-         g50vvSTRZuM1bxIo4+GJoUGPfKsrtQ9HrhSyzwZcQuiVQ4anj8mkL/u2oBivf2MO8F8M
-         j9iXTS/b8S1bks79v2l4HU4hJYX8s5iVbk+ak90++mlZDhXpMEkkp719jXqdYt7n912R
-         qZZA==
-X-Gm-Message-State: APjAAAXj+RjzINJmZAVhcxLVjwgQJWTKu2pmFs+zf2SGjVJaFdQ0tLA2
-        eFVoIG4023xrEPDFOHU7OmLpqfCaIPg=
-X-Google-Smtp-Source: APXvYqyecqhV/AC+jB1ox9OEXnv07f8SUGJOLSXH2DhCAB9aPKXA6VOim9xMdKoMsIl//okCdcvAow==
-X-Received: by 2002:adf:f008:: with SMTP id j8mr36207491wro.129.1565771569116;
-        Wed, 14 Aug 2019 01:32:49 -0700 (PDT)
-Received: from szeder.dev (x4db5324e.dyn.telefonica.de. [77.181.50.78])
-        by smtp.gmail.com with ESMTPSA id l14sm16156459wrn.42.2019.08.14.01.32.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Aug 2019 01:32:48 -0700 (PDT)
-Date:   Wed, 14 Aug 2019 10:32:45 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Palmer Dabbelt <palmer@sifive.com>
-Cc:     git@vger.kernel.org, peff@peff.net, e@80x24.org,
-        chriscool@tuxfamily.org, gitster@pobox.com,
-        jonathantanmy@google.com, tboegi@web.de, bwilliams.eng@gmail.com,
-        jeffhost@microsoft.com
-Subject: Re: [PATCH v2 5/5] fetch: Make --jobs control submodules and remotes
-Message-ID: <20190814083245.GP20404@szeder.dev>
-References: <20190812213448.2649-1-palmer@sifive.com>
- <20190812213448.2649-6-palmer@sifive.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=J8Y1cTxoYw9HJHSDpH6GeeQM7nAVIOat85lmjOyji78=;
+        b=U3k/ITInLSgj428e8+P2E9cGe+QgJpDiuCLkk59YYsYsydCM3IHy5WruGr/JQyUBZS
+         BhK6UWpkxyOqmIgOuLXtID6KbmH4KRlSkImSXj2YtnGgk0DVPAZ4qgh1g1v3pqSR2lKz
+         V44BK7DErhz238zV1IkOp9GMUoxxHKIl8ek0pBCIpKEpZLJn9/1n4IyFiiHDUfnV79uu
+         WjLqh5cdpkL5EMbGBhrtgJCD0ZNz2IVVTVrbDNGH0BI1JTF3AzTqrRTvbLQCR3Xjmobb
+         EkmKO5g29qNTDmeAoZ0X4FwJiibLwx/v939MIx6pVobVk5CppIZStqWam7JJSuf7mSjs
+         Slmw==
+X-Gm-Message-State: APjAAAVNZhhYoM8b6/15L0xN8ZDlPdKZr5LwpzroTadBbTV2y5qyRfKS
+        1hJsbDtBz3cf5qwq4JNPgkTceYm7ZD824ypDFstjwATZyI0=
+X-Google-Smtp-Source: APXvYqzbklT6zWOAu7SUNJePntDfbZFL+GBnWL1V6TvPYaspVQjpF+lHXJ5QxytKi4MczbDipBf4C0N2JDp1Gw2iUtw=
+X-Received: by 2002:a9d:4004:: with SMTP id m4mr6661294ote.146.1565772516400;
+ Wed, 14 Aug 2019 01:48:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190812213448.2649-6-palmer@sifive.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CACi-FhDeAZecXSM36zroty6kpf2BCWLS=0R+dUwuB96LqFKuTA@mail.gmail.com>
+ <20190730065949.GB4901@sigill.intra.peff.net>
+In-Reply-To: <20190730065949.GB4901@sigill.intra.peff.net>
+From:   Ibrahim El Rhezzali <ibrahim.elrhezzali@gmail.com>
+Date:   Wed, 14 Aug 2019 10:48:11 +0200
+Message-ID: <CACi-FhBktzoOLJMkQdWLVc1-+qJ_YuVMBy3KYbw96h9Y=hFDBQ@mail.gmail.com>
+Subject: Re: [RFC] Improved git signing interface
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 12, 2019 at 02:34:48PM -0700, Palmer Dabbelt wrote:
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 67d001f3f78b..41498e9efb3b 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -114,6 +114,20 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
->  	return git_default_config(k, v, cb);
->  }
->  
-> +static int parse_jobs_arg(const struct option *opt, const char *arg, int unset)
-> +{
-> +	int jobs;
-> +
-> +	jobs = atoi(arg);
-> +	if (jobs < 1)
-> +		die(_("There must be a positive number of jobs"));
-> +
-> +	max_children_for_submodules = jobs;
-> +	max_children_for_fetch = jobs;
-> +
-> +	return 0;
-> +}
-> +
->  static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
->  {
->  	BUG_ON_OPT_NEG(unset);
-> @@ -142,12 +156,13 @@ static struct option builtin_fetch_options[] = {
->  		    N_("fetch all tags and associated objects"), TAGS_SET),
->  	OPT_SET_INT('n', NULL, &tags,
->  		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
-> -	OPT_INTEGER('j', "jobs", &max_children_for_submodules,
-> +	{ OPTION_CALLBACK, 'j', "jobs", NULL, N_("jobs"),
-> +		    N_("number of parallel tasks to run while fetching"),
-> +		    PARSE_OPT_OPTARG, &parse_jobs_arg },
+Thank you very much Jeff for looking into the proposal and for
+pointing out the previous threads on the subject.
 
-These changes result segmentation faults in the tests '--quiet
-propagates to parallel submodules' and 'fetching submodules respects
-parallel settings' in 't5526-fetch-submodules.sh'.
+I understand your concern on 'emerging technologies' and new tools.
+But to clarify, the current work and patches do not include any new
+tools, and is merely a cleaning of the signing config and interface
+that would make it easier in the future to add compatibility for any
+signing tool.
 
-If the number of jobs is specified as '-j 2' or '--jobs 7', i.e. as an
-unstuck argument of the option, as opposed to '-j2' or '--jobs=7',
-then 'arg' in the parse_jobs_arg() callback is NULL, which then causes
-the segfault somewhere inside that atoi() call.
+The current changes maintain full backward compatibility and all
+existing tests pass. I will hopefully be submitting the patches in the
+coming days.
+
+Thank you again for checking the proposal.
+
+ -Ibrahim
+
+On Tue, Jul 30, 2019 at 8:59 AM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Jul 22, 2019 at 04:16:15PM +0200, Ibrahim El Rhezzali wrote:
+>
+> > I have been selected by the Linux Foundation to work on a summer
+> > project. I would like to abstract the git signing interface and add
+> > support for signatures using decentralized identifiers (DID).
+> > Decentralized identifiers are an emerging standard [0] that allows
+> > individuals to control their own digital identities, and is often
+> > called self-sovereign identity (SSI). The SSIMeetup is a good place to
+> > learn more about SSI [1] and DIDs [2].
+> >
+> > The project=E2=80=99s current goal is to abstract the current GPG inter=
+face
+> > into a more =E2=80=98generic=E2=80=99 API that supports the existing Op=
+enPGP and X.509
+> > functionality while creating the ability to write additional signature
+> > drivers.
+>
+> Neat. I'm always wary of supporting "emerging standards", because
+> sometimes they turn out not to emerge and you are left with historical
+> cruft. :) But if your changes to Git are mostly around making the
+> signing config more generic, I think that is something people are
+> interested in (signify has come up as a possibility before).
+>
+> You might find this discussion interesting (that patch and the
+> sub-thread):
+>
+>  https://public-inbox.org/git/20180409204129.43537-9-mastahyeti@gmail.com=
+/
+>
+> One of the points I think people didn't like was how Git would detect
+> signatures embedded in objects (i.e., is matching PEM-like lines enough,
+> or what would other signing systems want?).
+>
+> That patch was later dropped in favor of the work from Henning Schild:
+>
+>   https://public-inbox.org/git/cover.1531208187.git.henning.schild@siemen=
+s.com/
+>
+> which is much more geared at just adding gpgsm support. There were
+> various discussions about how it could eventually be extended to new
+> formats. I skimmed over the documentation from your branch and it looks
+> like a pretty sane layout, with backwards compatibility.
+>
+> > I have implemented a prototype that works and passes all tests, and in
+> > the coming weeks I plan to submit a series of patches for your review.
+> > I first need to clean up the Git history to make it easy to follow. I
+> > will also ensure that people using the current approach to GPG signing
+> > can use the proposed approach with only minor changes. The flag
+> > =E2=80=9C--gpg-sign=E2=80=9D would evolve to =E2=80=9C---sign=E2=80=9D,=
+ though I would like to
+> > preserve an alias to the old flag if possible.
+>
+> Yes, this must not be "minor changes" but "no changes" to be accepted.
+> It's OK to deprecate things, but old options cannot immediately stop
+> working. From this email and looking at your config patches, it looks
+> like that's the route you plan to take. Good.
+>
+> I look forward to seeing the cleaned-up patches. :)
+>
+> -Peff
 
 
+
+--=20
+Ibrahim EL RHEZZALI
+T=C3=A9l. +212 6 72 55 71 71
