@@ -2,86 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 295181F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 16:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28CF31F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 16:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728334AbfHNQPw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 12:15:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57276 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbfHNQPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 12:15:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F31FB8FC6E;
-        Wed, 14 Aug 2019 12:15:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wYUa3hNoOxNA1fmidqa16VFgynA=; b=BxMuxd
-        URSKLl/c3t3bxIUcXnNN4lLmpGKGVvSGPZOw/S2jmK6wLKYhhpB7yvsM6jXQqmNj
-        gh+tsl7CDWew5suyck5gTRdW+vhGpECOatfQK7qGZsJGjdyeCOCg1b4DWWjAkfle
-        vWcx/xEUPacIpLzQoZWDGfEYcIBtQnAXKQjH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ykcwJwSkKM0SZGVdEEf+wwf7yqRFE+eq
-        Oj8H/abCx1CEGl0zHFiSmdB17qfilEGWQh7mkU+T+jCRMNUT+4ZV6qvbvj2rGKe8
-        mthjcVc1gXECR/GNtI+epEHWN15ZxRki172OSvaGX1juLFUPx2JOfgOUu7uAarmR
-        bjVgDB68Gug=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EB6438FC6D;
-        Wed, 14 Aug 2019 12:15:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 270128FC6A;
-        Wed, 14 Aug 2019 12:15:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Paolo Pettinato \(ppettina\)" <ppettina@cisco.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] get_next_submodule(): format error string as an error
-References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
-        <20190814155953.GC12093@sigill.intra.peff.net>
-Date:   Wed, 14 Aug 2019 09:15:44 -0700
-In-Reply-To: <20190814155953.GC12093@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 14 Aug 2019 11:59:53 -0400")
-Message-ID: <xmqqtvaj67v3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C6490916-BEAE-11E9-8F4B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+        id S1726522AbfHNQ25 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 12:28:57 -0400
+Received: from ltwemail.bankofamerica.com ([171.161.41.178]:27323 "EHLO
+        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726047AbfHNQ24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 12:28:56 -0400
+Received: from lltwa05mxepmx03.bankofamerica.com ([171.180.36.246])
+        by lltwa05ixepmx04.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7EGSqYu006471;
+        Wed, 14 Aug 2019 16:28:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
+        s=corp1903; t=1565800132;
+        bh=ereOUGYchXNqzocNolbJtDoCQX0g73ZURq0kkDzCGQs=;
+        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
+         Content-type:Content-transfer-encoding:References;
+        b=P8pfKsQk7tfQj4/SOvI+ev7ZnQcYxeDerLy7Q95lyfsob5CBL5bi9YcfeKgEJIpYc
+         148W7RBgWIxW1vMKSOYY5j5joImGqPwUViIy3ON30/2bKnIVwX6z1HabHP2XqbsFNQ
+         QSvLGb5yMII7f2l0rN+8d0lDFOU5O/Te4lZktVW8=
+Received: from lltwa05cxepmx13.bankofamerica.com (lltwa05cxepmx13.bankofamerica.com [171.206.12.29])
+        by lltwa05mxepmx03.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7EGSdCI028050;
+        Wed, 14 Aug 2019 16:28:51 GMT
+Date:   Wed, 14 Aug 2019 16:28:47 +0000
+From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
+Subject: RE: suggestion for improved docs on autocrlf
+In-reply-to: <d4a0500d5f5e4706aef481a33096465a@bofa.com>
+X-Originating-IP: [30.245.13.45]
+To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+Message-id: <0244daea3faa4d4aa899cff0dcc62917@bofa.com>
+MIME-version: 1.0
+Content-type: text/plain; CHARSET=US-ASCII
+Content-language: en-US
+Content-transfer-encoding: 7BIT
+X-MS-Has-Attach: 
+Accept-Language: en-US
+Thread-topic: suggestion for improved docs on autocrlf
+Thread-index: AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQgANNx4CAADsrQP//18WAABMUKAD//38MoP/+sX+A//2l2mD/+aztkA==
+X-MS-TNEF-Correlator: 
+References: <577a66e0c26545aaa4795de3c5189c9d@bofa.com> <20190809033406.5t5ag3qmh36ideec@tb-raspi4>
+ <0c1b48c9fad641689ead69fdd9f72d63@bofa.com> <20190811121004.guygurnopwwggvsp@tb-raspi4>
+ <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com> <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
+ <aae529ce1b084b7bbcca3977e6909417@bofa.com> <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
+ <20190813032452.qg2ufgljm4bjeznr@tb-raspi4> <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
+ <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4> <d4a0500d5f5e4706aef481a33096465a@bofa.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-14_06:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Turns out that this is not intentional behavior of IntelliJ but an unfortunate interaction with a bug in git.
+Had I been using a more recent version of git, it wouldn't be happening.
+https://youtrack.jetbrains.com/issue/IDEA-205601
 
-> On Wed, Aug 14, 2019 at 09:57:50AM +0000, Paolo Pettinato (ppettina) wrote:
->
->> Could not access submodule 'sm' # fails, plus no newline here :P!
->
-> This part seems easy enough to fix.
+Patched docs on the way eventually.  Hopefully it's okay if my syntax is a bit off, I don't know AsciiDoc.
 
-Indeed, it is ;-)
-
-> diff --git a/submodule.c b/submodule.c
-> index 0f199c5137..a5ba57ac36 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1478,7 +1478,7 @@ static int get_next_submodule(struct child_process *cp,
->  			    !is_empty_dir(ce->name)) {
->  				spf->result = 1;
->  				strbuf_addf(err,
-> -					    _("Could not access submodule '%s'"),
-> +					    _("error: could not access submodule '%s'\n"),
->  					    ce->name);
->  			}
->  		}
+----------------------------------------------------------------------
+This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
