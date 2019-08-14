@@ -2,156 +2,447 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6529F1F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 17:03:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73F461F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 17:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729053AbfHNRDv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 13:03:51 -0400
-Received: from alln-iport-3.cisco.com ([173.37.142.90]:64580 "EHLO
-        alln-iport-3.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729037AbfHNRDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 13:03:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1738; q=dns/txt; s=iport;
-  t=1565802228; x=1567011828;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=N4ZBeL9O4M271G4kP7/D9RWeqM6U+kt3AkUE0S7aTqs=;
-  b=VwRPf1XDVrnn2HlDxWZAsi6bRQCfeboCZGwfjgr5bm0fwo2SCJ/rp/NN
-   7ufIuedKRNIFL/fPthRhxmH2ZduWjJ6oazTKSXfXdiUBHXTnHv9lgCF6Z
-   PreEVziBK0U3V8tA/TYjpSVf8/Sux+cwyhjywzeins0XSw7c7FPwhKNXT
-   U=;
-IronPort-PHdr: =?us-ascii?q?9a23=3AxsJvshK383dnqPiT19mcpTVXNCE6p7X5OBIU4Z?=
- =?us-ascii?q?M7irVIN76u5InmIFeBvKd2lFGcW4Ld5roEkOfQv636EU04qZea+DFnEtRXUg?=
- =?us-ascii?q?Mdz8AfngguGsmAXFXjIeL2biozNM9DT1RiuXq8NBsdFQ=3D=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0D1AACFPlRd/40NJK1mGgEBAQEBAgE?=
- =?us-ascii?q?BAQEHAgEBAQGBZ4FFUAOBQiAECyoKhBSDRwOKdoI2JZdjglIDVAkBAQEMAQE?=
- =?us-ascii?q?tAgEBhD8CF4J2IzgTAQQBAQQBAQQBCm2FJwyFSwEBAQMSEREMAQE3AQ8CAQg?=
- =?us-ascii?q?YAgImAgICMBUQAgQBDAEHAQEegwCBawMdAaARAoE4iGBzgTKCegEBBYJHgjs?=
- =?us-ascii?q?YghQJgQwoi0wdF4FAP4E4DIJfPoQdJxeCdIJYjxSOD44uCQKCHZQtBhuYPY1?=
- =?us-ascii?q?XlESDPwIEAgQFAg4BAQWBZyGBWHAVgydQEBSBToNyilNygSmLU4ExAYEgAQE?=
-X-IronPort-AV: E=Sophos;i="5.64,386,1559520000"; 
-   d="scan'208";a="319477391"
-Received: from alln-core-8.cisco.com ([173.36.13.141])
-  by alln-iport-3.cisco.com with ESMTP/TLS/DHE-RSA-SEED-SHA; 14 Aug 2019 17:03:47 +0000
-Received: from XCH-RCD-007.cisco.com (xch-rcd-007.cisco.com [173.37.102.17])
-        by alln-core-8.cisco.com (8.15.2/8.15.2) with ESMTPS id x7EH3lRk017278
-        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=FAIL);
-        Wed, 14 Aug 2019 17:03:47 GMT
-Received: from xhs-aln-001.cisco.com (173.37.135.118) by XCH-RCD-007.cisco.com
- (173.37.102.17) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 14 Aug
- 2019 12:03:46 -0500
-Received: from xhs-rtp-002.cisco.com (64.101.210.229) by xhs-aln-001.cisco.com
- (173.37.135.118) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 14 Aug
- 2019 12:03:46 -0500
-Received: from NAM05-BY2-obe.outbound.protection.outlook.com (64.101.32.56) by
- xhs-rtp-002.cisco.com (64.101.210.229) with Microsoft SMTP Server (TLS) id
- 15.0.1473.3 via Frontend Transport; Wed, 14 Aug 2019 13:03:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jwXu80eGLsf5qWwMeQhLJsbnQRdf5mxMmM+mzFA7RCUh3Mk1zELIkefuMhWxsPErdYk5Yd6ougPESSuYSheNx/81o8ca4Zn5nAjCxhOvFB/2MtDKsZxF7ugJSqAuXhTgmkPi5LfdxTQnCaQ/algfrKrdmccyWlgv7DIxUiXRiiIlNhmAsHUJ+SnbAwzw4LgnBrVUPbC8l3ZXEINZfLDDZ72IniwD4JkIQNm/xcih4o4r45GyRLGdL9JDo+7Si4dZ9TS9IlL4oQYCL7A7rMuzKPhfRTHuFf3BM7ec6BwaTMtdn9ox+TjnRigG4k1kumMyf3p3lDCYQj2gKHo5HmkR9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=N4ZBeL9O4M271G4kP7/D9RWeqM6U+kt3AkUE0S7aTqs=;
- b=DO9xlnLCoMLMzUhSfqQf7HMt3m66PDREVKcPk7a+4/sa9jJAn4hsw4rUExNeYQK0UsBU2TjWV6GM2Zmiq0AUKGzVjJgWQfEvPg2uadO2nrgqgAq34ohxJcONaFSpDsNIyjmxU7ns8MY+oZKc+QZOHO15T7FM7esJ+Kb+Cl69i1CeTxB/sGsDBIyn2eYIZYZhPbNjlhugRdMk+E4chNgLvG3s0Ptbvu+KSxUPrb6wq+n7p292dJbBbRG9adcvNn0rE8tEiPfw9qOXkrtbYswLYH+mAbCHhkRYLA5FXhrwKQeJZjwxH2/xIB8D2UYkhVkf+yl269sO55BnEfb0wSLqmA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
- dkim=pass header.d=cisco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cisco.onmicrosoft.com;
- s=selector2-cisco-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=N4ZBeL9O4M271G4kP7/D9RWeqM6U+kt3AkUE0S7aTqs=;
- b=SVlKq7qBF7pj/kSro27hSESxf/CKm42sHkPdF1c1CA2H/mW/T+7Ei5hDh5TYj90nnor276U8Ssk8PU68C26IJHHafh3VocJDbaBaRbZ+TXPcOCxpVoDWFf14dQmGOy2wE4rFLPnsILeImGcde2M1Gn0uoeLajaJMeomrZcJevnM=
-Received: from CY4PR11MB1912.namprd11.prod.outlook.com (10.175.81.150) by
- CY4PR11MB1782.namprd11.prod.outlook.com (10.175.59.13) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.20; Wed, 14 Aug 2019 17:03:44 +0000
-Received: from CY4PR11MB1912.namprd11.prod.outlook.com
- ([fe80::496c:dcfc:9192:5d54]) by CY4PR11MB1912.namprd11.prod.outlook.com
- ([fe80::496c:dcfc:9192:5d54%12]) with mapi id 15.20.2157.022; Wed, 14 Aug
- 2019 17:03:44 +0000
-From:   "Paolo Pettinato (ppettina)" <ppettina@cisco.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
-Thread-Topic: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
-Thread-Index: AQHVUoa7uzYIHbD+fES+2/mVSFIeOqb6xu2AgAASJ2+AAAZDAA==
-Date:   Wed, 14 Aug 2019 17:03:44 +0000
-Message-ID: <5a58b0eb-0690-c445-dbfd-bd4c5b614629@cisco.com>
-References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
- <20190814153607.GB12093@sigill.intra.peff.net>
- <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=ppettina@cisco.com; 
-x-originating-ip: [64.103.40.30]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 83ad69fe-598b-4e15-719b-08d720d95d65
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:CY4PR11MB1782;
-x-ms-traffictypediagnostic: CY4PR11MB1782:
-x-microsoft-antispam-prvs: <CY4PR11MB1782AEEDB244C3760832DD78C3AD0@CY4PR11MB1782.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 01294F875B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(346002)(366004)(39860400002)(396003)(136003)(376002)(199004)(189003)(51914003)(6436002)(14454004)(256004)(110136005)(6116002)(53546011)(76176011)(36756003)(4326008)(316002)(25786009)(186003)(53936002)(229853002)(3846002)(86362001)(66066001)(65806001)(102836004)(65956001)(6246003)(478600001)(6486002)(31686004)(31696002)(26005)(6506007)(81156014)(58126008)(305945005)(8936002)(7736002)(8676002)(65826007)(6512007)(81166006)(71190400001)(486006)(446003)(5660300002)(64126003)(2616005)(76116006)(66556008)(476003)(64756008)(4001150100001)(99286004)(66476007)(66446008)(11346002)(66946007)(71200400001)(91956017)(2906002);DIR:OUT;SFP:1101;SCL:1;SRVR:CY4PR11MB1782;H:CY4PR11MB1912.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: cisco.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: di4/Sj0XXVlki8FwBck7ZIRZn5puiqTEhiuuSK0RRuDRejryXZFVbSDyzr9r1XZhUD84MZnRXQ10duNyWNiYRdvkHIZDH03rIHPdPbQLWaQgemhdAXEV8jQyHOQDG1ZVq4YAxMPCnn5tBx9MeB4arVxI2MbBqeVgmOODBymZQInGtRGKbWqZEPJiitCV8trol/UzRucic4r03o6ZR33eyEdVr0Av9RTD3NcSstQ6CH7hYuMIr2QTVXrKQd6+CUtCxn2KAhLGhqVxJydjNlv1Rwy0FhaWU8FwfSxpKh1FW1XiPDmdd0eJPlMW3t+EXJgTZcLvNLJWY7iI3jepfeaCSJ96JXC+EFL1iKiO+FDNAIEsaXjFXGXEPlxTLE23sITUVLgNkZhFphmEiT98zyNTMfTtTSeyBDOkWVDkNmvi+uY=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6198F73B4F804043B97670FFCD19B9B6@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        id S1731044AbfHNROO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 13:14:14 -0400
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:53049 "EHLO
+        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731040AbfHNRON (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 13:14:13 -0400
+X-Originating-IP: 157.45.7.170
+Received: from localhost (unknown [157.45.7.170])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id E0B981C0007;
+        Wed, 14 Aug 2019 17:14:07 +0000 (UTC)
+Date:   Wed, 14 Aug 2019 22:44:04 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     git@vger.kernel.org, matthieu.moy@univ-lyon1.fr,
+        corentin.bompard@etu.univ-lyon1.fr, gitster@pobox.com,
+        nathan.berbezier@etu.univ-lyon1.fr,
+        pablo.chabanne@etu.univ-lyon1.fr
+Subject: Re: [PATCH] pull, fetch: add --set-upstream option
+Message-ID: <20190814171404.zqtd4xctjobgpzby@localhost.localdomain>
+References: <86zhoil3yw.fsf@univ-lyon1.fr>
+ <20190814134629.21096-1-git@matthieu-moy.fr>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83ad69fe-598b-4e15-719b-08d720d95d65
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2019 17:03:44.1026
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GVPFjGwZ4/VwkhLM3zKXO765EjfJsCc9nex8P9SHHET5I7E8RJt2pX0MUU/R5duVL0VmIF8n+W2Fm5dkOSrIsg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR11MB1782
-X-OriginatorOrg: cisco.com
-X-Outbound-SMTP-Client: 173.37.102.17, xch-rcd-007.cisco.com
-X-Outbound-Node: alln-core-8.cisco.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190814134629.21096-1-git@matthieu-moy.fr>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzIGZvciB0aGUgcmVwbHkhDQoNCk9uIDE0LzA4LzIwMTkgMTc6NDAsIEp1bmlvIEMgSGFt
-YW5vIHdyb3RlOg0KPiAgIFdoeSBpcyB0aGUgdXNlciBtdWNraW5nIHdpdGgNCj4gdGhhdCBkaXJl
-Y3RvcnkgaW4gdGhlIGZpcnN0IHBsYWNlLCBhbmQgaXNuJ3QgdGhlIGZsYWdnaW5nIG9mIHRoZQ0K
-PiBzaXR1YXRpb24gYXMgYW4gZXJyb3IsIGRvbmUgd2l0aCAyNmY4MGNjZiAoInN1Ym1vZHVsZTog
-bWlncmF0ZQ0KPiBnZXRfbmV4dF9zdWJtb2R1bGUgdG8gdXNlIHJlcG9zaXRvcnkgc3RydWN0cyIs
-IDIwMTgtMTEtMjgpLCBhDQo+IGJ1Z2ZpeD8gIElmIG5vdCwgd2h5IG5vdD8NCg0KTm90IHN1cmUg
-aWYgeW91J3JlIGltcGx5aW5nIGhlcmUgdGhhdCB0aGlzIGlzIG5vdCBhIGJ1ZzsgSSdkIHNheSB0
-aGF0Og0KDQotIE11Y2tpbmcgYWJvdXQgd2l0aCBhIGZvbGRlciB0aGF0J3Mgc3VwcG9zZWQgdG8g
-Y29udGFpbiBhIHN1Ym1vZHVsZSBpcyANCm5vdCBzb21ldGhpbmcgdGhhdCBhIGxvdCBvZiBwZW9w
-bGUgZG8gKGFuZCB3ZSB3b3JrZWQgYXJvdW5kIHRoZSBpc3N1ZSksIA0KYW5kIHBlb3BsZSBzaG91
-bGRuJ3QgZG8gdGhhdCwgYnV0Li4uDQoNCi0gLi4uIHJlZ2FyZGxlc3MsIEkgYmVsaWV2ZSB0aGF0
-ICJnaXQgZmV0Y2giIHNob3VsZG4ndCBwYXJ0aWN1bGFybHkgY2FyZSANCmFib3V0IHRoZSBzdGF0
-ZSBvZiB0aGUgY3VycmVudCB3b3JraW5nIGRpcmVjdG9yeS4gSSBkaWRuJ3QgYXNrIGl0IHRvIGRv
-IA0KYW55dGhpbmcgd2l0aCB0aGUgc3VibW9kdWxlcywgbm9yIGhhdmUgSSBpbml0aWFsaXNlZCB0
-aGVtLiBJbiBteSANCihsaW1pdGVkKSBrbm93bGVkZ2Ugb2YgZ2l0LCBJJ2QgZXhwZWN0IGdpdCBm
-ZXRjaCB0byBkbyBpdHMgbWFnaWMgDQplbnRpcmVseSBiZXR3ZWVuIHRoZSByZW1vdGUgYW5kIHRo
-ZSAuZ2l0IGZvbGRlci4NCg0KT3VyIHVzZSBjYXNlIHdhcyBmb3IgYSBzdWJtb2R1bGUgY29udGFp
-bmluZyBlbmNyeXB0ZWQgc2VjcmV0czsgYW5kIHRoZSANCm11Y2tpbmcgYWJvdXQgd2FzIHN0dWJi
-aW5nIG91dCB0aG9zZSBzZWNyZXRzIGluIGEgdGVzdCBidWlsZCB3aXRob3V0IA0KZmV0Y2hpbmcv
-ZGVjcnlwdGluZyB0aGVtLg0KDQpJdCdzIGFyZ3VhYmxlIHdoZXRoZXIgdGhpcyBzaG91bGQgYmUg
-Zml4ZWQgb3Igbm90OyBsZXNzIGFyZ3VhYmxlIHRoYXQgd2UgDQpjb3VsZCB1c2UgYSBiZXR0ZXIg
-ZXJyb3IgbWVzc2FnZSBhbmQgY29uc2lzdGVuY3kgKDFzdCBleGVjdXRpb24gZmFpbHMsIA0KMm5k
-IGRvZXMgbm90KS4NCg==
+Hi Matthieu,
+
+This is not really a review. Just some minor nitpicks I spotted while 
+reading through.
+
+On 14/08/19 03:46PM, Matthieu Moy wrote:
+> From: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+> 
+> Add the --set-upstream option to git pull/fetch
+> which lets the user set the upstream configuration
+> (branch.<current-branch-name>.merge and
+> branch.<current-branch-name>.remote) for the current branch.
+> 
+> A typical use-case is:
+> 
+>     git clone http://example.com/my-public-fork
+>     git remote add main http://example.com/project-main-repo
+>     git pull --set-upstream main master
+> 
+> or, instead of the last line:
+> 
+>     git fetch --set-upstream main master
+>     git merge # or git rebase
+> 
+> This functionality is analog to push --set-upstream.
+> 
+> Signed-off-by: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+> Signed-off-by: Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>
+> Signed-off-by: Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>
+> Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
+> Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
+> ---
+> This is a followup on
+> https://public-inbox.org/git/86zhoil3yw.fsf@univ-lyon1.fr/. It's
+> initially a student project, but students didn't get time to complete
+> it. Still, I think the feature is interesting, and I finally get time
+> to fix the remarks made up to now. This now looks good to me, but
+> obviously needs other pairs of eyes.
+> 
+> Thanks,
+> 
+>  Documentation/fetch-options.txt |   7 ++
+>  builtin/fetch.c                 |  48 ++++++++-
+>  builtin/pull.c                  |   6 ++
+>  t/t5553-set-upstream.sh         | 178 ++++++++++++++++++++++++++++++++
+>  4 files changed, 238 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t5553-set-upstream.sh
+> 
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index 3c9b4f9e09..99df1f3d4e 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -169,6 +169,13 @@ ifndef::git-pull[]
+>  	Disable recursive fetching of submodules (this has the same effect as
+>  	using the `--recurse-submodules=no` option).
+>  
+> +--set-upstream::
+> +	If the remote is fetched successfully, pull and add upstream
+> +	(tracking) reference, used by argument-less
+> +	linkgit:git-pull[1] and other commands. For more information,
+> +	see `branch.<name>.merge` and `branch.<name>.remote` in
+> +	linkgit:git-config[1].
+> +
+>  --submodule-prefix=<path>::
+>  	Prepend <path> to paths printed in informative messages
+>  	such as "Fetching submodule foo".  This option is used
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 717dd14e89..5557ae1c04 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -23,6 +23,7 @@
+>  #include "packfile.h"
+>  #include "list-objects-filter-options.h"
+>  #include "commit-reach.h"
+> +#include "branch.h"
+>  
+>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+>  
+> @@ -50,7 +51,7 @@ static int fetch_prune_tags_config = -1; /* unspecified */
+>  static int prune_tags = -1; /* unspecified */
+>  #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
+>  
+> -static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative;
+> +static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative, set_upstream;
+
+This line is getting pretty long. I think it is a good idea to split it 
+into two.
+
+>  static int progress = -1;
+>  static int enable_auto_gc = 1;
+>  static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
+> @@ -123,6 +124,8 @@ static struct option builtin_fetch_options[] = {
+>  	OPT__VERBOSITY(&verbosity),
+>  	OPT_BOOL(0, "all", &all,
+>  		 N_("fetch from all remotes")),
+> +	OPT_BOOL(0, "set-upstream", &set_upstream,
+> +		 N_("set upstream for git pull/fetch")),
+>  	OPT_BOOL('a', "append", &append,
+>  		 N_("append to .git/FETCH_HEAD instead of overwriting")),
+>  	OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
+> @@ -1367,6 +1370,49 @@ static int do_fetch(struct transport *transport,
+>  		retcode = 1;
+>  		goto cleanup;
+>  	}
+> +
+> +	if (set_upstream) {
+> +		struct branch *branch = branch_get("HEAD");
+> +		struct ref *rm;
+> +		struct ref *source_ref = NULL;
+> +
+> +		/*
+> +		 * We're setting the upstream configuration for the current branch. The
+> +		 * relevent upstream is the fetched branch that is meant to be merged with
+> +		 * the current one, i.e. the one fetched to FETCH_HEAD.
+> +		 *
+> +		 * When there are several such branches, consider the request ambiguous and
+> +		 * err on the safe side by doing nothing and just emit a warning.
+> +		 */
+
+The comment lines cross the 80 column boundary. The usual convention in 
+this project is to try to keep lines below 80 columns. For strings IMO 
+an exception can be allowed because breaking them up makes it harder to 
+grep for them. But comments are the easiest to format.
+
+Are you using a tab size of 4? That might explain why your line breaks 
+are just after the 80 col boundary. The coding guidelines say you should 
+make your tab characters 8 columns wide.
+
+> +		for (rm = ref_map; rm; rm = rm->next) {
+> +			if (!rm->peer_ref) {
+> +				if (source_ref) {
+> +					warning(_("multiple branch detected, incompatible with --set-upstream"));
+> +					goto skip;
+> +				} else {
+> +					source_ref = rm;
+> +				}
+> +			}
+> +		}
+> +		if (source_ref) {
+> +			if (!strcmp(source_ref->name, "HEAD") || 
+
+This line has a trailing space.
+
+> +				starts_with(source_ref->name, "refs/heads/")) {
+> +				install_branch_config(0, branch->name,
+> +							 transport->remote->name,
+> +							 source_ref->name);
+
+In other places around this code, multi line function calls are aligned 
+with the opening parenthesis. It is a good idea to follow that 
+convention.
+
+So this should change to something like:
+
+				install_branch_config(0, branch->name,
+						      transport->remote->name,
+						      source_ref->name);
+ 
+Maybe this discrepancy is because you are using the wrong tab size?
+
+> +			} else if (starts_with(source_ref->name, "refs/remotes/")) {
+> +				warning(_("not setting upstream for a remote remote-tracking branch"));
+> +			} else if (starts_with(source_ref->name, "refs/tags/")) {
+> +				warning(_("not setting upstream for a remote tag"));
+> +			} else {
+> +				warning(_("unknown branch type"));
+> +			}
+
+No need to wrap single line if statements in braces.
+
+> +		} else {
+> +			warning(_("no source branch found.\n"
+> +				"you need to specify exactly one branch with the --set-upstream option."));
+> +		}
+> +	}
+> + skip:
+>  	free_refs(ref_map);
+>  
+>  	/* if neither --no-tags nor --tags was specified, do automated tag
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index f1eaf6e6ed..d25ff13a60 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -129,6 +129,7 @@ static char *opt_refmap;
+>  static char *opt_ipv4;
+>  static char *opt_ipv6;
+>  static int opt_show_forced_updates = -1;
+> +static char *set_upstream;
+>  
+>  static struct option pull_options[] = {
+>  	/* Shared options */
+> @@ -243,6 +244,9 @@ static struct option pull_options[] = {
+>  		PARSE_OPT_NOARG),
+>  	OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
+>  		 N_("check for forced-updates on all updated branches")),
+> +	OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
+> +		N_("set upstream for git pull/fetch"),
+> +		PARSE_OPT_NOARG),
+>  
+>  	OPT_END()
+>  };
+> @@ -556,6 +560,8 @@ static int run_fetch(const char *repo, const char **refspecs)
+>  		argv_array_push(&args, "--show-forced-updates");
+>  	else if (opt_show_forced_updates == 0)
+>  		argv_array_push(&args, "--no-show-forced-updates");
+> +	if (set_upstream)
+> +		argv_array_push(&args, set_upstream);
+>  
+>  	if (repo) {
+>  		argv_array_push(&args, repo);
+> diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
+> new file mode 100755
+> index 0000000000..bd1a94f494
+> --- /dev/null
+> +++ b/t/t5553-set-upstream.sh
+> @@ -0,0 +1,178 @@
+> +#!/bin/sh
+> +
+> +test_description='"git fetch/pull --set-upstream" basic tests.'
+> +. ./test-lib.sh
+> +
+> +check_config () {
+> +	printf "%s\n" "$2" "$3" >"expect.$1" &&
+> +	{
+> +		git config "branch.$1.remote" && git config "branch.$1.merge"
+> +	} >"actual.$1" &&
+> +	test_cmp "expect.$1" "actual.$1"
+> +}
+> +
+> +check_config_missing () {
+> +	test_expect_code 1 git config "branch.$1.remote" &&
+> +	test_expect_code 1 git config "branch.$1.merge"
+> +}
+> +
+> +clear_config () {
+> +	for branch in "$@"; do
+> +		test_might_fail git config --unset-all "branch.$branch.remote"
+> +		test_might_fail git config --unset-all "branch.$branch.merge"
+> +	done
+> +}
+> +
+> +ensure_fresh_upstream () {
+> +	rm -rf parent && git init --bare parent
+> +}
+> +
+> +test_expect_success 'setup bare parent fetch' '
+> +	ensure_fresh_upstream &&
+> +	git remote add upstream parent
+> +'
+> +
+> +test_expect_success 'setup commit on master and other fetch' '
+> +	test_commit one &&
+> +	git push upstream master &&
+> +	git checkout -b other &&
+> +	test_commit two &&
+> +	git push upstream other
+> +'
+> +
+> +#tests for fetch --set-upstream
+
+Add a space after the '#'. Same in other comments below.
+
+> +
+> +test_expect_success 'fetch --set-upstream does not set upstream w/o branch' '
+> +	clear_config master other &&
+> +	git checkout master &&
+> +	git fetch --set-upstream upstream &&
+> +	check_config_missing master &&
+> +	check_config_missing other
+> +'
+> +
+> +test_expect_success 'fetch --set-upstream upstream master sets branch master but not other' '
+> +	clear_config master other &&
+> +	git fetch --set-upstream upstream master &&
+> +	check_config master upstream refs/heads/master &&
+> +	check_config_missing other
+> +'
+> +
+> +test_expect_success 'fetch --set-upstream upstream other sets branch other' '
+> +	clear_config master other &&
+> +	git fetch --set-upstream upstream other &&
+> +	check_config master upstream refs/heads/other &&
+> +	check_config_missing other
+> +'
+> +
+> +test_expect_success 'fetch --set-upstream master:other does not set the branch other2' '
+> +	clear_config other2 &&
+> +	git fetch --set-upstream upstream master:other2 &&
+> +	check_config_missing other2
+> +'
+> +
+> +test_expect_success 'fetch --set-upstream http://nosuchdomain.example.com fails with invalid url' '
+> +	# master explicitly not cleared, we check that it is not touched from previous value
+> +	clear_config other other2 &&
+> +	test_must_fail git fetch --set-upstream http://nosuchdomain.example.com &&
+> +	check_config master upstream refs/heads/other &&
+> +	check_config_missing other &&
+> +	check_config_missing other2
+> +'
+> +
+> +test_expect_success 'fetch --set-upstream with valid URL sets upstream to URL' '
+> +	clear_config other other2 &&
+> +	url="file://'"$PWD"'" &&
+> +	git fetch --set-upstream "$url" &&
+> +	check_config master "$url" HEAD &&
+> +	check_config_missing other &&
+> +	check_config_missing other2
+> +'
+> +
+> +#tests for pull --set-upstream
+> +
+> +test_expect_success 'setup bare parent pull' '
+> +	git remote rm upstream &&
+> +	ensure_fresh_upstream &&
+> +	git remote add upstream parent
+> +'
+> +
+> +test_expect_success 'setup commit on master and other pull' '
+> +	test_commit three &&
+> +	git push --tags upstream master &&
+> +	test_commit four &&
+> +	git push upstream other
+> +'
+> +
+> +test_expect_success 'pull --set-upstream upstream master sets branch master but not other' '
+> +	clear_config master other &&
+> +	git pull --set-upstream upstream master &&
+> +	check_config master upstream refs/heads/master &&
+> +	check_config_missing other
+> +'
+> +
+> +test_expect_success 'pull --set-upstream master:other2 does not set the branch other2' '
+> +	clear_config other2 &&
+> +	git pull --set-upstream upstream master:other2 &&
+> +	check_config_missing other2
+> +'
+> +
+> +test_expect_success 'pull --set-upstream upstream other sets branch master' '
+> +	clear_config master other &&
+> +	git pull --set-upstream upstream other &&
+> +	check_config master upstream refs/heads/other &&
+> +	check_config_missing other
+> +'
+> +
+> +test_expect_success 'pull --set-upstream upstream tag does not set the tag' '
+> +	clear_config three &&
+> +	git pull --tags --set-upstream upstream three &&
+> +	check_config_missing three
+> +'
+> +
+> +test_expect_success 'pull --set-upstream http://nosuchdomain.example.com fails with invalid url' '
+> +	# master explicitly not cleared, we check that it is not touched from previous value
+> +	clear_config other other2 three &&
+> +	test_must_fail git pull --set-upstream http://nosuchdomain.example.com &&
+> +	check_config master upstream refs/heads/other &&
+> +	check_config_missing other &&
+> +	check_config_missing other2 &&
+> +	check_config_missing three
+> +'
+> +
+> +test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD' '
+> +	clear_config master other &&
+> +	git pull --set-upstream upstream HEAD &&
+> +	check_config master upstream HEAD &&
+> +	git checkout other &&
+> +	git pull --set-upstream upstream HEAD &&
+> +	check_config other upstream HEAD
+> +'
+> +
+> +test_expect_success 'pull --set-upstream upstream with more than one branch does nothing' '
+> +	clear_config master three &&
+> +	git pull --set-upstream upstream master three &&
+> +	check_config_missing master &&
+> +	check_config_missing three
+> +'
+> +
+> +test_expect_success 'pull --set-upstream with valid URL sets upstream to URL' '
+> +	clear_config master other other2 &&
+> +	git checkout master &&
+> +	url="file://'"$PWD"'" &&
+> +	git pull --set-upstream "$url" &&
+> +	check_config master "$url" HEAD &&
+> +	check_config_missing other &&
+> +	check_config_missing other2
+> +'
+> +
+> +test_expect_success 'pull --set-upstream with valid URL and branch sets branch' '
+> +	clear_config master other other2 &&
+> +	git checkout master &&
+> +	url="file://'"$PWD"'" &&
+> +	git pull --set-upstream "$url" master &&
+> +	check_config master "$url" refs/heads/master &&
+> +	check_config_missing other &&
+> +	check_config_missing other2
+> +'
+> +
+> +test_done
+> -- 
+> 2.20.1.98.gecbdaf0
+> 
+
+-- 
+Regards,
+Pratyush Yadav
