@@ -7,107 +7,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 436461F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 17:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDE31F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 17:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728729AbfHNRig (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 13:38:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56211 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728188AbfHNRif (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 13:38:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5453F16471A;
-        Wed, 14 Aug 2019 13:38:30 -0400 (EDT)
+        id S1729083AbfHNR41 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 13:56:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51437 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbfHNR41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 13:56:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 025507C1C2;
+        Wed, 14 Aug 2019 13:56:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Mx2nQrKsQpVt4lLiUOtYFRKX9yA=; b=OZ0IbF
-        zW+O56xHqmEOkso6RZ5cseVaFEEgE71uFAyhwzFr5OzQ8ya9LwmWHFCxWuio+CXA
-        Ou2R/kJyis0Fw+wKp1Yrh/NAMw+QBbjqkZJB6Z8l7fWgtKkTfZv8608/BRGtETeH
-        SMGWMZOJRzqaX/7jEAmTeQcWJoxmnDTsaBmzw=
+        :content-type; s=sasl; bh=BdtQYlZm2vKZ4eK/mAMcGxVIa+c=; b=WNAw7e
+        QF3beYMaGa0GH5SMfEZjxOBRP5jQ5ohpQZ3GTgcZvnBXzIWyu1hJo2SKZGT/5ZxL
+        xOWEbfRA4UKWSFUl0MVeC9kWeU45ax69pj0FzhdjI3OQ/r7LdDwsSMl68LoRzbE1
+        LGr091gkK82nCk7Vzihvu6/YVKEHUUWZTQSzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=x/vIW+S/xzX4ESj487f1/iqL4U2C8zdW
-        IOlbxLRaDiMqKUPnIcTXogi24tpXBMw+Azgle0nI7XZzWaQKVYAwPzyQW6srK6j7
-        jxbwWxH02yj+EMS2r3ghQlIKblCWCLC11RkUb0sfTK810UE5rqty6bB9gdbVUdMN
-        rJpYqrmzMEo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CD51164719;
-        Wed, 14 Aug 2019 13:38:30 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=lU3nrCRyUkV3ekOZUSjVKPl0sQ4Ct/cc
+        LRlDKh7mkFW9TYP0yI36gdcQjxAv8nFYT7g5F8KIdmJfuUhgnjRMGFT89mSc4oS2
+        w2CyhSET84anyqZPUrg+Wg1CCK9wpN7/jZb0SHOApDSc0ODJMIE5PpXc5VHodxjM
+        MkcgJuZ25Pk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE5C27C1C1;
+        Wed, 14 Aug 2019 13:56:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D3D7164718;
-        Wed, 14 Aug 2019 13:38:29 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 262097C1C0;
+        Wed, 14 Aug 2019 13:56:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthieu Moy <git@matthieu-moy.fr>
-Cc:     git@vger.kernel.org, matthieu.moy@univ-lyon1.fr,
-        corentin.bompard@etu.univ-lyon1.fr,
-        nathan.berbezier@etu.univ-lyon1.fr,
-        pablo.chabanne@etu.univ-lyon1.fr
-Subject: Re: [PATCH] pull, fetch: add --set-upstream option
-References: <86zhoil3yw.fsf@univ-lyon1.fr>
-        <20190814134629.21096-1-git@matthieu-moy.fr>
-Date:   Wed, 14 Aug 2019 10:38:28 -0700
-In-Reply-To: <20190814134629.21096-1-git@matthieu-moy.fr> (Matthieu Moy's
-        message of "Wed, 14 Aug 2019 15:46:29 +0200")
-Message-ID: <xmqqlfvv6417.fsf@gitster-ct.c.googlers.com>
+To:     "Paolo Pettinato \(ppettina\)" <ppettina@cisco.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
+References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+        <20190814153607.GB12093@sigill.intra.peff.net>
+        <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
+        <5a58b0eb-0690-c445-dbfd-bd4c5b614629@cisco.com>
+Date:   Wed, 14 Aug 2019 10:56:19 -0700
+In-Reply-To: <5a58b0eb-0690-c445-dbfd-bd4c5b614629@cisco.com> (Paolo
+        Pettinato's message of "Wed, 14 Aug 2019 17:03:44 +0000")
+Message-ID: <xmqqh86j637g.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 53EC09A2-BEBA-11E9-9BF8-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D36C32E0-BEBC-11E9-9827-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthieu Moy <git@matthieu-moy.fr> writes:
+"Paolo Pettinato (ppettina)" <ppettina@cisco.com> writes:
 
-> From: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+> Thanks for the reply!
 >
-> Add the --set-upstream option to git pull/fetch
-> which lets the user set the upstream configuration
-> (branch.<current-branch-name>.merge and
-> branch.<current-branch-name>.remote) for the current branch.
+> On 14/08/2019 17:40, Junio C Hamano wrote:
+>>   Why is the user mucking with
+>> that directory in the first place, and isn't the flagging of the
+>> situation as an error, done with 26f80ccf ("submodule: migrate
+>> get_next_submodule to use repository structs", 2018-11-28), a
+>> bugfix?  If not, why not?
 >
-> A typical use-case is:
->
->     git clone http://example.com/my-public-fork
->     git remote add main http://example.com/project-main-repo
->     git pull --set-upstream main master
->
-> or, instead of the last line:
->
->     git fetch --set-upstream main master
->     git merge # or git rebase
->
-> This functionality is analog to push --set-upstream.
+> Not sure if you're implying here that this is not a bug; I'd say that:
 
-I was writing a one-paragraph summary for this topic, for the
-"What's cooking" report, and here is what I have:
+Yeah, sorry for a confused comment.
 
- "git fetch" learned "--set-upstream" option to help those who first
- clone from a forked repository they intend to push to, add the true
- upstream via "git remote add" and then "git fetch" from it.
-
-After describing it like so, I cannot shake the feeling that the
-workflow this intends to support feels somewhat backwards and
-suboptimal.
-
- - Unless you rely on server-side "fork" like GitHub does, you would
-   first clone from the upstream, and then push to your "fork".  The
-   flow whose first step is to clone from your "fork", not from the
-   true upstream, feels backwards (cloning from upstream then adding
-   your fork as a secondary may be more natural, without need for
-   the complexity of --set-upstream to pull/fetch/push, no?).
-
- - The second step adds the true upstream using "git remote", and at
-   that point, in your mind you are quite clear that you want to
-   pull from there (and push to your own fork).  Not having the "I
-   am adding this new remote; from now on, it is my upstream"
-   feature at this step, and instead having to say that with your
-   first "git pull", feels backwards.  If this feature were instead
-   added to "git remote", then the last step in your example does
-   not even have to say "main" (and no need for this new option),
-   does it?
-
+It does feel strange that the error behaviour depends on what is in
+the working tree for a "fetch", which is between two $GIT_DIR and
+does not involve the working tree on the receiving side (that brings
+us back to my earlier comment in the same message).
