@@ -2,110 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A71DD1F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 19:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 370561F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 19:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728482AbfHNTbL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 15:31:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43710 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726951AbfHNTbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 15:31:11 -0400
-Received: (qmail 20790 invoked by uid 109); 14 Aug 2019 19:31:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 19:31:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19338 invoked by uid 111); 14 Aug 2019 19:32:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 15:32:20 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Aug 2019 15:31:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Paolo Pettinato (ppettina)" <ppettina@cisco.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
-Message-ID: <20190814193110.GA31218@sigill.intra.peff.net>
-References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
- <20190814153607.GB12093@sigill.intra.peff.net>
- <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
+        id S1728684AbfHNTdb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 15:33:31 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50752 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728477AbfHNTda (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 15:33:30 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D23437CE2F;
+        Wed, 14 Aug 2019 15:33:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UShAuP4A8AbXYjcsSc05HmGJe8k=; b=MI3sSZ
+        +6LeyLJ0BgubiDF/LgsEFw0W0b38AcCgyF1X7g0dZMeunPUCUzWfupWjKGhIO7Zb
+        QaJOnV3M68cn3zTShapgjiZ8xPJZxhnST7r1OYTgBbxzTnt8PvI+Bs3IVc1JyQMl
+        l7TxacZ8djgXPaECpZC42LX0bGo+1KoF6yozI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rAPdPi+aoZ7GcWtjLcaaygKeO7JI1qNW
+        PyacnsKckOoBS9MgINnUv/B2z64QSw6BTXH8nV8v7vBMX4pDczfQTlPJC71GeOF8
+        nRrvUanHyySCd6C5D24XHw/5crbFMSI/LdUd3DE+R1SswidtAPJiMNwesxHD060Q
+        cXfLb6Yilbo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C9AD57CE2E;
+        Wed, 14 Aug 2019 15:33:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ED3C77CE2B;
+        Wed, 14 Aug 2019 15:33:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 5/6] rebase -i: support --ignore-date
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190812194301.5655-1-rohit.ashiwal265@gmail.com>
+        <20190812194301.5655-6-rohit.ashiwal265@gmail.com>
+        <xmqqblws7n8r.fsf@gitster-ct.c.googlers.com>
+        <c03439bf-54bf-b53d-9400-bdc4dd2a1309@gmail.com>
+Date:   Wed, 14 Aug 2019 12:33:23 -0700
+In-Reply-To: <c03439bf-54bf-b53d-9400-bdc4dd2a1309@gmail.com> (Phillip Wood's
+        message of "Wed, 14 Aug 2019 19:51:15 +0100")
+Message-ID: <xmqq8srv5ypo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpnl766pj.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 62B011F8-BECA-11E9-9E2A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 09:40:40AM -0700, Junio C Hamano wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> > but it feels odd to me. Even if the submodule is not currently checked
-> > out, we'd presumably still want to do the recursive fetch as long as we
-> > have a repo under $GIT_DIR/modules?
-> 
-> ... which means that we are not interested in "is it populated?" but
-> in "have we done 'git submodule init' to show interest in it?".  But
-> since we are walking the in-core index and picking only the gitlink
-> entries in it in the early part of this loop, we know ce cannot be
-> anything but a submodule at this point, so we will not be in the "we
-> are interesteed in the submodule, but the current HEAD and index is
-> at a commit that does not have it, hence $GIT_DIR/modules/ is the
-> only place that knows about it" situation.  If we are interested in
-> it enough to have a repository stashed under $GIT_DIR/modules/, we
-> should have a submodule there, shouldn't we?
+> That's an important distinction, particularly if GIT_COMMITTER_DATE is
+> set in the environment - are we aiming to have the author and
+> committer dates match or are we just resetting the author date to now?
+> Rohit - do you know which --ignore-date does in the am based rebase?
 
-Yeah, as I was writing the above I too was wondering whether this was a
-case that could even happen. So it may be that the two ways of asking
-the question end up the same in practice.
+The purpose "am --ignore-date" was to ignore "Date:" that came from
+the patch message, overriding it with the current date.  It might
+have become harder to read in the C version, but "git show v2.0.0:git-am.sh"
+would be an easier way to read how "--ignore-date" wanted to behave.
 
-> What I do not quite get is that repo_submodule_init(), which is
-> called by get_submodule_repo_for(), looks into $GIT_DIR/modules/,
-> according to the in-code comment of that function.  So "we cannot
-> get the repo for it, which is an error condition, but we will
-> complain only for non-empty directory" logic feels iffy.
-
-Right. This whole non-empty directory thing _feels_ like a hack that was
-added to paper over the fact that get_submodule_repo_for() does not
-distinguish between "nope, this module is not active" and "an error
-occurred".
-
-Given that any real errors there would come from
-read_and_verify_repository_format(), which generates its own error
-messages, I wonder if we should simply quietly ignore any entries for
-which get_submodule_repo_for() returns NULL. I suppose that would impact
-our exit code, though (i.e., a real broken submodule would not cause the
-outer fetch to exit with a non-zero code).
-
-Probably that could be dealt with by having get_submodule_repo_for()
-return a tristate enum: a working struct, an error, or ENOENT. Actually,
-I guess we could set errno. ;)
-
-It's not clear to me, though, that the rest of the functions are
-distinguishing between "broken repo at submodule path" and "no such
-submodule". For instance, get_submodule_repo_for() itself will happily
-hit a fallback path if repo_submodule_init() returns an error. That
-would really only want to trigger on this ENOENT-equivalent case.
-
-> Stepping back even a bit more, "an empty directory is normal" makes
-> some sense.  If the user or the build system created a non-directory
-> at a path where a populated submodule would sit, that would not be
-> good.  If the user or the build system created a random file in the
-> unpopulated empty directory, in which the working tree files of the
-> submodule would be created once the submodule getspopulated, that
-> would be equally bad, wouldn't it?  Why is the user mucking with
-> that directory in the first place, and isn't the flagging of the
-> situation as an error, done with 26f80ccf ("submodule: migrate
-> get_next_submodule to use repository structs", 2018-11-28), a
-> bugfix?  If not, why not?
-
-I agree that the user putting things in that directory is kind of weird.
-It just seems odd that fetch, which doesn't at all care about the
-working tree, would be the thing to complain about it.
-
--Peff
