@@ -2,141 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0DA71F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 15:36:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA5861F45A
+	for <e@80x24.org>; Wed, 14 Aug 2019 15:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbfHNPgJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 11:36:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43334 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726166AbfHNPgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 11:36:08 -0400
-Received: (qmail 17141 invoked by uid 109); 14 Aug 2019 15:36:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Aug 2019 15:36:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17273 invoked by uid 111); 14 Aug 2019 15:37:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Aug 2019 11:37:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Aug 2019 11:36:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Paolo Pettinato (ppettina)" <ppettina@cisco.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git fetch bug in git 2.21+ "Could not access submodule '%s'"
-Message-ID: <20190814153607.GB12093@sigill.intra.peff.net>
-References: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+        id S1726865AbfHNPyG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 11:54:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56066 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726522AbfHNPyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 11:54:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B39B71779CC;
+        Wed, 14 Aug 2019 11:54:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=leJjP60Xq9GS
+        PXu9t1k3C3nyjzE=; b=eC+96bf4Ny4PZSq2Rf5y78nZ5gf0aebolegNgtJT5sTp
+        bDSjqKD1uC88JZUfzNmmX00xkT9saC8ouT/ai/8tLuRuxDJu58YS8Jzr1WZyS00b
+        F/hvyEP/uudAiDcd6BOWflYYpzd6XtRQiqiSDu6pGvMLwU+QBs4pkk6llkiK6UU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=R238LN
+        Rb+2JZv4Ev2r86q3UEepCUXdVibwHSm2lBP4McyWVf2BlBPYFDDn0jywlVr9inSS
+        noQk9cafocCBbkrNDItL0nDdICa1z9fePzBHeTK2qMI4Iy/o3LqqR6owGyVvC+9C
+        HNAsUptq281eh1jJRX/Qqu9U9ppRgCQCepJx4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8B651779CB;
+        Wed, 14 Aug 2019 11:54:03 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E9541779CA;
+        Wed, 14 Aug 2019 11:54:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Palmer Dabbelt <palmer@sifive.com>, git@vger.kernel.org,
+        peff@peff.net, e@80x24.org, chriscool@tuxfamily.org,
+        jonathantanmy@google.com, tboegi@web.de, bwilliams.eng@gmail.com,
+        jeffhost@microsoft.com
+Subject: Re: [PATCH v2 5/5] fetch: Make --jobs control submodules and remotes
+References: <20190812213448.2649-1-palmer@sifive.com>
+        <20190812213448.2649-6-palmer@sifive.com>
+        <20190814083245.GP20404@szeder.dev>
+Date:   Wed, 14 Aug 2019 08:54:01 -0700
+In-Reply-To: <20190814083245.GP20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Wed, 14 Aug 2019 10:32:45 +0200")
+Message-ID: <xmqqy2zv68va.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <951a0ac4-592f-d71c-df6a-53a806249f7b@cisco.com>
+X-Pobox-Relay-ID: BCFBB00A-BEAB-11E9-AF12-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 14, 2019 at 09:57:50AM +0000, Paolo Pettinato (ppettina) wrote:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> The issue happens when fetching an updated ref from a remote, and that 
-> ref updates a submodule which is not checked out but whose folder is dirty.
-> 
-> Steps to reproduce (on *nix) with repositories on GitHub:
-> [...]
-> # Repo now contains a folder named "sm" which is bound to contain a 
-> submodule checkout. But the submodule is not checked out yet.
-> # Dirty that folder:
-> $ touch sm/test
-> 
-> # Fetching another branch will fail
-> $ git fetch origin branch_1
+> On Mon, Aug 12, 2019 at 02:34:48PM -0700, Palmer Dabbelt wrote:
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 67d001f3f78b..41498e9efb3b 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -114,6 +114,20 @@ static int git_fetch_config(const char *k, const =
+char *v, void *cb)
+>>  	return git_default_config(k, v, cb);
+>>  }
+>> =20
+>> +static int parse_jobs_arg(const struct option *opt, const char *arg, =
+int unset)
+>> +{
+>> +	int jobs;
+>> +
+>> +	jobs =3D atoi(arg);
+>> +	if (jobs < 1)
+>> +		die(_("There must be a positive number of jobs"));
+>> +
+>> +	max_children_for_submodules =3D jobs;
+>> +	max_children_for_fetch =3D jobs;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>  static int parse_refmap_arg(const struct option *opt, const char *arg=
+, int unset)
+>>  {
+>>  	BUG_ON_OPT_NEG(unset);
+>> @@ -142,12 +156,13 @@ static struct option builtin_fetch_options[] =3D=
+ {
+>>  		    N_("fetch all tags and associated objects"), TAGS_SET),
+>>  	OPT_SET_INT('n', NULL, &tags,
+>>  		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
+>> -	OPT_INTEGER('j', "jobs", &max_children_for_submodules,
+>> +	{ OPTION_CALLBACK, 'j', "jobs", NULL, N_("jobs"),
+>> +		    N_("number of parallel tasks to run while fetching"),
+>> +		    PARSE_OPT_OPTARG, &parse_jobs_arg },
+>
+> These changes result segmentation faults in the tests '--quiet
+> propagates to parallel submodules' and 'fetching submodules respects
+> parallel settings' in 't5526-fetch-submodules.sh'.
+>
+> If the number of jobs is specified as '-j 2' or '--jobs 7', i.e. as an
+> unstuck argument of the option, as opposed to '-j2' or '--jobs=3D7',
+> then 'arg' in the parse_jobs_arg() callback is NULL, which then causes
+> the segfault somewhere inside that atoi() call.
 
-Thanks, I was able to reproduce here. Since this worked in v2.18.1, it
-was an easy candidate for bisecting.  The resulting commit is 26f80ccfc1
-(submodule: migrate get_next_submodule to use repository structs,
-2018-11-28).
+True. =20
 
-It looks like your case falls afoul of this logic added by that commit
-in get_next_submodule():
-
-  repo = get_submodule_repo_for(spf->r, submodule);
-  if (repo) {
-          ...
-  } else {
-          /*
-	   * An empty directory is normal,
-	   * the submodule is not initialized
-	   */
-	  if (S_ISGITLINK(ce->ce_mode) &&
-	      !is_empty_dir(ce->name)) {
-		  spf->result = 1;
-		  strbuf_addf(err,
-			      _("Could not access submodule '%s'"),
-			      ce->name);
-	  }
-  }
-
-Because you created a file in the uninitialized submodule directory, it
-fools the is_empty_dir() check. It seems like there should be a more
-robust way to check whether the submodule is initialized. Maybe:
-
-diff --git a/submodule.c b/submodule.c
-index 77ace5e784..748ebe5909 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1294,6 +1294,9 @@ static int get_next_submodule(struct child_process *cp,
- 		if (!S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
-+		if (!is_submodule_active(spf->r, ce->name))
-+			continue;
-+
- 		submodule = submodule_from_path(spf->r, &null_oid, ce->name);
- 		if (!submodule) {
- 			const char *name = default_name_or_path(ce->name);
-
-but that seems to fail t5526's "on-demand works without .gitmodules
-entry" test.
-
-I think is_submodule_populated_gently() more exactly matches what the
-current code is trying to do, like so:
-
-diff --git a/submodule.c b/submodule.c
-index 77ace5e784..4b26faee5d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1347,8 +1347,7 @@ static int get_next_submodule(struct child_process *cp,
- 			 * An empty directory is normal,
- 			 * the submodule is not initialized
- 			 */
--			if (S_ISGITLINK(ce->ce_mode) &&
--			    !is_empty_dir(ce->name)) {
-+			if (is_submodule_populated_gently(ce->name, NULL)) {
- 				spf->result = 1;
- 				strbuf_addf(err,
- 					    _("Could not access submodule '%s'"),
-
-but it feels odd to me. Even if the submodule is not currently checked
-out, we'd presumably still want to do the recursive fetch as long as we
-have a repo under $GIT_DIR/modules? And anyway, it fails another test in
-t5526 ("fetching submodule into a broken repository").
-
-Maybe somebody with more submodule expertise can jump in.
-
-> # Re-issuing the command succeeds
-> $ git fetch origin branch_1
-> [...]
-> I'd expect the command not to fail, or to fail consistently.
-
-I think that part is expected. After receiving new objects, `fetch`
-tries to see if it found out about any new submodules that might need to
-be recursively fetched. In your first command, we actually received the
-new objects (but then erroneously complained because the submodule was
-not initialized). In the second, we already had those objects and didn't
-need to do that check.
-
--Peff
+An easier and more readable way would be to set another "nr-jobs"
+variable using plain vanilla OPT_INTEGER() and override the other
+two with it when they are not set after parse_options() returns, I
+guess.
