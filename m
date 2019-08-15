@@ -2,96 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F1861F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 20:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C70781F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 20:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730312AbfHOUIP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 16:08:15 -0400
-Received: from mout.gmx.net ([212.227.15.19]:32795 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728728AbfHOUIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 16:08:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1565899693;
-        bh=vDnvrCp1ePD7ppoVyv1NW2Q19zkwQf9B7sPanyiBHx8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=G6n7hJuz4lBJBBv9YrkjKvo1t+h92O4LngJlYKqlOdQu1e4tvrwL0WOEwotKS9FKs
-         j2B+uk8NJkb7RxEfhn5Nb3i9Q2hmEa5KGnGaHXo4wwmq8K2U4LxyHjTz+UAf9I+fFD
-         x/0sOsVq7b+j1IB78kSYwfUYsEj+aMHD/SrdE+28=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.2.63] ([77.165.132.136]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDywo-1i61XM3eyK-009trl; Thu, 15
- Aug 2019 22:08:12 +0200
-Date:   Thu, 15 Aug 2019 22:07:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1730169AbfHOUNb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 16:13:31 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36297 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfHOUNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 16:13:30 -0400
+Received: by mail-pg1-f194.google.com with SMTP id l21so1780748pgm.3
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 13:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WB2h2U8oyPfPWoEyBojbCmw34KWE/naz3ksOKRN0N8s=;
+        b=TIeGGCcwZwIYu5qcn4G/ou1FlKVw8ZfWyntjpm2MFyQQTNNXDE1xhuyg8AXPHVDSoc
+         1ZmoMdr/tK5H+tmzkDSkRxzH9wg6Q3/tP3iSVPYPpqrvuFIGD3VyCBTtqMtQEAaCT0Df
+         pMSyXAXkXuJSm9c0Y/5N/rlAXMVeJaXyUkupzYHAfU3d/P0WNXBYuyzPXEHnKL3F+3BF
+         9ZKGTUjlbWNZrZK0hodGD0VkblKj+O9VKGD9ktgiT3h757wU8B+FBv2MRw/kmYlrAact
+         zCulKndr1w3lNXqgTewkhERWsr+4TE3K/J+9CfSXNprx7hXfuGKSaIkRdrZbA3QUTZzC
+         rqYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WB2h2U8oyPfPWoEyBojbCmw34KWE/naz3ksOKRN0N8s=;
+        b=dNsXQjePJBG+nKzabSlVREVIgxUTKTu1BDoVS1TE7b3zq0TENk9chh8zEVxKhD7kCO
+         bfPwubS810EzWcrVw46qB5SAe7KN769r5gPz5GSrNm7osDu08GWayMQC8Zj1B2UKoXel
+         77X58XVJaPXE/bnYAaBGygXAwBHKBEU7ApIXpYsxhpO8fqWBQ4kOWD6qyIBHFfUsZmsx
+         f7j5mL/Wfn6wjIs+Uesc1Ksi7jLQisqBhQ79BrSDUfZ3DWCfSW26ZEPwyF26WeEhoS67
+         Hp0ibkqjeJhBcE9lrkMdgGbyvxr++6uG8G/PlNhFFjqCLRqUgMusI01pDK7dm40pJyeX
+         Ov5g==
+X-Gm-Message-State: APjAAAUcXjvaDo979HmOjhYqVAG/zfrjGw8uawsuywPKAYx697fdO/1i
+        1WNw1+xqdNP0LlmK/UNBiCOhKQ==
+X-Google-Smtp-Source: APXvYqx4AoClroEXqWi5LXqIwRSz2dthIMDm0Sc5NiFN9Cxnu6bwFi91dsTvbSYGj5rH8fc/eTA1XQ==
+X-Received: by 2002:a17:90a:30ad:: with SMTP id h42mr3741138pjb.31.1565900009067;
+        Thu, 15 Aug 2019 13:13:29 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id v21sm3635482pfe.131.2019.08.15.13.13.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2019 13:13:28 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 13:13:24 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Derrick Stolee <stolee@gmail.com>
-cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] bugreport: add tool to generate debugging info
-In-Reply-To: <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1908152205390.46@tvgsbejvaqbjf.bet>
-References: <20190815023418.33407-1-emilyshaffer@google.com> <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Message-ID: <20190815201324.GA208753@google.com>
+References: <20190815023418.33407-1-emilyshaffer@google.com>
+ <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ao8HKCJHmn4f8hgSwP4GCUIS46+dSH3E27VVIHB6UPziaQW9Nkx
- OZ1zyhmvyGUrZN2Zgp8gbA0CuFffezbZxhLVcEn23k55LdJTMGZUBoqNFKeOZA2DaVAJMZ6
- jfn0U1YjNGTQ24qFQDIsOccM9abWZPgsc9Th+UZgVbV/iGElR5MtBTQME+QOwkZa2FVMv6L
- 2SuWv375DVU5UCkEt+ZKA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FSYVpzwgPl0=:y6PgvQam14Q+QpPG/2R/+j
- qeLuTcdrB/AUpf02hWLMk6/s3J64k6iV4eKAtFxsG5AkZmJOImU1Q3nLTW4AGOgv4+nhM24Bw
- Ny8S08X41YYMiuOK+GepZ+nGPWVdWhOOlIC3WdadLDcGnxtpH94x8oqc/9GByXFYdxomsB+nk
- WQidTwdSgr3wPf0A/Bf0YTlkQ+AtFPv2sdCr5SG9eTag4UuMIX5y4qQy6ux0iyXrViM2HhmM5
- 87Dpb/y4bG7wWay0CetaO7+Bs1ouCuW0xOZYJM5P3k/prYVKOx9QF1/U0opAjk5BeHGcbNqtl
- aPiwFuUf6PSMT21IQP0VUhBuoycBiMgHPUj2T9SU9S4wPxsM9r0gOxUEl6VUaiDCuWz1KmmBq
- DOsmj6ihWQaQ8LfTVI61iMNQbmqDHP9uLNs7f3x+OPGif22Mrw4zZ8hVQMrx6abUg9VDGOcSk
- hbj+TgwQf8e4QOx0U2FgKS2LJ/W2Q6Us0SWdh+RsdR22cl5brDabJd3f48E4sZ0iqUu2nsxDd
- fPbXQabiFamWvZmTC3JkQR/p/kdNsPswdY/hQMKgfOBZTSgargfESv8nAAogWqxg8JPtdQQor
- zS6ihMPfuqbHYiX5AL2MkAa4IPshsfsEQUW2wOVp9IHlJMyosszrynC6Qtd2/SSsXxuwkvWUh
- KAq24LYtXZe9eZt52Lr3SBCsXdpB8Yh+KMw+R+Qi7q0TjhG1MHyGu6kijjfS9fwE+vc3nsBo3
- poMr7Xp0T3UDP1LhPVBkq2CyV21aHzTfo1qimAkTQBK9qv/dVftiNDBnPyc9+MDRdZdJRiHbH
- WX8ZGpfEu0BFz+iamaYdgVSxEqLQYLI7U8SVWo7YXIkmsmbCuDWTDs/YxFu1hsprJf+Gd6/68
- L47s0GOZIiC2+zvAM6FsLc38etERPh08AER+E0PV14QgMYMF7IZQe1PE0rkIOCo5qeYi+PVvq
- KxoL0cDhrp0yz7KViyXV/e7jydsCiMwoxf56XtVWampfJtoaVcLBHoTeaHDVzqEjXCqvlibKK
- +6M5HrPWGnQbzkv+zJ+OYPjbo69xy/AXQKBk8pWTXquMNObAuCcAgh9RYieBAZQ5xNq8Vxdtj
- Bh19rTX8oU3nuF2Qr7MdC5Ac5V+83fv04pYYAu8uhdM75yC8FFavDk93u1ga4hKXECXoSyzJM
- MFFJ0=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Aug 15, 2019 at 10:15:24AM -0400, Derrick Stolee wrote:
 
-On Thu, 15 Aug 2019, Derrick Stolee wrote:
+> >  - Do we want to advertise the Git mailing list for bug reports?
+> 
+> That is possible. Isn't there another mailing list for git users?
 
-> On 8/14/2019 10:34 PM, Emily Shaffer wrote:
-> > diff --git a/git-bugreport.sh b/git-bugreport.sh
-> > new file mode 100755
-> > index 0000000000..2200703a51
-> > --- /dev/null
-> > +++ b/git-bugreport.sh
->
-> At first I was alarmed by "What? another shell script?" but this
-> command should prioritize flexibility and extensibility over speed.
-> Running multiple processes shouldn't be too taxing for what we are
-> trying to do here.
+I know there's an IRC channel for Git users, I dunno about mailing list.
+I'm worried that places I name as points of contact will grow stale,
+although I suppose #git on freenode isn't really going anywhere, for
+example. (But as a counterexample, I hope that nobody sends something
+like this to #git-devel, which seems to have a lower population than
+this mailing list.)
 
-Git for Windows sometimes receives bug reports about Bash not being able
-to start (usually it is a DLL base address problem, related to the way
-Cygwin and MSYS2 emulate `fork()`).
+> 
+> I could see a patch added on top of this for git-for-windows/git that
+> changes the instructions to create issues on GitHub.
 
-In such a case, `git bugreport` would only be able to offer a reason for
-yet another bug report instead of adding useful metadata.
+Indeed; I imagine we'd probably like to patch it to ask for bugs in our
+bug tracker.
 
-Something to keep in mind when deciding how to implement this command.
+> 
+> >  - Which config options should we filter to avoid accidentally receiving
+> >    credentials?
+> 
+> The remote URLs are pretty sensitive. Not only do users sometimes put passwords
+> or PATs into their URLs, the literal name of the repo could be a secret.
 
-Ciao,
-Dscho
+Now here's where I start to wonder. We often debug internally by asking
+for the remote URL and replicating the issue there, which is why I
+mentioned it explicitly in the commit message. But I hadn't considered
+folks including the password in the URL.
+
+Well, I suppose anybody can keep a local patch to change the config
+filter pattern. I'll try to make it easy to spot and modify.
+
+[snip]
+
+> At first I was alarmed by "What? another shell script?" but this command should
+> prioritize flexibility and extensibility over speed. Running multiple processes
+> shouldn't be too taxing for what we are trying to do here.
+
+If shell scripts are entirely deprecated I can convert it, but doing it
+in C seemed like overkill when I really just wanted "what are all the
+commands we would ask the user to run and tell us the output?". I
+figured also that it would be a little more immune to bitrot to output
+the contents of porcelain commands here.
+
+> > +	echo "[Git Config]"
+> > +	# TODO: Pass this through grep -v to avoid users sending us their credentials.
+> > +	git config --show-origin --list
+> > +	echo
+> 
+> Config options to consider stripping out:
+> 
+> 	*url*
+> 	*pass* (anything "password" but also "sendmail.smtppass")
+
+Done, thanks.
+
+> 
+> > +	echo "[Configured Hooks]"
+> > +	find "$GIT_DIR/hooks/" -type f | grep -v "\.sample$" | print_filenames_and_content
+> > +	echo
+> 
+> Remove the sample hooks, but focus on the others. Will this look like garbage if a hook
+> is a binary file?
+
+Yeah, I'm sure it will. I'll add a check to
+print_filenames_and_content() so it can tell us if there is a hook
+installed there, even if we can't see the content.
+
+> 
+> > +
+> > +	echo "[Git Logs]"
+> > +	find "$GIT_DIR/logs" -type f | print_filenames_and_content
+> > +	echo
+> 
+> As mentioned before, I've sometimes found it helpful to know the data shape for the object
+> store. Having a few extra steps such as the following could be nice:
+> 
+> 	echo "[Loose Objects]"
+> 	for objdir in $(find "$GIT_DIR/objects/??" -type d)
+> 	do
+> 		echo "$objdir: $(ls $objdir | wc -l)"
+`echo "$objdir: $(ls $objdir | wc -l) objects`
+I'll add context so we don't need to have the bugreport script memorized
+in order to read a bugreport :)
+> 	done
+> 	echo
+> 
+> 	echo "[Pack Data]"
+> 	ls -l "$GIT_DIR/objects/pack"
+> 	echo
+> 
+> 	echo "[Object Info Data]"
+> 	ls -lR "$GIT_DIR/objects/info"
+> 	echo
+> 
+> 	echo "[Alternates File]"
+> 	echo "========"
+> 	cat "$GIT_DIR/objects/info/alternates"
+> 	echo
+> 
+> That last one will collect information on the commit-graph file, even if it is an
+> incremental file.
+
+Thanks Stolee, these are awesome and exactly the kind of feedback I was
+hoping for.
+
+> 
+> I think this is a great start, and I'll take some time later to try it out.
+> 
+> Thanks,
+> -Stolee
+
+Awesome. I'm excited to hear how it goes.
+
+ - Emily
