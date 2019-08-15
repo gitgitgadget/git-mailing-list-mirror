@@ -7,68 +7,106 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97AB91F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 04:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 854DE1F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 04:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726027AbfHOExS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 00:53:18 -0400
-Received: from sender4-of-o55.zoho.com ([136.143.188.55]:21519 "EHLO
-        sender4-of-o55.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725839AbfHOExS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 00:53:18 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Aug 2019 00:53:17 EDT
-ARC-Seal: i=1; a=rsa-sha256; t=1565843893; cv=none; 
-        d=zoho.com; s=zohoarc; 
-        b=RioW3ZlrMCf2pH8WFPWpYJcnZr3/VFUl/RZuoXxgD7gKEauMwS51zd9CvP1FtIqxi1qqbJQ2/rlva9xTFZaLn7c9I0qOckve4aGYddlYivD+v30iay6l10F3gI5ApJ3iCYIntq8j52VhlLjbctDeHqQUzDCG6+NHyX4CgMfQnIE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
-        t=1565843893; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To:ARC-Authentication-Results; 
-        bh=JoitrnwwXb4tMKe4zsQ9F/59TE1NMZOH+PqJuQVwHRQ=; 
-        b=KWCUKEIgKm3pcGsBNscge60HWvFHtMgFIE5K6VN2pSA4q1RAd9Ni2Fx0iv4N0P90Oz1nmR+NaWrM5feXUEEaH3pUZPbCMMXCUR0pm+MUXyoWR9YyrO3t3kmYKN+i7p17jKvs/FUdaDnLZbn/1N9Er+t4OCNrpMbjDVX6Q2OYrtw=
-ARC-Authentication-Results: i=1; mx.zoho.com;
-        dkim=pass  header.i=topbug.net;
-        spf=pass  smtp.mailfrom=hong@topbug.net;
-        dmarc=pass header.from=<hong@topbug.net> header.from=<hong@topbug.net>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1565843893;
-        s=zoho; d=topbug.net; i=hong@topbug.net;
-        h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        l=395; bh=JoitrnwwXb4tMKe4zsQ9F/59TE1NMZOH+PqJuQVwHRQ=;
-        b=b5TN6KFtjuMQMC9w4ASG+owFDtC5DxCKuTwK7bEWASjmLs79X417H9l4WVuWSFvP
-        Tgm5/OVMwH1vlSyQksjL0PdgDh7atZG52CTBUSPe5Z78hWW68EPvPPr78nHJTicUkjP
-        LnhvFOngOeWT6JVGSnoS3iPY21JF2L6eet1Q9nTY=
-Received: from [192.168.88.149] (69-215-149-151.lightspeed.sntcca.sbcglobal.net [69.215.149.151]) by mx.zohomail.com
-        with SMTPS id 1565843890273317.1232780183293; Wed, 14 Aug 2019 21:38:10 -0700 (PDT)
-To:     git <git@vger.kernel.org>
-From:   Hong Xu <hong@topbug.net>
-Subject: Is diff.indentHeuristic still experimental?
-Openpgp: preference=signencrypt
-Message-ID: <58aafeaa-72b0-25ce-27b6-f8480fe48b5e@topbug.net>
-Date:   Wed, 14 Aug 2019 21:38:08 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-ZohoMailClient: External
+        id S1729668AbfHOE4N (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 00:56:13 -0400
+Received: from rdnemail.bankofamerica.com ([171.161.147.155]:33130 "EHLO
+        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726098AbfHOE4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 00:56:13 -0400
+Received: from txdmzmailmx07.bankofamerica.com ([171.180.168.234])
+        by lrdna0myxepmx02.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7F4uB1K001683;
+        Thu, 15 Aug 2019 04:56:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
+        s=corp1903; t=1565844971;
+        bh=27vIvUzWnBXTSUKxSSdtNdc29H5tE2WAQHP/c39IMMU=;
+        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
+         Content-type:Content-transfer-encoding:References;
+        b=bTpNJkgsOAR6qDhKU5EviDiQC3+3re2dXinskb0TRego5JuRfTH7/jtGJV1IkPNVr
+         l6oCSnaahG2xMaiisAK6uhUuJVyDcigxEiAnFypf1EfqsCaKZx7NByr3WeDTIUV7bF
+         zaBB+QTHcvAM1aMEfQl7pnOufQViwh+yG7+LS0Zs=
+Received: from lrdna0n4xepmx12.bankofamerica.com (lrdna0n4xepmx12.bankofamerica.com [171.206.154.16])
+        by txdmzmailmx07.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7F4uAoo003586;
+        Thu, 15 Aug 2019 04:56:10 GMT
+Date:   Thu, 15 Aug 2019 04:56:05 +0000
+From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
+Subject: RE: suggestion for improved docs on autocrlf
+In-reply-to: <0244daea3faa4d4aa899cff0dcc62917@bofa.com>
+X-Originating-IP: [30.245.13.45]
+To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+Message-id: <bb706de9a42f4e60ba974647e68f8387@bofa.com>
+MIME-version: 1.0
+Content-type: text/plain; CHARSET=US-ASCII
+Content-language: en-US
+Content-transfer-encoding: 7BIT
+X-MS-Has-Attach: 
+Accept-Language: en-US
+Thread-topic: suggestion for improved docs on autocrlf
+Thread-index: AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQgANNx4CAADsrQP//18WAABMUKAD//38MoP/+sX+A//2l2mD/+aztkP/ypH+g
+X-MS-TNEF-Correlator: 
+References: <577a66e0c26545aaa4795de3c5189c9d@bofa.com> <20190809033406.5t5ag3qmh36ideec@tb-raspi4>
+ <0c1b48c9fad641689ead69fdd9f72d63@bofa.com> <20190811121004.guygurnopwwggvsp@tb-raspi4>
+ <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com> <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
+ <aae529ce1b084b7bbcca3977e6909417@bofa.com> <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
+ <20190813032452.qg2ufgljm4bjeznr@tb-raspi4> <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
+ <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4> <d4a0500d5f5e4706aef481a33096465a@bofa.com>
+ <0244daea3faa4d4aa899cff0dcc62917@bofa.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-15_02:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Okay, first attempt at better phrasing.  This may need more paragraph breaks, or something.
+Right now it's very wall-of-texty.  And probably in a style way too different from the rest of the git docs.
+Also, the syntax is probably closer to markdown than AsciiDoc; sorry.
+Anyway, enough disclaimers, here's the first draft:
 
-I saw that diff.indentHeuristic was enabled by default at
-33de7163879ca83be7d6e1583c125f84e1e7c329
-<https://git.kernel.org/pub/scm/git/git.git/commit/?id=33de7163879ca83be7d6e1583c125f84e1e7c329>
-, but the doc still says it is experimental
-<https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffindentHeuristic>.
-Am I missing anything?
+This variable has three valid settings: true, input, and false.
+(Leaving it unset is equivalent to setting it to "false".)
+1. Set it to "true" if you want to have CRLF line endings in your 
+working directory and the repository has LF line endings. 
+Setting it to true is the same as setting the `text` attribute to
+"auto" on all files and core.eol to "crlf".  In other words: any file
+that has LF line endings in the repository will have CRLF line
+endings in your working directory.  If you  commit a new file to
+the repository, then git will commit it with LF line endings, even
+if it has CRLF endings in your working  directory.  However, if you
+edit an existing file that has CRLF line endings in the repository,
+then git will not convert it to LF line endings when you commit it.
 
+2. If you set it to "input" then git will not do any line ending conversions
+when checking files out of the repository into your working directory.
+That is, immediately after a checkout, the line endings in your working
+directory will match those in the repository.  When committing a new
+file to the repository, git will commit it with LF line endings, even if it has
+CRLF line endings in your working directory.  If you edit an existing file in
+the repository, then:
+        * If the file had LF line endings in the repository, it will still have them,
+            no matter what line endings are in the working directory.
+        * If the file has LF line endings in the working directory, then it will be
+            committed with LF line endings , no matter what line endings it used
+            to have in the repository.
+If neither of the above two cases apply, (in other words, if the file has CRLF
+endings in the repository and in also in the working directory), then it will be
+committed with CRLF line endings.
 
-Best,
+3. The simplest setting to explain is "false".  In this setting, git will not
+perform any line ending conversion; all files will be checked out into
+the working directory exactly as they are in the repo, and will be
+committed to the repo exactly as they are in the working directory.
+This setting is recommended; if you are tempted to use "input" or "true"
+instead of "false", then consider looking into committing a .gitattributes file
+into your repository instead.  Settings in that file override this configuration
+variable, and since the same attributes file is being used by everyone who
+works on the repo, the results end up being more predictable.
 
-Hong
+Or something like that.
 
-Hong
-
-
+----------------------------------------------------------------------
+This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
