@@ -2,99 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 291D91F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 16:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54E9C1F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 16:54:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728575AbfHOQqj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 12:46:39 -0400
-Received: from mout.web.de ([212.227.17.12]:36251 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726099AbfHOQqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 12:46:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1565887593;
-        bh=TebyL+OL571WUzHDD2jFxXWdPeiwJ0zT60EDVo7I0Q4=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ZRcGC8LrmoSZ/6GyHByOKd9d7eRaC84g/h0amtKKGxhdUI6rDGKzIKstA01ztp9Af
-         f7IUN+Tss+5uW6u6O4EIDDe3EtY1luneM+VCIGVLns+QwnUi/rrhICXdt/m6bZ0Zyu
-         li0qsIbNbvVCAhX/SCFjnfV5sOvUsXYWFg/dNfqA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LzsC7-1iKZ0F47Sl-014xgT; Thu, 15
- Aug 2019 18:46:33 +0200
-Subject: Re: [PATCH v2] unpack-trees.c: distinguish ita files from empty files
-To:     Varun Naik <vcnaik94@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-References: <20190813160353.50018-1-vcnaik94@gmail.com>
- <20190815162115.65008-1-vcnaik94@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a19fd436-b5f3-462f-6f9b-f8eeb46c78da@web.de>
-Date:   Thu, 15 Aug 2019 18:46:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1729975AbfHOQyz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 12:54:55 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52399 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729579AbfHOQyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 12:54:54 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE8A985357;
+        Thu, 15 Aug 2019 12:54:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=fm6cNEdEzj8Z
+        idp6DmzexR2G1sw=; b=kxBotKI7SnXSdglyCzVr+IfV4sVVEW5eh2vWdexdi4J1
+        PINTKoXjWe7gt75s/K+iP3SEGkPzsjm56oX9MVK1p3z7o6BdOWm3j1WnIHDedcCJ
+        1p5OidytHVnXZhm3qjN0sy46h4Ffdd+5hm5tqNxZUGYSluSVi57wY0PS61sOcQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mLeP7V
+        24+NWeG99TrBnVeT0Z08ioODiWln+17nWBaQRP5UIoIfF/0ICd1dF4NSh3LtNzqF
+        3ffcXfYeeZB2aw1ECSjmhhe/T3mLDvwPXpYGp5y6/+xzJjuzFL12U0DRN1AlTbTc
+        1WweXbOBzaIUL3im1rF23DztNo1fjtcWWXEEY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6EB585356;
+        Thu, 15 Aug 2019 12:54:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C139585355;
+        Thu, 15 Aug 2019 12:54:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: minor interactive rebase regression: HEAD points to wrong commit while rewording
+References: <20190812175046.GM20404@szeder.dev>
+        <2a7d69a9-cb3e-eb84-188f-5713876f6d78@gmail.com>
+        <20190814212036.GQ20404@szeder.dev>
+        <026d6615-3420-eb31-8c93-a6245f3be503@gmail.com>
+        <xmqqpnl64c94.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 15 Aug 2019 09:54:44 -0700
+In-Reply-To: <xmqqpnl64c94.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 15 Aug 2019 09:36:07 -0700")
+Message-ID: <xmqqlfvu4be3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190815162115.65008-1-vcnaik94@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+X-Pobox-Relay-ID: 6339C926-BF7D-11E9-8B13-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WOHRXccTGppyFcpTxafUB4hnn1q6h5i8qRzt+9uXLjWPQ/REHss
- RFAG4hQI5yNcWVhYSjKtv6/2iTeXak4CnQW77DnXHw+X1WHYYKOTJDWBZ4HMO3+2xyebyCd
- U9UIEswstu6806TwZzGfKnWugfCcHGUK2xrFQinnt9b4cZO3AaP1OQmGsTPcmdgvE6How4B
- WecJaKnVRUZgnPDtcgzGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:f0vVJjySr0g=:pe9GK1p3pIjBu/liKh1RLK
- CYEZal3x5Ki3Kx5lSIE7d8ACergZeNXkhSxj8AftHDci8XuZiZ6OVsBbAZ4jCyO9z/IBISeES
- D5Fji4FfN7Moy1Ji202B669HceRFiZ5VWkZlSVL9yKxaJxH+BtnZ1OK3vU6/shd7xJI1wgltG
- RqZyZJx0OImsS0+rIAtR3U6rcjqvioMuh+Wo0eWQxaIAUiX8vmFo+iAhesoCFVBVmCSJFHW2N
- WggZmGz0/zrmhGTO7MjLBaicndl5Leq4VUm2ilUbctNh/4mYw3ofRLHo597uQ3uBtaayFsJeu
- TUGYTqSk1MLoX4YQIEC+xEzKdrvpoRG5d4T6k4epTbmssmTVoFTD0e1CcD09TzrJ3YMbzZ2bX
- m8TSMuHlVPmnEQYqXSn9tWGKOMpTlfCEvnH2RxryMSNTa2nL6X8BYSmMBnNtaTPpgO54k4DX9
- pDvpX6ZhBpqs0MNCW8rO0E0j+P30uXIl0W9tnhnfvg+098uHEF4YQw5UOcrmxvlWUTfMWmcRI
- WYGqDPVI6ovRD96nMOIZFprU/Am7eoFNSmHJujOJxWgy5PDx/bK8MjqbxaqQqJQ8Gr7SkSyOB
- VtUODiV4hnAQUsOqhfxrKh3TLzI4eznmP+WBq9SfP6yh6PqrbfOSd3YJW2oLsGcqGuhow0BWN
- xUdKO2hq4/4F/PV5jcqVRYbSnPoRYBng5FhgDauNYMetdt6GMmGKnTu42gpX2Tw2D3jTWDf0N
- zJd8Q0IgAlcSARytAJ025POYt1/+wH40dI+kvfRI1VP2ug64+dO0U/cp3dq4j67PvCNal2V4q
- Gf2J93VXqkLjFFiEdjgArvMhUnI+kskam7//tosgO7MA2cjwX6rKxI0C18+cs4Dp2nSTd3FMF
- WlBUake72hpsVBl4HeM7YGMa31+TQHm8xFQLEY9uBp9t/oo6sZLSxNEM1QsTkVhwujtdqSZX9
- cQXLcttK0JBHYGpxkvI3T3vxrgc/mdTad4E6GttsyxsejojhYd5w5EUs3T/ww3xxzipbo1NmN
- d8zQx/4tqHQk14Cf95uwMCujmIWzGoYYHtj+xyBNp9jQ+a/TvQEZ56qABaSRdxa3YbMpnV0vv
- gXiqZbyvA5lAIwTVxx7CcI1SnehdaXsEdvWFJrVkLhlk6tEBKfh+FY7Vu2H9yot2o7/+eYtr6
- 3J8Ac=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.08.19 um 18:21 schrieb Varun Naik:
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 50189909b8..5e6d88f36b 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1658,9 +1658,10 @@ static int same(const struct cache_entry *a, cons=
-t struct cache_entry *b)
->  		return 0;
->  	if (!a && !b)
->  		return 1;
-> -	if ((a->ce_flags | b->ce_flags) & CE_CONFLICTED)
-> +	if ((a->ce_flags | b->ce_flags) & (CE_CONFLICTED | CE_INTENT_TO_ADD))
->  		return 0;
+Junio C Hamano <gitster@pobox.com> writes:
 
-If any of the two entries has the intent-to-add flag set, they won't be
-considered the same and we exit early.
-
->  	return a->ce_mode =3D=3D b->ce_mode &&
-> +	       !ce_intent_to_add(a) =3D=3D !ce_intent_to_add(b) &&
-
-So if we reach this point, the flag can't be set, ce_intent_to_add()
-returns 0 on both sides and thus the added condition is always true.
-You might as well remove it.
-
->  	       oideq(&a->oid, &b->oid);
->  }
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >
+>> On 14/08/2019 22:20, SZEDER G=C3=A1bor wrote:
+>>
+>> I changed the sequencer to always commit the cherry-pick and then run
+>> 'git commit --amend' for rewords [1]. Running
+>>
+>> 	time env GIT_EDITOR=3Dtrue GIT_SEQUENCE_EDITOR=3D'sed -i
+>> s/pick/reword/' ../bin-wrappers/git rebase -i --root
+>>
+>> over 100 commits I cannot see any real difference in the timings
+>> between master and that branch. Any difference is within the variation
+>> of the times of multiple runs. The change also fixes a bug when
+>> rewording a re-arranged root commit.
 >
+> I guess that settles the "efficiency" story; besides, showing a
+> wrong intermediate state to users and scripts efficiently is just as
+> bad as showing a wrong state less efficiently.
+
+Needless to say, there is no need for us to make things less
+efficient when we do not need to.  If there are two back-to-back
+"pick"s, and there is no hook and the like that gives an end-user
+and/or a script a reliable trigger point that can be used to
+"observe" and "utilize" the state immediately after the first
+"pick", we do not have to update the HEAD (or update the working
+tree for that matter) between these two "pick"s.
+
+The external process being able to observe alone is not an enough
+reason to force us go inefficient here---if the triggering event is
+like "spawn an editor and wait for it to exit", that gives the
+external process to not just "observe" the updated state after the
+first pick, but also "utilize" that state (e.g. build, compare with
+some other tree, etc.) knowing that the second "pick" does not start
+changing the state until it relinquishes the control.
+
+But unless the external process can reliably utilize the updated
+state, it is of not much use to just be able to notice the change.
+For example, an argument like "constantly monitoring changes in the
+$GIT_DIR/rebase-merge directory, we can notice that each 'pick' gets
+done" is not a reason to force us to update HEAD every time any
+instruction is consumed in the todo file, as the next "pick" cannot
+be reliably delayed by somebody who is merely observing the
+directory to utilize the updated state.
+
+
