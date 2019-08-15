@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D81371F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1771F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732478AbfHOVlS (ORCPT <rfc822;e@80x24.org>);
+        id S1732464AbfHOVlS (ORCPT <rfc822;e@80x24.org>);
         Thu, 15 Aug 2019 17:41:18 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:32799 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732192AbfHOVlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 17:41:17 -0400
-Received: by mail-pl1-f195.google.com with SMTP id go14so1256538plb.0
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37445 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730573AbfHOVlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 17:41:16 -0400
+Received: by mail-pf1-f196.google.com with SMTP id 129so1985550pfa.4
         for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V9N0leVUQsbK90SpghEb8bVJeSw74Qso3JoepuQFdlQ=;
-        b=hpUnpwS7dP1q2eCrsDDi4TrVeNQk5eAVX2Mas6vp+88GJW46rJVPt/x1t9wIW9/FVq
-         W0igm59ioIBXDPw9QHi7cCJ0UBu+oGxdggtIUHOzoVmTrX9AKH4RBmK4kGPbKj22mso0
-         AUxFeV/Cqcz3iwJEKR0QLkpEWtv5278JPoFGbFnt6iX2rvi6rCQIutw5sOrFDSOP50D9
-         DbEHJbYpn3laioRmpTR/yZaSWJywwEfn3xuo3A0TE10gGK7j0rKRpeRF+iiJt5Fn7rnk
-         I0n8ijib4zLuk+LbKcVwB6iL6RPMjZ0J3Vvhgu428TNrgGFes9K0eK3NeAuodoJdf9BY
-         b2bw==
+        bh=xj5SPg238lgVxydTrdsSl0RDGkUT+0FCmMsBmULbm/o=;
+        b=RWjaGvFsz06tOzTLk3X4jYGQc00wt4SCxRT5aWUFBRWRDDDXeURibyJDhPCsVKUnZx
+         bhIvG7hbsiN8Amksxs249iI7Zu+ZA3bG2O/o/qhtZN5LPew4RBZhab+Pjxyq/X8mJhhv
+         TE0Bk+W36lLDPZY00nO47ayb42ZOI8Fl13GOxfvZfln2GuvgcToEaaEOkIAcn+QFnKHT
+         G8W9+v6S+4jgxDP/mUBmcUYv3ERIZ0QX44HraCtA9x7QHn1r2J75yTDBZ/51LNzY5lcm
+         Y3ZOgLayUBimMcUmYgGykG+axWV8XCId5pjJnBvpAYytTXM+Sk36T6d4q1/0v3f3/dZz
+         t9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V9N0leVUQsbK90SpghEb8bVJeSw74Qso3JoepuQFdlQ=;
-        b=tnegFHre+J2bVxTNd6zFiDnt0d+EbSQ7Au3e8W4GEHC8B9mDUj6jj0uH4ZmfboonyI
-         4Nl8lEIFqc3WMQ5ZxGsWnhXdyij5uqqKuGjpWMWKxSqgTpY5M/U+1LhgfqWx43sA6TZZ
-         56Avw4YI9YrEL9lN+Uv0tM9q1V4WEgY2QMc9qUBafv9zubWRk+aV+WHDzfCsmfWFn10Y
-         pGwDKpCtfw2/Y+ODSEPWzyoKIe4xFwrf7YbjrW2qbR8VABP8+hny0/wWIk+qDHIIiOoI
-         70O7P3gECklKprwV07Cg1BSfQeWSf3pTKSDhRVEQQxZmEvvT23F8YNBQEqxBxdD4oPCo
-         NLqg==
-X-Gm-Message-State: APjAAAW2NPsVnjGDkhFgJ5Sq6Mkl4MCmJxSaoFQMdtKNPZ2iJSISX28J
-        ald1sdxFF/tbhyHEyAXMO8nW+vKl
-X-Google-Smtp-Source: APXvYqz3uyFaL70+aUN3vq03IqHV1W1kgSHYE3OFf9WcVPveGsjr37sm9YDs7nFpvTLWghMf4Zg60Q==
-X-Received: by 2002:a17:902:ab96:: with SMTP id f22mr6287450plr.147.1565905276303;
-        Thu, 15 Aug 2019 14:41:16 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=xj5SPg238lgVxydTrdsSl0RDGkUT+0FCmMsBmULbm/o=;
+        b=bUX1zy+BdnNGQMnLTlDnSa283fHInP8GDAEpQwDDcM377bTTJW8OdwP9lVjrUbF66K
+         XpnoFC7Whf7iqk+MXETYPu9LWvjJ2ayu4V08BGAEy+QC8HzRWfURoKBZjQCTtOsR6Nw3
+         +8GcE2vbOi/IG3zHYlTy/vsQ2oovCrRK2VpkP29fQFp9O/eyV/WQJuI4u+g4Q0GmUL2p
+         MtUl7k65kzsyWE6uJkIjvzgv8PUidY548pBNbzUjPI4WqCBv74VhYAQWWWU1AtKSeMDr
+         sotPcbGvoOu8D5zT/bB9aLXAXSz0kfdndXZ7K5Eg3D5ryEazpssvbuCnxbOPyvOQV5ei
+         tAkg==
+X-Gm-Message-State: APjAAAWwDYs7ZKfavdWcvSKymroS2eCKyClaT3k58JLapQZHPSoWjd7A
+        HwQZfaNmD9K7NE+BcckjNTPKCAct
+X-Google-Smtp-Source: APXvYqxHYrls85TCX/WViGWZ3lhgoTFgQfl2lPH9cigYFBDlaSlUj0LlxDDc5pcD5QaWRxlprCMB0g==
+X-Received: by 2002:a62:c584:: with SMTP id j126mr7487552pfg.21.1565905275372;
         Thu, 15 Aug 2019 14:41:15 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Aug 2019 14:41:14 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 03/24] merge-recursive: enforce opt->ancestor != NULL when calling merge_trees()
-Date:   Thu, 15 Aug 2019 14:40:32 -0700
-Message-Id: <20190815214053.16594-4-newren@gmail.com>
+Subject: [PATCH v3 02/24] checkout: provide better conflict hunk description with detached HEAD
+Date:   Thu, 15 Aug 2019 14:40:31 -0700
+Message-Id: <20190815214053.16594-3-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.32.g2123e9e4e4
 In-Reply-To: <20190815214053.16594-1-newren@gmail.com>
 References: <20190726155258.28561-1-newren@gmail.com>
@@ -70,79 +70,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We always want our conflict hunks to be labelled so that users can know
-where each came from.  The previous commit fixed the one caller in the
-codebase which was not setting opt->ancestor (and thus not providing a
-label for the "merge base" conflict hunk in diff3-style conflict
-markers); add an assertion to prevent future codepaths from also
-overlooking this requirement.
+When running 'git checkout -m' and using diff3 style conflict markers,
+we want all the conflict hunks (left-side, "common" or "merge base", and
+right-side) to have label markers letting the user know where each came
+from.  The "common" hunk label (o.ancestor) came from
+old_branch_info->name, but that is NULL when HEAD is detached, which
+resulted in a blank label.  Check for that case and provide an
+abbreviated commit hash instead.
 
-Enforcing this requirement also allows us to simplify the code for
-labelling the conflict hunks by no longer checking if the ancestor label
-is NULL.
+(Incidentally, this was the only case in the git codebase where
+merge_trees() was called with opt->ancestor being NULL.  A subsequent
+commit will prevent similar problems by enforcing that merge_trees()
+always be called with opt->ancestor != NULL.)
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ builtin/checkout.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1d960fa64b..a67ea4957a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1019,7 +1019,7 @@ static int merge_3way(struct merge_options *opt,
- {
- 	mmfile_t orig, src1, src2;
- 	struct ll_merge_options ll_opts = {0};
--	char *base_name, *name1, *name2;
-+	char *base, *name1, *name2;
- 	int merge_status;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 6123f732a2..d5b946dc3a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -713,6 +713,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			struct tree *old_tree;
+ 			struct merge_options o;
+ 			struct strbuf sb = STRBUF_INIT;
++			struct strbuf old_commit_shortname = STRBUF_INIT;
  
- 	ll_opts.renormalize = opt->renormalize;
-@@ -1043,16 +1043,13 @@ static int merge_3way(struct merge_options *opt,
+ 			if (!opts->merge)
+ 				return 1;
+@@ -768,6 +769,12 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			if (ret)
+ 				return ret;
+ 			o.ancestor = old_branch_info->name;
++			if (old_branch_info->name == NULL) {
++				strbuf_add_unique_abbrev(&old_commit_shortname,
++							 &old_branch_info->commit->object.oid,
++							 DEFAULT_ABBREV);
++				o.ancestor = old_commit_shortname.buf;
++			}
+ 			o.branch1 = new_branch_info->name;
+ 			o.branch2 = "local";
+ 			ret = merge_trees(&o,
+@@ -781,6 +788,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 					 opts, 0,
+ 					 writeout_error);
+ 			strbuf_release(&o.obuf);
++			strbuf_release(&old_commit_shortname);
+ 			if (ret)
+ 				return ret;
  		}
- 	}
- 
--	assert(a->path && b->path && o->path);
--	if (strcmp(a->path, b->path) ||
--	    (opt->ancestor != NULL && strcmp(a->path, o->path) != 0)) {
--		base_name = opt->ancestor == NULL ? NULL :
--			mkpathdup("%s:%s", opt->ancestor, o->path);
-+	assert(a->path && b->path && o->path && opt->ancestor);
-+	if (strcmp(a->path, b->path) || strcmp(a->path, o->path) != 0) {
-+		base  = mkpathdup("%s:%s", opt->ancestor, o->path);
- 		name1 = mkpathdup("%s:%s", branch1, a->path);
- 		name2 = mkpathdup("%s:%s", branch2, b->path);
- 	} else {
--		base_name = opt->ancestor == NULL ? NULL :
--			mkpathdup("%s", opt->ancestor);
-+		base  = mkpathdup("%s", opt->ancestor);
- 		name1 = mkpathdup("%s", branch1);
- 		name2 = mkpathdup("%s", branch2);
- 	}
-@@ -1061,11 +1058,11 @@ static int merge_3way(struct merge_options *opt,
- 	read_mmblob(&src1, &a->oid);
- 	read_mmblob(&src2, &b->oid);
- 
--	merge_status = ll_merge(result_buf, a->path, &orig, base_name,
-+	merge_status = ll_merge(result_buf, a->path, &orig, base,
- 				&src1, name1, &src2, name2,
- 				opt->repo->index, &ll_opts);
- 
--	free(base_name);
-+	free(base);
- 	free(name1);
- 	free(name2);
- 	free(orig.ptr);
-@@ -3390,6 +3387,8 @@ int merge_trees(struct merge_options *opt,
- 	int code, clean;
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	assert(opt->ancestor != NULL);
-+
- 	if (!opt->call_depth && repo_index_has_changes(opt->repo, head, &sb)) {
- 		err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
- 		    sb.buf);
 -- 
 2.23.0.rc2.32.g2123e9e4e4
 
