@@ -7,110 +7,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54E9C1F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 16:54:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99F821F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 16:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729975AbfHOQyz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 12:54:55 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52399 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729579AbfHOQyy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 12:54:54 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE8A985357;
-        Thu, 15 Aug 2019 12:54:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1730448AbfHOQ5A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 12:57:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61365 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726865AbfHOQ5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 12:57:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57DAA15E0CF;
+        Thu, 15 Aug 2019 12:56:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=fm6cNEdEzj8Z
-        idp6DmzexR2G1sw=; b=kxBotKI7SnXSdglyCzVr+IfV4sVVEW5eh2vWdexdi4J1
-        PINTKoXjWe7gt75s/K+iP3SEGkPzsjm56oX9MVK1p3z7o6BdOWm3j1WnIHDedcCJ
-        1p5OidytHVnXZhm3qjN0sy46h4Ffdd+5hm5tqNxZUGYSluSVi57wY0PS61sOcQs=
+        :content-type; s=sasl; bh=CdCURay7f5SWqKGWssI9Vbu8/zA=; b=G2SGwT
+        Ia/iOTq0UfT3PFnpTZti3nQFv9m18rbjf5HzAO+cdry1Mth3AE5d0TSlQGKovyG9
+        zK/+XXVTfn3MniFkDpxvZmpIiyuocl4mYn7CAjfMcdkGrYKgbPMFVdr5PKvfMyo2
+        PPQbG3QVkO6E3YteiN/Ra00mhZvLUAkLPEpKY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mLeP7V
-        24+NWeG99TrBnVeT0Z08ioODiWln+17nWBaQRP5UIoIfF/0ICd1dF4NSh3LtNzqF
-        3ffcXfYeeZB2aw1ECSjmhhe/T3mLDvwPXpYGp5y6/+xzJjuzFL12U0DRN1AlTbTc
-        1WweXbOBzaIUL3im1rF23DztNo1fjtcWWXEEY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6EB585356;
-        Thu, 15 Aug 2019 12:54:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=qyg+XTPK+SgHwaKckSMDtABO6veGgzfl
+        VS7BlIVnSepDx5Z+lBBpj4kDv5mFRjYAhJca0tG8wq07X9/w40LObOzM9jozj+UR
+        tpRHDdEphh3SIMZdecPWDPQ4VdjbKFx5eeMYZuXl1SuVj5j4BEvA8fbyhwNQbTxn
+        X0lkPAWy7qg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D41315E0CE;
+        Thu, 15 Aug 2019 12:56:58 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C139585355;
-        Thu, 15 Aug 2019 12:54:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CB9615E0CD;
+        Thu, 15 Aug 2019 12:56:57 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: minor interactive rebase regression: HEAD points to wrong commit while rewording
-References: <20190812175046.GM20404@szeder.dev>
-        <2a7d69a9-cb3e-eb84-188f-5713876f6d78@gmail.com>
-        <20190814212036.GQ20404@szeder.dev>
-        <026d6615-3420-eb31-8c93-a6245f3be503@gmail.com>
-        <xmqqpnl64c94.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 15 Aug 2019 09:54:44 -0700
-In-Reply-To: <xmqqpnl64c94.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 15 Aug 2019 09:36:07 -0700")
-Message-ID: <xmqqlfvu4be3.fsf@gitster-ct.c.googlers.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2019, #04; Wed, 14)
+References: <xmqq36i35tfv.fsf@gitster-ct.c.googlers.com>
+        <CAHd-oW4kMr+Q1GhNQ7B7RW2hafqokvUoxg9qkXXyt98L53=Ahw@mail.gmail.com>
+        <CAPUEspjWbHC2md3kFu8O88275pYSzpFmu9kjHEn4_0_hjxZ8MA@mail.gmail.com>
+Date:   Thu, 15 Aug 2019 09:56:56 -0700
+In-Reply-To: <CAPUEspjWbHC2md3kFu8O88275pYSzpFmu9kjHEn4_0_hjxZ8MA@mail.gmail.com>
+        (Carlo Arenas's message of "Wed, 14 Aug 2019 19:15:50 -0700")
+Message-ID: <xmqqef1m4baf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6339C926-BF7D-11E9-8B13-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B1387654-BF7D-11E9-9B39-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> On Wed, Aug 14, 2019 at 4:58 PM Matheus Tavares Bernardino
+> <matheus.bernardino@usp.br> wrote:
+>>
+>> On Wed, Aug 14, 2019 at 6:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> >
+>> [...]
+>> > * mt/grep-submodules-working-tree (2019-07-30) 1 commit
+>> >   (merged to 'next' on 2019-08-02 at e1a46a195f)
+>> >  + grep: fix worktree case in submodules
+>>
+>> There is a new version of this patch here[1], addressing the comments
+>> you and Christian made.
 >
->> On 14/08/2019 22:20, SZEDER G=C3=A1bor wrote:
->>
->> I changed the sequencer to always commit the cherry-pick and then run
->> 'git commit --amend' for rewords [1]. Running
->>
->> 	time env GIT_EDITOR=3Dtrue GIT_SEQUENCE_EDITOR=3D'sed -i
->> s/pick/reword/' ../bin-wrappers/git rebase -i --root
->>
->> over 100 commits I cannot see any real difference in the timings
->> between master and that branch. Any difference is within the variation
->> of the times of multiple runs. The change also fixes a bug when
->> rewording a re-arranged root commit.
->
-> I guess that settles the "efficiency" story; besides, showing a
-> wrong intermediate state to users and scripts efficiently is just as
-> bad as showing a wrong state less efficiently.
+> since it is already in next, would be better to submit a patch on top
+> of the current topic instead (more details in
+> Documentation/SubmittingPatches).
 
-Needless to say, there is no need for us to make things less
-efficient when we do not need to.  If there are two back-to-back
-"pick"s, and there is no hook and the like that gives an end-user
-and/or a script a reliable trigger point that can be used to
-"observe" and "utilize" the state immediately after the first
-"pick", we do not have to update the HEAD (or update the working
-tree for that matter) between these two "pick"s.
-
-The external process being able to observe alone is not an enough
-reason to force us go inefficient here---if the triggering event is
-like "spawn an editor and wait for it to exit", that gives the
-external process to not just "observe" the updated state after the
-first pick, but also "utilize" that state (e.g. build, compare with
-some other tree, etc.) knowing that the second "pick" does not start
-changing the state until it relinquishes the control.
-
-But unless the external process can reliably utilize the updated
-state, it is of not much use to just be able to notice the change.
-For example, an argument like "constantly monitoring changes in the
-$GIT_DIR/rebase-merge directory, we can notice that each 'pick' gets
-done" is not a reason to force us to update HEAD every time any
-instruction is consumed in the todo file, as the next "pick" cannot
-be reliably delayed by somebody who is merely observing the
-directory to utilize the updated state.
-
-
+Thanks.  Or we could just go the lazier route.  A new stable release
+would happen within a day or two, and then in a week or so after that,
+the tip of 'next' gets rewound and rebuilt on top of it.  We can
+discard the older copy and replace with the newer one when it happens.
