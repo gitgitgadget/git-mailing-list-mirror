@@ -7,96 +7,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12FA51F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 22:10:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76E611F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 22:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730586AbfHOWKc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 18:10:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60754 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbfHOWKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 18:10:32 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4185D1605FF;
-        Thu, 15 Aug 2019 18:10:31 -0400 (EDT)
+        id S1727445AbfHOWSg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 18:18:36 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52996 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727119AbfHOWSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 18:18:36 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 32A3787B4E;
+        Thu, 15 Aug 2019 18:18:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4ijGv2Mu4x09YBSmqN5ijJTAoaQ=; b=sYq5Nm
-        qaRy+DNT+vHPseNQYwGHRbrjeWfT0lpEkrkSWgJxxGOPA8ToMmXz26n2scPMSn8y
-        CZSmV2e/3pLB981in2KfExwOYwHod44pn/DKZv1I/h7u/R1VXa8uSz798vyhNB2f
-        wCcTzgAjWbKDTVpWBBBPuczMJYrckAf9o6M8w=
+        :content-type:content-transfer-encoding; s=sasl; bh=0Ybm8d1QdMw+
+        aubPXcrF5Qf5tBw=; b=CyHn4ouLEfbMlDS4bxZ/t1Qbvf0LuQdQ4L7h5pq0Dwl7
+        sKt1tNeyXU/wjIOqp+EfrA9nTbkDLwYcCeefu1CXn8d88jVpx/T9Uy6BVmWFr+UR
+        75vk+R4Z+ZZkZe5DqzYrV/hpVHj/H3N7O3eSlRbEeG01iieSWbcmnrkl58XfPRA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LQ6cbGC33VTvd0NYgCaJa3eDpbYMp+1k
-        tr88mKuhT+1ucLIN2in6U0Cf2TZstHyfi3HFysWOKmP6Zm8XakYT8r+XG7SxpMP0
-        otWu/lquutUWj5e4y5A5DA/IyLbAPw8kwyZAfrfUPZpHmeL3N9h3Ho8TGqtrkBs6
-        OtwB+6BJLcY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39A941605FE;
-        Thu, 15 Aug 2019 18:10:31 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=p93O57
+        pZHs6BQiAQi7gOIRIPYj6Ie/WDujcqVr6+2MisfnO2MRolmHhKLuiFwMsWIb4uJS
+        /UINCrfMR4+DQPn/DWI1E7hThr3luTIkM+8/JYu8bcST1R2siSvEJ/T7aTjVfGdS
+        ZoSKGqg7Nngrmj5XuVJZiLOhgSWeEGc+CevCs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2BC0F87B4D;
+        Thu, 15 Aug 2019 18:18:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90FCB1605FD;
-        Thu, 15 Aug 2019 18:10:30 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 56AC487B4B;
+        Thu, 15 Aug 2019 18:18:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/2] apply: reload .gitattributes after patching it
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
-        <20190813024307.705016-1-sandals@crustytoothpaste.net>
-        <20190813024307.705016-3-sandals@crustytoothpaste.net>
-        <xmqq7e7h7xap.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 15 Aug 2019 15:10:29 -0700
-In-Reply-To: <xmqq7e7h7xap.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 13 Aug 2019 11:08:46 -0700")
-Message-ID: <xmqqftm22i7e.fsf@gitster-ct.c.googlers.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, daniel@haxx.se,
+        peff@peff.net
+Subject: Re: [PATCH v3] http: use xmalloc with cURL
+References: <xmqqo90q2pfw.fsf@gitster-ct.c.googlers.com>
+        <20190815214429.28048-1-carenas@gmail.com>
+Date:   Thu, 15 Aug 2019 15:18:29 -0700
+In-Reply-To: <20190815214429.28048-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 15 Aug 2019 14:44:29 -0700")
+Message-ID: <xmqqblwq2hu2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E9D20F6-BFA9-11E9-B35D-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9D2B09C4-BFAA-11E9-ACD2-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> When applying multiple patches with git am, or when rebasing using the
->> am backend, it's possible that one of our patches has updated a
->> gitattributes file. Currently, we cache this information, so if a
->> file in a subsequent patch has attributes applied, the file will be
->> written out with the attributes in place as of the time we started the
->> rebase or am operation, not with the attributes applied by the previous
->> patch. This problem does not occur when using the -m or -i flags to
->> rebase.
-> ...
-> "rebase -m" and "rebase -i" are not repeated run_command() calls
-> that invoke "git cherry-pick" or "git merge" these days, either, so
-> I am somewhat curious how they avoid fallilng into the same trap.
->
-> Thanks for the fix.  Will queue.
+>  #if LIBCURL_VERSION_NUM < 0x070800
+>  #define curl_global_init(a) do { /* nothing */ } while (0)
+> +#elif LIBCURL_VERSION_NUM >=3D 0x070c00
+> +#define curl_global_init(a) curl_global_init_mem(a, xmalloc, free, \
+> +						xrealloc, xstrdup, xcalloc)
+>  #endif
 
-Actually there still is one more thing I wasn't clear about the
-change.
+Yup.  That looks better.
 
-> To ensure we write the correct data into the working tree, expire the
-> cache after each patch that touches a path ending in ".gitattributes".
-> ...
-> +			if (!flush_attributes && patch->new_name &&
-> +			    ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE))
-> +				flush_attributes = 1;
-
-When an attribute file is removed by a patch, we should forget what
-we read earlier from the file before it got removed.  Would such a
-case, where patch->new_name would be NULL, be handled correctly?
-
-The call to ends_with_path_components() is almost no cost, and I
-would suspect that this call is easier to reason about without the
-"!flush_attributes &&" in the conditional part, by the way.
-
-Thanks.
+If your curl version is recent enough (which presumably is true for
+most people these days), the entire #if/#endif block is skipped
+while scanning for #else or #elif and #elseif willq be silently
+ignored; it is unfortunate that #elseif won't be flagged by CPP as a
+potential error X-<.
