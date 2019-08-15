@@ -2,305 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7E91F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 21:52:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B2371F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 22:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732654AbfHOVwb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 17:52:31 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36120 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731854AbfHOVwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 17:52:31 -0400
-Received: by mail-pg1-f195.google.com with SMTP id l21so1888842pgm.3
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:52:31 -0700 (PDT)
+        id S1730623AbfHOWDL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 18:03:11 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36009 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729387AbfHOWDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 18:03:11 -0400
+Received: by mail-pl1-f194.google.com with SMTP id g4so1587245plo.3
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 15:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DPqrAXUcv9Bsvyyu1grFxvENdbvfrYGG892go+7pdr4=;
-        b=hWxz6dVSZo8YNYZYp5/8xcM16+cMg4cyTKPWxCmRWLbRescfW4b0hAps1c8EW8ZFr9
-         NR3angunL36VgOosAr1V6Pc0gHLx4iLEoFS2aPdqf1jP1p86xd03ffDjCPtxhW5PYZ7E
-         MW+BbmmwEULWEYAW8N9nX0anOa/4QcTP0wzOcbTAcx2O7PKgFR3lrRDCefn+j2Ybux0C
-         Kzzk3x6HimdnV5jC5oCHJ8FrsBqCTPa14GCrN97xEHmQIMtRWnStmISQDPD0cJTWi/qd
-         t/4BKo4r7aaoonPlUt02Byc8tBGUVo4ZuT7pLsPjOa9vPfGdgMlGqr6gqChmOpcXLzmu
-         uunQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PxKiE6GQwmEpr7LWQNKCFXdEasxBvV5Wo+Gh6+zYZBc=;
+        b=gtV2otqd7wb6an+4RG7X39/IxXOCT+jo4HFThwnuHBWi0f+2CbEgIL0j+CpcYvuLMp
+         IAe1wd10WvUDibA3lzSbxpyVMDQe5XbY7YAmAYBc5zaBzvhlDB7kzZRhj1dYgMwo7jbn
+         B4xjxDnLmLB9+C3GeSYHReE7kB6Q8jmJQg2okP6FF4Hjtcb4c+R48t6nVvf8QPq3DogP
+         qYgcWen4VbXLsYkmC/ZoFdbIKZ04RpFK8lOw0IELGwgVNXGrC/CEN7JmdROO7Hknnc7t
+         uomuU0+mrHhCXMj+80tUu/pkBKfeWKTo8+vY9kJAPydt4DXCDXhLSWzQlzmPPgHEsths
+         3YYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DPqrAXUcv9Bsvyyu1grFxvENdbvfrYGG892go+7pdr4=;
-        b=GauH0LmFtnZdZxT5DFxxm0bKG0+cMiREKpWrVdvd60OPCoEQTUqmV2hLQLAQ+cc2he
-         yBTOOwPpTM+6E4bo0IzugkcZR0mUDntYVgvZbJSJs3H2n5RoZa2Cbsh+9skRfxTFU2RO
-         XHPXxNqCW8d9jJC0crtxIz2ROS9Jdu2BV4pmwzF+bjxJ+wL9DM8mttrCICOQWDMjcWaR
-         1N0xrT2PjVfCoAzXKKXtcb1ZeDI4Gq40dW/dCjhKheW0y3+ltiB5e/lwnqaxJBmYvoab
-         AO0Rpr8JAqdZbygWeagSMaMOY6E9S8KYEI8IXYswCNWOaUGymp0fSdEs1q3fTI+fSEmf
-         yEWQ==
-X-Gm-Message-State: APjAAAXUBhOX5kSkZKXkY9bcA6qM7/RDBdy8I3aRacUv4HoL/RiELA/k
-        yNa30Ruz6ou5r9Wpi35uGMnG+rsJsqE=
-X-Google-Smtp-Source: APXvYqzTF1iNU3Fr0hX/DkT4k2lhQj9YeRC5o4Cyif6Eds9OfRtTOyYsFyq01dlsi1HktnQk2ujfOg==
-X-Received: by 2002:a63:c1c:: with SMTP id b28mr5112243pgl.354.1565905949864;
-        Thu, 15 Aug 2019 14:52:29 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id y23sm4244138pfr.86.2019.08.15.14.52.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2019 14:52:29 -0700 (PDT)
-Date:   Thu, 15 Aug 2019 14:52:25 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] bugreport: add tool to generate debugging info
-Message-ID: <20190815215225.GB208753@google.com>
-References: <20190815023418.33407-1-emilyshaffer@google.com>
- <xmqqzhka2tbv.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PxKiE6GQwmEpr7LWQNKCFXdEasxBvV5Wo+Gh6+zYZBc=;
+        b=X/9Sz8Y31T6KOa+5iapPMfI3J4Y3LbKAJmL45kwhqy8BMsxvaV0fWppbS4K9Liw4d2
+         YCes1Qf8mGDYlcMq7VKHxC1ItALwfgImp72TQz04q9PqotvbLlj6ql9iYpdmFe1sCMG3
+         6v2fzbVXvqaYL/P+LmlK2zLizPpThIpM80rEjToc+1fCbXP8hrUWUUAWvZYfnm/s6i3s
+         nmk+KJPZWg7AkCbStd1Po9uKg09kg7dnwsvcBnwouX/VxJOgtX0NSzjw1D7zm/dDEH66
+         CLYbxX+wrLvDn+Mp39Xgstpy4k8FwL2Iyfm4yL4wLxFJFhAxLm5p7Ma3yDBz7jrmMdBM
+         IG8Q==
+X-Gm-Message-State: APjAAAWyaPLFDhVSAwCWtAHusZqaU2smNmKW/uupYPiGf4fTfoMmL255
+        HZBR1FoH59ES7DdhS8QRO7LYI8BJ
+X-Google-Smtp-Source: APXvYqzargo8IW9DRmWPjIS2SDP4U8xBfvAwUXRNRhbdNWajjbweRHbuIiUJJqwTmMFqeytnyqfr2Q==
+X-Received: by 2002:a17:902:1024:: with SMTP id b33mr6306396pla.325.1565906590188;
+        Thu, 15 Aug 2019 15:03:10 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id t7sm1935477pjq.15.2019.08.15.15.03.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Aug 2019 15:03:08 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: BUG?: xdl_merge surprisingly does not recognize content conflict
+Date:   Thu, 15 Aug 2019 15:03:03 -0700
+Message-Id: <20190815220303.17209-1-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc2.32.g2123e9e4e4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzhka2tbv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 11:10:12AM -0700, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-> > new file mode 100644
-> > index 0000000000..c5f45bbee8
-> > --- /dev/null
-> > +++ b/Documentation/git-bugreport.txt
-> > @@ -0,0 +1,48 @@
-> > +git-bugreport(1)
-> > +================
-> > +
-> > +NAME
-> > +----
-> > +git-bugreport - Collect information for user to file a bug report
-> > +
-> > +SYNOPSIS
-> > +--------
-> > +[verse]
-> > +'git bugreport' [-o | --output <path>]
-> > +
-> > +DESCRIPTION
-> > +-----------
-> > +Captures information about the user's machine, Git client, and repository state,
-> > +as well as a form requesting information about the behavior the user observed,
-> > +into a single text file which the user can then share, for example to the Git
-> > +mailing list, in order to report an observed bug.
-> > +
-> > +The following information is requested from the user:
-> > +
-> > + - Reproduction steps
-> > + - Expected behavior
-> > + - Actual behavior
-> 
-> + - How the above two are different
-> 
-> It is often helpful to have users explain how the expected and
-> actual are different in their own words.
+It appears git.git had a case of a patch being resubmitted and both the
+original (nd/checkout-m-doc-update) and new (nd/checkout-m) versions
+getting applied, with the merge picking to include both versions of some
+of the text rather than just one of the two.  I have a patch below to
+delete the duplicate hunk, but more surprising to me was the fact that
+re-running the merge in question did not show any conflicts despite the
+two patches adding different text in the same location.
 
-Good point; added.
+The "duplicate" commits:
+  * commit a7256debd4b6 ("checkout.txt: note about losing staged changes
+    with --merge", 2019-03-19), from nd/checkout-m-doc-update
+  * commit 6eff409e8a76 ("checkout: prevent losing staged changes with
+    --merge", 2019-03-22), from nd/checkout-m
+(From reading the mailing list, the former was v1 and the latter was
+meant as v2, but the latter was not marked as v2 and apparently both
+were picked up.)
 
-> 
-> > +NOTE
-> > +----
-> > +Bug reports can be sent to git@vger.kernel.org.
-> 
-> I am not sure if this belongs here.
+The problematic merge was commit 4a3ed2bec603 ("Merge branch
+'nd/checkout-m'", 2019-04-25), but redoing that merge produces no merge
+conflicts.  This can be seen at the individual file level with the
+following:
 
-Sure, I wasn't certain either. Would you rather I remove the "what to do
-with this bugreport" NOTE section entirely? I worry that folks will
-think this generated text file is being magically reported behind the
-scenes, or that they won't know what to do with the file now that it's
-created.
+  $ git show 4a3ed2bec603^1:builtin/checkout.c >ours
+  $ git show 4a3ed2bec603^2:builtin/checkout.c >theirs
+  $ git show $(git merge-base 4a3ed2bec603^1 4a3ed2bec603^2):builtin/checkout.c >base
 
-I suppose I did mention in the DESCRIPTION section that the user can
-share the generated text file to report a bug. Maybe I should remove
-"for example to the Git ML" from there as well.
+At this point, we can note that ours and theirs both added similar code
+at the same place; looking at ours:
 
-> 
-> > diff --git a/git-bugreport.sh b/git-bugreport.sh
-> > new file mode 100755
-> > index 0000000000..2200703a51
-> > --- /dev/null
-> > +++ b/git-bugreport.sh
-> > @@ -0,0 +1,86 @@
-> > +#!/bin/sh
-> > +
-> > +print_filenames_and_content() {
-> > +while read -r line; do
-> > +	echo "$line";
-> > +	echo "========";
-> > +	cat "$line";
-> > +	echo;
-> > +done
-> > +}
-> 
-> Style.
-> 
->  - have SP on both sides of ()
->  - one more HT indent for the function body
->  - "do" on its own line
->  - no unnecessary semicolons when LF would do
-> 
-> You probably are better off asking xargs to do this instead of
-> relying on "read -r".
-> 
-> 	find ... | xargs -n 1 sh -c 'echo "$1" && cat "$1"' -
-> 
-> or something like that, perhaps.
+  $ git diff --no-index base ours | grep -B 4 -A 7 repo_index_has_changes
+  @@ -736,6 +738,13 @@ static int merge_working_tree(const struct checkout_opts *opts,
+   			if (!old_branch_info->commit)
+   				return 1;
 
-Hm. In responding to Stolee's comments, I ended up replacing "cat $line"
-with another function, and it seems xargs isn't happy directing to
-functions which haven't been exported, because it spins a new process
-for each argument it's passed. I had originally intended to do this with
-xargs but then didn't want to pack many lines into one xargs call.
+  +			if (repo_index_has_changes(the_repository,
+  +						   get_commit_tree(old_branch_info->commit),
+  +						   &sb))
+  +				warning(_("staged changes in the following files may be lost: %s"),
+  +					sb.buf);
+  +			strbuf_release(&sb);
+  +
+   			/* Do more real merge */
 
-The way the code is in PS1 I think it's a reasonable replacement, but
-the code in PS2 is less so - there's a check for whether a file given is
-binary or whether it exists at all (the former for hooks, which I think
-you were worried about, and the latter for the alternates file, which I
-found I do not have.)
+Looking at theirs:
 
-Why is "read -r" unreliable? Is it better to export a function and use
-xargs, compared to using "read -r" in a loop like this? I was worried
-that exporting a function is similar to namespace pollution in C++, but
-maybe I'm mistaken.
+  $ git diff --no-index base theirs | grep -B 4 -A 7 repo_index_has_changes
+   			if (!old_branch_info->commit)
+   				return 1;
+  +			old_tree = get_commit_tree(old_branch_info->commit);
+  +
+  +			if (repo_index_has_changes(the_repository, old_tree, &sb))
+  +				die(_("cannot continue with staged changes in "
+  +				      "the following files:\n%s"), sb.buf);
+  +			strbuf_release(&sb);
 
-> 
-> > +
-> > +generate_report_text() {
-> > +
-> > +	# Generate a form for the user to fill out with their issue.
-> > +	gettextln "Thank you for filling out a Git bug report!"
-> > +	gettextln "Please answer the following questions to help us understand your issue."
-> > +	echo
-> > +	gettextln "What did you do before the bug happened? (Steps to reproduce your issue)"
-> > +	echo
-> > +	gettextln "What did you expect to happen? (Expected behavior)"
-> > +	echo
-> > +	gettextln "What happened instead? (Actual behavior)"
-> > +	echo
-> > +	gettextln "Anything else you want to add:"
-> > +	echo
-> > +	gettextln "Please review the rest of the bug report below."
-> > +	gettextln "You can delete any lines you don't wish to send."
-> > +	echo
-> 
-> Would we on the receiving end be able to tell these section headers
-> in translated to 47 different languages?  I am sure that i18n is
-> used here to encourage non-C-locale users to file bugs in their own
-> languages, but are we prepared to react to them?
+   			/* Do more real merge */
 
-I hope that we could accept reports in many languages with online
-translation as a guide, but practically speaking,
-machine-learning-powered online translation may not be as good for
-technical topics as it is for conversational.
+  @@ -772,7 +781,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
 
-At the same time, it seems unnecessarily restrictive to ask for bugs to
-come in English. My heart thinks it's better to encourage other
-languages too.
+Now, a manual merge of these files gives no conflicts, which surprises me:
 
-> 
-> > +	echo "[System Information]"
-> > +	git version --build-options
-> > +	uname -a
-> > +	curl-config --version
-> > +	ldd --version
-> 
-> "curl-config: command not found" may be clear enough, but would
-> there be a case where errors from two or more consecutive commands
-> in the above sequence would make the output confusing to the person
-> sitting on the receiving end?  Would it help, as a convention, to
-> always ahve "echo [what am I reporting]" before each of these
-> commands?
+  $ git merge-file ours base theirs; echo $?
+  0
 
-Yeah, I think that's a good point.
+and this merge includes BOTH additions:
 
-In responding to Stolee's review, I mentioned adding additional context
-to some command's output so that "those reviewing the report don't need
-to be intimately familiar with what the bugreport script runs". But it
-might actually be most useful to echo the command that's being run
-everywhere.
+  $ git diff --no-index base ours | grep -B 4 -A 7 repo_index_has_changes
+   			if (!old_branch_info->commit)
+   				return 1;
+  +			old_tree = get_commit_tree(old_branch_info->commit);
+  +
+  +			if (repo_index_has_changes(the_repository, old_tree, &sb))
+  +				die(_("cannot continue with staged changes in "
+  +				      "the following files:\n%s"), sb.buf);
+  +			strbuf_release(&sb);
+  +
+  +			if (repo_index_has_changes(the_repository,
+  +						   get_commit_tree(old_branch_info->commit),
+  +						   &sb))
+  +				warning(_("staged changes in the following files may be lost: %s"),
+  +					sb.buf);
+  +			strbuf_release(&sb);
 
-I imagine it's fine to include the [] header as well, to make it easier
-for the user to understand what was generated.
+   			/* Do more real merge */
 
-> 
-> > +# Create bugreport file
-> > +BUGREPORT_FILE="$basedir/git-bugreport-$(whoami)-$(hostname)-$(date -Iminutes)"
-> 
-> How portable is -Iminutes?
+I'm not that familiar with the xdl_merge stuff, but this seemed buggy
+to me.  Or is there something about the content merge that I'm just not
+understanding and this merge is actually correct?
 
-Ah, it seems while it works in MingW and bash, it doesn't work in zsh.
-I'll figure something else out. Thanks.
+Elijah
 
-> 
-> > diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> > new file mode 100755
-> > index 0000000000..6eb2ee4f66
-> > --- /dev/null
-> > +++ b/t/t0091-bugreport.sh
-> > @@ -0,0 +1,41 @@
-> > +#!/bin/bash
-> 
-> Make sure /bin/sh suffices to run the test script.
+-- 8< --
+Subject: checkout: remove duplicate code
 
-Will do. Thanks.
+Both commit a7256debd4b6 ("checkout.txt: note about losing staged
+changes with --merge", 2019-03-19) from nd/checkout-m-doc-update and
+commit 6eff409e8a76 ("checkout: prevent losing staged changes with
+--merge", 2019-03-22) from nd/checkout-m were included in git.git
+despite the fact that the latter was meant to be v2 of the former.
+The merge of these two topics resulted in a redundant chunk of code;
+remove it.
 
-> 
-> > +test_description='git bugreport'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +# Headers "[System Info]" will be followed by a non-empty line if we put some
-> > +# information there; we can make sure all our headers were followed by some
-> > +# information to check if the command was successful.
-> > +HEADER_PATTERN="^\[.*\]$"
-> > +check_all_headers_populated() {
-> > +	while read -r line; do
-> > +		if [$(grep $HEADER_PATTERN $line)]; then
-> 
-> Documentation/CodingGuidelines
-> 
-> I am not sure if the traits this test script checks about the
-> contents of the output is all that interesting.  Whenever we add new
-> sections to the main command because we want other kinds of
-> information collected, we'd update this test script because
-> otherwise the test would fail, but would it result in quality
-> bugreport tool, or is it just additional busywork?
+Signed-off-by: Elijah Newren <newren@gmail.com>
 
-I'm a little confused about this - I checked for a general [...] header
-standing alone on a line specifically so that we wouldn't need to update
-the test script when adding a new section. What do you see that will
-grow stale?
 
-> 
-> If we decide later that a header and its body needs to be separated
-> with a blank line for better readablity, the check done here would
-> also need to be updated, but again, that does not feel like anything
-> more than just busywork to me.
+---
+ builtin/checkout.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-Sure, I agree with that.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 6123f732a2..dc61afa066 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -730,13 +730,6 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 				      "the following files:\n%s"), sb.buf);
+ 			strbuf_release(&sb);
+ 
+-			if (repo_index_has_changes(the_repository,
+-						   get_commit_tree(old_branch_info->commit),
+-						   &sb))
+-				warning(_("staged changes in the following files may be lost: %s"),
+-					sb.buf);
+-			strbuf_release(&sb);
+-
+ 			/* Do more real merge */
+ 
+ 			/*
+-- 
+2.23.0.rc2.32.g2123e9e4e4
 
-So, what's your suggestion? Not to check the output at all? (This may
-actually be fine; it occurred to me while reading your review that if a
-user is filing a bug report about something, one of the diagnostic
-commands in bugreport might be what's broken for them. So perhaps it
-should be tolerant to missing information...)
-
-> 
-> The tests for "-o" and unknown options do make sense, though.
-> 
-> Thanks.
-Thanks for reviewing.
-
- - Emily
