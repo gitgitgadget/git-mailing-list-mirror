@@ -2,99 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5159F1F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 16:26:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4503F1F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 16:34:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731854AbfHOQ0e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 12:26:34 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:46001 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731855AbfHOQ0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 12:26:33 -0400
-Received: by mail-qk1-f193.google.com with SMTP id m2so2251910qki.12
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 09:26:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BgKn4A5iWT9iqzo1+Lk4F/d78zZBDapu8/q67f9ECDA=;
-        b=L9T1dIwpBS4w0c+Zi+UdRYqPqjzWX12k7t7Y3dN1PWNwz1AtvXPHRn6C/W1eX/kwfl
-         QCDedSHQGZiJYhqdJ0XeF/65It5R3Z4sDeyj5Wv0COWtYdRvymVlKbfos6pM9PIF8TvG
-         T1QKjPKS4Qzi0e+b87x3Jk0MCQ1w5qmMud5pe5icwPcMidXnlDCYBfmDyfKyIMb5dn/n
-         xGsnoFQ5qynu76F1IX/B03UepasQJaaGWAgMnrgWAin86S5FWwwojBKHouwMXq7b8JZQ
-         Mdu89qEiNhHqO4O65ikvDnlstTSu45nVtyVbp8QBM2t2BM0m3UMHfI25EHVhDannk+BK
-         HJMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BgKn4A5iWT9iqzo1+Lk4F/d78zZBDapu8/q67f9ECDA=;
-        b=AxJtLcnxO8ht3ZPoAzm6POn38gVDdG2jJ8sbjdpg/7O3XyMk4ninRqQIxfX4vH9QLW
-         7Qaeux1rCGaPjXcgzgAZc8WzsuoB83JT10hsIJtpdUWs81tOeDUowpXfZnwxLffizGmk
-         mZ16MAondUWYkvDycLQtLDd90LLvDQs46QM9IZn1bnVzT8A8NkV+ghUy8XCAijLBKJWm
-         qsaKJE1wKHNBet8inQOyXhf/LtJTIe6zlKNBT4B/R33eULJYwiTzwTqUN3Hmp34Nx6FL
-         P/wLbk0FswGVSB2ZXA5jYxJbnWN34pDEgA4FCT167Q1zcauI7WsnSHEs6EK1XlJ8LphR
-         QPjg==
-X-Gm-Message-State: APjAAAWzypLvhm1wwE9GQWgdB1cZCpwJukSfpjNENbAh9I0Xt6jG8G+C
-        UtdJ0MgJ6/ymRsvfg3Tcm5wtG6MiEq2S3sJcJiw=
-X-Google-Smtp-Source: APXvYqw68bjdE5DyLj+sT/kMN5BOc1n8aProLf/8ChEA2b3XRAY2dn1C4nobFVAmVavYx8WRYeT4B7cnmYfFBm5X9go=
-X-Received: by 2002:a37:4986:: with SMTP id w128mr4640138qka.417.1565886392782;
- Thu, 15 Aug 2019 09:26:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190712150235.12633-1-vcnaik94@gmail.com> <20190801161558.12838-1-vcnaik94@gmail.com>
-In-Reply-To: <20190801161558.12838-1-vcnaik94@gmail.com>
-From:   Varun Naik <vcnaik94@gmail.com>
-Date:   Thu, 15 Aug 2019 09:26:21 -0700
-Message-ID: <CAK_rgsGYa6LoGDHz=sGDXY26Lvg3dxV-poB5FQHf5G6BuOKVPg@mail.gmail.com>
-Subject: Re: [PATCH v3] diff-lib.c: handle empty deleted ita files
+        id S1731965AbfHOQeY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 12:34:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57103 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730156AbfHOQeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 12:34:24 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 31C9E15DD38;
+        Thu, 15 Aug 2019 12:34:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=LwmcUoe+Hmz5
+        ZrD/4Cehn2lULeQ=; b=mWAZmgnxSact9aNHTt6szDf7BFYhlLK7dc8B5e2nZF3j
+        d9AW0ctqhQtgeg9zU1yWtZdcXoVFK85agzhuOQ7OImhE/Ao2+GS3wf6W29e0i28x
+        ZsP6y6nNXhHEuOddf3IBlq5eG0y+ECIokfBSmLqQzxjcJSFcQfgD3QYoP66WXmM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=P+sw/4
+        FwqYBfKySB1TuHjqWKeDfPGD5d8D5wHDEIf2n3nmobts/djAMNYf6NrB0rcpchGT
+        IHxFsVqteWlqWy0cvntvviCMeTwuZWGh8AAj3uwkOFHcysCRoocqSoZz0j1cfz62
+        lAq1QAcpEQ8JykFkzk0Y5lnffmi+0SZRXNPxg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 25C2B15DD37;
+        Thu, 15 Aug 2019 12:34:21 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B05215DD34;
+        Thu, 15 Aug 2019 12:34:20 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Varun Naik <vcnaik94@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [RFC PATCH] unpack-trees.c: handle empty deleted ita files
+References: <20190813160353.50018-1-vcnaik94@gmail.com>
+        <b7f4b745-8942-6d90-dbc5-7f79f2cc323e@web.de>
+        <xmqqr25o7qmf.fsf@gitster-ct.c.googlers.com>
+        <CAK_rgsGSfL2zQLP59O+PUCLGz0X8c4UQ3Zg=9M+nCww5C+X_gA@mail.gmail.com>
+Date:   Thu, 15 Aug 2019 09:34:19 -0700
+In-Reply-To: <CAK_rgsGSfL2zQLP59O+PUCLGz0X8c4UQ3Zg=9M+nCww5C+X_gA@mail.gmail.com>
+        (Varun Naik's message of "Thu, 15 Aug 2019 09:17:09 -0700")
+Message-ID: <xmqqtvai4cc4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8857654A-BF7A-11E9-A5F7-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 1, 2019 at 9:16 AM Varun Naik <vcnaik94@gmail.com> wrote:
->
-> It is possible to delete a committed file from the index and then add it
-> as intent-to-add. Certain forms of `git diff` should show the file.
-> After `git reset HEAD`, the file should be identical in the index and
-> HEAD. The commands already work correctly if the file has contents in
-> HEAD. This patch provides the desired behavior even when the file is
-> empty in HEAD.
->
-> The affected "diff" commands and the "reset" command call
-> diff-lib.c:do_oneway_diff() with a cache entry in the index and a cache
-> entry in HEAD. An ita file is represented in the index by a cache entry
-> with the same hash as an empty file. For a nonempty deleted ita file,
-> do_oneway_diff() calls show_modified(), which detects a diff between the
-> cache entry in the index and the cache entry in HEAD and therefore deems
-> the file "modified". However, for an empty deleted ita file,
-> do_oneway_diff() previously detected no such diff between the two cache
-> entries and therefore deemed the file "not modified". After this fix,
-> for any deleted ita file, do_oneway_diff() calls diff_index_show_file()
-> and deems the file "deleted".
->
-> `git diff-index --cached HEAD` prints a row of output for both a
-> "modified" and a "deleted" file, although the output differs slightly.
-> `git reset HEAD` treats a "modified" and a "deleted" file similarly,
-> resurrecting the file in the index from HEAD.
->
-> This change should not affect newly added ita files. For those, the
-> "tree" cache entry is NULL, so the changed code is not executed.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Varun Naik <vcnaik94@gmail.com>
-> ---
+Varun Naik <vcnaik94@gmail.com> writes:
 
-Bumping this email, since I noticed v2 is still in pu.
+> On Tue, Aug 13, 2019 at 1:33 PM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>
+>> The original code considered that two entries with the same mode and
+>> the same "contents" are the same.  As nobody sane tracks an empty
+>> file for an extended span of history, that meant that most of the
+>> time, intent-to-add entries, which has the normal mode bits for the
+>> blobs (with or without the executable bit) and object name for a
+>> zero length blob, would have been judged "different".
+>>
+>
+> I agree, this edge case is really arcane. The rabbit hole was deep :)
 
-Varun
+In retrospect, perhaps I shouldn't have used the empty-blob SHA-1
+for I-T-A entries (instead, perhaps 0{40} or something impossible)
+when I invented this feature at 39425819 ("git-add --intent-to-add
+(-N)", 2008-08-21).  It made the code to "diff" easier than having
+to special case comparison between a real blob and an I-T-A entry,
+but we are paying the price for that laziness with a discussion and
+a patch like this one.
+
+>> So perhaps
+>>
+>> +       !ce_intent_to_add(a) && !ce_intent_to_add(b) &&
+>>
+>> i.e. "a cache entry is eligible to be same with something else only
+>> when its I-T-A bit is unset".
+>>
+>
+> I decided to follow Ren=C3=A9's suggestion in response to this. Patch c=
+oming soon.
+
+Either is fine as the implementation of the same semantics; I
+however am not sure if two I-T-A entries should compare "same" or
+"not same", or if we are better off catching the caller that feeds
+two I-T-A entries to same() with a BUG().
+
+Thanks.
