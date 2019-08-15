@@ -8,57 +8,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C05C1F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9501F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732521AbfHOVlS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 17:41:18 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33092 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732317AbfHOVlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 17:41:18 -0400
-Received: by mail-pf1-f195.google.com with SMTP id g2so2003057pfq.0
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:17 -0700 (PDT)
+        id S1732593AbfHOVlU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 17:41:20 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41660 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732551AbfHOVlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 17:41:19 -0400
+Received: by mail-pl1-f193.google.com with SMTP id m9so1550826pls.8
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K06rYwqzBCWXDk09acrdPoKG1Y0V0H4z8sTFUswvgzE=;
-        b=sjGY6k88hInqeAT0j1VEGhzfp0Tequc+xunNyySPGC8AiLxwz8LYCsKZjor0Qb228a
-         7j87Vfl/WxITpqLk8z8n+3gCHm5J6fueSqpt/CT4EgLH84pMqbOP7XRmOVFBBtv8w1KR
-         zxugyCAcIhl4M4eU2snk/PLRcca9sDTLMNVqalHP5FK4Svo2hs1GSF3fOGELc2d0XEv9
-         vo+3SO2EJcMiseNom89Q+OyUoDTagu1do1lmQSi0lUscVaVEvwzBc8kcmL7P896XSYR3
-         +wMovga9tFefuup4+lOU+RKzHxTCutziQhDKCU1rAXHC5o5q7DyGT16dHkmyKufyBAMF
-         nPVg==
+        bh=WGUr1o3ckLrj6SVrNNDq4kCRzlmt2+rH6QBsIi2Wcl8=;
+        b=I75lSEPmcsJbyN+peortCp4nXRgHmRAWnqgklHp1HVCxMGsbai0V3VqlgSbxliq78g
+         TSlm6A9vLxYK7W1uCJGUbMa7D+tngvx/J6fzuBTSvwk/e3uLJWvc7pfqJTFow7XgGPSK
+         2x6LjdfXiT8m9JAhh48ZiK2b9Vjq0P22r58+7s6Ycv/o7pNgFrRwBXjMWVFTCUhbdlN2
+         skNNnICtd6WgDy0EV5RqKRc/nOzlmqDH9AoPB/z6jvAD0ekEzB8/TitA7q/XcqyKNkgg
+         i2AKPeIzff7rV54ye/TSoxmkdS3+gRavA+sfS390pZrHh32bBgNAv2UoM5O/R53Y/PdH
+         rMBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K06rYwqzBCWXDk09acrdPoKG1Y0V0H4z8sTFUswvgzE=;
-        b=h8pTMCUMaWyRFIeaXRQNiY3ihBCsBRwMqBTaAe6OXT3ahWvHpq5n6zBfo5vJknWnYY
-         mO5kkDVuduuBnfm2gwwnNOcBGJ5YFGEfabkam9k3WydpS3kC0flIrD6ncqO0DJu9LXhc
-         i46XSzI8875j7yrfiJ5HXc5iPWSuhxdP2bIDJ2c6K0aVs9ku0pyJzYYXfqr3NCv9I7Dm
-         cfZaRbfxdZGGY5DwBMzdHbJtxxLqBk6S/sTKH+ADiEPf3DaeAGSY41k9xmUdCRxUe4uu
-         Lc8FzQVTbVGh8lGnxevzGfgY7C6iJZeGw0v3/LSah3oEviiy1VYlUSrbH1BOXiTF82va
-         lAfg==
-X-Gm-Message-State: APjAAAWKQ4BFl8g/x2BjRt18KYR2Dg7VJix6uI73bvBqsIHLAz8hkTYC
-        uAdSO+/NUtrYreRFUbEmETnlblF/
-X-Google-Smtp-Source: APXvYqzL9BNkWijjCswRoBWj5mFxvJO9OOilFv8Vs9TmNn6/dqK9QfUb/hywv2EIBJ2Je7znIBm+rg==
-X-Received: by 2002:a17:90a:1916:: with SMTP id 22mr4131127pjg.62.1565905277180;
-        Thu, 15 Aug 2019 14:41:17 -0700 (PDT)
+        bh=WGUr1o3ckLrj6SVrNNDq4kCRzlmt2+rH6QBsIi2Wcl8=;
+        b=rv4EY1VXs5d59OPcQm8O3CuK56uxXbKBfq5t0pBiT2hTdlSB9GxukKWs1G15vOzwx0
+         nGTwyZW6VpHmT0NlExWlNFddO04L/2AEKyYrmrBQpLJZ5nTCdmgKGGJHCM6/YdNPb6gw
+         cU83yibXUJNsA5djtZnmXcQaCgh7qU4HVg73vM8ZbYgC3jVjQJZ/9UMnlCH8izU0a84V
+         H1Yq6v4zLElWaaq9izoOHJZyeXPco9si9GD6QbfKK1DRjer7bxAFhKWQWwS6epw4KIGm
+         HQrHnQIGOD4u6OwLAI3LJ7ljYYFpXLBdFQOCe5x76LnxVfl9pLyByJY9IMpTvzuKpkT2
+         /79Q==
+X-Gm-Message-State: APjAAAWe6VEpo3SG369BARzC9BuH5+idS12cq3SwBz4WyvmjcESfz5sl
+        Sk289+guZCIwIrcjB22oPUoGQVeN
+X-Google-Smtp-Source: APXvYqwj/EKJtwZQ59ZS7Xg2pB9MXuX36ny5nJ6D5rxSSeKxcB3QFM/MSa4wPThyCbsYAtkLleHunw==
+X-Received: by 2002:a17:902:b48f:: with SMTP id y15mr6322811plr.268.1565905278210;
+        Thu, 15 Aug 2019 14:41:18 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.16
+        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Aug 2019 14:41:16 -0700 (PDT)
+        Thu, 15 Aug 2019 14:41:17 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 04/24] merge-recursive: provide a better label for diff3 common ancestor
-Date:   Thu, 15 Aug 2019 14:40:33 -0700
-Message-Id: <20190815214053.16594-5-newren@gmail.com>
+Subject: [PATCH v3 05/24] merge-recursive: introduce an enum for detect_directory_renames values
+Date:   Thu, 15 Aug 2019 14:40:34 -0700
+Message-Id: <20190815214053.16594-6-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.32.g2123e9e4e4
 In-Reply-To: <20190815214053.16594-1-newren@gmail.com>
 References: <20190726155258.28561-1-newren@gmail.com>
@@ -70,337 +71,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In commit 7ca56aa07619 ("merge-recursive: add a label for ancestor",
-2010-03-20), a label was added for the '||||||' line to make it have
-the more informative heading '|||||| merged common ancestors', with
-the statement:
+From: Derrick Stolee <dstolee@microsoft.com>
 
-    It would be nicer to use a more informative label.  Perhaps someone
-    will provide one some day.
+Improve code readability by introducing an enum to replace the
+not-quite-boolean values taken on by detect_directory_renames.
 
-This chosen label was perfectly reasonable when recursiveness kicks in,
-i.e. when there are multiple merge bases.  (I can't think of a better
-label in such cases.)  But it is actually somewhat misleading when there
-is a unique merge base or no merge base.  Change this based on the
-number of merge bases:
-    >=2: "merged common ancestors"
-    1:   <abbreviated commit hash>
-    0:   "<empty tree>"
-
-Tests have also been added to check that we get the right ancestor name
-for each of the three cases.
-
-Also, since merge_recursive() and merge_trees() have polar opposite
-pre-conditions for opt->ancestor, document merge_recursive()'s
-pre-condition with an assertion.  (An assertion was added to
-merge_trees() already a few commits ago.)  The differences in
-pre-conditions stem from two factors: (1) merge_trees() does not recurse
-and thus does not have multiple sub-merges to worry about -- each of
-which would require a different value for opt->ancestor, (2)
-merge_trees() is only passed trees rather than commits and thus cannot
-internally guess as good of a label.  Thus, while external callers of
-merge_trees() are required to provide a non-NULL opt->ancestor,
-merge_recursive() expects to set this value itself.
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                 |  21 +++-
- t/t6036-recursive-corner-cases.sh |   8 +-
- t/t6047-diff3-conflict-markers.sh | 189 ++++++++++++++++++++++++++++++
- 3 files changed, 214 insertions(+), 4 deletions(-)
- create mode 100755 t/t6047-diff3-conflict-markers.sh
+ builtin/am.c      |  2 +-
+ merge-recursive.c | 24 +++++++++++++++---------
+ merge-recursive.h |  6 +++++-
+ 3 files changed, 21 insertions(+), 11 deletions(-)
 
+diff --git a/builtin/am.c b/builtin/am.c
+index 1aea657a7f..037e828efe 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1538,7 +1538,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 	o.branch1 = "HEAD";
+ 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
+ 	o.branch2 = their_tree_name;
+-	o.detect_directory_renames = 0;
++	o.detect_directory_renames = MERGE_DIRECTORY_RENAMES_NONE;
+ 
+ 	if (state->quiet)
+ 		o.verbosity = 0;
 diff --git a/merge-recursive.c b/merge-recursive.c
-index a67ea4957a..3a7a9514b9 100644
+index 3a7a9514b9..dd2ee5edee 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -3507,6 +3507,11 @@ int merge_recursive(struct merge_options *opt,
- 	struct commit *merged_common_ancestors;
- 	struct tree *mrtree;
- 	int clean;
-+	int num_merge_bases;
-+	struct strbuf merge_base_abbrev = STRBUF_INIT;
-+
-+	if (!opt->call_depth)
-+		assert(opt->ancestor == NULL);
+@@ -1375,7 +1375,8 @@ static int handle_rename_via_dir(struct merge_options *opt,
+ 	const struct rename *ren = ci->ren1;
+ 	const struct diff_filespec *dest = ren->pair->two;
+ 	char *file_path = dest->path;
+-	int mark_conflicted = (opt->detect_directory_renames == 1);
++	int mark_conflicted = (opt->detect_directory_renames ==
++			       MERGE_DIRECTORY_RENAMES_CONFLICT);
+ 	assert(ren->dir_rename_original_dest);
  
- 	if (show(opt, 4)) {
- 		output(opt, 4, _("Merging:"));
-@@ -3528,6 +3533,7 @@ int merge_recursive(struct merge_options *opt,
- 			output_commit_title(opt, iter->item);
- 	}
+ 	if (!opt->call_depth && would_lose_untracked(opt, dest->path)) {
+@@ -2860,8 +2861,9 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 	head_pairs = get_diffpairs(opt, common, head);
+ 	merge_pairs = get_diffpairs(opt, common, merge);
  
-+	num_merge_bases = commit_list_count(ca);
- 	merged_common_ancestors = pop_commit(&ca);
- 	if (merged_common_ancestors == NULL) {
- 		/* if there is no common ancestor, use an empty tree */
-@@ -3568,10 +3574,23 @@ int merge_recursive(struct merge_options *opt,
- 	if (!opt->call_depth)
- 		repo_read_index(opt->repo);
+-	if ((opt->detect_directory_renames == 2) ||
+-	    (opt->detect_directory_renames == 1 && !opt->call_depth)) {
++	if ((opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE) ||
++	    (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT &&
++	     !opt->call_depth)) {
+ 		dir_re_head = get_directory_renames(head_pairs);
+ 		dir_re_merge = get_directory_renames(merge_pairs);
  
--	opt->ancestor = "merged common ancestors";
-+	switch (num_merge_bases) {
-+	case 0:
-+		opt->ancestor = "<empty tree>";
-+		break;
-+	case 1:
-+		strbuf_add_unique_abbrev(&merge_base_abbrev,
-+					 &merged_common_ancestors->object.oid,
-+					 DEFAULT_ABBREV);
-+		opt->ancestor = merge_base_abbrev.buf;
-+		break;
-+	default:
-+		opt->ancestor = "merged common ancestors";
-+	}
- 	clean = merge_trees(opt, get_commit_tree(h1), get_commit_tree(h2),
- 			    get_commit_tree(merged_common_ancestors),
- 			    &mrtree);
-+	strbuf_release(&merge_base_abbrev);
- 	if (clean < 0) {
- 		flush_output(opt);
+@@ -3119,7 +3121,8 @@ static int handle_rename_normal(struct merge_options *opt,
+ 	clean = handle_content_merge(&mfi, opt, path, was_dirty(opt, path),
+ 				     o, a, b, ci);
+ 
+-	if (clean && opt->detect_directory_renames == 1 &&
++	if (clean &&
++	    opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT &&
+ 	    ren->dir_rename_original_dest) {
+ 		if (update_stages(opt, path,
+ 				  NULL,
+@@ -3164,12 +3167,12 @@ static int warn_about_dir_renamed_entries(struct merge_options *opt,
  		return clean;
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index d23b948f27..7fddcc8c73 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -1562,6 +1562,7 @@ test_expect_success 'check nested conflicts' '
- 		cd nested_conflicts &&
  
- 		git clean -f &&
-+		MASTER=$(git rev-parse --short master) &&
- 		git checkout L2^0 &&
+ 	/* Sanity checks */
+-	assert(opt->detect_directory_renames > 0);
++	assert(opt->detect_directory_renames > MERGE_DIRECTORY_RENAMES_NONE);
+ 	assert(ren->dir_rename_original_type == 'A' ||
+ 	       ren->dir_rename_original_type == 'R');
  
- 		# Merge must fail; there is a conflict
-@@ -1582,7 +1583,7 @@ test_expect_success 'check nested conflicts' '
- 		git cat-file -p R1:a >theirs &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "merged common ancestors"  \
-+			-L "$MASTER"  \
- 			-L "Temporary merge branch 2" \
- 			ours  \
- 			base  \
-@@ -1594,7 +1595,7 @@ test_expect_success 'check nested conflicts' '
- 		git cat-file -p R1:b >theirs &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "merged common ancestors"  \
-+			-L "$MASTER"  \
- 			-L "Temporary merge branch 2" \
- 			ours  \
- 			base  \
-@@ -1732,6 +1733,7 @@ test_expect_success 'check virtual merge base with nested conflicts' '
- 	(
- 		cd virtual_merge_base_has_nested_conflicts &&
+ 	/* Check whether to treat directory renames as a conflict */
+-	clean = (opt->detect_directory_renames == 2);
++	clean = (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE);
  
-+		MASTER=$(git rev-parse --short master) &&
- 		git checkout L3^0 &&
- 
- 		# Merge must fail; there is a conflict
-@@ -1760,7 +1762,7 @@ test_expect_success 'check virtual merge base with nested conflicts' '
- 		cp left merged-once &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "merged common ancestors"  \
-+			-L "$MASTER"  \
- 			-L "Temporary merge branch 2" \
- 			merged-once \
- 			base        \
-diff --git a/t/t6047-diff3-conflict-markers.sh b/t/t6047-diff3-conflict-markers.sh
-new file mode 100755
-index 0000000000..f69c8256bc
---- /dev/null
-+++ b/t/t6047-diff3-conflict-markers.sh
-@@ -0,0 +1,189 @@
-+#!/bin/sh
-+
-+test_description='recursive merge diff3 style conflict markers'
-+
-+. ./test-lib.sh
-+
-+# Setup:
-+#          L1
-+#            \
-+#             ?
-+#            /
-+#          R1
-+#
-+# Where:
-+#   L1 and R1 both have a file named 'content' but have no common history
-+#
-+
-+test_expect_success 'setup no merge base' '
-+	test_create_repo no_merge_base &&
-+	(
-+		cd no_merge_base &&
-+
-+		git checkout -b L &&
-+		test_commit A content A &&
-+
-+		git checkout --orphan R &&
-+		test_commit B content B
-+	)
-+'
-+
-+test_expect_success 'check no merge base' '
-+	(
-+		cd no_merge_base &&
-+
-+		git checkout L^0 &&
-+
-+		test_must_fail git -c merge.conflictstyle=diff3 merge --allow-unrelated-histories -s recursive R^0 &&
-+
-+		grep "|||||| <empty tree>" content
-+	)
-+'
-+
-+# Setup:
-+#          L1
-+#         /  \
-+#   master    ?
-+#         \  /
-+#          R1
-+#
-+# Where:
-+#   L1 and R1 have modified the same file ('content') in conflicting ways
-+#
-+
-+test_expect_success 'setup unique merge base' '
-+	test_create_repo unique_merge_base &&
-+	(
-+		cd unique_merge_base &&
-+
-+		test_commit base content "1
-+2
-+3
-+4
-+5
-+" &&
-+
-+		git branch L &&
-+		git branch R &&
-+
-+		git checkout L &&
-+		test_commit L content "1
-+2
-+3
-+4
-+5
-+7" &&
-+
-+		git checkout R &&
-+		git rm content &&
-+		test_commit R renamed "1
-+2
-+3
-+4
-+5
-+six"
-+	)
-+'
-+
-+test_expect_success 'check unique merge base' '
-+	(
-+		cd unique_merge_base &&
-+
-+		git checkout L^0 &&
-+		MASTER=$(git rev-parse --short master) &&
-+
-+		test_must_fail git -c merge.conflictstyle=diff3 merge -s recursive R^0 &&
-+
-+		grep "|||||| $MASTER:content" renamed
-+	)
-+'
-+
-+# Setup:
-+#          L1---L2--L3
-+#         /  \ /      \
-+#   master    X1       ?
-+#         \  / \      /
-+#          R1---R2--R3
-+#
-+# Where:
-+#   commits L1 and R1 have modified the same file in non-conflicting ways
-+#   X1 is an auto-generated merge-base used when merging L1 and R1
-+#   commits L2 and R2 are merges of R1 and L1 into L1 and R1, respectively
-+#   commits L3 and R3 both modify 'content' in conflicting ways
-+#
-+
-+test_expect_success 'setup multiple merge bases' '
-+	test_create_repo multiple_merge_bases &&
-+	(
-+		cd multiple_merge_bases &&
-+
-+		test_commit initial content "1
-+2
-+3
-+4
-+5" &&
-+
-+		git branch L &&
-+		git branch R &&
-+
-+		# Create L1
-+		git checkout L &&
-+		test_commit L1 content "0
-+1
-+2
-+3
-+4
-+5" &&
-+
-+		# Create R1
-+		git checkout R &&
-+		test_commit R1 content "1
-+2
-+3
-+4
-+5
-+6" &&
-+
-+		# Create L2
-+		git checkout L &&
-+		git merge R1 &&
-+
-+		# Create R2
-+		git checkout R &&
-+		git merge L1 &&
-+
-+		# Create L3
-+		git checkout L &&
-+		test_commit L3 content "0
-+1
-+2
-+3
-+4
-+5
-+A" &&
-+
-+		# Create R3
-+		git checkout R &&
-+		git rm content &&
-+		test_commit R3 renamed "0
-+2
-+3
-+4
-+5
-+six"
-+	)
-+'
-+
-+test_expect_success 'check multiple merge bases' '
-+	(
-+		cd multiple_merge_bases &&
-+
-+		git checkout L^0 &&
-+
-+		test_must_fail git -c merge.conflictstyle=diff3 merge -s recursive R^0 &&
-+
-+		grep "|||||| merged common ancestors:content" renamed
-+	)
-+'
-+
-+test_done
+ 	is_add = (ren->dir_rename_original_type == 'A');
+ 	if (ren->dir_rename_original_type == 'A' && clean) {
+@@ -3684,9 +3687,12 @@ static void merge_recursive_config(struct merge_options *opt)
+ 	if (!git_config_get_string("merge.directoryrenames", &value)) {
+ 		int boolval = git_parse_maybe_bool(value);
+ 		if (0 <= boolval) {
+-			opt->detect_directory_renames = boolval ? 2 : 0;
++			opt->detect_directory_renames = boolval ?
++				MERGE_DIRECTORY_RENAMES_TRUE :
++				MERGE_DIRECTORY_RENAMES_NONE;
+ 		} else if (!strcasecmp(value, "conflict")) {
+-			opt->detect_directory_renames = 1;
++			opt->detect_directory_renames =
++				MERGE_DIRECTORY_RENAMES_CONFLICT;
+ 		} /* avoid erroring on values from future versions of git */
+ 		free(value);
+ 	}
+@@ -3706,7 +3712,7 @@ void init_merge_options(struct merge_options *opt,
+ 	opt->renormalize = 0;
+ 	opt->diff_detect_rename = -1;
+ 	opt->merge_detect_rename = -1;
+-	opt->detect_directory_renames = 1;
++	opt->detect_directory_renames = MERGE_DIRECTORY_RENAMES_CONFLICT;
+ 	merge_recursive_config(opt);
+ 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+ 	if (merge_verbosity)
+diff --git a/merge-recursive.h b/merge-recursive.h
+index c2b7bb65c6..f1b6ef38ae 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -22,7 +22,11 @@ struct merge_options {
+ 	unsigned renormalize : 1;
+ 	long xdl_opts;
+ 	int verbosity;
+-	int detect_directory_renames;
++	enum {
++		MERGE_DIRECTORY_RENAMES_NONE = 0,
++		MERGE_DIRECTORY_RENAMES_CONFLICT = 1,
++		MERGE_DIRECTORY_RENAMES_TRUE = 2
++	} detect_directory_renames;
+ 	int diff_detect_rename;
+ 	int merge_detect_rename;
+ 	int diff_rename_limit;
 -- 
 2.23.0.rc2.32.g2123e9e4e4
 
