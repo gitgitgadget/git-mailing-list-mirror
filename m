@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A11AF1F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56A241F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732901AbfHOVl0 (ORCPT <rfc822;e@80x24.org>);
+        id S1732929AbfHOVl2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 17:41:28 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36724 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732317AbfHOVl0 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 15 Aug 2019 17:41:26 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45131 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732744AbfHOVlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 17:41:25 -0400
-Received: by mail-pf1-f194.google.com with SMTP id w26so1959979pfq.12
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:25 -0700 (PDT)
+Received: by mail-pf1-f193.google.com with SMTP id w2so1991189pfi.3
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5RL+a5cbRltO8w02hc5FUnq6CzEvcgdU5XWnyebP4e8=;
-        b=muBvS8bbJbHEfIfQxKN2d1WMA/bJgSZYriZ65ThUZN8PHHU+7wgzubmcR0WGN12BjQ
-         8PD24pQYARVmLsVOz3Gom8qcgZyCjLmdg08gUhYzBdZQ/lmaz8P4VqGU6IdkVXjZdX/s
-         V/OZ5joWVuN0ICewamLeGYASMFyoJX8lcbufjEHZ5zEBhvY8TPTwh25x9zwbOJzSPWpt
-         GuEQk7PqSNdrh5rP9pGYLImf6VPMyGZNsfNBVeqV++Osd1k7mEKGR9SI9PDGIoUyOAmm
-         H/68iT/gL2XK4cUxJKg35/FqiL0uEiRoM/O4hEzhi0/2EqF3Sxll0nLbmf+iGfbNTh81
-         aaVg==
+        bh=kk4iUE/1sdBZh5tYDjhT0S5gT9SJsyy5VP1Pc58DjJ0=;
+        b=lHL7AjiRRHWMSqDlGWZfcNpjjewBm0wxtsmrD0Y+wnnWTxZMF3fnj+a9Rah0sFphxE
+         QDN815RzjybfxcJlzKPy7oZ/yXJedpjOi2gLZaQ00oIgtpcSO60g5SZFuKWNa5pzPDIR
+         ImJoI1olBOnZban7j6L7M4Di5YI13gzaJGQkNBq2xwYcwH+cFKjAgV5dkk0/Z4ope5iR
+         eCO91aXRdnbDq/3JSILmTApshcLgxeHxPdq9UHm7Ts1lMKcfPwGIuJMJrbMpd2TIXQSd
+         m4RfFkgt1MUfzhLLrlN2VH3wtm5Uj0uRXv+bwdQHf/Tv01kYXEm7PHcSDf70rFOMPwch
+         GjyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5RL+a5cbRltO8w02hc5FUnq6CzEvcgdU5XWnyebP4e8=;
-        b=HD+GuvhSVkePQ8by9bLob0/Jm8FL5NdMJJF7JzdGR8SCkZeEmCqSCMXO2XTVgPVbox
-         QMXFY6cfeUQr5MurOmisyggIJdDq6ja/eQgNRTi7SJ8BkjefuvUWjh7Hl+i7YpSU23u8
-         PTPzp79F9GnR95EVeS35q0RamkzTDwYjvMd4GaZe6p16jawtURhBM/IcGoKKS9vmZH/Y
-         lJNr09p6ECBvgP7B5mVP3eKI5tLogOeQ1/4EZjI8yf04ZJtOnp2jhm28sEULClamzKdh
-         jLFqts4rIIHaVyXezFcDtn7vrmsKdoT3hG9ogf4r5HlU9SXBzU2SUWfeKCEo538kghTV
-         Z5hg==
-X-Gm-Message-State: APjAAAWjDRZB6z7E6n5foGS80Y9GAwL6K7cGR7MlmjV9Rxa15FnmSGnl
-        vAcfEzCDzccGFa7tWr+enD9Z3DOa
-X-Google-Smtp-Source: APXvYqzHMP/HzuhM9WCwTElUeX01Fkvy+r2CiSFF57gF7VTI7K0/rTa6FzOMgGS0FMGcrVL2wDQn/A==
-X-Received: by 2002:a63:de4f:: with SMTP id y15mr5209655pgi.239.1565905284262;
-        Thu, 15 Aug 2019 14:41:24 -0700 (PDT)
+        bh=kk4iUE/1sdBZh5tYDjhT0S5gT9SJsyy5VP1Pc58DjJ0=;
+        b=tzUx1MNhggvI4qVIoP3K/VWd44SHdVvVWuqghI79ptaJJhYaNAM5ooA0ZMa+tno9Ei
+         jQ0UtKFU9JeRobrNWk62QHuwYpuEHiNOJGQDFVz2bm/FeNJpuyr8uNp1EVMrwUo6+lhI
+         CYr312zxjWc9PuID+fx6IxuFKI47xlMJVHLCNgchpVJkGBZzFKxPnhJ93KkNQhUWVfos
+         Vnlmv5RdYQG2EZGZIKa7p4sMKEE2qqvtmCRfjFdH5i+GGiw7VUf5vKqAvUTPZVRrCGGj
+         wZdQ5ynXJlr2WegoC5TbfrgzV78B6VNTp3Py0YjDpEp1FWMIz1K2ElbHrOS/6szxFziZ
+         whlw==
+X-Gm-Message-State: APjAAAW0n0eLNe1TxdsTeMTmb5FC+ncq7OyS1Lm6Aa6w417Al8lg9jfJ
+        3/OQU1Fsq6oRZtuAzSLUNUP2m+V3
+X-Google-Smtp-Source: APXvYqyogXsWbPjioXXDjrjn82X1Pg4fZGB2G9vz1gpuF28+EKykSScQxY4Ae89cDEHTI+K4ZWJF9Q==
+X-Received: by 2002:a63:31cc:: with SMTP id x195mr4981577pgx.147.1565905285390;
+        Thu, 15 Aug 2019 14:41:25 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.23
+        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Aug 2019 14:41:23 -0700 (PDT)
+        Thu, 15 Aug 2019 14:41:24 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 10/24] merge-recursive: remove useless parameter in merge_trees()
-Date:   Thu, 15 Aug 2019 14:40:39 -0700
-Message-Id: <20190815214053.16594-11-newren@gmail.com>
+Subject: [PATCH v3 11/24] merge-recursive: don't force external callers to do our logging
+Date:   Thu, 15 Aug 2019 14:40:40 -0700
+Message-Id: <20190815214053.16594-12-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.32.g2123e9e4e4
 In-Reply-To: <20190815214053.16594-1-newren@gmail.com>
 References: <20190726155258.28561-1-newren@gmail.com>
@@ -70,130 +70,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-merge_trees() took a results parameter that would only be written when
-opt->call_depth was positive, which is never the case now that
-merge_trees_internal() has been split from merge_trees().  Remove the
-misleading and unused parameter from merge_trees().
+Alternatively, you can view this as "make the merge functions behave
+more similarly."  merge-recursive has three different entry points:
+merge_trees(), merge_recursive(), and merge_recursive_generic().  Two of
+these would call diff_warn_rename_limit(), but merge_trees() didn't.
+This lead to callers of merge_trees() needing to manually call
+diff_warn_rename_limit() themselves.  Move this to the new
+merge_finalize() function to make sure that all three entry points run
+this function.
 
-While at it, add some comments explaining how the output of
-merge_trees() and merge_recursive() differ.
+Note that there are two external callers of merge_trees(), one in
+sequencer.c and one in builtin/checkout.c.  The one in sequencer.c is
+cleaned up by this patch and just transfers where the call to
+diff_warn_rename_limit() is made; the one in builtin/checkout.c is for
+switching to a different commit and in the very rare case where the
+warning might be triggered, it would probably be helpful to include
+(e.g. if someone is modifying a file that has been renamed in moving to
+the other commit, but there are so many renames between the commits that
+the limit kicks in and none are detected, it may help to have an
+explanation about why they got a delete/modify conflict instead of a
+proper content merge in a renamed file).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/checkout.c |  4 +---
- merge-recursive.c  |  6 +++---
- merge-recursive.h  | 20 ++++++++++++++++----
- sequencer.c        |  4 ++--
- 4 files changed, 22 insertions(+), 12 deletions(-)
+ merge-recursive.c | 7 +++----
+ sequencer.c       | 1 -
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d5b946dc3a..90e0eaf25e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -708,7 +708,6 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 * give up or do a real merge, depending on
- 			 * whether the merge flag was used.
- 			 */
--			struct tree *result;
- 			struct tree *work;
- 			struct tree *old_tree;
- 			struct merge_options o;
-@@ -780,8 +779,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			ret = merge_trees(&o,
- 					  new_tree,
- 					  work,
--					  old_tree,
--					  &result);
-+					  old_tree);
- 			if (ret < 0)
- 				exit(128);
- 			ret = reset_tree(new_tree,
 diff --git a/merge-recursive.c b/merge-recursive.c
-index ded2e1bcfb..89e9a7518c 100644
+index 89e9a7518c..6cee867d37 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -3628,16 +3628,16 @@ static void merge_finalize(struct merge_options *opt)
- int merge_trees(struct merge_options *opt,
- 		struct tree *head,
- 		struct tree *merge,
--		struct tree *common,
--		struct tree **result)
-+		struct tree *common)
- {
- 	int clean;
-+	struct tree *ignored;
- 
- 	assert(opt->ancestor != NULL);
- 
- 	if (merge_start(opt, head))
- 		return -1;
--	clean = merge_trees_internal(opt, head, merge, common, result);
-+	clean = merge_trees_internal(opt, head, merge, common, &ignored);
- 	merge_finalize(opt);
- 
+@@ -3600,9 +3600,6 @@ static int merge_recursive_internal(struct merge_options *opt,
+ 	flush_output(opt);
+ 	if (!opt->call_depth && opt->buffer_output < 2)
+ 		strbuf_release(&opt->obuf);
+-	if (show(opt, 2))
+-		diff_warn_rename_limit("merge.renamelimit",
+-				       opt->needed_rename_limit, 0);
  	return clean;
-diff --git a/merge-recursive.h b/merge-recursive.h
-index f1b6ef38ae..18012fff9d 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -74,19 +74,31 @@ static inline int merge_detect_rename(struct merge_options *o)
- 		o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
  }
  
--/* merge_trees() but with recursive ancestor consolidation */
-+/*
-+ * merge_recursive is like merge_trees() but with recursive ancestor
-+ * consolidation, and when successful, it creates an actual commit
-+ * and writes its address to *result.
-+ *
-+ * NOTE: empirically, about a decade ago it was determined that with more
-+ *       than two merge bases, optimal behavior was found when the
-+ *       ancestors were passed in the order of oldest merge base to newest
-+ *       one.  Also, ancestors will be consumed (emptied) so make a copy if
-+ *       you need it.
-+ */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
- 		    struct commit *h2,
- 		    struct commit_list *ancestors,
- 		    struct commit **result);
+@@ -3622,7 +3619,9 @@ static int merge_start(struct merge_options *opt, struct tree *head)
  
--/* rename-detecting three-way merge, no recursion */
-+/*
-+ * rename-detecting three-way merge, no recursion; result of merge is written
-+ * to opt->repo->index.
-+ */
- int merge_trees(struct merge_options *o,
- 		struct tree *head,
- 		struct tree *merge,
--		struct tree *common,
--		struct tree **result);
-+		struct tree *common);
+ static void merge_finalize(struct merge_options *opt)
+ {
+-	/* Common code for wrapping up merges will be added here later */
++	if (show(opt, 2))
++		diff_warn_rename_limit("merge.renamelimit",
++				       opt->needed_rename_limit, 0);
+ }
  
- /*
-  * "git-merge-recursive" can be fed trees; wrap them into
+ int merge_trees(struct merge_options *opt,
 diff --git a/sequencer.c b/sequencer.c
-index 34ebf8ed94..c4ed30f1b4 100644
+index c4ed30f1b4..094a4dd03d 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -586,7 +586,7 @@ static int do_recursive_merge(struct repository *r,
- 			      struct replay_opts *opts)
- {
- 	struct merge_options o;
--	struct tree *result, *next_tree, *base_tree, *head_tree;
-+	struct tree *next_tree, *base_tree, *head_tree;
- 	int clean;
- 	char **xopt;
- 	struct lock_file index_lock = LOCK_INIT;
-@@ -613,7 +613,7 @@ static int do_recursive_merge(struct repository *r,
- 
- 	clean = merge_trees(&o,
- 			    head_tree,
--			    next_tree, base_tree, &result);
-+			    next_tree, base_tree);
+@@ -617,7 +617,6 @@ static int do_recursive_merge(struct repository *r,
  	if (is_rebase_i(opts) && clean <= 0)
  		fputs(o.obuf.buf, stdout);
  	strbuf_release(&o.obuf);
+-	diff_warn_rename_limit("merge.renamelimit", o.needed_rename_limit, 0);
+ 	if (clean < 0) {
+ 		rollback_lock_file(&index_lock);
+ 		return clean;
 -- 
 2.23.0.rc2.32.g2123e9e4e4
 
