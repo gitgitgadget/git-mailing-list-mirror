@@ -2,81 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76E611F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 22:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9181B1F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 22:24:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727445AbfHOWSg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 18:18:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52996 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727119AbfHOWSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 18:18:36 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 32A3787B4E;
-        Thu, 15 Aug 2019 18:18:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=0Ybm8d1QdMw+
-        aubPXcrF5Qf5tBw=; b=CyHn4ouLEfbMlDS4bxZ/t1Qbvf0LuQdQ4L7h5pq0Dwl7
-        sKt1tNeyXU/wjIOqp+EfrA9nTbkDLwYcCeefu1CXn8d88jVpx/T9Uy6BVmWFr+UR
-        75vk+R4Z+ZZkZe5DqzYrV/hpVHj/H3N7O3eSlRbEeG01iieSWbcmnrkl58XfPRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=p93O57
-        pZHs6BQiAQi7gOIRIPYj6Ie/WDujcqVr6+2MisfnO2MRolmHhKLuiFwMsWIb4uJS
-        /UINCrfMR4+DQPn/DWI1E7hThr3luTIkM+8/JYu8bcST1R2siSvEJ/T7aTjVfGdS
-        ZoSKGqg7Nngrmj5XuVJZiLOhgSWeEGc+CevCs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2BC0F87B4D;
-        Thu, 15 Aug 2019 18:18:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 56AC487B4B;
-        Thu, 15 Aug 2019 18:18:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, daniel@haxx.se,
-        peff@peff.net
-Subject: Re: [PATCH v3] http: use xmalloc with cURL
-References: <xmqqo90q2pfw.fsf@gitster-ct.c.googlers.com>
-        <20190815214429.28048-1-carenas@gmail.com>
-Date:   Thu, 15 Aug 2019 15:18:29 -0700
-In-Reply-To: <20190815214429.28048-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 15 Aug 2019 14:44:29 -0700")
-Message-ID: <xmqqblwq2hu2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732908AbfHOWYe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 18:24:34 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:34670 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730444AbfHOWYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 18:24:34 -0400
+Received: by mail-pf1-f195.google.com with SMTP id b24so2052422pfp.1
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 15:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=adnRuobOrD3egO7MNU98kt9vHq/JAdY9ax///uq1BXc=;
+        b=WDYb7j9GdSqFkM2qpErp948FU7m8+7bC7tphVItV0lKkOa4hg8pDefmCRjCMHf5lj0
+         ehWi5DRUhoHBGhe/4C9jTaAVeKmEmbLP5j6ufn4z+6AKo4KLCvuz0EvBFGz8tso2FMRb
+         HgdvCTscMQMZlgMtya6Qu6z32aNbMLuj/mFUpw9Wrs76uDDpIDru8VJk9lJwfPeyYpBQ
+         Ud4UGVXm1MWUXHc2wmww8Xeo53MUOEAOX/eqtyFtupeQMufqtHhWjorPPjm+rcYu/Bsw
+         sfi0/FJqgUoyFy+HTtz93OiiE/bBKKykekH4O2Gva8buZVECO0fDoRLa9NlMFamZer+F
+         3dkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=adnRuobOrD3egO7MNU98kt9vHq/JAdY9ax///uq1BXc=;
+        b=LAIHBASsCrcrxv3o3zXokAof6OVlx5tnQkvg1398Cx45JWjg1aejSUQH8J5/F0WhVz
+         GwaUjoPPKAIarajbF6Evx6QanCT+IIfiDSCjbcNreL+OMk8xi+36sZkGjTEIZPBi9Nu0
+         rx35bEVhJ7NZ8rBWF/vKnNEzyXTY8/5Y0WFfcBNvQ/OSawaIs5N+KtsbVc12taR8UL0r
+         bNeoczllAUPE9f/Yl92ntxk5RFlyuQsSpNUpQiZOaogI6799gGnSZHldjneRNayyek8d
+         HNE/FAd8WffI03T8xKRX5YshuWLepui684gGDKDNW0nUPupjhsjdbZvv96zUBO5MkK1u
+         Vm+Q==
+X-Gm-Message-State: APjAAAVB97PnGBVaeofWDUjmyF4IMqT92P9/Z8/10X4R7Olr46Yr/HAu
+        J+0CGLnjoiEJAcXG4sTk+NxlBg==
+X-Google-Smtp-Source: APXvYqzq9PpqBtojGbOd9k1vjdsNTJMuVGTWDa8urywCIEk4S6Uqtbj53I24GaFSE6xfNnfHjlsS0A==
+X-Received: by 2002:aa7:946d:: with SMTP id t13mr7821595pfq.121.1565907872583;
+        Thu, 15 Aug 2019 15:24:32 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id w189sm3754846pfb.35.2019.08.15.15.24.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2019 15:24:31 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 15:24:27 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] bugreport: add tool to generate debugging info
+Message-ID: <20190815222427.GC208753@google.com>
+References: <20190815023418.33407-1-emilyshaffer@google.com>
+ <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
+ <nycvar.QRO.7.76.6.1908152205390.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9D2B09C4-BFAA-11E9-ACD2-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1908152205390.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+On Thu, Aug 15, 2019 at 10:07:57PM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 15 Aug 2019, Derrick Stolee wrote:
+> 
+> > On 8/14/2019 10:34 PM, Emily Shaffer wrote:
+> > > diff --git a/git-bugreport.sh b/git-bugreport.sh
+> > > new file mode 100755
+> > > index 0000000000..2200703a51
+> > > --- /dev/null
+> > > +++ b/git-bugreport.sh
+> >
+> > At first I was alarmed by "What? another shell script?" but this
+> > command should prioritize flexibility and extensibility over speed.
+> > Running multiple processes shouldn't be too taxing for what we are
+> > trying to do here.
+> 
+> Git for Windows sometimes receives bug reports about Bash not being able
+> to start (usually it is a DLL base address problem, related to the way
+> Cygwin and MSYS2 emulate `fork()`).
 
->  #if LIBCURL_VERSION_NUM < 0x070800
->  #define curl_global_init(a) do { /* nothing */ } while (0)
-> +#elif LIBCURL_VERSION_NUM >=3D 0x070c00
-> +#define curl_global_init(a) curl_global_init_mem(a, xmalloc, free, \
-> +						xrealloc, xstrdup, xcalloc)
->  #endif
+Hmm. In a case like this, then, how is someone using GfW at all?
+Embarrassingly, I don't actually have a way to try it out for myself.
+It seems there's no GUI, and users are using it through the command line
+in mingw, so when you say "bash doesn't start" do you mean "users can't
+use the mingw prompt at all"?
 
-Yup.  That looks better.
+> 
+> In such a case, `git bugreport` would only be able to offer a reason for
+> yet another bug report instead of adding useful metadata.
+> 
+> Something to keep in mind when deciding how to implement this command.
+> 
+> Ciao,
+> Dscho
 
-If your curl version is recent enough (which presumably is true for
-most people these days), the entire #if/#endif block is skipped
-while scanning for #else or #elif and #elseif willq be silently
-ignored; it is unfortunate that #elseif won't be flagged by CPP as a
-potential error X-<.
+Yeah, that's an interesting point, thanks for bringing it up. So, in the
+case when bash won't start at all, what does that failure look like? How
+much of Git can users still use? For example, would they be able to get
+far enough to run a binary git-bugreport?
+
+ - Emily
