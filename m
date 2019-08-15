@@ -2,101 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 564341F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 22:54:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 320F51F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 23:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732294AbfHOWyU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 18:54:20 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39470 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730124AbfHOWyU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 18:54:20 -0400
-Received: by mail-pl1-f195.google.com with SMTP id z3so1628298pln.6
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 15:54:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IGJITiRZZ8WmPV5f+VDY7stsxBRC2PE1Jtd4FTVuy2g=;
-        b=U2Tq87Upe34i8Wlzfc8imGMUEkQ2udyz2kOCi3Dt6anOwSmWxWeSFnnJ0Vwgkvyljb
-         1IvLd7DouNAxJ5BSPPEdRzCQJNeJzTutpTlBsy2hpApVRg2+COLfLM20hWq5qNt11VwE
-         Or+vGi/5J/vaOhVlSiUMlwAconj9ptCR37MLW2sE+Vg52BhVpZZOqwBJwG4ZY47jD7CL
-         P2hV3OW2RqYGlqHB6wolPfuKCEQrgwASocMoq/fXYLYlbLzfac9oih7Nkbf+4+yLgm7r
-         mv6QUgFI1XuECXSxFZ2/GKS3y/YfaFeyp5iWDea7OPHMAAK1GkluvYB+WwHipmMie5hH
-         /xaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IGJITiRZZ8WmPV5f+VDY7stsxBRC2PE1Jtd4FTVuy2g=;
-        b=dei/zrXEkixhvtBDsFiyeShgbjHggb+I3VoNTNWVIR5j8hwoYAX8c41SDRqR05goWs
-         9z3R141/gmWT161efHoecZ6X2Qx/D6YkjwFe4N82dcVx7Qr+4+HXq1TQaatDYFX6RaHv
-         BM85cEYobBbJ7+enTCR8n4lDYt8ft6EZl2oNTTufO2jYd0Dn9vmmLLMfFYu+4yPfeTVL
-         HOVl5AwAc3OfUC6xZV3e6gXZCSOfvgo1kvE7DBAr4GG69BO2O3MZ2D6GyuhYDgaeoxXq
-         JgNesIE1t9NF3e/RheM7dnVVwqwBKx3ovF61U5l4TDPdb+Mf+qSIdw64NYhcqr4Ocr+J
-         a3Wg==
-X-Gm-Message-State: APjAAAXZFW1ZQnXW3xUSvONaLcxJBtYHM39CNiZJDpGehqB1tPXHqPub
-        M1kkQBnsLQ9YsrDzsN/Cuu+g9g==
-X-Google-Smtp-Source: APXvYqzB9mY0EgCGURZTKMbV4qCR7eMU1kQajmv9Qygd1JSa/4t+mmute2SHhHewD2T2taDFDzpsqQ==
-X-Received: by 2002:a17:902:5c3:: with SMTP id f61mr5921447plf.98.1565909659055;
-        Thu, 15 Aug 2019 15:54:19 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id m125sm3211165pfm.139.2019.08.15.15.54.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2019 15:54:18 -0700 (PDT)
-Date:   Thu, 15 Aug 2019 15:54:13 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+        id S1726414AbfHOXky (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 19:40:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52545 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725440AbfHOXky (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 19:40:54 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F22AC160EF6;
+        Thu, 15 Aug 2019 19:40:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6ES290LVVJlJuT5J6DvW2MuR21U=; b=TU7US2
+        URjbnAEs7A7GhYeTwO+Zn1TltEosomBYPP8ICa7jbzt3oHvmq7NCafuf74+tYutc
+        FdboQuMvp7jQ9JhMNbAjAN8UmWCtq4z7uno7lZoJo8wUzAmvAUKz6T+pltDvHu4Y
+        1ngHJ6Cuw5Gpl9zT3fm72rhkdxIQVZP/VR74M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DwfGAHKkACK3dKEZgzQ89+WXm6XeT0HK
+        Vskh9j6v3XKK/jrE6pxQB3mcVSu30pEtG9jT6KT5zSw42oWSQv+M6S8eA8GRnpFD
+        D9IiOVzyES6vGe73O7vJ+StNwIZucjUPtbZkUWhxwMOR1b9SpIgohuRjYJEaKI30
+        ZIBRewRmFlI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EACBA160EF5;
+        Thu, 15 Aug 2019 19:40:51 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68049160EF4;
+        Thu, 15 Aug 2019 19:40:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH] bugreport: add tool to generate debugging info
-Message-ID: <20190815225413.GE208753@google.com>
 References: <20190815023418.33407-1-emilyshaffer@google.com>
- <xmqqzhka2tbv.fsf@gitster-ct.c.googlers.com>
- <20190815215225.GB208753@google.com>
- <xmqq7e7e2hbv.fsf@gitster-ct.c.googlers.com>
+        <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
+        <xmqqy2zu4hrq.fsf@gitster-ct.c.googlers.com>
+        <20190815225231.GD208753@google.com>
+Date:   Thu, 15 Aug 2019 16:40:50 -0700
+In-Reply-To: <20190815225231.GD208753@google.com> (Emily Shaffer's message of
+        "Thu, 15 Aug 2019 15:52:31 -0700")
+Message-ID: <xmqqwofe0zgd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7e7e2hbv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1DAE7E68-BFB6-11E9-9999-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 03:29:24PM -0700, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> >> > +NOTE
-> >> > +----
-> >> > +Bug reports can be sent to git@vger.kernel.org.
-> >> 
-> >> I am not sure if this belongs here.
-> >
-> > Sure, I wasn't certain either. Would you rather I remove the "what to do
-> > with this bugreport" NOTE section entirely?
-> 
-> Not really.  You are invoking an editor to let the user edit the
-> pre-populated report, and I would imagine that a comment in that
-> file would be the best place to give instructions, not a manpage
-> for "git bugreport" command.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Oh, I see! In that case, do you still want the Git mailing list address
-shown in the report text?
+> I think a whitelist of config options to print would grow stale
+> immediately, and the options we're missing would be very likely to be
+> configs to turn on new experimental features - which is probably what we
+> most want the bugreport for.
 
-> 
-> > So, what's your suggestion? Not to check the output at all? (This may
-> > actually be fine; it occurred to me while reading your review that if a
-> > user is filing a bug report about something, one of the diagnostic
-> > commands in bugreport might be what's broken for them. So perhaps it
-> > should be tolerant to missing information...)
-> 
-> Right.
+The implementation of your "git bugreport" command comes from the
+same version of Git as such an experimental feature you want
+feedback to is shipped with, so I am not sure where your concern
+about staleness comes from.
 
-Ok, will do.
+If you really care about getting quality reports, you need to earn
+users' trust (one way of doing so would be to maintain a good "list
+of benign configuration knobs whose values help diagnosing issues"),
+and you need to make sure we obtain relevant pieces of information.
+Both of these things are something you need to actively work on.
+
+We have trained ourselves to the point that we consider it a bug if
+you add a new command git-bugreport without adding a corresponding
+pattern in the .gitignore file.  And thanks to that discipline, we
+have been fairly good at keeping .gitignore up to date.  I do not
+see a reason why we cannot do something similar to the registry of
+configuration variables that we care about, which may be shipped as
+part of "git bugreport" command.
+
