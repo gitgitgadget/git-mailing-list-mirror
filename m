@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F6131F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8294F1F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 21:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732978AbfHOVlc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 17:41:32 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35102 "EHLO
+        id S1733015AbfHOVlf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 17:41:35 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44834 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731539AbfHOVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 17:41:29 -0400
-Received: by mail-pg1-f196.google.com with SMTP id n4so1884729pgv.2
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:29 -0700 (PDT)
+        with ESMTP id S1732930AbfHOVl2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 17:41:28 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i18so1856715pgl.11
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 14:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9Bo6zTkt3J1HiQISzltWFsJXL8x4MbBsF4NhgpyS4a0=;
-        b=hswoaxzsT78ZvfcNlyug645ywmGcu+lUD84Pcj6OMlZmRjsJrDJFVJcvjNZ4O+MT6K
-         FfhcSm3rQzljFMR7CYQTLleXgUEa1NdIkp03oR4Z4HWRWiDvZTMJzp2UIY9KqB74WaYK
-         94rp/44es0jFnbF33WFgM2N5/ZmSAwMIhNl+BgAKYjvE1YRDPovVVQVVvFU8dmfQhZ64
-         SA4EWo/Au1pm1ppjW41WT3KTP6BvPWzDvesxIsuLdYMZhthD8c8ZtjiOvab2YF1SLoTX
-         oHhy1aoQHAYpVMDQWk3rAALw6T8q+AaFSeW+FBTz86c3IR8yH+keVoV+CyOtqN4QJUDs
-         aRwA==
+        bh=+ozm1XC3FXAOoIQPNsnb2JGbK2K9dd81NER8goIB21Q=;
+        b=QHrPeVeJT6LihcoSXzf/ZFqPxi3oiiVUVhW5ulp7Szd4Nxd/T63HbN8b9YY8702PcD
+         tGwtRiQok5iU5wMGEVzEWOpKLjfUjjY4ii6QW5+Dz2qMkjo07MBEaikFCtwqESLHVVfT
+         14oHARkQm+K2EbUzDYEi/ODzHcclL5dYZIxEd27B73nxTQWEKKs8XrAu+IF/qEVjkctn
+         IHif40n4Kn7X1Wq4J+haJ/mPPPxTgAjJmb0rDHVy4dV6iagvi10ZQLOK/M5uHLTDyKL0
+         37jIq1aDmTRx1UnIPMZPHeeZV0aFC5WaOlQiL8pogD3g2hKtvAUKQwoPW6ymaufN6ay+
+         Q+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9Bo6zTkt3J1HiQISzltWFsJXL8x4MbBsF4NhgpyS4a0=;
-        b=h7+kdco0eDoFNwd7haFUtmm5zx1neZ8xQjUmRJ+qQNwSPOHEDzj2RfzCKwztGYdMGg
-         zH49MAsKWA81pzz2WqjufUSg+JJvyAjXTJ4JKjzKpzJprd4sxYxmaY9UL2wKDWbTTBIC
-         srN6fryMUQCvKu+jYMkOsBlTyo13itt61TTqlIh5QUrBS927O0DWxfORTRiH2EPV4xSs
-         h3zkg2SRmtxzIU9elOLvnBdDSpNXvsMisg7NMybwoeNFmyfsbUXV8P9UmOFkt4tZmgNf
-         wiaTSaUjpkGlkqVOhiei9LGuK7GlbFhmgH4wPKdcE5ndu72u2/c14xHnLjxOX68uLwup
-         FJRw==
-X-Gm-Message-State: APjAAAXQeBIP3pTXda7E0YOgRXMSv2c/qnVl9XMtYOCNvxoCeXFuKGn3
-        dHgp7lQoIqtcf97c2jH0d2UrL80/
-X-Google-Smtp-Source: APXvYqxkdoNkXTrH+av1I3ByD6/ztWnFlTwDL5LvNrhUjPbpMu562qr3okwGqnPqyHI4JJxc87S2lQ==
-X-Received: by 2002:a62:1ad4:: with SMTP id a203mr7330642pfa.210.1565905288580;
-        Thu, 15 Aug 2019 14:41:28 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=+ozm1XC3FXAOoIQPNsnb2JGbK2K9dd81NER8goIB21Q=;
+        b=OuIQE2bR9PwN0TGhxRHi58XmRCWVMkk6jZQmBhSK7t0ifHxk3nZUmrFZx8c8NTBtv7
+         2Nyz+XdxVJjc03ZARcCsgZeodJ2epqo+MAKSdU9r1ULCqZKn1BB+VtdOPcoAGobQODja
+         sU4zU3el5J5j2Nd6YFxdDywCTdFwYbzq333ZnfS65mlmIgX1gyTE9H5QtPc9WBPQ+LkW
+         75BqMvKwlR6rWjDQt+RFNe0Mn17JAI5p8UzZp2nlNjs6vTEccUWmgV9RZ1BwwIabqpy3
+         D+QJakIjIkS+N3n08/fAiSZPHiWhLmU6gQxHhF38/GUw2jbyHU57Yf+8FK4RrCny97ng
+         necg==
+X-Gm-Message-State: APjAAAVaF6w12LKRbGfjucBCaoJ5ycrRSYAKBaERNh0IqnWtDbvcFe/E
+        JgY+3jEDZncuRrY3z2JThLMPoSeq
+X-Google-Smtp-Source: APXvYqxSjIOAsikvI5HgVbCBqKrmMWbWHOkAoYqOMG8YuRbbjbuP9n1BZ8Xi+ZUJ8SkOPMy4vEU8EA==
+X-Received: by 2002:a63:2b0c:: with SMTP id r12mr5054200pgr.206.1565905287435;
         Thu, 15 Aug 2019 14:41:27 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id i124sm4131966pfe.61.2019.08.15.14.41.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Aug 2019 14:41:26 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 14/24] merge-recursive: use common name for ancestors/common/base_list
-Date:   Thu, 15 Aug 2019 14:40:43 -0700
-Message-Id: <20190815214053.16594-15-newren@gmail.com>
+Subject: [PATCH v3 13/24] merge-recursive: fix some overly long lines
+Date:   Thu, 15 Aug 2019 14:40:42 -0700
+Message-Id: <20190815214053.16594-14-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.32.g2123e9e4e4
 In-Reply-To: <20190815214053.16594-1-newren@gmail.com>
 References: <20190726155258.28561-1-newren@gmail.com>
@@ -70,272 +70,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-merge_trees(), merge_recursive(), and merge_recursive_generic() in
-their function headers used four different names for the merge base or
-list of merge bases they were passed:
-  * 'common'
-  * 'ancestors'
-  * 'ca'
-  * 'base_list'
-They were able to refer to it four different ways instead of only three
-by using a different name in the signature for the .c file than the .h
-file.  Change all of these to 'merge_base' or 'merge_bases'.
+No substantive code change, just add some line breaks to fix lines that
+have grown in length due to various refactorings.  Most remaining lines
+of excessive length in merge-recursive include error messages and it's
+not clear that splitting those improves things.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 72 ++++++++++++++++++++++++-----------------------
- merge-recursive.h | 14 ++++-----
- 2 files changed, 44 insertions(+), 42 deletions(-)
+ merge-recursive.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 40f2c6ad55..d0153ba971 100644
+index 1fbae52402..40f2c6ad55 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -3357,24 +3357,26 @@ static int process_entry(struct merge_options *opt,
- static int merge_trees_internal(struct merge_options *opt,
- 				struct tree *head,
- 				struct tree *merge,
--				struct tree *common,
-+				struct tree *merge_base,
- 				struct tree **result)
+@@ -681,7 +681,9 @@ static void add_flattened_path(struct strbuf *out, const char *s)
+ 			out->buf[i] = '_';
+ }
+ 
+-static char *unique_path(struct merge_options *opt, const char *path, const char *branch)
++static char *unique_path(struct merge_options *opt,
++			 const char *path,
++			 const char *branch)
  {
- 	struct index_state *istate = opt->repo->index;
- 	int code, clean;
- 
- 	if (opt->subtree_shift) {
--		merge = shift_tree_object(opt->repo, head, merge, opt->subtree_shift);
--		common = shift_tree_object(opt->repo, head, common, opt->subtree_shift);
-+		merge = shift_tree_object(opt->repo, head, merge,
-+					  opt->subtree_shift);
-+		merge_base = shift_tree_object(opt->repo, head, merge_base,
-+					       opt->subtree_shift);
- 	}
- 
--	if (oid_eq(&common->object.oid, &merge->object.oid)) {
-+	if (oid_eq(&merge_base->object.oid, &merge->object.oid)) {
- 		output(opt, 0, _("Already up to date!"));
- 		*result = head;
- 		return 1;
- 	}
- 
--	code = unpack_trees_start(opt, common, head, merge);
-+	code = unpack_trees_start(opt, merge_base, head, merge);
- 
- 	if (code != 0) {
- 		if (show(opt, 4) || opt->call_depth)
-@@ -3402,7 +3404,7 @@ static int merge_trees_internal(struct merge_options *opt,
+ 	struct path_hashmap_entry *entry;
+ 	struct strbuf newpath = STRBUF_INIT;
+@@ -915,7 +917,8 @@ static int update_file_flags(struct merge_options *opt,
+ 		}
+ 		if (S_ISREG(contents->mode)) {
+ 			struct strbuf strbuf = STRBUF_INIT;
+-			if (convert_to_working_tree(opt->repo->index, path, buf, size, &strbuf)) {
++			if (convert_to_working_tree(opt->repo->index,
++						    path, buf, size, &strbuf)) {
+ 				free(buf);
+ 				size = strbuf.len;
+ 				buf = strbuf_detach(&strbuf, NULL);
+@@ -3393,7 +3396,8 @@ static int merge_trees_internal(struct merge_options *opt,
+ 		 * opposed to decaring a local hashmap is for convenience
+ 		 * so that we don't have to pass it to around.
+ 		 */
+-		hashmap_init(&opt->current_file_dir_set, path_hashmap_cmp, NULL, 512);
++		hashmap_init(&opt->current_file_dir_set, path_hashmap_cmp,
++			     NULL, 512);
+ 		get_files_dirs(opt, head);
  		get_files_dirs(opt, merge);
  
- 		entries = get_unmerged(opt->repo->index);
--		clean = detect_and_process_renames(opt, common, head, merge,
-+		clean = detect_and_process_renames(opt, merge_base, head, merge,
- 						   entries, &re_info);
- 		record_df_conflict_files(opt, entries);
- 		if (clean < 0)
-@@ -3470,11 +3472,11 @@ static struct commit_list *reverse_commit_list(struct commit_list *list)
- static int merge_recursive_internal(struct merge_options *opt,
- 				    struct commit *h1,
- 				    struct commit *h2,
--				    struct commit_list *ca,
-+				    struct commit_list *merge_bases,
- 				    struct commit **result)
- {
- 	struct commit_list *iter;
--	struct commit *merged_common_ancestors;
-+	struct commit *merged_merge_bases;
- 	struct tree *mrtree;
- 	int clean;
- 	int num_merge_bases;
-@@ -3486,32 +3488,32 @@ static int merge_recursive_internal(struct merge_options *opt,
- 		output_commit_title(opt, h2);
- 	}
- 
--	if (!ca) {
--		ca = get_merge_bases(h1, h2);
--		ca = reverse_commit_list(ca);
-+	if (!merge_bases) {
-+		merge_bases = get_merge_bases(h1, h2);
-+		merge_bases = reverse_commit_list(merge_bases);
- 	}
- 
- 	if (show(opt, 5)) {
--		unsigned cnt = commit_list_count(ca);
-+		unsigned cnt = commit_list_count(merge_bases);
- 
- 		output(opt, 5, Q_("found %u common ancestor:",
- 				"found %u common ancestors:", cnt), cnt);
--		for (iter = ca; iter; iter = iter->next)
-+		for (iter = merge_bases; iter; iter = iter->next)
- 			output_commit_title(opt, iter->item);
- 	}
- 
--	num_merge_bases = commit_list_count(ca);
--	merged_common_ancestors = pop_commit(&ca);
--	if (merged_common_ancestors == NULL) {
-+	num_merge_bases = commit_list_count(merge_bases);
-+	merged_merge_bases = pop_commit(&merge_bases);
-+	if (merged_merge_bases == NULL) {
- 		/* if there is no common ancestor, use an empty tree */
+@@ -3503,7 +3507,8 @@ static int merge_recursive_internal(struct merge_options *opt,
  		struct tree *tree;
  
  		tree = lookup_tree(opt->repo, opt->repo->hash_algo->empty_tree);
--		merged_common_ancestors = make_virtual_commit(opt->repo,
--							      tree, "ancestor");
-+		merged_merge_bases = make_virtual_commit(opt->repo, tree,
-+							 "ancestor");
+-		merged_common_ancestors = make_virtual_commit(opt->repo, tree, "ancestor");
++		merged_common_ancestors = make_virtual_commit(opt->repo,
++							      tree, "ancestor");
  	}
  
--	for (iter = ca; iter; iter = iter->next) {
-+	for (iter = merge_bases; iter; iter = iter->next) {
- 		const char *saved_b1, *saved_b2;
- 		opt->call_depth++;
- 		/*
-@@ -3527,14 +3529,14 @@ static int merge_recursive_internal(struct merge_options *opt,
- 		saved_b2 = opt->branch2;
- 		opt->branch1 = "Temporary merge branch 1";
- 		opt->branch2 = "Temporary merge branch 2";
--		if (merge_recursive_internal(opt, merged_common_ancestors, iter->item,
--				    NULL, &merged_common_ancestors) < 0)
-+		if (merge_recursive_internal(opt, merged_merge_bases, iter->item,
-+					     NULL, &merged_merge_bases) < 0)
- 			return -1;
- 		opt->branch1 = saved_b1;
- 		opt->branch2 = saved_b2;
- 		opt->call_depth--;
- 
--		if (!merged_common_ancestors)
-+		if (!merged_merge_bases)
- 			return err(opt, _("merge returned no commit"));
- 	}
- 
-@@ -3548,7 +3550,7 @@ static int merge_recursive_internal(struct merge_options *opt,
- 		break;
- 	case 1:
- 		strbuf_add_unique_abbrev(&merge_base_abbrev,
--					 &merged_common_ancestors->object.oid,
-+					 &merged_merge_bases->object.oid,
- 					 DEFAULT_ABBREV);
- 		opt->ancestor = merge_base_abbrev.buf;
- 		break;
-@@ -3559,7 +3561,7 @@ static int merge_recursive_internal(struct merge_options *opt,
- 				     repo_get_commit_tree(opt->repo, h1),
- 				     repo_get_commit_tree(opt->repo, h2),
- 				     repo_get_commit_tree(opt->repo,
--							  merged_common_ancestors),
-+							  merged_merge_bases),
- 				     &mrtree);
- 	strbuf_release(&merge_base_abbrev);
- 	if (clean < 0) {
-@@ -3602,7 +3604,7 @@ static void merge_finalize(struct merge_options *opt)
- int merge_trees(struct merge_options *opt,
- 		struct tree *head,
- 		struct tree *merge,
--		struct tree *common)
-+		struct tree *merge_base)
- {
- 	int clean;
- 	struct tree *ignored;
-@@ -3611,7 +3613,7 @@ int merge_trees(struct merge_options *opt,
- 
- 	if (merge_start(opt, head))
- 		return -1;
--	clean = merge_trees_internal(opt, head, merge, common, &ignored);
-+	clean = merge_trees_internal(opt, head, merge, merge_base, &ignored);
- 	merge_finalize(opt);
- 
+ 	for (iter = ca; iter; iter = iter->next) {
+@@ -3630,7 +3635,8 @@ int merge_recursive(struct merge_options *opt,
  	return clean;
-@@ -3620,7 +3622,7 @@ int merge_trees(struct merge_options *opt,
- int merge_recursive(struct merge_options *opt,
- 		    struct commit *h1,
- 		    struct commit *h2,
--		    struct commit_list *ca,
-+		    struct commit_list *merge_bases,
- 		    struct commit **result)
+ }
+ 
+-static struct commit *get_ref(struct repository *repo, const struct object_id *oid,
++static struct commit *get_ref(struct repository *repo,
++			      const struct object_id *oid,
+ 			      const char *name)
  {
- 	int clean;
-@@ -3629,7 +3631,7 @@ int merge_recursive(struct merge_options *opt,
- 
- 	if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
- 		return -1;
--	clean = merge_recursive_internal(opt, h1, h2, ca, result);
-+	clean = merge_recursive_internal(opt, h1, h2, merge_bases, result);
- 	merge_finalize(opt);
- 
- 	return clean;
-@@ -3657,8 +3659,8 @@ static struct commit *get_ref(struct repository *repo,
- int merge_recursive_generic(struct merge_options *opt,
- 			    const struct object_id *head,
- 			    const struct object_id *merge,
--			    int num_base_list,
--			    const struct object_id **base_list,
-+			    int num_merge_bases,
-+			    const struct object_id **merge_bases,
- 			    struct commit **result)
- {
- 	int clean;
-@@ -3667,14 +3669,14 @@ int merge_recursive_generic(struct merge_options *opt,
- 	struct commit *next_commit = get_ref(opt->repo, merge, opt->branch2);
- 	struct commit_list *ca = NULL;
- 
--	if (base_list) {
-+	if (merge_bases) {
+ 	struct object *object;
+@@ -3665,7 +3671,8 @@ int merge_recursive_generic(struct merge_options *opt,
  		int i;
--		for (i = 0; i < num_base_list; ++i) {
-+		for (i = 0; i < num_merge_bases; ++i) {
+ 		for (i = 0; i < num_base_list; ++i) {
  			struct commit *base;
--			if (!(base = get_ref(opt->repo, base_list[i],
--					     oid_to_hex(base_list[i]))))
-+			if (!(base = get_ref(opt->repo, merge_bases[i],
-+					     oid_to_hex(merge_bases[i]))))
+-			if (!(base = get_ref(opt->repo, base_list[i], oid_to_hex(base_list[i]))))
++			if (!(base = get_ref(opt->repo, base_list[i],
++					     oid_to_hex(base_list[i]))))
  				return err(opt, _("Could not parse object '%s'"),
--					   oid_to_hex(base_list[i]));
-+					   oid_to_hex(merge_bases[i]));
+ 					   oid_to_hex(base_list[i]));
  			commit_list_insert(base, &ca);
- 		}
- 	}
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 0a3033bdb0..6f351098a5 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -81,14 +81,14 @@ static inline int merge_detect_rename(struct merge_options *o)
-  *
-  * NOTE: empirically, about a decade ago it was determined that with more
-  *       than two merge bases, optimal behavior was found when the
-- *       ancestors were passed in the order of oldest merge base to newest
-- *       one.  Also, ancestors will be consumed (emptied) so make a copy if
-- *       you need it.
-+ *       merge_bases were passed in the order of oldest commit to newest
-+ *       commit.  Also, merge_bases will be consumed (emptied) so make a
-+ *       copy if you need it.
-  */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
- 		    struct commit *h2,
--		    struct commit_list *ancestors,
-+		    struct commit_list *merge_bases,
- 		    struct commit **result);
- 
- /*
-@@ -98,7 +98,7 @@ int merge_recursive(struct merge_options *o,
- int merge_trees(struct merge_options *o,
- 		struct tree *head,
- 		struct tree *merge,
--		struct tree *common);
-+		struct tree *merge_base);
- 
- /*
-  * "git-merge-recursive" can be fed trees; wrap them into
-@@ -107,8 +107,8 @@ int merge_trees(struct merge_options *o,
- int merge_recursive_generic(struct merge_options *o,
- 			    const struct object_id *head,
- 			    const struct object_id *merge,
--			    int num_ca,
--			    const struct object_id **ca,
-+			    int num_merge_bases,
-+			    const struct object_id **merge_bases,
- 			    struct commit **result);
- 
- void init_merge_options(struct merge_options *o,
 -- 
 2.23.0.rc2.32.g2123e9e4e4
 
