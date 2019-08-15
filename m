@@ -2,80 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09ECA1F45A
-	for <e@80x24.org>; Thu, 15 Aug 2019 14:37:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7821F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 15:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731131AbfHOOhC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 10:37:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54852 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730084AbfHOOhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 10:37:01 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 949DB16C69E;
-        Thu, 15 Aug 2019 10:36:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FQguyVCh3wqjiaE0kzaYwM/V4/E=; b=gc0pOB
-        NVtXt19ZXiHuuF2Quz9v+0Dj/YZq8tJYeU5HlihESiUF2PKc0KpgV3c63PLLtXr0
-        cXQV+7Ump2mzflroUSo+xzlcQvmBw9Nuq+f7rYcaD9wg7kkoRwrDndXe28+UdOmK
-        2lK1nl3szddsfyp2EImD+2uAxxHBjgeAM0ZtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bzosXdv6hTuCxYd1oDsUCSduhHnOaWqw
-        IlkIkAT8TfH1xoeaTVFigMiveCl1LOUBIUXkIWvgLWqkgJz+nQZDi300Nr/GAuSB
-        4KkZmXpmAl6ju4BH2RowsVOyyC7yuRhs8831LYrF0Gr/A+6M3YD6l3Cv5pQg0zAO
-        /7mfAsZdioQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CC1516C69D;
-        Thu, 15 Aug 2019 10:36:59 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBA6716C69C;
-        Thu, 15 Aug 2019 10:36:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] bugreport: add tool to generate debugging info
-References: <20190815023418.33407-1-emilyshaffer@google.com>
-        <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
-Date:   Thu, 15 Aug 2019 07:36:57 -0700
-In-Reply-To: <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com> (Derrick
-        Stolee's message of "Thu, 15 Aug 2019 10:15:24 -0400")
-Message-ID: <xmqqy2zu4hrq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730347AbfHOPfI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 11:35:08 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:32776 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728728AbfHOPfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 11:35:07 -0400
+Received: by mail-pf1-f174.google.com with SMTP id g2so1524899pfq.0
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 08:35:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EZFT4N+Fo9NgHu6AGerqZq/veKwiJpoOZf19ALlAN8k=;
+        b=PXH2avchzG1/5LAqiZSfxCvyYcL1I/oStkHDDUTnbUdHx4tQWqQRYbElepfPxVW+ds
+         Avsp/bIJ3TJI6k4SGcpjrhLUhc1gzGbXbIuV03TvhU4BSJCuZNIafQ0hyBoNmi4QvBQu
+         LQWcVithIXM9gkUobo685ySqAjvIWuEkk/Z2oJctE0YRl52UocD0ZbiIrHlSGigeGb9M
+         2wVwsuXef6tXvs/yhQLnwLlnfmx9PMAWXoHsW2nC90DSMlcN32CdsPcfd5sWk2I9oXes
+         MDhjQIxby1434BcOpdou7Q5L4xHETMZJJxRR4jgFM9668ZWBqr7FP5O49QSJXx/PWvBX
+         RbRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EZFT4N+Fo9NgHu6AGerqZq/veKwiJpoOZf19ALlAN8k=;
+        b=Pjj/wD4HTXlBnRA0U/Uic1NuyoGmXespNYJtV8s4CDYW4dvgBUMx5oHgqxsSJemoXb
+         gP8wa14QYYHXLxUE25DmFY1hYReg9AEZ5BMrDf6JvCCRNl+aotTl8Se/FID/vH3iHRuF
+         E+EZ/2a0XrFjB50yTT5G/z6cj9W64Um9U5O+R3ZO5ZvQkCSwIP5r10YTu9C4YsYLfCcZ
+         ZUgOEvW+NESmIN0qNUXtkQjc6OZgUpTayPcx/QOCwfJJ8wJUZiFBq3eKuXJnpIgVDEnO
+         pIM3D5+1QSr8jTxQJ7ceGK7unMQkUh/K4/ROBFNDjyWq1j9Gqo2I27gUqBkcIfBs6N7h
+         VdOw==
+X-Gm-Message-State: APjAAAWssQ1WfXVhPVwBtB4nIK5H4lByYG7Ra6qXz6MFAWyG5DLKyN+j
+        Iatidg7bvAzSgLlIWfaz2IC0VPLUakM=
+X-Google-Smtp-Source: APXvYqyaidXVKiOipamgdfcbwSH4zS6ntexpUMJtzM22BlV/hG6Q1FKY01OZYeWBLB5Zopl8NcJYng==
+X-Received: by 2002:a17:90a:f485:: with SMTP id bx5mr2809370pjb.113.1565883305922;
+        Thu, 15 Aug 2019 08:35:05 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id w189sm3030439pfb.35.2019.08.15.08.35.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Aug 2019 08:35:05 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, daniel@haxx.se, peff@peff.net,
+        gitster@pobox.com
+Subject: [PATCH] http: use xmalloc with cURL
+Date:   Thu, 15 Aug 2019 08:35:04 -0700
+Message-Id: <20190815153504.23199-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 232E01D4-BF6A-11E9-8044-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+f0ed8226c9 (Add custom memory allocator to MinGW and MacOS builds, 2009-05-31)
+never told cURL about it.
 
-> Config options to consider stripping out:
->
-> 	*url*
-> 	*pass* (anything "password" but also "sendmail.smtppass")
+Correct that by using the cURL initializer available since version 7.12 to
+point to xmalloc and friends for consistency which then will pass the
+allocation requests along when USE_NED_ALLOCATOR=YesPlease is used (most
+likely in Windows)
 
-Blacklisting?  I wonder if users feel safer if these are limited to
-known-benign ones.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+This doesn't conflict with anything and was originally based on maint (so it
+applies cleanly also to master and next), but is now rebased on top of
+jk/drop-release-pack-memory so the final product wouldn't have any chance to
+introduce problems (thanks Peff)
 
->> +	echo "[Configured Hooks]"
->> +	find "$GIT_DIR/hooks/" -type f | grep -v "\.sample$" | print_filenames_and_content
->> +	echo
->
-> Remove the sample hooks, but focus on the others. Will this look like garbage if a hook
-> is a binary file?
+it has been built and tested in Windows through Azure Pipelines (thanks Dscho)
+and shouldn't introduce any build problems even with ancient versions or cURL
+(thanks Daniel) and while not strictly needed is a nice thing to have for
+consistency (thanks Junio)
 
-This makes me feel very nervous.  $GIT_DIR/hooks/ are private and
-people can hardcode credentials in them; $GIT_DIR/hooks/pre-foo may
-be written toread from $GIT_DIR/hooks/mypassword with the knowledge
-that there won't be any "mypassword" hook.
+ http.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/http.h b/http.h
+index b429f1cf04..e5f075dcbf 100644
+--- a/http.h
++++ b/http.h
+@@ -22,9 +22,15 @@
+ #define DEFAULT_MAX_REQUESTS 5
+ #endif
+ 
++#if LIBCURL_VERSION_NUM >= 0x070c00
++#define curl_global_init(a) curl_global_init_mem(a, xmalloc, free, \
++						xrealloc, xstrdup, xcalloc)
++#endif
++
+ #if LIBCURL_VERSION_NUM < 0x070704
+ #define curl_global_cleanup() do { /* nothing */ } while (0)
+ #endif
++
+ #if LIBCURL_VERSION_NUM < 0x070800
+ #define curl_global_init(a) do { /* nothing */ } while (0)
+ #endif
+
+base-commit: 9827d4c185e4da728f51cd77c54a38c9de62495f
+-- 
+2.23.0.rc2
+
