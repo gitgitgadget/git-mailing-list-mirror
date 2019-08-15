@@ -2,77 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MISSING_SUBJECT,
+	PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563B31F45A
-	for <e@80x24.org>; Wed, 14 Aug 2019 23:19:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B321F45A
+	for <e@80x24.org>; Thu, 15 Aug 2019 02:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728662AbfHNXTL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Aug 2019 19:19:11 -0400
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:42044 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726619AbfHNXTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Aug 2019 19:19:11 -0400
-Received: by mail-ot1-f43.google.com with SMTP id j7so2010306ota.9
-        for <git@vger.kernel.org>; Wed, 14 Aug 2019 16:19:10 -0700 (PDT)
+        id S1728373AbfHOCEt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Aug 2019 22:04:49 -0400
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:53871 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726865AbfHOCEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Aug 2019 22:04:48 -0400
+Received: by mail-wm1-f43.google.com with SMTP id 10so52890wmp.3
+        for <git@vger.kernel.org>; Wed, 14 Aug 2019 19:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x4Pu4nBBD6AZY1eelsy5m6+wPucZPsW0DqChRbDHUqY=;
-        b=V+fzPHeuiftWUGv4ZpkDQApoBkNlBrYZxXG8jFzReMEhayle7rSzj9cteN8LnxvYa8
-         ZW51KB5Nag61TCNHHEql0yIr6h3R/ZkLflK5lVsrmiEb775mKb9p5bfAOVGxpR186tbP
-         RDbUunjUmLQiJ3yNLlmEpVG/xc8T0lCA6bVlJkHbRvxwcxmVaUb4cZeqRYPDYWXiDFDL
-         T8a+55x/+eKyiTTNnqAencggYZyRXLWwqGDZLzGneAju3nVxxD2wT88EvYIIi4p5fGKa
-         TiWoFdRH1OxtAsji/jn2sqkwo7PAb2Y2vNCLvtRbFQIty+DIzn79MGUpXFWLkyQ4YTKI
-         Guvg==
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:to:mime-version:content-transfer-encoding;
+        bh=2LsBC7a3tpm40H3OeR6FqizbDmyrXC8tg9SVIVTZhXo=;
+        b=GaiMIjEjTrEX1PJsQPtG6MfznCtMR0BxnSKyuz6Nq8LkWqz4oYLE1lM1QBJKQ9FWKB
+         M/vhLWpxPT0FGBhJRLEFSuKSvzRMQahp9P8diATR1KmqRx4KFUZV7YWkUtahv5TAWrxb
+         CkAYM4dOwhakEz7HxJWSxjbiDRC6pcrWhM5jKpmWOaOe+uj3sYMe1OfF9jnZJgk25w1S
+         xdxugVbA41kKW7XcwjLFv2sTIPlWwLz8MZXi8X0GCoe9K3T+Ga4l7pz7q8OrVJYQNTLn
+         0Q02TdFIHB9iL1BhtkWt+97fA7nomt4a/nTPx2yk6w0D0tf18cwj5NWQf+8IW7TyUdTo
+         QEBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x4Pu4nBBD6AZY1eelsy5m6+wPucZPsW0DqChRbDHUqY=;
-        b=amYZ6tKneinNprUIRYaFFjx5ETEaeAunF5tqL0Bti5HKNnT5nsr17sXsemge7uo43F
-         RJV0zohD/I7SuD3rqD4vRN2Iw4IRGSHU488JFPbqayFQDR80GJKXpwZEtRnuvaKfH+RR
-         Ze9kAIaRa2fd2hbf7QXcx/BZuVUnuVrrYeJqq0n/QeXVvNNFuhoMIxhySwQGkun2UjGQ
-         V4/zedxPW7gQP0E8sgJjaYuPJhbtfCk/36/B2h/cij/ZZDlN59yDFWupadW6bwAmaDip
-         O0yB9gasULurta2CBKtObC6ZIusgZ5MOwOJaCcJmIlFqKdO5Ot+rqTeRvHFQ7yt+jvSC
-         iBmw==
-X-Gm-Message-State: APjAAAVircpVlxk8PVTyEI6Lw1vdpqMTMX6NKOHJI0QKiUEuGXn7c7w/
-        uzuQhVNDLKIVg2q5SIEsRr3iQZjo2hVb38K+aPhcQw==
-X-Google-Smtp-Source: APXvYqwE5Nsfhuv30jt56mUqqi8YKF89kVNqBcK15AG1E0r+bExDX3zTYM71vWTI4q0xi/CBpM/w5C+FimPDHuALq6g=
-X-Received: by 2002:a5d:9a04:: with SMTP id s4mr2625419iol.19.1565824750024;
- Wed, 14 Aug 2019 16:19:10 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:to:mime-version
+         :content-transfer-encoding;
+        bh=2LsBC7a3tpm40H3OeR6FqizbDmyrXC8tg9SVIVTZhXo=;
+        b=itf9dtI3a8JBcJtNfIKepzuJpmFATOeXwtOGzn9VeR2z/2o5qYWYAjbsV5bjKgnJYP
+         c2DYgItjsObXaVgSax4Pqnd9XNUqV1MLD5jfUhbq48QMh2bq9jP/olvgW45/SgecBmgc
+         VqKRftZu2wYynjLK6jaI/9zlFDRMi40oMR64on/9tyTdh2VJIyPWWUysia3Qqtkeq5Wi
+         mzJ9R1eTBgymV3/obRpckjocLyk78532oDcHB/enUo2v9lYZ8ncPCTHhbgnVE9lqtsFT
+         9+7TZeT2qfLijgMXPvJQpC5jti14KN7Xewc8V93vT+x+vI085e79p7uVTB52JcgzTtyp
+         iktw==
+X-Gm-Message-State: APjAAAXkobg7NmIW/qxtxcQaDXCNriYdXtOYYN9N0Fc2z++PD8EraZu/
+        ZlbTcrYP/QteZu2aC88H9R2qbBzqSg==
+X-Google-Smtp-Source: APXvYqyAVSIVEFwEMcYAFiZMqnLBX2sdaLlp3r5JcIfeozGs3kdvBVn2+sioUoJC/YdjIhBXVyw3SQ==
+X-Received: by 2002:a1c:b342:: with SMTP id c63mr138900wmf.84.1565834686915;
+        Wed, 14 Aug 2019 19:04:46 -0700 (PDT)
+Received: from [192.168.1.34] ([78.168.212.170])
+        by smtp.gmail.com with ESMTPSA id z25sm64334wml.5.2019.08.14.19.04.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Aug 2019 19:04:46 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 05:04:43 +0300
+X-Priority: 3
+Message-ID: <-di2fdtgdyo0l4l7ybqangg6fbwndhnoac2fagjvym5jfixsr-4jdx7fcucb4h-j823k7-jjunasjru5cj-xvqq5yw1fhq8hul08d-fe06db3vdruxudn0wcj4mw57-fb4p3o-d4fj3o-qt575goasrk0.1565834683582@email.android.com>
+From:   Sevil Olcar <sevilolcar818181@gmail.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq36i35tfv.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36i35tfv.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 14 Aug 2019 20:18:58 -0300
-Message-ID: <CAHd-oW4kMr+Q1GhNQ7B7RW2hafqokvUoxg9qkXXyt98L53=Ahw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2019, #04; Wed, 14)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+CgpIdWF3ZWkgTW9iaWwnaW1kZW4gZwpUaGlzIGRvY3VtZW50IGlzIG92ZXJ3cml0dGVuIAoKCgoK
+CgoKCgoKCgoKCgoKw7ZuZGVyaWxkaQ==
 
-On Wed, Aug 14, 2019 at 6:27 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-[...]
-> * mt/grep-submodules-working-tree (2019-07-30) 1 commit
->   (merged to 'next' on 2019-08-02 at e1a46a195f)
->  + grep: fix worktree case in submodules
-
-There is a new version of this patch here[1], addressing the comments
-you and Christian made.
-
-Thanks,
-Matheus
-
-[1]: https://public-inbox.org/git/901ddbf6a1d9eeff51b1b2282ebefad51e61b12d.1564629070.git.matheus.bernardino@usp.br/
