@@ -7,102 +7,91 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 197841F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 19:59:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B70051F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 20:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727585AbfHPT7R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 15:59:17 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53462 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727565AbfHPT7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 15:59:16 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B51F57E65E;
-        Fri, 16 Aug 2019 15:59:14 -0400 (EDT)
+        id S1727602AbfHPUGo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 16:06:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53298 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727548AbfHPUGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 16:06:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A7888FA22;
+        Fri, 16 Aug 2019 16:06:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eGzE/sbMoullAZugSndwTq5tt/g=; b=HzBOlE
-        mY73TXsre6BxScA6FjTHFJomJDkNtsIgvi8I8wR2R3DqSaGqzBE4tES+Wc5Oo6Xa
-        nU2gj42npONUuMzigpMnuweuDHsxBa7dW0R+FnvXfqyvobNfy/RY+ordAWAp0RCk
-        ZbITqVTURPZ3mHOkstTzZlvpOEKs0KzRUkiHE=
+        :content-type; s=sasl; bh=ZSiACEPLfusFFUY9RIGccKPb/10=; b=oPusGd
+        B8QSb4xrvwMjKzMT80DPykT6Gw7ZKBnou7PXMtKeNjJtPocyPfwLCOYsAcwzfc8/
+        At/amXldxbiHgzwwH8A42dPW1uORUK5ZQWqL7Pg+gj+JnUTSQIrqmoicej1lOyXH
+        H1JoxtWv54mxrvhU7TbgN8+xFo8dccEnyIOls=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ufJxuxfyV96M5C2XON1QsrR/ZtbUp2G+
-        l231+OPgIlqxS7Gn18H/A9l9TIMv0NssOK//9aBd/u5bPbOgjtBk3BuPE+PeLkCw
-        dWXr6/4Lm5wMHBKSttSDF7FXBh+AI5qySoT4jJRG5xmxDNzMzRVpmpJiyi5C4qo5
-        FQnKkFn7m9o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AEE117E65D;
-        Fri, 16 Aug 2019 15:59:14 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=IIj5FC0mH3R1XbgKxlVBExcQD0LPHA0G
+        wa7HFZ4LgrZ04WvVJrE9nqng3hFpJqnrrprFPH8uvu2CtxRGG9Xa+NDxSXKjzUA0
+        BESlebs/cH/Qlm9P/N3xpJAr+l/k5hlXva+lzTLLAaS9L4rrN8c7XfgS8ulBsvna
+        9VDAIwH46FE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 224648FA21;
+        Fri, 16 Aug 2019 16:06:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 916F97E658;
-        Fri, 16 Aug 2019 15:59:10 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 546C48FA20;
+        Fri, 16 Aug 2019 16:06:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 23/24] merge-recursive: add sanity checks for relevant merge_options
-References: <20190726155258.28561-1-newren@gmail.com>
-        <20190815214053.16594-1-newren@gmail.com>
-        <20190815214053.16594-24-newren@gmail.com>
-Date:   Fri, 16 Aug 2019 12:59:08 -0700
-In-Reply-To: <20190815214053.16594-24-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 15 Aug 2019 14:40:52 -0700")
-Message-ID: <xmqq8srs286r.fsf@gitster-ct.c.googlers.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Carmine Zaccagnino <carmine@carminezacc.com>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Christopher Diaz Riveros <chrisadr@gentoo.org>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias Ruester <matthias.ruester@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Philipp =?utf-8?Q?Wei=C3=9Fmann?= <mail@philipp-weissmann.de>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [GIT PULL] l10n updates for 2.23.0 round 2
+References: <20190816091636.2846-1-worldhello.net@gmail.com>
+Date:   Fri, 16 Aug 2019 13:06:39 -0700
+In-Reply-To: <20190816091636.2846-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Fri, 16 Aug 2019 17:16:36 +0800")
+Message-ID: <xmqq4l2g27u8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 502E7A6E-C060-11E9-877F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 5CDA06E2-C061-11E9-AA03-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 647b1f25c3..bc0da608c4 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -3620,6 +3620,29 @@ static int merge_start(struct merge_options *opt, struct tree *head)
->  ...
-> +	assert(opt->buffer_output >= 0 && opt->buffer_output <= 2);
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-The field is unsigned, so >=0 side triggers "-Werror=type-limits" warning.
+> Hi Junio,
+>
+> Please pull the following l10n updates for Git 2.23.0.
+>
+> The following changes since commit 2e27de94d485a6da0c8e264c165e55100f1a13a8:
+>
+>   Git 2.23-rc2 (2019-08-09 10:15:39 -0700)
+>
+> are available in the Git repository at:
+>
+>   git://github.com/git-l10n/git-po tags/l10n-2.23.0-rnd2
+>
+> for you to fetch changes up to a6cd2cc485b9ba73934a059245aa9de7e68a2d4c:
+>
+>   l10n: zh_CN: for git v2.23.0 l10n round 1~2 (2019-08-16 16:59:17 +0800)
 
-Material for squashing I have collected so far...
-
- cache-tree.c      | 2 +-
- merge-recursive.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 00eda3e537..ef8c9f5e04 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -608,7 +608,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 	return it;
- }
- 
--int write_index_as_tree_internal(struct object_id *oid, struct index_state *index_state, int cache_tree_valid, int flags, const char *prefix)
-+static int write_index_as_tree_internal(struct object_id *oid, struct index_state *index_state, int cache_tree_valid, int flags, const char *prefix)
- {
- 	if (flags & WRITE_TREE_IGNORE_CACHE_TREE) {
- 		cache_tree_free(&index_state->cache_tree);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index d3dc3d8a49..3d126dcc48 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3638,7 +3638,7 @@ static int merge_start(struct merge_options *opt, struct tree *head)
- 	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
- 
- 	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
--	assert(opt->buffer_output >= 0 && opt->buffer_output <= 2);
-+	assert(opt->buffer_output <= 2);
- 	assert(opt->obuf.len == 0);
- 
- 	assert(opt->priv == NULL);
+Thanks, pulled.
