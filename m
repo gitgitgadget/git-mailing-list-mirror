@@ -2,91 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2871F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 00:30:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 892261F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 01:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726089AbfHPAaQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Aug 2019 20:30:16 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:44086 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725983AbfHPAaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Aug 2019 20:30:15 -0400
-Received: by mail-io1-f65.google.com with SMTP id j4so2889173iop.11
-        for <git@vger.kernel.org>; Thu, 15 Aug 2019 17:30:15 -0700 (PDT)
+        id S1726509AbfHPBZ0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Aug 2019 21:25:26 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:41431 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726357AbfHPBZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Aug 2019 21:25:26 -0400
+Received: by mail-pf1-f193.google.com with SMTP id 196so2233075pfz.8
+        for <git@vger.kernel.org>; Thu, 15 Aug 2019 18:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mno8F9xQRgD08/Q12QdPc+38D/6pJ//6dn58UXm+75Y=;
-        b=wFANF1dkwIVFxM7Yv7YaOeeA6VrvsD2xHrNcvE3XFcUeDiBhQ6xjbM33sbd2QRQSf0
-         jtkOE8vEX/2oFOOa6v7+vnBAf25cvc1o/71dh8vgLuHDXahf5lUZcGhQs87tf6X4VEL5
-         LSUTo99dMqB6jjuQhQ0PU6ckArq7qbpKzheqLCJ9knoE04ALH+05vKLzzwtERzwiOVfo
-         XzBqy0NRRoutpkw3Oxc4ulECNtHHH0ip8BXKNYCdKU0hFM2+gRGq/oo62Bm+AFT5ipQP
-         827f/ELB49tHgJBAHoNsf2SUMhtfcdBvPDwtWxf687NK9Lq4IG7XflLW/y1VST2ADnBW
-         4bCw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ihtrZSsbHwbfcywQAChe8Qk+HxOHszeO/XukRCOIWdg=;
+        b=ubufkTPHHopBakFVDKBl501m4f88Ct4WBUglQQEUDMUbfxwfLci/24JwVpLlnDoX6m
+         YP48pzuAKALn3d85VFbBdP+K++FqttsSjjp6p16ktsXjFzgc7rspvfLrecrA9DMPHvw7
+         5t5u60KgYWzEba7XMtm/erkFx05vkZQP79xj4C5mt+oMz0HTDBFi12aVTH4QnfHi2al+
+         RAYQZoT7SyhD8X6GYsoRAzKpb2k4mHfjZb0NKC9b7yy3rBLx8VNQBP4uxVdDNd3IF3Tj
+         O9QnqgXCKDNxBq9cC/5dK5URdkufouJdO1fave8j927sG23huRt3H1T7nOakf6XHgWok
+         NBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mno8F9xQRgD08/Q12QdPc+38D/6pJ//6dn58UXm+75Y=;
-        b=rVFQ32ESmE3A5tWBWVq/77BrJeN+HMNoXXJiEcYW2Hb3dpBhBRjz3MXQE49fty4w72
-         sDKdBBBOhSJ9E2on70RQvlshEzURTborJ4sn5YMdLaqTVIHpsbFp3bWgYrgZegHga9Za
-         2nSGgJ6+b7rebr6xb+zraKtfS3mTQI8Ml2EgolfbVNHGFSx4JLtCRikuHGtLlI/3BaaN
-         UGt3ATqCXyBQbgkdQ8dFb5F5z6gaJrNee2MtoQitjnGtr2eNuZ+cTxT1m+D/k/8ik6g7
-         FYPyLIOK/xAhhdEIy3Ctxb/jJDJQUFbB4clTWdj6ASrINHvvBhiszD4+m8ufY/0W6Wq6
-         haoQ==
-X-Gm-Message-State: APjAAAUTSDs+4TXpPkRlpl8nnAd3VALIsGIp1eHXyAvqpweLxfI3kZ2L
-        dZuviPvp4F3wT3zue4nl935ijk/OK9SUQi9DBc4gAg==
-X-Google-Smtp-Source: APXvYqyAhMDHmmQDA0nrqh7MG0CxThWIvFEmJsKzNcP1JmfvL0G4clt/jLcEM8JRHdEo5G7NcfD7wxHFT1eBh/fFHuc=
-X-Received: by 2002:a05:6602:cc:: with SMTP id z12mr1886705ioe.86.1565915414797;
- Thu, 15 Aug 2019 17:30:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqq36i35tfv.fsf@gitster-ct.c.googlers.com> <CAHd-oW4kMr+Q1GhNQ7B7RW2hafqokvUoxg9qkXXyt98L53=Ahw@mail.gmail.com>
- <CAPUEspjWbHC2md3kFu8O88275pYSzpFmu9kjHEn4_0_hjxZ8MA@mail.gmail.com> <xmqqef1m4baf.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqef1m4baf.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 15 Aug 2019 21:30:03 -0300
-Message-ID: <CAHd-oW4qo=aTrA90RmWsLeW44WKUiL2x9rzdToFRMq=ebKYksQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2019, #04; Wed, 14)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ihtrZSsbHwbfcywQAChe8Qk+HxOHszeO/XukRCOIWdg=;
+        b=D1q73AxSqkH7dvqMFScANy7sKAtW+1RgoupPRQAeZjxtd5+YUv7qMXFMT0Oumhj/PV
+         8KFgNVVqt17s0htD7jXf1tzkXszXOV/Wj92DEguED4rDtrcGEpVWAtHmLiZQGgEVP2VW
+         2NU3seCQdWyXRIdGno+FjRG2oE2izBr6GZNWq1AuV6AzSXoJlwt360XPWQjyFc7XVU/p
+         5ld1QbnQ0QFjP3Cu4PnV4dbZSIknNgkn6aadUCXiTS8Ttl1NZl60vAvvYszMcKFGHeCa
+         7xfiDHKsyTzrmNxxK2TeQKs++DFjwyIH7Kt6MlfIWcn9zCAaxLy5JJ9B2dXlguUHpeDZ
+         GN/g==
+X-Gm-Message-State: APjAAAXW+t5nwTKpCDTs7CPijEznAh2XMCcgc7v2uFxRWeUZlpqKAv6c
+        f8I/yHxPDgNsx5SvOUdQLUzGyQ==
+X-Google-Smtp-Source: APXvYqzqYoRTIrcSB/6PEWmRTDXjkZPWHsNIzvwouTsR0Q+oCQ4ocJt2AMkUBYChNn4owqwO2doSew==
+X-Received: by 2002:a65:5202:: with SMTP id o2mr5413181pgp.29.1565918724991;
+        Thu, 15 Aug 2019 18:25:24 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id 203sm4773220pfz.107.2019.08.15.18.25.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2019 18:25:24 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 18:25:19 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Carlo Arenas <carenas@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] bugreport: add tool to generate debugging info
+Message-ID: <20190816012519.GF208753@google.com>
+References: <20190815023418.33407-1-emilyshaffer@google.com>
+ <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
+ <xmqqy2zu4hrq.fsf@gitster-ct.c.googlers.com>
+ <20190815225231.GD208753@google.com>
+ <xmqqwofe0zgd.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwofe0zgd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 1:57 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Arenas <carenas@gmail.com> writes:
->
-> > On Wed, Aug 14, 2019 at 4:58 PM Matheus Tavares Bernardino
-> > <matheus.bernardino@usp.br> wrote:
-> >>
-> >> On Wed, Aug 14, 2019 at 6:27 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >> >
-> >> [...]
-> >> > * mt/grep-submodules-working-tree (2019-07-30) 1 commit
-> >> >   (merged to 'next' on 2019-08-02 at e1a46a195f)
-> >> >  + grep: fix worktree case in submodules
-> >>
-> >> There is a new version of this patch here[1], addressing the comments
-> >> you and Christian made.
-> >
-> > since it is already in next, would be better to submit a patch on top
-> > of the current topic instead (more details in
-> > Documentation/SubmittingPatches).
->
-> Thanks.  Or we could just go the lazier route.  A new stable release
-> would happen within a day or two, and then in a week or so after that,
-> the tip of 'next' gets rewound and rebuilt on top of it.  We can
-> discard the older copy and replace with the newer one when it happens.
+On Thu, Aug 15, 2019 at 04:40:50PM -0700, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > I think a whitelist of config options to print would grow stale
+> > immediately, and the options we're missing would be very likely to be
+> > configs to turn on new experimental features - which is probably what we
+> > most want the bugreport for.
+> 
+> The implementation of your "git bugreport" command comes from the
+> same version of Git as such an experimental feature you want
+> feedback to is shipped with, so I am not sure where your concern
+> about staleness comes from.
+> 
+> If you really care about getting quality reports, you need to earn
+> users' trust (one way of doing so would be to maintain a good "list
+> of benign configuration knobs whose values help diagnosing issues"),
+> and you need to make sure we obtain relevant pieces of information.
+> Both of these things are something you need to actively work on.
+> 
+> We have trained ourselves to the point that we consider it a bug if
+> you add a new command git-bugreport without adding a corresponding
+> pattern in the .gitignore file.  And thanks to that discipline, we
+> have been fairly good at keeping .gitignore up to date.  I do not
+> see a reason why we cannot do something similar to the registry of
+> configuration variables that we care about, which may be shipped as
+> part of "git bugreport" command.
 
-OK. I'm working on a v2 of mt/threaded-grep-in-object-store which
-might depend on this patch. I can then send the newer version of this
-patch as part of the series. Is that OK?
+I think comparing this habit to the .gitignore isn't quite fair -
+.gitignore tells me I forgot to add my new command binary to it, when I
+run `git status` to see what I need to add to my commit with new
+command.
+
+But, I agree that it's not going to be possible to create a completely
+leakproof blacklisting heuristic here. So I'll use a whitelist for the
+next patchset.
+
+ - Emily
