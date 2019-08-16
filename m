@@ -2,161 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-8.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72C1A1F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 18:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDBE91F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 19:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727525AbfHPSkw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 14:40:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46154 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727067AbfHPSkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 14:40:52 -0400
-Received: (qmail 21361 invoked by uid 109); 16 Aug 2019 18:40:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Aug 2019 18:40:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9183 invoked by uid 111); 16 Aug 2019 18:42:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Aug 2019 14:42:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 16 Aug 2019 14:40:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: BUG?: xdl_merge surprisingly does not recognize content conflict
-Message-ID: <20190816184051.GB13894@sigill.intra.peff.net>
-References: <20190815220303.17209-1-newren@gmail.com>
+        id S1727540AbfHPTIR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 15:08:17 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:33385 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727067AbfHPTIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 15:08:16 -0400
+Received: by mail-pl1-f196.google.com with SMTP id go14so2509108plb.0
+        for <git@vger.kernel.org>; Fri, 16 Aug 2019 12:08:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yPxwOhRVpKyqv+aLk5Rfsr7IFMONRUDxPhyVnvDPhRM=;
+        b=dXgT7hh+Loo1eKpJsV+JxFJw3Ifqj0dJiU8HIrUn0if4wkoMQFonbIvlv3oMiC52gy
+         Ywqo30smGFyBYfyzcqWOHuPtqKyCg2kjLWkxVFCi48W61HEFsO+cy4rr9b5RSeSe0BwM
+         oRupFdx0bYLMgzcS2uml52iHM4rQv8ML4Y0xNu46ZwaoMdl2l6SdN8NemaL7UXnSjXmL
+         +SLLo+/ZhWkSNumkVXouZPP0MdbGJYy9t6VtoGdN4z0Ui7OTFZGSWQMrFrhUVPtrWAa7
+         Rz17xr+DDh/Q+etWBEQVK26mNi0uxrjo96dfIT0Os4g3nLoFhr2kQBnnsjOF7kqMj66y
+         Q5EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yPxwOhRVpKyqv+aLk5Rfsr7IFMONRUDxPhyVnvDPhRM=;
+        b=EsawC2sTyFx9qj1D8Qnz3Yb+Q/XGLxIfhMo+BItLIl941wzmmqS1m8PDuACy8B5jp5
+         fsWVBninxpvfHIuv74hv2dd8eKDFhHcRaBhifBKn8PKckQWFxRXEgnGwBG4WJRk4UEwk
+         B0SDVSnmAdjwEtAxC3qD9xEO1/pa4LLSRRGzmoenxDkdXIzs17vTut2oRuqzOcshLrwW
+         VYD6djyJSigPf4aNFKj1lbLbIEit+JvZM1f5I53flcBoRTrRX3FptvAv1FS5YXcn4Msc
+         IR8zpNXdqvt7Ix+/PD5o4NEajq43Nljpg2/kfaSP/kqPrrrJMwJ0d4L7YCBWjVL2D4Zz
+         ABDw==
+X-Gm-Message-State: APjAAAWOR9FFWNMSg1VTpZ7k/jF3pjAlbrM7/rJcLUO9MDZFAp6lev69
+        Gsmgxfy3QgC5D5POdylYp9/JIQ==
+X-Google-Smtp-Source: APXvYqwSjB2lSJUmrwYWKxkF+RIJBSW+ihEeJf6PgoRdQKJJx4AIl5TYawapjIRB9SwQPE31glM0jQ==
+X-Received: by 2002:a17:902:82c4:: with SMTP id u4mr10848049plz.196.1565982495558;
+        Fri, 16 Aug 2019 12:08:15 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id e189sm5742514pgc.15.2019.08.16.12.08.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Aug 2019 12:08:14 -0700 (PDT)
+Date:   Fri, 16 Aug 2019 12:08:10 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] bugreport: add tool to generate debugging info
+Message-ID: <20190816190810.GG208753@google.com>
+References: <20190815023418.33407-1-emilyshaffer@google.com>
+ <e6d56d97-99c9-064a-71b5-2b7eb9b71e01@gmail.com>
+ <xmqqy2zu4hrq.fsf@gitster-ct.c.googlers.com>
+ <20190815225231.GD208753@google.com>
+ <xmqqwofe0zgd.fsf@gitster-ct.c.googlers.com>
+ <20190816012519.GF208753@google.com>
+ <xmqqpnl512re.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190815220303.17209-1-newren@gmail.com>
+In-Reply-To: <xmqqpnl512re.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 03:03:03PM -0700, Elijah Newren wrote:
+On Fri, Aug 16, 2019 at 09:41:41AM -0700, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > I think comparing this habit to the .gitignore isn't quite fair -
+> > .gitignore tells me I forgot to add my new command binary to it, when I
+> > run `git status` to see what I need to add to my commit with new
+> > command.
+> 
+> That is why I said that we need to actively work on, if we care
+> about getting quality reports.
+> 
+> I do not think it is unreasonable to expect the build procedure for
+> "git bugreport" to involve scanning in Documentation/config/ to pick
+> up variable names, annotated in such a way that is invisible to
+> AsciiDoc to allow us tell which ones are sensitive and which ones
+> are not.  A test in t/ could even check if a documented
+> configuration variable has such an annotation.  A commit that adds
+> configuration variables without documentiong them does exist, but
+> variables without documentation are (1) bugs, and (2) are not worth
+> serious engineering effort on until they get documented.
 
-> The problematic merge was commit 4a3ed2bec603 ("Merge branch
-> 'nd/checkout-m'", 2019-04-25), but redoing that merge produces no merge
-> conflicts.  This can be seen at the individual file level with the
-> following:
-> [...]
-> I'm not that familiar with the xdl_merge stuff, but this seemed buggy
-> to me.  Or is there something about the content merge that I'm just not
-> understanding and this merge is actually correct?
+Interesting. I think I have an idea for a way to do this, but it ends up
+fairly large; I'll send proof of concept as a follow-on patch to this
+one. Thanks for the suggestions.
 
-Interesting case. If you look at the combined diff, you can see that the
-two hunks are actually separated by a single blank line from the
-original:
-
-  $ git show 4a3ed2bec603
-  [...]
-  diff --cc builtin/checkout.c
-  index 2e72a5e5a9,7cd01f62be..ffa776c6e1
-  --- a/builtin/checkout.c
-  +++ b/builtin/checkout.c
-  @@@ -737,14 -738,13 +738,20 @@@ static int merge_working_tree(const str
-                           */
-                          if (!old_branch_info->commit)
-                                  return 1;
-  +                       old_tree = get_commit_tree(old_branch_info->commit);
-  + 
-  +                       if (repo_index_has_changes(the_repository, old_tree, &sb))
-  +                               die(_("cannot continue with staged changes in "
-  +                                     "the following files:\n%s"), sb.buf);
-  +                       strbuf_release(&sb);
-    
-   +                      if (repo_index_has_changes(the_repository,
-   +                                                 get_commit_tree(old_branch_info->commit),
-   +                                                 &sb))
-   +                              warning(_("staged changes in the following files may be lost: %s"),
-   +                                      sb.buf);
-   +                      strbuf_release(&sb);
-   +
-                          /* Do more real merge */
-    
-                          /*
-
-which is itself an interesting diff artifact. The original had a line at
-the end, splitting the "if (!old_branch...)" conditional from the "Do
-more real merge" comment.  The upper half of the hunk _didn't_ add a new
-line between that old conditional and the new code. But the lower half
-did, but diff reports it as adding the line at the end (which is equally
-valid to adding the line at the top; who knows what the author actually
-did!).
-
-That tidbit aside, in general I'd think a single line would not be
-enough to separate two hunks and consider them independent. At first I
-thought that XDL_MERGE_ZEALOUS was to blame. If I do this:
-
-diff --git a/ll-merge.c b/ll-merge.c
-index 5b8d46aede..ea445dfb55 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -107,7 +107,6 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 	}
- 
- 	memset(&xmp, 0, sizeof(xmp));
--	xmp.level = XDL_MERGE_ZEALOUS;
- 	xmp.favor = opts->variant;
- 	xmp.xpp.flags = opts->xdl_opts;
- 	if (git_xmerge_style >= 0)
-
-and re-run the merge, I get a conflict. But it's not in those lines! The
-diff of the conflicted state is:
-
-diff --cc builtin/checkout.c
-index 2e72a5e5a9,7cd01f62be..0000000000
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@@ -725,9 -725,10 +725,15 @@@ static int merge_working_tree(const str
-  			 */
-  			struct tree *result;
-  			struct tree *work;
-+ 			struct tree *old_tree;
-  			struct merge_options o;
-++<<<<<<< HEAD
-  			struct strbuf sb = STRBUF_INIT;
-  
-++=======
-++			struct strbuf sb = STRBUF_INIT;
-++
-++>>>>>>> 4a3ed2bec603^2
-  			if (!opts->merge)
-  				return 1;
-  
-@@@ -737,14 -738,13 +743,20 @@@
-  			 */
-  			if (!old_branch_info->commit)
-  				return 1;
-+ 			old_tree = get_commit_tree(old_branch_info->commit);
-+ 
-+ 			if (repo_index_has_changes(the_repository, old_tree, &sb))
-+ 				die(_("cannot continue with staged changes in "
-+ 				      "the following files:\n%s"), sb.buf);
-+ 			strbuf_release(&sb);
-  
- +			if (repo_index_has_changes(the_repository,
- +						   get_commit_tree(old_branch_info->commit),
- +						   &sb))
- +				warning(_("staged changes in the following files may be lost: %s"),
- +					sb.buf);
- +			strbuf_release(&sb);
- +
-  			/* Do more real merge */
-  
-  			/*
-
-So it found another conflict (where the zealous resolution did the
-_right_ thing!) but didn't do anything for the hunk in question.
-
-I do wonder if the fact that the separating line a blank one is relevant
-or not (i.e., is it tickling some heuristics in xdiff).
-
--Peff
+ - Emily
