@@ -2,83 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72CE11F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 22:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15FA1F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 22:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727766AbfHPWBa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 18:01:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61132 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727696AbfHPWBa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 18:01:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 598EA7F4B0;
-        Fri, 16 Aug 2019 18:01:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qk5TUMs4DSZcepW2JRGJtNNAeNo=; b=KBktSF
-        0+L8eC60jIi2HS0wirsLaFuoMD1vSQRemBWpcLFllLwh1k1y/jUGYZE3cWc6elz9
-        /9g0Aj4pEsVe05Tt1uArMFf/RD1yZS+rkMyIgh8itlFWnCs43q9R4IyU9aMH2SHm
-        Qog7ljACOufMg/+18sypy0KEnw2YnoIMnV6EY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mz2EbcFhIEqmEiLf/TO1H1TnSLDACGx2
-        zhEK3Khmhdmj8ODly2/O/EO6SBlYfUS0unWv/wYS2P3lp8QmxAXJyEO2mNhRySn/
-        HkiEUFMslx/MXTjrGAWkSyz9f0IgvKXOg9tcQxWX/HNHCt5sBFsO7ED8PPRkkxaM
-        TFU5Oo0+Uwo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 52C417F4AF;
-        Fri, 16 Aug 2019 18:01:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7FBB17F4AE;
-        Fri, 16 Aug 2019 18:01:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org,
+        id S1727758AbfHPWIx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 18:08:53 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:42742 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727716AbfHPWIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 18:08:52 -0400
+Received: by mail-vk1-f195.google.com with SMTP id 130so1387650vkn.9
+        for <git@vger.kernel.org>; Fri, 16 Aug 2019 15:08:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+9pw+q+Zm35QjUaSE6qpC4jou26xHJ4SK9LoHiOJ1HI=;
+        b=ogMi7C/aWroQzVCDTRJoM0nBG2MVtVivTYC2/5cCoOUnCCFCvj7+mkAKlyMTIX/iRr
+         F0mp9CtBsg+WUwxVEZSScLWo3/Euum9fOZF6YGZv5Ve3dlVsE+WuVSRN3rfkW/ORsnMG
+         f9/wFwGt1mgYXCkz7Dw1GHjSRGW7GmxONKBh+sqZTfeaFcKeX3B+IYnXMM9vhoc4spBu
+         vUpQ7oUXj9IK4sgrckr4ESlhj2KKjsuct51VqnCk7l2LuIQz9C/YIuSSFS7CYv6abrSd
+         fBZ0OaFmpbL8s5mkmnObvE5q4V8Qkv6AcLSc0qoqREubU3SbrjM+bbT23tHjV5ms/mAY
+         sN4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+9pw+q+Zm35QjUaSE6qpC4jou26xHJ4SK9LoHiOJ1HI=;
+        b=cFs/DFm9Ooxc4Tfa4U8KQ2vXP5C3Tph+aTCvo6/ByDUhdbGBoSP14iQJImKwLLKO/E
+         m/3AfXIfaZEbzhylMfS7z4V9UM1+7M6VXppFWceRR234BWYTtXsBgxrnrA2qUBvZ78OY
+         hOIcERAjxTgnP1Vvj4azq91hZuEb5nGo3Ebgo9rJlqtKM+OkePy8wDiv4BFbKCua/n8D
+         +WSwjielpqT0eF2IPE/coTiSlIja2bTW1hpho5g5ehprcrAqn43N+N7GBQfbc8Uzngc2
+         3yooj/A8krp55QmuR/rw9YVSGskBDKOb0e2OEGHnm/28Da+oOg7J4+raPQeqb4q7g2UA
+         6stg==
+X-Gm-Message-State: APjAAAUbf+DqZ+gwx9pDcE8GhulI+h3hLbAj1HyUulCYufdButqnaj5D
+        cWeZrRWlQHxJpzx7j39wqQ/47cCDASJZMLbaG3M=
+X-Google-Smtp-Source: APXvYqynVy5GkYj6WOoaojNk/rlQfTWaDTn5OumVozF/7nqBN6FA4z+SujKyEDwkRI7CkS7CqtVyxFqfLJjXrEBjBFw=
+X-Received: by 2002:ac5:c901:: with SMTP id t1mr4680175vkl.27.1565993331672;
+ Fri, 16 Aug 2019 15:08:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190726155258.28561-1-newren@gmail.com> <20190815214053.16594-1-newren@gmail.com>
+ <20190815214053.16594-24-newren@gmail.com> <xmqqd0h428ig.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqd0h428ig.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 16 Aug 2019 15:08:40 -0700
+Message-ID: <CABPp-BFE+EX9HtAqN7CeBNHDTObGVw6nT8=+xxAASPJPXAq2=g@mail.gmail.com>
+Subject: Re: [PATCH v3 23/24] merge-recursive: add sanity checks for relevant merge_options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 12/24] cache-tree: share code between functions writing an index as a tree
-References: <20190726155258.28561-1-newren@gmail.com>
-        <20190815214053.16594-1-newren@gmail.com>
-        <20190815214053.16594-13-newren@gmail.com>
-Date:   Fri, 16 Aug 2019 15:01:24 -0700
-In-Reply-To: <20190815214053.16594-13-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 15 Aug 2019 14:40:41 -0700")
-Message-ID: <xmqqlfvszs5n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 64BBE26C-C071-11E9-B2FA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> write_tree_from_memory() appeared to be a merge-recursive special that
-> basically duplicated write_index_as_tree().  The two have a different
-> signature, but the bigger difference was just that write_index_as_tree()
-> would always unconditionally read the index off of disk instead of
-> working on the current in-memory index.  So:
+On Fri, Aug 16, 2019 at 12:52 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->   * split out common code into write_index_as_tree_internal()
+> Elijah Newren <newren@gmail.com> writes:
 >
->   * rename write_tree_from_memory() to write_inmemory_index_as_tree(),
+> > There are lots of options that callers can set, yet most have a limited
+> > range of valid values, some options are meant for output (e.g.
+> > opt->obuf, which is expected to start empty), and callers are expected
+> > to not set opt->priv.  Add several sanity checks to ensure callers
+> > provide sane values.
+> > ...
+>
+> The change to the struct does not seem to have much with the above
+> rationale.
 
-Somewhat minor, but I find "inmemory_index" hard to see while
-scanning the patch.  Perhaps call it "in_core_index" instead?
+If the only possible values are 0 and 1, I can either add assertions
+to check that at run time, or make the compiler check it for us by
+confining its value to a single bit.  A compile-time check seems more
+robust...
 
-I originally started the above with "Very minor, ...", but as this
-is exposed to the public in a header file, the name matters a bit
-more than that.
+> > diff --git a/merge-recursive.h b/merge-recursive.h
+> > index 978847e672..d201ee80fb 100644
+> > --- a/merge-recursive.h
+> > +++ b/merge-recursive.h
+> > @@ -27,7 +27,7 @@ struct merge_options {
+> >       } detect_directory_renames;
+> >       int rename_limit;
+> >       int rename_score;
+> > -     int show_rename_progress;
+> > +     int show_rename_progress : 1;
+>
+> And a one-bit wide bitfield that is signed is always an iffy idea.
+
+...assuming of course I don't mess it up like this, not noticing that
+it's an int that needs to be changed to an unsigned.  I'll fix this
+up.
+
+But the fact that you flagged the struct change -- would you prefer
+some commit message explanation of how it's related, or was it more
+the case that you felt it was a different kind of change and wanted it
+split out into a separate patch?  I'm suspecting the former but am not
+quite sure.
