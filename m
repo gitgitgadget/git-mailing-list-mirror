@@ -2,153 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E73B1F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 04:20:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 448571F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 09:17:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbfHPEUh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 00:20:37 -0400
-Received: from mout.web.de ([212.227.15.3]:58265 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725945AbfHPEUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 00:20:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1565929226;
-        bh=XdXPbRziPo2M61+niGk6GmNFXTjvdbsZMnTGmrEAHLg=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=P4mNqLcFdKv5iI0izQEdTpecJ3OcsT7Ws6B84RXEAicYD4WXaVrVJT5BT1BBk8uev
-         lnKhbBYimdFT1Xkad7qR2q2QQiE9Iw4bBJGfYlawsm8dYMAYGiFAzd997k7Hn98Ujy
-         DL9sScYnmWn3gm3cOuYoI8p/PsI5LG2rFYcbJzqE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgOUY-1hauT60emM-00Nl7U; Fri, 16
- Aug 2019 06:20:26 +0200
-Date:   Fri, 16 Aug 2019 06:20:25 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
-        "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: suggestion for improved docs on autocrlf
-Message-ID: <20190816042025.oiike3cahyfd5h7z@tb-raspi4>
-References: <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com>
- <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
- <aae529ce1b084b7bbcca3977e6909417@bofa.com>
- <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
- <20190813032452.qg2ufgljm4bjeznr@tb-raspi4>
- <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
- <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4>
- <d4a0500d5f5e4706aef481a33096465a@bofa.com>
- <0244daea3faa4d4aa899cff0dcc62917@bofa.com>
- <bb706de9a42f4e60ba974647e68f8387@bofa.com>
+        id S1726882AbfHPJRX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 05:17:23 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41905 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726842AbfHPJRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 05:17:22 -0400
+Received: by mail-pg1-f195.google.com with SMTP id x15so2649635pgg.8
+        for <git@vger.kernel.org>; Fri, 16 Aug 2019 02:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4vJgHKBimwwzIVCZSpLAq+Y7Kshiqwh08DKvSY0teYI=;
+        b=caiWPnswUe4wA8U89x9J4BsefagXxG5mePDls8lr33lqLzVduu75srtYVaZaCVl+re
+         75esRwnIKSXCu3UbTgdLQVf/Aw0Cl1qvADLZNaRPI2Wd07sx32A4vQvkG2jPcyO94l99
+         wMfT7omsiZ99UhaCaWPRMKwGIdfH5ajF61vtdo6XcQspWEjUyZ2F6yc4Zp/AD71RTpuj
+         yU4EFpbBLKD7XYE1tZw34f8EOUMXriO8THZ1G/HQsRWATzY6AQ1V5qsBsFXy9tSWGypX
+         M0jyKfttAvIJ5ab97LXb4R3sgYihk18HZkwGSUa2FcIV1mb+3Z04kIFEZtDdIF8h09/F
+         MyuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4vJgHKBimwwzIVCZSpLAq+Y7Kshiqwh08DKvSY0teYI=;
+        b=jy1oRzfkg70LGm8OYdGrtmlIeWCmPO7yIsRWcY1U3mtEu/X4S4c6QfMnhpogZMt7uj
+         jGOPCbQsqgjBnPoa8Zj53XYhznpG+1UwzTyQsVxAuE7fRFBdXwdNSIGX0j8c1IUVjeek
+         n5L9rcQtTKNBA5DKqHmBjKcoBDREH9UZdhPvbShG/3mhDt9llDK5M+Z84QHQr2ynj+yk
+         LGKPMQo/DNV2g1QtYpmfNiw0u4ph75/2Wx+AqUeBlOSLuwQbyaOsy+ocdiOYntOjS3Tt
+         BfyXLYvFrCyZl1QyUJGRLeHjCYhyIbbvdUvno2FLm1aFIMliRtYQzveVUvgCytvXEIOL
+         sqzw==
+X-Gm-Message-State: APjAAAULuoTTQbNQ7iex4u6xlES3a1w5YaBDsD6XnlRt8DVIsotY62hw
+        EzHz8mWQ/tIjNNIfKElsYKA=
+X-Google-Smtp-Source: APXvYqxoSlz6P7fzE0eJxYAtNCwXri+3QJJT2sQPdSkocvRNGuwe0bxk7RbjiMuPPXCA6g4g31XZuA==
+X-Received: by 2002:aa7:9e0a:: with SMTP id y10mr9692732pfq.93.1565947042270;
+        Fri, 16 Aug 2019 02:17:22 -0700 (PDT)
+Received: from localhost.localdomain ([2408:84e1:64:421d:25ba:428d:c223:7d41])
+        by smtp.gmail.com with ESMTPSA id h195sm7623427pfe.20.2019.08.16.02.17.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Aug 2019 02:17:21 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Carmine Zaccagnino <carmine@carminezacc.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Christopher Diaz Riveros <chrisadr@gentoo.org>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias Ruester <matthias.ruester@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Philipp=20Wei=C3=9Fmann?= <mail@philipp-weissmann.de>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: [GIT PULL] l10n updates for 2.23.0 round 2
+Date:   Fri, 16 Aug 2019 17:16:36 +0800
+Message-Id: <20190816091636.2846-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc2.26.g2046ddf5e5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bb706de9a42f4e60ba974647e68f8387@bofa.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:GkEOj7Nw38p11PjoSPIvRLndIOMHcBerD3BlIevql5xBNFz/zDj
- xc2EyX0nJ4vHup4MbA63ZWR9zbfsYrnjjbEgbYJk0e3h5dAY9VbCj83TWlhNWqQAkfHaoL/
- UkRMrxJnLJ5rOngBcwtRUZ2zHSa3qpydWG2FNXf0thbg2SX42q0k7vtz2vo8PBg9ad7O4If
- Nr8aanEqhddtjQu757XTg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gL/Ih/czjtE=:+/8+tOnVNAvqm7aCBKOOec
- c/7we7YXQRhyy1ry66Lpx8AruNuzpjxfkwxo03rpCbSKiujbJorHV29xhR1yLwAS15bqXl1h1
- M8eJxejYXvV2i2yILNyhhZAWgrMm3KNutIlibatzTnOGyzu/QhFuhgoFY0x9Q3jvudFe8VVQM
- RD70ILBvScgqD2R6veC+IlxRlkHXiJ/Ga7jnnCY6sPf4CMPKBlkEM5YYygSxA/uUWFMb4MbRD
- kovrLrW9PG5V0t6CyYdfGY/JriBE4MNcSRGTwTPUy2GwWgPr1z4tDMptyIcBMiYfmmuKRzlf8
- X+f2z8WOvPJzncy04FHwKINHgycTCAT4dwkD8EcipHENbV262rLyThsrpyR0lcQ1jArXOVBmS
- PcQFN6SvECR28YMduAyoXhdyVeV46fqLPE3i2eM0/bzV4VfEDlXbL6gPmDizrioc6J2liMbqN
- uYrGxKE5d05V3f6CuaKbiIum6rNIOlq1fCnZ3RG9vOWVfWNmiGO9XPm4QPoZnFb/AFKrfvgdN
- c3DC7yflP+m0mO/QfFedR4rKHhAF5xa4rFRVC0w1fhC2rsFZrNA2pnURaLScbTEJyAAXaB7h1
- YPEo2zbYb4leX9LPZn6dsYgoR7l3RUFE5U5iQnec0VWH4/DjM1oklYX5m2mWTcXHEee4MY457
- 4LndeU/QdDyJoAUl+QzlWq2z4lKVYwSfCYMGBnEF1UxV3AfbR4sutKYvK3Ts15gUoc+XT0oPo
- Z4eAG7Xf3Ms3155SoyLDuV0UnStxXTsvQWeiyiuhga2lTftTtMs7zPD3DCAKCgmN2XXnoBj+T
- u8aVB8cHnYQAq6I0WqbnqJi99cP7IYbdoS0spFI2ff+ZvH6eDo08h5bGJCHBTzcfp5tIjt3C2
- nS0Opuee+3+5wpDIyfO/a2OzeB3lU/6fxKjzFNg+scb/G3YyJ2p4SkdorPG+2tIDeVXJp0YKA
- LGddv91ZZcobaHPO6XWf6+uuqavPvY7pGEymS3mdZCF8ozu09yHogNiEOhQXBMMpo6FvtkMVb
- Qb+2WV+ja6EkRzFTkKGZJbiXQAuOgKZV9WzspxU3H++y7vcWH4+BJ2nqyihqKCILW1LQbLdHH
- t9wpp05rWflgwIEyo4UsIledLbG/A34BJ9pTWNkbu7khII/4DG+Odo/FfSBWcvWxMWcufmZVb
- xRGYF2Qn6idWtTe/LFQOZYqEsGuA7mMjVMzUfK/pclNi4QkQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 15, 2019 at 04:56:05AM +0000, Yagnatinsky, Mark wrote:
-> Okay, first attempt at better phrasing.  This may need more paragraph br=
-eaks, or something.
-> Right now it's very wall-of-texty.  And probably in a style way too diff=
-erent from the rest of the git docs.
-> Also, the syntax is probably closer to markdown than AsciiDoc; sorry.
-> Anyway, enough disclaimers, here's the first draft:
+Hi Junio,
 
-Thanks so much for the suggestion.
+Please pull the following l10n updates for Git 2.23.0.
 
-Feedback and Input like this from Git users are really appreciated.
-I will re-read it a couple of times, and probably find some time
-to make a patch out of it within the next days (or weeks).
+The following changes since commit 2e27de94d485a6da0c8e264c165e55100f1a13a8:
 
->
-> This variable has three valid settings: true, input, and false.
-> (Leaving it unset is equivalent to setting it to "false".)
-> 1. Set it to "true" if you want to have CRLF line endings in your
-> working directory and the repository has LF line endings.
-> Setting it to true is the same as setting the `text` attribute to
-> "auto" on all files and core.eol to "crlf".  In other words: any file
-> that has LF line endings in the repository will have CRLF line
-> endings in your working directory.  If you  commit a new file to
-> the repository, then git will commit it with LF line endings, even
-> if it has CRLF endings in your working  directory.  However, if you
-> edit an existing file that has CRLF line endings in the repository,
-> then git will not convert it to LF line endings when you commit it.
->
-> 2. If you set it to "input" then git will not do any line ending convers=
-ions
-> when checking files out of the repository into your working directory.
-> That is, immediately after a checkout, the line endings in your working
-> directory will match those in the repository.  When committing a new
-> file to the repository, git will commit it with LF line endings, even if=
- it has
-> CRLF line endings in your working directory.  If you edit an existing fi=
-le in
-> the repository, then:
->         * If the file had LF line endings in the repository, it will sti=
-ll have them,
->             no matter what line endings are in the working directory.
->         * If the file has LF line endings in the working directory, then=
- it will be
->             committed with LF line endings , no matter what line endings=
- it used
->             to have in the repository.
-> If neither of the above two cases apply, (in other words, if the file ha=
-s CRLF
-> endings in the repository and in also in the working directory), then it=
- will be
-> committed with CRLF line endings.
->
-> 3. The simplest setting to explain is "false".  In this setting, git wil=
-l not
-> perform any line ending conversion; all files will be checked out into
-> the working directory exactly as they are in the repo, and will be
-> committed to the repo exactly as they are in the working directory.
-> This setting is recommended; if you are tempted to use "input" or "true"
-> instead of "false", then consider looking into committing a .gitattribut=
-es file
-> into your repository instead.  Settings in that file override this confi=
-guration
-> variable, and since the same attributes file is being used by everyone w=
-ho
-> works on the repo, the results end up being more predictable.
->
-> Or something like that.
->
-> ----------------------------------------------------------------------
-> This message, and any attachments, is for the intended recipient(s) only=
-, may contain information that is privileged, confidential and/or propriet=
-ary and subject to important terms and conditions available at http://www.=
-bankofamerica.com/emaildisclaimer.   If you are not the intended recipient=
-, please delete this message.
+  Git 2.23-rc2 (2019-08-09 10:15:39 -0700)
+
+are available in the Git repository at:
+
+  git://github.com/git-l10n/git-po tags/l10n-2.23.0-rnd2
+
+for you to fetch changes up to a6cd2cc485b9ba73934a059245aa9de7e68a2d4c:
+
+  l10n: zh_CN: for git v2.23.0 l10n round 1~2 (2019-08-16 16:59:17 +0800)
+
+----------------------------------------------------------------
+l10n-2.23.0-rnd2
+
+----------------------------------------------------------------
+Alessandro Menti (3):
+      l10n: it.po: update the Italian translation
+      l10n: it.po: update the Italian translation for v2.23.0
+      l10n: it.po: update the Italian localization for v2.23.0 round 2
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (4674t)
+
+Carmine Zaccagnino (1):
+      l10n: it.po: remove an extra space
+
+Christopher Díaz Riveros (1):
+      l10n: es: 2.23.0 round 2
+
+Dimitriy Ryazantcev (1):
+      l10n: ru.po: update Russian translation
+
+Jean-Noël Avila (1):
+      l10n: fr v2.23.0 round 2
+
+Jiang Xin (11):
+      Merge branch 'master' of https://github.com/Softcatala/git-po
+      Merge tag 'v2.23.0-rc0' of git://git.kernel.org/pub/scm/git/git
+      l10n: git.pot: v2.23.0 round 1 (130 new, 35 removed)
+      Merge branch 'update-italian-translation' of github.com:AlessandroMenti/git-po
+      Merge branch 'master' of https://github.com/Softcatala/git-po
+      Merge tag 'v2.23.0-rc2' of git://git.kernel.org/pub/scm/git/git
+      l10n: git.pot: v2.23.0 round 2 (4 new, 6 removed)
+      Merge branch 'next' of https://github.com/ChrisADR/git-po
+      Merge branch 'update-italian-translation' of github.com:AlessandroMenti/git-po
+      Merge branch 'master' of https://github.com/vnwildman/git
+      l10n: zh_CN: for git v2.23.0 l10n round 1~2
+
+Jordi Mas (2):
+      l10n: Update Catalan translation
+      l10n: Update Catalan translation
+
+Matthias Rüster (1):
+      l10n: de.po: Update German translation
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (4676t0f0u)
+
+Philipp Weißmann (1):
+      l10n: de.po: Fix typo in German translation
+
+Trần Ngọc Quân (2):
+      l10n: vi.po (4676t): Updated Vietnamese translation
+      l10n: vi(4674t): Updated translation for Vietnamese
+
+ po/bg.po    |  6418 ++++++++--------
+ po/ca.po    | 11579 +++++++++++++++++------------
+ po/de.po    |  6445 ++++++++--------
+ po/es.po    |  6628 +++++++++--------
+ po/fr.po    |  6333 ++++++++--------
+ po/git.pot  |  6200 ++++++++--------
+ po/it.po    |  8426 +++++++++++----------
+ po/ru.po    | 23280 +++++++++++++++++++++++++++++++++-------------------------
+ po/sv.po    |  6565 +++++++++--------
+ po/vi.po    |  6847 +++++++++--------
+ po/zh_CN.po |  6323 ++++++++--------
+ 11 files changed, 52890 insertions(+), 42154 deletions(-)
+
+--
+Jiang Xin
