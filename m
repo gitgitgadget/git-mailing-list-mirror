@@ -2,152 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 149271F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 19:12:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB0E31F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 19:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727540AbfHPTMv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 15:12:51 -0400
-Received: from ltwemail.bankofamerica.com ([171.161.41.178]:37201 "EHLO
-        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727067AbfHPTMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 15:12:50 -0400
-Received: from lltwa05lxepmx01.bankofamerica.com ([171.180.36.243])
-        by lltwa05ixepmx04.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7GJCmgN013831;
-        Fri, 16 Aug 2019 19:12:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
-        s=corp1903; t=1565982768;
-        bh=yVI1r7GnbPc5mliye6jRzZ6Se/Nv8Jw5I83zyoEtUuo=;
-        h=Date:From:Subject:In-reply-to:To:Cc:Message-id:MIME-version:
-         Content-type:Content-transfer-encoding:References;
-        b=tZcNdLv3FgsB6mWw2l39niUAXu16gLFJBlQSVgGLqR9EMr39GA6h8ihmflyQ3jEB8
-         oYKWEPvFu3itwC+wEdWFvxv+XDz2Ia9/0qPiDloXoWmadFDG2QbOZtgQfZ1EXwgDU0
-         hX+h7GqXMtCEMXDaCJZmRKV0cJfJ5cMSW6XEN02Y=
-Received: from lltwa05bxepmx12.bankofamerica.com (lltwa05bxepmx12.bankofamerica.com [171.206.12.27])
-        by lltwa05lxepmx01.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7GJCL1i029160;
-        Fri, 16 Aug 2019 19:12:48 GMT
-Date:   Fri, 16 Aug 2019 19:12:41 +0000
-From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Subject: RE: suggestion for improved docs on autocrlf
-In-reply-to: <20190816042025.oiike3cahyfd5h7z@tb-raspi4>
-X-Originating-IP: [30.245.13.45]
-To:     =?iso-8859-1?Q?=27Torsten_B=F6gershausen=27?= <tboegi@web.de>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'git@vger.kernel.org'" <git@vger.kernel.org>
-Message-id: <9dd3ed31c654443b8c6715bb1a15a0c0@bofa.com>
-MIME-version: 1.0
-Content-type: text/plain; charset="iso-8859-1"
-Content-language: en-US
-Content-transfer-encoding: quoted-printable
-X-MS-Has-Attach: 
-Accept-Language: en-US
-Thread-topic: suggestion for improved docs on autocrlf
-Thread-index: AdVNISlxEEknYFEsRQ6Yj1wK7ruvjABLB7eAAAekNtAADVdLsP//xzkA//9/qwCABDUnAP/+mJWQgANNx4CAADsrQP//18WAABMUKAD//38MoP/+sX+A//2l2mD/+aztkP/ypH+g/+NhTYD/xgyPIA==
-X-MS-TNEF-Correlator: 
-References: <64c0a35825af4ff3956c6c9a5fb748bb@bofa.com> <20190812171049.ydec3nsmkt2xplhd@tb-raspi4>
- <aae529ce1b084b7bbcca3977e6909417@bofa.com> <xmqqo90u9ric.fsf@gitster-ct.c.googlers.com>
- <20190813032452.qg2ufgljm4bjeznr@tb-raspi4> <a5b84e2b8184414bb416f3aa83361a1c@bofa.com>
- <20190813154033.uhi7w5jgwcj4xan7@tb-raspi4> <d4a0500d5f5e4706aef481a33096465a@bofa.com>
- <0244daea3faa4d4aa899cff0dcc62917@bofa.com> <bb706de9a42f4e60ba974647e68f8387@bofa.com>
- <20190816042025.oiike3cahyfd5h7z@tb-raspi4>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-16_08:,,
- signatures=0
+        id S1727568AbfHPT0T (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 15:26:19 -0400
+Received: from mail-vs1-f53.google.com ([209.85.217.53]:43378 "EHLO
+        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727545AbfHPT0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 15:26:19 -0400
+Received: by mail-vs1-f53.google.com with SMTP id s5so4382318vsi.10
+        for <git@vger.kernel.org>; Fri, 16 Aug 2019 12:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EL46JBReJnaXFr25YCgMGW4NOiY5Ao2wO4gWVxMyCy0=;
+        b=PqWGPBLVZgGTrfUjzHzlObwhGf9L8sQqxRVdFR6ZHFx5wcxrc5Vf96TA094ue+8Hz4
+         xKMCJ3jrYUgp1Xl4e6CVaLWl5aFNWzOrApb2npNmRlunk8sEIVvW9y0iTyWbVJo4pi2a
+         r5t52j7WOeiZun2Ln+KcabDcg3s0Pq4SLyTXdNEfDq3KjJlUBS9GEEaQsvBYm7GM0yRV
+         DOaC95c3bLwv4zztsGix3pXfKENuqX6A2ggltnWWdhwyTMn11/YaSYgxVJvHd8ysU/4e
+         pN+rrDvZUPfyGg5We17bokUKi0Tq2+SskUD5PzJlGprrXodAx6RrQgFSi7T/HsuHqjt0
+         DM3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EL46JBReJnaXFr25YCgMGW4NOiY5Ao2wO4gWVxMyCy0=;
+        b=dQTv/wo3a8lBJ0mnGHhvuPkDaHJul/Zy9kjxH6cn/z7DqsGkcBMzO0u5XwF1G/3f3M
+         oIc2RMGDGUPcnjv/mLKjONrvxA8xiyrJgN8CcOSoHEJG/QyrbUFnfBzWG0ZEF5I5MSqs
+         OWMX2Xee7kk8HyOTo1b/nWibfl/zkMY9KKAqoVD0HUrZOB5LFjyLzb2lSmzdZ3BHgzv9
+         EbIkE3pxjIuCElMmZ70Zyo7tojc6WIEJRDfbeD98nT0O4crsKzS7mVzi+2QbJra/eq7u
+         Rp0rW+pHo6slL1GlJMl3/iWIRqv209azCs6qg9QtS9aSehQ3ULyiTbG2CzqtC1ahtABH
+         LhcA==
+X-Gm-Message-State: APjAAAVDntBowvpvIWNJgfFA12ntQ2JRC89666nQE7vAaDPiY1pdEdhD
+        j+ATEFunNJtQPt9N2Y1+WoDddCabUmftYQm/3I4=
+X-Google-Smtp-Source: APXvYqwDtCuGUJa6nKez8I0UChEASM/xOgTnJ5dqUM66ZSKvQ/E3vWx2T7BJQzdEM04NxfcOhZJWEVqv3HExg3+GkpI=
+X-Received: by 2002:a67:fd13:: with SMTP id f19mr7193257vsr.53.1565983578169;
+ Fri, 16 Aug 2019 12:26:18 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190815220303.17209-1-newren@gmail.com> <xmqqh86h12au.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh86h12au.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 16 Aug 2019 12:26:06 -0700
+Message-ID: <CABPp-BF_PdzOvsgUQUtQRgiQe1qQ_O9Pn2rbpwJ095e7VA2xKA@mail.gmail.com>
+Subject: Re: BUG?: xdl_merge surprisingly does not recognize content conflict
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yay!  Feel free to tweak and/or butcher the wording, I won't be offended :)
-
------Original Message-----
-From: Torsten B=F6gershausen [mailto:tboegi@web.de]=20
-Sent: Friday, August 16, 2019 12:20 AM
-To: Yagnatinsky, Mark <mark.yagnatinsky@bofa.com>
-Cc: 'Junio C Hamano' <gitster@pobox.com>; 'git@vger.kernel.org' <git@vger.k=
-ernel.org>
-Subject: Re: suggestion for improved docs on autocrlf
-
-On Thu, Aug 15, 2019 at 04:56:05AM +0000, Yagnatinsky, Mark wrote:
-> Okay, first attempt at better phrasing.  This may need more paragraph bre=
-aks, or something.
-> Right now it's very wall-of-texty.  And probably in a style way too diffe=
-rent from the rest of the git docs.
-> Also, the syntax is probably closer to markdown than AsciiDoc; sorry.
-> Anyway, enough disclaimers, here's the first draft:
-
-Thanks so much for the suggestion.
-
-Feedback and Input like this from Git users are really appreciated.
-I will re-read it a couple of times, and probably find some time
-to make a patch out of it within the next days (or weeks).
-
+On Fri, Aug 16, 2019 at 9:51 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This variable has three valid settings: true, input, and false.
-> (Leaving it unset is equivalent to setting it to "false".)
-> 1. Set it to "true" if you want to have CRLF line endings in your
-> working directory and the repository has LF line endings.
-> Setting it to true is the same as setting the `text` attribute to
-> "auto" on all files and core.eol to "crlf".  In other words: any file
-> that has LF line endings in the repository will have CRLF line
-> endings in your working directory.  If you  commit a new file to
-> the repository, then git will commit it with LF line endings, even
-> if it has CRLF endings in your working  directory.  However, if you
-> edit an existing file that has CRLF line endings in the repository,
-> then git will not convert it to LF line endings when you commit it.
+> Elijah Newren <newren@gmail.com> writes:
 >
-> 2. If you set it to "input" then git will not do any line ending conversi=
-ons
-> when checking files out of the repository into your working directory.
-> That is, immediately after a checkout, the line endings in your working
-> directory will match those in the repository.  When committing a new
-> file to the repository, git will commit it with LF line endings, even if =
-it has
-> CRLF line endings in your working directory.  If you edit an existing fil=
-e in
-> the repository, then:
->         * If the file had LF line endings in the repository, it will stil=
-l have them,
->             no matter what line endings are in the working directory.
->         * If the file has LF line endings in the working directory, then =
-it will be
->             committed with LF line endings , no matter what line endings =
-it used
->             to have in the repository.
-> If neither of the above two cases apply, (in other words, if the file has=
- CRLF
-> endings in the repository and in also in the working directory), then it =
-will be
-> committed with CRLF line endings.
+> > Now, a manual merge of these files gives no conflicts, which surprises me:
+> >
+> >   $ git merge-file ours base theirs; echo $?
+> >   0
 >
-> 3. The simplest setting to explain is "false".  In this setting, git will=
- not
-> perform any line ending conversion; all files will be checked out into
-> the working directory exactly as they are in the repo, and will be
-> committed to the repo exactly as they are in the working directory.
-> This setting is recommended; if you are tempted to use "input" or "true"
-> instead of "false", then consider looking into committing a .gitattribute=
-s file
-> into your repository instead.  Settings in that file override this config=
-uration
-> variable, and since the same attributes file is being used by everyone who
-> works on the repo, the results end up being more predictable.
+> Indeed that is surprising.
 >
-> Or something like that.
+> > -- 8< --
+> > Subject: checkout: remove duplicate code
+> >
+> > Both commit a7256debd4b6 ("checkout.txt: note about losing staged
+> > changes with --merge", 2019-03-19) from nd/checkout-m-doc-update and
+> > commit 6eff409e8a76 ("checkout: prevent losing staged changes with
+> > --merge", 2019-03-22) from nd/checkout-m were included in git.git
+> > despite the fact that the latter was meant to be v2 of the former.
+> > The merge of these two topics resulted in a redundant chunk of code;
+> > remove it.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
 >
-> ----------------------------------------------------------------------
-> This message, and any attachments, is for the intended recipient(s) only,=
- may contain information that is privileged, confidential and/or proprietar=
-y and subject to important terms and conditions available at http://www.ban=
-kofamerica.com/emaildisclaimer.   If you are not the intended recipient, pl=
-ease delete this message.
+> The latter half that you remove cannot be reached, because the first
+> half would have already died after checking the same condition, so
+> we were doing the same repo-index-has-changes check twice when there
+> is no change; in other words, we were lucky that this accidental dup
+> did not cause any real damange.
 
-----------------------------------------------------------------------
-This message, and any attachments, is for the intended recipient(s) only, m=
-ay contain information that is privileged, confidential and/or proprietary =
-and subject to important terms and conditions available at http://www.banko=
-famerica.com/emaildisclaimer.   If you are not the intended recipient, plea=
-se delete this message.
+Yes, but I am wondering if there are other cases we just don't know
+about yet and for which we did not get lucky.
+
+I dug a little further and found that even the first version of `git
+merge-file` that Dscho added to git in 2006 also exhibited the same
+behavior.  Since he was basically making a minimal replacement for RCS
+merge, I tried out /usr/bin/merge from the rcs package and found it
+has the same behavior.  I then downloaded the oldest tarball on the
+GNU ftp site I could find for rcs (5.7 from June 1995) and found that
+its' merge command had the same behavior.
+
+I'm not sure if that alarms me (not only have all versions of git
+potentially been mis-merging things, but all versions of rcs, cvs, and
+probably any other version control system out there in current use),
+or comforts me ("hey, it's been around for at least 24 years so it
+must only mis-merge things in both rare and innocuous ways or else
+someone would have noticed it decades ago")
+
+I'm leaning towards "It can't be that bad; I'll look at it again later
+if someone else who knows xdiff better hasn't already solved it"
