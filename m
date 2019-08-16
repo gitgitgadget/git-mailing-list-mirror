@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E16011F45A
-	for <e@80x24.org>; Fri, 16 Aug 2019 22:14:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC4D21F45A
+	for <e@80x24.org>; Fri, 16 Aug 2019 22:17:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727763AbfHPWOg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 18:14:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63165 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727709AbfHPWOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 18:14:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8FF78169741;
-        Fri, 16 Aug 2019 18:14:33 -0400 (EDT)
+        id S1727732AbfHPWRY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 18:17:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54638 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727727AbfHPWRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 18:17:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF44A1510C4;
+        Fri, 16 Aug 2019 18:17:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z246XFVFBygJJoQwJy/7TM9UhMA=; b=Fi1Rp7
-        P4vndwmfyHTvSCgNvyj4eJAsY+A+/QCaNuY/doUqoivCTukDNT9tdPj10Tx5pJK2
-        Q0roWwRlPJIPn5NpBl30VJIhENF43od9E0qxFu+ZoIRjqnbR8UI2YUrBArKdMjSl
-        4exUfFWhkjDoZbR7adkPfZlYUNuEgo4t0zTuo=
+        :content-type; s=sasl; bh=p1aNIdvklRfUjN3IbDneBvMT4F0=; b=psppFO
+        FquUABjl5zExAK/NEogzxvBN/yLcIcF/eCUxOaskfL6jhy1GAnZMJYXCrUGKQQv8
+        tnnHnauKOZmxB5cQIvm4vXgCVcycQmvrG1//7qxxsd06z++KFjofuqaZqf7nfqEO
+        gJLmqlBZMHOu9Hn66DgTfWc6XSCEO3blhurFk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FbdiKQI5vVzFI1uv3rsiA6LcorTwtQlz
-        6xJYbfpkBpGr9LMOve3rDa+AWd3S4IYZCQOimX5iwyxvbqjLPCEC6f5CfjPXmjSy
-        vHE4gtoj7pr3A/uiBmm83O7qQ70PLy2tb+ZP6X5gYqVq/mciOHucOA+0vm+nrLEq
-        mm2Z8LXvvsg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 886A2169740;
-        Fri, 16 Aug 2019 18:14:33 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Hf1/5/fzo7XfK8hlDrozdbnIBWC2hij6
+        4ojnK+VOCI8hK9FFXttd2F5EgTHixbqtt8nGjFEwKa9Tg0FAKJf6GJKDClASwT+S
+        nNwx3L8y1llkqkfi0WxEFgf4bHAsHcaB16285Y+/2jjQmnoGZy+TAMgX9Voh8PIN
+        78jAK13g6jU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A719F1510C3;
+        Fri, 16 Aug 2019 18:17:21 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E25F816973E;
-        Fri, 16 Aug 2019 18:14:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0DEED1510C0;
+        Fri, 16 Aug 2019 18:17:20 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 18/24] merge-recursive: consolidate unnecessary fields in merge_options
+Subject: Re: [PATCH v3 21/24] merge-recursive: split internal fields into a separate struct
 References: <20190726155258.28561-1-newren@gmail.com>
         <20190815214053.16594-1-newren@gmail.com>
-        <20190815214053.16594-19-newren@gmail.com>
-Date:   Fri, 16 Aug 2019 15:14:31 -0700
-In-Reply-To: <20190815214053.16594-19-newren@gmail.com> (Elijah Newren's
-        message of "Thu, 15 Aug 2019 14:40:47 -0700")
-Message-ID: <xmqqftm0zrjs.fsf@gitster-ct.c.googlers.com>
+        <20190815214053.16594-22-newren@gmail.com>
+Date:   Fri, 16 Aug 2019 15:17:20 -0700
+In-Reply-To: <20190815214053.16594-22-newren@gmail.com> (Elijah Newren's
+        message of "Thu, 15 Aug 2019 14:40:50 -0700")
+Message-ID: <xmqqblwozrf3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3977D258-C073-11E9-A7E9-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9DAE1A02-C073-11E9-901F-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,93 +63,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
->  static inline int merge_detect_rename(struct merge_options *opt)
->  {
-> -	return opt->merge_detect_rename >= 0 ? opt->merge_detect_rename :
-> -		opt->diff_detect_rename >= 0 ? opt->diff_detect_rename : 1;
-> +	return (opt->detect_renames != -1) ? opt->detect_renames : 1;
->  }
+> merge_options has several internal fields that should not be set or read
+> by external callers.  This just complicates the API.  Move them into an
+> opaque merge_options_internal struct that is defined only in
+> merge-recursive.c and keep these out of merge-recursive.h.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c | 186 ++++++++++++++++++++++++----------------------
+>  merge-recursive.h |  17 ++---
+>  2 files changed, 106 insertions(+), 97 deletions(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index b4334d0506..840b09f1dc 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3617,17 +3627,21 @@ static int merge_start(struct merge_options *opt, struct tree *he> ...
+> -				       opt->needed_rename_limit, 0);
+> +				       opt->priv->needed_rename_limit, 0);
+> +	free(opt->priv);
+> +	opt->priv = NULL;
 
-Every time I see "is it not negative?" (or more generally "is it in
-this range?") converted to "is it not this exact value?", it makes
-me feel uneasy.
-
-> -	opts.rename_limit = opt->merge_rename_limit >= 0 ? opt->merge_rename_limit :
-> -			    opt->diff_rename_limit >= 0 ? opt->diff_rename_limit :
-> -			    1000;
-> +	opts.rename_limit = (opt->rename_limit != -1) ? opt->rename_limit : 1000;
-
-Likewise.  I have no objection to merging two rename-limit to a
-single field (and two detect-renames to a single field).
-
-> @@ -3732,14 +3729,14 @@ static void merge_recursive_config(struct merge_options *opt)
->  {
->  	char *value = NULL;
->  	git_config_get_int("merge.verbosity", &opt->verbosity);
-> -	git_config_get_int("diff.renamelimit", &opt->diff_rename_limit);
-> -	git_config_get_int("merge.renamelimit", &opt->merge_rename_limit);
-> +	git_config_get_int("diff.renamelimit", &opt->rename_limit);
-> +	git_config_get_int("merge.renamelimit", &opt->rename_limit);
-
-Hmph.  If merge.renameLimit is there, that would overwrite whatever
-we get by reading from diff.renameLimit, so the two fields with
-runtime precedence order can easily be replaced by these two calls.
-
-Nice.
-
-If you have "[diff] renamelimit = -2" in your $GIT_DIR/config, would
-we change behaviour due to the earlier conversion that has nothing
-to do with the theme of this step (i.e. consolidate two variables
-into one)?
-
-> @@ -3765,11 +3762,9 @@ void init_merge_options(struct merge_options *opt,
->  	opt->repo = repo;
->  	opt->verbosity = 2;
->  	opt->buffer_output = 1;
-> -	opt->diff_rename_limit = -1;
-> -	opt->merge_rename_limit = -1;
-> +	opt->rename_limit = -1;
->  	opt->renormalize = 0;
-> -	opt->diff_detect_rename = -1;
-> -	opt->merge_detect_rename = -1;
-> +	opt->detect_renames = -1;
->  	opt->detect_directory_renames = MERGE_DIRECTORY_RENAMES_CONFLICT;
->  	merge_recursive_config(opt);
->  	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
-> @@ -3821,16 +3816,16 @@ int parse_merge_opt(struct merge_options *opt, const char *s)
->  	else if (!strcmp(s, "no-renormalize"))
->  		opt->renormalize = 0;
->  	else if (!strcmp(s, "no-renames"))
-> -		opt->merge_detect_rename = 0;
-> +		opt->detect_renames = 0;
->  	else if (!strcmp(s, "find-renames")) {
-> -		opt->merge_detect_rename = 1;
-> +		opt->detect_renames = 1;
->  		opt->rename_score = 0;
->  	}
->  	else if (skip_prefix(s, "find-renames=", &arg) ||
->  		 skip_prefix(s, "rename-threshold=", &arg)) {
->  		if ((opt->rename_score = parse_rename_score(&arg)) == -1 || *arg != 0)
->  			return -1;
-> -		opt->merge_detect_rename = 1;
-> +		opt->detect_renames = 1;
->  	}
->  	/*
->  	 * Please update $__git_merge_strategy_options in
-> diff --git a/merge-recursive.h b/merge-recursive.h
-> index 0fdae904dd..f4bdfbc897 100644
-> --- a/merge-recursive.h
-> +++ b/merge-recursive.h
-> @@ -27,10 +27,8 @@ struct merge_options {
->  		MERGE_DIRECTORY_RENAMES_CONFLICT = 1,
->  		MERGE_DIRECTORY_RENAMES_TRUE = 2
->  	} detect_directory_renames;
-> -	int diff_detect_rename;
-> -	int merge_detect_rename;
-> -	int diff_rename_limit;
-> -	int merge_rename_limit;
-> +	int detect_renames;
-> +	int rename_limit;
->  	int rename_score;
->  	int needed_rename_limit;
->  	int show_rename_progress;
+This gets hit by Cocci.
