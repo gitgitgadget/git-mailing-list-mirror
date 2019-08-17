@@ -1,77 +1,84 @@
-From: Kasey Bloome <partners@informer.com>
-Subject: GIT 2.6.4 is listed on Software Informer
-Date: Wed, 16 Dec 2015 05:04:35 -0500
-Message-ID: <6890d1c9b6abb09c985a5f6f58f10253@software.informer.com>
-Reply-To: Kasey Bloome <partners@informer.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 16 11:04:48 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a98wv-0006Ku-Ci
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Dec 2015 11:04:46 +0100
+Return-Path: <git-owner@vger.kernel.org>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
+X-Spam-Level: 
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id F204F1F45A
+	for <e@80x24.org>; Sat, 17 Aug 2019 09:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933985AbbLPKEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Dec 2015 05:04:39 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:33800 "EHLO
-	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932888AbbLPKEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Dec 2015 05:04:37 -0500
-Received: by mail-qk0-f169.google.com with SMTP id p187so55679151qkd.1
-        for <git@vger.kernel.org>; Wed, 16 Dec 2015 02:04:37 -0800 (PST)
+        id S1725934AbfHQJhG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Aug 2019 05:37:06 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:39390 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725832AbfHQJhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Aug 2019 05:37:05 -0400
+Received: by mail-oi1-f196.google.com with SMTP id 16so6561509oiq.6
+        for <git@vger.kernel.org>; Sat, 17 Aug 2019 02:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=informer-com.20150623.gappssmtp.com; s=20150623;
         h=sender:date:to:from:reply-to:subject:message-id:mime-version
-         :content-transfer-encoding:content-type;
-        bh=/BYjIDEYzUXehi/k0MNtZ3a/AgfYMtkgGhkI788647Q=;
-        b=MdbQj2zsZEBXuJoj+LC21LKQiV6FVvmFmm1U6ojYvX0Z9O0Kid4yin57c1bGRVEP3L
-         Gi34Hd4w8TpN3dw/gSRJJlWYz/M6+HAXMGu94PbjfQMt9RSGeu7rf4Se577Mxsnw6BxH
-         hvnyIvnzAQGn1deDcMF87AotVBStAjggkIKIr9KHiNrlpBtLPMgLmUMKqStuA7fB5L++
-         S11isoYkrOJcCEmwTRm8Gk4JxRyUD5Ex4o+BEAnonKRNt47E08gRQNjJCpntQuzLRxIg
-         28KJzWw4BydbyloAaK0cK8UWWp0Z4Wqz6t0f6UdNwmBqd70aMVdDD3YWEilfApxe8Exg
-         5GSQ==
+         :content-transfer-encoding;
+        bh=ac3Y7gP8uX4+aeNfk4Xl5TS1u6cKAruZgWqX1O6syaU=;
+        b=wfejWEWFukEAvDcrc2sOrbg/xBG285RCJ6pUAleEo7XzCVqsjwdXQtRzdvMqb5vJWa
+         OFT3ldlCxbv8zaAMFvfRnGiwh1IryAp7K+qkEUwjwpZL3aKU0CKGtaiQ01iLeChfo264
+         +pW/SF2lUg48EIML/KsB6Fp8qxFXv3vNd3smlPYqn1WlfiFa7jQBChpsHGLMww9dBMeM
+         mKHufeud7SPBsq1BoqTmq3keG0eZAHhVYMOZYDZmBtzY0hX+TLc9ZSi2FTVD0Z6OU0ZK
+         orccIh8Kd7PB5wK69L/Sj8hDai0gK+0f4k2w9FflOgQ0ciSCCnq3OBJpxINeaYw25gzl
+         h5aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
+        d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:to:from:reply-to:subject:message-id
-         :mime-version:content-transfer-encoding:content-type;
-        bh=/BYjIDEYzUXehi/k0MNtZ3a/AgfYMtkgGhkI788647Q=;
-        b=XXnS2vukN5ITQSkSykZ4OmIYhTLkOft/J8KCHtuPaAJoDZqeGn7G1pEAhsMMCJqCe1
-         CP/p0FP4mHOZBUYu/bk+gcPXZVL3MkDfzicVqcxvEoLEP0WHfZVyC3jn+gAUhmROpIcr
-         z7lLfncBwCFW0T2r010dcuwfpzDXHzAouj1iflD34cKgid8hQEIXzUJs/F9QcZAXlXdh
-         PhdIKcnEwW/yJ4AYtk0kGb76zK4Dd7IyvxqEpFSPO1SJxtuzFo3lFbQAU257spXCnLu/
-         TWrurDhkMLSRi/ugeKRtIOlMuoWAUy8G3ZOlIOHfrbWlyTXtU/0hU9tQwM5NSLU91Cg7
-         CqaA==
-X-Gm-Message-State: ALoCoQlMdn1iJuak4Pug4h+9gtF+PVSy0hTnkQLMumMi5gcx2GC/GKzvGqJRjDik6lFDugjccYVZgb4McsokNITosqpJFLjHxQ==
-X-Received: by 10.55.81.3 with SMTP id f3mr58149937qkb.35.1450260276779;
-        Wed, 16 Dec 2015 02:04:36 -0800 (PST)
-Received: from software.informer.com (27.28.24ae.ip4.static.sl-reverse.com. [174.36.40.39])
-        by smtp.gmail.com with ESMTPSA id e127sm2297475qkb.34.2015.12.16.02.04.35
+         :mime-version:content-transfer-encoding;
+        bh=ac3Y7gP8uX4+aeNfk4Xl5TS1u6cKAruZgWqX1O6syaU=;
+        b=WMwCyyOKEwf4Tj7tfBlfJIv49on1YiEclL2ULA19mwn7Slzbo2CH8kzLsBrXZ116DP
+         +xTLwe0K1o5yt17oQ8GCoN+8GHkZoLSfCQtoisMgkLvHL5wVUL16EUVXtxJZK97QbRbn
+         9iyyDGyYaJMe217p59hzpvxj2ixexObpCadO1vNA9ImwKu1qQXRTQe0sQ+aMvph4WdNP
+         ncbIrWYKlYTRMIQ3KRj2txvti3S97NZ/fCXare41L2tyJfZ6EZ09rZ9KmSsGYkyYdhvP
+         PsJu+lhx0NypAWgWwL0k2YJ3mxX9a4vqax1fXTWL7jThp5b1OhIXK75v7Gw4Icskbj6g
+         oudQ==
+X-Gm-Message-State: APjAAAVbJjNe75iqRbb6koVw7vV9W4UqG2g/vzQSPxA40nD0i1hz92Sf
+        i10b/XGaKfq7OHaQ3CPqOeeghj4FmsQ=
+X-Google-Smtp-Source: APXvYqxibDFJOvozOfg3Au2MmO1HVjXaneV7wLh1fi0Tkfmwk96w2cmVVUL/Oxl9jDXVU7uSLakqBQ==
+X-Received: by 2002:aca:ec87:: with SMTP id k129mr4167091oih.80.1566034624376;
+        Sat, 17 Aug 2019 02:37:04 -0700 (PDT)
+Received: from macdownload.informer.com ([208.88.224.100])
+        by smtp.gmail.com with ESMTPSA id v1sm3022393ota.60.2019.08.17.02.37.01
         for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Dec 2015 02:04:35 -0800 (PST)
-X-Priority: 3
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 17 Aug 2019 02:37:02 -0700 (PDT)
+Date:   Sat, 17 Aug 2019 05:37:01 -0400
+To:     git@vger.kernel.org
+From:   Elena Trubaeva <partners@informer.com>
+Reply-to: Elena Trubaeva <partners@informer.com>
+Subject: Git 2.22.0 is listed on Mac Informer
+Message-ID: <207a5908c2798a7911508feef3316737@macdownload.informer.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282547>
 
 Good day!
 
-Software.informer.com would like to inform you that your product GIT 2.6.4 has been reviewed by our editors http://git.software.informer.com/.
+ would like to inform you that your product Git 2.22.0 is now listed on our web site https://macdownload.informer.com/git3/.
 
-We would be grateful if you place our logo with a link to our review on your website. On our part, we can offer featuring your program in our Today's Highlight block. This block is shown in the rotator at the top of the main page and also on every page of our website in the upper right corner.
+We would be grateful if you place our logo with a link to our review on your website. On our part, we can offer featuring your application in our Today's Highlight block. This block is shown in the rotator at the top of the main page and also on every page of our website in the upper left corner.
 
-We also offer you to take advantage of our free storage by hosting your installation package on our servers and listing us as one of the mirror downloads for your application. There is a selection of predesigned buttons available to fit the look of your website.
+You are welcome to order a free video tutorial for your application as well. Once it's finished, you can add it to your website.
+
+We also offer you to take advantage of our free storage by hosting your installation package on our servers and listing us as one of the mirror downloads for your application.
 
 Please let me know if you're interested in any of these offers.
 
-We are on the list of the world's 500 most visited websites with over 700,000 unique visitors every day, so this could get your application some extra exposure.
+We are on the list of the world's 1000 most visited websites, so this could get your application some extra exposure.
 
 Kind regards,
-Kasey Bloome
+Elena Trubaeva
+
+
