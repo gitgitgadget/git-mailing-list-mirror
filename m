@@ -8,59 +8,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0879A1F461
-	for <e@80x24.org>; Sat, 17 Aug 2019 18:42:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73CBD1F461
+	for <e@80x24.org>; Sat, 17 Aug 2019 18:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbfHQSmI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Aug 2019 14:42:08 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37944 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbfHQSmF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Aug 2019 14:42:05 -0400
-Received: by mail-pf1-f196.google.com with SMTP id o70so4812470pfg.5
-        for <git@vger.kernel.org>; Sat, 17 Aug 2019 11:42:05 -0700 (PDT)
+        id S1726229AbfHQSmH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Aug 2019 14:42:07 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44514 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726198AbfHQSmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Aug 2019 14:42:06 -0400
+Received: by mail-pg1-f193.google.com with SMTP id i18so4577633pgl.11
+        for <git@vger.kernel.org>; Sat, 17 Aug 2019 11:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZgRaETQ/I0RilKLbq76Nx+w+n9xogRK5VVIrBGj94JE=;
-        b=pNA2xJ8WNaoi4LD49MzSOsDZ+x/OEexVDP0sLPKhpTEUtJ6AAE4+6Qi14GhC0yxKnQ
-         AT1QEZfVCIZXt8zvwJv4xMtHuyL5Fc7oe8KecGrLoQdaBXkkTb2wapQl+J+M/kc+HwtY
-         PFYto+TOYDn8UBqendwW90g/x8AXAs92lisftbkw1EY6H4dXyd45XxvRrEThUSP6OHeC
-         uS3SZy3Hd/pW1XQPVZ9Aku7DhHS9SEt5sEqEWZ15jd58DpbEy4E79ztziXWUhlW8vU1z
-         mAi3M9aejOxLhEry4QxT9lILSHVeQjPjeLWkbqTqS/oC8C4gzti25aA0ZobyyIIWZOy5
-         BEgA==
+        bh=DbKESkiGpf9yu8BtF3RE9rIrceYn5i9Y2JdbozNrRyE=;
+        b=tluUkgl+dyVmI/5BAX18tLsvSLPCuQq367OEB7KhBHhgVrSlwRoCr1gY+yLmSh2vcP
+         ecyaIsuytmUkXKvqJ1kGunY241mUFcni8ngCivcyd7JKYsFiceFzAU4+ZLyLhRw0s0X+
+         KcIzpiKmHN6MJER5sckowNQ5bnjIfGK5u3XvZw94KT2nP/7oj7mvicP9pthqRfUFcE/s
+         rAEdXGXhUWdUZwKnA0xpictz+/xOLy6AwYlHzz7J8QXHfR+SSJE/JNOmqi8SUadEwDrd
+         riB+5ryDXBDg/chSZinTQ1nMMgrxfMK5BOO+IRVqEc0GZhS17ouzJesKKqCXQk0Vz77S
+         C+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZgRaETQ/I0RilKLbq76Nx+w+n9xogRK5VVIrBGj94JE=;
-        b=BjejBc8gNWPspTzn1Tplz/4qy/4oqGD8GDocPCVQHPbI7/rn2oFzRErKAIe+drvYWc
-         JeFAAJkrpdiCxc3/U7yJ2yfRBAUeOh9Aqa45y6+vvWGo0wpu3E19zCNOVAAIszBQGpJt
-         DJrnSVfrzaQhkumyd4Gp18h5XiPCmPQQMpvdxlvc3Xool1cKdOErNblh58gSx7GJr/8e
-         Q8rXoPPUpeXXQd7DHlLr/3Af6jqrdawKtS8H1c1EFysUlLCNukxzRU/31BZb7iKR3n75
-         CN2typ8OF6oINMjtNLTvJTxY+cufkD8FRkXqZ4lK20kIKZGUrG0a6QD7eBPuEN+kmsrI
-         zjNQ==
-X-Gm-Message-State: APjAAAVHw1MLOLmtOiwQ0avvCTwenejjkRIBvhHm/D8nYywNQ/OCcvN1
-        /1uDWNwnHsWi57X7t2jPx3vokFNM
-X-Google-Smtp-Source: APXvYqy7dc266/0Uj2JJY2AcIdtys3RDFuL8AM35O8YHUNlg/MtgsIq+73evU1H92tROLwWyhuxYsg==
-X-Received: by 2002:a62:83c9:: with SMTP id h192mr16322134pfe.57.1566067324537;
-        Sat, 17 Aug 2019 11:42:04 -0700 (PDT)
+        bh=DbKESkiGpf9yu8BtF3RE9rIrceYn5i9Y2JdbozNrRyE=;
+        b=HnkGLQwgxgo+dZzJ40X5V6zCQ3jf9vGWUcQbX9lYOreogtbhFYQCg72jiGt5RZ0ieF
+         62Ug8poYYJAlxrrUiDPoyTWmvvyJldVdggMF+BFpqYrMofm+zWym+xjHarsA4EGgS9+D
+         yw22lRlvcC/NF9ce7Ukip2FnidwSq9kW6hhKxaegdLENWYf1eycIShrcPRXVYwsbQxOu
+         6U18jC55oW/hNjrD4bhNX91VsBUqzWX4HfuWU1oB1Ef66cROYxlO+vSTVIaahK8347Q3
+         /OwvCtPf4WCE+NbKHfXjuLz5asUrmFNgwh6eSZb6VcpT7K5KKtJQz1848dn8Gr4Fy2sX
+         j8tw==
+X-Gm-Message-State: APjAAAW834Ly/RzzHOPxWOBR8gzYx+ifktAuOoNRyhwoCY1Uo3lSwiQn
+        +gjgh9OrpoiVtzvTcXMvTRstrywp
+X-Google-Smtp-Source: APXvYqxZvmbyHmhFmN5kJ3X6ca8MfSLY5e5aFe09+MBxzPGdWpU+u6qhe/8pURtA6+ClPkAle+KRwQ==
+X-Received: by 2002:a65:6458:: with SMTP id s24mr12820482pgv.158.1566067325438;
+        Sat, 17 Aug 2019 11:42:05 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id j15sm9990422pfr.146.2019.08.17.11.42.03
+        by smtp.gmail.com with ESMTPSA id j15sm9990422pfr.146.2019.08.17.11.42.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 17 Aug 2019 11:42:03 -0700 (PDT)
+        Sat, 17 Aug 2019 11:42:04 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 05/24] merge-recursive: introduce an enum for detect_directory_renames values
-Date:   Sat, 17 Aug 2019 11:41:25 -0700
-Message-Id: <20190817184144.32179-6-newren@gmail.com>
+Subject: [PATCH v4 06/24] merge-recursive: future-proof update_file_flags() against memory leaks
+Date:   Sat, 17 Aug 2019 11:41:26 -0700
+Message-Id: <20190817184144.32179-7-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.28.g5f89f15d7b.dirty
 In-Reply-To: <20190817184144.32179-1-newren@gmail.com>
 References: <20190815214053.16594-1-newren@gmail.com>
@@ -72,124 +71,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+There is a 'free_buf' label to which all but one of the error paths in
+update_file_flags() jump; that error case involves a NULL buf and is
+thus not a memory leak.  However, make that error case execute the same
+deallocation code anyway so that if anyone adds any additional memory
+allocations or deallocations, then all error paths correctly deallocate
+resources.
 
-Improve code readability by introducing an enum to replace the
-not-quite-boolean values taken on by detect_directory_renames.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/am.c      |  2 +-
- merge-recursive.c | 24 +++++++++++++++---------
- merge-recursive.h |  6 +++++-
- 3 files changed, 21 insertions(+), 11 deletions(-)
+ merge-recursive.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 1aea657a7f..037e828efe 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1538,7 +1538,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	o.branch1 = "HEAD";
- 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
- 	o.branch2 = their_tree_name;
--	o.detect_directory_renames = 0;
-+	o.detect_directory_renames = MERGE_DIRECTORY_RENAMES_NONE;
- 
- 	if (state->quiet)
- 		o.verbosity = 0;
 diff --git a/merge-recursive.c b/merge-recursive.c
-index e6b84db2ef..9622781612 100644
+index 9622781612..1d4df952e5 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1375,7 +1375,8 @@ static int handle_rename_via_dir(struct merge_options *opt,
- 	const struct rename *ren = ci->ren1;
- 	const struct diff_filespec *dest = ren->pair->two;
- 	char *file_path = dest->path;
--	int mark_conflicted = (opt->detect_directory_renames == 1);
-+	int mark_conflicted = (opt->detect_directory_renames ==
-+			       MERGE_DIRECTORY_RENAMES_CONFLICT);
- 	assert(ren->dir_rename_original_dest);
+@@ -934,9 +934,11 @@ static int update_file_flags(struct merge_options *opt,
+ 		}
  
- 	if (!opt->call_depth && would_lose_untracked(opt, dest->path)) {
-@@ -2860,8 +2861,9 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	head_pairs = get_diffpairs(opt, common, head);
- 	merge_pairs = get_diffpairs(opt, common, merge);
- 
--	if ((opt->detect_directory_renames == 2) ||
--	    (opt->detect_directory_renames == 1 && !opt->call_depth)) {
-+	if ((opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE) ||
-+	    (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT &&
-+	     !opt->call_depth)) {
- 		dir_re_head = get_directory_renames(head_pairs);
- 		dir_re_merge = get_directory_renames(merge_pairs);
- 
-@@ -3119,7 +3121,8 @@ static int handle_rename_normal(struct merge_options *opt,
- 	clean = handle_content_merge(&mfi, opt, path, was_dirty(opt, path),
- 				     o, a, b, ci);
- 
--	if (clean && opt->detect_directory_renames == 1 &&
-+	if (clean &&
-+	    opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT &&
- 	    ren->dir_rename_original_dest) {
- 		if (update_stages(opt, path,
- 				  NULL,
-@@ -3164,12 +3167,12 @@ static int warn_about_dir_renamed_entries(struct merge_options *opt,
- 		return clean;
- 
- 	/* Sanity checks */
--	assert(opt->detect_directory_renames > 0);
-+	assert(opt->detect_directory_renames > MERGE_DIRECTORY_RENAMES_NONE);
- 	assert(ren->dir_rename_original_type == 'A' ||
- 	       ren->dir_rename_original_type == 'R');
- 
- 	/* Check whether to treat directory renames as a conflict */
--	clean = (opt->detect_directory_renames == 2);
-+	clean = (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE);
- 
- 	is_add = (ren->dir_rename_original_type == 'A');
- 	if (ren->dir_rename_original_type == 'A' && clean) {
-@@ -3679,9 +3682,12 @@ static void merge_recursive_config(struct merge_options *opt)
- 	if (!git_config_get_string("merge.directoryrenames", &value)) {
- 		int boolval = git_parse_maybe_bool(value);
- 		if (0 <= boolval) {
--			opt->detect_directory_renames = boolval ? 2 : 0;
-+			opt->detect_directory_renames = boolval ?
-+				MERGE_DIRECTORY_RENAMES_TRUE :
-+				MERGE_DIRECTORY_RENAMES_NONE;
- 		} else if (!strcasecmp(value, "conflict")) {
--			opt->detect_directory_renames = 1;
-+			opt->detect_directory_renames =
-+				MERGE_DIRECTORY_RENAMES_CONFLICT;
- 		} /* avoid erroring on values from future versions of git */
- 		free(value);
- 	}
-@@ -3701,7 +3707,7 @@ void init_merge_options(struct merge_options *opt,
- 	opt->renormalize = 0;
- 	opt->diff_detect_rename = -1;
- 	opt->merge_detect_rename = -1;
--	opt->detect_directory_renames = 1;
-+	opt->detect_directory_renames = MERGE_DIRECTORY_RENAMES_CONFLICT;
- 	merge_recursive_config(opt);
- 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
- 	if (merge_verbosity)
-diff --git a/merge-recursive.h b/merge-recursive.h
-index c2b7bb65c6..f1b6ef38ae 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -22,7 +22,11 @@ struct merge_options {
- 	unsigned renormalize : 1;
- 	long xdl_opts;
- 	int verbosity;
--	int detect_directory_renames;
-+	enum {
-+		MERGE_DIRECTORY_RENAMES_NONE = 0,
-+		MERGE_DIRECTORY_RENAMES_CONFLICT = 1,
-+		MERGE_DIRECTORY_RENAMES_TRUE = 2
-+	} detect_directory_renames;
- 	int diff_detect_rename;
- 	int merge_detect_rename;
- 	int diff_rename_limit;
+ 		buf = read_object_file(&contents->oid, &type, &size);
+-		if (!buf)
+-			return err(opt, _("cannot read object %s '%s'"),
+-				   oid_to_hex(&contents->oid), path);
++		if (!buf) {
++			ret = err(opt, _("cannot read object %s '%s'"),
++				  oid_to_hex(&contents->oid), path);
++			goto free_buf;
++		}
+ 		if (type != OBJ_BLOB) {
+ 			ret = err(opt, _("blob expected for %s '%s'"),
+ 				  oid_to_hex(&contents->oid), path);
 -- 
 2.23.0.rc2.28.g5f89f15d7b.dirty
 
