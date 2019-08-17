@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 387F11F461
-	for <e@80x24.org>; Sat, 17 Aug 2019 18:42:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E90E1F461
+	for <e@80x24.org>; Sat, 17 Aug 2019 18:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726389AbfHQSmS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Aug 2019 14:42:18 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40255 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbfHQSmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Aug 2019 14:42:07 -0400
-Received: by mail-pf1-f194.google.com with SMTP id w16so4812124pfn.7
-        for <git@vger.kernel.org>; Sat, 17 Aug 2019 11:42:07 -0700 (PDT)
+        id S1726435AbfHQSmY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Aug 2019 14:42:24 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35759 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfHQSmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Aug 2019 14:42:17 -0400
+Received: by mail-pf1-f195.google.com with SMTP id d85so4828227pfd.2
+        for <git@vger.kernel.org>; Sat, 17 Aug 2019 11:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WzwAiJvrVxNndBuz9+KfGMQSYkmf1xJJYbzB7FpP28o=;
-        b=C++iokm0DkDchkTd5D5SWervDjd+Ch2RjodHZKwx92YLvRUNsV2sfHZAh9G59nyZUf
-         96WWRzab4cEGBKoiLBPwajKXG2XDlW5efkCrUVoKcHdHqPCg/fy2kqWwwNCAAMlcJwcF
-         3Z3h1bWLUbsx0t4yt918ostBnX3Pm2/j92LVZsR4qsBKaFygMJV0qoBUf7XJApoNGSTg
-         bwoUIIiFZY5JlOjX2K1GmIlKtORH3+hig3QCErFycSmzmOyBtSrUPJGuP21IaFHI7Vn1
-         zmqSBAoCNzoFRogXn/dhqM/RV5ife3X7mqnHVSNHeKz4iKZL1riyBwQZGta41dIKiLkn
-         unZg==
+        bh=UKPxK25y+eu7hDqNSk9jPOQDjCr6wx6XuXJ7Tm4Uw/E=;
+        b=LCsUnBcxNobjbELxOS4hHxlF7LhX11K3aXZVuMAmqqu1br4Hn/n5s2chzo5GBcLyaP
+         C5Qwv32n84OjY1/STcE1FzCiuzlIbQ0fyoCNaj9NJrCNyy4O6Nc9fxHCaaU6Rim/xU2G
+         UjDI5Z81b4gBmKTJbGZBJLGoFdnX6LrJHpnhYWBMEVaXan6x3hQRlmy60liTTgzqAlym
+         aPntTTdfQPBs5vtg1KPq1ak+jaowZb1hVAp5UoqK0lhzNrNqinYdK3wwf7fHtnFlnRVB
+         o5+A55Aa31t4gkDt6D2RoUmS0hR/xfJKFuRmIYK7nggU7kO0Wk4lvpCezPRnUKp2P/Gv
+         jZFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WzwAiJvrVxNndBuz9+KfGMQSYkmf1xJJYbzB7FpP28o=;
-        b=UoL5xrvJcN/qr0R56uBF6RCD5PDJxTUbihKlvjuAADPQOj/LwYoROwtdvFikUJmyTP
-         JP3lisuxENcTidckmbWk6M4pH/VHKs+TQTJtu5a3dr2Y4nRCwlrTLN35fynCRaNd/6Ns
-         fPpXBTm6rr8D077ydv01drlKfU3KYpV5PmHacuPeO2b9W0Z/XS1zvD4v5DAwEyDX712j
-         E8LhfM3yImsn9BWdlZdX2G1g7eF3kwirOUoozgF4/kf0fDV277vr9WkyG2qlNd8vqbQx
-         1XzVw5AuiFMqjS3beOCoAYTZMCexPpGEmdHxeGYrJTIEii1qrvZwd5CV95eV5psMcdN/
-         4EvQ==
-X-Gm-Message-State: APjAAAWJPDn1lEKfFSxPBd3jvei+5BSmvgiZ71zbLKzYqHv2cdzCf8M7
-        Vq628rm2pYLMLgDS4fc9E/AcAFGV
-X-Google-Smtp-Source: APXvYqzO85GdaA0LN1uv95hlHb2zZFs0KtDh8aVUCxxENk09kJhG5yhvunL6Tkxb8IpgoA0iF8geNg==
-X-Received: by 2002:a65:50c8:: with SMTP id s8mr12883658pgp.339.1566067326577;
-        Sat, 17 Aug 2019 11:42:06 -0700 (PDT)
+        bh=UKPxK25y+eu7hDqNSk9jPOQDjCr6wx6XuXJ7Tm4Uw/E=;
+        b=JwUr5j2IE/X1hRqqo6SG4yJ37YD33igOglqfTwBhE1pYQ+iDJlIe+bB1z/+wqndsts
+         w20TP9aEVErDymUm76f+6pV8DUaE//1evXCvLjQTnvYYj/UVs+2RfXvSTjM7VgepwCMI
+         nRwCbdf1SmivNyjZZ0kwwASWyJtKy0Yc7+CVkomXtdZmpoOr5Cz26+G4w5P6p+Ao/djY
+         m790UbelC90NJYLoSnMuRSMN56tON2eYat+78C+3kSAKLk1sD8G3JmynfB3s32ciI+dY
+         cn1dIs7SGMUm8cjKQgvlwqIQgDM5IB3pf3WjUpeYaE9UyBZS4WTDcCIn/wR5F8TkR1FK
+         wQwg==
+X-Gm-Message-State: APjAAAUpxpznPMF2D2BT5W39lQ4wdAXwJMZweMJTOildTL16TGt5kQk9
+        q/cTcWt4C6lDgSaw+r2He1MgSbzv
+X-Google-Smtp-Source: APXvYqxo/xuUbCNQqnEbY1BoLpkdh3iK0YFKUcgCTK/UJfqD07nALOP3MUGsSqUpDz0BJn8TUfhJeA==
+X-Received: by 2002:a17:90a:b395:: with SMTP id e21mr13057606pjr.76.1566067336442;
+        Sat, 17 Aug 2019 11:42:16 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id j15sm9990422pfr.146.2019.08.17.11.42.05
+        by smtp.gmail.com with ESMTPSA id j15sm9990422pfr.146.2019.08.17.11.42.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 17 Aug 2019 11:42:05 -0700 (PDT)
+        Sat, 17 Aug 2019 11:42:15 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 07/24] merge-recursive: remove another implicit dependency on the_repository
-Date:   Sat, 17 Aug 2019 11:41:27 -0700
-Message-Id: <20190817184144.32179-8-newren@gmail.com>
+Subject: [PATCH v4 16/24] merge-recursive: rename merge_options argument to opt in header
+Date:   Sat, 17 Aug 2019 11:41:36 -0700
+Message-Id: <20190817184144.32179-17-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.28.g5f89f15d7b.dirty
 In-Reply-To: <20190817184144.32179-1-newren@gmail.com>
 References: <20190815214053.16594-1-newren@gmail.com>
@@ -71,36 +71,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit d7cf3a96e9a0 ("merge-recursive.c: remove implicit dependency on
-the_repository", 2019-01-12) and follow-ups like commit 34e7771bc644
-("Use the right 'struct repository' instead of the_repository",
-2019-06-27), removed most implicit uses of the_repository.  Convert
-calls to get_commit_tree() to instead use repo_get_commit_tree() to get
-rid of another.
+In commit 259ccb6cc324 ("merge-recursive: rename merge_options argument
+from 'o' to 'opt'", 2019-04-05), I renamed a bunch of function
+arguments in merge-recursive.c, but forgot to make that same change to
+merge-recursive.h.  Make the two match.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ merge-recursive.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1d4df952e5..88a33e6e72 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3587,8 +3587,11 @@ int merge_recursive(struct merge_options *opt,
- 		repo_read_index(opt->repo);
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 6f351098a5..2cb3844ad9 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -68,10 +68,10 @@ struct collision_entry {
+ 	unsigned reported_already:1;
+ };
  
- 	opt->ancestor = ancestor_name;
--	clean = merge_trees(opt, get_commit_tree(h1), get_commit_tree(h2),
--			    get_commit_tree(merged_common_ancestors),
-+	clean = merge_trees(opt,
-+			    repo_get_commit_tree(opt->repo, h1),
-+			    repo_get_commit_tree(opt->repo, h2),
-+			    repo_get_commit_tree(opt->repo,
-+						 merged_common_ancestors),
- 			    &mrtree);
- 	strbuf_release(&merge_base_abbrev);
- 	if (clean < 0) {
+-static inline int merge_detect_rename(struct merge_options *o)
++static inline int merge_detect_rename(struct merge_options *opt)
+ {
+-	return o->merge_detect_rename >= 0 ? o->merge_detect_rename :
+-		o->diff_detect_rename >= 0 ? o->diff_detect_rename : 1;
++	return opt->merge_detect_rename >= 0 ? opt->merge_detect_rename :
++		opt->diff_detect_rename >= 0 ? opt->diff_detect_rename : 1;
+ }
+ 
+ /*
+@@ -85,7 +85,7 @@ static inline int merge_detect_rename(struct merge_options *o)
+  *       commit.  Also, merge_bases will be consumed (emptied) so make a
+  *       copy if you need it.
+  */
+-int merge_recursive(struct merge_options *o,
++int merge_recursive(struct merge_options *opt,
+ 		    struct commit *h1,
+ 		    struct commit *h2,
+ 		    struct commit_list *merge_bases,
+@@ -95,7 +95,7 @@ int merge_recursive(struct merge_options *o,
+  * rename-detecting three-way merge, no recursion; result of merge is written
+  * to opt->repo->index.
+  */
+-int merge_trees(struct merge_options *o,
++int merge_trees(struct merge_options *opt,
+ 		struct tree *head,
+ 		struct tree *merge,
+ 		struct tree *merge_base);
+@@ -104,16 +104,16 @@ int merge_trees(struct merge_options *o,
+  * "git-merge-recursive" can be fed trees; wrap them into
+  * virtual commits and call merge_recursive() proper.
+  */
+-int merge_recursive_generic(struct merge_options *o,
++int merge_recursive_generic(struct merge_options *opt,
+ 			    const struct object_id *head,
+ 			    const struct object_id *merge,
+ 			    int num_merge_bases,
+ 			    const struct object_id **merge_bases,
+ 			    struct commit **result);
+ 
+-void init_merge_options(struct merge_options *o,
++void init_merge_options(struct merge_options *opt,
+ 			struct repository *repo);
+ 
+-int parse_merge_opt(struct merge_options *out, const char *s);
++int parse_merge_opt(struct merge_options *opt, const char *s);
+ 
+ #endif
 -- 
 2.23.0.rc2.28.g5f89f15d7b.dirty
 
