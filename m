@@ -2,415 +2,365 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7FEB1F45A
-	for <e@80x24.org>; Sat, 17 Aug 2019 00:40:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 731D21F45A
+	for <e@80x24.org>; Sat, 17 Aug 2019 01:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726048AbfHQAjx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Aug 2019 20:39:53 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:55299 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725829AbfHQAjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Aug 2019 20:39:53 -0400
-Received: by mail-pf1-f201.google.com with SMTP id 22so4856744pfn.22
-        for <git@vger.kernel.org>; Fri, 16 Aug 2019 17:39:53 -0700 (PDT)
+        id S1726126AbfHQBsg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Aug 2019 21:48:36 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:41201 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfHQBsg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Aug 2019 21:48:36 -0400
+Received: by mail-io1-f66.google.com with SMTP id j5so9949731ioj.8;
+        Fri, 16 Aug 2019 18:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=EMGuv5vGKRN5gs3H9Qrv3ByCxwQ42Q+GhuS+KBx5uMY=;
-        b=mLPnOJOiD9EbwS+EmBte3V4IwNtaxTq0mhAAtasYJqeF5fHzeOcfQ0oylqKBJot4Rp
-         2eYWNlEfOi5JtXxwlZD6rZbQnoiobGeh22wwXybGrwtDFUjXnRf0M7O3L+jZe49w9d2B
-         OI+64+HGlHvCtOWb1Vyn2N1Y2woczgBh2FkREqUx/LFLDUZfxWhlDSaRJHqLXIZVmK7y
-         G+06oUX0aV/TkXyEgVEUKZGLx3tOg4H7giErqjuEhAno7RRY2DltacBOSNZ4nEn3e33G
-         NuG6u5wmpxOhDqN33ufTHTRclt7O+1xXUEfMKEJEfiEeCCrcMzWxMDwLuSOfXSk2Vf56
-         cDrQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=eyDCO6W7W6LVv0RP3JCD+EXU2KHRzXGe2oBY+JrvVLk=;
+        b=XkGOpKp7EAs0oO5q5f0zf3Exp0gTpnmbhKff+NR5OTjmVinXpDigQ+mZwfURIvVrea
+         qdpIgKY2wWJOqaB8CTw3LGTaVPE+fVR4Q0tq1aFRyqPD997FMEDTUugW4gb7KcwzEB32
+         D+NiYJdwWc4tuy/assGSq8tELdS9Ynuv9ZazUwZn2cEvhiZ79XZL8LijytPJCfKV1NXw
+         0PmwCNd0ECXgrLy1daOMybfv2kEwJhXOaKHZY8MShCtOZ0nDQOKJzmCedotJsnobHYnF
+         5KscnUaP9vSAE/a+DWuSFGL3i7KSDR0VZ9gG63HbSWg8n2rVWcvnnFUumo3LGgIS7tvY
+         fo0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=EMGuv5vGKRN5gs3H9Qrv3ByCxwQ42Q+GhuS+KBx5uMY=;
-        b=Va3XoLGJf5qppmfBVjtJBPVNtY5n7CwfR1rUIogrQAqCXb6zDFqSBraRGYiLU26iVz
-         YgKOmu1m15xixFWCy9n2a5Uo9f6QJWS3rh83WvA3aVKK7Iw3sUzApM/41gtA6ohsXaGZ
-         pp0lh9AWmksHFLcH+snmYYSauxsk2O+Tc2H2HBJMnPbDfUNOI8oTMHxAdnfDysnUOzpE
-         wfkVa9Coj4ES6DEK39E2c+MKy6YbiVA1JWHxp14Rzm5M+MydRhqthKnjzCVF4xC1cCzm
-         HD5H0IdGXIoHAFA5BZcA6BjEf47KiEykYXcTLbuX3vdtwx+RZs9etCTvImquk2k7uaIX
-         i8WA==
-X-Gm-Message-State: APjAAAV5WQk+kbgcuejZvwhAEhbBb7xjqicjSv1VXUwxKsW/00ILfv6N
-        n4lTMGDTS+qTJlbcQ6Bn5oTR6+10cEFhFvpVtGYgMILhvP7Mytl0wzJgFzrAxS4Pf8ROJph0mLC
-        4mG2uv4G02tb9BPmDSn9G37BR9CaTWFQkmpWzr1Ey1vP1qlsE0TkmrqIkxQx/s31pJlXOAYKw1g
-        ==
-X-Google-Smtp-Source: APXvYqzf5qUdfKU8hERYMI174D/FGdZ5U7JOkEIvxipCXcFg/d6Y8dawob+2lYYjoqtqsc+7RcIObcRjSJ4hFwT0QYk=
-X-Received: by 2002:a65:64c6:: with SMTP id t6mr10185298pgv.323.1566002392136;
- Fri, 16 Aug 2019 17:39:52 -0700 (PDT)
-Date:   Fri, 16 Aug 2019 17:39:25 -0700
-In-Reply-To: <20190817003926.102944-1-emilyshaffer@google.com>
-Message-Id: <20190817003926.102944-2-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20190817003926.102944-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.23.0.rc1.153.gdeed80330f-goog
-Subject: [PATCH v2 1/2] bugreport: add tool to generate debugging info
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=eyDCO6W7W6LVv0RP3JCD+EXU2KHRzXGe2oBY+JrvVLk=;
+        b=BRGCNhQ9wiAGi1DDAgmxj3xMD2jfBlOeRB5L9ipSwO4RpTYxvM0vzG7ZEsymidsL1C
+         /OqJUGFaXnlyX80J/vETEgTKwJ52DwwXqMJrXRkvouqWT9PXjDhPLqflUugo3t2IZ6b5
+         T7qkb/oscOqqYNpo3pYtwGHdYuraAMzDcgO5U6pAe2nAONaN7fU+n9T3yTfHpGRUfjGM
+         t1Crj/vWYbC9W1JCrXro0N/SpZWo887ELfhxCstq/Tmg5S9oEYN/ukG85fKI4Y/a1MEi
+         6yQOWeD6ZuevRUYgI9wT6vCmNc2ZWfGWNdaaNwnbBlcPrvMUR+soaTp+KXLRL2skID15
+         h/IA==
+X-Gm-Message-State: APjAAAWHNmNrDTqfTbhHV2jcft5HPBnISIqaekaJoPofVDgXNSYGxO5L
+        9ntBFtpMDED/ozuJkWks2BE=
+X-Google-Smtp-Source: APXvYqxW3nBJv9KWXgdHBkGwmADBMzKWCPosLR/fEd+8pZfEJ3+h+6nfvfsle6kgtyBzt2MX3EdZhg==
+X-Received: by 2002:a5d:8747:: with SMTP id k7mr13596110iol.20.1566006515272;
+        Fri, 16 Aug 2019 18:48:35 -0700 (PDT)
+Received: from [192.168.43.210] (mobile-166-177-58-16.mycingular.net. [166.177.58.16])
+        by smtp.gmail.com with ESMTPSA id y25sm8304810iol.59.2019.08.16.18.48.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Aug 2019 18:48:34 -0700 (PDT)
+Subject: Re: [PATCH v2] userdiff: Add a builtin pattern for dts files
+To:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org
+Cc:     Adrian Johnson <ajohnson@redneon.com>,
+        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+        devicetree@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+References: <20190816225658.8946-1-sboyd@kernel.org>
+From:   Frank Rowand <frowand.list@gmail.com>
+Message-ID: <4dc7fb1a-b2ba-a938-5299-20330e0241c3@gmail.com>
+Date:   Fri, 16 Aug 2019 18:48:32 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20190816225658.8946-1-sboyd@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make it easier for users who encounter a bug to send a report by
-collecting some state information, intended to be viewed by humans
-familiar with Git.
++Frank (me)
 
-Teach Git how to prompt the user for a good bug report: reproduction
-steps, expected behavior, and actual behavior. Also, teach Git to write
-down its own version, the version of some of its dependencies, the
-operating system information, select entries from the gitconfig, the
-configured hooks, and the contents of $GIT_DIR/logs. Finally, make sure
-Git asks the user to review the contents of the report after it's
-generated.
-
-If users can send us a well-written bug report which contains diagnostic
-information we would otherwise need to ask the user for, we can reduce
-the number of question-and-answer round trips between the reporter and
-the Git contributor.
-
-Users may also wish to send a report like this to their local "Git
-expert" if they have put their repository into a state they are confused
-by.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- .gitignore                      |   1 +
- Documentation/git-bugreport.txt |  51 ++++++++++++
- Makefile                        |   1 +
- command-list.txt                |   1 +
- git-bugreport-config-whitelist  |  22 +++++
- git-bugreport.sh                | 139 ++++++++++++++++++++++++++++++++
- git-sh-setup.sh                 |   2 +
- t/t0091-bugreport.sh            |  25 ++++++
- 8 files changed, 242 insertions(+)
- create mode 100644 Documentation/git-bugreport.txt
- create mode 100644 git-bugreport-config-whitelist
- create mode 100755 git-bugreport.sh
- create mode 100755 t/t0091-bugreport.sh
-
-diff --git a/.gitignore b/.gitignore
-index 521d8f4fb4..b4f5433084 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -25,6 +25,7 @@
- /git-bisect--helper
- /git-blame
- /git-branch
-+/git-bugreport
- /git-bundle
- /git-cat-file
- /git-check-attr
-diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-new file mode 100644
-index 0000000000..2fc0a63192
---- /dev/null
-+++ b/Documentation/git-bugreport.txt
-@@ -0,0 +1,51 @@
-+git-bugreport(1)
-+================
-+
-+NAME
-+----
-+git-bugreport - Collect information for user to file a bug report
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git bugreport' [-o | --output <path>]
-+
-+DESCRIPTION
-+-----------
-+Captures information about the user's machine, Git client, and repository state,
-+as well as a form requesting information about the behavior the user observed,
-+into a single text file which the user can then share, for example to the Git
-+mailing list, in order to report an observed bug.
-+
-+The following information is requested from the user:
-+
-+ - Reproduction steps
-+ - Expected behavior
-+ - Actual behavior
-+ - Difference between expected and actual behavior
-+
-+The following information is captured automatically:
-+
-+ - Git version (`git version --build-options`)
-+ - Machine information (`uname -a`)
-+ - Versions of various dependencies (curl, ldd)
-+ - Relevant user environment variables ($SHELL)
-+ - Some Git config variables, filtered by a whitelist
-+   (`git config --show-origin --get`)
-+ - A list of all configured git-hooks in `.git/hooks/` (but not their contents)
-+ - A list of all loose objects in `.git/objects/`
-+ - A list of all packs in `.git/objects/pack`
-+ - A list of all object info in `.git/objects/info`
-+ - The contents of the alternates file (`.git/objects/info/alternates`)
-+ - The contents of `.git/logs`
-+
-+OPTIONS
-+-------
-+-o [<path>]::
-+--output [<path>]::
-+	Place the resulting bug report file in <path> instead of the root of the
-+	Git repository.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index f9255344ae..69801a1c45 100644
---- a/Makefile
-+++ b/Makefile
-@@ -606,6 +606,7 @@ TEST_PROGRAMS_NEED_X =
- unexport CDPATH
- 
- SCRIPT_SH += git-bisect.sh
-+SCRIPT_SH += git-bugreport.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-merge-octopus.sh
-diff --git a/command-list.txt b/command-list.txt
-index a9ac72bef4..be5a605047 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -54,6 +54,7 @@ git-archive                             mainporcelain
- git-bisect                              mainporcelain           info
- git-blame                               ancillaryinterrogators          complete
- git-branch                              mainporcelain           history
-+git-bugreport                           ancillaryinterrogators
- git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
- git-check-attr                          purehelpers
-diff --git a/git-bugreport-config-whitelist b/git-bugreport-config-whitelist
-new file mode 100644
-index 0000000000..e4f07f7175
---- /dev/null
-+++ b/git-bugreport-config-whitelist
-@@ -0,0 +1,22 @@
-+http.version
-+protocol.version
-+protocol.persistent-https.allow
-+protocol.rpc.allow
-+protocol.sso.allow
-+submodule.repolike
-+trace2.eventtarget
-+trace2.configparams
-+color.ui
-+core.pager
-+sendemail.smtpencryption
-+sendemail.smtpserver
-+sendemail.smtpserverport
-+sendemail.smtpsslcertpath
-+credential.helper
-+merge.tool
-+grep.linenumber
-+rerere.enabled
-+core.repositoryformatversion
-+core.filemode
-+core.bare
-+core.logallrefupdates
-diff --git a/git-bugreport.sh b/git-bugreport.sh
-new file mode 100755
-index 0000000000..0c182c62e9
---- /dev/null
-+++ b/git-bugreport.sh
-@@ -0,0 +1,139 @@
-+#!/bin/sh
-+
-+print_file_if_exists () {
-+	if [ -f "$1" ]
-+	then
-+		if $(file --mime "$1" | grep -q "charset=binary")
-+		then
-+			echo "<binary file>"
-+		else
-+			cat "$1"
-+		fi
-+	else
-+		echo "<file does not exist>"
-+	fi
-+}
-+
-+
-+print_filenames_and_content () {
-+	while read -r line
-+	do
-+		echo "$line"
-+		echo "========"
-+		print_file_if_exists "$line"
-+		echo
-+	done
-+}
-+
-+command_and_output () {
-+	echo "$@:"
-+	"$@"
-+	echo
-+}
-+
-+generate_report_text() {
-+
-+	# Generate a form for the user to fill out with their issue.
-+	gettextln "Thank you for filling out a Git bug report!"
-+	gettextln "Please answer the following questions to help us understand your issue."
-+	echo
-+	gettextln "What did you do before the bug happened? (Steps to reproduce your issue)"
-+	echo
-+	gettextln "What did you expect to happen? (Expected behavior)"
-+	echo
-+	gettextln "What happened instead? (Actual behavior)"
-+	echo
-+	gettextln "What's different between what you expected and what actually happened?"
-+	echo
-+	gettextln "Anything else you want to add:"
-+	echo
-+	gettextln "Please review the rest of the bug report below."
-+	gettextln "You can delete any lines you don't wish to send."
-+	gettextln \
-+"When you're done, you should include the contents of this file in your bug \n\
-+report, for example by pasting it into an email to git@vger.kernel.org."
-+	echo
-+
-+	# Versions of various necessary software should go here.
-+	echo "[Version Information]"
-+	command_and_output git version --build-options
-+	command_and_output uname -a
-+	command_and_output curl-config --version
-+	command_and_output ldd --version
-+	echo
-+
-+	# Values of environment variables we find useful should go here.
-+	echo "[Environment Information]"
-+	command_and_output echo $SHELL
-+
-+	echo "[Git Config]"
-+	xargs -n 1 -I% sh -c 'echo %: $(git config --show-origin --get %)' \
-+		<"$(git --exec-path)/git-bugreport-config-whitelist"
-+	echo
-+
-+	echo "[Configured Hooks]"
-+	find "$GIT_HOOKS_DIRECTORY" -type f | grep -v "\.sample$"
-+	echo
-+
-+	echo "[Loose Objects]"
-+	for objdir in $(find "$GIT_OBJECT_DIRECTORY"/?? -type d);
-+	do
-+		echo "$objdir: $(ls $objdir | wc -l) objects"
-+	done
-+	echo
-+	
-+	echo "[Pack Data]"
-+	command_and_output ls -l "$GIT_OBJECT_DIRECTORY/pack"
-+	echo
-+	
-+	echo "[Object Info Data]"
-+	command_and_output ls -lR "$GIT_OBJECT_DIRECTORY/info"
-+	echo
-+	
-+	echo "[Alternates File]"
-+        echo "$GIT_OBJECT_DIRECTORY/info/alternates" | print_filenames_and_content
-+	echo
-+
-+	# This command is the reflog; it's fairly chatty and hard to scan
-+	# quickly, so leave it at the bottom so that users don't miss what
-+	# happens before it.
-+	echo "[Git Logs]"
-+	find "$GIT_LOGS_DIRECTORY" -type f | print_filenames_and_content
-+	echo
-+}
-+
-+USAGE="[-o | --output <path>]"
-+
-+SUBDIRECTORY_OK=t
-+OPTIONS_SPEC=
-+. git-sh-setup
-+. git-sh-i18n
-+
-+basedir="$PWD"
-+while :
-+do
-+	case "$1" in
-+	-o|--output)
-+		shift
-+		basedir="$1"
-+		shift
-+		continue
-+		;;
-+	"")
-+		break
-+		;;
-+	*)
-+		usage
-+		;;
-+	esac
-+done
-+
-+
-+# Create bugreport file
-+BUGREPORT_FILE="$basedir/git-bugreport-$(whoami)-$(hostname)-$(date +%Y%m%d-%H%M)"
-+
-+generate_report_text >$BUGREPORT_FILE
-+
-+git_editor $BUGREPORT_FILE
-+
-+eval_gettextln "Your new bug report is in \$BUGREPORT_FILE."
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 10d9764185..1db8af0d76 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -379,6 +379,8 @@ git_dir_init () {
- 		exit 1
- 	}
- 	: "${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}"
-+        : "${GIT_LOGS_DIRECTORY="$(git rev-parse --git-path logs)"}"
-+        : "${GIT_HOOKS_DIRECTORY="$(git rev-parse --git-path hooks)"}"
- }
- 
- if test -z "$NONGIT_OK"
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-new file mode 100755
-index 0000000000..e4e2d1a927
---- /dev/null
-+++ b/t/t0091-bugreport.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh
-+
-+test_description='git bugreport'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'creates a report without crashing' '
-+	git bugreport &&
-+	rm git-bugreport-*
-+'
-+
-+test_expect_success '--output puts the report in the provided dir' '
-+	mkdir foo/ &&
-+	git bugreport -o foo/ &&
-+	test -f foo/git-bugreport-* &&
-+	rm -fr foo/
-+'
-+
-+test_expect_success 'incorrect arguments abort with usage' '
-+	test_must_fail git bugreport --false 2>output &&
-+	grep usage output &&
-+	test ! -f git-bugreport-*
-+'
-+
-+test_done
--- 
-2.23.0.rc1.153.gdeed80330f-goog
+On 8/16/19 3:56 PM, Stephen Boyd wrote:
+> The Linux kernel receives many patches to the devicetree files each
+> release. The hunk header for those patches typically show nothing,
+> making it difficult to figure out what node is being modified without
+> applying the patch or opening the file and seeking to the context. Let's
+> add a builtin 'dts' pattern to git so that users can get better diff
+> output on dts files when they use the diff=dts driver.
+> 
+> The regex has been constructed based on the spec at devicetree.org[1]
+> 
+> [1] https://github.com/devicetree-org/devicetree-specification/releases/latest
+> 
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+> 
+> Sending this again after getting feedback and it getting stuck in
+> review[1]. I'm not sure what happened with the meta question from Junio
+> to add a way for various projects to introduce their own patterns, but
+> I'd still prefer to have this in git proper because the kernel uses git
+> extensively and we rely on git formatted patches in our workflow. I
+> recently reviewed a dts change and remembered this never got accepted.
+> 
+> Changes from v1:
+>  * Updated regex to handle anything after node names instead of
+>    requiring a '{'
+>  * Updated test for boolean relation operators
+>  * Sent out a patch to devicetree spec to document % operator
+> 
+> [1] Feedback was in 16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com
+> 
+>  Documentation/gitattributes.txt |  2 ++
+>  t/t4018-diff-funcname.sh        |  1 +
+>  t/t4018/dts-labels              |  8 +++++++
+>  t/t4018/dts-node-unitless       |  8 +++++++
+>  t/t4018/dts-nodes               |  8 +++++++
+>  t/t4018/dts-reference           |  8 +++++++
+>  t/t4034-diff-words.sh           |  1 +
+>  t/t4034/dts/expect              | 37 +++++++++++++++++++++++++++++++++
+>  t/t4034/dts/post                | 32 ++++++++++++++++++++++++++++
+>  t/t4034/dts/pre                 | 32 ++++++++++++++++++++++++++++
+>  userdiff.c                      |  9 ++++++++
+>  11 files changed, 146 insertions(+)
+>  create mode 100644 t/t4018/dts-labels
+>  create mode 100644 t/t4018/dts-node-unitless
+>  create mode 100644 t/t4018/dts-nodes
+>  create mode 100644 t/t4018/dts-reference
+>  create mode 100644 t/t4034/dts/expect
+>  create mode 100644 t/t4034/dts/post
+>  create mode 100644 t/t4034/dts/pre
+> 
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index fb1d188d440c..c5a528c667b6 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -810,6 +810,8 @@ patterns are available:
+>  
+>  - `css` suitable for cascading style sheets.
+>  
+> +- `dts` suitable for devicetree (DTS) files.
+> +
+>  - `fortran` suitable for source code in the Fortran language.
+>  
+>  - `fountain` suitable for Fountain documents.
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index 9261d6d3a000..6f5ef0035e92 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -31,6 +31,7 @@ diffpatterns="
+>  	cpp
+>  	csharp
+>  	css
+> +	dts
+>  	fortran
+>  	fountain
+>  	golang
+> diff --git a/t/t4018/dts-labels b/t/t4018/dts-labels
+> new file mode 100644
+> index 000000000000..27cd4921cfb6
+> --- /dev/null
+> +++ b/t/t4018/dts-labels
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1@ff00 {
+> +		label2: RIGHT {
+> +			vendor,some-property;
+> +			ChangeMe = <0x45-30>;
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-node-unitless b/t/t4018/dts-node-unitless
+> new file mode 100644
+> index 000000000000..c5287d91416e
+> --- /dev/null
+> +++ b/t/t4018/dts-node-unitless
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1 {
+> +		RIGHT {
+> +			prop-array = <1>, <4>;
+> +			ChangeMe = <0xffeedd00>;
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-nodes b/t/t4018/dts-nodes
+> new file mode 100644
+> index 000000000000..5a4334bb1645
+> --- /dev/null
+> +++ b/t/t4018/dts-nodes
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1@ff00 {
+> +		RIGHT@deadf00,4000 {
+> +			#size-cells = <1>;
+> +			ChangeMe = <0xffeedd00>;
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-reference b/t/t4018/dts-reference
+> new file mode 100644
+> index 000000000000..f115d4291d25
+> --- /dev/null
+> +++ b/t/t4018/dts-reference
+> @@ -0,0 +1,8 @@
+> +&label_1 {
+> +	TEST = <455>;
+> +};
+> +
+> +&RIGHT {
+> +	vendor,some-property;
+> +	ChangeMe = <0x45-30>;
+> +};
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> index 912df91226f2..9a93c2a3e0dd 100755
+> --- a/t/t4034-diff-words.sh
+> +++ b/t/t4034-diff-words.sh
+> @@ -303,6 +303,7 @@ test_language_driver bibtex
+>  test_language_driver cpp
+>  test_language_driver csharp
+>  test_language_driver css
+> +test_language_driver dts
+>  test_language_driver fortran
+>  test_language_driver html
+>  test_language_driver java
+> diff --git a/t/t4034/dts/expect b/t/t4034/dts/expect
+> new file mode 100644
+> index 000000000000..560fc9918476
+> --- /dev/null
+> +++ b/t/t4034/dts/expect
+> @@ -0,0 +1,37 @@
+> +<BOLD>diff --git a/pre b/post<RESET>
+> +<BOLD>index b6a9051..7803aee 100644<RESET>
+> +<BOLD>--- a/pre<RESET>
+> +<BOLD>+++ b/post<RESET>
+> +<CYAN>@@ -1,32 +1,32 @@<RESET>
+> +/ {<RESET>
+> +	<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>: <RED>node<RESET><GREEN>new-node<RESET>@<RED>f00<RESET><GREEN>eeda<RESET> {
+> +		compatible = "<RED>mydev<RESET><GREEN>vendor,compat<RESET>";
+> +		string-prop = <RED>start<RESET><GREEN>end<RESET>: "hello <RED>world!<RESET><GREEN>world?<RESET>" <RED>end<RESET><GREEN>start<RESET>: ;
+> +		<RED>#size-cells<RESET><GREEN>#address-cells<RESET> = <<RED>0+0<RESET><GREEN>0+40<RESET>>;
+> +		reg = <<RED>0xf00<RESET><GREEN>0xeeda<RESET>>;
+> +		prop = <<GREEN>(<RESET>1<GREEN>)<RESET>>;
+> +		prop = <<GREEN>(<RESET>-1e10<GREEN>)<RESET>>;
+> +		prop = <(!<RED>3<RESET><GREEN>1<RESET>)>;
+> +		prop = <(~<RED>3<RESET><GREEN>1<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>/<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>%<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3+4<RESET><GREEN>1+2<RESET>)>;
+> +		prop = <(<RED>3-4<RESET><GREEN>1-2<RESET>)>;
+> +		prop = /bits/ <RED>64<RESET><GREEN>32<RESET> <(<RED>3<RESET><GREEN>1<RESET><<<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>>><RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>^<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>|<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>||<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>4?5<RESET><GREEN>1?2<RESET>:3)>;
+> +		list = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>, <0 0 0 <RED>0<RESET><GREEN>1<RESET>>;
+> +	};<RESET>
+> +
+> +	&<RED>phandle<RESET><GREEN>phandle2<RESET> {
+> +		<RED>pre-phandle<RESET><GREEN>prop_handle<RESET> = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>;
+> +	};<RESET>
+> +};<RESET>
+> diff --git a/t/t4034/dts/post b/t/t4034/dts/post
+> new file mode 100644
+> index 000000000000..7803aee28093
+> --- /dev/null
+> +++ b/t/t4034/dts/post
+> @@ -0,0 +1,32 @@
+> +/ {
+> +	HANDLE_2: new-node@eeda {
+> +		compatible = "vendor,compat";
+> +		string-prop = end: "hello world?" start: ;
+> +		#address-cells = <0+40>;
+> +		reg = <0xeeda>;
+> +		prop = <(1)>;
+> +		prop = <(-1e10)>;
+> +		prop = <(!1)>;
+> +		prop = <(~1)>;
+> +		prop = <(1*2)>;
+> +		prop = <(1&2)>;
+> +		prop = <(1*2)>;
+> +		prop = <(1/2)>;
+> +		prop = <(1%2)>;
+> +		prop = <(1+2)>;
+> +		prop = <(1-2)>;
+> +		prop = /bits/ 32 <(1<<2)>;
+> +		prop = <(1>>2)>;
+> +		prop = <(1&2)>;
+> +		prop = <(1^2)>;
+> +		prop = <(1|2)>;
+> +		prop = <(1&&2)>;
+> +		prop = <(1||2)>;
+> +		prop = <(1?2:3)>;
+> +		list = <&HANDLE_2>, <0 0 0 1>;
+> +	};
+> +
+> +	&phandle2 {
+> +		prop_handle = <&HANDLE_2>;
+> +	};
+> +};
+> diff --git a/t/t4034/dts/pre b/t/t4034/dts/pre
+> new file mode 100644
+> index 000000000000..b6a905113c22
+> --- /dev/null
+> +++ b/t/t4034/dts/pre
+> @@ -0,0 +1,32 @@
+> +/ {
+> +	this_handle: node@f00 {
+> +		compatible = "mydev";
+> +		string-prop = start: "hello world!" end: ;
+> +		#size-cells = <0+0>;
+> +		reg = <0xf00>;
+> +		prop = <1>;
+> +		prop = <-1e10>;
+> +		prop = <(!3)>;
+> +		prop = <(~3)>;
+> +		prop = <(3*4)>;
+> +		prop = <(3&4)>;
+> +		prop = <(3*4)>;
+> +		prop = <(3/4)>;
+> +		prop = <(3%4)>;
+> +		prop = <(3+4)>;
+> +		prop = <(3-4)>;
+> +		prop = /bits/ 64 <(3<<4)>;
+> +		prop = <(3>>4)>;
+> +		prop = <(3&4)>;
+> +		prop = <(3^4)>;
+> +		prop = <(3|4)>;
+> +		prop = <(3&&4)>;
+> +		prop = <(3||4)>;
+> +		prop = <(4?5:3)>;
+> +		list = <&this_handle>, <0 0 0 0>;
+> +	};
+> +
+> +	&phandle {
+> +		pre-phandle = <&this_handle>;
+> +	};
+> +};
+> diff --git a/userdiff.c b/userdiff.c
+> index e74a6d402255..1db5d30aaebe 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -23,6 +23,15 @@ IPATTERN("ada",
+>  	 "[a-zA-Z][a-zA-Z0-9_]*"
+>  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+>  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+> +PATTERNS("dts",
+> +	 /* Node name with optional label and unit address */
+> +	 "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*:[ \t]*)?[a-zA-Z][a-zA-Z0-9,._+-]*(@[a-zA-Z0-9,._+-]+)?"
+> +	 /* Reference */
+> +	 "|&[a-zA-Z_][a-zA-Z0-9_]*)[ \t]*[^;]*)$",
+> +	 /* -- */
+> +	 /* Property names and math operators */
+> +	 "[a-zA-Z0-9,._+?#-]+"
+> +	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
+>  IPATTERN("fortran",
+>  	 "!^([C*]|[ \t]*!)\n"
+>  	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
+> 
 
