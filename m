@@ -2,121 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,URI_TRY_3LD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 451BC1F461
-	for <e@80x24.org>; Sat, 17 Aug 2019 18:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57DD61F461
+	for <e@80x24.org>; Sat, 17 Aug 2019 20:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726484AbfHQSmd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Aug 2019 14:42:33 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:35766 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbfHQSmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Aug 2019 14:42:25 -0400
-Received: by mail-pf1-f194.google.com with SMTP id d85so4828298pfd.2
-        for <git@vger.kernel.org>; Sat, 17 Aug 2019 11:42:24 -0700 (PDT)
+        id S1726188AbfHQUDr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Aug 2019 16:03:47 -0400
+Received: from mail-yb1-f194.google.com ([209.85.219.194]:46270 "EHLO
+        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbfHQUDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Aug 2019 16:03:47 -0400
+Received: by mail-yb1-f194.google.com with SMTP id x10so3073164ybs.13
+        for <git@vger.kernel.org>; Sat, 17 Aug 2019 13:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MKv15GAGuh8hc1pF4Q7oRQu73NxUzPXT1Rb01TgMISg=;
-        b=Ue+0AFLHNrHKWo5oGYmnsuv7FOnDy9BDk+nJ6P5nq4Gum6V3kuUF9DHiUb57OtOMEe
-         KrZPgBstkoq5ePdnGpPWSOY+aKlSq/cFwRjFgiyoBVG4ZRfZJfweSqmKFmIni7L9OSiF
-         UtMIiMI2Xuo98b8MAMfmMs95JmnRMW5yUn963xBDvJ6molB3jLlAsCOqa6UTCbtzBFZx
-         nYbzIPdlYGp6sQLuVrO+Tj8rLFTZ7vxaGg80xx3YzeDTUKT1nhHvgY5SzFnzKqdy5t0X
-         kPUD671bYtJs2FBTsac2w18fnvGZZ1wVKkMWwZWmqGIyyqkKzo2uXpe8CvZ7LE4ykEN5
-         x2YA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BWlXu9K4VZq1DOg5KokWssG+IAdiVhRT3040sJUjmM4=;
+        b=i33hXiNZ5AtPJLt01/SDQbyrgUOmt8GCSMhxHsfmd+/sKBBwY884RNXTF1ZU5P9lRX
+         1FdNZzdFjnfi4AvTcwPxi/s4ehC7pd8fi+mbM/5Nl8bFY0tzX6BonyaR73aKiwC+53fT
+         ATtVehePfybw+SuBWjlOzh8J9zL1LsXfk2jxoyp5y5WSAT6xfUNZGW2tNjNY4g31qB/x
+         MTHn/5jT2YOhmxzIKxam5bCAZjD+gzxnMgDEXWCh41Ul5ES4qR57caLKPzIT8KZ9lRtz
+         ckHAfZVOSxzAXZhqYds8f8bKsFoI1A3LDSMA3XCuiaKaczxQRlmqK3g1FA5mFOUdpXpK
+         tSrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MKv15GAGuh8hc1pF4Q7oRQu73NxUzPXT1Rb01TgMISg=;
-        b=qjCK7QF83rLZJg+E7x6FyE6MdNarVHW50ERJaLKTZPCZga2VJpi2gg74F+8u5f4GwA
-         sHA+0+hul4DR+iHggrDHEgmVl67hjjH5COh7eDJsa32Xev2ijiLjqUmwDXDNzPJ9hZCp
-         qEVJDWiE9wfC/rkn4IN41BaH/m1mR8985VFggu+YMGmIN4PB94fGL5QoAOyG6VzykV0m
-         IOeGuznUS8xAybKQ6hK9mBdpRGZ8j5vfIQWFsRnGgr4iRZElabGMAcfLB3yeMN+NHMVU
-         tktWVeDg8fglqR+gaeOmb224zxt0YybMIaubUioD0Lw5TWBb3TgVtcWJ2QASY9aU+5wJ
-         mX8A==
-X-Gm-Message-State: APjAAAWwzJy39TG9yh5zLziUFm0GGVfwFpAHSxMxjTzmcOsr1zRUpEU1
-        TNfEZ3ekjmJXX9Qkjs5zu1sA3vHd
-X-Google-Smtp-Source: APXvYqzN12qWJkZEr12KCfaHRG5NM+0TMcl7XCam3hsfLNGrmEHc5JI2rnXKkXDQZyh8eG2FIrwHTA==
-X-Received: by 2002:a17:90b:14c:: with SMTP id em12mr13524649pjb.28.1566067343999;
-        Sat, 17 Aug 2019 11:42:23 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id j15sm9990422pfr.146.2019.08.17.11.42.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 17 Aug 2019 11:42:23 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 23/24] merge-recursive: add sanity checks for relevant merge_options
-Date:   Sat, 17 Aug 2019 11:41:43 -0700
-Message-Id: <20190817184144.32179-24-newren@gmail.com>
-X-Mailer: git-send-email 2.23.0.rc2.28.g5f89f15d7b.dirty
-In-Reply-To: <20190817184144.32179-1-newren@gmail.com>
-References: <20190815214053.16594-1-newren@gmail.com>
- <20190817184144.32179-1-newren@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BWlXu9K4VZq1DOg5KokWssG+IAdiVhRT3040sJUjmM4=;
+        b=bHe6Sx+DHqgMb4cTf1WX0hWvKy4faFJQPrb+8HfvHLU7mI/AwX0Sg0BabCYDsUa6bP
+         xN3Eyl3YlPZQyEh2mQyOWWXujPSi0nHxd60Xqu9YOvI94Rzgl+/9NudEUoKmlCRQuiqT
+         MdFjdK1Rgzh3j3YhFdakoMukoSZXj14UMD6fSX2yXzBR33wd1hHqVSI5fbabyHlckqEt
+         y2GgWtDFdGsKM1j4kULq6WDv5gPq8muXyH/pAD8UV7k6Enm6lLviIxoj0H16LzMKhtW5
+         6u5GVP+drmnB9Xx4g5PG75QqzVK0rq7AY5C+mM0+ZxhEMZWPDZ2Be7T+3EoKcMp9FCxN
+         oGyQ==
+X-Gm-Message-State: APjAAAVGeAYmURdAtQv7pButn9EuWSG0Gg3FWZcc4hOd/qp6eqno7UF6
+        ZSsbUVP0Sx8On8LlCLxIx5KhFbVCSoz3HstZYmz5yS/zl6+R6Apb
+X-Google-Smtp-Source: APXvYqwzxkly8iebHg7MkPwg0Z/3vFCflriKjHnOfAhV0Ic5IL1SJySyAnMOZca6aW7bXf2Kl2MCx6NpklYBMrKckJA=
+X-Received: by 2002:a25:a508:: with SMTP id h8mr1616308ybi.52.1566072226734;
+ Sat, 17 Aug 2019 13:03:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Gaiseric Vandal <gaiseric.vandal@gmail.com>
+Date:   Sat, 17 Aug 2019 16:03:36 -0400
+Message-ID: <CAGJ3EkWrHPAD04cEcp9P6Hg4jtNFpiGSCSue+5T7oUL+sbhcUQ@mail.gmail.com>
+Subject: Upgrade to gitweb-1.8.3.1-20 on centos7 breaks git access
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are lots of options that callers can set, yet most have a limited
-range of valid values, some options are meant for output (e.g.
-opt->obuf, which is expected to start empty), and callers are expected
-to not set opt->priv.  Add several sanity checks to ensure callers
-provide sane values.
+I recently applied the latest patches on centos7, including
+gitweb-1.8.3.1-20.      When I try to access git repos (either via web
+browser or git command line.) Repos are configured to require LDAP
+authentication.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-recursive.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fa3f8eb0b2..0231d7b049 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3615,6 +3615,30 @@ static int merge_start(struct merge_options *opt, struct tree *head)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	/* Sanity checks on opt */
-+	assert(opt->repo);
-+
-+	assert(opt->branch1 && opt->branch2);
-+
-+	assert(opt->detect_renames >= -1 &&
-+	       opt->detect_renames <= DIFF_DETECT_COPY);
-+	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
-+	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
-+	assert(opt->rename_limit >= -1);
-+	assert(opt->rename_score >= 0 && opt->rename_score <= MAX_SCORE);
-+	assert(opt->show_rename_progress >= 0 && opt->show_rename_progress <= 1);
-+
-+	assert(opt->xdl_opts >= 0);
-+	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
-+	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
-+
-+	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
-+	assert(opt->buffer_output <= 2);
-+	assert(opt->obuf.len == 0);
-+
-+	assert(opt->priv == NULL);
-+
-+	/* Sanity check on repo state; index must match head */
- 	if (repo_index_has_changes(opt->repo, head, &sb)) {
- 		err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
- 		    sb.buf);
--- 
-2.23.0.rc2.28.g5f89f15d7b.dirty
+I should be able to access repo ABC via
 
+https://myserver.domain.com/git/ABC
+
+I get the correct user login prompt but then , after logging, get
+following error
+
+     The requested URL /git/ABC/ was not found on this server.
+
+I don't think any of the config files got changed.
+
+My partial config is
+
+     # cat /etc/httpd/conf.d/git.conf
+     Alias /git /var/www/git
+
+     <Directory /var/www/git>
+      Options +ExecCGI
+      AddHandler cgi-script .cgi
+      DirectoryIndex gitweb.cgi
+     </Directory>
+     #
+
+
+
+     # cat /etc/httpd/conf.d/gitrepos.conf
+     SetEnv GIT_PROJECT_ROOT /export/gitrepos
+     SetEnv GIT_HTTP_EXPORT_ALL
+     ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+
+     RewriteEngine on
+     RewriteCond %{QUERY_STRING} service=git-receive-pack [OR]
+     RewriteCond %{REQUEST_URI} /git-receive-pack$
+     RewriteRule ^/git/ - [E=AUTHREQUIRED]
+
+     <Files "git-http-backend">
+     AuthType Basic
+     AuthBasicProvider ldap
+     AuthLDAPURL "ldaps://xxxxxxxxxxxxxxx)"
+     AuthLDAPBindDN  "uid=xxxxxxxxxxxx"
+     AuthLDAPBindPassword xxxxxxxxxxxxxxx
+     AuthName "Git Access"
+     Require user xxxxx xxxxx xxxxx
+     Order deny,allow
+     Deny from env=AUTHREQUIRED
+     Satisfy any
+     </Files>
+
+
+     <Location /git/ABC>
+     AuthType Basic
+     AuthBasicProvider ldap
+     AuthLDAPURL "ldaps://xxxxxxxxxxxxxxx)"
+     AuthLDAPBindDN  "uid=xxxxxxxxxxxx"
+     AuthLDAPBindPassword xxxxxxxxxxxxxxx
+     AuthName "Git Access ABC"
+     Require user xxxxx xxxxx xxxxx
+     Order deny,allow
+</Location>
+
+
+
+The /var/www/git/gitweb.cgi file has the default settings.
+
+...
+our $GIT = "/usr/bin/git";
+
+# absolute fs-path which will be prepended to the project path
+our $projectroot = "/var/lib/git";
+#our $projectroot = "/export/gitrepos";
+
+...
+
+
+If I set $projectroot to point to /export/gitrepos, I can see a list
+of projects when I browse to https://myserver.domain.com/git-
+however I wanted to minimize how much information was exposed with no
+authentication.      And it didn't fix the access problem.
+The "git" command is in the default OS path.   changing
+      our $GIT = "/usr/bin/git";
+to
+     our $GIT = "git";
+
+did not help.
+
+
+The only thing in the httpd error logs that looks relevant is
+
+[Sat Aug 17 15:39:39.826265 2019] [core:info] [pid 15870] [client
+xxxxx] AH00128: File does not exist: /var/www/git/ABC/
+[Sat Aug 17 15:39:44.831598 2019] [ssl:info] [pid 15870] (70007)The
+timeout specified has expired: [client xxxxx] AH01991: SSL input
+filter read failed.
+
+
+selinux is disabled.
+
+Since I am getting an authentication prompt with "Git Access ABC" in
+the dialog box it seems clear that the project root is being picked up
+from  /etc/httpd/conf.d/gitrepos.conf and that the
+/usr/libexec/git-core/git-http-backend script is being run.
+
+
+Appreciate any advice.
+
+Thanks
