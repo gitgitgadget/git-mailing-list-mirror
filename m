@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342A11F461
-	for <e@80x24.org>; Sun, 18 Aug 2019 20:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE9951F461
+	for <e@80x24.org>; Sun, 18 Aug 2019 20:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727229AbfHRUFp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Aug 2019 16:05:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57980 "EHLO
+        id S1727241AbfHRUFs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Aug 2019 16:05:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57996 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727202AbfHRUFk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 18 Aug 2019 16:05:40 -0400
+        by vger.kernel.org with ESMTP id S1727227AbfHRUFq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 18 Aug 2019 16:05:46 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:81dd:eb9b:e758:604b])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BD09860779;
-        Sun, 18 Aug 2019 20:05:38 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 75F8C6074A;
+        Sun, 18 Aug 2019 20:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1566158739;
-        bh=7S/PkHZPrbgdRJuayj4IuVWHdhu73n6pBjf3qBu2fwM=;
+        s=default; t=1566158743;
+        bh=l7uC48UD66dNlxlonpDIl1kNQ6Al5j6b0M03WG4/En4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Vip71UHAX+fT0y70ucfHz7K9ZuhRHy6Q6vakWBajCtRsWzSMXTzzb2T2baj7pJEii
-         76XH0mv0Bh8kNZu8aQzPM9bT/N/c1D/pQk2cl8xOf/W/Srjr64pPRbsmf0i7eIw1IM
-         ZuizQm1ZRlJQfuDjmyCNUbQy3C1NxddwhtRGUddbZ8yInHBbPR0V2bnM0lW28AFtac
-         Ezfv5HP7O70AfX6jP6+2xSzhl8m4qHWjfdLLACwKE/RPq+5uZlUAr7m6jFAi9Vu8qU
-         YdbRz8dFPDq1sddEfK80YKHHwq/7Rsn9RtEdTJvxz8SfgQ11ZJHnK1IwKtAoe8ovOD
-         kjA+cTjf8MuKIDgkBV1Mm9w2UjplIb7bb5+ZcIXIjYjgkrsKdLqqdp2itv7qhwLqU2
-         MtQCdLwJ2NxBgXNRgXIX2zdgp4t+lM0g87DyCn9gM9prTD1NPhCSjyWNM2lQMcAbGY
-         mkM+oXzIgapgo7IrjN6/UNm5336aUi2klbYjobmMi18UQ+TescR
+        b=Zn4cflYI944pksAFiLQeLMokxNPTUWSoSAwIiPWfsiIm2igAngTQ90iMlxbqfbpSi
+         8EBqNxslc+171XvJUsfq5XnrsbvS9+IXnB58OBDLBTuaTAglUbw/2kkeF/IDfg7c+q
+         K/OF5PIHwZl7qlX3hNB03DJOiketscfpesEPBZGnSm+Al0w3prDv9qXHDYW2J0dR5h
+         kjjXOKrso4/ZkyLc7gvV7v6EfKqNeaMnbe+fw4gj8aGJDh8+sLIUdlQc6eHXbP0ToP
+         tXQluQ1YysVbdqAfc6MbBYyIgzCmd8vtIPlEhCN8aoB7gbqPMwHJLzJs880wxfOBhS
+         zWbIjfw14kOPYokUwA7H1ii++vhNsTmxKtY2oBA+rQnv+fZpb58Rj+ZTH1GLnA4H0I
+         9Dk2bu3TpJDA2ZtK7Vh4+dOQ0+wz/DE9XnoImtS7wwJN64xNVDuRdJNQkvZ9W4BuvR
+         L1yJrEXtQrxFSZ8TDj8ANtWEcr3RY+kWXv/svzUZmiu2QKIbi96
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 12/26] config: use the_hash_algo in abbrev comparison
-Date:   Sun, 18 Aug 2019 20:04:13 +0000
-Message-Id: <20190818200427.870753-13-sandals@crustytoothpaste.net>
+Subject: [PATCH 15/26] sequencer: convert to use the_hash_algo
+Date:   Sun, 18 Aug 2019 20:04:16 +0000
+Message-Id: <20190818200427.870753-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
 In-Reply-To: <20190818200427.870753-1-sandals@crustytoothpaste.net>
 References: <20190818200427.870753-1-sandals@crustytoothpaste.net>
@@ -52,23 +52,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch one use of a hard-coded 40 constant to use the_hash_algo.
+Convert several uses of GIT_SHA1_HEXSZ constants to be references to
+the_hash_algo.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sequencer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/config.c b/config.c
-index 3900e4947b..b0f79aab21 100644
---- a/config.c
-+++ b/config.c
-@@ -1204,7 +1204,7 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
- 			default_abbrev = -1;
- 		else {
- 			int abbrev = git_config_int(var, value);
--			if (abbrev < minimum_abbrev || abbrev > 40)
-+			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
- 				return error(_("abbrev length out of range: %d"), abbrev);
- 			default_abbrev = abbrev;
- 		}
+diff --git a/sequencer.c b/sequencer.c
+index 34ebf8ed94..4d25e79137 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3568,7 +3568,7 @@ static int do_merge(struct repository *r,
+ 		goto leave_merge;
+ 	}
+ 
+-	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
++	write_message(oid_to_hex(&merge_commit->object.oid), the_hash_algo->hexsz,
+ 		      git_path_merge_head(r), 0);
+ 	write_message("no-ff", 5, git_path_merge_mode(r), 0);
+ 
+@@ -4487,7 +4487,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
+ 		char *p;
+ 
+ 		strbuf_reset(&state->buf);
+-		strbuf_grow(&state->buf, GIT_SHA1_HEXSZ);
++		strbuf_grow(&state->buf, GIT_MAX_HEXSZ);
+ 		label = p = state->buf.buf;
+ 
+ 		find_unique_abbrev_r(p, oid, default_abbrev);
+@@ -4500,7 +4500,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
+ 			size_t i = strlen(p) + 1;
+ 
+ 			oid_to_hex_r(p, oid);
+-			for (; i < GIT_SHA1_HEXSZ; i++) {
++			for (; i < the_hash_algo->hexsz; i++) {
+ 				char save = p[i];
+ 				p[i] = '\0';
+ 				if (!hashmap_get_from_hash(&state->labels,
