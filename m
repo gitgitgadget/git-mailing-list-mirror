@@ -7,43 +7,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE0E1F461
-	for <e@80x24.org>; Sun, 18 Aug 2019 19:20:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 535161F461
+	for <e@80x24.org>; Sun, 18 Aug 2019 19:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbfHRTUp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Aug 2019 15:20:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57738 "EHLO
+        id S1726926AbfHRTUr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Aug 2019 15:20:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57748 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726005AbfHRTUp (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 18 Aug 2019 15:20:45 -0400
+        by vger.kernel.org with ESMTP id S1726005AbfHRTUr (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 18 Aug 2019 15:20:47 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:81dd:eb9b:e758:604b])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3EB976047B;
-        Sun, 18 Aug 2019 19:20:38 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2CDDC60736;
+        Sun, 18 Aug 2019 19:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1566156038;
-        bh=m99XL7VEErWtPYAQ2qUC8/0KJhl1bX/KsH+dF6dgGqs=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=JfWCGwgBoD2VdDpiR2g4jc2D2UX9PVnojT9vueECFAZzzzlyizaN09Mijhd0rplRj
-         h9Io5RMKGgIm6KlgQ2kfV2sft1ut7Ssh13EkPkHN0th+oLCmmQ56KkCFOgSnepZPve
-         nsCC+ATq4+JyQZPcwS4wS/dC9DlGrO3qSJ3p6IV/+4M8MW/T0IlmlNA5o2ciTyqEhw
-         envBVx5+kYcR/qQXxgGldrVW7c0hMN5H1P2m8SB8foC+67uU1IOccfMyh0WGCrZNNk
-         fD3IYaSOeB39T6WTgo4GgHZucvV6HYdgAmZrZOC36DfYUFjqZER9MV5Biz2i/p+K/X
-         xVD2+wk14r29e22nnCVGqKCMr88K2v8UNnzRMK489xx3SbNHlqvlC7ISPFMLhHwzQX
-         +A4tt8nzq4I5C1L6005KxOreYjR6EZzoqr1fPi/Vq796qZA/uZ32CIxRABIgdSaQxC
-         OPNjpM/AY0HhsBSAGKrm6rDnqVH26Y1aqcgiCqCcPWb1ZcI7iFb
+        s=default; t=1566156044;
+        bh=P8yCDhvUZ0BVNjy3lVDLrSRJYFvrMTlDtO5h5NmPOdI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=c9crZbbDpc9046kJSehu5qHMQ+g2ekvoZOiM+0ebLYKqxJg76CPVzCbEC/oPw1BxB
+         kKwjDusTv1xqMY6Cp0fMClpGaV2lwjapXMmLZ6wUgsq8LhmE41u7rhkb5N8XHeTqig
+         xHqauCuhqkRy0qghUH4VBqZzNNdjTE+dbvPNS3VvfL9FfEk8FwE8pi8FeIEnhEXwK+
+         xYX5hjKMmylxW4wn1fvctISOOksrV1xXHTtX48B7TnVvY1p2y95CwVdPt/iGSB7hup
+         /GR192pEM3UwvauxJzUeBqtiKLk7zTanTarYqGg4Ikv+XpKyKPN+Vy/KRGQeL3A1Em
+         gdjh0THwD0QTTDZxTK4Y+G+PCHV04Ft4mP4J3kg3LfN+keWtJYO1NaO9R6U2eoh0dv
+         yUuJnFMANKl+Js0q2zkr6rkMabrtJtgN6btn2NofUjgrBHND11UknS9IOQbPCtdrkH
+         JA3ddQQqjTl9YcjDmVWPef0KL7kk3izH03hL0B9zUOwhyIfxLLq
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 00/14] Hash-independent tests, part 5
-Date:   Sun, 18 Aug 2019 19:16:32 +0000
-Message-Id: <20190818191646.868106-1-sandals@crustytoothpaste.net>
+Subject: [PATCH 01/14] t3201: abstract away SHA-1-specific constants
+Date:   Sun, 18 Aug 2019 19:16:33 +0000
+Message-Id: <20190818191646.868106-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.rc1.170.gbd704faa3e
+In-Reply-To: <20190818191646.868106-1-sandals@crustytoothpaste.net>
+References: <20190818191646.868106-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -51,44 +53,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the fifth series of test fixes for SHA-256 compatibility.  It
-consists of 15 patches fixing various tests from t3201 through t4009 and
-has only test fixes: no test helper changes are included.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
-There are approximately 75 remaining test patches (plus some additional
-code changes) required for the test suite to pass successfully with
-SHA-256, which does not include the patches required to replace SHA-1
-near-collisions in tests with actual SHA-256 near-collisions.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/t3201-branch-contains.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-brian m. carlson (14):
-  t3201: abstract away SHA-1-specific constants
-  t3206: abstract away hash size constants
-  t3301: abstract away SHA-1-specific constants
-  t3305: make hash size independent
-  t3306: abstract away SHA-1-specific constants
-  t3404: abstract away SHA-1-specific constants
-  t3430: avoid hard-coded object IDs
-  t3506: make hash independent
-  t3600: make hash size independent
-  t3800: make hash-size independent
-  t3903: abstract away SHA-1-specific constants
-  t4000: make hash size independent
-  t4002: make hash independent
-  t4009: make hash size independent
-
- t/t3201-branch-contains.sh    |   8 +-
- t/t3206-range-diff.sh         | 227 +++++++++++++++------
- t/t3301-notes.sh              | 140 ++++++++-----
- t/t3305-notes-fanout.sh       |  22 +-
- t/t3306-notes-prune.sh        |  45 ++---
- t/t3404-rebase-interactive.sh |  22 +-
- t/t3430-rebase-merges.sh      |  23 ++-
- t/t3506-cherry-pick-ff.sh     |   8 +-
- t/t3600-rm.sh                 |   4 +-
- t/t3800-mktag.sh              |  49 ++---
- t/t3903-stash.sh              |  32 ++-
- t/t4000-diff-format.sh        |   2 +-
- t/t4002-diff-basic.sh         | 367 ++++++++++++++++++++++++----------
- t/t4009-diff-rename-4.sh      |  19 +-
- 14 files changed, 640 insertions(+), 328 deletions(-)
-
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 0ea4fc4694..40251c9f8f 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -192,10 +192,10 @@ test_expect_success 'branch --merged with --verbose' '
+ 	EOF
+ 	test_cmp expect actual &&
+ 	git branch --verbose --merged topic >actual &&
+-	cat >expect <<-\EOF &&
+-	  master c77a0a9 second on master
+-	* topic  2c939f4 [ahead 1] foo
+-	  zzz    c77a0a9 second on master
++	cat >expect <<-EOF &&
++	  master $(git rev-parse --short master) second on master
++	* topic  $(git rev-parse --short topic ) [ahead 1] foo
++	  zzz    $(git rev-parse --short zzz   ) second on master
+ 	EOF
+ 	test_i18ncmp expect actual
+ '
