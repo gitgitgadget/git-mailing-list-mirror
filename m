@@ -2,99 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCD4E1F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 09:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0631F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 09:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbfHSJ0x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 05:26:53 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36893 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727148AbfHSJ0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 05:26:52 -0400
-Received: by mail-wm1-f67.google.com with SMTP id d16so858348wme.2
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 02:26:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bUDU6QPj1ox9Ojbvu2YF7Lpuwq4iU6QAeX5NJ61yQMI=;
-        b=DusBMnNcxgBEfa3VlA82GfL/36UvbUE+vaO4eruN3uQqhW4+CSUphrN9ny7VNK/NsJ
-         dS5bPesye9AoR9vRarCejfmNEGPtOGQewYKUvCAjVnINZBnC8zYW8e/kt2M4XvvGRBjI
-         1079fqXJOG5XI5H96OAgrOnkFyfq0c9VW9CjNw3ORzW70gjF4h5hc9AtJ/+KMCjbyfme
-         Fd42Gkvv9qu3piptl94kC2BwAYXrHS7bnzxjiHVOXyWllMEqeDJLu6jlywXdsrSW8u5n
-         68xkbz6k4HlbWDpQMJtsQrpJ+tru46CCpO3L+wR0Izkwbkhn/jDtCnWLw1ymHPCQxwFu
-         7sGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=bUDU6QPj1ox9Ojbvu2YF7Lpuwq4iU6QAeX5NJ61yQMI=;
-        b=Zzf5dzWTerWPb+0nj5R1v2RZ++O7W8K+Qz4FfPGyegsiVA5ddwZuklcrWRMz1PMFXI
-         3tVNbNH5NAYaxfSIQp2zqLVHuR7I+kVTyanUc3l9XvV0dB9PODl8Yx2r+hZt9qJVg1mh
-         /L3ProVdQborOf9KwwucozZSeR0Wmr/WhkxzM99tg7rZNXqcNiFNlazCeUBKrynxh+Fm
-         FFY1dTo42ftEpc8FA0UnmXgRmm+SLDSR/zQZpMxI9O5w93HuR6LgokjBtwKvvM9btBwc
-         5Ihk2u6Zg9m/9kLQns0mVKwE/f+sJnXIdlireY3KLjBB322HMIIgyCobI5O/lC7pfJIa
-         5Lzg==
-X-Gm-Message-State: APjAAAVdZqKuhXG9SJ0dZ2h/95ZhItqhdfzDzGNVN4IDFb5KAdt3+/Nu
-        QiHMl5bLhPHihEzGtdvAcOLL20gC
-X-Google-Smtp-Source: APXvYqw3slFomQQ5Y5LLTZGWE+xaiKgyvt96QsCYSPYGeOioHJalabfkTknbRtw2k/2V+o2+0X0dsg==
-X-Received: by 2002:a7b:ca5a:: with SMTP id m26mr18228104wml.134.1566206810576;
-        Mon, 19 Aug 2019 02:26:50 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
-        by smtp.gmail.com with ESMTPSA id p13sm16531834wrw.90.2019.08.19.02.26.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2019 02:26:50 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/2] git rebase: Make sure upstream branch is left alone.
-To:     Ben Wijen <ben@wijen.net>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>
-References: <20190818095349.3218-1-ben@wijen.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <0bef598c-6c89-c699-5290-ee2003db5979@gmail.com>
-Date:   Mon, 19 Aug 2019 10:26:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1726604AbfHSJlf convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 19 Aug 2019 05:41:35 -0400
+Received: from mail1.bemta26.messagelabs.com ([85.158.142.112]:43331 "EHLO
+        mail1.bemta26.messagelabs.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726366AbfHSJlf (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Aug 2019 05:41:35 -0400
+Received: from [85.158.142.199] (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits))
+        by server-1.bemta.az-b.eu-central-1.aws.symcld.net id DD/CF-30864-9CE6A5D5; Mon, 19 Aug 2019 09:41:29 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRWlGSWpSXmKPExsWi+sWpUvdkXlS
+  sQf9HZouuK91MDowenzfJBTBGsWbmJeVXJLBmHF9/gLlgo1jF2ks/mRsYVwp1MXJxCAmsZZRo
+  XrKFBc7pnL6FCcLZzShx4dIp5i5GTg42AUWJtjnT2LsYOThEBPQl+i6IgoSFBfQk9n06wwJii
+  wgYS7xrWMoMYetJvDk0C8xmEVCVWPtxFRuIzSvgIrFrSgMjiM0oICvxaOUvdhCbWUBc4taT+U
+  wgtoSAgMSSPeeZIWxRiZeP/7FC2AYSW5fuY4GwFSSefu1nhejVkViw+xMbhK0tsWzha2aIXYI
+  SJ2c+AasXEpCTuNP2i3kCo8gsJOtmIWmfhaR9FpL2BYwsqxgtkooy0zNKchMzc3QNDQx0DQ2N
+  dc10TYz0Eqt0k/RSS3WTU/NKihKBknqJ5cV6xZW5yTkpenmpJZsYgXGTUsimtYNx4aw3eocYJ
+  TmYlER5FWaFxwrxJeWnVGYkFmfEF5XmpBYfYpTh4FCS4PXLjIoVEixKTU+tSMvMAcYwTFqCg0
+  dJhPd5LlCat7ggMbc4Mx0idYrRnmPCy7mLmDkOHp0HJN/9XAwkN89duohZiCUvPy9VSpx3bg5
+  QmwBIW0ZpHtxQWMq5xCgrJczLyMDAIMRTkFqUm1mCKv+KUZyDUUmYdxXIcp7MvBK43a+AzmIC
+  Omv34UiQs0oSEVJSDUy9on9eTbynnVVyUWPlZ03BM74ncmRC329Zt3LO40fvD1zP4Tp6Y4tVn
+  CzTWV727evZzbystZ0uiGxOdeV7+lDHbeKppr5rB2MF3hnFlPD9Egycsuq/QfzNiuOuIdnsRZ
+  0bPHfOMTx8XWXx8bAr6/Py9Ba3332wWEdl2dOFb3OtBMQLsk8I/13yzeZvisysk4yOmy+/naE
+  tG6Lwzk7RqIdzw7731ou2e5SfTq6vTv6xviXkU94U3RlmKzlPOb+6p8BncvavfJW78xkeR8Un
+  PxyebxbesFLJieMQo4qPa9fee7XXLTmi38YteV59Q754ie69v0ZVbczr2x1XCVcnTBI9/bevb
+  tJbnWt/brxYvCFXiaU4I9FQi7moOBEAmSjgL7QDAAA=
+X-Env-Sender: eda@waniasset.com
+X-Msg-Ref: server-32.tower-244.messagelabs.com!1566207688!686532!1
+X-Originating-IP: [37.244.66.121]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.9; banners=waniasset.com,-,-
+X-VirusChecked: Checked
+Received: (qmail 11429 invoked from network); 19 Aug 2019 09:41:29 -0000
+Received: from unknown (HELO smtp.waniasset.com) (37.244.66.121)
+  by server-32.tower-244.messagelabs.com with ECDHE-RSA-AES256-SHA384 encrypted SMTP; 19 Aug 2019 09:41:29 -0000
+Received: from WCL-EX13MBX-DR.wcl.local (10.45.7.24) by WCL-EX13MBX.wcl.local
+ (10.45.7.22) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 19 Aug
+ 2019 10:41:26 +0100
+Received: from WCL-EX13MBX.wcl.local (10.45.7.22) by WCL-EX13MBX-DR.wcl.local
+ (10.45.7.24) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 19 Aug
+ 2019 10:41:23 +0100
+Received: from WCL-EX13MBX.wcl.local ([fe80::e996:e311:ad61:40e6]) by
+ WCL-EX13MBX.wcl.local ([fe80::e996:e311:ad61:40e6%12]) with mapi id
+ 15.00.1263.000; Mon, 19 Aug 2019 10:41:22 +0100
+From:   Ed Avis <eda@waniasset.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git switch and restore user interface
+Thread-Topic: git switch and restore user interface
+Thread-Index: AdVWcLjWfi3Pi/Y3QraS0O0y/jadrg==
+Date:   Mon, 19 Aug 2019 09:41:22 +0000
+Message-ID: <a3a66e58b1e44e88b9c11655c7c77e87@WCL-EX13MBX.wcl.local>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.45.11.140]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-In-Reply-To: <20190818095349.3218-1-ben@wijen.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben
+I think it would be helpful for git switch to print a reminder of the old and new branches.
 
-On 18/08/2019 10:53, Ben Wijen wrote:
-> I found an issue with git rebase --autostash <upstream> <branch> with an dirty worktree/index.
-> It seems the currently active branch is moved, which is not correct.
+Hi, a couple of suggestions for these experimental new commands.  Git switch should print the branch you are leaving:
 
-I'm not sure I understand what you mean by "the currently active branch 
-is moved". 'git rebase --autostash <upstream> <branch>' should checkout 
-<branch> (presumably stashing any unstaged and uncommitted changes 
-first) and then do rebase <upstream> - what's it doing instead?
+% git switch foo
+You were previously on branch bar (abcdef).
+You are now on branch foo (bcdef0).
 
-Best Wishes
+Sometimes I forget what branch I was on before and having it in the terminal history would help a lot.
 
-Phillip
 
-> The following patches contain both a test and a fix.
-> 
-> Ben Wijen (2):
->    t3420: never change upstream branch
->    rebase.c: make sure current branch isn't moved when autostashing
-> 
->   builtin/rebase.c            | 18 ++++++------------
->   t/t3420-rebase-autostash.sh | 13 +++++++++----
->   2 files changed, 15 insertions(+), 16 deletions(-)
-> 
+For git restore, it might be worth splitting the command further, into 'safe restore' and 'destructive restore'.  The safe command would always stop rather than lose data:
+
+% git safe-restore .
+The following local changes would be overwritten:
+   Fee.c
+   Foe.c
+Stash them first, or (etc etc).
+
+The command that unconditionally overwrites working copy changes should be given a different and more dangerous-sounding name.
+
+The reason I suggest this is to make sure of a sensible answer to the newcomer's question: "I just deleted a file by mistake in my working copy, how do I get it back from git?".  Too often at the moment the answer is "git checkout ." which while correct is also much too dangerous to be a first resort.  There should be an obvious and safe command for restoring missing files without losing local changes.
+
+In fact, I'd be quite happy for it to be like git clean, which in the default configuration requires some flag like -f to make it lose any local changes, even though the very purpose of git clean is to delete files.
+
+
+To learn how we protect privacy, please use this link (https://www.qma.com/gdpr.html) to read our Privacy Notice.
+
+This email and any files transmitted with it are CONFIDENTIAL and are intended solely for the use of the individual(s) or entity to whom they are addressed. Any unauthorised copying, disclosure or distribution of the material within this email is strictly forbidden. Any views or opinions presented within this email are solely those of the author and do not necessarily represent those of QMA Wadhwani (QMAW) unless otherwise specifically stated. An electronic message is not binding on its sender. Any message referring to a binding agreement must be confirmed in writing and duly signed. If you have received this email in error, please notify the sender immediately and delete the original. Telephone, electronic and other communications and conversations with QMAW and/or its associated persons may be recorded and retained.
+
+Please note that your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. If you provide personal information to us by email or otherwise, you consent to the transfer of that information to countries outside of your country of residence and these countries may have different data protection rules than your country.
+
