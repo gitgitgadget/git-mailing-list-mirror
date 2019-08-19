@@ -2,107 +2,312 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ED8D1F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 18:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFFB61F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 18:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728302AbfHSSVU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 14:21:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58035 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727808AbfHSSVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 14:21:19 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5FC116AE99;
-        Mon, 19 Aug 2019 14:21:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CwAXuvJLIdYk8dyMFgwA+PNSu0k=; b=J2TtId
-        ZcCWYfHDmUog2rUa0sKarqm/VF4yWGrcePoN9Sb0lmlbKBvkBZBpRNNIr593WvzX
-        NQwifUGBqn/Ut9gDR2YpMKZlZUjzK2QgZUGTKkPh24f2ZDCBjwxb844bVUxMOnPs
-        L2TxYKtBBjQ4wr1X5neC/rbR6co3Wy91hE9RQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=o/jYPRIFQ8CAtpg+liZPI61chiCXw7zQ
-        5DT/ijJ8XPTbg60Asa1o9QBYGCycBsYjmKo3j9Q7S/0t81fLisfgk8f4iyjIujSY
-        ZUOjVx6pre6zlH3B2JBwfXP9qITFu2uDPzcdObYW/DejOlfc+Klzt/IbGPKillPI
-        vM9Os/45mXA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C3BA16AE97;
-        Mon, 19 Aug 2019 14:21:17 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AD7316AE96;
-        Mon, 19 Aug 2019 14:21:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben <ben@wijen.net>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: Re: [PATCH 0/2] git rebase: Make sure upstream branch is left alone.
-References: <20190818095349.3218-1-ben@wijen.net>
-        <0bef598c-6c89-c699-5290-ee2003db5979@gmail.com>
-        <81b244b9-8b26-e638-56ae-827bbc522dc2@wijen.net>
-Date:   Mon, 19 Aug 2019 11:21:15 -0700
-In-Reply-To: <81b244b9-8b26-e638-56ae-827bbc522dc2@wijen.net> (ben@wijen.net's
-        message of "Mon, 19 Aug 2019 17:33:15 +0200")
-Message-ID: <xmqqef1hxbhg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728272AbfHSSkw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 14:40:52 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:60034 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727957AbfHSSkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 14:40:52 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46C2mw6CB1z5tlG;
+        Mon, 19 Aug 2019 20:40:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C3B622146;
+        Mon, 19 Aug 2019 20:40:47 +0200 (CEST)
+Subject: Re: [PATCH v2] userdiff: Add a builtin pattern for dts files
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     git@vger.kernel.org, Adrian Johnson <ajohnson@redneon.com>,
+        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+        Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+        devicetree@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+References: <20190816225658.8946-1-sboyd@kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <98f9cdc2-fa9b-b639-b906-44b17f0efd76@kdbg.org>
+Date:   Mon, 19 Aug 2019 20:40:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2282E3D4-C2AE-11E9-BC64-46F8B7964D18-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20190816225658.8946-1-sboyd@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben <ben@wijen.net> writes:
+Am 17.08.19 um 00:56 schrieb Stephen Boyd:
+> The Linux kernel receives many patches to the devicetree files each
+> release. The hunk header for those patches typically show nothing,
+> making it difficult to figure out what node is being modified without
+> applying the patch or opening the file and seeking to the context. Let's
+> add a builtin 'dts' pattern to git so that users can get better diff
+> output on dts files when they use the diff=dts driver.
+> 
+> The regex has been constructed based on the spec at devicetree.org[1]
+> 
+> [1] https://github.com/devicetree-org/devicetree-specification/releases/latest
+> 
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+> 
+> Sending this again after getting feedback and it getting stuck in
+> review[1]. I'm not sure what happened with the meta question from Junio
+> to add a way for various projects to introduce their own patterns, but
+> I'd still prefer to have this in git proper because the kernel uses git
+> extensively and we rely on git formatted patches in our workflow. I
+> recently reviewed a dts change and remembered this never got accepted.
+> 
+> Changes from v1:
+>  * Updated regex to handle anything after node names instead of
+>    requiring a '{'
+>  * Updated test for boolean relation operators
+>  * Sent out a patch to devicetree spec to document % operator
+> 
+> [1] Feedback was in 16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com
 
-> Hi Phillip,
->
-> The expected behavior: (as per v2.21.0:/git-legacy-rebase.sh:679)
->     AUTOSTASH=$(git stash create autostash)
->     git reset --hard
->     git checkout master
->     git rebase upstream
->     git stash apply $AUTOSTASH 
->
->
-> The actual behavior:
->     AUTOSTASH=$(git stash create autostash)
->     git reset --hard master
->     git checkout master
->     git rebase upstream
->     git stash apply $AUTOSTASH 
->
-> So, the problem with the actual behavior is the move of the currently active branch with 'git reset --hard master'
+Thanks. I've a few suggestions below.
 
-Your expected and actual behaviour are described above, but it is
-not mentioned out of what command (and in what settings) you expect
-the above behaviour.
+> diff --git a/t/t4018/dts-labels b/t/t4018/dts-labels
+> new file mode 100644
+> index 000000000000..27cd4921cfb6
+> --- /dev/null
+> +++ b/t/t4018/dts-labels
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1@ff00 {
+> +		label2: RIGHT {
+> +			vendor,some-property;
+> +			ChangeMe = <0x45-30>;
 
-I am guessing that the setup and the command is something along this
-line?
+In these tests, it would be worthwhile to leave another (possibly blank)
+line before the ChangeMe line in order to demonstrate that lines
+beginning with a word, such as the 'vendor,some-property;' line, are
+_not_ picked up when they are not in the hunk context.
 
-    git checkout not-the-master
-    work work work
-    git rebase --autostash upstream master
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-node-unitless b/t/t4018/dts-node-unitless
+> new file mode 100644
+> index 000000000000..c5287d91416e
+> --- /dev/null
+> +++ b/t/t4018/dts-node-unitless
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1 {
+> +		RIGHT {
+> +			prop-array = <1>, <4>;
+> +			ChangeMe = <0xffeedd00>;
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-nodes b/t/t4018/dts-nodes
+> new file mode 100644
+> index 000000000000..5a4334bb1645
+> --- /dev/null
+> +++ b/t/t4018/dts-nodes
+> @@ -0,0 +1,8 @@
+> +/ {
+> +	label_1: node1@ff00 {
+> +		RIGHT@deadf00,4000 {
+> +			#size-cells = <1>;
+> +			ChangeMe = <0xffeedd00>;
+> +		};
+> +	};
+> +};
+> diff --git a/t/t4018/dts-reference b/t/t4018/dts-reference
+> new file mode 100644
+> index 000000000000..f115d4291d25
+> --- /dev/null
+> +++ b/t/t4018/dts-reference
+> @@ -0,0 +1,8 @@
+> +&label_1 {
+> +	TEST = <455>;
+> +};
+> +
+> +&RIGHT {
+> +	vendor,some-property;
+> +	ChangeMe = <0x45-30>;
+> +};
+> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> index 912df91226f2..9a93c2a3e0dd 100755
+> --- a/t/t4034-diff-words.sh
+> +++ b/t/t4034-diff-words.sh
+> @@ -303,6 +303,7 @@ test_language_driver bibtex
+>  test_language_driver cpp
+>  test_language_driver csharp
+>  test_language_driver css
+> +test_language_driver dts
+>  test_language_driver fortran
+>  test_language_driver html
+>  test_language_driver java
+> diff --git a/t/t4034/dts/expect b/t/t4034/dts/expect
+> new file mode 100644
+> index 000000000000..560fc9918476
+> --- /dev/null
+> +++ b/t/t4034/dts/expect
+> @@ -0,0 +1,37 @@
+> +<BOLD>diff --git a/pre b/post<RESET>
+> +<BOLD>index b6a9051..7803aee 100644<RESET>
+> +<BOLD>--- a/pre<RESET>
+> +<BOLD>+++ b/post<RESET>
+> +<CYAN>@@ -1,32 +1,32 @@<RESET>
+> +/ {<RESET>
+> +	<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>: <RED>node<RESET><GREEN>new-node<RESET>@<RED>f00<RESET><GREEN>eeda<RESET> {
+> +		compatible = "<RED>mydev<RESET><GREEN>vendor,compat<RESET>";
+> +		string-prop = <RED>start<RESET><GREEN>end<RESET>: "hello <RED>world!<RESET><GREEN>world?<RESET>" <RED>end<RESET><GREEN>start<RESET>: ;
+> +		<RED>#size-cells<RESET><GREEN>#address-cells<RESET> = <<RED>0+0<RESET><GREEN>0+40<RESET>>;
+> +		reg = <<RED>0xf00<RESET><GREEN>0xeeda<RESET>>;
+> +		prop = <<GREEN>(<RESET>1<GREEN>)<RESET>>;
+> +		prop = <<GREEN>(<RESET>-1e10<GREEN>)<RESET>>;
+> +		prop = <(!<RED>3<RESET><GREEN>1<RESET>)>;
+> +		prop = <(~<RED>3<RESET><GREEN>1<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>/<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>%<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3+4<RESET><GREEN>1+2<RESET>)>;
+> +		prop = <(<RED>3-4<RESET><GREEN>1-2<RESET>)>;
+> +		prop = /bits/ <RED>64<RESET><GREEN>32<RESET> <(<RED>3<RESET><GREEN>1<RESET><<<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>>><RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>^<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>|<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&&<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>3<RESET><GREEN>1<RESET>||<RED>4<RESET><GREEN>2<RESET>)>;
+> +		prop = <(<RED>4?5<RESET><GREEN>1?2<RESET>:3)>;
+> +		list = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>, <0 0 0 <RED>0<RESET><GREEN>1<RESET>>;
+> +	};<RESET>
+> +
+> +	&<RED>phandle<RESET><GREEN>phandle2<RESET> {
+> +		<RED>pre-phandle<RESET><GREEN>prop_handle<RESET> = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>;
+> +	};<RESET>
+> +};<RESET>
+> diff --git a/t/t4034/dts/post b/t/t4034/dts/post
+> new file mode 100644
+> index 000000000000..7803aee28093
+> --- /dev/null
+> +++ b/t/t4034/dts/post
+> @@ -0,0 +1,32 @@
+> +/ {
+> +	HANDLE_2: new-node@eeda {
+> +		compatible = "vendor,compat";
+> +		string-prop = end: "hello world?" start: ;
+> +		#address-cells = <0+40>;
+> +		reg = <0xeeda>;
+> +		prop = <(1)>;
+> +		prop = <(-1e10)>;
+> +		prop = <(!1)>;
+> +		prop = <(~1)>;
+> +		prop = <(1*2)>;
+> +		prop = <(1&2)>;
+> +		prop = <(1*2)>;
+> +		prop = <(1/2)>;
+> +		prop = <(1%2)>;
+> +		prop = <(1+2)>;
+> +		prop = <(1-2)>;
+> +		prop = /bits/ 32 <(1<<2)>;
+> +		prop = <(1>>2)>;
+> +		prop = <(1&2)>;
+> +		prop = <(1^2)>;
+> +		prop = <(1|2)>;
+> +		prop = <(1&&2)>;
+> +		prop = <(1||2)>;
+> +		prop = <(1?2:3)>;
+> +		list = <&HANDLE_2>, <0 0 0 1>;
+> +	};
+> +
+> +	&phandle2 {
+> +		prop_handle = <&HANDLE_2>;
+> +	};
+> +};
+> diff --git a/t/t4034/dts/pre b/t/t4034/dts/pre
+> new file mode 100644
+> index 000000000000..b6a905113c22
+> --- /dev/null
+> +++ b/t/t4034/dts/pre
+> @@ -0,0 +1,32 @@
+> +/ {
+> +	this_handle: node@f00 {
+> +		compatible = "mydev";
+> +		string-prop = start: "hello world!" end: ;
+> +		#size-cells = <0+0>;
+> +		reg = <0xf00>;
+> +		prop = <1>;
+> +		prop = <-1e10>;
+> +		prop = <(!3)>;
+> +		prop = <(~3)>;
+> +		prop = <(3*4)>;
+> +		prop = <(3&4)>;
+> +		prop = <(3*4)>;
+> +		prop = <(3/4)>;
+> +		prop = <(3%4)>;
+> +		prop = <(3+4)>;
+> +		prop = <(3-4)>;
+> +		prop = /bits/ 64 <(3<<4)>;
+> +		prop = <(3>>4)>;
+> +		prop = <(3&4)>;
+> +		prop = <(3^4)>;
+> +		prop = <(3|4)>;
+> +		prop = <(3&&4)>;
+> +		prop = <(3||4)>;
+> +		prop = <(4?5:3)>;
+> +		list = <&this_handle>, <0 0 0 0>;
+> +	};
+> +
+> +	&phandle {
+> +		pre-phandle = <&this_handle>;
+> +	};
+> +};
+> diff --git a/userdiff.c b/userdiff.c
+> index e74a6d402255..1db5d30aaebe 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -23,6 +23,15 @@ IPATTERN("ada",
+>  	 "[a-zA-Z][a-zA-Z0-9_]*"
+>  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+>  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+> +PATTERNS("dts",
+> +	 /* Node name with optional label and unit address */
+> +	 "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*:[ \t]*)?[a-zA-Z][a-zA-Z0-9,._+-]*(@[a-zA-Z0-9,._+-]+)?"
 
-That is, you have checked out a branch that is not the 'master'
-branch, you have accumulated some work in the working tree, and then
-you ask "please stash away the work in progress and then rebase the
-'master' branch on top of the upstream branch"?
+From the examples I see in this patch, it looks like lines ending in a
+';' are not candidates, everything that begins with 'word' or '&word'
+is. Wouldn't that greatly simplify these patterns?
 
-If so, my expectation for the third step (i.e. the actual "rebase")
-aligns with yours.  After stashing away the local change, we want to
-get a clean working tree, checkout the master branch and rebase it
-on top of the upstream.  With the command sequence you wrote in the
-"actual" section, after stashing away the local change, the current
-branch that is *not* the master is reset to the tip of 'master',
-which would not be what we want.
+	"!;\n"
+	/* lines beginning with a word optionally preceded by '&' */
+	"^[ \t]*(&?([a-zA-Z_].*)"
 
+> +	 /* Reference */
+> +	 "|&[a-zA-Z_][a-zA-Z0-9_]*)[ \t]*[^;]*)$",
+
+Note that you don't have to replicate the syntax faithfully in the
+patterns because you can assume that files adhere to the correct syntax.
+You could merge this into the former pattern by just matching "&?" after
+the initial whitespace.
+
+> +	 /* -- */
+> +	 /* Property names and math operators */
+> +	 "[a-zA-Z0-9,._+?#-]+"
+> +	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
+>  IPATTERN("fortran",
+>  	 "!^([C*]|[ \t]*!)\n"
+>  	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
+> 
+
+-- Hannes
