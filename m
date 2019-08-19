@@ -2,107 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0631F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 09:41:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29AB01F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 09:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726604AbfHSJlf convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 19 Aug 2019 05:41:35 -0400
-Received: from mail1.bemta26.messagelabs.com ([85.158.142.112]:43331 "EHLO
-        mail1.bemta26.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726366AbfHSJlf (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Aug 2019 05:41:35 -0400
-Received: from [85.158.142.199] (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits))
-        by server-1.bemta.az-b.eu-central-1.aws.symcld.net id DD/CF-30864-9CE6A5D5; Mon, 19 Aug 2019 09:41:29 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRWlGSWpSXmKPExsWi+sWpUvdkXlS
-  sQf9HZouuK91MDowenzfJBTBGsWbmJeVXJLBmHF9/gLlgo1jF2ks/mRsYVwp1MXJxCAmsZZRo
-  XrKFBc7pnL6FCcLZzShx4dIp5i5GTg42AUWJtjnT2LsYOThEBPQl+i6IgoSFBfQk9n06wwJii
-  wgYS7xrWMoMYetJvDk0C8xmEVCVWPtxFRuIzSvgIrFrSgMjiM0oICvxaOUvdhCbWUBc4taT+U
-  wgtoSAgMSSPeeZIWxRiZeP/7FC2AYSW5fuY4GwFSSefu1nhejVkViw+xMbhK0tsWzha2aIXYI
-  SJ2c+AasXEpCTuNP2i3kCo8gsJOtmIWmfhaR9FpL2BYwsqxgtkooy0zNKchMzc3QNDQx0DQ2N
-  dc10TYz0Eqt0k/RSS3WTU/NKihKBknqJ5cV6xZW5yTkpenmpJZsYgXGTUsimtYNx4aw3eocYJ
-  TmYlER5FWaFxwrxJeWnVGYkFmfEF5XmpBYfYpTh4FCS4PXLjIoVEixKTU+tSMvMAcYwTFqCg0
-  dJhPd5LlCat7ggMbc4Mx0idYrRnmPCy7mLmDkOHp0HJN/9XAwkN89duohZiCUvPy9VSpx3bg5
-  QmwBIW0ZpHtxQWMq5xCgrJczLyMDAIMRTkFqUm1mCKv+KUZyDUUmYdxXIcp7MvBK43a+AzmIC
-  Omv34UiQs0oSEVJSDUy9on9eTbynnVVyUWPlZ03BM74ncmRC329Zt3LO40fvD1zP4Tp6Y4tVn
-  CzTWV727evZzbystZ0uiGxOdeV7+lDHbeKppr5rB2MF3hnFlPD9Egycsuq/QfzNiuOuIdnsRZ
-  0bPHfOMTx8XWXx8bAr6/Py9Ba3332wWEdl2dOFb3OtBMQLsk8I/13yzeZvisysk4yOmy+/naE
-  tG6Lwzk7RqIdzw7731ou2e5SfTq6vTv6xviXkU94U3RlmKzlPOb+6p8BncvavfJW78xkeR8Un
-  PxyebxbesFLJieMQo4qPa9fee7XXLTmi38YteV59Q754ie69v0ZVbczr2x1XCVcnTBI9/bevb
-  tJbnWt/brxYvCFXiaU4I9FQi7moOBEAmSjgL7QDAAA=
-X-Env-Sender: eda@waniasset.com
-X-Msg-Ref: server-32.tower-244.messagelabs.com!1566207688!686532!1
-X-Originating-IP: [37.244.66.121]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=waniasset.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 11429 invoked from network); 19 Aug 2019 09:41:29 -0000
-Received: from unknown (HELO smtp.waniasset.com) (37.244.66.121)
-  by server-32.tower-244.messagelabs.com with ECDHE-RSA-AES256-SHA384 encrypted SMTP; 19 Aug 2019 09:41:29 -0000
-Received: from WCL-EX13MBX-DR.wcl.local (10.45.7.24) by WCL-EX13MBX.wcl.local
- (10.45.7.22) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 19 Aug
- 2019 10:41:26 +0100
-Received: from WCL-EX13MBX.wcl.local (10.45.7.22) by WCL-EX13MBX-DR.wcl.local
- (10.45.7.24) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 19 Aug
- 2019 10:41:23 +0100
-Received: from WCL-EX13MBX.wcl.local ([fe80::e996:e311:ad61:40e6]) by
- WCL-EX13MBX.wcl.local ([fe80::e996:e311:ad61:40e6%12]) with mapi id
- 15.00.1263.000; Mon, 19 Aug 2019 10:41:22 +0100
-From:   Ed Avis <eda@waniasset.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git switch and restore user interface
-Thread-Topic: git switch and restore user interface
-Thread-Index: AdVWcLjWfi3Pi/Y3QraS0O0y/jadrg==
-Date:   Mon, 19 Aug 2019 09:41:22 +0000
-Message-ID: <a3a66e58b1e44e88b9c11655c7c77e87@WCL-EX13MBX.wcl.local>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.45.11.140]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1726947AbfHSJlq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 05:41:46 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50830 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbfHSJlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 05:41:46 -0400
+Received: by mail-wm1-f66.google.com with SMTP id v15so996223wml.0
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 02:41:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=G7TaG6K3AXzd9r1xaUmBDyc+Hj0jhUqxQHSEMRfQ0XU=;
+        b=DPCUPyEbZJ/QANegZmgffSAl0O+WRKDecL5tEH80mR0KyTUSQynj3MP/UmBN6/bRPw
+         u4GJ0TDMnuXKQG4WEp59Vijx+cuWxdU+rc8dpSZPRhYCGl6cEQtu3XZVLPndueBv9Cyb
+         T6kdZH0viWgw56H6/l5rwxYJz9cMDDB1Rn0PbWTJVMoY5UuT+eoyPjDB8hmV2najvpzg
+         voyUHEs9WMWxp5GYCzNtSAfrRuO0EMFw6w4thgAAD4ro2liD2YPOuMyJwqQo5VLBRTeL
+         o17Ii1W40Y+Sm0GsvEtWzhuhJ+qliiVzpOzZvr4nvbOkiJYbvs5xAtbB8RrFExJLDqFS
+         WDog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=G7TaG6K3AXzd9r1xaUmBDyc+Hj0jhUqxQHSEMRfQ0XU=;
+        b=D7I1rFBHEnRRnlc/GanD1nJYHEhS4c9TsBlII+NsCJX6DCB2BJI9zBtuh+mTpA2B96
+         e3FDKr+jLBQhxFU5aoi5/otu6xn07lhJkLUThuEJg5IPo9vvWDPzoxF2JZVNKcBpzf9d
+         swmh5JfsopH7D8TPJE1iBS3fYCeuzxOg40o3ekTLtzcgn90wx1tVsalvHJmlwmZowlGy
+         fOBexahewaw7CDRqT3rX49/U3x7zCtlPq5UCrJg3PgvP9oxHw6j4ptCzaZtw/dFmSk7Y
+         ztnDYGjBeZSLn1O8TPNMo5W2v5Xua+v0KtKAPLnxU130/bx/5GqwUPeKnDW+azmeiCcq
+         XMVA==
+X-Gm-Message-State: APjAAAVMXqrmxvKZktINdJnzMI++0IjOeH6o2QXurfho9jCc7GVGjJJi
+        08o155ZnqsP9kT1xqpnkvdQ=
+X-Google-Smtp-Source: APXvYqwwImQcy8PF1XRZVw3te2jUOAYDBnjv526GOCx5iBkkYXk8Axe98sWCULvkXn4iU1EPuyTTZA==
+X-Received: by 2002:a1c:61d4:: with SMTP id v203mr20312853wmb.164.1566207703885;
+        Mon, 19 Aug 2019 02:41:43 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
+        by smtp.gmail.com with ESMTPSA id q20sm46766546wrc.79.2019.08.19.02.41.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Aug 2019 02:41:43 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
+ <20190818184403.861907-1-sandals@crustytoothpaste.net>
+ <20190818184403.861907-3-sandals@crustytoothpaste.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
+Date:   Mon, 19 Aug 2019 10:41:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190818184403.861907-3-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think it would be helpful for git switch to print a reminder of the old and new branches.
+Hi Brian
 
-Hi, a couple of suggestions for these experimental new commands.  Git switch should print the branch you are leaving:
+On 18/08/2019 19:44, brian m. carlson wrote:
+> When applying multiple patches with git am, or when rebasing using the
+> am backend, it's possible that one of our patches has updated a
+> gitattributes file. Currently, we cache this information, so if a
+> file in a subsequent patch has attributes applied, the file will be
+> written out with the attributes in place as of the time we started the
+> rebase or am operation, not with the attributes applied by the previous
+> patch. This problem does not occur when using the -m or -i flags to
+> rebase.
 
-% git switch foo
-You were previously on branch bar (abcdef).
-You are now on branch foo (bcdef0).
+Do you know why -m and -i aren't affected?
 
-Sometimes I forget what branch I was on before and having it in the terminal history would help a lot.
+> To ensure we write the correct data into the working tree, expire the
+> cache after each patch that touches a path ending in ".gitattributes".
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>   apply.c           |  7 +++++++
+>   convert.c         |  9 ++++++++-
+>   convert.h         |  6 ++++++
+>   t/t3400-rebase.sh | 36 ++++++++++++++++++++++++++++++++++++
+>   4 files changed, 57 insertions(+), 1 deletion(-)
+> 
+> diff --git a/apply.c b/apply.c
+> index cde95369bb..d57bc635e4 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -4643,6 +4643,7 @@ static int apply_patch(struct apply_state *state,
+>   	struct patch *list = NULL, **listp = &list;
+>   	int skipped_patch = 0;
+>   	int res = 0;
+> +	int flush_attributes = 0;
+>   
+>   	state->patch_input_file = filename;
+>   	if (read_patch_file(&buf, fd) < 0)
+> @@ -4670,6 +4671,10 @@ static int apply_patch(struct apply_state *state,
+>   			patch_stats(state, patch);
+>   			*listp = patch;
+>   			listp = &patch->next;
+> +
+> +			if ((patch->new_name && ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE)) ||
+> +			    (patch->old_name && ends_with_path_components(patch->old_name, GITATTRIBUTES_FILE)))
+> +				flush_attributes = 1;
 
+style nit - these lines are very long compared to 80 characters
 
-For git restore, it might be worth splitting the command further, into 'safe restore' and 'destructive restore'.  The safe command would always stop rather than lose data:
+>   		}
+>   		else {
+>   			if (state->apply_verbosity > verbosity_normal)
+> @@ -4746,6 +4751,8 @@ static int apply_patch(struct apply_state *state,
+>   	if (state->summary && state->apply_verbosity > verbosity_silent)
+>   		summary_patch_list(list);
+>   
+> +	if (flush_attributes)
+> +		reset_parsed_attributes();
+>   end:
+>   	free_patch_list(list);
+>   	strbuf_release(&buf);
+> diff --git a/convert.c b/convert.c
+> index 94ff837649..030e9b81b9 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -1293,10 +1293,11 @@ struct conv_attrs {
+>   	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+>   };
+>   
+> +static struct attr_check *check;
 
-% git safe-restore .
-The following local changes would be overwritten:
-   Fee.c
-   Foe.c
-Stash them first, or (etc etc).
+I was concerned about the impact adding a file global if we ever want to 
+multi-thread this for submodules, but looking through the file there are 
+a couple of others already so this isn't creating a new problem.
 
-The command that unconditionally overwrites working copy changes should be given a different and more dangerous-sounding name.
+Best Wishes
 
-The reason I suggest this is to make sure of a sensible answer to the newcomer's question: "I just deleted a file by mistake in my working copy, how do I get it back from git?".  Too often at the moment the answer is "git checkout ." which while correct is also much too dangerous to be a first resort.  There should be an obvious and safe command for restoring missing files without losing local changes.
+Phillip
 
-In fact, I'd be quite happy for it to be like git clean, which in the default configuration requires some flag like -f to make it lose any local changes, even though the very purpose of git clean is to delete files.
-
-
-To learn how we protect privacy, please use this link (https://www.qma.com/gdpr.html) to read our Privacy Notice.
-
-This email and any files transmitted with it are CONFIDENTIAL and are intended solely for the use of the individual(s) or entity to whom they are addressed. Any unauthorised copying, disclosure or distribution of the material within this email is strictly forbidden. Any views or opinions presented within this email are solely those of the author and do not necessarily represent those of QMA Wadhwani (QMAW) unless otherwise specifically stated. An electronic message is not binding on its sender. Any message referring to a binding agreement must be confirmed in writing and duly signed. If you have received this email in error, please notify the sender immediately and delete the original. Telephone, electronic and other communications and conversations with QMAW and/or its associated persons may be recorded and retained.
-
-Please note that your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. If you provide personal information to us by email or otherwise, you consent to the transfer of that information to countries outside of your country of residence and these countries may have different data protection rules than your country.
-
+> +
+>   static void convert_attrs(const struct index_state *istate,
+>   			  struct conv_attrs *ca, const char *path)
+>   {
+> -	static struct attr_check *check;
+>   	struct attr_check_item *ccheck = NULL;
+>   
+>   	if (!check) {
+> @@ -1339,6 +1340,12 @@ static void convert_attrs(const struct index_state *istate,
+>   		ca->crlf_action = CRLF_AUTO_INPUT;
+>   }
+>   
+> +void reset_parsed_attributes(void)
+> +{
+> +	attr_check_free(check);
+> +	check = NULL;
+> +}
+> +
+>   int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
+>   {
+>   	struct conv_attrs ca;
+> diff --git a/convert.h b/convert.h
+> index 831559f10d..3710969d43 100644
+> --- a/convert.h
+> +++ b/convert.h
+> @@ -94,6 +94,12 @@ void convert_to_git_filter_fd(const struct index_state *istate,
+>   int would_convert_to_git_filter_fd(const struct index_state *istate,
+>   				   const char *path);
+>   
+> +/*
+> + * Reset the internal list of attributes used by convert_to_git and
+> + * convert_to_working_tree.
+> + */
+> +void reset_parsed_attributes(void);
+> +
+>   /*****************************************************************
+>    *
+>    * Streaming conversion support
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 80b23fd326..23469cc789 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -301,6 +301,42 @@ test_expect_success 'rebase --am and --show-current-patch' '
+>   	)
+>   '
+>   
+> +test_expect_success 'rebase --am and .gitattributes' '
+> +	test_create_repo attributes &&
+> +	(
+> +		cd attributes &&
+> +		test_commit init &&
+> +		git config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
+> +		git config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
+> +
+> +		test_commit second &&
+> +		git checkout -b test HEAD^ &&
+> +
+> +		echo "*.txt filter=test" >.gitattributes &&
+> +		git add .gitattributes &&
+> +		test_commit third &&
+> +
+> +		echo "This text is smudged." >a.txt &&
+> +		git add a.txt &&
+> +		test_commit fourth &&
+> +
+> +		git checkout -b removal HEAD^ &&
+> +		git rm .gitattributes &&
+> +		git add -u &&
+> +		test_commit fifth &&
+> +		git cherry-pick test &&
+> +
+> +		git checkout test &&
+> +		git rebase master &&
+> +		grep "smudged" a.txt &&
+> +
+> +		git checkout removal &&
+> +		git reset --hard &&
+> +		git rebase master &&
+> +		grep "clean" a.txt
+> +	)
+> +'
+> +
+>   test_expect_success 'rebase--merge.sh and --show-current-patch' '
+>   	test_create_repo conflict-merge &&
+>   	(
+> 
