@@ -2,312 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFFB61F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 18:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B951F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 19:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728272AbfHSSkw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 14:40:52 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:60034 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727957AbfHSSkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 14:40:52 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46C2mw6CB1z5tlG;
-        Mon, 19 Aug 2019 20:40:48 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id C3B622146;
-        Mon, 19 Aug 2019 20:40:47 +0200 (CEST)
-Subject: Re: [PATCH v2] userdiff: Add a builtin pattern for dts files
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     git@vger.kernel.org, Adrian Johnson <ajohnson@redneon.com>,
-        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-        Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-        devicetree@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-References: <20190816225658.8946-1-sboyd@kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <98f9cdc2-fa9b-b639-b906-44b17f0efd76@kdbg.org>
-Date:   Mon, 19 Aug 2019 20:40:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728385AbfHSTXm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 15:23:42 -0400
+Received: from mail-qt1-f170.google.com ([209.85.160.170]:42935 "EHLO
+        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728298AbfHSTXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 15:23:42 -0400
+Received: by mail-qt1-f170.google.com with SMTP id t12so3179612qtp.9
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 12:23:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=elJ2/1/+YtXu2aMOV08CJdFgRwyoLW1t6WeYTScsOL8=;
+        b=PpMUzMFd7vYAikDroBKiDpmFhjdclJlVhncN/cY3wm2iGPUxO5JgoJ/6yLfWyU+2w5
+         0V3/wvLlAGlg/5/ds8LtWLgPCYob1iH+t8s+HXT7A4rIDF7I6Zr9HvHxfFSAG/I7s3PN
+         qvjGI6w2uYmrDxla0CSEF/D3UolzQPMG3k5yAcjZh6l8eksDZzf7N2p1/OInzviFIF9Z
+         p+p3EDncVvwt/LcU4Fq4KPssPWljdraXKUnEsC38XWf158btHzUc6ZGr4gfe+j1mtcXL
+         pyMqHgS+yYre7nFcVtsRrmPl96mVplgyQohWoo3ukjKMkCzTWhWNRMvpZoUpfXUhu232
+         gglg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=elJ2/1/+YtXu2aMOV08CJdFgRwyoLW1t6WeYTScsOL8=;
+        b=doKRzVYV17/xz4nJBGgXsOfkPaYhUapD9TOUyoSJzn96eyNbWBRxAipOD/mx947buS
+         1q/HGYawFN1g5syD6KAEWc8VwGXClvQ7n0GT3PVVUiQNlRxqLI/gVowz+kVkDPMRWKFx
+         gKEaMef2ZcYYKQAIX6iqPOFxP1VN6Yr8WzlspPwO2bC7bo9gvGlMoYsEuJEZR5NX4tk4
+         zLJpk7kY882QJpjhI/8QWWWunquOWA2uaiHAoLd9ifpPJwym5tc6Bsc5R/mucklwfOpj
+         oRodTB6D6IrVMylsKI1NYv8BQlt7W+fjAgjAG+37enVyOWS9JFWGdJ+/kBJrWXon3tbg
+         fJ+Q==
+X-Gm-Message-State: APjAAAUDGxBDHBuRFCOQgMM3jb//fB+XHraP49bxoi11SR0csE1vbWvY
+        1U4v6SCYCtuIy2Vzy5A0RE57LccGh8qQIqGCMnS/glY+GbQ=
+X-Google-Smtp-Source: APXvYqx4nBGTIf9RDaTt/JPmOf6zsIQaZPZ6YCQ1V/AsFyWi1VK4Rk157C83sD5kO9KqR7nnbcTkrchzEPmMpQJULJg=
+X-Received: by 2002:ad4:54a6:: with SMTP id r6mr9688048qvy.128.1566242620150;
+ Mon, 19 Aug 2019 12:23:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190816225658.8946-1-sboyd@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Martin Nordholts <enselic@gmail.com>
+Date:   Mon, 19 Aug 2019 21:23:29 +0200
+Message-ID: <CAC-DJzJBHKrXG=3sXKPdaMrPCDXWOWgOBnuXjiHnJ_VdC-7Z8A@mail.gmail.com>
+Subject: gitk causes SIGSEGV in macOS com.apple.WindowServer when started
+ without Safe Mode
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.08.19 um 00:56 schrieb Stephen Boyd:
-> The Linux kernel receives many patches to the devicetree files each
-> release. The hunk header for those patches typically show nothing,
-> making it difficult to figure out what node is being modified without
-> applying the patch or opening the file and seeking to the context. Let's
-> add a builtin 'dts' pattern to git so that users can get better diff
-> output on dts files when they use the diff=dts driver.
-> 
-> The regex has been constructed based on the spec at devicetree.org[1]
-> 
-> [1] https://github.com/devicetree-org/devicetree-specification/releases/latest
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
-> 
-> Sending this again after getting feedback and it getting stuck in
-> review[1]. I'm not sure what happened with the meta question from Junio
-> to add a way for various projects to introduce their own patterns, but
-> I'd still prefer to have this in git proper because the kernel uses git
-> extensively and we rely on git formatted patches in our workflow. I
-> recently reviewed a dts change and remembered this never got accepted.
-> 
-> Changes from v1:
->  * Updated regex to handle anything after node names instead of
->    requiring a '{'
->  * Updated test for boolean relation operators
->  * Sent out a patch to devicetree spec to document % operator
-> 
-> [1] Feedback was in 16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com
+Hi
 
-Thanks. I've a few suggestions below.
+I run a MacBook Pro (15-inch, 2018) with macOS 10.14.6 (18G87)
+I run git version 2.23.0 via brew install git.
 
-> diff --git a/t/t4018/dts-labels b/t/t4018/dts-labels
-> new file mode 100644
-> index 000000000000..27cd4921cfb6
-> --- /dev/null
-> +++ b/t/t4018/dts-labels
-> @@ -0,0 +1,8 @@
-> +/ {
-> +	label_1: node1@ff00 {
-> +		label2: RIGHT {
-> +			vendor,some-property;
-> +			ChangeMe = <0x45-30>;
+As soon as I launch gitk, I get an empty gitk window for about 0.5
+seconds before getting thrown back to the macOS login screen due to a
+SIGSEGV in com.apple.WindowServer.
 
-In these tests, it would be worthwhile to leave another (possibly blank)
-line before the ChangeMe line in order to demonstrate that lines
-beginning with a word, such as the 'vendor,some-property;' line, are
-_not_ picked up when they are not in the hunk context.
+If I launch gitk in macOS Safe Mode (reboot with Shift key pressed),
+gitk can be started just fine.
 
-> +		};
-> +	};
-> +};
-> diff --git a/t/t4018/dts-node-unitless b/t/t4018/dts-node-unitless
-> new file mode 100644
-> index 000000000000..c5287d91416e
-> --- /dev/null
-> +++ b/t/t4018/dts-node-unitless
-> @@ -0,0 +1,8 @@
-> +/ {
-> +	label_1: node1 {
-> +		RIGHT {
-> +			prop-array = <1>, <4>;
-> +			ChangeMe = <0xffeedd00>;
-> +		};
-> +	};
-> +};
-> diff --git a/t/t4018/dts-nodes b/t/t4018/dts-nodes
-> new file mode 100644
-> index 000000000000..5a4334bb1645
-> --- /dev/null
-> +++ b/t/t4018/dts-nodes
-> @@ -0,0 +1,8 @@
-> +/ {
-> +	label_1: node1@ff00 {
-> +		RIGHT@deadf00,4000 {
-> +			#size-cells = <1>;
-> +			ChangeMe = <0xffeedd00>;
-> +		};
-> +	};
-> +};
-> diff --git a/t/t4018/dts-reference b/t/t4018/dts-reference
-> new file mode 100644
-> index 000000000000..f115d4291d25
-> --- /dev/null
-> +++ b/t/t4018/dts-reference
-> @@ -0,0 +1,8 @@
-> +&label_1 {
-> +	TEST = <455>;
-> +};
-> +
-> +&RIGHT {
-> +	vendor,some-property;
-> +	ChangeMe = <0x45-30>;
-> +};
-> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-> index 912df91226f2..9a93c2a3e0dd 100755
-> --- a/t/t4034-diff-words.sh
-> +++ b/t/t4034-diff-words.sh
-> @@ -303,6 +303,7 @@ test_language_driver bibtex
->  test_language_driver cpp
->  test_language_driver csharp
->  test_language_driver css
-> +test_language_driver dts
->  test_language_driver fortran
->  test_language_driver html
->  test_language_driver java
-> diff --git a/t/t4034/dts/expect b/t/t4034/dts/expect
-> new file mode 100644
-> index 000000000000..560fc9918476
-> --- /dev/null
-> +++ b/t/t4034/dts/expect
-> @@ -0,0 +1,37 @@
-> +<BOLD>diff --git a/pre b/post<RESET>
-> +<BOLD>index b6a9051..7803aee 100644<RESET>
-> +<BOLD>--- a/pre<RESET>
-> +<BOLD>+++ b/post<RESET>
-> +<CYAN>@@ -1,32 +1,32 @@<RESET>
-> +/ {<RESET>
-> +	<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>: <RED>node<RESET><GREEN>new-node<RESET>@<RED>f00<RESET><GREEN>eeda<RESET> {
-> +		compatible = "<RED>mydev<RESET><GREEN>vendor,compat<RESET>";
-> +		string-prop = <RED>start<RESET><GREEN>end<RESET>: "hello <RED>world!<RESET><GREEN>world?<RESET>" <RED>end<RESET><GREEN>start<RESET>: ;
-> +		<RED>#size-cells<RESET><GREEN>#address-cells<RESET> = <<RED>0+0<RESET><GREEN>0+40<RESET>>;
-> +		reg = <<RED>0xf00<RESET><GREEN>0xeeda<RESET>>;
-> +		prop = <<GREEN>(<RESET>1<GREEN>)<RESET>>;
-> +		prop = <<GREEN>(<RESET>-1e10<GREEN>)<RESET>>;
-> +		prop = <(!<RED>3<RESET><GREEN>1<RESET>)>;
-> +		prop = <(~<RED>3<RESET><GREEN>1<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>*<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>/<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>%<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3+4<RESET><GREEN>1+2<RESET>)>;
-> +		prop = <(<RED>3-4<RESET><GREEN>1-2<RESET>)>;
-> +		prop = /bits/ <RED>64<RESET><GREEN>32<RESET> <(<RED>3<RESET><GREEN>1<RESET><<<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>>><RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>^<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>|<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>&&<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>3<RESET><GREEN>1<RESET>||<RED>4<RESET><GREEN>2<RESET>)>;
-> +		prop = <(<RED>4?5<RESET><GREEN>1?2<RESET>:3)>;
-> +		list = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>, <0 0 0 <RED>0<RESET><GREEN>1<RESET>>;
-> +	};<RESET>
-> +
-> +	&<RED>phandle<RESET><GREEN>phandle2<RESET> {
-> +		<RED>pre-phandle<RESET><GREEN>prop_handle<RESET> = <&<RED>this_handle<RESET><GREEN>HANDLE_2<RESET>>;
-> +	};<RESET>
-> +};<RESET>
-> diff --git a/t/t4034/dts/post b/t/t4034/dts/post
-> new file mode 100644
-> index 000000000000..7803aee28093
-> --- /dev/null
-> +++ b/t/t4034/dts/post
-> @@ -0,0 +1,32 @@
-> +/ {
-> +	HANDLE_2: new-node@eeda {
-> +		compatible = "vendor,compat";
-> +		string-prop = end: "hello world?" start: ;
-> +		#address-cells = <0+40>;
-> +		reg = <0xeeda>;
-> +		prop = <(1)>;
-> +		prop = <(-1e10)>;
-> +		prop = <(!1)>;
-> +		prop = <(~1)>;
-> +		prop = <(1*2)>;
-> +		prop = <(1&2)>;
-> +		prop = <(1*2)>;
-> +		prop = <(1/2)>;
-> +		prop = <(1%2)>;
-> +		prop = <(1+2)>;
-> +		prop = <(1-2)>;
-> +		prop = /bits/ 32 <(1<<2)>;
-> +		prop = <(1>>2)>;
-> +		prop = <(1&2)>;
-> +		prop = <(1^2)>;
-> +		prop = <(1|2)>;
-> +		prop = <(1&&2)>;
-> +		prop = <(1||2)>;
-> +		prop = <(1?2:3)>;
-> +		list = <&HANDLE_2>, <0 0 0 1>;
-> +	};
-> +
-> +	&phandle2 {
-> +		prop_handle = <&HANDLE_2>;
-> +	};
-> +};
-> diff --git a/t/t4034/dts/pre b/t/t4034/dts/pre
-> new file mode 100644
-> index 000000000000..b6a905113c22
-> --- /dev/null
-> +++ b/t/t4034/dts/pre
-> @@ -0,0 +1,32 @@
-> +/ {
-> +	this_handle: node@f00 {
-> +		compatible = "mydev";
-> +		string-prop = start: "hello world!" end: ;
-> +		#size-cells = <0+0>;
-> +		reg = <0xf00>;
-> +		prop = <1>;
-> +		prop = <-1e10>;
-> +		prop = <(!3)>;
-> +		prop = <(~3)>;
-> +		prop = <(3*4)>;
-> +		prop = <(3&4)>;
-> +		prop = <(3*4)>;
-> +		prop = <(3/4)>;
-> +		prop = <(3%4)>;
-> +		prop = <(3+4)>;
-> +		prop = <(3-4)>;
-> +		prop = /bits/ 64 <(3<<4)>;
-> +		prop = <(3>>4)>;
-> +		prop = <(3&4)>;
-> +		prop = <(3^4)>;
-> +		prop = <(3|4)>;
-> +		prop = <(3&&4)>;
-> +		prop = <(3||4)>;
-> +		prop = <(4?5:3)>;
-> +		list = <&this_handle>, <0 0 0 0>;
-> +	};
-> +
-> +	&phandle {
-> +		pre-phandle = <&this_handle>;
-> +	};
-> +};
-> diff --git a/userdiff.c b/userdiff.c
-> index e74a6d402255..1db5d30aaebe 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -23,6 +23,15 @@ IPATTERN("ada",
->  	 "[a-zA-Z][a-zA-Z0-9_]*"
->  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
->  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
-> +PATTERNS("dts",
-> +	 /* Node name with optional label and unit address */
-> +	 "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*:[ \t]*)?[a-zA-Z][a-zA-Z0-9,._+-]*(@[a-zA-Z0-9,._+-]+)?"
+When it crashes without Safe Mode, I see the following log messages in
+Console.app.
 
-From the examples I see in this patch, it looks like lines ending in a
-';' are not candidates, everything that begins with 'word' or '&word'
-is. Wouldn't that greatly simplify these patterns?
+Can anyone else reproduce this?
 
-	"!;\n"
-	/* lines beginning with a word optionally preceded by '&' */
-	"^[ \t]*(&?([a-zA-Z_].*)"
+Best regards,
+Martin Nordholts
 
-> +	 /* Reference */
-> +	 "|&[a-zA-Z_][a-zA-Z0-9_]*)[ \t]*[^;]*)$",
-
-Note that you don't have to replicate the syntax faithfully in the
-patterns because you can assume that files adhere to the correct syntax.
-You could merge this into the former pattern by just matching "&?" after
-the initial whitespace.
-
-> +	 /* -- */
-> +	 /* Property names and math operators */
-> +	 "[a-zA-Z0-9,._+?#-]+"
-> +	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
->  IPATTERN("fortran",
->  	 "!^([C*]|[ \t]*!)\n"
->  	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
-> 
-
--- Hannes
+Aug 19 20:04:47 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WindowServer[677]): Service exited due to SIGSEGV | sent by
+exc handler[677]
+Aug 19 20:04:47 martins-mbp-2 sessionlogoutd[1211]: DEAD_PROCESS: 676 console
+Aug 19 20:04:47 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.ViewBridgeAuxiliary[1212]): Service exited with abnormal
+code: 2
+Aug 19 20:04:47 martins-mbp-2 diagnosticd[1155]: System mode client
+stopped - Console (1154) - clearing mode: 0xa, still active: 0x0
+Aug 19 20:04:47 martins-mbp-2 diagnosticd[1155]: Posting empty stream filter
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.76991C21-BB99-401A-BDDA-6F756DC5CA7E[1005]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.24706A0C-74AD-4CDA-87F3-620A95F47116[1047]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.06826255-40C1-40B2-844D-9A1B7D247380[854]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.2E190561-3E95-4391-86C0-A1BE5AAEB71F[1057]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.0F4448C0-E12A-4C0A-8B0F-569CC2CD38FB[1074]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.2DFF6196-EC40-48AE-A934-4C3A6522C214[1136]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.44C9CDA1-309A-4732-B1BA-C95368F3E328[1077]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.DD50C739-9EAC-48F1-BDCF-07051E50A01C[1059]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.F2ECC3EE-1DC1-4F91-BCF4-587499D45667[1085]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.00A2CFBF-4C9F-49AE-8B79-D810900410F2[1132]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.2F0D8F2C-B093-46EA-9D81-14BFB2776C32[766]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.coreservices.useractivityd[771]): Service exited due to
+SIGKILL | sent by useractivityd[771]
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.CA39E5DC-4A94-4B48-971F-14FED587BFAA[1072]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.Dock.agent[727]): Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.DEF0E32E-11B6-4451-BD0B-A076C5956ED9[1036]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.WebKit.WebContent.8801C6A2-1E62-4140-B471-03CD427AD62C[1133]):
+Service exited with abnormal code: 1
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.corespeechd[921]): Service exited due to SIGKILL | sent by
+corespeechd[921]
+Aug 19 20:04:48 martins-mbp-2 login[853]: DEAD_PROCESS: 853 ttys002
+Aug 19 20:04:48 martins-mbp-2 login[798]: DEAD_PROCESS: 798 ttys000
+Aug 19 20:04:48 martins-mbp-2 login[833]: DEAD_PROCESS: 833 ttys001
+Aug 19 20:04:48 martins-mbp-2 WindowServer[1215]: DEPRECATED USE in
+libdispatch client: dispatch source activated with no event handler
+set; set a breakpoint on _dispatch_bug_deprecated to debug
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.preference.security.remoteservice[1128]): Service exited
+due to SIGKILL | sent by com.apple.preference.security.re[1128]
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.imklaunchagent): This service is defined to be constantly
+running and is inherently inefficient.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.coreservices.UASharedPasteboardProgressUI): Unknown key for
+Boolean: DrainMessagesAfterFailedInit
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.pluginkit.pkd (lint): Service sets EnableTransactions=false
+and EnablePressuredExit=true, which makes no sense. Enabling
+Transactions.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.UserEventAgent-LoginWindow): This service is defined to be
+constantly running and is inherently inefficient.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.universalaccessd (lint): The HideUntilCheckIn property is an
+architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.VoiceOver (lint): The HideUntilCheckIn property is an
+architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.AssistiveControl (lint): The HideUntilCheckIn property is an
+architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.DwellControl (lint): The HideUntilCheckIn property is an
+architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.universalaccesscontrol (lint): The HideUntilCheckIn property
+is an architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.noticeboard.agent (lint): EnablePressuredExit is not
+compatible with KeepAlive=true. Ignoring EnablePressuredExit.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.noticeboard.agent): This service is defined to be
+constantly running and is inherently inefficient.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.user.loginwindow.1214.4294967295):
+com.apple.tiswitcher (lint): The HideUntilCheckIn property is an
+architectural performance issue. Please transition away from it.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.coreservices.useractivityd): Unknown key for Boolean:
+DrainMessagesAfterFailedInit
+Aug 19 20:04:48 martins-mbp-2 SecurityAgent[1233]: objc[1233]: Class
+TKTokenRefImpl is implemented in both
+/System/Library/Frameworks/Security.framework/Versions/A/Security
+(0x7fff8fec5098) and
+/System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle/Contents/MacOS/SecurityAgent
+(0x104f13d00). One of the two will be used. Which one is undefined.
+Aug 19 20:04:48 martins-mbp-2 SecurityAgent[1233]: objc[1233]: Class
+TKTokenRefCtkd is implemented in both
+/System/Library/Frameworks/Security.framework/Versions/A/Security
+(0x7fff8fec50c0) and
+/System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle/Contents/MacOS/SecurityAgent
+(0x104f13d28). One of the two will be used. Which one is undefined.
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.system): Service tried to register a
+port for an endpoint declared in its launchd.plist(5): service =
+com.apple.ManagedClient, endpoint = com.apple.mcxd
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.pid.SecurityAgent.1233): Path not
+allowed in target domain: type = uid, path =
+/System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+error = 1: Operation not permitted, origin =
+/System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.pid.SecurityAgent.1233): Path not
+allowed in target domain: type = uid, path =
+/System/Library/PrivateFrameworks/FamilyControls.framework/Versions/A/XPCServices/com.apple.FCiCloudPrefUpdater.xpc/Contents/MacOS/com.apple.FCiCloudPrefUpdater
+error = 1: Operation not permitted, origin =
+/System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.xpc.launchd.domain.pid.SecurityAgent.1233): Path not
+allowed in target domain: type = uid, path =
+/System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+error = 1: Operation not permitted, origin =
+/System/Library/Frameworks/Security.framework/Versions/A/MachServices/SecurityAgent.bundle
+Aug 19 20:04:48 martins-mbp-2 com.apple.xpc.launchd[1]
+(com.apple.AmbientDisplayAgent): Service only ran for 0 seconds.
+Pushing respawn out by 10 seconds.
+Aug 19 20:04:49 martins-mbp-2 ctkahp[1244]: objc[1244]: Class
+TKTokenRefImpl is implemented in both
+/System/Library/Frameworks/Security.framework/Versions/A/Security
+(0x7fff8fec5098) and
+/System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+(0x10c357738). One of the two will be used. Which one is undefined.
+Aug 19 20:04:49 martins-mbp-2 ctkahp[1244]: objc[1244]: Class
+TKTokenRefCtkd is implemented in both
+/System/Library/Frameworks/Security.framework/Versions/A/Security
+(0x7fff8fec50c0) and
+/System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+(0x10c357760). One of the two will be used. Which one is undefined.
