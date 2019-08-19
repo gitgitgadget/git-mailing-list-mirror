@@ -2,176 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C636A1F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 21:41:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730661F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 21:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728530AbfHSVlf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 17:41:35 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:34983 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728435AbfHSVle (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 17:41:34 -0400
-Received: from localhost.localdomain (unknown [1.186.12.8])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id A80FF100004;
-        Mon, 19 Aug 2019 21:41:31 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     <git@vger.kernel.org>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] git-gui: Add the ability to revert selected hunk
-Date:   Tue, 20 Aug 2019 03:11:10 +0530
-Message-Id: <20190819214110.26461-4-me@yadavpratyush.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190819214110.26461-1-me@yadavpratyush.com>
-References: <20190819214110.26461-1-me@yadavpratyush.com>
+        id S1728484AbfHSVzw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 17:55:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58652 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728494AbfHSVzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 17:55:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5BE5671FBC;
+        Mon, 19 Aug 2019 17:55:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WOxukyOjnR1LVR28sWz/swe+QBs=; b=RUL0mp
+        ZrPbNzfCcHVIwjd+/qBTWPmufjQPsdnpGJ5C8M4ilwukKth2aGxpeffbv4/f3QZ1
+        VJZqjw2P2O4cBmSjux/vWapVrKJm7LwVC1TzMDUw3Rq4e/2BvYMCwcQ/UPIyeO+b
+        I59jH/dngBluMGZqwgyUIzH1fKKCAUJi7XiWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RxtjSSEqeKGIm+K5oo4Q8v9/r20vaFi8
+        x4YZ+Dw7chbrhonWBcq6nfHzAwzwvZR3Ft3OF0pHrrLinVv+xHiic+uo04W5QqEn
+        G2o2WeMzBuse+d6/YBUojNE5k6mn3QnlzNH88tCNOIPUoiGQNOk/kMH3GmWJVjs3
+        bpjMdeX2JsY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 54F5F71FBA;
+        Mon, 19 Aug 2019 17:55:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7FF9471FB8;
+        Mon, 19 Aug 2019 17:55:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Wijen <ben@wijen.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>
+Subject: Re: [PATCH 1/2] t3420: never change upstream branch
+References: <20190818095349.3218-1-ben@wijen.net>
+        <20190818095349.3218-2-ben@wijen.net>
+Date:   Mon, 19 Aug 2019 14:55:42 -0700
+In-Reply-To: <20190818095349.3218-2-ben@wijen.net> (Ben Wijen's message of
+        "Sun, 18 Aug 2019 11:53:48 +0200")
+Message-ID: <xmqqr25gx1k1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 182046F2-C2CC-11E9-889E-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like the user can select a hunk to stage or unstage, add the
-ability to revert hunks.
+Ben Wijen <ben@wijen.net> writes:
 
-Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
----
- git-gui/git-gui.sh   | 14 +++++++++++++-
- git-gui/lib/diff.tcl | 34 +++++++++++++++++++++++++++++-----
- 2 files changed, 42 insertions(+), 6 deletions(-)
+> When using `git rebase --autostash <upstream> <branch>` and
+> the workarea is dirty, the active branch is incorrectly reset
+> to the rebase <upstream> branch.
+>
+> This test will check for such behavior.
+>
+> Signed-off-by: Ben Wijen <ben@wijen.net>
+> ---
+>  t/t3420-rebase-autostash.sh | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index b8f4d03467..867e4e0b17 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -306,4 +306,13 @@ test_expect_success 'branch is left alone when possible' '
+>  	test unchanged-branch = "$(git rev-parse --abbrev-ref HEAD)"
+>  '
+>  
+> +test_expect_success 'never change upstream branch' '
+> +	test_when_finished "git reset --hard && git branch -D upstream" &&
+> +	git checkout -b upstream unrelated-onto-branch &&
+> +	echo changed >file0 &&
+> +	git add file0 &&
+> +	git rebase --autostash upstream feature-branch &&
+> +	test $(git rev-parse upstream) = $(git rev-parse unrelated-onto-branch)
+> +'
+> +
+>  test_done
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 2011894bef..cfa682ff59 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3606,9 +3606,14 @@ set ctxm .vpane.lower.diff.body.ctxm
- menu $ctxm -tearoff 0
- $ctxm add command \
- 	-label [mc "Apply/Reverse Hunk"] \
--	-command {apply_hunk $cursorX $cursorY}
-+	-command {apply_or_revert_hunk $cursorX $cursorY 0}
- set ui_diff_applyhunk [$ctxm index last]
- lappend diff_actions [list $ctxm entryconf $ui_diff_applyhunk -state]
-+$ctxm add command \
-+	-label [mc "Revert Hunk"] \
-+	-command {apply_or_revert_hunk $cursorX $cursorY 1}
-+set ui_diff_reverthunk [$ctxm index last]
-+lappend diff_actions [list $ctxm entryconf $ui_diff_reverthunk -state]
- $ctxm add command \
- 	-label [mc "Apply/Reverse Line"] \
- 	-command {apply_or_revert_range_or_line $cursorX $cursorY 0; do_rescan}
-@@ -3715,6 +3720,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
- 		set has_range [expr {[$::ui_diff tag nextrange sel 0.0] != {}}]
- 		if {$::ui_index eq $::current_diff_side} {
- 			set l [mc "Unstage Hunk From Commit"]
-+			set h [mc "Revert Hunk"]
-+
- 			if {$has_range} {
- 				set t [mc "Unstage Lines From Commit"]
- 				set r [mc "Revert Lines"]
-@@ -3724,6 +3731,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
- 			}
- 		} else {
- 			set l [mc "Stage Hunk For Commit"]
-+			set h [mc "Revert Hunk"]
-+
- 			if {$has_range} {
- 				set t [mc "Stage Lines For Commit"]
- 				set r [mc "Revert Lines"]
-@@ -3758,6 +3767,9 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
- 		$ctxm entryconf $::ui_diff_applyline -state $s -label $t
- 		$ctxm entryconf $::ui_diff_revertline -state $revert_state \
- 			-label $r
-+		$ctxm entryconf $::ui_diff_reverthunk -state $revert_state \
-+			-label $h
-+
- 		tk_popup $ctxm $X $Y
- 	}
- }
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 4b2b00df4b..a818e68dad 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -567,30 +567,50 @@ proc read_diff {fd conflict_size cont_info} {
- 	}
- }
- 
--proc apply_hunk {x y} {
-+proc apply_or_revert_hunk {x y revert} {
- 	global current_diff_path current_diff_header current_diff_side
- 	global ui_diff ui_index file_states
- 
- 	if {$current_diff_path eq {} || $current_diff_header eq {}} return
- 	if {![lock_index apply_hunk]} return
- 
--	set apply_cmd {apply --cached --whitespace=nowarn}
-+	set apply_cmd {apply --whitespace=nowarn}
- 	set mi [lindex $file_states($current_diff_path) 0]
- 	if {$current_diff_side eq $ui_index} {
- 		set failed_msg [mc "Failed to unstage selected hunk."]
--		lappend apply_cmd --reverse
-+		lappend apply_cmd --reverse --cached
- 		if {[string index $mi 0] ne {M}} {
- 			unlock_index
- 			return
- 		}
- 	} else {
--		set failed_msg [mc "Failed to stage selected hunk."]
-+		if {$revert} {
-+			set failed_msg [mc "Failed to revert selected hunk."]
-+			lappend apply_cmd --reverse
-+		} else {
-+			set failed_msg [mc "Failed to stage selected hunk."]
-+			lappend apply_cmd --cached
-+		}
-+
- 		if {[string index $mi 1] ne {M}} {
- 			unlock_index
- 			return
- 		}
- 	}
- 
-+	if {$revert} {
-+		set query "[mc "Revert changes in file %s?" \
-+			[short_path $current_diff_path]]
-+
-+[mc "The selected hunk will be permanently lost by the revert."]"
-+
-+		set reply [revert_dialog $query]
-+		if {$reply ne 1} {
-+			unlock_index
-+			return
-+		}
-+	}
-+
- 	set s_lno [lindex [split [$ui_diff index @$x,$y] .] 0]
- 	set s_lno [$ui_diff search -backwards -regexp ^@@ $s_lno.0 0.0]
- 	if {$s_lno eq {}} {
-@@ -619,13 +639,17 @@ proc apply_hunk {x y} {
- 	$ui_diff delete $s_lno $e_lno
- 	$ui_diff conf -state disabled
- 
-+	# Check if the hunk was the last one in the file.
- 	if {[$ui_diff get 1.0 end] eq "\n"} {
- 		set o _
- 	} else {
- 		set o ?
- 	}
- 
--	if {$current_diff_side eq $ui_index} {
-+	# Update the status flags.
-+	if {$revert} {
-+		set mi [string index $mi 0]$o
-+	} elseif {$current_diff_side eq $ui_index} {
- 		set mi ${o}M
- 	} elseif {[string index $mi 0] eq {_}} {
- 		set mi M$o
--- 
-2.21.0
+If you are going to make these into two separate commits (which I do
+not necessarily recommend), introduce it as "test_expect_failure" in
+step 1/2 and flip it to "test_expect_success" in step 2/2, when the
+breakage is corrected.
+
+This breakage may have happened somewhere between v2.19 and v2.20,
+if my hunch is correct.  If it is easy to identify the exact point
+of breakage, it may make sense to note it in the log message of 2/2
+as well.  My guess is 176f5d96 ("built-in rebase --autostash: leave
+the current branch alone if possible", 2018-11-07) is the plausible
+candidate (iow, I suspect that the "do not detach" optimization was
+made a bit too aggressively by that commit), but don't quote me on
+it as this was purely done by "git log --grep -p" and not compiling
+or running any tests ;-)
+
+Thanks.
+
 
