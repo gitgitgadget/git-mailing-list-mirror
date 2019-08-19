@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D4F1F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBBAC1F461
 	for <e@80x24.org>; Mon, 19 Aug 2019 02:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726028AbfHSChl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Aug 2019 22:37:41 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35197 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726254AbfHSChk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Aug 2019 22:37:40 -0400
-Received: by mail-io1-f68.google.com with SMTP id i22so807575ioh.2
-        for <git@vger.kernel.org>; Sun, 18 Aug 2019 19:37:40 -0700 (PDT)
+        id S1726477AbfHSChn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Aug 2019 22:37:43 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:33734 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbfHSChn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Aug 2019 22:37:43 -0400
+Received: by mail-io1-f67.google.com with SMTP id z3so818268iog.0
+        for <git@vger.kernel.org>; Sun, 18 Aug 2019 19:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=gSgcLkGjFQvkbemdd0RfcKQtgdzFOOG5Ggqz1dwOXjM=;
-        b=TZMo8txQgWvxTmkHDlm6BETaTXreFAFNjtMUqoM3NOkgTPYNSDCBIWYuB0EBVkSeTZ
-         2viSH1U6GbQPVgkGJwLoT4kabIqzlHDqw9U0v4vmTcxa5gMCj2cVXE2ShNxMjpsPAz5d
-         pk7bnkW79iU3ndMVuzKYSBW/86HHpc8o3ANP/dewWnCVFFrVUGcP+uBtlNmvVrUlC1Ca
-         /Zxeleqy4nhC9r4AoBBh2DqeI+tmYzzzM2aASW0mKQV0yvJFPPUOHSVlVnksJTJhyVuC
-         srRZ/GGHK9gMNHjEfyjHpUCBHWWnEGgnI/2bLp60+5I5GqYuKoKNee4TNIHiyb4Xso+W
-         d4Mg==
+        bh=/+TTp6u6au2xiIduX5JaeQyUS2857e3M5+0F8gjNV2g=;
+        b=gvXzDFCOU3xK6R+Pm1m65/LNAqPA9/T76lyHGiUxtIc0YxCRV/VFyvRXGkxJgdqNJa
+         bup8CdgbjovIT0CUwHVSdX34eAwFmJqKmF4x8QlCGcd+B225EmqNfNQiT/utXXy7VnI6
+         7iMye59XenRnigPgX2CSBOcEcQcrMprydV0oqxmZLrGzhFvVGV3TT0Yguo21QVKKzHDn
+         XbhoQ0hIvBZLUcRhINPKu3YE1AV8RPLIE7F7KlRiD6FEWphpCmxWdeUEG9xR8jYP5o6D
+         X17eOPSiXf6Hdo1wPvbtWrtlm/LN0w3dD4U0FQkqrizjr4XXI59Xo1dFTG/wanqUxRSy
+         uCPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gSgcLkGjFQvkbemdd0RfcKQtgdzFOOG5Ggqz1dwOXjM=;
-        b=aaXm5FfFTHF5UyQPK5twgTnteMJRBto+JWIZEUVbjUejWtf7ktp2tw4cHKGALuRWmX
-         xUCqZW/HSRnOECAkfkTcqGnFI4Ba+voR0JvynaIasDfa9lLDWeiCNlVvV7kY1mZI7QZq
-         2dsrhx0UTWUwXOQSbLWrT6EHDsTpa6rSw5vcAkNt2xps8K5Dzvkfqaza74rh00KBeaO7
-         KLPZf4Ch/PDQmIiXI0E4hmyW9MPyLvpyFWG05y6RblycYqTdlylXV4AswgSJhXmL3yRq
-         Aq0yn7evzdeNnNOLUZsO8u+AYhib4kJGBCt0OlKAofukbYEz33mYi1UYyJ1fBzmuwgJg
-         UMgg==
-X-Gm-Message-State: APjAAAW1ONa/pm0//hbPcjYe/X0Y8SwbqgthCB64vnldMRrTWxqCRs83
-        mByMTQP2OIwMB1P7L/JByGBD0Wc5
-X-Google-Smtp-Source: APXvYqxiXscpnXCdbc2qGZDv4OSg/B4Q2d54a1OHiJhkB7gAzz4DLzx+lW4qOhLF0GmYqnp4MXK5Xg==
-X-Received: by 2002:a5e:9747:: with SMTP id h7mr8299214ioq.299.1566182259412;
-        Sun, 18 Aug 2019 19:37:39 -0700 (PDT)
+        bh=/+TTp6u6au2xiIduX5JaeQyUS2857e3M5+0F8gjNV2g=;
+        b=SadQkVMNITh0ibLkG3fuq8iGEz4vTznk1UvX1d68orH/fPmi6o514X9rDK1BCVoJ1p
+         s+QY3tl4uwr2SZ4oD3uTYRH7e3lvl3bSUS4HigvmIeHpxi9giMRQ64iPoIyKL8JIgcvy
+         yg3HvTXjx7aRjltcSZ1TKVH5SkJFggDMCxhqkNAoIZ8zss9bLy2O0E5CbI/qUm1q2VQL
+         ZE2oNz4+sPwISNLk1DR+30h+mjsAG9y7Ot72N80sQJD6+qllbvvwoXkJ+YYVOg5nJPE3
+         l35vG9P8bp2J2+jRwawakJx/QIBymNLey93E85dlZaWtTdK7MSfry/fXmw2JOCtDjAAI
+         ETkQ==
+X-Gm-Message-State: APjAAAV5brmba2f01zBqsBqTVSgwUbryC3eEzYeqsfaqwBEooQUmuBh0
+        zoZsxdlAGzlWp5vSpvxbKdWpM5xi
+X-Google-Smtp-Source: APXvYqz514+g4yuFl9v53GhB20h5QnE9sixucgcTTf18dwd3uZtg6qnVVV1rvg4dmyxJKXq3M+zIZg==
+X-Received: by 2002:a05:6638:35a:: with SMTP id x26mr14854600jap.104.1566182261649;
+        Sun, 18 Aug 2019 19:37:41 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id r7sm11071408ioa.71.2019.08.18.19.37.38
+        by smtp.gmail.com with ESMTPSA id k24sm12227539ioj.39.2019.08.18.19.37.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Aug 2019 19:37:38 -0700 (PDT)
-Date:   Sun, 18 Aug 2019 22:37:37 -0400
+        Sun, 18 Aug 2019 19:37:41 -0700 (PDT)
+Date:   Sun, 18 Aug 2019 22:37:39 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] Doc: add more detail for git-format-patch
-Message-ID: <7619da962d1fc804392e3552fbd56bf4bc68ac38.1566182184.git.liu.denton@gmail.com>
+Subject: [PATCH 3/3] format-patch: infer cover letter from branch description
+Message-ID: <5cc5e354b6d84609f3d1de087b3390488abe5343.1566182184.git.liu.denton@gmail.com>
 References: <cover.1566182184.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -68,100 +68,240 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-format-patch.txt, we were missing some key user information.
-First of all, using the `--to` and `--cc` options don't override
-`format.to` and `format.cc` variables, respectively. They add on to each
-other. Document this.
+We used to populate the subject of the cover letter generated by
+git-format-patch with "*** SUBJECT HERE ***". However, if a user submits
+multiple patchsets, they may want to keep a consistent subject between
+rerolls.
 
-In addition, document the special value of `--base=auto`.
-
-Next, while we're at it, surround option arguments with <>.
-
-Finally, document the `format.outputDirectory` config and change
-`format.coverletter` to use camelcase.
+If git-format-patch is run with `--infer-cover-letter` or
+`format.inferCoverSubject`, infer the subject for the cover letter from
+the top line(s) of a branch description, similar to how a subject is
+read from a commit message.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-format-patch.txt | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ Documentation/config/format.txt    |  5 +++
+ Documentation/git-format-patch.txt | 10 ++++++
+ builtin/log.c                      | 56 +++++++++++++++++++-----------
+ t/t4014-format-patch.sh            | 33 ++++++++++++++++++
+ 4 files changed, 83 insertions(+), 21 deletions(-)
 
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index 414a5a8a9d..84a40544c5 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -36,6 +36,11 @@ format.subjectPrefix::
+ 	The default for format-patch is to output files with the '[PATCH]'
+ 	subject prefix. Use this variable to change that prefix.
+ 
++format.inferCoverSubject::
++	A boolean that controls whether or not to infer the subject for
++	the cover letter based on the branch's description. See the
++	--infer-cover-subject option in linkgit:git-format-patch[1].
++
+ format.signature::
+ 	The default for format-patch is to output a signature containing
+ 	the Git version number. Use this variable to change that default.
 diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index b9b97e63ae..0e2dd59c0f 100644
+index 0e2dd59c0f..757a74cf8a 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -17,9 +17,9 @@ SYNOPSIS
- 		   [--signature-file=<file>]
- 		   [-n | --numbered | -N | --no-numbered]
+@@ -19,6 +19,7 @@ SYNOPSIS
  		   [--start-number <n>] [--numbered-files]
--		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
-+		   [--in-reply-to=<Message-Id>] [--suffix=.<sfx>]
+ 		   [--in-reply-to=<Message-Id>] [--suffix=.<sfx>]
  		   [--ignore-if-in-upstream]
--		   [--rfc] [--subject-prefix=Subject-Prefix]
-+		   [--rfc] [--subject-prefix=<Subject-Prefix>]
++		   [--[no-]infer-cover-subject]
+ 		   [--rfc] [--subject-prefix=<Subject-Prefix>]
  		   [(--reroll-count|-v) <n>]
  		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet]
-@@ -159,7 +159,7 @@ Beware that the default for 'git send-email' is to thread emails
- itself.  If you want `git format-patch` to take care of threading, you
- will want to ensure that threading is disabled for `git send-email`.
+@@ -171,6 +172,14 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
  
----in-reply-to=Message-Id::
-+--in-reply-to=<Message-Id>::
- 	Make the first mail (or all the mails with `--no-thread`) appear as a
- 	reply to the given Message-Id, which avoids breaking threads to
- 	provide a new patch series.
-@@ -193,13 +193,17 @@ will want to ensure that threading is disabled for `git send-email`.
- 
- --to=<email>::
- 	Add a `To:` header to the email headers. This is in addition
--	to any configured headers, and may be used multiple times.
-+	to any configured headers, and may be used multiple times. The
-+	emails given will be used along with any emails given by
-+	`format.to` configurations.
- 	The negated form `--no-to` discards all `To:` headers added so
- 	far (from config or command line).
- 
- --cc=<email>::
- 	Add a `Cc:` header to the email headers. This is in addition
--	to any configured headers, and may be used multiple times.
-+	to any configured headers, and may be used multiple times. The
-+	emails given will be used along with any emails given by
-+	`format.cc` configurations.
- 	The negated form `--no-cc` discards all `Cc:` headers added so
- 	far (from config or command line).
- 
-@@ -314,7 +318,8 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
- --base=<commit>::
- 	Record the base tree information to identify the state the
- 	patch series applies to.  See the BASE TREE INFORMATION section
--	below for details.
-+	below for details. If <commit> is equal to "auto", a base commit
-+	is automatically chosen.
- 
- --root::
- 	Treat the revision argument as a <revision range>, even if it
-@@ -330,8 +335,9 @@ CONFIGURATION
- -------------
- You can specify extra mail header lines to be added to each message,
- defaults for the subject prefix and file suffix, number patches when
--outputting more than one patch, add "To" or "Cc:" headers, configure
--attachments, and sign off patches with configuration variables.
-+outputting more than one patch, add "To:" or "Cc:" headers, configure
-+attachments, change the patch output directory, and sign off patches
-+with configuration variables.
- 
- ------------
- [format]
-@@ -343,7 +349,8 @@ attachments, and sign off patches with configuration variables.
- 	cc = <email>
- 	attach [ = mime-boundary-string ]
++--[no-]infer-cover-subject::
++	Instead of using the default "*** SUBJECT HERE ***" subject for
++	the cover letter, infer the subject from the branch's
++	description.
+++
++Similar to a commit message, the subject is inferred as the beginning of
++the description up to and excluding the first blank line.
++
+ --subject-prefix=<Subject-Prefix>::
+ 	Instead of the standard '[PATCH]' prefix in the subject
+ 	line, instead use '[<Subject-Prefix>]'. This
+@@ -351,6 +360,7 @@ with configuration variables.
  	signOff = true
--	coverletter = auto
-+	outputDirectory = <directory>
-+	coverLetter = auto
+ 	outputDirectory = <directory>
+ 	coverLetter = auto
++	inferCoverSubject = true
  ------------
  
  
+diff --git a/builtin/log.c b/builtin/log.c
+index 44b10b3415..b15754e282 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -774,6 +774,7 @@ static const char *signature = git_version_string;
+ static const char *signature_file;
+ static int config_cover_letter;
+ static const char *config_output_directory;
++static int infer_cover_subject;
+ 
+ enum {
+ 	COVER_UNSET,
+@@ -887,6 +888,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		}
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.infercoversubject")) {
++		infer_cover_subject = git_config_bool(var, value);
++		return 0;
++	}
+ 
+ 	return git_log_config(var, value, cb);
+ }
+@@ -993,20 +998,6 @@ static void print_signature(FILE *file)
+ 	putc('\n', file);
+ }
+ 
+-static void add_branch_description(struct strbuf *buf, const char *branch_name)
+-{
+-	struct strbuf desc = STRBUF_INIT;
+-	if (!branch_name || !*branch_name)
+-		return;
+-	read_branch_desc(&desc, branch_name);
+-	if (desc.len) {
+-		strbuf_addch(buf, '\n');
+-		strbuf_addbuf(buf, &desc);
+-		strbuf_addch(buf, '\n');
+-	}
+-	strbuf_release(&desc);
+-}
+-
+ static char *find_branch_name(struct rev_info *rev)
+ {
+ 	int i, positive = -1;
+@@ -1057,13 +1048,17 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      struct commit *origin,
+ 			      int nr, struct commit **list,
+ 			      const char *branch_name,
++			      int infer_subject,
+ 			      int quiet)
+ {
+ 	const char *committer;
+-	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
+-	const char *msg;
++	const char *subject = "*** SUBJECT HERE ***";
++	const char *body = "*** BLURB HERE ***";
++	const char *description = NULL;
+ 	struct shortlog log;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct strbuf description_sb = STRBUF_INIT;
++	struct strbuf subject_sb = STRBUF_INIT;
+ 	int i;
+ 	const char *encoding = "UTF-8";
+ 	int need_8bit_cte = 0;
+@@ -1091,17 +1086,34 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	if (!branch_name)
+ 		branch_name = find_branch_name(rev);
+ 
+-	msg = body;
++	if (branch_name && *branch_name)
++		read_branch_desc(&description_sb, branch_name);
++
++	if (description_sb.len) {
++		if (infer_subject) {
++			description = format_subject(&subject_sb, description_sb.buf, " ");
++			subject = subject_sb.buf;
++		} else {
++			description = description_sb.buf;
++		}
++	}
++
+ 	pp.fmt = CMIT_FMT_EMAIL;
+ 	pp.date_mode.type = DATE_RFC2822;
+ 	pp.rev = rev;
+ 	pp.print_email_subject = 1;
+ 	pp_user_info(&pp, NULL, &sb, committer, encoding);
+-	pp_title_line(&pp, &msg, &sb, encoding, need_8bit_cte);
+-	pp_remainder(&pp, &msg, &sb, 0);
+-	add_branch_description(&sb, branch_name);
++	pp_title_line(&pp, &subject, &sb, encoding, need_8bit_cte);
++	pp_remainder(&pp, &body, &sb, 0);
++	if (description) {
++		strbuf_addch(&sb, '\n');
++		strbuf_addstr(&sb, description);
++		strbuf_addch(&sb, '\n');
++	}
+ 	fprintf(rev->diffopt.file, "%s\n", sb.buf);
+ 
++	strbuf_release(&description_sb);
++	strbuf_release(&subject_sb);
+ 	strbuf_release(&sb);
+ 
+ 	shortlog_init(&log);
+@@ -1577,6 +1589,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "rfc", &rev, NULL,
+ 			    N_("Use [RFC PATCH] instead of [PATCH]"),
+ 			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, rfc_callback },
++		OPT_BOOL(0, "infer-cover-subject", &infer_cover_subject,
++			    N_("infer a cover letter subject from the branch description")),
+ 		{ OPTION_CALLBACK, 0, "subject-prefix", &rev, N_("prefix"),
+ 			    N_("Use [<prefix>] instead of [PATCH]"),
+ 			    PARSE_OPT_NONEG, subject_prefix_callback },
+@@ -1916,7 +1930,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		if (thread)
+ 			gen_message_id(&rev, "cover");
+ 		make_cover_letter(&rev, use_stdout,
+-				  origin, nr, list, branch_name, quiet);
++				  origin, nr, list, branch_name, infer_cover_subject, quiet);
+ 		print_bases(&bases, rev.diffopt.file);
+ 		print_signature(rev.diffopt.file);
+ 		total++;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index d6aa41b8c6..a544d0c704 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1558,6 +1558,39 @@ test_expect_success 'format patch ignores color.ui' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'cover letter with config subject' '
++	test_config branch.rebuild-1.description "config subject
++
++body" &&
++	test_config format.inferCoverSubject true &&
++	git checkout rebuild-1 &&
++	git format-patch --stdout --cover-letter master >actual &&
++	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
++	grep "^body" actual
++'
++
++test_expect_success 'cover letter with command-line subject' '
++	test_config branch.rebuild-1.description "command-line subject
++
++body" &&
++	git checkout rebuild-1 &&
++	git format-patch --stdout --cover-letter --infer-cover-subject master >actual &&
++	grep "^Subject: \[PATCH 0/2\] command-line subject$" actual &&
++	grep "^body" actual
++'
++
++test_expect_success 'cover letter with command-line --no-infer-cover-subject overrides config' '
++	test_config branch.rebuild-1.description "config subject
++
++body" &&
++	test_config format.inferCoverSubject true &&
++	git checkout rebuild-1 &&
++	git format-patch --stdout --cover-letter --no-infer-cover-subject master >actual &&
++	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
++	grep "^config subject" actual &&
++	grep "^body" actual
++'
++
+ test_expect_success 'cover letter using branch description (1)' '
+ 	git checkout rebuild-1 &&
+ 	test_config branch.rebuild-1.description hello &&
 -- 
 2.23.0.248.g3a9dd8fb08
 
