@@ -2,77 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B431F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 21:35:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBF241F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 21:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbfHSVfm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 17:35:42 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:41739 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728018AbfHSVfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 17:35:41 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46C6fg3pMNz5tlC;
-        Mon, 19 Aug 2019 23:35:39 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 0E4B62B7;
-        Mon, 19 Aug 2019 23:35:39 +0200 (CEST)
-Subject: Re: [PATCH v2] userdiff: Add a builtin pattern for dts files
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     git@vger.kernel.org, Adrian Johnson <ajohnson@redneon.com>,
-        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        devicetree@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-References: <20190816225658.8946-1-sboyd@kernel.org>
- <98f9cdc2-fa9b-b639-b906-44b17f0efd76@kdbg.org>
- <20190819204451.522D422CEB@mail.kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <806dbf7a-0488-6dde-70b9-a62cc5dca23e@kdbg.org>
-Date:   Mon, 19 Aug 2019 23:35:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1728366AbfHSVgc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 17:36:32 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37583 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728055AbfHSVgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 17:36:32 -0400
+Received: by mail-pg1-f195.google.com with SMTP id d1so1930246pgp.4
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 14:36:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N7UqrF6zcyJbLyw2BZAWKqeCOyIzGrZBKrLx0k1wRDk=;
+        b=pQLIFO6tIwNTPGriANtAgXeWbi8jWCpdovjHHRyU35mqJfAtYOge2quS1zKaDbNAFK
+         kUbenB5HV4/Y6VN2kcGZcmQwTEyei+gyRA2GoVt0W0N2PIy3Imj+jOeRnA0zghe5GGMq
+         BkCc5wdDB5RxTAHLObP0pIdHwuUYuhc0mIyVycUxwfdud94SKFRx5VbTZ9Asea7bWP1v
+         3lh7DsnpXreknchNIaAtj6i2u7lr016NrXz3VDY9DW2gH+pD6GOjlzg1PPQmHuEhCrND
+         CDbpGELf7FOXpTXNY4drPKfdHZCvp1nwutXygUAFjoAptV+XP6h1czl/yAezoFS/PqqI
+         2dnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N7UqrF6zcyJbLyw2BZAWKqeCOyIzGrZBKrLx0k1wRDk=;
+        b=ME1bIPaT1u5osFkkk2e5UphQZJ6p//vtafLv+YZw1w1H3QdXlg0+gtEzZGZsXmufus
+         JSOmppLEqNKd657T/MZWe+QII6tqSwpxdrNoCEpQdNrBoRjmdhy6KYFtjkLxgKAoYceA
+         bih6L34/TM2m6ria5cDZdXZLWriGOk7FbiuOamz6APJsGGiHUkXvftxYWdMH5wZqhEH7
+         W7y0SkMtKfA1Ch/b/m4ySX1PN6nuf9YkG3VvCvLByJMTYK21zMeCDHyOLiPo61GoyUBV
+         I6r42sVfgQ2bsShoIguWLCpKYsIxTdl7epG9DPMDPU21YzJ+viQQ9JvXxTnmYmTQpV4n
+         DGJw==
+X-Gm-Message-State: APjAAAWb+zGyYxOxZfl2VgxM+aeSMzsXOTGTN32/Sht/AcaKEGDLz/U/
+        cTup+gHT6kX8O7+AskelK6RuYJU6
+X-Google-Smtp-Source: APXvYqw6+DzQuFD28xAVOTeuGUUZ4wzv1oYMVLuVVs9nAxwPQCAHVySqc79HIzUFKRVoBVgOTppLuw==
+X-Received: by 2002:a63:b102:: with SMTP id r2mr21523135pgf.370.1566250591321;
+        Mon, 19 Aug 2019 14:36:31 -0700 (PDT)
+Received: from localhost.localdomain ([76.77.186.180])
+        by smtp.gmail.com with ESMTPSA id a6sm17809291pfa.162.2019.08.19.14.36.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 14:36:30 -0700 (PDT)
+From:   Ben Milman <bpmilman@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Ben Milman <bpmilman@gmail.com>
+Subject: [PATCH] repository-layout.txt: correct pluralization of 'object'
+Date:   Mon, 19 Aug 2019 14:36:18 -0700
+Message-Id: <20190819213618.69179-1-bpmilman@gmail.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-In-Reply-To: <20190819204451.522D422CEB@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.08.19 um 22:44 schrieb Stephen Boyd:
-> Quoting Johannes Sixt (2019-08-19 11:40:47)
->> Am 17.08.19 um 00:56 schrieb Stephen Boyd:
->>> diff --git a/t/t4018/dts-labels b/t/t4018/dts-labels
->>> new file mode 100644
->>> index 000000000000..27cd4921cfb6
->>> --- /dev/null
->>> +++ b/t/t4018/dts-labels
->>> @@ -0,0 +1,8 @@
->>> +/ {
->>> +     label_1: node1@ff00 {
->>> +             label2: RIGHT {
->>> +                     vendor,some-property;
->>> +                     ChangeMe = <0x45-30>;
->>
->> In these tests, it would be worthwhile to leave another (possibly blank)
->> line before the ChangeMe line in order to demonstrate that lines
->> beginning with a word, such as the 'vendor,some-property;' line, are
->> _not_ picked up when they are not in the hunk context.
-> 
-> Sure. I can add a blank line. Did you want it on all the tests or just
-> some of them?
+In the description of 'objects/pack', 'object' should be
+pluralized to match the subject and agree with the
+rest of the sentence.
 
-Some of them. We should have cases that show that
-"vendor,some-property;" and "prop-erty = value;" are not picked up.
+Signed-off-by: Ben Milman <bpmilman@gmail.com>
+---
+ Documentation/gitrepository-layout.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--- Hannes
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index 216b11ee88..d6388f10bb 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -59,7 +59,7 @@ objects/[0-9a-f][0-9a-f]::
+ 	here are often called 'unpacked' (or 'loose') objects.
+ 
+ objects/pack::
+-	Packs (files that store many object in compressed form,
++	Packs (files that store many objects in compressed form,
+ 	along with index files to allow them to be randomly
+ 	accessed) are found in this directory.
+ 
+-- 
+2.23.0
+
