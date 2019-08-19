@@ -2,94 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8351F4B7
-	for <e@80x24.org>; Mon, 19 Aug 2019 06:26:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76B361F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 09:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbfHSG0X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 02:26:23 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:33780 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbfHSG0X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 02:26:23 -0400
-Received: by mail-io1-f65.google.com with SMTP id z3so1789930iog.0
-        for <git@vger.kernel.org>; Sun, 18 Aug 2019 23:26:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=wW2gjw9I46llkgy5tpWsUTNYT7ORl7TKgWsO50Tz5Gg=;
-        b=cdUeaeqkpanHBuMaH3h2sNABtamlnIXpFWJgzxRMiAy1QsXZAhXeK0kPqJYaJ4mOHJ
-         GdHwZQI5hZaJFvWO0KtT3eynrF3R94m1SLxxrJo6dgyxYFfThcxtq9tT+dPn08/kAqQV
-         +zIUdZPfNt2bbE6ncssigowbPEMAeokK4HqOk7gr1S8xgs76tbx2bnptr4g55uvTV918
-         F5HAdhFlHuWhjHBfLBjQfLJjl8k1yrxdXMepueZdQJUSLv9H27sV4AyP9ApvcjWaeS/9
-         bDorVBrV1bTB8z4P1ySw1y0SBBJrvgKJdl03s3pwFprLWnMl220EIVLs+0JRUMfIXSon
-         n45w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=wW2gjw9I46llkgy5tpWsUTNYT7ORl7TKgWsO50Tz5Gg=;
-        b=EtSE3HOzxzRp8IXyT//ivafJ/rq8Lq8hfDu5U2jE9gaV/uQ6KO+HnQiGSZZvKGGGje
-         7KkPANYLSmuHOd54793GbX4dwWUnyV4ZEICSS/zQAbUNtGcftm8wuHyPwaRfV9CEzDU/
-         ne4/K1B7V3bZp+/iOZfKNSg5rAZZN7T+5GFocCAk3Tr6s0GNlmqMo05Dj8UnG8x1y7jN
-         0eyBMYIXPtwDTrdsHOl6EkdeiTcV/xmWyyZwhwcqIdC22/qP9VagdR+gLbpd+mfCih88
-         FprkVxAvxRe4z/3gX8drlHb0xmq4is2Bkuf5Y3n8VemO3ebjmCbF2bfqcupKYCswTY+t
-         Wz0w==
-X-Gm-Message-State: APjAAAUrEwb8J1SsOqES78OS0gXHP/avcavkIPn+kp/3nQPA3gSC8n+c
-        wQBsdxFJ9FfcgzMXbFPtd+MElCqi
-X-Google-Smtp-Source: APXvYqxHzHvwwM92E3ALWEc/tlywiPzZzWy7lB9VLflnwvA+MdtIUp3aHrUVkvM1TD1ExDYCasagmQ==
-X-Received: by 2002:a5d:9690:: with SMTP id m16mr14043053ion.180.1566195982009;
-        Sun, 18 Aug 2019 23:26:22 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id e22sm10704090iog.2.2019.08.18.23.26.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Aug 2019 23:26:21 -0700 (PDT)
-Date:   Mon, 19 Aug 2019 02:26:19 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] packfile.h: drop extern from function declaration
-Message-ID: <58862d9d6f4eb1af7ac6a09a703c2ace66917ee3.1566195817.git.liu.denton@gmail.com>
+        id S1727325AbfHSJHn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 05:07:43 -0400
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:20596 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726211AbfHSJHn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Aug 2019 05:07:43 -0400
+X-IronPort-AV: E=Sophos;i="5.64,403,1559512800"; 
+   d="scan'208";a="395728617"
+Received: from dhcp-13-233.lip.ens-lyon.fr (HELO moylip) ([140.77.13.233])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES256-GCM-SHA384; 19 Aug 2019 11:07:40 +0200
+From:   Matthieu Moy <Matthieu.Moy@matthieu-moy.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org,
+        corentin.bompard@etu.univ-lyon1.fr,
+        nathan.berbezier@etu.univ-lyon1.fr,
+        pablo.chabanne@etu.univ-lyon1.fr
+Subject: Re: [PATCH] pull, fetch: add --set-upstream option
+References: <86zhoil3yw.fsf@univ-lyon1.fr>
+        <20190814134629.21096-1-git@matthieu-moy.fr>
+        <xmqqlfvv6417.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 19 Aug 2019 11:07:40 +0200
+In-Reply-To: <xmqqlfvv6417.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 14 Aug 2019 10:38:28 -0700")
+Message-ID: <86blwlcylf.fsf@matthieu-moy.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 336226c259 (packfile.h: drop extern from function declarations,
-2019-04-05), `extern` was removed from function declarations because
-it's redundant. However, in 8434e85d5f (repack: refactor pack deletion
-for future use, 2019-06-10), an `extern` was mistakenly included.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Remove this spurious `extern`.
+> Matthieu Moy <git@matthieu-moy.fr> writes:
+>
+>> From: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+>>
+>> Add the --set-upstream option to git pull/fetch
+>> which lets the user set the upstream configuration
+>> (branch.<current-branch-name>.merge and
+>> branch.<current-branch-name>.remote) for the current branch.
+>>
+>> A typical use-case is:
+>>
+>>     git clone http://example.com/my-public-fork
+>>     git remote add main http://example.com/project-main-repo
+>>     git pull --set-upstream main master
+>>
+>> or, instead of the last line:
+>>
+>>     git fetch --set-upstream main master
+>>     git merge # or git rebase
+>>
+>> This functionality is analog to push --set-upstream.
+>
+> I was writing a one-paragraph summary for this topic, for the
+> "What's cooking" report, and here is what I have:
+>
+>  "git fetch" learned "--set-upstream" option to help those who first
+>  clone from a forked repository they intend to push to, add the true
+>  upstream via "git remote add" and then "git fetch" from it.
+>
+> After describing it like so, I cannot shake the feeling that the
+> workflow this intends to support feels somewhat backwards and
+> suboptimal.
+>
+>  - Unless you rely on server-side "fork" like GitHub does,
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- packfile.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Note that these days, this is not a very restrictive statement ;-).
 
-diff --git a/packfile.h b/packfile.h
-index 3e98910bdd..fc7904ec81 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -100,7 +100,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
-  * Does not unlink if 'force_delete' is false and the pack-file is
-  * marked as ".keep".
-  */
--extern void unlink_pack_path(const char *pack_name, int force_delete);
-+void unlink_pack_path(const char *pack_name, int force_delete);
- 
- /*
-  * Make sure that a pointer access into an mmap'd index file is within bounds,
+And when you make a fork on GitHub or GitLab from the web UI, the next
+thing you see is the page of your fork with a button "clone or download"
+pointing to your local copy's URL. So even though there are arguments to
+clone upstream first, it's also quite natural from the UI point of view
+to clone the local copy, and add upstream when needed.
+
+>    you would first clone from the upstream, and then push to your
+>    "fork". The flow whose first step is to clone from your "fork", not
+>    from the true upstream, feels backwards (cloning from upstream then
+>    adding your fork as a secondary may be more natural, without need for
+>    the complexity of --set-upstream to pull/fetch/push, no?).
+
+To me, it depends on the involvement in the project. If I plan to send
+several contributions to a project, I'd usually clone the upstream and
+add my fork. But I also often do:
+
+- Find a project on GitHub/GitLab/...
+- Think about a minor contribution I can make
+- Fork from the web UI
+- clone my fork
+- code, commit, push
+- make a PR
+
+Only if my PR takes time to get accepted, I'll add upstream as a remote
+and pull from there to rebase my PR.
+
+>  - The second step adds the true upstream using "git remote", and at
+>    that point, in your mind you are quite clear that you want to
+>    pull from there (and push to your own fork).  Not having the "I
+>    am adding this new remote; from now on, it is my upstream"
+
+Note that you can also group "remote add" and "pull" by saying just
+
+  git pull --set-upstream http://example.com/project-main-repo master
+
+(I still tend to prefer the "remote add" + "pull" flow to name the
+remote, though).
+
+>    feature at this step, and instead having to say that with your
+>    first "git pull", feels backwards.  If this feature were instead
+>    added to "git remote", then the last step in your example does
+>    not even have to say "main" (and no need for this new option),
+>    does it?
+
+There's already "git remote add --track <branch> <remote> <url>", but it
+does something different: it does not set the upstream information but
+only sets the glob refspec to fetch only one branch from the remote.
+
+We could add a new option like
+
+  git remote --set-upstream <branch> <remote> <url>
+
+That would do
+
+  git remote add <remote> <url>
+  git branch --set-upstream-to=<branch>
+
+That wouldn't make the commands really easier to type IMHO, as you would
+still have to pull at some point, so it's:
+
+  git remote add main http://example.com/project-main-repo
+  git pull --set-upstream main master
+  
+Vs
+
+  git remote add --set-upstream master main http://example.com/project-main-repo
+  git pull
+
+The second is a bit shorter (saves the second instance of "master"), but
+I tend to prefer the first to avoid the overly long "git remote add"
+command.
+
+Also, if one has several local branches, one may run just one "git
+remote add" and several "git pull --set-upstream".
+
+Note that there are other possible use-cases, like "upstream was using a
+flow where 'master' was the main branch, but now commits to 'develop'
+branch and only merges to 'master' for releases", where you can just
+
+  git pull --set-upstream origin develop
+
+Actually, since "--set-upstream" means "next time, *pull* from this
+branch", it felt weird to have it in "git *push*" and not in "git pull".
+Certainly, not having "git pull --set-upstream" it "git pull" wasn't
+that much bothering (otherwise, someone would have implemented it long
+ago), but I still find it a nice-to-have shortcut.
+
+Cheers,
+
 -- 
-2.23.0.248.g3a9dd8fb08
-
+Matthieu Moy
+https://matthieu-moy.fr/
