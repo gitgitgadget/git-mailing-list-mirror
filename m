@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A121F461
-	for <e@80x24.org>; Mon, 19 Aug 2019 21:19:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E48E71F461
+	for <e@80x24.org>; Mon, 19 Aug 2019 21:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728499AbfHSVTn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 17:19:43 -0400
-Received: from mail2.protonmail.ch ([185.70.40.22]:34078 "EHLO
+        id S1728517AbfHSVTr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 17:19:47 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:18676 "EHLO
         mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728018AbfHSVTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 17:19:43 -0400
-Date:   Mon, 19 Aug 2019 21:19:29 +0000
+        with ESMTP id S1728352AbfHSVTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 17:19:46 -0400
+Date:   Mon, 19 Aug 2019 21:19:28 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me; s=proton;
-        t=1566249578; bh=6GDsF0/zap1eXiCI86XOJ743P4cMA9H6nHPS1HcLlko=;
+        t=1566249579; bh=4vak4HDlH0sDUl09rtlzG7s4XMchL59qmKkILe06HhU=;
         h=Date:To:From:Cc:Reply-To:Subject:Feedback-ID:From;
-        b=KilB0V6psVHfK16MwJlRmkgbkzqYORUazhi29CLa7/48cbuFmPSACli+Dvi0bE0uc
-         q1UhCnVpWwp1Ki6KsEAm0KpW0V6lqMme3AqsKzXZ388IkahxtbvnGzaczGrnh07Qpk
-         7xk+qhJPCPWh8kIVqwADKK+baw6kabwdjs4sNPl418RBI02uJ67G0kDEuB9zeNaXkS
-         m8FA68xyfyS9gng5FhKTDH0SdvOEGEASKwJf0BiHShfrn6Xq5Kq7hKBevvY/y2Wx97
-         K+EuoOHyQlKx6kWV3i79yresFohujTb//bWFqvF7B2Fh2vTL+vnEGxTx8mTULMBMHV
-         fXkGpaF7ksi8w==
+        b=Z1mV59AvNmtqx6wpp5KGYBBouQOx+XOVkl55g+q6+VGEDYVFR4jHj7FTwjRRuEzfa
+         gkwZKUrCb/4RTLb329Y5pkGlv+b3h5rN6tE6HRrHdwmpAiXJx3tJeuIpHhimPzQY5X
+         YklLAhgWtjxNgeWPaCu5uQ+qdFs+i89Xz/RVBtFZLr+D/HGGXnUv2QoO5a2KFHLX9s
+         qxZX4s8opwZhi2WGVsmsA9m/5nySJaEZ9zDO6diYs8iWGCvDg5S3Bla9pNNZyD7p8o
+         wpDZYFpJHiKUn4sYAuYpUqubjMIYjoVVE3jbGqkS2lIdjhUFd3D8zvBEKeODoiNFxS
+         2SHKbw5bhaeww==
 To:     git@vger.kernel.org
 From:   Ibrahim El <ibrahim.el@pm.me>
 Cc:     Ibrahim El Rhezzali <ibrahim.el@pm.me>
 Reply-To: Ibrahim El <ibrahim.el@pm.me>
-Subject: [RFC PATCH 3/5] Signing API: Migrated to the new signing interface API
-Message-ID: <0oTOrSdJdIaEfs3NVkfRmLxjYRvUPkucwwaXPuhCjS2QL3ztRJLfIlBkcpjSRiZQaY70SKSkg8_w20rxnuD4Vu3IbRcGOZM-fht8G7ySEHk=@pm.me>
+Subject: [RFC PATCH 2/5] Signing API: Added new signing interface API
+Message-ID: <8AMhjK19PJ35u3LCR57IvtAzOBN5bKK2vUn0Ns-4mmZzK9U14W5CGW5R8aITNXBm78J4Z7nd09RTVKW2pGaB4PnF7p2PireF_vzRST8DngE=@pm.me>
 Feedback-ID: RXIF8gqyi_fC5k95OfXmu3uPk6ALUZ4LT1y2TXMvXkIlhKcvgGbg1qhMCvct9LiRFa1gVJ9p8_D_liW8QUFSlg==:Ext:ProtonMail
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -43,689 +43,1575 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ibrahim El Rhezzali <ibrahim.el@pm.me>
 
-0affa9e2a Migrated to the new signing interface API
+7e3e6c9e4 Added new signing interface API
 
-Updating the code to use the new signing interface API. Old GPG interface c=
-ode is commented and not used
+Adding files for the new signing interface and also support drivers for the=
+ two existing GPG and GPGSM X.509 tools
 
 Signed-off-by: Ibrahim El <ibrahim.el@pm.me>
 ---
- builtin/am.c            |  3 ++-
- builtin/commit-tree.c   |  4 ++--
- builtin/commit.c        |  4 ++--
- builtin/fmt-merge-msg.c |  2 +-
- builtin/log.c           |  4 ++--
- builtin/merge.c         |  4 ++--
- builtin/push.c          |  3 ++-
- builtin/receive-pack.c  |  4 ++--
- builtin/send-pack.c     |  4 ++--
- builtin/tag.c           | 13 +++++++------
- builtin/verify-commit.c | 12 ++++++------
- builtin/verify-tag.c    | 10 +++++-----
- commit.c                | 13 +++++++------
- commit.h                |  4 ++--
- gpg-interface.c         |  5 ++++-
- gpg-interface.h         |  3 +++
- log-tree.c              |  2 +-
- pretty.c                |  8 ++++----
- ref-filter.c            |  1 +
- send-pack.c             |  5 +++--
- sequencer.c             |  3 ++-
- tag.c                   | 10 +++++-----
- 22 files changed, 67 insertions(+), 54 deletions(-)
+ Makefile               |   3 +
+ signing-interface.c    | 487 +++++++++++++++++++++++++++++++++++++++++++++=
+++++
+ signing-interface.h    | 151 +++++++++++++++
+ signing-tool-openpgp.c | 409 +++++++++++++++++++++++++++++++++++++++++
+ signing-tool-x509.c    | 383 ++++++++++++++++++++++++++++++++++++++
+ signing-tool.h         |  35 ++++
+ 6 files changed, 1468 insertions(+)
+ create mode 100644 signing-interface.c
+ create mode 100644 signing-interface.h
+ create mode 100644 signing-tool-openpgp.c
+ create mode 100644 signing-tool-x509.c
+ create mode 100644 signing-tool.h
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 78389d08b..a76efdd5d 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -34,6 +34,7 @@
- #include "string-list.h"
- #include "packfile.h"
- #include "repository.h"
+diff --git a/Makefile b/Makefile
+index f58bf14c7..244540e8d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -978,6 +978,9 @@ LIB_OBJS +=3D sha1-name.o
+ LIB_OBJS +=3D shallow.o
+ LIB_OBJS +=3D sideband.o
+ LIB_OBJS +=3D sigchain.o
++LIB_OBJS +=3D signing-interface.o
++LIB_OBJS +=3D signing-tool-openpgp.o
++LIB_OBJS +=3D signing-tool-x509.o
+ LIB_OBJS +=3D split-index.o
+ LIB_OBJS +=3D strbuf.o
+ LIB_OBJS +=3D streaming.o
+diff --git a/signing-interface.c b/signing-interface.c
+new file mode 100644
+index 000000000..c744ef499
+--- /dev/null
++++ b/signing-interface.c
+@@ -0,0 +1,487 @@
++#include <sys/types.h>
++#include <unistd.h>
++#include "cache.h"
++#include "config.h"
++#include "run-command.h"
++#include "strbuf.h"
 +#include "signing-interface.h"
-=20
- /**
-  * Returns the length of the first line of msg.
-@@ -2143,7 +2144,7 @@ static int git_am_config(const char *k, const char *v=
-, void *cb)
- {
- =09int status;
-=20
--=09status =3D git_gpg_config(k, v, NULL);
-+=09status =3D git_signing_config(k, v, NULL);
- =09if (status)
- =09=09return status;
-=20
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index b866d8395..06bc5016d 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -11,7 +11,7 @@
- #include "tree.h"
- #include "builtin.h"
- #include "utf8.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "parse-options.h"
-=20
- static const char * const commit_tree_usage[] =3D {
-@@ -38,7 +38,7 @@ static void new_parent(struct commit *parent, struct comm=
-it_list **parents_p)
-=20
- static int commit_tree_config(const char *var, const char *value, void *cb=
-)
- {
--=09int status =3D git_gpg_config(var, value, NULL);
-+=09int status =3D git_signing_config(var, value, NULL);
- =09if (status)
- =09=09return status;
- =09return git_default_config(var, value, cb);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1c9e8e222..3b446a029 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -29,7 +29,7 @@
- #include "unpack-trees.h"
- #include "quote.h"
- #include "submodule.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "column.h"
- #include "sequencer.h"
- #include "mailmap.h"
-@@ -1437,7 +1437,7 @@ static int git_commit_config(const char *k, const cha=
-r *v, void *cb)
- =09=09return 0;
- =09}
-=20
--=09status =3D git_gpg_config(k, v, NULL);
-+=09status =3D git_signing_config(k, v, NULL);
- =09if (status)
- =09=09return status;
- =09return git_status_config(k, v, s);
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index a4615587f..2dd0e9367 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -10,7 +10,7 @@
- #include "string-list.h"
- #include "branch.h"
- #include "fmt-merge-msg.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "repository.h"
- #include "commit-reach.h"
-=20
-diff --git a/builtin/log.c b/builtin/log.c
-index 7c8767d3b..96507f0d9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -28,7 +28,7 @@
- #include "streaming.h"
- #include "version.h"
- #include "mailmap.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "progress.h"
- #include "commit-slab.h"
- #include "repository.h"
-@@ -465,7 +465,7 @@ static int git_log_config(const char *var, const char *=
-value, void *cb)
-=20
- =09if (grep_config(var, value, cb) < 0)
- =09=09return -1;
--=09if (git_gpg_config(var, value, cb) < 0)
-+=09if (git_signing_config(var, value, cb) < 0)
- =09=09return -1;
- =09return git_diff_ui_config(var, value, cb);
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 6e99aead4..67a0bcb35 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -31,7 +31,7 @@
- #include "resolve-undo.h"
- #include "remote.h"
- #include "fmt-merge-msg.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "sequencer.h"
- #include "string-list.h"
- #include "packfile.h"
-@@ -636,7 +636,7 @@ static int git_merge_config(const char *k, const char *=
-v, void *cb)
- =09status =3D fmt_merge_msg_config(k, v, cb);
- =09if (status)
- =09=09return status;
--=09status =3D git_gpg_config(k, v, NULL);
-+=09status =3D git_signing_config(k, v, NULL);
- =09if (status)
- =09=09return status;
- =09return git_diff_ui_config(k, v, cb);
-diff --git a/builtin/push.c b/builtin/push.c
-index 021dd3b1e..74a6758cd 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -14,6 +14,7 @@
- #include "submodule-config.h"
- #include "send-pack.h"
- #include "color.h"
-+#include "signing-interface.h"
-=20
- static const char * const push_usage[] =3D {
- =09N_("git push [<options>] [<repository> [<refspec>...]]"),
-@@ -479,7 +480,7 @@ static int git_push_config(const char *k, const char *v=
-, void *cb)
- =09int *flags =3D cb;
- =09int status;
-=20
--=09status =3D git_gpg_config(k, v, NULL);
-+=09status =3D git_signing_config(k, v, NULL);
- =09if (status)
- =09=09return status;
-=20
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 77b712245..1a90dea5a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -19,7 +19,7 @@
- #include "argv-array.h"
- #include "version.h"
- #include "tag.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "sigchain.h"
- #include "fsck.h"
- #include "tmp-objdir.h"
-@@ -73,7 +73,7 @@ static int shallow_update;
- static const char *alt_shallow_file;
- static struct strbuf push_cert =3D STRBUF_INIT;
- static struct object_id push_cert_oid;
--static struct signature_check sigcheck;
-+static struct signature sigcheck;
- static const char *push_cert_nonce;
- static const char *cert_nonce_seed;
-=20
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 098ebf22d..ba21fb2df 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -12,7 +12,7 @@
- #include "transport.h"
- #include "version.h"
- #include "sha1-array.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "gettext.h"
- #include "protocol.h"
-=20
-@@ -101,7 +101,7 @@ static void print_helper_status(struct ref *ref)
-=20
- static int send_pack_config(const char *k, const char *v, void *cb)
- {
--=09git_gpg_config(k, v, NULL);
-+=09git_signing_config(k, v, NULL);
-=20
- =09if (!strcmp(k, "push.gpgsign")) {
- =09=09const char *value;
-diff --git a/builtin/tag.c b/builtin/tag.c
-index ef37dccf8..a52aa54c0 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -16,7 +16,7 @@
- #include "parse-options.h"
- #include "diff.h"
- #include "revision.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "sha1-array.h"
- #include "column.h"
- #include "ref-filter.h"
-@@ -111,10 +111,10 @@ static int verify_tag(const char *name, const char *r=
-ef,
- {
- =09int flags;
- =09const struct ref_format *format =3D cb_data;
--=09flags =3D GPG_VERIFY_VERBOSE;
-+=09flags =3D OUTPUT_VERBOSE;
-=20
- =09if (format->format)
--=09=09flags =3D GPG_VERIFY_OMIT_STATUS;
-+=09=09flags =3D OUTPUT_OMIT_STATUS;
-=20
- =09if (gpg_verify_tag(oid, name, flags))
- =09=09return -1;
-@@ -127,7 +127,8 @@ static int verify_tag(const char *name, const char *ref=
-,
-=20
- static int do_sign(struct strbuf *buffer)
- {
--=09return sign_buffer(buffer, buffer, get_signing_key());
-+=09extern enum signature_type default_type;
-+=09return sign_buffer(buffer, buffer, get_signing_key(default_type));
- }
-=20
- static const char tag_template[] =3D
-@@ -151,7 +152,7 @@ static int git_tag_config(const char *var, const char *=
-value, void *cb)
- =09=09return 0;
- =09}
-=20
--=09status =3D git_gpg_config(var, value, cb);
-+=09status =3D git_signing_config(var, value, cb);
- =09if (status)
- =09=09return status;
- =09if (!strcmp(var, "tag.forcesignannotated")) {
-@@ -447,7 +448,7 @@ int cmd_tag(int argc, const char **argv, const char *pr=
-efix)
-=20
- =09if (keyid) {
- =09=09opt.sign =3D 1;
--=09=09set_signing_key(keyid);
-+=09=09set_signing_key(keyid, default_type);
- =09}
- =09create_tag_object =3D (opt.sign || annotate || msg.given || msgfile);
-=20
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index 4b9e823f8..0f701ee70 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -14,7 +14,7 @@
- #include "run-command.h"
- #include <signal.h>
- #include "parse-options.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
-=20
- static const char * const verify_commit_usage[] =3D {
- =09=09N_("git verify-commit [-v | --verbose] <commit>..."),
-@@ -23,7 +23,7 @@ static const char * const verify_commit_usage[] =3D {
-=20
- static int run_gpg_verify(struct commit *commit, unsigned flags)
- {
--=09struct signature_check signature_check;
-+=09struct signature signature_check;
- =09int ret;
-=20
- =09memset(&signature_check, 0, sizeof(signature_check));
-@@ -31,7 +31,7 @@ static int run_gpg_verify(struct commit *commit, unsigned=
- flags)
- =09ret =3D check_commit_signature(commit, &signature_check);
- =09print_signature_buffer(&signature_check, flags);
-=20
--=09signature_check_clear(&signature_check);
-+=09signature_clear(&signature_check);
- =09return ret;
- }
-=20
-@@ -55,7 +55,7 @@ static int verify_commit(const char *name, unsigned flags=
-)
-=20
- static int git_verify_commit_config(const char *var, const char *value, vo=
-id *cb)
- {
--=09int status =3D git_gpg_config(var, value, cb);
-+=09int status =3D git_signing_config(var, value, cb);
- =09if (status)
- =09=09return status;
- =09return git_default_config(var, value, cb);
-@@ -67,7 +67,7 @@ int cmd_verify_commit(int argc, const char **argv, const =
-char *prefix)
- =09unsigned flags =3D 0;
- =09const struct option verify_commit_options[] =3D {
- =09=09OPT__VERBOSE(&verbose, N_("print commit contents")),
--=09=09OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VER=
-IFY_RAW),
-+=09=09OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), OUTPUT_=
-RAW),
- =09=09OPT_END()
- =09};
-=20
-@@ -79,7 +79,7 @@ int cmd_verify_commit(int argc, const char **argv, const =
-char *prefix)
- =09=09usage_with_options(verify_commit_usage, verify_commit_options);
-=20
- =09if (verbose)
--=09=09flags |=3D GPG_VERIFY_VERBOSE;
-+=09=09flags |=3D OUTPUT_VERBOSE;
-=20
- =09/* sometimes the program was terminated because this signal
- =09 * was received in the process of writing the gpg input: */
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 6fa04b751..d25f47d38 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -12,7 +12,7 @@
- #include "run-command.h"
- #include <signal.h>
- #include "parse-options.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "ref-filter.h"
-=20
- static const char * const verify_tag_usage[] =3D {
-@@ -22,7 +22,7 @@ static const char * const verify_tag_usage[] =3D {
-=20
- static int git_verify_tag_config(const char *var, const char *value, void =
-*cb)
- {
--=09int status =3D git_gpg_config(var, value, cb);
-+=09int status =3D git_signing_config(var, value, cb);
- =09if (status)
- =09=09return status;
- =09return git_default_config(var, value, cb);
-@@ -35,7 +35,7 @@ int cmd_verify_tag(int argc, const char **argv, const cha=
-r *prefix)
- =09struct ref_format format =3D REF_FORMAT_INIT;
- =09const struct option verify_tag_options[] =3D {
- =09=09OPT__VERBOSE(&verbose, N_("print tag contents")),
--=09=09OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VER=
-IFY_RAW),
-+=09=09OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), OUTPUT_=
-RAW),
- =09=09OPT_STRING(0, "format", &format.format, N_("format"), N_("format to =
-use for the output")),
- =09=09OPT_END()
- =09};
-@@ -48,13 +48,13 @@ int cmd_verify_tag(int argc, const char **argv, const c=
-har *prefix)
- =09=09usage_with_options(verify_tag_usage, verify_tag_options);
-=20
- =09if (verbose)
--=09=09flags |=3D GPG_VERIFY_VERBOSE;
-+=09=09flags |=3D OUTPUT_VERBOSE;
-=20
- =09if (format.format) {
- =09=09if (verify_ref_format(&format))
- =09=09=09usage_with_options(verify_tag_usage,
- =09=09=09=09=09   verify_tag_options);
--=09=09flags |=3D GPG_VERIFY_OMIT_STATUS;
-+=09=09flags |=3D OUTPUT_OMIT_STATUS;
- =09}
-=20
- =09while (i < argc) {
-diff --git a/commit.c b/commit.c
-index 8fa1883c6..2727c9231 100644
---- a/commit.c
-+++ b/commit.c
-@@ -10,7 +10,7 @@
- #include "revision.h"
- #include "notes.h"
- #include "alloc.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "mergesort.h"
- #include "commit-slab.h"
- #include "prio-queue.h"
-@@ -953,8 +953,9 @@ static int do_sign_commit(struct strbuf *buf, const cha=
-r *keyid)
- =09else
- =09=09inspos =3D eoh - buf->buf + 1;
-=20
--=09if (!keyid || !*keyid)
--=09=09keyid =3D get_signing_key();
-+=09if (!keyid || !*keyid) {
-+=09=09keyid =3D get_signing_key(default_type);
++#include "signing-tool.h"
++#include "sigchain.h"
++#include "tempfile.h"
++
++extern const struct signing_tool openpgp_tool;
++extern const struct signing_tool x509_tool;
++
++static const struct signing_tool *signing_tools[SIGNATURE_TYPE_COUNT] =3D =
+{
++=09&openpgp_tool,
++=09&x509_tool,
++};
++
++enum signature_type default_type =3D SIGNATURE_TYPE_DEFAULT;
++static const char* unknown_signature_type =3D "unknown signature type";
++static char* default_signing_key =3D NULL;
++
++static void add_signature(struct signatures *sigs, struct signature *sig) =
+{
++=09if (!sigs || !sig)
++=09=09return;
++=09ALLOC_GROW(sigs->sigs, sigs->nsigs + 1, sigs->alloc);
++=09sigs->sigs[sigs->nsigs++] =3D sig;
++}
++
++void signatures_clear(struct signatures *sigs)
++{
++=09size_t i;
++=09struct signature *psig;
++
++=09if (!sigs) return;
++=09
++=09for (i =3D 0; i < sigs->nsigs; i++) {
++=09=09psig =3D sigs->sigs[i];
++=09=09strbuf_release(&(psig->sig));
++=09=09strbuf_release(&(psig->output));
++=09=09strbuf_release(&(psig->status));
++=09=09FREE_AND_NULL(psig->signer);
++=09=09FREE_AND_NULL(psig->key);
++=09=09FREE_AND_NULL(psig->fingerprint);
++=09=09FREE_AND_NULL(psig->key);
++=09=09FREE_AND_NULL(psig);
 +=09}
- =09if (sign_buffer(buf, &sig, keyid)) {
- =09=09strbuf_release(&sig);
- =09=09return -1;
-@@ -1092,7 +1093,7 @@ static void handle_signed_tag(struct commit *parent, =
-struct commit_extra_header
- =09free(buf);
- }
-=20
--int check_commit_signature(const struct commit *commit, struct signature_c=
-heck *sigc)
-+int check_commit_signature(const struct commit *commit, struct signature *=
-sigc)
- {
- =09struct strbuf payload =3D STRBUF_INIT;
- =09struct strbuf signature =3D STRBUF_INIT;
-@@ -1115,7 +1116,7 @@ int check_commit_signature(const struct commit *commi=
-t, struct signature_check *
- void verify_merge_signature(struct commit *commit, int verbosity)
- {
- =09char hex[GIT_MAX_HEXSZ + 1];
--=09struct signature_check signature_check;
-+=09struct signature signature_check;
- =09memset(&signature_check, 0, sizeof(signature_check));
-=20
- =09check_commit_signature(commit, &signature_check);
-@@ -1137,7 +1138,7 @@ void verify_merge_signature(struct commit *commit, in=
-t verbosity)
- =09=09printf(_("Commit %s has a good GPG signature by %s\n"),
- =09=09       hex, signature_check.signer);
-=20
--=09signature_check_clear(&signature_check);
-+=09signature_clear(&signature_check);
- }
-=20
- void append_merge_tag_headers(struct commit_list *parents,
-diff --git a/commit.h b/commit.h
-index f5295ca7f..f5a942fc5 100644
---- a/commit.h
-+++ b/commit.h
-@@ -5,7 +5,7 @@
- #include "tree.h"
- #include "strbuf.h"
- #include "decorate.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "string-list.h"
- #include "pretty.h"
- #include "commit-slab.h"
-@@ -370,7 +370,7 @@ int remove_signature(struct strbuf *buf);
-  * at all.  This may allocate memory for sig->gpg_output, sig->gpg_status,
-  * sig->signer and sig->key.
-  */
--int check_commit_signature(const struct commit *commit, struct signature_c=
-heck *sigc);
-+int check_commit_signature(const struct commit *commit, struct signature *=
-sigc);
-=20
- /* record author-date for each commit object */
- struct author_date_slab;
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 8ed274533..5e7dee6fe 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -6,6 +6,7 @@
- #include "sigchain.h"
- #include "tempfile.h"
-=20
-+#if 0
- static char *configured_signing_key;
- struct gpg_format {
- =09const char *name;
-@@ -289,7 +290,7 @@ const char *get_signing_key(void)
- }
-=20
- int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const cha=
++=09FREE_AND_NULL(sigs->sigs);
++=09sigs->nsigs =3D 0;
++=09sigs->alloc =3D 0;
++}
++
++void signature_clear(struct signature *sigc)
++{
++=09FREE_AND_NULL(sigc->sig.buf);
++=09FREE_AND_NULL(sigc->output.buf);
++=09FREE_AND_NULL(sigc->status.buf);
++=09FREE_AND_NULL(sigc->signer);
++=09FREE_AND_NULL(sigc->key);
++=09FREE_AND_NULL(sigc->fingerprint);
++=09FREE_AND_NULL(sigc->primary_key_fingerprint);
++}
++
++int sign_payload(const char *payload, size_t size, struct signatures *sigs=
+,
++=09=09enum signature_type st, const char *signing_key)
++{
++=09const struct signing_tool *tool;
++=09struct signature *psig =3D xmalloc(sizeof(struct signature));
++=09int ret;
++
++=09fflush(stdout);
++
++=09if (!sigs)
++=09=09return error("invalid signatures passed to sign function");
++
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09return error("unsupported signature type: %d", st);
++
++=09tool =3D signing_tools[st];
++
++=09if (!tool || !tool->sign)
++=09=09BUG("signing tool %s undefined", signature_type_name(st));
++
++=09ret =3D tool->sign(payload, size, &psig, signing_key);
++=09if (!ret)
++=09=09add_signature(sigs, psig);
++=09else
++
++=09=09return error("signing operation failed");
++
++=09return 0;
++}
++
++int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const cha=
 r *signing_key)
--{
-+{=09
- =09struct child_process gpg =3D CHILD_PROCESS_INIT;
- =09int ret;
- =09size_t i, j, bottom;
-@@ -376,3 +377,5 @@ int verify_signed_buffer(const char *payload, size_t pa=
-yload_size,
++{
++=09struct signatures sigs =3D SIGNATURES_INIT;
++=09enum signature_type st =3D default_type;
++
++=09int ret =3D sign_payload(buffer->buf, buffer->len, &sigs, st, signing_k=
+ey);
++
++=09if (!ret)
++=09{
++=09=09strbuf_addstr(signature, sigs.sigs[0]->sig.buf);
++=09}
++
++=09return ret;
++}
++
++size_t parse_signatures(const char *payload, size_t size,=20
++=09=09struct signatures *sigs)
++{
++=09enum signature_type st;
++=09size_t first;
++=09size_t begin =3D 0;
++=09const struct signing_tool *tool;
++=09struct signature *psig =3D NULL;
++
++=09first =3D size;
++=09for (st =3D SIGNATURE_TYPE_FIRST; st < SIGNATURE_TYPE_LAST; st++) {
++=09=09tool =3D signing_tools[st];
++
++=09=09if (!tool || !tool->parse)
++=09=09=09BUG("signing tool %s undefined", signature_type_name(st));
++
++=09=09begin =3D tool->parse(payload, size, &psig);
++=09=09if (begin < size) {
++=09=09=09if (sigs)
++=09=09=09=09add_signature(sigs, psig);
++=09=09=09else
++=09=09=09=09FREE_AND_NULL(psig);
++
++=09=09=09first =3D begin;
++=09=09=09continue;
++=09=09}
++=09}
++
++=09return first;
++}
++
++size_t parse_signature(const char *buf, size_t size)
++{
++=09size_t match;
++=09struct signatures sigs =3D SIGNATURES_INIT;
++
++=09if ( !buf || !size )
++=09=09return size;
++
++=09match =3D parse_signatures(buf, size, &sigs);
++
++=09return match;
++}
++
++int verify_buffer_signatures(const char *payload, size_t size,
++=09=09struct signatures *sigs)
++{
++=09int ret =3D 0;
++=09size_t i;
++=09const struct signing_tool *tool;
++=09struct signature *psig;
++
++=09if (!sigs)
++=09=09error("invalid signatures passed to verify function");
++
++=09for (i =3D 0; i < sigs->nsigs; i++) {
++=09=09psig =3D sigs->sigs[i];
++=09=09tool =3D signing_tools[psig->st];
++
++=09=09if (!tool || !tool->verify)
++=09=09=09BUG("signing tool %s undefined", signature_type_name(psig->st));
++
++=09=09ret |=3D tool->verify(payload, size, psig);
++=09}
++
++=09return ret;
++}
++
++int verify_signed_buffer(const char *payload, size_t payload_size,
++=09=09=09 const char *signature, size_t signature_size,
++=09=09=09 struct strbuf *output, struct strbuf *status)
++{
++=09int ret;
++=09enum signature_type st;
++=09struct signature sig =3D SIGNATURE_INIT;
++=09struct signatures sigs =3D SIGNATURES_INIT;
++
++=09if ( !payload || !signature )
++=09=09return error("invalid payload or signature sent !");
++
++=09strbuf_addstr(&(sig.sig), signature);
++=09add_signature(&sigs, &sig);
++
++=09ret =3D verify_buffer_signatures(payload, payload_size, &sigs);
++
++=09/*  Some how gpg.format is not sometimes applied, temporary fix to loop=
+ and STs */
++=09if (ret)
++=09{
++=09=09for (st =3D SIGNATURE_TYPE_FIRST; st < SIGNATURE_TYPE_LAST; st++)
++=09=09{
++=09=09=09sig.st =3D st;
++=09=09=09ret =3D verify_buffer_signatures(payload, payload_size, &sigs);
++=09=09=09if (!ret || sig.result !=3D '0')
++=09=09=09=09break;
++=09=09}
++=09}
++
++=09if (output)
++=09=09strbuf_addstr(output, sig.output.buf);
++=09if (status)
++=09=09strbuf_addstr(status, sig.status.buf);
++
++=09return ret;
++}
++
++int check_signature(const char *payload, size_t plen, const char *signatur=
+e,
++=09size_t slen, struct signature *sigc)
++{
++=09int status;
++=09enum signature_type st;
++=09struct signatures sigs =3D SIGNATURES_INIT;
++=09struct signature sig =3D SIGNATURE_INIT;
++=09
++=09if (!payload || !signature || !sigc)
++=09=09BUG("invalid payload or signature sent !");
++
++=09strbuf_addstr(&(sig.sig), signature);
++=09sig.result =3D 'N';
++=09sig.st =3D default_type;
++
++=09add_signature(&sigs, &sig);
++
++=09status =3D verify_buffer_signatures(payload, plen, &sigs);
++
++=09/*  Some how gpg.format is not sometimes applied, temporary fix to loop=
+ and STs */
++=09if (status)
++=09{
++=09=09for (st =3D SIGNATURE_TYPE_FIRST; st < SIGNATURE_TYPE_LAST; st++)
++=09=09{
++=09=09=09sig.st =3D st;
++=09=09=09status =3D verify_buffer_signatures(payload, plen, &sigs);
++=09=09=09if (!status || sig.result !=3D 'N')
++=09=09=09=09break;
++=09=09}
++=09}
++=09status |=3D sig.result !=3D 'G' && sig.result !=3D 'U';
++
++=09if (sig.signer && !sigc->signer)
++=09=09sigc->signer =3D xstrdup(sig.signer);
++=09if (sig.key && !sigc->key)
++=09=09sigc->key =3D xstrdup(sig.key);
++=09if (sig.fingerprint && !sigc->fingerprint)
++=09=09sigc->fingerprint =3D xstrdup(sig.fingerprint);
++=09if (sig.primary_key_fingerprint && !sigc->primary_key_fingerprint)
++=09=09sigc->primary_key_fingerprint =3D xstrdup(sig.primary_key_fingerprin=
+t);=09
++
++=09sigc->st =3D sig.st;
++=09sigc->result =3D sig.result;
++=09
++=09strbuf_addstr(&(sigc->sig), payload);
++=09strbuf_addstr(&(sigc->output), sig.output.buf);
++=09strbuf_addstr(&(sigc->status), sig.status.buf);
++
++=09return !!status;
++}
++
++size_t strbuf_append_signatures(struct strbuf *buf, const struct signature=
+s *sigs)
++{
++=09size_t i;
++=09struct signature *psig;
++
++=09if (!buf)
++=09=09BUG("invalid buffer passed to signature append function");
++
++=09if (!sigs)
++=09=09return 0;
++
++=09for (i =3D 0; i < sigs->nsigs; i++) {
++=09=09psig =3D sigs->sigs[i];
++=09=09strbuf_addbuf(buf, &(psig->sig));
++=09}
++
++=09return sigs->nsigs;
++}
++
++void print_signatures(const struct signatures *sigs, unsigned flags)
++{
++=09size_t i;
++=09const struct signing_tool *tool;
++=09const struct signature *psig;
++
++=09if (!sigs)
++=09=09error("invalid signatures passed to verify function");
++
++=09for (i =3D 0; i < sigs->nsigs; i++) {
++=09=09psig =3D sigs->sigs[i];
++=09=09tool =3D signing_tools[psig->st];
++
++=09=09if (!tool || !tool->print)
++=09=09=09BUG("signing tool %s undefined", signature_type_name(psig->st));
++
++=09=09tool->print(psig, flags);
++=09}
++}
++
++void print_signature_buffer(const struct signature *sigc, unsigned flags)
++{
++=09const struct signing_tool *tool;
++
++=09if (!sigc)
++=09=09error("invalid signatures passed to verify function");
++
++=09tool =3D signing_tools[default_type];
++
++=09if (!tool || !tool->print)
++=09=09BUG("signing tool %s undefined", signature_type_name(sigc->st));
++
++=09tool->print(sigc, flags);
++}
++
++enum signature_type signature_type_by_name(const char *name)
++{
++=09enum signature_type st;
++
++=09if (!name)
++=09=09return default_type;
++
++=09for (st =3D SIGNATURE_TYPE_FIRST; st < SIGNATURE_TYPE_LAST; st++)
++=09=09if (!strcmp(signing_tools[st]->name, name))
++=09=09=09return st;
++
++=09return error("unknown signature type: %s", name);
++}
++
++const char *signature_type_name(enum signature_type st)
++{
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09return unknown_signature_type;
++
++=09return signing_tools[st]->name;
++}
++
++int git_signing_config(const char *var, const char *value, void *cb)
++{
++=09int ret =3D 0;
++=09char *t1, *t2, *t3, *buf;
++=09enum signature_type st;
++=09const struct signing_tool *tool;
++
++=09/* user.signingkey is a deprecated alias for signing.<signing.default>.=
+key */
++=09if (!strcmp(var, "user.signingkey")) {
++=09=09if (!value)
++=09=09=09return config_error_nonbool(var);
++=09=09
++=09=09set_signing_key(value, default_type);
++
++=09=09return 0;
++=09}
++
++=09/* gpg.format is a deprecated alias for signing.default */
++=09if (!strcmp(var, "gpg.format") || !strcmp(var, "signing.default")) {
++=09=09if (!value)
++=09=09=09return config_error_nonbool(var);
++
++=09=09if (!VALID_SIGNATURE_TYPE((st =3D signature_type_by_name(value))))
++=09=09=09return config_error_nonbool(var);
++
++=09=09set_signature_type(st);
++
++=09=09return 0;
++=09}
++
++=09/* gpg.program is a deprecated alias for signing.openpgp.program */
++=09if (!strcmp(var, "gpg.program") || !strcmp(var, "signing.openpgp.progra=
+m")) {
++=09=09ret =3D signing_tools[OPENPGP_SIGNATURE]->config(
++=09=09=09=09"program", value, cb);
++
++=09=09return ret;
++=09}
++
++=09/* gpg.x509.program is a deprecated alias for signing.x509.program */
++=09if (!strcmp(var, "gpg.x509.program") || !strcmp(var, "signing.x509.prog=
+ram")) {
++=09=09ret =3D signing_tools[X509_SIGNATURE]->config(
++=09=09=09=09"program", value, cb);
++
++=09=09return ret;
++=09}
++
++=09buf =3D xstrdup(var);
++=09t1 =3D strtok(buf, ".");
++=09t2 =3D strtok(NULL, ".");
++=09t3 =3D strtok(NULL, ".");
++
++=09/* gpg.<format>.* is a deprecated alias for signing.<format>.* */
++=09if (!strcmp(t1, "gpg") || !strcmp(t1, "signing")) {
++=09=09if (!VALID_SIGNATURE_TYPE((st =3D signature_type_by_name(t2)))) {
++=09=09=09free(buf);
++=09=09=09return error("unsupported variable: %s", var);
++=09=09}
++
++=09=09tool =3D signing_tools[st];
++=09=09if (!tool || !tool->config) {
++=09=09=09free(buf);
++=09=09=09BUG("signing tool %s undefined", signature_type_name(tool->st));
++=09=09}
++
++=09=09ret =3D tool->config(t3, value, cb);
++=09}
++
++=09free(buf);
++=09return ret;
++}
++
++void set_signing_key(const char *key, enum signature_type st)
++{
++=09/*
++=09 * Make sure we track the latest default signing key so that if the
++=09 * default signing format changes after this, we can make sure the
++=09 * default signing tool knows the key to use.
++=09 */
++=09free(default_signing_key);
++=09default_signing_key =3D xstrdup(key);
++
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09signing_tools[default_type]->set_key(key);
++=09else
++=09=09signing_tools[st]->set_key(key);
++}
++
++const char *get_signing_key(enum signature_type st)
++{
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09return signing_tools[default_type]->get_key();
++
++=09return signing_tools[default_type]->get_key();
++}
++
++void set_signing_program(const char *signing_program, enum signature_type =
+st)
++{
++=09/*
++=09 * Make sure we track the latest default signing program so that if the
++=09 * default signing format changes after this, we can make sure the
++=09 * default signing tool knows the program to use.
++=09 */
++
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09signing_tools[default_type]->set_program(signing_program);
++=09else
++=09=09signing_tools[st]->set_program(signing_program);
++}
++
++const char *get_signing_program(enum signature_type st)
++{
++=09const char *signing_program =3D NULL;
++
++=09if (!VALID_SIGNATURE_TYPE(st)) {
++=09=09signing_program =3D signing_tools[default_type]->get_program();
++
++=09=09return signing_program;
++=09}
++
++=09signing_program =3D signing_tools[st]->get_program();
++
++=09return signing_program;
++}
++
++void set_signature_type(enum signature_type st)
++{
++=09if (!VALID_SIGNATURE_TYPE(st))
++=09=09return;
++
++=09default_type =3D st;
++
++=09/*=20
++=09 * If the signing key has been set, then make sure the new default
++=09 * signing tool knows about it. this fixes the order of operations
++=09 * error of parsing the default signing key and default signing
++=09 * format in arbitrary order.
++=09 */
++=09if (default_signing_key) {
++=09=09set_signing_key(default_signing_key, default_type);
++=09}
++}
++
++enum signature_type get_signature_type(void)
++{
++=09return default_type;
++}
+\ No newline at end of file
+diff --git a/signing-interface.h b/signing-interface.h
+new file mode 100644
+index 000000000..b55edbdb8
+--- /dev/null
++++ b/signing-interface.h
+@@ -0,0 +1,151 @@
++#ifndef SIGNING_INTERFACE_H
++#define SIGNING_INTERFACE_H
++
++struct strbuf;
++
++#define OUTPUT_VERBOSE=09=091
++#define OUTPUT_RAW=09=09=092
++#define OUTPUT_OMIT_STATUS=094
++
++enum signature_type {
++=09OPENPGP_SIGNATURE,
++=09X509_SIGNATURE,
++
++=09SIGNATURE_TYPE_LAST,
++=09SIGNATURE_TYPE_FIRST =3D OPENPGP_SIGNATURE,
++=09SIGNATURE_TYPE_COUNT =3D SIGNATURE_TYPE_LAST - SIGNATURE_TYPE_FIRST,
++=09SIGNATURE_TYPE_DEFAULT =3D OPENPGP_SIGNATURE,
++=09SIGNATURE_TYPE_UNKNOWN =3D -1
++};
++enum signature_type default_type;
++
++#define VALID_SIGNATURE_TYPE(x) \
++=09((x >=3D SIGNATURE_TYPE_FIRST) && (x < SIGNATURE_TYPE_LAST))
++
++struct signature {
++=09struct strbuf sig;
++=09struct strbuf output;
++=09struct strbuf status;
++=09enum signature_type st;
++
++=09/*
++=09 * possible "result":
++=09 * 0 (not checked)
++=09 * N (checked but no further result)
++=09 * U (untrusted good)
++=09 * G (good)
++=09 * B (bad)
++=09 */
++=09char result;
++=09char *signer;
++=09char *key;
++=09char *fingerprint;
++=09char *primary_key_fingerprint;
++};
++
++struct signatures {
++=09size_t nsigs;
++=09size_t alloc;
++=09struct signature **sigs;
++};
++
++#define SIGNATURES_INIT  { .nsigs =3D 0, .alloc =3D 0, .sigs =3D NULL }
++#define SIGNATURE_INIT  { .sig =3D STRBUF_INIT, .output =3D STRBUF_INIT, .=
+status =3D STRBUF_INIT, .st =3D OPENPGP_SIGNATURE, .result =3D '0', .signer=
+ =3D NULL, .key =3D NULL }
++
++void signatures_clear(struct signatures *sigs);
++void signature_clear(struct signature *sig);
++
++/*
++ * Create a detached signature for the contents of "payload" and append
++ * it to the list of signatures in "sigs". The signature type determines w=
+hich
++ * type of signature to create and the optional "signing_key" specifies
++ * the key. If no signing key is specified the default key from the
++ * config will be used. If no default is found, then an error is
++ * returned. If the signing operation fails an error is returned.
++ */
++int sign_payload(const char *payload, size_t size, struct signatures *sigs=
+,
++=09=09enum signature_type st, const char *signing_key);
++
++/*
++ * Bridge function to be called by the git code for buffer signature
++ */
++int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const cha=
+r *signing_key);
++
++/*=20
++ * Look at the signed content (e.g. a signed tag object), whose payload
++ * is followed by one or more detached signatures. Return the offset of
++ * the first signature, or the size of the buf when there are no=20
++ * signatures. If a valid signatures struct is passed in, the signatures=
 =20
- =09return ret;
- }
++ * will be parsed and copied into its array of sigs.
++ */
++size_t parse_signatures(const char *payload, size_t size,
++=09=09struct signatures *sigs);
++
++/*
++ * Bridge function to be called by the git code for parsing signatures in =
+a buffer
++ */
++size_t parse_signature(const char *buf, size_t size);
++
++/*
++ * Run the signature verification tools to see if the payload matches
++ * the detached signatures. The output and status of the of the checks
++ * is recorded in the signatures struct. The caller must use
++ * parse_signatures or sign_buffer to initialize the signatures struct
++ * before calling this function.
++ */
++int verify_signed_buffer(const char *payload, size_t payload_size,
++=09=09=09 const char *signature, size_t signature_size,
++=09=09=09 struct strbuf *output, struct strbuf *status);
++
++/*
++ * Verify multiple signatures in a single buffer
++ */
++int verify_buffer_signatures(const char *payload, size_t size,
++=09=09struct signatures *sigs);
++
++/*
++ * Bridge function to be called by the git code to verify a signed payload
++ */
++int check_signature(const char *payload, size_t plen, const char *signatur=
+e,
++=09size_t slen, struct signature *sigc);
++
++/*
++ * Prints the results of either signing or verifying the payload in the
++ * signatures struct. If the OUTPUT_VERBOSE flag is specified, then the
++ * payload is printed to stdout. If the OUTPUT_RAW flag is specified,=20
++ * the raw status output from the signing tool is printed to stderr,=20
++ * otherwise, the nice results from the tool is printed to stderr.
++ */
++void print_signatures(const struct signatures *sigs, unsigned flags);
++
++/*
++ * Bridge function to be called by the git code to print a signature
++ */
++void print_signature_buffer(const struct signature *sigc, unsigned flags);
++
++/*
++ * Appends each of the detached signatures to the end of the strbuf
++ * passed in. Returns the number of signatures appended to the buffer.
++ */
++size_t strbuf_append_signatures(struct strbuf *buf, const struct signature=
+s *sigs);
++
++/*
++ * Translate the name of the signature tool into the enumerated value
++ * for the signature type.
++ */
++enum signature_type signature_type_by_name(const char *name);
++const char *signature_type_name(enum signature_type st);
++
++/*
++ * Config related functions
++ */
++int git_signing_config(const char *var, const char *value, void *cb);
++void set_signing_key(const char *key, enum signature_type st);
++const char *get_signing_key(enum signature_type st);
++void set_signing_program(const char *program, enum signature_type st);
++const char *get_signing_program(enum signature_type st);
++void set_signature_type(enum signature_type st);
++enum signature_type get_signature_type(void);
 +
 +#endif
++
+diff --git a/signing-tool-openpgp.c b/signing-tool-openpgp.c
+new file mode 100644
+index 000000000..93b63b36d
+--- /dev/null
++++ b/signing-tool-openpgp.c
+@@ -0,0 +1,409 @@
++#include "cache.h"
++#include "config.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "signing-interface.h"
++#include "signing-tool.h"
++#include "sigchain.h"
++#include "tempfile.h"
++
++static int openpgp_sign(const char *payload, size_t size,
++=09=09struct signature **sig, const char *key);
++static size_t openpgp_parse(const char *payload, size_t size,
++=09=09struct signature **sig);
++static int openpgp_verify(const char *payload, size_t size,
++=09=09struct signature *sig);
++static void openpgp_print(const struct signature *sig, unsigned flags);
++static int openpgp_config(const char *, const char *, void *);
++static void openpgp_set_key(const char *);
++static const char *openpgp_get_key(void);
++static void openpgp_set_program(const char *);
++static const char *openpgp_get_program(void);
++
++const struct signing_tool openpgp_tool =3D {
++=09.st =3D OPENPGP_SIGNATURE,
++=09.name =3D "openpgp",
++=09.sign =3D &openpgp_sign,
++=09.parse =3D &openpgp_parse,
++=09.verify =3D &openpgp_verify,
++=09.print =3D &openpgp_print,
++=09.config =3D &openpgp_config,
++=09.set_key =3D &openpgp_set_key,
++=09.get_key =3D &openpgp_get_key,
++=09.set_program =3D &openpgp_set_program,
++=09.get_program =3D &openpgp_get_program
++};
++
++static const char *program =3D "gpg";
++static const char *signing_key =3D NULL;
++static const char *keyring =3D NULL;
++static int no_default_keyring =3D 0;
++struct regex_pattern {
++=09const char * begin;
++=09const char * end;
++};
++static struct regex_pattern patterns[2] =3D {
++=09{ "^-----BEGIN PGP SIGNATURE-----\n", "-----END PGP SIGNATURE-----\n" }=
+,
++=09{ "^-----BEGIN PGP MESSAGE-----\n", "-----END PGP MESSAGE-----\n" }
++};
++
++static int openpgp_sign(const char *payload, size_t size,
++=09=09struct signature **sig, const char *key)
++{
++=09struct child_process gpg =3D CHILD_PROCESS_INIT;
++=09struct signature *psig;
++=09struct strbuf *psignature, *pstatus;
++=09int ret;
++=09size_t i, j;
++=09const char *skey =3D (!key || !*key) ? signing_key : key;
++
++=09/*
++=09 * Create the signature.
++=09 */
++=09if (sig) {
++=09=09psig =3D *sig;
++=09=09strbuf_init(&(psig->sig), 0);
++=09=09strbuf_init(&(psig->output), 0);
++=09=09strbuf_init(&(psig->status), 0);
++=09=09psig->st =3D OPENPGP_SIGNATURE;
++=09=09psig->result =3D 0;
++=09=09psig->signer =3D NULL;
++=09=09psig->key =3D NULL;
++=09=09psignature =3D &(psig->sig);
++=09=09pstatus =3D &(psig->status);
++=09} else {
++=09=09psignature =3D NULL;
++=09=09pstatus =3D NULL;
++=09}
++
++=09argv_array_pushl(&gpg.args,
++=09=09=09program,
++=09=09=09"--status-fd=3D2",
++=09=09=09"-bsau", skey,
++=09=09=09NULL);
++
++=09/*
++=09 * When the username signingkey is bad, program could be terminated
++=09 * because gpg exits without reading and then write gets SIGPIPE.
++=09 */
++=09sigchain_push(SIGPIPE, SIG_IGN);
++=09ret =3D pipe_command(&gpg, payload, size,
++=09=09=09psignature, 1024, pstatus, 0);
++=09sigchain_pop(SIGPIPE);
++
++=09if (!sig)
++=09=09return !!ret;
++
++=09/* Check for success status from gpg */
++=09ret |=3D !strstr(pstatus->buf, "\n[GNUPG:] SIG_CREATED ");
++
++=09if (ret)
++=09=09return error(_("gpg failed to sign the data"));
++
++=09/* Mark the signature as good */
++=09psig->result =3D 'G';
++
++=09/* Strip CR from the line endings, in case we are on Windows. */
++=09for (i =3D j =3D 0; i < psig->sig.len; i++)
++=09=09if (psig->sig.buf[i] !=3D '\r') {
++=09=09=09if (i !=3D j)
++=09=09=09=09psig->sig.buf[j] =3D psig->sig.buf[i];
++=09=09=09j++;
++=09=09}
++=09strbuf_setlen(&(psig->sig), j);
++
++=09/* Store the key we used */
++=09psig->key =3D xstrdup(skey);
++
++=09return 0;
++}
++
++/*
++ * To get all OpenPGP signatures in a payload, repeatedly call this functi=
+on
++ * giving it the remainder of the payload as the payload pointer. The retu=
+rn
++ * value is the index of the first char of the signature in the payload. I=
+f
++ * no signature is found, size is returned.
++ */
++static size_t openpgp_parse(const char *payload, size_t size,
++=09=09struct signature **sig)
++{
++=09int i, ret;
++=09regex_t rbegin;
++=09regex_t rend;
++=09regmatch_t bmatch;
++=09regmatch_t ematch;
++=09size_t begin, end;
++=09struct signature *psig;
++=09static char errbuf[1024];
++
++=09if (size =3D=3D 0)
++=09=09return size;
++
++=09/*
++=09 * Figure out if any OpenPGP signatures are in the payload and which
++=09 * begin pattern matches the first signature in the payload.
++=09 */
++=09for (i =3D 0; i < ARRAY_SIZE(patterns); i++) {
++=09=09if ((ret =3D regcomp(&rbegin, patterns[i].begin, REG_EXTENDED|REG_NE=
+WLINE))) {
++=09=09=09regerror(ret, &rbegin, errbuf, 1024);
++=09=09=09BUG("Failed to compile regex: %s\n", errbuf);
++
++=09=09=09return size;
++=09=09}
++=09=09if ((ret =3D regcomp(&rend, patterns[i].end, REG_EXTENDED|REG_NEWLIN=
+E))) {
++=09=09=09regerror(ret, &rend, errbuf, 1024);
++=09=09=09BUG("Failed to compile regex: %s\n", errbuf);
++
++=09=09=09return size;
++=09=09}
++
++=09=09begin =3D end =3D 0;
++=09=09if (regexec(&rbegin, payload, 1, &bmatch, 0) ||
++=09=09=09regexec(&rend, payload, 1, &ematch, 0)) {
++=09=09=09begin =3D size;
++=09=09=09continue;
++=09=09}
++=09=09begin =3D bmatch.rm_so;
++=09=09end =3D ematch.rm_eo;
++
++=09=09break;
++=09}
++=09if (begin =3D=3D size)
++=09=09goto next;
++
++=09/*
++=09 * Create the signature.
++=09 */
++=09if (sig) {
++=09=09psig =3D *sig;
++=09=09psig =3D xmalloc(sizeof(struct signature));
++=09=09strbuf_init(&(psig->sig), end - begin);
++=09=09strbuf_add(&(psig->sig), payload + begin, end - begin);
++=09=09strbuf_init(&(psig->output), 0);
++=09=09strbuf_init(&(psig->status), 0);
++=09=09psig->st =3D OPENPGP_SIGNATURE;
++=09=09psig->result =3D 0;
++=09=09psig->signer =3D NULL;
++=09=09psig->key =3D NULL;
++=09}
++=09next:
++=09=09regfree(&rbegin);
++=09=09regfree(&rend);
++
++=09return begin;
++}
++
++/* An exclusive status -- only one of them can appear in output */
++#define GPG_STATUS_EXCLUSIVE=09(1<<0)
++/* The status includes key identifier */
++#define GPG_STATUS_KEYID=09(1<<1)
++/* The status includes user identifier */
++#define GPG_STATUS_UID=09=09(1<<2)
++/* The status includes key fingerprints */
++#define GPG_STATUS_FINGERPRINT=09(1<<3)
++
++/* Short-hand for standard exclusive *SIG status with keyid & UID */
++#define GPG_STATUS_STDSIG=09(GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID|GPG_STA=
+TUS_UID)
++
++static struct {
++=09char result;
++=09const char *check;
++=09unsigned int flags;
++} sigcheck_gpg_status[] =3D {
++=09{ 'G', "GOODSIG ", GPG_STATUS_STDSIG },
++=09{ 'B', "BADSIG ", GPG_STATUS_STDSIG },
++=09{ 'U', "TRUST_NEVER", 0 },
++=09{ 'U', "TRUST_UNDEFINED", 0 },
++=09{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID },
++=09{ 'X', "EXPSIG ", GPG_STATUS_STDSIG },
++=09{ 'Y', "EXPKEYSIG ", GPG_STATUS_STDSIG },
++=09{ 'R', "REVKEYSIG ", GPG_STATUS_STDSIG },
++=09{ 0, "VALIDSIG ", GPG_STATUS_FINGERPRINT },
++};
++
++static void parse_output(struct signature *sigc)
++{
++=09const char *buf =3D sigc->status.buf;
++=09const char *line, *next;
++=09int i, j;
++=09int seen_exclusive_status =3D 0;
++
++=09/* Iterate over all lines */
++=09for (line =3D buf; *line; line =3D strchrnul(line+1, '\n')) {
++=09=09while (*line =3D=3D '\n')
++=09=09=09line++;
++=09=09/* Skip lines that don't start with GNUPG status */
++=09=09if (!skip_prefix(line, "[GNUPG:] ", &line))
++=09=09=09continue;
++
++=09=09/* Iterate over all search strings */
++=09=09for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
++=09=09=09if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
++=09=09=09=09=09if (seen_exclusive_status++)
++=09=09=09=09=09=09goto found_duplicate_status;
++=09=09=09=09}
++
++=09=09=09=09if (sigcheck_gpg_status[i].result)
++=09=09=09=09=09sigc->result =3D sigcheck_gpg_status[i].result;
++=09=09=09=09/* Do we have key information? */
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_KEYID) {
++=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09free(sigc->key);
++=09=09=09=09=09sigc->key =3D xmemdupz(line, next - line);
++=09=09=09=09=09/* Do we have signer information? */
++=09=09=09=09=09if (*next && (sigcheck_gpg_status[i].flags & GPG_STATUS_UID=
+)) {
++=09=09=09=09=09=09line =3D next + 1;
++=09=09=09=09=09=09next =3D strchrnul(line, '\n');
++=09=09=09=09=09=09free(sigc->signer);
++=09=09=09=09=09=09sigc->signer =3D xmemdupz(line, next - line);
++=09=09=09=09=09}
++=09=09=09=09}
++=09=09=09=09/* Do we have fingerprint? */
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_FINGERPRINT) {
++=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09free(sigc->fingerprint);
++=09=09=09=09=09sigc->fingerprint =3D xmemdupz(line, next - line);
++
++=09=09=09=09=09/* Skip interim fields */
++=09=09=09=09=09for (j =3D 9; j > 0; j--) {
++=09=09=09=09=09=09if (!*next)
++=09=09=09=09=09=09=09break;
++=09=09=09=09=09=09line =3D next + 1;
++=09=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09}
++
++=09=09=09=09=09next =3D strchrnul(line, '\n');
++=09=09=09=09=09free(sigc->primary_key_fingerprint);
++=09=09=09=09=09sigc->primary_key_fingerprint =3D xmemdupz(line, next - lin=
+e);
++=09=09=09=09}
++
++=09=09=09=09break;
++=09=09=09}
++=09=09}
++=09}
++=09return;
++
++found_duplicate_status:
++=09/*
++=09 * GOODSIG, BADSIG etc. can occur only once for each signature.
++=09 * Therefore, if we had more than one then we're dealing with multiple
++=09 * signatures.  We don't support them currently, and they're rather
++=09 * hard to create, so something is likely fishy and we should reject
++=09 * them altogether.
++=09 */
++=09sigc->result =3D 'E';
++=09/* Clear partial data to avoid confusion */
++=09FREE_AND_NULL(sigc->primary_key_fingerprint);
++=09FREE_AND_NULL(sigc->fingerprint);
++=09FREE_AND_NULL(sigc->signer);
++=09FREE_AND_NULL(sigc->key);
++}
++
++static int openpgp_verify(const char *payload, size_t size,
++=09=09struct signature *sig)
++{
++=09struct child_process gpg =3D CHILD_PROCESS_INIT;
++=09struct tempfile *temp;
++=09int ret;
++
++=09temp =3D mks_tempfile_t(".git_vtag_tmpXXXXXX");
++=09if (!temp)
++=09=09return error_errno(_("could not create temporary file"));
++=09if (write_in_full(temp->fd, sig->sig.buf, sig->sig.len) < 0 ||
++=09    close_tempfile_gently(temp) < 0) {
++=09=09error_errno(_("failed writing detached signature to '%s'"),
++=09=09=09=09temp->filename.buf);
++=09=09delete_tempfile(&temp);
++=09=09return -1;
++=09}
++
++=09argv_array_push(&gpg.args, program);
++=09if (keyring)
++=09=09argv_array_pushl(&gpg.args, "--keyring", keyring, NULL);
++=09if (no_default_keyring)
++=09=09argv_array_push(&gpg.args, "--no-default-keyring");
++=09argv_array_pushl(&gpg.args,
++=09=09=09"--keyid-format=3Dlong",
++=09=09=09"--status-fd=3D1",
++=09=09=09"--verify", temp->filename.buf, "-",
++=09=09=09NULL);
++
++=09strbuf_reset(&(sig->status));
++=09strbuf_reset(&(sig->output));
++
++=09sigchain_push(SIGPIPE, SIG_IGN);
++=09ret =3D pipe_command(&gpg, payload, size,
++=09=09=09&(sig->status), 0, &(sig->output), 0);
++=09sigchain_pop(SIGPIPE);
++
++=09delete_tempfile(&temp);
++
++=09ret |=3D !strstr(sig->status.buf, "\n[GNUPG:] GOODSIG ");
++
++=09if (ret && !sig->output.len)
++=09=09return !!ret;
++
++=09parse_output(sig);
++
++=09ret |=3D sig->result !=3D 'G' && sig->result !=3D 'U';
++
++=09return !!ret;
++}
++
++static void openpgp_print(const struct signature *sig, unsigned flags)
++{
++=09const char *output =3D flags & OUTPUT_RAW ?
++=09=09sig->status.buf : sig->output.buf;
++
++=09if (flags & OUTPUT_VERBOSE && sig->sig.buf)
++=09=09fputs(sig->sig.buf, stdout);
++
++=09if (output)
++=09=09fputs(output, stderr);
++}
++
++static int openpgp_config(const char *var, const char *value, void *cb)
++{
++=09if (!strcmp(var, "program"))
++=09=09return git_config_string(&program, var, value);
++
++=09if (!strcmp(var, "key"))
++=09=09return git_config_string(&signing_key, var, value);
++
++=09if (!strcmp(var, "keyring"))
++=09=09return git_config_string(&keyring, var, value);
++
++=09if (!strcmp(var, "nodefaultkeyring")) {
++=09=09no_default_keyring =3D git_config_bool(var, value);
++=09=09return 0;
++=09}
++=09return 0;
++}
++
++static void openpgp_set_key(const char *key)
++{
++=09free((void*)signing_key);
++=09signing_key =3D xstrdup(key);
++}
++
++static const char *openpgp_get_key(void)
++{
++=09if (signing_key)
++=09=09return signing_key;
++=09return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
++}
++
++static void openpgp_set_program(const char *signing_program)
++{
++=09free((void*)program);
++=09program =3D xstrdup(signing_program);
++}
++
++
++static const char *openpgp_get_program(void)
++{
++=09if (program)
++=09=09return program;
++=09return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
++}
 \ No newline at end of file
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 3e624ec28..c808d1685 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -1,6 +1,7 @@
- #ifndef GPG_INTERFACE_H
- #define GPG_INTERFACE_H
-=20
-+#if 0
- struct strbuf;
-=20
- #define GPG_VERIFY_VERBOSE=09=091
-@@ -65,3 +66,5 @@ void print_signature_buffer(const struct signature_check =
-*sigc,
- =09=09=09    unsigned flags);
-=20
- #endif
+diff --git a/signing-tool-x509.c b/signing-tool-x509.c
+new file mode 100644
+index 000000000..b7de56924
+--- /dev/null
++++ b/signing-tool-x509.c
+@@ -0,0 +1,383 @@
++#include "cache.h"
++#include "config.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "signing-interface.h"
++#include "signing-tool.h"
++#include "sigchain.h"
++#include "tempfile.h"
++
++static int x509_sign(const char *payload, size_t size,
++=09=09struct signature **sig, const char *key);
++static size_t x509_parse(const char *payload, size_t size,
++=09=09struct signature **sig);
++static int x509_verify(const char *payload, size_t size,
++=09=09struct signature *sig);
++static void x509_print(const struct signature *sig, unsigned flags);
++static int x509_config(const char *, const char *, void *);
++static void x509_set_key(const char *);
++static const char *x509_get_key(void);
++static void x509_set_program(const char *);
++static const char *x509_get_program(void);
++
++const struct signing_tool x509_tool =3D {
++=09.st =3D X509_SIGNATURE,
++=09.name =3D "x509",
++=09.sign =3D &x509_sign,
++=09.parse =3D &x509_parse,
++=09.verify =3D &x509_verify,
++=09.print =3D &x509_print,
++=09.config =3D &x509_config,
++=09.set_key =3D &x509_set_key,
++=09.get_key =3D &x509_get_key,
++=09.set_program =3D &x509_set_program,
++=09.get_program =3D &x509_get_program
++};
++
++static const char *program =3D "gpgsm";
++static const char *signing_key =3D NULL;
++struct regex_pattern {
++=09const char * begin;
++=09const char * end;
++};
++static struct regex_pattern pattern =3D {
++=09"^-----BEGIN SIGNED MESSAGE-----\n",
++=09"^-----END SIGNED MESSAGE-----\n"
++};
++
++static int x509_sign(const char *payload, size_t size,
++=09=09struct signature **sig, const char *key)
++{
++=09struct child_process gpgsm =3D CHILD_PROCESS_INIT;
++=09struct signature *psig;
++=09struct strbuf *psignature, *pstatus;
++=09int ret;
++=09size_t i, j;
++=09const char *skey =3D (!key || !*key) ? signing_key : key;
++
++=09/*
++=09 * Create the signature.
++=09 */
++=09if (sig) {
++=09=09psig =3D *sig;
++=09=09strbuf_init(&(psig->sig), 0);
++=09=09strbuf_init(&(psig->output), 0);
++=09=09strbuf_init(&(psig->status), 0);
++=09=09psig->st =3D X509_SIGNATURE;
++=09=09psig->result =3D 0;
++=09=09psig->signer =3D NULL;
++=09=09psig->key =3D NULL;
++=09=09psignature =3D &(psig->sig);
++=09=09pstatus =3D &(psig->status);
++=09} else {
++=09=09psignature =3D NULL;
++=09=09pstatus =3D NULL;
++=09}
++
++=09argv_array_pushl(&gpgsm.args,
++=09=09=09program,
++=09=09=09"--status-fd=3D2",
++=09=09=09"-bsau", skey,
++=09=09=09NULL);
++
++=09/*
++=09 * When the username signingkey is bad, program could be terminated
++=09 * because gpgsm exits without reading and then write gets SIGPIPE.
++=09 */
++=09sigchain_push(SIGPIPE, SIG_IGN);
++=09ret =3D pipe_command(&gpgsm, payload, size,
++=09=09=09psignature, 1024, pstatus, 0);
++=09sigchain_pop(SIGPIPE);
++
++=09if (!sig)
++=09=09return !!ret;
++
++=09ret |=3D !strstr(pstatus->buf, "\n[GNUPG:] SIG_CREATED ");
++=09if (ret)
++=09=09return error(_("gpgsm failed to sign the data"));
++
++=09/* Mark the signature as good. */
++=09psig->result =3D 'G';
++
++=09/* Strip CR from the line endings, in case we are on Windows. */
++=09for (i =3D j =3D 0; i < psig->sig.len; i++)
++=09=09if (psig->sig.buf[i] !=3D '\r') {
++=09=09=09if (i !=3D j)
++=09=09=09=09psig->sig.buf[j] =3D psig->sig.buf[i];
++=09=09=09j++;
++=09=09}
++=09strbuf_setlen(&(psig->sig), j);
++
++=09/* Store the key we used */
++=09psig->key =3D xstrdup(skey);
++
++=09return 0;
++}
++
++static size_t x509_parse(const char *payload, size_t size,
++=09=09struct signature **sig)
++{
++=09int ret;
++=09regex_t rbegin;
++=09regex_t rend;
++=09regmatch_t bmatch;
++=09regmatch_t ematch;
++=09size_t begin, end;
++=09struct signature *psig;
++=09static char errbuf[1024];
++
++=09if (size =3D=3D 0)
++=09=09return size;
++
++=09/*
++=09 * Find the first x509 signature in the payload and copy it into the
++=09 * signature struct.
++=09 */
++=09if ((ret =3D regcomp(&rbegin, pattern.begin, REG_EXTENDED|REG_NEWLINE))=
+) {
++=09=09regerror(ret, &rbegin, errbuf, 1024);
++=09=09BUG("Failed to compile regex: %s\n", errbuf);
++
++=09=09return size;
++=09}
++=09if ((ret =3D regcomp(&rend, pattern.end, REG_EXTENDED|REG_NEWLINE))) {
++=09=09regerror(ret, &rend, errbuf, 1024);
++=09=09BUG("Failed to compile regex: %s\n", errbuf);
++
++=09=09return size;
++=09}
++
++=09begin =3D end =3D 0;
++=09if (regexec(&rbegin, payload, 1, &bmatch, 0) ||
++=09=09regexec(&rend, payload, 1, &ematch, 0)) {
++=09=09begin =3D size;
++=09}
++=09if (begin =3D=3D size)
++=09=09goto next;
++
++=09begin =3D bmatch.rm_so;
++=09end =3D ematch.rm_eo;
++
++=09/*
++=09 * Create the signature.
++=09 */
++=09if (sig) {
++=09=09psig =3D *sig;
++=09=09psig =3D xmalloc(sizeof(struct signature));
++=09=09strbuf_init(&(psig->sig), end - begin);
++=09=09strbuf_add(&(psig->sig), payload + begin, end - begin);
++=09=09strbuf_init(&(psig->output), 0);
++=09=09strbuf_init(&(psig->status), 0);
++=09=09psig->st =3D X509_SIGNATURE;
++=09=09psig->result =3D 0;
++=09=09psig->signer =3D NULL;
++=09=09psig->key =3D NULL;
++=09}
++
++=09next:
++=09=09regfree(&rbegin);
++=09=09regfree(&rend);
++
++=09return begin;
++}
++
++/* An exclusive status -- only one of them can appear in output */
++#define GPG_STATUS_EXCLUSIVE=09(1<<0)
++/* The status includes key identifier */
++#define GPG_STATUS_KEYID=09(1<<1)
++/* The status includes user identifier */
++#define GPG_STATUS_UID=09=09(1<<2)
++/* The status includes key fingerprints */
++#define GPG_STATUS_FINGERPRINT=09(1<<3)
++
++/* Short-hand for standard exclusive *SIG status with keyid & UID */
++#define GPG_STATUS_STDSIG=09(GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID|GPG_STA=
+TUS_UID)
++
++static struct {
++=09char result;
++=09const char *check;
++=09unsigned int flags;
++} sigcheck_gpg_status[] =3D {
++=09{ 'G', "GOODSIG ", GPG_STATUS_STDSIG },
++=09{ 'B', "BADSIG ", GPG_STATUS_STDSIG },
++=09{ 'U', "TRUST_NEVER", 0 },
++=09{ 'U', "TRUST_UNDEFINED", 0 },
++=09{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID },
++=09{ 'X', "EXPSIG ", GPG_STATUS_STDSIG },
++=09{ 'Y', "EXPKEYSIG ", GPG_STATUS_STDSIG },
++=09{ 'R', "REVKEYSIG ", GPG_STATUS_STDSIG },
++=09{ 0, "VALIDSIG ", GPG_STATUS_FINGERPRINT },
++};
++
++static void parse_output(struct signature *sigc)
++{
++=09const char *buf =3D sigc->status.buf;
++=09const char *line, *next;
++=09int i, j;
++=09int seen_exclusive_status =3D 0;
++
++=09/* Iterate over all lines */
++=09for (line =3D buf; *line; line =3D strchrnul(line+1, '\n')) {
++=09=09while (*line =3D=3D '\n')
++=09=09=09line++;
++=09=09/* Skip lines that don't start with GNUPG status */
++=09=09if (!skip_prefix(line, "[GNUPG:] ", &line))
++=09=09=09continue;
++
++=09=09/* Iterate over all search strings */
++=09=09for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
++=09=09=09if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
++=09=09=09=09=09if (seen_exclusive_status++)
++=09=09=09=09=09=09goto found_duplicate_status;
++=09=09=09=09}
++
++=09=09=09=09if (sigcheck_gpg_status[i].result)
++=09=09=09=09=09sigc->result =3D sigcheck_gpg_status[i].result;
++=09=09=09=09/* Do we have key information? */
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_KEYID) {
++=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09free(sigc->key);
++=09=09=09=09=09sigc->key =3D xmemdupz(line, next - line);
++=09=09=09=09=09/* Do we have signer information? */
++=09=09=09=09=09if (*next && (sigcheck_gpg_status[i].flags & GPG_STATUS_UID=
+)) {
++=09=09=09=09=09=09line =3D next + 1;
++=09=09=09=09=09=09next =3D strchrnul(line, '\n');
++=09=09=09=09=09=09free(sigc->signer);
++=09=09=09=09=09=09sigc->signer =3D xmemdupz(line, next - line);
++=09=09=09=09=09}
++=09=09=09=09}
++=09=09=09=09/* Do we have fingerprint? */
++=09=09=09=09if (sigcheck_gpg_status[i].flags & GPG_STATUS_FINGERPRINT) {
++=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09free(sigc->fingerprint);
++=09=09=09=09=09sigc->fingerprint =3D xmemdupz(line, next - line);
++
++=09=09=09=09=09/* Skip interim fields */
++=09=09=09=09=09for (j =3D 9; j > 0; j--) {
++=09=09=09=09=09=09if (!*next)
++=09=09=09=09=09=09=09break;
++=09=09=09=09=09=09line =3D next + 1;
++=09=09=09=09=09=09next =3D strchrnul(line, ' ');
++=09=09=09=09=09}
++
++=09=09=09=09=09next =3D strchrnul(line, '\n');
++=09=09=09=09=09free(sigc->primary_key_fingerprint);
++=09=09=09=09=09sigc->primary_key_fingerprint =3D xmemdupz(line, next - lin=
+e);
++=09=09=09=09}
++
++=09=09=09=09break;
++=09=09=09}
++=09=09}
++=09}
++=09return;
++
++found_duplicate_status:
++=09/*
++=09 * GOODSIG, BADSIG etc. can occur only once for each signature.
++=09 * Therefore, if we had more than one then we're dealing with multiple
++=09 * signatures.  We don't support them currently, and they're rather
++=09 * hard to create, so something is likely fishy and we should reject
++=09 * them altogether.
++=09 */
++=09sigc->result =3D 'E';
++=09/* Clear partial data to avoid confusion */
++=09FREE_AND_NULL(sigc->primary_key_fingerprint);
++=09FREE_AND_NULL(sigc->fingerprint);
++=09FREE_AND_NULL(sigc->signer);
++=09FREE_AND_NULL(sigc->key);
++}
++
++static int x509_verify(const char *payload, size_t size,
++=09=09struct signature *sig)
++{
++=09struct child_process gpgsm =3D CHILD_PROCESS_INIT;
++=09struct tempfile *temp;
++=09int ret;
++
++=09temp =3D mks_tempfile_t(".git_vtag_tmpXXXXXX");
++=09if (!temp)
++=09=09return error_errno(_("could not create temporary file"));
++=09if (write_in_full(temp->fd, sig->sig.buf, sig->sig.len) < 0 ||
++=09    close_tempfile_gently(temp) < 0) {
++=09=09error_errno(_("failed writing detached signature to '%s'"),
++=09=09=09=09temp->filename.buf);
++=09=09delete_tempfile(&temp);
++=09=09return -1;
++=09}
++
++=09argv_array_push(&gpgsm.args, program);
++=09argv_array_pushl(&gpgsm.args,
++=09=09=09"--status-fd=3D1",
++=09=09=09"--verify", temp->filename.buf, "-",
++=09=09=09NULL);
++
++=09strbuf_reset(&(sig->status));
++=09strbuf_reset(&(sig->output));
++
++=09sigchain_push(SIGPIPE, SIG_IGN);
++=09ret =3D pipe_command(&gpgsm, payload, size,
++=09=09=09&(sig->status), 0, &(sig->output), 0);
++=09sigchain_pop(SIGPIPE);
++
++=09delete_tempfile(&temp);
++
++=09ret |=3D !strstr(sig->status.buf, "\n[GNUPG:] GOODSIG ");
++
++=09if (ret && !sig->output.len)
++=09=09return !!ret;
++
++=09parse_output(sig);
++
++=09ret |=3D sig->result !=3D 'G' && sig->result !=3D 'U';
++
++=09return !!ret;
++}
++
++static void x509_print(const struct signature *sig, unsigned flags)
++{
++=09const char *output =3D flags & OUTPUT_RAW ?
++=09=09sig->status.buf : sig->output.buf;
++
++=09if (flags & OUTPUT_VERBOSE && sig->sig.buf)
++=09=09fputs(sig->sig.buf, stdout);
++
++=09if (output)
++=09=09fputs(output, stderr);
++}
++
++static int x509_config(const char *var, const char *value, void *cb)
++{
++=09if (!strcmp(var, "program"))
++=09=09return git_config_string(&program, var, value);
++
++=09if (!strcmp(var, "key"))
++=09=09return git_config_string(&signing_key, var, value);
++
++=09return 0;
++}
++
++static void x509_set_key(const char *key)
++{
++=09free((void*)signing_key);
++=09signing_key =3D xstrdup(key);
++}
++
++static const char *x509_get_key(void)
++{
++=09if (signing_key)
++=09=09return signing_key;
++=09return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
++}
++
++static void x509_set_program(const char *signing_program)
++{
++=09free((void*)program);
++=09program =3D xstrdup(signing_program);
++}
++
++static const char *x509_get_program(void)
++{
++=09if (program)
++=09=09return program;
++=09return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
++}
+\ No newline at end of file
+diff --git a/signing-tool.h b/signing-tool.h
+new file mode 100644
+index 000000000..ee7ccc7a5
+--- /dev/null
++++ b/signing-tool.h
+@@ -0,0 +1,35 @@
++#ifndef SIGNING_TOOL_H
++#define SIGNING_TOOL_H
++
++struct strbuf;
++struct signature;
++
++typedef int (*sign_fn)(const char *payload, size_t size,
++=09struct signature **sig, const char *key);
++typedef size_t (*parse_fn)(const char *payload, size_t size,
++=09struct signature **sig);
++typedef int (*verify_fn)(const char *payload, size_t size,
++=09struct signature *sig);
++typedef void (*print_fn)(const struct signature *sig, unsigned flags);
++typedef int (*config_fn)(const char *var, const char *value, void *cb);
++typedef void (*set_key_fn)(const char *key);
++typedef const char *(*get_key_fn)(void);
++typedef void (*set_program_fn)(const char *signing_program);
++typedef const char *(*get_program_fn)(void);
++
++struct signing_tool {
++=09const enum signature_type st;
++=09const char* name;
++=09sign_fn sign;
++=09parse_fn parse;
++=09verify_fn verify;
++=09print_fn print;
++=09config_fn config;
++=09set_key_fn set_key;
++=09get_key_fn get_key;
++=09set_program_fn set_program;
++=09get_program_fn get_program;
++};
 +
 +#endif
-\ No newline at end of file
-diff --git a/log-tree.c b/log-tree.c
-index 1e56df62a..c13a7e06d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -11,7 +11,7 @@
- #include "refs.h"
- #include "string-list.h"
- #include "color.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "sequencer.h"
- #include "line-log.h"
- #include "help.h"
-diff --git a/pretty.c b/pretty.c
-index ced048525..f315755c3 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -10,7 +10,7 @@
- #include "notes.h"
- #include "color.h"
- #include "reflog-walk.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "trailer.h"
-=20
- static char *user_format;
-@@ -771,7 +771,7 @@ struct format_commit_context {
- =09const struct pretty_print_context *pretty_ctx;
- =09unsigned commit_header_parsed:1;
- =09unsigned commit_message_parsed:1;
--=09struct signature_check signature_check;
-+=09struct signature signature_check;
- =09enum flush_type flush_type;
- =09enum trunc_type truncate;
- =09const char *message;
-@@ -1292,8 +1292,8 @@ static size_t format_commit_one(struct strbuf *sb, /*=
- in UTF-8 */
- =09=09=09check_commit_signature(c->commit, &(c->signature_check));
- =09=09switch (placeholder[1]) {
- =09=09case 'G':
--=09=09=09if (c->signature_check.gpg_output)
--=09=09=09=09strbuf_addstr(sb, c->signature_check.gpg_output);
-+=09=09=09if (c->signature_check.output.buf)
-+=09=09=09=09strbuf_addstr(sb, c->signature_check.output.buf);
- =09=09=09break;
- =09=09case '?':
- =09=09=09switch (c->signature_check.result) {
-diff --git a/ref-filter.c b/ref-filter.c
-index 8500671bc..277fcc04e 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -20,6 +20,7 @@
- #include "commit-slab.h"
- #include "commit-graph.h"
- #include "commit-reach.h"
-+#include "signing-interface.h"
-=20
- static struct ref_msg {
- =09const char *gone;
-diff --git a/send-pack.c b/send-pack.c
-index 6dc16c321..6db779964 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -13,7 +13,7 @@
- #include "transport.h"
- #include "version.h"
- #include "sha1-array.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "cache.h"
-=20
- int option_parse_push_signed(const struct option *opt,
-@@ -269,7 +269,8 @@ static int generate_push_cert(struct strbuf *req_buf,
- {
- =09const struct ref *ref;
- =09struct string_list_item *item;
--=09char *signing_key =3D xstrdup(get_signing_key());
-+=09extern enum signature_type default_type;
-+=09char *signing_key =3D xstrdup(get_signing_key(default_type));
- =09const char *cp, *np;
- =09struct strbuf cert =3D STRBUF_INIT;
- =09int update_seen =3D 0;
-diff --git a/sequencer.c b/sequencer.c
-index ab74b6baf..e3cfe40d2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -32,6 +32,7 @@
- #include "alias.h"
- #include "commit-reach.h"
- #include "rebase-interactive.h"
-+#include "signing-interface.h"
-=20
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
-=20
-@@ -197,7 +198,7 @@ static int git_sequencer_config(const char *k, const ch=
-ar *v, void *cb)
- =09=09return 0;
- =09}
-=20
--=09status =3D git_gpg_config(k, v, NULL);
-+=09status =3D git_signing_config(k, v, NULL);
- =09if (status)
- =09=09return status;
-=20
-diff --git a/tag.c b/tag.c
-index 7445b8f6e..d9bbf5249 100644
---- a/tag.c
-+++ b/tag.c
-@@ -5,14 +5,14 @@
- #include "tree.h"
- #include "blob.h"
- #include "alloc.h"
--#include "gpg-interface.h"
-+#include "signing-interface.h"
- #include "packfile.h"
-=20
- const char *tag_type =3D "tag";
-=20
- static int run_gpg_verify(const char *buf, unsigned long size, unsigned fl=
-ags)
- {
--=09struct signature_check sigc;
-+=09struct signature sigc;
- =09size_t payload_size;
- =09int ret;
-=20
-@@ -21,7 +21,7 @@ static int run_gpg_verify(const char *buf, unsigned long =
-size, unsigned flags)
- =09payload_size =3D parse_signature(buf, size);
-=20
- =09if (size =3D=3D payload_size) {
--=09=09if (flags & GPG_VERIFY_VERBOSE)
-+=09=09if (flags & OUTPUT_VERBOSE)
- =09=09=09write_in_full(1, buf, payload_size);
- =09=09return error("no signature found");
- =09}
-@@ -29,10 +29,10 @@ static int run_gpg_verify(const char *buf, unsigned lon=
-g size, unsigned flags)
- =09ret =3D check_signature(buf, payload_size, buf + payload_size,
- =09=09=09=09size - payload_size, &sigc);
-=20
--=09if (!(flags & GPG_VERIFY_OMIT_STATUS))
-+=09if (!(flags & OUTPUT_OMIT_STATUS))
- =09=09print_signature_buffer(&sigc, flags);
-=20
--=09signature_check_clear(&sigc);
-+=09signature_clear(&sigc);
- =09return ret;
- }
-=20
++
 --=20
 2.11.0
 
