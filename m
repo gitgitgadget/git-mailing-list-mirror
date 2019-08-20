@@ -2,363 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D6781F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 13:56:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBA021F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 14:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730030AbfHTN4L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 09:56:11 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42290 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728248AbfHTN4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 09:56:10 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b16so12511284wrq.9
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 06:56:09 -0700 (PDT)
+        id S1729975AbfHTOcX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 10:32:23 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:36361 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728993AbfHTOcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 10:32:23 -0400
+Received: by mail-wr1-f53.google.com with SMTP id r3so12667132wrt.3
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 07:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Y0/6sMdpF9s+fqTJN5vbPoX/4XMpmvx5y+wzHU+kbu4=;
-        b=fgl1wkKc58fdPS1eOrQ7mo86szEC/4b+hTsV7RI/t94GRCmoTaACN2+3fyaKXMSY+B
-         Dfp+P9ML+6YRPQv/AcsEpjBU5+nohPj7y6CkFN+NgOvOvqiVtBme5B30GoEI9jJUxZuh
-         TzqRqq19OFTO6LlhxvU99C6NH0jB3yFmuS5BwmtOx4WssQKze8iQzN7dGgwybU12x311
-         86sKKpBkmrij5pkfY59ZYkh6b4l4wAkpNQvOpGNiTEHTkRpiFwvNjeF1WBmd1jDJ9M7d
-         Ecc9loEJ6SIxKGwpmzPKGFpVhR56VtwjbH3L32pkX9ntYzoW6LsdTH8+4tP8FBlI3ott
-         Jyvw==
+        d=mat.ucm.es; s=google;
+        h=from:to:cc:subject:references:reply-to:date:message-id:user-agent
+         :mime-version;
+        bh=E1ugqxNPztRNlqEr+4k9qQFiB7SgKCRJwA+1EfJkuUU=;
+        b=JF4fN9Dfuk8tlhnCJhGk4NHkzk6ccK1XA9QJkUiNJ7VPmV6/q+cUztqZf0qXxfsQv9
+         Kg7VV5dRNP+muJ4SIa8csxVmPL3H0nczM2560R36SxZgvX67mPhcWbPgEFor8yrzYkvp
+         9kBYv6cX/VwYEEks2osjpd92tQskAqh5ik0js=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=Y0/6sMdpF9s+fqTJN5vbPoX/4XMpmvx5y+wzHU+kbu4=;
-        b=tXhbqcvKjkQ5jr3996U3C7Bk74cXQ0uafVe0gI7CgVpb90l4yG3csGQvd5UK/ZbLkc
-         9w8cjJgtSKLxT1nK3RnJnhuVujVRhymBa/UXDjXTnZd00zyHloOOsPP/HTRThdXwPyLQ
-         1rCON4zwUkxKJtcYE4GeBm58cobEU4yh8aTL8KeRDDUgveVEDv36jPx7I8p0V9xRYPc0
-         bfRqffUBOgDcvKcteC+or0EMEt89O5EqczLqPYPV7j/i5UdgBM8YDyGKy1yp/9VWUKWq
-         ZjhrzJjxXY3KHcXJgXTiZlXVyKAQbRJ4rDC5RgAEG6aPnA4i1sDe+DAt5lis7XK3+QH6
-         FjNA==
-X-Gm-Message-State: APjAAAVw2wIBaGdxsG8hStE3ry8qVchPWrnfXsAjAFSmyyWVcGwOAT0K
-        YbsAgbslBogOtD003mD5tv6tGUDAKGw=
-X-Google-Smtp-Source: APXvYqxpQ8acVbEsMdrOF6cA5UTlgnOVNCfCYdVd3BQ0CHDjMA0XSnnU9ORIstceabx3YeDXm9h7CQ==
-X-Received: by 2002:adf:ea08:: with SMTP id q8mr11313724wrm.188.1566309368375;
-        Tue, 20 Aug 2019 06:56:08 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
-        by smtp.gmail.com with ESMTPSA id o11sm54437wmh.46.2019.08.20.06.56.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 06:56:07 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/6] rebase -i: support more options
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
-        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
- <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com>
-Date:   Tue, 20 Aug 2019 14:56:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:from:to:cc:subject:references:reply-to:date
+         :message-id:user-agent:mime-version;
+        bh=E1ugqxNPztRNlqEr+4k9qQFiB7SgKCRJwA+1EfJkuUU=;
+        b=Nh777e8Nspc9YoYMj2BuJinuytKXrX+0nKtUDIgXrZFQQwSDIteohz4rU0ABVjwGIJ
+         Nnj+6Tuvhiv4zCXIX/N1v1e9utC8E4b6JugDypDnfUNUMk/YIYQq0sJjCcixxVA3XvVT
+         CLCB5qWzCMhpKYbk6b1kNB74U36a/xJEiRSeuLDhRrw9tGyYFftieOl/8ehz/VTMMaY+
+         zNU5l+tIIT2UXWC6WkKZ2qaLk+izyX2QcoHyesBHIb5cyH0giVuBxGXBbX5yf2Pv0JTv
+         hijo3WitLjaaLkH+wcYcK6O0P8qmM9I1b4EGgu5z8wDlRwMI1/5FB3fqPw1hdLjR6UiU
+         FSyw==
+X-Gm-Message-State: APjAAAUKRnigMK45Bp+Sp9FMYxKzGlAqr2wYNpG1hYG2eDc5BU3qmO9f
+        3gzk9zGk01mlHHuq2XUj8qgQgw==
+X-Google-Smtp-Source: APXvYqx9XUtObzte4M76UwIXQLOguYpJEiDQA3eV1W8/aXXHvhsjHHpFwP5WXn1TUyfTbBZ9rPbwXg==
+X-Received: by 2002:adf:e708:: with SMTP id c8mr35190257wrm.25.1566311539939;
+        Tue, 20 Aug 2019 07:32:19 -0700 (PDT)
+Received: from Utnapischtim (p2003000611CFBC14D5AD6B2F5C7C552A.dip0.t-ipconnect.de. [2003:6:11cf:bc14:d5ad:6b2f:5c7c:552a])
+        by smtp.gmail.com with ESMTPSA id f192sm97189wmg.30.2019.08.20.07.32.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Aug 2019 07:32:18 -0700 (PDT)
+X-Mailer: emacs 27.0.50 (via feedmail 11-beta-1 I)
+From:   Uwe Brauer <oub@mat.ucm.es>
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     Uwe Brauer <oub@mat.ucm.es>, git@vger.kernel.org,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [problem with name-rev] (was: git log --graph with a sort of local
+ revision number)
+References: <87blwq7rn5.fsf@mat.ucm.es> <20190818190032.GA11185@rigel>
+Reply-To: Uwe Brauer <oub@mat.ucm.es>
+X-Hashcash: 1:20:190820:git@vger.kernel.org::k1YM4ZFdt78vfo2D:0000000000000000000000000000000000000000000BR2
+X-Hashcash: 1:20:190820:oub@mat.ucm.es::XkpnjcfnwnozIzqo:00008D6
+X-Hashcash: 1:20:190820:rafa.almas@gmail.com::ls4yPQLewB74oe1n:000000000000000000000000000000000000000001n0l
+X-Hashcash: 1:20:190820:alban.gruin@gmail.com::OSnN8idwjZ0q9ajV:00000000000000000000000000000000000000002tue
+Date:   Tue, 20 Aug 2019 16:32:12 +0200
+Message-ID: <87pnkzkivn.fsf_-_@mat.ucm.es>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=sha256; protocol="application/pkcs7-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 20/08/2019 04:45, Rohit Ashiwal wrote:
-> I've tries to incorporated all the suggestions.
+>>> "RA" =3D=3D Rafael Ascens=C3=A3o <rafa.almas@gmail.com> writes:
 
-It is helpful if you can list the changes to remind us all what we said. 
-(as a patch author I find composing that is helpful to remind me if 
-there's anything I've forgotten to address)
+   > You can achieve something close (on small repos, more on that later) w=
+ith:
+   > $ git log --graph --color \
+   >   --format=3D'%C(auto)changeset: %h:%H%nuser:      %an%ndate:      %ad=
+%nsummary:   %s%n' \
+   >   | git name-rev --refs=3D$(git rev-parse --abbrev-ref HEAD) --name-on=
+ly --stdin
 
-Also there are a couple of things that were discussed such as splitting 
-up the author and passing it round as a <name, email, date, tz> tuple 
-and testing a non-default timezone which aren't included - that's fine 
-but it helps if you take a moment to explain why in the cover letter.
 
-> 
-> Some points:
->    - According to v2.0.0's git-am.sh, ignore-date should override
->      committer-date-is-author-date. Ergo, we are not barfing out
->      when both flags are provided.
->    - Should the 'const' qualifier be removed[2]? Since it is leaving
->      a false impression that author should not be free()'d.
+It seems that there is problem with name-rev.
 
-The author returned by read_author_ident() is owned by the strbuf that 
-you pass to read_author_ident() which is confusing.
+Here's what I get when I start committing on master, then switch to a
+branch foo and finally merge foo into master:
 
-Best Wishes
+git init=20
+echo 1 > 1
+git add 1
+git commit -m 1
+echo 1.1 > 1
+git add .
+git commit -m 1.1
+git checkout -b foo master~1
+echo 1.2 > 1
+git add .
+git commit -m 1.2
+echo 1.2.1 > 1
+git add .
+git commit -m 1.2.1
+git checkout master
+git merge foo
+echo 1.2.1/1.1 > 1
+git add .
+git commit -m "1.2.1/1.1"
 
-Phillip
+Then=20
+ git log --graph --color --format=3D'%C(auto)changeset: %h:%H%nuser:      %=
+an%ndate:      %ad%nsummary:   %s%n'   | git name-rev --refs=3D$(git rev-pa=
+rse --abbrev-ref HEAD) --name-only --stdin | more
 
-> 
-> [1]: git show v2.0.0:git-am.sh
-> [2]: https://github.com/git/git/blob/v2.23.0/sequencer.c#L959
-> 
-> Rohit Ashiwal (6):
->    rebase -i: add --ignore-whitespace flag
->    sequencer: add NULL checks under read_author_script
->    rebase -i: support --committer-date-is-author-date
->    sequencer: rename amend_author to author_to_rename
->    rebase -i: support --ignore-date
->    rebase: add --reset-author-date
-> 
->   Documentation/git-rebase.txt            |  26 +++--
->   builtin/rebase.c                        |  53 +++++++---
->   sequencer.c                             | 135 ++++++++++++++++++++++--
->   sequencer.h                             |   2 +
->   t/t3422-rebase-incompatible-options.sh  |   2 -
->   t/t3433-rebase-options-compatibility.sh | 100 ++++++++++++++++++
->   6 files changed, 289 insertions(+), 29 deletions(-)
->   create mode 100755 t/t3433-rebase-options-compatibility.sh
-> 
-> Range-diff:
-> 1:  4cd0aa3084 ! 1:  e82ed8cad5 rebase -i: add --ignore-whitespace flag
->      @@ -19,10 +19,13 @@
->        default is `--no-fork-point`, otherwise the default is `--fork-point`.
->        
->        --ignore-whitespace::
->      -+	This flag is either passed to the 'git apply' program
->      -+	(see linkgit:git-apply[1]), or to 'git merge' program
->      -+	(see linkgit:git-merge[1]) as `-Xignore-space-change`,
->      -+	depending on which backend is selected by other options.
->      ++	Behaves differently depending on which backend is selected.
->      +++
->      ++'am' backend: When applying a patch, ignore changes in whitespace in
->      ++context lines if necessary.
->      +++
->      ++'interactive' backend: Treat lines with only whitespace changes as
->      ++unchanged for the sake of a three-way merge.
->       +
->        --whitespace=<option>::
->       -	These flag are passed to the 'git apply' program
->      @@ -63,7 +66,7 @@
->        
->        static struct replay_opts get_replay_opts(const struct rebase_options *opts)
->        {
->      -+	char *strategy_opts = opts->strategy_opts;
->      ++	struct strbuf strategy_buf = STRBUF_INIT;
->        	struct replay_opts replay = REPLAY_OPTS_INIT;
->        
->        	replay.action = REPLAY_INTERACTIVE_REBASE;
->      @@ -71,24 +74,19 @@
->        	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
->        	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
->        	replay.strategy = opts->strategy;
->      --	if (opts->strategy_opts)
->      --		parse_strategy_opts(&replay, opts->strategy_opts);
->      -+
->      -+	if (opts->ignore_whitespace) {
->      -+		struct strbuf buf = STRBUF_INIT;
->      -+
->      -+		if (strategy_opts)
->      -+			strbuf_addstr(&buf, strategy_opts);
->       +
->      -+		strbuf_addstr(&buf, " --ignore-space-change");
->      -+		free(strategy_opts);
->      -+		strategy_opts = strbuf_detach(&buf, NULL);
->      -+	}
->      -+	if (strategy_opts)
->      -+		parse_strategy_opts(&replay, strategy_opts);
->      + 	if (opts->strategy_opts)
->      +-		parse_strategy_opts(&replay, opts->strategy_opts);
->      ++		strbuf_addstr(&strategy_buf, opts->strategy_opts);
->      ++	if (opts->ignore_whitespace)
->      ++		strbuf_addstr(&strategy_buf, " --ignore-space-change");
->      ++	if (strategy_buf.len)
->      ++		parse_strategy_opts(&replay, strategy_buf.buf);
->        
->      ++	strbuf_release(&strategy_buf);
->        	return replay;
->        }
->      +
->       @@
->        	argc = parse_options(argc, argv, prefix, options,
->        			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
-> 2:  e2c0304587 = 2:  209057b361 sequencer: add NULL checks under read_author_script
-> 3:  6aed57ae2e ! 3:  a4e6644ef8 rebase -i: support --committer-date-is-author-date
->      @@ -21,10 +21,12 @@
->       +
->        --ignore-date::
->       -	These flags are passed to 'git am' to easily change the dates
->      +-	of the rebased commits (see linkgit:git-am[1]).
->       +	This flag is passed to 'git am' to change the author date
->      - 	of the rebased commits (see linkgit:git-am[1]).
->      ++	of each rebased commit (see linkgit:git-am[1]).
->        +
->        See also INCOMPATIBLE OPTIONS below.
->      +
->       @@
->        
->        The following options:
->      @@ -62,16 +64,6 @@
->        	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
->        	replay.strategy = opts->strategy;
->        
->      -@@
->      - 		warning(_("--[no-]rebase-cousins has no effect without "
->      - 			  "--rebase-merges"));
->      -
->      -+	if (opts.committer_date_is_author_date)
->      -+		opts.flags |= REBASE_FORCE;
->      -+
->      - 	return !!run_rebase_interactive(&opts, command);
->      - }
->      -
->       @@
->        
->        	if (opts->ignore_whitespace)
->      @@ -149,14 +141,14 @@
->       +		struct strbuf datebuf = STRBUF_INIT;
->       +		char *date = read_author_date_or_null();
->       +
->      ++		if (!date)
->      ++			return -1;
->      ++
->       +		strbuf_addf(&datebuf, "@%s", date);
->       +		free(date);
->       +
->       +		date = strbuf_detach(&datebuf, &len);
->      -+
->      -+		if (len > 1)
->      -+			res = setenv("GIT_COMMITTER_DATE", date, 1);
->      -+
->      ++		res = setenv("GIT_COMMITTER_DATE", date, 1);
->       +		free(date);
->       +
->       +		if (res)
->      @@ -187,7 +179,7 @@
->       +		if (!ident.date_begin)
->       +			return error(_("corrupted author without date information"));
->       +
->      -+		strbuf_addf(&date, "@%s",ident.date_begin);
->      ++		strbuf_addf(&date, "@%s", ident.date_begin);
->       +		setenv("GIT_COMMITTER_DATE", date.buf, 1);
->       +		strbuf_release(&date);
->       +	}
-> 4:  36a0c017c2 = 4:  6ac1885c54 sequencer: rename amend_author to author_to_rename
-> 5:  3a4ffeb995 ! 5:  a69749dd67 rebase -i: support --ignore-date
->      @@ -16,9 +16,9 @@
->        
->        --ignore-date::
->       -	This flag is passed to 'git am' to change the author date
->      --	of the rebased commits (see linkgit:git-am[1]).
->      -+	Instead of using the given author date, re-set it to the value
->      -+	same as committer (current) date. This implies --force-rebase.
->      +-	of each rebased commit (see linkgit:git-am[1]).
->      ++	Instead of using the given author date, reset it to the value
->      ++	same as the current time. This implies --force-rebase.
->        +
->        See also INCOMPATIBLE OPTIONS below.
->        
->      @@ -58,18 +58,6 @@
->        	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
->        	replay.strategy = opts->strategy;
->        
->      -@@
->      - 		warning(_("--[no-]rebase-cousins has no effect without "
->      - 			  "--rebase-merges"));
->      -
->      --	if (opts.committer_date_is_author_date)
->      -+	if (opts.ignore_date)
->      -+		opts.committer_date_is_author_date = 0;
->      -+	if (opts.committer_date_is_author_date ||
->      -+	    opts.ignore_date)
->      - 		opts.flags |= REBASE_FORCE;
->      -
->      - 	return !!run_rebase_interactive(&opts, command);
->       @@
->        		argv_array_push(&am.args, "--ignore-whitespace");
->        	if (opts->committer_date_is_author_date)
->      @@ -125,18 +113,19 @@
->        	return buf->buf;
->        }
->        
->      -+static void ignore_author_date(const char **author)
->      ++/* Construct a free()able author string with current time as the author date */
->      ++static char *ignore_author_date(const char *author)
->       +{
->      -+	int len = strlen(*author);
->      ++	int len = strlen(author);
->       +	struct ident_split ident;
->       +	struct strbuf new_author = STRBUF_INIT;
->       +
->      -+	split_ident_line(&ident, *author, len);
->      ++	split_ident_line(&ident, author, len);
->       +	len = ident.mail_end - ident.name_begin + 1;
->       +
->      -+	strbuf_addf(&new_author, "%.*s", len, *author);
->      ++	strbuf_addf(&new_author, "%.*s ", len, author);
->       +	datestamp(&new_author);
->      -+	*author = strbuf_detach(&new_author, NULL);
->      ++	return strbuf_detach(&new_author, NULL);
->       +}
->       +
->       +static void push_dates(struct child_process *child)
->      @@ -160,11 +149,13 @@
->       -		else
->       +		else {
->       +			if (opts->ignore_date) {
->      ++				char *new_author = ignore_author_date(author);
->       +				if (!author)
->       +					BUG("ignore-date can only be used with "
->       +					    "rebase, which must set the author "
->       +					    "before committing the tree");
->      -+				ignore_author_date(&author);
->      ++				free((void *)author);
->      ++				author = new_author;
->       +			}
->        			res = commit_tree(msg.buf, msg.len, cache_tree_oid,
->        					  NULL, &root_commit, author,
->      @@ -187,7 +178,7 @@
->        	reset_ident_date();
->        
->       +	if (opts->ignore_date) {
->      -+		ignore_author_date(&author);
->      ++		author = ignore_author_date(author);
->       +		free(author_to_free);
->       +		author_to_free = (char *)author;
->       +	}
-> 6:  cb81e6c4e5 ! 6:  210d15cca0 rebase: add --author-date-is-committer-date
->      @@ -1,6 +1,6 @@
->       Author: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
->       
->      -    rebase: add --author-date-is-committer-date
->      +    rebase: add --reset-author-date
->       
->           The previous commit introduced --ignore-date flag to interactive
->           rebase, but the name is actually very vague in context of rebase -i
->      @@ -16,9 +16,9 @@
->        	as the committer date. This implies --force-rebase.
->        
->        --ignore-date::
->      -+--author-date-is-committer-date::
->      - 	Instead of using the given author date, re-set it to the value
->      - 	same as committer (current) date. This implies --force-rebase.
->      ++--reset-author-date::
->      + 	Instead of using the given author date, reset it to the value
->      + 	same as the current time. This implies --force-rebase.
->        +
->       
->        diff --git a/builtin/rebase.c b/builtin/rebase.c
->      @@ -28,7 +28,7 @@
->        		OPT_BOOL(0, "committer-date-is-author-date",
->        			 &options.committer_date_is_author_date,
->        			 N_("make committer date match author date")),
->      -+		OPT_BOOL(0, "author-date-is-committer-date", &options.ignore_date,
->      ++		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
->       +			 "ignore author date and use current date"),
->        		OPT_BOOL(0, "ignore-date", &options.ignore_date,
->        			 "ignore author date and use current date"),
-> 
+Gives
+*   changeset: ae68dbe:master
+|\  user:      Uwe Brauer
+| | date:      Tue Aug 20 16:25:53 2019 +0200
+| | summary:   1.2.1/1.1
+| |
+| * changeset: c00bb5d:master^2
+| | user:      Uwe Brauer
+| | date:      Tue Aug 20 16:25:53 2019 +0200
+| | summary:   1.2.1
+| |
+| * changeset: 54c9230:master^2~1
+| | user:      Uwe Brauer
+| | date:      Tue Aug 20 16:25:53 2019 +0200
+| | summary:   1.2
+| |
+* | changeset: da0712f:master~1
+|/  user:      Uwe Brauer
+|   date:      Tue Aug 20 16:25:53 2019 +0200
+|   summary:   1.1
+|
+* changeset: 8eb999d:master~2
+  user:      Uwe Brauer
+  date:      Tue Aug 20 16:25:53 2019 +0200
+  summary:   1
+
+That looks odd.
+
+Any comments?
+
+Uwe Brauer
+
+--=-=-=
+Content-Type: application/pkcs7-signature; name=smime.p7s
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=smime.p7s
+
+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
+EwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE9MDsGA1UEAxM0Q09NT0RPIFJT
+QSBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQTCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAL6znlesKHZ1QBbHOAOY08YYdiFQ8yV5C0y1oNF9Olg+nKcxLqf2
+NHbZhGra0D00SOTq9bus3/mxgUsg/Wh/eXQ0pnp8tZ8XZWAnlyKMpjL+qUByRjXCA6RQyDMqVaVU
+kbIr5SU0RDX/kSsKwer3H1pT/HUrBN0X8sKtPTdGX8XAWt/VdMLBrZBlgvnkCos+KQWWCo63OTTq
+Rvaq8aWccm+KOMjTcE6s2mj6RkalweyDI7X+7U5lNo6jzC8RTXtVV4/Vwdax720YpMPJQaDaElmO
+upyTf1Qib+cpukNJnQmwygjD8m046DQkLnpXNCAGjuJy1F5NATksUsbfJAr7FLUCAwEAAaOCATww
+ggE4MB8GA1UdIwQYMBaAFLuvfgI9+qbxPISOre44mOzZMjLUMB0GA1UdDgQWBBSCr2yM+MX+lmF8
+6B89K3FIXsSLwDAOBgNVHQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADARBgNVHSAECjAI
+MAYGBFUdIAAwTAYDVR0fBEUwQzBBoD+gPYY7aHR0cDovL2NybC5jb21vZG9jYS5jb20vQ09NT0RP
+UlNBQ2VydGlmaWNhdGlvbkF1dGhvcml0eS5jcmwwcQYIKwYBBQUHAQEEZTBjMDsGCCsGAQUFBzAC
+hi9odHRwOi8vY3J0LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FBZGRUcnVzdENBLmNydDAkBggrBgEF
+BQcwAYYYaHR0cDovL29jc3AuY29tb2RvY2EuY29tMA0GCSqGSIb3DQEBDAUAA4ICAQB4XLKBKDRP
+PO5fVs6fl1bsj6JrF/bz9kkIBtTYLzXN30D+03Hj6OxCDBEaIeNmsBhrJmuubvyE7HtoSmR809Ag
+cYboW+rcTNZ/8u/Hv+GTrNI/AhqX2/kiQNxmgUPt/eJPs92Qclj0HnVyy9TnSvGkSDU7I5Px+TbO
++88G4zipA2psZaWeEykgzClZlPz1FjTCkk77ZXp5cQYYexE6zeeN4/0OqqoAloFrjAF4o50YJafX
+8mnahjp3I2Y2mkjhk0xQfhNqbzlLWPoT3m7j7U26u7zg6swjOq8hITYc3/np5tM5aVyu6t99p17b
+TbY7+1RTWBviN9YJzK8HxzObXYWBf/L+VGOYNsQDTxAk0Hbvb1j6KjUhg7fO294F29QIhhmiNOr8
+4JHoy+fNLpfvYc/Q9EtFOI5ISYgOxLk3nD/whbUe9rmEQXLp8MB933Ij474gwwCPUpwv9mj2PMnX
+oc7mbrS22XUSeTwxCTP9bcmUdp4jmIoWfhQm7X9w/Zgddg+JZ/YnIHOwsGsaTUgj7fIvxqith7Do
+JC91WJ8Lce3CVJqb1XWeKIJ84F7YLXZN0oa7TktYgDdmQVxYkZo1c5noaDKH9Oq9cbm/vOYRUM1c
+Wcef20Wkyk5S/GFyyPJwG0fR1nRas3DqAf4cXxMiEKcff7PNa4M3RGTqH0pWR8p6EjCCBScwggQP
+oAMCAQICECLAY/HTlgg2ZPbDon99FPswDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNVBAYTAkdCMRsw
+GQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNP
+TU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50aWNhdGlv
+biBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MDEwNjAwMDAwMFoXDTIwMDEwNjIzNTk1OVowHzEd
+MBsGCSqGSIb3DQEJARYOb3ViQG1hdC51Y20uZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQDAJBqZzDcWLNdUqJsWmomjQHH1BbPl6gKkKT+uLY5hIKZ1+K5kFXrEs0lk+myiS9/wR5Gu
+bpwKnr6xNcvtO0XP0dHMLLbu/1sTNg0t1/HOGJSgwUvZUHvUcUVhs/NACD69rh3V5F1w9oIAnXZj
+g526lvwWeBv8G6RGBM4+AVFXxaLdNO7G6V8GX9E8goBKGMKIDBAK6f31D1YbPRCEF3voj2UtpVjy
+PQXfQhHMZngUjyKChB7vWnHuRF+BIaxd0kWJ3qCPrOHNLHaEjr7bnjp9oZrS4DnnwbNifJBcdZjn
+ZYxEDBIoeols9qg4pjT2HsdEi3H6Y/CBKzB1yiMmHBZ1AgMBAAGjggHkMIIB4DAfBgNVHSMEGDAW
+gBSCr2yM+MX+lmF86B89K3FIXsSLwDAdBgNVHQ4EFgQUXbdUbNg/WjkhObIK9sKXkRnE4QswDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwIAYDVR0lBBkwFwYIKwYBBQUHAwQGCysGAQQBsjEB
+AwUCMBEGCWCGSAGG+EIBAQQEAwIFIDBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEBATArMCkGCCsG
+AQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklo
+dHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNl
+Y3VyZUVtYWlsQ0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQu
+Y29tb2RvY2EuY29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxD
+QS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAZBgNVHREEEjAQgQ5v
+dWJAbWF0LnVjbS5lczANBgkqhkiG9w0BAQsFAAOCAQEAtVRJu+IU+1WkBfCbsxbMisE9J3ObD7sN
+OCv7cHOT6oJ9xL7ff8qP3+Lu3fkRCPiB7/LuzPT7xyFso0LjJ84mycemvehuOTpwLX5wt2D+mVuw
+D/0wUHxpkKLLKIkTuBd4QNXU22UUn9iC4aqB3jgYPppfTKnam66X6PB7pL/7iycuOY06ymZeFGYL
+o8CKlrAWvOsik7RfFfamTv1bdNOHuJG0IiH0iDd3GJUxG4N/C3arjWxBcJIwEeKcRA16maLqFt+y
+9XyKpccfADI1WACfqn31+r2BvE2thbDDfUiGXVmzVsvPyQZup8uvjBscl6/yRu8bPKH508mPCLU3
++jOlazGCAm4wggJqAgEBMIGsMIGXMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5j
+aGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE9MDsG
+A1UEAxM0Q09NT0RPIFJTQSBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBD
+QQIQIsBj8dOWCDZk9sOif30U+zANBglghkgBZQMEAgEFAKCBkzAYBgkqhkiG9w0BCQMxCwYJKoZI
+hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xOTA4MjAxNDMyMTJaMCgGCSqGSIb3DQEJDzEbMBkwCwYJ
+YIZIAWUDBAECMAoGCCqGSIb3DQMHMC8GCSqGSIb3DQEJBDEiBCBrlLrrID0/ao3t3fo9x9OkvZ54
+nVm2BaUszhsxPe7QVTANBgkqhkiG9w0BAQEFAASCAQCnl6VjbqVz9qf/jXIsCO2uw7vIzRzoCEVp
+IxH2H9oepOoSpg19RTjMlYfR7PY1BQtm5aD44rXuxveCPQE7Cbz6RKI6CrJ4mCvQ8pg9UaPEmEE7
+uNwZ7qISGUgHPhjvARIpa57OPk1Sz894A0NyTali1yXDz1KkKke3d0+U8zHHorhyFQSEVaTXJQY2
+fmq81HNn1Ab6BRNHLJ8xxcUhOHkZcdkhPWbAh+fMbl64mPD9iMDKHSz0GjfPZg7V4tXhcYrRZq5V
+qnVx014sFus4dPc8+X+4IxvTkum7gQGp7Df2VakTYHHb0fcscMUEPcYj/d11p0T9Q9Jk1M4CcONA
+IS6NAAAAAAAA
+--=-=-=--
