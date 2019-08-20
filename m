@@ -8,67 +8,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1A671F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 03:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64D3B1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 04:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729032AbfHTDzX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 23:55:23 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:37401 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728777AbfHTDzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 23:55:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id c9so2993993lfh.4
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 20:55:22 -0700 (PDT)
+        id S1727006AbfHTEAo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 00:00:44 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44848 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726049AbfHTEAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 00:00:44 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i18so2389944pgl.11
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 21:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IbR3spte4TgjwsLzFEB5uqq+qdUnYHTF/zSD7gzmZ7w=;
-        b=cbwXUaa405YeHN8DtyRc9tTJMPyb8hE942tV36Qksqk4QOIE0kn0rsVscOyVFCUGFH
-         8F16WOm3udyMaGlRfOjcymHjZxCvtLd1kw6HP9qAR2Exc2dCecTZvZMS6pU9ik4ZR11t
-         KylqcnEtlZe8Ify4AQu8ZhFK0NUsxyoEtRd8WH+m13TVdxLe5/wtnlZtkbWfHj029oEW
-         otm1eJRVD8kLC74pw11m/ecgeFEoEKGFyjzlNw29jGSlVS6HP3uDXAvSoGWHVMv2eOE8
-         nXGKgEVR9Lzt0yTVxbYlwj1VbUbzbdVhZ7V3+s/jmoqgmrv2Zm7dnrKemkwhb5Q1tfX4
-         iMSA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=61OydYBJ1wEDo3GAJCLLxHriAc5EhWCHra8pfNSUT8o=;
+        b=uOADV9r89s0DobVh4SCPYSjYWxCi0PNFkSbeMRhwiRqlkrtL0oT8LnKoG9PmW2f/eM
+         VnNKLj1qd0NoLchCpcbVMTtM55nSku9LJuRXKvKqnD6fhd+B1gtf8a7Mg1M0R7jbRO3C
+         WAIi5x/XOVvGdwI45MqKW3wGeSr0NdbHGuMcslLvc97f9WTZcPVf5Nm/2K3YtJbZmkWV
+         7aou+TRC5WxltKDIefPDa4J7eQzvvYBR3w7822c9IUOrpfSTrnZbmTFOqZOhpsoKfOd6
+         +tG6Hfak9/Eg5MkPqDY9q0CY8OvYJrEHBWGEFKmnC306dZk4+3on2ya6OtNKsjxtHwpz
+         NnIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IbR3spte4TgjwsLzFEB5uqq+qdUnYHTF/zSD7gzmZ7w=;
-        b=fdSn69moRRIHCCvhtrN1GcoEM/TjqaqI4Vf2cvN21TD1Owk3F2sOIPDv5nenpHfLvY
-         8K/WkvIu2GLvrPMchML5lJgzUTVnEXZJIPsjm7N84oTD/KWVCRjjumcDz+xbvK4d6f9A
-         2XVdT2UCFRBq+y4yxyTOURCwuPifBDnctLJ4kdbrySjDQe3WtS8jSoaNr3s61lmhVgMu
-         6obETlqOkE6X+xK2tN5EGkI3B9iN9hW7y65W113egUIURXtaIBaqfIED/bPkrmjAiy2w
-         0HJ0kvY7VzQoL0soUyLRmugJpbCZ14aSujDOXTM6sluMzh/EBTVdTIhHV2iDM6F8G18S
-         VbuQ==
-X-Gm-Message-State: APjAAAUo3cKH+8d3wEucKqwmMYf4ffmUIG/enMVdf4AIIovoWCldTsa6
-        g7HI12ICsZX4ey0S4dY31EyG/6S14hLVxSUkTes=
-X-Google-Smtp-Source: APXvYqxjaaE7nzuahxHHqV2/5qWge2X71gwkAzScLCCYCiVtYBb34wYARJRmb0tJQKIcevTcI+8wl0iKHHNtCt7FvGU=
-X-Received: by 2002:a19:4aca:: with SMTP id x193mr13658460lfa.146.1566273321168;
- Mon, 19 Aug 2019 20:55:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com> <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-In-Reply-To: <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=61OydYBJ1wEDo3GAJCLLxHriAc5EhWCHra8pfNSUT8o=;
+        b=OIrOV8tTQv2jlRdzx0fJhENtMBjjoGXKVyEhbn4v92zckPL4oy6ztWr18SBTCVAi5a
+         7LlS78Q1fqhtJjx5luAWFcREoB/YCHCxIxSZIC7SqBURpoYhCeRTxZ5fSBh+xQ7JKoVj
+         ofw+JacpkMeCr23+yB2YAHRqPW3PcoQtNb33x6M5nFaARQHa8BKSAt3/z6yPITpLmvgH
+         1oUFgpcbg/T3WGcQlVzjYf0CLDiJ7+usUZIe2BVLWsuBbGENPC/zLZU39oqfnnaJ1P5n
+         1d7wVJhxAUaNVW9dGnfbwHgc2SzhAG8l8xZHW4uyM/0v2MYCyYFg8pSfiGsGlryAUOw9
+         DvPA==
+X-Gm-Message-State: APjAAAUqBvoB+ey5+++Z5lkdQ8ivAETlfqiYynYhVrbTx8rJkDmvQhW9
+        YlcUIYleF6XAHK6JTvzoibA=
+X-Google-Smtp-Source: APXvYqyq/7KGqB5Ro+joTaWGfC6Ex38XxhoHMEpPAxtLK/UUEJg3hppqaY504is9m22DNGsZqFyhwg==
+X-Received: by 2002:a62:1444:: with SMTP id 65mr27466841pfu.145.1566273643574;
+        Mon, 19 Aug 2019 21:00:43 -0700 (PDT)
+Received: from ar135.iitr.ac.in ([103.37.200.227])
+        by smtp.gmail.com with ESMTPSA id a5sm13172263pjs.31.2019.08.19.21.00.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2019 21:00:42 -0700 (PDT)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Date:   Tue, 20 Aug 2019 09:24:44 +0530
-Message-ID: <CAL7ArXpKggCm2Ex0Kk3m+jDbfd3roCYmj=6DFG=k-1kJm-j+tA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] rebase -i: support more options
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip <phillip.wood123@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     rohit.ashiwal265@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        martin.agren@gmail.com, newren@gmail.com,
+        phillip.wood123@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 6/6] rebase: add --author-date-is-committer-date
+Date:   Tue, 20 Aug 2019 09:30:36 +0530
+Message-Id: <20190820040036.14798-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190820034536.13071-7-rohit.ashiwal265@gmail.com>
+References: <20190820034536.13071-7-rohit.ashiwal265@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 9:15 AM Rohit Ashiwal
-<rohit.ashiwal265@gmail.com> wrote:
->
-> I've tries to incorporated all the suggestions.
+Hi Everyone
 
-I've tried to incorporate all the suggestions.
+Please ignore this patch. I forgot to clean the output dir before
+sending this iteration.
+
+Thanks
+Rohit
+
