@@ -2,127 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258571F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 08:56:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A64F41F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 08:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbfHTI4b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 04:56:31 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55410 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728426AbfHTI4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 04:56:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id f72so1884596wmf.5
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 01:56:29 -0700 (PDT)
+        id S1729623AbfHTI6c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 04:58:32 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51469 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729405AbfHTI6c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 04:58:32 -0400
+Received: by mail-wm1-f66.google.com with SMTP id k1so1615716wmi.1
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 01:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3wVhXy7XtEF8LY2AIikgXjb4lWQ9tSHWPYL9T0Y86Yw=;
-        b=eeHH1zux5L2KKVCnyXFZF2TWM3uN/UObZFo0sMmS9oJgh6gEUjh44Im7Buo/I7sY5k
-         HiKPVQWoKwkR7PMhTLd6OotZRCJHGPjkYuMQTgJGV+h4ueTTQwB6eAUomRzklQaMvoid
-         0hYWRTcfHD4wkABaO2PcnurGYRMdt38JgtBm2yW7MsInoefXlOYcwDxpx7fYgcEXw4YI
-         jbwkPPHyRNpTmzeIxUGpNDDy6uo7d71GdpQclzJvWck7edakwKQWx+J2jbFWPJUpgdBY
-         Q34g5MZvPnvn/6UkYZgoccSCOzk55736THUKRgRCvWhSuNO9mMxmZHDnjbTBpS4WGjTT
-         VK0Q==
+        bh=8k/d9Lp/2TjmmLQbYcYBwUvwA8cPWbnuPuBBHAgMKbw=;
+        b=SN06iQ+I8nx8wW5sCuysE1KiwOnwC+PE9jmdZaJXEVqnvGWGBAbbTc8aqZhOsDjKqV
+         sHIbGrZVZxyFBlR1CZ2lxpLoGhH9qXuc120oSa7SdFcllWnoRe2sk5Ypft/ZF/5nlxEj
+         tJCOHnTDs9c7o56AaJ1tSUHXvrKwaYZLKip5NZzuxC0op5zzrF4lOJm2cgvJARdvk4ZC
+         bMt3gTkJV5+hwZnQ73ccSqT2KIW6W5QD884joZtRPkd+/2GHw3XmMG9uxVaRSLHFdHSR
+         B55LK1MOKBIZY4Ef7ykqMRPnf10IN76j6VXDPl0QGBjeBSYiLpLCoAHJjvYKRb6Z6ofM
+         wE5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3wVhXy7XtEF8LY2AIikgXjb4lWQ9tSHWPYL9T0Y86Yw=;
-        b=dIdQgG6fjMk94XmE/uXliMK+q6VrTE88PiockdlMuqjhCMrKmxXGzhO3zGz9vGnoYP
-         8hRl/+zhE41OVMtSVzLc8HgWTnz5t/E8gbbODUz9amfETw3GNIH3k8tAYVO7eLLwgaUP
-         tx9mJiC1u/gMcs6gDd5omJ75HJpTEk0q8LiRzmkQtKiGSRcr/127iWGLYIWZEvMGYn/5
-         oMCWHXNVhWyelqbKkpyYQakMPYkKaVBtcnEND8/yDmCqP0muXxBggZ8IeJZVcJ9iWu5r
-         hiUS4AMVgFEuqJ9pg5I38Ji1ZntHRtTdgWrWnfXrh9tRB2EOJrdP4pqdweRFebTzKhzB
-         wJQA==
-X-Gm-Message-State: APjAAAURd1WQDGQbX+Y/QBnmB4G7YL9N6H5f4tKaS3qAKHmOh9CFqCaE
-        iNGxCw48LixmsYhwOXHFDpA=
-X-Google-Smtp-Source: APXvYqxWZUT+F6A1ja2SLmjYXA/ICnUO0VC618PG5T74Vbt/ZaExMahPlBfYHfEomHwyMnS+s8suow==
-X-Received: by 2002:a1c:494:: with SMTP id 142mr23894760wme.12.1566291388424;
-        Tue, 20 Aug 2019 01:56:28 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=8k/d9Lp/2TjmmLQbYcYBwUvwA8cPWbnuPuBBHAgMKbw=;
+        b=Os6jNSnh9sJk93IQVMF5ioKtGjS3ppbGfQL6HxETnp5CvIPS51Qisode9uWESDfuEd
+         ddh2wB/mf4vBPz7FlLR0SYBQeLI5dYlJwIdSfyNkuGUES0RPqLDPcErU5SrkaEOAGuyM
+         FfzNq1gnTZtyZB3XXJARpItSpSacAb1bH4jyKZaXcN/qMznIseFVaBMP1bju6z0CGBGn
+         RYK8zZVGc6C5Dzpdon+z3yDhxFjXbotHkk0e8kUpGkaeQsxoQtLgnGqNpKUKccNhYUUY
+         MJaPj30SjAM+uiN4QhqsKyUgm5i5cVAQbaAwLbRgOszCI8RXZKQQp13tlrXgLi1o5PaA
+         V+fw==
+X-Gm-Message-State: APjAAAU2XfA/gnfCU1Tc4U0wAKy/uSD/ql/Ee/OSni/TYYnPtSzLRxDo
+        XsrWuhiirWG7VMTU63TR+NI=
+X-Google-Smtp-Source: APXvYqwAk4AxQIAmfZb9TJL9l4vO8zWUuX0cp+R6P8bVnBNlw6DGBHWD4U3w1yViIGvTuCnPYYyFEw==
+X-Received: by 2002:a1c:a101:: with SMTP id k1mr25335350wme.98.1566291510152;
+        Tue, 20 Aug 2019 01:58:30 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
-        by smtp.gmail.com with ESMTPSA id z8sm17706745wru.13.2019.08.20.01.56.27
+        by smtp.gmail.com with ESMTPSA id 2sm18468612wrg.83.2019.08.20.01.58.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 01:56:27 -0700 (PDT)
+        Tue, 20 Aug 2019 01:58:29 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-3-sandals@crustytoothpaste.net>
- <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
- <2c33a668-4c7d-2114-41b1-8907c4384a15@gmail.com>
- <20190820030544.GI365197@genre.crustytoothpaste.net>
+Subject: Re: [PATCH 1/2] t3420: never change upstream branch
+To:     Ben Wijen <ben@wijen.net>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>
+References: <20190818095349.3218-1-ben@wijen.net>
+ <20190818095349.3218-2-ben@wijen.net>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <facdfb93-bbf5-cca7-7970-b68efed7cfd3@gmail.com>
-Date:   Tue, 20 Aug 2019 09:56:26 +0100
+Message-ID: <a8645289-ff60-7739-b010-039583beef1c@gmail.com>
+Date:   Tue, 20 Aug 2019 09:58:28 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190820030544.GI365197@genre.crustytoothpaste.net>
+In-Reply-To: <20190818095349.3218-2-ben@wijen.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/08/2019 04:05, brian m. carlson wrote:
-> On 2019-08-19 at 09:55:27, Phillip Wood wrote:
->> On 19/08/2019 10:41, Phillip Wood wrote:
->>> [...]
->>>> diff --git a/convert.c b/convert.c
->>>> index 94ff837649..030e9b81b9 100644
->>>> --- a/convert.c
->>>> +++ b/convert.c
->>>> @@ -1293,10 +1293,11 @@ struct conv_attrs {
->>>>        const char *working_tree_encoding; /* Supported encoding or
->>>> default encoding if NULL */
->>>>    };
->>>> +static struct attr_check *check;
->>>
->>> I was concerned about the impact adding a file global if we ever want to
->>> multi-thread this for submodules, but looking through the file there are
->>> a couple of others already so this isn't creating a new problem.
->>
->> Doh, I've just realized it was static already - ignore that.
-> 
-> And I just realized that I didn't read the entire thread before
-> responding.  Sorry about that.
-> 
->> One thing did occur to me though - does this patch reset attributes like the
->> merge marker length (they're less critical though if there is a conflict
->> after an attribute change it would be nice to have the correct length) or
->> just the ones for filtering files?
-> 
-> It resets "crlf", "ident", "filter", "eol", "text", and
-> "working-tree-encoding".  Things it doesn't reset include "whitespace",
-> "export-ignore", "export-subst", "merge", and "conflict-marker-size".
-> Of these, I think only the latter two are relevant.
-> 
-> I'll update that in v5.
+Hi Ben
 
-Thanks, one other thought I had was that this is really a bug in 'am' 
-rather than 'rebase'. There has been some talk of switching the default 
-rabase backend to the sequencer so maybe it would be better to test 'am' 
-rather than 'rebase' to ensure we still check 'am' is working properly 
-after any switch in the rebase backend. (perhaps we should be testing 
-rebase and rebase --interactive separately as well to prevent any future 
-regressions I'm not sure)
+On 18/08/2019 10:53, Ben Wijen wrote:
+> When using `git rebase --autostash <upstream> <branch>` and
+> the workarea is dirty, the active branch is incorrectly reset
+> to the rebase <upstream> branch.
+> 
+> This test will check for such behavior.
+> 
+> Signed-off-by: Ben Wijen <ben@wijen.net>
+> ---
+>   t/t3420-rebase-autostash.sh | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index b8f4d03467..867e4e0b17 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -306,4 +306,13 @@ test_expect_success 'branch is left alone when possible' '
+>   	test unchanged-branch = "$(git rev-parse --abbrev-ref HEAD)"
+>   '
+>   
+> +test_expect_success 'never change upstream branch' '
+> +	test_when_finished "git reset --hard && git branch -D upstream" &&
+> +	git checkout -b upstream unrelated-onto-branch &&
+> +	echo changed >file0 &&
+> +	git add file0 &&
+> +	git rebase --autostash upstream feature-branch &&
+> +	test $(git rev-parse upstream) = $(git rev-parse unrelated-onto-branch)
+
+In addition to Junio's suggestions I'd add using
+	test_cmp_rev upstream unrelated-onto-branch
+for the last line.
 
 Best Wishes
 
 Phillip
 
+> +'
+> +
+>   test_done
+> 
