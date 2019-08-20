@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6D11F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 15:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6040F1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 16:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730229AbfHTPOy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 11:14:54 -0400
-Received: from m12-16.163.com ([220.181.12.16]:47720 "EHLO m12-16.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730190AbfHTPOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 11:14:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id; bh=RY0oXp4GNylIb05VoE
-        DO9auhzCpFcV7Ie8bRD3S5Evk=; b=VOvhemtp2dVHDaPY9VJPkMeP4zHYoeKg+t
-        HZ3DgX2CfgXM8J+rYp6S9SjtIqu6CuITl96NNUP7ipoAaD5z0wOkqETjrZls3gTs
-        pjCLgKhHVxeZ2oo3c8WtmYkGhGYbStkZcEQ8FBNcH9G+UtaTg3C57b1gp+o3TN//
-        8xSjGmUGg=
-Received: from localhost.localdomain (unknown [115.205.5.95])
-        by smtp12 (Coremail) with SMTP id EMCowADnxqpMDlxdnGt7Aw--.18194S3;
-        Tue, 20 Aug 2019 23:14:21 +0800 (CST)
-From:   16657101987@163.com
-To:     gitster@pobox.com
-Cc:     16657101987@163.com, git@vger.kernel.org, mhagger@alum.mit.edu,
-        peff@peff.net, sunchao9@huawei.com, worldhello.net@gmail.com
-Subject: Re: Re: [PATCH v2 0/1] pack-refs: always refreshing after take the lock file
-Date:   Tue, 20 Aug 2019 23:14:08 +0800
-Message-Id: <20190820151408.12700-1-16657101987@163.com>
-X-Mailer: git-send-email 2.17.2 (Apple Git-113)
-In-Reply-To: <xmqqr25hxdk6.fsf@gitster-ct.c.googlers.com>
-References: <xmqqr25hxdk6.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr25hxdk6.fsf@gitster-ct.c.googlers.com>
-References: <xmqqr25hxdk6.fsf@gitster-ct.c.googlers.com>
-X-CM-TRANSID: EMCowADnxqpMDlxdnGt7Aw--.18194S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw4xXrWUAFyfWFyrKr13CFg_yoW8Xr4rpa
-        y2ga4DtF18Ar1Ikw4DJ3yIg34Svrs7Cay5Jr15GrW7ZasxWFyqqrZaqa9Y9F97Cw4vqw4Y
-        q3yj934Iy3s5ZaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRxWrZUUUUU=
-X-Originating-IP: [115.205.5.95]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiPg0XglxBdZXrwgAAsy
+        id S1730088AbfHTQhj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 12:37:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58751 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbfHTQhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 12:37:39 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9172C173559;
+        Tue, 20 Aug 2019 12:37:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TNIkbBf0H+syX5/Ra2TSivM9UJM=; b=Lo+L6S
+        Or0y1KE/cPdF78t3c80jtG1HSM+SeRyUoiKrgvly5RcPMr7DctlhPVT2wYk/Gavm
+        UxhWU04CpxjHMf4lo/Ic+bez0cS7EUrrOXYmi/PVmewwSdseqRx3TVqolVUBCCSW
+        6wynROzqmompARs7wimqL5LvjX5yWS/jF61D0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=F0qYoU5vwZDBUfm/o8UoA+fa3ZSGk+ZK
+        9NnqA211KTaig/lEBvH5mVFi31ai0MvzUGBHj4a3FmuRqoLfDtZvuQ4qLpD8AA+5
+        zmOVDzPMUtzyfCOXwl4PMseAjvjWbzZuwsAS8Uw9twswwpudshxiq4w/YGb1+yxR
+        hKvc5xQfUC4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86FA8173557;
+        Tue, 20 Aug 2019 12:37:36 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7CE7173553;
+        Tue, 20 Aug 2019 12:37:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mischa POSLAWSKY <git@shiar.nl>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Subject: Re: [PATCH] ref-filter: initialize empty name or email fields
+References: <20190817215107.13733-1-git@shiar.nl>
+        <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 20 Aug 2019 09:37:34 -0700
+In-Reply-To: <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 19 Aug 2019 10:55:13 -0700")
+Message-ID: <xmqq4l2bx06p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0DCF590-C368-11E9-AE60-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
-
----
-
-Jeff King <peff@peff.net> writes:
-
-> I'm undecided on this. I think reftables are still a while off, and even
-> once they are here, many people will still be using the older format. So
-> it makes sense to still apply fixes to the old code.
-
-Got it, thanks for explainning.
-
-> What I wonder, though, is whether always refreshing will cause a
-> noticeable performance impact (and that's why I was so slow in
-> responding -- I had hoped to try to come up with some numbers, but I
-> just hadn't gotten around to it).
->
-> My gut says it's _probably_ not an issue, but it would be nice to have
-> some data to back it up.
-
-Sorry for responding after 4 days because I have been away on official
-business.
-
-Tody I have tryied some tools like trace logs, time, and strace, tring
-to figure out if there are some noticeable numbers. I tried different
-repositories with different ref numbers and blob numbers, I also can
-not recognize how much the refreshing impact the performance, perhaps
-I need to find a better computer for benchmark testing.
-
----
-
 Junio C Hamano <gitster@pobox.com> writes:
 
-> I am tempted to let correctness (and ease-of-reasoning about the
-> code) take precedence over potential and unknown performance issue,
-> at least for now.  A single liner is rather simple to revert (or in
-> the worst case we could add "allow pack-refs to efficiently lose a
-> ref to a race" configuration option) anyway.
+> Mischa POSLAWSKY <git@shiar.nl> writes:
+>
+>> Formatting $(taggername) on headerless tags such as v0.99 in Git
+>> causes a SIGABRT with error "munmap_chunk(): invalid pointer",
+>> because of an oversight in commit f0062d3b74 (ref-filter: free
+>> item->value and item->value->s, 2018-10-19).
+>>
+>> Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
+>> ---
+>> If I understand correctly, such tags cannot be produced normally anymore.
+>> Therefore I'm unsure how to make tests, and if that is even warranted.
+>
+> Thanks for spotting.
+>
+> I am not sure if the approach taken by this patch is the right one,
+> though.  I didn't follow the call/dataflow thoroughly, but if we
+> replace unfree-able "" with NULL in these places, wouldn't
+> fill_missing_values() take care of them?
 
-Thanks a lot :)
+I think replacing these "" with NULL would be safe, but there are
+many places that return xstrdup("") from inside the callees of
+populate_value(), so the patch presented here would be more
+consistent with the current practice, I think.
 
--- 
-2.17.2 (Apple Git-113)
+So let's take the patch as is, at least for now.  Thanks.
 
-
+>>  ref-filter.c | 6 +++---
+>>  1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index f27cfc8c3e..7338cfc671 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -1028,7 +1028,7 @@ static const char *copy_name(const char *buf)
+>>  		if (!strncmp(cp, " <", 2))
+>>  			return xmemdupz(buf, cp - buf);
+>>  	}
+>> -	return "";
+>> +	return xstrdup("");
+>>  }
+>>  
+>>  static const char *copy_email(const char *buf)
+>> @@ -1036,10 +1036,10 @@ static const char *copy_email(const char *buf)
+>>  	const char *email = strchr(buf, '<');
+>>  	const char *eoemail;
+>>  	if (!email)
+>> -		return "";
+>> +		return xstrdup("");
+>>  	eoemail = strchr(email, '>');
+>>  	if (!eoemail)
+>> -		return "";
+>> +		return xstrdup("");
+>>  	return xmemdupz(email, eoemail + 1 - email);
+>>  }
