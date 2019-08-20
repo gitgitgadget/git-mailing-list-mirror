@@ -2,109 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120351F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 03:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E84981F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 03:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729115AbfHTDqM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 23:46:12 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36971 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729078AbfHTDqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 23:46:11 -0400
-Received: by mail-pg1-f195.google.com with SMTP id d1so2386156pgp.4
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 20:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Z5jJ1BJOSZJsi+CFl0UYyjyIEo71xb+zp0e5iflw64M=;
-        b=WOOsQ7BgDd01KyFvK3Bhk+iugO5iSU11PgD49AW2kHiIoavrKIri13rLYLCoV5tqyb
-         1zn7mz+d+W6CoJU9OXYsor5SCXjRDze26/TWdhUZ7g+RmPuq6Fmv6Vk392QiWr8guMgL
-         zGnmgYzKRnlpCGc2BDxxC+hXMUrzjdl6VPhqYC7O9Og68N2kSZ7SAnSs9DcVEA+SKW40
-         ul49TWEliP0p3tJ4eCd2Pi7q+fht5FYQaKxOgyY8lZiXggt95XeCiYfo0YndPDIDGun4
-         tjCNIB+aY5uXW3GCaTg/2bHWhe7hjy5a3/Um4c0Cxrhn7iaK1DMgxDJv13rcYRDPIb9b
-         pobQ==
+        id S1729160AbfHTDrB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 23:47:01 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38307 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728627AbfHTDrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 23:47:00 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g17so10800866wrr.5
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 20:46:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Z5jJ1BJOSZJsi+CFl0UYyjyIEo71xb+zp0e5iflw64M=;
-        b=qrn6evWKGPhWVsqzj8HlveMGnzoJfyjE2ANgUpyU9OZpuXyCkBVYtIo4WDBE3rkXbD
-         6p+nI/f2XDIDaZgXP/5o6S7VqnjqL1oQ/Qu4BinJVV0o+sWX051piTsE7f/JHb0x3fpK
-         2BqtKx+YoHdBJB9h7vqU7YQ70uf0Eevu4FE/YGDZMBKH/lekb1TSSp3gD7F7wla0+jG9
-         6r2FSqLX6hqw/XLGnmOREh8vw3Jhb7dLVm2Ii1UIU4XovVmUcZwOOUP6CfjurXhDFAwI
-         hd7m88b9DXBQk3zy6csqMwLzsTYIbghLfDAhOL5S7GQnyN9eTrAnfcrXkV3bFTM/sK1r
-         4e5Q==
-X-Gm-Message-State: APjAAAWzW9jHfXc4+DibsB4dCco0Rf+OP/sf7qqcyGioawTGp4rqib7H
-        yfAWMQWS5TKQs9SYKDXS5JE=
-X-Google-Smtp-Source: APXvYqxcLgkKGpIM8Qoex+lMrUwdQmQnb4TL+bWIu2tVqZFVkIPTwRxR9+tJQX/yb3nWh8ItYy5C5g==
-X-Received: by 2002:a17:90a:32a3:: with SMTP id l32mr24753404pjb.14.1566272770752;
-        Mon, 19 Aug 2019 20:46:10 -0700 (PDT)
-Received: from ar135.iitr.ac.in ([103.37.200.227])
-        by smtp.gmail.com with ESMTPSA id v67sm30115686pfb.45.2019.08.19.20.46.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Aug 2019 20:46:10 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     rohit.ashiwal265@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood123@gmail.com, t.gummerer@gmail.com
-Subject: [PATCH v3 6/6] rebase: add --reset-author-date
-Date:   Tue, 20 Aug 2019 09:15:36 +0530
-Message-Id: <20190820034536.13071-8-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
- <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y9m68RxJswJ4ejui6LPKWCFyC301Q3u4bUjfyZ70Nl0=;
+        b=qrdfZSA1/QbU/si0We6rNBGbIBxY8l+3tPpbMWaQkrslkghMehNpVTVU//3NzXPXOH
+         jan/RWz1mBzAugM6GuIxAbhZfW6Yl/+fGbfo2P/+fccPk0MYfKid4i1JgeC106R8qeXZ
+         bnMr2GC4jUzmmnPk3RjGuoYpDzhUhzKSeZwuu1SI69qf32ZL7/Kvv6nEJnP1bJUbPElf
+         8upF7Utoe4TdPMuvKxQz8AS9K81grSV2NeBIzj7vIr3GWCGEEmgUsgVZdZWX7OIP6/2B
+         ik9Xk6bRF5CJ6psyQt3s3eomS4F9et4cL0qVwqfJnik0q+exiSOMkTfAUyGj5Pw9op7+
+         jvQw==
+X-Gm-Message-State: APjAAAV7x84zxIIuAZHL75xg+EOaQ4+eEzh6tORfWoOLmNY4wb2o5oye
+        euSY/A5kB6W1XScE22AtRHLr3jjvL6t65TUVFKg=
+X-Google-Smtp-Source: APXvYqyssVfan6cS1fJjHPDEYA79+N2li0X0yeIQVFizrEeidZQnIa7PQyqljfzHtcd6BFKxrs3uGzFsvtiAkwVxNdg=
+X-Received: by 2002:a5d:4c87:: with SMTP id z7mr29899878wrs.10.1566272818498;
+ Mon, 19 Aug 2019 20:46:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1566258525.git.liu.denton@gmail.com> <e682bd347a09d0e1293ec6bd495c38dac5006a19.1566258525.git.liu.denton@gmail.com>
+In-Reply-To: <e682bd347a09d0e1293ec6bd495c38dac5006a19.1566258525.git.liu.denton@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 19 Aug 2019 23:46:47 -0400
+Message-ID: <CAPig+cRfk7jdhqRX2OiyftW0eaM040u6KgRPLUWin7Z3W1LgDA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] format-patch: learn --infer-cover-letter option
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit introduced --ignore-date flag to interactive
-rebase, but the name is actually very vague in context of rebase -i
-since there are two dates we can work with. Add an alias to convey
-the precise purpose.
+On Mon, Aug 19, 2019 at 7:53 PM Denton Liu <liu.denton@gmail.com> wrote:
+> We used to populate the subject of the cover letter generated by
+> git-format-patch with "*** SUBJECT HERE ***". However, if a user submits
+> multiple patchsets, they may want to keep a consistent subject between
+> rerolls.
+>
+> If git-format-patch is run with `--infer-cover-letter` or
 
-Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
----
- Documentation/git-rebase.txt | 1 +
- builtin/rebase.c             | 2 ++
- 2 files changed, 3 insertions(+)
+s/letter/subject/
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index e7ac9fae0b..ec62ba36b8 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -391,6 +391,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	as the committer date. This implies --force-rebase.
- 
- --ignore-date::
-+--reset-author-date::
- 	Instead of using the given author date, reset it to the value
- 	same as the current time. This implies --force-rebase.
- +
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index a63531ee90..dcf758845b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1431,6 +1431,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "committer-date-is-author-date",
- 			 &options.committer_date_is_author_date,
- 			 N_("make committer date match author date")),
-+		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
-+			 "ignore author date and use current date"),
- 		OPT_BOOL(0, "ignore-date", &options.ignore_date,
- 			 "ignore author date and use current date"),
- 		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
--- 
-2.21.0
+> `format.inferCoverSubject`, infer the subject for the cover letter from
+> the top line(s) of a branch description, similar to how a subject is
+> read from a commit message.
 
+A possible rewrite of the entire commit message in imperative mood:
+
+    Teach 'format-patch' to use the first line of the branch description
+    as the Subject: of the generated cover letter, rather than
+    "*** SUBJECT HERE ***", if --infer-cover-subject is specified (or the
+    corresponding `format.inferCoverSubject` option is enabled). This
+    complements existing inclusion of the branch description in the
+    cover letter body.
+
+A casual reader of this patch might wonder why this new useful
+behavior isn't default, so it might make sense for the commit message
+to further explain that making it default would potentially break
+existing tooling.
+
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+> @@ -36,6 +36,10 @@ format.subjectPrefix::
+> +format.inferCoverSubject::
+> +       A boolean value which lets you enable the
+> +       `--infer-cover-subject` option of format-patch by default.
+
+As mentioned in my review of 3/4, it is common to mention the default
+value at the end of the paragraph. So, perhaps:
+
+    A boolean that controls whether or not to take the first line of
+    the branch description as the subject for the cover letter. See the
+    `--infer-cover-subject` option in linkgit:git-format-patch[1].
+    Default is false.
+
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> @@ -171,6 +172,14 @@ will want to ensure that threading is disabled for `git send-email`.
+> +--[no-]infer-cover-subject::
+> +       Instead of using the default "*** SUBJECT HERE ***" subject for
+> +       the cover letter, infer the subject from the branch's
+> +       description.
+> ++
+> +Similar to a commit message, the subject is inferred as the beginning of
+> +the description up to and excluding the first blank line.
+
+I think this can all be collapsed to the simpler:
+
+    Use the beginning of the branch description (up to the first
+    blank line) as the cover letter subject instead of the default
+    "*** SUBJECT HERE ***".
+
+or something.
+
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -1577,6 +1589,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> +               OPT_BOOL(0, "infer-cover-subject", &infer_cover_subject,
+> +                           N_("infer a cover letter subject from the branch description")),
+
+Shorter: "infer cover letter subject from branch description"
