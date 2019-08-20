@@ -2,120 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E84981F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 03:47:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1A671F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 03:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729160AbfHTDrB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 23:47:01 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38307 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728627AbfHTDrA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 23:47:00 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g17so10800866wrr.5
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 20:46:59 -0700 (PDT)
+        id S1729032AbfHTDzX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 23:55:23 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:37401 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728777AbfHTDzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 23:55:23 -0400
+Received: by mail-lf1-f68.google.com with SMTP id c9so2993993lfh.4
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 20:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IbR3spte4TgjwsLzFEB5uqq+qdUnYHTF/zSD7gzmZ7w=;
+        b=cbwXUaa405YeHN8DtyRc9tTJMPyb8hE942tV36Qksqk4QOIE0kn0rsVscOyVFCUGFH
+         8F16WOm3udyMaGlRfOjcymHjZxCvtLd1kw6HP9qAR2Exc2dCecTZvZMS6pU9ik4ZR11t
+         KylqcnEtlZe8Ify4AQu8ZhFK0NUsxyoEtRd8WH+m13TVdxLe5/wtnlZtkbWfHj029oEW
+         otm1eJRVD8kLC74pw11m/ecgeFEoEKGFyjzlNw29jGSlVS6HP3uDXAvSoGWHVMv2eOE8
+         nXGKgEVR9Lzt0yTVxbYlwj1VbUbzbdVhZ7V3+s/jmoqgmrv2Zm7dnrKemkwhb5Q1tfX4
+         iMSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Y9m68RxJswJ4ejui6LPKWCFyC301Q3u4bUjfyZ70Nl0=;
-        b=qrdfZSA1/QbU/si0We6rNBGbIBxY8l+3tPpbMWaQkrslkghMehNpVTVU//3NzXPXOH
-         jan/RWz1mBzAugM6GuIxAbhZfW6Yl/+fGbfo2P/+fccPk0MYfKid4i1JgeC106R8qeXZ
-         bnMr2GC4jUzmmnPk3RjGuoYpDzhUhzKSeZwuu1SI69qf32ZL7/Kvv6nEJnP1bJUbPElf
-         8upF7Utoe4TdPMuvKxQz8AS9K81grSV2NeBIzj7vIr3GWCGEEmgUsgVZdZWX7OIP6/2B
-         ik9Xk6bRF5CJ6psyQt3s3eomS4F9et4cL0qVwqfJnik0q+exiSOMkTfAUyGj5Pw9op7+
-         jvQw==
-X-Gm-Message-State: APjAAAV7x84zxIIuAZHL75xg+EOaQ4+eEzh6tORfWoOLmNY4wb2o5oye
-        euSY/A5kB6W1XScE22AtRHLr3jjvL6t65TUVFKg=
-X-Google-Smtp-Source: APXvYqyssVfan6cS1fJjHPDEYA79+N2li0X0yeIQVFizrEeidZQnIa7PQyqljfzHtcd6BFKxrs3uGzFsvtiAkwVxNdg=
-X-Received: by 2002:a5d:4c87:: with SMTP id z7mr29899878wrs.10.1566272818498;
- Mon, 19 Aug 2019 20:46:58 -0700 (PDT)
+        bh=IbR3spte4TgjwsLzFEB5uqq+qdUnYHTF/zSD7gzmZ7w=;
+        b=fdSn69moRRIHCCvhtrN1GcoEM/TjqaqI4Vf2cvN21TD1Owk3F2sOIPDv5nenpHfLvY
+         8K/WkvIu2GLvrPMchML5lJgzUTVnEXZJIPsjm7N84oTD/KWVCRjjumcDz+xbvK4d6f9A
+         2XVdT2UCFRBq+y4yxyTOURCwuPifBDnctLJ4kdbrySjDQe3WtS8jSoaNr3s61lmhVgMu
+         6obETlqOkE6X+xK2tN5EGkI3B9iN9hW7y65W113egUIURXtaIBaqfIED/bPkrmjAiy2w
+         0HJ0kvY7VzQoL0soUyLRmugJpbCZ14aSujDOXTM6sluMzh/EBTVdTIhHV2iDM6F8G18S
+         VbuQ==
+X-Gm-Message-State: APjAAAUo3cKH+8d3wEucKqwmMYf4ffmUIG/enMVdf4AIIovoWCldTsa6
+        g7HI12ICsZX4ey0S4dY31EyG/6S14hLVxSUkTes=
+X-Google-Smtp-Source: APXvYqxjaaE7nzuahxHHqV2/5qWge2X71gwkAzScLCCYCiVtYBb34wYARJRmb0tJQKIcevTcI+8wl0iKHHNtCt7FvGU=
+X-Received: by 2002:a19:4aca:: with SMTP id x193mr13658460lfa.146.1566273321168;
+ Mon, 19 Aug 2019 20:55:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1566258525.git.liu.denton@gmail.com> <e682bd347a09d0e1293ec6bd495c38dac5006a19.1566258525.git.liu.denton@gmail.com>
-In-Reply-To: <e682bd347a09d0e1293ec6bd495c38dac5006a19.1566258525.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 19 Aug 2019 23:46:47 -0400
-Message-ID: <CAPig+cRfk7jdhqRX2OiyftW0eaM040u6KgRPLUWin7Z3W1LgDA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] format-patch: learn --infer-cover-letter option
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com> <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+In-Reply-To: <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Date:   Tue, 20 Aug 2019 09:24:44 +0530
+Message-ID: <CAL7ArXpKggCm2Ex0Kk3m+jDbfd3roCYmj=6DFG=k-1kJm-j+tA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] rebase -i: support more options
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip <phillip.wood123@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 19, 2019 at 7:53 PM Denton Liu <liu.denton@gmail.com> wrote:
-> We used to populate the subject of the cover letter generated by
-> git-format-patch with "*** SUBJECT HERE ***". However, if a user submits
-> multiple patchsets, they may want to keep a consistent subject between
-> rerolls.
+On Tue, Aug 20, 2019 at 9:15 AM Rohit Ashiwal
+<rohit.ashiwal265@gmail.com> wrote:
 >
-> If git-format-patch is run with `--infer-cover-letter` or
+> I've tries to incorporated all the suggestions.
 
-s/letter/subject/
-
-> `format.inferCoverSubject`, infer the subject for the cover letter from
-> the top line(s) of a branch description, similar to how a subject is
-> read from a commit message.
-
-A possible rewrite of the entire commit message in imperative mood:
-
-    Teach 'format-patch' to use the first line of the branch description
-    as the Subject: of the generated cover letter, rather than
-    "*** SUBJECT HERE ***", if --infer-cover-subject is specified (or the
-    corresponding `format.inferCoverSubject` option is enabled). This
-    complements existing inclusion of the branch description in the
-    cover letter body.
-
-A casual reader of this patch might wonder why this new useful
-behavior isn't default, so it might make sense for the commit message
-to further explain that making it default would potentially break
-existing tooling.
-
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> @@ -36,6 +36,10 @@ format.subjectPrefix::
-> +format.inferCoverSubject::
-> +       A boolean value which lets you enable the
-> +       `--infer-cover-subject` option of format-patch by default.
-
-As mentioned in my review of 3/4, it is common to mention the default
-value at the end of the paragraph. So, perhaps:
-
-    A boolean that controls whether or not to take the first line of
-    the branch description as the subject for the cover letter. See the
-    `--infer-cover-subject` option in linkgit:git-format-patch[1].
-    Default is false.
-
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> @@ -171,6 +172,14 @@ will want to ensure that threading is disabled for `git send-email`.
-> +--[no-]infer-cover-subject::
-> +       Instead of using the default "*** SUBJECT HERE ***" subject for
-> +       the cover letter, infer the subject from the branch's
-> +       description.
-> ++
-> +Similar to a commit message, the subject is inferred as the beginning of
-> +the description up to and excluding the first blank line.
-
-I think this can all be collapsed to the simpler:
-
-    Use the beginning of the branch description (up to the first
-    blank line) as the cover letter subject instead of the default
-    "*** SUBJECT HERE ***".
-
-or something.
-
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -1577,6 +1589,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> +               OPT_BOOL(0, "infer-cover-subject", &infer_cover_subject,
-> +                           N_("infer a cover letter subject from the branch description")),
-
-Shorter: "infer cover letter subject from branch description"
+I've tried to incorporate all the suggestions.
