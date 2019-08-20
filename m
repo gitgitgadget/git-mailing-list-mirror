@@ -2,122 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3C4E1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 17:49:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CAB01F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 17:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729900AbfHTRth (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 13:49:37 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55783 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726717AbfHTRtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:49:36 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f72so3367111wmf.5
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 10:49:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=A6IMiModHxmhmZYsXwdjTiend2w6mu0+tkKPoyjy34A=;
-        b=q5CTmuiaJNh2Rb001tjHaqNXywD1dgBMK3cougjjpQPcUhqPA23ReW49wsU6bXtked
-         A4CRLgIO4GISk+BwgFVfqtxXpnm6tY1VfTVfpnWJ/SavS8SVpgfJSghj5tEXiGzfLdJm
-         VAvcCGtsn59D2jeOftNSQEO14lsti1ytHpgPLUGnMaKAoGZ5jPg3MqGMRCOLBl4Onbfl
-         V5/tk4jOTSNMgQh2EX1RZiqWn/zD9Iu6i2KEU4KFgX0cnToaIGRc4FFlsyd+wyqYEPYn
-         A4KZLo4lx0HK0CD14ByK5R06kewTFcHOYR46QgxsBy7owrQXyNXqm1wdr7vQfd4MeVaJ
-         eGkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=A6IMiModHxmhmZYsXwdjTiend2w6mu0+tkKPoyjy34A=;
-        b=Bx1JQYaOHRYXPBKAMO2Xk1guTMG541c3WRcJjrC2JikABp/CzCpK6t6uYtzA66Z/g9
-         m1CKpvDTaqQcYaiVc7XB+/bsePyZ0osRNId95p8/okGjk/G1J/lVtqstTIsVdfK5nSWA
-         mgiOQApdrExmfGpKPaFP62i4eDOF1TExLd7+j8FPIzO3G4QSzwhfoFHNbiGFG4vv3CU2
-         B5AL9kQxgSLSh1hor7kvHrYXS8E8r7hzpoM+DBxh9LMOdXbMjPNxQgyutZ36V7OhDWsw
-         jxmh4/QZ58CHMVHFVZ1E3B8+a0rQLc5GYbCU/3zZlPnqe2S+iisZ2TLcwkyCI4o2Km9u
-         3ZJw==
-X-Gm-Message-State: APjAAAWul1Hp1M3l9FOV2JMjLC3ssy5+f7DdrOLXx7/CvK5yCLqLtvP/
-        cYJobduACIsS1PKzc8VsoltOOREq
-X-Google-Smtp-Source: APXvYqzkO7tv5qosNBezzwOzMrHWC+sMZ9DwhvHnQYD5QERbKghbSpAH12/yg4NpD+Y5rEj7Oj85dg==
-X-Received: by 2002:a7b:c776:: with SMTP id x22mr1252451wmk.128.1566323374560;
-        Tue, 20 Aug 2019 10:49:34 -0700 (PDT)
-Received: from rigel (167.207.63.94.rev.vodafone.pt. [94.63.207.167])
-        by smtp.gmail.com with ESMTPSA id 4sm35285419wro.78.2019.08.20.10.49.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2019 10:49:33 -0700 (PDT)
-Date:   Tue, 20 Aug 2019 18:49:29 +0100
-From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
-To:     Uwe Brauer <oub@mat.ucm.es>
-Cc:     git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [problem with name-rev] (was: git log --graph with a sort of
- local revision number)
-Message-ID: <20190820174929.GA6753@rigel>
-References: <87blwq7rn5.fsf@mat.ucm.es>
- <20190818190032.GA11185@rigel>
- <87pnkzkivn.fsf_-_@mat.ucm.es>
+        id S1729827AbfHTRxe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 13:53:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57647 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726717AbfHTRxd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:53:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB0A21637CC;
+        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xDcKwgfVAn6CEdshNESpt604Z8k=; b=V+TvKu
+        FSz5TjP7zPdoJb+0A8WBb+J2oZFdk2x+dFjChrS9pDyx0r5LGipwDOQkL5csAufF
+        Q9woYJ0uA861hHxw8jN6JVpXReLiXOfODpyaA8TG8xDf+JzfgIJ44tmMiTYq1drd
+        tuj69d7r0bTDrxWTyR1li44Ee+fgjHkMS1sC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fpuiTqtami+BNu6pr4VtjwTQn1SS02Ex
+        xVuuC5Gdmi/yAYxKqxL6z7fqqT20wx5Ia7owM2aE10oIwiufOF4kw0CKvgWMzRcV
+        moNTEKu2qBaYszJlS01uIkyOgIfAg8Wxs4CYQ2tjo03cq9BUuZWA7lPrrqZ8MIiW
+        WNXQVg78ftQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2A651637CB;
+        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D6401637C9;
+        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+Subject: Re: [PATCH v3 0/6] rebase -i: support more options
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+        <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com>
+Date:   Tue, 20 Aug 2019 10:53:27 -0700
+In-Reply-To: <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com> (Phillip Wood's
+        message of "Tue, 20 Aug 2019 14:56:06 +0100")
+Message-ID: <xmqqsgpvvi3s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87pnkzkivn.fsf_-_@mat.ucm.es>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A3EDECE-C373-11E9-9F07-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 04:32:12PM +0200, Uwe Brauer wrote:
-> 
-> It seems that there is problem with name-rev.
-> 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-In git, branches are just pointers to a commits. Commits do not store
-any information about branches. They're similar to mercurial bookmarks.
+> Hi Rohit
+>
+> On 20/08/2019 04:45, Rohit Ashiwal wrote:
+>> I've tries to incorporated all the suggestions.
+>
+> It is helpful if you can list the changes to remind us all what we
+> said. (as a patch author I find composing that is helpful to remind me
+> if there's anything I've forgotten to address)
+>
+> Also there are a couple of things that were discussed such as
+> splitting up the author and passing it round as a <name, email, date,
+> tz> tuple and testing a non-default timezone which aren't included -
+> that's fine but it helps if you take a moment to explain why in the
+> cover letter.
+>
+>>
+>> Some points:
+>>    - According to v2.0.0's git-am.sh, ignore-date should override
+>>      committer-date-is-author-date. Ergo, we are not barfing out
+>>      when both flags are provided.
+>>    - Should the 'const' qualifier be removed[2]? Since it is leaving
+>>      a false impression that author should not be free()'d.
+>
+> The author returned by read_author_ident() is owned by the strbuf that
+> you pass to read_author_ident() which is confusing.
+>
+> Best Wishes
+>
+> Phillip
 
-Thus, git is not able to answer "Was commit X was made in branch Y?".
+I've looked at this round, but will push out v2 for today's
+integration cycle, mostly due to lack of time, but there do not seem
+to be great difference between the iterations.
 
-What that command does is describe each entry in the log in function of
-your active branch. Keep in mind that these descriptions are relative,
-and they'll change as you make more commits.
+The "ignore-date" step conflicts semantically with b0a31861
+("sequencer: simplify root commit creation", 2019-08-19) but in a
+good way.  Without the clean-up b0a31861 makes, we need to munge the
+timestamp in two places, but with it, there is only one place that
+needs to modify the timestamp for the feature (in try_to_commit()).
 
-It is basically asking git the following:
+You may want to see if these "more options" topic can take advantage
+of the "simplify root commit creation" by building on top of some
+form of it (I do not know offhand if b0a31861 ("sequencer: simplify
+root commit creation", 2019-08-19) must build on other two patches
+to fix "rebase -i" or it can be split out as an independent
+clean-up), and if it is feasible, work with your student to make it
+happen, perhaps?
 
-    "Is commit X (each log entry) an ancestor of the commit pointed by
-    branch Y? (HEAD, meaning your active branch) If yes, describe the
-    relationship between them"
+Thanks.
 
-Considering your example,
-
-*   changeset: ae68dbe:master
-    |\  user:      Uwe Brauer
-    | | date:      Tue Aug 20 16:25:53 2019 +0200
-    | | summary:   1.2.1/1.1
-    | |
-    | * changeset: c00bb5d:master^2
-    | | user:      Uwe Brauer
-    | | date:      Tue Aug 20 16:25:53 2019 +0200
-    | | summary:   1.2.1
-    | |
-    | * changeset: 54c9230:master^2~1
-    | |
-
-54c9230 is the parent (~1) of master's second parent (master^2).
-
-If you make an additional commit on master, the same 54c9230 will be
-described as master~1^2~1
-
-Check the documentation to learn the syntax: git help revisions
-
-If want a permanent reference for a commit, you'll need to:
-    1) Use an unambiguous prefix of the commit ID.
-    2) Make a tag to the commit you want to reference.
-
-Cheers,
-Rafael Ascensão
