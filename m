@@ -2,160 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F0101F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 02:14:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A63AC1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 02:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728993AbfHTCOn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 22:14:43 -0400
-Received: from forward500p.mail.yandex.net ([77.88.28.110]:40998 "EHLO
-        forward500p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729071AbfHTCOl (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Aug 2019 22:14:41 -0400
-Received: from mxback17g.mail.yandex.net (mxback17g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:317])
-        by forward500p.mail.yandex.net (Yandex) with ESMTP id 5A2DE9401D2;
-        Tue, 20 Aug 2019 05:14:37 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback17g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id mgyqM913yn-EaiemfEX;
-        Tue, 20 Aug 2019 05:14:36 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1566267276;
-        bh=OobatThUo0WHMtKN+9nhKuq/0kiUxliyFEwsuag4leE=;
-        h=Message-Id:Subject:In-Reply-To:Date:References:To:From;
-        b=EyH7VouWCVfiqvIXDAX8/SlM3jkoZnDYe1vz9LtTRuk/RL1bW9QvdpO+uqjxH+mBS
-         m+auXxA4133gXQMGklVNFrDgyIVufv4F4BjDhqMtNXBKGRMSliN8BbCKVrr16C+WmG
-         Ibfebk8nNZwWoAB4MJC910zck+JgP9PBHWQOuTSY=
-Authentication-Results: mxback17g.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by iva5-049509bcc5d6.qloud-c.yandex.net with HTTP;
-        Tue, 20 Aug 2019 05:14:36 +0300
-From:   Andrey <ahippo@yandex.ru>
-Envelope-From: ahippo@yandex.com
-To:     Aaron Miller <aaronkmiller@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <CALSvhyb7Td-ugzze9cSLXRjF78w=zE5=3yuMFZVeuXsCWLSjHg@mail.gmail.com>
-References: <CALSvhyb7Td-ugzze9cSLXRjF78w=zE5=3yuMFZVeuXsCWLSjHg@mail.gmail.com>
-Subject: Re: git-p4: Clone p4 path with bidirectional integrations
+        id S1728965AbfHTClg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 22:41:36 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46966 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728647AbfHTClg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 22:41:36 -0400
+Received: by mail-wr1-f68.google.com with SMTP id z1so10665987wru.13
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 19:41:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H6hOZj7XXJgAjJCAothWBw5yRQEMkVF1ITqIwKhmRas=;
+        b=djc1hLeShPY7yyAb9zAYAtB1x1r28JqDSvuurCLKdJ3u29NwkO1tgFG+BkpHkQeHqw
+         7b3QD0jFiYXqSlRBRfOPS+4z2x3E4iS3ZBldGo6EaUt23skV7iNFYzmzzlWkG3VB8B47
+         xfCX/jJwQQ++YYLAYksmDNKzhgMwA7vb1UKa0TU2k/nzC8660pzgVV7wrY5a3zvfGpBG
+         PgVQprJuETbLcmQo2ruHF/ENwhFDaLVpck+dGe75fgEvAoDhfeCxBg/6XMZWPxP7FQ65
+         +SUED7X2R0zjHGxLk7hc0ziRHncmtEUN1uas2pieNvJErF4Xsb27/pmYzsjqJnpvAvUZ
+         az5A==
+X-Gm-Message-State: APjAAAWwfIMjZs9+WQSLzIxD5HFrShcP7I/qwm49eReOLQnLssWggC4Q
+        wNX/aMKfrSqcQHL/+DpfVqugcdpXKnAzPWavS0U=
+X-Google-Smtp-Source: APXvYqzVUazRJEnkYMU4AopXKyCsYVDTXr64vZ8aNtaojjzL5oe1IH+amuSljr6K7Q5Ipe6/yJfYi/sxokdNYMe17HA=
+X-Received: by 2002:a5d:4c87:: with SMTP id z7mr29600999wrs.10.1566268894069;
+ Mon, 19 Aug 2019 19:41:34 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Mon, 19 Aug 2019 22:14:36 -0400
-Message-Id: <3442071566267276@iva5-049509bcc5d6.qloud-c.yandex.net>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8
+References: <cover.1566258525.git.liu.denton@gmail.com> <76a0a274fde564f709d294acd7d6da17167f05b5.1566258525.git.liu.denton@gmail.com>
+In-Reply-To: <76a0a274fde564f709d294acd7d6da17167f05b5.1566258525.git.liu.denton@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 19 Aug 2019 22:41:22 -0400
+Message-ID: <CAPig+cSzq7KB4y+wuuVtVS7oi=uK2FY0+UkfOXx1jp-oe=fs4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] t4014: clean up style
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-19.08.2019, 13:30, "Aaron Miller" <aaronkmiller@gmail.com>:
-> Hi all,
+On Mon, Aug 19, 2019 at 7:53 PM Denton Liu <liu.denton@gmail.com> wrote:
+> In Git's tests, there is typically no space between the redirection
+> operator and the filename. Remove these spaces.
 >
-> Is it possible to `git p4 clone --detect-branches` from a Perforce
-> path which contains bidirectional integrations?
-
-Yes, but it would require some manual work most likely.
-
-First of all, git-p4 should normally take only one direction from bidirectional integrations on its own.
-Do you see "p4 branch <branchABC> defines a mapping from <path1> to <path2>, but there exists another mapping from <path2> to <path1> already!"?
-If you do, it means that git-p4 will ignore <branchABC> mapping.
-
-Also, just FYI, as far as I know, git-p4 doesn't create "merge" commits,
-so bidirectional integrations won't look different from ordinary commits in git commit graph.
-
-> I've tried a bunch of things to get this to work, but here's an
-> example which hopefully illustrates what I'm trying to accomplish
-> and the issue I'm having.
+> Since output is silenced when running without `-v` and debugging
+> output is useful with `-v`, remove redirections to /dev/null.
 >
-> Perforce setup, assuming PWD is mapped to //depot/... in your client spec:
+> Change here-docs from `<<\EOF` to `<<-\EOF` so that they can be indented
+> along with the rest of the test case.
 >
->   1. mkdir -p testing/master
->   2. touch testing/master/test1 && p4 add testing/master/test1 && p4 submit
->   3. p4 integrate //depot/testing/master/...
-> //depot/testing/staging/... && p4 submit
->   3. touch testing/staging/test2 && p4 add testing/staging/test2 && p4 submit
->   4. p4 integrate //depot/testing/staging/...
-> //depot/testing/master/... && p4 submit
+> Convert all instances of `cnt=$(... | wc -l) && test $cnt = N` into
+> uses of `test_line_count()`.
 >
-> Now try to clone with git-p4:
+> For style, move the ending sq of test cases onto its own line whenever
+> they do not conform.
 >
->   1. git init p4_git_test && cd p4_git_test
->   2. git config git-p4.branchList master:staging
->   3. git config --add git-p4.branchList staging:master
->   4. git p4 clone //depot/testing/...@all --detect-branches .
+> Rename output files from "expected" to "expect" to conform with the
+> usual convention.
 >
-> You end up with a failure like:
+> Finally, refactor to remove Git commands upstream of pipe as well as Git
+> commands that are in a non-variable-assignment subshell (e.g. `echo
+> "base-commit: $(git rev-parse HEAD)"`. This way, if an invocation of a
+> Git command fails, the return code won't be lost. Keep upstream non-Git
+> commands since we have to assume a base level of sanity.
 >
->   Importing from //depot/testing/...@all into .
->   Reinitialized existing Git repository in /home/amiller/p4_git_test/.git/
->   Importing revision 1205832 (25%)
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> This patch is getting a little unwieldy. Perhaps we could split it into
+> several smaller patches? Unfortunately, I'm not really sure where a
+> logical place to split it would be.
 
-Uh-oh, 5M commits!
-But given that it fails at 25% instead of 1%,
-you've got some luck. :)
+The bullet points in the commit message, each of which is a distinct
+change, give a strong hint as to how the commit could be split into
+smaller pieces. It would make repeated review easier (though I'm not
+sure it's worth re-rolling just for that).
 
->       Importing new branch testing/master
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> @@ -62,26 +63,24 @@ test_expect_success setup '
+>  test_expect_success "format-patch --ignore-if-in-upstream" '
 >
->       Resuming with change 1205832
->   fatal: ambiguous argument 'refs/remotes/p4/testing/staging': unknown
-> revision or path not in the working tree.
->   Use '--' to separate paths from revisions, like this:
->   'git <command> [<revision>...] -- [<file>...]'
->   Command failed: ['git', 'rev-list', '--reverse', '--no-merges',
-> 'refs/remotes/p4/testing/staging']
+>         git format-patch --stdout \
+>                 --ignore-if-in-upstream master..side >patch1 &&
+> -       cnt=$(grep "^From " patch1 | wc -l) &&
+> -       test $cnt = 2
+> -
+> +       grep "^From " patch1 >from1 &&
+> +       test_line_count = 2 from1
+>  '
 
-This might not be just because of bidirectional integrations per se.
-This error may happen if, say, there's a P4 branch mapping from staging to master,
-but master was actually created before staging.
-git-p4 tries to find a "parent branch" for master, but it doesn't exist yet,
-so git-p4 fails in an ugly way.
+Here you've removed the blank line following the body before the
+closing quote, which brings the formatting more in line with current
+style, however, you could do the same with the blank line before the
+body. Ditto for other tests.
 
+Another style fix would be to change the double quotes in the test
+title to single quotes (here and in other tests).
 
-One way to filter out troublesome P4 branch mappings is to set git-p4.branchUser to a particular user.
-But most likely, this won't help you because different people created different branch mappings over time.
+> @@ -357,7 +369,7 @@ test_expect_success 'reroll count (-v)' '
+>  check_threading () {
+>         expect="$1" &&
+>         shift &&
+> -       (git format-patch --stdout "$@"; echo $? > status.out) |
+> +       git format-patch --stdout "$@" >patch &&
+>         # Prints everything between the Message-ID and In-Reply-To,
+>         # and replaces all Message-ID-lookalikes by a sequence number
+>         perl -ne '
+> @@ -372,12 +384,11 @@ check_threading () {
+>                         print;
+>                 }
+>                 print "---\n" if /^From /i;
+> -       ' > actual &&
+> -       test 0 = "$(cat status.out)" &&
+> +       ' <patch >actual &&
+>         test_cmp "$expect" actual
+>  }
 
-Unfortunately, there's _no_ git-p4.branchRegexp config option,
-but it's fairly straightforward to implement -- patches welcome! ;)
-(getBranchMapping() needs to apply a regex to branch names before doing anything serious with them)
+If you do break this patch into smaller pieces, this might deserve its
+own patch (or not) because it requires a bit of extra reasoning by the
+reviewer.
 
+> @@ -852,20 +866,21 @@ test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
+> -git_version="$(git --version | sed "s/.* //")"
+> -
+>  signature() {
+> +       git_version="$(git --version >version && sed "s/.* //" version)" &&
+>         printf "%s\n%s\n\n" "-- " "${1:-$git_version}"
+>  }
 
-The other option is to manually set git-p4.branchList for all your branch pairs like
-git config --add git-p4.branchList staging:master
-git config --add git-p4.branchList master:branchA
-git config --add git-p4.branchList master:branchB
-...
-(or by manually editing .git/config)
-Note, that you can't have master:staging together with staging:master,
-otherwise you'll likely run into the same problem as before.
-
-This might be simple or quite tedious depending on the history and branching strategies of your repositories.
-It may be as easy as just dropping some p4 branch mappings.
-However, one of the repositories I had to deal with had almost random branching strategy (with most integrations done without predefined branch mappings),
-so I had to spend quite some time to trace the history and figure out which branches make the most sense in git.
-(Revision Graph in p4v was very helpful for figuring branching history out)
-
-
-As I said, git-p4 doesn't create merge commits in git (or I can't see how to make them),
-so for repositories with simple/short history,
-I recreated those merge commits manually (well, in a bash script) using `git replace --graft <commit> <parent1> <parent2>` followed by `git filter-branch --tag-name-filter cat -- --all` to make grafts permanent.
-(`git filter-branch` is only needed once in the very end after all `git replace` manipulations are done)
-It's perhaps better to teach git-p4 to produce merge commits, but a bash script was a low-tech low-risk option for me.
-
-Also, beware that git-p4 doesn't handle branch-into-non-empty directory properly.
-If I remember correctly, something like
-`p4 copy //depot/branchA/... //depot/branchB/... ; p4 submit; p4 copy //depot/branchC/... //depot/branchB/...; p4 submit`
-will result in branchB having _both_ branchA and branchC contents in git.
-`git filter-branch` or `git rebase` are your friends to workaround this.
-(or better fix git-p4, of course)
-
-> I'm using Git 2.22.1.
->
-> Thanks,
-> Aaron
-
-Hope this help,
-Andrey.
-
+Windows folks are not going to like you for this change since process
+creation is so expensive on that platform, and the point of setting
+that variable globally was to avoid repeated invocation (especially
+since the output of "git --version" won't change). This function
+appears to be invoked only three times presently, but that number
+could increase in the future as new tests are added. Consequently, it
+might be best to drop this change.
