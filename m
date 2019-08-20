@@ -2,114 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CAB01F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 17:53:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F19241F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:00:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729827AbfHTRxe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 13:53:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57647 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726717AbfHTRxd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:53:33 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB0A21637CC;
-        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xDcKwgfVAn6CEdshNESpt604Z8k=; b=V+TvKu
-        FSz5TjP7zPdoJb+0A8WBb+J2oZFdk2x+dFjChrS9pDyx0r5LGipwDOQkL5csAufF
-        Q9woYJ0uA861hHxw8jN6JVpXReLiXOfODpyaA8TG8xDf+JzfgIJ44tmMiTYq1drd
-        tuj69d7r0bTDrxWTyR1li44Ee+fgjHkMS1sC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fpuiTqtami+BNu6pr4VtjwTQn1SS02Ex
-        xVuuC5Gdmi/yAYxKqxL6z7fqqT20wx5Ia7owM2aE10oIwiufOF4kw0CKvgWMzRcV
-        moNTEKu2qBaYszJlS01uIkyOgIfAg8Wxs4CYQ2tjo03cq9BUuZWA7lPrrqZ8MIiW
-        WNXQVg78ftQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2A651637CB;
-        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3D6401637C9;
-        Tue, 20 Aug 2019 13:53:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
-Subject: Re: [PATCH v3 0/6] rebase -i: support more options
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
-        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-        <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com>
-Date:   Tue, 20 Aug 2019 10:53:27 -0700
-In-Reply-To: <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com> (Phillip Wood's
-        message of "Tue, 20 Aug 2019 14:56:06 +0100")
-Message-ID: <xmqqsgpvvi3s.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729409AbfHTSA5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:00:57 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:44186 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbfHTSA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:00:56 -0400
+Received: by mail-vs1-f68.google.com with SMTP id c7so4147920vse.11
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=RLOWyWIkc61nQhY691N8/CB8qVKYsR6G9Xk22HShzak=;
+        b=vVXRk69Y5WLimdX6D4QZq8oDXuHuTEbsT+wwS5F142ZodykZXUjKWTsULx9pMU5dGw
+         eZr8WulqbngikmG4wAkiJJMr34KGAXKem+E7LDiaEYqn/d4MWktOKA3rSqGGJuHV2JZC
+         TKUjhjuCSV5OqkhK6666uIw2K7Fdos5nEa8hhkGbuIkVZMCH2gt2+2TVTrC6Ff8NlpRl
+         MmXuaKXIl0EOqAqVJgmcmApm6GeOhwmO+KoYp0wZC8NOX44/k5vrVLkd/qP6cvIFk/S+
+         WIruwtJCXQbQIQi76MkZPjwMhFGqy3yhdM7hWGF99ZV1iEgVf0vXlBdZs8jO4XvuMdx6
+         uCdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RLOWyWIkc61nQhY691N8/CB8qVKYsR6G9Xk22HShzak=;
+        b=P6bSddWpoYh/bckjzLonFKvmnwbzP6wLG1WqhwkIK8RyO+Ar1Zat3HnX1GLeTwWeN4
+         ebGLjd6Hv3IGunSgshZI3K7pgNPkK2/3dD9JwOW8yTTVMvH7IyT349D8zS0DBcXcxYUy
+         WMhBsbs6+VBFLb1x2UVMTOrXx1gmb5g2ADDEPGsbQIbzvdpFlqZYG0BKtB4Z2Spbb8pl
+         GO0pG2T7S1KH88v3pw+0b3Wsks9N6tORuFaeyaCu61PTAKMMmEpVt9ZPbBaA7UZY4YdL
+         W1gB2vXeuDUauiu0qEXeRucfjRiY/7hhiXyuiHmDUWTjO2ORR1fLnhiIbFin/y/Ny7+j
+         p71A==
+X-Gm-Message-State: APjAAAVf1TxdwS+rlaRcXwjyY+5lePqQP+kUmc7i2jUc65Jg5gQLwFWS
+        qrl7h61yz6PcifO1PYVECVrfo5A2
+X-Google-Smtp-Source: APXvYqzayun5lkLyS1vNLFjC1bTo8hjJZ/YnVjAaqduEyJdszOJKSlylzg3eF1xzLX1ppq04rPxDFA==
+X-Received: by 2002:a67:f3d6:: with SMTP id j22mr17379637vsn.95.1566324055217;
+        Tue, 20 Aug 2019 11:00:55 -0700 (PDT)
+Received: from [192.168.1.254] (c-73-217-142-143.hsd1.sc.comcast.net. [73.217.142.143])
+        by smtp.gmail.com with ESMTPSA id b202sm3769451vkf.45.2019.08.20.11.00.54
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Aug 2019 11:00:54 -0700 (PDT)
+Subject: Re: Only track built files for final output?
+To:     git@vger.kernel.org
+References: <477295c5-f817-e32b-04fd-a41ddfbbac0a@gmail.com>
+ <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
+From:   Leam Hall <leamhall@gmail.com>
+Message-ID: <f899594c-4f57-b941-f4f1-fd3b8f81136a@gmail.com>
+Date:   Tue, 20 Aug 2019 14:01:14 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6A3EDECE-C373-11E9-9F07-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> Hi Rohit
->
-> On 20/08/2019 04:45, Rohit Ashiwal wrote:
->> I've tries to incorporated all the suggestions.
->
-> It is helpful if you can list the changes to remind us all what we
-> said. (as a patch author I find composing that is helpful to remind me
-> if there's anything I've forgotten to address)
->
-> Also there are a couple of things that were discussed such as
-> splitting up the author and passing it round as a <name, email, date,
-> tz> tuple and testing a non-default timezone which aren't included -
-> that's fine but it helps if you take a moment to explain why in the
-> cover letter.
->
+On 8/20/19 1:46 PM, Pratyush Yadav wrote:
+> On 20/08/19 08:21AM, Leam Hall wrote:
+>> Hey all, a newbie could use some help.
 >>
->> Some points:
->>    - According to v2.0.0's git-am.sh, ignore-date should override
->>      committer-date-is-author-date. Ergo, we are not barfing out
->>      when both flags are provided.
->>    - Should the 'const' qualifier be removed[2]? Since it is leaving
->>      a false impression that author should not be free()'d.
->
-> The author returned by read_author_ident() is owned by the strbuf that
-> you pass to read_author_ident() which is confusing.
->
-> Best Wishes
->
-> Phillip
+>> We have some code that generates data files, and as a part of our build
+>> process those files are rebuilt to ensure things work. This causes an issue
+>> with branches and merging, as the data files change slightly and dealing
+>> with half a dozen merge conflicts, for files that are in an interim state,
+>> is frustrating. The catch is that when the code goes to the production
+>> state, those files must be in place and current.
+>>
+>> We use a release branch, and then fork off that for each issue. Testing, and
+>> file creation, is a part of the pre-merge process. This is what causes the
+>> merge conflicts.
+>>
+>> Right now my thought is to put the "final" versions of the files in some
+>> other directory, and put the interim file storage directory in .gitignore.
+>> Is there a better way to do this?
+>>
+> 
+> My philosophy with Git is to only track files that I need to generate
+> the final product. I never track the generated files, because I can
+> always get to them via the tracked "source" files.
+> 
+> So for example, I was working on a simple parser in Flex and Bison. Flex
+> and Bison take source files in their syntax, and generate a C file each
+> that is then compiled and linked to get to the final binary. So instead
+> of tracking the generated C files, I only tracked the source Flex and
+> Bison files. My build system can always get me the generated files.
+> 
+> So in your case, what's wrong with just tracking the source files needed
+> to generate the other files, and then when you want a release binary,
+> just clone the repo, run your build system, and get the generated files?
+> What benefit do you get by tracking the generated files?
 
-I've looked at this round, but will push out v2 for today's
-integration cycle, mostly due to lack of time, but there do not seem
-to be great difference between the iterations.
+For internal use I agree with you. However, there's an issue.
 
-The "ignore-date" step conflicts semantically with b0a31861
-("sequencer: simplify root commit creation", 2019-08-19) but in a
-good way.  Without the clean-up b0a31861 makes, we need to munge the
-timestamp in two places, but with it, there is only one place that
-needs to modify the timestamp for the feature (in try_to_commit()).
+The generated files are used by another program's build system, and I 
+can't guarantee the other build system's build system is built like 
+ours. It seems easier to provide them the generated files and decouple 
+their build system layout from ours.
 
-You may want to see if these "more options" topic can take advantage
-of the "simplify root commit creation" by building on top of some
-form of it (I do not know offhand if b0a31861 ("sequencer: simplify
-root commit creation", 2019-08-19) must build on other two patches
-to fix "rebase -i" or it can be split out as an independent
-clean-up), and if it is feasible, work with your student to make it
-happen, perhaps?
-
-Thanks.
 
