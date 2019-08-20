@@ -2,126 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5060E1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 22:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5DF31F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 22:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730927AbfHTWlr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 18:41:47 -0400
-Received: from mail-io1-f49.google.com ([209.85.166.49]:44602 "EHLO
-        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728283AbfHTWlr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 18:41:47 -0400
-Received: by mail-io1-f49.google.com with SMTP id j4so627925iop.11
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 15:41:46 -0700 (PDT)
+        id S1726151AbfHTWww (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 18:52:52 -0400
+Received: from mail-vs1-f42.google.com ([209.85.217.42]:39534 "EHLO
+        mail-vs1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726128AbfHTWww (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 18:52:52 -0400
+Received: by mail-vs1-f42.google.com with SMTP id y62so81487vsb.6
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 15:52:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AaQYNA1tnQPZ8/zQ1D64Cf/gvgDhUuNsAbTIp+8pDjc=;
-        b=opFBN2ZT6v/hBBRgSJFnHPw3YqeZXmUiV1wJmw5yn5v0NDXCdhjCB+Yd/rkws4rlrw
-         gcU6GghmmshyoonXRs7gaOOpshW6FMjJwFErtN1LnHGKHdhrwzMY/lg4ttOzoFHE8nnJ
-         bV52QtmMCp1SEJMo8XP5AowNQIoqm7+mNUheCDOSHGZDluWZP4sYiWEb8gJZsfdqMPdv
-         2j1XDywQuaBxpNoCIfOWBvxxthFXfv0vAtTf/HemAq0ZvbTw9Bba2pk509/i98GNAxXS
-         2D5HPMcKqcc7pEes25VVm5GCNkJ038eX7gn5czwTABgdUAwltq6YmDuSj+tnqD9Crd8g
-         l3EQ==
+         :cc;
+        bh=2OA2vA9hWzsUCl/rk+aX9SQh7CYNHWqEkAwHYD5bTUs=;
+        b=UGQUPAxyBtkfaf/fSemSNQvHdcKLj78Xp2Cgn9eqmg0JN1kuGJX6JHZtqHYdcVD9kC
+         bmWs0hG3lflHImgTb46pxfBdNanxhtD+1GsWC/bVDxyTzeu/SJW39BGA0VWLOomdd7wf
+         vgmXATMpl/vA7m9EMRhRCFx4vWMDlElRv88nuxvRw0jns2EcmX8PA1jjRYv7m/kiFJsO
+         irifbw14cOIovoplyBh2dx6CpaFy7yIET5pYlSDuClqN1lYCSo9fTgi+seMCd0aZOl2V
+         d3txqoTe3xFM5exezgNB1Vq9uMEz3lX7xM2qmIreWTLHcNXHpJMcz226adNV7Aw960FO
+         +2SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AaQYNA1tnQPZ8/zQ1D64Cf/gvgDhUuNsAbTIp+8pDjc=;
-        b=rU9ujADxzoBekBFUbF/oA9mX47ul6q8OD4YUHr0QSWsmUXp1F/agXUX15Q/GBuNBCY
-         M6Fo9VesQEQXQNFlEQFLXyMEaacrk31dLLrrDnFIqNu61GHYZVHDm63zt+cAvQKwTYqw
-         3i7b1876wcB9egnGBYEPlIvg+aO80Z9HACm8Ud5VTesnXTYjnSUatjDGL2OqVKUhg1eg
-         7b8XYVn6pALJO5aRf9KltkDud/0ZzFCEYdl1cShGdgNvWHthBxhS6nWRKEA+nS07/MFq
-         YaaUN3wsMKvYG31GFYPhj4wORjrNRjMQv+HF76VMlDjcfDcWWbomItOYhW6ppuMVkXqf
-         FR7Q==
-X-Gm-Message-State: APjAAAUMlWFT6RBXdeO5e7LB5pBzq4lA+oAylu0rhaPpWMR7pJTGnids
-        r4JBSOds6ucCXlJ/i2F4wCWylLHFQWb+tf0Qf9bNeQ==
-X-Google-Smtp-Source: APXvYqwTsKqupZQI/7aNUE5qFLSlSBqN7mvXEZTY34BQK1P6/xHTIu7ysipJV0wQNzBi5hCAx0myBn6tIPDufcCTTqs=
-X-Received: by 2002:a6b:b2d6:: with SMTP id b205mr3962846iof.86.1566340906140;
- Tue, 20 Aug 2019 15:41:46 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=2OA2vA9hWzsUCl/rk+aX9SQh7CYNHWqEkAwHYD5bTUs=;
+        b=J4TfURmOboPfr5SHgV0bVTpLb49omSczqgLc2n5IfzJsV65+Bt0kBATbgTJ48lknjT
+         RRCSZQOGwTOJdx83JDnqHPnCJjNK+XKvpYW4SxcJc9EVvebpw6MmzT5bFmcXNrSNrTHi
+         H3TS/wLgEZSTg/5ubIaXMkrXSYRxXya3fEx9vEaVtCM8a2OETIpHDR3GqypRA0M2RDiy
+         OABKGmqZbh3gItJ5RvMY1KWWJLzkpuwihZ5P9vGAmxrKTh0/oaH7u1EDUywyBAEvKkY4
+         59cjlNqpYvQYfm2YUsvHnSka7FYAdVi/SqrzRzEdrWn4KBO8sTXce9r8rrCNCja+E9t3
+         amBg==
+X-Gm-Message-State: APjAAAUfhtNGrrLlGPbmo9+VygwOxTA6mU335B/VjKXKahZ/GoYHUBzL
+        yUBkqhqNzlZcD8/SIBXTX9oLzXM29BMOvnLQZDBKPxw=
+X-Google-Smtp-Source: APXvYqyMOtPRO2FC3QwaTvjfRTOn36OqXVO6KE9PmN3m4u8Sutb9s5Q8TjF1SywOU7LpkQYfS3VPTz0Gr+MITc7EivI=
+X-Received: by 2002:a67:eb8c:: with SMTP id e12mr17847857vso.20.1566341571163;
+ Tue, 20 Aug 2019 15:52:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
- <CAHd-oW5xHv-gC2gQE8_5w6nv8gq5fcLcypqe2bca63HTSaVtAg@mail.gmail.com>
- <CAL21BmmBBBg+LboTmToem-zitg8UMLaH8eM2Q+ZmEPOMFGcggA@mail.gmail.com> <CAP8UFD2NEM2YWfKr2hz2vs-xBZ0qo96QbdyMDUu7PePm7RnfRw@mail.gmail.com>
-In-Reply-To: <CAP8UFD2NEM2YWfKr2hz2vs-xBZ0qo96QbdyMDUu7PePm7RnfRw@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 20 Aug 2019 19:41:34 -0300
-Message-ID: <CAHd-oW6j1-XuPA8XcwmBKhuAeGMEB23NMd1h1KDmn_Z+VJpu1w@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+References: <CALSvhyb7Td-ugzze9cSLXRjF78w=zE5=3yuMFZVeuXsCWLSjHg@mail.gmail.com>
+ <CAE5ih78UOor3XT_hDofanoGUPLD1BC2y=pCbzF-Edm2mpRvjyQ@mail.gmail.com>
+In-Reply-To: <CAE5ih78UOor3XT_hDofanoGUPLD1BC2y=pCbzF-Edm2mpRvjyQ@mail.gmail.com>
+From:   Aaron Miller <aaronkmiller@gmail.com>
+Date:   Tue, 20 Aug 2019 15:52:15 -0700
+Message-ID: <CALSvhyagGHY+JOaygd5++-GbNYskd3ys9ZQH3ha1pkeJaKQp1Q@mail.gmail.com>
+Subject: Re: git-p4: Clone p4 path with bidirectional integrations
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 20, 2019 at 9:16 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi Matheus,
->
-> On Tue, Aug 20, 2019 at 1:28 PM Olga Telezhnaya
-> <olyatelezhnaya@gmail.com> wrote:
-> >
-> > =D0=B2=D1=82, 20 =D0=B0=D0=B2=D0=B3. 2019 =D0=B3. =D0=B2 07:59, Matheus=
- Tavares Bernardino
-> > <matheus.bernardino@usp.br>:
-> > >
-> > > I just posted the penultimate report on my project:
-> > > https://matheustavares.gitlab.io/posts/going-for-a-too-big-step This
-> > > week I=E2=80=99ve been working on a v2 of threaded git-grep w/ parall=
-el
-> > > inflation, to allow threads when grepping submodules. I also tried
-> > > some more optimizations along the way.
-> >
-> > Thank you for great blog post! You have done so many things, it is impr=
-essive.
->
-> Yeah, great blog post again!
+Hi Luke,
 
-Thank you both for the always encouraging comments :)
+> It's possible that running with "-v" might give a bit more information.
 
-> > I absolutely agree with your plans to structure the job and split it
-> > to smaller pieces, it should definitely help. Moreover, if you want,
-> > you can make something like a documentation and delegate some parts.
->
-> I also agree with the above. I think it would be really nice for
-> example if we could have something in Documentation/technical/
-> describing how multi-threading in `git grep` works and how it could be
-> improved. (You can of course copy paste from your blog.)
+Here's the output from that. I've set git-p4.branchUser in this test
+to avoid needlessly cluttering the output since I have a huge amount
+of branches in my Perforce repo, but otherwise I used the exact script
+which I've included later in this email:
 
-Hm, good idea! I would have to revisit the important points and better
-formulate them, but that could hopefully help in future optimizations
-to git-grep.
+Importing from //depot/testing/...@all into .
+Reinitialized existing Git repository in
+/home/amiller/Code/git-migration/repos/testing/.git/
+Reading pipe: ['git', 'config', '--bool', 'git-p4.useclientspec']
+Reading pipe: ['git', 'config', 'git-p4.branchUser']
+Reading pipe: ['git', 'config', 'git-p4.user']
+Reading pipe: ['git', 'config', 'git-p4.password']
+Reading pipe: ['git', 'config', 'git-p4.port']
+Reading pipe: ['git', 'config', 'git-p4.host']
+Reading pipe: ['git', 'config', 'git-p4.client']
+Reading pipe: ['git', 'config', '--int', 'git-p4.retries']
+Reading pipe: ['git', 'config', '--int', 'git-p4.retries']
+Opening pipe: ['p4', '-r', '3', '-G', 'login', '-s']
+Opening pipe: p4 -r 3 -G branches -u amiller
+Reading pipe: ['git', 'config', '--get-all', 'git-p4.branchList']
+p4-git branches: []
+initial parents: {}
+Getting p4 changes for //depot/testing/...
+Opening pipe: ['p4', '-r', '3', '-G', 'changes', '-m', '1']
+Opening pipe: ['p4', '-r', '3', '-G', 'changes',
+'//depot/testing/...@1,1048577']
+Opening pipe: ['p4', '-r', '3', '-G', 'changes',
+'//depot/testing/...@1048578,1206544']
+Opening pipe: ['p4', '-r', '3', '-G', 'describe', '-s', '1206099']
+Importing revision 1206099 (25%)Reading pipe: ['git', 'config',
+'--bool', 'core.ignorecase']
+branch is master
 
-> About static function-scope variables I wonder if we could have one
-> day some .h and .c files with only thread safe functions in them.
+    Importing new branch testing/master
+Opening pipe: ['p4', '-r', '3', '-G', 'changes',
+'//depot/testing/master/...@1,1048577']
+Opening pipe: ['p4', '-r', '3', '-G', 'changes',
+'//depot/testing/master/...@1048578,1206098']
 
-Yes, that would probably require quite some work but would definitely
-be very helpful!
+    Resuming with change 1206099
+parent determined through known branches: staging
+looking for initial parent for refs/remotes/p4/testing/master; current
+parent is refs/remotes/p4/testing/staging
+Creating temporary branch: refs/git-p4-tmp/1206099
+commit into refs/git-p4-tmp/1206099
+Reading pipe: ['git', 'config', '--bool', 'git-p4.keepEmptyCommits']
+Opening pipe: ['p4', '-r', '3', '-G', '-x', '-', 'print']
+//depot/testing/master/test1 --> test1 (0 MB)
+checkpoint finished: progress checkpoint
 
-> > I hope you enjoyed this summer :) Thank you for your readiness to
-> > continue contributing after GSoC. It is not mandatory, you do not have
-> > to finish the project, but if you want - all the community will be so
-> > glad to see you as the contributor.
->
-> Thank you for your work and for considering continuing after the GSoC,
+Reading pipe: ['git', 'rev-list', '--reverse', '--no-merges',
+'refs/remotes/p4/testing/staging']
+fatal: ambiguous argument 'refs/remotes/p4/testing/staging': unknown
+revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+Traceback (most recent call last):
+  File "/home/amiller/.bin/git-p4.py", line 4173, in <module>
+    main()
+  File "/home/amiller/.bin/git-p4.py", line 4167, in main
+    if not cmd.run(args):
+  File "/home/amiller/.bin/git-p4.py", line 3923, in run
+    if not P4Sync.run(self, depotPaths):
+  File "/home/amiller/.bin/git-p4.py", line 3790, in run
+    self.importChanges(changes)
+  File "/home/amiller/.bin/git-p4.py", line 3451, in importChanges
+    blob = self.searchParent(parent, branch, tempBranch)
+  File "/home/amiller/.bin/git-p4.py", line 3374, in searchParent
+    "--no-merges", parent]):
+  File "/home/amiller/.bin/git-p4.py", line 237, in read_pipe_lines
+    die('Command failed: %s' % str(c))
+  File "/home/amiller/.bin/git-p4.py", line 165, in die
+    raise Exception(msg)
+Exception: Command failed: ['git', 'rev-list', '--reverse',
+'--no-merges', 'refs/remotes/p4/testing/staging']
 
-Thank you both, again. It's been a great summer of code! (although
-it's winter here haha) I do hope to finish the project and keep
-contributing with whatever I can :)
 
-Best,
-Matheus
+> Can you write a test case, or even just a shell script, that might
+> help figure out what's going on.
+
+No problem:
+
+#!/bin/bash
+
+# perforce setup - assumes PWD is mapped to //depot/...
+mkdir -p testing/master
+touch testing/master/test1
+p4 add testing/master/test1
+p4 submit -d 'test changelist 1'
+
+p4 integrate //depot/testing/master/... //depot/testing/staging/...
+p4 submit -d 'test changelist 2'
+
+touch testing/staging/test2
+p4 add testing/staging/test2
+p4 submit -d 'test changelist 3'
+
+p4 integrate //depot/testing/staging/... //depot/testing/master/...
+p4 submit -d 'test changelist 4'
+
+# clone with git-p4:
+git init p4_git_test
+cd p4_git_test
+git config git-p4.branchList master:staging
+git config --add git-p4.branchList staging:master
+git p4 clone //depot/testing/...@all --detect-branches --verbose .
+
+
+Thanks,
+Aaron
