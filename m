@@ -2,157 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B25021F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 21:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4B8A1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 21:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730638AbfHTVLr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 17:11:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61427 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728283AbfHTVLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 17:11:47 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5082C16515A;
-        Tue, 20 Aug 2019 17:11:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rxwBNiYrb6ckfw76xrXnwNYovOw=; b=n+M7OK
-        rErA+sjEieQcdb2j6Tdlht/5ww28edorgF1re0kLn3+S9PiKG+IJwwPt/Zyrgs+h
-        VrijQwBVBv8xxVysRhUx8pn2Dg7lSOm0zriiwgGmKP/gXRI68F/1G0DIkOx7ddje
-        v+P1rKStE2rDgHb4eLG4PdaR5+nNQjnfVS7nw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rsVd8Yjfd9TWYu8OwCe0ffu7po+vwT4z
-        hSnO5naA/cyzNmexKt3IJaTImSwXedVA7rETts+KkOssvz6YT+pzpNzfORNtVUaR
-        Nvu6UVbGdjZ8t09G64VVAsjlx9AeZgWq9MGV7EsuMnfHyT82DN+FtajRlN2uYfc0
-        4Z3h5upOSOM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4932C165159;
-        Tue, 20 Aug 2019 17:11:45 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2167165157;
-        Tue, 20 Aug 2019 17:11:44 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Garima Singh <garima.singh@microsoft.com>
-Subject: Re: [PATCH 1/1] commit-graph: add --[no-]progress to write and verify.
-References: <pull.315.git.gitgitgadget@gmail.com>
-        <da89f7dadb0be2d4ada22dd3e2d1f5524c73f70d.1566326275.git.gitgitgadget@gmail.com>
-Date:   Tue, 20 Aug 2019 14:11:43 -0700
-In-Reply-To: <da89f7dadb0be2d4ada22dd3e2d1f5524c73f70d.1566326275.git.gitgitgadget@gmail.com>
-        (Garima Singh via GitGitGadget's message of "Tue, 20 Aug 2019 11:37:56
-        -0700 (PDT)")
-Message-ID: <xmqqftlvtucw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730734AbfHTVMS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 17:12:18 -0400
+Received: from mout.web.de ([217.72.192.78]:43373 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728283AbfHTVMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 17:12:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1566335521;
+        bh=AzVAKuxy2PP4CqDmu8IEhcH85ZxwoBlkkIStUB8jtB0=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=hhNkB5/SY1xS4rTaCzynwbVUGiyClp3y9QS3jFSOSZkxQTo/yQj8gteQexQCvMwwm
+         XHud/AzHFfffx8fCizd5MhgbE3NA5ksrgIN7h7Z89/0OADBY0GLwYaZScPHeU6KQAA
+         Hi8+CbRQ7SbGAwVfl/VvpO0d86O6BKLo3IZO534w=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MUF4Q-1hrpR52zti-00QzqG; Tue, 20
+ Aug 2019 23:12:01 +0200
+Subject: Re: [PATCH 02/26] patch-id: convert to use the_hash_algo
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20190818200427.870753-1-sandals@crustytoothpaste.net>
+ <20190818200427.870753-3-sandals@crustytoothpaste.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <1d3b46de-155a-6072-5e44-2622ac821230@web.de>
+Date:   Tue, 20 Aug 2019 23:12:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D198402-C38F-11E9-B647-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20190818200427.870753-3-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:FeIkMzZ04RKfg9o6wFCfqsYh0vaqda8bwnbvpUsHbxWywcbcqXg
+ x9u+eAMKjE71qv2mcO5slhAfQIAJZduQbkQY0dVBUQ1pBrgtmD/gR/6PJ3I+YUpV8llcD7m
+ XA4D3ik7I/t8FRkuLCTKp+Cxat233/f+NzySuBHRtVUpNke/D/IK9a19fyuT4ADNgaDtNjn
+ NenXoSg4H2ZlPP3NCdAPg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nQ1/Slt8TWM=:a3ZHC8ceFxCSnuqRG3+X0y
+ Y1bIf76ii4xpzwBKmYYIBkoMpauH2/AGJ9DQXHrI3/Dta/u7aPfGpHTpfb4IM45NiaIE6ppiI
+ sBv7gbQCefT9o/F3A5CpYkkIw6Fr7n6zVQDvK78V1swwbgu8bFGX6YvpgpzkNdtDi+ig7+acN
+ fDkNoe7UhyjOlf+zwQAwcDcVpP1Q5cydpo6Z8eUSrie0a2zh2JGK8qezkWjVsZ6ZNxazd7+5W
+ Ijv0NPqzblc4IpTWHCHvFdGNRoQlmuJ7hErb5H5Zq+XbR25BAhqe3K6Q41q8f+ALqElT1Mjf7
+ smrQ8AD90QFKf65pI5/7hr4nNnBZvcH9lc0yjxbJuehx+REkk2AVfqED3imjgcNsXHjWyZ/MO
+ SeeeSSgq6rUN4e5CaTwEgr6aHUTXG1dDEbCsTb/B/19uJn4Vw3SLnSL+Qh1wOyvEDvSx2e2oL
+ 3pXKIt5F3HWslB8KqTFfBAKCZHCyYN3Fgam/+Hi0bosIxbQ5QrFZZq8i6m4xmb1VDOIenojvT
+ jLegIsgPtGY4JW8jPgX8jJluT6AF1yQE977rHedJJWyWbbECiIqhaWGQ2dSsOWuTU458UXWNq
+ hBEQ4vipawG461ThibO/b0mZQEBWYJ2akEx5W9R5RN4prqjokNWI79WxVQr4H2GZ6qhPJBIkk
+ srlbhv0mrce5fnPAtR3yGp3ke/t1FM4vZF8f7DOCTxgV4i3Mm5ifFSSbzP599Vgu79Pm0PttY
+ oaR68y7Z9n36I+SJWIbyKlVrlWeNfgl3WBtRsBZVrtI5R36Dm43iNh6aDB2eImZMi3r9lTQMw
+ 66l6U6VejNdfhdgRMmZtJW7ocRcYry8lzEx/8ZjB7mllDHy0CwbF5UEw0pn/NFov5dCjZUbmV
+ 2NriWh0C8Sgstir7k7Poe/TeSMx6F3/3L/Ug1UMFQeTwWG0XYoKIPHmhFABcJq5otnsu+nwPv
+ Z2EN0+BIBBZMgnTe261jXWWloQeQH+ZmjoIrHKdprzJ26tTuOfkucShAlGkVLZwtfQkN4u7GX
+ fj+g7oMqc4NHvlIPWfyjlJlJhZRNdAABGa3EXEl1bd3wwHYnL6TASRqGpNU5S+0RzQ2uSoUoq
+ Q6yTQOSXHSxkXuClpQABlbSjHtINXcoStHaS+KkRni9j4W+Xma1poVGVxi9UWaWSQTY8pZ/vK
+ dkQPk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Garima Singh <garima.singh@microsoft.com>
+Am 18.08.19 um 22:04 schrieb brian m. carlson:
+> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> index bd28b80b2d..3059e525b8 100644
+> --- a/builtin/patch-id.c
+> +++ b/builtin/patch-id.c
+> @@ -1,15 +1,16 @@
+> +#include "cache.h"
+>  #include "builtin.h"
+>  #include "config.h"
+>  #include "diff.h"
 >
-> Add --[no-]progress to git commit-graph write and verify.
-> The progress feature was introduced in 7b0f229
-> ("commit-graph write: add progress output", 2018-09-17) but
-> the ability to opt-out was overlooked.
+>  static void flush_current_id(int patchlen, struct object_id *id, struct=
+ object_id *result)
+>  {
+> -	char name[50];
+> +	char name[GIT_MAX_HEXSZ + 1];
+>
+>  	if (!patchlen)
+>  		return;
+>
+> -	memcpy(name, oid_to_hex(id), GIT_SHA1_HEXSZ + 1);
+> +	memcpy(name, oid_to_hex(id), the_hash_algo->hexsz + 1);
+>  	printf("%s %s\n", oid_to_hex(result), name);
+>  }
 
-Nicely described.
+OK.  But why do we need our own buffer?  oid_to_hex() provides four of
+them for us, so the body could become just:
 
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index 38027b83d9..71796910fc 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -6,17 +6,18 @@
->  #include "repository.h"
->  #include "commit-graph.h"
->  #include "object-store.h"
-> +#include "unistd.h"
+	if (patchlen)
+		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
 
-Please do not contaminate *.c files with #include of system headers.
 
-Often, various platforms require system include files in specific
-order, and the project convention is to include them in
-git-compat-util.h in the right order (with #ifdef and friends as
-necessary).  *.c files are required to include git-compat-util.h (or
-one of the well known headers that include git-compat-util.h as the
-first one) as the first file.
+Right?  Well, this buffer comes from f97672225b (=C2=ABAdd "git-patch-id"
+program to generate patch ID's.=C2=BB, 2005-06-23), which predates the
+introduction of the four-buffer feature in dcb3450fd8 (=C2=ABsha1_to_hex()
+usage cleanup=C2=BB, 2006-05-03).
 
-In fact, "builtin.h" includes "git-compat-util.h" as the first
-thing, and "git-compat-util.h" in turn includes unistd reasonably
-early.  Do you really need to include it again here?
+And with 30e12b924b (=C2=ABpatch-id: make it stable against hunk reorderin=
+g=C2=BB,
+2014-04-27) the function's name became a bit misleading, because it
+stopped being responsible for flushing the hash calculation.
 
-> @@ -48,16 +50,20 @@ static int graph_verify(int argc, const char **argv)
->  	int fd;
->  	struct stat st;
->  	int flags = 0;
-> -
-> +	int defaultProgressState = isatty(2);
+So perhaps this on top?  (Or squash it in, if you like, but it's
+certainly not worth a re-roll.)
 
-As you can see from the naming of other variables, we do not do
-camelCase variable names.
+=2D- >8 --
+Subject: [PATCH] patch-id: inline flush_current_id()
 
-In fact you do not need this variable, do you?
+The function hasn't been flushing the hash calculation since 30e12b924b
+("patch-id: make it stable against hunk reordering", 2014-04-27), and
+there is no need for a private copy of the second hexadecimal hash value
+since dcb3450fd8 ("sha1_to_hex() usage cleanup", 2006-05-03) added
+support for up to four sha1_to_hex() results to be used in the same
+printf(3) call, which oid_to_hex() inherited.  So print both hash values
+directly and get rid of the function with the outdated name.
 
->  	static struct option builtin_commit_graph_verify_options[] = {
->  		OPT_STRING(0, "object-dir", &opts.obj_dir,
->  			   N_("dir"),
->  			   N_("The object directory to store the graph")),
->  		OPT_BOOL(0, "shallow", &opts.shallow,
->  			 N_("if the commit-graph is split, only verify the tip file")),
-> +		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
->  		OPT_END(),
->  	};
->  
-> +	opts.progress = defaultProgressState;
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/patch-id.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-... as you can assign isatty(2) to opts.progress here directly.
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3059e525b8..d328714af7 100644
+=2D-- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -3,17 +3,6 @@
+ #include "config.h"
+ #include "diff.h"
 
-> @@ -154,8 +162,9 @@ static int graph_write(int argc, const char **argv)
->  	struct string_list *commit_hex = NULL;
->  	struct string_list lines;
->  	int result = 0;
-> -	unsigned int flags = COMMIT_GRAPH_PROGRESS;
-> -
-> +	unsigned int flags = 0;
-> +	int defaultProgressState = isatty(2);
+-static void flush_current_id(int patchlen, struct object_id *id, struct o=
+bject_id *result)
+-{
+-	char name[GIT_MAX_HEXSZ + 1];
+-
+-	if (!patchlen)
+-		return;
+-
+-	memcpy(name, oid_to_hex(id), the_hash_algo->hexsz + 1);
+-	printf("%s %s\n", oid_to_hex(result), name);
+-}
+-
+ static int remove_space(char *line)
+ {
+ 	char *src =3D line;
+@@ -137,13 +126,12 @@ static int get_one_patchid(struct object_id *next_oi=
+d, struct object_id *result,
+ static void generate_id_list(int stable)
+ {
+ 	struct object_id oid, n, result;
+-	int patchlen;
+ 	struct strbuf line_buf =3D STRBUF_INIT;
 
-Likewise.
-
-> diff --git a/commit-graph.c b/commit-graph.c
-> index fe954ab5f8..b10d47f99a 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1986,14 +1986,17 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
->  	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
->  		return verify_commit_graph_error;
->  
-> -	progress = start_progress(_("Verifying commits in commit graph"),
-> -				  g->num_commits);
-> +	if (flags & COMMIT_GRAPH_PROGRESS)
-> +		progress = start_progress(_("Verifying commits in commit graph"),
-> +					g->num_commits);
-
-Makes sense.
-
->  	for (i = 0; i < g->num_commits; i++) {
->  		struct commit *graph_commit, *odb_commit;
->  		struct commit_list *graph_parents, *odb_parents;
->  		uint32_t max_generation = 0;
->  
->  		display_progress(progress, i + 1);
-> +
->  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-
-Drop this change---I do not see a reason for the extra blank line here.
+ 	oidclr(&oid);
+ 	while (!feof(stdin)) {
+-		patchlen =3D get_one_patchid(&n, &result, &line_buf, stable);
+-		flush_current_id(patchlen, &oid, &result);
++		if (get_one_patchid(&n, &result, &line_buf, stable))
++			printf("%s %s\n", oid_to_hex(&result), oid_to_hex(&oid));
+ 		oidcpy(&oid, &n);
+ 	}
+ 	strbuf_release(&line_buf);
+=2D-
+2.23.0
