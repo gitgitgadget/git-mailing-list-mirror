@@ -2,88 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8961F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 17:42:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 947381F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 17:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730913AbfHTRm3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 13:42:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62312 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730222AbfHTRm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:42:28 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A828C173D0C;
-        Tue, 20 Aug 2019 13:42:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rjMHDQLDn84dDz7Do6hGSnj+zG4=; b=t9M8Oe
-        sYRh27pwDN1SaPB1I4UvQRZJOjMuXV58f9JGIgHr6bDTJM1tW35o7s9sCmHt2RGt
-        fwgNsl0iouFhnqg4r9Ne6OcT17H+5Eo/jr7XQgd1G51QVwj5HHMmlTIGr5OPAkfB
-        7X05C0KsUrJiQ/HxnJo9dkxo0wv68pDXjZxqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pUmgaj5OEGtEzWB9TzWFJq2GACU4ffwP
-        DdaNMtpJ9giYHA6dReqxr+2uaUJMmOT3+zybaQhtPrrglrci2PF6cpa5KodCl33Q
-        PSy0IMrDxr2cGrMqv+ovnYgQCkEwTxYjLhpZr5PlwSXjrbbVz1C9dXyjsVEfXZbS
-        k1/sXOBNV+w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E336173D0B;
-        Tue, 20 Aug 2019 13:42:26 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11558173D0A;
-        Tue, 20 Aug 2019 13:42:25 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood123@gmail.com, t.gummerer@gmail.com
-Subject: Re: [PATCH v3 5/6] rebase -i: support --ignore-date
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
-        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-        <20190820034536.13071-6-rohit.ashiwal265@gmail.com>
-Date:   Tue, 20 Aug 2019 10:42:25 -0700
-In-Reply-To: <20190820034536.13071-6-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Tue, 20 Aug 2019 09:15:34 +0530")
-Message-ID: <xmqqwof7vim6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730267AbfHTRq4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 13:46:56 -0400
+Received: from relay10.mail.gandi.net ([217.70.178.230]:58599 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729827AbfHTRq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:46:56 -0400
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 5DBBB240003;
+        Tue, 20 Aug 2019 17:46:54 +0000 (UTC)
+Date:   Tue, 20 Aug 2019 23:16:40 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Leam Hall <leamhall@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Only track built files for final output?
+Message-ID: <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
+References: <477295c5-f817-e32b-04fd-a41ddfbbac0a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF8ECA24-C371-11E9-BDD1-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <477295c5-f817-e32b-04fd-a41ddfbbac0a@gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+On 20/08/19 08:21AM, Leam Hall wrote:
+> Hey all, a newbie could use some help.
+> 
+> We have some code that generates data files, and as a part of our build
+> process those files are rebuilt to ensure things work. This causes an issue
+> with branches and merging, as the data files change slightly and dealing
+> with half a dozen merge conflicts, for files that are in an interim state,
+> is frustrating. The catch is that when the code goes to the production
+> state, those files must be in place and current.
+> 
+> We use a release branch, and then fork off that for each issue. Testing, and
+> file creation, is a part of the pre-merge process. This is what causes the
+> merge conflicts.
+> 
+> Right now my thought is to put the "final" versions of the files in some
+> other directory, and put the interim file storage directory in .gitignore.
+> Is there a better way to do this?
+> 
 
-> +/* Construct a free()able author string with current time as the author date */
-> +static char *ignore_author_date(const char *author)
-> +{
-> +	int len = strlen(author);
+My philosophy with Git is to only track files that I need to generate 
+the final product. I never track the generated files, because I can 
+always get to them via the tracked "source" files.
 
-Mental note: ignore_author_date() would not allow author==NULL as its input.
+So for example, I was working on a simple parser in Flex and Bison. Flex 
+and Bison take source files in their syntax, and generate a C file each 
+that is then compiled and linked to get to the final binary. So instead 
+of tracking the generated C files, I only tracked the source Flex and 
+Bison files. My build system can always get me the generated files.
 
-> @@ -1020,10 +1047,20 @@ static int run_git_commit(struct repository *r,
->  
->  		if (res <= 0)
->  			res = error_errno(_("could not read '%s'"), defmsg);
-> -		else
-> +		else {
-> +			if (opts->ignore_date) {
-> +				char *new_author = ignore_author_date(author);
-> +				if (!author)
-> +					BUG("ignore-date can only be used with "
-> +					    "rebase, which must set the author "
-> +					    "before committing the tree");
+So in your case, what's wrong with just tracking the source files needed 
+to generate the other files, and then when you want a release binary, 
+just clone the repo, run your build system, and get the generated files?  
+What benefit do you get by tracking the generated files?
 
-Yet, author is used and then checked for NULL-ness, which is
-backwards.  Before we have a chance to issue this BUG(), we would
-already have segfaulted inside ignore_author_date().
-
+-- 
+Regards,
+Pratyush Yadav
