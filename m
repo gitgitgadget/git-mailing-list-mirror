@@ -2,117 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_EMPTY_SUBJ,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6040F1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 16:37:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB8D81F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 17:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730088AbfHTQhj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 12:37:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58751 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728682AbfHTQhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 12:37:39 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9172C173559;
-        Tue, 20 Aug 2019 12:37:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TNIkbBf0H+syX5/Ra2TSivM9UJM=; b=Lo+L6S
-        Or0y1KE/cPdF78t3c80jtG1HSM+SeRyUoiKrgvly5RcPMr7DctlhPVT2wYk/Gavm
-        UxhWU04CpxjHMf4lo/Ic+bez0cS7EUrrOXYmi/PVmewwSdseqRx3TVqolVUBCCSW
-        6wynROzqmompARs7wimqL5LvjX5yWS/jF61D0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=F0qYoU5vwZDBUfm/o8UoA+fa3ZSGk+ZK
-        9NnqA211KTaig/lEBvH5mVFi31ai0MvzUGBHj4a3FmuRqoLfDtZvuQ4qLpD8AA+5
-        zmOVDzPMUtzyfCOXwl4PMseAjvjWbzZuwsAS8Uw9twswwpudshxiq4w/YGb1+yxR
-        hKvc5xQfUC4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86FA8173557;
-        Tue, 20 Aug 2019 12:37:36 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7CE7173553;
-        Tue, 20 Aug 2019 12:37:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mischa POSLAWSKY <git@shiar.nl>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Subject: Re: [PATCH] ref-filter: initialize empty name or email fields
-References: <20190817215107.13733-1-git@shiar.nl>
-        <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 20 Aug 2019 09:37:34 -0700
-In-Reply-To: <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 19 Aug 2019 10:55:13 -0700")
-Message-ID: <xmqq4l2bx06p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728277AbfHTRXe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 13:23:34 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:36839 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbfHTRXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:23:34 -0400
+Received: by mail-qt1-f196.google.com with SMTP id z4so6941312qtc.3
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 10:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=;
+        b=k/QjWprzIWfeNsccO+sPBntPvxkA0HXS053vUnXE46eX3wIkmKUJ4/+IM/z7GoWsJC
+         kwm3invtg4p2nQWuQgFAuSvBcnRu1lXpqQRKETb/pyAgC9Yj6Xh4c7ftS7hPjP5ykLyY
+         M8wZCmRwrorUDoQicugPdqyxsM/B5o00+L4S3ciw0BccUOLHjWe4lje/Ln16avdDuzD5
+         TVJEM4KshiqBh71oEgrcRw26Wnrd82f/AlLTFBbcvwULgTMFHYjDv2iCvkpixTh+cToW
+         JXV5see3G1atczyOzSoL0IlmK6qGUiO2eRNsYwgwoeCy3cgVVfyf6c/RopAH1yyOiHKO
+         pQkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=;
+        b=rx+jBeUU9sffEi02WPLXZxZRJet1dM3AMKHvGkNcncc7lLNURbomGfXcVbUz1Dn5eX
+         Ysq230j1/823xfZmJz0ghNXiie2MqR1VTLLCXQjhAeelvf0lcK4VOLUFieaHWjEzqh2G
+         xkUyQg32Od6CZ7Y22zThCFR1J2symzpe5MB/TyoVTe0zMwcdPkvaewWkbSwjWxja1dhP
+         NDtp0b6uSxMgD0cTuexKV6ZEev9ePoJNXBSlYoH8n6o6DcxdCtsMr6aVxvryZ4ic4Wsd
+         oZY+VRzVOUqHx/8i2/JnM7URIKb09h9Bs1nkyK3EiaivyerzHjd4whUpLF/MrZWNnap3
+         moqg==
+X-Gm-Message-State: APjAAAWR3VLU2LpaYh9MFLW+s6xR2okspRa007bQODg/9q9Rejoejxcv
+        m/OGYqzvNdBUAamaBQNlxZd1Rp20WuVt5GKMg5RMLlz8RqY=
+X-Google-Smtp-Source: APXvYqz6i+P2319tr61LWlrBXEQEczyDWhgpqEAOrdPNO1lArwxQcWNjVm5IRSzEOobv9B8KEMwrUAltwE7+t5qB6Js=
+X-Received: by 2002:ac8:45c9:: with SMTP id e9mr27837083qto.133.1566321813200;
+ Tue, 20 Aug 2019 10:23:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D0DCF590-C368-11E9-AE60-46F8B7964D18-77302942!pb-smtp1.pobox.com
+From:   William Baker <williambaker54545@gmail.com>
+Date:   Tue, 20 Aug 2019 10:23:22 -0700
+Message-ID: <CAOoiaAP_dOjrqSA--DcWxE+6nb4FY1GCn3+QKZnC67LHo+xn8w@mail.gmail.com>
+Subject: 
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Mischa POSLAWSKY <git@shiar.nl> writes:
->
->> Formatting $(taggername) on headerless tags such as v0.99 in Git
->> causes a SIGABRT with error "munmap_chunk(): invalid pointer",
->> because of an oversight in commit f0062d3b74 (ref-filter: free
->> item->value and item->value->s, 2018-10-19).
->>
->> Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
->> ---
->> If I understand correctly, such tags cannot be produced normally anymore.
->> Therefore I'm unsure how to make tests, and if that is even warranted.
->
-> Thanks for spotting.
->
-> I am not sure if the approach taken by this patch is the right one,
-> though.  I didn't follow the call/dataflow thoroughly, but if we
-> replace unfree-able "" with NULL in these places, wouldn't
-> fill_missing_values() take care of them?
-
-I think replacing these "" with NULL would be safe, but there are
-many places that return xstrdup("") from inside the callees of
-populate_value(), so the patch presented here would be more
-consistent with the current practice, I think.
-
-So let's take the patch as is, at least for now.  Thanks.
-
->>  ref-filter.c | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/ref-filter.c b/ref-filter.c
->> index f27cfc8c3e..7338cfc671 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -1028,7 +1028,7 @@ static const char *copy_name(const char *buf)
->>  		if (!strncmp(cp, " <", 2))
->>  			return xmemdupz(buf, cp - buf);
->>  	}
->> -	return "";
->> +	return xstrdup("");
->>  }
->>  
->>  static const char *copy_email(const char *buf)
->> @@ -1036,10 +1036,10 @@ static const char *copy_email(const char *buf)
->>  	const char *email = strchr(buf, '<');
->>  	const char *eoemail;
->>  	if (!email)
->> -		return "";
->> +		return xstrdup("");
->>  	eoemail = strchr(email, '>');
->>  	if (!eoemail)
->> -		return "";
->> +		return xstrdup("");
->>  	return xmemdupz(email, eoemail + 1 - email);
->>  }
+subscribe git
