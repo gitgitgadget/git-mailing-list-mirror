@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C61B91F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 08:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 258571F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 08:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729405AbfHTIw6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 04:52:58 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38601 "EHLO
+        id S1728842AbfHTI4b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 04:56:31 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55410 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728842AbfHTIw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 04:52:58 -0400
-Received: by mail-wm1-f68.google.com with SMTP id m125so1892385wmm.3
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 01:52:56 -0700 (PDT)
+        with ESMTP id S1728426AbfHTI4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 04:56:30 -0400
+Received: by mail-wm1-f68.google.com with SMTP id f72so1884596wmf.5
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 01:56:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d/sMqQNqJQzV17ZC/7IKGgLkjzh7llkU7/DLzSeaI1E=;
-        b=O8KrqoMyXBYbckEMsG5Sjy347hOlMhPDdqk/qVkpsDYvmszVBbeWaK/PDsyN3SCP1W
-         DsWsdDF8HmES1AxeQQrYk7N9PZmvR3hj/LEABJ4GedrFb8YurI/FFL3qTtzWCNe4+RtJ
-         uQpEkuU82B0dIqn0abGR9vu1/IaLOOoAvaSZ6OHN8xQt2LDEeZyt+T4Bs3QPsJNSx6Mk
-         WUfDezHN5dKOJ5OwvJl97PxPXwKYAH2mi9bVA+UdpHn5Qtwz1pFbIS9AiVkKi4ubYl7h
-         WK/D/uBCiMfCWNKJIeW0B2iT1egJU0y2VdjKWEN0wTp9zSeJVdWMufE5vimtoG7g7DAl
-         lLvw==
+        bh=3wVhXy7XtEF8LY2AIikgXjb4lWQ9tSHWPYL9T0Y86Yw=;
+        b=eeHH1zux5L2KKVCnyXFZF2TWM3uN/UObZFo0sMmS9oJgh6gEUjh44Im7Buo/I7sY5k
+         HiKPVQWoKwkR7PMhTLd6OotZRCJHGPjkYuMQTgJGV+h4ueTTQwB6eAUomRzklQaMvoid
+         0hYWRTcfHD4wkABaO2PcnurGYRMdt38JgtBm2yW7MsInoefXlOYcwDxpx7fYgcEXw4YI
+         jbwkPPHyRNpTmzeIxUGpNDDy6uo7d71GdpQclzJvWck7edakwKQWx+J2jbFWPJUpgdBY
+         Q34g5MZvPnvn/6UkYZgoccSCOzk55736THUKRgRCvWhSuNO9mMxmZHDnjbTBpS4WGjTT
+         VK0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:references:from:message-id
          :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=d/sMqQNqJQzV17ZC/7IKGgLkjzh7llkU7/DLzSeaI1E=;
-        b=p0MmR4F9khfPI1H02BgnASVbcwqdmADm4aTL+VMvnnQX36uUkfJ2pjwog4gfkblO2I
-         cr4XiP8/fzsxMdyhPH+wrYdorZ6W4XGGruMwubQmgppDC13RKels5v8Jck33GsOiu53M
-         G9B+RVj1e5AUQ+kLZQedVrXHshaMRmLKrwVY9nzNokH54EA3kOr8mLLj5gl0rD0wDoNg
-         j8B9bzQG5QOVzx2zb7eZJb69r8J/Tt2tNHyzD8bfa0R7SDJhnkmx5VMn5dhC4DR4dTzu
-         xYg+WMuTH8BgQhIKEw/XiIVNDJtHX+kRruIyVOBXhfIhDRIvL67qV44CFxb5w55/4fRP
-         opbw==
-X-Gm-Message-State: APjAAAUaE6ZQA3JBJ/X4Y+Xk6h89bsjPzecG1DbGj0FVElLDTTqk1JPb
-        EPCalukMx+OgsfqXciZHBTw=
-X-Google-Smtp-Source: APXvYqxNmzM9y90DQlZBzl56Z63biBpEAY74XHBoMbJncirJ4K+bzUTUO7YqF/JBqkMNkLvgiQl+FQ==
-X-Received: by 2002:a1c:c909:: with SMTP id f9mr12200131wmb.52.1566291175633;
-        Tue, 20 Aug 2019 01:52:55 -0700 (PDT)
+        bh=3wVhXy7XtEF8LY2AIikgXjb4lWQ9tSHWPYL9T0Y86Yw=;
+        b=dIdQgG6fjMk94XmE/uXliMK+q6VrTE88PiockdlMuqjhCMrKmxXGzhO3zGz9vGnoYP
+         8hRl/+zhE41OVMtSVzLc8HgWTnz5t/E8gbbODUz9amfETw3GNIH3k8tAYVO7eLLwgaUP
+         tx9mJiC1u/gMcs6gDd5omJ75HJpTEk0q8LiRzmkQtKiGSRcr/127iWGLYIWZEvMGYn/5
+         oMCWHXNVhWyelqbKkpyYQakMPYkKaVBtcnEND8/yDmCqP0muXxBggZ8IeJZVcJ9iWu5r
+         hiUS4AMVgFEuqJ9pg5I38Ji1ZntHRtTdgWrWnfXrh9tRB2EOJrdP4pqdweRFebTzKhzB
+         wJQA==
+X-Gm-Message-State: APjAAAURd1WQDGQbX+Y/QBnmB4G7YL9N6H5f4tKaS3qAKHmOh9CFqCaE
+        iNGxCw48LixmsYhwOXHFDpA=
+X-Google-Smtp-Source: APXvYqxWZUT+F6A1ja2SLmjYXA/ICnUO0VC618PG5T74Vbt/ZaExMahPlBfYHfEomHwyMnS+s8suow==
+X-Received: by 2002:a1c:494:: with SMTP id 142mr23894760wme.12.1566291388424;
+        Tue, 20 Aug 2019 01:56:28 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
-        by smtp.gmail.com with ESMTPSA id 6sm15282191wmf.23.2019.08.20.01.52.49
+        by smtp.gmail.com with ESMTPSA id z8sm17706745wru.13.2019.08.20.01.56.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 01:52:54 -0700 (PDT)
+        Tue, 20 Aug 2019 01:56:27 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -62,107 +62,67 @@ References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
  <20190818184403.861907-1-sandals@crustytoothpaste.net>
  <20190818184403.861907-3-sandals@crustytoothpaste.net>
  <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
- <20190820024505.GH365197@genre.crustytoothpaste.net>
+ <2c33a668-4c7d-2114-41b1-8907c4384a15@gmail.com>
+ <20190820030544.GI365197@genre.crustytoothpaste.net>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <18fcc7db-7c09-3fbf-1e3f-81be99f4bb17@gmail.com>
-Date:   Tue, 20 Aug 2019 09:52:48 +0100
+Message-ID: <facdfb93-bbf5-cca7-7970-b68efed7cfd3@gmail.com>
+Date:   Tue, 20 Aug 2019 09:56:26 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190820024505.GH365197@genre.crustytoothpaste.net>
+In-Reply-To: <20190820030544.GI365197@genre.crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian
-
-On 20/08/2019 03:45, brian m. carlson wrote:
-> On 2019-08-19 at 09:41:42, Phillip Wood wrote:
->> Hi Brian
+On 20/08/2019 04:05, brian m. carlson wrote:
+> On 2019-08-19 at 09:55:27, Phillip Wood wrote:
+>> On 19/08/2019 10:41, Phillip Wood wrote:
+>>> [...]
+>>>> diff --git a/convert.c b/convert.c
+>>>> index 94ff837649..030e9b81b9 100644
+>>>> --- a/convert.c
+>>>> +++ b/convert.c
+>>>> @@ -1293,10 +1293,11 @@ struct conv_attrs {
+>>>>        const char *working_tree_encoding; /* Supported encoding or
+>>>> default encoding if NULL */
+>>>>    };
+>>>> +static struct attr_check *check;
+>>>
+>>> I was concerned about the impact adding a file global if we ever want to
+>>> multi-thread this for submodules, but looking through the file there are
+>>> a couple of others already so this isn't creating a new problem.
 >>
->> On 18/08/2019 19:44, brian m. carlson wrote:
->>> When applying multiple patches with git am, or when rebasing using the
->>> am backend, it's possible that one of our patches has updated a
->>> gitattributes file. Currently, we cache this information, so if a
->>> file in a subsequent patch has attributes applied, the file will be
->>> written out with the attributes in place as of the time we started the
->>> rebase or am operation, not with the attributes applied by the previous
->>> patch. This problem does not occur when using the -m or -i flags to
->>> rebase.
->>
->> Do you know why -m and -i aren't affected?
+>> Doh, I've just realized it was static already - ignore that.
 > 
-> I had to look, but I believe the answer is because they use the
-> sequencer, and the sequencer calls git merge-recursive as a separate
-> process, and so the writing of the tree is only done in a subprocess,
-> which can't persist state.
+> And I just realized that I didn't read the entire thread before
+> responding.  Sorry about that.
+> 
+>> One thing did occur to me though - does this patch reset attributes like the
+>> merge marker length (they're less critical though if there is a conflict
+>> after an attribute change it would be nice to have the correct length) or
+>> just the ones for filtering files?
+> 
+> It resets "crlf", "ident", "filter", "eol", "text", and
+> "working-tree-encoding".  Things it doesn't reset include "whitespace",
+> "export-ignore", "export-subst", "merge", and "conflict-marker-size".
+> Of these, I think only the latter two are relevant.
+> 
+> I'll update that in v5.
 
-The sequencer has been running in a single process for a while now. We 
-do fork for 'git merge' sometimes when processing 'merge' commands but 
-'pick' commands are all done in a single process by calling 
-do_recursive_merge().
+Thanks, one other thought I had was that this is really a bug in 'am' 
+rather than 'rebase'. There has been some talk of switching the default 
+rabase backend to the sequencer so maybe it would be better to test 'am' 
+rather than 'rebase' to ensure we still check 'am' is working properly 
+after any switch in the rebase backend. (perhaps we should be testing 
+rebase and rebase --interactive separately as well to prevent any future 
+regressions I'm not sure)
 
 Best Wishes
 
 Phillip
 
-> Should we move the merge-recursive code into the main process, we'll
-> likely have the same problem there.
-> 
->>> diff --git a/apply.c b/apply.c
->>> index cde95369bb..d57bc635e4 100644
->>> --- a/apply.c
->>> +++ b/apply.c
->>> @@ -4643,6 +4643,7 @@ static int apply_patch(struct apply_state *state,
->>>    	struct patch *list = NULL, **listp = &list;
->>>    	int skipped_patch = 0;
->>>    	int res = 0;
->>> +	int flush_attributes = 0;
->>>    	state->patch_input_file = filename;
->>>    	if (read_patch_file(&buf, fd) < 0)
->>> @@ -4670,6 +4671,10 @@ static int apply_patch(struct apply_state *state,
->>>    			patch_stats(state, patch);
->>>    			*listp = patch;
->>>    			listp = &patch->next;
->>> +
->>> +			if ((patch->new_name && ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE)) ||
->>> +			    (patch->old_name && ends_with_path_components(patch->old_name, GITATTRIBUTES_FILE)))
->>> +				flush_attributes = 1;
->>
->> style nit - these lines are very long compared to 80 characters
-> 
-> They are.  They aren't two different from other lines in the file, and I
-> thought that leaving them that way would preserve the similarities, but
-> I can also wrap them.  I'll send out a v5 with wrapped lines.
-> 
->>> diff --git a/convert.c b/convert.c
->>> index 94ff837649..030e9b81b9 100644
->>> --- a/convert.c
->>> +++ b/convert.c
->>> @@ -1293,10 +1293,11 @@ struct conv_attrs {
->>>    	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
->>>    };
->>> +static struct attr_check *check;
->>
->> I was concerned about the impact adding a file global if we ever want to
->> multi-thread this for submodules, but looking through the file there are a
->> couple of others already so this isn't creating a new problem.
->>> +
->>>    static void convert_attrs(const struct index_state *istate,
->>>    			  struct conv_attrs *ca, const char *path)
->>>    {
->>> -	static struct attr_check *check;
->>>    	struct attr_check_item *ccheck = NULL;
->>>    	if (!check) {
->>> @@ -1339,6 +1340,12 @@ static void convert_attrs(const struct index_state *istate,
->>>    		ca->crlf_action = CRLF_AUTO_INPUT;
->>>    }
-> 
-> The portion I've included above demonstrates that this was already a
-> static variable, just one hidden in a function.  So yeah, this is no
-> worse than it already was.
-> 
