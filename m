@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A63AC1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 02:41:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0711F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 02:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728965AbfHTClg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Aug 2019 22:41:36 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46966 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728647AbfHTClg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Aug 2019 22:41:36 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z1so10665987wru.13
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 19:41:34 -0700 (PDT)
+        id S1728898AbfHTCoQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Aug 2019 22:44:16 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33901 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728719AbfHTCoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Aug 2019 22:44:16 -0400
+Received: by mail-wr1-f66.google.com with SMTP id s18so10706219wrn.1
+        for <git@vger.kernel.org>; Mon, 19 Aug 2019 19:44:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=H6hOZj7XXJgAjJCAothWBw5yRQEMkVF1ITqIwKhmRas=;
-        b=djc1hLeShPY7yyAb9zAYAtB1x1r28JqDSvuurCLKdJ3u29NwkO1tgFG+BkpHkQeHqw
-         7b3QD0jFiYXqSlRBRfOPS+4z2x3E4iS3ZBldGo6EaUt23skV7iNFYzmzzlWkG3VB8B47
-         xfCX/jJwQQ++YYLAYksmDNKzhgMwA7vb1UKa0TU2k/nzC8660pzgVV7wrY5a3zvfGpBG
-         PgVQprJuETbLcmQo2ruHF/ENwhFDaLVpck+dGe75fgEvAoDhfeCxBg/6XMZWPxP7FQ65
-         +SUED7X2R0zjHGxLk7hc0ziRHncmtEUN1uas2pieNvJErF4Xsb27/pmYzsjqJnpvAvUZ
-         az5A==
-X-Gm-Message-State: APjAAAWwfIMjZs9+WQSLzIxD5HFrShcP7I/qwm49eReOLQnLssWggC4Q
-        wNX/aMKfrSqcQHL/+DpfVqugcdpXKnAzPWavS0U=
-X-Google-Smtp-Source: APXvYqzVUazRJEnkYMU4AopXKyCsYVDTXr64vZ8aNtaojjzL5oe1IH+amuSljr6K7Q5Ipe6/yJfYi/sxokdNYMe17HA=
-X-Received: by 2002:a5d:4c87:: with SMTP id z7mr29600999wrs.10.1566268894069;
- Mon, 19 Aug 2019 19:41:34 -0700 (PDT)
+        bh=8B/JRmY/F+KYauSoHkLUlnAIIYNnZtUnHkNHUz2AkIk=;
+        b=Tv7WvLmL8XhPSYlIUgF5m/r3uc03RZETapKk+Vy05ToIUnBr3gajsqOsFxwYJCkV+0
+         pLkowHeAONeQqrDL2VgDn8jHnOJq3FMXPckwUFLmJB9Cw6wSGx/qJhFwboiCRLmaHGPu
+         Y1y4o137PQY/ucSlW1gAAo7fCr3fsu3gIGhpQ0ytb5D8bfOl6cgSG107iW+tZCY29aOU
+         k/8+zcpIRPstcx3lna+CQNEK252VkMg3mqE6FPwPqMOZDWVOvRXeC07NqBtRRQwAvEmL
+         u4iF979dBEzm79td68Ta137jB0lUdRtoT5pNUkOGtKD5IcyloDDdm8jigFI58CQaB0QE
+         eRbg==
+X-Gm-Message-State: APjAAAXxtNiJXwjdbwQicC5/bYlkrs4Bd/hQnXBm1vlMXeW9VJMVy4vM
+        zjQkkq3uUuaHFIvnIU0/Z2TvpX4FyLRJeEomhfs=
+X-Google-Smtp-Source: APXvYqx4dX/W6D9IG5HDNv/L63HDeqCKx8GH12qOM4m2NK6MURUaGxKbbU25eOmP2HQD82AAxiM33Ou0QqbGWs6XtSg=
+X-Received: by 2002:a5d:4c87:: with SMTP id z7mr29614368wrs.10.1566269054332;
+ Mon, 19 Aug 2019 19:44:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1566258525.git.liu.denton@gmail.com> <76a0a274fde564f709d294acd7d6da17167f05b5.1566258525.git.liu.denton@gmail.com>
-In-Reply-To: <76a0a274fde564f709d294acd7d6da17167f05b5.1566258525.git.liu.denton@gmail.com>
+References: <cover.1566258525.git.liu.denton@gmail.com> <fd908bcc01884469dce966fbc384d6982687b4bd.1566258525.git.liu.denton@gmail.com>
+In-Reply-To: <fd908bcc01884469dce966fbc384d6982687b4bd.1566258525.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 19 Aug 2019 22:41:22 -0400
-Message-ID: <CAPig+cSzq7KB4y+wuuVtVS7oi=uK2FY0+UkfOXx1jp-oe=fs4Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] t4014: clean up style
+Date:   Mon, 19 Aug 2019 22:44:03 -0400
+Message-ID: <CAPig+cTL3rtPuMQiFfZPcAX7T=v8fVSOL07ULDbXUuG+GD_jzQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] Doc: add more detail for git-format-patch
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -52,97 +52,29 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Aug 19, 2019 at 7:53 PM Denton Liu <liu.denton@gmail.com> wrote:
-> In Git's tests, there is typically no space between the redirection
-> operator and the filename. Remove these spaces.
+> In git-format-patch.txt, we were missing some key user information.
+> First of all, using the `--to` and `--cc` options don't override
+> `format.to` and `format.cc` variables, respectively. They add on to each
+> other. Document this.
+
+This entire paragraph can go away since v2 dropped this change.
+
+> In addition, document the special value of `--base=auto`.
 >
-> Since output is silenced when running without `-v` and debugging
-> output is useful with `-v`, remove redirections to /dev/null.
+> Next, while we're at it, surround option arguments with <>.
 >
-> Change here-docs from `<<\EOF` to `<<-\EOF` so that they can be indented
-> along with the rest of the test case.
->
-> Convert all instances of `cnt=$(... | wc -l) && test $cnt = N` into
-> uses of `test_line_count()`.
->
-> For style, move the ending sq of test cases onto its own line whenever
-> they do not conform.
->
-> Rename output files from "expected" to "expect" to conform with the
-> usual convention.
->
-> Finally, refactor to remove Git commands upstream of pipe as well as Git
-> commands that are in a non-variable-assignment subshell (e.g. `echo
-> "base-commit: $(git rev-parse HEAD)"`. This way, if an invocation of a
-> Git command fails, the return code won't be lost. Keep upstream non-Git
-> commands since we have to assume a base level of sanity.
+> Finally, document the `format.outputDirectory` config and change
+> `format.coverletter` to use camel case.
 >
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
-> This patch is getting a little unwieldy. Perhaps we could split it into
-> several smaller patches? Unfortunately, I'm not really sure where a
-> logical place to split it would be.
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> @@ -314,7 +314,8 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>  --base=<commit>::
+>         Record the base tree information to identify the state the
+>         patch series applies to.  See the BASE TREE INFORMATION section
+> -       below for details.
+> +       below for details. If <commit> is "auto", a base commit is
+> +       automatically chosen.
 
-The bullet points in the commit message, each of which is a distinct
-change, give a strong hint as to how the commit could be split into
-smaller pieces. It would make repeated review easier (though I'm not
-sure it's worth re-rolling just for that).
-
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> @@ -62,26 +63,24 @@ test_expect_success setup '
->  test_expect_success "format-patch --ignore-if-in-upstream" '
->
->         git format-patch --stdout \
->                 --ignore-if-in-upstream master..side >patch1 &&
-> -       cnt=$(grep "^From " patch1 | wc -l) &&
-> -       test $cnt = 2
-> -
-> +       grep "^From " patch1 >from1 &&
-> +       test_line_count = 2 from1
->  '
-
-Here you've removed the blank line following the body before the
-closing quote, which brings the formatting more in line with current
-style, however, you could do the same with the blank line before the
-body. Ditto for other tests.
-
-Another style fix would be to change the double quotes in the test
-title to single quotes (here and in other tests).
-
-> @@ -357,7 +369,7 @@ test_expect_success 'reroll count (-v)' '
->  check_threading () {
->         expect="$1" &&
->         shift &&
-> -       (git format-patch --stdout "$@"; echo $? > status.out) |
-> +       git format-patch --stdout "$@" >patch &&
->         # Prints everything between the Message-ID and In-Reply-To,
->         # and replaces all Message-ID-lookalikes by a sequence number
->         perl -ne '
-> @@ -372,12 +384,11 @@ check_threading () {
->                         print;
->                 }
->                 print "---\n" if /^From /i;
-> -       ' > actual &&
-> -       test 0 = "$(cat status.out)" &&
-> +       ' <patch >actual &&
->         test_cmp "$expect" actual
->  }
-
-If you do break this patch into smaller pieces, this might deserve its
-own patch (or not) because it requires a bit of extra reasoning by the
-reviewer.
-
-> @@ -852,20 +866,21 @@ test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
-> -git_version="$(git --version | sed "s/.* //")"
-> -
->  signature() {
-> +       git_version="$(git --version >version && sed "s/.* //" version)" &&
->         printf "%s\n%s\n\n" "-- " "${1:-$git_version}"
->  }
-
-Windows folks are not going to like you for this change since process
-creation is so expensive on that platform, and the point of setting
-that variable globally was to avoid repeated invocation (especially
-since the output of "git --version" won't change). This function
-appears to be invoked only three times presently, but that number
-could increase in the future as new tests are added. Consequently, it
-might be best to drop this change.
+Should <commit> be encased in backquotes in the paragraph body?
