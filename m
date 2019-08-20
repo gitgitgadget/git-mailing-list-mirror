@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A64F41F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 08:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76D561F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 09:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729623AbfHTI6c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 04:58:32 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51469 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729405AbfHTI6c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 04:58:32 -0400
-Received: by mail-wm1-f66.google.com with SMTP id k1so1615716wmi.1
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 01:58:30 -0700 (PDT)
+        id S1729384AbfHTJAv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 05:00:51 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55097 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729381AbfHTJAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 05:00:51 -0400
+Received: by mail-wm1-f67.google.com with SMTP id p74so1898276wme.4
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 02:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8k/d9Lp/2TjmmLQbYcYBwUvwA8cPWbnuPuBBHAgMKbw=;
-        b=SN06iQ+I8nx8wW5sCuysE1KiwOnwC+PE9jmdZaJXEVqnvGWGBAbbTc8aqZhOsDjKqV
-         sHIbGrZVZxyFBlR1CZ2lxpLoGhH9qXuc120oSa7SdFcllWnoRe2sk5Ypft/ZF/5nlxEj
-         tJCOHnTDs9c7o56AaJ1tSUHXvrKwaYZLKip5NZzuxC0op5zzrF4lOJm2cgvJARdvk4ZC
-         bMt3gTkJV5+hwZnQ73ccSqT2KIW6W5QD884joZtRPkd+/2GHw3XmMG9uxVaRSLHFdHSR
-         B55LK1MOKBIZY4Ef7ykqMRPnf10IN76j6VXDPl0QGBjeBSYiLpLCoAHJjvYKRb6Z6ofM
-         wE5A==
+        bh=ZxFid3dusbJ6CV1dUjH9gt/HTt+jJjeFe2ZxgPM1seU=;
+        b=kKwJsmT4kiVpLDdmsd2XgdvArzx5wX4WhpgLe6gee8uJmwHM6JT2g9q8pmuMZhxeqm
+         gzvf2xUQOMSy0KXY3I4Pplbrxrp2Hbdi6TIajFYfhktSC2t8xhRSFoRXJzCsonKwOyyf
+         oPh1cwdkTI8e0Fj2Rcjlnw0al2NRfg63jF6To4wJjVN/Lj0LPC7QacyR6BaLNJ8qO4kE
+         IEjEcxMgVZ3JPp023bt/9xMWZ7LEoFvq+czk4/LoI6tE34Knse+2aee72BH4hy+dt2iX
+         s0n35WWbpzRfRd6G6LQxNlvffnEjaU6zsWarumFVwVG0a9BSRph1+2t8z1xl7T34mCMg
+         P/Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=8k/d9Lp/2TjmmLQbYcYBwUvwA8cPWbnuPuBBHAgMKbw=;
-        b=Os6jNSnh9sJk93IQVMF5ioKtGjS3ppbGfQL6HxETnp5CvIPS51Qisode9uWESDfuEd
-         ddh2wB/mf4vBPz7FlLR0SYBQeLI5dYlJwIdSfyNkuGUES0RPqLDPcErU5SrkaEOAGuyM
-         FfzNq1gnTZtyZB3XXJARpItSpSacAb1bH4jyKZaXcN/qMznIseFVaBMP1bju6z0CGBGn
-         RYK8zZVGc6C5Dzpdon+z3yDhxFjXbotHkk0e8kUpGkaeQsxoQtLgnGqNpKUKccNhYUUY
-         MJaPj30SjAM+uiN4QhqsKyUgm5i5cVAQbaAwLbRgOszCI8RXZKQQp13tlrXgLi1o5PaA
-         V+fw==
-X-Gm-Message-State: APjAAAU2XfA/gnfCU1Tc4U0wAKy/uSD/ql/Ee/OSni/TYYnPtSzLRxDo
-        XsrWuhiirWG7VMTU63TR+NI=
-X-Google-Smtp-Source: APXvYqwAk4AxQIAmfZb9TJL9l4vO8zWUuX0cp+R6P8bVnBNlw6DGBHWD4U3w1yViIGvTuCnPYYyFEw==
-X-Received: by 2002:a1c:a101:: with SMTP id k1mr25335350wme.98.1566291510152;
-        Tue, 20 Aug 2019 01:58:30 -0700 (PDT)
+        bh=ZxFid3dusbJ6CV1dUjH9gt/HTt+jJjeFe2ZxgPM1seU=;
+        b=m+RuBCbBS15ov5KTib0HsG/6ykIgsCnEt8BIZo9voIDh1UcZD8xjmcy7wffBQLr3+y
+         JiJGHIhEJzj5riZrLEkqikv72MtaV31gFynWN5zvP0pxc60LXQkqvWN5LXDgna9mClgY
+         Vt2WLR9J8C9MzSULWtgE/eo6opn7liOT4HwA3MLjBuWQyngThKNIDj//cfFRya9/qIlZ
+         UU4BLQyTBZM2bcpOyiOgVwUJvRKyQRa6KQiQqHM6ov3phgUUr0dAdP8RZkSh79TVtw5o
+         z+QsWqaZsXHOuBUJShIzFdHJxmVIz4VriJJcJxC8K5lqhgIjTwRRtdiRfX3Bvk7m4WPQ
+         B0qg==
+X-Gm-Message-State: APjAAAW8XnE8TNOGwjEM3lhoRCmcDd7psdBE/27WjmTV9Vo2PK6gXWib
+        nqcahKUGTIQSMkfHG5zUwok7Rw02
+X-Google-Smtp-Source: APXvYqxZIefLWZQhugVQLpiC7Qi739fDdgqBHnHD4tJkxT36daAEefNzRib/6ndoDhHGkMxTFK2RlA==
+X-Received: by 2002:a1c:7a14:: with SMTP id v20mr20619053wmc.75.1566291648437;
+        Tue, 20 Aug 2019 02:00:48 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-12-34.as13285.net. [92.22.12.34])
-        by smtp.gmail.com with ESMTPSA id 2sm18468612wrg.83.2019.08.20.01.58.29
+        by smtp.gmail.com with ESMTPSA id u130sm34511368wmg.28.2019.08.20.02.00.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 01:58:29 -0700 (PDT)
+        Tue, 20 Aug 2019 02:00:47 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] t3420: never change upstream branch
+Subject: Re: [PATCH 2/2] rebase.c: make sure current branch isn't moved when
+ autostashing
 To:     Ben Wijen <ben@wijen.net>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Pratik Karki <predatoramigo@gmail.com>
 References: <20190818095349.3218-1-ben@wijen.net>
- <20190818095349.3218-2-ben@wijen.net>
+ <20190818095349.3218-3-ben@wijen.net>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <a8645289-ff60-7739-b010-039583beef1c@gmail.com>
-Date:   Tue, 20 Aug 2019 09:58:28 +0100
+Message-ID: <ff239cf8-f46e-82c5-788a-3484deff51cd@gmail.com>
+Date:   Tue, 20 Aug 2019 10:00:46 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190818095349.3218-2-ben@wijen.net>
+In-Reply-To: <20190818095349.3218-3-ben@wijen.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -76,43 +77,99 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Ben
 
-On 18/08/2019 10:53, Ben Wijen wrote:
-> When using `git rebase --autostash <upstream> <branch>` and
-> the workarea is dirty, the active branch is incorrectly reset
-> to the rebase <upstream> branch.
-> 
-> This test will check for such behavior.
-> 
-> Signed-off-by: Ben Wijen <ben@wijen.net>
-> ---
->   t/t3420-rebase-autostash.sh | 9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-> index b8f4d03467..867e4e0b17 100755
-> --- a/t/t3420-rebase-autostash.sh
-> +++ b/t/t3420-rebase-autostash.sh
-> @@ -306,4 +306,13 @@ test_expect_success 'branch is left alone when possible' '
->   	test unchanged-branch = "$(git rev-parse --abbrev-ref HEAD)"
->   '
->   
-> +test_expect_success 'never change upstream branch' '
-> +	test_when_finished "git reset --hard && git branch -D upstream" &&
-> +	git checkout -b upstream unrelated-onto-branch &&
-> +	echo changed >file0 &&
-> +	git add file0 &&
-> +	git rebase --autostash upstream feature-branch &&
-> +	test $(git rev-parse upstream) = $(git rev-parse unrelated-onto-branch)
-
-In addition to Junio's suggestions I'd add using
-	test_cmp_rev upstream unrelated-onto-branch
-for the last line.
+I need to have a longer look at this (I don't understand why we're 
+calling reset --hard after we've stashed the changes) but I notice that 
+the test lines you're changing predate the switch to the builtin rebase 
+so those changes are not related to the branch switching problem.
 
 Best Wishes
 
 Phillip
 
-> +'
+On 18/08/2019 10:53, Ben Wijen wrote:
+> The rebase --autostash incorrectly moved the current branch to orig_head, where
+> orig_head -- commit object name of tip of the branch before rebasing
+> 
+> It seems this was incorrectly taken over from git-legacy-rebase.sh
+> 
+> Signed-off-by: Ben Wijen <ben@wijen.net>
+> ---
+>   builtin/rebase.c            | 18 ++++++------------
+>   t/t3420-rebase-autostash.sh |  4 ----
+>   2 files changed, 6 insertions(+), 16 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 670096c065..a928f44941 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1968,9 +1968,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   				state_dir_path("autostash", &options);
+>   			struct child_process stash = CHILD_PROCESS_INIT;
+>   			struct object_id oid;
+> -			struct commit *head =
+> -				lookup_commit_reference(the_repository,
+> -							&options.orig_head);
+>   
+>   			argv_array_pushl(&stash.args,
+>   					 "stash", "create", "autostash", NULL);
+> @@ -1991,17 +1988,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   				    options.state_dir);
+>   			write_file(autostash, "%s", oid_to_hex(&oid));
+>   			printf(_("Created autostash: %s\n"), buf.buf);
+> -			if (reset_head(&head->object.oid, "reset --hard",
 > +
->   test_done
+> +			/*
+> +			 * We might not be on orig_head yet:
+> +			 * Make sure to reset w/o switching branches...
+> +			 */
+> +			if (reset_head(NULL, "reset --hard",
+>   				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
+>   				die(_("could not reset --hard"));
+> -			printf(_("HEAD is now at %s"),
+> -			       find_unique_abbrev(&head->object.oid,
+> -						  DEFAULT_ABBREV));
+> -			strbuf_reset(&buf);
+> -			pp_commit_easy(CMIT_FMT_ONELINE, head, &buf);
+> -			if (buf.len > 0)
+> -				printf(" %s", buf.buf);
+> -			putchar('\n');
+>   
+>   			if (discard_index(the_repository->index) < 0 ||
+>   				repo_read_index(the_repository) < 0)
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index 867e4e0b17..2ea1909881 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -37,7 +37,6 @@ test_expect_success setup '
+>   create_expected_success_am () {
+>   	cat >expected <<-EOF
+>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>   	First, rewinding head to replay your work on top of it...
+>   	Applying: second commit
+>   	Applying: third commit
+> @@ -48,7 +47,6 @@ create_expected_success_am () {
+>   create_expected_success_interactive () {
+>   	q_to_cr >expected <<-EOF
+>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>   	Applied autostash.
+>   	Successfully rebased and updated refs/heads/rebased-feature-branch.
+>   	EOF
+> @@ -57,7 +55,6 @@ create_expected_success_interactive () {
+>   create_expected_failure_am () {
+>   	cat >expected <<-EOF
+>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>   	First, rewinding head to replay your work on top of it...
+>   	Applying: second commit
+>   	Applying: third commit
+> @@ -70,7 +67,6 @@ create_expected_failure_am () {
+>   create_expected_failure_interactive () {
+>   	cat >expected <<-EOF
+>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>   	Applying autostash resulted in conflicts.
+>   	Your changes are safe in the stash.
+>   	You can run "git stash pop" or "git stash drop" at any time.
 > 
