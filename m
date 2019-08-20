@@ -2,137 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5001F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 20:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79DF1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 20:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730330AbfHTUx0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 16:53:26 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:33374 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbfHTUxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 16:53:25 -0400
-Received: by mail-qt1-f201.google.com with SMTP id z15so218715qts.0
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 13:53:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=AYtnHM6W2Rk6lU/MdbzF/1x2IMgUtZDcFaNtgasDMf0=;
-        b=R812Ry4M75Sl5pDxbOhNhjqgf2BwX6pacQU8ZQU2wCBHOX4SdgG5LSGNFtrRqUTYr+
-         D8CK2AORDtXPRnBKq4ZGrj7mBq/J6pXAMfhgOuxPcKD1eBTgriYwe8A6TW+NIbbKb4zG
-         EUykNLG6ykMZr4eZftVPSsUnJwcySZTaYBrywT2y0bPrFwzwoRLSqdhFBxj52yTfGexQ
-         Ecp2BiyAKpu6xRlOL/O4PIG1NeVhKI0i7Fj8XbA2eNRhIM2TlptJ+rJoo+VccYPlmzll
-         JUQNP37gUzt2DLtCRs1sNdfCg1sGoHGmvw3DFH2RnURJF2iUmUfMJRimqtBwY9sXizHh
-         RFOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=AYtnHM6W2Rk6lU/MdbzF/1x2IMgUtZDcFaNtgasDMf0=;
-        b=kveeulWhkA4xtwr3ZGD0xt8GiYCGH0y4Zz7sqDhSK0+tN9ShHbfRhHhDakqORaHaIy
-         UgFDxfhjJiGqbLMyqIFiHtIBPm7e28jCBmPRcXpWY7+NyYGi/whMP/QDbyeFoLnNg71D
-         9mndw6QfhRbgbySMJT0M0PA1t0/Ys7hPkJH8Kqeb/xTpPKrBYjlIOev5lPpytay1m11k
-         BunL9Ud3F8DiI390u9RnR7H5kky/4+fd5loWcpYvaoNRoTLI6GfbX3SexBSpEQD2DN2S
-         +JEkQXH4qoUE+uupg3CYCDHbq1p4fr+JsPMYguy3zxTekqAI9tecxivA5H5+Nnvtwifb
-         aJ+w==
-X-Gm-Message-State: APjAAAU0bKcvnPV3srT9qqenCfZGhtEb0ZN5lYVQIOn9kmu1HlTYH+y8
-        UOFELVtgt1XTOTIY3cNxT0AJVn5AlW4by6ZRshM8BOG88MPGkYsLOrA921YdVAg3LEHi7irFgRU
-        baSjXBdffNvYm7sP0dtJEzZcSR2ijn++Br6TgqjtHSsesn8PZuzjLZIhXiMtd+9/SLBfonAAICz
-        zZ
-X-Google-Smtp-Source: APXvYqzTZ1ramfmrs2fk7S6oqwksZMMQPqLSZtE01Z1VzxBt8POcJ+CGgTfI36gcHRi8fSM/Z6gkO56AwYJg7b4oX1bv
-X-Received: by 2002:a37:c15:: with SMTP id 21mr26169312qkm.425.1566334404978;
- Tue, 20 Aug 2019 13:53:24 -0700 (PDT)
-Date:   Tue, 20 Aug 2019 13:53:20 -0700
-Message-Id: <20190820205320.139006-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.23.0.rc1.153.gdeed80330f-goog
-Subject: [PATCH] diff: skip GITLINK when lazy fetching missing objs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730821AbfHTU6b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 16:58:31 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59558 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729833AbfHTU6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 16:58:30 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C8F3887F4C;
+        Tue, 20 Aug 2019 16:58:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mtLFPl5gTj6dWkG7QkF9wM4WOzU=; b=bG0Phv
+        mDJyceeE08wwrhfLNmBDDrIovYkS5m+HcSeCHqEjeXeY1UEE5N+rUN7uQu9CxnBI
+        nLzjI0g1T1Ommf1+IavMqSPrZWc2mDZJcgM43PuUVj7AWZ7MznuzjQMrYkWj0irg
+        D3Xkl5y2/vXjymAkLSw22ZNS5E5e9D0WPQAsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ChVJpXm5ZnawjgDsI/k+tze+f5u7Idc6
+        6d6388046P7UH9IP3MvqAFHJjEeemPJ39A2aLIt2cuaHmqKBY+JqyNizj37wwbl3
+        KBPlzC3TQIwFa4mjaDHGSh/X6L/5cW7DxVKdXCoZ7ogTAbraDo3CVT+vZlGcIle5
+        IeYjurmURXw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0BD087F4B;
+        Tue, 20 Aug 2019 16:58:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EDF5787F4A;
+        Tue, 20 Aug 2019 16:58:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Wijen <ben@wijen.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/1] rebase.c: make sure current branch isn't moved when autostashing
+References: <20190818095349.3218-3-ben@wijen.net>
+        <20190820201237.10205-1-ben@wijen.net>
+        <20190820201237.10205-2-ben@wijen.net>
+Date:   Tue, 20 Aug 2019 13:58:23 -0700
+In-Reply-To: <20190820201237.10205-2-ben@wijen.net> (Ben Wijen's message of
+        "Tue, 20 Aug 2019 22:12:37 +0200")
+Message-ID: <xmqqlfvntuz4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 41010770-C38D-11E9-ADC9-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-08),
-diff was taught to batch the fetching of missing objects when operating
-on a partial clone, but was not taught to refrain from fetching
-GITLINKs. Teach diff to check if an object is a GITLINK before including
-it in the set to be fetched.
+Ben Wijen <ben@wijen.net> writes:
 
-(As stated in the commit message of that commit, unpack-trees was also
-taught a similar thing prior, but unpack-trees correctly checks for
-GITLINK before including objects in the set to be fetched.)
----
-One of my colleagues noticed this when switching branches in a
-superproject with a dirty working tree (hence triggering the diff
-mechanism). The test I included in this commit tests a simpler use case,
-but I've verified that this solves my colleague's case too.
----
- diff.c                        |  1 +
- t/t4067-diff-partial-clone.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+> Consider the following scenario:
+>     git checkout not-the-master
+>     work work work
+>     git rebase --autostash upstream master
+>
+> Here 'rebase --autostash <upstream> <branch>' incorrectly moves the
+> upstream branch to master.
+>
+> The expected behavior: (58794775:/git-rebase.sh:526)
+>     AUTOSTASH=$(git stash create autostash)
+>     git reset --hard
+>     git checkout master
+>     git rebase upstream
+>     git stash apply $AUTOSTASH
+>
+> The actual behavior: (6defce2b:/builtin/rebase.c:1062)
+>     AUTOSTASH=$(git stash create autostash)
+>     git reset --hard master
+>     git checkout master
+>     git rebase upstream
+>     git stash apply $AUTOSTASH
 
-diff --git a/diff.c b/diff.c
-index efe42b341a..e28b463f57 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6512,6 +6512,7 @@ static void add_if_missing(struct repository *r,
- 			   const struct diff_filespec *filespec)
- {
- 	if (filespec && filespec->oid_valid &&
-+	    !S_ISGITLINK(filespec->mode) &&
- 	    oid_object_info_extended(r, &filespec->oid, NULL,
- 				     OBJECT_INFO_FOR_PREFETCH))
- 		oid_array_append(to_fetch, &filespec->oid);
-diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-index 90c8fb2901..4831ad35e6 100755
---- a/t/t4067-diff-partial-clone.sh
-+++ b/t/t4067-diff-partial-clone.sh
-@@ -75,6 +75,37 @@ test_expect_success 'diff skips same-OID blobs' '
- 	! grep "want $(cat hash-b)" trace
- '
- 
-+test_expect_success 'when fetching missing objects, diff skips GITLINKs' '
-+	test_when_finished "rm -rf sub server client trace" &&
-+
-+	test_create_repo sub &&
-+	test_commit -C sub first &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	git -C server add a &&
-+	git -C server submodule add "file://$(pwd)/sub" &&
-+	git -C server commit -m x &&
-+
-+	test_commit -C server/sub second &&
-+	echo another-a >server/a &&
-+	git -C server add a sub &&
-+	git -C server commit -m x &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+
-+	echo a | git hash-object --stdin >hash-old-a &&
-+	echo another-a | git hash-object --stdin >hash-new-a &&
-+
-+	# Ensure that a and another-a are fetched, and check (by successful
-+	# execution of the diff) that no invalid OIDs are sent.
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-+	grep "want $(cat hash-old-a)" trace &&
-+	grep "want $(cat hash-new-a)" trace
-+'
-+
- test_expect_success 'diff with rename detection batches blobs' '
- 	test_when_finished "rm -rf server client trace" &&
- 
--- 
-2.23.0.rc1.153.gdeed80330f-goog
+In the scenario at the top, the branch that is checked out while you
+are working is "not-the-master" branch, and you run the rebase
+command.  If we follow the "actual behaviour" in our head, after
+stashing away the local change, the tip of the current branch
+(i.e. not-the-master) is reset to the same commit as the tip of
+'master'.
 
+But earlier, you said, "incorrectlly moves the upstream branch".
+
+It looks like either one of the use of branches in the "scenario",
+or the problem statement, is incorrect.
+
+The reason why "HEAD is..." comments are all gone (as shown in the
+test) is not explained well in the proposed commit log message,
+either.  I think the change is correct (i.e. we were moving HEAD
+incorrectly, and the messages were given incorrectly, and we are
+fixing this behaviour hence there is no longer any need to say we
+are moving the HEAD anymore), but there should be some mention of
+the change, I would think.
+
+Thanks.
+
+>  create_expected_failure_am () {
+>  	cat >expected <<-EOF
+>  	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>  	First, rewinding head to replay your work on top of it...
+>  	Applying: second commit
+>  	Applying: third commit
+> @@ -70,7 +67,6 @@ create_expected_failure_am () {
+>  create_expected_failure_interactive () {
+>  	cat >expected <<-EOF
+>  	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+> -	HEAD is now at $(git rev-parse --short feature-branch) third commit
+>  	Applying autostash resulted in conflicts.
+>  	Your changes are safe in the stash.
+>  	You can run "git stash pop" or "git stash drop" at any time.
+> @@ -306,4 +302,13 @@ test_expect_success 'branch is left alone when possible' '
+>  	test unchanged-branch = "$(git rev-parse --abbrev-ref HEAD)"
+>  '
+>  
+> +test_expect_success 'never change upstream branch' '
+> +	test_when_finished "git reset --hard && git branch -D upstream" &&
+> +	git checkout -b upstream unrelated-onto-branch &&
+> +	echo changed >file0 &&
+> +	git add file0 &&
+> +	git rebase --autostash upstream feature-branch &&
+> +	test_cmp_rev upstream unrelated-onto-branch
+> +'
+> +
+>  test_done
