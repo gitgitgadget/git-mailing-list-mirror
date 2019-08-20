@@ -8,301 +8,311 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DEBA1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:38:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73EBD1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730556AbfHTSiA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:38:00 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40749 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730202AbfHTSiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:38:00 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v19so3521556wmj.5
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:37:57 -0700 (PDT)
+        id S1729833AbfHTSk7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:40:59 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39099 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbfHTSk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:40:59 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t16so13426165wra.6
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uy+96vV15QTFvP9NLKQFO0c7hYd/Wc/5tyUzFTn7nDs=;
-        b=auUEFvbnDtuso6hnYzeWwGW0AHp/Nlk4QYnLVxW2aIezr1NKg1sx3rahRk1bvqyZGl
-         XncFQsA3+yKOVBWV7mrNdhENXpnAncrcP3lUViKw8Q9jRGIMtB5zoGDZp/Fe9kVqm7BI
-         vDxOx4ZN3A8aPUYTM1Gt2A+kVgK+rgtXZpRbqXMd989r3tOqsFUXVqCBnTKl80hQZbJY
-         61+QLL3wRGxF16MqFQMyEKLPEEHtr84hRFl5BR0A+xeKunwzM0+I7SLqmDInY93fF5XA
-         RC4mWNJZ+aUPiTbeXqRDTnq9ueF6IjHp0e6wjCcejBiKk1SpucNZ1h3gD63ZUMAxtOpc
-         00lQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=26XcdZQsAvMJiFSXLFQOqbFqJDMlZiDJ8Ggtw90jD44=;
+        b=Pd29m5g+1LbGgNroV/ju1D6w0+KcfDrVnPu5nD/L7vQJU2XVgUjq2ssaiqd2HpjuU7
+         +wwzQnheBfjbbGIJEK48IsWd5rc2aSXCIZbHvzVjaPgXCwCFaqvdY7OLoYOsGgXPsxnE
+         TDvEJGZ4sI8bpDBANdP1ILX5UEq5G2OM90t9r0Mm7P1ri0ojTQXuorprQH8lA4k+b786
+         jrkKnyBxhygbgxR0ck1GmKCoZPtMHGSMF/5OTy6scRTI4By/CM0kD+i5LEmRMRbbmtVW
+         fXmkdztYqxpEcYM78OTs4OHUFxPkeLvI8Usoiqjt1aMjbvLgv28EhQnnWZzWO0RK782B
+         ncjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uy+96vV15QTFvP9NLKQFO0c7hYd/Wc/5tyUzFTn7nDs=;
-        b=j51xFp+MlumtHtq5EGfUzYRDZMpzXZZWPKVs5zCs4NUs4fss7aTKQy5CnIn+WDxgr7
-         85tsRKt6jQGDeGwsOHaElUA9b4ODCvtsmnadse4KBZy8BlKwb5eFca02ir8LxYU9XIj3
-         xc+PnNWaE5YR6mhdjVYI9nssJhnOJ7K+4g7Vroq57dYihO6cPLgQK4q3Ee74okYYQGuR
-         LIqbJhsCt8RGUXBd+uwcv2wLvlLPxsjyByvI9Dx8vjh2TNsp7oJg+gDNQLmXUGz4aw1y
-         cGnpqdPJ50r/gsBVxDjPgZsWydmzdlW4o3BMvN0fZQhQcFX2SJioNGAZ08oY9LcWLs4C
-         iOEw==
-X-Gm-Message-State: APjAAAURbAGt7E//66uYOWiLOCNYA+X+jKC0XJarL/SNQJJ9k0k+2c6w
-        z+AXeSn9eGiAVvkUmhOycDTEfxJm
-X-Google-Smtp-Source: APXvYqxtGMb5h35wDTZtMzA+ae12gLs/dlNJzjlO60itx5kgaKwJwFBUWuzbxxGAfkH1L5OlQqwBzA==
-X-Received: by 2002:a1c:4d05:: with SMTP id o5mr1462044wmh.63.1566326276943;
-        Tue, 20 Aug 2019 11:37:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm19814703wrx.59.2019.08.20.11.37.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Aug 2019 11:37:56 -0700 (PDT)
-Date:   Tue, 20 Aug 2019 11:37:56 -0700 (PDT)
-X-Google-Original-Date: Tue, 20 Aug 2019 18:37:55 GMT
-Message-Id: <da89f7dadb0be2d4ada22dd3e2d1f5524c73f70d.1566326275.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.315.git.gitgitgadget@gmail.com>
-References: <pull.315.git.gitgitgadget@gmail.com>
-From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] commit-graph: add --[no-]progress to write and verify.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=26XcdZQsAvMJiFSXLFQOqbFqJDMlZiDJ8Ggtw90jD44=;
+        b=Ec6bH39CSvMArkuRzQkBvhJFHA/vHgOl4a+U96pUyKRH5SwlH+DvQE4deC0qXaQO7K
+         ReZQtC82EIzPahMKUt8/b5FNUkKp5pFlpLxpJBe5USMzcUaRIbwy0qOVE6jM7XTgV723
+         GBmrW9V03GKgcVs/EnJlE8Rk8JJzT6GXWXAsi8i5ArIlbyhzx8cx1NNdd3jCBGiRonJW
+         H15u00KfZKqbi0+bC99Od8xQkGdxJAjf7oQworOwUDCb0IGe71swI+juJfIDiQZud4bl
+         Cj94+4FBfZEZW27+sOtngDbr07Hll0ppEt64azJt3bDmy7JxtBdsypnJFTPAwxQw/+vB
+         SvJQ==
+X-Gm-Message-State: APjAAAUvLTW0OcoEjX7KnHoXZr6h8Rqke+My57S1EBKsmls4TfyoGU4r
+        S61ZGMtL6xuQEVTkZ0bKEEE=
+X-Google-Smtp-Source: APXvYqxeG56CXRu0bGuu5z1IGn7czOMGDPIdQgWJvJVELyB3w1kIHSOPXt+8Qx+UIErHgEXGVLogRQ==
+X-Received: by 2002:a5d:66d0:: with SMTP id k16mr22599530wrw.333.1566326456378;
+        Tue, 20 Aug 2019 11:40:56 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-13-95.as13285.net. [92.22.13.95])
+        by smtp.gmail.com with ESMTPSA id e9sm19236038wrt.69.2019.08.20.11.40.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Aug 2019 11:40:55 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/6] rebase -i: add --ignore-whitespace flag
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+ <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+ <20190820034536.13071-2-rohit.ashiwal265@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <98aeebc5-fceb-1ce8-9c27-d425c3f6e674@gmail.com>
+Date:   Tue, 20 Aug 2019 19:40:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
+In-Reply-To: <20190820034536.13071-2-rohit.ashiwal265@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Garima Singh <garima.singh@microsoft.com>
+Hi Rohit
 
-Add --[no-]progress to git commit-graph write and verify.
-The progress feature was introduced in 7b0f229
-("commit-graph write: add progress output", 2018-09-17) but
-the ability to opt-out was overlooked.
+On 20/08/2019 04:45, Rohit Ashiwal wrote:
+> There are two backends available for rebasing, viz, the am and the
+> interactive. Naturally, there shall be some features that are
+> implemented in one but not in the other. One such flag is
+> --ignore-whitespace which indicates merge mechanism to treat lines
+> with only whitespace changes as unchanged. Wire the interactive
+> rebase to also understand the --ignore-whitespace flag by
+> translating it to -Xignore-space-change.
+> 
+> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> ---
+>   Documentation/git-rebase.txt            | 13 ++++-
+>   builtin/rebase.c                        | 22 +++++++--
+>   t/t3422-rebase-incompatible-options.sh  |  1 -
+>   t/t3433-rebase-options-compatibility.sh | 65 +++++++++++++++++++++++++
+>   4 files changed, 94 insertions(+), 7 deletions(-)
+>   create mode 100755 t/t3433-rebase-options-compatibility.sh
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 6156609cf7..873eb5768c 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -371,8 +371,16 @@ If either <upstream> or --root is given on the command line, then the
+>   default is `--no-fork-point`, otherwise the default is `--fork-point`.
+>   
+>   --ignore-whitespace::
+> +	Behaves differently depending on which backend is selected.
+> ++
+> +'am' backend: When applying a patch, ignore changes in whitespace in
+> +context lines if necessary.
+> ++
+> +'interactive' backend: Treat lines with only whitespace changes as
+> +unchanged for the sake of a three-way merge.
+> +
 
-Signed-off-by: Garima Singh <garima.singh@microsoft.com>
----
- Documentation/git-commit-graph.txt |  4 +++-
- builtin/commit-graph.c             | 29 +++++++++++++++++-------
- commit-graph.c                     |  7 ++++--
- t/t5318-commit-graph.sh            | 36 ++++++++++++++++++++++++++++++
- t/t5324-split-commit-graph.sh      |  2 +-
- 5 files changed, 66 insertions(+), 12 deletions(-)
+Thanks for spelling out exactly what this does. I had not appreciated 
+the difference before. Does this mean that if I have a branch with some 
+whitespace cleanups I'll get different results if I rebase it with the 
+sequencer compared to am? (I suspect from the description that the 
+sequencer will simply ignore all my whitespace changes)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index eb5e7865f0..1256a80a81 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit-graph read' [--object-dir <dir>]
--'git commit-graph verify' [--object-dir <dir>] [--shallow]
-+'git commit-graph verify' [--object-dir <dir>] [--shallow] [--[no-]progress]
- 'git commit-graph write' <options> [--object-dir <dir>]
- 
- 
-@@ -29,6 +29,8 @@ OPTIONS
- 	commit-graph file is expected to be in the `<dir>/info` directory and
- 	the packfiles are expected to be in `<dir>/pack`.
- 
-+--[no-]progress::
-+	Toggle whether to show progress or not.
- 
- COMMANDS
- --------
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 38027b83d9..71796910fc 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -6,17 +6,18 @@
- #include "repository.h"
- #include "commit-graph.h"
- #include "object-store.h"
-+#include "unistd.h"
- 
- static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph [--object-dir <objdir>]"),
- 	N_("git commit-graph read [--object-dir <objdir>]"),
--	N_("git commit-graph verify [--object-dir <objdir>] [--shallow]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] <split options>"),
-+	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
- 	NULL
- };
- 
- static const char * const builtin_commit_graph_verify_usage[] = {
--	N_("git commit-graph verify [--object-dir <objdir>] [--shallow]"),
-+	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
- 	NULL
- };
- 
-@@ -26,7 +27,7 @@ static const char * const builtin_commit_graph_read_usage[] = {
- };
- 
- static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] <split options>"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits] [--[no-]progress] <split options>"),
- 	NULL
- };
- 
-@@ -38,6 +39,7 @@ static struct opts_commit_graph {
- 	int append;
- 	int split;
- 	int shallow;
-+	int progress;
- } opts;
- 
- static int graph_verify(int argc, const char **argv)
-@@ -48,16 +50,20 @@ static int graph_verify(int argc, const char **argv)
- 	int fd;
- 	struct stat st;
- 	int flags = 0;
--
-+	int defaultProgressState = isatty(2);
-+	
- 	static struct option builtin_commit_graph_verify_options[] = {
- 		OPT_STRING(0, "object-dir", &opts.obj_dir,
- 			   N_("dir"),
- 			   N_("The object directory to store the graph")),
- 		OPT_BOOL(0, "shallow", &opts.shallow,
- 			 N_("if the commit-graph is split, only verify the tip file")),
-+		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_END(),
- 	};
- 
-+	opts.progress = defaultProgressState;
-+	
- 	argc = parse_options(argc, argv, NULL,
- 			     builtin_commit_graph_verify_options,
- 			     builtin_commit_graph_verify_usage, 0);
-@@ -66,7 +72,9 @@ static int graph_verify(int argc, const char **argv)
- 		opts.obj_dir = get_object_directory();
- 	if (opts.shallow)
- 		flags |= COMMIT_GRAPH_VERIFY_SHALLOW;
--
-+	if (opts.progress)
-+		flags |= COMMIT_GRAPH_PROGRESS;
-+	
- 	graph_name = get_commit_graph_filename(opts.obj_dir);
- 	open_ok = open_commit_graph(graph_name, &fd, &st);
- 	if (!open_ok && errno != ENOENT)
-@@ -154,8 +162,9 @@ static int graph_write(int argc, const char **argv)
- 	struct string_list *commit_hex = NULL;
- 	struct string_list lines;
- 	int result = 0;
--	unsigned int flags = COMMIT_GRAPH_PROGRESS;
--
-+	unsigned int flags = 0;
-+	int defaultProgressState = isatty(2);
-+	
- 	static struct option builtin_commit_graph_write_options[] = {
- 		OPT_STRING(0, "object-dir", &opts.obj_dir,
- 			N_("dir"),
-@@ -168,6 +177,7 @@ static int graph_write(int argc, const char **argv)
- 			N_("start walk at commits listed by stdin")),
- 		OPT_BOOL(0, "append", &opts.append,
- 			N_("include all commits already in the commit-graph file")),
-+		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_BOOL(0, "split", &opts.split,
- 			N_("allow writing an incremental commit-graph file")),
- 		OPT_INTEGER(0, "max-commits", &split_opts.max_commits,
-@@ -179,6 +189,7 @@ static int graph_write(int argc, const char **argv)
- 		OPT_END(),
- 	};
- 
-+	opts.progress = defaultProgressState;
- 	split_opts.size_multiple = 2;
- 	split_opts.max_commits = 0;
- 	split_opts.expire_time = 0;
-@@ -195,6 +206,8 @@ static int graph_write(int argc, const char **argv)
- 		flags |= COMMIT_GRAPH_APPEND;
- 	if (opts.split)
- 		flags |= COMMIT_GRAPH_SPLIT;
-+	if (opts.progress)
-+		flags |= COMMIT_GRAPH_PROGRESS;
- 
- 	read_replace_refs = 0;
- 
-diff --git a/commit-graph.c b/commit-graph.c
-index fe954ab5f8..b10d47f99a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1986,14 +1986,17 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
- 		return verify_commit_graph_error;
- 
--	progress = start_progress(_("Verifying commits in commit graph"),
--				  g->num_commits);
-+	if (flags & COMMIT_GRAPH_PROGRESS)
-+		progress = start_progress(_("Verifying commits in commit graph"),
-+					g->num_commits);
-+
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit, *odb_commit;
- 		struct commit_list *graph_parents, *odb_parents;
- 		uint32_t max_generation = 0;
- 
- 		display_progress(progress, i + 1);
-+
- 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 22cb9d6643..a98d9f88f4 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -116,6 +116,42 @@ test_expect_success 'Add more commits' '
- 	git repack
- '
- 
-+test_expect_success 'commit-graph write progress off by default for stderr' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph write 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'commit-graph write force progress on for stderr' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph write --progress 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'commit-graph write with the --no-progress option' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph write --no-progress 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'commit-graph verify progress off by default for stderr' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph verify 2>err &&
-+	test_line_count = 0 err
-+'
-+
-+test_expect_success 'commit-graph verify force progress on for stderr' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph verify --progress 2>err &&
-+	test_file_not_empty err
-+'
-+
-+test_expect_success 'commit-graph verify with the --no-progress option' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git commit-graph verify --no-progress 2>err &&
-+	test_line_count = 0 err
-+'
-+
- # Current graph structure:
- #
- #   __M3___
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 99f4ef4c19..4fc3fda9d6 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -319,7 +319,7 @@ test_expect_success 'add octopus merge' '
- 	git merge commits/3 commits/4 &&
- 	git branch merge/octopus &&
- 	git commit-graph write --reachable --split &&
--	git commit-graph verify 2>err &&
-+	git commit-graph verify --progress 2>err &&
- 	test_line_count = 3 err &&
- 	test_i18ngrep ! warning err &&
- 	test_line_count = 3 $graphdir/commit-graph-chain
--- 
-gitgitgadget
+I think this is ready if we can live with the difference - I'm not 
+entirely convinced that adding an option with the same name and a 
+different behavior is going to improve things though.
+
+Best Wishes
+
+Phillip
+
+>   --whitespace=<option>::
+> -	These flag are passed to the 'git apply' program
+> +	This flag is passed to the 'git apply' program
+>   	(see linkgit:git-apply[1]) that applies the patch.
+>   +
+>   See also INCOMPATIBLE OPTIONS below.
+> @@ -520,7 +528,6 @@ The following options:
+>    * --committer-date-is-author-date
+>    * --ignore-date
+>    * --whitespace
+> - * --ignore-whitespace
+>    * -C
+>   
+>   are incompatible with the following options:
+> @@ -543,6 +550,8 @@ In addition, the following pairs of options are incompatible:
+>    * --preserve-merges and --interactive
+>    * --preserve-merges and --signoff
+>    * --preserve-merges and --rebase-merges
+> + * --preserve-merges and --ignore-whitespace
+> + * --rebase-merges and --ignore-whitespace
+>    * --rebase-merges and --strategy
+>    * --rebase-merges and --strategy-option
+>   
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 670096c065..f8a618d54c 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -79,6 +79,7 @@ struct rebase_options {
+>   	int allow_rerere_autoupdate;
+>   	int keep_empty;
+>   	int autosquash;
+> +	int ignore_whitespace;
+>   	char *gpg_sign_opt;
+>   	int autostash;
+>   	char *cmd;
+> @@ -99,6 +100,7 @@ struct rebase_options {
+>   
+>   static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   {
+> +	struct strbuf strategy_buf = STRBUF_INIT;
+>   	struct replay_opts replay = REPLAY_OPTS_INIT;
+>   
+>   	replay.action = REPLAY_INTERACTIVE_REBASE;
+> @@ -114,9 +116,15 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>   	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>   	replay.strategy = opts->strategy;
+> +
+>   	if (opts->strategy_opts)
+> -		parse_strategy_opts(&replay, opts->strategy_opts);
+> +		strbuf_addstr(&strategy_buf, opts->strategy_opts);
+> +	if (opts->ignore_whitespace)
+> +		strbuf_addstr(&strategy_buf, " --ignore-space-change");
+> +	if (strategy_buf.len)
+> +		parse_strategy_opts(&replay, strategy_buf.buf);
+>   
+> +	strbuf_release(&strategy_buf);
+>   	return replay;
+>   }
+>   
+> @@ -511,6 +519,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>   	argc = parse_options(argc, argv, prefix, options,
+>   			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+>   
+> +	opts.strategy_opts = xstrdup_or_null(opts.strategy_opts);
+> +
+>   	if (!is_null_oid(&squash_onto))
+>   		opts.squash_onto = &squash_onto;
+>   
+> @@ -964,6 +974,8 @@ static int run_am(struct rebase_options *opts)
+>   	am.git_cmd = 1;
+>   	argv_array_push(&am.args, "am");
+>   
+> +	if (opts->ignore_whitespace)
+> +		argv_array_push(&am.args, "--ignore-whitespace");
+>   	if (opts->action && !strcmp("continue", opts->action)) {
+>   		argv_array_push(&am.args, "--resolved");
+>   		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+> @@ -1407,9 +1419,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+>   		OPT_BOOL(0, "signoff", &options.signoff,
+>   			 N_("add a Signed-off-by: line to each commit")),
+> -		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
+> -				  NULL, N_("passed to 'git am'"),
+> -				  PARSE_OPT_NOARG),
+>   		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+>   				  &options.git_am_opts, NULL,
+>   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+> @@ -1417,6 +1426,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>   		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+>   				  N_("passed to 'git apply'"), 0),
+> +		OPT_BOOL(0, "ignore-whitespace", &options.ignore_whitespace,
+> +			 N_("ignore changes in whitespace")),
+>   		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+>   				  N_("action"), N_("passed to 'git apply'"), 0),
+>   		OPT_BIT('f', "force-rebase", &options.flags,
+> @@ -1834,6 +1845,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   	}
+>   
+>   	if (options.rebase_merges) {
+> +		if (options.ignore_whitespace)
+> +			die(_("cannot combine '--rebase-merges' with "
+> +			      "'--ignore-whitespace'"));
+>   		if (strategy_options.nr)
+>   			die(_("cannot combine '--rebase-merges' with "
+>   			      "'--strategy-option'"));
+> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+> index a5868ea152..4342f79eea 100755
+> --- a/t/t3422-rebase-incompatible-options.sh
+> +++ b/t/t3422-rebase-incompatible-options.sh
+> @@ -61,7 +61,6 @@ test_rebase_am_only () {
+>   }
+>   
+>   test_rebase_am_only --whitespace=fix
+> -test_rebase_am_only --ignore-whitespace
+>   test_rebase_am_only --committer-date-is-author-date
+>   test_rebase_am_only -C4
+>   
+> diff --git a/t/t3433-rebase-options-compatibility.sh b/t/t3433-rebase-options-compatibility.sh
+> new file mode 100755
+> index 0000000000..2e16e00a9d
+> --- /dev/null
+> +++ b/t/t3433-rebase-options-compatibility.sh
+> @@ -0,0 +1,65 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2019 Rohit Ashiwal
+> +#
+> +
+> +test_description='tests to ensure compatibility between am and interactive backends'
+> +
+> +. ./test-lib.sh
+> +
+> +# This is a special case in which both am and interactive backends
+> +# provide the same output. It was done intentionally because
+> +# both the backends fall short of optimal behaviour.
+> +test_expect_success 'setup' '
+> +	git checkout -b topic &&
+> +	q_to_tab >file <<-\EOF &&
+> +	line 1
+> +	Qline 2
+> +	line 3
+> +	EOF
+> +	git add file &&
+> +	git commit -m "add file" &&
+> +	cat >file <<-\EOF &&
+> +	line 1
+> +	new line 2
+> +	line 3
+> +	EOF
+> +	git commit -am "update file" &&
+> +	git tag side &&
+> +
+> +	git checkout --orphan master &&
+> +	sed -e "s/^|//" >file <<-\EOF &&
+> +	|line 1
+> +	|        line 2
+> +	|line 3
+> +	EOF
+> +	git add file &&
+> +	git commit -m "add file" &&
+> +	git tag main
+> +'
+> +
+> +test_expect_success '--ignore-whitespace works with am backend' '
+> +	cat >expect <<-\EOF &&
+> +	line 1
+> +	new line 2
+> +	line 3
+> +	EOF
+> +	test_must_fail git rebase main side &&
+> +	git rebase --abort &&
+> +	git rebase --ignore-whitespace main side &&
+> +	test_cmp expect file
+> +'
+> +
+> +test_expect_success '--ignore-whitespace works with interactive backend' '
+> +	cat >expect <<-\EOF &&
+> +	line 1
+> +	new line 2
+> +	line 3
+> +	EOF
+> +	test_must_fail git rebase --merge main side &&
+> +	git rebase --abort &&
+> +	git rebase --merge --ignore-whitespace main side &&
+> +	test_cmp expect file
+> +'
+> +
+> +test_done
+> 
