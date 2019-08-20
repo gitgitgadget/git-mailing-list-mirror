@@ -2,118 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4FEC1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:48:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92FD61F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730619AbfHTSsC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:48:02 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55762 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729409AbfHTSsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:48:01 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 972CB7ADBB;
-        Tue, 20 Aug 2019 14:47:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vwG19IYwaXEKqWy1VrV0SH+GHfY=; b=eYCVZ4
-        3TMsCq3afq9EYtM3EeTTxYE7IiA/aZTqYEYt+l2AvLEIuPXGDzsnb/n3myfEG8ny
-        Bo+Epogz1GfLG6FHYbw1b6aUGn2JAb84uvNR6Ec4lJhbmyZRbWkCMWPc5M4I276D
-        ZYcSkqbkuKLu+NNOvQirN2MK4EfsqauOrEuCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X1H6gYHUbiXEqwFM92Vr1p7da6fSqt9n
-        jqhv1+4ETqW3WesdQOu1k1BYDK8LfeFOTP81ENbYiRERv34OcRaoORn6pmMkEE52
-        EqAnSS2boUR43RhQ3srNyxSHB5+ud7X82I+0Rx5piHcZpaMnMPMqj6ErFQZ/LfPv
-        pzqZzVM60yU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F16D7ADBA;
-        Tue, 20 Aug 2019 14:47:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C36487ADB8;
-        Tue, 20 Aug 2019 14:47:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] git-gui: Add ability to revert selected hunks and lines
-References: <20190819214110.26461-1-me@yadavpratyush.com>
-Date:   Tue, 20 Aug 2019 11:47:54 -0700
-In-Reply-To: <20190819214110.26461-1-me@yadavpratyush.com> (Pratyush Yadav's
-        message of "Tue, 20 Aug 2019 03:11:07 +0530")
-Message-ID: <xmqq5zmrvfl1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730634AbfHTSsO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:48:14 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43488 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730623AbfHTSsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:48:14 -0400
+Received: by mail-lf1-f65.google.com with SMTP id c19so4912361lfm.10
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:48:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BJM0CYT7W74bVws5M4udroCaa1N7H5HJM69mCzqb07k=;
+        b=Mo545A1w7V2WsS7cxxFPtya1pDXEB2t8uIiiQkfmDN956bErTCTEgPnQndbpkolrZ5
+         35NBFpX6rNWFKwi/rS5kJ/tys4LQA0cZVxLTWKNXmvNb6s8EOKlpkw/N32iH78XWlrrH
+         NMp1DYJBa8pxxYZVvFf0Unf2avnm8j91CRZXCMcDWlKieXa27CSP2vUIvMRpzuHAMUI7
+         dgos1p3Q6SWJtClaZMQ5Obl+0vukSeEGrfKtN20gytE6tIPrIQU7U1uywaAQKwoNHC9/
+         cAV7teBaKccHcdU6RjndfJiWrw6LGJVSpDQ5dJyfan8yxJZ24isGIBnzc/taW3GKKHVL
+         +Kyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BJM0CYT7W74bVws5M4udroCaa1N7H5HJM69mCzqb07k=;
+        b=M9rH3NO5IYtSsPvVGd6ex0iY4rdpXUgoGEMqqjc1ZebMILXqX8wWtpIW5zwBCIhkJF
+         MSrk2UT3uwvUYr7LCawr4UmTiHJpiQHz2PRnZFhc7N7hW03MXN25+JraTMsxGttF0Iqm
+         2kE3A5hxgxRAqKEcIVwpOqK8dj1gf+nOtL+ClnEzo46qVSRfR1xJoz6PrNeuACHnI7d5
+         VGN0hd3rL4QCiQMBbLDUduIlhjP9HzKKnwX5AOqMrugM8KKwyV3Ru8woPGKZwoLoiSlf
+         VxOzSt3GUzEjZedL1xQyvCB82oxMuF5OpNQmm/bMOrcFFKIv8+IYKOSWb+OK7L79XA+c
+         6xVQ==
+X-Gm-Message-State: APjAAAV2h3vem7JEPqzK8YFTCFqaJ4An4bp6liMZZ70vXCLqfs4fnpll
+        MgvGpd2X1A0WY55vs313sWE4HJJQHd0KLMasHnjl1bxyArs=
+X-Google-Smtp-Source: APXvYqx22EVfVPh4Rq3z1of1+XwPKHAt6OXPKNhica7fHNIrHhh0mDfAiamjsBmSVrr5YlF+eZWCc8PkpqXWOQJB11g=
+X-Received: by 2002:a19:6f09:: with SMTP id k9mr16491540lfc.102.1566326892324;
+ Tue, 20 Aug 2019 11:48:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 067377DA-C37B-11E9-856C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+ <20190820034536.13071-1-rohit.ashiwal265@gmail.com> <20190820034536.13071-2-rohit.ashiwal265@gmail.com>
+ <98aeebc5-fceb-1ce8-9c27-d425c3f6e674@gmail.com>
+In-Reply-To: <98aeebc5-fceb-1ce8-9c27-d425c3f6e674@gmail.com>
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Date:   Wed, 21 Aug 2019 00:17:35 +0530
+Message-ID: <CAL7ArXrNaCh9vbvNUuDVCsogT9c+j8J+TMts+nW+S7R2EKhiwA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] rebase -i: add --ignore-whitespace flag
+To:     Phillip <phillip.wood@dunelm.org.uk>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+Hi Phillip
 
-> This series adds the ability to revert selected lines and hunks in
-> git-gui. Partially based on the patch by Bert Wesarg [0].
+On Wed, Aug 21, 2019 at 12:10 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> The commits can be found in the topic branch 'py/git-gui-revert-lines'
-> at https://github.com/prati0100/git/tree/py/git-gui-revert-lines
+> Thanks for spelling out exactly what this does. I had not appreciated
+> the difference before. Does this mean that if I have a branch with some
+> whitespace cleanups I'll get different results if I rebase it with the
+> sequencer compared to am? (I suspect from the description that the
+> sequencer will simply ignore all my whitespace changes)
 
-Please don't do this.  
+I'm afraid that this is the case.
 
-I would strongly prefer keeping the contination of history from the
-history in Pat's git-gui repository.  If you clone from
+> I think this is ready if we can live with the difference - I'm not
+> entirely convinced that adding an option with the same name and a
+> different behavior is going to improve things though.
 
-    git://repo.or.cz/git-gui.git/
+This is the first step to improving consistency. We can
+further improve upon the implementation. I have already
+mentioned that in the cover letter of previous patches[1].
 
-you'll notice everything for git-gui is one level up, and nothing
-for git-core is duplicated in there.  You'll work on top of that, so
-the patches to the git-gui project should not say things like
+Thanks
+Rohit
 
-    ---
-     git-gui/lib/index.tcl | 27 +++++++++++++++++----------
-     1 file changed, 17 insertions(+), 10 deletions(-)
-
-    diff --git a/git-gui/lib/index.tcl b/git-gui/lib/index.tcl
-    index b588db11d9..cb7f74af45 100644
-    ...
-
-The leading "git-gui/" should not appear.
-
-I have a fork of Pat's history with a single topic on top at
-https://github.com/gitster/git-gui/ so building on top would
-maintain the continuity of the history as well.
-
-Once you prepared your changes in such a clone of the git-gui
-project, in order to test them with the rest of Git, you'd make a
-trial merge with the -Xsubtree=git-gui option.  Perhaps you have
-git-gui's clone in $HOME/git-gui and git's clone in $HOME/git, like
-so
-
-	$ cd $HOME
-	$ git clone https://github.com/gitster/git-gui git-gui
-	$ cd git-gui
-	... from now on, you'd work on git-gui in this directory  ...
-	... do the work of this topic perhaps on 'revert-hunks' branch ...
-
-	$ git clone https://github.com/gitster/git git
-	$ cd ../git
-	... trial integration ...
-	$ git pull -Xsubtree=git-gui ../git-gui/ revert-hunks
-	... do whatever testing necessary ...
-
-As an interim (and hopefully evantual) maintainer of the git-gui
-project, you'd publish from your local git-gui directory to a fork
-of git-gui project you host somewhere.  Your patches for review
-would also be taken from your local git-gui directory.
-
-Thanks.
+[1]: https://public-inbox.org/git/20190712185015.20585-1-rohit.ashiwal265@gmail.com/
