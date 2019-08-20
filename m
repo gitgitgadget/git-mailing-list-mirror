@@ -8,70 +8,66 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C9751F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:32:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 419EA1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730088AbfHTScG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:32:06 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45628 "EHLO
+        id S1730142AbfHTShV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:37:21 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36961 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728283AbfHTScG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:32:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q12so13394295wrj.12
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:32:04 -0700 (PDT)
+        with ESMTP id S1727358AbfHTShV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:37:21 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z11so13427189wrt.4
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=iGlEBggCTP1Jw/Z8YvoJFU0tqdu9Kl5PMCqJHoj4oBQ=;
-        b=Z3EOWYIsKF1WQ9zQrgHAKc6m+zYQBkwbBjmtOpcUlgvka50PIN1tmAjtxxdACl8TgJ
-         GUlsGRLuLYC05tYHS5jHLlwMSw+lC3Bc2zGC5MaG0ymhiBD43JXkMfB6IEFThKL412cg
-         B/7AZjjjZQbtf4PRDODo3yTPR8xgeFEnXmVN5ahl7E1G9LTPTdD9wEIBKPcVfvsE1Shl
-         cfvBGC087YRbraoQr7vNEO6Fjo1RxMhQjAFiooqjMAPnWHELeSo6CUs28JUtfTDmfSK0
-         J4chIH6HgzdFhyEIsPsnwXYsLPRQroqvN+LR5E8EmKjA1yHUYIIDAYoj01utrTZ7R8Qt
-         GN5g==
+        bh=BPK3cUroRC6mQhqQYxLBebCGvhr4uYlRQlcJs2MB1C8=;
+        b=Zcm1xyFS2ai5w6H+dkY8WqeQsG0fJQqGZbNvMNC2Itb/LvhRZwj7NyIJoS7a4Kobhi
+         N1Qn/vsU0kMxFW2Auvlq4CSQHxzXDJ5m+jYtStVCyHY9m7A8VLsYA4cBinWLuuRt95oZ
+         QcAdmXxfJlUxGePWearuugjRSzwlns8csudrPLwy3LvDAuQHrfGFZzS7V2q7gW01nA/H
+         NlkM9lt+EjTDAM6QYIAN3rYtbl3FiTxqSOmycuVTwv29Ho0/zm7fZJc9DRuFDAeE2h++
+         eID1Val1ZfirFFhjIbJc33OjAHiGIOU+Jni8r1QKGKmTzaACkWg5/zt4oNKOwIOfKLxK
+         a9UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=iGlEBggCTP1Jw/Z8YvoJFU0tqdu9Kl5PMCqJHoj4oBQ=;
-        b=LBbLnQHq3rktlzmoiGVl6ec3IvQsiVpwxJ+SGgdXFVxq1f/htQCh96kvXxSZQgVVMI
-         E6SeGr/G66TJKMD7c2vRvGMEslf4Yn60X4lfF0oJIxIyydz2jo1FqGV7AWe+Hers3b8H
-         CAxSQxZ7AIp+Tb35WuSToElQN5t/9pyCD3cKZDuKpigoBGTsizIM/n5YoK+kJ722c+SB
-         e2vwt9EtuUxcHuwPdRnFh0gjgwul3Ycc5/xwLXdiUmnNqR8YIz4e3THNI8Ah6USITrDT
-         Q97FY/Dl9AZfgS5ERvwSPIruK9QYVQtLh/Xb5upTDwPHt0iIX8XMF6+Ai0liCrNEOmUv
-         ZSPA==
-X-Gm-Message-State: APjAAAWgG84pb1JLFxYaE24LIVDUjQ+/8PGhWsCsoLFZaiB6hQu3QjYU
-        c8AjAMp2JirplHAFFgBV/9w=
-X-Google-Smtp-Source: APXvYqyeRrZTZp7g88Vdsq4IsWKeohyoVgcs9W28CIUEdT14rycCs6NebLC9QldzRmNGbs1GHHyseA==
-X-Received: by 2002:a5d:6742:: with SMTP id l2mr35404522wrw.70.1566325923884;
-        Tue, 20 Aug 2019 11:32:03 -0700 (PDT)
+        bh=BPK3cUroRC6mQhqQYxLBebCGvhr4uYlRQlcJs2MB1C8=;
+        b=g4WenQu4OAyL9va3iU24uSUh8pAVjC6iheTETKoV6KoF2wolB6yeREKYHrksSwg9zJ
+         M+2eXV2Bs4MhAg5lbSGKsdsib96F1IRxXZp0myumQbefd7bhWhSja4IhLBVdtmhIAC2v
+         vUNyoMelTNwJo04oFuMjovLrcY/i7FVZHuNbd+IVGLAlMxKHXGu2A7bcm8bAHtw02mvJ
+         SAf7xUTRbG/RcdxGSQigwgPVJnYvOLAW//Fev7rNKNwlXAr2yJe3RtXlUbEEs0zadgAV
+         XQBfib38QEiMDduA2M8Tzimp+ySIfz9m5g7go8vs7OfBpm/dqakHm5voiQIJ02FY5UXP
+         IkPw==
+X-Gm-Message-State: APjAAAU3r55oF/rdUQ6AbiTd/WFy3P3DTkGh54BIXVk0mclj7AaOgFOF
+        FZkL2vlRDP960IZgSFxgxsQ=
+X-Google-Smtp-Source: APXvYqz3eUTVYFkykhRW3jwC5u6s8zkpxkkUoJ38yFOwN421iGh9byhn9uiKfWi/1xIQ7MJb+iZIXA==
+X-Received: by 2002:a5d:45cb:: with SMTP id b11mr37626783wrs.117.1566326238936;
+        Tue, 20 Aug 2019 11:37:18 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-13-95.as13285.net. [92.22.13.95])
-        by smtp.gmail.com with ESMTPSA id d16sm16351063wrv.55.2019.08.20.11.32.02
+        by smtp.gmail.com with ESMTPSA id a11sm19813563wrx.59.2019.08.20.11.37.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 11:32:03 -0700 (PDT)
+        Tue, 20 Aug 2019 11:37:18 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
+Subject: Re: [PATCH v3 0/6] rebase -i: support more options
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-3-sandals@crustytoothpaste.net>
- <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
- <20190820024505.GH365197@genre.crustytoothpaste.net>
- <18fcc7db-7c09-3fbf-1e3f-81be99f4bb17@gmail.com>
- <xmqqd0gzvgo3.fsf@gitster-ct.c.googlers.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com, t.gummerer@gmail.com
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+ <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+ <71c313d7-e08d-f62f-c52e-aabca0d97002@gmail.com>
+ <xmqqsgpvvi3s.fsf@gitster-ct.c.googlers.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <d59de3db-13e6-35d5-2cb1-b38dc8854c60@gmail.com>
-Date:   Tue, 20 Aug 2019 19:32:02 +0100
+Message-ID: <c8bede99-8926-2bdc-a3ff-b8ee49bb6e34@gmail.com>
+Date:   Tue, 20 Aug 2019 19:37:16 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0gzvgo3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgpvvi3s.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -80,33 +76,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/08/2019 19:24, Junio C Hamano wrote:
+On 20/08/2019 18:53, Junio C Hamano wrote:
 > Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
->>>> Do you know why -m and -i aren't affected?
->>>
->>> I had to look, but I believe the answer is because they use the
->>> sequencer, and the sequencer calls git merge-recursive as a separate
->>> process, and so the writing of the tree is only done in a subprocess,
->>> which can't persist state.
+>> Hi Rohit
 >>
->> The sequencer has been running in a single process for a while now. We
->> do fork for 'git merge' sometimes when processing 'merge' commands but
->> 'pick' commands are all done in a single process by calling
->> do_recursive_merge().
+>> On 20/08/2019 04:45, Rohit Ashiwal wrote:
+>>> I've tries to incorporated all the suggestions.
+>>
+>> It is helpful if you can list the changes to remind us all what we
+>> said. (as a patch author I find composing that is helpful to remind me
+>> if there's anything I've forgotten to address)
+>>
+>> Also there are a couple of things that were discussed such as
+>> splitting up the author and passing it round as a <name, email, date,
+>> tz> tuple and testing a non-default timezone which aren't included -
+>> that's fine but it helps if you take a moment to explain why in the
+>> cover letter.
+>>
+>>>
+>>> Some points:
+>>>     - According to v2.0.0's git-am.sh, ignore-date should override
+>>>       committer-date-is-author-date. Ergo, we are not barfing out
+>>>       when both flags are provided.
+>>>     - Should the 'const' qualifier be removed[2]? Since it is leaving
+>>>       a false impression that author should not be free()'d.
+>>
+>> The author returned by read_author_ident() is owned by the strbuf that
+>> you pass to read_author_ident() which is confusing.
 >>
 >> Best Wishes
 >>
 >> Phillip
->>
->>> Should we move the merge-recursive code into the main process, we'll
->>> likely have the same problem there.
 > 
-> So we actually have the same issue already?
+> I've looked at this round, but will push out v2 for today's
+> integration cycle, mostly due to lack of time, but there do not seem
+> to be great difference between the iterations.
+> 
+> The "ignore-date" step conflicts semantically with b0a31861
+> ("sequencer: simplify root commit creation", 2019-08-19) but in a
+> good way.  Without the clean-up b0a31861 makes, we need to munge the
+> timestamp in two places, but with it, there is only one place that
+> needs to modify the timestamp for the feature (in try_to_commit()).
 
-I don't think so, I modified Brian's test to call 'rebase -i' and it 
-passes but no one seems to know why.
+That was my hope
+
+> You may want to see if these "more options" topic can take advantage
+> of the "simplify root commit creation" by building on top of some
+> form of it (I do not know offhand if b0a31861 ("sequencer: simplify
+> root commit creation", 2019-08-19) must build on other two patches
+> to fix "rebase -i" or it can be split out as an independent
+> clean-up), and if it is feasible, work with your student to make it
+> happen, perhaps?
+
+If it is separated out from the first two there will be a minor textual 
+conflict as the first patch in that series changes the root commit 
+creation to stop it writing CHERRY_PICK_HEAD and then b0a31861 deletes 
+the modified version but it shouldn't be a problem to resolve manually. 
+Rohit do you want to try cherry-picking b0a31861 onto master and then 
+rebasing your patches on top of it? - it would be nice to simplify things.
 
 Best Wishes
 
 Phillip
+
+> Thanks.
+> 
