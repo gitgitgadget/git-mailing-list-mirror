@@ -2,83 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B30711F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 17:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8961F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 17:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730553AbfHTR2B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 13:28:01 -0400
-Received: from rdnemail.bankofamerica.com ([171.161.147.155]:36225 "EHLO
-        bankofamerica.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1730330AbfHTR2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 13:28:01 -0400
-Received: from txdmzmailmx05.bankofamerica.com ([171.180.168.230])
-        by lrdna0myxepmx02.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7KHRwEX004968;
-        Tue, 20 Aug 2019 17:27:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bofa.com;
-        s=corp1903; t=1566322078;
-        bh=qDcFIZoaIrfDwHVuW1e13GetaW3fjq4C0cOKt43XMU0=;
-        h=Date:From:Subject:In-reply-to:To:Message-id:MIME-version:
-         Content-type:Content-transfer-encoding:References;
-        b=iXLvUGxvbDLQ/HxGNewgT5yn8Uy0CnOfZViBfKwjDPGFvlvqxjhCEbIfTgFRT/7e0
-         qz2r+1LvUiZfjOCcnVNVulPUso94jYnxUpHHKhqPkqgePYX+0WEcLxStN9Jt04BLl5
-         JjXv4ffndfKOxmxNZQGpuXaUXdNrCMt6NStuuNRQ=
-Received: from lrdna0n4xepmx12.bankofamerica.com (lrdna0n4xepmx12.bankofamerica.com [171.206.154.16])
-        by txdmzmailmx05.bankofamerica.com (8.15.2/8.15.2) with ESMTP id x7KHRvr8009497;
-        Tue, 20 Aug 2019 17:27:58 GMT
-Date:   Tue, 20 Aug 2019 17:27:56 +0000
-From:   "Yagnatinsky, Mark" <mark.yagnatinsky@bofa.com>
-Subject: RE:
-In-reply-to: <CAOoiaAP_dOjrqSA--DcWxE+6nb4FY1GCn3+QKZnC67LHo+xn8w@mail.gmail.com>
-X-Originating-IP: [30.245.13.45]
-To:     "'William Baker'" <williambaker54545@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-id: <103df39d418946ddaa366b73176e9c72@bofa.com>
-MIME-version: 1.0
-Content-type: text/plain; CHARSET=US-ASCII
-Content-language: en-US
-Content-transfer-encoding: 7BIT
-X-MS-Has-Attach: 
-Accept-Language: en-US
-Thread-index: AQHVV3wBWMJyUn5LuUSJHYt6QbZvpqcESX0w
-X-MS-TNEF-Correlator: 
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-24860.000
-x-tm-as-result: No-10-0.078100-8.000000
-x-tmase-matchedrid: cgbqQT5W8hfuo96mfIBuopzEHTUOuMX33dCmvEa6IiEIhX6eoWEDQN2g
-        iq5xRdMLP1EDunecK1f7uuADRDIwrEfy6yl+57XwPnKakSId+fAx/k92L7R8tsHx9l2YYLoQERq
-        adVpIfz0Y80LYc3JB8eTRiBqsg0qJuvnFMeyIlFnHsv3gEadaxBtPDNiPbNC6myiLZetSf8kir3
-        kOMJmHTBQabjOuIvShC24oEZ6SpSmb4wHqRpnaDl4eVOjwUr9l2uq3lVdu1Vw1bZAPX5VrqbxZz
-        H19R+xO5hP6Ky5bhdVo7yUGR7IYts/Bb51cg1jR4V8uPbu9/DICxtOPzlBwFDWe/rF557XfKdR/
-        U4tRr/DYSvnsojaQCBClUEUt1OUI4+XAJZXbs2s=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10-0.078100-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-24860.000
-x-tm-snts-smtp: E7A9D1E2AD03ABC9283F667842047019ED7547C4C6A573774D9B5CE0C975C93C2000:8
-References: <CAOoiaAP_dOjrqSA--DcWxE+6nb4FY1GCn3+QKZnC67LHo+xn8w@mail.gmail.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-20_07:,,
- signatures=0
+        id S1730913AbfHTRm3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 13:42:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62312 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730222AbfHTRm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 13:42:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A828C173D0C;
+        Tue, 20 Aug 2019 13:42:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rjMHDQLDn84dDz7Do6hGSnj+zG4=; b=t9M8Oe
+        sYRh27pwDN1SaPB1I4UvQRZJOjMuXV58f9JGIgHr6bDTJM1tW35o7s9sCmHt2RGt
+        fwgNsl0iouFhnqg4r9Ne6OcT17H+5Eo/jr7XQgd1G51QVwj5HHMmlTIGr5OPAkfB
+        7X05C0KsUrJiQ/HxnJo9dkxo0wv68pDXjZxqk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pUmgaj5OEGtEzWB9TzWFJq2GACU4ffwP
+        DdaNMtpJ9giYHA6dReqxr+2uaUJMmOT3+zybaQhtPrrglrci2PF6cpa5KodCl33Q
+        PSy0IMrDxr2cGrMqv+ovnYgQCkEwTxYjLhpZr5PlwSXjrbbVz1C9dXyjsVEfXZbS
+        k1/sXOBNV+w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E336173D0B;
+        Tue, 20 Aug 2019 13:42:26 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11558173D0A;
+        Tue, 20 Aug 2019 13:42:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com,
+        phillip.wood123@gmail.com, t.gummerer@gmail.com
+Subject: Re: [PATCH v3 5/6] rebase -i: support --ignore-date
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+        <20190820034536.13071-6-rohit.ashiwal265@gmail.com>
+Date:   Tue, 20 Aug 2019 10:42:25 -0700
+In-Reply-To: <20190820034536.13071-6-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Tue, 20 Aug 2019 09:15:34 +0530")
+Message-ID: <xmqqwof7vim6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF8ECA24-C371-11E9-BDD1-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No, not like that.  See here:
-https://git.wiki.kernel.org/index.php/GitCommunity
-The email address you send the "subscribe" message to is NOT the mailing list itself.
-What you just did is send the words "subscribe git" to everyone already on the mailing list :)
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of William Baker
-Sent: Tuesday, August 20, 2019 1:23 PM
-To: git@vger.kernel.org
-Subject: 
+> +/* Construct a free()able author string with current time as the author date */
+> +static char *ignore_author_date(const char *author)
+> +{
+> +	int len = strlen(author);
 
-subscribe git
+Mental note: ignore_author_date() would not allow author==NULL as its input.
 
-----------------------------------------------------------------------
-This message, and any attachments, is for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at http://www.bankofamerica.com/emaildisclaimer.   If you are not the intended recipient, please delete this message.
+> @@ -1020,10 +1047,20 @@ static int run_git_commit(struct repository *r,
+>  
+>  		if (res <= 0)
+>  			res = error_errno(_("could not read '%s'"), defmsg);
+> -		else
+> +		else {
+> +			if (opts->ignore_date) {
+> +				char *new_author = ignore_author_date(author);
+> +				if (!author)
+> +					BUG("ignore-date can only be used with "
+> +					    "rebase, which must set the author "
+> +					    "before committing the tree");
+
+Yet, author is used and then checked for NULL-ness, which is
+backwards.  Before we have a chance to issue this BUG(), we would
+already have segfaulted inside ignore_author_date().
+
