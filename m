@@ -2,125 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 755921F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:12:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 380071F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730202AbfHTSMJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:12:09 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:62793 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730006AbfHTSMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:12:09 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7KIC4hk058546
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 20 Aug 2019 14:12:05 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Pratyush Yadav'" <me@yadavpratyush.com>,
-        "'Leam Hall'" <leamhall@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <477295c5-f817-e32b-04fd-a41ddfbbac0a@gmail.com> <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
-In-Reply-To: <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
-Subject: RE: Only track built files for final output?
-Date:   Tue, 20 Aug 2019 14:11:59 -0400
-Message-ID: <01b601d55782$c5e19d00$51a4d700$@nexbridge.com>
+        id S1730589AbfHTSVg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:21:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62374 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729827AbfHTSVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:21:36 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 048A817416E;
+        Tue, 20 Aug 2019 14:21:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wfptArXW5diXUuvYuTUT3ZyMBqY=; b=KgF7k6
+        Q3oUueE3AcmGU2XD8zfAH9L1C3Bsd1gXbot0KGSRdbR4XOZ4+3rkha2KqwLf6M/U
+        xz0Rp/SYSBaTpdQVnKFZgiAf2VZju/gnKhDjl2tYLAg9uPD9v0b3zTapPpoTo0tS
+        ZfcxdmqO/NGJklf/2OzZ7mvj/y0+odcMY4Ppg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uUi15CpCKw+sMd1h88GzjRMxGfZySf++
+        eGbXy4Gjvviha2yTEplY968TUkGtlOrOfQ2drv6myjMBOQYkgX9rdaSpb0wrtbBN
+        qn2EJsfsozO0a5G84pdehPlr3F3B9uJORaH+iDRE814n5kqh6mX4c+OHiS/CONoI
+        WTGQjcjz1HY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFBA117416D;
+        Tue, 20 Aug 2019 14:21:33 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D3BC17416C;
+        Tue, 20 Aug 2019 14:21:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Uwe Brauer <oub@mat.ucm.es>
+Cc:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [problem with name-rev]
+References: <87blwq7rn5.fsf@mat.ucm.es> <20190818190032.GA11185@rigel>
+        <87pnkzkivn.fsf_-_@mat.ucm.es>
+Date:   Tue, 20 Aug 2019 11:21:32 -0700
+In-Reply-To: <87pnkzkivn.fsf_-_@mat.ucm.es> (Uwe Brauer's message of "Tue, 20
+        Aug 2019 16:32:12 +0200")
+Message-ID: <xmqqh86bvgsz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGVuhvii6CmQEwiHqoGNd3MevSRHgHoetH2p3RKndA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 56A96E5C-C377-11E9-85B8-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 20, 2019 1:47 PM, Pratyush Yadav
-> On 20/08/19 08:21AM, Leam Hall wrote:
-> > Hey all, a newbie could use some help.
-> >
-> > We have some code that generates data files, and as a part of our
-> > build process those files are rebuilt to ensure things work. This
-> > causes an issue with branches and merging, as the data files change
-> > slightly and dealing with half a dozen merge conflicts, for files that
-> > are in an interim state, is frustrating. The catch is that when the
-> > code goes to the production state, those files must be in place and
-current.
-> >
-> > We use a release branch, and then fork off that for each issue.
-> > Testing, and file creation, is a part of the pre-merge process. This
-> > is what causes the merge conflicts.
-> >
-> > Right now my thought is to put the "final" versions of the files in
-> > some other directory, and put the interim file storage directory in
-> .gitignore.
-> > Is there a better way to do this?
-> >
-> 
-> My philosophy with Git is to only track files that I need to generate the
-final
-> product. I never track the generated files, because I can always get to
-them
-> via the tracked "source" files.
-> 
-> So for example, I was working on a simple parser in Flex and Bison. Flex
-and
-> Bison take source files in their syntax, and generate a C file each that
-is then
-> compiled and linked to get to the final binary. So instead of tracking the
-> generated C files, I only tracked the source Flex and Bison files. My
-build
-> system can always get me the generated files.
-> 
-> So in your case, what's wrong with just tracking the source files needed
-to
-> generate the other files, and then when you want a release binary, just
-clone
-> the repo, run your build system, and get the generated files?
-> What benefit do you get by tracking the generated files?
+Uwe Brauer <oub@mat.ucm.es> writes:
 
-The benefit of putting final release packages into git is based on the
-following set of requirements in highly regulated industries:
+> Gives
+> *   changeset: ae68dbe:master
+> |\  user:      Uwe Brauer
+> | | date:      Tue Aug 20 16:25:53 2019 +0200
+> | | summary:   1.2.1/1.1
+> | |
+> | * changeset: c00bb5d:master^2
+> | | user:      Uwe Brauer
+> | | date:      Tue Aug 20 16:25:53 2019 +0200
+> | | summary:   1.2.1
+> | |
+> | * changeset: 54c9230:master^2~1
+> | | user:      Uwe Brauer
+> | | date:      Tue Aug 20 16:25:53 2019 +0200
+> | | summary:   1.2
+> | |
+> * | changeset: da0712f:master~1
+> |/  user:      Uwe Brauer
+> |   date:      Tue Aug 20 16:25:53 2019 +0200
+> |   summary:   1.1
+> |
+> * changeset: 8eb999d:master~2
+>   user:      Uwe Brauer
+>   date:      Tue Aug 20 16:25:53 2019 +0200
+>   summary:   1
+>
+> That looks odd.
+>
+> Any comments?
 
-1. The release artifacts can never change from the point in time at which
-they are certified as working (a.k.a. passed tests) to the point when they
-are replaced with other artifacts (a subsequent release). Recompiling is not
-sufficient as the compilers themselves may change or be compromised. This is
-an audit requirement.
-2. The source commit(s) used to create the release artifacts must be
-immutable so that the origins of the release artifacts are always known.
-This is also an audit requirement in regulated industries.
-3. Disconnecting the source from the object (as is common in artifact
-repositories) breaks #2 and allows malicious code injection in
-after-the-test code reproduction. Variant of #2 but from the security
-perspective.
-4. Metadata on the origin of the release artifacts (the clone URL, the
-parent commit, the branch, signed commits), are required for forensic
-analysis of code in a compliance environment.
+When you make a merge like the ae68dbe, merging a topic with two
+commits 54c9230 and c00bb5d into the then-current tip of the master
+branch da0712f, _all_ direct parents are recorded in the resulting
+merge commit, so the first parent of it is denoted as ae68dbe~1
+(which is da0712f) and the second parent of it ae68dbe^2 (which is
+c00bb5d).
 
-There are other related variants of the above, but those are the essential
-ones that are generally accepted in financial, insurance, medical device,
-and industrial applications. Increasingly, food production and distribution
-sectors are realizing that they are also subject to the above. I sadly
-cannot cite specific internal regulations or policies for NDA reasons, but
-hope that others are able to do that.
+There is no linear ordering between these two commits, so c00bb5d
+will *never* be named as master~<some-number>.  As a commit on a
+side branch, its description from the tip of 'master' will always
+involve some ^2 (the second parent of some merge commit) somewhere
+in its name-rev result.
 
-Regards,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
+If you are saying that the $commit^$nth_parent notation "looks odd",
+then you are shooting the messenger with your title.  The problem is
+not with name-rev; the problem is with the way the world works.
 
