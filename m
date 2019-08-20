@@ -2,101 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C90A1F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4FEC1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730202AbfHTSpW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:45:22 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:41091 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730006AbfHTSpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:45:22 -0400
-Received: by mail-qk1-f195.google.com with SMTP id g17so5373687qkk.8
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 11:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oqG6gQeyogrHa40e2mUugplA0UFFjk4BFxn8l2aMPh4=;
-        b=JuA4+I4Bo5PNIg1wojj61prljO4s1T2Fjp3Z4ZiSNSOcmXxRf6ivFGjJ0ZP4OcPZNS
-         ErxrnPye6SpPaI4AgeXlXM7TICHdcft1A7b1KO9NHRtw62K+i5LRAfBpFlUpVz0Nq26W
-         6AcRxQOdlAt4k/O/pS8c6FkWBLKl4Y299zH2N5wFbD+dUDqYpdkHL4mvRidUeC3UEqTy
-         mGQIxTVwcZsnGPwmTWIIKNJPznfZS4M5lfM9PqEVACBYgi7XwrQURBHjoGOlGext8c4A
-         3PKvin3QnJa9lzvikNH6+smZD5IusFDoM4zgs6stLUwLis1WLz09MGfM6Gk5yxByZJ0R
-         FLRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oqG6gQeyogrHa40e2mUugplA0UFFjk4BFxn8l2aMPh4=;
-        b=SK9QZ1tASPlklAtqH3+ErShKen51kuI3vj1FveCl1p66E4KZifMNMAtJrPsCaJlQRf
-         LoejpYPBYdIt2F+Xrh7M+lRe0H7UrE5YFLg4Fana3bMFJu9x+MFRiVis7A+IntuIeMwk
-         pcwYEK6mQ4GvKx79hvExJq0d3tNR8gTycIfJkSKoscQ3FGNZRUBlHh0CjZbTTWWLgIsg
-         jRCcuOfSYxvDCbaYo/7dUF6oQjIAhxI3VirIGrPzaLutlaao0wQ9bIGoLKU5ep/HIjgz
-         mXcol5WJCnhHI6ZrenWTzLFPOEVbtktzoOSogr5gdcJGcyY2IkB2St5uHzL/GGM3ZU0v
-         M5dg==
-X-Gm-Message-State: APjAAAUX61s4+rYuJ49XO3lcwbhXzox9SNok58VZya7yTGeVbmHJ9JS1
-        VjHiVC+JttmuiApmvRi2rXs=
-X-Google-Smtp-Source: APXvYqyagugrIxz+jqDXa1DrWe9UTjIx7F891dKZi/ZPZTlQcMyf4mYQW0Ch6XWhx5YoUjyI815jUA==
-X-Received: by 2002:a37:717:: with SMTP id 23mr27052795qkh.267.1566326721000;
-        Tue, 20 Aug 2019 11:45:21 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:5ff:3a8e:8e40:6517? ([2001:4898:a800:1010:b734:3a8e:8e40:6517])
-        by smtp.gmail.com with ESMTPSA id j78sm8777222qke.102.2019.08.20.11.45.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2019 11:45:20 -0700 (PDT)
-Subject: Re: [PATCH 0/1] commit-graph: add --[no-]progress to write and verify
-To:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        garimasigit@gmail.com
-References: <pull.315.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <502f808c-d8fe-81d3-d15b-6f92916035ba@gmail.com>
-Date:   Tue, 20 Aug 2019 14:45:20 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1730619AbfHTSsC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:48:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55762 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729409AbfHTSsB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:48:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 972CB7ADBB;
+        Tue, 20 Aug 2019 14:47:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vwG19IYwaXEKqWy1VrV0SH+GHfY=; b=eYCVZ4
+        3TMsCq3afq9EYtM3EeTTxYE7IiA/aZTqYEYt+l2AvLEIuPXGDzsnb/n3myfEG8ny
+        Bo+Epogz1GfLG6FHYbw1b6aUGn2JAb84uvNR6Ec4lJhbmyZRbWkCMWPc5M4I276D
+        ZYcSkqbkuKLu+NNOvQirN2MK4EfsqauOrEuCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=X1H6gYHUbiXEqwFM92Vr1p7da6fSqt9n
+        jqhv1+4ETqW3WesdQOu1k1BYDK8LfeFOTP81ENbYiRERv34OcRaoORn6pmMkEE52
+        EqAnSS2boUR43RhQ3srNyxSHB5+ud7X82I+0Rx5piHcZpaMnMPMqj6ErFQZ/LfPv
+        pzqZzVM60yU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F16D7ADBA;
+        Tue, 20 Aug 2019 14:47:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C36487ADB8;
+        Tue, 20 Aug 2019 14:47:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] git-gui: Add ability to revert selected hunks and lines
+References: <20190819214110.26461-1-me@yadavpratyush.com>
+Date:   Tue, 20 Aug 2019 11:47:54 -0700
+In-Reply-To: <20190819214110.26461-1-me@yadavpratyush.com> (Pratyush Yadav's
+        message of "Tue, 20 Aug 2019 03:11:07 +0530")
+Message-ID: <xmqq5zmrvfl1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <pull.315.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 067377DA-C37B-11E9-856C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/20/2019 2:37 PM, Garima Singh via GitGitGadget wrote:
-> Hey Git contributors! 
-> 
-> My name is Garima Singh and I work at Microsoft. I recently started working
-> closely with the Microsoft team contributing to the git client ecosystem. I
-> am very glad to have the opportunity to work with this community. I am new
-> to the world of git client development but I did work on the Git service
-> offering of Azure Developer Services for a few years. I am sure I will get
-> to learn a lot from all of you. 
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-I just wanted to chime in and introduce Garima a bit myself. Garima and  I
-were both on the Git Server team for Azure Repos and left that team around
-the same time. She went and did things in Azure Pipelines before leaving to
-pursue more education and returning to our current team working on the Git
-ecosystem. Garima will be focused mostly on core Git, so get used to seeing
-her on the list!
+> This series adds the ability to revert selected lines and hunks in
+> git-gui. Partially based on the patch by Bert Wesarg [0].
+>
+> The commits can be found in the topic branch 'py/git-gui-revert-lines'
+> at https://github.com/prati0100/git/tree/py/git-gui-revert-lines
 
-She's starting with a couple smaller series to get her feet wet, but then
-is working on some deep dives into performance features. Look forward to
-those!
+Please don't do this.  
 
-> CC: stolee@gmail.com, avarab@gmail.com, garimasigit@gmail.com
+I would strongly prefer keeping the contination of history from the
+history in Pat's git-gui repository.  If you clone from
 
-GitGitGadget is picky about the casing of "Cc:" so I have CC'd these people.
+    git://repo.or.cz/git-gui.git/
 
-Thanks,
--Stolee
+you'll notice everything for git-gui is one level up, and nothing
+for git-core is duplicated in there.  You'll work on top of that, so
+the patches to the git-gui project should not say things like
+
+    ---
+     git-gui/lib/index.tcl | 27 +++++++++++++++++----------
+     1 file changed, 17 insertions(+), 10 deletions(-)
+
+    diff --git a/git-gui/lib/index.tcl b/git-gui/lib/index.tcl
+    index b588db11d9..cb7f74af45 100644
+    ...
+
+The leading "git-gui/" should not appear.
+
+I have a fork of Pat's history with a single topic on top at
+https://github.com/gitster/git-gui/ so building on top would
+maintain the continuity of the history as well.
+
+Once you prepared your changes in such a clone of the git-gui
+project, in order to test them with the rest of Git, you'd make a
+trial merge with the -Xsubtree=git-gui option.  Perhaps you have
+git-gui's clone in $HOME/git-gui and git's clone in $HOME/git, like
+so
+
+	$ cd $HOME
+	$ git clone https://github.com/gitster/git-gui git-gui
+	$ cd git-gui
+	... from now on, you'd work on git-gui in this directory  ...
+	... do the work of this topic perhaps on 'revert-hunks' branch ...
+
+	$ git clone https://github.com/gitster/git git
+	$ cd ../git
+	... trial integration ...
+	$ git pull -Xsubtree=git-gui ../git-gui/ revert-hunks
+	... do whatever testing necessary ...
+
+As an interim (and hopefully evantual) maintainer of the git-gui
+project, you'd publish from your local git-gui directory to a fork
+of git-gui project you host somewhere.  Your patches for review
+would also be taken from your local git-gui directory.
+
+Thanks.
