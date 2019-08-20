@@ -2,78 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90B971F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 04:59:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F59F1F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 05:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728957AbfHTE7J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 00:59:09 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:34290 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728777AbfHTE7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 00:59:09 -0400
-Received: by mail-io1-f45.google.com with SMTP id s21so9497747ioa.1
-        for <git@vger.kernel.org>; Mon, 19 Aug 2019 21:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qU6u6KPagCbNWhaRKraEuOFDUOakPiJMJuURP0LPSy0=;
-        b=FN7m2xsnyEaPJCiCmijP692A0mmXkXUD/h6bQv8xrPVCj0bAcE263L/MqsfiLgCyxl
-         PKC2A7KFeis+jZdpR4ayu9KArUqqfIj8tgw+kxquPOhuYNsrXAdLEipH9hTdVKvO3neW
-         qGQj2ydzHco0XYam4Q4jRs3qwaONG/9qPN7pQKWbgNEdFxxTa9qIctKeun8Ywqj2mS0K
-         Z/67PEGkJXHaC4dtWMLnhHsTObuaYe4LIk0+Ey5JLeU/c4yOT5EvHTjoCf2+fC4X5rr0
-         v5OpVjLQOYWYqyrR7rmLVbkzsuH9D+6Z9XJdtiYbQrj+ca7vNbZRlnZRpAQMRDAM4RxM
-         mmGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qU6u6KPagCbNWhaRKraEuOFDUOakPiJMJuURP0LPSy0=;
-        b=emHSBq8kto/m43mJ4cHcfXAo6up8Ve0JhZMSXtG1H7txXJ82IvAjVXzBXCeBDfIv1t
-         O/Ses1ZDvvnL/FUD7ouKpBiLcdcCnnPJS45gzd9y53+wBh1miv+V6z8yWUvu5aWeOI4b
-         G1eqa6r+cyHP5PavN4cBvevsRDJtTBJKkDWSr4Lk2I3kjkqpSt4ud8AGkdTfhSmew9fL
-         JRLh8dke1DxGnjoaZNcjnb3xn46iCbOGNC2CZNfl9E6xenbRAVieXn6J73rptrd9CLwr
-         UWBeUcTRjNcft8Uzl59eOMOvrhYRG0qpmm68KRZBmZ2YDRXBsO1i4sO38hw0AXbeV3OJ
-         /tWw==
-X-Gm-Message-State: APjAAAWLWA/I9dSMnB9+rfj2nflGmhIyhXfqLobVSZMJkZ1kSYF3SZFc
-        GlVpWBzIgoKF/8WVt4dmq01yj+WTKcrVMJsfrViUVV3Xa8c=
-X-Google-Smtp-Source: APXvYqw9FGcqYaEU+6A5zV8yHY3hjgt+HcSrIJvNzRVvP5xj/TBqeMeWg3PQk8etjat+7J7NRSsIiOWQNtTk5BhXvOU=
-X-Received: by 2002:a6b:b3c3:: with SMTP id c186mr30171035iof.76.1566277148104;
- Mon, 19 Aug 2019 21:59:08 -0700 (PDT)
+        id S1729000AbfHTFuc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 01:50:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62281 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbfHTFub (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 01:50:31 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF9FC754FA;
+        Tue, 20 Aug 2019 01:50:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9fmbvMI/uuT7YVZ5ycKADOolXkk=; b=nPIf/e
+        nOE44akV0pntQ/HZfVah+wofaIBJycwNvtQLF+y/XLB2/IMd9Vvc6+W6SYqa9hbP
+        ucVYL0+ePBcaF5alGpQ2v0Bq7YEaBeyBeSdza4UlAMU0TMrrIWb7NYNY2VPznlxO
+        4RXH9PDqE9QnBTHvnnQMGSqNm7elOyPIbmbAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tQPzpwcKN3NHt7wacI6F1m8lfaolzqHF
+        z/xdh7LtXtfYnwxaxTMJdqFg4IRe2Bjhfh589Ks1ZxzM9gV6zaIhEH11UBhdPvLV
+        AYQBRDLWrS6AS3WgL8+OT7EWZfzmqUOhrbWqgnnurDvcME/jXAKxqDg5ExNmhYmv
+        beyGCryMXCA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7D0F754F9;
+        Tue, 20 Aug 2019 01:50:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7FCA754F6;
+        Tue, 20 Aug 2019 01:50:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: Fully peel tags via for-each-ref?
+References: <CAGyf7-GBx3FSCQTipmkNBtnwMANg5A0FXiiPc2az0NiRLRT+xg@mail.gmail.com>
+Date:   Mon, 19 Aug 2019 22:50:24 -0700
+In-Reply-To: <CAGyf7-GBx3FSCQTipmkNBtnwMANg5A0FXiiPc2az0NiRLRT+xg@mail.gmail.com>
+        (Bryan Turner's message of "Mon, 19 Aug 2019 16:22:05 -0700")
+Message-ID: <xmqq8srowfkv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 20 Aug 2019 01:58:57 -0300
-Message-ID: <CAHd-oW5xHv-gC2gQE8_5w6nv8gq5fcLcypqe2bca63HTSaVtAg@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68F993F2-C30E-11E9-86AB-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+Bryan Turner <bturner@atlassian.com> writes:
 
-I just posted the penultimate report on my project:
-https://matheustavares.gitlab.io/posts/going-for-a-too-big-step This
-week I=E2=80=99ve been working on a v2 of threaded git-grep w/ parallel
-inflation, to allow threads when grepping submodules. I also tried
-some more optimizations along the way.
+> Is there any way, with "git for-each-ref", to output the "fully"
+> peeled SHA of a tag's ultimate target, regardless of how many layers
+> must be traversed?
 
-As always, any comments/suggestions will be highly appreciated.
+I do not think I wrote it to allow different degree of peeling, not
+because I wanted to explicitly forbid a use case for tags that tag
+another tag, but simply because I didn't think of anybody using it
+and didn't see need to support such tags.
 
-Thanks,
-Matheus
+If %(*<stuff>) does not peel fully (I do not recall what I did
+offhand), because all other things in Git (like $X~0, $X^{tree},
+etc.) fully peel the outer object until they get to what they want,
+it may even be OK to declare it a bug and "fix" the notation to
+fully peel tags.  I dunno.
