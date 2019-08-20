@@ -2,112 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C12541F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 18:49:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DAA51F461
+	for <e@80x24.org>; Tue, 20 Aug 2019 18:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730638AbfHTStW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 14:49:22 -0400
-Received: from mout.web.de ([212.227.17.11]:52157 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729900AbfHTStV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 14:49:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1566326952;
-        bh=VDxNP66OkpaiBX617k1GeUGINoex4iBsbw/+MHR8KLQ=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=aV4QBu2O67ulb3g6Tp6IjKiDIA2kIBW/XjRf1B5u9AZ7zv3gSCMhsq4xpKsLPN/H1
-         t03WFyBfxndK5iUkWLLARVttcwlDYpk3c7qz7/hjNVu4PVfR7OngOSBF8F/QW8vXCx
-         d/ys8wZhLCdJ8e47Z6mSk1/ccui/S9GNGoP6CA5E=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M57Vi-1iAhIU2XpG-00zE3s; Tue, 20
- Aug 2019 20:49:12 +0200
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] sha1-name: make sort_ambiguous_oid_array() thread-safe
-Message-ID: <a08751c7-170d-7faf-272e-79c589ec3eab@web.de>
-Date:   Tue, 20 Aug 2019 20:49:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1730174AbfHTS47 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 14:56:59 -0400
+Received: from relay10.mail.gandi.net ([217.70.178.230]:33813 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729639AbfHTS46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Aug 2019 14:56:58 -0400
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 49221240007;
+        Tue, 20 Aug 2019 18:56:56 +0000 (UTC)
+Date:   Wed, 21 Aug 2019 00:26:54 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Leam Hall <leamhall@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Only track built files for final output?
+Message-ID: <20190820185654.fhelqfub2on67mre@localhost.localdomain>
+References: <477295c5-f817-e32b-04fd-a41ddfbbac0a@gmail.com>
+ <20190820174640.n3elekpi6l4vwamp@localhost.localdomain>
+ <f899594c-4f57-b941-f4f1-fd3b8f81136a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:T/A1aYDsWzXZX/jNcsFan+tkdYRrLs2mrOQhpb2DkckbiPjX7ab
- 1oyP4QV4GXnUz7JrZ/w2oNGOOY2FkuHdn6UyQ40DGJ/vbaQ29STHPg2E98vEtHz/wH6T9n5
- DIq8o7hb1go9vHHs26Hx6MpNbvqokbN2gakJF8LzasoHl6VmpZ94FH2EZtyEeyUD/vM3ukh
- e044u9h9js3vMmZ1kRRgQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NXvUI1pVspU=:2pJ0cXywToM7/Y7WeoL9tS
- GyFIkS5E0wDl6Kt+tb1kuAhH5HbTUjJZfFzQ3qmaT3TlzA22Ihr+Fw0Suvv3/kcxUUdE4xqe5
- r0t6FAD1dQZTinbPQDNm0GVMstB5Jx9Z0FwhHvW1GueASS92b9+CjBc0UHKteqJPAEnEkw9Rw
- rNru2bMuZDgz471rTj+p4XhDCm1iaImAiDH2OKbAW27by7aGJlB8p/EFdFQ7KbREcuBfkLeVt
- GM7o6UcvbStIk0KhZDKVGvk68hyY84manOCf3UnVn1keMcckaY0oh0OBO+O4vIlkIpddP2qCc
- v06q8iX+uDMmUFlwKoGrnZvqCiYKXxDRjFju9DsE99I3pf1Ckrms+bGivVwnYYWzeRGDPMl8o
- YCB//QtEb6sKiygKJO9iKoEYMEWOKYUuqo+JDLu7+SCPZ5DwJ8RWWOYMKJiSidFuH9Y5MPZet
- wj0Rn6u5iNr7y82qm8x5njlQQ0N6m4hZObi3Tfo8p4cyfrb1+bxpYER4Pn4D/HPUUYDz6il2n
- fwe1AMszDCO1c7zv+h0cF/XSkcKrFjFIWvTBLoaRcuZkrW5kr4NOfhIAnA038Cz/OtPs+URpC
- DMQRy/Rl/Bi0qC340pUv9syhvQl01GuQ9sO4Le01+Ph7WjpMRHeid+woWI9C0phU6g6AGIBh9
- cclT5eXRbWavCbS74sR9caYRLzM2EgV0OVTQduYE88rd1m3IpvjdtRuNQOcBg5Rt2J+OgayXw
- +p3DCKIwHBnj+esVUAVOPjVmXe3a3CK7O1AxwjBAJB4DZvyJ89GCK9a3vnxZqFz4UKgZPqYAj
- 9rOf1vTfSU9uRmZJ3OMDN4ib2pRkQ5XcwUkwmkrFp6zhhexqvYderKzy9eTfV0IArCwhSthls
- f3xsBi568ZDCYhLuVDbEFtSVyESaMUE8ag66XfmUnIT7GJa0KdcLiaxb+5rqssyu1bbDqHDAn
- O7ynOWSS7i6LG5CSvwzeq0qkdPxSYRJFfVUP0dVKSirAreNrnDd+Bad48xN9PPVpwiKWiUiB1
- /QGGbj66ryF9lQM9WThEFTvxKns5eK5B4cNsq/COn/yymmoBupY9821SyxgZmpeVN8hClRqTr
- horXacmkMbAwd0jlK1ZAPNwEqUD+j5yiv8GAJRaE7MoRQyk4j3dzt6VyQlZyCCSG+fsLsxyd5
- aGt7Wbcqkx9to9yP6l77L4s93mXUj2vLkzDsMezOY1oP2eYw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f899594c-4f57-b941-f4f1-fd3b8f81136a@gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use QSORT_S instead of QSORT, which allows passing the repository
-pointer to the comparison function without using a static variable.
+On 20/08/19 02:01PM, Leam Hall wrote:
+> On 8/20/19 1:46 PM, Pratyush Yadav wrote:
+> > On 20/08/19 08:21AM, Leam Hall wrote:
+> > > Hey all, a newbie could use some help.
+> > > 
+> > > We have some code that generates data files, and as a part of our build
+> > > process those files are rebuilt to ensure things work. This causes an issue
+> > > with branches and merging, as the data files change slightly and dealing
+> > > with half a dozen merge conflicts, for files that are in an interim state,
+> > > is frustrating. The catch is that when the code goes to the production
+> > > state, those files must be in place and current.
+> > > 
+> > > We use a release branch, and then fork off that for each issue. Testing, and
+> > > file creation, is a part of the pre-merge process. This is what causes the
+> > > merge conflicts.
+> > > 
+> > > Right now my thought is to put the "final" versions of the files in some
+> > > other directory, and put the interim file storage directory in .gitignore.
+> > > Is there a better way to do this?
+> > > 
+> > 
+> > My philosophy with Git is to only track files that I need to generate
+> > the final product. I never track the generated files, because I can
+> > always get to them via the tracked "source" files.
+> > 
+> > So for example, I was working on a simple parser in Flex and Bison. Flex
+> > and Bison take source files in their syntax, and generate a C file each
+> > that is then compiled and linked to get to the final binary. So instead
+> > of tracking the generated C files, I only tracked the source Flex and
+> > Bison files. My build system can always get me the generated files.
+> > 
+> > So in your case, what's wrong with just tracking the source files needed
+> > to generate the other files, and then when you want a release binary,
+> > just clone the repo, run your build system, and get the generated files?
+> > What benefit do you get by tracking the generated files?
+> 
+> For internal use I agree with you. However, there's an issue.
+> 
+> The generated files are used by another program's build system, and I can't
+> guarantee the other build system's build system is built like ours. It seems
+> easier to provide them the generated files and decouple their build system
+> layout from ours.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- sha1-name.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+Maybe I don't completely understand your use case, but you can still 
+pass off the generated files to the external build system without having 
+to track them. Unless the external build system exclusively relies on 
+git clones/fetches, how about packaging your release with your files 
+generated from your build system in a tarball (or anything else that 
+works for you) and pushing them to the external build system?
 
-diff --git a/sha1-name.c b/sha1-name.c
-index 2989e27b71..c665e3f96d 100644
-=2D-- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -403,9 +403,9 @@ static int repo_collect_ambiguous(struct repository *r=
-,
- 	return collect_ambiguous(oid, data);
- }
+Assuming you just _have_ to track those files, will always resolving the 
+merge conflicts as 'theirs' work?
 
--static struct repository *sort_ambiguous_repo;
--static int sort_ambiguous(const void *a, const void *b)
-+static int sort_ambiguous(const void *a, const void *b, void *ctx)
- {
-+	struct repository *sort_ambiguous_repo =3D ctx;
- 	int a_type =3D oid_object_info(sort_ambiguous_repo, a, NULL);
- 	int b_type =3D oid_object_info(sort_ambiguous_repo, b, NULL);
- 	int a_type_sort;
-@@ -434,10 +434,7 @@ static int sort_ambiguous(const void *a, const void *=
-b)
+My guess about your process works is you branch off, make a new feature 
+or fix, and then merge those changes to your master. In that case, the 
+changes that the feature branch made to your generated files should 
+always be the ones that get committed, correct? master's version of the 
+generated files should be stale. So your merge conflicts always need to 
+be resolved as 'theirs', at least on the generated files. I don't know 
+if git-merge supports file-specific merge strategies though, please 
+check once. Otherwise, maybe you can write a script that resolves 
+conflicts as 'theirs' for the generated files, and lets you figure it 
+out manually for the rest. 
 
- static void sort_ambiguous_oid_array(struct repository *r, struct oid_arr=
-ay *a)
- {
--	/* mutex will be needed if this code is to be made thread safe */
--	sort_ambiguous_repo =3D r;
--	QSORT(a->oid, a->nr, sort_ambiguous);
--	sort_ambiguous_repo =3D NULL;
-+	QSORT_S(a->oid, a->nr, sort_ambiguous, r);
- }
+I'm just thinking out loud. I don't know how well this will scale. Maybe 
+the more experienced folks here will have better ideas.
 
- static enum get_oid_result get_short_oid(struct repository *r,
-=2D-
-2.23.0
+-- 
+Regards,
+Pratyush Yadav
