@@ -2,88 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBD7B1F461
-	for <e@80x24.org>; Wed, 21 Aug 2019 22:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 370061F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 23:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730099AbfHUWcE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 18:32:04 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33288 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729671AbfHUWcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 18:32:03 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u16so3522927wrr.0
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 15:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Fqf5WgQeahYZrQ80pWM06aZJrvjkxXfL2EGMVC40+34=;
-        b=eFXUW8Be3Nm6md/QP52oreqU4PHfuiwCVcZGsSQpRll3ml2lhzzzcNjenVmaf7z1iB
-         4SSAK/jUNJ7jckLIyrmLs4MxAShuULKlasPtgbf+QOzChf2co87BfhqKW1c7V5vQZbt9
-         WJV3YVOyqxtry/qmriFwoNTwyuGkP2iyO11bjejD5RAYFcommnG8Z8tcxRg1Asua2OE2
-         d0PQX1FirSjl//QQ0Hu6vY/oRO7mpjVPen78f9R5ljlGE4g2/BjZ5CAL24UHuI4cMhX0
-         KFxAGNhgMPGummwNo+qoiHyp2jcl/en2hZsViMV1c6uhxH+gcVSj9st0seE4Mr9reIXT
-         rtjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Fqf5WgQeahYZrQ80pWM06aZJrvjkxXfL2EGMVC40+34=;
-        b=q3pewBqHUupuENmXlUxz3h5qgIQnRJEvnya0cZsUQ7AgahDFNBnr25nlFkspnOQWRK
-         WaKOBn4XiaJm+OBOcLa5Z+VeswFI8ImKEPBuIz553CmaeicvdWsZyEu6kbng4p5rxzS7
-         kPLu74MZeBt8FCLbmOUUryGL+KRUiiNcis8BjQhjjSckY+bQ14eF/JlH/9Dmoi6wXFlg
-         R4m1R8K9FqN97tffQASZvsKIHB84qY1awrqaV/6NoWnmit33N1aL0sn6k70Ve2c4r9gu
-         8BR4gGkuI/b9WtuxLbVwUnjoIVfmOJ3nVsgJL195eHzvZyvfI56ThTRonZqsQKEnUuOg
-         SrQw==
-X-Gm-Message-State: APjAAAUaXhpsVcXs74OTTNPDD8Pe+FfFFYoKpGwCuD7DvcrkHOyih4Vd
-        b228PDaJaM/lIKBKkRwQues=
-X-Google-Smtp-Source: APXvYqyRoUneBL4siKmFlnzSWIiIdZbm/+JS2EtTmGh3WNhfAzNaQblWjZcCfhwOReXJCLAl1p8zug==
-X-Received: by 2002:a5d:6a12:: with SMTP id m18mr43575464wru.306.1566426721735;
-        Wed, 21 Aug 2019 15:32:01 -0700 (PDT)
-Received: from szeder.dev (x4db50904.dyn.telefonica.de. [77.181.9.4])
-        by smtp.gmail.com with ESMTPSA id s19sm32388921wrb.94.2019.08.21.15.32.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Aug 2019 15:32:00 -0700 (PDT)
-Date:   Thu, 22 Aug 2019 00:31:59 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, git@jeffhostetler.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] [RFC] Revert/delay performance regression in 'git
- checkout -b'
-Message-ID: <20190821223158.GB20404@szeder.dev>
-References: <pull.317.git.gitgitgadget@gmail.com>
+        id S1730199AbfHUXAh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 19:00:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51786 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730187AbfHUXAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 19:00:37 -0400
+Received: (qmail 24525 invoked by uid 109); 21 Aug 2019 23:00:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Aug 2019 23:00:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16107 invoked by uid 111); 21 Aug 2019 23:01:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Aug 2019 19:01:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 21 Aug 2019 19:00:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Fully peel tags via for-each-ref?
+Message-ID: <20190821230035.GA26107@sigill.intra.peff.net>
+References: <CAGyf7-GBx3FSCQTipmkNBtnwMANg5A0FXiiPc2az0NiRLRT+xg@mail.gmail.com>
+ <xmqq8srowfkv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.317.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqq8srowfkv.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 21, 2019 at 12:18:32PM -0700, Derrick Stolee via GitGitGadget wrote:
-> As we were integrating Git 2.23.0 into VFS for Git, we discovered that "git
-> checkout -b new-branch" went from 0.3s to 10+s on the Windows OS repo.
+On Mon, Aug 19, 2019 at 10:50:24PM -0700, Junio C Hamano wrote:
 
-Does this slowdown only affect the Windows OS repo with VFS for Git,
-or other biggish repos without VFS for Git as well?
-
-> This series does the following:
+> Bryan Turner <bturner@atlassian.com> writes:
 > 
->  1. Reverts the change that makes 'git checkout -b' slow again.
->  2. Creates a warning that recommends users start using 'git switch -c'
->     instead.
+> > Is there any way, with "git for-each-ref", to output the "fully"
+> > peeled SHA of a tag's ultimate target, regardless of how many layers
+> > must be traversed?
+> 
+> I do not think I wrote it to allow different degree of peeling, not
+> because I wanted to explicitly forbid a use case for tags that tag
+> another tag, but simply because I didn't think of anybody using it
+> and didn't see need to support such tags.
+> 
+> If %(*<stuff>) does not peel fully (I do not recall what I did
+> offhand), because all other things in Git (like $X~0, $X^{tree},
+> etc.) fully peel the outer object until they get to what they want,
+> it may even be OK to declare it a bug and "fix" the notation to
+> fully peel tags.  I dunno.
 
-'git help switch' says loudly and clearly that "THIS COMMAND IS
-EXPERIMENTAL. THE BEHAVIOR MAY CHANGE."  It's too early to recommend
-it this aggressively, and to deprecate any parts of 'git checkout'.
+Yeah, my first thought on reading Bryan's email was that this is so
+inconsistent with the rest of Git as to be considered a bug.
 
+There's this gem in ref-filter.c, which blames back to your 9f613ddd21
+(Add git-for-each-ref: helper for language bindings, 2006-09-15):
 
+          /*
+           * NEEDSWORK: This derefs tag only once, which
+           * is good to deal with chains of trust, but
+           * is not consistent with what deref_tag() does
+           * which peels the onion to the core.
+           */
+          return get_object(ref, 1, &obj, &oi_deref, err);
+
+Which isn't to say it isn't useful to be able to do a single-layer peel,
+but I can't think of another part of the system which does so (unless
+you've asked to peel to a specific type, of course). I'm thinking
+especially of the way upload-pack does its advertisement, with two
+interesting implications:
+
+  1. We store full peels in the packed-refs file[1], so we can show them
+     in the advertisement without having to access the object. Doing:
+
+       git upload-pack . </dev/null >/dev/null
+
+     is much cheaper than:
+
+       git for-each-ref \
+         --format='%(objectname) %(refname)%0a%(*objectname) %(refname)^{}' \
+	 >/dev/null
+
+  2. When we switched for_each_alternate_ref to using peeled values, we
+     stopped advertising peeled values for .push haves entirely. There's
+     some discussion in a10a17877b (for_each_alternate_ref: replace
+     transport code with for-each-ref, 2017-02-08), but if we _did_ want
+     to show them, we'd probably want the fully peeled value to match
+     the rest of the advertisement.
+
+Given that it's not how the rest of Git works, I'd be surprised for
+anybody to be relying on the shallow-peeling behavior of for-each-ref.
+But if we did want to retain it, it might be worth adding a separate
+syntax for a full peel. "%(**objectname)" or something?
+
+-Peff
+
+[1] Storing peeled values in the packed-refs file is itself a pretty
+    horrible hack. It's really a property of the object itself, and
+    we're just piggy-backing on the ref storage to make this cached
+    metadata easily accessible. It would be more appropriate in an
+    object metadata storage format similar to the commit-graph file.
+    And then of course we could store both full or partial peels,
+    depending on the format.
