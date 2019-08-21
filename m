@@ -2,191 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6961F461
-	for <e@80x24.org>; Tue, 20 Aug 2019 23:46:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 262E41F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 00:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726256AbfHTXqW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Aug 2019 19:46:22 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:41321 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726128AbfHTXqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Aug 2019 19:46:22 -0400
-Received: by mail-vs1-f68.google.com with SMTP id m62so95521vsc.8
-        for <git@vger.kernel.org>; Tue, 20 Aug 2019 16:46:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EAlPn/RLTOMqTLtpvOl78zy4OfeZD8JRXPnIvpbHdwI=;
-        b=sXETBqXQy5eHmbiNVDovtLS2iSG4NedRNOMRlXuK4fJ/q7abR6ivy9siFqBa138euR
-         pvi191t57L9NBjmfIx4K4Xgpw3pn6/KN2afNqnRADedKxLBVYJOeAaT0Ry8r5DI2UAgu
-         z7j1DQtodq+aByLC2ljQtDv10WDctJkT45PnWbv3creZgl2ka7jy7ZG02hnCYwW/6Y7L
-         b7KtY39a7vrHlC1P7osd4nfkX0bHqXVGoVkyyNyR0lwZPqFGQI9vK+5iQmK0oUFYeqHZ
-         urKnYv5zSmBuXSdYlCiv5ZuXk14nOJyLl/FpAbu+/pnOOTMSDeKpjtVk3jZczg38QIgO
-         1NVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EAlPn/RLTOMqTLtpvOl78zy4OfeZD8JRXPnIvpbHdwI=;
-        b=kE7Jb0iNyi8KLoI3WPM4Yaw4si/e2hbiP5imKdr3EXJeV+51KrWvNP+Z0dHRv+j0Hi
-         r2ltNc6DWEwgEp5BJpxH2UBjjcP+U4Yl3190P8AqHGEHpVz24jf6EIFWeIoDOny/PWDd
-         wf+UF7sURshh6tl43/iu+B9pCuvNQCYCcaxWvs8RXitHo9LNdRmbEuu+tJz36n5VpZc0
-         iCChFRBDYU3zlfiCJ+/55YpzG0DX5IMMG53XufKKJs7PlWfZEH3jcO9LoYlXIQGY6NI2
-         JC5ZmJUZXzRKAg3OjOIqVKTbk0jJANQZ7kOLN+romPa/0DL1e0FkAMS/VQBniqEyg7Ed
-         MZKQ==
-X-Gm-Message-State: APjAAAVdRTbiBvqyPqiJp7E2+f1lGUQuQcXSqe+AQFwIVhRHOGaWe+Km
-        8wau2viSDOM4EW5WZIvwruRFlgUOcHTA2ENCdA==
-X-Google-Smtp-Source: APXvYqxygHshAN5UtYg9Myngwp/qkmNkxf0fpEaPxeHADotjJuNDyBGkmbYiCqsqFfghq/pIL+8dO/lI6/JkDQ1ryWo=
-X-Received: by 2002:a67:eb8c:: with SMTP id e12mr17964212vso.20.1566344781157;
- Tue, 20 Aug 2019 16:46:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <CALSvhyb7Td-ugzze9cSLXRjF78w=zE5=3yuMFZVeuXsCWLSjHg@mail.gmail.com>
- <3442071566267276@iva5-049509bcc5d6.qloud-c.yandex.net>
-In-Reply-To: <3442071566267276@iva5-049509bcc5d6.qloud-c.yandex.net>
-From:   Aaron Miller <aaronkmiller@gmail.com>
-Date:   Tue, 20 Aug 2019 16:45:44 -0700
-Message-ID: <CALSvhyZUphJ4+Vb5MD-KS9OV7DOK6ahwvfBdg0JiNWbT7GxzWA@mail.gmail.com>
-Subject: Re: git-p4: Clone p4 path with bidirectional integrations
-To:     Andrey <ahippo@yandex.ru>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1726277AbfHUAFW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Aug 2019 20:05:22 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54143 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726028AbfHUAFV (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Aug 2019 20:05:21 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id DE7C221CDD
+        for <git@vger.kernel.org>; Tue, 20 Aug 2019 20:05:20 -0400 (EDT)
+Received: from imap1 ([10.202.2.51])
+  by compute3.internal (MEProxy); Tue, 20 Aug 2019 20:05:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=filippo.io; h=
+        mime-version:message-id:date:from:to:subject:content-type; s=
+        fm1; bh=bWsZ+K5QQTvsONN+/UR6Z7NNxDFbrF8AVoBnY7IO/2E=; b=F47D055z
+        s2fKRBfmeR8rkzUJh9Q0htLYPHulmeN9zCVmg7S3fsFvifGUQG0FdPWahYeUlDG5
+        LADMIfzwZTFGvJCD83fJ6fsDtxfw4CEwZU35Qw7l0jCn5Q96dpIqScSBEpHsqx9l
+        1ET/dUIhn8uZC7c+yOmSQy42OBCgykmYtA0qXJ1sHgR22r5149iRc5fXjZI7w6sE
+        4sCGCdzVfQBeLKGQITHQYJIuohmblpec1J87wcBt46VHSSdGabgkKodP1QAxFOh/
+        jmGXZTVvHJAdndn//8taHng4oOZgZJbABuyBPirm5AEHLk4/p4g9w/j7FAaR6Ks0
+        euR35oAVhBMkcA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=bWsZ+K5QQTvsONN+/UR6Z7NNxDFbr
+        F8AVoBnY7IO/2E=; b=EDgim4Cal2KWkSWB71Jw+aGpuxLZKsVL1vV4MJ3q1HDWu
+        y6G7q3Ie8Lzh/vXx3iIkbzfU5jgceO1zNUHhD5Y/h6gAG8kltjMvNy4SS81Oy/FD
+        I7bGxDHWW6maUNOz00BHyeHQxt2GTkMZUvbuBtm0cduoh+2HRWv3mwahEDQHUt/3
+        va/bdgka2RRQVLYr5o79MKyFfZqiVSIQFjy6nMZ+aEjEmg6JJJ3QS/POxvcF0V+v
+        z2AFTJ/tjQfivSxT0NUDMOG+AKpQhp+bw4+x3lniIXTQwOzVybJykEh/MdVedhHF
+        bY6MiOKwYjqRkwnuYJdq4noKEne5q68DeKO4X2W1A==
+X-ME-Sender: <xms:wIpcXYW6u2aBw9cVhTOtofpHMGWIa1vcuCZeeYQLVA2LwYqJssKXiQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudegvddgfeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+    erredtnecuhfhrohhmpedfhfhilhhiphhpohcugggrlhhsohhruggrfdcuoehfihhlihhp
+    phhosehmlhdrfhhilhhiphhpohdrihhoqeenucffohhmrghinhepthifihhtthgvrhdrtg
+    homhdpghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpehfihhlihhp
+    phhosehmlhdrfhhilhhiphhpohdrihhonecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:wIpcXQ3eQlHvvjXEAJpak9556waOiUC6ST9mBAlPwMLQx4jSbwbn-w>
+    <xmx:wIpcXXYmn2g6CsSmNCsYVyELdSdA9-60zl1u767rMLEDgOSho7hEYw>
+    <xmx:wIpcXbptGGAYM71lradwm1KQoRO7x9CThqCEWqafp3Tf_r1eXTHbBw>
+    <xmx:wIpcXde_lcmdo7GlE5-k1mogXxPLr1t6nsfC7leR60PIStO4X4wpGg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 9C528C200A5; Tue, 20 Aug 2019 20:05:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-878-g972612b-fmstable-20190820v1
+Mime-Version: 1.0
+Message-Id: <4d995a0b-0ac4-45a0-9ead-1bc76bd720c7@www.fastmail.com>
+Date:   Tue, 20 Aug 2019 20:05:20 -0400
+From:   "Filippo Valsorda" <filippo@ml.filippo.io>
+To:     git@vger.kernel.org
+Subject: Bug: git push in a --mirror repository deletes all refs
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrey,
+When used in a repository cloned with --mirror, git push with refs on
+the command line deletes all unmentioned refs.
 
-Thanks so much for this detailed response, I really appreciate it.
+This was investigated by @saleemrash1d on Twitter. I'm reporting
+their findings here and a reproduction below.
 
-> First of all, git-p4 should normally take only one direction from bidirec=
-tional integrations on its own.
-> Do you see "p4 branch <branchABC> defines a mapping from <path1> to <path=
-2>, but there exists another mapping from <path2> to <path1> already!"?
-> If you do, it means that git-p4 will ignore <branchABC> mapping.
+> seems to be a regression.
+> TRANSPORT_PUSH_MIRROR is set by remote->mirror
+> (https://github.com/git/git/blob/5fa0f5238b0/builtin/push.c#L410)
+> AFTER the check for refspecs provided on the command-line
+> (https://github.com/git/git/blob/5fa0f5238/builtin/push.c#L615).
+> introduced by 800a4ab399e954b8970897076b327bf1cf18c0ac.
 
-I was afraid that was the case!
+> it's mirroring only the refspecs you provided on the command-line to
+> the server. i.e. all local refs that aren't stated on the command-line
+> will still be deleted
 
-> Also, just FYI, as far as I know, git-p4 doesn't create "merge" commits,
-> so bidirectional integrations won't look different from ordinary commits =
-in git commit graph.
+> this unexpected behaviour is why --mirror isn't allowed to be used
+> when refspecs are specified on the command-line. but the above commit
+> moves the sanity check so it doesn't catch the implied --mirror when
+> remote.<remote>.mirror is set (i.e. cloned with --mirror)
 
-Ah, I didn't realize that, thank you. Perhaps I should just sync each
-branch separately then, ignoring branch mappings entirely and be done
-with it.
+https://twitter.com/saleemrash1d/status/1163963105849876481
 
-I was hoping to generate a commit graph that properly represents
-integrations as merge commits because our Perforce branches are quite
-large. Storing diffs of integrations rather than discrete commits
-would result in a much smaller Git repository for us. There are
-*quite* a lot of integration commits.
-
-I wonder how hard it would be to modify git-p4 to use merge commits? I
-will take a look at the source. I'm somewhat surprised that's not the
-case to begin with though? Maybe someone else can chime in on why
-merge commits aren't used.
-
-> Uh-oh, 5M commits!
-> But given that it fails at 25% instead of 1%,
-> you've got some luck. :)
-
-Hehe :) Fortunately I don't have to migrate *all* of those commits,
-but still a fair number.
-
-> This might not be just because of bidirectional integrations per se.
-
-I should have mentioned - there were no P4 branch mappings defined for
-the depot paths in the test case I shared (maybe that's obvious).
-
-> This error may happen if, say, there's a P4 branch mapping from staging t=
-o master,
-> but master was actually created before staging.
-> git-p4 tries to find a "parent branch" for master, but it doesn't exist y=
-et,
-> so git-p4 fails in an ugly way.
-
-Yeah this is exactly correct, I've tested precisely this scenario.
-Actually that's what two of the real branches I am trying to migrate
-look like.
-
-> One way to filter out troublesome P4 branch mappings is to set git-p4.bra=
-nchUser to a particular user.
-> But most likely, this won't help you because different people created dif=
-ferent branch mappings over time.
-
-I was thinking I could set git-p4.branchUser to a user that hasn't
-created any branches at all and then define branch mappings I care
-about in git-p4.branchList.
-
-But pretty much all of our branches either have bidirectional
-integrations or a situation like you described above where branchA was
-created before branchB, and branchB integrates into branchA.
-
-> Unfortunately, there's _no_ git-p4.branchRegexp config option,
-> but it's fairly straightforward to implement -- patches welcome! ;)
-> (getBranchMapping() needs to apply a regex to branch names before doing a=
-nything serious with them)
-
-That would be a neat option! It's not really filtering the branch
-mappings which is my issue though. The number of branches is small
-enough that I can manage the mappings manually.
-
-> Note, that you can't have master:staging together with staging:master,
-> otherwise you'll likely run into the same problem as before.
-
-Yeah this is really the crux of my issue.
-
-> This might be simple or quite tedious depending on the history and branch=
-ing strategies of your repositories.
-> It may be as easy as just dropping some p4 branch mappings.
-
-I'm thinking if I'm not getting merge commits anyway I may as well
-just forget about the branch mappings entirely.
-
-> However, one of the repositories I had to deal with had almost random bra=
-nching strategy (with most integrations done without predefined branch mapp=
-ings), so I had to spend quite some time to trace the history and figure ou=
-t which branches make the most sense in git.
-
-Fortunately our branching strategy was *mostly* well-defined and we do
-have Perforce mappings defined between our branches. However most
-integrations didn't actually use the branch mappings, just manually
-specified depot paths. But they did fall under the branch mapping
-scopes.
-
-> so for repositories with simple/short history,
-
-Unfortunately our repo history is anything but short or simple :(
-
-> I recreated those merge commits manually (well, in a bash script) using `=
-git replace --graft <commit> <parent1> <parent2>` followed by `git filter-b=
-ranch --tag-name-filter cat -- --all` to make grafts permanent.
->
-> (`git filter-branch` is only needed once in the very end after all `git r=
-eplace` manipulations are done)
-> It's perhaps better to teach git-p4 to produce merge commits, but a bash =
-script was a low-tech low-risk option for me.
->
-> Also, beware that git-p4 doesn't handle branch-into-non-empty directory p=
-roperly.
-> If I remember correctly, something like
-> `p4 copy //depot/branchA/... //depot/branchB/... ; p4 submit; p4 copy //d=
-epot/branchC/... //depot/branchB/...; p4 submit`
-> will result in branchB having _both_ branchA and branchC contents in git.
-> `git filter-branch` or `git rebase` are your friends to workaround this.
-> (or better fix git-p4, of course)
-
-These are great tips, thanks! Maybe what I will do is sync each branch
-separately with no branch mappings, then use this technique to create
-merge commits for the initial branch creation commits only and not
-worry about any other integrations.
-
--Aaron
+$ git clone --mirror git@github.com:FiloSottile/test.git
+$ git ls-remote
+From git@github.com:FiloSottile/test.git
+2aa1cacf9b1a6b1227c7c13367ec38637ef3d9a3	HEAD
+2aa1cacf9b1a6b1227c7c13367ec38637ef3d9a3	refs/heads/master
+773069ef7f893e7fcb3271e6ba80eeafbfb98694	refs/heads/patch-1
+2aa1cacf9b1a6b1227c7c13367ec38637ef3d9a3	refs/tags/v0.0.0
+$ git show-ref
+2aa1cacf9b1a6b1227c7c13367ec38637ef3d9a3 refs/heads/master
+773069ef7f893e7fcb3271e6ba80eeafbfb98694 refs/heads/patch-1
+2aa1cacf9b1a6b1227c7c13367ec38637ef3d9a3 refs/tags/v0.0.0
+$ git push -d origin patch-1
+To github.com:FiloSottile/test.git
+ - [deleted]         patch-1
+ - [deleted]         v0.0.0
+ ! [remote rejected] master (refusing to delete the current branch: refs/heads/master)
+error: failed to push some refs to 'git@github.com:FiloSottile/test.git'
+$ git version
+git version 2.22.0
