@@ -2,142 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCEFF1F461
-	for <e@80x24.org>; Wed, 21 Aug 2019 17:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2005E1F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 18:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727185AbfHURkW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 13:40:22 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39868 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726752AbfHURkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 13:40:22 -0400
-Received: by mail-pg1-f194.google.com with SMTP id u17so1715153pgi.6
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 10:40:21 -0700 (PDT)
+        id S1728231AbfHUSMl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 14:12:41 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44037 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbfHUSMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 14:12:40 -0400
+Received: by mail-qt1-f193.google.com with SMTP id 44so4138652qtg.11
+        for <git@vger.kernel.org>; Wed, 21 Aug 2019 11:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=JWq6pfnhMI0AVQNIDeNB5C+4KgKGHcAEokVc00jhyn8=;
-        b=a6m9Be81OPQFq//5HYqWKzFb41XVN44Kj8wgI8vwHR20CGSmmd4PMNSLyWpnrxeRNH
-         awlsZ8atd3jVQvEL27O7zTsm/fBH/GnPnjxBtl8Dxi0SNVO6jvNwjWRWcDXf2dCL2Xqh
-         nGT/sDWGOFlTdTmZnEjZyuVK2bm6h+MNg6o6HCh27CetMlTWV9JQD/byJggTlRGBECrf
-         s2dsDOza2UGbxE6KYIYBFWQbmhUCI+OCWzACKL2eeOWxwQXaC3Mpo6hxv8mbCuYiAnuG
-         CygXzWkxrujoVikD/5c38Tn5oULgIXaHG1uGHP/apwCDuZT/xGU5467f46dRimE3Cipg
-         YQYA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SVZTERedTyAyxbzMFH1aQGkEO1WvCNs1eKmRyT5j/+o=;
+        b=RvmTDwrU9gToZRt8L+1HpH6qi3jTsBeLLAsgiwhBLSa09iSMatI6Gq5NecbsiZsRiy
+         cX2ZN0ZpraGUatb6CA6M2eiTAqHcjOqFdVegVGvBEp62XWIczt7AN+SekDTq8d76SLOc
+         Cfn15auCxp1x1XUE83rGvBEurWD5tf6qpPHKk/D7vUaev+9hTmAUFmWHKtM2lUdneymb
+         Aywx+jmtVkDZcl5jxxmQOOLtKkzcZitcVMa4d70YEWYjpMR0XnxuwOfCuXHpB1Gb6Kqu
+         Sad7Fv6Glwmznc9uUjLOFOAdUrd8XT+VV1nzuURMNKf4cOH1DPsnCGRws6Zr3wTSG7e3
+         RZhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=JWq6pfnhMI0AVQNIDeNB5C+4KgKGHcAEokVc00jhyn8=;
-        b=GW9P5MQIXmvMZN55woVU25EKVQ9wksfahtn12ZABSr3ETRdmIVNk/PGZo8y7NpvT8z
-         C3tDBAUjnS0uhu335mwIBUQTjGgUe9Zj0Q0VjMCk7sBn2EA+OvjtI84+zIFkIfAKV7WG
-         pb3HU0BOmAwnAz4wxUnMXtOFE61vV/xcMxbqYerPl6szabMT7ZVweQsRzuLAMbNMabDN
-         +VIcWZVFTNEz17+BEdzHZ+NTVT42H1X3BfFYsss5zO28kzs+sl52ZvQsVqRnHpX/6iza
-         pfyzoEweq7qspePLKHgV3s54W/LsJLVxIWUDPz65AG5TRSYOyESWzr2k8Dld2Eiu8YA4
-         8vzw==
-X-Gm-Message-State: APjAAAWl0WvHJb7NWyLF/0UEkzAcM1sWTF+icV3+xqaddgBPhkHyuH6/
-        egl0TDEH5tvM/hyDWpHj5Viq4Q==
-X-Google-Smtp-Source: APXvYqxw4qoLGxOgngZlqJkmKhtG2kdTdrgsPzbkvFl97uP/4XgrAvdOSWI5RUISIlf8cQgvs8HQVA==
-X-Received: by 2002:a17:90a:21eb:: with SMTP id q98mr1106217pjc.23.1566409220787;
-        Wed, 21 Aug 2019 10:40:20 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 11sm33687746pgo.43.2019.08.21.10.40.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2019 10:40:20 -0700 (PDT)
-Date:   Wed, 21 Aug 2019 10:40:13 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] bugreport: generate config whitelist based on docs
-Message-ID: <20190821174013.GA35435@google.com>
-References: <20190817003926.102944-3-emilyshaffer@google.com>
- <20190817203846.31609-1-martin.agren@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SVZTERedTyAyxbzMFH1aQGkEO1WvCNs1eKmRyT5j/+o=;
+        b=Hepm84ASOqms6QFYDqUbt8OPl0muCVyjVYFoNdfs/WMJC4S5ZuRAZTxsxeH4t665DX
+         5cpFJYqAWpucyI/XZyWDe4T5AuHxUn9bhRO5t05sSLhW2I31pOTNTqwA/nUiEbgZC/q/
+         CRR15BMUhDJoJT5fEMKqT7aIupLMOMvRfhgjncLgrDgWbO54KV3pFuiTz4thFwvt/qXK
+         BnDshENXyZ97BtO3pqM2qRV8MKfGVYEsVshvv+mGlqLVcVzIMsVyPSCJWq3WfItvepm9
+         iY2fGr90zVYqhp0cpbn7Qili58v1zsKoaw2k4vqukVDNO4rLoZFcn39TA4xLKMIhtlfA
+         mweg==
+X-Gm-Message-State: APjAAAXmt6akhkLWdqz8ZV8U4CNxflDPnlfxYXvwo+Mus3/rqanH0+op
+        RK/dT+GftJPftE73Dx7u8cY=
+X-Google-Smtp-Source: APXvYqzNgCo3innoRsuILB6n8KPI6/RZsmEZweA3NaM9AmsPC8hYkjpVADdo47ZlJ4VWGSn6AU7D9A==
+X-Received: by 2002:ad4:4a92:: with SMTP id h18mr16898214qvx.235.1566411159539;
+        Wed, 21 Aug 2019 11:12:39 -0700 (PDT)
+Received: from [10.0.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id u28sm13221417qtu.22.2019.08.21.11.12.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Aug 2019 11:12:38 -0700 (PDT)
+Subject: Re: [PATCH 2/2] line-log: avoid unnecessary full tree diffs
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>
+References: <20190821110424.18184-1-szeder.dev@gmail.com>
+ <20190821110424.18184-3-szeder.dev@gmail.com>
+ <e52e867b-af17-d239-11b5-e0c6353acc2f@gmail.com>
+ <20190821173515.GY20404@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <284c3d2a-860a-fc46-bb1a-56c6707de724@gmail.com>
+Date:   Wed, 21 Aug 2019 14:12:36 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <20190821173515.GY20404@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190817203846.31609-1-martin.agren@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 17, 2019 at 10:38:46PM +0200, Martin �gren wrote:
-> On Sat, 17 Aug 2019 at 02:42, Emily Shaffer <emilyshaffer@google.com> wrote:
-> >
-> > Add a new step to the build to generate a whitelist of git-config
-> > variables which are appropriate to include in the output of
-> > git-bugreport. New variables can be added to the whitelist by annotating
-> > their documentation in Documentation/config with the line
-> > "// bugreport-include".
+On 8/21/2019 1:35 PM, SZEDER Gábor wrote:
+> On Wed, Aug 21, 2019 at 11:53:28AM -0400, Derrick Stolee wrote:
+>> On 8/21/2019 7:04 AM, SZEDER Gábor wrote:
+>>> With rename detection enabled the line-level log is able to trace the
+>>> evolution of line ranges across whole-file renames [1].  Alas, to
+>>> achieve that it uses the diff machinery very inefficiently, making the
+>>> operation very slow [2].  And since rename detection is enabled by
+>>> default, the line-level log is very slow by default.
+>>>
+>>> When the line-level log processes a commit with rename detection
+>>> enabled, it currently does the following (see queue_diffs()):
+>>>
+>>>   1. Computes a full tree diff between the commit and (one of) its
+>>>      parent(s), i.e. invokes diff_tree_oid() with an empty
+>>>      'diffopt->pathspec'.
+>>>   2. Checks whether any paths in the line ranges were modified.
+>>>   3. Checks whether any modified paths in the line ranges are missing
+>>>      in the parent commit's tree.
+>>>   4. If there is such a missing path, then calls diffcore_std() to
+>>>      figure out whether the path was indeed renamed based on the
+>>>      previously computed full tree diff.
+>>>   5. Continues doing stuff that are unrelated to the slowness.
+>>>
+>>> So basically the line-level log computes a full tree diff for each
+>>> commit-parent pair in step (1) to be used for rename detection in step
+>>> (4) in the off chance that an interesting path is missing from the
+>>> parent.
+>>>
+>>> Avoid these expensive and mostly unnecessary full tree diffs by
+>>> limiting the diffs to paths in the line ranges.  This is much cheaper,
+>>> and makes step (2) unnecessary.  If it turns out that an interesting
+>>> path is missing from the parent, then fall back and compute a full
+>>> tree diff, so the rename detection will still work.
+>>
+>> I applied your patches and tried them on our VFS-enabled version of Git
+>> (see [1]). Unfortunately, the new logic is still triggering rename
+>> detection, as measured by the number of objects being downloaded.
 > 
-> These "// bugreport-include" show up in the rendered manpages, both with
-> AsciiDoc and Asciidoctor. :-(
+> Well, the goal of this patch was to avoid full tree diffs if possible,
+> not to avoid rename detection :)
+> 
+> Anyway, I wonder how does 'git log -L1:your-evil-path --no-renames'
+> fare as a baseline?
 
-Hmm, I don't see it in the troff or the HTML with asciidoc using `make`
-- but I do see with asciidoctor, or `asciidoc -d html5`. Nice catch,
-thanks.
+Yeah, adding --no-renames does really well, comparatively. Perhaps I'll
+just recommend to users to use that flag for now.
 
-> 
-> > --- a/Documentation/config/sendemail.txt
-> > +++ b/Documentation/config/sendemail.txt
-> > @@ -1,63 +1,63 @@
-> > -sendemail.identity::
-> > +sendemail.identity:: // bugreport-exclude
-> >         A configuration identity. When given, causes values in the
-> 
-> If I put each comment on a line of its own (after the config option, but
-> I suppose before would work the same way), Asciidoctor truly ignores
-> them and everything's fine. And AsciiDoc renders this one and others
-> like it ok.
-> 
-> > -sendemail.aliasesFile::
-> > -sendemail.aliasFileType::
-> > -sendemail.annotate::
-> > +sendemail.aliasesFile:: // bugreport-exclude
-> > +sendemail.aliasFileType:: // bugreport-exclude
-> > +sendemail.annotate:: // bugreport-include
-> 
-> However, AsciiDoc (version 8.6.10) seems to effectively replace those
-> comments with an empty line during processing, and it makes quite the
-> difference here. Instead of these appearing in a compact comma-separated
-> list, they are treated as individual items in the description list with
-> no supporting content.
-> 
-> FWIW, I like the idea of annotating things here to make it harder to
-> forget this whitelisting when adding a new config item.
-> 
-> Below is what I came up with as an alternative approach. Feel free to
-> steal, squash and/or ignore as you see fit.
+Thanks,
+-Stolee
 
-This is cool - I'll add this to the commit chain and build on top of it.
-Thanks!
-
-> 
-> BTW, I'm not sure the grep invocation is portable (-R ? -h ? -P ? -o ?).
-
-Yeah, I'll see what I can do about that (recursive, no filename,
-Perl-compatible regex, match only) - I can probably replace this with
-something like `find | xargs pgrep` - I'll keep digging. Thanks.
-
-> We should probably also do the usual "create a candidate output file,
-> then move it into place" dance for robustness.
-> 
-> I do think we should test the generated whitelist in some minimal way,
-> e.g., to check that it does contain something which objectively belongs
-> in the whitelist and -- more importantly IMHO -- does *not* contain
-> something that shouldn't be there, such as sendemail.smtpPass.
-
-Good point, I'll add a test for this.
-
-Thanks very much for this!
- - Emily
