@@ -2,107 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6BA71F461
-	for <e@80x24.org>; Wed, 21 Aug 2019 14:56:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 183331F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 15:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727644AbfHUO4U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 10:56:20 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39325 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726530AbfHUO4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 10:56:20 -0400
-Received: by mail-wm1-f65.google.com with SMTP id i63so2459323wmg.4
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 07:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=P6q3C/W4CUJmYqaZE0wOZY6c+IyqMNwfmnqTFPvKz+o=;
-        b=SAztHgCxb0L8DPXsb4tDGj+0PROVfKjHKuxtSlt5K03ErHk8lcSAQDe+rVgt/e33mt
-         KFKy7ulfwgQQDvUcmJSUeFweOrDrMzbgcYtRoHG5z/M/JkRKpDOSPYp3mHTl4B6p5b5i
-         6zd+chKsjsvhkFTFMklqs2uDeUdHlkBGxwqNURrIHsrt+9PXprjoe5vfTHCuWR3MyxW+
-         Kemg1+iOW9FEykuCz3CFEM0NCuXBoBVqlvvyGTgiJCNmdfoYVUc89srygLleaZxb53rE
-         Q1V2S210TxrId6dC9plfG87wpgZLt5JgVjmg19l5eRF0wZ6QDamZWZe3PkCLua/KRZhp
-         y1zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=P6q3C/W4CUJmYqaZE0wOZY6c+IyqMNwfmnqTFPvKz+o=;
-        b=I46b8TQHnkLgjKbMnNNHH6/7SPe0lW+ZH9SVT9S4Pc9jLWmRSVFk79Pq9U4HQTHSn5
-         ZJEyXJwCUWMJkrDlZbg8/I9e6INu+KW3ntSYqVi/5q976MXMsHJFbFd85JsjLwAaam+2
-         ClEWlcp+2jA9cNUhaCRq+4+bB2zZFs5ZmQC+T1ZyTzZlbfuQY5kNK6CbqIYG5wLVz3jT
-         8oAK4I7zMvlOdNEfzPsVgq/zHmWqGIxO7RsQGUaGWjezUjo8BUXJbUTE1kU8k/5xX+3H
-         Twft14u86zAHs1wL8/n8MzI5jrguv9dOdLaT1asxSgzuqoUBEQERFpP8hAdbntXMCimZ
-         n35A==
-X-Gm-Message-State: APjAAAUTKT97LhDpC4t//aePqBNBV1V/HC8/+QnsDfv3/2SpPf7PzQWz
-        fd+9a1VkJa+JBbRP2kgGeac=
-X-Google-Smtp-Source: APXvYqxz+lkCmO9iOjzxG9S2bAV6ZUV0ZEuysABEECfcmqGZbgF91DPx1qoP5qCGmeWAogZeIFebBg==
-X-Received: by 2002:a1c:7619:: with SMTP id r25mr459782wmc.153.1566399378249;
-        Wed, 21 Aug 2019 07:56:18 -0700 (PDT)
-Received: from localhost ([2.31.128.175])
-        by smtp.gmail.com with ESMTPSA id 2sm26465269wrg.83.2019.08.21.07.56.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Aug 2019 07:56:17 -0700 (PDT)
-Date:   Wed, 21 Aug 2019 15:56:16 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
-        johannes.schindelin@gmx.de, larsxschneider@gmail.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH] t0021: make sure clean filter runs
-Message-ID: <20190821145616.GB2679@cat>
-References: <20190820065625.128130-1-t.gummerer@gmail.com>
- <aea64308-fcba-77a1-1196-182b35ad405c@kdbg.org>
+        id S1728412AbfHUPWU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 11:22:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57631 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726885AbfHUPWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 11:22:19 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B121159100;
+        Wed, 21 Aug 2019 11:22:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dqhVDQPGPfeMghKRlBNHVvspPdk=; b=bXUQBY
+        tAw72LyaMU5zES4X2VSnUyqptkxqvhoLbGUCuLDzTQNzUM5MJTv03p02SDHMr1Fm
+        XcCbI1x/qPTHckACQ2mZCejptl9wpotmaXMmDRFtBdvau2owpdRDV8S1myaChxYC
+        gcO9v9Ssxbkiy6LFWEzW/BV9W/aQHAjpRpVF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CBZR/sYg35/peqBQffa2CGP6q8dAkYLC
+        aFdHjU532NOviXve5ucld58EKV+5uCDTDZxR1WPM4nm5giSEGbN/CXXRXXKhOsLK
+        XINv9V9MLd63XPZPMjKsgJMY3/seADYEO4rKClCIuRlGe3u57qLqb0wIxrLRt3R3
+        fdBAl+yVIEk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D12B1590FE;
+        Wed, 21 Aug 2019 11:22:17 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42E781590FC;
+        Wed, 21 Aug 2019 11:22:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, garimasigit@gmail.com, jeffhost@microsoft.com,
+        stolee@gmail.com, Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH 1/1] quote: handle null and empty strings in sq_quote_buf_pretty()
+References: <pull.314.git.gitgitgadget@gmail.com>
+        <9d2685bdb2e193986bec8cad88795963977d41fe.1566329700.git.gitgitgadget@gmail.com>
+        <xmqqtvabtwai.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 21 Aug 2019 08:22:15 -0700
+In-Reply-To: <xmqqtvabtwai.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 20 Aug 2019 13:29:57 -0700")
+Message-ID: <xmqq7e76tufs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aea64308-fcba-77a1-1196-182b35ad405c@kdbg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 75574904-C427-11E9-92C3-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/20, Johannes Sixt wrote:
-> Am 20.08.19 um 08:56 schrieb Thomas Gummerer:
-> > Fix the test by updating the mtime of test.r, ...
-> 
-> > diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> > index e10f5f787f..66f75005d5 100755
-> > --- a/t/t0021-conversion.sh
-> > +++ b/t/t0021-conversion.sh
-> > @@ -390,6 +390,7 @@ test_expect_success PERL 'required process filter should filter data' '
-> >  		EOF
-> >  		test_cmp_exclude_clean expected.log debug.log &&
-> >  
-> > +		touch test.r &&
-> 
-> 		test-tool chmtime +10 test.r
-> 
-> would be more reliable.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hmm, is touch unreliable on some platforms?  I didn't think of
-'test-tool chmtime', but I'm also not sure it's better than touch in
-this case.
+> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>>  create mode 100644 t/helper/test-quote.c
+>>  create mode 100755 t/t0091-quote.sh
+>
+> I do not appreciate these two new files only to test this corner
+> case.  ...
 
-To me te 'touch' signifies that the timestamp must be updated after
-the previous checkout, so git thinks it could possibly have been
-changed, which I think is clearer in this case than setting the mtime
-to a future time.
+To avoid misunderstanding, I am not against having unit tests when
+they are appropriate. What I am against is to have only unit tests,
+especially when the effect of a bug (and its fix) can be tested with
+externally observable behaviour. The latter gives us a better sense
+of the real-world impact (e.g. if run_command would spawn the given
+command via shell using the 'sh -c "... stringified command and its
+arguments ..."' idiom, it may be done with the function we fixed
+here, which would mean that the user cannot pass '' as an argument
+to that codepath), while a unit test gives readers "ok, the function
+behaves that way now" alone, without answering "then what?  What
+difference does this fix make to my use of Git as a whole?".
 
-But I'm happy to change it if there's something I'm missing why
-'test-tool chmtime' is better in this case.
-
-> >  		filter_git checkout --quiet --no-progress empty-branch &&
-> >  		cat >expected.log <<-EOF &&
-> >  			START
-> > 
-> 
-> -- Hannes
+In any case, thanks for an attempt to fix.
