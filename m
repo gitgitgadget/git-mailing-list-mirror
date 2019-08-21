@@ -2,83 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EFB51F461
-	for <e@80x24.org>; Wed, 21 Aug 2019 18:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7848A1F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 18:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729038AbfHUSX0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 14:23:26 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:50189 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726785AbfHUSX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 14:23:26 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46DGHw2mH7z5tl9;
-        Wed, 21 Aug 2019 20:23:24 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id F1DBD1D1B;
-        Wed, 21 Aug 2019 20:23:23 +0200 (CEST)
-Subject: Re: [PATCH] t0021: make sure clean filter runs
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
-        johannes.schindelin@gmx.de, larsxschneider@gmail.com,
-        szeder.dev@gmail.com
-References: <20190820065625.128130-1-t.gummerer@gmail.com>
- <aea64308-fcba-77a1-1196-182b35ad405c@kdbg.org> <20190821145616.GB2679@cat>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a8de9661-7f6a-f953-93a0-8ef88e9a490a@kdbg.org>
-Date:   Wed, 21 Aug 2019 20:23:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727539AbfHUS0Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 14:26:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62655 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726513AbfHUS0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 14:26:24 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B8BE16DA11;
+        Wed, 21 Aug 2019 14:26:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/wjgRH4tLgl/xEMgsIf/91lGpgg=; b=LmQgAB
+        gn+Z81nYmsPf6M2KqA9gcn937arH6pF1+F3rnjzcnnsdcClYPQU7cW6Rx96Vnsyk
+        JwuJJ8mUjoThRBg1C/Goz/Ked8NmTRDhzarrm9KRGevtU+rXqgKCDYBDKvQ08R4y
+        SAYgHpzZlNigj+GD4ZdKobbZxgOO+pLIYaHIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aEMz1qpzT0tD7Y201CaovlmWHWJWhtSb
+        9vg5/AGopSwaw1aGsG8c5HvMQ0y/9oCwtEEYH2CxDRxTjhWwMq2MnmUX6OSHRlaZ
+        D2jZ9OPdu2sGNh0FBQELINMy1eZPc/Eb+AT6BEssfByShFhhlydPqPcY27UWOiNi
+        DmbzePt0x6k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 327FA16DA0F;
+        Wed, 21 Aug 2019 14:26:19 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 82E4F16DA0E;
+        Wed, 21 Aug 2019 14:26:18 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 11/13] Doc: add more detail for git-format-patch
+References: <cover.1566258525.git.liu.denton@gmail.com>
+        <cover.1566285151.git.liu.denton@gmail.com>
+        <c12534ab5dc67bdecad45e10d45d428bc783cb09.1566285151.git.liu.denton@gmail.com>
+Date:   Wed, 21 Aug 2019 11:26:17 -0700
+In-Reply-To: <c12534ab5dc67bdecad45e10d45d428bc783cb09.1566285151.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 20 Aug 2019 03:19:11 -0400")
+Message-ID: <xmqqimqqs7cm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190821145616.GB2679@cat>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B0B072C-C441-11E9-BC36-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.08.19 um 16:56 schrieb Thomas Gummerer:
-> On 08/20, Johannes Sixt wrote:
->> Am 20.08.19 um 08:56 schrieb Thomas Gummerer:
->>> Fix the test by updating the mtime of test.r, ...
->>
->>> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
->>> index e10f5f787f..66f75005d5 100755
->>> --- a/t/t0021-conversion.sh
->>> +++ b/t/t0021-conversion.sh
->>> @@ -390,6 +390,7 @@ test_expect_success PERL 'required process filter should filter data' '
->>>  		EOF
->>>  		test_cmp_exclude_clean expected.log debug.log &&
->>>  
->>> +		touch test.r &&
->>
->> 		test-tool chmtime +10 test.r
->>
->> would be more reliable.
-> 
-> Hmm, is touch unreliable on some platforms?  I didn't think of
-> 'test-tool chmtime', but I'm also not sure it's better than touch in
-> this case.
-> 
-> To me te 'touch' signifies that the timestamp must be updated after
-> the previous checkout, so git thinks it could possibly have been
-> changed, which I think is clearer in this case than setting the mtime
-> to a future time.
+Denton Liu <liu.denton@gmail.com> writes:
 
-touch does not guarantee that the current time is different from the
-timestamp that the file already carries, particularly not when the
-filesystem stores just a resolution of 1 second, and commands are
-executed quickly.
+> Next, while we're at it, surround option arguments with <>.
 
-But when we use test-tool chmtime +10, then the timestamp is definitely
-different. If you don't like a timestamp in the future, use -10, or
-anything else that is different from zero.
+I'd suggest squashing this in to complete the above.
 
--- Hannes
+cf. <xmqq1rxfveym.fsf@gitster-ct.c.googlers.com>
+---
+ Documentation/git-format-patch.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 95bc4d53ca..0ac56f4b70 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -17,9 +17,9 @@ SYNOPSIS
+ 		   [--signature-file=<file>]
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+-		   [--in-reply-to=<Message-Id>] [--suffix=.<sfx>]
++		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+ 		   [--ignore-if-in-upstream]
+-		   [--rfc] [--subject-prefix=<Subject-Prefix>]
++		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+ 		   [--to=<email>] [--cc=<email>]
+ 		   [--[no-]cover-letter] [--quiet]
+@@ -159,9 +159,9 @@ Beware that the default for 'git send-email' is to thread emails
+ itself.  If you want `git format-patch` to take care of threading, you
+ will want to ensure that threading is disabled for `git send-email`.
+ 
+---in-reply-to=<Message-Id>::
++--in-reply-to=<message id>::
+ 	Make the first mail (or all the mails with `--no-thread`) appear as a
+-	reply to the given Message-Id, which avoids breaking threads to
++	reply to the given <message id>, which avoids breaking threads to
+ 	provide a new patch series.
+ 
+ --ignore-if-in-upstream::
+@@ -171,9 +171,9 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
+ 
+---subject-prefix=<Subject-Prefix>::
++--subject-prefix=<subject prefix>::
+ 	Instead of the standard '[PATCH]' prefix in the subject
+-	line, instead use '[<Subject-Prefix>]'. This
++	line, instead use '[<subject prefix>]'. This
+ 	allows for useful naming of a patch series, and can be
+ 	combined with the `--numbered` option.
+ 
+-- 
+2.23.0-266-g1e4abb0e04
+
