@@ -2,84 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9321F461
-	for <e@80x24.org>; Wed, 21 Aug 2019 14:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 919B41F461
+	for <e@80x24.org>; Wed, 21 Aug 2019 14:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729015AbfHUOCJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 10:02:09 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37843 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727696AbfHUOCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 10:02:09 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f22so3088989edt.4
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 07:02:07 -0700 (PDT)
+        id S1729133AbfHUOKn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 10:10:43 -0400
+Received: from mail-yb1-f175.google.com ([209.85.219.175]:42467 "EHLO
+        mail-yb1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727949AbfHUOKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 10:10:43 -0400
+Received: by mail-yb1-f175.google.com with SMTP id h8so1071786ybq.9
+        for <git@vger.kernel.org>; Wed, 21 Aug 2019 07:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=m18rRLEjNc4X6x8Ap0F7UBR6sGvD75/5cM6KBxPd798=;
-        b=Kq86u9/akaif6Qq1i3zwjuwJurYKNlsNOUWxL7O4zY/8hQidx+EXnc1GrHFE8PUcve
-         0EFAbjqrpx2ncOUhggeFX5XdSdHh0RelFTDyipBkfpS69ePwWeV7zbSYeiUqemBixbsP
-         CLEJ6VkUNu5Eo9eH2qFq/Ve84iJzuAfV/kuBOh/rrBeTRAAH5EbUXvk5XksxFeW/tmJB
-         MGzL2PPbG5aC7Y+wZGzgaHav5C8QC+/LUTUcg9M91Aa9G8GN8oAK6xVAiKvLks4Neta5
-         RsKnFhqUtpF+rtEhb+44upqseruUqpm9uyFSl2IkKd2lUUUon+H6L36BUj0MGeJ8JW6C
-         XY3A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=tAsz2wYXzQrb01zFeLXYEaKXU/bSUXc/u+g0vs3IkTY=;
+        b=ZRfgeTvczNggEKwbuoE/rVySt8qED49tqksNRuz9zfU2uCF2MYOEjWwKPzCCjyRJy1
+         HwC1x0GdV/eGewcNxFVorwzDKntu694ZPvqlT1GlHYRIjrBowcVs2IMrY6Dzpl8HtIwJ
+         8FrUjIWAIHiLPG42/4BkJ+z8/Ivis/AaLjLuWqukm392IPsRVdn27IGDVd/Zxgag30YH
+         /iZf8dlLZ5ds4WQkAw+B51ymYUkmkgtueQraH4ZRHcx14a9hNSf7gALft6NxYYDX53Ai
+         LFla4p0bK50HgiVdf8AwzI+y92fwtHW+MKbcJAXks6jlml78Vnqem6VOhVdROMiZUpZ5
+         JBkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=m18rRLEjNc4X6x8Ap0F7UBR6sGvD75/5cM6KBxPd798=;
-        b=KWhZpj5D7+2XPvhu2QMXQ+COgux7Q68T3GhDr6uyiuJMPbg0vVF/cdkWMrgFT3ZYHI
-         0H5lBhrcZFN5eM2VGWnXBRbD4HQhpVWEHmhvbGYLvCwIl6BvVHWKXwYf86YAD9VyuKkH
-         vrOCT2lTANuCrQZ6l4Pbf5d/g5nMd9xgJKXuE6IULNAUyVFsVEdqtKCG4dKxOfcSU11X
-         6JK4iX0K/kTDCREmck3X80scPb30il0BaprlMdBUSRTFl+tSSyJOCbFJ0GuswtUYzrfn
-         Wv5skVBVc2Dr98wKkzjHuRHEwB3T+ltMY8BSzrq7gBB+3JgFNajvDJ0acLk80TdbTpWe
-         uGxg==
-X-Gm-Message-State: APjAAAWp+jPuzV5xnz9V95rHkd6zIjSECCMFMc4adUKM4HN3zhbiQLD1
-        W61FO5liTVi37ysL/+PUUEzUB1VCJe4JmB69m8nxnyRY
-X-Google-Smtp-Source: APXvYqxw+o5wa0RLpnj7bQwIeDMridJ92y28h9rS8C+EQ1e3cdd8POGjbDHjOVUlxmEB7WEhjtkCJBT5g2y/7PVVJyw=
-X-Received: by 2002:a05:6402:759:: with SMTP id p25mr36610725edy.119.1566396126815;
- Wed, 21 Aug 2019 07:02:06 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=tAsz2wYXzQrb01zFeLXYEaKXU/bSUXc/u+g0vs3IkTY=;
+        b=Gl2E0+fC+Qem7bsc+UFAdvxltudnGjl5z7uNHr0YPMaUWRYHBYhCxoA8lKWMubkGa3
+         NQ+rbyE69lV2H+EeGjhadb07KQ+T90us7CPNYdK1Zz8M5eDcC3qpB1m84HwHnJh8PrOl
+         zKiRKt/hMCLg+O4rHdPky8j8l5ylYx/KukA+aq5pb/MhC7kR3461jbuouSj7XZlSyEXT
+         z9nvBzpK0Q+JHJkW1CpW/5LnlwnLpRq/NCMTEmP6aW5dVhLOrxhuyQs1yVL5GiLafXmk
+         dhuANdSBkXeUeZOefzDUOEFVxCG6HCueQjN8ZUaDH7nFxLCvWt8/z4ZkPlgeV8GTq/QA
+         ySOA==
+X-Gm-Message-State: APjAAAUiRmRTJtI+xB1cw4jmTEH/6k2REk0UpQWVHGRRB0/03joCOzyG
+        mdKixKCNhDHRPz0V3UATRV1beYdA0lMsI2t+2EmaRw==
+X-Google-Smtp-Source: APXvYqz9h1wR0z5vQVqX7jIoKqkF6mh31n5dben0NoQi70lo5FzpL5qQWcUVBIDwCRf4YDIzBbEWPtqnZop1kbsVM4I=
+X-Received: by 2002:a25:6305:: with SMTP id x5mr23184499ybb.444.1566396642234;
+ Wed, 21 Aug 2019 07:10:42 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 21 Aug 2019 16:01:54 +0200
-Message-ID: <CAP8UFD3h=GNEFbVUWKBMpYFUNqOaDCkxyeq5Vu2kGst_uBE0eA@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 54
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Andrew Ardill <andrew.ardill@gmail.com>
+References: <CAAZEOjv+y8y6z_stqqZFAVe6SqCH1upvhYPeqAY=w49EGdzK4g@mail.gmail.com>
+In-Reply-To: <CAAZEOjv+y8y6z_stqqZFAVe6SqCH1upvhYPeqAY=w49EGdzK4g@mail.gmail.com>
+From:   Rick Tillery <rtillerywork@gmail.com>
+Date:   Wed, 21 Aug 2019 09:10:31 -0500
+Message-ID: <CAAZEOjuaMarjG=RUj2UDYL19u0tnYgXf-Kx3Z2dYJzmDDK8esw@mail.gmail.com>
+Subject: Re: QGit 2.8 for Windows?
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+So, does QGit have a test build for Windows, perhaps run as a
+regression test to verify the build each time a change is made to the
+source?
 
-The 54th edition of Git Rev News is now published:
+Rick
 
-  https://git.github.io/rev_news/2019/08/21/edition-54/
-
-Thanks a lot to Elijah Newren, Jeff Hostetler, Andrew Ardill and
-Jean-No=C3=ABl Avila who contributed this month!
-
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+On Thu, Aug 15, 2019 at 4:06 PM Rick Tillery <rtillerywork@gmail.com> wrote:
+>
+> QGit's README (
+> https://github.com/tibirna/qgit/blob/master/README.adoc ) directs me
+> to this mailing list, so forgive me if this is the wrong place.
+>
+> Is there a fully built version of QGit 2.8 for Windows?
+>
+> The latest QGit for Windows I can find is 2.3, from 2008 (
+> https://sourceforge.net/projects/qgit/ ). That version encounters an
+> error every time I load a repo (deprecated command "git
+> repo-config..."), and I see this has been updated between then and
+> now.
+>
+> I did attempt to clone and build, using the instructions in the repo,
+> but after several hours of trying, the binary I produced will not
+> load, with several error dialogs, which appear in differing order each
+> time I try to run qgit.exe (and the procedure entry point doesn't
+> always appear):
+>
+> "The code execution cannot proceed because libGLESv2.dll was not
+> found. Reinstalling..."
+> libGLEv2.dll is present on the system in \Windows\SysWOW64
+>
+> "...VCRUNTIME140_APP.dll..."
+> I do not find this on the system, in the Visual Studio files, or
+> available online (I do find VCRUNTIME140.dll).
+>
+> "...MSVCP140_APP.dll..."
+> Same as VCRUNTIME140_APP.dll
+>
+> "The procedure entry point
+> ?qt_metacall@QProcess@@UEAAHW4Call@QMetaObject@@HPEAPEAX@Z could not
+> be located int the dynamic link library
+> C:\Projects\qgit-qgit-2.8\bin\qgit.exe."
+>
+> Is there a pre-built 2.8 for Windows?
+>
+> Thanks,
+> Rick
