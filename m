@@ -2,79 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98A1E1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 16:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD8B1F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 16:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389741AbfHVQG7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 12:06:59 -0400
-Received: from mout.web.de ([217.72.192.78]:40315 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733034AbfHVQG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 12:06:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1566490017;
-        bh=qk3c9zorqzRazmTO0KvJcKDlObGB4kyFdrCcTofLX58=;
-        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=s+IdqFNNANI4daPW5oVHYB9lJp6v6T4bQGiugaYWZ0iXOIxQZSNmF5jpJxCfPfZJ9
-         kR5MAFTY7MK3oUaBPuqpBUeuff/vGDRMs785Jhp8uK4bZIXe/waAAhcAwM0CzKzIA/
-         J22hwffVMr/JJtwynxC7IZeITa4x2HlWhuT58iK0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M4IAh-1iI5Tu2tOd-00rnvx; Thu, 22
- Aug 2019 18:06:57 +0200
-Subject: Re: [BUG] You can't have single quote in your username
-To:     =?UTF-8?Q?Giuseppe_Crin=c3=b2?= <giuscri@gmail.com>
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fb5c0bb2-a5af-ef11-dada-a6e96fa7bdab@web.de>
-Date:   Thu, 22 Aug 2019 18:06:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S2389739AbfHVQHH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 12:07:07 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34764 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730979AbfHVQHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 12:07:07 -0400
+Received: by mail-wr1-f68.google.com with SMTP id s18so5979935wrn.1
+        for <git@vger.kernel.org>; Thu, 22 Aug 2019 09:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+pHM4DZ5TSk8Kg0ZGhAolSd4JjLJUAMeZeRXRxs41HI=;
+        b=DKC+StAZV7PHtOGxVpGBufHGg3ptQxF8uZ5fDZLOQgJhdh+ewfAo/wUfZ6m1Cr0oj+
+         Qx7dx3HOuK6inurdI1+K317viPEG2XISB62vD0YpjXZF2qRR7SYGnot1Yle0o9gjEiR3
+         duVfrdosGMJ5JqlhdJspCacc6MvvbS3MAhYBb9zUhDLWw9aEZ5pCbrF78ZhGX/bJG/0+
+         4IvfXGI7UnEUq4IbU4y3iHaUTQIUcoX0WMIKpQtfneNPdzEccecIfWKyF+gX8ZOHjY9X
+         TnyX/PsO5NX81CQsYn/frZoxWYSK8X4JFHD6ux8z8F/oZJNgeYH1QoJcwYZy7b+ycGk7
+         MoQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+pHM4DZ5TSk8Kg0ZGhAolSd4JjLJUAMeZeRXRxs41HI=;
+        b=a5MF4ZeNu9OK+tSHvdDN4d0ugCFspIp6pjZISL3+g2eZ8rpcnzHSUXLgq/XwEX/hPZ
+         jxNO4DMBHAzKtosVdOcrpitoQZyWiuwse3ri/cFDlQGiNt+oEW3qhQdThrJxCE/pRbor
+         VEnQTdjXE7iKrMIAtUETxO2CRft/opCDNZ9Els+wubNoeKfTf9sNdV3ExkDhaDrIT5uU
+         Um9AzgVFipASh6Go3rR5iglrhYl8pIFqjPdIdcw0BPJcRb4Q02rQGDLW7ZtgN9OL3cGI
+         6pzJ0eBxodL+rlV5ecY1pyC/QTfdIdy3Oddhbah7YYiZhzK6CEMSFCw3X0VjynnkmUoy
+         Ftpg==
+X-Gm-Message-State: APjAAAWPn9xhJyg2J6zdO3v7tI+gVB9D9VXOQMi5s3Z38/59Aoo0picw
+        fNKi+0h5kE+wHWtwiCPr+80=
+X-Google-Smtp-Source: APXvYqyI8wlSI0WOUPCzttkWCp8isiOAdGztJguUK06/R2ddUU9ZurRD9TJlyXGvyvAiBazKmpGJLA==
+X-Received: by 2002:adf:f18c:: with SMTP id h12mr22230505wro.47.1566490024942;
+        Thu, 22 Aug 2019 09:07:04 -0700 (PDT)
+Received: from szeder.dev (x4d0c08c4.dyn.telefonica.de. [77.12.8.196])
+        by smtp.gmail.com with ESMTPSA id t8sm35795wra.73.2019.08.22.09.07.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Aug 2019 09:07:04 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 18:07:02 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Charles Diza <chdiza@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: v2.22.1 and later regression wrt display of progress indicators
+Message-ID: <20190822160702.GD20404@szeder.dev>
+References: <20190822141928.GA3163@323642-phi-gmno-clahs>
 MIME-Version: 1.0
-In-Reply-To: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:G2HCtl/jql0CkLFOj3EbPYgNd/SmUN70LLaHs34ZNlsN3nhNqZj
- yZkN4onF9CqQbB7jFT5I+KsSyVWxkiJtanix9RDkpHw85N8SuVnRqxXM06J/ubEtyZwBeUi
- AoslNfYKOGDKB/ZIBXkRA/0gBQcecP43yVfH91mIjKswNJy8fPYGW3BBlgBrxrgXN7e5+CR
- UoYhKT7Ux30dTQBGBQoXA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NMh5mef71+I=:IwL9WpEixAgq9OCVY9GWAV
- 98/0mfHPTk6RfS/SFDMJ1wmvGcOJlwvI5MtEBJ2ZHcgkTLP2uLS1HrOVm2AX3x7rwqpBmcHEu
- C52K9cYLiYj8UcQpjC71kQTBcVM/tHUrjpZx50a/AwWZmvk2lip7IJocqxG4+s9t0/iewrQx7
- po9CznKlHOufQe9ra6rBo56V0PcDVnff8SmqPENAlIEpCu1vSV+s1WssbYusrUe1MocqfS886
- aBD8bkwuAtjmIuNpI+nKnot4m+vWLjIAHiyAdQFIC64oyrPO1XKl1VqcNFFsI6ekX7R8e3Ths
- 1OwmVi/rX6wJEXzC+TIMb8I7sIrfZcbnthumDZqz7BJLfEL+4Weo4jtHYjQGRHsVJdT/p/+zJ
- 5qkzTQP7Menn+bL/u5TrqpcQs/UPSyjahdY8hZadNROFSXig+etKuMaaMctgNndh6b821guDS
- GzTxFPcF3Esgb1bLNSjROEh/l8jPh7IXXK5LHFLdGcbfktckSjIIdIeTN4Cx/rf19Ksq/rTlV
- 0zSduciIjOdHb50TyGJfhGp9wyvJc3W94gkzKDF9Zdz6SUp2jHIFKo2yYL17TMo9QRI6OHh16
- 03tzuP17QxXM0gD3Qv/C5npRxBFfIFvljsmm9exiuH66j500BgHd9G25/8mVTXtN5s0opMnCC
- V4cxs0UjItg/nEfDJMvmgbUF9eqLCZeIFPACFYcpHWSTuFD7ofEK4hg83yWRp5cXz31cUFPsp
- Xl3S+H7QMeKgS2/eO/MeTSVUaYlc6iidEb2jIz2C9rSgFnvn/6DofVNjT00dFVSZixKss14zS
- +Iu9gFNONqTAlF22zrH3b86NY9NVQbZ3yIMeY2qa9h+C7gIlnHdJgzoxiML7T7vfdZ5C20tgT
- jFkYAjMs43gVi6lel7BG5hM5YBsrqA9Y+MwQ2xCPwNlcuC9OxWNCmWAXV8qkQe5gCBraJQmO/
- UYlexQ5tg9I6usVi6raUyhwaaeyZB7h04p0PS2QlrpxuDP/aN/mAkwM4k3qOolUz9OAmnU9ur
- 1ZOpz1TURUNPRyCFaMfp/ReAAUquS72I5SdGfDCb7OVlmIM2NMT/tVsUV6SXPHGdJiCpY+jBc
- wivk+85dsB4laYJK2PJvHX6NgYKZe+MryTh7+QzHIIeUBSJvgoy4wMb3/3WbwLXtpPPyWQjR/
- S7QqU=
+Content-Disposition: inline
+In-Reply-To: <20190822141928.GA3163@323642-phi-gmno-clahs>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.08.19 um 14:32 schrieb Giuseppe Crin=C3=B2:
->         name =3D Les Actualite\\'
+On Thu, Aug 22, 2019 at 10:20:08AM -0400, Charles Diza wrote:
+> By 2.22.1 at the latest (and continuing into 2.23.0) there is a
+> problem with the display of progress indication during `git pull`
+> (and possibly other commands, I don't know).
+> 
+> I'm on macOS, and this happens in both Terminal.app and iTerm2.app,
+> on both macOS 10.13.6 and 10.14.6:  In a standard 80-column wide
+> terminal window, cd into a git repo and do `git pull`.  The chances
+> are high (though not 100%) that one will see this:
 
-You can name yourself anything you like, of course, and I don't actually
-speak French, but wouldn't it rather be "L'actualit=C3=A9"?
+I noticed this today when pushing to GitHub (I suppose they have very
+recently upgraded?) from Linux, so this is neither specific to 'git
+pull' nor to macOS.
 
-I just reply as a fellow accent-bearer, feel free to ignore me..
+I'm sure the culprits are commits cd1096b282 (pager: add a helper
+function to clear the last line in the terminal, 2019-06-24) and
+5b12e3123b (progress: use term_clear_line(), 2019-06-24) with the
+added complication of communicating with a remote.
 
-Ren=C3=A9
+If the standard error of 'git pull/push' is connected to a terminal,
+then it will tell the transport helpers and in turn to the 'git
+upload-pack/receive-pack' processes on the remote to produce progress
+output.  However, since those processes run on the other side of the
+internet, they don't have any idea about the local terminal (smart or
+dumb?  how wide?) their progress will end up on, and, consequently,
+they assume the worst, i.e. standard-width dumb terminal, and use 80
+spaces to cover up the previously displayed progress line.
+
+I'm not sure how to handle the situation.  A few ideas to consider:
+
+  1. Update 'git upload-pack/receive-pack' to use some kind of magic
+     character or char sequence instead of a "real" line clearing
+     sequence, and update 'git pull/push' to replace that magic with
+     the line clearing sequence appropriate for the terminal.
+
+  2. Variant of the above: leave 'git upload-pack/receive-pack' as they
+     are now, and declare that those 80 spaces indicate when to clear
+     progress lines.  Update 'git push/pull' to catch those 80 spaces,
+     and replace them with the line clearing sequence appropriate for
+     the terminal.
+
+  3. Update 'git pull/push' to explicitly tell the remote what line
+     clearing sequence to use.
+
+  4. Revert, and go back to calculating how many spaces we need to
+     append to clear the previously displayed progress line, and hope
+     that we don't mess it up (or even if we do, it still won't be as
+     noticable as this).
+
+I suppose this issue affects other git clients as well, so (1), (2),
+and (3) might not even be an option.
+
