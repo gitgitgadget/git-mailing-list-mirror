@@ -2,106 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1C3B1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 03:07:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02E031F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 03:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730729AbfHVDHj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 23:07:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53199 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730136AbfHVDHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 23:07:39 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2FADD68AF6;
-        Wed, 21 Aug 2019 23:07:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=B3d39VHo8XUABo4JOG9ZyG7VPVc=; b=ADcFQm
-        Ykm0AFAOMiK7OgMIW+nUcg+B7Xy828WeaEq2eAwyI/ecK+vOW4kZHgdUGjDS2ltp
-        E4ac3OcnmOnkHpWDQdjMcNV6Kdzc1LBUvrPV+jiuFu9i4MNLINcDYa1vCAKohrG3
-        AnYf951E373F/9v6hUyXVzvF2pz92OsAF1ckU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AXkxP+n2UVCV6BqD/GHzh5SLv8q2F8Ym
-        igaGRPsbnLgCSZW+9CyOXIdaIjOZo0QK9RpHy+4hjrrDqZjkmQdHnFpg7xEsV/ow
-        2UJCtppVV10/J8TeoY8KteIBZwtpBLOgRLtsvkBvHkbzWMdqT+VsyYt6JDQevdVa
-        S/Zska8qio4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27BE268AF4;
-        Wed, 21 Aug 2019 23:07:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56AF468AF3;
-        Wed, 21 Aug 2019 23:07:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Fully peel tags via for-each-ref?
-References: <CAGyf7-GBx3FSCQTipmkNBtnwMANg5A0FXiiPc2az0NiRLRT+xg@mail.gmail.com>
-        <xmqq8srowfkv.fsf@gitster-ct.c.googlers.com>
-        <20190821230035.GA26107@sigill.intra.peff.net>
-Date:   Wed, 21 Aug 2019 20:07:29 -0700
-In-Reply-To: <20190821230035.GA26107@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 21 Aug 2019 19:00:36 -0400")
-Message-ID: <xmqqmug1rj7y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727923AbfHVDQS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 23:16:18 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:39633 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbfHVDQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 23:16:18 -0400
+Received: by mail-ua1-f65.google.com with SMTP id k7so1520847uao.6
+        for <git@vger.kernel.org>; Wed, 21 Aug 2019 20:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LIgy3vkskIXzVs0uZ6cGkejEqUl80hHjc15KPLpe5DM=;
+        b=WRdwEiqcK5eiNtguHEAExtt+EqDi5ZLxsy1lccIWGfGnoXVACZZPmO6H8fD70d6fxX
+         E98HalfNErv4RlRD/9gHbD8/1Rs/UxWkr3B4GBWsCee8qBnDNuoVQ41NXfhew00si0J1
+         bFdw+onqa2fUT68rJ7nbd9TKstoQJjbBwNm820RrtWnRW+MyDh0H0XU9usxzYS+WUlLK
+         Ul3dA/xRkbJeY3MfL3EkJumXOSyCgqitL9WqcvK6uesyRBWQahBmaSjE1wv/GGrUGAex
+         k3YkNcIUxzms+4qrsuV6N9OAu3EnhSCGDe/eS6Rw7o8ADqlkM9puNIgLjoZmbPSWg5Xr
+         lZMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LIgy3vkskIXzVs0uZ6cGkejEqUl80hHjc15KPLpe5DM=;
+        b=VspRwgtzFepQfd3/UzhgiH6FrJZuXNr7eLQt8Vzmx4pzBDUM/V5aZSciqv921cyxtd
+         hQfJKrRCi/CgIJ6NBrBplgMFAST2tEGfe0qHc21bizOi5J5YGloqzCwNEvbBeXyP5YQt
+         Fi4iQSxxTGiS2ynJzuzXlPq2XfCQrkgCdgzbktqrD6jVq9wWv1MyHTUofUmiraKjKGJf
+         N+Ms0WB6fWCTAAAi8BOvdioJ/fS9AzFmo+UH70vh8xqrRCoylEgMPRVj1DKzXPmWAJT/
+         UpoiM9ZWwTF8hJP7VHA+ejJEpV5DHk7EK56FgpaHnweKi8cjErERJVo9dp8By+cCYA0v
+         /8bg==
+X-Gm-Message-State: APjAAAUWVgUKojQo2IBLDFXFhU0ivak6P2+eccWiWsSOWqQ136kXxBMn
+        Iln4UUvmwO2FrqjlCNPggtF26NZ0HpTi5IskXnn4/w==
+X-Google-Smtp-Source: APXvYqzxd62teFNZxFMBJZNRlyvco+mBSjoHIAZiKIPxK4EP0gh546Uylvhrv+HaN9HZq5LG2piPPz7SKF/hSTeNQMM=
+X-Received: by 2002:a9f:2230:: with SMTP id 45mr4182941uad.87.1566443777196;
+ Wed, 21 Aug 2019 20:16:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB17B53A-C489-11E9-9D01-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <pull.317.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.317.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 21 Aug 2019 20:16:06 -0700
+Message-ID: <CABPp-BEN7TaMvtjoyqRa+_YxLDe8h8NYD9piu86-vWgwiKfbjQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] [RFC] Revert/delay performance regression in 'git
+ checkout -b'
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> There's this gem in ref-filter.c, which blames back to your 9f613ddd21
-> (Add git-for-each-ref: helper for language bindings, 2006-09-15):
+On Wed, Aug 21, 2019 at 12:21 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
->           /*
->            * NEEDSWORK: This derefs tag only once, which
->            * is good to deal with chains of trust, but
->            * is not consistent with what deref_tag() does
->            * which peels the onion to the core.
->            */
->           return get_object(ref, 1, &obj, &oi_deref, err);
+> As we were integrating Git 2.23.0 into VFS for Git, we discovered that "git
+> checkout -b new-branch" went from 0.3s to 10+s on the Windows OS repo. This
+> was an intentional change when writing the "git switch" builtin. Here is the
+> commit message for 65f099b ("switch: no worktree status unless real branch
+> switch happens" 2019-03-29):
 >
-> Which isn't to say it isn't useful to be able to do a single-layer peel,
-> but I can't think of another part of the system which does so (unless
-> you've asked to peel to a specific type, of course).
+> When we switch from one branch to another, it makes sense to show a
+> summary of local changes since there could be conflicts, or some files
+> left modified.... When switch is used solely for creating a new
+> branch (and "switch" to the same commit) or detaching, we don't really
+> need to show anything.
+>
+> "git checkout" does it anyway for historical reasons. But we can start
+> with a clean slate with switch and don't have to.
+>
+> This essentially reverts fa655d8411 (checkout: optimize "git checkout
+> -b <new_branch>" - 2018-08-16) and make it default for switch,
+> but also for -B and --detach. Users of big repos are encouraged to
+> move to switch.
+>
+> I was considering doing a full, long-term revert of this change to get the
+> performance back to normal, but I also saw this feedback on the list for
+> this patch:
+>
+> I like this last bit. The skip_merge_working_tree() function which
+> this removes was ugly, difficult to maintain, and difficult to get
+> just right (and easy to break -- even by changing parts of the system
+> which one might not expect to impact it).
 
-Quite honestly, I think the "only once" behaviour outlived its
-usefulness, without other "features" that may help make it more
-useful.  To help a script that wants to do "chains of trust", it may
-first appear to be useful to peel only one layer, revealing that the
-tagged object is another tag, and that was the thinking behind the
-NEEDSWORK comment.
+Instead of restoring this easy-to-break code, could we instead
+simplify it and make it more robust?  As per the original commit
+message, the whole point of the patch is that when you have a huge
+index, operations take a while.  But in the special case of "git
+checkout -b <new_branch>", there's no need to even check the index.
+So, we could:
 
-But after we learn that a ref "refs/tags/foo" points at a tag object
-that points at another tag object, what can the script do?  It
-cannot feed the other tag found that way back into --format=%(*<thing>)
-machinery of for-each-ref, as the command and its variants, the "--list"
-mode of "branch" and "tag" commands, only work on the object at the
-tip of refs.  The script must manually peel the tag one layer at a time.
+  * Check if the user is running "git checkout -b <new_branch>"
+  * If so, use the performance hack to skip touching the index at all.
 
-And that "manually" has to be really manual.  No ^{<type>} suffix
-allows scripts to peel just one layer, so inside a loop, the script
-has to say "cat-file tag <object>" and parse the "object" header
-from the output.
+This would be much better than what the patch currently does:
 
-The only thing that gets affected if we changed %(*<thing>) to fully
-peel tags is a tag that points at another tag, and the traditional
-behaviour to peel only one layer, while it _might_ have been done as
-a good first step to add more support for chain of trust, is not all
-that useful for such a tag, I am not sure if the current behaviour
-is defensible.
+  * Check if the user has specified -m, if so they clearly didn't just
+specify "git checkout -b <new_branch>"
+  * Check if the user has specified -f, if so they clearly didn't just
+specify "git checkout -b <new_branch>"
+  * Check if the user has specified --detach, if so they clearly
+didn't just specify "git checkout -b <new_branch>"
+  * ...<lots of other similar steps>...
+  * If we got here, since we've checked all other cases (assuming
+other people who have touched checkout remembered to add the necessary
+checks for each and every new flag), then by deduction the user must
+have specified "git checkout -b <new_branch>", so...
+  * Use the performance hack to skip touching the index at all.
