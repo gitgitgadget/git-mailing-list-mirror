@@ -7,52 +7,59 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 118EC1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 18:53:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BDF41F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 19:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388972AbfHVSxA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 14:53:00 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:63971 "EHLO bsmtp7.bon.at"
+        id S2391831AbfHVTP4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 15:15:56 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:60628 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729276AbfHVSw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 14:52:58 -0400
+        id S1730531AbfHVTPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 15:15:55 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46DtvV5VMyz5tlB;
-        Thu, 22 Aug 2019 20:52:54 +0200 (CEST)
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 46DvQ25jJJz5tlG;
+        Thu, 22 Aug 2019 21:15:54 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id A226F1D1B;
-        Thu, 22 Aug 2019 20:52:53 +0200 (CEST)
-Subject: Re: [PATCH] t0021: make sure clean filter runs
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, rsbecker@nexbridge.com,
-        johannes.schindelin@gmx.de, larsxschneider@gmail.com
-References: <20190820065625.128130-1-t.gummerer@gmail.com>
- <aea64308-fcba-77a1-1196-182b35ad405c@kdbg.org> <20190821145616.GB2679@cat>
- <a8de9661-7f6a-f953-93a0-8ef88e9a490a@kdbg.org>
- <20190821220355.GZ20404@szeder.dev> <20190822174901.GA71239@cat>
+        by dx.site (Postfix) with ESMTP id 41B291D1B;
+        Thu, 22 Aug 2019 21:15:54 +0200 (CEST)
+Subject: Re: First Git status takes 40+ minutes, when mounting
+ fileystem/diskimage with 50G GIT repo + 900G of builds articles
+To:     "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
+References: <2303C0BB-C532-4560-8BCA-A05DAD97EB72@cisco.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <79284459-d338-be91-5d13-8f06890f438f@kdbg.org>
-Date:   Thu, 22 Aug 2019 20:52:53 +0200
+Message-ID: <b409d16f-c392-7f1f-79a0-e14e70148cad@kdbg.org>
+Date:   Thu, 22 Aug 2019 21:15:54 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190822174901.GA71239@cat>
+In-Reply-To: <2303C0BB-C532-4560-8BCA-A05DAD97EB72@cisco.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.08.19 um 19:49 schrieb Thomas Gummerer:
-> Right, the above is why I think 'touch' is a good idea here.  Short of
-> system clocks jumping around, which will most likely break more than
-> this test anyway it guarantees that the timestamp is equal or greater
-> than the timestamp of the index, which is what we need here.
+Am 22.08.19 um 20:02 schrieb Saravanan Shanmugham (sarvi):
+> We have a diskimage/fileysystem that has a 50G Git repository + 900G
+> of binary/build articles and untracked files. When we mount such a
+> diskimage, The verify first “git status” command can take as long
+> 40-50minutes. Subsequent “git status” finish in under 5-10 seconds.>
+> If I had a diskimage of just the 50G source repository, and I mount
+> and do a “git status” takes around 15 seconds.
+Are you saying that you commonly mount and unmount the filesystem?
 
-Ok, thanks for the clarification. I didn't see the context. It looks
-like touch is good enough.
+Git tracks a device number in the index. Could it happen that it is
+different every time you mount the filesystem? Because when it is, Git
+reads the data and checks whether it has changed. At this time, the
+device number is also fixed up in the index. Thereafter, "git status" is
+fast because it sees from the cached file properties that no change was
+made and does not have to read the data.
+
+You may set "git config core.checkStat minimal" to avoid the problem.
+But it may come with its own problems (certain kinds of modifications
+would not be noticed, although these would be hard to trigger in practice).
 
 -- Hannes
