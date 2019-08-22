@@ -2,95 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08FC61F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 03:03:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1C3B1F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 03:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729680AbfHVDDW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 23:03:22 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:45460 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729640AbfHVDDW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 23:03:22 -0400
-Received: by mail-vs1-f66.google.com with SMTP id j25so2852024vsq.12
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 20:03:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XVXasEaTl8ezFgsC04UwLtZjRD42WTAdpKgoPTfYg9g=;
-        b=LAaLxvA6E5YXjRN8fh+zoI5BzdN9pYgi4FAJRJptD0Iq/g1yIffcAGclxSXViknAGr
-         Zn1NR7NBkmicq4Y8uWUNyp2UhCbbDgNLkJ6BsvFsyZz5WVF4cnRVi6EDPnBNTWb4MIeF
-         hsc2nU3xXdZVzU+8Clx2F0XjO3eeGn7/maRmHxxBD2sLPSBqGC2QCiImilEQFhqevAG2
-         YLLDf8DfygTi173kuLRspY5+yJTzsDPeDpyvhF4fg6qfVwfaW3gEMaVDxzWiw6a66JZw
-         is8qQV85cpatZzdKrTktc6BS4Sgfp3zQzRrfuBdIf9vjIIsc/yC8RC6uN4ph+03BooSO
-         XHNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XVXasEaTl8ezFgsC04UwLtZjRD42WTAdpKgoPTfYg9g=;
-        b=HEeGCjNKZ4WxN5tSiYLlqG5W65twDzBU70ee1APiK/74iImtTTvNXyiAKISUuNVvP4
-         ATIKFCg/HChmuuDyK2/alSG/Naqih21/zmXvRXUEEr5UddW3FuJBhc1bsDAj7vzOtk00
-         kwze6gM1/s0ebsrg4zIcClFVn2a2DWLgjFnlVgeWLy0+YC3iXrGGXpZc50sNsUoBJYqs
-         iYYYBZKB23BS7uFROXrXrNrw8ZcM+J5GfbTmUB+lYQkbVZA0MAEkS9M/h2227WvJHHN4
-         Gk7YLOlDzgODUb3pYS0LqrQy/vUWtyT2hMfwfTWskP4olBTQnt8iA5k9iHeClWTRzOdz
-         hVDA==
-X-Gm-Message-State: APjAAAWs7SNixQjD0w87UBbL2/rIdARXjBAQ39l8N5MW6+B7VwfLjZZh
-        FYuz+cJRP8BDf6vsR3TxvClcKRR7M50jzKhw9Pw=
-X-Google-Smtp-Source: APXvYqwmvSpesCVS0D7a4COttVklnBRl8uDh19bEWf1gslPMfaQzbCsUez8g+Ft2q7825dJAUN1S/CnQcCfmHPRB9OQ=
-X-Received: by 2002:a67:6244:: with SMTP id w65mr23599809vsb.117.1566443001109;
- Wed, 21 Aug 2019 20:03:21 -0700 (PDT)
+        id S1730729AbfHVDHj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Aug 2019 23:07:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53199 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730136AbfHVDHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Aug 2019 23:07:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2FADD68AF6;
+        Wed, 21 Aug 2019 23:07:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=B3d39VHo8XUABo4JOG9ZyG7VPVc=; b=ADcFQm
+        Ykm0AFAOMiK7OgMIW+nUcg+B7Xy828WeaEq2eAwyI/ecK+vOW4kZHgdUGjDS2ltp
+        E4ac3OcnmOnkHpWDQdjMcNV6Kdzc1LBUvrPV+jiuFu9i4MNLINcDYa1vCAKohrG3
+        AnYf951E373F/9v6hUyXVzvF2pz92OsAF1ckU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AXkxP+n2UVCV6BqD/GHzh5SLv8q2F8Ym
+        igaGRPsbnLgCSZW+9CyOXIdaIjOZo0QK9RpHy+4hjrrDqZjkmQdHnFpg7xEsV/ow
+        2UJCtppVV10/J8TeoY8KteIBZwtpBLOgRLtsvkBvHkbzWMdqT+VsyYt6JDQevdVa
+        S/Zska8qio4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27BE268AF4;
+        Wed, 21 Aug 2019 23:07:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56AF468AF3;
+        Wed, 21 Aug 2019 23:07:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Fully peel tags via for-each-ref?
+References: <CAGyf7-GBx3FSCQTipmkNBtnwMANg5A0FXiiPc2az0NiRLRT+xg@mail.gmail.com>
+        <xmqq8srowfkv.fsf@gitster-ct.c.googlers.com>
+        <20190821230035.GA26107@sigill.intra.peff.net>
+Date:   Wed, 21 Aug 2019 20:07:29 -0700
+In-Reply-To: <20190821230035.GA26107@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 21 Aug 2019 19:00:36 -0400")
+Message-ID: <xmqqmug1rj7y.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.317.git.gitgitgadget@gmail.com> <dd3b5120077dd0414c62b8deaeaaffa40bc47736.1566415112.git.gitgitgadget@gmail.com>
-In-Reply-To: <dd3b5120077dd0414c62b8deaeaaffa40bc47736.1566415112.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Aug 2019 20:03:10 -0700
-Message-ID: <CABPp-BHwhXVz7+GXdTdBQ-0POcr7Mh7A9ut_gw7syxE7rcXx+A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] DEPRECATION: warn about 'git checkout -b'
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: FB17B53A-C489-11E9-9D01-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 21, 2019 at 12:21 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Recommend that users use 'git switch -c' instead.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/.checkout.c.swp | Bin 77824 -> 0 bytes
->  builtin/checkout.c      |   9 ++++++++-
->  2 files changed, 8 insertions(+), 1 deletion(-)
->  delete mode 100644 builtin/.checkout.c.swp
->
-> diff --git a/builtin/.checkout.c.swp b/builtin/.checkout.c.swp
-> deleted file mode 100644
-> index f6dad4abb02c265ee66b3f6f76d00d59b9b524a4..0000000000000000000000000000000000000000
-> GIT binary patch
-> literal 0
-> HcmV?d00001
->
-> literal 77824
-> zcmeIb37F(pRrf#a46<X03c_z1GgCe3>dYjdA(>2=r6*}KnI2}zLK2GV?&_Y(bXPT1
-> z)icux34uRC00rR{;pJ5jL_ico7FiV85d;D8CG1O3By6%HioE<k-*fK$ZB^AXi9sKq
-> zXXeQ_-ThncdhWSryXQB(>5|Edle5P+t>NE&*Q|N(#aCVRsr$ZX%_F;O)^vOAg+@a+
-<snip>
+Jeff King <peff@peff.net> writes:
 
-You may want to add a local commit hook that prevents commiting vim
-swp files, or adding them to a global excludes file or something.  :-)
+> There's this gem in ref-filter.c, which blames back to your 9f613ddd21
+> (Add git-for-each-ref: helper for language bindings, 2006-09-15):
+>
+>           /*
+>            * NEEDSWORK: This derefs tag only once, which
+>            * is good to deal with chains of trust, but
+>            * is not consistent with what deref_tag() does
+>            * which peels the onion to the core.
+>            */
+>           return get_object(ref, 1, &obj, &oi_deref, err);
+>
+> Which isn't to say it isn't useful to be able to do a single-layer peel,
+> but I can't think of another part of the system which does so (unless
+> you've asked to peel to a specific type, of course).
+
+Quite honestly, I think the "only once" behaviour outlived its
+usefulness, without other "features" that may help make it more
+useful.  To help a script that wants to do "chains of trust", it may
+first appear to be useful to peel only one layer, revealing that the
+tagged object is another tag, and that was the thinking behind the
+NEEDSWORK comment.
+
+But after we learn that a ref "refs/tags/foo" points at a tag object
+that points at another tag object, what can the script do?  It
+cannot feed the other tag found that way back into --format=%(*<thing>)
+machinery of for-each-ref, as the command and its variants, the "--list"
+mode of "branch" and "tag" commands, only work on the object at the
+tip of refs.  The script must manually peel the tag one layer at a time.
+
+And that "manually" has to be really manual.  No ^{<type>} suffix
+allows scripts to peel just one layer, so inside a loop, the script
+has to say "cat-file tag <object>" and parse the "object" header
+from the output.
+
+The only thing that gets affected if we changed %(*<thing>) to fully
+peel tags is a tag that points at another tag, and the traditional
+behaviour to peel only one layer, while it _might_ have been done as
+a good first step to add more support for chain of trust, is not all
+that useful for such a tag, I am not sure if the current behaviour
+is defensible.
