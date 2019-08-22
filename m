@@ -2,114 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 953BA1F4B7
-	for <e@80x24.org>; Thu, 22 Aug 2019 22:34:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84BD91F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 22:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390865AbfHVWef (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 18:34:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57672 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390855AbfHVWef (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 18:34:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E714167E28;
-        Thu, 22 Aug 2019 18:34:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=86SUrUlgOkbxPi1Zjl4x9OhJ40g=; b=a8DJEE
-        Ks9N2kOXTE0Wd+DDAzwCRvkbaGMOzXZ0KewWh/qG7aCN5SIVyrNz/GnGQ+Hpbehu
-        WIkR9FfqMHln5OIep5Ol9OvDmQDJqae0CuQ5HsRxb8QAnPHCRrQVmz1LGJigjUYT
-        FhtNHhPhWaeu+BuMd3Fe7StxHvGd+B4jVwk+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HAbn3rBY6b/YwGcgqQZ0tNcbqBZ/hZtw
-        WB7jQgz4BWpbgOx028jNLh4+eULCl0eT+0g007FPP+o06xVKqGK+EvPibcaJeLY4
-        HOIMtRzwUguD8lIYp3XZEOla1KLwRSENy/9VXGkU8iXW4BpatewRvUHIa+X0NMwW
-        SMh6WjMaAMs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55C80167E27;
-        Thu, 22 Aug 2019 18:34:33 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B705B167E26;
-        Thu, 22 Aug 2019 18:34:32 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v2 0/4] git-gui: Add ability to revert selected hunks and lines
-References: <20190819214110.26461-1-me@yadavpratyush.com>
-        <20190822220107.4153-1-me@yadavpratyush.com>
-Date:   Thu, 22 Aug 2019 15:34:31 -0700
-In-Reply-To: <20190822220107.4153-1-me@yadavpratyush.com> (Pratyush Yadav's
-        message of "Fri, 23 Aug 2019 03:31:03 +0530")
-Message-ID: <xmqq4l28ommg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2388038AbfHVWiC convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 22 Aug 2019 18:38:02 -0400
+Received: from mga07.intel.com ([134.134.136.100]:4018 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731958AbfHVWiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 18:38:02 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 22 Aug 2019 15:38:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,418,1559545200"; 
+   d="scan'208";a="378676876"
+Received: from orsmsx108.amr.corp.intel.com ([10.22.240.6])
+  by fmsmga005.fm.intel.com with ESMTP; 22 Aug 2019 15:38:01 -0700
+Received: from orsmsx161.amr.corp.intel.com (10.22.240.84) by
+ ORSMSX108.amr.corp.intel.com (10.22.240.6) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 22 Aug 2019 15:38:00 -0700
+Received: from orsmsx121.amr.corp.intel.com ([169.254.10.57]) by
+ ORSMSX161.amr.corp.intel.com ([169.254.4.172]) with mapi id 14.03.0439.000;
+ Thu, 22 Aug 2019 15:38:00 -0700
+From:   "Keller, Jacob E" <jacob.e.keller@intel.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: RE: [PATCH] git-submodule: fix expansion of depth for cmd_update
+Thread-Topic: [PATCH] git-submodule: fix expansion of depth for cmd_update
+Thread-Index: AQHVWSiQ3p+7c+StnkKDZgOFZGN2f6cHp0q5gAAaSzA=
+Date:   Thu, 22 Aug 2019 22:38:00 +0000
+Message-ID: <02874ECE860811409154E81DA85FBB5896860344@ORSMSX121.amr.corp.intel.com>
+References: <20190822203114.18805-1-jacob.e.keller@intel.com>
+ <xmqqh868oqxv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh868oqxv.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZmNhY2U5MjQtMTg0MS00MzRkLTlhMjctZjY0NjgwZDk0YmE0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiSjQzWDdpSG12RFZzSTZcL0ptc0JxZUhUYWxnWFpVaEhBVUl5a3VqMUNYcDhPRTA1VWkzR3N4RktNU2ZXRHBOaGoifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.140]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0318D036-C52D-11E9-A64B-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of
+> Junio C Hamano
+> Sent: Thursday, August 22, 2019 2:01 PM
+> To: Keller, Jacob E <jacob.e.keller@intel.com>
+> Cc: git@vger.kernel.org; Jacob Keller <jacob.keller@gmail.com>
+> Subject: Re: [PATCH] git-submodule: fix expansion of depth for cmd_update
+> 
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+> 
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > The depth variable already contains "--depth=", so expanding it with an
+> > additional --depth when invoking the update-clone git submodule--helper
+> > is incorrect.
+> >
+> > Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> > ---
+> >
+> > I'm *reasonably* sure this is correct, but I am not sure how to test it.
+> > It's possible that it expands to "--depth --depth=N" and somehow this gets
+> > handled properly?
+> 
+> I agree with your eyeballing of all the assignments to the variable,
+> and other references to $depth take either one of these two forms:
+> 
+> 	git submodule--helper ... ${depth:+"$depth"} ...
+> 	git submodule--helper ... $depth ...
+> 
+> As long as "git submodule ... --depth <depth> ..." gets called with
+> <depth> that does not have $IFS, either would work fine, but the
+> former is correct even when <depth> has problematic characters in it
+> and your patch uses that form, too).
+> 
+> However.
+> 
+> The command line parser for update_clone() stuffs --depth as a
+> string to suc.depth, and then the machinery ends up calling
+> prepare_to_clone_next_submodule() with such an instance of suc
+> (struct submodule_update_clone).  Then that function just pushes the
+> suc->depth to an argv array used to spawn a "submodule--helper clone".
+> 
+> So passing "--depth --depth=23" would be "correct", sadly, in that
+> codepath (I am not saying other codepaths would not call the same
+> prepare_to_clone_next_submodule() with "--depth 23", as I didn't
+> check, and if there is such a codepath, it would break).
+> 
 
-> This series adds the ability to revert selected lines and hunks in
-> git-gui. Partially based on the patch by Bert Wesarg [0].
->
-> The commits can be found in the topic branch 'py/revert-hunks-lines'
-> at https://github.com/prati0100/git-gui/tree/py/revert-hunks-lines
->
-> Once reviewed, pull the commits from
-> 415ce3f8582769d1d454b3796dc6c9c847cefa87 till
-> 0a1f4ea92b97e673fda40918dae68deead43bb27, or just munge the patches and
-> apply them locally, whichever you prefer.
+Ok, so it's technically correct, but weird. I had trouble understanding it.
 
-Let's see how we can work together by you playing the role of
-git-gui maintainer and the others on the list (including me) playing
-the role of reviewer and contributor.  So I may keep an eye on the
-discussion on this thread, I may even comment on them myself, but
-you'll be the one waiting for the discussion to settle, adjusting
-the patches in response to reviews, etc. and making the final
-decision when/if the topic is done, at which time you'd be telling
-me to pull from you.
+> We may need to clean the mess up X-<.
+> 
 
-> Pratyush Yadav (4):
->   git-gui: Move revert confirmation dialog creation to separate function
->   git-gui: Add option to disable the revert confirmation prompt
->   git-gui: Add the ability to revert selected lines
->   git-gui: Add the ability to revert selected hunk
+Yea, I got confused looking at this code. Though if I recall, we were working towards rewriting it in C anyways (which is what the submodule--helper is doing).
 
-"Move" and "Add" after "git-gui:" would better be downcased to be
-more in line with the others in "git shortlog --no-merges"; I also
-think "allow doing X" is shorter and better way to say "add the
-ability to do X".
+Thanks,
+Jake
 
-If I am reading the first patch correctly, we already ask for
-confirmation before reverting local changes, and the steps 3 and 4
-are about allowing partial reversion in addition to the wholesale
-reversion, right?  An earlier objection from j6t sounded like we
-require users to respond to an extra dialog after this series, but
-that does not look like the case.  Instead, step 2 adds a new
-feature to allow those to opt-out of the existing dialog (which may
-be reused to squelch the dialog to protect features added in steps 3
-and 4).  Am I reading the series correctly?
-
-Thanks.
-
->
->  git-gui.sh     | 40 +++++++++++++++++++++++++++++--
->  lib/diff.tcl   | 65 ++++++++++++++++++++++++++++++++++++++++++--------
->  lib/index.tcl  | 31 ++++++++++++++++--------
->  lib/option.tcl |  1 +
->  4 files changed, 115 insertions(+), 22 deletions(-)
->
-> --
-> 2.21.0
+> > diff --git a/git-submodule.sh b/git-submodule.sh
+> > index c7f58c5756f7..4e7fc8bf3652 100755
+> > --- a/git-submodule.sh
+> > +++ b/git-submodule.sh
+> > @@ -547,7 +547,7 @@ cmd_update()
+> >  		${update:+--update "$update"} \
+> >  		${reference:+"$reference"} \
+> >  		${dissociate:+"--dissociate"} \
+> > -		${depth:+--depth "$depth"} \
+> > +		${depth:+"$depth"} \
+> >  		$recommend_shallow \
+> >  		$jobs \
+> >  		-- \
