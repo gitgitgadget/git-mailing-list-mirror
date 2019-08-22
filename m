@@ -2,144 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550581F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 13:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 381561F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 13:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730144AbfHVNpG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 09:45:06 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:46959 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727875AbfHVNpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 09:45:05 -0400
-Received: by mail-qt1-f196.google.com with SMTP id j15so7647253qtl.13
-        for <git@vger.kernel.org>; Thu, 22 Aug 2019 06:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yW9U3OJJetRujHShdoumJsJRxsfJFZWry4Rwu6rn41k=;
-        b=dtgh4FtsHaR2mRY8+e84O6fblQlpEo9QayCeNkUAGMi9ICYOfdr51U8u4YQ/Mvy5ss
-         IIhypjltq1Cpg4RGvhyrZWpNV0kR/cS8OKKUIAWlywWKg0MqvZrbL6HJqeVbZZrmbziN
-         Pa641NRSsq0nanDik6/GE3ABK7FTf28jOGkU4eQuQsKinxKaC56T/R7rcckHAI3pIKrh
-         H0EwNRMe6awAcUCQrT+iq74B9xIzByoVM3OZlBLYwrFvdnHbCiTbnaBy4lI43r9r4bPf
-         qcfSgalx6Z0c5roq+YX7/kUPd9omsCjgOOYs3xbn9MrIxXJRTNUk0zubMsGCwmgt9X4F
-         o5vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yW9U3OJJetRujHShdoumJsJRxsfJFZWry4Rwu6rn41k=;
-        b=ZmzCj/WEnh7xlwo5nWug8tTZREYNOX+QXt5ZiOlOjPPWQb75KnNHWZmblXRJI4Z074
-         oc52VJBh9LrTGTc3TqSIN3HpmKALI13aoxtxZHAQ7DOzM5FUB78bKnuG8klxYEbD8ym4
-         cmQduOVG2iEeAfgwB4h7GOwMYmio6Su5fpfKni83SVMZJVKYRvCN5TvRGFwlvFW+trme
-         q2160HFgyGP8oN6iv1Q1kavkieswjKbyyIEUPE64boFT85lrDNwokIQwPvSRsTOYHqAi
-         QFZyAP+PRtsG02ybfFeLHhOPrNwC8YFiB0dSqCjXWjNijTQ07PuFk30QDv6iWwSLxtlk
-         /c6w==
-X-Gm-Message-State: APjAAAVzfLwWVkCfmMXoRp/eeCvO4+3HTyxehlquJxO60LiGqsMdaFta
-        XmDAyyFLxzW2/wDs8SxyJWjSv7iGd3g=
-X-Google-Smtp-Source: APXvYqzVk1+1hjWGnO0N89UO02z1jGn0iyZvi+XA2TQANc+Tf80XhA1pZfog9XTrBYwkSIItG2eoSw==
-X-Received: by 2002:ac8:524a:: with SMTP id y10mr7399838qtn.100.1566481504590;
-        Thu, 22 Aug 2019 06:45:04 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7dcd:416c:c779:cf77? ([2001:4898:a800:1012:2f01:416c:c779:cf77])
-        by smtp.gmail.com with ESMTPSA id 6sm12557811qkp.82.2019.08.22.06.45.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2019 06:45:03 -0700 (PDT)
-Subject: Re: [PATCH 0/2] [RFC] Revert/delay performance regression in 'git
- checkout -b'
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.317.git.gitgitgadget@gmail.com>
- <CABPp-BEN7TaMvtjoyqRa+_YxLDe8h8NYD9piu86-vWgwiKfbjQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <37d35cf9-6387-2549-4b29-aadd40cb15ce@gmail.com>
-Date:   Thu, 22 Aug 2019 09:45:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+        id S1731811AbfHVNzc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 09:55:32 -0400
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:41063 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726687AbfHVNzc (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 22 Aug 2019 09:55:32 -0400
+Received: from tri.shiar.net ([83.161.198.138])
+        by smtp-cloud8.xs4all.net with ESMTP
+        id 0nYmiiD1jDqPe0nYni1iBp; Thu, 22 Aug 2019 15:55:29 +0200
+Received: by tri.shiar.net (Postfix, from userid 1000)
+        id B724229735B; Thu, 22 Aug 2019 15:55:28 +0200 (CEST)
+Date:   Thu, 22 Aug 2019 15:55:28 +0200
+From:   Mischa POSLAWSKY <git@shiar.nl>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Subject: [PATCH 2/1] t6300: format missing tagger
+Message-ID: <20190822135528.GB28725@shiar.net>
+References: <20190817215107.13733-1-git@shiar.nl>
+ <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com>
+ <xmqq1rxerxkk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEN7TaMvtjoyqRa+_YxLDe8h8NYD9piu86-vWgwiKfbjQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1rxerxkk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt 1.10.1 + Vim 8.1 (Debian 10.0 GNU/Linux 4.9.0-6-amd64)
+X-URL:  http://shiar.nl/
+X-Accept-Language: nl, eo, en
+X-CMAE-Envelope: MS4wfC6WzFXU0s83JgwEIbicNnvysIjutz41PPPsfCgSjwggfjL2vMedUYyzOqMiG8gBhDDkX8YJwlgGsIfqSxHVDwbBFovPCK/Ql24jHzS/z93+okCgQtSl
+ hK2ymyEoFXR9X3C91VQZHhEAVe5bIdI+q6B5HTgyd+7BHM+3bZ7XbIb06BB8vcMOZI8Nt6lcNPVkeyaRdP2FwjOENTN1oKXw9zdYhhJ9LwRrm+QkPaW7Ox0/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/21/2019 11:16 PM, Elijah Newren wrote:
-> Hi,
+Junio wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> On Wed, Aug 21, 2019 at 12:21 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> As we were integrating Git 2.23.0 into VFS for Git, we discovered that "git
->> checkout -b new-branch" went from 0.3s to 10+s on the Windows OS repo. This
->> was an intentional change when writing the "git switch" builtin. Here is the
->> commit message for 65f099b ("switch: no worktree status unless real branch
->> switch happens" 2019-03-29):
->>
->> When we switch from one branch to another, it makes sense to show a
->> summary of local changes since there could be conflicts, or some files
->> left modified.... When switch is used solely for creating a new
->> branch (and "switch" to the same commit) or detaching, we don't really
->> need to show anything.
->>
->> "git checkout" does it anyway for historical reasons. But we can start
->> with a clean slate with switch and don't have to.
->>
->> This essentially reverts fa655d8411 (checkout: optimize "git checkout
->> -b <new_branch>" - 2018-08-16) and make it default for switch,
->> but also for -B and --detach. Users of big repos are encouraged to
->> move to switch.
->>
->> I was considering doing a full, long-term revert of this change to get the
->> performance back to normal, but I also saw this feedback on the list for
->> this patch:
->>
->> I like this last bit. The skip_merge_working_tree() function which
->> this removes was ugly, difficult to maintain, and difficult to get
->> just right (and easy to break -- even by changing parts of the system
->> which one might not expect to impact it).
+> > Mischa POSLAWSKY <git@shiar.nl> writes:
+> >
+> >> If I understand correctly, such tags cannot be produced normally anymore.
+> >> Therefore I'm unsure how to make tests, and if that is even warranted.
+> >
+> > Thanks for spotting.
 > 
-> Instead of restoring this easy-to-break code, could we instead
-> simplify it and make it more robust?  As per the original commit
-> message, the whole point of the patch is that when you have a huge
-> index, operations take a while.  But in the special case of "git
-> checkout -b <new_branch>", there's no need to even check the index.
-> So, we could:
+> A quick trial to recreate a tag object seems to succeed:
 > 
->   * Check if the user is running "git checkout -b <new_branch>"
->   * If so, use the performance hack to skip touching the index at all.
+>     $ git cat-file tag v0.99 |
+>     > sed -e '/-----BEGIN/,$d' |
+>     > git hash-object --stdin -w -t tag
+>     667d141b478eee5e53d2ee05acd61bb1f640249a
+>     $ git cat-file tag 667d141b47
+>     object a3eb250f996bf5e12376ec88622c4ccaabf20ea8
+>     type commit
+>     tag v0.99
 > 
-> This would be much better than what the patch currently does:
+>     Test-release for wider distribution.
 > 
->   * Check if the user has specified -m, if so they clearly didn't just
-> specify "git checkout -b <new_branch>"
->   * Check if the user has specified -f, if so they clearly didn't just
-> specify "git checkout -b <new_branch>"
->   * Check if the user has specified --detach, if so they clearly
-> didn't just specify "git checkout -b <new_branch>"
->   * ...<lots of other similar steps>...
->   * If we got here, since we've checked all other cases (assuming
-> other people who have touched checkout remembered to add the necessary
-> checks for each and every new flag), then by deduction the user must
-> have specified "git checkout -b <new_branch>", so...
->   * Use the performance hack to skip touching the index at all.
+>     I'll make the first public RPM's etc, thus the tag.
+> 
+> So we should be able to do something along the above line.  Here is
+> my quick-n-dirty one.
+> 
+>  t/t6300-for-each-ref.sh | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index ab69aa176d..b3a6b336fa 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -869,4 +869,16 @@ test_expect_success 'for-each-ref --ignore-case ignores case' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'show a taggerless tag' '
+> +	test_commit tagged &&
+> +	git tag -a -m "a normal tag" to-be-shown-0 HEAD &&
+> +	another=$(git cat-file tag to-be-shown-0 |
+> +		sed -e "/^tagger /d" \
+> +		    -e "/^tag to-be-shown/s/0/1/" \
+> +		    -e "s/a normal tag/a broken tag/" |
+> +		git hash-object --stdin -w -t tag) &&
+> +	git tag to-be-shown-1 $another &&
+> +	git for-each-ref --format="%(refname:short) %(taggername)" refs/tags/to-be-shown\*
+> +'
+> +
+>  test_done
+> 
 
-I can look into a simpler implementation of this direction. I'm
-getting the feeling that this immediate recommendation of "git switch -c"
-is too hasty, so the best thing to do is to create a simpler way
-to detect "git checkout -b" and use the fast method.
+Alright, thanks for the pointer.
+Here's a batch of tests on all pertaining atoms.
 
-Thanks,
--Stolee
+-- >8 --
+
+Strip an annotated tag of its tagger header and verify it's ignored
+correctly in all cases, as fixed in commit e2a81276e8 (ref-filter:
+initialize empty name or email fields, 2019-08-19).
+
+Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
+---
+ t/t6300-for-each-ref.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index ab69aa176d..9c910ce746 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -526,6 +526,25 @@ test_expect_success 'Check ambiguous head and tag refs II (loose)' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'create tag without tagger' '
++	git tag -a -m "Broken tag" taggerless &&
++	git tag -f taggerless $(git cat-file tag taggerless |
++		sed -e "/^tagger /d" |
++		git hash-object --stdin -w -t tag)
++'
++
++test_atom refs/tags/taggerless type 'commit'
++test_atom refs/tags/taggerless tag 'taggerless'
++test_atom refs/tags/taggerless tagger ''
++test_atom refs/tags/taggerless taggername ''
++test_atom refs/tags/taggerless taggeremail ''
++test_atom refs/tags/taggerless taggerdate ''
++test_atom refs/tags/taggerless committer ''
++test_atom refs/tags/taggerless committername ''
++test_atom refs/tags/taggerless committeremail ''
++test_atom refs/tags/taggerless committerdate ''
++test_atom refs/tags/taggerless subject 'Broken tag'
++
+ test_expect_success 'an unusual tag with an incomplete line' '
+ 
+ 	git tag -m "bogo" bogo &&
+-- 
+2.23.0
