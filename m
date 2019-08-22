@@ -2,76 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 992191F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 16:25:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1501F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 16:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389916AbfHVQZB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 12:25:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64533 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389875AbfHVQYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 12:24:50 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FA64175BF3;
-        Thu, 22 Aug 2019 12:24:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qTMIkwMIVtaRR83mR28OZkcKSLo=; b=G7Apf8
-        UDLfGBg0YOegcydzS+AMBzLexOWKnjgx/qi+WRfnuBrWz2L1bdVLCWrBscaJ6BWX
-        r57e/2+WW9h7f5QzlE0WCn4fx3DCyXngIeP94+SWuEgGGKXegANquUVnhFMWyygh
-        bs9cj81L7LMzax8I8pBZOd9CNN4BOemomc6IY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S7dAEXOq/APt2uaXaEZduOeu1xYQnAA9
-        NB4dPMJNuHBP721mXGfoK0dC1BdDx1zCj9tkhyqCtjM+ZTJzeD/JMC6UNLevi1yo
-        0SZ75cctLdPhGXJ1fDxEtqMAOAQJPCoJ3PBQyyjQqnVR78+9pH6flxlnYXVv1jt3
-        EEwZJmCF2PQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9734C175BF2;
-        Thu, 22 Aug 2019 12:24:49 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B9AF175BF1;
-        Thu, 22 Aug 2019 12:24:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Giuseppe =?utf-8?Q?Crin=C3=B2?= <giuscri@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [BUG] You can't have single quote in your username
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
-        <20190822150614.o25g37pwfcaos2zn@localhost.localdomain>
-Date:   Thu, 22 Aug 2019 09:24:48 -0700
-In-Reply-To: <20190822150614.o25g37pwfcaos2zn@localhost.localdomain> (Pratyush
-        Yadav's message of "Thu, 22 Aug 2019 20:36:14 +0530")
-Message-ID: <xmqqy2zlp3qn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C949E62-C4F9-11E9-BCC3-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+        id S1731875AbfHVQZj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 12:25:39 -0400
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:34647 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729213AbfHVQZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 12:25:39 -0400
+Received: by mail-pf1-f201.google.com with SMTP id i2so4390632pfe.1
+        for <git@vger.kernel.org>; Thu, 22 Aug 2019 09:25:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=ImGu+3HRwxw26INoG2rJF7A3DHPaUWGe/WElk2lDQCY=;
+        b=aastEBMHiQ14sXhUFtRduepHxSoit6q/m2/Fzl+6XhocIZPwsUDOyj4HWRFngS3/7T
+         5eyzp6ewPpxBmSl92iRPVxGYY0HnrPbi4DlbdArtRqfM1y4Ebpz9ALYTiwJTdVCu1Tjg
+         hdH85qliqp6ZCTGsfbG7zuJbntvkgx1xufL9uCwEgT+Ivow+GNBcIhdVQxbIv2fN0K8i
+         5mE5VTl7wIfx0hXeJ95FCxnbjT634TGmLs6ce2iIOHGrK0XBG5rCSSYVCFqBXZ8T33cp
+         q1yC58ybXXgIqkkdgazwwxSiajGWrZiDNIUGI6UDNKrh0gWxPMA8z5L8Rl8P+hZddxTo
+         Ch+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ImGu+3HRwxw26INoG2rJF7A3DHPaUWGe/WElk2lDQCY=;
+        b=SccDJkddtOq3n/pRATkhVpU5equTEDdQo7krxasxxvrVRhKLq6cbvC3628eoZv35NO
+         AW9j/zR3DaKaJPBOGnrU88HUGGHGA59VGZl4Z7X8BBNXj1drwA2BsC1ypTxrEp59DelA
+         42PJ2wBUEvX342pD4T6GvTVi1/8KGLwWeQ51BnT/SfaFdXUTkQw8OZXsYYSai7kSra48
+         rFy3pdKzlswKSIhjL1dtbZXBjgHhDVOzwbiqWlz8JM+tLXZ9KlaH6smuCQ3NTdbZn/cL
+         oCCDbPtFDm5Arlnk7ng0wDUlVd9GM7zC3zm3tOt8K6JRSzhCG2zkNVjsVBAF16icyfbg
+         pG+w==
+X-Gm-Message-State: APjAAAWApvSanitSkMkCjsH9TkQGJGeBFDWjhRCuwHgZdJtsv0KsiGZF
+        1MMtxBobXrzB3gVxt2ZAInTCjnTMoN0gTWptY+sl
+X-Google-Smtp-Source: APXvYqxvrg/KM8U+krJLdK2XT09iubB2Rg7V30nyVoOai5kGIL7ns8Q71+TQcV0vjri3jbOdPvYfwU5mAaVoRwK1jkwJ
+X-Received: by 2002:a63:7a01:: with SMTP id v1mr107018pgc.310.1566491137842;
+ Thu, 22 Aug 2019 09:25:37 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 09:25:34 -0700
+In-Reply-To: <20190822041529.GA4347@sigill.intra.peff.net>
+Message-Id: <20190822162534.17365-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190822041529.GA4347@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.23.0.187.g17f5b7556c-goog
+Subject: Re: [PATCH] diff: skip GITLINK when lazy fetching missing objs
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, gitster@pobox.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+> I wondered what would happen when it does not succeed. It looks like the
+> whole diff process just dies.
+> 
+> The batch fetch is purely an optimization, because we'd eventually fetch
+> the individual objects on demand. If the batch one fails, should we
+> continue with the operation? That leaves any error-handling for the
+> overall operation to the "real" code. And it would also mean that this
+> bug became an annoying error message,
 
-> This strbuf_addstr_without_crud() function removes various characters 
-> from the start and end of the author info, one of which is the single 
-> quotation. I'm not sure why this is done, the more experienced folk 
-> where will have the answer.
+On the one hand, if the batch fetch fails, then the individual
+prefetching would likely fail as well. But on the other hand, as you
+said below, we sometimes extraneously fetch objects, so making the batch
+fetch non-fatal might be a good idea too.
 
-The logic there exists in order to remove cruft around the name on a
-typical e-mail header (remember, most of the very core-ish part of
-the Git was written and got solidified back when the Linux kernel
-was the primary client of the system, and many commits were created
-via "am"), e.g. sender's mail client may send something like this:
+> But certainly your fix is the right thing to do regardless.
+> 
+> Tangential to your fix, but I also noticed while poking at this that
+> we're pretty aggressive about fetching objects, even if they won't be
+> needed. I know we touched on this briefly when discussing the original
+> patch, and the logic can get pretty complicated, so we punted. But there
+> are a few cases that I think might have a good cost/benefit ratio:
+> 
+>   1. a --raw diff without renames doesn't need the blobs (and even with
+>      renames, it only needs added/deleted entries). I imagine that being
+>      able to "git log --raw" on a full history without pulling in a
+>      bunch of blobs might be worthwhile (and a fairly common operation).
+> 
+>   2. Files that exceed bigFileThreshold or are marked as binary via
+>      gitattributes will generally be skipped during the file-level diff,
+>      without even loading them. These are the minority of files, but
+>      they also have an outsized cost to fetching them (and in fact may
+>      be the very thing people are trying to avoid with a blob filter).
+> 
+> Again, not anything to hold up your patch, but just cataloging some
+> future work for this area.
 
-    From: 'Foo bar Baz' <my@name.xz>
-
-and we do not want to take surrounding sq pair as part of the name.
+Good points. Thanks.
