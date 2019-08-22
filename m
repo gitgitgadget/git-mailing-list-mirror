@@ -2,81 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 790EB1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 20:54:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EFAB1F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 21:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404549AbfHVUyd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 16:54:33 -0400
-Received: from st43p00im-ztbu10073701.me.com ([17.58.63.183]:57883 "EHLO
-        st43p00im-ztbu10073701.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731775AbfHVUyd (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Aug 2019 16:54:33 -0400
-X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Aug 2019 16:54:32 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
-        t=1566506683; bh=NzUUIRTCiWgviltRJpCSGOVF7wbuw+PfSXlYS9aCSlk=;
-        h=From:Content-Type:Subject:Message-Id:Date:To;
-        b=kHFoAiNHAdVT/c4as8vAgzCMv3nZQKWWptO690zlY2RsguDVRz7qUDi3lWb8ecnUq
-         L0n252wnABsMZljs1DrX+RaRdwCHfXlfDz2Q6eVArB0uRI/9RthGl5MDTsJc0Plv6f
-         pk5MW3nWbbEAxkFZ1HMqt47LJzrhQFetl5wunk/dJG0LfNA5p61hxm5VNwaO/OZYmp
-         40zocE4lf8cZuQcNIrk4cqi3twyiCNrky8bZ/kqgDGW2FXRb93fbPyGib4sJyNUAEn
-         igPAfcEvSA0zlCSr0Cap07yaxjCj/+sxmIqxj1KAttG2DmkGYIsqfB6cr6j/tSwc4F
-         RP1pLkWVEAcMQ==
-Received: from [172.20.10.5] (mobile-166-170-34-87.mycingular.net [166.170.34.87])
-        by st43p00im-ztbu10073701.me.com (Postfix) with ESMTPSA id 1BC414C03DD;
-        Thu, 22 Aug 2019 20:44:42 +0000 (UTC)
-From:   Christopher Sean Morrison <brlcad@mac.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Bug Report: notes disassociated after history edits
-Message-Id: <01F35983-BC98-4518-8ED3-C0E1AFC7507A@mac.com>
-Date:   Thu, 22 Aug 2019 16:44:37 -0400
-Cc:     Cliff Yapp <cliffyapp@gmail.com>
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.104.11)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-22_12:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1812120000 definitions=main-1908220180
+        id S2404606AbfHVVBZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 17:01:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52443 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733015AbfHVVBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 17:01:25 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AD81C71168;
+        Thu, 22 Aug 2019 17:01:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0BVCF0IIvgPJUWl9g7mElzZ5nPg=; b=bTXY6V
+        kgYWT0Zhjvqk2CZ7eRs9SWD5up/pyTyXJ/yLmulnyM1Q8AWme97U1KvGBxhinxpJ
+        lZjUrStNtYY03t3tDtoqg7NXxxMBpIBkYLRm+ony4XjG5szioA5PJEFAntltQJ6i
+        2aPrXxaHkoe4mevu2kRK+9EAZE8QMTWR/dKmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xtQ5YMFD3Wz/bnAd2y/A+gO7raonXhoj
+        8Pn2ypToBOhFnAo66Idf2i6gMAjS/pm9vodn9ajdN9t3grIhYLtVrACW/I5+7MN3
+        fzDe8WMsxkK34IYl5HBUFGq39h/kZw0rqcfsMtQdn4idJfaG9cdggwOGYe+kxc/f
+        NQ2JYSuB6Wc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 94A0E71166;
+        Thu, 22 Aug 2019 17:01:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BA03471165;
+        Thu, 22 Aug 2019 17:01:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] git-submodule: fix expansion of depth for cmd_update
+References: <20190822203114.18805-1-jacob.e.keller@intel.com>
+Date:   Thu, 22 Aug 2019 14:01:16 -0700
+In-Reply-To: <20190822203114.18805-1-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 22 Aug 2019 13:31:14 -0700")
+Message-ID: <xmqqh868oqxv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCD1E4A4-C51F-11E9-93AA-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-We=E2=80=99re migrating a very large old repository to Git (the oldest =
-in continuous development!) and using the notes feature to preserve Svn =
-data like revision IDs and branch information.  We=E2=80=99ve run into =
-what seems like an incomplete feature or bug in that notes get =
-orphaned/disassociated if an old commit is changed (e.g., edit a =
-committer's e-mail or the commit message).
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> The depth variable already contains "--depth=", so expanding it with an
+> additional --depth when invoking the update-clone git submodule--helper
+> is incorrect.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>
+> I'm *reasonably* sure this is correct, but I am not sure how to test it.
+> It's possible that it expands to "--depth --depth=N" and somehow this gets
+> handled properly?
 
-The changed commit and all children commits get sha updates, but the =
-notes remain associated with the original sha.  This can be particularly =
-catastrophic, for example, if an early commit is changed as all notes =
-become orphaned.
+I agree with your eyeballing of all the assignments to the variable,
+and other references to $depth take either one of these two forms:
 
-I presume this is a bug but perhaps we may be doing something wrong?  Is =
-there a better way to preserve old Svn information that will work with =
-filter-branch?
+	git submodule--helper ... ${depth:+"$depth"} ...
+	git submodule--helper ... $depth ...
 
-We want to be able to look up commits by the old Svn commit ID because =
-they are pervasively referenced in commit messages, issue trackers, =
-mailing lists, etc.  We also simply don=E2=80=99t want to lose the data =
-on philosophical grounds as we have a detailed continuous development =
-history that goes back 30+ years.  Thank you in advance for any =
-assistance or insights.
+As long as "git submodule ... --depth <depth> ..." gets called with
+<depth> that does not have $IFS, either would work fine, but the
+former is correct even when <depth> has problematic characters in it
+and your patch uses that form, too).
 
-Cheers!
-Sean
+However.
 
+The command line parser for update_clone() stuffs --depth as a
+string to suc.depth, and then the machinery ends up calling 
+prepare_to_clone_next_submodule() with such an instance of suc
+(struct submodule_update_clone).  Then that function just pushes the
+suc->depth to an argv array used to spawn a "submodule--helper clone".
+
+So passing "--depth --depth=23" would be "correct", sadly, in that
+codepath (I am not saying other codepaths would not call the same
+prepare_to_clone_next_submodule() with "--depth 23", as I didn't
+check, and if there is such a codepath, it would break).  
+
+We may need to clean the mess up X-<.
+
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index c7f58c5756f7..4e7fc8bf3652 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -547,7 +547,7 @@ cmd_update()
+>  		${update:+--update "$update"} \
+>  		${reference:+"$reference"} \
+>  		${dissociate:+"--dissociate"} \
+> -		${depth:+--depth "$depth"} \
+> +		${depth:+"$depth"} \
+>  		$recommend_shallow \
+>  		$jobs \
+>  		-- \
