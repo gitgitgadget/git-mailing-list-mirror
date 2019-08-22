@@ -2,138 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACC911F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 15:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E1271F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 15:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387585AbfHVPGT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 11:06:19 -0400
-Received: from relay12.mail.gandi.net ([217.70.178.232]:41223 "EHLO
-        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731338AbfHVPGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 11:06:19 -0400
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 14A4D200003;
-        Thu, 22 Aug 2019 15:06:16 +0000 (UTC)
-Date:   Thu, 22 Aug 2019 20:36:14 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Giuseppe =?utf-8?B?Q3JpbsOy?= <giuscri@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] You can't have single quote in your username
-Message-ID: <20190822150614.o25g37pwfcaos2zn@localhost.localdomain>
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
+        id S2388300AbfHVPt3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 11:49:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64113 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729069AbfHVPt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 11:49:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 311FB175790;
+        Thu, 22 Aug 2019 11:49:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=c7HKDKmWE7pWWBA5s57qbCOVbCc=; b=g+N/ih
+        1aF8fWw5hcDkhVGWbHNE7rxgYLG4LShExX1KNBWuu8F1rMaqfZn9awl7LWsYxDv4
+        FZ4EarHud729Uv6NwzNdynRlcvNWXbPA+8/AXaOYVVHKdvM+/iPbT9pzi8mntoRV
+        ob0Pdb0NUu5c7K+k6Cd/kdgJd8VqyT6LlmMEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mIoG9XAm2yB+orzhXHdgSA6DZXVv1ZPv
+        hKXyWhP61YO3kB5jduq2zjmxwUFG3nH3L5+hGEcfHMKho5g9w+ppGPa7HPMT0gFS
+        C7JezDPcaklO0Auw+GQHmUqNkG3WEkGaGY+Kxob6filj8uvcNiTnMJosx8a6XAgl
+        3lV0i7HlhrU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29B8B17578F;
+        Thu, 22 Aug 2019 11:49:28 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 942F117578E;
+        Thu, 22 Aug 2019 11:49:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Ben Wijen <ben@wijen.net>, git@vger.kernel.org,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/1] rebase.c: make sure the active branch isn't moved when autostashing
+References: <20190820201237.10205-1-ben@wijen.net>
+        <20190821182941.12674-1-ben@wijen.net>
+        <20190821182941.12674-2-ben@wijen.net>
+        <nycvar.QRO.7.76.6.1908221418540.46@tvgsbejvaqbjf.bet>
+Date:   Thu, 22 Aug 2019 08:49:26 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1908221418540.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 22 Aug 2019 14:27:29 +0200 (CEST)")
+Message-ID: <xmqqftltqjy1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6C1A31B2-C4F4-11E9-8D77-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/08/19 02:32PM, Giuseppe Crinò wrote:
-> Note how `git log` discards the ending quote character:
-> ```
-> root@NBR1710R:~# git init repo
-> Initialized empty Git repository in /root/repo/.git/
-> root@NBR1710R:~# cd repo/
-> root@NBR1710R:~/repo# git config user.name Les Actualite\'
-> root@NBR1710R:~/repo# cat .git/config
-> [core]
->         repositoryformatversion = 0
->         filemode = true
->         bare = false
->         logallrefupdates = true
-> [user]
->         name = Les
-> root@NBR1710R:~/repo# git config user.name "Les Actualite\'"
-> root@NBR1710R:~/repo# cat .git/config
-> [core]
->         repositoryformatversion = 0
->         filemode = true
->         bare = false
->         logallrefupdates = true
-> [user]
->         name = Les Actualite\\'
-> root@NBR1710R:~/repo# touch foo
-> root@NBR1710R:~/repo# git add foo
-> root@NBR1710R:~/repo# git commit -m 'first'
-> [master (root-commit) a78e11f] first
->  Committer: Les Actualite <root@NBR1710R>
-> Your name and email address were configured automatically based
-> on your username and hostname. Please check that they are accurate.
-> You can suppress this message by setting them explicitly. Run the
-> following command and follow the instructions in your editor to edit
-> your configuration file:
-> 
->     git config --global --edit
-> 
-> After doing this, you may fix the identity used for this commit with:
-> 
->     git commit --amend --reset-author
-> 
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 foo
-> root@NBR1710R:~/repo# git log
-> commit a78e11ff0707bd4f1bea195735a7fc8b7ee2b9f8 (HEAD -> master)
-> Author: Les Actualite <root@NBR1710R>
-> Date:   Thu Aug 22 14:25:11 2019 +0200
-> 
->     first
-> ```
-> 
-> I can't test with the development tree right now,
-> ```
-> root@NBR1710R:~/repo# git --version
-> git version 2.17.1
-> ```
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Hi,
+>> As with this commit the reset must never change the active branch,
+>> the 'HEAD is now at ...' message has now been removed.
+>
+> Actually, I am not so sure that I like this change.
+>
+> Previously, users had a chance to figure out to which revision the
+> worktree was reset, before switching the branch (because switching the
+> branch we _do_, via `git checkout master`).
 
-I took a quick look into this problem. The issue is not with git log, 
-but instead with git commit. When you commit, 
-builtin/commit.c::author_info() calls ident.c::fmt_ident(), which in 
-turn calls ident.c::strbuf_addstr_without_crud(), which in turn calls 
-ident.c::crud().
+Hmph, that only happens when --autostash is in effect and actually
+had created a stash, no?  If your working tree is clean, or if you
+did not pass --autostash, "HEAD is now at ..." is not reported.
+I am not sure why that particular piece of information is only
+useful in the case we actually created a stash and unnecessary if we
+did not create a stash.
 
-This strbuf_addstr_without_crud() function removes various characters 
-from the start and end of the author info, one of which is the single 
-quotation. I'm not sure why this is done, the more experienced folk 
-where will have the answer.
+When we do not create a stash, the output starts from "First,
+rewinding head to replay your work on top of it...", which sort of
+gives a warm and fuzzy impression that it is reporting what it is
+doing, but without giving the most useful information (i.e. what
+"it" refers to).
 
-Anyway, the fix is simple enough. Remove the lines that mark single 
-quotes as crud in the crud() function. This will fix the issue for the 
-future commits. If you need to fix it for past commits, you need to 
-re-write your history with the fix applied.
+Because I am all for preserving the existing behaviour as much as
+possible when fixing real bugs, I would not strongly object to your
+idea of resurrecting the message.  But I am not sure if the existing
+message was all that useful in the first place.  I'd rather see
+these messages that were only emitted when --autostash was given
+removed first (like this patch does), and then the "First rewinding..."
+message reworded to show where we rebuilt the history on top of.
 
-Below is the quick-and-dirty patch that fixes this. If there is no 
-reason for this patch to be dropped, I'll send a proper one once some 
-other people have commented.
-
--- >8 --
-diff --git a/ident.c b/ident.c
-index e666ee4e59..63cc5e32d3 100644
---- a/ident.c
-+++ b/ident.c
-@@ -204,9 +204,7 @@ static int crud(unsigned char c)
- 		c == ';' ||
- 		c == '<' ||
- 		c == '>' ||
--		c == '"' ||
--		c == '\\' ||
--		c == '\'';
-+		c == '"';
- }
- 
- static int has_non_crud(const char *str)
-
--- 
-Regards,
-Pratyush Yadav
+Other than that, thanks for a good review, and thanks Ben for
+working on this.
