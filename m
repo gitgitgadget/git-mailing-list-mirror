@@ -2,122 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD8B1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 16:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D58B1F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 16:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389739AbfHVQHH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 12:07:07 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34764 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730979AbfHVQHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 12:07:07 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s18so5979935wrn.1
-        for <git@vger.kernel.org>; Thu, 22 Aug 2019 09:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+pHM4DZ5TSk8Kg0ZGhAolSd4JjLJUAMeZeRXRxs41HI=;
-        b=DKC+StAZV7PHtOGxVpGBufHGg3ptQxF8uZ5fDZLOQgJhdh+ewfAo/wUfZ6m1Cr0oj+
-         Qx7dx3HOuK6inurdI1+K317viPEG2XISB62vD0YpjXZF2qRR7SYGnot1Yle0o9gjEiR3
-         duVfrdosGMJ5JqlhdJspCacc6MvvbS3MAhYBb9zUhDLWw9aEZ5pCbrF78ZhGX/bJG/0+
-         4IvfXGI7UnEUq4IbU4y3iHaUTQIUcoX0WMIKpQtfneNPdzEccecIfWKyF+gX8ZOHjY9X
-         TnyX/PsO5NX81CQsYn/frZoxWYSK8X4JFHD6ux8z8F/oZJNgeYH1QoJcwYZy7b+ycGk7
-         MoQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+pHM4DZ5TSk8Kg0ZGhAolSd4JjLJUAMeZeRXRxs41HI=;
-        b=a5MF4ZeNu9OK+tSHvdDN4d0ugCFspIp6pjZISL3+g2eZ8rpcnzHSUXLgq/XwEX/hPZ
-         jxNO4DMBHAzKtosVdOcrpitoQZyWiuwse3ri/cFDlQGiNt+oEW3qhQdThrJxCE/pRbor
-         VEnQTdjXE7iKrMIAtUETxO2CRft/opCDNZ9Els+wubNoeKfTf9sNdV3ExkDhaDrIT5uU
-         Um9AzgVFipASh6Go3rR5iglrhYl8pIFqjPdIdcw0BPJcRb4Q02rQGDLW7ZtgN9OL3cGI
-         6pzJ0eBxodL+rlV5ecY1pyC/QTfdIdy3Oddhbah7YYiZhzK6CEMSFCw3X0VjynnkmUoy
-         Ftpg==
-X-Gm-Message-State: APjAAAWPn9xhJyg2J6zdO3v7tI+gVB9D9VXOQMi5s3Z38/59Aoo0picw
-        fNKi+0h5kE+wHWtwiCPr+80=
-X-Google-Smtp-Source: APXvYqyI8wlSI0WOUPCzttkWCp8isiOAdGztJguUK06/R2ddUU9ZurRD9TJlyXGvyvAiBazKmpGJLA==
-X-Received: by 2002:adf:f18c:: with SMTP id h12mr22230505wro.47.1566490024942;
-        Thu, 22 Aug 2019 09:07:04 -0700 (PDT)
-Received: from szeder.dev (x4d0c08c4.dyn.telefonica.de. [77.12.8.196])
-        by smtp.gmail.com with ESMTPSA id t8sm35795wra.73.2019.08.22.09.07.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Aug 2019 09:07:04 -0700 (PDT)
-Date:   Thu, 22 Aug 2019 18:07:02 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Charles Diza <chdiza@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: v2.22.1 and later regression wrt display of progress indicators
-Message-ID: <20190822160702.GD20404@szeder.dev>
-References: <20190822141928.GA3163@323642-phi-gmno-clahs>
+        id S1733304AbfHVQQD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 12:16:03 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53206 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729455AbfHVQQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 12:16:02 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A321F6E868;
+        Thu, 22 Aug 2019 12:16:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=outS8/je/GvzAua5GBjErsGoFE4=; b=TNkKtA
+        yDrAZ4TbhDwtVOT56HrFJwFNtnnkfGRciDMcxh2m3n0+LQfu1BOJM4fh5M9J5Jc+
+        1ZDJ/m8xN5BH68C3vUtCz2W2nQYOunzAuXZ7V0T8ok0gH8RutvHAqfaovoQSDGrz
+        JYHM5s58E1F+1+2XVLInQd1hFBNtSOfoVe9VM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=seLp5dOQYtFpQm3/ty2reao347oh5K9X
+        pVWm6EDl5Hfcybqx465rMap+CrJiupEc9k9Xygf6mTDnSU7+w+iTl63Y65JOHazA
+        qBXlHbE/W5Ok0xjYj+PmPTinnjqkIMTQCnH7ASss4ScMQdaoOkUv5NR0qSwXSRqS
+        2Tumo2BWBYA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B16E6E865;
+        Thu, 22 Aug 2019 12:16:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C3E5B6E864;
+        Thu, 22 Aug 2019 12:15:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mischa POSLAWSKY <git@shiar.nl>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Subject: Re: [PATCH 2/1] t6300: format missing tagger
+References: <20190817215107.13733-1-git@shiar.nl>
+        <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com>
+        <xmqq1rxerxkk.fsf@gitster-ct.c.googlers.com>
+        <20190822135528.GB28725@shiar.net>
+Date:   Thu, 22 Aug 2019 09:15:55 -0700
+In-Reply-To: <20190822135528.GB28725@shiar.net> (Mischa POSLAWSKY's message of
+        "Thu, 22 Aug 2019 15:55:28 +0200")
+Message-ID: <xmqq36htqipw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190822141928.GA3163@323642-phi-gmno-clahs>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1FEECF74-C4F8-11E9-90C7-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 22, 2019 at 10:20:08AM -0400, Charles Diza wrote:
-> By 2.22.1 at the latest (and continuing into 2.23.0) there is a
-> problem with the display of progress indication during `git pull`
-> (and possibly other commands, I don't know).
-> 
-> I'm on macOS, and this happens in both Terminal.app and iTerm2.app,
-> on both macOS 10.13.6 and 10.14.6:  In a standard 80-column wide
-> terminal window, cd into a git repo and do `git pull`.  The chances
-> are high (though not 100%) that one will see this:
+Mischa POSLAWSKY <git@shiar.nl> writes:
 
-I noticed this today when pushing to GitHub (I suppose they have very
-recently upgraded?) from Linux, so this is neither specific to 'git
-pull' nor to macOS.
+> Alright, thanks for the pointer.
+> Here's a batch of tests on all pertaining atoms.
 
-I'm sure the culprits are commits cd1096b282 (pager: add a helper
-function to clear the last line in the terminal, 2019-06-24) and
-5b12e3123b (progress: use term_clear_line(), 2019-06-24) with the
-added complication of communicating with a remote.
+Good to see that you made it much more thorough than my q-n-d
+illustration patch ;-)
 
-If the standard error of 'git pull/push' is connected to a terminal,
-then it will tell the transport helpers and in turn to the 'git
-upload-pack/receive-pack' processes on the remote to produce progress
-output.  However, since those processes run on the other side of the
-internet, they don't have any idea about the local terminal (smart or
-dumb?  how wide?) their progress will end up on, and, consequently,
-they assume the worst, i.e. standard-width dumb terminal, and use 80
-spaces to cover up the previously displayed progress line.
+> -- >8 --
+>
+> Strip an annotated tag of its tagger header and verify it's ignored
+> correctly in all cases, as fixed in commit e2a81276e8 (ref-filter:
+> initialize empty name or email fields, 2019-08-19).
 
-I'm not sure how to handle the situation.  A few ideas to consider:
+I am inclined to squash this test part of the update into the said
+commit; you'd lose one commit count, but hopefully you do not mind?
 
-  1. Update 'git upload-pack/receive-pack' to use some kind of magic
-     character or char sequence instead of a "real" line clearing
-     sequence, and update 'git pull/push' to replace that magic with
-     the line clearing sequence appropriate for the terminal.
+My motivation for doing so is that it would allow us to lose the "as
+fixed in commit X" comment in a log message, which in turn would
+mean that the code-fix patch can later be rebased safely without
+having to remember that this one needs to be adjusted ("git rebase"
+does not do such a rewrite for us, and I personally do not think
+"git rebase" should do such a rewrite silently, as I cannot quantify
+the risk of false positives).
 
-  2. Variant of the above: leave 'git upload-pack/receive-pack' as they
-     are now, and declare that those 80 spaces indicate when to clear
-     progress lines.  Update 'git push/pull' to catch those 80 spaces,
-     and replace them with the line clearing sequence appropriate for
-     the terminal.
-
-  3. Update 'git pull/push' to explicitly tell the remote what line
-     clearing sequence to use.
-
-  4. Revert, and go back to calculating how many spaces we need to
-     append to clear the previously displayed progress line, and hope
-     that we don't mess it up (or even if we do, it still won't be as
-     noticable as this).
-
-I suppose this issue affects other git clients as well, so (1), (2),
-and (3) might not even be an option.
-
+>
+> Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
+> ---
+>  t/t6300-for-each-ref.sh | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index ab69aa176d..9c910ce746 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -526,6 +526,25 @@ test_expect_success 'Check ambiguous head and tag refs II (loose)' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'create tag without tagger' '
+> +	git tag -a -m "Broken tag" taggerless &&
+> +	git tag -f taggerless $(git cat-file tag taggerless |
+> +		sed -e "/^tagger /d" |
+> +		git hash-object --stdin -w -t tag)
+> +'
+> +
+> +test_atom refs/tags/taggerless type 'commit'
+> +test_atom refs/tags/taggerless tag 'taggerless'
+> +test_atom refs/tags/taggerless tagger ''
+> +test_atom refs/tags/taggerless taggername ''
+> +test_atom refs/tags/taggerless taggeremail ''
+> +test_atom refs/tags/taggerless taggerdate ''
+> +test_atom refs/tags/taggerless committer ''
+> +test_atom refs/tags/taggerless committername ''
+> +test_atom refs/tags/taggerless committeremail ''
+> +test_atom refs/tags/taggerless committerdate ''
+> +test_atom refs/tags/taggerless subject 'Broken tag'
+> +
+>  test_expect_success 'an unusual tag with an incomplete line' '
+>  
+>  	git tag -m "bogo" bogo &&
