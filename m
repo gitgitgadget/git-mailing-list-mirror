@@ -2,103 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 797101F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 17:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAAA41F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 17:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731521AbfHVRTm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 13:19:42 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40252 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390299AbfHVRIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 13:08:24 -0400
-Received: by mail-pf1-f193.google.com with SMTP id w16so4369632pfn.7
-        for <git@vger.kernel.org>; Thu, 22 Aug 2019 10:08:23 -0700 (PDT)
+        id S2392821AbfHVRoa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 13:44:30 -0400
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:32945 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403887AbfHVRXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 13:23:16 -0400
+Received: by mail-vs1-f74.google.com with SMTP id q9so1935083vsj.0
+        for <git@vger.kernel.org>; Thu, 22 Aug 2019 10:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=L6T3nu2wGnQFOWEFZFU36n3P80k2EY9ZaPrlyYz01vg=;
-        b=ABMjCcqYUaK7LtADWjnnQUt+BiM+qEVcBXI3YLqpNW8SNadhNVlfkh3qeZ8FezqJM1
-         FoJNEO5K5a3rgldsqfh7AQ1u0J5EceI4iykxOVpXHFxQe8vxyENMbPfBk6vjNblvJNpF
-         aekkEB/pb5yVnRP9meNsDtWT8kHOi60jx8cjgkqRt5taJwZ4ubiqgkkwdql/+GMCjkMU
-         kopwhsrnbsJbH9PU8/2IOHmKnOWTssot0x3O4EiOKXOafbMCAFTrIIam/9IhT5Za45BV
-         eoKPOA3y54EqBEDV3P9sJaUKv4jrRaEs8CxRFZqZ0Xj/7PBh3SgyBsjEZcbfgONzUO5f
-         /GWA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=rrDn3ZNaCE6mgYpG/qUxNx9AD7a3hI5bWJgzkcfcTo0=;
+        b=IRlpAUThSczMw4Ek3BBEn9MFSvy2vdP+DXJYo/43tl4Z6pm5GZ8UVf0exW8jWta2Si
+         pkjRwM5NiwK8Tt+Gc7N7SDx6wnglJ6bbtD7dG4iIyJP8SKsGjzZ3XQyAtT4QAHntvO1S
+         HN8TpjroEEzvjJEOHJ0BqnwGKHXF/oeUDm0KD3V4cuIyWFDeQ+Scwo3cGX+bmWeIGnLd
+         ysx01i97sTf/mZNoyMZ9F3Wels2ifw8cMZEtD7fjmtHQ+oMehWzqLvXKbf2+w5ENL/ny
+         /8+S4TnTR9nCSo/CKgmmzU1Kjn8OppoKSPg/Nk1sc4McaoTbeO6LQbhCcKQUoUhO4kQW
+         1XkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=L6T3nu2wGnQFOWEFZFU36n3P80k2EY9ZaPrlyYz01vg=;
-        b=FW2ij/JFo2Hzy8RT1vya3CSy85hi0lrQ3tajDRZIoMVhIxXcZAURZK7EMEuaRhVv2v
-         nskqIu1PVGqfB+mEBNUPoSgh0Y3ZAnLlXFPCX+/lEokmDCn//slpSDdUjtHGNSgghTC9
-         wnEI7NRLMtfUI5nHzK2txZyZD0oIM9poZNxC/he6srgB39NqKn+TofVtUYmzaTeHuU6o
-         tlY9IRJNRdqnppHZJnVgBgDf9+YHjgi40VuC+3em5x7YR62kbDeAyL8X5S0m8lU/KHzp
-         muSgEW9RLlQH+E99AFvhE+3l/wiFraG8eUw4IZP+ljQc/IS88ljdWfz4Mw8bzwOhxG8O
-         9png==
-X-Gm-Message-State: APjAAAVoqRjY41GNWHhJ+HyceFNYvytmsf6icS3UHCgUuj4clxt4NgQx
-        /ugCLyXRj6mJSOhTktJZiu39qw==
-X-Google-Smtp-Source: APXvYqxb0czLHHDZLbkgNFfL1sYEXNp3iFMQkwRoo7RTldcUs6g+tGj8XavhsGGxo/VJmNTT1zUd8g==
-X-Received: by 2002:a17:90a:ac0a:: with SMTP id o10mr690673pjq.143.1566493702935;
-        Thu, 22 Aug 2019 10:08:22 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id u24sm23810537pgk.31.2019.08.22.10.08.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Aug 2019 10:08:22 -0700 (PDT)
-Date:   Thu, 22 Aug 2019 10:08:17 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Giuseppe =?iso-8859-1?Q?Crin=F2?= <giuscri@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [BUG] You can't have single quote in your username
-Message-ID: <20190822170817.GB35435@google.com>
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
- <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=rrDn3ZNaCE6mgYpG/qUxNx9AD7a3hI5bWJgzkcfcTo0=;
+        b=o6zIbQD1/MHiAPL3hH74xaoaC7g1NFCadiJ3nZHj6f2aLLXPs3ujZGrKc312jDmLqL
+         EMZMXnJgz4eVrhV0x6IXeWJ6E8c3MWofS+2IImdDyIIfdIXwKSKbhmmztabRyWe9QOC8
+         IF5Erdd0rArrQG/lkFKrBm4Hh2d2ZAaJd+nEYwsGV+8rIXk496lM+KL63oDvbDnbgRMI
+         wAWz2+GWBt1LblzymlEpUIgurE078Q2XX9ZmnaQdi4enwNU6pF5hkH76Ut+wlr4ygIj+
+         3ozPcWK5oHCkuXADFXetyL4je3As6CRulr8/wPjrV28puMOK7BOCLcrNpjFj8Bw0gr/G
+         IkgQ==
+X-Gm-Message-State: APjAAAXoHHzInKHl6IlUpcaJ8COd1OxahJchrBYfebTbhOL0JdTsSbZk
+        0GD8cywy2wgLHlwEgzXGD/KLPBv1rLPyaUXrE2rj
+X-Google-Smtp-Source: APXvYqyNrN8iPYiRL9oEvLKbzKrzkar3mvFHJ+vgz5+2paPWgxB+orTnZqs+DM2ydBXvr1QpHsecPTTBNt+HwOQ4HUdY
+X-Received: by 2002:a67:fe90:: with SMTP id b16mr93689vsr.135.1566494595355;
+ Thu, 22 Aug 2019 10:23:15 -0700 (PDT)
+Date:   Thu, 22 Aug 2019 10:23:12 -0700
+In-Reply-To: <xmqqtva9p3ma.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190822172312.41404-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqtva9p3ma.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.23.0.187.g17f5b7556c-goog
+Subject: Re: [PATCH 0/2] Skip ls-refs if possible for HTTP
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 22, 2019 at 09:58:48AM -0700, Bryan Turner wrote:
-> On Thu, Aug 22, 2019 at 5:32 AM Giuseppe Crinò <giuscri@gmail.com> wrote:
-> >
-> > Note how `git log` discards the ending quote character:
-> 
-> <snip>
-> 
-> > root@NBR1710R:~/repo# git add foo
-> > root@NBR1710R:~/repo# git commit -m 'first'
-> > [master (root-commit) a78e11f] first
-> >  Committer: Les Actualite <root@NBR1710R>
-> 
-> If you look closely here, in the "git commit" output, you can see
-> that, as Pratyush indicated, it was actually "git commit" that dropped
-> the trailing apostrophe, and "git log" is simply presenting the
-> information as it exists in the repository.
-> 
-> If your goal is an accented "e", wouldn't it be better to set your
-> name using é, rather than a trailing apostrophe? "git commit" would
-> likely preserve that without issue.
+> This probably is totally off-tangent, but do any of these "let's
+> advertise fewer" changes at the protocol level have to take into
+> account the use of --prune option on the client side?
 
-Hmm, I don't think it's a good idea to get into the business of telling
-contributors how to write their names. There tends to be an axiom that
-"all assumptions developers make about human names are false."
+I don't think so. According to what I understand from the documentation,
+the prune option prunes based on the RHS of the refspec, and it doesn't
+affect anything non-matching. When we advertise fewer, the only refs
+that are missing are those that are non-matching anyway.
 
-Does it make more sense to replace this strbuf_addstr_without_crud()
-setup with something more intelligent (i.e. checking for matching crud
-on either end, like ^[$crudchars].*\1$? We already check for matched <>.
+Some experimentation seems to show that that is the case also:
 
-- Emily
+$ git init one
+[snip]
+$ git -C one commit --allow-empty -m x
+[master (root-commit) 67056ac] x
+$ git -C one branch maste
+$ git -C one branch other
+$ git clone "$(pwd)/one" two
+Cloning into 'two'...
+done.
+$ git -C one branch -d maste
+Deleted branch maste (was 67056ac).
+$ git -C two checkout --detach HEAD
+HEAD is now at 67056ac x
+$ GIT_TRACE_PACKET=1 git -c protocol.version=2 -C two fetch --prune origin refs/heads/m*:refs/remotes/origin/m*
+[snipped lots of stuff; basically, only refs/heads/master is sent]
+10:15:46.308264 pkt-line.c:80           packet:        fetch> ref-prefix refs/heads/m
+10:15:46.308276 pkt-line.c:80           packet:        fetch> ref-prefix refs/tags/
+10:15:46.308523 pkt-line.c:80           packet:        fetch< 67056ac6d07814334716df760054ac5bec05b66a refs/heads/master
+From /usr/local/google/home/jonathantanmy/tmp/g/one
+ - [deleted]         (none)     -> origin/maste
+$ git -C two for-each-ref
+67056ac6d07814334716df760054ac5bec05b66a commit	refs/heads/master
+67056ac6d07814334716df760054ac5bec05b66a commit	refs/remotes/origin/HEAD
+67056ac6d07814334716df760054ac5bec05b66a commit	refs/remotes/origin/master
+67056ac6d07814334716df760054ac5bec05b66a commit	refs/remotes/origin/other
+
+(Notice that refs/remotes/origin/other is untouched.)
