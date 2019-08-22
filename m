@@ -2,147 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EEEC1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 14:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29C651F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 14:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387808AbfHVOrI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 10:47:08 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38581 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727553AbfHVOrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 10:47:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566485223;
-        bh=BtHHFYDRp64dzhQ5mHouZytrWYqixW5JsrNvOGX2n8s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kfs0Qb7tfmQTPdPMRQP8076jrOo4IsDFukdnchVQH5Pr042j6BftRkn06EISpE0Sy
-         Z+e7i7kVv3vpVru97NflFPjh1pFkqRJb5eFx6lX+6NKrKlrRBtXj5iy5YD2lmnXBMr
-         RvhZCBvoFHOsaWjTQk/nYF1fnXi8OKtErdFMieS0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwrS8-1iKVyQ36zo-016L8F; Thu, 22
- Aug 2019 16:47:02 +0200
-Date:   Thu, 22 Aug 2019 16:47:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] parseopt: move definition of enum parse_opt_result up
-In-Reply-To: <58e5dd7b-d577-a1d9-c704-44642f553323@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1908221646460.46@tvgsbejvaqbjf.bet>
-References: <58e5dd7b-d577-a1d9-c704-44642f553323@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388671AbfHVOxQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 10:53:16 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:38745 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388028AbfHVOxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 10:53:15 -0400
+Received: by mail-qk1-f193.google.com with SMTP id u190so5399183qkh.5
+        for <git@vger.kernel.org>; Thu, 22 Aug 2019 07:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EDuNurtgNzHHTU4jgP9Fk/USEH7MOjTKBIZCTGhp6hw=;
+        b=bXMmcDKvU5ooII8hS13ySfanQNVtAULFRR2XcgUJsLSqpFB07bDrGfpOoxXEds3Mnv
+         KULrdRqiwAPein1uaZ49U4xNRl4uRbSTTWEyZSCH0J2Fhsje1u5RuDagwCeDLcBNz4PJ
+         qGt6G2imXo5UTsXHpLXnzbTMMoymVfyt0lnM2qYqx3kHYqyOVRxTTPuoPdGe980CpcjF
+         sX73sf6nZPv+Gbx+QnMC+BUdJh9NDLA6coSfSbjJsd8XvoFlTVg2whYpW81d9KPkHrQ5
+         LAD4oDhB0I/jLmZI/KIc4fmaqddSe5hrfh2MDbWojThl7026Uaxhxxu4GOWNzayDwKY+
+         PHUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EDuNurtgNzHHTU4jgP9Fk/USEH7MOjTKBIZCTGhp6hw=;
+        b=MmK/h/CzjxILea4NUrX2Ze1xxEozSv9dT9TvFKOOnuMh738n1t4KVBhGvjZVCqZq80
+         PAF/yBIeRPKG4nWVagbCNq7nT95NzVeA278qqScoJbcsv8R3wkZLKyluQnLrEz0ueV3y
+         s5l6vo1byF47rocnEn7yW+29b5GBFkovruHWvlrbRw/nXmRb5bqkmfxdr7by8p2SoXpc
+         rYR+52FsJj2NtMYe143/37n/QR7ue1lb9MBfU++GyKvOcdgRJ+aLfTDeGMvlyxWmVgcx
+         5OldqXuca1tA4CRgcaGXoieiI/+cXP48BR5ChnkV8aC/8Rh94wrGbtMJiFUFWdyoE74u
+         wLBw==
+X-Gm-Message-State: APjAAAU3z7BvLjov1hJ7fyPg/9R+vPTu3FBoHRlTatmJIiBDZNgP0X7r
+        gtFCteZtcJeLSjXApETD9cg=
+X-Google-Smtp-Source: APXvYqwky/267pYy5dJZB5hzuGM0A8Tr+QsarktBAvbWs6xnEcaXudeybSYX059CpDCp6BZzF9vCuA==
+X-Received: by 2002:a05:620a:1513:: with SMTP id i19mr33222198qkk.284.1566485594579;
+        Thu, 22 Aug 2019 07:53:14 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:7dcd:416c:c779:cf77? ([2001:4898:a800:1010:2f03:416c:c779:cf77])
+        by smtp.gmail.com with ESMTPSA id x68sm12582661qkc.16.2019.08.22.07.53.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Aug 2019 07:53:14 -0700 (PDT)
+Subject: Re: [PATCH 2/2] line-log: avoid unnecessary full tree diffs
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>
+References: <20190821110424.18184-1-szeder.dev@gmail.com>
+ <20190821110424.18184-3-szeder.dev@gmail.com>
+ <e52e867b-af17-d239-11b5-e0c6353acc2f@gmail.com>
+ <20190821173515.GY20404@szeder.dev> <20190822084158.GC20404@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5261a122-cdcb-dab5-dffa-75976c607017@gmail.com>
+Date:   Thu, 22 Aug 2019 10:53:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-327453726-1566485222=:46"
-X-Provags-ID: V03:K1:dvu0eQ8vI6ImEmOUHBJxAKtNJIZcv38NJgRxvh7ZrRjTC319iGJ
- GnyWmtIJfCg9TwPKfSGvyuljlPLQmp/vYg6Bq6/si5ft9aU7CrPEv7y+zkoDl9D8xON3nud
- oQiFsnYPD58xF/7PASWc4BibiO8ajC1JckHuq1pBWu4K0qfvDEr/Lc8XK7IyBTjHrujPyd/
- eFOd7DmUyFYqH+l24Klhg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wO9xAiihRsI=:ya2m5342X1l3Hu8tAmkEfK
- PfXDu3Z/bh44K/7lEX4AS1FeQeJQTOAD+HTF5e7/DSy4IVKLPGKMS0/wrXXQKul8VxqidbNjt
- 0yb3jTDAvQoDxHSdnPlq/UXR2E5F0l7dEHev3omv8oGa8z22VIiAAbDWPZPXP5eP92GuC2azq
- OE4ed0ypJRIAaw8Vsh1SuVguXzJX85cqSnnu5Y1900VwRjYyGq013gddQ18wj7WJI91pjQcfv
- ZfYwgVYJ8mTytuDnBaJVUMMxk9gFlpDS1QPaWkoPLJxTrJ1iEEErSJUnesN8al2MzKOVM0QEP
- tnQdz3cPriWOXDamlyBwBkrYAcSTiK5LwPKgFSn6ACi8UCD2/9JDWUIR5sHV/mw5GxR+69hms
- vej4ujR62YPGj/TodSxWabLmcLVFoTFYGRqmdp/Rc4/CDuPbOFj3NSEGP2FYT/4iQBUYDn5qP
- JAmBD36AFfQsKZXgs1lHBAf33XqNgh65jyeQyHNNIivVsJASqUl+/5NSV4Ass9XNGDhRML2/U
- B6HG4JYntvsDgrl+9n6HS9+VOgcQcZpZNGuDTBs+GBPjTect7Wdf6PGE1LMWhwWQy14kVT7At
- lNYPOPRS5TtHlZyyZCHOHjTlCsTyI13BOhSFWIsKMCv46mk1fP388ZxSoRz99iZOvYVEr7qcR
- gQA/v4GknUdWdzbCNEOtMUDFALTc7HTcCO7K+VFvgGGwUCyBsIApFfB/BvmtMXSiFJr6y8iAU
- VLv0JLCHa2XClmp+PW/gxmnAkL7ZB3cfSL84mpGWc8oG9x0mHJAYvBZkxSWOfG37gwiH2POJd
- kMVIC09sm8H+NhT39rulXZ9Sn63GAk02mgipT3n8Io3B9k0qJzWNwscEbHR2Dp4+wvkung4r1
- BfMQ81Um7zPDRMBtIbVckvO56T1hQEnzFRs/DMifloNMExhq0YKzYMkch1iV1nA1xsI0PeBMO
- hBDGjmK6EzEUMKvHkfqm5a0NBZMEpAcgvQuc5eJZU3uLz5Z8AGnxnJXSHSTXyk2IfSpOxnBdI
- T8PyT+wEmBkRoJbbS2xLTFcb+31OH9F42BqrAf+u2DAVZks/yDxav19FB3Iz+nqVRygfPZGws
- qJOZjvbKgwYHikaIus7CI2n9KGmyO7HXJvpLQLo76U+il+1QoPxU+YNkxOWvIFhQ3TNBgUnZO
- JAHuocCOWDBUkzmVNU1zsjaFt2IjLgFvNpxSx3tI0VcU3xgiet1TC2pnmb9UxpmROScrY=
+In-Reply-To: <20190822084158.GC20404@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 8/22/2019 4:41 AM, SZEDER Gábor wrote:
+> On Wed, Aug 21, 2019 at 07:35:15PM +0200, SZEDER Gábor wrote:
+>> So line-level log clearly computes a lot less diffs than
+>> '--full-history', though still about 50% more than a regular
+>> pathspec-limited history traversal.  Looking at the commit-parent
+>> pairs in the output, it appears that the difference comes mostly from
+>> merge commits, because line-level log compares a merge commit with all
+>> of its parents.
+> 
+>> It seems there is still more room for improvements by avoiding
+>> commit-non_first_parent diffs when the first parent is TREESAME, and
+>> doing so could hopefully avoid triggering rename detection in those
+>> subtree merges or in case of your evil path.
+> 
+> Well, that fruit hung much lower than I though, just look at the size
+> of the WIP patch below.  I just hope that there are no unexpected
+> surprises, but FWIW it produces the exact same output for all files up
+> to 't/t5515' in v2.23.0 as the previous patch.
+> 
+> Can't wait to see how it fares with that evil Windows path :)
 
---8323328-327453726-1566485222=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks for this! With this patch, we finally have the time down to ~20s.
 
-Hi,
+This is a HUGE improvement, especially considering there is only one result
+for the particular section, so the entire history is explored in that time.
+ 
+>   --- >8 ---
+> 
+> Subject: [PATCH 3/2] WIP line-log: stop diff-ing after first TREESAME merge parent
+> 
+>   # git.git, ~25% of all commits are merges
+>   $ time git --no-pager log -L:read_alternate_refs:sha1-file.c v2.23.0
+> 
+>   Before:
+> 
+>     real    0m2.516s
+>     user    0m2.456s
+>     sys     0m0.060s
+> 
+>   After:
+> 
+>     real    0m1.132s
+>     user    0m1.096s
+>     sys     0m0.036s
+> 
+>   # linux.git, ~7% of all commits are merges
+>   $ time ~/src/git/git --no-pager log \
+>     -L:build_restore_work_registers:arch/mips/mm/tlbex.c v5.2
+> 
+>   Before:
+> 
+>     real    0m2.599s
+>     user    0m2.466s
+>     sys     0m0.157s
+> 
+>   After:
+> 
+>     real    0m1.976s
+>     user    0m1.856s
+>     sys     0m0.121s
+> 
+> [TODO: get rid of unnecessary arrays, tests?, write commit message...]
+> ---
+>  line-log.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/line-log.c b/line-log.c
+> index 9010e00950..a4b032f83a 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -1184,13 +1184,11 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+>  
+>  	p = commit->parents;
+>  	for (i = 0; i < nparents; i++) {
+> +		int changed;
+>  		parents[i] = p->item;
+>  		p = p->next;
+>  		queue_diffs(range, &rev->diffopt, &diffqueues[i], commit, parents[i]);
+> -	}
+>  
+> -	for (i = 0; i < nparents; i++) {
+> -		int changed;
+>  		cand[i] = NULL;
+>  		changed = process_all_files(&cand[i], rev, &diffqueues[i], range);
+>  		if (!changed) {
 
-On Tue, 20 Aug 2019, Ren=C3=A9 Scharfe wrote:
+Interesting. The old logic computed ALL the diffs, then started navigating.
 
-> Define enum parse_opt_result before using it in a typedef.  This avoids
-> the following compiler warning:
->
->    ./parse-options.h:53:14: error: ISO C forbids forward references to '=
-enum' types [-Werror,-Wpedantic]
->    typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t =
-*ctx,
->                 ^
->
-> While GCC and Clang both accept such a forward reference by default,
-> other compilers might be less forgiving.
+By navigating before computing all the diffs, we are now avoiding the rename logic
+on the SECOND parent, and there will be a lot of second parents that do not include
+the file (depending on the number of parallel topics being merged independently).
+That's why git.git has a better performance difference than linux.git.
 
-Looks obviously correct to me.
+> @@ -1203,7 +1201,7 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+>  			commit_list_append(parents[i], &commit->parents);
+>  			free(parents);
+>  			free(cand);
+> -			free_diffqueues(nparents, diffqueues);
+> +			free_diffqueues(i, diffqueues);
+
+Good point here, as we haven't initialized all of the queues.
 
 Thanks,
-Dscho
+-Stolee
 
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  parse-options.h | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/parse-options.h b/parse-options.h
-> index a4bd40bb6a..38a33a087e 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -46,6 +46,15 @@ enum parse_opt_option_flags {
->  	PARSE_OPT_COMP_ARG =3D 1024
->  };
->
-> +enum parse_opt_result {
-> +	PARSE_OPT_COMPLETE =3D -3,
-> +	PARSE_OPT_HELP =3D -2,
-> +	PARSE_OPT_ERROR =3D -1,	/* must be the same as error() */
-> +	PARSE_OPT_DONE =3D 0,	/* fixed so that "return 0" works */
-> +	PARSE_OPT_NON_OPTION,
-> +	PARSE_OPT_UNKNOWN
-> +};
-> +
->  struct option;
->  typedef int parse_opt_cb(const struct option *, const char *arg, int un=
-set);
->
-> @@ -241,15 +250,6 @@ const char *optname(const struct option *opt, int f=
-lags);
->
->  /*----- incremental advanced APIs -----*/
->
-> -enum parse_opt_result {
-> -	PARSE_OPT_COMPLETE =3D -3,
-> -	PARSE_OPT_HELP =3D -2,
-> -	PARSE_OPT_ERROR =3D -1,	/* must be the same as error() */
-> -	PARSE_OPT_DONE =3D 0,	/* fixed so that "return 0" works */
-> -	PARSE_OPT_NON_OPTION,
-> -	PARSE_OPT_UNKNOWN
-> -};
-> -
->  /*
->   * It's okay for the caller to consume argv/argc in the usual way.
->   * Other fields of that structure are private to parse-options and shou=
-ld not
-> --
-> 2.23.0
->
-
---8323328-327453726-1566485222=:46--
