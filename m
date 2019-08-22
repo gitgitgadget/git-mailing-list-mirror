@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CF9A1F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 03:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CC11F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 04:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730814AbfHVDSs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Aug 2019 23:18:48 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:35971 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726785AbfHVDSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Aug 2019 23:18:48 -0400
-Received: by mail-vk1-f193.google.com with SMTP id u203so1159576vku.3
-        for <git@vger.kernel.org>; Wed, 21 Aug 2019 20:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TEASGrsEMPqajR5QavBUSxxwWXxoL1MBgVtY8kJ5C+s=;
-        b=Kyo2Qkzj8demGwiQ2083CmsaUDF20QJkbgCGkBfgTHkST/8ufa3eYl1S3AqDuqiyZq
-         gW3rvj3D9CjrBGKhiMFNd4oxeuVySBmVblltLKmKyd7n9iFs5Y60Bpw0TbynkXglS6md
-         Rfc5/s05io+NMWkJpA17gMN7PAKOobYsdDpBfhKJShUPwFyg2XJCvT6bzb4+nJsH+rkJ
-         /I9bLkkuMwTzbnyNrQs7jx+2zHeDOtC72RTZIeCrNzuQnxma1J7j3WtoNePzwfAJEzNG
-         80JQn93phBQzZis4FUkkeiOzumbiBqZArIgxvUPMMX3HZoGOsvcOYAOF6BVU5dua5Tqn
-         fr8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TEASGrsEMPqajR5QavBUSxxwWXxoL1MBgVtY8kJ5C+s=;
-        b=SnMyoozb/4T7G/qDSe3c6PbNEpymGjTxECFW6jlzNAZky/goGpNruZsUyAr7agKSum
-         LKees7Tn70TuwoPoIzcYlFmuq8woqc3BVQ2Z3YgLvPavUyLrrWzXgYppSnR/H5+55Vom
-         wwcpz/0fR7s1/OgiP+pCeZ+UTeCsuPAK6REbeuYxxFiYVWHIl8ClFm8hq0Lkv7xGXhe9
-         BBvqH/6idBS1DwJ0t0N2Z+eRY5pcSI4qSR/jyjdv/8jksgeIS7xw2VLufFbh12+3Iglv
-         2SZwIL1GYQ5QdJzC8mmxZl5eJ4hdO9g+NmZ2032vi4QS54GByBzNwyllnZgn0rDrZILr
-         z0eQ==
-X-Gm-Message-State: APjAAAX7bqp1q1ShWES10VwUcXwa2IgxloUGyJF7fQLQrVJd4dIhw4wj
-        AKgq+GDcq+th9ZHUhsNzWAxGSXyTcEhw1JnLnq4=
-X-Google-Smtp-Source: APXvYqzxwyVejqVvpKSFd/0UG8gqwPLLajC/XWIXYSEyRW3aYxnQSlk8xbHjBJyBik//kxYa3pTSROyJcL1FS+VX9n8=
-X-Received: by 2002:ac5:c901:: with SMTP id t1mr13463190vkl.27.1566443927134;
- Wed, 21 Aug 2019 20:18:47 -0700 (PDT)
+        id S1726346AbfHVEPa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 00:15:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51964 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725294AbfHVEPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 00:15:30 -0400
+Received: (qmail 27471 invoked by uid 109); 22 Aug 2019 04:15:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Aug 2019 04:15:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17664 invoked by uid 111); 22 Aug 2019 04:16:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Aug 2019 00:16:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 22 Aug 2019 00:15:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH] diff: skip GITLINK when lazy fetching missing objs
+Message-ID: <20190822041529.GA4347@sigill.intra.peff.net>
+References: <xmqqblwjtu1b.fsf@gitster-ct.c.googlers.com>
+ <20190820213924.154253-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <pull.317.git.gitgitgadget@gmail.com> <20190821223158.GB20404@szeder.dev>
-In-Reply-To: <20190821223158.GB20404@szeder.dev>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Aug 2019 20:18:36 -0700
-Message-ID: <CABPp-BGuwjC494sC8BCAjURyg1KgnzkhKfgewLH0fven6Qjc3w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] [RFC] Revert/delay performance regression in 'git
- checkout -b'
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190820213924.154253-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 21, 2019 at 5:01 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Wed, Aug 21, 2019 at 12:18:32PM -0700, Derrick Stolee via GitGitGadget=
- wrote:
-> > As we were integrating Git 2.23.0 into VFS for Git, we discovered that =
-"git
-> > checkout -b new-branch" went from 0.3s to 10+s on the Windows OS repo.
->
-> Does this slowdown only affect the Windows OS repo with VFS for Git,
-> or other biggish repos without VFS for Git as well?
+On Tue, Aug 20, 2019 at 02:39:24PM -0700, Jonathan Tan wrote:
 
-It will also affect other biggish repos without VFS for Git; see the
-"does not seem to be GFVS-specific in any way" paragraph of
-https://public-inbox.org/git/CABPp-BGir_5xyqEfwytDog0rZDydPHXjuqXCpNKk67dVP=
-XjUjA@mail.gmail.com/
+> > Jonathan Tan <jonathantanmy@google.com> writes:
+> > 
+> > > In 7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-08),
+> > > diff was taught to batch the fetching of missing objects when operating
+> > > on a partial clone, but was not taught to refrain from fetching
+> > > GITLINKs. Teach diff to check if an object is a GITLINK before including
+> > > it in the set to be fetched.
+> > 
+> > OK, so in a lazy repository, running "git diff" (or "git log") could
+> > have resulted in "git fetch" of a history of a submodule, which may
+> > likely have failed?
+> 
+> Yes - it would attempt to fetch the submodule commit (as stated in the
+> GITLINK) from the superproject, which is very unlikely to succeed. (And
+> succeeding would allow the operation to continue, but will cause the
+> superproject to have unrelated objects in its object store, which is not
+> what we want anyway.)
+
+I wondered what would happen when it does not succeed. It looks like the
+whole diff process just dies.
+
+The batch fetch is purely an optimization, because we'd eventually fetch
+the individual objects on demand. If the batch one fails, should we
+continue with the operation? That leaves any error-handling for the
+overall operation to the "real" code. And it would also mean that this
+bug became an annoying error message,
+
+But certainly your fix is the right thing to do regardless.
+
+Tangential to your fix, but I also noticed while poking at this that
+we're pretty aggressive about fetching objects, even if they won't be
+needed. I know we touched on this briefly when discussing the original
+patch, and the logic can get pretty complicated, so we punted. But there
+are a few cases that I think might have a good cost/benefit ratio:
+
+  1. a --raw diff without renames doesn't need the blobs (and even with
+     renames, it only needs added/deleted entries). I imagine that being
+     able to "git log --raw" on a full history without pulling in a
+     bunch of blobs might be worthwhile (and a fairly common operation).
+
+  2. Files that exceed bigFileThreshold or are marked as binary via
+     gitattributes will generally be skipped during the file-level diff,
+     without even loading them. These are the minority of files, but
+     they also have an outsized cost to fetching them (and in fact may
+     be the very thing people are trying to avoid with a blob filter).
+
+Again, not anything to hold up your patch, but just cataloging some
+future work for this area.
+
+-Peff
