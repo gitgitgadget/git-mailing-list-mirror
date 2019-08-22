@@ -2,147 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381561F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 13:55:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8B11F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 14:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731811AbfHVNzc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 09:55:32 -0400
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:41063 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726687AbfHVNzc (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Aug 2019 09:55:32 -0400
-Received: from tri.shiar.net ([83.161.198.138])
-        by smtp-cloud8.xs4all.net with ESMTP
-        id 0nYmiiD1jDqPe0nYni1iBp; Thu, 22 Aug 2019 15:55:29 +0200
-Received: by tri.shiar.net (Postfix, from userid 1000)
-        id B724229735B; Thu, 22 Aug 2019 15:55:28 +0200 (CEST)
-Date:   Thu, 22 Aug 2019 15:55:28 +0200
-From:   Mischa POSLAWSKY <git@shiar.nl>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Subject: [PATCH 2/1] t6300: format missing tagger
-Message-ID: <20190822135528.GB28725@shiar.net>
-References: <20190817215107.13733-1-git@shiar.nl>
- <xmqqimqtxcou.fsf@gitster-ct.c.googlers.com>
- <xmqq1rxerxkk.fsf@gitster-ct.c.googlers.com>
+        id S1732552AbfHVOET (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 10:04:19 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:45280 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732497AbfHVOES (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 10:04:18 -0400
+Received: by mail-qt1-f194.google.com with SMTP id k13so7742810qtm.12
+        for <git@vger.kernel.org>; Thu, 22 Aug 2019 07:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mu9iipZB8cLreeAJ80e5snah50zsKJYX13xZNByJsV8=;
+        b=utciKPcSao/0vTEC69E/Aq+FByzjMHan2XuznxWhZx9P+TlsGFuv4bJyFXmIv1eWc1
+         a8zIrMWD5KDS51xFXXj2LkYBASVo9FX168HdVdXtBcv8TjciBiqimECsVBJk9X205j5q
+         hn7kaG7sXwTBZXTA6HdVft+KwT/XwSrDDUDqUZaXqU/EoebKsFqjmw8iLXZhLt7BCn6V
+         oX/VKuU0iUYB8gtwG+aQY7k+KEr7PC/aQP6fdj9SNCkwn8RhkUJMUrmopR/2QKwbW00K
+         laT/EU0EFwypE2GpXaWdMOMVwGIIgL6mRfCdk3bDh9LQsz4CXSv8TDse3Vx64hPhkcra
+         yIQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mu9iipZB8cLreeAJ80e5snah50zsKJYX13xZNByJsV8=;
+        b=dMgBIg850b2jOpjRtWmdRDRxFDAyP/2reXoEhDoU/b07Vju8S1jHL5GoG5lBKUaa3A
+         qIeW7E9L43hZSAfVZKyqYX92VTZHu3aFhuDWEDJU8tf6OdB9V+eagm0UuOUNUgnPxaYU
+         5dC0Pk08c09sM4B67rRHnSCh39HNSypvARSAayGlUMGvW3p8MTWfpdF6EZ6OC18VRub4
+         XFDvEXCbIpI66NiUK/tyd21AFlysLwqk4K0zQtV3fabrPl46L39qBcZBKVPtBS4IT7We
+         iKyTv6CWM5MVJo7qBl4WFV7EX0R/I1l/IYWCN/KERy1nxmOc4fN8w7X75zQmcTM4+vZA
+         AFYQ==
+X-Gm-Message-State: APjAAAXc32ysoSle1u57rrs9GNI+7JnCyImxqjwgnm6hJ9MtirUu6ISN
+        Y3xv/RbSH/MhBpR4j8kRPTE=
+X-Google-Smtp-Source: APXvYqw46am4bNDpMrq4iN/MhzoNbWWNDyZcBLf6jYgsurHl2qw72vNZwURYcFQ6OJjwgBEV+QiTiA==
+X-Received: by 2002:ac8:358e:: with SMTP id k14mr33331464qtb.83.1566482657855;
+        Thu, 22 Aug 2019 07:04:17 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:7dcd:416c:c779:cf77? ([2001:4898:a800:1012:2f01:416c:c779:cf77])
+        by smtp.gmail.com with ESMTPSA id h1sm15254554qtc.92.2019.08.22.07.04.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Aug 2019 07:04:17 -0700 (PDT)
+Subject: Re: [PATCH 26/26] midx: switch to using the_hash_algo
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20190818200427.870753-1-sandals@crustytoothpaste.net>
+ <20190818200427.870753-27-sandals@crustytoothpaste.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4f6b781b-68b8-5bc4-92a2-67caff32024f@gmail.com>
+Date:   Thu, 22 Aug 2019 10:04:16 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
+ Thunderbird/69.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1rxerxkk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt 1.10.1 + Vim 8.1 (Debian 10.0 GNU/Linux 4.9.0-6-amd64)
-X-URL:  http://shiar.nl/
-X-Accept-Language: nl, eo, en
-X-CMAE-Envelope: MS4wfC6WzFXU0s83JgwEIbicNnvysIjutz41PPPsfCgSjwggfjL2vMedUYyzOqMiG8gBhDDkX8YJwlgGsIfqSxHVDwbBFovPCK/Ql24jHzS/z93+okCgQtSl
- hK2ymyEoFXR9X3C91VQZHhEAVe5bIdI+q6B5HTgyd+7BHM+3bZ7XbIb06BB8vcMOZI8Nt6lcNPVkeyaRdP2FwjOENTN1oKXw9zdYhhJ9LwRrm+QkPaW7Ox0/
+In-Reply-To: <20190818200427.870753-27-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Mischa POSLAWSKY <git@shiar.nl> writes:
-> >
-> >> If I understand correctly, such tags cannot be produced normally anymore.
-> >> Therefore I'm unsure how to make tests, and if that is even warranted.
-> >
-> > Thanks for spotting.
-> 
-> A quick trial to recreate a tag object seems to succeed:
-> 
->     $ git cat-file tag v0.99 |
->     > sed -e '/-----BEGIN/,$d' |
->     > git hash-object --stdin -w -t tag
->     667d141b478eee5e53d2ee05acd61bb1f640249a
->     $ git cat-file tag 667d141b47
->     object a3eb250f996bf5e12376ec88622c4ccaabf20ea8
->     type commit
->     tag v0.99
-> 
->     Test-release for wider distribution.
-> 
->     I'll make the first public RPM's etc, thus the tag.
-> 
-> So we should be able to do something along the above line.  Here is
-> my quick-n-dirty one.
-> 
->  t/t6300-for-each-ref.sh | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index ab69aa176d..b3a6b336fa 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -869,4 +869,16 @@ test_expect_success 'for-each-ref --ignore-case ignores case' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'show a taggerless tag' '
-> +	test_commit tagged &&
-> +	git tag -a -m "a normal tag" to-be-shown-0 HEAD &&
-> +	another=$(git cat-file tag to-be-shown-0 |
-> +		sed -e "/^tagger /d" \
-> +		    -e "/^tag to-be-shown/s/0/1/" \
-> +		    -e "s/a normal tag/a broken tag/" |
-> +		git hash-object --stdin -w -t tag) &&
-> +	git tag to-be-shown-1 $another &&
-> +	git for-each-ref --format="%(refname:short) %(taggername)" refs/tags/to-be-shown\*
-> +'
-> +
->  test_done
-> 
+On 8/18/2019 4:04 PM, brian m. carlson wrote:
+> Instead of hard-coding the hash size, use the_hash_algo to look up the
+> hash size at runtime.  Remove the #define constant which was used to
+> hold the hash length, since writing the expression with the_hash_algo
+> provide enough documentary value on its own.
 
-Alright, thanks for the pointer.
-Here's a batch of tests on all pertaining atoms.
+Thanks for this change! It seems to be very similar to the one
+included in the commit-graph, barring one small issue below
+(that we can follow-up on later).
 
--- >8 --
+> diff --git a/midx.c b/midx.c
+> index d649644420..f29afc0d2d 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -19,8 +19,7 @@
+>  #define MIDX_BYTE_NUM_PACKS 8
+>  #define MIDX_HASH_VERSION 1
 
-Strip an annotated tag of its tagger header and verify it's ignored
-correctly in all cases, as fixed in commit e2a81276e8 (ref-filter:
-initialize empty name or email fields, 2019-08-19).
+This hash version "1" is the same as we used in the commit-graph. It's
+a byte value from the file format, and we've already discussed how it
+would have been better to use the 4-byte identifier, but that ship has
+sailed. I'm just pointing this out to say that we are not done in this
+file yet, but we can get to that when we want to test the midx with
+multiple hash lengths.
 
-Signed-off-by: Mischa POSLAWSKY <git@shiar.nl>
----
- t/t6300-for-each-ref.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+>  #define MIDX_HEADER_SIZE 12
+> -#define MIDX_HASH_LEN 20
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index ab69aa176d..9c910ce746 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -526,6 +526,25 @@ test_expect_success 'Check ambiguous head and tag refs II (loose)' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'create tag without tagger' '
-+	git tag -a -m "Broken tag" taggerless &&
-+	git tag -f taggerless $(git cat-file tag taggerless |
-+		sed -e "/^tagger /d" |
-+		git hash-object --stdin -w -t tag)
-+'
-+
-+test_atom refs/tags/taggerless type 'commit'
-+test_atom refs/tags/taggerless tag 'taggerless'
-+test_atom refs/tags/taggerless tagger ''
-+test_atom refs/tags/taggerless taggername ''
-+test_atom refs/tags/taggerless taggeremail ''
-+test_atom refs/tags/taggerless taggerdate ''
-+test_atom refs/tags/taggerless committer ''
-+test_atom refs/tags/taggerless committername ''
-+test_atom refs/tags/taggerless committeremail ''
-+test_atom refs/tags/taggerless committerdate ''
-+test_atom refs/tags/taggerless subject 'Broken tag'
-+
- test_expect_success 'an unusual tag with an incomplete line' '
- 
- 	git tag -m "bogo" bogo &&
--- 
-2.23.0
+The replacements of MIDX_HASH_LEN make sense. Thanks!
+
+-Stolee
