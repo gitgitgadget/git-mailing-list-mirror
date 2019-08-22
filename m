@@ -2,88 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 866411F461
-	for <e@80x24.org>; Thu, 22 Aug 2019 16:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98A1E1F461
+	for <e@80x24.org>; Thu, 22 Aug 2019 16:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389625AbfHVQBr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 12:01:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56078 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387647AbfHVQBr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 12:01:47 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6647A1758E1;
-        Thu, 22 Aug 2019 12:01:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dnOsBe6ekpCc
-        25uGVr518exHpVs=; b=q0LNPWPAkzUpCO9xPS1VOqfRwM103LZ97Fbz3NwFQ6IO
-        YQRACp3/Al9KMn4O7aPXtvANck9UQw8qo5A3447hwuf3a7VaiDrB6YZN+/9XXs0K
-        +p2hj6NBjsvFVUFOmpqGK3EmOwOvM+32vzwB98bWbyElJoweWndmUdM3J9DyQ8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ig1MaO
-        OoFcSkOk7uW0zQwEFBgZgHEBYFpTc+wSuhBQnz+BPJKgZj0AUcstlUoiJeYSgr0i
-        vCTFk+M69Qkz3YkyJPFtqjCGAwtwpgqMStqADt54lDNHzLPDgpk52ED8mtifQuMD
-        3O8HaCcv+V/Y0PaFylaPf6owIG0YZbKrasEVo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ED0A1758E0;
-        Thu, 22 Aug 2019 12:01:46 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEC821758DF;
-        Thu, 22 Aug 2019 12:01:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH 2/2] line-log: avoid unnecessary full tree diffs
-References: <20190821110424.18184-1-szeder.dev@gmail.com>
-        <20190821110424.18184-3-szeder.dev@gmail.com>
-        <e52e867b-af17-d239-11b5-e0c6353acc2f@gmail.com>
-        <20190821173515.GY20404@szeder.dev>
-        <20190822084158.GC20404@szeder.dev>
-Date:   Thu, 22 Aug 2019 09:01:44 -0700
-In-Reply-To: <20190822084158.GC20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Thu, 22 Aug 2019 10:41:58 +0200")
-Message-ID: <xmqq7e75qjdj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2389741AbfHVQG7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 12:06:59 -0400
+Received: from mout.web.de ([217.72.192.78]:40315 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1733034AbfHVQG7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Aug 2019 12:06:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1566490017;
+        bh=qk3c9zorqzRazmTO0KvJcKDlObGB4kyFdrCcTofLX58=;
+        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
+        b=s+IdqFNNANI4daPW5oVHYB9lJp6v6T4bQGiugaYWZ0iXOIxQZSNmF5jpJxCfPfZJ9
+         kR5MAFTY7MK3oUaBPuqpBUeuff/vGDRMs785Jhp8uK4bZIXe/waAAhcAwM0CzKzIA/
+         J22hwffVMr/JJtwynxC7IZeITa4x2HlWhuT58iK0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.24.71]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M4IAh-1iI5Tu2tOd-00rnvx; Thu, 22
+ Aug 2019 18:06:57 +0200
+Subject: Re: [BUG] You can't have single quote in your username
+To:     =?UTF-8?Q?Giuseppe_Crin=c3=b2?= <giuscri@gmail.com>
+References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fb5c0bb2-a5af-ef11-dada-a6e96fa7bdab@web.de>
+Date:   Thu, 22 Aug 2019 18:06:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2416C8CE-C4F6-11E9-AC4B-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:G2HCtl/jql0CkLFOj3EbPYgNd/SmUN70LLaHs34ZNlsN3nhNqZj
+ yZkN4onF9CqQbB7jFT5I+KsSyVWxkiJtanix9RDkpHw85N8SuVnRqxXM06J/ubEtyZwBeUi
+ AoslNfYKOGDKB/ZIBXkRA/0gBQcecP43yVfH91mIjKswNJy8fPYGW3BBlgBrxrgXN7e5+CR
+ UoYhKT7Ux30dTQBGBQoXA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NMh5mef71+I=:IwL9WpEixAgq9OCVY9GWAV
+ 98/0mfHPTk6RfS/SFDMJ1wmvGcOJlwvI5MtEBJ2ZHcgkTLP2uLS1HrOVm2AX3x7rwqpBmcHEu
+ C52K9cYLiYj8UcQpjC71kQTBcVM/tHUrjpZx50a/AwWZmvk2lip7IJocqxG4+s9t0/iewrQx7
+ po9CznKlHOufQe9ra6rBo56V0PcDVnff8SmqPENAlIEpCu1vSV+s1WssbYusrUe1MocqfS886
+ aBD8bkwuAtjmIuNpI+nKnot4m+vWLjIAHiyAdQFIC64oyrPO1XKl1VqcNFFsI6ekX7R8e3Ths
+ 1OwmVi/rX6wJEXzC+TIMb8I7sIrfZcbnthumDZqz7BJLfEL+4Weo4jtHYjQGRHsVJdT/p/+zJ
+ 5qkzTQP7Menn+bL/u5TrqpcQs/UPSyjahdY8hZadNROFSXig+etKuMaaMctgNndh6b821guDS
+ GzTxFPcF3Esgb1bLNSjROEh/l8jPh7IXXK5LHFLdGcbfktckSjIIdIeTN4Cx/rf19Ksq/rTlV
+ 0zSduciIjOdHb50TyGJfhGp9wyvJc3W94gkzKDF9Zdz6SUp2jHIFKo2yYL17TMo9QRI6OHh16
+ 03tzuP17QxXM0gD3Qv/C5npRxBFfIFvljsmm9exiuH66j500BgHd9G25/8mVTXtN5s0opMnCC
+ V4cxs0UjItg/nEfDJMvmgbUF9eqLCZeIFPACFYcpHWSTuFD7ofEK4hg83yWRp5cXz31cUFPsp
+ Xl3S+H7QMeKgS2/eO/MeTSVUaYlc6iidEb2jIz2C9rSgFnvn/6DofVNjT00dFVSZixKss14zS
+ +Iu9gFNONqTAlF22zrH3b86NY9NVQbZ3yIMeY2qa9h+C7gIlnHdJgzoxiML7T7vfdZ5C20tgT
+ jFkYAjMs43gVi6lel7BG5hM5YBsrqA9Y+MwQ2xCPwNlcuC9OxWNCmWAXV8qkQe5gCBraJQmO/
+ UYlexQ5tg9I6usVi6raUyhwaaeyZB7h04p0PS2QlrpxuDP/aN/mAkwM4k3qOolUz9OAmnU9ur
+ 1ZOpz1TURUNPRyCFaMfp/ReAAUquS72I5SdGfDCb7OVlmIM2NMT/tVsUV6SXPHGdJiCpY+jBc
+ wivk+85dsB4laYJK2PJvHX6NgYKZe+MryTh7+QzHIIeUBSJvgoy4wMb3/3WbwLXtpPPyWQjR/
+ S7QqU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Am 22.08.19 um 14:32 schrieb Giuseppe Crin=C3=B2:
+>         name =3D Les Actualite\\'
 
-> Well, that fruit hung much lower than I though, just look at the size
-> of the WIP patch below.  I just hope that there are no unexpected
-> surprises, but FWIW it produces the exact same output for all files up
-> to 't/t5515' in v2.23.0 as the previous patch.
->
-> Can't wait to see how it fares with that evil Windows path :)
->
->   --- >8 ---
->
-> Subject: [PATCH 3/2] WIP line-log: stop diff-ing after first TREESAME m=
-erge parent
+You can name yourself anything you like, of course, and I don't actually
+speak French, but wouldn't it rather be "L'actualit=C3=A9"?
 
-A quick question.  That we need "stop diffing after first treesame"
-patch in the first place means we have always been attempting to
-follow all the parents of a merge?  I'd expect that to happen when
-"--full-history" was given to "git log -L..." invocation.  When we
-are simplifying side branches without "--full-history", I agree that
-we should see if any parent is treesame with respect to the paths we
-are interested in, and if so ignore all other parents.
+I just reply as a fellow accent-bearer, feel free to ignore me..
 
-Or am I misunderstanding the issue here?
+Ren=C3=A9
