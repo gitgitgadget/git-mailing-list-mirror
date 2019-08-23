@@ -2,100 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DBFE1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 18:20:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF04F1F4B7
+	for <e@80x24.org>; Fri, 23 Aug 2019 18:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405392AbfHWSUB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 14:20:01 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:40092 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405291AbfHWSUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 14:20:01 -0400
-Received: by mail-io1-f67.google.com with SMTP id t6so22200096ios.7
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 11:20:00 -0700 (PDT)
+        id S2405162AbfHWS31 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 14:29:27 -0400
+Received: from mail-vs1-f41.google.com ([209.85.217.41]:36968 "EHLO
+        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404001AbfHWS31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 14:29:27 -0400
+Received: by mail-vs1-f41.google.com with SMTP id q188so6871617vsa.4
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 11:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cyoXo4v1WTPtd1huN6c4VRamlctEw1bvpyWKGt1EVE8=;
-        b=Ek6/IvUPQvzeeb2aoqejR9hqDkgmoYL3zoNgETtg7P/R2BOKxMgCBTEIXuof4akdiI
-         4N5mDgx4+NNGoKY3pnywTvHcG7J6unydXzq0jGhIXB2XxdTcJJyzv9I9e7OySlVItMQP
-         moknTG8+/yRmkurSf1XFgxYmh6H+7k55wpqZAzxrCk1blCeaSSTpPs97qkuqkgmU7VKH
-         YQnvpZdRh5ZqLuJH5h0dk7fSQYNF2I7qiRLATmIEYDunyfCDaUj8Ge2CYFf42osW7S3X
-         XwXiUk0CUIfExdB+ZVLMwMfsL2oLPKsvDp3/XdReVZr+Os1+7eRbmqCvOevebNtzGD0S
-         7r0Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wPDeHScAeTGqVRqEH0EuVqi/senwT6mJaCV9dS5ItR8=;
+        b=O1EUuYH5obA1e1CTUfgXr5uPyNMIwD0fbyDdOf0E7sSFfPVwHUIZXAB2dCwmny/xaK
+         oT/h5KRxRWNWu9vfKiSDar7Q/3ABDpQFKODMfJsQc9kJRzTdu/XHfn/svcMRkNV38XCa
+         +e3dHMYzAq0yX1z6M/K8altIvODxm/fENnesgmhoGX+XHf1X761FYc5zXRew4J7aNgkz
+         eXj6tTDdXVxl7Ju7QfHviiymZPeX4eboaU8TFgQ7nsgQqENNPrmpR6V8QujXUCrJxyDT
+         MD0oqzTGGhH2ogschZViP+PkYBEDqVmBuPKZ2nHDixS4nPv2+FKZIanqE3uqCLXrb1+Y
+         NAHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cyoXo4v1WTPtd1huN6c4VRamlctEw1bvpyWKGt1EVE8=;
-        b=crFVf94LcNEgTrEM38sJ/XbC9ec4u9KlVlhPrXZiOdzf0qaZalVLEWQTnezCb9+FIA
-         7Y36A3mIDk+S2DBDYwmgtthlElZKthwaTlOPf5W4bXS1RdJsQrcPh+a8hfPpZrwHaK/M
-         SijviFi9u+WsJ3ztTs02YIXjysumpUSDtTKMJjFx6zqOY8bFTF3nnNSEvfhY8Byet5gR
-         FggzpAQH0425hom5KwmBsZghhoYXoRRA/w8ik/ky9Jw+qVuMeJ5MAYsGasOFAUTmjuCR
-         91evijMuHQMFK+PRWDXSUrPEW6DI8i4jmYGdztmPvOeAOfnSrigRD55jufdyz8Olt0RJ
-         6I0Q==
-X-Gm-Message-State: APjAAAVRREvz4SzOreCmacb5lwacLfZJZlVWGRYMIH/dSxTm3r3DopGU
-        jPXIwtyRKS8e5146L6L7zKY=
-X-Google-Smtp-Source: APXvYqztOAI+1zZ+nbwnzZopbNCwsF/+gRGBTpi4mcuWKcbTefF/ZOn3jANyofaUOlS+ecb/CZGt9Q==
-X-Received: by 2002:a5d:8f02:: with SMTP id f2mr8808183iof.192.1566584400149;
-        Fri, 23 Aug 2019 11:20:00 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE001a8c429ab1-CM1cabc0716f20.cpe.net.cable.rogers.com. [174.116.84.77])
-        by smtp.gmail.com with ESMTPSA id y25sm5732087iol.59.2019.08.23.11.19.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2019 11:19:59 -0700 (PDT)
-Date:   Fri, 23 Aug 2019 14:19:56 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/13] format-patch: learn --infer-cover-subject
- option (also t4014 cleanup)
-Message-ID: <20190823181956.GB14048@archbookpro.localdomain>
-References: <cover.1566258525.git.liu.denton@gmail.com>
- <cover.1566285151.git.liu.denton@gmail.com>
- <xmqqsgptnedb.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wPDeHScAeTGqVRqEH0EuVqi/senwT6mJaCV9dS5ItR8=;
+        b=kf4qvl6byKp0BwlIhUakKnx4P5yRwJfiemDXsnrgEVBv3LhCq7iV9LQy5ByUbYbqWH
+         exrfEP4L2uFy56MV1hYBs0M6vrge6ydDjiSCQauRxtM/96gVYcnnYO6okHKRUGYtvxrN
+         cVRk93l0CFu/Gy3ePkOQtruhDLI5UBuYOM1oFZon1ctrQrLfbAG5UAU4AIA0Pg/sIAiC
+         FLmlZePN6KhnABf05Z4Npkf/D5x1dvIuKwuGSgyg92zo06M8qD6qw8Nm2ImyAmHODJqm
+         4qCgtCuHB4RisN20prlIpPYZQvdzvoOREA3/DXXO1LJkJQW19b758bGwomegZT0moCVp
+         NnZQ==
+X-Gm-Message-State: APjAAAXZ1RQ1IRxOH4mR7mga/xDgywt63fD+ikb7SPHQnFCIExAlXoMg
+        QgDg51Dq9s22Kb4BMDy+Qylh9UeTfPtKUmfug14=
+X-Google-Smtp-Source: APXvYqza9GcGKQjr86fACRbkNP+mhRqiwc2AIw6dlXWG6njsaR0gjUOKwYJZJ3BTbhN2Z43FmJ3qCfH3DWZzP4q5Wo8=
+X-Received: by 2002:a67:6244:: with SMTP id w65mr3610162vsb.117.1566584965988;
+ Fri, 23 Aug 2019 11:29:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsgptnedb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_9skA@mail.gmail.com>
+ <xmqqlfvlne3k.fsf@gitster-ct.c.googlers.com> <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com>
+ <20190823030059.47ftwfne6y436e5j@dcvr> <CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com>
+In-Reply-To: <CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 23 Aug 2019 11:29:14 -0700
+Message-ID: <CABPp-BFxOA83uL=gsNir5zSgMsfBX6=9+YnWqp+Q4NiztiC6bw@mail.gmail.com>
+Subject: Re: RFC: Proposing git-filter-repo for inclusion in git.git
+To:     Eric Wong <e@80x24.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 22, 2019 at 01:18:08PM -0700, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > While we're at it, perform some major cleanup of t4014 including some
-> > stylistic cleanup and also, unmasking of Git return codes.
-> 
-> Wow.  It seems that "while we're at it" grew quite large and (from
-> purely patch count's point of view) ends up appearing as if it were
-> the primary focus of the series ;-)
+On Fri, Aug 23, 2019 at 11:06 AM Elijah Newren <newren@gmail.com> wrote:
+<snip>
+> Safety:
+<snip>
 
-For housekeeping, since this patchset now exists as two branches
-(dl/format-patch-cover-letter-subject and
-dl/format-patch-doc-test-cleanup), would you prefer any new revisions
-exist as one big patchset or two separate patchsets targeting each
-individual branch?
+Ooh, and another one I remembered just after hitting 'send':
+  * If the user provides a --tag-name-filter that maps multiple tags
+to the same name, no warning or error is provided; filter-branch
+simply overwrites each tag in some undocumented pre-defined order
+(lexicographic) resulting in only one tag at the end.  A regression
+test will fail if you attempt to error out and warn the user, so if
+you are trying to make a backward compatible reimplementation you have
+to add extra code to detect collisions and make sure that only the
+lexicographically last one is rewritten.  (fast-import will naturally
+error out if told to write the same tag more than once, so you have to
+avoid triggering it.)
 
-> 
-> Thanks for tackling the age-old mess.  Admittedly, this particular
-> script is from the older parts of Git's history and a clean-up was
-> long overdue.
-> 
-> With the "split pipes" approach taken in patches 09 and 10, we'd end
-> up leaving more untracked and unignored cruft in the working tree. I
-> do not think they would cause problems with the existing tests after
-> reading the patches over.
-> 
-> 
+<snip>
+> Summary of above: Anything compatible with git-filter-branch will be
+> slower than molasses and extraordinarily unsafe.
+<snip.
