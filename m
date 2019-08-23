@@ -2,88 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1575B1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 16:41:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A0F71F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 16:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436826AbfHWQlg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 12:41:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64352 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436778AbfHWQlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 12:41:35 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDD8D75A02;
-        Fri, 23 Aug 2019 12:41:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ePliPyJ0jVuX
-        egMhqw/vDeDC6ic=; b=N3Tmh11ZOq0nnIFwSCiGavbnUWln3WMmG3FXDh7sgqnn
-        dHsQ7KgtXz2mmCUmBe3w9g3a+nKUIUccyX6sEgkNaL/k0VrKmkRxhw1Gz3lyPA/6
-        lWm3rjtzI/oM/PkraJPuYuJJVjcqtoFJCCQWwcGy7RYVj6UPW92yw1rGoiKYZBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UV3S0y
-        EFh5XqeVg0sTRe8PMXP7fRohe9fFhtXL0+RY9BlYqa6EBCY9fRkO0S83FL/fqj1w
-        tLx69wUEQQ4wqwnPxjAoRqW/gXe1GRUdrWTqx62HU5wKpVf3+ofp0EQZPrJzYrrd
-        qQHfkvMoiuAOywkTFeB7vrX4X3KHPYdtMAvog=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E6A9475A01;
-        Fri, 23 Aug 2019 12:41:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2197D759FF;
-        Fri, 23 Aug 2019 12:41:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug: interactive rebase's 'edit' insn copies notes to newly inserted commit
-References: <20190823133850.GK20404@szeder.dev>
-Date:   Fri, 23 Aug 2019 09:41:28 -0700
-In-Reply-To: <20190823133850.GK20404@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Fri, 23 Aug 2019 15:38:50 +0200")
-Message-ID: <xmqqef1bn8av.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2405962AbfHWQoQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 12:44:16 -0400
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:57883 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731416AbfHWQoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 12:44:14 -0400
+X-Originating-IP: 1.186.12.26
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 193FF2000A;
+        Fri, 23 Aug 2019 16:44:11 +0000 (UTC)
+Date:   Fri, 23 Aug 2019 22:14:09 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 0/4] git-gui: Add ability to revert selected hunks and
+ lines
+Message-ID: <20190823164409.q23sxkfsmhvne4ud@localhost.localdomain>
+References: <20190819214110.26461-1-me@yadavpratyush.com>
+ <20190822220107.4153-1-me@yadavpratyush.com>
+ <xmqq4l28ommg.fsf@gitster-ct.c.googlers.com>
+ <20190822225143.3blolae3f65z6zqq@localhost.localdomain>
+ <CAKPyHN27Pz8BtzdUCewZMd2wi5hx8LyJTfJqwkyTbbQLJk+=VA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DC489872-C5C4-11E9-A0AC-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKPyHN27Pz8BtzdUCewZMd2wi5hx8LyJTfJqwkyTbbQLJk+=VA@mail.gmail.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On 23/08/19 08:04AM, Bert Wesarg wrote:
+> On Fri, Aug 23, 2019 at 12:51 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> >
+> > On 22/08/19 03:34PM, Junio C Hamano wrote:
+[...] 
+> as I'm the one who use this feature for more than 7 years, I can only
+> object to this. I'm happy to have the confirmation dialog for the
+> whole-file revert (the current state) but having the dialog also for
+> partial revert would be too disruptive. And disabling both at the same
+> time would not be an option for me.
+> 
+> The thing is, that the partial revert "just don't happen by accident".
+> Here are the minimum user actions needed to get to this dialog:
+> 
+> 1. whole-file revert
+> 
+> - do a Ctrl+J, more or less anywhere in the GUI
+ 
+Hmm, have to agree with you on this. It is kind of easy to trigger. But 
+read below why I think partial reverts are just as easy to trigger.
 
-> ...  However, once
-> rebase stops for the 'edit' instruction the user can do just about
-> anything, so I'm not sure how rebase could figure out when to copy the
-> note and when not.
+> 2. hunk revert/revert one unselected line
+> 
+> - right click anywhere in the diff pane (thats around 60% of the window area)
+> - move the mouse pointer down 3/4 menu items
+> - click this menu item
+ 
+But what if you wanted to click "Stage hunk", and instead click "Revert 
+hunk" instead. This is what I mean by "accidentally".
 
-True.
+This is even more a risk in the current layout of the buttons, which are 
+in the order:
 
-> This doesn't happen when inserting a 'break' instruction between
-> picking the "second" and "third" commits, and then adding new commits.
+Stage Hunk
+Revert Hunk
+Stage Lines
+Revert Lines
 
-Meaning the original note for the second one is carried to the
-rewritten second, and the one for the third is carried to the
-rewritten third?  That would be a reasonable outcome.
+In this layout, if you wanted to click Stage, you might end up clicking 
+Revert instead, losing part of your work. Even if we switch up the 
+layout a bit, I feel like the potential of "mis-aiming" your mouse is 
+there, but it can certainly be improved.
 
-> Alas, the 'break' instruction is not even a year old, and I have been
-> using 'edit' for this purpose for over a decade now...  so
-> re-training my fingers will be hard :)
+> 3. partially revert selected lines
+> 
+> - select some content in the diff pane by starting by pressing and
+> holding a left click
+> - end the selection by releasing the left click
+> - move the mouse pointer down 3/4 menu items
+> - click this menu item
+> 
+> Thats always at least 2 user actions more than the whole-file revert.
+> Thus this cannot happen by accident quite easily in comparison to the
+> whole-file revert. And thats the reason why this dialog exists, from
+> my point of view.
+> 
+> I can see the need to disable the dialog for the whole-file revert,
+> and IIRC that was also requested a long time ago on this list. But I
+> don't see a reason to have this dialog also for the partial reverts as
+> a safety measure.
 
-Probably a section in the tutorial and/or the example section of the
-"git rebase -i" documentation should encourage use of "break" when
-inserting a brand-new commit in the middle.
+I do (not too strongly, but I do), as I explained why above.
+ 
+It shouldn't be too difficult to have separate knobs for whole-file and 
+partial reverts, but they will add two config options. Not necessarily a 
+bad thing, I just thought the people who wanted to disable partial 
+reverts would also want to disable whole-file reverts.
 
-Thanks.
+But I have another suggestion in mind. I'll reply to one of the other 
+emails in this thread about it. Please read it there, I'd rather not 
+type it twice.
+
+-- 
+Regards,
+Pratyush Yadav
