@@ -2,81 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC3A41F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 20:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49A171F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 20:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406170AbfHWUZh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 16:25:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55645 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389571AbfHWUZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 16:25:36 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61C9317036F;
-        Fri, 23 Aug 2019 16:25:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PSJnnyXJc9wzvXbIDiaWUH1YW8Q=; b=ZTxgGE
-        EYVVOf6BRz53MyELknSrjxSjy58Vkk1I1JhjDw7SDnQ43aKIw6xjxxnwhAQdN1L7
-        OaYeiPLz6jLE1HN93srJ/C+UgqPMwcHg4byvgYkgsShFQ8DQuyQZH7wDKnWI5WnN
-        qMYAevNDjnwUqJc4sS/0ZM6WkWD0E6NQZ23kA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gHa/V8J6YnhGYGg9SpVVdBLCHCdfRybJ
-        dAGgcyhYBBEmAx/rwn2KcpXcvZqdrieZbPn9IWQJHHmv8jeZvDD0ufIdb/OfQrNG
-        CBYCbuWB3UTpFPgzgnnufDW8mIUrm3+0c52KHkLuu4t8Xi/L3Vh5WqK+icHFZ33M
-        vYJSu72ZMKk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5907717036E;
-        Fri, 23 Aug 2019 16:25:34 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B80EC17036D;
-        Fri, 23 Aug 2019 16:25:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/13] format-patch: learn --infer-cover-subject option (also t4014 cleanup)
-References: <cover.1566258525.git.liu.denton@gmail.com>
-        <cover.1566285151.git.liu.denton@gmail.com>
-        <xmqqsgptnedb.fsf@gitster-ct.c.googlers.com>
-        <20190823181956.GB14048@archbookpro.localdomain>
-Date:   Fri, 23 Aug 2019 13:25:32 -0700
-In-Reply-To: <20190823181956.GB14048@archbookpro.localdomain> (Denton Liu's
-        message of "Fri, 23 Aug 2019 14:19:56 -0400")
-Message-ID: <xmqqwof3ljcz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S2392534AbfHWUoM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 16:44:12 -0400
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:41031 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388903AbfHWUoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 16:44:12 -0400
+Received: by mail-oi1-f177.google.com with SMTP id g7so8002998oia.8
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 13:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=pf5aRtVAyjjR7qYxuN9xVzC8gRlC/QLLo0l1Czv7aZ0=;
+        b=QQxyGoPO74mMV29kHkb89Y9eMEpMT2hIG7df1FvtgFqnoRqaGvqVyIUbaQIsWUNI+J
+         gSNipCElAtVXU4fbOl2ozh5yWB37w8UfcaTLIw3NXnBKWoW/HtyvNGOKA3SYIRr5s5Bq
+         iBq/KwcG+1x4G1uDk9WSDifnj17eCwrXHPtEAfGTuUjWaaiaYA9yf722QhQHX6zbpWNe
+         qCsGkJjTN+ADen2Fb9x12vtSkVu9prB3Wl9htFJ1Owv541aVqbktBbiDwQJHMW9iWYIB
+         I2iLdmRBV31jLFrskaMQ1QbMnfDne15Cf8j4ZUtUwpBTpY1hqjYmzNPqIZ8u5lrdB0R6
+         WIYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=pf5aRtVAyjjR7qYxuN9xVzC8gRlC/QLLo0l1Czv7aZ0=;
+        b=h+QAu4giaAU2vOFBztpUGue2meWcc8GhqZx06Jzj1LiLYd8sC+oSpySRgrJdgUAFl1
+         jtPANxxp09UYGD5GQPaKxVkvbMQ6DAoHiQ5FtGCSvcqU5C580q4aCF6be7CzPNYuyQxJ
+         QkcUAkDE9UDR/GWwjkodAnSrBfIKRVxn3qBE2dKmFgmUq3uIAXB/OkZdzKCEyDxsql6X
+         R2OpRfF4k/aKdFSkD9s1OFjn/CpSM3Vtxaiqg9W4JzmUP61RjOMuwg6Bjajz4sCayVqe
+         KkdzxljxYvcpGkdqfgV/iSALY4x6LMTKxO2sIIW8CKgxBIwMds39P6xix/f8oogO/+3D
+         r1lA==
+X-Gm-Message-State: APjAAAXid5CSi3dpntPX8L5u6XKDj09dQZtzzGiMxyAsp6hx/C9lllZf
+        amze6EiwCITAAHyDyrxjDaIg5bb8ROIzYb21SP/qp3k6
+X-Google-Smtp-Source: APXvYqzVl3q1a/kVPT97FQBmGmth3BoYZ3IATCxpw7UNVhO43UUMYmg3wvzDpbtu+uf5J0mX6alyHfbJVhl3aUFIZpk=
+X-Received: by 2002:a54:4f91:: with SMTP id g17mr4648824oiy.103.1566593051095;
+ Fri, 23 Aug 2019 13:44:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 28B56B1C-C5E4-11E9-8638-46F8B7964D18-77302942!pb-smtp1.pobox.com
+From:   Albert Vaca Cintora <albertvaka@gmail.com>
+Date:   Fri, 23 Aug 2019 22:43:45 +0200
+Message-ID: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
+Subject: [Feature Request] Option to make .git not read-only in cloned repos
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi git folks,
 
-> For housekeeping, since this patchset now exists as two branches
-> (dl/format-patch-cover-letter-subject and
-> dl/format-patch-doc-test-cleanup), would you prefer any new revisions
-> exist as one big patchset or two separate patchsets targeting each
-> individual branch?
+Honestly I'm not aware of the reason behind .git being read-only, but
+I'm sure there is one.
 
-I think any updates to the last step would need to build on top of
-the clean-up series.  You might be able to add new tests and update
-docs in such a way that is independent from the clean-up and then
-worry about possible merge conflicts later, but with the clean-up
-series being in reasonably good shape already, I'd expect that the
-bigger clean-up series can be polished enough before we work on
-polishing the last step.  So perhaps we just focus first on the
-clean-up series, have them graduate to 'master', and then build the
-new feature on top, perhaps?
+However, I'm sure that a large percentage of developers out there will
+agree with me that having to use force (-f) to delete every cloned
+repo is annoying, and even worse, it creates the bad habit of always
+force-deleting everything.
 
+Would you find reasonable to add an option to keep .git writable on
+cloned repos?
+
+PS: I'm not subscribed to the list, so please CC me on replies.
+
+Thanks!
+Albert
