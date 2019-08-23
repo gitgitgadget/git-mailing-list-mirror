@@ -2,145 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B673B1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 12:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C34F01F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 13:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731457AbfHWMCE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 08:02:04 -0400
-Received: from mail-qt1-f182.google.com ([209.85.160.182]:37501 "EHLO
-        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730867AbfHWMCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 08:02:04 -0400
-Received: by mail-qt1-f182.google.com with SMTP id y26so10922499qto.4
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 05:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/zxYeH1sS0smPh56pWyzo6bOykdni+WetKPVzGHrhQY=;
-        b=C3djTYbkZKp/mwSLzHYSmLFdxbXEbnMqIU/vsr4UnkiLTCJP4ylGfWEcm+2n4fcb8m
-         ziFR/HHSKjL9iIE1jSGyN+uVHGtBMT6vSRkuthC/+u/fDES9k4BQUAxMJTBegtLAWLzi
-         jUgt2lGloCkmYLWGnRYzRctesZA29m9pFJoXph4HI78B6Y3ZJwbPABSMHepaB6tr3+v2
-         YJ7UJ2fTBsUrTubeQU1Y8byrLeTr5o1CFYjR33IAlGAg4vD8osN2uDzQTjlk5TmgSXzm
-         xSXSpRV7uP+EkzGKmiz/FFyaz1b32oo2+7FpYTsmgfs16ZtP1vjUL7Evgemrv5oDuw0x
-         0XSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/zxYeH1sS0smPh56pWyzo6bOykdni+WetKPVzGHrhQY=;
-        b=X/PqMYrSYf/eQcwyd9oQGqo9Nzfjx9kwHs4rvm89YAqRyYpprR/BKP6ijfD3bqzBfX
-         yomZWHmEIzf+qw9fKr3BXTfcLc03pLJo3AlzcdQWAUWFCv+sICkmyZDHkmZ4b4fBDaqW
-         9dFL4VXNSik0qsgLjeJWR0AhWB4wtfHO6+IeF83hjuyVHpjb0qz+gKTKFB9t9EFPgMi0
-         wRGYTRgcqVTtI3j/vjNidU48OszxPdFU8JzWdUs4lBCEDtliDNR3xrnpYAqZrp57Ti/H
-         BF8Jg4fE7O7zDcwfQSccvrHsWyfV5mTR+eytr68GgnJaBZyEXUbro+TMkfgeNZ1EAwgG
-         0wGQ==
-X-Gm-Message-State: APjAAAWbDjLclv5V/REas6pZdDhB2uunKdd3Q2jCjuePS1wZ/8AnCImY
-        v65IZ20NRAvHpoBA7PmHNYYchr4bPWGNeQ==
-X-Google-Smtp-Source: APXvYqy+TH7t+vmUJSRXTfi3Y8rlg0SpKAU0rfkys2RCvPpNU5tBC24V1JahLH49DrWZcTXPU2oI7g==
-X-Received: by 2002:ac8:2df8:: with SMTP id q53mr1222573qta.234.1566561723407;
-        Fri, 23 Aug 2019 05:02:03 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:15df:50c4:43d1:68bd? ([2001:4898:a800:1012:c712:50c4:43d1:68bd])
-        by smtp.gmail.com with ESMTPSA id p32sm1398369qtb.67.2019.08.23.05.02.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Aug 2019 05:02:02 -0700 (PDT)
-Subject: Re: RFC: Proposing git-filter-repo for inclusion in git.git
-To:     Elijah Newren <newren@gmail.com>,
+        id S2389892AbfHWNBz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 09:01:55 -0400
+Received: from mout.gmx.net ([212.227.17.20]:39781 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732009AbfHWNBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 09:01:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1566565308;
+        bh=rn2q38LXHVzcy0cVShNDceZJaxZAV6ujBx58bmrB5mI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=csoMx9bh1kRUn4KfOrvHdSnBPFoFRxOB5F9zsuwfswqVV2ENyJFrVoBPMnPRaHhcB
+         cwtS+a2xfoBq/auTU7bcbidqAFOycl3BD/evxUErTM9jbwiWnDuPOkWwmpMVgXvbDt
+         fnPnOiqmvwFQeScY7aqqTGLFsxE1rcos7kB4sdzg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9s8K-1i7ilP3F4C-00B5m4; Fri, 23
+ Aug 2019 15:01:47 +0200
+Date:   Fri, 23 Aug 2019 15:01:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_9skA@mail.gmail.com>
- <xmqqlfvlne3k.fsf@gitster-ct.c.googlers.com>
- <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a784a61e-1320-be1e-9dfb-d533a01827ec@gmail.com>
-Date:   Fri, 23 Aug 2019 08:02:02 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
- Thunderbird/69.0
+Subject: Re: [PATCH 2/3] git-gui: Add the ability to revert selected lines
+In-Reply-To: <20190821214829.2dzat2quo3h2s3z2@localhost.localdomain>
+Message-ID: <nycvar.QRO.7.76.6.1908231500030.46@tvgsbejvaqbjf.bet>
+References: <20190819214110.26461-1-me@yadavpratyush.com> <20190819214110.26461-3-me@yadavpratyush.com> <73e63382-4f79-cfd0-47f4-812f9cd4f88b@kdbg.org> <20190820192944.gzfwnm52fvb5refq@localhost.localdomain> <93095b5a-6e15-ce4a-eb9b-22f9528312e1@kdbg.org>
+ <20190821214829.2dzat2quo3h2s3z2@localhost.localdomain>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:RQBypXphz0OHKioy4LA8WlUKbhNJKvVj/q2ezaaYqtcZkfbQoMD
+ w5XfnIG/Ks3g/vHYU+qGMCQQGbfCJsgD977T8eL2W0LMZUAPV0bJlJWV3b23bqa2XstYkjl
+ x1VL/3Gq2c2dQg58X0f5VSYCCMkSB6q9Hf391d7EDELFwz5PH4rgodDfKK0xOQfV1JB8AOM
+ 2af05V5DTTySvjfLlxq9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dQPm8AYUSfE=:aCtmllOSmeiGbBX6KwIEpZ
+ VX2tsxIlf/w0pkMrawCPkxpiClRm3raoNTr2db/ENMvsi4EPHb0cBpJG+pTyMErM/LT29wIRA
+ I9/79gS4D/7222jk8CLGBL9RPWKZDTH1/StPjTcMIEnzYppQX9s8GIqe7lvusLoDUJhPG5DR+
+ 1emA1ntHhWEBa7bEk8Q7815kiVJMtRKv0kpTL3gkRRXiWuNY9H2yzQ+PZMcnZM3oTn/kzMtXh
+ /SWUAen1q0jz6L7pHwPPuwDf9psYiuM3eMJaDjxbhWGrzBvH4jiyJj6Mvdo9Zuva9RdpohCiF
+ HhT2WgfEVDfQYK/y/QsJulSUqA5hnphGsucsXSR3N0CfHAcNIc0G6KbThf4rBHWYLbZH3Rri3
+ 8RkI/bznI0tYkuBX5pucAlmv9cbAAtlHzya/qA/3wa377Y8ey+pQ5vK19fYE42RM18Tjzi1+b
+ rphAdYSjNrfhnih8gKeQq4hh9tBoy183JTAD63DtCGNmstngayizdsiuNHY4fuJqGOnke23zY
+ aGiEmdPI3M/MYm069XbZihu1RtR1jZ392WKeD2tyM8+Dkk02e6s99Qw2YF9KM9zj6k/gUDXPL
+ P60gYWoEIFQWJKIz2uYPh+7eiKTytXk8H9gWb3+bgtrWK60QCazS5KseahnLsZr1pcZgMYYJG
+ CkdyY339SpAeFMvHRyljCCGXKIkAgSU6jJDOvTmwSRnV2vzACgVXAs6y/b+D9IVVFAihg8QD4
+ pXgYOtKycnGd21WmGico7Q7eb7VW4/Ktvost+65bzzc0e4xrcgzpdrayNNPkNgkWARGKwb/C9
+ f5xfu2X2A7Co8zb6xLAOgzp7DMLt2nJP+kc4vgiNx0plcv6tP2hQYNzKQP3kCZOdWFVMSNiB2
+ xrca3ShePwuUHf4dhj60cwkIyB9HIi1n7gLJJ2wzm8G8HDb0elt2iSFnsS0KHFDzP+gVJ/3E4
+ LKPPZI0WAaObdGK15Ei8SnCJGBdG5zAdM45RcPPGUGFfKN2QJ1cxfnu6HWv+9toGIx4BL7nKK
+ okfOLUezfmSCuZszEQGozf3pRHWXLDuPDD19YZ9PB8fctqTUN5BnnbCTYqv1w4M/T/iF4Siod
+ PtKMLoCmeAwntZnJmKT3AGSvBoYhvuC0zLGVZ8XNZ3oENLPgdx23s0y/VyONCm8N1PLqsdtx3
+ FhVd858i20iFCnU5e5L9mLHfoKAxgYmXSrDovVnVVa/d+7/1WMVuL2VqMTun0OC7EKts8=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/22/2019 5:12 PM, Elijah Newren wrote:
-> On Thu, Aug 22, 2019 at 1:24 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Elijah Newren <newren@gmail.com> writes:
->>
->>> Questions, comments, or concerns with this proposal?  Alternative
->>> proposals?  If inclusion is acceptable, are there any other tasks that
->>> need to be completed first?
->>
->> I do not want a discussion to begin with a Devil's Advocate
->> response, but anyway...
->>
->> Are we planning to go to all batteries included approach?  I have a
->> feeling that there are other tools (hello, "git imerge") that
->> equally deserve attention by Git users; are we in the business of
->> absorbing them all?  How big a project will our tree become, and how
->> much more activity would have to be haneld by the readership of the
->> Git mailing list?
->>
->> I'd rather see us shed non-core tools we already have (e.g. git-svn,
->> cvs import/export) out of git.git and have them as independent
->> projects.  But that may be just me.
+Hi,
 
-Yes please! Let's make the repo smaller.
+On Thu, 22 Aug 2019, Pratyush Yadav wrote:
 
-> Ooh, if you're going to open this door, then a proposal I assumed
-> would be shot down but which I'd be just about as happy with is:
-> 
->   * Remove git-filter-branch from git.git.  Mention in the release
-> notes where people can go to get it.[1]
-> 
-[snip]
+> On 20/08/19 11:19PM, Johannes Sixt wrote:
+> > Am 20.08.19 um 21:29 schrieb Pratyush Yadav:
+> > > On 20/08/19 09:21PM, Johannes Sixt wrote:
+> > >> Please don't do this. This confirmation dialog is unacceptable in m=
+y
+> > >> workflow. I use reversals of hunks and lines frequently, almost lik=
+e a
+> > >> secondary code editor. My safety net is the undo function of the ID=
+E,
+> > >> which works across reloads that are triggered by these external edi=
+ts.
+> > >> These confirmations get in the way.
+> > >
+> > > But not everyone uses an IDE. I use vim and it does not have any suc=
+h
+> > > undo feature that works across reloads. Not one I'm aware of anyway.=
+ It
+> > > is absolutely necessary IMO to ask the user for confirmation before
+> > > deleting their work, unless we have a built in safety net.
+> >
+> > But you have a safety net built-in: Commit the work, then do the
+> > reversals in amend-mode. Now you can recover old state to your heart's
+> > content. That's recommended anyway if stuff is potentially precious.
 >
-> [1] We'd still have to decide where to put it.  If no one else wants
-> to do it, I could include it in git-filter-repo with the promise that
-> it's there for backward compatibility for those that still need the
-> tool, even if I recommend folks use filter-repo instead.
+> I suppose we disagree on this. I feel very uncomfortable removing the
+> prompt by default, because it is pretty easy to mis-click revert instead
+> of stage, and all of a sudden lots of your work is gone. It is a pretty
+> common workflow to make some changes, stage some hunks in one commit and
+> then some others in the next. Not everyone (including me) will first
+> commit changes, then amend them, especially if they are not that big or
+> complicated. Accidentally deleting your work, no matter how small,
+> because of a misclick sucks.
+>
+> So, I feel strongly in favor of keeping the prompt on by default. I will
+> add a config option to disable it for people who are willing to accept
+> misclicks. That keeps both sides of the argument happy. You just have to
+> disable it once in your global config and you're good to go.
 
-May I recommend an idea, which may be silly?
+Maybe the direction taken by this discussion merely suggests that the
+design is a bit unfortunate. Why "revert"? Why not "stash" instead? Then
+you don't need to have that annoying confirmation dialog.
 
-We could strip these "extra" tools out of git.git and place them in
-their own repos. The hope would be that they could build on their own
-and have their own test suites.
+Ciao,
+Johannes
 
-Then, Git distributors could pick and choose the components they
-bundle with Git. Dscho would know more about this sort of thing as
-he distributes MinGit, which strips these things out already.
-
-The biggest question is: how do we make sure that as git.git moves
-forward that we don't break the ecosystem? Maybe we create a new,
-larger repo that contains all of these subrepos? This would give
-the community more experience dogfooding our own repo-splitting tools.
-
-Personally, I like the idea of 'git subtree' over something like
-'git submodule'. Using 'git subtree' may mean that tools like
-'git-svn' that may be hard to split into a completely independent
-repo could live primarily in the meta repo with a source dependence
-on the included git.git subtree.
-
-This "meta-git.git" repo could then be more flexible in adding
-new tools like git-filter-repo or even git-lfs and friends. Again,
-distributors could select a subset to include, but we would have
-one place to run CI builds and make sure the tools are not
-obviously breaking as git.git updates.
-
-Thanks,
--Stolee
+>
+> > > So how about adding a config option that allows you to disable the
+> > > confirmation dialog? Sounds like a reasonable compromise to me.
+> >
+> > That's always an option. Needless to say that I'd prefer it off by
+> > default; I don't need three safety nets.
+> >
+> > -- Hannes
+>
+> --
+> Regards,
+> Pratyush Yadav
+>
