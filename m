@@ -7,101 +7,96 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8C0D1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 15:20:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6EF1F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 16:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395482AbfHWPUg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 11:20:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60823 "EHLO
+        id S2387831AbfHWQEZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 12:04:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62805 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390470AbfHWPUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 11:20:36 -0400
+        with ESMTP id S1732458AbfHWQEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 12:04:25 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 87FC878CE2;
-        Fri, 23 Aug 2019 11:20:34 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 260CA7929D;
+        Fri, 23 Aug 2019 12:04:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LAnnED0+DDL89HN6W84l1C8jtK8=; b=SAC0R/
-        bnasrJrpGTpTYIffhfYrO6DzCon95xinyhICsWw1ZDYOhOsMSnOtRT9ziImGo7rJ
-        qp/J142Dd9JK+8Wv/jjMZGeFM++o32gBpuxYIEaMIxbFO8jUlOp8fbxxcn77U1SN
-        wRTz+PMss8n/HTWTnIFKURD/GqV7aSH9apwMM=
+        :content-type; s=sasl; bh=3p+tacjXW9ME8dlR1qYbS7bQ1O4=; b=KiH84w
+        D9d3ZuyfzPJj9x2VuHA7Es4y96jTu6mg7PCA4TeeP1sVOh77ghy/kHb+U4hMV9Jh
+        hjzBdAtlRPPKmzNXtAgLmRGRZKgcdJHzNnOiguZxfwlHyhI2VQeA2NIriAcxIGF/
+        T6gj9odVoEKLhs7wAjse1H+LkLFemsfrhtGgA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aR/6bkEOGB5vDpEq1CuWKnR8tTuT+3o6
-        Av4JlPCu1pwZeTKSi1DD1C4akL4o7egRhmkZT2YvSYW3z0aobkLFl1aTrsJ4p8ro
-        eJeS9E2JIy8oAKPS7w3levmTK9F2GAEmHAvHH8qQSiRdxswVZDmqkNnelgWBM3W9
-        JMX5dBIuQZQ=
+        :content-type; q=dns; s=sasl; b=o4IPyWJU/BLkEnst6Oj/YBpTyOCn0jMa
+        xnXDnjzRwnh0JpdS1XcUoYVA7XHfm0PmjRs96sNBT9u1BWfyFLgfEHZIW5E2FHB5
+        ECAOBLxw8CarLJ8SYxpN3yl/IuEM7l1MJ/WPvwkRAv1+hwqLKFsBDh4DxshvJyvv
+        j7GL4XuumZ0=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80CF678CE0;
-        Fri, 23 Aug 2019 11:20:34 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DB2A7929C;
+        Fri, 23 Aug 2019 12:04:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DD2D78CDF;
-        Fri, 23 Aug 2019 11:20:31 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0D1B57929B;
+        Fri, 23 Aug 2019 12:04:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood123@gmail.com, t.gummerer@gmail.com
-Subject: Re: [PATCH v3 2/6] sequencer: add NULL checks under read_author_script
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
-        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
-        <20190820034536.13071-3-rohit.ashiwal265@gmail.com>
-Date:   Fri, 23 Aug 2019 08:20:29 -0700
-In-Reply-To: <20190820034536.13071-3-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Tue, 20 Aug 2019 09:15:31 +0530")
-Message-ID: <xmqqsgprnc1u.fsf@gitster-ct.c.googlers.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 0/4] git-gui: Add ability to revert selected hunks and lines
+References: <20190819214110.26461-1-me@yadavpratyush.com>
+        <20190822220107.4153-1-me@yadavpratyush.com>
+        <xmqq4l28ommg.fsf@gitster-ct.c.googlers.com>
+        <20190822225143.3blolae3f65z6zqq@localhost.localdomain>
+        <CAKPyHN27Pz8BtzdUCewZMd2wi5hx8LyJTfJqwkyTbbQLJk+=VA@mail.gmail.com>
+Date:   Fri, 23 Aug 2019 09:04:17 -0700
+In-Reply-To: <CAKPyHN27Pz8BtzdUCewZMd2wi5hx8LyJTfJqwkyTbbQLJk+=VA@mail.gmail.com>
+        (Bert Wesarg's message of "Fri, 23 Aug 2019 08:04:14 +0200")
+Message-ID: <xmqqo90fna0u.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8BC361A8-C5B9-11E9-ADEA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: AA749BCA-C5BF-11E9-BC04-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> read_author_script reads name, email and author date from the author
-> script. However, it does not check if the arguments are NULL. Adding
-> NULL checks will allow us to selectively get the required value,...
+> The thing is, that the partial revert "just don't happen by accident".
+> Here are the minimum user actions needed to get to this dialog:
+>
+> 1. whole-file revert
+>
+> - do a Ctrl+J, more or less anywhere in the GUI
+>
+> 2. hunk revert/revert one unselected line
+>
+> - right click anywhere in the diff pane (thats around 60% of the window area)
+> - move the mouse pointer down 3/4 menu items
+> - click this menu item
+>
+> 3. partially revert selected lines
+>
+> - select some content in the diff pane by starting by pressing and
+> holding a left click
+> - end the selection by releasing the left click
+> - move the mouse pointer down 3/4 menu items
+> - click this menu item
+>
+> Thats always at least 2 user actions more than the whole-file revert.
+> Thus this cannot happen by accident quite easily in comparison to the
+> whole-file revert. And thats the reason why this dialog exists, from
+> my point of view.
+>
+> I can see the need to disable the dialog for the whole-file revert,
+> and IIRC that was also requested a long time ago on this list. But I
+> don't see a reason to have this dialog also for the partial reverts as
+> a safety measure.
 
-I had a hard time understanding the argument here without knowing
-why I had trouble, and I think I figured it out.  What you wrote may
-not be incorrect per-se, but the logic is backwards.
-
-The function has been about reading all three, and it always took
-and required the callers to pass three valid pointers to locations
-to store these three.  It did not check for NULL; passing NULL was
-simply a bug in the caller who deserved a segfault.
-
-This series, however, wants to allow new callers of the function to
-selectively read some among the three and ignore the rest, and you
-happened to choose "pass NULL for an uninteresting field" as the
-new calling convention.
-
-That choice is where "checking for NULL" comes in.
-
-In other words, "checking for NULL" is merely an implementation
-detail for a more important change this patch brings in: We now
-can read some and ignore the rest, while requiring that the input
-file is well formed even for the fields we do not care about.
-
-
-
-    sequencer: allow callers of read_author_script() to ignore fields
-
-    The current callers of the read_author_script() function read
-    name, email and date from the author script.  Allow callers to
-    signal that they are not interested in some among these three
-    fields by passing NULL.
-
-    Note that fields that are ignored still must exist and be
-    formatted correctly in the author script.
-
-or something like that, perhaps.
-
+Thanks for walking us readers through your thought process.
