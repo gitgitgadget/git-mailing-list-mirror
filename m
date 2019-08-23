@@ -2,94 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41C851F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 08:34:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3001E1F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 09:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391062AbfHWIew (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 04:34:52 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:44481 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388643AbfHWIew (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 04:34:52 -0400
-Received: by mail-wr1-f43.google.com with SMTP id p17so7825698wrf.11
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 01:34:50 -0700 (PDT)
+        id S1732892AbfHWJfo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 05:35:44 -0400
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:41143 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730861AbfHWJfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 05:35:43 -0400
+Received: by mail-oi1-f173.google.com with SMTP id g7so6551333oia.8
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 02:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mz3AOKHWmcAlc6aUiBKAjg7VxdzqhGyTqWPg756ZUzo=;
-        b=TUXLDd03dsKDefaBp5jCzzk4GHEW4B0QGvD5j8sF8nTbTzWcjalzFvjX8jNXbt3gwl
-         2wDLK0Kf+mIS537luRJBXcubyL7kWIi6gpilHot8EkZeeAOa8djlT/zh3AuUIMppVQO5
-         gvxYRz0YJ0XybR8ClLR2gZ0YSNBb0iCzyIQAi/6C3B/G4o3POhMb9h/Md/Lr8d08YWPW
-         pkQpJsDrcKSxMoikpFrnte4WnXAfYzeUDUXxLFFgewmaIw/InVjtGIvXAle+QTHxC2DT
-         l1jx+LblELpIxYiEehzw1eYvA1aqXsHt3PGKMPr8ot9wBH2xtFLVnzS6jLdMvddzsokQ
-         1rlQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=x1yh6TEEGFjbEp7YgKpZOOaw+JqaZ9Xcy/FeAKV7v+Y=;
+        b=sjBsHf9O3QT9p9CfgPkTdtS0MRwKMTngX2sgMG2BY3IFtpeqn1wOUu3zj/RWuDlNzd
+         BAWF4wKpFXSBSuWby27xO6H3XLMCanqrT3MQuck7NvyPn6u+MbVW1DggxbEZczyKbi1D
+         Jq77Bc7M3Suv16owKwB8G0pj1S9FfLISlYX85thwiXO+aF1KAZ28whT7hyJUgXNmZT02
+         BMlMJD2/I6T0x8DKjcsxa0lHtr9MYUOC8uPYOrBkZ+5/v/qfM88Cdo7y4G9NdCFsU+jG
+         G++V7tJ6RFqPTP1gma+WtcW/Uiqxz3dPwTpCRHtdebTddW5uFxg9wANGh3Z6cCjl1tX7
+         MPDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mz3AOKHWmcAlc6aUiBKAjg7VxdzqhGyTqWPg756ZUzo=;
-        b=GEoPInobgzyOqlDhSaJ1MZwjICe/jGBlnY0BumozRtt7YqlqHBGcFQz7S8srYZsE4M
-         MU52QNkrfCJEAEovAu0XwtDGlsls5P+TRxf1LnHGwKXTFu96UaJeY63YPrBdXZ9N1ZBP
-         tp7jNYf4fZSCZ5u+CY50cQV2Y5r7XzCtF52rBySNc3ErgVtdhYXe4pqetXRr/yMonYyT
-         LGnNEb+v8b8PEZKgd9ZJJe0RXHlKtSjxRUi1ku4VprCC5v89GUzlkMNrea6dz9aCBVPd
-         hAX1AWwWB0BkNmd0emGqIPzvD2rgXpNwoGz5W9FkJTmGTXzcSMygceuIGCf7YJhutEuD
-         G3vw==
-X-Gm-Message-State: APjAAAWF25B8NIrAFtt5m+1DaMoqD77kThAYjr1qqcWEpK+sXjPRyYks
-        97nygSdUEQLtxElm/uPE4zw=
-X-Google-Smtp-Source: APXvYqxu4oEAmzEvb99hHVwG7bPjOQyagpVbJABQcFjd+7UTbbFXMPTqlAsOwhEvvehpaAzaPxnYqA==
-X-Received: by 2002:adf:f48d:: with SMTP id l13mr3907735wro.190.1566549290087;
-        Fri, 23 Aug 2019 01:34:50 -0700 (PDT)
-Received: from szeder.dev (x4db558a2.dyn.telefonica.de. [77.181.88.162])
-        by smtp.gmail.com with ESMTPSA id u130sm2861425wmg.28.2019.08.23.01.34.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Aug 2019 01:34:49 -0700 (PDT)
-Date:   Fri, 23 Aug 2019 10:34:47 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
-        johannes.schindelin@gmx.de, larsxschneider@gmail.com,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t0021: make sure clean filter runs
-Message-ID: <20190823083447.GH20404@szeder.dev>
-References: <20190820065625.128130-1-t.gummerer@gmail.com>
- <20190822192240.GA4077@cat>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=x1yh6TEEGFjbEp7YgKpZOOaw+JqaZ9Xcy/FeAKV7v+Y=;
+        b=gfv/iJebNsxmjucELAc0WrMXoiH539c5kXTupa3mRlCIBTqA4ZMyBcJa4drWkeOc81
+         FqgEyLelABhcSdu67RZwipDEHLkdxpnCoLiRWqZ0vAPAVrEOlmnzJUmP1Y0/E3YlsK3q
+         Ddf41X+FYpyp6tDudxeMRSlVmWzJ3d41M/R+Kpulkh4RVw4GKc3YpCjb2WTLkzV6s4GL
+         v8gG4OkOLGHP8GBdzQYjbvoKPkxVLdkU/l/G2ddPk8BaRNJju/lKqzI9llyrYRHRMkq8
+         WuDoA05bYXRJfd1XsXVNjtUrLjWHwBFn6+pJFodivx0GNCy78LrhOHzpaWf3kN/KhVFk
+         e3Zw==
+X-Gm-Message-State: APjAAAVyLj4UcsrzIM7IACxZZQbhfQe2KYTmBSaUnQzAxrC1wlUpl2a0
+        4ZJQ0KfI/+X7kKu1YA3hO3CVxUDvkzoX5nRTzAg=
+X-Google-Smtp-Source: APXvYqz8pUARZrBIgCxzTWOOevqlUuaME57JGpBUBMZdgmTfUskesPcA853VVFh5F2A1S4CMobk5xTHyZeF6D1a/FC4=
+X-Received: by 2002:aca:6044:: with SMTP id u65mr2563343oib.16.1566552942723;
+ Fri, 23 Aug 2019 02:35:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190822192240.GA4077@cat>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
+ <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
+ <20190822170817.GB35435@google.com> <20190822184312.xhrf2ij3bh3vovrq@localhost.localdomain>
+ <20190823082900.GG20404@szeder.dev>
+In-Reply-To: <20190823082900.GG20404@szeder.dev>
+From:   =?UTF-8?Q?Giuseppe_Crin=C3=B2?= <giuscri@gmail.com>
+Date:   Fri, 23 Aug 2019 11:35:48 +0200
+Message-ID: <CAGV3M54LVwHMkXd=wB3tQ_h4K0bJOZ43TxXZ8Fh5ZKfATBS57g@mail.gmail.com>
+Subject: Re: [BUG] You can't have single quote in your username
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 22, 2019 at 08:22:40PM +0100, Thomas Gummerer wrote:
-> v2 adds the comment as suggested by Szeder.
+On Fri, Aug 23, 2019 at 10:29 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> If we go down this route, then someone might want to write =C5=91 as o" o=
+r
+> =C5=B1 as u", which still supposed to be used in pairs, but what if someo=
+ne
+> wants to write =C3=A4 as a:, =C3=B6 as o:, =C3=BC as u:, =C3=A7 as "c,", =
+=C5=9F as "s,", etc.
 
-> +		# Make sure that the file appears dirty, so checkout below has to
-> +		# run the configured filter.
+I don't know any language that uses =C5=91 or =C5=B1 so I can't tell but it=
+'s
+definitely possible. In my country, sometimes the last name ends with
+an accented letter (mine ends with an "o grave") and people end up use
+a single quote to avoid pissing off computers. That's standard thing.
 
-Yeah, but that comment only really applied when setting both
-timestamps.  With a simple 'touch' it's more like
-
-  # Make sure that the file appears dirty or is at least racily clean,
-  # so ...
-
-So the next reader will know that right away, that the author didn't
-overlook racyness issue.
-
-> +		touch test.r &&
->  		filter_git checkout --quiet --no-progress empty-branch &&
->  		cat >expected.log <<-EOF &&
->  			START
-> -- 
-> 2.23.0.rc2.194.ge5444969c9
-> 
+In my current team I don't know enough of the setup of my colleagues
+(they may use CP1252) and that =C3=B2 may be badly decoded.
