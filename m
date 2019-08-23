@@ -2,166 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA5651F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 00:39:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8A321F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 02:18:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732095AbfHWAj2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Aug 2019 20:39:28 -0400
-Received: from rcdn-iport-7.cisco.com ([173.37.86.78]:52715 "EHLO
-        rcdn-iport-7.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732079AbfHWAj1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Aug 2019 20:39:27 -0400
-X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Aug 2019 20:39:26 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2354; q=dns/txt; s=iport;
-  t=1566520766; x=1567730366;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=8Xd5KwDV8aIU9p/101DLp4HTz5xLCD+fUdRUJuHQCwU=;
-  b=EPVYyOuzbp1dnQ8I5Qt5bWjEt3DO7I8tOIfj7mdamw37x7Tv8sco0/rl
-   Yk9sa9JHaCCBH4XStMp4BHn1WUi5x/c7nc7yVLU1zckVRV0d917JpnRiA
-   qwGf8O4c4eBx4QsjFnTmUQVXBJ9WKVv4WNsFiS88mmYPlI5lN7mIHY/nm
-   A=;
-IronPort-PHdr: =?us-ascii?q?9a23=3AOhvMYhyOwGfWisXXCy+N+z0EezQntrPoPwUc9p?=
- =?us-ascii?q?sgjfdUf7+++4j5YRyN/u1j2VnOW4iTq+lJjebbqejBYSQB+t7A1RJKa5lQT1?=
- =?us-ascii?q?kAgMQSkRYnBZueAFflLdbhbjcxG4JJU1o2t3w=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0A1AABBM19d/5pdJa1lGwEBAQEDAQE?=
- =?us-ascii?q?BBwMBAQGBVQQBAQELAYFEUAOBQiAECyqEIINHA4puglyXZoEugSQDVAkBAQE?=
- =?us-ascii?q?MAQEtAgEBhD8CF4JIIzYHDgIJAQEEAQEDAQYEbYUtDIVLAQEBAgESEREMAQE?=
- =?us-ascii?q?3AQ8CAQgaAh8HAgICMBUQAgQOBRsHgwCBawMODwECoSQCgTiIYXOBMoJ7AQE?=
- =?us-ascii?q?FhSIYghYJgQwoAYtuGIF/gTgfghc1PoREgwsyggQijxiOFI40CQKCHZQ9G4I?=
- =?us-ascii?q?xi0mKUI8Vll0CBAIEBQIOAQEFgVYBMYFYcBVlAYJBgkIMFxWDOopTcoEpiy0?=
- =?us-ascii?q?BAQ?=
-X-IronPort-AV: E=Sophos;i="5.64,419,1559520000"; 
-   d="scan'208";a="614527742"
-Received: from rcdn-core-3.cisco.com ([173.37.93.154])
-  by rcdn-iport-7.cisco.com with ESMTP/TLS/DHE-RSA-SEED-SHA; 23 Aug 2019 00:32:20 +0000
-Received: from XCH-ALN-013.cisco.com (xch-aln-013.cisco.com [173.36.7.23])
-        by rcdn-core-3.cisco.com (8.15.2/8.15.2) with ESMTPS id x7N0WKub026466
-        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=FAIL);
-        Fri, 23 Aug 2019 00:32:20 GMT
-Received: from xhs-aln-002.cisco.com (173.37.135.119) by XCH-ALN-013.cisco.com
- (173.36.7.23) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 22 Aug
- 2019 19:32:20 -0500
-Received: from xhs-rcd-002.cisco.com (173.37.227.247) by xhs-aln-002.cisco.com
- (173.37.135.119) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 22 Aug
- 2019 19:32:19 -0500
-Received: from NAM01-SN1-obe.outbound.protection.outlook.com (72.163.14.9) by
- xhs-rcd-002.cisco.com (173.37.227.247) with Microsoft SMTP Server (TLS) id
- 15.0.1473.3 via Frontend Transport; Thu, 22 Aug 2019 19:32:19 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GWOfmLPb4D0w0E7Xr8l9C9FWtyx6OhGLEIDIn5b+Kie/NWXcX9KNi8CBsQOXm11CW9HcC/4MDs4r180uHwZNeLmA2h3FsK1UqcjlF1KtNyEfh9nBHyoz5WUdMUIqrBrgT37mxM4xOMbMiISmo7gL/+sGKFLDeHknQwP1b0YY4TaMoU/MNp/DHVsQiSpNYXNSo3z+DMPQI8/UUUpEm+Wfb/P+IaZy+9uY9PrevlVQBbWcdzHlQk+h3Cj/gorJvGf/F33k3odb1ceCRm2CqjaQZibhAox/mMB4ZfB130d7WCEa3lNQDnNcswU9JD37c8g+XMOKv/WGrkM/t4hT8YlvTg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8Xd5KwDV8aIU9p/101DLp4HTz5xLCD+fUdRUJuHQCwU=;
- b=jhcYTtVEKPDE+CNbdH0I7FUkk8lRdPXoJ9h7D236EobQwFH+SYt57IMBxNW63uMqkTH1leNn52QxZtIFklBueqE38SeLEG/LdPAm318rwy7j1vjVh6SscE1WMrIo0lEh0OdaJArGa3aVw1dokLzNvfe3oizJaF4NiduOIL6TZqUoog0A/19G8R9On+61ScEY2P25b6u/AG4ijDjcfEkwEtAQDyAM4nfDf8sHDkwAp4mQivF4gtIYijMHKXNEUXLycqq9j02x93TZaaWKVc/8Nzs++qnYPtUygC57BdlPzt67zQ9/t/t4W+vHqOSkqTuRKzd+ElNitfesCYtxiEydHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
- dkim=pass header.d=cisco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cisco.onmicrosoft.com;
- s=selector2-cisco-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8Xd5KwDV8aIU9p/101DLp4HTz5xLCD+fUdRUJuHQCwU=;
- b=dASLU8Q2GzcyVGwTkh6GlFDn0qRUHW8VT34RjtCIxE6Cy9PTw8sH+T5zwwmHxU+8maVnaO+rIt+ozednIXjmdyImR1QXVwUbkXUbv4NZJdKUUtsomZiOEw3f1nOR50Tb8JEUcQ2cgIs0rBUHADoVi7tmdbVfEgMdxYHDR7F3YuY=
-Received: from BYAPR11MB2694.namprd11.prod.outlook.com (52.135.227.148) by
- BYAPR11MB2597.namprd11.prod.outlook.com (52.135.227.18) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2178.18; Fri, 23 Aug 2019 00:32:18 +0000
-Received: from BYAPR11MB2694.namprd11.prod.outlook.com
- ([fe80::1977:524c:5db5:d6da]) by BYAPR11MB2694.namprd11.prod.outlook.com
- ([fe80::1977:524c:5db5:d6da%7]) with mapi id 15.20.2178.020; Fri, 23 Aug 2019
- 00:32:17 +0000
-From:   "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: First Git status takes 40+ minutes, when mounting
- fileystem/diskimage with 50G GIT repo + 900G of builds articles
-Thread-Topic: First Git status takes 40+ minutes, when mounting
- fileystem/diskimage with 50G GIT repo + 900G of builds articles
-Thread-Index: AQHVWRO1ER69eoLi/kiFh7KrYPM/racHeJNy///gEQA=
-Date:   Fri, 23 Aug 2019 00:32:17 +0000
-Message-ID: <A240FE33-2B36-46EF-8AE4-0B3B2106908A@cisco.com>
-References: <2303C0BB-C532-4560-8BCA-A05DAD97EB72@cisco.com>
- <xmqqh869oypk.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh869oypk.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/10.1b.0.190715
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=sarvi@cisco.com; 
-x-originating-ip: [2001:420:c0c8:1002::422]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b75ab706-4d11-47c2-d0cf-08d727615a75
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600166)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:BYAPR11MB2597;
-x-ms-traffictypediagnostic: BYAPR11MB2597:
-x-microsoft-antispam-prvs: <BYAPR11MB25976F36468ACC0BCE577040BFA40@BYAPR11MB2597.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 0138CD935C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(136003)(39860400002)(396003)(366004)(346002)(376002)(23363002)(189003)(199004)(229853002)(76176011)(53936002)(25786009)(71200400001)(6486002)(8936002)(81166006)(81156014)(6246003)(14454004)(6512007)(66446008)(64756008)(8676002)(76116006)(6436002)(478600001)(66946007)(36756003)(46003)(66476007)(71190400001)(66556008)(486006)(11346002)(446003)(2616005)(6916009)(4326008)(476003)(305945005)(102836004)(6116002)(99286004)(6506007)(186003)(14444005)(256004)(5660300002)(2906002)(316002)(86362001)(7736002)(58126008)(33656002);DIR:OUT;SFP:1101;SCL:1;SRVR:BYAPR11MB2597;H:BYAPR11MB2694.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: cisco.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: HXmtFjWgNHUkZX8Nde7zQNQA4RxiRfXVhP8R1H2/USG+SMMFFqCGWmUcD6AP2EXF0Jis4w1QhUnrg2E7PDlybUfB9hjLbSW4jleVFWMFANioVMldpuC3flMyYOdUIbfqGybe6zsNLL6oe1XAFG9nIatgJjUuN0ct4G9+QUr9jixtDr9xQJzrJnt3hKPCjWZk9JaSm8YES/3odqNRAGXbHkyYVu3IVn6sKNIKJTZVrLx2tEuJ07d8X278tx48TyuE+CijsgHbevZtCDL7u6wynYzsYqcDViYym6uTG3T6MAT7GvndZ8K9DQ8qLHNjayTfN5mwCD3ePtGiP8ZvlXLmFVrC6K6gQLHea8pH4gY9hYeYabIW8+K5nhv0z0fAVRfR1u+5NJjItGNNPn239q9lEA9qBIV1uPNowPN8KQKsbnE=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4725AF48D65B5E4691031B3ED20DD30B@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        id S2387568AbfHWCSF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Aug 2019 22:18:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58180 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725856AbfHWCSF (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 22 Aug 2019 22:18:05 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:81dd:eb9b:e758:604b])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 272A16047B;
+        Fri, 23 Aug 2019 02:18:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1566526683;
+        bh=nRfCw/Z4PH03OaahDCgL9MC8QOLDCA+fofXm2LZ5ZCI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=D5/gYPA8/OPnsfRisGTJaj5p7TYqrj8Dx1Horx8eEohAKxVQzDRw7h7Cs3cGpuCCQ
+         /E2zwkFwRDDeL/lefMiH1w1edVzxXLBFYa47LSjeiD5yRKjNqI+PMBONWOTKX56MXA
+         ki7LqsSmjzboAC0YzxtE5XSyB0udBy9HM73RsVLgm4s0ahOoWsVASPO09nnqYulf43
+         vIGsQQ+WqfeYfe5chQHrW/gKrtrXOSt+ZxXosiGH52cCpIWdHtkwnzSaEoLbP4ErIS
+         DAj5HeUTt7BAXvVRPrKNbLfd5fGvhpDZMNKy/MscC0xDPoDbOd0m32w0dvJS7YaZ1r
+         SHCFaCJDy9/aqy0PEGVp1W3XWqlbTfPpnE5YohI/1ixoNbcTL3i/NME9spDmunw2lE
+         CVRVhkoIk3VHh2dPyWFFwVEI9IB1LirPNX37w91D3RueEseoSEc2Lb76Lq5vmBKlAL
+         aG2KO5eqH7p0eP1wxau6eIy2HETBlCaY7KHhHYl5W3Ert8LnNS6
+Date:   Fri, 23 Aug 2019 02:17:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 26/26] midx: switch to using the_hash_algo
+Message-ID: <20190823021757.GL365197@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20190818200427.870753-1-sandals@crustytoothpaste.net>
+ <20190818200427.870753-27-sandals@crustytoothpaste.net>
+ <4f6b781b-68b8-5bc4-92a2-67caff32024f@gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: b75ab706-4d11-47c2-d0cf-08d727615a75
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2019 00:32:17.7706
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8UEwBB9dhcPt5kKiprgvkUsgGHU+AqBLySGXM4cq4Sy4N+ILe4jGFEn57/ETZs2+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB2597
-X-OriginatorOrg: cisco.com
-X-Outbound-SMTP-Client: 173.36.7.23, xch-aln-013.cisco.com
-X-Outbound-Node: rcdn-core-3.cisco.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oiL9LJXJsdjS5rzq"
+Content-Disposition: inline
+In-Reply-To: <4f6b781b-68b8-5bc4-92a2-67caff32024f@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 5.2.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzLiBUaGF0IHNlZW1zIHRvIGhlbHAuDQoNCkp1c3QgZm9yIGNvbnRleHQsIHdlIGFyZSB1
-c2luZyBhIGNvcHktb24td3JpdGUvY2xvbmluZyBzb2x1dGlvbiB0byBnaXZlIGRldmVsb3BlcnMg
-IGEgcHJlYnVpbHQgd29ya3NwYWNlIHdpdGggYWxsIHRoZSBwbGF0Zm9ybXMgZnVsbHkgYnVpbHQs
-IGFzIHdlbGwgYXMgc291cmNlcyBhbGwgY2xvbmVkLA0KU28gdGhleSBhcmUgcmVhZHkgZm9yIGlu
-Y3JlbWVudGFsIGRldmVsb3BtZW50Lg0KDQpXZSBjcmVhdGUgYSBleHQ0IGRpc2tpbWFnZSwgd2l0
-aCBhIGdpdCBjbG9uZSB3b3Jrc3BhY2UoNTBHKSBhbmQgOTAwRyBvZiBmdWxseSBidWlsdCB0cmVl
-cywgdGhlbiBmcmVlemUgdGhhdCBkaXNraW1hZ2UuDQpEZXZlbG9wZXJzIGhhdmUgYSB3YXkgdG8g
-Y2xvbmUgdGhhdCBkaXNraW1hZ2UoaW50byBhIGNvcHktb24td3JpdGUpIGNvcHkgb2YgdGhlIGRp
-c2tpbWFnZShpbiAzMCBzZWNvbmRzKSB0aGF0IHRoZXkgY2FuIG1vdW50IGFuZCB1c2UgZm9yIGlu
-Y3JlbWVudGFsIGJ1aWxkIGRldmVsb3BtZW50Lg0KDQpJIGRpZCB0aGUgZm9sbG93aW5nLg0KDQpN
-b3VudGVkIHRoZSBleGlzdGluZyBmaWxlc3lzdGVtDQpnaXQgdXBkYXRlLWluZGV4IC0tdW50cmFj
-a2VkLWNhY2hlDQpnaXQgdXBkYXRlLWluZGV4IC0tcmVmcmVzaA0KDQpOb3Qgc3VyZSB3aGF0IHlv
-dSBtZWFudCBieSAiIHdvcmtpbmcgdHJlZSBzdGF0ZSBpbiB0aGUgZGlza2ltYWdlIg0KDQpJIHRo
-ZW4gZGV0YWNoZWQgdGhlIGRpc2tpbWFnZSwgZHJvcHBlZCBhbGwgdGhlIGNhY2hlcy4gDQpSZW1v
-dW50ZWQgdGhlIGRpc2tpbWFnZS4NCg0KDQpnaXQgc3RhdHVzICAtIFRoZSB2ZXJ5IGZpcnN0IGdp
-dCBzdGF0dXMgYWZ0ZXIgZHJvcHBpbmcgdGhlIGNhY2hlIG5vdyByZXR1cm5zIGluIGluIDEuNTQg
-c2Vjb25kcywgd2hpY2ggc2VlbXMgdmVyeSBtdWNoIGFjY2VwdGFibGUuDQoNCkkgb2J2aW91c2x5
-IG5lZWQgdG8gZG8gbW9yZSByZWFkIHVwIG9uIHdoYXQvaG93IGdpdCBjYWNoZXMuDQoNCkNhbiB5
-b3UgcG9pbnQgdG8gYW55IGRvY3VtZW50YXRpb24gb24gd2hhdCBzb3J0IG9mIGluZm9ybWF0aW9u
-IEdJVCBjYWNoZXMsIGFuZCBob3cgdG8gdW5kZXJzdGFuZCBkZWJ1ZyB0aGF0Pw0KSSB3b3VsZCBs
-aWtlIHRvIHVuZGVyc3RhbmQgd2hhdCB0aGUgYWJvdmUgZ2l0IHVwZGF0ZS1pbmRleCBjb21tYW5k
-cyBhY3R1YWxseSBkbywgdGhhdCBpcyBtYWtpbmcgdGhpcyBmYXN0ZXIuDQogDQpUaGFua3MsDQpT
-YXJ2aQ0KT2NjYW3igJlzIFJhem9yIFJ1bGVzDQoNCu+7v09uIDgvMjIvMTksIDExOjEzIEFNLCAi
-SnVuaW8gQyBIYW1hbm8iIDxnaXRzdGVyQHBvYm94LmNvbT4gd3JvdGU6DQoNCiAgICAiU2FyYXZh
-bmFuIFNoYW5tdWdoYW0gKHNhcnZpKSIgPHNhcnZpQGNpc2NvLmNvbT4gd3JpdGVzOg0KICAgIA0K
-ICAgID4gSSBzdXNwZWN0IHdhcm1pbmcgdGhlIGZpbGVzeXN0ZW0gY2FjaGluZyBpcyBpbiBwbGF5
-Lg0KICAgID4gQnV0IHNvIGlzIHRoZSBmYWN0IHRoYXQgd2FsayBldmVyeSB0cmVlIHRvIGZpbmQg
-dW50cmFja2VkIGZpbGVzIGFzIHdlbGwuIA0KICAgIA0KICAgIEVuYWJsZSB0aGUgdW50cmFja2Vk
-IGNhY2hlIGFuZCAidXBkYXRlLWluZGV4IC0tcmVmcmVzaCIsIGJlZm9yZQ0KICAgIGZyZWV6aW5n
-IHRoZSByZXBvc2l0b3J5ICsgd29ya2luZyB0cmVlIHN0YXRlIGluIHRoZSBkaXNraW1hZ2U/DQog
-ICAgDQoNCg==
+
+--oiL9LJXJsdjS5rzq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2019-08-22 at 14:04:16, Derrick Stolee wrote:
+> On 8/18/2019 4:04 PM, brian m. carlson wrote:
+> > diff --git a/midx.c b/midx.c
+> > index d649644420..f29afc0d2d 100644
+> > --- a/midx.c
+> > +++ b/midx.c
+> > @@ -19,8 +19,7 @@
+> >  #define MIDX_BYTE_NUM_PACKS 8
+> >  #define MIDX_HASH_VERSION 1
+>=20
+> This hash version "1" is the same as we used in the commit-graph. It's
+> a byte value from the file format, and we've already discussed how it
+> would have been better to use the 4-byte identifier, but that ship has
+> sailed. I'm just pointing this out to say that we are not done in this
+> file yet, but we can get to that when we want to test the midx with
+> multiple hash lengths.
+
+My approach so far has been to assume everything in the .git directory
+is in the same hash except for the translation functionality. Therefore,
+it doesn't make sense to distinguish between hashes in the midx files,
+because we'll never have files that differ in hash.  So essentially the
+MIDX_HASH_VERSION being 1 is "whatever hash is being used in the .git
+directory", not just SHA-1.
+
+In addition, the current multi-pack index format isn't capable (from my
+reading of the documentation, at least) of handling multiple hash
+algorithms at once.  So we'd need a midx v2 format for folks who are
+using SHA-256 with SHA-1 compatibility and we could then write separate
+sets of object chunks with an appropriate format identifier, much like
+the proposed pack index v3.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--oiL9LJXJsdjS5rzq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1fTNQACgkQv1NdgR9S
+9ovGeRAAzoNZzBzRfQGeAgVy4tyesw25zKc82YqNV7gXMvmzbcZeu0E6wTBF3cIn
+MJLvNfCqB1hdIa1h0lNgbvKKPothKuW+Llf3DdGdgahWTDoM8WxywLOY5GxxXP5w
+70Gc+N8gdXta3NF1ekfGvpNuuRXLQalPOOUW9IM3B4Fg6Gt2CN6dFyfzhYuC3V8N
+cdI2q8Kipi9Bcj6JNGOByhUm0kD65N15O73lL6HpNf0YqnpT7TlAaV/ek1yzqqSU
+oKkg3daqXxj+s8kJMwZ3hEfixNyUHGJ+v88BcBzLAjvGNovo2gzCA8yPzRVfVgbT
+/xWWpMJDx5x1MIXOvTy3GVDcEdqXIX/9H+5vgVHUNZxbaO/D+HLqVOOEugFfyQxL
+6RjCC2oLTvPIEezJxy4R/8nwsxhUdg8h4z6gW6srebBs0n3n1KI2JYn53BJmNnSN
+WafONOwQi742JqmCg/nywEiai/fH13BHJcfLf9Tfg7jhsP2EdlvDeYT+jVC8/LZ4
+vrsPgasoa/Bqv1pu8MXiRNBLPZK7KxMGbzMa6QiUwi+dcM8jmiWIOnJwFGPfmyWb
+N46gJlbq+maF0+5p+BbdCUV27cmDQYlsN7w68YU/LJSFSCs2D975RMVPO/iSE2lp
+57g2PLplR2oxHcvb/ugUhr8KRtoP6kcj2jO2Vuduy2rQkni8dwU=
+=4uhm
+-----END PGP SIGNATURE-----
+
+--oiL9LJXJsdjS5rzq--
