@@ -2,161 +2,267 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADDA61F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 23:43:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8A01F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 23:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbfHWXnn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 19:43:43 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34168 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725283AbfHWXnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 19:43:43 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d3so6455981plr.1
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 16:43:42 -0700 (PDT)
+        id S1725917AbfHWXuX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 19:50:23 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:33965 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbfHWXuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 19:50:23 -0400
+Received: by mail-vs1-f68.google.com with SMTP id b20so7389730vso.1
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 16:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Shw+nubukEh6ggw/HB14tBqUrDN9HYCSKMt2yhh5yE8=;
-        b=tHNUCsOQS+FOpWzp1iRyT+PaVdbrPBuE+V3xKigPoGQswC1v776SG7RDHFRk/gSdmt
-         4ryr2YbgkA2uCw67CuN5tNg37vNrs11UZmcWBRbOb2a6Dnu+XV78kwnRrFW2zv9Fp61B
-         iKUT0O0ipWC5oSns/Aw/b6RXdmMCluXHnUIOgDTprjLptrliKT1U5Ak85ohhyOJtnzRv
-         cVXdRhQk23eHl0nS3bJ/2JXZ1PZdjeZASnKpJOLAdnYKhp00NBXps8FCBosZ7+xoXJH9
-         LaAIaqCyh7Q54taefA5a9ypNopuPkTR0OlFLNLJNl3nVqQqmLcFQhtfKX/3OMeWv3VsD
-         rJlQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6RpLfBT5aznO6Hg5QuMSUBSNstezfTkcpMFZ25627oM=;
+        b=Glvn4L5XYSmEb5L6koTeAJJll6wH7DDvazNdHpqdSQxwEW2nHrZ0fbzNeXqzLMspM0
+         q91QfTLj41YTTXXc12Nl0KGCUUE8lA7d7SZiknJQOik1YHZ0DzrpywJ0SK4pGMQCFUbj
+         8jHg3ICuvIB4/Jg/uMiop5HkhdB6RWvV1nrcQvzeBmDHUz5qVOiVGIwUzAHUi5yv/7av
+         Vq8vcZ/6NysRwI82KoR70DEpH7sozBwy05zKkjVUZkswLBKDrQybhynH9kxa1Y4Tx/KG
+         dGn2nle3URh7s0jr19uomFM7kXTXT8RnGYFJdFLb7xEsVNRbvfwp24lFyinpTpZxEFdq
+         3Xrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Shw+nubukEh6ggw/HB14tBqUrDN9HYCSKMt2yhh5yE8=;
-        b=RRw19cQehuY79u6gQsW5QSTC9DPRgiEibLOF4rYJ9GcoIqQVsVx8zu6jL5YZu1r3UK
-         H7qYQePPTDBV4biKpvLVb4oPQyhLmrl4ha6ikr2f0yp6sgkBW3+U/lyHIJkqv45TOrfC
-         SSWwAhSLaDTqT/rw3cTkYpB4Iz98ayPabTKt+kwbTvH7PORuQkR1FbXPd3lS4SRPGNhi
-         /j5kyNYe+zWQrtlNEyD9njbAu3h06BR97BdnjZ8dBNIEIwcajXUoTEFkkv0OL6otESoK
-         /fbbvLzs+hRT9U2IVTwp/aohGHMHv2Up0rOkyyw2gux05KT9AuDbUjcmwx0jnsWLgMcF
-         HH3A==
-X-Gm-Message-State: APjAAAWk/8Lg41e83yg5L1Kp3Fs/T1gx+p7BKEo6/YtOt5x8isYkVAxm
-        PVSDh56fTRlbXoP3riQzESA=
-X-Google-Smtp-Source: APXvYqwmL/FgVjtkoAB2rsKI4RShiL/Wpjd7z/ZFbk6OWKid15jnPmCqRxX9WOQyeOxA0hoyM5xxwQ==
-X-Received: by 2002:a17:902:20cc:: with SMTP id v12mr7001075plg.188.1566603822301;
-        Fri, 23 Aug 2019 16:43:42 -0700 (PDT)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id j6sm3820553pfa.141.2019.08.23.16.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2019 16:43:41 -0700 (PDT)
-Date:   Fri, 23 Aug 2019 16:43:39 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v2 0/4] git-gui: Add ability to revert selected hunks and
- lines
-Message-ID: <20190823234339.GA17088@gmail.com>
-References: <20190819214110.26461-1-me@yadavpratyush.com>
- <20190822220107.4153-1-me@yadavpratyush.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6RpLfBT5aznO6Hg5QuMSUBSNstezfTkcpMFZ25627oM=;
+        b=r2R426lF3FrIrhOdO1GIwWiSyZMIvf5RILBWCQ7O7mP2DlUHkkefZeB99kFhWgjZno
+         twFJMd7//0oyr+cSfCHeUxH6zQAXuiE/aMR/vfwNsDv8i6Aw6//JNt5AEo23a1z9tF8q
+         D9uSBOD32zac+SpwRcwOrdDmVieDjLM4iDOmbWEkwCPA52wlNl7JgwEnKHzPshR/gTS5
+         xiakWpYjyPvLZ6rPNzqcvI+gkGTL3HlbtgJua6Pus9Imntu3pTMmS/cuibYODUeogNkD
+         VmOBZ+4FTMF2nYyvH2u7kfPT9SKjFnacFYGwqZV7MxnvI0WXEgqtVLc3Za9za4YyBTzV
+         zvqA==
+X-Gm-Message-State: APjAAAU9vwWs5HslHXGtfX4lstDSWtXd0NRTQEuIeI0tceiWl7H+DD5G
+        xt0k757IugErZgegYyT6yaYHn+Q7rYCMjeRQ4Ps=
+X-Google-Smtp-Source: APXvYqwxUTZg8HYEBtLZ2EZQ83+o6SRjQOro8lB0LdWzAvG/vL/aTmOr1ChAdRdFTrav2EsxVaweFXJ9AcOgAnSirf8=
+X-Received: by 2002:a67:f887:: with SMTP id h7mr1882907vso.116.1566604221453;
+ Fri, 23 Aug 2019 16:50:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190822220107.4153-1-me@yadavpratyush.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.316.git.gitgitgadget@gmail.com> <5f332b799f90b64e2c0720fd0aba0e163d41587a.1566313865.git.gitgitgadget@gmail.com>
+In-Reply-To: <5f332b799f90b64e2c0720fd0aba0e163d41587a.1566313865.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 23 Aug 2019 16:50:10 -0700
+Message-ID: <CABPp-BHon=QgZXPjwyZspq0wW3rFLZqx1HZgE8eMq6DuTCc-0g@mail.gmail.com>
+Subject: Re: [PATCH 5/9] sparse-checkout: create 'disable' subcommand
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 23, 2019 at 03:31:03AM +0530, Pratyush Yadav wrote:
-> Hi,
-> 
-> This series adds the ability to revert selected lines and hunks in
-> git-gui. Partially based on the patch by Bert Wesarg [0].
-> 
-> The commits can be found in the topic branch 'py/revert-hunks-lines'
-> at https://github.com/prati0100/git-gui/tree/py/revert-hunks-lines
-> 
-> Once reviewed, pull the commits from
-> 415ce3f8582769d1d454b3796dc6c9c847cefa87 till
-> 0a1f4ea92b97e673fda40918dae68deead43bb27, or just munge the patches and
-> apply them locally, whichever you prefer.
-> 
-> Changes in v2:
-> - Add an option to disable the revert confirmation prompt as suggested
->   by Johannes Sixt.
-> - Base the patches on Pat's git-gui tree instead of git.git.
+On Tue, Aug 20, 2019 at 8:14 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The instructions for disabling a sparse-checkout to a full
+> working directory are complicated and non-intuitive. Add a
+> subcommand, 'git sparse-checkout disable', to perform those
+> steps for the user.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-sparse-checkout.txt | 26 +++++++---------
+>  builtin/sparse-checkout.c             | 45 ++++++++++++++++++++++++---
+>  t/t1091-sparse-checkout-builtin.sh    | 15 +++++++++
+>  3 files changed, 67 insertions(+), 19 deletions(-)
+>
+> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> index 6f540a3443..de04b768ae 100644
+> --- a/Documentation/git-sparse-checkout.txt
+> +++ b/Documentation/git-sparse-checkout.txt
+> @@ -38,6 +38,10 @@ COMMANDS
+>         Add a set of patterns to the sparse-checkout file, as given over
+>         stdin. Updates the working directory to match the new patterns.
+>
+> +'disable'::
+> +       Remove the sparse-checkout file, set `core.sparseCheckout` to
+> +       `false`, and restore the working directory to include all files.
+> +
+>  SPARSE CHECKOUT
+>  ----------------
+>
+> @@ -60,6 +64,13 @@ Then it compares the new skip-worktree value with the previous one. If
+>  skip-worktree turns from set to unset, it will add the corresponding
+>  file back. If it turns from unset to set, that file will be removed.
+>
+> +To repopulate the working directory with all files, use the
+> +`git sparse-checkout disable` command.
+
+Make sense.
+
+> +
+> +Sparse checkout support in 'git read-tree' and similar commands is
+> +disabled by default. You need to set `core.sparseCheckout` to `true`
+> +in order to have sparse checkout support.
+
+But why add this paragraph?  read-tree is plumbing that we'd rather
+not force on users, so I'd rather not mention it.  And I thought we
+were setting core.sparseCheckout for the user.
+
+> -Another tricky thing is fully repopulating the working directory when you
+> -no longer want sparse checkout. You cannot just disable "sparse
+> -checkout" because skip-worktree bits are still in the index and your working
+> -directory is still sparsely populated. You should re-populate the working
+> -directory with the `$GIT_DIR/info/sparse-checkout` file content as
+> -follows:
+> -
+> -----------------
+> -/*
+> -----------------
+> -
+> -Then you can disable sparse checkout. Sparse checkout support in 'git
+> -read-tree' and similar commands is disabled by default. You need to
+> -set `core.sparseCheckout` to `true` in order to have sparse checkout
+> -support.
+
+Wahoo!
 
 
-We've had these features for years in git-cola.
+> -static int sc_enable_config(void)
+> +static int sc_set_config(int mode)
+>  {
+>         struct argv_array argv = ARGV_ARRAY_INIT;
+>         int result = 0;
+> -       argv_array_pushl(&argv, "config", "--add", "core.sparseCheckout", "true", NULL);
+> +       argv_array_pushl(&argv, "config", "--add", "core.sparseCheckout", NULL);
 
-Please copy our keyboard shortcuts.
-IMO we should not re-invent the user interactions.
+Remove "--add" and add "--worktree".
 
-http://git-cola.github.io/share/doc/git-cola/hotkeys.html
+> +
+> +       switch (mode) {
+> +       case 1:
+> +               argv_array_pushl(&argv, "true", NULL);
+> +               break;
+> +
+> +       case 0:
+> +               argv_array_pushl(&argv, "false", NULL);
+> +               break;
+> +
+> +       default:
+> +               die(_("invalid config mode"));
+> +       }
+>
+>         if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
 
-Ctrl-u is our revert-unstaged-edits hotkeys.  "s" is for
-staging/unstaging (or Ctrl-s if the file list is focused).
+Can't we use git_config_set instead of run_command_v_opt?
 
-The same hotkey is used for operating at the line level.
-If no lines are selected, the hunk surrounding the current cursor
-position is used.
+>                 error(_("failed to enable core.sparseCheckout"));
+> @@ -125,7 +138,7 @@ static int sparse_checkout_init(int argc, const char **argv)
+>         FILE *fp;
+>         int res;
+>
+> -       if (sc_enable_config())
+> +       if (sc_set_config(1))
 
-Please make keyboard interaction a first-class design consideration.
+Random idea: The code would be more self-documenting, if you just made
+sc_set_config take a string and you passed either "true" or "false".
+Then you could also dispense with the switch statement.  Yes, you can
+make typos, but there are only going to be 2-3 places in the code that
+call it, right?
 
+>                 return 1;
+>
+>         memset(&el, 0, sizeof(el));
+> @@ -194,6 +207,28 @@ static int sparse_checkout_add(int argc, const char **argv)
+>         return sc_read_tree();
+>  }
+>
+> +static int sparse_checkout_disable(int argc, const char **argv)
+> +{
+> +       char *sparse_filename;
+> +       FILE *fp;
+> +
+> +       if (sc_set_config(1))
+> +               die(_("failed to change config"));
 
-I have a very strong opinion about the confirmation dialog, so I'll just
-mention that here since Hannes is on this thread.
+Ooh, preventative setting.  This'll probably save some grief for
+people who get themselves in a weird state and start mucking around
+manually; very nice.
 
-In cola we do have a confirmation dialog, and I strongly believe this is
-the correct behavior because it's an operation that drops data that
-cannot be recovered.
+> +
+> +       sparse_filename = get_sparse_checkout_filename();
+> +       fp = fopen(sparse_filename, "w");
+> +       fprintf(fp, "/*\n");
+> +       fclose(fp);
+> +
+> +       if (sc_read_tree())
+> +               die(_("error while refreshing working directory"));
 
-In the other thread, it was mentioned that this dialog would be a
-nuisance.  Perhaps that is true -- for the dialog that may have been
-implemented in this series (I haven't run it to verify).
+This can fail e.g. if there are conflicts in the index.  Luckily, if
+they fix them up and then re-run "git sparse-checkout disable" then it
+can work.  But you've already changed the
+$GIT_DIR/info/sparse-checkout file to a state that won't match what
+they actually have checked out.  Will that cause any problems?  (I
+can't think of any immediately, but I am curious.)
 
-Let's dive into that concern.
+Also, should or can we give a better error message, such as
+instructing them to try again after they've fixed any problems
+reported by the sc_read_tree() operation?
 
-In git-cola we have a confirmation dialog and it is by no way a
-detriment to the workflow, and I use that feature all the time.
-Why?  The reason is that we focused on the keyboard interaction.
+> +
+> +       unlink(sparse_filename);
+> +       free(sparse_filename);
+> +
+> +       return sc_set_config(0);
+> +}
+> +
+>  int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+>  {
+>         static struct option builtin_sparse_checkout_options[] = {
+> @@ -217,6 +252,8 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+>                         return sparse_checkout_init(argc, argv);
+>                 if (!strcmp(argv[0], "add"))
+>                         return sparse_checkout_add(argc, argv);
+> +               if (!strcmp(argv[0], "disable"))
+> +                       return sparse_checkout_disable(argc, argv);
+>         }
+>
+>         usage_with_options(builtin_sparse_checkout_usage,
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index 499bd8d6d0..68ca63a6f6 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -120,4 +120,19 @@ test_expect_success 'add to existing sparse-checkout' '
+>         test_cmp expect dir
+>  '
+>
+> +test_expect_success 'sparse-checkout disable' '
+> +       git -C repo sparse-checkout disable &&
+> +       test_path_is_missing repo/.git/info/sparse-checkout &&
+> +       git -C repo config --list >config &&
 
-The workflow is as follows:
+Should this command also have a --worktree flag (just for consistency,
+even if we know there will only be one worktree so it doesn't matter
+in practice)?  There are probably similar cases I overlooked on the
+previous patches.
 
-	Ctrl-u to initiate the revert action
-	The prompt appears immediately.
-		- Hitting any of "enter", "y", or "spacebar" will
-		  confirm the confirmation, and proceed.
-		- Hitting any of "escape" or "n" will cancel the action.
-
-So essentially the workflow for the power user becomes "ctrl-u, enter"
-and that is such a tiny overhead that it really is not a bother at all.
-
-On the other hand, if I had to actually move my hand over to a mouse or
-trackpad and actually "click" on something then I would be super
-annoyed.  That would be simply horrible with RSI in mind.
-
-OTOH having to hit "enter" or "spacebar" (which is the largest key on
-your keyboard, and your thumbs have good hefty muscles) is totally
-acceptable in my book because it strikes the right balance between
-safety for a destructive operation and convenience.
-
-Now, let's consider the alternative -- adding an option to disable the
-prompt.  I don't like that.
-
-Why?  It's yet another option.  It's yet another thing to document, yet
-another code path, and yet another pitfall for a user who might run
-git-gui in a different configuration (and becomes surprised when revert
-doesn't prompt and suddenly loses their work).
-
-Do we really need an option, or do we need better usability instead?
-My opinion is that the latter is the real need.
-
-
-That's my $.02 from having used this feature in practice since 2013.
--- 
-David
+> +       test_i18ngrep "core.sparsecheckout=false" config &&
+> +       ls repo >dir &&
+> +       cat >expect <<-EOF &&
+> +               a
+> +               deep
+> +               folder1
+> +               folder2
+> +       EOF
+> +       test_cmp expect dir
+> +'
+> +
+>  test_done
+> \ No newline at end of file
+> --
+> gitgitgadget
+>
