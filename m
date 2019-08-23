@@ -2,133 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E51651F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 13:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8C0D1F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 15:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405672AbfHWNi5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 09:38:57 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:46327 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726894AbfHWNi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 09:38:56 -0400
-Received: by mail-wr1-f41.google.com with SMTP id z1so8658003wru.13
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 06:38:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=S95ADlXMMVg/Cc9rpt/vieBcnSHFF3jcprenIwD/ADg=;
-        b=p+dlVthYXAK1yzTkLKcFRPFq/LKE40y1EuCzJv0bFn6e5nMip5ADdWfpNKUUPy43vJ
-         STWU+zdDzvQ2ma8jJPDb+TB9aionoNgbyC0NuukeWptzK9OvA8wFpXYkgR4wiMO3hdZm
-         qdaQD62miNrVu5sXhrBjlsitm/rXDBVzHObBqBiNPTaPKkWT3jrlnxQRYjfaRvOlvUpx
-         WYaIZ8e+gXKsKNQmUWj19iUUy+zkfRB3pb7tyt0mKqJN62+kOvbTaUtkY1RFPeAB3HbV
-         TBiWjwhk2P5tQhD5a7ZC9MuRq/faSpbhaOSVdf7+ClbdnPt8ruvAfR0+3b+P0C253K6Y
-         cDIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=S95ADlXMMVg/Cc9rpt/vieBcnSHFF3jcprenIwD/ADg=;
-        b=SPDd6q1yfB1Hn+gupoYMOReIdnvY1f3KApli3Sb+RTduWCIoOn7TmWBQlabff4LnD9
-         TZpDuIzvVdLEJOvMprpVArzoj0FzLAP0Xr7h7ssTPFyG3eoiM7ST9R7JCiTPPigYBeiZ
-         YWDlpuyWy7c5vg7aOSh8Qp1d2D0HR/e8KPBT4i0JesdqomqGX/RtD6SSNGYvZCSLk7XF
-         WwrufQJ4+U4BuK9cGsBmcqUDIevfW3DStYNTqvyi7un4L9q+rtlPTRhqRGaV1iett4eh
-         7xCik5E9ufqa2iqA6xgKNbDJ3IQ7ptj8qJ0Q7CDDtPVKBJvio6yT/qGzuMPNArOxqerP
-         XN3g==
-X-Gm-Message-State: APjAAAWenGjQo3jbStokr7f5hiNMLWJ8gxubirQsKphae/v8A08DDtGv
-        I02dpoHT2g0fvrJsLFdCphQySG1I
-X-Google-Smtp-Source: APXvYqxdFomPgl3M9xWlXw8ri3+WF/U+R2AC/vzTQinAu7NSVPDCqgGse+hSZ5VrTBc9g3K2cldyIg==
-X-Received: by 2002:adf:b60c:: with SMTP id f12mr4734502wre.231.1566567533860;
-        Fri, 23 Aug 2019 06:38:53 -0700 (PDT)
-Received: from szeder.dev (x4db558a2.dyn.telefonica.de. [77.181.88.162])
-        by smtp.gmail.com with ESMTPSA id j9sm3536400wrx.66.2019.08.23.06.38.52
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Aug 2019 06:38:53 -0700 (PDT)
-Date:   Fri, 23 Aug 2019 15:38:50 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Subject: bug: interactive rebase's 'edit' insn copies notes to newly inserted
- commit
-Message-ID: <20190823133850.GK20404@szeder.dev>
+        id S2395482AbfHWPUg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 11:20:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60823 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390470AbfHWPUg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 11:20:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 87FC878CE2;
+        Fri, 23 Aug 2019 11:20:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LAnnED0+DDL89HN6W84l1C8jtK8=; b=SAC0R/
+        bnasrJrpGTpTYIffhfYrO6DzCon95xinyhICsWw1ZDYOhOsMSnOtRT9ziImGo7rJ
+        qp/J142Dd9JK+8Wv/jjMZGeFM++o32gBpuxYIEaMIxbFO8jUlOp8fbxxcn77U1SN
+        wRTz+PMss8n/HTWTnIFKURD/GqV7aSH9apwMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aR/6bkEOGB5vDpEq1CuWKnR8tTuT+3o6
+        Av4JlPCu1pwZeTKSi1DD1C4akL4o7egRhmkZT2YvSYW3z0aobkLFl1aTrsJ4p8ro
+        eJeS9E2JIy8oAKPS7w3levmTK9F2GAEmHAvHH8qQSiRdxswVZDmqkNnelgWBM3W9
+        JMX5dBIuQZQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80CF678CE0;
+        Fri, 23 Aug 2019 11:20:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DD2D78CDF;
+        Fri, 23 Aug 2019 11:20:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        martin.agren@gmail.com, newren@gmail.com,
+        phillip.wood123@gmail.com, t.gummerer@gmail.com
+Subject: Re: [PATCH v3 2/6] sequencer: add NULL checks under read_author_script
+References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
+        <20190820034536.13071-1-rohit.ashiwal265@gmail.com>
+        <20190820034536.13071-3-rohit.ashiwal265@gmail.com>
+Date:   Fri, 23 Aug 2019 08:20:29 -0700
+In-Reply-To: <20190820034536.13071-3-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Tue, 20 Aug 2019 09:15:31 +0530")
+Message-ID: <xmqqsgprnc1u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BC361A8-C5B9-11E9-ADEA-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed that somehow two commits on the same branch ended up with
-the same note attached.  I believe that this is the result of me using
-interactive rebase's 'edit' instruction to insert new commits, and
-then it copied the note from the edited commit to the commit from from
-where I 'git rebase --continue'-ed.
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-Here's a simple illustration:
+> read_author_script reads name, email and author date from the author
+> script. However, it does not check if the arguments are NULL. Adding
+> NULL checks will allow us to selectively get the required value,...
 
-  $ git log --oneline --notes
-  70be36f (HEAD -> master) third
-  02b5ef9 second
-  Notes:
-      A note on the second commit
-  
-  f93427a first
-  $ git config --get notes.rewriteref 
-  refs/notes/commits
-  $ git rebase -i HEAD^^
-  ## Change the instruction sheet to 'edit' the "second" commit ##
-  Stopped at 02b5ef9...  second
-  You can amend the commit now, with
-  
-    git commit --amend 
-  
-  Once you are satisfied with your changes, run
-  
-    git rebase --continue
+I had a hard time understanding the argument here without knowing
+why I had trouble, and I think I figured it out.  What you wrote may
+not be incorrect per-se, but the logic is backwards.
 
-  $ git commit --allow-empty -m "Insert new commit #1"
-  [detached HEAD 2d05076] Insert new commit #1
-  $ git commit --allow-empty -m "Insert new commit #2"
-  [detached HEAD 0ed24dc] Insert new commit #2
-  $ git rebase --continue 
-  Successfully rebased and updated refs/heads/master.
-  $ git log --oneline --notes
-  b02a593 (HEAD -> master) third
-  0ed24dc Insert new commit #2
-  Notes:
-      A note on the second commit
-  
-  2d05076 Insert new commit #1
-  02b5ef9 second
-  Notes:
-      A note on the second commit
-  
-  f93427a first
+The function has been about reading all three, and it always took
+and required the callers to pass three valid pointers to locations
+to store these three.  It did not check for NULL; passing NULL was
+simply a bug in the caller who deserved a segfault.
 
-Notice how the note now appears twice, because it has been copied from
-the (unmodified) "second" commit to the last commit that has been
-inserted on top before continuing.
+This series, however, wants to allow new callers of the function to
+selectively read some among the three and ignore the rest, and you
+happened to choose "pass NULL for an uninteresting field" as the
+new calling convention.
 
-I certainly didn't expect this, and can't readily see a use case where
-it's desirable, but maybe I just lack imagination :)  However, once
-rebase stops for the 'edit' instruction the user can do just about
-anything, so I'm not sure how rebase could figure out when to copy the
-note and when not.
+That choice is where "checking for NULL" comes in.
 
-This is not a regression of following the rewrite in C, the scripted
-version had the same behavior (I think v1.8.0 was the oldest I tried).
+In other words, "checking for NULL" is merely an implementation
+detail for a more important change this patch brings in: We now
+can read some and ignore the rest, while requiring that the input
+file is well formed even for the fields we do not care about.
 
-This doesn't happen when inserting a 'break' instruction between
-picking the "second" and "third" commits, and then adding new commits.
-Alas, the 'break' instruction is not even a year old, and I have been
-using 'edit' for this purpose for over a decade now...  so
-re-training my fingers will be hard :)
+
+
+    sequencer: allow callers of read_author_script() to ignore fields
+
+    The current callers of the read_author_script() function read
+    name, email and date from the author script.  Allow callers to
+    signal that they are not interested in some among these three
+    fields by passing NULL.
+
+    Note that fields that are ignored still must exist and be
+    formatted correctly in the author script.
+
+or something like that, perhaps.
 
