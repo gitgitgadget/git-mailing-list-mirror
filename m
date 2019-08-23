@@ -8,64 +8,67 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37CB1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 11:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B673B1F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 12:02:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393207AbfHWLxl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 07:53:41 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:46357 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391388AbfHWLxl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 07:53:41 -0400
-Received: by mail-qt1-f196.google.com with SMTP id j15so10813476qtl.13
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 04:53:41 -0700 (PDT)
+        id S1731457AbfHWMCE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 08:02:04 -0400
+Received: from mail-qt1-f182.google.com ([209.85.160.182]:37501 "EHLO
+        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730867AbfHWMCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 08:02:04 -0400
+Received: by mail-qt1-f182.google.com with SMTP id y26so10922499qto.4
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 05:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=SUJQ+yMn+ayFHiaamU2FlXSTMe2TYB9OcLpIPDJfssw=;
-        b=Xz8UKuwf+Pbe7GczNhPJ6++i7rfLvIcOyAjuNBI93IrpgBm9ejihiNsM9q34higkMn
-         +iyMVfN7jidK6zSkIcj9ZL+X969iPI+3bkv7eSO6Og5iU/F6AAB0svFf3l23J3YMX4ei
-         JM8+NrQc5SQ4WceNXV1GrqV/SfNHjIUhuQC5Z57HLqzoYOYRn87Ni2hbGTMQJauMm2mu
-         xch4U54TUkihDhl2+WWXwXdtwK06sYB3kmt/az7VUFg22NfpNGTyWdNfSMH02MiW9fJf
-         Il5XAIF+EYzzgmXgh2JIJaC1HiWDlsdj7BFIEMJTGlwFW7HY5KyKd74dyfgbsuBegJbp
-         KilA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/zxYeH1sS0smPh56pWyzo6bOykdni+WetKPVzGHrhQY=;
+        b=C3djTYbkZKp/mwSLzHYSmLFdxbXEbnMqIU/vsr4UnkiLTCJP4ylGfWEcm+2n4fcb8m
+         ziFR/HHSKjL9iIE1jSGyN+uVHGtBMT6vSRkuthC/+u/fDES9k4BQUAxMJTBegtLAWLzi
+         jUgt2lGloCkmYLWGnRYzRctesZA29m9pFJoXph4HI78B6Y3ZJwbPABSMHepaB6tr3+v2
+         YJ7UJ2fTBsUrTubeQU1Y8byrLeTr5o1CFYjR33IAlGAg4vD8osN2uDzQTjlk5TmgSXzm
+         xSXSpRV7uP+EkzGKmiz/FFyaz1b32oo2+7FpYTsmgfs16ZtP1vjUL7Evgemrv5oDuw0x
+         0XSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=SUJQ+yMn+ayFHiaamU2FlXSTMe2TYB9OcLpIPDJfssw=;
-        b=csx5FrpkKYX6bgMW3yYVa+7vnr7t/wOVeS4Aw/JgeL6bvl7Uezq6RVxh1DBE2vDJXU
-         sCJCWDdDvP63r/hx1b9OkEbUxxsUpcdCDGggK16lpxlsvgBtgNoGHOutXkMSSxr9QAv8
-         RcBVBIp2P6vwalZruhR8691Gx5nj6KRTt0UaTAlFwlXRsMK/Zw8dlw1E/GrZjKx2hOss
-         UzTNYlzxtQ4z/45h3NwWSmRpT0/YGw92q5mEESfiaxljK4gzLomjejUfDQmzGEC8tBAY
-         CijbU6leKOvwG/sCsnysCNFiNk3WgLcHQUkg740wJcQRX/8JvYMON7PaGv2rd9qvajPV
-         /SeQ==
-X-Gm-Message-State: APjAAAUcUU8eNeEPziZoUZmKrgf0uT88sSVL/BWkM7QW6IqpHnPAAJ3j
-        5F+4lsIsHRN8cozJD47mXDs=
-X-Google-Smtp-Source: APXvYqwQKb5ZzcfKhyFyehjWqc48940N6VGpVJQVRfPTz75MgnME4TQwoE4/z/zQRF8yJSkvcSBz1g==
-X-Received: by 2002:a05:6214:4cc:: with SMTP id ck12mr3357577qvb.194.1566561220278;
-        Fri, 23 Aug 2019 04:53:40 -0700 (PDT)
+        bh=/zxYeH1sS0smPh56pWyzo6bOykdni+WetKPVzGHrhQY=;
+        b=X/PqMYrSYf/eQcwyd9oQGqo9Nzfjx9kwHs4rvm89YAqRyYpprR/BKP6ijfD3bqzBfX
+         yomZWHmEIzf+qw9fKr3BXTfcLc03pLJo3AlzcdQWAUWFCv+sICkmyZDHkmZ4b4fBDaqW
+         9dFL4VXNSik0qsgLjeJWR0AhWB4wtfHO6+IeF83hjuyVHpjb0qz+gKTKFB9t9EFPgMi0
+         wRGYTRgcqVTtI3j/vjNidU48OszxPdFU8JzWdUs4lBCEDtliDNR3xrnpYAqZrp57Ti/H
+         BF8Jg4fE7O7zDcwfQSccvrHsWyfV5mTR+eytr68GgnJaBZyEXUbro+TMkfgeNZ1EAwgG
+         0wGQ==
+X-Gm-Message-State: APjAAAWbDjLclv5V/REas6pZdDhB2uunKdd3Q2jCjuePS1wZ/8AnCImY
+        v65IZ20NRAvHpoBA7PmHNYYchr4bPWGNeQ==
+X-Google-Smtp-Source: APXvYqy+TH7t+vmUJSRXTfi3Y8rlg0SpKAU0rfkys2RCvPpNU5tBC24V1JahLH49DrWZcTXPU2oI7g==
+X-Received: by 2002:ac8:2df8:: with SMTP id q53mr1222573qta.234.1566561723407;
+        Fri, 23 Aug 2019 05:02:03 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:15df:50c4:43d1:68bd? ([2001:4898:a800:1012:c712:50c4:43d1:68bd])
-        by smtp.gmail.com with ESMTPSA id d2sm1238534qko.26.2019.08.23.04.53.38
+        by smtp.gmail.com with ESMTPSA id p32sm1398369qtb.67.2019.08.23.05.02.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Aug 2019 04:53:39 -0700 (PDT)
-Subject: Re: [PATCH 26/26] midx: switch to using the_hash_algo
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20190818200427.870753-1-sandals@crustytoothpaste.net>
- <20190818200427.870753-27-sandals@crustytoothpaste.net>
- <4f6b781b-68b8-5bc4-92a2-67caff32024f@gmail.com>
- <20190823021757.GL365197@genre.crustytoothpaste.net>
+        Fri, 23 Aug 2019 05:02:02 -0700 (PDT)
+Subject: Re: RFC: Proposing git-filter-repo for inclusion in git.git
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_9skA@mail.gmail.com>
+ <xmqqlfvlne3k.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <244c8006-d8fa-8440-e799-ba8e41eb40cb@gmail.com>
-Date:   Fri, 23 Aug 2019 07:53:38 -0400
+Message-ID: <a784a61e-1320-be1e-9dfb-d533a01827ec@gmail.com>
+Date:   Fri, 23 Aug 2019 08:02:02 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
  Thunderbird/69.0
 MIME-Version: 1.0
-In-Reply-To: <20190823021757.GL365197@genre.crustytoothpaste.net>
+In-Reply-To: <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,45 +77,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/22/2019 10:17 PM, brian m. carlson wrote:
-> On 2019-08-22 at 14:04:16, Derrick Stolee wrote:
->> On 8/18/2019 4:04 PM, brian m. carlson wrote:
->>> diff --git a/midx.c b/midx.c
->>> index d649644420..f29afc0d2d 100644
->>> --- a/midx.c
->>> +++ b/midx.c
->>> @@ -19,8 +19,7 @@
->>>  #define MIDX_BYTE_NUM_PACKS 8
->>>  #define MIDX_HASH_VERSION 1
+On 8/22/2019 5:12 PM, Elijah Newren wrote:
+> On Thu, Aug 22, 2019 at 1:24 PM Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> This hash version "1" is the same as we used in the commit-graph. It's
->> a byte value from the file format, and we've already discussed how it
->> would have been better to use the 4-byte identifier, but that ship has
->> sailed. I'm just pointing this out to say that we are not done in this
->> file yet, but we can get to that when we want to test the midx with
->> multiple hash lengths.
-> 
-> My approach so far has been to assume everything in the .git directory
-> is in the same hash except for the translation functionality. Therefore,
-> it doesn't make sense to distinguish between hashes in the midx files,
-> because we'll never have files that differ in hash.  So essentially the
-> MIDX_HASH_VERSION being 1 is "whatever hash is being used in the .git
-> directory", not just SHA-1.
-> 
-> In addition, the current multi-pack index format isn't capable (from my
-> reading of the documentation, at least) of handling multiple hash
-> algorithms at once.  So we'd need a midx v2 format for folks who are
-> using SHA-256 with SHA-1 compatibility and we could then write separate
-> sets of object chunks with an appropriate format identifier, much like
-> the proposed pack index v3.
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>>> Questions, comments, or concerns with this proposal?  Alternative
+>>> proposals?  If inclusion is acceptable, are there any other tasks that
+>>> need to be completed first?
+>>
+>> I do not want a discussion to begin with a Devil's Advocate
+>> response, but anyway...
+>>
+>> Are we planning to go to all batteries included approach?  I have a
+>> feeling that there are other tools (hello, "git imerge") that
+>> equally deserve attention by Git users; are we in the business of
+>> absorbing them all?  How big a project will our tree become, and how
+>> much more activity would have to be haneld by the readership of the
+>> Git mailing list?
+>>
+>> I'd rather see us shed non-core tools we already have (e.g. git-svn,
+>> cvs import/export) out of git.git and have them as independent
+>> projects.  But that may be just me.
 
-Absolutely, it is not. It would be a great place to store a transition
-table, when that is needed.
+Yes please! Let's make the repo smaller.
 
-If we _never_ allow both hashes in the .git folder, then maybe we won't
-ever need this and can rely on config options. I imagine that will be
-tricky, and updating this byte should only help. We are not ready for
-that, anyway.
+> Ooh, if you're going to open this door, then a proposal I assumed
+> would be shot down but which I'd be just about as happy with is:
+> 
+>   * Remove git-filter-branch from git.git.  Mention in the release
+> notes where people can go to get it.[1]
+> 
+[snip]
+>
+> [1] We'd still have to decide where to put it.  If no one else wants
+> to do it, I could include it in git-filter-repo with the promise that
+> it's there for backward compatibility for those that still need the
+> tool, even if I recommend folks use filter-repo instead.
+
+May I recommend an idea, which may be silly?
+
+We could strip these "extra" tools out of git.git and place them in
+their own repos. The hope would be that they could build on their own
+and have their own test suites.
+
+Then, Git distributors could pick and choose the components they
+bundle with Git. Dscho would know more about this sort of thing as
+he distributes MinGit, which strips these things out already.
+
+The biggest question is: how do we make sure that as git.git moves
+forward that we don't break the ecosystem? Maybe we create a new,
+larger repo that contains all of these subrepos? This would give
+the community more experience dogfooding our own repo-splitting tools.
+
+Personally, I like the idea of 'git subtree' over something like
+'git submodule'. Using 'git subtree' may mean that tools like
+'git-svn' that may be hard to split into a completely independent
+repo could live primarily in the meta repo with a source dependence
+on the included git.git subtree.
+
+This "meta-git.git" repo could then be more flexible in adding
+new tools like git-filter-repo or even git-lfs and friends. Again,
+distributors could select a subset to include, but we would have
+one place to run CI builds and make sure the tools are not
+obviously breaking as git.git updates.
 
 Thanks,
 -Stolee
