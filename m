@@ -2,86 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3001E1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 09:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC4931F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 10:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732892AbfHWJfo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 05:35:44 -0400
-Received: from mail-oi1-f173.google.com ([209.85.167.173]:41143 "EHLO
-        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730861AbfHWJfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 05:35:43 -0400
-Received: by mail-oi1-f173.google.com with SMTP id g7so6551333oia.8
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 02:35:43 -0700 (PDT)
+        id S2391772AbfHWKEv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 06:04:51 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37061 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391765AbfHWKEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 06:04:51 -0400
+Received: by mail-wr1-f67.google.com with SMTP id z11so8097955wrt.4
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 03:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x1yh6TEEGFjbEp7YgKpZOOaw+JqaZ9Xcy/FeAKV7v+Y=;
-        b=sjBsHf9O3QT9p9CfgPkTdtS0MRwKMTngX2sgMG2BY3IFtpeqn1wOUu3zj/RWuDlNzd
-         BAWF4wKpFXSBSuWby27xO6H3XLMCanqrT3MQuck7NvyPn6u+MbVW1DggxbEZczyKbi1D
-         Jq77Bc7M3Suv16owKwB8G0pj1S9FfLISlYX85thwiXO+aF1KAZ28whT7hyJUgXNmZT02
-         BMlMJD2/I6T0x8DKjcsxa0lHtr9MYUOC8uPYOrBkZ+5/v/qfM88Cdo7y4G9NdCFsU+jG
-         G++V7tJ6RFqPTP1gma+WtcW/Uiqxz3dPwTpCRHtdebTddW5uFxg9wANGh3Z6cCjl1tX7
-         MPDw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=44TIIMI1nU2wJhRI3C5EVHhg47bxuXbr5VaOLyUPsag=;
+        b=r26tJnuSCXlxwDam4bWanGHe0W3GLI0rKsrAFu9ifu/eguyZEvEuRvuSrmfB6pljUt
+         pf4HXi2ezPp7hebPu4tbE9ey672KOiYVHi5mJc++5kJVS7WL9BfSk1Wp77hWWtdiKD2S
+         60AXtcSvlUMyJYOusrQ2siIA5BEH0M4GUWkYqqDKXksPblZN5vVtAEVepMhcyDZyU/oi
+         W3q3HyJ6pibLQeA5K1HQsS4fCYaXMI2xqTTS3iesnkRY0BIbQl31GFxdgU0rEUSzAWyZ
+         fkZygBMIHvlFPD/suyLR6kDGABnOQcYIearVcGkybkNVLWk9aDzBoumnBlYyDn+SuSe9
+         nYbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x1yh6TEEGFjbEp7YgKpZOOaw+JqaZ9Xcy/FeAKV7v+Y=;
-        b=gfv/iJebNsxmjucELAc0WrMXoiH539c5kXTupa3mRlCIBTqA4ZMyBcJa4drWkeOc81
-         FqgEyLelABhcSdu67RZwipDEHLkdxpnCoLiRWqZ0vAPAVrEOlmnzJUmP1Y0/E3YlsK3q
-         Ddf41X+FYpyp6tDudxeMRSlVmWzJ3d41M/R+Kpulkh4RVw4GKc3YpCjb2WTLkzV6s4GL
-         v8gG4OkOLGHP8GBdzQYjbvoKPkxVLdkU/l/G2ddPk8BaRNJju/lKqzI9llyrYRHRMkq8
-         WuDoA05bYXRJfd1XsXVNjtUrLjWHwBFn6+pJFodivx0GNCy78LrhOHzpaWf3kN/KhVFk
-         e3Zw==
-X-Gm-Message-State: APjAAAVyLj4UcsrzIM7IACxZZQbhfQe2KYTmBSaUnQzAxrC1wlUpl2a0
-        4ZJQ0KfI/+X7kKu1YA3hO3CVxUDvkzoX5nRTzAg=
-X-Google-Smtp-Source: APXvYqz8pUARZrBIgCxzTWOOevqlUuaME57JGpBUBMZdgmTfUskesPcA853VVFh5F2A1S4CMobk5xTHyZeF6D1a/FC4=
-X-Received: by 2002:aca:6044:: with SMTP id u65mr2563343oib.16.1566552942723;
- Fri, 23 Aug 2019 02:35:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=44TIIMI1nU2wJhRI3C5EVHhg47bxuXbr5VaOLyUPsag=;
+        b=T6+sTc8kE+8tyLh3WJrF7UgZXX55QNCyzU4yfMcen0+cZgVZhuqwPL1Y55ws8qCliE
+         8K8hQI+D5YfWXz3xv2vvdwpnG8HPRTk7dZRY0ZNdAJgdzl1x47YnKCo412ou/vjDhq0Q
+         wyfKiHjgQYjLsF2IDSEQ9N/7yOS37vaiJF86z1kfliMSmJdAHA3nerXQvx1EHo4FfPsY
+         lzhB+e5GSJ/iAXgzfQf6g+/oVglrlgN10/lezPJ+pjd96u3WmJaoi7Un39TEqc2pMaLE
+         pAmRuPvXZ8tewZM1REqYbh4HZOilllTBtraR7fwoa50EwtutvMLr314sWJ8D6eXMKwIr
+         11vg==
+X-Gm-Message-State: APjAAAUl4hM3nj96s43JPVTSrz/R2EPJhdCSY8VcSMLgesInthAehxnS
+        ZgyBVSSbjWb+iraY0Zh2hXmtpV1x
+X-Google-Smtp-Source: APXvYqzz1OONBpfolD8v+s8QbMGmG65HYcUAd0F2ImNVgxaOrblHc4ZRas2q7ediUAdhQAf+mCEmNg==
+X-Received: by 2002:a5d:51c7:: with SMTP id n7mr3934926wrv.73.1566554689172;
+        Fri, 23 Aug 2019 03:04:49 -0700 (PDT)
+Received: from szeder.dev (x4db558a2.dyn.telefonica.de. [77.181.88.162])
+        by smtp.gmail.com with ESMTPSA id r16sm3094698wrc.81.2019.08.23.03.04.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Aug 2019 03:04:48 -0700 (PDT)
+Date:   Fri, 23 Aug 2019 12:04:46 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH 2/2] line-log: avoid unnecessary full tree diffs
+Message-ID: <20190823100446.GI20404@szeder.dev>
+References: <20190821110424.18184-1-szeder.dev@gmail.com>
+ <20190821110424.18184-3-szeder.dev@gmail.com>
+ <e52e867b-af17-d239-11b5-e0c6353acc2f@gmail.com>
+ <20190821173515.GY20404@szeder.dev>
+ <20190822084158.GC20404@szeder.dev>
 MIME-Version: 1.0
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
- <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
- <20190822170817.GB35435@google.com> <20190822184312.xhrf2ij3bh3vovrq@localhost.localdomain>
- <20190823082900.GG20404@szeder.dev>
-In-Reply-To: <20190823082900.GG20404@szeder.dev>
-From:   =?UTF-8?Q?Giuseppe_Crin=C3=B2?= <giuscri@gmail.com>
-Date:   Fri, 23 Aug 2019 11:35:48 +0200
-Message-ID: <CAGV3M54LVwHMkXd=wB3tQ_h4K0bJOZ43TxXZ8Fh5ZKfATBS57g@mail.gmail.com>
-Subject: Re: [BUG] You can't have single quote in your username
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190822084158.GC20404@szeder.dev>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 23, 2019 at 10:29 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> If we go down this route, then someone might want to write =C5=91 as o" o=
-r
-> =C5=B1 as u", which still supposed to be used in pairs, but what if someo=
-ne
-> wants to write =C3=A4 as a:, =C3=B6 as o:, =C3=BC as u:, =C3=A7 as "c,", =
-=C5=9F as "s,", etc.
+On Thu, Aug 22, 2019 at 10:41:58AM +0200, SZEDER Gábor wrote:
+> On Wed, Aug 21, 2019 at 07:35:15PM +0200, SZEDER Gábor wrote:
+> Subject: [PATCH 3/2] WIP line-log: stop diff-ing after first TREESAME merge parent
 
-I don't know any language that uses =C5=91 or =C5=B1 so I can't tell but it=
-'s
-definitely possible. In my country, sometimes the last name ends with
-an accented letter (mine ends with an "o grave") and people end up use
-a single quote to avoid pissing off computers. That's standard thing.
+>   # linux.git, ~7% of all commits are merges
+>   $ time ~/src/git/git --no-pager log \
+>     -L:build_restore_work_registers:arch/mips/mm/tlbex.c v5.2
+> 
+>   Before:
+> 
+>     real    0m2.599s
+>     user    0m2.466s
+>     sys     0m0.157s
+> 
+>   After:
+> 
+>     real    0m1.976s
+>     user    0m1.856s
+>     sys     0m0.121s
 
-In my current team I don't know enough of the setup of my colleagues
-(they may use CP1252) and that =C3=B2 may be badly decoded.
+So, to recap, the above command follows the given line range through
+the whole history, and the timings were done with these three patches
+on top of v2.23.0 and with a commit-graph file present and used.
+
+When merged with my more responsive line-level log series, the same
+command takes about 12% longer:
+
+  real    0m2.216s
+  user    0m2.108s
+  sys     0m0.109s
+
+Looking at the flame graphs generated from the perf profiles I notice
+the following:
+
+  - (line_log_)process_ranges_arbitrary_commit(), i.e. the function
+    responsible for processing all commits for the line-level log,
+    shows up in 2408 samples before the merge and in 2387 samples
+    after the merge.  I'm inclined to write it off as noise.
+
+  - Before the merge limit_list() and sort_in_topological_order(), the
+    two functions responsible for topo-ordering without generation
+    numbers, show up in 2484 and 707 samples, respectively, which is
+    3191 samples combined.
+
+  - After the merge expand_topo_walk() alone shows up in 4341 samples,
+    with next_topo_commit() in 72 samples.
+    
+So it appears that the generation numbers-based topo-ordering is
+almost 40% slower than "traditional" topo-ordering.  It came as a
+surprise to me, but perhaps to you it's expected?
+
+Anyway, the time to show the first commit is still much better with
+generarion numbers, so overall I think it more than offsets this ~10%
+difference.
+
