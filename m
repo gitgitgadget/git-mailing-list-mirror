@@ -8,92 +8,88 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCDBD1F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 08:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41C851F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 08:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390155AbfHWI3F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 04:29:05 -0400
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:53624 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733069AbfHWI3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 04:29:05 -0400
-Received: by mail-wm1-f43.google.com with SMTP id 10so8092698wmp.3
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 01:29:03 -0700 (PDT)
+        id S2391062AbfHWIew (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 04:34:52 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:44481 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388643AbfHWIew (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 04:34:52 -0400
+Received: by mail-wr1-f43.google.com with SMTP id p17so7825698wrf.11
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 01:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=pG9p3Y6tBH+QPq+NHb/e4PqyUtBiZCg4ze28aFDUdQ4=;
-        b=kxW9dOf8DytLUPuWYzfrj9cCDLoDGRH9IRebnyYUGhEEUsdyyL73tJDhGY01esYRn+
-         4OawdMWsR7otIr/GBCjtGVO3Cr1Sfbo119hR03nUNW4rS0kRrT4QEtesx9WxuuczACRq
-         zQhlUrAVfNXQAZ6yA5PP2aQ84phWV8/kERlqkBENObImdsNUNPit5CP+N3G1hOB7OJ76
-         0Xb8/XsVIpb7b1g1ZUsb1B85YOLKBOcaDdp5740kcI7lA45lDWYY+bRHRdesGltZqlbM
-         k75LTJnnxXw21LaBA8kJGIUkV+WRCKlwh3iFDqg8a/hxUcNqjoxLU4h5iD00Y0AoKALT
-         9kig==
+         :content-disposition:in-reply-to:user-agent;
+        bh=mz3AOKHWmcAlc6aUiBKAjg7VxdzqhGyTqWPg756ZUzo=;
+        b=TUXLDd03dsKDefaBp5jCzzk4GHEW4B0QGvD5j8sF8nTbTzWcjalzFvjX8jNXbt3gwl
+         2wDLK0Kf+mIS537luRJBXcubyL7kWIi6gpilHot8EkZeeAOa8djlT/zh3AuUIMppVQO5
+         gvxYRz0YJ0XybR8ClLR2gZ0YSNBb0iCzyIQAi/6C3B/G4o3POhMb9h/Md/Lr8d08YWPW
+         pkQpJsDrcKSxMoikpFrnte4WnXAfYzeUDUXxLFFgewmaIw/InVjtGIvXAle+QTHxC2DT
+         l1jx+LblELpIxYiEehzw1eYvA1aqXsHt3PGKMPr8ot9wBH2xtFLVnzS6jLdMvddzsokQ
+         1rlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=pG9p3Y6tBH+QPq+NHb/e4PqyUtBiZCg4ze28aFDUdQ4=;
-        b=qUXgN8IhP+bycMlvVb/3j/bya2jusva1SCDx+jhDhKq8+jrDLL+0Matl+mncQiTXgY
-         Wcr+kZaK7C7J4rGO5zzeRnbWx0Sv2dU3L5AI7m3NznLK8XjSxLeyehmgfGh89L3AF2Wf
-         i4gEe0UxqbnOLDU96Y9rcwLxWAVjozFQ3ygjK60AMX78pNS5nxjwK+o1ZdNoVmCf8yVf
-         p4ECoC2cLo3Q5hReaW7glwfObKJDk6qqnn1R0ZlXmrF2C4GAq36CArZ+wN//hDT+8vZm
-         Dl7DugzFzymX2QiC7ZwwrZFflpSVOqZc6DNVL8VQoFgy809TSbrKFY7ysN+lGsZxXxC2
-         yXxg==
-X-Gm-Message-State: APjAAAUCTSrks/j2vYsqaUmGMJ8lRzXo7n1MQuX7Snwh5oyvcmSXHVXd
-        9lnCml2HSCXCt892tI1OXcU=
-X-Google-Smtp-Source: APXvYqxZKX5nE9u6sZTd2u8YBjoNW90bouQdesGDG1DtsnJamx9sEiAqBKCRx4HiPKO3oiAa9zllbw==
-X-Received: by 2002:a7b:cf3a:: with SMTP id m26mr3741772wmg.111.1566548943274;
-        Fri, 23 Aug 2019 01:29:03 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mz3AOKHWmcAlc6aUiBKAjg7VxdzqhGyTqWPg756ZUzo=;
+        b=GEoPInobgzyOqlDhSaJ1MZwjICe/jGBlnY0BumozRtt7YqlqHBGcFQz7S8srYZsE4M
+         MU52QNkrfCJEAEovAu0XwtDGlsls5P+TRxf1LnHGwKXTFu96UaJeY63YPrBdXZ9N1ZBP
+         tp7jNYf4fZSCZ5u+CY50cQV2Y5r7XzCtF52rBySNc3ErgVtdhYXe4pqetXRr/yMonYyT
+         LGnNEb+v8b8PEZKgd9ZJJe0RXHlKtSjxRUi1ku4VprCC5v89GUzlkMNrea6dz9aCBVPd
+         hAX1AWwWB0BkNmd0emGqIPzvD2rgXpNwoGz5W9FkJTmGTXzcSMygceuIGCf7YJhutEuD
+         G3vw==
+X-Gm-Message-State: APjAAAWF25B8NIrAFtt5m+1DaMoqD77kThAYjr1qqcWEpK+sXjPRyYks
+        97nygSdUEQLtxElm/uPE4zw=
+X-Google-Smtp-Source: APXvYqxu4oEAmzEvb99hHVwG7bPjOQyagpVbJABQcFjd+7UTbbFXMPTqlAsOwhEvvehpaAzaPxnYqA==
+X-Received: by 2002:adf:f48d:: with SMTP id l13mr3907735wro.190.1566549290087;
+        Fri, 23 Aug 2019 01:34:50 -0700 (PDT)
 Received: from szeder.dev (x4db558a2.dyn.telefonica.de. [77.181.88.162])
-        by smtp.gmail.com with ESMTPSA id l14sm2735229wrn.42.2019.08.23.01.29.02
+        by smtp.gmail.com with ESMTPSA id u130sm2861425wmg.28.2019.08.23.01.34.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Aug 2019 01:29:02 -0700 (PDT)
-Date:   Fri, 23 Aug 2019 10:29:00 +0200
+        Fri, 23 Aug 2019 01:34:49 -0700 (PDT)
+Date:   Fri, 23 Aug 2019 10:34:47 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Giuseppe =?utf-8?B?Q3JpbsOy?= <giuscri@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [BUG] You can't have single quote in your username
-Message-ID: <20190823082900.GG20404@szeder.dev>
-References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
- <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
- <20190822170817.GB35435@google.com>
- <20190822184312.xhrf2ij3bh3vovrq@localhost.localdomain>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
+        johannes.schindelin@gmx.de, larsxschneider@gmail.com,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] t0021: make sure clean filter runs
+Message-ID: <20190823083447.GH20404@szeder.dev>
+References: <20190820065625.128130-1-t.gummerer@gmail.com>
+ <20190822192240.GA4077@cat>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190822184312.xhrf2ij3bh3vovrq@localhost.localdomain>
+In-Reply-To: <20190822192240.GA4077@cat>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 23, 2019 at 12:13:12AM +0530, Pratyush Yadav wrote:
-> > Does it make more sense to replace this strbuf_addstr_without_crud()
-> > setup with something more intelligent (i.e. checking for matching crud
-> > on either end, like ^[$crudchars].*\1$? We already check for matched <>.
+On Thu, Aug 22, 2019 at 08:22:40PM +0100, Thomas Gummerer wrote:
+> v2 adds the comment as suggested by Szeder.
+
+> +		# Make sure that the file appears dirty, so checkout below has to
+> +		# run the configured filter.
+
+Yeah, but that comment only really applied when setting both
+timestamps.  With a simple 'touch' it's more like
+
+  # Make sure that the file appears dirty or is at least racily clean,
+  # so ...
+
+So the next reader will know that right away, that the author didn't
+overlook racyness issue.
+
+> +		touch test.r &&
+>  		filter_git checkout --quiet --no-progress empty-branch &&
+>  		cat >expected.log <<-EOF &&
+>  			START
+> -- 
+> 2.23.0.rc2.194.ge5444969c9
 > 
-> Sounds like something easy enough to implement. There are two types of 
-> characters that crud() removes: there are the ones which _should_ appear 
-> on both the start and end (', ", <, >), and the ones which don't 
-> necessarily have to (., ,, :, ;, \).
-> 
-> So we'd need to handle two cases. For the former type, remove a 
-> character both at the start and at the end. For the latter, remove only 
-> where they appear.
-
-If we go down this route, then someone might want to write ő as o" or
-ű as u", which still supposed to be used in pairs, but what if someone
-wants to write ä as a:, ö as o:, ü as u:, ç as "c,", ş as "s,", etc.
-
-What I wonder is whether we really have to remove crud from the user
-name if it comes from the configuration.
-
