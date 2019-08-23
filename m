@@ -8,51 +8,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A421F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 22:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A33631F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 23:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbfHWWxV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 18:53:21 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41055 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbfHWWxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 18:53:20 -0400
-Received: by mail-io1-f66.google.com with SMTP id j5so23695097ioj.8
-        for <git@vger.kernel.org>; Fri, 23 Aug 2019 15:53:19 -0700 (PDT)
+        id S1727120AbfHWXDK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 19:03:10 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:35837 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726384AbfHWXDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 19:03:10 -0400
+Received: by mail-vs1-f66.google.com with SMTP id q16so7313828vsm.2
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 16:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=poYE37POFP4F0JwKecWfnClviQ9TAoZAblqLlmZJ3Bk=;
-        b=Jg/symW5khsLDB5uGQnIGm9YbRncVke3ChwlzMsGUyPhjgh4A3TaMTovIddPBmUA8F
-         pRWnc1Gcw0m9pKoGrV0+au0QQ0coTYuykSnFIMki2R6XadsfjEj9SKIpm8B0iNGY2RTS
-         zp7tDJ8M4P+o+U1j3jVYcKGf+L4gpt7P5b9atsdzU0GBq/zSCHKEFu5alkeEn9Z3JhN6
-         GNKsZ+XjyeQqV6ioBTrtlyyvm7PdRyFkvn6bfgWxsyoSOkjS2KUEggXEDVV4gAMbokb+
-         ovprgKneDiEiAfjY7a74pMt/RzmRBTpmCGKV6adEk7gu8da/dWpa5ZM2m85Kvl/UIML8
-         e0xA==
+        bh=Kir25Ixer/VkTYcoVEBAGHhUM0db/tGsGVZGw2L88oo=;
+        b=eEJ6aKr1DWoHZ5lNMdogEIPEtf89qVflCiC7bXtqcUF6YMY6ColUCrkT+mmhinKnh7
+         bypKUc9aQ4Ruo4qqjLCzqaaysZqIgCGg14X+PFEeCH2ev7mzM0etNCKCPMxKcA7EAYSy
+         ZFx2BC6+RZdD8vPo/mM+lRANLVct6qRDqxjfcd1AIJydeTUYY3O5NFRnqPRWrr101VWo
+         3oylIwTz6rVT1HTjNYLKgiMBj8KVVBKjcHoYEKM7IbVtyW/42zeF5MWM8xa3vVvk/Wso
+         4YdjHyjacSvtPKOTDUPJsMYbqJ9dpqgjx7FcmGcysn0drmbhs0OMdtchKGVjarkmOpiQ
+         84FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=poYE37POFP4F0JwKecWfnClviQ9TAoZAblqLlmZJ3Bk=;
-        b=AKiJS6/x/H0hS2WXWSUkmYBIUMEgPXL2IySrArmudjaTOuKGSwd5esM/vs4X8HwZmc
-         5CGGoXGuvL/Rqs1M1DNFnXzL6QkITa8our4G2waznQIG0CVDzu0ROAa3URM+vro5Tm+F
-         pjLtlIfWXd15qV8SBPlVVfWmqORrPldxngzpt6qL+okoOcsCYpH8lgzK8D5D2JKwOU+2
-         PKcTf1jMoXi3MYXGbqwTA46fX7FT31vBOUSQDQ+7nyEn9hi2m8necLqN/wvLmO/6RPh/
-         6Bp+D14R3nUkEpDZ3Vhb+8j5j2sAAECYW2CAbdKnmd9tA44eS9fb3sXhad4tVcDzylig
-         965Q==
-X-Gm-Message-State: APjAAAVvebBUkYUsmoLONG/tRj3onHXoywFcrBYMnzmWMW3i27xi+k0y
-        VgNt8mz/QqZo+VI0uBOx+SfAd3YXaDMp9NU1tmF0d0to
-X-Google-Smtp-Source: APXvYqywLQy7+aW1aFjP1qCYzk4rmII3KXpgg3ugtHH+Hpm5H6ymNr/Ti5qqhoE2fMk8SLH3CaqWVkxck75frQkW874=
-X-Received: by 2002:ab0:6911:: with SMTP id b17mr3908260uas.18.1566599435337;
- Fri, 23 Aug 2019 15:30:35 -0700 (PDT)
+        bh=Kir25Ixer/VkTYcoVEBAGHhUM0db/tGsGVZGw2L88oo=;
+        b=Eip3a918hat+V4w2SSmcLDubWpdcC3PuEGXw+y21YxX2c6rojEBF0rOExZ5SGlhign
+         8yYlVsvmNYgZqcUy/tJVtj9zjdw/F+hoU1ZUiLJkF/Wq/lKEI2yDS2I/2xPlvLfqGbv3
+         ds/rcDQRTBsIUfYGphVaPKEe5dyppkPsYIwpUi3SygWbPmd0VvK1WClRz2qwQvflu93C
+         aMk+UL6+/1K7AI4aHR4Oa5Jf4dy8eQ+THEPZt0EGzA7yXkgxP6x1DZK/1KAeQht/THHZ
+         5dXe5dHnqwo/lGfWFWdd4x+trjHjGSLYQNuw+LNw5dnJTRDztqJcsCXZLbg8NwPLspqQ
+         Q0zA==
+X-Gm-Message-State: APjAAAXHz3gnoFaXq3puMsbpRM13HD/7bGIr8OeOywYYX90fqD50IlQT
+        CmdlxQXkznwt9cDlAIqWhpc8ekTqFcv8lk5zsGJYoovv
+X-Google-Smtp-Source: APXvYqyjHwQQEW3yUwlqMHm1NwkINqd5dJZnsYYW2vjWy3vVO7L/vYn7QodU9x+ufQriWivhifXowFUVtbKPwNXG3AQ=
+X-Received: by 2002:a67:fd13:: with SMTP id f19mr4325991vsr.53.1566601388936;
+ Fri, 23 Aug 2019 16:03:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.316.git.gitgitgadget@gmail.com> <c37b5f2c29d42e7c0c727596625d4eb50b6ddb4f.1566313865.git.gitgitgadget@gmail.com>
-In-Reply-To: <c37b5f2c29d42e7c0c727596625d4eb50b6ddb4f.1566313865.git.gitgitgadget@gmail.com>
+References: <pull.316.git.gitgitgadget@gmail.com> <e6e982e5a6e4517d97a7a404384057110f3a151d.1566313865.git.gitgitgadget@gmail.com>
+In-Reply-To: <e6e982e5a6e4517d97a7a404384057110f3a151d.1566313865.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 23 Aug 2019 15:30:24 -0700
-Message-ID: <CABPp-BFT9A5n=_bx5LsjCvbogqwSjiwgr5amcjgbU1iAk4KLJg@mail.gmail.com>
-Subject: Re: [PATCH 1/9] sparse-checkout: create builtin with 'list' subcommand
+Date:   Fri, 23 Aug 2019 16:02:57 -0700
+Message-ID: <CABPp-BEmwSwg4tgJg6nVG8a3Hpn_g-=ZjApZF4EiJO+qVgu4uw@mail.gmail.com>
+Subject: Re: [PATCH 2/9] sparse-checkout: create 'init' subcommand
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -65,129 +65,205 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Aug 20, 2019 at 8:13 AM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-<snip>
-> The documentation provided is adapted from the "git read-tree"
-> documentation with a few edits for clarity in the new context.
-> Extra sections are added to hint toward a future change to
-> a moer restricted pattern set.
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Getting started with a sparse-checkout file can be daunting. Help
+> users start their sparse enlistment using 'git sparse-checkout init'.
+> This will set 'core.sparseCheckout=true' in their config, write
+> an initial set of patterns to the sparse-checkout file, and update
+> their working directory.
+>
+> Using 'git read-tree' to clear directories does not work cleanly
+> on Windows, so manually delete directories that are tracked by Git
+> before running read-tree.
 
-s/moer/more/
+Is that a bug in read-tree that needs to be fixed?
 
-<snip>
-> +"Sparse checkout" allows populating the working directory sparsely.
-> +It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
-> +Git whether a file in the working directory is worth looking at. If
-> +the skip-worktree bit is set, then the file is ignored in the working
-> +directory. Git will not populate the contents of those files, which
-> +makes a sparse checkout helpful when working in a repository with many
-> +files, but only a few are important to the current user.
+> The use of running another process for 'git read-tree' is likely
+> suboptimal, but that can be improved in a later change, if valuable.
+
+I think it's valuable.  The bigger problem may be that "git read-tree
+-mu HEAD" may turn out to be insufficient for our needs; see below....
+
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-sparse-checkout.txt |   7 ++
+>  builtin/sparse-checkout.c             | 106 +++++++++++++++++++++++++-
+>  t/t1091-sparse-checkout-builtin.sh    |  40 ++++++++++
+>  3 files changed, 152 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> index ca0ca6a12f..50c53ee60a 100644
+> --- a/Documentation/git-sparse-checkout.txt
+> +++ b/Documentation/git-sparse-checkout.txt
+> @@ -26,6 +26,13 @@ COMMANDS
+>  'list'::
+>         Provide a list of the contents in the sparse-checkout file.
+>
+> +'init'::
+> +       Enable the `core.sparseCheckout` setting. If the
+> +       sparse-checkout file does not exist, then populate it with
+> +       patterns that match every file in the root directory and
+> +       no other directories, then will remove all directories tracked
+> +       by Git. Add patterns to the sparse-checkout file to
+> +       repopulate the working directory.
+>
+>  SPARSE CHECKOUT
+>  ----------------
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 6477a6ed9c..86d24e6295 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -8,7 +8,7 @@
+>  #include "strbuf.h"
+>
+>  static char const * const builtin_sparse_checkout_usage[] = {
+> -       N_("git sparse-checkout [list]"),
+> +       N_("git sparse-checkout [init|list]"),
+>         NULL
+>  };
+>
+> @@ -64,6 +64,108 @@ static int sparse_checkout_list(int argc, const char **argv)
+>         return 0;
+>  }
+>
+> +static int sc_read_tree(void)
+> +{
+> +       struct argv_array argv = ARGV_ARRAY_INIT;
+> +       int result = 0;
+> +       argv_array_pushl(&argv, "read-tree", "-m", "-u", "HEAD", NULL);
 > +
-> +The `$GIT_DIR/info/sparse-checkout` file is used to define the
-> +skip-worktree reference bitmap. When Git updates the working
-> +directory, it resets the skip-worktree bit in the index based on this
-> +file. If an entry
-> +matches a pattern in this file, skip-worktree will not be set on
-> +that entry. Otherwise, skip-worktree will be set.
-> +
-> +Then it compares the new skip-worktree value with the previous one. If
-> +skip-worktree turns from set to unset, it will add the corresponding
-> +file back. If it turns from unset to set, that file will be removed.
+> +       if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+> +               error(_("failed to update index with new sparse-checkout paths"));
+> +               result = 1;
+> +       }
 
-I had to read this twice for it to make sense.  Not sure I have a real
-good suggestion here, the name "skip-worktree" instead of e.g
-"wanted-in-worktree" just naturally leads us into sentences with one
-negation automatically and we sometimes have to add more.
-
-Maybe just replace the last two paragraphs with:
-
-The `$GIT_DIR/info/sparse-checkout` file is used to define the
-skip-worktree reference bitmap. When Git updates the working
-directory, it updates the skip-worktree bits in the index based on this
-file and removes or restores files in the working copy to match.
+`git read-tree -m -u HEAD` will fail if the index has any higher stage
+entries in it, even if those higher stage entries correspond to files
+which are included in the sparseness patterns and thus would not need
+an update.  It might be nice if we can find a way to provide a better
+error message, and/or implement the read-tree -m -u HEAD internally in
+a way that will allow us to not fail if the conflicted files are
+included in the sparse set.
 
 > +
-> +## FULL PATTERN SET
+> +       argv_array_clear(&argv);
+> +       return result;
+> +}
 > +
-> +By default, the sparse-checkout file uses the same syntax as `.gitignore`
-> +files.
-> +
-> +While `$GIT_DIR/info/sparse-checkout` is usually used to specify what
-> +files are in, you can also specify what files are _not_ in, using
-> +negate patterns. For example, to remove the file `unwanted`:
+> +static int sc_enable_config(void)
+> +{
+> +       struct argv_array argv = ARGV_ARRAY_INIT;
+> +       int result = 0;
+> +       argv_array_pushl(&argv, "config", "--add", "core.sparseCheckout", "true", NULL);
 
-s/in/included/?
+Why --add?  That seems really odd to me.
 
-> +Another tricky thing is fully repopulating the working directory when you
-> +no longer want sparse checkout. You cannot just disable "sparse
-> +checkout" because skip-worktree bits are still in the index and your working
-> +directory is still sparsely populated. You should re-populate the working
-> +directory with the `$GIT_DIR/info/sparse-checkout` file content as
-> +follows:
-> +
-> +----------------
-> +/*
-> +----------------
-
-Can we just get rid of this part of the documentation, since there
-will be a sparse-checkout command to disable/undo/reset?  However, it
-could be useful to mention cases when disabling/undoing/resetting a
-sparse-checkout won't work, if there are some.  For example, with the
-previous read-tree implementation, you could not undo the sparse
-checkout if the index had any unstaged entries, and you couldn't undo
-it if there were any files present that corresponding to the sparse
-patterns (for fear they'd be overwritten -- however, every once in a
-while someone tried to desparsify, it failed e.g. due to the disk
-becoming full, and then after freeing up space there were zillions of
-files that exactly matched what de-sparsifying would have put there
-but the command wanted the user to manually delete them first.)
+This should also have "--worktree".  And this function should either
+set extensions.worktreeConfig to true or die if it isn't already set;
+not sure which.  There's some UI and documentation stuff to figure out
+here...
 
 > +
-> +Then you can disable sparse checkout. Sparse checkout support in 'git
-> +read-tree' and similar commands is disabled by default. You need to
-> +set `core.sparseCheckout` to `true` in order to have sparse checkout
-> +support.
-
-...and get rid of this paragraph because I'd expect git
-sparse-checkout to come with a subcommand (init/add/whatever) to set
-this for the user?  Unless maybe you want to add some words about why
-the command sets core.sparseCheckout...and related workspace related
-stuff as we talked about elsewhere.
-
-> +test_expect_success 'git sparse-checkout list (empty)' '
-> +       git -C repo sparse-checkout list >list 2>err &&
-> +       test_line_count = 0 list &&
-> +       test_i18ngrep "failed to parse sparse-checkout file; it may not exist" err
-
-Is that the error we want, rather than something like "This worktree
-is not sparse (no sparse-checkout file exists and core.sparseCheckout
-is false"?
-
-> +'
+> +       if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+> +               error(_("failed to enable core.sparseCheckout"));
+> +               result = 1;
+> +       }
 > +
-> +test_expect_success 'git sparse-checkout list (populated)' '
-> +       test_when_finished rm -f repo/.git/info/sparse-checkout &&
-> +       cat >repo/.git/info/sparse-checkout <<-EOF &&
-> +               /folder1/*
-> +               /deep/
-> +               **/a
-> +               !*bin*
-> +       EOF
-> +       git -C repo sparse-checkout list >list &&
-> +       cat >expect <<-EOF &&
-> +               /folder1/*
-> +               /deep/
-> +               **/a
-> +               !*bin*
-> +       EOF
-> +       test_cmp expect list
+> +       argv_array_clear(&argv);
+> +       return result;
+> +}
+> +
+> +static int delete_directory(const struct object_id *oid, struct strbuf *base,
+> +               const char *pathname, unsigned mode, int stage, void *context)
+> +{
+> +       struct strbuf dirname = STRBUF_INIT;
+> +       struct stat sb;
+> +
+> +       strbuf_addstr(&dirname, the_repository->worktree);
+> +       strbuf_addch(&dirname, '/');
+> +       strbuf_addstr(&dirname, pathname);
+> +
+> +       if (stat(dirname.buf, &sb) || !(sb.st_mode & S_IFDIR))
+> +               return 0;
+> +
+> +       if (remove_dir_recursively(&dirname, 0))
 
-I have a `./sparsify --stats` that reports
-   You are now in a sparse checkout with only 3499 of the 53625 files.
-or
-  You are not in a sparse checkout.
+flags = 0 implies not REMOVE_DIR_EMPTY_ONLY.  I'm not familiar with
+remove_dir_recursively(), but won't this delete everything...including
+untracked files?  If so, that sounds like a bug.
 
-and I have a --info option that reports both the stats and the list of
-sparse paths similar to this sparse-checkout list command.  The stats
-aren't important, I guess, but seem nice for the user.  I don't know
-if you want to include anything like that in this or another command,
-but just thought I'd mention it.
+> +               warning(_("failed to remove directory '%s'"),
+> +                       dirname.buf);
+> +
+> +       strbuf_release(&dirname);
+> +       return 0;
+> +}
+> +
+> +static int sparse_checkout_init(int argc, const char **argv)
+> +{
+> +       struct tree *t;
+> +       struct object_id oid;
+> +       struct exclude_list el;
+> +       static struct pathspec pathspec;
+> +       char *sparse_filename;
+> +       FILE *fp;
+> +       int res;
+> +
+> +       if (sc_enable_config())
+> +               return 1;
+> +
+> +       memset(&el, 0, sizeof(el));
+> +
+> +       sparse_filename = get_sparse_checkout_filename();
+> +       res = add_excludes_from_file_to_list(sparse_filename, "", 0, &el, NULL);
+
+But 'el' isn't used again?  Why are we getting the list of files from
+sparse_filename then?
+
+> +
+> +       /* If we already have a sparse-checkout file, use it. */
+> +       if (res >= 0) {
+> +               free(sparse_filename);
+> +               goto reset_dir;
+> +       }
+> +
+> +       /* initial mode: all blobs at root */
+> +       fp = fopen(sparse_filename, "w");
+> +       free(sparse_filename);
+> +       fprintf(fp, "/*\n!/*/*\n");
+> +       fclose(fp);
+
+Makes sense.
+
+> +
+> +       /* remove all directories in the root, if tracked by Git */
+> +       if (get_oid("HEAD", &oid)) {
+> +               /* assume we are in a fresh repo */
+> +               return 0;
+> +       }
+> +
+> +       t = parse_tree_indirect(&oid);
+> +
+> +       parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC &
+> +                                 ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
+> +                      PATHSPEC_PREFER_CWD,
+> +                      "", NULL);
+> +
+> +       if (read_tree_recursive(the_repository, t, "", 0, 0, &pathspec,
+> +                               delete_directory, NULL))
+> +               return 1;
+
+Since this is only needed on Windows, as per your commit message,
+should it be #ifdef'd?  Or is this actually a bug that should be fixed
+in "git read-tree -mu HEAD"?
+
+> +
+> +reset_dir:
+> +       return sc_read_tree();
+> +}
+> +
+
+The rest looks fine.
