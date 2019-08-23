@@ -2,133 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C34F01F461
-	for <e@80x24.org>; Fri, 23 Aug 2019 13:01:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E51651F461
+	for <e@80x24.org>; Fri, 23 Aug 2019 13:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389892AbfHWNBz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Aug 2019 09:01:55 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39781 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732009AbfHWNBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Aug 2019 09:01:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566565308;
-        bh=rn2q38LXHVzcy0cVShNDceZJaxZAV6ujBx58bmrB5mI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=csoMx9bh1kRUn4KfOrvHdSnBPFoFRxOB5F9zsuwfswqVV2ENyJFrVoBPMnPRaHhcB
-         cwtS+a2xfoBq/auTU7bcbidqAFOycl3BD/evxUErTM9jbwiWnDuPOkWwmpMVgXvbDt
-         fnPnOiqmvwFQeScY7aqqTGLFsxE1rcos7kB4sdzg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9s8K-1i7ilP3F4C-00B5m4; Fri, 23
- Aug 2019 15:01:47 +0200
-Date:   Fri, 23 Aug 2019 15:01:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Pratyush Yadav <me@yadavpratyush.com>
-cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-gui: Add the ability to revert selected lines
-In-Reply-To: <20190821214829.2dzat2quo3h2s3z2@localhost.localdomain>
-Message-ID: <nycvar.QRO.7.76.6.1908231500030.46@tvgsbejvaqbjf.bet>
-References: <20190819214110.26461-1-me@yadavpratyush.com> <20190819214110.26461-3-me@yadavpratyush.com> <73e63382-4f79-cfd0-47f4-812f9cd4f88b@kdbg.org> <20190820192944.gzfwnm52fvb5refq@localhost.localdomain> <93095b5a-6e15-ce4a-eb9b-22f9528312e1@kdbg.org>
- <20190821214829.2dzat2quo3h2s3z2@localhost.localdomain>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2405672AbfHWNi5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Aug 2019 09:38:57 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:46327 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726894AbfHWNi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Aug 2019 09:38:56 -0400
+Received: by mail-wr1-f41.google.com with SMTP id z1so8658003wru.13
+        for <git@vger.kernel.org>; Fri, 23 Aug 2019 06:38:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=S95ADlXMMVg/Cc9rpt/vieBcnSHFF3jcprenIwD/ADg=;
+        b=p+dlVthYXAK1yzTkLKcFRPFq/LKE40y1EuCzJv0bFn6e5nMip5ADdWfpNKUUPy43vJ
+         STWU+zdDzvQ2ma8jJPDb+TB9aionoNgbyC0NuukeWptzK9OvA8wFpXYkgR4wiMO3hdZm
+         qdaQD62miNrVu5sXhrBjlsitm/rXDBVzHObBqBiNPTaPKkWT3jrlnxQRYjfaRvOlvUpx
+         WYaIZ8e+gXKsKNQmUWj19iUUy+zkfRB3pb7tyt0mKqJN62+kOvbTaUtkY1RFPeAB3HbV
+         TBiWjwhk2P5tQhD5a7ZC9MuRq/faSpbhaOSVdf7+ClbdnPt8ruvAfR0+3b+P0C253K6Y
+         cDIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=S95ADlXMMVg/Cc9rpt/vieBcnSHFF3jcprenIwD/ADg=;
+        b=SPDd6q1yfB1Hn+gupoYMOReIdnvY1f3KApli3Sb+RTduWCIoOn7TmWBQlabff4LnD9
+         TZpDuIzvVdLEJOvMprpVArzoj0FzLAP0Xr7h7ssTPFyG3eoiM7ST9R7JCiTPPigYBeiZ
+         YWDlpuyWy7c5vg7aOSh8Qp1d2D0HR/e8KPBT4i0JesdqomqGX/RtD6SSNGYvZCSLk7XF
+         WwrufQJ4+U4BuK9cGsBmcqUDIevfW3DStYNTqvyi7un4L9q+rtlPTRhqRGaV1iett4eh
+         7xCik5E9ufqa2iqA6xgKNbDJ3IQ7ptj8qJ0Q7CDDtPVKBJvio6yT/qGzuMPNArOxqerP
+         XN3g==
+X-Gm-Message-State: APjAAAWenGjQo3jbStokr7f5hiNMLWJ8gxubirQsKphae/v8A08DDtGv
+        I02dpoHT2g0fvrJsLFdCphQySG1I
+X-Google-Smtp-Source: APXvYqxdFomPgl3M9xWlXw8ri3+WF/U+R2AC/vzTQinAu7NSVPDCqgGse+hSZ5VrTBc9g3K2cldyIg==
+X-Received: by 2002:adf:b60c:: with SMTP id f12mr4734502wre.231.1566567533860;
+        Fri, 23 Aug 2019 06:38:53 -0700 (PDT)
+Received: from szeder.dev (x4db558a2.dyn.telefonica.de. [77.181.88.162])
+        by smtp.gmail.com with ESMTPSA id j9sm3536400wrx.66.2019.08.23.06.38.52
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Aug 2019 06:38:53 -0700 (PDT)
+Date:   Fri, 23 Aug 2019 15:38:50 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Subject: bug: interactive rebase's 'edit' insn copies notes to newly inserted
+ commit
+Message-ID: <20190823133850.GK20404@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RQBypXphz0OHKioy4LA8WlUKbhNJKvVj/q2ezaaYqtcZkfbQoMD
- w5XfnIG/Ks3g/vHYU+qGMCQQGbfCJsgD977T8eL2W0LMZUAPV0bJlJWV3b23bqa2XstYkjl
- x1VL/3Gq2c2dQg58X0f5VSYCCMkSB6q9Hf391d7EDELFwz5PH4rgodDfKK0xOQfV1JB8AOM
- 2af05V5DTTySvjfLlxq9A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dQPm8AYUSfE=:aCtmllOSmeiGbBX6KwIEpZ
- VX2tsxIlf/w0pkMrawCPkxpiClRm3raoNTr2db/ENMvsi4EPHb0cBpJG+pTyMErM/LT29wIRA
- I9/79gS4D/7222jk8CLGBL9RPWKZDTH1/StPjTcMIEnzYppQX9s8GIqe7lvusLoDUJhPG5DR+
- 1emA1ntHhWEBa7bEk8Q7815kiVJMtRKv0kpTL3gkRRXiWuNY9H2yzQ+PZMcnZM3oTn/kzMtXh
- /SWUAen1q0jz6L7pHwPPuwDf9psYiuM3eMJaDjxbhWGrzBvH4jiyJj6Mvdo9Zuva9RdpohCiF
- HhT2WgfEVDfQYK/y/QsJulSUqA5hnphGsucsXSR3N0CfHAcNIc0G6KbThf4rBHWYLbZH3Rri3
- 8RkI/bznI0tYkuBX5pucAlmv9cbAAtlHzya/qA/3wa377Y8ey+pQ5vK19fYE42RM18Tjzi1+b
- rphAdYSjNrfhnih8gKeQq4hh9tBoy183JTAD63DtCGNmstngayizdsiuNHY4fuJqGOnke23zY
- aGiEmdPI3M/MYm069XbZihu1RtR1jZ392WKeD2tyM8+Dkk02e6s99Qw2YF9KM9zj6k/gUDXPL
- P60gYWoEIFQWJKIz2uYPh+7eiKTytXk8H9gWb3+bgtrWK60QCazS5KseahnLsZr1pcZgMYYJG
- CkdyY339SpAeFMvHRyljCCGXKIkAgSU6jJDOvTmwSRnV2vzACgVXAs6y/b+D9IVVFAihg8QD4
- pXgYOtKycnGd21WmGico7Q7eb7VW4/Ktvost+65bzzc0e4xrcgzpdrayNNPkNgkWARGKwb/C9
- f5xfu2X2A7Co8zb6xLAOgzp7DMLt2nJP+kc4vgiNx0plcv6tP2hQYNzKQP3kCZOdWFVMSNiB2
- xrca3ShePwuUHf4dhj60cwkIyB9HIi1n7gLJJ2wzm8G8HDb0elt2iSFnsS0KHFDzP+gVJ/3E4
- LKPPZI0WAaObdGK15Ei8SnCJGBdG5zAdM45RcPPGUGFfKN2QJ1cxfnu6HWv+9toGIx4BL7nKK
- okfOLUezfmSCuZszEQGozf3pRHWXLDuPDD19YZ9PB8fctqTUN5BnnbCTYqv1w4M/T/iF4Siod
- PtKMLoCmeAwntZnJmKT3AGSvBoYhvuC0zLGVZ8XNZ3oENLPgdx23s0y/VyONCm8N1PLqsdtx3
- FhVd858i20iFCnU5e5L9mLHfoKAxgYmXSrDovVnVVa/d+7/1WMVuL2VqMTun0OC7EKts8=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I noticed that somehow two commits on the same branch ended up with
+the same note attached.  I believe that this is the result of me using
+interactive rebase's 'edit' instruction to insert new commits, and
+then it copied the note from the edited commit to the commit from from
+where I 'git rebase --continue'-ed.
 
-On Thu, 22 Aug 2019, Pratyush Yadav wrote:
+Here's a simple illustration:
 
-> On 20/08/19 11:19PM, Johannes Sixt wrote:
-> > Am 20.08.19 um 21:29 schrieb Pratyush Yadav:
-> > > On 20/08/19 09:21PM, Johannes Sixt wrote:
-> > >> Please don't do this. This confirmation dialog is unacceptable in m=
-y
-> > >> workflow. I use reversals of hunks and lines frequently, almost lik=
-e a
-> > >> secondary code editor. My safety net is the undo function of the ID=
-E,
-> > >> which works across reloads that are triggered by these external edi=
-ts.
-> > >> These confirmations get in the way.
-> > >
-> > > But not everyone uses an IDE. I use vim and it does not have any suc=
-h
-> > > undo feature that works across reloads. Not one I'm aware of anyway.=
- It
-> > > is absolutely necessary IMO to ask the user for confirmation before
-> > > deleting their work, unless we have a built in safety net.
-> >
-> > But you have a safety net built-in: Commit the work, then do the
-> > reversals in amend-mode. Now you can recover old state to your heart's
-> > content. That's recommended anyway if stuff is potentially precious.
->
-> I suppose we disagree on this. I feel very uncomfortable removing the
-> prompt by default, because it is pretty easy to mis-click revert instead
-> of stage, and all of a sudden lots of your work is gone. It is a pretty
-> common workflow to make some changes, stage some hunks in one commit and
-> then some others in the next. Not everyone (including me) will first
-> commit changes, then amend them, especially if they are not that big or
-> complicated. Accidentally deleting your work, no matter how small,
-> because of a misclick sucks.
->
-> So, I feel strongly in favor of keeping the prompt on by default. I will
-> add a config option to disable it for people who are willing to accept
-> misclicks. That keeps both sides of the argument happy. You just have to
-> disable it once in your global config and you're good to go.
+  $ git log --oneline --notes
+  70be36f (HEAD -> master) third
+  02b5ef9 second
+  Notes:
+      A note on the second commit
+  
+  f93427a first
+  $ git config --get notes.rewriteref 
+  refs/notes/commits
+  $ git rebase -i HEAD^^
+  ## Change the instruction sheet to 'edit' the "second" commit ##
+  Stopped at 02b5ef9...  second
+  You can amend the commit now, with
+  
+    git commit --amend 
+  
+  Once you are satisfied with your changes, run
+  
+    git rebase --continue
 
-Maybe the direction taken by this discussion merely suggests that the
-design is a bit unfortunate. Why "revert"? Why not "stash" instead? Then
-you don't need to have that annoying confirmation dialog.
+  $ git commit --allow-empty -m "Insert new commit #1"
+  [detached HEAD 2d05076] Insert new commit #1
+  $ git commit --allow-empty -m "Insert new commit #2"
+  [detached HEAD 0ed24dc] Insert new commit #2
+  $ git rebase --continue 
+  Successfully rebased and updated refs/heads/master.
+  $ git log --oneline --notes
+  b02a593 (HEAD -> master) third
+  0ed24dc Insert new commit #2
+  Notes:
+      A note on the second commit
+  
+  2d05076 Insert new commit #1
+  02b5ef9 second
+  Notes:
+      A note on the second commit
+  
+  f93427a first
 
-Ciao,
-Johannes
+Notice how the note now appears twice, because it has been copied from
+the (unmodified) "second" commit to the last commit that has been
+inserted on top before continuing.
 
->
-> > > So how about adding a config option that allows you to disable the
-> > > confirmation dialog? Sounds like a reasonable compromise to me.
-> >
-> > That's always an option. Needless to say that I'd prefer it off by
-> > default; I don't need three safety nets.
-> >
-> > -- Hannes
->
-> --
-> Regards,
-> Pratyush Yadav
->
+I certainly didn't expect this, and can't readily see a use case where
+it's desirable, but maybe I just lack imagination :)  However, once
+rebase stops for the 'edit' instruction the user can do just about
+anything, so I'm not sure how rebase could figure out when to copy the
+note and when not.
+
+This is not a regression of following the rewrite in C, the scripted
+version had the same behavior (I think v1.8.0 was the oldest I tried).
+
+This doesn't happen when inserting a 'break' instruction between
+picking the "second" and "third" commits, and then adding new commits.
+Alas, the 'break' instruction is not even a year old, and I have been
+using 'edit' for this purpose for over a decade now...  so
+re-training my fingers will be hard :)
+
