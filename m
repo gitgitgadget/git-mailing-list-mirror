@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 972211F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD00C1F461
 	for <e@80x24.org>; Sat, 24 Aug 2019 08:26:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726927AbfHXI0z (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 04:26:55 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43879 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726723AbfHXI0z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 04:26:55 -0400
-Received: by mail-io1-f66.google.com with SMTP id 18so25574937ioe.10
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:26:54 -0700 (PDT)
+        id S1726966AbfHXI05 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 04:26:57 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:36021 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726946AbfHXI05 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 04:26:57 -0400
+Received: by mail-io1-f67.google.com with SMTP id o9so25644600iom.3
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=9jrIbzWvoCYQgcJJyNCDCfNj2pQFwhu4pOWaG2kaKbQ=;
-        b=skex4mUGrcE+XM8Lst5HskYLF6cOw9UCtIo1pSmo0xHmOVOHtKkMdxMwUTIfKfVYqQ
-         6hldm/YhCkyTquglDVo1U12h1g7h12bG+FLUy1MivmYwdqFUGR9J1gUohE/UeSbd0sno
-         dqjrg4ALH5HtiBAkgjWcOuN6IPHanY77O7R7eWPRu7vOka3krwaCFOiyGEukIawKJ47Z
-         oUEk57Ur3fnlPEjJix7p9fRaEmFpWdGL4tpiBi4gWbCjPtWItr/mfEjpSptvhjULeQTk
-         IIwdH2fMktq0TfkEoyo7p/Rc0xNpQMKfr/ghK01iQ84U+PVYM6qqkBIXwSGIay3PfGC9
-         hkpA==
+        bh=IUxUkhQu8IKRPJnJfvXqpZRjIm/zAINbPLEtvMCz0aY=;
+        b=VN8qaCaVvTpri60jmeSdezVjhsbWV0urNRBaHYXRT1jNvaO/JDiKRmd0pTbGlMSQpb
+         JuWkZOE/68bIZhpM2UnM+H/VD0AWWWhteDvPA/xuhc8NiZKcAddFQPvLGIFEt4jYRB/4
+         qOGtlakxPaIr8d8M8HR4qTu8b5/daHCAXn+uji4ZxZPYqtm3G5HrJiHjphCQT0E5Tt33
+         F5fuqiOB2KrYO6hOb5vhbuyFdIghZfQRu92lrstTA4axnrahPjE3ROuImv9Wt5PyjDyL
+         OaOzGTlVsZZdCJJYNK5LUx8toYGR9uU+OpCjGHbFdO8zX2+awChN9ydalb4RFHVQ6oQw
+         lj9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9jrIbzWvoCYQgcJJyNCDCfNj2pQFwhu4pOWaG2kaKbQ=;
-        b=oGVpy+5rS2JAeTawQfI3BHFO3fON9u9Kpg47/SmRq2TVd3VjAMou+N75Da/aVZ7+X8
-         BKVLhSwtDoNIBGrQKVyaUALcOX1Djt+IHlvpi9HcWX+gDyJ7oopqDcpNlJ1y6jMuZwkq
-         gXlgnvss6x+1oO4zdhM1YTqBKGMqItippTWW2cH/gOyL0sAHmPN3bT9U5Foda+oPo2iL
-         QGsQ2NYbAFJnre7E+JetGRS80RTcEHYK259jhjX/5WkCqmxwvrkXtAcGxcFv7VZYBf8W
-         m1mJexvRePRkMyGMfzhiGbpUiyyg/+PsruoB1jqPivtjh1qzdz9IaWwP1uNlVmYa9EKc
-         wRhg==
-X-Gm-Message-State: APjAAAXXh/y99nMjBaAitBNgbWnh/Jw4Zi6zha2me3FP0fm2vlt2aQ1z
-        G2gxissc4r3hxv5sR5XrXS6Qlbp7
-X-Google-Smtp-Source: APXvYqz3qogBwNLA6aHK/8aZYAsEYX4qzlmxvT1oOcGHzpQRRuTthbm3LDA9pzcHjVBq2XMUjP0pwg==
-X-Received: by 2002:a02:4005:: with SMTP id n5mr8845356jaa.73.1566635213835;
-        Sat, 24 Aug 2019 01:26:53 -0700 (PDT)
+        bh=IUxUkhQu8IKRPJnJfvXqpZRjIm/zAINbPLEtvMCz0aY=;
+        b=mJCvLs2H8qsmmG1SK+GDUdkNiq2qlSKruyloHj8lGcMSEyi8OTaoDninBKMI+GRvGc
+         XVcPT7Ku4fpVF1nRRIEIoSWdrSH+KJw8cHKX98DG8y4DUHJ7kodPQa1l1jQc4PI0Y2/a
+         VPU2FHFkQZp5oXjPRmuLWFh8Ziq0PUiA5THM8/7hj7MD+Hp83nVs6LZ8x7RH1d1a8mhP
+         5p9zvwpG8c//HH+B+JAsueasMvKbKEg58d1LaFpbUzfebeiHv8KCuUEbCBBRcVV999Dr
+         Smhtu8oRU+dXOYaAKUGaFENY2+G46Mor9l+9gKcTWBfVeu/zSRf7zp1Ff6M0UhDhd6+8
+         HV2Q==
+X-Gm-Message-State: APjAAAVFCtJ+9037MC2DMPKPVHK5ZBqLaBIS6dqFRQzSE0Ui5aaDb3QR
+        XDniDsswlkcrI2n3jvrs7LEC9ndn
+X-Google-Smtp-Source: APXvYqxj0dmDpN3ZibGJgXj+gMabyPLbtZ0gqHm0UzsvBzUIFimieL+85GBaEGQ/xJKox/D6uRJMeA==
+X-Received: by 2002:a6b:731a:: with SMTP id e26mr5218753ioh.188.1566635216090;
+        Sat, 24 Aug 2019 01:26:56 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id q22sm3713573ioj.56.2019.08.24.01.26.52
+        by smtp.gmail.com with ESMTPSA id m20sm3917032ioh.4.2019.08.24.01.26.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Aug 2019 01:26:53 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 04:26:51 -0400
+        Sat, 24 Aug 2019 01:26:55 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 04:26:54 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -58,8 +58,8 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH 02/13] t4014: s/expected/expect/
-Message-ID: <0a5ce9b95f837fb7c6b526201fa619da15fb2625.1566635008.git.liu.denton@gmail.com>
+Subject: [PATCH 03/13] t4014: move closing sq onto its own line
+Message-ID: <5c49703aa4fd3741d1685d25b647d775003f9962.1566635008.git.liu.denton@gmail.com>
 References: <cover.1566285151.git.liu.denton@gmail.com>
  <cover.1566635008.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,374 +72,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For test cases, the usual convention is to name expected output files
-"expect", not "expected". Replace all instances of "expected" with
-"expect" except for one case where the "expected" is used as the name
-of a test case.
+The usual convention for test cases is for the closing sq to be on its
+own line. Move the sq onto its own line for cases that do not conform to
+this style.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4014-format-patch.sh | 106 ++++++++++++++++++++--------------------
- 1 file changed, 53 insertions(+), 53 deletions(-)
+ t/t4014-format-patch.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 3ed3feabfe..62f5680f05 100755
+index 62f5680f05..5e8eb6fb27 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -1209,32 +1209,32 @@ append_signoff()
+@@ -790,11 +790,13 @@ test_expect_success 'options no longer allowed for format-patch' '
+ 	test_must_fail git format-patch --name-status 2> output &&
+ 	test_i18ncmp expect.name-status output &&
+ 	test_must_fail git format-patch --check 2> output &&
+-	test_i18ncmp expect.check output'
++	test_i18ncmp expect.check output
++'
  
- test_expect_success 'signoff: commit with no body' '
- 	append_signoff </dev/null >actual &&
--	cat <<\EOF | sed "s/EOL$//" >expected &&
-+	cat <<\EOF | sed "s/EOL$//" >expect &&
- 4:Subject: [PATCH] EOL
- 8:
- 9:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
+ test_expect_success 'format-patch --numstat should produce a patch' '
+ 	git format-patch --numstat --stdout master..side > output &&
+-	test 5 = $(grep "^diff --git a/" output | wc -l)'
++	test 5 = $(grep "^diff --git a/" output | wc -l)
++'
  
- test_expect_success 'signoff: commit with only subject' '
- 	echo subject | append_signoff >actual &&
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 9:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: commit with only subject that does not end with NL' '
- 	printf subject | append_signoff >actual &&
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 9:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: no existing signoffs' '
-@@ -1243,24 +1243,24 @@ subject
- 
- body
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: no existing signoffs and no trailing NL' '
- 	printf "subject\n\nbody" | append_signoff >actual &&
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: some random signoff' '
-@@ -1271,14 +1271,14 @@ body
- 
- Signed-off-by: my@house
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: my@house
- 12:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: misc conforming footer elements' '
-@@ -1292,14 +1292,14 @@ Signed-off-by: my@house
- Tested-by: Some One <someone@example.com>
- Bug: 1234
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: my@house
- 15:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: some random signoff-alike' '
-@@ -1309,13 +1309,13 @@ subject
- body
- Fooled-by-me: my@house
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 11:
- 12:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: not really a signoff' '
-@@ -1324,14 +1324,14 @@ subject
- 
- I want to mention about Signed-off-by: here.
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 9:I want to mention about Signed-off-by: here.
- 10:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: not really a signoff (2)' '
-@@ -1341,13 +1341,13 @@ subject
- My unfortunate
- Signed-off-by: example happens to be wrapped here.
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:Signed-off-by: example happens to be wrapped here.
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: valid S-o-b paragraph in the middle' '
-@@ -1359,7 +1359,7 @@ Signed-off-by: your@house
- 
- A lot of houses.
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 9:Signed-off-by: my@house
-@@ -1368,7 +1368,7 @@ EOF
- 13:
- 14:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: the same signoff at the end' '
-@@ -1379,24 +1379,24 @@ body
- 
- Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: the same signoff at the end, no trailing NL' '
- 	printf "subject\n\nSigned-off-by: C O Mitter <committer@example.com>" |
- 		append_signoff >actual &&
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 9:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: the same signoff NOT at the end' '
-@@ -1408,14 +1408,14 @@ body
- Signed-off-by: C O Mitter <committer@example.com>
- Signed-off-by: my@house
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- 12:Signed-off-by: my@house
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: tolerate garbage in conforming footer' '
-@@ -1428,13 +1428,13 @@ Tested-by: my@house
- Some Trash
- Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 13:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: respect trailer config' '
-@@ -1444,13 +1444,13 @@ subject
- Myfooter: x
- Some Trash
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 11:
- 12:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual &&
-+	test_cmp expect actual &&
- 
- 	test_config trailer.Myfooter.ifexists add &&
- 	append_signoff <<\EOF >actual &&
-@@ -1459,12 +1459,12 @@ subject
- Myfooter: x
- Some Trash
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 11:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'signoff: footer begins with non-signoff without @ sign' '
-@@ -1479,13 +1479,13 @@ Change-id: Ideadbeef
- Signed-off-by: C O Mitter <committer@example.com>
- Bug: 1234
- EOF
--	cat >expected <<\EOF &&
-+	cat >expect <<\EOF &&
- 4:Subject: [PATCH] subject
- 8:
- 10:
- 14:Signed-off-by: C O Mitter <committer@example.com>
- EOF
--	test_cmp expected actual
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format patch ignores color.ui' '
-@@ -1604,13 +1604,13 @@ test_expect_success 'format-patch --base' '
- 	git checkout patchid &&
- 	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual1 &&
- 	git format-patch --stdout --base=HEAD~3 HEAD~.. | tail -n 7 >actual2 &&
--	echo >expected &&
--	echo "base-commit: $(git rev-parse HEAD~3)" >>expected &&
--	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expected &&
--	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expected &&
--	signature >> expected &&
--	test_cmp expected actual1 &&
--	test_cmp expected actual2 &&
-+	echo >expect &&
-+	echo "base-commit: $(git rev-parse HEAD~3)" >>expect &&
-+	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expect &&
-+	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expect &&
-+	signature >> expect &&
-+	test_cmp expect actual1 &&
-+	test_cmp expect actual2 &&
- 	echo >fail &&
- 	echo "base-commit: $(git rev-parse HEAD~3)" >>fail &&
- 	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --unstable | awk "{print \$1}")" >>fail &&
-@@ -1625,8 +1625,8 @@ test_expect_success 'format-patch --base errors out when base commit is in revis
- 	test_must_fail git format-patch --base=HEAD~1 -2 &&
- 	git format-patch --stdout --base=HEAD~2 -2 >patch &&
- 	grep "^base-commit:" patch >actual &&
--	echo "base-commit: $(git rev-parse HEAD~2)" >expected &&
--	test_cmp expected actual
-+	echo "base-commit: $(git rev-parse HEAD~2)" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format-patch --base errors out when base commit is not ancestor of revision list' '
-@@ -1652,8 +1652,8 @@ test_expect_success 'format-patch --base errors out when base commit is not ance
- 	test_must_fail git format-patch --base=$(cat commit-id-Z) -3 &&
- 	git format-patch --stdout --base=$(cat commit-id-base) -3 >patch &&
- 	grep "^base-commit:" patch >actual &&
--	echo "base-commit: $(cat commit-id-base)" >expected &&
--	test_cmp expected actual
-+	echo "base-commit: $(cat commit-id-base)" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format-patch --base=auto' '
-@@ -1664,8 +1664,8 @@ test_expect_success 'format-patch --base=auto' '
- 	test_commit N2 &&
- 	git format-patch --stdout --base=auto -2 >patch &&
- 	grep "^base-commit:" patch >actual &&
--	echo "base-commit: $(git rev-parse upstream)" >expected &&
--	test_cmp expected actual
-+	echo "base-commit: $(git rev-parse upstream)" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format-patch errors out when history involves criss-cross' '
-@@ -1701,8 +1701,8 @@ test_expect_success 'format-patch format.useAutoBaseoption' '
- 	git config format.useAutoBase true &&
- 	git format-patch --stdout -1 >patch &&
- 	grep "^base-commit:" patch >actual &&
--	echo "base-commit: $(git rev-parse upstream)" >expected &&
--	test_cmp expected actual
-+	echo "base-commit: $(git rev-parse upstream)" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format-patch --base overrides format.useAutoBase' '
-@@ -1710,8 +1710,8 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
- 	git config format.useAutoBase true &&
- 	git format-patch --stdout --base=HEAD~1 -1 >patch &&
- 	grep "^base-commit:" patch >actual &&
--	echo "base-commit: $(git rev-parse HEAD~1)" >expected &&
--	test_cmp expected actual
-+	echo "base-commit: $(git rev-parse HEAD~1)" >expect &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'format-patch --base with --attach' '
+ test_expect_success 'format-patch -- <path>' '
+ 	git format-patch master..side -- file 2>error &&
 -- 
 2.23.0.248.g3a9dd8fb08
 
