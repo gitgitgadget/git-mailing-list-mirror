@@ -2,377 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 655921F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 12:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A1091F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 12:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727959AbfHXMiS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 08:38:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40608 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727779AbfHXMiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 08:38:18 -0400
-Received: by mail-wr1-f67.google.com with SMTP id c3so10985877wrd.7
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 05:38:15 -0700 (PDT)
+        id S1727802AbfHXM6F (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 08:58:05 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:45156 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727590AbfHXM6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 08:58:05 -0400
+Received: by mail-io1-f67.google.com with SMTP id t3so26471761ioj.12
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 05:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vOMXOqdz6GnDZ4w09o6Fe/v6OnCjNwxOObhWkFBvjqE=;
-        b=ThDEsoos912+uPEz8iaV56w9h4YjYPXazSXDCy4GuwKuriM++usKUcZJrXn4JUEhk1
-         4NCEKvmrHqVhnCjdU1dIlmkFhG3O1CKVpTmMmUB98yhEvtk2PPEsi+lNoUoN53Gd8S56
-         qnI3+bbfqDyQZm/OQjjyZmSGjWHnoUtBL2p5tPlBS/lht3/ml1JDBoxosC1wwebyGqiW
-         ys2tfNnsmIDVGRIKcp5YtZqNNSWX/HpjETJB40qsiVZU/i+Ob+ZlB0iSUuvhDFJqSzyN
-         dZIBXkztrDbbARzWZyCpyCt9ftvwbyEo1WPvOsKpldS+1WtFp1Wk5fJ0t09mEMOLCzER
-         mPtw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mXt8m13ZIbFUS25mh+STgLCmTDxb7Sj3SImKPT8tU7U=;
+        b=HA94jCnXDEHZg8L6POJUK+Merllr/FVfes0yvK0Tb2C/VY4muNrAULy6rfToIIx+T4
+         8XGyjjnPz49RxQs077bd29BkNLFJN9T71fWMggh6Kb77TPk+W3axt9FeyIGnvngAvrMu
+         wD99798zU4Qi055CtL0ngFo0EpQLmelnofO/2Pe0/ZrL7T5QuR5LrDnhKQj32Al5WBuP
+         NWKnT0Qya5JMbw+m6ZaEVYHlyJc19O+bscRGcpP7PRVSZKCxKxYM/lslaNIEvH0XJMe2
+         I+BJLt2fk43sJJmCZOHgXVMKjnK7600APFQ36ynBobJGadl00R2haOEBxtmbJWRwK99J
+         8B6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vOMXOqdz6GnDZ4w09o6Fe/v6OnCjNwxOObhWkFBvjqE=;
-        b=uf0FhNra8h44GqV/OnoAaRKPd1ALsimqIdOOVInn/MtpXkzwZT9ACI4WIdcUycGr6H
-         vGs+sliNHQPn/WpLLnC+PXRjkszrld7S5Gunob3mbG3K58/hN2TPJ8B8Oky76qgvxMAo
-         FbrzBY1U8TfifSThMS3Gv/+P5jg1gVINAHn7HFCjMG195Kof5d0Kk/XB1Q24/QBBriEw
-         dc//fTn0iAxmmlvNfqtolUzuunw3gP6AtMCtrcuT/tuN/DZyFFysfAVuiLHTOIYRtr73
-         MMFaPxSfCp9AK/JksVdjZN5gBjr45cIMPE6Wup6vcSPse716gYrTKvLU1EJePOoKfRlU
-         lJrg==
-X-Gm-Message-State: APjAAAWBmx955nmFADanbD2Xqfnm6Mx7vmxO2mwgAhMYKheUJhoJifsv
-        VaSbSGKvSzh56wVIquYyeUk=
-X-Google-Smtp-Source: APXvYqzrUjKCsOnusZdM8itxeLJnEYyIOQ5LjiCJKJrT50eWs20METKkWi6tejH5Vo4XktkNjtUwsA==
-X-Received: by 2002:a5d:4492:: with SMTP id j18mr10757139wrq.53.1566650294697;
-        Sat, 24 Aug 2019 05:38:14 -0700 (PDT)
-Received: from szeder.dev (x4db936d2.dyn.telefonica.de. [77.185.54.210])
-        by smtp.gmail.com with ESMTPSA id b4sm6253274wma.5.2019.08.24.05.38.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Aug 2019 05:38:13 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 14:38:11 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH v3 07/11] Add a function to determine unique prefixes for
- a list of strings
-Message-ID: <20190824123811.GL20404@szeder.dev>
-References: <pull.170.v2.git.gitgitgadget@gmail.com>
- <pull.170.v3.git.gitgitgadget@gmail.com>
- <3000d7d08dfb64511b4ebf9d05617897dd7252f7.1563289115.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mXt8m13ZIbFUS25mh+STgLCmTDxb7Sj3SImKPT8tU7U=;
+        b=YqX4uEmjMBaSwkLTsu2GZJ5clu8c5nZdgboN84PXn5FKmiUxbX85PwEPiJcXo4zmiK
+         pTx9ZI77eYvFUZTz0dSg1kQee4wr0L7miy3We2EbCDv4LLnmFdpBmbWlJl4NNK57sS0p
+         OdxC3c1onOoqe6lBVpuPCRNlaUwYwkpzUl6qn3p0XvTaep0EbVFzg0dRKbGf3NkEfS9S
+         XV5TNWYp7utQJyp1IlIdv63yHCif/zEl6DxJsdNh4LLqKVpfyVkD45prQekU2J9V0lAf
+         ySPfAI1u8Hck26GgJTlkidPb6EM1s8BN4AMq7OltABdQWWbNIEOaQ0hHV7mDIIwtb4On
+         xifg==
+X-Gm-Message-State: APjAAAV5Qe32a0N5luodXQ4uKHhE97cWapTxMMLNs1nwycwDHXkyYzmV
+        qb9/ZBL2D9EdGr8IhfdDcxSO1+3L+UGZhsocT1g=
+X-Google-Smtp-Source: APXvYqxjUOOXIyjB94z81mXTxzdQ/Gu9iuUFfmmBundtg+1ZM/OZfi0yiWDWx/WrL/LS9Iq3V4TLwYoSes0mbvOPagA=
+X-Received: by 2002:a05:6602:186:: with SMTP id m6mr12989700ioo.162.1566651483975;
+ Sat, 24 Aug 2019 05:58:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3000d7d08dfb64511b4ebf9d05617897dd7252f7.1563289115.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190818201727.31505-1-dev+git@drbeat.li> <xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 24 Aug 2019 05:57:52 -0700
+Message-ID: <CAPUEspg9F7RutCUCoRAAXmRePjiunq3-zG7cN3uz_t5DVMxP=g@mail.gmail.com>
+Subject: Re: [PATCH] grep: under --debug, show whether PCRE JIT is enabled
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 16, 2019 at 07:58:42AM -0700, Slavica Djukic via GitGitGadget wrote:
-> In the `git add -i` command, we show unique prefixes of the commands and
-> files, to give an indication what prefix would select them.
-> 
-> Naturally, the C implementation looks a lot different than the Perl
-> implementation: in Perl, a trie is much easier implemented, while we
-> already have a pretty neat hashmap implementation in C that we use for
-> the purpose of storing (not necessarily unique) prefixes.
-> 
-> The idea: for each item that we add, we generate prefixes starting with
-> the first letter, then the first two letters, then three, etc, until we
-> find a prefix that is unique (or until the prefix length would be
-> longer than we want). If we encounter a previously-unique prefix on the
-> way, we adjust that item's prefix to make it unique again (or we mark it
-> as having no unique prefix if we failed to find one). These partial
-> prefixes are stored in a hash map (for quick lookup times).
-> 
-> To make sure that this function works as expected, we add a test using a
-> special-purpose test helper that was added for that purpose.
-> 
-> Note: We expect the list of prefix items to be passed in as a list of
-> pointers rather than as regular list to avoid having to copy information
-> (the actual items will most likely contain more information than just
-> the name and the length of the unique prefix, but passing in `struct
-> prefix_item *` would not allow for that).
-
-> diff --git a/prefix-map.c b/prefix-map.c
-> new file mode 100644
-> index 0000000000..747ddb4ebc
-> --- /dev/null
-> +++ b/prefix-map.c
-> @@ -0,0 +1,109 @@
-> +#include "cache.h"
-> +#include "prefix-map.h"
-> +
-> +static int map_cmp(const void *unused_cmp_data,
-> +		   const void *entry,
-> +		   const void *entry_or_key,
-> +		   const void *unused_keydata)
-> +{
-> +	const struct prefix_map_entry *a = entry;
-> +	const struct prefix_map_entry *b = entry_or_key;
-> +
-> +	return a->prefix_length != b->prefix_length ||
-> +		strncmp(a->name, b->name, a->prefix_length);
-> +}
-> +
-> +static void add_prefix_entry(struct hashmap *map, const char *name,
-> +			     size_t prefix_length, struct prefix_item *item)
-> +{
-> +	struct prefix_map_entry *result = xmalloc(sizeof(*result));
-> +	result->name = name;
-> +	result->prefix_length = prefix_length;
-> +	result->item = item;
-> +	hashmap_entry_init(result, memhash(name, prefix_length));
-> +	hashmap_add(map, result);
-> +}
-> +
-> +static void init_prefix_map(struct prefix_map *prefix_map,
-> +			    int min_prefix_length, int max_prefix_length)
-> +{
-> +	hashmap_init(&prefix_map->map, map_cmp, NULL, 0);
-> +	prefix_map->min_length = min_prefix_length;
-> +	prefix_map->max_length = max_prefix_length;
-> +}
-> +
-> +static void add_prefix_item(struct prefix_map *prefix_map,
-> +			    struct prefix_item *item)
-> +{
-> +	struct prefix_map_entry e = { { NULL } }, *e2;
-> +	int j;
-> +
-> +	e.item = item;
-> +	e.name = item->name;
-> +
-> +	for (j = prefix_map->min_length;
-> +	     j <= prefix_map->max_length && e.name[j]; j++) {
-> +		/* Avoid breaking UTF-8 multi-byte sequences */
-> +		if (!isascii(e.name[j]))
-> +			break;
-> +
-> +		e.prefix_length = j;
-> +		hashmap_entry_init(&e, memhash(e.name, j));
-> +		e2 = hashmap_get(&prefix_map->map, &e, NULL);
-> +		if (!e2) {
-> +			/* prefix is unique at this stage */
-> +			item->prefix_length = j;
-> +			add_prefix_entry(&prefix_map->map, e.name, j, item);
-> +			break;
-> +		}
-> +
-> +		if (!e2->item)
-> +			continue; /* non-unique prefix */
-> +
-> +		if (j != e2->item->prefix_length || memcmp(e.name, e2->name, j))
-> +			BUG("unexpected prefix length: %d != %d (%s != %s)",
-> +			    j, (int)e2->item->prefix_length, e.name, e2->name);
-> +
-> +		/* skip common prefix */
-> +		for (; j < prefix_map->max_length && e.name[j]; j++) {
-> +			if (e.item->name[j] != e2->item->name[j])
-> +				break;
-> +			add_prefix_entry(&prefix_map->map, e.name, j + 1,
-> +					 NULL);
-> +		}
-> +
-> +		/* e2 no longer refers to a unique prefix */
-> +		if (j < prefix_map->max_length && e2->name[j]) {
-> +			/* found a new unique prefix for e2's item */
-> +			e2->item->prefix_length = j + 1;
-> +			add_prefix_entry(&prefix_map->map, e2->name, j + 1,
-> +					 e2->item);
-> +		}
-> +		else
-> +			e2->item->prefix_length = 0;
-> +		e2->item = NULL;
-> +
-> +		if (j < prefix_map->max_length && e.name[j]) {
-> +			/* found a unique prefix for the item */
-> +			e.item->prefix_length = j + 1;
-> +			add_prefix_entry(&prefix_map->map, e.name, j + 1,
-> +					 e.item);
-> +		} else
-> +			/* item has no (short enough) unique prefix */
-> +			e.item->prefix_length = 0;
-> +
-> +		break;
-> +	}
-> +}
-> +
-> +void find_unique_prefixes(struct prefix_item **list, size_t nr,
-> +			  int min_length, int max_length)
-> +{
-> +	int i;
-> +	struct prefix_map prefix_map;
-> +
-> +	init_prefix_map(&prefix_map, min_length, max_length);
-> +	for (i = 0; i < nr; i++)
-> +		add_prefix_item(&prefix_map, list[i]);
-> +	hashmap_free(&prefix_map.map, 1);
-> +}
-
-Between the commit message, the in-code comment, the names of the new
-files, and implementation I was left somewhat confused about what this
-is about and how it works.  TBH, I didn't even try to understand how
-all the above works, in particular the add_prefix_item() function.
-
-However, I think it would be much-much simpler to first sort (a copy
-of?) the array of prefix item pointers based on their 'name' field,
-and then look for a unique prefix in each neighboring pair.  Perhaps
-it would even be faster, because it doesn't have to allocate a bunch
-of hashmap items, though I don't think that it matters much in
-practice (i.e. I expect the number of items to be fairly small;
-presumably nobody will run interactive add after a mass refactoring
-modifying thousands of files).
-
-> diff --git a/prefix-map.h b/prefix-map.h
-> new file mode 100644
-> index 0000000000..ce3b8a4a32
-> --- /dev/null
-> +++ b/prefix-map.h
-> @@ -0,0 +1,40 @@
-> +#ifndef PREFIX_MAP_H
-> +#define PREFIX_MAP_H
+On Mon, Aug 19, 2019 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> +#include "hashmap.h"
-> +
-> +struct prefix_item {
-> +	const char *name;
-> +	size_t prefix_length;
-> +};
+> There may be others I am missing.
 
-This struct is part of find_unique_prefixes()'s signature, good.
+should we still support PCRE1? I think in this case the problem is
+compounded by the fact that unless we do something like [1], the real
+fix for those UTF-8 validation issues will require a yet unreleased
+version of PCRE2 and will never be available for PCRE1, making the
+user experience suboptimal.
 
-> +struct prefix_map_entry {
-> +	struct hashmap_entry e;
-> +	const char *name;
-> +	size_t prefix_length;
-> +	/* if item is NULL, the prefix is not unique */
-> +	struct prefix_item *item;
-> +};
-> +
-> +struct prefix_map {
-> +	struct hashmap map;
-> +	int min_length, max_length;
-> +};
+and explained in [1] there was a series to cleanup (both for
+maintainability and to mitigate regressions) the PCRE1 code that is
+yet to be formally reviewed in [2]
 
-However, neither of these two structs nor the hashmap appear in the
-function's signature, but are all implementation details.  Therefore,
-they should not be defined and included here in the header but in the
-.c source file.  (But as mentioned above, I think this could be
-implemented much simpler without these data structures.)
+there is also the question of if we should provide knobs so users can
+"tune" their pcre library to workaround some of the quirks or if we
+should do more work ourselves to handle those quirks and improve the
+error reporting.
 
-Furthermore, this is not a map.
-A map, in general, is a container of key-value pairs that allows
-efficient insertion, removal and lookup.  This so-called prefix_map
-does none of that, so it should not be called a map.
+one example of that is as you pointed out JIT, but also applies to
+other things like PCRE's stack size, or depending on our solution for
+PCRE1, accepting the risk (which already exist anyway) to accept
+problems with matching because of corrupted UTF-8 in the haystack
 
-> +/*
-> + * Find unique prefixes in a given list of strings.
+> Is ab/pcre-jit-fixes a good base to collectively work on to finish
+> the topics floated around PCRE during the last cycle?
 
-... and stores the length of the unique prefixes in the
-'prefix_length' field of the elements of the given array.
+V3 of that (which was never sent) might be better IMHO, I had to also
+admit I was surprised to see the whole no-kwset series this depended
+on being dropped but would seem it was just partially merged with
+pcre-jit-fixes (which is missing the patches that address the UTF-8
+issues with PCRE2's unreleased flag and that should be part of that
+V3)
 
-> + *
-> + * Typically, the `struct prefix_item` information will be but a field in the
+it might be worth also rebasing pcre2-chartables-leakfix on top of
+this to avoid conflicts, eventhough I had to admit that I was
+expanding on integrating [3], to avoid having to squash a fix into
+Ren=C3=A9's patch (as he suggested) and that would be part of a reroll from
+that series.
 
-s/but //, perhaps?
+Carlo
 
-> + * actual item struct; For this reason, the `list` parameter is specified as a
-> + * list of pointers to the items.
-> + *
-> + * The `min_length`/`max_length` parameters define what length the unique
-> + * prefixes should have.
-> + *
-> + * If no unique prefix could be found for a given item, its `prefix_length`
-> + * will be set to 0.
-> + */
-> +void find_unique_prefixes(struct prefix_item **list, size_t nr,
-
-The first argument is not a list but an array.
-
-> +			  int min_length, int max_length);
-
-size_t, perhaps?  These are closely related to
-'prefix_item.prefix_length', which is already (rightfully) size_t.
-
-> +
-> +#endif
-> diff --git a/t/helper/test-prefix-map.c b/t/helper/test-prefix-map.c
-> new file mode 100644
-> index 0000000000..3f1c90eaf0
-> --- /dev/null
-> +++ b/t/helper/test-prefix-map.c
-> @@ -0,0 +1,58 @@
-> +#include "test-tool.h"
-> +#include "cache.h"
-> +#include "prefix-map.h"
-> +
-> +static size_t test_count, failed_count;
-> +
-> +static void check(int succeeded, const char *file, size_t line_no,
-> +		  const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +
-> +	test_count++;
-> +	if (succeeded)
-> +		return;
-> +
-> +	va_start(ap, fmt);
-> +	fprintf(stderr, "%s:%d: ", file, (int)line_no);
-> +	vfprintf(stderr, fmt, ap);
-> +	fputc('\n', stderr);
-> +	va_end(ap);
-> +
-> +	failed_count++;
-> +}
-> +
-> +#define EXPECT_SIZE_T_EQUALS(expect, actual, hint) \
-> +	check(expect == actual, __FILE__, __LINE__, \
-> +	      "size_t's do not match: %" \
-> +	      PRIdMAX " != %" PRIdMAX " (%s) (%s)", \
-> +	      (intmax_t)expect, (intmax_t)actual, #actual, hint)
-> +
-> +int cmd__prefix_map(int argc, const char **argv)
-> +{
-> +#define NR 5
-> +	struct prefix_item items[NR] = {
-
-You don't have to tell the compiler how many elements this array will
-contain, it will figure that out on its own.
-
-> +		{ "unique" },
-> +		{ "hell" },
-> +		{ "hello" },
-> +		{ "wok" },
-> +		{ "world" },
-> +	};
-> +	struct prefix_item *list[NR] = {
-
-Likewise.
-
-> +		items, items + 1, items + 2, items + 3, items + 4
-> +	};
-> +
-> +	find_unique_prefixes(list, NR, 1, 3);
-
-This could be find_unique_prefixes(list, ARRAY_SIZE(list), 1, 3), and
-then there is no need for that NR macro anymore.
-
-> +
-> +#define EXPECT_PREFIX_LENGTH_EQUALS(expect, index) \
-> +	EXPECT_SIZE_T_EQUALS(expect, list[index]->prefix_length, \
-> +			     list[index]->name)
-> +
-> +	EXPECT_PREFIX_LENGTH_EQUALS(1, 0);
-> +	EXPECT_PREFIX_LENGTH_EQUALS(0, 1);
-> +	EXPECT_PREFIX_LENGTH_EQUALS(0, 2);
-> +	EXPECT_PREFIX_LENGTH_EQUALS(3, 3);
-> +	EXPECT_PREFIX_LENGTH_EQUALS(3, 4);
-> +
-> +	return !!failed_count;
-> +}
+[1] https://public-inbox.org/git/CAPUEspgStVxL=3D0SoAg82vxRMRGLSEKdHrT-xq6n=
+CW1sNq7nLsw@mail.gmail.com/
+[2] https://public-inbox.org/git/20190726202642.7986-1-carenas@gmail.com/
+[3] https://public-inbox.org/git/20190721194052.15440-1-carenas@gmail.com/
