@@ -2,85 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9BC1F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 13:59:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CAA01F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 17:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727619AbfHXN7E (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 09:59:04 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:56718 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727546AbfHXN7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 09:59:04 -0400
-Received: from [92.7.169.237] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1i1WZI-0002hl-Cg; Sat, 24 Aug 2019 14:59:01 +0100
-Subject: Re: [PATCH v3 13/13] format-patch: learn --infer-cover-subject option
-To:     Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <cover.1566258525.git.liu.denton@gmail.com>
- <cover.1566285151.git.liu.denton@gmail.com>
- <de599f7ca9b5fe7e298bba0bb8c5d05f2f5cf34f.1566285151.git.liu.denton@gmail.com>
- <xmqq8srms4ak.fsf@gitster-ct.c.googlers.com>
- <20190823181545.GA14048@archbookpro.localdomain>
- <d8a02cfd-2250-44ce-b559-dbec742b7cdf@iee.email>
- <xmqq1rxbmy8r.fsf@gitster-ct.c.googlers.com>
- <20190824080328.GA9726@archbookpro.localdomain>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <1eccefe4-8002-4664-3bc2-8332fb7bd697@iee.email>
-Date:   Sat, 24 Aug 2019 14:59:01 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727094AbfHXRt5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 13:49:57 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:37462 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbfHXRt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 13:49:57 -0400
+Received: by mail-ed1-f54.google.com with SMTP id f22so19152880edt.4
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 10:49:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=CGoFtMTKjRlc9VQv14CuqiOrUXTmFeyWOJyZxlsfE3U=;
+        b=ncEErdWDukv+SuEeCHqp/rqek3qGFCqaW4iFWp+auxkUZUCShowxtduR339ZXnmR3x
+         7lOsx09R+UXW3xWAHestNM2K8g/sVcshdRnO2zHcvcuIDMnKt1QuGW4b9dU/916vJYtc
+         5QfSSKcG35VLnPjhRhZ5T+FrhXQCmUWL643xMBA/d86N9BnVIt/07VuDJ3LLVMSJgYMs
+         9+rplo4N7+Nxt/D7/09QLineiTp6p8bvWXojfKcXffBH9Dx6OEXgfOjHVAwwiG9FOKAV
+         OXxGkhtJwYOOXSUv1RBflSfoO+y+n8vsGvNHCv8klaAzStXrx+JmMK1Vr00ahaEDjm8m
+         HwPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=CGoFtMTKjRlc9VQv14CuqiOrUXTmFeyWOJyZxlsfE3U=;
+        b=M6NgpGgPys0dYjgb5Exzju6cmzMnegIKrb9DiLCk6qD4fkG0dhLGMgvhwmlhhIhF7B
+         tWXA6p8B7oMMb1ZM1xmWx12WrDCD5yHujLwe5XE4wkL7fiDLGH8SQB1B8OxNE5MbHrFA
+         xMn5hcTOio/TlnHPyiIMeBVaP/Sxn3UEUJQWvaLze5Nsn3gjRu10c8U9hTbmbvO3viaw
+         bDeAJyL+MXfNlxaL7eoy3LSNq5f+8WirRx3OK2jDkzZ2Mu5fcgHqnf+CxYAewIQTsEeH
+         uExnxe/pES2f/cShXgGn0aSs5Y0PhlVNkYLz5TPl46yxW75CA32deVxCIgsXuk7P5Qnc
+         62xA==
+X-Gm-Message-State: APjAAAVFkPD8wyVLejcYGKKP8doCo/wssD/+tGwRWFBfzSOtbk4E6zxa
+        Dh/7sLlLQpiiqUxH6tP7KLw=
+X-Google-Smtp-Source: APXvYqxII1/lsy75f63mN/GgRnenv037EMlHtEz21zAdKxX8CK6E9xAzkpyEfTmIIz/jflF6mxzriQ==
+X-Received: by 2002:a50:ccd4:: with SMTP id b20mr10783542edj.241.1566668995393;
+        Sat, 24 Aug 2019 10:49:55 -0700 (PDT)
+Received: from instance-template-1.europe-west6-a.c.vaulted-journal-250706.internal (169.120.65.34.bc.googleusercontent.com. [34.65.120.169])
+        by smtp.gmail.com with ESMTPSA id a16sm1371856ejr.10.2019.08.24.10.49.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 24 Aug 2019 10:49:54 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 17:49:52 +0000
+From:   Giuseppe =?iso-8859-1?Q?Crin=F2?= <giuscri@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Giuseppe =?iso-8859-1?Q?Crin=F2?= <giuscri@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [BUG] You can't have single quote in your username
+Message-ID: <20190824174952.GA688@instance-template-1.europe-west6-a.c.vaulted-journal-250706.internal>
+References: <CAGV3M55WAQOAOiZPPgR+6p2EVzakrbz1gYAMh-BqxCVDeLCq9w@mail.gmail.com>
+ <CAGyf7-EdxDn_BwguXNUNg76K9z30X0=C1btMR0dfiHR9bLjhwQ@mail.gmail.com>
+ <20190822170817.GB35435@google.com>
+ <20190822184312.xhrf2ij3bh3vovrq@localhost.localdomain>
+ <20190823082900.GG20404@szeder.dev>
 MIME-Version: 1.0
-In-Reply-To: <20190824080328.GA9726@archbookpro.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <20190823082900.GG20404@szeder.dev>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/08/2019 09:03, Denton Liu wrote:
-> On Fri, Aug 23, 2019 at 01:18:44PM -0700, Junio C Hamano wrote:
->> Philip Oakley <philipoakley@iee.email> writes:
->>
->>> Perhaps the `--infer-cover-subject` the config option needs to be
->>> multi-valued to include:
->>>       "subject" (always expect short first lines) or
->>>       "message" (always the long paragraph description, still use
->>> ***Subject Here***),
->>>       with the "true" being used when expecting both as previously
->>> described.
-> Good idea, I like this a lot!
->
->> The idea to have three choices feels that this is getting better,
->> but I notice that the choice is no longer about "subject".
->>
->> I've always felt that the name of this option is way suboptimal.
->> One reason is because the option only says it is about the subject
->> of the cover (letter), and the verb "infer" conveys almost no
->> information---especially it does not say anything about what affects
->> the inference (hint: the branch description value gets used, in a
->> single hardcoded ways right now, but now with the patch we have a
->> choice to control how it gets used).
-> Perhaps something like
-> --cover-subject-from-description={true,auto,false}?
+On Fri, Aug 23, 2019 at 10:29:00AM +0200, SZEDER G�bor wrote:
+> What I wonder is whether we really have to remove crud from the user
+> name if it comes from the configuration.
 
-maybe --cover-letter-from-description={true,auto,subject,message,false}? 
-to cover most eventualities (i.e. letter rather than subject).
-
-I haven't looked at what happens on Windows (CRLF usage?) for multi-line 
-descriptions. The common assumption is LF in repo, with attributes etc, 
-but the branch description is a bit free format in terms of guidance ;-)
-
-Philip
-
+Yes. If the primary use of removing crud is to remove quotes from a
+quoted name (as in `From: 'Foo baz Bar'`) why not directly removing
+pairs of quotes around the name and leave crud _inside_ the name?
