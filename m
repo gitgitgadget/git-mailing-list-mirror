@@ -8,49 +8,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF8421F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 08:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4AF1F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 08:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727088AbfHXI1H (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 04:27:07 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37399 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbfHXI1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 04:27:07 -0400
-Received: by mail-io1-f65.google.com with SMTP id q22so25656915iog.4
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:27:06 -0700 (PDT)
+        id S1727107AbfHXI1K (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 04:27:10 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:42345 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbfHXI1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 04:27:09 -0400
+Received: by mail-io1-f67.google.com with SMTP id e20so25544172iob.9
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=C7cvA63Mls7f/glzSnNwJN2P5f8JSKcVpFamqhfO42o=;
-        b=JOWJP6jUsOEI06bE92HzZEc195YG7TQWYGBL8xHG3fmJ7NjhuLmVUHjVWb5TK9DhcI
-         SFD+dFH6IS130736hYBiasNYw5Ws5SOfgbQlhKTrIbqHh7kBjaUCedimaX9ak7tccXXy
-         NlzBBPFdHmiqFO6+edWhWWWUh2EtoY1FKp7qd+vO023OClW0K4UzlmdjkbJjR0qAIpcm
-         cqVkxAiPmQC4cuOnIm8ShWF2dGrTFr4+/wUxJT+37MUFYxQjKzbnVLKbCM6tOwZgFUN+
-         Ur94eDzgWmt+poGApHcRFBKkWdvIpH6NG+s1GnLf0qfNngAhvEF2d9o1LQWUd3I7ic/c
-         KqSw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=HzHM2p4PCj3fdTdY+0mjHZTAYWCWVROiB8/myMHWwY8=;
+        b=pCknu4+CBziTYZAPX3bcTzoM8zGHYUiVCwRT8BmuU/PCT7zreWN4DQ5pGgUwy9rNSz
+         4/5ZiOR9LOC0BBahOwCkjco+ZvuDC1cfngBYyhZriOOYKFNGs/+fGT2SOGHGCFqDhRs3
+         1BiuuyLqFiVRITG+fMspEg+6J6V88iHkWGXc/2KtsndrLDWz5AjRnWcTMR8Sp4QLdc+l
+         2rgktLcJWdcZmqlyhgR+yiyNgkMmH19796xEIcjX3gzV2mKjLOUzFHWBh6XJkLTTPOQR
+         zvfNIPp20Dj6z+0h2udZ5EmpX4Lla1OiIU0qaWId6kdES9ESqN0MwB0WApTqfTGqWa8N
+         7Vmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=C7cvA63Mls7f/glzSnNwJN2P5f8JSKcVpFamqhfO42o=;
-        b=bRCZVJ7Li3cFpQ1fmhcgIKIm2e8f4fA83EgcZGfb2XEHMhu1dnZxV8az0K2sEMuAx5
-         ZAgJ65o+BBidaxlzUuyHYx/VOwjGenHiLo1brRZFjj6ql0zmwnLXkg1k2Y3bhK4QrF79
-         RBWf4YPjskerQGa18sPwIe0sn4SWp5fF+swObfIBAfbC8xC5tlDWbDM6cPAMZ6ChDwDR
-         nBx1/sQOV41D9lxrSr81gCH0JcBuQQzaqLYC2ImePSOKMA7yxOrdVzCScQRmMntZ724Q
-         +EM04UuhtRXNIsol7jqe66rbOAT7FJ3gvANVjC3+xiEm0NBfboys+oTh0a3nL0n2X+Bg
-         2DBA==
-X-Gm-Message-State: APjAAAWIUSGw6WzNOxm5gz4As2+5DU9CkQNkIA594xKbtbRmn18aSlpC
-        +g9W2aPwhBz7OezE5oV+O0QC2AT0
-X-Google-Smtp-Source: APXvYqwyZhJEhhiNzX/yropfYtJ54b6a0J4D55qTmC6WuyHWg0Z4I/zzF+9G6IlBoys8GH8dCLft+w==
-X-Received: by 2002:a02:c857:: with SMTP id r23mr8717253jao.139.1566635225936;
-        Sat, 24 Aug 2019 01:27:05 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=HzHM2p4PCj3fdTdY+0mjHZTAYWCWVROiB8/myMHWwY8=;
+        b=OVxVsf4/8KMR0VdyMP3PoKZF7Kxpd/qnXRLorbpXupGsq34wAYeOOiSBe1nFcoHEdN
+         pqSLK708FkUqAWE5wCo6Eml2+ahXpMjFYk+On29S2tV5Ockuy/xf38U7+74VvIi/nko7
+         zQpLbeqtnTFzIdYjAH4X4sFzhcvVdlUuxMjO5r8isbEeBt0LOWsMaOD78a1kMZ9xRkwu
+         HSzkad7Gb/wK3kXr5vrohiQK5B1URKPEn0QTndhlgBVHrDV/lMfgg6KVsx1+TtgK4FNJ
+         ON9Es6JfRi+u0Y2h6FeNFKG0QsY9RAKqUvAjVh/7aydWPAdma9g3PDw+P98Gplw4EPyv
+         fJjg==
+X-Gm-Message-State: APjAAAWaaSPNT3y5RiChV67B+wZq6+rNnEUIlIvqxfy1xkrTalJbtX7u
+        czhuhxyZnLN4oRxVQ/A1ybksTDDW
+X-Google-Smtp-Source: APXvYqyBeWCakum2Cqh0CsW/eNFV+gax9g/ITzB68wTHuk2AlNUiMRLa6CJ7KG7q6HtqQVQ6Pebahw==
+X-Received: by 2002:a02:cc6c:: with SMTP id j12mr8747262jaq.29.1566635228473;
+        Sat, 24 Aug 2019 01:27:08 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id e12sm4826527iob.66.2019.08.24.01.27.05
+        by smtp.gmail.com with ESMTPSA id g12sm3919477ioe.50.2019.08.24.01.27.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Aug 2019 01:27:05 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 04:27:03 -0400
+        Sat, 24 Aug 2019 01:27:08 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 04:27:06 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -58,13 +60,14 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH 07/13] t4014: drop redirections to /dev/null
-Message-ID: <804b3163f866cce0b8a928256b5009fc42dbc709.1566635008.git.liu.denton@gmail.com>
+Subject: [PATCH 08/13] t4014: let sed open its own files
+Message-ID: <7d9a24a97972ab8a8a1cfe1f2605630e154886be.1566635008.git.liu.denton@gmail.com>
 References: <cover.1566285151.git.liu.denton@gmail.com>
  <cover.1566635008.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1566635008.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
@@ -72,68 +75,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since output is silenced when running without `-v` and debugging output
-is useful with `-v`, remove redirections to /dev/null as it is not
-useful.
+In some cases, we were using a redirection operator to feed input into
+sed. However, since sed is capable of opening its own files and provides
+better error messages on IO failure, make sed open its own files instead
+of redirecting input into it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4014-format-patch.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t4014-format-patch.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index c07d868491..2048fb2008 100755
+index 2048fb2008..35cf798847 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -1502,42 +1502,42 @@ test_expect_success 'cover letter using branch description (1)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter master >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -596,7 +596,7 @@ EOF
+ 
+ test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
+ 	git format-patch --cover-letter -2 &&
+-	sed -e "1,/A U Thor/d" -e "/^\$/q" <0000-cover-letter.patch >output &&
++	sed -e "1,/A U Thor/d" -e "/^\$/q" 0000-cover-letter.patch >output &&
+ 	test_cmp expect output
  '
  
- test_expect_success 'cover letter using branch description (2)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter rebuild-1~2..rebuild-1 >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -635,7 +635,7 @@ EOF
+ 
+ test_expect_success 'format-patch -p suppresses stat' '
+ 	git format-patch -p -2 &&
+-	sed -e "1,/^\$/d" -e "/^+5/q" <0001-This-is-an-excessively-long-subject-line-for-a-messa.patch >output &&
++	sed -e "1,/^\$/d" -e "/^+5/q" 0001-This-is-an-excessively-long-subject-line-for-a-messa.patch >output &&
+ 	test_cmp expect output
  '
  
- test_expect_success 'cover letter using branch description (3)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter ^master rebuild-1 >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -890,7 +890,7 @@ test_expect_success 'prepare mail-signature input' '
+ test_expect_success '--signature-file=file works' '
+ 	git format-patch --stdout --signature-file=mail-signature -1 >output &&
+ 	check_patch output &&
+-	sed -e "1,/^-- \$/d" <output >actual &&
++	sed -e "1,/^-- \$/d" output >actual &&
+ 	{
+ 		cat mail-signature && echo
+ 	} >expect &&
+@@ -901,7 +901,7 @@ test_expect_success 'format.signaturefile works' '
+ 	test_config format.signaturefile mail-signature &&
+ 	git format-patch --stdout -1 >output &&
+ 	check_patch output &&
+-	sed -e "1,/^-- \$/d" <output >actual &&
++	sed -e "1,/^-- \$/d" output >actual &&
+ 	{
+ 		cat mail-signature && echo
+ 	} >expect &&
+@@ -923,7 +923,7 @@ test_expect_success '--signature-file overrides format.signaturefile' '
+ 	git format-patch --stdout \
+ 			--signature-file=other-mail-signature -1 >output &&
+ 	check_patch output &&
+-	sed -e "1,/^-- \$/d" <output >actual &&
++	sed -e "1,/^-- \$/d" output >actual &&
+ 	{
+ 		cat other-mail-signature && echo
+ 	} >expect &&
+@@ -992,7 +992,7 @@ test_expect_success 'format-patch wraps extremely long subject (ascii)' '
+ 	git add file &&
+ 	git commit -m "$M512" &&
+ 	git format-patch --stdout -1 >patch &&
+-	sed -n "/^Subject/p; /^ /p; /^$/q" <patch >subject &&
++	sed -n "/^Subject/p; /^ /p; /^$/q" patch >subject &&
+ 	test_cmp expect subject
  '
  
- test_expect_success 'cover letter using branch description (4)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter master.. >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -1031,7 +1031,7 @@ test_expect_success 'format-patch wraps extremely long subject (rfc2047)' '
+ 	git add file &&
+ 	git commit -m "$M512" &&
+ 	git format-patch --stdout -1 >patch &&
+-	sed -n "/^Subject/p; /^ /p; /^$/q" <patch >subject &&
++	sed -n "/^Subject/p; /^ /p; /^$/q" patch >subject &&
+ 	test_cmp expect subject
  '
  
- test_expect_success 'cover letter using branch description (5)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter -2 HEAD >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -1040,7 +1040,7 @@ check_author() {
+ 	git add file &&
+ 	GIT_AUTHOR_NAME=$1 git commit -m author-check &&
+ 	git format-patch --stdout -1 >patch &&
+-	sed -n "/^From: /p; /^ /p; /^$/q" <patch >actual &&
++	sed -n "/^From: /p; /^ /p; /^$/q" patch >actual &&
+ 	test_cmp expect actual
+ }
+ 
+@@ -1160,7 +1160,7 @@ test_expect_success '--from=ident replaces author' '
+ 	From: A U Thor <author@example.com>
+ 
+ 	EOF
+-	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
++	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
+ 	test_cmp expect patch.head
  '
  
- test_expect_success 'cover letter using branch description (6)' '
- 	git checkout rebuild-1 &&
- 	test_config branch.rebuild-1.description hello &&
- 	git format-patch --stdout --cover-letter -2 >actual &&
--	grep hello actual >/dev/null
-+	grep hello actual
+@@ -1172,7 +1172,7 @@ test_expect_success '--from uses committer ident' '
+ 	From: A U Thor <author@example.com>
+ 
+ 	EOF
+-	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
++	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
+ 	test_cmp expect patch.head
  '
  
- test_expect_success 'cover letter with nothing' '
+@@ -1182,7 +1182,7 @@ test_expect_success '--from omits redundant in-body header' '
+ 	From: A U Thor <author@example.com>
+ 
+ 	EOF
+-	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
++	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
+ 	test_cmp expect patch.head
+ '
+ 
+@@ -1197,7 +1197,7 @@ test_expect_success 'in-body headers trigger content encoding' '
+ 	From: éxötìc <author@example.com>
+ 
+ 	EOF
+-	sed -ne "/^From:/p; /^$/p; /^Content-Type/p; /^---$/q" <patch >patch.head &&
++	sed -ne "/^From:/p; /^$/p; /^Content-Type/p; /^---$/q" patch >patch.head &&
+ 	test_cmp expect patch.head
+ '
+ 
+@@ -1788,7 +1788,7 @@ test_expect_success 'interdiff: cover-letter' '
+ 	git format-patch --cover-letter --interdiff=boop~2 -1 boop &&
+ 	test_i18ngrep "^Interdiff:$" 0000-cover-letter.patch &&
+ 	test_i18ngrep ! "^Interdiff:$" 0001-fleep.patch &&
+-	sed "1,/^@@ /d; /^-- $/q" <0000-cover-letter.patch >actual &&
++	sed "1,/^@@ /d; /^-- $/q" 0000-cover-letter.patch >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1804,7 +1804,7 @@ test_expect_success 'interdiff: solo-patch' '
+ 	EOF
+ 	git format-patch --interdiff=boop~2 -1 boop &&
+ 	test_i18ngrep "^Interdiff:$" 0001-fleep.patch &&
+-	sed "1,/^  @@ /d; /^$/q" <0001-fleep.patch >actual &&
++	sed "1,/^  @@ /d; /^$/q" 0001-fleep.patch >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 2.23.0.248.g3a9dd8fb08
 
