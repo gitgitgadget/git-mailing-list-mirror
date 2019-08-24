@@ -8,51 +8,49 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4AF1F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 08:27:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08C051F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 08:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727107AbfHXI1K (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 04:27:10 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42345 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbfHXI1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 04:27:09 -0400
-Received: by mail-io1-f67.google.com with SMTP id e20so25544172iob.9
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:27:09 -0700 (PDT)
+        id S1727119AbfHXI1M (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 04:27:12 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:38673 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbfHXI1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 04:27:12 -0400
+Received: by mail-io1-f68.google.com with SMTP id p12so25687669iog.5
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 01:27:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=HzHM2p4PCj3fdTdY+0mjHZTAYWCWVROiB8/myMHWwY8=;
-        b=pCknu4+CBziTYZAPX3bcTzoM8zGHYUiVCwRT8BmuU/PCT7zreWN4DQ5pGgUwy9rNSz
-         4/5ZiOR9LOC0BBahOwCkjco+ZvuDC1cfngBYyhZriOOYKFNGs/+fGT2SOGHGCFqDhRs3
-         1BiuuyLqFiVRITG+fMspEg+6J6V88iHkWGXc/2KtsndrLDWz5AjRnWcTMR8Sp4QLdc+l
-         2rgktLcJWdcZmqlyhgR+yiyNgkMmH19796xEIcjX3gzV2mKjLOUzFHWBh6XJkLTTPOQR
-         zvfNIPp20Dj6z+0h2udZ5EmpX4Lla1OiIU0qaWId6kdES9ESqN0MwB0WApTqfTGqWa8N
-         7Vmw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=PdNpr+xjrLYU2MoWEBNF3xcNAmtPLys44nVVsueTa5k=;
+        b=Dv+o0vqhcGDfHflHOuWApgHbl74XnITb6ae1bvfuBktGJtZhGz2S7wAJZTdYpCJyff
+         lvcNTff92AP3lLATzCi+Foqc7Om6oRHKRZN2od1noozHtv3z53+1el+KVBTE8EmZT+PP
+         0k1maUx42EyI15RC+VEzDup7kg8Julewwy614pR60MWOw7AY50best4ddnWacrmK/hYi
+         2P04RvXQxUsSawAxzERH3pg5sOvE7RkaEK5pY3ZPoyjlqLEltLGtUp0Z1GWlg7dXZWUv
+         dkW9JXAELmqbw43f/jH5jYHyGLbV5Kcbh2QQfQv8jg61xgD+Cizhh79+zXNK4DpvxgTC
+         BVEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HzHM2p4PCj3fdTdY+0mjHZTAYWCWVROiB8/myMHWwY8=;
-        b=OVxVsf4/8KMR0VdyMP3PoKZF7Kxpd/qnXRLorbpXupGsq34wAYeOOiSBe1nFcoHEdN
-         pqSLK708FkUqAWE5wCo6Eml2+ahXpMjFYk+On29S2tV5Ockuy/xf38U7+74VvIi/nko7
-         zQpLbeqtnTFzIdYjAH4X4sFzhcvVdlUuxMjO5r8isbEeBt0LOWsMaOD78a1kMZ9xRkwu
-         HSzkad7Gb/wK3kXr5vrohiQK5B1URKPEn0QTndhlgBVHrDV/lMfgg6KVsx1+TtgK4FNJ
-         ON9Es6JfRi+u0Y2h6FeNFKG0QsY9RAKqUvAjVh/7aydWPAdma9g3PDw+P98Gplw4EPyv
-         fJjg==
-X-Gm-Message-State: APjAAAWaaSPNT3y5RiChV67B+wZq6+rNnEUIlIvqxfy1xkrTalJbtX7u
-        czhuhxyZnLN4oRxVQ/A1ybksTDDW
-X-Google-Smtp-Source: APXvYqyBeWCakum2Cqh0CsW/eNFV+gax9g/ITzB68wTHuk2AlNUiMRLa6CJ7KG7q6HtqQVQ6Pebahw==
-X-Received: by 2002:a02:cc6c:: with SMTP id j12mr8747262jaq.29.1566635228473;
-        Sat, 24 Aug 2019 01:27:08 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PdNpr+xjrLYU2MoWEBNF3xcNAmtPLys44nVVsueTa5k=;
+        b=H2v4CfM38sr5QawFU3ETiDF6H2vMvrgC8PVie+EdQBtnmr5Vgolw7nEF3AC+0QHjlD
+         I8aijEPReuPEJUIlw5f/5y2j5NZOGtysMwPh3ahkns5be5MauWEJOUWaNgrOxOHmEhis
+         05DrCg6Mm40hlIRpOD7LduVE7hnkU4Kj/waM39YYj9+GB/qA6IjhNcYvBKY5fK7MmW/C
+         a7HjcSxRq2wLEEeMGnLmoCNtN4dIhMSRQojMpUM4XuRPDbMNqEEcpEy2GYY+KamkYbEy
+         JX0MPPP0EMgARTS1qULd83znAs+oZ9CBqWm7OfcjL9fmI0gBgjJQttrIWpxpiWRPfwbP
+         bvkg==
+X-Gm-Message-State: APjAAAU0WKiF4xbJ1KX5evTV+OXWUI8qaGPpa/Kp0NHq80baGNjmCcWe
+        8ixFTGTS4jsweyrDByikdNYycX5m
+X-Google-Smtp-Source: APXvYqzVWB80ZyKT1E5ON19W8gHRAoVn9dMDf/SZl03Xt2h3nYT6/BjBXE6uXvfBQOEbuMjrSanO/Q==
+X-Received: by 2002:a5d:8908:: with SMTP id b8mr12328694ion.237.1566635231066;
+        Sat, 24 Aug 2019 01:27:11 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id g12sm3919477ioe.50.2019.08.24.01.27.07
+        by smtp.gmail.com with ESMTPSA id s12sm4682572ios.31.2019.08.24.01.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Aug 2019 01:27:08 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 04:27:06 -0400
+        Sat, 24 Aug 2019 01:27:10 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 04:27:08 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -60,14 +58,13 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH 08/13] t4014: let sed open its own files
-Message-ID: <7d9a24a97972ab8a8a1cfe1f2605630e154886be.1566635008.git.liu.denton@gmail.com>
+Subject: [PATCH 09/13] t4014: use test_line_count() where possible
+Message-ID: <d068d42098f3e9079f1b3173bfae743264f60f44.1566635008.git.liu.denton@gmail.com>
 References: <cover.1566285151.git.liu.denton@gmail.com>
  <cover.1566635008.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1566635008.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
@@ -75,146 +72,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some cases, we were using a redirection operator to feed input into
-sed. However, since sed is capable of opening its own files and provides
-better error messages on IO failure, make sed open its own files instead
-of redirecting input into it.
+Convert all instances of `cnt=$(... | wc -l) && test $cnt = N` into uses
+of `test_line_count()`.
+
+While we're at it, convert one instance of a Git command upstream of a
+pipe into two commands. This prevents a failure of a Git command from
+being masked since only the return code of the last member of the pipe
+is shown.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4014-format-patch.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ t/t4014-format-patch.sh | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 2048fb2008..35cf798847 100755
+index 35cf798847..18142ee5fa 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -596,7 +596,7 @@ EOF
+@@ -60,23 +60,23 @@ test_expect_success setup '
  
- test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
- 	git format-patch --cover-letter -2 &&
--	sed -e "1,/A U Thor/d" -e "/^\$/q" <0000-cover-letter.patch >output &&
-+	sed -e "1,/A U Thor/d" -e "/^\$/q" 0000-cover-letter.patch >output &&
- 	test_cmp expect output
+ test_expect_success 'format-patch --ignore-if-in-upstream' '
+ 	git format-patch --stdout master..side >patch0 &&
+-	cnt=$(grep "^From " patch0 | wc -l) &&
+-	test $cnt = 3
++	grep "^From " patch0 >from0 &&
++	test_line_count = 3 from0
  '
  
-@@ -635,7 +635,7 @@ EOF
- 
- test_expect_success 'format-patch -p suppresses stat' '
- 	git format-patch -p -2 &&
--	sed -e "1,/^\$/d" -e "/^+5/q" <0001-This-is-an-excessively-long-subject-line-for-a-messa.patch >output &&
-+	sed -e "1,/^\$/d" -e "/^+5/q" 0001-This-is-an-excessively-long-subject-line-for-a-messa.patch >output &&
- 	test_cmp expect output
- '
- 
-@@ -890,7 +890,7 @@ test_expect_success 'prepare mail-signature input' '
- test_expect_success '--signature-file=file works' '
- 	git format-patch --stdout --signature-file=mail-signature -1 >output &&
- 	check_patch output &&
--	sed -e "1,/^-- \$/d" <output >actual &&
-+	sed -e "1,/^-- \$/d" output >actual &&
- 	{
- 		cat mail-signature && echo
- 	} >expect &&
-@@ -901,7 +901,7 @@ test_expect_success 'format.signaturefile works' '
- 	test_config format.signaturefile mail-signature &&
- 	git format-patch --stdout -1 >output &&
- 	check_patch output &&
--	sed -e "1,/^-- \$/d" <output >actual &&
-+	sed -e "1,/^-- \$/d" output >actual &&
- 	{
- 		cat mail-signature && echo
- 	} >expect &&
-@@ -923,7 +923,7 @@ test_expect_success '--signature-file overrides format.signaturefile' '
+ test_expect_success 'format-patch --ignore-if-in-upstream' '
  	git format-patch --stdout \
- 			--signature-file=other-mail-signature -1 >output &&
- 	check_patch output &&
--	sed -e "1,/^-- \$/d" <output >actual &&
-+	sed -e "1,/^-- \$/d" output >actual &&
- 	{
- 		cat other-mail-signature && echo
- 	} >expect &&
-@@ -992,7 +992,7 @@ test_expect_success 'format-patch wraps extremely long subject (ascii)' '
- 	git add file &&
- 	git commit -m "$M512" &&
- 	git format-patch --stdout -1 >patch &&
--	sed -n "/^Subject/p; /^ /p; /^$/q" <patch >subject &&
-+	sed -n "/^Subject/p; /^ /p; /^$/q" patch >subject &&
- 	test_cmp expect subject
+ 		--ignore-if-in-upstream master..side >patch1 &&
+-	cnt=$(grep "^From " patch1 | wc -l) &&
+-	test $cnt = 2
++	grep "^From " patch1 >from1 &&
++	test_line_count = 2 from1
  '
  
-@@ -1031,7 +1031,7 @@ test_expect_success 'format-patch wraps extremely long subject (rfc2047)' '
- 	git add file &&
- 	git commit -m "$M512" &&
- 	git format-patch --stdout -1 >patch &&
--	sed -n "/^Subject/p; /^ /p; /^$/q" <patch >subject &&
-+	sed -n "/^Subject/p; /^ /p; /^$/q" patch >subject &&
- 	test_cmp expect subject
+ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
+ 	git tag -a v1 -m tag side &&
+ 	git tag -a v2 -m tag master &&
+ 	git format-patch --stdout --ignore-if-in-upstream v2..v1 >patch1 &&
+-	cnt=$(grep "^From " patch1 | wc -l) &&
+-	test $cnt = 2
++	grep "^From " patch1 >from1 &&
++	test_line_count = 2 from1
  '
  
-@@ -1040,7 +1040,7 @@ check_author() {
- 	git add file &&
- 	GIT_AUTHOR_NAME=$1 git commit -m author-check &&
- 	git format-patch --stdout -1 >patch &&
--	sed -n "/^From: /p; /^ /p; /^$/q" <patch >actual &&
-+	sed -n "/^From: /p; /^ /p; /^$/q" patch >actual &&
- 	test_cmp expect actual
- }
- 
-@@ -1160,7 +1160,7 @@ test_expect_success '--from=ident replaces author' '
- 	From: A U Thor <author@example.com>
- 
- 	EOF
--	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
-+	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
- 	test_cmp expect patch.head
+ test_expect_success "format-patch doesn't consider merge commits" '
+@@ -90,22 +90,23 @@ test_expect_success "format-patch doesn't consider merge commits" '
+ 	git checkout -b merger master &&
+ 	test_tick &&
+ 	git merge --no-ff slave &&
+-	cnt=$(git format-patch -3 --stdout | grep "^From " | wc -l) &&
+-	test $cnt = 3
++	git format-patch -3 --stdout >patch &&
++	grep "^From " patch >from &&
++	test_line_count = 3 from
  '
  
-@@ -1172,7 +1172,7 @@ test_expect_success '--from uses committer ident' '
- 	From: A U Thor <author@example.com>
- 
- 	EOF
--	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
-+	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
- 	test_cmp expect patch.head
+ test_expect_success 'format-patch result applies' '
+ 	git checkout -b rebuild-0 master &&
+ 	git am -3 patch0 &&
+-	cnt=$(git rev-list master.. | wc -l) &&
+-	test $cnt = 2
++	git rev-list master.. >list &&
++	test_line_count = 2 list
  '
  
-@@ -1182,7 +1182,7 @@ test_expect_success '--from omits redundant in-body header' '
- 	From: A U Thor <author@example.com>
- 
- 	EOF
--	sed -ne "/^From:/p; /^$/p; /^---$/q" <patch >patch.head &&
-+	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
- 	test_cmp expect patch.head
+ test_expect_success 'format-patch --ignore-if-in-upstream result applies' '
+ 	git checkout -b rebuild-1 master &&
+ 	git am -3 patch1 &&
+-	cnt=$(git rev-list master.. | wc -l) &&
+-	test $cnt = 2
++	git rev-list master.. >list &&
++	test_line_count = 2 list
  '
  
-@@ -1197,7 +1197,7 @@ test_expect_success 'in-body headers trigger content encoding' '
- 	From: éxötìc <author@example.com>
+ test_expect_success 'commit did not screw up the log message' '
+@@ -795,7 +796,8 @@ test_expect_success 'options no longer allowed for format-patch' '
  
- 	EOF
--	sed -ne "/^From:/p; /^$/p; /^Content-Type/p; /^---$/q" <patch >patch.head &&
-+	sed -ne "/^From:/p; /^$/p; /^Content-Type/p; /^---$/q" patch >patch.head &&
- 	test_cmp expect patch.head
+ test_expect_success 'format-patch --numstat should produce a patch' '
+ 	git format-patch --numstat --stdout master..side >output &&
+-	test 5 = $(grep "^diff --git a/" output | wc -l)
++	grep "^diff --git a/" output >diff &&
++	test_line_count = 5 diff
  '
  
-@@ -1788,7 +1788,7 @@ test_expect_success 'interdiff: cover-letter' '
- 	git format-patch --cover-letter --interdiff=boop~2 -1 boop &&
- 	test_i18ngrep "^Interdiff:$" 0000-cover-letter.patch &&
- 	test_i18ngrep ! "^Interdiff:$" 0001-fleep.patch &&
--	sed "1,/^@@ /d; /^-- $/q" <0000-cover-letter.patch >actual &&
-+	sed "1,/^@@ /d; /^-- $/q" 0000-cover-letter.patch >actual &&
- 	test_cmp expect actual
+ test_expect_success 'format-patch -- <path>' '
+@@ -852,8 +854,8 @@ test_expect_success 'format-patch --signature --cover-letter' '
+ 	git config --unset-all format.signature &&
+ 	git format-patch --stdout --signature="my sig" --cover-letter \
+ 		-1 >output &&
+-	grep "my sig" output &&
+-	test 2 = $(grep "my sig" output | wc -l)
++	grep "my sig" output >sig &&
++	test_line_count = 2 sig
  '
  
-@@ -1804,7 +1804,7 @@ test_expect_success 'interdiff: solo-patch' '
- 	EOF
- 	git format-patch --interdiff=boop~2 -1 boop &&
- 	test_i18ngrep "^Interdiff:$" 0001-fleep.patch &&
--	sed "1,/^  @@ /d; /^$/q" <0001-fleep.patch >actual &&
-+	sed "1,/^  @@ /d; /^$/q" 0001-fleep.patch >actual &&
- 	test_cmp expect actual
+ test_expect_success 'format.signature="" suppresses signatures' '
+@@ -1591,7 +1593,8 @@ test_expect_success 'format-patch format.outputDirectory option' '
+ 	test_config format.outputDirectory patches &&
+ 	rm -fr patches &&
+ 	git format-patch master..side &&
+-	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
++	git rev-list master..side >list &&
++	test_line_count = $(ls patches | wc -l) list
  '
  
+ test_expect_success 'format-patch -o overrides format.outputDirectory' '
 -- 
 2.23.0.248.g3a9dd8fb08
 
