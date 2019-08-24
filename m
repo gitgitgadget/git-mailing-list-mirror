@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51CA91F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9131F4B7
 	for <e@80x24.org>; Sat, 24 Aug 2019 09:07:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726950AbfHXJEy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 05:04:54 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46729 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfHXJEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 05:04:54 -0400
-Received: by mail-io1-f68.google.com with SMTP id x4so25634500iog.13
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 02:04:54 -0700 (PDT)
+        id S1726923AbfHXJEw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 05:04:52 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:43438 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfHXJEw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 05:04:52 -0400
+Received: by mail-io1-f65.google.com with SMTP id 18so25700028ioe.10
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 02:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5aGTgTJDDAQZBIm7fmYVi4BPAV0Hs8Ct4tdeyCpmDGM=;
-        b=MLgD2c3SBwLpvI4T7Rx5vbXoW69d+SJOfg9K9eGedvY+74Z1OMPr2a2rNwX5Ts+5X1
-         J+xVSVteSti/OToomFctzUOzPdx4NIT8iImQDt4OHZpfXg3RFngZaaB5ojoYgBeX5R7T
-         jy/zSiW1DW/J0M2rV3c5TRmgjxuxD7FNazI3wJnzDjUnjCOf+CZT3NY3HtY5U1i7U/DE
-         Aco+sBu8AZG2oa2xYA1ol0sOja8Q+fnj+ztmIfZfYhCMEUUZh/Bj+v5Cdoc781ACp0Gk
-         GSZcvh2IzUJO4c9uGV4G9hidN2WVgAHo19Nt6XHJkG8eB87BahYduPbldkjGKHIU0vGI
-         /o1g==
+        bh=qjm5nI779iRcTNELSAM5LUevFq2bekvh4uXnF6z2Gm8=;
+        b=uoAPkowWjGDD0n7Z8zaM1Gi/ZAka1nH+q60HeR/qD1eWjWySb/0S8LQ3w5DgEPfJF2
+         i5l+E4ixJivbp9wTIYpp8hjg8fyroPZuc5n8AwSwcqj04QrfsA51nuvn+3wUDY1O0xK5
+         3WyypInNiSorQd2d0jwEmU/IYz0uJ0YTBEs4gyhxRWIX0GM1CspvD9xR1R7tfcVUs3bQ
+         4Pe9uWRP8/GiQzHOU0q7XsGSEl/Se3dEUZbjIueQbpe8+nUtZnOsSNebAHOoTUW7mloZ
+         dgaCQ2eq70gbNAGS4YSMIpS5uit9H32TQNVeu+WNEERuw9pvJIRKZE+4d/zWVljd2Ho9
+         Epxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5aGTgTJDDAQZBIm7fmYVi4BPAV0Hs8Ct4tdeyCpmDGM=;
-        b=VjmWJMivWiDfuyM1su6TtFHa7MyoCwnEpiQSF2BjtC77rVuTJa90G1kBMOk61scEsa
-         c9uqNFYMEjo5lBQlWeSwVfMQpojdQ31rV2o1G9Q9om8wVUceBqeIcYGmAmcKBR4W+26q
-         anrKZMntfDd25T9Zu5Abxs08NNpaCNcisfJzUjN38ILl99gj91rGqf62ntNridnCELhB
-         DUFWx/bc+PBmGjDdGH4MJs8PZBYdPenRIp7PkJ1wxcMpY7OqHOMVshk8NZKX7ecI9G5o
-         0CFxUz5VUKpsvG/CItffufxt4TZX8UZKYccv2P/FMHm9oPBzP11PMhRFf0tlZR3pITQz
-         v70g==
-X-Gm-Message-State: APjAAAXAaKSDxyto9nOnEUs1087GwUGCgKGLlVCMeHy/NsuBDApO33p+
-        +se5oW4vx2SXdszNNacRB5N5Uucb
-X-Google-Smtp-Source: APXvYqyg3+OXnXZAsvaqfP7fijt719D5EwcQIVzuS7DXpp3Vm+xulB0p+pvKEHqFVtVpNcJ3tijdqA==
-X-Received: by 2002:a02:1981:: with SMTP id b123mr5862888jab.72.1566637493349;
-        Sat, 24 Aug 2019 02:04:53 -0700 (PDT)
+        bh=qjm5nI779iRcTNELSAM5LUevFq2bekvh4uXnF6z2Gm8=;
+        b=bZJxIoTg3OV20mT8tZ0B0+smUacmF9O4umryoSyCHuRDkrQbyEbMDd9pYOXurRR1Gj
+         RT3WVTl4QgvB8G8qRb/yKWVBV1aVI0EBj5iBjC24XLDL6a7sKqP0IsUQWvuz7wBBgUbN
+         dRnwKQE+L9a8KwbnhFVs34s1YYr1QjL2TWqYRuDQlr3HH4/P84MJtiQ5xkDEL346IRrr
+         oSDinBy14jsHRwtGJ97s0lSm53UGZt3TBcXftdZ+mhigzPXHVZ24inAyUPQUAUzAfZUA
+         76xFegWU7f/EE2VsyzlZ7Lcs+76Nk1GR9p5Gz48LdyhFjg5rkGEkha76V2Ly57QT9GNv
+         +uXQ==
+X-Gm-Message-State: APjAAAUkFMBBZPU6tZft/pHGzrgkSM57EHZJnKom7d07OstFY3EqP2UM
+        zs1D6lRJTqIe1DsSSnjt+aCHDD/U
+X-Google-Smtp-Source: APXvYqwdH85BP8cHcMAG6DbIJUJQL0nBAa7xaG3W3aHFGRobSunZ1P7J19nMLV7n/tfU8L3xgPQ6Xw==
+X-Received: by 2002:a5d:9487:: with SMTP id v7mr10976960ioj.230.1566637491224;
+        Sat, 24 Aug 2019 02:04:51 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id q8sm4476072ion.82.2019.08.24.02.04.52
+        by smtp.gmail.com with ESMTPSA id y19sm4859212ioj.62.2019.08.24.02.04.50
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Aug 2019 02:04:52 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 05:04:51 -0400
+        Sat, 24 Aug 2019 02:04:50 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 05:04:49 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/2] completion: add --skip for cherry-pick and revert
-Message-ID: <75adf581589dcce1a679d63977b1c82d333b0f77.1566637431.git.liu.denton@gmail.com>
+Subject: [PATCH 1/2] completion: merge options for cherry-pick and revert
+Message-ID: <cdcac975548502a58234f7537a5fe11dcdb538ea.1566637431.git.liu.denton@gmail.com>
 References: <cover.1566637431.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,28 +67,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Even though `--skip` is a valid command-line option for cherry-pick and
-revert while they are in progress, it is not completed. Add this missing
-option to the completion script.
+Since revert and cherry-pick share the same sequencer code, they should
+both accept the same command-line options. Merge the
+`__git_cherry_pick_inprogress_options` and
+`__git_revert_inprogress_options` variables together into
+`__git_cherry_pick_revert_inprogress_options` so that the options aren't
+unnecessarily duplicated twice.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 62f8ef600d..ebcfb5a5af 100644
+index e087c4bf00..62f8ef600d 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1361,7 +1361,7 @@ _git_checkout ()
+@@ -1361,13 +1361,13 @@ _git_checkout ()
  	esac
  }
  
--__git_cherry_pick_revert_inprogress_options="--continue --quit --abort"
-+__git_cherry_pick_revert_inprogress_options="--continue --quit --abort --skip"
+-__git_cherry_pick_inprogress_options="--continue --quit --abort"
++__git_cherry_pick_revert_inprogress_options="--continue --quit --abort"
  
  _git_cherry_pick ()
  {
+ 	__git_find_repo_path
+ 	if [ -f "$__git_repo_path"/CHERRY_PICK_HEAD ]; then
+-		__gitcomp "$__git_cherry_pick_inprogress_options"
++		__gitcomp "$__git_cherry_pick_revert_inprogress_options"
+ 		return
+ 	fi
+ 
+@@ -1376,7 +1376,7 @@ _git_cherry_pick ()
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp_builtin cherry-pick "" \
+-			"$__git_cherry_pick_inprogress_options"
++			"$__git_cherry_pick_revert_inprogress_options"
+ 		;;
+ 	*)
+ 		__git_complete_refs
+@@ -2512,20 +2512,18 @@ _git_restore ()
+ 	esac
+ }
+ 
+-__git_revert_inprogress_options="--continue --quit --abort"
+-
+ _git_revert ()
+ {
+ 	__git_find_repo_path
+ 	if [ -f "$__git_repo_path"/REVERT_HEAD ]; then
+-		__gitcomp "$__git_revert_inprogress_options"
++		__gitcomp "$__git_cherry_pick_revert_inprogress_options"
+ 		return
+ 	fi
+ 	__git_complete_strategy && return
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp_builtin revert "" \
+-			"$__git_revert_inprogress_options"
++			"$__git_cherry_pick_revert_inprogress_options"
+ 		return
+ 		;;
+ 	esac
 -- 
 2.23.0.248.g3a9dd8fb08
 
