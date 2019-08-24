@@ -2,64 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E5271F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 22:00:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA4CB1F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 22:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727924AbfHXWAH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 18:00:07 -0400
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:45066 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727708AbfHXWAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 18:00:06 -0400
-Received: by mail-ot1-f44.google.com with SMTP id m24so11910929otp.12
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:00:06 -0700 (PDT)
+        id S1727950AbfHXWIB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 18:08:01 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:53844 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726842AbfHXWIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 18:08:01 -0400
+Received: by mail-wm1-f45.google.com with SMTP id 10so11997978wmp.3
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dakotahawkins.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=q0L9FE3BFbktMJxhvuWlfIvEX2Hir9peJyv55PVPy2k=;
-        b=Clu0mzM9DKBcyHDMKbdOXfUxoJfrJPUlZyhwWn7Yj9U8kNhwKOwNQLK9Wwca9CrkEW
-         7DzQmWz5w7Q97HwS+PODT9nGTyu3dObm1di9wECm+Y5j/L+m8L3h3EXnCRtdrDYsa/W6
-         p3qdcYay0FvkfWjLKs35ejpg0ABLblmLT9f/U=
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=ZJQvMDxcKphTYFzkK6oGELuyXROEri6JJHcvLsTJ1B4=;
+        b=Z/R9iN5eb1sIZm5Fctjod0NCK91mluLzUDaQQ/iKQaxwS/IWDM4oYmM55I4QOWRt4s
+         MJyF96PqRRH79f5dZvh2MobPWdQ81ezPaAvA8z9TjllaFEsppYNbllC3Agi60m7XpZrW
+         62VCmiXn1BNvMhbIK8WzHZnXHNTObVUqxQgUKqREqLSsa5OpzCZi+nOz5TZOSJlcxFkP
+         lgtJ22yZ1OPWY/GoBqSc9v+tTn6oEHlbLCPThiKwW46NMH05Z/xTI5bXyZXs2YZl/QZi
+         EVyFeK+IOEfmioummlOer2Wf4/eMMU1pMdxZ+Md3dhxaCFwrb2CRGBMpYfzS3Xt+aEih
+         8mMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=q0L9FE3BFbktMJxhvuWlfIvEX2Hir9peJyv55PVPy2k=;
-        b=YUbPM3QGPF+4087qoE/elW837gyXSz6s8v7ZfUmf5wBSVcwmcWZR/TI2sQHuvrKhNH
-         0THzdby/SaqhG+Yjotol6KvR0Fofnunf5q5o4ozT5/80yGCRoeKVxWteWHvhbHcc4s2x
-         khfrUJCOiurysD+rAdSrOycteunHxI7//4jXOnVThecXpTuik9pa86FtwLxsh1BLPqLd
-         hhI7Huqt5sYL5YwwL9bEkGTcyxcSlnr12P1Ne5ekn9arouHKpREG6d8c3qfoYxeF9LFV
-         FejRCDejbHrMb9XSxeSJlj855YivhNqwawx6KY1SIO5XisJMhT5lRWT+udFh2s279Uvq
-         gkGQ==
-X-Gm-Message-State: APjAAAUIMtBEBBwdHYjiqGQ9ulQeQ+m0tsFiaVw6qQ0zKyUYtuLnHEiX
-        l7tg5Jqy5sKDOxI87f1nEXs67YwonJKv2BuwKAxQbuzCBf+93Q==
-X-Google-Smtp-Source: APXvYqwdHbxMoi+Kgl79aXXsvsTxLYAp+DFA61Mqr900pE1ccNOb40/dT4XQAD769Z/R+7fDUKJkFKgbzIf16ZWOUag=
-X-Received: by 2002:a9d:5789:: with SMTP id q9mr1101401oth.18.1566684005739;
- Sat, 24 Aug 2019 15:00:05 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=ZJQvMDxcKphTYFzkK6oGELuyXROEri6JJHcvLsTJ1B4=;
+        b=j1sjJfmSxlT2e15ozOJyF1cOSU4G4xY4cncqZwN4dii+5fdIBzvTICI/u6OousdHrQ
+         e7uxntjYl4Kx1F3iueKQgOAhLTi/9l9C42fH6KEUML39tB6WPr2kR4tN1UmkyzemW44d
+         YYrGAjq+zxC3ToVi6H+5pym2ul9tSS6zr8klvP00nmfGMLh6QLTdHIXyWJxFmokzwQQE
+         Gu9kORF7kfLFrxCskY+4QcMUdjwXjQ/bUbNynjvbdiwB7mw477vRaPp7qXpyEuQP5SF5
+         GhA3MqBmdwr7tyuDe9WxJjUlINvafdUwcRCB5EPwPoX7hTNhEqHaRqxRCON4z+yBGZcl
+         WW1A==
+X-Gm-Message-State: APjAAAU/nv+avk6/U1O8USNQmKMk1w6/lP+cRjyG6xGOtlma1j0i0umt
+        EI/5B8lUXgAZT1gmMd0lViNSS/v5
+X-Google-Smtp-Source: APXvYqzuKjalwwsdbsQWWkqV2KNB0EweivpkHHkYSj+92sbwnJZ4Ok/r67pnzyVURr3c3Ml4Tk/G8w==
+X-Received: by 2002:a7b:cd17:: with SMTP id f23mr13001295wmj.177.1566684479265;
+        Sat, 24 Aug 2019 15:07:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 74sm14269576wma.15.2019.08.24.15.07.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Aug 2019 15:07:58 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 15:07:58 -0700 (PDT)
+X-Google-Original-Date: Sat, 24 Aug 2019 22:07:57 GMT
+Message-Id: <pull.93.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] mingw: support UNC as file://server/share/repo
 MIME-Version: 1.0
-References: <CAHnyXxScGO6Eex_AEbgH=YFQ2yzY1hnXavyNMkiXbrccVUA=Ug@mail.gmail.com>
-In-Reply-To: <CAHnyXxScGO6Eex_AEbgH=YFQ2yzY1hnXavyNMkiXbrccVUA=Ug@mail.gmail.com>
-From:   Dakota Hawkins <dakota@dakotahawkins.com>
-Date:   Sat, 24 Aug 2019 17:59:53 -0400
-Message-ID: <CAHnyXxRTrx+7djrbGJ7uwyRTLkCmtet-t-dn=beeyWkdLGFx4Q@mail.gmail.com>
-Subject: Re: [RFC] Add config option corresponding to --rebase-merges
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think it would also be prudent to add the following:
+Windows users might think that the common file:/// protocol also works for
+network shares. This patch makes it so.
 
-# Auto-config option values for new branches
-branch.autoSetupRebase=
-+   localCousins
-+   remoteCousins
-+   alwaysCousins
+Torsten Bögershausen (1):
+  mingw: support UNC in git clone file://server/share/repo
+
+ connect.c             |  4 ++++
+ t/t5500-fetch-pack.sh | 13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+
+base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-93%2Fdscho%2Ffile-url-to-unc-path-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-93/dscho/file-url-to-unc-path-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/93
+-- 
+gitgitgadget
