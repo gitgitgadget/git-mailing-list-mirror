@@ -8,86 +8,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF461F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 22:10:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD4AB1F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 22:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728022AbfHXWKr (ORCPT <rfc822;e@80x24.org>);
+        id S1728098AbfHXWKr (ORCPT <rfc822;e@80x24.org>);
         Sat, 24 Aug 2019 18:10:47 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33038 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727690AbfHXWKq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 18:10:46 -0400
-Received: by mail-wm1-f65.google.com with SMTP id p77so11673451wme.0
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:10:45 -0700 (PDT)
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:34530 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727740AbfHXWKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 18:10:47 -0400
+Received: by mail-wm1-f49.google.com with SMTP id e8so11681596wme.1
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Q/h5UF9kQtD087ArEfF8Q6wrsRcMb2SomwZhpBDfnNs=;
-        b=b3fEEBS9bicsjS7TiTBVKZ+Ga/HYjXtqgTXDJygpgfm7OXOYfVU0nT8F/K1fAAqLTM
-         WdXURyju55AQp6JDoGqAOwEQd283lx2206xLmXqAThFD5clBvGChu4fTilqxJO4LGH4K
-         e4oHl6FCDLiKKaMgz+/2xJ126ul+5EekRYyo75nUZ2G+TXaWina/ylAko3IAK0dB765t
-         uyPKsPH4CsElOK9ksQ8KauFMamMWmJgCVJrnZgUsRmOB6WjiULpkdZxUj6tiBudOFKZH
-         qHz7TvO04sDrjestJbyWeVrVDsQLTUh0hZhrZaU209AcBO5HjxDj3brv469rr30F2DCE
-         mnQg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pLLFXCGv5668Am31WrlF04FVVcPLJfKWwB7/EgXET1E=;
+        b=CNQV84H0rkXiZe/qnK/2DRvDjFTeMYGyOZMeT1KAgZn03eB+7EP0w3G5tXJ5TxLyZo
+         9oXTtXL3lzD7e2WZT7rIXFvCSjMrFU2nWNVg6pxCyxtmSTBHVVTso8q5H+TSR+oNQ+CK
+         Gx1bZzfWbzPu23nkF50BJcmET7Zuhq7EQ4HeHh5xQpTfRciR7mnTSByFktZ/21OHghxq
+         iNqyiChEMi43Y1ObDE8sz7+eVmrVUwpylgysB2jPL77zB8yhdDDA9zIze+ge0KRqmch2
+         P15Wq/ismveeLhPUoFbcqGJdgSqjhSSjMiskMUIz33/QKzp3nYBuZY4kXVrJzD4K+x1q
+         90Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Q/h5UF9kQtD087ArEfF8Q6wrsRcMb2SomwZhpBDfnNs=;
-        b=gRqAYUdxKJ2TU2tMEJ8bpkPs0cWagkMtlSEj6cRyDFV+EmnLA6D+8Iw0v8Y/hXGaQI
-         qD/fNd2fMZlE93MA7anu30kbfWwgkrAezl6GVyaOmvWOYxnV52tNgWKRnE0GkBTWAgAd
-         lYl/L6UV37bmobqeqvjmj8Mc88R4ahPP7VSRRtk4b4t2NVGU7KstF9vrGhbJUWfQN2Hf
-         N3y12xvE7pkvIIjOZbz/B0/chTPOgRjqwFQjJqmBRyWdgUPuaxTYCv2JkldLbsjdA0Wg
-         bluP87TjwpgmeJGj8affBbkR+FoZTsksju9nJQW6YVsbU3eUZWu9tEkaIPsJdScdbcfv
-         BBcw==
-X-Gm-Message-State: APjAAAUwM5oXB4/5rmkx4W6Bc5KR5HIul/6A8Ue+VwtdWnAyZ8kTMCYn
-        5P1uq0em5b4C89RjJkkLWsc7g8ul
-X-Google-Smtp-Source: APXvYqxFskZI+9V94seTZpkAWJN0iCzNy9p0rBBWxECEGPsJ/z6kxwerSZnGP6J6BtEwTBCW5UxQ3A==
-X-Received: by 2002:a1c:6145:: with SMTP id v66mr13416844wmb.42.1566684644627;
-        Sat, 24 Aug 2019 15:10:44 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pLLFXCGv5668Am31WrlF04FVVcPLJfKWwB7/EgXET1E=;
+        b=AWA5tDSzh0izFh3tfR7dfjAiFEyIprNzMRGLEf4fnprmja5vr6FP2eUfEubeH1LE0A
+         +PNYu5SPo8sPRne30Tskb2Vl/H9IG4W9CDwrlt00V5DO40fPQk0syIj45pwqlxVVVJZF
+         6IomBDagzaNdYgnrsGmFXviCsL20ivRiHkcIe9c3k5n6tK6Zc1PoOO6RwAOqAwK9xPDY
+         f2UPKzZ1eFeNBPSxcjGhHY1XoX7TJ1AG/0ujZtxUUjftLs4wU4cfwX3zSoLALMCg4MNr
+         v5QfqrXANlcUutMORTtbClF45CrZGfzazFLm+RjrqS+MbvULqnEoxVajdP6Kgj4WpHDe
+         OLEQ==
+X-Gm-Message-State: APjAAAUIPizl1pF/BBGtpt3FusCDCZlQVBKUPkijxDba5jYqsxKkvEsE
+        X3nGYi54qZuATGyZlf4qSu5m36Kp
+X-Google-Smtp-Source: APXvYqzqXOe3TU+d8ZtE8p3e1XfiSvMKpH3zudH/ien+Ep8J/me2yf8qrL7vzwu4JkUc1TjZl7D4aA==
+X-Received: by 2002:a7b:c8c1:: with SMTP id f1mr11667894wml.87.1566684645282;
+        Sat, 24 Aug 2019 15:10:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m19sm6192629wml.28.2019.08.24.15.10.44
+        by smtp.gmail.com with ESMTPSA id f10sm7130672wrm.31.2019.08.24.15.10.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Sat, 24 Aug 2019 15:10:44 -0700 (PDT)
 Date:   Sat, 24 Aug 2019 15:10:44 -0700 (PDT)
-X-Google-Original-Date: Sat, 24 Aug 2019 22:10:40 GMT
-Message-Id: <pull.141.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Sat, 24 Aug 2019 22:10:41 GMT
+Message-Id: <bb29fcd20d3e3f59ed5d65f04148d73770f542b2.1566684643.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.141.git.gitgitgadget@gmail.com>
+References: <pull.141.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/3] Handle worktrees at the top of a network drive
+Subject: [PATCH 1/3] setup_git_directory(): handle UNC paths correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Windows' network drive concept is a quite useful and versatile one. Once
-authenticated, one can even change the working directory to a network drive
-(cd \\server\share, works in PowerShell and Git Bash).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Some users want to have their Git repositories there, and with these
-patches, that works, even.
+The first offset in a UNC path is not the host name, but the folder name after that.
 
-This is yet another patch series in the seemingly endless stream of Git for
-Windows patches.
+This fixes https://github.com/git-for-windows/git/issues/1181
 
-Johannes Schindelin (3):
-  setup_git_directory(): handle UNC paths correctly
-  Fix .git/ discovery at the root of UNC shares
-  setup_git_directory(): handle UNC root paths correctly
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- setup.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-
-base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-141%2Fdscho%2Fgitdir-at-unc-root-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-141/dscho/gitdir-at-unc-root-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/141
+diff --git a/setup.c b/setup.c
+index ca9e8a949e..a803b3ade3 100644
+--- a/setup.c
++++ b/setup.c
+@@ -906,7 +906,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	const char *env_ceiling_dirs = getenv(CEILING_DIRECTORIES_ENVIRONMENT);
+ 	struct string_list ceiling_dirs = STRING_LIST_INIT_DUP;
+ 	const char *gitdirenv;
+-	int ceil_offset = -1, min_offset = has_dos_drive_prefix(dir->buf) ? 3 : 1;
++	int ceil_offset = -1, min_offset = offset_1st_component(dir->buf);
+ 	dev_t current_device = 0;
+ 	int one_filesystem = 1;
+ 
 -- 
 gitgitgadget
+
