@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 791271F461
-	for <e@80x24.org>; Sat, 24 Aug 2019 22:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDDC1F461
+	for <e@80x24.org>; Sat, 24 Aug 2019 22:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728157AbfHXWg5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Aug 2019 18:36:57 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:41674 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbfHXWg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Aug 2019 18:36:57 -0400
-Received: by mail-wr1-f51.google.com with SMTP id j16so11809169wrr.8
-        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:36:55 -0700 (PDT)
+        id S1728243AbfHXWi6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Aug 2019 18:38:58 -0400
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:37472 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727879AbfHXWi6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Aug 2019 18:38:58 -0400
+Received: by mail-wm1-f42.google.com with SMTP id d16so12383082wme.2
+        for <git@vger.kernel.org>; Sat, 24 Aug 2019 15:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:from:subject:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=Fk8cap6K5lHJn1e5UMKA08IGm1yGKSWafiCJ8F4EU7o=;
-        b=OrISlS+kB0Pm2JQ6QUovMJuxYYMrpYtzOjvHieUXDcIpo61zoiDA5B1VtZUxilaydl
-         rBKfoHKA/kgWhilwGBn/vm8QMNDgQOocBKG9sc8NI8RwNrc7ZPWxExARSNX2g02try4t
-         heoTkQZfLhIRGfFJGQPwTLTsnvgw+ErjT13ty1ZSqTpwque8KaGp6djrZkl8X6yWosAV
-         w3R5a2TaE+gaEZvFw9XNQvGhINScdzfubh+JYnhmyRTU9aFSl1lEkuPaAUBsGYS/1LSE
-         /49FkYZGqq+K0rrZijwHcQQcsgxnF7W3t5vH9wLpEwb31KWw1cRAsC8Typ25eTVaPBz9
-         aWWQ==
+        bh=KwsgNVP55X4n/zHcDMDC1geFNq5dkZ1cM08wiKqC2W8=;
+        b=cJ4eIKyH2OiOmUwyTD59Pr+cSPi8c+vvGkKPBeiB17p5MtlEi7kvd/bzKhiX8bMFVJ
+         D2pWOCWJX+KNBkBhoztbqDN/nmBEYdJsx09kjU7WD4m61OsEaKAVBb+9LD6Qu0rxq6Ar
+         vRwvaDKf6Gnx9IxJxwN/Ki4iwzymZ0Idxxpm6MMGG6shdYetAkQ+Sp3wz3Hvvfra27xd
+         Sm8Is2OhKNpWI1TIb9lkbigivzNBrLlzYbzomvSLZhPE5VZw2tYM3Ev/ZMAg3fXD2EsC
+         Rsj1ECyfzaz/YfehX7q4QqHs98yISlWRrpSKcRo9hcqUdOKQXsVRLW2whUEoGhFrhH/E
+         Qdyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Fk8cap6K5lHJn1e5UMKA08IGm1yGKSWafiCJ8F4EU7o=;
-        b=tQixKrX1dRc0TLWSwDfrg9PAqHd0qOovwhDz+Q6MugxZhDFG3wbOiOizmdVMXIf3dz
-         1ddrkG3lugtgzAc1p3MLstjjuFPaRNL+RkPL9N9t6peo5Bo5/cIWRGqtIPb5DLcW3RQw
-         NoueBoUx5zEFxEaQqgPQR3UUQn1AuarkdhqdrL8SPdcI6zAMDf8tXSA9AlSRVc6zN+7c
-         OjQmyUICYDhu+GYIWIsJFnFrT8ndf+ibtM5vfxw3+2vK1seElTN6gfzii9gBoGecgM6n
-         AKi5VdFdfN1zG08N4fozlwRoL9/tZIjUph9acE1d9MitMa/5slmFpMJ7T14PdrNAG+ce
-         4mpQ==
-X-Gm-Message-State: APjAAAUrkqda0isCEuNedlwYxqNXd2EWpiKnimJJ4GprjHHtbnnMPuDa
-        NuVzQIjbBEZBa3DzlGNkYSNx3mT6
-X-Google-Smtp-Source: APXvYqx3WYS0FhUTODG/vXhXO0nX/3DE8EOtR0CMKQmFhUNPLmQ4CSNY4oRWIS7LhK768J00CbZ4Qg==
-X-Received: by 2002:adf:e708:: with SMTP id c8mr13217120wrm.25.1566686215101;
-        Sat, 24 Aug 2019 15:36:55 -0700 (PDT)
+        bh=KwsgNVP55X4n/zHcDMDC1geFNq5dkZ1cM08wiKqC2W8=;
+        b=KdN3jHkr9Q7otLRODkxvuxEXEFAEiUhDqnTZ52HXXDK1tjI0o2iq9mG4ZrGgBVan7l
+         hw12FIFfLcbQv0AKH7tCPykOFeE7Xbxnt+z5ouKsnfnBMJT4CifTIgIWRQZHljvHSJ78
+         UXlwjUf5y8XZvLU8nwAfLPQ/Hg+v4SZPMzPO7uxSipQ3Me3+H/jBMMXeizjbzrhxY4D8
+         oRZ0iwLurU9WoYh29ooDBJU57rVOk9vGetcKy86k0INrjWS88i1RggIqalaexFW/v3Mt
+         efUkRumBIPYrBSDJEsOBbBIoDBW5AQNVyWm8mjx72/fccUDM6s/kwYp0JITG0zDck6Mi
+         oXOw==
+X-Gm-Message-State: APjAAAUEL0FTRIopMPIadhmnbLAc6oyunViwFAVzL74qCZFbTGDhp475
+        cnKcGush80fq0OT18pNlL7GbRbwT
+X-Google-Smtp-Source: APXvYqxUfYUU6Rt0y7esl8CDpOucW+2KE5nnd5MHWXCGjUFJD+8wcoRib25P9lMszqR8rPfHn4rZaQ==
+X-Received: by 2002:a7b:cb89:: with SMTP id m9mr13216231wmi.50.1566686336108;
+        Sat, 24 Aug 2019 15:38:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a19sm21242449wra.2.2019.08.24.15.36.54
+        by smtp.gmail.com with ESMTPSA id c1sm5818587wmc.40.2019.08.24.15.38.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Aug 2019 15:36:54 -0700 (PDT)
-Date:   Sat, 24 Aug 2019 15:36:54 -0700 (PDT)
-X-Google-Original-Date: Sat, 24 Aug 2019 22:36:53 GMT
-Message-Id: <pull.129.git.gitgitgadget@gmail.com>
+        Sat, 24 Aug 2019 15:38:55 -0700 (PDT)
+Date:   Sat, 24 Aug 2019 15:38:55 -0700 (PDT)
+X-Google-Original-Date: Sat, 24 Aug 2019 22:38:54 GMT
+Message-Id: <pull.135.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Do use ALL_CFLAGS in hdr-check
+Subject: [PATCH 0/1] mingw: handle non-ASCII PATH components correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,22 +66,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I was playing with the Makefile target hdr-check, it looked as if it
-missed the correct CFLAGS. Without them, on Windows an attempt is made to
-include syslog.h, which does not make sense at all.
+We need to be careful on Windows: there are "ANSI" versions of the API
+functions that take char *, and "Unicode" versions that take "wchar_t `
+strings as parameters. The ANSI versions are subject to the current
+codepage, i.e. almost guaranteed to *not handle UTF-8. Internally, we do
+want to use UTF-8, though, at least in compat/mingw.c, so we really have to
+use the Unicode versions of the Win32 API.
 
-This patch addresses that.
+Adam Roben (1):
+  mingw: fix launching of externals from Unicode paths
 
-Johannes Schindelin (1):
-  hdr-check: make it work on Windows
-
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ compat/mingw.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 
-base-commit: c65a2884eae159bad540135479bc8afe20ff62d1
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-129%2Fdscho%2Ffix-hdr-check-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-129/dscho/fix-hdr-check-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/129
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-135%2Fdscho%2Ffix-externals-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-135/dscho/fix-externals-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/135
 -- 
 gitgitgadget
