@@ -2,155 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 504A01F461
-	for <e@80x24.org>; Sun, 25 Aug 2019 11:57:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EECA1F461
+	for <e@80x24.org>; Sun, 25 Aug 2019 12:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727048AbfHYL5d (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 07:57:33 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:34221 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726744AbfHYL5d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 07:57:33 -0400
-X-Originating-IP: 1.186.12.26
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id C0DCD20002;
-        Sun, 25 Aug 2019 11:57:29 +0000 (UTC)
-Date:   Sun, 25 Aug 2019 17:27:27 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 0/4] git-gui: Add ability to revert selected hunks and
- lines
-Message-ID: <20190825115726.okwwala7y5wt6gzl@localhost.localdomain>
-References: <20190819214110.26461-1-me@yadavpratyush.com>
- <20190822220107.4153-1-me@yadavpratyush.com>
- <xmqq4l28ommg.fsf@gitster-ct.c.googlers.com>
- <20190822225143.3blolae3f65z6zqq@localhost.localdomain>
- <CAKPyHN27Pz8BtzdUCewZMd2wi5hx8LyJTfJqwkyTbbQLJk+=VA@mail.gmail.com>
- <20190823164409.q23sxkfsmhvne4ud@localhost.localdomain>
- <CAKPyHN0QbCDzcG8=zPP4-WHKqMk3R0sJ0BjXDR=zak3OfEa2bg@mail.gmail.com>
+        id S1727056AbfHYMHr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 08:07:47 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42350 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726182AbfHYMHr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 08:07:47 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b16so12649260wrq.9
+        for <git@vger.kernel.org>; Sun, 25 Aug 2019 05:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0B7UYfuYZbGOpIBNdpPlCo4WT94cvMFrfRksbS056U4=;
+        b=O/0GQiKsoBpxcFRLtO899ZEPuQk0gWX6u446uGoVx1xBENPABEM7VxjFahjRzCLlB6
+         Q54QkNF4K5ussgFdNqbkj8Ja+wE9WthE8jrYo98zJqKDNzBwi8ZCKzaaJN49XTJd2i1d
+         AlYgsbutty4kaN4Sl5Q6w5n+K/mxQSMsrWxaaGdI3at7S68UGADBSwit/rwdOs9jliCT
+         KmC4V7SXVxB/ybsqavWEx+lMDeU/gZ/FSlFO6rsREUs8vaULkJYxxQlc6CyM6joQCQfC
+         J92AtKSiAiZb8oLgWd1qcv0mQ3YjbM/93cbnRCFRO0DeYbEywcBMSYJa9yqm6NplVkpm
+         Vqcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0B7UYfuYZbGOpIBNdpPlCo4WT94cvMFrfRksbS056U4=;
+        b=H6qwkL3Japti3lDDtX90rHj6cb0HzRpjCOIijy7VAoZYpoe1KTAf/g74QkvUo0sxDx
+         tUZx9CgIjdPc5wQ1tmnZfEjNjETuRavnsOzU+fSgDkZb7QISF/sBxyc8Sy4Ow+M7E6iw
+         hs/Nhc3hc+0Ba9WEbd1r5NQ1LY2r+cf34j50tkFBg/421qZQZv536LTSJDTO+777dfvo
+         ySF+BGv/3Xr6UZej8F6ubsTZ+CRYhX2ax8eNL26vqCEuVXyeanlN93GNyapWBOTpNNqb
+         YCkkfzy7ZS4OqFwmXoEI8PJKEqUZDcvo52cujIkja0QOafPjHQvfXFvNvA5Crvuu383q
+         4FHA==
+X-Gm-Message-State: APjAAAVCa0zQnTMDkzgM09iu7gdzLreDAUM5sVcGTO9qccc9fnz+1A4p
+        Z60c6zdzK5uKr+SwqtyggwI=
+X-Google-Smtp-Source: APXvYqzi/jEtjyEqEbQRUPAfoBpjCwho5YD2GVXcxUZ6vvq0c/FTzxZEIIL658Q6qD9gxrbQUE4wvw==
+X-Received: by 2002:adf:ecc7:: with SMTP id s7mr16720967wro.215.1566734865011;
+        Sun, 25 Aug 2019 05:07:45 -0700 (PDT)
+Received: from szeder.dev (x4db347f6.dyn.telefonica.de. [77.179.71.246])
+        by smtp.gmail.com with ESMTPSA id w13sm23324091wre.44.2019.08.25.05.07.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Aug 2019 05:07:44 -0700 (PDT)
+Date:   Sun, 25 Aug 2019 14:07:41 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Cesar Eduardo Barros <cesarb@cesarb.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 20/23] .gitignore: touch up the entries regarding
+ Visual Studio
+Message-ID: <20190825120741.GM20404@szeder.dev>
+References: <pull.287.git.gitgitgadget@gmail.com>
+ <pull.287.v2.git.gitgitgadget@gmail.com>
+ <dc4a9cc6205afac03d1154ca935e4334536fa693.1564430879.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAKPyHN0QbCDzcG8=zPP4-WHKqMk3R0sJ0BjXDR=zak3OfEa2bg@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <dc4a9cc6205afac03d1154ca935e4334536fa693.1564430879.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/08/19 11:12PM, Bert Wesarg wrote:
-> On Fri, Aug 23, 2019, 18:44 Pratyush Yadav <me@yadavpratyush.com> wrote:
+On Mon, Jul 29, 2019 at 01:08:14PM -0700, Philip Oakley via GitGitGadget wrote:
+> Add the Microsoft .manifest pattern, and do not anchor the 'Debug'
+> and 'Release' entries at the top-level directory, to allow for
+> multiple projects (one per target).
 > 
-> > On 23/08/19 08:04AM, Bert Wesarg wrote:
-> > > On Fri, Aug 23, 2019 at 12:51 AM Pratyush Yadav <me@yadavpratyush.com>
-> > wrote:
-> > > >
-> > > > On 22/08/19 03:34PM, Junio C Hamano wrote:
-> > [...]
-> > > as I'm the one who use this feature for more than 7 years, I can only
-> > > object to this. I'm happy to have the confirmation dialog for the
-> > > whole-file revert (the current state) but having the dialog also for
-> > > partial revert would be too disruptive. And disabling both at the same
-> > > time would not be an option for me.
-> > >
-> > > The thing is, that the partial revert "just don't happen by accident".
-> > > Here are the minimum user actions needed to get to this dialog:
-> > >
-> > > 1. whole-file revert
-> > >
-> > > - do a Ctrl+J, more or less anywhere in the GUI
-> >
-> > Hmm, have to agree with you on this. It is kind of easy to trigger. But
-> > read below why I think partial reverts are just as easy to trigger.
-> >
-> > > 2. hunk revert/revert one unselected line
-> > >
-> > > - right click anywhere in the diff pane (thats around 60% of the window
-> > area)
-> > > - move the mouse pointer down 3/4 menu items
-> > > - click this menu item
-> >
-> > But what if you wanted to click "Stage hunk", and instead click "Revert
-> > hunk" instead. This is what I mean by "accidentally".
-> >
-> > This is even more a risk in the current layout of the buttons, which are
-> > in the order:
-> >
-> > Stage Hunk
-> > Revert Hunk
-> > Stage Lines
-> > Revert Lines
-> >
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  .gitignore | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> but this is your current layout! my layout in the patch from 2012 was (and
-> still is in my git-gui):
-> 
-> Stage Hunk
-> Stage Line
-> ----------
-> Revert Hunk
-> Revert Line
-> 
-> 
-> thats a separator inbetween!
- 
-Looking at how this discussion has been going, I see that people really 
-don't like the dialog, even with a config option. So I will send a 
-re-roll with this layout of buttons and ability to undo last revert. I 
-hope that will satisfy most people.
+> diff --git a/.gitignore b/.gitignore
+> index e096e0a51c..e7bb15d301 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -230,6 +230,7 @@
+>  *.ipdb
+>  *.dll
+>  .vs/
+> -/Debug/
+> -/Release/
+> +*.manifest
 
-> bert
-> 
-> 
-> 
-> > In this layout, if you wanted to click Stage, you might end up clicking
-> > Revert instead, losing part of your work. Even if we switch up the
-> > layout a bit, I feel like the potential of "mis-aiming" your mouse is
-> > there, but it can certainly be improved.
-> >
-> > > 3. partially revert selected lines
-> > >
-> > > - select some content in the diff pane by starting by pressing and
-> > > holding a left click
-> > > - end the selection by releasing the left click
-> > > - move the mouse pointer down 3/4 menu items
-> > > - click this menu item
-> > >
-> > > Thats always at least 2 user actions more than the whole-file revert.
-> > > Thus this cannot happen by accident quite easily in comparison to the
-> > > whole-file revert. And thats the reason why this dialog exists, from
-> > > my point of view.
-> > >
-> > > I can see the need to disable the dialog for the whole-file revert,
-> > > and IIRC that was also requested a long time ago on this list. But I
-> > > don't see a reason to have this dialog also for the partial reverts as
-> > > a safety measure.
-> >
-> > I do (not too strongly, but I do), as I explained why above.
-> >
-> > It shouldn't be too difficult to have separate knobs for whole-file and
-> > partial reverts, but they will add two config options. Not necessarily a
-> > bad thing, I just thought the people who wanted to disable partial
-> > reverts would also want to disable whole-file reverts.
-> >
-> > But I have another suggestion in mind. I'll reply to one of the other
-> > emails in this thread about it. Please read it there, I'd rather not
-> > type it twice.
-> >
-> > --
-> > Regards,
-> > Pratyush Yadav
-> >
+This new line ignores the tracked file 'compat/win32/git.manifest'
+that was added fairly recently in fe90397604 (mingw: embed a manifest
+to trick UAC into Doing The Right Thing, 2019-06-27).
 
--- 
-Regards,
-Pratyush Yadav
+I wonder whether that's intentional or accidental.
+
+I'm inclined to think that it's merely accidental, because, as far as
+I understand, this is an old-ish patch from times when there wasn't
+any 'git.manifest' file in tree, and simply noone noticed that in the
+meantime we got one.  But I have no idea about how a Git build with
+Visual Studio is supposed to work, so it doesn't really matter what
+I'm inclined to think :)
+
