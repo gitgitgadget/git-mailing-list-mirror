@@ -4,130 +4,133 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 210C51F461
-	for <e@80x24.org>; Sun, 25 Aug 2019 18:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96F431F461
+	for <e@80x24.org>; Sun, 25 Aug 2019 19:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728918AbfHYS70 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 14:59:26 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37236 "EHLO
+        id S1728802AbfHYTKD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 15:10:03 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36945 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbfHYS7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 14:59:25 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z11so13239870wrt.4
-        for <git@vger.kernel.org>; Sun, 25 Aug 2019 11:59:24 -0700 (PDT)
+        with ESMTP id S1726345AbfHYTKD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 15:10:03 -0400
+Received: by mail-wr1-f68.google.com with SMTP id z11so13255241wrt.4
+        for <git@vger.kernel.org>; Sun, 25 Aug 2019 12:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WGItKpIFJgEkbOcz6/stHtk7JFePxAjBHaToQtg5KQo=;
-        b=dxHrXoquzNSHtBBtnLPocwxpQ6KST0ikVC6HThq2LiCJKJ1zaAWb2iJMCDxCOlFCsm
-         U0I2QSb80j6O3ZtR2NIHddLGEAlegsv+fi8MeLjdJahR1bAB2g/fomMWTonQmaphW88m
-         3MwGfHY5oLj8bQA0ElKc8ZGE80XssZQ+C963tyq4LE+dHmgEXFl7tORFyImY1N3brweq
-         u24kSVlLAtAxHVrDqkAwlqH/HxwdkBXzYWWYkyZrHhnQcloIMYV1mpBg5EpKdNGWxY5v
-         I0iEa2+Jsy/bGBaEEEvym9w2L2JG+unxUAzDhfIPjYRPTJOmPopVNOIbjpYEr8hvrGMQ
-         eTaw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7+MWIQ3WDUWU6i8OPx2txybaKTdhvO236ksQFFF5I+E=;
+        b=ugIg4kwu4ul+33PyC6h7NVH5l/zBXOR1X/hhYN6A5uc7HVVCERsrz4rmaQy8q7/It/
+         mvvTZ9iYZDqA0F3HL1j46iMy2Os5mK0iqQJ7xuPzj6pg4Evf2GSQ9HXGm4+/4414s2OX
+         WkPzvyo7b/7lLKhli5mYjgkd50BMADF6VhiQMabPa9k6SYfLhA5AGyodkeskhq+CNeZB
+         THdr4Vtq5TtMHN8K1Ie0KsdnHsVZfLQXmPWhiZffN9LufpKb7YAml2iev1A+0zUyR+Yf
+         Kvc1TZxIuCVTjddNm3a/eoGBMn9CMA3WIxUbuWax0NHhqGe6s5FOiB+oeuJpE842GCrn
+         w6Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WGItKpIFJgEkbOcz6/stHtk7JFePxAjBHaToQtg5KQo=;
-        b=i8nT1uMOAumOrKPMxOa6Jrpd0YtiFA+2I1Vfugf4ZN6s8c+fsvBB5mTDrtCfx5Au/q
-         V5l/GzfWokwmomeE7Z+cDm4YrsyfbC2GyxUQ//RPkYgq6HLWz2/xLsIdCsTp5s4FQWOG
-         P4WGlsVE+OlOE9Bc9mzji/KiIkXv8oa7QUZzHVLwthP/Li6SCgs3XfxdDE4pathmi8wD
-         ohOw3gzQOnFwryyn6EiTzJXk+DsiNRX1+PMoQ1H+LIqehn88946Pakngs2XZsWBPh8CL
-         3uH3vxA9yN2zzRfUnbdkKZZNDyFH6pl5RjilSe4GUV/FjkCkFDwOSTD5wL1w9EQv/Hb8
-         jGJw==
-X-Gm-Message-State: APjAAAXCzamwb5G1OJ+W0woWElh/ZRYsLhwu7qwLa20dFxzw0Aqt77mZ
-        2oxnqof8GlM8Mq/8sNzAYdc=
-X-Google-Smtp-Source: APXvYqyIf1o9Qx5cZ4msX/99R9ZHGUWR1Vufuh4U6YKpQFxwiAHPORwMHxuowSF0ruHKpD5dCDDwXw==
-X-Received: by 2002:a5d:4946:: with SMTP id r6mr18811933wrs.266.1566759563850;
-        Sun, 25 Aug 2019 11:59:23 -0700 (PDT)
-Received: from localhost.localdomain (x4db347f6.dyn.telefonica.de. [77.179.71.246])
-        by smtp.gmail.com with ESMTPSA id i5sm11966547wrn.48.2019.08.25.11.59.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 25 Aug 2019 11:59:23 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t7300-clean: demonstrate deleting nested repo with an ignored file breakage
-Date:   Sun, 25 Aug 2019 20:59:18 +0200
-Message-Id: <20190825185918.3909-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.23.0.331.g4e51dcdf11
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7+MWIQ3WDUWU6i8OPx2txybaKTdhvO236ksQFFF5I+E=;
+        b=kMDVorw+XtKrpIlNvvkRGB9lNmYVQvGuNVrSlJ07ZF/S6wLy/AtQq9nnWMByMNM0cU
+         tzcG042xUkaxdqDWg4Fu+BLcu9LXRUDc+Tt8hrCBxIeiR/HNeulSb4+LS1EedyEJoLP/
+         t1tcsvjFkHHXKaidkubiaTsPE+de5jwb0mPnhKwz64Km1y6yc6k7MyHPzz8GfYey4qf5
+         J+csCbtq8WwSTABdjxxtankadlToWQkTcJgdXk8oGvMYYkqe8Rvvi86XkKohNmFqBrX0
+         bvSdytctrfm/EZatzbA/CQ8EeLH4xgQ6RQfl3lh5Wtd2RiEnjv+t/le0O3aFrsUKFuoH
+         r/FA==
+X-Gm-Message-State: APjAAAUiyj+KYFdwRIbA8xnBVrqFEKZKTUWzSbXlL3Jhj723qw9zWHnX
+        SSCpcMV50d6qpJF/6JNasUI=
+X-Google-Smtp-Source: APXvYqwqju0CTqsnz6b+q+TVFPy9FgdzxwQiXKuNoWMf2QHZAaAoGRd+auSb3y2KUEJ2OvlADDoDog==
+X-Received: by 2002:adf:e504:: with SMTP id j4mr17510776wrm.222.1566760200796;
+        Sun, 25 Aug 2019 12:10:00 -0700 (PDT)
+Received: from szeder.dev (x4db347f6.dyn.telefonica.de. [77.179.71.246])
+        by smtp.gmail.com with ESMTPSA id u7sm7547288wrp.96.2019.08.25.12.09.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Aug 2019 12:09:59 -0700 (PDT)
+Date:   Sun, 25 Aug 2019 21:09:57 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Cesar Eduardo Barros <cesarb@cesarb.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 20/23] .gitignore: touch up the entries regarding
+ Visual Studio
+Message-ID: <20190825190957.GN20404@szeder.dev>
+References: <pull.287.git.gitgitgadget@gmail.com>
+ <pull.287.v2.git.gitgitgadget@gmail.com>
+ <dc4a9cc6205afac03d1154ca935e4334536fa693.1564430879.git.gitgitgadget@gmail.com>
+ <20190825120741.GM20404@szeder.dev>
+ <9eed02e7-7e2d-4ae3-6c08-ab17b3c92fb6@iee.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <9eed02e7-7e2d-4ae3-6c08-ab17b3c92fb6@iee.email>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git clean -fd' must not delete an untracked directory if it belongs
-to a different Git repository or worktree.  Unfortunately, if a
-'.gitignore' rule in the outer repository happens to match a file in a
-nested repository or worktree, then something goes awry and 'git clean
--fd' does delete the content of the nested repository's worktree
-except that ignored file, potentially leading to data loss.
+On Sun, Aug 25, 2019 at 02:20:32PM +0100, Philip Oakley wrote:
+> Hi Szeder,
+> 
+> On 25/08/2019 13:07, SZEDER Gábor wrote:
+> >On Mon, Jul 29, 2019 at 01:08:14PM -0700, Philip Oakley via GitGitGadget wrote:
+> >>Add the Microsoft .manifest pattern, and do not anchor the 'Debug'
+> >>and 'Release' entries at the top-level directory, to allow for
+> >>multiple projects (one per target).
+> >>
+> >>Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> >>Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >>---
+> >>  .gitignore | 5 +++--
+> >>  1 file changed, 3 insertions(+), 2 deletions(-)
+> >>
+> >>diff --git a/.gitignore b/.gitignore
+> >>index e096e0a51c..e7bb15d301 100644
+> >>--- a/.gitignore
+> >>+++ b/.gitignore
+> >>@@ -230,6 +230,7 @@
+> >>  *.ipdb
+> >>  *.dll
+> >>  .vs/
+> >>-/Debug/
+> >>-/Release/
+> >>+*.manifest
+> >This new line ignores the tracked file 'compat/win32/git.manifest'
+> >that was added fairly recently in fe90397604 (mingw: embed a manifest
+> >to trick UAC into Doing The Right Thing, 2019-06-27).
+> >
+> >I wonder whether that's intentional or accidental.
+> >
+> >I'm inclined to think that it's merely accidental, because, as far as
+> >I understand, this is an old-ish patch from times when there wasn't
+> >any 'git.manifest' file in tree, and simply noone noticed that in the
+> >meantime we got one.  But I have no idea about how a Git build with
+> >Visual Studio is supposed to work, so it doesn't really matter what
+> >I'm inclined to think :)
+> >
+> At the time, it was just one of the many non-source files that were
+> generated by Visual Studio that cluttered the status list and also could
+> accidentally added to the tracked files.
+> 
+> The newly added .manifest file does appear to be there to 'trick' the
+> Windows User Access Control (UAC) which otherwise can be an annoyance to
+> 'regular' users.
 
-Add a test to 't7300-clean.sh' to demonstrate this breakage.
+Sorry, I'm not sure how to interpret your reply, and can't decide
+whether it tries to justify why that tracked file should be ignored,
+or explains that ignoring it was accidental.
 
-This issue is a regression introduced in 6b1db43109 (clean: teach
-clean -d to preserve ignored paths, 2017-05-23).
+Anyway, ignoring that tracked file apparently triggered a nested
+worktree-related bug in 'git clean', which can lead to data loss:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-
-BEWARE: Our toplevel '.gitignore' currently contains the '*.manifest'
-rule [1], which ignores the file 'compat/win32/git.manifest' [2], so
-if you use nested worktrees in your git repo, then a 'git clean -fd'
-will delete them.
-
-[1] 516dfb8416 (.gitignore: touch up the entries regarding Visual
-    Studio, 2019-07-29)
-[2] fe90397604 (mingw: embed a manifest to trick UAC into Doing The
-    Right Thing, 2019-06-27)
-
-
- t/t7300-clean.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index a2c45d1902..d01fd120ab 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -669,6 +669,28 @@ test_expect_success 'git clean -d skips untracked dirs containing ignored files'
- 	test_path_is_missing foo/b/bb
- '
- 
-+test_expect_failure 'git clean -d skips nested repo containing ignored files' '
-+	test_when_finished "rm -rf nested-repo-with-ignored-file" &&
-+
-+	git init nested-repo-with-ignored-file &&
-+	(
-+		cd nested-repo-with-ignored-file &&
-+		>file &&
-+		git add file &&
-+		git commit -m Initial &&
-+
-+		# This file is ignored by a .gitignore rule in the outer repo
-+		# added in the previous test.
-+		>ignoreme
-+	) &&
-+
-+	git clean -fd &&
-+
-+	test_path_is_file nested-repo-with-ignored-file/.git/index &&
-+	test_path_is_file nested-repo-with-ignored-file/ignoreme &&
-+	test_path_is_file nested-repo-with-ignored-file/file
-+'
-+
- test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
- 	test_config core.longpaths false &&
- 	a50=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&
--- 
-2.23.0.331.g4e51dcdf11
+https://public-inbox.org/git/20190825185918.3909-1-szeder.dev@gmail.com/
 
