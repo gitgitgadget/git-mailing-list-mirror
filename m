@@ -2,125 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 719861F461
-	for <e@80x24.org>; Sun, 25 Aug 2019 13:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12721F461
+	for <e@80x24.org>; Sun, 25 Aug 2019 13:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbfHYNRJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 09:17:09 -0400
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:36229 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbfHYNRJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 09:17:09 -0400
-X-Originating-IP: 1.186.12.26
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id CD9E240003;
-        Sun, 25 Aug 2019 13:17:04 +0000 (UTC)
-Date:   Sun, 25 Aug 2019 18:47:02 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v9 5/9] rebase: refactor can_fast_forward into goto tower
-Message-ID: <20190825130235.bsbknf7sky44kwt7@localhost.localdomain>
-References: <20190508001252.15752-1-avarab@gmail.com>
- <cover.1566724236.git.liu.denton@gmail.com>
- <9bd34b4a404136c974b71975c7a3d809a874cc3d.1566724236.git.liu.denton@gmail.com>
+        id S1728376AbfHYNUg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 09:20:36 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:17337 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727186AbfHYNUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 09:20:35 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1i1sRc-0000uv-8W; Sun, 25 Aug 2019 14:20:33 +0100
+Subject: Re: [PATCH v2 20/23] .gitignore: touch up the entries regarding
+ Visual Studio
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Cesar Eduardo Barros <cesarb@cesarb.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.287.git.gitgitgadget@gmail.com>
+ <pull.287.v2.git.gitgitgadget@gmail.com>
+ <dc4a9cc6205afac03d1154ca935e4334536fa693.1564430879.git.gitgitgadget@gmail.com>
+ <20190825120741.GM20404@szeder.dev>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <9eed02e7-7e2d-4ae3-6c08-ab17b3c92fb6@iee.email>
+Date:   Sun, 25 Aug 2019 14:20:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9bd34b4a404136c974b71975c7a3d809a874cc3d.1566724236.git.liu.denton@gmail.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20190825120741.GM20404@szeder.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/08/19 05:12AM, Denton Liu wrote:
-> Before, can_fast_forward was written with an if-else statement. However,
-> in the future, we may be adding more termination cases which would lead
-> to deeply nested if statements.
-> 
-> Refactor to use a goto tower so that future cases can be easily
-> inserted.
-> 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  builtin/rebase.c | 24 +++++++++++++++---------
->  1 file changed, 15 insertions(+), 9 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 670096c065..22c4f1ff93 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1264,21 +1264,27 @@ static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
->  			    struct object_id *merge_base)
->  {
->  	struct commit *head = lookup_commit(the_repository, head_oid);
-> -	struct commit_list *merge_bases;
-> -	int res;
-> +	struct commit_list *merge_bases = NULL;
-> +	int res = 0;
->  
->  	if (!head)
-> -		return 0;
-> +		goto done;
->  
->  	merge_bases = get_merge_bases(onto, head);
-> -	if (merge_bases && !merge_bases->next) {
-> -		oidcpy(merge_base, &merge_bases->item->object.oid);
-> -		res = oideq(merge_base, &onto->object.oid);
-> -	} else {
-> +	if (!merge_bases || merge_bases->next) {
->  		oidcpy(merge_base, &null_oid);
-> -		res = 0;
-> +		goto done;
->  	}
-> -	free_commit_list(merge_bases);
-> +
-> +	oidcpy(merge_base, &merge_bases->item->object.oid);
-> +	if (!oideq(merge_base, &onto->object.oid))
-> +		goto done;
-> +
-> +	res = 1;
-> +
-> +done:
-> +	if (merge_bases)
-> +		free_commit_list(merge_bases);
+Hi Szeder,
 
-free_commit_list() returns immediately when a NULL pointer is passed in, 
-so I'm not sure if this check is really necessary. I think it is a 
-reasonable assumption to make that free* functions work well with NULL 
-inputs.
+On 25/08/2019 13:07, SZEDER Gábor wrote:
+> On Mon, Jul 29, 2019 at 01:08:14PM -0700, Philip Oakley via GitGitGadget wrote:
+>> Add the Microsoft .manifest pattern, and do not anchor the 'Debug'
+>> and 'Release' entries at the top-level directory, to allow for
+>> multiple projects (one per target).
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>   .gitignore | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/.gitignore b/.gitignore
+>> index e096e0a51c..e7bb15d301 100644
+>> --- a/.gitignore
+>> +++ b/.gitignore
+>> @@ -230,6 +230,7 @@
+>>   *.ipdb
+>>   *.dll
+>>   .vs/
+>> -/Debug/
+>> -/Release/
+>> +*.manifest
+> This new line ignores the tracked file 'compat/win32/git.manifest'
+> that was added fairly recently in fe90397604 (mingw: embed a manifest
+> to trick UAC into Doing The Right Thing, 2019-06-27).
+>
+> I wonder whether that's intentional or accidental.
+>
+> I'm inclined to think that it's merely accidental, because, as far as
+> I understand, this is an old-ish patch from times when there wasn't
+> any 'git.manifest' file in tree, and simply noone noticed that in the
+> meantime we got one.  But I have no idea about how a Git build with
+> Visual Studio is supposed to work, so it doesn't really matter what
+> I'm inclined to think :)
+>
+At the time, it was just one of the many non-source files that were 
+generated by Visual Studio that cluttered the status list and also could 
+accidentally added to the tracked files.
 
->  	return res && is_linear_history(onto, head);
->  }
->  
-
-Out of curiosity, since you are going with a goto tower, why not do 
-something like:
-
-done_merge_bases:
-free_commit_list(merge_bases);
-done:
-return res && is_linear_history(onto, head);
-
-You jump to done_merge_bases after you have initialized merge_bases, and 
-directly to done before initializing it.
-
-I'm not advocating for either way, just curious if there is a specific 
-reason to do it your way. Anyway, if you drop the if (merge_bases), then 
-it doesn't really matter I suppose.
-
--- 
-Regards,
-Pratyush Yadav
+The newly added .manifest file does appear to be there to 'trick' the 
+Windows User Access Control (UAC) which otherwise can be an annoyance to 
+'regular' users.
+Philip
