@@ -2,97 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 745B21F461
-	for <e@80x24.org>; Sun, 25 Aug 2019 21:59:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28B011F461
+	for <e@80x24.org>; Sun, 25 Aug 2019 22:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729139AbfHYV7H (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 17:59:07 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:38759 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729077AbfHYV7H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 17:59:07 -0400
-X-Originating-IP: 1.186.12.26
-Received: from localhost (unknown [1.186.12.26])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 5CCDBC0005;
-        Sun, 25 Aug 2019 21:59:04 +0000 (UTC)
-Date:   Mon, 26 Aug 2019 03:29:02 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: Update in-memory config when changing config
- options
-Message-ID: <20190825215902.ccvhgf5wesjmatqj@localhost.localdomain>
-References: <20190822223316.11153-1-me@yadavpratyush.com>
+        id S1728774AbfHYWV1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 18:21:27 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:13790 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727321AbfHYWV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 18:21:26 -0400
+Received: from [92.7.169.237] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1i20t1-00070K-89; Sun, 25 Aug 2019 23:21:24 +0100
+Subject: Re: [PATCH v2 20/23] .gitignore: touch up the entries regarding
+ Visual Studio
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Cesar Eduardo Barros <cesarb@cesarb.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.287.git.gitgitgadget@gmail.com>
+ <pull.287.v2.git.gitgitgadget@gmail.com>
+ <dc4a9cc6205afac03d1154ca935e4334536fa693.1564430879.git.gitgitgadget@gmail.com>
+ <20190825120741.GM20404@szeder.dev>
+ <9eed02e7-7e2d-4ae3-6c08-ab17b3c92fb6@iee.email>
+ <20190825190957.GN20404@szeder.dev>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <e221aaf8-7d0b-6feb-3f58-1e9e4382939b@iee.email>
+Date:   Sun, 25 Aug 2019 23:21:23 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190822223316.11153-1-me@yadavpratyush.com>
-User-Agent: NeoMutt/20180716
+In-Reply-To: <20190825190957.GN20404@szeder.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio,
+Hi Szeder,
 
-This patch hasn't got any comments, but it looks correct to me, and fit 
-for merging IMO.
+On 25/08/2019 20:09, SZEDER Gábor wrote:
+> On Sun, Aug 25, 2019 at 02:20:32PM +0100, Philip Oakley wrote:
+>> Hi Szeder,
+>>
+>> On 25/08/2019 13:07, SZEDER Gábor wrote:
+>>> On Mon, Jul 29, 2019 at 01:08:14PM -0700, Philip Oakley via GitGitGadget wrote:
+>>>> Add the Microsoft .manifest pattern, and do not anchor the 'Debug'
+>>>> and 'Release' entries at the top-level directory, to allow for
+>>>> multiple projects (one per target).
+>>>>
+>>>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>>> ---
+>>>>   .gitignore | 5 +++--
+>>>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/.gitignore b/.gitignore
+>>>> index e096e0a51c..e7bb15d301 100644
+>>>> --- a/.gitignore
+>>>> +++ b/.gitignore
+>>>> @@ -230,6 +230,7 @@
+>>>>   *.ipdb
+>>>>   *.dll
+>>>>   .vs/
+>>>> -/Debug/
+>>>> -/Release/
+>>>> +*.manifest
+>>> This new line ignores the tracked file 'compat/win32/git.manifest'
+>>> that was added fairly recently in fe90397604 (mingw: embed a manifest
+>>> to trick UAC into Doing The Right Thing, 2019-06-27).
+>>>
+>>> I wonder whether that's intentional or accidental.
+>>>
+>>> I'm inclined to think that it's merely accidental, because, as far as
+>>> I understand, this is an old-ish patch from times when there wasn't
+>>> any 'git.manifest' file in tree, and simply noone noticed that in the
+>>> meantime we got one.  But I have no idea about how a Git build with
+>>> Visual Studio is supposed to work, so it doesn't really matter what
+>>> I'm inclined to think :)
+>>>
+>> At the time, it was just one of the many non-source files that were
+>> generated by Visual Studio that cluttered the status list and also could
+>> accidentally added to the tracked files.
+>>
+>> The newly added .manifest file does appear to be there to 'trick' the
+>> Windows User Access Control (UAC) which otherwise can be an annoyance to
+>> 'regular' users.
+> Sorry, I'm not sure how to interpret your reply, and can't decide
+> whether it tries to justify why that tracked file should be ignored,
+> or explains that ignoring it was accidental.
+>
+> Anyway, ignoring that tracked file apparently triggered a nested
+> worktree-related bug in 'git clean', which can lead to data loss:
+>
+> https://public-inbox.org/git/20190825185918.3909-1-szeder.dev@gmail.com/
+>
+Basically manifests are a build artefact from Visual Studio [1], so it 
+was just another file to be ignored, from a _source_ control control 
+viewpoint.
 
-I updated the commit subject from 'git-gui: Update...' to 'git-gui: 
-update...' to match with the style of other commit messages, as you 
-suggested in the other series.
+I hadn't fully appreciated the reason for your question, but I can now 
+see how the general 'ignore most, but keep an occasional' file type can 
+be a problem for the `git clean` filter, along with sub-module repos in 
+sub-directories. It probably extends beyond this special case .manifest 
+file.
 
-You can pull the updated commit from 
-https://github.com/prati0100/git-gui/tree/py/reload-config commit 
-3d8a8d8ff795f93554dd0ab3bbcdaec6a53c5642.
+I doubt that dscho wants to also do file renaming to achieve the trick 
+that added that file to avoid this. the clean command should never be 
+ignoring (and possibly deleting) tracked files.
 
-I don't think it is worth the email noise to send a re-roll with just 
-the commit subject changed, but if you want, I will.
+When clean hits a nested repo (maybe with .git directory - not sure of 
+some of the sub-module changes) then it should stop referring to that 
+top level gitignore, at least that's my expectation. The commit 
+description in the referenced patch appears to get the two parts 
+inter-twined.
 
-On 23/08/19 04:03AM, Pratyush Yadav wrote:
-> When the user updates any config variable from the options menu, the new
-> config gets saved, but the in-memory state of the config variables is
-> not updated. This results in the old settings being used until the user
-> either opens the options menu again (which triggers a call to
-> load_config), or re-starts git-gui.
-> 
-> This change fixes that problem by re-loading the config variables when
-> the Save button is pressed in the options menu.
-> 
-> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> ---
-> 
-> The commit can be found in the topic branch 'py/reload-config' at
-> https://github.com/prati0100/git-gui/tree/py/reload-config
-> 
-> Once reviewed, pull the commit 92582527b91750e47c2c3e4d1e2188998e9330ce
-> or just munge the patch and apply it locally, whichever you prefer.
-> 
->  lib/option.tcl | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/lib/option.tcl b/lib/option.tcl
-> index e43971b..139cf44 100644
-> --- a/lib/option.tcl
-> +++ b/lib/option.tcl
-> @@ -344,6 +344,7 @@ proc do_save_config {w} {
->  	if {[catch {save_config} err]} {
->  		error_popup [strcat [mc "Failed to completely save options:"] "\n\n$err"]
->  	}
-> +	load_config 1
->  	reshow_diff
->  	destroy $w
->  }
-> --
-> 2.21.0
-> 
-
--- 
-Regards,
-Pratyush Yadav
+Philip
+[1] 
+https://docs.microsoft.com/en-us/cpp/build/manifest-generation-in-visual-studio?view=vs-2019
