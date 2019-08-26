@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 825741F4B7
-	for <e@80x24.org>; Mon, 26 Aug 2019 01:44:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB961F4B7
+	for <e@80x24.org>; Mon, 26 Aug 2019 01:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729083AbfHZBoK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 21:44:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58300 "EHLO
+        id S1729100AbfHZBoL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 21:44:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58288 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729058AbfHZBoJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Aug 2019 21:44:09 -0400
+        by vger.kernel.org with ESMTP id S1726265AbfHZBoH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Aug 2019 21:44:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:60b7:b124:ccfa:d51])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7C51860780;
-        Mon, 26 Aug 2019 01:44:07 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CBCEF6074A;
+        Mon, 26 Aug 2019 01:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1566783847;
-        bh=OnewIo6qRCkCQKRbTcNKQUB3wtB2MIjxzXh1u+soRZ0=;
+        s=default; t=1566783846;
+        bh=p17VuaSheP1+ohXjcp12g/UGe7MYk2eIBZfRmD4076o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=a5I7i10orq0rp+h9oeEn5hdQi6GS2Dad56PQ0cGHLsogkstRI2608ZA3Qw8Gt7j3U
-         VxSSmZ3FVg9R5Q1BjO9u26+o0N7OkhkX1v9m6QPzB+vDyXpJNTTIQAn4C5UXj12mZk
-         IKQH9mqRWYma9uWYoHcHGuhtWF3l4CKTY3hmAOpUbwUo+9XNFE6UPKz3Nm1CeK+9NL
-         JB6IjDjVwan8FGyNlNi0OdrbDDQBNXyO1C8hNcmzJzlKjYajPgTZLcxpzHKWtdOqv/
-         iH+m60p00nQ9KOqP4C0P4qO6n7GwbWRsqlhF9nebLnMv3zEMWqwnb9ezAQfwODKaRo
-         lVbaYDIQjgpxRw2583xLFan5xpaJqaO181AAEmHeyYlRjEjmJDrnC0wMg76dNWnYg9
-         XlEorTU8pF9HqCZDBkSQLJUBMVJfDp1dhakLAZKIpvYalLsrjYD4rbe9woaTLRZyNq
-         hy/JPLvtzb8hmEnKZ3rXmJcSxiJtVbxAHzMSukH/UIqu52Oyw3r
+        b=XmIEiKA5YDiuOT1vL5HzW1RCNQEeBzd3+7POxwSwRQcdcO2SkqPdWvJ6dafgThCw6
+         VzMr3D0k9a/RKktmIDCuXFybRASUPHagIq0+kvA/kVZGW6UlhRvkg0FlES702mte1i
+         Nll0121Y+oQrEWwPeQTilTusYwGu3eNS5k1ZKv64BUoUHrVx0I5glG69Yng+28gkOd
+         INYalxW6lbLxISGS9dWl4MCMDIGd5gjvrLjZeITnaKDBnWfAU4akXpq5ze1WLu+QhG
+         Pqw0XEJIkzA+YCKwzZiW6pa0Ul/rB/QlvMgtjg54IyE3tFnjijcEsQ8mODoT2sqzFv
+         o2ec8hHG9oVrC7Z/pc4DpzTOIBdPVlF4adfO73YcrKdf6Uet82CahifjAhfMiZM4S3
+         ptJfHbCMdQlKyddl75oSEEBliV5uyHVN57AAmqGUvvFmIIJjxx5U8apPwd0fmCC9sy
+         SH/rsBvvOgceGpT1hN3XUTv1Ywkh7DGJIyeDYSuTYrTLPEtPDq8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 07/14] t3430: avoid hard-coded object IDs
-Date:   Mon, 26 Aug 2019 01:43:37 +0000
-Message-Id: <20190826014344.16008-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 05/14] t3306: abstract away SHA-1-specific constants
+Date:   Mon, 26 Aug 2019 01:43:35 +0000
+Message-Id: <20190826014344.16008-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.23.0.187.g17f5b7556c
 In-Reply-To: <20190826014344.16008-1-sandals@crustytoothpaste.net>
 References: <20190818191646.868106-1-sandals@crustytoothpaste.net>
@@ -53,76 +53,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the object IDs used in the todo list instead of hard-coding
-them.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.  Convert some single-line heredocs into inline
+uses of echo now that they can be expressed succinctly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3430-rebase-merges.sh | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ t/t3306-notes-prune.sh | 45 ++++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 7b6c4847ad..c1ea2ee297 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -37,20 +37,27 @@ test_expect_success 'setup' '
- 	test_commit A &&
- 	git checkout -b first &&
- 	test_commit B &&
-+	b=$(git rev-parse --short HEAD) &&
- 	git checkout master &&
- 	test_commit C &&
-+	c=$(git rev-parse --short HEAD) &&
- 	test_commit D &&
-+	d=$(git rev-parse --short HEAD) &&
- 	git merge --no-commit B &&
+diff --git a/t/t3306-notes-prune.sh b/t/t3306-notes-prune.sh
+index 61748088eb..8f4102ff9e 100755
+--- a/t/t3306-notes-prune.sh
++++ b/t/t3306-notes-prune.sh
+@@ -11,23 +11,26 @@ test_expect_success 'setup: create a few commits with notes' '
  	test_tick &&
- 	git commit -m E &&
- 	git tag -m E E &&
-+	e=$(git rev-parse --short HEAD) &&
- 	git checkout -b second C &&
- 	test_commit F &&
-+	f=$(git rev-parse --short HEAD) &&
- 	test_commit G &&
-+	g=$(git rev-parse --short HEAD) &&
- 	git checkout master &&
- 	git merge --no-commit G &&
+ 	git commit -m 1st &&
+ 	git notes add -m "Note #1" &&
++	first=$(git rev-parse HEAD) &&
+ 	: > file2 &&
+ 	git add file2 &&
  	test_tick &&
- 	git commit -m H &&
-+	h=$(git rev-parse --short HEAD) &&
- 	git tag -m H H &&
- 	git checkout A &&
- 	test_commit conflicting-G G.t
-@@ -93,24 +100,24 @@ test_expect_success 'create completely different structure' '
+ 	git commit -m 2nd &&
+ 	git notes add -m "Note #2" &&
++	second=$(git rev-parse HEAD) &&
+ 	: > file3 &&
+ 	git add file3 &&
+ 	test_tick &&
+ 	git commit -m 3rd &&
+-	COMMIT_FILE=.git/objects/5e/e1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	third=$(git rev-parse HEAD) &&
++	COMMIT_FILE=$(echo $third | sed "s!^..!.git/objects/&/!") &&
+ 	test -f $COMMIT_FILE &&
+ 	test-tool chmtime =+0 $COMMIT_FILE &&
+ 	git notes add -m "Note #3"
  '
  
- test_expect_success 'generate correct todo list' '
--	cat >expect <<-\EOF &&
-+	cat >expect <<-EOF &&
- 	label onto
+ cat > expect <<END_OF_LOG
+-commit 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
++commit $third
+ Author: A U Thor <author@example.com>
+ Date:   Thu Apr 7 15:15:13 2005 -0700
  
- 	reset onto
--	pick d9df450 B
-+	pick $b B
- 	label E
+@@ -36,7 +39,7 @@ Date:   Thu Apr 7 15:15:13 2005 -0700
+ Notes:
+     Note #3
  
- 	reset onto
--	pick 5dee784 C
-+	pick $c C
- 	label branch-point
--	pick ca2c861 F
--	pick 088b00a G
-+	pick $f F
-+	pick $g G
- 	label H
+-commit 08341ad9e94faa089d60fd3f523affb25c6da189
++commit $second
+ Author: A U Thor <author@example.com>
+ Date:   Thu Apr 7 15:14:13 2005 -0700
  
- 	reset branch-point # C
--	pick 12bd07b D
--	merge -C 2051b56 E # E
--	merge -C 233d48a H # H
-+	pick $d D
-+	merge -C $e E # E
-+	merge -C $h H # H
+@@ -45,7 +48,7 @@ Date:   Thu Apr 7 15:14:13 2005 -0700
+ Notes:
+     Note #2
  
- 	EOF
+-commit ab5f302035f2e7aaf04265f08b42034c23256e1f
++commit $first
+ Author: A U Thor <author@example.com>
+ Date:   Thu Apr 7 15:13:13 2005 -0700
  
+@@ -70,16 +73,16 @@ test_expect_success 'remove some commits' '
+ 
+ test_expect_success 'verify that commits are gone' '
+ 
+-	test_must_fail git cat-file -p 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+-	git cat-file -p 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+-	git cat-file -p ab5f302035f2e7aaf04265f08b42034c23256e1f
++	test_must_fail git cat-file -p $third &&
++	git cat-file -p $second &&
++	git cat-file -p $first
+ '
+ 
+ test_expect_success 'verify that notes are still present' '
+ 
+-	git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+-	git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+-	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
++	git notes show $third &&
++	git notes show $second &&
++	git notes show $first
+ '
+ 
+ test_expect_success 'prune -n does not remove notes' '
+@@ -90,13 +93,10 @@ test_expect_success 'prune -n does not remove notes' '
+ 	test_cmp expect actual
+ '
+ 
+-cat > expect <<EOF
+-5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29
+-EOF
+ 
+ test_expect_success 'prune -n lists prunable notes' '
+ 
+-
++	echo $third >expect &&
+ 	git notes prune -n > actual &&
+ 	test_cmp expect actual
+ '
+@@ -109,9 +109,9 @@ test_expect_success 'prune notes' '
+ 
+ test_expect_success 'verify that notes are gone' '
+ 
+-	test_must_fail git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+-	git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+-	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
++	test_must_fail git notes show $third &&
++	git notes show $second &&
++	git notes show $first
+ '
+ 
+ test_expect_success 'remove some commits' '
+@@ -121,21 +121,18 @@ test_expect_success 'remove some commits' '
+ 	git gc --prune=now
+ '
+ 
+-cat > expect <<EOF
+-08341ad9e94faa089d60fd3f523affb25c6da189
+-EOF
+-
+ test_expect_success 'prune -v notes' '
+ 
++	echo $second >expect &&
+ 	git notes prune -v > actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'verify that notes are gone' '
+ 
+-	test_must_fail git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+-	test_must_fail git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+-	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
++	test_must_fail git notes show $third &&
++	test_must_fail git notes show $second &&
++	git notes show $first
+ '
+ 
+ test_done
