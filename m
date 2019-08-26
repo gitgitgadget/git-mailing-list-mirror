@@ -2,104 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CAD11F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 19:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1D2D1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 19:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732628AbfHZT1P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 15:27:15 -0400
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:46524 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731340AbfHZT1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 15:27:15 -0400
-Received: by mail-vk1-f194.google.com with SMTP id m195so2160914vke.13
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 12:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3ET16NCwDIWa5mRdfJBc+Y0ed5a39W9F7fOlTS366+Q=;
-        b=p6iEnz9Rbk4cQ3CIdOkazkN1AyTi+MW3qbPfh+evxrzgnwcfqdq+yuNz/313s5wf2e
-         y/wM541eYgv2C9xMrxrlgiD/sH48oV+HfbMqCKE05u06ITNIEXxXNBt4p7PxA8G1o6wU
-         94SFdyEUw7NARzjTXNAkvdxlDcBadu799a85EkJHhCj5JZtsREA7LtW0uX1AcwOzXM3S
-         HyTjPw0afhs8kigvbSs35czEXQ8M834EwZxNTJJV5HC8Og5U7t/XaICTTKPINYIwLuU/
-         YDW1pdjCr/vu3oNLvWdLTBEiEmepWpNFG3Db6rmRi6h0CH1ifvV0qd2/QrfumLee2qoU
-         WJJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3ET16NCwDIWa5mRdfJBc+Y0ed5a39W9F7fOlTS366+Q=;
-        b=dPrI2h6ovstjE86tW+4D9GlYF2A+9H4q8SgD8JnRQPxvBvoC21J3ZN9iAFJn6QzPxu
-         E6pQUlY5DzlLtD8PZPP76Q+oxmIyd3t14DWuBlr0zMAVgVB1X/w/QYvsrc6LflvO968Y
-         xrUlYd+XyTZ4dtnIZKSUy21u0fkrebW5U4tj/XRncd9yLaShrcfktqEDzgXoisBT/QoS
-         6mr1uimIbWIgi/eF03c/mKLiVZPMPGpL1tliFICVa6YbEkGbr8jsJPbGUs2i1bY68ePd
-         wKYzF2BBDOnK+CHSqufCmwnCvB0I+3blrppqr2QLzdtLYcawerL+JGoMQODRB6jFu9B+
-         X6/Q==
-X-Gm-Message-State: APjAAAUArMctukDr2W3hqX0fgKP7HOzRNek6l3OdN3MDwHrPRiCrCy2a
-        oX0N7udKozy1MtBMXGrb/QF7uNA6I7ywxO8Jmrs=
-X-Google-Smtp-Source: APXvYqzw7ECWtNZX9+OxXEN0pYO2z7DzgjEZb5rlHpwOkmKr+HCTAGtU/sWu1IeI2xAH3+yJCqQj7K78Hnw1MgcGj0w=
-X-Received: by 2002:a1f:4bc5:: with SMTP id y188mr8577048vka.92.1566847634320;
- Mon, 26 Aug 2019 12:27:14 -0700 (PDT)
+        id S2387833AbfHZThX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 15:37:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63521 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732436AbfHZThW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 15:37:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39D8D162B5E;
+        Mon, 26 Aug 2019 15:37:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=WCADue2W7l+0
+        rVmS/gXMvyV6v8s=; b=dL2TEi64W8bn4D2rJZKitUftRsnwfe4EOzYSqHhKpeGZ
+        EcRT8udGk90zAU5LwBe/PAjNImh9g2ChH2tY0GWi5eoDU/8FurL2SsHTcycYMWqq
+        GAcEHxppE/sI2iKYA58OWuyhFWscnd+MeIltLqmJcrgQSS7Q2Dm2beu2IQ2yNFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bfrP9p
+        b1a6Uqc9b8zGZMwlY9NL1OGUvVkvqoElTQfvm6qLvdYM2RhLXgfZ/mLjmkHNJF5U
+        c5cT2fobRA1UnKCx6SLWdQSV9sQZ34SvYM+KyZe9UFXcR99FWMPICNpC1zXM/Oem
+        b5tjP4IyLFO/F+Q67G/3garW7+OCcJVxPydcE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 316F5162B5D;
+        Mon, 26 Aug 2019 15:37:22 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8FE59162B5C;
+        Mon, 26 Aug 2019 15:37:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v9 0/9] rebase: learn --keep-base and improvements on fast-forward behaviour
+References: <20190508001252.15752-1-avarab@gmail.com>
+        <cover.1566724236.git.liu.denton@gmail.com>
+Date:   Mon, 26 Aug 2019 12:37:20 -0700
+In-Reply-To: <cover.1566724236.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Sun, 25 Aug 2019 05:11:54 -0400")
+Message-ID: <xmqqtva3g1lb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <005f01d55a1f$88e2ab20$9aa80160$@rogers.com> <CAGyf7-HyJGVX51YMH0uqah4dkwkwfs6pLR5eSVBCeRQ1Ou=ZjQ@mail.gmail.com>
- <006001d55c18$e6def6c0$b49ce440$@rogers.com> <20190826182134.GA23399@sigill.intra.peff.net>
-In-Reply-To: <20190826182134.GA23399@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 26 Aug 2019 12:27:03 -0700
-Message-ID: <CABPp-BHHPBJLxV=_Y3Vu9cG1x1Vg-fdfadud9w5FA+aeAWTaKw@mail.gmail.com>
-Subject: Re: [Question] clone performance
-To:     Jeff King <peff@peff.net>
-Cc:     randall.s.becker@rogers.com, Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EC15D46A-C838-11E9-B673-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 26, 2019 at 12:04 PM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Aug 26, 2019 at 10:16:48AM -0400, randall.s.becker@rogers.com wrote:
->
-> > On August 24, 2019 5:00 PM, Bryan Turner wrote:
-> > > On Fri, Aug 23, 2019 at 6:59 PM <randall.s.becker@rogers.com> wrote:
-> > > >
-> > > > Hi All,
-> > > >
-> > > > I'm trying to answer a question for a customer on clone performance.
-> > > > They are doing at least 2-3 clones a day, of repositories with about
-> > > > 2500 files and 10Gb of content. This is stressing the file system.
-> > >
-> > > Can you go into a bit more detail about what "stress" means? Using too
-> > > much disk space? Too many IOPS reading/packing? Since you specifically
-> > > called out the filesystem, does that mean the CPU/memory usage is
-> > > acceptable?
-> >
-> > The upstream is BitBucket, which does a gc frequently. I'm not sure
-> > any of this is relating to the pack structure. Git is spending most of
-> > its time writing the large number of large files into the working
-> > directory - it is stress mostly the disk, with a bit on the CPU
-> > (neither is acceptable to the customer). I am really unsure there is
-> > any way to make things better. The core issue is that the customer
-> > insists on doing a clone for every feature branch instead of using
-> > pull/checkout. I have been unable to change their mind - to this point
-> > anyway.
->
-> Yeah, at the point of checkout there's basically no impact from anything
-> the server is doing or has done (technically it could make things worse
-> for you by returning a pack with absurdly long delta chains or
-> something, but that would be CPU and not disk stress).
->
-> I doubt there's much to optimize in Git here. It's literally just
-> writing files to disk as quickly as it can, and it sounds like disk
-> performance is your bottleneck.
+Denton Liu <liu.denton@gmail.com> writes:
 
-Well, if it's just checkout, Stolee's sparse-checkout series he just
-posted may be of interest to them...once it's polished up and included
-in git, of course.
+> Hi all, it's been a while but I guess now's a good time as any to
+> resurrect this topic. This is basically a resubmission of =C3=86var's W=
+IP v8
+> but I fixed a couple of minor whitespace issues.
+>
+> In addition, I opted to drop patches 9-13 from v8 since I don't think I
+> can do a good enough job polishing them up and I don't really understan=
+d
+> the intricacies of this part of the rebase code. Hopefully, =C3=86var w=
+ill
+> pick them up at a later time.
+
+Thanks; let's queue this with an updated base (the tip of master) as
+we are now in a new cycle.
