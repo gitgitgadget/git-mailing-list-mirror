@@ -8,71 +8,63 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28671F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 15:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 041761F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 15:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731947AbfHZPJ1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 11:09:27 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39564 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730995AbfHZPJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 11:09:26 -0400
-Received: by mail-wr1-f68.google.com with SMTP id t16so15690843wra.6
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 08:09:25 -0700 (PDT)
+        id S1732836AbfHZPLN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 11:11:13 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55399 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730583AbfHZPLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 11:11:13 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f72so15834573wmf.5
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 08:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=20Sc6sXtaQsUKLJTjG3aW6/pF8zQHUyxSdILqRKWv1Y=;
-        b=AMjjKprhtz4QUhuXBH87t0BVH0BRY+y+g7ISdaJdD39qAXfQ2XtTk5QheP7P7vbh6a
-         gfbAwFaz2CpxOfFPAXjrvJwMVXfeRjFSPdeQszZTUUX5Awt5afwCSOrsso0D5PmM2XJ7
-         EctxsUjepappsIOXmBdNXv2LY1QgucJZtrm8UANKKtyb8uKwZY115kpa1EOIIh0FUZpL
-         McPccoIthc357CxUuN2x4HsTuzvaaFM66x57Ll/gpHBZzw8oEXae7SSgiZQW9H6y85ix
-         /26n9YqYM5wJdrR8TmxgBxG2UHCjYVg+qAHxdAp6GRSu6aiwVjuVZcphgUPs/HqCDEx/
-         g6QQ==
+        bh=HyyW6dCBnkeSelueWL3p/4HOUASBpeYfDMSEPCYWpr8=;
+        b=bIGpBcZAlKZwclaNCb+1JkiIK2QmzoHZ5tiyFs6gfReaG1pswsl1L+zDOYhip7rspn
+         IcqYowaH4/2V5ih/hw2PUSv/54mJCBkmm4xpT8J8pZuRcVFn0LqjbV+jQPpiw6Dbjqr5
+         swumt7EK5qHw5l6QZBDzyZJBjs6eZaKHUndX7U3dgEqDvm/DcBXUgIQeNKgRVODg0DON
+         7RJtmslYsD5X4r4dUwvj3kWQFwwYw/pURSlzUeV9NKnodNPsGZswWyaqhXp7dyE/H1ko
+         /1V7esGB99tfLB86Bh+wKOfgNSvt0FP8zMj53Bf8BqvgTSSUrX+q677RnvswJ9McOxUO
+         JaZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:from:to:cc:references
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=20Sc6sXtaQsUKLJTjG3aW6/pF8zQHUyxSdILqRKWv1Y=;
-        b=RmxfblxXO5eXiUFnz8TPg4mJzWU5w5dFUtqRikqhiZeUkjeKDRTzC/gc3bPC4YvmrK
-         lnT1D8zgWNpd1XLJBEDyA8+5pQsFknPKy1D4cFCTQ5UVNO/cBdufPNkaeUNPPPShWBvs
-         V+2tkUUsQgw/JRISvLByAhTR1IHYVMqGLb0WUmQTcoFtKfJxYmng/5hvAZVn7EFdAteb
-         pjC5LhBNNzE7PrsbFZ+IiRqX8Q3yH4eWbW/50KAmxpm7bvR9W+ban4efudHCfIQOjxts
-         SXJzHXOvH5aMgJrGEZREAt2bDEMsxkCEDeM+HgklZH/20D4Vyzx7GqgzLHLPdZqc5l4I
-         j8lA==
-X-Gm-Message-State: APjAAAVseqfVKbTYBCJJL5FCptf4QExQVwhgIHHGQZQwwfJ21u/FWe8d
-        rv0WN+LU1+mSxmeDJKiTr0k=
-X-Google-Smtp-Source: APXvYqw2KoRLlWwQ3QQQULuQES0oqQd0VQ0N/RzeQA53RlY49OasNAsgfeLwxbBSRFzHDX5q901LwA==
-X-Received: by 2002:adf:f7ce:: with SMTP id a14mr23441970wrq.332.1566832164559;
-        Mon, 26 Aug 2019 08:09:24 -0700 (PDT)
+        bh=HyyW6dCBnkeSelueWL3p/4HOUASBpeYfDMSEPCYWpr8=;
+        b=L+1ZMvsvnI2InizPh1GnvQmX2cafoB+qyq9KF6H2xHTYGKmx0gWcVWdSzI3Tqk8u3w
+         1v7EVbTfvrsUHrWRGr8T4Epl2HfN8GG3JXSgQKdGLczONEGX4h8UYUNCZZGVSerBVv5F
+         7rPombRjuXejA4k4ECGRKGb+5anT4w5NjYrQyH7GOUdQFhosmCxZ8O7bVBmhBr4q+emY
+         DHxRkdP6aTKUStym3unRIqypEETinZ/hiL+5/DwOUPLZLM2iOoXSpBu1x8NTp8U32fdt
+         gT00EGkIp6Ja/8xOtu5h2h1jOWQUgN1FXRurYkoBPInb6n6X3fYTn2qY6xmJI0yV3Q1l
+         S75g==
+X-Gm-Message-State: APjAAAUiXmM4dT1zLnzZEOJIKSlAKK/AFosz0GXwOvMAjPHcvhVQ4r2G
+        h+4U9EqUWbSO66oGXYGWE4qcg30k
+X-Google-Smtp-Source: APXvYqylngCwVswueQW2Nl1jcxZ/kBc2wYKkqn+jR0HESOB4Z42fClwh5FJSeNxszK7IwsLtQjvh2Q==
+X-Received: by 2002:a7b:c019:: with SMTP id c25mr23206689wmb.116.1566832270418;
+        Mon, 26 Aug 2019 08:11:10 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-2-29.as13285.net. [92.22.2.29])
-        by smtp.gmail.com with ESMTPSA id 91sm40687968wrp.3.2019.08.26.08.09.21
+        by smtp.gmail.com with ESMTPSA id e14sm9658918wma.37.2019.08.26.08.11.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Aug 2019 08:09:22 -0700 (PDT)
+        Mon, 26 Aug 2019 08:11:09 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
+Subject: Re: [PATCH v5 0/2] Honor .gitattributes with rebase --am
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190825233340.10894-1-sandals@crustytoothpaste.net>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-1-sandals@crustytoothpaste.net>
- <20190818184403.861907-3-sandals@crustytoothpaste.net>
- <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
- <20190820024505.GH365197@genre.crustytoothpaste.net>
- <18fcc7db-7c09-3fbf-1e3f-81be99f4bb17@gmail.com>
- <xmqqd0gzvgo3.fsf@gitster-ct.c.googlers.com>
- <d59de3db-13e6-35d5-2cb1-b38dc8854c60@gmail.com>
-Message-ID: <e8196c6e-7f3c-1b29-73ba-40094f1e0280@gmail.com>
-Date:   Mon, 26 Aug 2019 16:09:20 +0100
+Message-ID: <6ad26ef8-fc94-726a-2243-4c3ff9717ad3@gmail.com>
+Date:   Mon, 26 Aug 2019 16:11:08 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <d59de3db-13e6-35d5-2cb1-b38dc8854c60@gmail.com>
+In-Reply-To: <20190825233340.10894-1-sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -81,46 +73,236 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/08/2019 19:32, Phillip Wood wrote:
-> On 20/08/2019 19:24, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>
->>>>> Do you know why -m and -i aren't affected?
->>>>
->>>> I had to look, but I believe the answer is because they use the
->>>> sequencer, and the sequencer calls git merge-recursive as a separate
->>>> process, and so the writing of the tree is only done in a subprocess,
->>>> which can't persist state.
->>>
->>> The sequencer has been running in a single process for a while now. We
->>> do fork for 'git merge' sometimes when processing 'merge' commands but
->>> 'pick' commands are all done in a single process by calling
->>> do_recursive_merge().
->>>
->>> Best Wishes
->>>
->>> Phillip
->>>
->>>> Should we move the merge-recursive code into the main process, we'll
->>>> likely have the same problem there.
->>
->> So we actually have the same issue already?
-> 
-> I don't think so, I modified Brian's test to call 'rebase -i' and it 
-> passes but no one seems to know why.
+Hi Brian
 
-I spent some time digging into this and the attributes are reloaded 
-before each pick. This is because check_updates() called by 
-unpack_trees() calls git_attr_set_direction(GIT_ATTR_CHECKOUT) at the 
-start of the function and git_attr_set_direction(GIT_ATTR_CHECKIN) at 
-the end of the function. This has the effect of dropping all loaded 
-attributes as git_attr_set_direction() calls drop_all_attr_stacks() when 
-the direction is changed.
+On 26/08/2019 00:33, brian m. carlson wrote:
+> This series makes rebase --am honor the .gitattributes file for
+> subsequent patches when a patch changes it.
+> 
+> Note that there are two places we load attributes in ll-merge.c, but
+> this code only handles the one that git am uses.  The two cannot be
+> unified because the one in ll_merge_marker_size intentionally doesn't
+> load the merge attribute, since it wants to always use the recursive
+> strategy.  Loading it anyway causes t4017 to fail.
+> 
+> Changes from v4:
+> * Wrap lines in apply.c.
+> * Handle merge and conflict-marker-size attributes.
+> * Add tests for am and am -3 in addition to rebase.
+
+I've only had time for a quick look at these but the changes look good 
+to me. Thanks for taking the time to add the tests for am and the code 
+for handling the merge attributes
 
 Best Wishes
 
 Phillip
 
-> Best Wishes
+> Changes from v3:
+> * Check for both addition and removal of .gitattributes files.
+> * Switch from "test_config" to "git config".
 > 
-> Phillip
+> Changes from v2:
+> * Rename has_path_suffix to ends_with_path_components.
+> 
+> Changes from v1:
+> * Add has_path_suffix in a separate commit.
+> 
+> brian m. carlson (2):
+>    path: add a function to check for path suffix
+>    am: reload .gitattributes after patching it
+> 
+>   apply.c           | 11 ++++++++++
+>   convert.c         | 11 +++++++++-
+>   convert.h         |  6 ++++++
+>   ll-merge.c        | 19 +++++++++++++----
+>   ll-merge.h        |  1 +
+>   path.c            | 39 +++++++++++++++++++++++++++--------
+>   path.h            |  3 +++
+>   t/t3400-rebase.sh | 36 ++++++++++++++++++++++++++++++++
+>   t/t4150-am.sh     | 52 +++++++++++++++++++++++++++++++++++++++++++++++
+>   9 files changed, 164 insertions(+), 14 deletions(-)
+> 
+> Range-diff against v4:
+> 1:  fa825e4b40 ! 1:  2077a0829e apply: reload .gitattributes after patching it
+>      @@ Metadata
+>       Author: brian m. carlson <sandals@crustytoothpaste.net>
+>       
+>        ## Commit message ##
+>      -    apply: reload .gitattributes after patching it
+>      +    am: reload .gitattributes after patching it
+>       
+>           When applying multiple patches with git am, or when rebasing using the
+>           am backend, it's possible that one of our patches has updated a
+>      @@ Commit message
+>       
+>           To ensure we write the correct data into the working tree, expire the
+>           cache after each patch that touches a path ending in ".gitattributes".
+>      +    Since we load these attributes in multiple separate files, we must
+>      +    expire them accordingly.
+>      +
+>      +    Verify that both the am and rebase code paths work correctly, including
+>      +    the conflict marker size with am -3.
+>       
+>           Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>       
+>      @@ apply.c: static int apply_patch(struct apply_state *state,
+>        			*listp = patch;
+>        			listp = &patch->next;
+>       +
+>      -+			if ((patch->new_name && ends_with_path_components(patch->new_name, GITATTRIBUTES_FILE)) ||
+>      -+			    (patch->old_name && ends_with_path_components(patch->old_name, GITATTRIBUTES_FILE)))
+>      ++			if ((patch->new_name &&
+>      ++			     ends_with_path_components(patch->new_name,
+>      ++						       GITATTRIBUTES_FILE)) ||
+>      ++			    (patch->old_name &&
+>      ++			     ends_with_path_components(patch->old_name,
+>      ++						       GITATTRIBUTES_FILE)))
+>       +				flush_attributes = 1;
+>        		}
+>        		else {
+>      @@ apply.c: static int apply_patch(struct apply_state *state,
+>        	strbuf_release(&buf);
+>       
+>        ## convert.c ##
+>      +@@
+>      + #include "pkt-line.h"
+>      + #include "sub-process.h"
+>      + #include "utf8.h"
+>      ++#include "ll-merge.h"
+>      +
+>      + /*
+>      +  * convert.c - convert a file when checking it out and checking it in.
+>       @@ convert.c: struct conv_attrs {
+>        	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+>        };
+>      @@ convert.c: static void convert_attrs(const struct index_state *istate,
+>       +{
+>       +	attr_check_free(check);
+>       +	check = NULL;
+>      ++	reset_merge_attributes();
+>       +}
+>       +
+>        int would_convert_to_git_filter_fd(const struct index_state *istate, const char *path)
+>      @@ convert.h: void convert_to_git_filter_fd(const struct index_state *istate,
+>         *
+>         * Streaming conversion support
+>       
+>      + ## ll-merge.c ##
+>      +@@ ll-merge.c: struct ll_merge_driver {
+>      + 	char *cmdline;
+>      + };
+>      +
+>      ++static struct attr_check *merge_attributes;
+>      ++static struct attr_check *load_merge_attributes(void)
+>      ++{
+>      ++	if (!merge_attributes)
+>      ++		merge_attributes = attr_check_initl("merge", "conflict-marker-size", NULL);
+>      ++	return merge_attributes;
+>      ++}
+>      ++
+>      ++void reset_merge_attributes(void)
+>      ++{
+>      ++	attr_check_free(merge_attributes);
+>      ++	merge_attributes = NULL;
+>      ++}
+>      ++
+>      + /*
+>      +  * Built-in low-levels
+>      +  */
+>      +@@ ll-merge.c: int ll_merge(mmbuffer_t *result_buf,
+>      + 	     struct index_state *istate,
+>      + 	     const struct ll_merge_options *opts)
+>      + {
+>      +-	static struct attr_check *check;
+>      ++	struct attr_check *check = load_merge_attributes();
+>      + 	static const struct ll_merge_options default_opts;
+>      + 	const char *ll_driver_name = NULL;
+>      + 	int marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+>      +@@ ll-merge.c: int ll_merge(mmbuffer_t *result_buf,
+>      + 		normalize_file(theirs, path, istate);
+>      + 	}
+>      +
+>      +-	if (!check)
+>      +-		check = attr_check_initl("merge", "conflict-marker-size", NULL);
+>      +-
+>      + 	git_check_attr(istate, path, check);
+>      + 	ll_driver_name = check->items[0].value;
+>      + 	if (check->items[1].value) {
+>      +
+>      + ## ll-merge.h ##
+>      +@@ ll-merge.h: int ll_merge(mmbuffer_t *result_buf,
+>      + 	     const struct ll_merge_options *opts);
+>      +
+>      + int ll_merge_marker_size(struct index_state *istate, const char *path);
+>      ++void reset_merge_attributes(void);
+>      +
+>      + #endif
+>      +
+>        ## t/t3400-rebase.sh ##
+>       @@ t/t3400-rebase.sh: test_expect_success 'rebase --am and --show-current-patch' '
+>        	)
+>      @@ t/t3400-rebase.sh: test_expect_success 'rebase --am and --show-current-patch' '
+>        test_expect_success 'rebase--merge.sh and --show-current-patch' '
+>        	test_create_repo conflict-merge &&
+>        	(
+>      +
+>      + ## t/t4150-am.sh ##
+>      +@@ t/t4150-am.sh: test_expect_success 'am --quit keeps HEAD where it is' '
+>      + 	test_cmp expected actual
+>      + '
+>      +
+>      ++test_expect_success 'am and .gitattibutes' '
+>      ++	test_create_repo attributes &&
+>      ++	(
+>      ++		cd attributes &&
+>      ++		test_commit init &&
+>      ++		git config filter.test.clean "sed -e '\''s/smudged/clean/g'\''" &&
+>      ++		git config filter.test.smudge "sed -e '\''s/clean/smudged/g'\''" &&
+>      ++
+>      ++		test_commit second &&
+>      ++		git checkout -b test HEAD^ &&
+>      ++
+>      ++		echo "*.txt filter=test conflict-marker-size=10" >.gitattributes &&
+>      ++		git add .gitattributes &&
+>      ++		test_commit third &&
+>      ++
+>      ++		echo "This text is smudged." >a.txt &&
+>      ++		git add a.txt &&
+>      ++		test_commit fourth &&
+>      ++
+>      ++		git checkout -b removal HEAD^ &&
+>      ++		git rm .gitattributes &&
+>      ++		git add -u &&
+>      ++		test_commit fifth &&
+>      ++		git cherry-pick test &&
+>      ++
+>      ++		git checkout -b conflict third &&
+>      ++		echo "This text is different." >a.txt &&
+>      ++		git add a.txt &&
+>      ++		test_commit sixth &&
+>      ++
+>      ++		git checkout test &&
+>      ++		git format-patch --stdout master..HEAD >patches &&
+>      ++		git reset --hard master &&
+>      ++		git am patches &&
+>      ++		grep "smudged" a.txt &&
+>      ++
+>      ++		git checkout removal &&
+>      ++		git reset --hard &&
+>      ++		git format-patch --stdout master..HEAD >patches &&
+>      ++		git reset --hard master &&
+>      ++		git am patches &&
+>      ++		grep "clean" a.txt &&
+>      ++
+>      ++		git checkout conflict &&
+>      ++		git reset --hard &&
+>      ++		git format-patch --stdout master..HEAD >patches &&
+>      ++		git reset --hard fourth &&
+>      ++		test_must_fail git am -3 patches &&
+>      ++		grep "<<<<<<<<<<" a.txt
+>      ++	)
+>      ++'
+>      ++
+>      + test_done
+> 
