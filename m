@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C96A1F4B7
-	for <e@80x24.org>; Mon, 26 Aug 2019 17:10:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99F651F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 17:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732382AbfHZRKa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 13:10:30 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33605 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729951AbfHZRKa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 13:10:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id p77so470330wme.0
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 10:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Un5Rher3CYLKomFHHtJCpEFIVIqQPTAZ9Rjixp7cQ7U=;
-        b=JVTMfry+SPdK03CT9ewqKlhEIQvxskTzY4L22HVWd+2phJrnckJ4HZ/MIY5TVwFIlj
-         iMQATJU43cgHuuO0Pojz+lNFIbMzzbFB1+db1AyZSCutMDPqUEEx+Inm7bgdEa0oZsKU
-         0g29j4hH8/hKVISbSTS6ZjNVWOuY5NaCbOBz0DFEaIHpvWy6peb6UYnWoFz+dPRjTM9A
-         BtX9IyoYjADKwDlc5a+bxGwqgKvrz8AQSstjapS1iXMZBgdxQggZhXQCANLZexlzz5vG
-         stTLrT1Ybx+69uc6/hyssDWT3LRRvCGKHumOcyVwaC8FNMAYZUFPmdDtd23C7JL6ti3f
-         XZoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Un5Rher3CYLKomFHHtJCpEFIVIqQPTAZ9Rjixp7cQ7U=;
-        b=WDAFvlLojNyG3p8q02rtk0ckG/V7bbAxBgL0setSpwtsgpqszcO/sWC09Z9jFt553+
-         p2rjHhqRdPpefFMsfQQUETwY8AgM4xEy3ey+p6bPodCHnwCtz3Rjq80pqOJ4dV5bO3N6
-         4Ck73hqJcjzmiBFzWXYo1W6rj+HhhCO52Bpj4NSwaNksM8WhGqj5mLqhGVbo7OBj+U2h
-         JtS3ISE3XMTHnHo6IJsoXlxylTfcJ2vUAF6y6KrZez1b3gQo6qc8XAKR0IgjiMGM10ta
-         0bkii5PEX7Qrm09KR1aQJm3trTAvYVoN7pMcytvWuPzRx2Vh4k9cRfvIXP5XcF65ZfRB
-         JIUQ==
-X-Gm-Message-State: APjAAAXRaNl/E7lfFPV1ZjVoPH+uAP+KLq8d7rykmgbwiHSJ5ZI/SJba
-        +89jzaXPxCjvhP49kNYewCk=
-X-Google-Smtp-Source: APXvYqzFeadgCe/kPB3BX7na7OvkXq2GQx/6GIbLv9TPAVbRtyGv9hehnAANYxjdLS1bDKhOiqGd5g==
-X-Received: by 2002:a1c:eb06:: with SMTP id j6mr23973123wmh.76.1566839428138;
-        Mon, 26 Aug 2019 10:10:28 -0700 (PDT)
-Received: from szeder.dev (x4db5125e.dyn.telefonica.de. [77.181.18.94])
-        by smtp.gmail.com with ESMTPSA id z2sm178430wmi.2.2019.08.26.10.10.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Aug 2019 10:10:27 -0700 (PDT)
-Date:   Mon, 26 Aug 2019 19:10:24 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Wijen <ben@wijen.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/1] rebase.c: make sure the active branch isn't moved
- when autostashing
-Message-ID: <20190826171024.GR20404@szeder.dev>
-References: <20190821182941.12674-1-ben@wijen.net>
- <20190826164513.9102-1-ben@wijen.net>
- <20190826164513.9102-2-ben@wijen.net>
+        id S1729358AbfHZRU1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 13:20:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52836 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728976AbfHZRU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 13:20:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F7D2738C5;
+        Mon, 26 Aug 2019 13:20:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LZlAoI16YJd/u1nnMUITDjARCwU=; b=PexAC6
+        hsPKnYBbMx8hv7DegzW7M1vwHbC3w45/yX3uNURRGuL+SN+3x7dgUvKy/4b/+r+1
+        QDpDxgLhwHL8oMzsqc7YaKIO02TLIJIwkGqecABDgazfWPG0kW8pZDwyt4lNKrd+
+        PCvE9Dsimy9dzJ9k6ntIHLAaRhE1MqjMfg9Sw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Rwvt60BYUp6ZHK7pxGWEvfXVHUT/uLlv
+        1lumAkzqFpwq6xul5JMLN7+jb11pF1H0U/rQFhKDOgHtQNSMIOEbJkwl2LuD90eB
+        I2nxzGGYjlV0aauCE+RN2cF/wIi/TuNHRBHnclwd99zNj7zwpU8JTw31SuP5uTEC
+        HbyignJP+G0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 37E34738C4;
+        Mon, 26 Aug 2019 13:20:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6694E738C1;
+        Mon, 26 Aug 2019 13:20:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Sperling <stsp@stsp.name>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH] fix segv with corrupt tag object
+References: <20190824230944.GA14132@jessup.stsp.name>
+        <bcc29199-a4ac-6bdc-6715-9807737253d8@web.de>
+        <20190826115715.GB71935@jessup.stsp.name>
+Date:   Mon, 26 Aug 2019 10:20:20 -0700
+In-Reply-To: <20190826115715.GB71935@jessup.stsp.name> (Stefan Sperling's
+        message of "Mon, 26 Aug 2019 13:57:15 +0200")
+Message-ID: <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190826164513.9102-2-ben@wijen.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: C9134A46-C825-11E9-A479-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 26, 2019 at 06:45:13PM +0200, Ben Wijen wrote:
-> +test_expect_success 'never change active branch' '
-> +	git checkout -b not-the-feature-branch unrelated-onto-branch &&
-> +	test_when_finished "git reset --hard && git checkout -" &&
+Stefan Sperling <stsp@stsp.name> writes:
 
-I think it would be safer to explicitly spell out the branch that
-should be checked out at the end than to rely on 'git checkout -'
-always being able to figure that out, even in case of a breakage.
+> The root cause of this bug seems to be that the valid assumption
+> that obj->parsed implies a successfully parsed object is broken by
+> parse_tag_buffer() because this function sets the 'parsed' flag even
+> if errors occur during parsing.
 
-> +	echo changed >file0 &&
-> +	git rebase --autostash not-the-feature-branch feature-branch &&
-> +	test_cmp_rev not-the-feature-branch unrelated-onto-branch
-> +'
-> +
->  test_done
-> -- 
-> 2.22.0
-> 
+I am mildly negative about that approach.  obj->parsed is about
+"we've done all we need to do to attempt parsing this object" (so
+that next person who gets hold of the object knows that fact---one
+of the reasons why may be that the caller who wants to ensure that
+the fields are ready to be accessed does not have to spend extra
+cycles, but that is not the only one).  Those that want to look at
+various fields in the object (e.g. the tagged object of a tag, the
+tagger identity of a tag, etc.) should be prepared to see and react
+to NULL in there so that they can gracefully handle "slightly"
+corrupt objects.
+
