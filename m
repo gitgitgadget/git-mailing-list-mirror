@@ -2,31 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 576691F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 02:44:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C512B1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 02:45:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729213AbfHZCoG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 22:44:06 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:36490 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729184AbfHZCoG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 22:44:06 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 8BD6C1F4C3;
-        Mon, 26 Aug 2019 02:43:34 +0000 (UTC)
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH 11/11] hashmap_get_next returns "struct hashmap_entry *"
-Date:   Mon, 26 Aug 2019 02:43:32 +0000
-Message-Id: <20190826024332.3403-12-e@80x24.org>
-In-Reply-To: <20190826024332.3403-1-e@80x24.org>
-References: <20190826024332.3403-1-e@80x24.org>
+        id S1729248AbfHZCpN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 22:45:13 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:39320 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729244AbfHZCpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 22:45:12 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <glandium@glandium.org>)
+        id 1i250G-0002Cx-Ot; Mon, 26 Aug 2019 11:45:08 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH] packfile: free packed_git memory when closing object store
+Date:   Mon, 26 Aug 2019 11:45:08 +0900
+Message-Id: <20190826024508.8444-1-mh@glandium.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -34,223 +33,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a step towards removing the requirement for
-hashmap_entry being the first field of a struct.
-
-Signed-off-by: Eric Wong <e@80x24.org>
+Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- diff.c                  | 19 ++++++++++++-------
- diffcore-rename.c       | 11 +++++++----
- hashmap.c               |  2 +-
- hashmap.h               | 12 ++++++++----
- name-hash.c             |  8 +++++---
- t/helper/test-hashmap.c | 10 ++++++----
- 6 files changed, 39 insertions(+), 23 deletions(-)
+ packfile.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 72d3c6aa19..663b5d01f8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1035,8 +1035,10 @@ static void pmb_advance_or_null_multi_match(struct diff_options *o,
+Note, I'm not sure this is the right place to do it.
+
+diff --git a/packfile.c b/packfile.c
+index fc43a6c52c..b0cb84adda 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -339,13 +339,16 @@ void close_pack(struct packed_git *p)
+ 
+ void close_object_store(struct raw_object_store *o)
  {
- 	int i;
- 	char *got_match = xcalloc(1, pmb_nr);
-+	struct hashmap_entry *ent = &match->ent;
+-	struct packed_git *p;
++	struct packed_git *p = o->packed_git;
  
--	for (; match; match = hashmap_get_next(hm, &match->ent)) {
-+	for (; ent; ent = hashmap_get_next(hm, ent)) {
-+		match = container_of(ent, struct moved_entry, ent);
- 		for (i = 0; i < pmb_nr; i++) {
- 			struct moved_entry *prev = pmb[i].match;
- 			struct moved_entry *cur = (prev && prev->next_line) ?
-@@ -1135,8 +1137,9 @@ static void mark_color_as_moved(struct diff_options *o,
+-	for (p = o->packed_git; p; p = p->next)
++	while (p) {
++		struct packed_git *current = p;
+ 		if (p->do_not_close)
+ 			BUG("want to close pack marked 'do-not-close'");
+-		else
+-			close_pack(p);
++		close_pack(p);
++		p = p->next;
++		free(current);
++	}
  
- 	for (n = 0; n < o->emitted_symbols->nr; n++) {
- 		struct hashmap *hm = NULL;
-+		struct hashmap_entry *ent = NULL;
- 		struct moved_entry *key;
--		struct moved_entry *match = NULL;
-+		struct moved_entry *match;
- 		struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
- 		enum diff_symbol last_symbol = 0;
- 
-@@ -1144,20 +1147,20 @@ static void mark_color_as_moved(struct diff_options *o,
- 		case DIFF_SYMBOL_PLUS:
- 			hm = del_lines;
- 			key = prepare_entry(o, n);
--			match = hashmap_get(hm, &key->ent, NULL);
-+			ent = hashmap_get(hm, &key->ent, NULL);
- 			free(key);
- 			break;
- 		case DIFF_SYMBOL_MINUS:
- 			hm = add_lines;
- 			key = prepare_entry(o, n);
--			match = hashmap_get(hm, &key->ent, NULL);
-+			ent = hashmap_get(hm, &key->ent, NULL);
- 			free(key);
- 			break;
- 		default:
- 			flipped_block = 0;
- 		}
- 
--		if (!match) {
-+		if (!ent) {
- 			int i;
- 
- 			adjust_last_block(o, n, block_length);
-@@ -1169,6 +1172,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 			last_symbol = l->s;
- 			continue;
- 		}
-+		match = container_of(ent, struct moved_entry, ent);
- 
- 		if (o->color_moved == COLOR_MOVED_PLAIN) {
- 			last_symbol = l->s;
-@@ -1189,8 +1193,9 @@ static void mark_color_as_moved(struct diff_options *o,
- 			 * The current line is the start of a new block.
- 			 * Setup the set of potential blocks.
- 			 */
--			for (; match; match = hashmap_get_next(hm,
--								&match->ent)) {
-+			for (; ent; ent = hashmap_get_next(hm, ent)) {
-+				match = container_of(ent, struct moved_entry,
-+							ent);
- 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
- 				if (o->color_moved_ws_handling &
- 				    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 4670a40179..71aa240a68 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -274,7 +274,7 @@ static int find_identical_files(struct hashmap *srcs,
- 				struct diff_options *options)
- {
- 	int renames = 0;
--
-+	struct hashmap_entry *ent;
- 	struct diff_filespec *target = rename_dst[dst_index].two;
- 	struct file_similarity *p, *best = NULL;
- 	int i = 100, best_score = -1;
-@@ -282,12 +282,15 @@ static int find_identical_files(struct hashmap *srcs,
- 	/*
- 	 * Find the best source match for specified destination.
- 	 */
--	p = hashmap_get_from_hash(srcs,
-+	ent = hashmap_get_from_hash(srcs,
- 				  hash_filespec(options->repo, target),
- 				  NULL);
--	for (; p; p = hashmap_get_next(srcs, &p->entry)) {
-+	for (; ent; ent = hashmap_get_next(srcs, ent)) {
- 		int score;
--		struct diff_filespec *source = p->filespec;
-+		struct diff_filespec *source;
-+
-+		p = container_of(ent, struct file_similarity, entry);
-+		source = p->filespec;
- 
- 		/* False hash collision? */
- 		if (!oideq(&source->oid, &target->oid))
-diff --git a/hashmap.c b/hashmap.c
-index 2dd9912e13..d6434d9ca4 100644
---- a/hashmap.c
-+++ b/hashmap.c
-@@ -192,7 +192,7 @@ void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
- 	return *find_entry_ptr(map, key, keydata);
- }
- 
--void *hashmap_get_next(const struct hashmap *map,
-+struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
- 			const struct hashmap_entry *entry)
- {
- 	struct hashmap_entry *e = entry->next;
-diff --git a/hashmap.h b/hashmap.h
-index b62ee2e7b9..25643dcdc4 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -55,15 +55,19 @@
-  *
-  *         if (!strcmp("print_all_by_key", action)) {
-  *             struct long2string k, *e;
-+ *             struct hashmap_entry *ent;
-  *             hashmap_entry_init(&k->ent, memhash(&key, sizeof(long)));
-  *             k.key = key;
-  *
-  *             flags &= ~COMPARE_VALUE;
-- *             e = hashmap_get(&map, &k, NULL);
-- *             if (e) {
-+ *             ent = hashmap_get(&map, &k, NULL);
-+ *             if (ent) {
-+ *                 e = container_of(ent, struct long2string, ent);
-  *                 printf("first: %ld %s\n", e->key, e->value);
-- *                 while ((e = hashmap_get_next(&map, e)))
-+ *                 while ((ent = hashmap_get_next(&map, ent))) {
-+ *                     e = container_of(ent, struct long2string, ent);
-  *                     printf("found more: %ld %s\n", e->key, e->value);
-+ *                 }
-  *             }
-  *         }
-  *
-@@ -320,7 +324,7 @@ static inline void *hashmap_get_from_hash(const struct hashmap *map,
-  * `entry` is the hashmap_entry to start the search from, obtained via a previous
-  * call to `hashmap_get` or `hashmap_get_next`.
-  */
--void *hashmap_get_next(const struct hashmap *map,
-+struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
- 			const struct hashmap_entry *entry);
- 
- /*
-diff --git a/name-hash.c b/name-hash.c
-index f64c52bfa2..6f2779934f 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -703,15 +703,17 @@ void adjust_dirname_case(struct index_state *istate, char *name)
- struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int icase)
- {
- 	struct cache_entry *ce;
-+	struct hashmap_entry *ent;
- 
- 	lazy_init_name_hash(istate);
- 
--	ce = hashmap_get_from_hash(&istate->name_hash,
-+	ent = hashmap_get_from_hash(&istate->name_hash,
- 				   memihash(name, namelen), NULL);
--	while (ce) {
-+	while (ent) {
-+		ce = container_of(ent, struct cache_entry, ent);
- 		if (same_name(ce, name, namelen, icase))
- 			return ce;
--		ce = hashmap_get_next(&istate->name_hash, &ce->ent);
-+		ent = hashmap_get_next(&istate->name_hash, ent);
- 	}
- 	return NULL;
- }
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index de2bd083b9..d85b8dc58e 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -194,16 +194,18 @@ int cmd__hashmap(int argc, const char **argv)
- 			free(entry);
- 
- 		} else if (!strcmp("get", cmd) && p1) {
-+			struct hashmap_entry *e;
- 
- 			/* lookup entry in hashmap */
--			entry = hashmap_get_from_hash(&map, hash, p1);
-+			e = hashmap_get_from_hash(&map, hash, p1);
- 
- 			/* print result */
--			if (!entry)
-+			if (!e)
- 				puts("NULL");
--			while (entry) {
-+			while (e) {
-+				entry = container_of(e, struct test_entry, ent);
- 				puts(get_value(entry));
--				entry = hashmap_get_next(&map, &entry->ent);
-+				e = hashmap_get_next(&map, e);
- 			}
- 
- 		} else if (!strcmp("remove", cmd) && p1) {
+ 	if (o->multi_pack_index) {
+ 		close_midx(o->multi_pack_index);
 -- 
-EW
+2.23.0
 
