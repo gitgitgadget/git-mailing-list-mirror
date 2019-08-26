@@ -2,76 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 957521F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 14:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 120AF1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:29:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732485AbfHZO1u convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 26 Aug 2019 10:27:50 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:45726 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729131AbfHZO1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 10:27:50 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7QERaME030013
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 26 Aug 2019 10:27:37 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Albert Vaca Cintora'" <albertvaka@gmail.com>,
-        "'Johannes Sixt'" <j6t@kdbg.org>
-Cc:     <git@vger.kernel.org>
-References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com> <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org> <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
-In-Reply-To: <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
-Subject: RE: [Feature Request] Option to make .git not read-only in cloned repos
-Date:   Mon, 26 Aug 2019 10:27:29 -0400
-Message-ID: <006201d55c1a$68180f50$38482df0$@nexbridge.com>
+        id S1731673AbfHZO3M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 10:29:12 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57017 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727261AbfHZO3L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 10:29:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1566829744;
+        bh=cSRF/Za7jRwOxIu+gLrx/doBKOWr8gqIxdIPn9V21DM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JddCdvoysRbiysGzWYgDGrf9Hx0HVh8IsPD6IxV2kemvqRGYvIPXGxiN7FXSUwm15
+         OchL16QRKDSN57AsyUHuEVBhrTKled1UayMAzOrqDVuuah2VLgINRQfp2rgDhpbRVP
+         XYY2hZxooCWAsJ2qHXj3DE9PLehbqaIeKMdD1Jgk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaIsi-1hmmTY0Ew4-00JttH; Mon, 26
+ Aug 2019 16:29:04 +0200
+Date:   Mon, 26 Aug 2019 16:28:49 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Carlo Arenas <carenas@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] grep: under --debug, show whether PCRE JIT is enabled
+In-Reply-To: <CAPUEspg9F7RutCUCoRAAXmRePjiunq3-zG7cN3uz_t5DVMxP=g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1908261626450.46@tvgsbejvaqbjf.bet>
+References: <20190818201727.31505-1-dev+git@drbeat.li> <xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com> <CAPUEspg9F7RutCUCoRAAXmRePjiunq3-zG7cN3uz_t5DVMxP=g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNp8WItsZHJ6oa15Vw/HazfT/RW8wGPs2THAhKp3vejxz3XUA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zUprlPntJ2ig+VyW6cxf2zQeRGp3AT0Kx5Ow3Bzc9NPJjiT+RWs
+ f0AzkbsE5GbbgBmFtn5Xztd3675fNHH62g6UDWBY7ymTq27tpOqGD4Qi8ty76jZeObjR+3F
+ SNlaMjiVEfwDDO7yQDRIhWAe+WQ3u6QhDUixlMWYozD/tT2bjBzM9v9N3x2LHd+dGNjM0Ly
+ w39U5yAPzMHOjfwmnEkIw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fqmF6luvuVg=:ap/fnlqZWgVYSDkdUoyfLk
+ GosV2Qg/1MM/FQnd4H2zVvIxntyJas/l6wj2uOv0s7QDw+6DBd50cg1h0RwZ0wnn+wGEplIOJ
+ 5JdMBpaEGUnPFOo6Tj34B80fNnNyDJLEd5A3HQXOrxoXpYlWgTM/VjsPXg5N794ekHKRa7M3k
+ RT8B8TNd67iood5gmdXs1h+eO/pfoSLkdiGYXAJN5QlzdwzVt0F0VAAI/zufCyPEkYfY8UNFi
+ STrVAXuhZXjgvmPFQpXBdz5rcfY+ITk8Li0KuKbRQS+i4hdCXVbBzNrOwyv1wmgmjH2Uj+ZC6
+ SGfpPQGrujRGhDki6qaDciMaEEOYMUKwYxx6sHFzbT2+3KVF/fjyF7NdxUZlYGhlzbqrkaKrW
+ K7xwljS19v47bPewOFqpdTngbE04XYRYwWw9qDHwqAnV/j7vvD4pm8NW+UhYRkrEPofzDkoKg
+ ppHnOAijk1YZEqlFvfJxnbgjxubuYksQ2DYERVZjFhCorCJMSZciZ79gv9xMdfOmdh6GFeqCj
+ IpuGENXcTTsPUlk841BGWVYNGl+dmck5LwGWAYzMzvsC7NEMYcXmDY2htTsgd40VLsjhA4Ch1
+ l1CNKxJZA4XdpPa8bXK5bSLpDam8fhXICJD3w8qxbxApynxRh35Ep6XET51Mo0h9YXVHCsYNP
+ CpXCvF2nJ/MJv0GGSXuhjqu1TNp2a+DMXXCHrso7dOuDS4u2o7yAv9LNNUz67w2eBEZ3KSpHY
+ yC66XhtdqSb9KiB+mqiqA+Z0UW+IUFFXirFltjt8+5LEQUgYbbr4Foqk7NCJazRcnLEkQnuh/
+ yQNHJH70Anol8Vp6jjYtxTpmMoIcyllDYxsaMdOhY45G773Uxfk8wa+nVDAEIerDkHo1lwfnw
+ I/SFGvsyF1PdTNOTB3DxENNg4d/z/OB8Qp/7dwV6MNq7wn0mX4TUT0sxic0Aud6Oh52z1H5j/
+ pYKgg2SghmF8m1yiQpL94x0/gtbuJP/Cw+D7ytswTRlXGmnyHSwRy9x6qnUa1oDb3NThIB7XJ
+ HPyd60emsihGBWLo9c+W4zWCmVQ34r5tfGYWw4Hd1aDKN8fbtbPFLl28DbAe/0ZNp99lp78Z+
+ 3j4zErb4vGftfl1Ln2ntadxvjinHoaWPs3JpLmRKFJCFzBxgNGqK8AUipSfGdrxx96WejfG/+
+ F/YRg8D5kkW9eGn79PFSPXyY0cwz5YOJWAg2OxIru/g5JI5oIooNMIFaOq5DG6hF52L6s=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 25, 2019 3:59 PM, Albert Vaca Cintora wrote:
-> To: Johannes Sixt <j6t@kdbg.org>
-> On Sun, Aug 25, 2019 at 7:54 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> >
-> > Am 23.08.19 um 22:43 schrieb Albert Vaca Cintora:
-> > > However, I'm sure that a large percentage of developers out there
-> > > will agree with me that having to use force (-f) to delete every
-> > > cloned repo is annoying, and even worse, it creates the bad habit of
-> > > always force-deleting everything.
-> >
-> > IMO, the bad habit is to delete cloned repositories all the time. If
-> > your workflow necessitates this, then you are doing something wrong.
-> > Maybe you have an X-Y-problem?
-> >
-> > -- Hannes
-> 
-> There are plenty of valid workflows where one would delete a repo.
-> 
-> What you suggest is like saying I shouldn't delete pictures from my camera,
-> because in that case I shouldn't have taken them in the first place.
-> 
-> Sometimes I clone a repo just to grep for an error string and then I don't
-> need it anymore, or I clone several repos until I find the one that contains
-> what I want and delete the rest. Sometimes I want to write a patch for some
-> software I don't develop regularly so I don't need to keep a clone of it.
-> 
-> In any case, it would be useful to know the reason those files are read-only in
-> the first place. Do you guys know who might know?
+Hi Carlo,
 
-Why don't you wrap your clone in a script that calls chmod -R u+w .git after the clone? This seems like a pretty trivial approach regardless of your workflow. This works in Linux, Mac, Windows (under cygwin-bash) and anything else POSIX-ish.
+On Sat, 24 Aug 2019, Carlo Arenas wrote:
 
+> On Mon, Aug 19, 2019 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrote=
+:
+> >
+> > There may be others I am missing.
+>
+> should we still support PCRE1?
+
+While Git for Windows has no problem to just drop PCRE1 support, I would
+like to take a longer road in Git. Like, deprecate it first (I don't
+know how to do that effectively, though, as packagers usually ignore
+compile warnings, maybe we need to add a Makefile knob
+YES_I_WANT_TO_BUILD_WITH_PCRE1_INSTEAD_OF_PCRE2 and
+YES_I_WILL_STATE_MY_REASONS_ON_THE_GIT_MAILING_LIST or something like
+that).
+
+Ciao,
+Dscho
