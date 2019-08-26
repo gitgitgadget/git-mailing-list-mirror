@@ -2,131 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2E931F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 14:44:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A49A1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731929AbfHZOos (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 10:44:48 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35218 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731903AbfHZOoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 10:44:46 -0400
-Received: by mail-wm1-f67.google.com with SMTP id l2so16160735wmg.0
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 07:44:45 -0700 (PDT)
+        id S1730637AbfHZOvD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 10:51:03 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:40307 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730491AbfHZOvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 10:51:03 -0400
+Received: by mail-oi1-f179.google.com with SMTP id h21so12293289oie.7
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 07:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=PfX5lXyHVCgPbTeOC6y5fmyNjYXJC+hUD8JhI36FLlA=;
-        b=D4bn3UWiczjaV+c/v68DVTugNAXfqRllpQUYyndY1SKHLOJ0A3J3UMHE+ZJgkdmSLr
-         ZTIuHR9y2r9MGvbLNPHDnUj9z3yCBrsHS/j3Hdho8YoE1Ve1RmKD3m0UJBfiQSYvUJ5u
-         WHbQuIL/zSIdf6Prgn+T0zvH+6ADLoe4OumaN269DbJykUE5+v6juKSEwdz2Ga/fOH2C
-         TV6ue8o1lSsF6YftWIoxpgYFV5Upy3OcRDS9XlGqznHQb/jkS4PmjlpgFArOs4fzU7Gt
-         iCiCAkNHVLAm+l2ikCA4XjX1nP59BOJNuyV8O/fPgrlCUtazmn8/H0XV1lNVmc0J9yo6
-         xYww==
+        d=dakotahawkins.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=faJRAGYKlv7a5O/UvwLkUaEAzfHPj1XzVrpPmnG76q4=;
+        b=bjtA/1MLYK+LqEj6xEP/59sYAILOiKov/nZKyDKP/E8CIlyd0qwsfDnQaZYZdBW1wt
+         UBYBBZpMIfNjON2vt2JgN21qlrj/Dde6VNobks5dGLJMMAwozbSjUKuneO5m1U07IAGb
+         nuBckHf6QnX5JwEM+bkr/93JpJGrO/tG5JN6A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PfX5lXyHVCgPbTeOC6y5fmyNjYXJC+hUD8JhI36FLlA=;
-        b=sigLriynkW6VLs+fps4cru18kUwLrzAJlZL4C4GnEcI67MyJ744gNNOg4HhVRfQFVx
-         iqzh/2RQf4DCpcNvR/i+XAjAPuNODgv0cSgyfDR8Y0CRCA8tzJgjvxi2ZtNyQZoyzdR1
-         GRa6FUb2rEu1Y3girTE+6nqHi7hWpyNySAmWX0cxuqX1jSFn6hujLl6j1MpI2UI70ASv
-         Nn/ASW9DUDgwQGseNskHIUBvzQAN6w/xLli8a9YhBOS51n8TXsZGAEy9dazcK1Sfw4im
-         /IDIlX9ZcTkxNtcJ1x7rAsh3aFrVSj7n/JMC0j6xk+CP1Qe2ffZ7+kQiqVHrXS6Ut3IR
-         /uwA==
-X-Gm-Message-State: APjAAAUaKHEJC4f9oBKTj/nb7Benv6RKzu0Q11p1r0R0mE1dyX5kZV5L
-        8ORFjbHFTraDklpGXX7sKlnprJ2N04A=
-X-Google-Smtp-Source: APXvYqwkl5x3VPLO0OSlpFhefxXL382EqFoJNFGo4welmRIS/vGbwHEvVkwp82QeHDojl5yDqlxH+Q==
-X-Received: by 2002:a7b:cb8e:: with SMTP id m14mr13881489wmi.10.1566830684560;
-        Mon, 26 Aug 2019 07:44:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm14497311wmj.27.2019.08.26.07.44.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Aug 2019 07:44:44 -0700 (PDT)
-Date:   Mon, 26 Aug 2019 07:44:44 -0700 (PDT)
-X-Google-Original-Date: Mon, 26 Aug 2019 14:44:42 GMT
-Message-Id: <b9a68598d79724849995283e6967f1c52843c048.1566830682.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.314.v2.git.gitgitgadget@gmail.com>
-References: <pull.314.git.gitgitgadget@gmail.com>
-        <pull.314.v2.git.gitgitgadget@gmail.com>
-From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] quote: handle null and empty strings in
- sq_quote_buf_pretty()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=faJRAGYKlv7a5O/UvwLkUaEAzfHPj1XzVrpPmnG76q4=;
+        b=gvjPa7fxYenezcZAfZMiDeCzLI2zQ+b4GxyKy4RYkkgc8QCuKPMIrzuyRCxojtFWjV
+         dNAeK4PTHeeZtAGIQjcKpwj38a8uHtC1D4lxlgT95xbTYihRLnCqg2Db1CUUpLLDZ4j1
+         eQo73xG8z8LSZbMvPPxk6T8oIAgaBd/n6caZykSnGkkf5wZWPoY6uIACbsK2e9luzw2p
+         dILGN62Fcpmi+4Dj5chNiupWFwtPoS2/8scQii26AVeH6Gfu41OiEHGyVkg6esoypA5F
+         +rCQzbEdppoO/M3eOY3/tXwhk5xqFFYC2WXsS1+COc89VqYaRw+A0aow4kbCWkJHwsoy
+         tJ4g==
+X-Gm-Message-State: APjAAAWYBdxmOuGUvwTy2911U1WaZKZIKaoN+8pjHIADwUB1gn+KbZNr
+        jQriICbyY4tq11Qho6C+MIC5IQkyTvlEcIhRtuNnHg==
+X-Google-Smtp-Source: APXvYqwbBvoWh1linCj5AxhPaw5cHoTgLnkxKn3c/jCrhrd0FOk+Xbv404/WRtXJIEH52jGPAwNcmzVcduGNvJkIDG4=
+X-Received: by 2002:aca:d8c3:: with SMTP id p186mr10276038oig.56.1566831061987;
+ Mon, 26 Aug 2019 07:51:01 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     garimasigit@gmail.com, jeffhost@microsoft.com, stolee@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
+References: <CAHnyXxScGO6Eex_AEbgH=YFQ2yzY1hnXavyNMkiXbrccVUA=Ug@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1908261615440.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1908261615440.46@tvgsbejvaqbjf.bet>
+From:   Dakota Hawkins <dakota@dakotahawkins.com>
+Date:   Mon, 26 Aug 2019 10:50:50 -0400
+Message-ID: <CAHnyXxQ46TC8hhjwLS-OtXzEDHaKxvCxj9HZMrs-ksnXFTxj_Q@mail.gmail.com>
+Subject: Re: [RFC] Add config option corresponding to --rebase-merges
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Garima Singh <garima.singh@microsoft.com>
+> I am not quite sure about the "cousins" thing. If at all, I would make
+> that a global option, I think. But then, maybe you have a use case in
+> mind where it would make sense to rebase cousins in some, but not in
+> other cases, cases that can be discerned via branch names?
 
-The sq_quote_buf_pretty() function does not emit anything when
-the incoming string is empty, but the function is to accumulate
-command line arguments, properly quoted as necessary, and the
-right way to add an argument that is an empty string is to show
-it quoted, i.e. ''. We warn the caller with the BUG macro if they
-pass in a NULL.
+I wasn't sure about that either (in fact I don't think I knew it existed before
+looking in to this), but I included it here in an attempt to be "symmetrical"
+with the --rebase-merges flag functionality.
 
-Reported by: Junio Hamano <gitster@pobox.com>
-Signed-off-by: Garima Singh <garima.singh@microsoft.com>
----
- quote.c          | 12 ++++++++++++
- t/t0014-alias.sh |  8 ++++++++
- 2 files changed, 20 insertions(+)
+Both pull.rebase and branch.<name>.rebase support the value "merges", so I
+think a rebase.merges config boolean is at least a no-brainer. In this case,
+though, it concerns me that you can set these to either "interactive" or
+"merges", so there's no way to have both. That's why I also suggest adding a
+".rebaseMerges" option to these (to allow .rebase=interactive).
 
-diff --git a/quote.c b/quote.c
-index 7f2aa6faa4..6d0f8a22a9 100644
---- a/quote.c
-+++ b/quote.c
-@@ -48,6 +48,18 @@ void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
- 	static const char ok_punct[] = "+,-./:=@_^";
- 	const char *p;
- 
-+	/* In case of null tokens, warn the user of the BUG in their call. */
-+	if (!src) 
-+		BUG("BUG can't append a NULL token to the buffer");
-+	
-+	/* In case of empty tokens, add a '' to ensure they 
-+	 * don't get inadvertently dropped. 
-+	 */
-+	if (!*src) {
-+		strbuf_addstr(dst, "''");
-+		return;
-+	}
-+
- 	for (p = src; *p; p++) {
- 		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
- 			sq_quote_buf(dst, src);
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index a070e645d7..9c176c7cbb 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -37,4 +37,12 @@ test_expect_success 'looping aliases - internal execution' '
- #	test_i18ngrep "^fatal: alias loop detected: expansion of" output
- #'
- 
-+test_expect_success 'run-command parses empty args properly, using sq_quote_buf_pretty' '
-+	cat >expect <<-EOF &&
-+	fatal: cannot change to '\''alias.foo=frotz foo '\'''\'' bar'\'': No such file or directory
-+	EOF
-+	test_expect_code 128 git -C "alias.foo=frotz foo '\'''\'' bar" foo 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+I could imagine that there exists some workflows where
+--rebase-merges=rebase-cousins might be desired either globally or for certain
+branches, though I don't think it's something I'd use myself. I really need to
+play around with it in a test repo to better understand its implications.
+
+This is the kind of feedback I was hoping for, though. I'd be amenable to
+adding only the simple option (if there's any kind of consensus on that) since
+that's the one I really want to use myself.
+
+Thanks!
+
+Dakota
+
+On Mon, Aug 26, 2019 at 10:19 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Dakota,
+>
+> On Fri, 23 Aug 2019, Dakota Hawkins wrote:
+>
+> > I'd like to work on a patch to add config options that correspond to
+> > rebase's --rebase-merges flag.
+> >
+> > In my workflow, while it's uncommon to encounter merge commits during
+> > a rebase operation, when they are encountered I pretty much always
+> > want this behavior. Since it's rare, I pretty much always forget to
+> > ask for it, with interesting and confusing consequences.
+> >
+> > If nobody has any opposition to the concept, the following are the
+> > specific options and values that I think makes sense and covers the
+> > existing functionality.
+>
+> I am in favor of this, as indicated at
+> https://github.com/gitgitgadget/git/issues/318
+>
+> > # New rebase.merges config that takes effect if set to true or cousins
+> > + rebase.merges=
+> > +   true
+> > +   cousins
+> >
+> > # New cousins value for pull.rebase
+> > pull.rebase=
+> > +   cousins
+> >
+> > # New pull.rebaseMerges config that takes effect if set to true or
+> > # cousins. Intended to allow pull.rebase to be set to interactive.
+> > + pull.rebaseMerges=
+> > +   true
+> > +   cousins
+> >
+> > # Corresponding additions for branch.<name> config
+> > branch.<name>.rebase=
+> > +   cousins
+> > branch.<name>.rebaseMerges=
+> > +   true
+> > +   cousins
+> >
+> > I'd like to get feedback on the idea and specific options proposed,
+> > if only to avoid having to tweak them once they've been added.
+>
+> I am not quite sure about the "cousins" thing. If at all, I would make
+> that a global option, I think. But then, maybe you have a use case in
+> mind where it would make sense to rebase cousins in some, but not in
+> other cases, cases that can be discerned via branch names?
+>
+> Ciao,
+> Johannes
