@@ -2,90 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BDC31F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 18:58:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15A81F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 19:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387497AbfHZS6B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 14:58:01 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55415 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727559AbfHZS6B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 14:58:01 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 520C26E35E;
-        Mon, 26 Aug 2019 14:57:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=blAxfX/hpBUG
-        rcfT80FRk4mFIDQ=; b=bPuQaR1cD3SI1E4BHpZU14fDtKFQ5hvwpDMiu8SxbP70
-        32Rgl34OegUJmRKAe/Mm6Um3SicY0gBAOdB2CP7FCTiGwC2zXmD46GsVsja4CrTr
-        XJP5+7cBhsFeSNyDaVQeWrr7ERE/Fwc/Sf5V6ewRn4iuC4H7bjEfP/A1td+LPi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=foBbKP
-        8/B42gHPeKG7+HBarjaMbvV7rsDaGu9GOh5aEEKwTKACj3p6nIHOHy79kfbO870+
-        zVQDMninV9AzfhUDfp57uqyS8UvrJkiG2W2VoU/e2NTQf/V3lB8lkhm04DoR+qaA
-        Vb7cFD6qNh6aa6J+TZI5UbbiyEHdXzzr94Goo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A0DD6E35D;
-        Mon, 26 Aug 2019 14:57:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 70A516E35C;
-        Mon, 26 Aug 2019 14:57:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, cbailey32@bloomberg.net, avarab@gmail.com
-Subject: Re: [PATCH 2/2] grep: refactor and simplify PCRE1 support
-References: <20190825182223.76288-1-carenas@gmail.com>
-        <20190825182223.76288-3-carenas@gmail.com>
-Date:   Mon, 26 Aug 2019 11:57:54 -0700
-In-Reply-To: <20190825182223.76288-3-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Sun, 25 Aug 2019 11:22:23 -0700")
-Message-ID: <xmqqy2zfg3f1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728658AbfHZTKL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 15:10:11 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:54857 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727768AbfHZTKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 15:10:11 -0400
+Received: from localhost (unknown [1.186.12.26])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id C5A83200004;
+        Mon, 26 Aug 2019 19:10:08 +0000 (UTC)
+Date:   Tue, 27 Aug 2019 00:40:06 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-gui: Update in-memory config when changing config
+ options
+Message-ID: <20190826191006.dmcj6kipwxnttc3s@yadavpratyush.com>
+References: <20190822223316.11153-1-me@yadavpratyush.com>
+ <xmqqimqkknup.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6A5B880C-C833-11E9-B4AA-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqimqkknup.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+On 26/08/19 07:22AM, Junio C Hamano wrote:
+> Pratyush Yadav <me@yadavpratyush.com> writes:
+> 
+> 
+> > Subject: Re: [PATCH] git-gui: Update in-memory config when changing config options
+> 
+> s/git-gui: Update/git-gui: update/
+ 
+I fixed this in my tree, just didn't send a re-roll with it. I assumed 
+you will pull from there so you'd get the updated subject.
 
-> diff --git a/grep.h b/grep.h
-> index 1a044c501e..ff620d784a 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -3,15 +3,6 @@
->  #include "color.h"
->  #ifdef USE_LIBPCRE1
->  #include <pcre.h>
-> -#ifndef NO_LIBPCRE1_JIT
-> -#ifdef PCRE_CONFIG_JIT
-> -#define GIT_PCRE1_USE_JIT
-> -#define GIT_PCRE_STUDY_JIT_COMPILE PCRE_STUDY_JIT_COMPILE
-> -#endif
-> -#endif
-> -#ifndef GIT_PCRE_STUDY_JIT_COMPILE
-> -#define GIT_PCRE_STUDY_JIT_COMPILE 0
-> -#endif
->  #else
->  typedef int pcre;
->  typedef int pcre_extra;
+> >  lib/option.tcl | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/lib/option.tcl b/lib/option.tcl
+> > index e43971b..139cf44 100644
+> > --- a/lib/option.tcl
+> > +++ b/lib/option.tcl
+> > @@ -344,6 +344,7 @@ proc do_save_config {w} {
+> >  	if {[catch {save_config} err]} {
+> >  		error_popup [strcat [mc "Failed to completely save options:"] "\n\n$err"]
+> >  	}
+> > +	load_config 1
+> 
+> This may make the symptom go away, and in that sense it would be a
+> good change in the short term.
+ 
+True.
 
-That's a patch pleasant to read ;-)
+> But I have to suspect that it may indicate a misdesign in the "edit
+> configuration" part of the program that the newly set configuration
+> value must load back to the program from the filesystem.  That feels
+> backwards.
+> 
+> NaaNaïvely, one would imagine a program wia capability to save and
+> load run-time options to disk to behave this way, no?
+> 
+>  * a set of in-core variables exist to control various aspects of
+>    the program (e.g. font size, background colour, etc.)
+> 
+>  * there is a "load config" helper function that can be called to
+>    populate these in-core variables from an external file.
+> 
+>  * there is a "edit config" UI that can be used to toggle these
+>    in-core variables (the checkboxes and radio buttons may not
+>    directly be connected to the underlying variables, but to their
+>    temporary counterparts and there may be a "OK" button in the UI
+>    to commit the changes to the temporaries to the real in-core
+>    variables).
+> 
+>  * there is a "save config" helper function that can be called to do
+>    the reverse of "load config"; one of the places that calls this
+>    helper is upon the success of "edit config".
 
-Will queue.  Thansk.
+I took a deeper look, and saving config should _in theory_ update the 
+in-memory state, and this indeed does happen for repo-specific settings 
+(which I unfortunately didn't test too well. Sorry). Changing global 
+settings is what is flawed.
+
+I leave it up to you to decide if you want to pull the current patch. I 
+don't mind if you don't. I'll see if I can find some time to debug this 
+and send a proper fix.
+
+Thanks for your input.
+ 
+> I didn't look at the lib/option.tcl to check, but I would suspect
+> that it would require a far larger change than your single liner if
+> we wanted to restructure the option tweaking part in such a way, and
+> it would be much more preferrable to use the single liner patch at
+> least for now, but in the longer term you might want to consider
+> such a clean-up.
+
+-- 
+Regards,
+Pratyush Yadav
