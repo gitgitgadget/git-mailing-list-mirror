@@ -2,87 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCBDB1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 14:38:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676141F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732583AbfHZOiv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 10:38:51 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57669 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731824AbfHZOiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 10:38:51 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A9A66BC56;
-        Mon, 26 Aug 2019 10:38:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fpvEPVwxqgAT2sB8i1lGoGf4Y9Y=; b=b/AcOk
-        Y4FyDcZAw1jz+2TtYmrKKBKnSnJYbiJBZBTvyUtPzmxtKv4LYtBQ/8qu+0OqkeHf
-        9hJXt2wrp61FcCEfhhZW1RAlX3tyVQtuKK5oqJkV9ifTOD3snLpGzdrm1NSFzo5J
-        f7zXoOTySEMnctbCj7BxI30a2AHN0YrTxEdc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fXpElvwG0/CEPLhM4NEfSkK6zX98Z2QC
-        UAXkq2YMcBF4Ea7nd2ULWjF3znh5IZWe3LPlu7aufIlTnw56JW7dcwofNjpuh+Lx
-        y2+6HyYemZjCQVsaawpdkd4sCndxlNalrzcuMWORJ9V6W63gKZd82gsa/ntlKHe7
-        gMyFT1/9HcU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 246AB6BC55;
-        Mon, 26 Aug 2019 10:38:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 203326BC54;
-        Mon, 26 Aug 2019 10:38:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Albert Vaca Cintora <albertvaka@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [Feature Request] Option to make .git not read-only in cloned repos
-References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
-        <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org>
-        <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
-        <34935414-4e69-114b-7a32-f94514e3679d@iee.email>
-Date:   Mon, 26 Aug 2019 07:38:45 -0700
-In-Reply-To: <34935414-4e69-114b-7a32-f94514e3679d@iee.email> (Philip Oakley's
-        message of "Sun, 25 Aug 2019 23:41:32 +0100")
-Message-ID: <xmqq5zmkkn4a.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731922AbfHZOnJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 10:43:09 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:38785 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731833AbfHZOnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 10:43:09 -0400
+Received: by mail-io1-f68.google.com with SMTP id p12so37921937iog.5
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 07:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sJxBmi5C9aAIjsogmoLajwCfdn+lXckoObKAo9pY1PU=;
+        b=MdeaMS2yOXjseWtSuOj0fet/cJovaNDoUq/uBncBX7CblPTHmGmr+Y7paPdtqeM0ti
+         cuKBoo1bMribsZQ4gv89qG0Wqm+EQu/zxHw+AynTJYUmKD8HqFj1mfzlqOrLAEU6/R4c
+         OjuvB+vbJuSEfYxbVpt9BUJxZKMd85cTu/5/7UbqkGBjN1N6p43IqAK3l7cptldba5xt
+         nOuesnPxepl5RpQY4AUXYENzbNeMbrCGMzPCwZuRDMtflhOS90zXHJ8X/bEfUysvhTBI
+         MnUYFh02Lug3UO5R0T60ofvJcrEi8Cn6mN4cjn5PGdqlc1unkbatC2va/t38S7zPaaL7
+         vAwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sJxBmi5C9aAIjsogmoLajwCfdn+lXckoObKAo9pY1PU=;
+        b=ojc4MzLelQkHS3IEpN1LQGSFMhMLfxCLSAOvUJsLnciT6RgHm5Z4s6CE9EhAxTxMLY
+         BBfnAb1jgvXs4FJk20Nv4WSjWsVpiUHSXRZ03HqxM22TeocDXINtf3UDmvBMeisqNAYS
+         6ILXRfKwpGOLvYyLbaAKwGc7QOmX4dPIF/IY3C1J9Hn1c2wf6h5s2MR9b3oUfMiPeaZM
+         JYXPnKjoopPk3WJUZJOLxYjA5OzGbQxbcwkwOT0vTjBxuRy2+Ao5PyMWcGet+5ZaDuGL
+         m6ful3SVfBNNNn6arole4IpRb6zrdbCp7UmZ0EuW+TWNO5/+Z49m+RiMfLdXd4R4d/uE
+         WosQ==
+X-Gm-Message-State: APjAAAURcXFS89I3y+7KE0MJ17xWDnVhaMu8zhHYjaJeooHOVAMGoL2q
+        Q00i6b6p8/pHFSnhWOwO2fvXtYZoVltT6X9zqt8=
+X-Google-Smtp-Source: APXvYqx/En0dCQmwDeLCbT0S5ljXmOOtWDcTxTOHJte29spkVhBMQ9qmihEDdNrjxw7u/tnDi/kYH/vBDb7uVgr0HLc=
+X-Received: by 2002:a05:6638:c8:: with SMTP id w8mr18325362jao.52.1566830587863;
+ Mon, 26 Aug 2019 07:43:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36D4936C-C80F-11E9-8651-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20190818201727.31505-1-dev+git@drbeat.li> <xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com>
+ <CAPUEspg9F7RutCUCoRAAXmRePjiunq3-zG7cN3uz_t5DVMxP=g@mail.gmail.com> <nycvar.QRO.7.76.6.1908261626450.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1908261626450.46@tvgsbejvaqbjf.bet>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 26 Aug 2019 07:42:56 -0700
+Message-ID: <CAPUEspivEfc82ZM=VaUA_sYhQbz+GtoOODVZK2i9LcCkmHq=Sg@mail.gmail.com>
+Subject: Re: [PATCH] grep: under --debug, show whether PCRE JIT is enabled
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+On Mon, Aug 26, 2019 at 7:29 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> On Sat, 24 Aug 2019, Carlo Arenas wrote:
+>
+> > On Mon, Aug 19, 2019 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> > >
+> > > There may be others I am missing.
+> >
+> > should we still support PCRE1?
+>
+> While Git for Windows has no problem to just drop PCRE1 support,
 
-> Surely (?), if we are considering our stored revisions to be
-> immutable, then removing the write bit is the right thing to do.
-> If I understand correctly (*) we don't separate the delete permission
-> from 'no-write' permissions, so the consequence will be that such
-> files are read-only.
+FWIW I don't want to drop PCRE1 support, I was not advocating for it,
+but in the contrary
+trying to find a way to keep it working as best as possible until we
+really can't.
 
-And directories (e.g. .git/objects/) are not made read-only for
-obvious reasons.  Read-only files inside a writeable directory can
-be deleted just like read-write ones can be (iow, the "delete
-permission" comes from the "write permission" of the containing
-directory) so "rm -r .git" should "work" just fine (depending on the
-definition of working, of course---it is discouraged to throw away
-your work).
+> I would
+> like to take a longer road in Git. Like, deprecate it first (I don't
+> know how to do that effectively, though, as packagers usually ignore
+> compile warnings, maybe we need to add a Makefile knob
+> YES_I_WANT_TO_BUILD_WITH_PCRE1_INSTEAD_OF_PCRE2 and
+> YES_I_WILL_STATE_MY_REASONS_ON_THE_GIT_MAILING_LIST or something like
+> that).
 
-Perhaps Windows filesystem or file manager application behave
-differently and tries to protect users from removing read-only files
-in read-write folders by mistake, or something?  If that is what the
-thread is complaining about, I agree that's a bit unfortunate.
-Perhaps Windows port can implement "this is an immultable file---do
-not write into it" slightly differently in adjust_shared_perm()?
+FWIW e6c531b808 (Makefile: make USE_LIBPCRE=3DYesPlease mean v2, not v1,
+2018-03-11)
+put a "deprecattion" warning in the Makefile by =C3=86var, but last time
+this was discussed[1] Junio
+made an IMHO sound argument for why that should be removed instead but
+ab/pcre-jit-fixes and UTF-8 validation are likely to make that more
+difficult (even if it is a mostly self inflicted wound AFAIK)
+
+Carlo
+
+[1] https://public-inbox.org/git/xmqqlg4xkh28.fsf@gitster-ct.c.googlers.com=
+/
