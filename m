@@ -2,120 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B8FB1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 23:15:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABC111F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 23:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726616AbfHZXPv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 19:15:51 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58372 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726584AbfHZXPv (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 19:15:51 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:60b7:b124:ccfa:d51])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC2A26140C;
-        Mon, 26 Aug 2019 23:15:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1566861348;
-        bh=JXrNp8S/onTbIlOzgwtWJsC/VoS7XlmcGsH7pGGyQYc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Lfm8yU98SRT/yJO2ouU2KFqCjDjDSByp5apGDmO3Ahp1+31INPBAZdsTbpCLDbd45
-         tr9oJ30/3gWz/50/sn4y0MxU8/Dp9BCzQvUDB6OjVyFfDQX9oltO+7zzSA4GpwLBJJ
-         Xon0In4W3iHIEa/BJ/YP2I/FjeY8VT+z6exU8j7DFkhLhm27/lQUKYkynFX9yfkfjv
-         gtMz7hZURXZqvLNrS9mTf3fej4qxJue7Dbjg5SVXvCUafCZ51LlwYdOz22ci2diCGv
-         7AQvkc7RUV2j9q/F65BgztuEULloaK2nku1rcrAVW9xvo7t47TS96P0v97IUajDAhb
-         XWHTpyFY8JQTDRRxP8/9C4vuUxgaTerPExKNFMIqudWuTgDuawMnLkVerruB1Pi3+l
-         eWVWz9dMGPNpDnq8dhRaTqJWoAdkpxw9RzN1UF2PiNB0kviVj4uvZu25FTFASMAxAy
-         17i6aUGUbRnWVE6NLVA1wf3TpwkCn4rufnI/dJkIN4+ZjL36q1I
-Date:   Mon, 26 Aug 2019 23:15:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ibrahim El <ibrahim.el@pm.me>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] New signing interface API with pluggable drivers
-Message-ID: <20190826231543.GD11334@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ibrahim El <ibrahim.el@pm.me>, git@vger.kernel.org
-References: <tz1YiiRtWStGrH2sc42DyD-8bDtH1A52rOCCapct59Qos6jEikqscvusUs7QeOBRNmCF7L_AL1ezKurbTp6qEZCmEk7L9B28wH-TVQGBSdY=@pm.me>
+        id S1726555AbfHZXRS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 19:17:18 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:33940 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfHZXRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 19:17:18 -0400
+Received: by mail-io1-f67.google.com with SMTP id s21so41748201ioa.1
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 16:17:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8do6TqQy68xwXHIskKmiHMe1rSuj6PS/u89BmUhq16E=;
+        b=PPomyCtocljaQdjdL+YAP3M8ONiVdR5TUXiRKTbFKQFg2O2ef+F6I6DRq44SFLjhH5
+         kRjfyxQuX/BqG3yQUfF4PcRlA+DZMibFnw3a4lyT/QEvse73rnvaYCl+/Gq6IhA8vWO+
+         aJ2m+63W+rfsX+nWqjKFD+PJTv6nfzJWS0f3b6AcSOAZUHj3g5aYWXU9tgS2KotdiMSa
+         Rjo/L/MeYP5FXhc2H65C54R0cAVSY2BRQmpJsl2YaevQp0P5gs3S3WWD3jV1QucKAJAY
+         MZZAHqF4IVdN0GILsOLgxPLIMbbGJq/tmp3IV1yMqQsfU06IX7Kfgu/R+u6KcCHZsEqf
+         6wQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8do6TqQy68xwXHIskKmiHMe1rSuj6PS/u89BmUhq16E=;
+        b=M0ymjAjjBMC3KRxC4SO2bFm4fzs9yf6Zxnzb8Vk6U2CuqA+r2dfrmmIB1l8QGL9gqc
+         ma/zjvF23LdRtjs4WmnHWAp8TgKtAlmzjj9nFQENEtHBX+WaHUNL7iRLhoEV25eOZCSj
+         7co5baxYFqgUwbT8iXYGGWcqDlk6z82aIBuE31iQDL1XAaHFwZ8KW3Ui7c0FES4mx0v+
+         XTh6Y2JEhOivLJ9t0oBJvAh8FDigZsIOp5FYSyChHVQn/EXOH4+eGdegsYHiyp/cknXl
+         zbC1TbnKFzkt7BPDTaIui9lEclgU6ZK2Jm7oSwLv/td6Jsw0X9yFR85LcrZdzAwpL9hD
+         KyZg==
+X-Gm-Message-State: APjAAAWjN3g3skxiw9ZAw3b6V9T3ym4vXZupLEch34JZVMM09pDoKkkj
+        gK3yTuz7gCfCDlvLBdQZX78=
+X-Google-Smtp-Source: APXvYqzT1HrbEHXXwMZASqb41AsL3wVmWo4YULIX3Oh0/bdwCMokJcU+lKkVUYLPrpd6xU2cviQSfw==
+X-Received: by 2002:a02:a409:: with SMTP id c9mr3948401jal.74.1566861437484;
+        Mon, 26 Aug 2019 16:17:17 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
+        by smtp.gmail.com with ESMTPSA id 8sm10482304ion.26.2019.08.26.16.17.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Aug 2019 16:17:16 -0700 (PDT)
+Date:   Mon, 26 Aug 2019 19:17:14 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v9 5/9] rebase: refactor can_fast_forward into goto tower
+Message-ID: <20190826231714.GA13827@archbookpro.localdomain>
+References: <20190508001252.15752-1-avarab@gmail.com>
+ <cover.1566724236.git.liu.denton@gmail.com>
+ <9bd34b4a404136c974b71975c7a3d809a874cc3d.1566724236.git.liu.denton@gmail.com>
+ <20190825130235.bsbknf7sky44kwt7@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wULyF7TL5taEdwHz"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <tz1YiiRtWStGrH2sc42DyD-8bDtH1A52rOCCapct59Qos6jEikqscvusUs7QeOBRNmCF7L_AL1ezKurbTp6qEZCmEk7L9B28wH-TVQGBSdY=@pm.me>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190825130235.bsbknf7sky44kwt7@localhost.localdomain>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Aug 25, 2019 at 06:47:02PM +0530, Pratyush Yadav wrote:
+> On 25/08/19 05:12AM, Denton Liu wrote:
+> > Before, can_fast_forward was written with an if-else statement. However,
+> > in the future, we may be adding more termination cases which would lead
+> > to deeply nested if statements.
+> > 
+> > Refactor to use a goto tower so that future cases can be easily
+> > inserted.
+> > 
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> >  builtin/rebase.c | 24 +++++++++++++++---------
+> >  1 file changed, 15 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 670096c065..22c4f1ff93 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -1264,21 +1264,27 @@ static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
+> >  			    struct object_id *merge_base)
+> >  {
+> >  	struct commit *head = lookup_commit(the_repository, head_oid);
+> > -	struct commit_list *merge_bases;
+> > -	int res;
+> > +	struct commit_list *merge_bases = NULL;
+> > +	int res = 0;
+> >  
+> >  	if (!head)
+> > -		return 0;
+> > +		goto done;
+> >  
+> >  	merge_bases = get_merge_bases(onto, head);
+> > -	if (merge_bases && !merge_bases->next) {
+> > -		oidcpy(merge_base, &merge_bases->item->object.oid);
+> > -		res = oideq(merge_base, &onto->object.oid);
+> > -	} else {
+> > +	if (!merge_bases || merge_bases->next) {
+> >  		oidcpy(merge_base, &null_oid);
+> > -		res = 0;
+> > +		goto done;
+> >  	}
+> > -	free_commit_list(merge_bases);
+> > +
+> > +	oidcpy(merge_base, &merge_bases->item->object.oid);
+> > +	if (!oideq(merge_base, &onto->object.oid))
+> > +		goto done;
+> > +
+> > +	res = 1;
+> > +
+> > +done:
+> > +	if (merge_bases)
+> > +		free_commit_list(merge_bases);
+> 
+> free_commit_list() returns immediately when a NULL pointer is passed in, 
+> so I'm not sure if this check is really necessary. I think it is a 
+> reasonable assumption to make that free* functions work well with NULL 
+> inputs.
 
---wULyF7TL5taEdwHz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I didn't realise that free_commit_list() would freely accept a NULL
+pointer without segfaulting. I'll remove the surrounding if.
 
-On 2019-08-26 at 19:57:45, Ibrahim El wrote:
-> Following previous introduction mail [1], this first series of 5 patches =
-is a re-write of the signing interface API in an effort to support easily t=
-he addition of new tools with minimal effort and also keeping backwards com=
-patibility with current tools and configuration.
->=20
-> All existing tests currently pass with backward compatibility.
->=20
-> [1]: https://public-inbox.org/git/CACi-FhDeAZecXSM36zroty6kpf2BCWLS=3D0R+=
-dUwuB96LqFKuTA@mail.gmail.com/T/#r43cbf31b86642ab5118e6e7b3d4098bade5f5a0a
->=20
-> The patches are ordered as follow:
-> [1/5] - Adding Documentation files explaining the different changes using=
- a design document and updates to the configuration part
-> [2/5] - Adding new files that define the signing interface API and also d=
-rivers for the existing GPG and GPGSM X.509 tools
-> [3/5] - Migrating the code to using the new signing interface API. Old GP=
-G Interface code is commented and ommited
-> [4/5] - Removing the old GPG interface and updating the code to remove al=
-l gpg mentions from it to make it transparent to the signing tool that is b=
-eing used
-> [5/5] - Duplicating existing signature related tests and updating them to=
- using the new configuration aliases
+> 
+> >  	return res && is_linear_history(onto, head);
+> >  }
+> >  
+> 
+> Out of curiosity, since you are going with a goto tower, why not do 
+> something like:
+> 
+> done_merge_bases:
+> free_commit_list(merge_bases);
+> done:
+> return res && is_linear_history(onto, head);
+> 
+> You jump to done_merge_bases after you have initialized merge_bases, and 
+> directly to done before initializing it.
 
-I haven't done an in-depth review of this series, but I did point out a
-few things that stood out to me.  I think the consensus on the list in
-the past was that for adding future tools, we'd like the drivers to be
-configuration-based so that Git need not learn about every signing tool.
-I think such a change would be welcome if done right.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I opted to do it this way since I figured it was less complexity to have
+a common jump target at the end. Also, in case in the future we decided
+to add more logic before merge_bases was initialised, we wouldn't have
+to worry about figuring out which target to jump to.
 
---wULyF7TL5taEdwHz
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> I'm not advocating for either way, just curious if there is a specific 
+> reason to do it your way. Anyway, if you drop the if (merge_bases), then 
+> it doesn't really matter I suppose.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+I'm pretty impartial as well. I'll drop the if and leave the rest as is
+unless someone else feels strongly about this.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1kaB8ACgkQv1NdgR9S
-9osqng/9E3rPpV4b06t/xAXAiac4z0Fqh7qvxgDA6UVjdzfi+oYXOdEHBJqS+nxE
-pxAQkusagXt9qePbNXiY7aJ7SVL0pvtL0qTXjIZaHXy74WBU1daxOhI2dULGGwUv
-26I5NF8XRq1JP9+TD5RK7iklyttFSCAQc1dNmRALTx4ot9yDv0IkNDqWTSPV0xtb
-+jDZyUrWnUR5RxG91XGfM0P5/H/gOMb1j4d9ctMQni/ZGq/nSSwPmfTeyTstaP1U
-3tE0WylF4p5QVNzYse6dnSBQkltZQBCpKMLVkVpNxVp6S4u2ZCZ+6hVN5g5Jh55b
-meOL0OkIWrIHqmZYkn8rnkcamyJK28l9LPkvmGx6ZVKBpKli+k3RoOWzBj6sakUW
-spnD2JrgFfoEUyawa6xAUg0puk4njXXhPGzKoTzieZqv6QXaVOaBDcjLdadRc0pX
-3jX1DnZBhcebzfhBrPy/c+Dhnf6CMjgyoTz2b+Edv1q5DGMyc3L2N6IcAxLau4S7
-SrrExYf1rhHzLNbvhQd5MtUJbqKukqmsfEFblijB6QiStrH8U6FH0S9faSDonzes
-9SFAfbdiGgjwWwcPfw8NwGDD01UWRBbkS2kQqFBPEoXqLL+5A//BbjScTe+7UmpT
-muUE1KrefoTma8YdO8ytCdJR+mLzxy1H1dspgg6XhumEYwWvKOE=
-=FLVe
------END PGP SIGNATURE-----
-
---wULyF7TL5taEdwHz--
+> 
+> -- 
+> Regards,
+> Pratyush Yadav
