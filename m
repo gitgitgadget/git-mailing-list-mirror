@@ -7,80 +7,85 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEB4D1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 15:27:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA901F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 15:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732305AbfHZP1n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 11:27:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58227 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728324AbfHZP1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 11:27:43 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 47FA86C2AD;
-        Mon, 26 Aug 2019 11:27:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1731835AbfHZPgR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 11:36:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59679 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728350AbfHZPgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 11:36:17 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27CDA1608D7;
+        Mon, 26 Aug 2019 11:36:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6vEt9ezPLODlJ56hSj+qJo3KbSw=; b=Lqhz7b
-        Y7TbGNjQLP1x3fKp78HBitWIPuVVoUFkVef1Ohg6ONkqqKZlwz3OivaSZFBM7n73
-        Od2blSckvjMGnJ/eKdzj+rQad69B8JUinFg69uj4n0jirgr0GoG2/luyGlCFb2+A
-        1+1gT4swwn9Z75BsfEPjBZsMo/MBAA8HH3wdQ=
+        :content-type; s=sasl; bh=iFm3Bhyef5o16T5khe6OJk5yub8=; b=ZHk64j
+        /iWj2y6q/X+XB7B9sWZ+kPUjquTKXT7yCPf0CoG33p3Bjc9InBQxbl2CVnaeSqkp
+        TKH/k4eaMNVumEwPuvpcOxbry1hH1L+rFr+k4WhxOO//JlR1iPCSCZPTrFNpzCo+
+        cWftVhiHDuQwYAOL5C00i7X92MKj8CvEU0ML4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Tymnup4uYqKGoK6s07/qPqxSizV8QVUR
-        eODpgyqN19hjNIgciQ4HfkITD2oZOJfl0+n8G1LSzfSIMwGO2uaFIkAWuf1c7oEg
-        SqMMKvfOfiOOocIsCH9d4Nu7rxeQ9Ixkly8ldcuQqy0yk6wvYacyENsoP5NfPDVf
-        KE/DPTzvj3E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FECE6C2AC;
-        Mon, 26 Aug 2019 11:27:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=Ft6i8KbQIls2SaksKyEtZ33UcLVuqOBU
+        jO/f7iFf/E67ycejHJz6xK58dwnVkswUiKyXwBXprNL6tALtn4wy2chMwPIOtCgZ
+        7CrUFZUrdLPwE4Nf9L0mvEe6ho9HVkrErFlzhUipKiRh8ls0eyXkMxGuLvdEWSqS
+        5NBHWdQryd0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FBBF1608D6;
+        Mon, 26 Aug 2019 11:36:15 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38D2E6C2AB;
-        Mon, 26 Aug 2019 11:27:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82A3E1608D4;
+        Mon, 26 Aug 2019 11:36:14 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Albert Vaca Cintora'" <albertvaka@gmail.com>,
-        "'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>
-Subject: Re: [Feature Request] Option to make .git not read-only in cloned repos
-References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
-        <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org>
-        <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
-        <006201d55c1a$68180f50$38482df0$@nexbridge.com>
-Date:   Mon, 26 Aug 2019 08:27:38 -0700
-In-Reply-To: <006201d55c1a$68180f50$38482df0$@nexbridge.com> (Randall
-        S. Becker's message of "Mon, 26 Aug 2019 10:27:29 -0400")
-Message-ID: <xmqqsgpoj6ad.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Mike Hommey <mh@glandium.org>, Elijah Newren <newren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] fast-import input string handling bugs
+References: <20190825041348.31835-1-mh@glandium.org>
+        <20190825065747.GA23806@sigill.intra.peff.net>
+        <20190825080640.GA31453@sigill.intra.peff.net>
+Date:   Mon, 26 Aug 2019 08:36:13 -0700
+In-Reply-To: <20190825080640.GA31453@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 25 Aug 2019 04:06:41 -0400")
+Message-ID: <xmqqo90cj5w2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0A7F96D4-C816-11E9-A479-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 3D0C8EA8-C817-11E9-8258-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> Sometimes I clone a repo just to grep for an error string and then I don't
->> need it anymore, or I clone several repos until I find the one that contains
->> what I want and delete the rest. Sometimes I want to write a patch for some
->> software I don't develop regularly so I don't need to keep a clone of it.
->> 
->> In any case, it would be useful to know the reason those files are read-only in
->> the first place. Do you guys know who might know?
+> On Sun, Aug 25, 2019 at 02:57:48AM -0400, Jeff King wrote:
 >
-> Why don't you wrap your clone in a script that calls chmod -R u+w
-> .git after the clone? This seems like a pretty trivial approach
-> regardless of your workflow. This works in Linux, Mac, Windows
-> (under cygwin-bash) and anything else POSIX-ish.
+>> And I think this is actually a real bug in the current code! We keep a
+>> pointer to the encoding string, which survives because of the history.
+>> But that history is bounded, and we could have an indefinite number of
+>> changed files in the middle. If I modify t9300 like this:
+>
+> Here are two patches. The first fixes the existing bug with "encoding",
+> and the second uses the approach I suggested to fix the leak you
+> noticed.
+>
+> The second one does carry a greater risk of regression than your patch,
+> but I think it's worth it for the fact that it makes any other bugs
+> (like the "encoding" one) more obvious.
 
-But on anything POSIX-ish, is it a problem for some files (but not
-any directory) in .git is made read-only?
+Yeah, it may be worth the risk, given that this is quite early in
+the cycle, so we have enough time to cook it in 'next' to see if
+somebody screams ;-)
 
-
-
+>
+>   [1/2]: fast-import: duplicate parsed encoding string
+>   [2/2]: fast-import: duplicate into history rather than passing ownership
+>
+>  fast-import.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> -Peff
