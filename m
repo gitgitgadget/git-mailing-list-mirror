@@ -2,113 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4221F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 17:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C96A1F4B7
+	for <e@80x24.org>; Mon, 26 Aug 2019 17:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732490AbfHZRJg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 13:09:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65021 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728560AbfHZRJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 13:09:36 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 946C07367B;
-        Mon, 26 Aug 2019 13:09:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t8OTeJMWFNul9x/N+OprvLbW6dM=; b=w4bgpH
-        Dx80l999/9cupWyIi8wJwosLnsjBA47ydjC4zJRQ0LcAYB1/XknW1Ivql5ZfxTxE
-        xAnqNpDFZOA89MDc1yseE0LUcQGroFPYVmGhj0c4ClLYo4sKxLGS8IC9qeRRuu1K
-        De6xIlSlHLICyQCdHs4Q5XFAGH4EkIkiw/sR8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tzh00H21yt4QH0Q/pcUZArd8ZzUCZMIw
-        OIhf9WtbGRfixVEIw40r+JpUpz4Cbaz5b/1PHMkQhjU6M6Xks5Q65Uw8i89WGOfY
-        Ei0FEE2XYq5ay/m4gCKmTBjtvTCBAAH9v2Qs4okycZGWbu+/DiEmTO+kBPL0pPKW
-        9GpcvP/+dmU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D3867367A;
-        Mon, 26 Aug 2019 13:09:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A37AC73676;
-        Mon, 26 Aug 2019 13:09:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Adam Roben via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Adam Roben <adam@roben.org>
-Subject: Re: [PATCH 1/1] mingw: fix launching of externals from Unicode paths
-References: <pull.135.git.gitgitgadget@gmail.com>
-        <8f2d64a88518d05579701b7093ecbc197ebca2c7.1566686335.git.gitgitgadget@gmail.com>
-Date:   Mon, 26 Aug 2019 10:09:28 -0700
-In-Reply-To: <8f2d64a88518d05579701b7093ecbc197ebca2c7.1566686335.git.gitgitgadget@gmail.com>
-        (Adam Roben via GitGitGadget's message of "Sat, 24 Aug 2019 15:38:56
-        -0700 (PDT)")
-Message-ID: <xmqqv9ujhn07.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732382AbfHZRKa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 13:10:30 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33605 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729951AbfHZRKa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 13:10:30 -0400
+Received: by mail-wm1-f68.google.com with SMTP id p77so470330wme.0
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 10:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Un5Rher3CYLKomFHHtJCpEFIVIqQPTAZ9Rjixp7cQ7U=;
+        b=JVTMfry+SPdK03CT9ewqKlhEIQvxskTzY4L22HVWd+2phJrnckJ4HZ/MIY5TVwFIlj
+         iMQATJU43cgHuuO0Pojz+lNFIbMzzbFB1+db1AyZSCutMDPqUEEx+Inm7bgdEa0oZsKU
+         0g29j4hH8/hKVISbSTS6ZjNVWOuY5NaCbOBz0DFEaIHpvWy6peb6UYnWoFz+dPRjTM9A
+         BtX9IyoYjADKwDlc5a+bxGwqgKvrz8AQSstjapS1iXMZBgdxQggZhXQCANLZexlzz5vG
+         stTLrT1Ybx+69uc6/hyssDWT3LRRvCGKHumOcyVwaC8FNMAYZUFPmdDtd23C7JL6ti3f
+         XZoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Un5Rher3CYLKomFHHtJCpEFIVIqQPTAZ9Rjixp7cQ7U=;
+        b=WDAFvlLojNyG3p8q02rtk0ckG/V7bbAxBgL0setSpwtsgpqszcO/sWC09Z9jFt553+
+         p2rjHhqRdPpefFMsfQQUETwY8AgM4xEy3ey+p6bPodCHnwCtz3Rjq80pqOJ4dV5bO3N6
+         4Ck73hqJcjzmiBFzWXYo1W6rj+HhhCO52Bpj4NSwaNksM8WhGqj5mLqhGVbo7OBj+U2h
+         JtS3ISE3XMTHnHo6IJsoXlxylTfcJ2vUAF6y6KrZez1b3gQo6qc8XAKR0IgjiMGM10ta
+         0bkii5PEX7Qrm09KR1aQJm3trTAvYVoN7pMcytvWuPzRx2Vh4k9cRfvIXP5XcF65ZfRB
+         JIUQ==
+X-Gm-Message-State: APjAAAXRaNl/E7lfFPV1ZjVoPH+uAP+KLq8d7rykmgbwiHSJ5ZI/SJba
+        +89jzaXPxCjvhP49kNYewCk=
+X-Google-Smtp-Source: APXvYqzFeadgCe/kPB3BX7na7OvkXq2GQx/6GIbLv9TPAVbRtyGv9hehnAANYxjdLS1bDKhOiqGd5g==
+X-Received: by 2002:a1c:eb06:: with SMTP id j6mr23973123wmh.76.1566839428138;
+        Mon, 26 Aug 2019 10:10:28 -0700 (PDT)
+Received: from szeder.dev (x4db5125e.dyn.telefonica.de. [77.181.18.94])
+        by smtp.gmail.com with ESMTPSA id z2sm178430wmi.2.2019.08.26.10.10.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Aug 2019 10:10:27 -0700 (PDT)
+Date:   Mon, 26 Aug 2019 19:10:24 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Ben Wijen <ben@wijen.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 1/1] rebase.c: make sure the active branch isn't moved
+ when autostashing
+Message-ID: <20190826171024.GR20404@szeder.dev>
+References: <20190821182941.12674-1-ben@wijen.net>
+ <20190826164513.9102-1-ben@wijen.net>
+ <20190826164513.9102-2-ben@wijen.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 449A6764-C824-11E9-AF76-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190826164513.9102-2-ben@wijen.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Adam Roben via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Aug 26, 2019 at 06:45:13PM +0200, Ben Wijen wrote:
+> +test_expect_success 'never change active branch' '
+> +	git checkout -b not-the-feature-branch unrelated-onto-branch &&
+> +	test_when_finished "git reset --hard && git checkout -" &&
 
-> Note that the only problem in this function was calling
-> `GetFileAttributes()` instead of `GetFileAttributesW()`. The calls to
-> `access()` were fine because `access()` is a macro which resolves to
-> `mingw_access()`, which already handles Unicode correctly. But
-> `lookup_prog()` was changed to use `_waccess()` directly so that we only
-> convert the path to UTF-16 once.
+I think it would be safer to explicitly spell out the branch that
+should be checked out at the end than to rely on 'git checkout -'
+always being able to figure that out, even in case of a breakage.
 
-Nicely explained.  Thanks.
-
->
-> To make things work correctly, we have to maintain UTF-8 and UTF-16
-> versions in tandem in `lookup_prog()`.
->
-> Signed-off-by: Adam Roben <adam@roben.org>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  compat/mingw.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 8141f77189..9f02403ebf 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1161,14 +1161,21 @@ static char *lookup_prog(const char *dir, int dirlen, const char *cmd,
->  			 int isexe, int exe_only)
->  {
->  	char path[MAX_PATH];
-> +	wchar_t wpath[MAX_PATH];
->  	snprintf(path, sizeof(path), "%.*s\\%s.exe", dirlen, dir, cmd);
->  
-> -	if (!isexe && access(path, F_OK) == 0)
-> +	if (xutftowcs_path(wpath, path) < 0)
-> +		return NULL;
+> +	echo changed >file0 &&
+> +	git rebase --autostash not-the-feature-branch feature-branch &&
+> +	test_cmp_rev not-the-feature-branch unrelated-onto-branch
+> +'
 > +
-> +	if (!isexe && _waccess(wpath, F_OK) == 0)
->  		return xstrdup(path);
-> -	path[strlen(path)-4] = '\0';
-> -	if ((!exe_only || isexe) && access(path, F_OK) == 0)
-> -		if (!(GetFileAttributes(path) & FILE_ATTRIBUTE_DIRECTORY))
-> +	wpath[wcslen(wpath)-4] = '\0';
-> +	if ((!exe_only || isexe) && _waccess(wpath, F_OK) == 0) {
-> +		if (!(GetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY)) {
-> +			path[strlen(path)-4] = '\0';
->  			return xstrdup(path);
-> +		}
-> +	}
->  	return NULL;
->  }
+>  test_done
+> -- 
+> 2.22.0
+> 
