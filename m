@@ -2,81 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0451F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 16:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52F841F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 16:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732524AbfHZQlr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 12:41:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64182 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729344AbfHZQlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 12:41:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39C25177121;
-        Mon, 26 Aug 2019 12:41:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=N+t5GkEpUAXDqJ0VZRG51hSx8ho=; b=Xq1s5P
-        pfWEfT/Dduj1J5cgJE8D80ZFZ8M42LAeaJBe5gfOQajr4TR/UnPd1XW/DX4JjA9Z
-        lVxzFinW9lv4q2Tu4d8JZ45r1aTVgd7al/+J5tQyZ4qFl8Hl/wzMuiaNIJdye3KV
-        V6kuCx/ICIkSVBpIFjjKaBb1sVCzXN8jR4y0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IQqjBAM0ND5vFGZ+/k18HenrEb9EpRvI
-        xcvdNY+aI5x6u0+tg5Y1arREjLFNckzwZNfpl74Zuu9Al3pA+BDWUuTPiKW84eNh
-        zsKOL3QymL7oEwxxgA/SbtiZmFucYHouYsz/IuX/cix+TCSDcSqeCNdAxmy633lf
-        cep/wnsrCmM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29189177120;
-        Mon, 26 Aug 2019 12:41:44 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76E4417711F;
-        Mon, 26 Aug 2019 12:41:43 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 2/2] apply: reload .gitattributes after patching it
-References: <20190809100217.427178-1-sandals@crustytoothpaste.net>
-        <20190818184403.861907-1-sandals@crustytoothpaste.net>
-        <20190818184403.861907-3-sandals@crustytoothpaste.net>
-        <9b940950-666a-0c4c-58c0-1e61ac9e654c@gmail.com>
-        <20190820024505.GH365197@genre.crustytoothpaste.net>
-        <18fcc7db-7c09-3fbf-1e3f-81be99f4bb17@gmail.com>
-        <xmqqd0gzvgo3.fsf@gitster-ct.c.googlers.com>
-        <d59de3db-13e6-35d5-2cb1-b38dc8854c60@gmail.com>
-        <e8196c6e-7f3c-1b29-73ba-40094f1e0280@gmail.com>
-Date:   Mon, 26 Aug 2019 09:41:42 -0700
-In-Reply-To: <e8196c6e-7f3c-1b29-73ba-40094f1e0280@gmail.com> (Phillip Wood's
-        message of "Mon, 26 Aug 2019 16:09:20 +0100")
-Message-ID: <xmqqk1azj2ux.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1733014AbfHZQpZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 12:45:25 -0400
+Received: from smtp01.domein-it.com ([92.48.232.141]:50036 "EHLO
+        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732893AbfHZQpX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 12:45:23 -0400
+Received: by smtp01.domein-it.com (Postfix, from userid 1000)
+        id CFEFA80190B4; Mon, 26 Aug 2019 18:45:20 +0200 (CEST)
+Received: from ferret.domein-it.nl (unknown [92.48.232.148])
+        by smtp01.domein-it.com (Postfix) with ESMTP id 838C980190B4;
+        Mon, 26 Aug 2019 18:45:16 +0200 (CEST)
+Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:57188 helo=ben.local)
+        by ferret.domein-it.nl with esmtpa (Exim 4.92)
+        (envelope-from <ben@wijen.net>)
+        id 1i2I7H-0001oK-BP; Mon, 26 Aug 2019 18:45:15 +0200
+From:   Ben Wijen <ben@wijen.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ben Wijen <ben@wijen.net>
+Subject: [PATCH v4 1/1] rebase.c: make sure the active branch isn't moved when autostashing
+Date:   Mon, 26 Aug 2019 18:45:13 +0200
+Message-Id: <20190826164513.9102-2-ben@wijen.net>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190826164513.9102-1-ben@wijen.net>
+References: <20190821182941.12674-1-ben@wijen.net>
+ <20190826164513.9102-1-ben@wijen.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 62E3005E-C820-11E9-8589-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
+X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
+X-Domein-IT-MailScanner-ID: 1i2I7H-0001oK-BP
+X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
+X-Domein-IT-MailScanner-SpamCheck: 
+X-Domein-IT-MailScanner-From: ben@wijen.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Consider the following scenario:
+    git checkout not-the-master
+    work work work
+    git rebase --autostash upstream master
 
-> I spent some time digging into this and the attributes are reloaded
-> before each pick. This is because check_updates() called by
-> unpack_trees() calls git_attr_set_direction(GIT_ATTR_CHECKOUT) at the
-> start of the function and git_attr_set_direction(GIT_ATTR_CHECKIN) at
-> the end of the function. This has the effect of dropping all loaded
-> attributes as git_attr_set_direction() calls drop_all_attr_stacks()
-> when the direction is changed.
+Here 'rebase --autostash <upstream> <branch>' incorrectly moves the
+active branch (not-the-master) to master (before the rebase).
 
-Ah, OK (and thanks), so it was working by accident ;-)
+The expected behavior: (58794775:/git-rebase.sh:526)
+    AUTOSTASH=$(git stash create autostash)
+    git reset --hard
+    git checkout master
+    git rebase upstream
+    git stash apply $AUTOSTASH
+
+The actual behavior: (6defce2b:/builtin/rebase.c:1062)
+    AUTOSTASH=$(git stash create autostash)
+    git reset --hard master
+    git checkout master
+    git rebase upstream
+    git stash apply $AUTOSTASH
+
+
+This commit reinstates the 'legacy script' behavior as introduced with
+58794775: rebase: implement --[no-]autostash and rebase.autostash
+
+As with this commit the reset must never change the active branch,
+the 'HEAD is now at ...' message has now been removed.
+
+Signed-off-by: Ben Wijen <ben@wijen.net>
+---
+ builtin/rebase.c            | 18 ++++++------------
+ t/t3420-rebase-autostash.sh | 12 ++++++++----
+ 2 files changed, 14 insertions(+), 16 deletions(-)
+
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 670096c065..a928f44941 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1968,9 +1968,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				state_dir_path("autostash", &options);
+ 			struct child_process stash = CHILD_PROCESS_INIT;
+ 			struct object_id oid;
+-			struct commit *head =
+-				lookup_commit_reference(the_repository,
+-							&options.orig_head);
+ 
+ 			argv_array_pushl(&stash.args,
+ 					 "stash", "create", "autostash", NULL);
+@@ -1991,17 +1988,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				    options.state_dir);
+ 			write_file(autostash, "%s", oid_to_hex(&oid));
+ 			printf(_("Created autostash: %s\n"), buf.buf);
+-			if (reset_head(&head->object.oid, "reset --hard",
++
++			/*
++			 * We might not be on orig_head yet:
++			 * Make sure to reset w/o switching branches...
++			 */
++			if (reset_head(NULL, "reset --hard",
+ 				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
+ 				die(_("could not reset --hard"));
+-			printf(_("HEAD is now at %s"),
+-			       find_unique_abbrev(&head->object.oid,
+-						  DEFAULT_ABBREV));
+-			strbuf_reset(&buf);
+-			pp_commit_easy(CMIT_FMT_ONELINE, head, &buf);
+-			if (buf.len > 0)
+-				printf(" %s", buf.buf);
+-			putchar('\n');
+ 
+ 			if (discard_index(the_repository->index) < 0 ||
+ 				repo_read_index(the_repository) < 0)
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index b8f4d03467..2421bc39f5 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -37,7 +37,6 @@ test_expect_success setup '
+ create_expected_success_am () {
+ 	cat >expected <<-EOF
+ 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+-	HEAD is now at $(git rev-parse --short feature-branch) third commit
+ 	First, rewinding head to replay your work on top of it...
+ 	Applying: second commit
+ 	Applying: third commit
+@@ -48,7 +47,6 @@ create_expected_success_am () {
+ create_expected_success_interactive () {
+ 	q_to_cr >expected <<-EOF
+ 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+-	HEAD is now at $(git rev-parse --short feature-branch) third commit
+ 	Applied autostash.
+ 	Successfully rebased and updated refs/heads/rebased-feature-branch.
+ 	EOF
+@@ -57,7 +55,6 @@ create_expected_success_interactive () {
+ create_expected_failure_am () {
+ 	cat >expected <<-EOF
+ 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+-	HEAD is now at $(git rev-parse --short feature-branch) third commit
+ 	First, rewinding head to replay your work on top of it...
+ 	Applying: second commit
+ 	Applying: third commit
+@@ -70,7 +67,6 @@ create_expected_failure_am () {
+ create_expected_failure_interactive () {
+ 	cat >expected <<-EOF
+ 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+-	HEAD is now at $(git rev-parse --short feature-branch) third commit
+ 	Applying autostash resulted in conflicts.
+ 	Your changes are safe in the stash.
+ 	You can run "git stash pop" or "git stash drop" at any time.
+@@ -306,4 +302,12 @@ test_expect_success 'branch is left alone when possible' '
+ 	test unchanged-branch = "$(git rev-parse --abbrev-ref HEAD)"
+ '
+ 
++test_expect_success 'never change active branch' '
++	git checkout -b not-the-feature-branch unrelated-onto-branch &&
++	test_when_finished "git reset --hard && git checkout -" &&
++	echo changed >file0 &&
++	git rebase --autostash not-the-feature-branch feature-branch &&
++	test_cmp_rev not-the-feature-branch unrelated-onto-branch
++'
++
+ test_done
+-- 
+2.22.0
+
