@@ -2,29 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5040D1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 02:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED6351F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 02:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729185AbfHZCnv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Aug 2019 22:43:51 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:36376 "EHLO dcvr.yhbt.net"
+        id S1729193AbfHZCnz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Aug 2019 22:43:55 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36404 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729182AbfHZCnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Aug 2019 22:43:51 -0400
+        id S1729186AbfHZCny (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Aug 2019 22:43:54 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 913671F4BD;
+        by dcvr.yhbt.net (Postfix) with ESMTP id C039B1F4BE;
         Mon, 26 Aug 2019 02:43:33 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: [PATCH 06/11] hashmap_add takes "struct hashmap_entry *"
-Date:   Mon, 26 Aug 2019 02:43:27 +0000
-Message-Id: <20190826024332.3403-7-e@80x24.org>
+Subject: [PATCH 07/11] hashmap_get takes "const struct hashmap_entry *"
+Date:   Mon, 26 Aug 2019 02:43:28 +0000
+Message-Id: <20190826024332.3403-8-e@80x24.org>
 In-Reply-To: <20190826024332.3403-1-e@80x24.org>
 References: <20190826024332.3403-1-e@80x24.org>
 MIME-Version: 1.0
@@ -34,388 +34,293 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is less error-prone than "void *" as the compiler now
-detects invalid types being passed.
+This is less error-prone than "const void *" as the compiler
+now detects invalid types being passed.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- attr.c                  | 2 +-
- blame.c                 | 2 +-
- builtin/describe.c      | 2 +-
- builtin/difftool.c      | 6 +++---
- builtin/fetch.c         | 2 +-
- config.c                | 2 +-
- diff.c                  | 2 +-
- diffcore-rename.c       | 2 +-
- hashmap.c               | 6 +++---
- hashmap.h               | 4 ++--
- merge-recursive.c       | 4 ++--
- name-hash.c             | 8 ++++----
- packfile.c              | 2 +-
- patch-ids.c             | 2 +-
- range-diff.c            | 2 +-
- ref-filter.c            | 2 +-
- sequencer.c             | 2 +-
- sub-process.c           | 2 +-
- submodule-config.c      | 2 +-
- t/helper/test-hashmap.c | 6 +++---
- 20 files changed, 31 insertions(+), 31 deletions(-)
+ attr.c                | 2 +-
+ blame.c               | 6 +++---
+ builtin/difftool.c    | 5 +++--
+ builtin/fast-export.c | 2 +-
+ config.c              | 2 +-
+ diff.c                | 4 ++--
+ hashmap.c             | 5 +++--
+ hashmap.h             | 8 +++++---
+ merge-recursive.c     | 4 ++--
+ name-hash.c           | 2 +-
+ patch-ids.c           | 2 +-
+ revision.c            | 3 ++-
+ sub-process.c         | 2 +-
+ submodule-config.c    | 4 ++--
+ 14 files changed, 28 insertions(+), 23 deletions(-)
 
 diff --git a/attr.c b/attr.c
-index a8be7a7b4f..fa26a3e3cb 100644
+index fa26a3e3cb..9bdef61cc3 100644
 --- a/attr.c
 +++ b/attr.c
-@@ -122,7 +122,7 @@ static void attr_hashmap_add(struct attr_hashmap *map,
- 	e->keylen = keylen;
- 	e->value = value;
+@@ -101,7 +101,7 @@ static void *attr_hashmap_get(struct attr_hashmap *map,
+ 	hashmap_entry_init(&k.ent, memhash(key, keylen));
+ 	k.key = key;
+ 	k.keylen = keylen;
+-	e = hashmap_get(&map->map, &k, NULL);
++	e = hashmap_get(&map->map, &k.ent, NULL);
  
--	hashmap_add(&map->map, e);
-+	hashmap_add(&map->map, &e->ent);
+ 	return e ? e->value : NULL;
  }
- 
- struct all_attrs_item {
 diff --git a/blame.c b/blame.c
-index 46059410cd..4d20aee435 100644
+index 4d20aee435..73ffb59403 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -424,7 +424,7 @@ static void get_fingerprint(struct fingerprint *result,
+@@ -419,7 +419,7 @@ static void get_fingerprint(struct fingerprint *result,
+ 			continue;
+ 		hashmap_entry_init(&entry->entry, hash);
+ 
+-		found_entry = hashmap_get(&result->map, entry, NULL);
++		found_entry = hashmap_get(&result->map, &entry->entry, NULL);
+ 		if (found_entry) {
  			found_entry->count += 1;
  		} else {
- 			entry->count = 1;
--			hashmap_add(&result->map, entry);
-+			hashmap_add(&result->map, &entry->entry);
- 			++entry;
+@@ -452,7 +452,7 @@ static int fingerprint_similarity(struct fingerprint *a, struct fingerprint *b)
+ 	hashmap_iter_init(&b->map, &iter);
+ 
+ 	while ((entry_b = hashmap_iter_next(&iter))) {
+-		if ((entry_a = hashmap_get(&a->map, entry_b, NULL))) {
++		if ((entry_a = hashmap_get(&a->map, &entry_b->entry, NULL))) {
+ 			intersection += entry_a->count < entry_b->count ?
+ 					entry_a->count : entry_b->count;
  		}
- 	}
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 596ddf89a5..f5e0a7e033 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -124,7 +124,7 @@ static void add_to_known_names(const char *path,
- 			e = xmalloc(sizeof(struct commit_name));
- 			oidcpy(&e->peeled, peeled);
- 			hashmap_entry_init(&e->entry, oidhash(peeled));
--			hashmap_add(&names, e);
-+			hashmap_add(&names, &e->entry);
- 			e->path = NULL;
- 		}
- 		e->tag = tag;
+@@ -471,7 +471,7 @@ static void fingerprint_subtract(struct fingerprint *a, struct fingerprint *b)
+ 	hashmap_iter_init(&b->map, &iter);
+ 
+ 	while ((entry_b = hashmap_iter_next(&iter))) {
+-		if ((entry_a = hashmap_get(&a->map, entry_b, NULL))) {
++		if ((entry_a = hashmap_get(&a->map, &entry_b->entry, NULL))) {
+ 			if (entry_a->count <= entry_b->count)
+ 				hashmap_remove(&a->map, entry_b, NULL);
+ 			else
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 98ffc04c61..82c146718d 100644
+index 82c146718d..f41298d199 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -168,7 +168,7 @@ static void add_left_or_right(struct hashmap *map, const char *path,
+@@ -162,7 +162,7 @@ static void add_left_or_right(struct hashmap *map, const char *path,
+ 
+ 	FLEX_ALLOC_STR(e, path, path);
+ 	hashmap_entry_init(&e->entry, strhash(path));
+-	existing = hashmap_get(map, e, NULL);
++	existing = hashmap_get(map, &e->entry, NULL);
+ 	if (existing) {
+ 		free(e);
  		e = existing;
- 	} else {
- 		e->left[0] = e->right[0] = '\0';
--		hashmap_add(map, e);
-+		hashmap_add(map, &e->entry);
- 	}
- 	strlcpy(is_right ? e->right : e->left, content, PATH_MAX);
- }
-@@ -235,7 +235,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
- 		struct path_entry *entry;
- 		FLEX_ALLOC_STR(entry, path, buf.buf);
- 		hashmap_entry_init(&entry->entry, strhash(buf.buf));
--		hashmap_add(result, entry);
-+		hashmap_add(result, &entry->entry);
- 	}
- 	fclose(fp);
- 	if (finish_command(&diff_files))
-@@ -466,7 +466,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+@@ -462,7 +462,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 			/* Avoid duplicate working_tree entries */
+ 			FLEX_ALLOC_STR(entry, path, dst_path);
+ 			hashmap_entry_init(&entry->entry, strhash(dst_path));
+-			if (hashmap_get(&working_tree_dups, entry, NULL)) {
++			if (hashmap_get(&working_tree_dups, &entry->entry,
++					NULL)) {
  				free(entry);
  				continue;
  			}
--			hashmap_add(&working_tree_dups, entry);
-+			hashmap_add(&working_tree_dups, &entry->entry);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index f30a92a4d3..081cdd70c9 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -152,7 +152,7 @@ static const void *anonymize_mem(struct hashmap *map,
+ 	hashmap_entry_init(&key.hash, hash);
+ 	key.orig = orig;
+ 	key.orig_len = *len;
+-	ret = hashmap_get(map, &key, NULL);
++	ret = hashmap_get(map, &key.hash, NULL);
  
- 			if (!use_wt_file(workdir, dst_path, &roid)) {
- 				if (checkout_path(rmode, &roid, dst_path,
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b7d70eee70..909dbde909 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -278,7 +278,7 @@ static struct refname_hash_entry *refname_hash_add(struct hashmap *map,
- 	FLEX_ALLOC_MEM(ent, refname, refname, len);
- 	hashmap_entry_init(&ent->ent, strhash(refname));
- 	oidcpy(&ent->oid, oid);
--	hashmap_add(map, ent);
-+	hashmap_add(map, &ent->ent);
- 	return ent;
- }
- 
+ 	if (!ret) {
+ 		ret = xmalloc(sizeof(*ret));
 diff --git a/config.c b/config.c
-index 08d866e7de..2243d7c3d6 100644
+index 2243d7c3d6..1a1b6675fd 100644
 --- a/config.c
 +++ b/config.c
-@@ -1885,7 +1885,7 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
- 		hashmap_entry_init(&e->ent, strhash(key));
- 		e->key = xstrdup(key);
- 		string_list_init(&e->value_list, 1);
--		hashmap_add(&cs->config_hash, e);
-+		hashmap_add(&cs->config_hash, &e->ent);
- 	}
- 	si = string_list_append_nodup(&e->value_list, xstrdup_or_null(value));
+@@ -1863,7 +1863,7 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
  
+ 	hashmap_entry_init(&k.ent, strhash(normalized_key));
+ 	k.key = normalized_key;
+-	found_entry = hashmap_get(&cs->config_hash, &k, NULL);
++	found_entry = hashmap_get(&cs->config_hash, &k.ent, NULL);
+ 	free(normalized_key);
+ 	return found_entry;
+ }
 diff --git a/diff.c b/diff.c
-index 1168f0cbb9..cc7f06d10d 100644
+index cc7f06d10d..72d3c6aa19 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1003,7 +1003,7 @@ static void add_lines_to_move_detection(struct diff_options *o,
- 		if (prev_line && prev_line->es->s == o->emitted_symbols->buf[n].s)
- 			prev_line->next_line = key;
- 
--		hashmap_add(hm, key);
-+		hashmap_add(hm, &key->ent);
- 		prev_line = key;
- 	}
- }
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 2a1449013b..4670a40179 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -330,7 +330,7 @@ static void insert_file_table(struct repository *r,
- 	entry->filespec = filespec;
- 
- 	hashmap_entry_init(&entry->entry, hash_filespec(r, filespec));
--	hashmap_add(table, entry);
-+	hashmap_add(table, &entry->entry);
- }
- 
- /*
+@@ -1144,13 +1144,13 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		case DIFF_SYMBOL_PLUS:
+ 			hm = del_lines;
+ 			key = prepare_entry(o, n);
+-			match = hashmap_get(hm, key, NULL);
++			match = hashmap_get(hm, &key->ent, NULL);
+ 			free(key);
+ 			break;
+ 		case DIFF_SYMBOL_MINUS:
+ 			hm = add_lines;
+ 			key = prepare_entry(o, n);
+-			match = hashmap_get(hm, key, NULL);
++			match = hashmap_get(hm, &key->ent, NULL);
+ 			free(key);
+ 			break;
+ 		default:
 diff --git a/hashmap.c b/hashmap.c
-index 958a7dfe14..1aa1324c3e 100644
+index 1aa1324c3e..f02ac41758 100644
 --- a/hashmap.c
 +++ b/hashmap.c
-@@ -201,12 +201,12 @@ void *hashmap_get_next(const struct hashmap *map,
- 	return NULL;
+@@ -186,7 +186,8 @@ void hashmap_free(struct hashmap *map, int free_entries)
+ 	memset(map, 0, sizeof(*map));
  }
  
--void hashmap_add(struct hashmap *map, void *entry)
-+void hashmap_add(struct hashmap *map, struct hashmap_entry *entry)
+-void *hashmap_get(const struct hashmap *map, const void *key, const void *keydata)
++void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
++		const void *keydata)
  {
- 	unsigned int b = bucket(map, entry);
- 
- 	/* add entry */
--	((struct hashmap_entry *) entry)->next = map->table[b];
-+	entry->next = map->table[b];
- 	map->table[b] = entry;
- 
- 	/* fix size and rehash if appropriate */
-@@ -303,7 +303,7 @@ const void *memintern(const void *data, size_t len)
- 		FLEX_ALLOC_MEM(e, data, data, len);
- 		hashmap_entry_init(&e->ent, hash);
- 		e->len = len;
--		hashmap_add(&map, e);
-+		hashmap_add(&map, &e->ent);
- 	}
- 	return e->data;
+ 	return *find_entry_ptr(map, key, keydata);
  }
+@@ -297,7 +298,7 @@ const void *memintern(const void *data, size_t len)
+ 	/* lookup interned string in pool */
+ 	hashmap_entry_init(&key.ent, hash);
+ 	key.len = len;
+-	e = hashmap_get(&map, &key, data);
++	e = hashmap_get(&map, &key.ent, data);
+ 	if (!e) {
+ 		/* not found: create it */
+ 		FLEX_ALLOC_MEM(e, data, data, len);
 diff --git a/hashmap.h b/hashmap.h
-index 8f55782dc9..6a2fdf451b 100644
+index 6a2fdf451b..dea369868d 100644
 --- a/hashmap.h
 +++ b/hashmap.h
-@@ -50,7 +50,7 @@
-  *             FLEX_ALLOC_STR(e, value, value);
-  *             hashmap_entry_init(&e->ent, memhash(&key, sizeof(long)));
+@@ -74,7 +74,8 @@
   *             e->key = key;
-- *             hashmap_add(&map, e);
-+ *             hashmap_add(&map, &e->ent);
+  *
+  *             flags |= COMPARE_VALUE;
+- *             printf("%sfound\n", hashmap_get(&map, e, NULL) ? "" : "not ");
++ *             printf("%sfound\n",
++ *                    hashmap_get(&map, &e->ent, NULL) ? "" : "not ");
+  *             free(e);
   *         }
   *
-  *         if (!strcmp("print_all_by_key", action)) {
-@@ -328,7 +328,7 @@ void *hashmap_get_next(const struct hashmap *map,
-  * `map` is the hashmap structure.
-  * `entry` is the entry to add.
+@@ -84,7 +85,8 @@
+  *             k.key = key;
+  *
+  *             flags |= COMPARE_VALUE;
+- *             printf("%sfound\n", hashmap_get(&map, &k, value) ? "" : "not ");
++ *             printf("%sfound\n",
++ *                    hashmap_get(&map, &k->ent, value) ? "" : "not ");
+  *         }
+  *
+  *         if (!strcmp("end", action)) {
+@@ -286,7 +288,7 @@ static inline unsigned int hashmap_get_size(struct hashmap *map)
+  * If an entry with matching hash code is found, `key` and `keydata` are passed
+  * to `hashmap_cmp_fn` to decide whether the entry matches the key.
   */
--void hashmap_add(struct hashmap *map, void *entry);
-+void hashmap_add(struct hashmap *map, struct hashmap_entry *entry);
+-void *hashmap_get(const struct hashmap *map, const void *key,
++void *hashmap_get(const struct hashmap *map, const struct hashmap_entry *key,
+ 			 const void *keydata);
  
  /*
-  * Adds or replaces a hashmap entry. If the hashmap contains duplicate
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 6bc4f14ff4..db9b247ece 100644
+index db9b247ece..2d31a3e279 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -455,7 +455,7 @@ static int save_files_dirs(const struct object_id *oid,
- 
- 	FLEX_ALLOC_MEM(entry, path, base->buf, base->len);
- 	hashmap_entry_init(&entry->e, path_hash(entry->path));
--	hashmap_add(&opt->current_file_dir_set, entry);
-+	hashmap_add(&opt->current_file_dir_set, &entry->e);
- 
- 	strbuf_setlen(base, baselen);
- 	return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-@@ -732,7 +732,7 @@ static char *unique_path(struct merge_options *opt, const char *path, const char
- 
- 	FLEX_ALLOC_MEM(entry, path, newpath.buf, newpath.len);
- 	hashmap_entry_init(&entry->e, path_hash(entry->path));
--	hashmap_add(&opt->current_file_dir_set, entry);
-+	hashmap_add(&opt->current_file_dir_set, &entry->e);
- 	return strbuf_detach(&newpath, NULL);
+@@ -63,7 +63,7 @@ static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *hashmap,
+ 		return NULL;
+ 	hashmap_entry_init(&key.ent, strhash(dir));
+ 	key.dir = dir;
+-	return hashmap_get(hashmap, &key, NULL);
++	return hashmap_get(hashmap, &key.ent, NULL);
  }
  
+ static int dir_rename_cmp(const void *unused_cmp_data,
+@@ -99,7 +99,7 @@ static struct collision_entry *collision_find_entry(struct hashmap *hashmap,
+ 
+ 	hashmap_entry_init(&key.ent, strhash(target_file));
+ 	key.target_file = target_file;
+-	return hashmap_get(hashmap, &key, NULL);
++	return hashmap_get(hashmap, &key.ent, NULL);
+ }
+ 
+ static int collision_cmp(void *unused_cmp_data,
 diff --git a/name-hash.c b/name-hash.c
-index e90660c94f..def3576a8b 100644
+index def3576a8b..7368913613 100644
 --- a/name-hash.c
 +++ b/name-hash.c
-@@ -70,7 +70,7 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
- 		FLEX_ALLOC_MEM(dir, name, ce->name, namelen);
- 		hashmap_entry_init(&dir->ent, memihash(ce->name, namelen));
- 		dir->namelen = namelen;
--		hashmap_add(&istate->dir_hash, dir);
-+		hashmap_add(&istate->dir_hash, &dir->ent);
- 
- 		/* recursively add missing parent directories */
- 		dir->parent = hash_dir_entry(istate, ce, namelen);
-@@ -107,7 +107,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
- 		return;
- 	ce->ce_flags |= CE_HASHED;
- 	hashmap_entry_init(&ce->ent, memihash(ce->name, ce_namelen(ce)));
--	hashmap_add(&istate->name_hash, ce);
-+	hashmap_add(&istate->name_hash, &ce->ent);
- 
- 	if (ignore_case)
- 		add_dir_entry(istate, ce);
-@@ -283,7 +283,7 @@ static struct dir_entry *hash_dir_entry_with_parent_and_prefix(
- 		hashmap_entry_init(&dir->ent, hash);
- 		dir->namelen = prefix->len;
- 		dir->parent = parent;
--		hashmap_add(&istate->dir_hash, dir);
-+		hashmap_add(&istate->dir_hash, &dir->ent);
- 
- 		if (parent) {
- 			unlock_dir_mutex(lock_nr);
-@@ -474,7 +474,7 @@ static void *lazy_name_thread_proc(void *_data)
- 		struct cache_entry *ce_k = d->istate->cache[k];
- 		ce_k->ce_flags |= CE_HASHED;
- 		hashmap_entry_init(&ce_k->ent, d->lazy_entries[k].hash_name);
--		hashmap_add(&d->istate->name_hash, ce_k);
-+		hashmap_add(&d->istate->name_hash, &ce_k->ent);
- 	}
- 
- 	return NULL;
-diff --git a/packfile.c b/packfile.c
-index 96535eb86b..f7402c470b 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1488,7 +1488,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	if (!delta_base_cache.cmpfn)
- 		hashmap_init(&delta_base_cache, delta_base_cache_hash_cmp, NULL, 0);
- 	hashmap_entry_init(&ent->ent, pack_entry_hash(p, base_offset));
--	hashmap_add(&delta_base_cache, ent);
-+	hashmap_add(&delta_base_cache, &ent->ent);
+@@ -35,7 +35,7 @@ static struct dir_entry *find_dir_entry__hash(struct index_state *istate,
+ 	struct dir_entry key;
+ 	hashmap_entry_init(&key.ent, hash);
+ 	key.namelen = namelen;
+-	return hashmap_get(&istate->dir_hash, &key, name);
++	return hashmap_get(&istate->dir_hash, &key.ent, name);
  }
  
- int packed_object_info(struct repository *r, struct packed_git *p,
+ static struct dir_entry *find_dir_entry(struct index_state *istate,
 diff --git a/patch-ids.c b/patch-ids.c
-index a2da711678..f87b62bf58 100644
+index f87b62bf58..437f29e42c 100644
 --- a/patch-ids.c
 +++ b/patch-ids.c
-@@ -116,6 +116,6 @@ struct patch_id *add_commit_patch_id(struct commit *commit,
+@@ -99,7 +99,7 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
+ 	if (init_patch_id_entry(&patch, commit, ids))
  		return NULL;
- 	}
  
--	hashmap_add(&ids->patches, key);
-+	hashmap_add(&ids->patches, &key->ent);
- 	return key;
+-	return hashmap_get(&ids->patches, &patch, NULL);
++	return hashmap_get(&ids->patches, &patch.ent, NULL);
  }
-diff --git a/range-diff.c b/range-diff.c
-index 32b29f9594..96f955d84d 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -218,7 +218,7 @@ static void find_exact_matches(struct string_list *a, struct string_list *b)
- 		util->patch = a->items[i].string;
- 		util->diff = util->patch + util->diff_offset;
- 		hashmap_entry_init(&util->e, strhash(util->diff));
--		hashmap_add(&map, util);
-+		hashmap_add(&map, &util->e);
- 	}
  
- 	/* Now try to find exact matches in b */
-diff --git a/ref-filter.c b/ref-filter.c
-index 206014c93d..d939ebc6bb 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1568,7 +1568,7 @@ static void populate_worktree_map(struct hashmap *map, struct worktree **worktre
- 			hashmap_entry_init(&entry->ent,
- 					strhash(worktrees[i]->head_ref));
+ struct patch_id *add_commit_patch_id(struct commit *commit,
+diff --git a/revision.c b/revision.c
+index 3461c78883..4336281286 100644
+--- a/revision.c
++++ b/revision.c
+@@ -147,7 +147,8 @@ static void paths_and_oids_insert(struct hashmap *map,
+ 	key.path = (char *)path;
+ 	oidset_init(&key.trees, 0);
  
--			hashmap_add(map, entry);
-+			hashmap_add(map, &entry->ent);
- 		}
- 	}
- }
-diff --git a/sequencer.c b/sequencer.c
-index 1140cdf526..ee11cda7e7 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4539,7 +4539,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
- 
- 	FLEX_ALLOC_STR(labels_entry, label, label);
- 	hashmap_entry_init(&labels_entry->entry, strihash(label));
--	hashmap_add(&state->labels, labels_entry);
-+	hashmap_add(&state->labels, &labels_entry->entry);
- 
- 	FLEX_ALLOC_STR(string_entry, string, label);
- 	oidcpy(&string_entry->entry.oid, oid);
+-	if (!(entry = (struct path_and_oids_entry *)hashmap_get(map, &key, NULL))) {
++	entry = hashmap_get(map, &key.ent, NULL);
++	if (!entry) {
+ 		entry = xcalloc(1, sizeof(struct path_and_oids_entry));
+ 		hashmap_entry_init(&entry->ent, hash);
+ 		entry->path = xstrdup(key.path);
 diff --git a/sub-process.c b/sub-process.c
-index 9847dad6fc..d58e069855 100644
+index d58e069855..debd86bb68 100644
 --- a/sub-process.c
 +++ b/sub-process.c
-@@ -105,7 +105,7 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
- 		return err;
- 	}
+@@ -22,7 +22,7 @@ struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const ch
  
--	hashmap_add(hashmap, entry);
-+	hashmap_add(hashmap, &entry->ent);
- 	return 0;
+ 	hashmap_entry_init(&key.ent, strhash(cmd));
+ 	key.cmd = cmd;
+-	return hashmap_get(hashmap, &key, NULL);
++	return hashmap_get(hashmap, &key.ent, NULL);
  }
  
+ int subprocess_read_status(int fd, struct strbuf *status)
 diff --git a/submodule-config.c b/submodule-config.c
-index 4aa02e280e..a3bbd9fd6f 100644
+index a3bbd9fd6f..58d585cd7d 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -149,7 +149,7 @@ static void cache_add(struct submodule_cache *cache,
- 	struct submodule_entry *e = xmalloc(sizeof(*e));
- 	hashmap_entry_init(&e->ent, hash);
- 	e->config = submodule;
--	hashmap_add(&cache->for_name, e);
-+	hashmap_add(&cache->for_name, &e->ent);
- }
+@@ -166,7 +166,7 @@ static const struct submodule *cache_lookup_path(struct submodule_cache *cache,
+ 	hashmap_entry_init(&key.ent, hash);
+ 	key.config = &key_config;
  
- static const struct submodule *cache_lookup_path(struct submodule_cache *cache,
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index bf063a2521..49e715f1cd 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -104,7 +104,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
- 			/* add entries */
- 			for (i = 0; i < TEST_SIZE; i++) {
- 				hashmap_entry_init(&entries[i]->ent, hashes[i]);
--				hashmap_add(&map, entries[i]);
-+				hashmap_add(&map, &entries[i]->ent);
- 			}
+-	entry = hashmap_get(&cache->for_path, &key, NULL);
++	entry = hashmap_get(&cache->for_path, &key.ent, NULL);
+ 	if (entry)
+ 		return entry->config;
+ 	return NULL;
+@@ -186,7 +186,7 @@ static struct submodule *cache_lookup_name(struct submodule_cache *cache,
+ 	hashmap_entry_init(&key.ent, hash);
+ 	key.config = &key_config;
  
- 			hashmap_free(&map, 0);
-@@ -117,7 +117,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
- 		j = (method & TEST_SPARSE) ? TEST_SIZE / 10 : TEST_SIZE;
- 		for (i = 0; i < j; i++) {
- 			hashmap_entry_init(&entries[i]->ent, hashes[i]);
--			hashmap_add(&map, entries[i]);
-+			hashmap_add(&map, &entries[i]->ent);
- 		}
- 
- 		for (j = 0; j < rounds; j++) {
-@@ -179,7 +179,7 @@ int cmd__hashmap(int argc, const char **argv)
- 			entry = alloc_test_entry(hash, p1, p2);
- 
- 			/* add to hashmap */
--			hashmap_add(&map, entry);
-+			hashmap_add(&map, &entry->ent);
- 
- 		} else if (!strcmp("put", cmd) && p1 && p2) {
- 
+-	entry = hashmap_get(&cache->for_name, &key, NULL);
++	entry = hashmap_get(&cache->for_name, &key.ent, NULL);
+ 	if (entry)
+ 		return entry->config;
+ 	return NULL;
 -- 
 EW
 
