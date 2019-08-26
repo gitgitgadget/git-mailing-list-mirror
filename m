@@ -2,85 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F0E1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 14:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 957521F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732484AbfHZO0r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 10:26:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62175 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727261AbfHZO0r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 10:26:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 48A416B9D4;
-        Mon, 26 Aug 2019 10:26:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fWz4zjQx9zwb2ekybTUzXP8fZ4A=; b=FXbQ7w
-        nh+zDVk6IAJLOGi/mPSi4Y83yA1WHy5Ot2sVfo8kBfLdHAdjgnn30fzA04dQHRvC
-        O3rGt9sJhW/ZrGdIuhnXU6j3C1FDio9PXDw6ZZIH3RZ0EljtrPfdHk3QJcTjiQuo
-        zJh6W8NdhL8N3MJe2JKUBJZUyq4CZoRjHbLtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Kr/3Y6odBFsS06D3FIOjRSzy9BCFfzJm
-        5Nhl5uFvc7qjkkSnZUK+bTXdvmTjdV6wJkajYTiAFIb3sSH/ZmvUAf41YlYB9/mV
-        n1oJ4qs5X2tQEuA8SuAwaCm6mtsIoebPEh80ltqcp3gEvLWp7lyt3uFvTmIo8yTV
-        pVHX1KVl4+g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 411F06B9D3;
-        Mon, 26 Aug 2019 10:26:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 52A106B9D0;
-        Mon, 26 Aug 2019 10:26:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 13/13] format-patch: learn --infer-cover-subject option
-References: <cover.1566258525.git.liu.denton@gmail.com>
-        <cover.1566285151.git.liu.denton@gmail.com>
-        <de599f7ca9b5fe7e298bba0bb8c5d05f2f5cf34f.1566285151.git.liu.denton@gmail.com>
-        <xmqq8srms4ak.fsf@gitster-ct.c.googlers.com>
-        <20190823181545.GA14048@archbookpro.localdomain>
-        <d8a02cfd-2250-44ce-b559-dbec742b7cdf@iee.email>
-        <xmqq1rxbmy8r.fsf@gitster-ct.c.googlers.com>
-        <20190824080328.GA9726@archbookpro.localdomain>
-Date:   Mon, 26 Aug 2019 07:26:36 -0700
-In-Reply-To: <20190824080328.GA9726@archbookpro.localdomain> (Denton Liu's
-        message of "Sat, 24 Aug 2019 04:03:28 -0400")
-Message-ID: <xmqqef18knoj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732485AbfHZO1u convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 26 Aug 2019 10:27:50 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:45726 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729131AbfHZO1u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 10:27:50 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7QERaME030013
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 26 Aug 2019 10:27:37 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Albert Vaca Cintora'" <albertvaka@gmail.com>,
+        "'Johannes Sixt'" <j6t@kdbg.org>
+Cc:     <git@vger.kernel.org>
+References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com> <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org> <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
+In-Reply-To: <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
+Subject: RE: [Feature Request] Option to make .git not read-only in cloned repos
+Date:   Mon, 26 Aug 2019 10:27:29 -0400
+Message-ID: <006201d55c1a$68180f50$38482df0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 846FCFBC-C80D-11E9-8FD1-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQNp8WItsZHJ6oa15Vw/HazfT/RW8wGPs2THAhKp3vejxz3XUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On August 25, 2019 3:59 PM, Albert Vaca Cintora wrote:
+> To: Johannes Sixt <j6t@kdbg.org>
+> On Sun, Aug 25, 2019 at 7:54 PM Johannes Sixt <j6t@kdbg.org> wrote:
+> >
+> > Am 23.08.19 um 22:43 schrieb Albert Vaca Cintora:
+> > > However, I'm sure that a large percentage of developers out there
+> > > will agree with me that having to use force (-f) to delete every
+> > > cloned repo is annoying, and even worse, it creates the bad habit of
+> > > always force-deleting everything.
+> >
+> > IMO, the bad habit is to delete cloned repositories all the time. If
+> > your workflow necessitates this, then you are doing something wrong.
+> > Maybe you have an X-Y-problem?
+> >
+> > -- Hannes
+> 
+> There are plenty of valid workflows where one would delete a repo.
+> 
+> What you suggest is like saying I shouldn't delete pictures from my camera,
+> because in that case I shouldn't have taken them in the first place.
+> 
+> Sometimes I clone a repo just to grep for an error string and then I don't
+> need it anymore, or I clone several repos until I find the one that contains
+> what I want and delete the rest. Sometimes I want to write a patch for some
+> software I don't develop regularly so I don't need to keep a clone of it.
+> 
+> In any case, it would be useful to know the reason those files are read-only in
+> the first place. Do you guys know who might know?
 
-> Perhaps something like
-> --cover-subject-from-description={true,auto,false}?
+Why don't you wrap your clone in a script that calls chmod -R u+w .git after the clone? This seems like a pretty trivial approach regardless of your workflow. This works in Linux, Mac, Windows (under cygwin-bash) and anything else POSIX-ish.
 
-Is it still only about "subject"?  I thought one of the improved
-behaviour was to populate the subject header with the title
-(i.e. the first, often single-line, paragraph) and use the remainder
-in the body?  --use-description-in-cover={both,auto,body} meaning
-"both subject and body gets filled" (among the three this name is I
-am least happy with), "automatically decide---if the first paragraph
-is overly big, it is unwise to use it on the subject", "use it only
-in body" (implying "use the *** SUBJECT HERE *** placeholder on the
-subject header), perhaps?
