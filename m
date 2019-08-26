@@ -2,137 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BB551F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 20:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 393621F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 20:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387567AbfHZUI0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 16:08:26 -0400
-Received: from mx0b-0016e101.pphosted.com ([148.163.141.31]:10410 "EHLO
-        mx0b-0016e101.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731657AbfHZUI0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 16:08:26 -0400
-Received: from pps.filterd (m0151358.ppops.net [127.0.0.1])
-        by mx0b-0016e101.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x7QK8CQg016203
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 13:08:24 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucsd.edu; h=from : content-type :
- content-transfer-encoding : mime-version : subject : date : in-reply-to :
- cc : references : message-id; s=campus;
- bh=tqfE68vGFky5E+D0gy4J9ynjoAXWJkQomKIAMnpB0KQ=;
- b=SwOl+gTkyiPESrJvpVy8mYf95lecXWQpqVFQt4ChrlyhFZDXmxLWUyvaSkZCk6vIrgHE
- IHFbl48GthM1S+OQzkc0V38QGQYDU9Pxs53wgN8CtB8a3CNRmTK50VXo0GKQ+fsYT61Q
- u7QYXj3OaOpuz5Tbijm+X4M+ODcOfb9ExMf46GHKHpScwXgHFP2FKuCryjRpT507GjTx
- 4zihfGnXpC0T7NBKvrd75k2YbSOw+GOnd9HleC3YDkoY3AC9+Lr0CDZCQvUl6lnNFugw
- 3ouM4XFG+JOlim6BY8QbSNWs+QEKIX/UjLpt6PG+mPHyf7VaIaeBKZtvW5vjcGZlLjZ8 EA== 
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-        by mx0b-0016e101.pphosted.com with ESMTP id 2uk3fcxk67-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 13:08:24 -0700
-Received: by mail-pl1-f199.google.com with SMTP id v4so10594588plp.23
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 13:08:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ucsd-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:mime-version:subject:date
-         :in-reply-to:cc:references:message-id;
-        bh=tqfE68vGFky5E+D0gy4J9ynjoAXWJkQomKIAMnpB0KQ=;
-        b=XOBjE/JksyapRg99rZk1DaqAonCZuwhVBuZjd3EXrYaxQhxRoX55Wh3EX/L2JaLHB/
-         SguPcee2xPqc8pDVTFREhsjjxyY6goQL4+mPIi58dEZe7UO55yavxr4iHh1zzi+f6zlr
-         vm9ey6wFK+OknHDJ2t2pJ0Al+Jnea3xxj0a7OujUUDNIiloyrxkbiE5XPBulsDFiz3ta
-         PkJQ2ljNFm+hM/KV6yJFom5ljTQpHnG/y1K5fhQ4O9Zn2GEon4XTz46dX1DOC4obTLEy
-         8x0mQiiW8ONvG3N0G78O8+SDArL/qIchRGz9CENAkeTHdMB1wvIS04UDcEen+UEs3xWZ
-         Sn5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:date:in-reply-to:cc:references:message-id;
-        bh=tqfE68vGFky5E+D0gy4J9ynjoAXWJkQomKIAMnpB0KQ=;
-        b=EMD5tTRtK8nJP+k5Pij0LL5TNLL36aItnxfUqp8KsN2sPhmWd8umAjXGTfXcfgN7JN
-         Ksq3MbcTD11gKVIYmue4LaoWvvicPfFsACN+j5r9YECgfK3aSR+4NIdSi0EeF4S53kGi
-         1JohEtyVyiuG7I4clSvCdZy18z2N2X097BOCZztqSIqPly/+TzQVXkoafWDZX72rALkt
-         V8AMkY5YdyaqFp26zh69XLUPoBlVVBRGhTnKdKHmAM7Rlowl/IzKc60bYIL1i+TRZQvU
-         ce+RqnbyuydEF7Z204A9v03kURUkuCCiq9I7APn0q6aTRs0DoLuRcXt6/FoliC+RpuhC
-         8ZFg==
-X-Gm-Message-State: APjAAAUr41Ve6JgUll9x3Ev2bHFz6EHxaFbcKTfZQypZucnyqCoUrWQr
-        mRIS9RkqF+QLQSz7ZLDUART0U6eFaCkGstuTfdy2o0Xy8Jhd2XTEI2V0csXuwrE+4DdUaWhyypT
-        8ggpMj+yRPv4=
-X-Received: by 2002:a17:902:8e8b:: with SMTP id bg11mr20362406plb.93.1566850098132;
-        Mon, 26 Aug 2019 13:08:18 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqwftElluWw8B2Vs/ZglWbLNAdlL8Thfm5GORFlyiEh8EUIzcS+JXG7oC/tk+y7M66MbzEe2Dw==
-X-Received: by 2002:a17:902:8e8b:: with SMTP id bg11mr20362388plb.93.1566850097928;
-        Mon, 26 Aug 2019 13:08:17 -0700 (PDT)
-Received: from ?IPv6:2601:646:c101:8c30:b92c:823a:6706:8ac1? ([2601:646:c101:8c30:b92c:823a:6706:8ac1])
-        by smtp.gmail.com with ESMTPSA id q22sm14659756pgh.49.2019.08.26.13.08.17
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Aug 2019 13:08:17 -0700 (PDT)
-From:   Andrey Portnoy <aportnoy@ucsd.edu>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: [PATCH 0/1] banned.h: fix vsprintf warning
-Date:   Mon, 26 Aug 2019 13:08:16 -0700
-In-Reply-To: <20190826183317.GB23399@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-References: <pull.322.git.gitgitgadget@gmail.com>
- <xmqqwoezj3o5.fsf@gitster-ct.c.googlers.com>
- <20190826183317.GB23399@sigill.intra.peff.net>
-Message-Id: <0766F8E0-9A36-4304-A99D-35CC65063F3A@ucsd.edu>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-campus_gsuite: gsuite_33445511
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:5.22.84,1.0.8
- definitions=2019-08-26_08:2019-08-26,2019-08-26 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=922 spamscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1906280000 definitions=main-1908260189
-To:     unlisted-recipients:; (no To-header on input)
+        id S1729288AbfHZUnk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 16:43:40 -0400
+Received: from alln-iport-2.cisco.com ([173.37.142.89]:61851 "EHLO
+        alln-iport-2.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727219AbfHZUnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 16:43:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2038; q=dns/txt; s=iport;
+  t=1566852218; x=1568061818;
+  h=from:to:subject:date:message-id:content-id:
+   content-transfer-encoding:mime-version;
+  bh=uZ3Pi7kCMQHfJ0XzWCP2fYtHxUepXhp54L9af8vuXEQ=;
+  b=A44u3U9I4xjMPBhRMLxUJf2/pmcouS9pExNr/qybCnT7LAN+whR6NrGC
+   0/6YcdBUJhLbfWc+CjqzeEIVG8mN6Co0BP6xLQFkXt4TDfewB+Ye/HlEm
+   jO4ye5sXWMPDktzqtmcGrJ83OYx7qCnI89NqAIz6CVh5VG8ggUZMLpLwV
+   c=;
+IronPort-PHdr: =?us-ascii?q?9a23=3Afht/3RGfQVAT4fImWQb4+Z1GYnJ96bzpIg4Y7I?=
+ =?us-ascii?q?YmgLtSc6Oluo7vJ1Hb+e4w3A3SRYuO7fVChqKWqK3mVWEaqbe5+HEZON0pNV?=
+ =?us-ascii?q?cejNkO2QkpAcqLE0r+eeXjdTI7NM9DT1RiuXq8NBsdFQ=3D=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0C7IQBDQ2Rd/5JdJa1kHgEGBwaBZ4F?=
+ =?us-ascii?q?FUAOBQyAECyqEIYNHA4pvTYFqmA2CUgNUCQEBAQwBAS0CAQGEPxmCUCM4EwI?=
+ =?us-ascii?q?KAQEEAQEBAgEGBG2FLQELhWMREQwBATgRASICHwcCBDAVEgQ1gwCBawMdAQK?=
+ =?us-ascii?q?fSgKBOIhhc4EygnsBAQWFARiCFgmBDCiLchiBf4E4DBOHZYJ0MoIEIo8dnFE?=
+ =?us-ascii?q?JAoIelEMbgjKWHY1ogTaTF4NZAgQCBAUCDgEBBYFnIYFYcBVlAYJBgkI4gzq?=
+ =?us-ascii?q?KU3KBKY4rAQE?=
+X-IronPort-AV: E=Sophos;i="5.64,433,1559520000"; 
+   d="scan'208";a="319674828"
+Received: from rcdn-core-10.cisco.com ([173.37.93.146])
+  by alln-iport-2.cisco.com with ESMTP/TLS/DHE-RSA-SEED-SHA; 26 Aug 2019 20:43:37 +0000
+Received: from XCH-ALN-012.cisco.com (xch-aln-012.cisco.com [173.36.7.22])
+        by rcdn-core-10.cisco.com (8.15.2/8.15.2) with ESMTPS id x7QKhbLG002782
+        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 20:43:37 GMT
+Received: from xhs-rcd-001.cisco.com (173.37.227.246) by XCH-ALN-012.cisco.com
+ (173.36.7.22) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 26 Aug
+ 2019 15:43:36 -0500
+Received: from xhs-rtp-002.cisco.com (64.101.210.229) by xhs-rcd-001.cisco.com
+ (173.37.227.246) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 26 Aug
+ 2019 15:43:36 -0500
+Received: from NAM03-BY2-obe.outbound.protection.outlook.com (64.101.32.56) by
+ xhs-rtp-002.cisco.com (64.101.210.229) with Microsoft SMTP Server (TLS) id
+ 15.0.1473.3 via Frontend Transport; Mon, 26 Aug 2019 16:43:35 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=c8o/qzBgxjkMb90zu1i2j22vWbTKV2cohSRXrRkY6FWraHak1rRcodEGvp2+dmmx/gC5mIzV0YUfj/ohJGpYpecE6LkUZRLWRYT32mDOLCi1ep90znRMprECadEZz19SNFoBwDHEUVzipq+cKdJgJq0xy/IzfKxz/JREjx2t9T5S04Xw+X8p0G2r3g7ysApHoDEbniHkeGxMJk+cMFoERfKnQ4hj0SKlFUdMKfeIoyJyIzViCKFYWjyLV2BqSESkQUwpT93p6zDAIu/7nWKNqkyrGeHngsRHih6N9adSSRaWSmaSF+32RRTfxIF0flIy74hYdjgt0/2Vwp/I5JnIYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uZ3Pi7kCMQHfJ0XzWCP2fYtHxUepXhp54L9af8vuXEQ=;
+ b=QqftKTI8Awqwh0nu9V7gJ7bVteGMeBwjbmSiqUKiWjzf4/SvjS/hwAtEF7A0MKo9NwFZTCHiMr3QNbZoy+/2HxFgodkRA+F2kcTKxC2jNb2AZrdw2PJii5cTONRzDe87HZDdHZuWrCA0CdZ0AuYmtOkwqZcSAEV3vtkfBh4oywcwQ1Ii+oBHlF35D+bxIqh4U4qUyVoSbhtt8jrC+DAZLavq4Vi1zpwlOw9bNBq/TtgkYtggm0g32kICIWYVlELRqUJJE1NofocUNHwWoPqWJsfycb379DS9KNm1OyYpDaXRjmEuvHXt19XhjKwsOw+pmUc0cvswqpnqq6oepqs9sg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
+ dkim=pass header.d=cisco.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cisco.onmicrosoft.com;
+ s=selector2-cisco-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uZ3Pi7kCMQHfJ0XzWCP2fYtHxUepXhp54L9af8vuXEQ=;
+ b=tFX+dpI1m6DhGcC0ZfAUF5sn1TMtA/sqM8CStdaZAsLTFWRKcOdybzld6+a2gP/rXOps5wXac1XoYwTgUBFzEMYxUgwLwxHjyvihLC2ex3yFhgsWNe8imPZX+xXwB9s5R2CMBDpAbHkmhGC4V0GAHx5bpRxUcE6KpKKGcI2yyc4=
+Received: from BYAPR11MB2694.namprd11.prod.outlook.com (52.135.227.148) by
+ BYAPR11MB3544.namprd11.prod.outlook.com (20.178.206.17) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2199.20; Mon, 26 Aug 2019 20:43:34 +0000
+Received: from BYAPR11MB2694.namprd11.prod.outlook.com
+ ([fe80::1977:524c:5db5:d6da]) by BYAPR11MB2694.namprd11.prod.outlook.com
+ ([fe80::1977:524c:5db5:d6da%7]) with mapi id 15.20.2199.021; Mon, 26 Aug 2019
+ 20:43:34 +0000
+From:   "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: "git commit" of single file takes 5 minutes, mounted
+ fileystem/diskimage with 50G GIT repo + 900G of builds articles
+Thread-Topic: "git commit" of single file takes 5 minutes, mounted
+ fileystem/diskimage with 50G GIT repo + 900G of builds articles
+Thread-Index: AQHVXE7tEXn5rKV5UEWW1pdt7rpvlA==
+Date:   Mon, 26 Aug 2019 20:43:34 +0000
+Message-ID: <7A1C0468-E07D-4D10-8891-01AC1FA1CC1B@cisco.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/10.1b.0.190715
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=sarvi@cisco.com; 
+x-originating-ip: [2001:420:30d:1254:109f:2b8e:58a0:aeeb]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: bad2e1ca-4b3f-4a77-8550-08d72a661080
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BYAPR11MB3544;
+x-ms-traffictypediagnostic: BYAPR11MB3544:
+x-microsoft-antispam-prvs: <BYAPR11MB3544D2018E79E66798E80E52BFA10@BYAPR11MB3544.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1388;
+x-forefront-prvs: 01415BB535
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(346002)(39860400002)(396003)(376002)(366004)(136003)(23363002)(199004)(189003)(305945005)(5660300002)(256004)(14444005)(6486002)(86362001)(7736002)(6116002)(2616005)(36756003)(81156014)(8676002)(1730700003)(71190400001)(486006)(2906002)(71200400001)(2501003)(81166006)(476003)(102836004)(2351001)(46003)(53936002)(6512007)(5640700003)(58126008)(8936002)(99286004)(76116006)(6436002)(66946007)(66446008)(66476007)(186003)(316002)(66556008)(64756008)(478600001)(33656002)(14454004)(6506007)(25786009)(6916009);DIR:OUT;SFP:1101;SCL:1;SRVR:BYAPR11MB3544;H:BYAPR11MB2694.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: cisco.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: QK+ZLxlB0UR/Z+vPWVDoKA8d3q+ReEnz40eh5u+tzVB9b2kboQqiTYl7nMwcHckZ9bjV1tAyxlWILQA+uwcOTKmmuWxQ4AQEbTpgsphTn/AmuMdhY7Wx6GqSChEOFmoBOr69rLRtFwM1yLYLTe1iD/YiS8D+83SAUnRNtAoB2VT7c5gkZErf7kCrHcIOTXKwy9Ttm8RSvsqcX7goMhuzOvXwqe2zTGsfSQkL2oAR6X0ocAgZra7fy4XOd6lrRP/zIWMQPHoNPRJ0J3B51WC6xYbPuAeBdNcXRumMMZltQhC9MoQBGRQqycIXqF0fnc3PtVOv4VjNyqCmCu2n+g0eoy53EuxBEne66H7RhEkRomgh/RlAWGBOV4bJPZEMpyXs5DVhEKa5XbRCERVj4gI3LWzU7Jc+FbUOBJbBqnreTts=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <6A6FC115F5D9D742978383D66F4D84CA@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: bad2e1ca-4b3f-4a77-8550-08d72a661080
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2019 20:43:34.6824
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: v6sJj6mohG5zjcKKphRzg2263hz19sm7vO2LL+5tf+a/UrFF+1I3nxNrItgEafbH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3544
+X-OriginatorOrg: cisco.com
+X-Outbound-SMTP-Client: 173.36.7.22, xch-aln-012.cisco.com
+X-Outbound-Node: rcdn-core-10.cisco.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-> On Aug 26, 2019, at 11:33 AM, Jeff King <peff@peff.net> wrote:
->=20
-> On Mon, Aug 26, 2019 at 09:24:10AM -0700, Junio C Hamano wrote:
->=20
->> "Andrey Portnoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>=20
->>> Previously sprintf was the argument to the BANNED macro, where =
-vsprintf is
->>> expected.
->>=20
->> Good eyes.  Thanks.
->=20
-> There's an identical patch in:
->=20
-> =
-https://public-inbox.org/git/cab687db8315dd4245e1703402a8c76218ee1115.1566=
-762128.git.me@ttaylorr.com/
->=20
-> and both were inspired by:
->=20
-> https://news.ycombinator.com/item?id=3D20793298
-Nope, mine was not =E2=80=9Cinspired by=E2=80=9D that comment, noticed =
-the bug myself. I did look at this header because it was posted on HN, =
-though.
->=20
-> whose author has little info there, but I think is separate from =
-either
-> submitter.
->=20
-> I don't know if we want to try to spread credit around via trailers.
-> "Racily-implemented-by:" ? :)
->=20
-> Anyway, the original bug is mine and the patch is obviously correct.
->=20
-> -Peff
->=20
-
+DQpCYXNlZCBvbiBhIHByZXZpb3VzIHRocmVhZCDigJxGaXJzdCBHaXQgc3RhdHVzIHRha2VzIDQw
+KyBtaW51dGVzLCB3aGVuIG1vdW50aW5nIGZpbGV5c3RlbS9kaXNraW1hZ2Ugd2l0aCA1MEcgR0lU
+IHJlcG8gKyA5MDBHIG9mIGJ1aWxkcyBhcnRpY2xlc+KAnQ0KDQpUaGUgY29udGV4dCBpcyB0aGF0
+IA0KICAxLiBnaXQgd29rc3BhY2Ugd2FzIGNsb25lKDUwRykNCiAgMi4gc29tZSAzMCBwbGF0b3Jt
+cyBidWlsZCg5MDBHKQ0KICAzLiBUaGlzIHRyZWUgd2FzIHRoZW4gY29waWVkIGludG8gYSBuZXcg
+ZGlza2ltYWdlL2ZpbGVzeXN0ZW0gKyBnaXQgdXBkYXRlLWluZGV4IC0tcmVmcmVzaCIgd2FzIGRv
+bmUgdG8gdXBkYXRlIHRoZSBpbmRleCB0byB0aGUgbmV3IGZpbGVzeXN0ZW0sIHRoZW4gZnJvemVu
+Lg0KICA0LiBOZXcgd29ya3NwYWNlcyBjcmVhdGVkIGJ5IGNsb25pbmcgdGhpcyBmcm96ZW4gZGlz
+a2ltYWdlKDwgMzAgc2Vjb25kcykNCiAgNS4gVGhpcyBkaXNraW1hZ2Ugd2FzIG1vdW50ZWQgb24g
+YSBuZXcgbWFjaGluZQ0KICA2LiBBIGZpbGUgd2FzIG1vZGlmaWVkIGFuZCAiZ2l0IGFkZC9jb21t
+aXQiIHdhcyBkb25lDQoNCkkgaGF2ZSBkb25lIOKAnGdpdCB1cGRhdGUtaW5kZXgg4oCTcmVmcmVz
+aOKAnSwgaW4gdGhlIG1vdW50ZWQgZmlsZXN5c3RlbSwgYXMgYWJvdmUNClRoaXMgaGFzIGltcHJv
+dmVkIOKAnGdpdCBzdGF0dXMvZGlmZuKAnSB0aW1pbmcgZnJvbSA0MCsgbWludXRlcyB0byAxLjUg
+bWludXRlcyBmb3IgdGhlIGZpcnN0IHRpbWUgYW5kIDw1IHNlY29uZHMgZm9yIHN1YnNlcXVlbnQg
+Y2FsbHMuDQoNCkJ1dCAiZ2l0IGNvbW1pdCAtbSAiZHVtbXkgY29tbWl0IiBvZiBhIDEgbGluZSBj
+aGFuZ2UgaW4gMSBmaWxlIHRha2VzIGFib3V0IDUtNiBtaW51dGVzLCBldmVyeXRpbWUgaW4gdGhp
+cyB3b3Jrc3BhY2UuDQpUcmFjaW5nIHNob3dzIGEgd2hvbGUgYnVuY2guIFRoZSBlbnRpcmUgNS02
+IG1pbnV0ZXMgd29ydGggb2YgdGhlIGZvbGxvd2luZyBzb3J0IG9mIHRyYWNlIGxvZ3MuDQozOjEz
+OjUwLjMyMDkzMCB0cmFjZSBnaXQtbGZzOiBmaWxlcGF0aGZpbHRlcjogcmVqZWN0aW5nICJ4L3kv
+ei5vLmNvbW1hbmQiIHZpYSBbXQ0KMTM6MTM6NTAuMzIwOTQwIHRyYWNlIGdpdC1sZnM6IGZpbGVw
+YXRoZmlsdGVyOiBhY2NlcHRpbmcgIiB4L3kvei5vLmNvbW1hbmQgIg0KMTM6MTM6NTAuMzIwODYy
+IHRyYWNlIGdpdC1sZnM6IGZpbGVwYXRoZmlsdGVyOiByZWplY3RpbmcgImEvYi9jL2Quby5jb21t
+YW5kIiB2aWEgW10NCjEzOjEzOjUwLjMyMDk3MiB0cmFjZSBnaXQtbGZzOiBmaWxlcGF0aGZpbHRl
+cjogYWNjZXB0aW5nICIgYS9iL2MvZC4uby5jb21tYW5kIg0KDQpEb2VzIGFueW9uZSBoYXZlIGFu
+eSBpbnNpZ2h0cyBvbiB3aGF0IGNvdWxkIGJlIGNhdXNpbmcgdGhpcz8NCg0KT24gdGhlIG90aGVy
+IGhhbmQsIGlmIEkgaGFkIA0KIA0KVGhhbmtzLA0KU2FydmkNCk9jY2Ft4oCZcyBSYXpvciBSdWxl
+cw0KDQo=
