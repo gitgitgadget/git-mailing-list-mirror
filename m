@@ -7,65 +7,61 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02FD41F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 16:05:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6D21F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 16:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732082AbfHZQFx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 12:05:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55796 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731642AbfHZQFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 12:05:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6F0B6C896;
-        Mon, 26 Aug 2019 12:05:50 -0400 (EDT)
+        id S1732709AbfHZQHR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 12:07:17 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64773 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732670AbfHZQHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 12:07:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8BF1C72C48;
+        Mon, 26 Aug 2019 12:07:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3UJozcBvvpB5fnZfOIx94kjSacU=; b=FDDDRB
-        o7iMHBekc+geg8kq7weVdMy4f5t+aWnePkvy5489u7deLAKAgVlsRuf/4UxvQ7iM
-        KkLclI3nbKzhHOLqJuv3pYf+7hiCEI9cg+5Xk2KMgajBFkz1TwBRIHa+0aptgdoY
-        xu8SxVRUzTdKbmgJ8ZW2tJJcT4JDitdwJXztI=
+        :content-type; s=sasl; bh=ATu1kPJrLtOh7aMP3E/tA4968iQ=; b=SHK58f
+        +ClbQA3cDsGMUEn07DlEEOQwd2PL4GKtbt4tXLzvU+I4KPdORdPfRIAPsp59vvHi
+        PiH9Qmf53IawF1FWgl8mPgoP7vylNnAca/9LK5iDbCKNgNfumxCEFFtzRAbzBqSq
+        xIQ9bpEzHC/nCGl2q+kzTnVEZNerUZdkDxDJM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LaZy50hFrhqpb9Oo8lD26YYsuWsnNo/Q
-        V15G5Ec/WQwN6ypUQJ7WdWW4TDl6W+Rwuu8ysiNHdQVmkgUMj4xzPloyc19QODSK
-        hhHR3FzDXNqrfBEC0sfzCS8UUQOixHctyGTM2W/ExiaEFo/wcTkN1XHh4ugC3WD1
-        XfLXsZrwFAA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE9746C895;
-        Mon, 26 Aug 2019 12:05:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=IKDD951rBx1lTqS/46zrbAnDCjOwlop5
+        BNCtgUayhuN06ME+WlrzYSdaMH1jhvCvHZ97I+5SelqjabU+8J3I/KOQl7e9gTcE
+        LovbyE4NrBCMrOwg7kNeAxkYSjo3dwSWBlVPIkrBoTypuo7PCMnB3wCLacqF0IaX
+        9BtSEplZ0SI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8342E72C47;
+        Mon, 26 Aug 2019 12:07:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D5B176C893;
-        Mon, 26 Aug 2019 12:05:47 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ADA7572C3F;
+        Mon, 26 Aug 2019 12:07:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 13/13] format-patch: learn --infer-cover-subject option
-References: <cover.1566258525.git.liu.denton@gmail.com>
-        <cover.1566285151.git.liu.denton@gmail.com>
-        <de599f7ca9b5fe7e298bba0bb8c5d05f2f5cf34f.1566285151.git.liu.denton@gmail.com>
-        <xmqq8srms4ak.fsf@gitster-ct.c.googlers.com>
-        <20190823181545.GA14048@archbookpro.localdomain>
-        <d8a02cfd-2250-44ce-b559-dbec742b7cdf@iee.email>
-        <xmqq1rxbmy8r.fsf@gitster-ct.c.googlers.com>
-        <20190824080328.GA9726@archbookpro.localdomain>
-        <xmqqef18knoj.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 26 Aug 2019 09:05:45 -0700
-In-Reply-To: <xmqqef18knoj.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 26 Aug 2019 07:26:36 -0700")
-Message-ID: <xmqqblwbkj3a.fsf@gitster-ct.c.googlers.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH 12/13] Doc: add more detail for git-format-patch
+References: <cover.1566285151.git.liu.denton@gmail.com>
+        <cover.1566635008.git.liu.denton@gmail.com>
+        <a97f861e6a9889545a61a750791257757fc5b8df.1566635008.git.liu.denton@gmail.com>
+        <xmqq1rx8kl76.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 26 Aug 2019 09:07:09 -0700
+In-Reply-To: <xmqq1rx8kl76.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 26 Aug 2019 08:20:13 -0700")
+Message-ID: <xmqq7e6zkj0y.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5E0AB360-C81B-11E9-917C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 90028F46-C81B-11E9-9B5A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -75,19 +71,18 @@ Junio C Hamano <gitster@pobox.com> writes:
 
 > Denton Liu <liu.denton@gmail.com> writes:
 >
->> Perhaps something like
->> --cover-subject-from-description={true,auto,false}?
+>> In git-format-patch.txt, we were missing some key user information.
+>> First of all, document the special value of `--base=auto`.
+>>
+>> Next, while we're at it, surround option arguments with <>.
 >
-> Is it still only about "subject"?  I thought one of the improved
-> behaviour was to populate the subject header with the title
-> (i.e. the first, often single-line, paragraph) and use the remainder
-> in the body?  --use-description-in-cover={both,auto,body} meaning
-> "both subject and body gets filled" (among the three this name is I
-> am least happy with), "automatically decide---if the first paragraph
-> is overly big, it is unwise to use it on the subject", "use it only
-> in body" (implying "use the *** SUBJECT HERE *** placeholder on the
-> subject header), perhaps?
+> I'd suggest squashing this in to complete the above.
+>
+> cf. <xmqq1rxfveym.fsf@gitster-ct.c.googlers.com>
+> cf. <xmqqimqqs7cm.fsf@gitster-ct.c.googlers.com>
+> ---
+>  Documentation/git-format-patch.txt | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
-Ah, I see Philip has suggested "--cover-letter-from-description",
-which also sounds better by not focusing too much on the 'subject',
-and I have no strong preference between the two.
+Ah, I see that you have squashed this into the next step.  I do not
+think it belongs there, though.
