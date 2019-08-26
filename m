@@ -7,51 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D94381F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 17:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3888D1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 17:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732839AbfHZRE6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 13:04:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61535 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727815AbfHZRE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 13:04:57 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8353817745E;
-        Mon, 26 Aug 2019 13:04:55 -0400 (EDT)
+        id S1732853AbfHZRG5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 13:06:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60465 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729358AbfHZRG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 13:06:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 989FF6D2EE;
+        Mon, 26 Aug 2019 13:06:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PyDFXUm7sd86KyTuHPAfaDtRlf4=; b=NsNkiD
-        j26x2rqx0H/m/HEgaGET3mon5zvvJ8Uj96F1N3zeybQiXV+5I3ahjd/wzDgoez9W
-        svCz/6S9nIpIMk3cAiuqn5A0ZjR+YI5fdHRUTongl/L/nUVe1KthN/BMksOK4vXh
-        VQEhNLjsnsWyKw8QToal3UAD6ZEJ+wL9pcZpc=
+        :content-type:content-transfer-encoding; s=sasl; bh=qOiwC6xGwFTG
+        vxb0VRKpFQrSvzI=; b=G7SyiSyGYgUtAeqcxwaDWWU+HfgtA0sE8Qa1Z6e5LJe2
+        ujwVzb/il1ezrV26vn/jngFvjUXgTQBMRcJQ3UBWlquKd+vwac1r3eTYk+7qpfrm
+        wcJfh1xlvCo9W2bB8VkjIODP3W9bcCkzXo/G+O35pwSa9KobYUo32cXYOK3Q1zI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UTlVOuS9WG7oyN0gf8wRL4ZFOxqAxG2p
-        +UKHni0jzyK6wDzttlYXD5bBqqplIth8Pn/vOvk42pMFu4+klCMY3+9UBsBFsJyt
-        eJSzLtUbnvc4pq24NqwXcTeUxRlO5UegR/NDtSo6AVyCe2GJmPKmKSSsMpe0i9n7
-        IVWVeUZy4Xo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79F4317745D;
-        Mon, 26 Aug 2019 13:04:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wGlESM
+        DdmGhLvyjD+GT9tQClXaDhiTxidObw3DoiVWDGAq2ec7ea/3adg111eR+XgsLX12
+        cHHAUN8ocbuXLtlGDABxi4xqH/eaCSS/87Z/3Ooko3paNMoz98qA+PXUB/DQObgO
+        OZOhyu8QoFgCd01IDi3k6GQP6ppcKHRT1EiZU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 90F186D2ED;
+        Mon, 26 Aug 2019 13:06:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CA68217745C;
-        Mon, 26 Aug 2019 13:04:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B8EFD6D2EA;
+        Mon, 26 Aug 2019 13:06:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Do use ALL_CFLAGS in hdr-check
-References: <pull.129.git.gitgitgadget@gmail.com>
-Date:   Mon, 26 Aug 2019 10:04:53 -0700
-In-Reply-To: <pull.129.git.gitgitgadget@gmail.com> (Johannes Schindelin via
-        GitGitGadget's message of "Sat, 24 Aug 2019 15:36:54 -0700 (PDT)")
-Message-ID: <xmqqblwbj1sa.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 0/1] mingw: support UNC as file://server/share/repo
+References: <pull.93.git.gitgitgadget@gmail.com>
+Date:   Mon, 26 Aug 2019 10:06:49 -0700
+In-Reply-To: <pull.93.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Sat, 24 Aug 2019 15:07:58 -0700 (PDT)")
+Message-ID: <xmqq7e6zj1p2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A0304680-C823-11E9-929E-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E5E235E4-C823-11E9-812A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,10 +64,24 @@ X-Mailing-List: git@vger.kernel.org
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> When I was playing with the Makefile target hdr-check, it looked as if it
-> missed the correct CFLAGS. Without them, on Windows an attempt is made to
-> include syslog.h, which does not make sense at all.
+> Windows users might think that the common file:/// protocol also works =
+for
+> network shares. This patch makes it so.
 
-Makes sense.
+Thanks, both.
 
-Thanks.
+>
+> Torsten B=C3=B6gershausen (1):
+>   mingw: support UNC in git clone file://server/share/repo
+>
+>  connect.c             |  4 ++++
+>  t/t5500-fetch-pack.sh | 13 +++++++++++--
+>  2 files changed, 15 insertions(+), 2 deletions(-)
+>
+>
+> base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-93%2F=
+dscho%2Ffile-url-to-unc-path-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-93/dscho=
+/file-url-to-unc-path-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/93
