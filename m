@@ -7,49 +7,50 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9299A1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 23:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5381F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 23:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726584AbfHZXEf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 19:04:35 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58362 "EHLO
+        id S1726663AbfHZXHL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 19:07:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58366 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726250AbfHZXEf (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 19:04:35 -0400
+        by vger.kernel.org with ESMTP id S1726278AbfHZXHK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 19:07:10 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:60b7:b124:ccfa:d51])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 631056140C;
-        Mon, 26 Aug 2019 23:04:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D9BBF6140C;
+        Mon, 26 Aug 2019 23:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1566860673;
-        bh=kywkWgv9H6EW8wTEFMXbSE61JiQqM6K8UifH9BgqAIo=;
+        s=default; t=1566860829;
+        bh=/sUxyGf1WzF7M2aUAreejJCzcBZ/sKUx2EQKxEGOe+U=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=NHIRyWmxviFCDQ6D81eq56QDA4VMlXo2H9gsSjOVq0SKsMbTBp1yNizIp0vC8HIGX
-         8HPL6SpxWvFPxOQgXS1d+ue5BQNeAEbDJy2QGN2rFB46FwFhQBljay+a/pxewuIrJ2
-         RMOvEfTZwk3d3w6RithcGZCs5Kx1eqYB6rjgBExvcLMDpEqdLqSeyOrEXK5xEpy9L8
-         u2+XuiwHIE5tjJQk96VlDHiS58lH41nf8FewEraPiqIJumZS8RzcM7LgvqbFTvqpmH
-         vJVQ9kpOLYj8F65ecdxIcsfPn9XNHNe0n4/ABH0fZj19RtNu2Mt3NSdfOTjYKZF/us
-         z57elwhxNpIhd07+KwwEn4h413vuq5yOk44/9a/yTQlgwwahnve5jnvlUJloshIN9a
-         nKEove4gfdUBzU8NpQ/+PgGnJX0MBi3OVLlnSWgUCdY0mV5Kdc2S/5Q6rfPkcVOeVv
-         JAVRr1X6AhDqYFNc05WhL2WYtI0n7qnO5ztycAu5hPGI/T78XZZ
-Date:   Mon, 26 Aug 2019 23:04:29 +0000
+        b=XfgVjMfLmRDRwyRrw+vULPE4IblTe74ggNA9MCTRGrz4FQy545vR3XtngbBzNvxlx
+         DKeO4wisLvLkkTNGFX/vvP/KKoq7eJb0aIXQcQNqOLIUQPmIUNvLm0+L7pslRj82nT
+         3tsGCrpjmep/vc7Sq5K8GW9orfd0Gj25NtJiMO3RS//F38YJHzIWSrdxAn8HfAL3cW
+         fCMLmQV3YomWNqTZMVIMXRP+PkBX/tvbWzARVhJrYTa0loEdrbsDkF3ufWKWybUQJE
+         BH4MsoPi9qUMQCGo707PbV+CKiRD5sKjKXx758+f6nyF1YOm2PE/gG88GT2p0eYThV
+         Gt0Tljx72ZapD7xnFey3Jxv1L3v5Z+y95127j9Q3TxyBM+pGu91pUsaVBGdAjNTYjH
+         WABPwTtt0hqF8oEfuyYm/S2KTQejCEwTeiYPgqxPSNPmbFRhFVg+cBz4vNjJdkX664
+         tNGS4bDzag5CxVF2QucdEFRqsAvxda8czvyGgcAqZnwnzNFNzwc
+Date:   Mon, 26 Aug 2019 23:07:04 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Ibrahim El <ibrahim.el@pm.me>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/5] Signing API: Added new signing interface API
-Message-ID: <20190826230429.GB11334@genre.crustytoothpaste.net>
+Subject: Re: [PATCH 5/5] Signing API: Duplicated signing tests using new
+ config aliases
+Message-ID: <20190826230704.GC11334@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Ibrahim El <ibrahim.el@pm.me>, git@vger.kernel.org
-References: <CkxnpIEi2c1o1FmI2ZJP8CJQybGMZFbL6uQAd3w7ApKdaki4vcCrlgbTWmPMrrfIedBSvLV56q6txzvCo7bnO1wHlS6cB3bUYpYfNW80w_s=@pm.me>
+References: <xidzc1zBudSNNUInNKpDPgAw3AlwtABPT9VpKuPpAfVodvQejHn5WHIYTrqlMlJEYB11iMVhxNCQKBnx7phcHaiPQhHLaqKgeVZwPTCx4n4=@pm.me>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Yylu36WmvOXNoKYn"
+        protocol="application/pgp-signature"; boundary="QRj9sO5tAVLaXnSD"
 Content-Disposition: inline
-In-Reply-To: <CkxnpIEi2c1o1FmI2ZJP8CJQybGMZFbL6uQAd3w7ApKdaki4vcCrlgbTWmPMrrfIedBSvLV56q6txzvCo7bnO1wHlS6cB3bUYpYfNW80w_s=@pm.me>
+In-Reply-To: <xidzc1zBudSNNUInNKpDPgAw3AlwtABPT9VpKuPpAfVodvQejHn5WHIYTrqlMlJEYB11iMVhxNCQKBnx7phcHaiPQhHLaqKgeVZwPTCx4n4=@pm.me>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-5-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -59,104 +60,46 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Yylu36WmvOXNoKYn
+--QRj9sO5tAVLaXnSD
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-08-26 at 19:58:00, Ibrahim El wrote:
+On 2019-08-26 at 19:58:10, Ibrahim El wrote:
 > From: Ibrahim El Rhezzali <ibrahim.el@pm.me>
 >=20
-> 7e3e6c9e4 Added new signing interface API
+> c6a1d1c21 Duplicated signing tests using new config aliases
 >=20
-> Adding files for the new signing interface and also support drivers for t=
-he two existing GPG and GPGSM X.509 tools
+> Duplicating existing tests that are signature related and updating them t=
+o use the new config aliases
 
-I'd like to see an explanation here why a new signing interface is
-necessary and we need to make a wholesale replacement of the existing
-one instead of making incremental changes.
-
-> diff --git a/signing-interface.c b/signing-interface.c
-> new file mode 100644
-> index 000000000..c744ef499
-> --- /dev/null
-> +++ b/signing-interface.c
-> @@ -0,0 +1,487 @@
-> +#include <sys/types.h>
-> +#include <unistd.h>
-> +#include "cache.h"
-> +#include "config.h"
-> +#include "run-command.h"
-> +#include "strbuf.h"
-> +#include "signing-interface.h"
-> +#include "signing-tool.h"
-> +#include "sigchain.h"
-> +#include "tempfile.h"
-> +
-> +extern const struct signing_tool openpgp_tool;
-> +extern const struct signing_tool x509_tool;
-> +
-> +static const struct signing_tool *signing_tools[SIGNATURE_TYPE_COUNT] =
-=3D {
-> +	&openpgp_tool,
-> +	&x509_tool,
-> +};
-
-It looks like we've hard-coded only two tools here.  I was under the
-impression this series was supposed to make signing pluggable with any
-tool, but that doesn't seem to be the case.
-
-> +size_t parse_signatures(const char *payload, size_t size,=20
-> +		struct signatures *sigs)
-> +{
-> +	enum signature_type st;
-> +	size_t first;
-> +	size_t begin =3D 0;
-> +	const struct signing_tool *tool;
-> +	struct signature *psig =3D NULL;
-> +
-> +	first =3D size;
-> +	for (st =3D SIGNATURE_TYPE_FIRST; st < SIGNATURE_TYPE_LAST; st++) {
-> +		tool =3D signing_tools[st];
-> +
-> +		if (!tool || !tool->parse)
-> +			BUG("signing tool %s undefined", signature_type_name(st));
-
-If this is supposed to make parsing generic, won't we have to add
-support for each individual tool in the codebase so tool->parse is
-defined?  Having to do that would defeat the point of having a pluggable
-interface set up in the configuration.
-
-> +	buf =3D xstrdup(var);
-> +	t1 =3D strtok(buf, ".");
-> +	t2 =3D strtok(NULL, ".");
-> +	t3 =3D strtok(NULL, ".");
-
-I don't think we make a lot of use of strtok.  Perhaps you'd like to use
-parse_config_key or another function in config.c?
+I don't think we want to duplicate all of these tests.  Perhaps we could
+add a small number of additional tests in an existing signing test that
+makes sure both the new and the old configuration work as expected, and
+assume that the entire codebase will honor those config settings.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---Yylu36WmvOXNoKYn
+--QRj9sO5tAVLaXnSD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1kZXwACgkQv1NdgR9S
-9ouVRQ//W1J14eyQJz+EW9Qw653l1ZCG6XoOMe9T3O22ec60X6oRIDledLixkuxJ
-fhafbcOcujzx7L9GUEXZOEHiVQMJmyvmf+TG5JMVROEOrmCWYj5cSutnMqi88Vos
-0NZMW08mHdE+qKlnbVAqRpeMmPmWzKtcw0rw+9K/R0lyuG3tnGi2nXwgjKzIkL1X
-Ri03kl/an7n890+FpfD8qdhAaL1+Q6IdC/xwwZCkyMfDZl2boNrQRe0yA1Vk81aF
-KjCZsuaGhylhabehWXw/or2lidWluHJK3x1La/yeJfwkJ8E0SOTb8CLc4vCbG2xl
-lP7W8cHOs4RYB8T2J+wwjogKC2/skSbRGOk7eeqNVuZi/y8Em2//rdT0BPo9U30U
-wBXiY3v/KbpytPmxDKzBhmKFMUdS9QffMhcQbvoK4HvrfpG46xT+Yk684/q9e7Kr
-jg2w0oQBSemTCTBIQLONkVam8YnhxQxoix1oW3qCRxijt3TgjqjWLZrNzgPAH21l
-hxWp32f57thrT2zvoJnrLPQlzCXKVEm/+UaztKAyxAsuoknVqO9kW/Pi6S8BaJpW
-mrlIksda7HTGkCwMOnubTxVQ/ShYzuihEZUhMeSpRh6EYSsq9oeECuNh0z9ijNT4
-tMxNzGRLCvGdrBAkmFXVY6GGiO7x+Zhitg4x0fzLHuafxKmz/VI=
-=XJjG
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl1kZhgACgkQv1NdgR9S
+9ossAQ//Y6c6bVAuL/l6OCs7p5eNer9xtU80awInGeY0JCd9ox8PpohCpBlfRDSP
+y8m+AgvKPscmAHezC6A5s3Zx9EB0oinnTvMS3qcdI1OAtCbFaz/9JJ7cn5xJOacE
+fNvQgsFH+H4hlwdoFGn0EZDoHTBbvNf5L5C7LitopefKj1R8TJRP/s7+eLIPB/s7
+M2x6AJe376UF2G0/v4jQ0ybAYfC2L7dbPRYQP7BDf2u0lED6Itw8UqRXot2xodG4
+9b73ULNPeOD6URWmU3j8HHGIsstTyEMHVYq6gDTc10ewBEASzkRErFt0/G3E9EH+
+CMhg8eIrK/L+1nYSY4s23ncTqZxnFnRyxEP7hRURfZWabBceMzLHjBT4Q0D1YR1k
+8UDUuepOFmG5EyXy8NrQJ0uq3EK/z/AqoCAiCIh4bLJdjcUk+y8VKtKFj+MtrYHD
+J+bh0y1Dyt4HETnPlYYuIRWkSAxQE94rYHEUx9ZkRudsYdHX4RHO3yESpybtqtv/
+qjMFbdKf+HrMWL27kcye+ZlfElKuC4TdNWOAaNKxK3a0tigWmwW1YhVw2uyp795M
+X8q23K8B7tXTlxEbHGXK2tGn+TxCMYnxG1b6Tgp8YwKn0T2VWznfCtuKIXwMAzcW
+/0gnErD2kdd/onREPkxjIfXPr90YMQlNScKEUaVEsvPNTypKjTQ=
+=iPrw
 -----END PGP SIGNATURE-----
 
---Yylu36WmvOXNoKYn--
+--QRj9sO5tAVLaXnSD--
