@@ -7,83 +7,63 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8B91F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 17:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D94381F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 17:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732745AbfHZRAE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 13:00:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55322 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727815AbfHZRAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 13:00:03 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D41246D227;
-        Mon, 26 Aug 2019 13:00:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1732839AbfHZRE6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 13:04:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61535 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727815AbfHZRE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 13:04:57 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8353817745E;
+        Mon, 26 Aug 2019 13:04:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ih3yFEDkbI8IuplJ1MTFgIAX6j8=; b=Uia4I8
-        JAKVqW3M5zcxIGsMWZdQR7FluLRy66NZTi43ouhRKidFLyi1sP4GqcmHMAJTKIbY
-        HTWTxzv1916Xk4QvSCrxUtS6W69QYuJuFLNcdjj/pjAp0ur1EyVGWeCfPekMkbsH
-        lddF1OP5Zr0uIG1FDSOVAMX+fXMoZ/VpdjvgM=
+        :content-type; s=sasl; bh=PyDFXUm7sd86KyTuHPAfaDtRlf4=; b=NsNkiD
+        j26x2rqx0H/m/HEgaGET3mon5zvvJ8Uj96F1N3zeybQiXV+5I3ahjd/wzDgoez9W
+        svCz/6S9nIpIMk3cAiuqn5A0ZjR+YI5fdHRUTongl/L/nUVe1KthN/BMksOK4vXh
+        VQEhNLjsnsWyKw8QToal3UAD6ZEJ+wL9pcZpc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N3JpJY8SUdnzpu7vogH7oexKRvfABzEJ
-        4d8tkwFLeYhXaGwIGcuCq3lfi3feI8XB+gzeFva1BgYlsFGJmhjIR5v/hA6wqOKk
-        NQIdOMeGoVnrfdOSmeJRYFNbeDvhPTVl60k5uNpBYU0ReLUroPaPBsa6dc95zIO7
-        Zey7Vd+d004=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CBE726D226;
-        Mon, 26 Aug 2019 13:00:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=UTlVOuS9WG7oyN0gf8wRL4ZFOxqAxG2p
+        +UKHni0jzyK6wDzttlYXD5bBqqplIth8Pn/vOvk42pMFu4+klCMY3+9UBsBFsJyt
+        eJSzLtUbnvc4pq24NqwXcTeUxRlO5UegR/NDtSo6AVyCe2GJmPKmKSSsMpe0i9n7
+        IVWVeUZy4Xo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79F4317745D;
+        Mon, 26 Aug 2019 13:04:55 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DB1816D211;
-        Mon, 26 Aug 2019 12:59:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CA68217745C;
+        Mon, 26 Aug 2019 13:04:54 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] completion: merge options for cherry-pick and revert
-References: <cover.1566637431.git.liu.denton@gmail.com>
-        <cdcac975548502a58234f7537a5fe11dcdb538ea.1566637431.git.liu.denton@gmail.com>
-Date:   Mon, 26 Aug 2019 09:59:56 -0700
-In-Reply-To: <cdcac975548502a58234f7537a5fe11dcdb538ea.1566637431.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Sat, 24 Aug 2019 05:04:49 -0400")
-Message-ID: <xmqqftlnj20j.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Do use ALL_CFLAGS in hdr-check
+References: <pull.129.git.gitgitgadget@gmail.com>
+Date:   Mon, 26 Aug 2019 10:04:53 -0700
+In-Reply-To: <pull.129.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Sat, 24 Aug 2019 15:36:54 -0700 (PDT)")
+Message-ID: <xmqqblwbj1sa.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EFCCDBA0-C822-11E9-8C0A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: A0304680-C823-11E9-929E-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Since revert and cherry-pick share the same sequencer code, they should
-> both accept the same command-line options. Merge the
-> `__git_cherry_pick_inprogress_options` and
-> `__git_revert_inprogress_options` variables together into
-> `__git_cherry_pick_revert_inprogress_options` so that the options aren't
-> unnecessarily duplicated twice.
+> When I was playing with the Makefile target hdr-check, it looked as if it
+> missed the correct CFLAGS. Without them, on Windows an attempt is made to
+> include syslog.h, which does not make sense at all.
 
-Hmm, will the claim hold true in the future?  I do agree that they
-will share continue, quit and abort (and skip) forever, but I am not
-bold enough to declare that they will never have some unique option
-in addition to the common one only because they "share the same
-sequencer" machinery.  It is trivial to add a "if we are in revert,
-do this" to the code, and it already works that way.
+Makes sense.
 
-__git_sequencer_inprogress_common_options="--continue --quit --abort"
-__git_cherry_pick_inprogress_options=$__git_sequencer_inprogress_common_options
-__git_revert_inprogress_options=$__git_sequencer_inprogress_common_options
-
-may be a bit more future-proof way, perhaps?  The places that use
-the variable(s) already correctly distinguish cherry-pick and
-revert, so even though the above and your version equally "unify"
-the set of common options and allow adding a new common option
-(i.e. skip) with equal ease, yours makes giving unique option to one
-but not to the other more difficult.
+Thanks.
