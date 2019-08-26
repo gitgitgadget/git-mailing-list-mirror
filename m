@@ -2,127 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA6E1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 13:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D58D1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732035AbfHZNvS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 09:51:18 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35441 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731873AbfHZNvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 09:51:17 -0400
-Received: by mail-ed1-f67.google.com with SMTP id t50so26637764edd.2
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 06:51:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yN9pv+Bexip0pjaI3Bl6Xc+ADXSQuN5sve4WWDV3y88=;
-        b=N+fdym4r/4+BQZmMwfqRis/AFZpdYnpdDixuRdZuoK/D1IAYpM6KrCYLIyQ4uEzkwP
-         AdOUe667eekG3ynV+MEWMRXhnewkcUPIyqyQpaQQYIjbZHwJeZibKfTT0Mv7GrVCmtA8
-         7vRZyy/lj/RRYDKWN5HLwfOj3C6GQ2SvANQVrDmUg1NNx47fZV+bzluvuThgzcMpyPz2
-         NyAz8uuwZ9qkWlgzsvYnwP8AJF3bBgTa4ZPnp55jwBYYjjK7aETFVi8k9acpd2TARTyR
-         +usncx+ssBXEG2NfZEZaFO/fy7omWoXmGN7LpW+DZBeBBwkqC2lbrvGKffZKbXpJYuoH
-         yYZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yN9pv+Bexip0pjaI3Bl6Xc+ADXSQuN5sve4WWDV3y88=;
-        b=Og6i+fOLqZ3zGXbr9ZKwws6xjziF+7DZzOjK10txJvM3bXcRn5xSXu3fviTonJLmXR
-         OGZlJRl1/+3tjOVrW24o/4ZAR/gqeU/ZuqrOKJjat7FuR8zctWHI7+PA7T/f8AnFlK9j
-         F3LfZvt1q27hsae41UPNyh4QnSHd7RtuplXCcoAe1C2X1RJ3tSBjuiXqK0cI1AaIFJpd
-         28jUgdkMZpfG2UlFczm17bDI5rVX2NcyTupnZWk1VuNj1/emRdhJsXfUXBTJOAAWPDeh
-         u0zn1wawxgNhodVVXU+sbCgx+4Fb+Et9gxN92J+q+eAfr3UGIE0F2NIuaDTzhwe9wDj6
-         6Jtg==
-X-Gm-Message-State: APjAAAWGubsKo/HBMnTZOWmUaeA+pjdz8fnFijYNrFGmlahKbViCpybY
-        IPjRzKZKQTfr10RV1j4450lPtEgiN0PEGvlEQUsE0SnJNQc=
-X-Google-Smtp-Source: APXvYqyHsl8+6GlKjD9bfONOA5XRih5fCXIpDFvW9L2ZL0Q/YMImyDmaAxNdpvnFTkQck0hIDsJGS2sLT44G3SDUZsk=
-X-Received: by 2002:a50:fc8c:: with SMTP id f12mr18855031edq.191.1566827475887;
- Mon, 26 Aug 2019 06:51:15 -0700 (PDT)
+        id S1729035AbfHZOQy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 10:16:54 -0400
+Received: from sonic303-24.consmr.mail.ne1.yahoo.com ([66.163.188.150]:42901
+        "EHLO sonic303-24.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729015AbfHZOQy (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 10:16:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1566829012; bh=dFaDAeD/sdU98rkbouMb/AqmnyN2nxfoO6cHNAK7BHg=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=WlzvbYkujagtz5kF5aacaMrKb266ZH9UlKy1nyDdGsP2BNXpA+8syJeOl8j5ZGo58xwuDEL9gSnrSUixrvPmFNi2mphSAeqLsKwUUqO8mTidi4p1uIs14olRG3vnUtT97n9TFgp7JQxEbPMPYxGBVyltvVhLIqfvVk32mnF10e1RzEzAIjAn0FTKek9nn/7bSOSirrOZnadx3KvFfmAKnsgRaco49/hXSy9a6ZjiIve1qvh9qT00dQeBV9U1919j0vAjyn8BxIRGta+2OeaXkpUg2uUPLKI/BrV6XafVAAaYnsBfSh9vmbvDIapLj3o3Z09EbX+Mjp6BMGNCtuV4pw==
+X-YMail-OSG: 01YEwTkVM1mGZxtsc0Ryxhq.s8zDPBrWAwwPGsdXEVNbHf.gr0gGYh9uEuHQp0M
+ m4X2ijPpcIVh1QXWy9uv.efQQwIQ5T4su7vQq66OW9kb13RH9i83Z.TALun4LfrWWcESQAZwXwqh
+ bN3GEhBnmGSWvTuosxQofzAZNG.V8eFq7BNZF7UzPGHaaIGc8Q5OsnS6EWB8I4bgnoumjU2bpD6K
+ vnbKFp.6IOVrBsrGN.K1EKeEOj1wAYiaOREJVPrUp4U69KaftR4TqD1Xe5qYcmI3ERz6yGidLc.E
+ mY7xEvrnJQK6pJ5avixHLEwPfAo2d6Z0NaQ9T3icBeBk8wZbjHWqe1JaCDF7Cid1RzCO2swtZeza
+ FQBrVdCigHwgXwj_ZjG352mYYEAdU5NKQ.2l2X_ijLeZrg3V4d.GtdM._L_gr1wzLjoZ3yYCE30s
+ 1NovZIgLbNH98Qh.PeN5JyY1ffxEmYQ5iaNVhDJhN3ftJ6uQUCj_BZ_2K2kM6LOQxvgzxjYL9JDK
+ h9vKZcFduALXjV1IVTor29s4wlD9drPC1YG76qMyq3tOuJPJCzObWE6fDrbNyZ7946bejPKihRwq
+ HfHyjMtGMeGzdH0sycjC23uSEQNPCBFyopBc0SH1sEp87NooxXTOoJd2lybcOqwbIjvvEpX3MQNI
+ amMr0.ZeddmEy7A4n534IlWIosf2PV3.puRRjG0rbqYKkF.WOaMdGS7tdkv5kP_ix_DvKM_10uts
+ IczZNYL1YQtv3VZxU9fkcALzSZfeCg8gijz1B_EUJYqfndHNy9BYjXYo_1LviA536j0Hh5Crvu.e
+ BEC5JxeQIGLNrWy.03cj5o2MXTy9qhVx55389ZWVq4AUYe59wuvIvhJv57qPYQXXNf6A33QxJHrY
+ .5Xpp31UIKqkNiP9mAGaKhOCDZvxZY303d8INioD7JXamHbcXtO2MJuwKApENhVz72NyMA7VHA0o
+ dHHKMTCwbY44HaXOLWrjvsOsNtzqqXhx0jfHh.8IpFInMuuHGv5ou4GBM0mvxI4s.ly45WrYBOSg
+ _k0ORDkjzPPxriptnOxDYn0ttaxbLI4Al4qfz70RvA9gzv2yq0Su.360V58YNPyrKdsYxnAvnyfB
+ 2eewg.qf795FT0eD6MPbcQ8lqvqw75orUCC67OorIraCzIqgA7OkWsstrROUDsLZ467bIwrkCTWG
+ BGMbswNIFe7sA6d4OtY2BjSxFeqVbC5okwf6y3RrM.pOhQl9qg6bnobsma7.AX.iIA_P00nGtQYj
+ OjCsb_S9GL8hSRDsXXvX9XWFIdOWtumC5a2ESvg--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.ne1.yahoo.com with HTTP; Mon, 26 Aug 2019 14:16:52 +0000
+Received: by smtp431.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID c184765ab7e0649881010d02a940cafd;
+          Mon, 26 Aug 2019 14:16:51 +0000 (UTC)
+From:   <randall.s.becker@rogers.com>
+To:     "'Bryan Turner'" <bturner@atlassian.com>
+Cc:     "'Git Users'" <git@vger.kernel.org>
+References: <005f01d55a1f$88e2ab20$9aa80160$@rogers.com> <CAGyf7-HyJGVX51YMH0uqah4dkwkwfs6pLR5eSVBCeRQ1Ou=ZjQ@mail.gmail.com>
+In-Reply-To: <CAGyf7-HyJGVX51YMH0uqah4dkwkwfs6pLR5eSVBCeRQ1Ou=ZjQ@mail.gmail.com>
+Subject: RE: [Question] clone performance
+Date:   Mon, 26 Aug 2019 10:16:48 -0400
+Message-ID: <006001d55c18$e6def6c0$b49ce440$@rogers.com>
 MIME-Version: 1.0
-References: <pull.303.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.303.git.gitgitgadget@gmail.com>
-From:   Git Gadget <gitgitgadget@gmail.com>
-Date:   Mon, 26 Aug 2019 15:51:06 +0200
-Message-ID: <CANg4QoGSVQWG3QXzoiA8oDsjXaXGoZ+WMNLSPpu75eJWdrWxLQ@mail.gmail.com>
-Subject: [PATCH 1/1] git-p4: auto-delete named temporary file
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Philip.McGraw" <Philip.McGraw@bentley.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQLF/IjgNADX6oarydk8PpngD+yI5wGSPTFNpR+lUkA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Philip.McGraw" <Philip.McGraw@bentley.com>
+On August 24, 2019 5:00 PM, Bryan Turner wrote:
+> On Fri, Aug 23, 2019 at 6:59 PM <randall.s.becker@rogers.com> wrote:
+> >
+> > Hi All,
+> >
+> > I'm trying to answer a question for a customer on clone performance.
+> > They are doing at least 2-3 clones a day, of repositories with about
+> > 2500 files and 10Gb of content. This is stressing the file system.
+>=20
+> Can you go into a bit more detail about what "stress" means? Using too
+> much disk space? Too many IOPS reading/packing? Since you specifically
+> called out the filesystem, does that mean the CPU/memory usage is
+> acceptable?
 
-Take new approach using the NamedTemporaryFile()
-file-like object as input to the ZipFile() which
-auto-deletes after implicit close leaving with scope.
+The upstream is BitBucket, which does a gc frequently. I'm not sure any =
+of this is relating to the pack structure. Git is spending most of its =
+time writing the large number of large files into the working directory =
+- it is stress mostly the disk, with a bit on the CPU (neither is =
+acceptable to the customer). I am really unsure there is any way to make =
+things better. The core issue is that the customer insists on doing a =
+clone for every feature branch instead of using pull/checkout. I have =
+been unable to change their mind - to this point anyway.
 
-Original code produced double-open problems on Windows
-platform from using already open NamedTemporaryFile()
-generated filename instead of object.
+We are going to be setting up a detailed performance analysis that may =
+lead to some data the git team can use.
 
-Thanks to Andrey for patiently suggesting several
-iterations on this change for avoiding exceptions!
+Regards,
+Randall
 
-Also print error details after resulting IOError to make
-debugging cause of exception less mysterious when it has
-nothing to do with "git version recent enough."
-
-Signed-off-by: Philip.McGraw <Philip.McGraw@bentley.com>
----
- git-p4.py | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index c71a6832e2..33bdb14fd1 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1160,13 +1160,11 @@ def exceedsLargeFileThreshold(self, relPath, contents):
-             if contentsSize <=
-gitConfigInt('git-p4.largeFileCompressedThreshold'):
-                 return False
-             contentTempFile = self.generateTempFile(contents)
--            compressedContentFile =
-tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
--            zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
--            zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
--            zf.close()
--            compressedContentsSize = zf.infolist()[0].compress_size
-+            compressedContentFile =
-tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=True)
-+            with zipfile.ZipFile(compressedContentFile, mode='w') as zf:
-+                zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
-+                compressedContentsSize = zf.infolist()[0].compress_size
-             os.remove(contentTempFile)
--            os.remove(compressedContentFile.name)
-             if compressedContentsSize >
-gitConfigInt('git-p4.largeFileCompressedThreshold'):
-                 return True
-         return False
-@@ -3514,8 +3512,9 @@ def importHeadRevision(self, revision):
-         self.updateOptionDict(details)
-         try:
-             self.commit(details,
-self.extractFilesFromCommit(details), self.branch)
--        except IOError:
-+        except IOError as err:
-             print("IO error with git fast-import. Is your git version
-recent enough?")
-+            print("IO error details: {}".format(err))
-             print(self.gitError.read())
-
-     def openStreams(self):
-
---
-gitgitgadget
