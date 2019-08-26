@@ -8,87 +8,98 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A741F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 19:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CAD11F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 19:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732260AbfHZTTF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 15:19:05 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:44140 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727504AbfHZTTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 15:19:05 -0400
-Received: by mail-vs1-f66.google.com with SMTP id c7so11732597vse.11
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 12:19:05 -0700 (PDT)
+        id S1732628AbfHZT1P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 15:27:15 -0400
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:46524 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731340AbfHZT1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 15:27:15 -0400
+Received: by mail-vk1-f194.google.com with SMTP id m195so2160914vke.13
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 12:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jy7tVZs3vlLa6BMw8A0+0QaFqWosquC9BZq0FS2n6js=;
-        b=lC9wQO5MwXk88t40Ls+WLNJvhD/smX3LEbdQ2GCbmDcZdqqpJhVMbTNtBVMZU6QvdI
-         vY9Z76STY1otpXfgGMVQlqyggPKN/0EV/8AWP1mgsXmiWgz7bh5JhwbzgAkolEkwQCj5
-         NhFMNTsbrgrU1Vw4ojDhFKbvheTV17WVMFwQxyY2d2lyrlIcanJxNq4hQTwbpLbcEMU/
-         kdK507jigdcoEytqAireG02DdbGsYTqRKkNouFpa82Og1jiR6PoKjFh0HcYnPG+afRnT
-         ImbwEBSrpjCSMzekiVEkNJDRW9bUabtdLbthX/6GFbLM0Ab7rvzHhSUxRjo5oNtlR1uC
-         cw2g==
+        bh=3ET16NCwDIWa5mRdfJBc+Y0ed5a39W9F7fOlTS366+Q=;
+        b=p6iEnz9Rbk4cQ3CIdOkazkN1AyTi+MW3qbPfh+evxrzgnwcfqdq+yuNz/313s5wf2e
+         y/wM541eYgv2C9xMrxrlgiD/sH48oV+HfbMqCKE05u06ITNIEXxXNBt4p7PxA8G1o6wU
+         94SFdyEUw7NARzjTXNAkvdxlDcBadu799a85EkJHhCj5JZtsREA7LtW0uX1AcwOzXM3S
+         HyTjPw0afhs8kigvbSs35czEXQ8M834EwZxNTJJV5HC8Og5U7t/XaICTTKPINYIwLuU/
+         YDW1pdjCr/vu3oNLvWdLTBEiEmepWpNFG3Db6rmRi6h0CH1ifvV0qd2/QrfumLee2qoU
+         WJJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jy7tVZs3vlLa6BMw8A0+0QaFqWosquC9BZq0FS2n6js=;
-        b=Ojxc0f4v+rpeb9QQgiuvwmlHED7C0PpoQhvItl/iLYFuyrCXC3PrAIHNjgWaMOO2SF
-         DgEFbKPow7K7zEFSlsjZZ3PQJoUqTRX2O1YNNHNh6QaVLKiv266GVgoKfFuZIUyYCaVM
-         k8cDPl27Xy/zMwbRsIEURq9YJahiGWWVfYHcnwvVvlF28c4wnjisPnHH1d77bHCS+KM9
-         SLQuy7y7lFJfq0sRfPDWMqRq0YkW2X5O/yy8UHi9Yw9BOWIbVGp/OBT5qlpU69RnKBPe
-         Tz9DpUDusYMrKU/SOvVnJUFL0hP70IBNjCsD3ScK9CFkn9clXJhAftlm3f5k2MIM9kJD
-         5CWA==
-X-Gm-Message-State: APjAAAXOSUr30LfwqKZlv8YheNh0BWPzpK32Ds2u/PNkjHie/R4LqR/k
-        Ee4cQNGGrwrbrMw1XWJNvnNQobJdRcz1vvhVUzU=
-X-Google-Smtp-Source: APXvYqw/UBysmhrEehdVNmTvQE6i6xPWYCr1JE/s3p3iffEtBBomLQWrJucrVB5LF84ssy6zZQBhMPDS2kj0d9jaHsE=
-X-Received: by 2002:a67:f887:: with SMTP id h7mr9096693vso.116.1566847144523;
- Mon, 26 Aug 2019 12:19:04 -0700 (PDT)
+        bh=3ET16NCwDIWa5mRdfJBc+Y0ed5a39W9F7fOlTS366+Q=;
+        b=dPrI2h6ovstjE86tW+4D9GlYF2A+9H4q8SgD8JnRQPxvBvoC21J3ZN9iAFJn6QzPxu
+         E6pQUlY5DzlLtD8PZPP76Q+oxmIyd3t14DWuBlr0zMAVgVB1X/w/QYvsrc6LflvO968Y
+         xrUlYd+XyTZ4dtnIZKSUy21u0fkrebW5U4tj/XRncd9yLaShrcfktqEDzgXoisBT/QoS
+         6mr1uimIbWIgi/eF03c/mKLiVZPMPGpL1tliFICVa6YbEkGbr8jsJPbGUs2i1bY68ePd
+         wKYzF2BBDOnK+CHSqufCmwnCvB0I+3blrppqr2QLzdtLYcawerL+JGoMQODRB6jFu9B+
+         X6/Q==
+X-Gm-Message-State: APjAAAUArMctukDr2W3hqX0fgKP7HOzRNek6l3OdN3MDwHrPRiCrCy2a
+        oX0N7udKozy1MtBMXGrb/QF7uNA6I7ywxO8Jmrs=
+X-Google-Smtp-Source: APXvYqzw7ECWtNZX9+OxXEN0pYO2z7DzgjEZb5rlHpwOkmKr+HCTAGtU/sWu1IeI2xAH3+yJCqQj7K78Hnw1MgcGj0w=
+X-Received: by 2002:a1f:4bc5:: with SMTP id y188mr8577048vka.92.1566847634320;
+ Mon, 26 Aug 2019 12:27:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190825041348.31835-1-mh@glandium.org> <20190825065747.GA23806@sigill.intra.peff.net>
- <20190825080640.GA31453@sigill.intra.peff.net>
-In-Reply-To: <20190825080640.GA31453@sigill.intra.peff.net>
+References: <005f01d55a1f$88e2ab20$9aa80160$@rogers.com> <CAGyf7-HyJGVX51YMH0uqah4dkwkwfs6pLR5eSVBCeRQ1Ou=ZjQ@mail.gmail.com>
+ <006001d55c18$e6def6c0$b49ce440$@rogers.com> <20190826182134.GA23399@sigill.intra.peff.net>
+In-Reply-To: <20190826182134.GA23399@sigill.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 26 Aug 2019 12:18:52 -0700
-Message-ID: <CABPp-BHAweswaAV+Qv_=SCQk7fr2s5fH=cEqzuz5N8OMD8=mOA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] fast-import input string handling bugs
+Date:   Mon, 26 Aug 2019 12:27:03 -0700
+Message-ID: <CABPp-BHHPBJLxV=_Y3Vu9cG1x1Vg-fdfadud9w5FA+aeAWTaKw@mail.gmail.com>
+Subject: Re: [Question] clone performance
 To:     Jeff King <peff@peff.net>
-Cc:     Mike Hommey <mh@glandium.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     randall.s.becker@rogers.com, Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 25, 2019 at 1:06 AM Jeff King <peff@peff.net> wrote:
+On Mon, Aug 26, 2019 at 12:04 PM Jeff King <peff@peff.net> wrote:
 >
-> On Sun, Aug 25, 2019 at 02:57:48AM -0400, Jeff King wrote:
+> On Mon, Aug 26, 2019 at 10:16:48AM -0400, randall.s.becker@rogers.com wrote:
 >
-> > And I think this is actually a real bug in the current code! We keep a
-> > pointer to the encoding string, which survives because of the history.
-> > But that history is bounded, and we could have an indefinite number of
-> > changed files in the middle. If I modify t9300 like this:
+> > On August 24, 2019 5:00 PM, Bryan Turner wrote:
+> > > On Fri, Aug 23, 2019 at 6:59 PM <randall.s.becker@rogers.com> wrote:
+> > > >
+> > > > Hi All,
+> > > >
+> > > > I'm trying to answer a question for a customer on clone performance.
+> > > > They are doing at least 2-3 clones a day, of repositories with about
+> > > > 2500 files and 10Gb of content. This is stressing the file system.
+> > >
+> > > Can you go into a bit more detail about what "stress" means? Using too
+> > > much disk space? Too many IOPS reading/packing? Since you specifically
+> > > called out the filesystem, does that mean the CPU/memory usage is
+> > > acceptable?
+> >
+> > The upstream is BitBucket, which does a gc frequently. I'm not sure
+> > any of this is relating to the pack structure. Git is spending most of
+> > its time writing the large number of large files into the working
+> > directory - it is stress mostly the disk, with a bit on the CPU
+> > (neither is acceptable to the customer). I am really unsure there is
+> > any way to make things better. The core issue is that the customer
+> > insists on doing a clone for every feature branch instead of using
+> > pull/checkout. I have been unable to change their mind - to this point
+> > anyway.
 >
-> Here are two patches. The first fixes the existing bug with "encoding",
-> and the second uses the approach I suggested to fix the leak you
-> noticed.
+> Yeah, at the point of checkout there's basically no impact from anything
+> the server is doing or has done (technically it could make things worse
+> for you by returning a pack with absurdly long delta chains or
+> something, but that would be CPU and not disk stress).
 >
-> The second one does carry a greater risk of regression than your patch,
-> but I think it's worth it for the fact that it makes any other bugs
-> (like the "encoding" one) more obvious.
+> I doubt there's much to optimize in Git here. It's literally just
+> writing files to disk as quickly as it can, and it sounds like disk
+> performance is your bottleneck.
 
-I agree, both patches look good to me, and I particularly appreciate
-some extra help to avoid making the same mistake again.  :-)
-
-Just for good measure, I also went and tested these patches by running
-the git filter-repo testsuite and by re-running the filter-repo timing
-cases at https://public-inbox.org/git/CABPp-BGOz8nks0+Tdw5GyGqxeYR-3FF6FT5JcgVqZDYVRQ6qog@mail.gmail.com/.
-
-While filter-repo only uses a subset of fast-export functionality, it
-tests it with a variety of weird and unusual tiny test repos.  And the
-timing cases run on three real-world repositories (git, rails, and
-linux).  Everything looks good on all of these testcases.
+Well, if it's just checkout, Stolee's sparse-checkout series he just
+posted may be of interest to them...once it's polished up and included
+in git, of course.
