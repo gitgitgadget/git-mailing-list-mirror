@@ -2,74 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,UNPARSEABLE_RELAY shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8DBB1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 18:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4C341F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 18:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387593AbfHZSCp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 14:02:45 -0400
-Received: from einhorn-mail.in-berlin.de ([217.197.80.20]:49001 "EHLO
-        einhorn-mail.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387588AbfHZSCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 14:02:45 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from authenticated.user (localhost [127.0.0.1]) by einhorn.in-berlin.de  with ESMTPSA id x7QI2bKj025267
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Aug 2019 20:02:38 +0200
-Received: from localhost (ted.stsp.name [local])
-        by ted.stsp.name (OpenSMTPD) with ESMTPA id 58b81044;
-        Mon, 26 Aug 2019 20:02:37 +0200 (CEST)
-Date:   Mon, 26 Aug 2019 20:02:37 +0200
-From:   Stefan Sperling <stsp@stsp.name>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH] fix segv with corrupt tag object
-Message-ID: <20190826180237.GN14213@ted.stsp.name>
-References: <20190824230944.GA14132@jessup.stsp.name>
- <bcc29199-a4ac-6bdc-6715-9807737253d8@web.de>
- <20190826115715.GB71935@jessup.stsp.name>
- <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
+        id S2387645AbfHZSGf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 14:06:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64324 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732525AbfHZSGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 14:06:34 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CEF173F35;
+        Mon, 26 Aug 2019 14:06:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TRXHFfxXrBF3jucoOMDwTX2PdA4=; b=ZAPWWI
+        RHyJS1Lj/K4OFiScu/oLcmZSyZP9lorQqrGOw/eCoMCbWp9poZ6w3xuC7eIwyLif
+        cFouBqrpmV4klcbYwL4273ozi+EFetHDXgz+0e/BI8RH7h7jfBCrFEkjwC2HfzAQ
+        p4PyuiYeRE5COsLJWUeSzCyO3pMktTrco4lJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZoJzuQ7IS6eNvPzP8yVT0xCuE93DoQYx
+        jGhGXkfm56xAakhfl0umPmwBarHjbIpv/dWGPJNJ0tWcIH1brANMQEKSIKs2kK3N
+        N+tz6pbHXEga2IPoCdWSi8yxzJyoStBnbGOaoyys2SEpW9mTS1rSXL0/HX/gt2w3
+        okQjB60McOQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5505E73F31;
+        Mon, 26 Aug 2019 14:06:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9E7FE73F2C;
+        Mon, 26 Aug 2019 14:06:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] packfile: free packed_git memory when closing object store
+References: <20190826024508.8444-1-mh@glandium.org>
+Date:   Mon, 26 Aug 2019 11:06:29 -0700
+In-Reply-To: <20190826024508.8444-1-mh@glandium.org> (Mike Hommey's message of
+        "Mon, 26 Aug 2019 11:45:08 +0900")
+Message-ID: <xmqqftlnhkd6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3BAA8E9C-C82C-11E9-B7F9-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 26, 2019 at 10:20:20AM -0700, Junio C Hamano wrote:
-> Stefan Sperling <stsp@stsp.name> writes:
-> 
-> > The root cause of this bug seems to be that the valid assumption
-> > that obj->parsed implies a successfully parsed object is broken by
-> > parse_tag_buffer() because this function sets the 'parsed' flag even
-> > if errors occur during parsing.
-> 
-> I am mildly negative about that approach.  obj->parsed is about
-> "we've done all we need to do to attempt parsing this object" (so
-> that next person who gets hold of the object knows that fact---one
-> of the reasons why may be that the caller who wants to ensure that
-> the fields are ready to be accessed does not have to spend extra
-> cycles, but that is not the only one).  Those that want to look at
-> various fields in the object (e.g. the tagged object of a tag, the
-> tagger identity of a tag, etc.) should be prepared to see and react
-> to NULL in there so that they can gracefully handle "slightly"
-> corrupt objects.
-> 
+Mike Hommey <mh@glandium.org> writes:
 
-I will respectfully agree to disagree :-)
-If an object is corrupt the repository is broken and should be fixed.
-Now, if this code was running in a tool which intends to fix up such
-problems, sure, let it handle corrupt objects. But I don't see the point
-of complicating code all over the place just to have the main tool's
-intended functionality partly working in face of corruption.
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  packfile.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+>
+> Note, I'm not sure this is the right place to do it.
 
-That said, since you state that the 'parsed' flag already carries a
-different meaning than I was assuming it did, my patch is wrong and
-should be rewritten by someone else who can fully make sense of the
-existing internals.
+I do not think this patch is complete, given that o->packed_git
+still has a non-NULL pointer.  IIRC, close_pack() was written for
+the explicit purpose of releasing resources while allowing us to
+reopen with open_packed_git() on it, so with the current
+arrangement, after releasing the resources held for this object
+store and doing something else, you should be able to come back to
+this object store and work in it again---this patch makes it harder
+if not impossible to do so.
+
+I _think_ the patch is OK if you assigned NULL to o->packed_git,
+after making sure that the intention of all the callers of
+close_object_store() is to declare that this object store will not
+be accessed any longer during the lifetime of the process, and write
+it down as the contract between the callers and this function in a
+comment perhaps in packfile.h where the function is declared.
+
+Thanks.
+
+> diff --git a/packfile.c b/packfile.c
+> index fc43a6c52c..b0cb84adda 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -339,13 +339,16 @@ void close_pack(struct packed_git *p)
+>  
+>  void close_object_store(struct raw_object_store *o)
+>  {
+> -	struct packed_git *p;
+> +	struct packed_git *p = o->packed_git;
+>  
+> -	for (p = o->packed_git; p; p = p->next)
+> +	while (p) {
+> +		struct packed_git *current = p;
+>  		if (p->do_not_close)
+>  			BUG("want to close pack marked 'do-not-close'");
+> -		else
+> -			close_pack(p);
+> +		close_pack(p);
+> +		p = p->next;
+> +		free(current);
+> +	}
+>  
+>  	if (o->multi_pack_index) {
+>  		close_midx(o->multi_pack_index);
