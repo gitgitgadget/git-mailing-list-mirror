@@ -2,95 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61BE51F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 16:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C1D1F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 16:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732521AbfHZQgw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 12:36:52 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:42297 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729417AbfHZQgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 12:36:52 -0400
-Received: by mail-io1-f66.google.com with SMTP id e20so38704026iob.9
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 09:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FWbBRq4SIwh6MJ8bwxNhdcjVmF/imInxH/zTTjyykSk=;
-        b=N5DVktmHoOJduGG0IiJYj7goKilxHA02kSO2SilfW6S9GOddeE+CgwofF+Iuz+rzq2
-         HOo7vZNtdE98+H512Os2KOMk5/Uqz4z5s99fq/kRFlk4//5CkxrdB3i7G0xxn03dIss0
-         QxYHAk3xE4EYz1Mt4RGIYCl2eyW5+0TtcX4cbFJ1WsN+ZFZvLka/wcpQ2pxUenkpXn2k
-         6JV5c3urySGGNxwwrRXA0zCIyw3yonOu/W8Vv2kfI0VMSCzHHhQvqpy8vT1PYaR+z/tr
-         lYx6PBBDRCkTgaYQi6XTYur/+yyFUlcljJhLK8RK50lP3DS0odb1dD8ABdciT5eNr9+F
-         n7uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FWbBRq4SIwh6MJ8bwxNhdcjVmF/imInxH/zTTjyykSk=;
-        b=VNOimoDETmYrrCICVj7BJhuoXYj2fbhLnRHWUAhCbrcwSnstthnvqHWH8Rd9TwCMjM
-         w8nOGr7KKYshAcmbID+XycY8qJDl3UaGYi7MrAiQBsZaqo/ZM8kz7JGvcl1Y1H9TL/Lm
-         t+XWjQQ+aQPc6XiLuqrOsorb0cp2lmp2vCd5QOVRndvbVvu79nbd4xclWt97VindCtBX
-         PIQkCLg4joE+G7OZm7E79h5LplXdDVpOrO2gVGP5li18gHZWXc2wjUuzwzKRl4pc8bJx
-         lSFJBgAQ3/Hqk4qst4QToBHBtlFOKzmX7Vglr+0klqmVNNzNCTjtp0SZ5RCzvvwp3QFk
-         Kckg==
-X-Gm-Message-State: APjAAAUzbeBZZ+HDFDaHBunRwSbsugaSm/gcJrxT7xEmEmAdEJczI14t
-        TlJL6f9RknSILnDgueRwjc55Xq3cYq8/YYxHH+HvFGyy
-X-Google-Smtp-Source: APXvYqxzHbilP5wxpsFC1HtqinY7YCWPjB7zwLvM5YoT8knl3eEZ5MQaSHdaTOwzqMmL7vEy8NLgD+GkQ7qEsJIeKms=
-X-Received: by 2002:a6b:6010:: with SMTP id r16mr13770859iog.124.1566837410779;
- Mon, 26 Aug 2019 09:36:50 -0700 (PDT)
+        id S1732610AbfHZQjq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 12:39:46 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58521 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729338AbfHZQjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 12:39:46 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58290731C3;
+        Mon, 26 Aug 2019 12:39:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wfz7YIbr2mm0EDC1P15qUmCjaSc=; b=dkQmaf
+        c/Us/V5aXo1dSWa7THD/vUD6wcP7exCgkfOJk6K+Jxlc6hWeWewUANEjioAszBXJ
+        tLkBwsasmy8BSeBKS+QPez90SaBMZB2F16PCfFS3kwUtXccq47fikeUjuTw9FpZ9
+        Sei55MWn+hh2Ydx9jyhqrq3fWRBH1ghmpiqGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lZr/wSjYG8gcLg34dfc9GTb4T70QD//t
+        5P5Eb5dxwHhhfyz/WkGdoP03RByO4/5JQ8LT9MO4b4vh7zRlQKdyz3TNLzdcti4o
+        xJIEjVY3lM4OYwvaGXkrA214Ay1/j2vuVZqWKlYDhkogOE9GqIl20NB0HxCuddKe
+        A9gwaVilg0o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 50C97731C2;
+        Mon, 26 Aug 2019 12:39:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 256E7731C1;
+        Mon, 26 Aug 2019 12:39:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Git Gadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "Philip.McGraw" <Philip.McGraw@bentley.com>
+Subject: Re: [PATCH 1/1] git-p4: auto-delete named temporary file
+References: <pull.303.git.gitgitgadget@gmail.com>
+        <CANg4QoGSVQWG3QXzoiA8oDsjXaXGoZ+WMNLSPpu75eJWdrWxLQ@mail.gmail.com>
+Date:   Mon, 26 Aug 2019 09:39:37 -0700
+In-Reply-To: <CANg4QoGSVQWG3QXzoiA8oDsjXaXGoZ+WMNLSPpu75eJWdrWxLQ@mail.gmail.com>
+        (Git Gadget's message of "Mon, 26 Aug 2019 15:51:06 +0200")
+Message-ID: <xmqqo90bj2ye.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190818201727.31505-1-dev+git@drbeat.li> <xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com>
- <CAPUEspg9F7RutCUCoRAAXmRePjiunq3-zG7cN3uz_t5DVMxP=g@mail.gmail.com>
- <nycvar.QRO.7.76.6.1908261626450.46@tvgsbejvaqbjf.bet> <CAPUEspivEfc82ZM=VaUA_sYhQbz+GtoOODVZK2i9LcCkmHq=Sg@mail.gmail.com>
- <xmqqftlnkj98.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftlnkj98.fsf@gitster-ct.c.googlers.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 26 Aug 2019 09:36:38 -0700
-Message-ID: <CAPUEspj4BJLjXorUXMiZnFtNcmhym_2QL5GUqeaGaCoxk=zjtw@mail.gmail.com>
-Subject: Re: [PATCH] grep: under --debug, show whether PCRE JIT is enabled
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Beat Bolli <dev+git@drbeat.li>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 195F9460-C820-11E9-A64F-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 26, 2019 at 9:02 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Arenas <carenas@gmail.com> writes:
->
-> > ... but
-> > ab/pcre-jit-fixes and UTF-8 validation are likely to make that more
-> > difficult (even if it is a mostly self inflicted wound AFAIK)
->
-> Hmm, in what way?  Do you mean that we'd be invested even more in
-> pcre1 in an effort to keep supporting, that the sunk cost would
-> dissuade us from deprecating the support even more, or something?
+Funny that the patch is line-wrapped, which I do not recall ever
+seeing in GGG-generated e-mails.  Dscho, do you know if anything
+funny is going on?
 
-on the contrary, PCRE1 works fine but our recent changes make it worst
-unnecessarily (IMHO)
+Git Gadget <gitgitgadget@gmail.com> writes:
 
- for example 685668faaa (grep: stop using a custom JIT stack with PCRE
-v1, 2019-07-26) adds 2 regressions as discussed in [1]
-
-* git grep -P will now throw an error if there are non UTF-8 documents
-in the haystack (even if JIT is available)
-* git grep -P '^([/](?!/)|[^/])*~/.*' will now fail with a cryptic
-PCRE error instead of succeeding (but at least will be consistent and
-show the same error with PCRE2)
-
-Carlo
-
-[1] https://public-inbox.org/git/CAPUEspgStVxL=0SoAg82vxRMRGLSEKdHrT-xq6nCW1sNq7nLsw@mail.gmail.com/
+> From: "Philip.McGraw" <Philip.McGraw@bentley.com>
+> ...
+> diff --git a/git-p4.py b/git-p4.py
+> index c71a6832e2..33bdb14fd1 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1160,13 +1160,11 @@ def exceedsLargeFileThreshold(self, relPath, contents):
+>              if contentsSize <=
+> gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>                  return False
+>              contentTempFile = self.generateTempFile(contents)
+> -            compressedContentFile =
+> tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
+> -            zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
+> -            zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+> ...
