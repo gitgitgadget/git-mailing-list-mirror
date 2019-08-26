@@ -2,120 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 413DD1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 14:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7761F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 14:23:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731040AbfHZOTV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 10:19:21 -0400
-Received: from mout.gmx.net ([212.227.17.21]:46357 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729138AbfHZOTV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 10:19:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566829158;
-        bh=uOfw06mu2gRvxXy2D0PfZXYP9Suf7R7oYT7HvZFnmRw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MD7RVK9/gRA7TQZNRs5WBZ9qGFmEJbgGXWKSRTw/Zdt77EM0a1ywpwc7he61lUBFo
-         Uc9qg13AYP652KoiMVbYQT5ylmzs+s4yMhTS0akXHs+wuXMu3ZVArrzanJXy9nMn/d
-         ePs9OgV56ukgh1KHTQI8FMGX8z6k6kisLri/DZmU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlYrb-1ibar32iON-00bN30; Mon, 26
- Aug 2019 16:19:18 +0200
-Date:   Mon, 26 Aug 2019 16:19:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Dakota Hawkins <dakota@dakotahawkins.com>
-cc:     git <git@vger.kernel.org>
-Subject: Re: [RFC] Add config option corresponding to --rebase-merges
-In-Reply-To: <CAHnyXxScGO6Eex_AEbgH=YFQ2yzY1hnXavyNMkiXbrccVUA=Ug@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1908261615440.46@tvgsbejvaqbjf.bet>
-References: <CAHnyXxScGO6Eex_AEbgH=YFQ2yzY1hnXavyNMkiXbrccVUA=Ug@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732366AbfHZOXB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 10:23:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55592 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728324AbfHZOXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 10:23:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CDD1D15FF68;
+        Mon, 26 Aug 2019 10:22:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tnyR+ooAu60y
+        h+fRqRhwdrDerUg=; b=JsxqECBKvv+VxSnPlXR1R1I44li1IC2Fxz/HO3w7u778
+        RsumMd6r87r0ItVsKAENn7Mv5+O/dZIHdVmbASqW2k3r+62Al9phFqU2MiOM29Gk
+        NWuCoZ+AIaWypxDlUsWZEtJjuBINr5R860ds5lTQSp1Z6WuMmF8GIGRE8LZIHsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xYNPG1
+        TRuA/usY/+qTBlHmp0wqjceS95sRbQoq05oFlIb1acPLEjA2f/7lSjley1m1phXr
+        94klcsj7ve576AqmgIp8voCrPJ7IUC2LKsvgsOrkk1R59izKesEzexbMWAf2ZSzZ
+        ZWBtbmA2hQBFNHglySlnkn776LSrA6Zwieq3M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5D5815FF66;
+        Mon, 26 Aug 2019 10:22:55 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2FDD215FF65;
+        Mon, 26 Aug 2019 10:22:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH] git-gui: Update in-memory config when changing config options
+References: <20190822223316.11153-1-me@yadavpratyush.com>
+Date:   Mon, 26 Aug 2019 07:22:54 -0700
+In-Reply-To: <20190822223316.11153-1-me@yadavpratyush.com> (Pratyush Yadav's
+        message of "Fri, 23 Aug 2019 04:03:16 +0530")
+Message-ID: <xmqqimqkknup.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7nC/k5dOA6LJOuZsDj0avutEQa1eYt77/K092eaC+dICANHB0Eh
- zvzHvUfRbDfwsqBHZzzuomdp3ubZatEVo8H+3Q+3Tz2AlfbbijmCnuwOn9fZDntV8b7ast1
- agosY3hdkHB+ym+bwRT0xbGnRIfN1Zs0czdDkHnwFYd568Ktq1Bykzd1C222AUHx2sT7Jc+
- jhdG7G99slOYBjRyUFlxw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bfGdbTZxYfw=:yz7ukoNj0ADxA6OLKZaIed
- yTATIz1AY2N7cZQUg7arfM+SPyDJHzJFl/lQKbLXpBIRTM5Khg7fgMn3T9k1wdSMvCVsrGVDb
- os9ijQRM42ikgLRcnl8VmKXEegAzMJv8keWRy1uhEwJ5tz9VuUQ9KlHWc2a1ZifT1acnYLcDy
- 4EUMp0ibfQXYGIGZEx3RXTX/F6t+mWl+ZbasGTyAl2Utr20fwoDpKPDLEppG4r3D6w9TILjiH
- n6BJoccD2rUier0rnyJnHvycMvSUW0nhYl5q2XhNOJlE9v/ELfaisl5dzb3CBnbWyCqhAElvw
- oqiKZnHKdd0TvBpGTGKOg7GQ3/7YHRZcnDcdtsyRyOyVw4ngTPNEQc2J79YV5IcuRh53ckmam
- V2hzH+RGX78xBz1GAMWuemkCKYWhtIR4ub+vY5mlnjMhDDa2jm/pQMXqAJUHPa7HnIBJNz6Bt
- waU+DNeMxzS/yz3d+ptd5gUKFXvJ7AgQrMzq9KPGyJESw5F70XVjJLTU0kS7m9PYicXEEPfEG
- RfGfksEpYp/g1nsowrctGSY7QDCqXX+k17yKC/NKwSGJnwgoPSHvxuA1M4yM7z2ghr/j0JYAR
- eckrdhVXp7nNk2ZbAbrjbFP/yMmFEdYy13ym+HvXzVgVw6dK1i8BrEsHTXZX0RLqChg5vkcgQ
- 2ziGb6277b7sPePqi9Ms7Ye1YLsD4EnFknrnWhbvNG7z1SPsDukZpq0tqgMMH/V1k/+ArkYQ2
- ECwxD1YIcagRu8e2LTi/V31za4ugEihGWBgXxAo+o0lQ8qhPCZi6A5L//Nh8pSfLo1oTdBh/a
- 4c6XxQ4fNYS6L97AP1RuG3GTA5Bdaqb+N0tj6wbweJe0DrZHq+lI85I7zgmIdkDe86aPnDeBt
- E7cUYugsHZRFf7obx9wIGyx9Amx97KCxIp8eIOE0vF0P6fSRct/dcCR2FnFW1qJWhc2TF/UW2
- AZ39WwEaWuuK2myU5oFUrUxqV6t1y+OqNhZr24+eEpxknEXWQMjN8SNha7iFlYMZGoaFM+k/P
- 49eTWiHiljU99IyWP4yQTQ2RsNMpgsOJIlEEOdOjEMs2EGqb9Hc2V31LjyumtwqKmZsrHI8Be
- x0ezezQVSE6VAHZBGGINhP7Tn7mjSYHStSMSMUaRnWzStkmyDkr1ReVpGA7czpg1zrqWBGpWz
- WZT+c=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FED5B380-C80C-11E9-A27A-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dakota,
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-On Fri, 23 Aug 2019, Dakota Hawkins wrote:
 
-> I'd like to work on a patch to add config options that correspond to
-> rebase's --rebase-merges flag.
->
-> In my workflow, while it's uncommon to encounter merge commits during
-> a rebase operation, when they are encountered I pretty much always
-> want this behavior. Since it's rare, I pretty much always forget to
-> ask for it, with interesting and confusing consequences.
->
-> If nobody has any opposition to the concept, the following are the
-> specific options and values that I think makes sense and covers the
-> existing functionality.
+> Subject: Re: [PATCH] git-gui: Update in-memory config when changing con=
+fig options
 
-I am in favor of this, as indicated at
-https://github.com/gitgitgadget/git/issues/318
+s/git-gui: Update/git-gui: update/
 
-> # New rebase.merges config that takes effect if set to true or cousins
-> + rebase.merges=3D
-> +   true
-> +   cousins
+>  lib/option.tcl | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> # New cousins value for pull.rebase
-> pull.rebase=3D
-> +   cousins
->
-> # New pull.rebaseMerges config that takes effect if set to true or
-> # cousins. Intended to allow pull.rebase to be set to interactive.
-> + pull.rebaseMerges=3D
-> +   true
-> +   cousins
->
-> # Corresponding additions for branch.<name> config
-> branch.<name>.rebase=3D
-> +   cousins
-> branch.<name>.rebaseMerges=3D
-> +   true
-> +   cousins
->
-> I'd like to get feedback on the idea and specific options proposed,
-> if only to avoid having to tweak them once they've been added.
+> diff --git a/lib/option.tcl b/lib/option.tcl
+> index e43971b..139cf44 100644
+> --- a/lib/option.tcl
+> +++ b/lib/option.tcl
+> @@ -344,6 +344,7 @@ proc do_save_config {w} {
+>  	if {[catch {save_config} err]} {
+>  		error_popup [strcat [mc "Failed to completely save options:"] "\n\n$=
+err"]
+>  	}
+> +	load_config 1
 
-I am not quite sure about the "cousins" thing. If at all, I would make
-that a global option, I think. But then, maybe you have a use case in
-mind where it would make sense to rebase cousins in some, but not in
-other cases, cases that can be discerned via branch names?
+This may make the symptom go away, and in that sense it would be a
+good change in the short term.
 
-Ciao,
-Johannes
+But I have to suspect that it may indicate a misdesign in the "edit
+configuration" part of the program that the newly set configuration
+value must load back to the program from the filesystem.  That feels
+backwards.
+
+NaaNa=C3=AFvely, one would imagine a program wia capability to save and
+load run-time options to disk to behave this way, no?
+
+ * a set of in-core variables exist to control various aspects of
+   the program (e.g. font size, background colour, etc.)
+
+ * there is a "load config" helper function that can be called to
+   populate these in-core variables from an external file.
+
+ * there is a "edit config" UI that can be used to toggle these
+   in-core variables (the checkboxes and radio buttons may not
+   directly be connected to the underlying variables, but to their
+   temporary counterparts and there may be a "OK" button in the UI
+   to commit the changes to the temporaries to the real in-core
+   variables).
+
+ * there is a "save config" helper function that can be called to do
+   the reverse of "load config"; one of the places that calls this
+   helper is upon the success of "edit config".
+
+I didn't look at the lib/option.tcl to check, but I would suspect
+that it would require a far larger change than your single liner if
+we wanted to restructure the option tweaking part in such a way, and
+it would be much more preferrable to use the single liner patch at
+least for now, but in the longer term you might want to consider
+such a clean-up.
+
+Thanks.
