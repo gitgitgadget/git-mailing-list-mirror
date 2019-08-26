@@ -2,87 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6D21F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 16:07:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 017521F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 16:19:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732709AbfHZQHR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 12:07:17 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64773 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732670AbfHZQHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 12:07:16 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8BF1C72C48;
-        Mon, 26 Aug 2019 12:07:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ATu1kPJrLtOh7aMP3E/tA4968iQ=; b=SHK58f
-        +ClbQA3cDsGMUEn07DlEEOQwd2PL4GKtbt4tXLzvU+I4KPdORdPfRIAPsp59vvHi
-        PiH9Qmf53IawF1FWgl8mPgoP7vylNnAca/9LK5iDbCKNgNfumxCEFFtzRAbzBqSq
-        xIQ9bpEzHC/nCGl2q+kzTnVEZNerUZdkDxDJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IKDD951rBx1lTqS/46zrbAnDCjOwlop5
-        BNCtgUayhuN06ME+WlrzYSdaMH1jhvCvHZ97I+5SelqjabU+8J3I/KOQl7e9gTcE
-        LovbyE4NrBCMrOwg7kNeAxkYSjo3dwSWBlVPIkrBoTypuo7PCMnB3wCLacqF0IaX
-        9BtSEplZ0SI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8342E72C47;
-        Mon, 26 Aug 2019 12:07:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ADA7572C3F;
-        Mon, 26 Aug 2019 12:07:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH 12/13] Doc: add more detail for git-format-patch
-References: <cover.1566285151.git.liu.denton@gmail.com>
-        <cover.1566635008.git.liu.denton@gmail.com>
-        <a97f861e6a9889545a61a750791257757fc5b8df.1566635008.git.liu.denton@gmail.com>
-        <xmqq1rx8kl76.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 26 Aug 2019 09:07:09 -0700
-In-Reply-To: <xmqq1rx8kl76.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 26 Aug 2019 08:20:13 -0700")
-Message-ID: <xmqq7e6zkj0y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1732671AbfHZQTi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 12:19:38 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:57844 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731762AbfHZQTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 12:19:38 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7QGJTIf035082
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 26 Aug 2019 12:19:29 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Albert Vaca Cintora'" <albertvaka@gmail.com>,
+        "'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>
+References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>        <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org>        <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>        <006201d55c1a$68180f50$38482df0$@nexbridge.com> <xmqqsgpoj6ad.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgpoj6ad.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [Feature Request] Option to make .git not read-only in cloned repos
+Date:   Mon, 26 Aug 2019 12:19:22 -0400
+Message-ID: <008e01d55c2a$08749ea0$195ddbe0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90028F46-C81B-11E9-9B5A-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQNp8WItsZHJ6oa15Vw/HazfT/RW8wGPs2THAhKp3vcBxFpAjQH2sV7po6mFfNA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On August 26, 2019 11:28 AM, Junio C Hamano wrote:
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> 
+> >> Sometimes I clone a repo just to grep for an error string and then I
+> >> don't need it anymore, or I clone several repos until I find the one
+> >> that contains what I want and delete the rest. Sometimes I want to
+> >> write a patch for some software I don't develop regularly so I don't
+need
+> to keep a clone of it.
+> >>
+> >> In any case, it would be useful to know the reason those files are
+> >> read-only in the first place. Do you guys know who might know?
+> >
+> > Why don't you wrap your clone in a script that calls chmod -R u+w .git
+> > after the clone? This seems like a pretty trivial approach regardless
+> > of your workflow. This works in Linux, Mac, Windows (under
+> > cygwin-bash) and anything else POSIX-ish.
+> 
+> But on anything POSIX-ish, is it a problem for some files (but not any
+> directory) in .git is made read-only?
 
-> Denton Liu <liu.denton@gmail.com> writes:
->
->> In git-format-patch.txt, we were missing some key user information.
->> First of all, document the special value of `--base=auto`.
->>
->> Next, while we're at it, surround option arguments with <>.
->
-> I'd suggest squashing this in to complete the above.
->
-> cf. <xmqq1rxfveym.fsf@gitster-ct.c.googlers.com>
-> cf. <xmqqimqqs7cm.fsf@gitster-ct.c.googlers.com>
-> ---
->  Documentation/git-format-patch.txt | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+Not for me or anyone I personally support. As I suggested to Albert,
+wrapping a clone in a script with a chmod would solve the problem with
+minimal work.
 
-Ah, I see that you have squashed this into the next step.  I do not
-think it belongs there, though.
+My own personal issue is convincing people not to clone for every topic
+branch, but that's unrelated.
+
