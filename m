@@ -2,76 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC50B1F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 18:42:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9921F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 18:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733169AbfHZSmy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 14:42:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56216 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727687AbfHZSmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 14:42:54 -0400
-Received: (qmail 6701 invoked by uid 109); 26 Aug 2019 18:42:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Aug 2019 18:42:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22564 invoked by uid 111); 26 Aug 2019 18:44:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Aug 2019 14:44:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 26 Aug 2019 14:42:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Mike Hommey <mh@glandium.org>, Elijah Newren <newren@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 2/2] fast-import: duplicate into history rather than
- passing ownership
-Message-ID: <20190826184252.GC23399@sigill.intra.peff.net>
-References: <20190825080640.GA31453@sigill.intra.peff.net>
- <20190825081055.GB31824@sigill.intra.peff.net>
- <20190825100213.fssjydohathfhhe5@glandium.org>
- <248c5f9f-ba44-6dec-6f30-f7d193bc22bb@web.de>
+        id S1733205AbfHZSnX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 14:43:23 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:39119 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732685AbfHZSnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 14:43:23 -0400
+Received: by mail-ot1-f67.google.com with SMTP id b1so16185577otp.6
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 11:43:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PnexhLheFTj14s6zOoWVVAzTWeS2nWYIk/gqFTfOzD8=;
+        b=VRJxD9ifMwcVvGJKw7t8bK3yYMU/Ezr32agb6btEdtNQsDWmmLaJ9ewYVyFqOVHpoN
+         Z/A8Fe3CSHOSlNE4n1WnPlTxgevTAFvNfGfPZNl1he+GjFic78Iyg3Uvg5uUEEhmPI9d
+         /iWtpEgbgBEmUGOc0pKc0az517M01mS7w/jPmgCboMZyS4wx75p0PisdvjyMEZiFZDi6
+         dDO2bJj35ZbejGf999YOQi5Gzk3p1XpsNUFzZaqfQZXSyiJc1lKxdB7jV14jpOfDVVgo
+         sUcol/T3JztWIlM31/b+2DRb8yFKCMgyLAcQarEsqTOaOyFTeXxhvEk7M77C05oZQow+
+         hZjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PnexhLheFTj14s6zOoWVVAzTWeS2nWYIk/gqFTfOzD8=;
+        b=WAnulgWQxOOUV5zgB8PD65o+Cs7zxOaG8xSvb8bzzGbNEo1+yAyDmevCVJ93GObxPm
+         TwOqOYn1sTjK7cAsYvbuQ0ULQztpP2sZCs5Tev6BQh750FZxuAV5Iob/RC6INjmk189u
+         Crb/fek39Jld8JFah+c2R1L82TXLtCGyy1q7PFtenokMwosr+if1XnfaM105GejjByVi
+         1aKllQKzj6oBztTHICk7+zkhxq1A5L+smpb1RBZe/jv8HMok3hFroG/DMZsQD6UX4cJ6
+         BXilVZh4o3Y3eUoibbhjcyq61FUwV7se/C186vqRzSOSLKfdxjtQvNCgVpD5S0lwM/mD
+         06VQ==
+X-Gm-Message-State: APjAAAWPJy6G5/DLKr9ygJ2efKtY3dJDJ4q//kWwtte1+bWJxO9qtc42
+        hKPGEw2zqZSjya42utQaBi37w//jYW4C+GXorDg=
+X-Google-Smtp-Source: APXvYqysQI3zHSh5jwjn6g6HaOKRZR2jGDff+H3Qvmx497zQhKIUyvKtNXxygh13mBHB4Ml3/xuRgDUSyWUCvvx7wI0=
+X-Received: by 2002:a9d:65d4:: with SMTP id z20mr15255297oth.314.1566845002145;
+ Mon, 26 Aug 2019 11:43:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <248c5f9f-ba44-6dec-6f30-f7d193bc22bb@web.de>
+References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
+ <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org> <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
+ <34935414-4e69-114b-7a32-f94514e3679d@iee.email> <xmqq5zmkkn4a.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq5zmkkn4a.fsf@gitster-ct.c.googlers.com>
+From:   Albert Vaca Cintora <albertvaka@gmail.com>
+Date:   Mon, 26 Aug 2019 20:42:56 +0200
+Message-ID: <CAAQViEsL+X5ZYmmSjG1JBksGjthHCUyWa3525b8dN7u1XAbvJg@mail.gmail.com>
+Subject: Re: [Feature Request] Option to make .git not read-only in cloned repos
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 25, 2019 at 04:21:54PM +0200, René Scharfe wrote:
+On Mon, Aug 26, 2019 at 4:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> And directories (e.g. .git/objects/) are not made read-only for
+> obvious reasons.  Read-only files inside a writeable directory can
+> be deleted just like read-write ones can be (iow, the "delete
+> permission" comes from the "write permission" of the containing
+> directory) so "rm -r .git" should "work" just fine (depending on the
+> definition of working, of course---it is discouraged to throw away
+> your work).
+>
 
-> > You could xstrndup(command_buf.buf, command_buf.len), which would avoid
-> > a hidden strlen.
-> 
-> xstrndup() also searches for NUL, albeit with memchr(3).  xmemdupz()
-> would copy without checking.
-> 
-> I suspect the simplicity of xstrdup() outweighs the benefits of the
-> alternatives, but didn't do any measurements..
+It "works" for some definition of work, but it asks for confirmation
+for every file, which is a pain. I'm on Linux.
 
-Yep. I actually started to write xmemdupz() originally then decided it
-was unnecessarily verbose and a premature optimization.
+On Mon, Aug 26, 2019 at 4:27 PM Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+>
+> Why don't you wrap your clone in a script that calls chmod -R u+w .git after the clone? This seems like a pretty trivial approach regardless of your workflow. This works in Linux, Mac, Windows (under cygwin-bash) and anything else POSIX-ish.
+>
 
-I wondered after this exchange whether something like:
+Wrapping `git clone` should work as a workaround. Although if that
+doesn't break anything... then why were those files read-only in the
+first place? :)
 
-  char *strbuf_dup(const struct strbuf *sb)
-  {
-	return xmemdupz(sb->buf, sb->len);
-  }
+The fact that, from a formal point of view, those files are immutable
+doesn't seem to justify them being read-only (or, at least, doesn't
+follow any convention): there are plenty of immutable files on any
+system (eg: all binaries and libs, application assets like images and
+icons, pid/lock files for daemons, etc.) that are not made read-only.
 
-would be a useful general helper. Grepping around it doesn't seem like
-there are a lot of candidates.
+I can go with the workaround, but I'm still inclined to think this
+option should be built in into git.
 
-If we really wanted to micro-optimize, we could have cmd_hist store
-strbufs, and then we could reuse the same buffers over and over without
-re-allocating. And use strbuf_addbuf(&cmd_hist.buf, &command_buf). :)
-
--Peff
+Albert
