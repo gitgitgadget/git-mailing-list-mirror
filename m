@@ -2,54 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78A001F4BA
-	for <e@80x24.org>; Mon, 26 Aug 2019 23:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31B591F4B9
+	for <e@80x24.org>; Mon, 26 Aug 2019 23:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727235AbfHZXwl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 19:52:41 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45212 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726944AbfHZXwk (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727227AbfHZXwk (ORCPT <rfc822;e@80x24.org>);
         Mon, 26 Aug 2019 19:52:40 -0400
-Received: by mail-pl1-f194.google.com with SMTP id y8so10827097plr.12
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 16:52:39 -0700 (PDT)
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39374 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727089AbfHZXwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 19:52:38 -0400
+Received: by mail-pg1-f193.google.com with SMTP id u17so11530597pgi.6
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 16:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NPNAzcR9DEzG2//Ht9B3w3OGw5m6tS2ereAnWmSaieE=;
-        b=gWqUfQLuTkDbCGywH5wtu3qPpb+nLHiLLVki4Wh7f3heW8/POoq+FP8Ubz4qrA+OQv
-         CDwlPE8PNZRD37cXrsTavLRTlCH4OgiNJzEU0XjFi7o7Sia3xv/iGecFSLgE89mKxw81
-         XjTic82vdbujwJhjO4BI+8ZjZ/n4k7Si6oU9SEetGsNR/bWz/unU8XGKsjmwOV1Ex8FB
-         YBy+mweSgCOQYRY/4+mI1+02Xacvetp1pnvuR8iD3+z94zPfwwIxm1Uew7i3x1tVddnr
-         qSC0jnKMaPBSMn6GAQ3JYThzV4MEPCKHhPHnBJRELQ2j3I/c5BKosxjGMFL3qu6WnABx
-         PPPw==
+        bh=H5x87QSvrq0ij+IKrzrzMSQhJvcL7g/G5e/9lB/LRCI=;
+        b=Yelbabij4CfYnGDX5OstXSZ2fyV/huTiB01LgzXamfrPfij3gEjKKcEtVVlBVx/70M
+         yyVWNmr9LxxqWl6/T1rzUTteTtd7F5aw12IGkGLYBPrI55JnySN7+uyz1tVX8G2lST/2
+         Co+2yCKen/uUlvwMrgYYRF8T+F/DuoQXiBlog0vpfCQ0LLzD09JLxRhDqDRK1bbazUNg
+         Ku6G3Pdn6qImJlNMKg1V6T5iFbH8+XsMf6qpzPbUBdsvO3xi8DdNW4zj1kmx/oBAXJHu
+         GKdKAF0NjRvFJilSFIINsHDhBAnqAY3GbE413EgYCVV3LsRW7rw3OzSAAoTjRoLIGfyB
+         gfTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NPNAzcR9DEzG2//Ht9B3w3OGw5m6tS2ereAnWmSaieE=;
-        b=nhnIAYxshi0DCFRaIWmzpZqBAmSxWf8XhqXH/4XB5AcQvzNUCoGUrSOCNznfsOASfC
-         nwkHs0Uda5lVGwSjW2L8riXrtfsoobecgYljcyZTGdfFOWmnlatfJx/aplnI69+oYLfE
-         DWmNvi/rahq55fNM4QkmLYGPMU8ipweJqRqGU7jkRN3bceQ+geqCd68DKqKqPn/ZOnPq
-         K8pzGKRV8c7KcRfaSoa/Z+NuEnZIFBwr01lIomEJ8I5wkrYBwzG1kwtFBURYKWbTuRTF
-         V8cFI3ygrD6ULR5cJV7FTsIuC0QzJoMYi/aB2eOuD3hgF/128oLGvx51T73DWEOex7aC
-         X4vg==
-X-Gm-Message-State: APjAAAXFZIzTQNc7HDVoAZVMLpZwkOkaD5ehYprTaKAFWyzsVd5oXM+w
-        LClchm21VF1dG52JTHfY3AR6vn+/
-X-Google-Smtp-Source: APXvYqwRq5Ge0GNeEcb6Fj1gtTImPgKAtvyCfLUYrrzYFA0mKquE3KgbZf8C+aXKR0NTdzOESzZyaQ==
-X-Received: by 2002:a17:902:7892:: with SMTP id q18mr20566352pll.206.1566863557873;
-        Mon, 26 Aug 2019 16:52:37 -0700 (PDT)
+        bh=H5x87QSvrq0ij+IKrzrzMSQhJvcL7g/G5e/9lB/LRCI=;
+        b=S2IMi6yLxxkL+ZRBTRtV/CPvR57CDfz3ujuknBVzY5YiwC/i7syWQj2TfF4s/iWXob
+         KZ8xS0MGFyB+P+zn+fMLQyh6J10iv1oNiXJHckoC6OdOjMkPb8i7/5bs9ZqBeDpJIVMV
+         b4djd4m7s3EWyi2JgdKoouQA6zGGukLU9gCNiYGzZZN041SEJB5FJyBp+xgQdX4JATcK
+         MUKCoe8WvZqaMlJWtuWit4bfkyXgIhKFv35W6aVTcvkHnk10f6qSnhF2PMThCYV0jCXQ
+         t5eUhyy8PEwWkIp6uT6CRLfn3b8QpOO/0B7wywDl6NmskgFUgWNAwvdcwE/Yp7UDYAzS
+         pXiw==
+X-Gm-Message-State: APjAAAWcSvy0F/xiuFoYY6svsvU4BpygQdMF8TQr1LjIR50jvZf4dUcf
+        bsj8KjkVaMz4sEIqPFadw8dLdf2N
+X-Google-Smtp-Source: APXvYqz7lOc/bGBAbjvApTphnIp/lYXoDm1oupDUF36mtEOozDvIkD52hOkQWMZ3B/7klC7tEk+mtg==
+X-Received: by 2002:a17:90a:3646:: with SMTP id s64mr22705501pjb.44.1566863556727;
+        Mon, 26 Aug 2019 16:52:36 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id 21sm5939047pfb.96.2019.08.26.16.52.36
+        by smtp.gmail.com with ESMTPSA id 21sm5939047pfb.96.2019.08.26.16.52.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Aug 2019 16:52:37 -0700 (PDT)
+        Mon, 26 Aug 2019 16:52:36 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -61,1846 +61,276 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 5/5] Remove git-filter-branch, it is now external to git.git
-Date:   Mon, 26 Aug 2019 16:52:26 -0700
-Message-Id: <20190826235226.15386-6-newren@gmail.com>
+Subject: [RFC PATCH 4/5] Recommend git-filter-repo instead of git-filter-branch in documentation
+Date:   Mon, 26 Aug 2019 16:52:25 -0700
+Message-Id: <20190826235226.15386-5-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.5.g775ebaa2a0
 In-Reply-To: <20190826235226.15386-1-newren@gmail.com>
 References: <xmqqd0gwopej.fsf@gitster-ct.c.googlers.com>
  <20190826235226.15386-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+filter-branch suffers from a huge number of pitfalls that can result in
+incorrectly rewritten history, and many of the problems can easily go
+undetected until the new repository is in use.  This can result in
+problems ranging from an even messier history than what led folks to
+filter-branch in the first place, to data loss or corruption.  These
+issues cannot be backward compatibly fixed, so add a warning to the
+filter-branch manpage about this and recommand that another tool (such
+as filter-repo) be used instead.
+
+Also, update other manpages that referenced filter-branch.  Several of
+these needed updates even if we could continue recommending
+filter-branch, either due to implying that something was unique to
+filter-branch when it applied more generally to all history rewriting
+tools (e.g. BFG, reposurgeon, fast-import, filter-repo), or because
+something about filter-branch was used as an example despite other more
+commonly known examples now existing.  Reword these sections to fix
+these issues and to avoid recommending filter-branch.
+
+Finally, remove the section explaining BFG Repo Cleaner as an
+alternative to filter-branch.  I feel somewhat bad about this,
+especially since I feel like I learned so much from BFG that I put to
+good use in filter-repo (which is much more than I can say for
+filter-branch), but keeping that section presented a few problems:
+  * In order to recommend that people quit using filter-branch, we need
+    to provide them a recomendation for something else to use that
+    can handle all the same types of rewrites.  To my knowledge,
+    filter-repo is the only such tool.  So it needs to be mentioned.
+  * I don't want to give conflicting recommendations to users
+  * If we recommend two tools, we shouldn't expect users to learn both
+    and pick which one to use; we should explain which problems one
+    can solve that the other can't or when one is much faster than
+    the other.
+  * BFG and filter-repo have similar performance
+  * All filtering types that BFG can do, filter-repo can also do.  In
+    fact, filter-repo comes with a reimplementation of BFG named
+    bfg-ish which provides the same user-interface as BFG but with
+    several bugfixes and new features that are hard to implement in
+    BFG due to its technical underpinnings.
+While I could still mention both tools, it seems like I would need to
+provide some kind of comparison and I would ultimately just say that
+filter-repo can do everything BFG can, so ultimately it seems that it
+is just better to remove that section altogether.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- .gitignore                          |   1 -
- Documentation/git-filter-branch.txt | 461 -------------------
- Makefile                            |   1 -
- command-list.txt                    |   1 -
- git-filter-branch.sh                | 662 ----------------------------
- t/perf/p7000-filter-branch.sh       |  24 -
- t/t7003-filter-branch.sh            | 505 ---------------------
- t/t7009-filter-branch-null-sha1.sh  |  55 ---
- t/t9902-completion.sh               |  12 +-
- 9 files changed, 6 insertions(+), 1716 deletions(-)
- delete mode 100644 Documentation/git-filter-branch.txt
- delete mode 100755 git-filter-branch.sh
- delete mode 100755 t/perf/p7000-filter-branch.sh
- delete mode 100755 t/t7003-filter-branch.sh
- delete mode 100755 t/t7009-filter-branch-null-sha1.sh
+ Documentation/git-fast-export.txt   |  6 ++---
+ Documentation/git-filter-branch.txt | 42 ++++++++---------------------
+ Documentation/git-gc.txt            | 17 ++++++------
+ Documentation/git-rebase.txt        |  2 +-
+ Documentation/git-replace.txt       | 10 +++----
+ Documentation/git-svn.txt           |  4 +--
+ Documentation/githooks.txt          |  7 ++---
+ contrib/svn-fe/svn-fe.txt           |  4 +--
+ 8 files changed, 36 insertions(+), 56 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 521d8f4fb4..97f5d8afea 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -63,7 +63,6 @@
- /git-fast-import
- /git-fetch
- /git-fetch-pack
--/git-filter-branch
- /git-fmt-merge-msg
- /git-for-each-ref
- /git-format-patch
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index cc940eb9ad..784e934009 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -17,9 +17,9 @@ This program dumps the given revisions in a form suitable to be piped
+ into 'git fast-import'.
+ 
+ You can use it as a human-readable bundle replacement (see
+-linkgit:git-bundle[1]), or as a kind of an interactive
+-'git filter-branch'.
+-
++linkgit:git-bundle[1]), or as a format that can be edited before being
++fed to 'git fast-import' in order to do history rewrites (an ability
++relied on by tools like 'git filter-repo').
+ 
+ OPTIONS
+ -------
 diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-deleted file mode 100644
-index 8c586eed55..0000000000
+index 6b53dd7e06..8c586eed55 100644
 --- a/Documentation/git-filter-branch.txt
-+++ /dev/null
-@@ -1,461 +0,0 @@
--git-filter-branch(1)
--====================
--
--NAME
------
--git-filter-branch - Rewrite branches
--
--SYNOPSIS
----------
--[verse]
--'git filter-branch' [--setup <command>] [--subdirectory-filter <directory>]
--	[--env-filter <command>] [--tree-filter <command>]
--	[--index-filter <command>] [--parent-filter <command>]
--	[--msg-filter <command>] [--commit-filter <command>]
--	[--tag-name-filter <command>] [--prune-empty]
--	[--original <namespace>] [-d <directory>] [-f | --force]
--	[--state-branch <branch>] [--] [<rev-list options>...]
--
--WARNING
---------
--'git filter-branch' has a litany of gotchas that can and will cause
--history to be rewritten incorrectly (in addition to abysmal
--performance).  These issues cannot be backward compatibly fixed and as
--such, its use is not recommended.  Please use an alternative history
--filtering tool such as 'git filter-repo'.  If you still need to use
--'git filter-branch', please carefully read the "Safety" section of
--https://public-inbox.org/git/CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com/
--and avoid as many of the pitfalls listed there as reasonably possible.
--
--DESCRIPTION
-------------
--Lets you rewrite Git revision history by rewriting the branches mentioned
--in the <rev-list options>, applying custom filters on each revision.
--Those filters can modify each tree (e.g. removing a file or running
--a perl rewrite on all files) or information about each commit.
--Otherwise, all information (including original commit times or merge
--information) will be preserved.
--
--The command will only rewrite the _positive_ refs mentioned in the
--command line (e.g. if you pass 'a..b', only 'b' will be rewritten).
--If you specify no filters, the commits will be recommitted without any
--changes, which would normally have no effect.  Nevertheless, this may be
--useful in the future for compensating for some Git bugs or such,
--therefore such a usage is permitted.
--
--*NOTE*: This command honors `.git/info/grafts` file and refs in
--the `refs/replace/` namespace.
--If you have any grafts or replacement refs defined, running this command
--will make them permanent.
--
--*WARNING*! The rewritten history will have different object names for all
--the objects and will not converge with the original branch.  You will not
--be able to easily push and distribute the rewritten branch on top of the
--original branch.  Please do not use this command if you do not know the
--full implications, and avoid using it anyway, if a simple single commit
--would suffice to fix your problem.  (See the "RECOVERING FROM UPSTREAM
--REBASE" section in linkgit:git-rebase[1] for further information about
--rewriting published history.)
--
--Always verify that the rewritten version is correct: The original refs,
--if different from the rewritten ones, will be stored in the namespace
--'refs/original/'.
--
--Note that since this operation is very I/O expensive, it might
--be a good idea to redirect the temporary directory off-disk with the
--`-d` option, e.g. on tmpfs.  Reportedly the speedup is very noticeable.
--
--
--Filters
--~~~~~~~
--
--The filters are applied in the order as listed below.  The <command>
--argument is always evaluated in the shell context using the 'eval' command
--(with the notable exception of the commit filter, for technical reasons).
--Prior to that, the `$GIT_COMMIT` environment variable will be set to contain
--the id of the commit being rewritten.  Also, GIT_AUTHOR_NAME,
--GIT_AUTHOR_EMAIL, GIT_AUTHOR_DATE, GIT_COMMITTER_NAME, GIT_COMMITTER_EMAIL,
--and GIT_COMMITTER_DATE are taken from the current commit and exported to
--the environment, in order to affect the author and committer identities of
--the replacement commit created by linkgit:git-commit-tree[1] after the
--filters have run.
--
--If any evaluation of <command> returns a non-zero exit status, the whole
--operation will be aborted.
--
--A 'map' function is available that takes an "original sha1 id" argument
--and outputs a "rewritten sha1 id" if the commit has been already
--rewritten, and "original sha1 id" otherwise; the 'map' function can
--return several ids on separate lines if your commit filter emitted
--multiple commits.
--
--
--OPTIONS
---------
--
----setup <command>::
--	This is not a real filter executed for each commit but a one
--	time setup just before the loop. Therefore no commit-specific
--	variables are defined yet.  Functions or variables defined here
--	can be used or modified in the following filter steps except
--	the commit filter, for technical reasons.
--
----subdirectory-filter <directory>::
--	Only look at the history which touches the given subdirectory.
--	The result will contain that directory (and only that) as its
--	project root. Implies <<Remap_to_ancestor>>.
--
----env-filter <command>::
--	This filter may be used if you only need to modify the environment
--	in which the commit will be performed.  Specifically, you might
--	want to rewrite the author/committer name/email/time environment
--	variables (see linkgit:git-commit-tree[1] for details).
--
----tree-filter <command>::
--	This is the filter for rewriting the tree and its contents.
--	The argument is evaluated in shell with the working
--	directory set to the root of the checked out tree.  The new tree
--	is then used as-is (new files are auto-added, disappeared files
--	are auto-removed - neither .gitignore files nor any other ignore
--	rules *HAVE ANY EFFECT*!).
--
----index-filter <command>::
--	This is the filter for rewriting the index.  It is similar to the
--	tree filter but does not check out the tree, which makes it much
--	faster.  Frequently used with `git rm --cached
--	--ignore-unmatch ...`, see EXAMPLES below.  For hairy
--	cases, see linkgit:git-update-index[1].
--
----parent-filter <command>::
--	This is the filter for rewriting the commit's parent list.
--	It will receive the parent string on stdin and shall output
--	the new parent string on stdout.  The parent string is in
--	the format described in linkgit:git-commit-tree[1]: empty for
--	the initial commit, "-p parent" for a normal commit and
--	"-p parent1 -p parent2 -p parent3 ..." for a merge commit.
--
----msg-filter <command>::
--	This is the filter for rewriting the commit messages.
--	The argument is evaluated in the shell with the original
--	commit message on standard input; its standard output is
--	used as the new commit message.
--
----commit-filter <command>::
--	This is the filter for performing the commit.
--	If this filter is specified, it will be called instead of the
--	'git commit-tree' command, with arguments of the form
--	"<TREE_ID> [(-p <PARENT_COMMIT_ID>)...]" and the log message on
--	stdin.  The commit id is expected on stdout.
--+
--As a special extension, the commit filter may emit multiple
--commit ids; in that case, the rewritten children of the original commit will
--have all of them as parents.
--+
--You can use the 'map' convenience function in this filter, and other
--convenience functions, too.  For example, calling 'skip_commit "$@"'
--will leave out the current commit (but not its changes! If you want
--that, use 'git rebase' instead).
--+
--You can also use the `git_commit_non_empty_tree "$@"` instead of
--`git commit-tree "$@"` if you don't wish to keep commits with a single parent
--and that makes no change to the tree.
--
----tag-name-filter <command>::
--	This is the filter for rewriting tag names. When passed,
--	it will be called for every tag ref that points to a rewritten
--	object (or to a tag object which points to a rewritten object).
--	The original tag name is passed via standard input, and the new
--	tag name is expected on standard output.
--+
--The original tags are not deleted, but can be overwritten;
--use "--tag-name-filter cat" to simply update the tags.  In this
--case, be very careful and make sure you have the old tags
--backed up in case the conversion has run afoul.
--+
--Nearly proper rewriting of tag objects is supported. If the tag has
--a message attached, a new tag object will be created with the same message,
--author, and timestamp. If the tag has a signature attached, the
--signature will be stripped. It is by definition impossible to preserve
--signatures. The reason this is "nearly" proper, is because ideally if
--the tag did not change (points to the same object, has the same name, etc.)
--it should retain any signature. That is not the case, signatures will always
--be removed, buyer beware. There is also no support for changing the
--author or timestamp (or the tag message for that matter). Tags which point
--to other tags will be rewritten to point to the underlying commit.
--
----prune-empty::
--	Some filters will generate empty commits that leave the tree untouched.
--	This option instructs git-filter-branch to remove such commits if they
--	have exactly one or zero non-pruned parents; merge commits will
--	therefore remain intact.  This option cannot be used together with
--	`--commit-filter`, though the same effect can be achieved by using the
--	provided `git_commit_non_empty_tree` function in a commit filter.
--
----original <namespace>::
--	Use this option to set the namespace where the original commits
--	will be stored. The default value is 'refs/original'.
--
---d <directory>::
--	Use this option to set the path to the temporary directory used for
--	rewriting.  When applying a tree filter, the command needs to
--	temporarily check out the tree to some directory, which may consume
--	considerable space in case of large projects.  By default it
--	does this in the `.git-rewrite/` directory but you can override
--	that choice by this parameter.
--
---f::
----force::
--	'git filter-branch' refuses to start with an existing temporary
--	directory or when there are already refs starting with
--	'refs/original/', unless forced.
--
----state-branch <branch>::
--	This option will cause the mapping from old to new objects to
--	be loaded from named branch upon startup and saved as a new
--	commit to that branch upon exit, enabling incremental of large
--	trees. If '<branch>' does not exist it will be created.
--
--<rev-list options>...::
--	Arguments for 'git rev-list'.  All positive refs included by
--	these options are rewritten.  You may also specify options
--	such as `--all`, but you must use `--` to separate them from
--	the 'git filter-branch' options. Implies <<Remap_to_ancestor>>.
--
--
--[[Remap_to_ancestor]]
--Remap to ancestor
--~~~~~~~~~~~~~~~~~
--
--By using linkgit:git-rev-list[1] arguments, e.g., path limiters, you can limit the
--set of revisions which get rewritten. However, positive refs on the command
--line are distinguished: we don't let them be excluded by such limiters. For
--this purpose, they are instead rewritten to point at the nearest ancestor that
--was not excluded.
--
--
--EXIT STATUS
-------------
--
--On success, the exit status is `0`.  If the filter can't find any commits to
--rewrite, the exit status is `2`.  On any other error, the exit status may be
--any other non-zero value.
--
--
--EXAMPLES
----------
--
--Suppose you want to remove a file (containing confidential information
--or copyright violation) from all commits:
--
---------------------------------------------------------
--git filter-branch --tree-filter 'rm filename' HEAD
---------------------------------------------------------
--
--However, if the file is absent from the tree of some commit,
--a simple `rm filename` will fail for that tree and commit.
--Thus you may instead want to use `rm -f filename` as the script.
--
--Using `--index-filter` with 'git rm' yields a significantly faster
--version.  Like with using `rm filename`, `git rm --cached filename`
--will fail if the file is absent from the tree of a commit.  If you
--want to "completely forget" a file, it does not matter when it entered
--history, so we also add `--ignore-unmatch`:
--
----------------------------------------------------------------------------
--git filter-branch --index-filter 'git rm --cached --ignore-unmatch filename' HEAD
----------------------------------------------------------------------------
--
--Now, you will get the rewritten history saved in HEAD.
--
--To rewrite the repository to look as if `foodir/` had been its project
--root, and discard all other history:
--
---------------------------------------------------------
--git filter-branch --subdirectory-filter foodir -- --all
---------------------------------------------------------
--
--Thus you can, e.g., turn a library subdirectory into a repository of
--its own.  Note the `--` that separates 'filter-branch' options from
--revision options, and the `--all` to rewrite all branches and tags.
--
--To set a commit (which typically is at the tip of another
--history) to be the parent of the current initial commit, in
--order to paste the other history behind the current history:
--
---------------------------------------------------------------------
--git filter-branch --parent-filter 'sed "s/^\$/-p <graft-id>/"' HEAD
---------------------------------------------------------------------
--
--(if the parent string is empty - which happens when we are dealing with
--the initial commit - add graftcommit as a parent).  Note that this assumes
--history with a single root (that is, no merge without common ancestors
--happened).  If this is not the case, use:
--
----------------------------------------------------------------------------
--git filter-branch --parent-filter \
--	'test $GIT_COMMIT = <commit-id> && echo "-p <graft-id>" || cat' HEAD
----------------------------------------------------------------------------
--
--or even simpler:
--
-------------------------------------------------
--git replace --graft $commit-id $graft-id
--git filter-branch $graft-id..HEAD
-------------------------------------------------
--
--To remove commits authored by "Darl McBribe" from the history:
--
--------------------------------------------------------------------------------
--git filter-branch --commit-filter '
--	if [ "$GIT_AUTHOR_NAME" = "Darl McBribe" ];
--	then
--		skip_commit "$@";
--	else
--		git commit-tree "$@";
--	fi' HEAD
--------------------------------------------------------------------------------
--
--The function 'skip_commit' is defined as follows:
--
----------------------------
--skip_commit()
--{
--	shift;
--	while [ -n "$1" ];
--	do
--		shift;
--		map "$1";
--		shift;
--	done;
--}
----------------------------
--
--The shift magic first throws away the tree id and then the -p
--parameters.  Note that this handles merges properly! In case Darl
--committed a merge between P1 and P2, it will be propagated properly
--and all children of the merge will become merge commits with P1,P2
--as their parents instead of the merge commit.
--
--*NOTE* the changes introduced by the commits, and which are not reverted
--by subsequent commits, will still be in the rewritten branch. If you want
--to throw out _changes_ together with the commits, you should use the
--interactive mode of 'git rebase'.
--
--You can rewrite the commit log messages using `--msg-filter`.  For
--example, 'git svn-id' strings in a repository created by 'git svn' can
--be removed this way:
--
---------------------------------------------------------
--git filter-branch --msg-filter '
--	sed -e "/^git-svn-id:/d"
--'
---------------------------------------------------------
--
--If you need to add 'Acked-by' lines to, say, the last 10 commits (none
--of which is a merge), use this command:
--
----------------------------------------------------------
--git filter-branch --msg-filter '
--	cat &&
--	echo "Acked-by: Bugs Bunny <bunny@bugzilla.org>"
--' HEAD~10..HEAD
----------------------------------------------------------
--
--The `--env-filter` option can be used to modify committer and/or author
--identity.  For example, if you found out that your commits have the wrong
--identity due to a misconfigured user.email, you can make a correction,
--before publishing the project, like this:
--
----------------------------------------------------------
--git filter-branch --env-filter '
--	if test "$GIT_AUTHOR_EMAIL" = "root@localhost"
--	then
--		GIT_AUTHOR_EMAIL=john@example.com
--	fi
--	if test "$GIT_COMMITTER_EMAIL" = "root@localhost"
--	then
--		GIT_COMMITTER_EMAIL=john@example.com
--	fi
--' -- --all
----------------------------------------------------------
--
--To restrict rewriting to only part of the history, specify a revision
--range in addition to the new branch name.  The new branch name will
--point to the top-most revision that a 'git rev-list' of this range
--will print.
--
--Consider this history:
--
--------------------
--     D--E--F--G--H
--    /     /
--A--B-----C
--------------------
--
--To rewrite only commits D,E,F,G,H, but leave A, B and C alone, use:
--
----------------------------------
--git filter-branch ... C..H
----------------------------------
--
--To rewrite commits E,F,G,H, use one of these:
--
------------------------------------------
--git filter-branch ... C..H --not D
--git filter-branch ... D..H --not C
------------------------------------------
--
--To move the whole tree into a subdirectory, or remove it from there:
--
-----------------------------------------------------------------
--git filter-branch --index-filter \
--	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
--		GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
--			git update-index --index-info &&
--	 mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"' HEAD
-----------------------------------------------------------------
--
--
--
--CHECKLIST FOR SHRINKING A REPOSITORY
--------------------------------------
--
--git-filter-branch can be used to get rid of a subset of files,
--usually with some combination of `--index-filter` and
--`--subdirectory-filter`.  People expect the resulting repository to
--be smaller than the original, but you need a few more steps to
--actually make it smaller, because Git tries hard not to lose your
--objects until you tell it to.  First make sure that:
--
--* You really removed all variants of a filename, if a blob was moved
--  over its lifetime.  `git log --name-only --follow --all -- filename`
--  can help you find renames.
--
--* You really filtered all refs: use `--tag-name-filter cat -- --all`
--  when calling git-filter-branch.
--
--Then there are two ways to get a smaller repository.  A safer way is
--to clone, that keeps your original intact.
--
--* Clone it with `git clone file:///path/to/repo`.  The clone
--  will not have the removed objects.  See linkgit:git-clone[1].  (Note
--  that cloning with a plain path just hardlinks everything!)
--
--If you really don't want to clone it, for whatever reasons, check the
--following points instead (in this order).  This is a very destructive
--approach, so *make a backup* or go back to cloning it.  You have been
--warned.
--
--* Remove the original refs backed up by git-filter-branch: say `git
--  for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git
--  update-ref -d`.
--
--* Expire all reflogs with `git reflog expire --expire=now --all`.
--
--* Garbage collect all unreferenced objects with `git gc --prune=now`
--  (or if your git-gc is not new enough to support arguments to
--  `--prune`, use `git repack -ad; git prune` instead).
--
--GIT
-----
--Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index f9255344ae..20850def5d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -607,7 +607,6 @@ unexport CDPATH
++++ b/Documentation/git-filter-branch.txt
+@@ -16,6 +16,17 @@ SYNOPSIS
+ 	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[--state-branch <branch>] [--] [<rev-list options>...]
  
- SCRIPT_SH += git-bisect.sh
- SCRIPT_SH += git-difftool--helper.sh
--SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-merge-octopus.sh
- SCRIPT_SH += git-merge-one-file.sh
- SCRIPT_SH += git-merge-resolve.sh
-diff --git a/command-list.txt b/command-list.txt
-index a9ac72bef4..1ba65d9516 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -90,7 +90,6 @@ git-fast-export                         ancillarymanipulators
- git-fast-import                         ancillarymanipulators
- git-fetch                               mainporcelain           remote
- git-fetch-pack                          synchingrepositories
--git-filter-branch                       ancillarymanipulators
- git-fmt-merge-msg                       purehelpers
- git-for-each-ref                        plumbinginterrogators
- git-format-patch                        mainporcelain
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-deleted file mode 100755
-index 5c5afa2b98..0000000000
---- a/git-filter-branch.sh
-+++ /dev/null
-@@ -1,662 +0,0 @@
--#!/bin/sh
--#
--# Rewrite revision history
--# Copyright (c) Petr Baudis, 2006
--# Minimal changes to "port" it to core-git (c) Johannes Schindelin, 2007
--#
--# Lets you rewrite the revision history of the current branch, creating
--# a new branch. You can specify a number of filters to modify the commits,
--# files and trees.
--
--# The following functions will also be available in the commit filter:
--
--functions=$(cat << \EOF
--EMPTY_TREE=$(git hash-object -t tree /dev/null)
--
--warn () {
--	echo "$*" >&2
--}
--
--map()
--{
--	# if it was not rewritten, take the original
--	if test -r "$workdir/../map/$1"
--	then
--		cat "$workdir/../map/$1"
--	else
--		echo "$1"
--	fi
--}
--
--# if you run 'skip_commit "$@"' in a commit filter, it will print
--# the (mapped) parents, effectively skipping the commit.
--
--skip_commit()
--{
--	shift;
--	while [ -n "$1" ];
--	do
--		shift;
--		map "$1";
--		shift;
--	done;
--}
--
--# if you run 'git_commit_non_empty_tree "$@"' in a commit filter,
--# it will skip commits that leave the tree untouched, commit the other.
--git_commit_non_empty_tree()
--{
--	if test $# = 3 && test "$1" = $(git rev-parse "$3^{tree}"); then
--		map "$3"
--	elif test $# = 1 && test "$1" = $EMPTY_TREE; then
--		:
--	else
--		git commit-tree "$@"
--	fi
--}
--# override die(): this version puts in an extra line break, so that
--# the progress is still visible
--
--die()
--{
--	echo >&2
--	echo "$*" >&2
--	exit 1
--}
--EOF
--)
--
--eval "$functions"
--
--finish_ident() {
--	# Ensure non-empty id name.
--	echo "case \"\$GIT_$1_NAME\" in \"\") GIT_$1_NAME=\"\${GIT_$1_EMAIL%%@*}\" && export GIT_$1_NAME;; esac"
--	# And make sure everything is exported.
--	echo "export GIT_$1_NAME"
--	echo "export GIT_$1_EMAIL"
--	echo "export GIT_$1_DATE"
--}
--
--set_ident () {
--	parse_ident_from_commit author AUTHOR committer COMMITTER
--	finish_ident AUTHOR
--	finish_ident COMMITTER
--}
--
--USAGE="[--setup <command>] [--subdirectory-filter <directory>] [--env-filter <command>]
--	[--tree-filter <command>] [--index-filter <command>]
--	[--parent-filter <command>] [--msg-filter <command>]
--	[--commit-filter <command>] [--tag-name-filter <command>]
--	[--original <namespace>]
--	[-d <directory>] [-f | --force] [--state-branch <branch>]
--	[--] [<rev-list options>...]"
--
--OPTIONS_SPEC=
--. git-sh-setup
--
--if [ "$(is_bare_repository)" = false ]; then
--	require_clean_work_tree 'rewrite branches'
--fi
--
--tempdir=.git-rewrite
--filter_setup=
--filter_env=
--filter_tree=
--filter_index=
--filter_parent=
--filter_msg=cat
--filter_commit=
--filter_tag_name=
--filter_subdir=
--state_branch=
--orig_namespace=refs/original/
--force=
--prune_empty=
--remap_to_ancestor=
--while :
--do
--	case "$1" in
--	--)
--		shift
--		break
--		;;
--	--force|-f)
--		shift
--		force=t
--		continue
--		;;
--	--remap-to-ancestor)
--		# deprecated ($remap_to_ancestor is set now automatically)
--		shift
--		remap_to_ancestor=t
--		continue
--		;;
--	--prune-empty)
--		shift
--		prune_empty=t
--		continue
--		;;
--	-*)
--		;;
--	*)
--		break;
--	esac
--
--	# all switches take one argument
--	ARG="$1"
--	case "$#" in 1) usage ;; esac
--	shift
--	OPTARG="$1"
--	shift
--
--	case "$ARG" in
--	-d)
--		tempdir="$OPTARG"
--		;;
--	--setup)
--		filter_setup="$OPTARG"
--		;;
--	--subdirectory-filter)
--		filter_subdir="$OPTARG"
--		remap_to_ancestor=t
--		;;
--	--env-filter)
--		filter_env="$OPTARG"
--		;;
--	--tree-filter)
--		filter_tree="$OPTARG"
--		;;
--	--index-filter)
--		filter_index="$OPTARG"
--		;;
--	--parent-filter)
--		filter_parent="$OPTARG"
--		;;
--	--msg-filter)
--		filter_msg="$OPTARG"
--		;;
--	--commit-filter)
--		filter_commit="$functions; $OPTARG"
--		;;
--	--tag-name-filter)
--		filter_tag_name="$OPTARG"
--		;;
--	--original)
--		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
--		;;
--	--state-branch)
--		state_branch="$OPTARG"
--		;;
--	*)
--		usage
--		;;
--	esac
--done
--
--case "$prune_empty,$filter_commit" in
--,)
--	filter_commit='git commit-tree "$@"';;
--t,)
--	filter_commit="$functions;"' git_commit_non_empty_tree "$@"';;
--,*)
--	;;
--*)
--	die "Cannot set --prune-empty and --commit-filter at the same time"
--esac
--
--case "$force" in
--t)
--	rm -rf "$tempdir"
--;;
--'')
--	test -d "$tempdir" &&
--		die "$tempdir already exists, please remove it"
--esac
--orig_dir=$(pwd)
--mkdir -p "$tempdir/t" &&
--tempdir="$(cd "$tempdir"; pwd)" &&
--cd "$tempdir/t" &&
--workdir="$(pwd)" ||
--die ""
--
--# Remove tempdir on exit
--trap 'cd "$orig_dir"; rm -rf "$tempdir"' 0
--
--ORIG_GIT_DIR="$GIT_DIR"
--ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
--ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
--ORIG_GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME"
--ORIG_GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL"
--ORIG_GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE"
--ORIG_GIT_COMMITTER_NAME="$GIT_COMMITTER_NAME"
--ORIG_GIT_COMMITTER_EMAIL="$GIT_COMMITTER_EMAIL"
--ORIG_GIT_COMMITTER_DATE="$GIT_COMMITTER_DATE"
--
--GIT_WORK_TREE=.
--export GIT_DIR GIT_WORK_TREE
--
--# Make sure refs/original is empty
--git for-each-ref > "$tempdir"/backup-refs || exit
--while read sha1 type name
--do
--	case "$force,$name" in
--	,$orig_namespace*)
--		die "Cannot create a new backup.
--A previous backup already exists in $orig_namespace
--Force overwriting the backup with -f"
--	;;
--	t,$orig_namespace*)
--		git update-ref -d "$name" $sha1
--	;;
--	esac
--done < "$tempdir"/backup-refs
--
--# The refs should be updated if their heads were rewritten
--git rev-parse --no-flags --revs-only --symbolic-full-name \
--	--default HEAD "$@" > "$tempdir"/raw-refs || exit
--while read ref
--do
--	case "$ref" in ^?*) continue ;; esac
--
--	if git rev-parse --verify "$ref"^0 >/dev/null 2>&1
--	then
--		echo "$ref"
--	else
--		warn "WARNING: not rewriting '$ref' (not a committish)"
--	fi
--done >"$tempdir"/heads <"$tempdir"/raw-refs
--
--test -s "$tempdir"/heads ||
--	die "You must specify a ref to rewrite."
--
--GIT_INDEX_FILE="$(pwd)/../index"
--export GIT_INDEX_FILE
--
--# map old->new commit ids for rewriting parents
--mkdir ../map || die "Could not create map/ directory"
--
--if test -n "$state_branch"
--then
--	state_commit=$(git rev-parse --no-flags --revs-only "$state_branch")
--	if test -n "$state_commit"
--	then
--		echo "Populating map from $state_branch ($state_commit)" 1>&2
--		perl -e'open(MAP, "-|", "git show $ARGV[0]:filter.map") or die;
--			while (<MAP>) {
--				m/(.*):(.*)/ or die;
--				open F, ">../map/$1" or die;
--				print F "$2" or die;
--				close(F) or die;
--			}
--			close(MAP) or die;' "$state_commit" \
--				|| die "Unable to load state from $state_branch:filter.map"
--	else
--		echo "Branch $state_branch does not exist. Will create" 1>&2
--	fi
--fi
--
--# we need "--" only if there are no path arguments in $@
--nonrevs=$(git rev-parse --no-revs "$@") || exit
--if test -z "$nonrevs"
--then
--	dashdash=--
--else
--	dashdash=
--	remap_to_ancestor=t
--fi
--
--git rev-parse --revs-only "$@" >../parse
--
--case "$filter_subdir" in
--"")
--	eval set -- "$(git rev-parse --sq --no-revs "$@")"
--	;;
--*)
--	eval set -- "$(git rev-parse --sq --no-revs "$@" $dashdash \
--		"$filter_subdir")"
--	;;
--esac
--
--git rev-list --reverse --topo-order --default HEAD \
--	--parents --simplify-merges --stdin "$@" <../parse >../revs ||
--	die "Could not get the commits"
--commits=$(wc -l <../revs | tr -d " ")
--
--test $commits -eq 0 && die_with_status 2 "Found nothing to rewrite"
--
--# Rewrite the commits
--report_progress ()
--{
--	if test -n "$progress" &&
--		test $git_filter_branch__commit_count -gt $next_sample_at
--	then
--		count=$git_filter_branch__commit_count
--
--		now=$(date +%s)
--		elapsed=$(($now - $start_timestamp))
--		remaining=$(( ($commits - $count) * $elapsed / $count ))
--		if test $elapsed -gt 0
--		then
--			next_sample_at=$(( ($elapsed + 1) * $count / $elapsed ))
--		else
--			next_sample_at=$(($next_sample_at + 1))
--		fi
--		progress=" ($elapsed seconds passed, remaining $remaining predicted)"
--	fi
--	printf "\rRewrite $commit ($count/$commits)$progress    "
--}
--
--git_filter_branch__commit_count=0
--
--progress= start_timestamp=
--if date '+%s' 2>/dev/null | grep -q '^[0-9][0-9]*$'
--then
--	next_sample_at=0
--	progress="dummy to ensure this is not empty"
--	start_timestamp=$(date '+%s')
--fi
--
--if test -n "$filter_index" ||
--   test -n "$filter_tree" ||
--   test -n "$filter_subdir"
--then
--	need_index=t
--else
--	need_index=
--fi
--
--eval "$filter_setup" < /dev/null ||
--	die "filter setup failed: $filter_setup"
--
--while read commit parents; do
--	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
--
--	report_progress
--	test -f "$workdir"/../map/$commit && continue
--
--	case "$filter_subdir" in
--	"")
--		if test -n "$need_index"
--		then
--			GIT_ALLOW_NULL_SHA1=1 git read-tree -i -m $commit
--		fi
--		;;
--	*)
--		# The commit may not have the subdirectory at all
--		err=$(GIT_ALLOW_NULL_SHA1=1 \
--		      git read-tree -i -m $commit:"$filter_subdir" 2>&1) || {
--			if ! git rev-parse -q --verify $commit:"$filter_subdir"
--			then
--				rm -f "$GIT_INDEX_FILE"
--			else
--				echo >&2 "$err"
--				false
--			fi
--		}
--	esac || die "Could not initialize the index"
--
--	GIT_COMMIT=$commit
--	export GIT_COMMIT
--	git cat-file commit "$commit" >../commit ||
--		die "Cannot read commit $commit"
--
--	eval "$(set_ident <../commit)" ||
--		die "setting author/committer failed for commit $commit"
--	eval "$filter_env" < /dev/null ||
--		die "env filter failed: $filter_env"
--
--	if [ "$filter_tree" ]; then
--		git checkout-index -f -u -a ||
--			die "Could not checkout the index"
--		# files that $commit removed are now still in the working tree;
--		# remove them, else they would be added again
--		git clean -d -q -f -x
--		eval "$filter_tree" < /dev/null ||
--			die "tree filter failed: $filter_tree"
--
--		(
--			git diff-index -r --name-only --ignore-submodules $commit -- &&
--			git ls-files --others
--		) > "$tempdir"/tree-state || exit
--		git update-index --add --replace --remove --stdin \
--			< "$tempdir"/tree-state || exit
--	fi
--
--	eval "$filter_index" < /dev/null ||
--		die "index filter failed: $filter_index"
--
--	parentstr=
--	for parent in $parents; do
--		for reparent in $(map "$parent"); do
--			case "$parentstr " in
--			*" -p $reparent "*)
--				;;
--			*)
--				parentstr="$parentstr -p $reparent"
--				;;
--			esac
--		done
--	done
--	if [ "$filter_parent" ]; then
--		parentstr="$(echo "$parentstr" | eval "$filter_parent")" ||
--				die "parent filter failed: $filter_parent"
--	fi
--
--	{
--		while IFS='' read -r header_line && test -n "$header_line"
--		do
--			# skip header lines...
--			:;
--		done
--		# and output the actual commit message
--		cat
--	} <../commit |
--		eval "$filter_msg" > ../message ||
--			die "msg filter failed: $filter_msg"
--
--	if test -n "$need_index"
--	then
--		tree=$(git write-tree)
--	else
--		tree=$(git rev-parse "$commit^{tree}")
--	fi
--	workdir=$workdir @SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
--		"$tree" $parentstr < ../message > ../map/$commit ||
--			die "could not write rewritten commit"
--done <../revs
--
--# If we are filtering for paths, as in the case of a subdirectory
--# filter, it is possible that a specified head is not in the set of
--# rewritten commits, because it was pruned by the revision walker.
--# Ancestor remapping fixes this by mapping these heads to the unique
--# nearest ancestor that survived the pruning.
--
--if test "$remap_to_ancestor" = t
--then
--	while read ref
--	do
--		sha1=$(git rev-parse "$ref"^0)
--		test -f "$workdir"/../map/$sha1 && continue
--		ancestor=$(git rev-list --simplify-merges -1 "$ref" "$@")
--		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
--	done < "$tempdir"/heads
--fi
--
--# Finally update the refs
--
--_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
--echo
--while read ref
--do
--	# avoid rewriting a ref twice
--	test -f "$orig_namespace$ref" && continue
--
--	sha1=$(git rev-parse "$ref"^0)
--	rewritten=$(map $sha1)
--
--	test $sha1 = "$rewritten" &&
--		warn "WARNING: Ref '$ref' is unchanged" &&
--		continue
--
--	case "$rewritten" in
--	'')
--		echo "Ref '$ref' was deleted"
--		git update-ref -m "filter-branch: delete" -d "$ref" $sha1 ||
--			die "Could not delete $ref"
--	;;
--	$_x40)
--		echo "Ref '$ref' was rewritten"
--		if ! git update-ref -m "filter-branch: rewrite" \
--					"$ref" $rewritten $sha1 2>/dev/null; then
--			if test $(git cat-file -t "$ref") = tag; then
--				if test -z "$filter_tag_name"; then
--					warn "WARNING: You said to rewrite tagged commits, but not the corresponding tag."
--					warn "WARNING: Perhaps use '--tag-name-filter cat' to rewrite the tag."
--				fi
--			else
--				die "Could not rewrite $ref"
--			fi
--		fi
--	;;
--	*)
--		# NEEDSWORK: possibly add -Werror, making this an error
--		warn "WARNING: '$ref' was rewritten into multiple commits:"
--		warn "$rewritten"
--		warn "WARNING: Ref '$ref' points to the first one now."
--		rewritten=$(echo "$rewritten" | head -n 1)
--		git update-ref -m "filter-branch: rewrite to first" \
--				"$ref" $rewritten $sha1 ||
--			die "Could not rewrite $ref"
--	;;
--	esac
--	git update-ref -m "filter-branch: backup" "$orig_namespace$ref" $sha1 ||
--		 exit
--done < "$tempdir"/heads
--
--# TODO: This should possibly go, with the semantics that all positive given
--#       refs are updated, and their original heads stored in refs/original/
--# Filter tags
--
--if [ "$filter_tag_name" ]; then
--	git for-each-ref --format='%(objectname) %(objecttype) %(refname)' refs/tags |
--	while read sha1 type ref; do
--		ref="${ref#refs/tags/}"
--		# XXX: Rewrite tagged trees as well?
--		if [ "$type" != "commit" -a "$type" != "tag" ]; then
--			continue;
--		fi
--
--		if [ "$type" = "tag" ]; then
--			# Dereference to a commit
--			sha1t="$sha1"
--			sha1="$(git rev-parse -q "$sha1"^{commit})" || continue
--		fi
--
--		[ -f "../map/$sha1" ] || continue
--		new_sha1="$(cat "../map/$sha1")"
--		GIT_COMMIT="$sha1"
--		export GIT_COMMIT
--		new_ref="$(echo "$ref" | eval "$filter_tag_name")" ||
--			die "tag name filter failed: $filter_tag_name"
--
--		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
--
--		if [ "$type" = "tag" ]; then
--			new_sha1=$( ( printf 'object %s\ntype commit\ntag %s\n' \
--						"$new_sha1" "$new_ref"
--				git cat-file tag "$ref" |
--				sed -n \
--				    -e '1,/^$/{
--					  /^object /d
--					  /^type /d
--					  /^tag /d
--					}' \
--				    -e '/^-----BEGIN PGP SIGNATURE-----/q' \
--				    -e 'p' ) |
--				git hash-object -t tag -w --stdin) ||
--				die "Could not create new tag object for $ref"
--			if git cat-file tag "$ref" | \
--			   sane_grep '^-----BEGIN PGP SIGNATURE-----' >/dev/null 2>&1
--			then
--				warn "gpg signature stripped from tag object $sha1t"
--			fi
--		fi
--
--		git update-ref "refs/tags/$new_ref" "$new_sha1" ||
--			die "Could not write tag $new_ref"
--	done
--fi
--
--unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
--unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
--unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE
--test -z "$ORIG_GIT_DIR" || {
--	GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
--}
--test -z "$ORIG_GIT_WORK_TREE" || {
--	GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
--	export GIT_WORK_TREE
--}
--test -z "$ORIG_GIT_INDEX_FILE" || {
--	GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
--	export GIT_INDEX_FILE
--}
--test -z "$ORIG_GIT_AUTHOR_NAME" || {
--	GIT_AUTHOR_NAME="$ORIG_GIT_AUTHOR_NAME" &&
--	export GIT_AUTHOR_NAME
--}
--test -z "$ORIG_GIT_AUTHOR_EMAIL" || {
--	GIT_AUTHOR_EMAIL="$ORIG_GIT_AUTHOR_EMAIL" &&
--	export GIT_AUTHOR_EMAIL
--}
--test -z "$ORIG_GIT_AUTHOR_DATE" || {
--	GIT_AUTHOR_DATE="$ORIG_GIT_AUTHOR_DATE" &&
--	export GIT_AUTHOR_DATE
--}
--test -z "$ORIG_GIT_COMMITTER_NAME" || {
--	GIT_COMMITTER_NAME="$ORIG_GIT_COMMITTER_NAME" &&
--	export GIT_COMMITTER_NAME
--}
--test -z "$ORIG_GIT_COMMITTER_EMAIL" || {
--	GIT_COMMITTER_EMAIL="$ORIG_GIT_COMMITTER_EMAIL" &&
--	export GIT_COMMITTER_EMAIL
--}
--test -z "$ORIG_GIT_COMMITTER_DATE" || {
--	GIT_COMMITTER_DATE="$ORIG_GIT_COMMITTER_DATE" &&
--	export GIT_COMMITTER_DATE
--}
--
--if test -n "$state_branch"
--then
--	echo "Saving rewrite state to $state_branch" 1>&2
--	state_blob=$(
--		perl -e'opendir D, "../map" or die;
--			open H, "|-", "git hash-object -w --stdin" or die;
--			foreach (sort readdir(D)) {
--				next if m/^\.\.?$/;
--				open F, "<../map/$_" or die;
--				chomp($f = <F>);
--				print H "$_:$f\n" or die;
--			}
--			close(H) or die;' || die "Unable to save state")
--	state_tree=$(printf '100644 blob %s\tfilter.map\n' "$state_blob" | git mktree)
--	if test -n "$state_commit"
--	then
--		state_commit=$(echo "Sync" | git commit-tree "$state_tree" -p "$state_commit")
--	else
--		state_commit=$(echo "Sync" | git commit-tree "$state_tree" )
--	fi
--	git update-ref "$state_branch" "$state_commit"
--fi
--
--cd "$orig_dir"
--rm -rf "$tempdir"
--
--trap - 0
--
--if [ "$(is_bare_repository)" = false ]; then
--	git read-tree -u -m HEAD || exit
--fi
--
--exit 0
-diff --git a/t/perf/p7000-filter-branch.sh b/t/perf/p7000-filter-branch.sh
-deleted file mode 100755
-index b029586ccb..0000000000
---- a/t/perf/p7000-filter-branch.sh
-+++ /dev/null
-@@ -1,24 +0,0 @@
--#!/bin/sh
--
--test_description='performance of filter-branch'
--. ./perf-lib.sh
--
--test_perf_default_repo
--test_checkout_worktree
--
--test_expect_success 'mark bases for tests' '
--	git tag -f tip &&
--	git tag -f base HEAD~100
--'
--
--test_perf 'noop filter' '
--	git checkout --detach tip &&
--	git filter-branch -f base..HEAD
--'
--
--test_perf 'noop prune-empty' '
--	git checkout --detach tip &&
--	git filter-branch -f --prune-empty base..HEAD
--'
--
--test_done
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-deleted file mode 100755
-index e23de7d0b5..0000000000
---- a/t/t7003-filter-branch.sh
-+++ /dev/null
-@@ -1,505 +0,0 @@
--#!/bin/sh
--
--test_description='git filter-branch'
--. ./test-lib.sh
--. "$TEST_DIRECTORY/lib-gpg.sh"
--
--test_expect_success 'setup' '
--	test_commit A &&
--	GIT_COMMITTER_DATE="@0 +0000" GIT_AUTHOR_DATE="@0 +0000" &&
--	test_commit --notick B &&
--	git checkout -b branch B &&
--	test_commit D &&
--	mkdir dir &&
--	test_commit dir/D &&
--	test_commit E &&
--	git checkout master &&
--	test_commit C &&
--	git checkout branch &&
--	git merge C &&
--	git tag F &&
--	test_commit G &&
--	test_commit H
--'
--# * (HEAD, branch) H
--# * G
--# *   Merge commit 'C' into branch
--# |\
--# | * (master) C
--# * | E
--# * | dir/D
--# * | D
--# |/
--# * B
--# * A
--
--
--H=$(git rev-parse H)
--
--test_expect_success 'rewrite identically' '
--	git filter-branch branch
--'
--test_expect_success 'result is really identical' '
--	test $H = $(git rev-parse HEAD)
--'
--
--test_expect_success 'rewrite bare repository identically' '
--	(git config core.bare true && cd .git &&
--	 git filter-branch branch > filter-output 2>&1 &&
--	! fgrep fatal filter-output)
--'
--git config core.bare false
--test_expect_success 'result is really identical' '
--	test $H = $(git rev-parse HEAD)
--'
--
--TRASHDIR=$(pwd)
--test_expect_success 'correct GIT_DIR while using -d' '
--	mkdir drepo &&
--	( cd drepo &&
--	git init &&
--	test_commit drepo &&
--	git filter-branch -d "$TRASHDIR/dfoo" \
--		--index-filter "cp \"$TRASHDIR\"/dfoo/backup-refs \"$TRASHDIR\"" \
--	) &&
--	grep drepo "$TRASHDIR/backup-refs"
--'
--
--test_expect_success 'tree-filter works with -d' '
--	git init drepo-tree &&
--	(
--		cd drepo-tree &&
--		test_commit one &&
--		git filter-branch -d "$TRASHDIR/dfoo" \
--			--tree-filter "echo changed >one.t" &&
--		echo changed >expect &&
--		git cat-file blob HEAD:one.t >actual &&
--		test_cmp expect actual &&
--		test_cmp one.t actual
--	)
--'
--
--test_expect_success 'Fail if commit filter fails' '
--	test_must_fail git filter-branch -f --commit-filter "exit 1" HEAD
--'
--
--test_expect_success 'rewrite, renaming a specific file' '
--	git filter-branch -f --tree-filter "mv D.t doh || :" HEAD
--'
--
--test_expect_success 'test that the file was renamed' '
--	test D = "$(git show HEAD:doh --)" &&
--	! test -f D.t &&
--	test -f doh &&
--	test D = "$(cat doh)"
--'
--
--test_expect_success 'rewrite, renaming a specific directory' '
--	git filter-branch -f --tree-filter "mv dir diroh || :" HEAD
--'
--
--test_expect_success 'test that the directory was renamed' '
--	test dir/D = "$(git show HEAD:diroh/D.t --)" &&
--	! test -d dir &&
--	test -d diroh &&
--	! test -d diroh/dir &&
--	test -f diroh/D.t &&
--	test dir/D = "$(cat diroh/D.t)"
--'
--
--V=$(git rev-parse HEAD)
--
--test_expect_success 'populate --state-branch' '
--	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD
--'
--
--W=$(git rev-parse HEAD)
--
--test_expect_success 'using --state-branch to skip already rewritten commits' '
--	test_when_finished git reset --hard $V &&
--	git reset --hard $V &&
--	git filter-branch --state-branch state -f --tree-filter "touch file || :" HEAD &&
--	test_cmp_rev $W HEAD
--'
--
--git tag oldD HEAD~4
--test_expect_success 'rewrite one branch, keeping a side branch' '
--	git branch modD oldD &&
--	git filter-branch -f --tree-filter "mv B.t boh || :" D..modD
--'
--
--test_expect_success 'common ancestor is still common (unchanged)' '
--	test "$(git merge-base modD D)" = "$(git rev-parse B)"
--'
--
--test_expect_success 'filter subdirectory only' '
--	mkdir subdir &&
--	touch subdir/new &&
--	git add subdir/new &&
--	test_tick &&
--	git commit -m "subdir" &&
--	echo H > A.t &&
--	test_tick &&
--	git commit -m "not subdir" A.t &&
--	echo A > subdir/new &&
--	test_tick &&
--	git commit -m "again subdir" subdir/new &&
--	git rm A.t &&
--	test_tick &&
--	git commit -m "again not subdir" &&
--	git branch sub &&
--	git branch sub-earlier HEAD~2 &&
--	git filter-branch -f --subdirectory-filter subdir \
--		refs/heads/sub refs/heads/sub-earlier
--'
--
--test_expect_success 'subdirectory filter result looks okay' '
--	test 2 = $(git rev-list sub | wc -l) &&
--	git show sub:new &&
--	test_must_fail git show sub:subdir &&
--	git show sub-earlier:new &&
--	test_must_fail git show sub-earlier:subdir
--'
--
--test_expect_success 'more setup' '
--	git checkout master &&
--	mkdir subdir &&
--	echo A > subdir/new &&
--	git add subdir/new &&
--	test_tick &&
--	git commit -m "subdir on master" subdir/new &&
--	git rm A.t &&
--	test_tick &&
--	git commit -m "again subdir on master" &&
--	git merge branch
--'
--
--test_expect_success 'use index-filter to move into a subdirectory' '
--	git branch directorymoved &&
--	git filter-branch -f --index-filter \
--		 "git ls-files -s | sed \"s-	-&newsubdir/-\" |
--	          GIT_INDEX_FILE=\$GIT_INDEX_FILE.new \
--			git update-index --index-info &&
--		  mv \"\$GIT_INDEX_FILE.new\" \"\$GIT_INDEX_FILE\"" directorymoved &&
--	git diff --exit-code HEAD directorymoved:newsubdir
--'
--
--test_expect_success 'stops when msg filter fails' '
--	old=$(git rev-parse HEAD) &&
--	test_must_fail git filter-branch -f --msg-filter false HEAD &&
--	test $old = $(git rev-parse HEAD) &&
--	rm -rf .git-rewrite
--'
--
--test_expect_success 'author information is preserved' '
--	: > i &&
--	git add i &&
--	test_tick &&
--	GIT_AUTHOR_NAME="B V Uips" git commit -m bvuips &&
--	git branch preserved-author &&
--	(sane_unset GIT_AUTHOR_NAME &&
--	 git filter-branch -f --msg-filter "cat; \
--			test \$GIT_COMMIT != $(git rev-parse master) || \
--			echo Hallo" \
--		preserved-author) &&
--	git rev-list --author="B V Uips" preserved-author >actual &&
--	test_line_count = 1 actual
--'
--
--test_expect_success "remove a certain author's commits" '
--	echo i > i &&
--	test_tick &&
--	git commit -m i i &&
--	git branch removed-author &&
--	git filter-branch -f --commit-filter "\
--		if [ \"\$GIT_AUTHOR_NAME\" = \"B V Uips\" ];\
--		then\
--			skip_commit \"\$@\";
--		else\
--			git commit-tree \"\$@\";\
--		fi" removed-author &&
--	cnt1=$(git rev-list master | wc -l) &&
--	cnt2=$(git rev-list removed-author | wc -l) &&
--	test $cnt1 -eq $(($cnt2 + 1)) &&
--	git rev-list --author="B V Uips" removed-author >actual &&
--	test_line_count = 0 actual
--'
--
--test_expect_success 'barf on invalid name' '
--	test_must_fail git filter-branch -f master xy-problem &&
--	test_must_fail git filter-branch -f HEAD^
--'
--
--test_expect_success '"map" works in commit filter' '
--	git filter-branch -f --commit-filter "\
--		parent=\$(git rev-parse \$GIT_COMMIT^) &&
--		mapped=\$(map \$parent) &&
--		actual=\$(echo \"\$@\" | sed \"s/^.*-p //\") &&
--		test \$mapped = \$actual &&
--		git commit-tree \"\$@\";" master~2..master &&
--	git rev-parse --verify master
--'
--
--test_expect_success 'Name needing quotes' '
--
--	git checkout -b rerere A &&
--	mkdir foo &&
--	name="れれれ" &&
--	>foo/$name &&
--	git add foo &&
--	git commit -m "Adding a file" &&
--	git filter-branch --tree-filter "rm -fr foo" &&
--	test_must_fail git ls-files --error-unmatch "foo/$name" &&
--	test $(git rev-parse --verify rerere) != $(git rev-parse --verify A)
--
--'
--
--test_expect_success 'Subdirectory filter with disappearing trees' '
--	git reset --hard &&
--	git checkout master &&
--
--	mkdir foo &&
--	touch foo/bar &&
--	git add foo &&
--	test_tick &&
--	git commit -m "Adding foo" &&
--
--	git rm -r foo &&
--	test_tick &&
--	git commit -m "Removing foo" &&
--
--	mkdir foo &&
--	touch foo/bar &&
--	git add foo &&
--	test_tick &&
--	git commit -m "Re-adding foo" &&
--
--	git filter-branch -f --subdirectory-filter foo &&
--	git rev-list master >actual &&
--	test_line_count = 3 actual
--'
--
--test_expect_success 'Tag name filtering retains tag message' '
--	git tag -m atag T &&
--	git cat-file tag T > expect &&
--	git filter-branch -f --tag-name-filter cat &&
--	git cat-file tag T > actual &&
--	test_cmp expect actual
--'
--
--faux_gpg_tag='object XXXXXX
--type commit
--tag S
--tagger T A Gger <tagger@example.com> 1206026339 -0500
--
--This is a faux gpg signed tag.
-------BEGIN PGP SIGNATURE-----
--Version: FauxGPG v0.0.0 (FAUX/Linux)
--
--gdsfoewhxu/6l06f1kxyxhKdZkrcbaiOMtkJUA9ITAc1mlamh0ooasxkH1XwMbYQ
--acmwXaWET20H0GeAGP+7vow=
--=agpO
-------END PGP SIGNATURE-----
--'
--test_expect_success 'Tag name filtering strips gpg signature' '
--	sha1=$(git rev-parse HEAD) &&
--	sha1t=$(echo "$faux_gpg_tag" | sed -e s/XXXXXX/$sha1/ | git mktag) &&
--	git update-ref "refs/tags/S" "$sha1t" &&
--	echo "$faux_gpg_tag" | sed -e s/XXXXXX/$sha1/ | head -n 6 > expect &&
--	git filter-branch -f --tag-name-filter cat &&
--	git cat-file tag S > actual &&
--	test_cmp expect actual
--'
--
--test_expect_success GPG 'Filtering retains message of gpg signed commit' '
--	mkdir gpg &&
--	touch gpg/foo &&
--	git add gpg &&
--	test_tick &&
--	git commit -S -m "Adding gpg" &&
--
--	git log -1 --format="%s" > expect &&
--	git filter-branch -f --msg-filter "cat" &&
--	git log -1 --format="%s" > actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'Tag name filtering allows slashes in tag names' '
--	git tag -m tag-with-slash X/1 &&
--	git cat-file tag X/1 | sed -e s,X/1,X/2, > expect &&
--	git filter-branch -f --tag-name-filter "echo X/2" &&
--	git cat-file tag X/2 > actual &&
--	test_cmp expect actual
--'
--test_expect_success 'setup --prune-empty comparisons' '
--	git checkout --orphan master-no-a &&
--	git rm -rf . &&
--	unset test_tick &&
--	test_tick &&
--	GIT_COMMITTER_DATE="@0 +0000" GIT_AUTHOR_DATE="@0 +0000" &&
--	test_commit --notick B B.t B Bx &&
--	git checkout -b branch-no-a Bx &&
--	test_commit D D.t D Dx &&
--	mkdir dir &&
--	test_commit dir/D dir/D.t dir/D dir/Dx &&
--	test_commit E E.t E Ex &&
--	git checkout master-no-a &&
--	test_commit C C.t C Cx &&
--	git checkout branch-no-a &&
--	git merge Cx -m "Merge tag '\''C'\'' into branch" &&
--	git tag Fx &&
--	test_commit G G.t G Gx &&
--	test_commit H H.t H Hx &&
--	git checkout branch
--'
--
--test_expect_success 'Prune empty commits' '
--	git rev-list HEAD > expect &&
--	test_commit to_remove &&
--	git filter-branch -f --index-filter "git update-index --remove to_remove.t" --prune-empty HEAD &&
--	git rev-list HEAD > actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'prune empty collapsed merges' '
--	test_config merge.ff false &&
--	git rev-list HEAD >expect &&
--	test_commit to_remove_2 &&
--	git reset --hard HEAD^ &&
--	test_merge non-ff to_remove_2 &&
--	git filter-branch -f --index-filter "git update-index --remove to_remove_2.t" --prune-empty HEAD &&
--	git rev-list HEAD >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'prune empty works even without index/tree filters' '
--	git rev-list HEAD >expect &&
--	git commit --allow-empty -m empty &&
--	git filter-branch -f --prune-empty HEAD &&
--	git rev-list HEAD >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success '--prune-empty is able to prune root commit' '
--	git rev-list branch-no-a >expect &&
--	git branch testing H &&
--	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t" testing &&
--	git rev-list testing >actual &&
--	git branch -D testing &&
--	test_cmp expect actual
--'
--
--test_expect_success '--prune-empty is able to prune entire branch' '
--	git branch prune-entire B &&
--	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
--	test_path_is_missing .git/refs/heads/prune-entire &&
--	test_must_fail git reflog exists refs/heads/prune-entire
--'
--
--test_expect_success '--remap-to-ancestor with filename filters' '
--	git checkout master &&
--	git reset --hard A &&
--	test_commit add-foo foo 1 &&
--	git branch moved-foo &&
--	test_commit add-bar bar a &&
--	git branch invariant &&
--	orig_invariant=$(git rev-parse invariant) &&
--	git branch moved-bar &&
--	test_commit change-foo foo 2 &&
--	git filter-branch -f --remap-to-ancestor \
--		moved-foo moved-bar A..master \
--		-- -- foo &&
--	test $(git rev-parse moved-foo) = $(git rev-parse moved-bar) &&
--	test $(git rev-parse moved-foo) = $(git rev-parse master^) &&
--	test $orig_invariant = $(git rev-parse invariant)
--'
--
--test_expect_success 'automatic remapping to ancestor with filename filters' '
--	git checkout master &&
--	git reset --hard A &&
--	test_commit add-foo2 foo 1 &&
--	git branch moved-foo2 &&
--	test_commit add-bar2 bar a &&
--	git branch invariant2 &&
--	orig_invariant=$(git rev-parse invariant2) &&
--	git branch moved-bar2 &&
--	test_commit change-foo2 foo 2 &&
--	git filter-branch -f \
--		moved-foo2 moved-bar2 A..master \
--		-- -- foo &&
--	test $(git rev-parse moved-foo2) = $(git rev-parse moved-bar2) &&
--	test $(git rev-parse moved-foo2) = $(git rev-parse master^) &&
--	test $orig_invariant = $(git rev-parse invariant2)
--'
--
--test_expect_success 'setup submodule' '
--	rm -fr ?* .git &&
--	git init &&
--	test_commit file &&
--	mkdir submod &&
--	submodurl="$PWD/submod" &&
--	( cd submod &&
--	  git init &&
--	  test_commit file-in-submod ) &&
--	git submodule add "$submodurl" &&
--	git commit -m "added submodule" &&
--	test_commit add-file &&
--	( cd submod && test_commit add-in-submodule ) &&
--	git add submod &&
--	git commit -m "changed submodule" &&
--	git branch original HEAD
--'
--
--orig_head=$(git show-ref --hash --head HEAD)
--
--test_expect_success 'rewrite submodule with another content' '
--	git filter-branch --tree-filter "test -d submod && {
--					 rm -rf submod &&
--					 git rm -rf --quiet submod &&
--					 mkdir submod &&
--					 : > submod/file
--					 } || :" HEAD &&
--	test $orig_head != $(git show-ref --hash --head HEAD)
--'
--
--test_expect_success 'replace submodule revision' '
--	git reset --hard original &&
--	git filter-branch -f --tree-filter \
--	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
--	     then git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 submod
--	     fi" HEAD &&
--	test $orig_head != $(git show-ref --hash --head HEAD)
--'
--
--test_expect_success 'filter commit message without trailing newline' '
--	git reset --hard original &&
--	commit=$(printf "no newline" | git commit-tree HEAD^{tree}) &&
--	git update-ref refs/heads/no-newline $commit &&
--	git filter-branch -f refs/heads/no-newline &&
--	echo $commit >expect &&
--	git rev-parse refs/heads/no-newline >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'tree-filter deals with object name vs pathname ambiguity' '
--	test_when_finished "git reset --hard original" &&
--	ambiguous=$(git rev-list -1 HEAD) &&
--	git filter-branch --tree-filter "mv file.t $ambiguous" HEAD^.. &&
--	git show HEAD:$ambiguous
--'
--
--test_expect_success 'rewrite repository including refs that point at non-commit object' '
--	test_when_finished "git reset --hard original" &&
--	tree=$(git rev-parse HEAD^{tree}) &&
--	test_when_finished "git replace -d $tree" &&
--	echo A >new &&
--	git add new &&
--	new_tree=$(git write-tree) &&
--	git replace $tree $new_tree &&
--	git tag -a -m "tag to a tree" treetag $new_tree &&
--	git reset --hard HEAD &&
--	git filter-branch -f -- --all >filter-output 2>&1 &&
--	! fgrep fatal filter-output
--'
--
--test_done
-diff --git a/t/t7009-filter-branch-null-sha1.sh b/t/t7009-filter-branch-null-sha1.sh
-deleted file mode 100755
-index 9ba9f24ad2..0000000000
---- a/t/t7009-filter-branch-null-sha1.sh
-+++ /dev/null
-@@ -1,55 +0,0 @@
--#!/bin/sh
--
--test_description='filter-branch removal of trees with null sha1'
--. ./test-lib.sh
--
--test_expect_success 'setup: base commits' '
--	test_commit one &&
--	test_commit two &&
--	test_commit three
--'
--
--test_expect_success 'setup: a commit with a bogus null sha1 in the tree' '
--	{
--		git ls-tree HEAD &&
--		printf "160000 commit $ZERO_OID\\tbroken\\n"
--	} >broken-tree &&
--	echo "add broken entry" >msg &&
--
--	tree=$(git mktree <broken-tree) &&
--	test_tick &&
--	commit=$(git commit-tree $tree -p HEAD <msg) &&
--	git update-ref HEAD "$commit"
--'
--
--# we have to make one more commit on top removing the broken
--# entry, since otherwise our index does not match HEAD (and filter-branch will
--# complain). We could make the index match HEAD, but doing so would involve
--# writing a null sha1 into the index.
--test_expect_success 'setup: bring HEAD and index in sync' '
--	test_tick &&
--	git commit -a -m "back to normal"
--'
--
--test_expect_success 'noop filter-branch complains' '
--	test_must_fail git filter-branch \
--		--force --prune-empty \
--		--index-filter "true"
--'
--
--test_expect_success 'filter commands are still checked' '
--	test_must_fail git filter-branch \
--		--force --prune-empty \
--		--index-filter "git rm --cached --ignore-unmatch three.t"
--'
--
--test_expect_success 'removing the broken entry works' '
--	echo three >expect &&
--	git filter-branch \
--		--force --prune-empty \
--		--index-filter "git rm --cached --ignore-unmatch broken" &&
--	git log -1 --format=%s >actual &&
--	test_cmp expect actual
--'
--
--test_done
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 75512c3403..4e7f669c76 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -28,10 +28,10 @@ complete ()
- #
- # (2) A test makes sure that common subcommands are included in the
- #     completion for "git <TAB>", and a plumbing is excluded.  "add",
--#     "filter-branch" and "ls-files" are listed for this.
-+#     "rebase" and "ls-files" are listed for this.
++WARNING
++-------
++'git filter-branch' has a litany of gotchas that can and will cause
++history to be rewritten incorrectly (in addition to abysmal
++performance).  These issues cannot be backward compatibly fixed and as
++such, its use is not recommended.  Please use an alternative history
++filtering tool such as 'git filter-repo'.  If you still need to use
++'git filter-branch', please carefully read the "Safety" section of
++https://public-inbox.org/git/CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com/
++and avoid as many of the pitfalls listed there as reasonably possible.
++
+ DESCRIPTION
+ -----------
+ Lets you rewrite Git revision history by rewriting the branches mentioned
+@@ -445,37 +456,6 @@ warned.
+   (or if your git-gc is not new enough to support arguments to
+   `--prune`, use `git repack -ad; git prune` instead).
  
--GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr filter-branch ls-files'
--GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout filter-branch'
-+GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr rebase ls-files'
-+GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
+-NOTES
+------
+-
+-git-filter-branch allows you to make complex shell-scripted rewrites
+-of your Git history, but you probably don't need this flexibility if
+-you're simply _removing unwanted data_ like large files or passwords.
+-For those operations you may want to consider
+-http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
+-a JVM-based alternative to git-filter-branch, typically at least
+-10-50x faster for those use-cases, and with quite different
+-characteristics:
+-
+-* Any particular version of a file is cleaned exactly _once_. The BFG,
+-  unlike git-filter-branch, does not give you the opportunity to
+-  handle a file differently based on where or when it was committed
+-  within your history. This constraint gives the core performance
+-  benefit of The BFG, and is well-suited to the task of cleansing bad
+-  data - you don't care _where_ the bad data is, you just want it
+-  _gone_.
+-
+-* By default The BFG takes full advantage of multi-core machines,
+-  cleansing commit file-trees in parallel. git-filter-branch cleans
+-  commits sequentially (i.e. in a single-threaded manner), though it
+-  _is_ possible to write filters that include their own parallelism,
+-  in the scripts executed against each commit.
+-
+-* The http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
+-  are much more restrictive than git-filter branch, and dedicated just
+-  to the tasks of removing unwanted data- e.g:
+-  `--strip-blobs-bigger-than 1M`.
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 247f765604..0c114ad1ca 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -115,15 +115,14 @@ NOTES
+ -----
  
- . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
+ 'git gc' tries very hard not to delete objects that are referenced
+-anywhere in your repository. In
+-particular, it will keep not only objects referenced by your current set
+-of branches and tags, but also objects referenced by the index,
+-remote-tracking branches, refs saved by 'git filter-branch' in
+-refs/original/, reflogs (which may reference commits in branches
+-that were later amended or rewound), and anything else in the refs/* namespace.
+-If you are expecting some objects to be deleted and they aren't, check
+-all of those locations and decide whether it makes sense in your case to
+-remove those references.
++anywhere in your repository. In particular, it will keep not only
++objects referenced by your current set of branches and tags, but also
++objects referenced by the index, remote-tracking branches, notes saved
++by 'git notes' under refs/notes/, reflogs (which may reference commits
++in branches that were later amended or rewound), and anything else in
++the refs/* namespace.  If you are expecting some objects to be deleted
++and they aren't, check all of those locations and decide whether it
++makes sense in your case to remove those references.
  
-@@ -1392,12 +1392,12 @@ test_expect_success 'basic' '
- 	# built-in
- 	grep -q "^add \$" out &&
- 	# script
--	grep -q "^filter-branch \$" out &&
-+	grep -q "^rebase \$" out &&
- 	# plumbing
- 	! grep -q "^ls-files \$" out &&
+ On the other hand, when 'git gc' runs concurrently with another process,
+ there is a risk of it deleting an object that the other process is using
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 6156609cf7..2f201d85d4 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -832,7 +832,7 @@ Hard case: The changes are not the same.::
+ 	This happens if the 'subsystem' rebase had conflicts, or used
+ 	`--interactive` to omit, edit, squash, or fixup commits; or
+ 	if the upstream used one of `commit --amend`, `reset`, or
+-	`filter-branch`.
++	a full history rewriting command like `filter-repo`.
  
--	run_completion "git f" &&
--	! grep -q -v "^f" out
-+	run_completion "git r" &&
-+	! grep -q -v "^r" out
- '
  
- test_expect_success 'double dash "git" itself' '
+ The easy case
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index 246dc9943c..35595a2cd3 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -123,10 +123,10 @@ The following format are available:
+ CREATING REPLACEMENT OBJECTS
+ ----------------------------
+ 
+-linkgit:git-filter-branch[1], linkgit:git-hash-object[1] and
+-linkgit:git-rebase[1], among other git commands, can be used to create
+-replacement objects from existing objects. The `--edit` option can
+-also be used with 'git replace' to create a replacement object by
++linkgit:git-hash-object[1], linkgit:git-rebase[1], and
++linkgit:git-filter-repo[1], among other git commands, can be used to
++create replacement objects from existing objects. The `--edit` option
++can also be used with 'git replace' to create a replacement object by
+ editing an existing object.
+ 
+ If you want to replace many blobs, trees or commits that are part of a
+@@ -148,8 +148,8 @@ pending objects.
+ SEE ALSO
+ --------
+ linkgit:git-hash-object[1]
+-linkgit:git-filter-branch[1]
+ linkgit:git-rebase[1]
++linkgit:git-filter-repo[1]
+ linkgit:git-tag[1]
+ linkgit:git-branch[1]
+ linkgit:git-commit[1]
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 30711625fd..f2762dd5d4 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -769,9 +769,9 @@ option for (hopefully) obvious reasons.
+ +
+ This option is NOT recommended as it makes it difficult to track down
+ old references to SVN revision numbers in existing documentation, bug
+-reports and archives.  If you plan to eventually migrate from SVN to Git
++reports, and archives.  If you plan to eventually migrate from SVN to Git
+ and are certain about dropping SVN history, consider
+-linkgit:git-filter-branch[1] instead.  filter-branch also allows
++linkgit:git-filter-repo[1] instead.  filter-repo also allows
+ reformatting of metadata for ease-of-reading and rewriting authorship
+ info for non-"svn.authorsFile" users.
+ 
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 82cd573776..997548f5ed 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -425,9 +425,10 @@ post-rewrite
+ 
+ This hook is invoked by commands that rewrite commits
+ (linkgit:git-commit[1] when called with `--amend` and
+-linkgit:git-rebase[1]; currently `git filter-branch` does 'not' call
+-it!).  Its first argument denotes the command it was invoked by:
+-currently one of `amend` or `rebase`.  Further command-dependent
++linkgit:git-rebase[1]; however, full-history (re)writing tools like
++linkgit:git-fast-import[1] or linkgit:git-filter-repo[1] typically do
++not call it!).  Its first argument denotes the command it was invoked
++by: currently one of `amend` or `rebase`.  Further command-dependent
+ arguments may be passed in the future.
+ 
+ The hook receives a list of the rewritten commits on stdin, in the
+diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
+index a3425f4770..19333fc8df 100644
+--- a/contrib/svn-fe/svn-fe.txt
++++ b/contrib/svn-fe/svn-fe.txt
+@@ -56,7 +56,7 @@ line.  This line has the form `git-svn-id: URL@REVNO UUID`.
+ 
+ The resulting repository will generally require further processing
+ to put each project in its own repository and to separate the history
+-of each branch.  The 'git filter-branch --subdirectory-filter' command
++of each branch.  The 'git filter-repo --subdirectory-filter' command
+ may be useful for this purpose.
+ 
+ BUGS
+@@ -67,5 +67,5 @@ The exit status does not reflect whether an error was detected.
+ 
+ SEE ALSO
+ --------
+-git-svn(1), svn2git(1), svk(1), git-filter-branch(1), git-fast-import(1),
++git-svn(1), svn2git(1), svk(1), git-filter-repo(1), git-fast-import(1),
+ https://svn.apache.org/repos/asf/subversion/trunk/notes/dump-load-format.txt
 -- 
 2.23.0.5.g775ebaa2a0
 
