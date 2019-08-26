@@ -2,79 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 051E51F461
-	for <e@80x24.org>; Mon, 26 Aug 2019 17:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4221F461
+	for <e@80x24.org>; Mon, 26 Aug 2019 17:09:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732909AbfHZRJI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 13:09:08 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:49978 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729338AbfHZRJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 13:09:07 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 46HJPs3jfNz1rcPg;
-        Mon, 26 Aug 2019 19:09:05 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 46HJPs3Ny7z1qqkc;
-        Mon, 26 Aug 2019 19:09:05 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id HzEtFqCv1J5K; Mon, 26 Aug 2019 19:09:04 +0200 (CEST)
-X-Auth-Info: w/79tRfRC1BQJLReS9ZGbILHvhWW/+24SUwL484Qe1B6S8YKMSXH5JuxDU02sOpZ
-Received: from igel.home (ppp-46-244-173-1.dynamic.mnet-online.de [46.244.173.1])
+        id S1732490AbfHZRJg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 13:09:36 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65021 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728560AbfHZRJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 13:09:36 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 946C07367B;
+        Mon, 26 Aug 2019 13:09:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=t8OTeJMWFNul9x/N+OprvLbW6dM=; b=w4bgpH
+        Dx80l999/9cupWyIi8wJwosLnsjBA47ydjC4zJRQ0LcAYB1/XknW1Ivql5ZfxTxE
+        xAnqNpDFZOA89MDc1yseE0LUcQGroFPYVmGhj0c4ClLYo4sKxLGS8IC9qeRRuu1K
+        De6xIlSlHLICyQCdHs4Q5XFAGH4EkIkiw/sR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tzh00H21yt4QH0Q/pcUZArd8ZzUCZMIw
+        OIhf9WtbGRfixVEIw40r+JpUpz4Cbaz5b/1PHMkQhjU6M6Xks5Q65Uw8i89WGOfY
+        Ei0FEE2XYq5ay/m4gCKmTBjtvTCBAAH9v2Qs4okycZGWbu+/DiEmTO+kBPL0pPKW
+        9GpcvP/+dmU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D3867367A;
+        Mon, 26 Aug 2019 13:09:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Mon, 26 Aug 2019 19:09:04 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 181BC2C0102; Mon, 26 Aug 2019 19:09:04 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Dhaval Patel <drdhaval2785@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git diff autocomplete
-References: <CADSGPzV+dfNR=epmz2whKkrpiH=JMUR4gVjpZ+x+kzKrX0kD-A@mail.gmail.com>
-        <20190818024757.765fx3tdfekseim5@LykOS.localdomain>
-        <CADSGPzU6+AdMtrEnc98SHASmcmxGsj52Y99Dd5zvkOeRqWS-jQ@mail.gmail.com>
-        <CADSGPzVgweL4tCEqg3LvfXbp=HZyQ7BngKpVrFp0_0SFJZVezQ@mail.gmail.com>
-X-Yow:  Ask me the DIFFERENCE between PHIL SILVERS and ALEXANDER HAIG!!
-Date:   Mon, 26 Aug 2019 19:09:04 +0200
-In-Reply-To: <CADSGPzVgweL4tCEqg3LvfXbp=HZyQ7BngKpVrFp0_0SFJZVezQ@mail.gmail.com>
-        (Dhaval Patel's message of "Mon, 26 Aug 2019 21:18:12 +0530")
-Message-ID: <87mufvzwen.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A37AC73676;
+        Mon, 26 Aug 2019 13:09:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Adam Roben via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Adam Roben <adam@roben.org>
+Subject: Re: [PATCH 1/1] mingw: fix launching of externals from Unicode paths
+References: <pull.135.git.gitgitgadget@gmail.com>
+        <8f2d64a88518d05579701b7093ecbc197ebca2c7.1566686335.git.gitgitgadget@gmail.com>
+Date:   Mon, 26 Aug 2019 10:09:28 -0700
+In-Reply-To: <8f2d64a88518d05579701b7093ecbc197ebca2c7.1566686335.git.gitgitgadget@gmail.com>
+        (Adam Roben via GitGitGadget's message of "Sat, 24 Aug 2019 15:38:56
+        -0700 (PDT)")
+Message-ID: <xmqqv9ujhn07.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 449A6764-C824-11E9-AF76-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Aug 26 2019, Dhaval Patel <drdhaval2785@gmail.com> wrote:
+"Adam Roben via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> If it is only about files and revisions both being handled by git
-> diff, would it not ne possible to do something like this?
->
-> For files
->
-> git diff -f a[PRESS TAB]
->
-> For revisions
->
-> git diff -r a[PRESS TAB]
->
-> Some sort of flag which says we are handling files or revisions.
+> Note that the only problem in this function was calling
+> `GetFileAttributes()` instead of `GetFileAttributesW()`. The calls to
+> `access()` were fine because `access()` is a macro which resolves to
+> `mingw_access()`, which already handles Unicode correctly. But
+> `lookup_prog()` was changed to use `_waccess()` directly so that we only
+> convert the path to UTF-16 once.
 
-That already exists, it is spelt `--'.
+Nicely explained.  Thanks.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+>
+> To make things work correctly, we have to maintain UTF-8 and UTF-16
+> versions in tandem in `lookup_prog()`.
+>
+> Signed-off-by: Adam Roben <adam@roben.org>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  compat/mingw.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 8141f77189..9f02403ebf 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1161,14 +1161,21 @@ static char *lookup_prog(const char *dir, int dirlen, const char *cmd,
+>  			 int isexe, int exe_only)
+>  {
+>  	char path[MAX_PATH];
+> +	wchar_t wpath[MAX_PATH];
+>  	snprintf(path, sizeof(path), "%.*s\\%s.exe", dirlen, dir, cmd);
+>  
+> -	if (!isexe && access(path, F_OK) == 0)
+> +	if (xutftowcs_path(wpath, path) < 0)
+> +		return NULL;
+> +
+> +	if (!isexe && _waccess(wpath, F_OK) == 0)
+>  		return xstrdup(path);
+> -	path[strlen(path)-4] = '\0';
+> -	if ((!exe_only || isexe) && access(path, F_OK) == 0)
+> -		if (!(GetFileAttributes(path) & FILE_ATTRIBUTE_DIRECTORY))
+> +	wpath[wcslen(wpath)-4] = '\0';
+> +	if ((!exe_only || isexe) && _waccess(wpath, F_OK) == 0) {
+> +		if (!(GetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY)) {
+> +			path[strlen(path)-4] = '\0';
+>  			return xstrdup(path);
+> +		}
+> +	}
+>  	return NULL;
+>  }
