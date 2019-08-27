@@ -8,87 +8,113 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC231F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 16:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 382DA1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 16:56:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729696AbfH0Q4h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 12:56:37 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55219 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728506AbfH0Q4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 12:56:37 -0400
-Received: by mail-wm1-f66.google.com with SMTP id p74so3844002wme.4
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 09:56:35 -0700 (PDT)
+        id S1730159AbfH0Q4i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 12:56:38 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52513 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729377AbfH0Q4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 12:56:38 -0400
+Received: by mail-wm1-f65.google.com with SMTP id o4so3854912wmh.2
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 09:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Z77lJ2GoVkNSTq1KdH86wBedjf3F/B2E8C1jjhqskxY=;
-        b=F1BifE3WIJmdElB/gGJfIzG+umPgp05FNoX1zZ+y6k2BTWzv3fJ/XAl67fOBblOBSU
-         ajeL+xh1Z3icL8Xa+np2rx5N0EBSVApUCJj8dHlHiq/oqYLqiFB+8uOwrU26f3DlPXkk
-         10GtEeNu6p6Kho08VKduCg6+diin0sXA+gWiTuib9LYrtsuqEuVKfxiyGdn0kzf7dlnd
-         AG1TkceDqUhuqujbaGJv6DY6XUEJEAFDzTtodpF8KLHmLN9FnBeSbR7N21mHVUJrZx3Z
-         MQ3XS3DWJeT39KPu54L3bE6A/SskAzSxiQJ5+4xq/9qVbtoglg1ERAaFCvS9t4g74oto
-         pAHA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=CDnW+/zm/e6yALhpey+0VhsELh8dHaGTbGQnK0JbMt4=;
+        b=BhSNJPwBBVNi3uIs+wElPYnhW8jm/csHGmo5V4eDCjCYZf8ORTUaRI64prn1KQAojd
+         c7n+e/qwobDQjFn3qGLPOReyCKPeTkXF8atX0c+A4Vs2qJXAuanwQYBsxzU13pRl3eRW
+         uI2cYPOWWwIhFjZUtD2zz/u4f9tbws6Bby4Dp/5CBp7XrX0PuZeYM2ArWXCIXUva6hHj
+         y9fo0FRN/G7dNqtElQlzs6C1wXpJO+Ur9ooWFMDTyx1jFhpcWJu7eZIDQaMLothzAJrN
+         Jp3Y+I2bwY5Jy5qAZodncT+no+i53iF9PzfQG/S7vnop3rmdq6d8mZzOZaHh4iRsAF1d
+         ewdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Z77lJ2GoVkNSTq1KdH86wBedjf3F/B2E8C1jjhqskxY=;
-        b=ClT3n0maoCsFi1rUuDOv2JNgh6j8OZxjKlcEyp3jFO7xd1ASUHHk/KPRvDMZKdiEMl
-         De7ozSXwc2qjN3Tf3umOojgP8UpNnSB2UVPwmbftLiACJtCzxwiqaSvUBG5XlJ7pLIPG
-         8a+X95eOkErPLPKkb7YU4TIbi28CDWiyisg8qFrWTM3yN/Vf4EanUqIU7aPtqsZBNm6E
-         fqOp32f05dotqcFStqi8LZIM7dUdJt0TcCUdLP4TpLBfl6V2Ccn0Bkh3R0ZPWNz2a+f6
-         pgxxiH9dC7bmHfmoqcQw7e23Q4aXuwDmrWiXrYlLl5igU6WQyTW1zrs4Fz/IKmD7YbPI
-         6T7Q==
-X-Gm-Message-State: APjAAAUFd3HKQ5vakIB9h3djiAWxlVwef97UpG76Eo0sKKUwKaxlhb2H
-        kJXWZwGU/lCI8zG6fNHDKz8GVTmW
-X-Google-Smtp-Source: APXvYqzklqxLnn7fiMKQOyzyG/u0KqwmSjUUP2IEqU/kKT456U5C2RNUheJyYt+aHjrNa3fkqf9DWQ==
-X-Received: by 2002:a1c:c1c1:: with SMTP id r184mr29843312wmf.9.1566924994487;
-        Tue, 27 Aug 2019 09:56:34 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=CDnW+/zm/e6yALhpey+0VhsELh8dHaGTbGQnK0JbMt4=;
+        b=WPtkUgkfxdCGk/PnnzjNT9pokMaJzM5ay6nriLMX0VdWMioFaqUNoH9HVRZfLRlFsa
+         4ul71udMV4MvQ4kju9dRkSCnLeu1G3x+SIUjj1nBUjEPwOoR3VcMEmyyi0tG3Ha3PeyK
+         w5sGNOTKgxnRWZuqEwvOVPSi+0WJHVeZAy49Xyj4gao0KOH5ER9iGrnVPGWfd/p18Dtx
+         Y5BEh92B7vNNG168SELGPs1YJLpzjLVOJ2s2eXsnqT/sQhYqkR8tSwtCC1SshYAO/+PB
+         Hb0zaTRkgbx2dAkKJm+IvjgEtKDaQdepAYMVXtP3XdhABLY5nOwBTx27tu+2uTOz55lJ
+         Gm3A==
+X-Gm-Message-State: APjAAAWAT6M5srheXsgBTkTz6MOOny5cy9QBDxf7k/X7jaAsNUcYH5uA
+        B/Zb0FgqSM5et9VkWqqY1jsG9Rb3
+X-Google-Smtp-Source: APXvYqyOczusjbE7sc25VLtFFOKVCfKNksKOBrTuZFtI1fv/ZpNUhigQqhfhMG6MWv8dNobW3XTGNA==
+X-Received: by 2002:a7b:cd06:: with SMTP id f6mr30768990wmj.66.1566924995614;
+        Tue, 27 Aug 2019 09:56:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e6sm14078237wrr.14.2019.08.27.09.56.33
+        by smtp.gmail.com with ESMTPSA id t198sm5293048wmt.39.2019.08.27.09.56.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Aug 2019 09:56:33 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 09:56:33 -0700 (PDT)
-X-Google-Original-Date: Tue, 27 Aug 2019 16:56:30 GMT
-Message-Id: <pull.323.git.gitgitgadget@gmail.com>
+        Tue, 27 Aug 2019 09:56:34 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 09:56:34 -0700 (PDT)
+X-Google-Original-Date: Tue, 27 Aug 2019 16:56:31 GMT
+Message-Id: <80496fdcfc42cd7ea883ea1a7200ab3611cbbca5.1566924992.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.323.git.gitgitgadget@gmail.com>
+References: <pull.323.git.gitgitgadget@gmail.com>
 From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] commit-graph: emit trace2 cmd_mode for each sub-command
+Subject: [PATCH 1/1] commit-graph: emit trace2 cmd_mode for each sub-command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emit trace2_cmd_mode() messages for each commit-graph sub-command.
+From: Garima Singh <garima.singh@microsoft.com>
 
-The commit graph commands were in flux when trace2 was making it's way to
-git. Now that we have enough sub-commands in commit-graph, we can label the
-various modes within them. Distinguishing between read, write and verify is
-a great start.
+Emit trace2_cmd_mode() messages for each commit-graph
+sub-command.
 
-Signed-off-by: Garima Singh garima.singh@microsoft.com
-[garima.singh@microsoft.com]
+The commit graph commands were in flux when trace2 was
+making it's way to git. Now that we have enough sub-commands
+in commit-graph, we can label the various modes within them.
+Distinguishing between read, write and verify is a great
+start.
 
-CC: jeffhost@microsoft.com, stolee@gmail.com, garimasigit@gmail.com, 
-avarab@gmail.com
-
-Garima Singh (1):
-  commit-graph: emit trace2 cmd_mode for each sub-command
-
+Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+---
  builtin/commit-graph.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-
-base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-323%2Fgarimasi514%2FcoreGit-commit-graph-trace2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-323/garimasi514/coreGit-commit-graph-trace2-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/323
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 57863619b7..ef68b26744 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -58,6 +58,8 @@ static int graph_verify(int argc, const char **argv)
+ 		OPT_END(),
+ 	};
+ 
++	trace2_cmd_mode("verify");
++
+ 	argc = parse_options(argc, argv, NULL,
+ 			     builtin_commit_graph_verify_options,
+ 			     builtin_commit_graph_verify_usage, 0);
+@@ -102,6 +104,8 @@ static int graph_read(int argc, const char **argv)
+ 		OPT_END(),
+ 	};
+ 
++	trace2_cmd_mode("read");
++
+ 	argc = parse_options(argc, argv, NULL,
+ 			     builtin_commit_graph_read_options,
+ 			     builtin_commit_graph_read_usage, 0);
+@@ -183,6 +187,8 @@ static int graph_write(int argc, const char **argv)
+ 	split_opts.max_commits = 0;
+ 	split_opts.expire_time = 0;
+ 
++	trace2_cmd_mode("write");
++
+ 	argc = parse_options(argc, argv, NULL,
+ 			     builtin_commit_graph_write_options,
+ 			     builtin_commit_graph_write_usage, 0);
 -- 
 gitgitgadget
