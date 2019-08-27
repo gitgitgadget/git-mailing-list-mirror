@@ -2,87 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD6011F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 22:16:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D40A1F4B7
+	for <e@80x24.org>; Tue, 27 Aug 2019 22:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbfH0WQu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 18:16:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54926 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfH0WQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 18:16:50 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 482AF15C126;
-        Tue, 27 Aug 2019 18:16:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SmLSgZr/3DpqjYj+NDxP9gs3GzA=; b=mhK3ux
-        C8hhrMMTpaa7hVyXCeqCk8GvShw3lHWLysFdgMsCwV04S1dhrKjq+JfPdvCny0Qr
-        PASyTxGWhj/jf430TmbVkWxpQGW+XmhnLcxOdhKaFEXvx3r5KNPPul8EOEd3KPw9
-        Zblmcx85gWgZgPvKg7VZuHyIiIQanlIQeyELk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ay6UcMtVwVvwdizIoRcPgW/b8HjKrZyj
-        xPfofw5G4o1Ps/pmvxfUqXoD7iWnrYE+/cn5Z3jzwQQJfigLw5F6o9hmbjA4J6g9
-        hq/Hec1qSYXG1G49i67pSqGO9SWIEGRSOzrxyGnVsqC3fwdd3Bp9o3oKJoySYJzR
-        VQxlvXyro/8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F21215C125;
-        Tue, 27 Aug 2019 18:16:48 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 92F7615C124;
-        Tue, 27 Aug 2019 18:16:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 04/11] hashmap_entry: detect improper initialization
-References: <20190826024332.3403-1-e@80x24.org>
-        <20190826024332.3403-5-e@80x24.org>
-        <nycvar.QRO.7.76.6.1908271108410.46@tvgsbejvaqbjf.bet>
-        <20190827094923.6qhwqosiucsi43td@whir>
-Date:   Tue, 27 Aug 2019 15:16:46 -0700
-In-Reply-To: <20190827094923.6qhwqosiucsi43td@whir> (Eric Wong's message of
-        "Tue, 27 Aug 2019 09:49:23 +0000")
-Message-ID: <xmqqa7bu2r01.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726127AbfH0WSc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 18:18:32 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:45412 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726034AbfH0WSc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 18:18:32 -0400
+Received: by mail-ua1-f65.google.com with SMTP id j6so149775uae.12
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 15:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Oq2BR6sZrLFqxiZgcN7EPziwCpi7Xh/CHenOnmp3uVo=;
+        b=WlgWQdevFceVKNzp42uwm0FvuZYQQmg9iiruCAKyZUeIwH3o9bMqIe060z7N5IaAma
+         8pxmH0apHrXw9ud3+ViQa2eVV6F0MHCve/LtpChmWTl74YlgoqoYrAh00bbktzmz5mCK
+         LE/R87enENztpmcuGalWtP1aW/LuXI/vOptLXzD1FBtHEygoikGD7xYk/YzvufCzGiOl
+         m4G5GmOtfRnSfvwkyfnFneXe6Zr888+8yMshIL9+9sv9TVS5oELO9t7fU+9XE0PcO8RT
+         tfCUAZoOvRUcdqUjBjcStCinG8FhL0QhyjwXhVusKQnPn1k0iHJPZw/7BMgVwDtq1cod
+         n8Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Oq2BR6sZrLFqxiZgcN7EPziwCpi7Xh/CHenOnmp3uVo=;
+        b=tu/3BchU6kgExnp05ybYSroF6R8mIRdaQnIqlqh6s6Mq5ZHBr+vZZ3elpUNasPB3RJ
+         mQb9yJANDbmHlFO2NpOpi/nP6+xcixqSs37TXaKJvvCxNMp2p/IQKmwvEX/UuqqwrUNz
+         84hryeg0snlgQ7eH/ubpkKIi+PhL/IzvkuJyKypwHu3mbeqqg89FAUazwWqbr0KpBIYM
+         oUd/py26rNbI7w0iA7K9Rsd7XErl66nAFTSfIg5WzTd1SCRwEh1cSDyyXjVu/ib9dmtH
+         VCF6EKzxWv50axg2a6n6KYGvKVpQexYWWgOUQeT67/x19vs8+qk/CiOO1+FxSujDdfpx
+         y2Aw==
+X-Gm-Message-State: APjAAAWNtCVyKEymHAIOGWNRpOc1hxuw+d15wBRgUaPHKH4reDVZkV3s
+        rnQM/ccnoRRJFSnpeS0jxgCOZBl/pONacLCgw8g=
+X-Google-Smtp-Source: APXvYqy5q2YI2sRtkOBrIF+dyHck9cYNdSxlq9r2/fayF7kluDC9LI8Ba4GAfps1CjnoNWdKe5alAYUiOGyIauxk7PE=
+X-Received: by 2002:ab0:2b13:: with SMTP id e19mr315075uar.81.1566944310845;
+ Tue, 27 Aug 2019 15:18:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C491C26-C918-11E9-87B5-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+References: <xmqqd0gwopej.fsf@gitster-ct.c.googlers.com> <20190826235226.15386-1-newren@gmail.com>
+ <20190827070324.7l2cpc3dlnithbm6@whir> <87v9ujc827.fsf@osv.gnss.ru>
+In-Reply-To: <87v9ujc827.fsf@osv.gnss.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 27 Aug 2019 15:18:19 -0700
+Message-ID: <CABPp-BGfoRX-ob986kd-vvBo3meg-MpJ8Jo85G_2GgARY=cxxg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] Remove git-filter-branch from git.git; host it elsewhere
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+On Tue, Aug 27, 2019 at 1:43 AM Sergey Organov <sorganov@gmail.com> wrote:
+>
+> Eric Wong <e@80x24.org> writes:
+>
+>
+> [...]
+>
+> > AFAIK, filter-branch is not causing support headaches for any
+> > git developers today.  With so many commands in git, it's
+> > unlikely newbies will ever get around to discover it :)
+> > So I think think we should be in any rush to remove it.
+>
+> Nah, discovering it is simple. Just Google for "git change author". That
+> eventually leads to a script that uses "git filter-branch --env-filter"
+> to get the job done, and I'm afraid it is spread all over the world.
+>
+> See, e.g.:
+>
+> https://help.github.com/en/articles/changing-author-info
 
-> I renamed it to intentionally break my build.
+Side note: Is the goal to "fix names and email addresses in this
+repository"?  If so, this guide fails: it doesn't update tagger names
+or email addresses.  Indeed, filter-branch doesn't provide a way to do
+that.  (Not to mention other problems like not updating references to
+commit hashes in commit messages when it busy rewriting everything.)
 
-This cuts both ways.  If you work without any throw-away merges, it
-is GOOD to make sure any new use other people added will be spotted
-by the compiler by breaking the build.  It will force you to resolve
-all such breakages until you can move on to other topics, and it
-will also force you to commit to your topic that deliberately breaks
-the build by renaming.
+> > But I agree that filter-branch isn't useful and certainly
+> > shouldn't be encouraged/promoted.
+>
+> Well, is there more suitable way to change author for a (large) set of
+> commits then?
 
-If you want to avoid committing to the current iteration of topic,
-however, then that would mean you'd need a reliable way to rebuild
-evil merges (aka resolution of semantic conflicts) so that you can
-keep parts of more recent history more flexible (similar to how 'pu'
-is managed).
+I would say yes, use git filter-repo (note that this thread started
+with me proposing filter-repo for inclusion in git.git -- and getting
+suggestions that we should remove stuff instead of adding more stuff).
+I'm biased, but I think it's much better at this particular job as
+well:
 
-My plan is to have ew/hashmap topic for a few days while ejecting
-the js/add-i topic which semantically conflicts with the changed way
-hashmaps ought to be used temporarily, and when I have enough time
-and concentration, try to see if I can come up with a good semantic
-conflict resolution that I can keep reusing (aka refs/merge-fix/).
-If it happens, we'll see both topics, and if it doesn't, I'll then
-drop ew/hashmap and queue js/add-i and rinse and repeat from there
-;-)
+
+You can create a mailmap file and pass it to the --mailmap option to
+git-filter-repo.
+
+Or, if you prefer (perhaps you don't like git's mailmap format as used
+by shortlog and now log, or perhaps you really want to be able to do
+regex replacement or something), you can use the --name-callback or
+--email-callback to work on those fields more directly.
+
+Or, if you prefer (e.g. you want to handle author vs. committer vs.
+tagger differently), you can use the --commit-callback and
+--tag-callback filters.
+
+
+As an added bonus, filter-repo will also perform the rewrite far
+faster than filter-branch (and rewrite commit hashes in commit
+messages as alluded to above).
+
+> > Yet there's probably still users which ARE happy with it, that
+> > will never hit the edge cases and problems it poses; and will
+> > never read release notes.  And said users are probably getting
+> > git from a slow-moving distro, so it'd be a disservice to them
+> > if they lost a tool they depend on without any warning.
+>
+> Personally, I'm far from happy with it, but I have no clue how to
+> substitute it in the job above. Anybody?
+
+The start of this thread where I proposed git filter-repo for
+inclusion in git[1] had links to documentation and comparisons to
+other tools and such.  You may find those links helpful; if not, let
+me know what needs to be fixed in the documentation.
+
+Elijah
+
+[1] https://public-inbox.org/git/CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_9skA@mail.gmail.com/
