@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2B291F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 10:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1902E1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 10:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728061AbfH0KOT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 06:14:19 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34652 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726054AbfH0KOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 06:14:19 -0400
-Received: by mail-wm1-f67.google.com with SMTP id e8so2047926wme.1
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 03:14:17 -0700 (PDT)
+        id S1729024AbfH0KOW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 06:14:22 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33349 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726054AbfH0KOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 06:14:21 -0400
+Received: by mail-wr1-f67.google.com with SMTP id u16so18209105wrr.0
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 03:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=zqjWpmQup8ZS0pieyXpMhF1xWGmjAKb8RID1fw7JD9o=;
-        b=GpKWX9kWZnQKL9GpWgcrNrGIzWsRfpkQh2myeaFcWe3bcLkomAI1EDUrmrcYTj7TXc
-         54Pjg2qqrYUXM6HkTJybyB36TtI2DMwvM1537vBM1ZeGG60WU0pTIw0Sp7NhEpHrmlhj
-         Gv8bKZUX1YxOqsq2s+vkQRUJ5opo737wne63pHFCqmVZQHEgNiZwQthYDxHr7utZumYO
-         OEaP1mNX0R/r39i6Kb64g+Gs7fSfHrI0PNHApBL3UhPZx5hnBRoXS3G3IhH7772yaMVv
-         dfDJIrR6sZnbIav8KrzUeRto0Bki4ri34y5rJjio/Qmjs37v7b3jaZe/9lUkl45RPdDe
-         HmOw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=frnhtb+/jIPyrLQ/2eIV7b0SW4r/HDvHTMd5ZQe0D4I=;
+        b=FNESviYHU5LilAkZTjrWWmB0XnWylCU/BJ/dF9p9v7ZG/6euRj7DFDG/a58PrJFL8v
+         fQybxd6KXn4/4aC3SogRmdAyff1cNTR3GrrBrrIxtOxxpQPycR1P307ZL34tP+9zQnur
+         X3b+2+omMo17yq6J7nUY8tXvqkHWZqfzpeQSBOXS4dvjpADa+hAGBR2FcVF+uSfDeuV8
+         30t5AGZOBVpd6/bYIVoTpcdVGgjSnFfe4AuUTh38xcpVm3qTHFAQJGFusKfvBEmbgd/3
+         H9SrnUqHk6Yp/Zx3b+4ci7Qndb8opDVFZH1jbtGPrbHxPJ2ntpkI47CHytGae2JWkW/9
+         qlTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=zqjWpmQup8ZS0pieyXpMhF1xWGmjAKb8RID1fw7JD9o=;
-        b=gyrmnyZgqVr7C+wNGZHT7XshADW37dTNhocB8h/PRVnKrUj7zMvEpYO/8xKn5TnumT
-         HNTSGdSNP7K/bqbLJZ1LlyRud8Pe/g5ngXmk5XcIQoIgUOWFMcZekpIEaO6bHecQgTg/
-         Sw9Hf/9liAPFx3gUmRTm3KdQn/dm7Tiut5diAUW+RVFwgcAIk+k30e75jDKrlkDw578Q
-         7o1vJrFt0CmKD09DqaptA3z1BcL7sw+u/6j0SHgYZccpbvaDJsBrDs2nwdgHlg/70QU6
-         1IioYm3Ihq7uWecPxUuze+GDLLFoLN7y/w2zBH3I1wnBs7Pg0HpWpha4TChnubAIDQ2N
-         PHsg==
-X-Gm-Message-State: APjAAAWTHVi19nOXlsp6BNBAl6g2NftN8CJq/913OSQAG/5aIQ1MBDu6
-        hXGhnOZV6fxqKRPm7mbv6n+/2Z76
-X-Google-Smtp-Source: APXvYqzk4U7KzTYhCbLH/uXEXZ4eJMLuF+kuyfQkg532akAd4fnOXVoAbpWywznNA/9Juv/b8MVK2Q==
-X-Received: by 2002:a05:600c:389:: with SMTP id w9mr26806913wmd.119.1566900856611;
-        Tue, 27 Aug 2019 03:14:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=frnhtb+/jIPyrLQ/2eIV7b0SW4r/HDvHTMd5ZQe0D4I=;
+        b=sdNE9ppBPgfaomIxRKl3+tl84IKi4RwaJhiTjHOapIHSHeUUYcw+TAqe+H9rWXZPuY
+         fMLOJlTQU3by4Eaggnpoy5bKolZbeuyX+U4ULO6cEjx8yGgBACH5KsRzVXOQJ285CrEH
+         +hmZ80eyFUe03npdRzPSUrh6hbrw6eTREyWZUbT0jmFQXjKqkizvi9v9RWqXwtUA0bmx
+         Xfx8XNscnQkqIwOnaljAilI4e/m/WIBnxJCOhf0udR9/r5RIdnm4WkIEMaeyCLYSJ5bN
+         RD1kLjdxuB42WB6Gnyoei8lio17Fz0pEB4flQexGylz1LPh1Yr7E9mgwnrS1zx/KVWIL
+         Hh2Q==
+X-Gm-Message-State: APjAAAXN/xKspXFTEOegbuCCLwpRI0ky8C7a/cCaJDGh8coN/MHUiMOl
+        6XizVywIIumffKXIxngvCStkRWfH
+X-Google-Smtp-Source: APXvYqx10jrW0yTGEb/eYWPlcIzIaidE8sSHHi+LEGPhwKslqD1UGmwalHmaPPRdMifNuQ8DrNresQ==
+X-Received: by 2002:adf:a1de:: with SMTP id v30mr28218767wrv.138.1566900859550;
+        Tue, 27 Aug 2019 03:14:19 -0700 (PDT)
 Received: from localhost ([2.31.128.175])
-        by smtp.gmail.com with ESMTPSA id r18sm2485599wmh.6.2019.08.27.03.14.15
+        by smtp.gmail.com with ESMTPSA id 24sm2773866wmf.10.2019.08.27.03.14.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Aug 2019 03:14:15 -0700 (PDT)
+        Tue, 27 Aug 2019 03:14:18 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -57,10 +57,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 0/3] make sure stash refreshes the index properly
-Date:   Tue, 27 Aug 2019 11:14:05 +0100
-Message-Id: <20190827101408.76757-1-t.gummerer@gmail.com>
+Subject: [PATCH 2/3] merge: use refresh_and_write_cache
+Date:   Tue, 27 Aug 2019 11:14:07 +0100
+Message-Id: <20190827101408.76757-3-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.194.ge5444969c9
+In-Reply-To: <20190827101408.76757-1-t.gummerer@gmail.com>
+References: <20190827101408.76757-1-t.gummerer@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -68,40 +70,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Peff for spotting the bug!  Here's a series that fixes it.
+Use the 'refresh_and_write_cache()' convenience function introduced in
+the last commit, instead of refreshing and writing the index manually
+in merge.c
 
-> And before the third one, introduction of a new entry point that
-> makes merge-recursive machinery inherit the already populated
-> in-core index, happens, I think the right solution is to write the
-> in-core index out---the write is not pointless.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ builtin/merge.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-Yup, I agree with that.  In fact there are some other places where we
-just call 'refresh_cache()' as a replacement for 'git update-index
---refresh'.  At least the other one in 'do_apply_stash()' also seems
-like a bug, as I assume the original intention (and behaviour) was
-that the index is refreshed after 'stash apply -q' finishes.
-
-I think in do_push_stash and do_create_stash we might be able to get
-away without the write, but I wasn't 100% sure, so I made them write
-the index after refreshing it as well, which is what the shell script
-did.
-
-The first patch is a small refactoring that makes the actual fix a bit
-easier, while the second patch is a cleanup that I found while there.
-
-Thomas Gummerer (3):
-  factor out refresh_and_write_cache function
-  merge: use refresh_and_write_cache
-  stash: make sure to write refreshed cache
-
- builtin/am.c     | 16 ++--------------
- builtin/merge.c  | 15 ++++-----------
- builtin/stash.c  | 11 +++++++----
- cache.h          |  9 +++++++++
- read-cache.c     | 17 +++++++++++++++++
- t/t3903-stash.sh | 16 ++++++++++++++++
- 6 files changed, 55 insertions(+), 29 deletions(-)
-
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e2ccbc44e2..b5e31ce283 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -691,11 +691,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	struct lock_file lock = LOCK_INIT;
+ 	const char *head_arg = "HEAD";
+ 
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+-	refresh_cache(REFRESH_QUIET);
+-	if (write_locked_index(&the_index, &lock,
+-			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		return error(_("Unable to write index."));
++	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK | SKIP_IF_UNCHANGED) < 0)
++		return -1;
+ 
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
+ 		int clean, x;
+@@ -860,13 +857,9 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
+ {
+ 	struct object_id result_tree, result_commit;
+ 	struct commit_list *parents, **pptr = &parents;
+-	struct lock_file lock = LOCK_INIT;
+ 
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+-	refresh_cache(REFRESH_QUIET);
+-	if (write_locked_index(&the_index, &lock,
+-			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		return error(_("Unable to write index."));
++	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK | SKIP_IF_UNCHANGED) < 0)
++		return -1;
+ 
+ 	write_tree_trivial(&result_tree);
+ 	printf(_("Wonderful.\n"));
 -- 
 2.23.0.rc2.194.ge5444969c9
 
