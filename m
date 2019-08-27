@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9E11F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id 286171F461
 	for <e@80x24.org>; Tue, 27 Aug 2019 10:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729185AbfH0KOX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 06:14:23 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37581 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728723AbfH0KOW (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728954AbfH0KOW (ORCPT <rfc822;e@80x24.org>);
         Tue, 27 Aug 2019 06:14:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id z11so18210643wrt.4
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 03:14:21 -0700 (PDT)
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38348 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726140AbfH0KOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 06:14:21 -0400
+Received: by mail-wm1-f68.google.com with SMTP id m125so2385344wmm.3
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 03:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gfm5T3ociK+alscJ3JBn+v125WYhO99IaaXdi4KFHVU=;
-        b=s3ampqj7pD98qi8Whz8jMUhpoSGkcIbO+U5YwIsNO9UbIMcGXrKk2BDxjjIaMi9XgM
-         VNK4OIAF+8CCfKZsdSWwvB7Pfb39Q6CBUayMPE6uNiFZrvsj4qWhDUWCKaBX8QFw6X56
-         dGgHWUAO9lnnsKHqxsCIEFzzdUT9R4THVl6aeo0r4HBCri4ZGnPvOXWUoKVjCWS1JooP
-         FyQJM5VQ4nIV2C0MYP1k5AIc2ZR0OpR35np10pEbQBfUgJKaBVPHYY8vATb+7XrsIUVA
-         c5DPegzxZenA6xz4zjvpArMPedkptJTVp4Qcn6yppNshPjLnnNJhasqudAk+WqQCL/Mn
-         5WLw==
+        bh=a9qpdHzYjmLrDIAggsgpuPLsUo/rtP7sDMa+KHuz/Ro=;
+        b=S86KKmnsGn5QLyq0oS4d6dF5vur8bPFlA7yiZ7NXdA6EVIwbjeK/ErXE/11PkKs0mN
+         6hVsckXpJq6YixIl6edaProJPwdhzMdffBAo2rM7Fe33cj7VJg/o0MSDoe0aB/of2Qt2
+         UZ6yjTR3m+bF+VqbRSLmnZjU/yFbHsAzs7bc8gCx+ZjqTpQHkrTZS7DETc9lkX0n0ww7
+         ftAfl74LJzQlUfKu21uPIOA05j+yl3BIl1LMCALEY8BLb510I+uD+krUM2wlsaF5NmkR
+         MgcPCZ27MAyBenig09xVACf2SxA2x4/RUa7t7kfvXIl1ZlGq6Ec8lHxiXPJG3XUrypdg
+         Gq5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gfm5T3ociK+alscJ3JBn+v125WYhO99IaaXdi4KFHVU=;
-        b=sU5spp4dd5u49IRB92t/84D3SRF175qo5+5RP5N/UhjnbFtywFCO/XUae+P9sb6oUH
-         kQjXimIeFEoVdbDT6RglE3gxYir7pqZ3Y6WV6z/3S/Zubc9ywkiza5zQBWSiU1kl9L4Q
-         iJS5gXa8mk21RVcKFvpKKsy2nD2+G2i72yAJh6f/OFJEKpMX+ehYaIvBE9S2CPKFVUg0
-         zi5mAxK8tt326UvPox4TQ+KgGTJWcfnh6muNyVB2v3ZnMVsuiBTgj90ZW5L/hw+QdUEe
-         Kowh4nSVCBDP3aM85AUOfbNVSuurZs5UQeX2s3j6IRx7x05oQN4qvLTIj0/BfHt9+y1n
-         dOMA==
-X-Gm-Message-State: APjAAAV+8dk5uAyWJs/bovgDLQYx1xsrxe5VarGKTJ8vsNxYi2X1WOcc
-        JZXrMdpOXfmG4h04/CVI4gjOvJ0T
-X-Google-Smtp-Source: APXvYqxkzjRPquvZrq9xkn4CXIynwtY+IPB+KNS7iZ98Nn7bGph+TX8oRJgpsLEkQ0Cps/y6IpbZ+w==
-X-Received: by 2002:adf:ce05:: with SMTP id p5mr28163411wrn.197.1566900860865;
-        Tue, 27 Aug 2019 03:14:20 -0700 (PDT)
+        bh=a9qpdHzYjmLrDIAggsgpuPLsUo/rtP7sDMa+KHuz/Ro=;
+        b=Jr9qAnudn8qTeS4EVkIibt/UPPYVq4qiY2WUMjnlh5Qw+hSzoz8MSW21PKOylWlDFm
+         y8JnAp32uMmIhwOdI7Q230oa4Y+tg00no854wOX997uqD6lr8lglBGifEKUsiZyhMuWw
+         8wc0jYoXTmiczQBe8LZjKqBsDTttnrEKIoutWFJVglvZAvUJTJJkK+/Y4hhsXbLrS1MG
+         vj8va9e8XttiMLF5ueycjioED+822cngLS1BeXFX7qxhkTQm4K2dKmLWMrQDtTECDyKI
+         ZCdoZO+JhRL53u3zOn2wdUcAUn4wmbQcH8YEJiYa9JP1wHN+GaGddAZZYZEMD+Pm2DH3
+         +mjg==
+X-Gm-Message-State: APjAAAU9lEPSOR23W97dwRDPIADwYU9h77ND+s1WfvD14Prh/8/OCiup
+        K50VWY194OyrCguQUzdo3Xp6QmmV
+X-Google-Smtp-Source: APXvYqzFgoszoUN33AjXOBN5dSUb/0tH8wAj5Bwf3fSlGLA6ivKbqe1/Me0rL61msIyhou/hKof2PQ==
+X-Received: by 2002:a7b:c157:: with SMTP id z23mr27311081wmi.104.1566900858150;
+        Tue, 27 Aug 2019 03:14:18 -0700 (PDT)
 Received: from localhost ([2.31.128.175])
-        by smtp.gmail.com with ESMTPSA id r15sm15442024wrj.68.2019.08.27.03.14.20
+        by smtp.gmail.com with ESMTPSA id 24sm2773775wmf.10.2019.08.27.03.14.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Aug 2019 03:14:20 -0700 (PDT)
+        Tue, 27 Aug 2019 03:14:17 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 3/3] stash: make sure to write refreshed cache
-Date:   Tue, 27 Aug 2019 11:14:08 +0100
-Message-Id: <20190827101408.76757-4-t.gummerer@gmail.com>
+Subject: [PATCH 1/3] factor out refresh_and_write_cache function
+Date:   Tue, 27 Aug 2019 11:14:06 +0100
+Message-Id: <20190827101408.76757-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.23.0.rc2.194.ge5444969c9
 In-Reply-To: <20190827101408.76757-1-t.gummerer@gmail.com>
 References: <20190827101408.76757-1-t.gummerer@gmail.com>
@@ -70,98 +70,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When converting stash into C, calls to 'git update-index --refresh'
-were replaced with the 'refresh_cache()' function.  That is fine as
-long as the index is only needed in-core, and not re-read from disk.
+Getting the lock for the index, refreshing it and then writing it is a
+pattern that happens more than once throughout the codebase.  Factor
+out the refresh_and_write_cache function from builtin/am.c to
+read-cache.c, so it can be re-used in other places in a subsequent
+commit.
 
-However in many cases we do actually need the refreshed index to be
-written to disk, for example 'merge_recursive_generic()' discards the
-in-core index before re-reading it from disk, and in the case of 'apply
---quiet', the 'refresh_cache()' we currently have is pointless without
-writing the index to disk.
+Note that we return different error codes for failing to refresh the
+cache, and failing to write the index.  The current caller only cares
+about failing to write the index.  However for other callers we're
+going to convert in subsequent patches we will need this distinction.
 
-Always write the index after refreshing it to ensure there are no
-regressions in this compared to the scripted stash.  In the future we
-can consider avoiding the write where possible after making sure none
-of the subsequent calls actually need the refreshed cache, and it is
-not expected to be refreshed after stash exits or it is written
-somewhere else already.
-
-Reported-by: Jeff King <peff@peff.net>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/stash.c  | 11 +++++++----
- t/t3903-stash.sh | 16 ++++++++++++++++
- 2 files changed, 23 insertions(+), 4 deletions(-)
+ builtin/am.c | 16 ++--------------
+ cache.h      |  9 +++++++++
+ read-cache.c | 17 +++++++++++++++++
+ 3 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index b5a301f24d..b36aada644 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -396,7 +396,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	const struct object_id *bases[1];
+diff --git a/builtin/am.c b/builtin/am.c
+index 1aea657a7f..e00410e4d7 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1071,19 +1071,6 @@ static const char *msgnum(const struct am_state *state)
+ 	return sb.buf;
+ }
  
- 	read_cache_preload(NULL);
--	if (refresh_cache(REFRESH_QUIET))
-+	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK))
- 		return -1;
- 
- 	if (write_cache_as_tree(&c_tree, 0, NULL))
-@@ -485,7 +485,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	}
- 
- 	if (quiet) {
--		if (refresh_cache(REFRESH_QUIET))
-+		if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK))
- 			warning("could not refresh index");
- 	} else {
- 		struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1129,7 +1129,10 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	prepare_fallback_ident("git stash", "git@stash");
- 
- 	read_cache_preload(NULL);
+-/**
+- * Refresh and write index.
+- */
+-static void refresh_and_write_cache(void)
+-{
+-	struct lock_file lock_file = LOCK_INIT;
+-
+-	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
 -	refresh_cache(REFRESH_QUIET);
-+	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK) < 0) {
-+		ret = -1;
-+		goto done;
-+	}
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+-		die(_("unable to write index file"));
+-}
+-
+ /**
+  * Dies with a user-friendly message on how to proceed after resolving the
+  * problem. This message can be overridden with state->resolvemsg.
+@@ -1703,7 +1690,8 @@ static void am_run(struct am_state *state, int resume)
  
- 	if (get_oid("HEAD", &info->b_commit)) {
- 		if (!quiet)
-@@ -1290,7 +1293,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 		free(ps_matched);
- 	}
+ 	unlink(am_path(state, "dirtyindex"));
  
--	if (refresh_cache(REFRESH_QUIET)) {
-+	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK)) {
- 		ret = -1;
- 		goto done;
- 	}
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index b8e337893f..392954d6dd 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1241,4 +1241,20 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
- 	test_path_is_missing to-remove
- '
+-	refresh_and_write_cache();
++	if (refresh_and_write_cache(REFRESH_QUIET, COMMIT_LOCK) < 0)
++		die(_("failed to refresh cache"));
  
-+test_expect_success 'stash apply should succeed with unmodified file' '
-+	echo base >file &&
-+	git add file &&
-+	git commit -m base &&
+ 	if (repo_index_has_changes(the_repository, NULL, &sb)) {
+ 		write_state_bool(state, "dirtyindex", 1);
+diff --git a/cache.h b/cache.h
+index b1da1ab08f..f72392f32b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -414,6 +414,7 @@ extern struct index_state the_index;
+ #define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
+ #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
+ #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
++#define refresh_and_write_cache(refresh_flags, write_flags) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), NULL, NULL, NULL)
+ #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
+ #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+ #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+@@ -812,6 +813,14 @@ void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, st
+ #define REFRESH_IN_PORCELAIN	0x0020	/* user friendly output, not "needs update" */
+ #define REFRESH_PROGRESS	0x0040  /* show progress bar if stderr is tty */
+ int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
++/*
++ * Refresh the index and write it to disk.
++ *
++ * Return 1 if refreshing the cache failed, -1 if writing the cache to
++ * disk failed, 0 on success.
++ */
++int repo_refresh_and_write_index(struct repository*, unsigned int refresh_flags, unsigned int write_flags, const struct pathspec *, char *seen, const char *header_msg);
 +
-+	# now stash a modification
-+	echo modified >file &&
-+	git stash &&
+ struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
+ 
+ void set_alternate_index_output(const char *);
+diff --git a/read-cache.c b/read-cache.c
+index 52ffa8a313..905d2ddd10 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1472,6 +1472,23 @@ static void show_file(const char * fmt, const char * name, int in_porcelain,
+ 	printf(fmt, name);
+ }
+ 
++int repo_refresh_and_write_index(struct  repository *repo,
++				 unsigned int refresh_flags,
++				 unsigned int write_flags,
++				 const struct pathspec *pathspec,
++				 char *seen, const char *header_msg)
++{
++	struct lock_file lock_file = LOCK_INIT;
 +
-+	# make the file stat dirty
-+	cp file other &&
-+	mv other file &&
++	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
++	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg))
++		return 1;
++	if (write_locked_index(repo->index, &lock_file, write_flags))
++		return error(_("unable to write index file"));
++	return 0;
++}
 +
-+	git stash apply
-+'
 +
- test_done
+ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		  const struct pathspec *pathspec,
+ 		  char *seen, const char *header_msg)
 -- 
 2.23.0.rc2.194.ge5444969c9
 
