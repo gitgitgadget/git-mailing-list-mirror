@@ -8,57 +8,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4A121F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 12:58:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C63DB1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 12:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729153AbfH0M6E (ORCPT <rfc822;e@80x24.org>);
+        id S1726735AbfH0M6G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 08:58:06 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39667 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729935AbfH0M6E (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Aug 2019 08:58:04 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44293 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727086AbfH0M57 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 08:57:59 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p17so18690911wrf.11
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 05:57:57 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id t16so18707266wra.6
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 05:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ddx1qp7yobgLQ1SEJr4onXZfVjSpKH9xoqGS2zK+XO0=;
-        b=WsA0QQccC+wbMF2FNinefK459tmAct9Ox4TMX967HZgiCu31G8yxXSDERhlA7T7tL8
-         j69K4Ol6fCYQpLU1RqMQ+nB2Dg6rZYwckVNvWS4shREQ35bwov6LCW5WWl43GprwL7Qs
-         avZRDDT1RgGegs/Hs6CeSW/xh/aq8pqj1MI7cXdfua4aI3BdeO6YD3JKRlsjXRfNY8lC
-         W0Knh0BFVjU4wtpqLMLT8ABs/2RGDBTWRyVsyAsXjqyrLdeEX2r8W77USi46O35pZXzB
-         /Pu59z7VmON+lNQ1XHTUuoS3D7cq5HlI/4pCS6DfYB/cevRcJfJS1p9oJW57xB2zdZkt
-         BO3Q==
+        bh=MDS3VyEtjqlxL22NPuOn2c1gYCHbJCWQ5MSerLrc6II=;
+        b=QIifbr6lTbBUoCzOogOa13Zf+NnRpeedVpOXIJ95zjY7V24E8sSmhFcEviSjnPtv5t
+         vRSzbvfAhAguZacM/9n2+dBV+h2PtH5W2ZD9xjGrfM8heJg+UWzK22iIPY2BrWVEcXG9
+         jyese+kvD5OrhxPNGu3HPW1jchu94431BOi0NTnYV8Kp/gxPEsmBbxK+A+I7wgzMTu4D
+         cwL3dkks26nFRIFKTqcEHHjKzFRSOT7FqBw98Ol0WV3tBFcyJj3zaccCTI+hSUmJdowO
+         NTKQl0z/RdpqxrVFJqBI5H79V4lPZ+wbqNuYOkmUEaF31kRHSe43JtJpm3GpWhsJSYjD
+         buLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ddx1qp7yobgLQ1SEJr4onXZfVjSpKH9xoqGS2zK+XO0=;
-        b=lLt2mFGsOD/FbSl10ZB8/llbWyZyT6cKSi/Sy75ZUWp/OaDf7i41fUKt7HePi6X5/R
-         MzOZCVWwBqt88D/I1WJdmNBr9Vf+I5nnfAm8AUM7fF8iFnjx7ddmVFAe4cD4cFmrKyFH
-         1fCdVQckKxbP/Izmb95YIlqioXCdduug9qQ6AqGNr6Zy62rN86Xe8U0gJHyu1DC4UXuB
-         2w3g1PVWn9F8bOy8wsGsjeKz1qKsZvbrjjixPJVrAymTXs95wPYlwhrMqBFTp3bqPhvP
-         8pBGPbLqMASGehhZ9mI7h7SdDIYNgtDIbcUJ3GbGZSoFatcD+9RtoLew4Vi67yA862S4
-         cF0g==
-X-Gm-Message-State: APjAAAVJuzmC1kARNLMA54+hYZ/878eBY5JRQRfxy+d/NIuiiimQQQJI
-        mc3PJResl3A59Kkeg9NzoZWf+RIjqSk=
-X-Google-Smtp-Source: APXvYqyzB7uZQqce6iEHig6TWpS5YoBWBR4OBEHCglwCo5Rx7nepJ6MnhMoLfsEDDxvFVum6X5ERRQ==
-X-Received: by 2002:adf:9222:: with SMTP id 31mr30162792wrj.93.1566910677142;
-        Tue, 27 Aug 2019 05:57:57 -0700 (PDT)
+        bh=MDS3VyEtjqlxL22NPuOn2c1gYCHbJCWQ5MSerLrc6II=;
+        b=DNiXWQBB/UpYADIgFMFD8+jVcyZuPHzB8XnnfUPVJSBpCjjc9dpK0L6YbAWjeLIpci
+         T+R8w8zP5hiazAHI03qCjj7PlkkNYvOtR5fjK+EjxNLqlBlhLR9TPH/yhkNle+d4LoxR
+         iP6i5UUutb0Lq5qHjABfoI16ij8kWxK/Si/HauI9aE6IFj7uvoGpAryTg+rp9TovK40c
+         QXX6TtC20mNuSeaKnfsWOScoTxhFXgUxD01CMhArFgyn0k9Vb4KVpWXXQQ3PbWjI8p/Z
+         HnNH9zN67u0unHPT57PtnjzArJn+btLb0bmYt65JWdD+Dr5dFPWRmPhY3+cmgaOVFCLb
+         0yvw==
+X-Gm-Message-State: APjAAAV1coDGXKmyy/Oz/rHzJ8bpHVs4oVAhfJ33dNRuocf2q52V+blh
+        q8lo+eRXtKJukX4r4yS37/fLuRRARMU=
+X-Google-Smtp-Source: APXvYqxEPcu0I/52WsG5s+qH2nCmyRQxNeGIAPudfjo0mE1uhEVZWhDy7BNYugA7LQGLXfEXodXO3w==
+X-Received: by 2002:adf:e78c:: with SMTP id n12mr28063373wrm.83.1566910682300;
+        Tue, 27 Aug 2019 05:58:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm3764108wmj.27.2019.08.27.05.57.56
+        by smtp.gmail.com with ESMTPSA id l62sm4559416wml.13.2019.08.27.05.58.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Aug 2019 05:57:56 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 05:57:56 -0700 (PDT)
-X-Google-Original-Date: Tue, 27 Aug 2019 12:57:45 GMT
-Message-Id: <3c855d9fa563a288d7934e3cca29295fc929257a.1566910672.git.gitgitgadget@gmail.com>
+        Tue, 27 Aug 2019 05:58:01 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 05:58:01 -0700 (PDT)
+X-Google-Original-Date: Tue, 27 Aug 2019 12:57:52 GMT
+Message-Id: <b27fbe289f18201466ce996e29b2788e22b2b17a.1566910672.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v4.git.gitgitgadget@gmail.com>
 References: <pull.170.v3.git.gitgitgadget@gmail.com>
         <pull.170.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 04/11] built-in add -i: refresh the index before running
- `status`
+Subject: [PATCH v4 11/11] built-in add -i: implement the `help` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,75 +73,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is what the Perl version does, and therefore it is what the
-built-in version should do, too.
+This imitates the code to show the help text from the Perl script
+`git-add--interactive.perl` in the built-in version.
 
+To make sure that it renders exactly like the Perl version of `git add
+-i`, we also add a test case for that to `t3701-add-interactive.sh`.
+
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c |  4 +++-
- repository.c      | 19 +++++++++++++++++++
- repository.h      |  7 +++++++
- 3 files changed, 29 insertions(+), 1 deletion(-)
+ add-interactive.c          | 26 ++++++++++++++++++++++++--
+ t/t3701-add-interactive.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 2 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index d64206ba1c..427abe505e 100644
+index a343195a67..765455a3fc 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -259,7 +259,9 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 		    _("staged"), _("unstaged"), _("path"));
- 	opts.header = header.buf;
- 
--	res = run_status(r, ps, &files, &opts);
-+	repo_refresh_and_write_index(r, REFRESH_QUIET, 1);
-+	if (run_status(r, ps, &files, &opts) < 0)
-+		res = -1;
- 
- 	release_file_list(&files);
- 	strbuf_release(&print_file_item_data.buf);
-diff --git a/repository.c b/repository.c
-index 682c239fe3..def35c40fc 100644
---- a/repository.c
-+++ b/repository.c
-@@ -275,3 +275,22 @@ int repo_hold_locked_index(struct repository *repo,
- 		BUG("the repo hasn't been setup");
- 	return hold_lock_file_for_update(lf, repo->index_file, flags);
+@@ -429,6 +429,26 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 	return 0;
  }
-+
-+int repo_refresh_and_write_index(struct repository *r,
-+				 unsigned int flags, int gentle)
+ 
++static int run_help(struct add_i_state *s, const struct pathspec *unused_ps,
++		    struct file_list *unused_files,
++		    struct list_options *unused_opts)
 +{
-+	struct lock_file lock_file = LOCK_INIT;
-+	int fd;
-+
-+	if (repo_read_index_preload(r, NULL, 0) < 0)
-+		return error(_("could not read index"));
-+	fd = repo_hold_locked_index(r, &lock_file, 0);
-+	if (!gentle && fd < 0)
-+		return error(_("could not lock index for writing"));
-+	refresh_index(r->index, flags, NULL, NULL, NULL);
-+	if (0 <= fd)
-+		repo_update_index_if_able(r, &lock_file);
-+	rollback_lock_file(&lock_file);
++	color_fprintf_ln(stdout, s->help_color, "status        - %s",
++			 _("show paths with changes"));
++	color_fprintf_ln(stdout, s->help_color, "update        - %s",
++			 _("add working tree state to the staged set of changes"));
++	color_fprintf_ln(stdout, s->help_color, "revert        - %s",
++			 _("revert staged set of changes back to the HEAD version"));
++	color_fprintf_ln(stdout, s->help_color, "patch         - %s",
++			 _("pick hunks and update selectively"));
++	color_fprintf_ln(stdout, s->help_color, "diff          - %s",
++			 _("view diff between HEAD and index"));
++	color_fprintf_ln(stdout, s->help_color, "add untracked - %s",
++			 _("add contents of untracked files to the staged set of changes"));
 +
 +	return 0;
 +}
-diff --git a/repository.h b/repository.h
-index 4fb6a5885f..cf5d5bab48 100644
---- a/repository.h
-+++ b/repository.h
-@@ -157,5 +157,12 @@ int repo_read_index_unmerged(struct repository *);
-  */
- void repo_update_index_if_able(struct repository *, struct lock_file *);
++
+ struct print_command_item_data {
+ 	const char *color, *reset;
+ };
+@@ -474,9 +494,11 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 		N_("What now"), command_prompt_help
+ 	};
+ 	struct command_item
+-		status = { { "status" }, run_status };
++		status = { { "status" }, run_status },
++		help = { { "help" }, run_help };
+ 	struct command_item *commands[] = {
+-		&status
++		&status,
++		&help
+ 	};
  
-+/*
-+ * Refresh the index and write it out. If the index file could not be
-+ * locked, error out, except in gentle mode. The flags will be passed
-+ * through to refresh_index().
-+ */
-+int repo_refresh_and_write_index(struct repository *r,
-+				 unsigned int flags, int gentle);
- 
- #endif /* REPOSITORY_H */
+ 	struct print_file_item_data print_file_item_data = {
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 69991a3168..cf67756b85 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -647,4 +647,29 @@ test_expect_success 'checkout -p works with pathological context lines' '
+ 	test_write_lines a b a b a a b a b a >expect &&
+ 	test_cmp expect a
+ '
++
++test_expect_success 'show help from add--helper' '
++	git reset --hard &&
++	cat >expect <<-EOF &&
++
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
++	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
++	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
++	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
++	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
++	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>>$SP
++	Bye.
++	EOF
++	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
++	test_decode_color <actual.colored >actual &&
++	test_i18ncmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
-
