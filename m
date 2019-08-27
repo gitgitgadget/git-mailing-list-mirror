@@ -2,74 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A98C1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 03:04:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45B301F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 03:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728828AbfH0DEE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 23:04:04 -0400
-Received: from mail-io1-f46.google.com ([209.85.166.46]:39288 "EHLO
-        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727227AbfH0DEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 23:04:04 -0400
-Received: by mail-io1-f46.google.com with SMTP id l7so42794167ioj.6
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 20:04:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TlBQm+DS2K2W8dSt8qx5AxcWn9O5xWDzDjiV4aUICro=;
-        b=Ve23OiVA1mHWZPq3yNpQpD9cFLRoDMXPF9ZsSnjrlTUJ3pdCWJQQOhzIwsltSr7F8E
-         jABZMZLkObgZn9hd2p7lDC7vnCEfHv+qOVMSJE4ZRjMvhbBhzElyVn/yWf7g2pjUfbYt
-         u5IkFTKMEAnNJnRrMIfaP5VJbFwzpS2Sl8XN4ElHEhR4sF3tG5nLmE/VTKGZT28uV1um
-         qI2q6xPihMtRdEZfEG/vUH9Lzjs8AjqtHtLNaPlQZVbBNFwrl/ozpcvznLBLnB4xwiS6
-         yLwUEjKUjnhIBzrQQ5H0WXX+qY3x/bFSknKldCCuPNg/xl3tdkxsMgZNoRZEXSTuRHNZ
-         pUHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TlBQm+DS2K2W8dSt8qx5AxcWn9O5xWDzDjiV4aUICro=;
-        b=J8cXMqFnY744S2IgdlR+29A/a0S5yTPcXKCQSt5RuAxzrJRqDPmeGn1t8goh/BmCZB
-         9rTemfAhi52ZZFcOBXzKE/tgqGOmIueEjFpQXxpULj1kDvV5UlVJ//dlSwk7R1SXOnlF
-         6BRkioM6qUqzprVCkZwcpU8p+DZ1KVu45guB5/quXSfpZ86UoduRV/DY6kBaAj8QuhDk
-         H+Bi0q9tXGVDV3BNNBOdMQUaYvapcjBVCTAtkpZW/9CctdUL7UhAFkDtSWEQTzC6Hy2v
-         RFuBocg4yZQiFd2ZmQLK6DM3tiIIrxEMGBbstSIoJMwPlS7Sb1/XxWNmas2IvrFa622j
-         2ADQ==
-X-Gm-Message-State: APjAAAURMQGjwD5ucuwqDP8fs8GK6SDEpo5MjvcXNOuql+ivjd5+9p6c
-        C+rybFNGUMF7MjwyrFGx0rBzyhCUCibrIgTYDWRMqIzmJYc=
-X-Google-Smtp-Source: APXvYqw718RFn11fPicPc8WTTgOQlx4RD29R/M2w4Qn37PQSGzT32D0aR1A8p5jdP3OxcC4u/EpshkZ7XfQw+7HjWzk=
-X-Received: by 2002:a5e:d70a:: with SMTP id v10mr987566iom.19.1566875042871;
- Mon, 26 Aug 2019 20:04:02 -0700 (PDT)
+        id S1728971AbfH0DfF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 23:35:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56944 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728025AbfH0DfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 23:35:05 -0400
+Received: (qmail 13390 invoked by uid 109); 27 Aug 2019 03:35:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Aug 2019 03:35:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27105 invoked by uid 111); 27 Aug 2019 03:36:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Aug 2019 23:36:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 26 Aug 2019 23:35:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: Missing file in 2.23 (p5302-pack-index.subtests)?
+Message-ID: <20190827033503.GA571@sigill.intra.peff.net>
+References: <20190818160317.GA13772@mit.edu>
+ <20190826205012.GB27762@sigill.intra.peff.net>
+ <20190827012942.GD28066@mit.edu>
+ <20190827022700.GA31125@sigill.intra.peff.net>
+ <20190827025811.GJ28066@mit.edu>
 MIME-Version: 1.0
-References: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5MZNQ=AWwL+4wh6wERYJTMVv_1DKCBk4OK9Asui_bQBA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 27 Aug 2019 00:03:51 -0300
-Message-ID: <CAHd-oW6rK8uwX9TazVi30oS_cGqWvaYoKMU+TsKyhp3qKaFjqw@mail.gmail.com>
-Subject: Re: [GSoC] My project blog
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190827025811.GJ28066@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+On Mon, Aug 26, 2019 at 10:58:11PM -0400, Theodore Y. Ts'o wrote:
 
-Just wanted to share with you the final report on my GSoC project:
-https://matheustavares.gitlab.io/posts/gsoc-final-report  I plan to
-continue the project (as it isn't finished yet) and keep contributing
-with whatever I can :) Thank you all for the support during this SoC!
+> On Mon, Aug 26, 2019 at 10:27:00PM -0400, Jeff King wrote:
+> > > cannot open test-results/p5302-pack-index.subtests: No such file or directory at ./aggregate.perl line 153.
+> > 
+> > Implies that we're trying to _write_ to it, and that the problem is that
+> > test-results doesn't exist. That should be set up by this part of
+> > perf-lib:
+> 
+> Hmm....   test-results does exist after the failure:
 
-Best,
-Matheus
+Ah, never mind. I was thinking it was coming from this line in perf-lib:
+
+   echo "$test_count" >>"$perf_results_dir"/$base.subtests
+
+But it it is pretty clear from this line of your output:
+
+> cannot open test-results/p5302-pack-index.subtests: No such file or directory at ./aggregate.perl line 153.
+
+...that this is the aggregate script that is run afterwards complaining.
+So for whatever reason, the actual p5302 script is exiting early, before
+it writes anything into the subtests file (from the line above).
+
+That subtests write is done in test_wrapper_(), which is only triggered
+for actual timing tests, not for setup tests (like the repack step that
+starts this script). So the plausible sequence of events here is:
+
+  1. The first "test_expect_success repack" test fails for some reason.
+     Try running "./p5302-pack-index -v -i -x" to see more output.
+
+  2. After the initial failure, the script exits totally rather than
+     continue. That's due to this line in perf-lib, which acts as if
+     "-i" is always set:
+
+       # Performance tests should never fail.  If they do, stop immediately
+       immediate=t
+
+     That makes sense, since any timings we do after a setup step fails
+     would invalidate the result. And if it's not the _first_ such step
+     that fails, we'll just have a truncated subtests file, and some
+     timings will be missing. But when the first one fails, there's no
+     file at all.
+
+     We could probably leave a more consistent state in that case. E.g.,
+     something like this:
+
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index b58a43ea43..cfac2c3cbe 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -48,7 +48,7 @@ export MODERN_GIT
+ perf_results_dir=$TEST_OUTPUT_DIRECTORY/test-results
+ test -n "$GIT_PERF_SUBSECTION" && perf_results_dir="$perf_results_dir/$GIT_PERF_SUBSECTION"
+ mkdir -p "$perf_results_dir"
+-rm -f "$perf_results_dir"/$(basename "$0" .sh).subtests
++>"$perf_results_dir"/$(basename "$0" .sh).subtests
+ 
+ die_if_build_dir_not_repo () {
+ 	if ! ( cd "$TEST_DIRECTORY/.." &&
+
+
+     which would just quietly omit the rest of p5302. It is unfortunate
+     that you wouldn't get some note in the output saying "hey, we
+     didn't run some tests!".
+
+     A lot of this has to do with the hackish way that the list of tests
+     is generated. If you do something like:
+
+       ./run HEAD^ HEAD p5302-pack-index.sh
+
+     and the tests fail in HEAD^ but not HEAD, you'll get a nice table
+     listing all of the tests, with a nil field for each one that didn't
+     run in HEAD^.
+
+     But that's because the second run, on HEAD, actually generated a
+     correct p5302-pack-index.subtests file, that actually mentioned the
+     tests! If the order were reversed, you'd get an empty list.
+
+     So I think in the long run, it would be nice to have some way of
+     generating the list that's more robust to failures. But I suspect
+     doing that is going to be hard; a lot of this is rooted in the fact
+     that there's no data structure with the set of tests, but literally
+     an executable shell script that decides what to run.
+
+So short answer: use "-v" to figure out why the repack is failing, and
+the rest is just Git's perf suite being a bit hacky.
+
+-Peff
