@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C355A1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 18:08:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A126C1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 18:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728371AbfH0SIJ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 27 Aug 2019 14:08:09 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:53639 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfH0SIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 14:08:09 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7RI833B089776
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 27 Aug 2019 14:08:03 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Matheus Tavares Bernardino'" <matheus.bernardino@usp.br>,
-        "'Giuseppe Crino''" <giuscri@gmail.com>
-Cc:     "'git'" <git@vger.kernel.org>
-References: <20190827162725.GA29263@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal> <CAHd-oW6MtoYAwv36_Jsx5qQzvLguXdvrA6NRA+D3ayHGmfVSqw@mail.gmail.com>
-In-Reply-To: <CAHd-oW6MtoYAwv36_Jsx5qQzvLguXdvrA6NRA+D3ayHGmfVSqw@mail.gmail.com>
-Subject: RE: How to build to debug with gdb?
-Date:   Tue, 27 Aug 2019 14:07:57 -0400
-Message-ID: <018f01d55d02$5e89e1f0$1b9da5d0$@nexbridge.com>
+        id S1730449AbfH0SYO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 14:24:14 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33767 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729903AbfH0SYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 14:24:14 -0400
+Received: by mail-qt1-f195.google.com with SMTP id v38so32572qtb.0
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 11:24:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=1AIbinFWM7+llGB5f4axHj/I3ecqVYvraiSZiNwFDNU=;
+        b=p7QQ8amT457uJXItMyB0WFYnHYrRUFN0GZHEGQ+ITDoDjacGvoJD610G3lGe62Myrj
+         6kee44Qyc9zQUEKVnMmDfOzp9b8JgPx3cnzE99UTRX6Kg1Kfn6DS1X73IFdsNrzo+HRI
+         COu7hE9tOoqayQ4ve0FVnsxs6pyYmjjFt0zkvmR2NxTDdYi3COpmigRJcUlTfRbvwC9Z
+         qqcmbh9JC3givwoKhda//S4jHIDlrmv1ZAOj73kwTHJaeTnVaA/KoeGWPhOoCh3UVjEr
+         WkJm+A1IfC+JhSTMm/HMSD3DY83qOr8WY3VHSuFMvz3nyPMW2+/SlIBwwCmFUhDOLk7F
+         2GDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=1AIbinFWM7+llGB5f4axHj/I3ecqVYvraiSZiNwFDNU=;
+        b=WnwaZ7roZk8eNEViS08JEP2eUI5PbKP5IxZ4B/mOU/sdXhltb+6ruqFH6/oJSbR6Z4
+         otRaXE//p52u7yST6IfTTYtd6S0/y55TCnWLl3/6hyIGGL2djJO5cFKu+F3wEL1jF3B9
+         eD09DLnG4FhyhLrlE+82P7o8nxrEyWPENNs93xcnAjHOxBfiQn0GB1hTMahZQTowf6+9
+         wDspF5bU/Ir30IGx5g13rG52smSn891uVyx0em57VC1H5AhIaNl3dTgJJ1Ci8gXJAqBu
+         0Wq4dDqRV7oYQq0UJhxmfoze4t12Qg6RF/D8tKKSKjEDnHpuiCR09XaZWo7pabIHI3uW
+         Yq4w==
+X-Gm-Message-State: APjAAAXfI8Q9bZFHA5w5msDxTD2ifVuLuOHj1CJm6KVkUJZ0/Z0hgVgp
+        PR7Hs1+6HQcUgxImUj/B664TX/OCcZltJhmZsm+XF1/ZzJh48g==
+X-Google-Smtp-Source: APXvYqygpMBs/SNByvy7Svuo1nyvGYkwvJ5yNaw7d+vPhyQVyNQAsZk4EvCraYSzZ3hjkXBwST9F098JNahC6s2emZc=
+X-Received: by 2002:ac8:7402:: with SMTP id p2mr217493qtq.182.1566930253298;
+ Tue, 27 Aug 2019 11:24:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQKGl7gichNm/SI1hdluiFjdgqZSsQHOC4wopZ5i3hA=
+From:   Dmitry Nikulin <pastafariant@gmail.com>
+Date:   Tue, 27 Aug 2019 21:24:02 +0300
+Message-ID: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
+Subject: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF incorrectly?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 27, 2019 1:56 PM, Matheus Tavares Bernardino wrote:
-> On Tue, Aug 27, 2019 at 1:27 PM Giuseppe Crino' <giuscri@gmail.com>
-> wrote:
-> > Hello, to debug some issues I built and installed git via
-> >
-> > $ make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g"
-> > $ sudo make install
-> > $ git --version # git version 2.23.0.40.g4d8aada92f
-> 
-> Hmm, could it be perhaps that CFLAGS is being overwritten? To debug Git
-> with GDB I always add this to my config.mak file:
-> 
-> CFLAGS += -g3 -O0
-> LDFLAGS += -g3 -O0
-> 
-> And then just compile with `make`. Maybe give it a try?
-> 
-> > But it seems there's still some optimization going on that prevents gdb
-> from working correctly.
-> >
-> > For example
-> >
-> > (gdb) b builtin/config.c:752
-> > Breakpoint 1 at 0x43942: file builtin/config.c, line 752.
-> > (gdb) r config --global --edit
-> > Starting program: /usr/local/bin/git config --global --edit [Thread
-> > debugging using libthread_db enabled] Using host libthread_db library
-> > "/lib/x86_64-linux-gnu/libth read_db.so.1".
-> >
-> > Breakpoint 1, cmd_config (argc=0, argv=<optimized out>,
-> >     prefix=<optimized out>) at builtin/config.c:753
-> >     753                             if (fd >= 0) {
-> >     (gdb) p fd
-> >     $1 = <optimized out>
-> >
-> >  What am I missing?
+I wrote a very simple Python script to see which arguments git-diff
+passes to the external diff program when comparing files across
+branches:
 
-Given that you are 40 commits in from 2.23.0, is it possible that you have compiled a few objects, like main, using the old CFLAGS? Gdb is notorious for not showing symbols if main does not have it. Have you done a git clean -dxf before building with the new CFLAGS?
+$ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
+origin/branch1:file1.txt origin/branch2:file2.txt
+['./print_argv.py',
+ 'file1.txt',
+ '/tmp/QRaIJ1_file1.txt',
+ '802b1c4ed7b06162b2ce09b7db72a576695b96e5',
+ '100644',
+ '/tmp/AZuOJ1_file2.txt',
+ '076e8e37a712d8a66c0c3d1a103050dc509ca6ff',
+ '100644',
+ 'file2.txt',
+ 'index 802b1c4..076e8e3 100644\n']
 
-Just a thought.
+According to the docs
+(https://www.git-scm.com/docs/git/2.22.0#Documentation/git.txt-codeGITEXTERNALDIFFcode),
+git-diff is supposed to pass 7 parameters:
 
-Randall
+path old-file old-hex old-mode new-file new-hex new-mode
 
+This is not what I am seeing here. Is this a bug or
+incorrect/incomplete documentation?
+
+Tested with git 2.22.0 and 2.17.1.
