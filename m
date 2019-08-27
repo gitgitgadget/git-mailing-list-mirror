@@ -8,51 +8,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EE741F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 05:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEFC61F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 05:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729324AbfH0FiF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 01:38:05 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35769 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725811AbfH0FiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 01:38:05 -0400
-Received: by mail-io1-f65.google.com with SMTP id b10so34397940ioj.2
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 22:38:04 -0700 (PDT)
+        id S1729340AbfH0FiI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 01:38:08 -0400
+Received: from mail-io1-f42.google.com ([209.85.166.42]:38865 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725811AbfH0FiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 01:38:07 -0400
+Received: by mail-io1-f42.google.com with SMTP id p12so43496478iog.5
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 22:38:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=F60fZwnt39XfVOJovpBOzsC+gIlPxSPyARZ47M61hD0=;
-        b=I1iGMK8FTvsQlIvGDCiu8Gh/hKXNYAphCnCgT9NwBOEj7nylmrwlZaJpW+E2Mq6BWs
-         uKf+5sy5U9PqLkSGR2IU1ZZ7pMoPW/D8qgteHA+fv5xpH5YjG0wttQy2Ap1LwwMJBCh1
-         Rr91YxEJghNlEfzCtJ0G70OwnltvAkvnwxoHfdOO3kV4768bibS6XGDtt5AZP0hEFcUb
-         Uflx4GpCSGg2VhT3FjBCeTTohJa/ztlsboeuCEnNkGUQEL9VnV44XK6T0zVVEAqlJWza
-         ZV3NkHOHPmcdQAdMwKsz7GYsfnALr5ICuElNOG/T99qfRkFp0jOKQtZV+8CBNhyQO3OD
-         7u1w==
+        bh=vQ/XcDGahnhdplmjyOLvVAhEom12eBuxu/TN2N3wMX0=;
+        b=NJv3qlvPgslO/KRVNZFPZOAF+OQQFW4xL9EDHnjyR9GrTMa3cqQlRrGUsWb3+hNrOt
+         fAzQW0Yfm4YKyFdYMEsgahg6fKSgnGZi2Bbnq3LHQRXKJa6PMWms0xoovEBuSD316MKT
+         mWUWG1FQPUKMm7IiWeP9M030/TxSFcOfY+JVrXfp+2harC86KkGKcOiLX0f6zHHIzSJh
+         7SbDUv4RfR+aJnHo/NPVhB7dpbBwuD8hUOd+PUKbFzhAIJp97owwzJ/InqHiKxbP8Odd
+         fZccj25wql7zqgsQIeZjKtd7nj+eiGi1LYhjW3pLlq846Fy9qxlPJjFz71k4nCrMakpz
+         y4ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=F60fZwnt39XfVOJovpBOzsC+gIlPxSPyARZ47M61hD0=;
-        b=rVJC7avRk0P0cyK7yWOUhjuGz4m7W/DYdyZfQvzuFHunVVR9LN0iwXT1+UHOz9Dhaf
-         WLgktCGEZd/Ks3QbqwTlnh8jaqwB6LMm32vVNk3Xvb5CSzrfwEHtpTJ8aQ5RvU3EUDeH
-         9W6stXMH2eyjPsa3cIo0g0CMLYmHBVWrc/Q8dL/ez0XMhg2jH38XTzlnpw27ATSvCL0n
-         RRsEpk+frc3RJVMWT5CJJJg/pM9mNoBqHv61JhRvFFVoiJFwlC40a8vMBloWCBLplzyD
-         wImG60N6Z8ArSrHMszgjMHheZ56UuUHee4qu5+5AcTxu/ueCrmHIpxsEi/6/DE5624f4
-         DrwA==
-X-Gm-Message-State: APjAAAUjjJopf4uoBak4p7698F2bc5oQpqyR6syj1Dh/M7kTzJG+0FqL
-        zHYsDiACA84xpR3EwNnpTpgiJoZb
-X-Google-Smtp-Source: APXvYqxtUnAzG2ZRqw5z/pn9nTB+sGmTOo/MSGgf6PUYVaSJezn5FMfyYXJHStOYpPxCGHinb1DJ1w==
-X-Received: by 2002:a5d:9a01:: with SMTP id s1mr1197295iol.255.1566884284169;
-        Mon, 26 Aug 2019 22:38:04 -0700 (PDT)
+        bh=vQ/XcDGahnhdplmjyOLvVAhEom12eBuxu/TN2N3wMX0=;
+        b=fQ218kU8mmGJby6rop0MJKZIAqSSksabXplUhDJH5Ep/C6kOB9zWjF5dZvCUgIuDBA
+         4WOtZ+/UKax5Gjsnd1+ZqOWg8Zif7LRcQZOI77Z5l4RjYlVs8Gb+8WFRxac3UrIVqLwX
+         Zwr/JDx/o28yVOmPt+GT4wCTYszJMInLg5R4oNpvL+Ey7GSwhVeNCyoYihoDn6on+A3+
+         BklsI/mAcEKMBPd7/4WJ3mRDoF8V8uDQMLsrShwhHn2ssa7CRp9PawTZGi/zVuCVqDma
+         SL9CvawYFxz8Udx8kb6ZVpEIXdU5AT8IfgUXk6EyVkddotceyw+BNP3BlmQo2cGKA+ba
+         IKLA==
+X-Gm-Message-State: APjAAAUiokgeh7vWajKJ5PJOHMBts0cZyMerUZyei02TSskxggv61rGj
+        fs7n65Gr2HA8JETCSMsvXJu44eoj
+X-Google-Smtp-Source: APXvYqw7fV7U2cN91/nWwVwDFw5AlMOTmJ4BIourdWr/JXjivoNBZQS2ZipbZbQWKpQUHcfdkJ9RHA==
+X-Received: by 2002:a02:9644:: with SMTP id c62mr10719718jai.45.1566884286604;
+        Mon, 26 Aug 2019 22:38:06 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id q3sm12209469ios.70.2019.08.26.22.38.03
+        by smtp.gmail.com with ESMTPSA id s11sm12483137ioo.45.2019.08.26.22.38.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 22:38:03 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 01:38:01 -0400
+        Mon, 26 Aug 2019 22:38:06 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 01:38:04 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -63,8 +63,8 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Philip Oakley <philipoakley@iee.email>,
         Pratyush Yadav <me@yadavpratyush.com>
-Subject: [PATCH v10 7/9] rebase: fast-forward --fork-point in more cases
-Message-ID: <126c20a95d1d7afa4e0cba384fbd08a4bea43614.1566884063.git.liu.denton@gmail.com>
+Subject: [PATCH v10 8/9] rebase tests: test linear branch topology
+Message-ID: <bf6cc6a6102d7b872de590db99b1c5957d7a2dad.1566884063.git.liu.denton@gmail.com>
 References: <cover.1566724236.git.liu.denton@gmail.com>
  <cover.1566884063.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -78,105 +78,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, when we rebased with a --fork-point invocation where the
-fork-point wasn't empty, we would be setting options.restrict_revision.
-The fast-forward logic would automatically declare that the rebase was
-not fast-forwardable if it was set. However, this was painting with a
-very broad brush.
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Refine the logic so that we can fast-forward in the case where the
-restricted revision is equal to the merge base, since we stop rebasing
-at the merge base anyway.
+Add tests rebasing a linear branch topology to linear rebase tests
+added in 2aad7cace2 ("add simple tests of consistency across rebase
+types", 2013-06-06).
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+These tests are duplicates of two surrounding tests that do the same
+with tags pointing to the same objects. Right now there's no change in
+behavior being introduced, but as we'll see in a subsequent change
+rebase can have different behaviors when working implicitly with
+remote tracking branches.
+
+While I'm at it add a --fork-point test, strictly speaking this is
+redundant to the existing '' test, as no argument to rebase implies
+--fork-point. But now it's easier to grep for tests that explicitly
+stress --fork-point.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/rebase.c               | 10 +++++++---
- t/t3432-rebase-fast-forward.sh | 20 ++++++++++----------
- 2 files changed, 17 insertions(+), 13 deletions(-)
+ t/t3421-rebase-topology-linear.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1e1406c8ba..7ef9095e7c 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1261,6 +1261,7 @@ static int is_linear_history(struct commit *from, struct commit *to)
- }
+diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
+index 7274dca40b..b847064f91 100755
+--- a/t/t3421-rebase-topology-linear.sh
++++ b/t/t3421-rebase-topology-linear.sh
+@@ -31,6 +31,16 @@ test_run_rebase success -m
+ test_run_rebase success -i
+ test_have_prereq !REBASE_P || test_run_rebase success -p
  
- static int can_fast_forward(struct commit *onto, struct commit *upstream,
-+			    struct commit *restrict_revision,
- 			    struct object_id *head_oid, struct object_id *merge_base)
- {
- 	struct commit *head = lookup_commit(the_repository, head_oid);
-@@ -1280,6 +1281,9 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	if (!oideq(merge_base, &onto->object.oid))
- 		goto done;
- 
-+	if (restrict_revision && !oideq(&restrict_revision->object.oid, merge_base))
-+		goto done;
++test_expect_success 'setup branches and remote tracking' '
++	git tag -l >tags &&
++	for tag in $(cat tags)
++	do
++		git branch branch-$tag $tag || return 1
++	done &&
++	git remote add origin "file://$PWD" &&
++	git fetch origin
++'
 +
- 	if (!upstream)
- 		goto done;
- 
-@@ -2042,9 +2046,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * with new commits recreated by replaying their changes. This
- 	 * optimization must not be done if this is an interactive rebase.
- 	 */
--	if (can_fast_forward(options.onto, options.upstream, &options.orig_head,
--		    &merge_base) &&
--	    !is_interactive(&options) && !options.restrict_revision) {
-+	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
-+		    &options.orig_head, &merge_base) &&
-+	    !is_interactive(&options)) {
- 		int flag;
- 
- 		if (!(options.flags & REBASE_FORCE)) {
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index d9957e5f1e..fbedfe7b4a 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -70,32 +70,32 @@ test_rebase_same_head_ () {
+ test_run_rebase () {
+ 	result=$1
+ 	shift
+@@ -57,10 +67,28 @@ test_run_rebase () {
+ 	"
  }
+ test_run_rebase success ''
++test_run_rebase success --fork-point
+ test_run_rebase success -m
+ test_run_rebase success -i
+ test_have_prereq !REBASE_P || test_run_rebase failure -p
  
- changes='no changes'
--test_rebase_same_head success work same success work same
-+test_rebase_same_head success noop same success work same
- test_rebase_same_head success noop same success noop-force same master
- test_rebase_same_head success noop same success noop-force diff --onto B B
- test_rebase_same_head success noop same success noop-force diff --onto B... B
- test_rebase_same_head success noop same success noop-force same --onto master... master
- test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success work same success work same --fork-point master
--test_rebase_same_head failure noop same success work diff --fork-point --onto B B
--test_rebase_same_head failure work same success work diff --fork-point --onto B... B
--test_rebase_same_head success work same success work same --fork-point --onto master... master
-+test_rebase_same_head success noop same success work same --fork-point master
-+test_rebase_same_head success noop same success work diff --fork-point --onto B B
-+test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-+test_rebase_same_head success noop same success work same --fork-point --onto master... master
- 
- test_expect_success 'add work same to side' '
- 	test_commit E
- '
- 
- changes='our changes'
--test_rebase_same_head success work same success work same
-+test_rebase_same_head success noop same success work same
- test_rebase_same_head success noop same success noop-force same master
- test_rebase_same_head success noop same success noop-force diff --onto B B
- test_rebase_same_head success noop same success noop-force diff --onto B... B
- test_rebase_same_head success noop same success noop-force same --onto master... master
- test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success work same success work same --fork-point master
--test_rebase_same_head failure work same success work diff --fork-point --onto B B
--test_rebase_same_head failure work same success work diff --fork-point --onto B... B
--test_rebase_same_head success work same success work same --fork-point --onto master... master
-+test_rebase_same_head success noop same success work same --fork-point master
-+test_rebase_same_head success noop same success work diff --fork-point --onto B B
-+test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-+test_rebase_same_head success noop same success work same --fork-point --onto master... master
- 
- test_expect_success 'add work same to upstream' '
- 	git checkout master &&
++test_run_rebase () {
++	result=$1
++	shift
++	test_expect_$result "rebase $* -f rewrites even if remote upstream is an ancestor" "
++		reset_rebase &&
++		git rebase $* -f branch-b branch-e &&
++		! test_cmp_rev branch-e origin/branch-e &&
++		test_cmp_rev branch-b HEAD~2 &&
++		test_linear_range 'd e' branch-b..
++	"
++}
++test_run_rebase success ''
++test_run_rebase success --fork-point
++test_run_rebase success -m
++test_run_rebase success -i
++test_have_prereq !REBASE_P || test_run_rebase success -p
++
+ test_run_rebase () {
+ 	result=$1
+ 	shift
+@@ -71,6 +99,7 @@ test_run_rebase () {
+ 	"
+ }
+ test_run_rebase success ''
++test_run_rebase success --fork-point
+ test_run_rebase success -m
+ test_run_rebase success -i
+ test_have_prereq !REBASE_P || test_run_rebase success -p
 -- 
 2.23.0.248.g3a9dd8fb08
 
