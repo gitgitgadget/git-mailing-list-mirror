@@ -2,94 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3526D1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 04:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0E761F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 04:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729083AbfH0EFY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 00:05:24 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39730 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbfH0EFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:05:24 -0400
-Received: by mail-io1-f66.google.com with SMTP id l7so43065062ioj.6
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RLA+auV5w3B4S445lrANQbbCFiyXgx8XVCPcuC5rVkY=;
-        b=QwMRFytNukuCdacFkFy8E+n0Aj4xM8JQsCyrylAmY72PbZzznlvBOhpsl8NfKVX7yB
-         6jsI8kCW9UOS0QOjrJv6/EgfLVF+yFGM1z7feaIwR5ASdRlwFL2lwY0Re7F+RyJqyfZw
-         ST7jC5Ar8R9KACVOKLgP/SLzBErrx5vJdtA/yIjTaFka/qeD7d6poDTvmjqJRki2mxMF
-         1+FJDxdH3R56+kv+oPyY9uUutjzzrcY+ThFgdxkOaPI/bfUNVKAgsZ+Rk6w2cRTe3rfg
-         Z3Y4tgyvG38nXTmKavVB6XSsIHBWkY2Mr0VB+pL6UiLlpk9k2NygmGRfpQxxupfK7YJz
-         rK5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RLA+auV5w3B4S445lrANQbbCFiyXgx8XVCPcuC5rVkY=;
-        b=amEmZX1WUKFmcr6kPYrCgn1eOzYOcWGkcWYBrfeEdQTpbq1+IME9mS2U7kAxGvvDYe
-         G9ero7rWUtY6zIjhbQFTtFeWkoAV03Y0N5JX64Zu8s2xjFZKSmMkNLNHeAGWT2yYZeFo
-         I9Or7E118wjNWRrhDVdssYnlrH4JE30onggtjytH6BkFVOdsUb7wdUwp6pOthMpG595A
-         kN3oVWav9bNExWrOF8ryT729uoYwlE/1RLfJ+U6xnsL1WCtQk8LFrsqdHvrDPtxk3oGB
-         G7cxOYUWA31UeAAVgZeIJ3iOVaCdn41LA/cf+9X8zCeyNBQrKV70HNlzPbjKhcoBbdVN
-         uBJg==
-X-Gm-Message-State: APjAAAUUtMNzJbI5F8OSKEtVmIaTARNV95JydPrKbuu0aJqPEvEP6I2r
-        o9MlQjmEY8LGda0rhSkgXU2o49Gs
-X-Google-Smtp-Source: APXvYqzIKEMVdD6H71hExzeUIRX1iv1pBhiBulWLvae4swAwSUtZi43Lr4d+XL4oOvitJHpVmsLD3g==
-X-Received: by 2002:a5d:8444:: with SMTP id w4mr3449764ior.51.1566878723132;
-        Mon, 26 Aug 2019 21:05:23 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id j18sm5935944ioo.14.2019.08.26.21.05.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:05:22 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 00:05:20 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2 13/13] config/format.txt: specify default value of
- format.coverLetter
-Message-ID: <4e429e1989173e07bcb9b622b732e46bf3dab828.1566878374.git.liu.denton@gmail.com>
-References: <cover.1566635008.git.liu.denton@gmail.com>
- <cover.1566878373.git.liu.denton@gmail.com>
+        id S1729137AbfH0EZH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 00:25:07 -0400
+Received: from forward102p.mail.yandex.net ([77.88.28.102]:43510 "EHLO
+        forward102p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725879AbfH0EZG (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Aug 2019 00:25:06 -0400
+Received: from mxback17j.mail.yandex.net (mxback17j.mail.yandex.net [IPv6:2a02:6b8:0:1619::93])
+        by forward102p.mail.yandex.net (Yandex) with ESMTP id A7AEA1D40D45;
+        Tue, 27 Aug 2019 07:25:04 +0300 (MSK)
+Received: from smtp1p.mail.yandex.net (smtp1p.mail.yandex.net [2a02:6b8:0:1472:2741:0:8b6:6])
+        by mxback17j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id GRkwBpFjzt-P4OqF8uS;
+        Tue, 27 Aug 2019 07:25:04 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1566879904;
+        bh=g3wGWwFlV+qLbZiLua2Lqb9NZw8juNy4IbvlfhaSsLI=;
+        h=Subject:To:From:Cc:Date:Message-Id;
+        b=nBhEath0tHltaXbqeL680cUx3hv1LetgD5GpTgNjp+98FtKgQjR0tzvBa8pI+e6Ae
+         jRoflhjiCyiQxA0HXjtVdqy5yU+H5mWUTKF9I8el4oxcMddPw8xpQGef9j6WZt3e3d
+         kOE8q2hPZM8WtRcvZnfK8eSwKCaitZrg3s/vdiG4=
+Authentication-Results: mxback17j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by smtp1p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id gRT48iKPW5-P20uRXud;
+        Tue, 27 Aug 2019 07:25:03 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+From:   Andrey Mazo <ahippo@yandex.ru>
+To:     git@vger.kernel.org
+Cc:     Andrey Mazo <ahippo@yandex.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/1] .mailmap: update email address of Andrey Mazo
+Date:   Tue, 27 Aug 2019 07:24:41 +0300
+Message-Id: <b8cd556ebb4715d2111422d4bacf4075eedea8f8.1566879764.git.ahippo@yandex.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1566878373.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
+From: Andrey Mazo <ahippo@yandex.com>
+
+I don't have access to my old work email since 20 Apr 2019.
+Replace with my personal email address.
+
+Signed-off-by: Andrey Mazo <ahippo@yandex.com>
 ---
- Documentation/config/format.txt | 1 +
+ .mailmap | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index 414a5a8a9d..cb629fa769 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -77,6 +77,7 @@ format.coverLetter::
- 	A boolean that controls whether to generate a cover-letter when
- 	format-patch is invoked, but in addition can be set to "auto", to
- 	generate a cover-letter only when there's more than one patch.
-+	Default is false.
- 
- format.outputDirectory::
- 	Set a custom directory to store the resulting files instead of the
+diff --git a/.mailmap b/.mailmap
+index 9a5ff04753..14fa041043 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -16,10 +16,11 @@ Alexander Gavrilov <angavrilov@gmail.com>
+ Alexander Kuleshov <kuleshovmail@gmail.com>
+ Alexey Shumkin <alex.crezoff@gmail.com> <zapped@mail.ru>
+ Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff@gmail.com>
+ Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
+ Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
++Andrey Mazo <ahippo@yandex.com> Mazo, Andrey <amazo@checkvideo.com>
+ Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+ Amos Waterland <apw@debian.org> <apw@rossby.metr.ou.edu>
+ Amos Waterland <apw@debian.org> <apw@us.ibm.com>
+ Ben Peart <benpeart@microsoft.com> <Ben.Peart@microsoft.com>
+ Ben Peart <benpeart@microsoft.com> <peartben@gmail.com>
+
+base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
 -- 
-2.23.0.248.g3a9dd8fb08
+2.21.0
 
