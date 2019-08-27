@@ -8,103 +8,102 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3D7E1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 04:45:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 470E21F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 04:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725920AbfH0Epi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 00:45:38 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:44027 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbfH0Eph (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:45:37 -0400
-Received: by mail-io1-f66.google.com with SMTP id 18so43123607ioe.10
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:45:37 -0700 (PDT)
+        id S1726134AbfH0Epk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 00:45:40 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:40241 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbfH0Epk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 00:45:40 -0400
+Received: by mail-io1-f67.google.com with SMTP id t6so43212954ios.7
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=lCt+399YLlfRn3vHugnGALNUf5gGbIk4It7OU2mvFks=;
-        b=jqgfT3/MI7t2+H2OghXTcCCjswesN82TRsKz29oavDFJXSGndtWR3zZx2sNIC/bsiY
-         hFivWgU7puIi2uyEBfXPYYxFV1C367hMOA8TaQFtIZn9lHXTJdyZmJzzc0/bXP19e2Dc
-         69K5iHa79LiBXUYUsCb8/2PHEto53pbQyBp1k8Nj4qBtivZWJV7mjdhi3hiKDmg0RWMf
-         Ls+UMIl+HHLq2+ip3MtWUqD3o0OfAXsv35ZjCQt3ah6jtU0U8L5VvK8p2N9Fv+VWlEnY
-         VylkckHd8B8i8AryIu0RZODOkOaeKYDOChiMORyhowNGVaj3khfVVrps9Tl0/KmaC3Bj
-         fmww==
+        bh=7GYwZSmNkJA7qLEr5X341A9jJ/weY7cRYvFm1vBdq20=;
+        b=N+Ku5aAdWuvmXxZnIu6HzYoK2ALk4a1JrOwj55BgOUqoUQ/wUVVZu+63kC4+lvIM4j
+         A710ki7QQjvzm5zoBlo27IepbTI54+G0UUbI8ArH7Hl5w7c7jZ3driw5RA+1FcPFoVzz
+         uMyN6T0TBayb8idvMNCnQTxjJTsgnNwMrRTu8n2Sl8K3h3ZBgZy8ykTNFOVvWkKgz5hG
+         GEXAWii6Po3UVwfnnMt4FX3KNXmGjyWoTylEVcExgmTh+9jGyGvWLL8YM8iKI2771TSf
+         l7JoNns5E8CZot6Bi5sm18z/C8s8Dpd9i4xjXuGJXP2ZdjmdWMERaHkpQrxt4vOSrhhR
+         /jnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lCt+399YLlfRn3vHugnGALNUf5gGbIk4It7OU2mvFks=;
-        b=JWMcrct5/0fvrIps+7+UAtRIA5IUbj7BWqfH3/PRbiiO3JswrBxubuz4oWQkgbVabC
-         CcdaOQc+WacwrsC9LFNseR+/gHWPs1OeSvy6iwWGLFhstA5FUYhtnzoil8jDGuyUNj0J
-         kE3BcTirRcIpk5jLwZNZCbLiwWYi6/UvMPmzGAwR1CCZMcn6HHlAaxXRjKiD1T40ffyn
-         txXxruuscmugEea+Gx+UM5mERyTrhQfTSQDaxdO+xQMBsRHQRGfLZm0OYzNYaluyoAha
-         YL44VRxXRTPktkdZwei5+dKx8SMSQYr7kMZqTEUqvciD86kyumyC8dN5X4YyZxQ9MBiQ
-         TZ0w==
-X-Gm-Message-State: APjAAAWZtfOs9xhLpl1a3RU8XZPzJ9P1gbWL+TJ8cRPE4UdDnwHmfhWv
-        8Met47tRYd8QwBrOkneLtoDFoPso
-X-Google-Smtp-Source: APXvYqykNHFuhwyyls+okCAqM1B7VILXBLIFFPSyhosZpXgVk653V/vjbOiDeD4jsbX7caDM5o7q9A==
-X-Received: by 2002:a5e:c104:: with SMTP id v4mr954739iol.209.1566881136563;
-        Mon, 26 Aug 2019 21:45:36 -0700 (PDT)
+        bh=7GYwZSmNkJA7qLEr5X341A9jJ/weY7cRYvFm1vBdq20=;
+        b=P/rLLJlT9Jjq0Bfmh0da4xOo8SOkxY9na+sJQjyPYsSQETQKE1cout0GjKcsgaOcLz
+         7s1r9BjWoGSAqVUMeHfMMW5W7YkbfDHfSXRAuZMWdpGWGxKAHVMhSA0NVBym81Cf6mKy
+         HDbZuZyWl9KeBUGDYLFMPcCYwPbuKCzASBe3RCchz7unp38B4Z14/IW4DSX3pVhyFtLM
+         9XHBxtw9o45d9cvxkAhYcixA/LFbnZtqOCp6pzVdR9EHlnUmd7H0hKrsZCBX+/AyxkIX
+         t5jS2ju3FYtku/l2ns1ItxIpg+EyPOtCvZP6Kr4G74kxd1v83Z/edQC9sddYN6xKb6KB
+         qyeg==
+X-Gm-Message-State: APjAAAWlxx+EdvxtH8fxl3zAmnShONyysf/5DJl1oRTMFzYfnhD3rfBj
+        QkESnVrQDYe7txcNS4VdlqBnJRxS
+X-Google-Smtp-Source: APXvYqxHEqpY1EoSrMKilptB3gCFpsuJrBgPcQM7QmPkyekbxi4zRxomG3jt2ww/a9lGuwdBofMhtg==
+X-Received: by 2002:a02:a11e:: with SMTP id f30mr21536358jag.0.1566881139045;
+        Mon, 26 Aug 2019 21:45:39 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id i10sm8299001ioq.51.2019.08.26.21.45.35
+        by smtp.gmail.com with ESMTPSA id s6sm11259023ioe.6.2019.08.26.21.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:45:35 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 00:45:33 -0400
+        Mon, 26 Aug 2019 21:45:38 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 00:45:36 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/3] advertise --skip for cherry-pick and revert better
-Message-ID: <cover.1566880835.git.liu.denton@gmail.com>
+Subject: [PATCH v2 1/3] completion: merge options for cherry-pick and revert
+Message-ID: <862802366ab2dc636614b737bbb5d4fe26dba9e4.1566880835.git.liu.denton@gmail.com>
 References: <cover.1566637431.git.liu.denton@gmail.com>
+ <cover.1566880835.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1566637431.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1566880835.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio, thanks for the suggestion. I incorporated your suggestion.
-Also, I decided to incorporate another patch (3/3) I was planning on
-submitting later since both these patchsets have a common purpose:
-advertising the `--skip` option better.
+Since revert and cherry-pick share the same sequencer code, they should
+both accept the same command-line options. Derive the
+`__git_cherry_pick_inprogress_options` and
+`__git_revert_inprogress_options` variables from
+`__git_sequencer_inprogress_options` so that the options aren't
+unnecessarily duplicated twice.
 
-
-Before, the completion script would not complete `--skip` for
-cherry-pick and revert, even though it is a valid option while that
-operation is in progress. Add that missing completion.
-
-Also, if a cherry-pick or revert is still in progress, mention the
-`--skip` flag in the status message so that users are more aware of
-their options.
-
-Changes since v1:
-
-* Instead of outright replacing the old completion variables, make them derive
-  from a common variable.
-* Add patch 3/3 and change the focus of this patchset so that it's focused on
-  advertising the `--skip` option better.
-
-
-Denton Liu (3):
-  completion: merge options for cherry-pick and revert
-  completion: add --skip for cherry-pick and revert
-  status: mention --skip for revert and cherry-pick
-
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
  contrib/completion/git-completion.bash | 6 ++++--
- t/t7512-status-help.sh                 | 6 ++++++
- wt-status.c                            | 4 ++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Range-diff against v1:
-1:  cdcac97554 < -:  ---------- completion: merge options for cherry-pick and revert
-2:  75adf58158 < -:  ---------- completion: add --skip for cherry-pick and revert
--:  ---------- > 1:  862802366a completion: merge options for cherry-pick and revert
--:  ---------- > 2:  c83feb3d6e completion: add --skip for cherry-pick and revert
--:  ---------- > 3:  be64ce1e92 status: mention --skip for revert and cherry-pick
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e087c4bf00..a7d3f58627 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1361,7 +1361,9 @@ _git_checkout ()
+ 	esac
+ }
+ 
+-__git_cherry_pick_inprogress_options="--continue --quit --abort"
++__git_sequencer_inprogress_options="--continue --quit --abort"
++
++__git_cherry_pick_inprogress_options=$__git_sequencer_inprogress_options
+ 
+ _git_cherry_pick ()
+ {
+@@ -2512,7 +2514,7 @@ _git_restore ()
+ 	esac
+ }
+ 
+-__git_revert_inprogress_options="--continue --quit --abort"
++__git_revert_inprogress_options=$__git_sequencer_inprogress_options
+ 
+ _git_revert ()
+ {
 -- 
 2.23.0.248.g3a9dd8fb08
 
