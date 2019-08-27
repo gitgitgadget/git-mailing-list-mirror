@@ -8,51 +8,49 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868EA1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 04:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BF091F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 04:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725904AbfH0EEy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 00:04:54 -0400
-Received: from mail-io1-f54.google.com ([209.85.166.54]:37101 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbfH0EEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:04:54 -0400
-Received: by mail-io1-f54.google.com with SMTP id q22so43029769iog.4
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:04:53 -0700 (PDT)
+        id S1726037AbfH0EE5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 00:04:57 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:45946 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbfH0EE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 00:04:56 -0400
+Received: by mail-io1-f68.google.com with SMTP id t3so42916166ioj.12
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=cn5jFarKJ6VpDNdkWy0N5jDxwa8FQX6TLwwg9G5+5dY=;
-        b=YrTQOXMOGfE6cgRCJ+WB4+Ba7Mu75OZRUHy7SZAsPsNVqWACJ3xaz2aDncQM0pSnQO
-         3Gzx8azT/g6ITnnJlRUffpU5KcjpfR9RNPjLUMCTgx5vZcy3kK6H3UZmtiLlXnzmajSO
-         XIQ3mS0ZSbM+ddHOhlrMO05EqlVb+0lnLEMC/H2UzK/aWO0lJi+PDdCxq1ZNcSS6ihs9
-         IluxgkGmGj98TR4wZMMT5+cXVBJbLnpvP14XLalWEKd5A4vvZMqsbifPwRTOaPgKR+ti
-         PQII71yy9f1c5QZlv3IZGHzO4o2qstm62QY341RcXWLw9Tou4/oQQgv4L8LTPJ4wwbDK
-         aFtA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=9jrIbzWvoCYQgcJJyNCDCfNj2pQFwhu4pOWaG2kaKbQ=;
+        b=vIlIVCjKlVZcUceNwCQuc29LIwrbQuyk5NsOiN3MF/n8+10VK5SXpEkT8iA4tNbmtm
+         iHbVVo9lGcVkGTdAFhT7e1m6yqoGn3DXQLdzdyn+tG4aE5wgurkdkBMiXQLYxfvh9S8O
+         qilV+O/FKyv/RKFkcIm0ZCE8KY0bTJKa6yaqXuOd8GgmdSUBlyk6GQi63xd3RCnqpwqj
+         a/wydm5A7QKgPJeGnYCLUtRbTxRX+oP8yKnMQmEN+2mXuacYsIJ40FBV0LyeQqF/CWdg
+         3M5tWyL/2KDBlE5te4pqk5Z2mC0tT/jNwi5KNDMEUUmdE/w1wWVLorZLWVj/r0QRPeDP
+         Bdkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=cn5jFarKJ6VpDNdkWy0N5jDxwa8FQX6TLwwg9G5+5dY=;
-        b=aV5m50wMDbXEqE+lU+Yee5WnVmvo27Da3LqdzbP6d+zpZs2ANmJUQJiHf7LPekuoPe
-         22q+AYbXXyaPChOUJBaxELplx5HE9lWjw6fQokO3Hj4G6EgblOMEuCxdVgUJmifMkTVz
-         g7xFiTpgeCdC3uRAmR144FYCabbf/rf0IWFHZOhXtpfyfgFUhCQY7v675xdOPqbVZDH8
-         i2ofGyji/wcyGoVj/7vRXCjThjffYuZuS4m/C6Ix1EI/QteS/Dy6dQ/RE9tVMEaSQlKR
-         4Fg6+3GbDYlVd8uPFW7NQUTSDnLNg908PrKgUQwLlnDcEXLFNWf7z4Liub/IVrClkHiQ
-         gjQQ==
-X-Gm-Message-State: APjAAAUK2fBthY+2PGPgQernvSnJ6rI4+uD697EzZeJwa/JAMW02V26U
-        upaD385gVYhP8pAqC71lKekaT4iW
-X-Google-Smtp-Source: APXvYqxsB2jAHHUKkrgCNhHqe24Xzf9S1CfboUJb9tZ100vNP+g37QXepiZUu+b6sjlvx0ymXVdUzg==
-X-Received: by 2002:a02:a703:: with SMTP id k3mr20343594jam.12.1566878692665;
-        Mon, 26 Aug 2019 21:04:52 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9jrIbzWvoCYQgcJJyNCDCfNj2pQFwhu4pOWaG2kaKbQ=;
+        b=nsQNFN3NjD+fWM1gDLMkT29MFpHiNVtXGnHN858JckMuqVbTiPJnmPZkeZnE9gNkO/
+         luhXyzI50rPn4MhxjChueihxNST6ul+BwIayQxrKDPzB79SPl4dJpKV0E9+TTT4xQeoT
+         LQuT3nEy12XT5zH+GK/HZU37VzFWqUCFoewKxdpFSXBegtnpF5eTxpQhtH6vkJ9HkDdZ
+         x8ii1sh8XUv+wGj9g/MPgodIJ4YVF2vrqCKR7MmmJG8vE8srSaAwzphu9ovrBt3xTlxL
+         FI/FPvqAwNDpFFyc89Zi2iBcXZ1CH36If27GBiUui11lxzU4qerEDtikuxqd2jd3AV2c
+         yCTg==
+X-Gm-Message-State: APjAAAUFKLZDwrGsDELo1KlPhr2VbX1kCRhyFvIcwqrbWh1B24JvEncp
+        5wuK9GHR1MetLl9ZvVvcx1hrHJLl
+X-Google-Smtp-Source: APXvYqzQbealvL+NJIKsKSXZcCPwFmrKCJ+hxFNTe1g3Uxb5wtFd+B69/n9qQdbOAcXeD6EZb68lgw==
+X-Received: by 2002:a5d:9403:: with SMTP id v3mr14940956ion.281.1566878695629;
+        Mon, 26 Aug 2019 21:04:55 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id s11sm12307314ioo.45.2019.08.26.21.04.51
+        by smtp.gmail.com with ESMTPSA id h18sm10917450iob.80.2019.08.26.21.04.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:04:52 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 00:04:50 -0400
+        Mon, 26 Aug 2019 21:04:55 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 00:04:52 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -60,14 +58,13 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2 01/13] t4014: drop unnecessary blank lines from test cases
-Message-ID: <fb000bfca21bde176f1e7ea947f36f3639f822bd.1566878373.git.liu.denton@gmail.com>
+Subject: [PATCH v2 02/13] t4014: s/expected/expect/
+Message-ID: <0a5ce9b95f837fb7c6b526201fa619da15fb2625.1566878373.git.liu.denton@gmail.com>
 References: <cover.1566635008.git.liu.denton@gmail.com>
  <cover.1566878373.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1566878373.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
@@ -75,324 +72,374 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+For test cases, the usual convention is to name expected output files
+"expect", not "expected". Replace all instances of "expected" with
+"expect" except for one case where the "expected" is used as the name
+of a test case.
+
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4014-format-patch.sh | 47 -----------------------------------------
- 1 file changed, 47 deletions(-)
+ t/t4014-format-patch.sh | 106 ++++++++++++++++++++--------------------
+ 1 file changed, 53 insertions(+), 53 deletions(-)
 
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ca7debf1d4..3ed3feabfe 100755
+index 3ed3feabfe..62f5680f05 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -9,7 +9,6 @@ test_description='various format-patch tests'
- . "$TEST_DIRECTORY"/lib-terminal.sh
+@@ -1209,32 +1209,32 @@ append_signoff()
  
- test_expect_success setup '
--
- 	for i in 1 2 3 4 5 6 7 8 9 10; do echo "$i"; done >file &&
- 	cat file >elif &&
- 	git add file elif &&
-@@ -60,20 +59,16 @@ test_expect_success setup '
- '
- 
- test_expect_success "format-patch --ignore-if-in-upstream" '
--
- 	git format-patch --stdout master..side >patch0 &&
- 	cnt=$(grep "^From " patch0 | wc -l) &&
- 	test $cnt = 3
--
- '
- 
- test_expect_success "format-patch --ignore-if-in-upstream" '
--
- 	git format-patch --stdout \
- 		--ignore-if-in-upstream master..side >patch1 &&
- 	cnt=$(grep "^From " patch1 | wc -l) &&
- 	test $cnt = 2
--
- '
- 
- test_expect_success "format-patch --ignore-if-in-upstream handles tags" '
-@@ -85,7 +80,6 @@ test_expect_success "format-patch --ignore-if-in-upstream handles tags" '
- '
- 
- test_expect_success "format-patch doesn't consider merge commits" '
--
- 	git checkout -b slave master &&
- 	echo "Another line" >>file &&
- 	test_tick &&
-@@ -101,7 +95,6 @@ test_expect_success "format-patch doesn't consider merge commits" '
- '
- 
- test_expect_success "format-patch result applies" '
--
- 	git checkout -b rebuild-0 master &&
- 	git am -3 patch0 &&
- 	cnt=$(git rev-list master.. | wc -l) &&
-@@ -109,7 +102,6 @@ test_expect_success "format-patch result applies" '
- '
- 
- test_expect_success "format-patch --ignore-if-in-upstream result applies" '
--
- 	git checkout -b rebuild-1 master &&
- 	git am -3 patch1 &&
- 	cnt=$(git rev-list master.. | wc -l) &&
-@@ -117,26 +109,19 @@ test_expect_success "format-patch --ignore-if-in-upstream result applies" '
- '
- 
- test_expect_success 'commit did not screw up the log message' '
--
- 	git cat-file commit side | grep "^Side .* with .* backslash-n"
--
- '
- 
- test_expect_success 'format-patch did not screw up the log message' '
--
- 	grep "^Subject: .*Side changes #3 with .* backslash-n" patch0 &&
- 	grep "^Subject: .*Side changes #3 with .* backslash-n" patch1
--
- '
- 
- test_expect_success 'replay did not screw up the log message' '
--
- 	git cat-file commit rebuild-1 | grep "^Side .* with .* backslash-n"
--
- '
- 
- test_expect_success 'extra headers' '
--
- 	git config format.headers "To: R E Cipient <rcipient@example.com>
- " &&
- 	git config --add format.headers "Cc: S E Cipient <scipient@example.com>
-@@ -145,22 +130,18 @@ test_expect_success 'extra headers' '
- 	sed -e "/^\$/q" patch2 > hdrs2 &&
- 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs2 &&
- 	grep "^Cc: S E Cipient <scipient@example.com>\$" hdrs2
--
- '
- 
- test_expect_success 'extra headers without newlines' '
--
- 	git config --replace-all format.headers "To: R E Cipient <rcipient@example.com>" &&
- 	git config --add format.headers "Cc: S E Cipient <scipient@example.com>" &&
- 	git format-patch --stdout master..side >patch3 &&
- 	sed -e "/^\$/q" patch3 > hdrs3 &&
- 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs3 &&
- 	grep "^Cc: S E Cipient <scipient@example.com>\$" hdrs3
--
- '
- 
- test_expect_success 'extra headers with multiple To:s' '
--
- 	git config --replace-all format.headers "To: R E Cipient <rcipient@example.com>" &&
- 	git config --add format.headers "To: S E Cipient <scipient@example.com>" &&
- 	git format-patch --stdout master..side > patch4 &&
-@@ -170,7 +151,6 @@ test_expect_success 'extra headers with multiple To:s' '
- '
- 
- test_expect_success 'additional command line cc (ascii)' '
--
- 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
- 	git format-patch --cc="S E Cipient <scipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch5 &&
- 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch5 &&
-@@ -178,7 +158,6 @@ test_expect_success 'additional command line cc (ascii)' '
- '
- 
- test_expect_failure 'additional command line cc (rfc822)' '
--
- 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
- 	git format-patch --cc="S. E. Cipient <scipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch5 &&
- 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch5 &&
-@@ -186,14 +165,12 @@ test_expect_failure 'additional command line cc (rfc822)' '
- '
- 
- test_expect_success 'command line headers' '
--
- 	git config --unset-all format.headers &&
- 	git format-patch --add-header="Cc: R E Cipient <rcipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch6 &&
- 	grep "^Cc: R E Cipient <rcipient@example.com>\$" patch6
- '
- 
- test_expect_success 'configuration headers and command line headers' '
--
- 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
- 	git format-patch --add-header="Cc: S E Cipient <scipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch7 &&
- 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" patch7 &&
-@@ -201,40 +178,34 @@ test_expect_success 'configuration headers and command line headers' '
- '
- 
- test_expect_success 'command line To: header (ascii)' '
--
- 	git config --unset-all format.headers &&
- 	git format-patch --to="R E Cipient <rcipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch8 &&
- 	grep "^To: R E Cipient <rcipient@example.com>\$" patch8
- '
- 
- test_expect_failure 'command line To: header (rfc822)' '
--
- 	git format-patch --to="R. E. Cipient <rcipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch8 &&
- 	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" patch8
- '
- 
- test_expect_failure 'command line To: header (rfc2047)' '
--
- 	git format-patch --to="R Ä Cipient <rcipient@example.com>" --stdout master..side | sed -e "/^\$/q" >patch8 &&
- 	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" patch8
- '
- 
- test_expect_success 'configuration To: header (ascii)' '
--
- 	git config format.to "R E Cipient <rcipient@example.com>" &&
- 	git format-patch --stdout master..side | sed -e "/^\$/q" >patch9 &&
- 	grep "^To: R E Cipient <rcipient@example.com>\$" patch9
- '
- 
- test_expect_failure 'configuration To: header (rfc822)' '
--
- 	git config format.to "R. E. Cipient <rcipient@example.com>" &&
- 	git format-patch --stdout master..side | sed -e "/^\$/q" >patch9 &&
- 	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" patch9
- '
- 
- test_expect_failure 'configuration To: header (rfc2047)' '
--
- 	git config format.to "R Ä Cipient <rcipient@example.com>" &&
- 	git format-patch --stdout master..side | sed -e "/^\$/q" >patch9 &&
- 	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" patch9
-@@ -249,7 +220,6 @@ check_patch () {
- }
- 
- test_expect_success 'format.from=false' '
--
- 	git -c format.from=false format-patch --stdout master..side |
- 	sed -e "/^\$/q" >patch &&
- 	check_patch patch &&
-@@ -257,7 +227,6 @@ test_expect_success 'format.from=false' '
- '
- 
- test_expect_success 'format.from=true' '
--
- 	git -c format.from=true format-patch --stdout master..side |
- 	sed -e "/^\$/q" >patch &&
- 	check_patch patch &&
-@@ -265,7 +234,6 @@ test_expect_success 'format.from=true' '
- '
- 
- test_expect_success 'format.from with address' '
--
- 	git -c format.from="F R Om <from@example.com>" format-patch --stdout master..side |
- 	sed -e "/^\$/q" >patch &&
- 	check_patch patch &&
-@@ -273,7 +241,6 @@ test_expect_success 'format.from with address' '
- '
- 
- test_expect_success '--no-from overrides format.from' '
--
- 	git -c format.from="F R Om <from@example.com>" format-patch --no-from --stdout master..side |
- 	sed -e "/^\$/q" >patch &&
- 	check_patch patch &&
-@@ -281,7 +248,6 @@ test_expect_success '--no-from overrides format.from' '
- '
- 
- test_expect_success '--from overrides format.from' '
--
- 	git -c format.from="F R Om <from@example.com>" format-patch --from --stdout master..side |
- 	sed -e "/^\$/q" >patch &&
- 	check_patch patch &&
-@@ -289,7 +255,6 @@ test_expect_success '--from overrides format.from' '
- '
- 
- test_expect_success '--no-to overrides config.to' '
--
- 	git config --replace-all format.to \
- 		"R E Cipient <rcipient@example.com>" &&
- 	git format-patch --no-to --stdout master..side |
-@@ -299,7 +264,6 @@ test_expect_success '--no-to overrides config.to' '
- '
- 
- test_expect_success '--no-to and --to replaces config.to' '
--
- 	git config --replace-all format.to \
- 		"Someone <someone@out.there>" &&
- 	git format-patch --no-to --to="Someone Else <else@out.there>" \
-@@ -311,7 +275,6 @@ test_expect_success '--no-to and --to replaces config.to' '
- '
- 
- test_expect_success '--no-cc overrides config.cc' '
--
- 	git config --replace-all format.cc \
- 		"C E Cipient <rcipient@example.com>" &&
- 	git format-patch --no-cc --stdout master..side |
-@@ -321,7 +284,6 @@ test_expect_success '--no-cc overrides config.cc' '
- '
- 
- test_expect_success '--no-add-header overrides config.headers' '
--
- 	git config --replace-all format.headers \
- 		"Header1: B E Cipient <rcipient@example.com>" &&
- 	git format-patch --no-add-header --stdout master..side |
-@@ -331,7 +293,6 @@ test_expect_success '--no-add-header overrides config.headers' '
- '
- 
- test_expect_success 'multiple files' '
--
- 	rm -rf patches/ &&
- 	git checkout side &&
- 	git format-patch -o patches/ master &&
-@@ -594,7 +555,6 @@ test_expect_success 'thread config + --no-thread' '
- '
- 
- test_expect_success 'excessive subject' '
--
- 	rm -rf patches/ &&
- 	git checkout side &&
- 	before=$(git hash-object file) &&
-@@ -622,7 +582,6 @@ test_expect_success 'cover-letter inherits diff options' '
- 	! grep "file => foo .* 0 *\$" 0000-cover-letter.patch &&
- 	git format-patch --cover-letter -1 -M &&
- 	grep "file => foo .* 0 *\$" 0000-cover-letter.patch
--
- '
- 
- cat > expect << EOF
-@@ -636,11 +595,9 @@ cat > expect << EOF
+ test_expect_success 'signoff: commit with no body' '
+ 	append_signoff </dev/null >actual &&
+-	cat <<\EOF | sed "s/EOL$//" >expected &&
++	cat <<\EOF | sed "s/EOL$//" >expect &&
+ 4:Subject: [PATCH] EOL
+ 8:
+ 9:Signed-off-by: C O Mitter <committer@example.com>
  EOF
- 
- test_expect_success 'shortlog of cover-letter wraps overly-long onelines' '
--
- 	git format-patch --cover-letter -2 &&
- 	sed -e "1,/A U Thor/d" -e "/^\$/q" < 0000-cover-letter.patch > output &&
- 	test_cmp expect output
--
+-	test_cmp expected actual
++	test_cmp expect actual
  '
  
- cat > expect << EOF
-@@ -656,13 +613,11 @@ index $before..$after 100644
+ test_expect_success 'signoff: commit with only subject' '
+ 	echo subject | append_signoff >actual &&
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 9:Signed-off-by: C O Mitter <committer@example.com>
  EOF
- 
- test_expect_success 'format-patch respects -U' '
--
- 	git format-patch -U4 -2 &&
- 	sed -e "1,/^diff/d" -e "/^+5/q" \
- 		<0001-This-is-an-excessively-long-subject-line-for-a-messa.patch \
- 		>output &&
- 	test_cmp expect output
--
+-	test_cmp expected actual
++	test_cmp expect actual
  '
  
- cat > expect << EOF
-@@ -679,11 +634,9 @@ index $before..$after 100644
+ test_expect_success 'signoff: commit with only subject that does not end with NL' '
+ 	printf subject | append_signoff >actual &&
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 9:Signed-off-by: C O Mitter <committer@example.com>
  EOF
- 
- test_expect_success 'format-patch -p suppresses stat' '
--
- 	git format-patch -p -2 &&
- 	sed -e "1,/^\$/d" -e "/^+5/q" < 0001-This-is-an-excessively-long-subject-line-for-a-messa.patch > output &&
- 	test_cmp expect output
--
+-	test_cmp expected actual
++	test_cmp expect actual
  '
  
- test_expect_success 'format-patch from a subdirectory (1)' '
+ test_expect_success 'signoff: no existing signoffs' '
+@@ -1243,24 +1243,24 @@ subject
+ 
+ body
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: no existing signoffs and no trailing NL' '
+ 	printf "subject\n\nbody" | append_signoff >actual &&
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: some random signoff' '
+@@ -1271,14 +1271,14 @@ body
+ 
+ Signed-off-by: my@house
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: my@house
+ 12:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: misc conforming footer elements' '
+@@ -1292,14 +1292,14 @@ Signed-off-by: my@house
+ Tested-by: Some One <someone@example.com>
+ Bug: 1234
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: my@house
+ 15:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: some random signoff-alike' '
+@@ -1309,13 +1309,13 @@ subject
+ body
+ Fooled-by-me: my@house
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 11:
+ 12:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: not really a signoff' '
+@@ -1324,14 +1324,14 @@ subject
+ 
+ I want to mention about Signed-off-by: here.
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 9:I want to mention about Signed-off-by: here.
+ 10:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: not really a signoff (2)' '
+@@ -1341,13 +1341,13 @@ subject
+ My unfortunate
+ Signed-off-by: example happens to be wrapped here.
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:Signed-off-by: example happens to be wrapped here.
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: valid S-o-b paragraph in the middle' '
+@@ -1359,7 +1359,7 @@ Signed-off-by: your@house
+ 
+ A lot of houses.
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 9:Signed-off-by: my@house
+@@ -1368,7 +1368,7 @@ EOF
+ 13:
+ 14:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: the same signoff at the end' '
+@@ -1379,24 +1379,24 @@ body
+ 
+ Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: the same signoff at the end, no trailing NL' '
+ 	printf "subject\n\nSigned-off-by: C O Mitter <committer@example.com>" |
+ 		append_signoff >actual &&
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 9:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: the same signoff NOT at the end' '
+@@ -1408,14 +1408,14 @@ body
+ Signed-off-by: C O Mitter <committer@example.com>
+ Signed-off-by: my@house
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ 12:Signed-off-by: my@house
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: tolerate garbage in conforming footer' '
+@@ -1428,13 +1428,13 @@ Tested-by: my@house
+ Some Trash
+ Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 13:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: respect trailer config' '
+@@ -1444,13 +1444,13 @@ subject
+ Myfooter: x
+ Some Trash
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 11:
+ 12:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual &&
++	test_cmp expect actual &&
+ 
+ 	test_config trailer.Myfooter.ifexists add &&
+ 	append_signoff <<\EOF >actual &&
+@@ -1459,12 +1459,12 @@ subject
+ Myfooter: x
+ Some Trash
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 11:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'signoff: footer begins with non-signoff without @ sign' '
+@@ -1479,13 +1479,13 @@ Change-id: Ideadbeef
+ Signed-off-by: C O Mitter <committer@example.com>
+ Bug: 1234
+ EOF
+-	cat >expected <<\EOF &&
++	cat >expect <<\EOF &&
+ 4:Subject: [PATCH] subject
+ 8:
+ 10:
+ 14:Signed-off-by: C O Mitter <committer@example.com>
+ EOF
+-	test_cmp expected actual
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format patch ignores color.ui' '
+@@ -1604,13 +1604,13 @@ test_expect_success 'format-patch --base' '
+ 	git checkout patchid &&
+ 	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual1 &&
+ 	git format-patch --stdout --base=HEAD~3 HEAD~.. | tail -n 7 >actual2 &&
+-	echo >expected &&
+-	echo "base-commit: $(git rev-parse HEAD~3)" >>expected &&
+-	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expected &&
+-	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expected &&
+-	signature >> expected &&
+-	test_cmp expected actual1 &&
+-	test_cmp expected actual2 &&
++	echo >expect &&
++	echo "base-commit: $(git rev-parse HEAD~3)" >>expect &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expect &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expect &&
++	signature >> expect &&
++	test_cmp expect actual1 &&
++	test_cmp expect actual2 &&
+ 	echo >fail &&
+ 	echo "base-commit: $(git rev-parse HEAD~3)" >>fail &&
+ 	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --unstable | awk "{print \$1}")" >>fail &&
+@@ -1625,8 +1625,8 @@ test_expect_success 'format-patch --base errors out when base commit is in revis
+ 	test_must_fail git format-patch --base=HEAD~1 -2 &&
+ 	git format-patch --stdout --base=HEAD~2 -2 >patch &&
+ 	grep "^base-commit:" patch >actual &&
+-	echo "base-commit: $(git rev-parse HEAD~2)" >expected &&
+-	test_cmp expected actual
++	echo "base-commit: $(git rev-parse HEAD~2)" >expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format-patch --base errors out when base commit is not ancestor of revision list' '
+@@ -1652,8 +1652,8 @@ test_expect_success 'format-patch --base errors out when base commit is not ance
+ 	test_must_fail git format-patch --base=$(cat commit-id-Z) -3 &&
+ 	git format-patch --stdout --base=$(cat commit-id-base) -3 >patch &&
+ 	grep "^base-commit:" patch >actual &&
+-	echo "base-commit: $(cat commit-id-base)" >expected &&
+-	test_cmp expected actual
++	echo "base-commit: $(cat commit-id-base)" >expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format-patch --base=auto' '
+@@ -1664,8 +1664,8 @@ test_expect_success 'format-patch --base=auto' '
+ 	test_commit N2 &&
+ 	git format-patch --stdout --base=auto -2 >patch &&
+ 	grep "^base-commit:" patch >actual &&
+-	echo "base-commit: $(git rev-parse upstream)" >expected &&
+-	test_cmp expected actual
++	echo "base-commit: $(git rev-parse upstream)" >expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format-patch errors out when history involves criss-cross' '
+@@ -1701,8 +1701,8 @@ test_expect_success 'format-patch format.useAutoBaseoption' '
+ 	git config format.useAutoBase true &&
+ 	git format-patch --stdout -1 >patch &&
+ 	grep "^base-commit:" patch >actual &&
+-	echo "base-commit: $(git rev-parse upstream)" >expected &&
+-	test_cmp expected actual
++	echo "base-commit: $(git rev-parse upstream)" >expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format-patch --base overrides format.useAutoBase' '
+@@ -1710,8 +1710,8 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
+ 	git config format.useAutoBase true &&
+ 	git format-patch --stdout --base=HEAD~1 -1 >patch &&
+ 	grep "^base-commit:" patch >actual &&
+-	echo "base-commit: $(git rev-parse HEAD~1)" >expected &&
+-	test_cmp expected actual
++	echo "base-commit: $(git rev-parse HEAD~1)" >expect &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'format-patch --base with --attach' '
 -- 
 2.23.0.248.g3a9dd8fb08
 
