@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB1391F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 04:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3526D1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 04:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729076AbfH0EFV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 00:05:21 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46026 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbfH0EFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:05:21 -0400
-Received: by mail-io1-f68.google.com with SMTP id t3so42918206ioj.12
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:05:20 -0700 (PDT)
+        id S1729083AbfH0EFY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 00:05:24 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:39730 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbfH0EFY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 00:05:24 -0400
+Received: by mail-io1-f66.google.com with SMTP id l7so43065062ioj.6
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=STrhgLV+GP1f/OkDRDYo2571zVPeQnjc85O1EKDAM+k=;
-        b=us902jgduWEd1oV4ZOMDX4jZNiIdXMkmbOKnuj/VpM21V5OCbtnG0ZZpi5gLeWpRzx
-         xKixut2Z8EJZhvS/g40QhNFkupgC4DGITVIeVmUTxOloqL8eGDpU/MoVETPn5F7SPok5
-         6ULs0aKGwL2GPXSJWq/Gvl9T1KJPkl4fljS2bdatBF5duZjhK35lhlY0+XVsYSWl2CQj
-         gRXaLEtEV5CUuXlZjFZEN6FOTje7l5KZ1HJkez1N8k9ro3/XJlNC9wgUxfnD7hqKxl5d
-         /eFM/vug3zwTt2duoSo3IAOFAEJL0uu+vfSe4Ai1sorvR2bgoR9AL+/RxFnUS8T2uIK4
-         TtDQ==
+        bh=RLA+auV5w3B4S445lrANQbbCFiyXgx8XVCPcuC5rVkY=;
+        b=QwMRFytNukuCdacFkFy8E+n0Aj4xM8JQsCyrylAmY72PbZzznlvBOhpsl8NfKVX7yB
+         6jsI8kCW9UOS0QOjrJv6/EgfLVF+yFGM1z7feaIwR5ASdRlwFL2lwY0Re7F+RyJqyfZw
+         ST7jC5Ar8R9KACVOKLgP/SLzBErrx5vJdtA/yIjTaFka/qeD7d6poDTvmjqJRki2mxMF
+         1+FJDxdH3R56+kv+oPyY9uUutjzzrcY+ThFgdxkOaPI/bfUNVKAgsZ+Rk6w2cRTe3rfg
+         Z3Y4tgyvG38nXTmKavVB6XSsIHBWkY2Mr0VB+pL6UiLlpk9k2NygmGRfpQxxupfK7YJz
+         rK5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=STrhgLV+GP1f/OkDRDYo2571zVPeQnjc85O1EKDAM+k=;
-        b=VlxuMZbS2VJhxqJDbDMmYbQYEJqXu2uyXUl/QtX+CV0Y/tCanw+TjI7c1NeHlhtczg
-         0+so19JiUZ8bn44nb4Nm59sGOcrRT7bo/uSkogvQlKy3zFdzxGzS2uVNLpv0aZa72jVg
-         FaMe1t/OTnsGTPV6Zp3gE0Nlmrr6VHrVwLxBVMm2roFUQPQah4MSZLLgB7KHNTQpYQOj
-         YNMs8TrbyC9p+/V29KnXUfYQdnGUDl/3DrxDECDhkddxWSmSRZx7wUNB/MHbbKpjB696
-         fJSWW/w9nmIIgvEfMyyttjAjCGb1jJJazomotgEzmOucHeHiV7lUkqvXpPowHUimqUfx
-         n3VA==
-X-Gm-Message-State: APjAAAWLLOlW49nhf3PPo4vLw/7Ke/QiGRyubIUatLdlTbuj+sTAFkED
-        Wf7ukzW2uAHplG/SVY24g2UUUR+V
-X-Google-Smtp-Source: APXvYqyhnnFlM5ErwvA5U0nWn8sIPImuPjQ4FLDdMSQFFAhXxmSvPtpyz+7P4Rzw2GOdwiCmGh7BhA==
-X-Received: by 2002:a6b:e511:: with SMTP id y17mr4834407ioc.228.1566878720076;
-        Mon, 26 Aug 2019 21:05:20 -0700 (PDT)
+        bh=RLA+auV5w3B4S445lrANQbbCFiyXgx8XVCPcuC5rVkY=;
+        b=amEmZX1WUKFmcr6kPYrCgn1eOzYOcWGkcWYBrfeEdQTpbq1+IME9mS2U7kAxGvvDYe
+         G9ero7rWUtY6zIjhbQFTtFeWkoAV03Y0N5JX64Zu8s2xjFZKSmMkNLNHeAGWT2yYZeFo
+         I9Or7E118wjNWRrhDVdssYnlrH4JE30onggtjytH6BkFVOdsUb7wdUwp6pOthMpG595A
+         kN3oVWav9bNExWrOF8ryT729uoYwlE/1RLfJ+U6xnsL1WCtQk8LFrsqdHvrDPtxk3oGB
+         G7cxOYUWA31UeAAVgZeIJ3iOVaCdn41LA/cf+9X8zCeyNBQrKV70HNlzPbjKhcoBbdVN
+         uBJg==
+X-Gm-Message-State: APjAAAUUtMNzJbI5F8OSKEtVmIaTARNV95JydPrKbuu0aJqPEvEP6I2r
+        o9MlQjmEY8LGda0rhSkgXU2o49Gs
+X-Google-Smtp-Source: APXvYqzIKEMVdD6H71hExzeUIRX1iv1pBhiBulWLvae4swAwSUtZi43Lr4d+XL4oOvitJHpVmsLD3g==
+X-Received: by 2002:a5d:8444:: with SMTP id w4mr3449764ior.51.1566878723132;
+        Mon, 26 Aug 2019 21:05:23 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id w6sm11701206iob.29.2019.08.26.21.05.19
+        by smtp.gmail.com with ESMTPSA id j18sm5935944ioo.14.2019.08.26.21.05.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:05:19 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 00:05:17 -0400
+        Mon, 26 Aug 2019 21:05:22 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 00:05:20 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -58,8 +58,9 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2 12/13] Doc: add more detail for git-format-patch
-Message-ID: <fd343b99c5bc3a73c3896805ea4283c9f39a9d04.1566878374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 13/13] config/format.txt: specify default value of
+ format.coverLetter
+Message-ID: <4e429e1989173e07bcb9b622b732e46bf3dab828.1566878374.git.liu.denton@gmail.com>
 References: <cover.1566635008.git.liu.denton@gmail.com>
  <cover.1566878373.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,93 +73,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-format-patch.txt, we were missing some key user information.
-First of all, document the special value of `--base=auto`.
-
-Next, while we're at it, surround option arguments with <> and change
-existing names such as "Message-Id" to "message id", which conforms with
-how existing documentation is written.
-
-Finally, document the `format.outputDirectory` config and change
-`format.coverletter` to use camel case.
-
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-format-patch.txt | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ Documentation/config/format.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index b9b97e63ae..0ac56f4b70 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -17,9 +17,9 @@ SYNOPSIS
- 		   [--signature-file=<file>]
- 		   [-n | --numbered | -N | --no-numbered]
- 		   [--start-number <n>] [--numbered-files]
--		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
-+		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
- 		   [--ignore-if-in-upstream]
--		   [--rfc] [--subject-prefix=Subject-Prefix]
-+		   [--rfc] [--subject-prefix=<subject prefix>]
- 		   [(--reroll-count|-v) <n>]
- 		   [--to=<email>] [--cc=<email>]
- 		   [--[no-]cover-letter] [--quiet]
-@@ -159,9 +159,9 @@ Beware that the default for 'git send-email' is to thread emails
- itself.  If you want `git format-patch` to take care of threading, you
- will want to ensure that threading is disabled for `git send-email`.
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index 414a5a8a9d..cb629fa769 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -77,6 +77,7 @@ format.coverLetter::
+ 	A boolean that controls whether to generate a cover-letter when
+ 	format-patch is invoked, but in addition can be set to "auto", to
+ 	generate a cover-letter only when there's more than one patch.
++	Default is false.
  
----in-reply-to=Message-Id::
-+--in-reply-to=<message id>::
- 	Make the first mail (or all the mails with `--no-thread`) appear as a
--	reply to the given Message-Id, which avoids breaking threads to
-+	reply to the given <message id>, which avoids breaking threads to
- 	provide a new patch series.
- 
- --ignore-if-in-upstream::
-@@ -171,9 +171,9 @@ will want to ensure that threading is disabled for `git send-email`.
- 	patches being generated, and any patch that matches is
- 	ignored.
- 
----subject-prefix=<Subject-Prefix>::
-+--subject-prefix=<subject prefix>::
- 	Instead of the standard '[PATCH]' prefix in the subject
--	line, instead use '[<Subject-Prefix>]'. This
-+	line, instead use '[<subject prefix>]'. This
- 	allows for useful naming of a patch series, and can be
- 	combined with the `--numbered` option.
- 
-@@ -314,7 +314,8 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
- --base=<commit>::
- 	Record the base tree information to identify the state the
- 	patch series applies to.  See the BASE TREE INFORMATION section
--	below for details.
-+	below for details. If <commit> is "auto", a base commit is
-+	automatically chosen.
- 
- --root::
- 	Treat the revision argument as a <revision range>, even if it
-@@ -330,8 +331,9 @@ CONFIGURATION
- -------------
- You can specify extra mail header lines to be added to each message,
- defaults for the subject prefix and file suffix, number patches when
--outputting more than one patch, add "To" or "Cc:" headers, configure
--attachments, and sign off patches with configuration variables.
-+outputting more than one patch, add "To:" or "Cc:" headers, configure
-+attachments, change the patch output directory, and sign off patches
-+with configuration variables.
- 
- ------------
- [format]
-@@ -343,7 +345,8 @@ attachments, and sign off patches with configuration variables.
- 	cc = <email>
- 	attach [ = mime-boundary-string ]
- 	signOff = true
--	coverletter = auto
-+	outputDirectory = <directory>
-+	coverLetter = auto
- ------------
- 
- 
+ format.outputDirectory::
+ 	Set a custom directory to store the resulting files instead of the
 -- 
 2.23.0.248.g3a9dd8fb08
 
