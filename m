@@ -2,87 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42F2E1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 18:36:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBE7D1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 18:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730424AbfH0Sgq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 14:36:46 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:37161 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730262AbfH0Sgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 14:36:46 -0400
-Received: by mail-wm1-f48.google.com with SMTP id d16so140377wme.2
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 11:36:44 -0700 (PDT)
+        id S1730435AbfH0Soh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 14:44:37 -0400
+Received: from mail-qt1-f177.google.com ([209.85.160.177]:35859 "EHLO
+        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730313AbfH0Sog (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 14:44:36 -0400
+Received: by mail-qt1-f177.google.com with SMTP id z4so79704qtc.3
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 11:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=I7WC2ELTxeDmodG5LAZPtNXdjw2oe8/h1PL2Nq2tcNQ=;
-        b=Y7VKddYkZq6NROhjp0uULmOP9QXmYe4iEWY9U/enMaxw7aG7nPb5WCpqHOgkhP3zMb
-         FyoKnuq+L0djNPQYQ6o/mJVd37D0mGVxNaWp7IhLNVqnOjbqAv2yKFA5+NG+zZ+EoZJl
-         cjpCRL3MogtiXLa9KGue5nbQwPab2zr8CWsL3jCp4pxsaSQEukkW99clGYrfVfq2fOYe
-         p3QMpXERukdJodIIylcvvxBFHyhXwt8HCUnmUsORwUrgtD0lP8YeIl5T/bVkza4CPWwb
-         SSCz97z6lp4nGcUQf4PYmQ2qAetwkkpw8b7YxMAYGLK20KlJf9RP1mLMNG7RxrqOQmpB
-         ziJQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=hIXlNs9hDcgdTj+f8Gx5VSr2OSaXL94fsaJaS0rT+SI=;
+        b=QAc8u0Lzao3Z8QK1ie3fxlX7IiK8j+qnZuuU4ncoi6jx+tY2fiUstXG4P5CwZ8iIOV
+         LkTjzEONV+jHjktPrjWw3jk/4c4+d5XxdYd8UuK3fY3GTRyCS4lD7VqtbGOBSybwgASA
+         hZdvrmuGKrYW7vUYrZoSh4lGFpkEd+7flN+BWPIsET/DA5OAP2XDGyWtlx/iuPvHaHP7
+         DcNXB85LM6YE2kZ97WR/2iyVVZYYjGRI65ndF+JS6GzuNldzb7v2fAMspHNFzK5KuN3E
+         rwiGyH3qMnjNFRNqL3A1tiID2pp323Fs41VIRxfmU6oCDLdasoaEaEM2qlYvjWtIFENl
+         7wRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I7WC2ELTxeDmodG5LAZPtNXdjw2oe8/h1PL2Nq2tcNQ=;
-        b=XXCVrv26pBG0qeR6Qgo8tYTSWi2Cha/GB1Kur1/xp20sAaQH9Zo4MgsJPjTQtDtdIj
-         G15fxolWPyEINfbVGHa1zCMdDd5vS77YWxiwUd3lrzvv6ioxQ4EOsdhK/2hcjkIlKuCQ
-         r7bzA+a8yqtNLQikndurw2fb+wkTcIM2aMBxPIVQyS6U9v6C7tf7iIavUbjLQhHlkD0S
-         +pRRiwN1Xov8TuWJlxayA9q+s75vQ6bzs2kLNLPrWyQSN+62fvobYGzCN+vZnZ5+QpCv
-         36NzQx7L5Oxx9DRx2yPlGZihxc0a9qDuz3XgbkDehA0U+o482N/c8k51pOuaSA2U5+mA
-         Ut4Q==
-X-Gm-Message-State: APjAAAV3+j5Ojm3NqI155gwZNqgIsvQhaAK1YGw3PL7eyj6qoYZFvhOA
-        GlPRkwzBKgPbEF0ak1nI83w=
-X-Google-Smtp-Source: APXvYqyIWhJ5ypC+jNJwRqTuoFY5azkAs//efpB/bopy/+ZJd4YBLRgnOXgJuJQQz3dgGBpRsDmYYw==
-X-Received: by 2002:a05:600c:2056:: with SMTP id p22mr322188wmg.159.1566931004064;
-        Tue, 27 Aug 2019 11:36:44 -0700 (PDT)
-Received: from szeder.dev (x4db46f61.dyn.telefonica.de. [77.180.111.97])
-        by smtp.gmail.com with ESMTPSA id r17sm41251185wrg.93.2019.08.27.11.36.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Aug 2019 11:36:42 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 20:36:40 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Giuseppe Crino' <giuscri@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to build to debug with gdb?
-Message-ID: <20190827183640.GC8571@szeder.dev>
-References: <20190827162725.GA29263@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal>
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hIXlNs9hDcgdTj+f8Gx5VSr2OSaXL94fsaJaS0rT+SI=;
+        b=BoNkgTFCZAfbXBPujHmhxHzqfhzz7LM74XDmvpTndkbh6nUWjy1tGg6XdwsXqds9I2
+         cixLCncSHS7UzQpqNZnBBm8WKepHW+IN7Q6u8/d9RS9F2LgqPQWNyp6jVMY3zawl5pay
+         axuzXqyIRGpyKxOCI0RQ8LEFnagWiQxawKg/OU+P+7ILbNOARUoi1PlqXAVcSs0L3rp9
+         13RKL2j/asTNQR8SeSmevHl2F0OVuO6ogAKiGH1rV3HDaJBZS41C8DTqsrW7LW+j0RFN
+         0AhUP8r2P5/GqCjO3w/ItUKlYhWLM6nF56wcJWSzYtrIMrdjSCNTcarpWMrhiSI2Byfj
+         zDQA==
+X-Gm-Message-State: APjAAAVMY584LgiSBe34WOTDDO8Z9zF75cJA+NAHOlH7qCVx4upbxx2k
+        nnB1ZQnpLjoEmV0HomBm6SESpB01N0Oghw==
+X-Google-Smtp-Source: APXvYqy8P2wlPlf8zc/ZhWNxCO4Ok4qtx69zwXqs/DWzpyFPfoIb/vy04GezzNwoStKVHlKz5UcBEw==
+X-Received: by 2002:a0c:ec84:: with SMTP id u4mr21314114qvo.205.1566931475736;
+        Tue, 27 Aug 2019 11:44:35 -0700 (PDT)
+Received: from localhost ([2605:9480:205:fffe:a56f:bf18:42be:60d4])
+        by smtp.gmail.com with ESMTPSA id o33sm9535847qtd.72.2019.08.27.11.44.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Aug 2019 11:44:34 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Tue, 27 Aug 2019 14:44:34 -0400
+To:     "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "git commit" of single file takes 5 minutes, mounted
+ fileystem/diskimage with 50G GIT repo + 900G of builds articles
+Message-ID: <20190827184434.GA63526@syl.lan>
+References: <7A1C0468-E07D-4D10-8891-01AC1FA1CC1B@cisco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190827162725.GA29263@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7A1C0468-E07D-4D10-8891-01AC1FA1CC1B@cisco.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 04:27:25PM +0000, Giuseppe Crino' wrote:
-> Hello, to debug some issues I built and installed git via
-> 
-> $ make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g"
-> $ sudo make install
+Hi Saravanan,
 
-What do the output of these two command look like?  After the first
-command build Git with the custom prefix and CFLAGS, the second
-command is supposed to start with printing "* new build flags" and
-then to build Git again with the default prefix and CFLAGS.
+On Mon, Aug 26, 2019 at 08:43:34PM +0000, Saravanan Shanmugham (sarvi) wrote:
+>
+> Based on a previous thread “First Git status takes 40+ minutes, when mounting fileystem/diskimage with 50G GIT repo + 900G of builds articles”
+>
+> The context is that
+>   1. git wokspace was clone(50G)
+>   2. some 30 platorms build(900G)
+>   3. This tree was then copied into a new diskimage/filesystem + git update-index --refresh" was done to update the index to the new filesystem, then frozen.
+>   4. New workspaces created by cloning this frozen diskimage(< 30 seconds)
+>   5. This diskimage was mounted on a new machine
+>   6. A file was modified and "git add/commit" was done
+>
+> I have done “git update-index –refresh”, in the mounted filesystem, as above
+> This has improved “git status/diff” timing from 40+ minutes to 1.5 minutes for the first time and <5 seconds for subsequent calls.
+>
+> But "git commit -m "dummy commit" of a 1 line change in 1 file takes about 5-6 minutes, everytime in this workspace.
+> Tracing shows a whole bunch. The entire 5-6 minutes worth of the following sort of trace logs.
+> 3:13:50.320930 trace git-lfs: filepathfilter: rejecting "x/y/z.o.command" via []
+> 13:13:50.320940 trace git-lfs: filepathfilter: accepting " x/y/z.o.command "
+> 13:13:50.320862 trace git-lfs: filepathfilter: rejecting "a/b/c/d.o.command" via []
+> 13:13:50.320972 trace git-lfs: filepathfilter: accepting " a/b/c/d..o.command"
+>
+> Does anyone have any insights on what could be causing this?
 
->  What am I missing?
+These are messages from the Git LFS tool, and this list does not provide
+support for Git LFS, since it is a separate project not affiliated with
+Git.
 
-Just a couple hundred lines worth of build output :)
+I would recommend that you create an issue on Git LFS's tracker at:
 
-Try using the same build flags for the install, i.e.:
+  https://github.com/git-lfs/git-lfs/issues/new
 
-  make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g" install
+and mention that you are seeing lots of 'filepathfilter' logs. My
+speculation is that this could be a slowdown in the 'filepathfilter'
+code paths, or an entire-tree scan where 'filepathfilter' is invoked
+every so often. I'd mention both of those as possibilities (or send a
+link to this email on public-inbox), and see if anything comes up.
 
+> On the other hand, if I had
+>
+> Thanks,
+> Sarvi
+> Occam’s Razor Rules
+
+Thanks,
+Taylor
