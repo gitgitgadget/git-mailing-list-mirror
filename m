@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 940DB1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 04:05:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A280F1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 04:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727718AbfH0EFO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 00:05:14 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:44637 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbfH0EFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 00:05:14 -0400
-Received: by mail-io1-f65.google.com with SMTP id j4so34656047iog.11
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:05:13 -0700 (PDT)
+        id S1728823AbfH0EFQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 00:05:16 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:37781 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbfH0EFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 00:05:16 -0400
+Received: by mail-io1-f67.google.com with SMTP id q22so43031634iog.4
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 21:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=PdNpr+xjrLYU2MoWEBNF3xcNAmtPLys44nVVsueTa5k=;
-        b=DRok/ps7ro+HCrjFsaikfulZm1IpxuHS7BLoatFgX7qGLXyCpTJVRfsJQDxz3zOe7z
-         zHS2m7yjiub85IaPjP16FpF27El8sUrZ9D+jV03xHQqZduR2AHt3Ti6beaDJdAVmlHsQ
-         f8+uxqJoaIz8sStugzwW8+fQviz7yjb8BscR/MNkYc3GvlfzaivpvOCWyaHW1zQy4Yjh
-         hD+t9NI7I7WHu21QgNkpGhev1BrJFvrkMHlazkTOe3RcXAPjNZC30YU0LE1TCCC3f03c
-         RNsOMrpyOF/r+f7giMEVPmYhUPA1Cxrzz5loJ0lFcJObmDSPeZP7FTTHlM3DP+EXV25A
-         Z1QQ==
+        bh=XVN3uoweg9olm4lkkysRDVARDiy1wDmhHAGBz6iSCUo=;
+        b=PMj9kDQkxDCR2MTxaNl0kmAbLUIk8eR1E0o9dlzO+x/PGfZiR0BeuKy4xRYlpkRWDM
+         cjKSZ6e4wKFtSKCtfO+Ijbd0EjJvMvm4SZalQZj2pBUvRJV2cHiBi/YsWK29pVMkEAcu
+         VjgGurrnN8ufBPbPi4HgVkl6LGEKjalFLR5pDTdef7DqDV5iXbjP5EVdYKZ5IPQa/0SL
+         LaDqNX+uCv7qJIvM2VXU4QuhCrWVDRiHkZt3PhQbFmP4lfnJJB5wjQDenHrJt8CAm+ad
+         bTqBP/5ZAPXFhL/GhIyc2rEKO/kqq+0BesOc4S0YvSOO+yqchQCgSc9udR7CgZYA5P8e
+         h8Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PdNpr+xjrLYU2MoWEBNF3xcNAmtPLys44nVVsueTa5k=;
-        b=g+nGF5qgz0KjM6mkm64pSEUBPhSsjwesP0scQvoH7g53ivL2+LkvRM3I5LGjwWwOSm
-         pX1aCvNAUUFN0PIOkkvqDzYD9rckN4Ba8pLkrXXC4gcxyBj9M24gEEGIT1lwSbAo/zME
-         OywhQxCi2mTS4oOHC3XKa3V9HnRZIN11UVsttUYg+Wdxt9bP3yDJrCzPzIipP1ryZ7hn
-         F3gR3+UQbSqIx/0VYQ5uertoL6tx9AYAsZ5ufaKzGDgh+x+/1QgToopzkaji/u7j2bo4
-         3UL+R7Wlg9DALpq6jnp8Jk6MEPtk14Zgx9jD0ViKyBZUrJxCWiAr43bWOqdwMlV2YnOk
-         YA+Q==
-X-Gm-Message-State: APjAAAWNDFyLzM0tj9W23h5Thv3I8W5okFT9XugfAqC9xh9XoTednwv+
-        jaA93CpSx4nMiHPfTy4qYhWpp1OT
-X-Google-Smtp-Source: APXvYqywDVKv+J0KrulSmZUOuZYtcLuFuNyvkgjV3mAtSxUxROSG+BTIupmrdo7HnsnEuudY22R7Bg==
-X-Received: by 2002:a5e:8344:: with SMTP id y4mr4729459iom.213.1566878712522;
-        Mon, 26 Aug 2019 21:05:12 -0700 (PDT)
+        bh=XVN3uoweg9olm4lkkysRDVARDiy1wDmhHAGBz6iSCUo=;
+        b=cMRteLeCiO1Axf/qinlYuvLb+shaNDpdIcupRNPfZVrjQUAwFu20De8F2ImG4Gv+e+
+         w0OYWK0bu1CfiufKQuhOKcnHbXf/IC9/a6Sfuy6IpcbulcXrjBKgu4HcKifE6sw58dIt
+         05rbeoDDuvw2Ah75KTXuMx+H1Wtxy6GCSwYssBpXvoLGYSNPQpzo6lLTrOfnV4HcUyS7
+         kbU42eDP/LY4SGIYeqjAkHyImVDZ8TI9nHsRAsJxPMXHamExFpUDy6vPYgwcsuvX+5YD
+         4x3OIiBu2NNnc66NSs+3U0m423SjoXkAPQYu9uI2w6SsihzX73yMrrfDXWfARv9GjoJw
+         IzkA==
+X-Gm-Message-State: APjAAAWDFW8Eg/PS8teY63ZYg0PTLg9NE0aHs2CVgeurBLhut/atgNpX
+        bXhbMG7Kn+wgZ4/zJZwxRmh84X79
+X-Google-Smtp-Source: APXvYqwQPPvrkf/z0tqW+03jpNfh4SSvTyK+SMfAXVHx4neVxdP8z7D0gjfcIzd/bK9Z8u2rjC63tQ==
+X-Received: by 2002:a5e:8b03:: with SMTP id g3mr3785329iok.170.1566878715046;
+        Mon, 26 Aug 2019 21:05:15 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id v10sm13759244iob.43.2019.08.26.21.05.11
+        by smtp.gmail.com with ESMTPSA id p1sm9192865iol.11.2019.08.26.21.05.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2019 21:05:12 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 00:05:10 -0400
+        Mon, 26 Aug 2019 21:05:14 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 00:05:12 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -58,8 +58,8 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2 09/13] t4014: use test_line_count() where possible
-Message-ID: <9a42ec2b7e5f9bea3676655e3a066acac3bee1f6.1566878374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 10/13] t4014: remove confusing pipe in check_threading()
+Message-ID: <8acc90f74d89301646f8120ebb79eb9170f64743.1566878374.git.liu.denton@gmail.com>
 References: <cover.1566635008.git.liu.denton@gmail.com>
  <cover.1566878373.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,114 +72,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert all instances of `cnt=$(... | wc -l) && test $cnt = N` into uses
-of `test_line_count()`.
-
-While we're at it, convert one instance of a Git command upstream of a
-pipe into two commands. This prevents a failure of a Git command from
-being masked since only the return code of the last member of the pipe
-is shown.
+In check_threading(), there was a Git command in the upstream of a pipe.
+In order to not lose its status code, it was saved into a file. However,
+this may be confusing so rewrite to redirect IO to file. This allows us
+to directly use the conventional &&-chain.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4014-format-patch.sh | 35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ t/t4014-format-patch.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 35cf798847..18142ee5fa 100755
+index 18142ee5fa..67f4c62ed6 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -60,23 +60,23 @@ test_expect_success setup '
+@@ -319,7 +319,7 @@ test_expect_success 'reroll count (-v)' '
+ check_threading () {
+ 	expect="$1" &&
+ 	shift &&
+-	(git format-patch --stdout "$@"; echo $? >status.out) |
++	git format-patch --stdout "$@" >patch &&
+ 	# Prints everything between the Message-ID and In-Reply-To,
+ 	# and replaces all Message-ID-lookalikes by a sequence number
+ 	perl -ne '
+@@ -334,8 +334,7 @@ check_threading () {
+ 			print;
+ 		}
+ 		print "---\n" if /^From /i;
+-	' >actual &&
+-	test 0 = "$(cat status.out)" &&
++	' <patch >actual &&
+ 	test_cmp "$expect" actual
+ }
  
- test_expect_success 'format-patch --ignore-if-in-upstream' '
- 	git format-patch --stdout master..side >patch0 &&
--	cnt=$(grep "^From " patch0 | wc -l) &&
--	test $cnt = 3
-+	grep "^From " patch0 >from0 &&
-+	test_line_count = 3 from0
- '
- 
- test_expect_success 'format-patch --ignore-if-in-upstream' '
- 	git format-patch --stdout \
- 		--ignore-if-in-upstream master..side >patch1 &&
--	cnt=$(grep "^From " patch1 | wc -l) &&
--	test $cnt = 2
-+	grep "^From " patch1 >from1 &&
-+	test_line_count = 2 from1
- '
- 
- test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
- 	git tag -a v1 -m tag side &&
- 	git tag -a v2 -m tag master &&
- 	git format-patch --stdout --ignore-if-in-upstream v2..v1 >patch1 &&
--	cnt=$(grep "^From " patch1 | wc -l) &&
--	test $cnt = 2
-+	grep "^From " patch1 >from1 &&
-+	test_line_count = 2 from1
- '
- 
- test_expect_success "format-patch doesn't consider merge commits" '
-@@ -90,22 +90,23 @@ test_expect_success "format-patch doesn't consider merge commits" '
- 	git checkout -b merger master &&
- 	test_tick &&
- 	git merge --no-ff slave &&
--	cnt=$(git format-patch -3 --stdout | grep "^From " | wc -l) &&
--	test $cnt = 3
-+	git format-patch -3 --stdout >patch &&
-+	grep "^From " patch >from &&
-+	test_line_count = 3 from
- '
- 
- test_expect_success 'format-patch result applies' '
- 	git checkout -b rebuild-0 master &&
- 	git am -3 patch0 &&
--	cnt=$(git rev-list master.. | wc -l) &&
--	test $cnt = 2
-+	git rev-list master.. >list &&
-+	test_line_count = 2 list
- '
- 
- test_expect_success 'format-patch --ignore-if-in-upstream result applies' '
- 	git checkout -b rebuild-1 master &&
- 	git am -3 patch1 &&
--	cnt=$(git rev-list master.. | wc -l) &&
--	test $cnt = 2
-+	git rev-list master.. >list &&
-+	test_line_count = 2 list
- '
- 
- test_expect_success 'commit did not screw up the log message' '
-@@ -795,7 +796,8 @@ test_expect_success 'options no longer allowed for format-patch' '
- 
- test_expect_success 'format-patch --numstat should produce a patch' '
- 	git format-patch --numstat --stdout master..side >output &&
--	test 5 = $(grep "^diff --git a/" output | wc -l)
-+	grep "^diff --git a/" output >diff &&
-+	test_line_count = 5 diff
- '
- 
- test_expect_success 'format-patch -- <path>' '
-@@ -852,8 +854,8 @@ test_expect_success 'format-patch --signature --cover-letter' '
- 	git config --unset-all format.signature &&
- 	git format-patch --stdout --signature="my sig" --cover-letter \
- 		-1 >output &&
--	grep "my sig" output &&
--	test 2 = $(grep "my sig" output | wc -l)
-+	grep "my sig" output >sig &&
-+	test_line_count = 2 sig
- '
- 
- test_expect_success 'format.signature="" suppresses signatures' '
-@@ -1591,7 +1593,8 @@ test_expect_success 'format-patch format.outputDirectory option' '
- 	test_config format.outputDirectory patches &&
- 	rm -fr patches &&
- 	git format-patch master..side &&
--	test $(git rev-list master..side | wc -l) -eq $(ls patches | wc -l)
-+	git rev-list master..side >list &&
-+	test_line_count = $(ls patches | wc -l) list
- '
- 
- test_expect_success 'format-patch -o overrides format.outputDirectory' '
 -- 
 2.23.0.248.g3a9dd8fb08
 
