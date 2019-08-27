@@ -2,93 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F3921F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 16:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC231F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 16:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730280AbfH0Q13 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 12:27:29 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:34425 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbfH0Q13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 12:27:29 -0400
-Received: by mail-ed1-f53.google.com with SMTP id s49so32154250edb.1
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 09:27:28 -0700 (PDT)
+        id S1729696AbfH0Q4h (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 12:56:37 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55219 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728506AbfH0Q4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 12:56:37 -0400
+Received: by mail-wm1-f66.google.com with SMTP id p74so3844002wme.4
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 09:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=lbUVNNjkuRyzIYQfh99xKrXWa3oftEJxGHsRRuG8PMo=;
-        b=inOyn8qTWtTD1lQcC4tZfG07p1DRc1587PQ7P1V6W7rwrFPLW8dREp+cR6PrejQdVs
-         A1vaJztJ2pIsbndloq7iPFIZRHqkgWqkiRVONc8jbMa5kkD46/AYziXMkjpoH/IFurXc
-         GbAGr/DrTUyk0fHq7AbDsRfNAI7JGSNmOklSsSVVoyNw3J9nCf6MDd8/iSWII7AqcdV2
-         nZPKkFfNBPAkolgWx/yN6qLXb7hvDzosMkvFziBkxmTsDhjlvC4xoiiZVMIsuTdlclyk
-         FskkyMx8mQkUD3+y4grDNVo1am5EIF9XOA84ipyuSOdn9CjZye0Q3gahkiFGj7EDiYzO
-         PlLg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Z77lJ2GoVkNSTq1KdH86wBedjf3F/B2E8C1jjhqskxY=;
+        b=F1BifE3WIJmdElB/gGJfIzG+umPgp05FNoX1zZ+y6k2BTWzv3fJ/XAl67fOBblOBSU
+         ajeL+xh1Z3icL8Xa+np2rx5N0EBSVApUCJj8dHlHiq/oqYLqiFB+8uOwrU26f3DlPXkk
+         10GtEeNu6p6Kho08VKduCg6+diin0sXA+gWiTuib9LYrtsuqEuVKfxiyGdn0kzf7dlnd
+         AG1TkceDqUhuqujbaGJv6DY6XUEJEAFDzTtodpF8KLHmLN9FnBeSbR7N21mHVUJrZx3Z
+         MQ3XS3DWJeT39KPu54L3bE6A/SskAzSxiQJ5+4xq/9qVbtoglg1ERAaFCvS9t4g74oto
+         pAHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=lbUVNNjkuRyzIYQfh99xKrXWa3oftEJxGHsRRuG8PMo=;
-        b=ZLw3Jx0hH1dliIibCmNUOh6+2/sXz512Zgc48xwfOTuAtGihG2DNqaamODsxfFldDo
-         gTG8Uy01AEOvdO7L8a/WqArPxC6oU2/jsCIrA1YrmivR3zSDL8TQUdu4B4OfPbuOEDMk
-         RJ7hNxvBBKfrlodcFwwagkIPJKruD21yhhpHMSezLZzklbmg4p6HVUGeSsNwjhX6oH2Z
-         ApYIKeklp5RJVH0/n/c0Dtsm2D8Ytn7aLnv4VODItHpnQ7PtetCt7GjfIrMhZfgeEWRe
-         f4g4wR7zd4ARBrH9Zqxx2tXfmFXQkrZOWlETTbSyZ+FSX2lPLTpwF75kDE8cq3NnVFV7
-         WXjw==
-X-Gm-Message-State: APjAAAXWtQtFjuBLvqH0kXtSnGoCgA7nb5n3cMR+Ps7aIFvx4sPu0A/F
-        qxxGjn8JzVfvw72AVLxV1JiOF/7ZfUE=
-X-Google-Smtp-Source: APXvYqw5uZe3nFPtf6qPHdSi4I8q5B251FAusfKXb5eYpWz+tLu3kG2K0QZNOs+rvVbgFDiRS7c6mw==
-X-Received: by 2002:a50:f315:: with SMTP id p21mr25573565edm.195.1566923247179;
-        Tue, 27 Aug 2019 09:27:27 -0700 (PDT)
-Received: from instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal (1.133.65.34.bc.googleusercontent.com. [34.65.133.1])
-        by smtp.gmail.com with ESMTPSA id b15sm2081220edb.46.2019.08.27.09.27.26
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Aug 2019 09:27:26 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 16:27:25 +0000
-From:   Giuseppe Crino' <giuscri@gmail.com>
-To:     git@vger.kernel.org
-Subject: How to build to debug with gdb?
-Message-ID: <20190827162725.GA29263@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal>
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z77lJ2GoVkNSTq1KdH86wBedjf3F/B2E8C1jjhqskxY=;
+        b=ClT3n0maoCsFi1rUuDOv2JNgh6j8OZxjKlcEyp3jFO7xd1ASUHHk/KPRvDMZKdiEMl
+         De7ozSXwc2qjN3Tf3umOojgP8UpNnSB2UVPwmbftLiACJtCzxwiqaSvUBG5XlJ7pLIPG
+         8a+X95eOkErPLPKkb7YU4TIbi28CDWiyisg8qFrWTM3yN/Vf4EanUqIU7aPtqsZBNm6E
+         fqOp32f05dotqcFStqi8LZIM7dUdJt0TcCUdLP4TpLBfl6V2Ccn0Bkh3R0ZPWNz2a+f6
+         pgxxiH9dC7bmHfmoqcQw7e23Q4aXuwDmrWiXrYlLl5igU6WQyTW1zrs4Fz/IKmD7YbPI
+         6T7Q==
+X-Gm-Message-State: APjAAAUFd3HKQ5vakIB9h3djiAWxlVwef97UpG76Eo0sKKUwKaxlhb2H
+        kJXWZwGU/lCI8zG6fNHDKz8GVTmW
+X-Google-Smtp-Source: APXvYqzklqxLnn7fiMKQOyzyG/u0KqwmSjUUP2IEqU/kKT456U5C2RNUheJyYt+aHjrNa3fkqf9DWQ==
+X-Received: by 2002:a1c:c1c1:: with SMTP id r184mr29843312wmf.9.1566924994487;
+        Tue, 27 Aug 2019 09:56:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e6sm14078237wrr.14.2019.08.27.09.56.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Aug 2019 09:56:33 -0700 (PDT)
+Date:   Tue, 27 Aug 2019 09:56:33 -0700 (PDT)
+X-Google-Original-Date: Tue, 27 Aug 2019 16:56:30 GMT
+Message-Id: <pull.323.git.gitgitgadget@gmail.com>
+From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] commit-graph: emit trace2 cmd_mode for each sub-command
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, to debug some issues I built and installed git via
+Emit trace2_cmd_mode() messages for each commit-graph sub-command.
 
-$ make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g"
-$ sudo make install
-$ git --version # git version 2.23.0.40.g4d8aada92f 
+The commit graph commands were in flux when trace2 was making it's way to
+git. Now that we have enough sub-commands in commit-graph, we can label the
+various modes within them. Distinguishing between read, write and verify is
+a great start.
 
-But it seems there's still some optimization going on that prevents gdb from working correctly.
+Signed-off-by: Garima Singh garima.singh@microsoft.com
+[garima.singh@microsoft.com]
 
-For example
+CC: jeffhost@microsoft.com, stolee@gmail.com, garimasigit@gmail.com, 
+avarab@gmail.com
 
-(gdb) b builtin/config.c:752
-Breakpoint 1 at 0x43942: file builtin/config.c, line 752.
-(gdb) r config --global --edit
-Starting program: /usr/local/bin/git config --global --edit
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libth
-read_db.so.1".
+Garima Singh (1):
+  commit-graph: emit trace2 cmd_mode for each sub-command
 
-Breakpoint 1, cmd_config (argc=0, argv=<optimized out>,
-    prefix=<optimized out>) at builtin/config.c:753
-    753                             if (fd >= 0) {
-    (gdb) p fd
-    $1 = <optimized out>
+ builtin/commit-graph.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- What am I missing?
 
- -Giuseppe
+base-commit: 745f6812895b31c02b29bdfe4ae8e5498f776c26
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-323%2Fgarimasi514%2FcoreGit-commit-graph-trace2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-323/garimasi514/coreGit-commit-graph-trace2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/323
+-- 
+gitgitgadget
