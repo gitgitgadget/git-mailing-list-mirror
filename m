@@ -2,104 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51AC71F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 22:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5A931F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 22:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbfH0W0E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 18:26:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62512 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfH0W0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 18:26:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 62D4C7B3AE;
-        Tue, 27 Aug 2019 18:26:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1fntlwI899DkR6SQfeb1Q/W1sqE=; b=w0Oekd
-        1n6eUdTIj4nV5RjZkz0OlvUzj56FCPYZhrI2MNUrKEvnK9to78A67YhKAS4evdFO
-        ZB2MQjrzG7FNKMTDqyF+khwGomHjhoJIbRiKUhxSGbs1uPX9dgzExtFWkJ47TaNT
-        FsJicRw4DuhZcjNrj9zkvkfcvsWAS6WG1W7rE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d5AoORGxKgZ24chZewjplxyrZLXkDTMK
-        AjEdO/d2JV+KDTKe66Om+iGqLNtx/QL6dFnTsGKNIdXvHQ+fhN/WTzEfT1Om+43n
-        4Wya7mtvfnplPca5oR0vtbWg17tl/ZpWMPdPRxdKsXN1/MYsnCUWe92c4m3eJ5e6
-        BSRUOnSIm3U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A9D57B3AD;
-        Tue, 27 Aug 2019 18:26:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A31FF7B3A8;
-        Tue, 27 Aug 2019 18:26:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 01/11] Start to implement a built-in version of `git add --interactive`
-References: <pull.170.v2.git.gitgitgadget@gmail.com>
-        <pull.170.v3.git.gitgitgadget@gmail.com>
-        <0a5ec9345d2f9cc6cd348231219d4af428a28e94.1563289115.git.gitgitgadget@gmail.com>
-        <xmqq1ry6qeg2.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1908262317250.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 27 Aug 2019 15:25:58 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1908262317250.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 26 Aug 2019 23:26:22 +0200 (CEST)")
-Message-ID: <xmqq5zmi2qkp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726152AbfH0W0J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 18:26:09 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:45576 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbfH0W0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 18:26:09 -0400
+Received: by mail-qk1-f193.google.com with SMTP id m2so632378qki.12
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 15:26:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=d7Hv9DmG3oKHxh3xyjKtw0p0y2qQrZ/u4/x+zgVS8/U=;
+        b=IgdZDYP6Itw2iCOKpkwB/Vgp0B71azyqaPLPoxk/O5maeZyiLJJ3Ydt0iiSFkeL4SO
+         PWpu3Q+pl5LDE7/3k6SVXv8qwX6KeGiOFgRkvtPma27MTLfzVp0S+dQVyvkn7IZ1bwVY
+         2IPEhVH7suHcSDurOR6vDWG4dcPONCDVh5rpGqgTH9A6lBwO5M2Eg5lSBNA6mL8BQXk8
+         NGGP3KQUxlQ8oSW7izJjBa9jLD7UMYbPqLAsfRGIVxAHJZRuQSLm/ifL1Ye3UM6lx4VV
+         z83GwbjaQQypLoHOGcafNRvUSynWh0YG54aWOuw7dXQ1APswHhiGzkUX4iGUQl5/ONTT
+         lLGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=d7Hv9DmG3oKHxh3xyjKtw0p0y2qQrZ/u4/x+zgVS8/U=;
+        b=RQDJ5Xgrxy2ealmLkMC9pBje98wQKo7Fqa6j9wgUO5VmgkO47Ovfa8zE9NqPjUrhwN
+         o3oXoJ/w9Wbdc+YmwFKSd6uxx1iV24n/GAo7og58fGrKD6PSqHNvRo2ETCs8+Hu9X1Kn
+         r+6we34vE+Z6JVFXDLDCz43S1O4f3fr+eaKep+2mp9gY65T8iGTlOJzmJda2scQ6dPUk
+         nks1gnXVskKNXnc/zRa9JY+RYMXNO2mjvCu+/3VpH48vjIe1FkXJ1NH7TQ0tkZVlRZCv
+         qgU63xIEdH97sGD7PnILUiS2gishuDIr79vLtq31VrPXeTxPkuNrDmQRqCc8zuHL4D23
+         zK2w==
+X-Gm-Message-State: APjAAAVj2MGUqyzR7UZyMFzMNbAP9TEI72HH+fyQXwaHbwPZNFnX9/jQ
+        9T81FePzK4w14rwnov+ifKwVw1L+4OY4NTk79hbLwzEFwJg=
+X-Google-Smtp-Source: APXvYqyPuQEx5qG7mjLbkdIvpz2mHvunOCHUYk411LENHxXgiaTC5RAe3rCxDZmRLdwLxeA7sprujbJidMXkCAodKWk=
+X-Received: by 2002:a37:9cce:: with SMTP id f197mr925981qke.129.1566944768232;
+ Tue, 27 Aug 2019 15:26:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5EFDF44-C919-11E9-AB0A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
+In-Reply-To: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
+From:   Dmitry Nikulin <pastafariant@gmail.com>
+Date:   Wed, 28 Aug 2019 01:25:57 +0300
+Message-ID: <CAH53Sy=zcP=DRg5WQFkaBp9CoHP+phCA_NasM5OqOdfwQGkQyQ@mail.gmail.com>
+Subject: Re: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF incorrectly?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I have put up a demo repo here: https://github.com/dniku/git-external-diff-argv
 
-> Besides, I really hope that this would be only temporary,...
-
-Oh, no question about it.  This should be temporary knob.
-
-I still do worry about giving a bad example for others to copy.
-People tend to copy & paste without thinking.  Either we come up
-with and use a two-level name, or we add a comment to explain to
-developers (not users---as this is merely a temporary thing) why
-they should never follow suit using three-level names for things
-like this one written in big red letters, or something, then perhaps
-we won't have to worry about too much?  I dunno.
-
->> > +	if (use_builtin_add_i == 1 && !patch_mode)
->> > +		return !!run_add_i(the_repository, pathspec);
->>
->> I am hoping that eventually "add -p" will also be routed to the new
->> codepath.  Would it make sense to have "&& !patch_mode" here,
->> especially at this step where run_add_i() won't do anything useful
->> anyway yet?
+On Tue, 27 Aug 2019 at 21:24, Dmitry Nikulin <pastafariant@gmail.com> wrote:
 >
-> The `&& !patch_mode` is here to allow for a gradual adoption of the
-> built-in parts. ...
-
-Ah, so "add.usebuiltin = interactive patch" can (eventually) choose
-to use the C code for both while "add.usebuiltin = interactive"
-would not use it for the patch mode, or something?  Or even
-
-	add.interactive.usebuiltin = yes
-	add.patch.usebuiltin = no
-
-perhaps?
-
-> Of course, eventually this will be handled.
-
-Yup, again, the knob is merely temporary.
+> I wrote a very simple Python script to see which arguments git-diff
+> passes to the external diff program when comparing files across
+> branches:
+>
+> $ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
+> origin/branch1:file1.txt origin/branch2:file2.txt
+> ['./print_argv.py',
+>  'file1.txt',
+>  '/tmp/QRaIJ1_file1.txt',
+>  '802b1c4ed7b06162b2ce09b7db72a576695b96e5',
+>  '100644',
+>  '/tmp/AZuOJ1_file2.txt',
+>  '076e8e37a712d8a66c0c3d1a103050dc509ca6ff',
+>  '100644',
+>  'file2.txt',
+>  'index 802b1c4..076e8e3 100644\n']
+>
+> According to the docs
+> (https://www.git-scm.com/docs/git/2.22.0#Documentation/git.txt-codeGITEXTERNALDIFFcode),
+> git-diff is supposed to pass 7 parameters:
+>
+> path old-file old-hex old-mode new-file new-hex new-mode
+>
+> This is not what I am seeing here. Is this a bug or
+> incorrect/incomplete documentation?
+>
+> Tested with git 2.22.0 and 2.17.1.
