@@ -2,85 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8F9D1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 10:56:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF0AF1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 10:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728972AbfH0K4k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 06:56:40 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:44891 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728806AbfH0K4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 06:56:40 -0400
-Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1i2Z9T-0004P8-5Z; Tue, 27 Aug 2019 12:56:39 +0200
-Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1i2Z9S-0003gd-KO; Tue, 27 Aug 2019 12:56:38 +0200
-Date:   Tue, 27 Aug 2019 12:56:38 +0200
-From:   Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>,
-        entwicklung@pengutronix.de
-Subject: Re: git slow unless piped to cat
-Message-ID: <20190827105638.2og6vwvqtzkkqn5p@pengutronix.de>
-References: <20190827081559.mt5wjpdvqzn62dib@pengutronix.de>
- <20190827084111.GU20404@szeder.dev>
- <20190827085637.g6cpnuofpteyfqfz@pengutronix.de>
- <1566897126.4102.5.camel@pengutronix.de>
- <20190827094407.GV20404@szeder.dev>
- <20190827100427.u3a5uvmylm5vddn2@pengutronix.de>
- <20190827103309.GA8571@szeder.dev>
+        id S1726574AbfH0K7Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 06:59:16 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:41222 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725793AbfH0K7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 06:59:15 -0400
+Received: by mail-io1-f45.google.com with SMTP id j5so45222673ioj.8
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 03:59:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tegQCOxpnL4ICa7NoqAz0iLrgdL4889cyyZ2AdGI5PE=;
+        b=adioWtZLhTAuKaLXI4W4aPb8GVteodeGT+TXkfk/zQNHIJl7VJhR3pfnanm4La6Xkk
+         k+2QtFK0eC+Gt1mTZpKgwqxhMMz/AvOxLD2DB5nbIRUommCv2mMPQIvIRVjBRFOGv4GZ
+         z9ulLDD8cC8PdpuxHOquPGvLNwLpC3FXp9NOTl08v+uSobIC0ZGnskVLVbcVnBzyo2cu
+         cuymari+qaJLCZWFdmKINFCMuLy8Xeoi90Glvdef9FMHMxeFYo8nhvcGUoLbiwBaM9Ea
+         /luyuDWIvL8wP9fVXhispz51E1QCc01P12Yn4ow6RFpuGw4O0yBs3LfdJZNNHNphGVw2
+         x+4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tegQCOxpnL4ICa7NoqAz0iLrgdL4889cyyZ2AdGI5PE=;
+        b=goNUgKraklXMKpFL8MUzcMRnY8QYGIzSWpjravQv+u8WktkXE9ZVtuH+f2pFOQ99QS
+         jZi6XwaUvHzuJoWBAugNsV9uN+lh+NdZTr8ewgAW06Kgs8/dcMgFr5BDa5Ukpuzgacoq
+         2vHnQfLhT/HoICG0ZctmvS2hvWDaVjbxlPmlsNo1JePmBt4ENYWncQdUV4dLGTNIU3lh
+         UkzfVq5mmRpXwJ+bAjSr+SqUM4JT9XTlSSpOkf1WRLamfdCfXRdyXU6I/WzeL/tRh3I2
+         1n7EJ1eqpt8h5DWppIBrpVK6szS/L6b9sYuZQCGOABx85RNwhHO7v62gsoeZzphMAims
+         rpkA==
+X-Gm-Message-State: APjAAAUzTioajQMpkjsEHPJbiYb6mpyN303haYb/2XS4DXs2iFM0kD5n
+        OzsRKYsFuFWqTJbhXct4JPteWDFfoh4wNr+1QK3qzw==
+X-Google-Smtp-Source: APXvYqy60z3krXM1OLPKRlJJg9NMc45wYZJH+NhUYYni4uiUimIn5HjwQtKgz4T/p+SG2jFMtv+gprjSRcxqAf83B7A=
+X-Received: by 2002:a6b:c98c:: with SMTP id z134mr29723722iof.276.1566903554887;
+ Tue, 27 Aug 2019 03:59:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190827103309.GA8571@szeder.dev>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+References: <CAObSod2jhDjq=Fw2JtNMsK53HxXSf3n6K5XacHQBH00L49mNpQ@mail.gmail.com>
+ <20190827103653.GB8571@szeder.dev>
+In-Reply-To: <20190827103653.GB8571@szeder.dev>
+From:   Konstantin <kostix87@gmail.com>
+Date:   Tue, 27 Aug 2019 13:59:03 +0300
+Message-ID: <CAObSod1tMmLVNciNL_C4i_Xb7VQPwWc0uJtzLc0tntZF3KH2zg@mail.gmail.com>
+Subject: Re: How to split file with its history?
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+thank you. your answer is pretty complete.
 
-On Tue, Aug 27, 2019 at 12:33:09PM +0200, SZEDER Gábor wrote:
-> On Tue, Aug 27, 2019 at 12:04:27PM +0200, Uwe Kleine-König wrote:
-> > I'm a bit surprised that the default for --decorate depends on the
-> > output being a terminal.
-> 
-> Decorations (and colors as well) are for humans, and humans read the
-> terminal.
+On Tue, Aug 27, 2019 at 1:36 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+>
+> On Tue, Aug 27, 2019 at 01:10:02PM +0300, Konstantin wrote:
+> > currently we have one code file with deep history.
+> > As code file grown it is necessary to split it.
+> > but this action will drop history for the new extracted file.
+> > how can i split one big code file to small files and save its history
+> > for the "blame" action?
+>
+> 'git blame -C' can detect lines moved between files.
+>
+> https://git-scm.com/docs/git-blame#Documentation/git-blame.txt--Cltnumgt
+>
 
-I agree for colors only. Changing the actually provided information
-depending on output being a terminal is IMHO at least surprising.
 
-> > Thanks for your help, I will think about what I want to do. Just using
-> > --no-decorate will work, but isn't nice either. Will test if just
-> > throwing away all those tags from linux-next will make this already
-> > better.
-> 
-> Note that you can disable decorations by setting the 'log.decorate'
-> configuration variable to false.
-
-Being able to configure --decorate-refs= and --decorate-refs-exclude= in
-the config would be nice ...
-
-Best regards
-Uwe
-
--- 
-Pengutronix e.K.                           | Uwe Kleine-König            |
-Industrial Linux Solutions                 | http://www.pengutronix.de/  |
+--=20
+Best regards, Konstantin Kosukhin
