@@ -2,91 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5A931F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 22:26:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 785E31F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 22:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726152AbfH0W0J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 18:26:09 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45576 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfH0W0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 18:26:09 -0400
-Received: by mail-qk1-f193.google.com with SMTP id m2so632378qki.12
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 15:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=d7Hv9DmG3oKHxh3xyjKtw0p0y2qQrZ/u4/x+zgVS8/U=;
-        b=IgdZDYP6Itw2iCOKpkwB/Vgp0B71azyqaPLPoxk/O5maeZyiLJJ3Ydt0iiSFkeL4SO
-         PWpu3Q+pl5LDE7/3k6SVXv8qwX6KeGiOFgRkvtPma27MTLfzVp0S+dQVyvkn7IZ1bwVY
-         2IPEhVH7suHcSDurOR6vDWG4dcPONCDVh5rpGqgTH9A6lBwO5M2Eg5lSBNA6mL8BQXk8
-         NGGP3KQUxlQ8oSW7izJjBa9jLD7UMYbPqLAsfRGIVxAHJZRuQSLm/ifL1Ye3UM6lx4VV
-         z83GwbjaQQypLoHOGcafNRvUSynWh0YG54aWOuw7dXQ1APswHhiGzkUX4iGUQl5/ONTT
-         lLGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=d7Hv9DmG3oKHxh3xyjKtw0p0y2qQrZ/u4/x+zgVS8/U=;
-        b=RQDJ5Xgrxy2ealmLkMC9pBje98wQKo7Fqa6j9wgUO5VmgkO47Ovfa8zE9NqPjUrhwN
-         o3oXoJ/w9Wbdc+YmwFKSd6uxx1iV24n/GAo7og58fGrKD6PSqHNvRo2ETCs8+Hu9X1Kn
-         r+6we34vE+Z6JVFXDLDCz43S1O4f3fr+eaKep+2mp9gY65T8iGTlOJzmJda2scQ6dPUk
-         nks1gnXVskKNXnc/zRa9JY+RYMXNO2mjvCu+/3VpH48vjIe1FkXJ1NH7TQ0tkZVlRZCv
-         qgU63xIEdH97sGD7PnILUiS2gishuDIr79vLtq31VrPXeTxPkuNrDmQRqCc8zuHL4D23
-         zK2w==
-X-Gm-Message-State: APjAAAVj2MGUqyzR7UZyMFzMNbAP9TEI72HH+fyQXwaHbwPZNFnX9/jQ
-        9T81FePzK4w14rwnov+ifKwVw1L+4OY4NTk79hbLwzEFwJg=
-X-Google-Smtp-Source: APXvYqyPuQEx5qG7mjLbkdIvpz2mHvunOCHUYk411LENHxXgiaTC5RAe3rCxDZmRLdwLxeA7sprujbJidMXkCAodKWk=
-X-Received: by 2002:a37:9cce:: with SMTP id f197mr925981qke.129.1566944768232;
- Tue, 27 Aug 2019 15:26:08 -0700 (PDT)
+        id S1726232AbfH0Wbl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 18:31:41 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62621 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbfH0Wbl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 18:31:41 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F210E80FEC;
+        Tue, 27 Aug 2019 18:31:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qHD9flif5wsjQiVxyx1aDzzvVio=; b=x71uya
+        auWPCOc3j+7hR/GJFgkvtEvQrzJN7dmL7x5yPcJV14jZ9/4cIDK+w/YUZi1deyiA
+        E5EX3GR5jcHwWx9h0bAM4TZsaL3Of/r+fncEYDiWjaa0eXEAsrGQqhHhJs4hx4Mt
+        yVwJ4MQ4uVW1Ay8amVh8O+RJHA76CrB3PAoMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qqVtwQzTo2Iufd9cQaF96DhTFOYW3iW8
+        PSoUis4LWwyUgyCIi6OfR6zjIGmpjifEb399dnu1QAPDlP3k1u24uLzX1s+LnulR
+        ZVzaBNRf2Z5oVfmP/Z9jfgGnNfV4AtWQ1eI0Y1CbjFH41O7d7cLspKFaGCAtTWDs
+        6m+gcfX5gKY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9B8E80FEB;
+        Tue, 27 Aug 2019 18:31:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2114F80FEA;
+        Tue, 27 Aug 2019 18:31:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andrey Mazo <ahippo@yandex.ru>
+Cc:     "Philip.McGraw" <Philip.McGraw@bentley.com>,
+        Luke Diamand <luke@diamand.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Andrey Mazo <ahippo@yandex.com>, git@vger.kernel.org,
+        gitgitgadget@gmail.com
+Subject: Re: [PATCH v2 1/1] git-p4: auto-delete named temporary file
+References: <pull.303.v2.git.gitgitgadget@gmail.com>
+        <7e59b5cec2f267820feeeeb63a20814fe67d61e3.1566876175.git.ahippo@yandex.com>
+Date:   Tue, 27 Aug 2019 15:31:33 -0700
+In-Reply-To: <7e59b5cec2f267820feeeeb63a20814fe67d61e3.1566876175.git.ahippo@yandex.com>
+        (Andrey Mazo's message of "Tue, 27 Aug 2019 06:43:58 +0300")
+Message-ID: <xmqq1rx62qbe.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
-In-Reply-To: <CAH53SykX12SN83=gey8KS_x3cGkXH758sfEieskXnnvos8DMcA@mail.gmail.com>
-From:   Dmitry Nikulin <pastafariant@gmail.com>
-Date:   Wed, 28 Aug 2019 01:25:57 +0300
-Message-ID: <CAH53Sy=zcP=DRg5WQFkaBp9CoHP+phCA_NasM5OqOdfwQGkQyQ@mail.gmail.com>
-Subject: Re: git-diff passes <rev>:<path> args to GIT_EXTERNAL_DIFF incorrectly?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6DE4488C-C91A-11E9-8747-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have put up a demo repo here: https://github.com/dniku/git-external-diff-argv
+Andrey Mazo <ahippo@yandex.ru> writes:
 
-On Tue, 27 Aug 2019 at 21:24, Dmitry Nikulin <pastafariant@gmail.com> wrote:
+> From: "Philip.McGraw" <Philip.McGraw@bentley.com>
 >
-> I wrote a very simple Python script to see which arguments git-diff
-> passes to the external diff program when comparing files across
-> branches:
+> Avoid double-open exceptions on Windows platform when
+> calculating for lfs compressed size threshold
+> (git-p4.largeFileCompressedThreshold) comparisons.
 >
-> $ env GIT_EXTERNAL_DIFF=./print_argv.py git diff
-> origin/branch1:file1.txt origin/branch2:file2.txt
-> ['./print_argv.py',
->  'file1.txt',
->  '/tmp/QRaIJ1_file1.txt',
->  '802b1c4ed7b06162b2ce09b7db72a576695b96e5',
->  '100644',
->  '/tmp/AZuOJ1_file2.txt',
->  '076e8e37a712d8a66c0c3d1a103050dc509ca6ff',
->  '100644',
->  'file2.txt',
->  'index 802b1c4..076e8e3 100644\n']
+> Take new approach using the NamedTemporaryFile()
+> file-like object as input to the ZipFile() which
+> auto-deletes after implicit close leaving with scope.
 >
-> According to the docs
-> (https://www.git-scm.com/docs/git/2.22.0#Documentation/git.txt-codeGITEXTERNALDIFFcode),
-> git-diff is supposed to pass 7 parameters:
+> Original code had double-open exception on Windows
+> platform because file still open from NamedTemporaryFile()
+> using generated filename instead of object.
 >
-> path old-file old-hex old-mode new-file new-hex new-mode
+> Thanks to Andrey for patiently suggesting several
+> iterations on this change for avoiding exceptions!
 >
-> This is not what I am seeing here. Is this a bug or
-> incorrect/incomplete documentation?
+> Also print error details after resulting IOError to make
+> debugging cause of exception less mysterious when it has
+> nothing to do with "git version recent enough."
 >
-> Tested with git 2.22.0 and 2.17.1.
+> Signed-off-by: Philip.McGraw <Philip.McGraw@bentley.com>
+> Reviewed-by: Andrey Mazo <ahippo@yandex.com>
+> ---
+
+Luke, does this look good?
+
+I know Mazo is the only other contributor who has multiple commits
+to git-p4.py in the past 2 years, to make Reviewed-by carry some
+weight ;-) but as we have so small number of people touching this
+script anyway, I'd rather see what the main contributor in the past
+2 years thinks.
+
+Thanks.
+
+>  git-p4.py | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index c71a6832e2..33bdb14fd1 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1158,17 +1158,15 @@ def exceedsLargeFileThreshold(self, relPath, contents):
+>          if gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>              contentsSize = sum(len(d) for d in contents)
+>              if contentsSize <= gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>                  return False
+>              contentTempFile = self.generateTempFile(contents)
+> -            compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
+> -            zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
+> -            zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+> -            zf.close()
+> -            compressedContentsSize = zf.infolist()[0].compress_size
+> +            compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=True)
+> +            with zipfile.ZipFile(compressedContentFile, mode='w') as zf:
+> +                zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+> +                compressedContentsSize = zf.infolist()[0].compress_size
+>              os.remove(contentTempFile)
+> -            os.remove(compressedContentFile.name)
+>              if compressedContentsSize > gitConfigInt('git-p4.largeFileCompressedThreshold'):
+>                  return True
+>          return False
+>  
+>      def addLargeFile(self, relPath):
+> @@ -3512,12 +3510,13 @@ def importHeadRevision(self, revision):
+>          details["time"] = res["time"]
+>  
+>          self.updateOptionDict(details)
+>          try:
+>              self.commit(details, self.extractFilesFromCommit(details), self.branch)
+> -        except IOError:
+> +        except IOError as err:
+>              print("IO error with git fast-import. Is your git version recent enough?")
+> +            print("IO error details: {}".format(err))
+>              print(self.gitError.read())
+>  
+>      def openStreams(self):
+>          self.importProcess = subprocess.Popen(["git", "fast-import"],
+>                                                stdin=subprocess.PIPE,
+>
+> base-commit: 1feeaaf26bff51996f9f96c6dc41ca0f95ab5fc4
+> Pull-Request: https://github.com/gitgitgadget/git/pull/303
