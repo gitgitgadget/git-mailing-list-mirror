@@ -2,53 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD3981F4B7
-	for <e@80x24.org>; Tue, 27 Aug 2019 00:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BE781F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 00:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726616AbfH0AE6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 20:04:58 -0400
-Received: from pv50p00im-ztdg10012101.me.com ([17.58.6.49]:56518 "EHLO
-        pv50p00im-ztdg10012101.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726543AbfH0AE6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Aug 2019 20:04:58 -0400
-X-Greylist: delayed 543 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Aug 2019 20:04:58 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1566863753;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        h=Content-Type:From:Date:Subject:Message-Id:To;
-        b=NQdrDa1GfYxYWmxSljS6hervh8icWvQPJeFSr+IkKRKM2h7jzvdW0PIKGrejQBDE6
-         0DO95/hVZjkNLinsGBucn+XCakfrfzWkyWDlfW9+fMWaERdJUVQ9M/kHjq7UEejNMd
-         wsakrAbQqQoJovKViaQfpmRx/CsPGM7KxXjx+jNl7eT/l8TEq/QuN0DoFgp55J9qQq
-         LaM+eDx+ZNE9q8POgQokvcVL+xVnxFGytNUV9tdkXu/usLdYPwXNwvTlh8Z0yuPSBj
-         jx4i8tgbTGtn8u0asu1A4rNJdn6e0vTfAriUuu70PggZhMCMi3TSbSbwLNkdsnhzA/
-         eXSGQtm3mfC5A==
-Received: from [192.168.100.244] (unknown [77.31.212.46])
-        by pv50p00im-ztdg10012101.me.com (Postfix) with ESMTPSA id CF0CD8405FE
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 23:55:52 +0000 (UTC)
+        id S1727064AbfH0AZi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 20:25:38 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45658 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726543AbfH0AZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 20:25:38 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1i2PIi-0007FP-Sz; Tue, 27 Aug 2019 09:25:32 +0900
+Date:   Tue, 27 Aug 2019 09:25:32 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] packfile: free packed_git memory when closing object
+ store
+Message-ID: <20190827002532.aqjbik6haoa5axhj@glandium.org>
+References: <20190826024508.8444-1-mh@glandium.org>
+ <xmqqftlnhkd6.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From:   ". ." <w_sm2019@icloud.com>
-Mime-Version: 1.0 (1.0)
-Date:   Tue, 27 Aug 2019 02:55:48 +0300
-Subject: M
-Message-Id: <D2ED1EA0-D60F-4342-90C9-E6D993B1A10C@icloud.com>
-To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (16F203)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-08-26_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=241 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1812120000 definitions=main-1908260223
+Content-Disposition: inline
+In-Reply-To: <xmqqftlnhkd6.fsf@gitster-ct.c.googlers.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 26, 2019 at 11:06:29AM -0700, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > Signed-off-by: Mike Hommey <mh@glandium.org>
+> > ---
+> >  packfile.c | 11 +++++++----
+> >  1 file changed, 7 insertions(+), 4 deletions(-)
+> >
+> > Note, I'm not sure this is the right place to do it.
+> 
+> I do not think this patch is complete, given that o->packed_git
+> still has a non-NULL pointer.  IIRC, close_pack() was written for
+> the explicit purpose of releasing resources while allowing us to
+> reopen with open_packed_git() on it, so with the current
+> arrangement, after releasing the resources held for this object
+> store and doing something else, you should be able to come back to
+> this object store and work in it again---this patch makes it harder
+> if not impossible to do so.
+> 
+> I _think_ the patch is OK if you assigned NULL to o->packed_git,
+> after making sure that the intention of all the callers of
+> close_object_store() is to declare that this object store will not
+> be accessed any longer during the lifetime of the process, and write
+> it down as the contract between the callers and this function in a
+> comment perhaps in packfile.h where the function is declared.
 
+Maybe it would make more sense to do the complete cleanup in
+raw_object_store_clear, then?
+
+Relatedly, while looking around the other things that close_object_store
+does, I saw that multi_pack_index is a sort of linked list... and
+close_midx doesn't follow the links. Which raises the question whether
+it should, or whether close_object_store should (considering it's
+similar to packed_git in that regard, it would seem like
+close_object_store should). It also raises the question what should be
+free()ing multi_pack_index, because like packed_git, it's not free()d.
+
+Mike
