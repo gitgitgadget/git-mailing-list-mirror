@@ -8,51 +8,50 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAB321F4B7
-	for <e@80x24.org>; Tue, 27 Aug 2019 01:26:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3881F1F4B7
+	for <e@80x24.org>; Tue, 27 Aug 2019 01:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728124AbfH0B0D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Aug 2019 21:26:03 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:38244 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726257AbfH0B0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Aug 2019 21:26:02 -0400
-Received: by mail-yw1-f67.google.com with SMTP id f187so7327801ywa.5
-        for <git@vger.kernel.org>; Mon, 26 Aug 2019 18:26:02 -0700 (PDT)
+        id S1728461AbfH0B2D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Aug 2019 21:28:03 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:43256 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726257AbfH0B2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Aug 2019 21:28:03 -0400
+Received: by mail-yw1-f66.google.com with SMTP id n205so7317509ywb.10
+        for <git@vger.kernel.org>; Mon, 26 Aug 2019 18:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Nvccj90ZcjDQGPBL8nqdscdxi8VlrUFDlisDNo3ygyA=;
-        b=i6b4ypvw9K8GqcImi4CWMtDnh3v48h+ziniTKBZE2dwhjAt7wVELozVhty17KwiI5A
-         0Fcio1q98EUO/t4Xp5ZdVHWM3mSAprKGa5MZFlf+SObrI3+JVta/SibMOXw942pL+56G
-         ociaa47Ojl5SpCQ30jmZxz5x3XxRaAG5WohFAVGcob85gKncO2s/WnNNR60wZHHyNkgZ
-         QGVBtIj99aetKMrD+8F7T6OEaTb0EEr+VJc6pFETYryRM3zhqKwFnUabz4a+orSr4H1l
-         KQCTzo3oruCZlH0luOShu5wWwbolsDtkzLpEWrXfgPouuG12veIrJdFrLZuNdgyPPXuQ
-         VyPg==
+        bh=lUkUiMW0aRY8/5hmaFnX45iG342DrM/SgR7q7mPfb+s=;
+        b=KdokRKb77Ol1DowliI54iMTeEsNgy1PuRElKDtNeYliMIO2u6Ps31qDreF3WNPmj8u
+         HvEbTJxYmaB7zZbYX06mz7tvXwRCDNv5JjGDKBfYfsSXNJuzj76CCPxGVNyQI3XPMDd5
+         m8PEsMkqu6mWXtQ7IoB7ReDFdAe6SMAvQggdqONCmBejH97Qi+m/jQ0Xxd+qhP+Rxjyf
+         e2BAdIRzbReqOQudtcxdJi1u+loAWFgrEOmds2ARLP4W3Nm2+Q4t8HcvQ8IFULADilRX
+         ksWsJk215BsvomwEqJMCAwNzultvS/kyqa14bs9zUiOXEB+tmrn+QJK7E6VRSD3MYUG+
+         Vvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Nvccj90ZcjDQGPBL8nqdscdxi8VlrUFDlisDNo3ygyA=;
-        b=Pukrf6nwgOnfj5D6O/amvcyr6uDQJduIYKqDaTxk8etpobPTGvuSop1gYw/HMUvL6y
-         B0hVzT0bwWMDS5SNcWEIlqMydHSBnoBtwDZ/+JYhOoDmDPL2xsY953tE9obq1LsI+dsg
-         5gMipn6JLDTKbtGh3q7tUdXiZl5Bqk+KeeShmg90YNCKyU8AAyEtgnGItgA6g2n95mJA
-         pMtL95DrzaRT9V+brfPO4bZB3siJgNaUzKCJQ+KJP739/0k3+yiuNnS3+UyoUrSDWDWL
-         pqf6QWFhd+8W8rGfrmA9JxAQZRAUCFcgpDfr+iRxZ+omFb7P+N2ayP/mBG3nvPpzOwIx
-         aMCw==
-X-Gm-Message-State: APjAAAW1yon57thd6CuWGHPod6tUnem6PH6ZKqkwyziAYM6h0+0lVgrJ
-        hUxEnZVj2hm9gJlkzFiCFPM=
-X-Google-Smtp-Source: APXvYqyzJD7PuJtC9vjxfNK2+8oly5KmSh8ewtT/C2mq60aXSQjAmRrtUJAlyntBg5g9mVd7mIE1fA==
-X-Received: by 2002:a0d:eb4f:: with SMTP id u76mr15005963ywe.285.1566869161555;
-        Mon, 26 Aug 2019 18:26:01 -0700 (PDT)
+        bh=lUkUiMW0aRY8/5hmaFnX45iG342DrM/SgR7q7mPfb+s=;
+        b=FZNALtBgh3n0cOMDRZk3hykHBs+C1uUSsFhVRJXSaaddTcpLHK0+jCOGMxaDcthFs+
+         5ABO7LxP+ZAPjSuGMGRtB1WZjIVzGVzYfIKJFKUyMJeY0poRSdGZs6SoFaAl8/pSRLtf
+         tyWoR+WhszBGgfoazQVtgAK6sSf9NZiF5ibSDRUco9XQyGPDiOtrTc/IR7Rgy2SeLbTa
+         3hdKnPdge37fvgSoF6PWxyblH9cZf2pd05XQ4KhyJGd+ELz1BBymnfMVXnQPHVZXmedh
+         R1KKyafxxyGZLFTm5MQPfYp7ZzywORjBaTLoF61PZZZEsJeizWdMa6A8BsqopS9ikBMo
+         KqBw==
+X-Gm-Message-State: APjAAAV0t36arrKoGv7n8OLCfSXzt+JOjEf6GvvDkfHFxpXBK01b5eSJ
+        B5IWZHHO/je7GpLIGPX0cts=
+X-Google-Smtp-Source: APXvYqzsbE1tqweyzzL/d247IgHWkAUqmDBr7r+CIDWrni7KNHz2rHPSRuRmhe63Jloer8nPzBGptw==
+X-Received: by 2002:a81:4c55:: with SMTP id z82mr15079734ywa.439.1566869282264;
+        Mon, 26 Aug 2019 18:28:02 -0700 (PDT)
 Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id c7sm2770016ywb.48.2019.08.26.18.26.00
+        by smtp.gmail.com with ESMTPSA id l71sm3288458ywl.39.2019.08.26.18.28.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Aug 2019 18:26:00 -0700 (PDT)
-Subject: Re: [RFC PATCH 2/5] t3427: accelerate this test by using fast-export
- and fast-import
+        Mon, 26 Aug 2019 18:28:01 -0700 (PDT)
+Subject: Re: [RFC PATCH 3/5] git-sh-i18n: work with external scripts
 To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         Jeff King <peff@peff.net>,
@@ -62,14 +61,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         Jonathan Nieder <jrnieder@gmail.com>
 References: <xmqqd0gwopej.fsf@gitster-ct.c.googlers.com>
  <20190826235226.15386-1-newren@gmail.com>
- <20190826235226.15386-3-newren@gmail.com>
+ <20190826235226.15386-4-newren@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ad7446ac-34cc-b566-302b-053bf5dafc63@gmail.com>
-Date:   Mon, 26 Aug 2019 21:25:59 -0400
+Message-ID: <88ee0658-66c2-902b-276a-25ffcd08b954@gmail.com>
+Date:   Mon, 26 Aug 2019 21:28:00 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101
  Thunderbird/69.0
 MIME-Version: 1.0
-In-Reply-To: <20190826235226.15386-3-newren@gmail.com>
+In-Reply-To: <20190826235226.15386-4-newren@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -79,119 +78,26 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 8/26/2019 7:52 PM, Elijah Newren wrote:
-> fast-export and fast-import can easily handle the simple rewrite that
-> was being done by filter-branch, and should be significantly faster on
-> systems with a slow fork.  Timings from before and after on two laptops
-> that I have access to (measured via `time ./t3427-rebase-subtree.sh`,
-> i.e. including everything in this test -- not just the filter-branch or
-> fast-export/fast-import pair):
+> Scripts external to git could source $(git --exec-path)/git-sh-setup (as
+> we document in Documentation/git-sh-setup.txt).  This will in turn
+> source git-sh-i18n, which will setup some handy internationalization
+> infrastructure.  However, git-sh-i18n hardcodes the TEXTDOMAIN, meaning
+> that anyone using this infrastructure will only get translations that
+> are shipped with git.  Allow the external scripts to specify their own
+> translation domain but otherwise use our infrastructure for accessing
+> translations.
 > 
->    Linux:  4.305s -> 3.684s (~17% speedup)
->    Mac:   10.128s -> 7.038s (~30% speedup)
+> My original plan was to have git-filter-branch be the first testcase
+> using this feature, with a goal of minimizing the number of changes that
+> needed to be made to it when I moved it out of git.git.  However, I
+> realized after creating this patch that no strings in git-filter-branch
+> are translated.  However, the generalization could be useful if we move
+> other tools from git.git to an external location.
 
-Again, impressive speedup!
+Hm. Maybe extract it from this series for the YAGNI principle?
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t3427-rebase-subtree.sh | 32 ++++++++++++++++++++++++--------
->  1 file changed, 24 insertions(+), 8 deletions(-)
-> 
-> diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-> index d8640522a0..d05fcce5dc 100755
-> --- a/t/t3427-rebase-subtree.sh
-> +++ b/t/t3427-rebase-subtree.sh
-> @@ -42,7 +42,9 @@ test_expect_failure REBASE_P \
->  	'Rebase -Xsubtree --preserve-merges --onto commit 4' '
->  	reset_rebase &&
->  	git checkout -b rebase-preserve-merges-4 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
+A noble goal, but in my opinion I'd prefer to see this be exercised
+by something immediately.
 
-There's a lot of repetition in these changes. Is this a good time
-to introduce a helper method? This trio of commands happens to be
-difficult to parse, so I'd rather do it just once.
-
->  	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
->  	verbose test "$(commit_message HEAD~)" = "files_subtree/master4"
-> @@ -53,7 +55,9 @@ test_expect_failure REBASE_P \
->  	'Rebase -Xsubtree --preserve-merges --onto commit 5' '
->  	reset_rebase &&
->  	git checkout -b rebase-preserve-merges-5 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
->  	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
-> @@ -64,7 +68,9 @@ test_expect_failure REBASE_P \
->  	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 4' '
->  	reset_rebase &&
->  	git checkout -b rebase-keep-empty-4 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
->  	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-> @@ -75,7 +81,9 @@ test_expect_failure REBASE_P \
->  	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 5' '
->  	reset_rebase &&
->  	git checkout -b rebase-keep-empty-5 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
->  	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-> @@ -86,7 +94,9 @@ test_expect_failure REBASE_P \
->  	'Rebase -Xsubtree --keep-empty --preserve-merges --onto empty commit' '
->  	reset_rebase &&
->  	git checkout -b rebase-keep-empty-empty master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
->  	verbose test "$(commit_message HEAD)" = "Empty commit"
-> @@ -96,7 +106,9 @@ test_expect_failure REBASE_P \
->  test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
->  	reset_rebase &&
->  	git checkout -b rebase-onto-4 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --onto files-master master &&
->  	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-> @@ -106,7 +118,9 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
->  test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
->  	reset_rebase &&
->  	git checkout -b rebase-onto-5 master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --onto files-master master &&
->  	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-> @@ -115,7 +129,9 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
->  test_expect_failure 'Rebase -Xsubtree --onto empty commit' '
->  	reset_rebase &&
->  	git checkout -b rebase-onto-empty master &&
-> -	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-> +	git fast-export --no-data HEAD -- files_subtree/ \
-> +		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +		| git fast-import --force --quiet &&
->  	git commit -m "Empty commit" --allow-empty &&
->  	git rebase -Xsubtree=files_subtree --onto files-master master &&
->  	verbose test "$(commit_message HEAD)" = "Empty commit"
-> 
-
+Thanks,
+-Stolee
