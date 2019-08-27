@@ -2,172 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793521F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 09:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 664931F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 09:26:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729517AbfH0JXJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 05:23:09 -0400
-Received: from mout.gmx.net ([212.227.17.21]:44501 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729357AbfH0JXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 05:23:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566897778;
-        bh=EWb+FN6Gd0wVRnqiAEbka2t6LU2XVuCfsTZwJwtIAwI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Z8E/UddKon9HXnu3ZDI8KrMwP3uQuh6RGNpSorn8GuJcxrJi5IMKKXlwq6+5xsxoo
-         yfzFZlBs96TmibCO5IZ22FNPIclxJOS20WDn0/yEv5HQLcroUNCLijtxbtvCt/Wt+2
-         +beMCHgvDhsS5J9w0C6lnJrzgT7I0l6s2CdH4JKY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGhyc-1hydf93MSg-00Ds3V; Tue, 27
- Aug 2019 11:22:57 +0200
-Date:   Tue, 27 Aug 2019 11:22:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Daniel Ferreira via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Daniel Ferreira <bnmvco@gmail.com>
-Subject: Re: [PATCH v3 02/11] diff: export diffstat interface
-In-Reply-To: <xmqqwofyozka.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1908271121230.46@tvgsbejvaqbjf.bet>
-References: <pull.170.v2.git.gitgitgadget@gmail.com>        <pull.170.v3.git.gitgitgadget@gmail.com>        <c7a377890d84849ea2f63099cfc081420a4de15d.1563289115.git.gitgitgadget@gmail.com> <xmqqwofyozka.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729746AbfH0J0m (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 05:26:42 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:33087 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbfH0J0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 05:26:42 -0400
+Received: by mail-io1-f65.google.com with SMTP id z3so44776038iog.0
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 02:26:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v20zXHXZa98JNHGHE5szbwnCeaC4BO4ToWO2Q7qn3fA=;
+        b=n0Jjxxen/2VfNE2OSaoMWIwo6ahrNhs6TAMn0RT+mwnmMK180OuAOPUbmgUVJnmGl8
+         8Sni2xIU5qJr5kTwXXmS+Ax9gWZ52NoDto6Ou3UPDD7Cz0WXhuVQ3XdhqLWA9m9xyW8G
+         hHfEiA4DQpo8ica8bmcGZYDpochg1prlPOFHxYtZdi1JzrkkDMVG05Ru/oyST5HWq0mv
+         yrn9zJm6QPmVT+yyi6T1kTO05OkHbfJm2CsHMQqG9Pyt0QJC4T5g4oDZKbHwvD3iQszr
+         K6c6g2jFo5I9QgeSPd5+2OiswR06iX33ea20RBq0cdJKCuxb1V9ig1fLOkF/bPqAS8kj
+         uJvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v20zXHXZa98JNHGHE5szbwnCeaC4BO4ToWO2Q7qn3fA=;
+        b=Z6mrGVfKeAvNkmOu/GmGe/IxplH5AQ89ZnH1yQFpPF8zKXVN1M6jJG+zEQvMbHsNiA
+         sDL3RUgXFbceHlQMpDzVS/wG9PkdbzAi0JHKFfj5a+R1/JX3jqZTE7Ab7MEd+lhjsYzH
+         bLAjIgKbwgJVw12+7dJYAlrPGah8BY4QgdCkQhcOiUWbL4gX7BQAYVGux5QHeVpqwIZV
+         WwUDsETKrbXhGWKz/a5/Mseri5hhZu0m9q+Ng8AZn9NkCeSKHWtM1vrfmTFqs2bs0aCO
+         lvIVYc1gCSVGQf/oL/MH4fnwNlzywN2EoLkHYdhphijX6B4e6PK+2c1ZwdMrxHSjspzc
+         0fog==
+X-Gm-Message-State: APjAAAXal26wRstHff470laoSNZDJYn1WmzUT56inU/CBOLTthZvxRbZ
+        5aqneL01axX85BO5ZkNFg1RVZ9FS459p8rDLokA=
+X-Google-Smtp-Source: APXvYqzf1ZukbV6ZeFBmlSyZpJiZGD60nSEU4mczuUi+GW7t4UhBK3sPVKginV6qKfjwmgtrj8ayjdzQidRyxeFN1Ys=
+X-Received: by 2002:a02:a792:: with SMTP id e18mr22882893jaj.64.1566898001397;
+ Tue, 27 Aug 2019 02:26:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qSwsYRXlahNizJXI5FPj8h/DFKYB1gw1kMEgqcek9VJgWbpZ7nc
- v3rgIpEH3Vn7TCiG0TwVeUYNzP+/cSLo01PkvetPZRYPqzCQbSMF3SzkrNe4d9SAzkwMgE/
- d1wFnRQXh2aDDo9bWapJH8EhSWdDP2K4BWvRp9FPN2TE4VhTDo4x1SI0QMQUGZW6X47iNGp
- mUu2lqAgRUimdtUxDfSAQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1mMkI3XmA1U=:1pdVbU98r202wJeSQK/HlZ
- guLOhSQgJT+D8kHPgUzZ6mA1/qiQh3Z100DfavZr28wIt3M3LNqP0xbJ4qhOUO25Q17Bfs68t
- FmTT/xSkyuB0IZLkS/elgvbzWIMyxYvOXGfNezyOXXDXcGBUj9r/5Q6Fo3Iep942KwiyqEdrT
- /ZpqztfdFG4t8Nr23jxz2EUqBe7+GKXH+nXGEFXTbf6tLCXLzszMZlf8V6Plbw2XVOJmsDytP
- V1+6wKqFULnin5TR/DHcEIXi//PlImMwqLrxAi504X98hTCM42JjIddi1Mzd93nWVe/Q6/OMB
- 3YDgo14U9IfdoTgj4RvCfonaUkw5BBCuixyFabMPuNnJjiyVXCMoF38QOMw79PwAgNUTM9w/m
- 4XpNOCH/79hyaSMHBUVADlucDWaYFx2rRve8Wz2gxQwPbMA90w5CFuOEhsSHplS3bSB34U+ZN
- baiPQJD6zfXvQad4D9AbFPb7jCyVME+frXGpuudVqS/29Y2Soy6GIWDQNJyH+fJomw1owlA2x
- QP0cAvzfLlRiCkguWsNG5Z6jRZY3yKLRxHzNygyMJfNaAsECkS+cB1ffWgt1N5i7/LtwLTQvU
- b5BRkn4mcy9vsHMdmKCtKiojuSaH4dBc0IaHaAX5b3zVfW8536b/9K8JVT5l2cNT/Q0tnx5EX
- OYivQqelWwhzopR4kzg6Ah/InSnwv3UD+XHh7FiIl4j2iRsBP/puN4JJfRIJEuHdoOZPCGYUU
- dGF+4MPynA5QzweNzNCZOIS6MPiglNCfg/rdQK3fBM8BZRlkgn6tTpIaBZVe95LBKM2ShU9n0
- czsMAa/N6rrOHjYhjo4yqGwgsoV9VbFGHxVXKaGxHzL7suNvQYZLXv1eL2LFPqga5IdOyCX+E
- R+gBhja2WBQsKHTl7kqmxUEHNmDExBrDiDadpTSe+SLkjFx/R6yOBk/w7CVNTOK7/8h+x/gd4
- KCbCeD/tr96YCkqCSIGPfptLp9+7eXbApob4KBBb+262y9HJyQhvRLjsKlJ9fGy/ZAwqzzxwN
- F4gD/zwPRLAShb3jO08EcitjQSYKJF9mrUkUl+Q87CF2Irphby1aEwcBWrV3VYDSAbXXWviKK
- slZp+Liu06goy4vq/jCJuwcwiP1QS3GLx7XwF8pxyWDagCsMJoNsKnQfncuEdxoZ/0vlkIkzo
- 5oacY=
-Content-Transfer-Encoding: quoted-printable
+References: <cover.1566863604.git.matheus.bernardino@usp.br> <4920d3c474375abb39ed163c5ed6138a5e5dccc6.1566863604.git.matheus.bernardino@usp.br>
+In-Reply-To: <4920d3c474375abb39ed163c5ed6138a5e5dccc6.1566863604.git.matheus.bernardino@usp.br>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 27 Aug 2019 16:26:15 +0700
+Message-ID: <CACsJy8Dry7MfKBi5EKw4Ka9r63QVmDjPv9nAozS0mC6Z7-sG=w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] config: allow config_with_options() to handle any repo
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 31 Jul 2019, Junio C Hamano wrote:
-
-> "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Aug 27, 2019 at 6:57 AM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 >
-> > @@ -6273,12 +6257,7 @@ void diff_flush(struct diff_options *options)
-> >  	    dirstat_by_line) {
-> >  		struct diffstat_t diffstat;
-> >
-> > -		memset(&diffstat, 0, sizeof(struct diffstat_t));
-> > -		for (i =3D 0; i < q->nr; i++) {
-> > -			struct diff_filepair *p =3D q->queue[i];
-> > -			if (check_pair_status(p))
-> > -				diff_flush_stat(p, options, &diffstat);
-> > -		}
-> > +		compute_diffstat(options, &diffstat, q);
-> >  		if (output_format & DIFF_FORMAT_NUMSTAT)
-> >  			show_numstat(&diffstat, options);
-> >  		if (output_format & DIFF_FORMAT_DIFFSTAT)
-> > @@ -6611,6 +6590,20 @@ static int is_submodule_ignored(const char *pat=
-h, struct diff_options *options)
-> >  	return ignored;
-> >  }
-> >
-> > +void compute_diffstat(struct diff_options *options,
-> > +		      struct diffstat_t *diffstat,
-> > +		      struct diff_queue_struct *q)
-> > +{
-> > +	int i;
-> > +
-> > +	memset(diffstat, 0, sizeof(struct diffstat_t));
-> > +	for (i =3D 0; i < q->nr; i++) {
-> > +		struct diff_filepair *p =3D q->queue[i];
-> > +		if (check_pair_status(p))
-> > +			diff_flush_stat(p, options, diffstat);
-> > +	}
-> > +}
->
-> Hmm, (1) clearing diffstat struct to initialize, (2) looping over
-> diff_queue to compute stat for each path, (3) using diffstat
-> information and then (4) finally freeing the diffstat info is the
-> bog-standard sequence of the user of this API.  Merging step (1) and
-> (2) may probably be OK (iow, I do not think of a use pattern for
-> future users where being able to do some custom things between steps
-> (1) and (2) would be useful), which is this function is about.  (3)
-> is what the user of this API would do, but shouldn't (4) be exported
-> at the same time, if we are making (1+2) as an external API?
+> Currently, config_with_options() relies on the global the_repository
+> when it has to configure from a blob.
 
-Good point.
+Not really reading the patch, but my last experience with moving
+config.c away from the_repo [1] shows that there are more hidden
+dependencies, in git_path() and particularly the git_config_clear()
+call in git_config_set_multivar_... Not really sure if those deps
+really affect your goals or not. Have a look at that branch, filtering
+on config.c for more info (and if you want to pick up some patches
+from that, you have my sign-off).
 
-It _also_ hints at the fact that we're not releasing the memory properly
-after running the diffstat in the built-in `add -i`.
+[1] https://gitlab.com/pclouds/git/commits/submodules-in-worktrees
 
-Will fix,
-Dscho
-
->
-> >  void diff_addremove(struct diff_options *options,
-> >  		    int addremove, unsigned mode,
-> >  		    const struct object_id *oid,
-> > diff --git a/diff.h b/diff.h
-> > index b680b377b2..34fc658946 100644
-> > --- a/diff.h
-> > +++ b/diff.h
-> > @@ -244,6 +244,22 @@ void diff_emit_submodule_error(struct diff_option=
-s *o, const char *err);
-> >  void diff_emit_submodule_pipethrough(struct diff_options *o,
-> >  				     const char *line, int len);
-> >
-> > +struct diffstat_t {
-> > +	int nr;
-> > +	int alloc;
-> > +	struct diffstat_file {
-> > +		char *from_name;
-> > +		char *name;
-> > +		char *print_name;
-> > +		const char *comments;
-> > +		unsigned is_unmerged:1;
-> > +		unsigned is_binary:1;
-> > +		unsigned is_renamed:1;
-> > +		unsigned is_interesting:1;
-> > +		uintmax_t added, deleted;
-> > +	} **files;
-> > +};
-> > +
-> >  enum color_diff {
-> >  	DIFF_RESET =3D 0,
-> >  	DIFF_CONTEXT =3D 1,
-> > @@ -333,6 +349,9 @@ void diff_change(struct diff_options *,
-> >
-> >  struct diff_filepair *diff_unmerge(struct diff_options *, const char =
-*path);
-> >
-> > +void compute_diffstat(struct diff_options *options, struct diffstat_t=
- *diffstat,
-> > +		      struct diff_queue_struct *q);
-> > +
-> >  #define DIFF_SETUP_REVERSE      	1
-> >  #define DIFF_SETUP_USE_SIZE_CACHE	4
->
+--
+Duy
