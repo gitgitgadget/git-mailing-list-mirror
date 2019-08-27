@@ -2,102 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 576731F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 09:12:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 793521F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 09:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728634AbfH0JMJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 05:12:09 -0400
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:59735 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbfH0JMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 05:12:09 -0400
-Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
-        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1i2XWJ-0000Qt-8Z; Tue, 27 Aug 2019 11:12:07 +0200
-Message-ID: <1566897126.4102.5.camel@pengutronix.de>
-Subject: Re: git slow unless piped to cat
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, entwicklung@pengutronix.de
-Date:   Tue, 27 Aug 2019 11:12:06 +0200
-In-Reply-To: <20190827085637.g6cpnuofpteyfqfz@pengutronix.de>
-References: <20190827081559.mt5wjpdvqzn62dib@pengutronix.de>
-         <20190827084111.GU20404@szeder.dev>
-         <20190827085637.g6cpnuofpteyfqfz@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+        id S1729517AbfH0JXJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 05:23:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:44501 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729357AbfH0JXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 05:23:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1566897778;
+        bh=EWb+FN6Gd0wVRnqiAEbka2t6LU2XVuCfsTZwJwtIAwI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Z8E/UddKon9HXnu3ZDI8KrMwP3uQuh6RGNpSorn8GuJcxrJi5IMKKXlwq6+5xsxoo
+         yfzFZlBs96TmibCO5IZ22FNPIclxJOS20WDn0/yEv5HQLcroUNCLijtxbtvCt/Wt+2
+         +beMCHgvDhsS5J9w0C6lnJrzgT7I0l6s2CdH4JKY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGhyc-1hydf93MSg-00Ds3V; Tue, 27
+ Aug 2019 11:22:57 +0200
+Date:   Tue, 27 Aug 2019 11:22:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Daniel Ferreira via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>, Daniel Ferreira <bnmvco@gmail.com>
+Subject: Re: [PATCH v3 02/11] diff: export diffstat interface
+In-Reply-To: <xmqqwofyozka.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1908271121230.46@tvgsbejvaqbjf.bet>
+References: <pull.170.v2.git.gitgitgadget@gmail.com>        <pull.170.v3.git.gitgitgadget@gmail.com>        <c7a377890d84849ea2f63099cfc081420a4de15d.1563289115.git.gitgitgadget@gmail.com> <xmqqwofyozka.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qSwsYRXlahNizJXI5FPj8h/DFKYB1gw1kMEgqcek9VJgWbpZ7nc
+ v3rgIpEH3Vn7TCiG0TwVeUYNzP+/cSLo01PkvetPZRYPqzCQbSMF3SzkrNe4d9SAzkwMgE/
+ d1wFnRQXh2aDDo9bWapJH8EhSWdDP2K4BWvRp9FPN2TE4VhTDo4x1SI0QMQUGZW6X47iNGp
+ mUu2lqAgRUimdtUxDfSAQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1mMkI3XmA1U=:1pdVbU98r202wJeSQK/HlZ
+ guLOhSQgJT+D8kHPgUzZ6mA1/qiQh3Z100DfavZr28wIt3M3LNqP0xbJ4qhOUO25Q17Bfs68t
+ FmTT/xSkyuB0IZLkS/elgvbzWIMyxYvOXGfNezyOXXDXcGBUj9r/5Q6Fo3Iep942KwiyqEdrT
+ /ZpqztfdFG4t8Nr23jxz2EUqBe7+GKXH+nXGEFXTbf6tLCXLzszMZlf8V6Plbw2XVOJmsDytP
+ V1+6wKqFULnin5TR/DHcEIXi//PlImMwqLrxAi504X98hTCM42JjIddi1Mzd93nWVe/Q6/OMB
+ 3YDgo14U9IfdoTgj4RvCfonaUkw5BBCuixyFabMPuNnJjiyVXCMoF38QOMw79PwAgNUTM9w/m
+ 4XpNOCH/79hyaSMHBUVADlucDWaYFx2rRve8Wz2gxQwPbMA90w5CFuOEhsSHplS3bSB34U+ZN
+ baiPQJD6zfXvQad4D9AbFPb7jCyVME+frXGpuudVqS/29Y2Soy6GIWDQNJyH+fJomw1owlA2x
+ QP0cAvzfLlRiCkguWsNG5Z6jRZY3yKLRxHzNygyMJfNaAsECkS+cB1ffWgt1N5i7/LtwLTQvU
+ b5BRkn4mcy9vsHMdmKCtKiojuSaH4dBc0IaHaAX5b3zVfW8536b/9K8JVT5l2cNT/Q0tnx5EX
+ OYivQqelWwhzopR4kzg6Ah/InSnwv3UD+XHh7FiIl4j2iRsBP/puN4JJfRIJEuHdoOZPCGYUU
+ dGF+4MPynA5QzweNzNCZOIS6MPiglNCfg/rdQK3fBM8BZRlkgn6tTpIaBZVe95LBKM2ShU9n0
+ czsMAa/N6rrOHjYhjo4yqGwgsoV9VbFGHxVXKaGxHzL7suNvQYZLXv1eL2LFPqga5IdOyCX+E
+ R+gBhja2WBQsKHTl7kqmxUEHNmDExBrDiDadpTSe+SLkjFx/R6yOBk/w7CVNTOK7/8h+x/gd4
+ KCbCeD/tr96YCkqCSIGPfptLp9+7eXbApob4KBBb+262y9HJyQhvRLjsKlJ9fGy/ZAwqzzxwN
+ F4gD/zwPRLAShb3jO08EcitjQSYKJF9mrUkUl+Q87CF2Irphby1aEwcBWrV3VYDSAbXXWviKK
+ slZp+Liu06goy4vq/jCJuwcwiP1QS3GLx7XwF8pxyWDagCsMJoNsKnQfncuEdxoZ/0vlkIkzo
+ 5oacY=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2019-08-27 at 10:56 +0200, Uwe Kleine-König wrote:
-> On Tue, Aug 27, 2019 at 10:41:11AM +0200, SZEDER Gábor wrote:
-> > On Tue, Aug 27, 2019 at 10:15:59AM +0200, Uwe Kleine-König wrote:
-> > > I have a problem here with git being slow in some situations.
-> > > Using git 2.23.0 (from Debian) the effect is:
-> > > 
-> > > ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git show v5.2
-> > > tag v5.2
-> > > ...
-> > > 
-> > > real	0m12.727s
-> > > user	0m0.300s
-> > > sys	0m0.371s
-> > > 
-> > > But to get the actual data isn't the problem:
-> > > 
-> > > ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git show v5.2 | cat
-> > > tag v5.2
-> > > ...
-> > > 
-> > > real	0m0.764s
-> > > user	0m0.014s
-> > > sys	0m0.020s
-> > > 
-> > 
-> > How does 'git --no-pager show v5.2' perform?  If it's as fast as the
-> > case piping the output to cat, then look into what pager and pager
-> > options you use.
-> 
-> 	ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git --no-pager show v5.2
-> 	tag v5.2
-> 	...
-> 
-> 	real	0m13.225s
-> 	user	0m0.355s
-> 	sys	0m0.336s
-> 
-> So this doesn't seem to be the problem. Also the local configuration
-> can be ruled out:
-> 
-> 	ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time env GIT_CONFIG_NOSYSTEM=1 HOME=/nonexistant XDG_CONFIG_HOME=/nonexistant git --no-pager show --no-color v5.2
-> 	tag v5.2
-> 	...
-> 
-> 	real	0m13.587s
-> 	user	0m0.335s
-> 	sys	0m0.336s
-> 
-> Thanks
-> Uwe
+Hi Junio,
 
-Have you checked strace output? I see a directory walk through .git/refs
-and .git/packed-refs if the output is not redirected.
+On Wed, 31 Jul 2019, Junio C Hamano wrote:
 
-regards
-Philipp
+> "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > @@ -6273,12 +6257,7 @@ void diff_flush(struct diff_options *options)
+> >  	    dirstat_by_line) {
+> >  		struct diffstat_t diffstat;
+> >
+> > -		memset(&diffstat, 0, sizeof(struct diffstat_t));
+> > -		for (i =3D 0; i < q->nr; i++) {
+> > -			struct diff_filepair *p =3D q->queue[i];
+> > -			if (check_pair_status(p))
+> > -				diff_flush_stat(p, options, &diffstat);
+> > -		}
+> > +		compute_diffstat(options, &diffstat, q);
+> >  		if (output_format & DIFF_FORMAT_NUMSTAT)
+> >  			show_numstat(&diffstat, options);
+> >  		if (output_format & DIFF_FORMAT_DIFFSTAT)
+> > @@ -6611,6 +6590,20 @@ static int is_submodule_ignored(const char *pat=
+h, struct diff_options *options)
+> >  	return ignored;
+> >  }
+> >
+> > +void compute_diffstat(struct diff_options *options,
+> > +		      struct diffstat_t *diffstat,
+> > +		      struct diff_queue_struct *q)
+> > +{
+> > +	int i;
+> > +
+> > +	memset(diffstat, 0, sizeof(struct diffstat_t));
+> > +	for (i =3D 0; i < q->nr; i++) {
+> > +		struct diff_filepair *p =3D q->queue[i];
+> > +		if (check_pair_status(p))
+> > +			diff_flush_stat(p, options, diffstat);
+> > +	}
+> > +}
+>
+> Hmm, (1) clearing diffstat struct to initialize, (2) looping over
+> diff_queue to compute stat for each path, (3) using diffstat
+> information and then (4) finally freeing the diffstat info is the
+> bog-standard sequence of the user of this API.  Merging step (1) and
+> (2) may probably be OK (iow, I do not think of a use pattern for
+> future users where being able to do some custom things between steps
+> (1) and (2) would be useful), which is this function is about.  (3)
+> is what the user of this API would do, but shouldn't (4) be exported
+> at the same time, if we are making (1+2) as an external API?
+
+Good point.
+
+It _also_ hints at the fact that we're not releasing the memory properly
+after running the diffstat in the built-in `add -i`.
+
+Will fix,
+Dscho
+
+>
+> >  void diff_addremove(struct diff_options *options,
+> >  		    int addremove, unsigned mode,
+> >  		    const struct object_id *oid,
+> > diff --git a/diff.h b/diff.h
+> > index b680b377b2..34fc658946 100644
+> > --- a/diff.h
+> > +++ b/diff.h
+> > @@ -244,6 +244,22 @@ void diff_emit_submodule_error(struct diff_option=
+s *o, const char *err);
+> >  void diff_emit_submodule_pipethrough(struct diff_options *o,
+> >  				     const char *line, int len);
+> >
+> > +struct diffstat_t {
+> > +	int nr;
+> > +	int alloc;
+> > +	struct diffstat_file {
+> > +		char *from_name;
+> > +		char *name;
+> > +		char *print_name;
+> > +		const char *comments;
+> > +		unsigned is_unmerged:1;
+> > +		unsigned is_binary:1;
+> > +		unsigned is_renamed:1;
+> > +		unsigned is_interesting:1;
+> > +		uintmax_t added, deleted;
+> > +	} **files;
+> > +};
+> > +
+> >  enum color_diff {
+> >  	DIFF_RESET =3D 0,
+> >  	DIFF_CONTEXT =3D 1,
+> > @@ -333,6 +349,9 @@ void diff_change(struct diff_options *,
+> >
+> >  struct diff_filepair *diff_unmerge(struct diff_options *, const char =
+*path);
+> >
+> > +void compute_diffstat(struct diff_options *options, struct diffstat_t=
+ *diffstat,
+> > +		      struct diff_queue_struct *q);
+> > +
+> >  #define DIFF_SETUP_REVERSE      	1
+> >  #define DIFF_SETUP_USE_SIZE_CACHE	4
+>
