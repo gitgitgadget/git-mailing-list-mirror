@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4671F4B7
-	for <e@80x24.org>; Tue, 27 Aug 2019 21:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC44E1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 21:57:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbfH0Vu6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 17:50:58 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:47370 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbfH0Vu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 17:50:58 -0400
-Received: by mail-vk1-f202.google.com with SMTP id n185so301400vkf.14
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 14:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=1qBmzKXxyVUsz97O0oE96plQeLSJaKm3VKuWyPib+Yk=;
-        b=JdpgOH4bCkyqIvgZNkiEttxWmahw+F2YTEfgWHsKpjm45zyFJHAgrijLfdWoMuq+HY
-         L0QiUV7T3mXBC1Irlyo8tLhLtu1n6rnNeeXdbZD6IFCeVqfZQiTIf3DIA7RPngoQUF6O
-         GISRlMXZ12PDTJ4oqZh2x2+/pZeLHCCSjaW1KsdnsLc5CpFWM4ghQ/lfQNFQxArRf+bV
-         Om0vDz3QMT0Ag2SScc6iz04a+rcx48fc2f7/jhk6Tv58tzxFBSJRIV4NbrD+fjVDpONV
-         nqyKXF0d+T2Vbz+DOhzjJ+gWmZQ1HK/n9abSvlw409OUBIp6+dwiXHLxwye1QFL5Z45f
-         ANlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=1qBmzKXxyVUsz97O0oE96plQeLSJaKm3VKuWyPib+Yk=;
-        b=Gbza45+Ad6OeMjBce53Oil9MvRFrXKt9Jyb4yYjF1Szo8yoPLK2cKCuh17qhmq++qy
-         ljfBaktpw9QnhNuDzk7pU/v4qiDuWF2m4EDXMNi+ZCmQzPfbw79d9OLqtvbm3anXrALO
-         eI9XSWkNIunzq3qcfOg/UMguP25PtTJwGtH4rTl1wy/SAE6q8qmA+amVdzs7E8gBCcWk
-         rsNwmKkV7SNW68H7Og8VZA8V+gKxMJZBHFEw2ylswnfbFxDSQWMXvWsYy7lZR+TBdp+P
-         Xqc5oK0OuuRgyc0u8dHU/HA18recLcZJOdi8iW4I+qvVEXU88A5HgK/YA0ghKn7a/k4J
-         JpxQ==
-X-Gm-Message-State: APjAAAXa0d+QMaDTwwa3MIeU24VllpNu0Ai1+KNhH8Rw7P4yrmlFzCVd
-        4LxfFEhqWNI3DPEmcloU+WjPJRZhexHdezV2iveX
-X-Google-Smtp-Source: APXvYqy2vbq+SY71VtQw9GbET+TsJkzhCTDFBSxzcKM45Vs6Nm7iQr6t6XFH9Ub3kmkhl8azvOYAYzWUUdT4du6WkVDL
-X-Received: by 2002:ac5:ccda:: with SMTP id j26mr593356vkn.43.1566942657222;
- Tue, 27 Aug 2019 14:50:57 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 14:50:54 -0700
-In-Reply-To: <xmqqmufu2w25.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190827215054.109496-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqmufu2w25.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.23.0.187.g17f5b7556c-goog
-Subject: Re: [PATCH] fetch-pack: write fetched refs to .promisor
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1726616AbfH0V5C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 17:57:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64417 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbfH0V5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 17:57:01 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F16416D9FC;
+        Tue, 27 Aug 2019 17:56:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w8awimXey74OL1oAF/E6a2eT5VQ=; b=O88Mgl
+        tTQLSHE3HZhwlYnnSojr7nV/8U16uEW0ujg5E10zwe7w/3XbvnmTbf98svGXOll3
+        AYDLE38CBbL+9p9SOrTgfuAmUNDdgDnhk/+HOgZr/3lI/Zh8FHD7k0dZQWaReWgq
+        vpiRxf7ThghM6UNozf6s78wiy50e3lCMVVxMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ff8D5CcpyVz6p/utdBHJfUN17KCweZe7
+        EKb4m2MkYFSEEdhvkO1VkfffBV2HmVPpMg6QhOT1GJWPAPn3jgN47cDLwc8v9VSa
+        P41qPugvqlmKj11QR8EEkIvWtDZQZjbdGjNzW9Uoo4SjSR1Xn88N3KwArS2rfUT6
+        5UTRc78o3gw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 459D116D9FB;
+        Tue, 27 Aug 2019 17:56:59 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A78A916D9FA;
+        Tue, 27 Aug 2019 17:56:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 3/3] status: mention --skip for revert and cherry-pick
+References: <cover.1566637431.git.liu.denton@gmail.com>
+        <cover.1566880835.git.liu.denton@gmail.com>
+        <be64ce1e92c60f9587b137d36e98532604d4a1ff.1566880835.git.liu.denton@gmail.com>
+Date:   Tue, 27 Aug 2019 14:56:57 -0700
+In-Reply-To: <be64ce1e92c60f9587b137d36e98532604d4a1ff.1566880835.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 27 Aug 2019 00:45:41 -0400")
+Message-ID: <xmqqef162rx2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 97A2944E-C915-11E9-A847-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > As written in the NEEDSWORK comment, repack does not preserve the
-> > contents of .promisor files, but I thought I'd send this out anyway as
-> > this change is already useful for users who don't run repack much.
-> 
-> What do you exactly mean by "much" here?
+Denton Liu <liu.denton@gmail.com> writes:
 
-For diagnostic information to be preserved, the user must not have run
-repack between the fetch and the discovery of a problem. Admittedly,
-this is probablistic, but if the user never GCs (for example), this
-would work.
+> When reverting or cherry-picking, one of the options we can pass the
+> sequencer is `--skip`. However, unlike rebasing, `--skip` is not
+> mentioned as a possible option in the status message. Mention it so that
+> users are more aware of their options.
 
-> The comment sounds like it
-> is saying "running this code once and you'd make the commits and
-> objects that were depending on the existing promisor invalid", in
-> which case it would be more like "it is already useful for users
-> until they run their first repack that destroyes their repository",
-> but certainly that is not what we want to do, so...
+Is this a good thing, though?
 
-To be clear, repacks will not destroy their repository, whether before
-or after this change. Before and after this change, a repack will just
-collect all promisor objects from all promisor packs (that is, the ones
-with .promisor) into one single pack, and then generate an empty
-.promisor file to indicate that the new single pack is a promisor pack.
-The difference is that before this change, Git does not write anything
-into the .promisor file (at least for fetches), so nothing is lost. With
-this change, we now write something for fetches, so something is lost
-(since we delete all the old packs, including the .promisor files).
+Giving up (because you do not have enough time or concentration to
+finish the cherry-pick or revert in progress) with --abort, and
+committing to the resolution after spending effort to deal with a
+conflicted cherry-pick or revert with --continue, are both sensible
+actions after seeing the command stop due to conflicts.  Is "--skip"
+a recommendable action in the same way?  Doesn't a multi-commit
+series often break if you drop just one in the middle, especially
+if the series is sensibly structured as a logical progression?
 
-But the only thing lost is diagnostic information (for humans - to
-diagnose, the user will need to open the .promisor file in a text
-editor) - commits/objects are still valid, and the repository is not
-destroyed.
+
+
+
+
+
