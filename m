@@ -2,132 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B81171F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 10:00:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 474BB1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 10:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727306AbfH0KAC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 06:00:02 -0400
-Received: from knopi.disroot.org ([178.21.23.139]:40726 "EHLO
-        knopi.disroot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725985AbfH0KAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 06:00:02 -0400
-X-Greylist: delayed 381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Aug 2019 06:00:00 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by disroot.org (Postfix) with ESMTP id 5F4B623A34
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 11:53:38 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at disroot.org
-Received: from knopi.disroot.org ([127.0.0.1])
-        by localhost (disroot.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id aBSLVcTsgjod for <git@vger.kernel.org>;
-        Tue, 27 Aug 2019 11:53:37 +0200 (CEST)
-From:   Vipul <finn02@disroot.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-        t=1566899617; bh=B0zvUwmKx+mfPO1u6edV20vGolX18kDwl3InwQ+2X90=;
-        h=From:To:Subject:Date;
-        b=CLeDV+SHorRd1KwMfEjfrMcb0uFmoYFX84nfLUj6OswMSTJkr1UbWZZYf3eAOgJFD
-         GB90Yn+AaxK9Lg3jbymAHIBwR984h78SIPKwPcSpk3RyhCFZtE09fIP8smMIUm+4nJ
-         7blSMadusPUAdAFAmiPkkWQA58XDMN5UZb+ss4u9xdOkkPoj0Kmb2Z4PTpdyi1AzPo
-         0I9A67mZv+0vJtGWSdW08+CqHBX/9r5g/ocvs/EwehDzPO5P85LwfCuGbDu0pq7NM5
-         06sdjRKLlMv5C9ulyU2Za5oXIW6rpx7d/HQIsesQZzcP8yOUgzhyqQKz1qa8lWi1sr
-         4567oJBQz5piA==
-Openpgp: preference=signencrypt
-Autocrypt: addr=finn02@disroot.org; keydata=
- mDMEXRx7cxYJKwYBBAHaRw8BAQdAKciEXPQkIdtaWRhCIHoSIiBY4g5ZfIP1axIJDFNi5Yu0
- IFZpcHVsIEt1bWFyIDxmaW5uMDJAZGlzcm9vdC5vcmc+iJYEExYKAD4WIQS5z8d4HtK3bcaz
- H3/qgPyoFmeTQQUCXRx7cwIbAQUJA8JnAAULCQgHAwUVCgkICwUWAwIBAAIeAQIXgAAKCRDq
- gPyoFmeTQXjCAP42jD3kQc7BCyR4Ay6I4BhIGYpyPiw9rJInGFtwaZsI5wD/bisWiN14ZuVA
- cop7o/DYqX2K6pRpEap3XqYUEoJKrgS4OARdHHxWEgorBgEEAZdVAQUBAQdAZ2pWXE/s6AfF
- APSNgAU1H4PgVASh/X9N0adLq1YJplwDAQgHiH4EGBYKACYWIQS5z8d4HtK3bcazH3/qgPyo
- FmeTQQUCXRx8VgIbDAUJAeEzgAAKCRDqgPyoFmeTQUGRAP0RlzrFUA0ZAnMJY6asTOd09mxl
- HaiVCjmalM/QY4gNggD/VDcEs9q6eDRAJi4q/VgGwAKEG37pnN2VGfNXFkweYwC4MwRdHHx4
- FgkrBgEEAdpHDwEBB0AE+sNCB2H528wQwT+JBOVcizDtuVzX573iqlwlrximWoj1BBgWCgAm
- FiEEuc/HeB7St23Gsx9/6oD8qBZnk0EFAl0cfHgCGwIFCQHhM4AAgQkQ6oD8qBZnk0F2IAQZ
- FgoAHRYhBC+P1j3RPqH/yxnKNPUjW5+MjneUBQJdHHx4AAoJEPUjW5+MjneUMxgBANyMa1h8
- k7K+S5ozyIkKAGEzPkbpvbmzJXDgkdjvJ/76AQDRfbuR+tGOfhJtYsZKJa6jmGr7WYRrmuJS
- V+PChHe7DAHyAQDMLXZgSTGQooEb50BRM4zllFM6Sbx6ld4izSDWnt87LQEA2S/YbiM57y0v
- HbW6ULT6+Un4KxzFBvl9iZyFMBVRbAw=
-To:     git@vger.kernel.org
-Subject: Support for an interactive confirmation prompt when users can
- possibly lose their work like some UNIX commands
-Message-ID: <c1136131-0a9e-9dbb-3ad7-495ac96c1ef0@disroot.org>
-Date:   Tue, 27 Aug 2019 09:53:30 +0000
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="eU2TVPymDBFxOi7ooVkPxj4XCEOV8Ef72"
+        id S1729225AbfH0KE3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 06:04:29 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:57451 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbfH0KE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 06:04:29 -0400
+Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
+        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1i2YKx-00078A-Rc; Tue, 27 Aug 2019 12:04:27 +0200
+Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1i2YKx-0002HR-J2; Tue, 27 Aug 2019 12:04:27 +0200
+Date:   Tue, 27 Aug 2019 12:04:27 +0200
+From:   Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>, git@vger.kernel.org,
+        entwicklung@pengutronix.de
+Subject: Re: git slow unless piped to cat
+Message-ID: <20190827100427.u3a5uvmylm5vddn2@pengutronix.de>
+References: <20190827081559.mt5wjpdvqzn62dib@pengutronix.de>
+ <20190827084111.GU20404@szeder.dev>
+ <20190827085637.g6cpnuofpteyfqfz@pengutronix.de>
+ <1566897126.4102.5.camel@pengutronix.de>
+ <20190827094407.GV20404@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190827094407.GV20404@szeder.dev>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---eU2TVPymDBFxOi7ooVkPxj4XCEOV8Ef72
-Content-Type: multipart/mixed; boundary="K5Ih8NEIzRttGp66W6nnlEGuAyu3HPXH1";
- protected-headers="v1"
-From: Vipul <finn02@disroot.org>
-To: git@vger.kernel.org
-Message-ID: <c1136131-0a9e-9dbb-3ad7-495ac96c1ef0@disroot.org>
-Subject: Support for an interactive confirmation prompt when users can
- possibly lose their work like some UNIX commands
+On Tue, Aug 27, 2019 at 11:44:07AM +0200, SZEDER Gábor wrote:
+> On Tue, Aug 27, 2019 at 11:12:06AM +0200, Philipp Zabel wrote:
+> > On Tue, 2019-08-27 at 10:56 +0200, Uwe Kleine-König wrote:
+> > > On Tue, Aug 27, 2019 at 10:41:11AM +0200, SZEDER Gábor wrote:
+> > > > On Tue, Aug 27, 2019 at 10:15:59AM +0200, Uwe Kleine-König wrote:
+> > > > > I have a problem here with git being slow in some situations.
+> > > > > Using git 2.23.0 (from Debian) the effect is:
+> > > > > 
+> > > > > ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git show v5.2
+> > > > > tag v5.2
+> > > > > ...
+> > > > > 
+> > > > > real	0m12.727s
+> > > > > user	0m0.300s
+> > > > > sys	0m0.371s
+> > > > > 
+> > > > > But to get the actual data isn't the problem:
+> > > > > 
+> > > > > ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git show v5.2 | cat
+> > > > > tag v5.2
+> > > > > ...
+> > > > > 
+> > > > > real	0m0.764s
+> > > > > user	0m0.014s
+> > > > > sys	0m0.020s
+> > > > > 
+> > > > 
+> > > > How does 'git --no-pager show v5.2' perform?  If it's as fast as the
+> > > > case piping the output to cat, then look into what pager and pager
+> > > > options you use.
+> > > 
+> > > 	ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time git --no-pager show v5.2
+> > > 	tag v5.2
+> > > 	...
+> > > 
+> > > 	real	0m13.225s
+> > > 	user	0m0.355s
+> > > 	sys	0m0.336s
+> > > 
+> > > So this doesn't seem to be the problem. Also the local configuration
+> > > can be ruled out:
+> > > 
+> > > 	ukl@dude.ptx:/ptx/src/git/linux.git$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time env GIT_CONFIG_NOSYSTEM=1 HOME=/nonexistant XDG_CONFIG_HOME=/nonexistant git --no-pager show --no-color v5.2
+> > > 	tag v5.2
+> > > 	...
+> > > 
+> > > 	real	0m13.587s
+> > > 	user	0m0.335s
+> > > 	sys	0m0.336s
+> > > 
+> > > Thanks
+> > > Uwe
+> > 
+> > Have you checked strace output? I see a directory walk through .git/refs
+> > and .git/packed-refs if the output is not redirected.
+> 
+> That's a good point, 'git show/log' show decorations (refs pointing to
+> any commits shown) when the output is a terminal:
+> 
+>   $ git show v5.2
+>   [...]
+>   commit 0ecfebd2b52404ae0c54a878c872bb93363ada36 (HEAD -> master, tag: v5.2)
+>   [...]
+>   $ git show v5.2 |cat
+>   [...]
+>   commit 0ecfebd2b52404ae0c54a878c872bb93363ada36
+>   [...]
 
---K5Ih8NEIzRttGp66W6nnlEGuAyu3HPXH1
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+> And indeed, if you have a lot of refs and cold cache, then that might
+> account for a couple of seconds difference.  So, how does 'git show
+> --no-decorate v5.2' perform, and if it performs well, then how many
+> refs do you have ('git for-each-ref |wc -l')?
 
-Hi,
+	$ sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; time env GIT_CONFIG_NOSYSTEM=1 HOME=/nonexistant XDG_CONFIG_HOME=/nonexistant git --no-pager show --no-color --no-decorate v5.2
+	...
 
-Sometimes, I messed-up with git repository and lost works due
-carelessness. This includes reset a branch instead of other, drop the
-stash etc by mistake. I wonder, is there way to a get an interactive
-confirmation prompt (which ask for yes/no option) before executing those
-commands when users can possibly lose their work? Like, some UNIX
-commands have support for an interactive prompt (like 'rm -i', 'mv -i',
-'cp -i', etc) for ex: before deleting and overwriting a file a
-confirmation is prompt and asking for users permission.
-	If there would no such feature available in git, so how do other people
-avoid these kind of mistakes? Obviously, one them would be recheck the
-command carefully before executing it and repo status but, I think
-sometimes people also do these kind of mistakes. For now, to minimize
-some of these kind problems I've modified my bash shell prompt to show
-all kind information related to a git repository by sourcing
-"git-prompt" script (provided with git package) and turn on all of flags
-provided by it which significantly increase my productivity and less
-mistakes than earlier. But, anything else I can do to avoid these kind
-of mistakes at first place or increase my productivity (it includes
-adopting some best practices, using some command line tools etc).
-  	I searched it on the Internet and found that there are many GUI tools
-available which help with these problems but don't want to use GUI tools
-because most of time I work in command line environment and love using
-command line tool than GUI one.
+	real	0m1.041s
+	user	0m0.000s
+	sys	0m0.021s
 
-Any help would be greatly appreciated. Thanks.
+	$ git for-each-ref |wc -l
+	10013
 
-PS: Sometimes, I would recover my work by seeking some help mostly on
-#git IRC but, it would be better avoid this kind of mess at first place.
+So this is indeed the problem.
 
-Cheers,
-Vipul
+I'm a bit surprised that the default for --decorate depends on the
+output being a terminal.
 
+Thanks for your help, I will think about what I want to do. Just using
+--no-decorate will work, but isn't nice either. Will test if just
+throwing away all those tags from linux-next will make this already
+better.
 
---K5Ih8NEIzRttGp66W6nnlEGuAyu3HPXH1--
+Best regards
+Uwe
 
---eU2TVPymDBFxOi7ooVkPxj4XCEOV8Ef72
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQQvj9Y90T6h/8sZyjT1I1ufjI53lAUCXWT9mwAKCRD1I1ufjI53
-lE46AP9ierNIdnhh7QUyDx5sWutKrHpLWxa5uiV3+DLPS9YGcAEAkkCkvDdpF9Ny
-ZcnfsiwzxBcyM+bDh+w8SRXk1GBuHAQ=
-=tvky
------END PGP SIGNATURE-----
-
---eU2TVPymDBFxOi7ooVkPxj4XCEOV8Ef72--
+-- 
+Pengutronix e.K.                           | Uwe Kleine-König            |
+Industrial Linux Solutions                 | http://www.pengutronix.de/  |
