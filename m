@@ -2,120 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBE7D1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 18:44:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB5011F4B7
+	for <e@80x24.org>; Tue, 27 Aug 2019 18:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730435AbfH0Soh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 14:44:37 -0400
-Received: from mail-qt1-f177.google.com ([209.85.160.177]:35859 "EHLO
-        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730313AbfH0Sog (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 14:44:36 -0400
-Received: by mail-qt1-f177.google.com with SMTP id z4so79704qtc.3
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 11:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=hIXlNs9hDcgdTj+f8Gx5VSr2OSaXL94fsaJaS0rT+SI=;
-        b=QAc8u0Lzao3Z8QK1ie3fxlX7IiK8j+qnZuuU4ncoi6jx+tY2fiUstXG4P5CwZ8iIOV
-         LkTjzEONV+jHjktPrjWw3jk/4c4+d5XxdYd8UuK3fY3GTRyCS4lD7VqtbGOBSybwgASA
-         hZdvrmuGKrYW7vUYrZoSh4lGFpkEd+7flN+BWPIsET/DA5OAP2XDGyWtlx/iuPvHaHP7
-         DcNXB85LM6YE2kZ97WR/2iyVVZYYjGRI65ndF+JS6GzuNldzb7v2fAMspHNFzK5KuN3E
-         rwiGyH3qMnjNFRNqL3A1tiID2pp323Fs41VIRxfmU6oCDLdasoaEaEM2qlYvjWtIFENl
-         7wRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=hIXlNs9hDcgdTj+f8Gx5VSr2OSaXL94fsaJaS0rT+SI=;
-        b=BoNkgTFCZAfbXBPujHmhxHzqfhzz7LM74XDmvpTndkbh6nUWjy1tGg6XdwsXqds9I2
-         cixLCncSHS7UzQpqNZnBBm8WKepHW+IN7Q6u8/d9RS9F2LgqPQWNyp6jVMY3zawl5pay
-         axuzXqyIRGpyKxOCI0RQ8LEFnagWiQxawKg/OU+P+7ILbNOARUoi1PlqXAVcSs0L3rp9
-         13RKL2j/asTNQR8SeSmevHl2F0OVuO6ogAKiGH1rV3HDaJBZS41C8DTqsrW7LW+j0RFN
-         0AhUP8r2P5/GqCjO3w/ItUKlYhWLM6nF56wcJWSzYtrIMrdjSCNTcarpWMrhiSI2Byfj
-         zDQA==
-X-Gm-Message-State: APjAAAVMY584LgiSBe34WOTDDO8Z9zF75cJA+NAHOlH7qCVx4upbxx2k
-        nnB1ZQnpLjoEmV0HomBm6SESpB01N0Oghw==
-X-Google-Smtp-Source: APXvYqy8P2wlPlf8zc/ZhWNxCO4Ok4qtx69zwXqs/DWzpyFPfoIb/vy04GezzNwoStKVHlKz5UcBEw==
-X-Received: by 2002:a0c:ec84:: with SMTP id u4mr21314114qvo.205.1566931475736;
-        Tue, 27 Aug 2019 11:44:35 -0700 (PDT)
-Received: from localhost ([2605:9480:205:fffe:a56f:bf18:42be:60d4])
-        by smtp.gmail.com with ESMTPSA id o33sm9535847qtd.72.2019.08.27.11.44.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2019 11:44:34 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Tue, 27 Aug 2019 14:44:34 -0400
-To:     "Saravanan Shanmugham (sarvi)" <sarvi@cisco.com>
+        id S1730473AbfH0Str (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 14:49:47 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:61104 "EHLO
+        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729903AbfH0Str (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 14:49:47 -0400
+Date:   Tue, 27 Aug 2019 18:49:37 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me; s=proton;
+        t=1566931784; bh=NlHu43Oxq5PqthfpIgOnRtHU/cboItiMIBC/vpPLdSw=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+         Feedback-ID:From;
+        b=WDSfoieeTyenQf4kvX/BAYqaCJ+oZbkX5qCrgAlkFfx6EBgO+lGeyrv8BObGrvbky
+         HGsI3Kc7CQuj5xzOoLjh5/F5JCqlZxZBoca+K5KUXF+3ttZX0zd+RehR3On1K0JXxa
+         wNyzO4TAfh6ai8N0JPRQKnTAHlco+kLJCEWE7K8ZZ7uaERJPH8Z47WCLEcYKrMbBaZ
+         ++XA2kFM0wZBgNhbdEgoEoPdxxr47DFgYtg7poAqpDRRjgAlK5dMA/4xvLtGUXjoFw
+         PrZyOiQ5K2zYBrU8DC1Dqz96PR5LJrCENUR2Ryhr+b8wPJnMAioncTwyIt9sL5Ckd8
+         o294wymaMDMfg==
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+From:   Ibrahim El <ibrahim.el@pm.me>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "git commit" of single file takes 5 minutes, mounted
- fileystem/diskimage with 50G GIT repo + 900G of builds articles
-Message-ID: <20190827184434.GA63526@syl.lan>
-References: <7A1C0468-E07D-4D10-8891-01AC1FA1CC1B@cisco.com>
+Reply-To: Ibrahim El <ibrahim.el@pm.me>
+Subject: Re: [PATCH 0/5] New signing interface API with pluggable drivers
+Message-ID: <roBm3J_8ZgID_Uc8ZPZ8rJP0Ljc4ChC5MD9MGGbYIjQISuzvRxM36ZwcPcWQlKydxl-mwVT7tWWnA01ZGLhqdENo5ljEHkmfkIq3trGBM2k=@pm.me>
+In-Reply-To: <20190826231543.GD11334@genre.crustytoothpaste.net>
+References: <tz1YiiRtWStGrH2sc42DyD-8bDtH1A52rOCCapct59Qos6jEikqscvusUs7QeOBRNmCF7L_AL1ezKurbTp6qEZCmEk7L9B28wH-TVQGBSdY=@pm.me>
+ <20190826231543.GD11334@genre.crustytoothpaste.net>
+Feedback-ID: RXIF8gqyi_fC5k95OfXmu3uPk6ALUZ4LT1y2TXMvXkIlhKcvgGbg1qhMCvct9LiRFa1gVJ9p8_D_liW8QUFSlg==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7A1C0468-E07D-4D10-8891-01AC1FA1CC1B@cisco.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Saravanan,
+Thx for your feedback. I will incorporate the config based improach into a =
+generic driver and will re-submit the patches.
 
-On Mon, Aug 26, 2019 at 08:43:34PM +0000, Saravanan Shanmugham (sarvi) wrote:
+
+Ibrahim El
+
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Monday, August 26, 2019 11:15 PM, brian m. carlson <sandals@crustytoothp=
+aste.net> wrote:
+
+> On 2019-08-26 at 19:57:45, Ibrahim El wrote:
 >
-> Based on a previous thread “First Git status takes 40+ minutes, when mounting fileystem/diskimage with 50G GIT repo + 900G of builds articles”
+> > Following previous introduction mail 1, this first series of 5 patches =
+is a re-write of the signing interface API in an effort to support easily t=
+he addition of new tools with minimal effort and also keeping backwards com=
+patibility with current tools and configuration.
+> > All existing tests currently pass with backward compatibility.
+> > The patches are ordered as follow:
+> > [1/5] - Adding Documentation files explaining the different changes usi=
+ng a design document and updates to the configuration part
+> > [2/5] - Adding new files that define the signing interface API and also=
+ drivers for the existing GPG and GPGSM X.509 tools
+> > [3/5] - Migrating the code to using the new signing interface API. Old =
+GPG Interface code is commented and ommited
+> > [4/5] - Removing the old GPG interface and updating the code to remove =
+all gpg mentions from it to make it transparent to the signing tool that is=
+ being used
+> > [5/5] - Duplicating existing signature related tests and updating them =
+to using the new configuration aliases
 >
-> The context is that
->   1. git wokspace was clone(50G)
->   2. some 30 platorms build(900G)
->   3. This tree was then copied into a new diskimage/filesystem + git update-index --refresh" was done to update the index to the new filesystem, then frozen.
->   4. New workspaces created by cloning this frozen diskimage(< 30 seconds)
->   5. This diskimage was mounted on a new machine
->   6. A file was modified and "git add/commit" was done
+> I haven't done an in-depth review of this series, but I did point out a
+> few things that stood out to me. I think the consensus on the list in
+> the past was that for adding future tools, we'd like the drivers to be
+> configuration-based so that Git need not learn about every signing tool.
+> I think such a change would be welcome if done right.
 >
-> I have done “git update-index –refresh”, in the mounted filesystem, as above
-> This has improved “git status/diff” timing from 40+ minutes to 1.5 minutes for the first time and <5 seconds for subsequent calls.
+> -------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+--------------------------------------------
 >
-> But "git commit -m "dummy commit" of a 1 line change in 1 file takes about 5-6 minutes, everytime in this workspace.
-> Tracing shows a whole bunch. The entire 5-6 minutes worth of the following sort of trace logs.
-> 3:13:50.320930 trace git-lfs: filepathfilter: rejecting "x/y/z.o.command" via []
-> 13:13:50.320940 trace git-lfs: filepathfilter: accepting " x/y/z.o.command "
-> 13:13:50.320862 trace git-lfs: filepathfilter: rejecting "a/b/c/d.o.command" via []
-> 13:13:50.320972 trace git-lfs: filepathfilter: accepting " a/b/c/d..o.command"
->
-> Does anyone have any insights on what could be causing this?
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
 
-These are messages from the Git LFS tool, and this list does not provide
-support for Git LFS, since it is a separate project not affiliated with
-Git.
 
-I would recommend that you create an issue on Git LFS's tracker at:
-
-  https://github.com/git-lfs/git-lfs/issues/new
-
-and mention that you are seeing lots of 'filepathfilter' logs. My
-speculation is that this could be a slowdown in the 'filepathfilter'
-code paths, or an entire-tree scan where 'filepathfilter' is invoked
-every so often. I'd mention both of those as possibilities (or send a
-link to this email on public-inbox), and see if anything comes up.
-
-> On the other hand, if I had
->
-> Thanks,
-> Sarvi
-> Occam’s Razor Rules
-
-Thanks,
-Taylor
