@@ -2,85 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+	SPF_NONE shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 055F11F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 20:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F1F11F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 20:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731458AbfH0U1i (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 16:27:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54625 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbfH0U1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 16:27:37 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EB5A8800FD;
-        Tue, 27 Aug 2019 16:27:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=64k+69Tcs5xO/66yHs3quyPpgio=; b=fpIdBC
-        6NtbK3W4JeaKW+se8PLANYgUv6HYVrMDtLDD1xOfzClI8D06nY/CCSVUC+0QdAJw
-        +q6IYsMXxWLNxdriCt31MSOJje3dg4SGiXEqKY/GwRg73M07bq9H3qnsKyE+5FBt
-        5WujAdw2+ddZrjMQjAPHciyyf4lRVKUDqm0pE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MklAPfVitxk52oSNrG0pkdDBW2ek2hK4
-        pi8fOhtOShKe4NUg4jNHUFPd35SDa9St3rq+2ZcP4TKCAYV2jNT7TCoacqKFFhUh
-        FfHg3N/G+tMiImenQ7y0OkKw+ty6qYZb1TjTdjod+Rt38n6aI50arv28pJ+MueCw
-        8ebu8uxG3Co=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E456A800FC;
-        Tue, 27 Aug 2019 16:27:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1BDF7800FB;
-        Tue, 27 Aug 2019 16:27:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: write fetched refs to .promisor
-References: <20190826214737.164132-1-jonathantanmy@google.com>
-Date:   Tue, 27 Aug 2019 13:27:30 -0700
-In-Reply-To: <20190826214737.164132-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 26 Aug 2019 14:47:37 -0700")
-Message-ID: <xmqqmufu2w25.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1731447AbfH0UbB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 16:31:01 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40451 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726332AbfH0UbB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 16:31:01 -0400
+Received: by mail-pf1-f193.google.com with SMTP id w16so140415pfn.7
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 13:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LCQRIf3EepkhttlenTCgvUoDaOyQ13qRNUxCNycs7YI=;
+        b=TetX2ALkSuWnVxCLCjEgzkmB+QNH2zJBzQ66ZWE63P1ixO8Uuh/2W+mjxnsNVFCfNN
+         2JTa86yo2RjNhUsxxpTv/84Kyqyf6jMICq9B9fJxLK66XMlnTPHOp3rA7t8kBqxwdoex
+         0JLtpGikeQO/ghr3xAPkuqs5ia3HIhAjIOEWWWg05KMlPC9zu3tU3K1ysmEgDXV8gVvB
+         y9/NB83ItmwqkF2Kl+Knh3rmC/Gi55T5m8+f5uLvkhaMhvCfmzQdupvy+Bkh95+c8Oyp
+         tFkCH2XAAq+2JMq25lwlmmWmNRToNj8imzroOZZDkQS1CT6S1teZ3IB9wyfEX9DAGyRI
+         xHCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LCQRIf3EepkhttlenTCgvUoDaOyQ13qRNUxCNycs7YI=;
+        b=ZeFkM8v/MoDkqoPWOmptFY+zPOqvaohmuDbXwA9TXKcHZgVA0wsWa/baFzGfsMaM6V
+         H1GKXUQwaYviCd7hDBEGiPydio0/0kJDNUg3cLnGxRzgncoomeL9dtvdQ0E3lPdsv/yQ
+         xAdpiX3NUWjG0Pap9yxaUshVKB/ME8/rYf7Ep72YpmMPERrZ0AT92gLLfKLEMheK6XZz
+         3f7jzWInEkiSM7N11XhgLQUx3rQ7GWi1cod3fjSWLcxvycZXtuxx5Q/VV8ASC/1ofAVz
+         cKDXvzsDlXhY700y7GyTA8eBgI5kiMWk+pX0g6US/kVly1HSX5W44q2/T1FxqLvMk+WI
+         nr3w==
+X-Gm-Message-State: APjAAAVmWpNqi77lnFj3CJ1vlsQv5GjkUzUCO69kX3M4kfQYJH2MjJzo
+        zYIFho14Y/NdndT3zISkB8/OtQ0I9u0=
+X-Google-Smtp-Source: APXvYqwju3sulU19ScYee9ae1qw/4f/H50zLU8yKDxltscKWSuKnFIZx1l19DwFbX+srZ9ht7E56kA==
+X-Received: by 2002:a62:63c1:: with SMTP id x184mr366923pfb.11.1566937860388;
+        Tue, 27 Aug 2019 13:31:00 -0700 (PDT)
+Received: from ar135.iitr.local ([103.37.200.223])
+        by smtp.gmail.com with ESMTPSA id u1sm221369pgi.28.2019.08.27.13.30.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Aug 2019 13:30:59 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     rohit.ashiwal265@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        matheus.bernardino@usp.br, newren@gmail.com,
+        olyatelezhnaya@gmail.com, t.gummerer@gmail.com
+Subject: Re: [GSoC] Blogging with Rohit
+Date:   Wed, 28 Aug 2019 02:00:46 +0530
+Message-Id: <20190827203046.10714-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
+References: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19811D62-C909-11E9-8DD3-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hey Everyone!
 
-> As written in the NEEDSWORK comment, repack does not preserve the
-> contents of .promisor files, but I thought I'd send this out anyway as
-> this change is already useful for users who don't run repack much.
+GSoC is finally over and I present to you my final report[1].
+Thanks for all your support and reviews without which this
+would not be possible.
 
-What do you exactly mean by "much" here?  The comment sounds like it
-is saying "running this code once and you'd make the commits and
-objects that were depending on the existing promisor invalid", in
-which case it would be more like "it is already useful for users
-until they run their first repack that destroyes their repository",
-but certainly that is not what we want to do, so...
+Thanks
+Rohit
 
-> +test_expect_success 'verify that .promisor file contains refs fetched' '
-> +	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
-> +	test_line_count = 1 promisorlist &&
-> +	git -C srv.bare rev-list HEAD >headhash &&
-> +	grep "$(cat headhash) HEAD" $(cat promisorlist) &&
-> +	grep "$(cat headhash) refs/heads/master" $(cat promisorlist)
-> +'
-> +
->  # checkout master to force dynamic object fetch of blobs at HEAD.
->  test_expect_success 'verify checkout with dynamic object fetch' '
->  	git -C pc1 rev-list --quiet --objects --missing=print HEAD >observed &&
+[1]: https://rashiwal.me/2019/final-report/
+
