@@ -2,73 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D7201F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 19:05:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBD381F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 19:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730684AbfH0TFL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 15:05:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58440 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730668AbfH0TFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 15:05:11 -0400
-Received: (qmail 27256 invoked by uid 109); 27 Aug 2019 19:05:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 27 Aug 2019 19:05:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4398 invoked by uid 111); 27 Aug 2019 19:06:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Aug 2019 15:06:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Aug 2019 15:05:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Vipul <finn02@disroot.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Support for an interactive confirmation prompt when users can
- possibly lose their work like some UNIX commands
-Message-ID: <20190827190509.GB3150@sigill.intra.peff.net>
-References: <c1136131-0a9e-9dbb-3ad7-495ac96c1ef0@disroot.org>
+        id S1731072AbfH0Tfp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 15:35:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61129 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726871AbfH0Tfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 15:35:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AED0E16C9CC;
+        Tue, 27 Aug 2019 15:35:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZJk6KfBoTtjJvb5I8+TvzE673sQ=; b=vjs2Bi
+        rHQtVDfEXDitaje2wXhxxf8gZpkocQDl734LEmada/JBPBJlVYy12DVdXLKtn5Jc
+        f2+C4fu1bFNNLa4G/ZdqiQojQ0sDkcWpWGgZoegi7ztGLBdsDYvZD48rdbJfXHcL
+        aNcKdRKuZGu7yvfdpOtKO4fbX+kVWczcfvIRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O9ZFtspLUC8BLu3steirhfuZHhK2BGK8
+        1l4x4lc+lhkZyhzs2fscp45ggECRlHlSCsRb0ycLnM5YD2OJhkFix6cFHXjDph2+
+        yLAQkF4/XBr/9sjEPp7DL8takU7M8pBGAdqd6WHuD5pmFFIO0EfpLtYkYTaXCZ5J
+        CbN/aLQnyDU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4DD516C9CB;
+        Tue, 27 Aug 2019 15:35:44 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F42516C9CA;
+        Tue, 27 Aug 2019 15:35:43 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Albert Vaca Cintora <albertvaka@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [Feature Request] Option to make .git not read-only in cloned repos
+References: <CAAQViEsZW4PzHr5BrkDHU2kSd_e04n02McGPgrmXGZMpgaTePg@mail.gmail.com>
+        <d31b871a-5c2d-99e7-5616-6f43759bb948@kdbg.org>
+        <CAAQViEv1_YXPxLRN=eT7yQhro55K4audnouzAjjbHhJsU7pgQA@mail.gmail.com>
+        <34935414-4e69-114b-7a32-f94514e3679d@iee.email>
+        <xmqq5zmkkn4a.fsf@gitster-ct.c.googlers.com>
+        <CAAQViEsL+X5ZYmmSjG1JBksGjthHCUyWa3525b8dN7u1XAbvJg@mail.gmail.com>
+Date:   Tue, 27 Aug 2019 12:35:42 -0700
+In-Reply-To: <CAAQViEsL+X5ZYmmSjG1JBksGjthHCUyWa3525b8dN7u1XAbvJg@mail.gmail.com>
+        (Albert Vaca Cintora's message of "Mon, 26 Aug 2019 20:42:56 +0200")
+Message-ID: <xmqq4l224d0x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c1136131-0a9e-9dbb-3ad7-495ac96c1ef0@disroot.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DC5D6DFC-C901-11E9-ACD2-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 09:53:30AM +0000, Vipul wrote:
+Albert Vaca Cintora <albertvaka@gmail.com> writes:
 
-> Sometimes, I messed-up with git repository and lost works due
-> carelessness. This includes reset a branch instead of other, drop the
-> stash etc by mistake. I wonder, is there way to a get an interactive
-> confirmation prompt (which ask for yes/no option) before executing those
-> commands when users can possibly lose their work? Like, some UNIX
-> commands have support for an interactive prompt (like 'rm -i', 'mv -i',
-> 'cp -i', etc) for ex: before deleting and overwriting a file a
-> confirmation is prompt and asking for users permission.
-> 	If there would no such feature available in git, so how do other people
-> avoid these kind of mistakes?
+> It "works" for some definition of work, but it asks for confirmation
+> for every file, which is a pain. I'm on Linux.
 
-The usual philosophy in Git is not to bother the user with
-confirmations, but to allow recovery after a mistake.
-
-If you've moved a branch pointer around (e.g., via "git branch -f" or
-"git reset"), you can recover it from the reflog.
-
-In the case of a mistakenly dropped stash, there's no reflog (the stash
-list itself is implemented as a reflog!), but you can use "git fsck" to
-generate a list of "dangling" commits. These are commits which are
-unreferenced, but they hang around until at least the next git-gc run.
-
-Note that there _are_ some commands which are not reversible: mostly
-things that drop content from the working tree. So "git reset --hard" is
-one, and "git clean" is another. There have been discussions and even
-some patches about storing the lost in an "undo log", but nothing has
-been merged.
-
--Peff
+Ah, your "rm" command needs to learn "-f" option, too, then?
