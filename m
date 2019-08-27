@@ -2,80 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD14D1F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 19:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F33F1F461
+	for <e@80x24.org>; Tue, 27 Aug 2019 20:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730872AbfH0Tqc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 15:46:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60336 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730035AbfH0Tqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 15:46:31 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9924015AE0F;
-        Tue, 27 Aug 2019 15:46:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fyriC3oaAm+oqdMuAJ9BFIR2opY=; b=LZ9oXn
-        71egh4bxbDRVB+LYJ4vWm9QX4XVIA8dFceWegnVXQJXHeaazUYXxoYJ3UkpSqTTN
-        B7fns6rUExgH4zNZ6BPFHdWv/gz8+2T4759OghE1FLW49DNpvlPcm+6Pg3SstgVh
-        WbbnKsxZbjLCQh3oMISsOA9KZsoGFU2pHeOc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iB1A8Vw3PrMZAJUsDrDHHl2Md3Fl/jX9
-        wUI9fze6H4YW3PRvJpthEO4xhuH6svkyujloZwIm/HZSylB6TYka+N7idcPokmkA
-        tvdva4fnkeVXGtabnDkjc8md32fJXMvvSy0jNpfWHqAVzwU+PQuKflr8u8Gi9Sqx
-        wqykGEcsLpE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9253615AE0E;
-        Tue, 27 Aug 2019 15:46:29 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07CFF15AE0D;
-        Tue, 27 Aug 2019 15:46:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, Andrey Portnoy <aportnoy@ucsd.edu>,
-        Andrey Portnoy via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] banned.h: fix vsprintf warning
-References: <pull.322.git.gitgitgadget@gmail.com>
-        <xmqqwoezj3o5.fsf@gitster-ct.c.googlers.com>
-        <20190826183317.GB23399@sigill.intra.peff.net>
-        <20190826184022.GA30349@syl.lan>
-Date:   Tue, 27 Aug 2019 12:46:27 -0700
-In-Reply-To: <20190826184022.GA30349@syl.lan> (Taylor Blau's message of "Mon,
-        26 Aug 2019 14:40:22 -0400")
-Message-ID: <xmqqv9ui2xyk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1730668AbfH0UCS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 16:02:18 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:31879 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728371AbfH0UCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 16:02:18 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x7RK2GKb093831
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 16:02:16 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: Question of intent: stash push --include-untracked
+Date:   Tue, 27 Aug 2019 16:02:10 -0400
+Message-ID: <019501d55d12$534b5ca0$f9e215e0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5CCC687A-C903-11E9-A278-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdVdDYHrnTjodDI+RBKEjsx8u4qFsQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+I'm a bit perplexed about what is intended follow a git stash push
+--include-untracked. Suppose I have files a,b,c,known modified, but only
+known is in the index. After the stash, stash show only displays known. A
+subsequent pop will restore a,b,c. So functionally push and pop are fine,
+but show appears to ignores files in the stash. The log shows a previous
+commit (dce2e3e) to the WIP stash (ab0834c) that does contain the untracked
+files, and git diff is happy to show the contents when using the ref
+directly. It is just counterintuitive for stash show not to display all
+entries previously pushed. I would have expected symmetry. Is this new, or
+intended.
 
-> ... My patch has a few
-> more details such as blame information (and how the typo was only made
-> in the explicit version, not the variadic form), so it may be worthwhile
-> to take that instead of this, but I don't mind either way.
+*-.   ab0834c (refs/stash) WIP on master: bf223fc Updated known
+|\ \
+| | * dce2e3e untracked files on master: bf223fc Updated known
+| * a5ad1ef index on master: bf223fc Updated known
+|/
+* bf223fc (HEAD -> master) Updated known
+* db0efd4 (origin/master, origin/HEAD) initial
 
-Yup, that was exactly why I took that version (after tentatively
-queuing the other one, but discarded before pushing the integration
-result out).
+This on git 2.23.0
 
-Thanks, all.
+Thanks,
+Randall
 
->> I don't know if we want to try to spread credit around via trailers.
->> "Racily-implemented-by:" ? :)
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
-Please don't X-<.
+
+
