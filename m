@@ -2,210 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 035FF1F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 14:54:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 236C11F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 14:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbfH1OyO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 10:54:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59574 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726315AbfH1OyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 10:54:13 -0400
-Received: (qmail 13418 invoked by uid 109); 28 Aug 2019 14:54:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 28 Aug 2019 14:54:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11462 invoked by uid 111); 28 Aug 2019 14:55:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Aug 2019 10:55:39 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 28 Aug 2019 10:54:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] upload-pack: fix race condition in error messages
-Message-ID: <20190828145412.GB14432@sigill.intra.peff.net>
-References: <pull.324.git.gitgitgadget@gmail.com>
- <5c313aba7e97cb93e7d07f6d5dfaf0febe8a2f8b.1566956608.git.gitgitgadget@gmail.com>
- <20190828093408.GD8571@szeder.dev>
+        id S1726472AbfH1Oyt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 10:54:49 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46513 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfH1Oyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 10:54:49 -0400
+Received: by mail-pf1-f194.google.com with SMTP id q139so1867845pfc.13
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 07:54:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E/TlOYDqkKXxir1NoGd6QxzEvMrKj9B8vGyZ4EFHBHM=;
+        b=SZYC+kdHYq+ZYJElcmHUJuxkT4nXezeX+LxY+AolAJbkh88/ZpQC8kM6XzHVO+nHVg
+         9vmiv638hRDdFb8+eCwXgM6DQMtdTWsUGWPZtLzDi4JZ1PDA3KMIqVfXR2yzUaMI9CJa
+         RxxFIuXaqwYErxZ0/j+bBvCY9AgCD3aieCL0b43pwzsALjtPXx6ZnpLUjDPttBVom0hg
+         i64rn7HvVVJag4xD/JwU+V4t0PsF7h/kyD9G4jkXgiOaa55Q7l0+rRLW2ejtDmj+dYBo
+         lBxqDrtvkEmFvPU0qqo332xMO7/RDCmeIkqaQmfV0imoS3R8GjsvHJSPdmHrX69MEr3t
+         DMzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E/TlOYDqkKXxir1NoGd6QxzEvMrKj9B8vGyZ4EFHBHM=;
+        b=I6MyECxSwMu1GgRaNd5tp/f/RVerTshotZ5bgf8chgqKnCwZLmRb3nMXOwJkcX7PtS
+         go0ZScvDXbNSUNJyUDAm9sDYQCv1mgisoNTnMIGNNRF2isOxB6XJ287q3NTP0f3KtkOy
+         vG6MhjJUhbY5qSfVTx6EffzYNXO7V49cFAnZrMpik9O1i1l8vYYLK9NTOSYB7MiGB7b2
+         oVrS8EGI0j1AnEs1Vo/aBFcoF7Mjnlw/i3/F08eWoxcCBVxk1J8KlGLPDmH5dCPpgGVr
+         fMER9YiNhrq87J6FsPOLyCxNjK+PODkKAsjschmdOrJsHsYQE7OqKt+6YtAgPewu4nVH
+         GHoA==
+X-Gm-Message-State: APjAAAVB5fcLnOMtELyTuuIanq/EnjHgVpv73mGp5+6UuWREdDowCElr
+        th+HYQo2FZh1UF8Aa+2HPaaIPfOu
+X-Google-Smtp-Source: APXvYqyngTp0VY3g/UQ7diEAvEKTLSBag4xJ4ednNfC42oErfqLuzXnGpjTOiwuMGlnv0OCOKtRtnw==
+X-Received: by 2002:a17:90a:ba06:: with SMTP id s6mr4462522pjr.69.1567004087878;
+        Wed, 28 Aug 2019 07:54:47 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id 4sm4336013pfe.76.2019.08.28.07.54.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 28 Aug 2019 07:54:47 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] grep: skip UTF8 checks explicitly
+Date:   Wed, 28 Aug 2019 07:54:44 -0700
+Message-Id: <20190828145444.31588-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <xmqq5znrs9d0.fsf@gitster-ct.c.googlers.com>
+References: <xmqq5znrs9d0.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190828093408.GD8571@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 28, 2019 at 11:34:08AM +0200, SZEDER Gábor wrote:
+18547aacf5 ("grep/pcre: support utf-8", 2016-06-25) that was released
+with git 2.10 added the PCRE_UTF8 flag to PCRE1 matching including a
+call to has_non_ascii() to try to avoid breakage if there was non-utf8
+encoded content in the haystack.
 
-> On Tue, Aug 27, 2019 at 06:43:29PM -0700, Derrick Stolee via GitGitGadget wrote:
-> > Test t5516-fetch-push.sh has a test 'deny fetch unreachable SHA1,
-> > allowtipsha1inwant=true' that checks stderr for a specific error
-> > string from the remote. In some build environments the error sent
-> > over the remote connection gets mingled with the error from the
-> > die() statement. Since both signals are being output to the same
-> > file descriptor (but from parent and child processes), the output
-> > we are matching with grep gets split.
-> 
-> In the spirit of "An error message is worth a thousand words", I think
-> it's worth to include the error message causing the failure:
-> 
->   error: 'grep not our ref.*64ea4c133d59fa98e86a771eda009872d6ab2886 err' didn't find a match in:
->   fatal: git upload-pack: not our ref 64ea4c13fatal: remote error: upload-pack: not our ref 63d59fa98e86a771eda009872d6ab2886
->   4ea4c133d59fa98e86a771eda009872d6ab2886
->   error: last command exited with $?=1
-> 
-> I tried to reproduce this specific error on Linux and macOS, but
-> couldn't yet.
+Usually PCRE is compiled with JIT support (even if is not the default),
+and therefore the codepath used includes calling pcre_jit_exec, which
+skips UTF-8 validation by design (which might result in crashes or hangs)
+but when JIT support wasn't compiled we use pcre_exec instead with the
+posibility that grep might be aborted if invalid UTF-8 is found in the
+haystack.
 
-I suspect it depends on write() to a file not being atomic, since we
-should be able to get the full message out to a single write in both
-cases. It's _possible_ that stderr is fully buffered on Windows, but it
-generally shouldn't be. If it is, then this might help:
+PCRE1 provides a flag since Mar 5, 2007 that could be used to skip the
+checks explicitly so use that to make both codepaths equivalent (the
+flag is ignored by pcre1_jit_exec)
 
-diff --git a/usage.c b/usage.c
-index 2fdb20086b..d6df31bc5b 100644
---- a/usage.c
-+++ b/usage.c
-@@ -10,13 +10,19 @@ void vreportf(const char *prefix, const char *err, va_list params)
+this fix is only implemented for PCRE1 because PCRE2 is likely to have
+a better solution (without the risks) instead in the future
+
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+V2:
+* drop PCRE2 support
+* add backward compatibility define
+
+ grep.c | 4 ++--
+ grep.h | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index f7c3a5803e..69ef69516e 100644
+--- a/grep.c
++++ b/grep.c
+@@ -421,7 +421,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
  {
- 	char msg[4096];
- 	char *p;
--
--	vsnprintf(msg, sizeof(msg), err, params);
-+	size_t len;
-+
-+	/* truncation is OK here, but make sure we have a newline */
-+	len = xsnprintf(msg, sizeof(msg), "%s", prefix);
-+	len += vsnprintf(msg + len, sizeof(msg) - len, err, params);
-+	if (len >= sizeof(msg) - 1)
-+		len--;
-+	len += xsnprintf(msg + len, sizeof(msg) - len, "\n");
- 	for (p = msg; *p; p++) {
- 		if (iscntrl(*p) && *p != '\t' && *p != '\n')
- 			*p = '?';
- 	}
--	fprintf(stderr, "%s%s\n", prefix, msg);
-+	write(2, msg, len);
- }
+-	int ovector[30], ret, flags = 0;
++	int ovector[30], ret, flags = PCRE_NO_UTF8_CHECK;
  
- static NORETURN void usage_builtin(const char *err, va_list params)
-
-But again, I'm doubtful.
-
-> Here you talk about reducing the risk ...
-> 
-> > 1. Write an error message to stderr.
-> > 2. Write an error message across the connection.
-> > 3. exit(1).
-> > 
-> > This reorders the events so the error is written entirely before
-> > the client receives a message from the remote, removing the race
-> > condition.
-> 
-> ... but here you talk about removing the race condition.
-> 
-> I don't understand how this change would remove the race condition.
-> After all, the occasional failure is caused by two messages racing
-> through different file descriptors, and merely sending them in reverse
-> order doesn't change that they would still be racing.
-
-I had the same puzzlement. I think the answer might be that in the
-original, we can have two write()s happening simultaneously:
-
-  1. upload-pack sends the packet to the client
-
-  2. client receives packet
-
-  3a. upload-pack then writes to stderr
-
-  3b. simultaneously, the client writes to stderr
-
-But by reordering, step 3a is completed before step 1.
-
-> > +			warning("git upload-pack: not our ref %s",
-> > +				oid_to_hex(&o->oid));
-> >  			packet_writer_error(writer,
-> >  					    "upload-pack: not our ref %s",
-> >  					    oid_to_hex(&o->oid));
-> > -			die("git upload-pack: not our ref %s",
-> > -			    oid_to_hex(&o->oid));
-> > +			exit(1);
-> 
-> 
-> So, the error coming from the 'git fetch' command in question
-> currently looks like this:
-> 
->   fatal: git upload-pack: not our ref 64ea4c133d59fa98e86a771eda009872d6ab2886
->   fatal: remote error: upload-pack: not our ref 64ea4c133d59fa98e86a771eda009872d6ab2886
-> 
-> Changing die() to a warning() changes the prefix of the message from
-> "fatal:" to "warning:", i.e. with this patch I got this:
-> 
->   warning: git upload-pack: not our ref 64ea4c133d59fa98e86a771eda009872d6ab2886
->   fatal: remote error: upload-pack: not our ref 64ea4c133d59fa98e86a771eda009872d6ab2886
-> 
-> I don't think that "demoting" that message from fatal to warning
-> matters much to users, because they would see the (arguably redundant)
-> second line starting with "fatal:".
-
-An interesting thing about this message is that many users won't see it
-at all! It requires that they be connected to the stderr of upload-pack,
-which happens only for local-filesystem clones, and for git-over-ssh to
-a vanilla ssh session.
-
-It won't be seen for git:// nor for https://, which go to the stderr of
-git-daemon and the webserver respectively. Nor would it be seen on any
-hosting site which uses something other than vanilla sshd to terminate
-the connection (at GitHub for example, ssh terminates in a proxy layer
-which then uses a different protocol to run upload-pack on the backend).
-
-That's why we've been adding this sideband-level errors: so everybody
-can see them. So unless the client is a 2005-era version of Git that
-lacks sideband, the die message is either invisible to the user, or
-redundant.
-
-I'd almost suggest it is worth dropping the die() message altogether
-here, but it does carry some value to people collecting them on the
-server side[1].
-
-Another solution is for Git to redirect the stderr of the child
-upload-pack it runs, which puts all invocations on the same footing,
-regardless of protocol. But that risks losing useful messages from
-before the sideband starts up (e.g., ssh failures).
-
-[1] At GitHub, we record the exit status of every Git process, and we've
-    hooked die() to record the message, which is often helpful for
-    post-facto debugging. I'd hate to lose it, but we could certainly
-    work around it for this case, perhaps by hooking
-    packet_writer_error() in a similar way.
-
-> Unfortunately, however, while running './t5516-fetch-push.sh -r 1,79
-> --stress' to try to reproduce a failure caused by those mingled
-> messages, the same check only failed for a different reason so far
-> (both on Linux and macOS (on Travis CI)):
-
-There's some hand-waving argument that this should be race-free in
-014ade7484 (upload-pack: send ERR packet for non-tip objects,
-2019-04-13), but I am not too surprised if there is a flaw in that
-logic.
-
-This kind of race is a problem anytime upload-pack dies. And it's not
-just a test issue, but a real problem for users: they might see EPIPE
-instead of the error message from the server (it used to be SIGPIPE but
-we recently relaxed that).
-
-There's details and a possible path forward discussed in:
-
-  https://public-inbox.org/git/20190305041139.GA19800@sigill.intra.peff.net/
-
--Peff
+ 	if (eflags & REG_NOTBOL)
+ 		flags |= PCRE_NOTBOL;
+diff --git a/grep.h b/grep.h
+index 1875880f37..9c8797a017 100644
+--- a/grep.h
++++ b/grep.h
+@@ -3,6 +3,9 @@
+ #include "color.h"
+ #ifdef USE_LIBPCRE1
+ #include <pcre.h>
++#ifndef PCRE_NO_UTF8_CHECK
++#define PCRE_NO_UTF8_CHECK 0
++#endif
+ #ifdef PCRE_CONFIG_JIT
+ #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
+ #ifndef NO_LIBPCRE1_JIT
+-- 
+2.23.0
