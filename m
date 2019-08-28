@@ -2,95 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33C151F461
-	for <e@80x24.org>; Tue, 27 Aug 2019 23:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3689D1F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 00:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbfH0XqX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 19:46:23 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:41512 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725992AbfH0XqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 19:46:23 -0400
-Received: by mail-vs1-f66.google.com with SMTP id m62so633724vsc.8
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 16:46:22 -0700 (PDT)
+        id S1726342AbfH1ANP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 20:13:15 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:34904 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbfH1ANP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 20:13:15 -0400
+Received: by mail-pf1-f194.google.com with SMTP id d85so460408pfd.2
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 17:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qRQG1qeL2TSoHWJ9LSmJmVJhBVv08TAYwRiz1fYlgxA=;
-        b=0Zjnc6Vdx4AYFUyc0IGVz1pTdKkEM5k7dx1N2jpZE+1GVpGMiw7S8YeZNuVfzyOYRZ
-         XssarFFIqX7eiWUzMjQVz1XklivVZnXSWnPxuN+/U0rA2FIHCJRR1O8qTi6/SV6ts8xQ
-         br4sP5WNPENAfWGbyJK7hqFW+0xHR+ORHB/N8zH84Ib19WapsJgOvljyFkl3D46BwAPp
-         r8WzbMwI1IOnChPf2lr99Ks5DozPsj7jFmel/rAPacbYcIyZJm05cBNyd0JDJBlo4afw
-         txFZKdghlOp5MU05+cH8K1InJbGuStoOhJLTUioDaCIPI0fcKeU7Ml96TnFa/8T1uPm4
-         U/vA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xt9DOqKfkJ1xbizDP8LXtXefze3n8RU02LicksjtuzE=;
+        b=EKPbV7yN4C1WfWOYC1W5P1iU+7JyEeAeskdwAaFQmMt3UKXdBXosAmBEL8UExJmeA+
+         fD6EArW9acbTi6NRpVRx13/prFdtlRT3IPCqj8+4R4AOUO3AhRNg+MtRyRIc95xLVoSa
+         HE1tPKUctoVDfliS9E2l2CBu46xvWFTVnaIcIOrLRZY/M6QY5ql4V4f5pK1PZqUbVB/Q
+         6+9mGpwzDnyhncKs6bhnTtzplySLiZjRQd0iRM4PgdvWAVynX/hHkAcufk9DKMm40nmG
+         AroDlUQOkJLq6sckPUd+AXuxaTs+rlV0LGjqOdVWOYeoJh9tn6TndgD47YPpqTx5anS1
+         srFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qRQG1qeL2TSoHWJ9LSmJmVJhBVv08TAYwRiz1fYlgxA=;
-        b=Wqbs90L8D3jEL1p+jB3qMx1Fzcl1Gb0UDI9kuB45N5+k88g6B6P52NouHdtoSjXCd+
-         U0klx36D0shrqhFtaR1N3x2P6Lz748a09LFKBLm04CKeGGI3X+oLu8AOYtwTcz5KxhNo
-         EjXJJ64uhZM1J51ubcTAU2PlRmJCkg0bMfgwr0/Ppgedadnn+zOV73heqTB7lxv2oYjk
-         5OxJa3Iv5uMuYkqt07K9YUM1JJjwvXvdMX4fZX1peSU3IW9X2Wm9BIPdu6v11bNHWpua
-         JplfPXLoTf9RO36j8L77WHASzGUZ/zZZZOHruhlifLnR5lPjrM2gF53n7sBVCD4tXjsz
-         9Axg==
-X-Gm-Message-State: APjAAAVjS7xm++/fXaQYRMH4qODqjFVkquW8XMMMp3itGK4rdOghtlzY
-        4CKU5B1a8qKrFjJJB+zpKFNhzmcDvDo3wxnfzRru5A==
-X-Google-Smtp-Source: APXvYqxqR5vKLB91lWP8Db5vKn5IVsHgSd0+uBja6gqHaD6JeD3kBAw/1TRhmaqdTvIXsF+GYNF6ML5DunAGB4mtjPw=
-X-Received: by 2002:a67:ce83:: with SMTP id c3mr753296vse.98.1566949582285;
- Tue, 27 Aug 2019 16:46:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xt9DOqKfkJ1xbizDP8LXtXefze3n8RU02LicksjtuzE=;
+        b=iC8NpAPXTL69i5lp3xioofjglQTMZjuU+9J90TOyIwPBhQal5uJrUpCmNWoLhLDtuz
+         RviJDLm38YCBpsm3da395WDiiBnwhNuF6xW832/aKg7A5gCMEaAQVG4goQ1ajRulW71H
+         1TWelKUP+gMeZwpAF3J97dWo5vfCDRLRRimVqMwiYctGVGfIUh3MlJTM5z3DdcZa955x
+         qK9h8CUUY4ogEDhdk9mUlF0gLwd0B+yxIZt6OuLYWwzLfvfYS/uIyGqm3YrJtk58fNzY
+         EaODnI52Oe1ZBCFHn77kLErzq8Gb0/qGONN+frKlXcvSAPKH/g6u+w9Ho8zKm55orITM
+         Lu4A==
+X-Gm-Message-State: APjAAAWFUE7sFEwICnKmzV7MitBLIN9wr4czmPiXJgVeTTjsUe5H9ESO
+        88caEd+RGv3uI4r62JyA+7Yp2oHI
+X-Google-Smtp-Source: APXvYqyt5dYwAze8ahnlOrRRFcZj1CnNxOEUDepgbyIygYEopu/zocwJ2B/4AujoeQUmbOO2bcdWOQ==
+X-Received: by 2002:a63:e901:: with SMTP id i1mr953006pgh.451.1566951193765;
+        Tue, 27 Aug 2019 17:13:13 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id p5sm469115pfg.184.2019.08.27.17.13.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 27 Aug 2019 17:13:13 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH] merge-options.txt: clarify meaning of various ff-related options
+Date:   Tue, 27 Aug 2019 17:13:07 -0700
+Message-Id: <20190828001307.8042-1-newren@gmail.com>
+X-Mailer: git-send-email 2.23.0.38.gfc6987be7e
 MIME-Version: 1.0
-References: <cover.1566863604.git.matheus.bernardino@usp.br>
- <4920d3c474375abb39ed163c5ed6138a5e5dccc6.1566863604.git.matheus.bernardino@usp.br>
- <CACsJy8Dry7MfKBi5EKw4Ka9r63QVmDjPv9nAozS0mC6Z7-sG=w@mail.gmail.com>
-In-Reply-To: <CACsJy8Dry7MfKBi5EKw4Ka9r63QVmDjPv9nAozS0mC6Z7-sG=w@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 27 Aug 2019 20:46:10 -0300
-Message-ID: <CAHd-oW4h80xrp6y65dqZbq_a67ncArC9rrNq7F7rAhBbrALOkA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] config: allow config_with_options() to handle any repo
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Duy
+As discovered on the mailing list, some of the descriptions of the
+ff-related options were unclear.  Try to be more precise with what these
+options do.
 
-On Tue, Aug 27, 2019 at 6:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Aug 27, 2019 at 6:57 AM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
-> >
-> > Currently, config_with_options() relies on the global the_repository
-> > when it has to configure from a blob.
->
-> Not really reading the patch, but my last experience with moving
-> config.c away from the_repo [1] shows that there are more hidden
-> dependencies, in git_path() and particularly the git_config_clear()
-> call in git_config_set_multivar_... Not really sure if those deps
-> really affect your goals or not. Have a look at that branch, filtering
-> on config.c for more info (and if you want to pick up some patches
-> from that, you have my sign-off).
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+I noticed this patch sitting around in one of my branches, and noticed it
+wasn't upstream.  I'm pretty sure I submitted it a few months back, but I
+think it got lost in the cracks.  Resubmitting and I'll see if I can do a
+better job following up on it.
 
-Thanks for the advice. Indeed, I see now that do_git_config_sequence()
-may call git_pathdup(), which relies on the_repo. For my use in patch
-2/2, repo_config_with_options() won't ever get to call
-do_git_config_sequence(), so that's fine. But in other use cases it
-may have to, so I'll need to check that.
+ Documentation/merge-options.txt | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-> [1] https://gitlab.com/pclouds/git/commits/submodules-in-worktrees
->
-> --
-> Duy
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 79a00d2a4a..b39df5f126 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -40,20 +40,22 @@ set to `no` at the beginning of them.
+ 	case of a merge conflict.
+ 
+ --ff::
+-	When the merge resolves as a fast-forward, only update the branch
+-	pointer, without creating a merge commit.  This is the default
++	When the merge can resolve as a fast-forward, do so (only
++	update the branch pointer to match the merged branch; do not
++	create a merge commit).  When a fast forward update is not
++	possible, create a merge commit.  This is the default
+ 	behavior.
+ 
+ --no-ff::
+-	Create a merge commit even when the merge resolves as a
+-	fast-forward.  This is the default behaviour when merging an
+-	annotated (and possibly signed) tag that is not stored in
+-	its natural place in 'refs/tags/' hierarchy.
++	Create a merge commit even when the merge could instead resolve
++	as a fast-forward.  This is the default behaviour when merging
++	an annotated (and possibly signed) tag that is not stored in its
++	natural place in 'refs/tags/' hierarchy.
+ 
+ --ff-only::
+-	Refuse to merge and exit with a non-zero status unless the
+-	current `HEAD` is already up to date or the merge can be
+-	resolved as a fast-forward.
++	When possible, resolve the merge as a fast-forward (do not
++	create a merge commit).  When not possible, refuse to merge and
++	exit with a non-zero status.
+ 
+ -S[<keyid>]::
+ --gpg-sign[=<keyid>]::
+-- 
+2.23.0.38.gfc6987be7e
+
