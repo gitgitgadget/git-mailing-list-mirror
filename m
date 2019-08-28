@@ -8,108 +8,114 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA7621F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 11:10:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 047E41F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 11:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726300AbfH1LKC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 07:10:02 -0400
-Received: from mout.gmx.net ([212.227.15.19]:36331 "EHLO mout.gmx.net"
+        id S1726292AbfH1LbE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 07:31:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56105 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725991AbfH1LKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 07:10:02 -0400
+        id S1726253AbfH1LbE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 07:31:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1566990591;
-        bh=m2KyyEDtSxSERgrwK3hWRFBx3nKtu5THq0pYeVIqU6M=;
+        s=badeba3b8450; t=1566991854;
+        bh=bbRYed7RfK4ZCK1mg7kMoI814TJ1+3WiVmKI8fUZGI8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LQUwTRpMwc2xQmY5InsNWBre6AO+81JgdQ83mVEZRfzJY//fGd2VJh0IZ4e2pYPeM
-         4bmbChMLDGBpTvIaiC22xuPwU5shxvvFg4n13Q8kPoKDf6K0IRmAerJ0pHLUDYdTsl
-         RL19R2l9QoWvHMcFsTnBAvidwSXzasroxpQKWOQs=
+        b=PDN1hRW0h1AuiVgztvWI81jVpexLwRdHYWCJBdK+zE15FP9mCMlCkX/Nyt9cI7w6w
+         5fnDMYJg+54yflvnKW1CeMvdIhqiTrDTNA5mQdvbxKkZYmfYr4Gs14WPA0c2vgweEz
+         RYJXLveBnY5oSEc+ZPK2o2IrH5jd/sDQDFKIiMPo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGS9o-1hyVyR0mtU-00DGdy; Wed, 28
- Aug 2019 13:09:51 +0200
-Date:   Wed, 28 Aug 2019 13:09:21 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lev1D-1iYgXS3ZHj-00qkDL; Wed, 28
+ Aug 2019 13:30:53 +0200
+Date:   Wed, 28 Aug 2019 13:30:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: Proposing git-filter-repo for inclusion in git.git
-In-Reply-To: <CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1908281307250.46@tvgsbejvaqbjf.bet>
-References: <CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_9skA@mail.gmail.com> <xmqqlfvlne3k.fsf@gitster-ct.c.googlers.com> <CABPp-BFK65qL4GCs5bFuiPPYwMCDYrxMyYejacVS89d2GK4nDQ@mail.gmail.com> <20190823030059.47ftwfne6y436e5j@dcvr>
- <CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v5 2/2] am: reload .gitattributes after patching it
+In-Reply-To: <20190825233340.10894-3-sandals@crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1908281327180.46@tvgsbejvaqbjf.bet>
+References: <20190825233340.10894-1-sandals@crustytoothpaste.net> <20190825233340.10894-3-sandals@crustytoothpaste.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:euJKMAFSWcskpncyk4ZqddLWMk++2o/BhONovx+Z0hsIlOmydHC
- EBoGbxv9QoCfmYicq3ZncaotPaBF4TeK4G5zeudQhOCx9We2hL6PE6djyw2uSxa3tsgneS9
- FERLu2OQZv481cg3QLiy8zsHxd7EmKvbds6uE+76qMkxb8Oa4fYNLpYvnDUEAyiMhjYwI7L
- GS2EytIO0RsROGYz6F24Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1o9Wh7sCko4=:nv5YDJqcgwdt2y60FCxgh/
- c1aRoGSocU7MGHKWstAjzr32XGxkBxI21K+GSY2Xw47MEMMvvqSNNiqgCRYjaTX4o3uzowgbP
- D8+O6ZIi1UKnp6FIznHvnz2n1vvw8ZTnh5AoOswLPkuEVAEZ807H5mpym11OzA7dcnfayXR0i
- pwtoYRQk2bx+xnAhH3HX5bP8QrxvW1OrAcUNmjK9lCnMK/krv8E1cTgS2xuN+xq7N7nfJOO8f
- np29Qu2Z9Y1yWsSMXTygiNRcwxN9AQSJQHrq9wAbzJYS/XrAZz/Y5EmE3wJ36N6Y000jv+EFX
- i4L7Ic/nH6MOfhVrvHrYbp0h55uAzMkYW1tu/wg5duVHfKw+uAGuxmtgFiHGFB31oGqQZ1OqH
- TOpIYWkBwJp+dIs3wd3PqqKe/0/RShBl81n0fNK+Fid9n1ZGHmwRj3UQMNt6exVwMQ4iEgDgR
- WlhGMMdY++KskzF9z92MJDQ7wRDzLbYHPXYvCiG+MCP9sSzD/Y1MtWweFWMZqIrHsVedy5Rs+
- ojaLxiLtS0xlT8rQ0vsbGgsFwSvOYnu0ryN8Saqwsa2ZrCvvnjjUSDrubkWlKSUN+InYTloAd
- wnfciLLGuJAfwnf5Yz/8FYeeV6euzAQvFgl6yDbqkKx4Td4enJSwEmIh3H16/pt+pQE1R1TFp
- IXUC5OaCuz4fdcrwCpdaIPI75X1O/Mdt5YBv6zVzvxyQEaz1xnKqzzzG7xBLCSMZ/MaUpaddK
- T8FilfOFAEVoT1jrabSnrMpigiycJ55ySlOPa1lV7jWgwG+zgXffpb8PIHLXLEkkLF4/uOtpG
- CcOtSV9EaoUYN+DirdNZoogoA90h71muUVjSix0FDun5iZJZZNHkmYIVvn+IBUmfYuzKoOpDU
- Ppz9RxbxsEx6+oEVXBXHS9KGHEfXzgImLoIrILiG23+Y1JVDqsLhv+L9ficaulRAzlkdOl1s7
- ZdDl6NeMyq9AnexOMfFXXWCW4PaH1iVg4lKgXcReJhKt+ircFjslpqE1nHekHHApoMXo04Pv6
- rCwbRyukmwYmC49jzs6cgDlfkqwaTMcyjvGaq8ucTwyLHt3Qk5a11N2zfKiozWux8d6bAGICn
- s342YiDHUg1LaMitduVszuU2uYun5bVtOHNcbf+srj/K8qja0WuP5HxtmgIchaNaiThn9vAqs
- 9DVT8=
+X-Provags-ID: V03:K1:shgHIRNaOMdvfMFxM0oscmloI0Y1An4GjJRPc0lA5bY8rMuaA/K
+ 3srB4YLyAq8PX5H4+7N88RDzjCU9iVhJubvu/HC0jF4xKHZkuIU+Aef5jDl1aF2YqLjeFxF
+ nH8Npoi/EopNy/mtwKkBn96C/FvkkJsMvK9cKZ46myh09p+/VL4MWYPYNehyghKwbQZqtnA
+ nSHTiZ39yWAN6pAqNZo3A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DellbslUf4M=:t/kvghdv4vDnsUFWs1r+cw
+ JVC7V2olcZCQ+XiWqeBBZC/HxEzUh+jmuUwC6JF4tpHYuIla8WIa2RPqxcDMLWygoF//2ioi/
+ I1gevPi4nvKT/19jJ7361mGn0U+HuYkxK+NT7xVaNqwzd+o9wEPaYXtaAVyCY8gs4pbIFgC8t
+ glX7IQQRZfHDHBIsaOxfzHxZ0+U90SXfS6zW+YMyXR001+hzbgyWnNOSOmyMHQ2eKKZ9xSaz0
+ G9JC6K0v6HerZi6C/rFVP9rvOSMz84OqobO8/dCoL89efQwy7oplENw5Z25Y89fRT0vPTa5n6
+ iM9qZ7NJDho3W34FejwasA0WkC4D/RmXHAjsP4pxqAu2Z73yPXXnyPIcTbREFXZAVjnOEu/SG
+ UJc+hDVKeZN5o1iq3Mtwml2uAO5dbugQRadlnc+81PWE+D1Q7F/xwJxJP7+S5IKbc6xIBRCU2
+ EIPnLwqvuPzFUUPdk0kufN5NKhUZdV6ioT5qMcb9MoZtUbJujeKE4A8kR1kqqwn92yN6/+uqF
+ 37pcLY5YuKJ3YZPhsA+QW3whot5bxiGYDXmNoyp8hrw9tazhuH7f2je2YGgYxpw62UcpLexwo
+ 4PbAag0I6L+mJGq0jfsgsn+cmKSTjCRHu/qNK0goFQYL808qQ05QFpIZJnzqgwP9g2w7+X4/S
+ OZz3PS+YRD9Q3tO/H17kec5zfOlyvCcc2lai9eWm1niv6tbjB8LMA0ywMGLKRgONdiYlp+nM1
+ DBiZz54gL7+yfJFyCOkJTU/IasYhgRlq8yT4PemArX4zShLFR4tMjvAkPxOZHtiFtu2CEwx1Z
+ 4sj/JKl+OG28zEhgjYxfHtrabiy4ev5NJfyzkc9n2g3snNrFDpn9v3zV/qW94T8L9hm+C0MTl
+ sS3ZSYUGKnQEadLIAYgg/uXXuhpDgG0VziGj7mb3jHqep35js798QSM+oj4aXu7FUfMjX3bBe
+ nSPPhMn3plsMnFGiQ/ar6swLMDfYkQaopNNrTGuv15FTPTVSTJ7nbiHmC9isOpluRC/uAekXM
+ KwVDXkc+to17JH9EhFSfKY1f1VJya0yyUrpItZAER2NtSndF/eoY3ocF/VXCrR3NW+fYhgq6w
+ wXRw2pGlpQ/YsK+2mhP9NjkjMqy7JPr/aorG8Cl1lXw427vU/QX+dpWfJJY8MBInH1eVHOkSo
+ Tq7Wc8WHEFbM0agrXySNSD7Z5AtTYdWkmAXevSiZ+Wa0UdVQRsC9OA2T8STm3vvZIE1YA=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi brian,
 
-On Fri, 23 Aug 2019, Elijah Newren wrote:
+[chiming in from the peanut gallery; if my comments don't make any
+sense, please do feel free to completely ignore me.]
 
-> On Thu, Aug 22, 2019 at 8:01 PM Eric Wong <e@80x24.org> wrote:
-> >
-> > Elijah Newren <newren@gmail.com> wrote:
-> > >   * Remove git-filter-branch from git.git.  Mention in the release
-> > > notes where people can go to get it.[1]
-> > >
-> > > filter-branch is not merely a slow or difficult-to-use tool, it's on=
-e
-> > > that *fosters* mistakes by making it hard to get things right in
-> > > several different ways.  Granted, people exercise extra caution usin=
-g
-> > > filter-branch because they know they need to, but there are so many
-> > > gotchas that they're likely to accidentally mess something up.  Thos=
-e
-> > > mess-ups are not always discovered immediately, and by then it's
-> > > nearly cast into stone (rewriting being something you want to do ver=
-y
-> > > rarely).
-> >
-> > Is it possible to turn git-filter-branch into a fast, compatible,
-> > and (maybe) safe wrapper for git-filter-repo?  That would "fix"
-> > filter-branch and (if done carefully) not break existing uses.
+On Sun, 25 Aug 2019, brian m. carlson wrote:
+
+> diff --git a/convert.c b/convert.c
+> index 94ff837649..0e6e9d2d75 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -8,6 +8,7 @@
+>  #include "pkt-line.h"
+>  #include "sub-process.h"
+>  #include "utf8.h"
+> +#include "ll-merge.h"
 >
-> Ooh, what an interesting question.  I can probably ramble on a LOT
-> longer than you expected about this...
+>  /*
+>   * convert.c - convert a file when checking it out and checking it in.
+> @@ -1293,10 +1294,11 @@ struct conv_attrs {
+>  	const char *working_tree_encoding; /* Supported encoding or default en=
+coding if NULL */
+>  };
 >
-> [...]
+> +static struct attr_check *check;
+> +
+>  static void convert_attrs(const struct index_state *istate,
+>  			  struct conv_attrs *ca, const char *path)
+>  {
+> -	static struct attr_check *check;
+>  	struct attr_check_item *ccheck =3D NULL;
+>
+>  	if (!check) {
 
-FWIW if anybody cares about my opinion: I would be totally fine with
-integrating git-filter-repo into git.git, have it there for a major
-version or two, then patch `git filter-branch` to spew out a deprecation
-warning, and then remove that latter command a major version (or two)
-later.
+After this line:
+
+                check =3D attr_check_initl("crlf", "ident", "filter",
+				"eol", "text", "working-tree-encoding",
+				NULL);
+		user_convert_tail =3D &user_convert;
+		git_config(read_convert_config, NULL);
+	}
+
+I am a bit worried about `user_convert`: it seems never to be re-set.
+
+Also, how thread-safe do we need `reset_parsed_attributes()` to be?
 
 Ciao,
 Dscho
