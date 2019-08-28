@@ -2,38 +2,35 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC4F41F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 20:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 130E41F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 20:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726941AbfH1U0t (ORCPT <rfc822;e@80x24.org>);
+        id S1726945AbfH1U0t (ORCPT <rfc822;e@80x24.org>);
         Wed, 28 Aug 2019 16:26:49 -0400
-Received: from smtp122.iad3a.emailsrvr.com ([173.203.187.122]:39890 "EHLO
+Received: from smtp122.iad3a.emailsrvr.com ([173.203.187.122]:53082 "EHLO
         smtp122.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726657AbfH1U0s (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Aug 2019 16:26:48 -0400
-X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Aug 2019 16:26:47 EDT
+        by vger.kernel.org with ESMTP id S1726763AbfH1U0t (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 28 Aug 2019 16:26:49 -0400
 X-Auth-ID: jon@jonsimons.org
-Received: by smtp8.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id E94494F86;
-        Wed, 28 Aug 2019 16:18:54 -0400 (EDT)
+Received: by smtp8.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id 1B02F5465;
+        Wed, 28 Aug 2019 16:18:48 -0400 (EDT)
 X-Sender-Id: jon@jonsimons.org
 Received: from localhost.localdomain (c-73-223-68-105.hsd1.ca.comcast.net [73.223.68.105])
         (using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256)
         by 0.0.0.0:465 (trex/5.7.12);
-        Wed, 28 Aug 2019 16:18:55 -0400
+        Wed, 28 Aug 2019 16:18:49 -0400
 From:   Jon Simons <jon@jonsimons.org>
 To:     jon@jonsimons.org, git@vger.kernel.org
 Cc:     me@ttaylorr.com, peff@peff.net
-Subject: [PATCH 1/2] list-objects-filter: only parse sparse OID when 'have_git_dir'
-Date:   Wed, 28 Aug 2019 16:18:23 -0400
-Message-Id: <20190828201824.1255-2-jon@jonsimons.org>
+Subject: [PATCH 0/2] partial-clone: fix two issues with sparse filter handling
+Date:   Wed, 28 Aug 2019 16:18:22 -0400
+Message-Id: <20190828201824.1255-1-jon@jonsimons.org>
 X-Mailer: git-send-email 2.23.0.37.g745f681289.dirty
-In-Reply-To: <20190828201824.1255-1-jon@jonsimons.org>
-References: <20190828201824.1255-1-jon@jonsimons.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -41,82 +38,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a bug in partial cloning with sparse filters by ensuring to check
-for 'have_git_dir' before attempting to resolve the sparse filter OID.
+Included here are two fixes for partial cloning with sparse filters.
+These issues were uncovered in early testing internally at GitHub,
+where Taylor and Peff have provided early offlist review feedback.
 
-Otherwise the client will trigger:
+Jon Simons (2):
+  list-objects-filter: only parse sparse OID when 'have_git_dir'
+  list-objects-filter: handle unresolved sparse filter OID
 
-    BUG: refs.c:1851: attempting to get main_ref_store outside of repository
-
-when attempting to git clone with a sparse filter.
-
-Note that this fix is the minimal one which avoids the BUG and allows
-for the clone to complete successfully:
-
-There is an open question as to whether there should be any attempt
-to resolve the OID provided by the client in this context, as a filter
-for the clone to be used on the remote side.  For cases where local
-and remote OID resolutions differ, resolving on the client side could
-be considered a bug.  For now, the minimal approach here is used to
-unblock further testing for partial clones with sparse filters, while
-a more invasive fix could make sense to pursue as a future direction.
-
-t5616 is updated to demonstrate the change.
-
-Signed-off-by: Jon Simons <jon@jonsimons.org>
----
  list-objects-filter-options.c |  3 ++-
- t/t5616-partial-clone.sh      | 23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+ list-objects-filter.c         |  6 +++++-
+ t/t5616-partial-clone.sh      | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 1cb20c659c..aaba312edb 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -71,7 +71,8 @@ static int gently_parse_list_objects_filter(
- 		 * command, but DO NOT complain if we don't have the blob or
- 		 * ref locally.
- 		 */
--		if (!get_oid_with_context(the_repository, v0, GET_OID_BLOB,
-+		if (have_git_dir() &&
-+		    !get_oid_with_context(the_repository, v0, GET_OID_BLOB,
- 					  &sparse_oid, &oc))
- 			filter_options->sparse_oid_value = oiddup(&sparse_oid);
- 		filter_options->choice = LOFC_SPARSE_OID;
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 565254558f..6c3aa06973 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -241,6 +241,29 @@ test_expect_success 'fetch what is specified on CLI even if already promised' '
- 	! grep "?$(cat blob)" missing_after
- '
- 
-+test_expect_success 'setup src repo for sparse filter' '
-+	git init sparse-src &&
-+	git -C sparse-src config --local uploadpack.allowfilter 1 &&
-+	git -C sparse-src config --local uploadpack.allowanysha1inwant 1 &&
-+	for n in 1 2 3 4
-+	do
-+		test_commit -C sparse-src "this-is-file-$n" file.$n.txt
-+	done &&
-+	echo "/file.1.txt" >> sparse-src/odd-files &&
-+	echo "/file.3.txt" >> sparse-src/odd-files &&
-+	echo "/file.2.txt" >> sparse-src/even-files &&
-+	echo "/file.4.txt" >> sparse-src/even-files &&
-+	echo "/*" >> sparse-src/all-files &&
-+	git -C sparse-src add odd-files even-files all-files &&
-+	git -C sparse-src commit -m "some sparse checkout files"
-+'
-+
-+test_expect_success 'partial clone with sparse filter succeeds' '
-+	git clone --no-local --no-checkout --filter=sparse:oid=master:all-files "file://$(pwd)/sparse-src" pc-all &&
-+	git clone --no-local --no-checkout --filter=sparse:oid=master:even-files "file://$(pwd)/sparse-src" pc-even &&
-+	git clone --no-local --no-checkout --filter=sparse:oid=master:odd-files "file://$(pwd)/sparse-src" pc-odd
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
 -- 
 2.23.0.37.g745f681289.dirty
 
