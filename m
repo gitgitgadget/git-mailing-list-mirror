@@ -2,130 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D65421F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 09:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CECB11F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 09:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726326AbfH1JFY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 05:05:24 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:37040 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726253AbfH1JFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 05:05:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id w67so1493958lff.4
-        for <git@vger.kernel.org>; Wed, 28 Aug 2019 02:05:22 -0700 (PDT)
+        id S1726436AbfH1JLq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 05:11:46 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46110 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbfH1JLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 05:11:46 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z1so1655210wru.13
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 02:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=okvDooLLFJpLj+IhAPiVapI2i/8rzrVdjbnKRDtUu+g=;
-        b=kDFKz33LUtlKEkn2fHp+yZZlb3Il+KkxqJfTAoWlhawEeK3V8A/h/fV83ZoamiYtJz
-         C+GWerj19MOkIwacy+ezG53tNcSbzxcD1e6IoohIx9ORnXKS4HjoVP5ZOVrAyScZtw37
-         t4M6t44cvHOvKFNQ1h8iMPvJ6MwXvfmhvPiU+8KDpwW4OwF8lgboNPOb0vInXFZ/JyX6
-         fWzbnVTDwUDHYuxwY8Pc/JWMgvD4oLiX4a+5zzrOmfevZ2Mi2XuJbDeRlWmuRQUkAh2R
-         qjEupjITz+6VxW3v2NKRjqJYG4gGPzEP2DV8FksJkt+Yqe3NmJUQg4Y5ENjPpip01nIR
-         5LEA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=D5xumJlwdcilFo/njjbEzxFa6ctffy8d4uKpawHYNuU=;
+        b=lAnnplg+Pe7Mb42Gb/TToeKoHFs5I7lpF+CBZDa7B3yRcnw0mseH6W5/BJ45onmTn5
+         qRVuKk2PLrMbX0jbgfX65qMkwvSxeDNM39181wvdZ99IbLJuDpKuE6uqwaMKF70i/Eqo
+         wNjqxO8nAkuECThVd+WQK2xjLP3z4pmFTLL2ZWm97SC5QO62hfcmRm3NioA8E012kPJc
+         DzwxIyEFiTdXe+wLA+7b6MtMd/plnwdPhz2HE+7USUQAPAMqJ8GUqWG67/rEdwtlhOxu
+         GeLk+v6AyJqsMI7xRDx8z16BZtYiZssLWlAunZaOHCI3+WK9f6FWSDVo7PxzB85unGB8
+         z74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=okvDooLLFJpLj+IhAPiVapI2i/8rzrVdjbnKRDtUu+g=;
-        b=LvdTP6EKak/IX85/z5Wgwx8kvjLNTTKjzgwy0Ak9erkG8nx26cPCUaNZJJhdRXDTQJ
-         cIAnVbm8n4ble1kk1z1oAurQi3eBz2ETaxJgATCSkP2OocUI1mBWoklSGEXHhdd6hBL0
-         Xdbz9dZf3MRktX4D0vdXAumRtdigFAZpmJ1V5Rns8qSwUcyTS9YcX4jTsV3pPAzr3wRe
-         RzpBTMT1z4aypIkBH9tAHl+WscFh3SzcC7I9XGTvlA0t3qzRcPhacJmoeVTsJGyAP8rr
-         yKMSqLDrfhYbqLpH4bnEwnq4wrLPqZwGQVtOf4eykYOzkwrxeE8JlCB6kAGEg5HynzJ3
-         yrIA==
-X-Gm-Message-State: APjAAAXnQjxKEgS2Fl47xJrQd2eypvQ3a73LRp6VblNwZ076iCe6jLfK
-        7ngT/AvJFsrEuiPm8/HQIJk=
-X-Google-Smtp-Source: APXvYqzUNY35bAynmIreZDgMdk83ze/kWPMYltpR2adKipQMcbLslxVv0Xp9hJgqU7WWEEUpf4zezw==
-X-Received: by 2002:a19:428f:: with SMTP id p137mr1943730lfa.149.1566983121662;
-        Wed, 28 Aug 2019 02:05:21 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id r76sm477682ljb.13.2019.08.28.02.05.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Aug 2019 02:05:21 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-options.txt: clarify meaning of various ff-related options
-References: <20190828001307.8042-1-newren@gmail.com>
-Date:   Wed, 28 Aug 2019 12:05:20 +0300
-In-Reply-To: <20190828001307.8042-1-newren@gmail.com> (Elijah Newren's message
-        of "Tue, 27 Aug 2019 17:13:07 -0700")
-Message-ID: <877e6x3bjj.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=D5xumJlwdcilFo/njjbEzxFa6ctffy8d4uKpawHYNuU=;
+        b=PDhdlpvR9il0saEi8HGtKv6t2x9of+GdVIskiuT1NPxSpVenejuIyQecyHs0efh/jL
+         abi/1/AWWToPhPxQK6/Zgeon4Y0tAE0TG8F4BdUYsKP3Hki8N6b/S8ptO2UA/LsNUVLl
+         zaUR+Gae+Of2aR5Q7TRU7NqxMSz/WTGxAVfdAlVq5xe2C9231pSCPvDv0+sqRMey7PVQ
+         wgGrvIBskMxszNV0qcErbMyr3kAZGQ/ITRHDUaOH6HV9lGGrx5lvAodx35yaawyjaQ1I
+         Z5lKyANXaJ2zn9kUVjCzhsbGEpqpvObKR0ZG6yxDBXX/ST3nz5XPHH/6Gq4OE+GU04IP
+         Vx2A==
+X-Gm-Message-State: APjAAAXd/EB8xmUfgmr82OOkYxH/mpLFB4oANDxbSI7vr+de4DEahzAX
+        UsqRWEvRZ/kvAcpTVdwCd3S1IWj2
+X-Google-Smtp-Source: APXvYqxWZNzLCj99Kn1IlRcQkXPsYmjJ/X+ngcraSnQm6+FrJfYoC7MVWJbaE4K0+rC+Ytr8JRainw==
+X-Received: by 2002:a5d:4250:: with SMTP id s16mr3284411wrr.318.1566983503774;
+        Wed, 28 Aug 2019 02:11:43 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-2-29.as13285.net. [92.22.2.29])
+        by smtp.gmail.com with ESMTPSA id c1sm1432152wmc.40.2019.08.28.02.11.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Aug 2019 02:11:43 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 10/11] introduce container_of macro
+To:     Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20190826024332.3403-1-e@80x24.org>
+ <20190826024332.3403-11-e@80x24.org>
+ <381dd52f-f7d4-3e6c-24b8-22c8a0710f25@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <a7b3b9f4-58aa-0d09-fe43-8094e3a255b8@gmail.com>
+Date:   Wed, 28 Aug 2019 10:11:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <381dd52f-f7d4-3e6c-24b8-22c8a0710f25@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On 27/08/2019 15:49, Derrick Stolee wrote:
+> On 8/25/2019 10:43 PM, Eric Wong wrote:
+>> This macro is popular within the Linux kernel for supporting
+>> intrusive data structures such as linked lists, red-black trees,
+>> and chained hash tables while allowing the compiler to do
+>> type checking.
+>>
+>> I intend to use this to remove the limitation of "hashmap_entry"
+>> being location-dependent and to allow more compile-time type
+>> checking.
+>>
+>> This macro already exists in our source as "list_entry" in
+>> list.h and making "list_entry" an alias to "container_of"
+>> as the Linux kernel has done is a possibility.
+> [snip]
+>> +/*
+>> + * container_of - Get the address of an object containing a field.
+>> + *
+>> + * @ptr: pointer to the field.
+>> + * @type: type of the object.
+>> + * @member: name of the field within the object.
+>> + */
+>> +#define container_of(ptr, type, member) \
+>> +	((type *) ((char *)(ptr) - offsetof(type, member)))
+>> +
+>>   #endif
+> 
+> I think it would be good to include at least one use of this
+> macro in this patch. As it stands, I need to look at the next
+> patch to make sense of what this is doing.
+> 
+> It took me a little while to parse what is happening here.
+> 'ptr' is a pointer to the generic struct (in our case,
+> 'struct hashmap_entry *'), while 'type' is the parent type,
+> and 'member' is the name of the member in 'type' that is
+> of type typeof(*ptr).
 
-> As discovered on the mailing list, some of the descriptions of the
-> ff-related options were unclear.  Try to be more precise with what these
-> options do.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> I noticed this patch sitting around in one of my branches, and noticed it
-> wasn't upstream.  I'm pretty sure I submitted it a few months back, but I
-> think it got lost in the cracks.  Resubmitting and I'll see if I can do a
-> better job following up on it.
->
->  Documentation/merge-options.txt | 20 +++++++++++---------
->  1 file changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> index 79a00d2a4a..b39df5f126 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -40,20 +40,22 @@ set to `no` at the beginning of them.
->  	case of a merge conflict.
->  
->  --ff::
-> -	When the merge resolves as a fast-forward, only update the branch
-> -	pointer, without creating a merge commit.  This is the default
-> +	When the merge can resolve as a fast-forward, do so (only
-> +	update the branch pointer to match the merged branch; do not
-> +	create a merge commit).  When a fast forward update is not
-> +	possible, create a merge commit.  This is the default
->  	behavior.
->  
->  --no-ff::
-> -	Create a merge commit even when the merge resolves as a
-> -	fast-forward.  This is the default behaviour when merging an
-> -	annotated (and possibly signed) tag that is not stored in
-> -	its natural place in 'refs/tags/' hierarchy.
-> +	Create a merge commit even when the merge could instead resolve
-> +	as a fast-forward.  This is the default behaviour when merging
-> +	an annotated (and possibly signed) tag that is not stored in its
-> +	natural place in 'refs/tags/' hierarchy.
+It took me a couple of minutes to figure it out as well. The rest of 
+this patch series adds some very welcome type safety changes, at first 
+sight this patch threatens to undermine that as there is no check (and 
+no compiler independent way to check) that type == typeof(*ptr). It 
+would also be helpful if the commit message could explain how this can 
+be used to improve type safety.
 
-Please notice that virtually all the other cases of
---something/--no-something are formatted like this:
+Best Wishes
 
---something::
---no-something::
-        [descriptions]
+Phillip
 
-So, even only for consistency, it seems to be better to have this the
-same way:
-
-  --ff::
-  --no-ff::
-  --ff-only::
-        [descriptions]
-
-that, as a bonus, will make it explicit and crystal clear that these 3
-things are alternatives, and thus the last one on the command line takes
-precedence.
-
--- Sergey
+> Perhaps this is easier to grok for others than it was for me.
+> 
+> -Stolee
+> 
