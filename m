@@ -2,139 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 175361F4B7
-	for <e@80x24.org>; Wed, 28 Aug 2019 06:18:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8E721F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 06:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726146AbfH1GSB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 02:18:01 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33421 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726052AbfH1GSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 02:18:00 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r17so939338wme.0
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 23:17:59 -0700 (PDT)
+        id S1726321AbfH1GqC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 02:46:02 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:34451 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726256AbfH1GqB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 02:46:01 -0400
+Received: by mail-io1-f68.google.com with SMTP id s21so3832679ioa.1
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 23:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MlGqD6mvSv4asdKatGBK2o6i7AnjbohAQWVRrJVpm7Q=;
+        b=d5Ea9UFXd7ZiSJBy7rKTCux1wXFuSqNBvRFu5l1e3uqDJ65hRMrwXNu1vG6GVlOd2d
+         +MA2TgMALhyDdu+srjtU/xiihCPQYZJWwtEYHbC8Gr3KeVRpnZ4aT30HOENAvvcgPDSZ
+         LZGLefQFoZj7C2ixv4wGQUdByH2m3omwio7VcZB+toif0VzmB5llMYvmc1b1O/dQIVHT
+         dJqwfHAprRnU7A8coWLh7eKbiyTmpS66Ul7NKoewMpZ/GlGFsMOhoJ4/e5aal8SELQWL
+         kcGdSUa7Z3LEoyF4R1RVoePfzR5JpThd+CxrR/G40PDhCF3UAABABKFl5X7hdzT1GXuC
+         hk3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0fw7w1OytoLjGtInPjLkiBvZAxf7VFLqQy7qC5/Ih4k=;
-        b=W5o1KE0G+jSHvQcyXzJKyDBl/picUeQCLO6gniMoCfLfPTmQYYxC9QYMuHa80om5LI
-         eBFpOqYF1FslE5UPCNtcI8Tg2HVcfZnA7Zpjq8/urG4+lK9mCcdTFdO9u0z/yiTFSsS4
-         lO2WaedkNN7qhcUBG59p1x2KghQhoIhqi14h1S4hqzxUsy6NpvX9wg8eV9y3Zb3Jtad0
-         EmIM+V21HS92gGYcp8LEiWymOfyJqgg482rx9edi73fh2/fsop3Wzlu0QhkBZ/9CFBI/
-         uQRyQRTw94JLmiVJO5j3B6COyXQHJlWdaLACa8IpSzB3MxkkPPOqfDFz8W+d/Vgxa/MF
-         37LA==
-X-Gm-Message-State: APjAAAViuP+RPEyYGqvVX7vkS1AidRCKpHd9IGAo87v2900G3bCjLmW/
-        BTedy0jtFIoK1xI/IxdXDqgZc/fqKqeJ8wgMAaUbeGwi
-X-Google-Smtp-Source: APXvYqz+6yDdut/vVA2a4NHUb4CGCJVF/j/lE5eHx5hD3m5IxWXojO66MXQpEP5KztMArbupfsxJ5g8oAoJqiTB5BxE=
-X-Received: by 2002:a1c:4d05:: with SMTP id o5mr2501459wmh.129.1566973078322;
- Tue, 27 Aug 2019 23:17:58 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MlGqD6mvSv4asdKatGBK2o6i7AnjbohAQWVRrJVpm7Q=;
+        b=OJd/vO+ER5eKG72+IR60yZYjexY7w5zfmmE88TE0S0kl31/Ob2fH9HQEzr+Vwdp4Zq
+         o8zrQ0LvswE+iCPwHz/GlLLbamGCd6e44FNByA6zuXg1qiEndLbau6yG5BYcYpnjqCWj
+         0DddUrCJrHzPByfQmMvMK91EBErSaQmfbqewue3C9c/Ozx4Ey44YGz5EaC8GTWdujT9S
+         PaJGvCUNkd8wN6+DMoCkCuOKlM1gfqteD817t5sbrzSmGW1gYOb5gDydrA7RcX9YD8Mg
+         GijHW/I7/B3zYBorTHVILOn2YBjwDtjb/uHsAL6af9Mm8D/529ZDZISiZeR1ww6Rj1BL
+         cJLQ==
+X-Gm-Message-State: APjAAAX5MLFyzFj7KX2Z10rfx8lY3q3AyVNpsdXeLZICATIcyalpafH/
+        96GNUwZH8bWzHDd/D1VoB30=
+X-Google-Smtp-Source: APXvYqyZu0AwGb2GjbR7LX/U+hRMbHdftWXFh/2YJeY3QiQ6Ny0Om4xwnSseRU1are6pbCZPBXRt9A==
+X-Received: by 2002:a5d:9dd8:: with SMTP id 24mr2511438ioo.249.1566974760870;
+        Tue, 27 Aug 2019 23:46:00 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
+        by smtp.gmail.com with ESMTPSA id o2sm1220233iob.64.2019.08.27.23.45.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Aug 2019 23:45:59 -0700 (PDT)
+Date:   Wed, 28 Aug 2019 02:45:58 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 3/3] status: mention --skip for revert and cherry-pick
+Message-ID: <20190828064558.GA2399@archbookpro.localdomain>
+References: <cover.1566637431.git.liu.denton@gmail.com>
+ <cover.1566880835.git.liu.denton@gmail.com>
+ <be64ce1e92c60f9587b137d36e98532604d4a1ff.1566880835.git.liu.denton@gmail.com>
+ <xmqqef162rx2.fsf@gitster-ct.c.googlers.com>
+ <xmqqwoey0zwa.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190826235226.15386-1-newren@gmail.com> <20190828002210.8862-1-newren@gmail.com>
- <20190828002210.8862-4-newren@gmail.com>
-In-Reply-To: <20190828002210.8862-4-newren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 28 Aug 2019 02:17:47 -0400
-Message-ID: <CAPig+cSydZnie3CSwPgfSaNcGxr1jj94YBXAL47vEXrtxaQXUw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] Recommend git-filter-repo instead of git-filter-branch
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwoey0zwa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 8:22 PM Elijah Newren <newren@gmail.com> wrote:
-> filter-branch suffers from a deluge of disguised dangers that disfigure
-> history rewrites (i.e. deviate from the deliberate changes). [...]
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-> @@ -16,6 +16,20 @@ SYNOPSIS
-> +WARNING
-> +-------
-> +'git filter-branch' has a plethora of pitfalls that can produce non-obvious
-> +manglings of the intended history rewrite (and can leave you with little
-> +time to investigate such problems since it has such abysmal performance).
-> +These safety and performance issues cannot be backward compatibly fixed and
-> +as such, its use is not recommended.  Please use an alternative history
-> +filtering tool such as https://github.com/newren/git-filter-repo/[git
-> +filter-repo].  If you still need to use 'git filter-branch', please
-> +carefully read the "Safety" section of the message on the Git mailing list
-> +https://public-inbox.org/git/CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com/[detailing
-> +the land mines of filter-branch] and vigilantly avoid as many of the
-> +hazards listed there as reasonably possible.
+On Tue, Aug 27, 2019 at 07:47:33PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Is this a good thing, though?
+> >
+> > Giving up (because you do not have enough time or concentration to
+> > finish the cherry-pick or revert in progress) with --abort, and
+> > committing to the resolution after spending effort to deal with a
+> > conflicted cherry-pick or revert with --continue, are both sensible
+> > actions after seeing the command stop due to conflicts.  Is "--skip"
+> > a recommendable action in the same way?  Doesn't a multi-commit
+> > series often break if you drop just one in the middle, especially
+> > if the series is sensibly structured as a logical progression?
+> 
+> Addendum.
+> 
+> "rebase" (especially with "-i") is fundamentally different from
+> "cherry-pick" and it makes tons of sense to suggest "--skip" in the
+> former.  "rebase -i" is a tool to take a messy work in progress and
+> polish it by reordering, discarding and combining commits.
+> "cherry-pick" is to take a finished work already in one integration
+> track, and transplant to another, often an older maintenance track,
+> and there is no place for "this conflict is too much to resolve so
+> let's drop it".
+> 
 
-Is there a good reason to not simply copy the "Safety" section from
-that email directly into this document so that readers don't have to
-go chasing down the link (especially those who are reading
-documentation offline)?
+I still believe that it's a good idea to let users know what all of
+their options are, including the --skip for cherry-pick and revert even
+if it may be rare that it's the right thing to do.
 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> @@ -832,7 +832,7 @@ Hard case: The changes are not the same.::
->         This happens if the 'subsystem' rebase had conflicts, or used
->         `--interactive` to omit, edit, squash, or fixup commits; or
->         if the upstream used one of `commit --amend`, `reset`, or
-> -       `filter-branch`.
-> +       a full history rewriting command like `filter-repo`.
-
-Do we want a clickable link to `filter-repo` here?
-
-> diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-> @@ -123,10 +123,10 @@ The following format are available:
-> +linkgit:git-hash-object[1], linkgit:git-rebase[1], and
-> +linkgit:git-filter-repo[1], among other git commands, can be used to
-> [...]
-> @@ -148,8 +148,8 @@ pending objects.
->  linkgit:git-hash-object[1]
->  linkgit:git-rebase[1]
-> +linkgit:git-filter-repo[1]
-
-Are these 'linkgit:' references to `filter-repo` going to be
-meaningful if that tool is not incorporated into the Git project
-proper? Perhaps use a generic clickable link instead.
-
-Same comment applies to other 'linkgit:' invocations in the remainder
-of the patch.
-
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> old mode 100755
-> new mode 100644
-
-Why lose the executable bit?
-
-> @@ -83,6 +83,19 @@ set_ident () {
-> +if [ -z "$FILTER_BRANCH_SQUELCH_WARNING" -a \
-> +     -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS" ]; then
-
-If this script didn't already have a mix of styles, I'd say something
-about modern style being:
-
-    if test -z "$FILTER_BRANCH_SQUELCH_WARNING" &&
-        test -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS"
-    then
-        ...
-    fi
-
-> +       cat <<EOF
-> +WARNING: git-filter-branch has a glut of gotchas generating mangled history
-> +         rewrites.  Please use an alternative filtering tool such as 'git
-> +         filter-repo' (https://github.com/newren/git-filter-repo/) instead.
-> +         See the filter-branch manual page for more details; to squelch
-> +         this warning and pause, set FILTER_BRANCH_SQUELCH_WARNING=1.
-
-The "and pause" threw me. There's more than a bit of ambiguity
-surrounding it. Perhaps drop it?
+That being said, I'm not passionate enough about this change to pursue
+it so when you queue this patchset, please drop this patch.
