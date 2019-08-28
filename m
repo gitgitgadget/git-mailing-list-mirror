@@ -2,122 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60B781F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 16:04:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F35F41F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 16:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbfH1QEJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 12:04:09 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54004 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726560AbfH1QEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 12:04:09 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E6CC87E8A;
-        Wed, 28 Aug 2019 12:04:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q1GmkSwi4l5lbSyGsL8u3QPuNyY=; b=mmT7u/
-        SOlnuQNYu4YwVlNAhn8tKrsm/mFWMSqxaicfsEbZEk4xUHVAui0xwik+Zo2MsMpW
-        MjrogVJCC/OjyhSjqt7ZEziz7KxTdMxBvGmsNgoHOdbUATumolcLrKL6CrPJo/vA
-        d2AJTu0+Er5meKMr8l5+lv/4MjoZotZ3SjHwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yjmUxZKSs/0AJ1hhaqZl66U5IrGetuAV
-        TnfbFVJYRI0ULV4TjgpJkszWFqv2ERdMjF6oGsapGZ7Ntkv2l0pxSU5AmLvkS7/3
-        LK78T2ZNGjwfBm86l/RUejT0JqBFxw6zoft3ePY54UHmB5RKjhn+jpYpLHVrsBvs
-        xmWGJR6mEpc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2663C87E89;
-        Wed, 28 Aug 2019 12:04:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 45D4587E81;
-        Wed, 28 Aug 2019 12:04:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Ben Wijen <ben@wijen.net>, git@vger.kernel.org,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/1] rebase.c: make sure the active branch isn't moved when autostashing
-References: <20190821182941.12674-1-ben@wijen.net>
-        <20190826164513.9102-1-ben@wijen.net>
-        <nycvar.QRO.7.76.6.1908281454070.46@tvgsbejvaqbjf.bet>
-        <xmqqh8611eza.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 28 Aug 2019 09:03:58 -0700
-In-Reply-To: <xmqqh8611eza.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 28 Aug 2019 08:34:01 -0700")
-Message-ID: <xmqq8srd1dld.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726687AbfH1QP6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 12:15:58 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40239 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726395AbfH1QP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 12:15:57 -0400
+Received: by mail-wm1-f65.google.com with SMTP id t9so660650wmi.5
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 09:15:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+HYuO+R7Hb7cKTCmj1oZuAmeO2zIbTfnHq3x88VBc5k=;
+        b=GEEEcqHIQjVRdiBAb1/06ZjZVYOOuqY6syqoI6KF2DEp9HMhaR0G7S9fTE1vDL3K+j
+         DQcEsfyFYNkYS7vMfjmoK0M5Fm5kcqAJxNjm0Hzg9rV0qgRbSQKYwwjjwa5MxLkVkDVR
+         6xglVQ6zHNryovRb1gmJPwkXj+WJbQACO5cS5Rr+xWCwD0eH/ucQ1UHnbEgfSxBLHKjF
+         mnbX/LJP3EbUZ/j4Y/mxywNNjGgQLtHRBxXLx9KnSMmfwB45kg6v/3K4GDOJW5p62paH
+         FseuQe2fLeNJHUQgbuvPDhPfoy6lBKw5u9hFikHXEJL7KUNr57lZeTryRRDvZGKrxjqU
+         w57A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+HYuO+R7Hb7cKTCmj1oZuAmeO2zIbTfnHq3x88VBc5k=;
+        b=BZwQWCp5ODISmMSSiW/ee+sRLy69mZWGMdh2X2k5RVEuKWp1/Fwj2lSoV8/kdWbV32
+         +MO+b6YYHTfyBkxec477Z4/DONYuvVJ6onOXtHt0RWVCDmAKln2r28AHx5Nre8/SxrP+
+         Bqg8lH0PzU3BtCmySxppibBeXnZU59okvPBp5Qk8WcLavCo26bCczirgpQYEIP36/Pqi
+         muE7cuUKiLkvi62B6dV6UgBp/bJwAxcXTZT/dIODGKc33kjSmI4s6nSz6Si321seCV4+
+         7dHrkkM21FP3WXhg8xCFpIo7da6fthFdzV3d+Da4SLGYxlgjkXKxPVL67R84lSYTaDO1
+         noSA==
+X-Gm-Message-State: APjAAAWnIT9fasFiM2g1tMbQr4DyOtcofM0uImmEq/ipoZYB/0fokuFS
+        YZKfkIkfB7THi1rVMF4plgM=
+X-Google-Smtp-Source: APXvYqwjElqPMoUJa2JjfMgJjpeCeNCGGI3r471q8YiLCPDLvVpF7hRlIhSYUeE29NThXOFOPnSNrg==
+X-Received: by 2002:a7b:cbd3:: with SMTP id n19mr6143128wmi.112.1567008955881;
+        Wed, 28 Aug 2019 09:15:55 -0700 (PDT)
+Received: from szeder.dev (x4db66bea.dyn.telefonica.de. [77.182.107.234])
+        by smtp.gmail.com with ESMTPSA id k6sm8048544wrg.0.2019.08.28.09.15.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Aug 2019 09:15:55 -0700 (PDT)
+Date:   Wed, 28 Aug 2019 18:15:52 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] upload-pack: fix race condition in error messages
+Message-ID: <20190828161552.GE8571@szeder.dev>
+References: <pull.324.git.gitgitgadget@gmail.com>
+ <5c313aba7e97cb93e7d07f6d5dfaf0febe8a2f8b.1566956608.git.gitgitgadget@gmail.com>
+ <20190828093408.GD8571@szeder.dev>
+ <20190828145412.GB14432@sigill.intra.peff.net>
+ <20190828153944.GA29715@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 735587B6-C9AD-11E9-AA2D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190828153944.GA29715@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 28, 2019 at 11:39:44AM -0400, Jeff King wrote:
+> On Wed, Aug 28, 2019 at 10:54:12AM -0400, Jeff King wrote:
+> 
+> > > Unfortunately, however, while running './t5516-fetch-push.sh -r 1,79
+> > > --stress' to try to reproduce a failure caused by those mingled
+> > > messages, the same check only failed for a different reason so far
+> > > (both on Linux and macOS (on Travis CI)):
+> > 
+> > There's some hand-waving argument that this should be race-free in
+> > 014ade7484 (upload-pack: send ERR packet for non-tip objects,
+> > 2019-04-13), but I am not too surprised if there is a flaw in that
+> > logic.
+> 
+> By the way, I've not been able to reproduce this locally after ~10
+> minutes of running "./t5516-fetch-push.sh -r 1,79 --stress" on my Linux
+> box. I wonder what's different.
+> 
+> Are you running the tip of master?
 
-> IIUC, the bug is twofold:
-> ...
->  - A message is given only when the above happens.  When rebasing
-> ...
->    That "reset --hard" is done only to clean the index and the
->    working tree and talking about "HEAD is now..." is a bug in its
->    context.
+Yeah, but this seems to be one of those "you have to be really lucky,
+even with --stress" cases.
 
-Actually, this "latter" bug can further be split into two
+So...  I was away for keyboard for over an hour and let it run on
+'master', but it didn't fail.  Then I figured that I give it a try
+with Derrick's patch, because, well, why not, and then I got this
+broken pipe error in ~150 repetitions.  Run it again, same error after
+~200 reps.  However, I didn't understand how that patch could lead to
+broken pipe, so went back to stressing master...  nothing.  So I
+started writing the reply to that patch saying that it seems to cause
+some racy failures on Linux, and was already proofreading before
+sending when the damn thing finally did fail.  Oh, well.
 
- * The "HEAD is now" is given only when autostash feature needs to
-   clean the working tree, and we have never moved HEAD anyway.
-
- * The message does not indicate what we are rebuilding on top of.
-
-and dealt with separately, so with that in mind the step that would
-follow the first patch, i.e.
-
-> ... update
-> this patch to add logic to give a pointless and misleading "HEAD is
-> now at..." message so that we will report the location of HEAD where
-> the "rebase --autostash" command started at, to fix only the first
-> bug.
-
-may become different.  The fact that the "HEAD is now..." is given
-only when autostash actually happens _might_ be taken as a feature
-by some users---the location of HEAD reported by the message is
-irrelevant to them (we know that as a fact---we have been reporting
-a wrong commit all along anyway), but the single-bit "we got a
-message" is a signal that "--autostash" had something valuable to
-save.
-
-So the second step may be to replace the "HEAD is now..." message we
-add back (relative to Ben's patch under discussion) to the first
-patch with a more direct "stashed away your local changes" message
-(perhaps with diffstat???  I do not care about the details, as we
-are talking about resurrecting one single useful bit of information
-and extending it futher is beyond the scope of this analysis).
-
-And the last point, i.e. "First, rewinding head to replay your
-work..." does not give enough information to be truly useful, is a
-totally separate bug (that Ben's patch does not even mention or
-attempt to address), so we can leave it out of this analysis, too.
-
-So, yeah, if we are to spend extra effort to polish Ben's patch
-further while keeping the "fix things without making unnecessary
-changes", I think the approach that takes least amount of effort may
-not to make the code manually say "Head is at ...", but to add a new
-message to report that autostash happened.  That fixes two bugs
-(i.e. the original bug, and the "we autostashed" bit is reported in
-a roundabout and misleading way via "HEAD is now at ...") in a
-single patch ;-)
+Then tried it on macOS, and it failed fairly quickly.  For lack of
+better options I used Travis CI's debug shell to access a mac VM, and
+could reproduce the failure both with and without the patch before it
+timeouted.
 
