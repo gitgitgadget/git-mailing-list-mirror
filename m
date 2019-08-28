@@ -2,104 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8E721F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 06:46:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4E4E1F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 08:16:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726321AbfH1GqC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 02:46:02 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:34451 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726256AbfH1GqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 02:46:01 -0400
-Received: by mail-io1-f68.google.com with SMTP id s21so3832679ioa.1
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 23:46:01 -0700 (PDT)
+        id S1726400AbfH1IQC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 04:16:02 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:41404 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726292AbfH1IQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 04:16:01 -0400
+Received: by mail-ed1-f47.google.com with SMTP id w5so1977670edl.8
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 01:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MlGqD6mvSv4asdKatGBK2o6i7AnjbohAQWVRrJVpm7Q=;
-        b=d5Ea9UFXd7ZiSJBy7rKTCux1wXFuSqNBvRFu5l1e3uqDJ65hRMrwXNu1vG6GVlOd2d
-         +MA2TgMALhyDdu+srjtU/xiihCPQYZJWwtEYHbC8Gr3KeVRpnZ4aT30HOENAvvcgPDSZ
-         LZGLefQFoZj7C2ixv4wGQUdByH2m3omwio7VcZB+toif0VzmB5llMYvmc1b1O/dQIVHT
-         dJqwfHAprRnU7A8coWLh7eKbiyTmpS66Ul7NKoewMpZ/GlGFsMOhoJ4/e5aal8SELQWL
-         kcGdSUa7Z3LEoyF4R1RVoePfzR5JpThd+CxrR/G40PDhCF3UAABABKFl5X7hdzT1GXuC
-         hk3Q==
+        h=from:date:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=PbH7LjrCYqhUzSaq88+AQAxC+TyGVzqRXsXAeq0rJXE=;
+        b=MVVbIA9DwbEo2g6DKp50/Uxruxae7KvUJXcU/7+KeivW0t2uQIDOov768fFzz6cCfd
+         39GNZzNxxEzGY9cgNmhrDWbta88kr5+LlQQa/DkOq+FygogMQysTSk3Xi2rzt8ds1taQ
+         bL7VhExfpXDXqHGllZBiLxLO3RSgb7WNCcfU/vSipEhQjdUOaV9sjQviLF/UpAOCQf2t
+         DtAYObUr6y4Xfe2e/+JoCd4xcL0srbRRQc/RdQnwZJCFMDAVhpHGIEXdTMiPd+R7TVJZ
+         GMKCjBYDziQ438xG0iUfgfwZmjfrG1rsEZUAXP0SnQ4LbiHpmtWmErP5MdoScuR0Gl5c
+         g4kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MlGqD6mvSv4asdKatGBK2o6i7AnjbohAQWVRrJVpm7Q=;
-        b=OJd/vO+ER5eKG72+IR60yZYjexY7w5zfmmE88TE0S0kl31/Ob2fH9HQEzr+Vwdp4Zq
-         o8zrQ0LvswE+iCPwHz/GlLLbamGCd6e44FNByA6zuXg1qiEndLbau6yG5BYcYpnjqCWj
-         0DddUrCJrHzPByfQmMvMK91EBErSaQmfbqewue3C9c/Ozx4Ey44YGz5EaC8GTWdujT9S
-         PaJGvCUNkd8wN6+DMoCkCuOKlM1gfqteD817t5sbrzSmGW1gYOb5gDydrA7RcX9YD8Mg
-         GijHW/I7/B3zYBorTHVILOn2YBjwDtjb/uHsAL6af9Mm8D/529ZDZISiZeR1ww6Rj1BL
-         cJLQ==
-X-Gm-Message-State: APjAAAX5MLFyzFj7KX2Z10rfx8lY3q3AyVNpsdXeLZICATIcyalpafH/
-        96GNUwZH8bWzHDd/D1VoB30=
-X-Google-Smtp-Source: APXvYqyZu0AwGb2GjbR7LX/U+hRMbHdftWXFh/2YJeY3QiQ6Ny0Om4xwnSseRU1are6pbCZPBXRt9A==
-X-Received: by 2002:a5d:9dd8:: with SMTP id 24mr2511438ioo.249.1566974760870;
-        Tue, 27 Aug 2019 23:46:00 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id o2sm1220233iob.64.2019.08.27.23.45.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2019 23:45:59 -0700 (PDT)
-Date:   Wed, 28 Aug 2019 02:45:58 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] status: mention --skip for revert and cherry-pick
-Message-ID: <20190828064558.GA2399@archbookpro.localdomain>
-References: <cover.1566637431.git.liu.denton@gmail.com>
- <cover.1566880835.git.liu.denton@gmail.com>
- <be64ce1e92c60f9587b137d36e98532604d4a1ff.1566880835.git.liu.denton@gmail.com>
- <xmqqef162rx2.fsf@gitster-ct.c.googlers.com>
- <xmqqwoey0zwa.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=PbH7LjrCYqhUzSaq88+AQAxC+TyGVzqRXsXAeq0rJXE=;
+        b=VLTUBSgRmA1nfkfecBaD8VtAWBTWx2VQWPMBGxYRkAiyitgaxSzQMDX0R+LsT3uEwt
+         3Yvmc8SdvIjL0wX4dSCt8mx/5hSn/SYa3hztWN7A+RJGbiMXBMndmgIwPXNNrq7HWSqr
+         ayW42KWMe5t3SZxquD83SlSDjxwLR7ohbJCO3CM6K80/jz3Hms74MIRuoaqowqfKg7UI
+         PphtLWqRlAQXVFI1aBDZG4jyw2b21jiUVOEHLMuOoKL5fb//WKmoWJ5ftxf2HP6CY9Jx
+         ZMSEACHQHEeGcgKCtzeCjrAuz+hHx1969ZzTh4vQcBPaJrFzA+tzPMG3ok5H3C79e2Vc
+         uKRA==
+X-Gm-Message-State: APjAAAUOqUShKmEtGHmk/FHiAuE2n40c9Z0EUgwk1DEOWZH0IhreUawq
+        U2aqrHmalnr5sq6/m+rQ56Y=
+X-Google-Smtp-Source: APXvYqy9IH7f4Bu+eMH1+ojQePDYPZIkMDmhOyJw7hT1Y6PPG/kl8g7n6ThiAMr0snvYg9R+o05k1g==
+X-Received: by 2002:a50:a7c2:: with SMTP id i60mr2637052edc.215.1566980159575;
+        Wed, 28 Aug 2019 01:15:59 -0700 (PDT)
+Received: from instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal (1.133.65.34.bc.googleusercontent.com. [34.65.133.1])
+        by smtp.gmail.com with ESMTPSA id w3sm308402edq.12.2019.08.28.01.15.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Aug 2019 01:15:58 -0700 (PDT)
+From:   "Giuseppe Crino'" <giuscri@gmail.com>
+X-Google-Original-From: Giuseppe Crino' <giuscri>
+Date:   Wed, 28 Aug 2019 08:15:57 +0000
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Cc:     Giuseppe Crino' <giuscri@gmail.com>, git@vger.kernel.org
+Subject: Re: How to build to debug with gdb?
+Message-ID: <20190828081557.GA18785@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqwoey0zwa.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1d44d8d6-6c6f-591e-dd2c-5102c9fd7d11@kdbg.org>
+ <20190827183640.GC8571@szeder.dev>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 07:47:33PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Aug 27, 2019 at 08:36:40PM +0200, SZEDER Gábor wrote:
+> Try using the same build flags for the install, i.e.:
 > 
-> > Is this a good thing, though?
-> >
-> > Giving up (because you do not have enough time or concentration to
-> > finish the cherry-pick or revert in progress) with --abort, and
-> > committing to the resolution after spending effort to deal with a
-> > conflicted cherry-pick or revert with --continue, are both sensible
-> > actions after seeing the command stop due to conflicts.  Is "--skip"
-> > a recommendable action in the same way?  Doesn't a multi-commit
-> > series often break if you drop just one in the middle, especially
-> > if the series is sensibly structured as a logical progression?
-> 
-> Addendum.
-> 
-> "rebase" (especially with "-i") is fundamentally different from
-> "cherry-pick" and it makes tons of sense to suggest "--skip" in the
-> former.  "rebase -i" is a tool to take a messy work in progress and
-> polish it by reordering, discarding and combining commits.
-> "cherry-pick" is to take a finished work already in one integration
-> track, and transplant to another, often an older maintenance track,
-> and there is no place for "this conflict is too much to resolve so
-> let's drop it".
-> 
+>   make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g" install
 
-I still believe that it's a good idea to let users know what all of
-their options are, including the --skip for cherry-pick and revert even
-if it may be rare that it's the right thing to do.
+Yes, now it works thanks!
 
-That being said, I'm not passionate enough about this change to pursue
-it so when you queue this patchset, please drop this patch.
+On Tue, Aug 27, 2019 at 08:34:23PM +0200, Johannes Sixt wrote:
+> That is because the command sequence above does not do what you think it
+> does. Didn't you notice that everything was recompiled during `sudo make
+> install`?
+
+Shouldn't be this documented somewhere?
+
+To my knowledge `make install` is expected to copy artifacts of the
+build under prefix. It's unusual to me that `install` has the `all`
+target as prerequisite.
