@@ -2,116 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16EF11F4B7
-	for <e@80x24.org>; Wed, 28 Aug 2019 01:43:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D330F1F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 02:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbfH1Bnd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Aug 2019 21:43:33 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53532 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfH1Bnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 21:43:32 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 10so956275wmp.3
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 18:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VoA3/1ekUbnnzxIt+TuVbhfhub7U8UKuBQ9h9U7VCfU=;
-        b=WTwAd+YgH1PW7nU/sGo8YI1/BkVO1cbGjF30OzeaTpSbB2J8UdGSv96v/DbchfQnlS
-         +oM6fSXDlN8qrdzj6Gn2t31K9oJmRWvS8vlT6yJRHzl2zqmWCZp1/l2ivpq7PTPx1+oW
-         jFrZZv3HHM0SA47Cdw3McjsWy9pFdquP7HdOhdYqxQ4H4hjg/omz1K5UQ1snpt6H+9Fd
-         5OCg20y5PjeBxBD+Y68yyp/UTYGFaWXz2Qm3IL7HZ3JaPtEjwQqaaX4wYL9M2ZFWX9F9
-         ktmHFeBugwy8FLbxIeGBJyYo9sfeJvgYObMzBrqqA7nCAqgfCau/KPKdSJXnqHpWgnLP
-         MKBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VoA3/1ekUbnnzxIt+TuVbhfhub7U8UKuBQ9h9U7VCfU=;
-        b=Ndgqtnqlhe5izPSBZPZHwJ+2+DQ4Z2FjN83XgaUoeV9sX3KfCaY1e6unraXHwBZozy
-         6eH+MMVhFpvOXFy1SPHFjIms+7wd6TOOxPGJaQxcSBRS+w2rTFdRWjsEozoSGcNoqBLh
-         NY4tJO2v6x7xCK1iYPMBfDXwnFosmxSUhw4S+CoRD4LSQZFHfitC6xDQ6oGcCH+lh5HW
-         SdNNZkPvWJbKsegxmSIVgvz5kPfdk0M618Co9vyHU/Abk6uZ3jgcDTVjV5Zals1aYXDO
-         hjq4Ts54vtINRUnVueflmxgVnqY3v1S5dqlaPv2FbJu5bcvkTaXsVYZCh7F9SCD+iUzG
-         NxuA==
-X-Gm-Message-State: APjAAAVYjiv0vdz41SujGDrCKvYkIJZLMhZlPdSMCcP0CYFtiDrfgKX8
-        n8GEzv2Bj+H/NEPe/0FkhT519hY5
-X-Google-Smtp-Source: APXvYqxFGVzjc7x/4Ln7nkQWCVSZgnPR7BVo64McsBr0uKPTHC73DBd3vzvj17B5/F9YqQ9g+uZ88A==
-X-Received: by 2002:a1c:9855:: with SMTP id a82mr1277841wme.134.1566956610256;
-        Tue, 27 Aug 2019 18:43:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z8sm762617wmi.7.2019.08.27.18.43.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Aug 2019 18:43:29 -0700 (PDT)
-Date:   Tue, 27 Aug 2019 18:43:29 -0700 (PDT)
-X-Google-Original-Date: Wed, 28 Aug 2019 01:43:28 GMT
-Message-Id: <5c313aba7e97cb93e7d07f6d5dfaf0febe8a2f8b.1566956608.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.324.git.gitgitgadget@gmail.com>
-References: <pull.324.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] upload-pack: fix race condition in error messages
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726328AbfH1Crk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 22:47:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51800 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbfH1Crk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Aug 2019 22:47:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 629A37C538;
+        Tue, 27 Aug 2019 22:47:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1bKtUvnwy70CUCM5t1hsDfh7DFY=; b=KLpe2G
+        4d6Lye1CPW1SGzQCc2hDq63dP1O98dMGlSUziTa6wAxasqaoBOUQRcAwPKeffIqs
+        V/9vxaPLvww2pbtDj6OaCwTZ1ZnzhnRyi32rErS+5tJIclKnM6Z6qGKziz33QaGl
+        cEAW1QiVvGTXSl0Y4oWUMr0w4DQ7Uhxg/fIdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kkcQmV+pzX+39Li7jD+hZlLjFRY11EoB
+        ysLUPXHuwujwvEroYBYdd1svXJmRu+wBOmctWbiPfh/K/rSt5/2UZ/k7yTj7fKKb
+        BijsvKAOdmGdRitv1pstmIjNwsqSXLu8c3qlbZWrlJz9P8XIq21v/f1/HEr2sWfv
+        ECUxOkQ4dr0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4971A7C537;
+        Tue, 27 Aug 2019 22:47:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D1327C535;
+        Tue, 27 Aug 2019 22:47:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 3/3] status: mention --skip for revert and cherry-pick
+References: <cover.1566637431.git.liu.denton@gmail.com>
+        <cover.1566880835.git.liu.denton@gmail.com>
+        <be64ce1e92c60f9587b137d36e98532604d4a1ff.1566880835.git.liu.denton@gmail.com>
+        <xmqqef162rx2.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 27 Aug 2019 19:47:33 -0700
+In-Reply-To: <xmqqef162rx2.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 27 Aug 2019 14:56:57 -0700")
+Message-ID: <xmqqwoey0zwa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 30ACCDF8-C93E-11E9-B8C6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Test t5516-fetch-push.sh has a test 'deny fetch unreachable SHA1,
-allowtipsha1inwant=true' that checks stderr for a specific error
-string from the remote. In some build environments the error sent
-over the remote connection gets mingled with the error from the
-die() statement. Since both signals are being output to the same
-file descriptor (but from parent and child processes), the output
-we are matching with grep gets split.
+> Is this a good thing, though?
+>
+> Giving up (because you do not have enough time or concentration to
+> finish the cherry-pick or revert in progress) with --abort, and
+> committing to the resolution after spending effort to deal with a
+> conflicted cherry-pick or revert with --continue, are both sensible
+> actions after seeing the command stop due to conflicts.  Is "--skip"
+> a recommendable action in the same way?  Doesn't a multi-commit
+> series often break if you drop just one in the middle, especially
+> if the series is sensibly structured as a logical progression?
 
-To reduce the risk of this failure, follow this process instead:
+Addendum.
 
-1. Write an error message to stderr.
-2. Write an error message across the connection.
-3. exit(1).
+"rebase" (especially with "-i") is fundamentally different from
+"cherry-pick" and it makes tons of sense to suggest "--skip" in the
+former.  "rebase -i" is a tool to take a messy work in progress and
+polish it by reordering, discarding and combining commits.
+"cherry-pick" is to take a finished work already in one integration
+track, and transplant to another, often an older maintenance track,
+and there is no place for "this conflict is too much to resolve so
+let's drop it".
 
-This reorders the events so the error is written entirely before
-the client receives a message from the remote, removing the race
-condition.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- upload-pack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/upload-pack.c b/upload-pack.c
-index 222cd3ad89..b0d3e028d1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -613,11 +613,12 @@ static void check_non_tip(struct object_array *want_obj,
- 	for (i = 0; i < want_obj->nr; i++) {
- 		struct object *o = want_obj->objects[i].item;
- 		if (!is_our_ref(o)) {
-+			warning("git upload-pack: not our ref %s",
-+				oid_to_hex(&o->oid));
- 			packet_writer_error(writer,
- 					    "upload-pack: not our ref %s",
- 					    oid_to_hex(&o->oid));
--			die("git upload-pack: not our ref %s",
--			    oid_to_hex(&o->oid));
-+			exit(1);
- 		}
- 	}
- }
--- 
-gitgitgadget
