@@ -2,89 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4E4E1F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 08:16:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D23B1F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 08:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726400AbfH1IQC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 04:16:02 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:41404 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbfH1IQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 04:16:01 -0400
-Received: by mail-ed1-f47.google.com with SMTP id w5so1977670edl.8
-        for <git@vger.kernel.org>; Wed, 28 Aug 2019 01:16:00 -0700 (PDT)
+        id S1726563AbfH1Ieb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 04:34:31 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56154 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726253AbfH1Iea (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 04:34:30 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f72so1785294wmf.5
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 01:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=PbH7LjrCYqhUzSaq88+AQAxC+TyGVzqRXsXAeq0rJXE=;
-        b=MVVbIA9DwbEo2g6DKp50/Uxruxae7KvUJXcU/7+KeivW0t2uQIDOov768fFzz6cCfd
-         39GNZzNxxEzGY9cgNmhrDWbta88kr5+LlQQa/DkOq+FygogMQysTSk3Xi2rzt8ds1taQ
-         bL7VhExfpXDXqHGllZBiLxLO3RSgb7WNCcfU/vSipEhQjdUOaV9sjQviLF/UpAOCQf2t
-         DtAYObUr6y4Xfe2e/+JoCd4xcL0srbRRQc/RdQnwZJCFMDAVhpHGIEXdTMiPd+R7TVJZ
-         GMKCjBYDziQ438xG0iUfgfwZmjfrG1rsEZUAXP0SnQ4LbiHpmtWmErP5MdoScuR0Gl5c
-         g4kg==
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gw1SnnRU6t7gZK5mqsmqgUdYUhb7ONjmJwMdIZly1eo=;
+        b=gkwalmLNOLJNYvwj/rdMH5Gt9F53/SEnvtFh8qZBFh0PWRkYG1GFceVK5BhRlvCzU+
+         XIlAp5gjm54Df4Z60TESjwxJWNvmbCkGeIQKadjeGU2W80ASuyNlHnTkIBxomKVpoGAo
+         OlA0yU7molbdQdwFpOYCG+FdRWMaRGtpYEec0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=PbH7LjrCYqhUzSaq88+AQAxC+TyGVzqRXsXAeq0rJXE=;
-        b=VLTUBSgRmA1nfkfecBaD8VtAWBTWx2VQWPMBGxYRkAiyitgaxSzQMDX0R+LsT3uEwt
-         3Yvmc8SdvIjL0wX4dSCt8mx/5hSn/SYa3hztWN7A+RJGbiMXBMndmgIwPXNNrq7HWSqr
-         ayW42KWMe5t3SZxquD83SlSDjxwLR7ohbJCO3CM6K80/jz3Hms74MIRuoaqowqfKg7UI
-         PphtLWqRlAQXVFI1aBDZG4jyw2b21jiUVOEHLMuOoKL5fb//WKmoWJ5ftxf2HP6CY9Jx
-         ZMSEACHQHEeGcgKCtzeCjrAuz+hHx1969ZzTh4vQcBPaJrFzA+tzPMG3ok5H3C79e2Vc
-         uKRA==
-X-Gm-Message-State: APjAAAUOqUShKmEtGHmk/FHiAuE2n40c9Z0EUgwk1DEOWZH0IhreUawq
-        U2aqrHmalnr5sq6/m+rQ56Y=
-X-Google-Smtp-Source: APXvYqy9IH7f4Bu+eMH1+ojQePDYPZIkMDmhOyJw7hT1Y6PPG/kl8g7n6ThiAMr0snvYg9R+o05k1g==
-X-Received: by 2002:a50:a7c2:: with SMTP id i60mr2637052edc.215.1566980159575;
-        Wed, 28 Aug 2019 01:15:59 -0700 (PDT)
-Received: from instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal (1.133.65.34.bc.googleusercontent.com. [34.65.133.1])
-        by smtp.gmail.com with ESMTPSA id w3sm308402edq.12.2019.08.28.01.15.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Aug 2019 01:15:58 -0700 (PDT)
-From:   "Giuseppe Crino'" <giuscri@gmail.com>
-X-Google-Original-From: Giuseppe Crino' <giuscri>
-Date:   Wed, 28 Aug 2019 08:15:57 +0000
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Cc:     Giuseppe Crino' <giuscri@gmail.com>, git@vger.kernel.org
-Subject: Re: How to build to debug with gdb?
-Message-ID: <20190828081557.GA18785@instance-template-2.europe-west6-a.c.vaulted-journal-250706.internal>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gw1SnnRU6t7gZK5mqsmqgUdYUhb7ONjmJwMdIZly1eo=;
+        b=bO0R+FLRqhzMjsFoFOzoNzxH8EqXU0Hg6GdGJdHtFeviTGrsMCyPf4Wv3Jc3g/yqwE
+         uRsLdjSfmKHT/BLU2F7aYdA5i0FLwIQfU2vQTpHOhacRcWSlDYyzRS9UeqzbGNjrwn1f
+         DVMK+6wsPayB5+zyXQrieFDojvBmAGVJellFYxH38EGa8F7r16han+Um749uHf4nKh4S
+         OC55z9V6cBmKMMKBPveEMPTtH0EzpE1dt1vvYQS4ETtSk3w/HFsiK4/YFNKvOjR6o7AR
+         wOydYV/1kkoW+VPtIQAE994Bgf/EAPO02CUNDSBtP5BJltIsvKPT3CStvwk62lVCX4G1
+         zrxQ==
+X-Gm-Message-State: APjAAAW4a3KVO9ZyUiydBfXeF3HWi1kbKZodQh+CagpXsOjCwrESOtIB
+        tVla5Pkl65fPDo6o1VWqFvI7pcSeHlOhVr2giAHk0Q==
+X-Google-Smtp-Source: APXvYqz6ASpPn2wb9EaysxYgpC4qkkJx/fMbdoW7CkEUkl6njzrXP80c8CGbbkwu5gEEpnteqkTEw1NT4EiLpWHW3As=
+X-Received: by 2002:a05:600c:21d8:: with SMTP id x24mr3241625wmj.11.1566981268476;
+ Wed, 28 Aug 2019 01:34:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1d44d8d6-6c6f-591e-dd2c-5102c9fd7d11@kdbg.org>
- <20190827183640.GC8571@szeder.dev>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <pull.303.v2.git.gitgitgadget@gmail.com> <7e59b5cec2f267820feeeeb63a20814fe67d61e3.1566876175.git.ahippo@yandex.com>
+ <xmqq1rx62qbe.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1rx62qbe.fsf@gitster-ct.c.googlers.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 28 Aug 2019 09:34:17 +0100
+Message-ID: <CAE5ih78iSO+yu0KC8gg450iv5iY1gJusN33uatFdRgp_1ToALw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] git-p4: auto-delete named temporary file
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andrey Mazo <ahippo@yandex.ru>,
+        "Philip.McGraw" <Philip.McGraw@bentley.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Andrey Mazo <ahippo@yandex.com>,
+        Git Users <git@vger.kernel.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 08:36:40PM +0200, SZEDER Gábor wrote:
-> Try using the same build flags for the install, i.e.:
-> 
->   make prefix=/usr/local DEVELOPER=1 CFLAGS="-O0 -g" install
+On Tue, 27 Aug 2019 at 23:31, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Andrey Mazo <ahippo@yandex.ru> writes:
+>
+> > From: "Philip.McGraw" <Philip.McGraw@bentley.com>
+> >
+> > Avoid double-open exceptions on Windows platform when
+> > calculating for lfs compressed size threshold
+> > (git-p4.largeFileCompressedThreshold) comparisons.
+> >
+> > Take new approach using the NamedTemporaryFile()
+> > file-like object as input to the ZipFile() which
+> > auto-deletes after implicit close leaving with scope.
+> >
+> > Original code had double-open exception on Windows
+> > platform because file still open from NamedTemporaryFile()
+> > using generated filename instead of object.
+> >
+> > Thanks to Andrey for patiently suggesting several
+> > iterations on this change for avoiding exceptions!
+> >
+> > Also print error details after resulting IOError to make
+> > debugging cause of exception less mysterious when it has
+> > nothing to do with "git version recent enough."
+> >
+> > Signed-off-by: Philip.McGraw <Philip.McGraw@bentley.com>
+> > Reviewed-by: Andrey Mazo <ahippo@yandex.com>
+> > ---
+>
+> Luke, does this look good?
+>
+> I know Mazo is the only other contributor who has multiple commits
+> to git-p4.py in the past 2 years, to make Reviewed-by carry some
+> weight ;-) but as we have so small number of people touching this
+> script anyway, I'd rather see what the main contributor in the past
+> 2 years thinks.
 
-Yes, now it works thanks!
+I think it looks reasonable.
 
-On Tue, Aug 27, 2019 at 08:34:23PM +0200, Johannes Sixt wrote:
-> That is because the command sequence above does not do what you think it
-> does. Didn't you notice that everything was recompiled during `sudo make
-> install`?
+Ack.
 
-Shouldn't be this documented somewhere?
 
-To my knowledge `make install` is expected to copy artifacts of the
-build under prefix. It's unusual to me that `install` has the `all`
-target as prerequisite.
+>
+> Thanks.
+>
+> >  git-p4.py | 13 ++++++-------
+> >  1 file changed, 6 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/git-p4.py b/git-p4.py
+> > index c71a6832e2..33bdb14fd1 100755
+> > --- a/git-p4.py
+> > +++ b/git-p4.py
+> > @@ -1158,17 +1158,15 @@ def exceedsLargeFileThreshold(self, relPath, contents):
+> >          if gitConfigInt('git-p4.largeFileCompressedThreshold'):
+> >              contentsSize = sum(len(d) for d in contents)
+> >              if contentsSize <= gitConfigInt('git-p4.largeFileCompressedThreshold'):
+> >                  return False
+> >              contentTempFile = self.generateTempFile(contents)
+> > -            compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
+> > -            zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
+> > -            zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+> > -            zf.close()
+> > -            compressedContentsSize = zf.infolist()[0].compress_size
+> > +            compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=True)
+> > +            with zipfile.ZipFile(compressedContentFile, mode='w') as zf:
+> > +                zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
+> > +                compressedContentsSize = zf.infolist()[0].compress_size
+> >              os.remove(contentTempFile)
+> > -            os.remove(compressedContentFile.name)
+> >              if compressedContentsSize > gitConfigInt('git-p4.largeFileCompressedThreshold'):
+> >                  return True
+> >          return False
+> >
+> >      def addLargeFile(self, relPath):
+> > @@ -3512,12 +3510,13 @@ def importHeadRevision(self, revision):
+> >          details["time"] = res["time"]
+> >
+> >          self.updateOptionDict(details)
+> >          try:
+> >              self.commit(details, self.extractFilesFromCommit(details), self.branch)
+> > -        except IOError:
+> > +        except IOError as err:
+> >              print("IO error with git fast-import. Is your git version recent enough?")
+> > +            print("IO error details: {}".format(err))
+> >              print(self.gitError.read())
+> >
+> >      def openStreams(self):
+> >          self.importProcess = subprocess.Popen(["git", "fast-import"],
+> >                                                stdin=subprocess.PIPE,
+> >
+> > base-commit: 1feeaaf26bff51996f9f96c6dc41ca0f95ab5fc4
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/303
