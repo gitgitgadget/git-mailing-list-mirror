@@ -2,77 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 300811F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 20:32:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0FD01F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 21:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726663AbfH1Uc1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 16:32:27 -0400
-Received: from mail-qt1-f178.google.com ([209.85.160.178]:41534 "EHLO
-        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbfH1Uc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 16:32:27 -0400
-Received: by mail-qt1-f178.google.com with SMTP id i4so1091723qtj.8
-        for <git@vger.kernel.org>; Wed, 28 Aug 2019 13:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-disposition:user-agent;
-        bh=BR+upNUH+qi8UT3YTdvTU4eHCMPIuuVz12iwvrT5+Sg=;
-        b=iePV0S8irgJ/aDc8ZgM7BOKaJazeUrtTVyEBFGdlAV8R7qNcgbbG1upCWJ/iOsXtxQ
-         YVHC3HZcdOuXZxSztvnzGJmcG1bD4NZ/Zd4YJTpo1Of9bCJ2G234OgkRgAgVl7DtaRc9
-         AtECiiL+cz/r2xzcX5sw5xUpapqxfrHluR+Kw=
+        id S1726845AbfH1VKq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 17:10:46 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53320 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfH1VKq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 17:10:46 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 10so1488574wmp.3
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 14:10:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
-         :mime-version:content-disposition:user-agent;
-        bh=BR+upNUH+qi8UT3YTdvTU4eHCMPIuuVz12iwvrT5+Sg=;
-        b=R2ZQN/uU+3w1p5N6walAEYY9ZOBeYIp3lNskGBOSmqC3yJHo2dos6JOMfhDlLQVj5P
-         2nN1fEziNhkVWfPK7JI7Vc84Z/IbINc5IBZaMfO5NsxgLf9Bhc6SozWmKCwmIAm0KuXo
-         mvwrpnGHCdIsgswJ2ScpFmFhQsSljNiTCkv7pWaZnpj0P4wvvXU5kb6ayIE6Un6T9GTR
-         vGE0RlMGfh2oAYrHkVhbQLm8+vY6dVLhVOGhESRVUXCFClPsoFksr+R7ZJNor8GMh6zD
-         bWn7BnTtPHuBL1H6iyi/miWBGAIiy0Pn+ZxoiKBZaG/XHmy37tjv/cKtKeXYSX1Xpd8+
-         iocQ==
-X-Gm-Message-State: APjAAAX3SeJP/X9IG4UYHglG2lg2ETOvEFQbf7xXm/VaqAttP9JlfX6C
-        4KjQ75998BeCN2w9CRuX3m7/xxd5x68=
-X-Google-Smtp-Source: APXvYqzv1Ikt7gRfEhyh3j2Bo14jJL+B2wUGCF10TYQE4VKytQ+d810NUQBikGetakkvOD1GQKBnpQ==
-X-Received: by 2002:ac8:364a:: with SMTP id n10mr6614922qtb.148.1567024346193;
-        Wed, 28 Aug 2019 13:32:26 -0700 (PDT)
-Received: from chatter.i7.local (192-0-228-88.cpe.teksavvy.com. [192.0.228.88])
-        by smtp.gmail.com with ESMTPSA id l8sm198047qti.65.2019.08.28.13.32.25
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2019 13:32:25 -0700 (PDT)
-Date:   Wed, 28 Aug 2019 16:32:24 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     git@vger.kernel.org
-Subject: Is git clone followed by git verify-tag meaningful?
-Message-ID: <20190828203224.GE26001@chatter.i7.local>
-Mail-Followup-To: git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vN0yWC/SMVlWXlPugILv2WKpc0JRt/5CWhgP0YK06Ek=;
+        b=pn/66MaPv7kKPatMDQj1GXh/sFx36d6RsvMLXNBaFpcX3UU7kC85EMnkJyumYT4Lr6
+         Dr+6IYU3jWG4bV3xxAIU/v3GATorkIs1yK6GQp9x10E+of8QEU6bmE+hqFz1ANV51wJI
+         5VlD/pkQOlMH9crFbaVZI+Y0crCRvaUkEazSBTNNud2Rq2+87kb4Tby61sT8er/knQIX
+         yrGXpKMj/3kTXfzd3zzY2KF3TK3ZijEbKyfCtaCiS4Mwo0Nutkl3ikWWraL5ho400tOu
+         QUlyJRlUfX85KaU1KeqDADmhcTQ/zwvhVhXKh/BnXdFRkHRYTLDKqRtwPGqrvvhCG+bQ
+         UUFQ==
+X-Gm-Message-State: APjAAAXdJ5WdSgyPGShjqBpP3/HdkwgsgEm9i8Xw4+e6pwxx6teobgfB
+        X5wuM0794VkvGz6s3Z26VhzUeTe/9GzxQaeB/inLWguc
+X-Google-Smtp-Source: APXvYqwn5X6XIETuN6oht4tCtXmCUcwNHJrkuok4ODy1tHDSLjUDC7woxj7kEeRjkfiPmahRxoVfPr8tpnsm2xw9Dgs=
+X-Received: by 2002:a1c:4b15:: with SMTP id y21mr7266230wma.53.1567026644429;
+ Wed, 28 Aug 2019 14:10:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <20190828201824.1255-1-jon@jonsimons.org> <20190828201824.1255-2-jon@jonsimons.org>
+In-Reply-To: <20190828201824.1255-2-jon@jonsimons.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 28 Aug 2019 17:10:33 -0400
+Message-ID: <CAPig+cQeco6-aM+UrJsbj9LXtWSe4hXn0vbrBWwVn00cbDpbzQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] list-objects-filter: only parse sparse OID when 'have_git_dir'
+To:     Jon Simons <jon@jonsimons.org>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, all:
+On Wed, Aug 28, 2019 at 4:27 PM Jon Simons <jon@jonsimons.org> wrote:
+> Fix a bug in partial cloning with sparse filters by ensuring to check
+> for 'have_git_dir' before attempting to resolve the sparse filter OID.
+> [...]
+> Signed-off-by: Jon Simons <jon@jonsimons.org>
+> ---
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> @@ -241,6 +241,29 @@ test_expect_success 'fetch what is specified on CLI even if already promised' '
+> +test_expect_success 'setup src repo for sparse filter' '
+> +       git init sparse-src &&
+> +       git -C sparse-src config --local uploadpack.allowfilter 1 &&
+> +       git -C sparse-src config --local uploadpack.allowanysha1inwant 1 &&
+> +       for n in 1 2 3 4
+> +       do
+> +               test_commit -C sparse-src "this-is-file-$n" file.$n.txt
+> +       done &&
 
-If I know that a project uses tag signing, would "git clone" followed by 
-"git verify-tag" be meaningful without a "git fsck" in-between? I.e. if 
-an attacker has control over the remote server, can they sneak in any 
-badness into any of the resulting files and still have the clone, 
-checkout, and verify-tag return success unless the repository is fsck'd 
-before verify-tag?
+The way this is coded, a failure of the test_commit() invocation won't
+fail the test overall. You need to do so manually:
 
-I assume that it would break during the checkout stage, but I wanted to 
-verify my assumptions.
+    for n in 1 2 3 4
+    do
+        test_commit -C sparse-src "this-is-file-$n" file.$n.txt || return 1
+    done &&
 
-Thanks,
--K
+> +       echo "/file.1.txt" >> sparse-src/odd-files &&
+> +       echo "/file.3.txt" >> sparse-src/odd-files &&
+> +       echo "/file.2.txt" >> sparse-src/even-files &&
+> +       echo "/file.4.txt" >> sparse-src/even-files &&
+
+Simpler:
+
+    test_write_lines /file1.txt /file3.txt >sparse-src/odd-files &&
+    test_write_lines /file2.txt /file4.txt >sparse-src/even-files &&
+
+> +       echo "/*" >> sparse-src/all-files &&
+
+Style nit: drop whitespace following redirection operator.
+
+And, using >> rather than just > here makes the test more confusing
+than it need be; probably best to use >.
