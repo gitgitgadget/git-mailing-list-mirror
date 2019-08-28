@@ -2,105 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE0C1F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 16:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E65B1F461
+	for <e@80x24.org>; Wed, 28 Aug 2019 17:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726576AbfH1Q5y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 12:57:54 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:42318 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbfH1Q5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 12:57:54 -0400
-Received: by mail-io1-f66.google.com with SMTP id e20so898621iob.9
-        for <git@vger.kernel.org>; Wed, 28 Aug 2019 09:57:53 -0700 (PDT)
+        id S1726575AbfH1RIL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 13:08:11 -0400
+Received: from mail-io1-f49.google.com ([209.85.166.49]:34220 "EHLO
+        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726504AbfH1RIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 13:08:11 -0400
+Received: by mail-io1-f49.google.com with SMTP id s21so1090119ioa.1
+        for <git@vger.kernel.org>; Wed, 28 Aug 2019 10:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GQYySDyRuptr4aiAZrcDmjWiIfoEw8qcVto3kpyW02k=;
-        b=a+SweYFJO/Mhr+W9553b1b2v75lK7WFA6EFQRM+YF+d9L7H45asKEG3m4PlCyt6wsa
-         r4w4NaooJiQKnnDJIPP+DDruSCDJulOSTP7qUrA91I9gfA1uOIcC+naOEuOs/+NdVvYH
-         V5B7LcwMcE+IbpW+nWzWuZG2o1jSMUEaiMWBlpHUeb5SCglvAGUURAtJ9npQEk1rEqqa
-         GUJvwl1V/mQtQ7oH/Ay/B6GAxvC4Ckpsz2UHlvmQbcPNx9EJjvkbJnPsWCTlwC7yLSRI
-         4P4Epts5Qyu8cLHo2Dtx2ACEOHQvTDmudYPvJi7B0AYjbFyq2obEu4Bsj2G+T2vN/tre
-         xsvw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WMsPHUsoiNFqTRo6vn3z3P8sIg2SfzFoRb6D9UBQngg=;
+        b=rFZ49Ebn3Uv82h/1pijGo1Q8tx+82miYB89LkMPHvUkdArRU+V2plOoccyEQ01cW7/
+         Btv7G0zn+kWuF8DmFHdbgaQOO3L+aLSMDKHBnO6VIt0faeU7SSJXX8FSmZd3zivGDtfm
+         MdGcwz7/cYmCZmfIq9prr6eraryg5Xwikw6pL318llV22o75vcaVsIXYSOdQTaEkBFB7
+         RYvQGlXthrJoKwcEpp0xCbH9MrBJ62zckC5tG+MjH0U8K0l2wDdijwxnx3lyDXdZDBwl
+         +YpXjL6SKVIQTFP1hsnSb9CI4zUHWnca6lkNsbbCCloXo+HTXYth4+SnyI1uqXNuQF4l
+         I3kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GQYySDyRuptr4aiAZrcDmjWiIfoEw8qcVto3kpyW02k=;
-        b=Xk8RYmmi9sGiQi6fu31r/5u+CTNI09/Jd0LSvPT6xDqnFlNPUecnmZiAZxzcmIetdL
-         DY9P51aaiDhZfS7XawkYd511TnVPk48gxtuaQd2WIlClrh+BwsJD8HvxT/C2Qs1/9Do9
-         D4alzMI4x7oEapzJe3SI6AUWy+JuAfjaL+ukDBL7D6rALSDEu72KaAx6z6kktB80T2ST
-         /LVxPBA1mg9vU0vZ/rHm7zW9X49JBxjmuw1Wvf2DEr1m7yMyfKZ4bJNlaQGWtKnE7oQz
-         3NGspow7xN2EgQH4oYwAQN8VhGcni3Jd2FiuWwKy+9avSpZ6A6aNntbwexCEi3cXTzQM
-         o3yw==
-X-Gm-Message-State: APjAAAV/OFt62N+M4HRzhTycHfbisjDO8KwsyZFIrobGM/jU6I0P26GN
-        XkFZCVvGiyL0+iuoOGiWBMHbFo0KlAlIAapPS3shgdZC
-X-Google-Smtp-Source: APXvYqxyGwIkG0VHCks7AdAsWt+dxJeLE3airNmB231li6r3gXrVVRSbZkJttmb9gaclP4vOUbH4SZO1qBi0HR8xamE=
-X-Received: by 2002:a6b:6010:: with SMTP id r16mr5422967iog.124.1567011473023;
- Wed, 28 Aug 2019 09:57:53 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WMsPHUsoiNFqTRo6vn3z3P8sIg2SfzFoRb6D9UBQngg=;
+        b=kBne0jsBZHnOzbCHqhdSsa+vGmnpgdFb73xkOqnaZ74n3XPcUgnYU+IUOvAzZ2K/IU
+         /SuDgc0cQUXdLmM6T3wtqy9DkiVL8IbaGKUwlk5IAMKGWyiOaZa/aVQju+tw6m2dFCfH
+         gNbZeeac5HRy9XK+T9kiFwuCFh6oWSPaL0jXbplhKdc0wRp7NzypOhfoO+1X2N0FGaJY
+         ADmeb6olNctWPLof8whia52r0ON6g7o+V/Ac+VSJ5Hq/e32wP7TMjn17fw/EDcgS+c5z
+         XEqHE2qfGhI0YHBxdcBQ2lkZIwmzL4OJ0w0PLmCBIC0mpR7O3OPW1IWmEIAR5a5swo2V
+         3+/g==
+X-Gm-Message-State: APjAAAVCPhrQGJoqIQq96/hVQe0Dw/Iz/U3O9HuMctdirhABNivhy8Xv
+        NNo41vHwTD/P4rPugOMjw4HHcYJiCWv7tOESLcxR0QPr2zM=
+X-Google-Smtp-Source: APXvYqzMx/a+Mr8mwK52hHZ82IsjmYnNez2HkWQtz4FeHT4emmRcLw0pW24Gt0m4ji8/303PwJn6S+Q9UDT7eR3ggRY=
+X-Received: by 2002:a5e:9412:: with SMTP id q18mr5958754ioj.112.1567012089963;
+ Wed, 28 Aug 2019 10:08:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq5znrs9d0.fsf@gitster-ct.c.googlers.com> <20190828145444.31588-1-carenas@gmail.com>
-In-Reply-To: <20190828145444.31588-1-carenas@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 28 Aug 2019 09:57:39 -0700
-Message-ID: <CAPUEsphatmoBg3jV9p_xLF_zYe0qn=S=5UTYBCHKjnuNZm4_VA@mail.gmail.com>
-Subject: Re: [PATCH v2] grep: skip UTF8 checks explicitly
+From:   Terry Davis <terry.y.davis@gmail.com>
+Date:   Wed, 28 Aug 2019 10:07:59 -0700
+Message-ID: <CAEziGD9bWPfV+L5z_-drATT8Fxvj=8hzNAQcNH9f9Ez+ncaEvw@mail.gmail.com>
+Subject: blame --ignore-rev - add place to specify defaults at repo level
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-FWIW, the changes in grep.h are IMHO optional and hadn't been really
-tested as I couldn't find a version of PCRE1 old enough to trigger it
-but I am hoping are simple enough to work.
+The new blame options (--ignore-rev, --ignore-revs-file) and config options
+(blame.markIgnoredLines,  blame.markUnblamables,  blame.ignoreRevsFile) are
+great, and much appreciated. However, for my primary use (one-time
+automated reformatting of an entire repository), there is still some
+friction preventing adoption.
 
-As in my original proposal, there is no test because this is going to
-(as documented) trigger undefined behaviour and so I don't see how we
-can reliably test that.  Goes without saying tthough, that the same is
-triggered when JIT is enabled and the JIT fast path is being used, so
-this is not a regression and will be more visible once
-ab/pcre-jit-fixes gets merged because we are moving out of the JIT
-fast path with a patch[0] in that series
+Adding a default location for the config options (much like .gitignore)
+specified above would have the following benefits:
 
-While =C3=86var made a point[1] that this wasn't a solution to the problem,
-it was because PCRE2 could have a better one (still missing but based
-on ab/pcre-jit-fixes), and it was expected that PCRE2 will be used a
-lot more and so it wasn't a good idea for it (something that doesn't
-apply to PCRE1)
+   1. New users of a repository would not need to take the extra step of
+   configuring their workspace for blame. This is most impactful for open
+   source projects with many contributors.
+   2. Git services (github, gitlab, etc.) could incorporate this feature
+   into their blame systems automatically.
 
-the patch was based on maint (like all bugfixes) but applies cleanly
-to master and next, it will conflict with pu but for easy of merge I'd
-applied it on top of cb/pcre1-cleanup and make it available in
-GitHub[2]; that branch could be used as well as a reroll for that
-topic (if that is preferred)
+If this has already been discussed, please point me to the thread, as I am
+a new member of this list.
 
-the error message hasn't been changed on this patch, as it might make
-sense to improve it as well for PCRE2, but at least shouldn't be
-triggered anymore (ex, from running a freshly built git without the
-patch and linked against a non JIT enabled PCRE1):
+If my proposal is worth considering, I'd be happy to provide more input.
 
-$ ./git-grep -P 'Nguy=E1=BB=85n Th=C3=A1i.Ng=E1=BB=8Dc'
-.mailmap:Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-fatal: pcre_exec failed with error code -10
-
-Carlo
-
-[0] 685668faaa (grep: stop using a custom JIT stack with PCRE v1, 2019-07-2=
-6)
-[1] https://public-inbox.org/git/87lfwn70nb.fsf@evledraar.gmail.com/
-[2] https://github.com/carenas/git/tree/pcre1-cleanup
+--Terry
