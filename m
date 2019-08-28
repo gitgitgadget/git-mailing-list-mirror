@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F521F461
-	for <e@80x24.org>; Wed, 28 Aug 2019 00:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A1A11F4BD
+	for <e@80x24.org>; Wed, 28 Aug 2019 00:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbfH1AWV (ORCPT <rfc822;e@80x24.org>);
+        id S1726315AbfH1AWX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Aug 2019 20:22:23 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33640 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726363AbfH1AWV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Aug 2019 20:22:21 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42416 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726078AbfH1AWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Aug 2019 20:22:20 -0400
-Received: by mail-pl1-f193.google.com with SMTP id y1so328039plp.9
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 17:22:20 -0700 (PDT)
+Received: by mail-pf1-f194.google.com with SMTP id g2so479374pfq.0
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 17:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=knOWXvX48crTaVXh1iU+8jUxBOjbjlRmU7dftFMK9HY=;
-        b=YAtYBmaGB5uV8rI64wiZO04jCw2x+SnAquPtgS1yUhyyZMxVlIjDMsTwi5ZpNBEmNK
-         USN8y47RIYwnDjpFkT8z36ovaVfqnmRhSUh1Zzg2epiaNwlCu2MjGJMPxsLblbjH9aXy
-         lkcmdvJ7nd1aQK+4RqUb0IIakKg2UgDi64bW73GQ82oTtZ25ZSqg7Efa3FkLJW5atdZ/
-         w8gtvOeZMgMG7aJvZ5YB188BJDhwlBC4mv310pWIXcFtCCpdhC/HxHcmsPHMc3TPUOg6
-         8YU3FBDsiEg6AosCIV7ZU0AitROZqj6sGV8BJhySel2lrVoFTxtSeWgY0AvNgl0qG5MW
-         9u/A==
+        bh=k+eal6GuxUzkHbq8ap0FX8HpkG4yhGugLm6g+XzE3zM=;
+        b=BVnmI/yUnung0NkPO7GsNMQWmxJ8PWc9UFTAbDUEWrYT9Gk78OoWgU35A+euD/jL14
+         3VBAjtlYdaPe/HqbYI0arBrNwyGpOibwYz/uDZYWueqvdOANcIdHmloxoYmt4zqIaY4W
+         Jtc/QVfS7FVyXFdWCBtUdlaqrr7tpT2471M39EPBFklWqrjftHwMw0jsNTjDo3+lJsr4
+         UBANU/7Fo94TzXw+veHdsWWEMn/qZj4Xs5w9j5hcJTgG/aGIlGI7gXb3dJ/+dyy23E44
+         ut2V6uQvNA44ucoj7OqI6CfF6IYC00R1b1Yo2iZHmK0wgnDeA0O4Q/AjT9xktZYHDcqp
+         4yxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=knOWXvX48crTaVXh1iU+8jUxBOjbjlRmU7dftFMK9HY=;
-        b=uGHsjd2mZoxVAvvaQmloyS1OC1QLcyzlbT8jhDjuNk0e5m494/nJVs/97JMHAwBIyR
-         k/e3aHdvXoHRpr3n6NqUX74fVkxqotffvGEXB5CnUNU9O0RmJM4kjJ4RYm+g0bL38nok
-         vTihQElJg9NxOLWNVNsdpFdCI+50Oq8ase5KM0PGyUHBijtGiTJYaugJVUtB0Q5JsL0Z
-         otqbgeZNQ5nTLTe4WOGyTkO8bgVbS5ksBmkbW7tA+Fw7h624b3O+XB30E0yh+i1PAEj5
-         5AegNYeecL9E03mQppwa4zsHoU6+X3Z8ueU18H9oKzvoMSaGwSQe201LrSuvgfAlL0wW
-         Tjkg==
-X-Gm-Message-State: APjAAAV60ekQVsjV8NAz+a1ndCc8sgdo3EN9zMqjk/2Hy0lSJZh8sZ1z
-        LKxocRem0/BcMHaFn0kSZqOr+MYU
-X-Google-Smtp-Source: APXvYqxLHYuHAM++V4+M+MzZ6bpXG55Jbh60chpsFZa3Y4o45UAqFJL+hyL2fCVfNIIUyZa3ugspNQ==
-X-Received: by 2002:a17:902:ab8e:: with SMTP id f14mr1670523plr.6.1566951739483;
-        Tue, 27 Aug 2019 17:22:19 -0700 (PDT)
+        bh=k+eal6GuxUzkHbq8ap0FX8HpkG4yhGugLm6g+XzE3zM=;
+        b=DCDZWRhbZZoQfmkomhGHbd78/2Fmne33/gtcUqVEHcFzxk8deUj5cFTrSl1mc5Hg/7
+         OXXscV6Lo9mh5zIyKTA/Hyyp7/HfS1hqI7Zlqq20bouKgjfPInIG7I3OpOE8Wu3/ztfJ
+         4sRIEb8iyrFVYIv9/SO4dIJgtnGHcacZhNZiTsPdf8LBTo+ao1BzCoTzuKEUaZtBWXsR
+         jN1Jt2MijSX6tCG7M6IMUY2dt1bgEEChCZXlHX6SHMuIU8DexxMYMKnPy/W+qtTBVXKy
+         aQfWQ47z/bepJMCIMXLHA6sA1A7AuV9eDqfuOgPzEf48K+DJwZ+VXMa1XWwTdkheoIAt
+         K/+Q==
+X-Gm-Message-State: APjAAAW2VRdstNss4o/CtOIOrglZLdY337djbaAIVRgIe8oeMiioTgba
+        hh+EsrnCi8+83HmdsFIHwuQv3wWO
+X-Google-Smtp-Source: APXvYqxMqYCN7IpAkhG+EHwZBODdAZ+uZPGbw4PkJ4zWgXbFBNDNvw4nhlT5IKhuuNtXbNFHXNjSfw==
+X-Received: by 2002:a65:50c5:: with SMTP id s5mr1036933pgp.368.1566951740627;
+        Tue, 27 Aug 2019 17:22:20 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id h17sm495682pfo.24.2019.08.27.17.22.18
+        by smtp.gmail.com with ESMTPSA id h17sm495682pfo.24.2019.08.27.17.22.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Aug 2019 17:22:18 -0700 (PDT)
+        Tue, 27 Aug 2019 17:22:20 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 2/4] t3427: accelerate this test by using fast-export and fast-import
-Date:   Tue, 27 Aug 2019 17:22:08 -0700
-Message-Id: <20190828002210.8862-3-newren@gmail.com>
+Subject: [PATCH v2 3/4] Recommend git-filter-repo instead of git-filter-branch
+Date:   Tue, 27 Aug 2019 17:22:09 -0700
+Message-Id: <20190828002210.8862-4-newren@gmail.com>
 X-Mailer: git-send-email 2.23.0.38.gfc6987be7e
 In-Reply-To: <20190828002210.8862-1-newren@gmail.com>
 References: <20190826235226.15386-1-newren@gmail.com>
@@ -75,110 +75,293 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fast-export and fast-import can easily handle the simple rewrite that
-was being done by filter-branch, and should be significantly faster on
-systems with a slow fork.  Timings from before and after on two laptops
-that I have access to (measured via `time ./t3427-rebase-subtree.sh`,
-i.e. including everything in this test -- not just the filter-branch or
-fast-export/fast-import pair):
+filter-branch suffers from a deluge of disguised dangers that disfigure
+history rewrites (i.e. deviate from the deliberate changes).  Many of
+these problems are unobtrusive and can easily go undiscovered until the
+new repository is in use.  This can result in problems ranging from an
+even messier history than what led folks to filter-branch in the first
+place, to data loss or corruption.  These issues cannot be backward
+compatibly fixed, so add a warning to both filter-branch and its manpage
+recommending that another tool (such as filter-repo) be used instead.
 
-   Linux:  4.305s -> 3.684s (~17% speedup)
-   Mac:   10.128s -> 7.038s (~30% speedup)
+Also, update other manpages that referenced filter-branch.  Several of
+these needed updates even if we could continue recommending
+filter-branch, either due to implying that something was unique to
+filter-branch when it applied more generally to all history rewriting
+tools (e.g. BFG, reposurgeon, fast-import, filter-repo), or because
+something about filter-branch was used as an example despite other more
+commonly known examples now existing.  Reword these sections to fix
+these issues and to avoid recommending filter-branch.
+
+Finally, remove the section explaining BFG Repo Cleaner as an
+alternative to filter-branch.  I feel somewhat bad about this,
+especially since I feel like I learned so much from BFG that I put to
+good use in filter-repo (which is much more than I can say for
+filter-branch), but keeping that section presented a few problems:
+  * In order to recommend that people quit using filter-branch, we need
+    to provide them a recomendation for something else to use that
+    can handle all the same types of rewrites.  To my knowledge,
+    filter-repo is the only such tool.  So it needs to be mentioned.
+  * I don't want to give conflicting recommendations to users
+  * If we recommend two tools, we shouldn't expect users to learn both
+    and pick which one to use; we should explain which problems one
+    can solve that the other can't or when one is much faster than
+    the other.
+  * BFG and filter-repo have similar performance
+  * All filtering types that BFG can do, filter-repo can also do.  In
+    fact, filter-repo comes with a reimplementation of BFG named
+    bfg-ish which provides the same user-interface as BFG but with
+    several bugfixes and new features that are hard to implement in
+    BFG due to its technical underpinnings.
+While I could still mention both tools, it seems like I would need to
+provide some kind of comparison and I would ultimately just say that
+filter-repo can do everything BFG can, so ultimately it seems that it
+is just better to remove that section altogether.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3427-rebase-subtree.sh | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ Documentation/git-fast-export.txt   |  6 ++--
+ Documentation/git-filter-branch.txt | 45 +++++++++--------------------
+ Documentation/git-gc.txt            | 17 +++++------
+ Documentation/git-rebase.txt        |  2 +-
+ Documentation/git-replace.txt       | 10 +++----
+ Documentation/git-svn.txt           |  4 +--
+ Documentation/githooks.txt          |  7 +++--
+ contrib/svn-fe/svn-fe.txt           |  4 +--
+ git-filter-branch.sh                | 13 +++++++++
+ 9 files changed, 52 insertions(+), 56 deletions(-)
+ mode change 100755 => 100644 git-filter-branch.sh
 
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index d8640522a0..943ae92226 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -11,6 +11,12 @@ commit_message() {
- 	git log --pretty=format:%s -1 "$1"
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index cc940eb9ad..784e934009 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -17,9 +17,9 @@ This program dumps the given revisions in a form suitable to be piped
+ into 'git fast-import'.
+ 
+ You can use it as a human-readable bundle replacement (see
+-linkgit:git-bundle[1]), or as a kind of an interactive
+-'git filter-branch'.
+-
++linkgit:git-bundle[1]), or as a format that can be edited before being
++fed to 'git fast-import' in order to do history rewrites (an ability
++relied on by tools like 'git filter-repo').
+ 
+ OPTIONS
+ -------
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 6b53dd7e06..e4047d472e 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -16,6 +16,20 @@ SYNOPSIS
+ 	[--original <namespace>] [-d <directory>] [-f | --force]
+ 	[--state-branch <branch>] [--] [<rev-list options>...]
+ 
++WARNING
++-------
++'git filter-branch' has a plethora of pitfalls that can produce non-obvious
++manglings of the intended history rewrite (and can leave you with little
++time to investigate such problems since it has such abysmal performance).
++These safety and performance issues cannot be backward compatibly fixed and
++as such, its use is not recommended.  Please use an alternative history
++filtering tool such as https://github.com/newren/git-filter-repo/[git
++filter-repo].  If you still need to use 'git filter-branch', please
++carefully read the "Safety" section of the message on the Git mailing list
++https://public-inbox.org/git/CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com/[detailing
++the land mines of filter-branch] and vigilantly avoid as many of the
++hazards listed there as reasonably possible.
++
+ DESCRIPTION
+ -----------
+ Lets you rewrite Git revision history by rewriting the branches mentioned
+@@ -445,37 +459,6 @@ warned.
+   (or if your git-gc is not new enough to support arguments to
+   `--prune`, use `git repack -ad; git prune` instead).
+ 
+-NOTES
+------
+-
+-git-filter-branch allows you to make complex shell-scripted rewrites
+-of your Git history, but you probably don't need this flexibility if
+-you're simply _removing unwanted data_ like large files or passwords.
+-For those operations you may want to consider
+-http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
+-a JVM-based alternative to git-filter-branch, typically at least
+-10-50x faster for those use-cases, and with quite different
+-characteristics:
+-
+-* Any particular version of a file is cleaned exactly _once_. The BFG,
+-  unlike git-filter-branch, does not give you the opportunity to
+-  handle a file differently based on where or when it was committed
+-  within your history. This constraint gives the core performance
+-  benefit of The BFG, and is well-suited to the task of cleansing bad
+-  data - you don't care _where_ the bad data is, you just want it
+-  _gone_.
+-
+-* By default The BFG takes full advantage of multi-core machines,
+-  cleansing commit file-trees in parallel. git-filter-branch cleans
+-  commits sequentially (i.e. in a single-threaded manner), though it
+-  _is_ possible to write filters that include their own parallelism,
+-  in the scripts executed against each commit.
+-
+-* The http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
+-  are much more restrictive than git-filter branch, and dedicated just
+-  to the tasks of removing unwanted data- e.g:
+-  `--strip-blobs-bigger-than 1M`.
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 247f765604..0c114ad1ca 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -115,15 +115,14 @@ NOTES
+ -----
+ 
+ 'git gc' tries very hard not to delete objects that are referenced
+-anywhere in your repository. In
+-particular, it will keep not only objects referenced by your current set
+-of branches and tags, but also objects referenced by the index,
+-remote-tracking branches, refs saved by 'git filter-branch' in
+-refs/original/, reflogs (which may reference commits in branches
+-that were later amended or rewound), and anything else in the refs/* namespace.
+-If you are expecting some objects to be deleted and they aren't, check
+-all of those locations and decide whether it makes sense in your case to
+-remove those references.
++anywhere in your repository. In particular, it will keep not only
++objects referenced by your current set of branches and tags, but also
++objects referenced by the index, remote-tracking branches, notes saved
++by 'git notes' under refs/notes/, reflogs (which may reference commits
++in branches that were later amended or rewound), and anything else in
++the refs/* namespace.  If you are expecting some objects to be deleted
++and they aren't, check all of those locations and decide whether it
++makes sense in your case to remove those references.
+ 
+ On the other hand, when 'git gc' runs concurrently with another process,
+ there is a risk of it deleting an object that the other process is using
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 6156609cf7..2f201d85d4 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -832,7 +832,7 @@ Hard case: The changes are not the same.::
+ 	This happens if the 'subsystem' rebase had conflicts, or used
+ 	`--interactive` to omit, edit, squash, or fixup commits; or
+ 	if the upstream used one of `commit --amend`, `reset`, or
+-	`filter-branch`.
++	a full history rewriting command like `filter-repo`.
+ 
+ 
+ The easy case
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index 246dc9943c..35595a2cd3 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -123,10 +123,10 @@ The following format are available:
+ CREATING REPLACEMENT OBJECTS
+ ----------------------------
+ 
+-linkgit:git-filter-branch[1], linkgit:git-hash-object[1] and
+-linkgit:git-rebase[1], among other git commands, can be used to create
+-replacement objects from existing objects. The `--edit` option can
+-also be used with 'git replace' to create a replacement object by
++linkgit:git-hash-object[1], linkgit:git-rebase[1], and
++linkgit:git-filter-repo[1], among other git commands, can be used to
++create replacement objects from existing objects. The `--edit` option
++can also be used with 'git replace' to create a replacement object by
+ editing an existing object.
+ 
+ If you want to replace many blobs, trees or commits that are part of a
+@@ -148,8 +148,8 @@ pending objects.
+ SEE ALSO
+ --------
+ linkgit:git-hash-object[1]
+-linkgit:git-filter-branch[1]
+ linkgit:git-rebase[1]
++linkgit:git-filter-repo[1]
+ linkgit:git-tag[1]
+ linkgit:git-branch[1]
+ linkgit:git-commit[1]
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 30711625fd..f2762dd5d4 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -769,9 +769,9 @@ option for (hopefully) obvious reasons.
+ +
+ This option is NOT recommended as it makes it difficult to track down
+ old references to SVN revision numbers in existing documentation, bug
+-reports and archives.  If you plan to eventually migrate from SVN to Git
++reports, and archives.  If you plan to eventually migrate from SVN to Git
+ and are certain about dropping SVN history, consider
+-linkgit:git-filter-branch[1] instead.  filter-branch also allows
++linkgit:git-filter-repo[1] instead.  filter-repo also allows
+ reformatting of metadata for ease-of-reading and rewriting authorship
+ info for non-"svn.authorsFile" users.
+ 
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 82cd573776..997548f5ed 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -425,9 +425,10 @@ post-rewrite
+ 
+ This hook is invoked by commands that rewrite commits
+ (linkgit:git-commit[1] when called with `--amend` and
+-linkgit:git-rebase[1]; currently `git filter-branch` does 'not' call
+-it!).  Its first argument denotes the command it was invoked by:
+-currently one of `amend` or `rebase`.  Further command-dependent
++linkgit:git-rebase[1]; however, full-history (re)writing tools like
++linkgit:git-fast-import[1] or linkgit:git-filter-repo[1] typically do
++not call it!).  Its first argument denotes the command it was invoked
++by: currently one of `amend` or `rebase`.  Further command-dependent
+ arguments may be passed in the future.
+ 
+ The hook receives a list of the rewritten commits on stdin, in the
+diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
+index a3425f4770..19333fc8df 100644
+--- a/contrib/svn-fe/svn-fe.txt
++++ b/contrib/svn-fe/svn-fe.txt
+@@ -56,7 +56,7 @@ line.  This line has the form `git-svn-id: URL@REVNO UUID`.
+ 
+ The resulting repository will generally require further processing
+ to put each project in its own repository and to separate the history
+-of each branch.  The 'git filter-branch --subdirectory-filter' command
++of each branch.  The 'git filter-repo --subdirectory-filter' command
+ may be useful for this purpose.
+ 
+ BUGS
+@@ -67,5 +67,5 @@ The exit status does not reflect whether an error was detected.
+ 
+ SEE ALSO
+ --------
+-git-svn(1), svn2git(1), svk(1), git-filter-branch(1), git-fast-import(1),
++git-svn(1), svn2git(1), svk(1), git-filter-repo(1), git-fast-import(1),
+ https://svn.apache.org/repos/asf/subversion/trunk/notes/dump-load-format.txt
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+old mode 100755
+new mode 100644
+index 5c5afa2b98..7b1865c1d5
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -83,6 +83,19 @@ set_ident () {
+ 	finish_ident COMMITTER
  }
  
-+extract_files_subtree() {
-+	git fast-export --no-data HEAD -- files_subtree/ \
-+		| sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-+		| git fast-import --force --quiet
-+}
++if [ -z "$FILTER_BRANCH_SQUELCH_WARNING" -a \
++     -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS" ]; then
++	cat <<EOF
++WARNING: git-filter-branch has a glut of gotchas generating mangled history
++         rewrites.  Please use an alternative filtering tool such as 'git
++         filter-repo' (https://github.com/newren/git-filter-repo/) instead.
++         See the filter-branch manual page for more details; to squelch
++         this warning and pause, set FILTER_BRANCH_SQUELCH_WARNING=1.
 +
- test_expect_success 'setup' '
- 	test_commit README &&
- 	mkdir files &&
-@@ -42,7 +48,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --preserve-merges --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master4"
-@@ -53,7 +59,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --preserve-merges --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
-@@ -64,7 +70,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-@@ -75,7 +81,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-@@ -86,7 +92,7 @@ test_expect_failure REBASE_P \
- 	'Rebase -Xsubtree --keep-empty --preserve-merges --onto empty commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty-empty master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
-@@ -96,7 +102,7 @@ test_expect_failure REBASE_P \
- test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-4 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD~2)" = "files_subtree/master4"
-@@ -106,7 +112,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 4' '
- test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-5 master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/master5"
-@@ -115,7 +121,7 @@ test_expect_failure 'Rebase -Xsubtree --onto commit 5' '
- test_expect_failure 'Rebase -Xsubtree --onto empty commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto-empty master &&
--	git filter-branch --prune-empty -f --subdirectory-filter files_subtree &&
-+	extract_files_subtree &&
- 	git commit -m "Empty commit" --allow-empty &&
- 	git rebase -Xsubtree=files_subtree --onto files-master master &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
++EOF
++	sleep 5
++fi
++
+ USAGE="[--setup <command>] [--subdirectory-filter <directory>] [--env-filter <command>]
+ 	[--tree-filter <command>] [--index-filter <command>]
+ 	[--parent-filter <command>] [--msg-filter <command>]
 -- 
 2.23.0.3.gcc10030edf.dirty
 
