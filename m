@@ -2,34 +2,35 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73D851F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC4F41F461
 	for <e@80x24.org>; Wed, 28 Aug 2019 20:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbfH1U0s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 16:26:48 -0400
-Received: from smtp122.iad3a.emailsrvr.com ([173.203.187.122]:47745 "EHLO
+        id S1726941AbfH1U0t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 16:26:49 -0400
+Received: from smtp122.iad3a.emailsrvr.com ([173.203.187.122]:39890 "EHLO
         smtp122.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726763AbfH1U0s (ORCPT
+        by vger.kernel.org with ESMTP id S1726657AbfH1U0s (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 28 Aug 2019 16:26:48 -0400
+X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Aug 2019 16:26:47 EDT
 X-Auth-ID: jon@jonsimons.org
-Received: by smtp8.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id B4AB454DF;
-        Wed, 28 Aug 2019 16:19:02 -0400 (EDT)
+Received: by smtp8.relay.iad3a.emailsrvr.com (Authenticated sender: jon-AT-jonsimons.org) with ESMTPSA id E94494F86;
+        Wed, 28 Aug 2019 16:18:54 -0400 (EDT)
 X-Sender-Id: jon@jonsimons.org
 Received: from localhost.localdomain (c-73-223-68-105.hsd1.ca.comcast.net [73.223.68.105])
         (using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256)
         by 0.0.0.0:465 (trex/5.7.12);
-        Wed, 28 Aug 2019 16:19:03 -0400
+        Wed, 28 Aug 2019 16:18:55 -0400
 From:   Jon Simons <jon@jonsimons.org>
 To:     jon@jonsimons.org, git@vger.kernel.org
 Cc:     me@ttaylorr.com, peff@peff.net
-Subject: [PATCH 2/2] list-objects-filter: handle unresolved sparse filter OID
-Date:   Wed, 28 Aug 2019 16:18:24 -0400
-Message-Id: <20190828201824.1255-3-jon@jonsimons.org>
+Subject: [PATCH 1/2] list-objects-filter: only parse sparse OID when 'have_git_dir'
+Date:   Wed, 28 Aug 2019 16:18:23 -0400
+Message-Id: <20190828201824.1255-2-jon@jonsimons.org>
 X-Mailer: git-send-email 2.23.0.37.g745f681289.dirty
 In-Reply-To: <20190828201824.1255-1-jon@jonsimons.org>
 References: <20190828201824.1255-1-jon@jonsimons.org>
@@ -40,56 +41,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Handle a potential NULL 'sparse_oid_value' when attempting to load
-sparse filter exclusions by blob, to avoid segfaulting later during
-'add_excludes_from_blob_to_list'.
+Fix a bug in partial cloning with sparse filters by ensuring to check
+for 'have_git_dir' before attempting to resolve the sparse filter OID.
 
-While here, uniquify the errors emitted to distinguish between the
-case that a given OID is NULL due to an earlier failure to resolve it,
-and when an OID resolves but parsing the sparse filter spec fails.
+Otherwise the client will trigger:
+
+    BUG: refs.c:1851: attempting to get main_ref_store outside of repository
+
+when attempting to git clone with a sparse filter.
+
+Note that this fix is the minimal one which avoids the BUG and allows
+for the clone to complete successfully:
+
+There is an open question as to whether there should be any attempt
+to resolve the OID provided by the client in this context, as a filter
+for the clone to be used on the remote side.  For cases where local
+and remote OID resolutions differ, resolving on the client side could
+be considered a bug.  For now, the minimal approach here is used to
+unblock further testing for partial clones with sparse filters, while
+a more invasive fix could make sense to pursue as a future direction.
 
 t5616 is updated to demonstrate the change.
 
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Jon Simons <jon@jonsimons.org>
 ---
- list-objects-filter.c    | 6 +++++-
- t/t5616-partial-clone.sh | 7 +++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ list-objects-filter-options.c |  3 ++-
+ t/t5616-partial-clone.sh      | 23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 36e1f774bc..252fae5d4e 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -464,9 +464,13 @@ static void *filter_sparse_oid__init(
- {
- 	struct filter_sparse_data *d = xcalloc(1, sizeof(*d));
- 	d->omits = omitted;
-+	if (!filter_options->sparse_oid_value)
-+		die(_("unable to read sparse filter specification from %s"),
-+		      filter_options->filter_spec);
- 	if (add_excludes_from_blob_to_list(filter_options->sparse_oid_value,
- 					   NULL, 0, &d->el) < 0)
--		die("could not load filter specification");
-+		die(_("unable to parse sparse filter data in %s"),
-+		      oid_to_hex(filter_options->sparse_oid_value));
- 
- 	ALLOC_GROW(d->array_frame, d->nr + 1, d->alloc);
- 	d->array_frame[d->nr].defval = 0; /* default to include */
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 1cb20c659c..aaba312edb 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -71,7 +71,8 @@ static int gently_parse_list_objects_filter(
+ 		 * command, but DO NOT complain if we don't have the blob or
+ 		 * ref locally.
+ 		 */
+-		if (!get_oid_with_context(the_repository, v0, GET_OID_BLOB,
++		if (have_git_dir() &&
++		    !get_oid_with_context(the_repository, v0, GET_OID_BLOB,
+ 					  &sparse_oid, &oc))
+ 			filter_options->sparse_oid_value = oiddup(&sparse_oid);
+ 		filter_options->choice = LOFC_SPARSE_OID;
 diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 6c3aa06973..0adb11f17b 100755
+index 565254558f..6c3aa06973 100755
 --- a/t/t5616-partial-clone.sh
 +++ b/t/t5616-partial-clone.sh
-@@ -264,6 +264,13 @@ test_expect_success 'partial clone with sparse filter succeeds' '
- 	git clone --no-local --no-checkout --filter=sparse:oid=master:odd-files "file://$(pwd)/sparse-src" pc-odd
+@@ -241,6 +241,29 @@ test_expect_success 'fetch what is specified on CLI even if already promised' '
+ 	! grep "?$(cat blob)" missing_after
  '
  
-+test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
-+	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master:sparse-filter "file://$(pwd)/sparse-src" sc1 2>err &&
-+	test_i18ngrep "unable to read sparse filter specification from sparse:oid=master:sparse-filter" err &&
-+	test_must_fail git clone --no-local --no-checkout --filter=sparse:oid=master "file://$(pwd)/sparse-src" sc2 2>err &&
-+	test_i18ngrep "unable to parse sparse filter data in $(git -C sparse-src rev-parse master)" err
++test_expect_success 'setup src repo for sparse filter' '
++	git init sparse-src &&
++	git -C sparse-src config --local uploadpack.allowfilter 1 &&
++	git -C sparse-src config --local uploadpack.allowanysha1inwant 1 &&
++	for n in 1 2 3 4
++	do
++		test_commit -C sparse-src "this-is-file-$n" file.$n.txt
++	done &&
++	echo "/file.1.txt" >> sparse-src/odd-files &&
++	echo "/file.3.txt" >> sparse-src/odd-files &&
++	echo "/file.2.txt" >> sparse-src/even-files &&
++	echo "/file.4.txt" >> sparse-src/even-files &&
++	echo "/*" >> sparse-src/all-files &&
++	git -C sparse-src add odd-files even-files all-files &&
++	git -C sparse-src commit -m "some sparse checkout files"
++'
++
++test_expect_success 'partial clone with sparse filter succeeds' '
++	git clone --no-local --no-checkout --filter=sparse:oid=master:all-files "file://$(pwd)/sparse-src" pc-all &&
++	git clone --no-local --no-checkout --filter=sparse:oid=master:even-files "file://$(pwd)/sparse-src" pc-even &&
++	git clone --no-local --no-checkout --filter=sparse:oid=master:odd-files "file://$(pwd)/sparse-src" pc-odd
 +'
 +
  . "$TEST_DIRECTORY"/lib-httpd.sh
