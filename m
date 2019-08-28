@@ -7,42 +7,41 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A94041F4B7
-	for <e@80x24.org>; Wed, 28 Aug 2019 06:00:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 175361F4B7
+	for <e@80x24.org>; Wed, 28 Aug 2019 06:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbfH1GAv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Aug 2019 02:00:51 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51855 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbfH1GAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Aug 2019 02:00:51 -0400
-Received: by mail-wm1-f68.google.com with SMTP id k1so1377205wmi.1
-        for <git@vger.kernel.org>; Tue, 27 Aug 2019 23:00:49 -0700 (PDT)
+        id S1726146AbfH1GSB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Aug 2019 02:18:01 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33421 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726052AbfH1GSA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Aug 2019 02:18:00 -0400
+Received: by mail-wm1-f66.google.com with SMTP id r17so939338wme.0
+        for <git@vger.kernel.org>; Tue, 27 Aug 2019 23:17:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=l1t0ws28OS7nlgdOkVITb7Z0CYN5ALJcns0KrSARrO4=;
-        b=Akx6X4u8+PQTqaVdqDCm9+jt7sPM9S1iMHdLNuiR/LhEciNvaP4eFaDYN+QKeAAZWf
-         z1fyPLiEp+cekRzB5lVXbEPCwEQJObeXo9qenFJ8GgFY9s6Hosga0/rwoUrOR336x5mW
-         9uLvvvT+lm538ME/UzL2LRBPL47yxPcFhyGCcoFX4rnYAVPjSKArHROTlGeN2IT2uzJ4
-         Tybc1Nkd3vu5JdHF/NVTx2t6CxQTx7knmQJepHAsPKXM+oXNxMtIQqdD4P76l66MN6Oj
-         QH7QYH5++jhos3ZB7FLDswETJL4ZA4s2EqekFmzkx0sAmSwTOjcmNox+ljDZ3uVycONV
-         oLjg==
-X-Gm-Message-State: APjAAAWTG31B/ydULJrBuDhRLEhYbDZOgZZ9jK2YqHEfWwr6/telXZ62
-        YZygqDHSm2QPCt6b9R0wSiqmwsfD6LN27BWoEV8=
-X-Google-Smtp-Source: APXvYqxyBx3RTUVZ+ULlSHEvvYI5ArWCtra9qcc3ALrNdwcNgmcqiIQI9O9JijZAq5fLFW5S9aqQo2dMWz00wEKW6dw=
-X-Received: by 2002:a7b:cf2d:: with SMTP id m13mr2512049wmg.120.1566972049207;
- Tue, 27 Aug 2019 23:00:49 -0700 (PDT)
+        bh=0fw7w1OytoLjGtInPjLkiBvZAxf7VFLqQy7qC5/Ih4k=;
+        b=W5o1KE0G+jSHvQcyXzJKyDBl/picUeQCLO6gniMoCfLfPTmQYYxC9QYMuHa80om5LI
+         eBFpOqYF1FslE5UPCNtcI8Tg2HVcfZnA7Zpjq8/urG4+lK9mCcdTFdO9u0z/yiTFSsS4
+         lO2WaedkNN7qhcUBG59p1x2KghQhoIhqi14h1S4hqzxUsy6NpvX9wg8eV9y3Zb3Jtad0
+         EmIM+V21HS92gGYcp8LEiWymOfyJqgg482rx9edi73fh2/fsop3Wzlu0QhkBZ/9CFBI/
+         uQRyQRTw94JLmiVJO5j3B6COyXQHJlWdaLACa8IpSzB3MxkkPPOqfDFz8W+d/Vgxa/MF
+         37LA==
+X-Gm-Message-State: APjAAAViuP+RPEyYGqvVX7vkS1AidRCKpHd9IGAo87v2900G3bCjLmW/
+        BTedy0jtFIoK1xI/IxdXDqgZc/fqKqeJ8wgMAaUbeGwi
+X-Google-Smtp-Source: APXvYqz+6yDdut/vVA2a4NHUb4CGCJVF/j/lE5eHx5hD3m5IxWXojO66MXQpEP5KztMArbupfsxJ5g8oAoJqiTB5BxE=
+X-Received: by 2002:a1c:4d05:: with SMTP id o5mr2501459wmh.129.1566973078322;
+ Tue, 27 Aug 2019 23:17:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190826235226.15386-1-newren@gmail.com> <20190828002210.8862-1-newren@gmail.com>
- <20190828002210.8862-3-newren@gmail.com>
-In-Reply-To: <20190828002210.8862-3-newren@gmail.com>
+ <20190828002210.8862-4-newren@gmail.com>
+In-Reply-To: <20190828002210.8862-4-newren@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 28 Aug 2019 02:00:38 -0400
-Message-ID: <CAPig+cQco8vtj498G_3tbsF_PFxXidUPgPZtOdNYqySGuz5c_A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] t3427: accelerate this test by using fast-export
- and fast-import
+Date:   Wed, 28 Aug 2019 02:17:47 -0400
+Message-ID: <CAPig+cSydZnie3CSwPgfSaNcGxr1jj94YBXAL47vEXrtxaQXUw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] Recommend git-filter-repo instead of git-filter-branch
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
@@ -58,35 +57,84 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Aug 27, 2019 at 8:22 PM Elijah Newren <newren@gmail.com> wrote:
-> fast-export and fast-import can easily handle the simple rewrite that
-> was being done by filter-branch, and should be significantly faster on
-> systems with a slow fork.  Timings from before and after on two laptops
-> that I have access to (measured via `time ./t3427-rebase-subtree.sh`,
-> i.e. including everything in this test -- not just the filter-branch or
-> fast-export/fast-import pair):
-> [...]
+> filter-branch suffers from a deluge of disguised dangers that disfigure
+> history rewrites (i.e. deviate from the deliberate changes). [...]
+>
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
-> diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-> @@ -11,6 +11,12 @@ commit_message() {
-> +extract_files_subtree() {
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> @@ -16,6 +16,20 @@ SYNOPSIS
+> +WARNING
+> +-------
+> +'git filter-branch' has a plethora of pitfalls that can produce non-obvious
+> +manglings of the intended history rewrite (and can leave you with little
+> +time to investigate such problems since it has such abysmal performance).
+> +These safety and performance issues cannot be backward compatibly fixed and
+> +as such, its use is not recommended.  Please use an alternative history
+> +filtering tool such as https://github.com/newren/git-filter-repo/[git
+> +filter-repo].  If you still need to use 'git filter-branch', please
+> +carefully read the "Safety" section of the message on the Git mailing list
+> +https://public-inbox.org/git/CABPp-BEDOH-row-hxY4u_cP30ptqOpcCvPibwyZ2wBu142qUbA@mail.gmail.com/[detailing
+> +the land mines of filter-branch] and vigilantly avoid as many of the
+> +hazards listed there as reasonably possible.
 
-Style nit: add space before opening '('
+Is there a good reason to not simply copy the "Safety" section from
+that email directly into this document so that readers don't have to
+go chasing down the link (especially those who are reading
+documentation offline)?
 
-(However, commit_message() function just above this doesn't follow
-that style, so...)
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> @@ -832,7 +832,7 @@ Hard case: The changes are not the same.::
+>         This happens if the 'subsystem' rebase had conflicts, or used
+>         `--interactive` to omit, edit, squash, or fixup commits; or
+>         if the upstream used one of `commit --amend`, `reset`, or
+> -       `filter-branch`.
+> +       a full history rewriting command like `filter-repo`.
 
-> +       git fast-export --no-data HEAD -- files_subtree/ \
-> +               | sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" \
-> +               | git fast-import --force --quiet
+Do we want a clickable link to `filter-repo` here?
 
-This would be a bit less noisy if you ended each line with the pipe
-operator, allowing you to drop the backslashes:
+> diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+> @@ -123,10 +123,10 @@ The following format are available:
+> +linkgit:git-hash-object[1], linkgit:git-rebase[1], and
+> +linkgit:git-filter-repo[1], among other git commands, can be used to
+> [...]
+> @@ -148,8 +148,8 @@ pending objects.
+>  linkgit:git-hash-object[1]
+>  linkgit:git-rebase[1]
+> +linkgit:git-filter-repo[1]
 
-    git fast-export --no-data HEAD -- files_subtree/ |
-        sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%" |
-        git fast-import --force --quiet
+Are these 'linkgit:' references to `filter-repo` going to be
+meaningful if that tool is not incorporated into the Git project
+proper? Perhaps use a generic clickable link instead.
 
-> +}
+Same comment applies to other 'linkgit:' invocations in the remainder
+of the patch.
 
-Not sure any of this is worth a re-roll.
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> old mode 100755
+> new mode 100644
+
+Why lose the executable bit?
+
+> @@ -83,6 +83,19 @@ set_ident () {
+> +if [ -z "$FILTER_BRANCH_SQUELCH_WARNING" -a \
+> +     -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS" ]; then
+
+If this script didn't already have a mix of styles, I'd say something
+about modern style being:
+
+    if test -z "$FILTER_BRANCH_SQUELCH_WARNING" &&
+        test -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS"
+    then
+        ...
+    fi
+
+> +       cat <<EOF
+> +WARNING: git-filter-branch has a glut of gotchas generating mangled history
+> +         rewrites.  Please use an alternative filtering tool such as 'git
+> +         filter-repo' (https://github.com/newren/git-filter-repo/) instead.
+> +         See the filter-branch manual page for more details; to squelch
+> +         this warning and pause, set FILTER_BRANCH_SQUELCH_WARNING=1.
+
+The "and pause" threw me. There's more than a bit of ambiguity
+surrounding it. Perhaps drop it?
