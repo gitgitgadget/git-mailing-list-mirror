@@ -2,142 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 509D11F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 16:48:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4101F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 17:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727352AbfH2Qsd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 12:48:33 -0400
-Received: from smtp01.domein-it.com ([92.48.232.141]:39463 "EHLO
-        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726784AbfH2Qsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 12:48:33 -0400
-Received: by smtp01.domein-it.com (Postfix, from userid 1000)
-        id 4E0D380A51A4; Thu, 29 Aug 2019 18:48:32 +0200 (CEST)
-Received: from ferret.domein-it.nl (unknown [92.48.232.148])
-        by smtp01.domein-it.com (Postfix) with ESMTP id 47A4780A51BF;
-        Thu, 29 Aug 2019 18:48:02 +0200 (CEST)
-Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:58842 helo=ben.local)
-        by ferret.domein-it.nl with esmtpa (Exim 4.92)
-        (envelope-from <ben@wijen.net>)
-        id 1i3Naa-0007BY-FS; Thu, 29 Aug 2019 18:48:00 +0200
-From:   Ben Wijen <ben@wijen.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Szeder=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Ben Wijen <ben@wijen.net>
-Subject: [PATCH v5 2/2] builtin/rebase.c: Remove pointless message
-Date:   Thu, 29 Aug 2019 18:47:57 +0200
-Message-Id: <20190829164757.7301-3-ben@wijen.net>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190829164757.7301-1-ben@wijen.net>
-References: <20190826164513.9102-1-ben@wijen.net>
- <20190829164757.7301-1-ben@wijen.net>
-MIME-Version: 1.0
+        id S1727773AbfH2RBe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 13:01:34 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46470 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726739AbfH2RBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 13:01:34 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h7so2858844wrt.13
+        for <git@vger.kernel.org>; Thu, 29 Aug 2019 10:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=sKMKpS7fN/0Cqu0WEZw87WMOTtCcLgqS3u0tsvsF5JI=;
+        b=r+GEA91MsIVRkckoX8g9wHowPd0R9zdqs+PBw5zftrBDU0VC200zUyxe1CCXDDHqiK
+         jBd2Sl2YoncEo1YmqR1/F+jymMKaNrpIJvjj0H8PukqkRhcnB9q9R0veOfYrOM/gRZay
+         PxVPHzziaL7MVLBRqS2h5WFMy81PeTjLyIDd0d29cKM9mAGWrz9PKxgaUQUV5e56KVN8
+         pZmrvUWVYW8AlCtZF1MVYDEPMId09RnfZwSpipcKdCGNXTL05aoC5C1L6jIZJJwurJf4
+         u2/MOYtb34mCT3nHbT37UTkmlES4lb5HI05GbkjEK+FRvdkhrcPDwnB2Qx1ab9Tqq2kq
+         2vmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sKMKpS7fN/0Cqu0WEZw87WMOTtCcLgqS3u0tsvsF5JI=;
+        b=IBlLLniP2GnPzJ7RTSmxEa3cUaYE5Az1N/t9SNvNAZiYffLe/TjoLmVzoWsvyoil32
+         R28LCsJxon9/Wv/RYfhU9j6n+ZvDgNQac04DMlJe5cLAJ/9SyXQoD7IbR7SVG+BVJxIO
+         A1qOc1RykIVx7CvAtGiGc/FL81QxzOujapBVNhZT0KqKByf78x528X0TPExSBsfABx3a
+         xPF5YV2xNDWZK8+YdAgQ3VSdddsz/lgdEycdDKpoRK4Pxf4KLQ/Bq2o+gXgL8NMpYn5D
+         jnPPlXVCULH4hSqvpWNWA01HvQMsV+Ny6h8ZEIq3Wa7izSIaCneCX6JZIpX5HErl0kdX
+         i40Q==
+X-Gm-Message-State: APjAAAWUyKrZl0D10OLmIudH6htzzedpJHt32XsBZWFZwsniY5umRYqH
+        72HVxYgdgj/7j33G/tWXXlyrnSVA
+X-Google-Smtp-Source: APXvYqyF8QIU2R7wcia52BbBAL+RIdVFsphVFE8QenEZ2gDLNgDABi3pC4+CEvyhNd8arcAVka7JZQ==
+X-Received: by 2002:a5d:404d:: with SMTP id w13mr12953079wrp.253.1567098091887;
+        Thu, 29 Aug 2019 10:01:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h5sm1903437wrr.10.2019.08.29.10.01.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Aug 2019 10:01:31 -0700 (PDT)
+Date:   Thu, 29 Aug 2019 10:01:31 -0700 (PDT)
+X-Google-Original-Date: Thu, 29 Aug 2019 17:01:29 GMT
+Message-Id: <pull.325.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] checkout: add simple check for 'git checkout -b'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
-X-Domein-IT-MailScanner-ID: 1i3Naa-0007BY-FS
-X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
-X-Domein-IT-MailScanner-SpamCheck: 
-X-Domein-IT-MailScanner-From: ben@wijen.net
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When doing 'git rebase --autostash <upstream> <master>' with a dirty worktree
-a 'HEAD is now at ...' message is emitted, which is pointless as it refers to
-the old active branch which isn't actually moved.
+This series replaces "[RFC] Revert/delay performance regression in 'git
+checkout -b'" [1].
 
-This commit removes the 'HEAD is now at...' message.
+The community response to that series seems to be:
 
-Signed-off-by: Ben Wijen <ben@wijen.net>
----
- builtin/rebase.c            | 17 +----------------
- t/t3420-rebase-autostash.sh |  4 ----
- 2 files changed, 1 insertion(+), 20 deletions(-)
+ 1. 'git switch' is still experimental, so don't warn that users should
+    adopt it right away.
+    
+    
+ 2. 'git checkout -b ' should do the fast thing, and we should check the
+    arguments directly.
+    
+    
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b3b17669e3..118205e481 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1968,13 +1968,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				state_dir_path("autostash", &options);
- 			struct child_process stash = CHILD_PROCESS_INIT;
- 			struct object_id oid;
--			struct object_id head_oid;
--			if (get_oid("HEAD", &head_oid)) {
--				ret = error(_("could not determine HEAD revision"));
--			}
--
--			struct commit *head =
--				lookup_commit_reference(the_repository, &head_oid);
- 
- 			argv_array_pushl(&stash.args,
- 					 "stash", "create", "autostash", NULL);
-@@ -1995,17 +1988,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				    options.state_dir);
- 			write_file(autostash, "%s", oid_to_hex(&oid));
- 			printf(_("Created autostash: %s\n"), buf.buf);
--			if (reset_head(&head->object.oid, "reset --hard",
-+			if (reset_head(NULL, "reset --hard",
- 				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
- 				die(_("could not reset --hard"));
--			printf(_("HEAD is now at %s"),
--			       find_unique_abbrev(&head->object.oid,
--						  DEFAULT_ABBREV));
--			strbuf_reset(&buf);
--			pp_commit_easy(CMIT_FMT_ONELINE, head, &buf);
--			if (buf.len > 0)
--				printf(" %s", buf.buf);
--			putchar('\n');
- 
- 			if (discard_index(the_repository->index) < 0 ||
- 				repo_read_index(the_repository) < 0)
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 43685a5c8e..2421bc39f5 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -37,7 +37,6 @@ test_expect_success setup '
- create_expected_success_am () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	First, rewinding head to replay your work on top of it...
- 	Applying: second commit
- 	Applying: third commit
-@@ -48,7 +47,6 @@ create_expected_success_am () {
- create_expected_success_interactive () {
- 	q_to_cr >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	Applied autostash.
- 	Successfully rebased and updated refs/heads/rebased-feature-branch.
- 	EOF
-@@ -57,7 +55,6 @@ create_expected_success_interactive () {
- create_expected_failure_am () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	First, rewinding head to replay your work on top of it...
- 	Applying: second commit
- 	Applying: third commit
-@@ -70,7 +67,6 @@ create_expected_failure_am () {
- create_expected_failure_interactive () {
- 	cat >expected <<-EOF
- 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
--	HEAD is now at $(git rev-parse --short feature-branch) third commit
- 	Applying autostash resulted in conflicts.
- 	Your changes are safe in the stash.
- 	You can run "git stash pop" or "git stash drop" at any time.
+This series makes 'git checkout -b ' do the same thing as 'git switch -c '.
+
+Thanks, -Stolee
+
+[1] https://public-inbox.org/git/pull.317.git.gitgitgadget@gmail.com/
+
+Derrick Stolee (1):
+  checkout: add simple check for 'git checkout -b'
+
+ builtin/checkout.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+
+base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-325%2Fderrickstolee%2Fcheckout-b-fast-again-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-325/derrickstolee/checkout-b-fast-again-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/325
 -- 
-2.22.0
-
+gitgitgadget
