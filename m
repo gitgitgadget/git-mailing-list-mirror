@@ -8,133 +8,122 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A67E1F461
-	for <e@80x24.org>; Thu, 29 Aug 2019 19:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846C91F461
+	for <e@80x24.org>; Thu, 29 Aug 2019 19:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728512AbfH2TGf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Aug 2019 15:06:35 -0400
-Received: from mout.web.de ([212.227.15.4]:53459 "EHLO mout.web.de"
+        id S1728300AbfH2TNV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Aug 2019 15:13:21 -0400
+Received: from mout.web.de ([212.227.15.4]:37267 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727437AbfH2TGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Aug 2019 15:06:35 -0400
+        id S1727146AbfH2TNV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Aug 2019 15:13:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1567105585;
-        bh=mrh8aZQTRldTtWy53emJhwxT34pPYDCmPdlkwG5hBvU=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=BjzFZuGPpBNz9kmfQq89v+YShDzDOCGVA4c8vjMKEDV2YxPSnzU1R4jYiTOLeB76O
-         sDGLD3x741L7j/wELPgIpkp3k1j648+zvLI4zIS/wc8HX0PlO2tcdzbERqwD8K0xm3
-         LwoZ3iS9LjZlovDcQhRBOBzQr6NrlvdUGvKtG/zU=
+        s=dbaedf251592; t=1567105997;
+        bh=5y3R95V4VP/Bqrlb9nA4M3x2Sc/njhBChxCeClETBN4=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=q31tiwRjmYtoCqPs6S301/Z2fMkcL49JNSnRj1j/TSLJMS8no/gurNGR4wZsFOm0z
+         g6xMzuTC49EI/jh172Oq8oU/YAnoFVzAI+k0AvxsDZZBRuc8wlq/AaaVX8oWlO4tDA
+         BuLPuddMsIljZXXHfu5sc6l45bMoAzxuOrEu0McA=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mh7qL-1hqZrE3NXF-00MKkI; Thu, 29
- Aug 2019 21:06:25 +0200
-Subject: Re: [PATCH] fix segv with corrupt tag object
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Sperling <stsp@stsp.name>
-Cc:     git@vger.kernel.org
-References: <20190824230944.GA14132@jessup.stsp.name>
- <bcc29199-a4ac-6bdc-6715-9807737253d8@web.de>
- <20190826115715.GB71935@jessup.stsp.name>
- <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
+Received: from [192.168.178.26] ([79.203.24.71]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8iaa-1htUlk3aBA-00C9LY; Thu, 29
+ Aug 2019 21:13:16 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c6601cca-7de0-ba82-2e18-916a2e9048d3@web.de>
-Date:   Thu, 29 Aug 2019 21:06:22 +0200
+Subject: [PATCH] help: make help_unknown_ref() NORETURN
+Message-ID: <d0606d19-0900-3908-2962-ceb24015f753@web.de>
+Date:   Thu, 29 Aug 2019 21:13:16 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqo90bhmi3.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:IHryajEXy4BqUunNqWBauGXZgFicjewhXOSMCmaTKOwatP+f2HO
- hSqS+rXWhw76nd8yDbGYVoSpbNUjo4L82Ka91OUS2LGWSb9MuwUSwK0lp4MizZrgUB1GiMI
- lrwYSnbFPgSdvSqT3uUiO+ylx8RaHnDsWc2yixiWLORWz0t5GfjEe/BNTFSfoFCWnZFq2/J
- ALZHYvyvBZm1DSDpBzsEw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/mC2+NWxZgs=:Z/rr9t5hmllj4ZOIuxgWlI
- 02c8J/2IjDzUpzLtcWHoOT6gd7kyVCyKXuXjp2JzMOjOJxQVF3siUYDlMIDMWifTaYF+FTYUU
- S6tCCq6eslGTmO7NVQd2WJMrqhPp8LXdMgaT0WqhpTGl/yyPx3irirfJeApcCH4Y+POva4SaS
- 23e6ifyCN710YyC9rdgzA8lBeQ9FH78Kl8iIHv9RXCH3zCTURoNtBk+WdxCcjpVGJP1s6NnJs
- g8XAttbPVEF40soPVeM417TwUfn+GfSSUKss1MSVL6WTNAATPFll/CbRfE+8CbTeNj1+05FB7
- IJn18BKoG6F2q0kcx4MHCGSycOF2j9NE4lWi3+swMOL6NHukG4Jty+POtZL4zkY8OAK7+jmZ5
- iDOb0N94nGP2ceVamFHoWWqsyGgT8OHnuLEL7D5AA7yPRW1wUqUDyNxfEN6j2gn3Q++I1YWc4
- 9ZofSgod89Hj8vStoNaK7MUk7Z97Xo8rCwOZPfZ6tepMPwObVhNZBuxr3S8GGPS1IfVZ1U/v7
- nrCUZTJbfulbvcwcZQgym8xozYyHSc3bu3Rbk8B/HQ62HhcyPvAyegLz9/Pae4904F1HxPzlm
- BGlZ+Mide/OmqvlCEJl0k+HlqOS08+m/HuL4LucoqHtTbJuI3ZBqzbrbxZ9U//cVEsr1LNubE
- YWbBamPorEgjm00f7Lx/IHEQMKMXY8LjrJDsX/DS1TLWvaXymaHwAGAJ0gMFu17SNmU3qAAhb
- Qo3N5olzeGvcw4b31rWiYpBQJ7uGdI4YMBVLN+RXWC291RxYssJ8nzJwA1tA7d+5OMUSXp2+5
- DDzMUwpu8BwfoYTGmwfN7aR3Qed1T62d2aaOQrnYz2j70eXYuW7eY8O5JfPnY0Y9gQrATXP4Q
- LYWmhnerveaFQ3sa9dfRVDPYuETmQytgUfeN+xoPOcHnSzAsCHpuAaeuWsTHXLnD2nvJhskP7
- lcncs25/IcRPkfcRU+C9tZ3MZNwzzr6pGaCBz5+BUFU6wcIUbEwbzVn7Of+PMdaP+BRtsOTOc
- U4xEf5reOLYRu89y7d8J3wOhumLTqV9aqM45M6df2fGFYNute1/CF4mkFfbXB1PbSnEVrqh0n
- k2K0ZX0GilYS4EaAhJZ/vQVyPFY+agpvyR2VL5Tyi7DYcIbHRWFMJTb5hrENYxzltcUHJN2gA
- HH2U//SP2Op7u4FEfcOkahvW9eT/zwotLGVBw9gtOCNy1LMg==
+X-Provags-ID: V03:K1:s1kt5/2myjtDV5ZDgYbxMVEwlSpOB15j9ZRUhY0joy+qCWL9AuE
+ TAEWU8U5DuqbJOI4LdBl9Of/se/Q0pBjTUyz4hRADY/go9MGxQibqyM8KTWoY9ooENsuNkl
+ QRBxJM3vnWENYImFdaE3k3WKaf4uZAnSbgsWHihNqkOKV4HlUO1iqy4n+R4XOlnHT6VJrsN
+ LvJfoKrfv/bveyftq+57Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NqS5Fym3S3I=:5UyVhi1bolqyRc/OXUyFwI
+ AJh9//Kq7BDiK2HQTMLTmlqaGQcXZ+3P8w8XjT7HY6jKACT48nfu7T7JpOwlptnNQug7wXueo
+ mc/gmaq/IDjR/kGNB10Yn71KOPAj1s/9z3HiuXx0km93GOkzEpYhvIiXipBSD66h68y9RPYZE
+ sVg0ahkZ/73eZ6q9QO0T48+1kIHknIYBauZhkYZxoiuDNxqve9ZgNYgN3yuphW+/YaB8uLavH
+ revXxEagz0RnBwRDYEjsJYCYm3Qwjo1kBAmrYfNRNS/8m6d+/cP6im+ENTA930i+ozbA25ujT
+ dRHxMRr49tOD1KW912t+XbMyAnybeIemQCF1oj7nPC2n7yWALCZFy8Y0aq9v/Ur4vm2haimEi
+ p+sOjVbO+/zIJU94IhxZOCW0JFmGjb3lN+zwkMp88+wvgd504nSLZSOHLODjeofUgO9j0WbGA
+ ig4oIK3lNR2lWJeVsdMmqzNi/+lpnPG/g4//VBxqhwahxxEiEJxAT8hRtYtbAH45Z5s19POu9
+ FNOU320XAzyHUGh3cymNn/4kwX0mhKPRU5MEEiOklelWQQTmDbhWOLeNb41+lmwLiBzwQNFAc
+ hY2aQDtfhLqhBik5gXRRvlIwbvZqcsXf86ZNB/vBVV1s3f6g1AG1lNiiyNHoVXBo9hP5DtxVL
+ 0bVI4WytLeCvlHigRZdidVaJOX1Gyn04TsetMKwj9YkIK60y8qXfprO7rgI3PpCjss/ivy6H/
+ S4sqBjI5cTqBJ6phsI5PWLsKm5pap8lZpGSJtjH4bMu5TH5pGIeHCgb/dpPeW4v6WiAc5dHw6
+ bYwQ46gU/t7veaPl+eyzUElENNi+mfhUpQ8e/+RffLqfiAmEKOpawPFcpJEkqtxKxTqM4dozU
+ Xn7d+MbzPF7/2CtyWMKiNn8omrYfqBm+2X7W5uSNbMr4BZULAUzL89/OjEAi200Xa3T17TLIr
+ GQjxjweumLfT/4biIrvy8TR2oyZJ1A+xS04dd52MO1a3J5R6MLHZwAWMf3ao6gc3Lt4iY8+au
+ Ybny9zr0GQowYhvDce/YLsL+IYbUKbIrLlTstEPbKCKW1560TLo0348RpJC39m1HWgHyepBc9
+ MMp5/mDFlWebjouQ2jfxISQgKBrt9LocsQt0uV+kq6TUAchwgbaQAs20ptDC6WxbGg0wvZb54
+ VdoqXCoZhobmGn1hvcnAqabHHFSzTCyEcqGlMa31SSvqqMBQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.08.19 um 19:20 schrieb Junio C Hamano:
-> Stefan Sperling <stsp@stsp.name> writes:
->
->> The root cause of this bug seems to be that the valid assumption
->> that obj->parsed implies a successfully parsed object is broken by
->> parse_tag_buffer() because this function sets the 'parsed' flag even
->> if errors occur during parsing.
->
-> I am mildly negative about that approach.  obj->parsed is about
-> "we've done all we need to do to attempt parsing this object" (so
-> that next person who gets hold of the object knows that fact---one
-> of the reasons why may be that the caller who wants to ensure that
-> the fields are ready to be accessed does not have to spend extra
-> cycles, but that is not the only one).  Those that want to look at
-> various fields in the object (e.g. the tagged object of a tag, the
-> tagger identity of a tag, etc.) should be prepared to see and react
-> to NULL in there so that they can gracefully handle "slightly"
-> corrupt objects.
+Announce that calling help_unknown_ref() exits the program.
 
-Not sure how this could happen under normal circumstances, but how
-about this here?
-
-=2D- >8 --
-Subject: [PATCH] tree: simplify parse_tree_indirect()
-
-Reduce code duplication by turning parse_tree_indirect() into a wrapper
-of repo_peel_to_type().  This avoids a segfault when handling a broken
-tag where ->tagged is NULL.  The new version also checks the return
-value of parse_object() that was ignored by the old one.
-
-Initial-patch-by: Stefan Sperling <stsp@stsp.name>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- tree.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+Patch generated with --function-context for easier review.
 
-diff --git a/tree.c b/tree.c
-index 4720945e6a..1466bcc6a8 100644
-=2D-- a/tree.c
-+++ b/tree.c
-@@ -244,19 +244,7 @@ void free_tree_buffer(struct tree *tree)
+ help.c | 3 ++-
+ help.h | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
- struct tree *parse_tree_indirect(const struct object_id *oid)
- {
--	struct object *obj =3D parse_object(the_repository, oid);
--	do {
--		if (!obj)
--			return NULL;
--		if (obj->type =3D=3D OBJ_TREE)
--			return (struct tree *) obj;
--		else if (obj->type =3D=3D OBJ_COMMIT)
--			obj =3D &(get_commit_tree(((struct commit *)obj))->object);
--		else if (obj->type =3D=3D OBJ_TAG)
--			obj =3D ((struct tag *) obj)->tagged;
--		else
--			return NULL;
--		if (!obj->parsed)
--			parse_object(the_repository, &obj->oid);
--	} while (1);
-+	struct repository *r =3D the_repository;
-+	struct object *obj =3D parse_object(r, oid);
-+	return (struct tree *)repo_peel_to_type(r, NULL, 0, obj, OBJ_TREE);
+diff --git a/help.c b/help.c
+index 5261d83ecf..9ff2be6b18 100644
+=2D-- a/help.c
++++ b/help.c
+@@ -774,22 +774,23 @@ static struct string_list guess_refs(const char *ref=
+)
+ 	return similar_refs;
  }
+
+-void help_unknown_ref(const char *ref, const char *cmd, const char *error=
+)
++NORETURN void help_unknown_ref(const char *ref, const char *cmd,
++			       const char *error)
+ {
+ 	int i;
+ 	struct string_list suggested_refs =3D guess_refs(ref);
+
+ 	fprintf_ln(stderr, _("%s: %s - %s"), cmd, ref, error);
+
+ 	if (suggested_refs.nr > 0) {
+ 		fprintf_ln(stderr,
+ 			   Q_("\nDid you mean this?",
+ 			      "\nDid you mean one of these?",
+ 			      suggested_refs.nr));
+ 		for (i =3D 0; i < suggested_refs.nr; i++)
+ 			fprintf(stderr, "\t%s\n", suggested_refs.items[i].string);
+ 	}
+
+ 	string_list_clear(&suggested_refs, 0);
+ 	exit(1);
+ }
+diff --git a/help.h b/help.h
+index b8780fbd0f..7a455beeb7 100644
+=2D-- a/help.h
++++ b/help.h
+@@ -42,8 +42,8 @@ void list_commands(unsigned int colopts, struct cmdnames=
+ *main_cmds, struct cmdn
+ /*
+  * call this to die(), when it is suspected that the user mistyped a
+  * ref to the command, to give suggested "correct" refs.
+  */
+-void help_unknown_ref(const char *ref, const char *cmd, const char *error=
+);
++NORETURN void help_unknown_ref(const char *ref, const char *cmd, const ch=
+ar *error);
+
+ static inline void list_config_item(struct string_list *list,
+ 				    const char *prefix,
 =2D-
 2.23.0
